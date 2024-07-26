@@ -4,142 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E95FAC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 20:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63C63C3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 20:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXRAR-00016w-89; Fri, 26 Jul 2024 16:03:55 -0400
+	id 1sXRDc-0005ck-ED; Fri, 26 Jul 2024 16:07:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sXRAP-00015F-St
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 16:03:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sXRAN-0006gC-GL
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 16:03:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722024230;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OoI1gfy89QINLXQ22mwXr732SGLO9aoIzyZdgyXcvoI=;
- b=Q3xFdynYPJrNocwciwySAvdtbqjrxOo+a6qtBhrkNTXXbnXaRaDKox+y6FoTF/NXkd0b4L
- ezVrtAaKCeqrd4yO8S8bWYexwCHm2cyIVxyv+UsrlaRlz8npJKU2AvW+FDyjxEO4LtjMfg
- RX9vOS9kSxv0WfKCAcXtcLfdlz4bC1k=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-660-20EX8nJpMDOd-WM4dUIqww-1; Fri, 26 Jul 2024 16:03:46 -0400
-X-MC-Unique: 20EX8nJpMDOd-WM4dUIqww-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4280c0b3017so522105e9.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 13:03:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sXRDb-0005c6-0A
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 16:07:11 -0400
+Received: from mail-qv1-xf32.google.com ([2607:f8b0:4864:20::f32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <porter@cs.unc.edu>) id 1sXRDY-0007LT-9f
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 16:07:10 -0400
+Received: by mail-qv1-xf32.google.com with SMTP id
+ 6a1803df08f44-6b7a36f26f3so8832236d6.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 13:07:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=cs.unc.edu; s=google; t=1722024426; x=1722629226; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8AuOzx/9Y1jYZv2yiLo/KkLdwmdsh+pVv3XmCSdHBx0=;
+ b=g2Ou1jFZ5U60qOFkYU79znxV8x5Xq/LcRYdxoilhp2h8E+De3nvynv3KEyi/O0FAPO
+ XSG/tfxY+1jJG3FCfAPt3hlHHfQfHh5AdjgPmWjRfVYwd0IH2cxQk8L9JBYrE2k0v2oL
+ obWZP0+/Pecxp+m74s06puNu7tK0AsiSUAaKkXUYvA3Nv8w0wRpCRbn4m2zf+t7ji9pJ
+ V/yYr9TD8Iv/r0pMgA5XHiuyQP+stOYEUn64Z9s1DZ8A4OOGXimC3ZKLxOfaZEDH6NhG
+ bAZpBcBFg84m8bpG34aG0BD40Ftug7/T+5HOfikAZPf8RLq9u/valSuby1XHebjyree+
+ ORrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722024225; x=1722629025;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=OoI1gfy89QINLXQ22mwXr732SGLO9aoIzyZdgyXcvoI=;
- b=LUzp5tRCChMHILu/nL7u+uTd1vzG8u8yvQ6AbSAtYjObpRKs7LCj/0jQqGaoMrqhl7
- meTog6vsOKNPeJhFrf+Q4Mj1EJiY/emk/DxyU8R2gax+eaXO72HlUX56Z2Co7+I2Img0
- neJUFnScv59ycuBK58hrdUfPKYVH7jMUiLp8oZ5EYDd8TBPARUxmnu0/9DoGUX1xCO0e
- CUCg9IJ/nqjIdK2D20DZkiEVMgwckJT6TpRjrlfaHgkC9d7Iwhg2Tav15Wd4SZb+WdHL
- NY1poxtvjb+9wIPBCWsuLWiiFGUnQ96CRA6zwHVxmxEDHnsQQJkxAO7o5DoguyZjJ4KT
- KYJA==
+ d=1e100.net; s=20230601; t=1722024426; x=1722629226;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8AuOzx/9Y1jYZv2yiLo/KkLdwmdsh+pVv3XmCSdHBx0=;
+ b=QFpzsSBefer1krAEfXcTSNEv9z/9iwjd8KecAt6hYXLEm42vTRrCTj/MdDmUF1o/nA
+ Ww2LWRF6JUDtNiNx+4l1baKyPshwGPaoAwuiaGtFQJxzmm1UZJl+ByH5i5gtgghQRlSI
+ ct3rdWTa5JGq4fquqUErsZdDxR1Sb4BN0CKM2EpZ7C56wjoIx6JY/1LhjK5XIzUy/xqe
+ AZq2yc1bwcqewq6dB+ImLri0T6GJwcUl1ipoW1PoU8PtMgoHadkMvuKPJNZJye3r5Xta
+ zjSYZ9MLgTJWBOFKNdvw0pMPE1GGXfLM3YwrRWjYFZ/9z5fplpXTVGlk7e/P5sdB+HBu
+ NWqA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWKRJ6agNk6cC4r90Qbqyv4V1c4cvYDacK4AOlP6uGTDgQFy+mXt59fgeiBM3Hx1aS/mTe1V5Ifyr9aBI+YU82rD0qDFwc=
-X-Gm-Message-State: AOJu0Yy3q3Sq9KP/fBWh/E353CKpHAG45ergm5x7vY2GkCtz/nNM70Js
- kLxcyO45z5CtCS26+a3ZbZaDQ7kr4WtHluMFp+Akmu8ufA98+aGdBnViJ5leQbnqRsk1Pw4DJZk
- i5trxfDkJTP2fFfBLztuv9WlAgAJUauW+gxC7jdB0NXkei7m8n0sz
-X-Received: by 2002:a05:600c:4f8e:b0:426:6e9a:7a1c with SMTP id
- 5b1f17b1804b1-42811e12d86mr4191835e9.25.1722024225293; 
- Fri, 26 Jul 2024 13:03:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHDm/M8JSwAdSlNZ5K93+2kHkXWh88PnHThbApvzpNRRWFIFEtKTLPzmma6oakcDNfNRUsUOw==
-X-Received: by 2002:a05:600c:4f8e:b0:426:6e9a:7a1c with SMTP id
- 5b1f17b1804b1-42811e12d86mr4191685e9.25.1722024224803; 
- Fri, 26 Jul 2024 13:03:44 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c713:a600:7ca0:23b3:d48a:97c7?
- (p200300cbc713a6007ca023b3d48a97c7.dip0.t-ipconnect.de.
- [2003:cb:c713:a600:7ca0:23b3:d48a:97c7])
+ AJvYcCVYYOCzomu0bgjz80kImmrAyD59BGXH+aZ7S1t8k+IskSq1pqSpeCuy1mJM+owk762+zf1g+op6K29AU9NYywCXUJDF1tc=
+X-Gm-Message-State: AOJu0YwoNIqkQ6KzQy775NWdHunjxlglluLXozxY3JMzKVAHcFeJEIE1
+ eaAaXC7rEyy7z/DAvzg3tlGAOziVz4v/jebnqQyC4HtOY1Cm0Z4NtBBorWhqWQ==
+X-Google-Smtp-Source: AGHT+IG3aJB+5BJo18nTT9fK2s1DfrSsqbPmpIabC0qvauSn6HeRol2VmvsPya3RQvUgmMqb1TnsZg==
+X-Received: by 2002:a05:6214:514e:b0:6ad:84aa:2956 with SMTP id
+ 6a1803df08f44-6bb563091b2mr11186376d6.13.1722024426496; 
+ Fri, 26 Jul 2024 13:07:06 -0700 (PDT)
+Received: from [192.168.86.22] ([136.56.85.135])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427f93e6084sm135268155e9.31.2024.07.26.13.03.43
+ 6a1803df08f44-6bb3fa94e57sm19556456d6.85.2024.07.26.13.07.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jul 2024 13:03:44 -0700 (PDT)
-Message-ID: <f31312a9-60ba-4b34-93fa-27c4fc97d15a@redhat.com>
-Date: Fri, 26 Jul 2024 22:03:43 +0200
+ Fri, 26 Jul 2024 13:07:05 -0700 (PDT)
+Message-ID: <27646d48-3565-4b72-8d23-f825edcacbf1@cs.unc.edu>
+Date: Fri, 26 Jul 2024 16:07:04 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] target/s390x: filter deprecated properties based on
- model expansion type
-To: Collin Walling <walling@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: thuth@redhat.com, wangyanan55@huawei.com, philmd@linaro.org,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net, armbru@redhat.com,
- Jiri Denemark <jdenemar@redhat.com>
-References: <20240725183909.24144-1-walling@linux.ibm.com>
- <6f7b3367-4f13-44f0-8a04-f2be798e7bd3@redhat.com>
- <63ea00ec-ca05-4e52-b469-3c5b7d3da90a@linux.ibm.com>
-From: David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH v4 3/7] Add an "info pg" command that prints the current
+ page tables
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: dave@treblig.org, peter.maydell@linaro.org, nadav.amit@gmail.com,
+ philmd@linaro.org, berrange@redhat.com
+References: <20240723010545.3648706-1-porter@cs.unc.edu>
+ <20240723010545.3648706-4-porter@cs.unc.edu>
+ <d3316e48-e601-4a43-b77e-2bf127d91a7a@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <63ea00ec-ca05-4e52-b469-3c5b7d3da90a@linux.ibm.com>
+From: Don Porter <porter@cs.unc.edu>
+In-Reply-To: <d3316e48-e601-4a43-b77e-2bf127d91a7a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f32;
+ envelope-from=porter@cs.unc.edu; helo=mail-qv1-xf32.google.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,79 +98,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.07.24 22:00, Collin Walling wrote:
-> On 7/26/24 3:57 PM, David Hildenbrand wrote:
->> On 25.07.24 20:39, Collin Walling wrote:
->>> Currently, there is no way to execute the query-cpu-model-expansion
->>> command to retrieve a comprehenisve list of deprecated properties, as
->>> the result is dependent per-model. To enable this, the expansion output
->>> is modified as such:
->>>
->>> When reporting a "static" CPU model, the command will only show
->>> deprecated properties that are a subset of the model's *enabled*
->>> properties. This is more accurate than how the query was handled
->>> before, which blindly reported properties that were never introduced
->>> for certain models.
->>>
->>> When reporting a "full" CPU model, show the *entire* list of deprecated
->>> properties regardless if they are supported on the model. A full
->>> expansion outputs all known CPU model properties anyway, so it makes
->>> sense to report all deprecated properties here too. This allows
->>> management apps to query a single model (e.g. host) to acquire the
->>> full list of deprecated properties.
->>>
->>> Additionally, the @deprecated-props array has been moved from the
->>> CpuModelInfo struct to the CpuModelExpansionInfo struct, since the data
->>> did not belong in the former.
->>>
->>> Acked-by: David Hildenbrand <david@redhat.com>
->>> Suggested-by: Jiri Denemark <jdenemar@redhat.com>
->>> Signed-off-by: Collin Walling <walling@linux.ibm.com>
->>> ---
->>>
->>
->> Hmmm, this does not apply on current master ... maybe because Thomas
->> already merged part of it?
->>
-> 
-> Uh oh, sorry about that.  I'll fix this right now and post a v5 with a
-> corrected rebase on master.
+Hi Richard,
 
-It would be great if the changelog could then only describe the diff to
-already-merged:
+Thank you for the feedback.
 
-commit da5cd572710cc4ad7e2c653614a4ab1598b17e78
-Author: Collin L. Walling <walling@linux.ibm.com>
-Date:   Thu Jul 25 14:39:09 2024 -0400
+On 7/23/24 11:33 PM, Richard Henderson wrote:
+> On 7/23/24 11:05, Don Porter wrote:
+>
+>
+>> +    if (env->hflags & HF_GUEST_MASK) {
+>> +
+>> +        /* Extract the EPTP value from vmcs12 structure, store in 
+>> arch state */
+>> +        if (env->nested_state->format == KVM_STATE_NESTED_FORMAT_VMX) {
+>> +            struct vmcs12 *vmcs =
+>> +                (struct vmcs12 *) env->nested_state->data.vmx->vmcs12;
+>
+> This is not required.  You appear to be confused by nested paging.
+>
+> First: nested paging is how hardware virtualization works.  When we 
+> are *using* hardware virtualization, all of that is the kernel's job.  
+> Our job as hypervisor is to give a bag of pages to the kernel and have 
+> it map them into the guest intermediate address space.
+>
+> When we are *using* hardware virtualization, we are only ever 
+> concerned with one level of paging: from the guest to the intermediate 
+> address space.  From there we use QEMU data structures to map to QEMU 
+> virtual address space (address_space_ld/st, etc).
+>
+> This is all we will ever see from KVM, HVF etc.
+>
+> With TCG, we can *emulate* hardware virtualization.  It is at this 
+> point where we are concerned about two levels of paging, because QEMU 
+> is handling both.
 
-     target/s390x: filter deprecated properties based on model expansion type
-     
-     Currently, there is no way to execute the query-cpu-model-expansion
-     command to retrieve a comprehenisve list of deprecated properties, as
-     the result is dependent per-model. To enable this, the expansion output
-     is modified as such:
-     
-     When reporting a "static" CPU model, the command will only show
-     deprecated properties that are a subset of the model's *enabled*
-     properties. This is more accurate than how the query was handled
-     before, which blindly reported properties that were never introduced
-     for certain models.
-     
-     When reporting a "full" CPU model, show the *entire* list of deprecated
-     properties regardless if they are supported on the model. A full
-     expansion outputs all known CPU model properties anyway, so it makes
-     sense to report all deprecated properties here too. This allows
-     management apps to query a single model (e.g. host) to acquire the
-     full list of deprecated properties.
-     
-     Additionally, the @deprecated-props array has been moved from the
-     CpuModelInfo struct to the CpuModelExpansionInfo struct, since the data
-     did not belong in the former.
+I actually think we are close to the same understanding, except that one 
+can use KVM to emulate (well, pass through to) Intel's virtualization 
+hardware for a guest (TCG does only appears to support AMD's hardware 
+virtualization interfaces), which is a use case I care about for my course.
 
+One of my test cases for these debugging features was to have a simple 
+guest/nested hypervisor running on emulated VT-x hardware. As in, the 
+"guest" code enters VT root mode and sets up a VMCS and EPT, and 
+launches a guest, etc.
 
--- 
-Cheers,
+My understanding is that when one uses kvm in this way, in the kernel 
+kvm creates shadow page tables to merge the guest hypervisor and host 
+hypervisor's tables transparently to the guest.
 
-David / dhildenb
+My reading of the KVM code is that this ioctl is the way that emulated 
+architectural state (like the vmcs) is synced from the kernel back to 
+qemu.  I don't see another KVM API for getting things like the extended 
+page table root and certain VMCS configuration flags that one needs to 
+walk the page tables.  Most of this state is not currently exposed to 
+debugging features in qemu, which is why this definition was not needed.
+
+I am open to other suggestions how to get that state, like the EPT root 
+pointer, from KVM.  Perhaps I am missing something.
+
+----
+
+I will admit the intermediate address space is a lot to get one's head 
+around.  I believe I have consistently used appropriate 
+address_space_ld/st and friends at this point.
+
+Thanks again,
+
+Don
 
 
