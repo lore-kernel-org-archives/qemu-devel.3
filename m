@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24D7FC3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 20:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718B4C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 20:55:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXRqx-0000RP-KA; Fri, 26 Jul 2024 16:47:51 -0400
+	id 1sXRy8-0005SO-VE; Fri, 26 Jul 2024 16:55:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sXRqw-0000Q7-8J
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 16:47:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sXRy7-0005Rp-IR
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 16:55:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sXRqu-0007Pc-5K
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 16:47:49 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sXRy5-0003Ga-DP
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 16:55:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722026866;
+ s=mimecast20190719; t=1722027311;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4MPYkjQVAfHCFd+5FpTcjfgvkwcFZw8gKiqMKNdAr4M=;
- b=b6eUnYbHSvTenk7/HkN3wQGxW1tKuLhbJbkVwzLIWEQfhAobEC+XUPgWAtOubF7TotM25j
- yaY8hWpvB3aArPW29IIebYbfOJQKoBngN85Ceubme6yEIsN6ffSc0SlFjt6VbDo0kydTOK
- U+P2m0y34AKI0NSvylFZ3jhLPtr/9M0=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=g6F3/9CRXZbbG6wJJvftOijKu280GGcu93VWB1ey/5c=;
+ b=KWB90a3q03y1k7rTguqUBtw/aVNSQ03U7bt2r1o/A/e5wYL72A3RaGtqPaGHNy4Js8qi4J
+ KYN0TfWdasrmDekuU1J4qHTycZnD4W9Keh3pGmCZ0Z4xkoyro8KUsYcMw7knP//Nc3HtdQ
+ 5s85ceAb3CgRJ/l0It5f1YpPFclcOOQ=
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
+ [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-9-f8tiB8B7P4mk8e3Rd863fQ-1; Fri, 26 Jul 2024 16:47:44 -0400
-X-MC-Unique: f8tiB8B7P4mk8e3Rd863fQ-1
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6ba92dd246fso1599556d6.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 13:47:44 -0700 (PDT)
+ us-mta-578-0-KJ_FXfNBO0ZfheEKiT2w-1; Fri, 26 Jul 2024 16:55:10 -0400
+X-MC-Unique: 0-KJ_FXfNBO0ZfheEKiT2w-1
+Received: by mail-oo1-f71.google.com with SMTP id
+ 006d021491bc7-5d5ba9e5d8bso225899eaf.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 13:55:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722026864; x=1722631664;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4MPYkjQVAfHCFd+5FpTcjfgvkwcFZw8gKiqMKNdAr4M=;
- b=whMDyFn3HeH8ya84gnpmy68ijb2QawoduDeuj+igei38zU9xvItdbGMUZnzWe1hgEx
- aw4YmTJ32krVLQUGwzzJgIIPZnao3YA14AcDwys5MNH5yYgU4fiqMb8tJMqbixxRXoSl
- PL4renTVxGQpXWjOLNnmAMtrDbK8IQAudw8LkFRCGopQur4GcLgtoSmvgs72CLhfws1c
- Zhsi+UpTYzxuTcYNxPh3ZF+qThOrl+UnDtkOE/XQoqWVmo9xf7Zq2+Z7AnOBwYPPGDLX
- hkAJRnlvFp9qwneHQv2sJmaptvYv2JY/FQJ8MRhsLRMIgTY1uZHsAU0fmxzcwC9j0F8d
- AyAg==
+ d=1e100.net; s=20230601; t=1722027309; x=1722632109;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=g6F3/9CRXZbbG6wJJvftOijKu280GGcu93VWB1ey/5c=;
+ b=weH4jCg46+R3YSOgqh8zKVcywEjfYXgtBnLBX7OgxBfbUG470DL0B4WPcl5tYpXzKU
+ ooWhduf0zzZdPJsFteBFdOMQzCTu7+PNQOK/8kFIJzqUJrwOdT/fDuyTgA+f12ZxkZGW
+ 1jIQUjHpiSBhxfFqkNLwk9h4Lkz0LLc4NA3iuXsV7fAxYvCasyy79g3EU4qIceLzm2Bf
+ zNOtv6apVXv8Fzi6kHia/oJT3j7c7DvBH0UBz7If5GjZJ3iVU5LsoNZuLAUtqujxleH1
+ dtT2P/0NxyQAciG1cQ+uaUP3QOz5kKrhfWv2WoV+tKoN74OHsY/XepeA7+5HhTgaQVqz
+ o2fw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVEo1WSVqGryHohiz3ClzHvh0pnaCs3QPoz7+JL3BOTOkS/gsrk3GfUYKqZa3xRyaqFaFUnVqXgJzp6@nongnu.org
-X-Gm-Message-State: AOJu0YzMcSNAdJIAy2Po6yHNCEp8jp9jv2Rf0PrGr8m3gStxbny9ieu5
- APp6R2LjUKSEHI2dqVAyVLFub76eEF9ibqouzREInN0RYAnI9dFzAiyWFL//obMUJafR9jK2ZlN
- VLDxEdTfw5NlweOvsUc7b5GBnylNIzfr0Y0kclmRfQuIe5aFICA07
-X-Received: by 2002:a05:6214:501d:b0:6bb:3f69:dd0c with SMTP id
- 6a1803df08f44-6bb3f69defdmr43187246d6.9.1722026863918; 
- Fri, 26 Jul 2024 13:47:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGGHm4wLRuk17bEqt/rrVt95CKL7dlXG/ki30Ro+/4r2XTXJqyumv1venoWre7wJDzpcyL2Dw==
-X-Received: by 2002:a05:6214:501d:b0:6bb:3f69:dd0c with SMTP id
- 6a1803df08f44-6bb3f69defdmr43187096d6.9.1722026863421; 
- Fri, 26 Jul 2024 13:47:43 -0700 (PDT)
+ AJvYcCX72y59B7eCXMwaVRRKy/VMeB0IWLAwezntomQu9jKvQqh3FwttzTHQ3GtGSvlAUpRZ01TBIZTIh9X7@nongnu.org
+X-Gm-Message-State: AOJu0YzKDVdJFbi/Y54ZIedirciE2dKiCx45+CpzLBlXNDSM14TIz4fe
+ DUVAzKeLNiPkR9a5rO36En7xRr8MR6qFTwR5yu+GG5WtjlJz3LANyvJzAupdN8f2c2dmAIJzAh5
+ WluNV/z/+4SBiHHrDDmPvB1ulsi3z0gCXmDSSYXTNxXcdhErvqo9R
+X-Received: by 2002:a05:6358:886:b0:1ac:f854:c49e with SMTP id
+ e5c5f4694b2df-1acfaac04bbmr481594055d.0.1722027309295; 
+ Fri, 26 Jul 2024 13:55:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFGsJcuvK2IWCF2MQ+WDTMgV/bGorETff7fOWyrM3dEjiVwJuzBYvze+5Z2rm9TssH/INO7Qw==
+X-Received: by 2002:a05:6358:886:b0:1ac:f854:c49e with SMTP id
+ e5c5f4694b2df-1acfaac04bbmr481592555d.0.1722027308787; 
+ Fri, 26 Jul 2024 13:55:08 -0700 (PDT)
 Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
  [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6bb3f9148aesm19701486d6.62.2024.07.26.13.47.41
+ 6a1803df08f44-6bb3fb090e2sm19975616d6.138.2024.07.26.13.55.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jul 2024 13:47:42 -0700 (PDT)
-Date: Fri, 26 Jul 2024 16:47:40 -0400
+ Fri, 26 Jul 2024 13:55:08 -0700 (PDT)
+Date: Fri, 26 Jul 2024 16:55:05 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+To: Thomas Huth <thuth@redhat.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
  marcel.apfelbaum@gmail.com, philmd@linaro.org,
  wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
  akihiko.odaki@daynix.com, jasowang@redhat.com,
  sriram.yagnaraman@est.tech, sw@weilnetz.de, qemu-devel@nongnu.org,
- yan@daynix.com, Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
+ yan@daynix.com, Fabiano Rosas <farosas@suse.de>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ devel@lists.libvirt.org
 Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <ZqQLbGxEW3XT7qL-@x1n>
+Message-ID: <ZqQNKZ9_OPhDq2AK@x1n>
 References: <20230731223148.1002258-1-yuri.benditovich@daynix.com>
  <20230731223148.1002258-5-yuri.benditovich@daynix.com>
  <ZqLPLBnbfD5r6z7D@x1n>
  <20240726020656-mutt-send-email-mst@kernel.org>
  <775ff713-f7d3-4fdc-8ba0-4ebde577040d@redhat.com>
- <ZqNiwmy29dxdyMA0@redhat.com> <ZqO2HvFJ8v7hZFOd@x1n>
- <ZqO7cR-UiGpX2rk0@redhat.com>
+ <20240726032520-mutt-send-email-mst@kernel.org>
+ <fb5fbcbd-ff55-466f-b48b-aa12adca3179@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZqO7cR-UiGpX2rk0@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <fb5fbcbd-ff55-466f-b48b-aa12adca3179@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,136 +113,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 26, 2024 at 04:17:12PM +0100, Daniel P. Berrangé wrote:
-> On Fri, Jul 26, 2024 at 10:43:42AM -0400, Peter Xu wrote:
-> > On Fri, Jul 26, 2024 at 09:48:02AM +0100, Daniel P. Berrangé wrote:
-> > > On Fri, Jul 26, 2024 at 09:03:24AM +0200, Thomas Huth wrote:
-> > > > On 26/07/2024 08.08, Michael S. Tsirkin wrote:
-> > > > > On Thu, Jul 25, 2024 at 06:18:20PM -0400, Peter Xu wrote:
-> > > > > > On Tue, Aug 01, 2023 at 01:31:48AM +0300, Yuri Benditovich wrote:
-> > > > > > > USO features of virtio-net device depend on kernel ability
-> > > > > > > to support them, for backward compatibility by default the
-> > > > > > > features are disabled on 8.0 and earlier.
-> > > > > > > 
-> > > > > > > Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
-> > > > > > > Signed-off-by: Andrew Melnychecnko <andrew@daynix.com>
+On Fri, Jul 26, 2024 at 07:39:46PM +0200, Thomas Huth wrote:
+> On 26/07/2024 09.25, Michael S. Tsirkin wrote:
+> > On Fri, Jul 26, 2024 at 09:03:24AM +0200, Thomas Huth wrote:
+> > > On 26/07/2024 08.08, Michael S. Tsirkin wrote:
+> > > > On Thu, Jul 25, 2024 at 06:18:20PM -0400, Peter Xu wrote:
+> > > > > On Tue, Aug 01, 2023 at 01:31:48AM +0300, Yuri Benditovich wrote:
+> > > > > > USO features of virtio-net device depend on kernel ability
+> > > > > > to support them, for backward compatibility by default the
+> > > > > > features are disabled on 8.0 and earlier.
 > > > > > > 
-> > > > > > Looks like this patch broke migration when the VM starts on a host that has
-> > > > > > USO supported, to another host that doesn't..
+> > > > > > Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
+> > > > > > Signed-off-by: Andrew Melnychecnko <andrew@daynix.com>
 > > > > > 
-> > > > > This was always the case with all offloads. The answer at the moment is,
-> > > > > don't do this.
+> > > > > Looks like this patch broke migration when the VM starts on a host that has
+> > > > > USO supported, to another host that doesn't..
 > > > > 
-> > > > May I ask for my understanding:
-> > > > "don't do this" = don't automatically enable/disable virtio features in QEMU
-> > > > depending on host kernel features, or "don't do this" = don't try to migrate
-> > > > between machines that have different host kernel features?
-> > > > 
-> > > > > Long term, we need to start exposing management APIs
-> > > > > to discover this, and management has to disable unsupported features.
-> > > > 
-> > > > Ack, this likely needs some treatments from the libvirt side, too.
+> > > > This was always the case with all offloads. The answer at the moment is,
+> > > > don't do this.
 > > > 
-> > > When QEMU automatically toggles machine type featuers based on host
-> > > kernel, relying on libvirt to then disable them again is impractical,
-> > > as we cannot assume that the libvirt people are using knows about
-> > > newly introduced features. Even if libvirt is updated to know about
-> > > it, people can easily be using a previous libvirt release.
-> > > 
-> > > QEMU itself needs to make the machine types do that they are there
-> > > todo, which is to define a stable machine ABI. 
-> > > 
-> > > What QEMU is missing here is a "platform ABI" concept, to encode
-> > > sets of features which are tied to specific platform generations.
-> > > As long as we don't have that we'll keep having these broken
-> > > migration problems from machine types dynamically changing instead
-> > > of providing a stable guest ABI.
+> > > May I ask for my understanding:
+> > > "don't do this" = don't automatically enable/disable virtio features in QEMU
+> > > depending on host kernel features, or "don't do this" = don't try to migrate
+> > > between machines that have different host kernel features?
 > > 
-> > Any more elaboration on this idea?  Would it be easily feasible in
-> > implementation?
+> > The later.
 > 
-> In terms of launching QEMU I'd imagine:
+> From my experience, it should rather be the former. We've seen similar
+> issues with the s390x machine in the past when trying to automatically
+> enable features depending on the availability of a kernel features. While it
+> looks nicer at a very first glance ("hey, a new feature is available, we
+> enable that for you, dear user!"), you end up in migration hell pretty
+> quickly.
 > 
->   $QEMU -machine pc-q35-9.1 -platform linux-6.9 ...args...
+> Maybe we could elevate the "--nodefaults" command line switch to avoid
+> enabling such features automatically?
 > 
-> Any virtual machine HW features which are tied to host kernel features
-> would have their defaults set based on the requested -platform. The
-> -machine will be fully invariant wrt the host kernel.
-> 
-> You would have -platform hlep to list available platforms, and
-> corresonding QMP "query-platforms" command to list what platforms
-> are supported on a given host OS.
-> 
-> Downstream distros can provide their own platforms definitions
-> (eg "linux-rhel-9.5") if they have kernels whose feature set
-> diverges from upstream due to backports.
-> 
-> Mgmt apps won't need to be taught about every single little QEMU
-> setting whose default is derived from the kernel. Individual
-> defaults are opaque and controlled by the requested platform.
-> 
-> Live migration has clearly defined semantics, and mgmt app can
-> use query-platforms to validate two hosts are compatible.
-> 
-> Omitting -platform should pick the very latest platform that is
-> cmpatible with the current host (not neccessarily the latest
-> platform built-in to QEMU).
+> Anyway, while we're discussing solutions: We are in softfreeze already.
+> Should we disable the UFO bits in the new 9.1 machine type for the time
+> being to avoid that more people are running into this problem?
 
-This seems to add one more layer to maintain, and so far I don't know
-whether it's a must.
+Probably too late for this one; this patch was merged in 8.2.
+Unfortunately CIs won't even cover a test across two host kernels, even so
+it'll need to be unlucky enough to one has USO one not..
 
-To put it simple, can we simply rely on qemu cmdline as "the guest ABI"?  I
-thought it was mostly the case already, except some extremely rare
-outliers.
+But I do agree with Thomas here.
 
-When we have one host that boots up a VM using:
+I think the only feature that can be auto-enabled is the ones that do not
+affect guest ABI.  When affected, the only right way to me to enable them
+should be exporting -device interface so that Libvirt can opt-in on
+enabling them when the host support is detected.  For QEMU users, that
+means user needs to explicitly enable them or they're off.
 
-  $QEMU1 $cmdline
-
-Then another host boots up:
-
-  $QEMU2 $cmdline -incoming XXX
-
-Then migration should succeed if $cmdline is exactly the same, and the VM
-can boot up all fine without errors on both sides.
-
-AFAICT this has nothing to do with what kernel is underneath, even not
-Linux?  I think either QEMU1 / QEMU2 has the option to fail.  But if it
-didn't, I thought the ABI should be guaranteed.
-
-That's why I think this is a migration violation, as 99.99% of other device
-properties should be following this rule.  The issue here is, we have the
-same virtio-net-pci cmdline on both sides in this case, but the ABI got
-break.
-
-That's also why I was suggesting if the property contributes to the guest
-ABI, then AFAIU QEMU needs to:
-
-  - Firstly, never quietly flipping any bit that affects the ABI...
-
-  - Have a default value of off, then QEMU will always allow the VM to boot
-    by default, while advanced users can opt-in on new features.  We can't
-    make this ON by default otherwise some VMs can already fail to boot,
-
-  - If the host doesn't support the feature while the cmdline enabled it,
-    it needs to fail QEMU boot rather than flipping, so that it says "hey,
-    this host does not support running such VM specified, due to XXX
-    feature missing".
-
-That's the only way an user could understand what happened, and IMHO that's
-a clean way that we stick with QEMU cmdline on defining the guest ABI,
-while in which the machine type is the fundation of such definition, as the
-machine type can decides many of the rest compat properties.  And that's
-the whole point of the compat properties too (to make sure the guest ABI is
-stable).
-
-If kernel breaks it easily, all compat property things that we maintain can
-already stop making sense in general, because it didn't define the whole
-guest ABI..
-
-So AFAIU that's really what we used for years, I hope I didn't overlook
-somehting.  And maybe we don't yet need the "-platform" layer if we can
-keep up with this rule?
+Or, there's also another option that we turn default to ON for such
+feature, but when most of the kernels should support it.  With that, we can
+set OFF in compat property for old machines, and we should fail the new
+machine from boot when running on an old kenrel without the feature.
 
 Thanks,
 
