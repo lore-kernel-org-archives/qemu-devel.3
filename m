@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ECA4C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 09:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4153C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 09:12:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXGx9-0000JS-Vy; Fri, 26 Jul 2024 05:09:32 -0400
+	id 1sXGzR-0004jF-QL; Fri, 26 Jul 2024 05:11:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sXGws-0000I7-U0
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 05:09:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sXGzQ-0004gi-6Y
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 05:11:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sXGwp-0008AU-DJ
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 05:09:14 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sXGzN-0000bE-H7
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 05:11:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721984948;
+ s=mimecast20190719; t=1721985108;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=EqEJZMXThtbbfYabBCzeDMXz6trq1o20U4ZUzCVT7xE=;
- b=Lp9mfWIP9D9ndqTspaub4CABQUe2VGnuXHFuwPHErsOr/ThHVhQ5xPxWGYTQ+0w75ds7Wf
- aO2Oin8xRXAK8SJ5El2lk2Jak0EeIe8jBICfm812UoNZU4jrF3nIOAFide21JmjhS7a74v
- MWjH9vIW5pdrTVnXEDJ5eD5yQ04EVJ8=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CvwMkeS7ov9fmMaYQzB8CI6TOqND9kALCmv+oilXh04=;
+ b=L0TYJHTYpe339QfZ3CafbTEPg6ajYfdW3KKAVPzcAEwxLlHYqFo0X92vfuvxybapr9Gjlb
+ 8izAyWImFmnT+V5a0sGRWTAlbawKFGD/8gvwhl0vzDJbrVvCx2yBKYlBd9noH3rTKGVFCg
+ Vi/kKUUt9nQKMVAPulfW11qRFvIUidU=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-ReAeFQVMOgO9nXaXPe-O6g-1; Fri, 26 Jul 2024 05:09:07 -0400
-X-MC-Unique: ReAeFQVMOgO9nXaXPe-O6g-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-428077f91a9so7673825e9.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 02:09:07 -0700 (PDT)
+ us-mta-386-4qxq6TMmML2msHjkCUjOrQ-1; Fri, 26 Jul 2024 05:11:46 -0400
+X-MC-Unique: 4qxq6TMmML2msHjkCUjOrQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4280805bc0fso9989895e9.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 02:11:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721984946; x=1722589746;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EqEJZMXThtbbfYabBCzeDMXz6trq1o20U4ZUzCVT7xE=;
- b=C2oy3kme7MP5oXkzpk4NsfnsOkw700JmnaRkZqjzsuZaSGrx0FnoSjFc/esEJP+WOS
- 6vJ2DghyqzLn8rZ+QZFuu+fV0+dvmggIEJSude+uvA1NF5MT6XBxJtbOHDv94aIKqeHe
- DauoFUYboAlO7tqa9edXKeBQLZaft1I3yDCXRU5786E8Wr8LEp0F19UEXzWnWyudtP5m
- arSR+CJc2dC+OhsyYd3Ksl+tS8pgc1ZH++Ucii7alu484TIJD4TWs6a31OAUc2Z4pn/Z
- u8BaXPR4sE7C22hqVzPg5vHadcQFsm+34OVHbOVpwrxkSJ7G5OquL1SWr8wlabeJJw0D
- UnGA==
+ d=1e100.net; s=20230601; t=1721985105; x=1722589905;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CvwMkeS7ov9fmMaYQzB8CI6TOqND9kALCmv+oilXh04=;
+ b=UsJycl0I0UmnpeIr3t14Y272MOvO0sNT0/n7cGAX0N5/VxX97R3XLCXMGBH9ceVMsG
+ D8MvpiAA56gQDrOKqrHyp0/RmuFUV0L623RGrMxQpGI+Xkuf4L7OMecJ0FS+WHRd1dw4
+ ztjNzhsRZ0FJ5E2mjv0i4QdAso5Jh7tsTj604KMzxCMhwmHxGU7EAo+Bvmj5I9zjhjxc
+ GcQFzqlm8GLFX6A4KXYXewvg817X7Jm4NcUgsoe1og5UHWdj6XwWSd4bxyC6RpdyZJrC
+ 6jMC/B7bVkusIt7ljjuvrV6IYRxdUPx7bUUundbQu9v5LuITo/dR0wkqVXtoaXqzSZOb
+ MpRw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWc77a8RRaisCCFrTNM2a+EorJbFq5wMcAhPwJBQ3xKgIpYPEEBa0gfRLQxIYANjivtilxsXjIb/lr8JZfRv2B5zwBemco=
-X-Gm-Message-State: AOJu0YxbiYeu3ANbX/2fKMKsgo7h56ps7caLcP7HGBhDHjriDPIrOP2L
- l0nTPqo34ogGD6hWSAazY8HpnaCVAJRwLN/H1WNUR8dbfPcTZSQUOSDyR0iK5eR3oX1cukBRYah
- aAQgJS/fE7zLzLBoyZ/h/YocrFDQH4QM5UiTQZIWAUt7Cgf637mCM
-X-Received: by 2002:a05:600c:1c83:b0:428:837:7015 with SMTP id
- 5b1f17b1804b1-42808377505mr28437295e9.13.1721984946128; 
- Fri, 26 Jul 2024 02:09:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFF8neW/NjExv5oI1QUcJNr2gUanqvtijhf2Z+ZVPAkKYM1Z8QuJXiHeExRrrd5ePisClfsmw==
-X-Received: by 2002:a05:600c:1c83:b0:428:837:7015 with SMTP id
- 5b1f17b1804b1-42808377505mr28437015e9.13.1721984945711; 
- Fri, 26 Jul 2024 02:09:05 -0700 (PDT)
+ AJvYcCXQ38MCD5wV0vBUPlgqxxH4wM9M8UGz3VXl8LVPeFtTXFCs8ONEtffYHH38HRwR4gtJTJSf5MOxGswnolysixhR2QiNn60=
+X-Gm-Message-State: AOJu0YzndqITzMDib1xjWUlXuA+yvzrYLU0GapgicSq5nGfBBO2vgNsc
+ lEbNUqIDGnQMlhUmipLd2E09CDgeAscxdjhyMCFt7QiLhP+A3lPrYs3VNX+BL0IMIAofUNSvrT8
+ o/DphkJVt7LyXLISgaBZZwRktW0C2V3LaVAruKBt6W9tvoxm+r0Ry
+X-Received: by 2002:a05:600c:4443:b0:426:5ad9:e1a2 with SMTP id
+ 5b1f17b1804b1-4280570809dmr37043385e9.9.1721985105319; 
+ Fri, 26 Jul 2024 02:11:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEMzfB3lFDerj03cXnaVFbsdCVbeetrWWHxZ4Ft6rFCo7OOaf2hWZrOF8cTDR7FO4h9/q7SOA==
+X-Received: by 2002:a05:600c:4443:b0:426:5ad9:e1a2 with SMTP id
+ 5b1f17b1804b1-4280570809dmr37043215e9.9.1721985104914; 
+ Fri, 26 Jul 2024 02:11:44 -0700 (PDT)
 Received: from [10.33.192.191] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b367fce64sm4460742f8f.61.2024.07.26.02.09.04
+ 5b1f17b1804b1-42809e4423dsm32245065e9.13.2024.07.26.02.11.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jul 2024 02:09:05 -0700 (PDT)
-Message-ID: <c6548713-6c80-4c56-925f-de88fd18d34d@redhat.com>
-Date: Fri, 26 Jul 2024 11:09:04 +0200
+ Fri, 26 Jul 2024 02:11:44 -0700 (PDT)
+Message-ID: <3919ac75-1cce-4fad-a0eb-4ec11865c011@redhat.com>
+Date: Fri, 26 Jul 2024 11:11:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitlab-ci: Use -fno-sanitize=function in the clang-user
- job
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: berrange@redhat.com, alex.bennee@linaro.org,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-References: <20240723232543.18093-1-richard.henderson@linaro.org>
- <76357626-9714-49f7-9ca5-d2a42cd56ab6@redhat.com>
- <bd367b1e-1858-4344-97d9-d0ed0d1890f6@linaro.org>
-Content-Language: en-US
+Subject: Re: [PATCH v2] tests/tcg: Skip failing ppc64 multi-threaded tests
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240725154003.428065-1-npiggin@gmail.com>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -123,9 +121,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <bd367b1e-1858-4344-97d9-d0ed0d1890f6@linaro.org>
+In-Reply-To: <20240725154003.428065-1-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -134,7 +132,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,34 +148,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/07/2024 01.33, Richard Henderson wrote:
-> On 7/24/24 16:08, Thomas Huth wrote:
->> On 24/07/2024 01.25, Richard Henderson wrote:
->>> With -fsanitize=undefined, which implies -fsanitize=function,
->>> clang will add a "type signature" before functions.
->>> It accesses funcptr-8 and funcptr-4 to do so.
->>>
->>> The generated TCG prologue is directly on a page boundary,
->>> so these accesses segfault.
->>>
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>
->> What happend to Akihiko Odaki's more generic patch:
->>
->>
->> https://lore.kernel.org/qemu-devel/20240714-function-v1-1-cc2acb4171ba@daynix.com/
->>
->> ?
+On 25/07/2024 17.40, Nicholas Piggin wrote:
+> In Gitlab CI, some ppc64 multi-threaded tcg tests crash when run in the
+> clang-user job with an assertion failure in glibc that seems to
+> indicate corruption:
 > 
-> This patch does not work:
+>    signals: allocatestack.c:223: allocate_stack:
+>      Assertion `powerof2 (pagesize_m1 + 1)' failed.
 > 
-> https://gitlab.com/qemu-project/qemu/-/jobs/7432239478/viewer#L4956
+> Disable these tests for now.
 > 
-> I presume this is an argument ordering issue vs --extra-cflags.
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> ---
+>   tests/tcg/ppc64/Makefile.target | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
+> 
+> diff --git a/tests/tcg/ppc64/Makefile.target b/tests/tcg/ppc64/Makefile.target
+> index 8c3e4e4038..509a20be2b 100644
+> --- a/tests/tcg/ppc64/Makefile.target
+> +++ b/tests/tcg/ppc64/Makefile.target
+> @@ -11,6 +11,18 @@ config-cc.mak: Makefile
+>   
+>   -include config-cc.mak
+>   
+> +# multi-threaded tests are known to fail (e.g., clang-user CI job)
+> +# See: https://gitlab.com/qemu-project/qemu/-/issues/2456
+> +run-signals: signals
+> +	$(call skip-test, $<, "BROKEN (flaky with clang) ")
+> +run-plugin-signals-with-%:
+> +	$(call skip-test, $<, "BROKEN (flaky with clang) ")
+> +
+> +run-threadcount: threadcount
+> +	$(call skip-test, $<, "BROKEN (flaky with clang) ")
+> +run-plugin-threadcount-with-%:
+> +	$(call skip-test, $<, "BROKEN (flaky with clang) ")
+> +
+>   ifneq ($(CROSS_CC_HAS_POWER8_VECTOR),)
+>   PPC64_TESTS=bcdsub non_signalling_xscv
+>   endif
 
-Ok, then we should definitely go with your patch to fix the job now. ... and 
-I just saw that you already applied it 👍
+Could you please check whether this is already fixed by Richard's patch:
 
-  Thomas
+  https://gitlab.com/qemu-project/qemu/-/commit/8e466dd092469e5ab0f355775c57
+
+?
+
+  Thanks,
+   Thomas
 
 
