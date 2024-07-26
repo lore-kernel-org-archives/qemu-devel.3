@@ -4,78 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66FE0C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 08:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ECA4C3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 09:10:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXGcl-0001kx-1c; Fri, 26 Jul 2024 04:48:27 -0400
+	id 1sXGx9-0000JS-Vy; Fri, 26 Jul 2024 05:09:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sXGcj-0001kN-Qd
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 04:48:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sXGws-0000I7-U0
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 05:09:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sXGcf-00069S-Bn
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 04:48:23 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sXGwp-0008AU-DJ
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 05:09:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721983699;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=f4uniNwpJqSkCpoQzQDnvKFJiVnXTingilyTN5USDsY=;
- b=WcSrFXRl8jheQsYKj8cCovFNAp24UJa48p5Xi3Bo4pLeJG4Lz1Urq2936QaWAGKdsTL5Zc
- c1HsUaBo0Q2cLBuu80RjH7pPwQ59c+8y02JaLwsw5BuiKKFNwZwYy6XWi4RhmPzH+V/0JW
- b9H8qRzPdPToqMGCQM+sJ8tPa8FMav8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-97-1duM5eBHNxKXe7y5-ybruQ-1; Fri,
- 26 Jul 2024 04:48:15 -0400
-X-MC-Unique: 1duM5eBHNxKXe7y5-ybruQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4C18419560B6; Fri, 26 Jul 2024 08:48:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.87])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E9ADC19560AE; Fri, 26 Jul 2024 08:48:05 +0000 (UTC)
-Date: Fri, 26 Jul 2024 09:48:02 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
- akihiko.odaki@daynix.com, jasowang@redhat.com,
- sriram.yagnaraman@est.tech, sw@weilnetz.de, qemu-devel@nongnu.org,
- yan@daynix.com, Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <ZqNiwmy29dxdyMA0@redhat.com>
-References: <20230731223148.1002258-1-yuri.benditovich@daynix.com>
- <20230731223148.1002258-5-yuri.benditovich@daynix.com>
- <ZqLPLBnbfD5r6z7D@x1n>
- <20240726020656-mutt-send-email-mst@kernel.org>
- <775ff713-f7d3-4fdc-8ba0-4ebde577040d@redhat.com>
+ s=mimecast20190719; t=1721984948;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=EqEJZMXThtbbfYabBCzeDMXz6trq1o20U4ZUzCVT7xE=;
+ b=Lp9mfWIP9D9ndqTspaub4CABQUe2VGnuXHFuwPHErsOr/ThHVhQ5xPxWGYTQ+0w75ds7Wf
+ aO2Oin8xRXAK8SJ5El2lk2Jak0EeIe8jBICfm812UoNZU4jrF3nIOAFide21JmjhS7a74v
+ MWjH9vIW5pdrTVnXEDJ5eD5yQ04EVJ8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-610-ReAeFQVMOgO9nXaXPe-O6g-1; Fri, 26 Jul 2024 05:09:07 -0400
+X-MC-Unique: ReAeFQVMOgO9nXaXPe-O6g-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-428077f91a9so7673825e9.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 02:09:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721984946; x=1722589746;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EqEJZMXThtbbfYabBCzeDMXz6trq1o20U4ZUzCVT7xE=;
+ b=C2oy3kme7MP5oXkzpk4NsfnsOkw700JmnaRkZqjzsuZaSGrx0FnoSjFc/esEJP+WOS
+ 6vJ2DghyqzLn8rZ+QZFuu+fV0+dvmggIEJSude+uvA1NF5MT6XBxJtbOHDv94aIKqeHe
+ DauoFUYboAlO7tqa9edXKeBQLZaft1I3yDCXRU5786E8Wr8LEp0F19UEXzWnWyudtP5m
+ arSR+CJc2dC+OhsyYd3Ksl+tS8pgc1ZH++Ucii7alu484TIJD4TWs6a31OAUc2Z4pn/Z
+ u8BaXPR4sE7C22hqVzPg5vHadcQFsm+34OVHbOVpwrxkSJ7G5OquL1SWr8wlabeJJw0D
+ UnGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWc77a8RRaisCCFrTNM2a+EorJbFq5wMcAhPwJBQ3xKgIpYPEEBa0gfRLQxIYANjivtilxsXjIb/lr8JZfRv2B5zwBemco=
+X-Gm-Message-State: AOJu0YxbiYeu3ANbX/2fKMKsgo7h56ps7caLcP7HGBhDHjriDPIrOP2L
+ l0nTPqo34ogGD6hWSAazY8HpnaCVAJRwLN/H1WNUR8dbfPcTZSQUOSDyR0iK5eR3oX1cukBRYah
+ aAQgJS/fE7zLzLBoyZ/h/YocrFDQH4QM5UiTQZIWAUt7Cgf637mCM
+X-Received: by 2002:a05:600c:1c83:b0:428:837:7015 with SMTP id
+ 5b1f17b1804b1-42808377505mr28437295e9.13.1721984946128; 
+ Fri, 26 Jul 2024 02:09:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFF8neW/NjExv5oI1QUcJNr2gUanqvtijhf2Z+ZVPAkKYM1Z8QuJXiHeExRrrd5ePisClfsmw==
+X-Received: by 2002:a05:600c:1c83:b0:428:837:7015 with SMTP id
+ 5b1f17b1804b1-42808377505mr28437015e9.13.1721984945711; 
+ Fri, 26 Jul 2024 02:09:05 -0700 (PDT)
+Received: from [10.33.192.191] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36b367fce64sm4460742f8f.61.2024.07.26.02.09.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Jul 2024 02:09:05 -0700 (PDT)
+Message-ID: <c6548713-6c80-4c56-925f-de88fd18d34d@redhat.com>
+Date: Fri, 26 Jul 2024 11:09:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <775ff713-f7d3-4fdc-8ba0-4ebde577040d@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] gitlab-ci: Use -fno-sanitize=function in the clang-user
+ job
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: berrange@redhat.com, alex.bennee@linaro.org,
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+References: <20240723232543.18093-1-richard.henderson@linaro.org>
+ <76357626-9714-49f7-9ca5-d2a42cd56ab6@redhat.com>
+ <bd367b1e-1858-4344-97d9-d0ed0d1890f6@linaro.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <bd367b1e-1858-4344-97d9-d0ed0d1890f6@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,57 +147,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 26, 2024 at 09:03:24AM +0200, Thomas Huth wrote:
-> On 26/07/2024 08.08, Michael S. Tsirkin wrote:
-> > On Thu, Jul 25, 2024 at 06:18:20PM -0400, Peter Xu wrote:
-> > > On Tue, Aug 01, 2023 at 01:31:48AM +0300, Yuri Benditovich wrote:
-> > > > USO features of virtio-net device depend on kernel ability
-> > > > to support them, for backward compatibility by default the
-> > > > features are disabled on 8.0 and earlier.
-> > > > 
-> > > > Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
-> > > > Signed-off-by: Andrew Melnychecnko <andrew@daynix.com>
-> > > 
-> > > Looks like this patch broke migration when the VM starts on a host that has
-> > > USO supported, to another host that doesn't..
-> > 
-> > This was always the case with all offloads. The answer at the moment is,
-> > don't do this.
+On 26/07/2024 01.33, Richard Henderson wrote:
+> On 7/24/24 16:08, Thomas Huth wrote:
+>> On 24/07/2024 01.25, Richard Henderson wrote:
+>>> With -fsanitize=undefined, which implies -fsanitize=function,
+>>> clang will add a "type signature" before functions.
+>>> It accesses funcptr-8 and funcptr-4 to do so.
+>>>
+>>> The generated TCG prologue is directly on a page boundary,
+>>> so these accesses segfault.
+>>>
+>>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>>
+>> What happend to Akihiko Odaki's more generic patch:
+>>
+>>
+>> https://lore.kernel.org/qemu-devel/20240714-function-v1-1-cc2acb4171ba@daynix.com/
+>>
+>> ?
 > 
-> May I ask for my understanding:
-> "don't do this" = don't automatically enable/disable virtio features in QEMU
-> depending on host kernel features, or "don't do this" = don't try to migrate
-> between machines that have different host kernel features?
+> This patch does not work:
 > 
-> > Long term, we need to start exposing management APIs
-> > to discover this, and management has to disable unsupported features.
+> https://gitlab.com/qemu-project/qemu/-/jobs/7432239478/viewer#L4956
 > 
-> Ack, this likely needs some treatments from the libvirt side, too.
+> I presume this is an argument ordering issue vs --extra-cflags.
 
-When QEMU automatically toggles machine type featuers based on host
-kernel, relying on libvirt to then disable them again is impractical,
-as we cannot assume that the libvirt people are using knows about
-newly introduced features. Even if libvirt is updated to know about
-it, people can easily be using a previous libvirt release.
+Ok, then we should definitely go with your patch to fix the job now. ... and 
+I just saw that you already applied it 👍
 
-QEMU itself needs to make the machine types do that they are there
-todo, which is to define a stable machine ABI. 
-
-What QEMU is missing here is a "platform ABI" concept, to encode
-sets of features which are tied to specific platform generations.
-As long as we don't have that we'll keep having these broken
-migration problems from machine types dynamically changing instead
-of providing a stable guest ABI.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+  Thomas
 
 
