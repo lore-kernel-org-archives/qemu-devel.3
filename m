@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3D89C3DA49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6102C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 13:47:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXLHW-0000qR-Si; Fri, 26 Jul 2024 09:46:50 -0400
+	id 1sXLGv-0005eQ-GO; Fri, 26 Jul 2024 09:46:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sXLGM-0004qZ-Pp
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 09:45:38 -0400
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sXLGC-0004mS-RY
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 09:45:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sXLGK-0001xA-9d
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 09:45:38 -0400
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sXLG9-0001ub-Fv
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 09:45:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722001534;
+ s=mimecast20190719; t=1722001520;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SjcpbA2sD6CYVWhEq7nq8PpqkGiIsiq71NF+s5HMhDo=;
- b=hMBIIVh1/E2B7GXSZ4LGFsNc6MN5i7wjRqwU78eVl8M0NY9d/Mt+7/CQ2aMv43CPlmrY0J
- QY0vMrDJyqQweYRgHPKCJfZepkjuYCq9GeP9tcQKzaH33U5yt9Fr+r60xsra8EuHH/cK81
- 5qdcN/IqgqkrN8K51STTXuPAz4A8KPk=
+ bh=1OvDLu3KIbWHiu6ZxO0CUx4o4QNDavrUPXIZjllUrVA=;
+ b=GIErtOyV3mhmXvfCTU2IAvzDYurWTEPX/9AhscDdry9JzUJsTM2VXBqlQZk4dUXzGZ3GaW
+ y+qm+PiQUlO/Nw+uKY6wgxdMIusluuZ5ZL92OjoALMhTgE4T0+w3EcenT5QXXJ4f9f5b5Q
+ SfiHL90dRCoJiVZ8Zg/qmJViQbdzSLg=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-600-Du1ZquumO3icphIrhLcVaQ-1; Fri,
- 26 Jul 2024 09:45:31 -0400
-X-MC-Unique: Du1ZquumO3icphIrhLcVaQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-488-X4q3-WUWMgibfuwHxzfhaQ-1; Fri,
+ 26 Jul 2024 09:45:19 -0400
+X-MC-Unique: X4q3-WUWMgibfuwHxzfhaQ-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 33DD91944A87; Fri, 26 Jul 2024 13:45:29 +0000 (UTC)
+ id 920EF1944AA6; Fri, 26 Jul 2024 13:45:16 +0000 (UTC)
 Received: from p1.localdomain.com (unknown [10.22.17.77])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 24ACF1955D42; Fri, 26 Jul 2024 13:45:24 +0000 (UTC)
+ id D2BD61955D42; Fri, 26 Jul 2024 13:45:12 +0000 (UTC)
 From: Cleber Rosa <crosa@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
@@ -59,10 +59,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  Radoslaw Biernacki <rad@semihalf.com>, Cleber Rosa <crosa@redhat.com>,
  Paul Durrant <paul@xen.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH 09/13] tests/avocado/boot_xen.py: fetch kernel during test
- setUp()
-Date: Fri, 26 Jul 2024 09:44:34 -0400
-Message-ID: <20240726134438.14720-10-crosa@redhat.com>
+Subject: [PATCH 06/13] tests/avocado: use more distinct names for assets
+Date: Fri, 26 Jul 2024 09:44:31 -0400
+Message-ID: <20240726134438.14720-7-crosa@redhat.com>
 In-Reply-To: <20240726134438.14720-1-crosa@redhat.com>
 References: <20240726134438.14720-1-crosa@redhat.com>
 MIME-Version: 1.0
@@ -92,56 +91,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The kernel is a common blob used in all tests.  By moving it to the
-setUp() method, the "fetch asset" plugin will recognize the kernel and
-attempt to fetch it and cache it before the tests are started.
+Avocado's asset system will deposit files in a cache organized either
+by their original location (the URI) or by their names.  Because the
+cache (and the "by_name" sub directory) is common across tests, it's a
+good idea to make these names as distinct as possible.
+
+This avoid name clashes, which makes future Avocado runs to attempt to
+redownload the assets with the same name, but from the different
+locations they actually are from.  This causes cache misses, extra
+downloads, and possibly canceled tests.
 
 Signed-off-by: Cleber Rosa <crosa@redhat.com>
 ---
- tests/avocado/boot_xen.py | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ tests/avocado/kvm_xen_guest.py  | 3 ++-
+ tests/avocado/netdev-ethtool.py | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/tests/avocado/boot_xen.py b/tests/avocado/boot_xen.py
-index f29bc58b9e..490a127a3e 100644
---- a/tests/avocado/boot_xen.py
-+++ b/tests/avocado/boot_xen.py
-@@ -30,23 +30,22 @@ class BootXen(LinuxKernelTest):
-     timeout = 90
-     XEN_COMMON_COMMAND_LINE = 'dom0_mem=128M loglvl=all guest_loglvl=all'
+diff --git a/tests/avocado/kvm_xen_guest.py b/tests/avocado/kvm_xen_guest.py
+index f8cb458d5d..318fadebc3 100644
+--- a/tests/avocado/kvm_xen_guest.py
++++ b/tests/avocado/kvm_xen_guest.py
+@@ -40,7 +40,8 @@ def get_asset(self, name, sha1):
+         url = base_url + name
+         # use explicit name rather than failing to neatly parse the
+         # URL into a unique one
+-        return self.fetch_asset(name=name, locations=(url), asset_hash=sha1)
++        return self.fetch_asset(name=f"qemu-kvm-xen-guest-{name}",
++                                locations=(url), asset_hash=sha1)
  
--    def fetch_guest_kernel(self):
-+    def setUp(self):
-+        super(BootXen, self).setUp()
-+
-         # Using my own built kernel - which works
-         kernel_url = ('https://fileserver.linaro.org/'
-                       's/JSsewXGZ6mqxPr5/download?path=%2F&files='
-                       'linux-5.9.9-arm64-ajb')
-         kernel_sha1 = '4f92bc4b9f88d5ab792fa7a43a68555d344e1b83'
--        kernel_path = self.fetch_asset(kernel_url,
--                                       asset_hash=kernel_sha1)
--
--        return kernel_path
-+        self.kernel_path = self.fetch_asset(kernel_url,
-+                                            asset_hash=kernel_sha1)
+     def common_vm_setup(self):
+         # We also catch lack of KVM_XEN support if we fail to launch
+diff --git a/tests/avocado/netdev-ethtool.py b/tests/avocado/netdev-ethtool.py
+index 5f33288f81..462cf8de7d 100644
+--- a/tests/avocado/netdev-ethtool.py
++++ b/tests/avocado/netdev-ethtool.py
+@@ -27,7 +27,8 @@ def get_asset(self, name, sha1):
+         url = base_url + name
+         # use explicit name rather than failing to neatly parse the
+         # URL into a unique one
+-        return self.fetch_asset(name=name, locations=(url), asset_hash=sha1)
++        return self.fetch_asset(name=f"qemu-netdev-ethtool-{name}",
++                                locations=(url), asset_hash=sha1)
  
-     def launch_xen(self, xen_path):
-         """
-         Launch Xen with a dom0 guest kernel
-         """
-         self.log.info("launch with xen_path: %s", xen_path)
--        kernel_path = self.fetch_guest_kernel()
- 
-         self.vm.set_console()
- 
-@@ -56,7 +55,7 @@ def launch_xen(self, xen_path):
-                          '-append', self.XEN_COMMON_COMMAND_LINE,
-                          '-device',
-                          'guest-loader,addr=0x47000000,kernel=%s,bootargs=console=hvc0'
--                         % (kernel_path))
-+                         % (self.kernel_path))
- 
-         self.vm.launch()
+     def common_test_code(self, netdev, extra_args=None):
  
 -- 
 2.45.2
