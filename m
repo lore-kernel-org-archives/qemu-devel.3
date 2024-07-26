@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0224BC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 15:12:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5E9BC3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 15:18:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXMbj-0005Zm-L6; Fri, 26 Jul 2024 11:11:47 -0400
+	id 1sXMhQ-0002Rc-Jf; Fri, 26 Jul 2024 11:17:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sXMbf-0005Tn-L6
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 11:11:43 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sXMbd-0004gi-NE
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 11:11:43 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4266b1f1b21so16890615e9.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 08:11:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722006699; x=1722611499; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1Xls7OtqHm8jAae+wQ69UEFGfX7RpeLw5Zu+ZpRqCF0=;
- b=bp5p46Ft4RfQvYyLjvFkC80ht1zBRNYIbrhgEcocRFH7p6vcJWShedZp/cHuqdRp/u
- zgIKoMAamzJOZ5FKSwGejTJKjyaEhLTFP5xRh4Ivxsyctgdo1OWvqQxtFaTwwj194PjN
- 87EibQX/jlGPwPdSrUPQ6OFDpLdzg0/4d5NhGO8JSshdPZqrmjD/voHmeRUhO28Vl7Sc
- pNj1CaQLOtmGBfyD8kuy6UViisf53PNXFemv9/hKW9Tax+m3twq8EEQsSyFjgpHZMZsn
- D+O4HZ8rRd7X31t+VqE8ZpBYB+hptFTU0jnXrTXfG7LYRRiA47I0NunjvvyUAzoLTpaG
- Sjig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722006699; x=1722611499;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1Xls7OtqHm8jAae+wQ69UEFGfX7RpeLw5Zu+ZpRqCF0=;
- b=MbKYaY8X2BkOck7KFZ40sCAW34aD1sTPxrOHKzQl1TdVuBQlRGfvKqa19U0UxfBE4B
- tym+YoR2OurtbFB/UxDtcc0iopWA5MvgVvBEV0SIaYX53nw5zyz3jhAGp0cho/8Qc6wc
- sEB7hhVvJsnjTzh6g6OZ6CQ4gi9VkkcOy9gIgd/nP2JnRBJ/LpK6D2jbujB1D1sNbNfi
- kxW99E3APIcggkQnJVzbLHhXFtzn3FA8KY3kco3pWh18OA5GdG1WSuICeIpB83ffkQaO
- TVQpR7qZxmqlVYq8gjNY3Csc1frbFHB8Zd5dA3C2ZAOCme9Z957GqmbMdRi14lck4bvv
- OTcg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU/fkJvq8vEtArPrQUJpzvAhcMLcuUdiiTkMz+p9HW76aokxb/hWFmUMxnwMD4qhrKghDEhgYFnktPT1MzSy4dWvFSob+o=
-X-Gm-Message-State: AOJu0Ywtd89sEtuO+WgUioCJCWYW9ao8dwpQOfoKzUf95RAR0PiJk+9s
- +iYYkndVaSmTzQp3LybFENVNH34zWrtoRFb19mHGZJb45AGH4x5nfNwVTRf6g9Q=
-X-Google-Smtp-Source: AGHT+IHDl5U0KPrf/CBNanL7EM+cdQt0H6NRVi3FlyNU+wlz+Fxdr+UI7VIbEP5RGLGbyUFzo2DsSQ==
-X-Received: by 2002:a05:600c:4f92:b0:426:67f0:b4f3 with SMTP id
- 5b1f17b1804b1-42806bd9f0dmr37368425e9.26.1722006699165; 
- Fri, 26 Jul 2024 08:11:39 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.211.194])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427f941352asm122626935e9.41.2024.07.26.08.11.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jul 2024 08:11:38 -0700 (PDT)
-Message-ID: <4e6446fd-582f-4d0c-b59a-c62034583099@linaro.org>
-Date: Fri, 26 Jul 2024 17:11:36 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sXMhL-0002Qb-Ey
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 11:17:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sXMhI-00018c-45
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 11:17:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722007047;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6q5+BxFnzluFw4B6k0u8M+z9XFIUuBtDXItwUrUywR8=;
+ b=BzvtbsNsAcokVbed8VuICjLsVfkiYfrBR+F9ShVgPCPa8DZMP4nsuniVxFPz6hajIrKVml
+ xg9kCeY1YArGGMyUqiCYfIKnvdW3JWNj5ggJaYsLZDvIU66qIs9HRQGGNKy8DeREBQA6T6
+ +UqE4XCgy5OppdELrogH78sYKZER7Eo=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-170-J-TtIDN4Mk26h3j6oESoPQ-1; Fri,
+ 26 Jul 2024 11:17:24 -0400
+X-MC-Unique: J-TtIDN4Mk26h3j6oESoPQ-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A61F61955F3D; Fri, 26 Jul 2024 15:17:21 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.32])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 063201955D45; Fri, 26 Jul 2024 15:17:15 +0000 (UTC)
+Date: Fri, 26 Jul 2024 16:17:12 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
+ akihiko.odaki@daynix.com, jasowang@redhat.com,
+ sriram.yagnaraman@est.tech, sw@weilnetz.de, qemu-devel@nongnu.org,
+ yan@daynix.com, Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
+Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
+Message-ID: <ZqO7cR-UiGpX2rk0@redhat.com>
+References: <20230731223148.1002258-1-yuri.benditovich@daynix.com>
+ <20230731223148.1002258-5-yuri.benditovich@daynix.com>
+ <ZqLPLBnbfD5r6z7D@x1n>
+ <20240726020656-mutt-send-email-mst@kernel.org>
+ <775ff713-f7d3-4fdc-8ba0-4ebde577040d@redhat.com>
+ <ZqNiwmy29dxdyMA0@redhat.com> <ZqO2HvFJ8v7hZFOd@x1n>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/loongarch: Fix helper_lddir() a CID
- INTEGER_OVERFLOW issue
-To: Michael Tokarev <mjt@tls.msk.ru>, Song Gao <gaosong@loongson.cn>,
- qemu-devel@nongnu.org, lixianglai@loongson.cn, maobibo@loongson.cn
-Cc: richard.henderson@linaro.org, peter.maydell@linaro.org,
- philmd@redhat.com, qemu-stable <qemu-stable@nongnu.org>
-References: <20240724015853.1317396-1-gaosong@loongson.cn>
- <25d30b4f-1589-43aa-b99c-fa6fc8529336@tls.msk.ru>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <25d30b4f-1589-43aa-b99c-fa6fc8529336@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <ZqO2HvFJ8v7hZFOd@x1n>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,40 +93,90 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/7/24 12:12, Michael Tokarev wrote:
-> 24.07.2024 04:58, Song Gao wrote:
->> When the lddir level is 4 and the base is a HugePage, we may try to 
->> put value 4
->> into a field in the TLBENTRY that is only 2 bits wide.
->>
->> Fixes: Coverity CID 1547717
->> Fixes: 9c70db9a43388 ("target/loongarch: Fix tlb huge page loading 
->> issue")
->> Signed-off-by: Song Gao <gaosong@loongson.cn>
->> ---
->>   target/loongarch/tcg/tlb_helper.c | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/target/loongarch/tcg/tlb_helper.c 
->> b/target/loongarch/tcg/tlb_helper.c
->> index d6331f9b0b..97f38fc391 100644
->> --- a/target/loongarch/tcg/tlb_helper.c
->> +++ b/target/loongarch/tcg/tlb_helper.c
->> @@ -525,6 +525,7 @@ target_ulong helper_lddir(CPULoongArchState *env, 
->> target_ulong base,
->>           if (unlikely(level == 4)) {
->>               qemu_log_mask(LOG_GUEST_ERROR,
->>                             "Attempted use of level 4 huge page\n");
->> +            return base;
->>           }
->>           if (FIELD_EX64(base, TLBENTRY, LEVEL)) {
+On Fri, Jul 26, 2024 at 10:43:42AM -0400, Peter Xu wrote:
+> On Fri, Jul 26, 2024 at 09:48:02AM +0100, Daniel P. Berrangé wrote:
+> > On Fri, Jul 26, 2024 at 09:03:24AM +0200, Thomas Huth wrote:
+> > > On 26/07/2024 08.08, Michael S. Tsirkin wrote:
+> > > > On Thu, Jul 25, 2024 at 06:18:20PM -0400, Peter Xu wrote:
+> > > > > On Tue, Aug 01, 2023 at 01:31:48AM +0300, Yuri Benditovich wrote:
+> > > > > > USO features of virtio-net device depend on kernel ability
+> > > > > > to support them, for backward compatibility by default the
+> > > > > > features are disabled on 8.0 and earlier.
+> > > > > > 
+> > > > > > Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
+> > > > > > Signed-off-by: Andrew Melnychecnko <andrew@daynix.com>
+> > > > > 
+> > > > > Looks like this patch broke migration when the VM starts on a host that has
+> > > > > USO supported, to another host that doesn't..
+> > > > 
+> > > > This was always the case with all offloads. The answer at the moment is,
+> > > > don't do this.
+> > > 
+> > > May I ask for my understanding:
+> > > "don't do this" = don't automatically enable/disable virtio features in QEMU
+> > > depending on host kernel features, or "don't do this" = don't try to migrate
+> > > between machines that have different host kernel features?
+> > > 
+> > > > Long term, we need to start exposing management APIs
+> > > > to discover this, and management has to disable unsupported features.
+> > > 
+> > > Ack, this likely needs some treatments from the libvirt side, too.
+> > 
+> > When QEMU automatically toggles machine type featuers based on host
+> > kernel, relying on libvirt to then disable them again is impractical,
+> > as we cannot assume that the libvirt people are using knows about
+> > newly introduced features. Even if libvirt is updated to know about
+> > it, people can easily be using a previous libvirt release.
+> > 
+> > QEMU itself needs to make the machine types do that they are there
+> > todo, which is to define a stable machine ABI. 
+> > 
+> > What QEMU is missing here is a "platform ABI" concept, to encode
+> > sets of features which are tied to specific platform generations.
+> > As long as we don't have that we'll keep having these broken
+> > migration problems from machine types dynamically changing instead
+> > of providing a stable guest ABI.
 > 
-> 
-> Is it qemu-stable material (for 9.0.x series)?
+> Any more elaboration on this idea?  Would it be easily feasible in
+> implementation?
 
-If this applies cleanly, then yes.
+In terms of launching QEMU I'd imagine:
+
+  $QEMU -machine pc-q35-9.1 -platform linux-6.9 ...args...
+
+Any virtual machine HW features which are tied to host kernel features
+would have their defaults set based on the requested -platform. The
+-machine will be fully invariant wrt the host kernel.
+
+You would have -platform hlep to list available platforms, and
+corresonding QMP "query-platforms" command to list what platforms
+are supported on a given host OS.
+
+Downstream distros can provide their own platforms definitions
+(eg "linux-rhel-9.5") if they have kernels whose feature set
+diverges from upstream due to backports.
+
+Mgmt apps won't need to be taught about every single little QEMU
+setting whose default is derived from the kernel. Individual
+defaults are opaque and controlled by the requested platform.
+
+Live migration has clearly defined semantics, and mgmt app can
+use query-platforms to validate two hosts are compatible.
+
+Omitting -platform should pick the very latest platform that is
+cmpatible with the current host (not neccessarily the latest
+platform built-in to QEMU).
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
