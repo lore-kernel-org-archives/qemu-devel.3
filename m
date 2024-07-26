@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 444D4C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 10:42:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C8EAC49EA1
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 10:42:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXIOa-00060M-19; Fri, 26 Jul 2024 06:41:56 -0400
+	id 1sXIP3-0006JY-Co; Fri, 26 Jul 2024 06:42:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sXIOY-0005z0-AN
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:41:54 -0400
+ id 1sXIP2-0006IJ-6g
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:42:24 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sXIOV-0001eb-Fm
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:41:54 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WVkm06B4lz6K8rl;
- Fri, 26 Jul 2024 18:40:00 +0800 (CST)
+ id 1sXIP0-0001kk-MW
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:42:23 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WVkm25NTQz689SY;
+ Fri, 26 Jul 2024 18:40:02 +0800 (CST)
 Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 9D959140B2F;
- Fri, 26 Jul 2024 18:41:44 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id C0BCE140B63;
+ Fri, 26 Jul 2024 18:42:18 +0800 (CST)
 Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
  (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 26 Jul
- 2024 11:41:44 +0100
-Date: Fri, 26 Jul 2024 11:41:43 +0100
+ 2024 11:42:18 +0100
+Date: Fri, 26 Jul 2024 11:42:17 +0100
 To: Hendrik Wuethrich <whendrik@google.com>
 CC: <qemu-devel@nongnu.org>, <eduardo@habkost.net>,
  <richard.henderson@linaro.org>, <marcel.apfelbaum@gmail.com>,
  <mst@redhat.com>, <pbonzini@redhat.com>, <peternewman@google.com>
 Subject: Re: [PATCH v1 3/9] Add init and realize funciontality for RDT device.
-Message-ID: <20240726114143.0000154e@Huawei.com>
+Message-ID: <20240726114217.00003862@Huawei.com>
 In-Reply-To: <20240719162929.1197154-4-whendrik@google.com>
 References: <20240719162929.1197154-1-whendrik@google.com>
  <20240719162929.1197154-4-whendrik@google.com>
@@ -46,7 +46,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Originating-IP: [10.203.174.77]
-X-ClientProxiedBy: lhrpeml100005.china.huawei.com (7.191.160.25) To
+X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
  lhrpeml500005.china.huawei.com (7.191.163.240)
 Received-SPF: pass client-ip=185.176.79.56;
  envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
@@ -81,78 +81,5 @@ Hendrik Wuethrich <whendrik@google.com> wrote:
 > Add code to initialize all necessary state for the RDT device.
 >=20
 > Signed-off-by: Hendrik W=C3=BCthrich <whendrik@google.com>
-> ---
->  hw/i386/rdt.c | 28 ++++++++++++++++++++++++++++
->  1 file changed, 28 insertions(+)
->=20
-> diff --git a/hw/i386/rdt.c b/hw/i386/rdt.c
-> index cf246ab835..259dafc963 100644
-> --- a/hw/i386/rdt.c
-> +++ b/hw/i386/rdt.c
-> @@ -62,10 +62,38 @@ static void rdt_init(Object *obj)
-> =20
->  static void rdt_realize(DeviceState *dev, Error **errp)
->  {
-> +    CPUState *cs =3D first_cpu;
-> +
-
-No blank line here.
-
-> +    RDTState *rdtDev =3D RDT(dev);
-
-blank line here.
-
-> +    rdtDev->rdtInstances =3D g_array_new(false, true, sizeof(RDTStateIns=
-tance));
-> +    g_array_set_size(rdtDev->rdtInstances, cs->nr_cores);
-> +    CPU_FOREACH(cs) {
-> +        RDTStateInstance *rdt =3D &g_array_index(rdtDev->rdtInstances, R=
-DTStateInstance, cs->cpu_index);
-> +
-No blank line here. Also wrap this long line somewhere.
-
-> +        X86CPU *cpu =3D X86_CPU(cs);
-blank line here.
-
-> +        rdt->rdtstate =3D rdtDev;
-> +        cpu->rdt =3D rdt;
-> +
-> +        rdt->monitors =3D g_array_new(false, true, sizeof(RDTMonitor));
-> +        rdt->rdtstate->allocations =3D g_array_new(false, true, sizeof(R=
-DTAllocation));
-> +
-> +        g_array_set_size(rdt->monitors, rdtDev->rmids);
-> +        g_array_set_size(rdt->rdtstate->allocations, rdtDev->rmids);
-
-Are these g_array's going to change size? If not, why go through this dance=
- when
-a simple pointer will do?
-
-
-> +    }
->  }
-> =20
->  static void rdt_finalize(Object *obj)
->  {
-> +    CPUState *cs;
-> +    RDTState *rdt =3D RDT(obj);
-> +
-> +    CPU_FOREACH(cs) {
-> +        RDTStateInstance *rdtInstance =3D &g_array_index(rdt->rdtInstanc=
-es, RDTStateInstance, cs->cpu_index);
-
-Long line. Wrap that.  Worth running checkpatch which I think
-will moan about things like this.
-
-
-
-> +        g_array_free(rdtInstance->monitors, true);
-> +        g_array_free(rdtInstance->rdtstate->allocations, true);
-> +    }
-> +
-> +    g_array_free(rdt->rdtInstances, true);
->  }
-> =20
->  static void rdt_class_init(ObjectClass *klass, void *data)
-
+Spell check (typo in patch title).
 
