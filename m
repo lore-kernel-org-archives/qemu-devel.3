@@ -4,55 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBDCDC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 10:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05EADC3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 10:27:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXI9u-0004fb-Ch; Fri, 26 Jul 2024 06:26:46 -0400
+	id 1sXIA5-00057b-Dq; Fri, 26 Jul 2024 06:26:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1sXI9s-0004ZF-M2
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:26:44 -0400
+ id 1sXIA1-00055q-3r
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:26:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1sXI9q-0002z7-RV
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:26:44 -0400
+ id 1sXI9z-00030P-MT
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:26:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721989601;
+ s=mimecast20190719; t=1721989610;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Jk8T7qalYXX3bMQ4hJfsyg+bxF18fdKkG/y2X9OniOU=;
- b=ExcTujvGixfE0JXY9kcijZetJMeuHXC1Eox6LtQr1o3vrIb/3rX/VXPA9MJzmbT7uLgtGb
- xaRHP+5Yi8IIo/YrdsN9xyMgQyodlc/B+tAWdhwHTfbwcFgWw8bGDiFgOPV6eLAjmvuck7
- ZNB9/AwczTLvW9UysN2QqRPlYAVLzPs=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jTtG5rF+133Rl4upwhryPbqEnaoY3xhSO1uldM+GCd4=;
+ b=J+MeluHe1kHZjerAgvo+iix6L5wnEZy5XVMFq2hy7Xs4++1VDiGAL8P8apjhAk+pjLgxjo
+ DbCm96le2JRT5M/JgO7jd1aiZ5CGItxbzzX4se+96b8NTnmkYtWjE2SfeZu03MQRGVsX78
+ hJ3cte4+w5N2zSD07Fgqx9TfMe8uByE=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-383-r-bpbzMTNq2xQnsu9VENXQ-1; Fri,
- 26 Jul 2024 06:26:39 -0400
-X-MC-Unique: r-bpbzMTNq2xQnsu9VENXQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-381-oXXP9o2KN9iqlEYa341nkg-1; Fri,
+ 26 Jul 2024 06:26:48 -0400
+X-MC-Unique: oXXP9o2KN9iqlEYa341nkg-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A487D1955D47
- for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 10:26:38 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9754E1944B2B
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 10:26:46 +0000 (UTC)
 Received: from fedora.redhat.com (unknown [10.39.208.15])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ECD6719560AE; Fri, 26 Jul 2024 10:26:36 +0000 (UTC)
+ id 42E201955F23; Fri, 26 Jul 2024 10:26:45 +0000 (UTC)
 From: Anthony Harivel <aharivel@redhat.com>
 To: pbonzini@redhat.com
 Cc: qemu-devel@nongnu.org,
 	Anthony Harivel <aharivel@redhat.com>
-Subject: [PATCH 0/2] Fix RAPL MSR support in staging
-Date: Fri, 26 Jul 2024 12:26:30 +0200
-Message-ID: <20240726102632.1324432-1-aharivel@redhat.com>
+Subject: [PATCH 2/2] target/i386: Clean output of vmsr_read_thread_stat()
+Date: Fri, 26 Jul 2024 12:26:32 +0200
+Message-ID: <20240726102632.1324432-3-aharivel@redhat.com>
+In-Reply-To: <20240726102632.1324432-1-aharivel@redhat.com>
+References: <20240726102632.1324432-1-aharivel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
@@ -80,22 +83,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+Fix leaking memory of file handle in case of error
+Erase unused "pid = -1"
+Add clearer error_report
 
-RAPL MSR has landed in staging with few scratches.
+Should fix: CID 1558557
 
-Here a couple of patches to solves CID 1558553 and 1558557.
-
-Anthony
-
-Anthony Harivel (2):
-  target/i386: Fix typo that assign same value twice
-  target/i386: Clean output of vmsr_read_thread_stat()
-
- target/i386/kvm/kvm.c         | 4 ++--
+Signed-off-by: Anthony Harivel <aharivel@redhat.com>
+---
  target/i386/kvm/vmsr_energy.c | 5 +++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
+diff --git a/target/i386/kvm/vmsr_energy.c b/target/i386/kvm/vmsr_energy.c
+index a1d78f2f2aee..7e064c5aef30 100644
+--- a/target/i386/kvm/vmsr_energy.c
++++ b/target/i386/kvm/vmsr_energy.c
+@@ -270,7 +270,7 @@ void vmsr_read_thread_stat(pid_t pid,
+ 
+     FILE *file = fopen(path, "r");
+     if (file == NULL) {
+-        pid = -1;
++        error_report("Error opening %s", path_name);
+         return;
+     }
+ 
+@@ -279,7 +279,8 @@ void vmsr_read_thread_stat(pid_t pid,
+         " %*u %*u %*u %*u %*u %*u %*u %*u %*u %*d %*u %*u %u",
+            utime, stime, cpu_id) != 3)
+     {
+-        pid = -1;
++        fclose(file);
++        error_report("Error fscanf did not report the right amount of items");
+         return;
+     }
+ 
 -- 
 2.45.2
 
