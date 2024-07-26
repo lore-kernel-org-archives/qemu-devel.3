@@ -4,57 +4,200 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 562C3C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 10:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21B2FC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 10:56:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXIYE-00070L-GL; Fri, 26 Jul 2024 06:51:54 -0400
+	id 1sXIcb-00050g-Cg; Fri, 26 Jul 2024 06:56:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sXIYC-0006zo-Gp
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:51:52 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1sXIcZ-0004yk-1H
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:56:23 -0400
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sXIY9-00085r-Av
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:51:52 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WVkzN5GF8z6K5kn;
- Fri, 26 Jul 2024 18:49:52 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 75541140A46;
- Fri, 26 Jul 2024 18:51:36 +0800 (CST)
-Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 26 Jul
- 2024 11:51:36 +0100
-Date: Fri, 26 Jul 2024 11:51:35 +0100
-To: Hendrik Wuethrich <whendrik@google.com>
-CC: <qemu-devel@nongnu.org>, <eduardo@habkost.net>,
- <richard.henderson@linaro.org>, <marcel.apfelbaum@gmail.com>,
- <mst@redhat.com>, <pbonzini@redhat.com>, <peternewman@google.com>
-Subject: Re: [PATCH v1 4/9] Add RDT functionality
-Message-ID: <20240726115135.00003804@Huawei.com>
-In-Reply-To: <20240719162929.1197154-5-whendrik@google.com>
-References: <20240719162929.1197154-1-whendrik@google.com>
- <20240719162929.1197154-5-whendrik@google.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1sXIcV-0000lu-Ob
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:56:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1721991379; x=1753527379;
+ h=message-id:date:from:subject:to:cc:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=PmS6NAtf0wl660TwEq7XDy9HZ1HPVJF1v6EMegNyk1g=;
+ b=HnkvJEuZoHtRWKh+akBdAyJRe67uChxE2yuO7IpPrBjTil/FV24wTMIv
+ cqYZqZts90SesuMKAAzFbkWWVOTwMroZRK3cQOjOx047P39S/vOoQTIPp
+ iXLYdtLmFwWeumhIydD7ctkrIJyE8KKXxI7j4rxVD9NQ/uGVsIZjwNcoY
+ W79jteLZdW3IGDA3gvG4bEuEhsdHjamPh1cCyVQXqNtVLJzDElUW9Nx4A
+ MTtLhP22DpgUlgmMZpuLexLiNThI81DSALpik0mBLK59egfqFQ72x9dAB
+ J80C4Vv5ZRTjLUjUJdtdAA2OoPu4QNOU7KPyqyAXSY/AmgZmvXmT6XC2S g==;
+X-CSE-ConnectionGUID: BMrgPzRdSu2Ds8CQxKjeuQ==
+X-CSE-MsgGUID: 6cW/DGkGTJ2AKZzFujVeVA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11144"; a="19966487"
+X-IronPort-AV: E=Sophos;i="6.09,238,1716274800"; d="scan'208";a="19966487"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 26 Jul 2024 03:56:16 -0700
+X-CSE-ConnectionGUID: cJsckgKIQWWGkPfEGgG8hw==
+X-CSE-MsgGUID: 02O7L9ZvRhul90FuQgANEA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,238,1716274800"; d="scan'208";a="76457407"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
+ by fmviesa002.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 26 Jul 2024 03:56:15 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Fri, 26 Jul 2024 03:56:15 -0700
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Fri, 26 Jul 2024 03:56:15 -0700
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.169)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Fri, 26 Jul 2024 03:56:15 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wAFsRCaZidswfKQm/b04js/asjDMTHnjBitpL1loBDAG8UM6OdObBUCHkenzXZuMdtlDfXZv2JBHfvdaDFunldwYegeeihnQHSDxtd5XtDdze+6wzDBxoPnKaTNSpsRO0BGi6pNOBJJ21O4XhaU+T0Q6wVkE4jZGaCqJFyz+GjqQ+lPTnC9MzoT90LhhNqoncUtOAYmlhRjAcBieYbJri5tj9mQLnKw0FDGH57BexCwwgyotPDGafWNOQpm954s0BHTu81p/9LB75GyaAaJIxwKY/Dn4CR4AhPrNl+GTMQ0c9S44kbiG5sVUE4Huc6YcoHtZyVWSp76qMsElnEG1Hg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=n0s5JXwXQ4jaDU7xP9ub0DhatGQJj5LAi+rEwyGmRWY=;
+ b=Jh5nOPxn3P7syAoVpdp1GwijPPc1jIFSThIauCi8p1j2yqZiK7VarznYJ/L2UIv+IcVKwshNQzcwQk0p9NP6/212HBSYtUTbUCD6fCvIygqsU9mPX19+IIjqV9kgP+Bpk348lRN5VhgkrwvJ1Cp5qyHn2ejsqS4UUk6EVGqyh7YheyepAp65qS9l368jAdhsapX1Q9/RIX8uLg6GXl00+ChwiL6h4ccKNGTMPqAlzBZ3ZljiOtR0o15Ntkpay0iqBp9x98rPvEYUaMzFyaYOur0yltMN4Dv9klWFCEQTjZYV9Z9fMHlqHXU2u9/qNL5X+t4kQZedis2N5B5aMGdy3g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
+ PH0PR11MB7635.namprd11.prod.outlook.com (2603:10b6:510:28e::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.29; Fri, 26 Jul
+ 2024 10:56:13 +0000
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95%3]) with mapi id 15.20.7784.020; Fri, 26 Jul 2024
+ 10:56:13 +0000
+Message-ID: <0fdd0340-8daa-45b8-9e1c-bafe6f4e6a60@intel.com>
+Date: Fri, 26 Jul 2024 18:56:00 +0800
+User-Agent: Mozilla Thunderbird
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+Subject: Re: [RFC PATCH 0/6] Enable shared device assignment
+To: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Michael Roth <michael.roth@amd.com>
+CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
+ <dan.j.williams@intel.com>, Edgecombe Rick P <rick.p.edgecombe@intel.com>,
+ Wang Wei W <wei.w.wang@intel.com>, Peng Chao P <chao.p.peng@intel.com>, "Gao
+ Chao" <chao.gao@intel.com>, Wu Hao <hao.wu@intel.com>, Xu Yilun
+ <yilun.xu@intel.com>
+References: <20240725072118.358923-1-chenyi.qiang@intel.com>
+ <ace9bb98-1415-460f-b8f5-e50607fbce20@redhat.com>
+ <69091ee4-f1c9-43ce-8a2a-9bb370e8115f@intel.com>
+ <d87a5e47-3c48-4e20-b3de-e83c2ca44606@redhat.com>
+Content-Language: en-US
+In-Reply-To: <d87a5e47-3c48-4e20-b3de-e83c2ca44606@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.174.77]
-X-ClientProxiedBy: lhrpeml100005.china.huawei.com (7.191.160.25) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SI2PR02CA0042.apcprd02.prod.outlook.com
+ (2603:1096:4:196::19) To DM3PR11MB8735.namprd11.prod.outlook.com
+ (2603:10b6:0:4b::20)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|PH0PR11MB7635:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5de25b4d-1df5-43f5-8e8a-08dcad61906e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?aHpoZDN4RDJUQXVadDhGeFp5VFJpMmJSc0xaTmJib1crY1AwbitzNnkyOXky?=
+ =?utf-8?B?bHExTUhqOFVheEliaU1TMjFwaTlOUzg3YXJ6Rnp1dStMMWNKNUIramRjT3dl?=
+ =?utf-8?B?QUx0VnYwK1N4YndHQ2FNZE40U0lLb2dacWd0RWk1M0VyWXp3aVptZWY5aGZ2?=
+ =?utf-8?B?c3hERjhsRjhubld1d3dLakNjSEhsZk9CR2RvYmcrVWt1U1FMalpQQTQ5M1kz?=
+ =?utf-8?B?UXdlUVRXKzBsZ1h2WU1lejZiMzlWMURIaUZ5eVdhdVdyWXhuSVZQbmNaS0tz?=
+ =?utf-8?B?UjUyYVVEcTRFM1o2VFR4YzVxeW8xekswNi9qVk5ta1B1eE5RdlNxOU40MWhW?=
+ =?utf-8?B?RzhRby9UT0VLZGpHWEQ3TWtuM3pTUXBxKzd1a2F4ZlYrNXdCdGhkMUs3RXYv?=
+ =?utf-8?B?YjF2K0FPTGMvYU9IK3lsMmpyZENRcUphVTR3MTQwM25DTUxia2JmUFZQdVRv?=
+ =?utf-8?B?MytxUVJSK05qYjJxTElSN1BRUENabjRjY2dXcUc2SDFoVXVjSHUyQi8wUUVE?=
+ =?utf-8?B?cGpLVW9QY2piQkVWSkYzTUg5L0VteDVKeisxcW5ackJGdk1SLythczhQTFh2?=
+ =?utf-8?B?OVRDZGtZOXUxVW94dkxBWXljeHhETmtrek1BeUR6dzVEeVZOeTBlVHVOMG1r?=
+ =?utf-8?B?andnNi9zNVpnY2dIMkZrL0hxZnRwelAwdi8vTExJaGZRK1pmajdXdmRlc3Na?=
+ =?utf-8?B?UzF2MEMrK2t5WHVVTkQwNXh6UzMyNE83cnc1cWgwbGJWR1RZeGRuMTVFRW1s?=
+ =?utf-8?B?d2ZQZFMzWFRnbGp4ZlEzVjFNWExYNzlxYkZwUlA0akpwNUt4MDNoMFhKSGVa?=
+ =?utf-8?B?bTJhcHRDbFJpOTFGVW5tc0tXNTlIOEd4UWY3TUR0Nzc1c04zS3ZCb3JkM3NT?=
+ =?utf-8?B?bXREemU1UmFqdmhxamZLeHBEZ0FyejRFeUdFbXhiZ2JxSXlKb3ZNVy80N0E3?=
+ =?utf-8?B?RTgrNlh5bVN0MU1zQkY4S0xpYXNIeHVEMjNtSG02QXRWdHk1R1lNRU9hazB3?=
+ =?utf-8?B?aXlZblJURmpGVDdvQ2N6alU2OWhiaDIxanVPU0xUb2w2YSt4U1hybzU0dFVp?=
+ =?utf-8?B?ZmZPSDV2NW9TVXd3eVVFeGNNa3QwNlg1azQ4cisxdG83T1hxSTVnZzlkL1Na?=
+ =?utf-8?B?RkJNdmpIYWZaNm8vTUI4a3hDNFBuK0NDT2lyYjVaaGRPN3ErSDhtb1U5UnZW?=
+ =?utf-8?B?akpwM0pIZjAyZVUwZXVReTUzaTNmV3JOQU1CVGV5WTRnS01oSjBra0JtaXor?=
+ =?utf-8?B?NHhwbnBsY3EzSGxTaWVWNjdnVFZDeVNuREdPT1FGcDFGOHhxQ2RnSXJNd1NP?=
+ =?utf-8?B?WndORU5zaTRlSkpEUGNxZjgwb1lydDRYQmpLeUJiSmFjM0E4WFRsbHAva1VN?=
+ =?utf-8?B?elVQL1BTVjhwTnZzRU1IT3g0enNJMTl3dS8ySzVORFdncVhnNXhCaWhVdWxK?=
+ =?utf-8?B?SnJJVHBjV09GVGliSnk2TUNIWWQzWlk0R0hvNXhzQkNRY3FjTDVrY1RWYUll?=
+ =?utf-8?B?Z0huK2R5YmpOOXZjeEdNOGFNZ1NjRXI1djFtV0FSVWVDZ2RoUGZhczBvZm55?=
+ =?utf-8?B?TldtVzNQajhwNUJwTkhFL2t3UUgzbm1YamVMR1M3NWsyZlh1SDdiWDhjTm01?=
+ =?utf-8?B?QTZBLytqRFFueHE4Vk4renVkY1o0NCtsaExkSWZwN2VvSGxBU1Z5aHJFL25v?=
+ =?utf-8?B?dXpXNVdiN09xSUJmTmtPUG1FOUgydW16d25XN3FTZ3QxRkZuamRLa1k5YXVN?=
+ =?utf-8?Q?+RV39l+LuP9scHaEIg=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?clFUclBLYjAzUk5qeWx0RjNvUmU3RXVrSEt0aFU4VVRaYU8wVEFlRm5JTG1B?=
+ =?utf-8?B?QmEzWGU0ZjEwRUs1QXpJUjBmbWZXd0Ntb1NzMWpQNHFPYTlHNWhDZDNKTjdz?=
+ =?utf-8?B?RTFhdE50SkRDd3BUQ0lHZ2x3dkNsdmM0OENUaUt4MmJPdmFKMTZFVGczMGtG?=
+ =?utf-8?B?aXQzaUxLVTMzNVd5TkprTVhtTi9zdDNuZXR2MHY0NytvQ2g0ZVZkYlBZeE01?=
+ =?utf-8?B?L0RGTFM3Z2xsWDZDWUZKVGJEdThDM0NYSm94RGlTSWQ0amZsRUVuZnhoYStz?=
+ =?utf-8?B?Z21YRDNjN3BvMFVna0FVUXRPUDNQSHhMZkZRVG1UTkk5NHFtZGU2UHV5ZE9Z?=
+ =?utf-8?B?WktUNVJjYVVBK2QwTjNnTHY1cU0yL3BZdU5KREw0VUwwdk1jd2VLa0JsMytE?=
+ =?utf-8?B?a2VuV3dCdmo3S3k5UjNRRWpTaUkwVWRKMUkyWEluTEZnTHozdEVoWmZ5bm95?=
+ =?utf-8?B?QnFocVJjN0tweU9XT0N5K1R4NFdWMW9SNWhTaTJYVlNjZDNyREZuQjNVZ2J2?=
+ =?utf-8?B?RnZRdDc2M2lQQW5jS0RYaEpGN3JXZllDVUtDZEJrd3o2UGp4cWlsK1doeXZi?=
+ =?utf-8?B?WGkxdW5EV2lXeHVSMlF1SmEvem9iaDF1VlUwcWJBYXprOHlGSEZCU0orYmRX?=
+ =?utf-8?B?SHVKU09YVlI3R3VpMGw0VlRIaVFYLzJBZ3BoYUVydDZYNXlBY1BXWDk3WWhv?=
+ =?utf-8?B?R2prcU54K0tLd1U1bVd0RHJoUWtVM2htczhpOWFlSVMweERTSW5FL3ZNdnFR?=
+ =?utf-8?B?dXcwU1ZPT3pia1JLWHBkUjZidUhRWnJqdlZzZHJnL1NHbS84UHIvQno4VXNP?=
+ =?utf-8?B?OXB5QWpLN1VCNVhhNTZOZUhsRFpMNjBBRGcxLy9tR25MMFFMdjZXT1ZlUkRp?=
+ =?utf-8?B?dFdydVlVdk1YQTRza2lOQmowYU1BdWR2YjVaRFJrQ0hsMzNERk8xUC94UTNM?=
+ =?utf-8?B?SFVWM0FkUTRhTE5Nclp4V0RjK2RqV0llLzJRcnd4QlY0QnlRY20rbSs0WjlI?=
+ =?utf-8?B?Qmd4akxKa3prdGphVThEb01Jb3ZzYUpXTk5lMUpNM3g0dDZRZU1WMVB2WStV?=
+ =?utf-8?B?cExvM0tTRFNXL1kwUW9qRjV0RlB0ZVF3ZndxeG4yNFJUcjhEcmxoWE5YMnRX?=
+ =?utf-8?B?ZlBBbnV2bTJpY2ViRmdTYWs2TEU2Z3ZJUEFHditQTmxuR3RVcjl1SmtzYWt2?=
+ =?utf-8?B?dGFxQjdQNHJuMW55WHJPZGNVYmdseHc1VEhscUg4bVpSd0RXcVBGWWhxb1Nz?=
+ =?utf-8?B?a3NPbTgrQ2lNUmN4cTh0SGhGaDRBcTdsZmZuM0hCNW9HTC9udnpLY1VZYXhT?=
+ =?utf-8?B?eGpxQ2xYRUlvZVhISVVQNExoRWV6ME0zalVDcGI1TnFrUVAxWUFqbnVjZE1z?=
+ =?utf-8?B?a2Y2NVFRaHA5MjJ1bkdOWmlXb1IwZ0JMOTU5dE5VN09QV0VlRUtsVnJxdTVw?=
+ =?utf-8?B?S3lzRUI1WmVFQ2J4UG1BZXdWWDNkZ2VMZTJ0QXJiZVFIN08zK1AwL0FVeDh1?=
+ =?utf-8?B?V0dSajhnVkZva2tHSWdMNU5xRTZYZzFtOVY5eEJOaXdSNS8yZ0Z5Wi9zVFdt?=
+ =?utf-8?B?NG82OWowdVI4K0RlQ0xxQWxzbnNzc1NyMUFvNnA0WVlJT1gyUVNjS1puTno5?=
+ =?utf-8?B?TlJObkwwVEowUVYyUjQwbWdUUzZQTlAyL05jR2lnaVAzSmxIdzlMZmE4WTdG?=
+ =?utf-8?B?eGhCVlhoZ2FERWx2clE2Z3JhYzB6bTRpVGpwNGlhL3hzeGhERTBiVDlRUVhB?=
+ =?utf-8?B?T0w1K2NDRmEzRHFJNCtzc3JtZHlONm03WWxROU1DMng0KzNOVjlTaFdTdTNl?=
+ =?utf-8?B?emNtb1NJTFp3UGhXaDhhZVFRQXROQWJTd3hxaFNnYm1rSnRMZnRMOUFza2RP?=
+ =?utf-8?B?OGt5MjFuMGNlM2VqSWs5Ry95WmVJQitybGVZNzRackhoS1JDQVFSb2xQQ0VC?=
+ =?utf-8?B?TTgwc2drTzhzUnNidHhFS0dWU1VmUXFwMVNxZ2JGTGJyRXJqWjlaNjNkVWJH?=
+ =?utf-8?B?RzViZktkT0JUTlpkNGY3WUZVeWtHM0lDOHZlb3U1MTVzZXlHMGJpSUUxblpS?=
+ =?utf-8?B?NXBaNS9tOVBEMy9yTHRGbmVHVldKdXB3MFBvbk5iMzBKcFFPQVFzcTFKS3lO?=
+ =?utf-8?Q?OKndjWaMG7MY3uZ9ld+n+FoBz?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5de25b4d-1df5-43f5-8e8a-08dcad61906e
+X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jul 2024 10:56:12.9339 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: zbp3w/CPpOcQ09grWdTSJUHjDAqJzgmlJ1gari2/4iJD3MYHOL1fho14uT54G1bBhwGwu4mGVtI/nxioLokfRA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB7635
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.14;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,235 +211,200 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 19 Jul 2024 16:29:24 +0000
-Hendrik Wuethrich <whendrik@google.com> wrote:
-
-> From: =E2=80=AAHendrik W=C3=BCthrich <whendrik@google.com>
->=20
-> Add RDT code to Associate CLOSID with RMID / set RMID for monitoring,
-> write COS, and read monitoring data. This patch does not add code for
-> the guest to interact through these things with MSRs, only the actual
-> ability for the RDT device to do them.
->=20
-> Signed-off-by: Hendrik W=C3=BCthrich <whendrik@google.com>
-> ---
->  hw/i386/rdt.c         | 124 ++++++++++++++++++++++++++++++++++++++++++
->  include/hw/i386/rdt.h |  13 +++++
->  2 files changed, 137 insertions(+)
->=20
-> diff --git a/hw/i386/rdt.c b/hw/i386/rdt.c
-> index 259dafc963..77b7b4f2d4 100644
-> --- a/hw/i386/rdt.c
-> +++ b/hw/i386/rdt.c
-> @@ -7,6 +7,11 @@
->  #include "target/i386/cpu.h"
->  #include "hw/isa/isa.h"
-> =20
-> +/* RDT Monitoring Event Codes */
-> +#define RDT_EVENT_L3_OCCUPANCY 1
-> +#define RDT_EVENT_L3_REMOTE_BW 2
-> +#define RDT_EVENT_L3_LOCAL_BW 3
-> +
->  /* Max counts for allocation masks or CBMs. In other words, the size of =
-respective MSRs*/
->  #define MAX_L3_MASK_COUNT      128
->  #define MAX_L2_MASK_COUNT      48
-> @@ -15,6 +20,9 @@
->  #define TYPE_RDT "rdt"
->  #define RDT_NUM_RMID_PROP "rmids"
-> =20
-> +#define QM_CTR_Error        (1ULL << 63)
-> +#define QM_CTR_Unavailable  (1ULL << 62)
-
-Mix of capitals and camel case is a bit unusual. I'd go
-capitals throughout unless there is precedence.
-
-Also, prefix with RDT_QM probably so we know it's a local
-define where it is used.
-
-> +
->  OBJECT_DECLARE_TYPE(RDTState, RDTStateClass, RDT);
-> =20
->  struct RDTMonitor {
-> @@ -49,6 +57,122 @@ struct RDTState {
-> =20
->  struct RDTStateClass { };
-> =20
-> +bool rdt_associate_rmid_cos(uint64_t msr_ia32_pqr_assoc) {
-> +    X86CPU *cpu =3D X86_CPU(current_cpu);
-> +    RDTStateInstance *rdt =3D cpu->rdt;
-> +    RDTAllocation *alloc;
-> +
-> +    uint32_t cos_id =3D (msr_ia32_pqr_assoc & 0xffff0000) >> 16;
-> +    uint32_t rmid =3D msr_ia32_pqr_assoc & 0xffff;
-> +
-> +    if (cos_id > MAX_L3_MASK_COUNT || cos_id > MAX_L2_MASK_COUNT ||
-> +    cos_id > MAX_MBA_THRTL_COUNT || rmid > rdt_max_rmid(rdt)) {
-
-Fix indent to be
-       if (cos_id...
-           cos_id > ...
 
 
-> +        return false;
-> +    }
-> +
-> +    rdt->active_rmid =3D rmid;
-> +
-> +    alloc =3D &g_array_index(rdt->rdtstate->allocations, RDTAllocation, =
-rmid);
-> +
-> +    alloc->active_cos =3D cos_id;
-> +
-> +    return true;
-> +}
-> +
-> +uint32_t rdt_read_l3_mask(uint32_t pos)
-> +{
-> +    X86CPU *cpu =3D X86_CPU(current_cpu);
-> +    RDTStateInstance *rdt =3D cpu->rdt;
-> +
-> +    uint32_t val =3D rdt->rdtstate->msr_L3_ia32_mask_n[pos];
-> +    return val;
+On 7/26/2024 3:20 PM, David Hildenbrand wrote:
+> On 26.07.24 08:20, Chenyi Qiang wrote:
+>>
+>>
+>> On 7/25/2024 10:04 PM, David Hildenbrand wrote:
+>>>> Open
+>>>> ====
+>>>> Implementing a RamDiscardManager to notify VFIO of page conversions
+>>>> causes changes in semantics: private memory is treated as discarded (or
+>>>> hot-removed) memory. This isn't aligned with the expectation of current
+>>>> RamDiscardManager users (e.g. VFIO or live migration) who really
+>>>> expect that discarded memory is hot-removed and thus can be skipped
+>>>> when
+>>>> the users are processing guest memory. Treating private memory as
+>>>> discarded won't work in future if VFIO or live migration needs to
+>>>> handle
+>>>> private memory. e.g. VFIO may need to map private memory to support
+>>>> Trusted IO and live migration for confidential VMs need to migrate
+>>>> private memory.
+>>>
+>>> "VFIO may need to map private memory to support Trusted IO"
+>>>
+>>> I've been told that the way we handle shared memory won't be the way
+>>> this is going to work with guest_memfd. KVM will coordinate directly
+>>> with VFIO or $whatever and update the IOMMU tables itself right in the
+>>> kernel; the pages are pinned/owned by guest_memfd, so that will just
+>>> work. So I don't consider that currently a concern. guest_memfd private
+>>> memory is not mapped into user page tables and as it currently seems it
+>>> never will be.
+>>
+>> That's correct. AFAIK, some TEE IO solution like TDX Connect would let
+>> kernel coordinate and update private mapping in IOMMU tables. Here, It
+>> mentions that VFIO "may" need map private memory. I want to make this
+>> more generic to account for potential future TEE IO solutions that may
+>> require such functionality. :)
+> 
+> Careful to not over-enginner something that is not even real or
+> close-to-be-real yet, though. :) Nobody really knows who that will look
+> like, besides that we know for Intel that we won't need that.
 
-return rdt->
+OK, Thanks for the reminder!
 
-> +}
-> +
-> +uint32_t rdt_read_l2_mask(uint32_t pos)
-> +{
-> +    X86CPU *cpu =3D X86_CPU(current_cpu);
-> +    RDTStateInstance *rdt =3D cpu->rdt;
-> +
-> +    uint32_t val =3D rdt->rdtstate->msr_L2_ia32_mask_n[pos];
-> +    return val;
+> 
+>>
+>>>
+>>> Similarly: live migration. We cannot simply migrate that memory the
+>>> traditional way. We even have to track the dirty state differently.
+>>>
+>>> So IMHO, treating both memory as discarded == don't touch it the usual
+>>> way might actually be a feature not a bug ;)
+>>
+>> Do you mean treating the private memory in both VFIO and live migration
+>> as discarded? That is what this patch series does. And as you mentioned,
+>> these RDM users cannot follow the traditional RDM way. Because of this,
+>> we also considered whether we should use RDM or a more generic mechanism
+>> like notifier_list below.
+> 
+> Yes, the shared memory is logically discarded. At the same time we
+> *might* get private memory effectively populated. See my reply to Kevin
+> that there might be ways of having shared vs. private populate/discard
+> in the future, if required. Just some idea, though.
+> 
+>>
+>>>
+>>>>
+>>>> There are two possible ways to mitigate the semantics changes.
+>>>> 1. Develop a new mechanism to notify the page conversions between
+>>>> private and shared. For example, utilize the notifier_list in QEMU.
+>>>> VFIO
+>>>> registers its own handler and gets notified upon page conversions. This
+>>>> is a clean approach which only touches the notifier workflow. A
+>>>> challenge is that for device hotplug, existing shared memory should be
+>>>> mapped in IOMMU. This will need additional changes.
+>>>>
+>>>> 2. Extend the existing RamDiscardManager interface to manage not only
+>>>> the discarded/populated status of guest memory but also the
+>>>> shared/private status. RamDiscardManager users like VFIO will be
+>>>> notified with one more argument indicating what change is happening and
+>>>> can take action accordingly. It also has challenges e.g. QEMU allows
+>>>> only one RamDiscardManager, how to support virtio-mem for confidential
+>>>> VMs would be a problem. And some APIs like .is_populated() exposed by
+>>>> RamDiscardManager are meaningless to shared/private memory. So they may
+>>>> need some adjustments.
+>>>
+>>> Think of all of that in terms of "shared memory is populated, private
+>>> memory is some inaccessible stuff that needs very special way and other
+>>> means for device assignment, live migration, etc.". Then it actually
+>>> quite makes sense to use of RamDiscardManager (AFAIKS :) ).
+>>
+>> Yes, such notification mechanism is what we want. But for the users of
+>> RDM, it would require additional change accordingly. Current users just
+>> skip inaccessible stuff, but in private memory case, it can't be simply
+>> skipped. Maybe renaming RamDiscardManager to RamStateManager is more
+>> accurate then. :)
+> 
+> Current users must skip it, yes. How private memory would have to be
+> handled, and who would handle it, is rather unclear.
+> 
+> Again, maybe we'd want separate RamDiscardManager for private and shared
+> memory (after all, these are two separate memory backends).
 
-return rdt->
+We also considered distinguishing the populate and discard operation for
+private and shared memory separately. As in method 2 above, we mentioned
+to add a new argument to indicate the memory attribute to operate on.
+They seem to have a similar idea.
 
-> +}
-> +
-> +uint32_t rdt_read_mba_thrtl(uint32_t pos)
-> +{
-> +    X86CPU *cpu =3D X86_CPU(current_cpu);
-> +    RDTStateInstance *rdt =3D cpu->rdt;
-> +
-> +    uint32_t val =3D rdt->rdtstate->ia32_L2_qos_ext_bw_thrtl_n[pos];
-> +    return val;
+> 
+> Not sure that "RamStateManager" terminology would be reasonable in that
+> approach.
+> 
+>>
+>>>
+>>>>
+>>>> Testing
+>>>> =======
+>>>> This patch series is tested based on the internal TDX KVM/QEMU tree.
+>>>>
+>>>> To facilitate shared device assignment with the NIC, employ the legacy
+>>>> type1 VFIO with the QEMU command:
+>>>>
+>>>> qemu-system-x86_64 [...]
+>>>>       -device vfio-pci,host=XX:XX.X
+>>>>
+>>>> The parameter of dma_entry_limit needs to be adjusted. For example, a
+>>>> 16GB guest needs to adjust the parameter like
+>>>> vfio_iommu_type1.dma_entry_limit=4194304.
+>>>
+>>> But here you note the biggest real issue I see (not related to
+>>> RAMDiscardManager, but that we have to prepare for conversion of each
+>>> possible private page to shared and back): we need a single IOMMU
+>>> mapping for each 4 KiB page.
+>>>
+>>> Doesn't that mean that we limit shared memory to 4194304*4096 == 16 GiB.
+>>> Does it even scale then?
+>>
+>> The entry limitation needs to be increased as the guest memory size
+>> increases. For this issue, are you concerned that having too many
+>> entries might bring some performance issue? Maybe we could introduce
+>> some PV mechanism to coordinate with guest to convert memory only in 2M
+>> granularity. This may help mitigate the problem.
+> 
+> I've had this talk with Intel, because the 4K granularity is a pain. I
+> was told that ship has sailed ... and we have to cope with random 4K
+> conversions :(
+> 
+> The many mappings will likely add both memory and runtime overheads in
+> the kernel. But we only know once we measure.
 
-return rdt->rdstate...
+In the normal case, the main runtime overhead comes from
+private<->shared flip in SWIOTLB, which defaults to 6% of memory with a
+maximum of 1Gbyte. I think this overhead is acceptable. In non-default
+case, e.g. dynamic allocated DMA buffer, the runtime overhead will
+increase. As for the memory overheads, It is indeed unavoidable.
 
-> +}
-> +
-> +void rdt_write_msr_l3_mask(uint32_t pos, uint32_t val) {
-> +    X86CPU *cpu =3D X86_CPU(current_cpu);
-> +    RDTStateInstance *rdt =3D cpu->rdt;
-> +
-> +    rdt->rdtstate->msr_L3_ia32_mask_n[pos] =3D val;
-> +}
-> +
-> +void rdt_write_msr_l2_mask(uint32_t pos, uint32_t val) {
-> +    X86CPU *cpu =3D X86_CPU(current_cpu);
-> +    RDTStateInstance *rdt =3D cpu->rdt;
-> +
-> +    rdt->rdtstate->msr_L2_ia32_mask_n[pos] =3D val;
-> +}
-> +
-> +void rdt_write_mba_thrtl(uint32_t pos, uint32_t val) {
-> +    X86CPU *cpu =3D X86_CPU(current_cpu);
-> +    RDTStateInstance *rdt =3D cpu->rdt;
-> +
-> +    rdt->rdtstate->ia32_L2_qos_ext_bw_thrtl_n[pos] =3D val;
-> +}
-> +
-> +uint32_t rdt_max_rmid(RDTStateInstance *rdt)
-> +{
-> +    RDTState *rdtdev =3D rdt->rdtstate;
-> +    return rdtdev->rmids - 1;
-> +}
-> +
-> +uint64_t rdt_read_event_count(RDTStateInstance *rdtInstance, uint32_t rm=
-id, uint32_t event_id)
+Will these performance issues be a deal breaker for enabling shared
+device assignment in this way?
 
-Long line - consider wrapping it.
+> 
+> Key point is that even 4194304 "only" allows for 16 GiB. Imagine 1 TiB
+> of shared memory :/
+> 
+>>
+>>>
+>>>
+>>> There is the alternative of having in-place private/shared conversion
+>>> when we also let guest_memfd manage some shared memory. It has plenty of
+>>> downsides, but for the problem at hand it would mean that we don't
+>>> discard on shared/private conversion.>
+>>> But whenever we want to convert memory shared->private we would
+>>> similarly have to from IOMMU page tables via VFIO. (the in-place
+>>> conversion will only be allowed if any additional references on a page
+>>> are gone -- when it is inaccessible by userspace/kernel).
+>>
+>> I'm not clear about this in-place private/shared conversion. Can you
+>> elaborate a little bit? It seems this alternative changes private and
+>> shared management in current guest_memfd?
+> 
+> Yes, there have been discussions about that, also in the context of
+> supporting huge pages while allowing for the guest to still convert
+> individual 4K chunks ...
+> 
+> A summary is here [1]. Likely more things will be covered at Linux
+> Plumbers.
+> 
+> 
+> [1]
+> https://lore.kernel.org/kvm/20240712232937.2861788-1-ackerleytng@google.com/
+> 
 
-> +{
-> +    CPUState *cs;
-> +    RDTMonitor *mon;
-> +    RDTState *rdt =3D rdtInstance->rdtstate;
-> +
-> +    uint32_t count_l3 =3D 0;
-> +    uint32_t count_local=3D 0;
-> +    uint32_t count_remote =3D 0;
-> +
-> +    if (!rdt) {
-> +        return 0;
-> +    }
-> +
-> +    CPU_FOREACH(cs) {
-> +        rdtInstance =3D &g_array_index(rdt->rdtInstances, RDTStateInstan=
-ce, cs->cpu_index);
-> +        if (rmid >=3D rdtInstance->monitors->len) {
-> +            return QM_CTR_Error;
-> +        }
-> +        mon =3D &g_array_index(rdtInstance->monitors, RDTMonitor, rmid);
-> +        count_l3 +=3D mon->count_l3;
-> +        count_local +=3D mon->count_local;
-> +        count_remote +=3D mon->count_remote;
-> +    }
-> +
-> +    switch (event_id) {
-> +        case RDT_EVENT_L3_OCCUPANCY:
-> +            return count_l3 =3D=3D 0 ? QM_CTR_Unavailable : count_l3;
-> +            break;
-> +        case RDT_EVENT_L3_REMOTE_BW:
-> +            return count_remote =3D=3D 0 ? QM_CTR_Unavailable : count_re=
-mote;
-> +            break;
-> +        case RDT_EVENT_L3_LOCAL_BW:
-> +            return count_local =3D=3D 0 ? QM_CTR_Unavailable : count_loc=
-al;
-> +            break;
+Thanks for your sharing.
 
-break after return not needed. I'm a bit surprised that didn't give you a w=
-arning.
-
-
-> +        default:
-> +            return QM_CTR_Error;
-> +    }
-> +}
-> +
->  OBJECT_DEFINE_TYPE(RDTState, rdt, RDT, ISA_DEVICE);
-> =20
->  static Property rdt_properties[] =3D {
-> diff --git a/include/hw/i386/rdt.h b/include/hw/i386/rdt.h
-> index 45e34d3103..8092c5f290 100644
-> --- a/include/hw/i386/rdt.h
-> +++ b/include/hw/i386/rdt.h
-> @@ -10,3 +10,16 @@ typedef struct RDTMonitor RDTMonitor;
->  typedef struct RDTAllocation RDTAllocation;
-> =20
->  #endif
-> +bool rdt_associate_rmid_cos(uint64_t msr_ia32_pqr_assoc);
-> +
-> +void rdt_write_msr_l3_mask(uint32_t pos, uint32_t val);
-> +void rdt_write_msr_l2_mask(uint32_t pos, uint32_t val);
-> +void rdt_write_mba_thrtl(uint32_t pos, uint32_t val);
-> +
-> +uint32_t rdt_read_l3_mask(uint32_t pos);
-> +uint32_t rdt_read_l2_mask(uint32_t pos);
-> +uint32_t rdt_read_mba_thrtl(uint32_t pos);
-> +
-> +uint64_t rdt_read_event_count(RDTStateInstance *rdt, uint32_t rmid, uint=
-32_t event_id);
-> +uint32_t rdt_max_rmid(RDTStateInstance *rdt);
-> +
-Trailing blank line doesn't add anything so I'd drop it.
-
-Jonathan
 
