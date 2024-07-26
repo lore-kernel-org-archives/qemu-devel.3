@@ -4,81 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A524C3DA64
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 02:13:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83EDCC3DA64
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 02:24:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXAS5-0007kF-L8; Thu, 25 Jul 2024 22:13:02 -0400
+	id 1sXAcN-0007gC-2a; Thu, 25 Jul 2024 22:23:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sXARw-0007jL-EL
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 22:12:53 -0400
+ id 1sXAcJ-0007fC-Pe
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 22:23:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sXARt-0001UN-Uk
- for qemu-devel@nongnu.org; Thu, 25 Jul 2024 22:12:52 -0400
+ id 1sXAcH-0003IN-3s
+ for qemu-devel@nongnu.org; Thu, 25 Jul 2024 22:23:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721959968;
+ s=mimecast20190719; t=1721960611;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=68qXEV2QOs5A+nfyOfVtC96FPOGyDocpRDCoKxAMlSo=;
- b=O/NNSZDZRUXTmXaqdIXue/qTv0BOYoNYVzhDBj/hEZikK1oeB1f0dTCyBgzrM+aCJGab4l
- u+N8hGvPjvKnQjznJyOS2L1seeGbtXiwvx5ZysTFLqHn02r/1dSspQir/HbSV2TwH4GeIV
- 3zjJUoft4d6j+2eU3aqlOSkPiLL1ZW4=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5uMHF2+m9Y1bqB89q949ETCM6D8KnKNF0yiL5OsN/bE=;
+ b=MyQEC5sELv36+RoZdZzMfTtKymDEqghfI+2vlCVrVPtczAjV5JZPckvYrbEF+arwYcf8ox
+ uBFe5HGmdRNywEY6/OfUXp0xrKWLLGMfXIZYep8fW+MVXTB1TycDVej4vK5vv1PUByhNG5
+ /l0d6xcdoQsCN+efuZ71UqRVi87c9+4=
+Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
+ [209.85.222.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-104-d-H_O9wdMiCAvY1c6vJE_w-1; Thu, 25 Jul 2024 22:12:44 -0400
-X-MC-Unique: d-H_O9wdMiCAvY1c6vJE_w-1
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2cb4ea563dfso577756a91.3
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 19:12:44 -0700 (PDT)
+ us-mta-290-_lVWfyZlP_y_YSNRCZJUXg-1; Thu, 25 Jul 2024 22:23:30 -0400
+X-MC-Unique: _lVWfyZlP_y_YSNRCZJUXg-1
+Received: by mail-ua1-f70.google.com with SMTP id
+ a1e0cc1a2514c-821436dac4dso140967241.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 19:23:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721959963; x=1722564763;
+ d=1e100.net; s=20230601; t=1721960609; x=1722565409;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=68qXEV2QOs5A+nfyOfVtC96FPOGyDocpRDCoKxAMlSo=;
- b=eIk3xeZs/uwwdeIHtoKseQHkdehXM0jknRT5nelw3RkY/krREdEbUMS0KI/gVct/yz
- AYEwNAp3BnDPFNBb8UjfzuYmEhNg8RDDyshGms7NvAiZv0NovhJUGOl5pfTaEbdfCohS
- A5/x6wymWaOWywmBDsJpeiiM7pAhWZh/g4gwRqEpbupJvKfvJ00LjT8SyWCGazlVIosn
- LL/g9qIPRpvgyyjfJSFZS3OpAwVSsDSNADDjZbLpA3KguRcrulUhmWJ7tkmaUtqGfcIt
- FC4atqHFHTk6NhfBSOfiNvRZj7fPnIy/U7zT91tYyxWDfe9Bryax7Y4eGq6NzyT7HGYD
- 6+gg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDZB/4G62nS1Sf5MdSxJP2/eiEMPWHpfcCaIvHu9dxJOMvFJpIPDhV0hG/avfjtYpfeA3kjv1Q3C8vAv7aUUtN7v2Pq6s=
-X-Gm-Message-State: AOJu0Yx2kap8wU1XpdW8zwOUo51yasz6mXJroLbdqLQrQ455oPqHCgKm
- w4Rbb4aZZ7K6VKXLdLLEjd5ZHEixOQM6mZm6Ok0d+ubtEJ5YDHGf4BKRmdWYKOFPpzY8cTBP3Ok
- wD3nkGgCcAn5by/8bVFl/jwdzU2S17Xpl2z6X9RFuN9xiDzj8HFoQ6lujH4d08X7XIerMEL2vDu
- jTEP41l0twNCaq7GFQ/E5ymPG8L18=
-X-Received: by 2002:a17:90a:fe82:b0:2c9:83f3:1291 with SMTP id
- 98e67ed59e1d1-2cf238b9040mr5464851a91.34.1721959963208; 
- Thu, 25 Jul 2024 19:12:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHfPovOJ5Ahnr1fxpiBto5mt2QYQWnMFa+nRj2FqDcmIIhl85AHYL6FD+34rtNGcWrVo8D44+QBFc0u9V9rXYM=
-X-Received: by 2002:a17:90a:fe82:b0:2c9:83f3:1291 with SMTP id
- 98e67ed59e1d1-2cf238b9040mr5464820a91.34.1721959962665; Thu, 25 Jul 2024
- 19:12:42 -0700 (PDT)
+ bh=5uMHF2+m9Y1bqB89q949ETCM6D8KnKNF0yiL5OsN/bE=;
+ b=qUqacL0fKRh+4tOAfdlBuEFuvAtU4YE+/mec6ODp3hH3OpmxGAbNFnih7UUUClb25j
+ WJJs6QmUbCaiyjfcY3u/bKZ07coKdmz5hacho6uEysTk1pSIukICpLF/5VwF+4iZdfeU
+ bO172VTz/sfz7U6yl3672Y5TwusOokyjDaVKQhuCyOZhgvgxYkJr+kEyFzV/cbIzX3aD
+ uQe8hxLDrREEQYKDaESdFpQTFGbAAtvTygyeJ2E65G45bRT+Wplyy3i+8At3iXTNH5hn
+ 9y/WqNbKItYdXUoeZEUbg5ZhvZbVWErD80DovV/ntbmFQpFDfu97AoXR6/6DoFpPeUI1
+ 624w==
+X-Gm-Message-State: AOJu0YwukESqQ7GfCCSaSB7tCP1YR2gSC2VkF1be2y2DXxF5PYFOgqGT
+ stpzbitDomHe50CDf3LMo9eQAeAXpO8ajUUxUP0JeMGvruC+R7E0YkZ9s7Gml/XektPJpFaR9ET
+ Sz+meLQKtxWTjV353dxilvDZPfKao+Gp9iDZQ6Xd5pKW30RyqTwotUNLnJOEhJCwVLanOmoFO+d
+ 7Tf2sugbSVWsLWhw5v7Jh/6RSWPB4=
+X-Received: by 2002:a05:6102:2927:b0:48f:3b56:a184 with SMTP id
+ ada2fe7eead31-493c5a0d8c9mr5678728137.5.1721960609145; 
+ Thu, 25 Jul 2024 19:23:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHmL91ooCjnYz6qfBIHuvtrMfAbCRvx1HBQtSYIY8SsntMUWjtVM+NkzKYd/vX489euDKWoZ5Kag6vWMImF7j8=
+X-Received: by 2002:a05:6102:2927:b0:48f:3b56:a184 with SMTP id
+ ada2fe7eead31-493c5a0d8c9mr5678726137.5.1721960608749; Thu, 25 Jul 2024
+ 19:23:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230731223148.1002258-1-yuri.benditovich@daynix.com>
- <20230731223148.1002258-5-yuri.benditovich@daynix.com> <ZqLPLBnbfD5r6z7D@x1n>
-In-Reply-To: <ZqLPLBnbfD5r6z7D@x1n>
+References: <20240704124834.81958-1-lvivier@redhat.com>
+ <58363488-4058-4470-8bda-5068381712bb@redhat.com>
+In-Reply-To: <58363488-4058-4470-8bda-5068381712bb@redhat.com>
 From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 26 Jul 2024 10:12:31 +0800
-Message-ID: <CACGkMEuueZsSCRgNvgMXB7Hr0t2xD+EbqgFsF49oUZE8wnBDDA@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-To: Peter Xu <peterx@redhat.com>
-Cc: Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net, 
- marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com, 
- dmitry.fleytman@gmail.com, akihiko.odaki@daynix.com, 
- sriram.yagnaraman@est.tech, mst@redhat.com, sw@weilnetz.de, 
- qemu-devel@nongnu.org, yan@daynix.com, Fabiano Rosas <farosas@suse.de>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>
+Date: Fri, 26 Jul 2024 10:23:13 +0800
+Message-ID: <CACGkMEvdt3SaOb6=SDYiRoR1xhcbJhr0Q_01m_UqZiyTZJNfPQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] net: update netdev stream/dgram man page
+To: Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>, 
+ QEMU Trivial <qemu-trivial@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
@@ -105,159 +99,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 26, 2024 at 6:19=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
+On Thu, Jul 25, 2024 at 2:49=E2=80=AFPM Laurent Vivier <lvivier@redhat.com>=
+ wrote:
 >
-> On Tue, Aug 01, 2023 at 01:31:48AM +0300, Yuri Benditovich wrote:
-> > USO features of virtio-net device depend on kernel ability
-> > to support them, for backward compatibility by default the
-> > features are disabled on 8.0 and earlier.
+> On 04/07/2024 14:48, Laurent Vivier wrote:
+> > Add the description of "-netdev stream" and "-netdev dgram" in the QEMU
+> > manpage.
 > >
-> > Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
-> > Signed-off-by: Andrew Melnychecnko <andrew@daynix.com>
+> > Add some examples on how to use them, including a way to use
+> > "-netdev stream" and "passt" in place of "-netdev user".
+> > ("passt" is a non privileged translation proxy between layer-2,
+> > like "-netdev stream", and layer-4 on host, like TCP, UDP,
+> > ICMP/ICMPv6 echo)
+> >
+> > v2:
+> >    - split patch
+> >    - update unix socket description with stream and datagram words.
+> >
+> > Laurent Vivier (4):
+> >    net: update netdev stream/dgram man page
+> >    net: update netdev stream man page with unix socket
+> >    net: update netdev dgram man page with unix socket
+> >    net: update netdev stream man page with the reconnect parameter
+> >
+> >   qemu-options.hx | 189 +++++++++++++++++++++++++++++++++++++++++++++++=
++
+> >   1 file changed, 189 insertions(+)
+> >
+> ping
 >
-> Looks like this patch broke migration when the VM starts on a host that h=
-as
-> USO supported, to another host that doesn't..
->
-> Yuri, would it be possible we always keep all the USO* features off by
-> default (so this feature bit never affects migration ABI), but then:
->
->   - only enable them when the user specified ON
->
->   - meanwhile, if detecting host feature doesn't support USO*, it could
->     fail qemu from boot, rather than silently turning it from ON->OFF
->
-> ?
 
-I agree, I have raised the same issue several times in the past.
+Queued.
 
+> cc: qemu-trivial
 >
-> Silently flipping the bit may cause migration issues like this.
 
-Looking at virtio_net_get_features(), it silently clears a lot of features.=
-..
+If trivial maintainer want to take,
+
+Acked-by: Jason Wang <jasowang@redhat.com>
 
 Thanks
->
-> Or any suggestion on how to fix migration?
->
-> Thanks,
->
-> > ---
-> >  hw/core/machine.c   |  4 ++++
-> >  hw/net/virtio-net.c | 31 +++++++++++++++++++++++++++++--
-> >  2 files changed, 33 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/hw/core/machine.c b/hw/core/machine.c
-> > index f0d35c6401..a725e76738 100644
-> > --- a/hw/core/machine.c
-> > +++ b/hw/core/machine.c
-> > @@ -38,10 +38,14 @@
-> >  #include "exec/confidential-guest-support.h"
-> >  #include "hw/virtio/virtio.h"
-> >  #include "hw/virtio/virtio-pci.h"
-> > +#include "hw/virtio/virtio-net.h"
-> >
-> >  GlobalProperty hw_compat_8_0[] =3D {
-> >      { "migration", "multifd-flush-after-each-section", "on"},
-> >      { TYPE_PCI_DEVICE, "x-pcie-ari-nextfn-1", "on" },
-> > +    { TYPE_VIRTIO_NET, "host_uso", "off"},
-> > +    { TYPE_VIRTIO_NET, "guest_uso4", "off"},
-> > +    { TYPE_VIRTIO_NET, "guest_uso6", "off"},
-> >  };
-> >  const size_t hw_compat_8_0_len =3D G_N_ELEMENTS(hw_compat_8_0);
-> >
-> > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> > index d2311e7d6e..bd0ead94fe 100644
-> > --- a/hw/net/virtio-net.c
-> > +++ b/hw/net/virtio-net.c
-> > @@ -659,6 +659,15 @@ static int peer_has_ufo(VirtIONet *n)
-> >      return n->has_ufo;
-> >  }
-> >
-> > +static int peer_has_uso(VirtIONet *n)
-> > +{
-> > +    if (!peer_has_vnet_hdr(n)) {
-> > +        return 0;
-> > +    }
-> > +
-> > +    return qemu_has_uso(qemu_get_queue(n->nic)->peer);
-> > +}
-> > +
-> >  static void virtio_net_set_mrg_rx_bufs(VirtIONet *n, int mergeable_rx_=
-bufs,
-> >                                         int version_1, int hash_report)
-> >  {
-> > @@ -796,6 +805,10 @@ static uint64_t virtio_net_get_features(VirtIODevi=
-ce *vdev, uint64_t features,
-> >          virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_TSO6);
-> >          virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_ECN);
-> >
-> > +        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_USO);
-> > +        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO4);
-> > +        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO6);
-> > +
-> >          virtio_clear_feature(&features, VIRTIO_NET_F_HASH_REPORT);
-> >      }
-> >
-> > @@ -804,6 +817,12 @@ static uint64_t virtio_net_get_features(VirtIODevi=
-ce *vdev, uint64_t features,
-> >          virtio_clear_feature(&features, VIRTIO_NET_F_HOST_UFO);
-> >      }
-> >
-> > +    if (!peer_has_uso(n)) {
-> > +        virtio_clear_feature(&features, VIRTIO_NET_F_HOST_USO);
-> > +        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO4);
-> > +        virtio_clear_feature(&features, VIRTIO_NET_F_GUEST_USO6);
-> > +    }
-> > +
-> >      if (!get_vhost_net(nc->peer)) {
-> >          return features;
-> >      }
-> > @@ -864,14 +883,16 @@ static void virtio_net_apply_guest_offloads(VirtI=
-ONet *n)
-> >              !!(n->curr_guest_offloads & (1ULL << VIRTIO_NET_F_GUEST_US=
-O6)));
-> >  }
-> >
-> > -static uint64_t virtio_net_guest_offloads_by_features(uint32_t feature=
-s)
-> > +static uint64_t virtio_net_guest_offloads_by_features(uint64_t feature=
-s)
-> >  {
-> >      static const uint64_t guest_offloads_mask =3D
-> >          (1ULL << VIRTIO_NET_F_GUEST_CSUM) |
-> >          (1ULL << VIRTIO_NET_F_GUEST_TSO4) |
-> >          (1ULL << VIRTIO_NET_F_GUEST_TSO6) |
-> >          (1ULL << VIRTIO_NET_F_GUEST_ECN)  |
-> > -        (1ULL << VIRTIO_NET_F_GUEST_UFO);
-> > +        (1ULL << VIRTIO_NET_F_GUEST_UFO)  |
-> > +        (1ULL << VIRTIO_NET_F_GUEST_USO4) |
-> > +        (1ULL << VIRTIO_NET_F_GUEST_USO6);
-> >
-> >      return guest_offloads_mask & features;
-> >  }
-> > @@ -3924,6 +3945,12 @@ static Property virtio_net_properties[] =3D {
-> >      DEFINE_PROP_INT32("speed", VirtIONet, net_conf.speed, SPEED_UNKNOW=
-N),
-> >      DEFINE_PROP_STRING("duplex", VirtIONet, net_conf.duplex_str),
-> >      DEFINE_PROP_BOOL("failover", VirtIONet, failover, false),
-> > +    DEFINE_PROP_BIT64("guest_uso4", VirtIONet, host_features,
-> > +                      VIRTIO_NET_F_GUEST_USO4, true),
-> > +    DEFINE_PROP_BIT64("guest_uso6", VirtIONet, host_features,
-> > +                      VIRTIO_NET_F_GUEST_USO6, true),
-> > +    DEFINE_PROP_BIT64("host_uso", VirtIONet, host_features,
-> > +                      VIRTIO_NET_F_HOST_USO, true),
-> >      DEFINE_PROP_END_OF_LIST(),
-> >  };
-> >
-> > --
-> > 2.34.3
-> >
-> >
->
-> --
-> Peter Xu
->
 
 
