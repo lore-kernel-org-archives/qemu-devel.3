@@ -4,73 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BA56C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 10:12:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DF68C3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 10:25:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXHvq-0002cu-RN; Fri, 26 Jul 2024 06:12:15 -0400
+	id 1sXI7r-0000LH-UC; Fri, 26 Jul 2024 06:24:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sXHvp-0002bp-2v; Fri, 26 Jul 2024 06:12:13 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sXI7p-0000KO-FS
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:24:37 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sXHvm-0004GK-Tf; Fri, 26 Jul 2024 06:12:12 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DA5F57E022;
- Fri, 26 Jul 2024 13:11:45 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 11EB6113CDE;
- Fri, 26 Jul 2024 13:12:00 +0300 (MSK)
-Message-ID: <25d30b4f-1589-43aa-b99c-fa6fc8529336@tls.msk.ru>
-Date: Fri, 26 Jul 2024 13:12:00 +0300
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sXI7k-000216-Oe
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:24:36 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WVkN10Fmbz6K5kR;
+ Fri, 26 Jul 2024 18:22:41 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id BDFA5140A46;
+ Fri, 26 Jul 2024 18:24:24 +0800 (CST)
+Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 26 Jul
+ 2024 11:24:24 +0100
+Date: Fri, 26 Jul 2024 11:24:23 +0100
+To: Hendrik Wuethrich <whendrik@google.com>
+CC: <qemu-devel@nongnu.org>, <eduardo@habkost.net>,
+ <richard.henderson@linaro.org>, <marcel.apfelbaum@gmail.com>,
+ <mst@redhat.com>, <pbonzini@redhat.com>, <peternewman@google.com>
+Subject: Re: [PATCH v1 1/9] Add Intel RDT device to config.
+Message-ID: <20240726112423.00005e5f@Huawei.com>
+In-Reply-To: <20240719162929.1197154-2-whendrik@google.com>
+References: <20240719162929.1197154-1-whendrik@google.com>
+ <20240719162929.1197154-2-whendrik@google.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/loongarch: Fix helper_lddir() a CID
- INTEGER_OVERFLOW issue
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org,
- lixianglai@loongson.cn, maobibo@loongson.cn
-Cc: richard.henderson@linaro.org, peter.maydell@linaro.org,
- philmd@redhat.com, qemu-stable <qemu-stable@nongnu.org>
-References: <20240724015853.1317396-1-gaosong@loongson.cn>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
- bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
- WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
- 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
- WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
- zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
- FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
- CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
- Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
- LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
- UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
- SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
- 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
- K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
- pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
- GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
- fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
- AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
- cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
- HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
- 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
- rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
- Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240724015853.1317396-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.203.174.77]
+X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,37 +68,174 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-24.07.2024 04:58, Song Gao wrote:
-> When the lddir level is 4 and the base is a HugePage, we may try to put value 4
-> into a field in the TLBENTRY that is only 2 bits wide.
-> 
-> Fixes: Coverity CID 1547717
-> Fixes: 9c70db9a43388 ("target/loongarch: Fix tlb huge page loading issue")
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
+On Fri, 19 Jul 2024 16:29:21 +0000
+Hendrik Wuethrich <whendrik@google.com> wrote:
+
+> From: =E2=80=AAHendrik W=C3=BCthrich <whendrik@google.com>
+>=20
+> Change config to show RDT, add minimal code to the rdt.c module to make
+> sure things still compile.
+>=20
+> Signed-off-by: Hendrik W=C3=BCthrich <whendrik@google.com>
+
+Hi Hendrik
+
+Great to see emulation of this. Will be handy for testing
+kernel changes etc.
+
+Not convinced it's worth a separate patch just to add stubs.
+Why not at least bring some real code in with this?
+
 > ---
->   target/loongarch/tcg/tlb_helper.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-> index d6331f9b0b..97f38fc391 100644
-> --- a/target/loongarch/tcg/tlb_helper.c
-> +++ b/target/loongarch/tcg/tlb_helper.c
-> @@ -525,6 +525,7 @@ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
->           if (unlikely(level == 4)) {
->               qemu_log_mask(LOG_GUEST_ERROR,
->                             "Attempted use of level 4 huge page\n");
-> +            return base;
->           }
->   
->           if (FIELD_EX64(base, TLBENTRY, LEVEL)) {
+>  hw/i386/Kconfig       |  4 ++++
+>  hw/i386/meson.build   |  1 +
+>  hw/i386/rdt.c         | 49 +++++++++++++++++++++++++++++++++++++++++++
+>  include/hw/i386/rdt.h | 12 +++++++++++
+>  4 files changed, 66 insertions(+)
+>  create mode 100644 hw/i386/rdt.c
+>  create mode 100644 include/hw/i386/rdt.h
+>=20
+> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+> index f4a33b6c08..4dd05ed6f2 100644
+> --- a/hw/i386/Kconfig
+> +++ b/hw/i386/Kconfig
+> @@ -10,6 +10,9 @@ config SGX
+>      bool
+>      depends on KVM
+> =20
+> +config RDT
+> +    bool
+> +
+>  config PC
+>      bool
+>      imply APPLESMC
+> @@ -26,6 +29,7 @@ config PC
+>      imply QXL
+>      imply SEV
+>      imply SGX
+> +    imply RDT
+>      imply TEST_DEVICES
+>      imply TPM_CRB
+>      imply TPM_TIS_ISA
+> diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+> index 03aad10df7..fdbf5962b5 100644
+> --- a/hw/i386/meson.build
+> +++ b/hw/i386/meson.build
+> @@ -21,6 +21,7 @@ i386_ss.add(when: 'CONFIG_VMPORT', if_true: files('vmpo=
+rt.c'))
+>  i386_ss.add(when: 'CONFIG_VTD', if_true: files('intel_iommu.c'))
+>  i386_ss.add(when: 'CONFIG_SGX', if_true: files('sgx-epc.c','sgx.c'),
+>                                  if_false: files('sgx-stub.c'))
+> +i386_ss.add(when: 'CONFIG_RDT', if_true: files('rdt.c'))
+> =20
+>  i386_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-common.c'))
+>  i386_ss.add(when: 'CONFIG_PC', if_true: files(
+> diff --git a/hw/i386/rdt.c b/hw/i386/rdt.c
+> new file mode 100644
+> index 0000000000..0a5e95606b
+> --- /dev/null
+> +++ b/hw/i386/rdt.c
+
+License etc missing.
+
+> @@ -0,0 +1,49 @@
+> +#include "qemu/osdep.h"
+> +#include "hw/i386/rdt.h"
+> +#include <stdint.h>
+> +#include "hw/qdev-properties.h"
+> +#include "qemu/typedefs.h"
+> +#include "qom/object.h"
+> +#include "target/i386/cpu.h"
+> +#include "hw/isa/isa.h"
+
+Ordering seems a bit random.  I don't really mind what order
+they are in but it is easier to pick an option so it
+becomes obvious where to put things later.
+
+Also better to bring these in when they are needed so it
+is obvious why they are here.
 
 
-Is it qemu-stable material (for 9.0.x series)?
+> +
+> +#define TYPE_RDT "rdt"
+> +
+> +OBJECT_DECLARE_TYPE(RDTState, RDTStateClass, RDT);
+> +
+> +struct RDTState {
+> +    ISADevice parent;
+> +};
+> +
+> +struct RDTStateClass { };
+I'd do
+...Class {
+};
 
-Thanks,
+As will reduce noise in later patches assuming this will have
+content.
 
-/mjt
+
+> +
+> +OBJECT_DEFINE_TYPE(RDTState, rdt, RDT, ISA_DEVICE);
+> +
+> +static Property rdt_properties[] =3D {
+> +    DEFINE_PROP_END_OF_LIST(),
+> +};
+> +
+> +static void rdt_init(Object *obj)
+
+Not used?
+
+> +{
+> +}
+> +
+> +static void rdt_realize(DeviceState *dev, Error **errp)
+> +{
+> +}
+> +
+> +static void rdt_finalize(Object *obj)
+> +{
+> +}
+
+Not used?
+
+> +
+> +static void rdt_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> +
+> +    dc->hotpluggable =3D false;
+> +    dc->desc =3D "RDT";
+> +    dc->user_creatable =3D true;
+> +    dc->realize =3D rdt_realize;
+> +
+> +    device_class_set_props(dc, rdt_properties);
+> +}
+> +
+> diff --git a/include/hw/i386/rdt.h b/include/hw/i386/rdt.h
+> new file mode 100644
+> index 0000000000..45e34d3103
+> --- /dev/null
+> +++ b/include/hw/i386/rdt.h
+> @@ -0,0 +1,12 @@
+> +#ifndef HW_RDT_H
+> +#define HW_RDT_H
+> +
+> +#include <stdbool.h>
+> +#include <stdint.h>
+
+Not used so don't include them until needed.
+
+> +
+> +typedef struct RDTState RDTState;
+> +typedef struct RDTStateInstance RDTStateInstance;
+> +typedef struct RDTMonitor RDTMonitor;
+> +typedef struct RDTAllocation RDTAllocation;
+> +
+> +#endif
+
 
