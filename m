@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE24AC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 16:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74709C3DA70
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 17:00:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXO8y-0001gI-2y; Fri, 26 Jul 2024 12:50:12 -0400
+	id 1sXOIP-00009K-Gi; Fri, 26 Jul 2024 12:59:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sXO8w-0001eY-CT
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 12:50:10 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sXOIO-00008W-9p
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 12:59:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sXO8s-0006Bd-Po
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 12:50:10 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WVtw42Qqrz6K9Lm;
- Sat, 27 Jul 2024 00:47:32 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 1A1191404FC;
- Sat, 27 Jul 2024 00:50:00 +0800 (CST)
-Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 26 Jul
- 2024 17:49:59 +0100
-Date: Fri, 26 Jul 2024 17:49:58 +0100
-To: David Woodhouse <dwmw2@infradead.org>
-CC: "Michael S. Tsirkin" <mst@redhat.com>, Richard Cochran
- <richardcochran@gmail.com>, Peter Hilber <peter.hilber@opensynergy.com>,
- <linux-kernel@vger.kernel.org>, <virtualization@lists.linux.dev>,
- <linux-arm-kernel@lists.infradead.org>, <linux-rtc@vger.kernel.org>, "Ridoux, 
- Julien" <ridouxj@amazon.com>, <virtio-dev@lists.linux.dev>, "Luu, Ryan"
- <rluu@amazon.com>, "Chashper, David" <chashper@amazon.com>, "Mohamed
- Abuelfotoh, Hazem" <abuehaze@amazon.com>, "Christopher S . Hall"
- <christopher.s.hall@intel.com>, Jason Wang <jasowang@redhat.com>, "John
- Stultz" <jstultz@google.com>, <netdev@vger.kernel.org>, Stephen Boyd
- <sboyd@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, Xuan Zhuo
- <xuanzhuo@linux.alibaba.com>, Marc Zyngier <maz@kernel.org>, Mark Rutland
- <mark.rutland@arm.com>, Daniel Lezcano <daniel.lezcano@linaro.org>,
- Alessandro Zummo <a.zummo@towertech.it>, Alexandre Belloni
- <alexandre.belloni@bootlin.com>, qemu-devel <qemu-devel@nongnu.org>, "Simon
- Horman" <horms@kernel.org>
-Subject: Re: [PATCH] ptp: Add vDSO-style vmclock support
-Message-ID: <20240726174958.00007d10@Huawei.com>
-In-Reply-To: <98813a70f6d3377d3a9d502fd175be97334fcc87.camel@infradead.org>
-References: <14d1626bc9ddae9d8ad19d3c508538d10f5a8e44.camel@infradead.org>
- <20240725012730-mutt-send-email-mst@kernel.org>
- <7de7da1122e61f8c64bbaab04a35af93fafac454.camel@infradead.org>
- <20240725081502-mutt-send-email-mst@kernel.org>
- <f55e6dfc4242d69eed465f26d6ad7719193309dc.camel@infradead.org>
- <20240725082828-mutt-send-email-mst@kernel.org>
- <db786be69aed3800f1aca71e8c4c2a6930e3bb0b.camel@infradead.org>
- <20240725083215-mutt-send-email-mst@kernel.org>
- <98813a70f6d3377d3a9d502fd175be97334fcc87.camel@infradead.org>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sXOIL-0003D3-LH
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 12:59:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722013190;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=hSLu4jn027/cByGI588DmGtg3B2C9cOApNc9SFCcP60=;
+ b=Y4iIKUal65kdGH8spAAV1BH7VaAUng/M0az1An+NhOeQSEN7JPzCLN5fs+qami2d7GKcAz
+ 9zTJmX0hyLma/woZ3zN+GwYdx4gETtxioGRTUkJCYCU8MNQTN5sgTpyVPs3N7Q3dj+UuMw
+ ISc9meTuywct9ZmEJy2NlcZ32CLNS5s=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-321-LWUPQy5_MDCMauy4Cmhwhw-1; Fri,
+ 26 Jul 2024 12:59:46 -0400
+X-MC-Unique: LWUPQy5_MDCMauy4Cmhwhw-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3D52E195609E; Fri, 26 Jul 2024 16:59:44 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.32])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ADF7F1955D48; Fri, 26 Jul 2024 16:59:41 +0000 (UTC)
+Date: Fri, 26 Jul 2024 17:59:38 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] .gitlab-ci.d/cirrus.yml: Shorten the runtime of the
+ macOS and FreeBSD jobs
+Message-ID: <ZqPV-s_7yav0eUT4@redhat.com>
+References: <20240429100113.53357-1-thuth@redhat.com>
+ <035f854c-78ff-4a8a-9356-1c55dca381b8@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.174.77]
-X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <035f854c-78ff-4a8a-9356-1c55dca381b8@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,89 +85,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 25 Jul 2024 14:50:50 +0100
-David Woodhouse <dwmw2@infradead.org> wrote:
+On Fri, Jul 26, 2024 at 11:18:43AM +0200, Thomas Huth wrote:
+> 
+> Looks like the reduction of this patch was not enough, we've run out of
+> Cirrus-CI compute time again ... does anybody have additional ideas how we
+> could avoid that in the future?
 
-> On Thu, 2024-07-25 at 08:33 -0400, Michael S. Tsirkin wrote:
-> > On Thu, Jul 25, 2024 at 01:31:19PM +0100, David Woodhouse wrote:  
-> > > On Thu, 2024-07-25 at 08:29 -0400, Michael S. Tsirkin wrote:  
-> > > > On Thu, Jul 25, 2024 at 01:27:49PM +0100, David Woodhouse wrote:  
-> > > > > On Thu, 2024-07-25 at 08:17 -0400, Michael S. Tsirkin wrote:  
-> > > > > > On Thu, Jul 25, 2024 at 10:56:05AM +0100, David Woodhouse wrote:  
-> > > > > > > > Do you want to just help complete virtio-rtc then? Would be easier than
-> > > > > > > > trying to keep two specs in sync.  
-> > > > > > > 
-> > > > > > > The ACPI version is much more lightweight and doesn't take up a
-> > > > > > > valuable PCI slot#. (I know, you can do virtio without PCI but that's
-> > > > > > > complex in other ways).
-> > > > > > >   
-> > > > > > 
-> > > > > > Hmm, should we support virtio over ACPI? Just asking.  
-> > > > > 
-> > > > > Given that we support virtio DT bindings, and the ACPI "PRP0001" device
-> > > > > exists with a DSM method which literally returns DT properties,
-> > > > > including such properties as "compatible=virtio,mmio" ... do we
-> > > > > already?
-> > > > > 
-> > > > >   
-> > > > 
-> > > > In a sense, but you are saying that is too complex?
-> > > > Can you elaborate?  
-> > > 
-> > > No, I think it's fine. I encourage the use of the PRP0001 device to
-> > > expose DT devices through ACPI. I was just reminding you of its
-> > > existence.  
-> > 
-> > Confused. You said "I know, you can do virtio without PCI but that's
-> > complex in other ways" as the explanation why you are doing a custom
-> > protocol.  
-> 
-> Ah, apologies, I wasn't thinking that far back in the conversation.
-> 
-> If we wanted to support virtio over ACPI, I think PRP0001 can be made
-> to work and isn't too complex (even though it probably doesn't yet work
-> out of the box).
-> 
-> But for the VMCLOCK thing, yes, the simple ACPI device is a lot simpler
-> than virtio-rtc and much more attractive.
-> 
-> Even if the virtio-rtc specification were official today, and I was
-> able to expose it via PCI, I probably wouldn't do it that way. There's
-> just far more in virtio-rtc than we need; the simple shared memory
-> region is perfectly sufficient for most needs, and especially ours.
-> 
-> I have reworked
-> https://git.infradead.org/users/dwmw2/linux.git/shortlog/refs/heads/vmclock
-> to take your other feedback into account.
-> 
-> It's now more flexible about the size handling, and explicitly checking
-> that specific fields are present before using them. 
-> 
-> I think I'm going to add a method on the ACPI device to enable the
-> precise clock information. I haven't done that in the driver yet; it
-> still just consumes the precise clock information if it happens to be
-> present already. The enable method can be added in a compatible fashion
-> (the failure mode is that guests which don't invoke this method when
-> the hypervisor needs them to will see only the disruption signal and
-> not precise time).
-> 
-> For the HID I'm going to use AMZNVCLK. I had used QEMUVCLK in the QEMU
-> patches, but I'll change that to use AMZNVCLK too when I repost the
-> QEMU patch.
+QEMU keeps getting bigger, so our attempts to cut down on what we
+build mean we keep testing a narrower & narrower subset of
+functionality. We long ago culled the obvious wastage.
 
-That doesn't fit with ACPI _HID definitions.
-Second set 4 characters need to be hex digits as this is an
-ACPI style ID (which I assume this is given AMZN is a valid
-vendor ID.  6.1.5 in ACPI v6.5
+One thing is to optimize our code such that it is less expensive
+for the compiler. I feel like we've done that periodically already
+with refactoring header files. It is a complex problem with no
+quick wins to reduce compile time. If someone knows of more low
+hanging fruit though, speak up.
 
-Maybe I'm missing something...
+Cirrus CI supports a "bring your hardware" model. We could do
+that for FreeBSD testing, by leveraging our existnig Azure
+account further to provide VMs. If doing that though, it'd
+be saner to just do it in GitLab context directly. This huas
+the burn of *us* maintaining FreeBSD images,and updating
+them every time a new FreeBSD is released. ie you can't just
+stick on 12.0, because when 12.1 is released, the ports
+packages get rebuilt against new 12.1 and frequently become
+uninstallable on the older minor release. IOW, we would have
+a continual burden in updating our images to track FreeBSD
+minor releases. Also this doesn't solve our macOS needs since
+you can't just run macOS in any VM, it has to be Apple HW.
 
-J
+Cirrus CI lets you buy more CI credits. IIUC we get 50 credits
+free each month. I can't see QEMU's usage, since it is private
+to admins only:
 
+  https://cirrus-ci.com/settings/github/qemu
+
+if it is anything like libvirt though, I'm going to expect that
+most of our credits are consumed by macOS, not FreeBSD, since
+Cirrus CI charges for macOS at a higher level.
+
+To stop running out of credits I guess we'll want to buy an
+extra 20 credits in each freeze period - ie 60 a year. They
+charge $1 per credit.
+
+Does the QEMU project have funds available to spend on things
+like this ?  It unfortunately requires a credit card to buy
+more credits, so somehow QEMU would have to re-imburse an
+individual maintainer for the purchase.
+
+Final option is to make contact with Cirrus CI owners, and
+ask if they might wish to directly sponsor QEMU in terms of
+granting us extra credits, in exchange for including them on
+our sponsor's page https://www.qemu.org/sponsors/.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
