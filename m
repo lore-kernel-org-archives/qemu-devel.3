@@ -4,85 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5483C3DA63
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 05:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91A0AC3DA63
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 05:56:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXDZr-0004nd-TL; Fri, 26 Jul 2024 01:33:15 -0400
+	id 1sXDvu-0004lq-2c; Fri, 26 Jul 2024 01:56:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sXDZq-0004m0-DD
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 01:33:14 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sXDZc-0007V4-1U
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 01:33:14 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1fc587361b6so2407675ad.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 22:32:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721971978; x=1722576778; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rTDQH37Ci1bWxSokmKwx6+i64qavG3O8C1lYGoVCHpY=;
- b=c1N8OsPzipDkiLhYeM9RYwMHJREbW7sOrNOk5HHO3DGZU5hrGzQB+SX7VZ5T/KMX9t
- Q/oWYc5gt1iSrOhR4SYA8rtrlBXyCeZ8PwTMC/b/29hf/05k1Mtb/BZDzzi4H1sGaURz
- cJryYo22yEDAXClQoLJ3O6+3Z8sV1g+H707LKAcQzYmjpsC/BQMksJTKDeh8HoSBQhwS
- olFGf4ttWt32Li46lmPpX/95S/SgOzHaWj9rjVGK7sFfe+J6hDwiAiDcsRtySFS4dVkE
- xez8BfqoeCYspVsm3Ud+VZsH7L8lNcviOZR1/BvPCZje84EVWYuOGGwsSp6iQQElR6E0
- Td2Q==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sXDvs-0004kN-7u
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 01:56:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sXDvq-0005rX-8I
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 01:55:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721973356;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=YQThcy6xed9kn8EJsXisAuikWbZtGIN23SlH2PNZkcA=;
+ b=bkjymalnOdXScRwNcjhDSuo1dqkAVX4GvsaNggUYsA+jms15GCP9J7z/xQ1sVUevJJzvfG
+ IPBjOcfwxwqCWeaNhUFSWefQ9jv/H37Wci3DEzRRojLXmnC/jl8Ysb3EIsSDo/7ynFBrK9
+ tyWJ98LQeCUNb/hyL57bPquZ0MGrTeA=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-193-BhRb-0kGOoqAW-HOKuxBXg-1; Fri, 26 Jul 2024 01:55:53 -0400
+X-MC-Unique: BhRb-0kGOoqAW-HOKuxBXg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4280c6b3614so2716565e9.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 22:55:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721971978; x=1722576778;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rTDQH37Ci1bWxSokmKwx6+i64qavG3O8C1lYGoVCHpY=;
- b=E7VCB8HzNsuIXM7zRtc4kBKzEf4LqOTs+7NJC6z7gxD1/GwCyHLEMR9HL9ZCQul2Xg
- kbyNkizaU1x8Gb09i8ODlZv+IkY2WiNBD8zndToEeoEojFsMjqqWq2KFOhNACuuTe7YN
- u8n8VrdbsX9aXOfgJ90rIFotq3Ru/gtW4UFfHpefWz9zlyL6p/FCkY8gAlEeRK2Qk70J
- M7K5hA9r3WQEwcRIGJIYAdpUXBnvrDaWKgOAmf7+u7EBTnofIsnnlZO255haLsbMzus0
- 1y3g+UhlaMo4H0QYBW5c76DJfJBtuMh8O4kKaV34RaUgaQLOozPiXNhaujtcb/9TD+BP
- KC2Q==
+ d=1e100.net; s=20230601; t=1721973352; x=1722578152;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YQThcy6xed9kn8EJsXisAuikWbZtGIN23SlH2PNZkcA=;
+ b=e0S//220sfzB8fa07Q767Y88pLun7rhkBpDWGJzlRRWv+sTzwnfsi8hk+GPYThPcuK
+ OAOQsXLsqLSxq8yeeEXHQZUEMDN4Rw3EBFgaLi4iFZZLbdIsapZjpWIrS+UfWdMtgLLK
+ Rgngtpv1d4W2NeJkZOSoeBBDLX4W3Z0PR0mdxfZ01mC6b31EIBZToT0lv2NOgJHc1/q/
+ QUS/Yv14ehQiedQSC1dXkO9GX8b7wavEk//n+Rrb8PZjFchAc95UE8Tf5IdEfHT/Fw8g
+ kbeFjTfV/qzoK1m86V+cM62GptAgYwGVRQ/zWljAc64lrebzkdwCVGKqRgHCJxCjDa8j
+ 8ZGg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWzzJaauhdnm6uzoPlKurGwTlCYhNJLCKYy22OPwtBNTl8bVizX483Zv8cYeDlK5qEEUIj5ZrfnTYIizc3ygaKxbmCUXJY=
-X-Gm-Message-State: AOJu0YxlnohuHHcxa57NKp9vrIKtpkxkSlCe9tgZvRMzFQ6f8+/4hf9H
- 3+HyQqLec/CW/PMw6rZeGMEeHN69MixZGyvl/ZoJO1J7Fo67RswkiJWrKmpxhbo=
-X-Google-Smtp-Source: AGHT+IFi2L3qsdHek8EBCmHr6FdiodpBh8NMernWtJ7z1wQQC/E5QwpxMgE9E5kf/QM8dyWID4h2Og==
-X-Received: by 2002:a17:902:cec7:b0:1fd:67c2:f97f with SMTP id
- d9443c01a7336-1fed92579d1mr41451655ad.28.1721971978113; 
- Thu, 25 Jul 2024 22:32:58 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
+ AJvYcCUhDuRu5ekU8FpDhJiGcGnuv1wZ8QjKzMZG9jq9DRPQ1XUnQFNwvdHKsqlZoOT25d7zrWJokShW3yK3m3xezXfSWkzL4ZY=
+X-Gm-Message-State: AOJu0YxehzxT6TTFxmUDkFNfUQXCX8GkPb4wM1ha/b2dcoVjG07szeDd
+ HznOFenqPTDqJSzeBJMuoioKAwSXioxqAg3wplaSf5dfPSi4FVJd21kNPhnXH8MNEPNVgQnU2VG
+ uoNnA2HmpoH6wuk8f4kWH80bMahCbMdF4oyqf1axegMLdIBoqnvqz
+X-Received: by 2002:adf:c08b:0:b0:367:8875:dd4c with SMTP id
+ ffacd0b85a97d-36b31ae2541mr2973082f8f.23.1721973351674; 
+ Thu, 25 Jul 2024 22:55:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGwUk9Ft0dVUiNjmu7f1QTIXu6q3o+g6VMlVMK1lSks1buGboeYtzHjiLlkzq1mSCBI88a7sA==
+X-Received: by 2002:adf:c08b:0:b0:367:8875:dd4c with SMTP id
+ ffacd0b85a97d-36b31ae2541mr2973059f8f.23.1721973351027; 
+ Thu, 25 Jul 2024 22:55:51 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:1f7:28ce:f21a:7e1e:6a9:f708])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fed7c85c70sm23351375ad.23.2024.07.25.22.32.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Jul 2024 22:32:57 -0700 (PDT)
-Message-ID: <8b952492-36f5-4d7f-b2f9-93f17f95c02c@linaro.org>
-Date: Fri, 26 Jul 2024 15:32:53 +1000
+ 5b1f17b1804b1-4280573edbfsm63673365e9.15.2024.07.25.22.55.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Jul 2024 22:55:50 -0700 (PDT)
+Date: Fri, 26 Jul 2024 01:55:45 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: David Woodhouse <dwmw2@infradead.org>
+Cc: Richard Cochran <richardcochran@gmail.com>,
+ Peter Hilber <peter.hilber@opensynergy.com>,
+ linux-kernel@vger.kernel.org, virtualization@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, linux-rtc@vger.kernel.org,
+ "Ridoux, Julien" <ridouxj@amazon.com>, virtio-dev@lists.linux.dev,
+ "Luu, Ryan" <rluu@amazon.com>, "Chashper, David" <chashper@amazon.com>,
+ "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>,
+ "Christopher S . Hall" <christopher.s.hall@intel.com>,
+ Jason Wang <jasowang@redhat.com>, John Stultz <jstultz@google.com>,
+ netdev@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+ Thomas Gleixner <tglx@linutronix.de>,
+ Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+ Marc Zyngier <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Alessandro Zummo <a.zummo@towertech.it>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ qemu-devel <qemu-devel@nongnu.org>, Simon Horman <horms@kernel.org>
+Subject: Re: [PATCH] ptp: Add vDSO-style vmclock support
+Message-ID: <20240726012933-mutt-send-email-mst@kernel.org>
+References: <98813a70f6d3377d3a9d502fd175be97334fcc87.camel@infradead.org>
+ <20240725100351-mutt-send-email-mst@kernel.org>
+ <2a27205bfc61e19355d360f428a98e2338ff68c3.camel@infradead.org>
+ <20240725122603-mutt-send-email-mst@kernel.org>
+ <0959390cad71b451dc19e5f9396d3f4fdb8fd46f.camel@infradead.org>
+ <20240725163843-mutt-send-email-mst@kernel.org>
+ <d62925d94a28b4f8e07d14c1639023f3b78b0769.camel@infradead.org>
+ <20240725170328-mutt-send-email-mst@kernel.org>
+ <c5a48c032a2788ecd98bbcec71f6f3fb0fb65e8c.camel@infradead.org>
+ <20240726010511-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] linux-user: Add QEMU include path to vdso
-To: Jim Shu <jim.shu@sifive.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>
-References: <20240726043246.10999-1-jim.shu@sifive.com>
- <20240726043246.10999-3-jim.shu@sifive.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240726043246.10999-3-jim.shu@sifive.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240726010511-mutt-send-email-mst@kernel.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,36 +124,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/26/24 14:32, Jim Shu wrote:
-> Add include path to 'gen-vdso.c' to get ELF header in QEMU source.
+On Fri, Jul 26, 2024 at 01:09:24AM -0400, Michael S. Tsirkin wrote:
+> On Thu, Jul 25, 2024 at 10:29:18PM +0100, David Woodhouse wrote:
+> > > > > Then can't we fix it by interrupting all CPUs right after LM?
+> > > > > 
+> > > > > To me that seems like a cleaner approach - we then compartmentalize
+> > > > > the ABI issue - kernel has its own ABI against userspace,
+> > > > > devices have their own ABI against kernel.
+> > > > > It'd mean we need a way to detect that interrupt was sent,
+> > > > > maybe yet another counter inside that structure.
+> > > > > 
+> > > > > WDYT?
+> > > > > 
+> > > > > By the way the same idea would work for snapshots -
+> > > > > some people wanted to expose that info to userspace, too.
+> > 
+> > Those people included me. I wanted to interrupt all the vCPUs, even the
+> > ones which were in userspace at the moment of migration, and have the
+> > kernel deal with passing it on to userspace via a different ABI.
+> > 
+> > It ends up being complex and intricate, and requiring a lot of new
+> > kernel and userspace support. I gave up on it in the end for snapshots,
+> > and didn't go there again for this.
 > 
-> Signed-off-by: Jim Shu <jim.shu@sifive.com>
-> ---
->   linux-user/meson.build | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
+> Maybe become you insist on using ACPI?
+> I see a fairly simple way to do it. For example, with virtio:
 > 
-> diff --git a/linux-user/meson.build b/linux-user/meson.build
-> index bc41e8c3bc..ccce4f7e70 100644
-> --- a/linux-user/meson.build
-> +++ b/linux-user/meson.build
-> @@ -30,8 +30,11 @@ linux_user_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING', if_true: files('sem
->   
->   syscall_nr_generators = {}
->   
-> +# It requires "include/elf.h"
-> +gen_vdso_inc = include_directories('..' / 'include')
->   gen_vdso_exe = executable('gen-vdso', 'gen-vdso.c',
-> -                          native: true, build_by_default: false)
-> +                          native: true, build_by_default: false,
-> +                          include_directories: gen_vdso_inc)
->   gen_vdso = generator(gen_vdso_exe, output: '@BASENAME@.c.inc',
->                        arguments: ['-o', '@OUTPUT@', '@EXTRA_ARGS@', '@INPUT@'])
->   
+> one vq per CPU, with a single outstanding buffer,
+> callback copies from the buffer into the userspace
+> visible memory.
+> 
+> Want me to show you the code?
 
-Ok, I guess.  I'm not convinced we need this.  I tend to think our elf.h is way out of 
-date, and perhaps should be removed.  I suspect we only carry it around now for windows 
-hosts, compiling the system loaders.
+Couldn't resist, so I wrote a bit of this code.
+Fundamentally, we keep a copy of the hypervisor abi
+in the device:
+
+struct virtclk_info *vci {
+	struct vmclock_abi abi;
+};
+
+each vq will has its own copy:
+
+struct virtqueue_info {
+	struct scatterlist sg[];
+	struct vmclock_abi abi;
+}
+
+we add it during probe:
+        sg_init_one(vqi->sg, &vqi->abi, sizeof(vqi->abi));
+	virtqueue_add_inbuf(vq,
+                        vqi->sg, 1,
+                        &vq->vabi,
+                        GFP_ATOMIC);
 
 
-r~
+
+We set the affinity for each vq:
+
+       for (i = 0; i < num_online_cpus(); i++)
+               virtqueue_set_affinity(vi->vq[i], i);
+
+(virtio net does it, and it handles cpu hotplug as well)
+
+each vq callback would do:
+
+static void vmclock_cb(struct virtqueue *vq)
+{
+        struct virtclk_info *vci = vq->vdev->priv;
+        struct virtqueue_info *vqi = vq->priv;
+	void *buf;
+        unsigned int len;
+
+	buf = virtqueue_get_buf(vq, &len);
+	if (!buf)
+		return;
+
+	BUG_ON(buf != &vq->abi);
+
+	spin_lock(vci->lock);
+	if (memcmp(&vci->abi, &vqi->abi, sizeof(vqi->abi))) {
+		memcpy(&vci->abi, &vqi->abi, sizeof(vqi->abi));
+	}
+
+	/* Update the userspace visible structure now */
+	.....
+
+	/* Re-add the buffer */
+	virtqueue_add_inbuf(vq,
+                        vqi->sg, 1,
+                        &vqi->abi,
+                        GFP_ATOMIC);
+
+	spin_unlock(vi->lock);
+}
+
+That's it!
+Where's the problem here?
+
+-- 
+MST
+
 
