@@ -4,81 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48DAEC3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B32AC3DA70
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 00:15:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sX8Lp-0007wL-PX; Thu, 25 Jul 2024 19:58:25 -0400
+	id 1sX8bl-0002yz-PZ; Thu, 25 Jul 2024 20:14:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8LW-0006F3-Rw; Thu, 25 Jul 2024 19:58:12 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ (Exim 4.90_1) (envelope-from <gregorhaas1997@gmail.com>)
+ id 1sX8bk-0002tK-9G; Thu, 25 Jul 2024 20:14:52 -0400
+Received: from mail-il1-x130.google.com ([2607:f8b0:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sX8LT-0001Vb-Ok; Thu, 25 Jul 2024 19:58:06 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-656d8b346d2so283976a12.2; 
- Thu, 25 Jul 2024 16:58:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gregorhaas1997@gmail.com>)
+ id 1sX8bg-0008Bd-Cx; Thu, 25 Jul 2024 20:14:52 -0400
+Received: by mail-il1-x130.google.com with SMTP id
+ e9e14a558f8ab-397ba4f7387so5617275ab.0; 
+ Thu, 25 Jul 2024 17:14:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1721951882; x=1722556682; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ksbtOr2fFR9ZvnrgX2otizuG+rARTiSjYmU8A5zEVWc=;
- b=aMrVr+Szg2TI5V4Yjt95pTVbPaqzAEyxUfLEEcnY8qWZknflfYoqkPcOd5Pe4vx8gz
- i+JBV8C5qcI1POcPIrheksFj6Ck8THjzdyIYp7GbLe6NVH9XjFaIelp2KG5LrLIiTswU
- ONknL/LeBLFxZH16cy0VypLvU4LNR1+aqt6EZLMheHsdanb93roP/zGaJYjjYksHInTk
- w8kxDrd9cVpIjmun4GV6bb2FaqkKWbQUwg8twWt+OdSxzJEIxw+ymmBBfHX+Db/e+upc
- L5uVf0A6R85tVVhDokK9IDla/r+LFmAUgfxCQFczpbyG5AvAiq2FvLiDoMbHYDlMEFpo
- uURw==
+ d=gmail.com; s=20230601; t=1721952885; x=1722557685; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=mmLhNiSFDrMxFOe5Bj8cO8dwpS639NItZ7u/sC95EYo=;
+ b=eHDLgd094sGCIodOoDWGfW9mCqTqnMWuBKaEYM7x52Jqa6CXT1Y1e26pQerPigX1A0
+ 7K9ayunyzm0KLHmw2k75FVQMzeyPvg8R9o4cwmGRxerhPsaHaXy4HuGInjfyL/0RIoBI
+ uGVwa4scKD1niZZDMHf109A7bXp7hRyAjFPzRoWAZlSZOnXtjpZnHv2ft+RCBiic2L6C
+ qrO5xGihMN9GTp+Pc36ncAXzM1WktL9TcNmbPbTc85msV22dGeco35q6eshtN0kvzO31
+ JUWv9Lbv/GA1TDLs+XWFmJgkj8jU7Y4tygTHmEtyLsjNoZV3zJ/Zy9d3m3VrWFThj1qR
+ I1GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721951882; x=1722556682;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ksbtOr2fFR9ZvnrgX2otizuG+rARTiSjYmU8A5zEVWc=;
- b=iEHthHrZWVngneTXCuEbbw8acBoygmqEeMb0gX6/b+4S+uwHuFMy4ImOBlzcLLOm+k
- c+rI7ptyTTJLRVWxOMjTv3Kruhcl7BQYRT88Om4yJjx13pShX5mG7CdJ5RRc6Vwm394c
- IztOMw5CmbiSTzHJ08OXY2VIBoNC6e9sbrSUBGFmaT5VqML1GKXFuNhbBd2bWIq5s6ru
- L1adanCFLX5cSuWqW/cSnUUNjYqhqfJfgv/RIrfNh9wdedv9j3i3F9wtjXHhe6j82bUS
- LVasHaiWeJuBXhp1VFTP8TNwfTrWUoFfu4xtND/cvRfQmxm3xQo4jLBhgJfaAGGIsyau
- c2DQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX2hnpF3RsQyWnjR1xuonPYfMMGJy4qYuxfdFproydtHsiuZ8lUXD0Go4NIYRUFpTZnDuA8IjToL2t0uxYvmidnvo78
-X-Gm-Message-State: AOJu0Yz7rAO9VnGw91LobbfMlKn61tUVc0IoRQViNh2MVOyVTp3e0MIF
- DHlbOqI/Jb1yoN/RCVT/cYlDrmNcpxJpDNbrW2j9DwhfmixtM60EjkMYlA==
-X-Google-Smtp-Source: AGHT+IE7oMaBNE8FXpTmKLzVq15gqR0VhQXNK/wQujz/xmVrq4BKTtWcKAa55mRRkWmMM0VnUjVzPg==
-X-Received: by 2002:a17:90b:4ec5:b0:2c8:647:1600 with SMTP id
- 98e67ed59e1d1-2cf2e9ab28emr3652635a91.9.1721951881523; 
- Thu, 25 Jul 2024 16:58:01 -0700 (PDT)
-Received: from wheely.local0.net ([203.220.44.216])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c7fef3sm2142060a91.16.2024.07.25.16.57.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 16:58:01 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
+ d=1e100.net; s=20230601; t=1721952885; x=1722557685;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mmLhNiSFDrMxFOe5Bj8cO8dwpS639NItZ7u/sC95EYo=;
+ b=bd/IPpl4iz0BevL2qWVlLjdDXj7Vn7nvBIiGZmmja5D+UW2GwByS/n3bFcareRYBhZ
+ QAXQD2ytcRQqu7lY9sZ3IBI0ulfrz1LWynENiwOMTIao2If/Yc4ADfmE8Ou29L3sKvqO
+ sispT9Dv59QE8yZcv/lC/pjohbCvSnlZGi/eWAdaEC6FtbiXjdNyh6yqKfHXhu4srisL
+ Ja6BJa+BNEIHBP9lKola5XVaov9LsTFlP4REcFeR4O5AmW0ZOLzgE0OeUcxJMCJKNwXh
+ QuYHYGB0jVPSYNT7Ow5fWENdUAc4efYwCh2JY1LTsGgNtLgiYgRsNRHCNIs+ekGXYIyQ
+ Rdgw==
+X-Gm-Message-State: AOJu0YzMsVeBgmEJpI9ddfDdQzFtw3y4Z6Z9Pb05ytYqMsSKNsYW3Lc2
+ pS+nLJvvGzOkeGywPxrSNhXckyxcf4Jb+ByAITdBHLHAxdZaGyb0ej/PJmwK
+X-Google-Smtp-Source: AGHT+IFmWxx11GaSJoai4YiLRhPgF3WA2PFMpBmvkSUt4ayMTtMcBmtoYnOtFX2uTIUGObAYtGf+yw==
+X-Received: by 2002:a05:6e02:1c4b:b0:378:5d14:f426 with SMTP id
+ e9e14a558f8ab-39a217e0f10mr64017155ab.1.1721952884431; 
+ Thu, 25 Jul 2024 17:14:44 -0700 (PDT)
+Received: from localhost ([205.175.106.198])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 41be03b00d2f7-7a9f9fbec91sm1740085a12.73.2024.07.25.17.14.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Jul 2024 17:14:43 -0700 (PDT)
+From: Gregor Haas <gregorhaas1997@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Chinmay Rath <rathc@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 60/96] target/ppc: Move VSX vector storage access insns to
- decodetree.
-Date: Fri, 26 Jul 2024 09:53:33 +1000
-Message-ID: <20240725235410.451624-61-npiggin@gmail.com>
+Cc: qemu-riscv@nongnu.org, atishp@rivosinc.com, dbarboza@ventanamicro.com,
+ alistair.francis@wdc.com, Gregor Haas <gregorhaas1997@gmail.com>
+Subject: [PATCH] Add support for generating OpenSBI domains in the device tree
+Date: Thu, 25 Jul 2024 17:14:16 -0700
+Message-ID: <20240726001416.1498769-1-gregorhaas1997@gmail.com>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
-References: <20240725235410.451624-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::130;
+ envelope-from=gregorhaas1997@gmail.com; helo=mail-il1-x130.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -96,409 +90,605 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chinmay Rath <rathc@linux.ibm.com>
+OpenSBI has support for domains, which are partitions of CPUs and memory into
+isolated compartments. Domains can be specified in the device tree according to
+a standardized format [1], which OpenSBI parses at boot time to initialize all
+system domains. This patch enables simply specifying domains (and their
+associated memory regions) on the QEMU command line, from which these are then
+rendered into the machine's device tree. A simple example of what this looks
+like is below:
 
-Moving the following instructions to decodetree specification:
+qemu-system-riscv64 -machine virt -bios fw_jump.bin -cpu max -smp 2 -m 4G \
+	-device opensbi-memregion,id=mem,base=0x178000000,size=0x4000000,mmio=false \
+	-device opensbi-domain,possible-harts=0x2,boot-hart=0x1,next-addr=0x178000000,next-mode=1,region0=mem,perms0=0x3f
 
-  lxv{b16, d2, h8, w4, ds, ws}x   : X-form
-  stxv{b16, d2, h8, w4}x          : X-form
+At machine initialization time, a new create_fdt_opensbi_domains() function
+walks the peripherals/peripherals-anon containers, identifies all domains and
+memregions, and parses them into the relevant device tree structures.
 
-The changes were verified by validating that the tcg-ops generated for those
-instructions remain the same, which were captured using the '-d in_asm,op' flag.
+[1] https://github.com/riscv-software-src/opensbi/blob/master/docs/domain_support.md
 
-Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Gregor Haas <gregorhaas1997@gmail.com>
 ---
- target/ppc/insn32.decode            |  10 ++
- target/ppc/translate/vsx-impl.c.inc | 199 ++++++++++++----------------
- target/ppc/translate/vsx-ops.c.inc  |  12 --
- 3 files changed, 97 insertions(+), 124 deletions(-)
+ MAINTAINERS               |   7 +
+ hw/riscv/Kconfig          |   4 +
+ hw/riscv/domain.c         | 435 ++++++++++++++++++++++++++++++++++++++
+ hw/riscv/meson.build      |   1 +
+ hw/riscv/virt.c           |   3 +
+ include/hw/riscv/domain.h |  49 +++++
+ 6 files changed, 499 insertions(+)
+ create mode 100644 hw/riscv/domain.c
+ create mode 100644 include/hw/riscv/domain.h
 
-diff --git a/target/ppc/insn32.decode b/target/ppc/insn32.decode
-index e87b034159..77869cfb33 100644
---- a/target/ppc/insn32.decode
-+++ b/target/ppc/insn32.decode
-@@ -1006,9 +1006,19 @@ STXSIHX         011111 ..... ..... ..... 1110101101 .   @X_TSX
- STXSIWX         011111 ..... ..... ..... 0010001100 .   @X_TSX
- STXSSPX         011111 ..... ..... ..... 1010001100 .   @X_TSX
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 98eddf7ae1..85ad6e0227 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -355,6 +355,13 @@ F: target/riscv/XVentanaCondOps.decode
+ F: target/riscv/insn_trans/trans_xventanacondops.c.inc
+ F: disas/riscv-xventana*
  
-+LXVB16X         011111 ..... ..... ..... 1101101100 .   @X_TSX
-+LXVD2X          011111 ..... ..... ..... 1101001100 .   @X_TSX
-+LXVH8X          011111 ..... ..... ..... 1100101100 .   @X_TSX
-+LXVW4X          011111 ..... ..... ..... 1100001100 .   @X_TSX
-+LXVDSX          011111 ..... ..... ..... 0101001100 .   @X_TSX
-+LXVWSX          011111 ..... ..... ..... 0101101100 .   @X_TSX
- LXVL            011111 ..... ..... ..... 0100001101 .   @X_TSX
- LXVLL           011111 ..... ..... ..... 0100101101 .   @X_TSX
- 
-+STXVB16X        011111 ..... ..... ..... 1111101100 .   @X_TSX
-+STXVD2X         011111 ..... ..... ..... 1111001100 .   @X_TSX
-+STXVH8X         011111 ..... ..... ..... 1110101100 .   @X_TSX
-+STXVW4X         011111 ..... ..... ..... 1110001100 .   @X_TSX
- STXVL           011111 ..... ..... ..... 0110001101 .   @X_TSX
- STXVLL          011111 ..... ..... ..... 0110101101 .   @X_TSX
- 
-diff --git a/target/ppc/translate/vsx-impl.c.inc b/target/ppc/translate/vsx-impl.c.inc
-index 46bab49215..e0fb4bad92 100644
---- a/target/ppc/translate/vsx-impl.c.inc
-+++ b/target/ppc/translate/vsx-impl.c.inc
-@@ -46,41 +46,37 @@ TRANS_FLAGS2(ISA300, LXSIHZX, do_lxs, gen_qemu_ld16u_i64);
- TRANS_FLAGS2(VSX207, LXSIWZX, do_lxs, gen_qemu_ld32u_i64);
- TRANS_FLAGS2(VSX207, LXSSPX, do_lxs, gen_qemu_ld32fs);
- 
--static void gen_lxvd2x(DisasContext *ctx)
-+static bool trans_LXVD2X(DisasContext *ctx, arg_LXVD2X *a)
- {
-     TCGv EA;
-     TCGv_i64 t0;
--    if (unlikely(!ctx->vsx_enabled)) {
--        gen_exception(ctx, POWERPC_EXCP_VSXU);
--        return;
--    }
++RISC-V OpenSBI domain support
++M: Gregor Haas <gregorhaas1997@gmail.com>
++L: qemu-riscv@nongnu.org
++S: Maintained
++F: hw/riscv/domain.c
++F: include/hw/riscv/domain.h
 +
-+    REQUIRE_VSX(ctx);
-+    REQUIRE_INSNS_FLAGS2(ctx, VSX);
+ RENESAS RX CPUs
+ R: Yoshinori Sato <ysato@users.sourceforge.jp>
+ S: Orphan
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index a2030e3a6f..14a3a7d09e 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -1,6 +1,9 @@
+ config RISCV_NUMA
+     bool
+ 
++config RISCV_DOMAIN
++    bool
 +
-     t0 = tcg_temp_new_i64();
-     gen_set_access_type(ctx, ACCESS_INT);
--    EA = tcg_temp_new();
--    gen_addr_reg_index(ctx, EA);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-     gen_qemu_ld64_i64(ctx, t0, EA);
--    set_cpu_vsr(xT(ctx->opcode), t0, true);
-+    set_cpu_vsr(a->rt, t0, true);
-     tcg_gen_addi_tl(EA, EA, 8);
-     gen_qemu_ld64_i64(ctx, t0, EA);
--    set_cpu_vsr(xT(ctx->opcode), t0, false);
-+    set_cpu_vsr(a->rt, t0, false);
-+    return true;
+ config IBEX
+     bool
+ 
+@@ -40,6 +43,7 @@ config RISCV_VIRT
+     imply TPM_TIS_SYSBUS
+     select DEVICE_TREE
+     select RISCV_NUMA
++    select RISCV_DOMAIN
+     select GOLDFISH_RTC
+     select PCI
+     select PCI_EXPRESS_GENERIC_BRIDGE
+diff --git a/hw/riscv/domain.c b/hw/riscv/domain.c
+new file mode 100644
+index 0000000000..11b3aff453
+--- /dev/null
++++ b/hw/riscv/domain.c
+@@ -0,0 +1,435 @@
++#include "qemu/osdep.h"
++#include "hw/riscv/domain.h"
++#include "hw/boards.h"
++#include "sysemu/device_tree.h"
++#include "qapi/error.h"
++
++#include <libfdt.h>
++
++static void create_fdt_domain_possible_harts(MachineState *ms,
++                                             OpenSBIDomainState *s,
++                                             char *path) {
++    unsigned long i, cpu;
++    int num_cpus;
++    uint32_t *phandles;
++    char *cpu_name;
++
++    num_cpus = ctpop64(s->possible_harts);
++    if (num_cpus) {
++        phandles = g_malloc0_n(num_cpus, sizeof(uint32_t));
++
++        for (i = 0, cpu = -1; i < num_cpus; i++) {
++            cpu = find_next_bit(&s->possible_harts, BITS_PER_LONG, cpu + 1);
++            cpu_name = g_strdup_printf("/cpus/cpu@%li", cpu);
++            phandles[i++] = cpu_to_fdt32(qemu_fdt_get_phandle(
++                    ms->fdt, cpu_name));
++            g_free(cpu_name);
++        }
++
++        qemu_fdt_setprop(ms->fdt, path, "possible-harts",
++                         phandles, num_cpus * 4);
++        g_free(phandles);
++    }
++}
++
++static void create_fdt_domain_regions(MachineState *ms,
++                                      OpenSBIDomainState *s,
++                                      char *path) {
++    unsigned long i;
++    int num_regions = 0;
++    uint32_t *regions;
++    char *region_name;
++    DeviceState *ds;
++
++    for (i = 0; i < OPENSBI_DOMAIN_MEMREGIONS_MAX; i++) {
++        if (s->regions[i]) {
++            num_regions++;
++        }
++    }
++
++    if (num_regions) {
++        regions = g_malloc0_n(num_regions, 2 * sizeof(uint32_t));
++        for (i = 0; i < OPENSBI_DOMAIN_MEMREGIONS_MAX; i++) {
++            if (s->regions[i]) {
++                ds = DEVICE(s->regions[i]);
++                region_name = g_strdup_printf("/chosen/opensbi-domains/%s",
++                                              ds->id);
++                regions[2 * i] = cpu_to_fdt32(qemu_fdt_get_phandle
++                        (ms->fdt, region_name));
++                regions[2 * i + 1] = cpu_to_fdt32(s->region_perms[i]);
++                g_free(region_name);
++            }
++        }
++
++        qemu_fdt_setprop(ms->fdt, path, "regions",
++                         regions, num_regions * 8);
++        g_free(regions);
++    }
++}
++
++struct DomainFDTState {
++    MachineState *ms;
++    bool regions;
++};
++
++static void create_fdt_one_domain(MachineState *ms, OpenSBIDomainState *s)
++{
++    DeviceState *ds = DEVICE(s);
++    char *path, *cpu_name;
++
++    if (ds->id) {
++        path = g_strdup_printf("/chosen/opensbi-domains/%s",
++                               ds->id);
++    } else {
++        path = g_strdup_printf("/chosen/opensbi-domains/domain@%lx",
++                               s->next_addr);
++    }
++
++    qemu_fdt_add_subnode(ms->fdt, path);
++    qemu_fdt_setprop_string(ms->fdt, path, "compatible",
++                            "opensbi,domain,instance");
++    qemu_fdt_setprop_cells(ms->fdt, path, "phandle",
++                           qemu_fdt_alloc_phandle(ms->fdt));
++
++    create_fdt_domain_possible_harts(ms, s, path);
++    create_fdt_domain_regions(ms, s, path);
++
++    /* Assign boot hart to this domain */
++    cpu_name = g_strdup_printf("/cpus/cpu@%i", s->boot_hart);
++    qemu_fdt_setprop_cell(ms->fdt, path, "boot-hart",
++                          qemu_fdt_get_phandle(ms->fdt, cpu_name));
++    qemu_fdt_setprop_cell(ms->fdt, cpu_name, "opensbi-domain",
++                          qemu_fdt_get_phandle(ms->fdt, path));
++    g_free(cpu_name);
++
++    qemu_fdt_setprop_cells(ms->fdt, path, "next-arg1",
++                           (uint64_t) s->next_arg1 >> 32, s->next_arg1);
++    qemu_fdt_setprop_cells(ms->fdt, path, "next-addr",
++                           (uint64_t) s->next_addr >> 32, s->next_addr);
++    qemu_fdt_setprop_cell(ms->fdt, path, "next-mode",
++                          s->next_mode);
++
++    if (s->system_reset_allowed) {
++        qemu_fdt_setprop(ms->fdt, path, "system-reset-allowed", NULL, 0);
++    }
++
++    if (s->system_suspend_allowed) {
++        qemu_fdt_setprop(ms->fdt, path, "system-suspend-allowed", NULL, 0);
++    }
++
++    g_free(path);
++}
++
++static void create_fdt_one_memregion(MachineState *ms,
++                                     OpenSBIMemregionState *s)
++{
++    char *path;
++    int i, dev, num_devices;
++    uint32_t *devices;
++    DeviceState *ds = DEVICE(s);
++
++    path = g_strdup_printf("/chosen/opensbi-domains/%s", ds->id);
++    qemu_fdt_add_subnode(ms->fdt, path);
++    qemu_fdt_setprop_string(ms->fdt, path, "compatible",
++                            "opensbi,domain,memregion");
++    qemu_fdt_setprop_cells(ms->fdt, path, "base",
++                           (uint64_t) s->base >> 32, s->base);
++
++    qemu_fdt_setprop_cell(ms->fdt, path, "order",
++                          (uint32_t) s->order);
++
++    if (s->mmio) {
++        qemu_fdt_setprop(ms->fdt, path, "mmio", NULL, 0);
++
++        /* Get all phandles for related devices */
++        num_devices = 0;
++        for (i = 0; i < OPENSBI_MEMREGION_DEVICES_MAX; i++) {
++            if (s->devices[i]) {
++                num_devices++;
++            }
++        }
++
++        devices = g_malloc0_n(num_devices, sizeof(uint32_t));
++        for (i = 0, dev = 0; i < OPENSBI_MEMREGION_DEVICES_MAX; i++) {
++            if (s->devices[i]) {
++                devices[dev++] = cpu_to_fdt32(
++                        qemu_fdt_get_phandle(ms->fdt, s->devices[i]));
++            }
++        }
++
++        qemu_fdt_setprop(ms->fdt, path, "devices", devices, num_devices * 4);
++        g_free(devices);
++    }
++
++    qemu_fdt_setprop_cells(ms->fdt, path, "phandle",
++                           qemu_fdt_alloc_phandle(ms->fdt));
++    g_free(path);
++}
++
++static int create_fdt_domains(Object *obj, void *opaque)
++{
++    struct DomainFDTState *dfs = opaque;
++    OpenSBIDomainState *osds;
++    OpenSBIMemregionState *osms;
++
++    osds = (OpenSBIDomainState *)
++            object_dynamic_cast(obj, TYPE_OPENSBI_DOMAIN);
++    osms = (OpenSBIMemregionState *)
++            object_dynamic_cast(obj, TYPE_OPENSBI_MEMREGION);
++
++    if (dfs->regions) {
++        if (osms) {
++            create_fdt_one_memregion(dfs->ms, osms);
++        }
++    } else {
++        if (osds) {
++            create_fdt_one_domain(dfs->ms, osds);
++        }
++    }
++
++    return 0;
++}
++
++static const char *containers[] = {
++        "/peripheral", "/peripheral-anon"
++};
++
++void create_fdt_opensbi_domains(MachineState *s)
++{
++    int i;
++    MachineState *ms = MACHINE(s);
++    Object *container;
++
++    struct DomainFDTState check = {
++            .ms = ms,
++            .regions = true
++    };
++
++    /* Make sure that top-level node exists */
++    qemu_fdt_add_subnode(ms->fdt, "/chosen/opensbi-domains");
++    qemu_fdt_setprop_string(ms->fdt, "/chosen/opensbi-domains",
++                            "compatible", "opensbi,domain,config");
++
++    /* Do a scan through regions first */
++    for (i = 0; i < ARRAY_SIZE(containers); i++) {
++        container = container_get(OBJECT(s), containers[i]);
++        object_child_foreach(container, create_fdt_domains, &check);
++    }
++
++    /* Then scan through domains */
++    check.regions = false;
++    for (i = 0; i < ARRAY_SIZE(containers); i++) {
++        container = container_get(OBJECT(s), containers[i]);
++        object_child_foreach(container, create_fdt_domains, &check);
++    }
++}
++
++/* OpenSBI Memregions */
++
++static void set_mmio(Object *obj, bool val, Error **err)
++{
++    OpenSBIMemregionState *s = OPENSBI_MEMREGION(obj);
++    s->mmio = val;
++}
++
++static void set_device(Object *obj, const char *val, Error **err)
++{
++    int i;
++    OpenSBIMemregionState *s = OPENSBI_MEMREGION(obj);
++
++    for (i = 0; i < OPENSBI_DOMAIN_MEMREGIONS_MAX; i++) {
++        if (!s->devices[i]) {
++            s->devices[i] = g_strdup(val);
++            break;
++        }
++    }
++}
++
++static void opensbi_memregion_instance_init(Object *obj)
++{
++    int i;
++    char *propname, *description;
++    OpenSBIMemregionState *s = OPENSBI_MEMREGION(obj);
++
++    object_property_add_uint64_ptr(obj, "base", &s->base,
++                                   OBJ_PROP_FLAG_WRITE);
++    object_property_set_description(obj, "base",
++                                    "The base address of the domain memory region. If \"order\" is also specified, "
++                                    "this property should be a 2 ^ order aligned 64 bit address");
++
++    object_property_add_uint32_ptr(obj, "order", &s->order,
++                                   OBJ_PROP_FLAG_WRITE);
++    object_property_set_description(obj, "order",
++                                    "The order of the domain memory region. This property should have a 32 bit value "
++                                    "(i.e. one DT cell) in the range 3 <= order <= __riscv_xlen.");
++
++    object_property_add_bool(obj, "mmio", NULL, set_mmio);
++    object_property_set_description(obj, "mmio",
++                                    "A boolean flag representing whether the domain memory region is a "
++                                    "memory-mapped I/O (MMIO) region.");
++
++    for (i = 0; i < OPENSBI_DOMAIN_MEMREGIONS_MAX; i++) {
++        propname = g_strdup_printf("device%i", i);
++        object_property_add_str(obj, propname, NULL, set_device);
++
++        description = g_strdup_printf(
++                "Device %i (out of %i) for this memregion. This property should be a device tree path to the device.",
++                i, OPENSBI_DOMAIN_MEMREGIONS_MAX);
++        object_property_set_description(obj, propname, description);
++        g_free(description);
++        g_free(propname);
++    }
++}
++
++static void opensbi_memregion_realize(DeviceState *ds, Error **errp)
++{
++    #if defined(TARGET_RISCV32)
++    int xlen = 32;
++    #elif defined(TARGET_RISCV64)
++    int xlen = 64;
++    #endif
++
++    OpenSBIMemregionState *s = OPENSBI_MEMREGION(ds);
++
++    if (!s->base) {
++        error_setg(errp, "Must specify base");
++        return;
++    }
++
++    /* Check order bounds */
++    if (s->order < 3) {
++        error_setg(errp, "Order too small");
++        return;
++    }
++
++    if (s->order > xlen) {
++        error_setg(errp, "Order too big");
++        return;
++    }
++
++    /* Check base alignment */
++    if (s->order < xlen && (s->base & (BIT(s->order) - 1))) {
++        error_setg(errp, "Base not aligned to order");
++        return;
++    }
++}
++
++static void opensbi_memregion_class_init(ObjectClass *oc, void *opaque)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    dc->realize = opensbi_memregion_realize;
++}
++
++static const TypeInfo opensbi_memregion_info = {
++        .name = TYPE_OPENSBI_MEMREGION,
++        .parent = TYPE_DEVICE,
++        .instance_init = opensbi_memregion_instance_init,
++        .instance_size = sizeof(OpenSBIDomainState),
++        .class_init = opensbi_memregion_class_init
++};
++
++/* OpenSBI Domains */
++
++static void set_sysreset_allowed(Object *obj, bool val, Error **err)
++{
++    OpenSBIDomainState *s = OPENSBI_DOMAIN(obj);
++    s->system_reset_allowed = val;
++}
++
++static void set_suspend_allowed(Object *obj, bool val, Error **err)
++{
++    OpenSBIDomainState *s = OPENSBI_DOMAIN(obj);
++    s->system_suspend_allowed = val;
++}
++
++static void opensbi_domain_instance_init(Object *obj)
++{
++    int i;
++    char *propname, *description;
++    OpenSBIDomainState *s = OPENSBI_DOMAIN(obj);
++
++    object_property_add_uint32_ptr(obj, "boot-hart", &s->boot_hart,
++                                   OBJ_PROP_FLAG_WRITE);
++    object_property_set_description(obj, "boot-hart",
++                                    "The HART booting the domain instance.");
++
++    object_property_add_uint64_ptr(obj, "possible-harts", &s->possible_harts,
++                                   OBJ_PROP_FLAG_WRITE);
++    object_property_set_description(obj, "possible-harts",
++                                    "The list of CPUs for the domain instance, encoded as a bitmask");
++
++    object_property_add_uint64_ptr(obj, "next-arg1", &s->next_arg1,
++                                   OBJ_PROP_FLAG_WRITE);
++    object_property_set_description(obj, "next-arg1",
++                                    "The 64 bit next booting stage arg1 for the domain instance.");
++
++    object_property_add_uint64_ptr(obj, "next-addr", &s->next_addr,
++                                   OBJ_PROP_FLAG_WRITE);
++    object_property_set_description(obj, "next-addr",
++                                    "The 64 bit next booting stage address for the domain instance.");
++
++    object_property_add_uint32_ptr(obj, "next-mode", &s->next_mode,
++                                   OBJ_PROP_FLAG_WRITE);
++    object_property_set_description(obj, "next-mode",
++                                    "The 32 bit next booting stage mode for the domain instance.");
++
++    object_property_add_bool(obj, "system-reset-allowed", NULL,
++                             set_sysreset_allowed);
++    object_property_set_description(obj, "system-reset-allowed",
++                                    "Whether the domain instance is allowed to do system reset.");
++
++    object_property_add_bool(obj, "system-suspend-allowed", NULL,
++                             set_suspend_allowed);
++    object_property_set_description(obj, "system-suspend-allowed",
++                                    "Whether the domain instance is allowed to do system suspend.");
++
++    for (i = 0; i < OPENSBI_DOMAIN_MEMREGIONS_MAX; i++) {
++        propname = g_strdup_printf("region%i", i);
++        object_property_add_link(obj, propname, TYPE_OPENSBI_MEMREGION,
++                                 (Object **) &s->regions[i],
++                                 qdev_prop_allow_set_link_before_realize, 0);
++
++        description = g_strdup_printf(
++                "Region %i (out of %i) for this domain.",
++                i, OPENSBI_DOMAIN_MEMREGIONS_MAX);
++        object_property_set_description(obj, propname, description);
++        g_free(description);
++        g_free(propname);
++
++        propname = g_strdup_printf("perms%i", i);
++        description = g_strdup_printf(
++                "Permissions for region %i for this domain.", i);
++        object_property_add_uint32_ptr(obj, propname, &s->region_perms[i],
++                                       OBJ_PROP_FLAG_WRITE);
++        object_property_set_description(obj, propname, description);
++        g_free(description);
++        g_free(propname);
++    }
++}
++
++static void opensbi_domain_realize(DeviceState *ds, Error **errp)
++{
++    /* Nothing to do */
++}
++
++static void opensbi_domain_class_init(ObjectClass *oc, void *opaque)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    dc->realize = opensbi_domain_realize;
++}
++
++static const TypeInfo opensbi_domain_info = {
++        .name = TYPE_OPENSBI_DOMAIN,
++        .parent = TYPE_DEVICE,
++        .instance_init = opensbi_domain_instance_init,
++        .instance_size = sizeof(OpenSBIDomainState),
++        .class_init = opensbi_domain_class_init
++};
++
++static void opensbi_register_types(void)
++{
++    type_register_static(&opensbi_domain_info);
++    type_register_static(&opensbi_memregion_info);
++}
++
++type_init(opensbi_register_types)
+diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+index f872674093..6189660014 100644
+--- a/hw/riscv/meson.build
++++ b/hw/riscv/meson.build
+@@ -1,6 +1,7 @@
+ riscv_ss = ss.source_set()
+ riscv_ss.add(files('boot.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
++riscv_ss.add(when: 'CONFIG_RISCV_DOMAIN', if_true: files('domain.c'))
+ riscv_ss.add(files('riscv_hart.c'))
+ riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
+ riscv_ss.add(when: 'CONFIG_RISCV_VIRT', if_true: files('virt.c'))
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 9981e0f6c9..49e72b793b 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -55,6 +55,7 @@
+ #include "hw/acpi/aml-build.h"
+ #include "qapi/qapi-visit-common.h"
+ #include "hw/virtio/virtio-iommu.h"
++#include "hw/riscv/domain.h"
+ 
+ /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
+ static bool virt_use_kvm_aia(RISCVVirtState *s)
+@@ -1051,6 +1052,8 @@ static void finalize_fdt(RISCVVirtState *s)
+     create_fdt_uart(s, virt_memmap, irq_mmio_phandle);
+ 
+     create_fdt_rtc(s, virt_memmap, irq_mmio_phandle);
++
++    create_fdt_opensbi_domains(ms);
  }
  
--static void gen_lxvw4x(DisasContext *ctx)
-+static bool trans_LXVW4X(DisasContext *ctx, arg_LXVW4X *a)
- {
-     TCGv EA;
--    TCGv_i64 xth;
--    TCGv_i64 xtl;
--    if (unlikely(!ctx->vsx_enabled)) {
--        gen_exception(ctx, POWERPC_EXCP_VSXU);
--        return;
--    }
-+    TCGv_i64 xth, xtl;
+ static void create_fdt(RISCVVirtState *s, const MemMapEntry *memmap)
+diff --git a/include/hw/riscv/domain.h b/include/hw/riscv/domain.h
+new file mode 100644
+index 0000000000..95c0382d23
+--- /dev/null
++++ b/include/hw/riscv/domain.h
+@@ -0,0 +1,49 @@
 +
-+    REQUIRE_VSX(ctx);
-+    REQUIRE_INSNS_FLAGS2(ctx, VSX);
++#ifndef RISCV_DOMAIN_H
++#define RISCV_DOMAIN_H
 +
-     xth = tcg_temp_new_i64();
-     xtl = tcg_temp_new_i64();
--
-     gen_set_access_type(ctx, ACCESS_INT);
--    EA = tcg_temp_new();
--
--    gen_addr_reg_index(ctx, EA);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-     if (ctx->le_mode) {
-         TCGv_i64 t0 = tcg_temp_new_i64();
-         TCGv_i64 t1 = tcg_temp_new_i64();
-@@ -97,55 +93,45 @@ static void gen_lxvw4x(DisasContext *ctx)
-         tcg_gen_addi_tl(EA, EA, 8);
-         tcg_gen_qemu_ld_i64(xtl, EA, ctx->mem_idx, MO_BEUQ);
-     }
--    set_cpu_vsr(xT(ctx->opcode), xth, true);
--    set_cpu_vsr(xT(ctx->opcode), xtl, false);
-+    set_cpu_vsr(a->rt, xth, true);
-+    set_cpu_vsr(a->rt, xtl, false);
-+    return true;
- }
- 
--static void gen_lxvwsx(DisasContext *ctx)
-+static bool trans_LXVWSX(DisasContext *ctx, arg_LXVWSX *a)
- {
-     TCGv EA;
-     TCGv_i32 data;
- 
--    if (xT(ctx->opcode) < 32) {
--        if (unlikely(!ctx->vsx_enabled)) {
--            gen_exception(ctx, POWERPC_EXCP_VSXU);
--            return;
--        }
-+    if (a->rt < 32) {
-+        REQUIRE_VSX(ctx);
-     } else {
--        if (unlikely(!ctx->altivec_enabled)) {
--            gen_exception(ctx, POWERPC_EXCP_VPU);
--            return;
--        }
-+        REQUIRE_VECTOR(ctx);
-     }
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
- 
-     gen_set_access_type(ctx, ACCESS_INT);
--    EA = tcg_temp_new();
--
--    gen_addr_reg_index(ctx, EA);
--
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-     data = tcg_temp_new_i32();
-     tcg_gen_qemu_ld_i32(data, EA, ctx->mem_idx, DEF_MEMOP(MO_UL));
--    tcg_gen_gvec_dup_i32(MO_UL, vsr_full_offset(xT(ctx->opcode)), 16, 16, data);
-+    tcg_gen_gvec_dup_i32(MO_UL, vsr_full_offset(a->rt), 16, 16, data);
-+    return true;
- }
- 
--static void gen_lxvdsx(DisasContext *ctx)
-+static bool trans_LXVDSX(DisasContext *ctx, arg_LXVDSX *a)
- {
-     TCGv EA;
-     TCGv_i64 data;
- 
--    if (unlikely(!ctx->vsx_enabled)) {
--        gen_exception(ctx, POWERPC_EXCP_VSXU);
--        return;
--    }
-+    REQUIRE_VSX(ctx);
-+    REQUIRE_INSNS_FLAGS2(ctx, VSX);
- 
-     gen_set_access_type(ctx, ACCESS_INT);
--    EA = tcg_temp_new();
--
--    gen_addr_reg_index(ctx, EA);
--
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-     data = tcg_temp_new_i64();
-     tcg_gen_qemu_ld_i64(data, EA, ctx->mem_idx, DEF_MEMOP(MO_UQ));
--    tcg_gen_gvec_dup_i64(MO_UQ, vsr_full_offset(xT(ctx->opcode)), 16, 16, data);
-+    tcg_gen_gvec_dup_i64(MO_UQ, vsr_full_offset(a->rt), 16, 16, data);
-+    return true;
- }
- 
- static void gen_bswap16x8(TCGv_i64 outh, TCGv_i64 outl,
-@@ -184,52 +170,47 @@ static void gen_bswap32x4(TCGv_i64 outh, TCGv_i64 outl,
-     tcg_gen_deposit_i64(outl, outl, lo, 32, 32);
- }
- 
--static void gen_lxvh8x(DisasContext *ctx)
-+static bool trans_LXVH8X(DisasContext *ctx, arg_LXVH8X *a)
- {
-     TCGv EA;
--    TCGv_i64 xth;
--    TCGv_i64 xtl;
-+    TCGv_i64 xth, xtl;
++#include "hw/sysbus.h"
++#include "qom/object.h"
++#include "cpu.h"
 +
-+    REQUIRE_VSX(ctx);
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
- 
--    if (unlikely(!ctx->vsx_enabled)) {
--        gen_exception(ctx, POWERPC_EXCP_VSXU);
--        return;
--    }
-     xth = tcg_temp_new_i64();
-     xtl = tcg_temp_new_i64();
-     gen_set_access_type(ctx, ACCESS_INT);
--
--    EA = tcg_temp_new();
--    gen_addr_reg_index(ctx, EA);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-     tcg_gen_qemu_ld_i64(xth, EA, ctx->mem_idx, MO_BEUQ);
-     tcg_gen_addi_tl(EA, EA, 8);
-     tcg_gen_qemu_ld_i64(xtl, EA, ctx->mem_idx, MO_BEUQ);
-     if (ctx->le_mode) {
-         gen_bswap16x8(xth, xtl, xth, xtl);
-     }
--    set_cpu_vsr(xT(ctx->opcode), xth, true);
--    set_cpu_vsr(xT(ctx->opcode), xtl, false);
-+    set_cpu_vsr(a->rt, xth, true);
-+    set_cpu_vsr(a->rt, xtl, false);
-+    return true;
- }
- 
--static void gen_lxvb16x(DisasContext *ctx)
-+static bool trans_LXVB16X(DisasContext *ctx, arg_LXVB16X *a)
- {
-     TCGv EA;
--    TCGv_i64 xth;
--    TCGv_i64 xtl;
-+    TCGv_i64 xth, xtl;
++#define TYPE_OPENSBI_MEMREGION "opensbi-memregion"
++OBJECT_DECLARE_SIMPLE_TYPE(OpenSBIMemregionState, OPENSBI_MEMREGION)
 +
-+    REQUIRE_VSX(ctx);
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
- 
--    if (unlikely(!ctx->vsx_enabled)) {
--        gen_exception(ctx, POWERPC_EXCP_VSXU);
--        return;
--    }
-     xth = tcg_temp_new_i64();
-     xtl = tcg_temp_new_i64();
-     gen_set_access_type(ctx, ACCESS_INT);
--    EA = tcg_temp_new();
--    gen_addr_reg_index(ctx, EA);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-     tcg_gen_qemu_ld_i64(xth, EA, ctx->mem_idx, MO_BEUQ);
-     tcg_gen_addi_tl(EA, EA, 8);
-     tcg_gen_qemu_ld_i64(xtl, EA, ctx->mem_idx, MO_BEUQ);
--    set_cpu_vsr(xT(ctx->opcode), xth, true);
--    set_cpu_vsr(xT(ctx->opcode), xtl, false);
-+    set_cpu_vsr(a->rt, xth, true);
-+    set_cpu_vsr(a->rt, xtl, false);
-+    return true;
- }
- 
- #if defined(TARGET_PPC64)
-@@ -319,42 +300,39 @@ TRANS_FLAGS2(ISA300, STXSIHX, do_stxs, gen_qemu_st16_i64);
- TRANS_FLAGS2(VSX207, STXSIWX, do_stxs, gen_qemu_st32_i64);
- TRANS_FLAGS2(VSX207, STXSSPX, do_stxs, gen_qemu_st32fs);
- 
--static void gen_stxvd2x(DisasContext *ctx)
-+static bool trans_STXVD2X(DisasContext *ctx, arg_STXVD2X *a)
- {
-     TCGv EA;
-     TCGv_i64 t0;
--    if (unlikely(!ctx->vsx_enabled)) {
--        gen_exception(ctx, POWERPC_EXCP_VSXU);
--        return;
--    }
++#define OPENSBI_MEMREGION_DEVICES_MAX   16
 +
-+    REQUIRE_VSX(ctx);
-+    REQUIRE_INSNS_FLAGS2(ctx, VSX);
++struct OpenSBIMemregionState {
++    /* public */
++    DeviceState parent_obj;
 +
-     t0 = tcg_temp_new_i64();
-     gen_set_access_type(ctx, ACCESS_INT);
--    EA = tcg_temp_new();
--    gen_addr_reg_index(ctx, EA);
--    get_cpu_vsr(t0, xS(ctx->opcode), true);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-+    get_cpu_vsr(t0, a->rt, true);
-     gen_qemu_st64_i64(ctx, t0, EA);
-     tcg_gen_addi_tl(EA, EA, 8);
--    get_cpu_vsr(t0, xS(ctx->opcode), false);
-+    get_cpu_vsr(t0, a->rt, false);
-     gen_qemu_st64_i64(ctx, t0, EA);
-+    return true;
- }
- 
--static void gen_stxvw4x(DisasContext *ctx)
-+static bool trans_STXVW4X(DisasContext *ctx, arg_STXVW4X *a)
- {
-     TCGv EA;
--    TCGv_i64 xsh;
--    TCGv_i64 xsl;
-+    TCGv_i64 xsh, xsl;
++    /* private */
++    uint64_t base;
++    uint32_t order;
++    bool mmio;
++    char *devices[OPENSBI_MEMREGION_DEVICES_MAX];
++};
 +
-+    REQUIRE_VSX(ctx);
-+    REQUIRE_INSNS_FLAGS2(ctx, VSX);
- 
--    if (unlikely(!ctx->vsx_enabled)) {
--        gen_exception(ctx, POWERPC_EXCP_VSXU);
--        return;
--    }
-     xsh = tcg_temp_new_i64();
-     xsl = tcg_temp_new_i64();
--    get_cpu_vsr(xsh, xS(ctx->opcode), true);
--    get_cpu_vsr(xsl, xS(ctx->opcode), false);
-+    get_cpu_vsr(xsh, a->rt, true);
-+    get_cpu_vsr(xsl, a->rt, false);
-     gen_set_access_type(ctx, ACCESS_INT);
--    EA = tcg_temp_new();
--    gen_addr_reg_index(ctx, EA);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-     if (ctx->le_mode) {
-         TCGv_i64 t0 = tcg_temp_new_i64();
-         TCGv_i64 t1 = tcg_temp_new_i64();
-@@ -371,25 +349,23 @@ static void gen_stxvw4x(DisasContext *ctx)
-         tcg_gen_addi_tl(EA, EA, 8);
-         tcg_gen_qemu_st_i64(xsl, EA, ctx->mem_idx, MO_BEUQ);
-     }
-+    return true;
- }
- 
--static void gen_stxvh8x(DisasContext *ctx)
-+static bool trans_STXVH8X(DisasContext *ctx, arg_STXVH8X *a)
- {
-     TCGv EA;
--    TCGv_i64 xsh;
--    TCGv_i64 xsl;
-+    TCGv_i64 xsh, xsl;
++#define TYPE_OPENSBI_DOMAIN "opensbi-domain"
++OBJECT_DECLARE_SIMPLE_TYPE(OpenSBIDomainState, OPENSBI_DOMAIN)
 +
-+    REQUIRE_VSX(ctx);
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
- 
--    if (unlikely(!ctx->vsx_enabled)) {
--        gen_exception(ctx, POWERPC_EXCP_VSXU);
--        return;
--    }
-     xsh = tcg_temp_new_i64();
-     xsl = tcg_temp_new_i64();
--    get_cpu_vsr(xsh, xS(ctx->opcode), true);
--    get_cpu_vsr(xsl, xS(ctx->opcode), false);
-+    get_cpu_vsr(xsh, a->rt, true);
-+    get_cpu_vsr(xsl, a->rt, false);
-     gen_set_access_type(ctx, ACCESS_INT);
--    EA = tcg_temp_new();
--    gen_addr_reg_index(ctx, EA);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-     if (ctx->le_mode) {
-         TCGv_i64 outh = tcg_temp_new_i64();
-         TCGv_i64 outl = tcg_temp_new_i64();
-@@ -403,28 +379,27 @@ static void gen_stxvh8x(DisasContext *ctx)
-         tcg_gen_addi_tl(EA, EA, 8);
-         tcg_gen_qemu_st_i64(xsl, EA, ctx->mem_idx, MO_BEUQ);
-     }
-+    return true;
- }
- 
--static void gen_stxvb16x(DisasContext *ctx)
-+static bool trans_STXVB16X(DisasContext *ctx, arg_STXVB16X *a)
- {
-     TCGv EA;
--    TCGv_i64 xsh;
--    TCGv_i64 xsl;
-+    TCGv_i64 xsh, xsl;
++#define OPENSBI_DOMAIN_MEMREGIONS_MAX   16
 +
-+    REQUIRE_VSX(ctx);
-+    REQUIRE_INSNS_FLAGS2(ctx, ISA300);
- 
--    if (unlikely(!ctx->vsx_enabled)) {
--        gen_exception(ctx, POWERPC_EXCP_VSXU);
--        return;
--    }
-     xsh = tcg_temp_new_i64();
-     xsl = tcg_temp_new_i64();
--    get_cpu_vsr(xsh, xS(ctx->opcode), true);
--    get_cpu_vsr(xsl, xS(ctx->opcode), false);
-+    get_cpu_vsr(xsh, a->rt, true);
-+    get_cpu_vsr(xsl, a->rt, false);
-     gen_set_access_type(ctx, ACCESS_INT);
--    EA = tcg_temp_new();
--    gen_addr_reg_index(ctx, EA);
-+    EA = do_ea_calc(ctx, a->ra, cpu_gpr[a->rb]);
-     tcg_gen_qemu_st_i64(xsh, EA, ctx->mem_idx, MO_BEUQ);
-     tcg_gen_addi_tl(EA, EA, 8);
-     tcg_gen_qemu_st_i64(xsl, EA, ctx->mem_idx, MO_BEUQ);
-+    return true;
- }
- 
- static void gen_mfvsrwz(DisasContext *ctx)
-diff --git a/target/ppc/translate/vsx-ops.c.inc b/target/ppc/translate/vsx-ops.c.inc
-index 7f4326c974..91cde088bc 100644
---- a/target/ppc/translate/vsx-ops.c.inc
-+++ b/target/ppc/translate/vsx-ops.c.inc
-@@ -1,15 +1,3 @@
--GEN_HANDLER_E(lxvd2x, 0x1F, 0x0C, 0x1A, 0, PPC_NONE, PPC2_VSX),
--GEN_HANDLER_E(lxvwsx, 0x1F, 0x0C, 0x0B, 0, PPC_NONE, PPC2_ISA300),
--GEN_HANDLER_E(lxvdsx, 0x1F, 0x0C, 0x0A, 0, PPC_NONE, PPC2_VSX),
--GEN_HANDLER_E(lxvw4x, 0x1F, 0x0C, 0x18, 0, PPC_NONE, PPC2_VSX),
--GEN_HANDLER_E(lxvh8x, 0x1F, 0x0C, 0x19, 0, PPC_NONE,  PPC2_ISA300),
--GEN_HANDLER_E(lxvb16x, 0x1F, 0x0C, 0x1B, 0, PPC_NONE, PPC2_ISA300),
--
--GEN_HANDLER_E(stxvd2x, 0x1F, 0xC, 0x1E, 0, PPC_NONE, PPC2_VSX),
--GEN_HANDLER_E(stxvw4x, 0x1F, 0xC, 0x1C, 0, PPC_NONE, PPC2_VSX),
--GEN_HANDLER_E(stxvh8x, 0x1F, 0x0C, 0x1D, 0, PPC_NONE,  PPC2_ISA300),
--GEN_HANDLER_E(stxvb16x, 0x1F, 0x0C, 0x1F, 0, PPC_NONE, PPC2_ISA300),
--
- GEN_HANDLER_E(mfvsrwz, 0x1F, 0x13, 0x03, 0x0000F800, PPC_NONE, PPC2_VSX207),
- GEN_HANDLER_E(mtvsrwa, 0x1F, 0x13, 0x06, 0x0000F800, PPC_NONE, PPC2_VSX207),
- GEN_HANDLER_E(mtvsrwz, 0x1F, 0x13, 0x07, 0x0000F800, PPC_NONE, PPC2_VSX207),
++struct OpenSBIDomainState {
++    /* public */
++    DeviceState parent_obj;
++
++    /* private */
++    OpenSBIMemregionState *regions[OPENSBI_DOMAIN_MEMREGIONS_MAX];
++    unsigned int region_perms[OPENSBI_DOMAIN_MEMREGIONS_MAX];
++
++    unsigned long possible_harts;
++    unsigned int boot_hart;
++    uint64_t next_arg1;
++    uint64_t next_addr;
++    uint32_t next_mode;
++    bool system_reset_allowed;
++    bool system_suspend_allowed;
++};
++
++void create_fdt_opensbi_domains(MachineState *s);
++
++#endif /* RISCV_DOMAIN_H */
 -- 
 2.45.2
 
