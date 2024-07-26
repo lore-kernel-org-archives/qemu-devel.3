@@ -4,153 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D9CC3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 14:22:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1605C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 14:30:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXLpY-0000Ng-Fu; Fri, 26 Jul 2024 10:22:00 -0400
+	id 1sXLwt-0005lU-5I; Fri, 26 Jul 2024 10:29:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dfaggioli@suse.com>)
- id 1sXLpW-0000Me-G4
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 10:21:58 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dfaggioli@suse.com>)
- id 1sXLpU-00014c-4T
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 10:21:58 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 6415C1F82D;
- Fri, 26 Jul 2024 14:21:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1722003712; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:autocrypt:autocrypt;
- bh=tBFz1qLHbz1jFtlHAKKcACG6nNYrHa1NApu5Ev1+JUo=;
- b=pj+bclFt9Y+u2wPi/GtBMZcOX1wRT7lBHT1CZ4vEIQ5J26ELlxGS571sy/qFfrKqoSA9iA
- f1w2onWkhFCyiMY3pDvfe2dda+ExJChndsC5cQPW7eofWYVoJG/u7RTOkgunlSBmofiau4
- Eo9d5VeDnFVagFyUihcjRz/P+7S/6SU=
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
- t=1722003712; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:autocrypt:autocrypt;
- bh=tBFz1qLHbz1jFtlHAKKcACG6nNYrHa1NApu5Ev1+JUo=;
- b=pj+bclFt9Y+u2wPi/GtBMZcOX1wRT7lBHT1CZ4vEIQ5J26ELlxGS571sy/qFfrKqoSA9iA
- f1w2onWkhFCyiMY3pDvfe2dda+ExJChndsC5cQPW7eofWYVoJG/u7RTOkgunlSBmofiau4
- Eo9d5VeDnFVagFyUihcjRz/P+7S/6SU=
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F13A9138A7;
- Fri, 26 Jul 2024 14:21:51 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id gDphOP+wo2YzHgAAD6G6ig
- (envelope-from <dfaggioli@suse.com>); Fri, 26 Jul 2024 14:21:51 +0000
-Message-ID: <68f8b8b1ca1bf58b059f52afbd1c9c51108a074a.camel@suse.com>
-Subject: SRSO mitigation in microcode not passed through to VMs
-From: Dario Faggioli <dfaggioli@suse.com>
-To: qemu-devel@nongnu.org
-Cc: jpoimboe@kernel.org, Paolo Bonzini <pbonzini@redhat.com>, Fabian Vogt
- <fvogt@suse.de>, Nikolay Borisov <nik.borisov@suse.com>,
- fabiano.rosas@suse.com
-Date: Fri, 26 Jul 2024 16:21:49 +0200
-Autocrypt: addr=dfaggioli@suse.com; prefer-encrypt=mutual;
- keydata=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
- fkAJ0OEQQ==
-Organization: SUSE Software Solutions Italy S.r.l.
-Content-Type: multipart/signed; micalg="pgp-sha256";
- protocol="application/pgp-signature"; boundary="=-lTo5ODzHdegmxhSD5PF+"
-User-Agent: Evolution 3.52.3 (by Flathub.org) 
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sXLwr-0005kx-Jv
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 10:29:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sXLwp-0005fr-H5
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 10:29:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722004169;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vvbUoevMOc3z/HgcATTlw+ZYyye26ur49hRwNTbFrfM=;
+ b=g5WCp3K9Z95BjpZ6DmiKZwipoPh3VlI8hayBBYrWCOCbqc91ehATkuEhy3sZNLGuth19yi
+ nLP4sHX3ic4eCZ9cIsGDH2h7FwC0tupSld7hSCvTn9NB4dResBcY2qv2Y/PTt/n0z0E7WY
+ LVk+nDNNACh8+HL0amncavN9yBXibIg=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-589-SBM6i6lHMVmMUVHzXGr_wA-1; Fri, 26 Jul 2024 10:29:27 -0400
+X-MC-Unique: SBM6i6lHMVmMUVHzXGr_wA-1
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-650ab31aabdso49735897b3.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 07:29:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722004167; x=1722608967;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vvbUoevMOc3z/HgcATTlw+ZYyye26ur49hRwNTbFrfM=;
+ b=FslTEcFQh8hkJjUFlRZUPTPsfIP45S6dXJaEMPcBEN9tVneeRhtlAGpwNJhqVPhjdY
+ hMIOgpC1gL2D9NVu2atHRWBxPdhUVJtsoASBzpFedKwjEMcMd/ckArjfhSx5XpigyHTt
+ nDK/0iS5LA9T5QnsjSoF3bbxxrGddvPF3GQG+Yac7fa/Ew0YewElGx9rQR6nNmS+l/6B
+ 8RHuaaHO9d79S/Ad+CTJj2eke9cGqvw2IFkTItOIf3ADr3CqckVBPDe6ilfLxWVXnfqN
+ +f5m89fYrAI1ugmxnkHt5uCIEZ2O88UicMB71UmMsYPskGDRZ9LTcRUf+acQG9XkULJ5
+ St1A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVssMMZ+yxZlixShzLoIPSJLAgh7TUvp/RWpdrqspDlfZk1byCvGEw0BKqpsxmlNO08uR0I7+e6yOkF9nod8EnpU3Ljurw=
+X-Gm-Message-State: AOJu0YwvfWxHh6yGMscCn6CJJ17FDkPC/uJw4sBU3b0jUxGwpuqh2UwF
+ 3tyYp6B3tXt/FA3SUaxbjJPmBMHZkRb67el3rKfcsEl52fTzl1p8OI9PG5sdCY3GqMhzlfdbvF8
+ 8JDJabMEH57qbzfRHl6FuoLQhRTjdHzxDbtIFnwIPAQ/wzbIuLtile3p3CGzWVCiUoGMRKV12wT
+ Na6LIsL1jeCV3wcA8ialJN6JckgNg=
+X-Received: by 2002:a05:690c:3385:b0:64b:89cd:7db8 with SMTP id
+ 00721157ae682-675b9b60727mr61328427b3.28.1722004166668; 
+ Fri, 26 Jul 2024 07:29:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG68qi+feTncWw4/dNpWWdWQOZfHKJXM1YtWrGmlSJD5piIRuPDFZX/vOjfWNaeX4a9m6X4ZnP5OmDIZuC2G5s=
+X-Received: by 2002:a05:690c:3385:b0:64b:89cd:7db8 with SMTP id
+ 00721157ae682-675b9b60727mr61328107b3.28.1722004166200; Fri, 26 Jul 2024
+ 07:29:26 -0700 (PDT)
 MIME-Version: 1.0
-X-Spamd-Result: default: False [-6.20 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SIGNED_PGP(-2.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- MIME_GOOD(-0.20)[multipart/signed,text/plain];
- HAS_ORG_HEADER(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MIME_TRACE(0.00)[0:+,1:+,2:~]; TO_DN_SOME(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; ARC_NA(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.com:s=susede1]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.com:url]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=dfaggioli@suse.com;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240726095822.104017-1-sahilcdq@proton.me>
+ <20240726095822.104017-4-sahilcdq@proton.me>
+In-Reply-To: <20240726095822.104017-4-sahilcdq@proton.me>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Fri, 26 Jul 2024 16:28:49 +0200
+Message-ID: <CAJaqyWeNBw=xqmFLPx40VuRGuAW9ntYcAUVXK0GKHzdxTTBoVQ@mail.gmail.com>
+Subject: Re: [RFC v2 3/3] vhost: Allocate memory for packed vring.
+To: Sahil Siddiq <icegambit91@gmail.com>
+Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
+ Sahil Siddiq <sahilcdq@proton.me>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,112 +100,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Jul 26, 2024 at 11:59=E2=80=AFAM Sahil Siddiq <icegambit91@gmail.co=
+m> wrote:
+>
+> Allocate memory for the packed vq format and support
+> packed vq in the SVQ "start" operation.
+>
+> Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
+> ---
+> Changes v1 -> v2:
+> * vhost-shadow-virtqueue.h
+>   (struct VhostShadowVirtqueue): New member "is_packed"
+>   (vhost_svq_get_vring_addr): Renamed function.
+>   (vhost_svq_get_vring_addr_packed): New function.
+>   (vhost_svq_memory_packed): Likewise.
+> * vhost-shadow-virtqueue.c:
+>   (vhost_svq_add): Use "is_packed" to check vq format.
+>   (vhost_svq_get_vring_addr): Rename function.
+>   (vhost_svq_get_vring_addr_packed): New function but is yet to be implem=
+ented.
+>   (vhost_svq_memory_packed): New function.
+>   (vhost_svq_start): Support packed vq format.
+> * vhost-vdpa.c
+>   (vhost_svq_get_vring_addr): Rename function.
+>
+>
+>  hw/virtio/vhost-shadow-virtqueue.c | 70 ++++++++++++++++++++++--------
+>  hw/virtio/vhost-shadow-virtqueue.h | 10 ++++-
+>  hw/virtio/vhost-vdpa.c             |  4 +-
+>  3 files changed, 63 insertions(+), 21 deletions(-)
+>
+> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-=
+virtqueue.c
+> index c7b7e0c477..045c07304c 100644
+> --- a/hw/virtio/vhost-shadow-virtqueue.c
+> +++ b/hw/virtio/vhost-shadow-virtqueue.c
+> @@ -343,7 +343,7 @@ int vhost_svq_add(VhostShadowVirtqueue *svq, const st=
+ruct iovec *out_sg,
+>          return -ENOSPC;
+>      }
+>
+> -    if (virtio_vdev_has_feature(svq->vdev, VIRTIO_F_RING_PACKED)) {
+> +    if (svq->is_packed) {
+>          ok =3D vhost_svq_add_packed(svq, out_sg, out_num,
+>                                    in_sg, in_num, &qemu_head);
+>      } else {
+> @@ -679,18 +679,29 @@ void vhost_svq_set_svq_call_fd(VhostShadowVirtqueue=
+ *svq, int call_fd)
+>  }
+>
+>  /**
+> - * Get the shadow vq vring address.
+> + * Get the split shadow vq vring address.
+>   * @svq: Shadow virtqueue
+>   * @addr: Destination to store address
+>   */
+> -void vhost_svq_get_vring_addr(const VhostShadowVirtqueue *svq,
+> -                              struct vhost_vring_addr *addr)
+> +void vhost_svq_get_vring_addr_split(const VhostShadowVirtqueue *svq,
+> +                                    struct vhost_vring_addr *addr)
+>  {
+>      addr->desc_user_addr =3D (uint64_t)(uintptr_t)svq->vring.desc;
+>      addr->avail_user_addr =3D (uint64_t)(uintptr_t)svq->vring.avail;
+>      addr->used_user_addr =3D (uint64_t)(uintptr_t)svq->vring.used;
+>  }
+>
+> +/**
+> + * Get the packed shadow vq vring address.
+> + * @svq: Shadow virtqueue
+> + * @addr: Destination to store address
+> + */
+> +void vhost_svq_get_vring_addr_packed(const VhostShadowVirtqueue *svq,
+> +                                     struct vhost_vring_addr *addr)
+> +{
+> +    /* TODO */
+> +}
+> +
+>  size_t vhost_svq_driver_area_size(const VhostShadowVirtqueue *svq)
+>  {
+>      size_t desc_size =3D sizeof(vring_desc_t) * svq->vring.num;
+> @@ -707,6 +718,16 @@ size_t vhost_svq_device_area_size(const VhostShadowV=
+irtqueue *svq)
+>      return ROUND_UP(used_size, qemu_real_host_page_size());
+>  }
+>
+> +size_t vhost_svq_memory_packed(const VhostShadowVirtqueue *svq)
+> +{
+> +    size_t desc_size =3D sizeof(struct vring_packed_desc) * svq->num_fre=
+e;
+> +    size_t driver_event_suppression =3D sizeof(struct vring_packed_desc_=
+event);
+> +    size_t device_event_suppression =3D sizeof(struct vring_packed_desc_=
+event);
+> +
+> +    return ROUND_UP(desc_size + driver_event_suppression + device_event_=
+suppression,
+> +                    qemu_real_host_page_size());
+> +}
+> +
+>  /**
+>   * Set a new file descriptor for the guest to kick the SVQ and notify fo=
+r avail
+>   *
+> @@ -759,19 +780,34 @@ void vhost_svq_start(VhostShadowVirtqueue *svq, Vir=
+tIODevice *vdev,
+>      svq->vq =3D vq;
+>      svq->iova_tree =3D iova_tree;
+>
+> -    svq->vring.num =3D virtio_queue_get_num(vdev, virtio_get_queue_index=
+(vq));
+> -    svq->num_free =3D svq->vring.num;
+> -    svq->vring.desc =3D mmap(NULL, vhost_svq_driver_area_size(svq),
+> -                           PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANON=
+YMOUS,
+> -                           -1, 0);
+> -    desc_size =3D sizeof(vring_desc_t) * svq->vring.num;
+> -    svq->vring.avail =3D (void *)((char *)svq->vring.desc + desc_size);
+> -    svq->vring.used =3D mmap(NULL, vhost_svq_device_area_size(svq),
+> -                           PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANON=
+YMOUS,
+> -                           -1, 0);
+> -    svq->desc_state =3D g_new0(SVQDescState, svq->vring.num);
+> -    svq->desc_next =3D g_new0(uint16_t, svq->vring.num);
+> -    for (unsigned i =3D 0; i < svq->vring.num - 1; i++) {
+> +    if (virtio_vdev_has_feature(svq->vdev, VIRTIO_F_RING_PACKED)) {
+> +        svq->is_packed =3D true;
+> +        svq->vring_packed.vring.num =3D virtio_queue_get_num(vdev, virti=
+o_get_queue_index(vq));
+> +        svq->num_free =3D svq->vring_packed.vring.num;
+> +        svq->vring_packed.vring.desc =3D mmap(NULL, vhost_svq_memory_pac=
+ked(svq),
+> +                                            PROT_READ | PROT_WRITE, MAP_=
+SHARED | MAP_ANONYMOUS,
+> +                                            -1, 0);
+> +        desc_size =3D sizeof(struct vring_packed_desc) * svq->vring.num;
+> +        svq->vring_packed.vring.driver =3D (void *)((char *)svq->vring_p=
+acked.vring.desc + desc_size);
 
---=-lTo5ODzHdegmxhSD5PF+
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+(Expanding on the cover letter comment) Here the driver area is
+aligned properly too as each descriptor is 16 bytes length, and
+required alignment for the driver area is 4 bytes by VirtIO standard.
 
-Hello,
+> +        svq->vring_packed.vring.device =3D (void *)((char *)svq->vring_p=
+acked.vring.driver +
+> +                                                  sizeof(struct vring_pa=
+cked_desc_event));
+> +    } else {
+> +        svq->is_packed =3D false;
+> +        svq->vring.num =3D virtio_queue_get_num(vdev, virtio_get_queue_i=
+ndex(vq));
+> +        svq->num_free =3D svq->vring.num;
 
-So, even if SRSO is fully mitigated on the host, we still see as not
-completely patched inside of the VMs running on Zen 3 and 4 hosts
-(e.g., AMD EPYC 7713)
+Nitpicks,
 
-We can see an example of that here:
-https://bugzilla.suse.com/show_bug.cgi?id=3D1228079
+The variables is_packed and num_free can be merged out of the if/else
+to reduce code duplication.
 
-This specific bug is about SLE15SP5, where we have old versions of QEMU
-and kernel (and the kernel was missing a backport), but we see it also
-on openSUSE Tumbleweed, where we have kernel 6.9.9 and QEMU 9.0.2, e.g:
+Also it is clearer to me to assign svq->is_packed =3D
+virtio_vdev_has_feature(...) and then check the variable in the if.
+But other parts of QEMU do as you do here so I don't have a strong
+opinion.
+
+> +        svq->vring.desc =3D mmap(NULL, vhost_svq_driver_area_size(svq),
+> +                               PROT_READ | PROT_WRITE, MAP_SHARED | MAP_=
+ANONYMOUS,
+> +                               -1, 0);
+> +        desc_size =3D sizeof(vring_desc_t) * svq->vring.num;
+> +        svq->vring.avail =3D (void *)((char *)svq->vring.desc + desc_siz=
+e);
+> +        svq->vring.used =3D mmap(NULL, vhost_svq_device_area_size(svq),
+> +                               PROT_READ | PROT_WRITE, MAP_SHARED | MAP_=
+ANONYMOUS,
+> +                               -1, 0);
+> +    }
+> +
+> +    svq->desc_state =3D g_new0(SVQDescState, svq->num_free);
+> +    svq->desc_next =3D g_new0(uint16_t, svq->num_free);
+> +    for (unsigned i =3D 0; i < svq->num_free - 1; i++) {
+>          svq->desc_next[i] =3D cpu_to_le16(i + 1);
+>      }
+>  }
+> diff --git a/hw/virtio/vhost-shadow-virtqueue.h b/hw/virtio/vhost-shadow-=
+virtqueue.h
+> index ee1a87f523..b396daf57d 100644
+> --- a/hw/virtio/vhost-shadow-virtqueue.h
+> +++ b/hw/virtio/vhost-shadow-virtqueue.h
+> @@ -67,6 +67,9 @@ struct vring_packed {
+>
+>  /* Shadow virtqueue to relay notifications */
+>  typedef struct VhostShadowVirtqueue {
+> +    /* True if packed virtqueue */
+> +    bool is_packed;
+> +
+>      /* Virtio queue shadowing */
+>      VirtQueue *vq;
+>
+> @@ -146,10 +149,13 @@ size_t vhost_svq_poll(VhostShadowVirtqueue *svq, si=
+ze_t num);
+>
+>  void vhost_svq_set_svq_kick_fd(VhostShadowVirtqueue *svq, int svq_kick_f=
+d);
+>  void vhost_svq_set_svq_call_fd(VhostShadowVirtqueue *svq, int call_fd);
+> -void vhost_svq_get_vring_addr(const VhostShadowVirtqueue *svq,
+> -                              struct vhost_vring_addr *addr);
+> +void vhost_svq_get_vring_addr_split(const VhostShadowVirtqueue *svq,
+> +                                    struct vhost_vring_addr *addr);
+> +void vhost_svq_get_vring_addr_packed(const VhostShadowVirtqueue *svq,
+> +                                     struct vhost_vring_addr *addr);
+>  size_t vhost_svq_driver_area_size(const VhostShadowVirtqueue *svq);
+>  size_t vhost_svq_device_area_size(const VhostShadowVirtqueue *svq);
+> +size_t vhost_svq_memory_packed(const VhostShadowVirtqueue *svq);
+
+Ok now I get the question on the cover letter better,
+
+It is ok to reuse the already present functions, no need to create new
+ones to export in this header.
+
+Thanks!
 
 
-  ### Host
-  virt136:~ # uname -a
-  Linux virt136 6.9.9-1-default #1 SMP PREEMPT_DYNAMIC Thu Jul 11 11:31:54 =
-UTC 2024 (8c0f797) x86_64 x86_64 x86_64 GNU/Linux
+>
+>  void vhost_svq_start(VhostShadowVirtqueue *svq, VirtIODevice *vdev,
+>                       VirtQueue *vq, VhostIOVATree *iova_tree);
+> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+> index 3cdaa12ed5..688de4a662 100644
+> --- a/hw/virtio/vhost-vdpa.c
+> +++ b/hw/virtio/vhost-vdpa.c
+> @@ -1130,7 +1130,7 @@ static void vhost_vdpa_svq_unmap_rings(struct vhost=
+_dev *dev,
+>      struct vhost_vdpa *v =3D dev->opaque;
+>      struct vhost_vring_addr svq_addr;
+>
+> -    vhost_svq_get_vring_addr(svq, &svq_addr);
+> +    vhost_svq_get_vring_addr_split(svq, &svq_addr);
+>
+>      vhost_vdpa_svq_unmap_ring(v, svq_addr.desc_user_addr);
+>
+> @@ -1189,7 +1189,7 @@ static bool vhost_vdpa_svq_map_rings(struct vhost_d=
+ev *dev,
+>      size_t avail_offset;
+>      bool ok;
+>
+> -    vhost_svq_get_vring_addr(svq, &svq_addr);
+> +    vhost_svq_get_vring_addr_split(svq, &svq_addr);
+>
+>      driver_region =3D (DMAMap) {
+>          .translated_addr =3D svq_addr.desc_user_addr,
+> --
+> 2.45.2
+>
 
-  virt136:~ # qemu-system-x86_64 --version
-  QEMU emulator version 9.0.2 (openSUSE Tumbleweed)
-
-  virt136:~ # cat /proc/cpuinfo | grep -e "vendor\|family\|model\|stepping\=
-|microcode" | tail -5
-  cpu family	: 25
-  model		: 1
-  model name	: AMD EPYC 7713 64-Core Processor
-  stepping	: 1
-  microcode	: 0xa0011d5
-
-  virt136:~ # lscpu | grep rstack
-  Vulnerability Spec rstack overflow:   Mitigation; Safe RET
-
-  ### Guest
-  virt136:~ # virsh console opensusetumbleweed
-  Connected to domain 'opensusetumbleweed'
-  Escape character is ^] (Ctrl + ])
-
-  localhost:~ # uname -a
-  Linux localhost.localdomain 6.9.9-1-default #1 SMP PREEMPT_DYNAMIC Thu Ju=
-l 11 11:31:54 UTC 2024 (8c0f797) x86_64 x86_64 x86_64 GNU/Linux
-
-  localhost:~ # lscpu | grep rstack
-  Vulnerability Spec rstack overflow:   Vulnerable: Safe RET, no microcode
-
-
-Fabian and Nikolay (Cc-ed) can provide more details, if necessary.
-AFAIUI this is due to how/when the proper bit in CPUID is set, on this
-specific CPU model.
-
-In fact (and I'm quoting Nikolay): "the problem with the IBPB_BRTYPE
-flag is that on CPUs which require the microcode fix, the flag is not
-shown by CPUID despite it actually being available. Ini this case the
-kernel checks whether the feature is valid by doing a specific wrmsr
-and, if it is, it sets the flag internally in the kernel and in KVM's
-cpuid representation".
-
-Yet, we don't see this in the VM, because QEMU seems to be masking it
-(as visible, e.g., here:
-https://bugzilla.suse.com/show_bug.cgi?id=3D1228079#c2)
-
-In one of the thread on LKML where this mitigation was discussed, we
-found mentions (from Josh, Cc-ed) to a QEMU patch being necessary, and
-also being ready and about to be submitted, e.g.:
-
-https://lore.kernel.org/lkml/20230821170520.dcovzudamnoqp7jc@treble/
-
-But I'm not able to find such patch, neither in the mailing list not as
-a commit... Is it just me not seeing it? In case it's really missing,
-what's the best course of action? Do we need that patch? Is it (in the
-form in which it appears in that email) still correct?
-
-Thanks and Regards,
---=20
-Dario Faggioli, Ph.D
-http://about.me/dario.faggioli
-Virtualization Software Engineer
-SUSE Labs, SUSE https://www.suse.com/
--------------------------------------------------------------------
-<<This happens because _I_ choose it to happen!>> (Raistlin Majere)
-
---=-lTo5ODzHdegmxhSD5PF+
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEES5ssOj3Vhr0WPnOLFkJ4iaW4c+4FAmajsP4ACgkQFkJ4iaW4
-c+6hgBAAwKFWIB0360joqfldNy7wQFMoPPP0yKgzoLc2TWDJTNiU7aaCev3nhAqm
-6YG6ivhbmwkAMhxzPQimqeoVN86BFUmcksR5RTDL10jxysvelxZhGvnrYXC2AHTa
-NVWI4auq36liarUKnCI4nACMLfc1pA8YO0ByYKMvpy3ODPdY6SO6VIonIEQ19HGJ
-cTSwVIo6SHMTjFDsXDpmdXSw5TPp2bBkAMnymx5aZzX8ShBcmg695CJUvxxx7cuM
-fHTTesUYkhtKD5k8qGfUEtYNfDDCV3T4aoRwahUai3OOAw2tQ6ohy2reF8tLnuGx
-IysymksL53NzTnKFEoZjNRwydRJOeJNVh4ghDeMVeM0RijupTdqyYfH1fCNkqhJ1
-ab/1KFBmpKemhJIAdpV4It0jgtW31NtwXL5uOfmU/RXcrklqr7dHfIqYlugQF9HL
-kDagHTZNMXYViA97UkUBnxxD6RS9gucQdFSb5Cqor3D0Q/+WErc4qvZiaRoLCLQb
-w4XzvDdYG3HZKQm642eYJt/Y/9tHXNuzvAdCLr5YBdH2+hn3vgjyq/3q2vwTcsCk
-o+Z4QRrmMrR7Xms7AeoyYzIG1ZWfgmLULv7L8jts4m9KURNCqwuNTpaR9cmg+UWs
-PAbeoOeijKlpiWZ1pZPKORUJAyhnDoVo0WvdqqY5ehnufo/std0=
-=7V05
------END PGP SIGNATURE-----
-
---=-lTo5ODzHdegmxhSD5PF+--
 
