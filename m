@@ -4,100 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B614C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 20:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24D7FC3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 20:49:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXRhV-0003Aq-MI; Fri, 26 Jul 2024 16:38:05 -0400
+	id 1sXRqx-0000RP-KA; Fri, 26 Jul 2024 16:47:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1sXRhS-00039a-KC; Fri, 26 Jul 2024 16:38:02 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sXRqw-0000Q7-8J
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 16:47:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1sXRhQ-0002YZ-3E; Fri, 26 Jul 2024 16:38:02 -0400
-Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46QK3t1A005466;
- Fri, 26 Jul 2024 20:37:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:content-transfer-encoding
- :mime-version; s=pp1; bh=oCndrv/EExFAZMW2o9cevTtsOTllR5m/LhFS6Ue
- bw7k=; b=hvuwEYVs3Pm/+0Os7c6wbz1Sk+N29cDsbCUVkws71GIitBUwwPFhwMp
- 7btTrOhKff7hTVFbDMO1Ud9y8E3peE1le9LdmBmcIyru1YJwmAur38iS2Ns6HPgA
- PzL3TuM6fg0EARHVHWfn8F+an5KHOsyxlZQ/G9/Yxqe8P5U45vNCAyfnwMoGqdoO
- C5LsDwN7mO2lkCQA7SoIhM4hU8KD2BW4Nn65FtDRg+QwJJbL9kLddNTLxpmZSlCZ
- T9yJtqdP9Ns8vFZcU/yI7TiGCoBBiSAKcnRMpjHN5uyzdSp2glfXPXZU4z/eJCdS
- p9+0trqDrb9RBM0vGpZiSn2vfALlceA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40m8b01upy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jul 2024 20:37:02 +0000 (GMT)
-Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46QKb1CZ027508;
- Fri, 26 Jul 2024 20:37:01 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40m8b01upv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jul 2024 20:37:01 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 46QHxiar006208; Fri, 26 Jul 2024 20:37:00 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 40gqjuxh03-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jul 2024 20:37:00 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 46QKaveZ41484756
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 26 Jul 2024 20:36:59 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7FE7A5806A;
- Fri, 26 Jul 2024 20:36:57 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 09FD45806B;
- Fri, 26 Jul 2024 20:36:57 +0000 (GMT)
-Received: from li-d664314c-3171-11b2-a85c-fa8047ef35bd.pok.ibm.com (unknown
- [9.12.68.85]) by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 26 Jul 2024 20:36:56 +0000 (GMT)
-From: Collin Walling <walling@linux.ibm.com>
-To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: thuth@redhat.com, david@redhat.com, wangyanan55@huawei.com,
- philmd@linaro.org, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
- armbru@redhat.com
-Subject: [PATCH v1] target/s390x: move @deprecated-props to CpuModelExpansion
- Info
-Date: Fri, 26 Jul 2024 16:36:46 -0400
-Message-ID: <20240726203646.20279-1-walling@linux.ibm.com>
-X-Mailer: git-send-email 2.45.1
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 91x2vxiL8OAjPjW_cntQfqSKG4pGp2XF
-X-Proofpoint-GUID: HKKRcFW6c8MmX8Tq7GF4M0CM-peQa_aC
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sXRqu-0007Pc-5K
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 16:47:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722026866;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4MPYkjQVAfHCFd+5FpTcjfgvkwcFZw8gKiqMKNdAr4M=;
+ b=b6eUnYbHSvTenk7/HkN3wQGxW1tKuLhbJbkVwzLIWEQfhAobEC+XUPgWAtOubF7TotM25j
+ yaY8hWpvB3aArPW29IIebYbfOJQKoBngN85Ceubme6yEIsN6ffSc0SlFjt6VbDo0kydTOK
+ U+P2m0y34AKI0NSvylFZ3jhLPtr/9M0=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-9-f8tiB8B7P4mk8e3Rd863fQ-1; Fri, 26 Jul 2024 16:47:44 -0400
+X-MC-Unique: f8tiB8B7P4mk8e3Rd863fQ-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6ba92dd246fso1599556d6.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 13:47:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722026864; x=1722631664;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4MPYkjQVAfHCFd+5FpTcjfgvkwcFZw8gKiqMKNdAr4M=;
+ b=whMDyFn3HeH8ya84gnpmy68ijb2QawoduDeuj+igei38zU9xvItdbGMUZnzWe1hgEx
+ aw4YmTJ32krVLQUGwzzJgIIPZnao3YA14AcDwys5MNH5yYgU4fiqMb8tJMqbixxRXoSl
+ PL4renTVxGQpXWjOLNnmAMtrDbK8IQAudw8LkFRCGopQur4GcLgtoSmvgs72CLhfws1c
+ Zhsi+UpTYzxuTcYNxPh3ZF+qThOrl+UnDtkOE/XQoqWVmo9xf7Zq2+Z7AnOBwYPPGDLX
+ hkAJRnlvFp9qwneHQv2sJmaptvYv2JY/FQJ8MRhsLRMIgTY1uZHsAU0fmxzcwC9j0F8d
+ AyAg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVEo1WSVqGryHohiz3ClzHvh0pnaCs3QPoz7+JL3BOTOkS/gsrk3GfUYKqZa3xRyaqFaFUnVqXgJzp6@nongnu.org
+X-Gm-Message-State: AOJu0YzMcSNAdJIAy2Po6yHNCEp8jp9jv2Rf0PrGr8m3gStxbny9ieu5
+ APp6R2LjUKSEHI2dqVAyVLFub76eEF9ibqouzREInN0RYAnI9dFzAiyWFL//obMUJafR9jK2ZlN
+ VLDxEdTfw5NlweOvsUc7b5GBnylNIzfr0Y0kclmRfQuIe5aFICA07
+X-Received: by 2002:a05:6214:501d:b0:6bb:3f69:dd0c with SMTP id
+ 6a1803df08f44-6bb3f69defdmr43187246d6.9.1722026863918; 
+ Fri, 26 Jul 2024 13:47:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGGHm4wLRuk17bEqt/rrVt95CKL7dlXG/ki30Ro+/4r2XTXJqyumv1venoWre7wJDzpcyL2Dw==
+X-Received: by 2002:a05:6214:501d:b0:6bb:3f69:dd0c with SMTP id
+ 6a1803df08f44-6bb3f69defdmr43187096d6.9.1722026863421; 
+ Fri, 26 Jul 2024 13:47:43 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6bb3f9148aesm19701486d6.62.2024.07.26.13.47.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 26 Jul 2024 13:47:42 -0700 (PDT)
+Date: Fri, 26 Jul 2024 16:47:40 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
+ akihiko.odaki@daynix.com, jasowang@redhat.com,
+ sriram.yagnaraman@est.tech, sw@weilnetz.de, qemu-devel@nongnu.org,
+ yan@daynix.com, Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
+Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
+Message-ID: <ZqQLbGxEW3XT7qL-@x1n>
+References: <20230731223148.1002258-1-yuri.benditovich@daynix.com>
+ <20230731223148.1002258-5-yuri.benditovich@daynix.com>
+ <ZqLPLBnbfD5r6z7D@x1n>
+ <20240726020656-mutt-send-email-mst@kernel.org>
+ <775ff713-f7d3-4fdc-8ba0-4ebde577040d@redhat.com>
+ <ZqNiwmy29dxdyMA0@redhat.com> <ZqO2HvFJ8v7hZFOd@x1n>
+ <ZqO7cR-UiGpX2rk0@redhat.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-26_12,2024-07-26_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- priorityscore=1501 bulkscore=0 adultscore=0 clxscore=1015
- lowpriorityscore=0 phishscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999
- malwarescore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407260139
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=walling@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZqO7cR-UiGpX2rk0@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,145 +113,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The @deprecated-props array did not make any sense to be a member of the
-CpuModelInfo struct, since this field would only be populated by a
-query-cpu-model-expansion response and ignored otherwise. Move this
-field to the CpuModelExpansionInfo struct where is makes more sense.
+On Fri, Jul 26, 2024 at 04:17:12PM +0100, Daniel P. Berrangé wrote:
+> On Fri, Jul 26, 2024 at 10:43:42AM -0400, Peter Xu wrote:
+> > On Fri, Jul 26, 2024 at 09:48:02AM +0100, Daniel P. Berrangé wrote:
+> > > On Fri, Jul 26, 2024 at 09:03:24AM +0200, Thomas Huth wrote:
+> > > > On 26/07/2024 08.08, Michael S. Tsirkin wrote:
+> > > > > On Thu, Jul 25, 2024 at 06:18:20PM -0400, Peter Xu wrote:
+> > > > > > On Tue, Aug 01, 2023 at 01:31:48AM +0300, Yuri Benditovich wrote:
+> > > > > > > USO features of virtio-net device depend on kernel ability
+> > > > > > > to support them, for backward compatibility by default the
+> > > > > > > features are disabled on 8.0 and earlier.
+> > > > > > > 
+> > > > > > > Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
+> > > > > > > Signed-off-by: Andrew Melnychecnko <andrew@daynix.com>
+> > > > > > 
+> > > > > > Looks like this patch broke migration when the VM starts on a host that has
+> > > > > > USO supported, to another host that doesn't..
+> > > > > 
+> > > > > This was always the case with all offloads. The answer at the moment is,
+> > > > > don't do this.
+> > > > 
+> > > > May I ask for my understanding:
+> > > > "don't do this" = don't automatically enable/disable virtio features in QEMU
+> > > > depending on host kernel features, or "don't do this" = don't try to migrate
+> > > > between machines that have different host kernel features?
+> > > > 
+> > > > > Long term, we need to start exposing management APIs
+> > > > > to discover this, and management has to disable unsupported features.
+> > > > 
+> > > > Ack, this likely needs some treatments from the libvirt side, too.
+> > > 
+> > > When QEMU automatically toggles machine type featuers based on host
+> > > kernel, relying on libvirt to then disable them again is impractical,
+> > > as we cannot assume that the libvirt people are using knows about
+> > > newly introduced features. Even if libvirt is updated to know about
+> > > it, people can easily be using a previous libvirt release.
+> > > 
+> > > QEMU itself needs to make the machine types do that they are there
+> > > todo, which is to define a stable machine ABI. 
+> > > 
+> > > What QEMU is missing here is a "platform ABI" concept, to encode
+> > > sets of features which are tied to specific platform generations.
+> > > As long as we don't have that we'll keep having these broken
+> > > migration problems from machine types dynamically changing instead
+> > > of providing a stable guest ABI.
+> > 
+> > Any more elaboration on this idea?  Would it be easily feasible in
+> > implementation?
+> 
+> In terms of launching QEMU I'd imagine:
+> 
+>   $QEMU -machine pc-q35-9.1 -platform linux-6.9 ...args...
+> 
+> Any virtual machine HW features which are tied to host kernel features
+> would have their defaults set based on the requested -platform. The
+> -machine will be fully invariant wrt the host kernel.
+> 
+> You would have -platform hlep to list available platforms, and
+> corresonding QMP "query-platforms" command to list what platforms
+> are supported on a given host OS.
+> 
+> Downstream distros can provide their own platforms definitions
+> (eg "linux-rhel-9.5") if they have kernels whose feature set
+> diverges from upstream due to backports.
+> 
+> Mgmt apps won't need to be taught about every single little QEMU
+> setting whose default is derived from the kernel. Individual
+> defaults are opaque and controlled by the requested platform.
+> 
+> Live migration has clearly defined semantics, and mgmt app can
+> use query-platforms to validate two hosts are compatible.
+> 
+> Omitting -platform should pick the very latest platform that is
+> cmpatible with the current host (not neccessarily the latest
+> platform built-in to QEMU).
 
-References:
- - https://lists.gnu.org/archive/html/qemu-devel/2024-07/msg05996.html
- - commit eed0e8ffa38f0695c0519508f6e4f5a3297cbd67
+This seems to add one more layer to maintain, and so far I don't know
+whether it's a must.
 
-Signed-off-by: Collin Walling <walling@linux.ibm.com>
----
+To put it simple, can we simply rely on qemu cmdline as "the guest ABI"?  I
+thought it was mostly the case already, except some extremely rare
+outliers.
 
-@David, the previous commit header did not align with the changes made
-here, so I tagged this as a "v1" but added the previous conversation as
-a reference.  I hope this is appropriate?
+When we have one host that boots up a VM using:
 
----
- qapi/machine-target.json         | 18 ++++++++++--------
- target/s390x/cpu_models_sysemu.c | 31 ++++++++++++++++++++-----------
- 2 files changed, 30 insertions(+), 19 deletions(-)
+  $QEMU1 $cmdline
 
-diff --git a/qapi/machine-target.json b/qapi/machine-target.json
-index a552e2b0ce..09dec2b9bb 100644
---- a/qapi/machine-target.json
-+++ b/qapi/machine-target.json
-@@ -20,17 +20,11 @@
- #
- # @props: a dictionary of QOM properties to be applied
- #
--# @deprecated-props: a list of properties that are flagged as deprecated
--#     by the CPU vendor.  These properties are either a subset of the
--#     properties enabled on the CPU model, or a set of properties
--#     deprecated across all models for the architecture.
--#
- # Since: 2.8
- ##
- { 'struct': 'CpuModelInfo',
-   'data': { 'name': 'str',
--            '*props': 'any',
--            '*deprecated-props': ['str'] } }
-+            '*props': 'any' } }
- 
- ##
- # @CpuModelExpansionType:
-@@ -248,10 +242,18 @@
- #
- # @model: the expanded CpuModelInfo.
- #
-+# @deprecated-props: a list of properties that are flagged as deprecated
-+#     by the CPU vendor.  The list depends on the CpuModelExpansionType:
-+#     "static" properties are a subset of the enabled-properties for
-+#     the expanded model; "full" properties are a set of properties
-+#     that are deprecated across all models for the architecture.
-+#     (since: 9.1).
-+#
- # Since: 2.8
- ##
- { 'struct': 'CpuModelExpansionInfo',
--  'data': { 'model': 'CpuModelInfo' },
-+  'data': { 'model': 'CpuModelInfo',
-+            '*deprecated-props': ['str'] },
-   'if': { 'any': [ 'TARGET_S390X',
-                    'TARGET_I386',
-                    'TARGET_ARM',
-diff --git a/target/s390x/cpu_models_sysemu.c b/target/s390x/cpu_models_sysemu.c
-index 94dd798b4c..44e7587acb 100644
---- a/target/s390x/cpu_models_sysemu.c
-+++ b/target/s390x/cpu_models_sysemu.c
-@@ -174,15 +174,11 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
-                                 bool delta_changes)
- {
-     QDict *qdict = qdict_new();
--    S390FeatBitmap bitmap, deprecated;
-+    S390FeatBitmap bitmap;
- 
-     /* always fallback to the static base model */
-     info->name = g_strdup_printf("%s-base", model->def->name);
- 
--    /* features flagged as deprecated */
--    bitmap_zero(deprecated, S390_FEAT_MAX);
--    s390_get_deprecated_features(deprecated);
--
-     if (delta_changes) {
-         /* features deleted from the base feature set */
-         bitmap_andnot(bitmap, model->def->base_feat, model->features,
-@@ -197,9 +193,6 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
-         if (!bitmap_empty(bitmap, S390_FEAT_MAX)) {
-             s390_feat_bitmap_to_ascii(bitmap, qdict, qdict_add_enabled_feat);
-         }
--
--        /* deprecated features that are a subset of the model's enabled features */
--        bitmap_and(deprecated, deprecated, model->features, S390_FEAT_MAX);
-     } else {
-         /* expand all features */
-         s390_feat_bitmap_to_ascii(model->features, qdict,
-@@ -213,9 +206,6 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
-     } else {
-         info->props = QOBJECT(qdict);
-     }
--
--    s390_feat_bitmap_to_ascii(deprecated, &info->deprecated_props, list_add_feat);
--    info->has_deprecated_props = !!info->deprecated_props;
- }
- 
- CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-@@ -226,6 +216,7 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-     CpuModelExpansionInfo *expansion_info = NULL;
-     S390CPUModel s390_model;
-     bool delta_changes = false;
-+    S390FeatBitmap deprecated_feats;
- 
-     /* convert it to our internal representation */
-     cpu_model_from_info(&s390_model, model, "model", &err);
-@@ -245,6 +236,24 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-     expansion_info = g_new0(CpuModelExpansionInfo, 1);
-     expansion_info->model = g_malloc0(sizeof(*expansion_info->model));
-     cpu_info_from_model(expansion_info->model, &s390_model, delta_changes);
-+
-+    /* populated list of deprecated features */
-+    bitmap_zero(deprecated_feats, S390_FEAT_MAX);
-+    s390_get_deprecated_features(deprecated_feats);
-+
-+    if (delta_changes) {
-+        /*
-+         * Only populate deprecated features that are a
-+         * subset of the features enabled on the CPU model.
-+         */
-+        bitmap_and(deprecated_feats, deprecated_feats,
-+                   s390_model.features, S390_FEAT_MAX);
-+    }
-+
-+    s390_feat_bitmap_to_ascii(deprecated_feats,
-+                              &expansion_info->deprecated_props, list_add_feat);
-+    expansion_info->has_deprecated_props = !!expansion_info->deprecated_props;
-+
-     return expansion_info;
- }
- 
+Then another host boots up:
+
+  $QEMU2 $cmdline -incoming XXX
+
+Then migration should succeed if $cmdline is exactly the same, and the VM
+can boot up all fine without errors on both sides.
+
+AFAICT this has nothing to do with what kernel is underneath, even not
+Linux?  I think either QEMU1 / QEMU2 has the option to fail.  But if it
+didn't, I thought the ABI should be guaranteed.
+
+That's why I think this is a migration violation, as 99.99% of other device
+properties should be following this rule.  The issue here is, we have the
+same virtio-net-pci cmdline on both sides in this case, but the ABI got
+break.
+
+That's also why I was suggesting if the property contributes to the guest
+ABI, then AFAIU QEMU needs to:
+
+  - Firstly, never quietly flipping any bit that affects the ABI...
+
+  - Have a default value of off, then QEMU will always allow the VM to boot
+    by default, while advanced users can opt-in on new features.  We can't
+    make this ON by default otherwise some VMs can already fail to boot,
+
+  - If the host doesn't support the feature while the cmdline enabled it,
+    it needs to fail QEMU boot rather than flipping, so that it says "hey,
+    this host does not support running such VM specified, due to XXX
+    feature missing".
+
+That's the only way an user could understand what happened, and IMHO that's
+a clean way that we stick with QEMU cmdline on defining the guest ABI,
+while in which the machine type is the fundation of such definition, as the
+machine type can decides many of the rest compat properties.  And that's
+the whole point of the compat properties too (to make sure the guest ABI is
+stable).
+
+If kernel breaks it easily, all compat property things that we maintain can
+already stop making sense in general, because it didn't define the whole
+guest ABI..
+
+So AFAIU that's really what we used for years, I hope I didn't overlook
+somehting.  And maybe we don't yet need the "-platform" layer if we can
+keep up with this rule?
+
+Thanks,
+
 -- 
-2.45.1
+Peter Xu
 
 
