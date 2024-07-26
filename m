@@ -4,89 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 049A3C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 19:55:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C532C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 19:58:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXR17-0003J4-Nd; Fri, 26 Jul 2024 15:54:17 -0400
+	id 1sXR4R-00004y-LU; Fri, 26 Jul 2024 15:57:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sXR14-0003Ez-IH
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 15:54:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sXR4O-0008VI-0X
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 15:57:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sXR10-0001tt-Ue
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 15:54:14 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sXR4L-0002gd-Ps
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 15:57:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722023647;
+ s=mimecast20190719; t=1722023856;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=95HAwFR9/LxcH0aL73+L8JsEwsfpsQzWxNFIytZhhDI=;
- b=hbSv5Dh++PzFI+ZLky+0IhF9yBgIKdGIHxyholU1RVBqSzRpAnFli0W9bEEsNVq8JlZFWC
- lIxfeWZLUF3niMAIB4sgAlOQx+MDx/9pB8hjDt87Y26ogGuyLSBKRI+3leN22HvJ6GHybv
- W6L5+nrDlZ09yu5OabKuQPiRWzHWPjo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2EWKVSASi+6+EBoOpHsqj4q37i1KyDvOiyE7Jc/4eJU=;
+ b=LO3yJy5j0KMe0XeomQ954HTk+pLrG/7TuwA/AUEOpIfxx+dRF/b/yEHfitWy+/jVOY+7Ni
+ SegknC9sBNolAsMbR5ncaSbbxqPES9wJdbFn5D2jr3tz7VHxjmsnsA0BuMK3+WRk/0bFhG
+ QCk1uxwUEiQ9iW7LRjXABbztkubnuGI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-107-9pJyMWOWMNWqqTpqFcjtQA-1; Fri, 26 Jul 2024 15:54:04 -0400
-X-MC-Unique: 9pJyMWOWMNWqqTpqFcjtQA-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-36865706f5eso17985f8f.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 12:54:04 -0700 (PDT)
+ us-mta-154-JFxGbvCpNf6Fwl3RLdR4iQ-1; Fri, 26 Jul 2024 15:57:34 -0400
+X-MC-Unique: JFxGbvCpNf6Fwl3RLdR4iQ-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4280291f739so115515e9.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 12:57:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722023643; x=1722628443;
+ d=1e100.net; s=20230601; t=1722023853; x=1722628653;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=95HAwFR9/LxcH0aL73+L8JsEwsfpsQzWxNFIytZhhDI=;
- b=eF7toPGyr3PvVUaxCpBoHDMX9rzKCArSUhYlWOVmaRX6hbHa3g8m9OtfwFHiopIqUr
- pLOXmTFWticpVr+r7xmgUtjV8n/CSQKyuUi7JsnquiMYMfyxq+aw/DXk8VJlkD6vzpxB
- c6KcRgW1MIdQ3Fpbrb4dxi7q6bxBl+P8CLwe2IIAn+Y43yFiihqgz0BW1m/IoEe5CsVR
- CPCCENoS4OU1kf6360eEb5ZBHonqtI6gkuh3k3qAxFvdryJtn5jo7UmC+MHvkYldIV1o
- R9JdkHwWnqgAgtc2FcNldHv5WZKzVFU37OJQkFMgWUJmVTq4z8UfLCdjfI2fJki3YZh5
- BFlg==
+ bh=2EWKVSASi+6+EBoOpHsqj4q37i1KyDvOiyE7Jc/4eJU=;
+ b=WKkwOiCPbtCiBdxnoJQ5deCAcHzU4dyECoPXkiTfuMVCqNqvqvFovW7c/bQ4pHKOG7
+ Y5w5Cux5kwqBl02hgn/+0Mp3wMdE412M6wwGWOXsPr0BPrxHDY7fU77K9fyG+KBI+zo7
+ rDzCCQI2uvTMWtern1uMGSTSCaYTapOE3qYoGv/YcTiQ1uFWXuMhPo2pZLwZerF5VHvL
+ XX2+38QCoY55ZFLz0jiIJVnp7/vX5S2SoTsRd4DF1/6lg1AgvzHqfhjTP9Vpt4RieTUT
+ 8wncd0l6MOV81sXwkVaUu7/2iqORb+p2Y3/DJCkhL0uf6ppw1EhGpzBrLabXBDiH8H8Y
+ 2RjQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVo7tn98MqSwYOyjeXOA1o+/CoP49Vf6Ejr+FZ1oVc05DG2VoNCPJuV5njgiYwHVXzaDnbtkOHeoX5aN+W9Xs14Q/CcUpM=
-X-Gm-Message-State: AOJu0YwfYfXN66BWv05hMpUDFJ7tglGc3yaPJxe9kr3fkmjBtDf5h4nU
- qGWWMO8lUOenol1FE/Zjv5eSqWbOjJ5hpRlCeejJb1CqLXNSRBy9HF6zove/QyUr4PiDPNU3nke
- R6hb6arbn/rpweM8NAliDWd+VTRrPmtf98cjR1kV21l+0lD1JDcsv
-X-Received: by 2002:a05:6000:dcd:b0:368:7fd3:291c with SMTP id
- ffacd0b85a97d-36b5d0b7b9dmr384703f8f.60.1722023643731; 
- Fri, 26 Jul 2024 12:54:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF0Y9QTSdbJ7hDIvqyy3Gg5dBlYDHN2Yv0jsPK3ksAePu4f4/aNWCzRKne4DDSYc1XG+I3Lgw==
-X-Received: by 2002:a05:6000:dcd:b0:368:7fd3:291c with SMTP id
- ffacd0b85a97d-36b5d0b7b9dmr384696f8f.60.1722023643268; 
- Fri, 26 Jul 2024 12:54:03 -0700 (PDT)
+ AJvYcCX1VUu6UKWHClu/hq+WIdsi4cx+bATU9fWKajsvL5GvZw0gbGqRHxltl2zgCwwQoyHQhbFhlxNY5/H7tflOUXKIlxTjxPs=
+X-Gm-Message-State: AOJu0Yx7VM0zhNWZsnfln1zRsK2RckyiQb0zY106dEvzHPK/XtBeTtZg
+ m0MiTGO/3Sdhmj5jKhSesZ1GrWCXXfTcp8iutfDoD9dddFCuMYAClOoBUimZXo0UtxRgQcNW8bc
+ bDXNuRImE/qnotszfFJidZ416PbeYMMHCGn8GHuOrXjAmFpTO1O+Y
+X-Received: by 2002:a05:600c:2d53:b0:426:59fc:cdec with SMTP id
+ 5b1f17b1804b1-42811da1b88mr4117425e9.21.1722023853392; 
+ Fri, 26 Jul 2024 12:57:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHca4IrHU+3sBQnbZ3lhoLEm8PKDjpqkXnrVu/E4SbqRBehzkKq7FqxoOGDj9H0TQZDBVFsnw==
+X-Received: by 2002:a05:600c:2d53:b0:426:59fc:cdec with SMTP id
+ 5b1f17b1804b1-42811da1b88mr4117305e9.21.1722023852965; 
+ Fri, 26 Jul 2024 12:57:32 -0700 (PDT)
 Received: from [192.168.3.141] (p4ff238dc.dip0.t-ipconnect.de. [79.242.56.220])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b36857c78sm5845813f8f.87.2024.07.26.12.54.02
+ 5b1f17b1804b1-428054b9196sm89371445e9.0.2024.07.26.12.57.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jul 2024 12:54:02 -0700 (PDT)
-Message-ID: <3956a1ff-d036-4ef8-b1b3-7380933f49f6@redhat.com>
-Date: Fri, 26 Jul 2024 21:54:01 +0200
+ Fri, 26 Jul 2024 12:57:32 -0700 (PDT)
+Message-ID: <6f7b3367-4f13-44f0-8a04-f2be798e7bd3@redhat.com>
+Date: Fri, 26 Jul 2024 21:57:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] target/s390x: filter deprecated properties based on
+Subject: Re: [PATCH v4] target/s390x: filter deprecated properties based on
  model expansion type
-To: Collin Walling <walling@linux.ibm.com>,
- Markus Armbruster <armbru@redhat.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, thuth@redhat.com,
- wangyanan55@huawei.com, philmd@linaro.org, marcel.apfelbaum@gmail.com,
- eduardo@habkost.net, Jiri Denemark <jdenemar@redhat.com>
-References: <20240719181741.35146-1-walling@linux.ibm.com>
- <87h6cksk4h.fsf@pond.sub.org>
- <28ea8260-a411-4651-8e2a-1fcc009f5043@linux.ibm.com>
- <87bk2nrzou.fsf@pond.sub.org>
- <9f8023a4-3edd-476f-9243-677138be3921@linux.ibm.com>
- <87cyn2ugyi.fsf@pond.sub.org> <87v80tudo7.fsf@pond.sub.org>
- <d20cdad7-89c2-47f7-8acf-dcce767d8db5@redhat.com>
- <fa452b18-d19c-4d00-a566-3ec82d53b153@linux.ibm.com>
- <87ed7gipxu.fsf@pond.sub.org>
- <474aa180-431d-4724-945d-8e7dc4b91228@linux.ibm.com>
+To: Collin Walling <walling@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: thuth@redhat.com, wangyanan55@huawei.com, philmd@linaro.org,
+ marcel.apfelbaum@gmail.com, eduardo@habkost.net, armbru@redhat.com,
+ Jiri Denemark <jdenemar@redhat.com>
+References: <20240725183909.24144-1-walling@linux.ibm.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -134,18 +125,18 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <474aa180-431d-4724-945d-8e7dc4b91228@linux.ibm.com>
+In-Reply-To: <20240725183909.24144-1-walling@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,59 +152,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.07.24 21:11, Collin Walling wrote:
-> On 7/26/24 3:15 AM, Markus Armbruster wrote:
->> Collin Walling <walling@linux.ibm.com> writes:
->>
->>> On 7/25/24 3:39 AM, David Hildenbrand wrote:
->>>> On 25.07.24 09:35, Markus Armbruster wrote:
->>>>> Markus Armbruster <armbru@redhat.com> writes:
->>
->> [...]
->>
->>>>>> Arguments that are silently ignored is bad interface design.
->>>>>>
->>>>>> Observe: when CpuModelInfo is an argument, @deprecated-props is always
->>>>>> ignored.  When it's a return value, absent means {}, and it can be
->>>>>> present only for certain targets (currently S390).
->>>>>>
->>>>>> The reason we end up with an argument we ignore is laziness: we use the
->>>>>> same type for both roles.  We can fix that easily:
->>>>>>
->>>>>>       { 'struct': 'CpuModel',
->>>>>>         'data': { 'name': 'str',
->>>>>>                   '*props': 'any' } }
->>>>>>
->>>>>>       { 'struct': 'CpuModelInfo',
->>>>>>         'base': 'CpuModel',
->>>>>>         'data': { '*deprecated-props': ['str'] } }
->>>>>>
->>>>>> Use CpuModel for arguments, CpuModelInfo for return values.
->>>>>>
->>>>>> Since @deprecated-props is used only by some targets, I'd make it
->>>>>> conditional, i.e. 'if': 'TARGET_S390X'.
->>>>>
->>>>> If we want just query-cpu-model-expansion return deprecated properties,
->>>>> we can instead move @deprecated-props from CpuModelInfo to
->>>>> CpuModelExpansionInfo.
->>>>
->>>> That might a bit more sense, because deprecated-props does not make any
->>>> sense as input parameter, for example.
->>>
->>> Will do.  Thanks for the feedback.  v4 in the works.
->>
->> We better get this into 9.1.  Plan B: mark @deprecated-props unstable to
->> avoid backward compatibility pain.
->>
->>
+On 25.07.24 20:39, Collin Walling wrote:
+> Currently, there is no way to execute the query-cpu-model-expansion
+> command to retrieve a comprehenisve list of deprecated properties, as
+> the result is dependent per-model. To enable this, the expansion output
+> is modified as such:
 > 
-> Agreed, it would go a long way to squeeze this in before things get too
-> messy.
+> When reporting a "static" CPU model, the command will only show
+> deprecated properties that are a subset of the model's *enabled*
+> properties. This is more accurate than how the query was handled
+> before, which blindly reported properties that were never introduced
+> for certain models.
 > 
-> v4 is posted.  I think Thomas is unavailable, so if @David would not
-> mind handling this?
+> When reporting a "full" CPU model, show the *entire* list of deprecated
+> properties regardless if they are supported on the model. A full
+> expansion outputs all known CPU model properties anyway, so it makes
+> sense to report all deprecated properties here too. This allows
+> management apps to query a single model (e.g. host) to acquire the
+> full list of deprecated properties.
+> 
+> Additionally, the @deprecated-props array has been moved from the
+> CpuModelInfo struct to the CpuModelExpansionInfo struct, since the data
+> did not belong in the former.
+> 
+> Acked-by: David Hildenbrand <david@redhat.com>
+> Suggested-by: Jiri Denemark <jdenemar@redhat.com>
+> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+> ---
+> 
 
-Will do!
+Hmmm, this does not apply on current master ... maybe because Thomas 
+already merged part of it?
 
 -- 
 Cheers,
