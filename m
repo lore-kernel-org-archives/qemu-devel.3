@@ -4,89 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F6EAC3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 12:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 298BBC3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 12:34:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXK7V-0007Wx-Fy; Fri, 26 Jul 2024 08:32:26 -0400
+	id 1sXJlN-0003Kk-8T; Fri, 26 Jul 2024 08:09:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sXK7C-00075q-59
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 08:32:10 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sXK79-0003D7-Om
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 08:32:05 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1fd69e44596so4458505ad.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 05:32:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1721997122; x=1722601922; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=EtRK4zWhoiaMF0j+CVYjLlZPKRTkFC/ig+Ipn+BZYKg=;
- b=aCef13bxeAzcXPfM49pWR3H09a9k+qm1HLlHopWP1cs6kPAPfFkfk0DfjpgeBwPuIL
- tXugJeRjQfsFJ1Av2NyCKy34EEaLfISf98M6ib0XPljo/3lMFr90NXxGTSEilePBxPHV
- IK4YVdgv1Dr93JpWBLWwNHGITwJ79+6uKKvx8VHEcC0EmiPvAImI/uLNA5vgX4bACXpR
- 8iwEd0AJm1ajJ/OLEjJ+uDctJfL/3vVfzyzwV98MNrQMLICIK5n916T9EmjL9WvIs80T
- c9fGz0s1SkECveW+3lGfBukvkL4YwJp2tvHiKls4VbpziuLOIU8auqTdaDz1R4hvWbwd
- 8Jqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721997122; x=1722601922;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=EtRK4zWhoiaMF0j+CVYjLlZPKRTkFC/ig+Ipn+BZYKg=;
- b=c4F9HooCa/iiFOs2uE1DPSdjXbrh8biFs/ZFMKiJTX54qsTmsKWWdOkg6ODp8P1u54
- dZpHU53BwF6ehBSgjYGwdPHUQrRXa5paM1mn1nT3vOYxDijFpgvMMJ+zjuPfn2CWJcl7
- b5OIfDwR5jS5JZJrpEozUbLeLYL/wfytS9L/Q3CUvFD7D3EYPzNloWHJRhQ9gzVArUVE
- /EH/qcp99HJwme7eoClabJ0rojNCqO8AlCJEbM/PfnSwSDfuGlR8DFbuIzSrwk/ZGEk+
- pj80X7xcJAw42LrGoPSxvx4uqiNk2IIuKAYiR6XY+JBBnVN2pQCJgiQlHMPXTQ86dy2I
- 5E6Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVh8o4DEFS4nZrl2hLZoB3IdodFT6z8B7SOZ8eO/JRSERuQwA5VVeKT3ZknverC3Z9IOYmp4xIyjmdsuzE+QkEotogKlRM=
-X-Gm-Message-State: AOJu0YzJHpC8qHFbkY1dpaT4WEeDq0vXlqePB8idLgkzjsgjiZcfkCKW
- L0FVmHCyyzHEjdfnQGH6xlNGhnAYgs0EwOgf61gq+cIp4OC8L3L91f4+Xy9p7+U=
-X-Google-Smtp-Source: AGHT+IEgymvyGjOEhBuJXdL2Wi2DdocA3Ya4PRzqyhDbvku0sARpaof0y551Ua96Zr/2a9KYz+atcQ==
-X-Received: by 2002:a17:903:41cc:b0:1fd:b5fe:ee91 with SMTP id
- d9443c01a7336-1fdd6e42911mr143186455ad.25.1721997121912; 
- Fri, 26 Jul 2024 05:32:01 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:bcc0:54b1:ce70:829:8c74:d7d4?
- ([2804:7f0:bcc0:54b1:ce70:829:8c74:d7d4])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead874aeesm2577489b3a.163.2024.07.26.05.31.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jul 2024 05:32:01 -0700 (PDT)
-Message-ID: <73a0b3bc-2742-432e-a1bc-061621634a46@ventanamicro.com>
-Date: Fri, 26 Jul 2024 09:31:57 -0300
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sXJlK-0003Ie-Lk
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 08:09:30 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sXJlH-000895-Fk
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 08:09:30 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WVmj50D06z6K9Sj;
+ Fri, 26 Jul 2024 20:07:37 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id EC776140CB1;
+ Fri, 26 Jul 2024 20:09:20 +0800 (CST)
+Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 26 Jul
+ 2024 13:09:20 +0100
+Date: Fri, 26 Jul 2024 13:09:19 +0100
+To: Hendrik Wuethrich <whendrik@google.com>
+CC: <qemu-devel@nongnu.org>, <eduardo@habkost.net>,
+ <richard.henderson@linaro.org>, <marcel.apfelbaum@gmail.com>,
+ <mst@redhat.com>, <pbonzini@redhat.com>, <peternewman@google.com>
+Subject: Re: [PATCH v1 6/9] Add CPUID enumeration for RDT
+Message-ID: <20240726130919.00007580@Huawei.com>
+In-Reply-To: <20240719162929.1197154-7-whendrik@google.com>
+References: <20240719162929.1197154-1-whendrik@google.com>
+ <20240719162929.1197154-7-whendrik@google.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 0/2] Improve the performance of unit-stride RVV ld/st on
-To: Paolo Savini <paolo.savini@embecosm.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Richard Handerson <richard.henderson@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Helene Chelin <helene.chelin@embecosm.com>, Max Chou <max.chou@sifive.com>
-References: <20240717153040.11073-1-paolo.savini@embecosm.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240717153040.11073-1-paolo.savini@embecosm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.203.174.77]
+X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,79 +68,270 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+On Fri, 19 Jul 2024 16:29:26 +0000
+Hendrik Wuethrich <whendrik@google.com> wrote:
+
+> From: =E2=80=AAHendrik W=C3=BCthrich <whendrik@google.com>
+>=20
+> Add CPUID enumeration for intel RDT monitoring and allocation, as well
+> as the flags used in the enumeration code.
+>=20
+> Signed-off-by: Hendrik W=C3=BCthrich <whendrik@google.com>
+> ---
+>  hw/i386/rdt.c         | 29 ++++++++++++++
+>  include/hw/i386/rdt.h | 29 ++++++++++++++
+>  target/i386/cpu.c     | 91 +++++++++++++++++++++++++++++++++++++++++++
+>  target/i386/cpu.h     |  5 +++
+>  4 files changed, 154 insertions(+)
+>=20
+> diff --git a/hw/i386/rdt.c b/hw/i386/rdt.c
+> index 0d0e5751fc..5ad05f996a 100644
+> --- a/hw/i386/rdt.c
+> +++ b/hw/i386/rdt.c
+> @@ -17,8 +17,18 @@
+>  #define MAX_L2_MASK_COUNT      48
+>  #define MAX_MBA_THRTL_COUNT    31
+> =20
+> +/* RDT L3 Allocation features */
+> +#define CPUID_10_1_EAX_CBM_LENGTH       0xf
+> +#define CPUID_10_1_EBX_CBM              0x0
+> +#define CPUID_10_1_ECX_CDP              0x0 // to enable, it would be (1=
+U << 2)
+>  #define CPUID_10_1_EDX_COS_MAX          MAX_L3_MASK_COUNT
+> +/* RDT L2 Allocation features*/
+> +#define CPUID_10_2_EAX_CBM_LENGTH       0xf
+> +#define CPUID_10_2_EBX_CBM              0x0
+>  #define CPUID_10_2_EDX_COS_MAX          MAX_L2_MASK_COUNT
+> +/* RDT MBA features */
+> +#define CPUID_10_3_EAX_THRTL_MAX        89
+> +#define CPUID_10_3_ECX_LINEAR_RESPONSE (1U << 2)
+>  #define CPUID_10_3_EDX_COS_MAX          MAX_MBA_THRTL_COUNT
+> =20
+>  #define TYPE_RDT "rdt"
+> @@ -61,8 +71,27 @@ struct RDTState {
+> =20
+>  struct RDTStateClass { };
+> =20
+> +uint32_t rdt_get_cpuid_15_0_edx_l3(void) { return CPUID_15_1_EDX_L3_OCCU=
+PANCY | CPUID_15_1_EDX_L3_TOTAL_BW | CPUID_15_1_EDX_L3_LOCAL_BW; }
+> +
+> +uint32_t rdt_cpuid_15_1_edx_l3_total_bw_enabled(void) { return CPUID_15_=
+1_EDX_L3_TOTAL_BW; }
+> +uint32_t rdt_cpuid_15_1_edx_l3_local_bw_enabled(void) { return CPUID_15_=
+1_EDX_L3_LOCAL_BW; }
+> +uint32_t rdt_cpuid_15_1_edx_l3_occupancy_enabled(void) { return CPUID_15=
+_1_EDX_L3_OCCUPANCY; }
+> +
+> +uint32_t rdt_cpuid_10_0_ebx_l3_cat_enabled(void) { return CPUID_10_0_EBX=
+_L3_CAT; }
+> +uint32_t rdt_cpuid_10_0_ebx_l2_cat_enabled(void) { return CPUID_10_0_EBX=
+_L2_CAT; }
+> +uint32_t rdt_cpuid_10_0_ebx_l2_mba_enabled(void) { return CPUID_10_0_EBX=
+_MBA; }
+> +
+> +uint32_t rdt_get_cpuid_10_1_eax_cbm_length(void) { return CPUID_10_1_EAX=
+_CBM_LENGTH; }
+> +uint32_t rdt_cpuid_10_1_ebx_cbm_enabled(void) { return CPUID_10_1_EBX_CB=
+M; }
+> +uint32_t rdt_cpuid_10_1_ecx_cdp_enabled(void) { return CPUID_10_1_ECX_CD=
+P; }
+>  uint32_t rdt_get_cpuid_10_1_edx_cos_max(void) { return CPUID_10_1_EDX_CO=
+S_MAX; }
+> +
+> +uint32_t rdt_get_cpuid_10_2_eax_cbm_length(void) { return CPUID_10_2_EAX=
+_CBM_LENGTH; }
+> +uint32_t rdt_cpuid_10_2_ebx_cbm_enabled(void) { return CPUID_10_2_EBX_CB=
+M; }
+>  uint32_t rdt_get_cpuid_10_2_edx_cos_max(void) { return CPUID_10_2_EDX_CO=
+S_MAX; }
+> +
+> +uint32_t rdt_get_cpuid_10_3_eax_thrtl_max(void) { return CPUID_10_3_EAX_=
+THRTL_MAX; }
+> +uint32_t rdt_cpuid_10_3_eax_linear_response_enabled(void) { return CPUID=
+_10_3_ECX_LINEAR_RESPONSE; }
+>  uint32_t rdt_get_cpuid_10_3_edx_cos_max(void) { return CPUID_10_3_EDX_CO=
+S_MAX; }
+> =20
+>  bool rdt_associate_rmid_cos(uint64_t msr_ia32_pqr_assoc) {
+> diff --git a/include/hw/i386/rdt.h b/include/hw/i386/rdt.h
+> index 51d36822f0..74aba33995 100644
+> --- a/include/hw/i386/rdt.h
+> +++ b/include/hw/i386/rdt.h
+> @@ -4,15 +4,44 @@
+>  #include <stdbool.h>
+>  #include <stdint.h>
+> =20
+> +/* RDT L3 Cache Monitoring Technology */
+> +#define CPUID_15_0_EDX_L3               (1U << 1)
+> +#define CPUID_15_1_EDX_L3_OCCUPANCY     (1U << 0)
+> +#define CPUID_15_1_EDX_L3_TOTAL_BW      (1U << 1)
+> +#define CPUID_15_1_EDX_L3_LOCAL_BW      (1U << 2)
+> +
+> +/* RDT Cache Allocation Technology */
+> +#define CPUID_10_0_EBX_L3_CAT           (1U << 1)
+> +#define CPUID_10_0_EBX_L2_CAT           (1U << 2)
+> +#define CPUID_10_0_EBX_MBA              (1U << 3)
+> +#define CPUID_10_0_EDX CPUID_10_0_EBX_L3_CAT | CPUID_10_0_EBX_L2_CAT | C=
+PUID_10_0_EBX_MBA
+> +
+>  typedef struct RDTState RDTState;
+>  typedef struct RDTStateInstance RDTStateInstance;
+>  typedef struct RDTMonitor RDTMonitor;
+>  typedef struct RDTAllocation RDTAllocation;
+> =20
+> +uint32_t rdt_get_cpuid_15_0_edx_l3(void);
+> +
+> +uint32_t rdt_cpuid_15_1_edx_l3_total_bw_enabled(void);
+> +uint32_t rdt_cpuid_15_1_edx_l3_local_bw_enabled(void);
+> +uint32_t rdt_cpuid_15_1_edx_l3_occupancy_enabled(void);
+> +
+> +uint32_t rdt_cpuid_10_0_ebx_l3_cat_enabled(void);
+> +uint32_t rdt_cpuid_10_0_ebx_l2_cat_enabled(void);
+> +uint32_t rdt_cpuid_10_0_ebx_l2_mba_enabled(void);
+> +
+> +uint32_t rdt_get_cpuid_10_1_eax_cbm_length(void);
+> +uint32_t rdt_cpuid_10_1_ebx_cbm_enabled(void);
+> +uint32_t rdt_cpuid_10_1_ecx_cdp_enabled(void);
+>  uint32_t rdt_get_cpuid_10_1_edx_cos_max(void);
+> =20
+> +uint32_t rdt_get_cpuid_10_2_eax_cbm_length(void);
+> +uint32_t rdt_cpuid_10_2_ebx_cbm_enabled(void);
+>  uint32_t rdt_get_cpuid_10_2_edx_cos_max(void);
+> =20
+> +uint32_t rdt_get_cpuid_10_3_eax_thrtl_max(void);
+> +uint32_t rdt_cpuid_10_3_eax_linear_response_enabled(void);
+>  uint32_t rdt_get_cpuid_10_3_edx_cos_max(void);
+> =20
+>  bool rdt_associate_rmid_cos(uint64_t msr_ia32_pqr_assoc);
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 4688d140c2..c61981bf82 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -42,6 +42,7 @@
+>  #include "hw/boards.h"
+>  #include "hw/i386/sgx-epc.h"
+>  #endif
+> +#include "hw/i386/rdt.h"
+> =20
+>  #include "disas/capstone.h"
+>  #include "cpu-internal.h"
+> @@ -6629,6 +6630,96 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t inde=
+x, uint32_t count,
+>          assert(!(*eax & ~0x1f));
+>          *ebx &=3D 0xffff; /* The count doesn't need to be reliable. */
+>          break;
+> +#ifndef CONFIG_USER_ONLY
+> +    case 0xF:
+> +        /* Shared Resource Monitoring Enumeration Leaf */
+> +        *eax =3D 0;
+> +        *ebx =3D 0;
+> +        *ecx =3D 0;
+> +        *edx =3D 0;
+> +        if (!(env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_PQM))
+> +            break;
+> +        assert(cpu->rdt);
+> +        /* Non-zero count is ResId */
+> +        switch (count) {
+> +            /* Monitoring Resource Type Enumeration */
+> +            case 0:
+> +                *edx =3D env->features[FEAT_RDT_15_0_EDX];
+> +                *ebx =3D rdt_max_rmid(cpu->rdt);
+> +                break;
+> +            /* L3 Cache Monitoring Capability Enumeration Data */
+> +            case 1:
+> +                /* Upscaling Factor */
+> +                *ebx =3D 1;
+> +                /* MaxRMID */
+> +                *ecx =3D rdt_max_rmid(cpu->rdt);
+> +                /* Set L3 Total BW */
+comments fairly obvious from naming of functions so I'd be tempted
+to drop them all and have
+		   *ecx =3D rdt_max_rmid(cpu->rdt);
+                   *edx =3D rdt_cpuid_15_1_edx_l3_total_bw_enabled() |
+                          rdt_cpuid_15_1_edx_l3_local_bw_enabled() |
+                          rdt_cpuid_15_1_edx_l3_occupancy_enabled();
+
+Same for the rest of the cases
+> +                *edx |=3D rdt_cpuid_15_1_edx_l3_total_bw_enabled();
+> +                /* Set L3 Local BW */
+> +                *edx |=3D rdt_cpuid_15_1_edx_l3_local_bw_enabled();
+> +                /* Set L3 Occupancy */
+> +                *edx |=3D rdt_cpuid_15_1_edx_l3_occupancy_enabled();
+> +                break;
+> +            default:
+> +                break;
+> +        }
+> +        break;
+> +    case 0x10:
+> +        /* Shared Resource Director Technology Allocation Enumeration Le=
+af */
+> +        *eax =3D 0;
+> +        *ebx =3D 0;
+> +        *ecx =3D 0;
+> +        *edx =3D 0;
+> +        if (!(env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_PQE))
+> +            break;
+> +        assert(cpu->rdt);
+> +        /* Non-zero count is ResId */
+> +        switch (count) {
+> +            /* Cache Allocation Technology Available Resource Types */
+> +            case 0:
+> +                /* Set L3 CAT */
+> +                *ebx |=3D rdt_cpuid_10_0_ebx_l3_cat_enabled();
+> +                /* Set L2 CAT */
+> +                *ebx |=3D rdt_cpuid_10_0_ebx_l2_cat_enabled();
+> +                /* Set MBA */
+> +                *ebx |=3D rdt_cpuid_10_0_ebx_l2_mba_enabled();
+> +                // *edx =3D env->features[FEAT_RDT_10_0_EBX];
+
+Make sure to clean up any commented out code for v2.
+
+> +                break;
+> +            case 1:
+> +                /* Length of capacity bitmask in -1 notation */
+> +                *eax =3D rdt_get_cpuid_10_1_eax_cbm_length();
+> +                /* Capability bit mask */
+> +                *ebx =3D rdt_cpuid_10_1_ebx_cbm_enabled();
+> +                /* Code and Data priotitization */
+> +                *ecx |=3D rdt_cpuid_10_1_ecx_cdp_enabled();
+> +                /* Support for n COS masks (zero-referenced)*/
+> +                *edx =3D  rdt_get_cpuid_10_1_edx_cos_max();
+> +                break;
+> +            case 2:
+> +                /* Length of capacity bitmask in -1 notation */
+> +                *eax =3D rdt_get_cpuid_10_2_eax_cbm_length();
+> +                /* Capability bit mask */
+> +                *ebx =3D rdt_cpuid_10_2_ebx_cbm_enabled();
+> +                /* Support for n COS masks (zero-referenced)*/
+> +                *edx =3D  rdt_get_cpuid_10_2_edx_cos_max();
+> +                break;
+> +            case 3:
+> +                /* Max throttling value -1 (89 means 90) */
+> +                *eax =3D rdt_get_cpuid_10_3_eax_thrtl_max();
+> +                /* Linear response of delay values */
+> +                *ecx =3D rdt_cpuid_10_3_eax_linear_response_enabled();
+> +                /* Max number of CLOS -1 (15 means 16) */
+> +                *edx =3D rdt_get_cpuid_10_3_edx_cos_max();
+> +                break;
+> +            default:
+> +                *eax =3D 0;
+> +                *ebx =3D 0;
+> +                *ecx =3D 0;
+> +                *edx =3D 0;
+already done above.
+> +                break;
+> +        }
+> +        break;
+> +#endif
+>      case 0x1C:
+>          if (cpu->enable_pmu && (env->features[FEAT_7_0_EDX] & CPUID_7_0_=
+EDX_ARCH_LBR)) {
+>              x86_cpu_get_supported_cpuid(0x1C, 0, eax, ebx, ecx, edx);
 
 
-I suggest adding a "riscv:" at the start of the cover letter subject for the next
-version. This will make it easier for everyone else to quickly identify which arch
-the patches are changing.
-
-Other than that, and checkpatch.pl style changes, looks good to me.
-
-
-Thanks,
-
-
-Daniel
-
-
-On 7/17/24 12:30 PM, Paolo Savini wrote:
-> This series of patches builds on top of Max Chou's patches:
-> 
-> https://lore.kernel.org/all/20240613175122.1299212-1-max.chou@sifive.com/
-> 
-> The aim of these patches is to improve the performance of QEMU emulation
-> of RVV unit-stride load and store instructions in the following cases
-> 
-> 1. when the data being loaded/stored per iteration amounts to 8 bytes or less.
-> 2. when the vector length is 16 bytes (VLEN=128) and there is no grouping of the
->     vector registers (LMUL=1).
-> 3. when the data being loaded/stored per iteration is more than 64 bytes.
-> 
-> In the first two cases the optimization consists of avoiding the
-> overhead of probing the RAM of the host machine and perform a simple loop
-> load/store on the data grouped in chunks of as many bytes as possible (8,4,2 or 1).
-> 
-> The third case is optimized by calling the __builtin_memcpy function on
-> data chuncks of 128 bytes and 256 bytes per time.
-> 
-> These patches on top of Max Chou's patches have been tested with SPEC
-> CPU 2017 and achieve an average reduction of 13% of the time needed by
-> QEMU for running the benchmarks compared with the master branch of QEMU.
-> 
-> You can find the source code being developed here: https://github.com/embecosm/rise-rvv-tcg-qemu
-> and regular updates and more statistics about the patch here: https://github.com/embecosm/rise-rvv-tcg-qemu-reports
-> 
-> Changes:
-> - patch 1:
->    - Modify vext_ldst_us to run the simple loop load/store if we
->      are in one of the two cases above.
-> - patch 2:
->    - Modify vext_group_ldst_host to use __builtin_memcpy for data sizes
->      of 128 bits and above.
-> 
-> Cc: Richard Handerson <richard.henderson@linaro.org>
-> Cc: Palmer Dabbelt <palmer@dabbelt.com>
-> Cc: Alistair Francis <alistair.francis@wdc.com>
-> Cc: Bin Meng <bmeng.cn@gmail.com>
-> Cc: Weiwei Li <liwei1518@gmail.com>
-> Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-> Cc: Helene Chelin <helene.chelin@embecosm.com>
-> Cc: Max Chou <max.chou@sifive.com>
-> 
-> Helene CHELIN (1):
->    target/riscv: rvv: reduce the overhead for simple RISC-V vector
->      unit-stride loads and stores
-> 
-> Paolo Savini (1):
->    target/riscv: rvv: improve performance of RISC-V vector loads and
->      stores on large amounts of data.
-> 
->   target/riscv/vector_helper.c | 63 +++++++++++++++++++++++++++++++++++-
->   1 file changed, 62 insertions(+), 1 deletion(-)
-> 
 
