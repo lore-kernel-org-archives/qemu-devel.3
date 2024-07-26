@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8FE1C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 12:23:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58F1AC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 12:27:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXJyE-0006Rk-Up; Fri, 26 Jul 2024 08:22:50 -0400
+	id 1sXK2S-00032S-Gq; Fri, 26 Jul 2024 08:27:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sXJyD-0006P5-5Y
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 08:22:49 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1sXK2R-00031S-Au
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 08:27:11 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sXJyB-0006Ro-BK
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 08:22:48 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1fc5296e214so5303075ad.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 05:22:46 -0700 (PDT)
+ id 1sXK2P-000787-Ig
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 08:27:11 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-70d1a74a43bso753788b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 05:27:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1721996566; x=1722601366; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1721996828; x=1722601628; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=1amohUDCPiTYIIdRIYvUnq0PwPQExwJ5LpZlhWyL0Cw=;
- b=IJ0WViCVDy9he17zPuG5qHCHIUBCKxtip1Yjoweo3RxbDvP5ioz7sVufBjdEhG3kXf
- IqnaEtvEcG1HBVW6wEu4mp9SR976w7NiCEZtSEqx9T2R7BKVXrgfSZa36H+ODfqHpV90
- s/A7pBJDEwX+ReXWwDrh+xSKvCZ02tar2WFDKZ/vmbYCGMAZ/J+XAzhuruI2SRBeEKSb
- LUG6YFR67uC9GXL3nviIDIf19dregJ9bYPFT5IlQQrorFElfUKZAxAMAjzjgflg6bGMC
- 69PkLMVW0JkFmnplp/aRFZeS5pzR+uAIPhARY2vWbFFosq9Lj6+BgBY+sw8Lc3OAXNo+
- ZwOA==
+ bh=nFh+G7stIUPYlB2tBNcR+6jw95Oe3yxx4//NYKBPH9w=;
+ b=NlADgO3ylgzYNigBr9W0EoXzgYUSX5/uc4BYFxCVoT9EirGtq4x5USgn5PoTOxBomN
+ EtZTpBg1iGFfrcpkBK4NMIu3XAgbLKysknjplRwvHwlty6VBB3mVMxO1gZj4X3nAsmz2
+ mPN8fY8cyQrJt2kzktAH+1zxMcYJAoQWO+S9X4NLyTTUuVyDFWzclle9gLh/lBgBPbcf
+ Ca32gNkzSzKBGVw7W6pHiecsu1/cfJI8ialbN8+oBrfQLWGmTPc35iO6FDvjnKjsji8K
+ vpgvAmJEyUjlGHxkSccwTxrC9Kya9oC8L2JtWlq72Xq2j7JPadk445bJeNaWj5gbrxFC
+ pF+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721996566; x=1722601366;
+ d=1e100.net; s=20230601; t=1721996828; x=1722601628;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1amohUDCPiTYIIdRIYvUnq0PwPQExwJ5LpZlhWyL0Cw=;
- b=kgMGxPzfNLB7eQ+NrZVUrloKVNS3NGVjGbEZjHkmeQR1PT3YCdKv/+2gc1ZemFcKnR
- Hc+wMKmon4ctbeQEKd3Na01IXlaSp+6u4JXDWxYjHu/mnc8WPmuMKwqJOZzxA9oIhMEX
- 5PAiEZDzQyq+G6f4Xf37BA5whJc87s5BmMMrMCNJKnSJPg5K2RfJw3diTbVs1uOBl8Zr
- sNF5C70mL3iXGr8Xu+a63gmPePxKb9ZHsQe0JpjCSZTuJW8kKk6+YKscX1StDUa4mIBD
- 3VwbJGTv65URoVZsdMYw1Y3teZxuCLAZg4KHoWv/dV62KM6xGXkd4HFsupe7R5WdIQHE
- 9txQ==
+ bh=nFh+G7stIUPYlB2tBNcR+6jw95Oe3yxx4//NYKBPH9w=;
+ b=f+ZALGoHRn43XV7uJuADhMyy3g0rUn7uLsuNYLd6RYbWurdDWU3AYrmaLQH+MhJy0T
+ kAGUJE3dJKpv5utFnUA2TdNZWWLI9q/Kt1bU5hu7fSb9YCTDLiDe+tTmqbpt8t3aU8kP
+ UCaGf/hQHUogLLZLlYw1yIur0YaOdDnonepAfY7us0gTvfLkwxC5j4chk+S84T/1UvXh
+ pnWQMGx0ewQfkjjOCoEyo+LKdmMKpmNNUTYcLxWHxFMYYBq3ip4JoLx6JUnCtb1PsOhj
+ SfoSlQAZD1dg8gJDt0gWMzcS6v43tqhpxlQVvdhZvl/y1BkFE4uRbSQ38zsItAOJwuDq
+ EE4Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXeRlZ50yn2tf3P5iQbUK1DIjQ2bSUKhqOvJ+me/IxlKI730nWAtQ0G07HoD9K22VK9IR2dsvXV8i8S/MU69rsK30jpa1A=
-X-Gm-Message-State: AOJu0YySkUwMQaz6MjIaL89iHF+EttDbB0MmczJLiGDAvD3vwOnb65U2
- /B6b3E+/LX72Idlhkul8+Zb6bfJE29nhwpgpcCvxpNkLLrSD8OhJmWUq8wdeOJ8=
-X-Google-Smtp-Source: AGHT+IFil65YjmLnILeAzoLEnOYDAkAwc1Wf63tvLIGeEzxqgwwvB+tKk/bLRO/WU/BlJaUYcxgiqQ==
-X-Received: by 2002:a17:903:2445:b0:1fc:369b:c1d1 with SMTP id
- d9443c01a7336-1fed90b8fadmr61574305ad.3.1721996565549; 
- Fri, 26 Jul 2024 05:22:45 -0700 (PDT)
+ AJvYcCWpGGXVnoJfaUGzH9LRTulVXNgGjCViXAPAg+DYdtb0dcVkur2XmH758ytHrmwU6piYOq7i+maXsUrRvPG0mrI3CU3nSPo=
+X-Gm-Message-State: AOJu0YylJfmonfmIuSrWigSrlwmfJoAs2heTExr6xxcUosmw1TRVZKch
+ RFbrZO1mFipCJzW64I+FfPJpVB7qh+9QS8RleTaTv2pZsXU0jXpUwEYYAPgKiSk=
+X-Google-Smtp-Source: AGHT+IGmCXVbJVSbYzeRVxK2s0WOn6Ih8V6z91YW4P12NWt5UQ+LDkBILTui/BL3qzgKaY6yWDWOWA==
+X-Received: by 2002:a05:6a00:9448:b0:705:9ddb:db6b with SMTP id
+ d2e1a72fcca58-70eae8f0dd3mr5193129b3a.13.1721996827981; 
+ Fri, 26 Jul 2024 05:27:07 -0700 (PDT)
 Received: from ?IPV6:2804:7f0:bcc0:54b1:ce70:829:8c74:d7d4?
  ([2804:7f0:bcc0:54b1:ce70:829:8c74:d7d4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fed7f1aa0dsm30899155ad.187.2024.07.26.05.22.41
+ d2e1a72fcca58-70ead8a105bsm2578926b3a.194.2024.07.26.05.27.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jul 2024 05:22:45 -0700 (PDT)
-Message-ID: <009166f4-22b7-4568-9ffa-978f4138df15@ventanamicro.com>
-Date: Fri, 26 Jul 2024 09:22:39 -0300
+ Fri, 26 Jul 2024 05:27:07 -0700 (PDT)
+Message-ID: <5429e0ae-641e-4500-adde-e4bf8712587c@ventanamicro.com>
+Date: Fri, 26 Jul 2024 09:27:03 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 1/2] target/riscv: rvv: reduce the overhead for simple
- RISC-V vector unit-stride loads and stores
+Subject: Re: [RFC 2/2] target/riscv: rvv: improve performance of RISC-V vector
+ loads and stores on large amounts of data.
 To: Paolo Savini <paolo.savini@embecosm.com>, qemu-devel@nongnu.org,
  qemu-riscv@nongnu.org
 Cc: Richard Handerson <richard.henderson@linaro.org>,
@@ -75,14 +75,14 @@ Cc: Richard Handerson <richard.henderson@linaro.org>,
  Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Helene Chelin <helene.chelin@embecosm.com>, Max Chou <max.chou@sifive.com>
 References: <20240717153040.11073-1-paolo.savini@embecosm.com>
- <20240717153040.11073-2-paolo.savini@embecosm.com>
+ <20240717153040.11073-3-paolo.savini@embecosm.com>
 Content-Language: en-US
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240717153040.11073-2-paolo.savini@embecosm.com>
+In-Reply-To: <20240717153040.11073-3-paolo.savini@embecosm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,93 +108,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 7/17/24 12:30 PM, Paolo Savini wrote:
-> From: Helene CHELIN <helene.chelin@embecosm.com>
+> This patch optimizes the emulation of unit-stride load/store RVV instructions
+> when the data being loaded/stored per iteration amounts to 64 bytes or more.
+> The optimization consists of calling __builtin_memcpy on chunks of data of 128
+> and 256 bytes between the memory address of the simulated vector register and
+> the destination memory address and vice versa.
+> This is done only if we have direct access to the RAM of the host machine.
 > 
-> This patch improves the performance of the emulation of the RVV unit-stride
-> loads and stores in the following cases:
-> 
-> - when the data being loaded/stored per iteration amounts to 8 bytes or less.
-> - when the vector length is 16 bytes (VLEN=128) and there's no grouping of the
->    vector registers (LMUL=1).
-> 
-> The optimization consists of avoiding the overhead of probing the RAM of the
-> host machine and doing a loop load/store on the input data grouped in chunks
-> of as many bytes as possible (8,4,2,1 bytes).
-> 
-> Co-authored-by: Helene CHELIN <helene.chelin@embecosm.com>
-> Co-authored-by: Paolo Savini <paolo.savini@embecosm.com>
-> 
-> Signed-off-by: Helene CHELIN <helene.chelin@embecosm.com>
+> Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
 > ---
->   target/riscv/vector_helper.c | 46 ++++++++++++++++++++++++++++++++++++
->   1 file changed, 46 insertions(+)
+>   target/riscv/vector_helper.c | 17 ++++++++++++++++-
+>   1 file changed, 16 insertions(+), 1 deletion(-)
 > 
 > diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 29849a8b66..4b444c6bc5 100644
+> index 4b444c6bc5..7674972784 100644
 > --- a/target/riscv/vector_helper.c
 > +++ b/target/riscv/vector_helper.c
-> @@ -633,6 +633,52 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
+> @@ -486,7 +486,22 @@ vext_group_ldst_host(CPURISCVState *env, void *vd, uint32_t byte_end,
+>       }
 >   
->       VSTART_CHECK_EARLY_EXIT(env);
->   
-> +    /* For data sizes <= 64 bits and for LMUL=1 with VLEN=128 bits we get a
-> +     * better performance by doing a simple simulation of the load/store
-> +     * without the overhead of prodding the host RAM */
-> +    if ((nf == 1) && ((evl << log2_esz) <= 8 ||
-> +	((vext_lmul(desc) == 0) && (simd_maxsz(desc) == 16)))) {
+>       fn = fns[is_load][group_size];
+> -    fn(vd, byte_offset, host + byte_offset);
 > +
-> +	uint32_t evl_b = evl << log2_esz;
-> +
-> +        for (uint32_t j = env->vstart; j < evl_b;) {
-> +	    addr = base + j;
-> +            if ((evl_b - j) >= 8) {
-> +                if (is_load)
-> +                    lde_d_tlb(env, adjust_addr(env, addr), j, vd, ra);
-> +                else
-> +                    ste_d_tlb(env, adjust_addr(env, addr), j, vd, ra);
-> +                j += 8;
-> +            }
-> +            else if ((evl_b - j) >= 4) {
-> +                if (is_load)
-> +                    lde_w_tlb(env, adjust_addr(env, addr), j, vd, ra);
-> +                else
-> +                    ste_w_tlb(env, adjust_addr(env, addr), j, vd, ra);
-> +                j += 4;
-> +            }
-> +            else if ((evl_b - j) >= 2) {
-> +                if (is_load)
-> +                    lde_h_tlb(env, adjust_addr(env, addr), j, vd, ra);
-> +                else
-> +                    ste_h_tlb(env, adjust_addr(env, addr), j, vd, ra);
-> +                j += 2;
-> +            }
-> +            else {
-> +                if (is_load)
-> +                    lde_b_tlb(env, adjust_addr(env, addr), j, vd, ra);
-> +                else
-> +                    ste_b_tlb(env, adjust_addr(env, addr), j, vd, ra);
-> +                j += 1;
-> +            }
-> +        }
-> +
-> +        env->vstart = 0;
-> +        vext_set_tail_elems_1s(evl, vd, desc, nf, esz, max_elems);
-> +        return;
+> +    if (byte_offset + 32 < byte_end) {
+> +      group_size = MO_256;
+> +      if (is_load)
+> +        __builtin_memcpy((uint8_t *)(vd + byte_offset), (uint8_t *)(host + byte_offset), 32);
+> +      else
+> +        __builtin_memcpy((uint8_t *)(host + byte_offset), (uint8_t *)(vd + byte_offset), 32);
+> +    } else if (byte_offset + 16 < byte_end) {
+> +      group_size = MO_128;
+> +      if (is_load)
+> +        __builtin_memcpy((uint8_t *)(vd + byte_offset), (uint8_t *)(host + byte_offset), 16);
+> +      else
+> +        __builtin_memcpy((uint8_t *)(host + byte_offset), (uint8_t *)(vd + byte_offset), 16);
+> +    } else {
+> +      fn(vd, byte_offset, host + byte_offset);
 > +    }
-> +
+>  
 
-Aside from the code style remarks that ./scripts/checkpatch.pl will make here (we always
-use curly braces in all ifs and elses, regardless of being a single statement or not),
-LGTM.
+I see that we don't have any precedence with this particular built-in in the TCG code. We do have
+some instances in other parts of QEMU though (e.g. util/guest-random.c).
+
+If we're ok with adding these builtin calls in the execution helpers in TCG, and aside from the
+style warnings that ./scripts/checkpatch.pl will give, LGTM.
 
 
 Thanks,
 
-
 Daniel
 
-> +
->       vext_cont_ldst_elements(&info, base, env->vreg, env->vstart, evl, desc,
->                               log2_esz, false);
->       /* Probe the page(s).  Exit with exception for any invalid page. */
+>       return 1 << group_size;
+>   }
 
