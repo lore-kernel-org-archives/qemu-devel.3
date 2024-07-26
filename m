@@ -4,83 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5E9BC3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 15:18:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B12F4C3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 15:39:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXMhQ-0002Rc-Jf; Fri, 26 Jul 2024 11:17:40 -0400
+	id 1sXN1P-000138-Nx; Fri, 26 Jul 2024 11:38:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sXMhL-0002Qb-Ey
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 11:17:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sXN1N-00011q-5a
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 11:38:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sXMhI-00018c-45
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 11:17:35 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sXN1L-0000nd-N6
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 11:38:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722007047;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1722008293;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=6q5+BxFnzluFw4B6k0u8M+z9XFIUuBtDXItwUrUywR8=;
- b=BzvtbsNsAcokVbed8VuICjLsVfkiYfrBR+F9ShVgPCPa8DZMP4nsuniVxFPz6hajIrKVml
- xg9kCeY1YArGGMyUqiCYfIKnvdW3JWNj5ggJaYsLZDvIU66qIs9HRQGGNKy8DeREBQA6T6
- +UqE4XCgy5OppdELrogH78sYKZER7Eo=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=lcv6Pe6hQxAmcA6zPSkaK2jCPHrotiCeNTHUHSn32sQ=;
+ b=B4Pxzenvt7UJcShr7JKfEgdwMyZWLzlgtSpRoYHOkvp64/9AKo0YpwRbd6RbUqnaz2M3Ez
+ P1xqmaxHZBFPoU7imve6Mh4kUiAOaxpOaSotpVGWcporueDKxVWC3O9TMQ0dy9XeH6DJN9
+ OD+YYP3pGrvSkHHIh2MPex6oSx4JdnA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-170-J-TtIDN4Mk26h3j6oESoPQ-1; Fri,
- 26 Jul 2024 11:17:24 -0400
-X-MC-Unique: J-TtIDN4Mk26h3j6oESoPQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-98SKVh_XN8CpfcDejzEYaw-1; Fri,
+ 26 Jul 2024 11:38:07 -0400
+X-MC-Unique: 98SKVh_XN8CpfcDejzEYaw-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A61F61955F3D; Fri, 26 Jul 2024 15:17:21 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.32])
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 85839195609E; Fri, 26 Jul 2024 15:38:06 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.72])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 063201955D45; Fri, 26 Jul 2024 15:17:15 +0000 (UTC)
-Date: Fri, 26 Jul 2024 16:17:12 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
- akihiko.odaki@daynix.com, jasowang@redhat.com,
- sriram.yagnaraman@est.tech, sw@weilnetz.de, qemu-devel@nongnu.org,
- yan@daynix.com, Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <ZqO7cR-UiGpX2rk0@redhat.com>
-References: <20230731223148.1002258-1-yuri.benditovich@daynix.com>
- <20230731223148.1002258-5-yuri.benditovich@daynix.com>
- <ZqLPLBnbfD5r6z7D@x1n>
- <20240726020656-mutt-send-email-mst@kernel.org>
- <775ff713-f7d3-4fdc-8ba0-4ebde577040d@redhat.com>
- <ZqNiwmy29dxdyMA0@redhat.com> <ZqO2HvFJ8v7hZFOd@x1n>
+ id 76A031955D42; Fri, 26 Jul 2024 15:38:03 +0000 (UTC)
+Date: Fri, 26 Jul 2024 10:38:01 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: "open list:Network Block Dev..." <qemu-block@nongnu.org>, 
+ QEMU Developers <qemu-devel@nongnu.org>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
+ John Snow <jsnow@redhat.com>
+Subject: Re: query dirty areas according to bitmap via QMP or qemu-nbd
+Message-ID: <spi5wsadgvijq6venwx74c5exat6635h4xf5v6aaf2t3bzvijq@dkfqlhzhcvl3>
+References: <a8ceec92-4b4a-4ee6-b7f7-b6b9d804a5e9@proxmox.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZqO2HvFJ8v7hZFOd@x1n>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+In-Reply-To: <a8ceec92-4b4a-4ee6-b7f7-b6b9d804a5e9@proxmox.com>
+User-Agent: NeoMutt/20240425
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,90 +80,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 26, 2024 at 10:43:42AM -0400, Peter Xu wrote:
-> On Fri, Jul 26, 2024 at 09:48:02AM +0100, Daniel P. Berrangé wrote:
-> > On Fri, Jul 26, 2024 at 09:03:24AM +0200, Thomas Huth wrote:
-> > > On 26/07/2024 08.08, Michael S. Tsirkin wrote:
-> > > > On Thu, Jul 25, 2024 at 06:18:20PM -0400, Peter Xu wrote:
-> > > > > On Tue, Aug 01, 2023 at 01:31:48AM +0300, Yuri Benditovich wrote:
-> > > > > > USO features of virtio-net device depend on kernel ability
-> > > > > > to support them, for backward compatibility by default the
-> > > > > > features are disabled on 8.0 and earlier.
-> > > > > > 
-> > > > > > Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
-> > > > > > Signed-off-by: Andrew Melnychecnko <andrew@daynix.com>
-> > > > > 
-> > > > > Looks like this patch broke migration when the VM starts on a host that has
-> > > > > USO supported, to another host that doesn't..
-> > > > 
-> > > > This was always the case with all offloads. The answer at the moment is,
-> > > > don't do this.
-> > > 
-> > > May I ask for my understanding:
-> > > "don't do this" = don't automatically enable/disable virtio features in QEMU
-> > > depending on host kernel features, or "don't do this" = don't try to migrate
-> > > between machines that have different host kernel features?
-> > > 
-> > > > Long term, we need to start exposing management APIs
-> > > > to discover this, and management has to disable unsupported features.
-> > > 
-> > > Ack, this likely needs some treatments from the libvirt side, too.
-> > 
-> > When QEMU automatically toggles machine type featuers based on host
-> > kernel, relying on libvirt to then disable them again is impractical,
-> > as we cannot assume that the libvirt people are using knows about
-> > newly introduced features. Even if libvirt is updated to know about
-> > it, people can easily be using a previous libvirt release.
-> > 
-> > QEMU itself needs to make the machine types do that they are there
-> > todo, which is to define a stable machine ABI. 
-> > 
-> > What QEMU is missing here is a "platform ABI" concept, to encode
-> > sets of features which are tied to specific platform generations.
-> > As long as we don't have that we'll keep having these broken
-> > migration problems from machine types dynamically changing instead
-> > of providing a stable guest ABI.
+On Fri, Jul 26, 2024 at 04:16:41PM GMT, Fiona Ebner wrote:
+> Hi,
 > 
-> Any more elaboration on this idea?  Would it be easily feasible in
-> implementation?
+> sorry if I'm missing the obvious, but is there a way to get the dirty
+> areas according to a dirty bitmap via QMP? I mean as something like
+> offset + size + dirty-flag triples. In my case, the bitmap is also
+> exported via NBD, so same question for qemu-nbd being the client.
 
-In terms of launching QEMU I'd imagine:
+Over QMP, no - that can produce a potentially large response and
+possible long time in computing the data, so we have never felt the
+need to introduce a new QMP command for that purpose.  So over NBD is
+the preferred solution.
 
-  $QEMU -machine pc-q35-9.1 -platform linux-6.9 ...args...
+> 
+> I can get the info with "nbdinfo --map", but would like to avoid
+> requiring a tool outside QEMU.
 
-Any virtual machine HW features which are tied to host kernel features
-would have their defaults set based on the requested -platform. The
--machine will be fully invariant wrt the host kernel.
+By default, QEMU as an NBD client only reads the "base:allocation" NBD
+metacontext, and is not wired to read more than one NBD metacontext at
+once (weaker than nbdinfo's capabilities).  But I have intentionally
+left in a hack (accessible through QMP as well as from the command
+line) for connecting a qemu NBD client to an alternative NBD
+metacontext that feeds the block status, at which point 2 bits of
+information from the alternative context are observable through the
+result of block status calls.  Note that using such an NBD connection
+for anything OTHER than block status calls is inadvisable (qemu might
+incorrectly optimize reads based on its misinterpretation of those
+block status bits); but as long as you limit the client to block
+status calls, it's a great way to read out a "qemu:dirty-bitmap:..."
+metacontext using only a qemu NBD client connection.
 
-You would have -platform hlep to list available platforms, and
-corresonding QMP "query-platforms" command to list what platforms
-are supported on a given host OS.
+git grep -l x-dirty-bitmap tests/qemu-iotests
 
-Downstream distros can provide their own platforms definitions
-(eg "linux-rhel-9.5") if they have kernels whose feature set
-diverges from upstream due to backports.
+shows several of the iotests using the backdoor in just that manner.
+In particular, tests/qemu-img-bitmaps gives the magic decoder ring:
 
-Mgmt apps won't need to be taught about every single little QEMU
-setting whose default is derived from the kernel. Individual
-defaults are opaque and controlled by the requested platform.
+| # x-dirty-bitmap is a hack for reading bitmaps; it abuses block status to
+| # report "data":false for portions of the bitmap which are set
+| IMG="driver=nbd,server.type=unix,server.path=$nbd_unix_socket"
+| nbd_server_start_unix_socket -r -f qcow2 \
+|     -B b0 -B b1 -B b2 -B b3 "$TEST_IMG"
+| $QEMU_IMG map --output=json --image-opts \
+|     "$IMG,x-dirty-bitmap=qemu:dirty-bitmap:b0" | _filter_qemu_img_map
 
-Live migration has clearly defined semantics, and mgmt app can
-use query-platforms to validate two hosts are compatible.
+meaning the map output includes "data":false for the dirty portions
+and "data":true for the unchanged portions recorded in bitmap b0 as
+read from the JSON map output.
 
-Omitting -platform should pick the very latest platform that is
-cmpatible with the current host (not neccessarily the latest
-platform built-in to QEMU).
+> 
+> If it is not currently possible, would upstream be interested too in the
+> feature, either for QMP or qemu-nbd?
 
+Improving qemu-img to get at the information without quite the hacky
+post-processing deciphering would indeed be a useful patch, but it has
+never risen to the level of enough of an itch for me to write it
+myself (especially since 'nbdinfo --map's output works just as well).
 
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
