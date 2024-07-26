@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4153C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 09:12:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3286FC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 09:19:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXGzR-0004jF-QL; Fri, 26 Jul 2024 05:11:54 -0400
+	id 1sXH6G-0001nB-AX; Fri, 26 Jul 2024 05:18:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sXGzQ-0004gi-6Y
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 05:11:52 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sXH6C-0001mS-Uq
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 05:18:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sXGzN-0000bE-H7
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 05:11:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sXH6A-0004xo-Nz
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 05:18:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1721985108;
+ s=mimecast20190719; t=1721985529;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=CvwMkeS7ov9fmMaYQzB8CI6TOqND9kALCmv+oilXh04=;
- b=L0TYJHTYpe339QfZ3CafbTEPg6ajYfdW3KKAVPzcAEwxLlHYqFo0X92vfuvxybapr9Gjlb
- 8izAyWImFmnT+V5a0sGRWTAlbawKFGD/8gvwhl0vzDJbrVvCx2yBKYlBd9noH3rTKGVFCg
- Vi/kKUUt9nQKMVAPulfW11qRFvIUidU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=adA7YZBSzxNPTtdbuA4X/4J5RMIAJ9CtDTsZzXL1jmA=;
+ b=BWrEMF1azAic0ZrQfcbAT/Dc5WCaw+CRjGPMdj8sQnDZFd3SZkCdKcN5Sjmayi9jdQ3MUH
+ CB+tSVaUQENQiIL993l2XtLsUsm6BWX63hDim1L5i0CgZOMjaiuBMDAn+HupZQocQNGRgy
+ V0knA32QMI+8uHtLQOomSzkosw3BPVs=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-386-4qxq6TMmML2msHjkCUjOrQ-1; Fri, 26 Jul 2024 05:11:46 -0400
-X-MC-Unique: 4qxq6TMmML2msHjkCUjOrQ-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4280805bc0fso9989895e9.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 02:11:46 -0700 (PDT)
+ us-mta-644-w0bvBRbzMCie_RrNZgqKcA-1; Fri, 26 Jul 2024 05:18:46 -0400
+X-MC-Unique: w0bvBRbzMCie_RrNZgqKcA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-428040f49f9so12716725e9.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 02:18:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721985105; x=1722589905;
+ d=1e100.net; s=20230601; t=1721985525; x=1722590325;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
+ :references:cc:to:from:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CvwMkeS7ov9fmMaYQzB8CI6TOqND9kALCmv+oilXh04=;
- b=UsJycl0I0UmnpeIr3t14Y272MOvO0sNT0/n7cGAX0N5/VxX97R3XLCXMGBH9ceVMsG
- D8MvpiAA56gQDrOKqrHyp0/RmuFUV0L623RGrMxQpGI+Xkuf4L7OMecJ0FS+WHRd1dw4
- ztjNzhsRZ0FJ5E2mjv0i4QdAso5Jh7tsTj604KMzxCMhwmHxGU7EAo+Bvmj5I9zjhjxc
- GcQFzqlm8GLFX6A4KXYXewvg817X7Jm4NcUgsoe1og5UHWdj6XwWSd4bxyC6RpdyZJrC
- 6jMC/B7bVkusIt7ljjuvrV6IYRxdUPx7bUUundbQu9v5LuITo/dR0wkqVXtoaXqzSZOb
- MpRw==
+ bh=adA7YZBSzxNPTtdbuA4X/4J5RMIAJ9CtDTsZzXL1jmA=;
+ b=Toc+wDRysUMuMbI9v8yLvOlK82ciNXGEcuBlw7vGmwjiUyp3SUHeF50rF1K3R1XhKF
+ 5x7YEHo3dt0+xD3P3M+HP4x30I71/uvu/ra7e/WeV9l7LIAJQfMW54IjD1mBlUAFq6Ha
+ zKTMLP1+YvOCg646nhX98FkvDXUirpHvk6HbA4tPkrihrjYzLEv9qjS24ShKxJ2ccHuN
+ cVD1sLonWNzWylwNrGDlxFfl4GBQY8ptglqZbBEN6XStFK5nDP/yUPWDie6dXyBOwVoM
+ xvNOFcMnnA69LLRCTTZY7tCyqOkSuF95XjeJpWCipQ+7Orj1JYRDHjJbzqPuEdmt9EIP
+ 4Evw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXQ38MCD5wV0vBUPlgqxxH4wM9M8UGz3VXl8LVPeFtTXFCs8ONEtffYHH38HRwR4gtJTJSf5MOxGswnolysixhR2QiNn60=
-X-Gm-Message-State: AOJu0YzndqITzMDib1xjWUlXuA+yvzrYLU0GapgicSq5nGfBBO2vgNsc
- lEbNUqIDGnQMlhUmipLd2E09CDgeAscxdjhyMCFt7QiLhP+A3lPrYs3VNX+BL0IMIAofUNSvrT8
- o/DphkJVt7LyXLISgaBZZwRktW0C2V3LaVAruKBt6W9tvoxm+r0Ry
-X-Received: by 2002:a05:600c:4443:b0:426:5ad9:e1a2 with SMTP id
- 5b1f17b1804b1-4280570809dmr37043385e9.9.1721985105319; 
- Fri, 26 Jul 2024 02:11:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEMzfB3lFDerj03cXnaVFbsdCVbeetrWWHxZ4Ft6rFCo7OOaf2hWZrOF8cTDR7FO4h9/q7SOA==
-X-Received: by 2002:a05:600c:4443:b0:426:5ad9:e1a2 with SMTP id
- 5b1f17b1804b1-4280570809dmr37043215e9.9.1721985104914; 
- Fri, 26 Jul 2024 02:11:44 -0700 (PDT)
+ AJvYcCVr0T3kORwTvMUPhurwpXdZvce3kVvRab4kADsKdNTef5CypTYYxr8EfkILXRqrEhBnAcr6bGwjBWcLuBX9qAqcQMpo550=
+X-Gm-Message-State: AOJu0YxAOy7HKAiD630p5QorDtwOIcqHCwwptdkcb1ilDXJ7Ja4Dtmhj
+ nvP9Cn8CqPQE6HL3SD5/nWdg15sQtdh6xOPZEu9X8jGSC6q6Pq17b4eSfoDAqGwpgUhcdZJB6Po
+ 8W5nJzqgsXQ3e9pyannEfxnpjAO9arJDWWoYrrSgQWqw5kyavMjjm9vCcW/UR
+X-Received: by 2002:a05:600c:a04:b0:428:387:79ac with SMTP id
+ 5b1f17b1804b1-42806b5bb00mr34904145e9.6.1721985524982; 
+ Fri, 26 Jul 2024 02:18:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IESdWY72PPN16OCN7Jg+NlbS9Q8lJk4dH38ku9qv96OrErX7hbC5V+lVBTenKnqswABsK7l3Q==
+X-Received: by 2002:a05:600c:a04:b0:428:387:79ac with SMTP id
+ 5b1f17b1804b1-42806b5bb00mr34903855e9.6.1721985524411; 
+ Fri, 26 Jul 2024 02:18:44 -0700 (PDT)
 Received: from [10.33.192.191] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42809e4423dsm32245065e9.13.2024.07.26.02.11.44
+ 5b1f17b1804b1-42809eb192csm22970475e9.1.2024.07.26.02.18.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jul 2024 02:11:44 -0700 (PDT)
-Message-ID: <3919ac75-1cce-4fad-a0eb-4ec11865c011@redhat.com>
-Date: Fri, 26 Jul 2024 11:11:43 +0200
+ Fri, 26 Jul 2024 02:18:43 -0700 (PDT)
+Message-ID: <035f854c-78ff-4a8a-9356-1c55dca381b8@redhat.com>
+Date: Fri, 26 Jul 2024 11:18:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/tcg: Skip failing ppc64 multi-threaded tests
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240725154003.428065-1-npiggin@gmail.com>
+Subject: Re: [PATCH] .gitlab-ci.d/cirrus.yml: Shorten the runtime of the macOS
+ and FreeBSD jobs
 From: Thomas Huth <thuth@redhat.com>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240429100113.53357-1-thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -121,7 +123,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240725154003.428065-1-npiggin@gmail.com>
+In-Reply-To: <20240429100113.53357-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -132,7 +134,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,52 +150,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/07/2024 17.40, Nicholas Piggin wrote:
-> In Gitlab CI, some ppc64 multi-threaded tcg tests crash when run in the
-> clang-user job with an assertion failure in glibc that seems to
-> indicate corruption:
+
+Looks like the reduction of this patch was not enough, we've run out of 
+Cirrus-CI compute time again ... does anybody have additional ideas how we 
+could avoid that in the future?
+
+  Thomas
+
+
+On 29/04/2024 12.01, Thomas Huth wrote:
+> Cirrus-CI introduced limitations to the free CI minutes. To avoid that
+> we are consuming them too fast, let's drop the usual targets that are
+> not that important since they are either a subset of another target
+> (like i386 or ppc being a subset of x86_64 or ppc64 respectively), or
+> since there is still a similar target with the opposite endianness
+> (like xtensa/xtensael, microblaze/microblazeel etc.).
 > 
->    signals: allocatestack.c:223: allocate_stack:
->      Assertion `powerof2 (pagesize_m1 + 1)' failed.
-> 
-> Disable these tests for now.
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   tests/tcg/ppc64/Makefile.target | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
+>   .gitlab-ci.d/cirrus.yml | 2 ++
+>   1 file changed, 2 insertions(+)
 > 
-> diff --git a/tests/tcg/ppc64/Makefile.target b/tests/tcg/ppc64/Makefile.target
-> index 8c3e4e4038..509a20be2b 100644
-> --- a/tests/tcg/ppc64/Makefile.target
-> +++ b/tests/tcg/ppc64/Makefile.target
-> @@ -11,6 +11,18 @@ config-cc.mak: Makefile
+> diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
+> index 74de2edbb4..75df1273bc 100644
+> --- a/.gitlab-ci.d/cirrus.yml
+> +++ b/.gitlab-ci.d/cirrus.yml
+> @@ -57,6 +57,7 @@ x64-freebsd-13-build:
+>       CIRRUS_VM_RAM: 8G
+>       UPDATE_COMMAND: pkg update; pkg upgrade -y
+>       INSTALL_COMMAND: pkg install -y
+> +    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblaze-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu
+>       TEST_TARGETS: check
 >   
->   -include config-cc.mak
+>   aarch64-macos-13-base-build:
+> @@ -72,6 +73,7 @@ aarch64-macos-13-base-build:
+>       INSTALL_COMMAND: brew install
+>       PATH_EXTRA: /opt/homebrew/ccache/libexec:/opt/homebrew/gettext/bin
+>       PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
+> +    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,microblazeel-softmmu,mips64-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4-softmmu,xtensaeb-softmmu
+>       TEST_TARGETS: check-unit check-block check-qapi-schema check-softfloat check-qtest-x86_64
 >   
-> +# multi-threaded tests are known to fail (e.g., clang-user CI job)
-> +# See: https://gitlab.com/qemu-project/qemu/-/issues/2456
-> +run-signals: signals
-> +	$(call skip-test, $<, "BROKEN (flaky with clang) ")
-> +run-plugin-signals-with-%:
-> +	$(call skip-test, $<, "BROKEN (flaky with clang) ")
-> +
-> +run-threadcount: threadcount
-> +	$(call skip-test, $<, "BROKEN (flaky with clang) ")
-> +run-plugin-threadcount-with-%:
-> +	$(call skip-test, $<, "BROKEN (flaky with clang) ")
-> +
->   ifneq ($(CROSS_CC_HAS_POWER8_VECTOR),)
->   PPC64_TESTS=bcdsub non_signalling_xscv
->   endif
-
-Could you please check whether this is already fixed by Richard's patch:
-
-  https://gitlab.com/qemu-project/qemu/-/commit/8e466dd092469e5ab0f355775c57
-
-?
-
-  Thanks,
-   Thomas
+>   aarch64-macos-14-base-build:
 
 
