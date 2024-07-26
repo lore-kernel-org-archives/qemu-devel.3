@@ -4,75 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74709C3DA70
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 17:00:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 778D1C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 17:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXOIP-00009K-Gi; Fri, 26 Jul 2024 12:59:57 -0400
+	id 1sXOTK-00061F-4v; Fri, 26 Jul 2024 13:11:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sXOIO-00008W-9p
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 12:59:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sXOIL-0003D3-LH
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 12:59:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722013190;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=hSLu4jn027/cByGI588DmGtg3B2C9cOApNc9SFCcP60=;
- b=Y4iIKUal65kdGH8spAAV1BH7VaAUng/M0az1An+NhOeQSEN7JPzCLN5fs+qami2d7GKcAz
- 9zTJmX0hyLma/woZ3zN+GwYdx4gETtxioGRTUkJCYCU8MNQTN5sgTpyVPs3N7Q3dj+UuMw
- ISc9meTuywct9ZmEJy2NlcZ32CLNS5s=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-321-LWUPQy5_MDCMauy4Cmhwhw-1; Fri,
- 26 Jul 2024 12:59:46 -0400
-X-MC-Unique: LWUPQy5_MDCMauy4Cmhwhw-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3D52E195609E; Fri, 26 Jul 2024 16:59:44 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.32])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ADF7F1955D48; Fri, 26 Jul 2024 16:59:41 +0000 (UTC)
-Date: Fri, 26 Jul 2024 17:59:38 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] .gitlab-ci.d/cirrus.yml: Shorten the runtime of the
- macOS and FreeBSD jobs
-Message-ID: <ZqPV-s_7yav0eUT4@redhat.com>
-References: <20240429100113.53357-1-thuth@redhat.com>
- <035f854c-78ff-4a8a-9356-1c55dca381b8@redhat.com>
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1sXOTH-0005yf-Nz
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 13:11:12 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
+ id 1sXOTF-000857-LW
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 13:11:11 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1fd640a6454so9084305ad.3
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 10:11:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1722013868; x=1722618668; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Erz6ehpdJXQDZ8sLftaC+CoQQUJE9QOzFeYy2GFkg5A=;
+ b=jSbQHHr5dq2Qz/UFB+v87jYGUphEGFdnC62mrWqbzqvlTbXbHbY6ZTsTMiFxVudsze
+ zXh6krMtx9e+Ry1kP8TIPSxYB2KdWUlso49eztIVjbGSkAkzLkdRrgGnqrcM6/hJdXNX
+ Ve1T6gIlMkAKFguaRiBAtWpenGh7TmNrBarrqJb3tP9WKKB4oFuVaLTNzhHrf2Q7ap9f
+ hgnYq/zzhG22c1P7xUhBQbTNOXeEoIJjiKaRWqgNHO70WWiS95LdAXZ6BHDPh0Zqg5DA
+ 5vG6M+kx2CT09akJ7eYJ7IEdrs7Vb5aW9RoEkO1gvvwDZT7JtDxXMBHGPJtmQ+PRgYXT
+ n7Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722013868; x=1722618668;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Erz6ehpdJXQDZ8sLftaC+CoQQUJE9QOzFeYy2GFkg5A=;
+ b=IY0qDQd/4F6HxkgVVfrqkqoMiCTyxU5DtfiD1tXlHiMb4XJNavELHRwbEznnJYLOIL
+ 76hCYS8cPd+aSqZib72NUwuTiujqVOh7q2WEOSLZZbkT+TF3dhJz9mHnWs58qaL5wamk
+ gEo+XF5uekUNSgOg/YAmX/kL90TKl0TQcMMUkEjz6xW44578v4CGPRaB74od4ew3HEey
+ 8nnlZEu/WPsCqhqu0y213ci008quLebWEUgdjjvHtcowqgzGqsu9NUbwZxVZPBKKrYcB
+ cgkl8F5Ec4vr/2u2mk6fxA20HmCwe8rdTGY56zH9PqW2Sq71Rmi9ZfgHDvuTxZDuYLYQ
+ /pkw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWGqG8BUBS0Y3qm3pEJ2Jbb3VX9vcplP49uUBLeLu2QbT7662NJChElwRBMwHjDL4fHZsjkYkPeiHbmCVFfixRmFH3i9bI=
+X-Gm-Message-State: AOJu0YzTe8Z1OCYelh/gBJmmQW8UwT1vo0FafjXeDEWP/KHXO8nF4+dl
+ DHQI7ZWaDO4iReoKtWwq/AAm1r+EQHySM7zgKNspJFUuKE3DjzuemzgulA==
+X-Google-Smtp-Source: AGHT+IGNXqVq+IvJeTGZ/Qg0NUoYQD2Dtld3n+V9nfsRGJrgPcCbnjZ8vx0DBeH0pSdTxYFAK87tjw==
+X-Received: by 2002:a17:902:e5cd:b0:1fb:8e00:e5e8 with SMTP id
+ d9443c01a7336-1ff04808a05mr3474775ad.10.1722013867966; 
+ Fri, 26 Jul 2024 10:11:07 -0700 (PDT)
+Received: from valdaarhun.localnet ([223.233.82.156])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fed7ee3f5csm35097275ad.123.2024.07.26.10.11.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 26 Jul 2024 10:11:07 -0700 (PDT)
+From: Sahil <icegambit91@gmail.com>
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org,
+ Sahil Siddiq <sahilcdq@proton.me>
+Subject: Re: [RFC v2 0/3] Add packed virtqueue to shadow virtqueue
+Date: Fri, 26 Jul 2024 22:41:03 +0530
+Message-ID: <7801595.EvYhyI6sBW@valdaarhun>
+In-Reply-To: <CAJaqyWdZeohNn3BpD=Od9F9JekayYnXR-RBOn6OX_Oq4uYq5MQ@mail.gmail.com>
+References: <20240726095822.104017-1-sahilcdq@proton.me>
+ <CAJaqyWdZeohNn3BpD=Od9F9JekayYnXR-RBOn6OX_Oq4uYq5MQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <035f854c-78ff-4a8a-9356-1c55dca381b8@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=icegambit91@gmail.com; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,69 +94,107 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 26, 2024 at 11:18:43AM +0200, Thomas Huth wrote:
-> 
-> Looks like the reduction of this patch was not enough, we've run out of
-> Cirrus-CI compute time again ... does anybody have additional ideas how we
-> could avoid that in the future?
+Hi,
 
-QEMU keeps getting bigger, so our attempts to cut down on what we
-build mean we keep testing a narrower & narrower subset of
-functionality. We long ago culled the obvious wastage.
+On Friday, July 26, 2024 7:10:24=E2=80=AFPM GMT+5:30 Eugenio Perez Martin w=
+rote:
+> On Fri, Jul 26, 2024 at 11:58=E2=80=AFAM Sahil Siddiq <icegambit91@gmail.=
+com> wrote:
+> > [...]
+> > Q1.
+> > In virtio_ring.h [2], new aliases with memory alignment enforcement
+> > such as "vring_desc_t" have been created. I am not sure if this
+> > is required for the packed vq descriptor ring (vring_packed_desc)
+> > as well. I don't see a type alias that enforces memory alignment
+> > for "vring_packed_desc" in the linux kernel. I haven't used any
+> > alias either.
+>=20
+> The alignment is required to be 16 for the descriptor ring and 4 for
+> the device and driver ares by the standard [1]. In QEMU, this is
+> solved by calling mmap, which always returns page-aligned addresses.
 
-One thing is to optimize our code such that it is less expensive
-for the compiler. I feel like we've done that periodically already
-with refactoring header files. It is a complex problem with no
-quick wins to reduce compile time. If someone knows of more low
-hanging fruit though, speak up.
+Ok, I understand this now.
 
-Cirrus CI supports a "bring your hardware" model. We could do
-that for FreeBSD testing, by leveraging our existnig Azure
-account further to provide VMs. If doing that though, it'd
-be saner to just do it in GitLab context directly. This huas
-the burn of *us* maintaining FreeBSD images,and updating
-them every time a new FreeBSD is released. ie you can't just
-stick on 12.0, because when 12.1 is released, the ports
-packages get rebuilt against new 12.1 and frequently become
-uninstallable on the older minor release. IOW, we would have
-a continual burden in updating our images to track FreeBSD
-minor releases. Also this doesn't solve our macOS needs since
-you can't just run macOS in any VM, it has to be Apple HW.
+> > Q2.
+> > I see that parts of the "vhost-vdpa" implementation is based on
+> > the assumption that SVQ uses the split vq format. For example,
+> > "vhost_vdpa_svq_map_rings" [3], calls "vhost_svq_device_area_size"
+> > which is specific to split vqs. The "vhost_vring_addr" [4] struct
+> > is also specific to split vqs.
+> >=20
+> > My idea is to have a generic "vhost_vring_addr" structure that
+> > wraps around split and packed vq specific structures, rather
+> > than using them directly in if-else conditions wherever the
+> > vhost-vdpa functions require their usage. However, this will
+> > involve checking their impact in several other places where this
+> > struct is currently being used (eg.: "vhost-user", "vhost-backend",
+> > "libvhost-user").
+>=20
+> Ok I've just found this is under-documented actually :).
+>=20
+> As you mention, vhost-user is already using this same struct for
+> packed vqs [2], just translating the driver area from the avail vring
+> and the device area from the used vring. So the best option is to
+> stick with that, unless I'm missing something.
+>=20
+>=20
+> [1] https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html
+> [2]
+> https://github.com/DPDK/dpdk/blob/82c47f005b9a0a1e3a649664b7713443d18abe4=
+3/
+> lib/vhost/vhost_user.c#L841C1-L841C25
 
-Cirrus CI lets you buy more CI credits. IIUC we get 50 credits
-free each month. I can't see QEMU's usage, since it is private
-to admins only:
+Sorry, I am a little confused here. I was referring to QEMU's vhost-user
+implementation here.
 
-  https://cirrus-ci.com/settings/github/qemu
+Based on what I have understood, "vhost_vring_addr" is only being used
+for split vqs in QEMU's vhost-user and in other places too. The implementat=
+ion
+does not take into account packed vqs.
 
-if it is anything like libvirt though, I'm going to expect that
-most of our credits are consumed by macOS, not FreeBSD, since
-Cirrus CI charges for macOS at a higher level.
+I was going through DPDK's source. In DPDK's implementation of vhost-user [=
+1],
+the same struct (vhost_virtqueue) is being used for split vqs and packed vq=
+s. This
+is possible since "vhost_virtqueue" [2] uses a union to wrap around the spl=
+it and
+packed versions of the vq.
 
-To stop running out of credits I guess we'll want to buy an
-extra 20 credits in each freeze period - ie 60 a year. They
-charge $1 per credit.
+> > My idea is to have a generic "vhost_vring_addr" structure that
+> > wraps around split and packed vq specific structures, rather
+> > than using them directly in if-else conditions wherever the
+> > vhost-vdpa functions require their usage. However, this will
+> > involve checking their impact in several other places where this
+> > struct is currently being used (eg.: "vhost-user", "vhost-backend",
+> > "libvhost-user").
 
-Does the QEMU project have funds available to spend on things
-like this ?  It unfortunately requires a credit card to buy
-more credits, so somehow QEMU would have to re-imburse an
-individual maintainer for the purchase.
+I was referring to something similar by this. The current "vhost_vring_addr"
+can be renamed to "vhost_vring_addr_split" for example, and a new struct
+"vhost_vring_addr" can wrap around this and "vhost_vring_addr_packed"
+using a union.
 
-Final option is to make contact with Cirrus CI owners, and
-ask if they might wish to directly sponsor QEMU in terms of
-granting us extra credits, in exchange for including them on
-our sponsor's page https://www.qemu.org/sponsors/.
+I liked the idea of using three unions for each member in the virtqueue for=
+mat
+instead of having one union for the whole format. I didn't think of this. I=
+ think
+by having three unions the "vhost_svq_get_vring_addr" [3] function won't ha=
+ve
+to be split into two new functions to handle split and packed formats separ=
+ately.
+I am not sure if this is what you were referring to.
 
+Thanks,
+Sahil
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+[1] https://github.com/DPDK/dpdk/blob/82c47f005b9a0a1e3a649664b7713443d18ab=
+e43/lib/vhost/vhost_user.c#L861
+[2] https://github.com/DPDK/dpdk/blob/82c47f005b9a0a1e3a649664b7713443d18ab=
+e43/lib/vhost/vhost.h#L275
+[3] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost-shad=
+ow-virtqueue.c#L595
+
 
 
