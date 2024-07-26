@@ -4,92 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718B4C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 20:55:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD983C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 21:17:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXRy8-0005SO-VE; Fri, 26 Jul 2024 16:55:16 -0400
+	id 1sXSIa-000462-Rq; Fri, 26 Jul 2024 17:16:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sXRy7-0005Rp-IR
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 16:55:15 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sXSIW-00043J-FN
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 17:16:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sXRy5-0003Ga-DP
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 16:55:15 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sXSIT-0003DP-Vp
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 17:16:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722027311;
+ s=mimecast20190719; t=1722028576;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=g6F3/9CRXZbbG6wJJvftOijKu280GGcu93VWB1ey/5c=;
- b=KWB90a3q03y1k7rTguqUBtw/aVNSQ03U7bt2r1o/A/e5wYL72A3RaGtqPaGHNy4Js8qi4J
- KYN0TfWdasrmDekuU1J4qHTycZnD4W9Keh3pGmCZ0Z4xkoyro8KUsYcMw7knP//Nc3HtdQ
- 5s85ceAb3CgRJ/l0It5f1YpPFclcOOQ=
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com
- [209.85.161.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=7F8ImsKbGNc5NeKHoy1SXmcW3PimF9WuzhUULHlrFxM=;
+ b=em9gMqGJKdaNdtsOjg4g0J2OXvGkjNdQ007pMe7Enlew4oKqCufSfTLisk/R3pw/dI04Ia
+ 86f4ALt9yv7wHHFfv2nj5m0SJETzbKRWGpoiWRcVNmWjvyzzsFdItI8DbZGAODQXtRlLDI
+ WJxpLMzvVbppUoWstuAckSiiJoRTlf8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-578-0-KJ_FXfNBO0ZfheEKiT2w-1; Fri, 26 Jul 2024 16:55:10 -0400
-X-MC-Unique: 0-KJ_FXfNBO0ZfheEKiT2w-1
-Received: by mail-oo1-f71.google.com with SMTP id
- 006d021491bc7-5d5ba9e5d8bso225899eaf.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 13:55:10 -0700 (PDT)
+ us-mta-202-8FrfQ6HJMnSvQSJ3l0op1A-1; Fri, 26 Jul 2024 17:16:14 -0400
+X-MC-Unique: 8FrfQ6HJMnSvQSJ3l0op1A-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-426624f4ce3so516365e9.1
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 14:16:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722027309; x=1722632109;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=g6F3/9CRXZbbG6wJJvftOijKu280GGcu93VWB1ey/5c=;
- b=weH4jCg46+R3YSOgqh8zKVcywEjfYXgtBnLBX7OgxBfbUG470DL0B4WPcl5tYpXzKU
- ooWhduf0zzZdPJsFteBFdOMQzCTu7+PNQOK/8kFIJzqUJrwOdT/fDuyTgA+f12ZxkZGW
- 1jIQUjHpiSBhxfFqkNLwk9h4Lkz0LLc4NA3iuXsV7fAxYvCasyy79g3EU4qIceLzm2Bf
- zNOtv6apVXv8Fzi6kHia/oJT3j7c7DvBH0UBz7If5GjZJ3iVU5LsoNZuLAUtqujxleH1
- dtT2P/0NxyQAciG1cQ+uaUP3QOz5kKrhfWv2WoV+tKoN74OHsY/XepeA7+5HhTgaQVqz
- o2fw==
+ d=1e100.net; s=20230601; t=1722028573; x=1722633373;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=7F8ImsKbGNc5NeKHoy1SXmcW3PimF9WuzhUULHlrFxM=;
+ b=IqCO9fQe1yQZ9EE+n9VX+bC7gDW/rif1q3t6E+hysWi4L1eYPGW7NvSmwSh3wek7eE
+ nP/ehAyn7TIhLs9dl7PRp+Dtwy5Hhi3ugLrXfWsSN3y5N1DdWe0pCC99eDg4B17u1uGn
+ eZAoqVn8g2kHiEUVBAlDsYy2ChHP0P5zMxucrDFJCw4diC6wbZzXawMQ/8aa8zw8EAVF
+ 5DP0+F3H4zEDwTDp05OmyLHDZbaMsWgD0TFmDeriWK2iMRR4KW6EEqapaTAE6FFXQ06t
+ EqJBMY9XGAxGl+y1M5etLdAUaIKRABMFqiVq8xcaQttWGZFVag9lZbCIK8jeveneW5q+
+ uD0A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX72y59B7eCXMwaVRRKy/VMeB0IWLAwezntomQu9jKvQqh3FwttzTHQ3GtGSvlAUpRZ01TBIZTIh9X7@nongnu.org
-X-Gm-Message-State: AOJu0YzKDVdJFbi/Y54ZIedirciE2dKiCx45+CpzLBlXNDSM14TIz4fe
- DUVAzKeLNiPkR9a5rO36En7xRr8MR6qFTwR5yu+GG5WtjlJz3LANyvJzAupdN8f2c2dmAIJzAh5
- WluNV/z/+4SBiHHrDDmPvB1ulsi3z0gCXmDSSYXTNxXcdhErvqo9R
-X-Received: by 2002:a05:6358:886:b0:1ac:f854:c49e with SMTP id
- e5c5f4694b2df-1acfaac04bbmr481594055d.0.1722027309295; 
- Fri, 26 Jul 2024 13:55:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFGsJcuvK2IWCF2MQ+WDTMgV/bGorETff7fOWyrM3dEjiVwJuzBYvze+5Z2rm9TssH/INO7Qw==
-X-Received: by 2002:a05:6358:886:b0:1ac:f854:c49e with SMTP id
- e5c5f4694b2df-1acfaac04bbmr481592555d.0.1722027308787; 
- Fri, 26 Jul 2024 13:55:08 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6bb3fb090e2sm19975616d6.138.2024.07.26.13.55.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 26 Jul 2024 13:55:08 -0700 (PDT)
-Date: Fri, 26 Jul 2024 16:55:05 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
- akihiko.odaki@daynix.com, jasowang@redhat.com,
- sriram.yagnaraman@est.tech, sw@weilnetz.de, qemu-devel@nongnu.org,
- yan@daynix.com, Fabiano Rosas <farosas@suse.de>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- devel@lists.libvirt.org
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <ZqQNKZ9_OPhDq2AK@x1n>
-References: <20230731223148.1002258-1-yuri.benditovich@daynix.com>
- <20230731223148.1002258-5-yuri.benditovich@daynix.com>
- <ZqLPLBnbfD5r6z7D@x1n>
- <20240726020656-mutt-send-email-mst@kernel.org>
- <775ff713-f7d3-4fdc-8ba0-4ebde577040d@redhat.com>
- <20240726032520-mutt-send-email-mst@kernel.org>
- <fb5fbcbd-ff55-466f-b48b-aa12adca3179@redhat.com>
+ AJvYcCWm0wb2cohYwPeILug+SciwC/XSmsL8luZl/+HMPMLxKYBA4OGxf+M+uv5zkg7mtKV/+/xgFjTuTQYl4zpXM4m7iVrhol0=
+X-Gm-Message-State: AOJu0Yz1yhajSP5A1BwmbvDT3Sef1vs582k4oJRObfdUMRp5QtlRpmu+
+ e0WJZsCNNA7AnECARq18erTpMDJ7o36eor+Q41Yw5160RXPryRDzjRURmP630Yx6o/LpXnpXOr5
+ UyP3SAfgsuDtpWbM6ncpqSHWZ2yv+JNA5Xws5QYSb1jJLTjA+HskT
+X-Received: by 2002:a05:600c:1f96:b0:428:1310:b6b5 with SMTP id
+ 5b1f17b1804b1-4281310b8dfmr3001385e9.34.1722028573466; 
+ Fri, 26 Jul 2024 14:16:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEpSDamSUbWjNNAdbI7tIak+PUbo0F59MJAJg6t2xD+j0DyPoxwYEpP5Nm3dP5EF9ggHP0LeA==
+X-Received: by 2002:a05:600c:1f96:b0:428:1310:b6b5 with SMTP id
+ 5b1f17b1804b1-4281310b8dfmr3001255e9.34.1722028573071; 
+ Fri, 26 Jul 2024 14:16:13 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c713:a600:7ca0:23b3:d48a:97c7?
+ (p200300cbc713a6007ca023b3d48a97c7.dip0.t-ipconnect.de.
+ [2003:cb:c713:a600:7ca0:23b3:d48a:97c7])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4280573edbfsm94314295e9.15.2024.07.26.14.16.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Jul 2024 14:16:12 -0700 (PDT)
+Message-ID: <7744345c-964a-445d-96e3-64f71183bfba@redhat.com>
+Date: Fri, 26 Jul 2024 23:16:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <fb5fbcbd-ff55-466f-b48b-aa12adca3179@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] target/s390x: move @deprecated-props to
+ CpuModelExpansion Info
+To: Collin Walling <walling@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: thuth@redhat.com, wangyanan55@huawei.com, philmd@linaro.org,
+ marcel.apfelbaum@gmail.com, eduardo@habkost.net, armbru@redhat.com
+References: <20240726203646.20279-1-walling@linux.ibm.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ xsFNBFXLn5EBEAC+zYvAFJxCBY9Tr1xZgcESmxVNI/0ffzE/ZQOiHJl6mGkmA1R7/uUpiCjJ
+ dBrn+lhhOYjjNefFQou6478faXE6o2AhmebqT4KiQoUQFV4R7y1KMEKoSyy8hQaK1umALTdL
+ QZLQMzNE74ap+GDK0wnacPQFpcG1AE9RMq3aeErY5tujekBS32jfC/7AnH7I0v1v1TbbK3Gp
+ XNeiN4QroO+5qaSr0ID2sz5jtBLRb15RMre27E1ImpaIv2Jw8NJgW0k/D1RyKCwaTsgRdwuK
+ Kx/Y91XuSBdz0uOyU/S8kM1+ag0wvsGlpBVxRR/xw/E8M7TEwuCZQArqqTCmkG6HGcXFT0V9
+ PXFNNgV5jXMQRwU0O/ztJIQqsE5LsUomE//bLwzj9IVsaQpKDqW6TAPjcdBDPLHvriq7kGjt
+ WhVhdl0qEYB8lkBEU7V2Yb+SYhmhpDrti9Fq1EsmhiHSkxJcGREoMK/63r9WLZYI3+4W2rAc
+ UucZa4OT27U5ZISjNg3Ev0rxU5UH2/pT4wJCfxwocmqaRr6UYmrtZmND89X0KigoFD/XSeVv
+ jwBRNjPAubK9/k5NoRrYqztM9W6sJqrH8+UWZ1Idd/DdmogJh0gNC0+N42Za9yBRURfIdKSb
+ B3JfpUqcWwE7vUaYrHG1nw54pLUoPG6sAA7Mehl3nd4pZUALHwARAQABzSREYXZpZCBIaWxk
+ ZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT7CwZgEEwEIAEICGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAhkBFiEEG9nKrXNcTDpGDfzKTd4Q9wD/g1oFAl8Ox4kFCRKpKXgACgkQTd4Q
+ 9wD/g1oHcA//a6Tj7SBNjFNM1iNhWUo1lxAja0lpSodSnB2g4FCZ4R61SBR4l/psBL73xktp
+ rDHrx4aSpwkRP6Epu6mLvhlfjmkRG4OynJ5HG1gfv7RJJfnUdUM1z5kdS8JBrOhMJS2c/gPf
+ wv1TGRq2XdMPnfY2o0CxRqpcLkx4vBODvJGl2mQyJF/gPepdDfcT8/PY9BJ7FL6Hrq1gnAo4
+ 3Iv9qV0JiT2wmZciNyYQhmA1V6dyTRiQ4YAc31zOo2IM+xisPzeSHgw3ONY/XhYvfZ9r7W1l
+ pNQdc2G+o4Di9NPFHQQhDw3YTRR1opJaTlRDzxYxzU6ZnUUBghxt9cwUWTpfCktkMZiPSDGd
+ KgQBjnweV2jw9UOTxjb4LXqDjmSNkjDdQUOU69jGMUXgihvo4zhYcMX8F5gWdRtMR7DzW/YE
+ BgVcyxNkMIXoY1aYj6npHYiNQesQlqjU6azjbH70/SXKM5tNRplgW8TNprMDuntdvV9wNkFs
+ 9TyM02V5aWxFfI42+aivc4KEw69SE9KXwC7FSf5wXzuTot97N9Phj/Z3+jx443jo2NR34XgF
+ 89cct7wJMjOF7bBefo0fPPZQuIma0Zym71cP61OP/i11ahNye6HGKfxGCOcs5wW9kRQEk8P9
+ M/k2wt3mt/fCQnuP/mWutNPt95w9wSsUyATLmtNrwccz63XOwU0EVcufkQEQAOfX3n0g0fZz
+ Bgm/S2zF/kxQKCEKP8ID+Vz8sy2GpDvveBq4H2Y34XWsT1zLJdvqPI4af4ZSMxuerWjXbVWb
+ T6d4odQIG0fKx4F8NccDqbgHeZRNajXeeJ3R7gAzvWvQNLz4piHrO/B4tf8svmRBL0ZB5P5A
+ 2uhdwLU3NZuK22zpNn4is87BPWF8HhY0L5fafgDMOqnf4guJVJPYNPhUFzXUbPqOKOkL8ojk
+ CXxkOFHAbjstSK5Ca3fKquY3rdX3DNo+EL7FvAiw1mUtS+5GeYE+RMnDCsVFm/C7kY8c2d0G
+ NWkB9pJM5+mnIoFNxy7YBcldYATVeOHoY4LyaUWNnAvFYWp08dHWfZo9WCiJMuTfgtH9tc75
+ 7QanMVdPt6fDK8UUXIBLQ2TWr/sQKE9xtFuEmoQGlE1l6bGaDnnMLcYu+Asp3kDT0w4zYGsx
+ 5r6XQVRH4+5N6eHZiaeYtFOujp5n+pjBaQK7wUUjDilPQ5QMzIuCL4YjVoylWiBNknvQWBXS
+ lQCWmavOT9sttGQXdPCC5ynI+1ymZC1ORZKANLnRAb0NH/UCzcsstw2TAkFnMEbo9Zu9w7Kv
+ AxBQXWeXhJI9XQssfrf4Gusdqx8nPEpfOqCtbbwJMATbHyqLt7/oz/5deGuwxgb65pWIzufa
+ N7eop7uh+6bezi+rugUI+w6DABEBAAHCwXwEGAEIACYCGwwWIQQb2cqtc1xMOkYN/MpN3hD3
+ AP+DWgUCXw7HsgUJEqkpoQAKCRBN3hD3AP+DWrrpD/4qS3dyVRxDcDHIlmguXjC1Q5tZTwNB
+ boaBTPHSy/Nksu0eY7x6HfQJ3xajVH32Ms6t1trDQmPx2iP5+7iDsb7OKAb5eOS8h+BEBDeq
+ 3ecsQDv0fFJOA9ag5O3LLNk+3x3q7e0uo06XMaY7UHS341ozXUUI7wC7iKfoUTv03iO9El5f
+ XpNMx/YrIMduZ2+nd9Di7o5+KIwlb2mAB9sTNHdMrXesX8eBL6T9b+MZJk+mZuPxKNVfEQMQ
+ a5SxUEADIPQTPNvBewdeI80yeOCrN+Zzwy/Mrx9EPeu59Y5vSJOx/z6OUImD/GhX7Xvkt3kq
+ Er5KTrJz3++B6SH9pum9PuoE/k+nntJkNMmQpR4MCBaV/J9gIOPGodDKnjdng+mXliF3Ptu6
+ 3oxc2RCyGzTlxyMwuc2U5Q7KtUNTdDe8T0uE+9b8BLMVQDDfJjqY0VVqSUwImzTDLX9S4g/8
+ kC4HRcclk8hpyhY2jKGluZO0awwTIMgVEzmTyBphDg/Gx7dZU1Xf8HFuE+UZ5UDHDTnwgv7E
+ th6RC9+WrhDNspZ9fJjKWRbveQgUFCpe1sa77LAw+XFrKmBHXp9ZVIe90RMe2tRL06BGiRZr
+ jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20240726203646.20279-1-walling@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -113,66 +153,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 26, 2024 at 07:39:46PM +0200, Thomas Huth wrote:
-> On 26/07/2024 09.25, Michael S. Tsirkin wrote:
-> > On Fri, Jul 26, 2024 at 09:03:24AM +0200, Thomas Huth wrote:
-> > > On 26/07/2024 08.08, Michael S. Tsirkin wrote:
-> > > > On Thu, Jul 25, 2024 at 06:18:20PM -0400, Peter Xu wrote:
-> > > > > On Tue, Aug 01, 2023 at 01:31:48AM +0300, Yuri Benditovich wrote:
-> > > > > > USO features of virtio-net device depend on kernel ability
-> > > > > > to support them, for backward compatibility by default the
-> > > > > > features are disabled on 8.0 and earlier.
-> > > > > > 
-> > > > > > Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
-> > > > > > Signed-off-by: Andrew Melnychecnko <andrew@daynix.com>
-> > > > > 
-> > > > > Looks like this patch broke migration when the VM starts on a host that has
-> > > > > USO supported, to another host that doesn't..
-> > > > 
-> > > > This was always the case with all offloads. The answer at the moment is,
-> > > > don't do this.
-> > > 
-> > > May I ask for my understanding:
-> > > "don't do this" = don't automatically enable/disable virtio features in QEMU
-> > > depending on host kernel features, or "don't do this" = don't try to migrate
-> > > between machines that have different host kernel features?
-> > 
-> > The later.
+On 26.07.24 22:36, Collin Walling wrote:
+> The @deprecated-props array did not make any sense to be a member of the
+> CpuModelInfo struct, since this field would only be populated by a
+> query-cpu-model-expansion response and ignored otherwise. Move this
+> field to the CpuModelExpansionInfo struct where is makes more sense.
 > 
-> From my experience, it should rather be the former. We've seen similar
-> issues with the s390x machine in the past when trying to automatically
-> enable features depending on the availability of a kernel features. While it
-> looks nicer at a very first glance ("hey, a new feature is available, we
-> enable that for you, dear user!"), you end up in migration hell pretty
-> quickly.
+> References:
+>   - https://lists.gnu.org/archive/html/qemu-devel/2024-07/msg05996.html
+>   - commit eed0e8ffa38f0695c0519508f6e4f5a3297cbd67
 > 
-> Maybe we could elevate the "--nodefaults" command line switch to avoid
-> enabling such features automatically?
+> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+> ---
 > 
-> Anyway, while we're discussing solutions: We are in softfreeze already.
-> Should we disable the UFO bits in the new 9.1 machine type for the time
-> being to avoid that more people are running into this problem?
+> @David, the previous commit header did not align with the changes made
+> here, so I tagged this as a "v1" but added the previous conversation as
+> a reference.  I hope this is appropriate?
 
-Probably too late for this one; this patch was merged in 8.2.
-Unfortunately CIs won't even cover a test across two host kernels, even so
-it'll need to be unlucky enough to one has USO one not..
+Thanks, I modified the "References" section and converted it to a "Fixes:".
+It's now:
 
-But I do agree with Thomas here.
+     target/s390x: move @deprecated-props to CpuModelExpansion Info
+     
+     The @deprecated-props array did not make any sense to be a member of the
+     CpuModelInfo struct, since this field would only be populated by a
+     query-cpu-model-expansion response and ignored otherwise. Move this
+     field to the CpuModelExpansionInfo struct where is makes more sense.
+     
+     This was identified late during review [1] and we have to fix it up
+     while it's not part of an official QEMU release yet.
+     
+     [1] https://lore.kernel.org/qemu-devel/20240719181741.35146-1-walling@linux.ibm.com/
+     
+     Message-ID: <20240726203646.20279-1-walling@linux.ibm.com>
+     Fixes: eed0e8ffa38f ("target/s390x: filter deprecated properties based on model expansion type")
+     Signed-off-by: Collin Walling <walling@linux.ibm.com>
+     [ david: add "Fixes", explain why fix is required now and reference to v3 ]
+     Signed-off-by: David Hildenbrand <david@redhat.com>
 
-I think the only feature that can be auto-enabled is the ones that do not
-affect guest ABI.  When affected, the only right way to me to enable them
-should be exporting -device interface so that Libvirt can opt-in on
-enabling them when the host support is detected.  For QEMU users, that
-means user needs to explicitly enable them or they're off.
 
-Or, there's also another option that we turn default to ON for such
-feature, but when most of the kernels should support it.  With that, we can
-set OFF in compat property for old machines, and we should fail the new
-machine from boot when running on an old kenrel without the feature.
 
-Thanks,
+Can you take a quick peek at
+	https://github.com/davidhildenbrand/qemu/tree/s390x-next
+if everything is alright?
 
 -- 
-Peter Xu
+Cheers,
+
+David / dhildenb
 
 
