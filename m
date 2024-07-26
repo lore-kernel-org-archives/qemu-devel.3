@@ -4,83 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71F61C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 09:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFEEAC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 09:55:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXHOo-0002BB-9u; Fri, 26 Jul 2024 05:38:06 -0400
+	id 1sXHec-00089B-OH; Fri, 26 Jul 2024 05:54:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sXHOi-000280-24
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 05:38:01 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1sXHeb-00087w-3g
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 05:54:25 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sXHOf-0007VJ-JQ
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 05:37:59 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5a20de39cfbso2373116a12.1
- for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 02:37:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1sXHeX-0005NB-UI
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 05:54:24 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5a15692b6f6so2497529a12.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 02:54:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1721986675; x=1722591475; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2UcAH1+L4Yv+zlJoqvFyEVMRobQJWoqCLRd9rImdOTU=;
- b=nHNKcMzdkIuuNKqqkHTw8gpwqlmxOd7Ip0s3omcZvhSoamNKBnNnE518WcbIVk2JdN
- CKAZTNjL9yv8uLLrCQL+DXpns8ULAwT2jQayx5uQ9KvtN43j+hjZUzPl+TdkmV7C7wdf
- 1qA6aInbhRmGla1SfhyYkhdvV8JvRf5kiAE5BqXTjtpFtgIoBJKMhfWV1jUKlKoaLgym
- oFQ6nKERUk5Aap/taGtzRssWiuuR8jVdyPW906s9LfFaFWJfdM50Jv50/jjlGl7uoPAP
- AOoRGI0uawWrxzwFcWPfFzZYs0IiEuAk6p6X4k/WhojymYhS48XnsrvfE9kCYlLjM4sN
- 9Miw==
+ d=bytedance.com; s=google; t=1721987658; x=1722592458; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:mime-version:from:user-agent
+ :in-reply-to:references:from:to:cc:subject:date:message-id:reply-to;
+ bh=FK/NTiPcvNWfnTKbzA0IYU+nXXTmEncI+KSPemSyA5w=;
+ b=JXXGAuK3q8eIAZZj7zziWtGI+VACg87fyzwNnLTreApmzPgboUPjzApI7RS6usOFuR
+ +Nd/ScAsB72fk2/mx7gsg9bGbwwR0Z7HPeVgRrUF67g5ZRhOW2MaW3BHghc4tDGN4vcT
+ O9UjdshhVmexFXQ7tcRvEAB4gORLq2M0ai/wdSX7XFnZyzJraXamjZWP3lzJZ7Lx1yl0
+ lFANnVQ9kG6iTs62QEv1QiojwOwYopcxlyWmDa2cT2MMx/quSjLqbRpeKaspRZyGNDCh
+ AxdeMjK/qUaOL6kQ7IeooQwXO5E0BZOVE1IPqsbFUu0NctuY5pTzhW2UjOvgXv8EUsfI
+ O6Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721986675; x=1722591475;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2UcAH1+L4Yv+zlJoqvFyEVMRobQJWoqCLRd9rImdOTU=;
- b=j1xHdDuXFbCiYn7vomOjcFiuUSn27V89LRNgTgAvHx4njSTFx5+6tkN7ihU8I84zCS
- nA1mjogIih2QdfcOEEBbetk0H534lq9H6QKhByYvXy+J4wvBblU9168ivi2prKlU2wTp
- Pr1UKmv4g+8I6mhJEV/jFaSgq5nJ0ROFU4pBBQF/O71gWEh4c6uldoKYzJBLhZr0Zuuc
- /FzhbdLe2osE2IQ0sSxGY6lg5m60ku8wE2chmcrnBPnlJRZa7jp5tWMYVWBgT8Jbsb5L
- PnYqpCA59dhjMDCRNBtt8nTGbXeedMe/hHyJnv3pblDuQ0agmz8miyuUuTyTQNq0dmMr
- GciA==
+ d=1e100.net; s=20230601; t=1721987658; x=1722592458;
+ h=cc:to:subject:message-id:date:mime-version:from:user-agent
+ :in-reply-to:references:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FK/NTiPcvNWfnTKbzA0IYU+nXXTmEncI+KSPemSyA5w=;
+ b=lUdNZwUTRmqvsHn7ADqRTef9r63+rnmvtDS1f1p+ghKelQFv/t9XbFRETqjoy1wvOG
+ 3ePJtcv1yqHzDUKBsJ84YAxERF2dgh3MGIeUcDQP57XmbYCWFBGKEYrUBdjqy+tQwnrj
+ li3N3mTXqbdE6SEEj7tOJICNqm5usnO20IpDmO15X2peaarP5SNfNMLAp912exRmHRnu
+ pFJCeBRAB5jy6Zqlp86CmlCn6zGjLjGRR4YPD4YnqYm8uxGP1U9erzott7PEQwYJjj0n
+ X7LdEBka1tqhuJ+Kdg8YLk2XImuFtL9dBTrGcmNAjFgwS7uINwUTJoSPDxBi8qrCJLFz
+ cx0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXicAP3bMfXVj8DcDJujsIG5jvGn1Io7r5svmIUVPoGT+ti8E+SljxTRooYgYj9NEbmCdn4k2NJNEAw7uusWDMh++bINHk=
-X-Gm-Message-State: AOJu0YwUQu0t5bAgJctlSYvt6uRy34v9mMf7w16EgMezjTeyiuDU34Ox
- hCGkdua+hjJz8dTWNomMtBsiELsiresCuGL+hh5i1j/MJrhHA2MjFB6sSUDmx3lUPMfjfrDTAHw
- Z1Q9/O2T4g9Qs0Y8BXewzJHfSOZP0nulis2EJMA==
-X-Google-Smtp-Source: AGHT+IEuXLDEUaO7o3i+po0oWT3pBCNfcaxmJjOt/LdcYGX8/0SBw+vr386RnxBVF1dORKGASRRyGkoANvquLGwHnRc=
-X-Received: by 2002:a50:a451:0:b0:5a1:7d68:62d8 with SMTP id
- 4fb4d7f45d1cf-5ac657865a6mr2696044a12.38.1721986674897; Fri, 26 Jul 2024
- 02:37:54 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240722040742.11513-1-yaoxt.fnst@fujitsu.com>
- <897365b8-03b9-49d1-9822-3c99e146c670@linaro.org>
- <OSZPR01MB64531A7E8576610BDD603D3A8DA82@OSZPR01MB6453.jpnprd01.prod.outlook.com>
- <CAFEAcA_rBrA=Fy_m+U_OZaznbBn3wykTCyUf3S5aMA36YHXNkg@mail.gmail.com>
- <OSZPR01MB645328F814AD0BC9629BF2A18DB42@OSZPR01MB6453.jpnprd01.prod.outlook.com>
-In-Reply-To: <OSZPR01MB645328F814AD0BC9629BF2A18DB42@OSZPR01MB6453.jpnprd01.prod.outlook.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 26 Jul 2024 10:37:43 +0100
-Message-ID: <CAFEAcA-D1=SzRwgHv6KL7wrSAY3GBHszF1W=XHYJ9xzcz9cp2g@mail.gmail.com>
-Subject: Re: [PATCH 00/13] make range overlap check more readable
-To: "Xingtao Yao (Fujitsu)" <yaoxt.fnst@fujitsu.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ AJvYcCWsXqC1OkSWoGt/1CVQePefQoWImlZQ37wUQIA6htQu7BAlX7njwAs5PQgiIf0lvpI7I4fg6ybdLHGugjr9ubtd8jeaz8s=
+X-Gm-Message-State: AOJu0YwX9njXZfPa4W0QVdZHTdk7NhTd1BP+E9cmm3ohPIbJkTef7U09
+ Zc0tgbL5oAzFMQvwvAak9XRYgD1So8Ur3f/iiRPgYyCkzZjLH8FVarp0q9FP+QqK/Fa885heNUj
+ rAwwixDgvT0dUhrf8ye5t1koHDDqYs8fli93F5Q==
+X-Google-Smtp-Source: AGHT+IEIJtH3fiDF1uYd5J8mMRRWzNK4yZgeNxOdqmTiqgmtIy75H1Jl8l9EFWgIgsFkKuIE3SE+SqVwvP99pXhHsbQ=
+X-Received: by 2002:a05:6402:5111:b0:5a3:d140:1a52 with SMTP id
+ 4fb4d7f45d1cf-5ac2a0ee946mr4274950a12.3.1721987657612; Fri, 26 Jul 2024
+ 02:54:17 -0700 (PDT)
+Received: from 44278815321 named unknown by gmailapi.google.com with HTTPREST; 
+ Fri, 26 Jul 2024 05:54:17 -0400
+References: <20240712023650.45626-1-luchangqi.123@bytedance.com>
+ <20240712023650.45626-10-luchangqi.123@bytedance.com>
+ <ZpT1ZnOjx48_6q0j@cormorant.local>
+ <58383d65-83df-4527-81e4-b4d12c409b22@bytedance.com>
+ <CAO5cSZDc9_o4=VZRDFA-CXAkF12r=v95zhNQ0gBM0NHExgkbMw@mail.gmail.com>
+ <ZqNBSGmVTg-xkTs3@cormorant.local>
+In-Reply-To: <ZqNBSGmVTg-xkTs3@cormorant.local>
+X-Original-From: =?UTF-8?B?5Y2i6ZW/5aWHIDxsdWNoYW5ncWkuMTIzQGJ5dGVkYW5jZS5jb20+?=
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?B?5Y2i6ZW/5aWH?= <luchangqi.123@bytedance.com>
+Mime-Version: 1.0
+Date: Fri, 26 Jul 2024 05:54:17 -0400
+Message-ID: <CAO5cSZD8Vk-=z-REXjusrXXemN4T4=-kA=_aXiPsiR4MsjL10Q@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH v9 09/10] hw/nvme: add reservation protocal
+ command
+To: Klaus Jensen <its@irrelevant.dk>
+Cc: Klaus Jensen <k.jensen@samsung.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, 
+ kwolf@redhat.com, hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net, 
+ ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de, 
+ kbusch@kernel.org, foss@defmacro.it, philmd@linaro.org, 
+ pizhenwei@bytedance.com
+Content-Type: multipart/alternative; boundary="000000000000a3dc88061e237eff"
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=luchangqi.123@bytedance.com; helo=mail-ed1-x535.google.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_MUA_MOZILLA=2.309,
+ HTML_MESSAGE=0.001, NUMERIC_HTTP_ADDR=1.242, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ WEIRD_PORT=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,98 +105,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 26 Jul 2024 at 01:16, Xingtao Yao (Fujitsu)
-<yaoxt.fnst@fujitsu.com> wrote:
->
->
->
-> > -----Original Message-----
-> > From: Peter Maydell <peter.maydell@linaro.org>
-> > Sent: Thursday, July 25, 2024 11:14 PM
-> > To: Yao, Xingtao/=E5=A7=9A =E5=B9=B8=E6=B6=9B <yaoxt.fnst@fujitsu.com>
-> > Cc: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>; qemu-devel@nongnu.=
-org
-> > Subject: Re: [PATCH 00/13] make range overlap check more readable
-> >
-> > On Mon, 22 Jul 2024 at 08:00, Xingtao Yao (Fujitsu) via
-> > <qemu-devel@nongnu.org> wrote:
-> > >
-> > >
-> > >
-> > > > -----Original Message-----
-> > > > From: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> > > > Sent: Monday, July 22, 2024 2:43 PM
-> > > > To: Yao, Xingtao/=E5=A7=9A =E5=B9=B8=E6=B6=9B <yaoxt.fnst@fujitsu.c=
-om>; qemu-devel@nongnu.org
-> > > > Subject: Re: [PATCH 00/13] make range overlap check more readable
-> > > >
-> > > > Hi Yao,
-> > > >
-> > > > On 22/7/24 06:07, Yao Xingtao via wrote:
-> > > > > Currently, some components still open-coding the range overlap ch=
-eck.
-> > > > > Sometimes this check may be fail because some patterns are missed=
-.
-> > > >
-> > > > How did you catch all these use cases?
-> > > I used the Coccinelle to match these use cases, the pattern is below
-> > > range_overlap.cocci:
-> > >
-> > > // use ranges_overlap() instead of open-coding the overlap check
-> > > @@
-> > > expression E1, E2, E3, E4;
-> > > @@
-> > > (
-> > > - E2 <=3D E3 || E1 >=3D E4
-> > > + !ranges_overlap(E1, E2, E3, E4)
-> > > |
-> >
-> > Maybe I'm misunderstanding the coccinelle patch here, but
-> > I don't see how it produces the results in the patchset.
-> > ranges_overlap() takes arguments (start1, len1, start2, len2),
-> > but an expression like "E2 <=3D E3 || E1 >=3D E4" is working
-> > with start,end pairs to indicate the ranges. And looking
-> > at e.g. patch 9:
-> >
-> > - if (cur->phys_addr >=3D begin + length ||
-> > - cur->phys_addr + cur->length <=3D begin) {
-> > + if (!ranges_overlap(cur->phys_addr, cur->length, begin, length)) {
-> >
-> > the kind of if() check you get for start, length pairs
-> > has an addition in it, which I don't see in any of these
-> > coccinelle script fragments.
-> I understand your confusion, but it is difficult to match the region over=
-lap check because
-> it has many variations, like below:
-> case1:
-> start >=3D old_start +old_len || start + len <=3D old_start
->
-> case2:
-> start >=3D old_end || end <=3D old_start
->
-> case3:
-> cur->phys_addr >=3D begin + length || cur->phys_addr + cur->length <=3D b=
-egin
->
-> case4:
-> new->base >=3D old.base +old.size || new->base + new->size <=3D old.base
-> ......
-> and sometimes the length or end may be also an expression, I can not find=
- a way to
-> handle all the variants.
->
-> So I decided to use the above pattern to find out the region overlap chec=
-ks as much as possible,
-> then manually drop the cases that does not meet the requirements, and the=
-n manually modify
-> the cases that meets the requirements.
+--000000000000a3dc88061e237eff
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ah, I see -- you just used coccinelle as a more flexible grep,
-effectively. That's fine -- it just means that when we review
-the series we need to review each patch for e.g. off-by-one
-errors rather than being able to do that only on the
-coccinelle patch.
+Hi;
 
-thanks
--- PMM
+You can test it in spdk.
+First start spdk and execute the following command.
+
+```
+dd if=3D/dev/zero of=3Dtest.img bs=3D1G count=3D10
+RPC=3D/root/source/spdk/spdk/scripts/rpc.py
+FILE=3D/root/test.img
+
+$RPC bdev_aio_create $FILE aio0 512
+$RPC iscsi_create_portal_group 1 127.0.0.1:3260
+$RPC iscsi_create_initiator_group 2 ANY ANY
+$RPC iscsi_create_target_node target0 target0_alias aio0:0 1:2 64 -d
+```
+
+Then start qemu and mount an nvme disk.
+Execute the following test command.
+```
+#reporter
+nvme resv-report /dev/nvme0n1
+#register
+nvme resv-register /dev/nvme0n1 --nrkey 3 --rrega 0
+#unregister
+nvme resv-register /dev/nvme0n1 --crkey 3 --rrega 1
+# register replace
+nvme resv-register /dev/nvme0n1 --crkey 3 --nrkey 5 --rrega 2
+#release
+nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 0
+#clear
+nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 1
+#reserve
+nvme resv-acquire /dev/nvme0n1 --crkey 3 --rtype 1 --racqa 0
+#premmpt
+nvme resv-acquire /dev/nvme0n1 --crkey 6 --prkey 3 --rtype 1 --racqa 1
+```
+
+
+
+On 2024/7/26 14:25, Klaus Jensen wrote:
+> On Jul 25 19:42, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
+>> Hi,
+>>
+>> ```
+>> 2685 nvme_status->regctl_ds[i].cntlid =3D nvme_ctrl(req)->cntlid;
+>> 2686 nvme_status->regctl_ds[i].rkey =3D keys_info->keys[i];
+>> 2687 nvme_status->regctl_ds[i].rcsts =3D keys_info->keys[i] =3D=3D
+>> 2688 reservation->key ? 1 : 0;
+>> 2689 /* hostid is not supported currently */
+>> 2670 memset(&nvme_status->regctl_ds[i].hostid, 0, 8);
+>> ```
+>>
+>> Klaus, I think hostid(2685) is stored locally like cntlid, i
+>> can get cntlid by nvme_ctrl(req)->cntlid, but I can't
+>> find a good way to get the host ID(2670). So I add a comment
+>> "/* hostid is not supported currently */". Could you give me
+>> some advices?
+>>
+>
+> The Host Identifier is just a 64 or 128 bit value that the host can set
+> with Set Feature. So, it is fine (and normal) that the value is
+> initially zero, but the host should be able to set it on controllers
+> with Set Feature to indicate if a controller belongs to the same host or
+> not.
+>
+>> And using spdk as target will not fail, but it will show 0 at hostid
+>> at present.
+>
+> Host Identifier 0 is a valid value when used with reservations; 0
+> indicates that the host associated with the controller is not associated
+> with any other controllers in the subsystem. So if two controllers have
+> Host Identifier set to 0, that implicitly mean they are associated with
+> two different hosts.
+>
+>> The relevant tests in qemu are as follows=EF=BC=8C
+>>
+>> ```
+>> root@node1:~# nvme resv-report /dev/nvme0n1
+>> NVME Reservation Report success
+>>
+>> NVME Reservation status:
+>>
+>> gen : 1
+>> regctl : 1
+>> rtype : 0
+>> ptpls : 0
+>> regctl[0] :
+>> cntlid : 0
+>> rcsts : 0
+>> hostid : 0
+>> rkey : 6
+>> ```
+>
+> I was hoping for an example on how to setup some simple iscsi stuff so I
+> could test the feature.
+
+--000000000000a3dc88061e237eff
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<p>Hi;
+<br>
+<br>You can test it in spdk.
+<br>First start spdk and execute the following command.
+<br>
+<br>```
+<br>dd if=3D/dev/zero of=3Dtest.img bs=3D1G count=3D10
+<br>RPC=3D/root/source/spdk/spdk/scripts/rpc.py
+<br>FILE=3D/root/test.img
+<br>
+<br>$RPC bdev_aio_create $FILE aio0 512
+<br>$RPC iscsi_create_portal_group 1 <a href=3D"http://127.0.0.1:3260">127.=
+0.0.1:3260</a>
+<br>$RPC iscsi_create_initiator_group 2 ANY ANY
+<br>$RPC iscsi_create_target_node target0 target0_alias aio0:0 1:2 64 -d
+<br>```
+<br>
+<br>Then start qemu and mount an nvme disk.
+<br>Execute the following test command.
+<br>```
+<br>#reporter
+<br>nvme resv-report /dev/nvme0n1
+<br>#register
+<br>nvme resv-register /dev/nvme0n1 --nrkey 3  --rrega 0
+<br>#unregister
+<br>nvme resv-register /dev/nvme0n1 --crkey 3  --rrega 1
+<br># register replace
+<br>nvme resv-register /dev/nvme0n1 --crkey 3 --nrkey 5 --rrega 2
+<br>#release
+<br>nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 0
+<br>#clear
+<br>nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 1
+<br>#reserve
+<br>nvme resv-acquire /dev/nvme0n1 --crkey 3 --rtype 1 --racqa 0
+<br>#premmpt
+<br>nvme resv-acquire /dev/nvme0n1 --crkey 6 --prkey 3 --rtype 1 --racqa 1
+<br>```
+<br>
+<br>
+<br>
+<br>On 2024/7/26 14:25, Klaus Jensen wrote:
+<br>&gt; On Jul 25 19:42, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
+<br>&gt;&gt; Hi,
+<br>&gt;&gt;
+<br>&gt;&gt; ```
+<br>&gt;&gt; 2685 nvme_status-&gt;regctl_ds[i].cntlid =3D nvme_ctrl(req)-&g=
+t;cntlid;
+<br>&gt;&gt; 2686 nvme_status-&gt;regctl_ds[i].rkey =3D keys_info-&gt;keys[=
+i];
+<br>&gt;&gt; 2687 nvme_status-&gt;regctl_ds[i].rcsts =3D keys_info-&gt;keys=
+[i] =3D=3D
+<br>&gt;&gt; 2688 reservation-&gt;key ? 1 : 0;
+<br>&gt;&gt; 2689 /* hostid is not supported currently */
+<br>&gt;&gt; 2670 memset(&amp;nvme_status-&gt;regctl_ds[i].hostid, 0, 8);
+<br>&gt;&gt; ```
+<br>&gt;&gt;
+<br>&gt;&gt; Klaus, I think hostid(2685) is stored locally like cntlid, i
+<br>&gt;&gt; can get cntlid by nvme_ctrl(req)-&gt;cntlid, but I can&#39;t
+<br>&gt;&gt; find a good way to get the host ID(2670). So I add a comment
+<br>&gt;&gt; &quot;/* hostid is not supported currently */&quot;. Could you=
+ give me
+<br>&gt;&gt; some advices?
+<br>&gt;&gt;
+<br>&gt;=20
+<br>&gt; The Host Identifier is just a 64 or 128 bit value that the host ca=
+n set
+<br>&gt; with Set Feature. So, it is fine (and normal) that the value is
+<br>&gt; initially zero, but the host should be able to set it on controlle=
+rs
+<br>&gt; with Set Feature to indicate if a controller belongs to the same h=
+ost or
+<br>&gt; not.
+<br>&gt;=20
+<br>&gt;&gt; And using spdk as target will not fail, but it will show 0 at =
+hostid
+<br>&gt;&gt; at present.
+<br>&gt;=20
+<br>&gt; Host Identifier 0 is a valid value when used with reservations; 0
+<br>&gt; indicates that the host associated with the controller is not asso=
+ciated
+<br>&gt; with any other controllers in the subsystem. So if two controllers=
+ have
+<br>&gt; Host Identifier set to 0, that implicitly mean they are associated=
+ with
+<br>&gt; two different hosts.
+<br>&gt;=20
+<br>&gt;&gt; The relevant tests in qemu are as follows=EF=BC=8C
+<br>&gt;&gt;
+<br>&gt;&gt; ```
+<br>&gt;&gt; root@node1:~# nvme resv-report /dev/nvme0n1
+<br>&gt;&gt; NVME Reservation Report success
+<br>&gt;&gt;
+<br>&gt;&gt; NVME Reservation status:
+<br>&gt;&gt;
+<br>&gt;&gt; gen : 1
+<br>&gt;&gt; regctl : 1
+<br>&gt;&gt; rtype : 0
+<br>&gt;&gt; ptpls : 0
+<br>&gt;&gt; regctl[0] :
+<br>&gt;&gt; cntlid : 0
+<br>&gt;&gt; rcsts : 0
+<br>&gt;&gt; hostid : 0
+<br>&gt;&gt; rkey : 6
+<br>&gt;&gt; ```
+<br>&gt;=20
+<br>&gt; I was hoping for an example on how to setup some simple iscsi stuf=
+f so I
+<br>&gt; could test the feature.</p>
+
+--000000000000a3dc88061e237eff--
 
