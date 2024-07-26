@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6102C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 13:47:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C52B0C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 13:48:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXLGv-0005eQ-GO; Fri, 26 Jul 2024 09:46:14 -0400
+	id 1sXLHV-0000fT-WF; Fri, 26 Jul 2024 09:46:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sXLGC-0004mS-RY
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 09:45:35 -0400
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sXLGE-0004mp-E6
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 09:45:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sXLG9-0001ub-Fv
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 09:45:28 -0400
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sXLGC-0001vD-1L
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 09:45:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722001520;
+ s=mimecast20190719; t=1722001526;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1OvDLu3KIbWHiu6ZxO0CUx4o4QNDavrUPXIZjllUrVA=;
- b=GIErtOyV3mhmXvfCTU2IAvzDYurWTEPX/9AhscDdry9JzUJsTM2VXBqlQZk4dUXzGZ3GaW
- y+qm+PiQUlO/Nw+uKY6wgxdMIusluuZ5ZL92OjoALMhTgE4T0+w3EcenT5QXXJ4f9f5b5Q
- SfiHL90dRCoJiVZ8Zg/qmJViQbdzSLg=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=iANeBO6ReZ4SXr/ZZKfmq7nYRFwkGFSuGPP72ITezII=;
+ b=itpWQ+rUFNh53xa0WaPG1peuvnrvEOK7JwvCwbi4FkDceo1B+jjYYFwsJJOlLkazZgZ9aO
+ PyM/wsoLApelStWRUHyzUzgw1pmV86HJ1CSlz/V8oLonhkXjGQvZW/FALRaffcqyvyCRng
+ zkEU7H8V3Ny4jJHoydVar2ryXxWnB60=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-488-X4q3-WUWMgibfuwHxzfhaQ-1; Fri,
- 26 Jul 2024 09:45:19 -0400
-X-MC-Unique: X4q3-WUWMgibfuwHxzfhaQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-336-YaN_GngSPvyKyKgwQTcq-w-1; Fri,
+ 26 Jul 2024 09:45:23 -0400
+X-MC-Unique: YaN_GngSPvyKyKgwQTcq-w-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 920EF1944AA6; Fri, 26 Jul 2024 13:45:16 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CEAF81955BFA; Fri, 26 Jul 2024 13:45:20 +0000 (UTC)
 Received: from p1.localdomain.com (unknown [10.22.17.77])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D2BD61955D42; Fri, 26 Jul 2024 13:45:12 +0000 (UTC)
+ id D164F1955D45; Fri, 26 Jul 2024 13:45:16 +0000 (UTC)
 From: Cleber Rosa <crosa@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
@@ -59,9 +59,10 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  Radoslaw Biernacki <rad@semihalf.com>, Cleber Rosa <crosa@redhat.com>,
  Paul Durrant <paul@xen.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH 06/13] tests/avocado: use more distinct names for assets
-Date: Fri, 26 Jul 2024 09:44:31 -0400
-Message-ID: <20240726134438.14720-7-crosa@redhat.com>
+Subject: [PATCH 07/13] tests/avocado/kvm_xen_guest.py: cope with asset RW
+ requirements
+Date: Fri, 26 Jul 2024 09:44:32 -0400
+Message-ID: <20240726134438.14720-8-crosa@redhat.com>
 In-Reply-To: <20240726134438.14720-1-crosa@redhat.com>
 References: <20240726134438.14720-1-crosa@redhat.com>
 MIME-Version: 1.0
@@ -91,50 +92,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avocado's asset system will deposit files in a cache organized either
-by their original location (the URI) or by their names.  Because the
-cache (and the "by_name" sub directory) is common across tests, it's a
-good idea to make these names as distinct as possible.
+Some of these tests actually require the root filesystem image,
+obtained through Avocado's asset feature and kept in a common cache
+location, to be writable.
 
-This avoid name clashes, which makes future Avocado runs to attempt to
-redownload the assets with the same name, but from the different
-locations they actually are from.  This causes cache misses, extra
-downloads, and possibly canceled tests.
+This makes a distinction between the tests that actually have this
+requirement and those who don't.  The goal is to be as safe as
+possible, avoiding causing cache misses (because the assets get
+modified and thus need to be dowloaded again) while avoid copying the
+root filesystem backing file whenever possible.
+
+This also allow these tests to be run in parallel with newer Avocado
+versions.
 
 Signed-off-by: Cleber Rosa <crosa@redhat.com>
 ---
- tests/avocado/kvm_xen_guest.py  | 3 ++-
- tests/avocado/netdev-ethtool.py | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ tests/avocado/kvm_xen_guest.py | 27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
 diff --git a/tests/avocado/kvm_xen_guest.py b/tests/avocado/kvm_xen_guest.py
-index f8cb458d5d..318fadebc3 100644
+index 318fadebc3..d73fa888ef 100644
 --- a/tests/avocado/kvm_xen_guest.py
 +++ b/tests/avocado/kvm_xen_guest.py
-@@ -40,7 +40,8 @@ def get_asset(self, name, sha1):
-         url = base_url + name
-         # use explicit name rather than failing to neatly parse the
-         # URL into a unique one
--        return self.fetch_asset(name=name, locations=(url), asset_hash=sha1)
-+        return self.fetch_asset(name=f"qemu-kvm-xen-guest-{name}",
-+                                locations=(url), asset_hash=sha1)
+@@ -10,6 +10,7 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
-     def common_vm_setup(self):
+ import os
++import shutil
+ 
+ from qemu.machine import machine
+ 
+@@ -43,7 +44,7 @@ def get_asset(self, name, sha1):
+         return self.fetch_asset(name=f"qemu-kvm-xen-guest-{name}",
+                                 locations=(url), asset_hash=sha1)
+ 
+-    def common_vm_setup(self):
++    def common_vm_setup(self, readwrite=False):
          # We also catch lack of KVM_XEN support if we fail to launch
-diff --git a/tests/avocado/netdev-ethtool.py b/tests/avocado/netdev-ethtool.py
-index 5f33288f81..462cf8de7d 100644
---- a/tests/avocado/netdev-ethtool.py
-+++ b/tests/avocado/netdev-ethtool.py
-@@ -27,7 +27,8 @@ def get_asset(self, name, sha1):
-         url = base_url + name
-         # use explicit name rather than failing to neatly parse the
-         # URL into a unique one
--        return self.fetch_asset(name=name, locations=(url), asset_hash=sha1)
-+        return self.fetch_asset(name=f"qemu-netdev-ethtool-{name}",
-+                                locations=(url), asset_hash=sha1)
+         self.require_accelerator("kvm")
  
-     def common_test_code(self, netdev, extra_args=None):
+@@ -56,11 +57,19 @@ def common_vm_setup(self):
+                                           "367962983d0d32109998a70b45dcee4672d0b045")
+         self.rootfs = self.get_asset("rootfs.ext4",
+                                      "f1478401ea4b3fa2ea196396be44315bab2bb5e4")
++        if readwrite:
++            dest = os.path.join(self.workdir, os.path.basename(self.rootfs))
++            shutil.copy(self.rootfs, dest)
++            self.rootfs = dest
  
+-    def run_and_check(self):
++    def run_and_check(self, readwrite=False):
++        if readwrite:
++            drive = f"file={self.rootfs},if=none,format=raw,id=drv0"
++        else:
++            drive = f"file={self.rootfs},if=none,readonly=on,format=raw,id=drv0"
+         self.vm.add_args('-kernel', self.kernel_path,
+                          '-append', self.kernel_params,
+-                         '-drive',  f"file={self.rootfs},if=none,snapshot=on,format=raw,id=drv0",
++                         '-drive',  drive,
+                          '-device', 'xen-disk,drive=drv0,vdev=xvda',
+                          '-device', 'virtio-net-pci,netdev=unet',
+                          '-netdev', 'user,id=unet,hostfwd=:127.0.0.1:0-:22')
+@@ -90,11 +99,11 @@ def test_kvm_xen_guest(self):
+         :avocado: tags=kvm_xen_guest
+         """
+ 
+-        self.common_vm_setup()
++        self.common_vm_setup(True)
+ 
+         self.kernel_params = (self.KERNEL_DEFAULT +
+                               ' xen_emul_unplug=ide-disks')
+-        self.run_and_check()
++        self.run_and_check(True)
+         self.ssh_command('grep xen-pirq.*msi /proc/interrupts')
+ 
+     def test_kvm_xen_guest_nomsi(self):
+@@ -102,11 +111,11 @@ def test_kvm_xen_guest_nomsi(self):
+         :avocado: tags=kvm_xen_guest_nomsi
+         """
+ 
+-        self.common_vm_setup()
++        self.common_vm_setup(True)
+ 
+         self.kernel_params = (self.KERNEL_DEFAULT +
+                               ' xen_emul_unplug=ide-disks pci=nomsi')
+-        self.run_and_check()
++        self.run_and_check(True)
+         self.ssh_command('grep xen-pirq.* /proc/interrupts')
+ 
+     def test_kvm_xen_guest_noapic_nomsi(self):
+@@ -114,11 +123,11 @@ def test_kvm_xen_guest_noapic_nomsi(self):
+         :avocado: tags=kvm_xen_guest_noapic_nomsi
+         """
+ 
+-        self.common_vm_setup()
++        self.common_vm_setup(True)
+ 
+         self.kernel_params = (self.KERNEL_DEFAULT +
+                               ' xen_emul_unplug=ide-disks noapic pci=nomsi')
+-        self.run_and_check()
++        self.run_and_check(True)
+         self.ssh_command('grep xen-pirq /proc/interrupts')
+ 
+     def test_kvm_xen_guest_vapic(self):
 -- 
 2.45.2
 
