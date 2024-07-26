@@ -4,169 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E96C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 06:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A439EC3DA63
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 06:06:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXE1D-00074v-S8; Fri, 26 Jul 2024 02:01:31 -0400
+	id 1sXE5W-0008Vj-Og; Fri, 26 Jul 2024 02:05:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sXE0t-0005dS-7L; Fri, 26 Jul 2024 02:01:17 -0400
-Received: from mail-sgaapc01on20720.outbound.protection.outlook.com
- ([2a01:111:f400:feab::720]
- helo=APC01-SG2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <Lei.Huang@amd.com>) id 1sXDr8-0004AN-VW
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 01:51:08 -0400
+Received: from mail-bn8nam11on2062a.outbound.protection.outlook.com
+ ([2a01:111:f403:2414::62a]
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sXE0p-00082A-CC; Fri, 26 Jul 2024 02:01:10 -0400
+ (Exim 4.90_1) (envelope-from <Lei.Huang@amd.com>) id 1sXDr4-000512-2c
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 01:51:06 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JgWh8l+LqLK6BOTe9O7jol6Q/aSEV0MqRaAdq4j95yRJi6LXS0qT7Jlrki+GNXQ6xPbAaEEGAxrB6jnaIMS9qzwT7Yq6/RTOCKQhwJ76XO2UCoTsSuKSn6r2Weuxzy4XIgaZs+qPcs0pmLUNA6/ai7M+MMp02j0go2DBzPZXfbUZctJuJkADx81aofKz4PQUmoAP1PUiJl4VA61lMnwRmsa24WkF0nw09O+ZT4rWOsZJ7iJqn/v58SugP4HxaW2EjZHwV85VHl0tHqSQDDOvV1lRuSS4v672VLvCnoFrasTEI1bNrfO+9jBAqO8ISV6RuyXLP09DjHw/lD+qYT/omA==
+ b=tEGXJjS0xUmqkwJxvjKptAXKVRmQdG9dwhRM3Xj7gvP/WwhuF/uoJrnGKKEc9U8FCYU9rCuEeAqxqGbv7kYoIxv+YoOd1KIHQ+ISGM0HfB+G6Mzwr3SGHpeLuWaMpopP94x5UIS2b+9Ugmll5AqPwCwEmN3lYgd/6O6Wmyri+LU76VUg7bu3TY/qo6FzPDJmav2OmUak1gmzi8KaZXVezvwXEZCRdzltasKL6EGU8pFimH83rviunuDfzH2cOeso3bPunIzeyteN9jU7U20zZzDZsRTTa421zdH95Rgi3E38r2ubd2aopGZd/IxgZRyaD1xAcpSUYbC4sBv2pqYMjQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gPexOZ029Qn1QLyNSxvxbukw3EpD9Iz6wr9+JsaAuxc=;
- b=untEv3oKBGjz730OPy8L0DrPMLHIR9/D5Yv2o1IyE1CBx/xMyhy1RE5fOOX8M2cX1SihLRunt/4q2+6Zy8esD0uGO+0e5PI89o9DGTKRcrmngDiOcBgmXZ2i/4yYWuKEv1FpmSipP6+yrSOXljO5SYB2ebE66cOTsmzD+0uMB7LpueDEVtMErUi023FOkrJiLR97E96IpgB0YvuLP1XXrINBMQExn6R9Xphu9ouvTezBryB6onuSAJMHxW8O+t9TdTyHuHrfOCoraSdyMh+W6SI8369ORe6WfShAH0PGfz1HsaP0UPTg4MvRqdCBxcIxJ08Wwp9xwYzA15lOEALd+Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
+ bh=lHgwfUPVro9NoMU8kggmkeynkpffBvsl1Qxu1jAKX2I=;
+ b=XdxLKidftSnIwVrQfS8P3T6I4wZ51HedQAtRUJkyc5292MalZvRRSlSSvpmvvdfoH8DvDFUW3EzF9ZX7FihgPwiQ7s0VZT35dEG2Gq64xW8wGK9nfbiM3Bfyxzwvm25Pacqz4M6SGYoecR354eo5s2fuoVmKrhB8mM8u0LSnEyjOBZcWC82gJE1TTcYzBZsWyevCRdZvwEZlNQSiL7kLIXrRO5cID5HKJX6pJWxQ556MDh7g34s89MnVVWQ8m9hREqiEBPFFEyNum29QKnD9mbeGZWKlXVpA+8Qvaa9SM5wV0nVOACK4lfbT87k9MWF989Q5RaprmC5Ff+2glT3low==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gPexOZ029Qn1QLyNSxvxbukw3EpD9Iz6wr9+JsaAuxc=;
- b=FaS+3TtdQuP9X0CjL7Ac2ZIs1AIcrqFnzF7WALa/qjIz+d8YoK6BKFWIZdODSVzqyF0MQSxVoLcTlZ1eDjTfOYKlTVlPjGwshzV5cwLhLlCYavG62GnqnARfUHvzBRmYLFOyPrx0eRXOBoCQOOYuhSY3ygtbmRtnXizgzoM/rTiwB+sxNHRuOl1DcmF5Co1CiQBvyZ748Ky1svsgelavBALbPIfm77TZpn98/W+YxotXWRtGaH+XcW9wNrWp17tvNH0XbOQntQWWp4DP+PW1VtDokIjSUV5pFjxLtIrPt9mkJRMuw0x27BuiY30zfHUuU17OjxK58GqPbdTfE5OzmQ==
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
- SI2PR06MB5316.apcprd06.prod.outlook.com (2603:1096:4:1eb::7) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7784.20; Fri, 26 Jul 2024 06:00:57 +0000
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56%4]) with mapi id 15.20.7784.020; Fri, 26 Jul 2024
- 06:00:57 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, Yunlin Tang
- <yunlin.tang@aspeedtech.com>
-Subject: RE: [PATCH v1 04/15] hw/i2c/aspeed: support discontinuous register
- memory region of I2C bus
-Thread-Topic: [PATCH v1 04/15] hw/i2c/aspeed: support discontinuous register
- memory region of I2C bus
-Thread-Index: AQHa2N7FJ4EHEryDLUODXq5rrtI5x7H8K8oAgAAQGICAAEKygIAMCnCg
-Date: Fri, 26 Jul 2024 06:00:57 +0000
-Message-ID: <SI2PR06MB5041D50CAC61711661F4B56FFCB42@SI2PR06MB5041.apcprd06.prod.outlook.com>
-References: <20240718064925.1846074-1-jamin_lin@aspeedtech.com>
- <20240718064925.1846074-5-jamin_lin@aspeedtech.com>
- <de851b5c-5983-44f6-955a-6ba71f966c71@kaod.org>
- <SI2PR06MB5041E3D271FB5839B12E76D4FCAC2@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <c7d00701-cada-4ed8-856b-85249aa1ac0b@kaod.org>
-In-Reply-To: <c7d00701-cada-4ed8-856b-85249aa1ac0b@kaod.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|SI2PR06MB5316:EE_
-x-ms-office365-filtering-correlation-id: 53720007-6e90-437d-4388-08dcad38516b
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|376014|366016|38070700018;
-x-microsoft-antispam-message-info: =?utf-8?B?RDNZcDY1OFlpQUVITnB3SUt1VGRqQ2N4L20vNWIvWW0wd0VqVkMyWWtTTm9P?=
- =?utf-8?B?V1pwdFpwSmpUL0RjbGxIbFFDeFh6b1l6aTMvajkrczFoQU1JMzNHbXAwTjNK?=
- =?utf-8?B?Um03VG9ZNUNYNWNYL0tKUTZCeU9weHpSbmovTTZ0NXM2T2txaVV5b1hsYzYz?=
- =?utf-8?B?UnBoUHlDUVFHUjkxeEF2M2FVWnVRU3NTSWRKbnhFRXlsQ244T3JlazBWb1dp?=
- =?utf-8?B?WWZwVVhLODFLRjR4RXFCK29uc0ZYcUNUcjdZU1p5cnY4QXlqdmFGbkJaNmEy?=
- =?utf-8?B?dXRCeDdCN1JUaDRGZTd6OGE1cHp3eG1EV0NOZ0I2Vlc2dGFIeDdVQjAwQzdY?=
- =?utf-8?B?RU1JaXRQS1BHcmp0S01rNy9XcWwwOVhXdHpqV0p4ZThxOXlSNUNVRzA2RUF6?=
- =?utf-8?B?ZUxCK25ibFFNdE1walM5V2JEd0hqWW9UczZRVFNrOWZkYURNTW5NQUlSRGFV?=
- =?utf-8?B?c09WaC9mWWE0UGE1RWp1YVF3UWpSNnVpMlJhciswaTJpMERFOThrY0FvQk9U?=
- =?utf-8?B?cDJVYmFXWEpUSVgrZkp0SlVwQVpZUkZoOUk4ZkVSY1ZRc3pUWDIrYVR4cVJ0?=
- =?utf-8?B?VVVvazJySk0rR1BTaG5hbzUyVGJKVGI1cDVkbFdBN2E4SjBuR3krR3NXQ3dn?=
- =?utf-8?B?NVBIZW1EUVFZSnQ1MEdiT0pSeUpnWmNOcXdpa3FlTVBMbXRSaFVLaFlLV1FI?=
- =?utf-8?B?MXo5Z3lZNzlvbXJYbXVIeWxGdURERlNEQTFaZlNKbTlwZEZ3L00weEVqRkRm?=
- =?utf-8?B?V3RuZDdUNE03eDlsV05RbVRRYmM0MFdITEpWbEtnbEdmNzdsR2IvcFhRUGEw?=
- =?utf-8?B?ejlFdm5BVDN2N3lXblRzT1UxRjNQMXEyTGNoalFjbDJ2TG1HRHVDVWtLaUU3?=
- =?utf-8?B?bXJtbFpia2JtSjNHUGJ6WlZDdUhyZU1wZUIvQmdaemdTQzUxSXNiOFk0Q3cz?=
- =?utf-8?B?Y1dtalYyYkh5VGtPSTAxUjNHQ0M3Zld2bmIybzA3NlBuMkZ6ZjQrQTN3a1E1?=
- =?utf-8?B?ei9WS2FqWXlyRWtjdC95MDlubHZrek0wOXFKdDJidUkzcVlUUk5iVHhtTVZx?=
- =?utf-8?B?eENwWSsvY29CSzBVWVNuc3loMXcvdUZpdEFyRUJzS2dxbkpvbko1VUp0Y24z?=
- =?utf-8?B?clQ1L1RySjhXTk9vK25yczhPVkgvNjczLy93YXZtdUVBdkRIY3RCSXZWWndB?=
- =?utf-8?B?ZlZRZ1hXc1NNR2VnRCtUNDhLRnptdFpKVmx4dnYxdU13MWZlejA1elphb1lG?=
- =?utf-8?B?WXVzL0ZIeFN2Q1hta21Bcy9GMmVvZVRQSm9uYnhYbEh1RCtQRCsxa2xIazlp?=
- =?utf-8?B?VWM4ZjBPMGNyeFVDSGpnVURxMkdVdldIcEM1UE1OeVhtRDRrY1JPWDYrMU40?=
- =?utf-8?B?ZDhmdVRIYWJmeDB3OWJVWHp3Rm1JYlFFVTRhSDVGQ0hXWk1RcXFka2NNZDRx?=
- =?utf-8?B?VWV5MTlUWVVlTy9sY3N5aHpsVUIwcHR4TVFwMHA1WHlGUlVJSHQ1MWtMWWM5?=
- =?utf-8?B?cXNrMDZZdStVM2JrWVI1M2tDQ2xCS0ZESzBVdldqR1hoV21VMUd1NVZ6YVQr?=
- =?utf-8?B?Z1Q0aWxDN1BBY1FucHRVak82OXB1bWpIZ1pQcEVmUC9uWGxuS3Q1WjBhNGZa?=
- =?utf-8?B?SEpObkZmZ3ZZMFpYQytOaDFaUHoxZFJ0akZQczB6Z0p3c0hBZVlPcVR4RnNL?=
- =?utf-8?B?UHF3Nmhkb2hsQ1Fmb016WDh2SjJJcjZ0RTlxRGZWR09wZjlxQ25nY1ZBbzU2?=
- =?utf-8?B?WHpSdkpRaVpncFEwRlBaY284ZDd0L3BESVBYMUV4Rk10dTRxcVdHRzVBMWs0?=
- =?utf-8?B?RVI2dFVPU2lpQllodGhrazh4VGVLYzUxTktXNXh2N2xnZ25KWE4xcTcvVURt?=
- =?utf-8?B?QVM0L0VDZDJSQ29Od2d6M01IQzZ0eWhnVWNYMUtHR1FqVFE9PQ==?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(1800799024)(376014)(366016)(38070700018); DIR:OUT;
- SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?WUVsOWgzbnpaSjd1MVIrZm4ydklibVpqczQ5WFZRM3dKNkczS1pNcURBaDdp?=
- =?utf-8?B?THNzTWprY0MwZ0taK1lramd5NHc4YjBjUUZqeDVWN3RiVVphWXRKWGFKYTFr?=
- =?utf-8?B?R3FDWmZCbGwxeXlGRGdoMGVDN0NkaWNaUWtFQXM2SHpleHNqMXVxWjQwRmhU?=
- =?utf-8?B?RXVUYk5zd0kxdmQwYktqWjd1bTR6QmhrS1FOWWt3MUl3TW9KTHZlUnlyTjRn?=
- =?utf-8?B?T0VoYUl2UXdYdmcrWFhCY0czcklmb0JzTE5UOCtFeVFzUXNxV1Njclg0cU01?=
- =?utf-8?B?cTNJTHMvRzJSeVBmY0xMdWtKR2Y2cWNPSzZyUUIrc2FpeWhIZTRHMFhPNVFt?=
- =?utf-8?B?RFEvbC9YbG52Njd2TDMyMlhBdi9USWQ0SzNibVMzbC94T2xYbWs4WmtMNFZD?=
- =?utf-8?B?bmdvN0FLVG9VcXYwbm9zSTduci8vaUVLaUw1cWZydUJ4eEN6MUIxMUhlcVRV?=
- =?utf-8?B?ZElNT1hNREJMVFlUY2Zuc2c2NHhBYTZjL1BualVxUDJJTWEwa041WnAvV0ho?=
- =?utf-8?B?NnNqbE5WQVpHRGlxNXdTTjVwaTBGNTVjMkRIRTRZYzZlRitSTXp3MXBGakdq?=
- =?utf-8?B?cGs5MlhYMnNmV0J4eXJycjZkekhyaUFvUGpzVnUva0ZrTjk1eE9ZTk1Ld2Rv?=
- =?utf-8?B?ck1FRGVwc1kvdnFwZ0ZwbndKUEdLS1NUa0FUdjdOQmRCS0VnbHN3dnZHR0cy?=
- =?utf-8?B?c2ZlOWtsZWh3UkROVzFhbmlJYkgxcURtcG91dnhwZEZNSVJNMHE0Uk9wWU5M?=
- =?utf-8?B?VXUzLzFyU3BILy9IRlFZdG5vRkg2aU5KNEJmWnlodVRsMDQvV1BBMUV3ekdZ?=
- =?utf-8?B?bDZ3OVFGR3pPYUpNclBJNXJGbGMxQ2ZwZ213MnB2ai9kU1ZaSjFzZTE1Y0Y3?=
- =?utf-8?B?elBvWnNRWnNtMll6akt5SXl1S2YzK0NaRFJ3R1ZHVWh2eTlrbDZRd09OVXQr?=
- =?utf-8?B?SmE4S0dCd1dxcnVtcGtLRGErVk5nb2JycjRvcmRxK0I5aE1TbGl1c0ZVRDl1?=
- =?utf-8?B?RHFONFI5UGtLRExaaHVMYUJVZUZRZlNNM01UZW91TmVHYVY0U3dkM1ZFRDFW?=
- =?utf-8?B?WmVmZllFK25meGx0alRIUXcvRTlYckl4WkRlTTlxVWI5TEh1SWdSM2xYcXUx?=
- =?utf-8?B?YVYzQS9RbjZBb2tabFV6akdNZUw0NFI4UFYrbFBqejhORE04dDZsd0hkKzkw?=
- =?utf-8?B?Ky9nekRId2F0NmFFd0V1bTU1bk1yMVJ2VU03YUw1U1BPOGFLSXZIY0V5SEpr?=
- =?utf-8?B?OWdqY1N1WjlqTTZ4OXN3WTNSV29ETUR5OXNnTm5OaHBZeWdMejMxd0RKcXNp?=
- =?utf-8?B?N3VBNTZKTW5kYzVuakRjRDlxcXBsSTNUTmtmUVVMYkZxSVNuR2VSaDNjNmlI?=
- =?utf-8?B?Nmw5MjMyV3ZHZmpweld6eVV2TnVBY1JjN3dCcmJIbnRGb1hqbEtyMmtROG1I?=
- =?utf-8?B?bmdOY2w4MW9EM1NKTDZNWXlwckpFc3d6WmNqcmduQW5PZzlSU1pyOGNMUGwz?=
- =?utf-8?B?UjR0MEx1cUVXaWZ4NTJQT1F1VkdIYmo0dlJZZ3Y2MEtzVWhZQWVOQ0xsTWwz?=
- =?utf-8?B?TlMwU0ZKU2VGME1maVN6S0cwQmVpWkNvbC9VQUYzOTAyYXpUTnlDU1NVRHBC?=
- =?utf-8?B?TC9yZWprOHpTTDdCbVorb2RlV1pIaENhZVpnc0pFbzczQlNIRXJHTHZveVg3?=
- =?utf-8?B?V0NRTG1HbFUrcGVQR2NoSE9BN1dIcmlqbEx5czhIL21lRWdIalFXNmEvcmNS?=
- =?utf-8?B?bldQM3JEMUhrMHB4OUJ3TGl3TE0wTmpkRE9XMGVtNnZ0aUdLK29JQmcwRU9H?=
- =?utf-8?B?VFhkK2ZMZFBhMy9VS1Ewb1hHOS9mMjU2MGh3ZXdkNXk4YkxPRzJ0cGRnUlYv?=
- =?utf-8?B?V2hieDJzRjI5aWlzangvMEZoaHZ6Z0ZoR1lyVUgzS2N0K1NiTldwb0tvZEpG?=
- =?utf-8?B?c0JnNEhLR21GL284bTNtRmZrbXViWTgyZThuWTJpL3NDZFpCd1V3bDQ1SUp2?=
- =?utf-8?B?TGxvWTdLalhmeXUxdGsxamY2a2NIRUY1WDF4dmNlT2pNZmw1V1gxTDVMUytF?=
- =?utf-8?B?OGNSZkR6WE9VbkdjUUowTVd6TGF1bjg5K1lwL3FPb2o0MHMzczBLUGF2Um0y?=
- =?utf-8?Q?ZcAVfQjeX3/7Hkqt3mQ/uTOeb?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ bh=lHgwfUPVro9NoMU8kggmkeynkpffBvsl1Qxu1jAKX2I=;
+ b=ZQel0/zrQrIN66XlzMNsFUrpLvabJ2CgQrHjC0pVKdvxREQzqWoT4CJ/h+aCzyHzHs8SFEXyxqTpgG+Py3DqR3kyd7ExZr5PxEJgBB1B6xTujNTBSA/dRstCqbkklmDseDgNzTl9imdR1CR5dJ21dpXyEPPL/lrhO8pfq2D4qcY=
+Received: from CH0PR04CA0108.namprd04.prod.outlook.com (2603:10b6:610:75::23)
+ by CH3PR12MB8186.namprd12.prod.outlook.com (2603:10b6:610:129::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.29; Fri, 26 Jul
+ 2024 05:50:55 +0000
+Received: from CH2PEPF0000009F.namprd02.prod.outlook.com
+ (2603:10b6:610:75:cafe::a1) by CH0PR04CA0108.outlook.office365.com
+ (2603:10b6:610:75::23) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.14 via Frontend
+ Transport; Fri, 26 Jul 2024 05:50:55 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ CH2PEPF0000009F.mail.protection.outlook.com (10.167.244.21) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7784.11 via Frontend Transport; Fri, 26 Jul 2024 05:50:53 +0000
+Received: from SHA-L-LEIHUANG.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 26 Jul
+ 2024 00:50:50 -0500
+From: Lei Huang <Lei.Huang@amd.com>
+To: <mst@redhat.com>
+CC: <ken.xue@amd.com>, <lei.huang@amd.com>, <qemu-devel@nongnu.org>, Lei Huang
+ <Lei.Huang@amd.com>
+Subject: [PATCH 1/1] virtio-gpu: customize EDID for vms
+Date: Fri, 26 Jul 2024 13:50:29 +0800
+Message-ID: <20240726055029.946-2-Lei.Huang@amd.com>
+X-Mailer: git-send-email 2.44.0.windows.1
+In-Reply-To: <20240726055029.946-1-Lei.Huang@amd.com>
+References: <20240726055029.946-1-Lei.Huang@amd.com>
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 53720007-6e90-437d-4388-08dcad38516b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Jul 2024 06:00:57.5481 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: +A5r+mVp6HHXmH72FVf6sh1cU3kIEVgh0Wf/x2N8LpqsF/IssOG8tM9gl1jjZi18AijHiDF5k3/XuAN90aVSDJ07aTDRS7RcQdujERCUrIw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR06MB5316
-Received-SPF: pass client-ip=2a01:111:f400:feab::720;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=APC01-SG2-obe.outbound.protection.outlook.com
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF0000009F:EE_|CH3PR12MB8186:EE_
+X-MS-Office365-Filtering-Correlation-Id: f4c9d471-2b9a-4541-78f1-08dcad36e9a7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|82310400026|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?fNZPHtPAEyl/OOnB/GL8mLiuhWq3yis+FkYyZPF5eIVmXLWq4WTn7xsSLWYk?=
+ =?us-ascii?Q?bkj6+5oYi9cve5rJDXk8gZiG3jROYmWkmpU93pXc62Gruw8f3V9p403Jw5g/?=
+ =?us-ascii?Q?tohm0IpIODGHMafX/8WCRNOt4JG5B4syfU/9ZshTOkqUfdR3FH06+jZLr6qe?=
+ =?us-ascii?Q?NfiL+giMQFhmmmYiFNyHNVXfsIqjjCkiA5XFlakxoQgOojgcA1+/BQKnQPfK?=
+ =?us-ascii?Q?766Vagec5qYfsDpq8AI8yzX2qbOfxLi4pTvn8+V2Cxc+8IMEl3BN4M7eHyuq?=
+ =?us-ascii?Q?c3KFb+FTdymAzjazsOL2uiKLsaKCR/pFYEvDgC9fy5IPi0NioLRVBJIRvstx?=
+ =?us-ascii?Q?bPI1ygarykGYyQkElUcPCHljjUbssO9PJ3ScGFJ2rHVVNQVYyI3rB0J/GnoV?=
+ =?us-ascii?Q?yxr+kUf4qoHWXXWrg8+b5LaEOPm0ZZx2CWKm+NmI/YiYqeSgvv++Yk/XoPYs?=
+ =?us-ascii?Q?rqm88P5fAtp4kXWxtfoWu+sfPqs1loxGNN2TyfSYlpDbMo9rzJyHxlycrXro?=
+ =?us-ascii?Q?mIYyBANulFov1b7WEgyn3DZnZT4RabIWqbhNq+Gz8rk9Ob4KAlBDH/aC1Xlx?=
+ =?us-ascii?Q?qWnlKyKSkeCoidATwZ2f25V0yE+HAh438u75oDwBYTKrt8QJpjWf1B6AxaRo?=
+ =?us-ascii?Q?jpLI00/4Dwtjdc+9DEzA1L9H1xvmpqcbjPFMK+UA34pUw+3RFVXSJ4H/Q2xV?=
+ =?us-ascii?Q?oTq8BaHgpn90aEmXrNWuH3pbJ+OCJVt/MCE9eGIQR+satTpO6YkZ7KTpNg4f?=
+ =?us-ascii?Q?1Yh8AchdjZU2OoBH1rq6buNRrRUArkCW0K4J3Ab7NwFYTt0WYsZ7o5MzvzL7?=
+ =?us-ascii?Q?hpIXh66BtjsnhWpplhru7VY+LaH75OwJXFGxgYfDXmHx3jWGrFfvQZ/oJ86V?=
+ =?us-ascii?Q?mlcVLaMRrTGsvmcSK03ih5BFPvfHz+7lZkCje2XOfj42z08ZbsGMhoovY+G4?=
+ =?us-ascii?Q?05KWWL38NZZb3WPXFR21OtjYtcQOszR1bgCCstyr2p3RMr5SJV10MH03bgDM?=
+ =?us-ascii?Q?22FCq6XwSYf33rJeXgG4SJYIxN8AExKxzbbm3FD5KzbhIFBl4xDzBes1YZj0?=
+ =?us-ascii?Q?P/B9KZXuOc90h3SzR7SB7QsJh0Ay+k0lVh5HJtKE9eHrhLLBY0YZK1EMP7qH?=
+ =?us-ascii?Q?qMD7KmXULjsAYlU5celUxuRPLQtBe180VbBt60yv6kguAZh4YWDsRjrA/Eff?=
+ =?us-ascii?Q?CK4ooMLe0TtlIvLZgXx51zXWrdHZUeD0gUbWdZxGFH6lBdh7t+K2/bGuNYJV?=
+ =?us-ascii?Q?ac1/uRZAzbJZciTzSFXmGnDusfVSkEg2PoOjBSa94Vo/tqnlILuPwmB3xTVn?=
+ =?us-ascii?Q?5zMqob/bi2waTEjDcPz44OcJ7Pr5DhMEW1BaSqwXMKo8OgOLNd/L/bnDmrx4?=
+ =?us-ascii?Q?b6fMLntGA2+HOdGaD4Qtm90Vk31CO6fxICrUPS0rMcwDNM4ZUdYxuNnU0o4k?=
+ =?us-ascii?Q?eYBjyHwKqrGYYaiTncCT9UKUYpPIGyhy?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(82310400026)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Jul 2024 05:50:53.7017 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: f4c9d471-2b9a-4541-78f1-08dcad36e9a7
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF0000009F.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8186
+Received-SPF: permerror client-ip=2a01:111:f403:2414::62a;
+ envelope-from=Lei.Huang@amd.com;
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -174,6 +132,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 26 Jul 2024 02:05:53 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -188,73 +147,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ2VkcmljLA0KDQo+IFN1YmplY3Q6IFJlOiBbUEFUQ0ggdjEgMDQvMTVdIGh3L2kyYy9hc3Bl
-ZWQ6IHN1cHBvcnQgZGlzY29udGludW91cyByZWdpc3Rlcg0KPiBtZW1vcnkgcmVnaW9uIG9mIEky
-QyBidXMNCj4NCj4gT24gNy8xOC8yNCAxMTo0NCwgSmFtaW4gTGluIHdyb3RlOg0KPiA+IEhpIENl
-ZHJpYywNCj4gPg0KPiA+PiBTdWJqZWN0OiBSZTogW1BBVENIIHYxIDA0LzE1XSBody9pMmMvYXNw
-ZWVkOiBzdXBwb3J0IGRpc2NvbnRpbnVvdXMNCj4gPj4gcmVnaXN0ZXIgbWVtb3J5IHJlZ2lvbiBv
-ZiBJMkMgYnVzDQo+ID4+DQo+ID4+IE9uIDcvMTgvMjQgMDg6NDksIEphbWluIExpbiB3cm90ZToN
-Cj4gPj4+IEl0IG9ubHkgc3VwcG9ydCBjb250aW51b3VzIHJlZ2lzdGVyIG1lbW9yeSByZWdpb24g
-Zm9yIGFsbCBJMkMgYnVzLg0KPiA+Pj4gSG93ZXZlciwgdGhlIHJlZ2lzdGVyIGFkZHJlc3Mgb2Yg
-YWxsIEkyYyBidXMgYXJlIGRpc2NvbnRpbnVvdXMgZm9yDQo+ID4+PiBBU1QyNzAwLg0KPiA+Pj4N
-Cj4gPj4+IEV4OiB0aGUgcmVnaXN0ZXIgYWRkcmVzcyBvZiBJMkMgYnVzIGZvciBhc3QyNzAwIGFz
-IGZvbGxvd2luZy4NCj4gPj4+IDB4MTAwIC0gMHgxN0Y6IERldmljZSAwDQo+ID4+PiAweDIwMCAt
-IDB4MjdGOiBEZXZpY2UgMQ0KPiA+Pj4gMHgzMDAgLSAweDM3RjogRGV2aWNlIDINCj4gPj4+IDB4
-NDAwIC0gMHg0N0Y6IERldmljZSAzDQo+ID4+PiAweDUwMCAtIDB4NTdGOiBEZXZpY2UgNA0KPiA+
-Pj4gMHg2MDAgLSAweDY3RjogRGV2aWNlIDUNCj4gPj4+IDB4NzAwIC0gMHg3N0Y6IERldmljZSA2
-DQo+ID4+PiAweDgwMCAtIDB4ODdGOiBEZXZpY2UgNw0KPiA+Pj4gMHg5MDAgLSAweDk3RjogRGV2
-aWNlIDgNCj4gPj4+IDB4QTAwIC0gMHhBN0Y6IERldmljZSA5DQo+ID4+PiAweEIwMCAtIDB4QjdG
-OiBEZXZpY2UgMTANCj4gPj4+IDB4QzAwIC0gMHhDN0Y6IERldmljZSAxMQ0KPiA+Pj4gMHhEMDAg
-LSAweEQ3RjogRGV2aWNlIDEyDQo+ID4+PiAweEUwMCAtIDB4RTdGOiBEZXZpY2UgMTMNCj4gPj4+
-IDB4RjAwIOKAkyAweEY3RjogRGV2aWNlIDE0DQo+ID4+PiAweDEwMDAg4oCTIDB4MTA3RjogRGV2
-aWNlIDE1DQo+ID4+Pg0KPiA+Pj4gSW50cm9kdWNlIGEgbmV3IGNsYXNzIGF0dHJpYnV0ZSB0byBt
-YWtlIHVzZXIgc2V0IGVhY2ggSTJDIGJ1cyBnYXAgc2l6ZS4NCj4gPj4+IFVwZGF0ZSBmb3JtdWxh
-IHRvIGNyZWF0ZSBhbGwgSTJDIGJ1cyByZWdpc3RlciBtZW1vcnkgcmVnaW9ucy4NCj4gPj4NCj4g
-Pj4gSSBkb24ndCB0aGluayB0aGlzIGlzIG5lY2Vzc2FyeSB0byBtb2RlbC4gQ291bGQgd2Ugc2lt
-cGx5IGluY3JlYXNlDQo+ID4+IHRnZSByZWdpc3RlciBNTUlPIHNpemUgZm9yIHRoZSBBU1QyNzAw
-IGJ1cyBtb2RlbCBhbmQgcmVseSBvbiB0aGUNCj4gPj4gbWVtb3BzIHRvIGNhdGNoIGludmFsaWQg
-cmVnaXN0ZXIgb2Zmc2V0cyA/DQo+ID4+DQo+ID4gVGhhbmtzIGZvciB5b3VyIHJldmlldyBhbmQg
-c3VnZ2VzdGlvbi4NCj4gPg0KPiA+IFNvcnJ5LCBJIGFtIG5vdCB2ZXJ5IGNsZWFybHkgdW5kZXJz
-dGFuZCB5b3VyIGNvbW1lbnRzLg0KPiA+IENvdWxkIHlvdSBwbGVhc2UgZGVzY3JpYmUgaXQgbW9y
-ZSBkZXRhaWw/DQo+ID4gVGhhbmtzLUphbWluDQo+DQo+IEkgZG9uJ3QgdGhpbmsgeW91IG5lZWQg
-dG8gaW50cm9kdWNlIGEgZ2FwIHNpemUgY2xhc3MgYXR0cmlidXRlLg0KPg0KPiBTZXR0aW5nIDoN
-Cj4NCj4gICAgICBhaWMtPnJlZ19zaXplID0gMHgxMDA7IC8qIHNpemUgKyBnYXAgKi8NCj4NCj4g
-aW4gYXNwZWVkXzI3MDBfaTJjX2NsYXNzX2luaXQoKSBzaG91bGQgYmUgZW5vdWdoLg0KPg0KU29y
-cnkgcmVwbHkgeW91IGxhdGUuDQoNClRoZSBhZGRyZXNzIHNwYWNlIG9mIEkyQyBidXMgYW5kIHBv
-b2wgYnVmZmVyIGFyZSBhcyBmb2xsb3dpbmcNCjB4MTAwIC0gMHgxN0Y6IGRldmljZTFfcmVnICAw
-eDFhMCAtIDB4MWJmOiBkZXZpY2UxX2J1Zg0KMHgyMDAgLSAweDI3RjogZGV2aWNlMl9yZWcgIDB4
-MmEwIC0gMHgyYmY6ZGV2aWNlMl9idWYNCjB4MzAwIC0gMHgzN0Y6IGRldmljZTNfcmVnICAweDNh
-MCAtMHgzYmY6IGRldmljZTNfYnVmDQoNCkkgdHJpZWQgdG8gc2V0IHRoZSBhaWMtPnJlZ19zaXpl
-IDB4MTAwIGFuZCBhaWMtPnBvb2xfc2l6ZSAweDEwMC4NCkFuZCB0aGUgbWVtb3J5IHJlZ2lvbnMg
-b2YgSTJjIGJ1cyBiZWNhbWUgYXMgZm9sbG93aW5nLg0KDQoweDEwMC0weDFmZiBhc3BlZWQuaTJj
-LmJ1cy4wICAweDFhMC0weDI5ZiBhc3BlZWQuaTJjLmJ1cy4wLnBvb2wNCjB4MjAwLTB4MmZmIGFz
-cGVlZC5pMmMuYnVzLjEgIDB4MmEwLTB4MzlmIGFzcGVlZC5pMmMuYnVzLjEucG9vbA0KMHgzMDAt
-MHgzZmYgYXNwZWVkLmkyYy5idXMuMiAgMHgzYTAtMHg0OWYgYXNwZWVkLmkyYy5idXMuMi5wb29s
-DQoNCjAwMDAwMDAwMTRjMGYwMDAtMDAwMDAwMDAxNGMxMGZmZiAocHJpbyAwLCBpL28pOiBhc3Bl
-ZWQuaTJjDQogICAgMDAwMDAwMDAxNGMwZjEwMC0wMDAwMDAwMDE0YzBmMWZmIChwcmlvIDAsIGkv
-byk6IGFzcGVlZC5pMmMuYnVzLjANCiAgICAwMDAwMDAwMDE0YzBmMWEwLTAwMDAwMDAwMTRjMGYy
-OWYgKHByaW8gMCwgaS9vKTogYXNwZWVkLmkyYy5idXMuMC5wb29sDQogICAgMDAwMDAwMDAxNGMw
-ZjIwMC0wMDAwMDAwMDE0YzBmMmZmIChwcmlvIDAsIGkvbyk6IGFzcGVlZC5pMmMuYnVzLjENCiAg
-ICAwMDAwMDAwMDE0YzBmMmEwLTAwMDAwMDAwMTRjMGYzOWYgKHByaW8gMCwgaS9vKTogYXNwZWVk
-LmkyYy5idXMuMS5wb29sDQogICAgMDAwMDAwMDAxNGMwZjMwMC0wMDAwMDAwMDE0YzBmM2ZmIChw
-cmlvIDAsIGkvbyk6IGFzcGVlZC5pMmMuYnVzLjINCiAgICAwMDAwMDAwMDE0YzBmM2EwLTAwMDAw
-MDAwMTRjMGY0OWYgKHByaW8gMCwgaS9vKTogYXNwZWVkLmkyYy5idXMuMi5wb29sDQoNClRoZSBt
-ZW1vcnkgcmVnaW9uIG9mIGFzcGVlZC5pMmMuYnVzLjAgKDB4MTAwLTB4MWZmKSBvY2N1cGllZCBh
-c3BlZWQuaTJjLmJ1cy4wLnBvb2wgYWRkcmVzcyBzcGFjZSgweDFhMC0weDFiZikuDQpBbmQgdGhl
-IG1lbW9yeSByZWdpb24gb2YgYXNwZWVkLmkyYy5idXMuMC5wb29sICgweDFhMC0weDI5Zikgb2Nj
-dXBpZWQgYXNwZWVkLmkyYy5idXMuMSBhZGRyZXNzIHNwYWNlKDB4MjAwLTB4MjdGKQ0KVGhhdCB3
-YXMgd2h5IEkgY3JlYXRlZCByZWdfZ2FwX3NpemUgYW5kIHBvb2xfZ2FwX3NpemUgdG8gZml4IHRo
-aXMgaXNzdWUuDQpEbyB5b3UgaGF2ZSBhbnkgc3VnZ2VzdGlvbj8NCg0KVGhhbmtzLUphbWluDQoN
-Cj4gVGhhbmtzLA0KPg0KPiBDLg0KPg0KDQoqKioqKioqKioqKioqIEVtYWlsIENvbmZpZGVudGlh
-bGl0eSBOb3RpY2UgKioqKioqKioqKioqKioqKioqKioNCuWFjeiyrOiBsuaYjjoNCuacrOS/oeS7
-tijmiJblhbbpmYTku7Yp5Y+v6IO95YyF5ZCr5qmf5a+G6LOH6KiK77yM5Lim5Y+X5rOV5b6L5L+d
-6K2344CC5aaCIOWPsOerr+mdnuaMh+WumuS5i+aUtuS7tuiAhe+8jOiri+S7pembu+WtkOmDteS7
-tumAmuefpeacrOmbu+WtkOmDteS7tuS5i+eZvOmAgeiAhSwg5Lim6KuL56uL5Y2z5Yiq6Zmk5pys
-6Zu75a2Q6YO15Lu25Y+K5YW26ZmE5Lu25ZKM6Yq35q+A5omA5pyJ6KSH5Y2w5Lu244CC6Kyd6Kyd
-5oKo55qE5ZCI5L2cIQ0KDQpESVNDTEFJTUVSOg0KVGhpcyBtZXNzYWdlIChhbmQgYW55IGF0dGFj
-aG1lbnRzKSBtYXkgY29udGFpbiBsZWdhbGx5IHByaXZpbGVnZWQgYW5kL29yIG90aGVyIGNvbmZp
-ZGVudGlhbCBpbmZvcm1hdGlvbi4gSWYgeW91IGhhdmUgcmVjZWl2ZWQgaXQgaW4gZXJyb3IsIHBs
-ZWFzZSBub3RpZnkgdGhlIHNlbmRlciBieSByZXBseSBlLW1haWwgYW5kIGltbWVkaWF0ZWx5IGRl
-bGV0ZSB0aGUgZS1tYWlsIGFuZCBhbnkgYXR0YWNobWVudHMgd2l0aG91dCBjb3B5aW5nIG9yIGRp
-c2Nsb3NpbmcgdGhlIGNvbnRlbnRzLiBUaGFuayB5b3UuDQo=
+customize refresh rate and resolution for the guest VM
+instead of being limited by the actual resolution of the host.
+
+add edid info and modify conf like:
+"-device", "virtio-vga-gl,edid=on,max_outputs=2,
+refresh_rate0=120000,maxx0=7680,maxy0=1080,refresh_rate1=75000,
+maxx1=3840,maxy1=960"
+
+Change-Id: I5d5742d280186ffd5dee9eba7697f06a2b09b123
+Signed-off-by: Lei Huang <Lei.Huang@amd.com>
+---
+ hw/display/virtio-gpu-base.c   | 41 ++++++++++++++++++++++++++++------
+ hw/display/virtio-gpu.c        |  1 +
+ include/hw/virtio/virtio-gpu.h | 26 +++++++++++++++++++++
+ 3 files changed, 61 insertions(+), 7 deletions(-)
+
+diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+index 4fc7ef8896c..80d22005447 100644
+--- a/hw/display/virtio-gpu-base.c
++++ b/hw/display/virtio-gpu-base.c
+@@ -46,8 +46,18 @@ virtio_gpu_base_fill_display_info(VirtIOGPUBase *g,
+     for (i = 0; i < g->conf.max_outputs; i++) {
+         if (g->enabled_output_bitmask & (1 << i)) {
+             dpy_info->pmodes[i].enabled = 1;
+-            dpy_info->pmodes[i].r.width = cpu_to_le32(g->req_state[i].width);
+-            dpy_info->pmodes[i].r.height = cpu_to_le32(g->req_state[i].height);
++            if (g->edid_info[i].maxx && g->edid_info[i].maxy &&
++                virtio_gpu_edid_enabled(g->conf)) {
++                dpy_info->pmodes[i].r.width =
++                    cpu_to_le32(g->edid_info[i].maxx);
++                dpy_info->pmodes[i].r.height =
++                    cpu_to_le32(g->edid_info[i].maxy);
++            } else {
++                dpy_info->pmodes[i].r.width =
++                    cpu_to_le32(g->req_state[i].width);
++                dpy_info->pmodes[i].r.height =
++                    cpu_to_le32(g->req_state[i].height);
++            }
+         }
+     }
+ }
+@@ -62,6 +72,8 @@ virtio_gpu_base_generate_edid(VirtIOGPUBase *g, int scanout,
+         .prefx = g->req_state[scanout].width,
+         .prefy = g->req_state[scanout].height,
+         .refresh_rate = g->req_state[scanout].refresh_rate,
++        .maxx = g->req_state[scanout].width,
++        .maxy = g->req_state[scanout].height,
+     };
+ 
+     edid->size = cpu_to_le32(sizeof(edid->edid));
+@@ -96,9 +108,16 @@ static void virtio_gpu_ui_info(void *opaque, uint32_t idx, QemuUIInfo *info)
+ 
+     g->req_state[idx].x = info->xoff;
+     g->req_state[idx].y = info->yoff;
+-    g->req_state[idx].refresh_rate = info->refresh_rate;
+-    g->req_state[idx].width = info->width;
+-    g->req_state[idx].height = info->height;
++    if (!g->edid_info[idx].refresh_rate) {
++        g->req_state[idx].refresh_rate = info->refresh_rate;
++    }
++    if (!g->edid_info[idx].maxx) {
++        g->req_state[idx].width = info->width;
++    }
++    if (!g->edid_info[idx].maxy) {
++        g->req_state[idx].height = info->height;
++    }
++
+     g->req_state[idx].width_mm = info->width_mm;
+     g->req_state[idx].height_mm = info->height_mm;
+ 
+@@ -204,11 +223,19 @@ virtio_gpu_base_device_realize(DeviceState *qdev,
+ 
+     g->enabled_output_bitmask = 1;
+ 
+-    g->req_state[0].width = g->conf.xres;
+-    g->req_state[0].height = g->conf.yres;
+ 
+     g->hw_ops = &virtio_gpu_ops;
+     for (i = 0; i < g->conf.max_outputs; i++) {
++        if (g->edid_info[i].maxx && g->edid_info[i].maxy &&
++            virtio_gpu_edid_enabled(g->conf) &&
++            g->edid_info[i].refresh_rate) {
++            g->req_state[i].refresh_rate = g->edid_info[i].refresh_rate;
++            g->req_state[i].width = g->edid_info[i].maxx;
++            g->req_state[i].height = g->edid_info[i].maxy;
++        } else {
++            g->req_state[i].width = g->conf.xres;
++            g->req_state[i].height = g->conf.yres;
++        }
+         g->scanout[i].con =
+             graphic_console_init(DEVICE(g), i, &virtio_gpu_ops, g);
+     }
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 3281842bfe1..dd759a80522 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1666,6 +1666,7 @@ static const VMStateDescription vmstate_virtio_gpu = {
+ 
+ static Property virtio_gpu_properties[] = {
+     VIRTIO_GPU_BASE_PROPERTIES(VirtIOGPU, parent_obj.conf),
++    VIRTIO_GPU_EDID_PROPERTIES_MULTI_DISPLAY(VirtIOGPU, parent_obj.edid_info),
+     DEFINE_PROP_SIZE("max_hostmem", VirtIOGPU, conf_max_hostmem,
+                      256 * MiB),
+     DEFINE_PROP_BIT("blob", VirtIOGPU, parent_obj.conf.flags,
+diff --git a/include/hw/virtio/virtio-gpu.h b/include/hw/virtio/virtio-gpu.h
+index 7a59379f5a7..094f2f65f71 100644
+--- a/include/hw/virtio/virtio-gpu.h
++++ b/include/hw/virtio/virtio-gpu.h
+@@ -18,6 +18,7 @@
+ #include "ui/qemu-pixman.h"
+ #include "ui/console.h"
+ #include "hw/virtio/virtio.h"
++#include "hw/display/edid.h"
+ #include "qemu/log.h"
+ #include "sysemu/vhost-user-backend.h"
+ 
+@@ -150,6 +151,7 @@ struct VirtIOGPUBase {
+     MemoryRegion hostmem;
+ 
+     struct virtio_gpu_scanout scanout[VIRTIO_GPU_MAX_SCANOUTS];
++    struct qemu_edid_info   edid_info[VIRTIO_GPU_MAX_SCANOUTS];
+ 
+     int enabled_output_bitmask;
+     struct virtio_gpu_requested_state req_state[VIRTIO_GPU_MAX_SCANOUTS];
+@@ -168,6 +170,30 @@ struct VirtIOGPUBaseClass {
+     DEFINE_PROP_UINT32("xres", _state, _conf.xres, 1280), \
+     DEFINE_PROP_UINT32("yres", _state, _conf.yres, 800)
+ 
++#define VIRTIO_GPU_EDID_PROPERTIES_MULTI_DISPLAY(_state, _edid_info)   \
++    (VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 0),                \
++    VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 1),                 \
++    VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 2),                 \
++    VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 3),                 \
++    VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 4),                 \
++    VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 5),                 \
++    VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 6),                 \
++    VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 7),                 \
++    VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 8),                 \
++    VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 9),                 \
++    VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 10),                \
++    VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 11),                \
++    VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 12),                \
++    VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 13),                \
++    VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 14),                \
++    VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, 15))                \
++
++#define VIRTIO_GPU_EDID_PROPERTIES(_state, _edid_info, id)             \
++    (DEFINE_PROP_UINT32("maxx" #id, _state, _edid_info[id].maxx, 0),   \
++    DEFINE_PROP_UINT32("maxy" #id, _state, _edid_info[id].maxy, 0),    \
++    DEFINE_PROP_UINT32("refresh_rate" #id, _state,                     \
++            _edid_info[id].refresh_rate, 0))
++
+ typedef struct VGPUDMABuf {
+     QemuDmaBuf *buf;
+     uint32_t scanout_id;
+-- 
+2.45.2
+
 
