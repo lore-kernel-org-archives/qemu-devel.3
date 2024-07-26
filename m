@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F0BFC3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 13:47:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 105CFC3DA70
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 13:47:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXLHY-00014d-5x; Fri, 26 Jul 2024 09:46:52 -0400
+	id 1sXLHe-0001pI-Sq; Fri, 26 Jul 2024 09:47:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sXLGl-0005jx-Re
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 09:46:07 -0400
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sXLH8-0007BU-8o
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 09:46:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sXLGk-00023C-1g
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 09:46:03 -0400
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sXLH4-0002B7-NO
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 09:46:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722001561;
+ s=mimecast20190719; t=1722001581;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EIz6GUKRiMrJ4ToqmN6PNK35L1sSA8CzTEn9Mn2ZcHQ=;
- b=g9flDMcW/tYsTQt7HNvjpXzof7XJvZX4jGOTyC8RC3YjyBAKRqfSJglhmUP3AQ2o0y7A+b
- KeMtLfMETTiUZDHUebczPkIp1ay/A4o66hOeDxbwdmUhfKdIBE+KBubj3i9TR/fU9m3fT4
- 4zX1zQ7/GSxizk4/9cHvQV+FeB7p6Rg=
+ bh=Im4JjI8yzxxn9wQq5bZQLL26rZjo/9QxJ6+zUl4DQ7s=;
+ b=DUyWGN4r7r24U/jgytdlvtFkzY/L1XcLy++0wOGMX+BJG+/kq7xGwmCrb8PZIB1e8ht246
+ UCkRc3fOkzjmaX+FRsg6G8KDKggzY6TNbDl8OOngQ68EZhRRw86eb6uVNqg5JcAvzSSqx8
+ UIp5xxCEGA7BsoSHADAUqKZ0okawMc8=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-192-S669IZyENCGJsElLcUAWWw-1; Fri,
- 26 Jul 2024 09:45:57 -0400
-X-MC-Unique: S669IZyENCGJsElLcUAWWw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-170-dGOgJqcsNGmzR9AyTJmYdQ-1; Fri,
+ 26 Jul 2024 09:46:17 -0400
+X-MC-Unique: dGOgJqcsNGmzR9AyTJmYdQ-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE5FB1918E4D; Fri, 26 Jul 2024 13:45:42 +0000 (UTC)
+ id B640C19E5770; Fri, 26 Jul 2024 13:46:07 +0000 (UTC)
 Received: from p1.localdomain.com (unknown [10.22.17.77])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8A2331955D52; Fri, 26 Jul 2024 13:45:38 +0000 (UTC)
+ id 2A4F71955D42; Fri, 26 Jul 2024 13:45:42 +0000 (UTC)
 From: Cleber Rosa <crosa@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
@@ -59,9 +59,9 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  Radoslaw Biernacki <rad@semihalf.com>, Cleber Rosa <crosa@redhat.com>,
  Paul Durrant <paul@xen.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PATCH 12/13] Bump avocado to 103.0
-Date: Fri, 26 Jul 2024 09:44:37 -0400
-Message-ID: <20240726134438.14720-13-crosa@redhat.com>
+Subject: [PATCH 13/13] Avocado tests: allow for parallel execution of tests
+Date: Fri, 26 Jul 2024 09:44:38 -0400
+Message-ID: <20240726134438.14720-14-crosa@redhat.com>
 In-Reply-To: <20240726134438.14720-1-crosa@redhat.com>
 References: <20240726134438.14720-1-crosa@redhat.com>
 MIME-Version: 1.0
@@ -91,34 +91,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This bumps Avocado to latest the LTS release.
+The updated Avocado version allows for the execution of tests in
+parallel.
 
-An LTS release is one that can receive bugfixes and guarantees
-stability for a much longer period and has incremental minor releases
-made.
+While on a CI environment it may not be a good idea to increase the
+parallelization level in a single runner, developers may leverage that
+on specific CI runners or on their development environments.
 
-Even though the 103.0 LTS release is pretty a rewrite of Avocado when
-compared to 88.1, the behavior of all existing tests under
-tests/avocado has been extensively tested no regression in behavior
-was found.
+This also multiplies the timeout for each test accordingly.  The
+reason is that more concurrency can lead to less resources, and less
+resources can lead to some specific tests taking longer to complete
+and then time out.  The timeout factor being used here is very
+conservative (being equal to the amount of parallel tasks).  The worst
+this possibly oversized timeout value can do is making users wait a
+bit longer for the job to finish if a test hangs.
 
-Reference: https://avocado-framework.readthedocs.io/en/103.0/releases/lts/103_0.html
+Overall, users can expect a much quicker turnaround on most systems
+with a value such as 8 on a 12 core machine.
+
 Signed-off-by: Cleber Rosa <crosa@redhat.com>
 ---
- pythondeps.toml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ docs/devel/testing.rst | 12 ++++++++++++
+ tests/Makefile.include |  6 +++++-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/pythondeps.toml b/pythondeps.toml
-index f6e590fdd8..175cf99241 100644
---- a/pythondeps.toml
-+++ b/pythondeps.toml
-@@ -30,5 +30,5 @@ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.1.1" }
- # Note that qemu.git/python/ is always implicitly installed.
- # Prefer an LTS version when updating the accepted versions of
- # avocado-framework, for example right now the limit is 92.x.
--avocado-framework = { accepted = "(>=88.1, <93.0)", installed = "88.1", canary = "avocado" }
-+avocado-framework = { accepted = "(>=103.0, <104.0)", installed = "103.0", canary = "avocado" }
- pycdlib = { accepted = ">=1.11.0" }
+diff --git a/docs/devel/testing.rst b/docs/devel/testing.rst
+index 23d3f44f52..5600123743 100644
+--- a/docs/devel/testing.rst
++++ b/docs/devel/testing.rst
+@@ -983,6 +983,18 @@ of Avocado or ``make check-avocado``, and can also be queried using:
+ 
+   pyvenv/bin/avocado list tests/avocado
+ 
++To run tests in parallel, the ``AVOCADO_PARALLEL`` environment
++variable can be defined with a value different than ``1`` (its default
++value).  Example:
++
++ .. code::
++
++  make check-avocado AVOCADO_PARALLEL=4
++
++Please exercise care when using parallel execution with the QEMU
++Avocado tests as a higher system load can cause time sensitive tests
++to timeout and be interrupted.
++
+ Manual Installation
+ ~~~~~~~~~~~~~~~~~~~
+ 
+diff --git a/tests/Makefile.include b/tests/Makefile.include
+index 6618bfed70..545b5155f9 100644
+--- a/tests/Makefile.include
++++ b/tests/Makefile.include
+@@ -94,6 +94,9 @@ TESTS_RESULTS_DIR=$(BUILD_DIR)/tests/results
+ ifndef AVOCADO_TESTS
+ 	AVOCADO_TESTS=tests/avocado
+ endif
++ifndef AVOCADO_PARALLEL
++	AVOCADO_PARALLEL=1
++endif
+ # Controls the output generated by Avocado when running tests.
+ # Any number of command separated loggers are accepted.  For more
+ # information please refer to "avocado --help".
+@@ -141,7 +144,8 @@ check-avocado: check-venv $(TESTS_RESULTS_DIR) get-vm-images
+             --show=$(AVOCADO_SHOW) run --job-results-dir=$(TESTS_RESULTS_DIR) \
+             $(if $(AVOCADO_TAGS),, --filter-by-tags-include-empty \
+ 			--filter-by-tags-include-empty-key) \
+-            $(AVOCADO_CMDLINE_TAGS) \
++            $(AVOCADO_CMDLINE_TAGS) --max-parallel-tasks=$(AVOCADO_PARALLEL) \
++			-p timeout_factor=$(AVOCADO_PARALLEL) \
+             $(if $(GITLAB_CI),,--failfast) $(AVOCADO_TESTS), \
+             "AVOCADO", "tests/avocado")
+ 
 -- 
 2.45.2
 
