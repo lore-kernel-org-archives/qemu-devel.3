@@ -4,58 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1069AC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 10:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD95FC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 11:33:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXIdU-0007uB-KS; Fri, 26 Jul 2024 06:57:20 -0400
+	id 1sXJBs-0001ft-79; Fri, 26 Jul 2024 07:32:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sXIdR-0007k6-M7
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:57:17 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sXJBq-0001fC-AO
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 07:32:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sXIdP-0000wo-IX
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 06:57:17 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WVl5C5xB7z6K5v4;
- Fri, 26 Jul 2024 18:54:55 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id DB9A2140B63;
- Fri, 26 Jul 2024 18:57:11 +0800 (CST)
-Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 26 Jul
- 2024 11:57:11 +0100
-Date: Fri, 26 Jul 2024 11:57:10 +0100
-To: Hendrik Wuethrich <whendrik@google.com>
-CC: <qemu-devel@nongnu.org>, <eduardo@habkost.net>,
- <richard.henderson@linaro.org>, <marcel.apfelbaum@gmail.com>,
- <mst@redhat.com>, <pbonzini@redhat.com>, <peternewman@google.com>
-Subject: Re: [PATCH v1 5/9] Add RDT device interface through MSRs
-Message-ID: <20240726115710.00005c9c@Huawei.com>
-In-Reply-To: <20240719162929.1197154-6-whendrik@google.com>
-References: <20240719162929.1197154-1-whendrik@google.com>
- <20240719162929.1197154-6-whendrik@google.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sXJBo-0000iJ-Bt
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 07:32:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1721993567;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uSDhnvJdeAqIQbVpxBOkkgnfidh1GlMWBeyXZHBnVck=;
+ b=ADhudrEwHxtWaKzp5Qo3/gd2EN0wsj2BwSDRsnhWCS8YN/E3LOxqP4kDFmzECxs5DhDX4k
+ +NI4I8ZWlrnKRzb8JyJe7Vei8o2WsVC5e8oLp7ya2nWrJhWXNwgacegb/imuUpVlAAjOzX
+ CAKYrj9sVyZ+AqSlrMovLrQxW6u0EEc=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-108-b_91ggytPM-F0f0XQyu6_g-1; Fri, 26 Jul 2024 07:32:45 -0400
+X-MC-Unique: b_91ggytPM-F0f0XQyu6_g-1
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6b798c6b850so1905326d6.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 04:32:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1721993565; x=1722598365;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uSDhnvJdeAqIQbVpxBOkkgnfidh1GlMWBeyXZHBnVck=;
+ b=kHL37VzAehytiL2n50lcFRDvLzgtCquZZXOeQVHMcL774rmljG+MehF1/611Ibwtqp
+ 5M9IrNtRwR62ZLAw8mMjjkT4T2URbOnmBZr2u2lu6+Xr/YM4Rfr0ozdbd3xgDN1FLTsU
+ t1yIqOLAMF76fP36EdH0ooYeUHBbimPsP6WrXM7nznnF+bBwAe+aiEcETbOfPksy2RNH
+ wqz2hHWPMyZAGb867slHM3/cVrQtZKpClvFr1RmTzBo9jm2xtjYk+UyCaoLy4UKlRRnt
+ aX5kvbPTMPiNwUv3BkFufFummVcC3nU8vY7az0Gt2PmdsQkfog4UcQKqHx+mBeVo/4HN
+ Ra/A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWO+HsQU3rWB41HcJGsN4eoue569gMAsSOzOM3LZl7j9TmXaWYMqgyoyHa8MNLYbBO/k4wmrUQyBpcNJcc8cpm/V0MFgH4=
+X-Gm-Message-State: AOJu0YyDfapJSjj10BLpmx+KxHbnqBo0ak+imXHoi36jibyPDz5HXPNV
+ rp9a1fj2KkqxYAk14Rf7Fdx65D4o5o41mrgd62WO3oYIfO1j14YB0DKxNDkxYpDMkSKRIKQ48PG
+ WAMOkBk+3aT342fdWs7uUZPuCwKEH5PhSpSDANUfk3bz9R9Snl+9q
+X-Received: by 2002:a05:622a:1a87:b0:44f:89e4:131f with SMTP id
+ d75a77b69052e-44fe5b7b5f5mr33090281cf.12.1721993565131; 
+ Fri, 26 Jul 2024 04:32:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF/8neHBCyeJ2UerVymE97cIaZ5JbOhbPvm/rq5VicoduFA0E7cRVWAfcyn+VYiIJ1M0WR6tA==
+X-Received: by 2002:a05:622a:1a87:b0:44f:89e4:131f with SMTP id
+ d75a77b69052e-44fe5b7b5f5mr33090181cf.12.1721993564756; 
+ Fri, 26 Jul 2024 04:32:44 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-44fe8199a6fsm12669731cf.58.2024.07.26.04.32.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 26 Jul 2024 04:32:44 -0700 (PDT)
+Date: Fri, 26 Jul 2024 07:32:41 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
+ akihiko.odaki@daynix.com, jasowang@redhat.com,
+ sriram.yagnaraman@est.tech, sw@weilnetz.de, qemu-devel@nongnu.org,
+ yan@daynix.com, Fabiano Rosas <farosas@suse.de>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ devel@lists.libvirt.org
+Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
+Message-ID: <ZqOJWRDq-W3XfDyn@x1n>
+References: <20230731223148.1002258-1-yuri.benditovich@daynix.com>
+ <20230731223148.1002258-5-yuri.benditovich@daynix.com>
+ <ZqLPLBnbfD5r6z7D@x1n>
+ <20240726020656-mutt-send-email-mst@kernel.org>
+ <775ff713-f7d3-4fdc-8ba0-4ebde577040d@redhat.com>
+ <20240726032520-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.203.174.77]
-X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240726032520-mutt-send-email-mst@kernel.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,287 +109,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 19 Jul 2024 16:29:25 +0000
-Hendrik Wuethrich <whendrik@google.com> wrote:
+On Fri, Jul 26, 2024 at 03:25:31AM -0400, Michael S. Tsirkin wrote:
+> On Fri, Jul 26, 2024 at 09:03:24AM +0200, Thomas Huth wrote:
+> > On 26/07/2024 08.08, Michael S. Tsirkin wrote:
+> > > On Thu, Jul 25, 2024 at 06:18:20PM -0400, Peter Xu wrote:
+> > > > On Tue, Aug 01, 2023 at 01:31:48AM +0300, Yuri Benditovich wrote:
+> > > > > USO features of virtio-net device depend on kernel ability
+> > > > > to support them, for backward compatibility by default the
+> > > > > features are disabled on 8.0 and earlier.
+> > > > > 
+> > > > > Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
+> > > > > Signed-off-by: Andrew Melnychecnko <andrew@daynix.com>
+> > > > 
+> > > > Looks like this patch broke migration when the VM starts on a host that has
+> > > > USO supported, to another host that doesn't..
+> > > 
+> > > This was always the case with all offloads. The answer at the moment is,
+> > > don't do this.
+> > 
+> > May I ask for my understanding:
+> > "don't do this" = don't automatically enable/disable virtio features in QEMU
+> > depending on host kernel features, or "don't do this" = don't try to migrate
+> > between machines that have different host kernel features?
+> 
+> The later.
 
-> From: =E2=80=AAHendrik W=C3=BCthrich <whendrik@google.com>
->=20
-> Implement rdmsr and wrmsr for the following MSRs:
-> * MSR_IA32_PQR_ASSOC
-> * MSR_IA32_QM_EVTSEL
-> * MSR_IA32_QM_CTR
-> * IA32_L3_QOS_Mask_n
-> * IA32_L2_QOS_Mask_n
-> * IA32_L2_QoS_Ext_BW_Thrtl_n
->=20
-> This allows for the guest to call RDT-internal functions to
-> associate an RMID with a CLOSID / set an active RMID for
-> monitoring, read monitoring data, and set classes of service.
->=20
-> Signed-off-by: Hendrik W=C3=BCthrich <whendrik@google.com>
-A few comments inline. Mostly code cleanup stuff.
+The question is how should an user know a migration is not supported?
 
-> ---
->  hw/i386/rdt.c                        |  8 +++
->  include/hw/i386/rdt.h                |  8 ++-
->  target/i386/cpu.h                    | 14 +++++
->  target/i386/tcg/sysemu/misc_helper.c | 80 ++++++++++++++++++++++++++++
->  4 files changed, 109 insertions(+), 1 deletion(-)
->=20
-> diff --git a/hw/i386/rdt.c b/hw/i386/rdt.c
-> index 77b7b4f2d4..0d0e5751fc 100644
-> --- a/hw/i386/rdt.c
-> +++ b/hw/i386/rdt.c
-> @@ -17,6 +17,10 @@
->  #define MAX_L2_MASK_COUNT      48
->  #define MAX_MBA_THRTL_COUNT    31
-> =20
-> +#define CPUID_10_1_EDX_COS_MAX          MAX_L3_MASK_COUNT
-> +#define CPUID_10_2_EDX_COS_MAX          MAX_L2_MASK_COUNT
-> +#define CPUID_10_3_EDX_COS_MAX          MAX_MBA_THRTL_COUNT
+The user can be using exactly the same QEMU binary on two hosts, while
+there can be a tiny slight difference in host kernel version, then
+migration can fail between them misterously.
 
-Worth these defines?  Seems easier to just use the MAX_L3...
-etc
+There're too many kernel features that can be on/off when kernels are
+different, even if slightly.  Then I don't see how someone can even
+identify such issue, unless one uses exactly the same host kernels on both
+sides..
 
-> +
->  #define TYPE_RDT "rdt"
->  #define RDT_NUM_RMID_PROP "rmids"
-> =20
-> @@ -57,6 +61,10 @@ struct RDTState {
-> =20
->  struct RDTStateClass { };
-> =20
-> +uint32_t rdt_get_cpuid_10_1_edx_cos_max(void) { return CPUID_10_1_EDX_CO=
-S_MAX; }
-> +uint32_t rdt_get_cpuid_10_2_edx_cos_max(void) { return CPUID_10_2_EDX_CO=
-S_MAX; }
-> +uint32_t rdt_get_cpuid_10_3_edx_cos_max(void) { return CPUID_10_3_EDX_CO=
-S_MAX; }
-> +
->  bool rdt_associate_rmid_cos(uint64_t msr_ia32_pqr_assoc) {
->      X86CPU *cpu =3D X86_CPU(current_cpu);
->      RDTStateInstance *rdt =3D cpu->rdt;
-> diff --git a/include/hw/i386/rdt.h b/include/hw/i386/rdt.h
-> index 8092c5f290..51d36822f0 100644
-> --- a/include/hw/i386/rdt.h
-> +++ b/include/hw/i386/rdt.h
-> @@ -9,7 +9,12 @@ typedef struct RDTStateInstance RDTStateInstance;
->  typedef struct RDTMonitor RDTMonitor;
->  typedef struct RDTAllocation RDTAllocation;
-> =20
-> -#endif
-> +uint32_t rdt_get_cpuid_10_1_edx_cos_max(void);
-> +
-> +uint32_t rdt_get_cpuid_10_2_edx_cos_max(void);
-> +
-> +uint32_t rdt_get_cpuid_10_3_edx_cos_max(void);
-
-No need for blank lines between these related function
-definitions.
-
-> +
->  bool rdt_associate_rmid_cos(uint64_t msr_ia32_pqr_assoc);
-> =20
->  void rdt_write_msr_l3_mask(uint32_t pos, uint32_t val);
-> @@ -23,3 +28,4 @@ uint32_t rdt_read_mba_thrtl(uint32_t pos);
->  uint64_t rdt_read_event_count(RDTStateInstance *rdt, uint32_t rmid, uint=
-32_t event_id);
->  uint32_t rdt_max_rmid(RDTStateInstance *rdt);
-> =20
-> +#endif
-
-Fix that in earlier patch not here.
-
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index bd0bbb75f2..0b3aca2d02 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -574,6 +574,17 @@ typedef enum X86Seg {
->  #define MSR_IA32_VMX_TRUE_ENTRY_CTLS     0x00000490
->  #define MSR_IA32_VMX_VMFUNC             0x00000491
-> =20
-> +#define MSR_IA32_QM_EVTSEL                  0x0c8d
-> +#define MSR_IA32_QM_CTR                     0x0c8e
-> +#define MSR_IA32_PQR_ASSOC                  0x0c8f
-> +
-> +#define MSR_IA32_L3_CBM_BASE                0x0c90
-> +#define MSR_IA32_L3_MASKS_END               0x0d0f
-> +#define MSR_IA32_L2_CBM_BASE                0x0d10
-> +#define MSR_IA32_L2_CBM_END                 0x0d4f
-> +#define MSR_IA32_L2_QOS_Ext_BW_Thrtl_BASE   0xd50
-> +#define MSR_IA32_L2_QOS_Ext_BW_Thrtl_END    0xd80
-> +
->  #define MSR_APIC_START                  0x00000800
->  #define MSR_APIC_END                    0x000008ff
-> =20
-> @@ -1778,6 +1789,9 @@ typedef struct CPUArchState {
->      uint64_t msr_ia32_feature_control;
->      uint64_t msr_ia32_sgxlepubkeyhash[4];
-> =20
-> +    uint64_t msr_ia32_qm_evtsel;
-> +    uint64_t msr_ia32_pqr_assoc;
-> +
->      uint64_t msr_fixed_ctr_ctrl;
->      uint64_t msr_global_ctrl;
->      uint64_t msr_global_status;
-> diff --git a/target/i386/tcg/sysemu/misc_helper.c b/target/i386/tcg/sysem=
-u/misc_helper.c
-> index 094aa56a20..e48e6b0da1 100644
-> --- a/target/i386/tcg/sysemu/misc_helper.c
-> +++ b/target/i386/tcg/sysemu/misc_helper.c
-> @@ -25,6 +25,7 @@
->  #include "exec/address-spaces.h"
->  #include "exec/exec-all.h"
->  #include "tcg/helper-tcg.h"
-> +#include "hw/i386/rdt.h"
->  #include "hw/i386/apic.h"
-> =20
->  void helper_outb(CPUX86State *env, uint32_t port, uint32_t data)
-> @@ -293,6 +294,44 @@ void helper_wrmsr(CPUX86State *env)
->          env->msr_bndcfgs =3D val;
->          cpu_sync_bndcs_hflags(env);
->          break;
-> +    case MSR_IA32_QM_EVTSEL:
-> +        env->msr_ia32_qm_evtsel =3D val;
-> +        break;
-> +    case MSR_IA32_PQR_ASSOC:
-> +    {
-> +        env->msr_ia32_pqr_assoc =3D val;
-> +        bool res =3D rdt_associate_rmid_cos(val);
-QEMU tends to use traditional C style, so declare
-variables at start of scope then blank line.
-However...
-
-> +        if (!res)
-> +            goto error;
-           if (rdt_associate_rmid_cos(val)) {
-               goto error;
-           }
-> +        break;
-> +    }
-Drop this scoping as bool will have gone away.
-
-> +    case MSR_IA32_L3_CBM_BASE ... MSR_IA32_L3_MASKS_END:
-> +    {
-> +        uint32_t pos =3D (uint32_t)env->regs[R_ECX] - MSR_IA32_L3_CBM_BA=
-SE;
-blank line
-
-> +        if (pos >=3D rdt_get_cpuid_10_1_edx_cos_max()) {
-> +            goto error;
-> +        }
-> +        rdt_write_msr_l3_mask(pos, val);
-> +        break;
-> +    }
-> +    case MSR_IA32_L2_CBM_BASE ... MSR_IA32_L2_CBM_END:
-> +    {
-> +        uint32_t pos =3D (uint32_t)env->regs[R_ECX] - MSR_IA32_L2_CBM_BA=
-SE;
-blank line.
-> +        if (pos >=3D rdt_get_cpuid_10_2_edx_cos_max()) {
-> +            goto error;
-> +        }
-> +        rdt_write_msr_l2_mask(pos, val);
-> +        break;
-> +    }
-> +    case MSR_IA32_L2_QOS_Ext_BW_Thrtl_BASE ... MSR_IA32_L2_QOS_Ext_BW_Th=
-rtl_END:
-> +    {
-> +        uint32_t pos =3D (uint32_t)env->regs[R_ECX] - MSR_IA32_L2_QOS_Ex=
-t_BW_Thrtl_BASE;
-
-blank line
-
-> +        if (pos >=3D rdt_get_cpuid_10_3_edx_cos_max()) {
-> +            goto error;
-> +        }
-> +        rdt_write_mba_thrtl(pos, val);
-> +        break;
-> +    }
->      case MSR_APIC_START ... MSR_APIC_END: {
->          int ret;
->          int index =3D (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
-> @@ -472,6 +511,44 @@ void helper_rdmsr(CPUX86State *env)
->          val =3D (cs->nr_threads * cs->nr_cores) | (cs->nr_cores << 16);
->          break;
->      }
-> +    case MSR_IA32_QM_CTR:
-> +        val =3D rdt_read_event_count(x86_cpu->rdt,
-> +                                   (env->msr_ia32_qm_evtsel >> 32) & 0xf=
-f,
-> +                                   env->msr_ia32_qm_evtsel & 0xff);
-> +        break;
-> +    case MSR_IA32_QM_EVTSEL:
-> +        val =3D env->msr_ia32_qm_evtsel;
-> +        break;
-> +    case MSR_IA32_PQR_ASSOC:
-> +        val =3D env->msr_ia32_pqr_assoc;
-> +        break;
-> +    case MSR_IA32_L3_CBM_BASE ... MSR_IA32_L3_MASKS_END:
-> +    {
-> +        uint32_t pos =3D (uint32_t)env->regs[R_ECX] - MSR_IA32_L3_CBM_BA=
-SE;
-
-blank line.
-
-> +        if (pos >=3D rdt_get_cpuid_10_1_edx_cos_max()) {
-> +            goto error;
-> +        }
-> +        val =3D rdt_read_l3_mask(pos);
-> +        break;
-> +    }
-> +    case MSR_IA32_L2_CBM_BASE ... MSR_IA32_L2_CBM_END:
-> +    {
-> +        uint32_t pos =3D (uint32_t)env->regs[R_ECX] - MSR_IA32_L2_CBM_BA=
-SE;
-
-blank line.
-
-> +        if (pos >=3D rdt_get_cpuid_10_2_edx_cos_max()) {
-> +            goto error;
-> +        }
-> +        val =3D rdt_read_l2_mask(pos);
-> +        break;
-> +    }
-> +    case MSR_IA32_L2_QOS_Ext_BW_Thrtl_BASE ... MSR_IA32_L2_QOS_Ext_BW_Th=
-rtl_END:
-> +    {
-> +        uint32_t pos =3D (uint32_t)env->regs[R_ECX] - MSR_IA32_L2_QOS_Ex=
-t_BW_Thrtl_BASE;
-
-blank line.
-
-> +        if (pos >=3D rdt_get_cpuid_10_3_edx_cos_max()) {
-> +            goto error;
-> +        }
-> +        val =3D rdt_read_mba_thrtl(pos);
-> +        break;
-> +    }
->      case MSR_APIC_START ... MSR_APIC_END: {
->          int ret;
->          int index =3D (uint32_t)env->regs[R_ECX] - MSR_APIC_START;
-> @@ -499,6 +576,9 @@ void helper_rdmsr(CPUX86State *env)
->      }
->      env->regs[R_EAX] =3D (uint32_t)(val);
->      env->regs[R_EDX] =3D (uint32_t)(val >> 32);
-> +return;
-    return;
-fix the indent
-
-blank line after the return.
-
-> +error:
-> +    raise_exception_err_ra(env, EXCP0D_GPF, 0, GETPC());
-If this is only thing to do in error path it might be easier
-to just do that inline instead of goto.
-
->  }
-> =20
->  void helper_flush_page(CPUX86State *env, target_ulong addr)
+-- 
+Peter Xu
 
 
