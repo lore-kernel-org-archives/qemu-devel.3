@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB7BC3DA63
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 04:33:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABDAFC3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 04:33:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXCdd-0006kR-PM; Fri, 26 Jul 2024 00:33:05 -0400
+	id 1sXCdr-0006xc-7h; Fri, 26 Jul 2024 00:33:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1sXCdb-0006js-Kg
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 00:33:03 -0400
+ id 1sXCdf-0006oz-6M
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 00:33:12 -0400
 Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1sXCdZ-0004nI-VV
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 00:33:03 -0400
+ id 1sXCdd-0004ns-7r
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 00:33:06 -0400
 Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1fd70ba6a15so2340625ad.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 21:33:01 -0700 (PDT)
+ d9443c01a7336-1fc4fccdd78so1945265ad.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Jul 2024 21:33:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1721968380; x=1722573180; darn=nongnu.org;
+ d=sifive.com; s=google; t=1721968383; x=1722573183; darn=nongnu.org;
  h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
  :cc:subject:date:message-id:reply-to;
- bh=2x4mj/BwG7aAcgrsqFz1Wjvyoe9j7V/h87SQHM9sKzM=;
- b=FStF4WcPSDFIZTSDKzLYqtOCSOYUNzD4QhtmjYwg98a9jC2+3+rDROktglyoKMC4X1
- 63d0Gy4a4gGcNaOMlDufZ/gWbWxZVfwq+9MkNe0uFIBDs05Zl41Q561cggaZXpR0D7ER
- oX3bZ88ElMxioJlqBvBUNIPq0Q4QV2VPvp1UWFdnNBOAI/mSBw2GlmEFRp/r3d0+v2z+
- zUUO6SVjB6CDdnwT6nzTOZnY6yXS5FxQJM5+VVahpe/AcRwNfm9PuHKnJobzVnk+aM8P
- lCiVC7MySvX8FVb3H+787sYIu63mKTDoLtSwhAT6/3i2kMb+XYBXYDb917uatqQKm0d0
- refQ==
+ bh=5U4Ghw3305Ip1Uq39M/Dx9BFTMBWVjM3s+Sw3x7fAg4=;
+ b=B+YZkZHTxSohpMDW8t1EqLGQYUC2dr4humAvjTsnpZJG+xVupOGr7A3QnArsaG1TZQ
+ +7J2kgpf/5oqSnCeMu8f1ZIjZD78S9ymzdNX0cVk5NbOfpW+npglva8gzZXk7itLDZ11
+ hepQUCmF2OQSHDcmGvh5bpNh7yqkQvBLFBQmL0g3+0jEnmHR+QlM93iTC1voh3YLxIpV
+ ms6CBaerldfARhR+624yy15WUcU4Boz3H+eouMtXjKtqkAgwQRXbuP6pPxF4jgIJ30JV
+ TTtwBdHVXZMIyvryuZye/B/OKf781vWEItldRaF0OP1LwHoTfBqccsAeufh4vm5qyXAT
+ 1XMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1721968380; x=1722573180;
+ d=1e100.net; s=20230601; t=1721968383; x=1722573183;
  h=references:in-reply-to:message-id:date:subject:cc:to:from
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2x4mj/BwG7aAcgrsqFz1Wjvyoe9j7V/h87SQHM9sKzM=;
- b=U2YXpaYPvFaVAGXetetXvMfZoDUIwhzPgYoNlhn/NrRXM582J2bImR4mTkpKonBuGm
- 57DeAL6e0jWrGLVDNNySefv86DUaEJ1CtNNNagq8tfNyik+kUVhD0DVgOgAYa+K2BSqR
- BTMQxbxvivanT9vLOY9AwFeBhJoM7aRueFyc59mXFX6cWK9OLyGKpR5dglJpu30nTqDl
- FQBN4C36+ZBEq3u+O44jeJY36y/qUXk6cq9DF0yp43NKTjWXBlIPkotbry5o938dprD2
- E46jBH8UEptNGk+Mh3+sYsM+BymdRpSt+3G/qwqY85FCuGvwgY9dWndOr2xGuyppM6QS
- AOkg==
-X-Gm-Message-State: AOJu0YwqFOSoe0vXA3R0+EzXOCz5a2kvnn7df3gppdxtbXYdY3WVOBnW
- xLLiq7NXBbcXHIlBb68xHkj4K7Z6fNswD22bfXPzcUIqi+mTtRGj9YS4MjenoGso3mVEZt+xOJJ
- /amiabBDeY4X5yDC0L8syPQTPanHMkCzN/gXbopwio8/168DZS+mHKIz98urT7+nmteYfVN3Jss
- iijNCTTS+Pc4Cyzt3GIc9c83BanWWNQIRzOg==
-X-Google-Smtp-Source: AGHT+IEwr3ab04VrYcJM4KyRCVNL+YihmknAfCSYADHrHT/a5pjf7xoci0bxfkbgOyAjiIMM7x7B9g==
-X-Received: by 2002:a17:902:d511:b0:1fb:93d6:9fef with SMTP id
- d9443c01a7336-1fed9253507mr43527235ad.38.1721968379652; 
- Thu, 25 Jul 2024 21:32:59 -0700 (PDT)
+ bh=5U4Ghw3305Ip1Uq39M/Dx9BFTMBWVjM3s+Sw3x7fAg4=;
+ b=WsBgBKsOD01iG4hB3SjQ4RgsmHBAW9+FCrdHUtfYeIoBk3UUBlkNxjQpYT/v+VBLzM
+ JsK5e0GvRDUim3MAzeQZw1RGgXgqe+z49hImUE6nBYe1cD9ieoX6+Gf/hQQwCZFNtbS6
+ IQ5CqKl+OKjDGxkrS7VTgM/1LqcqI3VU6tTCcCOLZ8ujzl1+sh2s1JYCci/veHehRZq2
+ tZbtSmSRe+7fc8mW8vvWoCJ0wuOw3Zrj0M4EoWrvnlfHBKWwgSJAXQqggoBav9k4kNFX
+ 569OJ9vyBjjVEIfa0m3ys8H5DVhq4hTxTRndyfau18mWD0LK/lKKRk7S1ZGtlo22O5dJ
+ TnWg==
+X-Gm-Message-State: AOJu0YwQMRWLcxuvGgks4/O2ejZKG8Pd7Mqi/kgrw+gtuvxuI0i3NOIQ
+ 4VOEziVZ/R/a0hPVU6G7yipkY37EGxjbhARV6FYwFfLtnCFfxTOdA/ySw7dGcwN5J99vfWiRnc8
+ tpuGPhu0qtw0NhyF/yK31rKxGUooJS4AAdg/C/03e2Zlq7x5TX/QoUlKvXvP5cDWo6E7vrZPhC0
+ G8NPv9l76JP4cZzsnX24cRn4rBee8MXp4HhA==
+X-Google-Smtp-Source: AGHT+IETII5npB9N/eaoMSzToBfFfk5IT6VQNZ1tROEfRRObvJ3ncDGmeLcsmQAK52b/111SPDF3gA==
+X-Received: by 2002:a17:902:e882:b0:1fb:cffb:cfc1 with SMTP id
+ d9443c01a7336-1fed35354c2mr57891775ad.4.1721968382557; 
+ Thu, 25 Jul 2024 21:33:02 -0700 (PDT)
 Received: from hsinchu26.internal.sifive.com
  (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fed7f7b092sm22303015ad.246.2024.07.25.21.32.56
+ d9443c01a7336-1fed7f7b092sm22303015ad.246.2024.07.25.21.33.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jul 2024 21:32:57 -0700 (PDT)
+ Thu, 25 Jul 2024 21:33:02 -0700 (PDT)
 From: Jim Shu <jim.shu@sifive.com>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
  Richard Henderson <richard.henderson@linaro.org>,
  Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH 1/2] include/elf.h: align ELF macro name with glibc
-Date: Fri, 26 Jul 2024 12:32:45 +0800
-Message-Id: <20240726043246.10999-2-jim.shu@sifive.com>
+Subject: [PATCH 2/2] linux-user: Add QEMU include path to vdso
+Date: Fri, 26 Jul 2024 12:32:46 +0800
+Message-Id: <20240726043246.10999-3-jim.shu@sifive.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20240726043246.10999-1-jim.shu@sifive.com>
 References: <20240726043246.10999-1-jim.shu@sifive.com>
@@ -94,26 +94,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename DT_BINDNOW to DT_BIND_NOW to align with glibc header: "elf/elf.h"
+Add include path to 'gen-vdso.c' to get ELF header in QEMU source.
 
 Signed-off-by: Jim Shu <jim.shu@sifive.com>
 ---
- include/elf.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ linux-user/meson.build | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/elf.h b/include/elf.h
-index e7259ec366..ef47b5e2ad 100644
---- a/include/elf.h
-+++ b/include/elf.h
-@@ -235,7 +235,7 @@ typedef struct mips_elf_abiflags_v0 {
- #define DT_DEBUG        21
- #define DT_TEXTREL      22
- #define DT_JMPREL       23
--#define DT_BINDNOW      24
-+#define DT_BIND_NOW     24
- #define DT_INIT_ARRAY   25
- #define DT_FINI_ARRAY   26
- #define DT_INIT_ARRAYSZ 27
+diff --git a/linux-user/meson.build b/linux-user/meson.build
+index bc41e8c3bc..ccce4f7e70 100644
+--- a/linux-user/meson.build
++++ b/linux-user/meson.build
+@@ -30,8 +30,11 @@ linux_user_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING', if_true: files('sem
+ 
+ syscall_nr_generators = {}
+ 
++# It requires "include/elf.h"
++gen_vdso_inc = include_directories('..' / 'include')
+ gen_vdso_exe = executable('gen-vdso', 'gen-vdso.c',
+-                          native: true, build_by_default: false)
++                          native: true, build_by_default: false,
++                          include_directories: gen_vdso_inc)
+ gen_vdso = generator(gen_vdso_exe, output: '@BASENAME@.c.inc',
+                      arguments: ['-o', '@OUTPUT@', '@EXTRA_ARGS@', '@INPUT@'])
+ 
 -- 
 2.17.1
 
