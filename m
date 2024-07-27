@@ -4,81 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67D59C3DA49
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jul 2024 01:36:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1348AC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jul 2024 04:11:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXWLt-0004NX-4q; Fri, 26 Jul 2024 21:36:05 -0400
+	id 1sXYlL-0002U9-Dx; Sat, 27 Jul 2024 00:10:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sXWLr-0004KN-AM
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 21:36:03 -0400
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sXWLp-0008T8-GT
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 21:36:03 -0400
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-52f008aa351so2710158e87.0
- for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 18:36:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722044159; x=1722648959;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZKIaXeGRSYuTdh4lDQvDGBsb/YVfbCXRarwsI6kRJYM=;
- b=B5nW+phlotUEl7IOoPliZ+Fff4imSg6wsQdWV+Bo2JvFOKt4Dsmu+Af1gdwe1TFQfq
- SbPQUskUZZLsRqHPhvjdg+mEtzzKJSXZzMF4MJHfi6qEwBAvGdKLPVsNvP2z3xTvKqVr
- 5WQb25JCTXSqfH1xTKQF0QqiABzHHn1riWKKglUEd6xETy44A2K8IjoN19GvA/utJyjc
- 1ZuUWzZr3ubIMOxKjEorMDpiyA7fKRarWM3VKSORW3hBPqtCpA6IYCTMO5A6RUqLZ83t
- 0RwcRfvg0BUw92mlSindydA+rR+b8vl5mIeb0Q4FW3UPwOf0qvw0y0pIj/tzsv7cO4C5
- CvxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722044159; x=1722648959;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZKIaXeGRSYuTdh4lDQvDGBsb/YVfbCXRarwsI6kRJYM=;
- b=Gqv31gV+HQqvjTv96UeCzX67vQ3t6Xu/efOXn2vezjzIliKjKgD7iVob+VHa6yo1iv
- M31CFnabDAxOQWNJKkC/NSDKjp2WvNY9vNmVvjK4DWDB6vmHG3nAt5vnoWSQduMqR0Ox
- Br9yzaa5Z25S2SIVT2NVKUZWGK9Pd5Qr2WEE5Va31U3S55ePj1ByMmagiJdUslYw33qj
- TSZ0Tuu1rEtfrghd85/bn4L/7BGXyU1OVOjgg2J8Inx3KG6UgOp7diM10oZ/gGzBvSt7
- IDS+aKfsVCaR9ZA+ZBjrCO6gCdU0DsV6DWL0Jyy56kbnW5K9VR6TDwecKxRRk5nbCo7L
- ud4w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWNu+D6eIbCww4+BlryJhFqfPTlZrftcQ7qSZPueBJrrEaE+k2Izrhu41Oxo+jyiMUfp9uU1qNeqoy3aq35QzX7D8E1WrI=
-X-Gm-Message-State: AOJu0YyWuJTSYLSyRX49CuQmJzik1xkzuICJVUEDu7OxFiqaTYrhqd7j
- 7njV9nt3/3MGJYmEvz9Gs/6R568yHU/2PuAaKBXKPmHs/kXwj3Rd/zFkij+JPZKEhaDdDcL6T8c
- Q4bg299xIJvYfHbkKCUUxDaT3SwDFig5AfiH7Zg==
-X-Google-Smtp-Source: AGHT+IHlyd4Uaw0gSNyDHZu9jj3oGS7+MM6RfHHEloXNd4rX+FdYgqbDrqXT/TQwOicsqZrBFunhKu/j3fxsl6g9mOk=
-X-Received: by 2002:a05:6512:ac8:b0:52d:8f80:6444 with SMTP id
- 2adb3069b0e04-5309b27dd53mr956083e87.32.1722044159253; Fri, 26 Jul 2024
- 18:35:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tugy@chinatelecom.cn>)
+ id 1sXYlI-0002Sb-SR
+ for qemu-devel@nongnu.org; Sat, 27 Jul 2024 00:10:28 -0400
+Received: from smtpnm6-07.21cn.com ([182.42.151.156] helo=chinatelecom.cn)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tugy@chinatelecom.cn>) id 1sXYlD-0003AD-5T
+ for qemu-devel@nongnu.org; Sat, 27 Jul 2024 00:10:28 -0400
+HMM_SOURCE_IP: 192.168.138.117:0.313935585
+HMM_ATTACHE_NUM: 0000
+HMM_SOURCE_TYPE: SMTP
+Received: from clientip-112.44.135.226 (unknown [192.168.138.117])
+ by chinatelecom.cn (HERMES) with SMTP id 4627B9C19C1;
+ Sat, 27 Jul 2024 12:10:02 +0800 (CST)
+X-189-SAVE-TO-SEND: +tugy@chinatelecom.cn
+Received: from  ([112.44.135.226])
+ by gateway-ssl-dep-67bdc54df-qz2qs with ESMTP id
+ 799eca1d70934cd8bd75930e03d03c62 for armbru@redhat.com; 
+ Sat, 27 Jul 2024 12:10:10 CST
+X-Transaction-ID: 799eca1d70934cd8bd75930e03d03c62
+X-Real-From: tugy@chinatelecom.cn
+X-Receive-IP: 112.44.135.226
+X-MEDUSA-Status: 0
+Message-ID: <1f960137-f5b5-429c-9eca-13ed6cc1786f@chinatelecom.cn>
+Date: Sat, 27 Jul 2024 12:09:59 +0800
 MIME-Version: 1.0
-References: <20240724-fixes-v1-1-4a64596b0d64@rivosinc.com>
- <CAKmqyKPhCzrYxwpBF+NQi-5KgcKkhWeVNX6nwwx3ZjeE9rWEAg@mail.gmail.com>
-In-Reply-To: <CAKmqyKPhCzrYxwpBF+NQi-5KgcKkhWeVNX6nwwx3ZjeE9rWEAg@mail.gmail.com>
-From: Atish Kumar Patra <atishp@rivosinc.com>
-Date: Fri, 26 Jul 2024 18:35:48 -0700
-Message-ID: <CAHBxVyHBtnhFnFYN0=_5PoKvc7DadJABH71s+wCZzPiYAmPM_g@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Add asserts for out-of-bound access
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
- dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
- Peter Maydell <peter.maydell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=atishp@rivosinc.com; helo=mail-lf1-x12d.google.com
+User-Agent: Mozilla Thunderbird
+Cc: tugy@chinatelecom.cn, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org,
+ dengpc12@chinatelecom.cn, zhangl161@chinatelecom.cn,
+ Paolo Bonzini <pbonzini@redhat.com>, Yang Zhong <yang.zhong@intel.com>
+Subject: Re: [PATCH] misc: introduce strim-memory qapi to support free memory
+ trimming
+To: Markus Armbruster <armbru@redhat.com>
+References: <0370576b-0660-4fb0-ac70-5b31ad6e3dbf@chinatelecom.cn>
+ <87h6cdogau.fsf@pond.sub.org>
+Content-Language: en-US
+From: Guoyi Tu <tugy@chinatelecom.cn>
+In-Reply-To: <87h6cdogau.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=182.42.151.156; envelope-from=tugy@chinatelecom.cn;
+ helo=chinatelecom.cn
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,56 +74,234 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 25, 2024 at 10:12=E2=80=AFPM Alistair Francis <alistair23@gmail=
-.com> wrote:
->
-> On Wed, Jul 24, 2024 at 6:33=E2=80=AFPM Atish Patra <atishp@rivosinc.com>=
- wrote:
-> >
-> > Coverity complained about the possible out-of-bounds access with
-> > counter_virt/counter_virt_prev because these two arrays are
-> > accessed with privilege mode. However, these two arrays are accessed
-> > only when virt is enabled. Thus, the privilege mode can't be M mode.
-> >
-> > Add the asserts anyways to detect any wrong usage of these arrays
-> > in the future.
-> >
-> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> > Signed-off-by: Atish Patra <atishp@rivosinc.com>
->
-> Fixes: Coverity CID 1558459
-> Fixes: Coverity CID 1558462
->
+On 2024/7/25 19:35, Markus Armbruster wrote:
+> Guoyi Tu <tugy@chinatelecom.cn> writes:
+> 
+>> In the test environment, we conducted IO stress tests on all storage disks
+>> within a virtual machine that had five storage devices mounted.During
+>> testing,
+>> we found that the qemu process allocated a large amount of memory (~800MB)
+>> to handle these IO operations.
+>>
+>> When the test ended, although qemu called free() to release the allocated
+>> memory, the memory was not actually returned to the operating system, as
+>> observed via the top command.
+>>
+>> Upon researching the glibc memory management mechanism, we found that when
+>> small chunks of memory are allocated in user space and then released with
+>> free(),  the glibc memory management mechanism does not necessarily return
+>> this memory to the operating system. Instead, it retains the memory until
+>> certain conditions are met for release.
+> 
+> Yes.
+> 
+>> For virtual machines that only have business operations during specific
+>> periods,  they remain idle most of the time. However, the qemu process
+>> still occupies a large amount of memory resources, leading to significant
+>> memory resource waste.
+> 
+> Mitigation: the memory free()'s but not returned to the OS can be paged
+> out.
+Yes, swap can alleviate the issue of insufficient system memory, but it 
+can also affect performance. Additionally, some systems may disable the 
+swap function for various reasons, making it unavailable for use
 
-I think one of the Coverity issues was about the get_field issue in
-the other thread?
-This doesn't necessarily fix the coverity issue also as the issue
-reported is a false positive.
-But I don't mind citing the coverity issues as it is reported by that.
+>> To address this issue, this patch introduces an API to actively reclaim
+>> idle memory within the qemu process. This API effectively calls
+>> malloc_trim()
+>> to notify glibc to trim free memory. With this api, the management tool
+>> can monitor the virtual machine's state and call this API during idle times
+>> to free up the memory occupied by the virtual machine, thereby allowing more
+>> virtual machines to be provisioned.
+> 
+> How does this affect the test case you described above?
+Based on the test results, QEMU generally allocates a lot of memory
+when handling backend I/O, and this memory can be released when the
+virtual machine’s storage I/O is idle.
 
-Is there a link to both coverity issues to know which issue describes
-the out-of-bound access one ?
+Based on this observation, management tools can monitor the storage I/O
+load of virtual machines. If the storage I/O load of a virtual machine
+remains low for a certain period, the tool can use this interface to
+return most of the allocatable memory to the operating system.
 
-> > ---
-> > The lore discussion can be found here
-> > https://lore.kernel.org/all/CAHBxVyGQHBobpf71o4Qp51iQGXKBh0Ajup=3De_a95=
-xdLF=3D=3DV_WQ@mail.gmail.com/
-> > ---
-> >  target/riscv/pmu.c | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> >
-> > diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
-> > index 3cc0b3648cad..e05ab067d2f2 100644
-> > --- a/target/riscv/pmu.c
-> > +++ b/target/riscv/pmu.c
-> > @@ -204,6 +204,7 @@ static void riscv_pmu_icount_update_priv(CPURISCVSt=
-ate *env,
-> >      }
-> >
-> >      if (env->virt_enabled) {
-> > +        g_assert(env->priv <=3D PRV_S);
->
-> Don't we need this assert for !env->virt_enabled as well?
->
-> Alistair
+According to our statistics, this approach can save at least 150MB of
+system memory per virtual machine on average.
+
+> There's an existing use of malloc_trim() in util/rcu.c's
+> call_rcu_thread().  It's from commit 5a22ab71623:
+> 
+>      rcu: reduce more than 7MB heap memory by malloc_trim()
+>      
+>      Since there are some issues in memory alloc/free machenism
+>      in glibc for little chunk memory, if Qemu frequently
+>      alloc/free little chunk memory, the glibc doesn't alloc
+>      little chunk memory from free list of glibc and still
+>      allocate from OS, which make the heap size bigger and bigger.
+>      
+>      This patch introduce malloc_trim(), which will free heap
+>      memory when there is no rcu call during rcu thread loop.
+>      malloc_trim() can be enabled/disabled by --enable-malloc-trim/
+>      --disable-malloc-trim in the Qemu configure command. The
+>      default malloc_trim() is enabled for libc.
+>      
+>      Below are test results from smaps file.
+>      (1)without patch
+>      55f0783e1000-55f07992a000 rw-p 00000000 00:00 0  [heap]
+>      Size:              21796 kB
+>      Rss:               14260 kB
+>      Pss:               14260 kB
+>      
+>      (2)with patch
+>      55cc5fadf000-55cc61008000 rw-p 00000000 00:00 0  [heap]
+>      Size:              21668 kB
+>      Rss:                6940 kB
+>      Pss:                6940 kB
+>      
+>      Signed-off-by: Yang Zhong <yang.zhong@intel.com>
+>      Message-Id: <1513775806-19779-1-git-send-email-yang.zhong@intel.com>
+>      Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> 
+> How would the malloc_trim() you propose interact with this one?
+During the lifecycle of the virtual machine, this part of the logic
+may not be triggered, so we plan to add a new interface.
+>> Signed-off-by: Guoyi Tu <tugy@chinatelecom.cn>
+>> Signed-off-by: dengpengcheng <dengpc12@chinatelecom.cn>
+>> ---
+>>    hmp-commands.hx       | 13 +++++++++++++
+>>    include/monitor/hmp.h |  1 +
+>>    monitor/hmp-cmds.c    | 14 ++++++++++++++
+>>    monitor/qmp-cmds.c    | 18 ++++++++++++++++++
+>>    qapi/misc.json        | 13 +++++++++++++
+>>    5 files changed, 59 insertions(+)
+>>
+>> diff --git a/hmp-commands.hx b/hmp-commands.hx
+>> index 06746f0afc..0fde22fc71 100644
+>> --- a/hmp-commands.hx
+>> +++ b/hmp-commands.hx
+>> @@ -1858,4 +1858,17 @@ SRST
+>>    ``xen-event-list``
+>>      List event channels in the guest
+>>    ERST
+>> +
+>> +    {
+>> +        .name       = "trim-memory",
+>> +        .args_type  = "reserved:l?",
+>> +        .params     = "[reserved]",
+>> +        .help       = "trim momory",
+>> +        .cmd        = hmp_trim_memory,
+>> +    },
+>> +
+>> +SRST
+>> +``trim-memory`` *reserved*
+>> +  try to release free memory and keep reserved bytes of free memory
+>> untrimmed
+>> +ERST
+>>    #endif
+>> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+>> index 954f3c83ad..547cde0056 100644
+>> --- a/include/monitor/hmp.h
+>> +++ b/include/monitor/hmp.h
+>> @@ -181,5 +181,6 @@ void hmp_boot_set(Monitor *mon, const QDict *qdict);
+>>    void hmp_info_mtree(Monitor *mon, const QDict *qdict);
+>>    void hmp_info_cryptodev(Monitor *mon, const QDict *qdict);
+>>    void hmp_dumpdtb(Monitor *mon, const QDict *qdict);
+>> +void hmp_trim_memory(Monitor *mon, const QDict *qdict);
+>>
+>>    #endif
+>> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+>> index ea79148ee8..f842e43315 100644
+>> --- a/monitor/hmp-cmds.c
+>> +++ b/monitor/hmp-cmds.c
+>> @@ -460,3 +460,17 @@ void hmp_dumpdtb(Monitor *mon, const QDict *qdict)
+>>       monitor_printf(mon, "dtb dumped to %s", filename);
+>>   }
+>>   #endif
+>> +
+>> +void hmp_trim_memory(Monitor *mon, const QDict *qdict)
+>> +{
+>> +    int64_t reserved;
+>> +    bool has_reserved = qdict_haskey(qdict, "reserved");
+>> +    Error *err = NULL;
+>> +
+>> +    if (has_reserved) {
+>> +        reserved = qdict_get_int(qdict, "reserved");
+>> +    }
+>> +
+>> +    qmp_trim_memory(has_reserved, reserved, &err);
+>> +    hmp_handle_error(mon, err);
+>> +}
+>> diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
+>> index f84a0dc523..878a7a646a 100644
+>> --- a/monitor/qmp-cmds.c
+>> +++ b/monitor/qmp-cmds.c
+>> @@ -31,6 +31,7 @@
+>>   #include "qapi/type-helpers.h"
+>>   #include "hw/mem/memory-device.h"
+>>   #include "hw/intc/intc.h"
+>> +#include <malloc.h>
+>>
+>>   NameInfo *qmp_query_name(Error **errp)
+>>   {
+>> @@ -161,6 +162,23 @@ void qmp_add_client(const char *protocol, const
+>> char *fdname,
+>>       }
+>>   }
+>>
+>> +void qmp_trim_memory(bool has_reserved, int64_t reserved, Error **errp)
+>> +{
+>> +#if defined(CONFIG_MALLOC_TRIM)
+>> +    if (!has_reserved) {
+>> +        reserved = 1024 * 1024;
+>> +    }
+>> +    if (reserved < 0) {
+>> +        error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
+>> +                   "reserved", "a >0 reserved");
+>> +        return;
+>> +    }
+>> +    malloc_trim(reserved);
+>> +#else
+>> +    error_setg(errp, "malloc_trim feature not configured");
+> 
+> Have you tried making the entire command conditional instead?  Like...
+> 
+>> +#endif
+>> +}
+>> +
+>>    char *qmp_human_monitor_command(const char *command_line, bool
+>> has_cpu_index,
+>>                                    int64_t cpu_index, Error **errp)
+>>    {
+>> diff --git a/qapi/misc.json b/qapi/misc.json
+>> index ec30e5c570..00e6f2f650 100644
+>> --- a/qapi/misc.json
+>> +++ b/qapi/misc.json
+>> @@ -605,3 +605,16 @@
+>>    { 'event': 'VFU_CLIENT_HANGUP',
+>>      'data': { 'vfu-id': 'str', 'vfu-qom-path': 'str',
+>>                'dev-id': 'str', 'dev-qom-path': 'str' } }
+>> +
+>> +##
+>> +# @trim-memory:
+>> +#
+>> +# try to release free memory
+>> +#
+>> +# @reserved: specifies the amount of free space to leave untrimmed.
+>> +#            default to 1MB if not specified.
+>> +#
+>> +# Since: 9.0
+>> +##
+>> +{'command': 'trim-memory',
+>> + 'data': {'*reserved': 'int'} }
+> 
+> ... so:
+> 
+>     { 'command': 'trim-memory',
+>       'data': {'*reserved': 'int'},
+>       'if': 'CONFIG_MALLOC_TRIM' }
+> 
+> Could we do without the argument?
+> 
+> 
+--
+Guoyi
 
