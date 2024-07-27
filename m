@@ -4,62 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A1F9C3DA61
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jul 2024 05:26:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BEBEC3DA61
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jul 2024 06:03:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXZwq-0007wg-6X; Sat, 27 Jul 2024 01:26:28 -0400
+	id 1sXaVv-0001tO-7h; Sat, 27 Jul 2024 02:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tugy@chinatelecom.cn>)
- id 1sXZwo-0007pq-DQ
- for qemu-devel@nongnu.org; Sat, 27 Jul 2024 01:26:26 -0400
-Received: from smtpnm6-10.21cn.com ([182.42.147.92] helo=chinatelecom.cn)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tugy@chinatelecom.cn>) id 1sXZwl-0005z5-JH
- for qemu-devel@nongnu.org; Sat, 27 Jul 2024 01:26:26 -0400
-HMM_SOURCE_IP: 192.168.138.117:0.1813631041
-HMM_ATTACHE_NUM: 0000
-HMM_SOURCE_TYPE: SMTP
-Received: from clientip-112.44.135.226 (unknown [192.168.138.117])
- by chinatelecom.cn (HERMES) with SMTP id 8A48EB023C02;
- Sat, 27 Jul 2024 13:18:34 +0800 (CST)
-X-189-SAVE-TO-SEND: +tugy@chinatelecom.cn
-Received: from  ([112.44.135.226])
- by gateway-ssl-dep-67bdc54df-qz2qs with ESMTP id
- 33bef313a3c147af95851c15975a5609 for berrange@redhat.com; 
- Sat, 27 Jul 2024 13:18:42 CST
-X-Transaction-ID: 33bef313a3c147af95851c15975a5609
-X-Real-From: tugy@chinatelecom.cn
-X-Receive-IP: 112.44.135.226
-X-MEDUSA-Status: 0
-Message-ID: <80321ce6-1596-460d-b4e1-622a0b69f8e1@chinatelecom.cn>
-Date: Sat, 27 Jul 2024 13:18:32 +0800
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sXaVs-0001sJ-PG
+ for qemu-devel@nongnu.org; Sat, 27 Jul 2024 02:02:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sXaVp-0001LP-Ht
+ for qemu-devel@nongnu.org; Sat, 27 Jul 2024 02:02:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722060155;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gAmgNwutb2vDGU2+FUjAjSHmmY8Zmdlkwyqf1L5pvKU=;
+ b=GZm6w5BSjrZRUw63Dg0vn8o6oBCJIQLQG598mydj9U75ChmUen32rHOF3Gm58Fv9xTlhA2
+ 9BHliUkZzMb5cy4JKYYVp0uRMu9kz6uSAQJpKNaHzJrMXuCgYD7HXKws9BgxJIzPKCuRS2
+ D3R54uAv+/oKnFJaWnbBLb/shkjTeM8=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-695-ov0jLDhnMZudRjUU17h6YQ-1; Sat,
+ 27 Jul 2024 02:02:31 -0400
+X-MC-Unique: ov0jLDhnMZudRjUU17h6YQ-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2B0181955D44; Sat, 27 Jul 2024 06:02:29 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1006F19560AE; Sat, 27 Jul 2024 06:02:27 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B0C9221E6757; Sat, 27 Jul 2024 08:02:24 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Collin Walling <walling@linux.ibm.com>
+Cc: qemu-s390x@nongnu.org,  qemu-devel@nongnu.org,  thuth@redhat.com,
+ david@redhat.com,  wangyanan55@huawei.com,  philmd@linaro.org,
+ marcel.apfelbaum@gmail.com,  eduardo@habkost.net
+Subject: Re: [PATCH v1] target/s390x: move @deprecated-props to
+ CpuModelExpansion Info
+In-Reply-To: <20240726203646.20279-1-walling@linux.ibm.com> (Collin Walling's
+ message of "Fri, 26 Jul 2024 16:36:46 -0400")
+References: <20240726203646.20279-1-walling@linux.ibm.com>
+Date: Sat, 27 Jul 2024 08:02:24 +0200
+Message-ID: <877cd7qsnj.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: tugy@chinatelecom.cn, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org,
- dengpc12@chinatelecom.cn, zhangl161@chinatelecom.cn,
- Paolo Bonzini <pbonzini@redhat.com>, Yang Zhong <yang.zhong@intel.com>
-Subject: Re: [PATCH] misc: introduce strim-memory qapi to support free memory
- trimming
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <0370576b-0660-4fb0-ac70-5b31ad6e3dbf@chinatelecom.cn>
- <87h6cdogau.fsf@pond.sub.org> <ZqI9tgHzWudxBUn9@redhat.com>
-Content-Language: en-US
-From: Guoyi Tu <tugy@chinatelecom.cn>
-In-Reply-To: <ZqI9tgHzWudxBUn9@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=182.42.147.92; envelope-from=tugy@chinatelecom.cn;
- helo=chinatelecom.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,171 +85,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/7/25 19:57, Daniel P. Berrangé wrote:
-> On Thu, Jul 25, 2024 at 01:35:21PM +0200, Markus Armbruster wrote:
->> Guoyi Tu <tugy@chinatelecom.cn> writes:
->>
->>> In the test environment, we conducted IO stress tests on all storage disks
->>> within a virtual machine that had five storage devices mounted.During
->>> testing,
->>> we found that the qemu process allocated a large amount of memory (~800MB)
->>> to handle these IO operations.
->>>
->>> When the test ended, although qemu called free() to release the allocated
->>> memory, the memory was not actually returned to the operating system, as
->>> observed via the top command.
->>>
->>> Upon researching the glibc memory management mechanism, we found that when
->>> small chunks of memory are allocated in user space and then released with
->>> free(),  the glibc memory management mechanism does not necessarily return
->>> this memory to the operating system. Instead, it retains the memory until
->>> certain conditions are met for release.
->>
->> Yes.
-> 
-> Looking at mallopt(3) man page, the M_TRIM_THRESHOLD is said to control
-> when glibc releases the top of the heap back to the OS. It is said to
-> default to 128 kb.
-Yes, the M_TRIM_THRESHOLD option can control glibc to release the free
-memory at the top of the heap, but glibc will not release the free
-memory in the middle of the heap.
+Collin Walling <walling@linux.ibm.com> writes:
 
-> I'm curious how we get from that default, to 800 MB of unused memory > Is it related to the number of distinct malloc arenas that are in use ?
+> The @deprecated-props array did not make any sense to be a member of the
+> CpuModelInfo struct, since this field would only be populated by a
+> query-cpu-model-expansion response and ignored otherwise.
 
-At least 600MB of memory is free, and this memory might be in the middle 
-of the heap and cannot be automatically released.
+Doesn't query-cpu-model-baseline also return it in its response?  It
+seems to assume the "static" expansion type.
 
-> I'm curious what malloc_stats() would report before & after malloc_trim
-> when QEMU is in this situation with lots of wasted memory.
-Here is the test case:
-1. start the test process
+>                                                           Move this
+> field to the CpuModelExpansionInfo struct where is makes more sense.
+>
+> References:
+>  - https://lists.gnu.org/archive/html/qemu-devel/2024-07/msg05996.html
+>  - commit eed0e8ffa38f0695c0519508f6e4f5a3297cbd67
+>
+> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+> ---
+>
+> @David, the previous commit header did not align with the changes made
+> here, so I tagged this as a "v1" but added the previous conversation as
+> a reference.  I hope this is appropriate?
+>
+> ---
+>  qapi/machine-target.json         | 18 ++++++++++--------
+>  target/s390x/cpu_models_sysemu.c | 31 ++++++++++++++++++++-----------
+>  2 files changed, 30 insertions(+), 19 deletions(-)
+>
+> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+> index a552e2b0ce..09dec2b9bb 100644
+> --- a/qapi/machine-target.json
+> +++ b/qapi/machine-target.json
+> @@ -20,17 +20,11 @@
+>  #
+>  # @props: a dictionary of QOM properties to be applied
+>  #
+> -# @deprecated-props: a list of properties that are flagged as deprecated
+> -#     by the CPU vendor.  These properties are either a subset of the
+> -#     properties enabled on the CPU model, or a set of properties
+> -#     deprecated across all models for the architecture.
+> -#
+>  # Since: 2.8
+>  ##
+>  { 'struct': 'CpuModelInfo',
+>    'data': { 'name': 'str',
+> -            '*props': 'any',
+> -            '*deprecated-props': ['str'] } }
+> +            '*props': 'any' } }
+>  
+>  ##
+>  # @CpuModelExpansionType:
+> @@ -248,10 +242,18 @@
+>  #
+>  # @model: the expanded CpuModelInfo.
+>  #
+> +# @deprecated-props: a list of properties that are flagged as deprecated
+> +#     by the CPU vendor.  The list depends on the CpuModelExpansionType:
+> +#     "static" properties are a subset of the enabled-properties for
+> +#     the expanded model; "full" properties are a set of properties
+> +#     that are deprecated across all models for the architecture.
+> +#     (since: 9.1).
+> +#
+>  # Since: 2.8
+>  ##
+>  { 'struct': 'CpuModelExpansionInfo',
+> -  'data': { 'model': 'CpuModelInfo' },
+> +  'data': { 'model': 'CpuModelInfo',
+> +            '*deprecated-props': ['str'] },
+>    'if': { 'any': [ 'TARGET_S390X',
+>                     'TARGET_I386',
+>                     'TARGET_ARM',
 
-     Rss:                1504 kB
+This solves several interface problems:
 
-     malloc_stats:
-     Arena 0:
-     system bytes     =     135168
-     in use bytes     =       5808
-     Total (incl. mmap):
-     system bytes     =     135168
-     in use bytes     =       5808
-     max mmap regions =          0
-     max mmap bytes   =          0
+1. Removes inappropriate @deprecated-props argument of
+   query-cpu-model-comparison, query-cpu-model-expansion,
+   query-cpu-model-baseline.
 
-2. Call malloc to allocate memory 320 times, each memory chunk is 64KiB
-    and total allocated memory is 20MiB
+2. Removes @deprecated-props return of query-cpu-model-baseline.
 
-     Rss:               21992 kB
+3. Properly documents how @deprecated-props depends on the expansion
+   type.
 
-     malloc_stats:
-     Arena 0:
-     system bytes     =   21049344
-     in use bytes     =   20982448
-     Total (incl. mmap):
-     system bytes     =   21049344
-     in use bytes     =   20982448
-     max mmap regions =          0
-     max mmap bytes   =          0
+Remaining problem:
 
-3. free the first 319 chunks , total size: 20416 KiB
+4. Only S390 implements this.
 
-     Rss:               21992 kB
+Suggest to capture 1-3 more clearly in the commit message, perhaps like
+this:
 
-     malloc_stats:
-     Arena 0:
-     system bytes     =   21049344
-     in use bytes     =      71360
-     Total (incl. mmap):
-     system bytes     =   21049344
-     in use bytes     =      71360
-     max mmap regions =          0
-     max mmap bytes   =          0
+    CpuModelInfo is used both as command argument and in command
+    returns.
 
-4. free the last one
+    Its @deprecated-props array does not make any sense in arguments,
+    and is silently ignored.  We actually want it only as return value
+    of query-cpu-model-expansion.
 
-     Rss:                1636 kB
+    Move it from CpuModelInfo to CpuModelExpansionType, and document
+    its dependence on expansion type propetly.
 
-     malloc_stats:
-     Arena 0:
-     system bytes     =     139264
-     in use bytes     =       5808
-     Total (incl. mmap):
-     system bytes     =     139264
-     in use bytes     =       5808
-     max mmap regions =          0
-     max mmap bytes   =          0
+The simplest way to address 4 is to tack 'if': 'TARGET_S390X' to
+@deprecated-props.
 
+I recommend to make @deprecated-props mandatory rather than optional
+then.
 
->>
->>> For virtual machines that only have business operations during specific
->>> periods,  they remain idle most of the time. However, the qemu process
->>> still occupies a large amount of memory resources, leading to significant
->>> memory resource waste.
->>
->> Mitigation: the memory free()'s but not returned to the OS can be paged
->> out.
->>
->>> To address this issue, this patch introduces an API to actively reclaim
->>> idle memory within the qemu process. This API effectively calls
->>> malloc_trim()
->>> to notify glibc to trim free memory. With this api, the management tool
->>> can monitor the virtual machine's state and call this API during idle times
->>> to free up the memory occupied by the virtual machine, thereby allowing more
->>> virtual machines to be provisioned.
->>
->> How does this affect the test case you described above?
->>
->> There's an existing use of malloc_trim() in util/rcu.c's
->> call_rcu_thread().  It's from commit 5a22ab71623:
->>
->>      rcu: reduce more than 7MB heap memory by malloc_trim()
->>      
->>      Since there are some issues in memory alloc/free machenism
->>      in glibc for little chunk memory, if Qemu frequently
->>      alloc/free little chunk memory, the glibc doesn't alloc
->>      little chunk memory from free list of glibc and still
->>      allocate from OS, which make the heap size bigger and bigger.
->>      
->>      This patch introduce malloc_trim(), which will free heap
->>      memory when there is no rcu call during rcu thread loop.
->>      malloc_trim() can be enabled/disabled by --enable-malloc-trim/
->>      --disable-malloc-trim in the Qemu configure command. The
->>      default malloc_trim() is enabled for libc.
->>      
->>      Below are test results from smaps file.
->>      (1)without patch
->>      55f0783e1000-55f07992a000 rw-p 00000000 00:00 0  [heap]
->>      Size:              21796 kB
->>      Rss:               14260 kB
->>      Pss:               14260 kB
->>      
->>      (2)with patch
->>      55cc5fadf000-55cc61008000 rw-p 00000000 00:00 0  [heap]
->>      Size:              21668 kB
->>      Rss:                6940 kB
->>      Pss:                6940 kB
->>      
->>      Signed-off-by: Yang Zhong <yang.zhong@intel.com>
->>      Message-Id: <1513775806-19779-1-git-send-email-yang.zhong@intel.com>
->>      Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->>
->> How would the malloc_trim() you propose interact with this one?
-> 
-> The above usage is automatic, while this proposal requires that
-> an external mgmt app monitor QEMU and tell it to free memory.
-> I'm wondering if the latter is really desirable, or whether QEMU
-> can call this itself when reasonable ?
+> diff --git a/target/s390x/cpu_models_sysemu.c b/target/s390x/cpu_models_sysemu.c
+> index 94dd798b4c..44e7587acb 100644
+> --- a/target/s390x/cpu_models_sysemu.c
+> +++ b/target/s390x/cpu_models_sysemu.c
+> @@ -174,15 +174,11 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
+>                                  bool delta_changes)
+>  {
+>      QDict *qdict = qdict_new();
+> -    S390FeatBitmap bitmap, deprecated;
+> +    S390FeatBitmap bitmap;
+>  
+>      /* always fallback to the static base model */
+>      info->name = g_strdup_printf("%s-base", model->def->name);
+>  
+> -    /* features flagged as deprecated */
+> -    bitmap_zero(deprecated, S390_FEAT_MAX);
+> -    s390_get_deprecated_features(deprecated);
+> -
+>      if (delta_changes) {
+>          /* features deleted from the base feature set */
+>          bitmap_andnot(bitmap, model->def->base_feat, model->features,
+> @@ -197,9 +193,6 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
+>          if (!bitmap_empty(bitmap, S390_FEAT_MAX)) {
+>              s390_feat_bitmap_to_ascii(bitmap, qdict, qdict_add_enabled_feat);
+>          }
+> -
+> -        /* deprecated features that are a subset of the model's enabled features */
+> -        bitmap_and(deprecated, deprecated, model->features, S390_FEAT_MAX);
+>      } else {
+>          /* expand all features */
+>          s390_feat_bitmap_to_ascii(model->features, qdict,
+> @@ -213,9 +206,6 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
+>      } else {
+>          info->props = QOBJECT(qdict);
+>      }
+> -
+> -    s390_feat_bitmap_to_ascii(deprecated, &info->deprecated_props, list_add_feat);
+> -    info->has_deprecated_props = !!info->deprecated_props;
+>  }
+>  
+>  CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+> @@ -226,6 +216,7 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>      CpuModelExpansionInfo *expansion_info = NULL;
+>      S390CPUModel s390_model;
+>      bool delta_changes = false;
+> +    S390FeatBitmap deprecated_feats;
+>  
+>      /* convert it to our internal representation */
+>      cpu_model_from_info(&s390_model, model, "model", &err);
+> @@ -245,6 +236,24 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+>      expansion_info = g_new0(CpuModelExpansionInfo, 1);
+>      expansion_info->model = g_malloc0(sizeof(*expansion_info->model));
+>      cpu_info_from_model(expansion_info->model, &s390_model, delta_changes);
+> +
+> +    /* populated list of deprecated features */
+> +    bitmap_zero(deprecated_feats, S390_FEAT_MAX);
+> +    s390_get_deprecated_features(deprecated_feats);
+> +
+> +    if (delta_changes) {
+> +        /*
+> +         * Only populate deprecated features that are a
+> +         * subset of the features enabled on the CPU model.
+> +         */
+> +        bitmap_and(deprecated_feats, deprecated_feats,
+> +                   s390_model.features, S390_FEAT_MAX);
+> +    }
+> +
+> +    s390_feat_bitmap_to_ascii(deprecated_feats,
+> +                              &expansion_info->deprecated_props, list_add_feat);
+> +    expansion_info->has_deprecated_props = !!expansion_info->deprecated_props;
+> +
+>      return expansion_info;
+>  }
 
-Yes, I have also considered implementing an automatic memory release
-function within qemu. This approach would require qemu to periodically
-monitor the IO load of all backend storage, and if the IO load is very
-low over a period of time, it would proactively release memory.
+Implementation looks good to me.
 
-This patch is a preliminary implementation, and I also want to discuss 
-with you which implementation approach is more reasonable.
-
-So, which approach do you prefer?
-> 
-> With regards,
-> Daniel
 
