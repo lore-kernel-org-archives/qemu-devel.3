@@ -4,78 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 163CBC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jul 2024 06:58:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E6D7C3DA61
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jul 2024 07:14:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXbN8-0002xl-GO; Sat, 27 Jul 2024 02:57:42 -0400
+	id 1sXbcU-0001GN-4q; Sat, 27 Jul 2024 03:13:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sXbN6-0002vU-Uq
- for qemu-devel@nongnu.org; Sat, 27 Jul 2024 02:57:40 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1sXbcS-0001EY-OC
+ for qemu-devel@nongnu.org; Sat, 27 Jul 2024 03:13:32 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sXbN5-0002Ih-7W
- for qemu-devel@nongnu.org; Sat, 27 Jul 2024 02:57:40 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1fc611a0f8cso10945965ad.2
- for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 23:57:38 -0700 (PDT)
+ id 1sXbcR-0000Bb-2x
+ for qemu-devel@nongnu.org; Sat, 27 Jul 2024 03:13:32 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1fd70ba6a15so11048265ad.0
+ for <qemu-devel@nongnu.org>; Sat, 27 Jul 2024 00:13:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722063457; x=1722668257; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722064408; x=1722669208; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=lJ+RaV8FXelDALRpY5ji624PDjGirc8lcspEnvshpLw=;
- b=Dh95X9YyJAztmpxXnjDjHIii5+PsW/ZkDQdqQShqhk5yjIBXHPmi2lpyIIaLFMEDPK
- loN+iUrNsmIFa7FSCCRS8uC334vUET1Y0FBLPt3wuTvZexJ9tDHX5AAunp1tJU0ocRFK
- gtyH4IQe9tCQXo4a5QgS6zSY5dr8YNqCKjeq4RVcB2X8eYW0M/Ezh/rzAaw129KbcPFZ
- O6iTeYXc73S1G1++efGmw0+0furowgQeerv/jm3DKg7+69cpK4PSJ+K3HmabqlAa0bNj
- iXcLSUs5qptQ9/Wbyg6gr3G0pLJpmoRDpzXMscFkoWDUcAnDuOkIuZ/ngm4xkYspYax/
- pKwg==
+ bh=hIhjJ4c0xYrUtdWdkw4bZlNJNbpikzNAqEFfGumYL5Y=;
+ b=NRyPyo0691cnhEGsJx0j49fL+45ZwQE191Z9kxLjZ35Qq5sHgV+rjoeait0yK6G4EG
+ guQFiRAj6nnYq0cqhWfnVgGQAyAt/loA3sstj+jn5/oFDsEwgwMQe6f4Ow9grHSc5xMz
+ h5mher0eXlrm2kKcztW6XbgeV+/cjc09PXB+TkoVQGSlKncX6BihLpKiVTLig2AfBlCP
+ U0nNLj0f/BobApSPYurb8i7z7aXbty9qp3gX1hCsJVFdXxmnNLXqiHD5yiP+gNHskHE2
+ /vr77n1SIKwwwcjG6oklnHlIO2ta4EBFhD5TwwVArznHeC4PExT02eOH/s6mzbhk1ADI
+ PWEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722063457; x=1722668257;
+ d=1e100.net; s=20230601; t=1722064408; x=1722669208;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lJ+RaV8FXelDALRpY5ji624PDjGirc8lcspEnvshpLw=;
- b=ODTbDIjgQFVa+glJ2gcTnQRUDRe9GgoIW3h0IZEtI8INkbwdx/R/DDMCbjA0uIUEOE
- ++lqQeBK4c1O4Nok6/c3gMzze+571arRdeOgKwlvmwaVTttv0Lu3Gizml4ugBltXOVNn
- tI53beFmuSvj991G28nqmYOx/BGvZzaaHt9lVT1hArFaDKiuix4XSRJXGmZ7Qr4h8jaH
- qn/OWj0TDeHj+z/dnkrBkOKAuaH+2MSLZyGqqtef8XswHSP4Nm6YoIsky33aK+Pz4Dhs
- RrGwQWkYaADt6O175TIPLIgHq5Zevg2dXRd3PLHG9keFJherz8LDVKk5pTKB2sVTFcJP
- sT4g==
+ bh=hIhjJ4c0xYrUtdWdkw4bZlNJNbpikzNAqEFfGumYL5Y=;
+ b=rkQ+89H0ePAWdSJK4Ne+EgBBU/tQitZvzXIXEyrMbKTFF/PhwwZKDzz4OfPkNFHl02
+ QYtqCCLr46iFkUiQkPXIpJdX5eNfUKih9RvjLO4FU5Uzxct0bYC7E/a6Q8zIa/ZvHpgP
+ njN8nDk0CUVIQ2L80TsPE6EJ1kbazfRAs25drKVldhYW42OCJ6kJiraCyQL+D2xgW8c2
+ WWnY6ra7mmJVib/0QS1QOHPsTLNeQ9XLDiNpZt0Zk6M5yr18N/RB2c7NfURzQGbLHBoA
+ wbO1hG2ceQjX14/1kFMg2CX9BjLHw/HR7+wOlaPcnmbZWZUwSJHW7COIkeBCE30F7AZI
+ 8uhg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWYimyY2BHj3nRc4ajIJSQDjw5znLWyho/apJm0H30lwdEzAqpwE4WlHaXadzB94GIEWx+WlWppmgFA5jF8QHNrwUFcwNs=
-X-Gm-Message-State: AOJu0Ywsg4jIPwDBSG3ms0n80+o/sZZDxyytfQs/uzs40DZjLUS3s+7B
- VF0wcca+zSpx20UT21uQ5fXlPJfTSNCB6AdZZnnBjOioDMs+Ifiyq1YBEMoaqJINuUAYZSluvCb
- jRSMqEw==
-X-Google-Smtp-Source: AGHT+IFIwOwjai8vKqADvYBcuNIR4Ujz1UsWXIAGmj/3SDCeNs2ViVbznG+TVoaCJ62JjFlynggRoA==
-X-Received: by 2002:a17:902:f54b:b0:1fb:4f8f:f212 with SMTP id
- d9443c01a7336-1ff0491b171mr23737895ad.60.1722063456865; 
- Fri, 26 Jul 2024 23:57:36 -0700 (PDT)
+ AJvYcCVBiExLO5GHNAc2ao89Gm9bDpHXjXKhb0X5Otg/33R3wkRTw+PrA3b2eGtoWUeH4HYVUga37VbLcXFhHM7nvkCVPOZbWbU=
+X-Gm-Message-State: AOJu0Yw9EWJysBTbftDNdvooEiZvk+8B3NBJM8HFXmPRnvHMrelVYKXP
+ /bAd1v5oKSlUZ/T0SOI/m3eeahtZFHNUA1a2CrZPpqcElhVEsbcVpLjNEUi6Psc=
+X-Google-Smtp-Source: AGHT+IHtuIvxBlGH8gb+TyrZrgj72p9HYldkixW/A85Eg02n/vjxhA+QDMegSRrDyDxuCcO1NSBHpQ==
+X-Received: by 2002:a17:90b:3d2:b0:2c4:dfa6:df00 with SMTP id
+ 98e67ed59e1d1-2cf7e098515mr1757442a91.8.1722064407464; 
+ Sat, 27 Jul 2024 00:13:27 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fed7ef238dsm43881545ad.180.2024.07.26.23.57.34
+ 98e67ed59e1d1-2cdb74e8478sm6628745a91.37.2024.07.27.00.13.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 26 Jul 2024 23:57:36 -0700 (PDT)
-Message-ID: <5c63bc0d-c342-4e31-a21b-3900c5d23da2@linaro.org>
-Date: Sat, 27 Jul 2024 16:57:29 +1000
+ Sat, 27 Jul 2024 00:13:27 -0700 (PDT)
+Message-ID: <aff5f930-d291-4ff5-8f24-53291059d59a@linaro.org>
+Date: Sat, 27 Jul 2024 17:13:17 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/96] ppc-for-9.1-2 queue
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org
-References: <20240725235410.451624-1-npiggin@gmail.com>
+Subject: Re: [RFC 1/2] target/riscv: rvv: reduce the overhead for simple
+ RISC-V vector unit-stride loads and stores
+To: Paolo Savini <paolo.savini@embecosm.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Helene Chelin <helene.chelin@embecosm.com>, Max Chou <max.chou@sifive.com>
+References: <20240717153040.11073-1-paolo.savini@embecosm.com>
+ <20240717153040.11073-2-paolo.savini@embecosm.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
+In-Reply-To: <20240717153040.11073-2-paolo.savini@embecosm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,36 +105,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/26/24 09:52, Nicholas Piggin wrote:
-> Apologies this is so late after soft-freeze, apologies. I was waiting
-> on "accel/kvm: Extract common KVM vCPU {creation,parking} code" to be
-> merged upsream then ran into last minute CI problems. This PR is very
-> contained to ppc code so I hope it will not inconvenience anybody.
+On 7/18/24 01:30, Paolo Savini wrote:
+> From: Helene CHELIN <helene.chelin@embecosm.com>
 > 
-> Thanks,
-> Nick
+> This patch improves the performance of the emulation of the RVV unit-stride
+> loads and stores in the following cases:
 > 
-> The following changes since commit 029e13a8a56a2931e7c24c0db52ae7256b932cb0:
+> - when the data being loaded/stored per iteration amounts to 8 bytes or less.
+> - when the vector length is 16 bytes (VLEN=128) and there's no grouping of the
+>    vector registers (LMUL=1).
 > 
->    Merge tag 'bsd-user-for-9.1-pull-request' ofgitlab.com:bsdimp/qemu into staging (2024-07-25 09:53:57 +1000)
+> The optimization consists of avoiding the overhead of probing the RAM of the
+> host machine and doing a loop load/store on the input data grouped in chunks
+> of as many bytes as possible (8,4,2,1 bytes).
 > 
-> are available in the Git repository at:
+> Co-authored-by: Helene CHELIN <helene.chelin@embecosm.com>
+> Co-authored-by: Paolo Savini <paolo.savini@embecosm.com>
 > 
->    https://gitlab.com/npiggin/qemu.git tags/pull-ppc-for-9.1-2-20240726-1
+> Signed-off-by: Helene CHELIN <helene.chelin@embecosm.com>
+> ---
+>   target/riscv/vector_helper.c | 46 ++++++++++++++++++++++++++++++++++++
+>   1 file changed, 46 insertions(+)
 > 
-> for you to fetch changes up to d741ecffd2ca260ce7875a4596f17736b5ccb7c3:
-> 
->    target/ppc: Remove includes from mmu-book3s-v3.h (2024-07-26 09:51:34 +1000)
-> 
-> ----------------------------------------------------------------
-> 
-> * Fixes for pseries migration bugs.
-> * Graceful handling of vCPU hotplug failure in KVM.
-> * Many improvements to powernv machine model.
-> * Move more instructions to decodetree.
-> * Most of the remaining large MMU cleanup.
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index 29849a8b66..4b444c6bc5 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -633,6 +633,52 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
+>   
+>       VSTART_CHECK_EARLY_EXIT(env);
+>   
+> +    /* For data sizes <= 64 bits and for LMUL=1 with VLEN=128 bits we get a
+> +     * better performance by doing a simple simulation of the load/store
+> +     * without the overhead of prodding the host RAM */
+> +    if ((nf == 1) && ((evl << log2_esz) <= 8 ||
+> +	((vext_lmul(desc) == 0) && (simd_maxsz(desc) == 16)))) {
+> +
+> +	uint32_t evl_b = evl << log2_esz;
+> +
+> +        for (uint32_t j = env->vstart; j < evl_b;) {
+> +	    addr = base + j;
+> +            if ((evl_b - j) >= 8) {
+> +                if (is_load)
+> +                    lde_d_tlb(env, adjust_addr(env, addr), j, vd, ra);
+> +                else
+> +                    ste_d_tlb(env, adjust_addr(env, addr), j, vd, ra);
+> +                j += 8;
+> +            }
+> +            else if ((evl_b - j) >= 4) {
+> +                if (is_load)
+> +                    lde_w_tlb(env, adjust_addr(env, addr), j, vd, ra);
+> +                else
+> +                    ste_w_tlb(env, adjust_addr(env, addr), j, vd, ra);
+> +                j += 4;
+> +            }
+> +            else if ((evl_b - j) >= 2) {
+> +                if (is_load)
+> +                    lde_h_tlb(env, adjust_addr(env, addr), j, vd, ra);
+> +                else
+> +                    ste_h_tlb(env, adjust_addr(env, addr), j, vd, ra);
+> +                j += 2;
+> +            }
+> +            else {
+> +                if (is_load)
+> +                    lde_b_tlb(env, adjust_addr(env, addr), j, vd, ra);
+> +                else
+> +                    ste_b_tlb(env, adjust_addr(env, addr), j, vd, ra);
+> +                j += 1;
+> +            }
+> +        }
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+For system mode, this performs the tlb lookup N times, and so will not be an improvement.
+
+This will not work on a big-endian host.
+
 
 r~
 
