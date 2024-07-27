@@ -4,61 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1348AC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jul 2024 04:11:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F12DAC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jul 2024 04:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXYlL-0002U9-Dx; Sat, 27 Jul 2024 00:10:31 -0400
+	id 1sXZ2s-0000Ml-S9; Sat, 27 Jul 2024 00:28:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tugy@chinatelecom.cn>)
- id 1sXYlI-0002Sb-SR
- for qemu-devel@nongnu.org; Sat, 27 Jul 2024 00:10:28 -0400
-Received: from smtpnm6-07.21cn.com ([182.42.151.156] helo=chinatelecom.cn)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tugy@chinatelecom.cn>) id 1sXYlD-0003AD-5T
- for qemu-devel@nongnu.org; Sat, 27 Jul 2024 00:10:28 -0400
-HMM_SOURCE_IP: 192.168.138.117:0.313935585
-HMM_ATTACHE_NUM: 0000
-HMM_SOURCE_TYPE: SMTP
-Received: from clientip-112.44.135.226 (unknown [192.168.138.117])
- by chinatelecom.cn (HERMES) with SMTP id 4627B9C19C1;
- Sat, 27 Jul 2024 12:10:02 +0800 (CST)
-X-189-SAVE-TO-SEND: +tugy@chinatelecom.cn
-Received: from  ([112.44.135.226])
- by gateway-ssl-dep-67bdc54df-qz2qs with ESMTP id
- 799eca1d70934cd8bd75930e03d03c62 for armbru@redhat.com; 
- Sat, 27 Jul 2024 12:10:10 CST
-X-Transaction-ID: 799eca1d70934cd8bd75930e03d03c62
-X-Real-From: tugy@chinatelecom.cn
-X-Receive-IP: 112.44.135.226
-X-MEDUSA-Status: 0
-Message-ID: <1f960137-f5b5-429c-9eca-13ed6cc1786f@chinatelecom.cn>
-Date: Sat, 27 Jul 2024 12:09:59 +0800
+ (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
+ id 1sXZ2r-0000ME-EJ
+ for qemu-devel@nongnu.org; Sat, 27 Jul 2024 00:28:37 -0400
+Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
+ helo=Atcsqr.andestech.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alvinga@andestech.com>)
+ id 1sXZ2p-0001nr-AM
+ for qemu-devel@nongnu.org; Sat, 27 Jul 2024 00:28:37 -0400
+Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
+ by Atcsqr.andestech.com with ESMTPS id 46R4SACl049966
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
+ Sat, 27 Jul 2024 12:28:10 +0800 (+08)
+ (envelope-from alvinga@andestech.com)
+Received: from atctrx.andestech.com (10.0.15.190) by ATCPCS34.andestech.com
+ (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Sat, 27 Jul
+ 2024 12:28:11 +0800
+To: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <alistair.francis@wdc.com>, <bin.meng@windriver.com>,
+ <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
+ <zhiwei_liu@linux.alibaba.com>, Alvin Chang <alvinga@andestech.com>
+Subject: [PATCH] RISC-V: Remove riscv_cpu_claim_interrupts()
+Date: Sat, 27 Jul 2024 12:27:58 +0800
+Message-ID: <20240727042758.2341031-1-alvinga@andestech.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: tugy@chinatelecom.cn, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org,
- dengpc12@chinatelecom.cn, zhangl161@chinatelecom.cn,
- Paolo Bonzini <pbonzini@redhat.com>, Yang Zhong <yang.zhong@intel.com>
-Subject: Re: [PATCH] misc: introduce strim-memory qapi to support free memory
- trimming
-To: Markus Armbruster <armbru@redhat.com>
-References: <0370576b-0660-4fb0-ac70-5b31ad6e3dbf@chinatelecom.cn>
- <87h6cdogau.fsf@pond.sub.org>
-Content-Language: en-US
-From: Guoyi Tu <tugy@chinatelecom.cn>
-In-Reply-To: <87h6cdogau.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=182.42.151.156; envelope-from=tugy@chinatelecom.cn;
- helo=chinatelecom.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Originating-IP: [10.0.15.190]
+X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
+ ATCPCS34.andestech.com (10.0.1.134)
+X-DNSRBL: 
+X-MAIL: Atcsqr.andestech.com 46R4SACl049966
+Received-SPF: pass client-ip=60.248.80.70; envelope-from=alvinga@andestech.com;
+ helo=Atcsqr.andestech.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RDNS_DYNAMIC=0.982,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,237 +66,231 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alvin Chang <alvinga@andestech.com>
+From:  Alvin Chang via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/7/25 19:35, Markus Armbruster wrote:
-> Guoyi Tu <tugy@chinatelecom.cn> writes:
-> 
->> In the test environment, we conducted IO stress tests on all storage disks
->> within a virtual machine that had five storage devices mounted.During
->> testing,
->> we found that the qemu process allocated a large amount of memory (~800MB)
->> to handle these IO operations.
->>
->> When the test ended, although qemu called free() to release the allocated
->> memory, the memory was not actually returned to the operating system, as
->> observed via the top command.
->>
->> Upon researching the glibc memory management mechanism, we found that when
->> small chunks of memory are allocated in user space and then released with
->> free(),  the glibc memory management mechanism does not necessarily return
->> this memory to the operating system. Instead, it retains the memory until
->> certain conditions are met for release.
-> 
-> Yes.
-> 
->> For virtual machines that only have business operations during specific
->> periods,  they remain idle most of the time. However, the qemu process
->> still occupies a large amount of memory resources, leading to significant
->> memory resource waste.
-> 
-> Mitigation: the memory free()'s but not returned to the OS can be paged
-> out.
-Yes, swap can alleviate the issue of insufficient system memory, but it 
-can also affect performance. Additionally, some systems may disable the 
-swap function for various reasons, making it unavailable for use
+The function of riscv_cpu_claim_interrupts() was introduced in commit
+e3e7039 ("RISC-V: Allow interrupt controllers to claim interrupts") to
+enforce hardware controlled of SEIP signal when there is an attached
+external interrupt controller.
 
->> To address this issue, this patch introduces an API to actively reclaim
->> idle memory within the qemu process. This API effectively calls
->> malloc_trim()
->> to notify glibc to trim free memory. With this api, the management tool
->> can monitor the virtual machine's state and call this API during idle times
->> to free up the memory occupied by the virtual machine, thereby allowing more
->> virtual machines to be provisioned.
-> 
-> How does this affect the test case you described above?
-Based on the test results, QEMU generally allocates a lot of memory
-when handling backend I/O, and this memory can be released when the
-virtual machine’s storage I/O is idle.
+In later RISC-V privileged specification version 1.10, SEIP became
+software-writable, even if there is an attached external interrupt
+controller. Thus, the commit 33fe584 ("target/riscv: Allow software
+access to MIP SEIP") was introduced to remove that limitation, and it
+also removed the usage of "miclaim" mask.
 
-Based on this observation, management tools can monitor the storage I/O
-load of virtual machines. If the storage I/O load of a virtual machine
-remains low for a certain period, the tool can use this interface to
-return most of the allocatable memory to the operating system.
+It seems the function of riscv_cpu_claim_interrupts() is no longer used.
+Therefore, we remove it in this commit.
 
-According to our statistics, this approach can save at least 150MB of
-system memory per virtual machine on average.
+Signed-off-by: Alvin Chang <alvinga@andestech.com>
+---
+ hw/intc/riscv_aclint.c    | 20 --------------------
+ hw/intc/riscv_aplic.c     | 11 -----------
+ hw/intc/riscv_imsic.c     |  8 --------
+ hw/intc/sifive_plic.c     | 15 ---------------
+ target/riscv/cpu.c        |  1 -
+ target/riscv/cpu.h        |  3 ---
+ target/riscv/cpu_helper.c | 11 -----------
+ target/riscv/machine.c    |  1 -
+ 8 files changed, 70 deletions(-)
 
-> There's an existing use of malloc_trim() in util/rcu.c's
-> call_rcu_thread().  It's from commit 5a22ab71623:
-> 
->      rcu: reduce more than 7MB heap memory by malloc_trim()
->      
->      Since there are some issues in memory alloc/free machenism
->      in glibc for little chunk memory, if Qemu frequently
->      alloc/free little chunk memory, the glibc doesn't alloc
->      little chunk memory from free list of glibc and still
->      allocate from OS, which make the heap size bigger and bigger.
->      
->      This patch introduce malloc_trim(), which will free heap
->      memory when there is no rcu call during rcu thread loop.
->      malloc_trim() can be enabled/disabled by --enable-malloc-trim/
->      --disable-malloc-trim in the Qemu configure command. The
->      default malloc_trim() is enabled for libc.
->      
->      Below are test results from smaps file.
->      (1)without patch
->      55f0783e1000-55f07992a000 rw-p 00000000 00:00 0  [heap]
->      Size:              21796 kB
->      Rss:               14260 kB
->      Pss:               14260 kB
->      
->      (2)with patch
->      55cc5fadf000-55cc61008000 rw-p 00000000 00:00 0  [heap]
->      Size:              21668 kB
->      Rss:                6940 kB
->      Pss:                6940 kB
->      
->      Signed-off-by: Yang Zhong <yang.zhong@intel.com>
->      Message-Id: <1513775806-19779-1-git-send-email-yang.zhong@intel.com>
->      Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> 
-> How would the malloc_trim() you propose interact with this one?
-During the lifecycle of the virtual machine, this part of the logic
-may not be triggered, so we plan to add a new interface.
->> Signed-off-by: Guoyi Tu <tugy@chinatelecom.cn>
->> Signed-off-by: dengpengcheng <dengpc12@chinatelecom.cn>
->> ---
->>    hmp-commands.hx       | 13 +++++++++++++
->>    include/monitor/hmp.h |  1 +
->>    monitor/hmp-cmds.c    | 14 ++++++++++++++
->>    monitor/qmp-cmds.c    | 18 ++++++++++++++++++
->>    qapi/misc.json        | 13 +++++++++++++
->>    5 files changed, 59 insertions(+)
->>
->> diff --git a/hmp-commands.hx b/hmp-commands.hx
->> index 06746f0afc..0fde22fc71 100644
->> --- a/hmp-commands.hx
->> +++ b/hmp-commands.hx
->> @@ -1858,4 +1858,17 @@ SRST
->>    ``xen-event-list``
->>      List event channels in the guest
->>    ERST
->> +
->> +    {
->> +        .name       = "trim-memory",
->> +        .args_type  = "reserved:l?",
->> +        .params     = "[reserved]",
->> +        .help       = "trim momory",
->> +        .cmd        = hmp_trim_memory,
->> +    },
->> +
->> +SRST
->> +``trim-memory`` *reserved*
->> +  try to release free memory and keep reserved bytes of free memory
->> untrimmed
->> +ERST
->>    #endif
->> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
->> index 954f3c83ad..547cde0056 100644
->> --- a/include/monitor/hmp.h
->> +++ b/include/monitor/hmp.h
->> @@ -181,5 +181,6 @@ void hmp_boot_set(Monitor *mon, const QDict *qdict);
->>    void hmp_info_mtree(Monitor *mon, const QDict *qdict);
->>    void hmp_info_cryptodev(Monitor *mon, const QDict *qdict);
->>    void hmp_dumpdtb(Monitor *mon, const QDict *qdict);
->> +void hmp_trim_memory(Monitor *mon, const QDict *qdict);
->>
->>    #endif
->> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
->> index ea79148ee8..f842e43315 100644
->> --- a/monitor/hmp-cmds.c
->> +++ b/monitor/hmp-cmds.c
->> @@ -460,3 +460,17 @@ void hmp_dumpdtb(Monitor *mon, const QDict *qdict)
->>       monitor_printf(mon, "dtb dumped to %s", filename);
->>   }
->>   #endif
->> +
->> +void hmp_trim_memory(Monitor *mon, const QDict *qdict)
->> +{
->> +    int64_t reserved;
->> +    bool has_reserved = qdict_haskey(qdict, "reserved");
->> +    Error *err = NULL;
->> +
->> +    if (has_reserved) {
->> +        reserved = qdict_get_int(qdict, "reserved");
->> +    }
->> +
->> +    qmp_trim_memory(has_reserved, reserved, &err);
->> +    hmp_handle_error(mon, err);
->> +}
->> diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
->> index f84a0dc523..878a7a646a 100644
->> --- a/monitor/qmp-cmds.c
->> +++ b/monitor/qmp-cmds.c
->> @@ -31,6 +31,7 @@
->>   #include "qapi/type-helpers.h"
->>   #include "hw/mem/memory-device.h"
->>   #include "hw/intc/intc.h"
->> +#include <malloc.h>
->>
->>   NameInfo *qmp_query_name(Error **errp)
->>   {
->> @@ -161,6 +162,23 @@ void qmp_add_client(const char *protocol, const
->> char *fdname,
->>       }
->>   }
->>
->> +void qmp_trim_memory(bool has_reserved, int64_t reserved, Error **errp)
->> +{
->> +#if defined(CONFIG_MALLOC_TRIM)
->> +    if (!has_reserved) {
->> +        reserved = 1024 * 1024;
->> +    }
->> +    if (reserved < 0) {
->> +        error_setg(errp, QERR_INVALID_PARAMETER_VALUE,
->> +                   "reserved", "a >0 reserved");
->> +        return;
->> +    }
->> +    malloc_trim(reserved);
->> +#else
->> +    error_setg(errp, "malloc_trim feature not configured");
-> 
-> Have you tried making the entire command conditional instead?  Like...
-> 
->> +#endif
->> +}
->> +
->>    char *qmp_human_monitor_command(const char *command_line, bool
->> has_cpu_index,
->>                                    int64_t cpu_index, Error **errp)
->>    {
->> diff --git a/qapi/misc.json b/qapi/misc.json
->> index ec30e5c570..00e6f2f650 100644
->> --- a/qapi/misc.json
->> +++ b/qapi/misc.json
->> @@ -605,3 +605,16 @@
->>    { 'event': 'VFU_CLIENT_HANGUP',
->>      'data': { 'vfu-id': 'str', 'vfu-qom-path': 'str',
->>                'dev-id': 'str', 'dev-qom-path': 'str' } }
->> +
->> +##
->> +# @trim-memory:
->> +#
->> +# try to release free memory
->> +#
->> +# @reserved: specifies the amount of free space to leave untrimmed.
->> +#            default to 1MB if not specified.
->> +#
->> +# Since: 9.0
->> +##
->> +{'command': 'trim-memory',
->> + 'data': {'*reserved': 'int'} }
-> 
-> ... so:
-> 
->     { 'command': 'trim-memory',
->       'data': {'*reserved': 'int'},
->       'if': 'CONFIG_MALLOC_TRIM' }
-> 
-> Could we do without the argument?
-> 
-> 
---
-Guoyi
+diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
+index e9f0536b1c..54cf69dada 100644
+--- a/hw/intc/riscv_aclint.c
++++ b/hw/intc/riscv_aclint.c
+@@ -280,7 +280,6 @@ static Property riscv_aclint_mtimer_properties[] = {
+ static void riscv_aclint_mtimer_realize(DeviceState *dev, Error **errp)
+ {
+     RISCVAclintMTimerState *s = RISCV_ACLINT_MTIMER(dev);
+-    int i;
+ 
+     memory_region_init_io(&s->mmio, OBJECT(dev), &riscv_aclint_mtimer_ops,
+                           s, TYPE_RISCV_ACLINT_MTIMER, s->aperture_size);
+@@ -291,14 +290,6 @@ static void riscv_aclint_mtimer_realize(DeviceState *dev, Error **errp)
+ 
+     s->timers = g_new0(QEMUTimer *, s->num_harts);
+     s->timecmp = g_new0(uint64_t, s->num_harts);
+-    /* Claim timer interrupt bits */
+-    for (i = 0; i < s->num_harts; i++) {
+-        RISCVCPU *cpu = RISCV_CPU(cpu_by_arch_id(s->hartid_base + i));
+-        if (riscv_cpu_claim_interrupts(cpu, MIP_MTIP) < 0) {
+-            error_report("MTIP already claimed");
+-            exit(1);
+-        }
+-    }
+ }
+ 
+ static void riscv_aclint_mtimer_reset_enter(Object *obj, ResetType type)
+@@ -472,7 +463,6 @@ static Property riscv_aclint_swi_properties[] = {
+ static void riscv_aclint_swi_realize(DeviceState *dev, Error **errp)
+ {
+     RISCVAclintSwiState *swi = RISCV_ACLINT_SWI(dev);
+-    int i;
+ 
+     memory_region_init_io(&swi->mmio, OBJECT(dev), &riscv_aclint_swi_ops, swi,
+                           TYPE_RISCV_ACLINT_SWI, RISCV_ACLINT_SWI_SIZE);
+@@ -480,16 +470,6 @@ static void riscv_aclint_swi_realize(DeviceState *dev, Error **errp)
+ 
+     swi->soft_irqs = g_new(qemu_irq, swi->num_harts);
+     qdev_init_gpio_out(dev, swi->soft_irqs, swi->num_harts);
+-
+-    /* Claim software interrupt bits */
+-    for (i = 0; i < swi->num_harts; i++) {
+-        RISCVCPU *cpu = RISCV_CPU(qemu_get_cpu(swi->hartid_base + i));
+-        /* We don't claim mip.SSIP because it is writable by software */
+-        if (riscv_cpu_claim_interrupts(cpu, swi->sswi ? 0 : MIP_MSIP) < 0) {
+-            error_report("MSIP already claimed");
+-            exit(1);
+-        }
+-    }
+ }
+ 
+ static void riscv_aclint_swi_reset_enter(Object *obj, ResetType type)
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index 32edd6d07b..cde8337542 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -873,17 +873,6 @@ static void riscv_aplic_realize(DeviceState *dev, Error **errp)
+     if (!aplic->msimode) {
+         aplic->external_irqs = g_malloc(sizeof(qemu_irq) * aplic->num_harts);
+         qdev_init_gpio_out(dev, aplic->external_irqs, aplic->num_harts);
+-
+-        /* Claim the CPU interrupt to be triggered by this APLIC */
+-        for (i = 0; i < aplic->num_harts; i++) {
+-            RISCVCPU *cpu = RISCV_CPU(cpu_by_arch_id(aplic->hartid_base + i));
+-            if (riscv_cpu_claim_interrupts(cpu,
+-                (aplic->mmode) ? MIP_MEIP : MIP_SEIP) < 0) {
+-                error_report("%s already claimed",
+-                             (aplic->mmode) ? "MEIP" : "SEIP");
+-                exit(1);
+-            }
+-        }
+     }
+ 
+     msi_nonbroken = true;
+diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
+index b90f0d731d..8c61a5f28b 100644
+--- a/hw/intc/riscv_imsic.c
++++ b/hw/intc/riscv_imsic.c
+@@ -347,14 +347,6 @@ static void riscv_imsic_realize(DeviceState *dev, Error **errp)
+                           IMSIC_MMIO_SIZE(imsic->num_pages));
+     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &imsic->mmio);
+ 
+-    /* Claim the CPU interrupt to be triggered by this IMSIC */
+-    if (riscv_cpu_claim_interrupts(rcpu,
+-            (imsic->mmode) ? MIP_MEIP : MIP_SEIP) < 0) {
+-        error_setg(errp, "%s already claimed",
+-                   (imsic->mmode) ? "MEIP" : "SEIP");
+-        return;
+-    }
+-
+     /* Create output IRQ lines */
+     imsic->external_irqs = g_malloc(sizeof(qemu_irq) * imsic->num_pages);
+     qdev_init_gpio_out(dev, imsic->external_irqs, imsic->num_pages);
+diff --git a/hw/intc/sifive_plic.c b/hw/intc/sifive_plic.c
+index e559f11805..f0f3dcce1f 100644
+--- a/hw/intc/sifive_plic.c
++++ b/hw/intc/sifive_plic.c
+@@ -356,7 +356,6 @@ static void sifive_plic_irq_request(void *opaque, int irq, int level)
+ static void sifive_plic_realize(DeviceState *dev, Error **errp)
+ {
+     SiFivePLICState *s = SIFIVE_PLIC(dev);
+-    int i;
+ 
+     memory_region_init_io(&s->mmio, OBJECT(dev), &sifive_plic_ops, s,
+                           TYPE_SIFIVE_PLIC, s->aperture_size);
+@@ -385,20 +384,6 @@ static void sifive_plic_realize(DeviceState *dev, Error **errp)
+     s->m_external_irqs = g_malloc(sizeof(qemu_irq) * s->num_harts);
+     qdev_init_gpio_out(dev, s->m_external_irqs, s->num_harts);
+ 
+-    /*
+-     * We can't allow the supervisor to control SEIP as this would allow the
+-     * supervisor to clear a pending external interrupt which will result in
+-     * lost a interrupt in the case a PLIC is attached. The SEIP bit must be
+-     * hardware controlled when a PLIC is attached.
+-     */
+-    for (i = 0; i < s->num_harts; i++) {
+-        RISCVCPU *cpu = RISCV_CPU(qemu_get_cpu(s->hartid_base + i));
+-        if (riscv_cpu_claim_interrupts(cpu, MIP_SEIP) < 0) {
+-            error_setg(errp, "SEIP already claimed");
+-            return;
+-        }
+-    }
+-
+     msi_nonbroken = true;
+ }
+ 
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index a90808a3ba..19feb032d6 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -967,7 +967,6 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+         }
+     }
+     env->mcause = 0;
+-    env->miclaim = MIP_SGEIP;
+     env->pc = env->resetvec;
+     env->bins = 0;
+     env->two_stage_lookup = false;
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 1619c3acb6..6277979afd 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -258,8 +258,6 @@ struct CPUArchState {
+     bool external_seip;
+     bool software_seip;
+ 
+-    uint64_t miclaim;
+-
+     uint64_t mie;
+     uint64_t mideleg;
+ 
+@@ -565,7 +563,6 @@ void riscv_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+ hwaddr riscv_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
+ bool riscv_cpu_exec_interrupt(CPUState *cs, int interrupt_request);
+ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env);
+-int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts);
+ uint64_t riscv_cpu_update_mip(CPURISCVState *env, uint64_t mask,
+                               uint64_t value);
+ void riscv_cpu_interrupt(CPURISCVState *env);
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 395a1d9140..bcafa55acd 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -619,17 +619,6 @@ void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen)
+     env->geilen = geilen;
+ }
+ 
+-int riscv_cpu_claim_interrupts(RISCVCPU *cpu, uint64_t interrupts)
+-{
+-    CPURISCVState *env = &cpu->env;
+-    if (env->miclaim & interrupts) {
+-        return -1;
+-    } else {
+-        env->miclaim |= interrupts;
+-        return 0;
+-    }
+-}
+-
+ void riscv_cpu_interrupt(CPURISCVState *env)
+ {
+     uint64_t gein, vsgein = 0, vstip = 0, irqf = 0;
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 492c2c6d9d..0eabb6c076 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -378,7 +378,6 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINTTL(env.mhartid, RISCVCPU),
+         VMSTATE_UINT64(env.mstatus, RISCVCPU),
+         VMSTATE_UINT64(env.mip, RISCVCPU),
+-        VMSTATE_UINT64(env.miclaim, RISCVCPU),
+         VMSTATE_UINT64(env.mie, RISCVCPU),
+         VMSTATE_UINT64(env.mvien, RISCVCPU),
+         VMSTATE_UINT64(env.mvip, RISCVCPU),
+-- 
+2.34.1
+
 
