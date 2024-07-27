@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE47C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jul 2024 01:34:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67D59C3DA49
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jul 2024 01:36:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXWJZ-0007t6-UQ; Fri, 26 Jul 2024 21:33:42 -0400
+	id 1sXWLt-0004NX-4q; Fri, 26 Jul 2024 21:36:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sXWJX-0007rN-QT
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 21:33:39 -0400
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
+ id 1sXWLr-0004KN-AM
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 21:36:03 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sXWJV-0007h6-Nj
- for qemu-devel@nongnu.org; Fri, 26 Jul 2024 21:33:39 -0400
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-52f04c29588so3106534e87.3
- for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 18:33:37 -0700 (PDT)
+ id 1sXWLp-0008T8-GT
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 21:36:03 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-52f008aa351so2710158e87.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 18:36:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722044015; x=1722648815;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722044159; x=1722648959;
  darn=nongnu.org; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QxARiKP/61j2b1JgXSpkXulZIFXK32udoRr06o5SeGs=;
- b=2NmuPs0Pw87D5CvDRmiuWogswM8rxAgnKfJSdqlntkRR37LLv8Sr8hSFC9s4RlSb65
- dOyXbgSYTRb+MjrqpwftnZ+UN5GrdkXEZfnmieqhObwzRKp98Uk9lqV3tyiNB4rz89d8
- aN7FjkvoxnSrcIxyeNSAV0lNHF+2+2Rr0ZXOOTH/30i8FmDJFq4BlP3IsYJ4Z/rBGUu3
- RJ0lynK3v5QVAaVZqgXOI7QCeEFlbVAvRs1Q1Y3DhZJCNSHRnomGJVJ8Mj2Iyxq0It6u
- f9L7ic1YjJ8SNXkzxevqosLqR71sZi1eeO8/AN8D35aaRKjHBeoSoi3w9Y+rkhaAfFQq
- 1slw==
+ bh=ZKIaXeGRSYuTdh4lDQvDGBsb/YVfbCXRarwsI6kRJYM=;
+ b=B5nW+phlotUEl7IOoPliZ+Fff4imSg6wsQdWV+Bo2JvFOKt4Dsmu+Af1gdwe1TFQfq
+ SbPQUskUZZLsRqHPhvjdg+mEtzzKJSXZzMF4MJHfi6qEwBAvGdKLPVsNvP2z3xTvKqVr
+ 5WQb25JCTXSqfH1xTKQF0QqiABzHHn1riWKKglUEd6xETy44A2K8IjoN19GvA/utJyjc
+ 1ZuUWzZr3ubIMOxKjEorMDpiyA7fKRarWM3VKSORW3hBPqtCpA6IYCTMO5A6RUqLZ83t
+ 0RwcRfvg0BUw92mlSindydA+rR+b8vl5mIeb0Q4FW3UPwOf0qvw0y0pIj/tzsv7cO4C5
+ CvxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722044015; x=1722648815;
+ d=1e100.net; s=20230601; t=1722044159; x=1722648959;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QxARiKP/61j2b1JgXSpkXulZIFXK32udoRr06o5SeGs=;
- b=MozXN0C2i0xIe7Rt8qabbP4GCywWIbX+1TAsjLT0RN43bqfWuwoGHsa7YYyfBGwSKl
- XdFNR8Pzky1uTBKIva7WjUQkF4pN5o6oK0A2IUSabnRfjmDKTZEe1dRzW6PzVCjejb+6
- nfldUHXAYjy8VR+o9vrxlxEQ18O/I7M2VtBGXbTQaBFPKXmc1/lgQUSI5MXJjBL1PyiF
- uXsSXM89zV1dvhmWEFeDixvgAbfTnHRtbDiGY4UYPDfuJyhzTXWWa1dWkDsi7ogDwep3
- PQqXpBnVi2PS9UUTWDwpnk7PW0xqlu/owcME/m/xfvo5iMRdmNfT+E4GsyfvKWQv5u7Q
- usmg==
+ bh=ZKIaXeGRSYuTdh4lDQvDGBsb/YVfbCXRarwsI6kRJYM=;
+ b=Gqv31gV+HQqvjTv96UeCzX67vQ3t6Xu/efOXn2vezjzIliKjKgD7iVob+VHa6yo1iv
+ M31CFnabDAxOQWNJKkC/NSDKjp2WvNY9vNmVvjK4DWDB6vmHG3nAt5vnoWSQduMqR0Ox
+ Br9yzaa5Z25S2SIVT2NVKUZWGK9Pd5Qr2WEE5Va31U3S55ePj1ByMmagiJdUslYw33qj
+ TSZ0Tuu1rEtfrghd85/bn4L/7BGXyU1OVOjgg2J8Inx3KG6UgOp7diM10oZ/gGzBvSt7
+ IDS+aKfsVCaR9ZA+ZBjrCO6gCdU0DsV6DWL0Jyy56kbnW5K9VR6TDwecKxRRk5nbCo7L
+ ud4w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXxE3edxUpKDm5kqcbUFA73s6DKd/x18tAlrvtorexifDoNRjW17kMrW83Ev+WeKwuBlmLFM02g0ZM9015vtDTfEkfXM80=
-X-Gm-Message-State: AOJu0YzJWNU4NEPnye0oiLvdU3AXbnC5fYDRmUJxVw5R552dcS3vlXS6
- Xp/rTGjBUqJBrycoeWgtle93nfPxmaHWFawIl1krIsTahLtvhsfNGcBZhhsrIZOEJ/7f+1Q+Oy+
- RnQ6ghRdUwYxybeY1exwTCE5AGAFHY/m5QwQmew==
-X-Google-Smtp-Source: AGHT+IFgw7IRJ29U60mUW2RRJtRa9ZKYIl8tUEQTC64fgEmSRxWaojdsdAbc6tOMMW7Gaex8oJjtjuAJxvc95LrgPr8=
-X-Received: by 2002:a19:f703:0:b0:52c:d834:4f2d with SMTP id
- 2adb3069b0e04-5309b270abcmr815761e87.18.1722044015315; Fri, 26 Jul 2024
- 18:33:35 -0700 (PDT)
+ AJvYcCWNu+D6eIbCww4+BlryJhFqfPTlZrftcQ7qSZPueBJrrEaE+k2Izrhu41Oxo+jyiMUfp9uU1qNeqoy3aq35QzX7D8E1WrI=
+X-Gm-Message-State: AOJu0YyWuJTSYLSyRX49CuQmJzik1xkzuICJVUEDu7OxFiqaTYrhqd7j
+ 7njV9nt3/3MGJYmEvz9Gs/6R568yHU/2PuAaKBXKPmHs/kXwj3Rd/zFkij+JPZKEhaDdDcL6T8c
+ Q4bg299xIJvYfHbkKCUUxDaT3SwDFig5AfiH7Zg==
+X-Google-Smtp-Source: AGHT+IHlyd4Uaw0gSNyDHZu9jj3oGS7+MM6RfHHEloXNd4rX+FdYgqbDrqXT/TQwOicsqZrBFunhKu/j3fxsl6g9mOk=
+X-Received: by 2002:a05:6512:ac8:b0:52d:8f80:6444 with SMTP id
+ 2adb3069b0e04-5309b27dd53mr956083e87.32.1722044159253; Fri, 26 Jul 2024
+ 18:35:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240723-counter_delegation-v2-0-c4170a5348ca@rivosinc.com>
- <20240723-counter_delegation-v2-1-c4170a5348ca@rivosinc.com>
- <CAKmqyKPEWgA=s5sokPG2_v2qdbuaHwdGf6RJzqFfL15Htq=vBA@mail.gmail.com>
-In-Reply-To: <CAKmqyKPEWgA=s5sokPG2_v2qdbuaHwdGf6RJzqFfL15Htq=vBA@mail.gmail.com>
+References: <20240724-fixes-v1-1-4a64596b0d64@rivosinc.com>
+ <CAKmqyKPhCzrYxwpBF+NQi-5KgcKkhWeVNX6nwwx3ZjeE9rWEAg@mail.gmail.com>
+In-Reply-To: <CAKmqyKPhCzrYxwpBF+NQi-5KgcKkhWeVNX6nwwx3ZjeE9rWEAg@mail.gmail.com>
 From: Atish Kumar Patra <atishp@rivosinc.com>
-Date: Fri, 26 Jul 2024 18:33:24 -0700
-Message-ID: <CAHBxVyGzogwFhFu+kF=PvVEJ+Mm_1EYyaHD+6NR=mh9WrrEBBw@mail.gmail.com>
-Subject: Re: [PATCH v2 01/13] target/riscv: Add properties for Indirect CSR
- Access extension
+Date: Fri, 26 Jul 2024 18:35:48 -0700
+Message-ID: <CAHBxVyHBtnhFnFYN0=_5PoKvc7DadJABH71s+wCZzPiYAmPM_g@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Add asserts for out-of-bound access
 To: Alistair Francis <alistair23@gmail.com>
 Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
- dbarboza@ventanamicro.com, alistair.francis@wdc.com
+ dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
+ Peter Maydell <peter.maydell@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=atishp@rivosinc.com; helo=mail-lf1-x132.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=atishp@rivosinc.com; helo=mail-lf1-x12d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -96,48 +95,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 26, 2024 at 12:42=E2=80=AFAM Alistair Francis <alistair23@gmail=
+On Thu, Jul 25, 2024 at 10:12=E2=80=AFPM Alistair Francis <alistair23@gmail=
 .com> wrote:
 >
-> On Wed, Jul 24, 2024 at 9:31=E2=80=AFAM Atish Patra <atishp@rivosinc.com>=
+> On Wed, Jul 24, 2024 at 6:33=E2=80=AFPM Atish Patra <atishp@rivosinc.com>=
  wrote:
 > >
-> > From: Kaiwen Xue <kaiwenx@rivosinc.com>
+> > Coverity complained about the possible out-of-bounds access with
+> > counter_virt/counter_virt_prev because these two arrays are
+> > accessed with privilege mode. However, these two arrays are accessed
+> > only when virt is enabled. Thus, the privilege mode can't be M mode.
 > >
-> > This adds the properties for sxcsrind. Definitions of new registers and
-> > implementations will come with future patches.
+> > Add the asserts anyways to detect any wrong usage of these arrays
+> > in the future.
 > >
+> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 > > Signed-off-by: Atish Patra <atishp@rivosinc.com>
-> > Signed-off-by: Kaiwen Xue <kaiwenx@rivosinc.com>
+>
+> Fixes: Coverity CID 1558459
+> Fixes: Coverity CID 1558462
+>
+
+I think one of the Coverity issues was about the get_field issue in
+the other thread?
+This doesn't necessarily fix the coverity issue also as the issue
+reported is a false positive.
+But I don't mind citing the coverity issues as it is reported by that.
+
+Is there a link to both coverity issues to know which issue describes
+the out-of-bound access one ?
+
 > > ---
-> >  target/riscv/cpu.c     | 2 ++
-> >  target/riscv/cpu_cfg.h | 2 ++
-> >  2 files changed, 4 insertions(+)
+> > The lore discussion can be found here
+> > https://lore.kernel.org/all/CAHBxVyGQHBobpf71o4Qp51iQGXKBh0Ajup=3De_a95=
+xdLF=3D=3DV_WQ@mail.gmail.com/
+> > ---
+> >  target/riscv/pmu.c | 4 ++++
+> >  1 file changed, 4 insertions(+)
 > >
-> > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> > index a90808a3bace..ebc19090b40d 100644
-> > --- a/target/riscv/cpu.c
-> > +++ b/target/riscv/cpu.c
-> > @@ -183,12 +183,14 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
-> >      ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
-> >      ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
-> >      ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
-> > +    ISA_EXT_DATA_ENTRY(smcsrind, PRIV_VERSION_1_12_0, ext_smcsrind),
+> > diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
+> > index 3cc0b3648cad..e05ab067d2f2 100644
+> > --- a/target/riscv/pmu.c
+> > +++ b/target/riscv/pmu.c
+> > @@ -204,6 +204,7 @@ static void riscv_pmu_icount_update_priv(CPURISCVSt=
+ate *env,
+> >      }
+> >
+> >      if (env->virt_enabled) {
+> > +        g_assert(env->priv <=3D PRV_S);
 >
-> This is actually part of the unpriv spec, so it's a bit weird that it
-> depends on the priv spec. But that's how it's all set up.
+> Don't we need this assert for !env->virt_enabled as well?
 >
-
-Smcsrind is part of priv spec[1]. Am I missing something ?
-
-https://drive.google.com/file/d/17GeetSnT5wW3xNuAHI95-SI1gPGd5sJ_/view
-
-> But shouldn't this be PRIV_VERSION_1_13_0?
->
-
-Yes. Sorry I forgot about that. smcntrpmf should also be PRIV_VERSION_1_13_=
-0.
-I will send a fix patch along with the v2 for assert fix.
-
 > Alistair
 
