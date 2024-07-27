@@ -4,105 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 200D2C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri, 26 Jul 2024 22:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B173C3DA49
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jul 2024 01:27:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXTa6-0008Fp-7b; Fri, 26 Jul 2024 18:38:34 -0400
+	id 1sXWCP-0002AG-0t; Fri, 26 Jul 2024 21:26:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1sXTa4-0008E7-8T; Fri, 26 Jul 2024 18:38:32 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1sXTa2-0001JW-Ab; Fri, 26 Jul 2024 18:38:32 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46QGuWDr020267;
- Fri, 26 Jul 2024 22:38:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- gAd/V1SBe0RIt0lPe5P2bowfhgIVRHe3/pxwI4GQH84=; b=tLNTt2vE9L12KxRF
- CnsRDxilM4VrLN9ViA5R/VTy0xbYP5bLrbAulmvxEKOd9YMO+oIXbOTOtVKxzZO0
- /BZCrfIBKFiJzK7wz/pazDZt5R2K1ojKHHrW45Zs7uK2qUONu4iP0lzmwGM2s50x
- rhgPjg9K76135M/DxP5y3/Tp4tWwHF8DkO8ALJFVYROp2eyptjat1A+Mi3UhOiRa
- n4Zym8BFaJTvGYJpOudhVMIo55qz6W7XqYwRPkfU/CsBCLWN86/W/QFX5ZfLAqFU
- pdMGSz630lD6a9MJWrFSNl+138pt8WilvhBwos2o8B0KDJ2YuvMtxbt9aN9pRRq5
- LesJ/w==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40md5bs7cv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jul 2024 22:38:19 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46QMcJ1Y021174;
- Fri, 26 Jul 2024 22:38:19 GMT
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40md5bs7cs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jul 2024 22:38:19 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 46QKqldh005773; Fri, 26 Jul 2024 22:38:18 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40gy2pwdcu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 26 Jul 2024 22:38:18 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 46QMcGkr28836352
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 26 Jul 2024 22:38:18 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3D52E58055;
- Fri, 26 Jul 2024 22:38:16 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 774CE58054;
- Fri, 26 Jul 2024 22:38:15 +0000 (GMT)
-Received: from [9.12.68.85] (unknown [9.12.68.85])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 26 Jul 2024 22:38:15 +0000 (GMT)
-Message-ID: <8d220cee-186b-486b-b729-293e0c9b1084@linux.ibm.com>
-Date: Fri, 26 Jul 2024 18:38:14 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] target/s390x: move @deprecated-props to
- CpuModelExpansion Info
-To: David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: thuth@redhat.com, wangyanan55@huawei.com, philmd@linaro.org,
- marcel.apfelbaum@gmail.com, eduardo@habkost.net, armbru@redhat.com
-References: <20240726203646.20279-1-walling@linux.ibm.com>
- <7744345c-964a-445d-96e3-64f71183bfba@redhat.com>
-Content-Language: en-US
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <7744345c-964a-445d-96e3-64f71183bfba@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: -tNshD6Nxm1N-dFqanDBpAwfAwEVoCEJ
-X-Proofpoint-GUID: iOWudKAxq9CduvS-x_uqM8D2C9T1JRh5
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1sXWCJ-00026s-Cy
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 21:26:11 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1sXWCH-0004Pz-5M
+ for qemu-devel@nongnu.org; Fri, 26 Jul 2024 21:26:11 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2ef2cce8c08so20277141fa.0
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 18:26:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722043567; x=1722648367;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3vf6SMqBGacUh3oyyzqoyXbaatTN5XcogvaaBcF39Vg=;
+ b=jEsFxkJxF67tck3yfJYTIA/MjnDDEwgriCERrVRNJ5hI8xZriuDwQMEh5/WgulTKgL
+ Y/L4trdN65F/YdDVJ/sYuh/bNLAmDzvDbN4LsgSvtf6JCw77G1t9cd8RFbA5VOJDIvXK
+ 9zyUxzfnoanqVlcfE3/Zrn2YxTYdN2KjFCeMxFh4Raz9Q4mw6fe8jBXKLn7Otkl/3D2S
+ ALtNNlgw7fUMgup7bEItn218qgciZZrZLsagjzZfzJ6UWXeVNmGaEdgJ2BIugMbX8cwd
+ dnM0TraEWjdnDEIHVma0bAuFPEP5rITBaWSp3CvGaoK58VeS0x+Dbe7MyMOV64PPIWbC
+ j7Xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722043567; x=1722648367;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3vf6SMqBGacUh3oyyzqoyXbaatTN5XcogvaaBcF39Vg=;
+ b=WzHBQu7PEfGvQDhGtcxfwx0pS9uibsKuXepLAmvl8p/cSrCjc7zmlfbVcG6IP7fNWg
+ 5zbrjz3hFKLvQFOWyiFZLdRh04iwA1dp1/OWy8UErFzxdtGXSMa9mhCtnkbV++5NLKyi
+ qDNAC583hE/Bj2iHh6KwlQYiW6Tz4FaqxgbJ4AH9SgLnXklHn3bOgBhZZbTmyM6WBmDD
+ qUdPjOrTDDXMbGVBFavy4EJuEX82gSZzqEyfnZj9bIXmoepPROpcztKzWs+Wx3MopdqN
+ r6TyxvA09ix02B6KNYwRcG3ba362/BSWduN0NzmleWA3whX1tCNPHl0sjlC074GqfTzd
+ r29Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUTe0i4JIyR+TP9qUq94cswiwYZYtniXIQfrt4WEPzdE55qt6kUZ1A+NZxfJKGfF3BxTFV5rKAVJYWCnkrnc9TzohnRS2s=
+X-Gm-Message-State: AOJu0Yx8UTocAgplPwqpw0vJtKawgBRqKfnxQ2yuySL6vs6zmSFKjB+B
+ EbNfAQ1OSDiovLXbdy1yCntODccXM6k3PpVe8IP/PR0/fOaZ9rxveo0hvCjvi8GRmJZz1a5zEl1
+ e9UkM0XKIxkzEewubRXzhuzo9YZcFK/qYwIWyOw==
+X-Google-Smtp-Source: AGHT+IFQAAyyXQ7WEhCpaUjHRnF/J+QAYGL2pzVR15a5xPSm3GwdKc1eBSP74jOoG+m/FO7rS1q+QvkMnptJy6419bo=
+X-Received: by 2002:a2e:80cb:0:b0:2f0:1e0a:4671 with SMTP id
+ 38308e7fff4ca-2f12edf9e78mr7591721fa.4.1722043566498; Fri, 26 Jul 2024
+ 18:26:06 -0700 (PDT)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-26_13,2024-07-26_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0
- mlxscore=0 malwarescore=0 adultscore=0 priorityscore=1501 suspectscore=0
- phishscore=0 lowpriorityscore=0 impostorscore=0 mlxlogscore=999
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407260151
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+References: <20240724-fixes-v1-1-4a64596b0d64@rivosinc.com>
+ <CAKmqyKPhCzrYxwpBF+NQi-5KgcKkhWeVNX6nwwx3ZjeE9rWEAg@mail.gmail.com>
+In-Reply-To: <CAKmqyKPhCzrYxwpBF+NQi-5KgcKkhWeVNX6nwwx3ZjeE9rWEAg@mail.gmail.com>
+From: Atish Kumar Patra <atishp@rivosinc.com>
+Date: Fri, 26 Jul 2024 18:25:55 -0700
+Message-ID: <CAHBxVyHe1gA39nF67ZL5KzHMOXwVCPK8dSLRDuu1BYy5OTGK=Q@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Add asserts for out-of-bound access
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
+ dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
+ Peter Maydell <peter.maydell@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=atishp@rivosinc.com; helo=mail-lj1-x22f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,59 +95,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/26/24 5:16 PM, David Hildenbrand wrote:
-> On 26.07.24 22:36, Collin Walling wrote:
->> The @deprecated-props array did not make any sense to be a member of the
->> CpuModelInfo struct, since this field would only be populated by a
->> query-cpu-model-expansion response and ignored otherwise. Move this
->> field to the CpuModelExpansionInfo struct where is makes more sense.
->>
->> References:
->>   - https://lists.gnu.org/archive/html/qemu-devel/2024-07/msg05996.html
->>   - commit eed0e8ffa38f0695c0519508f6e4f5a3297cbd67
->>
->> Signed-off-by: Collin Walling <walling@linux.ibm.com>
->> ---
->>
->> @David, the previous commit header did not align with the changes made
->> here, so I tagged this as a "v1" but added the previous conversation as
->> a reference.  I hope this is appropriate?
-> 
-> Thanks, I modified the "References" section and converted it to a "Fixes:".
-> It's now:
-> 
->      target/s390x: move @deprecated-props to CpuModelExpansion Info
->      
->      The @deprecated-props array did not make any sense to be a member of the
->      CpuModelInfo struct, since this field would only be populated by a
->      query-cpu-model-expansion response and ignored otherwise. Move this
->      field to the CpuModelExpansionInfo struct where is makes more sense.
+On Thu, Jul 25, 2024 at 10:12=E2=80=AFPM Alistair Francis <alistair23@gmail=
+.com> wrote:
+>
+> On Wed, Jul 24, 2024 at 6:33=E2=80=AFPM Atish Patra <atishp@rivosinc.com>=
+ wrote:
+> >
+> > Coverity complained about the possible out-of-bounds access with
+> > counter_virt/counter_virt_prev because these two arrays are
+> > accessed with privilege mode. However, these two arrays are accessed
+> > only when virt is enabled. Thus, the privilege mode can't be M mode.
+> >
+> > Add the asserts anyways to detect any wrong usage of these arrays
+> > in the future.
+> >
+> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> > Signed-off-by: Atish Patra <atishp@rivosinc.com>
+>
+> Fixes: Coverity CID 1558459
+> Fixes: Coverity CID 1558462
+>
+> > ---
+> > The lore discussion can be found here
+> > https://lore.kernel.org/all/CAHBxVyGQHBobpf71o4Qp51iQGXKBh0Ajup=3De_a95=
+xdLF=3D=3DV_WQ@mail.gmail.com/
+> > ---
+> >  target/riscv/pmu.c | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >
+> > diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
+> > index 3cc0b3648cad..e05ab067d2f2 100644
+> > --- a/target/riscv/pmu.c
+> > +++ b/target/riscv/pmu.c
+> > @@ -204,6 +204,7 @@ static void riscv_pmu_icount_update_priv(CPURISCVSt=
+ate *env,
+> >      }
+> >
+> >      if (env->virt_enabled) {
+> > +        g_assert(env->priv <=3D PRV_S);
+>
+> Don't we need this assert for !env->virt_enabled as well?
+>
 
-s/is/it
+For that case, it uses counter and counter_prev which is array size of 4.
+The assert was in the other case just to avoid wrong invocation in the
+future with PRV_M while the array size is 2.
 
->      
->      This was identified late during review [1] and we have to fix it up
->      while it's not part of an official QEMU release yet.
->      
->      [1] https://lore.kernel.org/qemu-devel/20240719181741.35146-1-walling@linux.ibm.com/
->      
->      Message-ID: <20240726203646.20279-1-walling@linux.ibm.com>
->      Fixes: eed0e8ffa38f ("target/s390x: filter deprecated properties based on model expansion type")
->      Signed-off-by: Collin Walling <walling@linux.ibm.com>
->      [ david: add "Fixes", explain why fix is required now and reference to v3 ]
->      Signed-off-by: David Hildenbrand <david@redhat.com>
-> 
-> 
-> 
-> Can you take a quick peek at
-> 	https://github.com/davidhildenbrand/qemu/tree/s390x-next
-> if everything is alright?
-> 
-
-Aside from a typo (on my end), everything looks golden.  Thanks, David!
-
--- 
-Regards,
-  Collin
-
+> Alistair
 
