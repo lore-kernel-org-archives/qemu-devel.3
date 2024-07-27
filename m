@@ -4,91 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52295C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jul 2024 07:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B26DC3DA61
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jul 2024 20:48:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXbfH-0006Wv-Ea; Sat, 27 Jul 2024 03:16:27 -0400
+	id 1sXoKj-0005mK-RZ; Sat, 27 Jul 2024 16:48:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sXbf3-0006RH-FS
- for qemu-devel@nongnu.org; Sat, 27 Jul 2024 03:16:15 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sXbf0-0001Ht-IR
- for qemu-devel@nongnu.org; Sat, 27 Jul 2024 03:16:12 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1fc692abba4so10924375ad.2
- for <qemu-devel@nongnu.org>; Sat, 27 Jul 2024 00:16:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722064563; x=1722669363; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=IfuzwiUHCK0yOqno5KoQ7HBsfGxxOGDSKsnCp6Lq1AM=;
- b=P/QBZgzMheT8pGenXVKI7OgWrJC0z9gDZAPqD5X+9qtCeaRVnHNTMsaf/O8ZvK931U
- wWS9qA7lJ2gfqNX8Bfy4Vw5JTBf07trdw9wMjaUEoiLHjb6qDNNZm3x0pQZYZyeNyjU1
- kb5c5FZmxHYrU9QlnxOd4hmJ1H7QFuSHIbI1hJzMdVsYkhZXnSqxf5KuuEKJiJPAKVrJ
- PzkKp2up853f+iXSi3cFwOQ69mT0WH8oQj4hxPdkm+vhlUZhT5IyTUQTXslxlhHNLfCO
- zUd1FNUJrzcsdJW7xWi+gq8/nTrXXxfO+DEBzj7MOxHK4+2YAt8NzcrNnI030269rKff
- UUPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722064563; x=1722669363;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IfuzwiUHCK0yOqno5KoQ7HBsfGxxOGDSKsnCp6Lq1AM=;
- b=XM0x7Qxy2/hKIRrqaXI5CS/Jfp1Dw7P7NyQfYlYqM2YsdeZyllsQgZICnWM20iS1A4
- Ik1jFz1qEB3x1rkF2rcEachAGHNg1WVl3y+djDSvV19QXrqlGjNtYKDd+neSpZjs0Xdv
- gY6MOPW/Kv5NKdnJZr5sZ+G6d4ghj9r36yCXw8viSRF3kHfEF54Ef+za05fFdzJkUy4f
- NBlG/5ZK3RDdkQJGEXa7uPI8gx065wmcTFOvtQd8Oa9kFLFOXJo9ecZNTSGf7md1bwdZ
- M7ZEQPJiVpvXxoCn4mdAXKSnAbZuU63BTK0ueOUFW1qKyi8/cnGf9cF0f3/930dy/7vw
- uwZw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWVwAwXl+ifxyDnL290at7yjaqJZaqqkE/laMciqkf/BQfKACqC76oms/dgBktUU1XstWrhlcu9xc4nW/Yb6pBFjfRcMxA=
-X-Gm-Message-State: AOJu0Yyp+wWY/O4hEVysMJWJBAiBQxPcTq9wDvp3PH+9J6wevb+qcpYO
- HvqWCUZmOUGsCs9qgt2yM0kvfc0J5qITLAf5JQIp4JUyG0gzMToX0vVV3fO3MIw=
-X-Google-Smtp-Source: AGHT+IFph++8jvlmnu60isKoplDdqalQCLdl9k9chqhAM3dRblXxcAkJQUX1QyYxmEoMbW2dBwpbDg==
-X-Received: by 2002:a17:902:db12:b0:1fb:57e7:5bc6 with SMTP id
- d9443c01a7336-1ff047a614amr21783875ad.23.1722064563124; 
- Sat, 27 Jul 2024 00:16:03 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fed7c7f66esm44503595ad.15.2024.07.27.00.15.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 27 Jul 2024 00:16:02 -0700 (PDT)
-Message-ID: <8e0c2afd-4c31-47f8-ade9-60a83ca20859@linaro.org>
-Date: Sat, 27 Jul 2024 17:15:55 +1000
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1sXoKi-0005kg-OK
+ for qemu-devel@nongnu.org; Sat, 27 Jul 2024 16:48:04 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1sXoKf-0003j1-W5
+ for qemu-devel@nongnu.org; Sat, 27 Jul 2024 16:48:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=evikos4zz/zOFcpxuRjz/b0G1sc2b7nftQdxITodvyk=; b=p74IhBkM61+PWe6G
+ 882M23daH9tdtUa9fkjLh/KRDEifzLzSN+bvQ83QDmXfKtOBEjq0JHaXSHOBtCeDbwNAxwfxTuroC
+ owhCt05ADELfnR0J6TsNSsc5QY6BQWZNPcEbD3GTXxAi8hU59V756Sc8WCdfY/TTbw81E54ipmpsA
+ RYkvN8vAOxks4DOU50CElLpubXxuubbl8oXqVheu0BmM6NxJ8nuOytDRq3gE2Ko/t9uoBprlSgg1w
+ RN6hMa+TzQr8EfGDOIyb7FQ5Au+GpPNv0orTwtiHpobT7MnRuTSTnrn5eiNFtNRuoEpHeaR52Qikx
+ WX+wD9MJc6ZxqCGIig==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1sXoKb-00DZdy-07;
+ Sat, 27 Jul 2024 20:47:57 +0000
+Date: Sat, 27 Jul 2024 20:47:56 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Don Porter <porter@cs.unc.edu>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, nadav.amit@gmail.com,
+ richard.henderson@linaro.org, philmd@linaro.org, berrange@redhat.com
+Subject: Re: [PATCH v4 4/7] Convert 'info tlb' to use generic iterator.
+Message-ID: <ZqVc_Jzs319S55sR@gallifrey>
+References: <20240723010545.3648706-1-porter@cs.unc.edu>
+ <20240723010545.3648706-5-porter@cs.unc.edu>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 2/2] target/riscv: rvv: improve performance of RISC-V vector
- loads and stores on large amounts of data.
-To: Paolo Savini <paolo.savini@embecosm.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Helene Chelin <helene.chelin@embecosm.com>, Max Chou <max.chou@sifive.com>
-References: <20240717153040.11073-1-paolo.savini@embecosm.com>
- <20240717153040.11073-3-paolo.savini@embecosm.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240717153040.11073-3-paolo.savini@embecosm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20240723010545.3648706-5-porter@cs.unc.edu>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 20:39:09 up 80 days, 7:53, 1 user, load average: 0.02, 0.01, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,52 +70,381 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/18/24 01:30, Paolo Savini wrote:
-> This patch optimizes the emulation of unit-stride load/store RVV instructions
-> when the data being loaded/stored per iteration amounts to 64 bytes or more.
-> The optimization consists of calling __builtin_memcpy on chunks of data of 128
-> and 256 bytes between the memory address of the simulated vector register and
-> the destination memory address and vice versa.
-> This is done only if we have direct access to the RAM of the host machine.
+* Don Porter (porter@cs.unc.edu) wrote:
+> If the the guest is using nested page tables, change the output format
+> slightly, to first show guest virtual to guest physical, then guest
+> physical to host physical, as below:
+
+This surprises me from the title; the title made me think
+this was a change purely to the implementation.
+
+> (qemu) info tlb
+> Info guest TLB (guest virtual to guest physical):
+
+It's a shame that the code that prints this has no way to know the column widths,
+since it would be nice to have:
+
+   guest virt           guest phys    ???????????
+> 0000008000800000: 000000000076a000  -------U-P
+> 0000008000801000: 000000000076b000  -------U-P
+> 0000008000802000: 000000000076c000  -------U-P
+> 0000008000803000: 000000000076d000  -------U-P
+> [...]
+> 0000008004ffd000: 0000000000ffd000  --------WP
+> 0000008004ffe000: 0000000000ffe000  --------WP
+> 0000008004fff000: 0000000000fff000  --------WP
+
+> Info host TLB, (guest physical to host physical):
+
+Do you actually want this to happen in the same operation, or do you
+want info tlb -h (e.g.) to get the host info?
+
+> 0000000000001000: 0000000001b20000  ----XWR
+> 0000000000002000: 0000000001b21000  ----XWR
+> 0000000000003000: 0000000001b22000  ----XWR
+> 0000000000004000: 0000000001b23000  ----XWR
+> 0000000000005000: 0000000001b24000  ----XWR
+> [...]
 > 
-> Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
+> Signed-off-by: Don Porter <porter@cs.unc.edu>
 > ---
->   target/riscv/vector_helper.c | 17 ++++++++++++++++-
->   1 file changed, 16 insertions(+), 1 deletion(-)
+>  include/hw/core/sysemu-cpu-ops.h |   7 +
+>  target/i386/cpu.c                |   1 +
+>  target/i386/cpu.h                |   2 +
+>  target/i386/monitor.c            | 233 +++++++++----------------------
+>  4 files changed, 75 insertions(+), 168 deletions(-)
 > 
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 4b444c6bc5..7674972784 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -486,7 +486,22 @@ vext_group_ldst_host(CPURISCVState *env, void *vd, uint32_t byte_end,
->       }
->   
->       fn = fns[is_load][group_size];
-> -    fn(vd, byte_offset, host + byte_offset);
+> diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
+> index d0e939def8..083df4717c 100644
+> --- a/include/hw/core/sysemu-cpu-ops.h
+> +++ b/include/hw/core/sysemu-cpu-ops.h
+> @@ -225,6 +225,13 @@ typedef struct SysemuCPUOps {
+>      bool (*mon_flush_page_print_state)(CPUState *cs,
+>                                         struct mem_print_state *state);
+>  
+> +    /**
+> +     * @mon_print_pte: Hook called by the monitor to print a page
+> +     * table entry at address addr, with contents pte.
+> +     */
+> +    void (*mon_print_pte) (CPUState *cs, GString *buf, hwaddr addr,
+> +                           hwaddr pte, uint64_t prot, int mmu_idx);
 > +
-> +    if (byte_offset + 32 < byte_end) {
-> +      group_size = MO_256;
-> +      if (is_load)
-> +        __builtin_memcpy((uint8_t *)(vd + byte_offset), (uint8_t *)(host + byte_offset), 32);
-> +      else
-> +        __builtin_memcpy((uint8_t *)(host + byte_offset), (uint8_t *)(vd + byte_offset), 32);
-> +    } else if (byte_offset + 16 < byte_end) {
-> +      group_size = MO_128;
-> +      if (is_load)
-> +        __builtin_memcpy((uint8_t *)(vd + byte_offset), (uint8_t *)(host + byte_offset), 16);
-> +      else
-> +        __builtin_memcpy((uint8_t *)(host + byte_offset), (uint8_t *)(vd + byte_offset), 16);
-> +    } else {
-> +      fn(vd, byte_offset, host + byte_offset);
+>  } SysemuCPUOps;
+>  
+>  int compressing_iterator(CPUState *cs, void *data, DecodedPTE *pte,
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index ec419e0ef0..030198497a 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -8388,6 +8388,7 @@ static const struct SysemuCPUOps i386_sysemu_ops = {
+>      .mon_init_page_table_iterator = &x86_mon_init_page_table_iterator,
+>      .mon_info_pg_print_header = &x86_mon_info_pg_print_header,
+>      .mon_flush_page_print_state = &x86_mon_flush_print_pg_state,
+> +    .mon_print_pte = &x86_mon_print_pte,
+>  };
+>  #endif
+>  
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 4e5877f41d..413c743c1a 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2264,6 +2264,8 @@ bool x86_mon_init_page_table_iterator(CPUState *cpu, GString *buf, int mmu_idx,
+>                                        struct mem_print_state *state);
+>  void x86_mon_info_pg_print_header(struct mem_print_state *state);
+>  bool x86_mon_flush_print_pg_state(CPUState *cs, struct mem_print_state *state);
+> +void x86_mon_print_pte(CPUState *cs, GString *out_buf, hwaddr addr,
+> +                       hwaddr child, uint64_t prot, int mmu_idx);
+>  bool x86_ptw_translate(CPUState *cs, vaddr vaddress, hwaddr *hpa,
+>                         bool debug, int mmu_idx, bool user_access,
+>                         const MMUAccessType access_type, uint64_t *page_size,
+> diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+> index 8ef92e7c42..d88347684b 100644
+> --- a/target/i386/monitor.c
+> +++ b/target/i386/monitor.c
+> @@ -224,201 +224,98 @@ static hwaddr addr_canonical(CPUArchState *env, hwaddr addr)
+>      return addr;
+>  }
+>  
+> -static void print_pte(Monitor *mon, CPUArchState *env, hwaddr addr,
+> -                      hwaddr pte, hwaddr mask)
+> +void x86_mon_print_pte(CPUState *cs, GString *out_buf, hwaddr addr,
+> +                       hwaddr child, uint64_t prot, int mmu_idx)
+>  {
+> +    CPUX86State *env = cpu_env(cs);
+> +    g_autoptr(GString) buf = g_string_new("");
+> +
+>      addr = addr_canonical(env, addr);
+>  
+> -    monitor_printf(mon, HWADDR_FMT_plx ": " HWADDR_FMT_plx
+> -                   " %c%c%c%c%c%c%c%c%c\n",
+> -                   addr,
+> -                   pte & mask,
+> -                   pte & PG_NX_MASK ? 'X' : '-',
+> -                   pte & PG_GLOBAL_MASK ? 'G' : '-',
+> -                   pte & PG_PSE_MASK ? 'P' : '-',
+> -                   pte & PG_DIRTY_MASK ? 'D' : '-',
+> -                   pte & PG_ACCESSED_MASK ? 'A' : '-',
+> -                   pte & PG_PCD_MASK ? 'C' : '-',
+> -                   pte & PG_PWT_MASK ? 'T' : '-',
+> -                   pte & PG_USER_MASK ? 'U' : '-',
+> -                   pte & PG_RW_MASK ? 'W' : '-');
+> -}
+> +    g_string_append_printf(buf, HWADDR_FMT_plx ": " HWADDR_FMT_plx " ",
+> +                           addr, child);
+>  
+> -static void tlb_info_32(Monitor *mon, CPUArchState *env)
+> -{
+> -    unsigned int l1, l2;
+> -    uint32_t pgd, pde, pte;
+> +    g_string_append_printf(buf, " %s", pg_bits(cs, prot, mmu_idx));
+>  
+> -    pgd = env->cr[3] & ~0xfff;
+> -    for(l1 = 0; l1 < 1024; l1++) {
+
+It's nice to see all this hairy code disappearing.
+
+> -        cpu_physical_memory_read(pgd + l1 * 4, &pde, 4);
+> -        pde = le32_to_cpu(pde);
+> -        if (pde & PG_PRESENT_MASK) {
+> -            if ((pde & PG_PSE_MASK) && (env->cr[4] & CR4_PSE_MASK)) {
+> -                /* 4M pages */
+> -                print_pte(mon, env, (l1 << 22), pde, ~((1 << 21) - 1));
+> -            } else {
+> -                for(l2 = 0; l2 < 1024; l2++) {
+> -                    cpu_physical_memory_read((pde & ~0xfff) + l2 * 4, &pte, 4);
+> -                    pte = le32_to_cpu(pte);
+> -                    if (pte & PG_PRESENT_MASK) {
+> -                        print_pte(mon, env, (l1 << 22) + (l2 << 12),
+> -                                  pte & ~PG_PSE_MASK,
+> -                                  ~0xfff);
+> -                    }
+> -                }
+> -            }
+> -        }
+> -    }
+> -}
+> -
+> -static void tlb_info_pae32(Monitor *mon, CPUArchState *env)
+> -{
+> -    unsigned int l1, l2, l3;
+> -    uint64_t pdpe, pde, pte;
+> -    uint64_t pdp_addr, pd_addr, pt_addr;
+> +    /* Trim line to fit screen */
+> +    g_string_truncate(buf, 79);
+
+Do we need that?  It's a pretty arbitrary limit these days.
+
+> -    pdp_addr = env->cr[3] & ~0x1f;
+> -    for (l1 = 0; l1 < 4; l1++) {
+> -        cpu_physical_memory_read(pdp_addr + l1 * 8, &pdpe, 8);
+> -        pdpe = le64_to_cpu(pdpe);
+> -        if (pdpe & PG_PRESENT_MASK) {
+> -            pd_addr = pdpe & 0x3fffffffff000ULL;
+> -            for (l2 = 0; l2 < 512; l2++) {
+> -                cpu_physical_memory_read(pd_addr + l2 * 8, &pde, 8);
+> -                pde = le64_to_cpu(pde);
+> -                if (pde & PG_PRESENT_MASK) {
+> -                    if (pde & PG_PSE_MASK) {
+> -                        /* 2M pages with PAE, CR4.PSE is ignored */
+> -                        print_pte(mon, env, (l1 << 30) + (l2 << 21), pde,
+> -                                  ~((hwaddr)(1 << 20) - 1));
+> -                    } else {
+> -                        pt_addr = pde & 0x3fffffffff000ULL;
+> -                        for (l3 = 0; l3 < 512; l3++) {
+> -                            cpu_physical_memory_read(pt_addr + l3 * 8, &pte, 8);
+> -                            pte = le64_to_cpu(pte);
+> -                            if (pte & PG_PRESENT_MASK) {
+> -                                print_pte(mon, env, (l1 << 30) + (l2 << 21)
+> -                                          + (l3 << 12),
+> -                                          pte & ~PG_PSE_MASK,
+> -                                          ~(hwaddr)0xfff);
+> -                            }
+> -                        }
+> -                    }
+> -                }
+> -            }
+> -        }
+> -    }
+> +    g_string_append_printf(out_buf, "%s\n", buf->str);
+>  }
+>  
+> -#ifdef TARGET_X86_64
+> -static void tlb_info_la48(Monitor *mon, CPUArchState *env,
+> -        uint64_t l0, uint64_t pml4_addr)
+> +static
+> +int mem_print_tlb(CPUState *cs, void *data, DecodedPTE *pte, int height,
+> +                  int offset, int mmu_idx, const PageTableLayout *layout)
+>  {
+> -    uint64_t l1, l2, l3, l4;
+> -    uint64_t pml4e, pdpe, pde, pte;
+> -    uint64_t pdp_addr, pd_addr, pt_addr;
+> -
+> -    for (l1 = 0; l1 < 512; l1++) {
+> -        cpu_physical_memory_read(pml4_addr + l1 * 8, &pml4e, 8);
+> -        pml4e = le64_to_cpu(pml4e);
+> -        if (!(pml4e & PG_PRESENT_MASK)) {
+> -            continue;
+> -        }
+> -
+> -        pdp_addr = pml4e & 0x3fffffffff000ULL;
+> -        for (l2 = 0; l2 < 512; l2++) {
+> -            cpu_physical_memory_read(pdp_addr + l2 * 8, &pdpe, 8);
+> -            pdpe = le64_to_cpu(pdpe);
+> -            if (!(pdpe & PG_PRESENT_MASK)) {
+> -                continue;
+> -            }
+> +    struct mem_print_state *state = (struct mem_print_state *) data;
+> +    CPUClass *cc = CPU_GET_CLASS(cs);
+>  
+> -            if (pdpe & PG_PSE_MASK) {
+> -                /* 1G pages, CR4.PSE is ignored */
+> -                print_pte(mon, env, (l0 << 48) + (l1 << 39) + (l2 << 30),
+> -                        pdpe, 0x3ffffc0000000ULL);
+> -                continue;
+> -            }
+> -
+> -            pd_addr = pdpe & 0x3fffffffff000ULL;
+> -            for (l3 = 0; l3 < 512; l3++) {
+> -                cpu_physical_memory_read(pd_addr + l3 * 8, &pde, 8);
+> -                pde = le64_to_cpu(pde);
+> -                if (!(pde & PG_PRESENT_MASK)) {
+> -                    continue;
+> -                }
+> +    cc->sysemu_ops->mon_print_pte(cs, state->buf, pte->bits_translated,
+> +                                  pte->child, pte->prot, mmu_idx);
+>  
+> -                if (pde & PG_PSE_MASK) {
+> -                    /* 2M pages, CR4.PSE is ignored */
+> -                    print_pte(mon, env, (l0 << 48) + (l1 << 39) + (l2 << 30) +
+> -                            (l3 << 21), pde, 0x3ffffffe00000ULL);
+> -                    continue;
+> -                }
+> -
+> -                pt_addr = pde & 0x3fffffffff000ULL;
+> -                for (l4 = 0; l4 < 512; l4++) {
+> -                    cpu_physical_memory_read(pt_addr
+> -                            + l4 * 8,
+> -                            &pte, 8);
+> -                    pte = le64_to_cpu(pte);
+> -                    if (pte & PG_PRESENT_MASK) {
+> -                        print_pte(mon, env, (l0 << 48) + (l1 << 39) +
+> -                                (l2 << 30) + (l3 << 21) + (l4 << 12),
+> -                                pte & ~PG_PSE_MASK, 0x3fffffffff000ULL);
+> -                    }
+> -                }
+> -            }
+> -        }
+> -    }
+> +    return 0;
+>  }
+>  
+> -static void tlb_info_la57(Monitor *mon, CPUArchState *env)
+> +static
+> +void helper_hmp_info_tlb(CPUState *cs, Monitor *mon, int mmu_idx)
+>  {
+> -    uint64_t l0;
+> -    uint64_t pml5e;
+> -    uint64_t pml5_addr;
+> +    struct mem_print_state state;
+> +    g_autoptr(GString) buf = g_string_new("");
+> +    CPUClass *cc = CPU_GET_CLASS(cs);
+>  
+> -    pml5_addr = env->cr[3] & 0x3fffffffff000ULL;
+> -    for (l0 = 0; l0 < 512; l0++) {
+> -        cpu_physical_memory_read(pml5_addr + l0 * 8, &pml5e, 8);
+> -        pml5e = le64_to_cpu(pml5e);
+> -        if (pml5e & PG_PRESENT_MASK) {
+> -            tlb_info_la48(mon, env, l0, pml5e & 0x3fffffffff000ULL);
+> -        }
+> +    if (!cc->sysemu_ops->mon_init_page_table_iterator(cs, buf, mmu_idx,
+> +                                                      &state)) {
+> +        monitor_printf(mon, "Unable to initialize page table iterator\n");
+> +        return;
+>      }
+> +
+> +    /**
+> +     * 'info tlb' visits only leaf PTEs marked present.
+> +     * It does not check other protection bits.
+
+(What happens if the guest is using huge pages inside the guest?)
+
+> +     */
+> +    for_each_pte(cs, &mem_print_tlb, &state, false, false, false,  mmu_idx);
+> +
+> +    monitor_printf(mon, "%s", buf->str);
+>  }
+> -#endif /* TARGET_X86_64 */
+>  
+>  void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+>  {
+> -    CPUArchState *env;
+> +    CPUState *cs = mon_get_cpu(mon);
+> +    bool nested;
+>  
+> -    env = mon_get_cpu_env(mon);
+> -    if (!env) {
+> -        monitor_printf(mon, "No CPU available\n");
+> +    if (!cs) {
+> +        monitor_printf(mon, "Unable to get CPUState.  Internal error\n");
+
+I wouldn't bother saying ' Internal error'.
+
+>          return;
+>      }
+>  
+> -    if (!(env->cr[0] & CR0_PG_MASK)) {
+> +    if (!cpu_paging_enabled(cs, 0)) {
+>          monitor_printf(mon, "PG disabled\n");
+>          return;
+>      }
+> -    if (env->cr[4] & CR4_PAE_MASK) {
+> -#ifdef TARGET_X86_64
+> -        if (env->hflags & HF_LMA_MASK) {
+> -            if (env->cr[4] & CR4_LA57_MASK) {
+> -                tlb_info_la57(mon, env);
+> -            } else {
+> -                tlb_info_la48(mon, env, 0, env->cr[3] & 0x3fffffffff000ULL);
+> -            }
+> -        } else
+> -#endif
+> -        {
+> -            tlb_info_pae32(mon, env);
+> -        }
+> -    } else {
+> -        tlb_info_32(mon, env);
+> +
+> +    CPUClass *cc = CPU_GET_CLASS(cs);
+> +
+> +    if (!cc->sysemu_ops->mon_print_pte
+> +        || !cc->sysemu_ops->mon_init_page_table_iterator) {
+> +        monitor_printf(mon, "Info tlb unsupported on this ISA\n");
+> +        return;
 > +    }
->   
-
-This will not work for big-endian hosts.
-
-This may have atomicity issues, depending on the spec, the compiler options, and the host 
-capabilities.
-
-
-r~
-
+> +
+> +    nested = cpu_paging_enabled(cs, 1);
+> +
+> +    if (nested) {
+> +        monitor_printf(mon,
+> +                       "Info guest TLB (guest virtual to guest physical):\n");
+> +    }
+> +
+> +    helper_hmp_info_tlb(cs, mon, 0);
+> +
+> +    if (nested) {
+> +        monitor_printf(mon,
+> +                       "Info host TLB, (guest physical to host physical):\n");
+> +
+> +        helper_hmp_info_tlb(cs, mon, 1);
+> +
+>      }
+>  }
+>  
+> -- 
+> 2.34.1
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
