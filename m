@@ -4,55 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B635C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jul 2024 06:56:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 163CBC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Sat, 27 Jul 2024 06:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sXbKu-0006rK-JJ; Sat, 27 Jul 2024 02:55:24 -0400
+	id 1sXbN8-0002xl-GO; Sat, 27 Jul 2024 02:57:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
- id 1sXbKq-0006qP-Mk
- for qemu-devel@nongnu.org; Sat, 27 Jul 2024 02:55:20 -0400
-Received: from mailout09.t-online.de ([194.25.134.84])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vr_qemu@t-online.de>)
- id 1sXbKn-00020F-OM
- for qemu-devel@nongnu.org; Sat, 27 Jul 2024 02:55:20 -0400
-Received: from fwd76.aul.t-online.de (fwd76.aul.t-online.de [10.223.144.102])
- by mailout09.t-online.de (Postfix) with SMTP id 0E0C7C1F1;
- Sat, 27 Jul 2024 08:55:12 +0200 (CEST)
-Received: from [192.168.211.200] ([79.208.28.154]) by fwd76.t-online.de
- with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
- esmtp id 1sXbKg-1HpPHd0; Sat, 27 Jul 2024 08:55:10 +0200
-Message-ID: <21a0899b-cff5-49da-bda5-f53e12cca234@t-online.de>
-Date: Sat, 27 Jul 2024 08:55:10 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sXbN6-0002vU-Uq
+ for qemu-devel@nongnu.org; Sat, 27 Jul 2024 02:57:40 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sXbN5-0002Ih-7W
+ for qemu-devel@nongnu.org; Sat, 27 Jul 2024 02:57:40 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1fc611a0f8cso10945965ad.2
+ for <qemu-devel@nongnu.org>; Fri, 26 Jul 2024 23:57:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722063457; x=1722668257; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=lJ+RaV8FXelDALRpY5ji624PDjGirc8lcspEnvshpLw=;
+ b=Dh95X9YyJAztmpxXnjDjHIii5+PsW/ZkDQdqQShqhk5yjIBXHPmi2lpyIIaLFMEDPK
+ loN+iUrNsmIFa7FSCCRS8uC334vUET1Y0FBLPt3wuTvZexJ9tDHX5AAunp1tJU0ocRFK
+ gtyH4IQe9tCQXo4a5QgS6zSY5dr8YNqCKjeq4RVcB2X8eYW0M/Ezh/rzAaw129KbcPFZ
+ O6iTeYXc73S1G1++efGmw0+0furowgQeerv/jm3DKg7+69cpK4PSJ+K3HmabqlAa0bNj
+ iXcLSUs5qptQ9/Wbyg6gr3G0pLJpmoRDpzXMscFkoWDUcAnDuOkIuZ/ngm4xkYspYax/
+ pKwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722063457; x=1722668257;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=lJ+RaV8FXelDALRpY5ji624PDjGirc8lcspEnvshpLw=;
+ b=ODTbDIjgQFVa+glJ2gcTnQRUDRe9GgoIW3h0IZEtI8INkbwdx/R/DDMCbjA0uIUEOE
+ ++lqQeBK4c1O4Nok6/c3gMzze+571arRdeOgKwlvmwaVTttv0Lu3Gizml4ugBltXOVNn
+ tI53beFmuSvj991G28nqmYOx/BGvZzaaHt9lVT1hArFaDKiuix4XSRJXGmZ7Qr4h8jaH
+ qn/OWj0TDeHj+z/dnkrBkOKAuaH+2MSLZyGqqtef8XswHSP4Nm6YoIsky33aK+Pz4Dhs
+ RrGwQWkYaADt6O175TIPLIgHq5Zevg2dXRd3PLHG9keFJherz8LDVKk5pTKB2sVTFcJP
+ sT4g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWYimyY2BHj3nRc4ajIJSQDjw5znLWyho/apJm0H30lwdEzAqpwE4WlHaXadzB94GIEWx+WlWppmgFA5jF8QHNrwUFcwNs=
+X-Gm-Message-State: AOJu0Ywsg4jIPwDBSG3ms0n80+o/sZZDxyytfQs/uzs40DZjLUS3s+7B
+ VF0wcca+zSpx20UT21uQ5fXlPJfTSNCB6AdZZnnBjOioDMs+Ifiyq1YBEMoaqJINuUAYZSluvCb
+ jRSMqEw==
+X-Google-Smtp-Source: AGHT+IFIwOwjai8vKqADvYBcuNIR4Ujz1UsWXIAGmj/3SDCeNs2ViVbznG+TVoaCJ62JjFlynggRoA==
+X-Received: by 2002:a17:902:f54b:b0:1fb:4f8f:f212 with SMTP id
+ d9443c01a7336-1ff0491b171mr23737895ad.60.1722063456865; 
+ Fri, 26 Jul 2024 23:57:36 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fed7ef238dsm43881545ad.180.2024.07.26.23.57.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 26 Jul 2024 23:57:36 -0700 (PDT)
+Message-ID: <5c63bc0d-c342-4e31-a21b-3900c5d23da2@linaro.org>
+Date: Sat, 27 Jul 2024 16:57:29 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 17/61] virtio-snd: check for invalid param shift operands
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Zheyu Ma <zheyuma97@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
-References: <cover.1721731723.git.mst@redhat.com>
- <9b6083465fb8311f2410615f8303a41f580a2a20.1721731723.git.mst@redhat.com>
+Subject: Re: [PULL 00/96] ppc-for-9.1-2 queue
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org
+References: <20240725235410.451624-1-npiggin@gmail.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>
-In-Reply-To: <9b6083465fb8311f2410615f8303a41f580a2a20.1721731723.git.mst@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TOI-EXPURGATEID: 150726::1722063310-F0FE1B54-430D52ED/0/0 CLEAN NORMAL
-X-TOI-MSGID: f709353c-378c-48b2-8012-deb0d5d930dd
-Received-SPF: pass client-ip=194.25.134.84; envelope-from=vr_qemu@t-online.de;
- helo=mailout09.t-online.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,64 +98,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->
-> When setting the parameters of a PCM stream, we compute the bit flag
-> with the format and rate values as shift operand to check if they are
-> set in supported_formats and supported_rates.
->
-> If the guest provides a format/rate value which when shifting 1 results
-> in a value bigger than the number of bits in
-> supported_formats/supported_rates, we must report an error.
->
-> Previously, this ended up triggering the not reached assertions later
-> when converting to internal QEMU values.
->
-> Reported-by: Zheyu Ma <zheyuma97@gmail.com>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2416
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> Message-Id: <virtio-snd-fuzz-2416-fix-v1-manos.pitsidianakis@linaro.org>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> ---
->  hw/audio/virtio-snd.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-> index e6432ac959..e5196aa4bb 100644
-> --- a/hw/audio/virtio-snd.c
-> +++ b/hw/audio/virtio-snd.c
-> @@ -282,11 +282,13 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
->          error_report("Number of channels is not supported.");
->          return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
->      }
-> -    if (!(supported_formats & BIT(params->format))) {
+On 7/26/24 09:52, Nicholas Piggin wrote:
+> Apologies this is so late after soft-freeze, apologies. I was waiting
+> on "accel/kvm: Extract common KVM vCPU {creation,parking} code" to be
+> merged upsream then ran into last minute CI problems. This PR is very
+> contained to ppc code so I hope it will not inconvenience anybody.
+> 
+> Thanks,
+> Nick
+> 
+> The following changes since commit 029e13a8a56a2931e7c24c0db52ae7256b932cb0:
+> 
+>    Merge tag 'bsd-user-for-9.1-pull-request' ofgitlab.com:bsdimp/qemu into staging (2024-07-25 09:53:57 +1000)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/npiggin/qemu.git tags/pull-ppc-for-9.1-2-20240726-1
+> 
+> for you to fetch changes up to d741ecffd2ca260ce7875a4596f17736b5ccb7c3:
+> 
+>    target/ppc: Remove includes from mmu-book3s-v3.h (2024-07-26 09:51:34 +1000)
+> 
+> ----------------------------------------------------------------
+> 
+> * Fixes for pseries migration bugs.
+> * Graceful handling of vCPU hotplug failure in KVM.
+> * Many improvements to powernv machine model.
+> * Move more instructions to decodetree.
+> * Most of the remaining large MMU cleanup.
 
-Hi Manos,
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-this patch doesn't work as intended. I guess you wanted to write
-
-    if (params->format >= sizeof(supported_formats) * BITS_PER_BYTE ||
-        !(supported_formats & BIT(params->format))) {
-
-> +    if (BIT(params->format) > sizeof(supported_formats) ||
-> +        !(supported_formats & BIT(params->format))) {
->          error_report("Stream format is not supported.");
->          return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
->      }
-> -    if (!(supported_rates & BIT(params->rate))) {
-
-    if (params->rate >= sizeof(supported_rates) * BITS_PER_BYTE ||
-        !(supported_rates & BIT(params->rate))) {
-
-With best regards,
-Volker
-
-> +    if (BIT(params->rate) > sizeof(supported_rates) ||
-> +        !(supported_rates & BIT(params->rate))) {
->          error_report("Stream rate is not supported.");
->          return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
->      }
-
+r~
 
