@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC41C3DA64
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jul 2024 16:44:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4EBCC3DA64
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jul 2024 17:16:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sY6zT-0004eZ-EQ; Sun, 28 Jul 2024 12:43:23 -0400
+	id 1sY7V8-0004jG-Vt; Sun, 28 Jul 2024 13:16:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1sY6zS-0004e1-1m
- for qemu-devel@nongnu.org; Sun, 28 Jul 2024 12:43:22 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1sY6zQ-0003rW-37
- for qemu-devel@nongnu.org; Sun, 28 Jul 2024 12:43:21 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2cb674b48ccso1429726a91.2
- for <qemu-devel@nongnu.org>; Sun, 28 Jul 2024 09:43:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722184997; x=1722789797; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UkotFGFcMUZuK5MzwYVJRL4ggb9lf16YyyN29NBeDyk=;
- b=kC5JyC6X15M+YLruWJ/nMZMW7vxGWr4ohoJQjAcIeTDsNOxb6sVh78cHSJeZpUh0oq
- qPLOtoxSoHax/RbFpOd8S1kEIkBuk0QwJtvAeU455tDuW70yg2HP2o77e8YCz/gxxwaM
- eNR0gEDFR/eQojJmAeeKN5GXuUqwCe1OM82+x1guUkSl3MhxkGKVqs/qPI6GD/4UiqWf
- nID30YJSqBiQF04Wp3UAT7wvR5wJspjsMOcWJbMqq4jF4QLPzolpwopGQGOQUzMdG764
- WZkFVTn1qBqqc7LRBk73jt4bik5DFYfc/ElB3Ojn4DRsZ5x4nDkW4oYodgRZaDGJtdSv
- h0cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722184997; x=1722789797;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UkotFGFcMUZuK5MzwYVJRL4ggb9lf16YyyN29NBeDyk=;
- b=tlIPSW7kYxJC4TgQQvLNhTkXgL65eL2jmLkyRLliCoeMsTEVuJAFnM8vWwRIfMAS9L
- 3M0Dc0SrFpIRXNBoZiCV7fGEOt1A1oiLfnuPGNZcJT5WrH2AFvk6goa1Cm8Qo79uWXNb
- lzBam4MxRsb9CQ9gqifLMtWNqvmMYpIwDbc9a1A0K+maoA9m311EJOEShX7deo+yc4ig
- jc+W/6wPgwsUVfMxIw9emMOZSXERN2t0s/PeNeLkp2aRrUQAMRiQBtPg+uEtB4n65+02
- DdQI8JsiP++H5xYgoiiMRmXuC5s1nDBbgMZoSh0FWnVXp2dTvPa88YCKoGx5PBuUYYVa
- aSFg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU2KBSDJxk78Y2fEZXiVMm4unZdSzBXQOe4AsblB+YdywzpTOYLLjG9Krvkoi5Aw89WePlzPyVdPFnH9j3qWGhe9nfTls8=
-X-Gm-Message-State: AOJu0YwCX1940qLCVpv4h5DF1W4Xmwdih1iWZ4Mxrhv2r8ZovNBlyybU
- yUabaDZF7bB/VfXPdFBlRGQknVENCW+XJDaZYKYRECzyI9M7AXdL
-X-Google-Smtp-Source: AGHT+IHeGJi9aowCEk70GvFq8RVwgAtVI3VjNrPANNP4IuzxVo614sE45MymXYOmxtNW5C9o1GrZZA==
-X-Received: by 2002:a17:90b:4f4c:b0:2c8:e888:26a2 with SMTP id
- 98e67ed59e1d1-2cf7e1c171bmr3833784a91.13.1722184997283; 
- Sun, 28 Jul 2024 09:43:17 -0700 (PDT)
-Received: from valdaarhun.localnet ([223.233.82.159])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cf28c5578dsm6830382a91.2.2024.07.28.09.43.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 28 Jul 2024 09:43:16 -0700 (PDT)
-From: Sahil <icegambit91@gmail.com>
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org,
- Sahil Siddiq <sahilcdq@proton.me>
-Subject: Re: [RFC v2 0/3] Add packed virtqueue to shadow virtqueue
-Date: Sun, 28 Jul 2024 22:12:58 +0530
-Message-ID: <2343990.ElGaqSPkdT@valdaarhun>
-In-Reply-To: <CAJaqyWdrOpeVOoK-VZYvcK809s9Gg5Dx_L76Mj03_omOtn4UrQ@mail.gmail.com>
-References: <20240726095822.104017-1-sahilcdq@proton.me>
- <7801595.EvYhyI6sBW@valdaarhun>
- <CAJaqyWdrOpeVOoK-VZYvcK809s9Gg5Dx_L76Mj03_omOtn4UrQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1sY7V3-0004i2-FR
+ for qemu-devel@nongnu.org; Sun, 28 Jul 2024 13:16:03 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1sY7V1-00017i-9l
+ for qemu-devel@nongnu.org; Sun, 28 Jul 2024 13:16:01 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46SGssRF002576;
+ Sun, 28 Jul 2024 17:15:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=yQFpXWVkjLSYIUwcYuvfJM
+ GEVWHL81nFJUi3KhjzCTc=; b=Lult6U5ctOYTItYdfPSHrKYCJcdrEGEVuwEIlY
+ GALkrTwEt/YlT45NaZn/10A+d2n9b5Nt0evWbbiRVv2g8o96/DUUiHpBZWlyUp9V
+ w2f38p+o6EpDsnaTbEpKU4/1y75Er1PatNqHBUW1No29Nom3OHleO/2Z1JwGQnDU
+ KTKeB8YI9VViMsakEtiPOAPRB9Rffi/YUvCNvLTOtPGrlh2GQIM7JsaV6twCZoov
+ u3uTc5WzGp9C3Ki+/un3IBujxry8iRZuMENXWOLLuqX0ctPi+9Pewx2nkjOoGj/8
+ 1GOvVye4yIZ+OWsQuHK0aSm5HawemOIedX4o0137ygCk2ahg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40ms96j516-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 28 Jul 2024 17:15:53 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
+ [10.47.209.196])
+ by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id
+ 46SHFqSO025328
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sun, 28 Jul 2024 17:15:52 GMT
+Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 28 Jul 2024 10:15:51 -0700
+From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+To: <qemu-devel@nongnu.org>
+CC: <ltaylorsimpson@gmail.com>, <bcain@quicinc.com>, <sidneym@quicinc.com>,
+ <ale@rev.ng>, <anjo@rev.ng>
+Subject: [PATCH] Hexagon: fix F2_conv_* instructions for negative zero
+Date: Sun, 28 Jul 2024 14:15:40 -0300
+Message-ID: <9f3be6911db2dcff834ce6b530118fa383b9e46a.1722186937.git.quic_mathbern@quicinc.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=icegambit91@gmail.com; helo=mail-pj1-x1035.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-ORIG-GUID: rHxZ3UZTOU0OJxoJIzS1LHEBLx7-sy9G
+X-Proofpoint-GUID: rHxZ3UZTOU0OJxoJIzS1LHEBLx7-sy9G
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-28_12,2024-07-26_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0
+ impostorscore=0 mlxlogscore=562 bulkscore=0 malwarescore=0 phishscore=0
+ priorityscore=1501 clxscore=1011 lowpriorityscore=0 spamscore=0
+ adultscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407280126
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=quic_mathbern@quicinc.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,120 +98,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+The implementation for these instructions handles -0 as an invalid float
+point value, whereas the Hexagon hardware considers it the same as +0
+(which is valid). Let's fix that and add a regression test.
 
-On Friday, July 26, 2024 11:55:14=E2=80=AFPM GMT+5:30 Eugenio Perez Martin =
-wrote:
-> On Fri, Jul 26, 2024 at 7:11=E2=80=AFPM Sahil <icegambit91@gmail.com> wro=
-te:
-> > [...]
-> > > > Q2.
-> > > > I see that parts of the "vhost-vdpa" implementation is based on
-> > > > the assumption that SVQ uses the split vq format. For example,
-> > > > "vhost_vdpa_svq_map_rings" [3], calls "vhost_svq_device_area_size"
-> > > > which is specific to split vqs. The "vhost_vring_addr" [4] struct
-> > > > is also specific to split vqs.
-> > > >=20
-> > > > My idea is to have a generic "vhost_vring_addr" structure that
-> > > > wraps around split and packed vq specific structures, rather
-> > > > than using them directly in if-else conditions wherever the
-> > > > vhost-vdpa functions require their usage. However, this will
-> > > > involve checking their impact in several other places where this
-> > > > struct is currently being used (eg.: "vhost-user", "vhost-backend",
-> > > > "libvhost-user").
-> > >=20
-> > > Ok I've just found this is under-documented actually :).
-> > >=20
-> > > As you mention, vhost-user is already using this same struct for
-> > > packed vqs [2], just translating the driver area from the avail vring
-> > > and the device area from the used vring. So the best option is to
-> > > stick with that, unless I'm missing something.
-> > >=20
-> > >=20
-> > > [1] https://docs.oasis-open.org/virtio/virtio/v1.3/virtio-v1.3.html
-> > > [2]
-> > > https://github.com/DPDK/dpdk/blob/82c47f005b9a0a1e3a649664b7713443d18=
-abe
-> > > 43/
-> > > lib/vhost/vhost_user.c#L841C1-L841C25
-> >=20
-> > Sorry, I am a little confused here. I was referring to QEMU's vhost-user
-> > implementation here.
-> >=20
-> > Based on what I have understood, "vhost_vring_addr" is only being used
-> > for split vqs in QEMU's vhost-user and in other places too. The
-> > implementation does not take into account packed vqs.
-> >=20
-> > I was going through DPDK's source. In DPDK's implementation of vhost-us=
-er
-> > [1], the same struct (vhost_virtqueue) is being used for split vqs and
-> > packed vqs. This is possible since "vhost_virtqueue" [2] uses a union to
-> > wrap around the split and packed versions of the vq.
->=20
-> Ok, now I get you better. Let me start again from a different angle :).
->=20
-> vhost_vring_addr is already part of the API that QEMU uses between
-> itself and vhost devices, all vhost-kernel, vhost-user and vhost-vdpa.
-> To make non-backward compatible changes to it is impossible, as it
-> involves changes in all of these elements.
->=20
-> QEMU and DPDK, using vhost-user, already send and receive packed
-> virtqueues addresses using the current structure layout. QEMU's
-> hw/virtio/vhost.c:vhost_virtqueue_set_addr already sets vq->desc,
-> vq->avail and vq->user, which has the values of the desc, driver and
-> device. In that sense, I recommend not to modify it.
->=20
-> On the other hand, DPDK's vhost_virtqueue is not the same struct as
-> vhost_vring_addr. It is internal to DPDK so it can be modified. We
-> need to do something similar for the SVQ, yes.
->=20
-> To do that union trick piece by piece in VhostShadowVirtqueue is
-> possible, but it requires modifying all the usages of the current
-> vring. I think it is easier for us to follow the kernel's
-> virtio_ring.c model, as it is a driver too, and create a vring_packed.
-> We can create an anonymous union and suffix all members with a _packed
-> so we don't need to modify current split usage.
->=20
-> Let me know what you think.
+Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+---
+ target/hexagon/op_helper.c | 16 ++++++++--------
+ tests/tcg/hexagon/usr.c    | 10 ++++++++++
+ 2 files changed, 18 insertions(+), 8 deletions(-)
 
-Thank you for the detailed explanation. This makes sense to me now.
-Since the three *_addr members (not counting log_guest_addr) in
-"vhost_vring_addr" simply store addresses, a union is not required
-here and these members can be reused in the case of packed format
-as well.
-
-> > > > My idea is to have a generic "vhost_vring_addr" structure that
-> > > > wraps around split and packed vq specific structures, rather
-> > > > than using them directly in if-else conditions wherever the
-> > > > vhost-vdpa functions require their usage. However, this will
-> > > > involve checking their impact in several other places where this
-> > > > struct is currently being used (eg.: "vhost-user", "vhost-backend",
-> > > > "libvhost-user").
-> >=20
-> > I was referring to something similar by this. The current
-> > "vhost_vring_addr" can be renamed to "vhost_vring_addr_split" for
-> > example, and a new struct "vhost_vring_addr" can wrap around this and
-> > "vhost_vring_addr_packed" using a union.
-> >=20
-> > I liked the idea of using three unions for each member in the virtqueue
-> > format instead of having one union for the whole format. I didn't think
-> > of this. I think by having three unions the "vhost_svq_get_vring_addr"
-> > [3] function won't have to be split into two new functions to handle
-> > split and packed formats separately. I am not sure if this is what you
-> > were referring to.
->=20
-> But you need the if/else anyway, as the members are not vring_desc_t
-> but vring_packed_desc, and same with vring_avail_t and vring_used_t
-> with struct vring_packed_desc_event. Or am I missing something?
-
-I was referring to having a union for each member in "vhost_vring_addr".
-But based on your explanation above I don't think this would be required
-either.
-
-Thanks,
-Sahil
-
-
-
+diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+index ae5a605513..e1fc88aa0d 100644
+--- a/target/hexagon/op_helper.c
++++ b/target/hexagon/op_helper.c
+@@ -683,7 +683,7 @@ uint32_t HELPER(conv_sf2uw)(CPUHexagonState *env, float32 RsV)
+     uint32_t RdV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV)) {
++    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV) && !float32_is_zero(RsV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RdV = 0;
+     } else {
+@@ -713,7 +713,7 @@ uint64_t HELPER(conv_sf2ud)(CPUHexagonState *env, float32 RsV)
+     uint64_t RddV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV)) {
++    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV) && !float32_is_zero(RsV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RddV = 0;
+     } else {
+@@ -743,7 +743,7 @@ uint32_t HELPER(conv_df2uw)(CPUHexagonState *env, float64 RssV)
+     uint32_t RdV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV)) {
++    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV) && !float64_is_zero(RssV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RdV = 0;
+     } else {
+@@ -773,7 +773,7 @@ uint64_t HELPER(conv_df2ud)(CPUHexagonState *env, float64 RssV)
+     uint64_t RddV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV)) {
++    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV) && !float64_is_zero(RssV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RddV = 0;
+     } else {
+@@ -803,7 +803,7 @@ uint32_t HELPER(conv_sf2uw_chop)(CPUHexagonState *env, float32 RsV)
+     uint32_t RdV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV)) {
++    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV) && !float32_is_zero(RsV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RdV = 0;
+     } else {
+@@ -833,7 +833,7 @@ uint64_t HELPER(conv_sf2ud_chop)(CPUHexagonState *env, float32 RsV)
+     uint64_t RddV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV)) {
++    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV) && !float32_is_zero(RsV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RddV = 0;
+     } else {
+@@ -863,7 +863,7 @@ uint32_t HELPER(conv_df2uw_chop)(CPUHexagonState *env, float64 RssV)
+     uint32_t RdV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV)) {
++    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV) && !float64_is_zero(RssV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RdV = 0;
+     } else {
+@@ -893,7 +893,7 @@ uint64_t HELPER(conv_df2ud_chop)(CPUHexagonState *env, float64 RssV)
+     uint64_t RddV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV)) {
++    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV) && !float64_is_zero(RssV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RddV = 0;
+     } else {
+diff --git a/tests/tcg/hexagon/usr.c b/tests/tcg/hexagon/usr.c
+index 92bc86a213..95d04762bf 100644
+--- a/tests/tcg/hexagon/usr.c
++++ b/tests/tcg/hexagon/usr.c
+@@ -1007,6 +1007,11 @@ int main()
+     TEST_P_OP_R(conv_sf2d_chop,   SF_QNaN,  0xffffffffffffffffULL,  USR_FPINVF);
+     TEST_P_OP_R(conv_sf2d_chop,   SF_SNaN,  0xffffffffffffffffULL,  USR_FPINVF);
+ 
++    TEST_R_OP_R(conv_sf2uw,       SF_zero_neg,  0, USR_CLEAR);
++    TEST_R_OP_R(conv_sf2uw_chop,  SF_zero_neg,  0, USR_CLEAR);
++    TEST_P_OP_R(conv_sf2ud,       SF_zero_neg,  0, USR_CLEAR);
++    TEST_P_OP_R(conv_sf2ud_chop,  SF_zero_neg,  0, USR_CLEAR);
++
+     TEST_R_OP_P(conv_df2sf,       DF_QNaN,  SF_HEX_NaN,             USR_CLEAR);
+     TEST_R_OP_P(conv_df2sf,       DF_SNaN,  SF_HEX_NaN,             USR_FPINVF);
+     TEST_R_OP_P(conv_df2uw,       DF_QNaN,  0xffffffff,             USR_FPINVF);
+@@ -1020,6 +1025,11 @@ int main()
+     TEST_R_OP_P(conv_df2uw_chop,  DF_QNaN,  0xffffffff,             USR_FPINVF);
+     TEST_R_OP_P(conv_df2uw_chop,  DF_SNaN,  0xffffffff,             USR_FPINVF);
+ 
++    TEST_R_OP_P(conv_df2uw,       DF_zero_neg,  0, USR_CLEAR);
++    TEST_R_OP_P(conv_df2uw_chop,  DF_zero_neg,  0, USR_CLEAR);
++    TEST_P_OP_P(conv_df2ud,       DF_zero_neg,  0, USR_CLEAR);
++    TEST_P_OP_P(conv_df2ud_chop,  DF_zero_neg,  0, USR_CLEAR);
++
+     /* Test for typo in HELPER(conv_df2uw_chop) */
+     TEST_R_OP_P(conv_df2uw_chop, 0xffffff7f00000001ULL, 0xffffffff, USR_FPINVF);
+ 
+-- 
+2.37.2
 
 
