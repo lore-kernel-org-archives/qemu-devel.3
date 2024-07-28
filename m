@@ -4,112 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F178C3DA64
-	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jul 2024 15:24:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B35C0C3DA49
+	for <qemu-devel@archiver.kernel.org>; Sun, 28 Jul 2024 15:28:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sY5ks-00018L-5l; Sun, 28 Jul 2024 11:24:14 -0400
+	id 1sY5oT-0005tJ-Ur; Sun, 28 Jul 2024 11:27:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sY5kn-000167-9p
- for qemu-devel@nongnu.org; Sun, 28 Jul 2024 11:24:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sY5kj-0004mS-DV
- for qemu-devel@nongnu.org; Sun, 28 Jul 2024 11:24:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722180242;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=5bC7CjlZdsdHI4lvHiT2ExOZBWJ7XMhmuhfoptCNZqw=;
- b=dcT+0eM8BW7APhf0SQlvSFgEGeGTGM2vi8sD/0ZaVLUCS96cyeSh5EAC6kCj6QYNaxx/WI
- Afl6CtwiI08M/Tf1qwzRF1Pq9MnTpfkALAjRMU7knEbxZ2w1eWQBnxN9KIljmvF17lEMZ5
- kixlI7Ox6S1Mzcht22PUMcTldXuNNXU=
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-151-q6kKUKrvNi-YU1BWGd0X8w-1; Sun, 28 Jul 2024 11:24:00 -0400
-X-MC-Unique: q6kKUKrvNi-YU1BWGd0X8w-1
-Received: by mail-lf1-f69.google.com with SMTP id
- 2adb3069b0e04-52e9557e312so2126017e87.0
- for <qemu-devel@nongnu.org>; Sun, 28 Jul 2024 08:24:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sY5oP-0005rj-NB
+ for qemu-devel@nongnu.org; Sun, 28 Jul 2024 11:27:54 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sY5oM-0005Zn-H2
+ for qemu-devel@nongnu.org; Sun, 28 Jul 2024 11:27:52 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-70d162eef54so1566788b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 28 Jul 2024 08:27:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722180468; x=1722785268;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RLNZtX5NhiWjh8pTpiHyCLdAqm/MusJQss3pc8cjtvA=;
+ b=hTgTXBhgQtgWcNxQ51UBPDlUfoxfapYvS3rZFLEX8RlHJUJRa3yN/fqstSvrTWSNna
+ zPGE82B5FWr7mcXYZY2ghI01mJozQtme0xj1/iC4KTs/ds6PtWqHtgEApOdnkF782GwY
+ DNLlxvN7giQWGFvnEedoY4iNJ6p4X1HUFY1vSJ5a9L3MitNKYz7dT/bYNfPAuK/7uOBZ
+ D3Y4ZqoaS8UAvu7f1G0SktsVR+WjkKRnuBhzwiHzXoZXiY7+lQ4vUsuarzPwsQIwueQt
+ kllFRDXC4e4mJChbyqyDnjr7vSvPdTi5K6Z2lbwsopkK9Ge9O4VVs9lNc9bUgAuxgJQN
+ x5XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722180239; x=1722785039;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5bC7CjlZdsdHI4lvHiT2ExOZBWJ7XMhmuhfoptCNZqw=;
- b=UkECjARPSAcOaElQmNViUHMQrXEy0VjZJpoLhnegnkJdUmtkQFYSOMo8VIrYaSt2df
- B5QAcV9etMlZgQpc52uzqYsZU9evQtohDCWKyzNGZVqpomIZ/r6+HX8A8bzkhHX7PgYC
- CoM17vDjUr2fiRyC/87pGeELq/KnhUaNDzB00GJrjnZshCHT+xGohSZYJcgr3KYm7oDQ
- hQdMROYUj0iyCJis4xvCmeII19SZiYBOjDCjfIGznLloUjbOD4bTWLprjufdgH7+8Y5A
- 72G8j8pDdYAh5bfhjmf00eKwIQo/uHFkxpbe7V+qxl6LRCfpsmbyIIbBuzKTUA5oDXy8
- gMTw==
+ d=1e100.net; s=20230601; t=1722180468; x=1722785268;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RLNZtX5NhiWjh8pTpiHyCLdAqm/MusJQss3pc8cjtvA=;
+ b=nqMlNndonWsTJ+dKUnYoyKjBcIQsx6CQxdGxUp/us12WyBNVbfzJ7alcjW78bR9Opm
+ IYRCw2HMyPqRUu4/RugWgUYXjakh5a2CGDDGhD+tbZGMbFeTwVsRoRYzE6Y+vVCsQGvF
+ rXM02jhz72EvIug1ic3eqeFzXlEos6RFm356u5xDIbN7FleZjx7Cw7jZMVBRyyqLAXLk
+ jMDfJOV4yHGPJnIAeOsCFNC72kALxKZ4tHng//ZmYH/E3TsqTZ1dzjbjKV8l43hiWbhU
+ Qp514BoLVxPJ68hYkjK0tdjbL9StIsGc1+H8IY4HDp4mV4CWxc3vRvqpApn7wnx+UKAE
+ oMkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVy1kRTTLqzBPux7sLykArNybYafsUA1TBpnQy1m7OPGtXM1KBQic17+zkRfjbWmbusPcm8g61u4jQR7nRYQxXKreY/xJE=
-X-Gm-Message-State: AOJu0YxYvliVN9288IUVWPaDD03HeoTmi9Tz3y4Gp4pgo5A+f+cnkQQI
- 9HCSmIivyHLt3FeHexp+WjitrjJUD2KPSyBMq9xk0UcxeoCPCS/56GyXcWTz/0irtNOGvhSealG
- IhlNdH0MjYQ2UzPeDa/NSo55PZFXOz0ojtqgxnwwQB4790Kc6Jafx
-X-Received: by 2002:a2e:be22:0:b0:2ef:1c0a:9b94 with SMTP id
- 38308e7fff4ca-2f12edfddc0mr34329351fa.16.1722180238923; 
- Sun, 28 Jul 2024 08:23:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEU13tBt+N37F7ob3Jx0ruuvo8+dsNp9muZtzaqjHOl31gS3qTrnO0jECcjoxvWesNrjNQyHQ==
-X-Received: by 2002:a2e:be22:0:b0:2ef:1c0a:9b94 with SMTP id
- 38308e7fff4ca-2f12edfddc0mr34329181fa.16.1722180238084; 
- Sun, 28 Jul 2024 08:23:58 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:55d:98c4:742e:26be:b52d:dd54])
+ AJvYcCX4vd22RrRovPRHt7vdSPNfFCdkrtvcX4Gna7S2h3u0so6ySokLGZHEMPT78UK1EuZ+XHDkia4OzEdRUB1I+ZWCuanng40=
+X-Gm-Message-State: AOJu0YyudVbUD/Gq++LKytqN5g4M3WlZFZJp2swnM2MwJg/fBUTvKJ88
+ mmvbU/ajW5Tha0UPHc2eSIOSxqdIXzci70fUsUAwyyD7H472oZARFRdz6mnW81s=
+X-Google-Smtp-Source: AGHT+IF3ctAx7D4BmK/J3K8ksZbvsUjXa+3JPF7azc14f59vwyWxf75VXj4f3Ql1F8QaYpsSFuIiqQ==
+X-Received: by 2002:a05:6a00:4fd2:b0:70b:3175:1f4f with SMTP id
+ d2e1a72fcca58-70ecea40e8amr3771492b3a.16.1722180468007; 
+ Sun, 28 Jul 2024 08:27:48 -0700 (PDT)
+Received: from ?IPV6:2400:4050:a840:1e00:32ed:25ae:21b1:72d6?
+ ([2400:4050:a840:1e00:32ed:25ae:21b1:72d6])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-428054b9196sm147521925e9.0.2024.07.28.08.23.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 28 Jul 2024 08:23:57 -0700 (PDT)
-Date: Sun, 28 Jul 2024 11:23:49 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Richard Cochran <richardcochran@gmail.com>,
- Peter Hilber <peter.hilber@opensynergy.com>,
- linux-kernel@vger.kernel.org, virtualization@lists.linux.dev,
- linux-arm-kernel@lists.infradead.org, linux-rtc@vger.kernel.org,
- "Ridoux, Julien" <ridouxj@amazon.com>, virtio-dev@lists.linux.dev,
- "Luu, Ryan" <rluu@amazon.com>, "Chashper, David" <chashper@amazon.com>,
- "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>,
- "Christopher S . Hall" <christopher.s.hall@intel.com>,
- Jason Wang <jasowang@redhat.com>, John Stultz <jstultz@google.com>,
- netdev@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>,
- Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
- Marc Zyngier <maz@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Alessandro Zummo <a.zummo@towertech.it>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- qemu-devel <qemu-devel@nongnu.org>, Simon Horman <horms@kernel.org>
-Subject: Re: [PATCH] ptp: Add vDSO-style vmclock support
-Message-ID: <20240728111746-mutt-send-email-mst@kernel.org>
-References: <20240725081502-mutt-send-email-mst@kernel.org>
- <f55e6dfc4242d69eed465f26d6ad7719193309dc.camel@infradead.org>
- <20240725082828-mutt-send-email-mst@kernel.org>
- <db786be69aed3800f1aca71e8c4c2a6930e3bb0b.camel@infradead.org>
- <20240725083215-mutt-send-email-mst@kernel.org>
- <98813a70f6d3377d3a9d502fd175be97334fcc87.camel@infradead.org>
- <20240726174958.00007d10@Huawei.com>
- <811E8A25-3DBC-452D-B594-F9B7B0B61335@infradead.org>
- <20240728062521-mutt-send-email-mst@kernel.org>
- <9817300C-9280-4CC3-B9DB-37D24C8C20B5@infradead.org>
+ d2e1a72fcca58-70ead814233sm5419684b3a.124.2024.07.28.08.27.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 28 Jul 2024 08:27:47 -0700 (PDT)
+Message-ID: <27dda662-baef-4f09-86e0-168ab1d47a87@daynix.com>
+Date: Mon, 29 Jul 2024 00:27:43 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9817300C-9280-4CC3-B9DB-37D24C8C20B5@infradead.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/13] Bump Avocado to 103.0 LTS and update tests for
+ compatibility and new features
+To: Cleber Rosa <crosa@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
+ Beraldo Leal <bleal@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ David Woodhouse <dwmw2@infradead.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, kvm@vger.kernel.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-arm@nongnu.org,
+ Radoslaw Biernacki <rad@semihalf.com>, Paul Durrant <paul@xen.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240726134438.14720-1-crosa@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240726134438.14720-1-crosa@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::430;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,19 +110,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Jul 28, 2024 at 02:07:01PM +0100, David Woodhouse wrote:
-> On 28 July 2024 11:37:04 BST, "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> >Glad you asked :)
+On 2024/07/26 22:44, Cleber Rosa wrote:
+> This is a *long* overdue update of the Avocado version used in QEMU.
+> It comes a time where the role of the runner and the libraries are
+> being discussed and questioned.
 > 
-> Heh, I'm not sure I'm so glad. Did I mention I hate ACPI? Perhaps it's still not too late for me just to define a DT binding and use PRP0001 for it :)
+> These exact commits have been staging on my side for over 30 days now,
+> and I was exceeding what I should in terms of testing before posting.
+> I apologize for the miscalculation.
 > 
-> >Long story short, QEMUVGID is indeed out of spec, but it works
-> >both because of guest compatibility with ACPI 1.0, and because no one
-> >much uses it.
+> Nevertheless, as pointed out, on the ML, these changes are needed NOW.
 > 
+> Some examples of runs in the CI can be seen below:
 > 
-> I think it's reasonable enough to follow that example and use AMZNVCLK (or QEMUVCLK, but there seems little point in both) then?
+> * Serial with 103.0 LTS (https://gitlab.com/cleber.gnu/qemu/-/jobs/7074346143#L220):
+>     RESULTS    : PASS 46 | ERROR 0 | FAIL 0 | SKIP 2 | WARN 0 | INTERRUPT 0 | CANCEL 0
+>     JOB TIME   : 432.63 s
+> 
+> * Parallel with 103.0 LTS (https://gitlab.com/cleber.gnu/qemu/-/jobs/7085879478#L222)
+>     RESULTS    : PASS 46 | ERROR 0 | FAIL 0 | SKIP 2 | WARN 0 | INTERRUPT 0 | CANCEL 0
+>     JOB TIME   : 148.99 s
+> 
+> Cleber Rosa (13):
+>    tests/avocado: mips: fallback to HTTP given certificate expiration
+>    tests/avocado: mips: add hint for fetchasset plugin
+>    tests/avocado/intel_iommu.py: increase timeout
+>    tests/avocado: add cdrom permission related tests
+>    tests/avocado: machine aarch64: standardize location and RO access
+>    tests/avocado: use more distinct names for assets
+>    tests/avocado/kvm_xen_guest.py: cope with asset RW requirements
+>    testa/avocado: test_arm_emcraft_sf2: handle RW requirements for asset
+>    tests/avocado/boot_xen.py: fetch kernel during test setUp()
+>    tests/avocado/tuxrun_baselines.py: use Avocado's zstd support
+>    tests/avocado/machine_aarch64_sbsaref.py: allow for rw usage of image
+>    Bump avocado to 103.0
+>    Avocado tests: allow for parallel execution of tests
+> 
+>   docs/devel/testing.rst                   | 12 +++++++
+>   pythondeps.toml                          |  2 +-
+>   tests/Makefile.include                   |  6 +++-
+>   tests/avocado/boot_linux_console.py      | 24 ++++++++------
+>   tests/avocado/boot_xen.py                | 13 ++++----
+>   tests/avocado/cdrom.py                   | 41 ++++++++++++++++++++++++
+>   tests/avocado/intel_iommu.py             |  2 ++
+>   tests/avocado/kvm_xen_guest.py           | 30 +++++++++++------
+>   tests/avocado/machine_aarch64_sbsaref.py | 11 +++++--
+>   tests/avocado/machine_aarch64_virt.py    | 14 ++++----
+>   tests/avocado/netdev-ethtool.py          |  3 +-
+>   tests/avocado/tuxrun_baselines.py        | 16 ++++-----
+>   12 files changed, 125 insertions(+), 49 deletions(-)
+>   create mode 100644 tests/avocado/cdrom.py
+> 
 
-I'd stick to spec. If you like puns, QEMUC10C maybe?
-
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
