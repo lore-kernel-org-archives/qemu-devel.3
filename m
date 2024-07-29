@@ -4,52 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7711FC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 10:11:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ED88C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 10:15:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYNLO-0003R3-A4; Mon, 29 Jul 2024 06:11:06 -0400
+	id 1sYNPR-0008U4-ED; Mon, 29 Jul 2024 06:15:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=joD8=O5=kaod.org=clg@ozlabs.org>)
- id 1sYNLM-0003Pr-FZ; Mon, 29 Jul 2024 06:11:04 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=joD8=O5=kaod.org=clg@ozlabs.org>)
- id 1sYNLJ-0008JC-7S; Mon, 29 Jul 2024 06:11:04 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WXYz02nWYz4x7G;
- Mon, 29 Jul 2024 20:10:52 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WXYyx5vTGz4x6n;
- Mon, 29 Jul 2024 20:10:49 +1000 (AEST)
-Message-ID: <49b1d57d-e0bf-4b64-b6ef-3cb4e1da5d65@kaod.org>
-Date: Mon, 29 Jul 2024 12:10:46 +0200
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sYNPD-0008S6-9I
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 06:15:04 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sYNPB-0000YC-9Y
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 06:15:02 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-a7abe5aa9d5so393660766b.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 03:15:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722248099; x=1722852899; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=SVis92b7eBt0n3MfQrBQflb9Btq8/XJC0Xl/kDfWkuI=;
+ b=OvyS6ozi/hUeoEGUc5gQWtxYTUPVOlWahXawVCeAiRksQ1TohL1X9coviidiyB9VfK
+ Sr/lAtha2ybTd41+ZLluamHMsxdY1wh+6g0QTBuEHjYkxQi9/XGyQ5zRVR26lIy4G7kc
+ WcKGYGnNlFeolKogUdIY9dB6WRloD09fKCJwhe5PD11ZQxkrNztltv/2rEMgXxT70YtF
+ GOXcVJ2JdC9vdaXqFW41ntEXPwjwqSwDaZ04RLzmc+6metJpuFzwJDXu1NarWJYjmu07
+ tzXQtvLjiVpgzEETfiRVVHnSqnBgzCmzR8ZYRKiaHIXSEWskEBT8NJNmY1nQBz0O9gjR
+ XnnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722248099; x=1722852899;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SVis92b7eBt0n3MfQrBQflb9Btq8/XJC0Xl/kDfWkuI=;
+ b=itkuip+ASxy0UdPh8im3tJ4bj5iA4Ee2WrSFSGgGmj3DxPutAkYRJo792IoafsZ+rB
+ CvV4Gy9OtV5WhdnK5AMmjLlyZ3E/CAACzDhBEE5cerxAI5uotrQRCz4uulvAm6X9Udg+
+ ZkmvNZ0RG0m2fBj1SDkJ8pIvyKKpszcroZ0Pt4+k0+kAD2UriU7v7FznS4zoEkWFdDFc
+ wXey8swxL0DYuOVRVXkJ0yKFXEkbZR8bSmmYb/5B03wtcxSNR2vprfr5dL3w5903QOnf
+ sUzOUqvp4BovFwjf7v5RtbDqDSeorcP+aBZY1U6MP0nqLCaWRDHXjBOxNBL+RUmD2Uaf
+ hk5A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWrMjrBuARZhoHRtw2M4/jsnR6Lj3MMD/e+RzZvKqwqzIcx0XrFQoatCd3Y7dlsZdJ/ZRqzYyFMwfQk6LVpTm8xBWcm310=
+X-Gm-Message-State: AOJu0YwsT8Wy1ueIXTyxmR9nXv9eTSipLsWg6is8FM5DJ5NFLgCZieC5
+ XdHgQBiunqz+Evl/wr25zcNo2ro9C0R5gfJL5LZ0UTk6TmkznchLmf1LfpCMNQM=
+X-Google-Smtp-Source: AGHT+IG0OvMsP08uL78SuZ7w1oFldioo5KHUfd8K5ruBsuFjj498BcDSs/9LAF3e0KDh7IiyZIcU9w==
+X-Received: by 2002:a17:907:3ea1:b0:a7a:a4be:2f92 with SMTP id
+ a640c23a62f3a-a7d3ff55721mr559412766b.13.1722248099279; 
+ Mon, 29 Jul 2024 03:14:59 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7acadb8015sm486576966b.203.2024.07.29.03.14.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Jul 2024 03:14:58 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B80B85F844;
+ Mon, 29 Jul 2024 11:14:57 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,  qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org,  richard.henderson@linaro.org,
+ darren@os.amperecomputing.com
+Subject: Re: [PATCH] arm/kvm: add support for MTE
+In-Reply-To: <0c171de4-a8ea-4859-b78c-272244267bb3@os.amperecomputing.com>
+ (Ganapatrao Kulkarni's message of "Mon, 29 Jul 2024 15:07:51 +0530")
+References: <20240709060448.251881-1-gankulkarni@os.amperecomputing.com>
+ <CAFEAcA_7BOXSLXJ=VV0pWDvrN=2dWrM3bRTG+31ivPjeVbWGKQ@mail.gmail.com>
+ <0c171de4-a8ea-4859-b78c-272244267bb3@os.amperecomputing.com>
+Date: Mon, 29 Jul 2024 11:14:57 +0100
+Message-ID: <8734ns1p3y.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 15/96] ppc/pnv: Implement POWER9 LPC PSI serirq outputs and
- auto-clear function
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Glenn Miles <milesg@linux.ibm.com>
-References: <20240725235410.451624-1-npiggin@gmail.com>
- <20240725235410.451624-16-npiggin@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240725235410.451624-16-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=joD8=O5=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,385 +101,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/26/24 01:52, Nicholas Piggin wrote:
-> The POWER8 LPC ISA device irqs all get combined and reported to the line
-> connected the PSI LPCHC irq. POWER9 changed this so only internal LPC
-> host controller irqs use that line, and the device irqs get routed to
-> 4 new lines connected to PSI SERIRQ0-3.
-> 
-> POWER9 also introduced a new feature that automatically clears the irq
-> status in the LPC host controller when EOI'ed, so software does not have
-> to.
-> 
-> The powernv OPAL (skiboot) firmware managed to work because the LPCHC
-> irq handler scanned all LPC irqs and handled those including clearing
-> status even on POWER9 systems. So LPC irqs worked despite OPAL thinking
-> it was running in POWER9 mode. After this change, UART interrupts show
-> up on serirq1 which is where OPAL routes them to:
-> 
->   cat /proc/interrupts
->   ...
->   20:          0  XIVE-IRQ 1048563 Level     opal-psi#0:lpchc
->   ...
->   25:         34  XIVE-IRQ 1048568 Level     opal-psi#0:lpc_serirq_mux1
-> 
-> Whereas they previously turn up on lpchc.
-> 
-> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   hw/ppc/pnv.c             |  36 +++++++++--
->   hw/ppc/pnv_lpc.c         | 128 ++++++++++++++++++++++++++++++++-------
->   include/hw/ppc/pnv_lpc.h |  14 ++++-
->   3 files changed, 148 insertions(+), 30 deletions(-)
-> 
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index 13cebd6ab9..f56dcf6597 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -727,7 +727,8 @@ static ISABus *pnv_chip_power8_isa_create(PnvChip *chip, Error **errp)
->       Pnv8Chip *chip8 = PNV8_CHIP(chip);
->       qemu_irq irq = qdev_get_gpio_in(DEVICE(&chip8->psi), PSIHB_IRQ_EXTERNAL);
->   
-> -    qdev_connect_gpio_out(DEVICE(&chip8->lpc), 0, irq);
-> +    qdev_connect_gpio_out_named(DEVICE(&chip8->lpc), "LPCHC", 0, irq);
-> +
->       return pnv_lpc_isa_create(&chip8->lpc, true, errp);
->   }
->   
-> @@ -736,25 +737,48 @@ static ISABus *pnv_chip_power8nvl_isa_create(PnvChip *chip, Error **errp)
->       Pnv8Chip *chip8 = PNV8_CHIP(chip);
->       qemu_irq irq = qdev_get_gpio_in(DEVICE(&chip8->psi), PSIHB_IRQ_LPC_I2C);
->   
-> -    qdev_connect_gpio_out(DEVICE(&chip8->lpc), 0, irq);
-> +    qdev_connect_gpio_out_named(DEVICE(&chip8->lpc), "LPCHC", 0, irq);
-> +
->       return pnv_lpc_isa_create(&chip8->lpc, false, errp);
->   }
->   
->   static ISABus *pnv_chip_power9_isa_create(PnvChip *chip, Error **errp)
->   {
->       Pnv9Chip *chip9 = PNV9_CHIP(chip);
-> -    qemu_irq irq = qdev_get_gpio_in(DEVICE(&chip9->psi), PSIHB9_IRQ_LPCHC);
-> +    qemu_irq irq;
-> +
-> +    irq = qdev_get_gpio_in(DEVICE(&chip9->psi), PSIHB9_IRQ_LPCHC);
-> +    qdev_connect_gpio_out_named(DEVICE(&chip9->lpc), "LPCHC", 0, irq);
-> +
-> +    irq = qdev_get_gpio_in(DEVICE(&chip9->psi), PSIHB9_IRQ_LPC_SIRQ0);
-> +    qdev_connect_gpio_out_named(DEVICE(&chip9->lpc), "SERIRQ", 0, irq);
-> +    irq = qdev_get_gpio_in(DEVICE(&chip9->psi), PSIHB9_IRQ_LPC_SIRQ1);
-> +    qdev_connect_gpio_out_named(DEVICE(&chip9->lpc), "SERIRQ", 1, irq);
-> +    irq = qdev_get_gpio_in(DEVICE(&chip9->psi), PSIHB9_IRQ_LPC_SIRQ2);
-> +    qdev_connect_gpio_out_named(DEVICE(&chip9->lpc), "SERIRQ", 2, irq);
-> +    irq = qdev_get_gpio_in(DEVICE(&chip9->psi), PSIHB9_IRQ_LPC_SIRQ3);
-> +    qdev_connect_gpio_out_named(DEVICE(&chip9->lpc), "SERIRQ", 3, irq);
->   
-> -    qdev_connect_gpio_out(DEVICE(&chip9->lpc), 0, irq);
->       return pnv_lpc_isa_create(&chip9->lpc, false, errp);
->   }
->   
->   static ISABus *pnv_chip_power10_isa_create(PnvChip *chip, Error **errp)
->   {
->       Pnv10Chip *chip10 = PNV10_CHIP(chip);
-> -    qemu_irq irq = qdev_get_gpio_in(DEVICE(&chip10->psi), PSIHB9_IRQ_LPCHC);
-> +    qemu_irq irq;
-> +
-> +    irq = qdev_get_gpio_in(DEVICE(&chip10->psi), PSIHB9_IRQ_LPCHC);
-> +    qdev_connect_gpio_out_named(DEVICE(&chip10->lpc), "LPCHC", 0, irq);
-> +
-> +    irq = qdev_get_gpio_in(DEVICE(&chip10->psi), PSIHB9_IRQ_LPC_SIRQ0);
-> +    qdev_connect_gpio_out_named(DEVICE(&chip10->lpc), "SERIRQ", 0, irq);
-> +    irq = qdev_get_gpio_in(DEVICE(&chip10->psi), PSIHB9_IRQ_LPC_SIRQ1);
-> +    qdev_connect_gpio_out_named(DEVICE(&chip10->lpc), "SERIRQ", 1, irq);
-> +    irq = qdev_get_gpio_in(DEVICE(&chip10->psi), PSIHB9_IRQ_LPC_SIRQ2);
-> +    qdev_connect_gpio_out_named(DEVICE(&chip10->lpc), "SERIRQ", 2, irq);
-> +    irq = qdev_get_gpio_in(DEVICE(&chip10->psi), PSIHB9_IRQ_LPC_SIRQ3);
-> +    qdev_connect_gpio_out_named(DEVICE(&chip10->lpc), "SERIRQ", 3, irq);
->   
-> -    qdev_connect_gpio_out(DEVICE(&chip10->lpc), 0, irq);
->       return pnv_lpc_isa_create(&chip10->lpc, false, errp);
->   }
->   
-> diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
-> index 7d26b29487..0f14e180af 100644
-> --- a/hw/ppc/pnv_lpc.c
-> +++ b/hw/ppc/pnv_lpc.c
-> @@ -64,6 +64,7 @@ enum {
->   #define   LPC_HC_IRQSER_START_4CLK      0x00000000
->   #define   LPC_HC_IRQSER_START_6CLK      0x01000000
->   #define   LPC_HC_IRQSER_START_8CLK      0x02000000
-> +#define   LPC_HC_IRQSER_AUTO_CLEAR      0x00800000
->   #define LPC_HC_IRQMASK          0x34    /* same bit defs as LPC_HC_IRQSTAT */
->   #define LPC_HC_IRQSTAT          0x38
->   #define   LPC_HC_IRQ_SERIRQ0            0x80000000 /* all bits down to ... */
-> @@ -420,32 +421,90 @@ static const MemoryRegionOps pnv_lpc_mmio_ops = {
->       .endianness = DEVICE_BIG_ENDIAN,
->   };
->   
-> -static void pnv_lpc_eval_irqs(PnvLpcController *lpc)
-> +/* Program the POWER9 LPC irq to PSI serirq routing table */
-> +static void pnv_lpc_eval_serirq_routes(PnvLpcController *lpc)
->   {
-> -    bool lpc_to_opb_irq = false;
-> +    int irq;
->   
-> -    /* Update LPC controller to OPB line */
-> -    if (lpc->lpc_hc_irqser_ctrl & LPC_HC_IRQSER_EN) {
-> -        uint32_t irqs;
-> +    if (!lpc->psi_has_serirq) {
-> +        if ((lpc->opb_irq_route0 & PPC_BITMASK(8, 13)) ||
-> +            (lpc->opb_irq_route1 & PPC_BITMASK(4, 31))) {
+Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com> writes:
 
+> Hi Peter,
+>
+>
+> [Apologies for the delayed response]
+>
+> On 16-07-2024 09:15 pm, Peter Maydell wrote:
+>> On Tue, 9 Jul 2024 at 07:05, Ganapatrao Kulkarni
+>> <gankulkarni@os.amperecomputing.com> wrote:
+>>>
+>>> Extend the 'mte' property for the virt machine to cover KVM as
+>>> well. For KVM, we don't allocate tag memory, but instead enable
+>>> the capability.
+>>>
+>>> If MTE has been enabled, we need to disable migration, as we do not
+>>> yet have a way to migrate the tags as well. Therefore, MTE will stay
+>>> off with KVM unless requested explicitly.
+>>>
+>>> This patch is rework of commit b320e21c48ce64853904bea6631c0158cc2ef227
+>>> which broke TCG since it made the TCG -cpu max
+>>> report the presence of MTE to the guest even if the board hadn't
+>>> enabled MTE by wiring up the tag RAM. This meant that if the guest
+>>> then tried to use MTE QEMU would segfault accessing the
+>>> non-existent tag RAM.
+>>>
+>>> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+>>> Signed-off-by: Ganapatrao Kulkarni <gankulkarni@os.amperecomputing.com>
+>>> ---
+>> In target/arm/cpu.c:arm_cpu_realizefn() there is this code:
+>>      if (cpu_isar_feature(aa64_mte, cpu)) {
+>>          /*
+>>           * The architectural range of GM blocksize is 2-6, however qemu
+>>           * doesn't support blocksize of 2 (see HELPER(ldgm)).
+>>           */
+>>          if (tcg_enabled()) {
+>>              assert(cpu->gm_blocksize >=3D 3 && cpu->gm_blocksize <=3D 6=
+);
+>>          }
+>> #ifndef CONFIG_USER_ONLY
+>>          /*
+>>           * If we do not have tag-memory provided by the machine,
+>>           * reduce MTE support to instructions enabled at EL0.
+>>           * This matches Cortex-A710 BROADCASTMTE input being LOW.
+>>           */
+>>          if (cpu->tag_memory =3D=3D NULL) {
+>>              cpu->isar.id_aa64pfr1 =3D
+>>                  FIELD_DP64(cpu->isar.id_aa64pfr1, ID_AA64PFR1, MTE, 1);
+>>          }
+>> #endif
+>>      }
+>> With this patch, for KVM we will end up going through the
+>> "squash ID_AA64PFR1_EL1.MTE to 1" codepath, because KVM doesn't
+>> set cpu->tag_memory and this is still using that as its check.
+>>=20
+>
+> I looked at this function and it seems we are not entering this
+> function for KVM boot. I do see -DCONFIG_USER_ONLY added to make
+> files.
+>
+> Also Linux kernel wont detect/enable MTE until unless the
+> ID_AA64PFR1_EL1.MTE value is 2(b0010) and above.
+>
+>> More generally, how does the enabling of the MTE KVM cap
+>> interact with the ID_AA64PFR1_EL1 value that we read from
+>> the host in kvm_arm_get_host_cpu_features() ? We care that we
+>> have the right ID register values because we use ID field
+>> checks to determine whether the vcpu has a feature or not,
+>> even in the KVM case.
+>> Since Cornelia first wrote the patch this is based on, we've
+>> landed gdbstub support for MTE (so gdb can find out which
+>> addresses in the memory map have tags and read and write
+>> those tags). So I think the KVM MTE support now also needs to
+>> handle that. (See aarch64_cpu_register_gdb_commands() in
+>> target/arm/gdbstub64.c.)
+>
+> Ok sure, I will go through this file to add/update MTE part
 
-Coverity reports an issue :
+So to be clear the current MTE gdbstub support is linux-user only.
+Gustavo has a series on the list that adds the system emulation part:
 
-     CID 1558829:  Integer handling issues  (CONSTANT_EXPRESSION_RESULT)
-     "lpc->opb_irq_route0 & (70931694131085312ULL /* (0x8000000000000000ULL >> 8) - (0x8000000000000000ULL >> 13) | (0x8000000000000000ULL >> 8) */)" is always 0 regardless of the values of its operands. This occurs as the logical first operand of "||".
+  Message-Id: <20240722160709.1677430-1-gustavo.romero@linaro.org>
+  Date: Mon, 22 Jul 2024 16:07:05 +0000
+  Subject: [PATCH 0/4] gdbstub: Add support for MTE in system mode
+  From: Gustavo Romero <gustavo.romero@linaro.org>
 
-Should the above if use PPC_BITMASK32 instead ?
+which of course is focused on TCG. But if the KVM guests sync to the same
+registers to cpregs I think most stuff should just work. However the
+current code uses the TCG only:
 
+  allocation_tag_mem_probe
 
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                "OPB: setting serirq routing on POWER8 system, ignoring.\n");
-> +        }
-> +        return;
-> +    }
->   
-> -        irqs = lpc->lpc_hc_irqstat & lpc->lpc_hc_irqmask;
-> -        lpc_to_opb_irq = (irqs != 0);
-> +    for (irq = 0; irq <= 13; irq++) {
-> +        int serirq = (lpc->opb_irq_route1 >> (31 - 5 - (irq * 2))) & 0x3;
-> +        lpc->irq_to_serirq_route[irq] = serirq;
->       }
->   
-> -    /* We don't honor the polarity register, it's pointless and unused
-> -     * anyway
-> -     */
-> -    if (lpc_to_opb_irq) {
-> -        lpc->opb_irq_input |= OPB_MASTER_IRQ_LPC;
-> -    } else {
-> -        lpc->opb_irq_input &= ~OPB_MASTER_IRQ_LPC;
-> +    for (irq = 14; irq < ISA_NUM_IRQS; irq++) {
-> +        int serirq = (lpc->opb_irq_route0 >> (31 - 9 - (irq * 2))) & 0x3;
+which I guess needs a KVM equivalent to query the tag memory?
 
+>
+>
+> Thanks,
+> Ganapat
 
-Coverity reports an issue :
-
-     CID 1558828:    (BAD_SHIFT)
-     In expression "lpc->opb_irq_route0 >> 22 - irq * 2", shifting by a negative amount has undefined behavior.  The shift amount, "22 - irq * 2", is -8.
-
-The shift value (irq * 2) seems incorrect. should it be ((irq - 14) * 2) ?
-
-Thanks,
-
-C.
-
-
-
-> +        lpc->irq_to_serirq_route[irq] = serirq;
-> +    }
-> +}
-> +
-> +static void pnv_lpc_eval_irqs(PnvLpcController *lpc)
-> +{
-> +    uint32_t active_irqs = 0;
-> +
-> +    if (lpc->lpc_hc_irqstat & PPC_BITMASK32(16, 31)) {
-> +        qemu_log_mask(LOG_UNIMP, "LPC HC Unimplemented irqs in IRQSTAT: "
-> +                                 "0x%08"PRIx32"\n", lpc->lpc_hc_irqstat);
->       }
->   
-> -    /* Update OPB internal latch */
-> -    lpc->opb_irq_stat |= lpc->opb_irq_input & lpc->opb_irq_mask;
-> +    if (lpc->lpc_hc_irqser_ctrl & LPC_HC_IRQSER_EN) {
-> +        active_irqs = lpc->lpc_hc_irqstat & lpc->lpc_hc_irqmask;
-> +    }
->   
->       /* Reflect the interrupt */
-> -    qemu_set_irq(lpc->psi_irq, lpc->opb_irq_stat != 0);
-> +    if (!lpc->psi_has_serirq) {
-> +        /*
-> +         * POWER8 ORs all irqs together (also with LPCHC internal interrupt
-> +         * sources) and outputs a single line that raises the PSI LPCHC irq
-> +         * which then latches an OPB IRQ status register that sends the irq
-> +         * to PSI.
-> +         *
-> +         * We don't honor the polarity register, it's pointless and unused
-> +         * anyway
-> +         */
-> +        if (active_irqs) {
-> +            lpc->opb_irq_input |= OPB_MASTER_IRQ_LPC;
-> +        } else {
-> +            lpc->opb_irq_input &= ~OPB_MASTER_IRQ_LPC;
-> +        }
-> +
-> +        /* Update OPB internal latch */
-> +        lpc->opb_irq_stat |= lpc->opb_irq_input & lpc->opb_irq_mask;
-> +
-> +        qemu_set_irq(lpc->psi_irq_lpchc, lpc->opb_irq_stat != 0);
-> +    } else {
-> +        /*
-> +         * POWER9 and POWER10 have routing fields in OPB master registers that
-> +         * send LPC irqs to 4 output lines that raise the PSI SERIRQ irqs.
-> +         * These don't appear to get latched into an OPB register like the
-> +         * LPCHC irqs.
-> +         *
-> +         * POWER9 LPC controller internal irqs still go via the OPB
-> +         * and LPCHC PSI irqs like P8, but we have no such internal sources
-> +         * modelled yet.
-> +         */
-> +        bool serirq_out[4] = { false, false, false, false };
-> +        int irq;
-> +
-> +        for (irq = 0; irq < ISA_NUM_IRQS; irq++) {
-> +            if (active_irqs & (LPC_HC_IRQ_SERIRQ0 >> irq)) {
-> +                serirq_out[lpc->irq_to_serirq_route[irq]] = true;
-> +            }
-> +        }
-> +
-> +        qemu_set_irq(lpc->psi_irq_serirq[0], serirq_out[0]);
-> +        qemu_set_irq(lpc->psi_irq_serirq[1], serirq_out[1]);
-> +        qemu_set_irq(lpc->psi_irq_serirq[2], serirq_out[2]);
-> +        qemu_set_irq(lpc->psi_irq_serirq[3], serirq_out[3]);
-> +    }
->   }
->   
->   static uint64_t lpc_hc_read(void *opaque, hwaddr addr, unsigned size)
-> @@ -543,10 +602,10 @@ static uint64_t opb_master_read(void *opaque, hwaddr addr, unsigned size)
->       uint64_t val = 0xfffffffffffffffful;
->   
->       switch (addr) {
-> -    case OPB_MASTER_LS_ROUTE0: /* TODO */
-> +    case OPB_MASTER_LS_ROUTE0:
->           val = lpc->opb_irq_route0;
->           break;
-> -    case OPB_MASTER_LS_ROUTE1: /* TODO */
-> +    case OPB_MASTER_LS_ROUTE1:
->           val = lpc->opb_irq_route1;
->           break;
->       case OPB_MASTER_LS_IRQ_STAT:
-> @@ -575,11 +634,15 @@ static void opb_master_write(void *opaque, hwaddr addr,
->       PnvLpcController *lpc = opaque;
->   
->       switch (addr) {
-> -    case OPB_MASTER_LS_ROUTE0: /* TODO */
-> +    case OPB_MASTER_LS_ROUTE0:
->           lpc->opb_irq_route0 = val;
-> +        pnv_lpc_eval_serirq_routes(lpc);
-> +        pnv_lpc_eval_irqs(lpc);
->           break;
-> -    case OPB_MASTER_LS_ROUTE1: /* TODO */
-> +    case OPB_MASTER_LS_ROUTE1:
->           lpc->opb_irq_route1 = val;
-> +        pnv_lpc_eval_serirq_routes(lpc);
-> +        pnv_lpc_eval_irqs(lpc);
->           break;
->       case OPB_MASTER_LS_IRQ_STAT:
->           lpc->opb_irq_stat &= ~val;
-> @@ -664,6 +727,8 @@ static void pnv_lpc_power9_realize(DeviceState *dev, Error **errp)
->       PnvLpcClass *plc = PNV_LPC_GET_CLASS(dev);
->       Error *local_err = NULL;
->   
-> +    object_property_set_bool(OBJECT(lpc), "psi-serirq", true, &error_abort);
-> +
->       plc->parent_realize(dev, &local_err);
->       if (local_err) {
->           error_propagate(errp, local_err);
-> @@ -673,6 +738,9 @@ static void pnv_lpc_power9_realize(DeviceState *dev, Error **errp)
->       /* P9 uses a MMIO region */
->       memory_region_init_io(&lpc->xscom_regs, OBJECT(lpc), &pnv_lpc_mmio_ops,
->                             lpc, "lpcm", PNV9_LPCM_SIZE);
-> +
-> +    /* P9 LPC routes ISA irqs to 4 PSI SERIRQ lines */
-> +    qdev_init_gpio_out_named(dev, lpc->psi_irq_serirq, "SERIRQ", 4);
->   }
->   
->   static void pnv_lpc_power9_class_init(ObjectClass *klass, void *data)
-> @@ -751,13 +819,19 @@ static void pnv_lpc_realize(DeviceState *dev, Error **errp)
->       memory_region_add_subregion(&lpc->opb_mr, LPC_HC_REGS_OPB_ADDR,
->                                   &lpc->lpc_hc_regs);
->   
-> -    qdev_init_gpio_out(dev, &lpc->psi_irq, 1);
-> +    qdev_init_gpio_out_named(dev, &lpc->psi_irq_lpchc, "LPCHC", 1);
->   }
->   
-> +static Property pnv_lpc_properties[] = {
-> +    DEFINE_PROP_BOOL("psi-serirq", PnvLpcController, psi_has_serirq, false),
-> +    DEFINE_PROP_END_OF_LIST(),
-> +};
-> +
->   static void pnv_lpc_class_init(ObjectClass *klass, void *data)
->   {
->       DeviceClass *dc = DEVICE_CLASS(klass);
->   
-> +    device_class_set_props(dc, pnv_lpc_properties);
->       dc->realize = pnv_lpc_realize;
->       dc->desc = "PowerNV LPC Controller";
->       dc->user_creatable = false;
-> @@ -803,7 +877,7 @@ static void pnv_lpc_isa_irq_handler_cpld(void *opaque, int n, int level)
->       }
->   
->       if (pnv->cpld_irqstate != old_state) {
-> -        qemu_set_irq(lpc->psi_irq, pnv->cpld_irqstate != 0);
-> +        qemu_set_irq(lpc->psi_irq_lpchc, pnv->cpld_irqstate != 0);
->       }
->   }
->   
-> @@ -824,6 +898,13 @@ static void pnv_lpc_isa_irq_handler(void *opaque, int n, int level)
->           pnv_lpc_eval_irqs(lpc);
->       } else {
->           lpc->lpc_hc_irq_inputs &= ~irq_bit;
-> +
-> +        /* POWER9 adds an auto-clear mode that clears IRQSTAT bits on EOI */
-> +        if (lpc->psi_has_serirq &&
-> +            (lpc->lpc_hc_irqser_ctrl & LPC_HC_IRQSER_AUTO_CLEAR)) {
-> +            lpc->lpc_hc_irqstat &= ~irq_bit;
-> +            pnv_lpc_eval_irqs(lpc);
-> +        }
->       }
->   }
->   
-> @@ -854,6 +935,7 @@ ISABus *pnv_lpc_isa_create(PnvLpcController *lpc, bool use_cpld, Error **errp)
->           handler = pnv_lpc_isa_irq_handler;
->       }
->   
-> +    /* POWER has a 17th irq, QEMU only implements the 16 regular device irqs */
->       irqs = qemu_allocate_irqs(handler, lpc, ISA_NUM_IRQS);
->   
->       isa_bus_register_input_irqs(isa_bus, irqs);
-> diff --git a/include/hw/ppc/pnv_lpc.h b/include/hw/ppc/pnv_lpc.h
-> index 97c6872c3f..e0fd5e4130 100644
-> --- a/include/hw/ppc/pnv_lpc.h
-> +++ b/include/hw/ppc/pnv_lpc.h
-> @@ -23,6 +23,7 @@
->   #include "exec/memory.h"
->   #include "hw/ppc/pnv.h"
->   #include "hw/qdev-core.h"
-> +#include "hw/isa/isa.h" /* For ISA_NUM_IRQS */
->   
->   #define TYPE_PNV_LPC "pnv-lpc"
->   typedef struct PnvLpcClass PnvLpcClass;
-> @@ -87,8 +88,19 @@ struct PnvLpcController {
->       /* XSCOM registers */
->       MemoryRegion xscom_regs;
->   
-> +    /*
-> +     * In P8, ISA irqs are combined with internal sources to drive the
-> +     * LPCHC interrupt output. P9 ISA irqs raise one of 4 lines that
-> +     * drive PSI SERIRQ irqs, routing according to OPB routing registers.
-> +     */
-> +    bool psi_has_serirq;
-> +
->       /* PSI to generate interrupts */
-> -    qemu_irq psi_irq;
-> +    qemu_irq psi_irq_lpchc;
-> +
-> +    /* P9 serirq lines and irq routing table */
-> +    qemu_irq psi_irq_serirq[4];
-> +    int irq_to_serirq_route[ISA_NUM_IRQS];
->   };
->   
->   struct PnvLpcClass {
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
