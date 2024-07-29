@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A295DC49EA1
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D9AEC3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:47:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYRbt-0003kz-57; Mon, 29 Jul 2024 10:44:25 -0400
+	id 1sYRc1-0004NJ-Gj; Mon, 29 Jul 2024 10:44:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYRbr-0003dO-9o
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:23 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1sYRbz-0004CJ-5Q
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:31 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYRbn-0008Mh-7A
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:22 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a7a9a7af0d0so474252766b.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:44:18 -0700 (PDT)
+ id 1sYRbr-0008PA-Uq
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:30 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a7aada2358fso653652166b.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:44:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722264257; x=1722869057; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722264262; x=1722869062; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=T3GszRkz8geRaMKEq8CHOzLhtMD92I0hXo79XzAv5so=;
- b=pEcO7j9I2xMgVr21v+Bp/m+53kOVGtrq3JgQQPNi7OVma39u+ZuECWWU2j5xSZcQb3
- QoLcy7y3vohvpv8JSyYMJUAkHu/ocKcqh5PbSR45uFp/mZa9u3ofw70KIHEScJtukEu3
- W3jkzdRmc4Y4jqpNpcgnpfmWIHOYyKExNfPVqyv5BeEa8ZemyOseGuQ0L9Js88s2oeGP
- AMIhPqGdvgsM8KR2ghD5y6btDCoJhT9Znac4dFVoEu8enCjTcSbayimbdr+rxLtjY7xK
- 3gvsHVGlLaTZqxtEtTF0rAI0/KarMOp5WP0IQPNpGdswAgcomL5W11et68kR6dkUxSyw
- 33TQ==
+ bh=GENiq4e8KZQrz58joiPbir+V04pOx1NyhbMnGqm72qs=;
+ b=TnCSR4Md/GxcZyni38dY5d2R1F1Y8UPR2aZp3JYXwZDsdNs1xu75Ulqi2/EWkOXYG8
+ RrX7cFplt30ozV/M7BBllGr1bErmZQ2f8Dbwhr7aPC3LggphUS+oIW0U9HmWy7gamASi
+ 4Gtylewpt/nyX2xLcuWSC7EAY/QtMOjKfins9Td5760Go5+lGwe+Kxpl2/a1B/5kWd7E
+ udNrf9zIVLYxsukE0sHd7r+vHJoGULnePrJjn6sBZICzi0urFN6JReaPa69ig9muVNc6
+ G4BA1ncwzpcXESjNY/G7K2dmT0FwV4lGRbVO14lhUrilZmRVz7d9lYxvx4plp+zLZIWQ
+ IPIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722264257; x=1722869057;
+ d=1e100.net; s=20230601; t=1722264262; x=1722869062;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=T3GszRkz8geRaMKEq8CHOzLhtMD92I0hXo79XzAv5so=;
- b=BlJFIX6tZMKp+Yh+BcvUJ3dPLPOuHrR+qycF8HgljSXLvUP9wq+pYPKD7cpBi9OXnc
- gzhxd1jF1xc3QclJ1jsgozpBACDuhYto7+6WuGyGggR4rF/rYLvaV6foIGzv5TmNuFEI
- vW5CUufHD7YYVMFSycP2IRfd0t4tmGv4n6Gaw6lnJQRje0QdzZ7LfbnJ1gp43wkGHN0R
- xcxfdeRaxLl7puouOfi4XZxI7PRYNJmN9hYikvADjw8VnnEGNQ9oXJXoSdNtIfMen3OL
- C2B0D7QrDyJBmjSO7JiYlVxTUphzDy2Xydyh3BqayhbGEhc4rqvtv96BBXvogmHpsP0a
- adoA==
-X-Gm-Message-State: AOJu0YxWcdVNStopOohrIZARJvpztLL0+6ZoHNH6n6bPfPoKhrcfajAC
- FInwNgYTo0IWMotjJWwgtxGT0s8+QZYpbbX8POOOjj1Q2lQTXBnUOXmj+yic1mw=
-X-Google-Smtp-Source: AGHT+IHsL9GVI03IDp731rAG6GHIVAfI+LUj5scFzgtsovFBrefGaBwW73UfGf+Y9O+g5aIIe7Nscg==
-X-Received: by 2002:a17:907:c48e:b0:a77:da14:8409 with SMTP id
- a640c23a62f3a-a7d40135360mr437751466b.48.1722264257006; 
- Mon, 29 Jul 2024 07:44:17 -0700 (PDT)
+ bh=GENiq4e8KZQrz58joiPbir+V04pOx1NyhbMnGqm72qs=;
+ b=ClIWLbP0MZIW4Vyu4NLT72ntirZQIGo6Xt3G/I1/Qp51ftHua28FhChPEq+soB5evs
+ NWSL+89EA9zT+dEahqhB/4HrJ2V6i3gppkr02aHa7BCNXbcXsAFLRXJayn9WJV+uLriX
+ PCOWCvwf1/8SMui4QAofzPJ1LvsmIKcFVz02a8lgFO5vHiWyLlBUpdtrz5kVgM15O8hd
+ O9YV11zpIpuGzgynVHLERtt02wfk4tfOEJkiopUgeRw+evIIFaO5Ryjl95SNTMofAHdY
+ mZmoo35JobyGqijccwPJOZCZaInjOd0KNV0zW+5nmSgmYJ7s6Kj0MUTzSy3NDJX4P4d5
+ GgHg==
+X-Gm-Message-State: AOJu0Yxlwu++2LkwGal/80fR7UL/IjfEXckWuzwBuvw++CaLLjdfQwMc
+ L9a9LeFrRCK77/r5rLbp/BqjZuqThYltFPdQKij2Lq0pMJClba6qn90ElNgpqA0=
+X-Google-Smtp-Source: AGHT+IG0/8LbXJz3R5yJW31iuocEeDzsi0u8V4yfCpH41bAtspf5nJ+467kKd1hi8/985d+hriSNzQ==
+X-Received: by 2002:a17:907:7e9f:b0:a77:ce4c:8c9c with SMTP id
+ a640c23a62f3a-a7d3f85b7b6mr879809966b.8.1722264261746; 
+ Mon, 29 Jul 2024 07:44:21 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acad41976sm518778766b.130.2024.07.29.07.44.15
+ a640c23a62f3a-a7acab4de85sm515866566b.52.2024.07.29.07.44.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jul 2024 07:44:15 -0700 (PDT)
+ Mon, 29 Jul 2024 07:44:18 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3374A5F92D;
+ by draig.lan (Postfix) with ESMTP id B4C765FA06;
  Mon, 29 Jul 2024 15:44:15 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -78,19 +78,18 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
  Alexandre Iooss <erdnaxe@crans.org>, Song Gao <gaosong@loongson.cn>,
  David Hildenbrand <david@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 02/14] gitlab: display /packages.txt in build jobs
-Date: Mon, 29 Jul 2024 15:44:02 +0100
-Message-Id: <20240729144414.830369-3-alex.bennee@linaro.org>
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Subject: [PATCH 07/14] docs/devel: document how to run individual TCG tests
+Date: Mon, 29 Jul 2024 15:44:07 +0100
+Message-Id: <20240729144414.830369-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240729144414.830369-1-alex.bennee@linaro.org>
 References: <20240729144414.830369-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,47 +112,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+Since 6f6ca067d2 (tests/tcg: add some help output for running
+individual tests) we made it easier to run individual tests for a
+given architecture. Lets reference that in the developer
+documentation.
 
-The lcitool created containers save the full distro package list
-details into /packages.txt. The idea is that build jobs will 'cat'
-this file, so that the build log has a record of what packages
-were used. This is important info, because when it comes to debug
-failures, the original container is often lost.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-Id: <20240724095505.33544-3-berrange@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- .gitlab-ci.d/buildtest-template.yml  | 1 +
- .gitlab-ci.d/crossbuild-template.yml | 2 ++
- 2 files changed, 3 insertions(+)
+ docs/devel/testing.rst | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
-index 8f7ebfaed8..844c26623d 100644
---- a/.gitlab-ci.d/buildtest-template.yml
-+++ b/.gitlab-ci.d/buildtest-template.yml
-@@ -9,6 +9,7 @@
-     when: always
-   before_script:
-     - JOBS=$(expr $(nproc) + 1)
-+    - cat /packages.txt
-   script:
-     - export CCACHE_BASEDIR="$(pwd)"
-     - export CCACHE_DIR="$CCACHE_BASEDIR/ccache"
-diff --git a/.gitlab-ci.d/crossbuild-template.yml b/.gitlab-ci.d/crossbuild-template.yml
-index d9f81b7061..53051ec793 100644
---- a/.gitlab-ci.d/crossbuild-template.yml
-+++ b/.gitlab-ci.d/crossbuild-template.yml
-@@ -8,6 +8,8 @@
-     key: "$CI_JOB_NAME"
-     when: always
-   timeout: 80m
-+  before_script:
-+    - cat /packages.txt
-   script:
-     - export CCACHE_BASEDIR="$(pwd)"
-     - export CCACHE_DIR="$CCACHE_BASEDIR/ccache"
+diff --git a/docs/devel/testing.rst b/docs/devel/testing.rst
+index b984c5dd26..af73d3d64f 100644
+--- a/docs/devel/testing.rst
++++ b/docs/devel/testing.rst
+@@ -1490,6 +1490,19 @@ And run with::
+ Adding ``V=1`` to the invocation will show the details of how to
+ invoke QEMU for the test which is useful for debugging tests.
+ 
++Running individual tests
++~~~~~~~~~~~~~~~~~~~~~~~~
++
++Tests can also be run directly from the test build directory. If you
++run ``make help`` from the test build directory you will get a list of
++all the tests that can be run. Please note that same binaries are used
++in multiple tests, for example::
++
++  make run-plugin-test-mmap-with-libinline.so
++
++will run the mmap test with the ``libinline.so`` TCG plugin. The
++gdbstub tests also re-use the test binaries but while exercising gdb.
++
+ TCG test dependencies
+ ~~~~~~~~~~~~~~~~~~~~~
+ 
 -- 
 2.39.2
 
