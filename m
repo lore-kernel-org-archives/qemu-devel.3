@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFB95C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 11:20:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E85AC3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 11:42:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYOPE-0000cM-Pa; Mon, 29 Jul 2024 07:19:08 -0400
+	id 1sYOkO-0001Cv-Lr; Mon, 29 Jul 2024 07:41:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sYOPC-0000ZP-LQ; Mon, 29 Jul 2024 07:19:06 -0400
-Received: from sin.source.kernel.org ([145.40.73.55])
+ id 1sYOkE-000184-SF; Mon, 29 Jul 2024 07:40:52 -0400
+Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sYOP9-00044I-Hq; Mon, 29 Jul 2024 07:19:06 -0400
+ id 1sYOk9-0008Me-2X; Mon, 29 Jul 2024 07:40:47 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id BAD0CCE0966;
- Mon, 29 Jul 2024 11:18:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F963C32786;
- Mon, 29 Jul 2024 11:18:55 +0000 (UTC)
+ by sin.source.kernel.org (Postfix) with ESMTP id 2643DCE0AED;
+ Mon, 29 Jul 2024 11:40:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C3CC32786;
+ Mon, 29 Jul 2024 11:40:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1722251939;
- bh=TZWnzVzliccEj7Fu28VQJqcjmzU0UNXPAtXxgl5zVdY=;
+ s=k20201202; t=1722253240;
+ bh=7vuEUPWCtOsmYrp6otur2CNDMnhPRPOkRmNYGEq5/1k=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=qFrHCY5fm/HSbjL6v49B02WHi0ZkxUrwfWoFvLZ2A1VzKTzNqXGe3KoB8UCxI6mCK
- 1Q2wolZY4SfT4wWPX+k07zbxZIBRjQcc2uCFbm2BrYRf1YLZMFfhDyh23jcLoB8IEK
- U/T+cXjfDYnKn5QBMfjRRvBh+XXYHeCh20HwgLgjuKb0O9w0GgU2AdT4b6rXB9cPLN
- wzxeItsj9VwwAiwc/jWRI/IbcEOtZTsoVIM12lg+H9xXDToR37zLbcMXjdLtvPnHPC
- MBIDzbkAi/b8eahJRX1WcvNCqiVTruvwGLoiuP7D4/h0+Y2dt8hHXG/wENbTrTTrBI
- 7R3WOIKCjKBlg==
-Date: Mon, 29 Jul 2024 13:18:52 +0200
+ b=JZyJXEB8dXfNibr8dHNhC0qnTDUMk6wjafjeiottKjoUbJS+C34SdpwgIAdppg7/9
+ qjgtSoQHkNnVMpLazj3k4xerKiTGaatlR+2B28vMC4Yws0RmSkJ+fcX0h+LaN/KZL3
+ fbOU2Q2eeR3YVXSYpGIXkfIER/Tg5cM+IyqOR0Ays7veey5GNyXF8y7LiYnAlPTpsq
+ NTmQINaFDplhZPaVG3oDx4jOG58GpHY6pawfwUQ9gbA/nxJYaoeZ9kiM1FkHYE7SYw
+ +5kZxM6T/4NV5RiXpQ0eGd1vvgj7WvAP3Vpy7ZcJZK06tvL3wU13yBRX+kfKxcZfx/
+ glv8ZfMyAfdPg==
+Date: Mon, 29 Jul 2024 13:40:34 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, Alex =?UTF-8?B?QmVubsOpZQ==?=
- <alex.bennee@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>, Philippe
- =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
- <anisinha@redhat.com>, Beraldo Leal <bleal@redhat.com>, Dongjiu Geng
+To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+Cc: Shiju Jose <shiju.jose@huawei.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, Dongjiu Geng
  <gengdongjiu1@gmail.com>, Eric Blake <eblake@redhat.com>, Igor Mammedov
- <imammedo@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Thomas
- Huth <thuth@redhat.com>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 7/7] acpi/ghes: extend arm error injection logic
-Message-ID: <20240729131852.0b850c15@foz.lan>
-In-Reply-To: <87y15ppz3x.fsf@pond.sub.org>
+ <imammedo@redhat.com>, Markus Armbruster <armbru@redhat.com>, Michael Roth
+ <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, <linux-kernel@vger.kernel.org>,
+ <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v3 4/7] acpi/ghes: Add a logic to handle block addresses
+ and FW first ARM processor error injection
+Message-ID: <20240729134034.1754bf14@foz.lan>
+In-Reply-To: <20240726134412.000038c1@Huawei.com>
 References: <cover.1721630625.git.mchehab+huawei@kernel.org>
- <89e8a63b5e54409dd9bc4e7f4f4c12290838371b.1721630625.git.mchehab+huawei@kernel.org>
- <87y15ppz3x.fsf@pond.sub.org>
+ <6a3542a7d8acfbf88c906ec6f6dc5a697257b461.1721630625.git.mchehab+huawei@kernel.org>
+ <20240726134412.000038c1@Huawei.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=145.40.73.55;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
  envelope-from=mchehab+huawei@kernel.org; helo=sin.source.kernel.org
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -79,436 +78,351 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Thu, 25 Jul 2024 12:03:46 +0200
-Markus Armbruster <armbru@redhat.com> escreveu:
+Em Fri, 26 Jul 2024 13:44:12 +0100
+Jonathan Cameron <Jonathan.Cameron@Huawei.com> escreveu:
 
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
->=20
-> > Enrich CPER error injection logic for ARM processor to allow
-> > setting values to  from UEFI 2.10 tables N.16 and N.17.
-> >
-> > It should be noticed that, with such change, all arguments are
-> > now optional, so, once QMP is negotiated with:
-> >
-> > 	{ "execute": "qmp_capabilities" }
-> >
-> > the simplest way to generate a cache error is to use:
-> >
-> > 	{ "execute": "arm-inject-error" }
-> >
-> > Also, as now PEI is mapped into an array, it is possible to
-> > inject multiple errors at the same CPER record with:
-> >
-> > 	{ "execute": "arm-inject-error", "arguments": {
-> > 	   "error": [ {"type": [ "cache-error" ]},
-> > 		      {"type": [ "tlb-error" ]} ] } }
-> >
-> > This would generate both cache and TLB errors, using default
-> > values for other fields.
-> >
-> > As all fields from ARM Processor CPER are now mapped, all
-> > types of CPER records can be generated with the new QAPI.
-> >
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org> =20
->=20
-> [...]
->=20
-> > diff --git a/qapi/arm-error-inject.json b/qapi/arm-error-inject.json
-> > index 430e6cea6b60..2a314830fe60 100644
-> > --- a/qapi/arm-error-inject.json
-> > +++ b/qapi/arm-error-inject.json
-> > @@ -2,40 +2,258 @@
-> >  # vim: filetype=3Dpython
-> > =20
-> >  ##
-> > -# =3D ARM Processor Errors
-> > +# =3D ARM Processor Errors as defined at:
-> > +# https://uefi.org/specs/UEFI/2.10/Apx_N_Common_Platform_Error_Record.=
-html
-> > +# See tables N.16, N.17 and N.21.
-> >  ## =20
->=20
-> This comes out badly in HTML.
->=20
-> Try something like
->=20
->    # =3D ARM Processor Errors
->    #
->    # These are defined at
->    # https://uefi.org/specs/UEFI/2.10/Apx_N_Common_Platform_Error_Record.=
-html
->    # See tables N.16, N.17 and N.21.
-
-Ok. I double-checked the results of both manpage and html on the
-version I'm about to submit. The parsed macros should now be OK
-for both.
-
->=20
-> If any part of this is relevant in PATCH 4 already, squash the relevant
-> parts into that patch please.
-
-Ok. I ended squashing patch 7 with patch 4.
-
->=20
-> > =20
-> > +##
-> > +# @ArmProcessorValidationBits:
-> > +#
-> > +# Indcates whether or not fields of ARM processor CPER record are vali=
-d. =20
->=20
-> docs/devel/qapi-code-gen.rst section "Documentation markup":
->=20
->     For legibility, wrap text paragraphs so every line is at most 70
->     characters long.
-
-Ok.
-
-> > +#
-> > +# @mpidr-valid:  MPIDR Valid
-> > +#
-> > +# @affinity-valid: Error affinity level Valid
-> > +#
-> > +# @running-state-valid: Running State
-> > +#
-> > +# @vendor-specific-valid: Vendor Specific Info Valid
-> > +#
-> > +# Since: 9.1
-> > +##
-> > +{ 'enum': 'ArmProcessorValidationBits',
-> > +  'data': ['mpidr-valid',
-> > +           'affinity-valid',
-> > +           'running-state-valid',
-> > +           'vendor-specific-valid']
-> > +}
+> On Mon, 22 Jul 2024 08:45:56 +0200
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> 
+> > From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > 
+> > 1. Some GHES functions require handling addresses. Add a helper function
+> >    to support it.
+> > 
+> > 2. Add support for ACPI CPER (firmware-first) ARM processor error injection.
+> > 
+> > Compliance with N.2.4.4 ARM Processor Error Section in UEFI 2.6 and
+> > upper specs, using error type bit encoding as detailed at UEFI 2.9A
+> > errata.
+> > 
+> > Error injection examples:
+> > 
+> > { "execute": "qmp_capabilities" }
+> > 
+> > { "execute": "arm-inject-error",
+> >       "arguments": {
+> >         "errortypes": ['cache-error']
+> >       }
+> > }
+> > 
+> > { "execute": "arm-inject-error",
+> >       "arguments": {
+> >         "errortypes": ['tlb-error']
+> >       }
+> > }
+> > 
+> > { "execute": "arm-inject-error",
+> >       "arguments": {
+> >         "errortypes": ['bus-error']
+> >       }
+> > }
+> > 
+> > { "execute": "arm-inject-error",
+> >       "arguments": {
+> >         "errortypes": ['cache-error', 'tlb-error']
+> >       }
+> > }
+> > 
+> > { "execute": "arm-inject-error",
+> >       "arguments": {
+> >         "errortypes": ['cache-error', 'tlb-error', 'bus-error', 'micro-arch-error']
+> >       }
+> > }
+> > ...
+> > 
+> > Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > Co-authored-by: Shiju Jose <shiju.jose@huawei.com>
+> > For Add a logic to handle block addresses,  
+> # before comments I think?
+> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > For FW first ARM processor error injection,
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > Signed-off-by: Shiju Jose <shiju.jose@huawei.com>  
+> I can't remember what I wrote in here so may well be commenting on
+> my past self ;)
+> 
+> > ---
+> >  configs/targets/aarch64-softmmu.mak |   1 +
+> >  hw/acpi/ghes.c                      | 258 ++++++++++++++++++++++++++--
+> >  hw/arm/Kconfig                      |   4 +
+> >  hw/arm/arm_error_inject.c           |  35 ++++
+> >  hw/arm/arm_error_inject_stubs.c     |  18 ++
+> >  hw/arm/meson.build                  |   3 +
+> >  include/hw/acpi/ghes.h              |   2 +
+> >  qapi/arm-error-inject.json          |  49 ++++++
+> >  qapi/meson.build                    |   1 +
+> >  qapi/qapi-schema.json               |   1 +
+> >  10 files changed, 361 insertions(+), 11 deletions(-)
+> >  create mode 100644 hw/arm/arm_error_inject.c
+> >  create mode 100644 hw/arm/arm_error_inject_stubs.c
+> >  create mode 100644 qapi/arm-error-inject.json
+> > 
+> > diff --git a/configs/targets/aarch64-softmmu.mak b/configs/targets/aarch64-softmmu.mak
+> > index 84cb32dc2f4f..b4b3cd97934a 100644
+> > --- a/configs/targets/aarch64-softmmu.mak
+> > +++ b/configs/targets/aarch64-softmmu.mak
+> > @@ -5,3 +5,4 @@ TARGET_KVM_HAVE_GUEST_DEBUG=y
+> >  TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml gdb-xml/aarch64-pauth.xml
+> >  # needed by boot.c
+> >  TARGET_NEED_FDT=y
+> > +CONFIG_ARM_EINJ=y
+> > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> > index 5b8bc6eeb437..6075ef5893ce 100644
+> > --- a/hw/acpi/ghes.c
+> > +++ b/hw/acpi/ghes.c
+> > @@ -27,6 +27,7 @@
+> >  #include "hw/acpi/generic_event_device.h"
+> >  #include "hw/nvram/fw_cfg.h"
+> >  #include "qemu/uuid.h"
+> > +#include "qapi/qapi-types-arm-error-inject.h"
+> >  
+> >  #define ACPI_GHES_ERRORS_FW_CFG_FILE        "etc/hardware_errors"
+> >  #define ACPI_GHES_DATA_ADDR_FW_CFG_FILE     "etc/hardware_errors_addr"
+> > @@ -53,6 +54,12 @@
+> >  /* The memory section CPER size, UEFI 2.6: N.2.5 Memory Error Section */
+> >  #define ACPI_GHES_MEM_CPER_LENGTH           80
+> >  
+> > +/*
+> > + * ARM Processor section CPER size, UEFI 2.10: N.2.4.4
+> > + * ARM Processor Error Section
+> > + */
+> > +#define ACPI_GHES_ARM_CPER_LENGTH (72 + 600)
 > > +
-> > +##
-> > +# @ArmProcessorFlags:
-> > +#
-> > +# Indicates error attributes at the Error info section.
-> > +#
-> > +# @first-error-cap: First error captured
-> > +#
-> > +# @last-error-cap:  Last error captured
-> > +#
-> > +# @propagated: Propagated
-> > +#
-> > +# @overflow: Overflow
-> > +#
-> > +# Since: 9.1
-> > +##
-> > +{ 'enum': 'ArmProcessorFlags',
-> > +  'data': ['first-error-cap',
-> > +           'last-error-cap',
-> > +           'propagated',
-> > +           'overflow']
-> > +}
-> > +
-> > +##
-> > +# @ArmProcessorRunningState:
-> > +#
-> > +# Indicates if the processor is running.
-> > +#
-> > +# @processor-running: indicates that the processor is running
-> > +#
-> > +# Since: 9.1
-> > +##
-> > +{ 'enum': 'ArmProcessorRunningState',
-> > +  'data': ['processor-running']
-> > +}
-> > +
-> >  ##
-> >  # @ArmProcessorErrorType:
-> >  #
-> > -# Type of ARM processor error to inject
-> > -#
-> > -# @unknown-error: Unknown error
-> > +# Type of ARM processor error information to inject.
-> >  #
-> >  # @cache-error: Cache error
-> >  #
-> >  # @tlb-error: TLB error
-> >  #
-> > -# @bus-error: Bus error.
-> > +# @bus-error: Bus error
-> >  #
-> > -# @micro-arch-error: Micro architectural error.
-> > +# @micro-arch-error: Micro architectural error
-> >  #
-> >  # Since: 9.1
-> >  ##
-> >  { 'enum': 'ArmProcessorErrorType',
-> > -  'data': ['unknown-error',
-> > -	   'cache-error',
-> > +  'data': ['cache-error',
-> >             'tlb-error',
-> >             'bus-error',
-> >             'micro-arch-error']
-> > + } =20
->=20
-> Squash the changes to this type into PATCH 4, please.
-
-Ok.
-
-> > +
-> > +##
-> > +# @ArmPeiValidationBits:
-> > +#
-> > +# Indcates whether or not fields of Processor Error Info section are v=
-alid.
-> > +#
-> > +# @multiple-error-valid: Information at multiple-error field is valid
-> > +#
-> > +# @flags-valid: Information at flags field is valid
-> > +#
-> > +# @error-info-valid: Information at error-info field is valid
-> > +#
-> > +# @virt-addr-valid: Information at virt-addr field is valid
-> > +#
-> > +# @phy-addr-valid: Information at phy-addr field is valid
-> > +#
-> > +# Since: 9.1
-> > +##
-> > +{ 'enum': 'ArmPeiValidationBits',
-> > +  'data': ['multiple-error-valid',
-> > +           'flags-valid',
-> > +           'error-info-valid',
-> > +           'virt-addr-valid',
-> > +           'phy-addr-valid']
-> > +}
-> > +
-> > +##
-> > +# @ArmProcessorErrorInformation:
-> > +#
-> > +# Contains ARM processor error information (PEI) data according with U=
-EFI
-> > +# CPER table N.17.
-> > +#
-> > +# @validation:
-> > +#       Valid validation bits for error-info section.
-> > +#       Argument is optional. If not specified, those flags will be en=
-abled:
-> > +#       first-error-cap and propagated. =20
->=20
-> Please format like this for consistency:
->=20
->    # @validation: Valid validation bits for error-info section.
->    #     Argument is optional.  If not specified, those flags will be
->    #     enabled: first-error-cap and propagated.
-
-Ok.
-
->=20
-> > +#
-> > +# @type:
-> > +#       ARM processor error types to inject. Argument is mandatory.
-> > +#
-> > +# @multiple-error:
-> > +#       Indicates whether multiple errors have occurred.
-> > +#       Argument is optional. If not specified and @validation not enf=
-orced,
-> > +#       this field will be marked as invalid at CPER record..
-> > +#
-> > +# @flags:
-> > +#       Indicates flags that describe the error attributes.
-> > +#       Argument is optional. If not specified and defaults to
-> > +#       first-error and propagated.
-> > +#
-> > +# @error-info:
-> > +#       Error information structure is specific to each error type.
-> > +#       Argument is optional, and its value depends on the PEI type(s).
-> > +#       If not defined, the default depends on the type:
-> > +#       - for cache-error: 0x0091000F;
-> > +#       - for tlb-error: 0x0054007F;
-> > +#       - for bus-error: 0x80D6460FFF;
-> > +#       - for micro-arch-error: 0x78DA03FF;
-> > +#       - if multiple types used, this bit is disabled from @validatio=
-n bits.
-> > +#
-> > +# @virt-addr:
-> > +#       Virtual fault address associated with the error.
-> > +#       Argument is optional. If not specified and @validation not enf=
-orced,
-> > +#       this field will be marked as invalid at CPER record..
-> > +#
-> > +# @phy-addr:
-> > +#       Physical fault address associated with the error.
-> > +#       Argument is optional. If not specified and @validation not enf=
-orced,
-> > +#       this field will be marked as invalid at CPER record..
-> > +#
-> > +# Since: 9.1
-> > +##
-> > +{ 'struct': 'ArmProcessorErrorInformation',
-> > +  'data': { '*validation': ['ArmPeiValidationBits'],
-> > +            'type': ['ArmProcessorErrorType'],
-> > +            '*multiple-error': 'uint16',
-> > +            '*flags': ['ArmProcessorFlags'],
-> > +            '*error-info': 'uint64',
-> > +            '*virt-addr':  'uint64',
-> > +            '*phy-addr': 'uint64'}
-> > +}
-> > +
-> > +##
-> > +# @ArmProcessorContext:
-> > +#
-> > +# Provide processor context state specific to the ARM processor archit=
-ecture,
-> > +# According with UEFI 2.10 CPER table N.21.
-> > +# Argument is optional.If not specified, no context will be used.
-> > +#
-> > +# @type:
-> > +#       Contains an integer value indicating the type of context state=
- being
-> > +#       reported.
-> > +#       Argument is optional. If not defined, it will be set to be EL1=
- register
-> > +#       for the emulation, e. g.:
-> > +#       - on arm32: AArch32 EL1 context registers;
-> > +#       - on arm64: AArch64 EL1 context registers.
-> > +#
-> > +# @register:
-> > +#       Provides the contents of the actual registers or raw data, dep=
-ending
-> > +#       on the context type.
-> > +#       Argument is optional. If not defined, it will fill the first r=
-egister
-> > +#       with 0xDEADBEEF, and the other ones with zero.
-> > +#
-> > +# @minimal-size:
-> > +#       Argument is optional. If provided, define the minimal size of =
-the
-> > +#       context register array. The actual size is defined by checking=
- the
-> > +#       number of register values plus the content of this field (if u=
-sed),
-> > +#       ensuring that each processor context information structure arr=
-ay is
-> > +#       padded with zeros if the size is not a multiple of 16 bytes.
-> > +#
-> > +# Since: 9.1
-> > +##
-> > +{ 'struct': 'ArmProcessorContext',
-> > +  'data': { '*type': 'uint16',
-> > +            '*minimal-size': 'uint32',
-> > +            '*register': ['uint64']}
+> >  /* Masks for block_status flags */
+> >  #define ACPI_GEBS_UNCORRECTABLE         1
+> >  
+> > @@ -231,6 +238,142 @@ static int acpi_ghes_record_mem_error(uint64_t error_block_address,
+> >      return 0;
 > >  }
-> > =20
-> >  ##
-> >  # @arm-inject-error:
-> >  #
-> > -# Inject ARM Processor error.
-> > +# Inject ARM Processor error with data to be filled accordign with UEF=
-I 2.10
-> > +# CPER table N.16.
-> >  #
-> > -# @errortypes: ARM processor error types to inject
-> > +# @validation:
-> > +#       Valid validation bits for ARM processor CPER.
-> > +#       Argument is optional. If not specified, the default is
-> > +#       calculated based on having the corresponding arguments filled.
-> > +#
-> > +# @affinity-level:
-> > +#       Error affinity level for errors that can be attributed to a sp=
-ecific
-> > +#       affinity level.
-> > +#       Argument is optional. If not specified and @validation not enf=
-orced,
-> > +#       this field will be marked as invalid at CPER record.
-> > +#
-> > +# @mpidr-el1:
-> > +#       Processor=E2=80=99s unique ID in the system.
-> > +#       Argument is optional. If not specified, it will use the cpu mp=
-idr
-> > +#       field from the emulation data. If zero and @validation is not
-> > +#       enforced, this field will be marked as invalid at CPER record.
-> > +#
-> > +# @midr-el1:  Identification info of the chip
-> > +#       Argument is optional. If not specified, it will use the cpu mp=
-idr
-> > +#       field from the emulation data. If zero and @validation is not
-> > +#       enforced, this field will be marked as invalid at CPER record.
-> > +#
-> > +# @running-state:
-> > +#       Indicates the running state of the processor.
-> > +#       Argument is optional. If not specified and @validation not enf=
-orced,
-> > +#       this field will be marked as invalid at CPER record.
-> > +#
-> > +# @psci-state:
-> > +#       Provides PSCI state of the processor, as defined in ARM PSCI d=
-ocument.
-> > +#       Argument is optional. If not specified, it will use the cpu po=
-wer
-> > +#       state field from the emulation data.
-> > +#
-> > +# @context:
-> > +#       Contains an array of processor context registers.
-> > +#       Argument is optional. If not specified, no context will be add=
-ed.
-> > +#
-> > +# @vendor-specific:
-> > +#       Contains a byte array of vendor-specific data.
-> > +#       Argument is optional. If not specified, no vendor-specific data
-> > +#       will be added.
-> > +#
-> > +# @error:
-> > +#       Contains an array of ARM processor error information (PEI) sec=
-tions.
-> > +#       Argument is optional. If not specified, defaults to a single
-> > +#       Program Error Information record defaulting to type=3Dcache-er=
-ror.
-> >  #
-> >  # Features:
-> >  #
-> > @@ -44,6 +262,16 @@
-> >  # Since: 9.1
-> >  ##
-> >  { 'command': 'arm-inject-error',
-> > -  'data': { 'errortypes': ['ArmProcessorErrorType'] },
-> > +  'data': {
-> > +    '*validation': ['ArmProcessorValidationBits'],
-> > +    '*affinity-level': 'uint8',
-> > +    '*mpidr-el1': 'uint64',
-> > +    '*midr-el1': 'uint64',
-> > +    '*running-state':  ['ArmProcessorRunningState'],
-> > +    '*psci-state': 'uint32',
-> > +    '*context': ['ArmProcessorContext'],
-> > +    '*vendor-specific': ['uint8'],
-> > +    '*error': ['ArmProcessorErrorInformation']
-> > +  },
-> >    'features': [ 'unstable' ]
-> >  } =20
->=20
-> This changes the command pretty much completely.  Why is the previous
-> state worth capturing in git?
+> >  
+> > +/* UEFI 2.9: N.2.4.4 ARM Processor Error Section */
+> > +static void acpi_ghes_build_append_arm_cper(uint8_t error_types, GArray *table)
+> > +{
+> > +    /*
+> > +     * ARM Processor Error Record
+> > +     */
+> > +
+> > +    /* Validation Bits */
+> > +    build_append_int_noprefix(table,
+> > +                              (1ULL << 3) | /* Vendor specific info Valid */
+> > +                              (1ULL << 2) | /* Running status Valid */
+> > +                              (1ULL << 1) | /* Error affinity level Valid */
+> > +                              (1ULL << 0), /* MPIDR Valid */
+> > +                              4);
+> > +    /* Error Info Num */
+> > +    build_append_int_noprefix(table, 1, 2);
+> > +    /* Context Info Num */
+> > +    build_append_int_noprefix(table, 1, 2);
+> > +    /* Section length */
+> > +    build_append_int_noprefix(table, ACPI_GHES_ARM_CPER_LENGTH, 4);
+> > +    /* Error affinity level */
+> > +    build_append_int_noprefix(table, 2, 1);
+> > +    /* Reserved */
+> > +    build_append_int_noprefix(table, 0, 3);
+> > +    /* MPIDR_EL1 */
+> > +    build_append_int_noprefix(table, 0xAB12, 8);  
+> 
+> These need to be real - I see you fix that in later
+> patches, but I'd be tempted to pull it back here.  Or maybe just
+> add a comment to say you will rewrite this later.
+> 
+> I know you aren't keen to smash patches with different authorship
+> together, but here I think you should just have this
+> correct from the start (so combine this and 5-7)
+> perhaps with some links back to the version where they are split?
 
-I was thinking on having the first patch with minimal stuff and
-letting patch 7 with everything, but after yours and Jonathan's
-comments, I opted to merge them altogether.
+I folded this with patch 7. I kept patch 5 as a separate one,
+as it is a different logical change.
 
->=20
-> > diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
-> > index 0e9490cebc72..77c800186f34 160000
-> > --- a/tests/lcitool/libvirt-ci
-> > +++ b/tests/lcitool/libvirt-ci
-> > @@ -1 +1 @@
-> > -Subproject commit 0e9490cebc726ef772b6c9e27dac32e7ae99f9b2
-> > +Subproject commit 77c800186f34b21be7660750577cc5582a914deb =20
->=20
-> Accident?
->=20
+After folding, this field is filled from the emulation value for
+it (by default, as it can be overridden via QMP).
 
-Yes. Working with submodules is sometimes tricky, as git commit -a wants
-to merge everything including submodule changes, and manually dropping
-submodule from existing commits is tricky. I added this to my environment,
-but this affects only git diff porcelain:
+> > +    /* MIDR_EL1 */
+> > +    build_append_int_noprefix(table, 0xCD24, 8);
+> > +    /* Running state */
+> > +    build_append_int_noprefix(table, 0x1, 4);
+> > +    /* PSCI state */
+> > +    build_append_int_noprefix(table, 0x1234, 4);
+> > +
+> > +    /* ARM Propcessor error information */
+> > +    /* Version */
+> > +    build_append_int_noprefix(table, 0, 1);
+> > +    /*  Length */
+> > +    build_append_int_noprefix(table, 32, 1);
+> > +    /* Validation Bits */
+> > +    build_append_int_noprefix(table,
+> > +                              (1ULL << 4) | /* Physical fault address Valid */  
+> 
+> Some tabs hiding in here that need to be spaces.
 
-	[diff]
-	        ignoreSubmodules =3D all
+Solved when folding with patch 7.
 
-I wonder is are there ways for git commit -a to also ignore submodules...
-perhaps some git hook?
+> > +                             (1ULL << 3) | /* Virtual fault address Valid */
+> > +                             (1ULL << 2) | /* Error information Valid */
+> > +                              (1ULL << 1) | /* Flags Valid */
+> > +                              (1ULL << 0), /* Multiple error count Valid */
+> > +                              2);
+> > +    /* Type */
+> > +    if (error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_CACHE_ERROR) ||
+> > +        error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_TLB_ERROR) ||
+> > +        error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_BUS_ERROR) ||
+> > +        error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_MICRO_ARCH_ERROR)) {
+> > +        build_append_int_noprefix(table, error_types, 1);
+> > +    } else {
+> > +        return;
+> > +    }
+> > +    /* Multiple error count */
+> > +    build_append_int_noprefix(table, 2, 2);
+> > +    /* Flags  */
+> > +    build_append_int_noprefix(table, 0xD, 1);
+> > +    /* Error information  */
+> > +    if (error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_CACHE_ERROR)) {
+> > +        build_append_int_noprefix(table, 0x0091000F, 8);
+> > +    } else if (error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_TLB_ERROR)) {
+> > +        build_append_int_noprefix(table, 0x0054007F, 8);
+> > +    } else if (error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_BUS_ERROR)) {
+> > +        build_append_int_noprefix(table, 0x80D6460FFF, 8);
+> > +    } else if (error_types & BIT(ARM_PROCESSOR_ERROR_TYPE_MICRO_ARCH_ERROR)) {
+> > +        build_append_int_noprefix(table, 0x78DA03FF, 8);
+> > +    } else {
+> > +        return;
+> > +    }
+> > +    /* Virtual fault address  */
+> > +    build_append_int_noprefix(table, 0x67320230, 8);
+> > +    /* Physical fault address  */
+> > +    build_append_int_noprefix(table, 0x5CDFD492, 8);
+> > +
+> > +    /* ARM Propcessor error context information */
+> > +    /* Version */
+> > +    build_append_int_noprefix(table, 0, 2);
+> > +    /* Validation Bits */
+> > +    /* AArch64 EL1 context registers Valid */
+> > +    build_append_int_noprefix(table, 5, 2);
+> > +    /* Register array size */
+> > +    build_append_int_noprefix(table, 592, 4);
+> > +    /* Register array */
+> > +    build_append_int_noprefix(table, 0x12ABDE67, 8);
+> > +}
+> > +
+> > +static int acpi_ghes_record_arm_error(uint8_t error_types,
+> > +                                      uint64_t error_block_address)
+> > +{
+> > +    GArray *block;
+> > +
+> > +    /* ARM processor Error Section Type */
+> > +    const uint8_t uefi_cper_arm_sec[] =
+> > +          UUID_LE(0xE19E3D16, 0xBC11, 0x11E4, 0x9C, 0xAA, 0xC2, 0x05, \
+> > +                  0x1D, 0x5D, 0x46, 0xB0);
+> > +
+> > +    /*
+> > +     * Invalid fru id: ACPI 4.0: 17.3.2.6.1 Generic Error Data,
+> > +     * Table 17-13 Generic Error Data Entry
+> > +     */
+> > +    QemuUUID fru_id = {};
+> > +    uint32_t data_length;
+> > +
+> > +    block = g_array_new(false, true /* clear */, 1);
+> > +
+> > +    /* This is the length if adding a new generic error data entry*/  
+> 
+> space before *
+
+Fixed.
+
+> 
+> > +    data_length = ACPI_GHES_DATA_LENGTH + ACPI_GHES_ARM_CPER_LENGTH;
+> > +    /*
+> > +     * It should not run out of the preallocated memory if adding a new generic
+> > +     * error data entry
+> > +     */
+> > +    assert((data_length + ACPI_GHES_GESB_SIZE) <=
+> > +            ACPI_GHES_MAX_RAW_DATA_LENGTH);
+> > +
+> > +    /* Build the new generic error status block header */
+> > +    acpi_ghes_generic_error_status(block, ACPI_GEBS_UNCORRECTABLE,
+> > +        0, 0, data_length, ACPI_CPER_SEV_RECOVERABLE);
+> > +
+> > +    /* Build this new generic error data entry header */
+> > +    acpi_ghes_generic_error_data(block, uefi_cper_arm_sec,
+> > +        ACPI_CPER_SEV_RECOVERABLE, 0, 0,
+> > +        ACPI_GHES_ARM_CPER_LENGTH, fru_id, 0);
+> > +
+> > +    /* Build the ARM processor error section CPER */
+> > +    acpi_ghes_build_append_arm_cper(error_types, block);
+> > +
+> > +    /* Write the generic error data entry into guest memory */
+> > +    cpu_physical_memory_write(error_block_address, block->data, block->len);
+> > +
+> > +    g_array_free(block, true);
+> > +
+> > +    return 0;
+> > +}  
+> 
+> 
+> > +bool ghes_record_arm_errors(uint8_t error_types, uint32_t notify)
+> > +{
+> > +    int read_ack_register = 0;
+> > +    uint64_t read_ack_register_addr = 0;
+> > +    uint64_t error_block_addr = 0;
+> > +
+> > +    if (!ghes_get_addr(notify, &error_block_addr, &read_ack_register_addr)) {
+> > +        return false;
+> > +    }
+> > +
+> > +    cpu_physical_memory_read(read_ack_register_addr,
+> > +                             &read_ack_register, sizeof(uint64_t));  
+> 
+> longer but I'd prefer sizeof(read_ack_register)
+> Maybe we can shorten to read_ack and read_ack_addr?
+> 
+> > +    /* zero means OSPM does not acknowledge the error */
+> > +    if (!read_ack_register) {
+> > +        error_report("Last time OSPM does not acknowledge the error,"
+> > +                     " record CPER failed this time, set the ack value to"
+> > +                     " avoid blocking next time CPER record! exit");
+> > +        read_ack_register = 1;
+> > +        cpu_physical_memory_write(read_ack_register_addr,
+> > +                                  &read_ack_register, sizeof(uint64_t));  
+> sizeof(read_ack_register)
+> 
+> > +        return false;
+> > +    }
+> > +
+> > +    read_ack_register = cpu_to_le64(0);
+> > +    cpu_physical_memory_write(read_ack_register_addr,
+> > +                              &read_ack_register, sizeof(uint64_t));  
+> 
+> sizeof(read_ack_register)
+> 
+> > +    return acpi_ghes_record_arm_error(error_types, error_block_addr);
+> > +}
+> > +  
+
+Changed as suggested.
+
+> 
+> > diff --git a/qapi/arm-error-inject.json b/qapi/arm-error-inject.json
+> > new file mode 100644
+> > index 000000000000..430e6cea6b60
+> > --- /dev/null
+> > +++ b/qapi/arm-error-inject.json  
+> 
+> > +##
+> > +# @arm-inject-error:
+> > +#
+> > +# Inject ARM Processor error.
+> > +#
+> > +# @errortypes: ARM processor error types to inject
+> > +#
+> > +# Features:
+> > +#
+> > +# @unstable: This command is experimental.
+> > +#
+> > +# Since: 9.1  
+> Update to 9.2 on next version.
+
+Ok.
 
 Thanks,
 Mauro
