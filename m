@@ -4,76 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42008C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:36:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AEADC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:39:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYRUI-0001Rp-FT; Mon, 29 Jul 2024 10:36:34 -0400
+	id 1sYRWy-0005nc-Jv; Mon, 29 Jul 2024 10:39:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYRUG-0001Px-SI
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:36:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYRUF-00079e-HE
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:36:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722263790;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/jY559H9vS6cKA++BRJ3mq/D6lSrfhqH/1UYiQk1pzU=;
- b=KMRyF9wyFY/fEjPcmjBs2Q9coKN8w+tfKrZUGbgE9Jb2zy0nVWwg6kawCAMJNy/s2KrCgF
- gDI6x7kW9GOOc8ZqPfM0687eLkUn/jsKOvFOJbRu4vyCIfOgRo9q9UbT0G89LW2B3MMWL4
- /zQwYKzjGIvfORc8P2ZiFJLlXPhDOlM=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-498-aeXrgS9_PxueyL8psSvsjA-1; Mon,
- 29 Jul 2024 10:36:22 -0400
-X-MC-Unique: aeXrgS9_PxueyL8psSvsjA-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F1A61955BEF; Mon, 29 Jul 2024 14:36:20 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D1D211955D42; Mon, 29 Jul 2024 14:36:18 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8FDE421E6693; Mon, 29 Jul 2024 16:36:16 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: Collin Walling <walling@linux.ibm.com>,  qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org,  thuth@redhat.com,  wangyanan55@huawei.com,
- philmd@linaro.org,  marcel.apfelbaum@gmail.com,  eduardo@habkost.net
-Subject: Re: [PATCH v1] target/s390x: move @deprecated-props to
- CpuModelExpansion Info
-In-Reply-To: <f42a8801-f49d-48b6-84a4-467c89e78657@redhat.com> (David
- Hildenbrand's message of "Mon, 29 Jul 2024 16:22:16 +0200")
-References: <20240726203646.20279-1-walling@linux.ibm.com>
- <877cd7qsnj.fsf@pond.sub.org>
- <00bc2317-dbba-43b3-b355-ddce45b5dfc6@redhat.com>
- <87a5i0cmht.fsf@pond.sub.org>
- <f42a8801-f49d-48b6-84a4-467c89e78657@redhat.com>
-Date: Mon, 29 Jul 2024 16:36:16 +0200
-Message-ID: <87msm0b6zj.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYRWw-0005mI-5k
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:39:18 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYRWu-0007bH-6h
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:39:17 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-427b1d4da32so10800155e9.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:39:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722263954; x=1722868754; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qEnyOvA1X8TKi0lsodpQGCil95YO2hb3XDAGCjbudWY=;
+ b=iXonCNgmBPImVG0FiVp0sSdjg+njcJ75tCZfdqt2S24a79C8Gl55o/F4us3QSPEnHO
+ h8V1gvj0syTvzBWPMojzVxaHTGQ6dryU8VmX/1f0OlhmsT0jv+pdrBmKWuRTipvvX6gj
+ hcrASS7RX6IPkcjB3yJ0DIMpqeYcywTGY0tYCe3TaG3b0hpj9DgGdTQASV3QU4T69KFz
+ HMFBlSR70H1kHKu+SHAYdXIyuuaSJDeU8+3MdWB7y/g7ypiVrsLMrAHUJNR9ySyehCec
+ AcVnfGfrQ/OQ/5UPNdk0pFi/FV4eeZwig3/VaGDACEmKoQoq7onH+60RXGWv8qKJnTmM
+ 9nVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722263954; x=1722868754;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qEnyOvA1X8TKi0lsodpQGCil95YO2hb3XDAGCjbudWY=;
+ b=YBv5jC6TQfXlRC0xTvW0RRscX3KVQhWtG7qeaM/NcUEOZv6+uHBDc93Z7b59OY9X8p
+ jlRTr93bx/ygjIwX20C2smjQVxKkwn8cnkuoVXrI0tXZnVRzlg2Le3yo1gIn/QQp8CqH
+ IfVx8sXYw1YhxRyDS36libmizKeVShMsF/QJFQLqm3omP3Yx7okGeKnTJ0iPoLuD8n0m
+ hPmYdKSYwVpwRPrW7VtZnAS9XE/UTrnc2x0rM+gdx0UCbif/szTV6GMsQ8PSkgjn0jQF
+ NJxPaNd1WarGeoZOguBWIRdvg5zZJMlgcz4iMqkJAPxqwU1oxiGi1dicjqcplvTCqiLk
+ 6kvg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXXIyib5JhSiK9lP22P1J+kWHAuHCROO/10lW9O18mlaTkzQlornl16xig8WNEwfUv8onwoIJDkeKU3wJ7679NN2/vPn5k=
+X-Gm-Message-State: AOJu0YwfDtNuLEuXIMqDlUsqkK9vGuMmk4DUESX9irKPKb30SxV93bpx
+ CaDDBqxUoVjVHe1VpuvAz5+wr7NetNZbTwAu/fIDftgTi5OK3azpYozKnRHer14=
+X-Google-Smtp-Source: AGHT+IGhrXmQOvCwdmc/mrVWsNfUM8NWLaSEVksL1o/NLVYFClufq9VU4ziPQrR4Ung5I6UYQQ0o4Q==
+X-Received: by 2002:a5d:55d1:0:b0:363:ac4d:c44f with SMTP id
+ ffacd0b85a97d-36b5d7cf02bmr4471297f8f.17.1722263954418; 
+ Mon, 29 Jul 2024 07:39:14 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.173.10])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36b36857eb7sm12396324f8f.66.2024.07.29.07.39.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jul 2024 07:39:13 -0700 (PDT)
+Message-ID: <a7f2d78a-4de6-4bc6-9d54-ee646a9001fe@linaro.org>
+Date: Mon, 29 Jul 2024 16:39:10 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 10/13] tests/avocado/tuxrun_baselines.py: use Avocado's
+ zstd support
+To: Cleber Rosa <crosa@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
+ Beraldo Leal <bleal@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ David Woodhouse <dwmw2@infradead.org>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, kvm@vger.kernel.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-arm@nongnu.org,
+ Radoslaw Biernacki <rad@semihalf.com>, Paul Durrant <paul@xen.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
+References: <20240726134438.14720-1-crosa@redhat.com>
+ <20240726134438.14720-11-crosa@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240726134438.14720-11-crosa@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,42 +107,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-David Hildenbrand <david@redhat.com> writes:
+On 26/7/24 15:44, Cleber Rosa wrote:
+> Signed-off-by: Cleber Rosa <crosa@redhat.com>
+> ---
+>   tests/avocado/tuxrun_baselines.py | 16 ++++++----------
+>   1 file changed, 6 insertions(+), 10 deletions(-)
+> 
+> diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
+> index 736e4aa289..bd02e88ed6 100644
+> --- a/tests/avocado/tuxrun_baselines.py
+> +++ b/tests/avocado/tuxrun_baselines.py
+> @@ -17,6 +17,7 @@
+>   from avocado_qemu import QemuSystemTest
+>   from avocado_qemu import exec_command, exec_command_and_wait_for_pattern
+>   from avocado_qemu import wait_for_console_pattern
+> +from avocado.utils import archive
+>   from avocado.utils import process
+>   from avocado.utils.path import find_command
+>   
+> @@ -40,17 +41,12 @@ def get_tag(self, tagname, default=None):
+>   
+>           return default
+>   
+> +    @skipUnless(archive._probe_zstd_cmd(),
 
->>>> The simplest way to address 4 is to tack 'if': 'TARGET_S390X' to
->>>> @deprecated-props.
->>>>
->>>
->>> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
->>> index 09dec2b9bb..0be95d559c 100644
->>> --- a/qapi/machine-target.json
->>> +++ b/qapi/machine-target.json
->>> @@ -253,7 +253,7 @@
->>>    ##
->>>    { 'struct': 'CpuModelExpansionInfo',
->>>      'data': { 'model': 'CpuModelInfo',
->>> -            '*deprecated-props': ['str'] },
->>> +            '*deprecated-props' : { 'type': ['str'], 'if': 'TARGET_S390X' } },
->>>      'if': { 'any': [ 'TARGET_S390X',
->>>                       'TARGET_I386',
->>>                       'TARGET_ARM',
->>>
->>>
->>> Should do the trick, right?
->> 
->> Yes.  Break the line before 'if', please.
->
-> Ack
->
-> [...]
->
->> 
->> Questions?
->
-> As clear as it can get, thanks! :)
->
-> That would leave us with:
+_probe_zstd_cmd() isn't public AFAICT, but more importantly
+this doesn't work because this method has been added in v101.0.
 
-Looks good to me!
+> +                'Could not find "zstd", or it is not able to properly '
+> +                'decompress decompress the rootfs')
+>       def setUp(self):
+>           super().setUp()
+>   
+> -        # We need zstd for all the tuxrun tests
+> -        # See https://github.com/avocado-framework/avocado/issues/5609
+> -        zstd = find_command('zstd', False)
+> -        if zstd is False:
+> -            self.cancel('Could not find "zstd", which is required to '
+> -                        'decompress rootfs')
+> -        self.zstd = zstd
+> -
+>           # Process the TuxRun specific tags, most machines work with
+>           # reasonable defaults but we sometimes need to tweak the
+>           # config. To avoid open coding everything we store all these
+> @@ -99,8 +95,8 @@ def fetch_tuxrun_assets(self, csums=None, dt=None):
+>                                            asset_hash = isum,
+>                                            algorithm = "sha256")
+>   
+> -        cmd = f"{self.zstd} -d {disk_image_zst} -o {self.workdir}/rootfs.ext4"
+> -        process.run(cmd)
+> +        archive.extract(disk_image_zst, os.path.join(self.workdir,
+> +                                                     "rootfs.ext4"))
+>   
+>           if dt:
+>               dsum = csums.get(dt, None)
 
 
