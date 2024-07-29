@@ -4,89 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9CBDC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34651C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:22:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYRFU-0001Bp-Db; Mon, 29 Jul 2024 10:21:16 -0400
+	id 1sYRGd-0004os-Qc; Mon, 29 Jul 2024 10:22:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1sYRFR-0001B7-D2
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:21:13 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1sYRFN-0004J0-1G
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:21:13 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-70d2357df99so54285b3a.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:21:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722262867; x=1722867667;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=el/tjyLq93BoeSSvMNgAzWQN3+X5h196F75XbiH/mgk=;
- b=26DlpBtoW/ByMWSFls3Jr5ixLO56SO3ec2KfZVefDVCXZHu96wzQe0EddcmgG+OLXu
- S2hqCMrgoZQl9xG1SS0zYeaJJ8qEh+7wxhFZy9kGYIQL2pLbL43OPblaaN4qwDakXHBM
- Ln7TbUHMKqC7FwzBik14ZYqCzWSGdOi8L35LxUo+J+4NdD/nZW5z0HXi+fdsCN8nIph3
- jehlrMisNTNKQKwdJRW1VXNP8AC3DKGiz+TtxOlhaNAHTOgM5mXIWRcaDsES8gyrA9pK
- ftf/6ddGmZbxK/QuTW8jwGLq2ia6I8NjHLv0OncCyV1gO86TFO2ufmzR7hmNWN84DLbp
- oS7Q==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sYRGc-0004gh-Sk
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:22:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sYRGZ-0004PZ-6E
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:22:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722262941;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=XorokIzlYwpbele6tLNnz8WKmNxwLFhApoSu+BhyQ7Q=;
+ b=LWqVCZML4qw+UNEqi+dYTvcMGTaDWwfKqUcC6Dgv1AH8TEsJDM9gpKnsEhE9Nnnx3d3ceh
+ 9UFCuQq7Qu2LLSKF0BQNT3quKnYH1mzacG1qoHCzISpdif0xEs4dPVpHftBlEkPN3U7fcG
+ jkbst8qpOtOTVkYj2S3llIST5qsRYu0=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-110-_8vButAKOb6ShtO5UnDz2g-1; Mon, 29 Jul 2024 10:22:19 -0400
+X-MC-Unique: _8vButAKOb6ShtO5UnDz2g-1
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-368665a3fdfso1454653f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:22:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722262867; x=1722867667;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=el/tjyLq93BoeSSvMNgAzWQN3+X5h196F75XbiH/mgk=;
- b=lWDMTUP9UyCnvlNZPiu4W+kXacnyHKx4nkvVdCBIUeClzEengmULmpydbnPY50EliP
- fWhxU+uC2e6oBiFCIo4R4xPBbqbkoPGz8DiHXH5Ce3dZWyRRLPYt+SFbwNJFFHcZfsVG
- 2E8KHH0/MPPnknkEBEexDHA5l3FER5SuayTvKIpXssPkPMjka0aNE//D9ugIjtaIjXuZ
- EJO6rR99x9c5CXW80LtNxcJfoiRIrmc+APwXFZKyhVG6gXzry8RxXpCvUgAR7gKOZueH
- a97ZtGLeISF+K+PtVqtUPSEB04LpmmkbMC21uzO4pLG/ZYH9TeR4hOC4TbWtac1uK0Hp
- ANOA==
+ d=1e100.net; s=20230601; t=1722262938; x=1722867738;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=XorokIzlYwpbele6tLNnz8WKmNxwLFhApoSu+BhyQ7Q=;
+ b=Y0wSZNzlV2xFlVixJSvdPVDqEUo0Ds5sJGEl/EO7SCCEYjqgNvnt+VYGc4TkLrDOY9
+ DkklJZ/m9oKS5DAwm4zFWJ5Wniz1zKu3k2xPn+rqLFJIoRSJD+RFJoG8lwhL7YurMIuD
+ QcV+U2P6c/REIANIAcge5PPgEjXnXHNmAIb5wEQ1dWRskNpOpaXYRZbOiRSPt9TDWFjC
+ n5AAIrGBlFFWcXGsmgGEVF9gY+6580KFpSJMiJW3IDswfOdfV/VuMAi537iYllPio+tE
+ VOMwI2ObVoIaRA9A4ck5ZYR2a6DV73cs2lYwWrnhZ0TLdwlNY0/t05QIMpiffAuB267p
+ nTww==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUUT3BSirV8A1c89noYLyQp1TIHl1PylNkFcC5YIXzsBtUNarh58R8b09duJOXYdvgGftPAOXVGpr/7@nongnu.org
-X-Gm-Message-State: AOJu0YyZwE5NP6vJ0znxuF6m3WkLFfSbC9GAUZM3GqQi4YSrj0uwYWAn
- N1wUXBSU6cERPlub0TF3PmmINmvrrrfjg6EoFUlYJYcocT8e5KYipTAa16gIaqg=
-X-Google-Smtp-Source: AGHT+IG4pVXeb1sBzLcu3LOFbY1lXOUt6oEB3A51r7Vfp8okS2gR4qXh6b50ihtlUimwm8wzWWyxyg==
-X-Received: by 2002:a05:6a00:9445:b0:70d:18e1:441c with SMTP id
- d2e1a72fcca58-70eac9ccfc0mr9146098b3a.2.1722262866848; 
- Mon, 29 Jul 2024 07:21:06 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:e17:9700:16d2:7456:6634:9626?
- ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
+ AJvYcCVTwNI+zlkUC+hTyAxCOSFyl3men4R/a6TE+ipcglYG+VXedbfMPrJvCBejRj0fwYz3PNU+XGTB85Z2TYUpuchrNoIwVWM=
+X-Gm-Message-State: AOJu0YzhRNw/6YfgQbFADH1x49ZOWPIKQKy1ILAUM+PAoX7OJhqkD9yW
+ 452lhhkKPxnuqcWHjhgjsEShoAYaB7b0vqgkEdkIkqw5raKtB20BBCyRcs699Yv5l86pTO5Rzem
+ zo8NOVkvbbRc3CxK5fQ29lsePjt7DQBBXT+nUvE+SAwpX+s9lGItY
+X-Received: by 2002:a05:6000:1082:b0:368:7943:146f with SMTP id
+ ffacd0b85a97d-36b5d03c2c9mr4546356f8f.26.1722262938567; 
+ Mon, 29 Jul 2024 07:22:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1OCncZleLYjN7F35l7QiUtsJX/cS5EY0ysxfX1ES6y5D4zGz8oKMhkiRY2cm+47iBxdg5HQ==
+X-Received: by 2002:a05:6000:1082:b0:368:7943:146f with SMTP id
+ ffacd0b85a97d-36b5d03c2c9mr4546338f8f.26.1722262937958; 
+ Mon, 29 Jul 2024 07:22:17 -0700 (PDT)
+Received: from ?IPV6:2a09:80c0:192:0:5dac:bf3d:c41:c3e7?
+ ([2a09:80c0:192:0:5dac:bf3d:c41:c3e7])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead89e564sm6857025b3a.189.2024.07.29.07.21.02
+ ffacd0b85a97d-36b36863b45sm12551442f8f.107.2024.07.29.07.22.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jul 2024 07:21:06 -0700 (PDT)
-Message-ID: <94b658a0-21c1-4cd0-8bc5-21c0c71b9cb8@rivosinc.com>
-Date: Mon, 29 Jul 2024 16:20:56 +0200
+ Mon, 29 Jul 2024 07:22:17 -0700 (PDT)
+Message-ID: <f42a8801-f49d-48b6-84a4-467c89e78657@redhat.com>
+Date: Mon, 29 Jul 2024 16:22:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] osdep: add a qemu_close_all_open_fd() helper
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240726075502.4054284-1-cleger@rivosinc.com>
- <0914a034-260f-44ef-8d75-2dca9d5fcb24@linaro.org>
+Subject: Re: [PATCH v1] target/s390x: move @deprecated-props to
+ CpuModelExpansion Info
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Collin Walling <walling@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org, thuth@redhat.com, wangyanan55@huawei.com,
+ philmd@linaro.org, marcel.apfelbaum@gmail.com, eduardo@habkost.net
+References: <20240726203646.20279-1-walling@linux.ibm.com>
+ <877cd7qsnj.fsf@pond.sub.org>
+ <00bc2317-dbba-43b3-b355-ddce45b5dfc6@redhat.com>
+ <87a5i0cmht.fsf@pond.sub.org>
+From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
-In-Reply-To: <0914a034-260f-44ef-8d75-2dca9d5fcb24@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=cleger@rivosinc.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <87a5i0cmht.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,94 +155,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+>>> The simplest way to address 4 is to tack 'if': 'TARGET_S390X' to
+>>> @deprecated-props.
+>>>
+>>
+>> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+>> index 09dec2b9bb..0be95d559c 100644
+>> --- a/qapi/machine-target.json
+>> +++ b/qapi/machine-target.json
+>> @@ -253,7 +253,7 @@
+>>    ##
+>>    { 'struct': 'CpuModelExpansionInfo',
+>>      'data': { 'model': 'CpuModelInfo',
+>> -            '*deprecated-props': ['str'] },
+>> +            '*deprecated-props' : { 'type': ['str'], 'if': 'TARGET_S390X' } },
+>>      'if': { 'any': [ 'TARGET_S390X',
+>>                       'TARGET_I386',
+>>                       'TARGET_ARM',
+>>
+>>
+>> Should do the trick, right?
+> 
+> Yes.  Break the line before 'if', please.
 
+Ack
 
-On 29/07/2024 16:00, Philippe Mathieu-Daudé wrote:
-> Hi Clément,
-> 
-> On 26/7/24 09:54, Clément Léger wrote:
->> Since commit 03e471c41d8b ("qemu_init: increase NOFILE soft limit on
->> POSIX"), the maximum number of file descriptors that can be opened are
->> raised to nofile.rlim_max. On recent debian distro, this yield a maximum
->> of 1073741816 file descriptors. Now, when forking to start
->> qemu-bridge-helper, this actually calls close() on the full possible file
->> descriptor range (more precisely [3 - sysconf(_SC_OPEN_MAX)]) which
->> takes a considerable amount of time. In order to reduce that time,
->> factorize existing code to close all open files descriptors in a new
->> qemu_close_all_open_fd() function. This function uses various methods
->> to close all the open file descriptors ranging from the most efficient
->> one to the least one. It also accepts an ordered array of file
->> descriptors that should not be closed since this is required by the
->> callers that calls it after forking. Since this function is not used
->> for Win32, do not implement it to force an error at link time if used.
->>
->> Signed-off-by: Clément Léger <cleger@rivosinc.com>
->> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->> v5:
->>   - Move qemu_close_all_open_fd() to oslib-posix.c since it does not
->>     compile on windows and is not even used on it.
->>   - v4:
->> https://lore.kernel.org/qemu-devel/20240717124534.1200735-1-cleger@rivosinc.com/
->>
->> v4:
->>   - Add a comment saying that qemu_close_all_open_fd() can take a NULL
->> skip
->>     array and nskip == 0
->>   - Added an assert in qemu_close_all_open_fd() to check for skip/nskip
->>     parameters
->>   - Fix spurious tabs instead of spaces
->>   - Applied checkpatch
->>   - v3:
->> https://lore.kernel.org/qemu-devel/20240716144006.6571-1-cleger@rivosinc.com/
->>
->> v3:
->>   - Use STD*_FILENO defines instead of raw values
->>   - Fix indentation of close_all_fds_after_fork()
->>   - Check for nksip in fallback code
->>   - Check for path starting with a '.' in qemu_close_all_open_fd_proc()
->>   - Use unsigned for cur_skip
->>   - Move ifdefs inside close_fds functions rather than redefining them
->>   - Remove uneeded 'if(nskip)' test
->>   - Add comments to close_range version
->>   - Reduce range of skip fd as we find them in
->>   - v2:
->> https://lore.kernel.org/qemu-devel/20240618111704.63092-1-cleger@rivosinc.com/
->>
->> v2:
->>   - Factorize async_teardown.c close_fds implementation as well as
->> tap.c ones
->>   - Apply checkpatch
->>   - v1:
->> https://lore.kernel.org/qemu-devel/20240617162520.4045016-1-cleger@rivosinc.com/
->>
->> ---
->>   include/qemu/osdep.h    |   9 +++
->>   net/tap.c               |  33 +++++-----
->>   system/async-teardown.c |  37 +-----------
->>   util/oslib-posix.c      | 131 ++++++++++++++++++++++++++++++++++++++++
->>   4 files changed, 160 insertions(+), 50 deletions(-)
-> 
-> I'm getting this error on msys2, not sure if related:
-> 
-> WARNING: Failed to terminate process: 1 error occurred:
->     * failed to attach the runner process to the console of its parent
-> process: The handle is invalid.
-> 
-> I find your patch hard to review. Do you mind splitting as trivial
-> changes? Something like:
-> 
-> - Expose close_all_open_fd() renamed as qemu_close_all_open_fd()
-> - Rework qemu_close_all_open_fd()
-> - Factor close_all_fds_after_fork() in net/tap.c
-> - Use qemu_close_all_open_fd() in net/tap.c
-
-Yes sure, I'll do that.
-
-Clément
+[...]
 
 > 
-> Thanks,
-> 
-> Phil.
+> Questions?
+
+As clear as it can get, thanks! :)
+
+That would leave us with:
+
+
+ From 8be206168e31b9c3ff89e2b99c57a85d30150194 Mon Sep 17 00:00:00 2001
+From: Collin Walling <walling@linux.ibm.com>
+Date: Fri, 26 Jul 2024 16:36:46 -0400
+Subject: [PATCH] target/s390x: move @deprecated-props to CpuModelExpansion
+  Info
+
+CpuModelInfo is used both as command argument and in command
+returns.
+
+Its @deprecated-props array does not make any sense in arguments,
+and is silently ignored.  We actually want it only as return value
+of query-cpu-model-expansion.
+
+Move it from CpuModelInfo to CpuModelExpansionType, and document
+its dependence on expansion type property.
+
+This was identified late during review [1] and we have to fix it up
+while it's not part of an official QEMU release yet.
+
+[1] https://lore.kernel.org/qemu-devel/20240719181741.35146-1-walling@linux.ibm.com/
+
+Message-ID: <20240726203646.20279-1-walling@linux.ibm.com>
+Fixes: eed0e8ffa38f ("target/s390x: filter deprecated properties based on model expansion type")
+Signed-off-by: Collin Walling <walling@linux.ibm.com>
+[ david: - add "Fixes", adjust description, reference v3 instead
+          - make property s390x-only and non-optional ]
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+  qapi/machine-target.json         | 19 +++++++++++--------
+  target/s390x/cpu_models_sysemu.c | 29 ++++++++++++++++++-----------
+  2 files changed, 29 insertions(+), 19 deletions(-)
+
+diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+index a552e2b0ce..00bbecc905 100644
+--- a/qapi/machine-target.json
++++ b/qapi/machine-target.json
+@@ -20,17 +20,11 @@
+  #
+  # @props: a dictionary of QOM properties to be applied
+  #
+-# @deprecated-props: a list of properties that are flagged as deprecated
+-#     by the CPU vendor.  These properties are either a subset of the
+-#     properties enabled on the CPU model, or a set of properties
+-#     deprecated across all models for the architecture.
+-#
+  # Since: 2.8
+  ##
+  { 'struct': 'CpuModelInfo',
+    'data': { 'name': 'str',
+-            '*props': 'any',
+-            '*deprecated-props': ['str'] } }
++            '*props': 'any' } }
+  
+  ##
+  # @CpuModelExpansionType:
+@@ -248,10 +242,19 @@
+  #
+  # @model: the expanded CpuModelInfo.
+  #
++# @deprecated-props: a list of properties that are flagged as deprecated
++#     by the CPU vendor.  The list depends on the CpuModelExpansionType:
++#     "static" properties are a subset of the enabled-properties for
++#     the expanded model; "full" properties are a set of properties
++#     that are deprecated across all models for the architecture.
++#     (since: 9.1).
++#
+  # Since: 2.8
+  ##
+  { 'struct': 'CpuModelExpansionInfo',
+-  'data': { 'model': 'CpuModelInfo' },
++  'data': { 'model': 'CpuModelInfo',
++            'deprecated-props' : { 'type': ['str'],
++                                   'if': 'TARGET_S390X' } },
+    'if': { 'any': [ 'TARGET_S390X',
+                     'TARGET_I386',
+                     'TARGET_ARM',
+diff --git a/target/s390x/cpu_models_sysemu.c b/target/s390x/cpu_models_sysemu.c
+index 94dd798b4c..6c8e5c7260 100644
+--- a/target/s390x/cpu_models_sysemu.c
++++ b/target/s390x/cpu_models_sysemu.c
+@@ -174,15 +174,11 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
+                                  bool delta_changes)
+  {
+      QDict *qdict = qdict_new();
+-    S390FeatBitmap bitmap, deprecated;
++    S390FeatBitmap bitmap;
+  
+      /* always fallback to the static base model */
+      info->name = g_strdup_printf("%s-base", model->def->name);
+  
+-    /* features flagged as deprecated */
+-    bitmap_zero(deprecated, S390_FEAT_MAX);
+-    s390_get_deprecated_features(deprecated);
+-
+      if (delta_changes) {
+          /* features deleted from the base feature set */
+          bitmap_andnot(bitmap, model->def->base_feat, model->features,
+@@ -197,9 +193,6 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
+          if (!bitmap_empty(bitmap, S390_FEAT_MAX)) {
+              s390_feat_bitmap_to_ascii(bitmap, qdict, qdict_add_enabled_feat);
+          }
+-
+-        /* deprecated features that are a subset of the model's enabled features */
+-        bitmap_and(deprecated, deprecated, model->features, S390_FEAT_MAX);
+      } else {
+          /* expand all features */
+          s390_feat_bitmap_to_ascii(model->features, qdict,
+@@ -213,9 +206,6 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
+      } else {
+          info->props = QOBJECT(qdict);
+      }
+-
+-    s390_feat_bitmap_to_ascii(deprecated, &info->deprecated_props, list_add_feat);
+-    info->has_deprecated_props = !!info->deprecated_props;
+  }
+  
+  CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+@@ -226,6 +216,7 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+      CpuModelExpansionInfo *expansion_info = NULL;
+      S390CPUModel s390_model;
+      bool delta_changes = false;
++    S390FeatBitmap deprecated_feats;
+  
+      /* convert it to our internal representation */
+      cpu_model_from_info(&s390_model, model, "model", &err);
+@@ -245,6 +236,22 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+      expansion_info = g_new0(CpuModelExpansionInfo, 1);
+      expansion_info->model = g_malloc0(sizeof(*expansion_info->model));
+      cpu_info_from_model(expansion_info->model, &s390_model, delta_changes);
++
++    /* populated list of deprecated features */
++    bitmap_zero(deprecated_feats, S390_FEAT_MAX);
++    s390_get_deprecated_features(deprecated_feats);
++
++    if (delta_changes) {
++        /*
++         * Only populate deprecated features that are a
++         * subset of the features enabled on the CPU model.
++         */
++        bitmap_and(deprecated_feats, deprecated_feats,
++                   s390_model.features, S390_FEAT_MAX);
++    }
++
++    s390_feat_bitmap_to_ascii(deprecated_feats,
++                              &expansion_info->deprecated_props, list_add_feat);
+      return expansion_info;
+  }
+  
+-- 
+2.45.2
+
+
+-- 
+Cheers,
+
+David / dhildenb
+
 
