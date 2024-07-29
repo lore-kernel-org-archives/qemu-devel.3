@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A90C9C3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:46:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00651C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:46:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYRby-0004Ak-RS; Mon, 29 Jul 2024 10:44:30 -0400
+	id 1sYRcE-0005Lc-01; Mon, 29 Jul 2024 10:44:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYRbv-0003xV-TC
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:27 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1sYRcC-00059h-Cd
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:44 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYRbq-0008No-4u
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:27 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-36865a516f1so2025736f8f.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:44:20 -0700 (PDT)
+ id 1sYRbx-0008T6-OZ
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:44 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2ef2d582e31so43256691fa.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:44:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722264260; x=1722869060; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722264267; x=1722869067; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/v/k/yniP5nVbC0OuXzGFTLMBK/X3Q5pTmqVGs8gUbQ=;
- b=SzdKklmzyf7WP1srhXZZT5zSqzINWURblWDIr0y8H/CsfrkjTcAqBu1DwQ+4pZb7ZT
- /RZAgSGgRmsRLkAmO/NczNTi9W/IS07/2MPSoMAZo+xS5fYDekJD0uheeWp2BkGckafa
- xM1YN0kxAan2LJ0QcD1Ep5Eor0+EsoIeWYYZG0uPsnrTmi090w7miujpeva9oGmLJkxR
- BkYEh8quAh/rcMqTLUCt4jiV5y5Wey/ifVYfCnEVhZh5jTGB/6/oyoSL0K9DoLeuOP/Q
- XdVOlI4vLW2Y38mTOfpzZpnA6WBJhUxrMB7tycaEziqwLHB/SZiCxXB+BiyGfErLdrPA
- 8RIA==
+ bh=4I0UyAB3UWkIb2mikOF5Y9Vqa9qt5KlackYDMoOxLtQ=;
+ b=sG1vEoLA2oL9obrMh0u1O9ESES+2c28ICDgmpokytLO7Btls7/4bf7ufsomDqX7FNT
+ rWFwZ15lHEsZ9zEEaIp0hnuw1tX9fso+amNLUAbUr7rq4s0Z6F0OAa9JNJc497BkZE8n
+ 1aGjiP064JxTrCWUkaeKEF/60G0h2/13c4wfApbs5/Ez5ksaTfdh08KD7nmNK2cWCDK8
+ CLPr0Qt32pcYGWE7sZomFX3+MFOebfETJABkZJTbTDrvivbRrBtHEkDq1yH72h3lnMXP
+ rQ/2TH6qJHo6RNKs/2lwNiRgi4IyrWHHKRn+s/1nVLQ2Md8YycHSBNCZnJPTmWI0REuB
+ rXnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722264260; x=1722869060;
+ d=1e100.net; s=20230601; t=1722264267; x=1722869067;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/v/k/yniP5nVbC0OuXzGFTLMBK/X3Q5pTmqVGs8gUbQ=;
- b=hiRUHA1OgcewKCjn0wk+ky7ZFDBjvR0iFSE6l4PJ6Ktn/zDkoYFPCyI0uC4fUzRZYL
- 28dLqAMEBuoFw0VjWBAvqROhYVPodvrkGuSE3szKq0tyXhTXZAGOwLq3wOaqxH5aXPOY
- 2CURCI1hdH0B+ub1Sgicxdv1o6o3OytX5w691pgNq4ohWjeBdTmqkuk3Y9lVAf+nmquH
- ucMeACOAr81JO+HOHBMwN7zxNw8Q4/Td5lPXna5+2OZa71PMpdCtH7IpMIC3HzlHx5z8
- C8VX2b8cqYknDCYNKHLDmbP8Zh+5j4eF6YKIyoSkMt+cMHsEd8MgdoFYHGWauei5LelP
- 5JJA==
-X-Gm-Message-State: AOJu0YyQgxR/49PMQpzNpI/qIiX2p2jEqP4wfoZcByslme7Tka0IXAlB
- wlgf6o0sZkbBTUPmFMuhuWs4Yi0QbwsVUcg3LleVugh9CTUI1JOrHgm1hKyjEDM=
-X-Google-Smtp-Source: AGHT+IEgeVGE/c3HbNhA+uFrQD89n8ygvnu1W/8UdExBBLwR3Otvv7+kSvxZWXQE7OnZqNjkBHF4PA==
-X-Received: by 2002:a05:6000:1b91:b0:368:7e54:baaa with SMTP id
- ffacd0b85a97d-36b5cf254e7mr6122234f8f.4.1722264258943; 
- Mon, 29 Jul 2024 07:44:18 -0700 (PDT)
+ bh=4I0UyAB3UWkIb2mikOF5Y9Vqa9qt5KlackYDMoOxLtQ=;
+ b=Qv59pi2DU1SEM6HPH6epFoh2Vh1V/5pnn3Fpieb53Z8/eaXbW++P6Eu2q9YORRnLbm
+ PHNZgpefn2kfqtui3r1b2w4rn6YepOBK2eBiAQ/GNzJrzr2hqFNmBvVEuaQ6Ld8BmcUu
+ I0HhdlDSR+iY/SVOOjuJaDYk0hn8gqTrgpkoNmNqy63UW7rZMrVau1wzTITVZtIlJ2Jo
+ yDcos5qY1R03xIfE1NvL41uHXaflTqSXQnJzVwOiaERQ3Sj0cWhsspSlQ07SPeCeMVNX
+ SkoEuJt5k+SK+GUcR3wuj4KPwuCObTFczYiEMr4h3rlMhd9K4Eq/yiRftpRIFNdPnSFq
+ IJGQ==
+X-Gm-Message-State: AOJu0YzEH98twn2LWbnh9xReLW6AK43j4XO4/Q/yiYSTMSYJp0scG4iX
+ TdQR7cIig58NM0dwAp+av/nw87txi5fCeIo1JdPAbQwntqB59x5294Bniy8E5hY=
+X-Google-Smtp-Source: AGHT+IFl4LCULlJKEByDcLtWCZgItRAwJArV3m4eNczbzVK0sd35IGpGBF3Tkz0ksybl+CJB4WXE/g==
+X-Received: by 2002:a05:651c:1541:b0:2ef:2d6e:58fe with SMTP id
+ 38308e7fff4ca-2f12ee55aabmr58999511fa.32.1722264266422; 
+ Mon, 29 Jul 2024 07:44:26 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acab22bfdsm516374666b.34.2024.07.29.07.44.15
+ 4fb4d7f45d1cf-5ac64eb3980sm5826419a12.60.2024.07.29.07.44.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jul 2024 07:44:17 -0700 (PDT)
+ Mon, 29 Jul 2024 07:44:22 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6E59A5F94C;
- Mon, 29 Jul 2024 15:44:15 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 5BB2B5FA13;
+ Mon, 29 Jul 2024 15:44:16 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
@@ -79,18 +79,17 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
  David Hildenbrand <david@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH 04/14] tests/tcg/loongarch64: Use --no-warn-rwx-segments to
- link system tests
-Date: Mon, 29 Jul 2024 15:44:04 +0100
-Message-Id: <20240729144414.830369-5-alex.bennee@linaro.org>
+Subject: [PATCH 13/14] contrib/plugins: add compat for g_memdup2
+Date: Mon, 29 Jul 2024 15:44:13 +0100
+Message-Id: <20240729144414.830369-14-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240729144414.830369-1-alex.bennee@linaro.org>
 References: <20240729144414.830369-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,36 +112,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+We were premature if bumping this because some of our builds are still
+on older glibs. Just copy the compat handler for now and we can remove
+it later.
 
-Recent debian cross-linker for loongarch issues
-
-  ld: warning: hello has a LOAD segment with RWX permissions
-
-This is partially related to tests/tcg/loongarch64/system/kernel.ld,
-but is not fixed by explicitly adding a single LOAD PHDR.
-Disable the warning, since it does not apply to kernel images.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240724010733.22129-3-richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Fixes: ee293103b0 (plugins: update lockstep to use g_memdup2)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2161
 ---
- tests/tcg/loongarch64/Makefile.softmmu-target | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/plugins/lockstep.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/tests/tcg/loongarch64/Makefile.softmmu-target b/tests/tcg/loongarch64/Makefile.softmmu-target
-index d5d5c1a7f6..6d4a20fde7 100644
---- a/tests/tcg/loongarch64/Makefile.softmmu-target
-+++ b/tests/tcg/loongarch64/Makefile.softmmu-target
-@@ -16,7 +16,7 @@ LINK_SCRIPT=$(LOONGARCH64_SYSTEM_SRC)/kernel.ld
- LDFLAGS=-Wl,-T$(LINK_SCRIPT)
- TESTS+=$(LOONGARCH64_TESTS) $(MULTIARCH_TESTS)
- CFLAGS+=-nostdlib -g -O1 -march=loongarch64 -mabi=lp64d $(MINILIB_INC)
--LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
-+LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc -Wl,--no-warn-rwx-segments
+diff --git a/contrib/plugins/lockstep.c b/contrib/plugins/lockstep.c
+index 6a7e9bbb39..62981d4e09 100644
+--- a/contrib/plugins/lockstep.c
++++ b/contrib/plugins/lockstep.c
+@@ -101,6 +101,31 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+     plugin_cleanup(id);
+ }
  
- # building head blobs
- .PRECIOUS: $(CRT_OBJS)
++/*
++ * g_memdup has been deprecated in Glib since 2.68 and
++ * will complain about it if you try to use it. However until
++ * glib_req_ver for QEMU is bumped we make a copy of the glib-compat
++ * handler.
++ */
++static inline gpointer g_memdup2_qemu(gconstpointer mem, gsize byte_size)
++{
++#if GLIB_CHECK_VERSION(2, 68, 0)
++    return g_memdup2(mem, byte_size);
++#else
++    gpointer new_mem;
++
++    if (mem && byte_size != 0) {
++        new_mem = g_malloc(byte_size);
++        memcpy(new_mem, mem, byte_size);
++    } else {
++        new_mem = NULL;
++    }
++
++    return new_mem;
++#endif
++}
++#define g_memdup2(m, s) g_memdup2_qemu(m, s)
++
+ static void report_divergance(ExecState *us, ExecState *them)
+ {
+     DivergeState divrec = { log, 0 };
 -- 
 2.39.2
 
