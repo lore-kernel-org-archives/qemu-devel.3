@@ -4,60 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16743C3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 16:31:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC98BC3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 16:32:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYTHd-0003kc-W1; Mon, 29 Jul 2024 12:31:38 -0400
+	id 1sYTIX-0006YW-TW; Mon, 29 Jul 2024 12:32:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sYTHK-0003j6-J1; Mon, 29 Jul 2024 12:31:18 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sYTHG-0005Q4-Hj; Mon, 29 Jul 2024 12:31:18 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WXkM05dSpz6K5nF;
- Tue, 30 Jul 2024 00:28:44 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 22A07140B38;
- Tue, 30 Jul 2024 00:31:11 +0800 (CST)
-Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 29 Jul
- 2024 17:31:10 +0100
-Date: Mon, 29 Jul 2024 17:31:09 +0100
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-CC: Shiju Jose <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- Eric Blake <eblake@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Markus
- Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- <linux-kernel@vger.kernel.org>, <qemu-arm@nongnu.org>,
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v4 6/6] acpi/ghes: Add a logic to inject ARM processor CPER
-Message-ID: <20240729173109.00006911@Huawei.com>
-In-Reply-To: <7e0c1ae181e9792e876ec0e7d2a9e7f32d7b60ac.1722259246.git.mchehab+huawei@kernel.org>
-References: <cover.1722259246.git.mchehab+huawei@kernel.org>
- <7e0c1ae181e9792e876ec0e7d2a9e7f32d7b60ac.1722259246.git.mchehab+huawei@kernel.org>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sYTIS-0006Ac-1z
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 12:32:28 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sYTIN-0005U9-Tt
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 12:32:27 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-70d399da0b5so2975453b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 09:32:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722270739; x=1722875539;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NP0mnjphVBIb1VHUp9w1Gbv9MySDgOtzxAXgvoRoCWk=;
+ b=kl3CesCekBJDDxKvOYQz8Hl2iLD2rOxZu+bYHKTSjuPVm2/yHm4FlAmvDb77/pJsoV
+ 54/T8JefZP+Twp1hiPWOwjl/LkzkbRlFSPCuAL+L2Q3onIaBdzl4YI5IA0LxR0v2/xSZ
+ VMdR5I8eVpY1XVON8P5VZYJUUKv9Yt+oNurRu94/Hx/HUBM8eQtog/S6TUURffEG4Zpc
+ RZryfq7v7AZPim28IHAAta5tq0g8WgMOp4HVLVPFnE9rdEkKrGvB+wHotqUV1lWmx0/2
+ A5Q7beHkFlaHBMYez9vlrLg3CdBswcTd8G3MFEd0dQu6hDqZD6rMk6MlAgOUk8h15GBA
+ hGZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722270739; x=1722875539;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NP0mnjphVBIb1VHUp9w1Gbv9MySDgOtzxAXgvoRoCWk=;
+ b=IfLifsWBd0Bx00j6MTMHA1OmufUc2v1Qf3/5jZPBJ3ylcH05/LQcYMGuUFWjAg70IM
+ kn6tnWHvuN36vuKtFCGV9kRhAQtT7lGam9rRQ83mbWm9bR0XDCJThq978iDwMenqSJ3m
+ 7D3fSCpQy0KW2CP2tywGAim+C8mjd29GdfoSEImejVfToAbsoDue1iEYhNph95uXGR9N
+ QPr06wt7aLmHVW8rSM823xL2aAs9b1UNDSHOscWXxNXnKw+5gqvsdLoAI/CYu2GKEVFZ
+ ud6JklM6EHDQiVKhx3AvaX3c5sysIeDv+9HcKOA3jsXfWfcVDALlNn9NIAUHUHmOQdKd
+ +i1Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVy+nwuJ9Fehgs54J3CCzXD7wDONe2aAL4pkMLS4Xyt9jnZp32M81k9cD+Q4z6+hoy+VKCi4bPYHXEC63zosc80pMehfDY=
+X-Gm-Message-State: AOJu0YzNTewPOKBqb1E5IO71mEjD1+62nIJkUMcS7Kh+g6J9K1fjq6h0
+ duVDbubIvq97dNV2i44KCE5yLqT09vvRS4bcXQT0gxN6Z75y0FjxkTLfYiTGhnQ=
+X-Google-Smtp-Source: AGHT+IE8USeonXb4Pm9/EG3A3k5KbT5WMV9i2oo6wxOG6M5W2IsdmVYvAs1TCLj8GNJj8VLKjiJU2g==
+X-Received: by 2002:a05:6a21:3406:b0:1c3:18f9:16d8 with SMTP id
+ adf61e73a8af0-1c4a1511038mr10516471637.52.1722270739318; 
+ Mon, 29 Jul 2024 09:32:19 -0700 (PDT)
+Received: from ?IPV6:2400:4050:a840:1e00:32ed:25ae:21b1:72d6?
+ ([2400:4050:a840:1e00:32ed:25ae:21b1:72d6])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70ead7120easm7010598b3a.55.2024.07.29.09.32.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jul 2024 09:32:18 -0700 (PDT)
+Message-ID: <361cec8b-cd35-416b-b3d2-9e6d87981edd@daynix.com>
+Date: Tue, 30 Jul 2024 01:32:15 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/6] target/arm: Always add pmu property for Armv7-A/R+
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org
+References: <20240720-pmu-v4-0-2a2b28f6b08f@daynix.com>
+ <20240720-pmu-v4-3-2a2b28f6b08f@daynix.com>
+ <CAFEAcA_HWfCU09NfZDf6EC=rpvHn148avySCztQ8PqPBMFx4_Q@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CAFEAcA_HWfCU09NfZDf6EC=rpvHn148avySCztQ8PqPBMFx4_Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::431;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,384 +99,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Jul 2024 15:21:10 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-
-> Add an ACPI APEI GHES error injection logic for ARM
-> processor CPER, allowing to set fields at from
-> UEFI spec 2.10 tables N.16 and N.17 to any valid
-> value.
+On 2024/07/30 0:13, Peter Maydell wrote:
+> On Sat, 20 Jul 2024 at 10:31, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>>
+>> kvm-steal-time and sve properties are added for KVM even if the
+>> corresponding features are not available. Always add pmu property for
+>> Armv8. Note that the property is added only for Armv7-A/R+ as QEMU
+>> currently emulates PMU only for such versions, and a different
+>> version may have a different definition of PMU or may not have one at
+>> all.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> ---
+>>   target/arm/cpu.c | 5 ++++-
+>>   1 file changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+>> index 19191c239181..c1955a82fb3c 100644
+>> --- a/target/arm/cpu.c
+>> +++ b/target/arm/cpu.c
+>> @@ -1741,6 +1741,10 @@ void arm_cpu_post_init(Object *obj)
+>>
+>>       if (!arm_feature(&cpu->env, ARM_FEATURE_M)) {
+>>           qdev_property_add_static(DEVICE(obj), &arm_cpu_reset_hivecs_property);
+>> +
+>> +        if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
+>> +            object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
+>> +        }
 > 
-> As some GHES functions require handling addresses, add
-> a helper function to support it.
+> Not every V7 CPU has a PMU[*]. Unfortunately for PMUv1 the
+> architecture did not define an ID register field for it,
+> so there's no ID field you can look at to distinguish
+> "has PMUv1" from "has no PMU". (For PMUv2 and later you
+> can look at ID_DFR0 bits [27:24]; or for AArch64
+> ID_AA64DFR0_EL1.PMUVer.) This is why we have the
+> ARM_FEATURE_PMU feature bit. So the correct way to determine
+> "does this CPU have a PMU and so it's OK to add the 'pmu'
+> property" is to look at ARM_FEATURE_PMU. Which is what
+> we already do.
 > 
-> Before starting erorr inject, the QAPI requires to negociate
-> QMP with:
-> 
-> { "execute": "qmp_capabilities" }
-> 
-> Afterwards, errors can be injected with:
-> 
-> 	{ "execute": "arm-inject-error" }
-> 
-> The error injection events supports several optional arguments,
-> having Processor Error Information (PEI) mapped into an array.
-> 
-> So, it is possible to inject multiple errors at the same CPER record,
-> as defined at UEFI spec, with:
-> 
-> 	{ "execute": "arm-inject-error", "arguments": {
-> 	   "error": [ {"type": [ "cache-error" ]},
-> 		      {"type": [ "tlb-error" ]} ] } }
-> 
-> The above generates a single CPER record with two PEI info, one
-> reporting a cache error, and the other one a TLB error, using
-> default values for other fields.
-> 
-> As all fields from ARM Processor CPER are mapped, so, the error
-> could contain physical/virtual addresses, register dumps,
-> vendor-specific data, etc.
-> 
-> This patch is co-authored:
-> - ghes logic to inject a simple ARM record by Shiju Jose;
-> - generic logic to handle block addresses by Jonathan Cameron;
-> - logic to allow changing all fields by Mauro Carvalho Chehab;
-> 
-> Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Co-authored-by: Shiju Jose <shiju.jose@huawei.com>
-> Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Alternatively, if you want to make the property always
+> present even on CPUs where it can't be set, you need
+> to have some mechanism for having the user's attempt to
+> enable it fail. But mostly for Arm at the moment we
+> have properties which are only present when they're
+> meaningful. (I'm not opposed to changing this -- it would
+> arguably be cleaner to have properties be per-class,
+> not per-object, to aid in introspection. But it's a big
+> task and probably not easy.)
 
-A few minor comments inline.
-This crossed (I think) with a reply from Markus though so there are
-some other bits to address from that.
+Why not disabling PMU fail for V7 then? If the guest cannot know the 
+presence or the lack of PMUv1, disabling PMUv1 for a V7 CPU that has one 
+is as wrong as enabling PMUv1 for a V7 CPU lacking PMUv1.
 
-Jonathan
-
-> diff --git a/configs/targets/aarch64-softmmu.mak b/configs/targets/aarch64-softmmu.mak
-> index 84cb32dc2f4f..b4b3cd97934a 100644
-> --- a/configs/targets/aarch64-softmmu.mak
-> +++ b/configs/targets/aarch64-softmmu.mak
-> @@ -5,3 +5,4 @@ TARGET_KVM_HAVE_GUEST_DEBUG=y
->  TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml gdb-xml/aarch64-pauth.xml
->  # needed by boot.c
->  TARGET_NEED_FDT=y
-> +CONFIG_ARM_EINJ=y
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index 9346f45c59a5..e435c9aa0961 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -27,6 +27,7 @@
->  #include "hw/acpi/generic_event_device.h"
->  #include "hw/nvram/fw_cfg.h"
->  #include "qemu/uuid.h"
-> +#include "qapi/qapi-types-arm-error-inject.h"
->  
->  #define ACPI_GHES_ERRORS_FW_CFG_FILE        "etc/hardware_errors"
->  #define ACPI_GHES_DATA_ADDR_FW_CFG_FILE     "etc/hardware_errors_addr"
-> @@ -53,6 +54,12 @@
->  /* The memory section CPER size, UEFI 2.6: N.2.5 Memory Error Section */
->  #define ACPI_GHES_MEM_CPER_LENGTH           80
->  
-> +/*
-> + * ARM Processor error section CPER sizes - UEFI 2.10: N.2.4.4
-> + */
-> +#define ACPI_GHES_ARM_CPER_LENGTH           40
-> +#define ACPI_GHES_ARM_CPER_PEI_LENGTH       32
-> +
->  /* Masks for block_status flags */
->  #define ACPI_GEBS_UNCORRECTABLE         1
->  
-> @@ -234,6 +241,152 @@ static int acpi_ghes_record_mem_error(uint64_t error_block_address,
->      return 0;
->  }
->  
-> +/* UEFI 2.9: N.2.4.4 ARM Processor Error Section */
-> +static void acpi_ghes_build_append_arm_cper(ArmError err, uint32_t cper_length,
-> +                                            GArray *table)
-> +{
-> +    unsigned int i, j;
-> +
-> +    /*
-> +     * ARM Processor Error Record
-> +     */
-> +
-> +    /* Validation Bits */
-
-Given nice naming, maybe drop the comments where the field
-name makes it obvious?
-
-> +    build_append_int_noprefix(table, err.validation, 4);
-> +
-> +    /* Error Info Num */
-> +    build_append_int_noprefix(table, err.err_info_num, 2);
-> +
-> +    /* Context Info Num */
-> +    build_append_int_noprefix(table, err.context_info_num, 2);
-> +
-> +    /* Section length */
-> +    build_append_int_noprefix(table, cper_length, 4);
-> +
-> +    /* Error affinity level */
-> +    build_append_int_noprefix(table, err.affinity_level, 1);
-> +
-> +    /* Reserved */
-> +    build_append_int_noprefix(table, 0, 3);
-> +
-> +    /* MPIDR_EL1 */
-> +    build_append_int_noprefix(table, err.mpidr_el1, 8);
-> +
-> +    /* MIDR_EL1 */
-> +    build_append_int_noprefix(table, err.midr_el1, 8);
-> +
-> +    /* Running state */
-> +    build_append_int_noprefix(table, err.running_state, 4);
-> +
-> +    /* PSCI state: only valid when running state is zero  */
-> +    build_append_int_noprefix(table, err.psci_state, 4);
-> +
-> +    for (i = 0; i < err.err_info_num; i++) {
-> +        /* ARM Propcessor error information */
-> +        /* Version */
-> +        build_append_int_noprefix(table, 0, 1);
-> +
-> +        /*  Length */
-> +        build_append_int_noprefix(table, ACPI_GHES_ARM_CPER_PEI_LENGTH, 1);
-> +
-> +        /* Validation Bits */
-> +        build_append_int_noprefix(table, err.pei[i].validation, 2);
-> +
-> +        /* Type */
-> +        build_append_int_noprefix(table, err.pei[i].type, 1);
-> +
-> +        /* Multiple error count */
-> +        build_append_int_noprefix(table, err.pei[i].multiple_error, 2);
-> +
-> +        /* Flags  */
-> +        build_append_int_noprefix(table, err.pei[i].flags, 1);
-> +
-> +        /* Error information  */
-> +        build_append_int_noprefix(table, err.pei[i].error_info, 8);
-> +
-> +        /* Virtual fault address  */
-> +        build_append_int_noprefix(table, err.pei[i].virt_addr, 8);
-> +
-> +        /* Physical fault address  */
-> +        build_append_int_noprefix(table, err.pei[i].phy_addr, 8);
-> +    }
-> +
-> +    for (i = 0; i < err.context_info_num; i++) {
-> +        /* ARM Propcessor error context information */
-> +        /* Version */
-> +        build_append_int_noprefix(table, 0, 2);
-> +
-> +        /* Validation type */
-> +        build_append_int_noprefix(table, err.context[i].type, 2);
-> +
-> +        /* Register array size */
-> +        build_append_int_noprefix(table, err.context[i].size * 8, 4);
-> +
-> +        /* Register array (byte 8 of Context info) */
-> +        for (j = 0; j < err.context[i].size; j++) {
-> +            build_append_int_noprefix(table, err.context[i].array[j], 8);
-> +        }
-> +    }
-> +
-> +    for (i = 0; i < err.vendor_num; i++) {
-> +        build_append_int_noprefix(table, err.vendor[i], 1);
-> +    }
-> +}
-
-
-...
-
-> diff --git a/hw/arm/arm_error_inject.c b/hw/arm/arm_error_inject.c
-> new file mode 100644
-> index 000000000000..5ebbdf2b2adc
-> --- /dev/null
-> +++ b/hw/arm/arm_error_inject.c
-> @@ -0,0 +1,420 @@
-> +/*
-> + * ARM Processor error injection
-> + *
-> + * Copyright(C) 2024 Huawei LTD.
-> + *
-> + * This code is licensed under the GPL version 2 or later. See the
-> + * COPYING file in the top-level directory.
-> + *
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "hw/boards.h"
-> +#include "hw/acpi/ghes.h"
-> +#include "cpu.h"
-> +
-> +#define ACPI_GHES_ARM_CPER_CTX_DEFAULT_NREGS 74
-> +
-> +/* Handle ARM Processor Error Information (PEI) */
-> +static const ArmProcessorErrorInformationList *default_pei = { 0 };
-> +
-> +static ArmPEI *qmp_arm_pei(uint16_t *err_info_num,
-> +              bool has_error,
-> +              ArmProcessorErrorInformationList const *error_list)
-> +{
-> +    ArmProcessorErrorInformationList const *next;
-> +    ArmPeiValidationBitsList const *validation_list;
-> +    ArmPEI *pei = NULL;
-> +    uint16_t i;
-> +
-> +    if (!has_error) {
-> +        error_list = default_pei;
-> +    }
-> +
-> +    *err_info_num = 0;
-> +
-> +    for (next = error_list; next; next = next->next) {
-> +        (*err_info_num)++;
-> +
-> +        if (*err_info_num >= 255) {
-> +            break;
-> +        }
-> +    }
-> +
-> +    pei = g_new0(ArmPEI, (*err_info_num));
-> +
-> +    for (next = error_list, i = 0;
-> +                i < *err_info_num; i++, next = next->next) {
-> 
-Odd alignment.
-
-
-> +/* For ARM processor errors */
-> +void qmp_arm_inject_error(bool has_validation,
-> +                    ArmProcessorValidationBitsList *validation_list,
-> +                    bool has_affinity_level,
-> +                    uint8_t affinity_level,
-> +                    bool has_mpidr_el1,
-> +                    uint64_t mpidr_el1,
-> +                    bool has_midr_el1,
-> +                    uint64_t midr_el1,
-> +                    bool has_running_state,
-> +                    ArmProcessorRunningStateList *running_state_list,
-> +                    bool has_psci_state,
-> +                    uint32_t psci_state,
-> +                    bool has_context,
-> +                    ArmProcessorContextList *context_list,
-> +                    bool has_vendor_specific,
-> +                    uint8List *vendor_specific_list,
-> +                    bool has_error,
-> +                    ArmProcessorErrorInformationList *error_list,
-> +                    Error **errp)
-> +{
-...
-
-> +
-> +    if (error.context) {
-
-No need for check. If context_info_num is zero their
-won't be a loop iteration. 
-
-> +        for (i = 0; i < error.context_info_num; i++) {
-> +            g_free(error.context[i].array);
-> +        }
-> +    }
-> +    g_free(error.context);
-> +    g_free(error.pei);
-> +    g_free(error.vendor);
-> +
-> +    return;
-> +}
-> diff --git a/hw/arm/arm_error_inject_stubs.c b/hw/arm/arm_error_inject_stubs.c
-> new file mode 100644
-> index 000000000000..be6e8be2d0d9
-> --- /dev/null
-> +++ b/hw/arm/arm_error_inject_stubs.c
-> @@ -0,0 +1,34 @@
-> +/*
-> + * QMP stub for ARM processor error injection.
-> + *
-> + * Copyright(C) 2024 Huawei LTD.
-> + *
-> + * This code is licensed under the GPL version 2 or later. See the
-> + * COPYING file in the top-level directory.
-> + *
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "hw/acpi/ghes.h"
-> +
-> +void qmp_arm_inject_error(bool has_validation,
-> +                        ArmProcessorValidationBitsList *validation,
-> +                        bool has_affinity_level,
-> +                        uint8_t affinity_level,
-> +                        bool has_mpidr_el1,
-> +                        uint64_t mpidr_el1,
-> +                        bool has_midr_el1,
-> +                        uint64_t midr_el1,
-> +                        bool has_running_state,
-> +                        ArmProcessorRunningStateList *running_state,
-> +                        bool has_psci_state,
-> +                        uint32_t psci_state,
-> +                        bool has_context, ArmProcessorContextList *context,
-> +                        bool has_vendor_specific, uint8List *vendor_specific,
-> +                        bool has_error,
-> +                        ArmProcessorErrorInformationList *error,
-> +                        Error **errp)
-> +{
-> +    error_setg(errp, "ARM processor error support is not compiled in");
-> +}
-Markus suggested:
-
-> A target-specific command like this one should be conditional.  Try
-> this:
-> 
->     { 'command': 'arm-inject-error',
->       'data': { 'errortypes': ['ArmProcessorErrorType'] },
->       'features': [ 'unstable' ],
->       'if': 'TARGET_ARM' }
->
-> No need to provide a qmp_arm_inject_error() stub then.
-
-(I noticed because never knew you could do this.)
-
-Probably crossed with your v4 posting.
-
-> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-> index 4f1ab1a73a06..c591a5fb02c4 100644
-> --- a/include/hw/acpi/ghes.h
-> +++ b/include/hw/acpi/ghes.h
-
-...
-
-> +/* ARM processor - UEFI 2.10 table N.16 */
-> +typedef struct ArmError {
-> +    uint16_t validation;
-> +
-> +    uint8_t affinity_level;
-> +    uint64_t mpidr_el1;
-> +    uint64_t midr_el1;
-> +    uint32_t running_state;
-> +    uint32_t psci_state;
-> +
-> +    /* Those are calculated based on the input data */
-    /* Calculated based on the input data */
-> +    uint16_t err_info_num;
-> +    uint16_t context_info_num;
-> +    uint32_t vendor_num;
-> +    uint32_t context_length;
-> +
-> +    ArmPEI *pei;
-> +    ArmContext *context;
-> +    uint8_t *vendor;
-> +} ArmError;
-
+Regards,
+Akihiko Odaki
 
