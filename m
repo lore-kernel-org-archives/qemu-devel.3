@@ -4,46 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86C7EC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 13:52:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C8A6C3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:01:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYQmk-0002zl-KC; Mon, 29 Jul 2024 09:51:34 -0400
+	id 1sYQvt-0001mY-Cn; Mon, 29 Jul 2024 10:01:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1sYQmi-0002wc-9f; Mon, 29 Jul 2024 09:51:32 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1sYQme-0007d5-Vh; Mon, 29 Jul 2024 09:51:32 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 03E5241ECB;
- Mon, 29 Jul 2024 15:51:18 +0200 (CEST)
-Message-ID: <777b4151-116b-4d3d-8b60-4b17ede51dea@proxmox.com>
-Date: Mon, 29 Jul 2024 15:51:17 +0200
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYQvq-0001lK-DS
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:00:58 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYQvo-0000oU-FM
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:00:58 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4266f3e0df8so16509215e9.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:00:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722261654; x=1722866454; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nOFxyVUfG84Ww0QRlijHOWwuXlphgmiany5mEoCdvAc=;
+ b=oH88fy9WDHjKnvbPW3cXn+wZauD5BWAcJ+lRMuBY3OOOBUQS5nXn9IPcstMRu4DaRq
+ ue+awhAsLwEFJGoygrYZLd2KropSo1b7JffC5mw5Ip2gk6LzHQgGW+eSi6OstDD/PGFS
+ Ft2TQqYkQFxg5amB3NZMgGByB+zFbMuNUAxhyajJkdizMgDs4HdzISit7zBYvxYrc/Hm
+ IIp6KMdRrF1pv6rJEIM/gPY0Q64BlMHWDL9Uo4jFbbw1MNNTcU1YAe6tcPRHu29p9+ML
+ OPPvo7bDDCrfjHC3hwDzlUUiB+sfC7NH3dfB//lTDYTDZKWEEM/JNrZ6pJs+VU19gDzm
+ JBnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722261654; x=1722866454;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nOFxyVUfG84Ww0QRlijHOWwuXlphgmiany5mEoCdvAc=;
+ b=G8Di/FvlP31t7Ev5liVjzd5Abd6cARMuk2ennEJ8c8ldr4oaw3Ft+LF+l0dm6w6Lxg
+ VzrIC4WTePWrpE03y+P0XX3yPrfYKmL+jDWnvHsYbRaxeqbrBSSsMFE0FFxY8/jVmYYu
+ n4vNCcF9cok2GUSjvi3ru2LKiqVNfhP3AQjAkKfSO0OeY37dHjG9XZPXWMsehix9Ttqn
+ LCNnffX/JoosOsyMqs9VjIEXDlc/3jnuUSOlVn4mSbgwoREzXa9tKrs8FVUTUO+R7chI
+ HeUVvo4ogXZ5EduAAyFNyjLar0YddBi2wAGlDoXEG89KHCbN0UDmkcSIf7J9zJKIQmt3
+ wYvQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXLZ3ArCdF1XglR+rcb+JY91TqQKOfxMyFdLmFXdwU/ZMvE5GiQQOftfnTRTDiDQauoE4FWRBkEXny3xa+sF3gU0htBUj8=
+X-Gm-Message-State: AOJu0YzyRk2mez9mv3MAkd1CCDKdskjpT713EgNAMOINfJRnrgnu+4Xq
+ ISQSkeokkjNh8VLvihjRzeU85a1DeWg4tG8w5Ej27rp9ZNgv2yMP95mez+nDbQY=
+X-Google-Smtp-Source: AGHT+IGl64P7p05VKWq0g5cZHYd+KF3i5yOhHTFJEJEyqkHoKK5Pvpw6sMmLUfV1kXVMv497A0BMWQ==
+X-Received: by 2002:a05:600c:35d5:b0:426:6f5f:9da6 with SMTP id
+ 5b1f17b1804b1-42811dd70d7mr59515165e9.27.1722261654455; 
+ Mon, 29 Jul 2024 07:00:54 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.173.10])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42809eb192csm109049425e9.1.2024.07.29.07.00.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jul 2024 07:00:54 -0700 (PDT)
+Message-ID: <0914a034-260f-44ef-8d75-2dca9d5fcb24@linaro.org>
+Date: Mon, 29 Jul 2024 16:00:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: query dirty areas according to bitmap via QMP or qemu-nbd
-To: Eric Blake <eblake@redhat.com>
-Cc: "open list:Network Block Dev..." <qemu-block@nongnu.org>,
- QEMU Developers <qemu-devel@nongnu.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>
-References: <a8ceec92-4b4a-4ee6-b7f7-b6b9d804a5e9@proxmox.com>
- <spi5wsadgvijq6venwx74c5exat6635h4xf5v6aaf2t3bzvijq@dkfqlhzhcvl3>
+Subject: Re: [PATCH v5] osdep: add a qemu_close_all_open_fd() helper
+To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240726075502.4054284-1-cleger@rivosinc.com>
 Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <spi5wsadgvijq6venwx74c5exat6635h4xf5v6aaf2t3bzvijq@dkfqlhzhcvl3>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240726075502.4054284-1-cleger@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -60,95 +98,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 26.07.24 um 17:38 schrieb Eric Blake:
-> On Fri, Jul 26, 2024 at 04:16:41PM GMT, Fiona Ebner wrote:
->> Hi,
->>
->> sorry if I'm missing the obvious, but is there a way to get the dirty
->> areas according to a dirty bitmap via QMP? I mean as something like
->> offset + size + dirty-flag triples. In my case, the bitmap is also
->> exported via NBD, so same question for qemu-nbd being the client.
+Hi Clément,
+
+On 26/7/24 09:54, Clément Léger wrote:
+> Since commit 03e471c41d8b ("qemu_init: increase NOFILE soft limit on
+> POSIX"), the maximum number of file descriptors that can be opened are
+> raised to nofile.rlim_max. On recent debian distro, this yield a maximum
+> of 1073741816 file descriptors. Now, when forking to start
+> qemu-bridge-helper, this actually calls close() on the full possible file
+> descriptor range (more precisely [3 - sysconf(_SC_OPEN_MAX)]) which
+> takes a considerable amount of time. In order to reduce that time,
+> factorize existing code to close all open files descriptors in a new
+> qemu_close_all_open_fd() function. This function uses various methods
+> to close all the open file descriptors ranging from the most efficient
+> one to the least one. It also accepts an ordered array of file
+> descriptors that should not be closed since this is required by the
+> callers that calls it after forking. Since this function is not used
+> for Win32, do not implement it to force an error at link time if used.
 > 
-> Over QMP, no - that can produce a potentially large response and
-> possible long time in computing the data, so we have never felt the
-> need to introduce a new QMP command for that purpose.  So over NBD is
-> the preferred solution.
+> Signed-off-by: Clément Léger <cleger@rivosinc.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+> v5:
+>   - Move qemu_close_all_open_fd() to oslib-posix.c since it does not
+>     compile on windows and is not even used on it.
+>   - v4: https://lore.kernel.org/qemu-devel/20240717124534.1200735-1-cleger@rivosinc.com/
 > 
->>
->> I can get the info with "nbdinfo --map", but would like to avoid
->> requiring a tool outside QEMU.
+> v4:
+>   - Add a comment saying that qemu_close_all_open_fd() can take a NULL skip
+>     array and nskip == 0
+>   - Added an assert in qemu_close_all_open_fd() to check for skip/nskip
+>     parameters
+>   - Fix spurious tabs instead of spaces
+>   - Applied checkpatch
+>   - v3: https://lore.kernel.org/qemu-devel/20240716144006.6571-1-cleger@rivosinc.com/
 > 
-> By default, QEMU as an NBD client only reads the "base:allocation" NBD
-> metacontext, and is not wired to read more than one NBD metacontext at
-> once (weaker than nbdinfo's capabilities).  But I have intentionally
-> left in a hack (accessible through QMP as well as from the command
-> line) for connecting a qemu NBD client to an alternative NBD
-> metacontext that feeds the block status, at which point 2 bits of
-> information from the alternative context are observable through the
-> result of block status calls.  Note that using such an NBD connection
-> for anything OTHER than block status calls is inadvisable (qemu might
-> incorrectly optimize reads based on its misinterpretation of those
-> block status bits); but as long as you limit the client to block
-> status calls, it's a great way to read out a "qemu:dirty-bitmap:..."
-> metacontext using only a qemu NBD client connection.
+> v3:
+>   - Use STD*_FILENO defines instead of raw values
+>   - Fix indentation of close_all_fds_after_fork()
+>   - Check for nksip in fallback code
+>   - Check for path starting with a '.' in qemu_close_all_open_fd_proc()
+>   - Use unsigned for cur_skip
+>   - Move ifdefs inside close_fds functions rather than redefining them
+>   - Remove uneeded 'if(nskip)' test
+>   - Add comments to close_range version
+>   - Reduce range of skip fd as we find them in
+>   - v2: https://lore.kernel.org/qemu-devel/20240618111704.63092-1-cleger@rivosinc.com/
 > 
-> git grep -l x-dirty-bitmap tests/qemu-iotests
+> v2:
+>   - Factorize async_teardown.c close_fds implementation as well as tap.c ones
+>   - Apply checkpatch
+>   - v1: https://lore.kernel.org/qemu-devel/20240617162520.4045016-1-cleger@rivosinc.com/
 > 
-> shows several of the iotests using the backdoor in just that manner.
-> In particular, tests/qemu-img-bitmaps gives the magic decoder ring:
-> 
-> | # x-dirty-bitmap is a hack for reading bitmaps; it abuses block status to
-> | # report "data":false for portions of the bitmap which are set
-> | IMG="driver=nbd,server.type=unix,server.path=$nbd_unix_socket"
-> | nbd_server_start_unix_socket -r -f qcow2 \
-> |     -B b0 -B b1 -B b2 -B b3 "$TEST_IMG"
-> | $QEMU_IMG map --output=json --image-opts \
-> |     "$IMG,x-dirty-bitmap=qemu:dirty-bitmap:b0" | _filter_qemu_img_map
-> 
-> meaning the map output includes "data":false for the dirty portions
-> and "data":true for the unchanged portions recorded in bitmap b0 as
-> read from the JSON map output.
-> 
+> ---
+>   include/qemu/osdep.h    |   9 +++
+>   net/tap.c               |  33 +++++-----
+>   system/async-teardown.c |  37 +-----------
+>   util/oslib-posix.c      | 131 ++++++++++++++++++++++++++++++++++++++++
+>   4 files changed, 160 insertions(+), 50 deletions(-)
 
-Oh, I didn't think about checking the NBD block driver for such an
-option :) And thank you for all the explanations!
+I'm getting this error on msys2, not sure if related:
 
->>
->> If it is not currently possible, would upstream be interested too in the
->> feature, either for QMP or qemu-nbd?
-> 
-> Improving qemu-img to get at the information without quite the hacky
-> post-processing deciphering would indeed be a useful patch, but it has
-> never risen to the level of enough of an itch for me to write it
-> myself (especially since 'nbdinfo --map's output works just as well).
-> 
+WARNING: Failed to terminate process: 1 error occurred:
+	* failed to attach the runner process to the console of its parent 
+process: The handle is invalid.
 
-I might just go with the above for now, but who knows if I'll get around
-to this some day. Three approaches that come to mind are:
+I find your patch hard to review. Do you mind splitting as trivial
+changes? Something like:
 
-1. qemu-img bitmap --dump
+- Expose close_all_open_fd() renamed as qemu_close_all_open_fd()
+- Rework qemu_close_all_open_fd()
+- Factor close_all_fds_after_fork() in net/tap.c
+- Use qemu_close_all_open_fd() in net/tap.c
 
-Other bitmap actions won't be supported in combination with NBD.
+Thanks,
 
-2. qemu-img map --bitmap NAME
-
-Should it use a dedicated output format compared to the usual "map"
-output (both human and json) with just "start/offset + length + dirty
-bit" triples?
-
-3. qemu-nbd --map CONTEXT
-
-With only supporting one context at a time? Would be limited to NBD of
-course which the other two won't be.
-
-
-All would require connecting to the NBD export with the correct meta
-context, which currently means using x_dirty_bitmap internally. So would
-that even be okay as part of a non-experimental command, or would it
-require to teach the NBD client code to deal with multiple meta contexts
-first?
-
-Best Regards,
-Fiona
-
+Phil.
 
