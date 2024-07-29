@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4072CC3DA61
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2913C52CDA
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 13:22:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYQJk-00060P-Rg; Mon, 29 Jul 2024 09:21:36 -0400
+	id 1sYQJb-0005NC-Ff; Mon, 29 Jul 2024 09:21:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sYQJi-0005ri-Nu; Mon, 29 Jul 2024 09:21:34 -0400
-Received: from sin.source.kernel.org ([145.40.73.55])
+ id 1sYQJY-0005L7-Q4; Mon, 29 Jul 2024 09:21:24 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sYQJb-000290-Ss; Mon, 29 Jul 2024 09:21:34 -0400
+ id 1sYQJX-00028a-5M; Mon, 29 Jul 2024 09:21:24 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id BA193CE0B29;
+ by dfw.source.kernel.org (Postfix) with ESMTP id A755F619A2;
  Mon, 29 Jul 2024 13:21:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF26C4AF09;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17CABC4AF10;
  Mon, 29 Jul 2024 13:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1722259281;
- bh=CEfB5KrYRL3cgljABI9Vh0KZmODdlgqjxE5jRa0lRAQ=;
+ bh=gUVkPm3/Mv+8SKurFkEgfoAKMWPotqxokzq+MwLEJyA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=i/N9Sc4zEclRKNOtAmZGCQ0OLwB7pUzU3Fr5vY1Xd5cjgOtHWfOQWbU87h/D4hHWZ
- ap3GspjoPKv4X8miHWNYDy5z9ed3oBEhorqhhJsb0V5qyQdFtT2GhqMimCBUYvrOck
- GlYcULfPujDGz3/icwoaG5ysj0s/tp85vaPtSyAkhA/rHVNKnVzNENdAMursYg9mDu
- r9p0DeXB9diW8+AB6PDBGtxcsrpqGPnmCevcnH3AWzkhuwmkxthzchOn04eVmkFOWU
- H4a6aeb5B4Q1N+cUFpz7gjCodlsmLvmw/aOxOXWmahCvIdBFnW9iafKOWpf9FpX9CM
- n2flbt4tD48Cw==
+ b=fZ2KSe4cruXVTBWOK1O0YOMHrzgQX03gECZal+t57opjKOKoZ7u5EsOCKOUeKM7BT
+ CkilIfmN1kstZnEKTDk9JG0JUbodID7iHOuaJdamvsGq9zwKhwzUsBn9UQp5ZF3sMU
+ UmS2mrphr8zBxpt7qFilogtXD+emVMCNHeu54bU0IRy/pAptfcqJHXa9EPN5RT6uap
+ wNFgDRx0ZcZOk1iRa0xnMUqb8K4bhAAPLubESkv/SPyLxL1FuLtW48pJ7eQvnDD6wy
+ QYbACth29A8kOc7vgkW5rINGdxGLKXWXgRdGUA8zbh6fk3UWM2FA3cKbucs/5N5KWA
+ lG0ZXtvDMMnhw==
 Received: from mchehab by mail.kernel.org with local (Exim 4.97.1)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1sYQJT-000000030VZ-0VUZ; Mon, 29 Jul 2024 15:21:19 +0200
+ id 1sYQJT-000000030Vj-0ikj; Mon, 29 Jul 2024 15:21:19 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: 
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Peter Maydell <peter.maydell@linaro.org>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v4 3/6] target/arm: preserve mpidr value
-Date: Mon, 29 Jul 2024 15:21:07 +0200
-Message-ID: <459cf7dd22b3de57a2079e0a43dc20d87b3f05a1.1722259246.git.mchehab+huawei@kernel.org>
+ Shiju Jose <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, linux-kernel@vger.kernel.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH v4 5/6] acpi/ghes: Support GPIO error source.
+Date: Mon, 29 Jul 2024 15:21:09 +0200
+Message-ID: <9a7b1acde960ca699c85c88b3f93550e29d32c57.1722259246.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <cover.1722259246.git.mchehab+huawei@kernel.org>
 References: <cover.1722259246.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.40.73.55;
- envelope-from=mchehab+huawei@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -71
+X-Spam_score: -7.2
+X-Spam_bar: -------
+X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,71 +76,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is a logic at helper to properly fill the mpidr information.
-This is needed for ARM Processor error injection, so store the
-value inside a cpu opaque value, to allow it to be used.
+From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
+Add error notification to GHES v2 using the GPIO source.
+
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- target/arm/cpu.h    |  1 +
- target/arm/helper.c | 10 ++++++++--
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ hw/acpi/ghes.c         | 8 ++++++--
+ include/hw/acpi/ghes.h | 1 +
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index a12859fc5335..d2e86f0877cc 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1033,6 +1033,7 @@ struct ArchCPU {
-         uint64_t reset_pmcr_el0;
-     } isar;
-     uint64_t midr;
-+    uint64_t mpidr;
-     uint32_t revidr;
-     uint32_t reset_fpsid;
-     uint64_t ctr;
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index ce319572354a..2432b5b09607 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -4692,7 +4692,7 @@ static uint64_t mpidr_read_val(CPUARMState *env)
-     return mpidr;
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index 8816af8280be..9346f45c59a5 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -34,8 +34,8 @@
+ /* The max size in bytes for one error block */
+ #define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
+ 
+-/* Now only support ARMv8 SEA notification type error source */
+-#define ACPI_GHES_ERROR_SOURCE_COUNT        1
++/* Support ARMv8 SEA notification type error source and GPIO interrupt. */
++#define ACPI_GHES_ERROR_SOURCE_COUNT        2
+ 
+ /* Generic Hardware Error Source version 2 */
+ #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
+@@ -333,6 +333,9 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
+          */
+         build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_SEA);
+         break;
++    case ACPI_HEST_SRC_ID_GPIO:
++        build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_GPIO);
++        break;
+     default:
+         error_report("Not support this error source");
+         abort();
+@@ -378,6 +381,7 @@ void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
+     /* Error Source Count */
+     build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
+     build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
++    build_ghes_v2(table_data, ACPI_HEST_SRC_ID_GPIO, linker);
+ 
+     acpi_table_end(linker, &table);
  }
+diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+index 674f6958e905..4f1ab1a73a06 100644
+--- a/include/hw/acpi/ghes.h
++++ b/include/hw/acpi/ghes.h
+@@ -58,6 +58,7 @@ enum AcpiGhesNotifyType {
  
--static uint64_t mpidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
-+static uint64_t mpidr_read(CPUARMState *env)
- {
-     unsigned int cur_el = arm_current_el(env);
- 
-@@ -4702,6 +4702,11 @@ static uint64_t mpidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
-     return mpidr_read_val(env);
- }
- 
-+static uint64_t mpidr_read_ri(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    return mpidr_read(env);
-+}
-+
- static const ARMCPRegInfo lpae_cp_reginfo[] = {
-     /* NOP AMAIR0/1 */
-     { .name = "AMAIR0", .state = ARM_CP_STATE_BOTH,
-@@ -9723,7 +9728,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-             { .name = "MPIDR_EL1", .state = ARM_CP_STATE_BOTH,
-               .opc0 = 3, .crn = 0, .crm = 0, .opc1 = 0, .opc2 = 5,
-               .fgt = FGT_MPIDR_EL1,
--              .access = PL1_R, .readfn = mpidr_read, .type = ARM_CP_NO_RAW },
-+              .access = PL1_R, .readfn = mpidr_read_ri, .type = ARM_CP_NO_RAW },
-         };
- #ifdef CONFIG_USER_ONLY
-         static const ARMCPRegUserSpaceInfo mpidr_user_cp_reginfo[] = {
-@@ -9733,6 +9738,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-         modify_arm_cp_regs(mpidr_cp_reginfo, mpidr_user_cp_reginfo);
- #endif
-         define_arm_cp_regs(cpu, mpidr_cp_reginfo);
-+        cpu->mpidr = mpidr_read(env);
-     }
- 
-     if (arm_feature(env, ARM_FEATURE_AUXCR)) {
+ enum {
+     ACPI_HEST_SRC_ID_SEA = 0,
++    ACPI_HEST_SRC_ID_GPIO = 1,
+     /* future ids go here */
+     ACPI_HEST_SRC_ID_RESERVED,
+ };
 -- 
 2.45.2
 
