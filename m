@@ -4,86 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D509C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:41:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 882FDC3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:42:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYRYK-0001g6-Ig; Mon, 29 Jul 2024 10:40:44 -0400
+	id 1sYRZW-0006av-9U; Mon, 29 Jul 2024 10:41:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYRYJ-0001ck-MK
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:40:43 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYRZS-0006LU-6q
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:41:54 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYRYI-00081n-3H
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:40:43 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-427fc97a88cso17621565e9.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:40:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYRZP-000860-6F
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:41:53 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-428085a3ad1so17783685e9.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:41:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722264040; x=1722868840; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=j3e9b1ZbsCUPjFEgRqJ+hwXbs28Kkpn08+Yw7FV+otA=;
- b=LF36nJH/Q1g1SbvOzbLzR6BZ8ED3F4gb43syzDdFk+KmlR7ABUNTOv3o1LP4/uj6Nb
- XtoyEITjbBHM5oE/hEa55KwtMKXv+mNsNhG0p/hG3Of8xdm1mOJ0IqPEMwSbf481vK8M
- T8I54dIWtLkrrh9S9TE5QxXKMvpIr6jNT80x6G92UTvxyn/4KUOKt/cfo5hQkM0DNP86
- +Wn8wy4d2UG7djzgts419a+QTeA/SfsCPZ1E2UNENNVpC71ZeRuTE/IQTNxu0fGNq9TH
- 14sOhbdoFmIX2VwuaCkIskWe3RDEUWNRQzZztg8rB1tIL6grzNp8/ShqlfiyhHNDMPiK
- 3GKw==
+ d=linaro.org; s=google; t=1722264110; x=1722868910; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Mj+22UJr1471HGAY6p//Qj6mLWQV7Xkn5auvDq+aTkk=;
+ b=D/01LRuCNxkMwkqne974pzF14kIkeF9H8D6ESIzDNoQfQG/ejlUbiPKHyig3fMbzqJ
+ QjfkGcxoKGIatHX5XLy3ZOF203KRAxmhDrhzeN/2Yxeb4CQ5ygkGoNsGImovr4vKloZW
+ fQkudceZaJrGLzMzfAyK9AvMJIfnltyHC0iH2msZykW9V8rK6nBeMRmylItFEwF8Q7Wm
+ N31qnohZ7chzGMjcRL4QjWhqH30/RbxG2a8tlOBV0u3Mon53LDgJbR61iKC/TcsYJny1
+ cxWmorLJ8GuIPuPs4ZaDYjmvQ2bn1HZPu1SbIodsoVZNbZHaDiqAdjxFMLZS7OAQ+uGn
+ ufKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722264040; x=1722868840;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1722264110; x=1722868910;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=j3e9b1ZbsCUPjFEgRqJ+hwXbs28Kkpn08+Yw7FV+otA=;
- b=UIsO2urHrAAATTNMN46IeXJ/FCYRAfg3xyi8PzWC4b61UyOmLGAKIx6zVD3uLNM/Pg
- xoqriyNX5UJBfpAz+F8x2OJ9iPDoYiwbkpPqmI8iZTQdceSYRgUYaPlyr7Mwlas3RV9l
- T77fneAiz5pcZANNp/F3vBpHIgNpmxhHxhvlneiwix/Td/QvB1LHnEWcX8W6+UoBofw8
- 9IdR4cCCwnHZlV+yafzVRYBoDBJ9cp5HNwTaiJkLG9Dbrat6EZpJwD3rWisLed5BbtTW
- AwkMYsS4mlvCs/RXo5i+q31BWJXhV4KXP1Ysy+uVT1Z55EyWQdeD0kVtpjcEVDh1OAAV
- x8Eg==
+ bh=Mj+22UJr1471HGAY6p//Qj6mLWQV7Xkn5auvDq+aTkk=;
+ b=qV3mDDuieSXO5DvXzlRyFeQwIhx2q+2ToAs6jSo6mBalo3ETM4mVFMsHvCypbYcqdT
+ QqYCqIole3M7HQCA9nMrDqd4STpaMRU/ix9zsbtwg9Ml/yc8wZkBMizkfJaX1XAowKID
+ RLjEGMFCwXGCSkkYJhSMeBxZQR/3FLtcjDDg8UUdp1uKJtKtvJP0TGQdFedpNeK9gF3Q
+ SeCLHRhv8eJ9BEtnw5EtE/GEri+zW4shguE4UKAVc8CGEe2W1KVTsFCClTVsjCIuULgH
+ GcT4i6YCZIU1sdUvNKCx4smzJkeTJ4x8gJU4Ah2ziUosvs1neuYyT7sArKZfA/iU10k8
+ RDug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVF0eexQ2syQMf+/cSSL55fz4NDMJoiWjkPUiIhBXX6wITxEhqGAmuyZnwMmVFFWQRrOB825AYCgoMkAbmwGETfx1BntXo=
-X-Gm-Message-State: AOJu0YzymnABxcBJlp+ERKV+oYM8VOBLF6d2OxxzdlO5vrjS7MUIb36d
- jqwxlJmS5muz617r7HHoXCo1FeLBLo7jOvoABBv+h3AigJHlfevJJ6i87VbqWgc=
-X-Google-Smtp-Source: AGHT+IFHgcVZBSsqx+kJWyuBFGP6dDtPg8rYuEWdm5awfdO3TlQSRElWHr7IrKK+DGDGkjwxVHIITg==
-X-Received: by 2002:a05:600c:3ba6:b0:426:6667:bbbe with SMTP id
- 5b1f17b1804b1-42811d89a5bmr62687045e9.9.1722264039627; 
- Mon, 29 Jul 2024 07:40:39 -0700 (PDT)
+ AJvYcCU9uBtwOcoBPXIC4nC7Aa6T1nHwkMgtFU0D9BDdw546d+k7pmipkOD7MdX5tU33FQOQEaUezfVmtC1t9oSpnJf+KiuMzOo=
+X-Gm-Message-State: AOJu0Yyr7OX3jN1wKbmy6DpafNHcVIs+vVmr06TzjrIBN4c+Et3oyOx2
+ /K08zUFlfeNR5QMFtCbk65hYVyreZKFi0lu93vxhyG59C8WNqTkuQHdJox378j8=
+X-Google-Smtp-Source: AGHT+IG3APd0pqgGydQk0/fsePMpDJrfd09Tdg4BhpYdjWbziRye82E1jj0qvhlwq7qZm79Gh3tHaQ==
+X-Received: by 2002:a05:600c:154b:b0:428:1090:cfd4 with SMTP id
+ 5b1f17b1804b1-42811df08a0mr53134125e9.33.1722264109726; 
+ Mon, 29 Jul 2024 07:41:49 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.173.10])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-428218a3934sm2651625e9.45.2024.07.29.07.40.37
+ 5b1f17b1804b1-4280a867e7esm135565005e9.27.2024.07.29.07.41.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jul 2024 07:40:39 -0700 (PDT)
-Message-ID: <0977da6d-53c9-4ea4-a099-531d76258dfd@linaro.org>
-Date: Mon, 29 Jul 2024 16:40:36 +0200
+ Mon, 29 Jul 2024 07:41:49 -0700 (PDT)
+Message-ID: <cac9ad39-da1b-46cd-b1d6-4a196c943f24@linaro.org>
+Date: Mon, 29 Jul 2024 16:41:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/13] Bump Avocado to 103.0 LTS and update tests for
- compatibility and new features
-To: Cleber Rosa <crosa@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
- Beraldo Leal <bleal@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- David Woodhouse <dwmw2@infradead.org>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, kvm@vger.kernel.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-arm@nongnu.org,
- Radoslaw Biernacki <rad@semihalf.com>, Paul Durrant <paul@xen.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
-References: <20240726134438.14720-1-crosa@redhat.com>
-Content-Language: en-US
+Subject: Re: [PATCH] docs/sphinx/depfile.py: Handle env.doc2path() returning a
+ Path not a str
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240726134438.14720-1-crosa@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+References: <20240729120533.2486427-1-peter.maydell@linaro.org>
+ <735c512e-32e3-42cd-916f-d2b1fe3f0794@linaro.org>
+Content-Language: en-US
+In-Reply-To: <735c512e-32e3-42cd-916f-d2b1fe3f0794@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,23 +97,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/7/24 15:44, Cleber Rosa wrote:
+On 29/7/24 15:36, Philippe Mathieu-Daudé wrote:
+> On 29/7/24 14:05, Peter Maydell wrote:
+>> In newer versions of Sphinx the env.doc2path() API is going to change
+>> to return a Path object rather than a str. This was originally visible
+>> in Sphinx 8.0.0rc1, but has been rolled back for the final 8.0.0
+>> release. However it will probably emit a deprecation warning and is
+>> likely to change for good in 9.0:
+>>    https://github.com/sphinx-doc/sphinx/issues/12686
+>>
+>> Our use in depfile.py assumes a str, and if it is passed a Path
+>> it will fall over:
+>>   Handler <function write_depfile at 0x77a1775ff560> for event 
+>> 'build-finished' threw an exception (exception: unsupported operand 
+>> type(s) for +: 'PosixPath' and 'str')
+>>
+>> Wrapping the env.doc2path() call in str() will coerce a Path object
+>> to the str we expect, and have no effect in older Sphinx versions
+>> that do return a str.
+>>
+>> Cc: qemu-stable@nongnu.org
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2458
+>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+>> ---
+>>   docs/sphinx/depfile.py | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
 
-> Cleber Rosa (13):
->    tests/avocado: mips: fallback to HTTP given certificate expiration
->    tests/avocado: mips: add hint for fetchasset plugin
->    tests/avocado/intel_iommu.py: increase timeout
->    tests/avocado: add cdrom permission related tests
->    tests/avocado: machine aarch64: standardize location and RO access
->    tests/avocado: use more distinct names for assets
->    tests/avocado/kvm_xen_guest.py: cope with asset RW requirements
->    testa/avocado: test_arm_emcraft_sf2: handle RW requirements for asset
->    tests/avocado/boot_xen.py: fetch kernel during test setUp()
->    tests/avocado/tuxrun_baselines.py: use Avocado's zstd support
->    tests/avocado/machine_aarch64_sbsaref.py: allow for rw usage of image
->    Bump avocado to 103.0
->    Avocado tests: allow for parallel execution of tests
-
-Queuing patches #1, #2 and #8. Unfortunately #10 depends on Avocado
-101.0 so can't be merged at this point.
+I'm queuing this patch since have another docs/ related one
+in my next pull request.
 
