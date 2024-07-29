@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BF4AC3DA7E
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:45:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7EBC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:45:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYRbr-0003eY-R1; Mon, 29 Jul 2024 10:44:23 -0400
+	id 1sYRc3-0004W8-GJ; Mon, 29 Jul 2024 10:44:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYRbq-0003ay-ES
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:22 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1sYRc1-0004OS-NW
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:33 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYRbm-0008MZ-OQ
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:21 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a7ac449a0e6so262260066b.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:44:18 -0700 (PDT)
+ id 1sYRbt-0008Q3-Cs
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:33 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5a2ffc346ceso5322527a12.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:44:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722264257; x=1722869057; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722264264; x=1722869064; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j5fFJhx+vMgfG1V76vPOjIITII9gIRW1UvsbXoaqfhQ=;
- b=Gp9o/a0FRpYF53rV+54dRNr8gvIGVLLmNgQUKjFo+INqZE4iO5A7f5YPXh4GLQpiCK
- 9BZsLTYbjiQfGJmUidGRUHgbeLsrB/8NPyzsqi199odIDxD1HXvo4Y1z3KJg4RseDTlU
- c+q38a+70YCYFFDnQYUXQ5h+nIxasRmwqppAs1pHG0KP0sb/Ora11i/AxaqbegTYw2ET
- fRvHFtVsXFxWTDUV9KaBrSuLaNRsrUGO5Ks0OshjMGPLILMbcgNIgf6UwRDvAHIyG7ZU
- u/me/56R3eIp+R0YPBInYTv+THKuYivSRsPz+yvXCrTSS6B/LCB9sCbIgrY71T6VaruC
- vJBA==
+ bh=RIOayMEsJA1tkmepteKB9T0FXWTwbDeTnBtcVohO/HQ=;
+ b=vrz7AqpY0TeQ9/WAPxNm5oFSfMpOi4siqTB17ebTmwHEDG/t0vhuTJpW+G7JqxBK+f
+ RmJCEiIF70+kJe70TsWh+RqongjyO3z5NvWRRuh1mLYz4Y3oEWPRewT4JLBXMkTmooHj
+ pZsGUDWq8p5ewK1qy808Nr8uFr7B/huXBpIGCNKU+43o7KFNXa/CQZvNMgWFqS4CQv7G
+ 7k19hi1U3Y3UohipcWFzN5kWGk6XstRciq54GAbsvWDQGOnWPhuaHadHnEajt1hSb/0L
+ V2yKU91SUud4NGBBKPy2Mvlj80HpnoW8gnFzh7iZHIWZfhDPcE13WIt4fFznIghORmM+
+ pC2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722264257; x=1722869057;
+ d=1e100.net; s=20230601; t=1722264264; x=1722869064;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=j5fFJhx+vMgfG1V76vPOjIITII9gIRW1UvsbXoaqfhQ=;
- b=vhgBbPU3NRmpbpqx9ZMg++XXYGPjOpS4uS22EE9FVbjTuH1gLFJ9kUhggYDRSRZAG0
- 6IlKb8wDUml+g1rhI2oG6SIX6qD0j1VpG67Y9AwO8e2XkthCc4m+S4Cp9VQ7zJXJJfrB
- Z5+9FqDUv4uRVueGhJ7orYL2bH06eri5Cz6dDVS3J1X5S7qGgZHugddltacyhSGDxmM3
- affbQa8Er1DyAv2aj5JFQJdSHOUc4kQeAWcvCR80r/QrQ4M7C6yOYdDpt0muTnRbjS+d
- NTFAM3YYg1489jD2JM2XRSQRLOzqirNX+xbW+onGC3gKWHqWUS0a8F3lJOEAF7jubvyz
- jozg==
-X-Gm-Message-State: AOJu0YwT21MxJ3c2vtcIDiJQEASnoWkrd8qsf1rzQw1ZU46vIq4peJks
- 1lDaG/NL7GlOZHKCbimxzJAndxG812srmyzXLb/6EDw/UWfIrllyZup+2OSE5AA=
-X-Google-Smtp-Source: AGHT+IFxoNmmMsy1h/7fYoWEIEUAYxhhkKCm/iVRs9WvorySlcHEQ9jIDr2TPCGtWEZlVGMSwgJ/fw==
-X-Received: by 2002:a17:907:84e:b0:a7d:26ff:aeb0 with SMTP id
- a640c23a62f3a-a7d4000b79bmr474456366b.30.1722264256673; 
- Mon, 29 Jul 2024 07:44:16 -0700 (PDT)
+ bh=RIOayMEsJA1tkmepteKB9T0FXWTwbDeTnBtcVohO/HQ=;
+ b=U24osGjbA8cHM9XpdQjgrLaEyLL2pxLYgZ9l9vly2zkUpQBk3S27k9zL7fw5bh4GhY
+ 0jbfVmSFVVHD8/yqiu9Rc0NXN3k7PXs7dgOroJMe+0FlP3ElQ0T675D9mGzJeaCMl8QZ
+ S4fJES0GThWqfgoRs4I9B/CmFnfyXTfibgOYbinsSTOBxl/FocPL3aHVmBz/eJwovead
+ k7v6J+AU5vXi1691E22bJTS1LLZjp4uPC7lPYSNGWB1LvvY8Qwm/CUwMENYxrKeTFya/
+ 1fq1wev584+SS1fnbeF1V6s8fER+BrF/CrzTeWuTtccXLebYszzCl0HBDQjh3skhX2Co
+ iOaA==
+X-Gm-Message-State: AOJu0YzRhHIppF4aVb64B2br+Adkp1+4zXV7iHrtEX5UWZhxqprV3kOb
+ oPcsmEZXT7giU/CjDdbhfUwDs1MafVCHrogs8zHy4YA1hE32Vgtpscg8H6EtKq4=
+X-Google-Smtp-Source: AGHT+IFBqzVWW8HN4yEEamLBDbG/voeZt/brB68Ctd58ksy7qlSURXpWYpi+y2eacnqXtSPvTiYy9A==
+X-Received: by 2002:a17:907:3d9e:b0:a77:ab40:6d7f with SMTP id
+ a640c23a62f3a-a7d401781femr483657566b.43.1722264263519; 
+ Mon, 29 Jul 2024 07:44:23 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acad411bcsm511230266b.109.2024.07.29.07.44.15
+ a640c23a62f3a-a7acad91080sm518097066b.160.2024.07.29.07.44.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jul 2024 07:44:15 -0700 (PDT)
+ Mon, 29 Jul 2024 07:44:19 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1C0A65F8DA;
- Mon, 29 Jul 2024 15:44:15 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 43DE05FA11;
+ Mon, 29 Jul 2024 15:44:16 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
@@ -78,27 +78,25 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
  Alexandre Iooss <erdnaxe@crans.org>, Song Gao <gaosong@loongson.cn>,
  David Hildenbrand <david@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 01/14] gitlab: record installed packages in /packages.txt in
- containers
-Date: Mon, 29 Jul 2024 15:44:01 +0100
-Message-Id: <20240729144414.830369-2-alex.bennee@linaro.org>
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Subject: [PATCH 12/14] contrib/plugins: be more vocal building
+Date: Mon, 29 Jul 2024 15:44:12 +0100
+Message-Id: <20240729144414.830369-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240729144414.830369-1-alex.bennee@linaro.org>
 References: <20240729144414.830369-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,113 +112,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+With the conversion to meson and removing the old QEMU Makefile
+baggage we became very silent when building the plugins. Bring in a
+copy of the quiet-command logic (and some magic COMMAs) so we can at
+least assure developers we are building them.
 
-The lcitool created containers save the full distro package list
-details into /packages.txt. The idea is that build jobs will 'cat'
-this file, so that the build log has a record of what packages
-were used. This is important info, because when it comes to debug
-failures, the original container is often lost.
-
-This extends the manually written dockerfiles to also create the
-/packages.txt file.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-Id: <20240724095505.33544-2-berrange@redhat.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2457
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- tests/docker/dockerfiles/debian-all-test-cross.docker    | 3 ++-
- tests/docker/dockerfiles/debian-hexagon-cross.docker     | 3 ++-
- tests/docker/dockerfiles/debian-legacy-test-cross.docker | 3 ++-
- tests/docker/dockerfiles/debian-loongarch-cross.docker   | 3 ++-
- tests/docker/dockerfiles/debian-tricore-cross.docker     | 3 ++-
- tests/docker/dockerfiles/debian-xtensa-cross.docker      | 3 ++-
- 6 files changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/tests/docker/dockerfiles/debian-all-test-cross.docker
-index 6cc38a3633..8ab244e018 100644
---- a/tests/docker/dockerfiles/debian-all-test-cross.docker
-+++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
-@@ -62,7 +62,8 @@ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
-         gcc-s390x-linux-gnu \
-         libc6-dev-s390x-cross \
-         gcc-sparc64-linux-gnu \
--        libc6-dev-sparc64-cross
-+        libc6-dev-sparc64-cross && \
-+        dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
+---
+Maybe we should just move to a meson build as proposed here:
+
+https://gitlab.com/qemu-project/qemu/-/issues/1710
+---
+ contrib/plugins/Makefile | 25 ++++++++++++++++++++-----
+ 1 file changed, 20 insertions(+), 5 deletions(-)
+
+diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
+index 98a89d5c40..edf256cd9d 100644
+--- a/contrib/plugins/Makefile
++++ b/contrib/plugins/Makefile
+@@ -39,26 +39,41 @@ endif
+ 
+ SONAMES := $(addsuffix $(SO_SUFFIX),$(addprefix lib,$(NAMES)))
+ 
+-# The main QEMU uses Glib extensively so it's perfectly fine to use it
++# The main QEMU uses Glib extensively so it is perfectly fine to use it
+ # in plugins (which many example do).
+ PLUGIN_CFLAGS := $(shell $(PKG_CONFIG) --cflags glib-2.0)
+ PLUGIN_CFLAGS += -fPIC -Wall
+ PLUGIN_CFLAGS += -I$(TOP_SRC_PATH)/include/qemu
+ 
++# Helper that honours V=1 so we get some output when compiling
++quiet-@ = $(if $(V),,@$(if $1,printf "  %-7s %s\n" "$(strip $1)" "$(strip $2)" && ))
++quiet-command = $(call quiet-@,$2,$3)$1
++
++# for including , in command strings
++COMMA := ,
++
+ all: $(SONAMES)
+ 
+ %.o: %.c
+-	$(CC) $(CFLAGS) $(PLUGIN_CFLAGS) -c -o $@ $<
++	$(call quiet-command, \
++		$(CC) $(CFLAGS) $(PLUGIN_CFLAGS) -c -o $@ $<, \
++	        BUILD, plugin $@)
+ 
+ ifeq ($(CONFIG_WIN32),y)
+ lib%$(SO_SUFFIX): %.o win32_linker.o ../../plugins/libqemu_plugin_api.a
+-	$(CC) -shared -o $@ $^ $(LDLIBS)
++	$(call quiet-command, \
++		$(CC) -shared -o $@ $^ $(LDLIBS), \
++		LINK, plugin $@)
+ else ifeq ($(CONFIG_DARWIN),y)
+ lib%$(SO_SUFFIX): %.o
+-	$(CC) -bundle -Wl,-undefined,dynamic_lookup -o $@ $^ $(LDLIBS)
++	$(call quiet-command, \
++		$(CC) -bundle -Wl$(COMMA)-undefined$(COMMA)dynamic_lookup -o $@ $^ $(LDLIBS), \
++		LINK, plugin $@)
+ else
+ lib%$(SO_SUFFIX): %.o
+-	$(CC) -shared -o $@ $^ $(LDLIBS)
++	$(call quiet-command, \
++		$(CC) -shared -o $@ $^ $(LDLIBS), \
++		LINK, plugin $@)
+ endif
  
  
- ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools
-diff --git a/tests/docker/dockerfiles/debian-hexagon-cross.docker b/tests/docker/dockerfiles/debian-hexagon-cross.docker
-index f2d40f2dee..23152b4918 100644
---- a/tests/docker/dockerfiles/debian-hexagon-cross.docker
-+++ b/tests/docker/dockerfiles/debian-hexagon-cross.docker
-@@ -33,7 +33,8 @@ RUN apt-get update && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/c++ && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/cc && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/g++ && \
--    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
-+    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc && \
-+    dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
- 
- RUN /usr/bin/pip3 install tomli
- 
-diff --git a/tests/docker/dockerfiles/debian-legacy-test-cross.docker b/tests/docker/dockerfiles/debian-legacy-test-cross.docker
-index d75e0b85e2..5a6616b7d3 100644
---- a/tests/docker/dockerfiles/debian-legacy-test-cross.docker
-+++ b/tests/docker/dockerfiles/debian-legacy-test-cross.docker
-@@ -36,7 +36,8 @@ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
-         python3-pip \
-         python3-setuptools \
-         python3-venv \
--        python3-wheel
-+        python3-wheel && \
-+        dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
- 
- RUN /usr/bin/pip3 install tomli
- 
-diff --git a/tests/docker/dockerfiles/debian-loongarch-cross.docker b/tests/docker/dockerfiles/debian-loongarch-cross.docker
-index 6a9197528b..79eab5621e 100644
---- a/tests/docker/dockerfiles/debian-loongarch-cross.docker
-+++ b/tests/docker/dockerfiles/debian-loongarch-cross.docker
-@@ -32,7 +32,8 @@ RUN apt-get update && \
-         python3-pip \
-         python3-setuptools \
-         python3-venv \
--        python3-wheel
-+        python3-wheel && \
-+        dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
- 
- RUN /usr/bin/pip3 install tomli
- 
-diff --git a/tests/docker/dockerfiles/debian-tricore-cross.docker b/tests/docker/dockerfiles/debian-tricore-cross.docker
-index 16276aa21d..479b4d6eba 100644
---- a/tests/docker/dockerfiles/debian-tricore-cross.docker
-+++ b/tests/docker/dockerfiles/debian-tricore-cross.docker
-@@ -34,7 +34,8 @@ RUN apt update && \
-        python3-pip \
-        python3-setuptools \
-        python3-wheel \
--       python3-venv
-+       python3-venv && \
-+       dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
- 
- RUN /usr/bin/pip3 install tomli
- 
-diff --git a/tests/docker/dockerfiles/debian-xtensa-cross.docker b/tests/docker/dockerfiles/debian-xtensa-cross.docker
-index 413881899b..d011eee2ad 100644
---- a/tests/docker/dockerfiles/debian-xtensa-cross.docker
-+++ b/tests/docker/dockerfiles/debian-xtensa-cross.docker
-@@ -16,7 +16,8 @@ RUN apt-get update && \
-         curl \
-         gettext \
-         git \
--        python3-minimal
-+        python3-minimal && \
-+    dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
- 
- ENV CPU_LIST dc232b dc233c de233_fpu dsp3400
- ENV TOOLCHAIN_RELEASE 2020.07
 -- 
 2.39.2
 
