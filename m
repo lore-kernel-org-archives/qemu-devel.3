@@ -4,75 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EB09C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 08:59:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBB4BC3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 09:27:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYMDV-0006PO-VB; Mon, 29 Jul 2024 04:58:53 -0400
+	id 1sYMeE-0005uR-8y; Mon, 29 Jul 2024 05:26:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYMDU-0006Oa-BB
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 04:58:52 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYMeC-0005tI-Oh
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 05:26:28 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYMDS-0004hw-MW
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 04:58:52 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-a7a9e25008aso419201666b.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 01:58:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYMeB-0001NJ-1q
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 05:26:28 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3685a5e7d3cso1402281f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 02:26:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722243528; x=1722848328; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HRMii+RlBXa8/ciEPBTTq/5S+gWxNao+gfER2Vs4a5Q=;
- b=LpZgFGIIQGUROXO3DJSoVtuhrjVPnvM82pita6TfrqgCoH5SFZQOBrOTunS4qco8TF
- PQ28UJYyE62ogmSV48uNW5jAfdXB5E34FSj94QrYz8h8v9Aa5KGg7uDyNhth8Vz3F27b
- gTJKp5XF+jftXIgHbgTVzC/AUGEoo1wIp9gHs1PfSLAtRNvqU6NbV624uYuG8JvpYved
- xnjzy8yl6g62s8dX5fNn9GQG37W52ICocDmgwoPbZ6zeAZZbtsN7eqXfaGUWcexko4WR
- HLbpuRcDtpvXl+un12j4bzpnvvXb6IA16IJMzqEuEiwjhzsYvP1G7PWlo9unBcJljfP2
- 1FvQ==
+ d=linaro.org; s=google; t=1722245185; x=1722849985; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aJQglsc/9ThcINvqQpIx6rtAKMkjXGdOWU36BfwkRcQ=;
+ b=TAZwAwYTN/louTNS5embtw9m2zHCZdd7f86v3okKKIswV2r0+t9xAegd6VF/Wpbq76
+ MZZJUceXrC+bjyHmaY1BASyau/CgJMCbpU0c7gyDZOwYouYVrSavta2Db0Xi2hvjzwwv
+ s/aDte7ijY3ZoE5+jGJ7Zg5cd3W9pxKAQxd/oJurG3McsmW7CnArxiC2ZJz+W+tDuXLu
+ BYQgB4uIvMyTNnBfu0NWskzC0MxJF3m9RT/IAHfYBgpx/766MbUn4DFIYtCGf0wGYTj1
+ s5t4njEc+dcrqh86pzNQ15kRDw7MJQylI3pxlLbhCCpWhuR8KA+/icaRE3MwQU0sk1ES
+ AVtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722243528; x=1722848328;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HRMii+RlBXa8/ciEPBTTq/5S+gWxNao+gfER2Vs4a5Q=;
- b=ESZWER47UPTqLgYSu/BF2PQauVyYMEUPIxJAE4XQUgHXW7dYwqlD8/1mLFh9XvwVK9
- FfVgD/RaRqC81reuY9mdpLmX7ylfSIMPcQ0g350yG0tbuJY62ocOCPzQoMmIviSELJwp
- GkKKAd67WaEa/97zCVqmQ57LXw2gQ7Xi2J81Q5zfTvNvzjNW4TDOXpEcCe+jTgtTrOuu
- sj+eeHhQfyPwMYmg6VSRL4lRC4LoSA5f6SRmZO/It2rvj+X4dgm9j0w+7IKMJqAUFWJQ
- c5+epm6r/huLSfkT1L1rx8I+2plLRLaU+yOGR+SARpiDrVnc/x3P5ODM3T1mNa0uNxxU
- Dpmg==
-X-Gm-Message-State: AOJu0YwuKIp/WeVSGF3ig7720AwBmHCQ7lyoXdhrxp+y7IqLqjOiieBf
- Bh1x0GN/VFg5/Ng1G6k6I8IVSUZGDPJ5TPmbiJohz9CYE26SqAe+jmQNRR7AT6k=
-X-Google-Smtp-Source: AGHT+IGvRmnQNZpMTFSaeTSwfi+Xtl0d0yqcwpvdYMXQ4pPV/QZOT6slESrrJG/ycVcq6xVNEj8FtQ==
-X-Received: by 2002:a17:907:97cd:b0:a7a:929f:c0ce with SMTP id
- a640c23a62f3a-a7d40044af9mr512797966b.19.1722243527270; 
- Mon, 29 Jul 2024 01:58:47 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acad91eeesm485207866b.178.2024.07.29.01.58.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jul 2024 01:58:46 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B2C595F844;
- Mon, 29 Jul 2024 09:58:45 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Sergei Lyubski <slyubski@gmail.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: The question about migration/checkpointing
-In-Reply-To: <CAMLUMH6dRAg+s9jzfVg3ihbE42yO1PssYLnKm-o99aEkpD8QyQ@mail.gmail.com>
- (Sergei Lyubski's message of "Fri, 26 Jul 2024 12:41:47 -0700")
-References: <CAMLUMH6dRAg+s9jzfVg3ihbE42yO1PssYLnKm-o99aEkpD8QyQ@mail.gmail.com>
-Date: Mon, 29 Jul 2024 09:58:45 +0100
-Message-ID: <877cd41smy.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1722245185; x=1722849985;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aJQglsc/9ThcINvqQpIx6rtAKMkjXGdOWU36BfwkRcQ=;
+ b=w/ASRuUGU8c0YnrwTrXWXpglF+B8kYeZnE7QBBwmiVQBoO71M6JlHyTDh1U0Uh0bhq
+ IHQ3uuTdsWDwghi1xNKtSqajChLWyh/wpsYCF36l5uWEVKKqy0xwweYzgSk6sNjWAjx8
+ Rgg6T7VK4smRtjY6gmwYbVVdmMi17OUCsvXsEUV4bLuEOp3oNQ/F0B/YKmeeVoKjGkFo
+ NeXpURUJae1Ny3gO7ceakeHQV6scqs2Ob3XkpdM225IYG0vNjp3enqbo2xA0pIteah4Y
+ Yuqd1ZMz9Dond1qi1AgJzgAnF+F8bZgA9k9MFqbv39MHvk1brGWkv8CS+Ty116T0KY7N
+ 2aEg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU73lsocZ8TnXULRFHhLvf5soaG11Sed+V4RntGyJCR23A1NEUJfSGfXID/DO8qxcsuBg4IrjGk9RSjDQwZr7X+uaX7X9k=
+X-Gm-Message-State: AOJu0Yz9p/GpHwSF9rltx0SQh3ckXMKnUNhP5DezT0UXtbGjLbxxPiti
+ pxu/tYs+Xx3KNguQneSgTEaeqsklMdnbd3wAp9k09d2pfviFB4JVuJQFosTzJEU=
+X-Google-Smtp-Source: AGHT+IH7Jxl4egsm44aKzPKE0aLRG0ZvDNhAZufHKs58sOQRPIFCkfK9Yg0oOoHoJlDXQJo4YHOe7g==
+X-Received: by 2002:adf:f292:0:b0:366:ec2f:dbd3 with SMTP id
+ ffacd0b85a97d-36b5d353bcbmr4110803f8f.47.1722245184746; 
+ Mon, 29 Jul 2024 02:26:24 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.173.10])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42813e5067dsm81026115e9.16.2024.07.29.02.26.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jul 2024 02:26:24 -0700 (PDT)
+Message-ID: <f5f5dfca-d60b-4b0d-add9-e41b42bd4ce2@linaro.org>
+Date: Mon, 29 Jul 2024 11:26:19 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 05/11] exec/ioport: Add portio_list_set_address()
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
+ Sergio Lopez <slp@redhat.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
+ <fbarrat@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Hanna Reitz <hreitz@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ John Snow <jsnow@redhat.com>, Thomas Huth <huth@tuxfamily.org>,
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Leonardo Bras <leobras@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
+ Kevin Wolf <kwolf@redhat.com>, David Hildenbrand <david@redhat.com>
+References: <20240114123911.4877-1-shentey@gmail.com>
+ <20240114123911.4877-6-shentey@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240114123911.4877-6-shentey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,67 +112,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sergei Lyubski <slyubski@gmail.com> writes:
+On 14/1/24 13:39, Bernhard Beschow wrote:
+> Some SuperI/O devices such as the VIA south bridges or the PC87312 controller
+> are able to relocate their SuperI/O functions. Add a convenience function for
+> implementing this in the VIA south bridges.
+> 
+> This convenience function relies on previous simplifications in exec/ioport
+> which avoids some duplicate synchronization of I/O port base addresses. The
+> naming of the function is inspired by its memory_region_set_address() pendant.
+> 
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> ---
+>   docs/devel/migration.rst |  5 +++--
+>   include/exec/ioport.h    |  2 ++
+>   system/ioport.c          | 19 +++++++++++++++++++
+>   3 files changed, 24 insertions(+), 2 deletions(-)
 
->   Hi guys,
->
-> My name is Sergey. My company uses QEMU for  CPU performance simulation/e=
-valuaton.
-> Sorry, I found  your emails in QEMU  relatively recent commits  into ram.=
-c .  Why ram.c . Because I see some weirdness in
-> the  behavior.
->=20=20=20
-> Our goal is :
->      a)  To boot  Linux , to launch some  TEST/SPEC, to drop a few checkp=
-oints.
->      b)  To resume  execution from  those checkpoints, to attach a perfor=
-mance simulator and
->            to evaluate performance at the "hot" code  areas.
->
->   How we tried to do it .
->
->      a) run QEMU with -monitor telnet options
->      b) connect  to QEMU with telnet=20
->      c)  after  LINUX  booted  in  QEMU monitor (telnet)  executed
->             migrate -d file://<FULL  CKPT PATH>=20
->             quit
->       d)  run QEMU  with option -incoming file://<FULL CKPT PATH>
->
->   Now !!
->
->   If  I  drop the checkpoint  when running  on linux a long ( endless) te=
-st which  prints on      the console,  everything works (!)
->  and  the console is properly restored.
->=20=20=20=20
->   When I drop  the checkpoint  when the linux console is in shell  prompt=
-, the restoration does  not  work.
->    I see either error message  from  ram_load_precopy()
->        error_report("Unknown combination of migration flags: 0x%x",
->   flags);
 
-I suspect seeing the value of flags will help with any diagnosis.
+> +void portio_list_set_address(PortioList *piolist, uint32_t addr)
+> +{
+> +    MemoryRegionPortioList *mrpio;
+> +    unsigned i, j;
+> +
 
->
->        or
->
->    the console is locked, QEMU restarts and  runs  (ps, top).   The only =
- solution is to kill=20
->    QEMU .  After that,  QEMU console is distorted and requires to type
->    RESET.
+        memory_region_transaction_begin();
 
-Are you able to attach with gdb and get a backtrace?
+> +    for (i = 0; i < piolist->nr; ++i) {
+> +        mrpio = container_of(piolist->regions[i], MemoryRegionPortioList, mr);
 
->
->     Could you please comment on the above issues.=20
->     If you need more info I can send you my screen shots.
->     Please note that  that the similar behavior is observed on  both
->      qemu 9.0  ( stable-9.0)  and
->      qemu 8.x
->
-> Thanks in advance.
-> Sergey Lyubskiy
+Should we check mrpio->mr is disabled before changing its base address?
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> +        memory_region_set_address(&mrpio->mr,
+> +                                  mrpio->mr.addr - piolist->addr + addr);
+> +        for (j = 0; mrpio->ports[j].size; ++j) {
+> +            mrpio->ports[j].offset += addr - piolist->addr;
+> +        }
+
+           memory_region_transaction_commit();
+
+> +    }
+> +
+> +    piolist->addr = addr;
+> +}
+> +
+>   static void memory_region_portio_list_finalize(Object *obj)
+>   {
+>       MemoryRegionPortioList *mrpio = MEMORY_REGION_PORTIO_LIST(obj);
+
 
