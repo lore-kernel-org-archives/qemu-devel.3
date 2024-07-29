@@ -4,79 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FFE6C3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 12:28:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E376C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 12:29:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYOz7-0001w6-Kj; Mon, 29 Jul 2024 07:56:13 -0400
+	id 1sYPVW-0006ox-Su; Mon, 29 Jul 2024 08:29:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sYOz5-0001na-Bg
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 07:56:11 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sYPVU-0006i9-Vl
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 08:29:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sYOz3-0003Hb-MC
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 07:56:11 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sYPVT-0000rH-6D
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 08:29:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722254169;
+ s=mimecast20190719; t=1722256178;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eCSVOq9LhPfLBfy6HuRWZRfXiaQynAMj8sqpSrqVBG8=;
- b=dmLBNMxTKr2LFMPoo9qaB4v/ZQtnQmeKdOqqbhyAJI26vPGCSUlTDq4i8v5Er6ghSClSGc
- LL+poRRFYHjHHadQkawAStAOyGneRCrFg9hF0BDbBiqQiOZcH3mOcksCSiB8X3EAP35f/8
- OnIT3u++KFX4k1WWQVZcOLgeiPHFdvE=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=BSCGIkagRajMJUNnkRhQR1V1o2DHbmlR8SKkQy4X4pM=;
+ b=P/qZhkRT37fp3ftw5j7v7IsAZ7himcUU2NwwE0fAkZR3O2W63Z9S1ta0mSxrVz+fJTtm8i
+ ej1rn+ndJo816wI9S/2O+8JJ5v/xi93GDyLpvPDDiudelucNKb+aOpGLjzyLFZwXOBO9ki
+ J+QWTO2LQ/4hjEZYSsa9zEWEXEjELw0=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-202-MQa-ej4gOAmR0cZuUG4eQQ-1; Mon, 29 Jul 2024 07:56:05 -0400
-X-MC-Unique: MQa-ej4gOAmR0cZuUG4eQQ-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-36831948d94so1452847f8f.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 04:56:05 -0700 (PDT)
+ us-mta-182-OVdntNpxM1ezX2RWmiVqvQ-1; Mon, 29 Jul 2024 08:29:36 -0400
+X-MC-Unique: OVdntNpxM1ezX2RWmiVqvQ-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3687e6d7a3aso1248430f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 05:29:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722254164; x=1722858964;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1722256175; x=1722860975;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eCSVOq9LhPfLBfy6HuRWZRfXiaQynAMj8sqpSrqVBG8=;
- b=wnUvKdqttVGTxs47fvX20/a3UGwJ7LuxhWfFVCJh/cQ8AodUus8+azj0KXdvDJU7DR
- VTR7GzexR1nhYN2BAwbVAa58IGSvitlFNg06iEgXVsXc2D7mSCnQB4i1Ezv9fpCm73xk
- 5KkEs1Xm/oeAKOpCPqrtlA74X8tlZYmTICtcM/aN3lSub5mqAdxuLNqs/ARhhBy0o6lB
- d5CG2PrgobCHbpX/D4o9r+WAztcULMhpSYr+H7+P8VwvMfW4tbG6lZh9GI3pLoMnfojI
- 2YxW3qBLa6iFz7rk2kVpo3OZ6m7ILdADRZVzKRLvlVn6b9GXKJqOMsFE1b3fdN7cAsv2
- JF6g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVpHLym2Ns8crQIowfh0bYXe64wo/wiMY+keJiltlgxvbUlLPyKlVgN9+/Zt9cxEjAwtTw+p9cKfNE85PML5sFZB0g47qQ=
-X-Gm-Message-State: AOJu0Yx5Dfwh83DJYfUsZICjAJYJp8y6bSpu5h8bnj4xC/cb/Kbunf6v
- RdvCfyLVdWr1GBSPtshvA7PVpbyMc3o8u+1elHMfJU6mrEZRw+C/Q+80bNyNkR6AKbEFLmc0Ray
- C5AZmrCrrifJFAUwV8HJKzSOv3euyQEcWX24QBHENQM9G/MN4gPrEYvv/yOZPJOVEVMQpIXd6cD
- 78QclgicL9EIW/U84riqksfievSoYOrm0oInq3sA==
-X-Received: by 2002:a05:6000:186c:b0:368:4e28:47f7 with SMTP id
- ffacd0b85a97d-36b5cefd51dmr6220284f8f.6.1722254163946; 
- Mon, 29 Jul 2024 04:56:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFz54WjA+vo2ttOC9KhPgthpaRhina1Z5WxtiW6vBspEPgUIuZEIprU6hUXbd9ObE7Vzh8jnieFv/3c6rehNFY=
-X-Received: by 2002:a05:6000:186c:b0:368:4e28:47f7 with SMTP id
- ffacd0b85a97d-36b5cefd51dmr6220258f8f.6.1722254163473; Mon, 29 Jul 2024
- 04:56:03 -0700 (PDT)
+ bh=BSCGIkagRajMJUNnkRhQR1V1o2DHbmlR8SKkQy4X4pM=;
+ b=qKn9bQjvZirsZjAxO6Q1pqJcXGCD/d3tqT84BO1M6vWYiAgPHDiIyGne2hodRx84wx
+ DY+iuiVSJSCchCH+xuJmRWTcXFpfY1vHN2WMmxhuL76uOSt+IBEBPVNzga88y6IA6dHo
+ Ihmu5mpbS66hwCesKdg6dI1YfvWCRMrzs9u2zb8Pdi602jJ3bVNkhviiTCa80imwOc3O
+ SCqqKplGzrXx3vhyoDVUYV74SGxlPS9tykY9uFVfk1vvqapsKOgPv2+LUFCglF+i24i3
+ HcLcC4/EyZN0SduqxedJuThyOxuanOoO+LpBXZbVf7RE59g+mb6QQ3g352f55Za7edYA
+ c1jg==
+X-Gm-Message-State: AOJu0Yy6rrSjeesSzZ29SyMDnpSHWs0GOx9llC/kiHcFE3rJN3tnqMrh
+ MJRhGZijwf2SgelJ6fGBW8WA77fCvx1VxZ1+iCyhV2Fmw+BhcUuswjdZ7IqMQ8sMMbJKCQSWJ3E
+ RlRvv0sStF+sa7OsWvXtdXvrrhxOaJe4+cHwjP/wi6WOcrJRXhFil
+X-Received: by 2002:a5d:698b:0:b0:367:9088:fecd with SMTP id
+ ffacd0b85a97d-36b5cee2e4emr5251006f8f.7.1722256175283; 
+ Mon, 29 Jul 2024 05:29:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEeoXJnACuhaOBERrsZqdRmBWKpabnGs5regVIs3AuxVrMGHjcFAaV/fk5WMdAOvhe8d01GBw==
+X-Received: by 2002:a5d:698b:0:b0:367:9088:fecd with SMTP id
+ ffacd0b85a97d-36b5cee2e4emr5250992f8f.7.1722256174814; 
+ Mon, 29 Jul 2024 05:29:34 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-427f93594b6sm220493395e9.5.2024.07.29.05.29.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 29 Jul 2024 05:29:34 -0700 (PDT)
+Date: Mon, 29 Jul 2024 14:29:32 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Fabiano Rosas
+ <farosas@suse.de>, David Hildenbrand <david@redhat.com>, Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, "Daniel P. Berrange" <berrange@redhat.com>, Markus
+ Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V2 01/11] machine: alloc-anon option
+Message-ID: <20240729142932.6667c5b5@imammedo.users.ipa.redhat.com>
+In-Reply-To: <88945053-6918-4096-ac55-0ef4b946b241@oracle.com>
+References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
+ <1719776434-435013-2-git-send-email-steven.sistare@oracle.com>
+ <20240716111955.01d1d2b9@imammedo.users.ipa.redhat.com>
+ <88945053-6918-4096-ac55-0ef4b946b241@oracle.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20240729094702.50282-1-kwolf@redhat.com>
- <20240729094702.50282-5-kwolf@redhat.com>
-In-Reply-To: <20240729094702.50282-5-kwolf@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 29 Jul 2024 13:55:51 +0200
-Message-ID: <CABgObfYbpZ3JV5i_TKjobd6DrzYiy567YAfQbX+x5X7mj1=GKw@mail.gmail.com>
-Subject: Re: [PATCH 4/4] scsi-disk: Always report RESERVATION_CONFLICT to guest
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, fam@euphon.net, stefanha@redhat.com, 
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -84,7 +93,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,105 +109,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 29, 2024 at 11:47=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrot=
-e:
-> RESERVATION_CONFLICT is not a backend error, but indicates that the
-> guest tried to make a request that it isn't allowed to execute. Pass the
-> error to the guest so that it can decide what to do with it.
+On Sat, 20 Jul 2024 16:28:25 -0400
+Steven Sistare <steven.sistare@oracle.com> wrote:
 
-This is only true of scsi-block (though your patch is okay here -
-scsi-disk would see an EBADE and go down the ret < 0 path).
+> On 7/16/2024 5:19 AM, Igor Mammedov wrote:
+> > On Sun, 30 Jun 2024 12:40:24 -0700
+> > Steve Sistare <steven.sistare@oracle.com> wrote:
+> >   
+> >> Allocate anonymous memory using mmap MAP_ANON or memfd_create depending
+> >> on the value of the anon-alloc machine property.  This affects
+> >> memory-backend-ram objects, guest RAM created with the global -m option
+> >> but without an associated memory-backend object and without the -mem-path
+> >> option  
+> > nowadays, all machines were converted to use memory backend for VM RAM.
+> > so -m option implicitly creates memory-backend object,
+> > which will be either MEMORY_BACKEND_FILE if -mem-path present
+> > or MEMORY_BACKEND_RAM otherwise.  
+> 
+> Yes.  I dropped an an important adjective, "implicit".
+> 
+>    "guest RAM created with the global -m option but without an explicit associated
+>    memory-backend object and without the -mem-path option"
+> 
+> >> To access the same memory in the old and new QEMU processes, the memory
+> >> must be mapped shared.  Therefore, the implementation always sets  
+> >   
+> >> RAM_SHARED if alloc-anon=memfd, except for memory-backend-ram, where the
+> >> user must explicitly specify the share option.  In lieu of defining a new  
+> > so statement at the top that memory-backend-ram is affected is not
+> > really valid?  
+> 
+> memory-backend-ram is affected by alloc-anon.  But in addition, the user must
+> explicitly add the "share" option.  I don't implicitly set share in this case,
+> because I would be overriding the user's specification of the memory object's property,
+> which would be private if omitted.
 
-In general, for scsi-block I'd expect people to use report instead of
-stop. I agree that this is the best behavior for the case where you
-have a pr-manager, but it may also be better to stop the VM if a
-pr-manager has not been set up.  That's probably a bit hackish, so I
-guess it's okay to add a FIXME or TODO comment instead?
+instead of touching implicit RAM (-m), it would be better to error out
+and ask user to provide properly configured memory-backend explicitly.
 
-> -        if (status =3D=3D CHECK_CONDITION) {
-> +        switch (status) {
-> +        case CHECK_CONDITION:
->              req_has_sense =3D true;
->              error =3D scsi_sense_buf_to_errno(r->req.sense, sizeof(r->re=
-q.sense));
-> -        } else {
-> +            break;
-> +        case RESERVATION_CONFLICT:
-> +            /* Don't apply the error policy, always report to the guest =
-*/
-
-This is the only case where you get error =3D=3D 0. Maybe remove it from
-the initializer, and set it here?
-
-Paolo
-
-On Mon, Jul 29, 2024 at 11:47=E2=80=AFAM Kevin Wolf <kwolf@redhat.com> wrot=
-e:
->
-> RESERVATION_CONFLICT is not a backend error, but indicates that the
-> guest tried to make a request that it isn't allowed to execute. Pass the
-> error to the guest so that it can decide what to do with it.
->
-> Without this, if we stop the VM in response to a RESERVATION_CONFLICT,
-> it can happen that the VM cannot be resumed any more because every
-> attempt to resume it immediately runs into the same error and stops the
-> VM again.
->
-> One case that expects RESERVATION_CONFLICT errors to be visible in the
-> guest is running the validation tests in Windows 2019's Failover Cluster
-> Manager, which intentionally tries to execute invalid requests to see if
-> they are properly rejected.
->
-> Buglink: https://issues.redhat.com/browse/RHEL-50000
-> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> ---
->  hw/scsi/scsi-disk.c | 15 +++++++++++----
->  1 file changed, 11 insertions(+), 4 deletions(-)
->
-> diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-> index 69a195177e..e173b238de 100644
-> --- a/hw/scsi/scsi-disk.c
-> +++ b/hw/scsi/scsi-disk.c
-> @@ -235,11 +235,17 @@ static bool scsi_handle_rw_error(SCSIDiskReq *r, in=
-t ret, bool acct_failed)
->      } else {
->          /* A passthrough command has completed with nonzero status.  */
->          status =3D ret;
-> -        if (status =3D=3D CHECK_CONDITION) {
-> +        switch (status) {
-> +        case CHECK_CONDITION:
->              req_has_sense =3D true;
->              error =3D scsi_sense_buf_to_errno(r->req.sense, sizeof(r->re=
-q.sense));
-> -        } else {
-> +            break;
-> +        case RESERVATION_CONFLICT:
-> +            /* Don't apply the error policy, always report to the guest =
-*/
-> +            break;
-> +        default:
->              error =3D EINVAL;
-> +            break;
->          }
->      }
->
-> @@ -249,8 +255,9 @@ static bool scsi_handle_rw_error(SCSIDiskReq *r, int =
-ret, bool acct_failed)
->       * are usually retried immediately, so do not post them to QMP and
->       * do not account them as failed I/O.
->       */
-> -    if (req_has_sense &&
-> -        scsi_sense_buf_is_guest_recoverable(r->req.sense, sizeof(r->req.=
-sense))) {
-> +    if (!error || (req_has_sense &&
-> +                   scsi_sense_buf_is_guest_recoverable(r->req.sense,
-> +                                                       sizeof(r->req.sen=
-se)))) {
->          action =3D BLOCK_ERROR_ACTION_REPORT;
->          acct_failed =3D false;
->      } else {
-> --
-> 2.45.2
->
+> 
+> >> RAM flag, at the lowest level the implementation uses RAM_SHARED with fd=-1
+> >> as the condition for calling memfd_create.  
+> > 
+> > In general I do dislike adding yet another option that will affect
+> > guest RAM allocation (memory-backends  should be sufficient).
+> > 
+> > However I do see that you need memfd for device memory (vram, roms, ...).
+> > Can we just use memfd/shared unconditionally for those and
+> > avoid introducing a new confusing option?  
+> 
+> The Linux kernel has different tunables for backing memfd's with huge pages, so we
+> could hurt performance if we unconditionally change to memfd.  The user should have
+> a choice for any segment that is large enough for huge pages to improve performance,
+> which potentially is any memory-backend-object.  The non memory-backend objects are
+> small, and it would be OK to use memfd unconditionally for them.
+> 
+> - Steve
+> 
 
 
