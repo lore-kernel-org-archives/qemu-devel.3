@@ -4,64 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 427A1C49EA1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4072CC3DA61
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 13:22:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYQJd-0005Uu-Ge; Mon, 29 Jul 2024 09:21:29 -0400
+	id 1sYQJk-00060P-Rg; Mon, 29 Jul 2024 09:21:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sYQJb-0005Nz-Ds; Mon, 29 Jul 2024 09:21:27 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ id 1sYQJi-0005ri-Nu; Mon, 29 Jul 2024 09:21:34 -0400
+Received: from sin.source.kernel.org ([145.40.73.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sYQJX-00028Z-4z; Mon, 29 Jul 2024 09:21:25 -0400
+ id 1sYQJb-000290-Ss; Mon, 29 Jul 2024 09:21:34 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 5EA9D619A0;
+ by sin.source.kernel.org (Postfix) with ESMTP id BA193CE0B29;
  Mon, 29 Jul 2024 13:21:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1056DC4AF0C;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF26C4AF09;
  Mon, 29 Jul 2024 13:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1722259281;
- bh=wmX5BOavDV5A0y4JGTIfwXXXDCYeYux2q4KKf6xw9vs=;
+ bh=CEfB5KrYRL3cgljABI9Vh0KZmODdlgqjxE5jRa0lRAQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=o4PyZdBgGpMneSb5gcEbFosIXh7r2vfuZOKvBP12tP6fSGmNrv8VgCXKCmnbPH0Yi
- v8NYL/xImPGCLIo4Os3iBdYEmGj8jYJVG/b/tnDh1fbtOT21HNpkhQ3ITL94P2mH8s
- n8Ir0fMV0jFv4dtUA+g2Aw8fibNPYnx76GTXFBslXEozcjG4Hj/IKVx1KHmJ2ojrWa
- Cv1ersR2w9Ld/tl8hxVRkBpG931tCqUT+WKb1nSY0d0uS5mzrPz2JlPWt1Y/kM/J+s
- /86vAPeB7WosmMvn/GdqFjgsEdKwwPGPb2V67YLHhHtuitprquuNJd/R5oRNOqJezm
- 7Q88ZGwqKWBSQ==
+ b=i/N9Sc4zEclRKNOtAmZGCQ0OLwB7pUzU3Fr5vY1Xd5cjgOtHWfOQWbU87h/D4hHWZ
+ ap3GspjoPKv4X8miHWNYDy5z9ed3oBEhorqhhJsb0V5qyQdFtT2GhqMimCBUYvrOck
+ GlYcULfPujDGz3/icwoaG5ysj0s/tp85vaPtSyAkhA/rHVNKnVzNENdAMursYg9mDu
+ r9p0DeXB9diW8+AB6PDBGtxcsrpqGPnmCevcnH3AWzkhuwmkxthzchOn04eVmkFOWU
+ H4a6aeb5B4Q1N+cUFpz7gjCodlsmLvmw/aOxOXWmahCvIdBFnW9iafKOWpf9FpX9CM
+ n2flbt4tD48Cw==
 Received: from mchehab by mail.kernel.org with local (Exim 4.97.1)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1sYQJT-000000030VT-0I6f; Mon, 29 Jul 2024 15:21:19 +0200
+ id 1sYQJT-000000030VZ-0VUZ; Mon, 29 Jul 2024 15:21:19 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: 
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, linux-kernel@vger.kernel.org,
+ Peter Maydell <peter.maydell@linaro.org>, linux-kernel@vger.kernel.org,
  qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v4 1/6] arm/virt: place power button pin number on a define
-Date: Mon, 29 Jul 2024 15:21:05 +0200
-Message-ID: <e5afbbaf2836ebe22b48c455285eccef86db966b.1722259246.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v4 3/6] target/arm: preserve mpidr value
+Date: Mon, 29 Jul 2024 15:21:07 +0200
+Message-ID: <459cf7dd22b3de57a2079e0a43dc20d87b3f05a1.1722259246.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <cover.1722259246.git.mchehab+huawei@kernel.org>
 References: <cover.1722259246.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+Received-SPF: pass client-ip=145.40.73.55;
+ envelope-from=mchehab+huawei@kernel.org; helo=sin.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,82 +75,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Having magic numbers inside the code is not a good idea, as it
-is error-prone. So, instead, create a macro with the number
-definition.
+There is a logic at helper to properly fill the mpidr information.
+This is needed for ARM Processor error injection, so store the
+value inside a cpu opaque value, to allow it to be used.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- hw/arm/virt-acpi-build.c | 6 +++---
- hw/arm/virt.c            | 7 ++++---
- include/hw/arm/virt.h    | 3 +++
- 3 files changed, 10 insertions(+), 6 deletions(-)
+ target/arm/cpu.h    |  1 +
+ target/arm/helper.c | 10 ++++++++--
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index e10cad86dd73..f76fb117adff 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -154,10 +154,10 @@ static void acpi_dsdt_add_gpio(Aml *scope, const MemMapEntry *gpio_memmap,
-     aml_append(dev, aml_name_decl("_CRS", crs));
- 
-     Aml *aei = aml_resource_template();
--    /* Pin 3 for power button */
--    const uint32_t pin_list[1] = {3};
-+
-+    const uint32_t pin = GPIO_PIN_POWER_BUTTON;
-     aml_append(aei, aml_gpio_int(AML_CONSUMER, AML_EDGE, AML_ACTIVE_HIGH,
--                                 AML_EXCLUSIVE, AML_PULL_UP, 0, pin_list, 1,
-+                                 AML_EXCLUSIVE, AML_PULL_UP, 0, &pin, 1,
-                                  "GPO0", NULL, 0));
-     aml_append(dev, aml_name_decl("_AEI", aei));
- 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 719e83e6a1e7..687fe0bb8bc9 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1004,7 +1004,7 @@ static void virt_powerdown_req(Notifier *n, void *opaque)
-     if (s->acpi_dev) {
-         acpi_send_event(s->acpi_dev, ACPI_POWER_DOWN_STATUS);
-     } else {
--        /* use gpio Pin 3 for power button event */
-+        /* use gpio Pin for power button event */
-         qemu_set_irq(qdev_get_gpio_in(gpio_key_dev, 0), 1);
-     }
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index a12859fc5335..d2e86f0877cc 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1033,6 +1033,7 @@ struct ArchCPU {
+         uint64_t reset_pmcr_el0;
+     } isar;
+     uint64_t midr;
++    uint64_t mpidr;
+     uint32_t revidr;
+     uint32_t reset_fpsid;
+     uint64_t ctr;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index ce319572354a..2432b5b09607 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -4692,7 +4692,7 @@ static uint64_t mpidr_read_val(CPUARMState *env)
+     return mpidr;
  }
-@@ -1013,7 +1013,8 @@ static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
-                              uint32_t phandle)
+ 
+-static uint64_t mpidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
++static uint64_t mpidr_read(CPUARMState *env)
  {
-     gpio_key_dev = sysbus_create_simple("gpio-key", -1,
--                                        qdev_get_gpio_in(pl061_dev, 3));
-+                                        qdev_get_gpio_in(pl061_dev,
-+                                                         GPIO_PIN_POWER_BUTTON));
+     unsigned int cur_el = arm_current_el(env);
  
-     qemu_fdt_add_subnode(fdt, "/gpio-keys");
-     qemu_fdt_setprop_string(fdt, "/gpio-keys", "compatible", "gpio-keys");
-@@ -1024,7 +1025,7 @@ static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
-     qemu_fdt_setprop_cell(fdt, "/gpio-keys/poweroff", "linux,code",
-                           KEY_POWER);
-     qemu_fdt_setprop_cells(fdt, "/gpio-keys/poweroff",
--                           "gpios", phandle, 3, 0);
-+                           "gpios", phandle, GPIO_PIN_POWER_BUTTON, 0);
+@@ -4702,6 +4702,11 @@ static uint64_t mpidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     return mpidr_read_val(env);
  }
  
- #define SECURE_GPIO_POWEROFF 0
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index ab961bb6a9b8..a4d937ed45ac 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -47,6 +47,9 @@
- /* See Linux kernel arch/arm64/include/asm/pvclock-abi.h */
- #define PVTIME_SIZE_PER_CPU 64
- 
-+/* GPIO pins */
-+#define GPIO_PIN_POWER_BUTTON  3
++static uint64_t mpidr_read_ri(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    return mpidr_read(env);
++}
 +
- enum {
-     VIRT_FLASH,
-     VIRT_MEM,
+ static const ARMCPRegInfo lpae_cp_reginfo[] = {
+     /* NOP AMAIR0/1 */
+     { .name = "AMAIR0", .state = ARM_CP_STATE_BOTH,
+@@ -9723,7 +9728,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+             { .name = "MPIDR_EL1", .state = ARM_CP_STATE_BOTH,
+               .opc0 = 3, .crn = 0, .crm = 0, .opc1 = 0, .opc2 = 5,
+               .fgt = FGT_MPIDR_EL1,
+-              .access = PL1_R, .readfn = mpidr_read, .type = ARM_CP_NO_RAW },
++              .access = PL1_R, .readfn = mpidr_read_ri, .type = ARM_CP_NO_RAW },
+         };
+ #ifdef CONFIG_USER_ONLY
+         static const ARMCPRegUserSpaceInfo mpidr_user_cp_reginfo[] = {
+@@ -9733,6 +9738,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+         modify_arm_cp_regs(mpidr_cp_reginfo, mpidr_user_cp_reginfo);
+ #endif
+         define_arm_cp_regs(cpu, mpidr_cp_reginfo);
++        cpu->mpidr = mpidr_read(env);
+     }
+ 
+     if (arm_feature(env, ARM_FEATURE_AUXCR)) {
 -- 
 2.45.2
 
