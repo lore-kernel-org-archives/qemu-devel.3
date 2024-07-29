@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EB84C52CDA
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 17:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91492C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 17:57:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYUZX-0006q2-Ps; Mon, 29 Jul 2024 13:54:11 -0400
+	id 1sYUZV-0006f3-4l; Mon, 29 Jul 2024 13:54:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sYUZQ-0006Ig-Dc
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 13:54:04 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1sYUZO-00062p-5g
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 13:54:02 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sYUZN-0000Pw-K0
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 13:54:04 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-70d153fec2fso2795459b3a.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 10:54:01 -0700 (PDT)
+ id 1sYUZK-0000OO-37
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 13:54:01 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-70d150e8153so2189935b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 10:53:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722275640; x=1722880440;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722275637; x=1722880437;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w3J0a7Kk8VH78Rf/KPYKxAa9BurTiYRdK3RsGWQBTas=;
- b=15OOM8CmUf5KAi1dpp+tfOmy98Hx5hePLiiFc5oViD5ltC89qYrbT7WTPPyLT7M3sX
- xzjfgDFnQ4JcRlsCXSUJb0xUgAH3cAHG157CYtCf1i3urrRG9S1RnkcLyc4gUM8MSbMH
- WdtcnUo5N5JUg/nh/AUfWIan01Hn1T+UnkvU4aFKC2+6OPlK9qHuWTfFybRjQdzn7qpV
- qbwgiAsjsdc879CDp5aqMR/I8U5QGIlgiZOso6eVtZCFZw7lYYUxB0rGugB9zNtVP1VY
- hmqiZMHy/P4lIjAbGeYoWp2BC78ZBn0Jhm+O7Sqr0Q0aipgamOSE9eri9Arrl5+zZXR/
- xaPw==
+ bh=E2gOjemeIxuisakJLMtv9C9tfaLcK041ldza0nSyRho=;
+ b=VMeSPlsDlSn6QFNvoQfYYak0CCDhd1FZuL0l630+8F1l5hzALC6wC2+kbBo/jr62+b
+ gAP/fucrOqGKKNdZhRM7IJJ4xd2vdUFb3bp1ZA+b8x4qm7uYUfijQca2j+nPZ1diQ1S6
+ +P4NMhlHH/yDAzPIS/L0/vRS4rvBEMbAHw5TWmI8by005WLTlait6axJRg12gVHehv4Z
+ nLyOyjxM2TBkr03bmPmB2Os3wEafk/oUGPoq9g/eH+GCSGN9nvrOePQUohVII7GTZu6o
+ gKTqAQx8erANVLOSQQShZfchkTS+KQkU4koXXAEUtpgoRw+zrTuHeNwHIm0HkNJt/26I
+ 6xig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722275640; x=1722880440;
+ d=1e100.net; s=20230601; t=1722275637; x=1722880437;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=w3J0a7Kk8VH78Rf/KPYKxAa9BurTiYRdK3RsGWQBTas=;
- b=He21e2qXFwZiEe6EZPXD7+/pB1XEK6okn0MYKDRutmiqgQoWuXsjMXUae8Bapb0Kcf
- L2HUZbTNhOZD82tAWh6kSUd1POel5UV96VOiC4WPXdwpBK8p/iGTyWb6NiconlBfreN3
- jDeFYEpsEVXoln4EepqUpAI2YoUXPrvDGnzWED5vWlmIQhjhFm7t5QYoCpV57rsCYsZY
- AfUWx95AKTfClaCdrzLyXeBaqyumAXAizYjkasPC+eiJTW4cuTXfXOq+h8xfaeKt3HOh
- U0NN30F6mRBWeXUL5lgZxpGbQ3+HXZef2xWfYu8p7PG7Hfr9Gy/Fs5Hi0LcU3ha5gpiX
- 6xXw==
+ bh=E2gOjemeIxuisakJLMtv9C9tfaLcK041ldza0nSyRho=;
+ b=gSJxVh+d20p/KO9EZpf+49VK1HzutNXRRHylUHhhbgZETLxVoW3jW7bntFzb9opAPA
+ yEd8OAm/a3aeXzE0Zi1BKpwdR9PIJT4/9JjRMHiuWGTJSCHyZWHoetB9IwBpvqs8qCOf
+ p32iIpuCd/UZ8qefiWEgY7tL9z2hvaIU4Q5rnHJMKlkPJCjaZGuecDXDPR2JIsYglNPG
+ 3gwpBPaKXmTefG4n3Tea1KkS7lNgWMFQ+NQ2O8Kiqq8Wi6/aSYoU+8Pt7Y6Z6SQfWpHZ
+ uok2bpG+fSIGn1qAe6o3/ruv9j/er0CwwaLsREj1VYGP5B4BBPFu45WqXH+o1c4bZGBI
+ Avtw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgvXEhALZ6EavGwqqIn4tynJL3XZFbG3oEWHlgJHWgwiZ4tjX8faDBHa3wygf9GOMNmyl2nnDwexHj+wiZ08Nov9Vank4=
-X-Gm-Message-State: AOJu0YzoIS08vk+TDJH6RJqcX/2xYldQi0Tx4pX5L8byCdJzH+kmbFka
- Ncg2SRUtUiraednPKOOgVtrmLXQjivEtADfFghWZ5NsJaqG7ymSDvWZftXV3h0E=
-X-Google-Smtp-Source: AGHT+IGyb7t92TbYrkmTmHHiKjTKiGmECLntJPWTfS8dwp20WJtnI+6yJJ/+mRyAHYGwBDukrI+9gg==
-X-Received: by 2002:a05:6a21:9994:b0:1c0:f1ea:adf with SMTP id
- adf61e73a8af0-1c4a129d460mr11457487637.16.1722275640068; 
- Mon, 29 Jul 2024 10:54:00 -0700 (PDT)
+ AJvYcCWE2d+10BT78f5ME6od3cYZ1qpQWAfRDjbSuSGHJpx1bzr9DCoSOeOf0apgio6dsrbOvskoiFFNJSrRZV4LCLMaago9Pqk=
+X-Gm-Message-State: AOJu0YyixKYbpDe0i/mNcOQ9kxCfoR6GEVC/E1A6MSna507HUrQbfbAw
+ ZGhv/4KvhnnvSeeuITjdX7sp+J1EV37jb9vNaxWPIxcq8Qt/DdaqpQhpaE4o300=
+X-Google-Smtp-Source: AGHT+IEvIkWPRazroEY9kqvcXbNbEiec7KjUrMUaddW0iNlpNWZZMV7N4BULgyi2m28lp63uqN8vkA==
+X-Received: by 2002:a05:6a00:895:b0:706:aa4b:4 with SMTP id
+ d2e1a72fcca58-70ece81cef5mr11896428b3a.13.1722275636598; 
+ Mon, 29 Jul 2024 10:53:56 -0700 (PDT)
 Received: from debug.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7a9f7c71b15sm6303141a12.18.2024.07.29.10.53.59
+ 41be03b00d2f7-7a9f7c71b15sm6303141a12.18.2024.07.29.10.53.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jul 2024 10:53:59 -0700 (PDT)
+ Mon, 29 Jul 2024 10:53:56 -0700 (PDT)
 From: Deepak Gupta <debug@rivosinc.com>
 To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, jim.shu@sifive.com,
  andy.chiu@sifive.com, jesse.huang@sifive.com, kito.cheng@sifive.com
 Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, laurent@vivier.eu,
  bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
  zhiwei_liu@linux.alibaba.com, Deepak Gupta <debug@rivosinc.com>
-Subject: [PATCH v2 24/24] linux-user/riscv: Adding zicfiss/lp extension in
- hwprobe syscall
-Date: Mon, 29 Jul 2024 10:53:26 -0700
-Message-ID: <20240729175327.73705-25-debug@rivosinc.com>
+Subject: [PATCH v2 21/24] target/riscv: add trace-hooks for each case of
+ sw-check exception
+Date: Mon, 29 Jul 2024 10:53:23 -0700
+Message-ID: <20240729175327.73705-22-debug@rivosinc.com>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240729175327.73705-1-debug@rivosinc.com>
 References: <20240729175327.73705-1-debug@rivosinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=debug@rivosinc.com; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=debug@rivosinc.com; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,39 +99,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add zicfiss/lp extensions in the ext0 key of hwprobe syscall.
-It is aligned with Linux CFI patchset.
+Violations to control flow rules setup by zicfilp and zicfiss lead to
+software check exceptions. To debug and fix such sw check issues in guest
+, add trace-hooks for each case.
 
 Signed-off-by: Jim Shu <jim.shu@sifive.com>
 Signed-off-by: Deepak Gupta <debug@rivosinc.com>
 ---
- linux-user/syscall.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ target/riscv/insn_trans/trans_rvi.c.inc | 1 +
+ target/riscv/op_helper.c                | 4 ++++
+ target/riscv/trace-events               | 6 ++++++
+ target/riscv/translate.c                | 2 ++
+ 4 files changed, 13 insertions(+)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index f879be7cfe..f2f2164ee5 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -8882,6 +8882,8 @@ static int do_getdents64(abi_long dirfd, abi_long arg2, abi_long count)
- #define     RISCV_HWPROBE_EXT_ZTSO          (1ULL << 33)
- #define     RISCV_HWPROBE_EXT_ZACAS         (1ULL << 34)
- #define     RISCV_HWPROBE_EXT_ZICOND        (1ULL << 35)
-+#define     RISCV_HWPROBE_EXT_ZICFILP       (1ULL << 36)
-+#define     RISCV_HWPROBE_EXT_ZICFISS       (1ULL << 37)
+diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
+index ee868c5fcb..66b26cbe8b 100644
+--- a/target/riscv/insn_trans/trans_rvi.c.inc
++++ b/target/riscv/insn_trans/trans_rvi.c.inc
+@@ -65,6 +65,7 @@ static bool trans_lpad(DisasContext *ctx, arg_lpad *a)
+                     tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
+                     tcg_env, offsetof(CPURISCVState, sw_check_code));
+             generate_exception(ctx, RISCV_EXCP_SW_CHECK);
++            trace_zicfilp_unaligned_lpad_instr((uint64_t) ctx->base.pc_next);
+             return true;
+         }
+     }
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 54baa3a966..6a54c6c24d 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -24,6 +24,7 @@
+ #include "exec/exec-all.h"
+ #include "exec/cpu_ldst.h"
+ #include "exec/helper-proto.h"
++#include "trace.h"
  
- #define RISCV_HWPROBE_KEY_CPUPERF_0     5
- #define     RISCV_HWPROBE_MISALIGNED_UNKNOWN     (0 << 0)
-@@ -9000,6 +9002,10 @@ static void risc_hwprobe_fill_pairs(CPURISCVState *env,
-                      RISCV_HWPROBE_EXT_ZACAS : 0;
-             value |= cfg->ext_zicond ?
-                      RISCV_HWPROBE_EXT_ZICOND : 0;
-+            value |= cfg->ext_zicfilp ?
-+                     RISCV_HWPROBE_EXT_ZICFILP : 0;
-+            value |= cfg->ext_zicfiss ?
-+                     RISCV_HWPROBE_EXT_ZICFISS : 0;
-             __put_user(value, &pair->value);
-             break;
-         case RISCV_HWPROBE_KEY_CPUPERF_0:
+ /* Exceptions processing helpers */
+ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
+@@ -283,6 +284,8 @@ void helper_cfi_check_landing_pad(CPURISCVState *env, int lbl)
+          * greater than 31 and then shift 12 right
+          */
+         if (lbl && (lbl != ((env->gpr[xT2] & 0xFFFFFFFF) >> 12))) {
++            trace_zicfilp_lpad_reg_mismatch(lbl,
++                                           (env->gpr[xT2] & 0xFFFFFFFF) >> 12);
+             env->sw_check_code = RISCV_EXCP_SW_CHECK_FCFI_TVAL;
+             riscv_raise_exception(env, RISCV_EXCP_SW_CHECK, GETPC());
+         }
+@@ -295,6 +298,7 @@ void helper_sschk_mismatch(CPURISCVState *env, target_ulong rs1,
+                            target_ulong ssra)
+ {
+     if (rs1 != ssra) {
++        trace_zicfiss_sspopchk_reg_mismatch((uint64_t)ssra, (uint64_t) rs1);
+         env->sw_check_code = RISCV_EXCP_SW_CHECK_BCFI_TVAL;
+         riscv_raise_exception(env, RISCV_EXCP_SW_CHECK, GETPC());
+     }
+diff --git a/target/riscv/trace-events b/target/riscv/trace-events
+index 49ec4d3b7d..842349ecb9 100644
+--- a/target/riscv/trace-events
++++ b/target/riscv/trace-events
+@@ -9,3 +9,9 @@ pmpaddr_csr_write(uint64_t mhartid, uint32_t addr_index, uint64_t val) "hart %"
+ 
+ mseccfg_csr_read(uint64_t mhartid, uint64_t val) "hart %" PRIu64 ": read mseccfg, val: 0x%" PRIx64
+ mseccfg_csr_write(uint64_t mhartid, uint64_t val) "hart %" PRIu64 ": write mseccfg, val: 0x%" PRIx64
++
++# zicfiss/lp
++zicfiss_sspopchk_reg_mismatch(uint64_t ssra, uint64_t rs1) "shadow_stack_ra: 0x%" PRIx64 ", rs1: 0x%" PRIx64
++zicfilp_missing_lpad_instr(uint64_t pc_first) "pc_first: 0x%" PRIx64
++zicfilp_unaligned_lpad_instr(uint64_t pc_next) "pc_next: 0x%" PRIx64
++zicfilp_lpad_reg_mismatch(int lpad_label, int t2_label) "lpad_label: 0x%x, t2_label: 0x%x"
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index ad0f841807..958a1578d4 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -30,6 +30,7 @@
+ #include "semihosting/semihost.h"
+ 
+ #include "internals.h"
++#include "trace.h"
+ 
+ #define HELPER_H "helper.h"
+ #include "exec/helper-info.c.inc"
+@@ -1380,6 +1381,7 @@ static void riscv_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
+          * illegal instruction exception.
+          */
+         tcg_set_insn_param(cfi_lp_check, 1, tcgv_i32_arg(tcg_constant_i32(1)));
++        trace_zicfilp_missing_lpad_instr((uint64_t) ctx->base.pc_first);
+     }
+ }
+ 
 -- 
 2.44.0
 
