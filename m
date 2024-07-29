@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBB4BC3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 09:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BEC7C3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 09:27:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYMeE-0005uR-8y; Mon, 29 Jul 2024 05:26:30 -0400
+	id 1sYMeu-0006wC-7Q; Mon, 29 Jul 2024 05:27:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYMeC-0005tI-Oh
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 05:26:28 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYMes-0006oe-Cq
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 05:27:10 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYMeB-0001NJ-1q
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 05:26:28 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3685a5e7d3cso1402281f8f.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 02:26:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYMeq-0001Ov-Iy
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 05:27:10 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-428178fc07eso11944405e9.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 02:27:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722245185; x=1722849985; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722245227; x=1722850027; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=aJQglsc/9ThcINvqQpIx6rtAKMkjXGdOWU36BfwkRcQ=;
- b=TAZwAwYTN/louTNS5embtw9m2zHCZdd7f86v3okKKIswV2r0+t9xAegd6VF/Wpbq76
- MZZJUceXrC+bjyHmaY1BASyau/CgJMCbpU0c7gyDZOwYouYVrSavta2Db0Xi2hvjzwwv
- s/aDte7ijY3ZoE5+jGJ7Zg5cd3W9pxKAQxd/oJurG3McsmW7CnArxiC2ZJz+W+tDuXLu
- BYQgB4uIvMyTNnBfu0NWskzC0MxJF3m9RT/IAHfYBgpx/766MbUn4DFIYtCGf0wGYTj1
- s5t4njEc+dcrqh86pzNQ15kRDw7MJQylI3pxlLbhCCpWhuR8KA+/icaRE3MwQU0sk1ES
- AVtA==
+ bh=g8XAPiWH2FqbGvRy29sLzAUdq0CY3h/biDYe/igYx4k=;
+ b=gred+ViP6nAY8He6N+mY/K5lU1cjczf5jyjqCKi845gvwXmEaEJ1J4en6vt0jxawUn
+ r6unZQvzdUhOrsCyk/iJA63Qh2dAD/XvQsuRjbvjPB2bvMTAkZrypoB5UKluFHjVUcMD
+ Mgvj3anjBRyDKqgSi1CKHezJNZyBdISR/HYFKvHOCr6a0BlYvrPkg/wQrR77IbHngrub
+ Ib1yaklbJ2TsVLQtrzCZcmHXQ624Zu83Y7/cuTw72pr9gAClRYcNLVpiLREiqo0+/pXB
+ O2tUFQM6Gnm06fOBYSXo9qYmUW1pCQv4aKYBsYMpjmP96I3eFMRAbPrBIQIdAdy8mV/k
+ Z0Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722245185; x=1722849985;
+ d=1e100.net; s=20230601; t=1722245227; x=1722850027;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aJQglsc/9ThcINvqQpIx6rtAKMkjXGdOWU36BfwkRcQ=;
- b=w/ASRuUGU8c0YnrwTrXWXpglF+B8kYeZnE7QBBwmiVQBoO71M6JlHyTDh1U0Uh0bhq
- IHQ3uuTdsWDwghi1xNKtSqajChLWyh/wpsYCF36l5uWEVKKqy0xwweYzgSk6sNjWAjx8
- Rgg6T7VK4smRtjY6gmwYbVVdmMi17OUCsvXsEUV4bLuEOp3oNQ/F0B/YKmeeVoKjGkFo
- NeXpURUJae1Ny3gO7ceakeHQV6scqs2Ob3XkpdM225IYG0vNjp3enqbo2xA0pIteah4Y
- Yuqd1ZMz9Dond1qi1AgJzgAnF+F8bZgA9k9MFqbv39MHvk1brGWkv8CS+Ty116T0KY7N
- 2aEg==
+ bh=g8XAPiWH2FqbGvRy29sLzAUdq0CY3h/biDYe/igYx4k=;
+ b=gYeaLo5ZfkOHap0iQNrXw30TaU0C+KcicdoAkIpDyN3f2g3vTzX926zgrB3DAJjbNQ
+ 2txvHlwvJaVE/IONoz1QmpqyQ0M8Brx3X8Mkmr8MPw+r5pemqmZqAmRvIoc2anB+gIEZ
+ IwBcrpL1XoHA6+VpywDJQanZfNgmRTIiiJvKQR1GCBzRE+zughYZlPMHIbRBjBBj23ub
+ oyjhyz+nCIIztInm7UgoxQ43DR1FSb54jKXU54fuNWzfY96QXur+GDBBU0RjjtabEnJg
+ JNcwOrZstJ0W+dWYb4yAYT2HZL03sFMZKTq+enpKMuA3/VyC0isChAmHcnxsnJ84kdbD
+ jf2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU73lsocZ8TnXULRFHhLvf5soaG11Sed+V4RntGyJCR23A1NEUJfSGfXID/DO8qxcsuBg4IrjGk9RSjDQwZr7X+uaX7X9k=
-X-Gm-Message-State: AOJu0Yz9p/GpHwSF9rltx0SQh3ckXMKnUNhP5DezT0UXtbGjLbxxPiti
- pxu/tYs+Xx3KNguQneSgTEaeqsklMdnbd3wAp9k09d2pfviFB4JVuJQFosTzJEU=
-X-Google-Smtp-Source: AGHT+IH7Jxl4egsm44aKzPKE0aLRG0ZvDNhAZufHKs58sOQRPIFCkfK9Yg0oOoHoJlDXQJo4YHOe7g==
-X-Received: by 2002:adf:f292:0:b0:366:ec2f:dbd3 with SMTP id
- ffacd0b85a97d-36b5d353bcbmr4110803f8f.47.1722245184746; 
- Mon, 29 Jul 2024 02:26:24 -0700 (PDT)
+ AJvYcCVY43mmeVQbA9oaD2O1svtSdisMc3u5gH4LeNoaQNTTlYJQdyIJCgBSGqq+0uFBXEXlefQJ6N05kS6gQVHTduTr9xWj78Q=
+X-Gm-Message-State: AOJu0Yy0XaB7Xz7dyTqKJ8epqXC40UazVn7dMb/kJRqR7G5bZBP0+9h1
+ yxGTFChoSMhJCGtEHYPOHh0cU8FkAo99Mw2g5IW2NQ7dcG+2QUCxC/CTVcUbEUs=
+X-Google-Smtp-Source: AGHT+IFO+41JqucrdvEIVNnc/4rveZUI8xpBzr4AfTfdu9aRnA2CxQSQ7xOc7vdVZp+frc9QlAzq4Q==
+X-Received: by 2002:a05:600c:468d:b0:425:649b:60e8 with SMTP id
+ 5b1f17b1804b1-42811d9cb9bmr51906095e9.18.1722245226750; 
+ Mon, 29 Jul 2024 02:27:06 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.173.10])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42813e5067dsm81026115e9.16.2024.07.29.02.26.21
+ 5b1f17b1804b1-4280574003bsm167702425e9.17.2024.07.29.02.27.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jul 2024 02:26:24 -0700 (PDT)
-Message-ID: <f5f5dfca-d60b-4b0d-add9-e41b42bd4ce2@linaro.org>
-Date: Mon, 29 Jul 2024 11:26:19 +0200
+ Mon, 29 Jul 2024 02:27:06 -0700 (PDT)
+Message-ID: <73127b3f-7a56-46f3-892f-a7ffd542b4dd@linaro.org>
+Date: Mon, 29 Jul 2024 11:27:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 05/11] exec/ioport: Add portio_list_set_address()
+Subject: Re: [PATCH v5 11/11] hw/isa/vt82c686: Implement relocation and
+ toggling of SuperI/O functions
 To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
  Sergio Lopez <slp@redhat.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
@@ -82,21 +83,21 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
  Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
  Kevin Wolf <kwolf@redhat.com>, David Hildenbrand <david@redhat.com>
 References: <20240114123911.4877-1-shentey@gmail.com>
- <20240114123911.4877-6-shentey@gmail.com>
+ <20240114123911.4877-12-shentey@gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240114123911.4877-6-shentey@gmail.com>
+In-Reply-To: <20240114123911.4877-12-shentey@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,50 +114,42 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 14/1/24 13:39, Bernhard Beschow wrote:
-> Some SuperI/O devices such as the VIA south bridges or the PC87312 controller
-> are able to relocate their SuperI/O functions. Add a convenience function for
-> implementing this in the VIA south bridges.
+> The VIA south bridges are able to relocate and toggle (enable or disable) their
+> SuperI/O functions. So far this is hardcoded such that all functions are always
+> enabled and are located at fixed addresses.
 > 
-> This convenience function relies on previous simplifications in exec/ioport
-> which avoids some duplicate synchronization of I/O port base addresses. The
-> naming of the function is inspired by its memory_region_set_address() pendant.
+> Some PC BIOSes seem to probe for I/O occupancy before activating such a function
+> and issue an error in case of a conflict. Since the functions are currently
+> enabled on reset, conflicts are always detected. Prevent that by implementing
+> relocation and toggling of the SuperI/O functions.
+> 
+> Note that all SuperI/O functions are now deactivated upon reset (except for
+> VT82C686B's serial ports where Fuloong 2e's rescue-yl seems to expect them to be
+> enabled by default). Rely on firmware to configure the functions accordingly.
 > 
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   docs/devel/migration.rst |  5 +++--
->   include/exec/ioport.h    |  2 ++
->   system/ioport.c          | 19 +++++++++++++++++++
->   3 files changed, 24 insertions(+), 2 deletions(-)
+>   hw/isa/vt82c686.c | 65 +++++++++++++++++++++++++++++++++++++++--------
+>   1 file changed, 55 insertions(+), 10 deletions(-)
 
 
-> +void portio_list_set_address(PortioList *piolist, uint32_t addr)
+> +static void via_superio_devices_enable(ViaSuperIOState *s, uint8_t data)
 > +{
-> +    MemoryRegionPortioList *mrpio;
-> +    unsigned i, j;
+> +    ISASuperIOClass *ic = ISA_SUPERIO_GET_CLASS(s);
 > +
 
         memory_region_transaction_begin();
 
-> +    for (i = 0; i < piolist->nr; ++i) {
-> +        mrpio = container_of(piolist->regions[i], MemoryRegionPortioList, mr);
-
-Should we check mrpio->mr is disabled before changing its base address?
-
-> +        memory_region_set_address(&mrpio->mr,
-> +                                  mrpio->mr.addr - piolist->addr + addr);
-> +        for (j = 0; mrpio->ports[j].size; ++j) {
-> +            mrpio->ports[j].offset += addr - piolist->addr;
-> +        }
-
-           memory_region_transaction_commit();
-
+> +    isa_parallel_set_enabled(s->superio.parallel[0], (data & 0x3) != 3);
+> +    for (int i = 0; i < ic->serial.count; i++) {
+> +        isa_serial_set_enabled(s->superio.serial[i], data & BIT(i + 2));
 > +    }
-> +
-> +    piolist->addr = addr;
+> +    isa_fdc_set_enabled(s->superio.floppy, data & BIT(4));
+
+        memory_region_transaction_commit();
+
 > +}
 > +
->   static void memory_region_portio_list_finalize(Object *obj)
->   {
->       MemoryRegionPortioList *mrpio = MEMORY_REGION_PORTIO_LIST(obj);
 
 
