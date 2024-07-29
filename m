@@ -4,75 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 367F7C3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:52:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC49AC3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYSf3-0006A9-4n; Mon, 29 Jul 2024 11:51:45 -0400
+	id 1sYSlB-0004AK-Aj; Mon, 29 Jul 2024 11:58:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYSf1-000682-AT
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:51:43 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ id 1sYSl9-00047o-Sb
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:58:03 -0400
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYSez-00069z-JB
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:51:43 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2ef2d96164aso41893771fa.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:51:41 -0700 (PDT)
+ id 1sYSl8-00073j-0b
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:58:03 -0400
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-52efbc57456so3853269e87.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722268300; x=1722873100; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DVeYyd38oI4ymekSrtGt52u8IpbVV/D3aJ4+z1VG4jc=;
- b=ryAckw+YSeE10ktxzxpGbEqDscxduheqN1uNKTRINE3uXM0WWhgnjc8iyQfM49aWQ9
- x0RNcN+qLCFo7FFEj+n87/V0riC0vjcSRXUgm0IQ7GL1ffzOFBfTGTHDh4HeEFE5OCNK
- YGV4KKgr3yL0By8OXYN+v/kD6VlQfQgn8jSYIWut/qrIwP8FqWCGpcDcTz5wwjZ8SAnA
- b2W7jgjQf+3S8RbqrsB3DtVsluJ+nQdc3m8KDn8tkzCyUEprfxI6HdRw79qGfomnjzLY
- R+XcXzWZ6d/E9Fu1NlRggLHhiwjDfWhg8zF51SpnfkAn/n9SwjHVphPQs9KbApGyyUeE
- J5Pg==
+ d=linaro.org; s=google; t=1722268680; x=1722873480; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=zqNAnrwlZ7pIqVdvMaH8oPfNljGW4HJUTJaiICPW7yU=;
+ b=ObS0ta59xxMkufi9TbbW/LbC/c2ZYr/A868I/JpVc5TZmuCCAjXUqgbFG9m7IZSpg3
+ XEJ7uD9M9akoBDttHizlhllZ+qeFnSL+w7vRc2qEGMR2+AkaHUm7NL83DaakLFNPbFuM
+ uMqCfXxF1q70m0N1K/CvVTy0PwTGMd/aPY2lLRePcUB5VxRXyLSE5eqKf/F26Rdai5yF
+ C1eOKwWXBA3K3MWqQphnN9isoue1nJ39AjQogCmFcJJPXkA4OaXHB2ScXZeCqiN9oZeY
+ qurDYvkMB/aqXBjl0THU3MyErRTfdiDnEVrE7RHWp+RLdxHnue1kMM3u4ozAHip3Yvku
+ meIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722268300; x=1722873100;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DVeYyd38oI4ymekSrtGt52u8IpbVV/D3aJ4+z1VG4jc=;
- b=KMnSJd656nFeLzC2g/m2qacmXTT/nq9e/r2Y7LbDJG8ZIUrU6UMOVgYfyMrMUzqnPj
- xOs3DTmYXFursiES26RYE9ZZWYxU0WdVcJloVkT8NEgJIfiPiOL2gwUyF16QT+uXqO1Z
- zU1kAXafV9Gp9zfIdvC/L/6BesWeLZDc0dNgHkjEmsrpHvwsPPFXsDmZ0yA3M0PZ8YKH
- izZrm0uo3AsCAtG6YRgKY3T11mqgsjj5Qq3f4y4iIws8iFjlvi1VuI38smdxQtGkuz1W
- qxSTDcxlkGgmUUS6AwI+dQcwh95ZdTUF4FPhW2BK4S/tOYbv4oChfdvibZVtfFoATJ/Z
- pmHg==
-X-Gm-Message-State: AOJu0YzrpVsZf//zWqBgf6Tht6Q66I7xom/hGgzljuVgC6V2flo5IU8X
- 7UQ2aAXxbr9sMZKn1jkkj1BZDE2i8rMWoHq6Sw2U7kPn37NxRRoFuvBiXpdR5Mbii7pG3bSrF23
- /7+0tBkvicunXESWINYD2J9eMUFCj9KzQv8OEpg==
-X-Google-Smtp-Source: AGHT+IGgfLNaGF2nDylIei4IZk1IQfK8UJMfLyn/o4nGYkGfmSUAIZA0oVrrVrdpRtREQq2C77aP60y0NFmiV4Vt0IE=
-X-Received: by 2002:a2e:9903:0:b0:2ec:5b17:29a2 with SMTP id
- 38308e7fff4ca-2f12ee423c1mr55661621fa.32.1722268299607; Mon, 29 Jul 2024
- 08:51:39 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1722268680; x=1722873480;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zqNAnrwlZ7pIqVdvMaH8oPfNljGW4HJUTJaiICPW7yU=;
+ b=EIJnAP/kZeOd+v2XlhLxU/v6gU5wLDKHoN0h/TaDDWRGt1zi6OeD63nSK0HLhIUeY6
+ Hdb5eq77ps4sz2vYMoY86+tfxkD0VXVNyFZ11K1OHa/89/C8oVadvrxJ0KGDeSRyFy8f
+ 5DTxCp2S1fJMMDwRTJyvcVu+QliwDUS/pg8gnSAm1IImB4RMHxJLEBZE7+GLlTWQu34U
+ c38FQ8AQY6Nxmmx4lt2NGHSwE8kPo23JCgxR/PBOAttS80iFDbGkboVg24BP0nepBv4k
+ LJ/hJnlvZfY24DZ3WI4PQVl5ZOgYUecNgbMwFHqN6EL90R9wO2x8FucyY6mss7u638Jm
+ /znQ==
+X-Gm-Message-State: AOJu0Yw7D02yEpvuLhUGrL4xBCSAvr6ddWVmn6ZYMTMbgUzmts7YxJc8
+ QafWQFIpmdqFU8o/AtmXdR0FDxeGeYWzgT67MLhr20AP40pI+QZpitR6RA8ZZI8JQaCrSUB+sCR
+ jqIr4DGnXD7i6Mkit6SylOWUpsQV5YKWfdXkABPosrZ4m2xcv
+X-Google-Smtp-Source: AGHT+IFbWsBTnqsvH2AO/WuIpcBB7jM7gmvw1fbFdNEuzbE43H6WGcYQMEKQ2bWveK4S1P+ZKeOhqvtZ0KhehCv8FN8=
+X-Received: by 2002:ac2:4bd1:0:b0:52e:9b92:4999 with SMTP id
+ 2adb3069b0e04-5309b269ae5mr7223272e87.2.1722268679959; Mon, 29 Jul 2024
+ 08:57:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240719181041.49545-1-philmd@linaro.org>
- <20240719181041.49545-11-philmd@linaro.org>
-In-Reply-To: <20240719181041.49545-11-philmd@linaro.org>
+References: <20240723151042.1396610-1-peter.maydell@linaro.org>
+In-Reply-To: <20240723151042.1396610-1-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 29 Jul 2024 16:51:28 +0100
-Message-ID: <CAFEAcA-ibEzUWFCxA3iQLUoHwZeGnD5kM6c4Ni3BbgaoAs1gKA@mail.gmail.com>
-Subject: Re: [PATCH v5 10/16] hw/char/pl011: Check if receiver is enabled
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, qemu-arm@nongnu.org, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Tong Ho <tong.ho@amd.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>
+Date: Mon, 29 Jul 2024 16:57:49 +0100
+Message-ID: <CAFEAcA9KkA0YKp-VxOMkBi7C6G7tiJaJVJVR8YqzQxQagwppLQ@mail.gmail.com>
+Subject: Re: [PATCH] target/tricore: Use unsigned types for bitops in
+ helper_eq_b()
+To: qemu-devel@nongnu.org
+Cc: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,50 +88,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 19 Jul 2024 at 19:11, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+On Tue, 23 Jul 2024 at 16:10, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> Do not receive characters when UART or receiver are disabled.
+> Coverity points out that in helper_eq_b() we have an int32_t 'msk'
+> and we end up shifting into its sign bit. This is OK for QEMU because
+> we use -fwrapv to give this well defined semantics, but when you look
+> at what this function is doing it's doing bit operations, so we
+> should be using an unsigned variable anyway. This also matches the
+> return type of the function.
 >
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Make 'ret' and 'msk' uint32_t.
+>
+> Resolves: Coverity CID 1547758
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->  hw/char/pl011.c | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/char/pl011.c b/hw/char/pl011.c
-> index c76283dccf..0ce91c13d3 100644
-> --- a/hw/char/pl011.c
-> +++ b/hw/char/pl011.c
-> @@ -85,6 +85,7 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Ch=
-ardev *chr)
->  #define CR_OUT1     (1 << 12)
->  #define CR_RTS      (1 << 11)
->  #define CR_DTR      (1 << 10)
-> +#define CR_RXE      (1 << 9)
->  #define CR_TXE      (1 << 8)
->  #define CR_LBE      (1 << 7)
->  #define CR_UARTEN   (1 << 0)
-> @@ -481,9 +482,11 @@ static void pl011_write(void *opaque, hwaddr offset,
->  static int pl011_can_receive(void *opaque)
->  {
->      PL011State *s =3D (PL011State *)opaque;
-> -    int r;
-> +    int r =3D 0;
->
-> -    r =3D s->read_count < pl011_get_fifo_depth(s);
-> +    if ((s->cr & CR_UARTEN) && (s->cr & CR_RXE)) {
-> +        r =3D s->read_count < pl011_get_fifo_depth(s);
-> +    }
->      trace_pl011_can_receive(s->lcr, s->read_count, r);
->      return r;
 
-I have a vague recollection of a previous conversation
-where we discussed whether tightening up the UART-enable
-checks would break existing only-tested-on-QEMU baremetal
-simple example code. But I can't find it in my email
-archive -- do you remember a discussion about this or
-am I misremembering?
+I'll take this via my target-arm queue since I'm doing a
+pullreq anyway.
 
 thanks
 -- PMM
