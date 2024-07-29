@@ -4,92 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 019F6C3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DE8BC3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:18:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYQwm-00039j-7U; Mon, 29 Jul 2024 10:01:56 -0400
+	id 1sYRBp-0004Vb-EB; Mon, 29 Jul 2024 10:17:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sYQwj-0002zA-Io
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:01:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYRBn-0004Ud-Mu
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:17:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sYQwh-0000vK-1O
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:01:53 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYRBl-0003GS-Kf
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:17:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722261709;
+ s=mimecast20190719; t=1722262643;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=C8mElyKMtrGH2TgwBOcoDNaw5OVsHDgslzIoNoUr5ZI=;
- b=I9+8ANGZ2b2deDiwyYOxQfi0SWnsbJQKjFmb/MAjFkGrXZ3ar7W/3NT2XDpF6MHtO3RlPT
- asROdj8SKcdQv1R1TRORyybpP8+2ZAQW9bzRn6/dJsr33CuRCqX9aOWJahZc+IctroNUSB
- KVuR3ODflEGF8ykr+Yx2XnfP9BGaiY0=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-33-CyqAtG89MCqPwA2vRamhzQ-1; Mon, 29 Jul 2024 10:01:46 -0400
-X-MC-Unique: CyqAtG89MCqPwA2vRamhzQ-1
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-650b621f4cdso56188257b3.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:01:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722261705; x=1722866505;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=C8mElyKMtrGH2TgwBOcoDNaw5OVsHDgslzIoNoUr5ZI=;
- b=TVjJgZhRyKmp64XHklvS+DG/iJ1t1iKRTBijlkZjB+3KzAv879LpKkf9l9hW5Clqo0
- IgsX/d7Ffx4nImi+4ew4k7a8RKeHsoQ+d6HJptPUixc1Ee4bprP9QPUfNIIubQi2iZee
- M9ORl3brWB0xL2n/HSm8PiZUSCohvc9ckk2ysFAcF/M7iAP5usLvEZU61OLMfFnwK91F
- f8QL5JkYZvKdZAupDf3x1RSrGktH9dXh/9p3yax3G9MJBDYt2eBDKdJDEaAQfqz5J25p
- 1pXrICd2n2rjmYe1AxAvGO5B/XbghJbv9hjKFBC48bxppFof3llF4WVdzxxVMucBkYKi
- 6ozg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVSK/WGnVGV0jJs+Vx+YToeMC1p5f/w7HKRkA37jWOlxxlOsWDanrMXR9yMg4hGSBYQiP4EB4g56NOqfIEbRxqbHDAwnlU=
-X-Gm-Message-State: AOJu0YxmuSWkIawZzzXqX22Wykj6hqSr0O9ComjKSbKP5UtKFSJ/Naf6
- Dscw65Fe/PtOscajG4MJ/cONAxIzIcqDHcHEpiqql9BZT0vZY1gC/K1zqdevCUZibAwmBOHMgC+
- hWa4o9Y7EhHz15Gtyi424D91X0J/WRx25PqTS83FKeg0Gb1si30z0BHW7WswMCkdAvpjLuKG3xB
- Dxub8sXzZOcbYza+MR2/ykI7ThOBk=
-X-Received: by 2002:a05:690c:63c6:b0:65f:8218:8b2f with SMTP id
- 00721157ae682-67a0a518ef3mr90593137b3.43.1722261705384; 
- Mon, 29 Jul 2024 07:01:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGpNWhSmUWERxC4ojScZe/iCegkTO2GlUVbBPtKDHwqC2Ae5YrMVtQlgrxPr53i18ZCqW2iUgWATp1JHrIQ46k=
-X-Received: by 2002:a05:690c:63c6:b0:65f:8218:8b2f with SMTP id
- 00721157ae682-67a0a518ef3mr90592737b3.43.1722261705041; Mon, 29 Jul 2024
- 07:01:45 -0700 (PDT)
+ bh=ELhKuW/y2mk0thotjZoAxSAITrXRoRMvAQ+o+jZv5yc=;
+ b=jNzuq0dV7inlBfTT2BYMs4kzsqNOkAJ9jIGcA/a1pzgxXMSIflGL6+Tr9gTxB2GmGbY/dI
+ Ub2pYCdys73H8NhktNYKByLlUKkxW2+I7b/6gpoiOAmyf6dFW7XdegMHsjIUtQ7nXkCTzN
+ olxf9tj7eWqNZ7I9wi3FmQktgw7euBU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-O067gX1zMKuG7_BVn3IBqg-1; Mon,
+ 29 Jul 2024 10:16:13 -0400
+X-MC-Unique: O067gX1zMKuG7_BVn3IBqg-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CBD231955D52; Mon, 29 Jul 2024 14:16:01 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9266E19560AE; Mon, 29 Jul 2024 14:16:00 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 40D4921E6693; Mon, 29 Jul 2024 16:15:58 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: Collin Walling <walling@linux.ibm.com>,  qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org,  thuth@redhat.com,  wangyanan55@huawei.com,
+ philmd@linaro.org,  marcel.apfelbaum@gmail.com,  eduardo@habkost.net
+Subject: Re: [PATCH v1] target/s390x: move @deprecated-props to
+ CpuModelExpansion Info
+In-Reply-To: <00bc2317-dbba-43b3-b355-ddce45b5dfc6@redhat.com> (David
+ Hildenbrand's message of "Mon, 29 Jul 2024 11:52:19 +0200")
+References: <20240726203646.20279-1-walling@linux.ibm.com>
+ <877cd7qsnj.fsf@pond.sub.org>
+ <00bc2317-dbba-43b3-b355-ddce45b5dfc6@redhat.com>
+Date: Mon, 29 Jul 2024 16:15:58 +0200
+Message-ID: <87a5i0cmht.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20240716112614.1755692-1-thuth@redhat.com>
- <CA+bd_6LbLbR5hEqUhn5Vutf1k5HsB4Zg=qYF-Tq_pOrxDeWo1A@mail.gmail.com>
- <ZqeOlkYnzSzwNYBL@redhat.com>
-In-Reply-To: <ZqeOlkYnzSzwNYBL@redhat.com>
-From: Cleber Rosa <crosa@redhat.com>
-Date: Mon, 29 Jul 2024 10:01:30 -0400
-Message-ID: <CA+bd_6J2Et=7g=3tUrSSf7ZwMQO4BrJ3bTKLEjye3WU2resXjw@mail.gmail.com>
-Subject: Re: [PATCH v1 00/11] Convert avocado tests to normal Python unittests
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Ani Sinha <anisinha@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=crosa@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,146 +87,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 29, 2024 at 8:44=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
+David Hildenbrand <david@redhat.com> writes:
+
+> On 27.07.24 08:02, Markus Armbruster wrote:
+>> Collin Walling <walling@linux.ibm.com> writes:
+>> 
+>>> The @deprecated-props array did not make any sense to be a member of the
+>>> CpuModelInfo struct, since this field would only be populated by a
+>>> query-cpu-model-expansion response and ignored otherwise.
+>> 
+>> Doesn't query-cpu-model-baseline also return it in its response?  It
+>> seems to assume the "static" expansion type.
+>> 
+>>>                                                            Move this
+>>> field to the CpuModelExpansionInfo struct where is makes more sense.
+>>>
+>>> References:
+>>>   - https://lists.gnu.org/archive/html/qemu-devel/2024-07/msg05996.html
+>>>   - commit eed0e8ffa38f0695c0519508f6e4f5a3297cbd67
+>>>
+>>> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+>>> ---
+>>>
+>>> @David, the previous commit header did not align with the changes made
+>>> here, so I tagged this as a "v1" but added the previous conversation as
+>>> a reference.  I hope this is appropriate?
+>>>
+>>> ---
+>>>   qapi/machine-target.json         | 18 ++++++++++--------
+>>>   target/s390x/cpu_models_sysemu.c | 31 ++++++++++++++++++++-----------
+>>>   2 files changed, 30 insertions(+), 19 deletions(-)
+>>>
+>>> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+>>> index a552e2b0ce..09dec2b9bb 100644
+>>> --- a/qapi/machine-target.json
+>>> +++ b/qapi/machine-target.json
+>>> @@ -20,17 +20,11 @@
+>>>   #
+>>>   # @props: a dictionary of QOM properties to be applied
+>>>   #
+>>> -# @deprecated-props: a list of properties that are flagged as deprecated
+>>> -#     by the CPU vendor.  These properties are either a subset of the
+>>> -#     properties enabled on the CPU model, or a set of properties
+>>> -#     deprecated across all models for the architecture.
+>>> -#
+>>>   # Since: 2.8
+>>>   ##
+>>>   { 'struct': 'CpuModelInfo',
+>>>     'data': { 'name': 'str',
+>>> -            '*props': 'any',
+>>> -            '*deprecated-props': ['str'] } }
+>>> +            '*props': 'any' } }
+>>>   
+>>>   ##
+>>>   # @CpuModelExpansionType:
+>>> @@ -248,10 +242,18 @@
+>>>   #
+>>>   # @model: the expanded CpuModelInfo.
+>>>   #
+>>> +# @deprecated-props: a list of properties that are flagged as deprecated
+>>> +#     by the CPU vendor.  The list depends on the CpuModelExpansionType:
+>>> +#     "static" properties are a subset of the enabled-properties for
+>>> +#     the expanded model; "full" properties are a set of properties
+>>> +#     that are deprecated across all models for the architecture.
+>>> +#     (since: 9.1).
+>>> +#
+>>>   # Since: 2.8
+>>>   ##
+>>>   { 'struct': 'CpuModelExpansionInfo',
+>>> -  'data': { 'model': 'CpuModelInfo' },
+>>> +  'data': { 'model': 'CpuModelInfo',
+>>> +            '*deprecated-props': ['str'] },
+>>>     'if': { 'any': [ 'TARGET_S390X',
+>>>                      'TARGET_I386',
+>>>                      'TARGET_ARM',
+>> 
+>> This solves several interface problems:
+>> 
+>> 1. Removes inappropriate @deprecated-props argument of
+>>     query-cpu-model-comparison, query-cpu-model-expansion,
+>>     query-cpu-model-baseline.
+>> 
+>> 2. Removes @deprecated-props return of query-cpu-model-baseline.
+>> 
+>> 3. Properly documents how @deprecated-props depends on the expansion
+>>     type.
+>> 
+>> Remaining problem:
+>> 
+>> 4. Only S390 implements this.
+>> 
+>> Suggest to capture 1-3 more clearly in the commit message, perhaps like
+>> this:
+>> 
+>>      CpuModelInfo is used both as command argument and in command
+>>      returns.
+>> 
+>>      Its @deprecated-props array does not make any sense in arguments,
+>>      and is silently ignored.  We actually want it only as return value
+>>      of query-cpu-model-expansion.
+>> 
+>>      Move it from CpuModelInfo to CpuModelExpansionType, and document
+>>      its dependence on expansion type propetly.
 >
-> On Thu, Jul 25, 2024 at 10:21:54AM -0400, Cleber Rosa wrote:
-> > On Tue, Jul 16, 2024 at 7:28=E2=80=AFAM Thomas Huth <thuth@redhat.com> =
-wrote:
-> > > There have been several attempts to update the test suite in QEMU
-> > > to a newer version of Avocado, but so far no attempt has successfully
-> > > been merged yet.
-> > >
-> >
-> > So, we've seen in the past an attempt to update Avocado from 88.1 to a
-> > regular release, and the troubles it caused, including a revert.  My
-> > take was that a LTS version should be used, but during this time,
-> > Avocado experienced a rewrite and having it replacing the old
-> > implementation in a production level project such as QEMU was tricky.
+> s/propetly/property/
+
+Can't type.
+
+> Sounds good!
 >
-> IMHO the problems with updating avocado in QEMU are a sign that we're
-> suffering from excess complexity, as it shouldn't be this difficult to
-> update the test harness. That we need to stick on an LTS release to
-> protect us from further instability further suggests that we would
-> benefit from a much simpler solution here.
+>> 
+>> The simplest way to address 4 is to tack 'if': 'TARGET_S390X' to
+>> @deprecated-props.
+>> 
 >
-
-Hi Daniel,
-
-Some other projects using Avocado have picked different, non-LTS
-versions, to use as their pinned versions.  The consequences of using
-rolling releases versus LTS-like releases is not something specific to
-one software package IMO.  The suggestion to use LTS was to minimize
-the impact on users writing and running tests, while allowing for only
-needed fixes or very important features (say supporting a new Python
-version) to be addressed.
-
-> > > Additionally, the whole "make check" test suite in QEMU is using the
-> > > meson test runner nowadays, so running the python-based tests via the
-> > > Avocodo test runner looks and feels quite like an oddball, requiring
-> > > the users to deal with the knowledge of multiple test runners in
-> > > parallel (e.g. the timeout settings work completely differently).
-> > >
-> >
-> > Now I believe we can be very much in sync here.  I've thought for a
-> > while that there's no reason for Avocado to cooperate or be compatible
-> > with Meson.  There's no reason why users can't simply pick how the
-> > test gets run.  In fact, with the new Avocado architecture, you don't
-> > even need to run "avocado" to run an "avocado-instrumented" test.  You
-> > could pretty much run "avocado-runner-avocado-instrumented" with the
-> > right parameters through Meson.
->
-> Looking back to when we introduced avocado, we still had our original
-> home grown build system, and multiple different ways to run integrate
-> testing betwen our unit tests / qtests and block iotests. Adding
-> avocado to the mix introduced a third way to run tests. All round it
-> was rather a mess of inconsistent approaches to testing, but that was
-> a fact of life with our old home grown build/test process.
->
-
-Agreed.
-
-> Today we have adopted a much more standardized build system via meson.
-> While we do still have the block iotests harness, we now expose every
-> test to meson individually to reduce what the intermediate harness
-> needs to be involved in doing. Thomas' series here is bringing the same
-> simplified integration to our functional tests, such that each functional
-> test is known to meson individually. Overall we'll now have a consistent
-> approach to integrating tests into meson, without intermediate harnesses
-> adding their own logic.
->
-> I think this will make it easier for QEMU maintainers to understand how
-> the tests are working, and make it easier to maintain them and troublesho=
-ot
-> failures.
->
-
-I think this is a very good way forward.  I don't think anything
-(simple tests here) should depend on what they don't need to depend
-on.
-
-> So overall I'm not seeing a compelling reason for us to offer users a
-> choice between meson & avocado how they run tests. Such choice is a maint
-> burden over the long term, as we need to validate that both options keep
-> working. Focusing on a single option reduces the complexity and maint
-> work and gives us more flexiblity to evolve the code over time.
+> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+> index 09dec2b9bb..0be95d559c 100644
+> --- a/qapi/machine-target.json
+> +++ b/qapi/machine-target.json
+> @@ -253,7 +253,7 @@
+>   ##
+>   { 'struct': 'CpuModelExpansionInfo',
+>     'data': { 'model': 'CpuModelInfo',
+> -            '*deprecated-props': ['str'] },
+> +            '*deprecated-props' : { 'type': ['str'], 'if': 'TARGET_S390X' } },
+>     'if': { 'any': [ 'TARGET_S390X',
+>                      'TARGET_I386',
+>                      'TARGET_ARM',
 >
 >
+> Should do the trick, right?
 
-If meson is capable of doing all that can be done right now, then I
-believe you're right.  No reason to use duplicate software.  Now, If
-you mean that having "single option" may imply duplicating code that
-already exists and is maintained elsewhere, into the QEMU repo, then
-you're wrong.  This can be easily judged by how easy it is to convert
-all current tests and their features (timeout, download management,
-etc).
+Yes.  Break the line before 'if', please.
 
-Another level of judgement that I believe would be helpful to the
-decision making process here is how this impacts growing the test
-coverage.  Tests that manipulate both QEMU and the guest are still
-very very simple compared to what can be found on what I'll call "real
-life integration testing" of QEMU (read Avocado-VT like tests). But
-they present a glimpse of the problem. Having such tests requires a
-good amount of code to either be used from a project/repo that
-addresses that specifically, or be duplicated inside QEMU.
-
-> > > So instead of trying to update the python-based test suite in QEMU
-> > > to a newer version of Avocado, we should maybe try to better integrat=
-e
-> > > it with the meson test runner instead. Indeed most tests work quite
-> > > nicely without the Avocado framework already, as you can see with
-> > > this patch series - it does not convert all tests, just a subset so
-> > > far, but this already proves that many tests only need small modifi-
-> > > cations to work without Avocado.
-> > >
-> > > Only tests that use the LinuxTest / LinuxDistro and LinuxSSHMixIn
-> > > classes (e.g. based on cloud-init images or using SSH) really depend
-> > > on the Avocado framework, so we'd need a solution for those if we
-> > > want to continue using them. One solution might be to simply use the
-> > > required functions from avocado.utils for these tests, and still run
-> > > them via the meson test runner instead, but that needs some further
-> > > investigation that will be done later.
-> > >
-> >
-> > So, I believe this type of higher level testing is something that
-> > needs to remain, and even grow.  Speaking for Red Hat, I see the
-> > movement of QE contributing more Avocado-VT style tests into QEMU
-> > itself.  This means way more libraries and features that go into a
-> > common set of utilities and features (more on that later) than it
-> > currently exists in avocado.utils.
+>> I recommend to make @deprecated-props mandatory rather than optional
+>> then.
 >
-> The series here is showing how simple it is to adapt our existing
-> tests to the new execution approach, so shouldn't have a significant
-> impact on ability of people to contribute futher tests in future.
->
+> Hm, does that make sense judging that previous implementations didn't expose it?
 
-I am on the side of the unified execution approach.  But, will it
-really be simple to convert all tests?  "Real life integration" tests
-too?  I would love to see that, but I can't see how that can be done
-without the woes mentioned before (duplicating other code or limiting
-the further toolset and capabilities of test writers).
+Adding members to the return value is fine.
 
-Best regards,
-- Cleber.
+docs/devel/qapi-code-gen.rst section "Compatibility considerations"
+
+    Clients send commands with argument data, and receive command
+    responses with return data and events with event data.
+
+    Adding opt-in functionality to the send direction is backwards
+    compatible: adding commands, optional arguments, enumeration values,
+    union and alternate branches; turning an argument type into an
+    alternate of that type; making mandatory arguments optional.  Clients
+    oblivious of the new functionality continue to work.
+
+    Incompatible changes include removing commands, command arguments,
+    enumeration values, union and alternate branches, adding mandatory
+    command arguments, and making optional arguments mandatory.
+
+    The specified behavior of an absent optional argument should remain
+    the same.  With proper documentation, this policy still allows some
+    flexibility; for example, when an optional 'buffer-size' argument is
+    specified to default to a sensible buffer size, the actual default
+    value can still be changed.  The specified default behavior is not the
+    exact size of the buffer, only that the default size is sensible.
+
+--> Adding functionality to the receive direction is generally backwards
+--> compatible: adding events, adding return and event data members.
+--> Clients are expected to ignore the ones they don't know.
+
+    Removing "unreachable" stuff like events that can't be triggered
+    anymore, optional return or event data members that can't be sent
+    anymore, and return or event data member (enumeration) values that
+    can't be sent anymore makes no difference to clients, except for
+    introspection.  The latter can conceivably confuse clients, so tread
+    carefully.
+
+    Incompatible changes include removing return and event data members.
+
+Questions?
 
 
