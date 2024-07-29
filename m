@@ -4,73 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DED4C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 02:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9285C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 02:13:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYcIA-00029a-9t; Mon, 29 Jul 2024 22:08:46 -0400
+	id 1sYcLc-0006hG-6I; Mon, 29 Jul 2024 22:12:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYcI8-00028Q-Vl
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:08:45 -0400
-Received: from mail-il1-x134.google.com ([2607:f8b0:4864:20::134])
+ id 1sYcLa-0006dE-BR
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:12:18 -0400
+Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYcI4-0003EO-MZ
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:08:44 -0400
-Received: by mail-il1-x134.google.com with SMTP id
- e9e14a558f8ab-39865a15900so14992145ab.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 19:08:40 -0700 (PDT)
+ id 1sYcLX-0004BM-So
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:12:18 -0400
+Received: by mail-oa1-x29.google.com with SMTP id
+ 586e51a60fabf-25e3bc751daso2939013fac.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 19:12:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722305319; x=1722910119; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pvF0s1jQIBySSeBKtBCNdIkStj9P9gT/o0jVZTBUvsc=;
- b=SRfgQLDSCgy+V4bj1tnzi59BhqeBMwpPT7/WuQSo3ISmvtT4RjStcBnlAVSQtur7Za
- rGJet5HsgZHjDlmmXouXudrwU1l0EiHgElOQUVcnlcoUfUMJFQTDn6h9/0HwqjBBxMxP
- 07bD25YrZ91gfojAxtjFvbxuQiWKOruraf0IXp2UfO30xDEvzxrFVJHzsjY1nUjRytu2
- hxF8tUQiJ+J1/1/UCZp/SKnXku/bcrlOJT1VeUVSgbmiyLDS/c11jv2qKkIFNWSitk3n
- OlQZ2EZKSumcOGKY4MG2dPYaAWp3cX8XVqhKUaBqxNJe4QxWiAkY4/v5gczM/4WtreFH
- cusQ==
+ d=linaro.org; s=google; t=1722305534; x=1722910334; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Ref+X6HfwcJVt+DUoyjVSKl/pdGsw5DSkY0LXIiNoNc=;
+ b=NrL1jTfrJaowQ1RDHCTOXIiGUECAHpJ9eU6o72313WQ1TNcO99PYCy62t2RYiJTlmz
+ 5IBdwNvUd1eeFZu958YIPSVNHCDKRGIJ1vXC9A7DDJduf7vFSHWxPzZlaud2P+HSK2Z8
+ goSGsAF5FQeNZvzilWocXT7b8F07vlpdPfd8iuVg/M7mt/K0d7xrC9mVseeaGWctr/Rb
+ QxmiZfNC5u25IwhrYwNWtCa9FOkyYi4i+L/VS35j8palLFVVYaZXwIdCLVG13yVK26EL
+ 67ca+G7LwWQDGyaxvLIvxfyyo7CYZnQr3HwU5m/NR+IiOexe++vsqFg+InlD9N+YWBma
+ H8vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722305319; x=1722910119;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pvF0s1jQIBySSeBKtBCNdIkStj9P9gT/o0jVZTBUvsc=;
- b=j/v33bAtyrEPLg3K98waG9+kIv+qz0uwR4OYvdq6qXB/kCzGgFsPSCZdqE4zFIH5wk
- KowmrgGWHOx3jrvxzL1stoXJ5ITNtjoo4XYWQD5pQ7tMGYMpmFTMzQCmYRJTLe/X1Cuy
- KMFGrNFk/NcEJs7F6WQCRlK4uUphv5yAmPM+5aLIpy3Sjku0waeOM857E3+7JbyPPIYU
- SIeimbHtjWmyIdB8W1QZx/L6HCobZ4AcTAgs/f0YgOVMWRW3yuwE/Il/1/8UXrrM/1Nh
- C9VTbP49z2ruwSc6CO6tWLsIZKT2Is+R8kPIj3fPNle4DRKby8VW9Y06+bRQUpghUhtW
- JGCQ==
-X-Gm-Message-State: AOJu0Yw3ngQ4v+VgXDJvX7suVNnBfBpfw8HZELUsslB4S59Hf/YllHqH
- MxhTK9KPVwRealKNuqClINJ6G2xmFaiEU7HJe0Rs3OQu035b3gFDtu7zgqjbSnkgVVmcxaUvHtZ
- O4aM=
-X-Google-Smtp-Source: AGHT+IFTIf7LOeBm+FjgWoD0szE5P73hRxwPZGfNUF9Ox3Ri/JAmTT5m+cx07MMpvDb2M0XFQ+cyAA==
-X-Received: by 2002:a05:6a00:2443:b0:70d:2583:7223 with SMTP id
- d2e1a72fcca58-70ecea2ef3emr11413551b3a.17.1722301934907; 
- Mon, 29 Jul 2024 18:12:14 -0700 (PDT)
-Received: from stoup.. ([203.56.128.103]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7a9f7c6ff4bsm6750206a12.4.2024.07.29.18.12.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jul 2024 18:12:14 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Vivian Wang <uwu@dram.page>
-Subject: [PULL 2/5] util/getauxval: Ensure setting errno if not found
-Date: Tue, 30 Jul 2024 11:11:59 +1000
-Message-ID: <20240730011202.480829-4-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240730011202.480829-1-richard.henderson@linaro.org>
-References: <20240730011202.480829-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1722305534; x=1722910334;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ref+X6HfwcJVt+DUoyjVSKl/pdGsw5DSkY0LXIiNoNc=;
+ b=hMEPuVl8KmPLHhM7gxktodDAxD5M+TSpTKw2Y+nCP0sQ+/95u9iW9sx+uix26Nvx8R
+ 1SSGdPBK4e2zmjN6SGTEct+SXooQYPLPxlsGinnqxBU5vL367UrS0x2lP7Wa3lVudJOb
+ tcOSn9290yzkyNtd6BpF5lxU7LR4oI9c2+LuX3MzajayhwR8D16fmdvvKOa534LqSXc3
+ q2suFwNg79Y/3oVcyLE5z0LeVMB7TXI4gr/u8s9jILg6qQQlJqQyiLnEtLxkQEtKUVAq
+ N4JiXqXY+CiZnnMPxQhmqDPzH7iJ6iAiz9oXjEOJaQP73RkfaZjCMaYyyW3nKDOxVvly
+ m2xA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWzEf2ijZg785FUx37GyH13PdnBtFcY3wLy6pEYv6G7Dg1j20LC7PPWz1CPxNrtg7r6RR8ToUQelHyqmR2ho3r/rhHmyNw=
+X-Gm-Message-State: AOJu0YxTH7e5OaraNyTBHXTDpFrlCVCsX7FrVt0iI1zavAUgYB9Yh1IW
+ YWixX//e4Fh+gXsxRdGtxLc54sTINRDOHCtyFvSTQkF7faeHyVMhXqnr3c2z7DnYMwBIGQNSTez
+ GJSc=
+X-Google-Smtp-Source: AGHT+IFkKK2UYhb4JKUt9XHfRNavmItVLu559BD86X//ExFnud3V/5EgiJqMYufpLSwvE7P253Oxjg==
+X-Received: by 2002:a17:902:c40c:b0:1fd:a412:5e05 with SMTP id
+ d9443c01a7336-1ff0491ad81mr85602945ad.52.1722288753963; 
+ Mon, 29 Jul 2024 14:32:33 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fed7c8c9d3sm88307155ad.3.2024.07.29.14.32.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jul 2024 14:32:33 -0700 (PDT)
+Message-ID: <38387ea5-fb29-430f-a83a-917ca74b8357@linaro.org>
+Date: Tue, 30 Jul 2024 07:32:26 +1000
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] osdep: add a qemu_close_all_open_fd() helper
+To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>
+References: <20240726075502.4054284-1-cleger@rivosinc.com>
+ <0914a034-260f-44ef-8d75-2dca9d5fcb24@linaro.org>
+ <94b658a0-21c1-4cd0-8bc5-21c0c71b9cb8@rivosinc.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <94b658a0-21c1-4cd0-8bc5-21c0c71b9cb8@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::134;
- envelope-from=richard.henderson@linaro.org; helo=mail-il1-x134.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::29;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,54 +103,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vivian Wang <uwu@dram.page>
+On 7/30/24 00:20, Clément Léger wrote:
+> 
+> 
+> On 29/07/2024 16:00, Philippe Mathieu-Daudé wrote:
+>> Hi Clément,
+>>
+>> On 26/7/24 09:54, Clément Léger wrote:
+>>> Since commit 03e471c41d8b ("qemu_init: increase NOFILE soft limit on
+>>> POSIX"), the maximum number of file descriptors that can be opened are
+>>> raised to nofile.rlim_max. On recent debian distro, this yield a maximum
+>>> of 1073741816 file descriptors. Now, when forking to start
+>>> qemu-bridge-helper, this actually calls close() on the full possible file
+>>> descriptor range (more precisely [3 - sysconf(_SC_OPEN_MAX)]) which
+>>> takes a considerable amount of time. In order to reduce that time,
+>>> factorize existing code to close all open files descriptors in a new
+>>> qemu_close_all_open_fd() function. This function uses various methods
+>>> to close all the open file descriptors ranging from the most efficient
+>>> one to the least one. It also accepts an ordered array of file
+>>> descriptors that should not be closed since this is required by the
+>>> callers that calls it after forking. Since this function is not used
+>>> for Win32, do not implement it to force an error at link time if used.
+>>>
+>>> Signed-off-by: Clément Léger <cleger@rivosinc.com>
+>>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>>> ---
+>>> v5:
+>>>    - Move qemu_close_all_open_fd() to oslib-posix.c since it does not
+>>>      compile on windows and is not even used on it.
+>>>    - v4:
+>>> https://lore.kernel.org/qemu-devel/20240717124534.1200735-1-cleger@rivosinc.com/
+>>>
+>>> v4:
+>>>    - Add a comment saying that qemu_close_all_open_fd() can take a NULL
+>>> skip
+>>>      array and nskip == 0
+>>>    - Added an assert in qemu_close_all_open_fd() to check for skip/nskip
+>>>      parameters
+>>>    - Fix spurious tabs instead of spaces
+>>>    - Applied checkpatch
+>>>    - v3:
+>>> https://lore.kernel.org/qemu-devel/20240716144006.6571-1-cleger@rivosinc.com/
+>>>
+>>> v3:
+>>>    - Use STD*_FILENO defines instead of raw values
+>>>    - Fix indentation of close_all_fds_after_fork()
+>>>    - Check for nksip in fallback code
+>>>    - Check for path starting with a '.' in qemu_close_all_open_fd_proc()
+>>>    - Use unsigned for cur_skip
+>>>    - Move ifdefs inside close_fds functions rather than redefining them
+>>>    - Remove uneeded 'if(nskip)' test
+>>>    - Add comments to close_range version
+>>>    - Reduce range of skip fd as we find them in
+>>>    - v2:
+>>> https://lore.kernel.org/qemu-devel/20240618111704.63092-1-cleger@rivosinc.com/
+>>>
+>>> v2:
+>>>    - Factorize async_teardown.c close_fds implementation as well as
+>>> tap.c ones
+>>>    - Apply checkpatch
+>>>    - v1:
+>>> https://lore.kernel.org/qemu-devel/20240617162520.4045016-1-cleger@rivosinc.com/
+>>>
+>>> ---
+>>>    include/qemu/osdep.h    |   9 +++
+>>>    net/tap.c               |  33 +++++-----
+>>>    system/async-teardown.c |  37 +-----------
+>>>    util/oslib-posix.c      | 131 ++++++++++++++++++++++++++++++++++++++++
+>>>    4 files changed, 160 insertions(+), 50 deletions(-)
+>>
+>> I'm getting this error on msys2, not sure if related:
+>>
+>> WARNING: Failed to terminate process: 1 error occurred:
+>>      * failed to attach the runner process to the console of its parent
+>> process: The handle is invalid.
+>>
+>> I find your patch hard to review. Do you mind splitting as trivial
+>> changes? Something like:
+>>
+>> - Expose close_all_open_fd() renamed as qemu_close_all_open_fd()
+>> - Rework qemu_close_all_open_fd()
+>> - Factor close_all_fds_after_fork() in net/tap.c
+>> - Use qemu_close_all_open_fd() in net/tap.c
+> 
+> Yes sure, I'll do that.
 
-Sometimes zero is a valid value for getauxval (e.g. AT_EXECFD). Make
-sure that we can distinguish between a valid zero value and a not found
-entry by setting errno.
+If you're making updates, I think you should drop the linux ifdef for /proc/self/fd.  This 
+is also present on Solaris.  Importantly, it'll compile on all POSIX systems, whether or 
+not /proc is available.
 
-Assumes that getauxval from sys/auxv.h sets errno correctly.
 
-Signed-off-by: Vivian Wang <uwu@dram.page>
-Message-ID: <20240723100545.405476-2-uwu@dram.page>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- util/getauxval.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/util/getauxval.c b/util/getauxval.c
-index b124107d61..ad4f6686a8 100644
---- a/util/getauxval.c
-+++ b/util/getauxval.c
-@@ -95,6 +95,7 @@ unsigned long qemu_getauxval(unsigned long type)
-         }
-     }
- 
-+    errno = ENOENT;
-     return 0;
- }
- 
-@@ -104,7 +105,10 @@ unsigned long qemu_getauxval(unsigned long type)
- unsigned long qemu_getauxval(unsigned long type)
- {
-     unsigned long aux = 0;
--    elf_aux_info(type, &aux, sizeof(aux));
-+    int ret = elf_aux_info(type, &aux, sizeof(aux));
-+    if (ret != 0) {
-+        errno = ret;
-+    }
-     return aux;
- }
- 
-@@ -112,6 +116,7 @@ unsigned long qemu_getauxval(unsigned long type)
- 
- unsigned long qemu_getauxval(unsigned long type)
- {
-+    errno = ENOSYS;
-     return 0;
- }
- 
--- 
-2.43.0
-
+r~
 
