@@ -4,72 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 053E8C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:37:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6672C3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:40:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYSQS-0001Xk-3O; Mon, 29 Jul 2024 11:36:40 -0400
+	id 1sYSTA-0004L7-RS; Mon, 29 Jul 2024 11:39:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYSQQ-0001SB-IH
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:36:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYSQO-0002yA-O6
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:36:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722267395;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0kL5gQMPkiNOFObhH8ArDOtDQzMW4U5tZFuPv4Mg6bI=;
- b=Aft9XBCadk9PBIkC91XGQGUZPYCBYZ+zAmwLaThEAz0WuDdARrNDGjivjiOx77NqnBSUft
- X4khbak2s4rIaH5795nwRjjp7fzgeOXGlLKxBul20xKaSM72RMR34gxfHns2igJdto1rgq
- WEajjiDx46vNXh6sGENLg6pClGuYGc0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-489-RYwzgvzQMNeSyPkO1U5xGA-1; Mon,
- 29 Jul 2024 11:36:33 -0400
-X-MC-Unique: RYwzgvzQMNeSyPkO1U5xGA-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 56AAE1954126; Mon, 29 Jul 2024 15:36:32 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.58])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1F6DF19560AA; Mon, 29 Jul 2024 15:36:30 +0000 (UTC)
-Date: Mon, 29 Jul 2024 16:36:27 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL 00/14] Docs / testing patches for 2024-07-29
-Message-ID: <Zqe2-4B8_qs3Oq0K@redhat.com>
-References: <20240729152714.10225-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sYST8-0004DO-SF
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:39:26 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sYST7-0003Y9-1R
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:39:26 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-5a10835480bso5454680a12.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:39:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722267563; x=1722872363; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UAaECwIohdTcRxD66PZ+czjrv1KtXk3qx/5j9/cG0yg=;
+ b=nOsYtzIcFfPJ1Xi0vSSJWJDLlp9XvxIDAoifjaWBdLfYwBIl2fbblQHGRcbkbZ4OPQ
+ rrBlI8OwECvoOvpmG6jTLOUSbcBlJYmGWGE3E60ibw30rrBMYiBUEVM7znlhvKW9KOI5
+ wH+BXMIsJKmDuDq8CH/O6uK3RBOXvUR4OPy36kZib9hZ3MSQVjTjuzipZaynuS9Xky7m
+ gaQQNFVRgMUxtYykyf6/fkTHvWHjgpGDraR/WNXBQKBZ3zLaGJ563uErUvSwXu4OmbcL
+ JYYICO0amE5MXmN7P25soiafranrFBm1PL6cQN9/HwK1xGZjT9nF9yf1OLBsHlVGC6z6
+ CJZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722267563; x=1722872363;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UAaECwIohdTcRxD66PZ+czjrv1KtXk3qx/5j9/cG0yg=;
+ b=WcY2XDHnfHVASSqwB3HZ2bg5N+Qyi3/+XIB+EgCSu07NSlnDb3ovr0sgk1AvgJun9o
+ Ez4bh0NZCAxccL1mrjAehgGQm2peFbTaPXs7OebBzV6+PNxGfoqf1A3OT2i+N8sQU7mR
+ WhPOcUcBaiqpx4FUWNwKa/yxAgf2gREhvjoC5B1f7ybz7iOQ6hUdL27ZtOspCOnPsYX1
+ aob7bz2UGlvbVu2crG7tOt1mBqKd5lwq5xHSioq941lS20dn0FbKHOFuhkGpBu3PSdH0
+ ogcR7D1Ew5su9SY3LDhtwMjYXQl8mhVdD6ZjN4342/80vT3e+c0W5TLNObRhRqRUmNAL
+ PZng==
+X-Gm-Message-State: AOJu0Yy8gbleXbEd1JA7ut4FYt2l3COz/ZcJlvz7+UW4GGp76I0rKU5d
+ Qz65x1lYhW3EDQSIQgRkhnPjiaK+HjXIFZ54qy3i6LJJhuTzZjGGxfoapr0Wf1tnL4L360uWIkC
+ JbmfxXufX47qo3AaQB/HxSDe0tN6uEobVm5juhQ==
+X-Google-Smtp-Source: AGHT+IEvL2Qc9pTW+fj+dQlO/Isk3veoaCARkRDeHTnlRC8QCGCk8hGQ2u24cQ6bjPbE23yN3hEFf+UIWF4hOjtv18E=
+X-Received: by 2002:a05:6402:3481:b0:5a2:68a2:ae57 with SMTP id
+ 4fb4d7f45d1cf-5b0225c52f4mr5591102a12.31.1722267563299; Mon, 29 Jul 2024
+ 08:39:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240729152714.10225-1-philmd@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240719181041.49545-1-philmd@linaro.org>
+ <20240719181041.49545-3-philmd@linaro.org>
+In-Reply-To: <20240719181041.49545-3-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 29 Jul 2024 16:39:12 +0100
+Message-ID: <CAFEAcA80FOgY1tYDeG8DnFwwvGkXyK=tqi4AdGj-53ef+uJm3Q@mail.gmail.com>
+Subject: Re: [PATCH v5 02/16] hw/char/pl011: Remove unused 'readbuff' field
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, qemu-arm@nongnu.org, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Tong Ho <tong.ho@amd.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,77 +91,20 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 29, 2024 at 05:27:00PM +0200, Philippe Mathieu-Daudé wrote:
-> The following changes since commit 93b799fafd9170da3a79a533ea6f73a18de82e22:
-> 
->   Merge tag 'pull-ppc-for-9.1-2-20240726-1' of https://gitlab.com/npiggin/qemu into staging (2024-07-26 15:10:45 +1000)
-> 
-> are available in the Git repository at:
-> 
->   https://github.com/philmd/qemu.git tags/docs-testing-20240729
-> 
-> for you to fetch changes up to 8e2275592299b637e87cc905d20bfdeffa586a83:
-> 
->   tests/avocado: test_arm_emcraft_sf2: handle RW requirements for asset (2024-07-29 16:33:24 +0200)
-> 
-> Ignored warnings:
-> 
->   WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
->   WARNING: line over 80 characters
-> 
-> ----------------------------------------------------------------
-> Docs & testing patch queue
-> 
-> - Test QAPI firmware.json schema (Thomas)
-> - Handle new env.doc2path() return value (Peter)
-> - Convert some Avocado tests to simpler python-based functional testing (Thomas)
-> - Improve how assets are used by some Avocado tests (Cleber)
-> 
-> ----------------------------------------------------------------
-> 
-> Cleber Rosa (3):
->   tests/avocado: mips: fallback to HTTP given certificate expiration
->   tests/avocado: mips: add hint for fetchasset plugin
->   tests/avocado: test_arm_emcraft_sf2: handle RW requirements for asset
-> 
-> Peter Maydell (1):
->   docs/sphinx/depfile.py: Handle env.doc2path() returning a Path not a
->     str
-> 
-> Thomas Huth (9):
->   python: Install pycotap in our venv if necessary
->   tests/functional: Add base classes for the upcoming pytest-based tests
->   tests/Makefile.include: Increase the level of indentation in the help
->     text
->   tests/functional: Prepare the meson build system for the functional
->     tests
->   tests/functional: Convert simple avocado tests into standalone python
->     tests
->   tests/functional: Convert avocado tests that just need a small
->     adjustment
->   tests/functional: Convert the x86_cpu_model_versions test
->   tests/functional: Convert the riscv_opensbi avocado test into a
->     standalone test
->   gitlab-ci: Add "check-functional" to the build tests
+On Fri, 19 Jul 2024 at 19:10, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> Since its introduction in commit cdbdb648b7 ("ARM Versatile
+> Platform Baseboard emulation.") PL011State::readbuff as never
+> been used. Remove it.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-On the avocado review I mentioned that I didn't think we should
-be rebasing avocado during freeze. By the same token, I'm not
-convinced we should be introducing a new test framework during
-the freeze period.  This is alot simpler than avocado, but at
-the same time this small subset of Thomas' patches isn't really
-fixing any problem on its own, as avocado still exists in
-parallel.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
