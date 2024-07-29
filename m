@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93797C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6A23C3DA7E
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:28:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYSI3-0002Z7-6J; Mon, 29 Jul 2024 11:27:59 -0400
+	id 1sYSIS-0005E5-Ku; Mon, 29 Jul 2024 11:28:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYSHw-0001tx-1v
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:27:52 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYSIQ-00052d-QA
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:28:22 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYSHt-0008Gq-OQ
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:27:51 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-428178fc07eso15318085e9.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:27:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYSIN-0008Nn-N7
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:28:22 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-368584f9e36so1419574f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:28:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722266868; x=1722871668; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722266898; x=1722871698; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=f7BE/CfrHJNluE1SRipI94yPsTEJHS+QxQjczrrTgwI=;
- b=zyci+QYPSle5ic7GPu8U72byt2Hor+wbISl+4twqMkI7G9SGn0CHEqTiM2PsBRX1eA
- yiCBZyvBo58DTYlhV0Vg8Uh6m9QPbBAmi5naNtKMg9yxFrCCgzH2JpIHe02AIXJP7f6a
- s9YocWn8Nu8Ck4XomShys6ahkL1YzPEZcVA5L5SY+jnmo2M5xLFS+EFh50bJ2KHP/QxT
- xMSUgjv/vGPFfKMFzh7hJY1H1skApRMEMpoF1hP+ZfmBFPqxXhthRlWZZ3E9JJvFh33P
- qux0Jm/CxdH4bmQTFYObKLGjSf/bXwvfnIK33UUGwooZ3EvkssMz6lJQbym33VOtrSZG
- AaYA==
+ bh=hJ0+ehSPNMw3L+RsXx/3bfW5qZR45CYyWXKfYU5cn30=;
+ b=jkC+IoiQ56WmHqrXsCuQDVKNM8C7qAW2Bgzbcp2bxJoGIf7vl5h2j3GP0nMo9nRubh
+ 2w/GmgNe3Tgu60aOuE6gGxSccxu+OKkdyAQy8V8ZJ5vfz5RTP2qlis8H4x9i1h1eZH6Z
+ tFjpOAGWMWfEc8zszyIA/2V85Nmjql5klV/JCyaOX4tHQpAFuwjNhgYeVYTdUC5lB3dg
+ kGAMaqrtg+g32rTPwfF4luAgXXKrnbMT2XnnmgoM00yKt3qkbz7UwikEISaUzU/ba3cK
+ J5ZfBgkSqHdVW8ZeWsIX5hdoATV4M6uKXM753zPoQYEPF5IXWKMLyuZjxaicWV+xLDEs
+ Ra6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722266868; x=1722871668;
+ d=1e100.net; s=20230601; t=1722266898; x=1722871698;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=f7BE/CfrHJNluE1SRipI94yPsTEJHS+QxQjczrrTgwI=;
- b=Z52fUOvpIACeRka27sHRVpJgv4VwSG80qK5iLIwt1+hTE7ClsTBWDQOnTyiPFZaSGV
- OEqAqdaNoo8U+lhiF4EJzqV1Y4RF3rqD/CICT82iCxy4dxMTuLqi/1WfeaTlJ7bVTSMo
- qUTKdMtUb+q3vFfM8+r18M9I020youd0Kqy6fRm5X3k0ea7SO6a5osGF2I5Sz6xmLFek
- nOwDBmiU6yfaCrny4MwyDIGT/aXjVd3cuXHd2FBLtvTfGQBOtehDaO9Ljva4Jg1tod8h
- OWvBfczii1eZ67UZCcF/0UVuj6b63L9/7aW1/fpS5Zpw6JlDlCyFogxsnOGknlNPHaGu
- VW2Q==
-X-Gm-Message-State: AOJu0Yw74ezbZbB79sNbq3bFyqsvjsaI9F6sGIbJFflk/YdrMHv82dhg
- PeXcqmnAgfx7oJ3ssH7Ee0t7Js0Zp0XpGB6n2FC/syofn8NiwrU2p3H8I0QuNgxIn3T8leOH102
- P
-X-Google-Smtp-Source: AGHT+IGWgFX/GcwrWT6ftRRtuZoMav5EJlqb0WXMMw3iVsZ7YIq1Bz613jdjiqwcJyutc/Yhkf/tbA==
-X-Received: by 2002:adf:e844:0:b0:367:9828:f42d with SMTP id
- ffacd0b85a97d-36b5d0a60b1mr5731955f8f.53.1722266867426; 
- Mon, 29 Jul 2024 08:27:47 -0700 (PDT)
+ bh=hJ0+ehSPNMw3L+RsXx/3bfW5qZR45CYyWXKfYU5cn30=;
+ b=YBaiVM5OGjj/9GFHseudXddBMbsldTou1rH2HcP+4Ds4dXfqeog4p025li++S1Lpv/
+ zmF5CJFtXhOt3ara2rMYqCum7wTn5936ZVVxevGjn+QRygTJfhZoo36ZtM+1wIGn55qC
+ LvlYFlDlJ7ZoK7SvmrY9QQrmz43drD08Ha0yy7jS+pUjsnPoaexsqrqS8eL5qydUTTJv
+ kM+es7pnT30mK3oFHqUF9j+9VwSZRveyuRA/bMLRV31sVq9p4+vA46IMoF9QiahcYioA
+ aCZ9LIn7zz2Ri29TMk8S2H6QapTRizAt4rAgsPz7aslP13jEOh9RDaiONCXOYcbOtNyU
+ cUrA==
+X-Gm-Message-State: AOJu0YwlJINBCeGQN6NWjhtFTPII3Ztpu6z3M2/SNTMNKwpR+0+7zz6L
+ UKv0/wtdIIeEXrRUQ03KZmouBGdZDNV6SC4kDlPPc10VhNAKYbdgOyftBy7lz+FCiVMfwPmfqbM
+ J
+X-Google-Smtp-Source: AGHT+IG2RhidZfv4zGjcjCzezmJ1QGe09GAqM9S4tK2uNA5NTaEvp9OOnNwiigu6921i8ZFnU+iMgQ==
+X-Received: by 2002:a05:6000:dc7:b0:367:9237:611d with SMTP id
+ ffacd0b85a97d-36b5d096f0amr6103041f8f.60.1722266897790; 
+ Mon, 29 Jul 2024 08:28:17 -0700 (PDT)
 Received: from localhost.localdomain ([176.176.173.10])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b367fc873sm12514354f8f.60.2024.07.29.08.27.46
+ ffacd0b85a97d-36b36857db6sm12533901f8f.73.2024.07.29.08.28.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Jul 2024 08:27:46 -0700 (PDT)
+ Mon, 29 Jul 2024 08:28:17 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 05/14] tests/Makefile.include: Increase the level of
- indentation in the help text
-Date: Mon, 29 Jul 2024 17:27:05 +0200
-Message-ID: <20240729152714.10225-6-philmd@linaro.org>
+Subject: [PULL 10/14] tests/functional: Convert the riscv_opensbi avocado test
+ into a standalone test
+Date: Mon, 29 Jul 2024 17:27:10 +0200
+Message-ID: <20240729152714.10225-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240729152714.10225-1-philmd@linaro.org>
 References: <20240729152714.10225-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,67 +98,169 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-The next patch is going to add some entries that need more space between
-the command and the help text, so let's increase the indentation here
-first.
+The avocado test defined test functions for both, riscv32 and riscv64.
+Since we can run the whole file with multiple targets in the new
+framework, we can now consolidate the functions so we have to only
+define one function per machine now.
 
 Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240724175248.1389201-4-thuth@redhat.com>
+Message-ID: <20240724175248.1389201-16-thuth@redhat.com>
+[PMD: Updated MAINTAINERS]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/Makefile.include | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ MAINTAINERS                            |  1 +
+ tests/avocado/riscv_opensbi.py         | 63 --------------------------
+ tests/functional/meson.build           |  8 ++++
+ tests/functional/test_riscv_opensbi.py | 36 +++++++++++++++
+ 4 files changed, 45 insertions(+), 63 deletions(-)
+ delete mode 100644 tests/avocado/riscv_opensbi.py
+ create mode 100755 tests/functional/test_riscv_opensbi.py
 
-diff --git a/tests/Makefile.include b/tests/Makefile.include
-index 6618bfed70..167d8f29a4 100644
---- a/tests/Makefile.include
-+++ b/tests/Makefile.include
-@@ -3,28 +3,28 @@
- .PHONY: check-help
- check-help:
- 	@echo "Regression testing targets:"
--	@echo " $(MAKE) check                  Run block, qapi-schema, unit, softfloat, qtest and decodetree tests"
--	@echo " $(MAKE) bench                  Run speed tests"
-+	@echo " $(MAKE) check                    Run block, qapi-schema, unit, softfloat, qtest and decodetree tests"
-+	@echo " $(MAKE) bench                    Run speed tests"
- 	@echo
- 	@echo "Individual test suites:"
--	@echo " $(MAKE) check-qtest-TARGET     Run qtest tests for given target"
--	@echo " $(MAKE) check-qtest            Run qtest tests"
--	@echo " $(MAKE) check-unit             Run qobject tests"
--	@echo " $(MAKE) check-qapi-schema      Run QAPI schema tests"
--	@echo " $(MAKE) check-block            Run block tests"
-+	@echo " $(MAKE) check-qtest-TARGET       Run qtest tests for given target"
-+	@echo " $(MAKE) check-qtest              Run qtest tests"
-+	@echo " $(MAKE) check-unit               Run qobject tests"
-+	@echo " $(MAKE) check-qapi-schema        Run QAPI schema tests"
-+	@echo " $(MAKE) check-block              Run block tests"
- ifneq ($(filter $(all-check-targets), check-softfloat),)
--	@echo " $(MAKE) check-tcg              Run TCG tests"
--	@echo " $(MAKE) check-softfloat        Run FPU emulation tests"
-+	@echo " $(MAKE) check-tcg                Run TCG tests"
-+	@echo " $(MAKE) check-softfloat          Run FPU emulation tests"
- endif
--	@echo " $(MAKE) check-avocado          Run avocado (integration) tests for currently configured targets"
-+	@echo " $(MAKE) check-avocado            Run avocado (integration) tests for currently configured targets"
- 	@echo
--	@echo " $(MAKE) check-report.junit.xml Generates an aggregated XML test report"
--	@echo " $(MAKE) check-venv             Creates a Python venv for tests"
--	@echo " $(MAKE) check-clean            Clean the tests and related data"
-+	@echo " $(MAKE) check-report.junit.xml   Generates an aggregated XML test report"
-+	@echo " $(MAKE) check-venv               Creates a Python venv for tests"
-+	@echo " $(MAKE) check-clean              Clean the tests and related data"
- 	@echo
- 	@echo "The following are useful for CI builds"
--	@echo " $(MAKE) check-build            Build most test binaries"
--	@echo " $(MAKE) get-vm-images          Downloads all images used by avocado tests, according to configured targets (~350 MB each, 1.5 GB max)"
-+	@echo " $(MAKE) check-build              Build most test binaries"
-+	@echo " $(MAKE) get-vm-images            Downloads all images used by avocado tests, according to configured targets (~350 MB each, 1.5 GB max)"
- 	@echo
- 	@echo
- 	@echo "The variable SPEED can be set to control the gtester speed setting."
+diff --git a/MAINTAINERS b/MAINTAINERS
+index a768808a4a..a906218f9d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -337,6 +337,7 @@ F: include/hw/riscv/
+ F: linux-user/host/riscv32/
+ F: linux-user/host/riscv64/
+ F: tests/tcg/riscv64/
++F: tests/functional/test_riscv_opensbi.py
+ 
+ RISC-V XThead* extensions
+ M: Christoph Muellner <christoph.muellner@vrull.eu>
+diff --git a/tests/avocado/riscv_opensbi.py b/tests/avocado/riscv_opensbi.py
+deleted file mode 100644
+index bfff9cc3c3..0000000000
+--- a/tests/avocado/riscv_opensbi.py
++++ /dev/null
+@@ -1,63 +0,0 @@
+-# OpenSBI boot test for RISC-V machines
+-#
+-# Copyright (c) 2022, Ventana Micro
+-#
+-# This work is licensed under the terms of the GNU GPL, version 2 or
+-# later.  See the COPYING file in the top-level directory.
+-
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
+-
+-class RiscvOpenSBI(QemuSystemTest):
+-    """
+-    :avocado: tags=accel:tcg
+-    """
+-    timeout = 5
+-
+-    def boot_opensbi(self):
+-        self.vm.set_console()
+-        self.vm.launch()
+-        wait_for_console_pattern(self, 'Platform Name')
+-        wait_for_console_pattern(self, 'Boot HART MEDELEG')
+-
+-    def test_riscv32_spike(self):
+-        """
+-        :avocado: tags=arch:riscv32
+-        :avocado: tags=machine:spike
+-        """
+-        self.boot_opensbi()
+-
+-    def test_riscv64_spike(self):
+-        """
+-        :avocado: tags=arch:riscv64
+-        :avocado: tags=machine:spike
+-        """
+-        self.boot_opensbi()
+-
+-    def test_riscv32_sifive_u(self):
+-        """
+-        :avocado: tags=arch:riscv32
+-        :avocado: tags=machine:sifive_u
+-        """
+-        self.boot_opensbi()
+-
+-    def test_riscv64_sifive_u(self):
+-        """
+-        :avocado: tags=arch:riscv64
+-        :avocado: tags=machine:sifive_u
+-        """
+-        self.boot_opensbi()
+-
+-    def test_riscv32_virt(self):
+-        """
+-        :avocado: tags=arch:riscv32
+-        :avocado: tags=machine:virt
+-        """
+-        self.boot_opensbi()
+-
+-    def test_riscv64_virt(self):
+-        """
+-        :avocado: tags=arch:riscv64
+-        :avocado: tags=machine:virt
+-        """
+-        self.boot_opensbi()
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 48a617033e..94ac97ac53 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -23,6 +23,14 @@ tests_ppc_quick = [
+   'ppc_74xx',
+ ]
+ 
++tests_riscv32_quick = [
++  'riscv_opensbi',
++]
++
++tests_riscv64_quick = [
++  'riscv_opensbi',
++]
++
+ tests_x86_64_quick = [
+   'cpu_queries',
+   'mem_addr_space',
+diff --git a/tests/functional/test_riscv_opensbi.py b/tests/functional/test_riscv_opensbi.py
+new file mode 100755
+index 0000000000..d077e40f42
+--- /dev/null
++++ b/tests/functional/test_riscv_opensbi.py
+@@ -0,0 +1,36 @@
++#!/usr/bin/env python3
++#
++# OpenSBI boot test for RISC-V machines
++#
++# Copyright (c) 2022, Ventana Micro
++#
++# This work is licensed under the terms of the GNU GPL, version 2 or
++# later.  See the COPYING file in the top-level directory.
++
++from qemu_test import QemuSystemTest
++from qemu_test import wait_for_console_pattern
++
++class RiscvOpenSBI(QemuSystemTest):
++
++    timeout = 5
++
++    def boot_opensbi(self):
++        self.vm.set_console()
++        self.vm.launch()
++        wait_for_console_pattern(self, 'Platform Name')
++        wait_for_console_pattern(self, 'Boot HART MEDELEG')
++
++    def test_riscv_spike(self):
++        self.set_machine('spike')
++        self.boot_opensbi()
++
++    def test_riscv_sifive_u(self):
++        self.set_machine('sifive_u')
++        self.boot_opensbi()
++
++    def test_riscv_virt(self):
++        self.set_machine('virt')
++        self.boot_opensbi()
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.45.2
 
