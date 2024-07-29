@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B1CBC3DA61
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BF4AC3DA7E
 	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:45:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYRc9-0004xF-Gc; Mon, 29 Jul 2024 10:44:41 -0400
+	id 1sYRbr-0003eY-R1; Mon, 29 Jul 2024 10:44:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYRc6-0004jX-CP
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:38 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1sYRbq-0003ay-ES
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:22 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYRbv-0008Rv-SR
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:38 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-58ef19aa69dso4070789a12.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:44:27 -0700 (PDT)
+ id 1sYRbm-0008MZ-OQ
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:21 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a7ac449a0e6so262260066b.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:44:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722264266; x=1722869066; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722264257; x=1722869057; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PtcZqFWHrEGoL41FTohMyKEPDwyICpuVF7RbypBJq3A=;
- b=QaqrMGb3A82eoqzpBYuFVqSJk45CFX48XCphzCvrgkunueHPd8enJpsmB7y42XNQlS
- 4vlVI+Jriv+km8WjMnGRe6QplxQi+IXu+xprRyqP306rCAg5f3ETM2NG1aCcD/ZrDSGz
- PbS6cPCiWyDfmksMcGbgBHrWRICKoQIOYw7RadoCx2n7VfjVuQMBkRW9eeULv2/nVq3Z
- ajofHPPRUog/LgeEvlHHj+HjVzgno7S47xVqca7tm5E69tGtYSYLp49KAiKspEUOkb1t
- N+3ePgiyzgUjhjSRx/p7WUfsxryNNl6KxSi1chrV8LH86PKW6Vw16SpZVjd6Cr9PqLur
- +Z1A==
+ bh=j5fFJhx+vMgfG1V76vPOjIITII9gIRW1UvsbXoaqfhQ=;
+ b=Gp9o/a0FRpYF53rV+54dRNr8gvIGVLLmNgQUKjFo+INqZE4iO5A7f5YPXh4GLQpiCK
+ 9BZsLTYbjiQfGJmUidGRUHgbeLsrB/8NPyzsqi199odIDxD1HXvo4Y1z3KJg4RseDTlU
+ c+q38a+70YCYFFDnQYUXQ5h+nIxasRmwqppAs1pHG0KP0sb/Ora11i/AxaqbegTYw2ET
+ fRvHFtVsXFxWTDUV9KaBrSuLaNRsrUGO5Ks0OshjMGPLILMbcgNIgf6UwRDvAHIyG7ZU
+ u/me/56R3eIp+R0YPBInYTv+THKuYivSRsPz+yvXCrTSS6B/LCB9sCbIgrY71T6VaruC
+ vJBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722264266; x=1722869066;
+ d=1e100.net; s=20230601; t=1722264257; x=1722869057;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PtcZqFWHrEGoL41FTohMyKEPDwyICpuVF7RbypBJq3A=;
- b=K28xaAZM7F9yFstPNPBEuFipXKaKXWJ9S6fq2iPZk0gOrO/kJVQN9e107XapkvGfwa
- z95+FzKqWhTTpcxw2gT0AVUtijafFeewPzMqPANmKwToA0bjONIZ6fqjll/2ijsMa7nn
- nulWoiaMaD+tJW9A1Li3Ly0Kodupf3+MLvyQ2Ixx+qPHiQi+bUmWflZxYBKPxRcy3oiA
- mSFMKCMBrEAOH19lsn2F4254HLWUYCFG8+JUrFuh3XMa6fuNGAZjuULm9QLO/gOqtKRq
- +6KWaiKvleV3sWxOicR2Os4lgYTReLZ3/6CxCM3BrljkL8kIzDxu8s5aL123W3eoDvNh
- guGw==
-X-Gm-Message-State: AOJu0YwtMxVzEp74x5wCu47voALFMGCP3J7VVqRwXK7wcOs3yG58lyfB
- rKZXHOKvLEBdhoT76P3eTCFI5O5PogN/kF0on2C9GLS3Pzq483Qhl1bJoGGZHPA=
-X-Google-Smtp-Source: AGHT+IEfRp6u/PEriMXjt4MOemKUcELeyZUUP1+B68QPt6BYX7+H57vsJn7bbn9HRz217tQp4Q2OCA==
-X-Received: by 2002:a05:6402:35d6:b0:5a2:2fa5:f146 with SMTP id
- 4fb4d7f45d1cf-5b021f0dcfbmr5499561a12.28.1722264266053; 
- Mon, 29 Jul 2024 07:44:26 -0700 (PDT)
+ bh=j5fFJhx+vMgfG1V76vPOjIITII9gIRW1UvsbXoaqfhQ=;
+ b=vhgBbPU3NRmpbpqx9ZMg++XXYGPjOpS4uS22EE9FVbjTuH1gLFJ9kUhggYDRSRZAG0
+ 6IlKb8wDUml+g1rhI2oG6SIX6qD0j1VpG67Y9AwO8e2XkthCc4m+S4Cp9VQ7zJXJJfrB
+ Z5+9FqDUv4uRVueGhJ7orYL2bH06eri5Cz6dDVS3J1X5S7qGgZHugddltacyhSGDxmM3
+ affbQa8Er1DyAv2aj5JFQJdSHOUc4kQeAWcvCR80r/QrQ4M7C6yOYdDpt0muTnRbjS+d
+ NTFAM3YYg1489jD2JM2XRSQRLOzqirNX+xbW+onGC3gKWHqWUS0a8F3lJOEAF7jubvyz
+ jozg==
+X-Gm-Message-State: AOJu0YwT21MxJ3c2vtcIDiJQEASnoWkrd8qsf1rzQw1ZU46vIq4peJks
+ 1lDaG/NL7GlOZHKCbimxzJAndxG812srmyzXLb/6EDw/UWfIrllyZup+2OSE5AA=
+X-Google-Smtp-Source: AGHT+IFxoNmmMsy1h/7fYoWEIEUAYxhhkKCm/iVRs9WvorySlcHEQ9jIDr2TPCGtWEZlVGMSwgJ/fw==
+X-Received: by 2002:a17:907:84e:b0:a7d:26ff:aeb0 with SMTP id
+ a640c23a62f3a-a7d4000b79bmr474456366b.30.1722264256673; 
+ Mon, 29 Jul 2024 07:44:16 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ac6359392bsm5837519a12.33.2024.07.29.07.44.19
+ a640c23a62f3a-a7acad411bcsm511230266b.109.2024.07.29.07.44.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jul 2024 07:44:21 -0700 (PDT)
+ Mon, 29 Jul 2024 07:44:15 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 740E55FA14;
- Mon, 29 Jul 2024 15:44:16 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 1C0A65F8DA;
+ Mon, 29 Jul 2024 15:44:15 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
@@ -78,18 +78,20 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
  Alexandre Iooss <erdnaxe@crans.org>, Song Gao <gaosong@loongson.cn>,
  David Hildenbrand <david@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH 14/14] plugin/loader: handle basic help query
-Date: Mon, 29 Jul 2024 15:44:14 +0100
-Message-Id: <20240729144414.830369-15-alex.bennee@linaro.org>
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 01/14] gitlab: record installed packages in /packages.txt in
+ containers
+Date: Mon, 29 Jul 2024 15:44:01 +0100
+Message-Id: <20240729144414.830369-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240729144414.830369-1-alex.bennee@linaro.org>
 References: <20240729144414.830369-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,42 +114,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As the list of options isn't fixed we do all the parsing by hand.
-Without any named arguments we automatically fill the "file" option
-with the value give so check if it is requesting help and dump some
-basic usage text.
+From: Daniel P. Berrangé <berrange@redhat.com>
 
+The lcitool created containers save the full distro package list
+details into /packages.txt. The idea is that build jobs will 'cat'
+this file, so that the build log has a record of what packages
+were used. This is important info, because when it comes to debug
+failures, the original container is often lost.
+
+This extends the manually written dockerfiles to also create the
+/packages.txt file.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-Id: <20240724095505.33544-2-berrange@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- plugins/loader.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tests/docker/dockerfiles/debian-all-test-cross.docker    | 3 ++-
+ tests/docker/dockerfiles/debian-hexagon-cross.docker     | 3 ++-
+ tests/docker/dockerfiles/debian-legacy-test-cross.docker | 3 ++-
+ tests/docker/dockerfiles/debian-loongarch-cross.docker   | 3 ++-
+ tests/docker/dockerfiles/debian-tricore-cross.docker     | 3 ++-
+ tests/docker/dockerfiles/debian-xtensa-cross.docker      | 3 ++-
+ 6 files changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/plugins/loader.c b/plugins/loader.c
-index 513a429c57..ebc01da9c6 100644
---- a/plugins/loader.c
-+++ b/plugins/loader.c
-@@ -18,6 +18,7 @@
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
- #include "qemu/config-file.h"
-+#include "qemu/help_option.h"
- #include "qapi/error.h"
- #include "qemu/lockable.h"
- #include "qemu/option.h"
-@@ -98,7 +99,12 @@ static int plugin_add(void *opaque, const char *name, const char *value,
-     bool is_on;
-     char *fullarg;
+diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/tests/docker/dockerfiles/debian-all-test-cross.docker
+index 6cc38a3633..8ab244e018 100644
+--- a/tests/docker/dockerfiles/debian-all-test-cross.docker
++++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
+@@ -62,7 +62,8 @@ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
+         gcc-s390x-linux-gnu \
+         libc6-dev-s390x-cross \
+         gcc-sparc64-linux-gnu \
+-        libc6-dev-sparc64-cross
++        libc6-dev-sparc64-cross && \
++        dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
  
--    if (strcmp(name, "file") == 0) {
-+    if (is_help_option(value)) {
-+        printf("Plugin options\n");
-+        printf("  file=<path/to/plugin.so>\n");
-+        printf("  plugin specific arguments\n");
-+        exit(0);
-+    } else if (strcmp(name, "file") == 0) {
-         if (strcmp(value, "") == 0) {
-             error_setg(errp, "requires a non-empty argument");
-             return 1;
+ 
+ ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools
+diff --git a/tests/docker/dockerfiles/debian-hexagon-cross.docker b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+index f2d40f2dee..23152b4918 100644
+--- a/tests/docker/dockerfiles/debian-hexagon-cross.docker
++++ b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+@@ -33,7 +33,8 @@ RUN apt-get update && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/c++ && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/cc && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/g++ && \
+-    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
++    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc && \
++    dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
+ 
+ RUN /usr/bin/pip3 install tomli
+ 
+diff --git a/tests/docker/dockerfiles/debian-legacy-test-cross.docker b/tests/docker/dockerfiles/debian-legacy-test-cross.docker
+index d75e0b85e2..5a6616b7d3 100644
+--- a/tests/docker/dockerfiles/debian-legacy-test-cross.docker
++++ b/tests/docker/dockerfiles/debian-legacy-test-cross.docker
+@@ -36,7 +36,8 @@ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
+         python3-pip \
+         python3-setuptools \
+         python3-venv \
+-        python3-wheel
++        python3-wheel && \
++        dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
+ 
+ RUN /usr/bin/pip3 install tomli
+ 
+diff --git a/tests/docker/dockerfiles/debian-loongarch-cross.docker b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+index 6a9197528b..79eab5621e 100644
+--- a/tests/docker/dockerfiles/debian-loongarch-cross.docker
++++ b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+@@ -32,7 +32,8 @@ RUN apt-get update && \
+         python3-pip \
+         python3-setuptools \
+         python3-venv \
+-        python3-wheel
++        python3-wheel && \
++        dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
+ 
+ RUN /usr/bin/pip3 install tomli
+ 
+diff --git a/tests/docker/dockerfiles/debian-tricore-cross.docker b/tests/docker/dockerfiles/debian-tricore-cross.docker
+index 16276aa21d..479b4d6eba 100644
+--- a/tests/docker/dockerfiles/debian-tricore-cross.docker
++++ b/tests/docker/dockerfiles/debian-tricore-cross.docker
+@@ -34,7 +34,8 @@ RUN apt update && \
+        python3-pip \
+        python3-setuptools \
+        python3-wheel \
+-       python3-venv
++       python3-venv && \
++       dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
+ 
+ RUN /usr/bin/pip3 install tomli
+ 
+diff --git a/tests/docker/dockerfiles/debian-xtensa-cross.docker b/tests/docker/dockerfiles/debian-xtensa-cross.docker
+index 413881899b..d011eee2ad 100644
+--- a/tests/docker/dockerfiles/debian-xtensa-cross.docker
++++ b/tests/docker/dockerfiles/debian-xtensa-cross.docker
+@@ -16,7 +16,8 @@ RUN apt-get update && \
+         curl \
+         gettext \
+         git \
+-        python3-minimal
++        python3-minimal && \
++    dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
+ 
+ ENV CPU_LIST dc232b dc233c de233_fpu dsp3400
+ ENV TOOLCHAIN_RELEASE 2020.07
 -- 
 2.39.2
 
