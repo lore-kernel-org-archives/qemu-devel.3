@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C02A4C3DA7E
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:29:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50506C3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYSI1-00026H-ON; Mon, 29 Jul 2024 11:27:57 -0400
+	id 1sYSIK-0004E7-QC; Mon, 29 Jul 2024 11:28:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYSHs-0001eI-0W
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:27:49 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYSII-0003xB-Ef
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:28:14 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYSHn-0008GD-Kx
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:27:46 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-428035c0bb2so11104735e9.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:27:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYSI6-0008I3-RX
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:28:14 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-428163f7635so16365235e9.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:28:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722266862; x=1722871662; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722266880; x=1722871680; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KBqoPLgA3/9ZofvfJWZLzCibdmlqkba0mV85fMinUUM=;
- b=NaVbAlV8HxrobbpIefSjgXnrcUi9fAD+gRb9ms6ED+AAHPLC7UpXdlKYJ6CgZqtzau
- lCCRxIpHKunZOJurmjjAliLLcChow9UjxV1+CiX8oLYwCmdPjgpsZMLhQRPD+pepVfO5
- MFBEQBQKY7Dblmk8TMLE850L7ZEIfk8+jahdscgMsUxr8LZRTOD2sUfuu8jvBbIjh3ip
- 62bA4CwY4I7/J72TR5abRH6+KW7MCZQHSXnSrt4qLYj1CYZpPVXi2cnn48PejN2t2F4H
- QefIgwqMXveJ3S+ZLifpbdvOv/j4ernqgbJOuxyIuCcCv42LQiHza1ONe9vbHWW/vyfh
- p5gA==
+ bh=7TtsHovYmaBnbaX00mMSIqbmFg0IKysPj85jWQOERIQ=;
+ b=ZjcSRUyUFRFWnUimXHVzOzqPeIpYwER8Xf2H6gPDwmhfQZ0CO6+7kDcQUOjcJku8R5
+ LDDM7gnqn7QPo1ltuhjIziogUxoS1JTlWLdn+4pry8FdZjI1WGQS3zITavCj/OSO9kLQ
+ /2s311wCHWs87KoaLtPi2PvgJeLIp7raSePCHRPwt0qTW52RgL9w6XfOHFGoI1J+qgPi
+ BHvU1zo6gVnsKqBnNUbEN9dJEmm9fk4rx/KEWL33KbD84PH/4CqUvDp0Y+OnNo1vfzFk
+ uytIrW0E1871EMyleaP1tgAWTW0KJNG6xDrSVP9o89DGTu1YunKhpLVnQhjPq8NwYW0f
+ 7KMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722266862; x=1722871662;
+ d=1e100.net; s=20230601; t=1722266880; x=1722871680;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KBqoPLgA3/9ZofvfJWZLzCibdmlqkba0mV85fMinUUM=;
- b=uEsX9OEihmem6C80GPjo3rjnRtEu7EP+mbCBV1T1A5S/SmtKqq45+4npGy9BwPxf6F
- VghtAk5ZaOvIGbPEJaKXHCyCHt5fXt74yENrnrLnNvy0Wg2nP/c1MoRaKjANMkB2vpJp
- b0FAC494c8lSwnXcMpefUM2m5MpYJaRCpxcwAo6+bgrhJNzEXTSFcsn+GQS0/068cg8A
- 99Img+lDDbYECoBmly3eYi+RE9TRMgKUVCJod9V7cTRbIi4IZwn12yyQBooXw0HQc1sn
- 1GQOEtFwvtjosjO1a/ckj1w4ISxfYNFFxbi020ApKhpl0TWtIE7SxdgSFLJs37w6PuRl
- tV1g==
-X-Gm-Message-State: AOJu0YwecdaDf8Qwxk4AQ9dfzNdTb4M2gVf06SRyEYHqVBnvZobe0QtS
- M9hWS12aI/1pwPG6E9EdGaJgi9T8R4fuC0s8IOcNOGU4CnVIiJTPEiumMLCUzSIkPmPjK5fcNqT
- j
-X-Google-Smtp-Source: AGHT+IHn86wfaegvqLnD9wAeQUtx58ySzifUNpxtIHWtP5P4MC/Sr0S9DkiDdbwpg2j3ernvMXJsdA==
-X-Received: by 2002:a05:600c:1f96:b0:426:6252:61d9 with SMTP id
- 5b1f17b1804b1-42811fcb0camr49031295e9.11.1722266861716; 
- Mon, 29 Jul 2024 08:27:41 -0700 (PDT)
+ bh=7TtsHovYmaBnbaX00mMSIqbmFg0IKysPj85jWQOERIQ=;
+ b=bQLhf4Ox68RACZKKDM7NyTj0QUq59MiWssabCCdcTb/Dk5YXdH8icw5OaVrURcoDJ2
+ e4L1C5+9lFepPHBpGd+EvPK8DzGhA5kSMqquVXkSpnwUIaYlNnHIAmncgTJ6jYDgrgPQ
+ ouoWkaGvlshrB6nCMmxqti7aeOVSUTxZ9BAEQNQ/CJdkZ4jmyU20dliw6nJxOvpQU3tq
+ Xa0u/LryLW/bTEal8t52YrA86ZeoJ3DN+2wMoseLfCqmHXd+CcNMIwoRLJumgAE4lbfd
+ yBoAoDF6LSRaT71bUktrDg1arga0XIWw8VUXPg/CaD7hQEbkgU3V5UT+0M/saUDK6Qbl
+ mUqw==
+X-Gm-Message-State: AOJu0YzDeB//ipNX3FdfYo8tH1xlEbmDOTMuGaEUf+VUiZEx83cCU1Xj
+ QWpn/cD6x+Lhji4/uHTP578AzmjX5pm9GMHEHeQpWVHaNoDf/yZEfiFkPbNAnQ/2PiMJvNprNqi
+ /
+X-Google-Smtp-Source: AGHT+IGbHpknvwMzkA/VuxJ5BWhP8Ko/hLcr3dMJrCyNpfJIsiiamvxY0Mo8yUhesl6gNksLQw+R5Q==
+X-Received: by 2002:a05:6000:1ccb:b0:367:95e6:158a with SMTP id
+ ffacd0b85a97d-36b5d0bb424mr4624226f8f.63.1722266879853; 
+ Mon, 29 Jul 2024 08:27:59 -0700 (PDT)
 Received: from localhost.localdomain ([176.176.173.10])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42805730bdbsm183391265e9.5.2024.07.29.08.27.40
+ ffacd0b85a97d-36b367c0351sm12685450f8f.4.2024.07.29.08.27.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Jul 2024 08:27:41 -0700 (PDT)
+ Mon, 29 Jul 2024 08:27:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 04/14] tests/functional: Add base classes for the upcoming
- pytest-based tests
-Date: Mon, 29 Jul 2024 17:27:04 +0200
-Message-ID: <20240729152714.10225-5-philmd@linaro.org>
+Subject: [PULL 07/14] tests/functional: Convert simple avocado tests into
+ standalone python tests
+Date: Mon, 29 Jul 2024 17:27:07 +0200
+Message-ID: <20240729152714.10225-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240729152714.10225-1-philmd@linaro.org>
 References: <20240729152714.10225-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,371 +98,406 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-The file is mostly a copy of the tests/avocado/avocado_qemu/__init__.py
-file with some adjustments to get rid of the Avocado dependencies (i.e.
-we also have to drop the LinuxSSHMixIn and LinuxTest for now).
+These test are rather simple and don't need any modifications apart
+from adjusting the "from avocado_qemu" line. To ease debugging, make
+the files executable and add a shebang line and Python '__main__'
+handling, too, so that these tests can now be run by executing them
+directly.
 
-The emulator binary and build directory are now passed via
-environment variables that will be set via meson.build later.
-
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240724175248.1389201-3-thuth@redhat.com>
+Message-ID: <20240724175248.1389201-6-thuth@redhat.com>
 [PMD: Updated MAINTAINERS]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS                            |   1 +
- tests/functional/qemu_test/__init__.py | 328 +++++++++++++++++++++++++
- 2 files changed, 329 insertions(+)
- create mode 100644 tests/functional/qemu_test/__init__.py
+ MAINTAINERS                                   |  5 ++
+ tests/functional/meson.build                  |  5 ++
+ .../test_cpu_queries.py}                      |  7 ++-
+ .../test_empty_cpu_model.py}                  |  7 ++-
+ .../test_mem_addr_space.py}                   | 52 +++----------------
+ .../test_pc_cpu_hotplug_props.py}             | 11 ++--
+ .../test_virtio_version.py}                   |  8 +--
+ 7 files changed, 39 insertions(+), 56 deletions(-)
+ rename tests/{avocado/cpu_queries.py => functional/test_cpu_queries.py} (89%)
+ mode change 100644 => 100755
+ rename tests/{avocado/empty_cpu_model.py => functional/test_empty_cpu_model.py} (84%)
+ mode change 100644 => 100755
+ rename tests/{avocado/mem-addr-space-check.py => functional/test_mem_addr_space.py} (93%)
+ mode change 100644 => 100755
+ rename tests/{avocado/pc_cpu_hotplug_props.py => functional/test_pc_cpu_hotplug_props.py} (90%)
+ mode change 100644 => 100755
+ rename tests/{avocado/virtio_version.py => functional/test_virtio_version.py} (98%)
+ mode change 100644 => 100755
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 98eddf7ae1..aa03a40d01 100644
+index aa03a40d01..1d84803b69 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -4127,6 +4127,7 @@ F: .travis.yml
- F: docs/devel/ci*
- F: scripts/ci/
- F: tests/docker/
-+F: tests/functional/
- F: tests/vm/
- F: tests/lcitool/
- F: tests/avocado/tuxrun_baselines.py
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-new file mode 100644
-index 0000000000..fc98222c52
---- /dev/null
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -0,0 +1,328 @@
-+# Test class and utilities for functional tests
+@@ -1830,6 +1830,8 @@ F: hw/isa/apm.c
+ F: include/hw/isa/apm.h
+ F: tests/unit/test-x86-topo.c
+ F: tests/qtest/test-x86-cpuid-compat.c
++F: tests/functional/test_mem_addr_space.py
++F: tests/functional/test_pc_cpu_hotplug_props.py
+ 
+ PC Chipset
+ M: Michael S. Tsirkin <mst@redhat.com>
+@@ -1896,6 +1898,8 @@ F: include/hw/boards.h
+ F: include/hw/core/cpu.h
+ F: include/hw/cpu/cluster.h
+ F: include/sysemu/numa.h
++F: tests/functional/test_cpu_queries.py
++F: tests/functional/test_empty_cpu_model.py
+ F: tests/unit/test-smp-parse.c
+ T: git https://gitlab.com/ehabkost/qemu.git machine-next
+ 
+@@ -2236,6 +2240,7 @@ F: net/vhost-user.c
+ F: include/hw/virtio/
+ F: docs/devel/virtio*
+ F: docs/devel/migration/virtio.rst
++F: tests/functional/test_virtio_version.py
+ 
+ virtio-balloon
+ M: Michael S. Tsirkin <mst@redhat.com>
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 7fc9c4e513..a8cc0e6330 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -14,9 +14,14 @@ test_timeouts = {
+ }
+ 
+ tests_generic = [
++  'empty_cpu_model',
+ ]
+ 
+ tests_x86_64_quick = [
++  'cpu_queries',
++  'mem_addr_space',
++  'pc_cpu_hotplug_props',
++  'virtio_version',
+ ]
+ 
+ tests_x86_64_thorough = [
+diff --git a/tests/avocado/cpu_queries.py b/tests/functional/test_cpu_queries.py
+old mode 100644
+new mode 100755
+similarity index 89%
+rename from tests/avocado/cpu_queries.py
+rename to tests/functional/test_cpu_queries.py
+index d3faa14720..97dd600c01
+--- a/tests/avocado/cpu_queries.py
++++ b/tests/functional/test_cpu_queries.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
 +#
-+# Copyright 2018, 2024 Red Hat, Inc.
+ # Sanity check of query-cpu-* results
+ #
+ # Copyright (c) 2019 Red Hat, Inc.
+@@ -8,7 +10,7 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+ 
+-from avocado_qemu import QemuSystemTest
++from qemu_test import QemuSystemTest
+ 
+ class QueryCPUModelExpansion(QemuSystemTest):
+     """
+@@ -33,3 +35,6 @@ def test(self):
+             e = self.vm.cmd('query-cpu-model-expansion', model=model,
+                             type='full')
+             self.assertEqual(e['model']['name'], c['name'])
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/avocado/empty_cpu_model.py b/tests/functional/test_empty_cpu_model.py
+old mode 100644
+new mode 100755
+similarity index 84%
+rename from tests/avocado/empty_cpu_model.py
+rename to tests/functional/test_empty_cpu_model.py
+index d906ef3d3c..0081b06d85
+--- a/tests/avocado/empty_cpu_model.py
++++ b/tests/functional/test_empty_cpu_model.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
 +#
-+# Original Author (Avocado-based tests):
-+#  Cleber Rosa <crosa@redhat.com>
+ # Check for crash when using empty -cpu option
+ #
+ # Copyright (c) 2019 Red Hat, Inc.
+@@ -7,7 +9,7 @@
+ #
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+-from avocado_qemu import QemuSystemTest
++from qemu_test import QemuSystemTest
+ 
+ class EmptyCPUModel(QemuSystemTest):
+     def test(self):
+@@ -17,3 +19,6 @@ def test(self):
+         self.vm.wait()
+         self.assertEqual(self.vm.exitcode(), 1, "QEMU exit code should be 1")
+         self.assertRegex(self.vm.get_log(), r'-cpu option cannot be empty')
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/avocado/mem-addr-space-check.py b/tests/functional/test_mem_addr_space.py
+old mode 100644
+new mode 100755
+similarity index 93%
+rename from tests/avocado/mem-addr-space-check.py
+rename to tests/functional/test_mem_addr_space.py
+index d3974599f4..bb0cf062ca
+--- a/tests/avocado/mem-addr-space-check.py
++++ b/tests/functional/test_mem_addr_space.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
 +#
-+# Adaption for standalone version:
-+#  Thomas Huth <thuth@redhat.com>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
+ # Check for crash when using memory beyond the available guest processor
+ # address space.
+ #
+@@ -8,7 +10,7 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-from avocado_qemu import QemuSystemTest
++from qemu_test import QemuSystemTest
+ import time
+ 
+ class MemAddrCheck(QemuSystemTest):
+@@ -22,9 +24,6 @@ class MemAddrCheck(QemuSystemTest):
+     # for all 32-bit cases, pci64_hole_size is 0.
+     def test_phybits_low_pse36(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         With pse36 feature ON, a processor has 36 bits of addressing. So it can
+         access up to a maximum of 64GiB of memory. Memory hotplug region begins
+         at 4 GiB boundary when "above_4g_mem_size" is 0 (this would be true when
+@@ -52,9 +51,6 @@ def test_phybits_low_pse36(self):
+ 
+     def test_phybits_low_pae(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         With pae feature ON, a processor has 36 bits of addressing. So it can
+         access up to a maximum of 64GiB of memory. Rest is the same as the case
+         with pse36 above.
+@@ -72,9 +68,6 @@ def test_phybits_low_pae(self):
+ 
+     def test_phybits_ok_pentium_pse36(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         Setting maxmem to 59.5G and making sure that QEMU can start with the
+         same options as the failing case above with pse36 cpu feature.
+         """
+@@ -91,9 +84,6 @@ def test_phybits_ok_pentium_pse36(self):
+ 
+     def test_phybits_ok_pentium_pae(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         Test is same as above but now with pae cpu feature turned on.
+         Setting maxmem to 59.5G and making sure that QEMU can start fine
+         with the same options as the case above.
+@@ -111,9 +101,6 @@ def test_phybits_ok_pentium_pae(self):
+ 
+     def test_phybits_ok_pentium2(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         Pentium2 has 36 bits of addressing, so its same as pentium
+         with pse36 ON.
+         """
+@@ -130,9 +117,6 @@ def test_phybits_ok_pentium2(self):
+ 
+     def test_phybits_low_nonpse36(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         Pentium processor has 32 bits of addressing without pse36 or pae
+         so it can access physical address up to 4 GiB. Setting maxmem to
+         4 GiB should make QEMU fail to start with "phys-bits too low"
+@@ -153,9 +137,6 @@ def test_phybits_low_nonpse36(self):
+     # now lets test some 64-bit CPU cases.
+     def test_phybits_low_tcg_q35_70_amd(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         For q35 7.1 machines and above, there is a HT window that starts at
+         1024 GiB and ends at 1 TiB - 1. If the max GPA falls in this range,
+         "above_4G" memory is adjusted to start at 1 TiB boundary for AMD cpus
+@@ -182,9 +163,6 @@ def test_phybits_low_tcg_q35_70_amd(self):
+ 
+     def test_phybits_low_tcg_q35_71_amd(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         AMD_HT_START is defined to be at 1012 GiB. So for q35 machines
+         version > 7.0 and AMD cpus, instead of 1024 GiB limit for 40 bit
+         processor address space, it has to be 1012 GiB , that is 12 GiB
+@@ -205,9 +183,6 @@ def test_phybits_low_tcg_q35_71_amd(self):
+ 
+     def test_phybits_ok_tcg_q35_70_amd(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         Same as q35-7.0 AMD case except that here we check that QEMU can
+         successfully start when maxmem is < 988G.
+         """
+@@ -224,9 +199,6 @@ def test_phybits_ok_tcg_q35_70_amd(self):
+ 
+     def test_phybits_ok_tcg_q35_71_amd(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         Same as q35-7.1 AMD case except that here we check that QEMU can
+         successfully start when maxmem is < 976G.
+         """
+@@ -243,9 +215,6 @@ def test_phybits_ok_tcg_q35_71_amd(self):
+ 
+     def test_phybits_ok_tcg_q35_71_intel(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         Same parameters as test_phybits_low_tcg_q35_71_amd() but use
+         Intel cpu instead. QEMU should start fine in this case as
+         "above_4G" memory starts at 4G.
+@@ -264,9 +233,6 @@ def test_phybits_ok_tcg_q35_71_intel(self):
+ 
+     def test_phybits_low_tcg_q35_71_amd_41bits(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         AMD processor with 41 bits. Max cpu hw address = 2 TiB.
+         By setting maxram above 1012 GiB  - 32 GiB - 4 GiB = 976 GiB, we can
+         force "above_4G" memory to start at 1 TiB for q35-7.1 machines
+@@ -291,9 +257,6 @@ def test_phybits_low_tcg_q35_71_amd_41bits(self):
+ 
+     def test_phybits_ok_tcg_q35_71_amd_41bits(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         AMD processor with 41 bits. Max cpu hw address = 2 TiB.
+         Same as above but by setting maxram between 976 GiB and 992 Gib,
+         QEMU should start fine.
+@@ -312,9 +275,6 @@ def test_phybits_ok_tcg_q35_71_amd_41bits(self):
+ 
+     def test_phybits_low_tcg_q35_intel_cxl(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         cxl memory window starts after memory device range. Here, we use 1 GiB
+         of cxl window memory. 4G_mem end aligns at 4G. pci64_hole is 32 GiB and
+         starts after the cxl memory window.
+@@ -335,9 +295,6 @@ def test_phybits_low_tcg_q35_intel_cxl(self):
+ 
+     def test_phybits_ok_tcg_q35_intel_cxl(self):
+         """
+-        :avocado: tags=machine:q35
+-        :avocado: tags=arch:x86_64
+-
+         Same as above but here we do not reserve any cxl memory window. Hence,
+         with the exact same parameters as above, QEMU should start fine even
+         with cxl enabled.
+@@ -352,3 +309,6 @@ def test_phybits_ok_tcg_q35_intel_cxl(self):
+         time.sleep(self.DELAY_Q35_BOOT_SEQUENCE)
+         self.vm.shutdown()
+         self.assertNotRegex(self.vm.get_log(), r'phys-bits too low')
 +
-+import logging
-+import os
-+import pycotap
-+import shutil
-+import subprocess
-+import sys
-+import tempfile
-+import time
-+import uuid
-+import unittest
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/avocado/pc_cpu_hotplug_props.py b/tests/functional/test_pc_cpu_hotplug_props.py
+old mode 100644
+new mode 100755
+similarity index 90%
+rename from tests/avocado/pc_cpu_hotplug_props.py
+rename to tests/functional/test_pc_cpu_hotplug_props.py
+index 4bd3e02665..9d5a37cb17
+--- a/tests/avocado/pc_cpu_hotplug_props.py
++++ b/tests/functional/test_pc_cpu_hotplug_props.py
+@@ -1,3 +1,4 @@
++#!/usr/bin/env python3
+ #
+ # Ensure CPU die-id can be omitted on -device
+ #
+@@ -20,16 +21,16 @@
+ # License along with this library; if not, see <http://www.gnu.org/licenses/>.
+ #
+ 
+-from avocado_qemu import QemuSystemTest
++from qemu_test import QemuSystemTest
+ 
+ class OmittedCPUProps(QemuSystemTest):
+-    """
+-    :avocado: tags=arch:x86_64
+-    :avocado: tags=cpu:qemu64
+-    """
 +
-+from pathlib import Path
-+from qemu.machine import QEMUMachine
-+from qemu.utils import kvm_available, tcg_available
+     def test_no_die_id(self):
+         self.vm.add_args('-nodefaults', '-S')
+         self.vm.add_args('-smp', '1,sockets=2,cores=2,threads=2,maxcpus=8')
+         self.vm.add_args('-device', 'qemu64-x86_64-cpu,socket-id=1,core-id=0,thread-id=0')
+         self.vm.launch()
+         self.assertEqual(len(self.vm.cmd('query-cpus-fast')), 2)
 +
-+def _source_dir():
-+    # Determine top-level directory of the QEMU sources
-+    return Path(__file__).parent.parent.parent.parent
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/avocado/virtio_version.py b/tests/functional/test_virtio_version.py
+old mode 100644
+new mode 100755
+similarity index 98%
+rename from tests/avocado/virtio_version.py
+rename to tests/functional/test_virtio_version.py
+index afe5e828b5..eb23060564
+--- a/tests/avocado/virtio_version.py
++++ b/tests/functional/test_virtio_version.py
+@@ -1,3 +1,4 @@
++#!/usr/bin/env python3
+ """
+ Check compatibility of virtio device types
+ """
+@@ -12,7 +13,7 @@
+ import os
+ 
+ from qemu.machine import QEMUMachine
+-from avocado_qemu import QemuSystemTest
++from qemu_test import QemuSystemTest
+ 
+ # Virtio Device IDs:
+ VIRTIO_NET = 1
+@@ -60,8 +61,6 @@ class VirtioVersionCheck(QemuSystemTest):
+     Check if virtio-version-specific device types result in the
+     same device tree created by `disable-modern` and
+     `disable-legacy`.
+-
+-    :avocado: tags=arch:x86_64
+     """
+ 
+     # just in case there are failures, show larger diff:
+@@ -173,3 +172,6 @@ def test_modern_only_devs(self):
+         self.check_modern_only('virtio-mouse-pci', VIRTIO_INPUT)
+         self.check_modern_only('virtio-tablet-pci', VIRTIO_INPUT)
+         self.check_modern_only('virtio-keyboard-pci', VIRTIO_INPUT)
 +
-+def _build_dir():
-+    root = os.getenv('QEMU_BUILD_ROOT')
-+    if root is not None:
-+        return Path(root)
-+    # Makefile.mtest only exists in build dir, so if it is available, use CWD
-+    if os.path.exists('Makefile.mtest'):
-+        return Path(os.getcwd())
-+
-+    root = os.path.join(_source_dir(), 'build')
-+    if os.path.exists(root):
-+        return Path(root)
-+
-+    raise Exception("Cannot identify build dir, set QEMU_BUILD_ROOT")
-+
-+BUILD_DIR = _build_dir()
-+
-+def has_cmd(name, args=None):
-+    """
-+    This function is for use in a @skipUnless decorator, e.g.:
-+
-+        @skipUnless(*has_cmd('sudo -n', ('sudo', '-n', 'true')))
-+        def test_something_that_needs_sudo(self):
-+            ...
-+    """
-+
-+    if args is None:
-+        args = ('which', name)
-+
-+    try:
-+        _, stderr, exitcode = run_cmd(args)
-+    except Exception as e:
-+        exitcode = -1
-+        stderr = str(e)
-+
-+    if exitcode != 0:
-+        cmd_line = ' '.join(args)
-+        err = f'{name} required, but "{cmd_line}" failed: {stderr.strip()}'
-+        return (False, err)
-+    else:
-+        return (True, '')
-+
-+def has_cmds(*cmds):
-+    """
-+    This function is for use in a @skipUnless decorator and
-+    allows checking for the availability of multiple commands, e.g.:
-+
-+        @skipUnless(*has_cmds(('cmd1', ('cmd1', '--some-parameter')),
-+                              'cmd2', 'cmd3'))
-+        def test_something_that_needs_cmd1_and_cmd2(self):
-+            ...
-+    """
-+
-+    for cmd in cmds:
-+        if isinstance(cmd, str):
-+            cmd = (cmd,)
-+
-+        ok, errstr = has_cmd(*cmd)
-+        if not ok:
-+            return (False, errstr)
-+
-+    return (True, '')
-+
-+def run_cmd(args):
-+    subp = subprocess.Popen(args,
-+                            stdout=subprocess.PIPE,
-+                            stderr=subprocess.PIPE,
-+                            universal_newlines=True)
-+    stdout, stderr = subp.communicate()
-+    ret = subp.returncode
-+
-+    return (stdout, stderr, ret)
-+
-+def is_readable_executable_file(path):
-+    return os.path.isfile(path) and os.access(path, os.R_OK | os.X_OK)
-+
-+def _console_interaction(test, success_message, failure_message,
-+                         send_string, keep_sending=False, vm=None):
-+    assert not keep_sending or send_string
-+    if vm is None:
-+        vm = test.vm
-+    console = vm.console_file
-+    console_logger = logging.getLogger('console')
-+    while True:
-+        if send_string:
-+            vm.console_socket.sendall(send_string.encode())
-+            if not keep_sending:
-+                send_string = None # send only once
-+        try:
-+            msg = console.readline().decode().strip()
-+        except UnicodeDecodeError:
-+            msg = None
-+        if not msg:
-+            continue
-+        console_logger.debug(msg)
-+        if success_message is None or success_message in msg:
-+            break
-+        if failure_message and failure_message in msg:
-+            console.close()
-+            fail = 'Failure message found in console: "%s". Expected: "%s"' % \
-+                    (failure_message, success_message)
-+            test.fail(fail)
-+
-+def interrupt_interactive_console_until_pattern(test, success_message,
-+                                                failure_message=None,
-+                                                interrupt_string='\r'):
-+    """
-+    Keep sending a string to interrupt a console prompt, while logging the
-+    console output. Typical use case is to break a boot loader prompt, such:
-+
-+        Press a key within 5 seconds to interrupt boot process.
-+        5
-+        4
-+        3
-+        2
-+        1
-+        Booting default image...
-+
-+    :param test: a  test containing a VM that will have its console
-+                 read and probed for a success or failure message
-+    :type test: :class:`qemu_test.QemuSystemTest`
-+    :param success_message: if this message appears, test succeeds
-+    :param failure_message: if this message appears, test fails
-+    :param interrupt_string: a string to send to the console before trying
-+                             to read a new line
-+    """
-+    _console_interaction(test, success_message, failure_message,
-+                         interrupt_string, True)
-+
-+def wait_for_console_pattern(test, success_message, failure_message=None,
-+                             vm=None):
-+    """
-+    Waits for messages to appear on the console, while logging the content
-+
-+    :param test: a test containing a VM that will have its console
-+                 read and probed for a success or failure message
-+    :type test: :class:`qemu_test.QemuSystemTest`
-+    :param success_message: if this message appears, test succeeds
-+    :param failure_message: if this message appears, test fails
-+    """
-+    _console_interaction(test, success_message, failure_message, None, vm=vm)
-+
-+def exec_command(test, command):
-+    """
-+    Send a command to a console (appending CRLF characters), while logging
-+    the content.
-+
-+    :param test: a test containing a VM.
-+    :type test: :class:`qemu_test.QemuSystemTest`
-+    :param command: the command to send
-+    :type command: str
-+    """
-+    _console_interaction(test, None, None, command + '\r')
-+
-+def exec_command_and_wait_for_pattern(test, command,
-+                                      success_message, failure_message=None):
-+    """
-+    Send a command to a console (appending CRLF characters), then wait
-+    for success_message to appear on the console, while logging the.
-+    content. Mark the test as failed if failure_message is found instead.
-+
-+    :param test: a test containing a VM that will have its console
-+                 read and probed for a success or failure message
-+    :type test: :class:`qemu_test.QemuSystemTest`
-+    :param command: the command to send
-+    :param success_message: if this message appears, test succeeds
-+    :param failure_message: if this message appears, test fails
-+    """
-+    _console_interaction(test, success_message, failure_message, command + '\r')
-+
-+class QemuBaseTest(unittest.TestCase):
-+
-+    qemu_bin = os.getenv('QEMU_TEST_QEMU_BINARY')
-+    arch = None
-+
-+    workdir = None
-+    log = logging.getLogger('qemu-test')
-+
-+    def setUp(self, bin_prefix):
-+        self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
-+        self.arch = self.qemu_bin.split('-')[-1]
-+
-+        self.workdir = os.path.join(BUILD_DIR, 'tests/functional', self.arch,
-+                                    self.id())
-+        if not os.path.exists(self.workdir):
-+            os.makedirs(self.workdir)
-+
-+    def main():
-+        tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
-+                                   test_output_log = pycotap.LogMode.LogToError)
-+        path = os.path.basename(sys.argv[0])[:-3]
-+        unittest.main(module = None, testRunner = tr, argv=["__dummy__", path])
-+
-+
-+class QemuSystemTest(QemuBaseTest):
-+    """Facilitates system emulation tests."""
-+
-+    cpu = None
-+    machine = None
-+    _machinehelp = None
-+
-+    def setUp(self):
-+        self._vms = {}
-+
-+        super().setUp('qemu-system-')
-+
-+    def set_machine(self, machinename):
-+        # TODO: We should use QMP to get the list of available machines
-+        if not self._machinehelp:
-+            self._machinehelp = run_cmd([self.qemu_bin, '-M', 'help'])[0];
-+        if self._machinehelp.find(machinename) < 0:
-+            self.skipTest('no support for machine ' + machinename)
-+        self.machine = machinename
-+
-+    def require_accelerator(self, accelerator):
-+        """
-+        Requires an accelerator to be available for the test to continue
-+
-+        It takes into account the currently set qemu binary.
-+
-+        If the check fails, the test is canceled.  If the check itself
-+        for the given accelerator is not available, the test is also
-+        canceled.
-+
-+        :param accelerator: name of the accelerator, such as "kvm" or "tcg"
-+        :type accelerator: str
-+        """
-+        checker = {'tcg': tcg_available,
-+                   'kvm': kvm_available}.get(accelerator)
-+        if checker is None:
-+            self.skipTest("Don't know how to check for the presence "
-+                          "of accelerator %s" % accelerator)
-+        if not checker(qemu_bin=self.qemu_bin):
-+            self.skipTest("%s accelerator does not seem to be "
-+                          "available" % accelerator)
-+
-+    def require_netdev(self, netdevname):
-+        netdevhelp = run_cmd([self.qemu_bin,
-+                             '-M', 'none', '-netdev', 'help'])[0];
-+        if netdevhelp.find('\n' + netdevname + '\n') < 0:
-+            self.skipTest('no support for " + netdevname + " networking')
-+
-+    def require_device(self, devicename):
-+        devhelp = run_cmd([self.qemu_bin,
-+                           '-M', 'none', '-device', 'help'])[0];
-+        if devhelp.find(devicename) < 0:
-+            self.skipTest('no support for device ' + devicename)
-+
-+    def _new_vm(self, name, *args):
-+        vm = QEMUMachine(self.qemu_bin, base_temp_dir=self.workdir)
-+        self.log.debug('QEMUMachine "%s" created', name)
-+        self.log.debug('QEMUMachine "%s" temp_dir: %s', name, vm.temp_dir)
-+        self.log.debug('QEMUMachine "%s" log_dir: %s', name, vm.log_dir)
-+        if args:
-+            vm.add_args(*args)
-+        return vm
-+
-+    @property
-+    def vm(self):
-+        return self.get_vm(name='default')
-+
-+    def get_vm(self, *args, name=None):
-+        if not name:
-+            name = str(uuid.uuid4())
-+        if self._vms.get(name) is None:
-+            self._vms[name] = self._new_vm(name, *args)
-+            if self.cpu is not None:
-+                self._vms[name].add_args('-cpu', self.cpu)
-+            if self.machine is not None:
-+                self._vms[name].set_machine(self.machine)
-+        return self._vms[name]
-+
-+    def set_vm_arg(self, arg, value):
-+        """
-+        Set an argument to list of extra arguments to be given to the QEMU
-+        binary. If the argument already exists then its value is replaced.
-+
-+        :param arg: the QEMU argument, such as "-cpu" in "-cpu host"
-+        :type arg: str
-+        :param value: the argument value, such as "host" in "-cpu host"
-+        :type value: str
-+        """
-+        if not arg or not value:
-+            return
-+        if arg not in self.vm.args:
-+            self.vm.args.extend([arg, value])
-+        else:
-+            idx = self.vm.args.index(arg) + 1
-+            if idx < len(self.vm.args):
-+                self.vm.args[idx] = value
-+            else:
-+                self.vm.args.append(value)
-+
-+    def tearDown(self):
-+        for vm in self._vms.values():
-+            vm.shutdown()
-+        super().tearDown()
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.45.2
 
