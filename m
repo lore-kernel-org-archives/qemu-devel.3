@@ -4,86 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91492C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 17:57:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36853C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 18:22:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYUZV-0006f3-4l; Mon, 29 Jul 2024 13:54:09 -0400
+	id 1sYUzT-0004Kw-SI; Mon, 29 Jul 2024 14:21:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sYUZO-00062p-5g
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 13:54:02 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sYUZK-0000OO-37
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 13:54:01 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-70d150e8153so2189935b3a.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 10:53:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722275637; x=1722880437;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=E2gOjemeIxuisakJLMtv9C9tfaLcK041ldza0nSyRho=;
- b=VMeSPlsDlSn6QFNvoQfYYak0CCDhd1FZuL0l630+8F1l5hzALC6wC2+kbBo/jr62+b
- gAP/fucrOqGKKNdZhRM7IJJ4xd2vdUFb3bp1ZA+b8x4qm7uYUfijQca2j+nPZ1diQ1S6
- +P4NMhlHH/yDAzPIS/L0/vRS4rvBEMbAHw5TWmI8by005WLTlait6axJRg12gVHehv4Z
- nLyOyjxM2TBkr03bmPmB2Os3wEafk/oUGPoq9g/eH+GCSGN9nvrOePQUohVII7GTZu6o
- gKTqAQx8erANVLOSQQShZfchkTS+KQkU4koXXAEUtpgoRw+zrTuHeNwHIm0HkNJt/26I
- 6xig==
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sYUzJ-0004Jh-Ra
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 14:20:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sYUzG-0006gU-Ht
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 14:20:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722277245;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Jczxvrf3P6iE2GxRaOS8E0SeR3QxCk1xmNGF6rWJEm0=;
+ b=D4e7hKEkhCt+kjboEYLkNWFrVk0sgVPXBgwqC2qTNhdRRqVeU9ZKpm77PPVdh0kE5tXdAg
+ M4JhNEoijJBqGoaXcugvyUG/VJW1cj5ty1kBr9SJUtzScXsiGZnzkTm6xO/tycggmjQkZO
+ cFfFti2ZMxjDAPEWUIcNEfGOAPohb0M=
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-605-qcSJ6R9pPY-TqlM1waJq_w-1; Mon, 29 Jul 2024 14:20:43 -0400
+X-MC-Unique: qcSJ6R9pPY-TqlM1waJq_w-1
+Received: by mail-yw1-f198.google.com with SMTP id
+ 00721157ae682-664fc7c4e51so62223187b3.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 11:20:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722275637; x=1722880437;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1722277242; x=1722882042;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=E2gOjemeIxuisakJLMtv9C9tfaLcK041ldza0nSyRho=;
- b=gSJxVh+d20p/KO9EZpf+49VK1HzutNXRRHylUHhhbgZETLxVoW3jW7bntFzb9opAPA
- yEd8OAm/a3aeXzE0Zi1BKpwdR9PIJT4/9JjRMHiuWGTJSCHyZWHoetB9IwBpvqs8qCOf
- p32iIpuCd/UZ8qefiWEgY7tL9z2hvaIU4Q5rnHJMKlkPJCjaZGuecDXDPR2JIsYglNPG
- 3gwpBPaKXmTefG4n3Tea1KkS7lNgWMFQ+NQ2O8Kiqq8Wi6/aSYoU+8Pt7Y6Z6SQfWpHZ
- uok2bpG+fSIGn1qAe6o3/ruv9j/er0CwwaLsREj1VYGP5B4BBPFu45WqXH+o1c4bZGBI
- Avtw==
+ bh=Jczxvrf3P6iE2GxRaOS8E0SeR3QxCk1xmNGF6rWJEm0=;
+ b=LB4hbRluo7G/BHtftiwT5M4DkDp/4JHOLlhdC7tGtMjKEYsM0Wg5gy+BaLJxeNCKVT
+ SUDUZSFBQHWbfnKHgbu8tlXzTPiFuxNV8ciAuAY2EYcs6V4byi1Tsa5bCU4symZoFJBR
+ 1mGmSSLid+hrLOe6v9qLRhtfW6nghIDLQ1uIQiIDPp0RXiS0+Cs3A1aekzJnDR/BBZns
+ mFk8fJISbKDUlvWsJyrZKuUBmciSTDlD8xQe5Z3hP5EMnsqbAmwFq8TLTU6Y95KEMJDO
+ /PMS36ejH8DKFFOuf30CDfKSGoNavCUWVXdkqjdnPcIm/gkd1DcuPrtMIX3sBQpRJ4HG
+ WofA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWE2d+10BT78f5ME6od3cYZ1qpQWAfRDjbSuSGHJpx1bzr9DCoSOeOf0apgio6dsrbOvskoiFFNJSrRZV4LCLMaago9Pqk=
-X-Gm-Message-State: AOJu0YyixKYbpDe0i/mNcOQ9kxCfoR6GEVC/E1A6MSna507HUrQbfbAw
- ZGhv/4KvhnnvSeeuITjdX7sp+J1EV37jb9vNaxWPIxcq8Qt/DdaqpQhpaE4o300=
-X-Google-Smtp-Source: AGHT+IEvIkWPRazroEY9kqvcXbNbEiec7KjUrMUaddW0iNlpNWZZMV7N4BULgyi2m28lp63uqN8vkA==
-X-Received: by 2002:a05:6a00:895:b0:706:aa4b:4 with SMTP id
- d2e1a72fcca58-70ece81cef5mr11896428b3a.13.1722275636598; 
- Mon, 29 Jul 2024 10:53:56 -0700 (PDT)
-Received: from debug.ba.rivosinc.com ([64.71.180.162])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7a9f7c71b15sm6303141a12.18.2024.07.29.10.53.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jul 2024 10:53:56 -0700 (PDT)
-From: Deepak Gupta <debug@rivosinc.com>
-To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, jim.shu@sifive.com,
- andy.chiu@sifive.com, jesse.huang@sifive.com, kito.cheng@sifive.com
-Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, laurent@vivier.eu,
- bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, Deepak Gupta <debug@rivosinc.com>
-Subject: [PATCH v2 21/24] target/riscv: add trace-hooks for each case of
- sw-check exception
-Date: Mon, 29 Jul 2024 10:53:23 -0700
-Message-ID: <20240729175327.73705-22-debug@rivosinc.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240729175327.73705-1-debug@rivosinc.com>
-References: <20240729175327.73705-1-debug@rivosinc.com>
+ AJvYcCWyfnRJe6LTkVegJq2xpG80fkn5+jqMHz7MipAMorgTS7pxZ624daAil/FTv/M6HOuVI7tKZWKtPmr0u5yQQ1CGF8yLvO8=
+X-Gm-Message-State: AOJu0YzWxQpMSAcMH92vgv8V/YOhi+IRidccgxOhy3lLWLa/CNGl0Onl
+ 7ofQlg2Ap/QtA8wx76t+6vRQrduScSOy5AGahJgZ5opK4HHUM365P5nSSs85fnAFymrnvNfota4
+ OeecVGGKM26O/S+ybkYa9X4XPC256rq0AZFVtW/Xk3Fd7KTH7lyS1IrWp8n7ERC3GrMjTIE5qEQ
+ f5O0rOKAYbCafDSjnVdYaiHWDeqdQ=
+X-Received: by 2002:a81:94c5:0:b0:64b:2f31:296b with SMTP id
+ 00721157ae682-67a053e0c61mr109293827b3.4.1722277242376; 
+ Mon, 29 Jul 2024 11:20:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IESGo2agtqgyt+j+UIbzkpR1g4UX9GZsS7IZcR6Ml1Q8VCXsRI3P1Hn+S8AD41VSAgkmFBW11YmnWXIsBZ2Zmk=
+X-Received: by 2002:a81:94c5:0:b0:64b:2f31:296b with SMTP id
+ 00721157ae682-67a053e0c61mr109293367b3.4.1722277241887; Mon, 29 Jul 2024
+ 11:20:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=debug@rivosinc.com; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240410100345.389462-1-eperezma@redhat.com>
+ <CACGkMEu328ksfMDtJheH+sdTdV4E=pJFEa5Zco2_ecskubCAGg@mail.gmail.com>
+ <CAJaqyWdZFUw8H7_2Jw3j9JxLj9+3p53QZg=DF3o4OgWJYC-SaQ@mail.gmail.com>
+ <CACGkMEvdBDFvwvqb_7YXqiPd-ax4Xw7e0BLBhCt_uD6-Uf+DgA@mail.gmail.com>
+ <CAJaqyWdA_6Mx3mkcobmBjB5NDJt3tyqTJv2JijF0agnnBFxQxw@mail.gmail.com>
+ <CACGkMEv7wukFdXrA--DzA7U7VYWQq6UAVmi-0=pTAOuJ1nc_7Q@mail.gmail.com>
+ <CAJaqyWdtdfbQi4PrbC-ASRo7dHsT7Nw3dmw66K9D9ZeoqyV=ng@mail.gmail.com>
+ <CACGkMEs=-teddtO4ctLdJiwm2gu3sZrKOww-TC+5o2_19Sph4w@mail.gmail.com>
+ <CAJaqyWeKfVXYj61sgvFrUTpOgy0k-zsLoR4JePEo0Q8XuXYbmA@mail.gmail.com>
+ <CACGkMEt+TLqpbw2N4m7Ez4edTBztRUxiAt6=NLuFR3c7F7Z_jA@mail.gmail.com>
+ <CAJaqyWc18UeBHeQSoAFF1u1nkjaAfj0Y85pgSHbhV8xxExjcgg@mail.gmail.com>
+ <CACGkMEtrPAMb-ZN7AAE8cjEzjZY1Hnm29J7PhUYgwv26=YcdQw@mail.gmail.com>
+ <84374c5a-d937-4cb5-aafb-45ad75e2d837@oracle.com>
+ <CAJaqyWfekhhG+5Zp4eddpp-2N=SjUL+7zs+YqS5xx6eWxa-PqQ@mail.gmail.com>
+ <a9dd189f-ab4a-4dad-acec-31ee733fb1d7@oracle.com>
+In-Reply-To: <a9dd189f-ab4a-4dad-acec-31ee733fb1d7@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Mon, 29 Jul 2024 20:20:05 +0200
+Message-ID: <CAJaqyWeeP0S0uvHLz1p-Pp6_AozCnQ5d5j36wVrELYPjnySREA@mail.gmail.com>
+Subject: Re: [RFC 0/2] Identify aliased maps in vdpa SVQ iova_tree
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org, 
+ Si-Wei Liu <si-wei.liu@oracle.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Lei Yang <leiyang@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Dragos Tatulea <dtatulea@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,95 +115,480 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Violations to control flow rules setup by zicfilp and zicfiss lead to
-software check exceptions. To debug and fix such sw check issues in guest
-, add trace-hooks for each case.
+On Mon, Jul 29, 2024 at 7:50=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
+om> wrote:
+>
+>
+>
+> On 7/29/24 6:04 AM, Eugenio Perez Martin wrote:
+> > On Wed, Jul 24, 2024 at 7:00=E2=80=AFPM Jonah Palmer <jonah.palmer@orac=
+le.com> wrote:
+> >>
+> >>
+> >>
+> >> On 5/13/24 11:56 PM, Jason Wang wrote:
+> >>> On Mon, May 13, 2024 at 5:58=E2=80=AFPM Eugenio Perez Martin
+> >>> <eperezma@redhat.com> wrote:
+> >>>>
+> >>>> On Mon, May 13, 2024 at 10:28=E2=80=AFAM Jason Wang <jasowang@redhat=
+.com> wrote:
+> >>>>>
+> >>>>> On Mon, May 13, 2024 at 2:28=E2=80=AFPM Eugenio Perez Martin
+> >>>>> <eperezma@redhat.com> wrote:
+> >>>>>>
+> >>>>>> On Sat, May 11, 2024 at 6:07=E2=80=AFAM Jason Wang <jasowang@redha=
+t.com> wrote:
+> >>>>>>>
+> >>>>>>> On Fri, May 10, 2024 at 3:16=E2=80=AFPM Eugenio Perez Martin
+> >>>>>>> <eperezma@redhat.com> wrote:
+> >>>>>>>>
+> >>>>>>>> On Fri, May 10, 2024 at 6:29=E2=80=AFAM Jason Wang <jasowang@red=
+hat.com> wrote:
+> >>>>>>>>>
+> >>>>>>>>> On Thu, May 9, 2024 at 3:10=E2=80=AFPM Eugenio Perez Martin <ep=
+erezma@redhat.com> wrote:
+> >>>>>>>>>>
+> >>>>>>>>>> On Thu, May 9, 2024 at 8:27=E2=80=AFAM Jason Wang <jasowang@re=
+dhat.com> wrote:
+> >>>>>>>>>>>
+> >>>>>>>>>>> On Thu, May 9, 2024 at 1:16=E2=80=AFAM Eugenio Perez Martin <=
+eperezma@redhat.com> wrote:
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> On Wed, May 8, 2024 at 4:29=E2=80=AFAM Jason Wang <jasowang@=
+redhat.com> wrote:
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> On Tue, May 7, 2024 at 6:57=E2=80=AFPM Eugenio Perez Martin=
+ <eperezma@redhat.com> wrote:
+> >>>>>>>>>>>>>>
+> >>>>>>>>>>>>>> On Tue, May 7, 2024 at 9:29=E2=80=AFAM Jason Wang <jasowan=
+g@redhat.com> wrote:
+> >>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>> On Fri, Apr 12, 2024 at 3:56=E2=80=AFPM Eugenio Perez Mar=
+tin
+> >>>>>>>>>>>>>>> <eperezma@redhat.com> wrote:
+> >>>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>>> On Fri, Apr 12, 2024 at 8:47=E2=80=AFAM Jason Wang <jaso=
+wang@redhat.com> wrote:
+> >>>>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>>>> On Wed, Apr 10, 2024 at 6:03=E2=80=AFPM Eugenio P=C3=A9=
+rez <eperezma@redhat.com> wrote:
+> >>>>>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>>>>> The guest may have overlapped memory regions, where di=
+fferent GPA leads
+> >>>>>>>>>>>>>>>>>> to the same HVA.  This causes a problem when overlappe=
+d regions
+> >>>>>>>>>>>>>>>>>> (different GPA but same translated HVA) exists in the =
+tree, as looking
+> >>>>>>>>>>>>>>>>>> them by HVA will return them twice.
+> >>>>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>>>> I think I don't understand if there's any side effect f=
+or shadow virtqueue?
+> >>>>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>>> My bad, I totally forgot to put a reference to where thi=
+s comes from.
+> >>>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>>> Si-Wei found that during initialization this sequences o=
+f maps /
+> >>>>>>>>>>>>>>>> unmaps happens [1]:
+> >>>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>>> HVA                    GPA                IOVA
+> >>>>>>>>>>>>>>>> --------------------------------------------------------=
+-----------------------------------------------------------------
+> >>>>>>>>>>>>>>>> Map
+> >>>>>>>>>>>>>>>> [0x7f7903e00000, 0x7f7983e00000)    [0x0, 0x80000000) [0=
+x1000, 0x80000000)
+> >>>>>>>>>>>>>>>> [0x7f7983e00000, 0x7f9903e00000)    [0x100000000, 0x2080=
+000000)
+> >>>>>>>>>>>>>>>> [0x80001000, 0x2000001000)
+> >>>>>>>>>>>>>>>> [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc0=
+000)
+> >>>>>>>>>>>>>>>> [0x2000001000, 0x2000021000)
+> >>>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>>> Unmap
+> >>>>>>>>>>>>>>>> [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc0=
+000) [0x1000,
+> >>>>>>>>>>>>>>>> 0x20000) ???
+> >>>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>>> The third HVA range is contained in the first one, but e=
+xposed under a
+> >>>>>>>>>>>>>>>> different GVA (aliased). This is not "flattened" by QEMU=
+, as GPA does
+> >>>>>>>>>>>>>>>> not overlap, only HVA.
+> >>>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>>> At the third chunk unmap, the current algorithm finds th=
+e first chunk,
+> >>>>>>>>>>>>>>>> not the second one. This series is the way to tell the d=
+ifference at
+> >>>>>>>>>>>>>>>> unmap time.
+> >>>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>>> [1] https://urldefense.com/v3/__https://lists.nongnu.org=
+/archive/html/qemu-devel/2024-04/msg00079.html__;!!ACWV5N9M2RV99hQ!MXbGSFHV=
+bqRf0rzyWamOdnBLHP0FUh3r3BnTvGe6Mn5VzXTsajVp3BB7VqlklkRCr5aKazC5xxTCScuR_BY=
+$
+> >>>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>>> Thanks!
+> >>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>> Ok, I was wondering if we need to store GPA(GIOVA) to HVA=
+ mappings in
+> >>>>>>>>>>>>>>> the iova tree to solve this issue completely. Then there =
+won't be
+> >>>>>>>>>>>>>>> aliasing issues.
+> >>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>
+> >>>>>>>>>>>>>> I'm ok to explore that route but this has another problem.=
+ Both SVQ
+> >>>>>>>>>>>>>> vrings and CVQ buffers also need to be addressable by Vhos=
+tIOVATree,
+> >>>>>>>>>>>>>> and they do not have GPA.
+> >>>>>>>>>>>>>>
+> >>>>>>>>>>>>>> At this moment vhost_svq_translate_addr is able to handle =
+this
+> >>>>>>>>>>>>>> transparently as we translate vaddr to SVQ IOVA. How can w=
+e store
+> >>>>>>>>>>>>>> these new entries? Maybe a (hwaddr)-1 GPA to signal it has=
+ no GPA and
+> >>>>>>>>>>>>>> then a list to go through other entries (SVQ vaddr and CVQ=
+ buffers).
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> This seems to be tricky.
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> As discussed, it could be another iova tree.
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> Yes but there are many ways to add another IOVATree. Let me =
+expand & recap.
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> Option 1 is to simply add another iova tree to VhostShadowVi=
+rtqueue.
+> >>>>>>>>>>>> Let's call it gpa_iova_tree, as opposed to the current iova_=
+tree that
+> >>>>>>>>>>>> translates from vaddr to SVQ IOVA. To know which one to use =
+is easy at
+> >>>>>>>>>>>> adding or removing, like in the memory listener, but how to =
+know at
+> >>>>>>>>>>>> vhost_svq_translate_addr?
+> >>>>>>>>>>>
+> >>>>>>>>>>> Then we won't use virtqueue_pop() at all, we need a SVQ versi=
+on of
+> >>>>>>>>>>> virtqueue_pop() to translate GPA to SVQ IOVA directly?
+> >>>>>>>>>>>
+> >>>>>>>>>>
+> >>>>>>>>>> The problem is not virtqueue_pop, that's out of the
+> >>>>>>>>>> vhost_svq_translate_addr. The problem is the need of adding
+> >>>>>>>>>> conditionals / complexity in all the callers of
+> >>>>>>>>>>
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> The easiest way for me is to rely on memory_region_from_host=
+(). When
+> >>>>>>>>>>>> vaddr is from the guest, it returns a valid MemoryRegion. Wh=
+en it is
+> >>>>>>>>>>>> not, it returns NULL. I'm not sure if this is a valid use ca=
+se, it
+> >>>>>>>>>>>> just worked in my tests so far.
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> Now we have the second problem: The GPA values of the region=
+s of the
+> >>>>>>>>>>>> two IOVA tree must be unique. We need to be able to find una=
+llocated
+> >>>>>>>>>>>> regions in SVQ IOVA. At this moment there is only one IOVATr=
+ee, so
+> >>>>>>>>>>>> this is done easily by vhost_iova_tree_map_alloc. But it is =
+very
+> >>>>>>>>>>>> complicated with two trees.
+> >>>>>>>>>>>
+> >>>>>>>>>>> Would it be simpler if we decouple the IOVA allocator? For ex=
+ample, we
+> >>>>>>>>>>> can have a dedicated gtree to track the allocated IOVA ranges=
+. It is
+> >>>>>>>>>>> shared by both
+> >>>>>>>>>>>
+> >>>>>>>>>>> 1) Guest memory (GPA)
+> >>>>>>>>>>> 2) SVQ virtqueue and buffers
+> >>>>>>>>>>>
+> >>>>>>>>>>> And another gtree to track the GPA to IOVA.
+> >>>>>>>>>>>
+> >>>>>>>>>>> The SVQ code could use either
+> >>>>>>>>>>>
+> >>>>>>>>>>> 1) one linear mappings that contains both SVQ virtqueue and b=
+uffers
+> >>>>>>>>>>>
+> >>>>>>>>>>> or
+> >>>>>>>>>>>
+> >>>>>>>>>>> 2) dynamic IOVA allocation/deallocation helpers
+> >>>>>>>>>>>
+> >>>>>>>>>>> So we don't actually need the third gtree for SVQ HVA -> SVQ =
+IOVA?
+> >>>>>>>>>>>
+> >>>>>>>>>>
+> >>>>>>>>>> That's possible, but that scatters the IOVA handling code inst=
+ead of
+> >>>>>>>>>> keeping it self-contained in VhostIOVATree.
+> >>>>>>>>>
+> >>>>>>>>> To me, the IOVA range/allocation is orthogonal to how IOVA is u=
+sed.
+> >>>>>>>>>
+> >>>>>>>>> An example is the iova allocator in the kernel.
+> >>>>>>>>>
+> >>>>>>>>> Note that there's an even simpler IOVA "allocator" in NVME pass=
+through
+> >>>>>>>>> code, not sure it is useful here though (haven't had a deep loo=
+k at
+> >>>>>>>>> that).
+> >>>>>>>>>
+> >>>>>>>>
+> >>>>>>>> I don't know enough about them to have an opinion. I keep seeing=
+ the
+> >>>>>>>> drawback of needing to synchronize both allocation & adding in a=
+ll the
+> >>>>>>>> places we want to modify the IOVATree. At this moment, these are=
+ the
+> >>>>>>>> vhost-vdpa memory listener, the SVQ vring creation and removal, =
+and
+> >>>>>>>> net CVQ buffers. But it may be more in the future.
+> >>>>>>>>
+> >>>>>>>> What are the advantages of keeping these separated that justifie=
+s
+> >>>>>>>> needing to synchronize in all these places, compared with keepin=
+g them
+> >>>>>>>> synchronized in VhostIOVATree?
+> >>>>>>>
+> >>>>>>> It doesn't need to be synchronized.
+> >>>>>>>
+> >>>>>>> Assuming guest and SVQ shares IOVA range. IOVA only needs to trac=
+k
+> >>>>>>> which part of the range has been used.
+> >>>>>>>
+> >>>>>>
+> >>>>>> Not sure if I follow, that is what I mean with "synchronized".
+> >>>>>
+> >>>>> Oh right.
+> >>>>>
+> >>>>>>
+> >>>>>>> This simplifies things, we can store GPA->IOVA mappings and SVQ -=
+>
+> >>>>>>> IOVA mappings separately.
+> >>>>>>>
+> >>>>>>
+> >>>>>> Sorry, I still cannot see the whole picture :).
+> >>>>>>
+> >>>>>> Let's assume we have all the GPA mapped to specific IOVA regions, =
+so
+> >>>>>> we have the first IOVA tree (GPA -> IOVA) filled. Now we enable SV=
+Q
+> >>>>>> because of the migration. How can we know where we can place SVQ
+> >>>>>> vrings without having them synchronized?
+> >>>>>
+> >>>>> Just allocating a new IOVA range for SVQ?
+> >>>>>
+> >>>>>>
+> >>>>>> At this moment we're using a tree. The tree nature of the current =
+SVQ
+> >>>>>> IOVA -> VA makes all nodes ordered so it is more or less easy to l=
+ook
+> >>>>>> for holes.
+> >>>>>
+> >>>>> Yes, iova allocate could still be implemented via a tree.
+> >>>>>
+> >>>>>>
+> >>>>>> Now your proposal uses the SVQ IOVA as tree values. Should we iter=
+ate
+> >>>>>> over all of them, order them, of the two trees, and then look for
+> >>>>>> holes there?
+> >>>>>
+> >>>>> Let me clarify, correct me if I was wrong:
+> >>>>>
+> >>>>> 1) IOVA allocator is still implemented via a tree, we just don't ne=
+ed
+> >>>>> to store how the IOVA is used
+> >>>>> 2) A dedicated GPA -> IOVA tree, updated via listeners and is used =
+in
+> >>>>> the datapath SVQ translation
+> >>>>> 3) A linear mapping or another SVQ -> IOVA tree used for SVQ
+> >>>>>
+> >>>>
+> >>>> Ok, so the part I was missing is that now we have 3 whole trees, wit=
+h
+> >>>> somehow redundant information :).
+> >>>
+> >>> Somehow, it decouples the IOVA usage out of the IOVA allocator. This
+> >>> might be simple as guests and SVQ may try to share a single IOVA
+> >>> address space.
+> >>>
+> >>
+> >> I'm working on implementing your three suggestions above but I'm a bit
+> >> confused with some of the wording and I was hoping you could clarify
+> >> some of it for me when you get the chance.
+> >>
+> >> ---
+> >> For your first suggestion (1) you mention decoupling the IOVA allocato=
+r
+> >> and "don't need to store how the IOVA is used."
+> >>
+> >> By this, do you mean to not save the IOVA->HVA mapping and instead onl=
+y
+> >> save the allocated IOVA ranges? In other words, are you suggesting to
+> >> create a dedicated "IOVA->IOVA" tree like:
+> >>
+> >> struct VhostIOVATree {
+> >>       uint64_t iova_first;
+> >>       uint64_t iova_last;
+> >>       IOVATree *iova_map;
+> >> };
+> >>
+> >> Where the mapping might look something like (where translated_addr is
+> >> given some kind of 0 value):
+> >>
+> >> iova_region =3D (DMAMap) {
+> >>       .iova =3D iova_first,
+> >>       .translated_addr =3D 0,
+> >>       .size =3D region_size - 1,
+> >>       .perm =3D IOMMU_ACCESS_FLAG(true, section->readonly),
+> >> };
+> >>
+> >> Also, if this is what you mean by decoupling the IOVA allocator, what
+> >> happens to the IOVA->HVA tree? Are we no longer saving these mappings =
+in
+> >> a tree?
+> >>
+> >> ---
+> >> In your second suggestion (2) with a dedicated GPA->IOVA tree, were yo=
+u
+> >> thinking something like this? Just adding on to VhostIOVATree here:
+> >>
+> >> struct VhostIOVATree {
+> >>       uint64_t iova_first;
+> >>       uint64_t iova_last;
+> >>       IOVATree *iova_map;
+> >>       IOVATree *gpa_map;
+> >> };
+> >>
+> >> Where the mapping might look something like:
+> >>
+> >> gpa_region =3D (DMAMap) {
+> >>       .iova =3D iova_first,
+> >>       .translated_addr =3D gpa_first,
+> >>       .size =3D region_size - 1,
+> >>       .perm =3D IOMMU_ACCESS_FLAG(true, section->readonly),
+> >> };
+> >>
+> >> Also, when you say "used in the datapath SVQ translation", we still ne=
+ed
+> >> to build the GPA->IOVA tree when vhost_vdpa_listener_region_add() is
+> >> called, right?
+> >>
+> >> ---
+> >> Lastly, in your third suggestion (3) you mention implementing a
+> >> SVQ->IOVA tree, making the total number of IOVATrees/GTrees 3: one for
+> >> just IOVAs, one for GPA->IOVA, and the last one for SVQ->IOVA. E.g.
+> >>
+> >> struct VhostIOVATree {
+> >>       uint64_t iova_first;
+> >>       uint64_t iova_last;
+> >>       IOVATree *iova_map;
+> >>       IOVATree *gpa_map;
+> >>       IOVATree *svq_map;
+> >> };
+> >>
+> >> ---
+> >>
+> >> Let me know if I'm understanding this correctly. If I am, this would
+> >> require a pretty good amount of refactoring on the IOVA allocation,
+> >> searching, destroying, etc. code to account for these new trees.
+> >>
+> >
+> > Ok I think I understand your previous question better, sorry for the de=
+lay :).
+> >
+> > If I'm not wrong, Jason did not enumerate these as alternatives but as
+> > part of the same solution. Jason please correct me if I'm wrong here.
+> >
+> > His solution is composed of three trees:
+> > 1) One for the IOVA allocations, so we know where to allocate new range=
+s
+> > 2) One of the GPA -> SVQ IOVA translations.
+> > 3) Another one for SVQ vrings translations.
+> >
+> > In my opinion to use GPA this is problematic as we force all of the
+> > callers to know if the address we want to translate comes from the
+> > guest or not. Current code does now know it, as
+> > vhost_svq_translate_addr is called to translate both buffer dataplane
+> > addresses and control virtqueue buffers, which are also shadowed.  To
+> > transmit that information to the caller code would require either
+> > duplicate functions, to add a boolean, etc, as it is in a different
+> > layer (net specific net/vhost-vdpa.c vs generic
+> > hw/virtio/vhost-shadow-virtqueue.c).
+> >
+> > In my opinion is easier to keep just two trees (or similar structs):
+> > 1) One for the IOVA allocations, so we know where to allocate new
+> > ranges. We don't actually need to store the translations here.
+> > 2) One for HVA -> SVQ IOVA translations.
+> >
+> > This way we can accommodate both SVQ vrings, CVQ buffers, and guest
+> > memory buffers, all on the second tree, and take care of the HVA
+> > duplications.
+> >
+> > Thanks!
+>
+> I assume that this dedicated IOVA tree will be created and added to in
+> vhost_iova_tree_map_alloc --> iova_tree_alloc_map function calls, but
+> what about the IOVA->HVA tree that gets created during
+> vhost_vdpa_listener_region_add?
 
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
-Signed-off-by: Deepak Gupta <debug@rivosinc.com>
----
- target/riscv/insn_trans/trans_rvi.c.inc | 1 +
- target/riscv/op_helper.c                | 4 ++++
- target/riscv/trace-events               | 6 ++++++
- target/riscv/translate.c                | 2 ++
- 4 files changed, 13 insertions(+)
+Not sure if I get you. The only IOVA tree that vdpa is using is
+created at either net/vhost-vdpa.c:vhost_vdpa_net_data_start_first or
+vhost_vdpa_net_cvq_start. From that moment, other places like
+vhost_vdpa_listener_region_add just add entries to it.
 
-diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
-index ee868c5fcb..66b26cbe8b 100644
---- a/target/riscv/insn_trans/trans_rvi.c.inc
-+++ b/target/riscv/insn_trans/trans_rvi.c.inc
-@@ -65,6 +65,7 @@ static bool trans_lpad(DisasContext *ctx, arg_lpad *a)
-                     tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-                     tcg_env, offsetof(CPURISCVState, sw_check_code));
-             generate_exception(ctx, RISCV_EXCP_SW_CHECK);
-+            trace_zicfilp_unaligned_lpad_instr((uint64_t) ctx->base.pc_next);
-             return true;
-         }
-     }
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index 54baa3a966..6a54c6c24d 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -24,6 +24,7 @@
- #include "exec/exec-all.h"
- #include "exec/cpu_ldst.h"
- #include "exec/helper-proto.h"
-+#include "trace.h"
- 
- /* Exceptions processing helpers */
- G_NORETURN void riscv_raise_exception(CPURISCVState *env,
-@@ -283,6 +284,8 @@ void helper_cfi_check_landing_pad(CPURISCVState *env, int lbl)
-          * greater than 31 and then shift 12 right
-          */
-         if (lbl && (lbl != ((env->gpr[xT2] & 0xFFFFFFFF) >> 12))) {
-+            trace_zicfilp_lpad_reg_mismatch(lbl,
-+                                           (env->gpr[xT2] & 0xFFFFFFFF) >> 12);
-             env->sw_check_code = RISCV_EXCP_SW_CHECK_FCFI_TVAL;
-             riscv_raise_exception(env, RISCV_EXCP_SW_CHECK, GETPC());
-         }
-@@ -295,6 +298,7 @@ void helper_sschk_mismatch(CPURISCVState *env, target_ulong rs1,
-                            target_ulong ssra)
- {
-     if (rs1 != ssra) {
-+        trace_zicfiss_sspopchk_reg_mismatch((uint64_t)ssra, (uint64_t) rs1);
-         env->sw_check_code = RISCV_EXCP_SW_CHECK_BCFI_TVAL;
-         riscv_raise_exception(env, RISCV_EXCP_SW_CHECK, GETPC());
-     }
-diff --git a/target/riscv/trace-events b/target/riscv/trace-events
-index 49ec4d3b7d..842349ecb9 100644
---- a/target/riscv/trace-events
-+++ b/target/riscv/trace-events
-@@ -9,3 +9,9 @@ pmpaddr_csr_write(uint64_t mhartid, uint32_t addr_index, uint64_t val) "hart %"
- 
- mseccfg_csr_read(uint64_t mhartid, uint64_t val) "hart %" PRIu64 ": read mseccfg, val: 0x%" PRIx64
- mseccfg_csr_write(uint64_t mhartid, uint64_t val) "hart %" PRIu64 ": write mseccfg, val: 0x%" PRIx64
-+
-+# zicfiss/lp
-+zicfiss_sspopchk_reg_mismatch(uint64_t ssra, uint64_t rs1) "shadow_stack_ra: 0x%" PRIx64 ", rs1: 0x%" PRIx64
-+zicfilp_missing_lpad_instr(uint64_t pc_first) "pc_first: 0x%" PRIx64
-+zicfilp_unaligned_lpad_instr(uint64_t pc_next) "pc_next: 0x%" PRIx64
-+zicfilp_lpad_reg_mismatch(int lpad_label, int t2_label) "lpad_label: 0x%x, t2_label: 0x%x"
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index ad0f841807..958a1578d4 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -30,6 +30,7 @@
- #include "semihosting/semihost.h"
- 
- #include "internals.h"
-+#include "trace.h"
- 
- #define HELPER_H "helper.h"
- #include "exec/helper-info.c.inc"
-@@ -1380,6 +1381,7 @@ static void riscv_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-          * illegal instruction exception.
-          */
-         tcg_set_insn_param(cfi_lp_check, 1, tcgv_i32_arg(tcg_constant_i32(1)));
-+        trace_zicfilp_missing_lpad_instr((uint64_t) ctx->base.pc_first);
-     }
- }
- 
--- 
-2.44.0
+> Will this tree just be replaced with the
+> dedicated IOVA tree?
+>
+
+I'd say that for a first iteration it is ok to keep using
+VhostIOVATree->IOVATree, even if the values of the tree (HVA) are not
+used anymore.
+
+> Also, an HVA->SVQ IOVA tree means that the tree is balanced using the
+> HVA value and not the IOVA value, right? In other words, a tree where
+> it's more efficient to search using the HVA values vs. IOVA values?
+>
+
+Right, HVA is the key and SVQ IOVA is the value. That way we can
+detect duplicates and act in consequence.
+
+> >
+> >> Thanks Jason!
+> >>
+> >>>>
+> >>>> In some sense this is simpler than trying to get all the information
+> >>>> from only two trees. On the bad side, all SVQ calls that allocate so=
+me
+> >>>> region need to remember to add to one of the two other threes. That =
+is
+> >>>> what I mean by synchronized. But sure, we can go that way.
+> >>>
+> >>> Just a suggestion, if it turns out to complicate the issue, I'm fine
+> >>> to go the other way.
+> >>>
+> >>> Thanks
+> >>>
+> >>>>
+> >>>>> Thanks
+> >>>>>
+> >>>>>>
+> >>>>>>> Thanks
+> >>>>>>>
+> >>>>>>>>
+> >>>>>>>> Thanks!
+> >>>>>>>>
+> >>>>>>>
+> >>>>>>
+> >>>>>
+> >>>>
+> >>>>
+> >>>
+> >>
+> >
+>
 
 
