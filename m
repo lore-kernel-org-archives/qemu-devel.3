@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DCE4C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:48:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 367F7C3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:52:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYSax-00034E-3A; Mon, 29 Jul 2024 11:47:31 -0400
+	id 1sYSf3-0006A9-4n; Mon, 29 Jul 2024 11:51:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYSav-0002yD-D0
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:47:29 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1sYSf1-000682-AT
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:51:43 -0400
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYSaq-000500-DL
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:47:29 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5a108354819so5928057a12.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:47:23 -0700 (PDT)
+ id 1sYSez-00069z-JB
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:51:43 -0400
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2ef2d96164aso41893771fa.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:51:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722268042; x=1722872842; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722268300; x=1722873100; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9mSjDKWTBAXsg4nDAEN2Cn2dlEzXIiayBQvxoWLB0AM=;
- b=Muq61KF5eUck+ugZSy0Y2K8imT+1TQtG9+YlSQezrulAVOmypqCiKY2LLc2Be2H21U
- U3MKiTMsJZQTV+63axlWEmK4VGRsqf9GO9pYy0fkGgiV0MZLZWytWfribjpILpLv/ZPn
- I5pnhTSoc6oH1aew6A1Hg8qFHj2KpD2vNhrlluZy04qzwNv2um2sRJd8306FJq7+NzzE
- Hhdb981KzgvhQH09wvQKci6LXOc8piUlWp0CLt2SH4wnFRWaNvHGIGLeLG6VC8d9uQ9x
- qqlFCIye6VoTR0lpM34ZoOb9wAsFei9ZNe6VYdDPABhk1NUb9ODQ16lkPRPDOf6mau37
- zRGw==
+ bh=DVeYyd38oI4ymekSrtGt52u8IpbVV/D3aJ4+z1VG4jc=;
+ b=ryAckw+YSeE10ktxzxpGbEqDscxduheqN1uNKTRINE3uXM0WWhgnjc8iyQfM49aWQ9
+ x0RNcN+qLCFo7FFEj+n87/V0riC0vjcSRXUgm0IQ7GL1ffzOFBfTGTHDh4HeEFE5OCNK
+ YGV4KKgr3yL0By8OXYN+v/kD6VlQfQgn8jSYIWut/qrIwP8FqWCGpcDcTz5wwjZ8SAnA
+ b2W7jgjQf+3S8RbqrsB3DtVsluJ+nQdc3m8KDn8tkzCyUEprfxI6HdRw79qGfomnjzLY
+ R+XcXzWZ6d/E9Fu1NlRggLHhiwjDfWhg8zF51SpnfkAn/n9SwjHVphPQs9KbApGyyUeE
+ J5Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722268042; x=1722872842;
+ d=1e100.net; s=20230601; t=1722268300; x=1722873100;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9mSjDKWTBAXsg4nDAEN2Cn2dlEzXIiayBQvxoWLB0AM=;
- b=boWaqfyBIAVPzM31o7ooLrwPHdQUL8qCWb5jnJR3KurtvjgO+C9vdDx6/DkK5RULJe
- 8hFh0kPT51aSwPqQiC2WZRGmZvNpCNfFX5IdqaKHxPycnR33m+ZAFCRrV3xPTVm6gFpu
- uEH1eRVXV094JiYZFTy7omKu3737E+O2timZbT41znMkcb45BWe/Cnob9m5e6U8ilE5N
- hr8RpvoQD6XMGpaRVIGVhld/0i2kP+f70ao6klu1MQXtY30DVhmYiLrqEx+jfUgwCDDS
- XPvxtp3OdIV0ygVjVTzXOSr7PnFjMDvROhZIyTpYZ/mQ9JG0AWsR/zynzfwNXaoDbWCW
- vxug==
-X-Gm-Message-State: AOJu0Yx93uTbHkt2AE5LFC9xZhPD1wmeo7+uMMvxzUTR0WIFT3b8midq
- L9P+xLnAX7RBv4hc4whC3aYrYBDDirUHnKUiBqOMHjUBdWopNeCxTVr8KSZlpfldcA4oe3tA2ZZ
- b+XyW1DI8ss1VyICuZs9vmmjKavxRyU6OUVL1Ig==
-X-Google-Smtp-Source: AGHT+IHrQ3q44hntbezR2QNgC4BIjAWOsZs4/iZHgXzGbusu3StZZEsd/yQ/VbsgQQsXiApFds3Kb4wTjJkIdcCejhQ=
-X-Received: by 2002:a50:8759:0:b0:5a1:5fd9:5fb7 with SMTP id
- 4fb4d7f45d1cf-5b0221f0a72mr4781668a12.33.1722268042098; Mon, 29 Jul 2024
- 08:47:22 -0700 (PDT)
+ bh=DVeYyd38oI4ymekSrtGt52u8IpbVV/D3aJ4+z1VG4jc=;
+ b=KMnSJd656nFeLzC2g/m2qacmXTT/nq9e/r2Y7LbDJG8ZIUrU6UMOVgYfyMrMUzqnPj
+ xOs3DTmYXFursiES26RYE9ZZWYxU0WdVcJloVkT8NEgJIfiPiOL2gwUyF16QT+uXqO1Z
+ zU1kAXafV9Gp9zfIdvC/L/6BesWeLZDc0dNgHkjEmsrpHvwsPPFXsDmZ0yA3M0PZ8YKH
+ izZrm0uo3AsCAtG6YRgKY3T11mqgsjj5Qq3f4y4iIws8iFjlvi1VuI38smdxQtGkuz1W
+ qxSTDcxlkGgmUUS6AwI+dQcwh95ZdTUF4FPhW2BK4S/tOYbv4oChfdvibZVtfFoATJ/Z
+ pmHg==
+X-Gm-Message-State: AOJu0YzrpVsZf//zWqBgf6Tht6Q66I7xom/hGgzljuVgC6V2flo5IU8X
+ 7UQ2aAXxbr9sMZKn1jkkj1BZDE2i8rMWoHq6Sw2U7kPn37NxRRoFuvBiXpdR5Mbii7pG3bSrF23
+ /7+0tBkvicunXESWINYD2J9eMUFCj9KzQv8OEpg==
+X-Google-Smtp-Source: AGHT+IGgfLNaGF2nDylIei4IZk1IQfK8UJMfLyn/o4nGYkGfmSUAIZA0oVrrVrdpRtREQq2C77aP60y0NFmiV4Vt0IE=
+X-Received: by 2002:a2e:9903:0:b0:2ec:5b17:29a2 with SMTP id
+ 38308e7fff4ca-2f12ee423c1mr55661621fa.32.1722268299607; Mon, 29 Jul 2024
+ 08:51:39 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240719181041.49545-1-philmd@linaro.org>
- <20240719181041.49545-10-philmd@linaro.org>
-In-Reply-To: <20240719181041.49545-10-philmd@linaro.org>
+ <20240719181041.49545-11-philmd@linaro.org>
+In-Reply-To: <20240719181041.49545-11-philmd@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 29 Jul 2024 16:47:11 +0100
-Message-ID: <CAFEAcA9QA3Kn3h_bwMSoht7KZa8DOpMXFDUWon1kc+iHy59-EQ@mail.gmail.com>
-Subject: Re: [PATCH v5 09/16] tests/qtest: Update tests using PL011 UART
+Date: Mon, 29 Jul 2024 16:51:28 +0100
+Message-ID: <CAFEAcA-ibEzUWFCxA3iQLUoHwZeGnD5kM6c4Ni3BbgaoAs1gKA@mail.gmail.com>
+Subject: Re: [PATCH v5 10/16] hw/char/pl011: Check if receiver is enabled
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org,
  =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
  =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, qemu-arm@nongnu.org, 
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, Tong Ho <tong.ho@amd.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,81 +98,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, 19 Jul 2024 at 19:11, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
 g> wrote:
 >
-> We weren't enabling the PL011 TX UART before using it
-> on the raspi and virt machines. Update the ASM code
-> prefixing:
->
->   *UART_CTRL =3D UART_ENABLE | TX_ENABLE;
->
-> to:
->
->   while (true) {
->       *UART_DATA =3D 'T';
->   }
+> Do not receive characters when UART or receiver are disabled.
 >
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  tests/qtest/boot-serial-test.c | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
+>  hw/char/pl011.c | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
 >
-> diff --git a/tests/qtest/boot-serial-test.c b/tests/qtest/boot-serial-tes=
-t.c
-> index 3b92fa5d50..5cb309ccf0 100644
-> --- a/tests/qtest/boot-serial-test.c
-> +++ b/tests/qtest/boot-serial-test.c
-> @@ -70,18 +70,23 @@ static const uint8_t kernel_plml605[] =3D {
->  };
+> diff --git a/hw/char/pl011.c b/hw/char/pl011.c
+> index c76283dccf..0ce91c13d3 100644
+> --- a/hw/char/pl011.c
+> +++ b/hw/char/pl011.c
+> @@ -85,6 +85,7 @@ DeviceState *pl011_create(hwaddr addr, qemu_irq irq, Ch=
+ardev *chr)
+>  #define CR_OUT1     (1 << 12)
+>  #define CR_RTS      (1 << 11)
+>  #define CR_DTR      (1 << 10)
+> +#define CR_RXE      (1 << 9)
+>  #define CR_TXE      (1 << 8)
+>  #define CR_LBE      (1 << 7)
+>  #define CR_UARTEN   (1 << 0)
+> @@ -481,9 +482,11 @@ static void pl011_write(void *opaque, hwaddr offset,
+>  static int pl011_can_receive(void *opaque)
+>  {
+>      PL011State *s =3D (PL011State *)opaque;
+> -    int r;
+> +    int r =3D 0;
 >
->  static const uint8_t bios_raspi2[] =3D {
-> -    0x08, 0x30, 0x9f, 0xe5,                 /* ldr   r3,[pc,#8]    Get b=
-ase */
-> +    0x10, 0x30, 0x9f, 0xe5,                 /* ldr     r3,[pc,#8]    Get=
- base */
+> -    r =3D s->read_count < pl011_get_fifo_depth(s);
+> +    if ((s->cr & CR_UARTEN) && (s->cr & CR_RXE)) {
+> +        r =3D s->read_count < pl011_get_fifo_depth(s);
+> +    }
+>      trace_pl011_can_receive(s->lcr, s->read_count, r);
+>      return r;
 
-The instruction bytes have changed but the disassembly comment has not...
-
-> +    0x10, 0x20, 0x9f, 0xe5,                 /* ldr     r2,[pc,#8]    Get=
- CR */
-> +    0xb0, 0x23, 0xc3, 0xe1,                 /* strh    r2,[r3, #48]  Set=
- CR */
->      0x54, 0x20, 0xa0, 0xe3,                 /* mov     r2,#'T' */
-> -    0x00, 0x20, 0xc3, 0xe5,                 /* strb    r2,[r3] */
-> -    0xfb, 0xff, 0xff, 0xea,                 /* b       loop */
-> +    0x00, 0x20, 0xc3, 0xe5,                 /* strb    r2,[r3]       loo=
-p: */
-
-This placement of the "loop:" label is odd -- usually the label
-goes before the instruction that a branch to the label will
-start executing at.
-
-> +    0xfd, 0xff, 0xff, 0xea,                 /* b       loop */
-
-Here also the bytes changed but not the disassembly. Since
-'b' is a relative branch, why does the offset change?
-
->      0x00, 0x10, 0x20, 0x3f,                 /* 0x3f201000 =3D UART0 base=
- addr */
-> +    0x01, 0x01, 0x00, 0x00,                 /* 0x101      =3D CR UARTEN|=
-TXE */
->  };
->
->  static const uint8_t kernel_aarch64[] =3D {
-> -    0x81, 0x0a, 0x80, 0x52,                 /* mov     w1, #0x54 */
->      0x02, 0x20, 0xa1, 0xd2,                 /* mov     x2, #0x9000000 */
-> +    0x21, 0x20, 0x80, 0x52,                 /* mov     w1, #0x101 */
-> +    0x41, 0x60, 0x00, 0x79,                 /* strh    w1, [x2, #48] */
-> +    0x81, 0x0a, 0x80, 0x52,                 /* mov     w1, #0x54 */
->      0x41, 0x00, 0x00, 0x39,                 /* strb    w1, [x2] */
-> -    0xfd, 0xff, 0xff, 0x17,                 /* b       -12 (loop) */
-> +    0xff, 0xff, 0xff, 0x17,                 /* b       -4 (loop) */
-
-Another unexplained offset change here.
-
->  };
->
->  static const uint8_t kernel_nrf51[] =3D {
-> --
-> 2.41.0
+I have a vague recollection of a previous conversation
+where we discussed whether tightening up the UART-enable
+checks would break existing only-tested-on-QEMU baremetal
+simple example code. But I can't find it in my email
+archive -- do you remember a discussion about this or
+am I misremembering?
 
 thanks
 -- PMM
