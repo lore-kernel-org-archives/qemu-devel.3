@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F020C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B1CBC3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:45:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYRbr-0003dy-JK; Mon, 29 Jul 2024 10:44:23 -0400
+	id 1sYRc9-0004xF-Gc; Mon, 29 Jul 2024 10:44:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYRbq-0003b3-EW
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:22 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ id 1sYRc6-0004jX-CP
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:38 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYRbm-0008MQ-OE
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:21 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a7a81bd549eso323558066b.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:44:17 -0700 (PDT)
+ id 1sYRbv-0008Rv-SR
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:38 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-58ef19aa69dso4070789a12.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:44:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722264257; x=1722869057; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=eU1U0CRnG69r+xwrYAiab1VshqFyV1qABAq/chKJ/jE=;
- b=KPiidmodxC6u+SG8U6gKAlKgrTK8wcM9UalR1w5ZgNVJMYUkothjz+b+8as+SWax0Q
- s2b7pFIusvuoGM20WYVT7qB+e4XKGR+cvIS0oesBnQiQa3iRkmS6jtQIKZfDHl3PgQIj
- UxfM25mY8CHwaj4dh+mZLGE9NvbnoBoS+P+lRFbkRRiAC09ttTzYXuAnqyoxcpyaCzxl
- wQ/mlIDVy8tcnK59bJWc7xA9Mu+LOSVM9nOECINXnFYAl6Ht33W5F4xVm2o3Ecn+ZK5Y
- cvz6U3qiduvJ1Flwrog1aSPfrBGxDLapFVPuVrZ5HR0Z7C2HGFtCnic8fADlrgJnbkKz
- 845g==
+ d=linaro.org; s=google; t=1722264266; x=1722869066; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PtcZqFWHrEGoL41FTohMyKEPDwyICpuVF7RbypBJq3A=;
+ b=QaqrMGb3A82eoqzpBYuFVqSJk45CFX48XCphzCvrgkunueHPd8enJpsmB7y42XNQlS
+ 4vlVI+Jriv+km8WjMnGRe6QplxQi+IXu+xprRyqP306rCAg5f3ETM2NG1aCcD/ZrDSGz
+ PbS6cPCiWyDfmksMcGbgBHrWRICKoQIOYw7RadoCx2n7VfjVuQMBkRW9eeULv2/nVq3Z
+ ajofHPPRUog/LgeEvlHHj+HjVzgno7S47xVqca7tm5E69tGtYSYLp49KAiKspEUOkb1t
+ N+3ePgiyzgUjhjSRx/p7WUfsxryNNl6KxSi1chrV8LH86PKW6Vw16SpZVjd6Cr9PqLur
+ +Z1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722264257; x=1722869057;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=eU1U0CRnG69r+xwrYAiab1VshqFyV1qABAq/chKJ/jE=;
- b=MWcU0Lcg6+0JtvOA5Sz+kU0bh1IGoMRO66m/o6YxEJHXiSazliCUj9wSS73M2S3f1r
- 7UECgCnZlBDoedYND4N1KYTYKGWf/RKGwFq31GENfaG/hY/9IUgZlnEWHcfp76WIQc6S
- nrLvVRcc78qceu+QFEF8wr4VFoQ+ZCtd+h6iasyXa600MYSlZZ7cHpjcsNqlbh/n2C8M
- ZJX281f+FDoeFvwSmoHtmzpAlOZAxmju+hgAOHuCzwkuK5vVi5SV8U+H01nkg2uVNQoH
- 5q4JjU5+VJwpLnRoynm97xZ+QeuyoMdfnGUVMrKYx0Plj6ji+poQ+Ob0CqeO8JHgUbeY
- UTEA==
-X-Gm-Message-State: AOJu0YxrJRZ1WPKEBDcAo1iPDTpBBNwrBEW/EM1vR0SHDodGMAj+UKz7
- GxfhAlf9Vyn594G9JhKarCpk8MC1y4G6qbFe0i1FMjNgm46qbDP0uurhCM+UjD0=
-X-Google-Smtp-Source: AGHT+IGgjkrV2iIsdjBsLjNP2k/eXWq309IDDAQuMAN0ShQy1FVBMp0vPnfrGfCpPhV3vEWksJiBEQ==
-X-Received: by 2002:a17:907:9802:b0:a6f:1036:98cf with SMTP id
- a640c23a62f3a-a7d401509efmr566744566b.54.1722264256340; 
- Mon, 29 Jul 2024 07:44:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1722264266; x=1722869066;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PtcZqFWHrEGoL41FTohMyKEPDwyICpuVF7RbypBJq3A=;
+ b=K28xaAZM7F9yFstPNPBEuFipXKaKXWJ9S6fq2iPZk0gOrO/kJVQN9e107XapkvGfwa
+ z95+FzKqWhTTpcxw2gT0AVUtijafFeewPzMqPANmKwToA0bjONIZ6fqjll/2ijsMa7nn
+ nulWoiaMaD+tJW9A1Li3Ly0Kodupf3+MLvyQ2Ixx+qPHiQi+bUmWflZxYBKPxRcy3oiA
+ mSFMKCMBrEAOH19lsn2F4254HLWUYCFG8+JUrFuh3XMa6fuNGAZjuULm9QLO/gOqtKRq
+ +6KWaiKvleV3sWxOicR2Os4lgYTReLZ3/6CxCM3BrljkL8kIzDxu8s5aL123W3eoDvNh
+ guGw==
+X-Gm-Message-State: AOJu0YwtMxVzEp74x5wCu47voALFMGCP3J7VVqRwXK7wcOs3yG58lyfB
+ rKZXHOKvLEBdhoT76P3eTCFI5O5PogN/kF0on2C9GLS3Pzq483Qhl1bJoGGZHPA=
+X-Google-Smtp-Source: AGHT+IEfRp6u/PEriMXjt4MOemKUcELeyZUUP1+B68QPt6BYX7+H57vsJn7bbn9HRz217tQp4Q2OCA==
+X-Received: by 2002:a05:6402:35d6:b0:5a2:2fa5:f146 with SMTP id
+ 4fb4d7f45d1cf-5b021f0dcfbmr5499561a12.28.1722264266053; 
+ Mon, 29 Jul 2024 07:44:26 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acad911a0sm510956266b.155.2024.07.29.07.44.15
+ 4fb4d7f45d1cf-5ac6359392bsm5837519a12.33.2024.07.29.07.44.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jul 2024 07:44:15 -0700 (PDT)
+ Mon, 29 Jul 2024 07:44:21 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F29175F844;
- Mon, 29 Jul 2024 15:44:14 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 740E55FA14;
+ Mon, 29 Jul 2024 15:44:16 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
@@ -78,22 +79,24 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
  David Hildenbrand <david@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH 00/14] Various fixes and tweaks for 9.1-rc0/1
-Date: Mon, 29 Jul 2024 15:44:00 +0100
-Message-Id: <20240729144414.830369-1-alex.bennee@linaro.org>
+Subject: [PATCH 14/14] plugin/loader: handle basic help query
+Date: Mon, 29 Jul 2024 15:44:14 +0100
+Message-Id: <20240729144414.830369-15-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240729144414.830369-1-alex.bennee@linaro.org>
+References: <20240729144414.830369-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,94 +112,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As usual during soft freeze I switch to cleaning up the various
-niggles and bugs which have accumulated over the years.
+As the list of options isn't fixed we do all the parsing by hand.
+Without any named arguments we automatically fill the "file" option
+with the value give so check if it is requesting help and dump some
+basic usage text.
 
-Aside from some test build tweaks and some useful tools for debugging
-CI failures I've also moved tests/plugin to tests/tcg/plugins to
-better align with contrib/plugins and clearly marking what is TCG
-only. I took the opportunity to clean up some of the documentation
-while I was at it.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ plugins/loader.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-Please review:
-
-  plugin/loader: handle basic help query
-  contrib/plugins: add compat for g_memdup2
-  contrib/plugins: be more vocal building
-  docs: split TCG plugin usage from devel section
-  tests/tcg: move test plugins into tcg subdir
-  tests/avocado: remove tcg_plugins virt_mem_icount test
-  docs/devel: document how to run individual TCG tests
-  docs/devel: update the testing introduction
-  tests/tcg: update README
-
-Alex Bennée (9):
-  tests/tcg: update README
-  docs/devel: update the testing introduction
-  docs/devel: document how to run individual TCG tests
-  tests/avocado: remove tcg_plugins virt_mem_icount test
-  tests/tcg: move test plugins into tcg subdir
-  docs: split TCG plugin usage from devel section
-  contrib/plugins: be more vocal building
-  contrib/plugins: add compat for g_memdup2
-  plugin/loader: handle basic help query
-
-Daniel P. Berrangé (2):
-  gitlab: record installed packages in /packages.txt in containers
-  gitlab: display /packages.txt in build jobs
-
-Peter Maydell (1):
-  contrib/plugins/cache.c: Remove redundant check of l2_access
-
-Richard Henderson (2):
-  tests/tcg: Use --noexecstack with assembler files
-  tests/tcg/loongarch64: Use --no-warn-rwx-segments to link system tests
-
- MAINTAINERS                                   |   2 +-
- docs/about/emulation.rst                      | 567 +++++++++++++++++-
- docs/devel/tcg-plugins.rst                    | 505 ----------------
- docs/devel/testing.rst                        |  34 +-
- contrib/plugins/cache.c                       |   2 +-
- contrib/plugins/lockstep.c                    |  25 +
- plugins/loader.c                              |   8 +-
- tests/{plugin => tcg/plugins}/bb.c            |   0
- tests/{plugin => tcg/plugins}/empty.c         |   0
- tests/{plugin => tcg/plugins}/inline.c        |   0
- tests/{plugin => tcg/plugins}/insn.c          |   0
- tests/{plugin => tcg/plugins}/mem.c           |   0
- tests/{plugin => tcg/plugins}/syscall.c       |   0
- .gitlab-ci.d/buildtest-template.yml           |   1 +
- .gitlab-ci.d/crossbuild-template.yml          |   2 +
- contrib/plugins/Makefile                      |  25 +-
- tests/avocado/tcg_plugins.py                  |  37 +-
- .../dockerfiles/debian-all-test-cross.docker  |   3 +-
- .../dockerfiles/debian-hexagon-cross.docker   |   3 +-
- .../debian-legacy-test-cross.docker           |   3 +-
- .../dockerfiles/debian-loongarch-cross.docker |   3 +-
- .../dockerfiles/debian-tricore-cross.docker   |   3 +-
- .../dockerfiles/debian-xtensa-cross.docker    |   3 +-
- tests/meson.build                             |   2 +-
- tests/tcg/Makefile.target                     |   6 +-
- tests/tcg/README                              |  23 +-
- tests/tcg/aarch64/Makefile.softmmu-target     |   2 +-
- tests/tcg/alpha/Makefile.softmmu-target       |   2 +-
- tests/tcg/arm/Makefile.softmmu-target         |   2 +-
- tests/tcg/arm/Makefile.target                 |   2 +-
- tests/tcg/i386/Makefile.softmmu-target        |   2 +-
- tests/tcg/loongarch64/Makefile.softmmu-target |   4 +-
- tests/{plugin => tcg/plugins}/meson.build     |   6 +-
- tests/tcg/riscv64/Makefile.softmmu-target     |   2 +-
- tests/tcg/s390x/Makefile.softmmu-target       |   2 +-
- tests/tcg/x86_64/Makefile.softmmu-target      |   2 +-
- 36 files changed, 697 insertions(+), 586 deletions(-)
- rename tests/{plugin => tcg/plugins}/bb.c (100%)
- rename tests/{plugin => tcg/plugins}/empty.c (100%)
- rename tests/{plugin => tcg/plugins}/inline.c (100%)
- rename tests/{plugin => tcg/plugins}/insn.c (100%)
- rename tests/{plugin => tcg/plugins}/mem.c (100%)
- rename tests/{plugin => tcg/plugins}/syscall.c (100%)
- rename tests/{plugin => tcg/plugins}/meson.build (70%)
-
+diff --git a/plugins/loader.c b/plugins/loader.c
+index 513a429c57..ebc01da9c6 100644
+--- a/plugins/loader.c
++++ b/plugins/loader.c
+@@ -18,6 +18,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
+ #include "qemu/config-file.h"
++#include "qemu/help_option.h"
+ #include "qapi/error.h"
+ #include "qemu/lockable.h"
+ #include "qemu/option.h"
+@@ -98,7 +99,12 @@ static int plugin_add(void *opaque, const char *name, const char *value,
+     bool is_on;
+     char *fullarg;
+ 
+-    if (strcmp(name, "file") == 0) {
++    if (is_help_option(value)) {
++        printf("Plugin options\n");
++        printf("  file=<path/to/plugin.so>\n");
++        printf("  plugin specific arguments\n");
++        exit(0);
++    } else if (strcmp(name, "file") == 0) {
+         if (strcmp(value, "") == 0) {
+             error_setg(errp, "requires a non-empty argument");
+             return 1;
 -- 
 2.39.2
 
