@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C467BC3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:59:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED24C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:59:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYSm0-0006o6-3k; Mon, 29 Jul 2024 11:58:56 -0400
+	id 1sYSmj-0001yX-W9; Mon, 29 Jul 2024 11:59:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYSlx-0006cc-RV
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:58:53 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ id 1sYSmi-0001rj-4Y
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:59:40 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYSlw-00078Q-7H
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:58:53 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2ef27bfd15bso50479521fa.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:58:51 -0700 (PDT)
+ id 1sYSmg-0007CK-Hj
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:59:39 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2f035ae1083so48679621fa.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:59:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722268729; x=1722873529; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722268777; x=1722873577; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=EungNXOHErdEhNHmodW6Z8NrWsRg5rP923IRl8eYeo0=;
- b=NnxETyTtvbRh3AcHUH5amAi0hMqWmwk9eEK6E+6UlVB2m3oy9Q3i0bblLr7OvVs8ij
- JxJWLrHhGbwA9QHzsXdEDd658KXtvfzRLl2VkWJHZjWlfPIlu5uMX5bAQxdBM3rWGMcd
- 8DjLtROblaFLABWy/H0lxodhPn5/4VGv6C+Og3i0Bt3adBn4Knm8gDgPotqd1/9cMSSH
- NsRLiIh+7TmN7lFMVpyuuzMHhHkkMPIMOunr34uvFlmYIInvcA7nIWjMrDBPfwwbeC0b
- LWaHvbYeklJdUg/NEgcOvzfXDaD7Hc6Ta4aAv3d73XuZEp9eoqhRIXqp2yNM5ZUK/X4T
- Q5YQ==
+ bh=O8OV2YIPYGZM7nJeJK4nmT7/vryyQIsFtOIvuWJyV0A=;
+ b=Nn4SylK4TDGye2lJMh7l/AlF92SOxDlp2rgTW92ypMTcVFb0LEQGKFG3dkAU6rdFHh
+ k3KBeAoNEW2yXLv7a7loRZZP2feUmKmgErNF0F16OTJPZcVQrad2gybqEUGi8Y8jK0em
+ vT46pD1gcJ3Jeddyzf3i4qLeBRdU/1cO0623ke67BWUb5FRBq8lH0aBf2TCe7DfUNqtI
+ ATYIZDUARptDwJGW+d5aklKyavDkThXjloItyPGep7MIXd2xEmO1hSwKKFtaYTp0hUir
+ Fu8u3g/3j4NCfThotHpfzWPtbPhfeWk2LFsQ09ez2Ss4KzJrSpjZ4TFRwpSz1OFHJV0z
+ +hjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722268729; x=1722873529;
+ d=1e100.net; s=20230601; t=1722268777; x=1722873577;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=EungNXOHErdEhNHmodW6Z8NrWsRg5rP923IRl8eYeo0=;
- b=q9nB/pMsZy3CUnPmxODpCXdiIxEvBNesApknISYxR6zeqbw+3EudNJC+qLZYDAwmpc
- +bh1dHl49ph6nu9eKMJY+U/vVsyj4LwWJzRdVmBVLJbtDrPKJvIH0wtbMPC0t6ydXOTa
- T7MvgqiNv57EudzXISy76Z9TXdPWJdOrz89MZaUMi5ylt4fSDfGFy5BPwlbzncdzd21m
- dbLq5bXVIWhy5VMaRD/Ert/xIg7UTX9EmzNfoMEzv9p1/HTsEDc/vldaWok0fPu2SE88
- KpUEzvW2LE/s/uVsM+2wkKuSV4Myee2YWPi7yCKLcUxICeE0XY9WfaY3UiQekL5f4ZJ/
- 6jEQ==
-X-Gm-Message-State: AOJu0YxliL4q+v/nghsG8BF5H7lfV5xrY50BFDE5mk+hjcRP5x84SdoO
- i0I2xrmZOgycyn7vdZk7EPHyHOjtDy4IgIwONVvrUqrTb1+ugtN5Y90ucKIzlmY+ga6jQ27mf9d
- zwHU/yYCRLU1Qz1Fevod5IG9Uh17+fkeMFQP5wnKdgtJIXBO7
-X-Google-Smtp-Source: AGHT+IFZ/+o9N6jpsmzCK/kMcPcHS6Bx+NyxfDBlCQoy6zFofDOdqJo2sD6UC8TaTQwcY1kLSZcr2aDCOdI3sNxo1xA=
-X-Received: by 2002:a2e:9416:0:b0:2f0:1f06:2b43 with SMTP id
- 38308e7fff4ca-2f12ee6a3fdmr56524591fa.41.1722268729264; Mon, 29 Jul 2024
- 08:58:49 -0700 (PDT)
+ bh=O8OV2YIPYGZM7nJeJK4nmT7/vryyQIsFtOIvuWJyV0A=;
+ b=IWMpyWP/F4P9QROyIpg5Cl23GBYquPX+C3AMcuJV6NbpzT2x0VmGNoUMzK+4SqlHEw
+ 1bc4Knt9Ek157BYo39k11cnwGoHob2AM1teIQi1bR3WPPpMjW9XaUf+VDSNfLizNXj1l
+ tYhhGBpJJ5O3fghMpzc197CSn9qejq+Mt6iBZDKyPOxm4yriYRlT1pfeuE2L1lA1S6Nl
+ pJywGsRFsktBguRT0O9MEy9D2NKnYjzOFUIqtntc1xIMZKBt0aolsVqHUES3CAcCjaFe
+ pxl7Z+uaE6y1WPMxL5y9GZ6EqcjPYDJiePvmL7FLyyVjnRmA8BvK0wJNebZvC/XnW1Yb
+ e8/g==
+X-Gm-Message-State: AOJu0Yx+KdtucSJC+CG8qpqEpFjf3cTdxWcRzBYNuLqc6qNy8nlZaP6r
+ uoRVJlcKnxckJWTrZRJ7upAz99dtm5Tl25kFgkuLY9r60Hp3f7Xh61wALj15pnTWNdK6T98YHB/
+ MA4vaAYGPuku++lTv9Wv3YVusk5VsQUqlKZTfOIlNQSxMtIMf
+X-Google-Smtp-Source: AGHT+IH1mFKhxM7C650CWRsWMK+zH+pgYmJCvBpOhI9o5/RSRuTDi19CAW1jCTYUKZcfXWbchaYfgBJSFnLNlSfy9kk=
+X-Received: by 2002:a2e:2281:0:b0:2ec:617b:4757 with SMTP id
+ 38308e7fff4ca-2f12ee074c2mr54272231fa.13.1722268776573; Mon, 29 Jul 2024
+ 08:59:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240723151454.1396826-1-peter.maydell@linaro.org>
-In-Reply-To: <20240723151454.1396826-1-peter.maydell@linaro.org>
+References: <20240723154207.1483665-1-peter.maydell@linaro.org>
+In-Reply-To: <20240723154207.1483665-1-peter.maydell@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 29 Jul 2024 16:58:38 +0100
-Message-ID: <CAFEAcA8uB+7dgYuQeCtmExdZJUtzfuu9L4YNLtQjT4-6+DEBMg@mail.gmail.com>
-Subject: Re: [PATCH] target/xtensa: Make use of 'segment' in pptlb helper less
- confusing
+Date: Mon, 29 Jul 2024 16:59:24 +0100
+Message-ID: <CAFEAcA__7F=Nfi+72mG159wXGwO9yWw9brpAqmwY5iDr8J4f_g@mail.gmail.com>
+Subject: Re: [PATCH] target/m68k: avoid shift into sign bit in
+ dump_address_map()
 To: qemu-devel@nongnu.org
-Cc: Max Filippov <jcmvbkbc@gmail.com>
+Cc: Laurent Vivier <laurent@vivier.eu>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -88,34 +88,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 23 Jul 2024 at 16:14, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Tue, 23 Jul 2024 at 16:42, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> Coverity gets confused about the use of the 'segment' variable in the
-> pptlb helper function: it thinks that we can take a code path where
-> we first initialize it:
->   unsigned segment = XTENSA_MPU_PROBE_B;  // 0x40000000
-> and then use that value as a shift count:
->   } else if (nhits == 1 && (env->sregs[MPUENB] & (1u << segment))) {
+> Coverity complains (CID 1547592) that in dump_address_map() we take a
+> value stored in a signed integer variable 'i' and shift it by enough
+> to shift into the sign bit when we construct the value 'logical'.
+> This isn't a bug for QEMU because we use -fwrapv semantics, but
+> we can make Coverity happy by using an unsigned type for the loop
+> variables i, j, k in this function.
 >
-> In fact this isn't possible, beacuse xtensa_mpu_lookup() is passed
-> '&segment', and it uses that as an output value, which it will always
-> set if it returns nonzero.  But the way the code is currently written
-> is confusing to a human reader as well as to Coverity.
+> While we're changing the declaration of the variables, put them
+> in the for() loops so their scope is the minimum required (a style
+> now permitted by our coding style guide).
 >
-> Instead of initializing 'segment' at the top of the function with a
-> value that's only used in the "nhits == 0" code path, use the
-> constant value directly in that code path, and don't initialize
-> segment.  This matches the way we use xtensa_mpu_lookup() in its
-> other callsites in get_physical_addr_mpu().
->
-> Resolves: Coverity CID 1547589
->
+> Resolves: Coverity CID 1547592
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> --
+> ---
+> I could have just marked this as a false-positive, but it
+> just about seemed worth making the change overall.
+> ---
 
-
-I'll take this via target-arm.next since I'm doing a pullreq
-anyway.
+I'll take this via target-arm.next unless you prefer
+otherwise, since I'm doing a pullreq anyway.
 
 thanks
 -- PMM
