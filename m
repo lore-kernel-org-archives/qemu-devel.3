@@ -4,149 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49697C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 19:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58525C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 19:25:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYVdg-0001T1-0J; Mon, 29 Jul 2024 15:02:32 -0400
+	id 1sYVyt-00028N-CY; Mon, 29 Jul 2024 15:24:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.zeise@seagate.com>)
- id 1sYVdd-0001KT-Ln; Mon, 29 Jul 2024 15:02:29 -0400
-Received: from esa.hc4959-67.iphmx.com ([139.138.35.140])
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1sYVyr-00027e-Ju
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 15:24:25 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.zeise@seagate.com>)
- id 1sYVdP-0005Lq-La; Mon, 29 Jul 2024 15:02:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=seagate.com; i=@seagate.com; q=dns/txt; s=stxiport;
- t=1722279735; x=1753815735;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=G68+7dfymQ00uIGAn7lJUf6VqSh9B/C4tqmMwpDvGjU=;
- b=ojXHG0rJ0OZXv2D+pkuM2IV60wgYm5SaoIbuzoTu7tfw4OMU8Xr0y2KQ
- pwBDTPjcATuRNga4JPMqUl0yMe0HLpiSxuaCWnzqly6iC9QSQ711+03no
- bqwVK7XdaTxa4kakLFZekJhJdAfb3874ZDSstFchbharZ7Zvr+/HwQHQN Y=;
-X-CSE-ConnectionGUID: EeWmu0OYSGa2BEM/Su+ZoQ==
-X-CSE-MsgGUID: dxxt2PovT/GyEpqBDSQTgA==
-Received: from mail-bn8nam11lp2173.outbound.protection.outlook.com (HELO
- NAM11-BN8-obe.outbound.protection.outlook.com) ([104.47.58.173])
- by ob1.hc4959-67.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Jul 2024 12:02:09 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aef5LAS6Y3mdCdNd06Upcu8d5A6lubFgNSS6M+1clfcpMW8Fur2bqDpKViXxf/ZwjMeYqyU9HwmxfXhq8UAxXiACYX5uN5OIrx232M0m/p3n+cRAS+Uznydsvku05nAHCFVCdynBtfhBsAnuPvHbEHldb9OK8FE4EJ1p3wjgTNKbs7f66b4DKxkOxHaBh/wUm9Cw8e81eUCIvWMHtC/0/UPVQq74vS2Z5SkJX4hH9xX4BLkh1xqAuy5rGpxYVMoRCkMOotopHLIfjrllXToJjSbC++YTdh5l/3R7FP9XApCRMteo9beNWwn8G3ELRHQGucFY9jYPTy72GnVLMQ6SLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rkiIMDPr4hbt0KSrPbZ7A34gKHAmxkFG4WbWNC95Iv0=;
- b=xj4APsquI2r2HAVi1Xh+PUw+iZ7yk/A+MaQOdG+mV1qxcJ4wXYFGhjpMkP0P+5LKSd5AIHQ+zq6Zn1wKHdU0h6Xech9qPXlaUTzDOttc/J46FDkB0uoU7AKJbKSu0sr/DIPlK7iun/gcHRXq8IhBoYg7Ob7iPFuoKF3GUb2X4UA0HGMU4EtczHElV3KZlpRfyFIsWxxC4wnoznytg2883rY+aU0ff7lyqjky1WX4Ts2Lz/zYzPqXhO2WWd3SxkCCCyxy1H4vgbxCage7mQWCBziy5I4W6V06DofiIguqiny1Acg2xC9Px0d2ioe2Kl7V85R3143/PxtwPpWR3mPHJA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
- is 192.55.16.50) smtp.rcpttodomain=nongnu.org smtp.mailfrom=seagate.com;
- dmarc=fail (p=reject sp=reject pct=100) action=oreject
- header.from=seagate.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seagate.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rkiIMDPr4hbt0KSrPbZ7A34gKHAmxkFG4WbWNC95Iv0=;
- b=F93O0s5lQb+zwgZz9vxCJ0f1rRSVO5z6qwuJMDdedZfHbgfV+3ZX2DA20HODrczTSUChSrtCs2b6eq9OzwgA6r6aPgGBiH0I+EIbWAI1Yomasanms9BPBjQTaq8/UePduGGkrKxn/bCpoJeteuZBk8S8fAwAAb4nE0Eo8Q854HY=
-Received: from SJ0PR13CA0116.namprd13.prod.outlook.com (2603:10b6:a03:2c5::31)
- by SA1PR20MB7353.namprd20.prod.outlook.com (2603:10b6:806:3ea::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.32; Mon, 29 Jul
- 2024 19:02:07 +0000
-Received: from CO1PEPF000075F4.namprd03.prod.outlook.com
- (2603:10b6:a03:2c5:cafe::52) by SJ0PR13CA0116.outlook.office365.com
- (2603:10b6:a03:2c5::31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.19 via Frontend
- Transport; Mon, 29 Jul 2024 19:02:06 +0000
-X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is 192.55.16.50)
- smtp.mailfrom=seagate.com;
- dkim=none (message not signed)
- header.d=none;dmarc=fail action=oreject header.from=seagate.com;
-Received: from sgspzesaa001.seagate.com (192.55.16.50) by
- CO1PEPF000075F4.mail.protection.outlook.com (10.167.249.43) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7828.19 via Frontend Transport; Mon, 29 Jul 2024 19:02:05 +0000
-X-CSE-ConnectionGUID: ljcqUpXkSom//ryisNTxqA==
-X-CSE-MsgGUID: kiw991AMS8S+35q4QgXDeg==
-Received: from sgspiesaa002.seagate.com ([10.4.144.53])
- by sgspzesaa001.seagate.com with ESMTP; 29 Jul 2024 12:01:56 -0700
-X-CSE-ConnectionGUID: fo3epGGOTqCxJ7H2xyPEFQ==
-X-CSE-MsgGUID: iail1XcRRxax1OVwhTPWhw==
-X-IronPort-AV: E=Sophos;i="6.09,246,1716274800"; d="scan'208";a="121679657"
-STX-Internal-Mailhost: TRUE
-Received: from unknown (HELO cortana..) ([10.4.50.14])
- by sgspiesaa002.seagate.com with ESMTP; 29 Jul 2024 12:01:48 -0700
-From: Alejandro Zeise <alejandro.zeise@seagate.com>
-To: qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org, clg@kaod.org, peter.maydell@linaro.org,
- berrange@redhat.com, alejandro.zeise@seagate.com
-Subject: [PATCH v2 0/2] hw/misc/aspeed_hace: Fix SG Accumulative Hash
- Calculations
-Date: Mon, 29 Jul 2024 19:00:33 +0000
-Message-Id: <20240729190035.3419649-1-alejandro.zeise@seagate.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <quic_mathbern@quicinc.com>)
+ id 1sYVyp-0000ZH-GI
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 15:24:25 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46TAJ8gw028667;
+ Mon, 29 Jul 2024 19:24:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=+s6DUfplgtlrUN7V322Ifo
+ QC8oHVW+D6CyUnM1+Aajw=; b=HkLDnw+pILKVLYa122OKbN4K1QvB/9y5u62+kd
+ e9HA9uFTzF/yIx5+/pU8dIoCftrrCBH8yD34B/sHwwUU0IADWzVKi/wsQlxeIl90
+ tGTSVZ8rl+NQKS562rvPW66zH1glz/Nz73S0D1/sYRn0F0lmXoG4clBG0w/RhQR5
+ dqTo+Ks5RpNqWjk8pdObrGl+JoDDWMPHmp3eSuRb0eesqRu2Hk+7WKGH63kmdalw
+ o57S3QPWPn6d/gjWQRvjbVwqXiLdhbqQzy0APPs7u4vHLoylEftCh13xBRGGkuE+
+ AvFcaXrfKmF69dgx/CN5tfiDmR5neBXLzff479mFdvDe1xqA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40mqw758wj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jul 2024 19:24:18 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com
+ [10.47.209.196])
+ by NALASPPMTA04.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id
+ 46TJOHZb021655
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 29 Jul 2024 19:24:17 GMT
+Received: from hu-mathbern-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 29 Jul 2024 12:24:16 -0700
+From: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+To: <qemu-devel@nongnu.org>
+CC: <ltaylorsimpson@gmail.com>, <bcain@quicinc.com>, <sidneym@quicinc.com>,
+ <ale@rev.ng>, <anjo@rev.ng>
+Subject: [PATCH v2] Hexagon: fix F2_conv_* instructions for negative zero
+Date: Mon, 29 Jul 2024 16:24:06 -0300
+Message-ID: <d88fd9a1122503beceea7ee2f466761d51c8a8b9.1722281008.git.quic_mathbern@quicinc.com>
+X-Mailer: git-send-email 2.37.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000075F4:EE_|SA1PR20MB7353:EE_
 Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: ba5219a7-b3b7-4f28-63b3-08dcb000f067
-STX-Hosted-IronPort-Oubound: True
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|36860700013|376014|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?1LYYkrVl+UhVd3GEkc2CYKJ+46MCKE8z77lW7w6eF4375Vhc+NFp0yKwtOUy?=
- =?us-ascii?Q?RfO+rAErTGoXmUtv/ozNbASezMy8JOseHoo7MQf69xpkAqE0CApOHI9limj8?=
- =?us-ascii?Q?N70SVqyJNrAiYiPFYULUonvOiaRM9+4PXEnI8dZFtwG00gsMx2C+lbROFQGT?=
- =?us-ascii?Q?1OexGBbdl04933X9U9TBYAsBdSMtx8AE72/ZrtuH/ZWMwziy9yvjB3HccflS?=
- =?us-ascii?Q?P2JUpY5lLb7YJz9zgkCZpxS3lNL4tG9QmAvBvAL+FFC/K8NJDbA1PKieQCe9?=
- =?us-ascii?Q?eCpExQcLNpQMDXY6A0GNyffIuKqGVU5IDFv6H32q5tkf3CSbynaznyN1Rp0y?=
- =?us-ascii?Q?/CKeAawO1KlUl2GSCmkm1NcsRRLV/XoM15+QsuydKBxKLYFnVZsyfkXuKV0u?=
- =?us-ascii?Q?UCdZvHfzHASo3lxNXgygHA+ZQAHeqVP44PRMChZoS/eudcM/Cz3DEanAl79Z?=
- =?us-ascii?Q?IFiQKd0VfAHCVuoK8mgv2IbRhQJ05DREY2j/zpFqphzDicHN9lnHhIleSrvY?=
- =?us-ascii?Q?tDzSGZ28e1CqKaWQaE+lCoPPw5X7pceywhRRAyCtv2hQgvjSGaeLltNeT7//?=
- =?us-ascii?Q?KW9I3z+FQ2FaF1U9gr+emqGgwbIu+SEjOH+OZRzmM7EYK/K69KdqlHT3aBZt?=
- =?us-ascii?Q?ns3kegQQZCzJ2sDOFR3kCkkkibqVbM99lP/u0OiUR6Iult43qhM+FxF88+bf?=
- =?us-ascii?Q?VYmGPzHmvbp0MKSV3wgmkxuTRYCJDiH7+c9NQn8nuALI6XjZtLJNP6ExUjv8?=
- =?us-ascii?Q?J/IK4bRJQDekftQRVqgVBJQs9WQba7D2rbt+ya/GtoRzWpqz8ydG5vES/pAt?=
- =?us-ascii?Q?+SBs3kLXoevADzAGRZupwq4Yma+kyoj5bnUBTPCr0eKBEUEHbpxaH839UB+b?=
- =?us-ascii?Q?ZUoAhyaTaJpG6PIw/0kbaWf6RYtXLqQPfgueVn95/mdy79C/RqBESgEpISkJ?=
- =?us-ascii?Q?VAPwaBh4uEsUt9ISfY1l/Z3hIUR6hXEEzwPJYzyyHQj369sMh3bBnXOH0y3U?=
- =?us-ascii?Q?k/1sDUFQvM0zwiUNAu2kwe0YOUpQaVnxe3cZayhVyLSH9MR6/jykUP+8M6BO?=
- =?us-ascii?Q?JnfdB86U1bUAuNaP09saKCVkvq/f7LQHHRiAm0V8UVu2WoJAqO0eO4Py/BRe?=
- =?us-ascii?Q?AVxxkA5oLzA+uIHgKuYns133td79nDMB9XgmrtfUXIMpMGJ9SUIunGWKdpNY?=
- =?us-ascii?Q?R9JkBQb5DjlvMluPbmACP4A54/un0Yll8DWtW3LQewQBbwrb2QxTBOFCeUUn?=
- =?us-ascii?Q?wuJAekuOTjrivNFDBGLX0Uu/cnvoQEJ4h7DlYnGSLHW4oaPz/lU3UJACWE6f?=
- =?us-ascii?Q?qKeEimc1zPa/MW0/s5yT7mckbzZRimTz5PT6y3UKDUGDoLSv+qYuY7bpDu0D?=
- =?us-ascii?Q?ua99ZNHi4Z6OD+2BrwjeQoVsgMQHiSdr2LNmvw7WNnDoEmI7wT46A9Qd5qNw?=
- =?us-ascii?Q?NrkjpIrvbW/b3uCn/bskmuh72ndbEHL7?=
-X-Forefront-Antispam-Report: CIP:192.55.16.50; CTRY:SG; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:sgspzesaa001.seagate.com; PTR:InfoDomainNonexistent;
- CAT:NONE; SFS:(13230040)(82310400026)(36860700013)(376014)(1800799024);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: /ebEGkhLBJx2Lh5ehTArGbpZVGkR/3s32iaq6JvnBSyxPRuCIixjLXABMkqgAzt+MAVxuKH1E9y/5mo18W23bWCN47Enj8TXf4s23B3ZPC5Gkh1qcteLJCW81Epckmb8B0Q3qzEsiobFj0BGGqtsO0SqNRFMKlARaoOM+WIe1I8bF8vb22AYn6K2ct+z3rgd7zXqj6puwG9QJbBSKf30olw2SHn4PxlHx+eIHvcZ/Zl7klYBdF8yeBoow2b8XLv3Ng+KTYH6t7sayWwzsbm5ffA7qJzTC64uyddUuTJUe7ZKdsr/jh7skN6Zp7biNnAjMn8NcA+pW3fHUM56Kbfdw5M10dhrmDS4EQvDaOyu2jn9YDGY8zobFT6jxD7Tj1giQ/WydRvnsSb7YT0HRPXCSZIP8NK4q2x4JXrKR8y28H6qXyXvMlRvWh0CurRiXexZdXGC9U/DghjptQWVa0JDnYKu72kEyMr/0LW/69C8C/GUiTTD+K7cwkGE0dOZ+bzjV/a/02uo+DFdhtr34ntvTTqZ48uxc56vKBKlFc2gHl/SsisaGP3FR22TvF2E63VOQj5qVf2MEpNyPYUL6I7pp+Yy8EvwwpbvXFQecj8VyEOqMGk4FVHI5QKCPu/1HpJQ
-X-OriginatorOrg: seagate.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jul 2024 19:02:05.0501 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ba5219a7-b3b7-4f28-63b3-08dcb000f067
-X-MS-Exchange-CrossTenant-Id: d466216a-c643-434a-9c2e-057448c17cbe
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=d466216a-c643-434a-9c2e-057448c17cbe; Ip=[192.55.16.50];
- Helo=[sgspzesaa001.seagate.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000075F4.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR20MB7353
-Received-SPF: pass client-ip=139.138.35.140;
- envelope-from=alejandro.zeise@seagate.com; helo=esa.hc4959-67.iphmx.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-ORIG-GUID: UmKWnZyg23zz-2DVbQy5MZgW5E2-Uj6w
+X-Proofpoint-GUID: UmKWnZyg23zz-2DVbQy5MZgW5E2-Uj6w
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-29_17,2024-07-26_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ mlxlogscore=595 spamscore=0 impostorscore=0 lowpriorityscore=0
+ clxscore=1015 bulkscore=0 adultscore=0 suspectscore=0 malwarescore=0
+ phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407290130
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=quic_mathbern@quicinc.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,47 +98,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The goal of this patch series is to fix accumulative hashing support in the 
-Aspeed HACE module. The issue that stemmed this patch was a failure to boot an
-OpenBMC image using the "ast2600-evb" machine. The U-boot
-2019.04 loader failed to verify image hashes.
+The implementation for these instructions handles -0 as an invalid float
+point value, whereas the Hexagon hardware considers it the same as +0
+(which is valid). Let's fix that and add a regression test.
 
-These incorrect image hashes given by the HACE to the U-boot guest are due to 
-an oversight in the HACE module. Previously when operating in 
-scatter-gather accumulative mode, the HACE would cache the address provided by 
-the guest which contained the source data. However, there was no deep copy, 
-so when HACE generated the digest upon the reception of the final accumulative chunk 
-the digest was incorrect, as the addresses provided had their regions overwritten
-by that time.
+Signed-off-by: Matheus Tavares Bernardino <quic_mathbern@quicinc.com>
+Reviewed-by: Brian Cain <bcain@quicinc.com>
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+---
+v2: updated the copyright year
 
-This fix consists of two main steps:
-* Add an accumulative hashing function to the qcrypto library
-* Modify the HACE module to use the accumulative hashing functions
+ target/hexagon/op_helper.c | 18 +++++++++---------
+ tests/tcg/hexagon/usr.c    | 12 +++++++++++-
+ 2 files changed, 20 insertions(+), 10 deletions(-)
 
-All the crypto library backends (nettle, gnutls, etc.) support accumulative hashing,
-so it was trivial to create wrappers for those functions.
-
-Changes in V2:
-* Fixed error checking bug in libgcrypt crypto backend of
-  accumulate_bytesv
-
-
-Alejandro Zeise (2):
-  crypto: add support for accumulative hashing
-  hw/misc/aspeed_hace: Fix SG Accumulative hashing
-
- crypto/hash-gcrypt.c          | 105 ++++++++++++++++++++++++++++++++++
- crypto/hash-glib.c            |  89 ++++++++++++++++++++++++++++
- crypto/hash-gnutls.c          |  82 ++++++++++++++++++++++++++
- crypto/hash-nettle.c          |  93 ++++++++++++++++++++++++++++++
- crypto/hash.c                 |  42 ++++++++++++++
- crypto/hashpriv.h             |  11 ++++
- hw/misc/aspeed_hace.c         |  91 +++++++++++++++--------------
- include/crypto/hash.h         |  65 +++++++++++++++++++++
- include/hw/misc/aspeed_hace.h |   4 ++
- 9 files changed, 538 insertions(+), 44 deletions(-)
-
+diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+index ae5a605513..90e7aaa097 100644
+--- a/target/hexagon/op_helper.c
++++ b/target/hexagon/op_helper.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright(c) 2019-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
++ *  Copyright(c) 2019-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -683,7 +683,7 @@ uint32_t HELPER(conv_sf2uw)(CPUHexagonState *env, float32 RsV)
+     uint32_t RdV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV)) {
++    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV) && !float32_is_zero(RsV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RdV = 0;
+     } else {
+@@ -713,7 +713,7 @@ uint64_t HELPER(conv_sf2ud)(CPUHexagonState *env, float32 RsV)
+     uint64_t RddV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV)) {
++    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV) && !float32_is_zero(RsV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RddV = 0;
+     } else {
+@@ -743,7 +743,7 @@ uint32_t HELPER(conv_df2uw)(CPUHexagonState *env, float64 RssV)
+     uint32_t RdV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV)) {
++    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV) && !float64_is_zero(RssV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RdV = 0;
+     } else {
+@@ -773,7 +773,7 @@ uint64_t HELPER(conv_df2ud)(CPUHexagonState *env, float64 RssV)
+     uint64_t RddV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV)) {
++    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV) && !float64_is_zero(RssV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RddV = 0;
+     } else {
+@@ -803,7 +803,7 @@ uint32_t HELPER(conv_sf2uw_chop)(CPUHexagonState *env, float32 RsV)
+     uint32_t RdV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV)) {
++    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV) && !float32_is_zero(RsV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RdV = 0;
+     } else {
+@@ -833,7 +833,7 @@ uint64_t HELPER(conv_sf2ud_chop)(CPUHexagonState *env, float32 RsV)
+     uint64_t RddV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV)) {
++    if (float32_is_neg(RsV) && !float32_is_any_nan(RsV) && !float32_is_zero(RsV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RddV = 0;
+     } else {
+@@ -863,7 +863,7 @@ uint32_t HELPER(conv_df2uw_chop)(CPUHexagonState *env, float64 RssV)
+     uint32_t RdV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV)) {
++    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV) && !float64_is_zero(RssV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RdV = 0;
+     } else {
+@@ -893,7 +893,7 @@ uint64_t HELPER(conv_df2ud_chop)(CPUHexagonState *env, float64 RssV)
+     uint64_t RddV;
+     arch_fpop_start(env);
+     /* Hexagon checks the sign before rounding */
+-    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV)) {
++    if (float64_is_neg(RssV) && !float64_is_any_nan(RssV) && !float64_is_zero(RssV)) {
+         float_raise(float_flag_invalid, &env->fp_status);
+         RddV = 0;
+     } else {
+diff --git a/tests/tcg/hexagon/usr.c b/tests/tcg/hexagon/usr.c
+index 92bc86a213..f0b23d312b 100644
+--- a/tests/tcg/hexagon/usr.c
++++ b/tests/tcg/hexagon/usr.c
+@@ -1,5 +1,5 @@
+ /*
+- *  Copyright(c) 2022-2023 Qualcomm Innovation Center, Inc. All Rights Reserved.
++ *  Copyright(c) 2022-2024 Qualcomm Innovation Center, Inc. All Rights Reserved.
+  *
+  *  This program is free software; you can redistribute it and/or modify
+  *  it under the terms of the GNU General Public License as published by
+@@ -1007,6 +1007,11 @@ int main()
+     TEST_P_OP_R(conv_sf2d_chop,   SF_QNaN,  0xffffffffffffffffULL,  USR_FPINVF);
+     TEST_P_OP_R(conv_sf2d_chop,   SF_SNaN,  0xffffffffffffffffULL,  USR_FPINVF);
+ 
++    TEST_R_OP_R(conv_sf2uw,       SF_zero_neg,  0, USR_CLEAR);
++    TEST_R_OP_R(conv_sf2uw_chop,  SF_zero_neg,  0, USR_CLEAR);
++    TEST_P_OP_R(conv_sf2ud,       SF_zero_neg,  0, USR_CLEAR);
++    TEST_P_OP_R(conv_sf2ud_chop,  SF_zero_neg,  0, USR_CLEAR);
++
+     TEST_R_OP_P(conv_df2sf,       DF_QNaN,  SF_HEX_NaN,             USR_CLEAR);
+     TEST_R_OP_P(conv_df2sf,       DF_SNaN,  SF_HEX_NaN,             USR_FPINVF);
+     TEST_R_OP_P(conv_df2uw,       DF_QNaN,  0xffffffff,             USR_FPINVF);
+@@ -1020,6 +1025,11 @@ int main()
+     TEST_R_OP_P(conv_df2uw_chop,  DF_QNaN,  0xffffffff,             USR_FPINVF);
+     TEST_R_OP_P(conv_df2uw_chop,  DF_SNaN,  0xffffffff,             USR_FPINVF);
+ 
++    TEST_R_OP_P(conv_df2uw,       DF_zero_neg,  0, USR_CLEAR);
++    TEST_R_OP_P(conv_df2uw_chop,  DF_zero_neg,  0, USR_CLEAR);
++    TEST_P_OP_P(conv_df2ud,       DF_zero_neg,  0, USR_CLEAR);
++    TEST_P_OP_P(conv_df2ud_chop,  DF_zero_neg,  0, USR_CLEAR);
++
+     /* Test for typo in HELPER(conv_df2uw_chop) */
+     TEST_R_OP_P(conv_df2uw_chop, 0xffffff7f00000001ULL, 0xffffffff, USR_FPINVF);
+ 
 -- 
-2.34.1
+2.37.2
 
 
