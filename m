@@ -4,83 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50E56C3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 13:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 427A1C49EA1
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 13:22:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYQF9-0008WC-MH; Mon, 29 Jul 2024 09:16:51 -0400
+	id 1sYQJd-0005Uu-Ge; Mon, 29 Jul 2024 09:21:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYQF6-0008VD-KJ
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 09:16:48 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYQF4-0001Nv-Jb
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 09:16:48 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2eeb1ba0468so53898941fa.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 06:16:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722259005; x=1722863805; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UANyp+8rxjJ+X3O5/Dp4xmNtsX1NXYs9fbLe1Rv43m0=;
- b=ZO69wWc1FWl6aQ/wnOq/K8fIGiUgYIaQuxq5I0I9vG4ZmoFmaDi9i4MDI4Fg66Dj1d
- SdMJZXEzKLIC+0Kw+SO+vGo+gumVa/YX1eI11viOiRCYj6MvSq8f36IHWQS+pNc5DloL
- NPAFZeGA5ekhvkscVDYAkJb2b0GlWho6JpEyChIbI7JBxiOESTEuboSTvU28CFU0YrT9
- kPVMGE7u3mwpNj1g5qe84/jNF7J0qo7Pi1RQr2glE7gfHRHbcwInIgdPshDYMpGD+V1+
- D0s/UzIzyHA0RHODtIt52b2k8DmAHUXzP/OZk5cLGWzngVp0CDqxzCW2Y4KMNBtnt07d
- xvtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722259005; x=1722863805;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UANyp+8rxjJ+X3O5/Dp4xmNtsX1NXYs9fbLe1Rv43m0=;
- b=PUdUtDJmQd1aP5PUBvkgevmtx1JslRt90kyb3IM8aZlmlx2r138d3trd84Oah5Ia+g
- 8/9Vc7PIXj2yl2C0R9ydvSdLAzhJN49FSUo5FpPUdQ1Cpb8gvvKsrBQ+acbD+uvpj1+s
- 6O29pLq14VPNYPB6JA0R3b83UDdIcfeFDMRMMM4KSEWWyz8fh4KN6dBxElXW5I1h4moA
- kc7QVYGes9Aw8fI+oz+qKY/RWwIr8L0goNdRIfyjh9QDP/dgQfv2zLNlr2KajBYpf3Il
- Xj1BLWdRv4c9eS2rZ82q9Oga4HbNg1Oz1rFg8h3/CTIi3kho26Sru3W/k+XGRUUXzWei
- +9Fw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWd8Z1991KHa7v9WiOCOmpBX7AJ2z0EckMU2jP1nymqr/TibYjyb/kdxU1Nz1hz6phZANeJLRB1mT9o/bhmFJ85qKqyXEg=
-X-Gm-Message-State: AOJu0Ywu862ghpKlquFoisbypkZb6K7DXvKHGezVmkVw/6hdayOAUyH0
- KtxgU4JLQ2S3O6+c2RPpFX3y6Xg0YpIdXJYt1+sHSF51Vk02nukUIgaWPYi6M1qyartx0yivAx6
- nlGgTtMMleX1J3JQeDpgg0e6qzOLXDHatp9uS/w==
-X-Google-Smtp-Source: AGHT+IHoH3K8jsPvUE8/B2jMRY92sSIVFeStKFFNhF5Wbzo/vbYaqbH5iav8W3J/lNbtaQtAgsyq841gQxbhhNaJUig=
-X-Received: by 2002:a2e:868c:0:b0:2ef:1bd5:bac3 with SMTP id
- 38308e7fff4ca-2f12ee55a92mr50331841fa.41.1722259004491; Mon, 29 Jul 2024
- 06:16:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1sYQJb-0005Nz-Ds; Mon, 29 Jul 2024 09:21:27 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1sYQJX-00028Z-4z; Mon, 29 Jul 2024 09:21:25 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 5EA9D619A0;
+ Mon, 29 Jul 2024 13:21:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1056DC4AF0C;
+ Mon, 29 Jul 2024 13:21:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1722259281;
+ bh=wmX5BOavDV5A0y4JGTIfwXXXDCYeYux2q4KKf6xw9vs=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=o4PyZdBgGpMneSb5gcEbFosIXh7r2vfuZOKvBP12tP6fSGmNrv8VgCXKCmnbPH0Yi
+ v8NYL/xImPGCLIo4Os3iBdYEmGj8jYJVG/b/tnDh1fbtOT21HNpkhQ3ITL94P2mH8s
+ n8Ir0fMV0jFv4dtUA+g2Aw8fibNPYnx76GTXFBslXEozcjG4Hj/IKVx1KHmJ2ojrWa
+ Cv1ersR2w9Ld/tl8hxVRkBpG931tCqUT+WKb1nSY0d0uS5mzrPz2JlPWt1Y/kM/J+s
+ /86vAPeB7WosmMvn/GdqFjgsEdKwwPGPb2V67YLHhHtuitprquuNJd/R5oRNOqJezm
+ 7Q88ZGwqKWBSQ==
+Received: from mchehab by mail.kernel.org with local (Exim 4.97.1)
+ (envelope-from <mchehab+huawei@kernel.org>)
+ id 1sYQJT-000000030VT-0I6f; Mon, 29 Jul 2024 15:21:19 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: 
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, linux-kernel@vger.kernel.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v4 1/6] arm/virt: place power button pin number on a define
+Date: Mon, 29 Jul 2024 15:21:05 +0200
+Message-ID: <e5afbbaf2836ebe22b48c455285eccef86db966b.1722259246.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <cover.1722259246.git.mchehab+huawei@kernel.org>
+References: <cover.1722259246.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-References: <20240725235410.451624-1-npiggin@gmail.com>
- <20240725235410.451624-39-npiggin@gmail.com>
- <8d93da65-36a9-4642-9345-1b698191ba49@kaod.org>
-In-Reply-To: <8d93da65-36a9-4642-9345-1b698191ba49@kaod.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 29 Jul 2024 14:16:33 +0100
-Message-ID: <CAFEAcA9E8WRPumTsGh_UCnD-juLFr81BJWZWXEOKTQPkfy8upA@mail.gmail.com>
-Subject: Re: [PULL 38/96] hw/ssi: Extend SPI model
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, Chalapathi V <chalapathi.v@linux.ibm.com>,
- Caleb Schlossin <calebs@linux.vnet.ibm.com>, 
- Glenn Miles <milesg@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x233.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -71
+X-Spam_score: -7.2
+X-Spam_bar: -------
+X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,146 +78,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Jul 2024 at 11:33, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
->
-> On 7/26/24 01:53, Nicholas Piggin wrote:
-> > From: Chalapathi V <chalapathi.v@linux.ibm.com>
-> >
-> > In this commit SPI shift engine and sequencer logic is implemented.
-> > Shift engine performs serialization and de-serialization according to t=
-he
-> > control by the sequencer and according to the setup defined in the
-> > configuration registers. Sequencer implements the main control logic an=
-d
-> > FSM to handle data transmit and data receive control of the shift engin=
-e.
+Having magic numbers inside the code is not a good idea, as it
+is error-prone. So, instead, create a macro with the number
+definition.
 
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+---
+ hw/arm/virt-acpi-build.c | 6 +++---
+ hw/arm/virt.c            | 7 ++++---
+ include/hw/arm/virt.h    | 3 +++
+ 3 files changed, 10 insertions(+), 6 deletions(-)
 
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index e10cad86dd73..f76fb117adff 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -154,10 +154,10 @@ static void acpi_dsdt_add_gpio(Aml *scope, const MemMapEntry *gpio_memmap,
+     aml_append(dev, aml_name_decl("_CRS", crs));
+ 
+     Aml *aei = aml_resource_template();
+-    /* Pin 3 for power button */
+-    const uint32_t pin_list[1] = {3};
++
++    const uint32_t pin = GPIO_PIN_POWER_BUTTON;
+     aml_append(aei, aml_gpio_int(AML_CONSUMER, AML_EDGE, AML_ACTIVE_HIGH,
+-                                 AML_EXCLUSIVE, AML_PULL_UP, 0, pin_list, 1,
++                                 AML_EXCLUSIVE, AML_PULL_UP, 0, &pin, 1,
+                                  "GPO0", NULL, 0));
+     aml_append(dev, aml_name_decl("_AEI", aei));
+ 
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 719e83e6a1e7..687fe0bb8bc9 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1004,7 +1004,7 @@ static void virt_powerdown_req(Notifier *n, void *opaque)
+     if (s->acpi_dev) {
+         acpi_send_event(s->acpi_dev, ACPI_POWER_DOWN_STATUS);
+     } else {
+-        /* use gpio Pin 3 for power button event */
++        /* use gpio Pin for power button event */
+         qemu_set_irq(qdev_get_gpio_in(gpio_key_dev, 0), 1);
+     }
+ }
+@@ -1013,7 +1013,8 @@ static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
+                              uint32_t phandle)
+ {
+     gpio_key_dev = sysbus_create_simple("gpio-key", -1,
+-                                        qdev_get_gpio_in(pl061_dev, 3));
++                                        qdev_get_gpio_in(pl061_dev,
++                                                         GPIO_PIN_POWER_BUTTON));
+ 
+     qemu_fdt_add_subnode(fdt, "/gpio-keys");
+     qemu_fdt_setprop_string(fdt, "/gpio-keys", "compatible", "gpio-keys");
+@@ -1024,7 +1025,7 @@ static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
+     qemu_fdt_setprop_cell(fdt, "/gpio-keys/poweroff", "linux,code",
+                           KEY_POWER);
+     qemu_fdt_setprop_cells(fdt, "/gpio-keys/poweroff",
+-                           "gpios", phandle, 3, 0);
++                           "gpios", phandle, GPIO_PIN_POWER_BUTTON, 0);
+ }
+ 
+ #define SECURE_GPIO_POWEROFF 0
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index ab961bb6a9b8..a4d937ed45ac 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -47,6 +47,9 @@
+ /* See Linux kernel arch/arm64/include/asm/pvclock-abi.h */
+ #define PVTIME_SIZE_PER_CPU 64
+ 
++/* GPIO pins */
++#define GPIO_PIN_POWER_BUTTON  3
++
+ enum {
+     VIRT_FLASH,
+     VIRT_MEM,
+-- 
+2.45.2
 
-
-> > +static inline uint8_t get_seq_index(PnvSpi *s)
-> > +{
-> > +    return GETFIELD(SPI_STS_SEQ_INDEX, s->status);
-> > +}
->
-> Coverity reports :
->
-> >>>     CID 1558827:    (OVERRUN)
-> >>>     Overrunning array "s->seq_op" of 8 bytes at byte offset 16 using =
-index "get_seq_index(s) + 1" (which evaluates to 16).
->
->
-> get_seq_index() can return a value between 0 and 15 and it is used in a c=
-ouple
-> of places to index array s->seq_op[] which is an 8 bytes array.
->
-> Should we increase the size of the seq_op array ?
-
-I think in most places this can't happen, because:
-
-> > +    /*
-> > +     * There are only 8 possible operation IDs to iterate through thou=
-gh
-> > +     * some operations may cause more than one frame to be sequenced.
-> > +     */
-> > +    while (get_seq_index(s) < NUM_SEQ_OPS) {
-
-The loop condition enforces that the sequence index is < 8.
-
-> > +        opcode =3D s->seq_op[get_seq_index(s)];
-
-Coverity isn't smart enough to be able to tell that this
-call to get_seq_index() must return the same value as the
-previous one and so be in bounds for the array, which is why it's
-complaining.
-
-On the other hand:
- * this is also not totally obvious to humans
- * it means we're doing the shift-and-mask ops to get the
-   sequence index out every time
-
-Maybe we should keep it in a variable? (Depends whether there's
-a bunch of places in the loop that want to update the index, or
-if we just do that at the end of the loop.)
-
-Another option would be to have a version of get_seq_index() that
-asserts that the index is valid.
-
-The other design approach available here is to have the device
-state struct hold the underlying information in a split-out way
-(so e.g s->seq_index and other fields), and then assemble those
-into a 32-bit value for the status register in the "guest reads/writes
-the register codepath).
-
-That said, there is also a case which I suspect really is an
-overrun bug:
-
-> > +        case SEQ_OP_SHIFT_N1:
-> > +            s->status =3D SETFIELD(SPI_STS_SEQ_FSM, s->status, SEQ_STA=
-TE_EXECUTE);
-> > +            trace_pnv_spi_sequencer_op("SHIFT_N1", get_seq_index(s));
-> > +            /*
-> > +             * Only allow a shift_n1 when the state is not IDLE or DON=
-E.
-> > +             * In either of those two cases the sequencer is not in a =
-proper
-> > +             * state to perform shift operations because the sequencer=
- has:
-> > +             * - processed a responder deselect (DONE)
-> > +             * - processed a stop opcode (IDLE)
-> > +             * - encountered an error (IDLE)
-> > +             */
-> > +            if ((GETFIELD(SPI_STS_SHIFTER_FSM, s->status) =3D=3D FSM_I=
-DLE) ||
-> > +                (GETFIELD(SPI_STS_SHIFTER_FSM, s->status) =3D=3D FSM_D=
-ONE)) {
-> > +                qemu_log_mask(LOG_GUEST_ERROR, "Shift_N1 not allowed i=
-n "
-> > +                              "shifter state =3D 0x%llx", GETFIELD(
-> > +                        SPI_STS_SHIFTER_FSM, s->status));
-> > +                /*
-> > +                 * Set sequencer FSM error bit 3 (general_SPI_status[3=
-])
-> > +                 * in status reg.
-> > +                 */
-> > +                s->status =3D SETFIELD(SPI_STS_GEN_STATUS_B3, s->statu=
-s, 1);
-> > +                trace_pnv_spi_sequencer_stop_requested("invalid shifte=
-r state");
-> > +                stop =3D true;
-> > +            } else {
-> > +                /*
-> > +                 * Look for the special case where there is a shift_n1=
- set for
-> > +                 * transmit and it is followed by a shift_n2 set for t=
-ransmit
-> > +                 * AND the combined transmit length of the two operati=
-ons is
-> > +                 * less than or equal to the size of the TDR register.=
- In this
-> > +                 * case we want to use both this current shift_n1 opco=
-de and the
-> > +                 * following shift_n2 opcode to assemble the frame for
-> > +                 * transmission to the responder without requiring a r=
-efill of
-> > +                 * the TDR between the two operations.
-> > +                 */
-> > +                if (PNV_SPI_MASKED_OPCODE(s->seq_op[get_seq_index(s) +=
- 1])
-> > +                                =3D=3D SEQ_OP_SHIFT_N2) {
-
-Here we look at the seq_op[] array for get_seq_index(s) + 1,
-so if we're on the last iteration of the loop because the seq
-index is 7 we'll read off the end of the array at index 8.
-
-(Presumably the correct behaviour if the shift_n1 is the last
-operation is that it's not this special case.)
-
-> > +                    send_n1_alone =3D false;
-> > +                }
-> > +                s->status =3D SETFIELD(SPI_STS_SHIFTER_FSM, s->status,
-> > +                                FSM_SHIFT_N1);
-
-thanks
--- PMM
 
