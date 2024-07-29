@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AEADC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:39:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D509C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:41:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYRWy-0005nc-Jv; Mon, 29 Jul 2024 10:39:20 -0400
+	id 1sYRYK-0001g6-Ig; Mon, 29 Jul 2024 10:40:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYRWw-0005mI-5k
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:39:18 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYRYJ-0001ck-MK
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:40:43 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYRWu-0007bH-6h
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:39:17 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-427b1d4da32so10800155e9.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:39:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYRYI-00081n-3H
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:40:43 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-427fc97a88cso17621565e9.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:40:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722263954; x=1722868754; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722264040; x=1722868840; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qEnyOvA1X8TKi0lsodpQGCil95YO2hb3XDAGCjbudWY=;
- b=iXonCNgmBPImVG0FiVp0sSdjg+njcJ75tCZfdqt2S24a79C8Gl55o/F4us3QSPEnHO
- h8V1gvj0syTvzBWPMojzVxaHTGQ6dryU8VmX/1f0OlhmsT0jv+pdrBmKWuRTipvvX6gj
- hcrASS7RX6IPkcjB3yJ0DIMpqeYcywTGY0tYCe3TaG3b0hpj9DgGdTQASV3QU4T69KFz
- HMFBlSR70H1kHKu+SHAYdXIyuuaSJDeU8+3MdWB7y/g7ypiVrsLMrAHUJNR9ySyehCec
- AcVnfGfrQ/OQ/5UPNdk0pFi/FV4eeZwig3/VaGDACEmKoQoq7onH+60RXGWv8qKJnTmM
- 9nVQ==
+ bh=j3e9b1ZbsCUPjFEgRqJ+hwXbs28Kkpn08+Yw7FV+otA=;
+ b=LF36nJH/Q1g1SbvOzbLzR6BZ8ED3F4gb43syzDdFk+KmlR7ABUNTOv3o1LP4/uj6Nb
+ XtoyEITjbBHM5oE/hEa55KwtMKXv+mNsNhG0p/hG3Of8xdm1mOJ0IqPEMwSbf481vK8M
+ T8I54dIWtLkrrh9S9TE5QxXKMvpIr6jNT80x6G92UTvxyn/4KUOKt/cfo5hQkM0DNP86
+ +Wn8wy4d2UG7djzgts419a+QTeA/SfsCPZ1E2UNENNVpC71ZeRuTE/IQTNxu0fGNq9TH
+ 14sOhbdoFmIX2VwuaCkIskWe3RDEUWNRQzZztg8rB1tIL6grzNp8/ShqlfiyhHNDMPiK
+ 3GKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722263954; x=1722868754;
+ d=1e100.net; s=20230601; t=1722264040; x=1722868840;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qEnyOvA1X8TKi0lsodpQGCil95YO2hb3XDAGCjbudWY=;
- b=YBv5jC6TQfXlRC0xTvW0RRscX3KVQhWtG7qeaM/NcUEOZv6+uHBDc93Z7b59OY9X8p
- jlRTr93bx/ygjIwX20C2smjQVxKkwn8cnkuoVXrI0tXZnVRzlg2Le3yo1gIn/QQp8CqH
- IfVx8sXYw1YhxRyDS36libmizKeVShMsF/QJFQLqm3omP3Yx7okGeKnTJ0iPoLuD8n0m
- hPmYdKSYwVpwRPrW7VtZnAS9XE/UTrnc2x0rM+gdx0UCbif/szTV6GMsQ8PSkgjn0jQF
- NJxPaNd1WarGeoZOguBWIRdvg5zZJMlgcz4iMqkJAPxqwU1oxiGi1dicjqcplvTCqiLk
- 6kvg==
+ bh=j3e9b1ZbsCUPjFEgRqJ+hwXbs28Kkpn08+Yw7FV+otA=;
+ b=UIsO2urHrAAATTNMN46IeXJ/FCYRAfg3xyi8PzWC4b61UyOmLGAKIx6zVD3uLNM/Pg
+ xoqriyNX5UJBfpAz+F8x2OJ9iPDoYiwbkpPqmI8iZTQdceSYRgUYaPlyr7Mwlas3RV9l
+ T77fneAiz5pcZANNp/F3vBpHIgNpmxhHxhvlneiwix/Td/QvB1LHnEWcX8W6+UoBofw8
+ 9IdR4cCCwnHZlV+yafzVRYBoDBJ9cp5HNwTaiJkLG9Dbrat6EZpJwD3rWisLed5BbtTW
+ AwkMYsS4mlvCs/RXo5i+q31BWJXhV4KXP1Ysy+uVT1Z55EyWQdeD0kVtpjcEVDh1OAAV
+ x8Eg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXXIyib5JhSiK9lP22P1J+kWHAuHCROO/10lW9O18mlaTkzQlornl16xig8WNEwfUv8onwoIJDkeKU3wJ7679NN2/vPn5k=
-X-Gm-Message-State: AOJu0YwfDtNuLEuXIMqDlUsqkK9vGuMmk4DUESX9irKPKb30SxV93bpx
- CaDDBqxUoVjVHe1VpuvAz5+wr7NetNZbTwAu/fIDftgTi5OK3azpYozKnRHer14=
-X-Google-Smtp-Source: AGHT+IGhrXmQOvCwdmc/mrVWsNfUM8NWLaSEVksL1o/NLVYFClufq9VU4ziPQrR4Ung5I6UYQQ0o4Q==
-X-Received: by 2002:a5d:55d1:0:b0:363:ac4d:c44f with SMTP id
- ffacd0b85a97d-36b5d7cf02bmr4471297f8f.17.1722263954418; 
- Mon, 29 Jul 2024 07:39:14 -0700 (PDT)
+ AJvYcCVF0eexQ2syQMf+/cSSL55fz4NDMJoiWjkPUiIhBXX6wITxEhqGAmuyZnwMmVFFWQRrOB825AYCgoMkAbmwGETfx1BntXo=
+X-Gm-Message-State: AOJu0YzymnABxcBJlp+ERKV+oYM8VOBLF6d2OxxzdlO5vrjS7MUIb36d
+ jqwxlJmS5muz617r7HHoXCo1FeLBLo7jOvoABBv+h3AigJHlfevJJ6i87VbqWgc=
+X-Google-Smtp-Source: AGHT+IFHgcVZBSsqx+kJWyuBFGP6dDtPg8rYuEWdm5awfdO3TlQSRElWHr7IrKK+DGDGkjwxVHIITg==
+X-Received: by 2002:a05:600c:3ba6:b0:426:6667:bbbe with SMTP id
+ 5b1f17b1804b1-42811d89a5bmr62687045e9.9.1722264039627; 
+ Mon, 29 Jul 2024 07:40:39 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.173.10])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b36857eb7sm12396324f8f.66.2024.07.29.07.39.11
+ 5b1f17b1804b1-428218a3934sm2651625e9.45.2024.07.29.07.40.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jul 2024 07:39:13 -0700 (PDT)
-Message-ID: <a7f2d78a-4de6-4bc6-9d54-ee646a9001fe@linaro.org>
-Date: Mon, 29 Jul 2024 16:39:10 +0200
+ Mon, 29 Jul 2024 07:40:39 -0700 (PDT)
+Message-ID: <0977da6d-53c9-4ea4-a099-531d76258dfd@linaro.org>
+Date: Mon, 29 Jul 2024 16:40:36 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/13] tests/avocado/tuxrun_baselines.py: use Avocado's
- zstd support
+Subject: Re: [PATCH 00/13] Bump Avocado to 103.0 LTS and update tests for
+ compatibility and new features
 To: Cleber Rosa <crosa@redhat.com>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
  Beraldo Leal <bleal@redhat.com>,
@@ -77,14 +77,13 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  Radoslaw Biernacki <rad@semihalf.com>, Paul Durrant <paul@xen.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
 References: <20240726134438.14720-1-crosa@redhat.com>
- <20240726134438.14720-11-crosa@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240726134438.14720-11-crosa@redhat.com>
+In-Reply-To: <20240726134438.14720-1-crosa@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,58 +107,22 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 26/7/24 15:44, Cleber Rosa wrote:
-> Signed-off-by: Cleber Rosa <crosa@redhat.com>
-> ---
->   tests/avocado/tuxrun_baselines.py | 16 ++++++----------
->   1 file changed, 6 insertions(+), 10 deletions(-)
-> 
-> diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
-> index 736e4aa289..bd02e88ed6 100644
-> --- a/tests/avocado/tuxrun_baselines.py
-> +++ b/tests/avocado/tuxrun_baselines.py
-> @@ -17,6 +17,7 @@
->   from avocado_qemu import QemuSystemTest
->   from avocado_qemu import exec_command, exec_command_and_wait_for_pattern
->   from avocado_qemu import wait_for_console_pattern
-> +from avocado.utils import archive
->   from avocado.utils import process
->   from avocado.utils.path import find_command
->   
-> @@ -40,17 +41,12 @@ def get_tag(self, tagname, default=None):
->   
->           return default
->   
-> +    @skipUnless(archive._probe_zstd_cmd(),
 
-_probe_zstd_cmd() isn't public AFAICT, but more importantly
-this doesn't work because this method has been added in v101.0.
+> Cleber Rosa (13):
+>    tests/avocado: mips: fallback to HTTP given certificate expiration
+>    tests/avocado: mips: add hint for fetchasset plugin
+>    tests/avocado/intel_iommu.py: increase timeout
+>    tests/avocado: add cdrom permission related tests
+>    tests/avocado: machine aarch64: standardize location and RO access
+>    tests/avocado: use more distinct names for assets
+>    tests/avocado/kvm_xen_guest.py: cope with asset RW requirements
+>    testa/avocado: test_arm_emcraft_sf2: handle RW requirements for asset
+>    tests/avocado/boot_xen.py: fetch kernel during test setUp()
+>    tests/avocado/tuxrun_baselines.py: use Avocado's zstd support
+>    tests/avocado/machine_aarch64_sbsaref.py: allow for rw usage of image
+>    Bump avocado to 103.0
+>    Avocado tests: allow for parallel execution of tests
 
-> +                'Could not find "zstd", or it is not able to properly '
-> +                'decompress decompress the rootfs')
->       def setUp(self):
->           super().setUp()
->   
-> -        # We need zstd for all the tuxrun tests
-> -        # See https://github.com/avocado-framework/avocado/issues/5609
-> -        zstd = find_command('zstd', False)
-> -        if zstd is False:
-> -            self.cancel('Could not find "zstd", which is required to '
-> -                        'decompress rootfs')
-> -        self.zstd = zstd
-> -
->           # Process the TuxRun specific tags, most machines work with
->           # reasonable defaults but we sometimes need to tweak the
->           # config. To avoid open coding everything we store all these
-> @@ -99,8 +95,8 @@ def fetch_tuxrun_assets(self, csums=None, dt=None):
->                                            asset_hash = isum,
->                                            algorithm = "sha256")
->   
-> -        cmd = f"{self.zstd} -d {disk_image_zst} -o {self.workdir}/rootfs.ext4"
-> -        process.run(cmd)
-> +        archive.extract(disk_image_zst, os.path.join(self.workdir,
-> +                                                     "rootfs.ext4"))
->   
->           if dt:
->               dsum = csums.get(dt, None)
-
+Queuing patches #1, #2 and #8. Unfortunately #10 depends on Avocado
+101.0 so can't be merged at this point.
 
