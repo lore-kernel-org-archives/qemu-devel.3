@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16653C3DA61
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 02:21:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 441B5C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 02:22:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYcTr-0005Cg-Qy; Mon, 29 Jul 2024 22:20:51 -0400
+	id 1sYcV8-00008E-IE; Mon, 29 Jul 2024 22:22:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYcTq-0005Ac-IN
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:20:50 -0400
-Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ id 1sYcV6-00007c-Na
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:22:08 -0400
+Received: from mail-qv1-xf31.google.com ([2607:f8b0:4864:20::f31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYcTp-0006Ze-1Y
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:20:50 -0400
-Received: by mail-qt1-x832.google.com with SMTP id
- d75a77b69052e-44feaa08040so23892581cf.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 19:20:47 -0700 (PDT)
+ id 1sYcV5-0006sy-6A
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:22:08 -0400
+Received: by mail-qv1-xf31.google.com with SMTP id
+ 6a1803df08f44-6b5d3113168so23450796d6.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 19:22:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722306047; x=1722910847; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722306122; x=1722910922; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hs4GzPNy5V54pZYKeUr6ChWpCBV5fc0f5Vs0nKwuDRM=;
- b=tXTfrVVtpkA2BSbfVSY7rwz/kiZs1bz98hu8EEZbmuBFfQHbCO2yxN4ZiSZYojPKRk
- 5Qg6Pj0MlMWzdUcq+ePQNteK2H+1xO0VAdOwgWvYmVt7BKyYCEuGKOj8W81vAdbJfiml
- 6S5T24FxoV45TOCmy9gzZ2bJEBUNRVRNdgZOa/hAMcwg7Icifauk2QTkEBFe2GcCPk2C
- iy3LWm49sj/n4tadjS1EPHoEoHZD+AJgvCsYbCKX97YApmZdwN8Ly3MeX7VHxC2s3S0U
- +fIFyFxDsVZuoMuajV1F7yyF7YIQNEVf/1rYVHd7r5UNFiBnMjbvW2OXw5Okc4McfObn
- PoaQ==
+ bh=pkLZTmEY9dxtVQ0wb6MO1CwmXaO0v5ngNRGRZrlJftg=;
+ b=pfEkvktbAM+KFBlpblfSGMK9+KMcazMZEV2waslEnWxNb5p5OnaesBzMh9N9K3m5m9
+ z1kId9tEdv4ZYmdHzqm1iidgQuPODnQ2SzZi6DU7Gf/mLTanjERFh9u1FUr2e1U1qDZW
+ mJx0g3QCOOzc2yniILFFg7C1wugetkEp5kxcj/832vWETX1pq21wyw4yF+yxJIFC8Ibq
+ YPxgoQhCJAUvym28/MmrwttR/nbOPM/qQgkHSX/HjRW3gm+vERPfBLREXE13y+mvGJ8W
+ Fm+bE7PhYKRn5fks1Kw3xnLy8oaQrcpruEW8PepUnwjgnKU01AFpFNBZfJdjnps5VOo5
+ pgYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722306047; x=1722910847;
+ d=1e100.net; s=20230601; t=1722306122; x=1722910922;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hs4GzPNy5V54pZYKeUr6ChWpCBV5fc0f5Vs0nKwuDRM=;
- b=v6c7hpNnV5w/0TUpj4p1qf16BaLjSm2w6iQAV+LkDHUQ6jjbKzGlMImD5msnxFjXSe
- Do7XPsUywj6pS4xmhfJZltS7V40sPoAI4q1A582RlNIpTdPihSYuYCvNxPbuKWozw/wS
- DOT2jOoe8ZY4qWAgtUmE9N68xqBb1tF0rxAB6gCZ0waVZyQwIgzQr0IgflSnp9tRcIEo
- uyc2ucq3Y1KWzKZS0j1rfdEK/BsTp0DRa85ycEAP7asCkjOun6KBGhhTedf9/dEoeHO3
- O13euh4DGUgU/mfY7Zi3CKYJ2b7SuNZSC/PI4qV9Vk0FIvfL5e4UHOTrnas+pFdOgcXI
- FfZQ==
+ bh=pkLZTmEY9dxtVQ0wb6MO1CwmXaO0v5ngNRGRZrlJftg=;
+ b=PNSDe4vSauyfQP6e8nmVAW+gvCi44a/XkTTGzcQ7RQIIMemS/GKC2QcLfS/RqRRbhi
+ voheHKji0blxqr1VIrO1vnN4FLH4NTWoY4fecdYEC6AOYqV0Q1K2q9ZagpyKiZaT3LOt
+ Z9sbxBpk2jwfTvuvAGthaWlvbhxdLhF9+UH2ItxxMK5wNwgiUFHVJEGhk+9A+KxfTetN
+ 0KTXnUDMy5l6VzfvcdyiXr5g+V3jX4UugdnpmfqcnhDUbhnb8k4N+3d5gIemSewAbZCl
+ Kqzoti9RIyuWr6hO4gvDVAfcE59giol67XJM5czggJ+i06GFVPwrl4SER1HpBcpXN3e2
+ 69NA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUxIJ+9xBT+nvUDVATYYH7MgYX+fYBNqsmZAYO4rfXeDDV3D0iKGEYirOvcghGV7MVjz5Gt0kDxy0PWb/UR5Gs+R+5J52E=
-X-Gm-Message-State: AOJu0YxKDAyvquHwC2LkZ96Tv0353+OZzL7fn1C9JiIprQmuQC4wXDrE
- Uu7cYWUDA0xnpGSOnAkK5Nz/3qYJaJjZ/xbuyGQijgSb+F4brddeUNetkDH2+dgRvfJsP76e+X9
- J11M=
-X-Google-Smtp-Source: AGHT+IHngSVEDMj5B8lDVcAhXv9ZB0s3OKkfKPjEAISMpEIoGC+o10yKL16QUUkOxpdFkF+gvu4vYA==
-X-Received: by 2002:a05:6a21:178a:b0:1c4:c93e:a57b with SMTP id
- adf61e73a8af0-1c4c93ea754mr3989950637.23.1722291899783; 
- Mon, 29 Jul 2024 15:24:59 -0700 (PDT)
+ AJvYcCUN4l5LUrkm4ebPiZa17cz8DvubrtAYNL/rh2WqyMTbnQjIAQo/6ljTB9EtTno4bHp5dIq8rpxQmtDpSvCdMU7k2sgAa+0=
+X-Gm-Message-State: AOJu0Yz1XIspnTyruDNl+H+l9kFIkUgy8QLvyv6pRhvTiZSL4hZW+hDy
+ 1R+6YFW3U5q8YwJPcRRmyDw+5Fgtg+jhbmXUG9+1jbsfuPwsXH3LVuS1icXZmJG5X/649gxeWYi
+ HpSs=
+X-Google-Smtp-Source: AGHT+IGm5PBT5QA/Cnc1N1tHTBIzO0ZKp1uFDnrUwTeiETpRMSmZmaXuurKFROPvVJKQlgbwfOxqHA==
+X-Received: by 2002:a17:902:c40b:b0:1f7:3d0d:4cd with SMTP id
+ d9443c01a7336-1ff0483dea9mr74308975ad.24.1722292072052; 
+ Mon, 29 Jul 2024 15:27:52 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead8a1aadsm7293808b3a.193.2024.07.29.15.24.57
+ d9443c01a7336-1fed7cf1db4sm88578735ad.87.2024.07.29.15.27.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jul 2024 15:24:59 -0700 (PDT)
-Message-ID: <61658a95-5e6a-451d-b36c-5031618876ab@linaro.org>
-Date: Tue, 30 Jul 2024 08:24:55 +1000
+ Mon, 29 Jul 2024 15:27:51 -0700 (PDT)
+Message-ID: <1e08eb52-4521-4b24-9b35-65ef81decb0c@linaro.org>
+Date: Tue, 30 Jul 2024 08:27:47 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/14] docs/devel: update the testing introduction
+Subject: Re: [PATCH 09/14] tests/tcg: move test plugins into tcg subdir
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 References: <20240729144414.830369-1-alex.bennee@linaro.org>
- <20240729144414.830369-7-alex.bennee@linaro.org>
+ <20240729144414.830369-10-alex.bennee@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240729144414.830369-7-alex.bennee@linaro.org>
+In-Reply-To: <20240729144414.830369-10-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x832.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f31;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,13 +100,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/30/24 00:44, Alex Bennée wrote:
-> Move the mention of "check-help" up to the intro text and also mention
-> the meson test integration.
+> You cannot use plugins without TCG enabled so it doesn't make sense to
+> have them separated off in the test directory structure. While we are
+> at it rename the directory to plugins to reflect the plural nature of
+> the directory and match up with contrib/plugins.
 > 
 > Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
+> Suggested-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   docs/devel/testing.rst | 21 ++++++++++++++++++---
->   1 file changed, 18 insertions(+), 3 deletions(-)
+>   MAINTAINERS                               | 2 +-
+>   tests/{plugin => tcg/plugins}/bb.c        | 0
+>   tests/{plugin => tcg/plugins}/empty.c     | 0
+>   tests/{plugin => tcg/plugins}/inline.c    | 0
+>   tests/{plugin => tcg/plugins}/insn.c      | 0
+>   tests/{plugin => tcg/plugins}/mem.c       | 0
+>   tests/{plugin => tcg/plugins}/syscall.c   | 0
+>   tests/avocado/tcg_plugins.py              | 4 ++--
+>   tests/meson.build                         | 2 +-
+>   tests/tcg/Makefile.target                 | 4 ++--
+>   tests/{plugin => tcg/plugins}/meson.build | 6 +++---
+>   11 files changed, 9 insertions(+), 9 deletions(-)
+>   rename tests/{plugin => tcg/plugins}/bb.c (100%)
+>   rename tests/{plugin => tcg/plugins}/empty.c (100%)
+>   rename tests/{plugin => tcg/plugins}/inline.c (100%)
+>   rename tests/{plugin => tcg/plugins}/insn.c (100%)
+>   rename tests/{plugin => tcg/plugins}/mem.c (100%)
+>   rename tests/{plugin => tcg/plugins}/syscall.c (100%)
+>   rename tests/{plugin => tcg/plugins}/meson.build (70%)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
