@@ -4,91 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3476C3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:16:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1DCBC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:16:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYS69-000747-WD; Mon, 29 Jul 2024 11:15:43 -0400
+	id 1sYS6K-0008RD-NE; Mon, 29 Jul 2024 11:15:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYS5x-0006tR-3j
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:15:29 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sYS66-0007Tw-1X
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:15:41 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYS5t-00067W-CG
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:15:26 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-428163f7635so16231455e9.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:15:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sYS64-0006DQ-9u
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:15:37 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2f01e9f53e3so54428401fa.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:15:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722266123; x=1722870923; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=79xu6GwJt2tOSZjRUkS6x2bp/kSXLFMEOLWAaLfoTjo=;
- b=F8mA1Ri7bd4tcCJIvECqdnEJEwNa/JZ6Y40S6TE15PUnl0tHpVsS8YF+IptiyjecIo
- orxJlAvQgUXLtNji5oUEH8XvLbASwljJjy0LCSQ7Vt53qyor3rDJ1VVV/0XkyIcFwu3P
- rawbpAfVM3Pch+57seTREeTBa2XkWNvn8wIk7KQru+n33b0QaKzl7V08vabktgdCs8CS
- GIyPN4jLtdCDAyHl3eEIJ9qm7D1w/onrYKRcE//AwkeT63PO2OfRhlqzpkSYacNu6sbQ
- y9yCrYldCCDnChZE/CsEONkL5DEGGY5Dwjh2gtORuPy6lAfiKp8bu1n0ySbwAyPDfEn5
- 9DQQ==
+ d=linaro.org; s=google; t=1722266133; x=1722870933; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=BKuqbZOXAboBHx1ox4X60UNfaU6nkT1ePbeK4FEBPyY=;
+ b=GFs3sGdmMRkreX0FDgPIMQkBQzrzF+JhuW7yYi29tr2IavW3Hl+tFZJ4Gh4FAwE29T
+ XXVNfRPPGIf9pT4Rt3jq7yoNJjoMZOi6c9totnPgWgZVIHvduNn1jOJdLCAEKfYXZJN1
+ 5up+U20P7XG9wnry0WdS8NMEYArI281arnYJN6njzF33CaQrN+0Ts3PGZb4BDv2WGjfL
+ DuyIqDy0FD0gAMzpNU6gWxwXtGh8p3+FAIexUQldAtxr2Z0xW5jSTmCpE9pHbI8MY5YO
+ XLcanmBldnMQUFmz1wfQnILnmZ8NUdcfur7EicVhBF7L5GmVFFwYgK6x7+EYm2Mi8yr7
+ 3Rqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722266123; x=1722870923;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=79xu6GwJt2tOSZjRUkS6x2bp/kSXLFMEOLWAaLfoTjo=;
- b=spPxbQR+4EQc5xjBAK2m+7MUukMSndCdYX84Bwa1+6zM876dszia1WAmkzwt7q47G6
- rtVJvRLf3I/en4FLTNaKF1hkVszQyT9nk4rsBWLij+lyN/gUYU1yP3vU/sPZ/f3gElbl
- vOV1dgonjokAhj9jgCw4jIJ2+alfv8uV1k4i1UH2qNlPvQGPHWHk3J3xTyJy/gsjleLP
- adGp4N+5k33UeesgkQjrICTZGeOhRpQriURRkX+LMJt47JLxEaqcW5qCyjLy1XSaM7wj
- ZH2/mg0d4pF7dtuBdjToU9fr8kWYYgBKtGl7JFmQ+jmC3zG8ali84JWJf0YsuEIr9N9Y
- BIUw==
+ d=1e100.net; s=20230601; t=1722266133; x=1722870933;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BKuqbZOXAboBHx1ox4X60UNfaU6nkT1ePbeK4FEBPyY=;
+ b=mHCtRAFNhkOOsV6TjqmWZIiD5aWFm9CZd0l3gEyEU4YL/4vaSJFWlwR1I/+8fEJnK2
+ uajxVpVZ5ZmwvnLchWjnCGgBeLaPPZQOnnZfbpchGjt02htxSWqNjJ+EkmOSmwXL/NEZ
+ MBy5sYUlaUe3JV6jPUheXfMPYZzIH7UqRKotO7/5rAbVNCiJlLBpoOnxjg+/JulzllOV
+ hg1Wrz2VO+LOu2kqm9eBfuWMqpchGvT09GSz8elTf2eBzS1fQvIx10kcAlz4u9LWMB8e
+ 9j+fmdgDTA9QfvQuno4wG2NmmQzthXKNDjeLrTt1bgBndHH0w7yuMIxa+Z5UTsKvB2Yt
+ Metg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW7aQaYzmvZE4EnwEcjHNDPqzUQ8A3N9d+ROZELjG2Tbnua6stmy7Ujm6nsVelLRvZJ4jYtau9exKPQJFbzdrIVlAka6C0=
-X-Gm-Message-State: AOJu0YxyMrO9Woi39t8nszj5jypRMPx2d/gE4MdO2Uzq7we9pkIS2OZJ
- l4ksuTybRoMkimvNPLWhBvse88ZDuQhM979PkZBsbU1VS80pTw8CPQmIDyNz1mQ=
-X-Google-Smtp-Source: AGHT+IF6nc5Y+e2eOcabdpkPzuygIXcrytI+wRNmlOTnBDBa1WK+EeAGe2UPQng2y/E8HyELyGQXTQ==
-X-Received: by 2002:a05:600c:2143:b0:426:5471:156a with SMTP id
- 5b1f17b1804b1-42811d86408mr53805875e9.13.1722266123436; 
- Mon, 29 Jul 2024 08:15:23 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.173.10])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4280a867e7esm136621325e9.27.2024.07.29.08.15.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jul 2024 08:15:22 -0700 (PDT)
-Message-ID: <15dd571f-e4c2-4eac-a0f2-a056f63843fa@linaro.org>
-Date: Mon, 29 Jul 2024 17:15:18 +0200
+ AJvYcCUpMQnYrPB2ANJSffSuEyCE2/qj8VyNt+t9dHzgQu+IYw2i1eSFE4I8da9jjvA6W4+uPSDKeZuR/gJecmrXD5QXlYOEP1M=
+X-Gm-Message-State: AOJu0YyCHYz8COb0tzesSxBzMlMbtDreoNB/+7qCJ92dgqpZ8W7I1XHn
+ bHne8ALUuDyY+iWEnERG5CWuMF1NgSHrRYTbuNQhaHr94YeCyBQKM404EGMkLL4ucZgznCla1Np
+ vQ760uj6Ge+0a8oXpEfhqfMbTXodH6i6Yv6CEDg==
+X-Google-Smtp-Source: AGHT+IH6NpqeyCy53Urzjt7DAz1mAGiYBBvjPwebwZmqBTOauCa8V/qyDGsSedppiqHaYqy8RMHdkT7z1Q9117GMDBw=
+X-Received: by 2002:a2e:3208:0:b0:2ef:2422:dc21 with SMTP id
+ 38308e7fff4ca-2f12ee6322emr66771801fa.43.1722266132405; Mon, 29 Jul 2024
+ 08:15:32 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/14] tests/tcg: move test plugins into tcg subdir
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Bin Meng <bmeng.cn@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-riscv@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-s390x@nongnu.org,
- Cleber Rosa <crosa@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-arm@nongnu.org,
- Alexandre Iooss <erdnaxe@crans.org>, Song Gao <gaosong@loongson.cn>,
- David Hildenbrand <david@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-References: <20240729144414.830369-1-alex.bennee@linaro.org>
- <20240729144414.830369-10-alex.bennee@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240729144414.830369-10-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+References: <20240720-pmu-v4-0-2a2b28f6b08f@daynix.com>
+In-Reply-To: <20240720-pmu-v4-0-2a2b28f6b08f@daynix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 29 Jul 2024 16:15:21 +0100
+Message-ID: <CAFEAcA-ReAnVnq3WCZGEvBhH03gmwANC8TaiwMx5K6y7wQGRZg@mail.gmail.com>
+Subject: Re: [PATCH v4 0/6] target/arm/kvm: Report PMU unavailability
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,35 +91,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/7/24 16:44, Alex Bennée wrote:
-> You cannot use plugins without TCG enabled so it doesn't make sense to
-> have them separated off in the test directory structure. While we are
-> at it rename the directory to plugins to reflect the plural nature of
-> the directory and match up with contrib/plugins.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   MAINTAINERS                               | 2 +-
->   tests/{plugin => tcg/plugins}/bb.c        | 0
->   tests/{plugin => tcg/plugins}/empty.c     | 0
->   tests/{plugin => tcg/plugins}/inline.c    | 0
->   tests/{plugin => tcg/plugins}/insn.c      | 0
->   tests/{plugin => tcg/plugins}/mem.c       | 0
->   tests/{plugin => tcg/plugins}/syscall.c   | 0
->   tests/avocado/tcg_plugins.py              | 4 ++--
->   tests/meson.build                         | 2 +-
->   tests/tcg/Makefile.target                 | 4 ++--
->   tests/{plugin => tcg/plugins}/meson.build | 6 +++---
->   11 files changed, 9 insertions(+), 9 deletions(-)
->   rename tests/{plugin => tcg/plugins}/bb.c (100%)
->   rename tests/{plugin => tcg/plugins}/empty.c (100%)
->   rename tests/{plugin => tcg/plugins}/inline.c (100%)
->   rename tests/{plugin => tcg/plugins}/insn.c (100%)
->   rename tests/{plugin => tcg/plugins}/mem.c (100%)
->   rename tests/{plugin => tcg/plugins}/syscall.c (100%)
->   rename tests/{plugin => tcg/plugins}/meson.build (70%)
+On Sat, 20 Jul 2024 at 10:31, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
+>
+> target/arm/kvm.c checked PMU availability but claimed PMU is
+> available even if it is not. In fact, Asahi Linux supports KVM but lacks
+> PMU support. Only advertise PMU availability only when it is really
+> available.
+>
+> Fixes: dc40d45ebd8e ("target/arm/kvm: Move kvm_arm_get_host_cpu_features and unexport")
+>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Akihiko Odaki (6):
+>       target/arm/kvm: Set PMU for host only when available
+>       target/arm/kvm: Do not silently remove PMU
+>       target/arm: Always add pmu property for Armv7-A/R+
+>       hvf: arm: Raise an exception for sysreg by default
+>       hvf: arm: Properly disable PMU
+>       hvf: arm: Do not advance PC when raising an exception
 
+Thanks for this patchset; I've applied patches 1, 2, 4, 5 and 6
+to target-arm.next, but I had comments about patch 3.
+(Let me know if there's a dependency that 4-6 have on patch
+3 that I've missed: but they look to me like they're
+still OK to take without patch 3.)
+
+-- PMM
 
