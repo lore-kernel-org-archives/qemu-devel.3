@@ -4,133 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D25C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 09:53:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83E11C3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 10:06:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYN3O-0000Mz-FW; Mon, 29 Jul 2024 05:52:30 -0400
+	id 1sYNFi-00078e-Dp; Mon, 29 Jul 2024 06:05:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sYN3M-0000FB-Rp
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 05:52:28 -0400
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sYNFh-00078B-HZ
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 06:05:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sYN3L-0005J8-3h
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 05:52:28 -0400
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1sYNFb-0007Ty-Ki
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 06:05:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722246746;
+ s=mimecast20190719; t=1722247504;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=X42jPKjfWn3JrUR0dm5rMOtmkyC2iVFcpnst9O683lI=;
- b=TWc42zCtCZAyfqY+LiXD6cR5AhjeIDrnLOVjU2sEyzG/xDi2yBTXsVQSutsfw6KJoKiIJl
- vOC/5Z6/vso2Rx4KQZxKtugijKb1kIzODl5TEAmcHvTt3yKsonQ0Us0eZBx2TgFC5ciskR
- xx7cODD5pUYBZS68Dr4JifYz1nhfwwA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=Ic9DRKI1NAp1MQ+ZEa3IkR628N5vNe7ump7bHoDA3n4=;
+ b=MhVLv+xcK4HV/MgaBlXsO+TzNxSLYFN+Mq7CtN7u7OYtyoZm5td9lNLJ/oVtkOE4hmr1Ql
+ wrmEzQazCYR9YZnqll5bHUp/wods8Dh3AEajbqpI66ZPBmD3rZEdfAgF6VEzzGaBlmamzR
+ LeDzlSic8k5vAa8xjaEx/qX0L2ETJvA=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-353-_ua95Nx0MOqf_B-chzyVSQ-1; Mon, 29 Jul 2024 05:52:22 -0400
-X-MC-Unique: _ua95Nx0MOqf_B-chzyVSQ-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-36871eb0a8eso1319175f8f.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 02:52:22 -0700 (PDT)
+ us-mta-99-i-vgmw-rNw6BfoVmOhEsRQ-1; Mon, 29 Jul 2024 06:04:59 -0400
+X-MC-Unique: i-vgmw-rNw6BfoVmOhEsRQ-1
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-66b8faa2a4aso54212887b3.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 03:04:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722246741; x=1722851541;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=X42jPKjfWn3JrUR0dm5rMOtmkyC2iVFcpnst9O683lI=;
- b=bPlrnuRcA8HzAADylVBuz+j6+NOsZzYaL/TadKFNky9TS31raTsoWkLVhk7IxQKQus
- yZh/d0BC9rcyx0+Fw88lA9Ka5EPy0pXnmXkmVpnhZ82lzEdvYPWoZDTZolBRmz4OgUYY
- lLMtFWlGs1jlf1Q84Ej1LCXiQtNJijRIY/6e9MURCEl/nUO6kHycLuRVeFIQ879MgytE
- p5O8I4y3u0QeGT+KrjIOUc6wmWt/Ysbis7W7w6YKd/S6EiAkQtFu7A0tqd4t1OIwRFhj
- UYJ8hzld9ikSOCs/cec33yEDW2KypA7yQq7TBjlyt6fQza7ugpxRXZXBj992+tax4PSS
- 0WEA==
+ d=1e100.net; s=20230601; t=1722247498; x=1722852298;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ic9DRKI1NAp1MQ+ZEa3IkR628N5vNe7ump7bHoDA3n4=;
+ b=jdQZrDvXmn5z0rFF6khv/KTdQlSxXqsXItuZ9+yz/5wNSITYiGGGLxLpNOosoAxRgK
+ QO0dAImpQCMPfYhIoIAW4BRpAkIWkAaCduqxoZ91MyzOfd5UbtUD6G5AImC+saziQLk+
+ +sHhpBvs0TSgXzrm6BORTMa8q+NjvhQzwzbAIQOm+EnJLOAW/qJlrmJ+LUPIYP2WQve5
+ qCHdwosX5jwMaPJrOwSItaiH/fWKPS9HppsWMwY3srOMJTYEPMwxRtOewadSxUYwRYaX
+ hlcWXoJ4UTidEKHiSI/UmCZLOhsI6q3UHoUKxwLpSztXud/ZeOEmGCXVA4G6eRaJuYuo
+ ZwlA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJWn8HizmRpwE8mg2gOgi68391tM5GNGjX6OJyeIBVSl8PKKGRcpYhU8Gt5oL9fDL7yHW6pN5fBR5orXr06w4dNcmfPZY=
-X-Gm-Message-State: AOJu0YyePw+n+8ce5KHebT9hx2zTPiZUy5raH/93kxmjB8m0qzAt4o8Y
- CgFFZqFvZbpdH8sTewP8j25AaOlN8LiWpRwPv7funFW/0C66rgZTSu3SPbadT69Sqji/HXTfS3Y
- 1yTp2UmLOrSW3JRzFMUYQ3eWaIX6xx9ShxKYgazrTykpsZHXXSZl1
-X-Received: by 2002:a5d:6510:0:b0:367:905c:823e with SMTP id
- ffacd0b85a97d-36b5d0cd631mr3962814f8f.24.1722246741315; 
- Mon, 29 Jul 2024 02:52:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IELdatkSOfuETyW/OzCKPDuk0FaHsoldmtW7Hp9vVPFDxcOUpXYbO9PKdHOKlkHN9eZ7cLHXg==
-X-Received: by 2002:a5d:6510:0:b0:367:905c:823e with SMTP id
- ffacd0b85a97d-36b5d0cd631mr3962802f8f.24.1722246740882; 
- Mon, 29 Jul 2024 02:52:20 -0700 (PDT)
-Received: from ?IPV6:2a09:80c0:192:0:5dac:bf3d:c41:c3e7?
- ([2a09:80c0:192:0:5dac:bf3d:c41:c3e7])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b367c06f4sm11880671f8f.6.2024.07.29.02.52.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jul 2024 02:52:20 -0700 (PDT)
-Message-ID: <00bc2317-dbba-43b3-b355-ddce45b5dfc6@redhat.com>
-Date: Mon, 29 Jul 2024 11:52:19 +0200
+ AJvYcCUZZIOeEvbtts3oDulUkSlSYYC0hPYs5SrSQsxfEnbANsjKQEjfmhuCoaSybrX0ZS3LMQQKUNAHwX7a/z/E47FvJDYpH2s=
+X-Gm-Message-State: AOJu0YwtcYlKIIFcu6wwC7tA6uyck1E6nniy74DeBwydQ57vzZiBUC2R
+ K9PStBTnZr3IJnJHY/x3LqWyQobYuYq7/kSH8IOKgYVaqcEi3xmYPFThTka/VeUjPtmGF7V9L8J
+ BTYvuhFkh1s29lSiD4e1YkLKadmzVu9ISuZ+aglm/30I//5yJNyjahfNI0BzUGe4zSFHm0H2H0j
+ wEO8y5dMcz5dUn4YqUgreGGu4PTbk=
+X-Received: by 2002:a81:69c6:0:b0:65f:645a:b3c4 with SMTP id
+ 00721157ae682-67a095958acmr75979227b3.32.1722247498287; 
+ Mon, 29 Jul 2024 03:04:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5pP1MzIFRpvr5In3/oAKV3MBtBISHU2PIAN2pGGDV0gyXATVYZ4m+O/KwY6yCZOqmKCbN463Zosg7zXyz0EI=
+X-Received: by 2002:a81:69c6:0:b0:65f:645a:b3c4 with SMTP id
+ 00721157ae682-67a095958acmr75978997b3.32.1722247497906; Mon, 29 Jul 2024
+ 03:04:57 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] target/s390x: move @deprecated-props to
- CpuModelExpansion Info
-To: Markus Armbruster <armbru@redhat.com>,
- Collin Walling <walling@linux.ibm.com>
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org, thuth@redhat.com,
- wangyanan55@huawei.com, philmd@linaro.org, marcel.apfelbaum@gmail.com,
- eduardo@habkost.net
-References: <20240726203646.20279-1-walling@linux.ibm.com>
- <877cd7qsnj.fsf@pond.sub.org>
-Content-Language: en-US
-From: David Hildenbrand <david@redhat.com>
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <877cd7qsnj.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+References: <20240410100345.389462-1-eperezma@redhat.com>
+ <CACGkMEtZEe=ONRcrmm5TNdcxkJx=p4m24VD0yx5w0u+Rn854hQ@mail.gmail.com>
+ <CAJaqyWdoCYFEEQdwZiCxzaX6HuJE-0QWctJ4WBnOd97zDwbPnw@mail.gmail.com>
+ <CACGkMEu328ksfMDtJheH+sdTdV4E=pJFEa5Zco2_ecskubCAGg@mail.gmail.com>
+ <CAJaqyWdZFUw8H7_2Jw3j9JxLj9+3p53QZg=DF3o4OgWJYC-SaQ@mail.gmail.com>
+ <CACGkMEvdBDFvwvqb_7YXqiPd-ax4Xw7e0BLBhCt_uD6-Uf+DgA@mail.gmail.com>
+ <CAJaqyWdA_6Mx3mkcobmBjB5NDJt3tyqTJv2JijF0agnnBFxQxw@mail.gmail.com>
+ <CACGkMEv7wukFdXrA--DzA7U7VYWQq6UAVmi-0=pTAOuJ1nc_7Q@mail.gmail.com>
+ <CAJaqyWdtdfbQi4PrbC-ASRo7dHsT7Nw3dmw66K9D9ZeoqyV=ng@mail.gmail.com>
+ <CACGkMEs=-teddtO4ctLdJiwm2gu3sZrKOww-TC+5o2_19Sph4w@mail.gmail.com>
+ <CAJaqyWeKfVXYj61sgvFrUTpOgy0k-zsLoR4JePEo0Q8XuXYbmA@mail.gmail.com>
+ <CACGkMEt+TLqpbw2N4m7Ez4edTBztRUxiAt6=NLuFR3c7F7Z_jA@mail.gmail.com>
+ <CAJaqyWc18UeBHeQSoAFF1u1nkjaAfj0Y85pgSHbhV8xxExjcgg@mail.gmail.com>
+ <CACGkMEtrPAMb-ZN7AAE8cjEzjZY1Hnm29J7PhUYgwv26=YcdQw@mail.gmail.com>
+ <84374c5a-d937-4cb5-aafb-45ad75e2d837@oracle.com>
+In-Reply-To: <84374c5a-d937-4cb5-aafb-45ad75e2d837@oracle.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Mon, 29 Jul 2024 12:04:21 +0200
+Message-ID: <CAJaqyWfekhhG+5Zp4eddpp-2N=SjUL+7zs+YqS5xx6eWxa-PqQ@mail.gmail.com>
+Subject: Re: [RFC 0/2] Identify aliased maps in vdpa SVQ iova_tree
+To: Jonah Palmer <jonah.palmer@oracle.com>
+Cc: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org, 
+ Si-Wei Liu <si-wei.liu@oracle.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Lei Yang <leiyang@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Dragos Tatulea <dtatulea@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -138,7 +99,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,141 +115,428 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27.07.24 08:02, Markus Armbruster wrote:
-> Collin Walling <walling@linux.ibm.com> writes:
-> 
->> The @deprecated-props array did not make any sense to be a member of the
->> CpuModelInfo struct, since this field would only be populated by a
->> query-cpu-model-expansion response and ignored otherwise.
-> 
-> Doesn't query-cpu-model-baseline also return it in its response?  It
-> seems to assume the "static" expansion type.
-> 
->>                                                            Move this
->> field to the CpuModelExpansionInfo struct where is makes more sense.
->>
->> References:
->>   - https://lists.gnu.org/archive/html/qemu-devel/2024-07/msg05996.html
->>   - commit eed0e8ffa38f0695c0519508f6e4f5a3297cbd67
->>
->> Signed-off-by: Collin Walling <walling@linux.ibm.com>
->> ---
->>
->> @David, the previous commit header did not align with the changes made
->> here, so I tagged this as a "v1" but added the previous conversation as
->> a reference.  I hope this is appropriate?
->>
->> ---
->>   qapi/machine-target.json         | 18 ++++++++++--------
->>   target/s390x/cpu_models_sysemu.c | 31 ++++++++++++++++++++-----------
->>   2 files changed, 30 insertions(+), 19 deletions(-)
->>
->> diff --git a/qapi/machine-target.json b/qapi/machine-target.json
->> index a552e2b0ce..09dec2b9bb 100644
->> --- a/qapi/machine-target.json
->> +++ b/qapi/machine-target.json
->> @@ -20,17 +20,11 @@
->>   #
->>   # @props: a dictionary of QOM properties to be applied
->>   #
->> -# @deprecated-props: a list of properties that are flagged as deprecated
->> -#     by the CPU vendor.  These properties are either a subset of the
->> -#     properties enabled on the CPU model, or a set of properties
->> -#     deprecated across all models for the architecture.
->> -#
->>   # Since: 2.8
->>   ##
->>   { 'struct': 'CpuModelInfo',
->>     'data': { 'name': 'str',
->> -            '*props': 'any',
->> -            '*deprecated-props': ['str'] } }
->> +            '*props': 'any' } }
->>   
->>   ##
->>   # @CpuModelExpansionType:
->> @@ -248,10 +242,18 @@
->>   #
->>   # @model: the expanded CpuModelInfo.
->>   #
->> +# @deprecated-props: a list of properties that are flagged as deprecated
->> +#     by the CPU vendor.  The list depends on the CpuModelExpansionType:
->> +#     "static" properties are a subset of the enabled-properties for
->> +#     the expanded model; "full" properties are a set of properties
->> +#     that are deprecated across all models for the architecture.
->> +#     (since: 9.1).
->> +#
->>   # Since: 2.8
->>   ##
->>   { 'struct': 'CpuModelExpansionInfo',
->> -  'data': { 'model': 'CpuModelInfo' },
->> +  'data': { 'model': 'CpuModelInfo',
->> +            '*deprecated-props': ['str'] },
->>     'if': { 'any': [ 'TARGET_S390X',
->>                      'TARGET_I386',
->>                      'TARGET_ARM',
-> 
-> This solves several interface problems:
-> 
-> 1. Removes inappropriate @deprecated-props argument of
->     query-cpu-model-comparison, query-cpu-model-expansion,
->     query-cpu-model-baseline.
-> 
-> 2. Removes @deprecated-props return of query-cpu-model-baseline.
-> 
-> 3. Properly documents how @deprecated-props depends on the expansion
->     type.
-> 
-> Remaining problem:
-> 
-> 4. Only S390 implements this.
-> 
-> Suggest to capture 1-3 more clearly in the commit message, perhaps like
-> this:
-> 
->      CpuModelInfo is used both as command argument and in command
->      returns.
-> 
->      Its @deprecated-props array does not make any sense in arguments,
->      and is silently ignored.  We actually want it only as return value
->      of query-cpu-model-expansion.
-> 
->      Move it from CpuModelInfo to CpuModelExpansionType, and document
->      its dependence on expansion type propetly.
+On Wed, Jul 24, 2024 at 7:00=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
+om> wrote:
+>
+>
+>
+> On 5/13/24 11:56 PM, Jason Wang wrote:
+> > On Mon, May 13, 2024 at 5:58=E2=80=AFPM Eugenio Perez Martin
+> > <eperezma@redhat.com> wrote:
+> >>
+> >> On Mon, May 13, 2024 at 10:28=E2=80=AFAM Jason Wang <jasowang@redhat.c=
+om> wrote:
+> >>>
+> >>> On Mon, May 13, 2024 at 2:28=E2=80=AFPM Eugenio Perez Martin
+> >>> <eperezma@redhat.com> wrote:
+> >>>>
+> >>>> On Sat, May 11, 2024 at 6:07=E2=80=AFAM Jason Wang <jasowang@redhat.=
+com> wrote:
+> >>>>>
+> >>>>> On Fri, May 10, 2024 at 3:16=E2=80=AFPM Eugenio Perez Martin
+> >>>>> <eperezma@redhat.com> wrote:
+> >>>>>>
+> >>>>>> On Fri, May 10, 2024 at 6:29=E2=80=AFAM Jason Wang <jasowang@redha=
+t.com> wrote:
+> >>>>>>>
+> >>>>>>> On Thu, May 9, 2024 at 3:10=E2=80=AFPM Eugenio Perez Martin <eper=
+ezma@redhat.com> wrote:
+> >>>>>>>>
+> >>>>>>>> On Thu, May 9, 2024 at 8:27=E2=80=AFAM Jason Wang <jasowang@redh=
+at.com> wrote:
+> >>>>>>>>>
+> >>>>>>>>> On Thu, May 9, 2024 at 1:16=E2=80=AFAM Eugenio Perez Martin <ep=
+erezma@redhat.com> wrote:
+> >>>>>>>>>>
+> >>>>>>>>>> On Wed, May 8, 2024 at 4:29=E2=80=AFAM Jason Wang <jasowang@re=
+dhat.com> wrote:
+> >>>>>>>>>>>
+> >>>>>>>>>>> On Tue, May 7, 2024 at 6:57=E2=80=AFPM Eugenio Perez Martin <=
+eperezma@redhat.com> wrote:
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> On Tue, May 7, 2024 at 9:29=E2=80=AFAM Jason Wang <jasowang@=
+redhat.com> wrote:
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> On Fri, Apr 12, 2024 at 3:56=E2=80=AFPM Eugenio Perez Marti=
+n
+> >>>>>>>>>>>>> <eperezma@redhat.com> wrote:
+> >>>>>>>>>>>>>>
+> >>>>>>>>>>>>>> On Fri, Apr 12, 2024 at 8:47=E2=80=AFAM Jason Wang <jasowa=
+ng@redhat.com> wrote:
+> >>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>> On Wed, Apr 10, 2024 at 6:03=E2=80=AFPM Eugenio P=C3=A9re=
+z <eperezma@redhat.com> wrote:
+> >>>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>>> The guest may have overlapped memory regions, where diff=
+erent GPA leads
+> >>>>>>>>>>>>>>>> to the same HVA.  This causes a problem when overlapped =
+regions
+> >>>>>>>>>>>>>>>> (different GPA but same translated HVA) exists in the tr=
+ee, as looking
+> >>>>>>>>>>>>>>>> them by HVA will return them twice.
+> >>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>> I think I don't understand if there's any side effect for=
+ shadow virtqueue?
+> >>>>>>>>>>>>>>>
+> >>>>>>>>>>>>>>
+> >>>>>>>>>>>>>> My bad, I totally forgot to put a reference to where this =
+comes from.
+> >>>>>>>>>>>>>>
+> >>>>>>>>>>>>>> Si-Wei found that during initialization this sequences of =
+maps /
+> >>>>>>>>>>>>>> unmaps happens [1]:
+> >>>>>>>>>>>>>>
+> >>>>>>>>>>>>>> HVA                    GPA                IOVA
+> >>>>>>>>>>>>>> ----------------------------------------------------------=
+---------------------------------------------------------------
+> >>>>>>>>>>>>>> Map
+> >>>>>>>>>>>>>> [0x7f7903e00000, 0x7f7983e00000)    [0x0, 0x80000000) [0x1=
+000, 0x80000000)
+> >>>>>>>>>>>>>> [0x7f7983e00000, 0x7f9903e00000)    [0x100000000, 0x208000=
+0000)
+> >>>>>>>>>>>>>> [0x80001000, 0x2000001000)
+> >>>>>>>>>>>>>> [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc000=
+0)
+> >>>>>>>>>>>>>> [0x2000001000, 0x2000021000)
+> >>>>>>>>>>>>>>
+> >>>>>>>>>>>>>> Unmap
+> >>>>>>>>>>>>>> [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc000=
+0) [0x1000,
+> >>>>>>>>>>>>>> 0x20000) ???
+> >>>>>>>>>>>>>>
+> >>>>>>>>>>>>>> The third HVA range is contained in the first one, but exp=
+osed under a
+> >>>>>>>>>>>>>> different GVA (aliased). This is not "flattened" by QEMU, =
+as GPA does
+> >>>>>>>>>>>>>> not overlap, only HVA.
+> >>>>>>>>>>>>>>
+> >>>>>>>>>>>>>> At the third chunk unmap, the current algorithm finds the =
+first chunk,
+> >>>>>>>>>>>>>> not the second one. This series is the way to tell the dif=
+ference at
+> >>>>>>>>>>>>>> unmap time.
+> >>>>>>>>>>>>>>
+> >>>>>>>>>>>>>> [1] https://urldefense.com/v3/__https://lists.nongnu.org/a=
+rchive/html/qemu-devel/2024-04/msg00079.html__;!!ACWV5N9M2RV99hQ!MXbGSFHVbq=
+Rf0rzyWamOdnBLHP0FUh3r3BnTvGe6Mn5VzXTsajVp3BB7VqlklkRCr5aKazC5xxTCScuR_BY$
+> >>>>>>>>>>>>>>
+> >>>>>>>>>>>>>> Thanks!
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>> Ok, I was wondering if we need to store GPA(GIOVA) to HVA m=
+appings in
+> >>>>>>>>>>>>> the iova tree to solve this issue completely. Then there wo=
+n't be
+> >>>>>>>>>>>>> aliasing issues.
+> >>>>>>>>>>>>>
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> I'm ok to explore that route but this has another problem. B=
+oth SVQ
+> >>>>>>>>>>>> vrings and CVQ buffers also need to be addressable by VhostI=
+OVATree,
+> >>>>>>>>>>>> and they do not have GPA.
+> >>>>>>>>>>>>
+> >>>>>>>>>>>> At this moment vhost_svq_translate_addr is able to handle th=
+is
+> >>>>>>>>>>>> transparently as we translate vaddr to SVQ IOVA. How can we =
+store
+> >>>>>>>>>>>> these new entries? Maybe a (hwaddr)-1 GPA to signal it has n=
+o GPA and
+> >>>>>>>>>>>> then a list to go through other entries (SVQ vaddr and CVQ b=
+uffers).
+> >>>>>>>>>>>
+> >>>>>>>>>>> This seems to be tricky.
+> >>>>>>>>>>>
+> >>>>>>>>>>> As discussed, it could be another iova tree.
+> >>>>>>>>>>>
+> >>>>>>>>>>
+> >>>>>>>>>> Yes but there are many ways to add another IOVATree. Let me ex=
+pand & recap.
+> >>>>>>>>>>
+> >>>>>>>>>> Option 1 is to simply add another iova tree to VhostShadowVirt=
+queue.
+> >>>>>>>>>> Let's call it gpa_iova_tree, as opposed to the current iova_tr=
+ee that
+> >>>>>>>>>> translates from vaddr to SVQ IOVA. To know which one to use is=
+ easy at
+> >>>>>>>>>> adding or removing, like in the memory listener, but how to kn=
+ow at
+> >>>>>>>>>> vhost_svq_translate_addr?
+> >>>>>>>>>
+> >>>>>>>>> Then we won't use virtqueue_pop() at all, we need a SVQ version=
+ of
+> >>>>>>>>> virtqueue_pop() to translate GPA to SVQ IOVA directly?
+> >>>>>>>>>
+> >>>>>>>>
+> >>>>>>>> The problem is not virtqueue_pop, that's out of the
+> >>>>>>>> vhost_svq_translate_addr. The problem is the need of adding
+> >>>>>>>> conditionals / complexity in all the callers of
+> >>>>>>>>
+> >>>>>>>>>>
+> >>>>>>>>>> The easiest way for me is to rely on memory_region_from_host()=
+. When
+> >>>>>>>>>> vaddr is from the guest, it returns a valid MemoryRegion. When=
+ it is
+> >>>>>>>>>> not, it returns NULL. I'm not sure if this is a valid use case=
+, it
+> >>>>>>>>>> just worked in my tests so far.
+> >>>>>>>>>>
+> >>>>>>>>>> Now we have the second problem: The GPA values of the regions =
+of the
+> >>>>>>>>>> two IOVA tree must be unique. We need to be able to find unall=
+ocated
+> >>>>>>>>>> regions in SVQ IOVA. At this moment there is only one IOVATree=
+, so
+> >>>>>>>>>> this is done easily by vhost_iova_tree_map_alloc. But it is ve=
+ry
+> >>>>>>>>>> complicated with two trees.
+> >>>>>>>>>
+> >>>>>>>>> Would it be simpler if we decouple the IOVA allocator? For exam=
+ple, we
+> >>>>>>>>> can have a dedicated gtree to track the allocated IOVA ranges. =
+It is
+> >>>>>>>>> shared by both
+> >>>>>>>>>
+> >>>>>>>>> 1) Guest memory (GPA)
+> >>>>>>>>> 2) SVQ virtqueue and buffers
+> >>>>>>>>>
+> >>>>>>>>> And another gtree to track the GPA to IOVA.
+> >>>>>>>>>
+> >>>>>>>>> The SVQ code could use either
+> >>>>>>>>>
+> >>>>>>>>> 1) one linear mappings that contains both SVQ virtqueue and buf=
+fers
+> >>>>>>>>>
+> >>>>>>>>> or
+> >>>>>>>>>
+> >>>>>>>>> 2) dynamic IOVA allocation/deallocation helpers
+> >>>>>>>>>
+> >>>>>>>>> So we don't actually need the third gtree for SVQ HVA -> SVQ IO=
+VA?
+> >>>>>>>>>
+> >>>>>>>>
+> >>>>>>>> That's possible, but that scatters the IOVA handling code instea=
+d of
+> >>>>>>>> keeping it self-contained in VhostIOVATree.
+> >>>>>>>
+> >>>>>>> To me, the IOVA range/allocation is orthogonal to how IOVA is use=
+d.
+> >>>>>>>
+> >>>>>>> An example is the iova allocator in the kernel.
+> >>>>>>>
+> >>>>>>> Note that there's an even simpler IOVA "allocator" in NVME passth=
+rough
+> >>>>>>> code, not sure it is useful here though (haven't had a deep look =
+at
+> >>>>>>> that).
+> >>>>>>>
+> >>>>>>
+> >>>>>> I don't know enough about them to have an opinion. I keep seeing t=
+he
+> >>>>>> drawback of needing to synchronize both allocation & adding in all=
+ the
+> >>>>>> places we want to modify the IOVATree. At this moment, these are t=
+he
+> >>>>>> vhost-vdpa memory listener, the SVQ vring creation and removal, an=
+d
+> >>>>>> net CVQ buffers. But it may be more in the future.
+> >>>>>>
+> >>>>>> What are the advantages of keeping these separated that justifies
+> >>>>>> needing to synchronize in all these places, compared with keeping =
+them
+> >>>>>> synchronized in VhostIOVATree?
+> >>>>>
+> >>>>> It doesn't need to be synchronized.
+> >>>>>
+> >>>>> Assuming guest and SVQ shares IOVA range. IOVA only needs to track
+> >>>>> which part of the range has been used.
+> >>>>>
+> >>>>
+> >>>> Not sure if I follow, that is what I mean with "synchronized".
+> >>>
+> >>> Oh right.
+> >>>
+> >>>>
+> >>>>> This simplifies things, we can store GPA->IOVA mappings and SVQ ->
+> >>>>> IOVA mappings separately.
+> >>>>>
+> >>>>
+> >>>> Sorry, I still cannot see the whole picture :).
+> >>>>
+> >>>> Let's assume we have all the GPA mapped to specific IOVA regions, so
+> >>>> we have the first IOVA tree (GPA -> IOVA) filled. Now we enable SVQ
+> >>>> because of the migration. How can we know where we can place SVQ
+> >>>> vrings without having them synchronized?
+> >>>
+> >>> Just allocating a new IOVA range for SVQ?
+> >>>
+> >>>>
+> >>>> At this moment we're using a tree. The tree nature of the current SV=
+Q
+> >>>> IOVA -> VA makes all nodes ordered so it is more or less easy to loo=
+k
+> >>>> for holes.
+> >>>
+> >>> Yes, iova allocate could still be implemented via a tree.
+> >>>
+> >>>>
+> >>>> Now your proposal uses the SVQ IOVA as tree values. Should we iterat=
+e
+> >>>> over all of them, order them, of the two trees, and then look for
+> >>>> holes there?
+> >>>
+> >>> Let me clarify, correct me if I was wrong:
+> >>>
+> >>> 1) IOVA allocator is still implemented via a tree, we just don't need
+> >>> to store how the IOVA is used
+> >>> 2) A dedicated GPA -> IOVA tree, updated via listeners and is used in
+> >>> the datapath SVQ translation
+> >>> 3) A linear mapping or another SVQ -> IOVA tree used for SVQ
+> >>>
+> >>
+> >> Ok, so the part I was missing is that now we have 3 whole trees, with
+> >> somehow redundant information :).
+> >
+> > Somehow, it decouples the IOVA usage out of the IOVA allocator. This
+> > might be simple as guests and SVQ may try to share a single IOVA
+> > address space.
+> >
+>
+> I'm working on implementing your three suggestions above but I'm a bit
+> confused with some of the wording and I was hoping you could clarify
+> some of it for me when you get the chance.
+>
+> ---
+> For your first suggestion (1) you mention decoupling the IOVA allocator
+> and "don't need to store how the IOVA is used."
+>
+> By this, do you mean to not save the IOVA->HVA mapping and instead only
+> save the allocated IOVA ranges? In other words, are you suggesting to
+> create a dedicated "IOVA->IOVA" tree like:
+>
+> struct VhostIOVATree {
+>      uint64_t iova_first;
+>      uint64_t iova_last;
+>      IOVATree *iova_map;
+> };
+>
+> Where the mapping might look something like (where translated_addr is
+> given some kind of 0 value):
+>
+> iova_region =3D (DMAMap) {
+>      .iova =3D iova_first,
+>      .translated_addr =3D 0,
+>      .size =3D region_size - 1,
+>      .perm =3D IOMMU_ACCESS_FLAG(true, section->readonly),
+> };
+>
+> Also, if this is what you mean by decoupling the IOVA allocator, what
+> happens to the IOVA->HVA tree? Are we no longer saving these mappings in
+> a tree?
+>
+> ---
+> In your second suggestion (2) with a dedicated GPA->IOVA tree, were you
+> thinking something like this? Just adding on to VhostIOVATree here:
+>
+> struct VhostIOVATree {
+>      uint64_t iova_first;
+>      uint64_t iova_last;
+>      IOVATree *iova_map;
+>      IOVATree *gpa_map;
+> };
+>
+> Where the mapping might look something like:
+>
+> gpa_region =3D (DMAMap) {
+>      .iova =3D iova_first,
+>      .translated_addr =3D gpa_first,
+>      .size =3D region_size - 1,
+>      .perm =3D IOMMU_ACCESS_FLAG(true, section->readonly),
+> };
+>
+> Also, when you say "used in the datapath SVQ translation", we still need
+> to build the GPA->IOVA tree when vhost_vdpa_listener_region_add() is
+> called, right?
+>
+> ---
+> Lastly, in your third suggestion (3) you mention implementing a
+> SVQ->IOVA tree, making the total number of IOVATrees/GTrees 3: one for
+> just IOVAs, one for GPA->IOVA, and the last one for SVQ->IOVA. E.g.
+>
+> struct VhostIOVATree {
+>      uint64_t iova_first;
+>      uint64_t iova_last;
+>      IOVATree *iova_map;
+>      IOVATree *gpa_map;
+>      IOVATree *svq_map;
+> };
+>
+> ---
+>
+> Let me know if I'm understanding this correctly. If I am, this would
+> require a pretty good amount of refactoring on the IOVA allocation,
+> searching, destroying, etc. code to account for these new trees.
+>
 
-s/propetly/property/
+Ok I think I understand your previous question better, sorry for the delay =
+:).
 
-Sounds good!
+If I'm not wrong, Jason did not enumerate these as alternatives but as
+part of the same solution. Jason please correct me if I'm wrong here.
 
-> 
-> The simplest way to address 4 is to tack 'if': 'TARGET_S390X' to
-> @deprecated-props.
-> 
+His solution is composed of three trees:
+1) One for the IOVA allocations, so we know where to allocate new ranges
+2) One of the GPA -> SVQ IOVA translations.
+3) Another one for SVQ vrings translations.
 
-diff --git a/qapi/machine-target.json b/qapi/machine-target.json
-index 09dec2b9bb..0be95d559c 100644
---- a/qapi/machine-target.json
-+++ b/qapi/machine-target.json
-@@ -253,7 +253,7 @@
-  ##
-  { 'struct': 'CpuModelExpansionInfo',
-    'data': { 'model': 'CpuModelInfo',
--            '*deprecated-props': ['str'] },
-+            '*deprecated-props' : { 'type': ['str'], 'if': 'TARGET_S390X' } },
-    'if': { 'any': [ 'TARGET_S390X',
-                     'TARGET_I386',
-                     'TARGET_ARM',
+In my opinion to use GPA this is problematic as we force all of the
+callers to know if the address we want to translate comes from the
+guest or not. Current code does now know it, as
+vhost_svq_translate_addr is called to translate both buffer dataplane
+addresses and control virtqueue buffers, which are also shadowed.  To
+transmit that information to the caller code would require either
+duplicate functions, to add a boolean, etc, as it is in a different
+layer (net specific net/vhost-vdpa.c vs generic
+hw/virtio/vhost-shadow-virtqueue.c).
 
+In my opinion is easier to keep just two trees (or similar structs):
+1) One for the IOVA allocations, so we know where to allocate new
+ranges. We don't actually need to store the translations here.
+2) One for HVA -> SVQ IOVA translations.
 
-Should do the trick, right?
+This way we can accommodate both SVQ vrings, CVQ buffers, and guest
+memory buffers, all on the second tree, and take care of the HVA
+duplications.
 
-> I recommend to make @deprecated-props mandatory rather than optional
-> then.
+Thanks!
 
-Hm, does that make sense judging that previous implementations didn't expose it?
-
--- 
-Cheers,
-
-David / dhildenb
+> Thanks Jason!
+>
+> >>
+> >> In some sense this is simpler than trying to get all the information
+> >> from only two trees. On the bad side, all SVQ calls that allocate some
+> >> region need to remember to add to one of the two other threes. That is
+> >> what I mean by synchronized. But sure, we can go that way.
+> >
+> > Just a suggestion, if it turns out to complicate the issue, I'm fine
+> > to go the other way.
+> >
+> > Thanks
+> >
+> >>
+> >>> Thanks
+> >>>
+> >>>>
+> >>>>> Thanks
+> >>>>>
+> >>>>>>
+> >>>>>> Thanks!
+> >>>>>>
+> >>>>>
+> >>>>
+> >>>
+> >>
+> >>
+> >
+>
 
 
