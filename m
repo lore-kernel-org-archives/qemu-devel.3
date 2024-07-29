@@ -4,102 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83E11C3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 10:06:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7711FC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 10:11:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYNFi-00078e-Dp; Mon, 29 Jul 2024 06:05:14 -0400
+	id 1sYNLO-0003R3-A4; Mon, 29 Jul 2024 06:11:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sYNFh-00078B-HZ
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 06:05:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <SRS0=joD8=O5=kaod.org=clg@ozlabs.org>)
+ id 1sYNLM-0003Pr-FZ; Mon, 29 Jul 2024 06:11:04 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sYNFb-0007Ty-Ki
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 06:05:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722247504;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Ic9DRKI1NAp1MQ+ZEa3IkR628N5vNe7ump7bHoDA3n4=;
- b=MhVLv+xcK4HV/MgaBlXsO+TzNxSLYFN+Mq7CtN7u7OYtyoZm5td9lNLJ/oVtkOE4hmr1Ql
- wrmEzQazCYR9YZnqll5bHUp/wods8Dh3AEajbqpI66ZPBmD3rZEdfAgF6VEzzGaBlmamzR
- LeDzlSic8k5vAa8xjaEx/qX0L2ETJvA=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-99-i-vgmw-rNw6BfoVmOhEsRQ-1; Mon, 29 Jul 2024 06:04:59 -0400
-X-MC-Unique: i-vgmw-rNw6BfoVmOhEsRQ-1
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-66b8faa2a4aso54212887b3.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 03:04:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722247498; x=1722852298;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Ic9DRKI1NAp1MQ+ZEa3IkR628N5vNe7ump7bHoDA3n4=;
- b=jdQZrDvXmn5z0rFF6khv/KTdQlSxXqsXItuZ9+yz/5wNSITYiGGGLxLpNOosoAxRgK
- QO0dAImpQCMPfYhIoIAW4BRpAkIWkAaCduqxoZ91MyzOfd5UbtUD6G5AImC+saziQLk+
- +sHhpBvs0TSgXzrm6BORTMa8q+NjvhQzwzbAIQOm+EnJLOAW/qJlrmJ+LUPIYP2WQve5
- qCHdwosX5jwMaPJrOwSItaiH/fWKPS9HppsWMwY3srOMJTYEPMwxRtOewadSxUYwRYaX
- hlcWXoJ4UTidEKHiSI/UmCZLOhsI6q3UHoUKxwLpSztXud/ZeOEmGCXVA4G6eRaJuYuo
- ZwlA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUZZIOeEvbtts3oDulUkSlSYYC0hPYs5SrSQsxfEnbANsjKQEjfmhuCoaSybrX0ZS3LMQQKUNAHwX7a/z/E47FvJDYpH2s=
-X-Gm-Message-State: AOJu0YwtcYlKIIFcu6wwC7tA6uyck1E6nniy74DeBwydQ57vzZiBUC2R
- K9PStBTnZr3IJnJHY/x3LqWyQobYuYq7/kSH8IOKgYVaqcEi3xmYPFThTka/VeUjPtmGF7V9L8J
- BTYvuhFkh1s29lSiD4e1YkLKadmzVu9ISuZ+aglm/30I//5yJNyjahfNI0BzUGe4zSFHm0H2H0j
- wEO8y5dMcz5dUn4YqUgreGGu4PTbk=
-X-Received: by 2002:a81:69c6:0:b0:65f:645a:b3c4 with SMTP id
- 00721157ae682-67a095958acmr75979227b3.32.1722247498287; 
- Mon, 29 Jul 2024 03:04:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG5pP1MzIFRpvr5In3/oAKV3MBtBISHU2PIAN2pGGDV0gyXATVYZ4m+O/KwY6yCZOqmKCbN463Zosg7zXyz0EI=
-X-Received: by 2002:a81:69c6:0:b0:65f:645a:b3c4 with SMTP id
- 00721157ae682-67a095958acmr75978997b3.32.1722247497906; Mon, 29 Jul 2024
- 03:04:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <SRS0=joD8=O5=kaod.org=clg@ozlabs.org>)
+ id 1sYNLJ-0008JC-7S; Mon, 29 Jul 2024 06:11:04 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WXYz02nWYz4x7G;
+ Mon, 29 Jul 2024 20:10:52 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WXYyx5vTGz4x6n;
+ Mon, 29 Jul 2024 20:10:49 +1000 (AEST)
+Message-ID: <49b1d57d-e0bf-4b64-b6ef-3cb4e1da5d65@kaod.org>
+Date: Mon, 29 Jul 2024 12:10:46 +0200
 MIME-Version: 1.0
-References: <20240410100345.389462-1-eperezma@redhat.com>
- <CACGkMEtZEe=ONRcrmm5TNdcxkJx=p4m24VD0yx5w0u+Rn854hQ@mail.gmail.com>
- <CAJaqyWdoCYFEEQdwZiCxzaX6HuJE-0QWctJ4WBnOd97zDwbPnw@mail.gmail.com>
- <CACGkMEu328ksfMDtJheH+sdTdV4E=pJFEa5Zco2_ecskubCAGg@mail.gmail.com>
- <CAJaqyWdZFUw8H7_2Jw3j9JxLj9+3p53QZg=DF3o4OgWJYC-SaQ@mail.gmail.com>
- <CACGkMEvdBDFvwvqb_7YXqiPd-ax4Xw7e0BLBhCt_uD6-Uf+DgA@mail.gmail.com>
- <CAJaqyWdA_6Mx3mkcobmBjB5NDJt3tyqTJv2JijF0agnnBFxQxw@mail.gmail.com>
- <CACGkMEv7wukFdXrA--DzA7U7VYWQq6UAVmi-0=pTAOuJ1nc_7Q@mail.gmail.com>
- <CAJaqyWdtdfbQi4PrbC-ASRo7dHsT7Nw3dmw66K9D9ZeoqyV=ng@mail.gmail.com>
- <CACGkMEs=-teddtO4ctLdJiwm2gu3sZrKOww-TC+5o2_19Sph4w@mail.gmail.com>
- <CAJaqyWeKfVXYj61sgvFrUTpOgy0k-zsLoR4JePEo0Q8XuXYbmA@mail.gmail.com>
- <CACGkMEt+TLqpbw2N4m7Ez4edTBztRUxiAt6=NLuFR3c7F7Z_jA@mail.gmail.com>
- <CAJaqyWc18UeBHeQSoAFF1u1nkjaAfj0Y85pgSHbhV8xxExjcgg@mail.gmail.com>
- <CACGkMEtrPAMb-ZN7AAE8cjEzjZY1Hnm29J7PhUYgwv26=YcdQw@mail.gmail.com>
- <84374c5a-d937-4cb5-aafb-45ad75e2d837@oracle.com>
-In-Reply-To: <84374c5a-d937-4cb5-aafb-45ad75e2d837@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Mon, 29 Jul 2024 12:04:21 +0200
-Message-ID: <CAJaqyWfekhhG+5Zp4eddpp-2N=SjUL+7zs+YqS5xx6eWxa-PqQ@mail.gmail.com>
-Subject: Re: [RFC 0/2] Identify aliased maps in vdpa SVQ iova_tree
-To: Jonah Palmer <jonah.palmer@oracle.com>
-Cc: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org, 
- Si-Wei Liu <si-wei.liu@oracle.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Lei Yang <leiyang@redhat.com>, 
- Peter Xu <peterx@redhat.com>, Dragos Tatulea <dtatulea@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 15/96] ppc/pnv: Implement POWER9 LPC PSI serirq outputs and
+ auto-clear function
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Glenn Miles <milesg@linux.ibm.com>
+References: <20240725235410.451624-1-npiggin@gmail.com>
+ <20240725235410.451624-16-npiggin@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240725235410.451624-16-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=joD8=O5=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,428 +65,385 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 24, 2024 at 7:00=E2=80=AFPM Jonah Palmer <jonah.palmer@oracle.c=
-om> wrote:
->
->
->
-> On 5/13/24 11:56 PM, Jason Wang wrote:
-> > On Mon, May 13, 2024 at 5:58=E2=80=AFPM Eugenio Perez Martin
-> > <eperezma@redhat.com> wrote:
-> >>
-> >> On Mon, May 13, 2024 at 10:28=E2=80=AFAM Jason Wang <jasowang@redhat.c=
-om> wrote:
-> >>>
-> >>> On Mon, May 13, 2024 at 2:28=E2=80=AFPM Eugenio Perez Martin
-> >>> <eperezma@redhat.com> wrote:
-> >>>>
-> >>>> On Sat, May 11, 2024 at 6:07=E2=80=AFAM Jason Wang <jasowang@redhat.=
-com> wrote:
-> >>>>>
-> >>>>> On Fri, May 10, 2024 at 3:16=E2=80=AFPM Eugenio Perez Martin
-> >>>>> <eperezma@redhat.com> wrote:
-> >>>>>>
-> >>>>>> On Fri, May 10, 2024 at 6:29=E2=80=AFAM Jason Wang <jasowang@redha=
-t.com> wrote:
-> >>>>>>>
-> >>>>>>> On Thu, May 9, 2024 at 3:10=E2=80=AFPM Eugenio Perez Martin <eper=
-ezma@redhat.com> wrote:
-> >>>>>>>>
-> >>>>>>>> On Thu, May 9, 2024 at 8:27=E2=80=AFAM Jason Wang <jasowang@redh=
-at.com> wrote:
-> >>>>>>>>>
-> >>>>>>>>> On Thu, May 9, 2024 at 1:16=E2=80=AFAM Eugenio Perez Martin <ep=
-erezma@redhat.com> wrote:
-> >>>>>>>>>>
-> >>>>>>>>>> On Wed, May 8, 2024 at 4:29=E2=80=AFAM Jason Wang <jasowang@re=
-dhat.com> wrote:
-> >>>>>>>>>>>
-> >>>>>>>>>>> On Tue, May 7, 2024 at 6:57=E2=80=AFPM Eugenio Perez Martin <=
-eperezma@redhat.com> wrote:
-> >>>>>>>>>>>>
-> >>>>>>>>>>>> On Tue, May 7, 2024 at 9:29=E2=80=AFAM Jason Wang <jasowang@=
-redhat.com> wrote:
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> On Fri, Apr 12, 2024 at 3:56=E2=80=AFPM Eugenio Perez Marti=
-n
-> >>>>>>>>>>>>> <eperezma@redhat.com> wrote:
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> On Fri, Apr 12, 2024 at 8:47=E2=80=AFAM Jason Wang <jasowa=
-ng@redhat.com> wrote:
-> >>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>> On Wed, Apr 10, 2024 at 6:03=E2=80=AFPM Eugenio P=C3=A9re=
-z <eperezma@redhat.com> wrote:
-> >>>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>>> The guest may have overlapped memory regions, where diff=
-erent GPA leads
-> >>>>>>>>>>>>>>>> to the same HVA.  This causes a problem when overlapped =
-regions
-> >>>>>>>>>>>>>>>> (different GPA but same translated HVA) exists in the tr=
-ee, as looking
-> >>>>>>>>>>>>>>>> them by HVA will return them twice.
-> >>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>> I think I don't understand if there's any side effect for=
- shadow virtqueue?
-> >>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> My bad, I totally forgot to put a reference to where this =
-comes from.
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> Si-Wei found that during initialization this sequences of =
-maps /
-> >>>>>>>>>>>>>> unmaps happens [1]:
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> HVA                    GPA                IOVA
-> >>>>>>>>>>>>>> ----------------------------------------------------------=
----------------------------------------------------------------
-> >>>>>>>>>>>>>> Map
-> >>>>>>>>>>>>>> [0x7f7903e00000, 0x7f7983e00000)    [0x0, 0x80000000) [0x1=
-000, 0x80000000)
-> >>>>>>>>>>>>>> [0x7f7983e00000, 0x7f9903e00000)    [0x100000000, 0x208000=
-0000)
-> >>>>>>>>>>>>>> [0x80001000, 0x2000001000)
-> >>>>>>>>>>>>>> [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc000=
-0)
-> >>>>>>>>>>>>>> [0x2000001000, 0x2000021000)
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> Unmap
-> >>>>>>>>>>>>>> [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc000=
-0) [0x1000,
-> >>>>>>>>>>>>>> 0x20000) ???
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> The third HVA range is contained in the first one, but exp=
-osed under a
-> >>>>>>>>>>>>>> different GVA (aliased). This is not "flattened" by QEMU, =
-as GPA does
-> >>>>>>>>>>>>>> not overlap, only HVA.
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> At the third chunk unmap, the current algorithm finds the =
-first chunk,
-> >>>>>>>>>>>>>> not the second one. This series is the way to tell the dif=
-ference at
-> >>>>>>>>>>>>>> unmap time.
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> [1] https://urldefense.com/v3/__https://lists.nongnu.org/a=
-rchive/html/qemu-devel/2024-04/msg00079.html__;!!ACWV5N9M2RV99hQ!MXbGSFHVbq=
-Rf0rzyWamOdnBLHP0FUh3r3BnTvGe6Mn5VzXTsajVp3BB7VqlklkRCr5aKazC5xxTCScuR_BY$
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> Thanks!
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> Ok, I was wondering if we need to store GPA(GIOVA) to HVA m=
-appings in
-> >>>>>>>>>>>>> the iova tree to solve this issue completely. Then there wo=
-n't be
-> >>>>>>>>>>>>> aliasing issues.
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>
-> >>>>>>>>>>>> I'm ok to explore that route but this has another problem. B=
-oth SVQ
-> >>>>>>>>>>>> vrings and CVQ buffers also need to be addressable by VhostI=
-OVATree,
-> >>>>>>>>>>>> and they do not have GPA.
-> >>>>>>>>>>>>
-> >>>>>>>>>>>> At this moment vhost_svq_translate_addr is able to handle th=
-is
-> >>>>>>>>>>>> transparently as we translate vaddr to SVQ IOVA. How can we =
-store
-> >>>>>>>>>>>> these new entries? Maybe a (hwaddr)-1 GPA to signal it has n=
-o GPA and
-> >>>>>>>>>>>> then a list to go through other entries (SVQ vaddr and CVQ b=
-uffers).
-> >>>>>>>>>>>
-> >>>>>>>>>>> This seems to be tricky.
-> >>>>>>>>>>>
-> >>>>>>>>>>> As discussed, it could be another iova tree.
-> >>>>>>>>>>>
-> >>>>>>>>>>
-> >>>>>>>>>> Yes but there are many ways to add another IOVATree. Let me ex=
-pand & recap.
-> >>>>>>>>>>
-> >>>>>>>>>> Option 1 is to simply add another iova tree to VhostShadowVirt=
-queue.
-> >>>>>>>>>> Let's call it gpa_iova_tree, as opposed to the current iova_tr=
-ee that
-> >>>>>>>>>> translates from vaddr to SVQ IOVA. To know which one to use is=
- easy at
-> >>>>>>>>>> adding or removing, like in the memory listener, but how to kn=
-ow at
-> >>>>>>>>>> vhost_svq_translate_addr?
-> >>>>>>>>>
-> >>>>>>>>> Then we won't use virtqueue_pop() at all, we need a SVQ version=
- of
-> >>>>>>>>> virtqueue_pop() to translate GPA to SVQ IOVA directly?
-> >>>>>>>>>
-> >>>>>>>>
-> >>>>>>>> The problem is not virtqueue_pop, that's out of the
-> >>>>>>>> vhost_svq_translate_addr. The problem is the need of adding
-> >>>>>>>> conditionals / complexity in all the callers of
-> >>>>>>>>
-> >>>>>>>>>>
-> >>>>>>>>>> The easiest way for me is to rely on memory_region_from_host()=
-. When
-> >>>>>>>>>> vaddr is from the guest, it returns a valid MemoryRegion. When=
- it is
-> >>>>>>>>>> not, it returns NULL. I'm not sure if this is a valid use case=
-, it
-> >>>>>>>>>> just worked in my tests so far.
-> >>>>>>>>>>
-> >>>>>>>>>> Now we have the second problem: The GPA values of the regions =
-of the
-> >>>>>>>>>> two IOVA tree must be unique. We need to be able to find unall=
-ocated
-> >>>>>>>>>> regions in SVQ IOVA. At this moment there is only one IOVATree=
-, so
-> >>>>>>>>>> this is done easily by vhost_iova_tree_map_alloc. But it is ve=
-ry
-> >>>>>>>>>> complicated with two trees.
-> >>>>>>>>>
-> >>>>>>>>> Would it be simpler if we decouple the IOVA allocator? For exam=
-ple, we
-> >>>>>>>>> can have a dedicated gtree to track the allocated IOVA ranges. =
-It is
-> >>>>>>>>> shared by both
-> >>>>>>>>>
-> >>>>>>>>> 1) Guest memory (GPA)
-> >>>>>>>>> 2) SVQ virtqueue and buffers
-> >>>>>>>>>
-> >>>>>>>>> And another gtree to track the GPA to IOVA.
-> >>>>>>>>>
-> >>>>>>>>> The SVQ code could use either
-> >>>>>>>>>
-> >>>>>>>>> 1) one linear mappings that contains both SVQ virtqueue and buf=
-fers
-> >>>>>>>>>
-> >>>>>>>>> or
-> >>>>>>>>>
-> >>>>>>>>> 2) dynamic IOVA allocation/deallocation helpers
-> >>>>>>>>>
-> >>>>>>>>> So we don't actually need the third gtree for SVQ HVA -> SVQ IO=
-VA?
-> >>>>>>>>>
-> >>>>>>>>
-> >>>>>>>> That's possible, but that scatters the IOVA handling code instea=
-d of
-> >>>>>>>> keeping it self-contained in VhostIOVATree.
-> >>>>>>>
-> >>>>>>> To me, the IOVA range/allocation is orthogonal to how IOVA is use=
-d.
-> >>>>>>>
-> >>>>>>> An example is the iova allocator in the kernel.
-> >>>>>>>
-> >>>>>>> Note that there's an even simpler IOVA "allocator" in NVME passth=
-rough
-> >>>>>>> code, not sure it is useful here though (haven't had a deep look =
-at
-> >>>>>>> that).
-> >>>>>>>
-> >>>>>>
-> >>>>>> I don't know enough about them to have an opinion. I keep seeing t=
-he
-> >>>>>> drawback of needing to synchronize both allocation & adding in all=
- the
-> >>>>>> places we want to modify the IOVATree. At this moment, these are t=
-he
-> >>>>>> vhost-vdpa memory listener, the SVQ vring creation and removal, an=
-d
-> >>>>>> net CVQ buffers. But it may be more in the future.
-> >>>>>>
-> >>>>>> What are the advantages of keeping these separated that justifies
-> >>>>>> needing to synchronize in all these places, compared with keeping =
-them
-> >>>>>> synchronized in VhostIOVATree?
-> >>>>>
-> >>>>> It doesn't need to be synchronized.
-> >>>>>
-> >>>>> Assuming guest and SVQ shares IOVA range. IOVA only needs to track
-> >>>>> which part of the range has been used.
-> >>>>>
-> >>>>
-> >>>> Not sure if I follow, that is what I mean with "synchronized".
-> >>>
-> >>> Oh right.
-> >>>
-> >>>>
-> >>>>> This simplifies things, we can store GPA->IOVA mappings and SVQ ->
-> >>>>> IOVA mappings separately.
-> >>>>>
-> >>>>
-> >>>> Sorry, I still cannot see the whole picture :).
-> >>>>
-> >>>> Let's assume we have all the GPA mapped to specific IOVA regions, so
-> >>>> we have the first IOVA tree (GPA -> IOVA) filled. Now we enable SVQ
-> >>>> because of the migration. How can we know where we can place SVQ
-> >>>> vrings without having them synchronized?
-> >>>
-> >>> Just allocating a new IOVA range for SVQ?
-> >>>
-> >>>>
-> >>>> At this moment we're using a tree. The tree nature of the current SV=
-Q
-> >>>> IOVA -> VA makes all nodes ordered so it is more or less easy to loo=
-k
-> >>>> for holes.
-> >>>
-> >>> Yes, iova allocate could still be implemented via a tree.
-> >>>
-> >>>>
-> >>>> Now your proposal uses the SVQ IOVA as tree values. Should we iterat=
-e
-> >>>> over all of them, order them, of the two trees, and then look for
-> >>>> holes there?
-> >>>
-> >>> Let me clarify, correct me if I was wrong:
-> >>>
-> >>> 1) IOVA allocator is still implemented via a tree, we just don't need
-> >>> to store how the IOVA is used
-> >>> 2) A dedicated GPA -> IOVA tree, updated via listeners and is used in
-> >>> the datapath SVQ translation
-> >>> 3) A linear mapping or another SVQ -> IOVA tree used for SVQ
-> >>>
-> >>
-> >> Ok, so the part I was missing is that now we have 3 whole trees, with
-> >> somehow redundant information :).
-> >
-> > Somehow, it decouples the IOVA usage out of the IOVA allocator. This
-> > might be simple as guests and SVQ may try to share a single IOVA
-> > address space.
-> >
->
-> I'm working on implementing your three suggestions above but I'm a bit
-> confused with some of the wording and I was hoping you could clarify
-> some of it for me when you get the chance.
->
+On 7/26/24 01:52, Nicholas Piggin wrote:
+> The POWER8 LPC ISA device irqs all get combined and reported to the line
+> connected the PSI LPCHC irq. POWER9 changed this so only internal LPC
+> host controller irqs use that line, and the device irqs get routed to
+> 4 new lines connected to PSI SERIRQ0-3.
+> 
+> POWER9 also introduced a new feature that automatically clears the irq
+> status in the LPC host controller when EOI'ed, so software does not have
+> to.
+> 
+> The powernv OPAL (skiboot) firmware managed to work because the LPCHC
+> irq handler scanned all LPC irqs and handled those including clearing
+> status even on POWER9 systems. So LPC irqs worked despite OPAL thinking
+> it was running in POWER9 mode. After this change, UART interrupts show
+> up on serirq1 which is where OPAL routes them to:
+> 
+>   cat /proc/interrupts
+>   ...
+>   20:          0  XIVE-IRQ 1048563 Level     opal-psi#0:lpchc
+>   ...
+>   25:         34  XIVE-IRQ 1048568 Level     opal-psi#0:lpc_serirq_mux1
+> 
+> Whereas they previously turn up on lpchc.
+> 
+> Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
-> For your first suggestion (1) you mention decoupling the IOVA allocator
-> and "don't need to store how the IOVA is used."
->
-> By this, do you mean to not save the IOVA->HVA mapping and instead only
-> save the allocated IOVA ranges? In other words, are you suggesting to
-> create a dedicated "IOVA->IOVA" tree like:
->
-> struct VhostIOVATree {
->      uint64_t iova_first;
->      uint64_t iova_last;
->      IOVATree *iova_map;
-> };
->
-> Where the mapping might look something like (where translated_addr is
-> given some kind of 0 value):
->
-> iova_region =3D (DMAMap) {
->      .iova =3D iova_first,
->      .translated_addr =3D 0,
->      .size =3D region_size - 1,
->      .perm =3D IOMMU_ACCESS_FLAG(true, section->readonly),
-> };
->
-> Also, if this is what you mean by decoupling the IOVA allocator, what
-> happens to the IOVA->HVA tree? Are we no longer saving these mappings in
-> a tree?
->
-> ---
-> In your second suggestion (2) with a dedicated GPA->IOVA tree, were you
-> thinking something like this? Just adding on to VhostIOVATree here:
->
-> struct VhostIOVATree {
->      uint64_t iova_first;
->      uint64_t iova_last;
->      IOVATree *iova_map;
->      IOVATree *gpa_map;
-> };
->
-> Where the mapping might look something like:
->
-> gpa_region =3D (DMAMap) {
->      .iova =3D iova_first,
->      .translated_addr =3D gpa_first,
->      .size =3D region_size - 1,
->      .perm =3D IOMMU_ACCESS_FLAG(true, section->readonly),
-> };
->
-> Also, when you say "used in the datapath SVQ translation", we still need
-> to build the GPA->IOVA tree when vhost_vdpa_listener_region_add() is
-> called, right?
->
-> ---
-> Lastly, in your third suggestion (3) you mention implementing a
-> SVQ->IOVA tree, making the total number of IOVATrees/GTrees 3: one for
-> just IOVAs, one for GPA->IOVA, and the last one for SVQ->IOVA. E.g.
->
-> struct VhostIOVATree {
->      uint64_t iova_first;
->      uint64_t iova_last;
->      IOVATree *iova_map;
->      IOVATree *gpa_map;
->      IOVATree *svq_map;
-> };
->
-> ---
->
-> Let me know if I'm understanding this correctly. If I am, this would
-> require a pretty good amount of refactoring on the IOVA allocation,
-> searching, destroying, etc. code to account for these new trees.
->
+>   hw/ppc/pnv.c             |  36 +++++++++--
+>   hw/ppc/pnv_lpc.c         | 128 ++++++++++++++++++++++++++++++++-------
+>   include/hw/ppc/pnv_lpc.h |  14 ++++-
+>   3 files changed, 148 insertions(+), 30 deletions(-)
+> 
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 13cebd6ab9..f56dcf6597 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -727,7 +727,8 @@ static ISABus *pnv_chip_power8_isa_create(PnvChip *chip, Error **errp)
+>       Pnv8Chip *chip8 = PNV8_CHIP(chip);
+>       qemu_irq irq = qdev_get_gpio_in(DEVICE(&chip8->psi), PSIHB_IRQ_EXTERNAL);
+>   
+> -    qdev_connect_gpio_out(DEVICE(&chip8->lpc), 0, irq);
+> +    qdev_connect_gpio_out_named(DEVICE(&chip8->lpc), "LPCHC", 0, irq);
+> +
+>       return pnv_lpc_isa_create(&chip8->lpc, true, errp);
+>   }
+>   
+> @@ -736,25 +737,48 @@ static ISABus *pnv_chip_power8nvl_isa_create(PnvChip *chip, Error **errp)
+>       Pnv8Chip *chip8 = PNV8_CHIP(chip);
+>       qemu_irq irq = qdev_get_gpio_in(DEVICE(&chip8->psi), PSIHB_IRQ_LPC_I2C);
+>   
+> -    qdev_connect_gpio_out(DEVICE(&chip8->lpc), 0, irq);
+> +    qdev_connect_gpio_out_named(DEVICE(&chip8->lpc), "LPCHC", 0, irq);
+> +
+>       return pnv_lpc_isa_create(&chip8->lpc, false, errp);
+>   }
+>   
+>   static ISABus *pnv_chip_power9_isa_create(PnvChip *chip, Error **errp)
+>   {
+>       Pnv9Chip *chip9 = PNV9_CHIP(chip);
+> -    qemu_irq irq = qdev_get_gpio_in(DEVICE(&chip9->psi), PSIHB9_IRQ_LPCHC);
+> +    qemu_irq irq;
+> +
+> +    irq = qdev_get_gpio_in(DEVICE(&chip9->psi), PSIHB9_IRQ_LPCHC);
+> +    qdev_connect_gpio_out_named(DEVICE(&chip9->lpc), "LPCHC", 0, irq);
+> +
+> +    irq = qdev_get_gpio_in(DEVICE(&chip9->psi), PSIHB9_IRQ_LPC_SIRQ0);
+> +    qdev_connect_gpio_out_named(DEVICE(&chip9->lpc), "SERIRQ", 0, irq);
+> +    irq = qdev_get_gpio_in(DEVICE(&chip9->psi), PSIHB9_IRQ_LPC_SIRQ1);
+> +    qdev_connect_gpio_out_named(DEVICE(&chip9->lpc), "SERIRQ", 1, irq);
+> +    irq = qdev_get_gpio_in(DEVICE(&chip9->psi), PSIHB9_IRQ_LPC_SIRQ2);
+> +    qdev_connect_gpio_out_named(DEVICE(&chip9->lpc), "SERIRQ", 2, irq);
+> +    irq = qdev_get_gpio_in(DEVICE(&chip9->psi), PSIHB9_IRQ_LPC_SIRQ3);
+> +    qdev_connect_gpio_out_named(DEVICE(&chip9->lpc), "SERIRQ", 3, irq);
+>   
+> -    qdev_connect_gpio_out(DEVICE(&chip9->lpc), 0, irq);
+>       return pnv_lpc_isa_create(&chip9->lpc, false, errp);
+>   }
+>   
+>   static ISABus *pnv_chip_power10_isa_create(PnvChip *chip, Error **errp)
+>   {
+>       Pnv10Chip *chip10 = PNV10_CHIP(chip);
+> -    qemu_irq irq = qdev_get_gpio_in(DEVICE(&chip10->psi), PSIHB9_IRQ_LPCHC);
+> +    qemu_irq irq;
+> +
+> +    irq = qdev_get_gpio_in(DEVICE(&chip10->psi), PSIHB9_IRQ_LPCHC);
+> +    qdev_connect_gpio_out_named(DEVICE(&chip10->lpc), "LPCHC", 0, irq);
+> +
+> +    irq = qdev_get_gpio_in(DEVICE(&chip10->psi), PSIHB9_IRQ_LPC_SIRQ0);
+> +    qdev_connect_gpio_out_named(DEVICE(&chip10->lpc), "SERIRQ", 0, irq);
+> +    irq = qdev_get_gpio_in(DEVICE(&chip10->psi), PSIHB9_IRQ_LPC_SIRQ1);
+> +    qdev_connect_gpio_out_named(DEVICE(&chip10->lpc), "SERIRQ", 1, irq);
+> +    irq = qdev_get_gpio_in(DEVICE(&chip10->psi), PSIHB9_IRQ_LPC_SIRQ2);
+> +    qdev_connect_gpio_out_named(DEVICE(&chip10->lpc), "SERIRQ", 2, irq);
+> +    irq = qdev_get_gpio_in(DEVICE(&chip10->psi), PSIHB9_IRQ_LPC_SIRQ3);
+> +    qdev_connect_gpio_out_named(DEVICE(&chip10->lpc), "SERIRQ", 3, irq);
+>   
+> -    qdev_connect_gpio_out(DEVICE(&chip10->lpc), 0, irq);
+>       return pnv_lpc_isa_create(&chip10->lpc, false, errp);
+>   }
+>   
+> diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
+> index 7d26b29487..0f14e180af 100644
+> --- a/hw/ppc/pnv_lpc.c
+> +++ b/hw/ppc/pnv_lpc.c
+> @@ -64,6 +64,7 @@ enum {
+>   #define   LPC_HC_IRQSER_START_4CLK      0x00000000
+>   #define   LPC_HC_IRQSER_START_6CLK      0x01000000
+>   #define   LPC_HC_IRQSER_START_8CLK      0x02000000
+> +#define   LPC_HC_IRQSER_AUTO_CLEAR      0x00800000
+>   #define LPC_HC_IRQMASK          0x34    /* same bit defs as LPC_HC_IRQSTAT */
+>   #define LPC_HC_IRQSTAT          0x38
+>   #define   LPC_HC_IRQ_SERIRQ0            0x80000000 /* all bits down to ... */
+> @@ -420,32 +421,90 @@ static const MemoryRegionOps pnv_lpc_mmio_ops = {
+>       .endianness = DEVICE_BIG_ENDIAN,
+>   };
+>   
+> -static void pnv_lpc_eval_irqs(PnvLpcController *lpc)
+> +/* Program the POWER9 LPC irq to PSI serirq routing table */
+> +static void pnv_lpc_eval_serirq_routes(PnvLpcController *lpc)
+>   {
+> -    bool lpc_to_opb_irq = false;
+> +    int irq;
+>   
+> -    /* Update LPC controller to OPB line */
+> -    if (lpc->lpc_hc_irqser_ctrl & LPC_HC_IRQSER_EN) {
+> -        uint32_t irqs;
+> +    if (!lpc->psi_has_serirq) {
+> +        if ((lpc->opb_irq_route0 & PPC_BITMASK(8, 13)) ||
+> +            (lpc->opb_irq_route1 & PPC_BITMASK(4, 31))) {
 
-Ok I think I understand your previous question better, sorry for the delay =
-:).
 
-If I'm not wrong, Jason did not enumerate these as alternatives but as
-part of the same solution. Jason please correct me if I'm wrong here.
+Coverity reports an issue :
 
-His solution is composed of three trees:
-1) One for the IOVA allocations, so we know where to allocate new ranges
-2) One of the GPA -> SVQ IOVA translations.
-3) Another one for SVQ vrings translations.
+     CID 1558829:  Integer handling issues  (CONSTANT_EXPRESSION_RESULT)
+     "lpc->opb_irq_route0 & (70931694131085312ULL /* (0x8000000000000000ULL >> 8) - (0x8000000000000000ULL >> 13) | (0x8000000000000000ULL >> 8) */)" is always 0 regardless of the values of its operands. This occurs as the logical first operand of "||".
 
-In my opinion to use GPA this is problematic as we force all of the
-callers to know if the address we want to translate comes from the
-guest or not. Current code does now know it, as
-vhost_svq_translate_addr is called to translate both buffer dataplane
-addresses and control virtqueue buffers, which are also shadowed.  To
-transmit that information to the caller code would require either
-duplicate functions, to add a boolean, etc, as it is in a different
-layer (net specific net/vhost-vdpa.c vs generic
-hw/virtio/vhost-shadow-virtqueue.c).
+Should the above if use PPC_BITMASK32 instead ?
 
-In my opinion is easier to keep just two trees (or similar structs):
-1) One for the IOVA allocations, so we know where to allocate new
-ranges. We don't actually need to store the translations here.
-2) One for HVA -> SVQ IOVA translations.
 
-This way we can accommodate both SVQ vrings, CVQ buffers, and guest
-memory buffers, all on the second tree, and take care of the HVA
-duplications.
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                "OPB: setting serirq routing on POWER8 system, ignoring.\n");
+> +        }
+> +        return;
+> +    }
+>   
+> -        irqs = lpc->lpc_hc_irqstat & lpc->lpc_hc_irqmask;
+> -        lpc_to_opb_irq = (irqs != 0);
+> +    for (irq = 0; irq <= 13; irq++) {
+> +        int serirq = (lpc->opb_irq_route1 >> (31 - 5 - (irq * 2))) & 0x3;
+> +        lpc->irq_to_serirq_route[irq] = serirq;
+>       }
+>   
+> -    /* We don't honor the polarity register, it's pointless and unused
+> -     * anyway
+> -     */
+> -    if (lpc_to_opb_irq) {
+> -        lpc->opb_irq_input |= OPB_MASTER_IRQ_LPC;
+> -    } else {
+> -        lpc->opb_irq_input &= ~OPB_MASTER_IRQ_LPC;
+> +    for (irq = 14; irq < ISA_NUM_IRQS; irq++) {
+> +        int serirq = (lpc->opb_irq_route0 >> (31 - 9 - (irq * 2))) & 0x3;
 
-Thanks!
 
-> Thanks Jason!
->
-> >>
-> >> In some sense this is simpler than trying to get all the information
-> >> from only two trees. On the bad side, all SVQ calls that allocate some
-> >> region need to remember to add to one of the two other threes. That is
-> >> what I mean by synchronized. But sure, we can go that way.
-> >
-> > Just a suggestion, if it turns out to complicate the issue, I'm fine
-> > to go the other way.
-> >
-> > Thanks
-> >
-> >>
-> >>> Thanks
-> >>>
-> >>>>
-> >>>>> Thanks
-> >>>>>
-> >>>>>>
-> >>>>>> Thanks!
-> >>>>>>
-> >>>>>
-> >>>>
-> >>>
-> >>
-> >>
-> >
->
+Coverity reports an issue :
+
+     CID 1558828:    (BAD_SHIFT)
+     In expression "lpc->opb_irq_route0 >> 22 - irq * 2", shifting by a negative amount has undefined behavior.  The shift amount, "22 - irq * 2", is -8.
+
+The shift value (irq * 2) seems incorrect. should it be ((irq - 14) * 2) ?
+
+Thanks,
+
+C.
+
+
+
+> +        lpc->irq_to_serirq_route[irq] = serirq;
+> +    }
+> +}
+> +
+> +static void pnv_lpc_eval_irqs(PnvLpcController *lpc)
+> +{
+> +    uint32_t active_irqs = 0;
+> +
+> +    if (lpc->lpc_hc_irqstat & PPC_BITMASK32(16, 31)) {
+> +        qemu_log_mask(LOG_UNIMP, "LPC HC Unimplemented irqs in IRQSTAT: "
+> +                                 "0x%08"PRIx32"\n", lpc->lpc_hc_irqstat);
+>       }
+>   
+> -    /* Update OPB internal latch */
+> -    lpc->opb_irq_stat |= lpc->opb_irq_input & lpc->opb_irq_mask;
+> +    if (lpc->lpc_hc_irqser_ctrl & LPC_HC_IRQSER_EN) {
+> +        active_irqs = lpc->lpc_hc_irqstat & lpc->lpc_hc_irqmask;
+> +    }
+>   
+>       /* Reflect the interrupt */
+> -    qemu_set_irq(lpc->psi_irq, lpc->opb_irq_stat != 0);
+> +    if (!lpc->psi_has_serirq) {
+> +        /*
+> +         * POWER8 ORs all irqs together (also with LPCHC internal interrupt
+> +         * sources) and outputs a single line that raises the PSI LPCHC irq
+> +         * which then latches an OPB IRQ status register that sends the irq
+> +         * to PSI.
+> +         *
+> +         * We don't honor the polarity register, it's pointless and unused
+> +         * anyway
+> +         */
+> +        if (active_irqs) {
+> +            lpc->opb_irq_input |= OPB_MASTER_IRQ_LPC;
+> +        } else {
+> +            lpc->opb_irq_input &= ~OPB_MASTER_IRQ_LPC;
+> +        }
+> +
+> +        /* Update OPB internal latch */
+> +        lpc->opb_irq_stat |= lpc->opb_irq_input & lpc->opb_irq_mask;
+> +
+> +        qemu_set_irq(lpc->psi_irq_lpchc, lpc->opb_irq_stat != 0);
+> +    } else {
+> +        /*
+> +         * POWER9 and POWER10 have routing fields in OPB master registers that
+> +         * send LPC irqs to 4 output lines that raise the PSI SERIRQ irqs.
+> +         * These don't appear to get latched into an OPB register like the
+> +         * LPCHC irqs.
+> +         *
+> +         * POWER9 LPC controller internal irqs still go via the OPB
+> +         * and LPCHC PSI irqs like P8, but we have no such internal sources
+> +         * modelled yet.
+> +         */
+> +        bool serirq_out[4] = { false, false, false, false };
+> +        int irq;
+> +
+> +        for (irq = 0; irq < ISA_NUM_IRQS; irq++) {
+> +            if (active_irqs & (LPC_HC_IRQ_SERIRQ0 >> irq)) {
+> +                serirq_out[lpc->irq_to_serirq_route[irq]] = true;
+> +            }
+> +        }
+> +
+> +        qemu_set_irq(lpc->psi_irq_serirq[0], serirq_out[0]);
+> +        qemu_set_irq(lpc->psi_irq_serirq[1], serirq_out[1]);
+> +        qemu_set_irq(lpc->psi_irq_serirq[2], serirq_out[2]);
+> +        qemu_set_irq(lpc->psi_irq_serirq[3], serirq_out[3]);
+> +    }
+>   }
+>   
+>   static uint64_t lpc_hc_read(void *opaque, hwaddr addr, unsigned size)
+> @@ -543,10 +602,10 @@ static uint64_t opb_master_read(void *opaque, hwaddr addr, unsigned size)
+>       uint64_t val = 0xfffffffffffffffful;
+>   
+>       switch (addr) {
+> -    case OPB_MASTER_LS_ROUTE0: /* TODO */
+> +    case OPB_MASTER_LS_ROUTE0:
+>           val = lpc->opb_irq_route0;
+>           break;
+> -    case OPB_MASTER_LS_ROUTE1: /* TODO */
+> +    case OPB_MASTER_LS_ROUTE1:
+>           val = lpc->opb_irq_route1;
+>           break;
+>       case OPB_MASTER_LS_IRQ_STAT:
+> @@ -575,11 +634,15 @@ static void opb_master_write(void *opaque, hwaddr addr,
+>       PnvLpcController *lpc = opaque;
+>   
+>       switch (addr) {
+> -    case OPB_MASTER_LS_ROUTE0: /* TODO */
+> +    case OPB_MASTER_LS_ROUTE0:
+>           lpc->opb_irq_route0 = val;
+> +        pnv_lpc_eval_serirq_routes(lpc);
+> +        pnv_lpc_eval_irqs(lpc);
+>           break;
+> -    case OPB_MASTER_LS_ROUTE1: /* TODO */
+> +    case OPB_MASTER_LS_ROUTE1:
+>           lpc->opb_irq_route1 = val;
+> +        pnv_lpc_eval_serirq_routes(lpc);
+> +        pnv_lpc_eval_irqs(lpc);
+>           break;
+>       case OPB_MASTER_LS_IRQ_STAT:
+>           lpc->opb_irq_stat &= ~val;
+> @@ -664,6 +727,8 @@ static void pnv_lpc_power9_realize(DeviceState *dev, Error **errp)
+>       PnvLpcClass *plc = PNV_LPC_GET_CLASS(dev);
+>       Error *local_err = NULL;
+>   
+> +    object_property_set_bool(OBJECT(lpc), "psi-serirq", true, &error_abort);
+> +
+>       plc->parent_realize(dev, &local_err);
+>       if (local_err) {
+>           error_propagate(errp, local_err);
+> @@ -673,6 +738,9 @@ static void pnv_lpc_power9_realize(DeviceState *dev, Error **errp)
+>       /* P9 uses a MMIO region */
+>       memory_region_init_io(&lpc->xscom_regs, OBJECT(lpc), &pnv_lpc_mmio_ops,
+>                             lpc, "lpcm", PNV9_LPCM_SIZE);
+> +
+> +    /* P9 LPC routes ISA irqs to 4 PSI SERIRQ lines */
+> +    qdev_init_gpio_out_named(dev, lpc->psi_irq_serirq, "SERIRQ", 4);
+>   }
+>   
+>   static void pnv_lpc_power9_class_init(ObjectClass *klass, void *data)
+> @@ -751,13 +819,19 @@ static void pnv_lpc_realize(DeviceState *dev, Error **errp)
+>       memory_region_add_subregion(&lpc->opb_mr, LPC_HC_REGS_OPB_ADDR,
+>                                   &lpc->lpc_hc_regs);
+>   
+> -    qdev_init_gpio_out(dev, &lpc->psi_irq, 1);
+> +    qdev_init_gpio_out_named(dev, &lpc->psi_irq_lpchc, "LPCHC", 1);
+>   }
+>   
+> +static Property pnv_lpc_properties[] = {
+> +    DEFINE_PROP_BOOL("psi-serirq", PnvLpcController, psi_has_serirq, false),
+> +    DEFINE_PROP_END_OF_LIST(),
+> +};
+> +
+>   static void pnv_lpc_class_init(ObjectClass *klass, void *data)
+>   {
+>       DeviceClass *dc = DEVICE_CLASS(klass);
+>   
+> +    device_class_set_props(dc, pnv_lpc_properties);
+>       dc->realize = pnv_lpc_realize;
+>       dc->desc = "PowerNV LPC Controller";
+>       dc->user_creatable = false;
+> @@ -803,7 +877,7 @@ static void pnv_lpc_isa_irq_handler_cpld(void *opaque, int n, int level)
+>       }
+>   
+>       if (pnv->cpld_irqstate != old_state) {
+> -        qemu_set_irq(lpc->psi_irq, pnv->cpld_irqstate != 0);
+> +        qemu_set_irq(lpc->psi_irq_lpchc, pnv->cpld_irqstate != 0);
+>       }
+>   }
+>   
+> @@ -824,6 +898,13 @@ static void pnv_lpc_isa_irq_handler(void *opaque, int n, int level)
+>           pnv_lpc_eval_irqs(lpc);
+>       } else {
+>           lpc->lpc_hc_irq_inputs &= ~irq_bit;
+> +
+> +        /* POWER9 adds an auto-clear mode that clears IRQSTAT bits on EOI */
+> +        if (lpc->psi_has_serirq &&
+> +            (lpc->lpc_hc_irqser_ctrl & LPC_HC_IRQSER_AUTO_CLEAR)) {
+> +            lpc->lpc_hc_irqstat &= ~irq_bit;
+> +            pnv_lpc_eval_irqs(lpc);
+> +        }
+>       }
+>   }
+>   
+> @@ -854,6 +935,7 @@ ISABus *pnv_lpc_isa_create(PnvLpcController *lpc, bool use_cpld, Error **errp)
+>           handler = pnv_lpc_isa_irq_handler;
+>       }
+>   
+> +    /* POWER has a 17th irq, QEMU only implements the 16 regular device irqs */
+>       irqs = qemu_allocate_irqs(handler, lpc, ISA_NUM_IRQS);
+>   
+>       isa_bus_register_input_irqs(isa_bus, irqs);
+> diff --git a/include/hw/ppc/pnv_lpc.h b/include/hw/ppc/pnv_lpc.h
+> index 97c6872c3f..e0fd5e4130 100644
+> --- a/include/hw/ppc/pnv_lpc.h
+> +++ b/include/hw/ppc/pnv_lpc.h
+> @@ -23,6 +23,7 @@
+>   #include "exec/memory.h"
+>   #include "hw/ppc/pnv.h"
+>   #include "hw/qdev-core.h"
+> +#include "hw/isa/isa.h" /* For ISA_NUM_IRQS */
+>   
+>   #define TYPE_PNV_LPC "pnv-lpc"
+>   typedef struct PnvLpcClass PnvLpcClass;
+> @@ -87,8 +88,19 @@ struct PnvLpcController {
+>       /* XSCOM registers */
+>       MemoryRegion xscom_regs;
+>   
+> +    /*
+> +     * In P8, ISA irqs are combined with internal sources to drive the
+> +     * LPCHC interrupt output. P9 ISA irqs raise one of 4 lines that
+> +     * drive PSI SERIRQ irqs, routing according to OPB routing registers.
+> +     */
+> +    bool psi_has_serirq;
+> +
+>       /* PSI to generate interrupts */
+> -    qemu_irq psi_irq;
+> +    qemu_irq psi_irq_lpchc;
+> +
+> +    /* P9 serirq lines and irq routing table */
+> +    qemu_irq psi_irq_serirq[4];
+> +    int irq_to_serirq_route[ISA_NUM_IRQS];
+>   };
+>   
+>   struct PnvLpcClass {
 
 
