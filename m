@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7EBC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:45:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A90C9C3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:46:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYRc3-0004W8-GJ; Mon, 29 Jul 2024 10:44:35 -0400
+	id 1sYRby-0004Ak-RS; Mon, 29 Jul 2024 10:44:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYRc1-0004OS-NW
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:33 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ id 1sYRbv-0003xV-TC
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:27 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYRbt-0008Q3-Cs
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:33 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5a2ffc346ceso5322527a12.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:44:24 -0700 (PDT)
+ id 1sYRbq-0008No-4u
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:27 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-36865a516f1so2025736f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:44:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722264264; x=1722869064; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722264260; x=1722869060; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RIOayMEsJA1tkmepteKB9T0FXWTwbDeTnBtcVohO/HQ=;
- b=vrz7AqpY0TeQ9/WAPxNm5oFSfMpOi4siqTB17ebTmwHEDG/t0vhuTJpW+G7JqxBK+f
- RmJCEiIF70+kJe70TsWh+RqongjyO3z5NvWRRuh1mLYz4Y3oEWPRewT4JLBXMkTmooHj
- pZsGUDWq8p5ewK1qy808Nr8uFr7B/huXBpIGCNKU+43o7KFNXa/CQZvNMgWFqS4CQv7G
- 7k19hi1U3Y3UohipcWFzN5kWGk6XstRciq54GAbsvWDQGOnWPhuaHadHnEajt1hSb/0L
- V2yKU91SUud4NGBBKPy2Mvlj80HpnoW8gnFzh7iZHIWZfhDPcE13WIt4fFznIghORmM+
- pC2g==
+ bh=/v/k/yniP5nVbC0OuXzGFTLMBK/X3Q5pTmqVGs8gUbQ=;
+ b=SzdKklmzyf7WP1srhXZZT5zSqzINWURblWDIr0y8H/CsfrkjTcAqBu1DwQ+4pZb7ZT
+ /RZAgSGgRmsRLkAmO/NczNTi9W/IS07/2MPSoMAZo+xS5fYDekJD0uheeWp2BkGckafa
+ xM1YN0kxAan2LJ0QcD1Ep5Eor0+EsoIeWYYZG0uPsnrTmi090w7miujpeva9oGmLJkxR
+ BkYEh8quAh/rcMqTLUCt4jiV5y5Wey/ifVYfCnEVhZh5jTGB/6/oyoSL0K9DoLeuOP/Q
+ XdVOlI4vLW2Y38mTOfpzZpnA6WBJhUxrMB7tycaEziqwLHB/SZiCxXB+BiyGfErLdrPA
+ 8RIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722264264; x=1722869064;
+ d=1e100.net; s=20230601; t=1722264260; x=1722869060;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=RIOayMEsJA1tkmepteKB9T0FXWTwbDeTnBtcVohO/HQ=;
- b=U24osGjbA8cHM9XpdQjgrLaEyLL2pxLYgZ9l9vly2zkUpQBk3S27k9zL7fw5bh4GhY
- 0jbfVmSFVVHD8/yqiu9Rc0NXN3k7PXs7dgOroJMe+0FlP3ElQ0T675D9mGzJeaCMl8QZ
- S4fJES0GThWqfgoRs4I9B/CmFnfyXTfibgOYbinsSTOBxl/FocPL3aHVmBz/eJwovead
- k7v6J+AU5vXi1691E22bJTS1LLZjp4uPC7lPYSNGWB1LvvY8Qwm/CUwMENYxrKeTFya/
- 1fq1wev584+SS1fnbeF1V6s8fER+BrF/CrzTeWuTtccXLebYszzCl0HBDQjh3skhX2Co
- iOaA==
-X-Gm-Message-State: AOJu0YzRhHIppF4aVb64B2br+Adkp1+4zXV7iHrtEX5UWZhxqprV3kOb
- oPcsmEZXT7giU/CjDdbhfUwDs1MafVCHrogs8zHy4YA1hE32Vgtpscg8H6EtKq4=
-X-Google-Smtp-Source: AGHT+IFBqzVWW8HN4yEEamLBDbG/voeZt/brB68Ctd58ksy7qlSURXpWYpi+y2eacnqXtSPvTiYy9A==
-X-Received: by 2002:a17:907:3d9e:b0:a77:ab40:6d7f with SMTP id
- a640c23a62f3a-a7d401781femr483657566b.43.1722264263519; 
- Mon, 29 Jul 2024 07:44:23 -0700 (PDT)
+ bh=/v/k/yniP5nVbC0OuXzGFTLMBK/X3Q5pTmqVGs8gUbQ=;
+ b=hiRUHA1OgcewKCjn0wk+ky7ZFDBjvR0iFSE6l4PJ6Ktn/zDkoYFPCyI0uC4fUzRZYL
+ 28dLqAMEBuoFw0VjWBAvqROhYVPodvrkGuSE3szKq0tyXhTXZAGOwLq3wOaqxH5aXPOY
+ 2CURCI1hdH0B+ub1Sgicxdv1o6o3OytX5w691pgNq4ohWjeBdTmqkuk3Y9lVAf+nmquH
+ ucMeACOAr81JO+HOHBMwN7zxNw8Q4/Td5lPXna5+2OZa71PMpdCtH7IpMIC3HzlHx5z8
+ C8VX2b8cqYknDCYNKHLDmbP8Zh+5j4eF6YKIyoSkMt+cMHsEd8MgdoFYHGWauei5LelP
+ 5JJA==
+X-Gm-Message-State: AOJu0YyQgxR/49PMQpzNpI/qIiX2p2jEqP4wfoZcByslme7Tka0IXAlB
+ wlgf6o0sZkbBTUPmFMuhuWs4Yi0QbwsVUcg3LleVugh9CTUI1JOrHgm1hKyjEDM=
+X-Google-Smtp-Source: AGHT+IEgeVGE/c3HbNhA+uFrQD89n8ygvnu1W/8UdExBBLwR3Otvv7+kSvxZWXQE7OnZqNjkBHF4PA==
+X-Received: by 2002:a05:6000:1b91:b0:368:7e54:baaa with SMTP id
+ ffacd0b85a97d-36b5cf254e7mr6122234f8f.4.1722264258943; 
+ Mon, 29 Jul 2024 07:44:18 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acad91080sm518097066b.160.2024.07.29.07.44.17
+ a640c23a62f3a-a7acab22bfdsm516374666b.34.2024.07.29.07.44.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jul 2024 07:44:19 -0700 (PDT)
+ Mon, 29 Jul 2024 07:44:17 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 43DE05FA11;
- Mon, 29 Jul 2024 15:44:16 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 6E59A5F94C;
+ Mon, 29 Jul 2024 15:44:15 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
@@ -79,17 +79,18 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
  David Hildenbrand <david@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH 12/14] contrib/plugins: be more vocal building
-Date: Mon, 29 Jul 2024 15:44:12 +0100
-Message-Id: <20240729144414.830369-13-alex.bennee@linaro.org>
+Subject: [PATCH 04/14] tests/tcg/loongarch64: Use --no-warn-rwx-segments to
+ link system tests
+Date: Mon, 29 Jul 2024 15:44:04 +0100
+Message-Id: <20240729144414.830369-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240729144414.830369-1-alex.bennee@linaro.org>
 References: <20240729144414.830369-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,73 +113,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the conversion to meson and removing the old QEMU Makefile
-baggage we became very silent when building the plugins. Bring in a
-copy of the quiet-command logic (and some magic COMMAs) so we can at
-least assure developers we are building them.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2457
+Recent debian cross-linker for loongarch issues
+
+  ld: warning: hello has a LOAD segment with RWX permissions
+
+This is partially related to tests/tcg/loongarch64/system/kernel.ld,
+but is not fixed by explicitly adding a single LOAD PHDR.
+Disable the warning, since it does not apply to kernel images.
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240724010733.22129-3-richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
 ---
-Maybe we should just move to a meson build as proposed here:
+ tests/tcg/loongarch64/Makefile.softmmu-target | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-https://gitlab.com/qemu-project/qemu/-/issues/1710
----
- contrib/plugins/Makefile | 25 ++++++++++++++++++++-----
- 1 file changed, 20 insertions(+), 5 deletions(-)
-
-diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
-index 98a89d5c40..edf256cd9d 100644
---- a/contrib/plugins/Makefile
-+++ b/contrib/plugins/Makefile
-@@ -39,26 +39,41 @@ endif
+diff --git a/tests/tcg/loongarch64/Makefile.softmmu-target b/tests/tcg/loongarch64/Makefile.softmmu-target
+index d5d5c1a7f6..6d4a20fde7 100644
+--- a/tests/tcg/loongarch64/Makefile.softmmu-target
++++ b/tests/tcg/loongarch64/Makefile.softmmu-target
+@@ -16,7 +16,7 @@ LINK_SCRIPT=$(LOONGARCH64_SYSTEM_SRC)/kernel.ld
+ LDFLAGS=-Wl,-T$(LINK_SCRIPT)
+ TESTS+=$(LOONGARCH64_TESTS) $(MULTIARCH_TESTS)
+ CFLAGS+=-nostdlib -g -O1 -march=loongarch64 -mabi=lp64d $(MINILIB_INC)
+-LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
++LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc -Wl,--no-warn-rwx-segments
  
- SONAMES := $(addsuffix $(SO_SUFFIX),$(addprefix lib,$(NAMES)))
- 
--# The main QEMU uses Glib extensively so it's perfectly fine to use it
-+# The main QEMU uses Glib extensively so it is perfectly fine to use it
- # in plugins (which many example do).
- PLUGIN_CFLAGS := $(shell $(PKG_CONFIG) --cflags glib-2.0)
- PLUGIN_CFLAGS += -fPIC -Wall
- PLUGIN_CFLAGS += -I$(TOP_SRC_PATH)/include/qemu
- 
-+# Helper that honours V=1 so we get some output when compiling
-+quiet-@ = $(if $(V),,@$(if $1,printf "  %-7s %s\n" "$(strip $1)" "$(strip $2)" && ))
-+quiet-command = $(call quiet-@,$2,$3)$1
-+
-+# for including , in command strings
-+COMMA := ,
-+
- all: $(SONAMES)
- 
- %.o: %.c
--	$(CC) $(CFLAGS) $(PLUGIN_CFLAGS) -c -o $@ $<
-+	$(call quiet-command, \
-+		$(CC) $(CFLAGS) $(PLUGIN_CFLAGS) -c -o $@ $<, \
-+	        BUILD, plugin $@)
- 
- ifeq ($(CONFIG_WIN32),y)
- lib%$(SO_SUFFIX): %.o win32_linker.o ../../plugins/libqemu_plugin_api.a
--	$(CC) -shared -o $@ $^ $(LDLIBS)
-+	$(call quiet-command, \
-+		$(CC) -shared -o $@ $^ $(LDLIBS), \
-+		LINK, plugin $@)
- else ifeq ($(CONFIG_DARWIN),y)
- lib%$(SO_SUFFIX): %.o
--	$(CC) -bundle -Wl,-undefined,dynamic_lookup -o $@ $^ $(LDLIBS)
-+	$(call quiet-command, \
-+		$(CC) -bundle -Wl$(COMMA)-undefined$(COMMA)dynamic_lookup -o $@ $^ $(LDLIBS), \
-+		LINK, plugin $@)
- else
- lib%$(SO_SUFFIX): %.o
--	$(CC) -shared -o $@ $^ $(LDLIBS)
-+	$(call quiet-command, \
-+		$(CC) -shared -o $@ $^ $(LDLIBS), \
-+		LINK, plugin $@)
- endif
- 
- 
+ # building head blobs
+ .PRECIOUS: $(CRT_OBJS)
 -- 
 2.39.2
 
