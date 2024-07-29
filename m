@@ -4,94 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4380EC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 11:50:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 382B9C3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 11:56:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYOsm-0008Cy-SJ; Mon, 29 Jul 2024 07:49:40 -0400
+	id 1sYOy0-0005in-7P; Mon, 29 Jul 2024 07:55:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYOsl-0008C0-NC
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 07:49:39 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYOsj-0001lc-06
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 07:49:38 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-36844375001so1177158f8f.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 04:49:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722253775; x=1722858575; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9JnXahZi7Ry6BaSaWzwQlRdolcTPy7oGkuYP98Cp3gk=;
- b=X7660nBKP9TBn+HBB65lQ1TmH4qLeQAehh+oUalQWAF7+IgC5HLNqZmuS37NvAaQGY
- flY7BY2be4vgsAL0qRiaKwQE8Ju0eMQ2CnS0pHii3V0d09B2zTn8QpCyWsxiYEpkWhic
- 8n+MnMyquZY7j7GOb9xbyZuAQ63q443aFu8LhNuj72Nlnqfi32y5y5VabTcOIXxk2lNa
- McxlLfQcqpoxoteXQfFS0ACORtYl7aYxz54w/1IPTDwL0Fyjm2rxhQWgxS4FgEuOKcz0
- bqEEWTpXRyoQFF+WkJMOUBmy2o2GAH8hI/XcsqCozOPyVJB78uNTAljjxlH695tmsQ5v
- 6HcQ==
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sYOxx-0005dv-Te
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 07:55:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sYOxw-0002gK-F1
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 07:55:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722254098;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=a4NZQE0a01E7gkys5wMB3DntjcYY2NgIlYja4WDLw5Q=;
+ b=HBMRV1H7K8T14Um7t+AFXffwMWTK7jvIc4zS62pBWK8HpSv4w0okKEcxgbdPGUed3dGoJA
+ 9T0J5sPkpVbuCUVAFrE+T3kKts58H0lg0OTOn3vh2lPkMs01AyoMqp3A+dXSikLrdRaeNO
+ eJpqPCFZlClCHeNZ59IljsWo/qYJcR4=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-27-seEKqYj-NdeKdqEvf9z4-w-1; Mon, 29 Jul 2024 07:54:56 -0400
+X-MC-Unique: seEKqYj-NdeKdqEvf9z4-w-1
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-6648363b329so34516747b3.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 04:54:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722253775; x=1722858575;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9JnXahZi7Ry6BaSaWzwQlRdolcTPy7oGkuYP98Cp3gk=;
- b=jattrGp2vLtnz7O8xqXFEAb0Ff6KqOtdGJkpyIOntNWXNJpAnfIbUF3cqu190sSTi4
- /cUZbMfOABGYpV3hrHCWa5pUGEw+LMI9H/wV70WrW/1UC8d/q0U6LYE4un70OGPcuaQ5
- ikv3OzGofiHHtDQxWA9MYhi5E0EWpONsQhCukxZmrEO9YiLY9fwWsIvF3Sokkb5R8WnY
- mxXeYW6+O2eYQH9LoYgBELlirdqnR8QBeX8mJOn0Ag9pNN2ndk8iR11nCUKOV/2P6jaP
- cCn3c2xZ4HqDD2UqSvmRHkI2vk03HNsZfHihqudz7hUFu5RlnrnwgeVDdbIKJ0LtbJF/
- Q4WQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWU6ARkQsA3xceLE2WImuQCrUKeXeiDlufrZOt8zgFd8SjFBLOuQqRe5Rc2mCQv4c9cnnqAPToZA0Jj9Ez3IrMuCDT9rPc=
-X-Gm-Message-State: AOJu0YwTHQz+yKkKuHxJcL7clSReig2vjcNFZOwwgJS8wDfZqXxnzPzF
- EET9tTxJ+F54vGXXZS3pB1zkJdg3yGQi/2ZUqM+BHlN9Y5rzO1Ywf8UMf2/XwQw=
-X-Google-Smtp-Source: AGHT+IFeeCiGV5thGBTiNh7gr+7QbahBgArLsgKhz9+VAJf8JWTBngqYPYwRIe5wowq9hn3JvNtDbw==
-X-Received: by 2002:a5d:4e0d:0:b0:360:79d4:b098 with SMTP id
- ffacd0b85a97d-36b5d03ce06mr4046832f8f.29.1722253775119; 
- Mon, 29 Jul 2024 04:49:35 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.173.10])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4281a26e1bcsm51280515e9.34.2024.07.29.04.49.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jul 2024 04:49:34 -0700 (PDT)
-Message-ID: <7ef24be1-e79c-49ce-8c73-3509a7c8d77a@linaro.org>
-Date: Mon, 29 Jul 2024 13:49:31 +0200
+ d=1e100.net; s=20230601; t=1722254095; x=1722858895;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=a4NZQE0a01E7gkys5wMB3DntjcYY2NgIlYja4WDLw5Q=;
+ b=oJZX2U7x5KLdmIOUg0tlV9UW59hRTu2cuJceDmJyUIT1uSjR6f1ULr31VhthxkQZxP
+ cMJykTVphC+x2e0Dm/gMG96KxR/cNpt7QjBQpKk/qayEcuiammXd8Q3kk7cYS4TfkOcP
+ RG6FsQMwBeYj7xWK8ove23KZJJUq67InPtElf6WUw/ubYXnAUtSyu1JrAXxzRNIEfQW5
+ d6SgeP+8skdUZ4/hCvoXdHEmzRGINxSIn1uhh5o42CLk0FbW2hywG7RbZ/5vUrt8qDgv
+ UhharmLh/gKAWmR4ko1NlVvs/MGtLoFvHJmt2DTKst6p3ee6UT9Y7MEzCOloUBZISzn3
+ Lp0Q==
+X-Gm-Message-State: AOJu0Yx8q/aaUus+dxhvpSF5qNCOwIFCqTOi6Xn9MBTMnJd51aO/5tyw
+ hkvlZcv4WUfqDWxnQl+IS5ooP+UMziJa2KaVtQY1GW03g7l5pC7hNKS0SUanCRtq4dN3zbYgjHs
+ LuREKhXLAoTKehXJkXsU+Mg+3hY7smVS41ZdiMVsws9R1UO8hPPYEXYXM+BUwm32CvE99R76Ggz
+ c65t9Z8cYWfgPnF8fGf+/RsClBka4=
+X-Received: by 2002:a0d:cd45:0:b0:66a:843c:4c38 with SMTP id
+ 00721157ae682-67a09b7279cmr66399287b3.37.1722254095617; 
+ Mon, 29 Jul 2024 04:54:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IErfrRTDiSJvI5t7sMOIhqCoRowoqwYj4meCPwD0Afc+x3c9S/BATACl3L0a2odQpmfXnY0yF5dkB0GXDcn7Fc=
+X-Received: by 2002:a0d:cd45:0:b0:66a:843c:4c38 with SMTP id
+ 00721157ae682-67a09b7279cmr66399057b3.37.1722254095312; Mon, 29 Jul 2024
+ 04:54:55 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/13] tests/avocado: mips: fallback to HTTP given
- certificate expiration
-To: Cleber Rosa <crosa@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
- Beraldo Leal <bleal@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- David Woodhouse <dwmw2@infradead.org>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, kvm@vger.kernel.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-arm@nongnu.org,
- Radoslaw Biernacki <rad@semihalf.com>, Paul Durrant <paul@xen.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
 References: <20240726134438.14720-1-crosa@redhat.com>
- <20240726134438.14720-2-crosa@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240726134438.14720-2-crosa@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ <20240726134438.14720-6-crosa@redhat.com>
+ <ZqdwJRRBjj5DsWh8@redhat.com>
+In-Reply-To: <ZqdwJRRBjj5DsWh8@redhat.com>
+From: Cleber Rosa <crosa@redhat.com>
+Date: Mon, 29 Jul 2024 07:54:40 -0400
+Message-ID: <CA+bd_6Jj-DgpkouznuDC-ViOhi4zLu-SxnyrnyV6ceycHhEBiA@mail.gmail.com>
+Subject: Re: [PATCH 05/13] tests/avocado: machine aarch64: standardize
+ location and RO access
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, Beraldo Leal <bleal@redhat.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ David Woodhouse <dwmw2@infradead.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, kvm@vger.kernel.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-arm@nongnu.org, 
+ Radoslaw Biernacki <rad@semihalf.com>, Paul Durrant <paul@xen.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=crosa@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,25 +109,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/7/24 15:44, Cleber Rosa wrote:
-> The SSL certificate installed at mipsdistros.mips.com has expired:
-> 
->   0 s:CN = mipsdistros.mips.com
->   i:C = US, O = Amazon, OU = Server CA 1B, CN = Amazon
->   a:PKEY: rsaEncryption, 2048 (bit); sigalg: RSA-SHA256
->   v:NotBefore: Dec 23 00:00:00 2019 GMT; NotAfter: Jan 23 12:00:00 2021 GMT
-> 
-> Because this project has no control over that certificate and host,
-> this falls back to plain HTTP instead.  The integrity of the
-> downloaded files can be guaranteed by the existing hashes for those
-> files (which are not modified here).
-> 
-> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-> Signed-off-by: Cleber Rosa <crosa@redhat.com>
-> ---
->   tests/avocado/boot_linux_console.py | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+On Mon, Jul 29, 2024 at 6:34=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Fri, Jul 26, 2024 at 09:44:30AM -0400, Cleber Rosa wrote:
+> > The tests under machine_aarch64_virt.py and machine_aarch64_sbsaref.py
+> > should not be writing to the ISO files.  By adding "media=3Dcdrom" the
+> > "ro" is autmatically set.
+> >
+> > While at it, let's use a single code style and hash for the ISO url.
+> >
+> > Signed-off-by: Cleber Rosa <crosa@redhat.com>
+> > ---
+> >  tests/avocado/machine_aarch64_sbsaref.py |  6 +++++-
+> >  tests/avocado/machine_aarch64_virt.py    | 14 +++++++-------
+> >  2 files changed, 12 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/m=
+achine_aarch64_sbsaref.py
+> > index e920bbf08c..1275f24532 100644
+> > --- a/tests/avocado/machine_aarch64_sbsaref.py
+> > +++ b/tests/avocado/machine_aarch64_sbsaref.py
+> > @@ -129,7 +129,11 @@ def boot_alpine_linux(self, cpu):
+> >              "-cpu",
+> >              cpu,
+> >              "-drive",
+> > -            f"file=3D{iso_path},format=3Draw",
+> > +            f"file=3D{iso_path},media=3Dcdrom,format=3Draw",
+> > +            "-device",
+> > +            "virtio-rng-pci,rng=3Drng0",
+> > +            "-object",
+> > +            "rng-random,id=3Drng0,filename=3D/dev/urandom",
+> >          )
+>
+> The commit message doesn't say anything about adding virtio-rng.
+> If that's needed for some reason, do it as a separate commit
+> with an explanation of the bug its fixing.
+>
 
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This is actually a rebase mistake.  virtio-rng was removed in 21f123f3c.
+
+I'll fix it in a v2.
+
+Thanks for spotting it,
+- Cleber.
 
 
