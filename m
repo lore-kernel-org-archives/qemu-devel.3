@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6A23C3DA7E
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B96CBC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:29:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYSIS-0005E5-Ku; Mon, 29 Jul 2024 11:28:24 -0400
+	id 1sYSIr-0000YX-0T; Mon, 29 Jul 2024 11:28:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYSIQ-00052d-QA
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:28:22 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYSIp-0000Js-L4
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:28:47 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYSIN-0008Nn-N7
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:28:22 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-368584f9e36so1419574f8f.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:28:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYSIl-00009O-MF
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:28:47 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4266dc7591fso16448985e9.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:28:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722266898; x=1722871698; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722266922; x=1722871722; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hJ0+ehSPNMw3L+RsXx/3bfW5qZR45CYyWXKfYU5cn30=;
- b=jkC+IoiQ56WmHqrXsCuQDVKNM8C7qAW2Bgzbcp2bxJoGIf7vl5h2j3GP0nMo9nRubh
- 2w/GmgNe3Tgu60aOuE6gGxSccxu+OKkdyAQy8V8ZJ5vfz5RTP2qlis8H4x9i1h1eZH6Z
- tFjpOAGWMWfEc8zszyIA/2V85Nmjql5klV/JCyaOX4tHQpAFuwjNhgYeVYTdUC5lB3dg
- kGAMaqrtg+g32rTPwfF4luAgXXKrnbMT2XnnmgoM00yKt3qkbz7UwikEISaUzU/ba3cK
- J5ZfBgkSqHdVW8ZeWsIX5hdoATV4M6uKXM753zPoQYEPF5IXWKMLyuZjxaicWV+xLDEs
- Ra6Q==
+ bh=jz7Ox8GZ4fBgHa8IWcCtoxPXphT3ERQSEGlUxQOFD08=;
+ b=Srp3SKyWWnt6FNQiXVpaec38d/YXtS4zyesfqtPrDgdzDHiVcvCUH5bZ5R4MMgUz41
+ uBvSBPQZi/AjyIZkZhaMWK5FSH7lf04dCVZ0WAKuYcVbKejHxrZqWQQeGEsPUvpuQtAK
+ 5uHMc8CG9lKrlp+ZLHVZiNoyU1Xw6Bq1lFtsL4qkG/CLYN3ApUqgkbYJbCnUWbUNMaN0
+ s1BjKCTia4v12S1dBjcskz7C++I7kD2kY1Q+9EHkGTPF9kQ1TFe54WbL7tgj2S9XiaMJ
+ VNaMFXlF2GC4Qa3JPYXm4tAa5V9mOIXofGjVkmA9559fbMPA5a8imEaFtq9GRpRXZUL+
+ 6UDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722266898; x=1722871698;
+ d=1e100.net; s=20230601; t=1722266922; x=1722871722;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hJ0+ehSPNMw3L+RsXx/3bfW5qZR45CYyWXKfYU5cn30=;
- b=YBaiVM5OGjj/9GFHseudXddBMbsldTou1rH2HcP+4Ds4dXfqeog4p025li++S1Lpv/
- zmF5CJFtXhOt3ara2rMYqCum7wTn5936ZVVxevGjn+QRygTJfhZoo36ZtM+1wIGn55qC
- LvlYFlDlJ7ZoK7SvmrY9QQrmz43drD08Ha0yy7jS+pUjsnPoaexsqrqS8eL5qydUTTJv
- kM+es7pnT30mK3oFHqUF9j+9VwSZRveyuRA/bMLRV31sVq9p4+vA46IMoF9QiahcYioA
- aCZ9LIn7zz2Ri29TMk8S2H6QapTRizAt4rAgsPz7aslP13jEOh9RDaiONCXOYcbOtNyU
- cUrA==
-X-Gm-Message-State: AOJu0YwlJINBCeGQN6NWjhtFTPII3Ztpu6z3M2/SNTMNKwpR+0+7zz6L
- UKv0/wtdIIeEXrRUQ03KZmouBGdZDNV6SC4kDlPPc10VhNAKYbdgOyftBy7lz+FCiVMfwPmfqbM
- J
-X-Google-Smtp-Source: AGHT+IG2RhidZfv4zGjcjCzezmJ1QGe09GAqM9S4tK2uNA5NTaEvp9OOnNwiigu6921i8ZFnU+iMgQ==
-X-Received: by 2002:a05:6000:dc7:b0:367:9237:611d with SMTP id
- ffacd0b85a97d-36b5d096f0amr6103041f8f.60.1722266897790; 
- Mon, 29 Jul 2024 08:28:17 -0700 (PDT)
+ bh=jz7Ox8GZ4fBgHa8IWcCtoxPXphT3ERQSEGlUxQOFD08=;
+ b=svjViJWLUDCYby85mp3MOVviUtTACNRB2tQ90khkDeMVqwIDWZyoIG2nglf6eSRbP+
+ 5Ey8F/5zM6qGUtEreYR3kTcL3SJDdbunBb9TMF+xt6/hUsJiy6ax/Xs4zkjv8FvAHz52
+ bVcTXn7UzGxo32wkjQk7EYQ1EmYlkyYEm4Wpsyas3UwEvx5ds+1F9qMAirBmhdkcvhBJ
+ Xs4b+3cD8Q+vNZAe5YqOT2ru+4zYreuhixEpCnwpoTCEpZySvTnss49kSk0rpPDyFSz7
+ ONK7vDz/+6o/rQxjfPB7F59j79nvlA0YLF67gXqZryL79zrjLn0F3SzH2twbtpPZnSbn
+ 3KDw==
+X-Gm-Message-State: AOJu0YzEYfqx1Gy1kDOEhgeyuyjSmjlS/Z5kQBVZ3Kc5MWmQrQZJLl9y
+ U9NmbIb5iwOECyuPQeFRHJQeWMCMJj1yGL1Peeo/bueozmsmuCjk/ZS8uX+1DvTM5JYrt28xVaN
+ v
+X-Google-Smtp-Source: AGHT+IFuQJotWxyhTGPrZVPb0S0IiFSQXlanWxvBWHS38i5zJszlbwhWHAV9aQ149I7EKR12XuQvOA==
+X-Received: by 2002:a05:600c:3b1f:b0:426:5416:67de with SMTP id
+ 5b1f17b1804b1-42811dd4862mr49326015e9.30.1722266921829; 
+ Mon, 29 Jul 2024 08:28:41 -0700 (PDT)
 Received: from localhost.localdomain ([176.176.173.10])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b36857db6sm12533901f8f.73.2024.07.29.08.28.16
+ 5b1f17b1804b1-428057b7218sm181106805e9.47.2024.07.29.08.28.40
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 29 Jul 2024 08:28:17 -0700 (PDT)
+ Mon, 29 Jul 2024 08:28:41 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: Cleber Rosa <crosa@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 10/14] tests/functional: Convert the riscv_opensbi avocado test
- into a standalone test
-Date: Mon, 29 Jul 2024 17:27:10 +0200
-Message-ID: <20240729152714.10225-11-philmd@linaro.org>
+Subject: [PULL 14/14] tests/avocado: test_arm_emcraft_sf2: handle RW
+ requirements for asset
+Date: Mon, 29 Jul 2024 17:27:14 +0200
+Message-ID: <20240729152714.10225-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240729152714.10225-1-philmd@linaro.org>
 References: <20240729152714.10225-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,171 +96,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Cleber Rosa <crosa@redhat.com>
 
-The avocado test defined test functions for both, riscv32 and riscv64.
-Since we can run the whole file with multiple targets in the new
-framework, we can now consolidate the functions so we have to only
-define one function per machine now.
+The asset used in the mentioned test gets truncated before it's used
+in the test.  This means that the file gets modified, and thus the
+asset's expected hash doesn't match anymore.  This causes cache misses
+and re-downloads every time the test is re-run.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240724175248.1389201-16-thuth@redhat.com>
-[PMD: Updated MAINTAINERS]
+Let's make a copy of the asset so that the one in the cache is
+preserved and the cache sees a hit on re-runs.
+
+Signed-off-by: Cleber Rosa <crosa@redhat.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20240726134438.14720-9-crosa@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- MAINTAINERS                            |  1 +
- tests/avocado/riscv_opensbi.py         | 63 --------------------------
- tests/functional/meson.build           |  8 ++++
- tests/functional/test_riscv_opensbi.py | 36 +++++++++++++++
- 4 files changed, 45 insertions(+), 63 deletions(-)
- delete mode 100644 tests/avocado/riscv_opensbi.py
- create mode 100755 tests/functional/test_riscv_opensbi.py
+ tests/avocado/boot_linux_console.py | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a768808a4a..a906218f9d 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -337,6 +337,7 @@ F: include/hw/riscv/
- F: linux-user/host/riscv32/
- F: linux-user/host/riscv64/
- F: tests/tcg/riscv64/
-+F: tests/functional/test_riscv_opensbi.py
+diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
+index b8b0a4df10..2929aa042d 100644
+--- a/tests/avocado/boot_linux_console.py
++++ b/tests/avocado/boot_linux_console.py
+@@ -401,14 +401,16 @@ def test_arm_emcraft_sf2(self):
+                    'fe371d32e50ca682391e1e70ab98c2942aeffb01/spi.bin')
+         spi_hash = '65523a1835949b6f4553be96dec1b6a38fb05501'
+         spi_path = self.fetch_asset(spi_url, asset_hash=spi_hash)
++        spi_path_rw = os.path.join(self.workdir, os.path.basename(spi_path))
++        shutil.copy(spi_path, spi_path_rw)
  
- RISC-V XThead* extensions
- M: Christoph Muellner <christoph.muellner@vrull.eu>
-diff --git a/tests/avocado/riscv_opensbi.py b/tests/avocado/riscv_opensbi.py
-deleted file mode 100644
-index bfff9cc3c3..0000000000
---- a/tests/avocado/riscv_opensbi.py
-+++ /dev/null
-@@ -1,63 +0,0 @@
--# OpenSBI boot test for RISC-V machines
--#
--# Copyright (c) 2022, Ventana Micro
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or
--# later.  See the COPYING file in the top-level directory.
--
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
--
--class RiscvOpenSBI(QemuSystemTest):
--    """
--    :avocado: tags=accel:tcg
--    """
--    timeout = 5
--
--    def boot_opensbi(self):
--        self.vm.set_console()
--        self.vm.launch()
--        wait_for_console_pattern(self, 'Platform Name')
--        wait_for_console_pattern(self, 'Boot HART MEDELEG')
--
--    def test_riscv32_spike(self):
--        """
--        :avocado: tags=arch:riscv32
--        :avocado: tags=machine:spike
--        """
--        self.boot_opensbi()
--
--    def test_riscv64_spike(self):
--        """
--        :avocado: tags=arch:riscv64
--        :avocado: tags=machine:spike
--        """
--        self.boot_opensbi()
--
--    def test_riscv32_sifive_u(self):
--        """
--        :avocado: tags=arch:riscv32
--        :avocado: tags=machine:sifive_u
--        """
--        self.boot_opensbi()
--
--    def test_riscv64_sifive_u(self):
--        """
--        :avocado: tags=arch:riscv64
--        :avocado: tags=machine:sifive_u
--        """
--        self.boot_opensbi()
--
--    def test_riscv32_virt(self):
--        """
--        :avocado: tags=arch:riscv32
--        :avocado: tags=machine:virt
--        """
--        self.boot_opensbi()
--
--    def test_riscv64_virt(self):
--        """
--        :avocado: tags=arch:riscv64
--        :avocado: tags=machine:virt
--        """
--        self.boot_opensbi()
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 48a617033e..94ac97ac53 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -23,6 +23,14 @@ tests_ppc_quick = [
-   'ppc_74xx',
- ]
+-        file_truncate(spi_path, 16 << 20) # Spansion S25FL128SDPBHICO is 16 MiB
++        file_truncate(spi_path_rw, 16 << 20) # Spansion S25FL128SDPBHICO is 16 MiB
  
-+tests_riscv32_quick = [
-+  'riscv_opensbi',
-+]
-+
-+tests_riscv64_quick = [
-+  'riscv_opensbi',
-+]
-+
- tests_x86_64_quick = [
-   'cpu_queries',
-   'mem_addr_space',
-diff --git a/tests/functional/test_riscv_opensbi.py b/tests/functional/test_riscv_opensbi.py
-new file mode 100755
-index 0000000000..d077e40f42
---- /dev/null
-+++ b/tests/functional/test_riscv_opensbi.py
-@@ -0,0 +1,36 @@
-+#!/usr/bin/env python3
-+#
-+# OpenSBI boot test for RISC-V machines
-+#
-+# Copyright (c) 2022, Ventana Micro
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+from qemu_test import QemuSystemTest
-+from qemu_test import wait_for_console_pattern
-+
-+class RiscvOpenSBI(QemuSystemTest):
-+
-+    timeout = 5
-+
-+    def boot_opensbi(self):
-+        self.vm.set_console()
-+        self.vm.launch()
-+        wait_for_console_pattern(self, 'Platform Name')
-+        wait_for_console_pattern(self, 'Boot HART MEDELEG')
-+
-+    def test_riscv_spike(self):
-+        self.set_machine('spike')
-+        self.boot_opensbi()
-+
-+    def test_riscv_sifive_u(self):
-+        self.set_machine('sifive_u')
-+        self.boot_opensbi()
-+
-+    def test_riscv_virt(self):
-+        self.set_machine('virt')
-+        self.boot_opensbi()
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+         self.vm.set_console()
+         kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE
+         self.vm.add_args('-kernel', uboot_path,
+                          '-append', kernel_command_line,
+-                         '-drive', 'file=' + spi_path + ',if=mtd,format=raw',
++                         '-drive', 'file=' + spi_path_rw + ',if=mtd,format=raw',
+                          '-no-reboot')
+         self.vm.launch()
+         self.wait_for_console_pattern('Enter \'help\' for a list')
 -- 
 2.45.2
 
