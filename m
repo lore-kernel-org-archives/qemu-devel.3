@@ -4,65 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BF19C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 09:41:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC5CAC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 09:43:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYMsL-0002K7-1p; Mon, 29 Jul 2024 05:41:05 -0400
+	id 1sYMuO-0006uB-V1; Mon, 29 Jul 2024 05:43:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berto@igalia.com>)
- id 1sYMs9-0002IC-0U; Mon, 29 Jul 2024 05:40:53 -0400
-Received: from fanzine.igalia.com ([178.60.130.6] helo=fanzine2.igalia.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berto@igalia.com>)
- id 1sYMs4-0003kT-9R; Mon, 29 Jul 2024 05:40:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; 
- s=20170329;
- h=Content-Type:MIME-Version:Message-ID:Date:References:
- In-Reply-To:Subject:Cc:To:From:Sender:Reply-To:Content-Transfer-Encoding:
- Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
- List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=8cIngSOXNuzyHuQCs2+p3IVr5mfS7v96TYuocEL/Yuc=; b=oZcZNpzKN973iJk4PmMDaomCNn
- /UY2zS66b5eORJ9h2Fxc7PTEdIH5JkqTL4Z+rB10Vr7Q7Jl8j0hC9POitr7s6eN7iixMcOwc5erDu
- jHecLc4SJyTUBkURC1Lk4MxOJ8Y5BMd3OJnX0BU4hPpDxThopCZ9a+uA03ZkBNgKaYM7DsGVWfEl/
- gU4UD+a0R7RoM+TEfSgtgYoMjqOgotdVPypo0rld9JElV2dPzNXaL7DkaSQ+6Xqw3cFiC9h47fzW+
- dG+es3O1xSwXU+k0kHjJjaTfSGGFRsXbQWobZV0ERkEYYdZcX6J3JNtlPnxBCxQ+QMDy4I5WB7dmO
- oDQ9rbmg==;
-Received: from maestria.local.igalia.com ([192.168.10.14] helo=mail.igalia.com)
- by fanzine2.igalia.com with esmtps 
- (Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
- id 1sYMrr-003d1P-Lu; Mon, 29 Jul 2024 11:40:35 +0200
-Received: from gate.service.igalia.com ([192.168.21.52])
- by mail.igalia.com with esmtp (Exim)
- id 1sYMrp-00Av5D-Im; Mon, 29 Jul 2024 11:40:35 +0200
-Received: from berto by gate.service.igalia.com with local (Exim 4.96)
- (envelope-from <berto@igalia.com>) id 1sYMrp-004qhQ-1N;
- Mon, 29 Jul 2024 09:40:33 +0000
-From: Alberto Garcia <berto@igalia.com>
-To: Nir Soffer <nsoffer@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, Eric Blake <eblake@redhat.com>, Kevin
- Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>, Madeeha Javed
- <javed@igalia.com>
-Subject: Re: [PATCH v2] scripts/qcow2-to-stdout.py: Add script to write
- qcow2 images to stdout
-In-Reply-To: <CAMRbyysVzAB9DnJsrXfbdJJ5uDYJHEsgiNk=3wLkOisus59q5g@mail.gmail.com>
-References: <20240701151140.29775-1-berto@igalia.com>
- <CAMRbyysVzAB9DnJsrXfbdJJ5uDYJHEsgiNk=3wLkOisus59q5g@mail.gmail.com>
-Date: Mon, 29 Jul 2024 11:40:33 +0200
-Message-ID: <w51ed7c7cz2.fsf@igalia.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYMuN-0006tA-Cf
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 05:43:11 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYMuL-0003xD-OI
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 05:43:11 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2f136e23229so12939961fa.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 02:43:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722246188; x=1722850988; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=d9no4KWut5H4NSOgf4228amWo7spe+7p8DlDw8huReg=;
+ b=sgKaI3PiTGSZ6gN5G6C87HG17CzuGvsYEVbu7ke/g2FZWjaqiHPIP0nwRdIC+DTXxz
+ 7rjip7C8UkXXOBKTmevUIkztGEKs/kzSp/kb9Q6CBnGzGcrQGHm/8rZ2x1zWJK6p2qPZ
+ EX72snr0BbtQsbAsnAAFijZ3nJ51stVDrvOnBT/qwgUx6MB6qERRjmt5ETvY58gDpEgV
+ Ye05jF/GQ3228pjQSxyQcy2EURDzPcU+gZMSKVLCY6It/9n6JnICqkEkZompvuPlN2wB
+ F/iNeiKaBX8ExMS1KRFhRLJ+zoXnmwJhNV5extZFNilz+RYIGKX3BLZY//ATfceiRGrp
+ 0cDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722246188; x=1722850988;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=d9no4KWut5H4NSOgf4228amWo7spe+7p8DlDw8huReg=;
+ b=fSC9oLA4sL1ejSum7xyEQhuETqY8UmoQO+ccmcLWYSYUqtdCGg19t9iJUbLFVuQQpX
+ CwCxuaXxLHgM8eHqsPZO8Z3xC95rDpSt0envv2Jo7KGGZjpn4IGtudi6txLaYl9R87rX
+ 1UYSZAGabujcuFQ0AsDD0dZmiEUfd/VvRdN2+WCR2mpbH2VesNj1gw/uxDZvT0L3w65T
+ 7yW7h6NfJ1K9Yp2QzY3heo/G4nmFNL9wDOrvpSAQF0WIeQRmucQzpws9+g5N7gYrtEPD
+ zZ5pOe/qHrXyvczgT/sVD8DC5nKlExuKxZXSiuFiKFDXQMKbMlOwa9ENKyifkndbiCaW
+ QmAA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWGz0O2rA4RkPY0Rhu9EZSeU1WvJgnLQ6MuOKqDxPZu4eNpGQ91f5xppQAXeZixGpweM7vca0NGKmTlthJNeRiPI7qB5RY=
+X-Gm-Message-State: AOJu0YyAHfiuuNHmV3sdbmnFhY8pA9fmR++EJQ5tzWSeE7AwFLGuJ4YI
+ ug4RhdmBmWNMnbNUgeg7vCG0uFTSDmtK3uSkavrHIL1mqRhdqfeycrLBjMqeD2AhdhHSOQrAYCM
+ R
+X-Google-Smtp-Source: AGHT+IGMP1/TdbHW4qOVaMliaaoXF6M+PsudwPSiqbBJMofBVz+CiRmw7FIFAxSjq+IJyCWewWcpFw==
+X-Received: by 2002:a2e:9845:0:b0:2ef:2006:bfb1 with SMTP id
+ 38308e7fff4ca-2f12ee06661mr49047001fa.15.1722246187485; 
+ Mon, 29 Jul 2024 02:43:07 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.173.10])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4280573f935sm173423765e9.14.2024.07.29.02.43.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jul 2024 02:43:07 -0700 (PDT)
+Message-ID: <5d5a2fea-3402-4e9d-ba05-3caede577d30@linaro.org>
+Date: Mon, 29 Jul 2024 11:43:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-Received-SPF: pass client-ip=178.60.130.6; envelope-from=berto@igalia.com;
- helo=fanzine2.igalia.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/96] ppc-for-9.1-2 queue
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org
+References: <20240725235410.451624-1-npiggin@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240725235410.451624-1-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,87 +96,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun 28 Jul 2024 01:01:07 AM +03, Nir Soffer wrote:
->> +def bitmap_set(bitmap, idx):
->> +    bitmap[int(idx / 8)] |= 1 << (idx % 8)
->
-> Should use floor division operator (//):
->
->     bitmap[idx // 8] |= 1 << (idx % 8)
->
-> Same for bitmap_test().
+Hi Nick,
 
-Right, also for all other cases of int(foo / bar). I'll update them.
+On 26/7/24 01:52, Nicholas Piggin wrote:
+> Apologies this is so late after soft-freeze, apologies. I was waiting
+> on "accel/kvm: Extract common KVM vCPU {creation,parking} code" to be
+> merged upstream [...]
 
->> +        ret = subprocess.run(
->> +            [
->> +                QEMU_STORAGE_DAEMON,
->> +                "--daemonize",
->
-> Any reason to daemonize? managing the child process is easier if you
-> don't daemonize.
+When we have dependencies like that we can ping the maintainer or
+ask if he/she is OK with blocking patches being merged via another
+tree with their Ack-by. Sometimes their original PR might be split
+in smaller parts to help us merge our.
 
---daemonize guarantees that when subprocess.run() returns the exported
-raw_file is ready to use.
+Regards,
 
->> +            if len(cluster) < cluster_size:
->> +                cluster += bytes(cluster_size - len(cluster))
->
-> This should be done only for the last cluster.
-
-But that's what that condition is for, we'll only read less than
-cluster_size bytes at the end of the file.
-
->> +                if not bitmap_test(l1_bitmap, l1_idx):
->> +                    bitmap_set(l1_bitmap, l1_idx)
->> +                    allocated_l2_tables += 1
->
-> This could be much more efficient using SEEK_DATA/SEEK_HOLE, avoiding
-> reading the entire image twice. Or using "qemu-img map --output json"
-> to simplify.
-
-I prefer not to have external dependencies(*) so I would rather not use
-qemu-img, but I certainly can use SEEK_DATA/SEEK_HOLE to avoid reading
-data that is known to be zero in the first pass.
-
-(*) there is of course qemu-storage-daemon but that one is optional and
-    I anyway cannot implement its functionality in this script.
-
->> +                sys.stdout.buffer.write(cluster)
->> +            else:
->> +                skip += 1
->
-> If would be easier to work with if you add a function iterating over
-> the l2_entries, yielding the he cluster index to copy:
->
->   def iter_l2_entries(bitmap, clusters):
->     for idx in range(clusters):
->       if bitmap_test(bitmap, idx):
->         yield idx
->
-> The copy loop can read using os.pread():
->
->     for idx in iter_l2_entries(l2_bitmap, total_data_clusters):
->         cluster = os.pread(fd, cluster_size, cluster_size * idx)
->         sys.stdout.buffer.write(cluster)
->
-> I'm not sure the offset is right in my example, it is hard to
-> understand the semantics of skip in your code.
-
-That part reads the input file sequentially from start to end, but
-instead of reading empty clusters we use seek() to skip them. The 'skip'
-variable keeps a counter of empty clusters since the last read.
-
-Your proposal requires an additional function but I see that it can make
-the code more readable, so I'll give it a try.
-
->> +if __name__ == "__main__":
->
-> Usually code is easier to work with when __main__  calls main().
-
-Good idea.
-
-Thanks for the detailed review!
-
-Berto
+Phil.
 
