@@ -4,84 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FB18C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 02:13:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76207C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 02:14:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYcMO-0000Dz-Ne; Mon, 29 Jul 2024 22:13:08 -0400
+	id 1sYcNX-0004xr-0F; Mon, 29 Jul 2024 22:14:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYcMM-00005E-Mp
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:13:06 -0400
-Received: from mail-io1-xd32.google.com ([2607:f8b0:4864:20::d32])
+ id 1sYcNU-0004vR-TY
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:14:16 -0400
+Received: from mail-qv1-xf32.google.com ([2607:f8b0:4864:20::f32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYcMK-0004qq-Rn
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:13:06 -0400
-Received: by mail-io1-xd32.google.com with SMTP id
- ca18e2360f4ac-8111f946f04so178136539f.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 19:13:04 -0700 (PDT)
+ id 1sYcNS-00055x-Uk
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:14:16 -0400
+Received: by mail-qv1-xf32.google.com with SMTP id
+ 6a1803df08f44-6b7b349a98aso23521026d6.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 19:14:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722305583; x=1722910383; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722305653; x=1722910453; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tjxU4Pd+MXWcR+5/JzQwgIWtGtDmaE39V6TRa+KX2Pg=;
- b=ZvUFAvU0I4zYpoQKyyUjZexsXsi0MbTY1O0wp3gcbRWpRqh1cffSyK1YawSDwNQ8Lx
- 6Fr904cYBOBuMUVZu+pssJk374oVjuumF9ycuHgGe7pXko//4A9/Y/Bkrd99NJUOcSMh
- RSH1yAahWZMkxy33cCrozYhQKpZ3FDcI31OryTRU+YVnKXMDjTmWxr1YUVNZbSKqK0yP
- XyN00RxBF6lGZo6lt3mZ/Psg6Pqeh2vUzz4CToJe8vOPxFzY1zI7C9l1Sr1g6vOuKHft
- kwogHvlEJqctYcOztOPr435frHPk+Ky47iFX1NBhecCvxlSlQLLmTdkxQalE5r1QDujM
- 20Sw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=u7FNqUvF+XJzNco74MQlt6Xl8tIcakoaxeK08Lo7sIw=;
+ b=pvJD/wyOmeLhkMinuGsaXlMH7nRsrKn7b79q3+7xJDso3Dx7vbml6x2wBvs3snkaYv
+ 05dv8THEirq/Od5XGBeE2VncAXHv7sI2Pjxn11/rr3qVoxpV75p2OachbjQUOriHg1A2
+ 1+mArG/zF9UYx2F0Px6Kl1HdZMq54FcSsKeijajqtJ9c8o6f9gw2IkVgPwrDxuuuQjvR
+ 359eUGbGIUAOzDikfzjQSHrf8W0t9QkFjLlWlBBzBB45iBHtnowj+oqM6CvZPJ5RI8km
+ o0ftzuyMH5211ADCNBjvRJk6tl6ClhFYvOsjhMC0BMo+9JbCnsVA85XschGBLJrHxg0f
+ APgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722305583; x=1722910383;
+ d=1e100.net; s=20230601; t=1722305653; x=1722910453;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tjxU4Pd+MXWcR+5/JzQwgIWtGtDmaE39V6TRa+KX2Pg=;
- b=aq488eOB6ZVJimWE1BaHQqq8lECOeQDuGmyhVTbnl0sFekw/tugItzmC4GjynPErOb
- oQuSRJ6b3iSWn3i8f6qQc51SGEuDw2MNXOVMcqP+wWKu/NSY8/PAcZId2N/Rvx5gRgue
- DjDrmHJiOyMPOYusUDcaXLaY4FpOrWVpCk//KcX6hhOPuVtXcAVcTJ/T1ITA/PbJXVWH
- fYabvwk6T/y/neBUh8k+bfxm6ZfAVNO5PUqLyYo2awvKZDp+eCCwUicfpnjwlki+EMXm
- X7dmB538qnfzPDALl6JgikweB+G6/BFNxL9EuztIcX19RYnRdWN4aCaxrqkfWyw9d4kK
- 1+SQ==
+ bh=u7FNqUvF+XJzNco74MQlt6Xl8tIcakoaxeK08Lo7sIw=;
+ b=jZdBY1V83buApWHA6Jw78w1MBFq/XsQ18T1T+vqS3A8tejXC6DJlDjtwyL4Xj7EV6Z
+ mYWRE/kfaYwnCmHFxXZld6iIhJsmP/TzfSTl4/CvuClw/jkNgits58s0PkwKRvHyf4sb
+ /rCyRQDH0BNxYMfzVOML2jQ4XJgLeGqU03u5tZPubPw/6ZXnUcmQoy/P5i+HhutU5tAf
+ Em2ssQbQujuNtzqjmfTS6HMkG5jqwncmvVtiH1vuJm0xu+jvW7hCEGQFWwDpFC07j9xs
+ aPyxifQCsTKB7tG0T/bwpXSGLKQN3gSukdmpEh90ZbvpCnSlfhYWGekHRWFwjt/fJw7Z
+ eyOg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVmpS4h9+Nm8BB7YygIsM/bKpu5uf3WLcuUhqlg4QGzzwJtZ8qAuSBD3pQ1th+9PJl8Vxi3Db40A/z7ZoQS4q12gknhQBk=
-X-Gm-Message-State: AOJu0YwhOPbpvnQ4xw678KOiWTgfEDXjPAUASXfAfrgmgpV0g9gUz75p
- IjUJof68QhKEnpRV+j65w6xq81HqvBfTjBGIX8TxlBGHkWuBgl63ZqELgWDGHVgE+IZxWto4jIu
- nv4Y=
-X-Google-Smtp-Source: AGHT+IEeoICMu4UL8jj5vpvKUwRnacnphXa0cwGaygpZOKxgi5XrmPj3+lc+O9rYm0Lgz4EzQEDi6g==
-X-Received: by 2002:a17:90b:4a50:b0:2c9:5a8b:ff7e with SMTP id
- 98e67ed59e1d1-2cf7e216b0cmr11112138a91.25.1722298708561; 
- Mon, 29 Jul 2024 17:18:28 -0700 (PDT)
+ AJvYcCU96eGJO7ir6bZIVLjNb4YE0EYfhiEfnzkgMM7pyb4d1M6ulkGbDnqkwJv+DPaJ9MiLrHi1Z3+EE1IDol0hpGfrVJxk0NY=
+X-Gm-Message-State: AOJu0YzFYDRVCBEjXPpTqfKV+PglTaAfxH8WphYMiF0hGpCJR3WWsd/1
+ pTKpZ84gEO87LfDS1kwlvjXQQc59LUKdT62iXGpilUNSwYEvFPyHOq470S4SSN110BSCYaeTwr+
+ gE9g=
+X-Google-Smtp-Source: AGHT+IHxaVpnasTBLevsuWtlKoA0IxUJXPaGaErgyId59ZLGqLmmQskc15liu0cTH84jMh32qN1g4Q==
+X-Received: by 2002:a17:902:f550:b0:1fd:8c25:4145 with SMTP id
+ d9443c01a7336-1ff04809b95mr131361515ad.17.1722294278743; 
+ Mon, 29 Jul 2024 16:04:38 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cdb738fe0fsm11220403a91.10.2024.07.29.17.18.26
+ d9443c01a7336-1fed7c8d9a5sm88846875ad.10.2024.07.29.16.04.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jul 2024 17:18:28 -0700 (PDT)
-Message-ID: <100fdfe8-4c9d-48aa-9d92-95c818bc08db@linaro.org>
-Date: Tue, 30 Jul 2024 10:18:23 +1000
+ Mon, 29 Jul 2024 16:04:38 -0700 (PDT)
+Message-ID: <2fea7463-89e9-4fc4-9926-dba304838aab@linaro.org>
+Date: Tue, 30 Jul 2024 09:04:29 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/2] QAPI patches patches for 2024-07-29
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-References: <20240729063722.839708-1-armbru@redhat.com>
+Subject: Re: [PATCH v2 03/24] target/riscv: save and restore elp state on priv
+ transitions
+To: Deepak Gupta <debug@rivosinc.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, jim.shu@sifive.com, andy.chiu@sifive.com,
+ jesse.huang@sifive.com, kito.cheng@sifive.com
+Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, laurent@vivier.eu,
+ bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com
+References: <20240729175327.73705-1-debug@rivosinc.com>
+ <20240729175327.73705-4-debug@rivosinc.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240729063722.839708-1-armbru@redhat.com>
+In-Reply-To: <20240729175327.73705-4-debug@rivosinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d32;
- envelope-from=richard.henderson@linaro.org; helo=mail-io1-xd32.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f32;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,24 +104,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/29/24 16:37, Markus Armbruster wrote:
-> The following changes since commit 93b799fafd9170da3a79a533ea6f73a18de82e22:
+On 7/30/24 03:53, Deepak Gupta wrote:
+> elp state is recorded in *status on trap entry (less privilege to higher
+> privilege) and restored in elp from *status on trap exit (higher to less
+> privilege).
 > 
->    Merge tag 'pull-ppc-for-9.1-2-20240726-1' ofhttps://gitlab.com/npiggin/qemu into staging (2024-07-26 15:10:45 +1000)
-> 
-> are available in the Git repository at:
-> 
->    https://repo.or.cz/qemu/armbru.git tags/pull-qapi-2024-07-29
-> 
-> for you to fetch changes up to bc2e34e343b40b83cca82409db9c126df2e28c81:
-> 
->    qapi/machine: Belatedly document target loongarch64 is since 7.1 (2024-07-29 07:29:47 +0200)
-> 
-> ----------------------------------------------------------------
-> QAPI patches patches for 2024-07-29
+> Additionally this patch introduces a forward cfi helper function to
+> determine if current privilege has forward cfi is enabled or not based on
+> *envcfg (for U, VU, S, VU, HS) or mseccfg csr (for M). For qemu-user, a
+> new field `ufcfien` is introduced which is by default set to false and
+> helper function returns value deposited in `ufcfien` for qemu-user.
+
+Why are you using a different field for qemu-user?
+Much better to simply configure menvcfg the same as for system mode.
 
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+> +        return (env->menvcfg & MENVCFG_LPE) ? true : false;
+
+Never use ?: with true/false.  Use the correct boolean expression in the first place, 
+which in this case is just the & expression.
+
 
 r~
 
