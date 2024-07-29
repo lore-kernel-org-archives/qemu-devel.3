@@ -4,79 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC331C3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 12:26:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 594A5C3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 12:27:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYPRx-0008Lk-0e; Mon, 29 Jul 2024 08:26:01 -0400
+	id 1sYP4w-0003Yr-OH; Mon, 29 Jul 2024 08:02:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYPRu-0008Bk-FT
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 08:25:58 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYP4t-0003Uq-F2
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 08:02:11 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYPRs-0000S2-AS
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 08:25:58 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-42816ca782dso13961115e9.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 05:25:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYP4o-0004cJ-DV
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 08:02:11 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-42122ac2f38so10093555e9.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 05:02:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722255955; x=1722860755; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ZK5JAGCjpfD8w3xC2MXUI2a9OHNwAL8t7/Yak8e0bRA=;
- b=OFsPWItwQoQtxzM+Zusj7LHMqmw7str7UJs5Ad5Svd6aWPzOcTp2fCX8QZBqEmH1SF
- 32asNGZtSA6Cmab8aCYl9dAbj64sgPtOo07pk2wZfbTKeU2/I1DZXuH+zhmFQcFWXH1G
- QQgbA3pppoOT/CvWI59GbXtVpGRcB9TpRGZ1GT3hOLQQnwcaNaboH09ItfnasoLeIfvA
- ZRAkwhTGGNQNOv2cdXTUPjHeGgAU2+TH3ZkN8uT8hAeMhRaMzuT7z7bzrCp6f54DSlA4
- 3EMVNQ4EIu5aFpsTM+Z9j1sSyHLdbaoam8y7oflBd0giqKCUfmJ9ZvUW8caV91L/RsDk
- gERA==
+ d=linaro.org; s=google; t=1722254525; x=1722859325; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/qvSCEYggbJA531byaEkDr9vmqqh4tVOMW6xdeku0Eo=;
+ b=aeeZ6LPj90giWwagvZV8KVaRbCFJ0ykb7zMqoA73/QxU5stZ3sL8Y1Lhz5ykRXlYlY
+ jq7cAa9kMQsCjSL5k/X2AwMpzI6JN32mFHXmHXNtsjqfzJkcGTp+2WFn0mrj3bvfsXvS
+ zg+mWt2AWaV3yO86Mp0wiYWV9/g9jRWYxcSdreGx6e2I3clHq01DuZvCkpEcD3SehGNe
+ oAdw44zV3DgPsdwylgcXoKxtzP4pfBKmd5WJiXKCetJ2X7qnh+RSe+BZGicVEw6HFvZP
+ DZTK577ZwHODNiT5o/HiTXTk0/OfknofnA4lTgSFY6LoMYaABEGihEledTvfBhbZ2EQA
+ bDcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722255955; x=1722860755;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZK5JAGCjpfD8w3xC2MXUI2a9OHNwAL8t7/Yak8e0bRA=;
- b=uOC9nq9xR7nTidPPpOl2jIG37y6BcQ5atfLDtiJMf/e2LLv1rUFQRXcMuC5xrI/TRm
- HRRLvbykTYvyV+SfLI/ztpLjjjcweKKMK3Tx32UdGqWzY6xEdHmyH8omyXV6Mjet1DBz
- eszda0WGZ5ZKk/DfKk8tLHb7G2zfOL5aZxH6JOITlkU/1DqgPSUCstn7zFAarBXn+KFE
- Ghg/KMgCGuvfsbJbFBKKQVOWbriueGDgTi6f/KSyp5FicInWmrmTmgEiWc1uBcuPnub7
- xef87t2eJ1e2RlDhx9/SvwaMPZzHX6d2a4b60g0AVMF2wus4aEnVI31m4yCcc5liVvAN
- xp4g==
-X-Gm-Message-State: AOJu0Yzlz05HP1l1poNo8FqVi0MQUJ22lWw5DxnHhMJ9JixnvXtIpF2r
- t7DPB8qkettKwkO/kajbuFJo8D1InNAR2bSHekheB2GASnyu2A2LmhGAXEEWEHzf0j5sAqYMw+P
- 3
-X-Google-Smtp-Source: AGHT+IETiLdbubbewx5pwd9yKj/aEDZNqOHd+Gd7l57cVai77lfw+sSP+EDodX5zQoTJlz9zmDB8Ow==
-X-Received: by 2002:a05:600c:4511:b0:426:8884:3781 with SMTP id
- 5b1f17b1804b1-42811dd1089mr48447205e9.24.1722255954526; 
- Mon, 29 Jul 2024 05:25:54 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ d=1e100.net; s=20230601; t=1722254525; x=1722859325;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/qvSCEYggbJA531byaEkDr9vmqqh4tVOMW6xdeku0Eo=;
+ b=SvdsXd/dDWbxXa8u9xdGegA+b3bz5ti35aYIz6y2Y0d1y9oafBrbDa3bTlaf2/Isac
+ 7SfUn8U8YaTKE+k++riXz4UEjia3JWNBixD/RHtAB5/99aafMzND1MqQ/AGkOtq+VYOD
+ Hm5ZtAevzxlcxypzV44xY9tA7E2MjeyxMIn6UVDOaQzre63tg5GYR0L7O6OBRb8nn9U6
+ 7zHTOjA5/UAgsEukMbJhBX0m0Hc4DlJ5bVLLLfE1wNhvwL1sOmqJV9FABm4ul6Y1Rhkw
+ LqLUOCuyL5h0O6Dag9fxFMRcd9A/92pO5tsBKTil4o6oT5yeEPiVEVhVd2VHXBfdfao9
+ FZqg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXDC0UkDAGf+IJTIAXykq4eMujZsbS6hhn7YstJohjlUJmtdnXgH3ATA1OE4e8lWI/mPXclA1jQvk8k4ACBXGebObiXy4U=
+X-Gm-Message-State: AOJu0YyjhcvVOXW7R6432CY3xK/gdpG/386+gIx5aMShAOJBNYVkGO8R
+ KsllTKe0nJ36uUneGD6AoP2L6np1s6Uuhh3OcKDeh/D+4UTsjG6zh51QwLyhDzc=
+X-Google-Smtp-Source: AGHT+IFD+mPLCP16wqONM0xiaWZbeizYtEHeoTpsypYl3tjtLRKpY7ZoR1jjLZznwWE1Gxi4xvUPLQ==
+X-Received: by 2002:a05:600c:a4b:b0:424:8dbe:817d with SMTP id
+ 5b1f17b1804b1-42811e6ab12mr51422695e9.10.1722254524621; 
+ Mon, 29 Jul 2024 05:02:04 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.173.10])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-428057b5f69sm177694415e9.39.2024.07.29.05.25.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jul 2024 05:25:54 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Subject: [RFC] pythondeps: Split sphinx_rtd_theme into its own group
-Date: Mon, 29 Jul 2024 13:25:53 +0100
-Message-Id: <20240729122553.2501133-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ 5b1f17b1804b1-4280f9e3721sm108545485e9.29.2024.07.29.05.02.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jul 2024 05:02:04 -0700 (PDT)
+Message-ID: <2d85304c-ccec-43d1-8806-bdf7b861543d@linaro.org>
+Date: Mon, 29 Jul 2024 14:02:00 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/13] Bump avocado to 103.0
+To: Cleber Rosa <crosa@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
+ Beraldo Leal <bleal@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ David Woodhouse <dwmw2@infradead.org>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, kvm@vger.kernel.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-arm@nongnu.org,
+ Radoslaw Biernacki <rad@semihalf.com>, Paul Durrant <paul@xen.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
+References: <20240726134438.14720-1-crosa@redhat.com>
+ <20240726134438.14720-13-crosa@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240726134438.14720-13-crosa@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,86 +106,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we have "sphinx" and "sphinx_rtd_theme" in a single
-group in pythondeps.toml. This means that mkvenv will try to
-install them both at once, which doesn't work if sphinx_rtd_theme
-depends on a version of Sphinx which is newer than the system
-one, even if the "sphinx" we're installing at the same time
-would satisfy that dependency. For instance this:
+On 26/7/24 15:44, Cleber Rosa wrote:
+> This bumps Avocado to latest the LTS release.
+> 
+> An LTS release is one that can receive bugfixes and guarantees
+> stability for a much longer period and has incremental minor releases
+> made.
+> 
+> Even though the 103.0 LTS release is pretty a rewrite of Avocado when
+> compared to 88.1, the behavior of all existing tests under
+> tests/avocado has been extensively tested no regression in behavior
+> was found.
 
- sphinx = { accepted = ">=8.0.0rc1", installed = "8.0.0rc1", canary = "sphinx-build" }
- sphinx_rtd_theme = { accepted = ">=2.1.0rc1", installed = "2.1.0rc1" }
+Does that restore feature parity for macOS developers? Because this
+community has been left behind ignored for over 2 years and already
+looked at alternatives for functional testing.
 
-fails like this:
-
-mkvenv: Creating non-isolated virtual environment at 'pyvenv'
-mkvenv: checking for meson>=1.1.0
-mkvenv: installing meson==1.2.3
-mkvenv: checking for sphinx>=8.0.0rc1
-mkvenv: checking for sphinx_rtd_theme>=2.1.0rc1
-mkvenv: installing sphinx==8.0.0rc1, sphinx_rtd_theme==2.1.0rc1
-ERROR: Cannot install sphinx-rtd-theme==2.1.0rc1 and sphinx==8.0.0rc1 because these package versions have conflicting dependencies.
-ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
-
-*** Ouch! ***
-
-Could not provide build dependency 'sphinx==8.0.0rc1':
- • Python package 'sphinx' version '4.3.2' was found, but isn't suitable.
- • A suitable version could not be obtained from PyPI.
-
-(where 4.3.2 is the system version of sphinx on my system).
-
-Avoid this problem by splitting sphinx_rtd_theme into its own
-group in pythondeps, so we can install the new sphinx into the
-venv first and the sphinx_rtd_theme afterwards.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-I'm just bumbling around in the dark here, hence the RFC tag: maybe
-there's a better way to fix this? I ran into this when I was trying
-to test the fix for https://gitlab.com/qemu-project/qemu/-/issues/2458
-and wanted a newer Sphinx to test with. Unless you also install
-the newer RTD theme the new Sphinx will emit some deprecation warnings
-about things the theme is doing.
----
- configure       | 7 +++++--
- pythondeps.toml | 3 +++
- 2 files changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/configure b/configure
-index 019fcbd0ef7..7f9cfbffa2c 100755
---- a/configure
-+++ b/configure
-@@ -973,9 +973,12 @@ if test "$download" = "enabled" ; then
- fi
- 
- if test "$docs" != "disabled" ; then
--    if ! $mkvenv ensuregroup \
-+    if ! ( $mkvenv ensuregroup \
-          $(test "$docs" = "enabled" && echo "$mkvenv_online_flag") \
--         ${source_path}/pythondeps.toml docs;
-+         ${source_path}/pythondeps.toml docs && \
-+         $mkvenv ensuregroup \
-+         $(test "$docs" = "enabled" && echo "$mkvenv_online_flag") \
-+         ${source_path}/pythondeps.toml docs-theme );
-     then
-         if test "$docs" = "enabled" ; then
-             exit 1
-diff --git a/pythondeps.toml b/pythondeps.toml
-index f6e590fdd86..fdf5579c43e 100644
---- a/pythondeps.toml
-+++ b/pythondeps.toml
-@@ -24,6 +24,9 @@ meson = { accepted = ">=1.1.0", installed = "1.2.3", canary = "meson" }
- [docs]
- # Please keep the installed versions in sync with docs/requirements.txt
- sphinx = { accepted = ">=3.4.3", installed = "5.3.0", canary = "sphinx-build" }
-+
-+[docs-theme]
-+# Please keep the installed versions in sync with docs/requirements.txt
- sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.1.1" }
- 
- [avocado]
--- 
-2.34.1
+> Reference: https://avocado-framework.readthedocs.io/en/103.0/releases/lts/103_0.html
+> Signed-off-by: Cleber Rosa <crosa@redhat.com>
+> ---
+>   pythondeps.toml | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/pythondeps.toml b/pythondeps.toml
+> index f6e590fdd8..175cf99241 100644
+> --- a/pythondeps.toml
+> +++ b/pythondeps.toml
+> @@ -30,5 +30,5 @@ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.1.1" }
+>   # Note that qemu.git/python/ is always implicitly installed.
+>   # Prefer an LTS version when updating the accepted versions of
+>   # avocado-framework, for example right now the limit is 92.x.
+> -avocado-framework = { accepted = "(>=88.1, <93.0)", installed = "88.1", canary = "avocado" }
+> +avocado-framework = { accepted = "(>=103.0, <104.0)", installed = "103.0", canary = "avocado" }
+>   pycdlib = { accepted = ">=1.11.0" }
 
 
