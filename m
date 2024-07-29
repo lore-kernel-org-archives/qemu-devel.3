@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7C38C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 11:05:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B217AC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 11:09:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYOC6-00029Z-U5; Mon, 29 Jul 2024 07:05:34 -0400
+	id 1sYOFR-0006zP-PM; Mon, 29 Jul 2024 07:09:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYOC5-00028t-Sl
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 07:05:33 -0400
+ id 1sYOFQ-0006yO-IZ
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 07:09:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYOC4-0001v6-2S
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 07:05:33 -0400
+ id 1sYOFO-0002KF-HT
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 07:09:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722251131;
+ s=mimecast20190719; t=1722251337;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=3r1mIKK4V5hBTdmzUpz7ldC7D1ViTAzELfJkPVXxRLw=;
- b=NkZ9B/NuQy0YEwL5Ac+o9ISSgFiSkznmcojdaGPwgIo/KIv+25hedj0FGM02kej4Y0qcT5
- Y3S0tagLWCAUAru4tjLYoKEUc4sE1QC6fP5V31xYLwsNGytzDLCoSpz7FOhVR2p8JYxGdl
- tUnNahuNiW9sAOnp+QZ6kDnLHpRXEQQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=B1VdBTnyn5qt9IYla/ESU9CYnd0IBiOOUAW5rSXdVM8=;
+ b=Onj8dwGzp+3bYZwFAzKHI+g853/e/Sw2Q71gaW2XfslN2V8R3Wj4MqHCW14Ew0nBz14tjU
+ 2CP54WdmCugCOhdA/oGUpQ1traP60+1TI7jFiWnkMS0KqjaGXt34YSh8V25hDOvCrhsR4b
+ 7iO1hbiIk+OSHlxdu+d6kziMXzCt04Y=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-5ACTjvxFPseuOWQTfHarKg-1; Mon,
- 29 Jul 2024 07:05:27 -0400
-X-MC-Unique: 5ACTjvxFPseuOWQTfHarKg-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-193-1lHYfOtrOJu55Ip7tXWDBQ-1; Mon,
+ 29 Jul 2024 07:08:51 -0400
+X-MC-Unique: 1lHYfOtrOJu55Ip7tXWDBQ-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 31E321955BF7; Mon, 29 Jul 2024 11:05:24 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B32E19560B4; Mon, 29 Jul 2024 11:08:49 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.58])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9AE401945113; Mon, 29 Jul 2024 11:05:12 +0000 (UTC)
-Date: Mon, 29 Jul 2024 12:05:09 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 291E11955F68; Mon, 29 Jul 2024 11:08:42 +0000 (UTC)
+Date: Mon, 29 Jul 2024 12:08:39 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Cleber Rosa <crosa@redhat.com>
 Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -61,17 +61,16 @@ Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  qemu-arm@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>,
  Paul Durrant <paul@xen.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: Re: [PATCH 11/13] tests/avocado/machine_aarch64_sbsaref.py: allow
- for rw usage of image
-Message-ID: <Zqd3ZeNIo3dMTzHl@redhat.com>
+Subject: Re: [PATCH 12/13] Bump avocado to 103.0
+Message-ID: <Zqd4N0udouYyI_d-@redhat.com>
 References: <20240726134438.14720-1-crosa@redhat.com>
- <20240726134438.14720-12-crosa@redhat.com>
+ <20240726134438.14720-13-crosa@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240726134438.14720-12-crosa@redhat.com>
+In-Reply-To: <20240726134438.14720-13-crosa@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -80,7 +79,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,43 +96,43 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jul 26, 2024 at 09:44:36AM -0400, Cleber Rosa wrote:
-> When the OpenBSD based tests are run in parallel, the previously
-> single instance of the image would become corrupt.  Let's give each
-> test its own copy.
+On Fri, Jul 26, 2024 at 09:44:37AM -0400, Cleber Rosa wrote:
+> This bumps Avocado to latest the LTS release.
 > 
+> An LTS release is one that can receive bugfixes and guarantees
+> stability for a much longer period and has incremental minor releases
+> made.
+> 
+> Even though the 103.0 LTS release is pretty a rewrite of Avocado when
+> compared to 88.1, the behavior of all existing tests under
+> tests/avocado has been extensively tested no regression in behavior
+> was found.
+
+Rebasing to a completely re-written test harness while in freeze feels
+on the risky side to me, despite the known problems we have with the
+existing release. 
+
+> Reference: https://avocado-framework.readthedocs.io/en/103.0/releases/lts/103_0.html
 > Signed-off-by: Cleber Rosa <crosa@redhat.com>
 > ---
->  tests/avocado/machine_aarch64_sbsaref.py | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+>  pythondeps.toml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/machine_aarch64_sbsaref.py
-> index 1275f24532..8816308b86 100644
-> --- a/tests/avocado/machine_aarch64_sbsaref.py
-> +++ b/tests/avocado/machine_aarch64_sbsaref.py
-> @@ -7,6 +7,7 @@
->  # SPDX-License-Identifier: GPL-2.0-or-later
->  
->  import os
-> +import shutil
->  
->  from avocado import skipUnless
->  from avocado.utils import archive
-> @@ -187,7 +188,9 @@ def boot_openbsd73(self, cpu):
->          )
->  
->          img_hash = "7fc2c75401d6f01fbfa25f4953f72ad7d7c18650056d30755c44b9c129b707e5"
-> -        img_path = self.fetch_asset(img_url, algorithm="sha256", asset_hash=img_hash)
-> +        cached_img_path = self.fetch_asset(img_url, algorithm="sha256", asset_hash=img_hash)
-> +        img_path = os.path.join(self.workdir, os.path.basename(cached_img_path))
-> +        shutil.copy(cached_img_path, img_path)
-
-Again I think we should be using a throwaway qcow2 overlay rather
-than copying the full image.
-
->  
->          self.vm.set_console()
->          self.vm.add_args(
+> diff --git a/pythondeps.toml b/pythondeps.toml
+> index f6e590fdd8..175cf99241 100644
+> --- a/pythondeps.toml
+> +++ b/pythondeps.toml
+> @@ -30,5 +30,5 @@ sphinx_rtd_theme = { accepted = ">=0.5", installed = "1.1.1" }
+>  # Note that qemu.git/python/ is always implicitly installed.
+>  # Prefer an LTS version when updating the accepted versions of
+>  # avocado-framework, for example right now the limit is 92.x.
+> -avocado-framework = { accepted = "(>=88.1, <93.0)", installed = "88.1", canary = "avocado" }
+> +avocado-framework = { accepted = "(>=103.0, <104.0)", installed = "103.0", canary = "avocado" }
+>  pycdlib = { accepted = ">=1.11.0" }
+> -- 
+> 2.45.2
+> 
+> 
 
 With regards,
 Daniel
