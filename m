@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6066FC3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 12:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FB3FC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 12:37:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYPbs-0002PI-CZ; Mon, 29 Jul 2024 08:36:16 -0400
+	id 1sYPcr-0006mw-K5; Mon, 29 Jul 2024 08:37:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYPbp-0002Fk-LN
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 08:36:13 -0400
-Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYPcp-0006aw-9l
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 08:37:15 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYPbj-0002CP-8J
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 08:36:13 -0400
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-2f025b94e07so44225821fa.0
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 05:36:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYPcn-0002ID-LM
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 08:37:15 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-42803bbf842so20729575e9.1
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 05:37:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722256565; x=1722861365; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=r0Rx8ux2I2T0MDGdLpBR4i+gQPQRXAUPKUVcKAgDUuc=;
- b=b/lqTEaEiF+S1JXToH6vumbwpJP+zmqmXyF77BUwVZLet4NJ9M/xr0EqgBO4plqkdC
- mL+vD3VFk0APcSeFFk7fiYy35yG8GdWpiiw9ktsq8+scUOKQI81BP+hBWE/suFGordN+
- vQ2WziTe3FqwD7PjwGWed5Qtj/VHLfp4D4Eh30jPwtlf8G+72UwR4hZ30j3gFbDETCvq
- Fn8J8/8L1jMDJDqM/tUWRpidvBvKNGbruOjFQgFUnkYT4kkyHD1Dfwr+wozic0lmlHsm
- PvBbH7oIQuEiEh0e3mnohsABLPNS1AEZUaHHEDY5uJ6e7Kj3KdahvqG1JTf9ScTZCCPG
- fZ2w==
+ d=linaro.org; s=google; t=1722256632; x=1722861432; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=38TyAb8OPa1jKFSVSNL0PATpSoZBUTsnN3WM6n037t4=;
+ b=e5WAVtvMfwn206zIbqtCKgDDMK52+euKu73QlZ487m71cu2MMHZofiPnSTdZzqEG4+
+ XbEWIFXjhTzNQuBhZzn8a8FH0r7lgl0at1Efq0bPCTqZ2RDcAXHSkM4baiwbwKwNm3mj
+ n8QBE2iDni1ZDIlpV66X5i4lzqyPLApmF5F8kEiBkc06YYKrdYfKnUNP/s6JFjngXTVP
+ mNbHFjx0x3nwMpycOFDi4CgztWyLgPkVCtnabcFeSWiOFKSPmop5a/NO4N8ViHyrmuLy
+ eR9vZuuOY2Su52lleX8F1G+LJdKOxD2zCMjP5hEDjVUelv6PMrYjtErvGz5fhpRltGWo
+ HHDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722256565; x=1722861365;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1722256632; x=1722861432;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=r0Rx8ux2I2T0MDGdLpBR4i+gQPQRXAUPKUVcKAgDUuc=;
- b=McwkXn5JtDYEnmMzaXI04jKiuMYFCeJpKyjQyZG+xlbHlFHMlmVD38pvyCg6sIwXtd
- CtMn7+VdFQoMIlbwgeAjOcNaJ5+MqjWXaUN3RbRjcGzeS3+6F+h1Knc3G6EVnVkRrpkz
- DDLVWCEHNvYvaopL3kcK0dO94INLk2k+TWQCvWztJ0d8o3iC7zSDIEh1eyHN4LTbN8SB
- tiLfNTKuKy91avdv3J1XtwqWBvsUdkl+jzZCmdA4zHpteK5xIlMHpdqrHhGRVdwHqVJS
- IAEVTntQ4YId1bYWPMtdYbW//n/0y/Fv14Gy0KHE4GGHHoDcvuReR7ftxdKHrF83gyCO
- dHaQ==
+ bh=38TyAb8OPa1jKFSVSNL0PATpSoZBUTsnN3WM6n037t4=;
+ b=bWfMEsihLcF3uljdv7n//EskxZZfvlmFc+MyGbvgDeBHN7eyyMp+luM49n2sfbae8D
+ UCEZCygmMdyfjXy1zUZdq7vBn+FnUIWz0lepHKj6cgzP2Zp4ztERT/QgLjCXrpS+giD1
+ 2Zn54CnkwG7lQizOAVZFbDZM5pq8m12hOrjY5ehcPwY4/xB6VAyXnY75PO2QYX0GGZ25
+ JXn3GKBosg/WEmcgKIKpp3v+vYA0DFUgW2Vq5UopxnNuaMJ+B1OdUT2B+O8gPww4L4Dg
+ bM57PrZ35bbz/TP5PCvtu/7wxTV/exeISEL7edDXaZxSPZhQ3z9QLXgsgc9+mPHA6OlI
+ Z1sg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXtD8MVWnnvFkaqqNXebciUIcP73jX0RLI5y7Xoq8F0wXm9WAX6+uA0MGKHCExz6OfTMtlkqHPx0gMZMm6dOFUqZTDO2P4=
-X-Gm-Message-State: AOJu0YxvmCjPjGBBkyjHXyP+A94d0s8mLpAwEiqtqBr9OiP32SssgOcR
- GM/fERWDROvw2VX+3MSn1O0Zl5nEYGKlknPIQvmuavqFzNuu0GNUP9JkgzAl4rU=
-X-Google-Smtp-Source: AGHT+IEvYcpnZEO+kxSOmrCPB0hUvQSnyaP/8wiNiA14oDkpbi0X2mNXzBho/xjrJ2eHV4KoggMxsw==
-X-Received: by 2002:a05:651c:201:b0:2ef:2b38:8796 with SMTP id
- 38308e7fff4ca-2f12ee23df3mr57777831fa.32.1722256565192; 
- Mon, 29 Jul 2024 05:36:05 -0700 (PDT)
+ AJvYcCXgdGTKNMgZ5Zi3af95/xFDGMbnGcu1REgH4bRmSAYeMOCuTBx7/qFJ6xAgPsq89TI3d5uEx9FfyiqYSngRh5b+2Xvkaog=
+X-Gm-Message-State: AOJu0YwiCJD7XwdINybA8pyr2Srvq8raNV/Emmmsvml0TEXz36obFUrU
+ FZrHaPwF04V6JlzYw8kSueMXKeUZegAfVeZf0F+oNhlc+F0r0Z0ZQiwhTLx4c88=
+X-Google-Smtp-Source: AGHT+IHKuOLNgfC6/rdT+5Lmn9BrrIiyscxP3bFp6nra5vmDENZOoJkGU8DpAi59nql+X0Vz86X2OA==
+X-Received: by 2002:a05:600c:154a:b0:428:d31:ef25 with SMTP id
+ 5b1f17b1804b1-42811d8c0c8mr57086775e9.12.1722256632120; 
+ Mon, 29 Jul 2024 05:37:12 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.173.10])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-428057a6283sm176363875e9.32.2024.07.29.05.36.03
+ 5b1f17b1804b1-4281ef5a416sm20672435e9.33.2024.07.29.05.37.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jul 2024 05:36:04 -0700 (PDT)
-Message-ID: <91936071-fe2c-442a-934d-202076cb0d5a@linaro.org>
-Date: Mon, 29 Jul 2024 14:36:02 +0200
+ Mon, 29 Jul 2024 05:37:11 -0700 (PDT)
+Message-ID: <4595b585-d710-44f1-96b6-76daa2b73b9a@linaro.org>
+Date: Mon, 29 Jul 2024 14:37:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/23] tests/functional: Prepare the meson build system
- for the functional tests
+Subject: Re: [PATCH v2 05/23] tests/functional: Convert simple avocado tests
+ into standalone python tests
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, qemu-devel@nongnu.org
 Cc: Ani Sinha <anisinha@redhat.com>,
@@ -72,21 +73,21 @@ Cc: Ani Sinha <anisinha@redhat.com>,
  "Daniel P . Berrange" <berrange@redhat.com>, John Snow <jsnow@redhat.com>,
  qemu-ppc@nongnu.org, Fabiano Rosas <farosas@suse.de>
 References: <20240724175248.1389201-1-thuth@redhat.com>
- <20240724175248.1389201-5-thuth@redhat.com>
+ <20240724175248.1389201-6-thuth@redhat.com>
+ <124b4dd0-abe6-485a-b7ed-cfa2bd8e071e@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240724175248.1389201-5-thuth@redhat.com>
+In-Reply-To: <124b4dd0-abe6-485a-b7ed-cfa2bd8e071e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,25 +103,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/7/24 19:52, Thomas Huth wrote:
-> Provide a meson.build file for the upcoming python-based functional
-> tests, and add some wrapper glue targets to the tests/Makefile.include
-> file. We are going to use two "speed" modes for the functional tests:
-> The "quick" tests can be run at any time (i.e. also during "make check"),
-> while the "thorough" tests should only be run when running a
-> "make check-functional" test run (since these tests might download
-> additional assets from the internet).
+On 25/7/24 13:58, Philippe Mathieu-Daudé wrote:
+> On 24/7/24 19:52, Thomas Huth wrote:
+>> These test are rather simple and don't need any modifications apart
+>> from adjusting the "from avocado_qemu" line. To ease debugging, make
+>> the files executable and add a shebang line and Python '__main__'
+>> handling, too, so that these tests can now be run by executing them
+>> directly.
+>>
+>> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   tests/functional/meson.build                  |  5 ++
+>>   .../test_cpu_queries.py}                      |  7 ++-
+>>   .../test_empty_cpu_model.py}                  |  7 ++-
+>>   .../test_mem_addr_space.py}                   | 52 +++----------------
+>>   .../test_pc_cpu_hotplug_props.py}             | 11 ++--
+>>   .../test_virtio_version.py}                   |  8 +--
+>>   6 files changed, 34 insertions(+), 56 deletions(-)
+>>   rename tests/{avocado/cpu_queries.py => 
+>> functional/test_cpu_queries.py} (89%)
+>>   mode change 100644 => 100755
+>>   rename tests/{avocado/empty_cpu_model.py => 
+>> functional/test_empty_cpu_model.py} (84%)
+>>   mode change 100644 => 100755
+>>   rename tests/{avocado/mem-addr-space-check.py => 
+>> functional/test_mem_addr_space.py} (93%)
+>>   mode change 100644 => 100755
+>>   rename tests/{avocado/pc_cpu_hotplug_props.py => 
+>> functional/test_pc_cpu_hotplug_props.py} (90%)
+>>   mode change 100644 => 100755
+>>   rename tests/{avocado/virtio_version.py => 
+>> functional/test_virtio_version.py} (98%)
+>>   mode change 100644 => 100755
+
+
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
-> The changes to the meson.build files are partly based on an earlier
-> patch by Ani Sinha.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/Makefile.include       | 11 ++++++
->   tests/functional/meson.build | 66 ++++++++++++++++++++++++++++++++++++
->   tests/meson.build            |  1 +
->   3 files changed, 78 insertions(+)
->   create mode 100644 tests/functional/meson.build
 
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
