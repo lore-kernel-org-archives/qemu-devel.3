@@ -4,72 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 637ADC3DA61
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3476C3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 15:16:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYS4l-0003yZ-Pp; Mon, 29 Jul 2024 11:14:15 -0400
+	id 1sYS69-000747-WD; Mon, 29 Jul 2024 11:15:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYS4e-0003sU-AS
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:14:09 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYS5x-0006tR-3j
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:15:29 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYS4b-0005nH-GM
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:14:06 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5af51684d52so3301807a12.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:14:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYS5t-00067W-CG
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 11:15:26 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-428163f7635so16231455e9.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 08:15:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722266043; x=1722870843; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=tXRCoLvUC43mCRcozMDDdTd1IZQkjbRsqylKzysvyww=;
- b=uBY6aSwSd8doQLiwe45wp926jHfORA0L8AP2NcuZtuwarp9+ng7rjyGYBO5SxfONNq
- flts/qxUQElkyzO40jQOkrraA4KFoujbp9gWUovWIvomYh4sO63+KxxbpToRqsrSARbz
- sh03eTwxTZxOhApWpf/Lofvpu/UTvNc/VyeHFssnmcBc8kF9JADCqKCRdAUzeqamGHz7
- JpUrioKgalWMmKN0WEYGAoW9mGAs1rN8DIw0N9lv1sNxKpqTIf3IweDwvueXDECYRlun
- wrJC/7OVhUiOsDHGDKF9nQqS4kdUxUFBVd+KdWVrHY+dg8z9dRLJJT1hwuT0PYOikc+Q
- xpEg==
+ d=linaro.org; s=google; t=1722266123; x=1722870923; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=79xu6GwJt2tOSZjRUkS6x2bp/kSXLFMEOLWAaLfoTjo=;
+ b=F8mA1Ri7bd4tcCJIvECqdnEJEwNa/JZ6Y40S6TE15PUnl0tHpVsS8YF+IptiyjecIo
+ orxJlAvQgUXLtNji5oUEH8XvLbASwljJjy0LCSQ7Vt53qyor3rDJ1VVV/0XkyIcFwu3P
+ rawbpAfVM3Pch+57seTREeTBa2XkWNvn8wIk7KQru+n33b0QaKzl7V08vabktgdCs8CS
+ GIyPN4jLtdCDAyHl3eEIJ9qm7D1w/onrYKRcE//AwkeT63PO2OfRhlqzpkSYacNu6sbQ
+ y9yCrYldCCDnChZE/CsEONkL5DEGGY5Dwjh2gtORuPy6lAfiKp8bu1n0ySbwAyPDfEn5
+ 9DQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722266043; x=1722870843;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tXRCoLvUC43mCRcozMDDdTd1IZQkjbRsqylKzysvyww=;
- b=OEcVH7lKdaavUHrZDI90RD8tOUshLjbLiWCdFIEuocN5vi9EbVHcyyrD2fAkAW16zq
- NFUsrePu2UwVXVoNYChn25CSnMGiKlbWDB8vdk+XXY0f4fDQx/HE69bc8O/G8M7eiVUu
- EdSvM/dWCgd54+FIGvCgUdH81ZBGlO323Dy0lYmkMxhJGofDvgUATHUHZ5yFbgl4bogO
- s0xzydX8OKveOAWLBltwlpyep5kAL3f7LzB192Exvvqsm4wkpj1cEhB4HWmdqy+NAnEt
- vmssGgdoXaxFWscHAjCh3BOV8Qz1xRLmyoXTNrn1VHt98aPxZZPO2gLvusLZrtR0CSk6
- oV9w==
+ d=1e100.net; s=20230601; t=1722266123; x=1722870923;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=79xu6GwJt2tOSZjRUkS6x2bp/kSXLFMEOLWAaLfoTjo=;
+ b=spPxbQR+4EQc5xjBAK2m+7MUukMSndCdYX84Bwa1+6zM876dszia1WAmkzwt7q47G6
+ rtVJvRLf3I/en4FLTNaKF1hkVszQyT9nk4rsBWLij+lyN/gUYU1yP3vU/sPZ/f3gElbl
+ vOV1dgonjokAhj9jgCw4jIJ2+alfv8uV1k4i1UH2qNlPvQGPHWHk3J3xTyJy/gsjleLP
+ adGp4N+5k33UeesgkQjrICTZGeOhRpQriURRkX+LMJt47JLxEaqcW5qCyjLy1XSaM7wj
+ ZH2/mg0d4pF7dtuBdjToU9fr8kWYYgBKtGl7JFmQ+jmC3zG8ali84JWJf0YsuEIr9N9Y
+ BIUw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWHzmkEWThTJlj8O6j0O0jQMwojKSnC3KYL8yPk4/S48Oix3W2hfu88i8XvbtJWn4FhzmIeEpJFapsf3GTqcUg8gT0a1eY=
-X-Gm-Message-State: AOJu0YwIKzMYZ9uf/g48PkiqV5jRirFAyODJ5L7MkHttJOjM6JG6ghtm
- r75Vt/fL1nnW3bUBa1SotLhCKhikNC2HxgVIPcdhnkFuF+G+4GnoSJV2UlRWuanMgcGE0e0KV+s
- WwwWis3aVPUZovRf6dp1SQmXwzz7xP89i98O5HA==
-X-Google-Smtp-Source: AGHT+IEs8iHg9e+bOR7W3CkBhHyHTd7gyVHiVEpROtEV8UlqIDIqwS8P6KwVB/1hSoNtpt6mIOAqLDchb0mgMZ5A8/k=
-X-Received: by 2002:a50:cd18:0:b0:5a0:f8a2:9cf4 with SMTP id
- 4fb4d7f45d1cf-5b022003a8fmr5356669a12.25.1722266043138; Mon, 29 Jul 2024
- 08:14:03 -0700 (PDT)
+ AJvYcCW7aQaYzmvZE4EnwEcjHNDPqzUQ8A3N9d+ROZELjG2Tbnua6stmy7Ujm6nsVelLRvZJ4jYtau9exKPQJFbzdrIVlAka6C0=
+X-Gm-Message-State: AOJu0YxyMrO9Woi39t8nszj5jypRMPx2d/gE4MdO2Uzq7we9pkIS2OZJ
+ l4ksuTybRoMkimvNPLWhBvse88ZDuQhM979PkZBsbU1VS80pTw8CPQmIDyNz1mQ=
+X-Google-Smtp-Source: AGHT+IF6nc5Y+e2eOcabdpkPzuygIXcrytI+wRNmlOTnBDBa1WK+EeAGe2UPQng2y/E8HyELyGQXTQ==
+X-Received: by 2002:a05:600c:2143:b0:426:5471:156a with SMTP id
+ 5b1f17b1804b1-42811d86408mr53805875e9.13.1722266123436; 
+ Mon, 29 Jul 2024 08:15:23 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.173.10])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4280a867e7esm136621325e9.27.2024.07.29.08.15.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 29 Jul 2024 08:15:22 -0700 (PDT)
+Message-ID: <15dd571f-e4c2-4eac-a0f2-a056f63843fa@linaro.org>
+Date: Mon, 29 Jul 2024 17:15:18 +0200
 MIME-Version: 1.0
-References: <20240720-pmu-v4-0-2a2b28f6b08f@daynix.com>
- <20240720-pmu-v4-3-2a2b28f6b08f@daynix.com>
-In-Reply-To: <20240720-pmu-v4-3-2a2b28f6b08f@daynix.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 29 Jul 2024 16:13:52 +0100
-Message-ID: <CAFEAcA_HWfCU09NfZDf6EC=rpvHn148avySCztQ8PqPBMFx4_Q@mail.gmail.com>
-Subject: Re: [PATCH v4 3/6] target/arm: Always add pmu property for Armv7-A/R+
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/14] tests/tcg: move test plugins into tcg subdir
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-riscv@nongnu.org, Weiwei Li <liwei1518@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-s390x@nongnu.org,
+ Cleber Rosa <crosa@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, qemu-arm@nongnu.org,
+ Alexandre Iooss <erdnaxe@crans.org>, Song Gao <gaosong@loongson.cn>,
+ David Hildenbrand <david@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+References: <20240729144414.830369-1-alex.bennee@linaro.org>
+ <20240729144414.830369-10-alex.bennee@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240729144414.830369-10-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,58 +111,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 20 Jul 2024 at 10:31, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->
-> kvm-steal-time and sve properties are added for KVM even if the
-> corresponding features are not available. Always add pmu property for
-> Armv8. Note that the property is added only for Armv7-A/R+ as QEMU
-> currently emulates PMU only for such versions, and a different
-> version may have a different definition of PMU or may not have one at
-> all.
->
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+On 29/7/24 16:44, Alex Bennée wrote:
+> You cannot use plugins without TCG enabled so it doesn't make sense to
+> have them separated off in the test directory structure. While we are
+> at it rename the directory to plugins to reflect the plural nature of
+> the directory and match up with contrib/plugins.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  target/arm/cpu.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index 19191c239181..c1955a82fb3c 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -1741,6 +1741,10 @@ void arm_cpu_post_init(Object *obj)
->
->      if (!arm_feature(&cpu->env, ARM_FEATURE_M)) {
->          qdev_property_add_static(DEVICE(obj), &arm_cpu_reset_hivecs_property);
-> +
-> +        if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
-> +            object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
-> +        }
+>   MAINTAINERS                               | 2 +-
+>   tests/{plugin => tcg/plugins}/bb.c        | 0
+>   tests/{plugin => tcg/plugins}/empty.c     | 0
+>   tests/{plugin => tcg/plugins}/inline.c    | 0
+>   tests/{plugin => tcg/plugins}/insn.c      | 0
+>   tests/{plugin => tcg/plugins}/mem.c       | 0
+>   tests/{plugin => tcg/plugins}/syscall.c   | 0
+>   tests/avocado/tcg_plugins.py              | 4 ++--
+>   tests/meson.build                         | 2 +-
+>   tests/tcg/Makefile.target                 | 4 ++--
+>   tests/{plugin => tcg/plugins}/meson.build | 6 +++---
+>   11 files changed, 9 insertions(+), 9 deletions(-)
+>   rename tests/{plugin => tcg/plugins}/bb.c (100%)
+>   rename tests/{plugin => tcg/plugins}/empty.c (100%)
+>   rename tests/{plugin => tcg/plugins}/inline.c (100%)
+>   rename tests/{plugin => tcg/plugins}/insn.c (100%)
+>   rename tests/{plugin => tcg/plugins}/mem.c (100%)
+>   rename tests/{plugin => tcg/plugins}/syscall.c (100%)
+>   rename tests/{plugin => tcg/plugins}/meson.build (70%)
 
-Not every V7 CPU has a PMU[*]. Unfortunately for PMUv1 the
-architecture did not define an ID register field for it,
-so there's no ID field you can look at to distinguish
-"has PMUv1" from "has no PMU". (For PMUv2 and later you
-can look at ID_DFR0 bits [27:24]; or for AArch64
-ID_AA64DFR0_EL1.PMUVer.) This is why we have the
-ARM_FEATURE_PMU feature bit. So the correct way to determine
-"does this CPU have a PMU and so it's OK to add the 'pmu'
-property" is to look at ARM_FEATURE_PMU. Which is what
-we already do.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Alternatively, if you want to make the property always
-present even on CPUs where it can't be set, you need
-to have some mechanism for having the user's attempt to
-enable it fail. But mostly for Arm at the moment we
-have properties which are only present when they're
-meaningful. (I'm not opposed to changing this -- it would
-arguably be cleaner to have properties be per-class,
-not per-object, to aid in introspection. But it's a big
-task and probably not easy.)
-
-[*] It happens that all the v7 CPUs that QEMU currently
-models do have at least a PMUv1, but that's not an
-architectural requirement.
-
-thanks
--- PMM
 
