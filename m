@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0486C52CDA
-	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:46:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14715C3DA61
+	for <qemu-devel@archiver.kernel.org>; Mon, 29 Jul 2024 14:46:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYRc5-0004f9-Ep; Mon, 29 Jul 2024 10:44:37 -0400
+	id 1sYRc2-0004Qs-AK; Mon, 29 Jul 2024 10:44:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYRc2-0004Tt-Un
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:34 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1sYRc1-0004Lh-4I
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:33 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYRbu-0008Qt-1m
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:34 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-59589a9be92so5517642a12.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:44:25 -0700 (PDT)
+ id 1sYRbs-0008Pk-BZ
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 10:44:32 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-58f9874aeb4so4785709a12.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 07:44:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722264264; x=1722869064; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722264263; x=1722869063; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Pge7513nKBshjtyBdFZgBKyCSQ2SDh37JkBFhtHAoCg=;
- b=Z2CEoM92tEPrgbCv3G50GCaNNquDrhaqb4Z0df7ZkDIsSxjJ0ETU21NAsdmg+nILnL
- gVxhZnsv3UI+F/J508GHpeIHpAb989zcwmX1YaWL3CiKt4+TiMvu9USOw9a0OgZMthrY
- 8mTAspm3gqmGpJ9s9OnUxAa7uw/3TNUZy9URbE7UgA6we/4K/snleCP1FGMqLpQf0iqm
- wKR2i6BvKfmNB1cIWULU/wV3GMMDuKd8GXgoaBeHSnQHLNR8ufHS1dxlH9Pwl8wNOoVW
- vCE8yQkTzabAwJr+1DHmHt/2hwi6UlugfNKHVf30pt/oFK6qKgtzIj1PV90gsOtCvqZY
- pO/g==
+ bh=k68dUaa5yNSOgGnmccLcS4zpOsOezQjGJywa7D7FDBg=;
+ b=BoV095cys7xqWDm8wqPwaBpdfNGen9D8k02VQOZjkxN/vb2dSOODpfQFF72ROMHJQL
+ 1KO0wZtX/DPNqXsaWigkSjzZm3F+T0m5RQ/UDJspmHZEctQLDynD6D0hLHXF3P9N+Zxz
+ 0Z4aaY2XHfG2oizP/NxMaEvw6xEB61cqlJaPGjgTDCAF1mBC3vCxtrPbFFP8yrhp7AUN
+ MZ0/dLaAIe5Cr/qi8xG6DNjK1ItgMLrxFSiFJWsP288srNXo+zhOrGVo33ihnCj39qK/
+ zl+sqFM/mY6aiO9G6/9OK8Aqy5NCtfjkmNZmZyBpIUxO5RJhY1oOmcZ/QSiJkm4LHONF
+ wdjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722264264; x=1722869064;
+ d=1e100.net; s=20230601; t=1722264263; x=1722869063;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Pge7513nKBshjtyBdFZgBKyCSQ2SDh37JkBFhtHAoCg=;
- b=m/jCLjm8TAYJ5Oz3C/6ou/bsvhgtfB1IeY8dNl+j3+ns2TOeiQIgwvBCdH40NpW+wZ
- KZLbx9iKRIwzpJM41ZCjywVuV329TUeMlMtaPdGMiFDYsagjj0os39caGjTyOwzEs708
- zNOZicHEohmHHwkrFloIjZOTjdc+eqcbZ8mIMdMIOGWv3AXeY3GBYf/OPcToUeOG7Rtx
- LbekSaHZgaW59u667lCVWXWxUfrF/A9ep1X+Nws1z55yzsLlzPq4Yv7YXitqX2yfLVdf
- +HLQ+Q3oXAFoVYTn0SVkm5sqvryJvckfOCkAKtcmNNLpNaALHcanp+gfRonHcC1TSU9R
- w2iA==
-X-Gm-Message-State: AOJu0YyhGZa1W6u58F/tUmkVUY7sVitd5YP1P3Xf4qRkEZ3wzwlkHqtH
- gy53oktokv48DQP7jzpI00JTuJce974ctvtbPowJyvaRYEsu3jwCbChuUUCWRI0=
-X-Google-Smtp-Source: AGHT+IEsWFJLPqGVDsePmlOLfsx8ltOW1GIOJELld/RlChVzU5ZaLow5qjhWmwCesZntknV+adzZ2Q==
-X-Received: by 2002:a17:907:96a0:b0:a72:7da4:267c with SMTP id
- a640c23a62f3a-a7d3ffa612bmr624237466b.12.1722264264369; 
- Mon, 29 Jul 2024 07:44:24 -0700 (PDT)
+ bh=k68dUaa5yNSOgGnmccLcS4zpOsOezQjGJywa7D7FDBg=;
+ b=eUR9OYgr2p2mkyV50jDT1h6HVCDOfE9A4c1gU0ddhji1G2rZie3p23OTwClJP6AxBt
+ gsrI+owR98tiVbzKFRS7psaKPzARkwrbSSgPue8+pddgUgfgyMQZrwqeP0SfYgsEKxio
+ KX5WP9W1iJcvF05r/Eh/D0J4/mlkIEgCGk18GJ0xP5ufFaDgmPdS9iZfJb41Z+xgKEIu
+ 6ChlQa/hhhPzSeEIDlAhKyY3NHB7ncYNCLAyCkjyo7+m4t/gFAV3qSOt7aK7P7YCyp/z
+ YfWVZ1p0Egf6fFONfoelu4rvSlJsNfE2uKj3bXAO866fTk/WCuvPXUiMyRu5QKbydjiT
+ PVlA==
+X-Gm-Message-State: AOJu0YwZRonmam1oYeAjTHNF5e9UWcYakZuty9vDRdiQy9MPKd+FdNTc
+ wuW6nv3/PhE41KWaiRZ/F5aZkIIsEUgd4S9T+C3vjG8R22UWuf+GAjzDydNVT68=
+X-Google-Smtp-Source: AGHT+IHisnIBoJDnsJGlOaz1G2ZgOZJJy3ylebaI2AyDcFA0RiUAwTnoNA5VQHG6BKW8J01ncI8GJw==
+X-Received: by 2002:a17:907:944b:b0:a7a:bae8:f29e with SMTP id
+ a640c23a62f3a-a7d400a0385mr487093366b.29.1722264262589; 
+ Mon, 29 Jul 2024 07:44:22 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acab23f62sm521017766b.16.2024.07.29.07.44.17
+ a640c23a62f3a-a7acad902e2sm520163766b.146.2024.07.29.07.44.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 29 Jul 2024 07:44:19 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2B5B55FA0F;
- Mon, 29 Jul 2024 15:44:16 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id CC9615FA08;
+ Mon, 29 Jul 2024 15:44:15 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
@@ -79,18 +79,17 @@ Cc: Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>,
  David Hildenbrand <david@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH 11/14] contrib/plugins/cache.c: Remove redundant check of
- l2_access
-Date: Mon, 29 Jul 2024 15:44:11 +0100
-Message-Id: <20240729144414.830369-12-alex.bennee@linaro.org>
+Subject: [PATCH 08/14] tests/avocado: remove tcg_plugins virt_mem_icount test
+Date: Mon, 29 Jul 2024 15:44:08 +0100
+Message-Id: <20240729144414.830369-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240729144414.830369-1-alex.bennee@linaro.org>
 References: <20240729144414.830369-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,37 +112,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+Since 4f8d886085 (tests/plugin/mem: migrate to new per_vcpu API) this
+test was skipping due to not being able to run callback and inline
+memory instrumentation at the same time.
 
-In append_stats_line(), we have an expression
-   l2_access ? l2_miss_rate : 0.0
-But this is inside an if (l2_access && l2_misses) { ... } block,
-so Coverity points out that the false part of the ?: is dead code.
+However b480f7a621 (tests/plugin: add test plugin for inline
+operations) tests for all this matching up so we don't need the
+additional complexity in avocado.
 
-Remove the unnecessary test.
+Remove the test.
 
-Resolves: Coverity CID 1522458
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240725164851.1930964-1-peter.maydell@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Fixes: 4f8d886085
 ---
- contrib/plugins/cache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/avocado/tcg_plugins.py | 33 ---------------------------------
+ 1 file changed, 33 deletions(-)
 
-diff --git a/contrib/plugins/cache.c b/contrib/plugins/cache.c
-index c5c8ac75a9..512ef6776b 100644
---- a/contrib/plugins/cache.c
-+++ b/contrib/plugins/cache.c
-@@ -558,7 +558,7 @@ static void append_stats_line(GString *line,
-                                "  %-12" PRIu64 " %-11" PRIu64 " %10.4lf%%",
-                                l2_access,
-                                l2_misses,
--                               l2_access ? l2_miss_rate : 0.0);
-+                               l2_miss_rate);
-     }
- 
-     g_string_append(line, "\n");
+diff --git a/tests/avocado/tcg_plugins.py b/tests/avocado/tcg_plugins.py
+index 15fd87b2c1..a930fca2c0 100644
+--- a/tests/avocado/tcg_plugins.py
++++ b/tests/avocado/tcg_plugins.py
+@@ -120,36 +120,3 @@ def test_aarch64_virt_insn_icount(self):
+             else:
+                 count = int(m.group("count"))
+                 self.log.info(f"Counted: {count} instructions")
+-
+-    def test_aarch64_virt_mem_icount(self):
+-        """
+-        :avocado: tags=accel:tcg
+-        :avocado: tags=arch:aarch64
+-        :avocado: tags=machine:virt
+-        :avocado: tags=cpu:cortex-a53
+-        """
+-        kernel_path = self._grab_aarch64_kernel()
+-        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+-                               'console=ttyAMA0')
+-        console_pattern = 'Kernel panic - not syncing: VFS:'
+-
+-        plugin_log = tempfile.NamedTemporaryFile(mode="r+t", prefix="plugin",
+-                                                 suffix=".log")
+-
+-        self.run_vm(kernel_path, kernel_command_line,
+-                    "tests/plugin/libmem.so,inline=true,callback=true", plugin_log.name,
+-                    console_pattern,
+-                    args=('-icount', 'shift=1'))
+-
+-        with plugin_log as lf, \
+-             mmap.mmap(lf.fileno(), 0, access=mmap.ACCESS_READ) as s:
+-            m = re.findall(br"mem accesses: (?P<count>\d+)", s)
+-            if m is None or len(m) != 2:
+-                self.fail("no memory access counts found")
+-            else:
+-                inline = int(m[0])
+-                callback = int(m[1])
+-                if inline != callback:
+-                    self.fail("mismatched access counts")
+-                else:
+-                    self.log.info(f"Counted {inline} memory accesses")
 -- 
 2.39.2
 
