@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2F77C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:41:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D876C3DA61
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:41:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYjLI-0003UF-UD; Tue, 30 Jul 2024 05:40:28 -0400
+	id 1sYjLU-0004FZ-MJ; Tue, 30 Jul 2024 05:40:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYjLH-0003SW-Cl
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:27 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1sYjLN-0003mM-Ey
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:33 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYjLF-0000Wp-JV
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:27 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4281d812d3eso19861805e9.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:40:24 -0700 (PDT)
+ id 1sYjLK-0000bj-Qw
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:32 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-368440b073bso1744461f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:40:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722332423; x=1722937223; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=AwEczY42MhFblaALEOHIc9YDov6tfs1YZvL5O8SqFPU=;
- b=IXwZDCydcJmVH29LLAvz872DLeGkva2SEBybYzpdkA7yb/Wm8GhUM/Z6t3aOjETs3+
- P6+wsS9fRVOtCT8lQ9igkOUgDunE+GMjPZbMgORt24f9o4MUWAh5ilLgdyIA/6niLO2n
- yBZB3WDg/809C4fj606+c/0mC5aOrRKuI1faAkoPu34cG1JIJHPcdZbtIvlGDOOzNupE
- LNBj/KLWuHdKVQ+z1Pms4ciuA9Veeiu+5TGhIDIkCQbRLj2qd0mjrat2tt8DFiREJZDE
- ADD/T6K4eIdCeChezT6PjU8MDPKwJWB1nUwfSdnpm/KmArcgOlLxuOm2tK2im1SMCx15
- p7zg==
+ d=linaro.org; s=google; t=1722332429; x=1722937229; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=0K0Gkugc0azQ0l2zlcwkWWXyTIwjww7OgMp4rP3ZvNg=;
+ b=OUuLXmM9FiiuO4OUft8H42nhh2XZjDWxB1bbQF6PJ2L1hHMIf4a8WTxeIcq7UnFH+p
+ cBeyleunjm4C6BnrFHAsAMu4noE7LZ7f1LhFsIWwQdtoV+lddf2bdvjDa6onFqIYTq/R
+ EvhMQvUKcRFnfzswzBva9GZF2DBdJ+vzZ5uSNYm1Juv6FvVJyKimclbvS0mx6XovWzKb
+ 1pu1pq7xiuJHrsdOQ5iwCsr73C+H9muF95T/D7yZqTeOetIB1UL+UlGsJbInTtsk1Lxv
+ PdrUKg9D6JWogegVIci7/+oOVNzl3gC6L35LKCLOsuYxcpg/Tg/AOYTkK2UoaAd1gK4i
+ FljQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722332423; x=1722937223;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AwEczY42MhFblaALEOHIc9YDov6tfs1YZvL5O8SqFPU=;
- b=ow37rs0OlgLhsW+SoN9/u3x5HbIF274r7/0r9Tc3Ztc9+OIu+ko6AJIfwnp6sT6GdS
- 5qYvdmujcLl0whYLWoxZVAVsh+YXnhn3DcSKVuYnksFGk627C0kGmyAT7MBJF+CAyYyq
- /TMALTSbRRtGmvnnd0L4tY5n5pGC3XRcLMCUj622ZrH5fnEFSC1rutIRF3toXkfNN3iz
- ra9vXFw/VVeaYbfUxBF6iSDu+ISH/mkec0AFo6VyCzst1xAaNHFmTx4XNdwhwkvvB2pO
- PMmMccBQVgLWBLRbdTY8Am9P5BEeUppZQnMNaCm/PLDF5NmAI7hn17Y+wy0OucWMo8f7
- 3iPw==
-X-Gm-Message-State: AOJu0Yzo0xy0Xc3d/e3KalZEsvHrR3TTC4LjB4zYPR55zKJbm8wFXgaV
- WNn1V8twwjfa6erzVM5T8GEW+9yShhX3vi0Csoel1uV4TYjbNuCaBUddQ095CblHfC+GrfRh/1Y
- F
-X-Google-Smtp-Source: AGHT+IF3I32S+fr1eINs8CRaWmbp0jmsudDB7wQRvhKuryTiEEGdII79YjL8YrRtQR+yHs5Atqr9GQ==
-X-Received: by 2002:a05:6000:1b91:b0:368:7e54:baaa with SMTP id
- ffacd0b85a97d-36b5cf254e7mr8076144f8f.4.1722332422906; 
- Tue, 30 Jul 2024 02:40:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1722332429; x=1722937229;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0K0Gkugc0azQ0l2zlcwkWWXyTIwjww7OgMp4rP3ZvNg=;
+ b=SiE6ysOJAbQpR7yJx+NbormcUSUNSv1ibUxWGYXKZSPk54TwB1gizWN9rHs5K8Es9k
+ xqyMDiW5mKRa4A+rKM9kiYvnGXdBKxFqRxBk/on3wZ8KtzoK6UJa1UMC8p1H/OYelWcg
+ j7N+Lx87nMUA0rafXyqCu2MJEOsmFH4bwqpSlQiN7qUWf3K3R+ThWCWPSKWVTRLC7sDM
+ 75cwHTbaNaBk8Mo8BEeIGFb0oYpi2QI8S8Xs1TfllFmcZdB8+UNbZW17x4vicgjwoswB
+ fwPnLZSuehuZh9lBTeJz1x8+ypcNpROL5CV/yYPCNSCfaHVBp/6SrQCiSHYp+XC6xlDL
+ Yfqw==
+X-Gm-Message-State: AOJu0Yx0Wdn9rIHM8fyFCVRLtthMRgdZ9BxyX0qzn6K/C+/SAEeUNMqR
+ MYeVPbLSp2QN+LxBRAT3KRl2L1l8sHonH7G+MQZUGcQvJXccRGV3sLelptToNKFddjsWy94RtO0
+ 5
+X-Google-Smtp-Source: AGHT+IHmLNtRRGDEKY1q73mgMEXL5NV4tyUnE/fhG+tFR+pWp0akK3bsmluDIAl+/K6m44o/wPe6DQ==
+X-Received: by 2002:adf:fd8d:0:b0:362:ad01:5435 with SMTP id
+ ffacd0b85a97d-36b8c8ed70dmr923232f8f.29.1722332429238; 
+ Tue, 30 Jul 2024 02:40:29 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b36862549sm14194974f8f.106.2024.07.30.02.40.22
+ ffacd0b85a97d-36b36862549sm14194974f8f.106.2024.07.30.02.40.28
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jul 2024 02:40:22 -0700 (PDT)
+ Tue, 30 Jul 2024 02:40:28 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/21] target-arm queue
-Date: Tue, 30 Jul 2024 10:39:59 +0100
-Message-Id: <20240730094020.2758637-1-peter.maydell@linaro.org>
+Subject: [PULL 12/21] target/arm: Don't assert for 128-bit tile accesses when
+ SVL is 128
+Date: Tue, 30 Jul 2024 10:40:11 +0100
+Message-Id: <20240730094020.2758637-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240730094020.2758637-1-peter.maydell@linaro.org>
+References: <20240730094020.2758637-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,83 +94,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Arm pullreq: these are all bugfixes. I've included a handful
-of my fixes for various non-arm minor Coverity issues too.
+For an instruction which accesses a 128-bit element tile when
+the SVL is also 128 (for example MOV z0.Q, p0/M, ZA0H.Q[w0,0]),
+we will assert in get_tile_rowcol():
 
-thanks
--- PMM
+qemu-system-aarch64: ../../tcg/tcg-op.c:926: tcg_gen_deposit_z_i32: Assertion `len > 0' failed.
 
-The following changes since commit 93b799fafd9170da3a79a533ea6f73a18de82e22:
+This happens because we calculate
+    len = ctz32(streaming_vec_reg_size(s)) - esz;$
+but if the SVL and the element size are the same len is 0, and
+the deposit operation asserts.
 
-  Merge tag 'pull-ppc-for-9.1-2-20240726-1' of https://gitlab.com/npiggin/qemu into staging (2024-07-26 15:10:45 +1000)
+In this case the ZA storage contains exactly one 128 bit
+element ZA tile, and the horizontal or vertical slice is just
+that tile. This means that regardless of the index value in
+the Ws register, we always access that tile. (In pseudocode terms,
+we calculate (index + offset) MOD 1, which is 0.)
 
-are available in the Git repository at:
+Special case the len == 0 case to avoid hitting the assertion
+in tcg_gen_deposit_z_i32().
 
-  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240730
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20240722172957.1041231-2-peter.maydell@linaro.org
+---
+ target/arm/tcg/translate-sme.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-for you to fetch changes up to 73188068d7ba40c8a37b4763db38bb1ce24ca07d:
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index 185a8a917b0..a50a419af27 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -49,7 +49,15 @@ static TCGv_ptr get_tile_rowcol(DisasContext *s, int esz, int rs,
+     /* Prepare a power-of-two modulo via extraction of @len bits. */
+     len = ctz32(streaming_vec_reg_size(s)) - esz;
+ 
+-    if (vertical) {
++    if (!len) {
++        /*
++         * SVL is 128 and the element size is 128. There is exactly
++         * one 128x128 tile in the ZA storage, and so we calculate
++         * (Rs + imm) MOD 1, which is always 0. We need to special case
++         * this because TCG doesn't allow deposit ops with len 0.
++         */
++        tcg_gen_movi_i32(tmp, 0);
++    } else if (vertical) {
+         /*
+          * Compute the byte offset of the index within the tile:
+          *     (index % (svl / size)) * size
+-- 
+2.34.1
 
-  system/physmem: Where we assume we have a RAM MR, assert it (2024-07-29 17:03:35 +0100)
-
-----------------------------------------------------------------
-target-arm queue:
- * hw/char/bcm2835_aux: Fix assert when receive FIFO fills up
- * hw/arm/smmuv3: Assert input to oas2bits() is valid
- * target/arm/kvm: Set PMU for host only when available
- * target/arm/kvm: Do not silently remove PMU
- * hvf: arm: Properly disable PMU
- * hvf: arm: Do not advance PC when raising an exception
- * hw/misc/bcm2835_property: several minor bugfixes
- * target/arm: Don't assert for 128-bit tile accesses when SVL is 128
- * target/arm: Fix UMOPA/UMOPS of 16-bit values
- * target/arm: Ignore SMCR_EL2.LEN and SVCR_EL2.LEN if EL2 is not enabled
- * system/physmem: Where we assume we have a RAM MR, assert it
- * sh4, i386, m68k, xtensa, tricore, arm: fix minor Coverity issues
-
-----------------------------------------------------------------
-Akihiko Odaki (5):
-      target/arm/kvm: Set PMU for host only when available
-      target/arm/kvm: Do not silently remove PMU
-      hvf: arm: Raise an exception for sysreg by default
-      hvf: arm: Properly disable PMU
-      hvf: arm: Do not advance PC when raising an exception
-
-Frederik van Hövell (1):
-      hw/char/bcm2835_aux: Fix assert when receive FIFO fills up
-
-Mostafa Saleh (1):
-      hw/arm/smmuv3: Assert input to oas2bits() is valid
-
-Peter Maydell (14):
-      hw/misc/bcm2835_property: Fix handling of FRAMEBUFFER_SET_PALETTE
-      hw/misc/bcm2835_property: Avoid overflow in OTP access properties
-      hw/misc/bcm2835_property: Restrict scope of start_num, number, otp_row
-      hw/misc/bcm2835_property: Reduce scope of variables in mbox push function
-      target/arm: Don't assert for 128-bit tile accesses when SVL is 128
-      target/arm: Fix UMOPA/UMOPS of 16-bit values
-      target/arm: Avoid shifts by -1 in tszimm_shr() and tszimm_shl()
-      target/arm: Ignore SMCR_EL2.LEN and SVCR_EL2.LEN if EL2 is not enabled
-      target/tricore: Use unsigned types for bitops in helper_eq_b()
-      target/xtensa: Make use of 'segment' in pptlb helper less confusing
-      target/m68k: avoid shift into sign bit in dump_address_map()
-      target/i386: Remove dead assignment to ss in do_interrupt64()
-      target/sh4: Avoid shift into sign bit in update_itlb_use()
-      system/physmem: Where we assume we have a RAM MR, assert it
-
- hw/arm/smmuv3-internal.h       |   3 +-
- hw/char/bcm2835_aux.c          |   2 +-
- hw/misc/bcm2835_property.c     |  91 +++++++------
- system/physmem.c               |  18 ++-
- target/arm/helper.c            |   2 +-
- target/arm/hvf/hvf.c           | 302 +++++++++++++++++++++--------------------
- target/arm/kvm.c               |   7 +-
- target/arm/tcg/sme_helper.c    |   8 +-
- target/arm/tcg/translate-sme.c |  10 +-
- target/arm/tcg/translate-sve.c |  18 ++-
- target/i386/tcg/seg_helper.c   |   5 +-
- target/m68k/helper.c           |   7 +-
- target/sh4/helper.c            |   2 +-
- target/tricore/op_helper.c     |   4 +-
- target/xtensa/mmu_helper.c     |   4 +-
- 15 files changed, 262 insertions(+), 221 deletions(-)
 
