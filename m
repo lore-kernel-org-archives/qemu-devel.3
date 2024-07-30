@@ -4,75 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72D05C3DA61
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 06:54:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9473BC3DA61
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 06:55:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYgjz-00076H-1P; Tue, 30 Jul 2024 02:53:47 -0400
+	id 1sYgl9-0001O0-52; Tue, 30 Jul 2024 02:55:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYgjy-00075j-11
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 02:53:46 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYgl3-00014l-Td
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 02:54:55 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYgjw-0005Mi-Hd
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 02:53:45 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4266f3e0df8so22902905e9.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 23:53:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYgl2-0005RR-FO
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 02:54:53 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-3687fb526b9so1888221f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 23:54:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722322423; x=1722927223; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722322491; x=1722927291; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/3m+twV2hKpEclg+agHhIxvSGVfR4ban/62bVi7xfPY=;
- b=HkCYEgykhg9/zuspzwJovAheZMmA+wkxJPvnAfxPB5IuiWbKsvtmIOLVEFy2+OH54t
- 1uQZlIfA8EdfeFW3L1pu73Xlv3Qtdw5AljL3PjOSoKHGoti39EdfFa2mEQfG9D6at08T
- casNpJmzTDuy1ObX1qKSM21bJEtQMvV3jwS51g/WuBuE6BMowkTtvh/LBrEzNMUgT8w4
- b4MY/FM3HR20vxsdyoxdMmeLwEipIbN5MNok0McRKe+tMLa1QgYkSlqHYFkBw7Oy7rje
- RLwtJio8UvKTFgzZudEPTyEUn+5WRMowxgZ5U/JO9lNs91XQE0yeVv+NwbOM2xiM/ZvW
- 1Ryg==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=XiEk3ao15YVtRfpEP/OfkaZF+KYpCboS2otN2KssSf8=;
+ b=XykJQib32BJfhwPtlERmpgkxXIpdnajlsYzsjK/ZGQbfgFjvJLY8Z6Q10TcV2hcHFY
+ dVgNspkSrgEBxfni1YJss8cxGVGnnfEVPnk4+e6QcfWrfovHBHHAdh4prjjtfLNRFOeJ
+ 34hsjBW4ylST995I8LP8Jt8ryXV1KZ8VVa293aiXZtmdb1ejuzvTItzzEk01iOg6Ls/O
+ cOe0lXgZqL2j56KPoExRenldJxkE9IZLuCNyUagBoJHzaeCejwPnaOaENpIYftJlj0Or
+ p9MCGMFLgcAYRQpkU3p83S7BadYyezB0LH+cDhe6gMrYLMvGGYEQoT2g90i0uV/iWjOL
+ PaIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722322423; x=1722927223;
+ d=1e100.net; s=20230601; t=1722322491; x=1722927291;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/3m+twV2hKpEclg+agHhIxvSGVfR4ban/62bVi7xfPY=;
- b=fOPY6g2dDy9l/y5F4jjSfVTC6G/oaZt9PmEls/T6C7HMcfa+rQQKr1D5xBHAO4qZRq
- tEokc32QXTEyTUbbJ1V4NCmk2aaxthJe2/TXl3VR+sCUvJH2UJhe2WwqGd5u1EgQR07d
- S4xn+tZjs8MocNI2C8Q3dDVAaypnPnhNGXLdEeYiwhGh1ahQcqTthK5zVWu9fgwWrklg
- 37lnK9rIRIwOe9Xmm06wC9MG064cZWgkohh5PKOFOmxBYM9gQdVB+Cc8mCkM7dzu42sd
- UhUliwRetqcb/KwqJ5R2YdQP3PPIXsPEgovnpRc6HMbia8ukrIqwwbgKdFhTl4giEd1H
- fZ6g==
+ bh=XiEk3ao15YVtRfpEP/OfkaZF+KYpCboS2otN2KssSf8=;
+ b=UrU0RMeVqj04qEHTW+tXX7iK/qQFYh+My1OJMrwSWYafzFIX9gp8bAQqdda74lzyai
+ MeV8EX/HDZdejjYCQmz9N8UivvgAltOsxf59z0CcCg0dwUAE6UqkVWYLZWsrlzveMz/b
+ orICnoO/x+WIM2+4tOfJeZWtlGCsiqK5gEk0AUYkdIwEAitI4va0O/Su5Ca41RdNP2tn
+ T5ikZk/terYbtcfWS5Ru2GSx6okCi3HojizgOeoAp6gxjojd2Q7H+Y3sWqC9pgBsgfP3
+ 2bVBXUhZMtpq/j6Bh11oSmwCSW7Lf4KkmC8eOIULUGnZoFUyEe6YE0ty1mlYnOiBIwH9
+ UZgg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVsy1wsXwghzMhLJXx8vOtCg+zXLX1dOgDoLsbyM/7XTrcFOMWmwZea+2Pi9r0/w+mOsIdidzVz68PbLTHbAPJUUxWMqWU=
-X-Gm-Message-State: AOJu0YwHbRBni+HpCvkWN79iHAtThu2VLCDLvDTJhVbrgt4qJtOR89zT
- 87pcXogoIR/iytkA9hl6ztg6PQodCFAhf5XEqDo5gmZSlXEYunvIUKpluo7siBI=
-X-Google-Smtp-Source: AGHT+IEatNWV5UD2skUeJyaIHDfEYyEdMUBrJDV/m35UCn/Za8Q5jLfceaHlM/gG44AxjNG3B+O2TQ==
-X-Received: by 2002:a05:600c:4847:b0:426:8ee5:5d24 with SMTP id
- 5b1f17b1804b1-42811da0967mr68391435e9.20.1722322422605; 
- Mon, 29 Jul 2024 23:53:42 -0700 (PDT)
+ AJvYcCX7WF3/wj38iSF0/iGjxTjP8tLgIxYIpPzpvO1u14MqHGAM9IbF6opQ5YfnO5iA64/ADDCN5/xwA6ps+85nlD3Kji6k33Y=
+X-Gm-Message-State: AOJu0YxTabGG67mNjnK5nDqVAkSXY7r+x2KTysoJuwBBah3e82Iwnm/v
+ U6zxgc/GjYNlhtgNpjrVNo2aLDlSN+h2QJWDit7HGFkHeUWMbeVGiKLtUSKH/cM=
+X-Google-Smtp-Source: AGHT+IEt1mJa2PHObB02Dt2D+4zWZNyVZAx0vOKuqaerhbUQQAJJRqVcxEk/Pnf0fNpT9ZJd3XVSBw==
+X-Received: by 2002:a5d:480f:0:b0:368:2f3d:ae6f with SMTP id
+ ffacd0b85a97d-36b5cee984bmr5782456f8f.2.1722322490593; 
+ Mon, 29 Jul 2024 23:54:50 -0700 (PDT)
 Received: from [192.168.38.175] (82.red-88-28-10.dynamicip.rima-tde.net.
  [88.28.10.82]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-427f937348bsm243792255e9.18.2024.07.29.23.53.41
+ 5b1f17b1804b1-42805730bdbsm204024685e9.5.2024.07.29.23.54.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jul 2024 23:53:42 -0700 (PDT)
-Message-ID: <d8add4cf-6b59-41dd-a5b2-60f77acb3332@linaro.org>
-Date: Tue, 30 Jul 2024 08:53:38 +0200
+ Mon, 29 Jul 2024 23:54:49 -0700 (PDT)
+Message-ID: <32505268-0a17-4c95-b5d1-fd7c3debb6e2@linaro.org>
+Date: Tue, 30 Jul 2024 08:54:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1] tests/vm/openbsd: Install tomli
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20240730011202.480829-1-richard.henderson@linaro.org>
- <20240730011202.480829-3-richard.henderson@linaro.org>
+Subject: Re: [PATCH 1/1] qemu-options.hx: correct formatting -smbios type=4
+To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Cc: Thomas Huth <thuth@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20240729204816.11905-1-heinrich.schuchardt@canonical.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240730011202.480829-3-richard.henderson@linaro.org>
+In-Reply-To: <20240729204816.11905-1-heinrich.schuchardt@canonical.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,13 +98,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/7/24 03:11, Richard Henderson wrote:
-> Tomli is now required by configure.
+On 29/7/24 22:48, Heinrich Schuchardt wrote:
+> processor-family and processor-id can be assigned independently.
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> Add missing brackets.
+> 
+> Fixes: b5831d79671c ("smbios: add processor-family option")
+> Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 > ---
->   tests/vm/openbsd | 1 +
->   1 file changed, 1 insertion(+)
+>   qemu-options.hx | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
