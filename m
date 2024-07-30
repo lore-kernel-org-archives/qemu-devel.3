@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62249C3DA49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C31DC52D1D
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 19:24:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYsS5-000310-Tb; Tue, 30 Jul 2024 15:24:06 -0400
+	id 1sYsS2-0002m7-FF; Tue, 30 Jul 2024 15:24:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sYsS4-0002v8-BE; Tue, 30 Jul 2024 15:24:04 -0400
+ id 1sYsRu-0002Nj-Bp; Tue, 30 Jul 2024 15:23:54 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sYsS2-0002IK-LB; Tue, 30 Jul 2024 15:24:03 -0400
-Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46UErsdq008404;
- Tue, 30 Jul 2024 19:23:50 GMT
+ id 1sYsRs-0002HS-Ld; Tue, 30 Jul 2024 15:23:54 -0400
+Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46UISUjR004647;
+ Tue, 30 Jul 2024 19:23:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
- MZiS3PyugNdhxJRW4N1qcZ8IFgGOP229AbZY8pDZNnQ=; b=gOHd/errZ+86FEPw
- NRAgbTOANi9XO1GNjDkxeLOR01kAUABfngYlwnR+4DaByx80/ATCUre/ov3ikvKU
- gF5x/CVYZV4dGkW51x/Zr1hbfvYpeek5/rlfsL7IQn71A2m4LfLIpiiKgf/dIIHa
- hP5waS8FF0PWG07LIdXopcqi0Q4xGaaipYeSjONLrSg2lU0LuFbgH9/s/1dkzETG
- hqo8244faPEMb5ZCLbLkviC64+xfDV5rAYEmonwt4wA46WMmgf73v9yu4WUkK5Jl
- 76/NiLsBTa0ITS8zSa4dXfStzqxE3gBM7ECpHeT4j91LgaFSF5k+dKKVrnH/kOeE
- Dgy4/Q==
+ NdE/Fyel2C7AFtVEeKtdExqkuy8FZQ5dd9vlztjZABc=; b=CLdJcxqWEpizOnDw
+ qme2wXj9uGqJY1yD77x1/y9izrfmg+A1g0azJq8eyatKHwZ1mENm1SPmCoXbQdSz
+ VBi/R06doHJNhztAJSdMDpby2FtDTLXBK5m2Dm1ODpzum7cK6pA69CmCdvF9cF2r
+ kKFNAt5q/TN6YdXuguTWT0NlEQ3r3lLyhtQ3YTAX821nzJBGMXgC4XAg6nkom9QS
+ pH0Of5eK0j0Mz0+PHrpVWQOHfn5H+G69FdEqstI0MoGRtAJ594+MvuxOaRsmHiWQ
+ Sx1KtiifjSnfqbCvY7k/k0C/0quuVOdb3TvsHkk9hXL+w860hztXERNnJkGfivTw
+ dze/zQ==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40q13a8vue-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40q5fx03h7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jul 2024 19:23:50 +0000 (GMT)
-Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46UJNKhs028082;
- Tue, 30 Jul 2024 19:23:49 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40q13a8vu9-1
+ Tue, 30 Jul 2024 19:23:44 +0000 (GMT)
+Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46UJNhM5032211;
+ Tue, 30 Jul 2024 19:23:43 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40q5fx03h6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jul 2024 19:23:49 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 46UIJwvN009202; Tue, 30 Jul 2024 19:23:49 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 40ndx2xc07-1
+ Tue, 30 Jul 2024 19:23:43 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46UGU54k007479; Tue, 30 Jul 2024 19:23:42 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 40nb7u6w7u-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jul 2024 19:23:49 +0000
+ Tue, 30 Jul 2024 19:23:42 +0000
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 46UJNhd451904986
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46UJNbV253936570
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Jul 2024 19:23:45 GMT
+ Tue, 30 Jul 2024 19:23:39 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8559220043;
- Tue, 30 Jul 2024 19:23:43 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7AD4520043;
+ Tue, 30 Jul 2024 19:23:37 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BDA3C20040;
- Tue, 30 Jul 2024 19:23:40 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 239F920040;
+ Tue, 30 Jul 2024 19:23:35 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com.com (unknown
  [9.195.42.9]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 30 Jul 2024 19:23:40 +0000 (GMT)
+ Tue, 30 Jul 2024 19:23:34 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  Madhavan Srinivasan <maddy@linux.ibm.com>,
@@ -72,12 +72,11 @@ To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
 Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
-Subject: [PATCH v6 5/5] ppc/pseries: Add Power11 cpu type
-Date: Wed, 31 Jul 2024 00:53:25 +0530
-Message-ID: <20240730192325.669771-6-adityag@linux.ibm.com>
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Subject: [PATCH v6 3/5] target/ppc: Fix regression due to Power10 and Power11
+ having same PCR
+Date: Wed, 31 Jul 2024 00:53:23 +0530
+Message-ID: <20240730192325.669771-4-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730192325.669771-1-adityag@linux.ibm.com>
 References: <20240730192325.669771-1-adityag@linux.ibm.com>
@@ -85,16 +84,16 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: QN5I9t08Yt4usP2vhiZrkZW-WPeOOp-4
-X-Proofpoint-GUID: eLn0vyGFoggiPujZSmy9AyVZbsXTgNAR
+X-Proofpoint-GUID: LXPk5SEM5aCvgVVHrJvpAWWbpnsoN_03
+X-Proofpoint-ORIG-GUID: ST9M8qMuPDfxoSCywy470HbwJxkhGMgr
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-30_15,2024-07-30_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0
- adultscore=0 mlxlogscore=869 priorityscore=1501 phishscore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 mlxscore=0 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ clxscore=1015 malwarescore=0
+ bulkscore=0 priorityscore=1501 impostorscore=0 phishscore=0
+ mlxlogscore=909 suspectscore=0 lowpriorityscore=0 mlxscore=0 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2407110000 definitions=main-2407300134
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
@@ -120,64 +119,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add sPAPR CPU Core definition for Power11
+Power11 has the same PCR (Processor Compatibility Register) value, as
+Power10.
+
+Due to this, QEMU considers Power11 as a valid compat-mode for Power10,
+ie. earlier it was possible to run QEMU with '-M pseries,max-compat-mode=power11 --cpu power10'
+
+Same PCR also introduced a regression where `-M pseries --cpu power10`
+boots as Power11 (ie. logical PVR is of Power11, even though PVR is Power10).
+The regression was due to 'do_client_architecture_support' checking for
+valid compat modes and finding Power11 to be a valid compat mode for
+Power10 (it happens even without passing 'max-compat-mode' explicitly).
+
+Fix compat-mode issue and regression, by ensuring a future Power
+processor (with a higher logical_pvr value, eg. P11) cannot be valid
+compat-mode for an older Power processor (eg. P10)
 
 Cc: Cédric Le Goater <clg@kaod.org>
 Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
-Cc: David Gibson <david@gibson.dropbear.id.au>
-Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
 Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
 Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
 Cc: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- docs/system/ppc/pseries.rst | 17 +++++++++++++----
- hw/ppc/spapr_cpu_core.c     |  1 +
- 2 files changed, 14 insertions(+), 4 deletions(-)
+ target/ppc/compat.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/docs/system/ppc/pseries.rst b/docs/system/ppc/pseries.rst
-index a876d897b6e4..bbc51aa7fcdb 100644
---- a/docs/system/ppc/pseries.rst
-+++ b/docs/system/ppc/pseries.rst
-@@ -14,10 +14,19 @@ virtualization capabilities.
- Supported devices
- =================
- 
-- * Multi processor support for many Power processors generations: POWER7,
--   POWER7+, POWER8, POWER8NVL, POWER9, and Power10. Support for POWER5+ exists,
--   but its state is unknown.
-- * Interrupt Controller, XICS (POWER8) and XIVE (POWER9 and Power10)
-+ * Multi processor support for many Power processors generations:
-+   - POWER7, POWER7+
-+   - POWER8, POWER8NVL
-+   - POWER9
-+   - Power10
-+   - Power11
-+   - Support for POWER5+ also exists, works with correct kernel/userspace
-+ * Interrupt Controller
-+    - XICS (POWER8)
-+    - XIVE (Supported by below:)
-+        - POWER9
-+        - Power10
-+        - Power11
-  * vPHB PCIe Host bridge.
-  * vscsi and vnet devices, compatible with the same devices available on a
-    PowerVM hypervisor with VIOS managing LPARs.
-diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
-index 56090abcd11a..347a1643ac7f 100644
---- a/hw/ppc/spapr_cpu_core.c
-+++ b/hw/ppc/spapr_cpu_core.c
-@@ -411,6 +411,7 @@ static const TypeInfo spapr_cpu_core_type_infos[] = {
-     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
-+    DEFINE_SPAPR_CPU_CORE_TYPE("power11_v2.0"),
- #ifdef CONFIG_KVM
-     DEFINE_SPAPR_CPU_CORE_TYPE("host"),
- #endif
+diff --git a/target/ppc/compat.c b/target/ppc/compat.c
+index ebef2cccecf3..5b20fd7ef04c 100644
+--- a/target/ppc/compat.c
++++ b/target/ppc/compat.c
+@@ -132,6 +132,10 @@ static bool pcc_compat(PowerPCCPUClass *pcc, uint32_t compat_pvr,
+         /* Outside specified range */
+         return false;
+     }
++    if (compat->pvr > pcc->spapr_logical_pvr) {
++        /* Older CPU cannot support a newer processor's compat mode */
++        return false;
++    }
+     if (!(pcc->pcr_supported & compat->pcr_level)) {
+         /* Not supported by this CPU */
+         return false;
 -- 
 2.45.2
 
