@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9285C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 02:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FB18C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 02:13:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYcLc-0006hG-6I; Mon, 29 Jul 2024 22:12:20 -0400
+	id 1sYcMO-0000Dz-Ne; Mon, 29 Jul 2024 22:13:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYcLa-0006dE-BR
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:12:18 -0400
-Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
+ id 1sYcMM-00005E-Mp
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:13:06 -0400
+Received: from mail-io1-xd32.google.com ([2607:f8b0:4864:20::d32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYcLX-0004BM-So
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:12:18 -0400
-Received: by mail-oa1-x29.google.com with SMTP id
- 586e51a60fabf-25e3bc751daso2939013fac.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 19:12:15 -0700 (PDT)
+ id 1sYcMK-0004qq-Rn
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:13:06 -0400
+Received: by mail-io1-xd32.google.com with SMTP id
+ ca18e2360f4ac-8111f946f04so178136539f.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 19:13:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722305534; x=1722910334; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722305583; x=1722910383; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ref+X6HfwcJVt+DUoyjVSKl/pdGsw5DSkY0LXIiNoNc=;
- b=NrL1jTfrJaowQ1RDHCTOXIiGUECAHpJ9eU6o72313WQ1TNcO99PYCy62t2RYiJTlmz
- 5IBdwNvUd1eeFZu958YIPSVNHCDKRGIJ1vXC9A7DDJduf7vFSHWxPzZlaud2P+HSK2Z8
- goSGsAF5FQeNZvzilWocXT7b8F07vlpdPfd8iuVg/M7mt/K0d7xrC9mVseeaGWctr/Rb
- QxmiZfNC5u25IwhrYwNWtCa9FOkyYi4i+L/VS35j8palLFVVYaZXwIdCLVG13yVK26EL
- 67ca+G7LwWQDGyaxvLIvxfyyo7CYZnQr3HwU5m/NR+IiOexe++vsqFg+InlD9N+YWBma
- H8vQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tjxU4Pd+MXWcR+5/JzQwgIWtGtDmaE39V6TRa+KX2Pg=;
+ b=ZvUFAvU0I4zYpoQKyyUjZexsXsi0MbTY1O0wp3gcbRWpRqh1cffSyK1YawSDwNQ8Lx
+ 6Fr904cYBOBuMUVZu+pssJk374oVjuumF9ycuHgGe7pXko//4A9/Y/Bkrd99NJUOcSMh
+ RSH1yAahWZMkxy33cCrozYhQKpZ3FDcI31OryTRU+YVnKXMDjTmWxr1YUVNZbSKqK0yP
+ XyN00RxBF6lGZo6lt3mZ/Psg6Pqeh2vUzz4CToJe8vOPxFzY1zI7C9l1Sr1g6vOuKHft
+ kwogHvlEJqctYcOztOPr435frHPk+Ky47iFX1NBhecCvxlSlQLLmTdkxQalE5r1QDujM
+ 20Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722305534; x=1722910334;
+ d=1e100.net; s=20230601; t=1722305583; x=1722910383;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ref+X6HfwcJVt+DUoyjVSKl/pdGsw5DSkY0LXIiNoNc=;
- b=hMEPuVl8KmPLHhM7gxktodDAxD5M+TSpTKw2Y+nCP0sQ+/95u9iW9sx+uix26Nvx8R
- 1SSGdPBK4e2zmjN6SGTEct+SXooQYPLPxlsGinnqxBU5vL367UrS0x2lP7Wa3lVudJOb
- tcOSn9290yzkyNtd6BpF5lxU7LR4oI9c2+LuX3MzajayhwR8D16fmdvvKOa534LqSXc3
- q2suFwNg79Y/3oVcyLE5z0LeVMB7TXI4gr/u8s9jILg6qQQlJqQyiLnEtLxkQEtKUVAq
- N4JiXqXY+CiZnnMPxQhmqDPzH7iJ6iAiz9oXjEOJaQP73RkfaZjCMaYyyW3nKDOxVvly
- m2xA==
+ bh=tjxU4Pd+MXWcR+5/JzQwgIWtGtDmaE39V6TRa+KX2Pg=;
+ b=aq488eOB6ZVJimWE1BaHQqq8lECOeQDuGmyhVTbnl0sFekw/tugItzmC4GjynPErOb
+ oQuSRJ6b3iSWn3i8f6qQc51SGEuDw2MNXOVMcqP+wWKu/NSY8/PAcZId2N/Rvx5gRgue
+ DjDrmHJiOyMPOYusUDcaXLaY4FpOrWVpCk//KcX6hhOPuVtXcAVcTJ/T1ITA/PbJXVWH
+ fYabvwk6T/y/neBUh8k+bfxm6ZfAVNO5PUqLyYo2awvKZDp+eCCwUicfpnjwlki+EMXm
+ X7dmB538qnfzPDALl6JgikweB+G6/BFNxL9EuztIcX19RYnRdWN4aCaxrqkfWyw9d4kK
+ 1+SQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWzEf2ijZg785FUx37GyH13PdnBtFcY3wLy6pEYv6G7Dg1j20LC7PPWz1CPxNrtg7r6RR8ToUQelHyqmR2ho3r/rhHmyNw=
-X-Gm-Message-State: AOJu0YxTH7e5OaraNyTBHXTDpFrlCVCsX7FrVt0iI1zavAUgYB9Yh1IW
- YWixX//e4Fh+gXsxRdGtxLc54sTINRDOHCtyFvSTQkF7faeHyVMhXqnr3c2z7DnYMwBIGQNSTez
- GJSc=
-X-Google-Smtp-Source: AGHT+IFkKK2UYhb4JKUt9XHfRNavmItVLu559BD86X//ExFnud3V/5EgiJqMYufpLSwvE7P253Oxjg==
-X-Received: by 2002:a17:902:c40c:b0:1fd:a412:5e05 with SMTP id
- d9443c01a7336-1ff0491ad81mr85602945ad.52.1722288753963; 
- Mon, 29 Jul 2024 14:32:33 -0700 (PDT)
+ AJvYcCVmpS4h9+Nm8BB7YygIsM/bKpu5uf3WLcuUhqlg4QGzzwJtZ8qAuSBD3pQ1th+9PJl8Vxi3Db40A/z7ZoQS4q12gknhQBk=
+X-Gm-Message-State: AOJu0YwhOPbpvnQ4xw678KOiWTgfEDXjPAUASXfAfrgmgpV0g9gUz75p
+ IjUJof68QhKEnpRV+j65w6xq81HqvBfTjBGIX8TxlBGHkWuBgl63ZqELgWDGHVgE+IZxWto4jIu
+ nv4Y=
+X-Google-Smtp-Source: AGHT+IEeoICMu4UL8jj5vpvKUwRnacnphXa0cwGaygpZOKxgi5XrmPj3+lc+O9rYm0Lgz4EzQEDi6g==
+X-Received: by 2002:a17:90b:4a50:b0:2c9:5a8b:ff7e with SMTP id
+ 98e67ed59e1d1-2cf7e216b0cmr11112138a91.25.1722298708561; 
+ Mon, 29 Jul 2024 17:18:28 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fed7c8c9d3sm88307155ad.3.2024.07.29.14.32.30
+ 98e67ed59e1d1-2cdb738fe0fsm11220403a91.10.2024.07.29.17.18.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jul 2024 14:32:33 -0700 (PDT)
-Message-ID: <38387ea5-fb29-430f-a83a-917ca74b8357@linaro.org>
-Date: Tue, 30 Jul 2024 07:32:26 +1000
+ Mon, 29 Jul 2024 17:18:28 -0700 (PDT)
+Message-ID: <100fdfe8-4c9d-48aa-9d92-95c818bc08db@linaro.org>
+Date: Tue, 30 Jul 2024 10:18:23 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] osdep: add a qemu_close_all_open_fd() helper
-To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>
-References: <20240726075502.4054284-1-cleger@rivosinc.com>
- <0914a034-260f-44ef-8d75-2dca9d5fcb24@linaro.org>
- <94b658a0-21c1-4cd0-8bc5-21c0c71b9cb8@rivosinc.com>
+Subject: Re: [PULL 0/2] QAPI patches patches for 2024-07-29
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+References: <20240729063722.839708-1-armbru@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <94b658a0-21c1-4cd0-8bc5-21c0c71b9cb8@rivosinc.com>
+In-Reply-To: <20240729063722.839708-1-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::29;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x29.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d32;
+ envelope-from=richard.henderson@linaro.org; helo=mail-io1-xd32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,95 +97,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/30/24 00:20, Clément Léger wrote:
+On 7/29/24 16:37, Markus Armbruster wrote:
+> The following changes since commit 93b799fafd9170da3a79a533ea6f73a18de82e22:
 > 
+>    Merge tag 'pull-ppc-for-9.1-2-20240726-1' ofhttps://gitlab.com/npiggin/qemu into staging (2024-07-26 15:10:45 +1000)
 > 
-> On 29/07/2024 16:00, Philippe Mathieu-Daudé wrote:
->> Hi Clément,
->>
->> On 26/7/24 09:54, Clément Léger wrote:
->>> Since commit 03e471c41d8b ("qemu_init: increase NOFILE soft limit on
->>> POSIX"), the maximum number of file descriptors that can be opened are
->>> raised to nofile.rlim_max. On recent debian distro, this yield a maximum
->>> of 1073741816 file descriptors. Now, when forking to start
->>> qemu-bridge-helper, this actually calls close() on the full possible file
->>> descriptor range (more precisely [3 - sysconf(_SC_OPEN_MAX)]) which
->>> takes a considerable amount of time. In order to reduce that time,
->>> factorize existing code to close all open files descriptors in a new
->>> qemu_close_all_open_fd() function. This function uses various methods
->>> to close all the open file descriptors ranging from the most efficient
->>> one to the least one. It also accepts an ordered array of file
->>> descriptors that should not be closed since this is required by the
->>> callers that calls it after forking. Since this function is not used
->>> for Win32, do not implement it to force an error at link time if used.
->>>
->>> Signed-off-by: Clément Léger <cleger@rivosinc.com>
->>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->>> ---
->>> v5:
->>>    - Move qemu_close_all_open_fd() to oslib-posix.c since it does not
->>>      compile on windows and is not even used on it.
->>>    - v4:
->>> https://lore.kernel.org/qemu-devel/20240717124534.1200735-1-cleger@rivosinc.com/
->>>
->>> v4:
->>>    - Add a comment saying that qemu_close_all_open_fd() can take a NULL
->>> skip
->>>      array and nskip == 0
->>>    - Added an assert in qemu_close_all_open_fd() to check for skip/nskip
->>>      parameters
->>>    - Fix spurious tabs instead of spaces
->>>    - Applied checkpatch
->>>    - v3:
->>> https://lore.kernel.org/qemu-devel/20240716144006.6571-1-cleger@rivosinc.com/
->>>
->>> v3:
->>>    - Use STD*_FILENO defines instead of raw values
->>>    - Fix indentation of close_all_fds_after_fork()
->>>    - Check for nksip in fallback code
->>>    - Check for path starting with a '.' in qemu_close_all_open_fd_proc()
->>>    - Use unsigned for cur_skip
->>>    - Move ifdefs inside close_fds functions rather than redefining them
->>>    - Remove uneeded 'if(nskip)' test
->>>    - Add comments to close_range version
->>>    - Reduce range of skip fd as we find them in
->>>    - v2:
->>> https://lore.kernel.org/qemu-devel/20240618111704.63092-1-cleger@rivosinc.com/
->>>
->>> v2:
->>>    - Factorize async_teardown.c close_fds implementation as well as
->>> tap.c ones
->>>    - Apply checkpatch
->>>    - v1:
->>> https://lore.kernel.org/qemu-devel/20240617162520.4045016-1-cleger@rivosinc.com/
->>>
->>> ---
->>>    include/qemu/osdep.h    |   9 +++
->>>    net/tap.c               |  33 +++++-----
->>>    system/async-teardown.c |  37 +-----------
->>>    util/oslib-posix.c      | 131 ++++++++++++++++++++++++++++++++++++++++
->>>    4 files changed, 160 insertions(+), 50 deletions(-)
->>
->> I'm getting this error on msys2, not sure if related:
->>
->> WARNING: Failed to terminate process: 1 error occurred:
->>      * failed to attach the runner process to the console of its parent
->> process: The handle is invalid.
->>
->> I find your patch hard to review. Do you mind splitting as trivial
->> changes? Something like:
->>
->> - Expose close_all_open_fd() renamed as qemu_close_all_open_fd()
->> - Rework qemu_close_all_open_fd()
->> - Factor close_all_fds_after_fork() in net/tap.c
->> - Use qemu_close_all_open_fd() in net/tap.c
+> are available in the Git repository at:
 > 
-> Yes sure, I'll do that.
+>    https://repo.or.cz/qemu/armbru.git tags/pull-qapi-2024-07-29
+> 
+> for you to fetch changes up to bc2e34e343b40b83cca82409db9c126df2e28c81:
+> 
+>    qapi/machine: Belatedly document target loongarch64 is since 7.1 (2024-07-29 07:29:47 +0200)
+> 
+> ----------------------------------------------------------------
+> QAPI patches patches for 2024-07-29
 
-If you're making updates, I think you should drop the linux ifdef for /proc/self/fd.  This 
-is also present on Solaris.  Importantly, it'll compile on all POSIX systems, whether or 
-not /proc is available.
 
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
 r~
 
