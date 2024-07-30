@@ -4,51 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C274C3DA61
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:47:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6E1CC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:55:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYjRr-0007Fg-D3; Tue, 30 Jul 2024 05:47:15 -0400
+	id 1sYjYm-0001tQ-0O; Tue, 30 Jul 2024 05:54:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1sYjRk-0006pu-A1; Tue, 30 Jul 2024 05:47:13 -0400
-Received: from relay.virtuozzo.com ([130.117.225.111])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sYjYj-0001kP-R1; Tue, 30 Jul 2024 05:54:21 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
- id 1sYjRh-0001i3-PV; Tue, 30 Jul 2024 05:47:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=virtuozzo.com; s=relay; h=MIME-Version:Message-Id:Date:Subject:From:
- Content-Type; bh=z/pSz8JWP1f258KcjOwczIObAKqmmWgwMknXpyWI3oM=; b=SZ831bQurWvc
- GruiMd/R02hnOCfakeuV3EI9kqPDcBSp41CgbnYc2Fmy9I5olOIkRIn3aA0g3eGYpltUKvZLV7TTh
- Xcf2yoVOHjE+EEhkNARSyYQj5fy/6f/PUHOgvilQPLCJPDebQt3C/QTjlo4rrTq67RW9gdmTJ8qaD
- 0yAfmTFqRvsJgLZh/SoqtZDRJ44QYLQvJa3VMtuyQLEoA1qbt8afgS71bp6DwyP9OepvgVX0/21KR
- kUJ3kU7as2etnmmFWH8wXdQ1NWKFAVn0QJQZKnRZW+XQSw3ayuEYBRWXUY1LXQe0Cd1k6SBEcLxyi
- zX19t3Vs64MRvgEM7swNpA==;
-Received: from [130.117.225.1] (helo=dev005.ch-qa.vzint.dev)
- by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <andrey.drobyshev@virtuozzo.com>) id 1sYjQN-00Eeh3-1L;
- Tue, 30 Jul 2024 11:46:51 +0200
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, thuth@redhat.com, kwolf@redhat.com,
- hreitz@redhat.com, andrey.drobyshev@virtuozzo.com, den@virtuozzo.com
-Subject: [PATCH] iotests/024: exclude 'backing file format' field from the
- output
-Date: Tue, 30 Jul 2024 12:47:01 +0300
-Message-Id: <20240730094701.790624-1-andrey.drobyshev@virtuozzo.com>
-X-Mailer: git-send-email 2.39.3
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sYjYh-0002t8-Kr; Tue, 30 Jul 2024 05:54:21 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9FBF14E6000;
+ Tue, 30 Jul 2024 11:54:13 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id FEre8zQg5gXg; Tue, 30 Jul 2024 11:54:11 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id A005D4E6005; Tue, 30 Jul 2024 11:54:11 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9E49D746E3B;
+ Tue, 30 Jul 2024 11:54:11 +0200 (CEST)
+Date: Tue, 30 Jul 2024 11:54:11 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
+ Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org, 
+ Sergio Lopez <slp@redhat.com>, 
+ =?ISO-8859-15?Q?Fr=E9d=E9ric_Barrat?= <fbarrat@linux.ibm.com>, 
+ =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, Fabiano Rosas <farosas@suse.de>, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Hanna Reitz <hreitz@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ John Snow <jsnow@redhat.com>, Thomas Huth <huth@tuxfamily.org>, 
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Leonardo Bras <leobras@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>, 
+ Kevin Wolf <kwolf@redhat.com>, David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH v5 05/11] exec/ioport: Add portio_list_set_address()
+In-Reply-To: <05446d09-d5f1-4a6a-a816-ed9c28f6e82c@linaro.org>
+Message-ID: <7ead0da2-1f4d-369a-a51b-8c05b1ed5417@eik.bme.hu>
+References: <20240114123911.4877-1-shentey@gmail.com>
+ <20240114123911.4877-6-shentey@gmail.com>
+ <f5f5dfca-d60b-4b0d-add9-e41b42bd4ce2@linaro.org>
+ <C0822DF6-EA81-48BB-9102-887E66441EF2@gmail.com>
+ <05446d09-d5f1-4a6a-a816-ed9c28f6e82c@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=130.117.225.111;
- envelope-from=andrey.drobyshev@virtuozzo.com; helo=relay.virtuozzo.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1821407361-1722333251=:80219"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,54 +84,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Apparently 'qemu-img info' doesn't report the backing file format field
-for qed (as it does for qcow2):
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-$ qemu-img create -f qed base.qed 1M && qemu-img create -f qed -b base.qed -F qed top.qed 1M
-$ qemu-img create -f qcow2 base.qcow2 1M && qemu-img create -f qcow2 -b base.qcow2 -F qcow2 top.qcow2 1M
-$ qemu-img info top.qed | grep 'backing file format'
-$ qemu-img info top.qcow2 | grep 'backing file format'
-backing file format: qcow2
+--3866299591-1821407361-1722333251=:80219
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-This leads to the 024 test failure with -qed.  Let's just filter the
-field out and exclude it from the output.
+On Tue, 30 Jul 2024, Philippe Mathieu-Daudé wrote:
+> On 29/7/24 23:07, Bernhard Beschow wrote:
+>> Am 29. Juli 2024 09:26:19 UTC schrieb "Philippe Mathieu-Daudé" 
+>> <philmd@linaro.org>:
+>>> On 14/1/24 13:39, Bernhard Beschow wrote:
+>>>> Some SuperI/O devices such as the VIA south bridges or the PC87312 
+>>>> controller
+>>>> are able to relocate their SuperI/O functions. Add a convenience function 
+>>>> for
+>>>> implementing this in the VIA south bridges.
+>>>> 
+>>>> This convenience function relies on previous simplifications in 
+>>>> exec/ioport
+>>>> which avoids some duplicate synchronization of I/O port base addresses. 
+>>>> The
+>>>> naming of the function is inspired by its memory_region_set_address() 
+>>>> pendant.
+>>>> 
+>>>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+>>>> ---
+>>>>    docs/devel/migration.rst |  5 +++--
+>>>>    include/exec/ioport.h    |  2 ++
+>>>>    system/ioport.c          | 19 +++++++++++++++++++
+>>>>    3 files changed, 24 insertions(+), 2 deletions(-)
+>>> 
+>>> 
+>>>> +void portio_list_set_address(PortioList *piolist, uint32_t addr)
+>>>> +{
+>>>> +    MemoryRegionPortioList *mrpio;
+>>>> +    unsigned i, j;
+>>>> +
+>>>
+>>>        memory_region_transaction_begin();
+>>> 
+>>>> +    for (i = 0; i < piolist->nr; ++i) {
+>>>> +        mrpio = container_of(piolist->regions[i], 
+>>>> MemoryRegionPortioList, mr);
+>>> 
+>>> Should we check mrpio->mr is disabled before changing its base address?
+>> 
+>> Isn't that the responsibility of the guest? What should we do if the check 
+>> fails?
+>
+> What says the datasheet? At least we should log a GUEST_ERROR here.
 
-This is a fixup for the commit f93e65ee51 ("iotests/{024, 271}: add
-testcases for qemu-img rebase").
+It does not say what if it's not enabled but only says that parallel port 
+tegs should be located at LPTBase (0xf6 of superio config). So I think 
+this should move the memory region independent of if it's enabled but then 
+mayube the enable bit should check the address and set it when enabling 
+the region? But shouldn't portio take care of that remembering the base? I 
+don't know how all this works in QEMU and don't have time to check now.
 
-Found-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
----
- tests/qemu-iotests/024     | 2 +-
- tests/qemu-iotests/024.out | 1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/tests/qemu-iotests/024 b/tests/qemu-iotests/024
-index 285f17e79f..b29c76e161 100755
---- a/tests/qemu-iotests/024
-+++ b/tests/qemu-iotests/024
-@@ -283,7 +283,7 @@ TEST_IMG=$BASE_OLD _make_test_img -b "$BASE_NEW" -F $IMGFMT \
- CLUSTER_SIZE=$(( CLUSTER_SIZE * 2 )) TEST_IMG=$OVERLAY \
-     _make_test_img -b "$BASE_OLD" -F $IMGFMT $(( CLUSTER_SIZE * 6 ))
- 
--TEST_IMG=$OVERLAY _img_info
-+TEST_IMG=$OVERLAY _img_info | grep -v '^backing file format:'
- 
- echo
- echo "Fill backing files with data"
-diff --git a/tests/qemu-iotests/024.out b/tests/qemu-iotests/024.out
-index e1e8eea863..3d1e31927a 100644
---- a/tests/qemu-iotests/024.out
-+++ b/tests/qemu-iotests/024.out
-@@ -214,7 +214,6 @@ file format: IMGFMT
- virtual size: 384 KiB (393216 bytes)
- cluster_size: 131072
- backing file: TEST_DIR/subdir/t.IMGFMT.base_old
--backing file format: IMGFMT
- 
- Fill backing files with data
- 
--- 
-2.39.3
-
+Reagrds,
+BALATON Zoltan
+--3866299591-1821407361-1722333251=:80219--
 
