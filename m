@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83BB3C3DA61
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE437C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:13:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYitS-0006B8-3X; Tue, 30 Jul 2024 05:11:42 -0400
+	id 1sYiv6-0005Lj-5k; Tue, 30 Jul 2024 05:13:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sYitF-0005qZ-Ii; Tue, 30 Jul 2024 05:11:30 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
+ id 1sYiv3-0005Bs-1O; Tue, 30 Jul 2024 05:13:21 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sYitC-0003es-Km; Tue, 30 Jul 2024 05:11:29 -0400
+ id 1sYiv0-0003pX-Ga; Tue, 30 Jul 2024 05:13:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1722330687; x=1753866687;
+ t=1722330798; x=1753866798;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=Jt/KW4ijgn/wS46aVdfpJ4SG7pm8ZRBktxlKrLmiT2Q=;
- b=MN/i80mHQPoJOAfIyXHqGK2OGBmYWcAGTZ+BsYkorHjVkxxdS3dKGHGK
- oFJw3UZcM+gcHsyWkiZWxai4scGIhx+UbQg68YVmOHmGOtcQFLnZqVZKf
- K/FJJiCfPHNexYiYIQJ79/tbKWrjhsil9WFJVfo2wHiNPdogC0aoJAiIZ
- 3gSt6yDgm4v0xn0g0X/ALZE2lZ9IM2VJR81DXjVpyOC+jJfJzh3jcKGlX
- QGwIfvRLKUcT5TkkFMzQTs9bRAdPbveWmhThu3eWijiOAbz5B2bFlYmfr
- 3mTboNQnuLGjwVw/5O4YXrMXEZ4Y1sj81+TtGr48WEcxh3sK4uVIUCvz1 w==;
-X-CSE-ConnectionGUID: WEkYle1kRdieVeDptXoU1Q==
-X-CSE-MsgGUID: 0ESCV2z1TbqSthMraOHjKw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11148"; a="20082660"
-X-IronPort-AV: E=Sophos;i="6.09,248,1716274800"; d="scan'208";a="20082660"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Jul 2024 02:11:21 -0700
-X-CSE-ConnectionGUID: yNTegJrdQRCBmSsq7OI9IQ==
-X-CSE-MsgGUID: thjTxyPDR4qq5CRxhP60Ng==
+ bh=OJN+ESOf3j7WgRm7tp+5EaN6VLIEhB0GeZBgm8RyWZI=;
+ b=VU1ZvamSbhpUJ1ZL3Nf2LSKn9Eh+h959uoXWtI4cN1QGZTDf1aRRMpEA
+ lIqXL/l0tgVj9mEktMYNn5wZeqnRB/jt/yGhEDBISg16KbqUXMhA8FfVa
+ qooBXwxRqNrWkm0ugk3Vtmbhce70X6XtsPiIgfN8kMN5iOZQqfjqRY94O
+ FZT3FfZQYB51JQqCXNPcl/sJZGrCRoDDABio3FIr7zf9vAb7hCL/9DlIA
+ da7aA/qFKC4R1pvhvoARbidnZRnTKr/BWQ4t2ATIajyCYz0BGMn8HVxtA
+ 80ln5jaS2TE5wLUKC0h9Wg2fWK8rYn1KGFtthpRzqSwKj8qUlf/HyJuFk g==;
+X-CSE-ConnectionGUID: IflEyHHwSP6OLEsRhXPQKQ==
+X-CSE-MsgGUID: Yg/3g3FESF2JMjjjsYRa1g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11148"; a="31542665"
+X-IronPort-AV: E=Sophos;i="6.09,248,1716274800"; d="scan'208";a="31542665"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Jul 2024 02:13:14 -0700
+X-CSE-ConnectionGUID: gswTXqQTRYekTBKloxnqDw==
+X-CSE-MsgGUID: gyJq+ddtRmOByRaoPYZs5w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,248,1716274800"; d="scan'208";a="54182560"
+X-IronPort-AV: E=Sophos;i="6.09,248,1716274800"; d="scan'208";a="77507899"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by fmviesa008.fm.intel.com with ESMTP; 30 Jul 2024 02:11:11 -0700
-Date: Tue, 30 Jul 2024 17:26:57 +0800
+ by fmviesa002.fm.intel.com with ESMTP; 30 Jul 2024 02:13:04 -0700
+Date: Tue, 30 Jul 2024 17:28:50 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com,
@@ -65,16 +65,15 @@ Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com,
  vsementsov@yandex-team.ru, wangyanan55@huawei.com,
  yuri.benditovich@daynix.com, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-s390x@nongnu.org, kvm@vger.kernel.org
-Subject: Re: [PATCH 09/18] qapi/machine: Rename CpuS390* to S390Cpu, and drop
- 'prefix'
-Message-ID: <Zqix4UGgy4adBVFG@intel.com>
+Subject: Re: [PATCH 07/18] qapi/machine: Drop temporary 'prefix'
+Message-ID: <ZqiyUjihMSD0ce4b@intel.com>
 References: <20240730081032.1246748-1-armbru@redhat.com>
- <20240730081032.1246748-10-armbru@redhat.com>
+ <20240730081032.1246748-8-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240730081032.1246748-10-armbru@redhat.com>
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20240730081032.1246748-8-armbru@redhat.com>
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -44
 X-Spam_score: -4.5
@@ -98,65 +97,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 30, 2024 at 10:10:23AM +0200, Markus Armbruster wrote:
-> Date: Tue, 30 Jul 2024 10:10:23 +0200
+On Tue, Jul 30, 2024 at 10:10:21AM +0200, Markus Armbruster wrote:
+> Date: Tue, 30 Jul 2024 10:10:21 +0200
 > From: Markus Armbruster <armbru@redhat.com>
-> Subject: [PATCH 09/18] qapi/machine: Rename CpuS390* to S390Cpu, and drop
->  'prefix'
+> Subject: [PATCH 07/18] qapi/machine: Drop temporary 'prefix'
 > 
-> QAPI's 'prefix' feature can make the connection between enumeration
-> type and its constants less than obvious.  It's best used with
-> restraint.
+> Recent commit "qapi: Smarter camel_to_upper() to reduce need for
+> 'prefix'" added a temporary 'prefix' to delay changing the generated
+> code.
 > 
-> CpuS390Entitlement has a 'prefix' to change the generated enumeration
-> constants' prefix from CPU_S390_POLARIZATION to S390_CPU_POLARIZATION.
-                         ^^^^^^^^^^^^^^^^^^^^^    ^^^^^^^^^^^^^^^^^^^^^
-			 CPU_S390_ENTITLEMENT     S390_CPU_ENTITLEMENT
-
-> Rename the type to S390CpuEntitlement, so that 'prefix' is not needed.
-> 
-> Likewise change CpuS390Polarization to S390CpuPolarization, and
-> CpuS390State to S390CpuState.
+> Revert it.  This improves HmatLBDataType's generated enumeration
+> constant prefix from HMATLB_DATA_TYPE to HMAT_LB_DATA_TYPE.
 > 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  qapi/machine-common.json            |  5 ++---
->  qapi/machine-target.json            | 11 +++++------
->  qapi/machine.json                   |  9 ++++-----
->  qapi/pragma.json                    |  6 +++---
->  include/hw/qdev-properties-system.h |  2 +-
->  include/hw/s390x/cpu-topology.h     |  2 +-
->  target/s390x/cpu.h                  |  2 +-
->  hw/core/qdev-properties-system.c    |  6 +++---
->  hw/s390x/cpu-topology.c             |  6 +++---
->  9 files changed, 23 insertions(+), 26 deletions(-)
-
-[snip]
-
-> diff --git a/qapi/pragma.json b/qapi/pragma.json
-> index 59fbe74b8c..beddea5ca4 100644
-> --- a/qapi/pragma.json
-> +++ b/qapi/pragma.json
-> @@ -47,9 +47,9 @@
->          'BlockdevSnapshotWrapper',
->          'BlockdevVmdkAdapterType',
->          'ChardevBackendKind',
-> -        'CpuS390Entitlement',
-> -        'CpuS390Polarization',
-> -        'CpuS390State',
-> +        'S390CpuEntitlement',
-> +        'S390CpuPolarization',
-> +        'S390CpuState',
->          'CxlCorErrorType',
->          'DisplayProtocol',
->          'DriveBackupWrapper',
-
-It seems to be in alphabetical order. The new names don't follow the
-original order.
-
-Just the above nits,
+>  qapi/machine.json            | 1 -
+>  hw/core/numa.c               | 4 ++--
+>  hw/pci-bridge/cxl_upstream.c | 4 ++--
+>  3 files changed, 4 insertions(+), 5 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
 
 
