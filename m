@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6EFAC3DA7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 11:25:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5AA2C3DA7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 11:26:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYky8-0004h7-JF; Tue, 30 Jul 2024 07:24:40 -0400
+	id 1sYkzx-0001ID-AM; Tue, 30 Jul 2024 07:26:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sYky7-0004gA-Ho
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 07:24:39 -0400
+ id 1sYkzw-0001H0-AV
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 07:26:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sYky5-0001xA-9M
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 07:24:39 -0400
+ id 1sYkzt-0002ZT-SS
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 07:26:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722338675;
+ s=mimecast20190719; t=1722338788;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8X8bjq/3ai/H7MS5YO/WvfPpMtT+MudOcS3FU2wnAmg=;
- b=SPXCMXPT2SilJipfJkvElyRK34o6zzWIQ5ddxNZMESmmACdhvzs4xveXjVVAzScXYYZ46L
- LMgYUoellJqwSXCNZCd7ry4z9rZfkThr6iZUJH8UUUj9Wf/9dCdIVE/CXZkgYx6w0b2GjY
- /Qd5nc9TjxF2BF0vuX0e2m7dF+2t+Do=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=68Bv3qUhugllW5feZfpnaJ6Nwxgo67qRQ8KH325FnCA=;
+ b=fvzoDlYYpCDP/TtzymWxzJF6ENaxPWP0M4RbAyEI96keLW9IKyf9jVpL/O7hgcLjDKMz/l
+ CSvGCE+AY9kBa07rIY5Q+Xf9LGVnT3PMdkWTYBwM/TG2fUo2xLictNt2g9FHmiz/KTu/wq
+ zvfwmwct0uu0hAjvvGwErBzUWBYRCtk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-49-6KVIqV3PPqOHI_33tOS-zg-1; Tue, 30 Jul 2024 07:24:33 -0400
-X-MC-Unique: 6KVIqV3PPqOHI_33tOS-zg-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4281ca9f4dbso18087135e9.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 04:24:33 -0700 (PDT)
+ us-mta-665-v-q8QyJzNh6NxotF0gubow-1; Tue, 30 Jul 2024 07:26:25 -0400
+X-MC-Unique: v-q8QyJzNh6NxotF0gubow-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4280a434147so25910605e9.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 04:26:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722338672; x=1722943472;
+ d=1e100.net; s=20230601; t=1722338784; x=1722943584;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8X8bjq/3ai/H7MS5YO/WvfPpMtT+MudOcS3FU2wnAmg=;
- b=kc6q38D+p4NYZ4tdeySn6Rwskwdb5/0rSun6/+YYbDPzZPO3d+idGvXe0Js+OPuTFa
- s82mcafOOXgRJuK02eA50fWuJbBfSPCXQBHYmTOAMb54UWlP67ugXbMOlpz2m01/r9wl
- d52ea0wQMIIx7hqKhlU6vXKLsx0kVuguAttjNtw4V7GAk/LlYJTQmyDCXVCm+Bg9cq9A
- o8LTcmhP0xLB/1JZ2yFT6V2Ae6X+Xd9DwMbaI9+HNa54+X640A+iO0pyFhVDJ25QLal/
- fCLUb0RLAm19zgsQgUlLtchUt/evOGK8VYvsdgBwS3dyJiseNZuOGuATXb4xBYzIIy/2
- bN0g==
+ bh=68Bv3qUhugllW5feZfpnaJ6Nwxgo67qRQ8KH325FnCA=;
+ b=n1zFt6JxFHMpb4Hv4zvtRLZ359NP1vGKX9gBIlldcqalFgpClQaoCuBRA7umVpQQgC
+ jsZMlIUpZM54IKTwO2go22bExv3s2uKByML0VFl+jJulxcDjkOA8w5HSv2SlT721rePm
+ GASc0errD43BGehFg4lBwV37Rloang1QGaRgjHeMQiQOidGEL9v/WSl4bmS6wC6bp0fP
+ fcGBMHBlHTBYnU2tFmLmFPdJA3zlEmWKW2MI1kl5UPzjzW4vqeQEjdvlSB7fTkCEJ3WK
+ RERG3AypzR2U9MQpl2Fq2nDL1Pti/Q6CK1bhEnUZvIm/0O/NNpcNf6/lfTrSJlUsWEiP
+ b9lQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWuS2hT6EmMJ+zxhmeJwXeVXDNZ4xGA8iEb3Wo2yp+dCTXLIgK1r05jV0juUoSs2Q2HpktiJlgwgbZ/nBE/l3kxsNi7SwU=
-X-Gm-Message-State: AOJu0Yx869zNUtgTbN7/1h82h+jAo4jBL0fiAJBhNzh23jy2k0KucGZJ
- ue1g5Yk11PM1DiLCRRGYM/Eht+V0UhC2M0wtOH/F8SBSjcA7/pYX2Tu/Jwi2oEOpQ/irwuNPyXm
- tgsS2jeXMop3Wkb/uZzt3/bB1n4v1PU0cparYnC6eXQkMFslKy567
-X-Received: by 2002:a05:600c:4511:b0:424:a2be:c161 with SMTP id
- 5b1f17b1804b1-42811da3ff2mr71535175e9.20.1722338672466; 
- Tue, 30 Jul 2024 04:24:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHRB6QABXzjf+/OlbIvLEiNfswDduiWR63EnhwhwCm8/rzXApsvNazCL9ktWG5SIag2bROfMg==
-X-Received: by 2002:a05:600c:4511:b0:424:a2be:c161 with SMTP id
- 5b1f17b1804b1-42811da3ff2mr71534985e9.20.1722338671949; 
- Tue, 30 Jul 2024 04:24:31 -0700 (PDT)
+ AJvYcCUDHqmiee+jqlIL5EWsUV6Tw4dgFUDSeMI/BlcrH+G1BRyLI4FhKKwZ3yQ21s3pDomYgcIuRtQHWiNGmPAVceigGH+l7CU=
+X-Gm-Message-State: AOJu0YyfKJiGCTVmnyk564wLnWnJeLJkeRYHyXDg4fHH5leOe4mUzFg/
+ zu906Wr/bffYpZB0Doco5XwmZZQuk/C4rA9jHwRyj+vN5a4qCKYese3Rc3m+8D6Jc2jHmearqbc
+ x78v/ji0s4kcj8YEZYKeHz35xyeqf1KMT/7/wx420JKIaN2/vLrqp
+X-Received: by 2002:a05:600c:1515:b0:426:55c4:ff34 with SMTP id
+ 5b1f17b1804b1-42811d85b96mr64691645e9.15.1722338784286; 
+ Tue, 30 Jul 2024 04:26:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFX4Fvg5r3WYj/PUi3J/w154wlHxOXM06fmMmCdkHfMhJI1esBXcgg9hvSYrzFzFEAp+RIVFA==
+X-Received: by 2002:a05:600c:1515:b0:426:55c4:ff34 with SMTP id
+ 5b1f17b1804b1-42811d85b96mr64691525e9.15.1722338783818; 
+ Tue, 30 Jul 2024 04:26:23 -0700 (PDT)
 Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
  [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42813e5067dsm121306335e9.16.2024.07.30.04.24.31
+ 5b1f17b1804b1-4281dae1479sm64171485e9.44.2024.07.30.04.26.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jul 2024 04:24:31 -0700 (PDT)
-Date: Tue, 30 Jul 2024 13:24:30 +0200
+ Tue, 30 Jul 2024 04:26:20 -0700 (PDT)
+Date: Tue, 30 Jul 2024 13:26:20 +0200
 From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 6/7] acpi/ghes: update comments to point to newer
- ACPI specs
-Message-ID: <20240730132430.44d9e4ae@imammedo.users.ipa.redhat.com>
-In-Reply-To: <66c1ab4988589be99ae925c6361548f55fea58b0.1721630625.git.mchehab+huawei@kernel.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>, "Michael
+ S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, Shannon Zhao
+ <shannon.zhaosl@gmail.com>, linux-kernel@vger.kernel.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 1/7] arm/virt: place power button pin number on a define
+Message-ID: <20240730132620.46cca4ce@imammedo.users.ipa.redhat.com>
+In-Reply-To: <CAFEAcA8VWc3eQZqfJP9k5LYF-9aLChHQ+uS9UBfGV6nvybDxqQ@mail.gmail.com>
 References: <cover.1721630625.git.mchehab+huawei@kernel.org>
- <66c1ab4988589be99ae925c6361548f55fea58b0.1721630625.git.mchehab+huawei@kernel.org>
+ <bf8367bddfdc95e378b5725c732533c3ba20d388.1721630625.git.mchehab+huawei@kernel.org>
+ <20240730092549.6898ff3c@imammedo.users.ipa.redhat.com>
+ <CAFEAcA8VWc3eQZqfJP9k5LYF-9aLChHQ+uS9UBfGV6nvybDxqQ@mail.gmail.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -92,7 +94,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,164 +110,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 22 Jul 2024 08:45:58 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+On Tue, 30 Jul 2024 09:29:37 +0100
+Peter Maydell <peter.maydell@linaro.org> wrote:
 
-> There is one reference to ACPI 4.0 and several references
-> to ACPI 6.x versions.
+> On Tue, 30 Jul 2024 at 08:26, Igor Mammedov <imammedo@redhat.com> wrote:
+> >
+> > On Mon, 22 Jul 2024 08:45:53 +0200
+> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> >  
+> > > Having magic numbers inside the code is not a good idea, as it
+> > > is error-prone. So, instead, create a macro with the number
+> > > definition.
+> > >
+> > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>  
 > 
-> Update them to point to ACPI 6.5 whenever possible.
+> > > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> > > index b0c68d66a345..c99c8b1713c6 100644
+> > > --- a/hw/arm/virt.c
+> > > +++ b/hw/arm/virt.c
+> > > @@ -1004,7 +1004,7 @@ static void virt_powerdown_req(Notifier *n, void *opaque)
+> > >      if (s->acpi_dev) {
+> > >          acpi_send_event(s->acpi_dev, ACPI_POWER_DOWN_STATUS);
+> > >      } else {
+> > > -        /* use gpio Pin 3 for power button event */
+> > > +        /* use gpio Pin for power button event */
+> > >          qemu_set_irq(qdev_get_gpio_in(gpio_key_dev, 0), 1);  
+> >
+> > /me confused, it was saying Pin 3 but is passing 0 as argument where as elsewhere
+> > you are passing 3. Is this a bug?  
+> 
+> No. The gpio_key_dev is a gpio-key device which has one
+> input (which you assert to "press the key") and one output,
+> which goes high when the key is pressed and then falls
+> 100ms later. The virt board wires up the output of the
+> gpio-key device to input 3 on the PL061 GPIO controller.
+> (This happens in create_gpio_keys().) So the code is correct
+> to assert input 0 on the gpio-key device and the comment
+> isn't wrong that this results in GPIO pin 3 being asserted:
+> the link is just indirect.
 
-when it comes to APCI doc comments, they should point to
-the 1st (earliest) revision that provides given feature/value/field/table.
-
-
-> There's one reference that was kept pointing to ACPI 6.4,
-> though, with HEST revision 1.
+it's likely obvious to ARM folks, but maybe comment should
+clarify above for unaware.
+ 
 > 
-> ACPI 6.5 now defines HEST revision 2, and defined a new
-> way to handle source types starting from 12. According
-> with ACPI 6.5 revision history:
+> thanks
+> -- PMM
 > 
-> 	2312 Update to the HEST table and adding new error
-> 	     source descriptor - Table 18.2.
-> 
-> Yet, the spec doesn't define yet any new source
-> descriptors. It just defines a different behavior when
-> source type is above 11.
-> 
-> I also double-checked GHES implementation on an open
-> source project (Linux Kernel). Currently upstream
-> doesn't currently handle HEST revision, ignoring such
-> field.
-> 
-> In any case, revision 2 seems to be backward-compatible
-> with revison 1 when type <= 11 and just one error is
-> contained on a HEST record.
-> 
-> So, while it is probably safe to update it, there's no
-> real need. So, let's keep the implementation using
-> an ACPI 6.4 compatible table, e. g. HEST revision 1.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> ---
->  hw/acpi/ghes.c | 48 ++++++++++++++++++++++++++++--------------------
->  1 file changed, 28 insertions(+), 20 deletions(-)
-> 
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index 6075ef5893ce..ebf1b812aaaa 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -45,9 +45,9 @@
->  #define GAS_ADDR_OFFSET 4
->  
->  /*
-> - * The total size of Generic Error Data Entry
-> - * ACPI 6.1/6.2: 18.3.2.7.1 Generic Error Data,
-> - * Table 18-343 Generic Error Data Entry
-> + * The total size of Generic Error Data Entry before data field
-> + * ACPI 6.5: 18.3.2.7.1 Generic Error Data,
-> + * Table 18.12 Generic Error Data Entry
->   */
->  #define ACPI_GHES_DATA_LENGTH               72
->  
-> @@ -65,8 +65,8 @@
->  
->  /*
->   * Total size for Generic Error Status Block except Generic Error Data Entries
-> - * ACPI 6.2: 18.3.2.7.1 Generic Error Data,
-> - * Table 18-380 Generic Error Status Block
-> + * ACPI 6.5: 18.3.2.7.1 Generic Error Data,
-> + * Table 18.11 Generic Error Status Block
->   */
->  #define ACPI_GHES_GESB_SIZE                 20
->  
-> @@ -82,7 +82,8 @@ enum AcpiGenericErrorSeverity {
->  
->  /*
->   * Hardware Error Notification
-> - * ACPI 4.0: 17.3.2.7 Hardware Error Notification
-> + * ACPI 6.5: 18.3.2.9 Hardware Error Notification,
-> + * Table 18.14 - Hardware Error Notification Structure
->   * Composes dummy Hardware Error Notification descriptor of specified type
->   */
->  static void build_ghes_hw_error_notification(GArray *table, const uint8_t type)
-> @@ -112,7 +113,8 @@ static void build_ghes_hw_error_notification(GArray *table, const uint8_t type)
->  
->  /*
->   * Generic Error Data Entry
-> - * ACPI 6.1: 18.3.2.7.1 Generic Error Data
-> + * ACPI 6.5: 18.3.2.7.1 Generic Error Data,
-> + * Table 18.12 - Generic Error Data Entry
->   */
->  static void acpi_ghes_generic_error_data(GArray *table,
->                  const uint8_t *section_type, uint32_t error_severity,
-> @@ -148,7 +150,8 @@ static void acpi_ghes_generic_error_data(GArray *table,
->  
->  /*
->   * Generic Error Status Block
-> - * ACPI 6.1: 18.3.2.7.1 Generic Error Data
-> + * ACPI 6.5: 18.3.2.7.1 Generic Error Data,
-> + * Table 18.11 - Generic Hardware Error Source Structure
->   */
->  static void acpi_ghes_generic_error_status(GArray *table, uint32_t block_status,
->                  uint32_t raw_data_offset, uint32_t raw_data_length,
-> @@ -429,15 +432,18 @@ void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
->          0, sizeof(uint64_t), ACPI_GHES_ERRORS_FW_CFG_FILE, 0);
->  }
->  
-> -/* Build Generic Hardware Error Source version 2 (GHESv2) */
-> +/*
-> + * Build Generic Hardware Error Source version 2 (GHESv2)
-> + * ACPI 6.5: 18.3.2.8 Generic Hardware Error Source version 2 (GHESv2 - Type 10),
-> + * Table 18.13: Generic Hardware Error Source version 2 (GHESv2)
-> + */
->  static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
->  {
->      uint64_t address_offset;
-> -    /*
-> -     * Type:
-> -     * Generic Hardware Error Source version 2(GHESv2 - Type 10)
-> -     */
-> +    /* Type: (GHESv2 - Type 10) */
->      build_append_int_noprefix(table_data, ACPI_GHES_SOURCE_GENERIC_ERROR_V2, 2);
-> +
-> +    /* ACPI 6.5: Table 18.10 - Generic Hardware Error Source Structure */
->      /* Source Id */
->      build_append_int_noprefix(table_data, source_id, 2);
->      /* Related Source Id */
-> @@ -481,11 +487,8 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
->      /* Error Status Block Length */
->      build_append_int_noprefix(table_data, ACPI_GHES_MAX_RAW_DATA_LENGTH, 4);
->  
-> -    /*
-> -     * Read Ack Register
-> -     * ACPI 6.1: 18.3.2.8 Generic Hardware Error Source
-> -     * version 2 (GHESv2 - Type 10)
-> -     */
-> +    /* ACPI 6.5: fields defined at GHESv2 table */
-> +    /* Read Ack Register */
->      address_offset = table_data->len;
->      build_append_gas(table_data, AML_AS_SYSTEM_MEMORY, 0x40, 0,
->                       4 /* QWord access */, 0);
-> @@ -504,11 +507,16 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
->      build_append_int_noprefix(table_data, 0x1, 8);
->  }
->  
-> -/* Build Hardware Error Source Table */
-> +/*
-> + * Build Hardware Error Source Table
-> + * ACPI 6.4: 18.3.2 ACPI Error Source
-> + * Table 18.2: Hardware Error Source Table (HEST)
-> + */
->  void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
->                       const char *oem_id, const char *oem_table_id)
->  {
-> -    AcpiTable table = { .sig = "HEST", .rev = 1,
-> +    AcpiTable table = { .sig = "HEST",
-> +                        .rev = 1,                   /* ACPI 4.0 to 6.4 */
->                          .oem_id = oem_id, .oem_table_id = oem_table_id };
->  
->      acpi_table_begin(&table, table_data);
 
 
