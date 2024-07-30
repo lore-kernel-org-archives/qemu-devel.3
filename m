@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E479BC49EA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 17:05:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04535C3DA70
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 17:06:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYqHM-0000us-AN; Tue, 30 Jul 2024 13:04:52 -0400
+	id 1sYqHS-0001MG-FM; Tue, 30 Jul 2024 13:04:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYqHL-0000sL-Ka
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 13:04:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sYqHR-0001IK-HI
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 13:04:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYqHH-0002Rs-UX
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 13:04:51 -0400
+ id 1sYqHP-0002TI-Jt
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 13:04:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722359087;
+ s=mimecast20190719; t=1722359093;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7fQ/u5iyx5kV1+IvuNFjdKflkGZHLviKXwvMdc1tOps=;
- b=N3enCbnRlzMGkNluVY1ep9BkEFrCXQr+r+s0t+BOQmhLRFP0qDkiGKo4cE7wO1kr3xgJmz
- RAGzBRnrEp7W5qoCz44BviyjKcFSac/0jHsXmquJqej7uyLZ/S1KET6UJWr6trALdpI2Na
- 52y1KBXGGer5+5pu/JR4eCBTksFV4lo=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=OWDo31JF0dwgQe053IKmKYsLW+m8d3O8K/CNOx3RdSg=;
+ b=QYiqKHa5Z1ofuXPrUFtCUyZaVC+yDaqIrAB3HeneUKcnBYsS1SDrSTCNEUCx0og8tSxHWB
+ Ja4o3R6zuVOuvIid/TZHjEwj1yUbCZxj8WYihv8nqzeIcb3easFSJt2fQjqpShgJ/J7Aa6
+ YmYiX+RVW9sBi0IhVh9b56EzK4biyo4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-160-1yxNJYCfOk616S5cCdseYw-1; Tue,
- 30 Jul 2024 13:04:43 -0400
-X-MC-Unique: 1yxNJYCfOk616S5cCdseYw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-TNkDHJ7hO1KrOLR1QLERoA-1; Tue,
+ 30 Jul 2024 13:04:50 -0400
+X-MC-Unique: TNkDHJ7hO1KrOLR1QLERoA-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 279AE19560A2; Tue, 30 Jul 2024 17:04:42 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7EC82195608A; Tue, 30 Jul 2024 17:04:49 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.108])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9B3CD300018D; Tue, 30 Jul 2024 17:04:38 +0000 (UTC)
+ id 74990300018D; Tue, 30 Jul 2024 17:04:46 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -54,27 +54,25 @@ Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 12/24] tests/functional: Convert some avocado tests that
- needed avocado.utils.archive
-Date: Tue, 30 Jul 2024 18:03:32 +0100
-Message-ID: <20240730170347.4103919-13-berrange@redhat.com>
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v3 14/24] tests/functional: Convert the x86_cpu_model_versions
+ test
+Date: Tue, 30 Jul 2024 18:03:34 +0100
+Message-ID: <20240730170347.4103919-15-berrange@redhat.com>
 In-Reply-To: <20240730170347.4103919-1-berrange@redhat.com>
 References: <20240730170347.4103919-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,290 +90,202 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-Instead of using the "archive" module from avocado.utils, switch
-these tests to use the new wrapper function that is based on the
-"tarfile" module instead.
+Nothing thrilling in here, it's just a straight forward conversion.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- MAINTAINERS                                   |  6 +--
- tests/avocado/machine_sparc64_sun4u.py        | 36 -----------------
- tests/functional/meson.build                  |  6 +++
- .../test_arm_canona1100.py}                   | 30 ++++++++------
- .../test_ppc_bamboo.py}                       | 32 +++++++--------
- tests/functional/test_sparc64_sun4u.py        | 40 +++++++++++++++++++
- 6 files changed, 82 insertions(+), 68 deletions(-)
- delete mode 100644 tests/avocado/machine_sparc64_sun4u.py
- rename tests/{avocado/machine_arm_canona1100.py => functional/test_arm_canona1100.py} (52%)
+ tests/functional/meson.build                  |  1 +
+ .../test_x86_cpu_model_versions.py}           | 63 ++++++-------------
+ 2 files changed, 20 insertions(+), 44 deletions(-)
+ rename tests/{avocado/x86_cpu_model_versions.py => functional/test_x86_cpu_model_versions.py} (92%)
  mode change 100644 => 100755
- rename tests/{avocado/ppc_bamboo.py => functional/test_ppc_bamboo.py} (60%)
- mode change 100644 => 100755
- create mode 100755 tests/functional/test_sparc64_sun4u.py
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index c2b4352edd..ff952d683b 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -731,7 +731,7 @@ S: Odd Fixes
- F: include/hw/arm/digic.h
- F: hw/*/digic*
- F: include/hw/*/digic*
--F: tests/avocado/machine_arm_canona1100.py
-+F: tests/functional/test_arm_canona1100.py
- F: docs/system/arm/digic.rst
- 
- Goldfish RTC
-@@ -1426,7 +1426,7 @@ L: qemu-ppc@nongnu.org
- S: Orphan
- F: hw/ppc/ppc440_bamboo.c
- F: hw/pci-host/ppc4xx_pci.c
--F: tests/avocado/ppc_bamboo.py
-+F: tests/functional/test_ppc_bamboo.py
- 
- e500
- L: qemu-ppc@nongnu.org
-@@ -1712,7 +1712,7 @@ F: include/hw/pci-host/sabre.h
- F: hw/pci-bridge/simba.c
- F: include/hw/pci-bridge/simba.h
- F: pc-bios/openbios-sparc64
--F: tests/avocado/machine_sparc64_sun4u.py
-+F: tests/functional/test_sparc64_sun4u.py
- 
- Sun4v
- M: Artyom Tarasenko <atar4qemu@gmail.com>
-diff --git a/tests/avocado/machine_sparc64_sun4u.py b/tests/avocado/machine_sparc64_sun4u.py
-deleted file mode 100644
-index d333c0ae91..0000000000
---- a/tests/avocado/machine_sparc64_sun4u.py
-+++ /dev/null
-@@ -1,36 +0,0 @@
--# Functional test that boots a Linux kernel and checks the console
--#
--# Copyright (c) 2020 Red Hat, Inc.
--#
--# Author:
--#  Thomas Huth <thuth@redhat.com>
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or
--# later. See the COPYING file in the top-level directory.
--
--import os
--
--from avocado_qemu import wait_for_console_pattern
--from avocado.utils import archive
--from boot_linux_console import LinuxKernelTest
--
--class Sun4uMachine(LinuxKernelTest):
--    """Boots the Linux kernel and checks that the console is operational"""
--
--    timeout = 90
--
--    def test_sparc64_sun4u(self):
--        """
--        :avocado: tags=arch:sparc64
--        :avocado: tags=machine:sun4u
--        """
--        tar_url = ('https://qemu-advcal.gitlab.io'
--                   '/qac-best-of-multiarch/download/day23.tar.xz')
--        tar_hash = '142db83cd974ffadc4f75c8a5cad5bcc5722c240'
--        file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
--        archive.extract(file_path, self.workdir)
--        self.vm.set_console()
--        self.vm.add_args('-kernel', self.workdir + '/day23/vmlinux',
--                         '-append', self.KERNEL_COMMON_COMMAND_LINE)
--        self.vm.launch()
--        wait_for_console_pattern(self, 'Starting logging: OK')
 diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 32c7cc2d3c..91bf80f0f4 100644
+index ce5e5be2f3..e85d869948 100644
 --- a/tests/functional/meson.build
 +++ b/tests/functional/meson.build
-@@ -21,6 +21,7 @@ tests_generic = [
+@@ -61,6 +61,7 @@ tests_x86_64_quick = [
+   'mem_addr_space',
+   'pc_cpu_hotplug_props',
+   'virtio_version',
++  'x86_cpu_model_versions',
  ]
  
- tests_arm_thorough = [
-+  'arm_canona1100',
-   'arm_n8x0',
- ]
- 
-@@ -42,6 +43,11 @@ tests_ppc_quick = [
- 
- tests_ppc_thorough = [
-   'ppc_405',
-+  'ppc_bamboo',
-+]
-+
-+tests_sparc64_thorough = [
-+  'sparc64_sun4u',
- ]
- 
- tests_x86_64_quick = [
-diff --git a/tests/avocado/machine_arm_canona1100.py b/tests/functional/test_arm_canona1100.py
+ tests_x86_64_thorough = [
+diff --git a/tests/avocado/x86_cpu_model_versions.py b/tests/functional/test_x86_cpu_model_versions.py
 old mode 100644
 new mode 100755
-similarity index 52%
-rename from tests/avocado/machine_arm_canona1100.py
-rename to tests/functional/test_arm_canona1100.py
-index a42d8b0f2b..57cecbbb36
---- a/tests/avocado/machine_arm_canona1100.py
-+++ b/tests/functional/test_arm_canona1100.py
-@@ -1,3 +1,5 @@
+similarity index 92%
+rename from tests/avocado/x86_cpu_model_versions.py
+rename to tests/functional/test_x86_cpu_model_versions.py
+index 11101e02b9..a5f27c737d
+--- a/tests/avocado/x86_cpu_model_versions.py
++++ b/tests/functional/test_x86_cpu_model_versions.py
+@@ -1,3 +1,4 @@
 +#!/usr/bin/env python3
-+#
- # Functional test that boots the canon-a1100 machine with firmware
  #
- # Copyright (c) 2020 Red Hat, Inc.
-@@ -8,28 +10,30 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
+ # Basic validation of x86 versioned CPU models and CPU model aliases
+ #
+@@ -20,11 +21,11 @@
+ # License along with this library; if not, see <http://www.gnu.org/licenses/>.
+ #
  
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
--from avocado.utils import archive
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test.utils import archive_extract
+-
+-import avocado_qemu
+ import re
  
- class CanonA1100Machine(QemuSystemTest):
-     """Boots the barebox firmware and checks that the console is operational"""
- 
-     timeout = 90
- 
-+    ASSET_BIOS = Asset(('https://qemu-advcal.gitlab.io'
-+                        '/qac-best-of-multiarch/download/day18.tar.xz'),
-+                       '068b5fc4242b29381acee94713509f8a876e9db6')
+-class X86CPUModelAliases(avocado_qemu.QemuSystemTest):
++from qemu_test import QemuSystemTest
 +
-     def test_arm_canona1100(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:canon-a1100
--        :avocado: tags=device:pflash_cfi02
--        """
--        tar_url = ('https://qemu-advcal.gitlab.io'
--                   '/qac-best-of-multiarch/download/day18.tar.xz')
--        tar_hash = '068b5fc4242b29381acee94713509f8a876e9db6'
--        file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
--        archive.extract(file_path, self.workdir)
-+        self.set_machine('canon-a1100')
-+
-+        file_path = self.ASSET_BIOS.fetch()
-+        archive_extract(file_path, dest_dir=self.workdir,
-+                        member="day18/barebox.canon-a1100.bin")
-         self.vm.set_console()
-         self.vm.add_args('-bios',
-                          self.workdir + '/day18/barebox.canon-a1100.bin')
++class X86CPUModelAliases(QemuSystemTest):
+     """
+     Validation of PC CPU model versions and CPU model aliases
+ 
+@@ -76,9 +77,8 @@ def validate_variant_aliases(self, cpus):
+     def test_4_0_alias_compatibility(self):
+         """
+         Check if pc-*-4.0 unversioned CPU model won't be reported as aliases
+-
+-        :avocado: tags=machine:pc-i440fx-4.0
+         """
++        self.set_machine('pc-i440fx-4.0')
+         # pc-*-4.0 won't expose non-versioned CPU models as aliases
+         # We do this to help management software to keep compatibility
+         # with older QEMU versions that didn't have the versioned CPU model
+@@ -110,9 +110,8 @@ def test_4_0_alias_compatibility(self):
+     def test_4_1_alias(self):
+         """
+         Check if unversioned CPU model is an alias pointing to right version
+-
+-        :avocado: tags=machine:pc-i440fx-4.1
+         """
++        self.set_machine('pc-i440fx-4.1')
+         self.vm.add_args('-S')
          self.vm.launch()
-         wait_for_console_pattern(self, 'running /env/bin/init')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/avocado/ppc_bamboo.py b/tests/functional/test_ppc_bamboo.py
-old mode 100644
-new mode 100755
-similarity index 60%
-rename from tests/avocado/ppc_bamboo.py
-rename to tests/functional/test_ppc_bamboo.py
-index a81be3d608..8a1f7eca4d
---- a/tests/avocado/ppc_bamboo.py
-+++ b/tests/functional/test_ppc_bamboo.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Test that Linux kernel boots on the ppc bamboo board and check the console
- #
- # Copyright (c) 2021 Red Hat
-@@ -5,30 +7,25 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
  
--from avocado.utils import archive
--from avocado_qemu import QemuSystemTest
--from avocado_qemu import wait_for_console_pattern
--from avocado_qemu import exec_command_and_wait_for_pattern
-+from qemu_test.utils import archive_extract
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test import exec_command_and_wait_for_pattern
+@@ -217,9 +216,8 @@ def test_4_1_alias(self):
+     def test_none_alias(self):
+         """
+         Check if unversioned CPU model is an alias pointing to some version
+-
+-        :avocado: tags=machine:none
+         """
++        self.machine = 'none'
+         self.vm.add_args('-S')
+         self.vm.launch()
  
- class BambooMachine(QemuSystemTest):
+@@ -243,21 +241,16 @@ def test_none_alias(self):
+         self.validate_aliases(cpus)
  
-     timeout = 90
  
-+    ASSET_IMAGE = Asset(('http://landley.net/aboriginal/downloads/binaries/'
-+                         'system-image-powerpc-440fp.tar.gz'),
-+                        '53e5f16414b195b82d2c70272f81c2eedb39bad9')
-+
-     def test_ppc_bamboo(self):
+-class CascadelakeArchCapabilities(avocado_qemu.QemuSystemTest):
++class CascadelakeArchCapabilities(QemuSystemTest):
+     """
+     Validation of Cascadelake arch-capabilities
+-
+-    :avocado: tags=arch:x86_64
+     """
+     def get_cpu_prop(self, prop):
+         cpu_path = self.vm.cmd('query-cpus-fast')[0].get('qom-path')
+         return self.vm.cmd('qom-get', path=cpu_path, property=prop)
+ 
+     def test_4_1(self):
 -        """
--        :avocado: tags=arch:ppc
--        :avocado: tags=machine:bamboo
--        :avocado: tags=cpu:440epb
--        :avocado: tags=device:rtl8139
--        :avocado: tags=accel:tcg
+-        :avocado: tags=machine:pc-i440fx-4.1
+-        :avocado: tags=cpu:Cascadelake-Server
 -        """
-+        self.set_machine('bamboo')
-         self.require_accelerator("tcg")
-         self.require_netdev('user')
--        tar_url = ('http://landley.net/aboriginal/downloads/binaries/'
--                   'system-image-powerpc-440fp.tar.gz')
--        tar_hash = '53e5f16414b195b82d2c70272f81c2eedb39bad9'
--        file_path = self.fetch_asset(tar_url, asset_hash=tar_hash)
--        archive.extract(file_path, self.workdir)
-+        file_path = self.ASSET_IMAGE.fetch()
-+        archive_extract(file_path, self.workdir)
-         self.vm.set_console()
-         self.vm.add_args('-kernel', self.workdir +
-                                    '/system-image-powerpc-440fp/linux',
-@@ -40,3 +37,6 @@ def test_ppc_bamboo(self):
-         exec_command_and_wait_for_pattern(self, 'ping 10.0.2.2',
-                                           '10.0.2.2 is alive!')
-         exec_command_and_wait_for_pattern(self, 'halt', 'System Halted')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/functional/test_sparc64_sun4u.py b/tests/functional/test_sparc64_sun4u.py
-new file mode 100755
-index 0000000000..3ac18aebd1
---- /dev/null
-+++ b/tests/functional/test_sparc64_sun4u.py
-@@ -0,0 +1,40 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Linux kernel and checks the console
-+#
-+# Copyright (c) 2020 Red Hat, Inc.
-+#
-+# Author:
-+#  Thomas Huth <thuth@redhat.com>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later. See the COPYING file in the top-level directory.
-+
-+import os
-+
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test.utils import archive_extract
-+
-+class Sun4uMachine(QemuSystemTest):
-+    """Boots the Linux kernel and checks that the console is operational"""
-+
-+    timeout = 90
-+
-+    ASSET_IMAGE = Asset(('https://qemu-advcal.gitlab.io'
-+                         '/qac-best-of-multiarch/download/day23.tar.xz'),
-+                        '142db83cd974ffadc4f75c8a5cad5bcc5722c240')
-+
-+    def test_sparc64_sun4u(self):
-+        self.set_machine('sun4u')
-+        file_path = self.ASSET_IMAGE.fetch()
-+        kernel_name = 'day23/vmlinux'
-+        archive_extract(file_path, self.workdir, kernel_name)
-+        self.vm.set_console()
-+        self.vm.add_args('-kernel', os.path.join(self.workdir, kernel_name),
-+                         '-append', 'printk.time=0')
-+        self.vm.launch()
-+        wait_for_console_pattern(self, 'Starting logging: OK')
++        self.set_machine('pc-i440fx-4.1')
+         # machine-type only:
+         self.vm.add_args('-S')
+         self.set_vm_arg('-cpu',
+@@ -268,10 +261,7 @@ def test_4_1(self):
+                          'pc-i440fx-4.1 + Cascadelake-Server should not have arch-capabilities')
+ 
+     def test_4_0(self):
+-        """
+-        :avocado: tags=machine:pc-i440fx-4.0
+-        :avocado: tags=cpu:Cascadelake-Server
+-        """
++        self.set_machine('pc-i440fx-4.0')
+         self.vm.add_args('-S')
+         self.set_vm_arg('-cpu',
+                         'Cascadelake-Server,x-force-features=on,check=off,'
+@@ -281,10 +271,7 @@ def test_4_0(self):
+                          'pc-i440fx-4.0 + Cascadelake-Server should not have arch-capabilities')
+ 
+     def test_set_4_0(self):
+-        """
+-        :avocado: tags=machine:pc-i440fx-4.0
+-        :avocado: tags=cpu:Cascadelake-Server
+-        """
++        self.set_machine('pc-i440fx-4.0')
+         # command line must override machine-type if CPU model is not versioned:
+         self.vm.add_args('-S')
+         self.set_vm_arg('-cpu',
+@@ -295,10 +282,7 @@ def test_set_4_0(self):
+                         'pc-i440fx-4.0 + Cascadelake-Server,+arch-capabilities should have arch-capabilities')
+ 
+     def test_unset_4_1(self):
+-        """
+-        :avocado: tags=machine:pc-i440fx-4.1
+-        :avocado: tags=cpu:Cascadelake-Server
+-        """
++        self.set_machine('pc-i440fx-4.1')
+         self.vm.add_args('-S')
+         self.set_vm_arg('-cpu',
+                         'Cascadelake-Server,x-force-features=on,check=off,'
+@@ -308,10 +292,7 @@ def test_unset_4_1(self):
+                          'pc-i440fx-4.1 + Cascadelake-Server,-arch-capabilities should not have arch-capabilities')
+ 
+     def test_v1_4_0(self):
+-        """
+-        :avocado: tags=machine:pc-i440fx-4.0
+-        :avocado: tags=cpu:Cascadelake-Server
+-        """
++        self.set_machine('pc-i440fx-4.0')
+         # versioned CPU model overrides machine-type:
+         self.vm.add_args('-S')
+         self.set_vm_arg('-cpu',
+@@ -322,10 +303,7 @@ def test_v1_4_0(self):
+                          'pc-i440fx-4.0 + Cascadelake-Server-v1 should not have arch-capabilities')
+ 
+     def test_v2_4_0(self):
+-        """
+-        :avocado: tags=machine:pc-i440fx-4.0
+-        :avocado: tags=cpu:Cascadelake-Server
+-        """
++        self.set_machine('pc-i440fx-4.0')
+         self.vm.add_args('-S')
+         self.set_vm_arg('-cpu',
+                         'Cascadelake-Server-v2,x-force-features=on,check=off,'
+@@ -335,10 +313,7 @@ def test_v2_4_0(self):
+                         'pc-i440fx-4.0 + Cascadelake-Server-v2 should have arch-capabilities')
+ 
+     def test_v1_set_4_0(self):
+-        """
+-        :avocado: tags=machine:pc-i440fx-4.0
+-        :avocado: tags=cpu:Cascadelake-Server
+-        """
++        self.set_machine('pc-i440fx-4.0')
+         # command line must override machine-type and versioned CPU model:
+         self.vm.add_args('-S')
+         self.set_vm_arg('-cpu',
+@@ -349,10 +324,7 @@ def test_v1_set_4_0(self):
+                         'pc-i440fx-4.0 + Cascadelake-Server-v1,+arch-capabilities should have arch-capabilities')
+ 
+     def test_v2_unset_4_1(self):
+-        """
+-        :avocado: tags=machine:pc-i440fx-4.1
+-        :avocado: tags=cpu:Cascadelake-Server
+-        """
++        self.set_machine('pc-i440fx-4.1')
+         self.vm.add_args('-S')
+         self.set_vm_arg('-cpu',
+                         'Cascadelake-Server-v2,x-force-features=on,check=off,'
+@@ -360,3 +332,6 @@ def test_v2_unset_4_1(self):
+         self.vm.launch()
+         self.assertFalse(self.get_cpu_prop('arch-capabilities'),
+                          'pc-i440fx-4.1 + Cascadelake-Server-v2,-arch-capabilities should not have arch-capabilities')
 +
 +if __name__ == '__main__':
 +    QemuSystemTest.main()
