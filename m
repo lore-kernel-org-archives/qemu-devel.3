@@ -4,69 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1DF5C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED5F9C3DA61
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:59:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYjdF-0003sy-4M; Tue, 30 Jul 2024 05:59:01 -0400
+	id 1sYjdx-00074f-1T; Tue, 30 Jul 2024 05:59:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sYjdD-0003kG-DE; Tue, 30 Jul 2024 05:58:59 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sYjdB-0003Xg-Qz; Tue, 30 Jul 2024 05:58:59 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E825A4E6005;
- Tue, 30 Jul 2024 11:58:55 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id C2AQEdHpCEbU; Tue, 30 Jul 2024 11:58:53 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id E75A14E6001; Tue, 30 Jul 2024 11:58:53 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E48D8746E3B;
- Tue, 30 Jul 2024 11:58:53 +0200 (CEST)
-Date: Tue, 30 Jul 2024 11:58:53 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
- Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org, 
- Sergio Lopez <slp@redhat.com>, 
- =?ISO-8859-15?Q?Fr=E9d=E9ric_Barrat?= <fbarrat@linux.ibm.com>, 
- =?ISO-8859-15?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org, 
- Artyom Tarasenko <atar4qemu@gmail.com>, Fabiano Rosas <farosas@suse.de>, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
- Hanna Reitz <hreitz@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- John Snow <jsnow@redhat.com>, Thomas Huth <huth@tuxfamily.org>, 
- Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Leonardo Bras <leobras@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>, 
- Kevin Wolf <kwolf@redhat.com>, David Hildenbrand <david@redhat.com>
-Subject: Re: [PATCH v5 11/11] hw/isa/vt82c686: Implement relocation and
- toggling of SuperI/O functions
-In-Reply-To: <73127b3f-7a56-46f3-892f-a7ffd542b4dd@linaro.org>
-Message-ID: <bba2e80a-f509-d7f5-3846-14b4ebced5ac@eik.bme.hu>
-References: <20240114123911.4877-1-shentey@gmail.com>
- <20240114123911.4877-12-shentey@gmail.com>
- <73127b3f-7a56-46f3-892f-a7ffd542b4dd@linaro.org>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sYjdw-00071d-6R
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:59:44 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sYjdu-0003ch-Ii
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:59:43 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3684bea9728so2302965f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:59:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722333581; x=1722938381; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=1gxlSql/jvVtYT0aRUJJ4TNUP3dRmkRFYomfT7w2uNg=;
+ b=hOEk35TYr/S71hWKLhloROXb9KJ4yMFEib5OiIdwqIh5vi51SYAG++0CDyRW8ntiLf
+ ik18gsojF09zTFMrYZsH3F0ZKi5R0Px2KcGST9wgUlBUCiEYKl1QvBdsWinkrg29pZJE
+ sO0LRtTt7lvT7DWNlkDt33AwVe/SqnDMvo+8/nEgHtsDMz1pTsz156rUalJLj3+QmJme
+ OSDuxAsM+qF5Z2JOfSosl8lCYFkG8G6E9XjEuK0HXbdAEvQ33D9PKyT1hlHJ1b3QQwaW
+ 6b92rQIQHK08PUQ5ZfhKeF2Maq9c+iDov8+hmQWerxkRXr39u+gv9PLzuDmSDjpa/PcI
+ n++w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722333581; x=1722938381;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1gxlSql/jvVtYT0aRUJJ4TNUP3dRmkRFYomfT7w2uNg=;
+ b=d7eotLaSYt64DcDub7qaSjoqL2XpNEpcRbQ60NiunrCSH3C22p3WS9Q+hSltRjpRel
+ k96gJkeU3WtEASEVb3ljJvKAsvgYSebHrPuSoDtJuLjfXc0qSpUJAFBNrHHZCUwXhlCU
+ gp83Q2CGP9UUbZnWHJbfmh1F8Z/Lj336yir0jnW3tO5e6AxH7kg+aggm9hpjDCSD0OWZ
+ Jrs1jTmsDw/AmOD9kcQjOpIW8sVdd899HGlSmmznClBEAwyIUv3W1TbMwSCK+UPUYJmV
+ gTOqrtFkKIaAspe46Rs2iiJWY4O3wAYodL0lDeAtRE7hdLF53U9RGz5T7K1ev6ZFZ995
+ 5NSg==
+X-Gm-Message-State: AOJu0YyE4tjWCczfRi7lSCoaxPqpmM/eYA20WwwFz5RhaslJljsKKKVa
+ j32aLob8N8C0jcwIs8omGXW6BQUgvjENNfDkqlYkzG9lRS50Yy0YnERSw9MQ5MmgKkpmfTsbOQe
+ j
+X-Google-Smtp-Source: AGHT+IF24LWWhXZ7QjjDCPI4ChXMw7KuebQTyK/nVxlqOO2l/b/3u+zRZYu6sU+2FVdPgV05QN8Q7A==
+X-Received: by 2002:a5d:6891:0:b0:368:6f19:cbf5 with SMTP id
+ ffacd0b85a97d-36b5d03cb72mr6353539f8f.31.1722333580788; 
+ Tue, 30 Jul 2024 02:59:40 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-42805730d92sm209679985e9.3.2024.07.30.02.59.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Jul 2024 02:59:40 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org
+Subject: [PATCH] osdep.h: Clean up no-longer-needed back-compat for macOS 10
+Date: Tue, 30 Jul 2024 10:59:39 +0100
+Message-Id: <20240730095939.2781172-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-976674846-1722333533=:80219"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,61 +91,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Our official support policy only supports the most recent two
+versions of macOS (currently macOS 13 Ventura and macOS 14 Sonoma),
+and we already have code that assumes at least macOS 12 Monterey or
+better.  In commit 2d27c91e2b72ac7 we dropped some of the back-compat
+code for older macOS versions, but missed the guard in osdep.h that
+is providing a fallback for macOS 10 and earlier.
 
---3866299591-976674846-1722333533=:80219
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Simplify the ifdef to the "ifdef __APPLE__" that we use elsewhere for
+"is this macOS?".
 
-On Mon, 29 Jul 2024, Philippe Mathieu-Daudé wrote:
-> On 14/1/24 13:39, Bernhard Beschow wrote:
->> The VIA south bridges are able to relocate and toggle (enable or disable) 
->> their
->> SuperI/O functions. So far this is hardcoded such that all functions are 
->> always
->> enabled and are located at fixed addresses.
->> 
->> Some PC BIOSes seem to probe for I/O occupancy before activating such a 
->> function
->> and issue an error in case of a conflict. Since the functions are currently
->> enabled on reset, conflicts are always detected. Prevent that by 
->> implementing
->> relocation and toggling of the SuperI/O functions.
->> 
->> Note that all SuperI/O functions are now deactivated upon reset (except for
->> VT82C686B's serial ports where Fuloong 2e's rescue-yl seems to expect them 
->> to be
->> enabled by default). Rely on firmware to configure the functions 
->> accordingly.
->> 
->> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
->> Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
->> ---
->>   hw/isa/vt82c686.c | 65 +++++++++++++++++++++++++++++++++++++++--------
->>   1 file changed, 55 insertions(+), 10 deletions(-)
->
->
->> +static void via_superio_devices_enable(ViaSuperIOState *s, uint8_t data)
->> +{
->> +    ISASuperIOClass *ic = ISA_SUPERIO_GET_CLASS(s);
->> +
->
->       memory_region_transaction_begin();
->
->> +    isa_parallel_set_enabled(s->superio.parallel[0], (data & 0x3) != 3);
->> +    for (int i = 0; i < ic->serial.count; i++) {
->> +        isa_serial_set_enabled(s->superio.serial[i], data & BIT(i + 2));
->> +    }
->> +    isa_fdc_set_enabled(s->superio.floppy, data & BIT(4));
->
->       memory_region_transaction_commit();
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ include/qemu/osdep.h | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-Is a transaction needed here? We're just enable/disable independent memory 
-regions here and I don't think this function can be interrupted but having 
-a transaction does not hurt but I don't understand why we would need it.
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index 191916f38e6..720ed21a7e4 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -786,8 +786,7 @@ size_t qemu_get_host_physmem(void);
+  * Toggle write/execute on the pages marked MAP_JIT
+  * for the current thread.
+  */
+-#if defined(MAC_OS_VERSION_11_0) && \
+-    MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_11_0
++#ifdef __APPLE__
+ static inline void qemu_thread_jit_execute(void)
+ {
+     pthread_jit_write_protect_np(true);
+-- 
+2.34.1
 
-Regards,
-BALATON Zoltan
---3866299591-976674846-1722333533=:80219--
 
