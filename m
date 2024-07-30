@@ -4,70 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45CCFC3DA7F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAED7C3DA49
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 22:20:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYvCP-00054V-IJ; Tue, 30 Jul 2024 18:20:05 -0400
+	id 1sYvCc-0005zj-Nb; Tue, 30 Jul 2024 18:20:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYvCN-0004uy-I8
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 18:20:03 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYvCa-0005pM-Oj
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 18:20:16 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYvCL-0006Uy-Pj
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 18:20:03 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-42817f1eb1fso27123365e9.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 15:20:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYvCZ-0006iv-10
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 18:20:16 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-368313809a4so178094f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 15:20:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722378000; x=1722982800; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=MintP0wize/JyFBaMUoPoghZCF3wdgvih+vERvdHduU=;
- b=yaVBVAUHOxF0HPGswRPzRswxFN7NKzOUZ91ivIbE3RSrWnLMbbCGyCGq7cV5PRhDP4
- BZ7rvr4qW3hs/cx2hOIVViuX/qjhg+AWlIMRpVQmidZWTjtgyCDOtr8sb5M0x4XmqUoI
- 516tUYZXsMQQmlLumk9rklmlWOq6i+XtF9pUZo/0Pxk6dJCfYQErXs+1YHccJBB7Yw52
- EjJO2ayHorI79Z55JC+ATSkmXxvGGUO/KL0xn2sZCFVOcwHi5qUwJqtTKhL230jChdVL
- RY6zzknO2vM1FBzolUNvNIPlk2mxBXo+ymlvs4PcmWM9GsqgaA95eNLeTYC63QSHd9Sm
- 6HMQ==
+ d=linaro.org; s=google; t=1722378013; x=1722982813; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=24RQoEKyoT+5UpLOepmNrf2/RkiZNFw5AqywzTwtt80=;
+ b=zGXGjZVbbv7NTLfgx57Pmjdk7i2QwSJ6IWN9T5e6Yqj9uJzTC6KsOsSrO27i0t2ZvB
+ nxCkFUhV6okfRDZJB5m1MR6JtR+0E+EeCnspq5RaYWIOV0AxtWs4eAExpcH3cVO4dceU
+ Y+cCsxT4x5G9cPZF2TpZEbbDaB931NtXGU5ZZCfJVDfseIyazfwk3e8g5oL8P/6NMuvu
+ KWIGlzmZttiHlb6JAfk4jcLkc3PVyuDllIHyWxLUPDYvFRfZfCntBLTXzWSIAlNlj5s3
+ OZCbkRzZLqF6WsOH80mjj51lBEt44p1V7mYrAD04Px9gwx5d7cnJLJoa60WJsZQ0Awk7
+ mEBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722378000; x=1722982800;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MintP0wize/JyFBaMUoPoghZCF3wdgvih+vERvdHduU=;
- b=KrWYEg3RrjeWR6aFxNEmzoOajEtLdEikybV4FCcEiMkuWs+o5AIk3zpfxULVgL163L
- kOZLSXorUvNMB1WZusk9QjsrkY3OGUjdSoycw6CR8CoYSAvF0+Wn2tX0FwzLg+P611Hx
- J3aj6ySACd42Xq/vOSa6AdYoPpiFOMoGCi9Sn3LKBBNxdmKXGlYReTiHobNit1L3KCBV
- 7xW6vvtkNCDiO6uHiWQFpwQidyX3fi4DtgBbRATFi5T3xqNmpcgCyGPLZqfC5LXj0vMw
- CB4J304tdOXqv2DgIHsx8lxZvwbY00vu5UkTFDkD/zHWRsE+HMgnYieiDQv1dKBfNrGm
- cX1g==
-X-Gm-Message-State: AOJu0YxFaOFTH+BIooj1trc5zHxaYPO93PTI/az8/P8zG3A4DLPe6mzB
- lFhmn0ubYsp/BzvDLlDUHRbk13KHjJ657jWsyKunxX2EnI0nh5OEZdaE6bg+MAUM1IV48DyGKtD
- G9LU=
-X-Google-Smtp-Source: AGHT+IFaE8sNreQGtwOGJjI9Vu8MhSBUFNHfWG20UQux9paJM1Hhax9iFJormmuxCxNsme/EbV7pHA==
-X-Received: by 2002:a05:600c:a01:b0:426:602d:a243 with SMTP id
- 5b1f17b1804b1-42811d9f21fmr85573775e9.16.1722377999606; 
- Tue, 30 Jul 2024 15:19:59 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1722378013; x=1722982813;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=24RQoEKyoT+5UpLOepmNrf2/RkiZNFw5AqywzTwtt80=;
+ b=rcgWAPP7mM/i/5f8Y7y49vx9SAKS9GibGkhWB98g4MCxOz+JUknVYxpHsFta+JENxJ
+ rVauR5ghdaHSzfwTzPJp9I4/GFiomQsHEcLM76DuisZTglj5UtZfA76jZarMiJOBErtj
+ N6AZ/8BdsSptt8h4zNVt34E5Wo0+jesSd8r93W3NUrmc58pUanUlVWZfng2OnFB5TMjt
+ T172LXkKOaNDolo5aOUEYjyXhljrUASFDKCcvOSzn6YMGoh16hUObUDkX1vzOEbNMWXh
+ V6TMCdJBFRbrauTaotnSw3E+eTCaBWPQYsvu+KGu8fZC272HQniRHCc2SETYiawia/5B
+ aM1w==
+X-Gm-Message-State: AOJu0YwFPBSl+vrveEoXcc9OOaSbjcan+XHFdEWVNg0+YdfngL+ScVbv
+ 9ROzVRldakHJMQdJe3MBswTEsSoXUZPHJwNAWLU+pOM0j89nbBmRdSuBUM4FSGgFq3Zh6DIVMpn
+ G8Xs=
+X-Google-Smtp-Source: AGHT+IGkau5/2VEu6DmLCIUql1Z711qNocqOHwdy3AXd2lmcjkI4CXFpJ0jvONilGnO9sVSnxhtn7g==
+X-Received: by 2002:adf:f6c3:0:b0:368:6bb:f79e with SMTP id
+ ffacd0b85a97d-36b8c8d7eb2mr2009958f8f.4.1722378013231; 
+ Tue, 30 Jul 2024 15:20:13 -0700 (PDT)
 Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b36857d5asm15575516f8f.84.2024.07.30.15.19.58
+ ffacd0b85a97d-36b36857eb7sm15585085f8f.66.2024.07.30.15.20.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Jul 2024 15:19:59 -0700 (PDT)
+ Tue, 30 Jul 2024 15:20:12 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 0/6] Docs testing patches
-Date: Wed, 31 Jul 2024 00:19:51 +0200
-Message-ID: <20240730221957.34533-1-philmd@linaro.org>
+Cc: Cleber Rosa <crosa@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 3/6] tests/avocado: mips: fallback to HTTP given certificate
+ expiration
+Date: Wed, 31 Jul 2024 00:19:54 +0200
+Message-ID: <20240730221957.34533-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240730221957.34533-1-philmd@linaro.org>
+References: <20240730221957.34533-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,47 +97,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit ef009e4b4dc0421464008e6e303b892141ede579:
+From: Cleber Rosa <crosa@redhat.com>
 
-  Merge tag 's390x-20240730' of https://github.com/davidhildenbrand/qemu into staging (2024-07-30 19:21:58 +1000)
+The SSL certificate installed at mipsdistros.mips.com has expired:
 
-are available in the Git repository at:
+ 0 s:CN = mipsdistros.mips.com
+ i:C = US, O = Amazon, OU = Server CA 1B, CN = Amazon
+ a:PKEY: rsaEncryption, 2048 (bit); sigalg: RSA-SHA256
+ v:NotBefore: Dec 23 00:00:00 2019 GMT; NotAfter: Jan 23 12:00:00 2021 GMT
 
-  https://github.com/philmd/qemu.git tags/docs-testing-20240731
+Because this project has no control over that certificate and host,
+this falls back to plain HTTP instead.  The integrity of the
+downloaded files can be guaranteed by the existing hashes for those
+files (which are not modified here).
 
-for you to fetch changes up to 7b60b971cc2f52ed2a69006a2ad709df2831cd67:
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Cleber Rosa <crosa@redhat.com>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240726134438.14720-2-crosa@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tests/avocado/boot_linux_console.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-  osdep.h: Clean up no-longer-needed back-compat for macOS 10 (2024-07-31 00:15:00 +0200)
-
-----------------------------------------------------------------
-Docs & testing patch queue
-
-- Test QAPI firmware.json schema (Thomas)
-- Handle new env.doc2path() return value (Peter)
-- Improve how assets are used by some Avocado tests (Cleber)
-- Remove obsolete check for macOS 10 (Peter)
-
-----------------------------------------------------------------
-
-Cleber Rosa (3):
-  tests/avocado: mips: fallback to HTTP given certificate expiration
-  tests/avocado: mips: add hint for fetchasset plugin
-  tests/avocado: test_arm_emcraft_sf2: handle RW requirements for asset
-
-Peter Maydell (2):
-  docs/sphinx/depfile.py: Handle env.doc2path() returning a Path not a
-    str
-  osdep.h: Clean up no-longer-needed back-compat for macOS 10
-
-Thomas Weißschuh (1):
-  docs: add test for firmware.json QAPI
-
- docs/meson.build                    |  5 +++++
- docs/sphinx/depfile.py              |  2 +-
- include/qemu/osdep.h                |  3 +--
- tests/avocado/boot_linux_console.py | 24 ++++++++++++++----------
- 4 files changed, 21 insertions(+), 13 deletions(-)
-
+diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
+index c35fc5e9ba..450d67be6a 100644
+--- a/tests/avocado/boot_linux_console.py
++++ b/tests/avocado/boot_linux_console.py
+@@ -299,7 +299,7 @@ def test_mips_malta32el_nanomips_4k(self):
+         :avocado: tags=endian:little
+         :avocado: tags=cpu:I7200
+         """
+-        kernel_url = ('https://mipsdistros.mips.com/LinuxDistro/nanomips/'
++        kernel_url = ('http://mipsdistros.mips.com/LinuxDistro/nanomips/'
+                       'kernels/v4.15.18-432-gb2eb9a8b07a1-20180627102142/'
+                       'generic_nano32r6el_page4k.xz')
+         kernel_hash = '477456aafd2a0f1ddc9482727f20fe9575565dd6'
+@@ -312,7 +312,7 @@ def test_mips_malta32el_nanomips_16k_up(self):
+         :avocado: tags=endian:little
+         :avocado: tags=cpu:I7200
+         """
+-        kernel_url = ('https://mipsdistros.mips.com/LinuxDistro/nanomips/'
++        kernel_url = ('http://mipsdistros.mips.com/LinuxDistro/nanomips/'
+                       'kernels/v4.15.18-432-gb2eb9a8b07a1-20180627102142/'
+                       'generic_nano32r6el_page16k_up.xz')
+         kernel_hash = 'e882868f944c71c816e832e2303b7874d044a7bc'
+@@ -325,7 +325,7 @@ def test_mips_malta32el_nanomips_64k_dbg(self):
+         :avocado: tags=endian:little
+         :avocado: tags=cpu:I7200
+         """
+-        kernel_url = ('https://mipsdistros.mips.com/LinuxDistro/nanomips/'
++        kernel_url = ('http://mipsdistros.mips.com/LinuxDistro/nanomips/'
+                       'kernels/v4.15.18-432-gb2eb9a8b07a1-20180627102142/'
+                       'generic_nano32r6el_page64k_dbg.xz')
+         kernel_hash = '18d1c68f2e23429e266ca39ba5349ccd0aeb7180'
 -- 
 2.45.2
 
