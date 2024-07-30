@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C75FC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 08:14:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C08E8C3DA61
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 08:14:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYhwh-0005IN-UN; Tue, 30 Jul 2024 04:10:59 -0400
+	id 1sYhwl-0005XI-1j; Tue, 30 Jul 2024 04:11:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYhwg-0005Dj-VC
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:10:58 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYhwi-0005N7-Ma
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:11:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYhwZ-0001GT-VZ
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:10:58 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYhwa-0001H9-H9
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:11:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1722327051;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GEwsuofZJeT4kfZWCKBhwsE5dAZCLtZDseQ9yWUtp3Y=;
- b=JWPawbBcVZJUqxgTKpahHkRHz9PBiEHybGB+f2w6BnXqiEp27m+3LmSCpVQUL2HeJ3uVx8
- S7RoFkr3U1m2Y5TCGJq59ss+eAWhx8oiUU6nta3HJh7QCG79wCrOSBq7ZALr9YEjBh5B+1
- p/DdNEX/2nv+MbQZ13TMsQVAOzl+F38=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=DV7+EVWYFbrbaXV5c6Y9cFzbPTN8d8JAt36ne5Q5Nhc=;
+ b=cIBdOUH2l5j2yHyzuGkuxF009lTIMbaQw9qOhMiOoOHZRD9cgQa32VclnRMfNFV9OdcHlg
+ CPnA7Iq6X15GX9nUtBerRwPPa7IVlLxSFR3OVlPINuIEmZtcnNONYllmkuJEXScrIw0M4J
+ WWXiMlOjO7/yo9sCyQnyouEJQXkYgxs=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-91-Fg3UXDOzMNSw8UvqBuk3yw-1; Tue,
- 30 Jul 2024 04:10:46 -0400
-X-MC-Unique: Fg3UXDOzMNSw8UvqBuk3yw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-HO2voRrbNwuPaRTmjAxVvQ-1; Tue,
+ 30 Jul 2024 04:10:47 -0400
+X-MC-Unique: HO2voRrbNwuPaRTmjAxVvQ-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BDFB01955D59; Tue, 30 Jul 2024 08:10:39 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AD9A819560B0; Tue, 30 Jul 2024 08:10:42 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E686B3000193; Tue, 30 Jul 2024 08:10:34 +0000 (UTC)
+ id 9168E300018D; Tue, 30 Jul 2024 08:10:41 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CCF8221F4B8C; Tue, 30 Jul 2024 10:10:32 +0200 (CEST)
+ id E265121F4B94; Tue, 30 Jul 2024 10:10:32 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au, andrew@daynix.com,
@@ -64,9 +64,9 @@ Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au, andrew@daynix.com,
  vsementsov@yandex-team.ru, wangyanan55@huawei.com,
  yuri.benditovich@daynix.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-s390x@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH 02/18] tests/qapi-schema: Drop temporary 'prefix'
-Date: Tue, 30 Jul 2024 10:10:16 +0200
-Message-ID: <20240730081032.1246748-3-armbru@redhat.com>
+Subject: [PATCH 07/18] qapi/machine: Drop temporary 'prefix'
+Date: Tue, 30 Jul 2024 10:10:21 +0200
+Message-ID: <20240730081032.1246748-8-armbru@redhat.com>
 In-Reply-To: <20240730081032.1246748-1-armbru@redhat.com>
 References: <20240730081032.1246748-1-armbru@redhat.com>
 MIME-Version: 1.0
@@ -101,85 +101,72 @@ Recent commit "qapi: Smarter camel_to_upper() to reduce need for
 'prefix'" added a temporary 'prefix' to delay changing the generated
 code.
 
-Revert it.  This changes TestUnionEnumA's generated enumeration
-constant prefix from TEST_UNION_ENUMA to TEST_UNION_ENUM_A.
+Revert it.  This improves HmatLBDataType's generated enumeration
+constant prefix from HMATLB_DATA_TYPE to HMAT_LB_DATA_TYPE.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- tests/unit/test-qobject-input-visitor.c  | 4 ++--
- tests/unit/test-qobject-output-visitor.c | 4 ++--
- tests/qapi-schema/qapi-schema-test.json  | 1 -
- tests/qapi-schema/qapi-schema-test.out   | 1 -
- 4 files changed, 4 insertions(+), 6 deletions(-)
+ qapi/machine.json            | 1 -
+ hw/core/numa.c               | 4 ++--
+ hw/pci-bridge/cxl_upstream.c | 4 ++--
+ 3 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/tests/unit/test-qobject-input-visitor.c b/tests/unit/test-qobject-input-visitor.c
-index 024e26c49e..5479e68237 100644
---- a/tests/unit/test-qobject-input-visitor.c
-+++ b/tests/unit/test-qobject-input-visitor.c
-@@ -720,7 +720,7 @@ static void test_visitor_in_union_in_union(TestInputVisitorData *data,
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 5514450e12..fcfd249e2d 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -712,7 +712,6 @@
+ # Since: 5.0
+ ##
+ { 'enum': 'HmatLBDataType',
+-  'prefix': 'HMATLB_DATA_TYPE', # TODO drop
+   'data': [ 'access-latency', 'read-latency', 'write-latency',
+             'access-bandwidth', 'read-bandwidth', 'write-bandwidth' ] }
  
-     visit_type_TestUnionInUnion(v, NULL, &tmp, &error_abort);
-     g_assert_cmpint(tmp->type, ==, TEST_UNION_ENUM_VALUE_A);
--    g_assert_cmpint(tmp->u.value_a.type_a, ==, TEST_UNION_ENUMA_VALUE_A1);
-+    g_assert_cmpint(tmp->u.value_a.type_a, ==, TEST_UNION_ENUM_A_VALUE_A1);
-     g_assert_cmpint(tmp->u.value_a.u.value_a1.integer, ==, 2);
-     g_assert_cmpint(strcmp(tmp->u.value_a.u.value_a1.name, "fish"), ==, 0);
+diff --git a/hw/core/numa.c b/hw/core/numa.c
+index f8ce332cfe..fb81c1ed51 100644
+--- a/hw/core/numa.c
++++ b/hw/core/numa.c
+@@ -249,7 +249,7 @@ void parse_numa_hmat_lb(NumaState *numa_state, NumaHmatLBOptions *node,
+     lb_data.initiator = node->initiator;
+     lb_data.target = node->target;
  
-@@ -734,7 +734,7 @@ static void test_visitor_in_union_in_union(TestInputVisitorData *data,
+-    if (node->data_type <= HMATLB_DATA_TYPE_WRITE_LATENCY) {
++    if (node->data_type <= HMAT_LB_DATA_TYPE_WRITE_LATENCY) {
+         /* Input latency data */
  
-     visit_type_TestUnionInUnion(v, NULL, &tmp, &error_abort);
-     g_assert_cmpint(tmp->type, ==, TEST_UNION_ENUM_VALUE_A);
--    g_assert_cmpint(tmp->u.value_a.type_a, ==, TEST_UNION_ENUMA_VALUE_A2);
-+    g_assert_cmpint(tmp->u.value_a.type_a, ==, TEST_UNION_ENUM_A_VALUE_A2);
-     g_assert_cmpint(tmp->u.value_a.u.value_a2.integer, ==, 1729);
-     g_assert_cmpint(tmp->u.value_a.u.value_a2.size, ==, 87539319);
- 
-diff --git a/tests/unit/test-qobject-output-visitor.c b/tests/unit/test-qobject-output-visitor.c
-index 1535b3ad17..3455f3b107 100644
---- a/tests/unit/test-qobject-output-visitor.c
-+++ b/tests/unit/test-qobject-output-visitor.c
-@@ -359,7 +359,7 @@ static void test_visitor_out_union_in_union(TestOutputVisitorData *data,
- 
-     TestUnionInUnion *tmp = g_new0(TestUnionInUnion, 1);
-     tmp->type = TEST_UNION_ENUM_VALUE_A;
--    tmp->u.value_a.type_a = TEST_UNION_ENUMA_VALUE_A1;
-+    tmp->u.value_a.type_a = TEST_UNION_ENUM_A_VALUE_A1;
-     tmp->u.value_a.u.value_a1.integer = 42;
-     tmp->u.value_a.u.value_a1.name = g_strdup("fish");
- 
-@@ -377,7 +377,7 @@ static void test_visitor_out_union_in_union(TestOutputVisitorData *data,
-     visitor_reset(data);
-     tmp = g_new0(TestUnionInUnion, 1);
-     tmp->type = TEST_UNION_ENUM_VALUE_A;
--    tmp->u.value_a.type_a = TEST_UNION_ENUMA_VALUE_A2;
-+    tmp->u.value_a.type_a = TEST_UNION_ENUM_A_VALUE_A2;
-     tmp->u.value_a.u.value_a2.integer = 1729;
-     tmp->u.value_a.u.value_a2.size = 87539319;
- 
-diff --git a/tests/qapi-schema/qapi-schema-test.json b/tests/qapi-schema/qapi-schema-test.json
-index 0f5f54e621..8ca977c49d 100644
---- a/tests/qapi-schema/qapi-schema-test.json
-+++ b/tests/qapi-schema/qapi-schema-test.json
-@@ -119,7 +119,6 @@
-   'data': [ 'value-a', 'value-b' ] }
- 
- { 'enum': 'TestUnionEnumA',
--  'prefix': 'TEST_UNION_ENUMA', # TODO drop
-   'data': [ 'value-a1', 'value-a2' ] }
- 
- { 'struct': 'TestUnionTypeA1',
-diff --git a/tests/qapi-schema/qapi-schema-test.out b/tests/qapi-schema/qapi-schema-test.out
-index add7346f49..4617eb4e98 100644
---- a/tests/qapi-schema/qapi-schema-test.out
-+++ b/tests/qapi-schema/qapi-schema-test.out
-@@ -108,7 +108,6 @@ enum TestUnionEnum
-     member value-a
-     member value-b
- enum TestUnionEnumA
--    prefix TEST_UNION_ENUMA
-     member value-a1
-     member value-a2
- object TestUnionTypeA1
+         if (!node->has_latency) {
+@@ -313,7 +313,7 @@ void parse_numa_hmat_lb(NumaState *numa_state, NumaHmatLBOptions *node,
+             numa_info[node->target].lb_info_provided |= BIT(0);
+         }
+         lb_data.data = node->latency;
+-    } else if (node->data_type >= HMATLB_DATA_TYPE_ACCESS_BANDWIDTH) {
++    } else if (node->data_type >= HMAT_LB_DATA_TYPE_ACCESS_BANDWIDTH) {
+         /* Input bandwidth data */
+         if (!node->has_bandwidth) {
+             error_setg(errp, "Missing 'bandwidth' option");
+diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+index e51221a5f3..f3e46f0651 100644
+--- a/hw/pci-bridge/cxl_upstream.c
++++ b/hw/pci-bridge/cxl_upstream.c
+@@ -234,7 +234,7 @@ static int build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+                 .type = CDAT_TYPE_SSLBIS,
+                 .length = sslbis_size,
+             },
+-            .data_type = HMATLB_DATA_TYPE_ACCESS_LATENCY,
++            .data_type = HMAT_LB_DATA_TYPE_ACCESS_LATENCY,
+             .entry_base_unit = 10000,
+         },
+     };
+@@ -254,7 +254,7 @@ static int build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
+                 .type = CDAT_TYPE_SSLBIS,
+                 .length = sslbis_size,
+             },
+-            .data_type = HMATLB_DATA_TYPE_ACCESS_BANDWIDTH,
++            .data_type = HMAT_LB_DATA_TYPE_ACCESS_BANDWIDTH,
+             .entry_base_unit = 1024,
+         },
+     };
 -- 
 2.45.0
 
