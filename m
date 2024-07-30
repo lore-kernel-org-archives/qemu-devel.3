@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2684EC3DA70
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 16:24:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BD88C3DA7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 16:25:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYpcd-0008Kp-Rq; Tue, 30 Jul 2024 12:22:47 -0400
+	id 1sYpcf-0008Ps-2r; Tue, 30 Jul 2024 12:22:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYpcc-0008GK-Rj
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:22:46 -0400
-Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
+ id 1sYpcd-0008H4-0Z
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:22:47 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYpca-0003XL-44
+ id 1sYpcb-0003Xg-5Y
  for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:22:46 -0400
-Received: by mail-lj1-x236.google.com with SMTP id
- 38308e7fff4ca-2eeb1ba0481so76974521fa.2
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 09:22:43 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a7ab76558a9so2406366b.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 09:22:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722356561; x=1722961361; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722356563; x=1722961363; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LeP5hKI1uEP9cOGS+CMSaW0aT4kqda/WdRmJyVhc0Is=;
- b=XUB8zfiCtvxldLzGwKDAo9BDWsOr08IlBLYuTCsFlfj3UwLvxjm45Iceab3hrbTdie
- WzGNdfYgELCEwgD7nKgHV2lSnI4VvLfVw8S2aTRGt0K/3ZO7crC+amLhoSKXXBzrZtMo
- sqY2fsewVH1WwIdkPP+PCGqM/cOUsocnjR5LgRUM55isPyfFPUc3IN6XYkvlNMpsOUkh
- jR2bc7agBcHQBsVSmycEBu8dZZirPGJvznwmZNxqc4/TYBBX2HR2gL6QRinBMCt/Mt8D
- EWIrrIfHcvYEON7gZpVY/R53jE37z8hEKt73x0zG4HgxudoVeUyg6bMQ+hU9Un+VmW3F
- h09w==
+ bh=GN1HaihudaqLLrp8IlR/d+UPmyEvWng1714T4YdfQiw=;
+ b=a5PCfiwKoOmxH0ejGoXYV0/Rf6AIelag6X6c7gm6HIV1emMUAHokRmFpm9PHF+dKk3
+ CLLc2T89j+9cfcdTU3xnC23totFQNQyi2FJVOfXwiaBcyoiOVhNb+/LLDUDO0UIWuCRZ
+ 2qTzUWWPolKkdwqx5wnmdynzml1J29p/f5RDc1nrhL1XX+Jjkb785WJqMKNz3RuEJ8Kh
+ TdIeao12/tEG/GP+H2hLWUpBNq2+bljNlcBmaxSeX3IGnFYhGnNB8K2wP9+n9O7rxw/w
+ 0Ibf+qc3Z2We0nYxatfwp3qAyk0BeEZgFOpOujw6VKZGXCBPmXxDvM3xN3JhxUFOd1JS
+ hQpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722356561; x=1722961361;
+ d=1e100.net; s=20230601; t=1722356563; x=1722961363;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LeP5hKI1uEP9cOGS+CMSaW0aT4kqda/WdRmJyVhc0Is=;
- b=K9vxoAv5leI2StFE57bYHxqAZ9cO1VQbcrxhPPuTiq3RE/xbr5vgGC9Tx5ZMFPRh+0
- F/vK57PQxiMeyyryt10k9RxjbnlAFl6ta/23whBAjnjmpdPMYlZ+Z7gcjScSOfIStkqn
- teBWBCQ8ltJbFjX3sRmiy0ETvCfR7OHPPIOGv8atzBM1i543+hreWFgInXpfVGyZtBQC
- kS3qDPLqmSYPTlNF9XLIoF1jLkH6QpVDmWoNgdUg233PuuQhDF3rcQhvGwBo6z4fBcxg
- 90DhJMa+NakNXvMVVoYI+wIyvahi1yrErOkWilDW449/em6yOTrFZZBnnC3RiaETWG8R
- +Cew==
-X-Gm-Message-State: AOJu0YxFRZt2JloF36RmrY956/O88SbdVy39b9Gmb34E/FzBDqzivzGr
- XsLY4J2NeGFTT2WSE4/d9xscB3DzGW5z/lSB6Q/uhWvRRlna8eOL+ErHSyfzD8Y=
-X-Google-Smtp-Source: AGHT+IE/i9oz5LWVCbUqq06uVFHAxv8KHygOw8JFEdLuh7x4pxkry1e5ia8L9Lmm6bTT6opwJ6FnZA==
-X-Received: by 2002:a2e:8804:0:b0:2ee:8db7:47b7 with SMTP id
- 38308e7fff4ca-2f12edd78e8mr71347371fa.26.1722356560649; 
- Tue, 30 Jul 2024 09:22:40 -0700 (PDT)
+ bh=GN1HaihudaqLLrp8IlR/d+UPmyEvWng1714T4YdfQiw=;
+ b=MmGWxaOuKsd10S17KS7r9MjMi5/rNv8SfO3FS/OKFQH376G8pWLce7P7TrBGjS5HD0
+ XKGEqKGhYLOPw9/u/TJBLGl6bLEEgtRh0jUEFIhI/dxsffZ3S7KvuJdm3dOPRAz4vKlF
+ Mk46uFDF++z8T6Tm6tS/FWJKqIPA2P92U/UGU82pVVQoMsetnyder/ClZP/YVZ8d4CrC
+ 6RWuXi60tQEbpOprGANhoTTT+vdR/jeA8T1CHlLaDXESZf22HerZFphOyrXil1qm/y94
+ WWFvLrFBaCB7hQwyMO+Sych6OY62jarmbpLOgxyft/M6FvtmF7DmyOetFZZXjTVIAXm4
+ iRbQ==
+X-Gm-Message-State: AOJu0YwnUJawn/SKFAJePgrsiN9NOdZj7l3sy8zLm4oTJ0TvnJz1D/G0
+ AAbTmBBGxPk+Wv+eeFZycFZpK8VlMpQo6lTuNn1wKnoHkt6RmOnQC+PoOGaCfrPFdieKSncOWGn
+ n
+X-Google-Smtp-Source: AGHT+IEZUi76y+V7xML2jV9HXN1xlLgI3lAsBABwkfJb7aFBEh+AgUPwQ411TozVDM9sWnNzGBIZ8Q==
+X-Received: by 2002:a17:906:c10f:b0:a77:ca9d:1d46 with SMTP id
+ a640c23a62f3a-a7d85abb7e7mr296828066b.33.1722356563324; 
+ Tue, 30 Jul 2024 09:22:43 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ac65783704sm7337736a12.88.2024.07.30.09.22.38
+ 4fb4d7f45d1cf-5ac6377e06fsm7493819a12.28.2024.07.30.09.22.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jul 2024 09:22:38 -0700 (PDT)
+ Tue, 30 Jul 2024 09:22:40 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 3CBD35F931;
+ by draig.lan (Postfix) with ESMTP id 671A05F94C;
  Tue, 30 Jul 2024 17:22:38 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Song Gao <gaosong@loongson.cn>
-Subject: [PULL 04/14] tests/tcg/loongarch64: Use --no-warn-rwx-segments to
- link system tests
-Date: Tue, 30 Jul 2024 17:22:27 +0100
-Message-Id: <20240730162237.1425515-5-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Subject: [PULL 06/14] docs/devel: update the testing introduction
+Date: Tue, 30 Jul 2024 17:22:29 +0100
+Message-Id: <20240730162237.1425515-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240730162237.1425515-1-alex.bennee@linaro.org>
 References: <20240730162237.1425515-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::236;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x236.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,34 +102,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Move the mention of "check-help" up to the intro text and also mention
+the meson test integration.
 
-Recent debian cross-linker for loongarch issues
-
-  ld: warning: hello has a LOAD segment with RWX permissions
-
-This is partially related to tests/tcg/loongarch64/system/kernel.ld,
-but is not fixed by explicitly adding a single LOAD PHDR.
-Disable the warning, since it does not apply to kernel images.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240724010733.22129-3-richard.henderson@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240729144414.830369-5-alex.bennee@linaro.org>
+Message-Id: <20240729144414.830369-7-alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/loongarch64/Makefile.softmmu-target b/tests/tcg/loongarch64/Makefile.softmmu-target
-index d5d5c1a7f6..6d4a20fde7 100644
---- a/tests/tcg/loongarch64/Makefile.softmmu-target
-+++ b/tests/tcg/loongarch64/Makefile.softmmu-target
-@@ -16,7 +16,7 @@ LINK_SCRIPT=$(LOONGARCH64_SYSTEM_SRC)/kernel.ld
- LDFLAGS=-Wl,-T$(LINK_SCRIPT)
- TESTS+=$(LOONGARCH64_TESTS) $(MULTIARCH_TESTS)
- CFLAGS+=-nostdlib -g -O1 -march=loongarch64 -mabi=lp64d $(MINILIB_INC)
--LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
-+LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc -Wl,--no-warn-rwx-segments
+diff --git a/docs/devel/testing.rst b/docs/devel/testing.rst
+index 23d3f44f52..b984c5dd26 100644
+--- a/docs/devel/testing.rst
++++ b/docs/devel/testing.rst
+@@ -3,13 +3,28 @@
+ Testing in QEMU
+ ===============
  
- # building head blobs
- .PRECIOUS: $(CRT_OBJS)
+-This document describes the testing infrastructure in QEMU.
++QEMU's testing infrastructure is fairly complex as it covers
++everything from unit testing and exercising specific sub-systems all
++the way to full blown acceptance tests. To get an overview of the
++tests you can run ``make check-help`` from either the source or build
++tree.
++
++Most (but not all) tests are also integrated into the meson build
++system so can be run directly from the build tree, for example:
++
++.. code::
++
++  [./pyvenv/bin/]meson test --suite qemu:softfloat
++
++will run just the softfloat tests.
++
++The rest of this document will cover the details for specific test
++groups.
+ 
+ Testing with "make check"
+ -------------------------
+ 
+-The "make check" testing family includes most of the C based tests in QEMU. For
+-a quick help, run ``make check-help`` from the source tree.
++The "make check" testing family includes most of the C based tests in QEMU.
+ 
+ The usual way to run these tests is:
+ 
 -- 
 2.39.2
 
