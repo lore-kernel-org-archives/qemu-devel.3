@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C08E8C3DA61
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 08:14:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 424CCC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 08:30:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYhwl-0005XI-1j; Tue, 30 Jul 2024 04:11:03 -0400
+	id 1sYiF0-0007Cd-MW; Tue, 30 Jul 2024 04:29:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYhwi-0005N7-Ma
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:11:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYhwa-0001H9-H9
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:11:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722327051;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=DV7+EVWYFbrbaXV5c6Y9cFzbPTN8d8JAt36ne5Q5Nhc=;
- b=cIBdOUH2l5j2yHyzuGkuxF009lTIMbaQw9qOhMiOoOHZRD9cgQa32VclnRMfNFV9OdcHlg
- CPnA7Iq6X15GX9nUtBerRwPPa7IVlLxSFR3OVlPINuIEmZtcnNONYllmkuJEXScrIw0M4J
- WWXiMlOjO7/yo9sCyQnyouEJQXkYgxs=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-HO2voRrbNwuPaRTmjAxVvQ-1; Tue,
- 30 Jul 2024 04:10:47 -0400
-X-MC-Unique: HO2voRrbNwuPaRTmjAxVvQ-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD9A819560B0; Tue, 30 Jul 2024 08:10:42 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9168E300018D; Tue, 30 Jul 2024 08:10:41 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E265121F4B94; Tue, 30 Jul 2024 10:10:32 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au, andrew@daynix.com,
- arei.gonglei@huawei.com, berrange@redhat.com, berto@igalia.com,
- borntraeger@linux.ibm.com, clg@kaod.org, david@redhat.com, den@openvz.org,
- eblake@redhat.com, eduardo@habkost.net, farman@linux.ibm.com,
- farosas@suse.de, hreitz@redhat.com, idryomov@gmail.com, iii@linux.ibm.com,
- jamin_lin@aspeedtech.com, jasowang@redhat.com, joel@jms.id.au,
- jsnow@redhat.com, kwolf@redhat.com, leetroy@gmail.com,
- marcandre.lureau@redhat.com, marcel.apfelbaum@gmail.com,
- michael.roth@amd.com, mst@redhat.com, mtosatti@redhat.com,
- nsg@linux.ibm.com, pasic@linux.ibm.com, pbonzini@redhat.com,
- peter.maydell@linaro.org, peterx@redhat.com, philmd@linaro.org,
- pizhenwei@bytedance.com, pl@dlhnet.de, richard.henderson@linaro.org,
- stefanha@redhat.com, steven_lee@aspeedtech.com, thuth@redhat.com,
- vsementsov@yandex-team.ru, wangyanan55@huawei.com,
- yuri.benditovich@daynix.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
- qemu-arm@nongnu.org, qemu-s390x@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH 07/18] qapi/machine: Drop temporary 'prefix'
-Date: Tue, 30 Jul 2024 10:10:21 +0200
-Message-ID: <20240730081032.1246748-8-armbru@redhat.com>
-In-Reply-To: <20240730081032.1246748-1-armbru@redhat.com>
-References: <20240730081032.1246748-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sYiEz-00076U-4m
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:29:53 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sYiEx-0004SH-CH
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:29:52 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5b391c8abd7so1925099a12.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 01:29:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722328189; x=1722932989; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=bvctSTCxXDG9vkXCPJRFSO2OwM56i0h+SX57avLe2Sg=;
+ b=M/4mS9IqJBN5Th0IgQzBCJ1+1LRDe6cN0zwPEmCSIPTbo2P946F3PGZhWAbJO/pXH0
+ 2nDkd/iDUheQcmrcgNbKORpzqUUKgYyY6pXCZIGNqP7G9o/qPuNsOL1pRRe5nVSd7SoN
+ 5+6yJHvqhV3DhLaZ/H7O9pK4Pgsla8jpUo6AUIw+G8oMBbqhW1IquE4yRxQT7U7alRa9
+ rKLlL9Kn5sJwvsu+NL/MamZxxmivJ97pnyC504c09WAuMbFfze+DoVCPixTjEpdHHFhr
+ 8qjdMuuGP32Q8XDQ9UL3tjvjcQzPYx2f6rAQjC9NNrLvUbbPI/uFhXjkA75rW+ek0bOZ
+ sh2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722328189; x=1722932989;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bvctSTCxXDG9vkXCPJRFSO2OwM56i0h+SX57avLe2Sg=;
+ b=L1VsmW+WZOp73o2ZftuYEUY2hIIS5GVLGlmOEbY5QePbOtCJnTvfSZE9LiueeO2n6B
+ dPWVga7LIwq2BKu1FlB0pliYQK0m+5lK+2bfrv0bo/ghpl7BtLYREB5Og7A0n6dnnq+X
+ g2x2qjjuVwBNXmeQeZl7bipm/FUk6DdxytGuEvfTQwT/tBT/NotVCm6FMT/nbAUdablT
+ dE3SZe/UPdx3vNKASiQQGiJStYZxl7vjWl/kIwL+p0Sz+tWIg1Xr57+c/zT+uLwNTIfa
+ /SVTv8o0wcY7JMmkPDBU3l84qHJ16ceJ04/jk/EDmvUL8UmrMGK8GadLXvXR8bMDpIbF
+ 4CHg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWeche9Du1wGLoT5ZxaIYdtMBlomx8DhW0+5LuxUeVtc2eY4rPmvrMvCJwVQPF5DUN6vquiDOac2YRGxOTLIdW1WnemZ8w=
+X-Gm-Message-State: AOJu0YyzswpQtQxvjHlGAyipHqLYawxP6KcgrLkPrQunvRl1B8kJK/Po
+ ofCO/vght42By6QfoObmT+/tladJRGUYzwK1XN/lSV4taoNFNgjF7kTOZj1TcbCJXMvUnf01apd
+ yMk4cA31GI+cCo4y+nvXIKQFS4W4K/+7uBRMHcA==
+X-Google-Smtp-Source: AGHT+IErCc8jLnL94ZNnMfdPeD4RlLQ0Wtssx5HIgjIRj8h1yZKWV6ZokNRGFXEBilq3W+viB6Om7wZ7Cday52qL5Gg=
+X-Received: by 2002:a50:a411:0:b0:5a1:7d68:62d8 with SMTP id
+ 4fb4d7f45d1cf-5b022c81f43mr5928071a12.38.1722328188753; Tue, 30 Jul 2024
+ 01:29:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <cover.1721630625.git.mchehab+huawei@kernel.org>
+ <bf8367bddfdc95e378b5725c732533c3ba20d388.1721630625.git.mchehab+huawei@kernel.org>
+ <20240730092549.6898ff3c@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240730092549.6898ff3c@imammedo.users.ipa.redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 30 Jul 2024 09:29:37 +0100
+Message-ID: <CAFEAcA8VWc3eQZqfJP9k5LYF-9aLChHQ+uS9UBfGV6nvybDxqQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/7] arm/virt: place power button pin number on a define
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, 
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ Shannon Zhao <shannon.zhaosl@gmail.com>, linux-kernel@vger.kernel.org, 
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,77 +96,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Recent commit "qapi: Smarter camel_to_upper() to reduce need for
-'prefix'" added a temporary 'prefix' to delay changing the generated
-code.
+On Tue, 30 Jul 2024 at 08:26, Igor Mammedov <imammedo@redhat.com> wrote:
+>
+> On Mon, 22 Jul 2024 08:45:53 +0200
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+>
+> > Having magic numbers inside the code is not a good idea, as it
+> > is error-prone. So, instead, create a macro with the number
+> > definition.
+> >
+> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
-Revert it.  This improves HmatLBDataType's generated enumeration
-constant prefix from HMATLB_DATA_TYPE to HMAT_LB_DATA_TYPE.
+> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> > index b0c68d66a345..c99c8b1713c6 100644
+> > --- a/hw/arm/virt.c
+> > +++ b/hw/arm/virt.c
+> > @@ -1004,7 +1004,7 @@ static void virt_powerdown_req(Notifier *n, void *opaque)
+> >      if (s->acpi_dev) {
+> >          acpi_send_event(s->acpi_dev, ACPI_POWER_DOWN_STATUS);
+> >      } else {
+> > -        /* use gpio Pin 3 for power button event */
+> > +        /* use gpio Pin for power button event */
+> >          qemu_set_irq(qdev_get_gpio_in(gpio_key_dev, 0), 1);
+>
+> /me confused, it was saying Pin 3 but is passing 0 as argument where as elsewhere
+> you are passing 3. Is this a bug?
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- qapi/machine.json            | 1 -
- hw/core/numa.c               | 4 ++--
- hw/pci-bridge/cxl_upstream.c | 4 ++--
- 3 files changed, 4 insertions(+), 5 deletions(-)
+No. The gpio_key_dev is a gpio-key device which has one
+input (which you assert to "press the key") and one output,
+which goes high when the key is pressed and then falls
+100ms later. The virt board wires up the output of the
+gpio-key device to input 3 on the PL061 GPIO controller.
+(This happens in create_gpio_keys().) So the code is correct
+to assert input 0 on the gpio-key device and the comment
+isn't wrong that this results in GPIO pin 3 being asserted:
+the link is just indirect.
 
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 5514450e12..fcfd249e2d 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -712,7 +712,6 @@
- # Since: 5.0
- ##
- { 'enum': 'HmatLBDataType',
--  'prefix': 'HMATLB_DATA_TYPE', # TODO drop
-   'data': [ 'access-latency', 'read-latency', 'write-latency',
-             'access-bandwidth', 'read-bandwidth', 'write-bandwidth' ] }
- 
-diff --git a/hw/core/numa.c b/hw/core/numa.c
-index f8ce332cfe..fb81c1ed51 100644
---- a/hw/core/numa.c
-+++ b/hw/core/numa.c
-@@ -249,7 +249,7 @@ void parse_numa_hmat_lb(NumaState *numa_state, NumaHmatLBOptions *node,
-     lb_data.initiator = node->initiator;
-     lb_data.target = node->target;
- 
--    if (node->data_type <= HMATLB_DATA_TYPE_WRITE_LATENCY) {
-+    if (node->data_type <= HMAT_LB_DATA_TYPE_WRITE_LATENCY) {
-         /* Input latency data */
- 
-         if (!node->has_latency) {
-@@ -313,7 +313,7 @@ void parse_numa_hmat_lb(NumaState *numa_state, NumaHmatLBOptions *node,
-             numa_info[node->target].lb_info_provided |= BIT(0);
-         }
-         lb_data.data = node->latency;
--    } else if (node->data_type >= HMATLB_DATA_TYPE_ACCESS_BANDWIDTH) {
-+    } else if (node->data_type >= HMAT_LB_DATA_TYPE_ACCESS_BANDWIDTH) {
-         /* Input bandwidth data */
-         if (!node->has_bandwidth) {
-             error_setg(errp, "Missing 'bandwidth' option");
-diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
-index e51221a5f3..f3e46f0651 100644
---- a/hw/pci-bridge/cxl_upstream.c
-+++ b/hw/pci-bridge/cxl_upstream.c
-@@ -234,7 +234,7 @@ static int build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
-                 .type = CDAT_TYPE_SSLBIS,
-                 .length = sslbis_size,
-             },
--            .data_type = HMATLB_DATA_TYPE_ACCESS_LATENCY,
-+            .data_type = HMAT_LB_DATA_TYPE_ACCESS_LATENCY,
-             .entry_base_unit = 10000,
-         },
-     };
-@@ -254,7 +254,7 @@ static int build_cdat_table(CDATSubHeader ***cdat_table, void *priv)
-                 .type = CDAT_TYPE_SSLBIS,
-                 .length = sslbis_size,
-             },
--            .data_type = HMATLB_DATA_TYPE_ACCESS_BANDWIDTH,
-+            .data_type = HMAT_LB_DATA_TYPE_ACCESS_BANDWIDTH,
-             .entry_base_unit = 1024,
-         },
-     };
--- 
-2.45.0
-
+thanks
+-- PMM
 
