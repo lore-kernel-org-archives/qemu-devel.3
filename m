@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FED0C49EA1
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:42:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F313C3DA61
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:42:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYjLS-000464-Ce; Tue, 30 Jul 2024 05:40:38 -0400
+	id 1sYjLK-0003aj-Kb; Tue, 30 Jul 2024 05:40:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYjLP-0003vj-LE
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:35 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1sYjLI-0003UC-Qh
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:28 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYjLO-0000df-3N
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:35 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4280bca3960so25368305e9.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:40:33 -0700 (PDT)
+ id 1sYjLG-0000X7-96
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:28 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-36865a516f1so2835618f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:40:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722332433; x=1722937233; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722332425; x=1722937225; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=/p7od16yWan/HDEkGj2xKqznwD/3Uyvk/bZAOed461U=;
- b=aGWOjwOlSK8J+sC6ZJFJL5xn4uDPoP2r9y+PnjvTm4AiZrhZEdYkqUwA+Za0qNBgef
- WJ4bEqSlF8CEJlfaodpfX6k6MJj00QxMAt7q6NmXRAy/iBHts9Zh3EZ7kKvMQ1qNs4yy
- gfaNauvpvfljZcWLbWsSK4WhrJW1+TDVnX/RpYMw5qpYR++DHUjwC21EC63Nsv/jFr6l
- DjGrkxGYluRrJ/FJE5tabXp+pMvt9gJEv5REwdtgc3x/x2EzLVXftcksZVCm9UYBaTup
- G89y0viz8OOUgU75D0yU4PWhOND9MPEuYJ0gP0r6jsEFw5Nr1xoMB2uXsoz7ogdjuk4m
- n1hQ==
+ :reply-to; bh=NzA4PjXCRONbQTo8BkDcv1kJWdZctM8YQjAGl+nA/2Y=;
+ b=IWxayZdS+y1XSMSMDx/cotFWvinCo1CDJCqP00GukJsrCA5Y70FO8NDArwbha4hV+0
+ T1C1lDz8t5WTtkG1soHWYOCnmRgs6V3D4zvXZqdfAo1Pq7h2Mlr8mswAm0Fo5kExx0We
+ oUlbUyaMxVgTd7lg+mUbJl4DFbN20xsFeAP7qNS8pOy1NVMXXRJbbgNLOdEfz6nFmXTc
+ JmfGODsVcNctjtikDVjRM45uhovzHKJAd+Pjsnpc0P7OfRxNxn/stdmZZgLnz8EAn+3J
+ wydHug7sKOkzSrgi3Nt6HyGrfNZycFhQ1TLqc6TC2cSv0EkrMnpdrmP0yJYzUC7jjAQx
+ /Ydw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722332433; x=1722937233;
+ d=1e100.net; s=20230601; t=1722332425; x=1722937225;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/p7od16yWan/HDEkGj2xKqznwD/3Uyvk/bZAOed461U=;
- b=RJn3A0AtQqd96/3C3V8kCfv3cIFWTK2/wD3CaHLlyW8+clAlS550NFKy4OxwBm5x6C
- 070JuaVaKbVV9eKkIKcqAzXkp6O17puNpqyZgr8Qw3thq9YzBVKKp7h9xuscrklpaCoq
- hZ/JWtuw3aQ7y/SkX56Bf8RmSbISfNjbEXk1QAbDHFBoBXBCg1uf345Bgxy88TpEajW9
- RudyEVbaIBYwerDg5NuWv52nWYomfDHUQjaTHWLGgJDNMmEriba8+brpqre52pPuOy7m
- XaC+rZeA6tlZh6wu5/mLaXKagsHY/eDWURxxoIMGhp8wQJpulOm3LVPp7klO0U2xwWcj
- V17g==
-X-Gm-Message-State: AOJu0YyDzzjo/QlqYcV/viywDfQJz5mjikfL34D7V8XoS8LGNn0ZOXsB
- yC6p6SgI1Dtghd3F22FmaEM0oKpGDiRgDPpLq1J4LItteCnxYbu5oYGvAu8uuZ7L/Cw6csMssjc
- V
-X-Google-Smtp-Source: AGHT+IF+pNRJ3pVHCBr6CxeZULr52V7dsxz+Q49euP97uyNx8prcWL+oyFJOo9gR81G+7Li8QtV/Mg==
-X-Received: by 2002:a05:600c:6dce:b0:427:985b:178b with SMTP id
- 5b1f17b1804b1-42811d871a4mr68531495e9.16.1722332432646; 
- Tue, 30 Jul 2024 02:40:32 -0700 (PDT)
+ bh=NzA4PjXCRONbQTo8BkDcv1kJWdZctM8YQjAGl+nA/2Y=;
+ b=dxajZdRcstUVr/hmTLfYQOXa8ZSIRefcLCXAxP5Z33AILLS/juJ91vQwU376uB7ASV
+ hgdIONX6TJUeQrbzoTij2xdgU8RmruzOCbV7Spx01WLSUOqdSuLlQHCKijShxxIUY6eA
+ ufOui6iPGImbN3AOU7dTOA1/Awz7ROVZ4GE/Nymi77I10O+inhjmmlUh1aL5KfFN5XzH
+ tQv1kZ4fZREgEW7RgkUzxUDe45QjAoELgV8fBdPi4eRvHusPHl1skbn4uY06ALbtaHEF
+ DGm2e1uOdDblUExL3LgBtuIOgUlbwfzPMNbqGmHPtts9Ra/bABc8xT+UBRbph11GSpL+
+ Kl9g==
+X-Gm-Message-State: AOJu0YyhO4E/VhmxcZoF+BXSEGb3bFz4K+olwM4/GK6IkH65AenzhUSD
+ HmfNabb2TY+JALecXoYgEDoKURzvm/ktWR8rMzUzjkjO93w0GQc9mhVDKDgga+o4ZbKZ/+yWGrF
+ I
+X-Google-Smtp-Source: AGHT+IGMnsxlzihbxHfqSbR/RWqX9GZgXtfCmClfS1Nlc5yt8jEP7DIg2PPeJeU15ZO+q+QM2IGCqg==
+X-Received: by 2002:adf:f582:0:b0:368:3f5b:2ae7 with SMTP id
+ ffacd0b85a97d-36b5d079e31mr7514750f8f.24.1722332424739; 
+ Tue, 30 Jul 2024 02:40:24 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b36862549sm14194974f8f.106.2024.07.30.02.40.32
+ ffacd0b85a97d-36b36862549sm14194974f8f.106.2024.07.30.02.40.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jul 2024 02:40:32 -0700 (PDT)
+ Tue, 30 Jul 2024 02:40:24 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 20/21] target/sh4: Avoid shift into sign bit in
- update_itlb_use()
-Date: Tue, 30 Jul 2024 10:40:19 +0100
-Message-Id: <20240730094020.2758637-21-peter.maydell@linaro.org>
+Subject: [PULL 04/21] target/arm/kvm: Do not silently remove PMU
+Date: Tue, 30 Jul 2024 10:40:03 +0100
+Message-Id: <20240730094020.2758637-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240730094020.2758637-1-peter.maydell@linaro.org>
 References: <20240730094020.2758637-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,36 +93,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In update_itlb_use() the variables or_mask and and_mask are uint8_t,
-which means that in expressions like "and_mask << 24" the usual C
-arithmetic conversions will result in the shift being done as a
-signed int type, and so we will shift into the sign bit. For QEMU
-this isn't undefined behaviour because we use -fwrapv; but we can
-avoid it anyway by using uint32_t types for or_mask and and_mask.
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-Resolves: Coverity CID 1547628
+kvm_arch_init_vcpu() used to remove PMU when it is not available even
+if the CPU model needs one. It is semantically incorrect, and may
+continue execution on a misbehaving host that advertises a CPU model
+while lacking its PMU. Keep the PMU when the CPU model needs one, and
+let kvm_arm_vcpu_init() fail if the KVM implementation mismatches with
+our expectation.
+
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
-Message-id: 20240723172431.1757296-1-peter.maydell@linaro.org
 ---
- target/sh4/helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/kvm.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/target/sh4/helper.c b/target/sh4/helper.c
-index 67029106277..9659c695504 100644
---- a/target/sh4/helper.c
-+++ b/target/sh4/helper.c
-@@ -187,7 +187,7 @@ void superh_cpu_do_interrupt(CPUState *cs)
- 
- static void update_itlb_use(CPUSH4State * env, int itlbnb)
- {
--    uint8_t or_mask = 0, and_mask = (uint8_t) - 1;
-+    uint32_t or_mask = 0, and_mask = 0xff;
- 
-     switch (itlbnb) {
-     case 0:
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index b20a35052f4..849e2e21b30 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -1888,13 +1888,8 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     if (!arm_feature(env, ARM_FEATURE_AARCH64)) {
+         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_EL1_32BIT;
+     }
+-    if (!kvm_check_extension(cs->kvm_state, KVM_CAP_ARM_PMU_V3)) {
+-        cpu->has_pmu = false;
+-    }
+     if (cpu->has_pmu) {
+         cpu->kvm_init_features[0] |= 1 << KVM_ARM_VCPU_PMU_V3;
+-    } else {
+-        env->features &= ~(1ULL << ARM_FEATURE_PMU);
+     }
+     if (cpu_isar_feature(aa64_sve, cpu)) {
+         assert(kvm_arm_sve_supported());
 -- 
 2.34.1
 
