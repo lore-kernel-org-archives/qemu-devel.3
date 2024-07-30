@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1C16C3DA61
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 08:12:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D8EC3DA61
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 08:12:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYhxo-0001pG-AF; Tue, 30 Jul 2024 04:12:09 -0400
+	id 1sYhxC-0007a5-13; Tue, 30 Jul 2024 04:11:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYhwu-0006I8-Ss
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:11:14 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYhwo-0005m2-Ed
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:11:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYhwe-0001KA-73
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:11:12 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYhwc-0001IJ-99
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:11:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722327055;
+ s=mimecast20190719; t=1722327053;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=brJc2oAfaZLJqfqPX7ASwndfauL2Y7LJXC4WeVTDHUM=;
- b=Nf2XcJzso1HPZYiO5xR1CLMyFifximO4PyoKGyCZqJvHdxEB7q9NBW2uU0u05MqkjTO+UY
- 2xLsgh5AYn8iMuWLy9bxnti+ewErDXGMdbXig6ue6u7n5k48N/1bJqRkaD3jHKBMmMWslW
- 3/uRO0pxSW5Iyu3LmL4w7EKIB//q0PI=
+ bh=yyh6fsAVLJigAc5J2Kyd3aADvei1GeeZmy+DnRZmGtk=;
+ b=WQP5NAr+fyloEShtEbaoJZPLIjj27voqx1EZuhJnh6YwkZ/jLcU65WW5XCDV0lBLG9LAqX
+ /zDe+EO68w2ub6SrMSWF5dzgpYZWuIMvWFvoX35JgUVnDcQxKZK6tgjvRe6atge8B5W0A6
+ 20WTHQB/qEt2AEEHS3W54Pq32dfUCWc=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-527-ur9IBFh7P6-4i3MrvpgpEg-1; Tue,
- 30 Jul 2024 04:10:48 -0400
-X-MC-Unique: ur9IBFh7P6-4i3MrvpgpEg-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-kO77dZJdNCCsndwFrZ3f8Q-1; Tue,
+ 30 Jul 2024 04:10:47 -0400
+X-MC-Unique: kO77dZJdNCCsndwFrZ3f8Q-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B11FA1955F49; Tue, 30 Jul 2024 08:10:43 +0000 (UTC)
+ id 6673E195608B; Tue, 30 Jul 2024 08:10:43 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 803481955F3B; Tue, 30 Jul 2024 08:10:41 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9BBE21955D42; Tue, 30 Jul 2024 08:10:41 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D9EA421F4B8F; Tue, 30 Jul 2024 10:10:32 +0200 (CEST)
+ id EFA8121E668F; Tue, 30 Jul 2024 10:10:32 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au, andrew@daynix.com,
@@ -64,15 +64,15 @@ Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au, andrew@daynix.com,
  vsementsov@yandex-team.ru, wangyanan55@huawei.com,
  yuri.benditovich@daynix.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-s390x@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH 05/18] qapi/crypto: Drop temporary 'prefix'
-Date: Tue, 30 Jul 2024 10:10:19 +0200
-Message-ID: <20240730081032.1246748-6-armbru@redhat.com>
+Subject: [PATCH 10/18] qapi/crypto: Drop unwanted 'prefix'
+Date: Tue, 30 Jul 2024 10:10:24 +0200
+Message-ID: <20240730081032.1246748-11-armbru@redhat.com>
 In-Reply-To: <20240730081032.1246748-1-armbru@redhat.com>
 References: <20240730081032.1246748-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -97,246 +97,328 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Recent commit "qapi: Smarter camel_to_upper() to reduce need for
-'prefix'" added two temporary 'prefix' to delay changing the generated
-code.
+QAPI's 'prefix' feature can make the connection between enumeration
+type and its constants less than obvious.  It's best used with
+restraint.
 
-Revert them.  This improves QCryptoBlockFormat's generated enumeration
-constant prefix from Q_CRYPTO_BLOCK_FORMAT to QCRYPTO_BLOCK_FORMAT,
-and QCryptoBlockLUKSKeyslotState's from
-Q_CRYPTO_BLOCKLUKS_KEYSLOT_STATE to QCRYPTO_BLOCK_LUKS_KEYSLOT_STATE.
+QCryptoAkCipherKeyType has a 'prefix' that overrides the generated
+enumeration constants' prefix to QCRYPTO_AKCIPHER_KEY_TYPE.
+
+Drop it.  The prefix becomes QCRYPTO_AK_CIPHER_KEY_TYPE.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/crypto.json               |  2 --
- block/crypto.c                 | 10 +++++-----
- block/qcow.c                   |  2 +-
- block/qcow2.c                  | 10 +++++-----
- crypto/block-luks.c            |  4 ++--
- crypto/block.c                 |  4 ++--
- tests/unit/test-crypto-block.c | 14 +++++++-------
- 7 files changed, 22 insertions(+), 24 deletions(-)
+ qapi/crypto.json                        |  1 -
+ backends/cryptodev-builtin.c            |  4 ++--
+ backends/cryptodev-lkcf.c               |  6 +++---
+ tests/bench/benchmark-crypto-akcipher.c |  2 +-
+ tests/unit/test-crypto-akcipher.c       | 28 ++++++++++++-------------
+ crypto/akcipher-gcrypt.c.inc            |  8 +++----
+ crypto/akcipher-nettle.c.inc            |  8 +++----
+ crypto/rsakey-builtin.c.inc             |  4 ++--
+ crypto/rsakey-nettle.c.inc              |  4 ++--
+ 9 files changed, 32 insertions(+), 33 deletions(-)
 
 diff --git a/qapi/crypto.json b/qapi/crypto.json
-index e2d77c3fb3..42d321fdcb 100644
+index 42d321fdcb..aafb5d5c8d 100644
 --- a/qapi/crypto.json
 +++ b/qapi/crypto.json
-@@ -157,7 +157,6 @@
- # Since: 2.6
+@@ -609,7 +609,6 @@
+ # Since: 7.1
  ##
- { 'enum': 'QCryptoBlockFormat',
--  'prefix': 'Q_CRYPTO_BLOCK_FORMAT', # TODO drop
-   'data': ['qcow', 'luks']}
- 
- ##
-@@ -360,7 +359,6 @@
- # Since: 5.1
- ##
- { 'enum': 'QCryptoBlockLUKSKeyslotState',
--  'prefix': 'Q_CRYPTO_BLOCKLUKS_KEYSLOT_STATE', # TODO drop
-   'data': [ 'active', 'inactive' ] }
+ { 'enum': 'QCryptoAkCipherKeyType',
+-  'prefix': 'QCRYPTO_AKCIPHER_KEY_TYPE',
+   'data': ['public', 'private']}
  
  ##
-diff --git a/block/crypto.c b/block/crypto.c
-index 4eed3ffa6a..80b2dba17a 100644
---- a/block/crypto.c
-+++ b/block/crypto.c
-@@ -682,7 +682,7 @@ err:
- static int block_crypto_probe_luks(const uint8_t *buf,
-                                    int buf_size,
-                                    const char *filename) {
--    return block_crypto_probe_generic(Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+    return block_crypto_probe_generic(QCRYPTO_BLOCK_FORMAT_LUKS,
-                                       buf, buf_size, filename);
- }
+diff --git a/backends/cryptodev-builtin.c b/backends/cryptodev-builtin.c
+index 940104ee55..e95af9bb72 100644
+--- a/backends/cryptodev-builtin.c
++++ b/backends/cryptodev-builtin.c
+@@ -334,11 +334,11 @@ static int cryptodev_builtin_create_akcipher_session(
  
-@@ -691,7 +691,7 @@ static int block_crypto_open_luks(BlockDriverState *bs,
-                                   int flags,
-                                   Error **errp)
- {
--    return block_crypto_open_generic(Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+    return block_crypto_open_generic(QCRYPTO_BLOCK_FORMAT_LUKS,
-                                      &block_crypto_runtime_opts_luks,
-                                      bs, options, flags, errp);
- }
-@@ -724,7 +724,7 @@ block_crypto_co_create_luks(BlockdevCreateOptions *create_options, Error **errp)
-     }
- 
-     create_opts = (QCryptoBlockCreateOptions) {
--        .format = Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+        .format = QCRYPTO_BLOCK_FORMAT_LUKS,
-         .u.luks = *qapi_BlockdevCreateOptionsLUKS_base(luks_opts),
-     };
- 
-@@ -889,7 +889,7 @@ block_crypto_get_specific_info_luks(BlockDriverState *bs, Error **errp)
-     if (!info) {
-         return NULL;
-     }
--    assert(info->format == Q_CRYPTO_BLOCK_FORMAT_LUKS);
-+    assert(info->format == QCRYPTO_BLOCK_FORMAT_LUKS);
- 
-     spec_info = g_new(ImageInfoSpecific, 1);
-     spec_info->type = IMAGE_INFO_SPECIFIC_KIND_LUKS;
-@@ -1002,7 +1002,7 @@ coroutine_fn block_crypto_co_amend_luks(BlockDriverState *bs,
-     QCryptoBlockAmendOptions amend_opts;
- 
-     amend_opts = (QCryptoBlockAmendOptions) {
--        .format = Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+        .format = QCRYPTO_BLOCK_FORMAT_LUKS,
-         .u.luks = *qapi_BlockdevAmendOptionsLUKS_base(&opts->u.luks),
-     };
-     return block_crypto_amend_options_generic_luks(bs, &amend_opts,
-diff --git a/block/qcow.c b/block/qcow.c
-index c2f89db055..84d1cca296 100644
---- a/block/qcow.c
-+++ b/block/qcow.c
-@@ -831,7 +831,7 @@ qcow_co_create(BlockdevCreateOptions *opts, Error **errp)
-     }
- 
-     if (qcow_opts->encrypt &&
--        qcow_opts->encrypt->format != Q_CRYPTO_BLOCK_FORMAT_QCOW)
-+        qcow_opts->encrypt->format != QCRYPTO_BLOCK_FORMAT_QCOW)
-     {
-         error_setg(errp, "Unsupported encryption format");
-         return -EINVAL;
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 70b19730a3..dd359d241b 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -3214,10 +3214,10 @@ qcow2_set_up_encryption(BlockDriverState *bs,
-     int fmt, ret;
- 
-     switch (cryptoopts->format) {
--    case Q_CRYPTO_BLOCK_FORMAT_LUKS:
-+    case QCRYPTO_BLOCK_FORMAT_LUKS:
-         fmt = QCOW_CRYPT_LUKS;
+     switch (sess_info->keytype) {
+     case VIRTIO_CRYPTO_AKCIPHER_KEY_TYPE_PUBLIC:
+-        type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC;
++        type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC;
          break;
--    case Q_CRYPTO_BLOCK_FORMAT_QCOW:
-+    case QCRYPTO_BLOCK_FORMAT_QCOW:
-         fmt = QCOW_CRYPT_AES;
+ 
+     case VIRTIO_CRYPTO_AKCIPHER_KEY_TYPE_PRIVATE:
+-        type = QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE;
++        type = QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE;
          break;
+ 
      default:
-@@ -5306,10 +5306,10 @@ qcow2_get_specific_info(BlockDriverState *bs, Error **errp)
-         ImageInfoSpecificQCow2Encryption *qencrypt =
-             g_new(ImageInfoSpecificQCow2Encryption, 1);
-         switch (encrypt_info->format) {
--        case Q_CRYPTO_BLOCK_FORMAT_QCOW:
-+        case QCRYPTO_BLOCK_FORMAT_QCOW:
-             qencrypt->format = BLOCKDEV_QCOW2_ENCRYPTION_FORMAT_AES;
-             break;
--        case Q_CRYPTO_BLOCK_FORMAT_LUKS:
-+        case QCRYPTO_BLOCK_FORMAT_LUKS:
-             qencrypt->format = BLOCKDEV_QCOW2_ENCRYPTION_FORMAT_LUKS;
-             qencrypt->u.luks = encrypt_info->u.luks;
-             break;
-@@ -5948,7 +5948,7 @@ static int coroutine_fn qcow2_co_amend(BlockDriverState *bs,
-             return -EOPNOTSUPP;
+diff --git a/backends/cryptodev-lkcf.c b/backends/cryptodev-lkcf.c
+index 45aba1ff67..e1ee11a158 100644
+--- a/backends/cryptodev-lkcf.c
++++ b/backends/cryptodev-lkcf.c
+@@ -322,7 +322,7 @@ static void cryptodev_lkcf_execute_task(CryptoDevLKCFTask *task)
+      * 2. generally, public key related compution is fast, just compute it with
+      * thread-pool.
+      */
+-    if (session->keytype == QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE) {
++    if (session->keytype == QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE) {
+         if (qcrypto_akcipher_export_p8info(&session->akcipher_opts,
+                                            session->key, session->keylen,
+                                            &p8info, &p8info_len,
+@@ -534,11 +534,11 @@ static int cryptodev_lkcf_create_asym_session(
+ 
+     switch (sess_info->keytype) {
+     case VIRTIO_CRYPTO_AKCIPHER_KEY_TYPE_PUBLIC:
+-        sess->keytype = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC;
++        sess->keytype = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC;
+         break;
+ 
+     case VIRTIO_CRYPTO_AKCIPHER_KEY_TYPE_PRIVATE:
+-        sess->keytype = QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE;
++        sess->keytype = QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE;
+         break;
+ 
+     default:
+diff --git a/tests/bench/benchmark-crypto-akcipher.c b/tests/bench/benchmark-crypto-akcipher.c
+index 5e68cb0a1c..bbc29c9b12 100644
+--- a/tests/bench/benchmark-crypto-akcipher.c
++++ b/tests/bench/benchmark-crypto-akcipher.c
+@@ -28,7 +28,7 @@ static QCryptoAkCipher *create_rsa_akcipher(const uint8_t *priv_key,
+     opt.alg = QCRYPTO_AKCIPHER_ALG_RSA;
+     opt.u.rsa.padding_alg = padding;
+     opt.u.rsa.hash_alg = hash;
+-    return qcrypto_akcipher_new(&opt, QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE,
++    return qcrypto_akcipher_new(&opt, QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
+                                 priv_key, keylen, &error_abort);
+ }
+ 
+diff --git a/tests/unit/test-crypto-akcipher.c b/tests/unit/test-crypto-akcipher.c
+index 4f1f4214dd..59bc6f1e69 100644
+--- a/tests/unit/test-crypto-akcipher.c
++++ b/tests/unit/test-crypto-akcipher.c
+@@ -692,7 +692,7 @@ struct QCryptoAkCipherTestData {
+ static QCryptoRSAKeyTestData rsakey_test_data[] = {
+     {
+         .path = "/crypto/akcipher/rsakey-1024-public",
+-        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
++        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
+         .key = rsa1024_public_key,
+         .keylen = sizeof(rsa1024_public_key),
+         .is_valid_key = true,
+@@ -700,7 +700,7 @@ static QCryptoRSAKeyTestData rsakey_test_data[] = {
+     },
+     {
+         .path = "/crypto/akcipher/rsakey-1024-private",
+-        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE,
++        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
+         .key = rsa1024_private_key,
+         .keylen = sizeof(rsa1024_private_key),
+         .is_valid_key = true,
+@@ -708,7 +708,7 @@ static QCryptoRSAKeyTestData rsakey_test_data[] = {
+     },
+     {
+         .path = "/crypto/akcipher/rsakey-2048-public",
+-        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
++        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
+         .key = rsa2048_public_key,
+         .keylen = sizeof(rsa2048_public_key),
+         .is_valid_key = true,
+@@ -716,7 +716,7 @@ static QCryptoRSAKeyTestData rsakey_test_data[] = {
+     },
+     {
+         .path = "/crypto/akcipher/rsakey-2048-private",
+-        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE,
++        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
+         .key = rsa2048_private_key,
+         .keylen = sizeof(rsa2048_private_key),
+         .is_valid_key = true,
+@@ -724,56 +724,56 @@ static QCryptoRSAKeyTestData rsakey_test_data[] = {
+     },
+     {
+         .path = "/crypto/akcipher/rsakey-public-lack-elem",
+-        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
++        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
+         .key = rsa_public_key_lack_element,
+         .keylen = sizeof(rsa_public_key_lack_element),
+         .is_valid_key = false,
+     },
+     {
+         .path = "/crypto/akcipher/rsakey-private-lack-elem",
+-        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE,
++        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
+         .key = rsa_private_key_lack_element,
+         .keylen = sizeof(rsa_private_key_lack_element),
+         .is_valid_key = false,
+     },
+     {
+         .path = "/crypto/akcipher/rsakey-public-empty-elem",
+-        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
++        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
+         .key = rsa_public_key_empty_element,
+         .keylen = sizeof(rsa_public_key_empty_element),
+         .is_valid_key = false,
+     },
+     {
+         .path = "/crypto/akcipher/rsakey-private-empty-elem",
+-        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE,
++        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
+         .key = rsa_private_key_empty_element,
+         .keylen = sizeof(rsa_private_key_empty_element),
+         .is_valid_key = false,
+     },
+     {
+         .path = "/crypto/akcipher/rsakey-public-empty-key",
+-        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
++        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
+         .key = NULL,
+         .keylen = 0,
+         .is_valid_key = false,
+     },
+     {
+         .path = "/crypto/akcipher/rsakey-private-empty-key",
+-        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE,
++        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
+         .key = NULL,
+         .keylen = 0,
+         .is_valid_key = false,
+     },
+     {
+         .path = "/crypto/akcipher/rsakey-public-invalid-length-val",
+-        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
++        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
+         .key = rsa_public_key_invalid_length_val,
+         .keylen = sizeof(rsa_public_key_invalid_length_val),
+         .is_valid_key = false,
+     },
+     {
+         .path = "/crypto/akcipher/rsakey-public-extra-elem",
+-        .key_type = QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
++        .key_type = QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
+         .key = rsa_public_key_extra_elem,
+         .keylen = sizeof(rsa_public_key_extra_elem),
+         .is_valid_key = false,
+@@ -885,12 +885,12 @@ static void test_akcipher(const void *opaque)
+         return;
+     }
+     pub_key = qcrypto_akcipher_new(&data->opt,
+-                                   QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC,
++                                   QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC,
+                                    data->pub_key, data->pub_key_len,
+                                    &error_abort);
+     g_assert(pub_key != NULL);
+     priv_key = qcrypto_akcipher_new(&data->opt,
+-                                    QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE,
++                                    QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE,
+                                     data->priv_key, data->priv_key_len,
+                                     &error_abort);
+     g_assert(priv_key != NULL);
+diff --git a/crypto/akcipher-gcrypt.c.inc b/crypto/akcipher-gcrypt.c.inc
+index abb1fb272e..e942d43421 100644
+--- a/crypto/akcipher-gcrypt.c.inc
++++ b/crypto/akcipher-gcrypt.c.inc
+@@ -85,7 +85,7 @@ static int qcrypto_gcrypt_parse_rsa_private_key(
+     const uint8_t *key, size_t keylen, Error **errp)
+ {
+     g_autoptr(QCryptoAkCipherRSAKey) rsa_key = qcrypto_akcipher_rsakey_parse(
+-        QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE, key, keylen, errp);
++        QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE, key, keylen, errp);
+     gcry_mpi_t n = NULL, e = NULL, d = NULL, p = NULL, q = NULL, u = NULL;
+     bool compute_mul_inv = false;
+     int ret = -1;
+@@ -178,7 +178,7 @@ static int qcrypto_gcrypt_parse_rsa_public_key(QCryptoGcryptRSA *rsa,
+ {
+ 
+     g_autoptr(QCryptoAkCipherRSAKey) rsa_key = qcrypto_akcipher_rsakey_parse(
+-        QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC, key, keylen, errp);
++        QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC, key, keylen, errp);
+     gcry_mpi_t n = NULL, e = NULL;
+     int ret = -1;
+     gcry_error_t err;
+@@ -540,13 +540,13 @@ static QCryptoGcryptRSA *qcrypto_gcrypt_rsa_new(
+     rsa->akcipher.driver = &gcrypt_rsa;
+ 
+     switch (type) {
+-    case QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE:
++    case QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE:
+         if (qcrypto_gcrypt_parse_rsa_private_key(rsa, key, keylen, errp) != 0) {
+             goto error;
          }
+         break;
  
--        if (qopts->encrypt->format != Q_CRYPTO_BLOCK_FORMAT_LUKS) {
-+        if (qopts->encrypt->format != QCRYPTO_BLOCK_FORMAT_LUKS) {
-             error_setg(errp,
-                        "Amend can't be used to change the qcow2 encryption format");
-             return -EOPNOTSUPP;
-diff --git a/crypto/block-luks.c b/crypto/block-luks.c
-index 45347adeeb..7b9c7b292d 100644
---- a/crypto/block-luks.c
-+++ b/crypto/block-luks.c
-@@ -1861,11 +1861,11 @@ qcrypto_block_luks_amend_options(QCryptoBlock *block,
-     QCryptoBlockAmendOptionsLUKS *opts_luks = &options->u.luks;
- 
-     switch (opts_luks->state) {
--    case Q_CRYPTO_BLOCKLUKS_KEYSLOT_STATE_ACTIVE:
-+    case QCRYPTO_BLOCK_LUKS_KEYSLOT_STATE_ACTIVE:
-         return qcrypto_block_luks_amend_add_keyslot(block, readfunc,
-                                                     writefunc, opaque,
-                                                     opts_luks, force, errp);
--    case Q_CRYPTO_BLOCKLUKS_KEYSLOT_STATE_INACTIVE:
-+    case QCRYPTO_BLOCK_LUKS_KEYSLOT_STATE_INACTIVE:
-         return qcrypto_block_luks_amend_erase_keyslots(block, readfunc,
-                                                        writefunc, opaque,
-                                                        opts_luks, force, errp);
-diff --git a/crypto/block.c b/crypto/block.c
-index 3bcc4270c3..899561a080 100644
---- a/crypto/block.c
-+++ b/crypto/block.c
-@@ -26,8 +26,8 @@
- #include "block-luks.h"
- 
- static const QCryptoBlockDriver *qcrypto_block_drivers[] = {
--    [Q_CRYPTO_BLOCK_FORMAT_QCOW] = &qcrypto_block_driver_qcow,
--    [Q_CRYPTO_BLOCK_FORMAT_LUKS] = &qcrypto_block_driver_luks,
-+    [QCRYPTO_BLOCK_FORMAT_QCOW] = &qcrypto_block_driver_qcow,
-+    [QCRYPTO_BLOCK_FORMAT_LUKS] = &qcrypto_block_driver_luks,
- };
- 
- 
-diff --git a/tests/unit/test-crypto-block.c b/tests/unit/test-crypto-block.c
-index 42cfab6067..2a6c6e99e5 100644
---- a/tests/unit/test-crypto-block.c
-+++ b/tests/unit/test-crypto-block.c
-@@ -39,14 +39,14 @@
- #endif
- 
- static QCryptoBlockCreateOptions qcow_create_opts = {
--    .format = Q_CRYPTO_BLOCK_FORMAT_QCOW,
-+    .format = QCRYPTO_BLOCK_FORMAT_QCOW,
-     .u.qcow = {
-         .key_secret = (char *)"sec0",
-     },
- };
- 
- static QCryptoBlockOpenOptions qcow_open_opts = {
--    .format = Q_CRYPTO_BLOCK_FORMAT_QCOW,
-+    .format = QCRYPTO_BLOCK_FORMAT_QCOW,
-     .u.qcow = {
-         .key_secret = (char *)"sec0",
-     },
-@@ -55,7 +55,7 @@ static QCryptoBlockOpenOptions qcow_open_opts = {
- 
- #ifdef TEST_LUKS
- static QCryptoBlockOpenOptions luks_open_opts = {
--    .format = Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+    .format = QCRYPTO_BLOCK_FORMAT_LUKS,
-     .u.luks = {
-         .key_secret = (char *)"sec0",
-     },
-@@ -64,7 +64,7 @@ static QCryptoBlockOpenOptions luks_open_opts = {
- 
- /* Creation with all default values */
- static QCryptoBlockCreateOptions luks_create_opts_default = {
--    .format = Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+    .format = QCRYPTO_BLOCK_FORMAT_LUKS,
-     .u.luks = {
-         .key_secret = (char *)"sec0",
-     },
-@@ -73,7 +73,7 @@ static QCryptoBlockCreateOptions luks_create_opts_default = {
- 
- /* ...and with explicit values */
- static QCryptoBlockCreateOptions luks_create_opts_aes256_cbc_plain64 = {
--    .format = Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+    .format = QCRYPTO_BLOCK_FORMAT_LUKS,
-     .u.luks = {
-         .key_secret = (char *)"sec0",
-         .has_cipher_alg = true,
-@@ -87,7 +87,7 @@ static QCryptoBlockCreateOptions luks_create_opts_aes256_cbc_plain64 = {
- 
- 
- static QCryptoBlockCreateOptions luks_create_opts_aes256_cbc_essiv = {
--    .format = Q_CRYPTO_BLOCK_FORMAT_LUKS,
-+    .format = QCRYPTO_BLOCK_FORMAT_LUKS,
-     .u.luks = {
-         .key_secret = (char *)"sec0",
-         .has_cipher_alg = true,
-@@ -572,7 +572,7 @@ int main(int argc, char **argv)
-     g_assert(qcrypto_init(NULL) == 0);
- 
-     for (i = 0; i < G_N_ELEMENTS(test_data); i++) {
--        if (test_data[i].open_opts->format == Q_CRYPTO_BLOCK_FORMAT_LUKS &&
-+        if (test_data[i].open_opts->format == QCRYPTO_BLOCK_FORMAT_LUKS &&
-             !qcrypto_hash_supports(test_data[i].hash_alg)) {
-             continue;
+-    case QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC:
++    case QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC:
+         if (qcrypto_gcrypt_parse_rsa_public_key(rsa, key, keylen, errp) != 0) {
+             goto error;
          }
+diff --git a/crypto/akcipher-nettle.c.inc b/crypto/akcipher-nettle.c.inc
+index 02699e6e6d..62ac8699c4 100644
+--- a/crypto/akcipher-nettle.c.inc
++++ b/crypto/akcipher-nettle.c.inc
+@@ -87,7 +87,7 @@ static int qcrypt_nettle_parse_rsa_private_key(QCryptoNettleRSA *rsa,
+                                                Error **errp)
+ {
+     g_autoptr(QCryptoAkCipherRSAKey) rsa_key = qcrypto_akcipher_rsakey_parse(
+-        QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE, key, keylen, errp);
++        QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE, key, keylen, errp);
+ 
+     if (!rsa_key) {
+         return -1;
+@@ -137,7 +137,7 @@ static int qcrypt_nettle_parse_rsa_public_key(QCryptoNettleRSA *rsa,
+                                               Error **errp)
+ {
+     g_autoptr(QCryptoAkCipherRSAKey) rsa_key = qcrypto_akcipher_rsakey_parse(
+-        QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC, key, keylen, errp);
++        QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC, key, keylen, errp);
+ 
+     if (!rsa_key) {
+         return -1;
+@@ -397,13 +397,13 @@ static QCryptoAkCipher *qcrypto_nettle_rsa_new(
+     rsa_private_key_init(&rsa->priv);
+ 
+     switch (type) {
+-    case QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE:
++    case QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE:
+         if (qcrypt_nettle_parse_rsa_private_key(rsa, key, keylen, errp) != 0) {
+             goto error;
+         }
+         break;
+ 
+-    case QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC:
++    case QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC:
+         if (qcrypt_nettle_parse_rsa_public_key(rsa, key, keylen, errp) != 0) {
+             goto error;
+         }
+diff --git a/crypto/rsakey-builtin.c.inc b/crypto/rsakey-builtin.c.inc
+index 46cc7afe87..6337b84c54 100644
+--- a/crypto/rsakey-builtin.c.inc
++++ b/crypto/rsakey-builtin.c.inc
+@@ -183,10 +183,10 @@ QCryptoAkCipherRSAKey *qcrypto_akcipher_rsakey_parse(
+     size_t keylen, Error **errp)
+ {
+     switch (type) {
+-    case QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE:
++    case QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE:
+         return qcrypto_builtin_rsa_private_key_parse(key, keylen, errp);
+ 
+-    case QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC:
++    case QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC:
+         return qcrypto_builtin_rsa_public_key_parse(key, keylen, errp);
+ 
+     default:
+diff --git a/crypto/rsakey-nettle.c.inc b/crypto/rsakey-nettle.c.inc
+index cc49872e78..b7f34b0234 100644
+--- a/crypto/rsakey-nettle.c.inc
++++ b/crypto/rsakey-nettle.c.inc
+@@ -145,10 +145,10 @@ QCryptoAkCipherRSAKey *qcrypto_akcipher_rsakey_parse(
+     size_t keylen, Error **errp)
+ {
+     switch (type) {
+-    case QCRYPTO_AKCIPHER_KEY_TYPE_PRIVATE:
++    case QCRYPTO_AK_CIPHER_KEY_TYPE_PRIVATE:
+         return qcrypto_nettle_rsa_private_key_parse(key, keylen, errp);
+ 
+-    case QCRYPTO_AKCIPHER_KEY_TYPE_PUBLIC:
++    case QCRYPTO_AK_CIPHER_KEY_TYPE_PUBLIC:
+         return qcrypto_nettle_rsa_public_key_parse(key, keylen, errp);
+ 
+     default:
 -- 
 2.45.0
 
