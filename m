@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE3BCC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 18:32:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 287E7C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 18:32:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYrdP-0007dg-D3; Tue, 30 Jul 2024 14:31:43 -0400
+	id 1sYreF-0000K7-RP; Tue, 30 Jul 2024 14:32:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYrdN-0007cA-DY
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 14:31:41 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYreE-0000Cq-3X
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 14:32:34 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYrdK-0001vz-TZ
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 14:31:40 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4281c164408so23033615e9.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 11:31:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYreC-0002CU-Du
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 14:32:33 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4281abc65daso23560905e9.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 11:32:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722364297; x=1722969097; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722364351; x=1722969151; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Yo27OhUoBxfOHgiiTJTXRNV6dD9ldbTD78KSPUR+b0o=;
- b=syPJLwo9aU0eWfE76RXehHl+BKv/6apnDRMtYGoqSOIcG2tbi0J+ADMTo14SR3OzdG
- FhfgqaVd6OxtUQGOtXs4y8v33dOenHsx1LioEv2K9ehW+Z+5iBXU3WieLjI/80lVMcoM
- K2qchCQJUQ9BiG0Pk5/u4yDFncDFcoa9uHpxZbXRQIPeKGX9rTYCuhlNEw42L505t26S
- aU3A+KkGeHwZi9Gqfeggze3mhBKMSt7rwpMKkzZGluj2dRTrdLhk8v8eXtxU1h165oWV
- ixnE/px453fXYeMCqAWRfkBJHC4ywFAkvhWlxHt4MX7MG8R6iuiC9hi5utZ2sFIHYPs5
- 5m2Q==
+ bh=ONfisXJNQoe9Z7S6EcbzXFkVUygBUs7h+VpdAEKqDco=;
+ b=bOWDHJB39TCguohRsMpuCP6kNp+a6dhhxqee9RXpOIMTfyc69VouAJLBhzf5SwqV3H
+ 7p1Qjx5F9POLVeU5Ja8BxixWf1+GIm4onL/XmQMIGYilFiZIZ4NDnXutt4W0csRif7HF
+ my9k5hWl+sXSlymSszAxPgQQX663BhzjkJ1wKBQ/aNGoUT/s5I/eCxweyehE+uPR8nJ0
+ X4IJrhwm3d5UQzmfvTN7IkokKgmXUx92WE+SEo19xnAdLUVeH7jiCbS+V4rq8O3Dz3ia
+ XloV6Q3sg/8CPRJOkNPcoBVfKtgJ5EQYYCkN1Mn1v7bPdLpZzQgqz+X3fKRGgkeKplFl
+ OqWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722364297; x=1722969097;
+ d=1e100.net; s=20230601; t=1722364351; x=1722969151;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Yo27OhUoBxfOHgiiTJTXRNV6dD9ldbTD78KSPUR+b0o=;
- b=VrludeeRKwDmhxju/KH7siyONHxO/MtxGZTUtaSfyRDpKJA3vXKCsIZymMytNhUQsH
- Mriw81LMKvFh9YZe+qpYMf/+BBZw9n+gFueKo07E1STqYufY2tExa5qaVHOH22/Bv2k6
- XpMOzv6yWyRJ9yBHd2E3Gr0ZY1u64JwHH4gLfL9sMNg7o1Q1QtcFtRZweRlImLNFEAcO
- GUTVeNm5VxXxLtkfvyKSwPZIxOKZDd74rMVeKZtbMMJvCbqTIcOcXjxZtsbUr0DI7lut
- yxMydT+KKD32NNL3j4sZzjYlvMBJV+SWO7m4WB8jBCmaz4IGIEvXEB3EdoHv1B7LlzF/
- cCcg==
+ bh=ONfisXJNQoe9Z7S6EcbzXFkVUygBUs7h+VpdAEKqDco=;
+ b=Kiq1gZ22LfDMAt2rncHDNpdXnH7JHeF7mpwEpWm8JJ/ShcYHSuSiDxDSO2We/NC8S4
+ Bz8/1jRyTrHyD/SjrSW8yvnX+jYKinnAa5LWc49x51rMGv4Lj9lDC6GDjy4Rui78gnMM
+ UWuJsC8e/B6SprqV2hMtZn8cZBsm297vu3KBqBCLr6b11ap73OXaI3qlwSC9A8ePqQff
+ sKuhyE7huhQFsFAVh3GOnHr9JUzEvu+MFen4FlPMwITGFEL5jUTcR/+CD58hUWCcy/Md
+ Fq1rErNlFDciCtPU70r4OhbaMXdhgAIsqT0+MST0PdPeLgzlG8gmBWhuEHz33R8tZoep
+ DIkQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVErE61Q75Kfd0YWOOvzdyJADzNHgjKcLaggutPoqQVyTpXf7YxSF3K3yA8FwOa2W83poPQKrW/GR+ct93JPO0d9NmI/r4=
-X-Gm-Message-State: AOJu0Yzv5RHUU4wDa7l/kPr7QORsDV9tW/XNs0HggMsROh5nP4Tt4GMH
- Vh/Vf7d7wt28TR4A/8iQq2oyPLDaaC5lzswGQUH/LdeiOHg413/Ohvatv7oo5aA=
-X-Google-Smtp-Source: AGHT+IFZfsME1gMW6UASnlX85pKIVE1qFcA5IEspAXrRn9bys4Foind2RJjZ2QG0dWEByp918pB7+g==
-X-Received: by 2002:a05:600c:3109:b0:428:1663:2c2e with SMTP id
- 5b1f17b1804b1-42816632d21mr71148655e9.17.1722364296768; 
- Tue, 30 Jul 2024 11:31:36 -0700 (PDT)
+ AJvYcCXrWyg+jfAcfHntfLtNhLhin1YKumPU60iwcnqK+SizBeS5D0N5FiVUv9OROKxwQblGncrfOVEcrlL2NUPo60aXD/BSHkg=
+X-Gm-Message-State: AOJu0YwPiKs4rmNfXnR8ABbk971FW2ibbjOoq414vgkY2PqA/PN+2Uo+
+ 99jmugzeMOGgWEap5GH4UXSBbNRH8BSmSUXq7X9z00h1GzIaXgB2l+kCRzGFhW4=
+X-Google-Smtp-Source: AGHT+IEheMKJ7H+QUoWPvukOqH45IDE5dC/iYmgIGDdjV0jrubNKK5ak2+nJ/T29a5xOjF8YJ1N8Hg==
+X-Received: by 2002:a05:600c:4592:b0:426:5f09:cf57 with SMTP id
+ 5b1f17b1804b1-42811d9cc4amr77371575e9.19.1722364351052; 
+ Tue, 30 Jul 2024 11:32:31 -0700 (PDT)
 Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4281c3cc71fsm92878075e9.39.2024.07.30.11.31.36
+ 5b1f17b1804b1-4281a26e1bcsm99323855e9.34.2024.07.30.11.32.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jul 2024 11:31:36 -0700 (PDT)
-Message-ID: <bd2b33a3-62a1-4ebd-85b6-645df2644d91@linaro.org>
-Date: Tue, 30 Jul 2024 20:31:35 +0200
+ Tue, 30 Jul 2024 11:32:30 -0700 (PDT)
+Message-ID: <67087083-20ba-4a71-b547-0273604318ac@linaro.org>
+Date: Tue, 30 Jul 2024 20:32:29 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/14] Docs / testing patches for 2024-07-29
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240729152714.10225-1-philmd@linaro.org>
- <Zqe2-4B8_qs3Oq0K@redhat.com>
- <d211f9c9-bef6-42b6-8bd8-8ef9cc7d6a29@linaro.org>
- <CAFEAcA90cJV4eUktKTC38kTqANHh6Y_g8qp=Dq7+go81yfqMnA@mail.gmail.com>
+Subject: Re: [PATCH] osdep.h: Clean up no-longer-needed back-compat for macOS
+ 10
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org
+References: <20240730095939.2781172-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA90cJV4eUktKTC38kTqANHh6Y_g8qp=Dq7+go81yfqMnA@mail.gmail.com>
+In-Reply-To: <20240730095939.2781172-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,70 +96,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/7/24 12:14, Peter Maydell wrote:
-> On Tue, 30 Jul 2024 at 11:05, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->>
->> On 29/7/24 17:36, Daniel P. Berrangé wrote:
->>> On Mon, Jul 29, 2024 at 05:27:00PM +0200, Philippe Mathieu-Daudé wrote:
->>
->>>> Thomas Huth (9):
->>>>     python: Install pycotap in our venv if necessary
->>>>     tests/functional: Add base classes for the upcoming pytest-based tests
->>>>     tests/Makefile.include: Increase the level of indentation in the help
->>>>       text
->>>>     tests/functional: Prepare the meson build system for the functional
->>>>       tests
->>>>     tests/functional: Convert simple avocado tests into standalone python
->>>>       tests
->>>>     tests/functional: Convert avocado tests that just need a small
->>>>       adjustment
->>>>     tests/functional: Convert the x86_cpu_model_versions test
->>>>     tests/functional: Convert the riscv_opensbi avocado test into a
->>>>       standalone test
->>>>     gitlab-ci: Add "check-functional" to the build tests
->>>
->>> On the avocado review I mentioned that I didn't think we should
->>> be rebasing avocado during freeze. By the same token, I'm not
->>> convinced we should be introducing a new test framework during
->>> the freeze period.  This is alot simpler than avocado, but at
->>> the same time this small subset of Thomas' patches isn't really
->>> fixing any problem on its own, as avocado still exists in
->>> parallel.
->>
->> - As you noticed, Avocado isn't rebased here
->> - The python file added is almost a copy of the avocado base class,
->>     already well tested
->> - Test are moved from Avocado, so no waste of time running them
->>     twice
->> - macOS developers can run 178 functional tests. This is the big
->>     win and time saver for me.
->>
->> Do you really see merging these few patches now as being
->> counter productive for the community?
+On 30/7/24 11:59, Peter Maydell wrote:
+> Our official support policy only supports the most recent two
+> versions of macOS (currently macOS 13 Ventura and macOS 14 Sonoma),
+> and we already have code that assumes at least macOS 12 Monterey or
+> better.  In commit 2d27c91e2b72ac7 we dropped some of the back-compat
+> code for older macOS versions, but missed the guard in osdep.h that
+> is providing a fallback for macOS 10 and earlier.
 > 
-> I do feel from the discussion in other threads that "what is
-> the way forward for our currently-in-avocado test cases?" is
-> currently still an open question,
+> Simplify the ifdef to the "ifdef __APPLE__" that we use elsewhere for
+> "is this macOS?".
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   include/qemu/osdep.h | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
 
-Thomas demonstrated with few LoC we can leverage some Avocado
-libraries (util, archive, ...) without having to use Avocado
-framework as our entry point to run acceptance tests - which
-is what gave us headaches the last 2 years -.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Richard only requirement is a "fetch assets" equivalent. We'll
-look at.
-
-I don't see anything else blocking this test conversion.
-
-> so I tend to agree with Daniel
-> that it would be better to resolve that question first,
-> and we don't need to be in a hurry to change things in
-> our test framework during the freeze period.
-
-OK. I'll repost without these patches.
-
-Regards,
-
-Phil.
+and queued, thanks.
 
 
