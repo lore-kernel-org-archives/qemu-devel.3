@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3889C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 17:07:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C9A6C3DA70
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 17:07:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYqH8-0008TL-QV; Tue, 30 Jul 2024 13:04:38 -0400
+	id 1sYqH0-0007wn-RM; Tue, 30 Jul 2024 13:04:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYqGv-0007mm-0T
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 13:04:25 -0400
+ id 1sYqGn-0007bb-Sg
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 13:04:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYqGs-0002OH-0v
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 13:04:24 -0400
+ id 1sYqGj-0002IR-Ft
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 13:04:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722359061;
+ s=mimecast20190719; t=1722359052;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4zxDcKV1xn1fqpLvckSLsSW9vnIiyD28go3zEkWlMF8=;
- b=UCSsfB2rljfEFuMQllJlmc4GLwyjqT3Uf4cHPhcBaJwfX4VJMDCTc37hPH82FLbM2Q83mA
- mESSgMMcgcH+k05e9bLc/7AgOc3ynZ6qyz+O9vrCiGOXhrblI2Z2GY8F3z72qt+OcCwjMn
- X55pnT2GOhvm3D6HjGkQ8RI+oj4RANI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=RW0MiCTT6CDaQeMYaTVDdQznN62rjfo413XF11OSGiI=;
+ b=FC6iU3d7eZc67VzjRUYUpcgChIo6rvhMWinricdLLOMTq3U9cxJPVJwfFASHvhiV8JAeZc
+ +BdC4Z+n7amSsjw14PJ8fMmT9ucZs/N4kbDeuJG1k5uUWTWkHtg2zV3Ok/FlAj+AjzVKjt
+ fGH8rGiI1li51kdrJIBfChYZwprfMPE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-KrUxR8a8PB2PUakhdFWUhQ-1; Tue,
- 30 Jul 2024 13:04:19 -0400
-X-MC-Unique: KrUxR8a8PB2PUakhdFWUhQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-484-SBb7dmUnO5OOyJTTmdIyvg-1; Tue,
+ 30 Jul 2024 13:03:58 -0400
+X-MC-Unique: SBb7dmUnO5OOyJTTmdIyvg-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A81F71955D58; Tue, 30 Jul 2024 17:04:17 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BD64E1955F42; Tue, 30 Jul 2024 17:03:56 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.108])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C6A1D300018D; Tue, 30 Jul 2024 17:04:13 +0000 (UTC)
+ id 83465300018D; Tue, 30 Jul 2024 17:03:53 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -54,16 +54,13 @@ Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 06/24] tests/functional: Convert simple avocado tests into
- standalone python tests
-Date: Tue, 30 Jul 2024 18:03:26 +0100
-Message-ID: <20240730170347.4103919-7-berrange@redhat.com>
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v3 01/24] python: Install pycotap in our venv if necessary
+Date: Tue, 30 Jul 2024 18:03:21 +0100
+Message-ID: <20240730170347.4103919-2-berrange@redhat.com>
 In-Reply-To: <20240730170347.4103919-1-berrange@redhat.com>
 References: <20240730170347.4103919-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
@@ -74,7 +71,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,371 +89,119 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Thomas Huth <thuth@redhat.com>
 
-These test are rather simple and don't need any modifications apart
-from adjusting the "from avocado_qemu" line. To ease debugging, make
-the files executable and add a shebang line and Python '__main__'
-handling, too, so that these tests can now be run by executing them
-directly.
+The upcoming functional tests will require pycotap for providing
+TAP output from the python-based tests. Since we want to be able
+to run some of the tests offline by default, too, let's install
+it along with meson in our venv if necessary (it's size is only
+5 kB, so adding the wheel here should not really be a problem).
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+The wheel file has been obtained with:
+
+ pip download --only-binary :all: --dest . --no-cache pycotap
+
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/meson.build                  |  5 ++
- .../test_cpu_queries.py}                      |  7 ++-
- .../test_empty_cpu_model.py}                  |  7 ++-
- .../test_mem_addr_space.py}                   | 52 +++----------------
- .../test_pc_cpu_hotplug_props.py}             | 11 ++--
- .../test_virtio_version.py}                   |  8 +--
- 6 files changed, 34 insertions(+), 56 deletions(-)
- rename tests/{avocado/cpu_queries.py => functional/test_cpu_queries.py} (89%)
- mode change 100644 => 100755
- rename tests/{avocado/empty_cpu_model.py => functional/test_empty_cpu_model.py} (84%)
- mode change 100644 => 100755
- rename tests/{avocado/mem-addr-space-check.py => functional/test_mem_addr_space.py} (93%)
- mode change 100644 => 100755
- rename tests/{avocado/pc_cpu_hotplug_props.py => functional/test_pc_cpu_hotplug_props.py} (90%)
- mode change 100644 => 100755
- rename tests/{avocado/virtio_version.py => functional/test_virtio_version.py} (98%)
- mode change 100644 => 100755
+ python/wheels/pycotap-1.3.1-py3-none-any.whl | Bin 0 -> 5119 bytes
+ pythondeps.toml                              |   1 +
+ 2 files changed, 1 insertion(+)
+ create mode 100644 python/wheels/pycotap-1.3.1-py3-none-any.whl
 
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 7fc9c4e513..a8cc0e6330 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -14,9 +14,14 @@ test_timeouts = {
- }
+diff --git a/python/wheels/pycotap-1.3.1-py3-none-any.whl b/python/wheels/pycotap-1.3.1-py3-none-any.whl
+new file mode 100644
+index 0000000000000000000000000000000000000000..9c2c7d259365c8a0487228c6878e2c0b10ba6bdd
+GIT binary patch
+literal 5119
+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
+a`M=gRMNm<H|DFb*0Z`-skj4D{@BaZhvADJX
+
+literal 0
+HcmV?d00001
+
+diff --git a/pythondeps.toml b/pythondeps.toml
+index f6e590fdd8..0bc4144d4b 100644
+--- a/pythondeps.toml
++++ b/pythondeps.toml
+@@ -20,6 +20,7 @@
+ [meson]
+ # The install key should match the version in python/wheels/
+ meson = { accepted = ">=1.1.0", installed = "1.2.3", canary = "meson" }
++pycotap = { accepted = ">=1.1.0", installed = "1.3.1" }
  
- tests_generic = [
-+  'empty_cpu_model',
- ]
- 
- tests_x86_64_quick = [
-+  'cpu_queries',
-+  'mem_addr_space',
-+  'pc_cpu_hotplug_props',
-+  'virtio_version',
- ]
- 
- tests_x86_64_thorough = [
-diff --git a/tests/avocado/cpu_queries.py b/tests/functional/test_cpu_queries.py
-old mode 100644
-new mode 100755
-similarity index 89%
-rename from tests/avocado/cpu_queries.py
-rename to tests/functional/test_cpu_queries.py
-index d3faa14720..97dd600c01
---- a/tests/avocado/cpu_queries.py
-+++ b/tests/functional/test_cpu_queries.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Sanity check of query-cpu-* results
- #
- # Copyright (c) 2019 Red Hat, Inc.
-@@ -8,7 +10,7 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
- 
--from avocado_qemu import QemuSystemTest
-+from qemu_test import QemuSystemTest
- 
- class QueryCPUModelExpansion(QemuSystemTest):
-     """
-@@ -33,3 +35,6 @@ def test(self):
-             e = self.vm.cmd('query-cpu-model-expansion', model=model,
-                             type='full')
-             self.assertEqual(e['model']['name'], c['name'])
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/avocado/empty_cpu_model.py b/tests/functional/test_empty_cpu_model.py
-old mode 100644
-new mode 100755
-similarity index 84%
-rename from tests/avocado/empty_cpu_model.py
-rename to tests/functional/test_empty_cpu_model.py
-index d906ef3d3c..0081b06d85
---- a/tests/avocado/empty_cpu_model.py
-+++ b/tests/functional/test_empty_cpu_model.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Check for crash when using empty -cpu option
- #
- # Copyright (c) 2019 Red Hat, Inc.
-@@ -7,7 +9,7 @@
- #
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
--from avocado_qemu import QemuSystemTest
-+from qemu_test import QemuSystemTest
- 
- class EmptyCPUModel(QemuSystemTest):
-     def test(self):
-@@ -17,3 +19,6 @@ def test(self):
-         self.vm.wait()
-         self.assertEqual(self.vm.exitcode(), 1, "QEMU exit code should be 1")
-         self.assertRegex(self.vm.get_log(), r'-cpu option cannot be empty')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/avocado/mem-addr-space-check.py b/tests/functional/test_mem_addr_space.py
-old mode 100644
-new mode 100755
-similarity index 93%
-rename from tests/avocado/mem-addr-space-check.py
-rename to tests/functional/test_mem_addr_space.py
-index d3974599f4..bb0cf062ca
---- a/tests/avocado/mem-addr-space-check.py
-+++ b/tests/functional/test_mem_addr_space.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # Check for crash when using memory beyond the available guest processor
- # address space.
- #
-@@ -8,7 +10,7 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
--from avocado_qemu import QemuSystemTest
-+from qemu_test import QemuSystemTest
- import time
- 
- class MemAddrCheck(QemuSystemTest):
-@@ -22,9 +24,6 @@ class MemAddrCheck(QemuSystemTest):
-     # for all 32-bit cases, pci64_hole_size is 0.
-     def test_phybits_low_pse36(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         With pse36 feature ON, a processor has 36 bits of addressing. So it can
-         access up to a maximum of 64GiB of memory. Memory hotplug region begins
-         at 4 GiB boundary when "above_4g_mem_size" is 0 (this would be true when
-@@ -52,9 +51,6 @@ def test_phybits_low_pse36(self):
- 
-     def test_phybits_low_pae(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         With pae feature ON, a processor has 36 bits of addressing. So it can
-         access up to a maximum of 64GiB of memory. Rest is the same as the case
-         with pse36 above.
-@@ -72,9 +68,6 @@ def test_phybits_low_pae(self):
- 
-     def test_phybits_ok_pentium_pse36(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Setting maxmem to 59.5G and making sure that QEMU can start with the
-         same options as the failing case above with pse36 cpu feature.
-         """
-@@ -91,9 +84,6 @@ def test_phybits_ok_pentium_pse36(self):
- 
-     def test_phybits_ok_pentium_pae(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Test is same as above but now with pae cpu feature turned on.
-         Setting maxmem to 59.5G and making sure that QEMU can start fine
-         with the same options as the case above.
-@@ -111,9 +101,6 @@ def test_phybits_ok_pentium_pae(self):
- 
-     def test_phybits_ok_pentium2(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Pentium2 has 36 bits of addressing, so its same as pentium
-         with pse36 ON.
-         """
-@@ -130,9 +117,6 @@ def test_phybits_ok_pentium2(self):
- 
-     def test_phybits_low_nonpse36(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Pentium processor has 32 bits of addressing without pse36 or pae
-         so it can access physical address up to 4 GiB. Setting maxmem to
-         4 GiB should make QEMU fail to start with "phys-bits too low"
-@@ -153,9 +137,6 @@ def test_phybits_low_nonpse36(self):
-     # now lets test some 64-bit CPU cases.
-     def test_phybits_low_tcg_q35_70_amd(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         For q35 7.1 machines and above, there is a HT window that starts at
-         1024 GiB and ends at 1 TiB - 1. If the max GPA falls in this range,
-         "above_4G" memory is adjusted to start at 1 TiB boundary for AMD cpus
-@@ -182,9 +163,6 @@ def test_phybits_low_tcg_q35_70_amd(self):
- 
-     def test_phybits_low_tcg_q35_71_amd(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         AMD_HT_START is defined to be at 1012 GiB. So for q35 machines
-         version > 7.0 and AMD cpus, instead of 1024 GiB limit for 40 bit
-         processor address space, it has to be 1012 GiB , that is 12 GiB
-@@ -205,9 +183,6 @@ def test_phybits_low_tcg_q35_71_amd(self):
- 
-     def test_phybits_ok_tcg_q35_70_amd(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Same as q35-7.0 AMD case except that here we check that QEMU can
-         successfully start when maxmem is < 988G.
-         """
-@@ -224,9 +199,6 @@ def test_phybits_ok_tcg_q35_70_amd(self):
- 
-     def test_phybits_ok_tcg_q35_71_amd(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Same as q35-7.1 AMD case except that here we check that QEMU can
-         successfully start when maxmem is < 976G.
-         """
-@@ -243,9 +215,6 @@ def test_phybits_ok_tcg_q35_71_amd(self):
- 
-     def test_phybits_ok_tcg_q35_71_intel(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Same parameters as test_phybits_low_tcg_q35_71_amd() but use
-         Intel cpu instead. QEMU should start fine in this case as
-         "above_4G" memory starts at 4G.
-@@ -264,9 +233,6 @@ def test_phybits_ok_tcg_q35_71_intel(self):
- 
-     def test_phybits_low_tcg_q35_71_amd_41bits(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         AMD processor with 41 bits. Max cpu hw address = 2 TiB.
-         By setting maxram above 1012 GiB  - 32 GiB - 4 GiB = 976 GiB, we can
-         force "above_4G" memory to start at 1 TiB for q35-7.1 machines
-@@ -291,9 +257,6 @@ def test_phybits_low_tcg_q35_71_amd_41bits(self):
- 
-     def test_phybits_ok_tcg_q35_71_amd_41bits(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         AMD processor with 41 bits. Max cpu hw address = 2 TiB.
-         Same as above but by setting maxram between 976 GiB and 992 Gib,
-         QEMU should start fine.
-@@ -312,9 +275,6 @@ def test_phybits_ok_tcg_q35_71_amd_41bits(self):
- 
-     def test_phybits_low_tcg_q35_intel_cxl(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         cxl memory window starts after memory device range. Here, we use 1 GiB
-         of cxl window memory. 4G_mem end aligns at 4G. pci64_hole is 32 GiB and
-         starts after the cxl memory window.
-@@ -335,9 +295,6 @@ def test_phybits_low_tcg_q35_intel_cxl(self):
- 
-     def test_phybits_ok_tcg_q35_intel_cxl(self):
-         """
--        :avocado: tags=machine:q35
--        :avocado: tags=arch:x86_64
--
-         Same as above but here we do not reserve any cxl memory window. Hence,
-         with the exact same parameters as above, QEMU should start fine even
-         with cxl enabled.
-@@ -352,3 +309,6 @@ def test_phybits_ok_tcg_q35_intel_cxl(self):
-         time.sleep(self.DELAY_Q35_BOOT_SEQUENCE)
-         self.vm.shutdown()
-         self.assertNotRegex(self.vm.get_log(), r'phys-bits too low')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/avocado/pc_cpu_hotplug_props.py b/tests/functional/test_pc_cpu_hotplug_props.py
-old mode 100644
-new mode 100755
-similarity index 90%
-rename from tests/avocado/pc_cpu_hotplug_props.py
-rename to tests/functional/test_pc_cpu_hotplug_props.py
-index 4bd3e02665..9d5a37cb17
---- a/tests/avocado/pc_cpu_hotplug_props.py
-+++ b/tests/functional/test_pc_cpu_hotplug_props.py
-@@ -1,3 +1,4 @@
-+#!/usr/bin/env python3
- #
- # Ensure CPU die-id can be omitted on -device
- #
-@@ -20,16 +21,16 @@
- # License along with this library; if not, see <http://www.gnu.org/licenses/>.
- #
- 
--from avocado_qemu import QemuSystemTest
-+from qemu_test import QemuSystemTest
- 
- class OmittedCPUProps(QemuSystemTest):
--    """
--    :avocado: tags=arch:x86_64
--    :avocado: tags=cpu:qemu64
--    """
-+
-     def test_no_die_id(self):
-         self.vm.add_args('-nodefaults', '-S')
-         self.vm.add_args('-smp', '1,sockets=2,cores=2,threads=2,maxcpus=8')
-         self.vm.add_args('-device', 'qemu64-x86_64-cpu,socket-id=1,core-id=0,thread-id=0')
-         self.vm.launch()
-         self.assertEqual(len(self.vm.cmd('query-cpus-fast')), 2)
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/avocado/virtio_version.py b/tests/functional/test_virtio_version.py
-old mode 100644
-new mode 100755
-similarity index 98%
-rename from tests/avocado/virtio_version.py
-rename to tests/functional/test_virtio_version.py
-index afe5e828b5..eb23060564
---- a/tests/avocado/virtio_version.py
-+++ b/tests/functional/test_virtio_version.py
-@@ -1,3 +1,4 @@
-+#!/usr/bin/env python3
- """
- Check compatibility of virtio device types
- """
-@@ -12,7 +13,7 @@
- import os
- 
- from qemu.machine import QEMUMachine
--from avocado_qemu import QemuSystemTest
-+from qemu_test import QemuSystemTest
- 
- # Virtio Device IDs:
- VIRTIO_NET = 1
-@@ -60,8 +61,6 @@ class VirtioVersionCheck(QemuSystemTest):
-     Check if virtio-version-specific device types result in the
-     same device tree created by `disable-modern` and
-     `disable-legacy`.
--
--    :avocado: tags=arch:x86_64
-     """
- 
-     # just in case there are failures, show larger diff:
-@@ -173,3 +172,6 @@ def test_modern_only_devs(self):
-         self.check_modern_only('virtio-mouse-pci', VIRTIO_INPUT)
-         self.check_modern_only('virtio-tablet-pci', VIRTIO_INPUT)
-         self.check_modern_only('virtio-keyboard-pci', VIRTIO_INPUT)
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+ [docs]
+ # Please keep the installed versions in sync with docs/requirements.txt
 -- 
 2.45.2
 
