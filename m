@@ -4,90 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B379C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 21:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE930C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 21:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYuot-00045p-2l; Tue, 30 Jul 2024 17:55:47 -0400
+	id 1sYurr-0008Q8-6C; Tue, 30 Jul 2024 17:58:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sYuor-00045I-DK
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 17:55:45 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sYuop-0002u8-4a
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 17:55:44 -0400
-Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46ULN3au025278;
- Tue, 30 Jul 2024 21:55:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=pp1; bh=54QxnoIfTYgpZ2igM8irFJMiO8
- 75+1J60Q8Am2iQT4M=; b=VhrTSi1I5B3uNjhg4syBZytXWtWu/lb83xrQpeKuyF
- lCsV2JZb/dQSFhXBTDGl4T88S7ypP3Xdv/MUkmmVIKZS7JdKtT1SL3kIhE3NMwMM
- KVtxa5F4TVddikIxXp/sdK5aYHITY3kYV3zqy0ohw1OBFYvUnCmWgKG3bTJaVL+k
- /1J/UkvLDHVbeV9XZEj4A4gJko6XtqhBKonayriaTDZ1GmsHzTvbKu2PQXVaC9st
- 3oTUGcQF62ayGtjDnt10iNwcfPG3o7kk9Qkcsr6iL41MC8oSFAHFhQY2duxFqu9Y
- 1vyJB4BuAI3kXp/4BLmOTRlz5vwgCXNcClvH2MWOaxhg==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40q5xf0fnb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jul 2024 21:55:39 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 46ULHgOC009211; Tue, 30 Jul 2024 21:55:38 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 40ndx2y9nf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jul 2024 21:55:38 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 46ULtZbU8126888
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Jul 2024 21:55:37 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 162452004B;
- Tue, 30 Jul 2024 21:55:35 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BD6A420043;
- Tue, 30 Jul 2024 21:55:34 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.30.41])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 30 Jul 2024 21:55:34 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH] linux-user/main: Allow setting tb-size
-Date: Tue, 30 Jul 2024 23:54:57 +0200
-Message-ID: <20240730215532.1442-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.45.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 3vO_gS9AmXrhRafLypkW8bwJUzjFdeKh
-X-Proofpoint-GUID: 3vO_gS9AmXrhRafLypkW8bwJUzjFdeKh
+ (Exim 4.90_1) (envelope-from <danny_canter@apple.com>)
+ id 1sYuro-0008PZ-1a
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 17:58:48 -0400
+Received: from ma-mailsvcp-mx-lapp02.apple.com ([17.32.222.23])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <danny_canter@apple.com>)
+ id 1sYurm-0003BM-HJ
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 17:58:47 -0400
+Received: from rn-mailsvcp-mta-lapp04.rno.apple.com
+ (rn-mailsvcp-mta-lapp04.rno.apple.com [10.225.203.152])
+ by ma-mailsvcp-mx-lapp02.apple.com
+ (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
+ 2023)) with ESMTPS id <0SHG00MPTI5J0F10@ma-mailsvcp-mx-lapp02.apple.com> for
+ qemu-devel@nongnu.org; Tue, 30 Jul 2024 14:53:43 -0700 (PDT)
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-30_17,2024-07-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- lowpriorityscore=0 spamscore=0 suspectscore=0 clxscore=1011
- mlxlogscore=851 phishscore=0 adultscore=0 priorityscore=1501 mlxscore=0
- malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407300151
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com; h=cc :
+ content-transfer-encoding : content-type : date : from : in-reply-to :
+ message-id : mime-version : references : subject : to; s=20180706;
+ bh=H6K//kzbaNjOf4Z6dSWHpNChGyR9ein+SUNiFDEvSgY=;
+ b=lelmlupUc3lwAgqqcs45zoekS+E9l4XGy/CsPbHtu5GuUFlwDF5mcqIbV6fZypHwF8Qk
+ z4TSbb9Kfm5nvwtRAEFJPP5aLRFdpxH6ZD0s2/KkAJqD8lBitf1MFFx8V7U8lcVwr5Xz
+ eSfljAqkdVtub20pzM6fZX/8sNMMxYhrgZBmmJL891bDkdP3AkveHgZlFYf5JkKQocCz
+ Le6hiw7Fl4bFPQBx1Qb+WGm6gsmLmibFDC2H8jE/bbZNkt+KCoqVhZ0tg42I5Ec6x/Rv
+ DAOkEXCFSQ/sebIeEjX8TG7kDPE0Na0bNgDimo720dIyGrLNKDuPltZ9IXJ+7YKLD3qj iw==
+Received: from rn-mailsvcp-mmp-lapp04.rno.apple.com
+ (rn-mailsvcp-mmp-lapp04.rno.apple.com [17.179.253.17])
+ by rn-mailsvcp-mta-lapp04.rno.apple.com
+ (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
+ 2023)) with ESMTPS id <0SHG00YKDI5IMIN0@rn-mailsvcp-mta-lapp04.rno.apple.com>; 
+ Tue, 30 Jul 2024 14:53:42 -0700 (PDT)
+Received: from process_milters-daemon.rn-mailsvcp-mmp-lapp04.rno.apple.com by
+ rn-mailsvcp-mmp-lapp04.rno.apple.com
+ (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
+ 2023)) id <0SHG00X00HXR8500@rn-mailsvcp-mmp-lapp04.rno.apple.com>; Tue,
+ 30 Jul 2024 14:53:42 -0700 (PDT)
+X-Va-A: 
+X-Va-T-CD: 9be860c946f6cbc0801dd392535b1c06
+X-Va-E-CD: 6e8d677d3901fd5b58b190047ca79016
+X-Va-R-CD: 4206bda14c83e153d471243933acbb53
+X-Va-ID: 4bc6cea4-1786-4bfe-8938-41b0639e5136
+X-Va-CD: 0
+X-V-A: 
+X-V-T-CD: 9be860c946f6cbc0801dd392535b1c06
+X-V-E-CD: 6e8d677d3901fd5b58b190047ca79016
+X-V-R-CD: 4206bda14c83e153d471243933acbb53
+X-V-ID: 5bb79c9b-c26d-4e54-ac1a-a746214c5fb6
+X-V-CD: 0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-30_17,2024-07-30_01,2024-05-17_01
+Received: from smtpclient.apple (unknown [17.243.209.248])
+ by rn-mailsvcp-mmp-lapp04.rno.apple.com
+ (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
+ 2023))
+ with ESMTPSA id <0SHG00ILTI5IDP00@rn-mailsvcp-mmp-lapp04.rno.apple.com>; Tue,
+ 30 Jul 2024 14:53:42 -0700 (PDT)
+Content-type: text/plain; charset=utf-8
+MIME-version: 1.0 (Mac OS X Mail 16.0 \(3774.300.61.1.2\))
+Subject: Re: [PATCH] hvf: arm: Allow creating VMs with > 63GB of RAM on macOS
+ 15+
+From: Danny Canter <danny_canter@apple.com>
+In-reply-to: <CAFEAcA9Y3yNoOQp+Ei3M4mtOyeMKAh9fD9_WBimrSYETxFkUhA@mail.gmail.com>
+Date: Tue, 30 Jul 2024 14:53:31 -0700
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Cameron Esfahani <dirty@apple.com>, rbolshakov@ddn.com, agraf@csgraf.de
+Content-transfer-encoding: quoted-printable
+Message-id: <8CEBAF31-2582-45B5-B391-DE4F392EB932@apple.com>
+References: <20240718230031.69641-1-danny_canter@apple.com>
+ <CAFEAcA9Y3yNoOQp+Ei3M4mtOyeMKAh9fD9_WBimrSYETxFkUhA@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+X-Mailer: Apple Mail (2.3774.300.61.1.2)
+Received-SPF: pass client-ip=17.32.222.23; envelope-from=danny_canter@apple.com;
+ helo=ma-mailsvcp-mx-lapp02.apple.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,60 +109,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While qemu-system can set tb-size using -accel tcg,tb-size=n, there
-is no similar knob for qemu-user. Add one in a way similar to how
-one-insn-per-tb is already handled.
+Thanks Peter!=20
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- linux-user/main.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+For the macOS 13 comment just so I=E2=80=99m clear, you=E2=80=99re =
+saying the minimum we support is
+13 now so the conditional compilation for those isn=E2=80=99t required =
+anymore as well? I suppose
+that tracks given the wording that we support the last two macOS =
+releases at any given
+time, that kind of slipped my mind when thinking about what actually =
+needs to be ifdef=E2=80=99d
+here. That certainly cleans things up a bit for some of the functions in =
+this patch.
 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index d502945222b..6c5123aac57 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -72,6 +72,7 @@ char *exec_path;
- char real_exec_path[PATH_MAX];
- 
- static bool opt_one_insn_per_tb;
-+static unsigned long opt_tb_size;
- static const char *argv0;
- static const char *gdbstub;
- static envlist_t *envlist;
-@@ -418,6 +419,13 @@ static void handle_arg_one_insn_per_tb(const char *arg)
-     opt_one_insn_per_tb = true;
- }
- 
-+static void handle_arg_tb_size(const char *arg)
-+{
-+    if (qemu_strtoul(arg, NULL, 0, &opt_tb_size)) {
-+        usage(EXIT_FAILURE);
-+    }
-+}
-+
- static void handle_arg_strace(const char *arg)
- {
-     enable_strace = true;
-@@ -507,6 +515,8 @@ static const struct qemu_argument arg_table[] = {
-     {"one-insn-per-tb",
-                    "QEMU_ONE_INSN_PER_TB",  false, handle_arg_one_insn_per_tb,
-      "",           "run with one guest instruction per emulated TB"},
-+    {"tb-size",    "QEMU_TB_SIZE",     true,  handle_arg_tb_size,
-+     "size",       "TCG translation block cache size"},
-     {"strace",     "QEMU_STRACE",      false, handle_arg_strace,
-      "",           "log system calls"},
-     {"seed",       "QEMU_RAND_SEED",   true,  handle_arg_seed,
-@@ -803,6 +813,8 @@ int main(int argc, char **argv, char **envp)
-         accel_init_interfaces(ac);
-         object_property_set_bool(OBJECT(accel), "one-insn-per-tb",
-                                  opt_one_insn_per_tb, &error_abort);
-+        object_property_set_int(OBJECT(accel), "tb-size",
-+                                opt_tb_size, &error_abort);
-         ac->init_machine(NULL);
-     }
- 
--- 
-2.45.2
+=E2=80=94 Danny=20
+
+> On Jul 29, 2024, at 9:27=E2=80=AFAM, Peter Maydell =
+<peter.maydell@linaro.org> wrote:
+>=20
+> On Fri, 19 Jul 2024 at 00:03, Danny Canter <danny_canter@apple.com> =
+wrote:
+>>=20
+>> This patch's main focus is to enable creating VMs with > 63GB
+>> of RAM on Apple Silicon machines by using some new HVF APIs. In
+>> pursuit of this a couple of things related to how we handle the
+>> physical address range we expose to guests were altered:
+>=20
+> Hi -- this is just a note to say that this patch is on my
+> todo list to review, I just haven't got to it yet. (Unfortunately
+> it's just missed the cutoff for the upcoming 9.1 release, and
+> I've been prioritising the for-9.1 stuff.)
+>=20
+> I did see one thing from an initial quick eyeball, but
+> don't bother respinning the patchset just to change that:
+> I'll do an actual review hopefully in the next week or so.
+>=20
+>> +static uint32_t hvf_get_default_ipa_bit_size(void)
+>> +{
+>> +    uint32_t default_ipa_size =3D 36;
+>> +#if defined(MAC_OS_VERSION_13_0) && \
+>> +    MAC_OS_X_VERSION_MIN_REQUIRED >=3D MAC_OS_VERSION_13_0
+>> +    hv_return_t ret =3D =
+hv_vm_config_get_default_ipa_size(&default_ipa_size);
+>> +    assert_hvf_ok(ret);
+>> +#endif
+>=20
+> You can assume we have at least macos 13 or better -- our
+> minimum supported build platform is at least that new,
+> and we already dropped some 10.12-and-earlier compat
+> ifdefs (see commit 2d27c91e2b72ac7).
+>=20
+>> +    return default_ipa_size;
+>> +}
+>=20
+> thanks
+> -- PMM
 
 
