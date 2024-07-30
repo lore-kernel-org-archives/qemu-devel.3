@@ -4,76 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA303C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 15:00:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10E2DC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 15:06:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYoKa-0008Gy-Vv; Tue, 30 Jul 2024 11:00:05 -0400
+	id 1sYoQ7-00010L-4y; Tue, 30 Jul 2024 11:05:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYoKY-000898-0e
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 11:00:02 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1sYoQ5-0000yx-2e
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 11:05:45 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYoKN-0002Xp-P3
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 10:59:53 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5a15692b6f6so7411346a12.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 07:59:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1sYoQ2-00041J-Ek
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 11:05:44 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2ef298ff716so8604761fa.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 08:05:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722351589; x=1722956389; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722351939; x=1722956739;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=X+YyCrckRX8H9pZEbUF5NNg6CdwLDaRPsarTOkvTLWE=;
- b=qZkhcjAmgbw4e+gU9Fbc/bQe0wCoBlX8itqbZ/ob6mO8HBbEHvDoB0tDchD9yjjaDe
- jdtZo1TKzZS1/mV3tl+CjGQDnYbj0+amLVKbqzS+eqFu5LAJ0TkT6Q2UhXNH/5SJrSyO
- JbihmiiB075cM75UepFNGJ5kUMy0ClmnYfmogT7LAOBuVqMHRyzZCA2WPj7p96D8jg/W
- aA4xvkz7iYxc7Jcf2ALglvHBJwvEFi35f8EAMqVmU70vuNRDfS2KGhioy/4BRWN+hn6q
- xJyk1Ip/cMUGigXi5+Jg9j2PZ2JMJVNCFjoRJ6sTTvfIGnQ/LWOpUWEjTJDJfsrC3+/g
- CQ7g==
+ bh=MD3SZjQaELpHhaRRsED0fgSL5OizI87LWpY75t1A8Zw=;
+ b=YbQO36ClSzLyvQLjUcQpdnXnnPoq6A/FD0NDRyT+9Wwy+9zoImhAXqkbOIoIB/YqWH
+ O6IpmOi25bRGzrG8kJYfdDeARXzTilZdSs0AG7BWIzr1toQDfGoaq9qFyQWJLd11hQP3
+ n1wsx+kwvzzDj/52/+j/bY0eRwlbEHZ47IHN0PC08QTYAxTQruubghHCqriWrg97v9vX
+ APWYt683uuItJpWAL1Ex9rXT/c0tl63J42sxqa8irYsOtjsBGPPK5KasMFIF2bHLUqnS
+ BCUIwjjWu9xKLQVeqS8b+F5U5J7/KTSSG8DF8BDR0eQuTz5KyR2zvgtu8xF2/C35QtE9
+ xjyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722351589; x=1722956389;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1722351939; x=1722956739;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=X+YyCrckRX8H9pZEbUF5NNg6CdwLDaRPsarTOkvTLWE=;
- b=jZUUxrcvKPEULSAyUIybCvyf5PhEuF7fpGXkn0iotkgB3YPiLlmmXbLJROZYAUY2Fb
- dBSMS1JG8PRPrwpYYZbNlp0YQdwmJe1WIjdcNWMpiVAwd7n2euo56avWn89Ohl802KFM
- BaO65qNu0HzxC0Z2y/9V+QleBeBmAwgXOp+QimyrOOXQ2WOO499eZbh7LXuZMwQjhl8G
- HJDrNXjuRllaztO4GTNImjgbmflFwJ4LpMR4kx0pBzcGrq0gWEwIJc4qFL8vXIAbx3Z/
- 0CDK/muyOVhHeAF/FspSX3hlO1AwkRq0p/aKl6NfK54i8VpfhlmbowbMeJhu6HM/u6S9
- hKuQ==
-X-Gm-Message-State: AOJu0YzXPM4u80JpY6sL0WEc5wIExEoakTXzXW80Ec+C7BFAKalajk9T
- DVk0wOkfjuFZFrDEkU8ZBPA7luEhq1nz4u6URYcwnb5LkRX/xe58I+83EeAf9y2iAUKaib9HhPl
- W6fBwkAo5+4b42RY3RrSij+1NjOF7mHT51lkIwQ==
-X-Google-Smtp-Source: AGHT+IGBd00lerOJqK4cG/pzyBjKY7Pwi4AcSJatZZt17O34mPtQi9bvrqsdeULgBHXIu/kisiDGqI+lLwq/1mltrEk=
-X-Received: by 2002:a50:9501:0:b0:5a2:6350:75ac with SMTP id
- 4fb4d7f45d1cf-5b020101fb1mr7229393a12.8.1722351589080; Tue, 30 Jul 2024
- 07:59:49 -0700 (PDT)
+ bh=MD3SZjQaELpHhaRRsED0fgSL5OizI87LWpY75t1A8Zw=;
+ b=Ci0IrINsOQHqa9wZppv8vFS7MtdIa92wxWDRnjrY490h6hxOcI7M5MUKxYv0GMZ6XY
+ 3flXkuOoDUC4v4ezy6N7U+R5RP/tE00ZHjVuvbNPtmfP64eJbC4GAkjX0l+X2s66x1ou
+ ilTKlBEcoPQpCK8QNXDctZVUd8cWC+oNU7XTr2AE8G22Ycp8jhC0qCDuUEPTFaRkSuEt
+ ujwpAbcp28wpWRQ62tBsLEfTav0/bdmDEkTyqtoojXf5DlQ9IjKYP0WWJbyxiKCOSFef
+ hvFx/yyRrarvhYOc46I7jm7ZUDHzFlBTYOPd7S4AEbPkPAQpm4WgSqeW1OCW22BSUpms
+ Uznw==
+X-Gm-Message-State: AOJu0YzPDqKdfoq5nwHek2IrojGZVko6Gth6+4eYJaLWqF1wJLQlIKJt
+ ajT363YkhLqLQTY9Y1NjHS/jViuHHhbEPePKVH49ToniGQKRryZM/Ad+9Wwx5CHeMFbHu2qhThn
+ Mqpk=
+X-Google-Smtp-Source: AGHT+IHriaT1wvvutTP7Qzjy0U75fJZvDUaiSh3bdM3D+wHZsXRb9cA2f7bzk4c+4JC/Js4jE2GHRg==
+X-Received: by 2002:a5d:5f49:0:b0:360:8490:74d with SMTP id
+ ffacd0b85a97d-36b34d240a7mr7415237f8f.5.1722342285039; 
+ Tue, 30 Jul 2024 05:24:45 -0700 (PDT)
+Received: from carbon-x1.. ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36b36862549sm14577757f8f.106.2024.07.30.05.24.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Jul 2024 05:24:44 -0700 (PDT)
+From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v6 4/5] qemu/osdep: Add excluded fd parameter to
+ qemu_close_all_open_fd()
+Date: Tue, 30 Jul 2024 14:24:27 +0200
+Message-ID: <20240730122437.1749603-5-cleger@rivosinc.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240730122437.1749603-1-cleger@rivosinc.com>
+References: <20240730122437.1749603-1-cleger@rivosinc.com>
 MIME-Version: 1.0
-References: <20240729122553.2501133-1-peter.maydell@linaro.org>
- <CABgObfbBQsQjfktUmdECiC8mtrLdVK4R=3=bJTjZhqNh7EXvxw@mail.gmail.com>
-In-Reply-To: <CABgObfbBQsQjfktUmdECiC8mtrLdVK4R=3=bJTjZhqNh7EXvxw@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 30 Jul 2024 15:59:37 +0100
-Message-ID: <CAFEAcA_0FuP6Fh52=v9je858VHdgr5uN11Dn71hYFJW=o-OQ4w@mail.gmail.com>
-Subject: Re: [RFC] pythondeps: Split sphinx_rtd_theme into its own group
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=cleger@rivosinc.com; helo=mail-lj1-x234.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,119 +100,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 30 Jul 2024 at 15:50, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> On Mon, Jul 29, 2024 at 2:26=E2=80=AFPM Peter Maydell <peter.maydell@lina=
-ro.org> wrote:
-> >
-> > Currently we have "sphinx" and "sphinx_rtd_theme" in a single
-> > group in pythondeps.toml. This means that mkvenv will try to
-> > install them both at once, which doesn't work if sphinx_rtd_theme
-> > depends on a version of Sphinx which is newer than the system
-> > one, even if the "sphinx" we're installing at the same time
-> > would satisfy that dependency. For instance this:
-> >
-> >  sphinx =3D { accepted =3D ">=3D8.0.0rc1", installed =3D "8.0.0rc1", ca=
-nary =3D "sphinx-build" }
-> >  sphinx_rtd_theme =3D { accepted =3D ">=3D2.1.0rc1", installed =3D "2.1=
-.0rc1" }
-> >
-> > fails like this:
-> >
-> > mkvenv: Creating non-isolated virtual environment at 'pyvenv'
-> > mkvenv: checking for meson>=3D1.1.0
-> > mkvenv: installing meson=3D=3D1.2.3
-> > mkvenv: checking for sphinx>=3D8.0.0rc1
-> > mkvenv: checking for sphinx_rtd_theme>=3D2.1.0rc1
-> > mkvenv: installing sphinx=3D=3D8.0.0rc1, sphinx_rtd_theme=3D=3D2.1.0rc1
-> > ERROR: Cannot install sphinx-rtd-theme=3D=3D2.1.0rc1 and sphinx=3D=3D8.=
-0.0rc1 because these package versions have conflicting dependencies.
-> > ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/late=
-st/topics/dependency-resolution/#dealing-with-dependency-conflicts
-> >
-> > *** Ouch! ***
-> >
-> > Could not provide build dependency 'sphinx=3D=3D8.0.0rc1':
-> >  =E2=80=A2 Python package 'sphinx' version '4.3.2' was found, but isn't=
- suitable.
-> >  =E2=80=A2 A suitable version could not be obtained from PyPI.
-> >
-> > (where 4.3.2 is the system version of sphinx on my system).
->
-> I think the error is a bit confusing, but the versions seem to be
-> genuinely incompatibile. sphinx_rtd_theme is still incompatible with
-> sphinx 8.0.0, and the error is correct:
->
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D
-> $ python -m venv testvenv
-> $ cd testvenv
-> $ pip install 'sphinx=3D=3D8.0.0rc1' 'sphinx_rtd_theme=3D=3D2.1.0rc1'
-> Defaulting to user installation because normal site-packages is not write=
-able
-> Collecting sphinx=3D=3D8.0.0rc1
->   Downloading sphinx-8.0.0rc1-py3-none-any.whl.metadata (6.2 kB)
-> Collecting sphinx_rtd_theme=3D=3D2.1.0rc1
->   Downloading sphinx_rtd_theme-2.1.0rc1-py2.py3-none-any.whl.metadata (4.=
-4 kB)
-> Collecting sphinxcontrib-applehelp (from sphinx=3D=3D8.0.0rc1)
->   Downloading sphinxcontrib_applehelp-2.0.0-py3-none-any.whl.metadata (2.=
-3 kB)
-> Requirement already satisfied: sphinxcontrib-devhelp in
-> /usr/lib/python3.12/site-packages (from sphinx=3D=3D8.0.0rc1) (1.0.5)
-> [more "requirement already satisfied" lines...]
-> Requirement already satisfied: packaging>=3D23.0 in
-> /usr/lib/python3.12/site-packages (from sphinx=3D=3D8.0.0rc1) (23.2)
-> INFO: pip is looking at multiple versions of sphinx-rtd-theme to
-> determine which version is compatible with other requirements. This
-> could take a while.
-> ERROR: Cannot install sphinx-rtd-theme=3D=3D2.1.0rc1 and sphinx=3D=3D8.0.=
-0rc1
-> because these package versions have conflicting dependencies.
->
-> The conflict is caused by:
->     The user requested sphinx=3D=3D8.0.0rc1
->     sphinx-rtd-theme 2.1.0rc1 depends on sphinx<8 and >=3D5
-> To fix this you could try to:
-> 1. loosen the range of package versions you've specified
-> 2. remove package versions to allow pip attempt to solve the dependency c=
-onflict
->
-> ERROR: ResolutionImpossible: for help visit
-> https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-=
-dependency-conflicts
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> The reason why your patch works is weird, and it's apparent when you
-> run the "pip install" commands one by one:
->
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D
-> $ pip install 'sphinx_rtd_theme=3D=3D2.1.0rc1'
-> Defaulting to user installation because normal site-packages is not write=
-able
-> Collecting sphinx_rtd_theme=3D=3D2.1.0rc1
->   Using cached sphinx_rtd_theme-2.1.0rc1-py2.py3-none-any.whl.metadata (4=
-.4 kB)
-> Collecting sphinx<8,>=3D5 (from sphinx_rtd_theme=3D=3D2.1.0rc1)
->   Downloading sphinx-7.4.7-py3-none-any.whl.metadata (6.1 kB)
-> Requirement already satisfied: docutils<0.21 in
-> /usr/lib/python3.12/site-packages (from sphinx_rtd_theme=3D=3D2.1.0rc1)
-> (0.20.1)
-> [more "requirement already satisfied" lines...]
-> Downloading sphinx_rtd_theme-2.1.0rc1-py2.py3-none-any.whl (7.7 MB)
-> Downloading sphinx-7.4.7-py3-none-any.whl (3.4 MB)
-> Installing collected packages: sphinx, sphinx_rtd_theme
->   Attempting uninstall: sphinx
->     Found existing installation: Sphinx 8.0.0rc1
->     Uninstalling Sphinx-8.0.0rc1:
->       Successfully uninstalled Sphinx-8.0.0rc1
-> Successfully installed sphinx-7.4.7 sphinx_rtd_theme-2.1.0rc1
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> It doesn't install 8.0.0rc1 at all... :)
+In order for this function to be usable by tap.c code, add a list of
+file descriptors that should not be closed.
 
-Aha. Is it possible to get mkvenv to produce these full
-error messages rather than the truncated version?
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+---
+ include/qemu/osdep.h    |  8 +++-
+ system/async-teardown.c |  2 +-
+ util/oslib-posix.c      | 99 ++++++++++++++++++++++++++++++++++-------
+ 3 files changed, 91 insertions(+), 18 deletions(-)
 
-thanks
--- PMM
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index 5cd8517380..0bf6f0a356 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -760,9 +760,13 @@ int qemu_fdatasync(int fd);
+ /**
+  * qemu_close_all_open_fd:
+  *
+- * Close all open file descriptors
++ * Close all open file descriptors except the ones supplied in the @skip array
++ *
++ * @skip: ordered array of distinct file descriptors that should not be closed
++ *        if any, or NULL.
++ * @nskip: number of entries in the @skip array or 0 if @skip is NULL.
+  */
+-void qemu_close_all_open_fd(void);
++void qemu_close_all_open_fd(const int *skip, unsigned int nskip);
+ 
+ /**
+  * Sync changes made to the memory mapped file back to the backing
+diff --git a/system/async-teardown.c b/system/async-teardown.c
+index edf49e1007..9148ee8d04 100644
+--- a/system/async-teardown.c
++++ b/system/async-teardown.c
+@@ -52,7 +52,7 @@ static int async_teardown_fn(void *arg)
+      * Close all file descriptors that might have been inherited from the
+      * main qemu process when doing clone, needed to make libvirt happy.
+      */
+-    qemu_close_all_open_fd();
++    qemu_close_all_open_fd(NULL, 0);
+ 
+     /* Set up a handler for SIGHUP and unblock SIGHUP. */
+     sigaction(SIGHUP, &sa, NULL);
+diff --git a/util/oslib-posix.c b/util/oslib-posix.c
+index a6749d9f9b..e7bffaea16 100644
+--- a/util/oslib-posix.c
++++ b/util/oslib-posix.c
+@@ -808,11 +808,14 @@ int qemu_msync(void *addr, size_t length, int fd)
+     return msync(addr, length, MS_SYNC);
+ }
+ 
+-static bool qemu_close_all_open_fd_proc(void)
++
++static bool qemu_close_all_open_fd_proc(const int *skip, unsigned int nskip)
+ {
+     struct dirent *de;
+     int fd, dfd;
++    bool close_fd;
+     DIR *dir;
++    unsigned int i, skip_start = 0, skip_end = nskip;
+ 
+     dir = opendir("/proc/self/fd");
+     if (!dir) {
+@@ -823,8 +826,31 @@ static bool qemu_close_all_open_fd_proc(void)
+     dfd = dirfd(dir);
+ 
+     for (de = readdir(dir); de; de = readdir(dir)) {
++        if (de->d_name[0] == '.') {
++            continue;
++        }
+         fd = atoi(de->d_name);
+-        if (fd != dfd) {
++        close_fd = true;
++        if (fd == dfd) {
++            close_fd = false;
++        } else {
++            for (i = skip_start; i < skip_end; i++) {
++                if (fd < skip[i]) {
++                    /* We are below the next skipped fd, break */
++                    break;
++                } else if (fd == skip[i]) {
++                    close_fd = false;
++                    /* Restrict the range as we found fds matching start/end */
++                    if (i == skip_start) {
++                        skip_start++;
++                    } else if (i == skip_end) {
++                        skip_end--;
++                    }
++                    break;
++                }
++            }
++        }
++        if (close_fd) {
+             close(fd);
+         }
+     }
+@@ -833,36 +859,79 @@ static bool qemu_close_all_open_fd_proc(void)
+     return true;
+ }
+ 
+-static bool qemu_close_all_open_fd_close_range(void)
++static bool qemu_close_all_open_fd_close_range(const int *skip,
++                                               unsigned int nskip)
+ {
+ #ifdef CONFIG_CLOSE_RANGE
+-    int r = close_range(0, ~0U, 0);
+-    if (!r) {
+-        /* Success, no need to try other ways. */
+-        return true;
+-    }
+-#endif
++    int max_fd = sysconf(_SC_OPEN_MAX) - 1;
++    int first = 0, last = max_fd;
++    unsigned int cur_skip = 0;
++    int ret;
++
++    do {
++        /* Find the start boundary of the range to close */
++        while (cur_skip < nskip && first == skip[cur_skip]) {
++            cur_skip++;
++            first++;
++        }
++
++        /* Find the upper boundary of the range to close */
++        if (cur_skip < nskip) {
++            last = skip[cur_skip] - 1;
++        }
++        /*
++         * Adjust the maximum fd to close if it's above what the system
++         * supports
++         */
++        if (last > max_fd) {
++            last = max_fd;
++            /*
++             * We can directly skip the remaining skip fds since the current
++             * one is already above the maximum supported one.
++             */
++            cur_skip = nskip;
++        }
++        /* If last was adjusted, we might be > first, bail out */
++        if (first > last) {
++            break;
++        }
++
++        ret = close_range(first, last, 0);
++        if (ret < 0) {
++            return false;
++        }
++        first = last + 1;
++        last = max_fd;
++    } while (cur_skip < nskip);
++
++    return true;
++#else
+     return false;
++#endif
+ }
+ 
+-/*
+- * Close all open file descriptors.
+- */
+-void qemu_close_all_open_fd(void)
++void qemu_close_all_open_fd(const int *skip, unsigned int nskip)
+ {
+     int open_max = sysconf(_SC_OPEN_MAX);
++    unsigned int cur_skip = 0;
+     int i;
+ 
+-    if (qemu_close_all_open_fd_close_range()) {
++    assert(skip != NULL || nskip == 0);
++
++    if (qemu_close_all_open_fd_close_range(skip, nskip)) {
+         return;
+     }
+ 
+-    if (qemu_close_all_open_fd_proc()) {
++    if (qemu_close_all_open_fd_proc(skip, nskip)) {
+         return;
+     }
+ 
+     /* Fallback */
+     for (i = 0; i < open_max; i++) {
++        if (cur_skip < nskip && i == skip[cur_skip]) {
++            cur_skip++;
++            continue;
++        }
+         close(i);
+     }
+ }
+-- 
+2.45.2
+
 
