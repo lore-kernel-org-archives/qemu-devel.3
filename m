@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A3D8C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BF03C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:06:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYink-0005wh-DP; Tue, 30 Jul 2024 05:05:48 -0400
+	id 1sYioi-0002Kt-SD; Tue, 30 Jul 2024 05:06:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYini-0005p5-N3
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:05:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1sYioh-0002EW-Cr
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:06:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYing-0002RB-3P
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:05:46 -0400
+ id 1sYiof-0002eX-Bl
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:06:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722330343;
+ s=mimecast20190719; t=1722330404;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QmvJ7nhOuNxxZ8osbvd0dOI7VfRiguK8Roi861qMoQQ=;
- b=FmwuHu5/X0X8jtdgJ8KmMfRe9+Lzj3WzTUZJytw/ZQx9PcQBW221IFSLnCAOusPp8oBKPl
- q9Yw1QpsAopeXWfzyDB23FiM5yvF8aN2DpYHS1m6fdzBjcSRJ0vLzNIHqfmZrMkO/1EEus
- WW6mSqRRRO9rpX4eiZVHA00IPOh8CaU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=hD2wuqxPh2jNWtI+P8UeiNp+i2th2ceGYiWyfsYeooo=;
+ b=AR/veFBZujbjFNJ1erZrErmMSGOJ9SUIaWDncLNOz0ZB3u9VRF6Ho1h6g8hW4W0eDtWXUd
+ fIAL49GsyzQNYVYEo8/E6X1Zps3Z1sn9427NIntINgTfRdkg5xKGpbKcZ6bGqvW5U7iq1k
+ 7NdYcnJMLYImP2cXsuVsNcBOzYB2wzI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-385-BoRZ3pmpM-qSmoGzOfYTpg-1; Tue,
- 30 Jul 2024 05:05:39 -0400
-X-MC-Unique: BoRZ3pmpM-qSmoGzOfYTpg-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-216-W961CZLiMsejrsAvp2KgOQ-1; Tue,
+ 30 Jul 2024 05:06:41 -0400
+X-MC-Unique: W961CZLiMsejrsAvp2KgOQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2DCB71955F41; Tue, 30 Jul 2024 09:05:34 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 547981955BEE; Tue, 30 Jul 2024 09:06:36 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.108])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8DAEA19560AE; Tue, 30 Jul 2024 09:05:13 +0000 (UTC)
-Date: Tue, 30 Jul 2024 10:05:06 +0100
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 763D11955D42; Tue, 30 Jul 2024 09:06:20 +0000 (UTC)
+Date: Tue, 30 Jul 2024 10:06:16 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com,
@@ -69,25 +69,25 @@ Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com,
  yuri.benditovich@daynix.com, zhao1.liu@intel.com,
  qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  kvm@vger.kernel.org
-Subject: Re: [PATCH 16/18] qapi/crypto: Rename QCryptoAFAlg to QCryptoAFAlgo
-Message-ID: <Zqiswqkc0Ga754t6@redhat.com>
+Subject: Re: [PATCH 17/18] qapi/cryptodev: Drop unwanted 'prefix'
+Message-ID: <ZqitCCTOc_U0NRms@redhat.com>
 References: <20240730081032.1246748-1-armbru@redhat.com>
- <20240730081032.1246748-17-armbru@redhat.com>
+ <20240730081032.1246748-18-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240730081032.1246748-17-armbru@redhat.com>
+In-Reply-To: <20240730081032.1246748-18-armbru@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,19 +105,27 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 30, 2024 at 10:10:30AM +0200, Markus Armbruster wrote:
-> For consistency with other types names *Algo.
+On Tue, Jul 30, 2024 at 10:10:31AM +0200, Markus Armbruster wrote:
+> QAPI's 'prefix' feature can make the connection between enumeration
+> type and its constants less than obvious.  It's best used with
+> restraint.
+> 
+> QCryptodevBackendServiceType has a 'prefix' that overrides the
+> generated enumeration constants' prefix to QCRYPTODEV_BACKEND_SERVICE.
+> 
+> Drop it.  The prefix becomes QCRYPTODEV_BACKEND_SERVICE_TYPE.
 > 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  crypto/afalgpriv.h    | 14 +++++++-------
->  crypto/hmacpriv.h     |  2 +-
->  crypto/afalg.c        |  8 ++++----
->  crypto/cipher-afalg.c | 12 ++++++------
->  crypto/hash-afalg.c   | 14 +++++++-------
->  5 files changed, 25 insertions(+), 25 deletions(-)
+>  qapi/cryptodev.json             |  1 -
+>  backends/cryptodev-builtin.c    |  8 ++++----
+>  backends/cryptodev-lkcf.c       |  2 +-
+>  backends/cryptodev-vhost-user.c |  6 +++---
+>  backends/cryptodev.c            |  6 +++---
+>  hw/virtio/virtio-crypto.c       | 10 +++++-----
+>  6 files changed, 16 insertions(+), 17 deletions(-)
 
-Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
 
 With regards,
