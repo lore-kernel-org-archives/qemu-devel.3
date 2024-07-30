@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DE51C3DA70
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 16:35:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8BA9C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 16:35:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYpoz-0007FA-0C; Tue, 30 Jul 2024 12:35:33 -0400
+	id 1sYpow-000738-BB; Tue, 30 Jul 2024 12:35:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sYpoy-0007CY-C1
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:35:32 -0400
+ id 1sYpou-0006t7-4P
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:35:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sYpow-0005n9-Pd
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:35:31 -0400
+ id 1sYpos-0005l1-J8
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:35:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722357329;
+ s=mimecast20190719; t=1722357325;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gU4KL7Moiqu87bnz/09iJuwrZndoiDMXIGO3bUZjXbo=;
- b=JvvddD053Qa0PmkcO0le8N4DlWqH7i+CxQSqsY86Ht1d0tdclfwnwcQ3ifSBeF/5gMCeYt
- V6tKEM3vNpHSzSUJ42dLPXD7ii9aTgx9V1u6U1b8ooiVHhWec9bFBZ/fZioASzbt8w+fvs
- c/57XKJhl6uu+YdrjB95IiXknM/zukU=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8oybZ3SzlEScYaHLDt76yjBBSMfXFmJeutgYNIL1YBw=;
+ b=WrQAWg+uiZXmLrqvx/lCb0z+fSENdaPHLEPzvIUhjVNqUpqKNnc9B2KEr36Tk5SL8dlrfb
+ jxRmMvG8Fst28wwMGFyjfyx3RLmQLxGVZ9Eq3QGJiGWUQnglAVvpWePvcLjKclYoaFHOGk
+ tUk9U9MNsiGJg6Jw5JLFMt0ifU6SUho=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-169-8MrrKn0EP42Jl0QE0RLm1Q-1; Tue, 30 Jul 2024 12:35:27 -0400
-X-MC-Unique: 8MrrKn0EP42Jl0QE0RLm1Q-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a7bcaa94892so418994666b.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 09:35:27 -0700 (PDT)
+ us-mta-103-8JiB2Up4MwKy6sQi1vXzCw-1; Tue, 30 Jul 2024 12:35:24 -0400
+X-MC-Unique: 8JiB2Up4MwKy6sQi1vXzCw-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a7aa26f342cso431438566b.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 09:35:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722357326; x=1722962126;
+ d=1e100.net; s=20230601; t=1722357323; x=1722962123;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gU4KL7Moiqu87bnz/09iJuwrZndoiDMXIGO3bUZjXbo=;
- b=jkPcYbmEJPscSaXorRpp+dsJ5479tRKM17+GxDQti83FuU2dsQaQdQyYO1tRc6Tu7C
- z2u3HxxMmvk7YxZocta6k3lppa1nGsV1MuIRsK9X5duGFd859h1HaGwbVO+YbxAtOZ7s
- 0z0nK3vAkF0FlHAL3cS7AspcmjvPpcdiDvkTqqMQAnz8tBqKEaPgfmGFDM13i2adtGy7
- I6iCsq/6oADKAfpGWnB+Qks57mynPb9AHdmv0yKU7jlpAz8eWIbQOYKR4WL0pAPV7pPY
- OSUjvLCGMjScHo4kZg1Rgvslgp7BfllAHCf2Xns6ruLGbrucAxOsh1XAlDcdWkKFuald
- 8zng==
-X-Gm-Message-State: AOJu0YyEW6/Bfit8/36OazqE6SuJtx3IoYuBRUQMKxoVe9c4RwX0uD3+
- Td/7WKeBpV2lc8WmaeCCMchWt8vX7dcSBQ004zBRHfs9e70oi9Rn1xWobXbpRCO5V81TXcZOuau
- 3vtHsTs5lw45/uBHqndAotIhgERkOAratcauIA5AiVTEjVDdo6T/IR3udR6KcgOWkxFqrR0UjEB
- 86g5vXDlsbWJ2FhbTcn3elpryxMbs8FVrJbOht
-X-Received: by 2002:a17:907:9443:b0:a7a:aa35:4099 with SMTP id
- a640c23a62f3a-a7d3ffad2a9mr815191066b.26.1722357325674; 
- Tue, 30 Jul 2024 09:35:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG0CIcIIVtpD8t0KpIYltz2h/fHgkkVVjOZ3d47l/wPIUg4HxhMKXpaq3mDqxlZ51Md8LgAdA==
-X-Received: by 2002:a17:907:9443:b0:a7a:aa35:4099 with SMTP id
- a640c23a62f3a-a7d3ffad2a9mr815189166b.26.1722357325168; 
- Tue, 30 Jul 2024 09:35:25 -0700 (PDT)
+ bh=8oybZ3SzlEScYaHLDt76yjBBSMfXFmJeutgYNIL1YBw=;
+ b=cPDm4NODaw41Hw9t7/04vOF5dymYN4HIc2xmS57fvt0fXdEDb2/6BlUWDG8RZz/bX3
+ BPS/4l39IlHHryGWTGc0s2vWgkXaslf2nk5lazpdJYKNIGomYKskx31M0mKLxvdtxZ1B
+ 5oz5u/upCwKQsLSJJD6aDF8UdsCD1K05cNuLSWVhDdQIcE1jjWCp+1qj6AAbk+ZSy2uy
+ nmtuL1XniexMH/2O1jTkNK7wZjCJMwioyyfrWeSaUWeBge3FrYpPI4QXRq4JCkjKhyYo
+ lRmMt8jpeAlimaCVOwTj1Ovxp35h9rBPUx5OFy5rLlx/sgyIDRE0SJJ/XajccOTsyH1R
+ DmJA==
+X-Gm-Message-State: AOJu0Yx81nrSt6rAC4H/efSeLCiPpmEbi/3TaEOzu+U4iGP5Tut4npD0
+ a5U4dttF9bcRgzBh5qLHM1rJlV6mhTmBjF4wuRVY8Ran9tmPsYYJmGQGLwpnxBDe6z2pD34dHaj
+ FuJOzAJgeOYLnorF1kGCS3exVV1dz0b+ZLjzpb/h6V7LYCQ4yibsKbQTEbRWY6xDDk3hlDLEaWX
+ 4hciGnO3yYyMVZHJrvlJYtTmlCDvC6WytCKMMI
+X-Received: by 2002:a17:907:2da8:b0:a7a:a7b8:ada7 with SMTP id
+ a640c23a62f3a-a7d400746d3mr862766266b.24.1722357323054; 
+ Tue, 30 Jul 2024 09:35:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGmvq4Uelr00YF9mmINUcQe9XyVcrJR1KrVCD13O05oy9MV4yBmfpaM+BwcGXGIOQMzGECINw==
+X-Received: by 2002:a17:907:2da8:b0:a7a:a7b8:ada7 with SMTP id
+ a640c23a62f3a-a7d400746d3mr862765066b.24.1722357322643; 
+ Tue, 30 Jul 2024 09:35:22 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acadb9202sm656205966b.209.2024.07.30.09.35.24
+ a640c23a62f3a-a7acadbb8fasm665996966b.224.2024.07.30.09.35.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jul 2024 09:35:24 -0700 (PDT)
+ Tue, 30 Jul 2024 09:35:21 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: aharivel@redhat.com
-Subject: [PATCH 2/2] qemu-vmsr-helper: implement --verbose/-v
-Date: Tue, 30 Jul 2024 18:35:16 +0200
-Message-ID: <20240730163516.83566-3-pbonzini@redhat.com>
+Subject: [PATCH 1/2] qemu-vmsr-helper: fix socket loop breakage
+Date: Tue, 30 Jul 2024 18:35:15 +0200
+Message-ID: <20240730163516.83566-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730163516.83566-1-pbonzini@redhat.com>
 References: <20240730163516.83566-1-pbonzini@redhat.com>
@@ -102,49 +102,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Similar to qemu-pr-helper, do not print errors from the socket handling loop
-unless a --verbose or -v option is provided explicitly on the command line.
+Between v5 and v6 of the series, the socket loop of qemu-vmsr-helper was changed to
+allow sending multiple requests on the same socket.  Unfortunately, the condition
+of the while loop is botched and the loop will never be entered.  Clean it up, and
+also unify the handling of error reporting.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- tools/i386/qemu-vmsr-helper.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ tools/i386/qemu-vmsr-helper.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/tools/i386/qemu-vmsr-helper.c b/tools/i386/qemu-vmsr-helper.c
-index bac3ea70393..1644ac72da0 100644
+index ebf562c3ff8..bac3ea70393 100644
 --- a/tools/i386/qemu-vmsr-helper.c
 +++ b/tools/i386/qemu-vmsr-helper.c
-@@ -54,6 +54,7 @@ static enum { RUNNING, TERMINATE, TERMINATING } state;
- static QIOChannelSocket *server_ioc;
- static int server_watch;
- static int num_active_sockets = 1;
-+static bool verbose;
- 
- #ifdef CONFIG_LIBCAP_NG
- static int uid = -1;
-@@ -265,7 +266,11 @@ static void coroutine_fn vh_co_entry(void *opaque)
- 
- out:
-     if (local_err) {
+@@ -227,19 +227,17 @@ static void coroutine_fn vh_co_entry(void *opaque)
+                                 &peer_pid,
+                                 &local_err);
+     if (r < 0) {
 -        error_report_err(local_err);
-+        if (!verbose) {
-+            error_free(local_err);
-+        } else {
-+            error_report_err(local_err);
-+        }
+         goto out;
      }
  
+-    while (r < 0) {
++    for (;;) {
+         /*
+          * Read the requested MSR
+          * Only RAPL MSR in rapl-msr-index.h is allowed
+          */
+         r = qio_channel_read_all(QIO_CHANNEL(client->ioc),
+                                 (char *) &request, sizeof(request), &local_err);
+-        if (r < 0) {
+-            error_report_err(local_err);
++        if (r <= 0) {
+             break;
+         }
+ 
+@@ -261,11 +259,15 @@ static void coroutine_fn vh_co_entry(void *opaque)
+                                   sizeof(vmsr),
+                                   &local_err);
+         if (r < 0) {
+-            error_report_err(local_err);
+             break;
+         }
+     }
++
+ out:
++    if (local_err) {
++        error_report_err(local_err);
++    }
++
      object_unref(OBJECT(client->ioc));
-@@ -431,6 +436,9 @@ int main(int argc, char **argv)
-         case 'd':
-             daemonize = true;
-             break;
-+        case 'v':
-+            verbose = true;
-+            break;
-         case 'T':
-             trace_opt_parse(optarg);
-             break;
+     g_free(client);
+ }
 -- 
 2.45.2
 
