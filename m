@@ -4,71 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75982C3DA70
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 16:26:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2316DC3DA70
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 16:34:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYpgJ-0004Sw-Uz; Tue, 30 Jul 2024 12:26:35 -0400
+	id 1sYpng-0001Ge-Ij; Tue, 30 Jul 2024 12:34:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYpgH-0004Go-Sk
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:26:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from
+ <BATV+599d7e3c2d7f89c45dd6+7646+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sYpne-00017w-7Z
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:34:10 -0400
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYpgE-0004Lg-Bm
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:26:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722356788;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=wJjYVzvrtTYnNZwYb7O7HeA6MaQiVN2uJOKozifbdmA=;
- b=jVEmjakQ4RslExPjbYQaEkM5J5Pi4aX/MTzfNIzg5yBhel5X/qHT1l1B01UYN814jzWrSQ
- yRxMZeMkcjz/WnFUqCc0RpXJ/acg5VcSIv8OjN3mZS48tQgZFpLhmInCI75Gu21uDewK/0
- P+HR5wd5w8pr6/q8q4d8a32p1puarQc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-351-BTWNgCaLPpy8sigfEiWgwQ-1; Tue,
- 30 Jul 2024 12:26:24 -0400
-X-MC-Unique: BTWNgCaLPpy8sigfEiWgwQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8C4121955D55; Tue, 30 Jul 2024 16:26:22 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.108])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3EC4919560AE; Tue, 30 Jul 2024 16:26:20 +0000 (UTC)
-Date: Tue, 30 Jul 2024 17:26:16 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Alejandro Zeise <alejandro.zeise@seagate.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
- peter.maydell@linaro.org
-Subject: Re: [PATCH v2 1/2] crypto: add support for accumulative hashing
-Message-ID: <ZqkUKLtbCvfnrDWX@redhat.com>
-References: <20240729190035.3419649-1-alejandro.zeise@seagate.com>
- <20240729190035.3419649-2-alejandro.zeise@seagate.com>
+ (Exim 4.90_1) (envelope-from
+ <BATV+599d7e3c2d7f89c45dd6+7646+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sYpna-0005PC-2O
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:34:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:Date:Cc:To:
+ From:Subject:Message-ID:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:In-Reply-To:References;
+ bh=tTrhOjk4uYUZ+dBHe6cAsRQ9K66iR729knjNUhJCZDc=; b=JFWapMHQ2VJXYOgOghXW61jz6u
+ 6ejwjkHU6FjUvVPrHt1xI85EgZW3BH26h2QfChTA6HPusn60pNq1bajg0zhkxeUgai1TKr+cgKU8H
+ ZiWqCc6uRlFC4Oeurr3U4UKT06dORN2qvahE6OJOGyk7DdswrFNSLnxizMyrgDyNFxESqG4DFdDYl
+ DD8ZCwQeB3pU/yxniGraWZE0h+U+qACGhkHj8KK5RNQOPfXVzMZSV6/+0EmycQ/jkYfCvPRVp8xsb
+ yyUr22jzdlX4t7V8lY/YBAUk5FpDPiVLUGCLE3wiflm9KkRPqUqYgTU0NXG1RaUdQnFo5VhceVJd+
+ 30ErRCeg==;
+Received: from [2001:8b0:10b:5:acbb:bdbe:c422:84ed]
+ (helo=u3832b3a9db3152.ant.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+ id 1sYpnS-0000000EuVk-1mhD; Tue, 30 Jul 2024 16:33:58 +0000
+Message-ID: <bc85aba60523e0d63e760d5143c5cb57688779d1.camel@infradead.org>
+Subject: [PATCH v2] hw/acpi: Add vmclock device
+From: David Woodhouse <dwmw2@infradead.org>
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov
+ <imammedo@redhat.com>,  Ani Sinha <anisinha@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,  Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>, Peter Hilber <peter.hilber@opensynergy.com>,
+ "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>
+Date: Tue, 30 Jul 2024 17:33:55 +0100
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-TEpLJ+6JHE/UTDK4E5k1"
+User-Agent: Evolution 3.44.4-0ubuntu2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240729190035.3419649-2-alejandro.zeise@seagate.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+599d7e3c2d7f89c45dd6+7646+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,506 +76,719 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 29, 2024 at 07:00:34PM +0000, Alejandro Zeise wrote:
-> This change adds an accumulative hashing function
-> (qcrypto_hash_accumulate_bytesv) and implementation
-> for each of the crypto library backends that QEMU supports.
-> 
-> The QCrypto API did not support hashing in an accumulative mode.
-> As such, hardware hash modules (like the HACE from Aspeed's SoCs) are
-> unable to perform such operations correctly when the guest requires it.
-> 
-> The creation and freeing of each library's context is abstracted by
-> the qcrypto_hash_accumulate_new_ctx and qcrypto_hash_accumulate_free_ctx
-> functions.
-> 
-> Changes in V2:
-> * Fixed error checking bug in libgcrypt backend
-> 
-> Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
-> ---
->  crypto/hash-gcrypt.c  | 105 ++++++++++++++++++++++++++++++++++++++++++
->  crypto/hash-glib.c    |  89 +++++++++++++++++++++++++++++++++++
->  crypto/hash-gnutls.c  |  82 +++++++++++++++++++++++++++++++++
->  crypto/hash-nettle.c  |  93 +++++++++++++++++++++++++++++++++++++
->  crypto/hash.c         |  42 +++++++++++++++++
->  crypto/hashpriv.h     |  11 +++++
->  include/crypto/hash.h |  65 ++++++++++++++++++++++++++
->  7 files changed, 487 insertions(+)
-> 
-> diff --git a/crypto/hash-gcrypt.c b/crypto/hash-gcrypt.c
-> index 829e48258d..6ef7e67711 100644
-> --- a/crypto/hash-gcrypt.c
-> +++ b/crypto/hash-gcrypt.c
-> @@ -1,6 +1,7 @@
->  /*
->   * QEMU Crypto hash algorithms
->   *
-> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
->   * Copyright (c) 2016 Red Hat, Inc.
->   *
->   * This library is free software; you can redistribute it and/or
-> @@ -110,7 +111,111 @@ qcrypto_gcrypt_hash_bytesv(QCryptoHashAlgorithm alg,
->      return -1;
->  }
->  
-> +static
-> +int qcrypto_gcrypt_hash_accumulate_new_ctx(QCryptoHashAlgorithm alg,
-> +                                           qcrypto_hash_accumulate_ctx_t **accumulate_ctx,
-> +                                           Error **errp)
-> +{
-> +    int ret;
-> +
-> +    if (!qcrypto_hash_supports(alg)) {
-> +        error_setg(errp,
-> +                   "Unknown hash algorithm %d",
-> +                   alg);
-> +        return -1;
-> +    }
-> +
-> +    ret = gcry_md_open((gcry_md_hd_t *) accumulate_ctx, qcrypto_hash_alg_map[alg], 0);
-> +
-> +    if (ret < 0) {
-> +        error_setg(errp,
-> +                   "Unable to initialize hash algorithm: %s",
-> +                   gcry_strerror(ret));
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static
-> +int qcrypto_gcrypt_hash_accumulate_free_ctx(qcrypto_hash_accumulate_ctx_t *hash_ctx,
-> +                                            Error **errp)
-> +{
-> +    if (hash_ctx != NULL) {
-> +        gcry_md_close((gcry_md_hd_t) hash_ctx);
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static
-> +int qcrypto_gcrypt_hash_accumulate_bytesv(QCryptoHashAlgorithm alg,
-> +                                          qcrypto_hash_accumulate_ctx_t *accumulate_ctx,
-> +                                          const struct iovec *iov,
-> +                                          size_t niov,
-> +                                          uint8_t **result,
-> +                                          size_t *resultlen,
-> +                                          Error **errp)
-> +{
-> +    int i, ret;
-> +    gcry_md_hd_t ctx_copy;
-> +    unsigned char *digest;
-> +
-> +    if (!qcrypto_hash_supports(alg)) {
-> +        error_setg(errp,
-> +                   "Unknown hash algorithm %d",
-> +                   alg);
-> +        return -1;
-> +    }
-> +
-> +    for (i = 0; i < niov; i++) {
-> +        gcry_md_write((gcry_md_hd_t) accumulate_ctx, iov[i].iov_base, iov[i].iov_len);
-> +    }
-> +
-> +    ret = gcry_md_get_algo_dlen(qcrypto_hash_alg_map[alg]);
-> +    if (ret <= 0) {
-> +        error_setg(errp,
-> +                   "Unable to get hash length: %s",
-> +                   gcry_strerror(ret));
-> +        return -1;
-> +    }
-> +
-> +    if (*resultlen == 0) {
-> +        *resultlen = ret;
-> +        *result = g_new0(uint8_t, *resultlen);
-> +    } else if (*resultlen != ret) {
-> +        error_setg(errp,
-> +                   "Result buffer size %zu is smaller than hash %d",
-> +                   *resultlen, ret);
-> +        return -1;
-> +    }
-> +
-> +    /*
-> +     * Make a copy so we don't distort the main context
-> +     * by calculating the intermediate hash
-> +     */
-> +    ret = gcry_md_copy(&ctx_copy, (gcry_md_hd_t) accumulate_ctx);
-> +    if (ret) {
-> +        error_setg(errp, "Unable to make copy: %s", gcry_strerror(ret));
-> +        return -1;
-> +    }
-> +
-> +    digest = gcry_md_read(ctx_copy, 0);
-> +    if (!digest) {
-> +        error_setg(errp,
-> +                   "No digest produced");
-> +        return -1;
-> +    }
-> +    memcpy(*result, digest, *resultlen);
-> +    gcry_md_close(ctx_copy);
-> +
-> +    return 0;
-> +}
-> +
->  
->  QCryptoHashDriver qcrypto_hash_lib_driver = {
->      .hash_bytesv = qcrypto_gcrypt_hash_bytesv,
-> +    .hash_accumulate_bytesv = qcrypto_gcrypt_hash_accumulate_bytesv,
-> +    .accumulate_new_ctx = qcrypto_gcrypt_hash_accumulate_new_ctx,
-> +    .accumulate_free_ctx = qcrypto_gcrypt_hash_accumulate_free_ctx,
->  };
-> diff --git a/crypto/hash-glib.c b/crypto/hash-glib.c
-> index 82de9db705..c0d1d72c88 100644
-> --- a/crypto/hash-glib.c
-> +++ b/crypto/hash-glib.c
-> @@ -1,6 +1,7 @@
->  /*
->   * QEMU Crypto hash algorithms
->   *
-> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
->   * Copyright (c) 2016 Red Hat, Inc.
->   *
->   * This library is free software; you can redistribute it and/or
-> @@ -95,6 +96,94 @@ qcrypto_glib_hash_bytesv(QCryptoHashAlgorithm alg,
->  }
->  
->  
-> +static
-> +int qcrypto_glib_hash_accumulate_new_ctx(QCryptoHashAlgorithm alg,
-> +                                         qcrypto_hash_accumulate_ctx_t **accumulate_ctx,
-> +                                         Error **errp)
-> +{
-> +    if (!qcrypto_hash_supports(alg)) {
-> +        error_setg(errp,
-> +                   "Unknown hash algorithm %d",
-> +                   alg);
-> +        return -1;
-> +    }
-> +
-> +    *accumulate_ctx = g_checksum_new(qcrypto_hash_alg_map[alg]);
-> +
-> +    return 0;
-> +}
-> +
-> +static
-> +int qcrypto_glib_hash_accumulate_free_ctx(qcrypto_hash_accumulate_ctx_t *hash_ctx,
-> +                                          Error **errp)
-> +{
-> +    if (hash_ctx != NULL) {
-> +        g_checksum_free((GChecksum *) hash_ctx);
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +
-> +static
-> +int qcrypto_glib_hash_accumulate_bytesv(QCryptoHashAlgorithm alg,
-> +                                        qcrypto_hash_accumulate_ctx_t *accumulate_ctx,
-> +                                        const struct iovec *iov,
-> +                                        size_t niov,
-> +                                        uint8_t **result,
-> +                                        size_t *resultlen,
-> +                                        Error **errp)
-> +{
-> +    int i, ret;
-> +    GChecksum *ctx_copy;
-> +
-> +    if (!qcrypto_hash_supports(alg)) {
-> +        error_setg(errp,
-> +                   "Unknown hash algorithm %d",
-> +                   alg);
-> +        return -1;
-> +    }
-> +
-> +    for (i = 0; i < niov; i++) {
-> +        g_checksum_update((GChecksum *) accumulate_ctx, iov[i].iov_base, iov[i].iov_len);
-> +    }
-> +
-> +    ret = g_checksum_type_get_length(qcrypto_hash_alg_map[alg]);
-> +    if (ret < 0) {
-> +        error_setg(errp, "%s",
-> +                   "Unable to get hash length");
-> +        return -1;
-> +    }
-> +    if (*resultlen == 0) {
-> +        *resultlen = ret;
-> +        *result = g_new0(uint8_t, *resultlen);
-> +    } else if (*resultlen != ret) {
-> +        error_setg(errp,
-> +                   "Result buffer size %zu is smaller than hash %d",
-> +                   *resultlen, ret);
-> +        return -1;
-> +    }
-> +
-> +    /*
-> +    Make a copy so we don't distort the main context
-> +    by calculating the intermediate hash.
-> +    */
-> +    ctx_copy = g_checksum_copy((GChecksum *) accumulate_ctx);
-> +    if (ctx_copy == NULL) {
-> +        error_setg(errp, "Unable to make copy: %s", __func__);
-> +        return -1;
-> +    }
-> +
-> +    g_checksum_get_digest((GChecksum *) ctx_copy, *result, resultlen);
-> +    g_checksum_free(ctx_copy);
-> +
-> +    return 0;
-> +}
-> +
-> +
->  QCryptoHashDriver qcrypto_hash_lib_driver = {
->      .hash_bytesv = qcrypto_glib_hash_bytesv,
-> +    .hash_accumulate_bytesv = qcrypto_glib_hash_accumulate_bytesv,
 
-These two methods are 99% copy+pate of each other which is
-highly undesirable. To address this we should get rid of
-the 'hash_bytesv' callback entirely. The existing single shot
-methods can be implemented entirely in terms of the new methods
-you are adding.
+--=-TEpLJ+6JHE/UTDK4E5k1
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> +    .accumulate_new_ctx = qcrypto_glib_hash_accumulate_new_ctx,
-> +    .accumulate_free_ctx = qcrypto_glib_hash_accumulate_free_ctx,
->  };
+From: David Woodhouse <dwmw@amazon.co.uk>
 
-> diff --git a/crypto/hash.c b/crypto/hash.c
-> index b0f8228bdc..0d45ce1e1b 100644
-> --- a/crypto/hash.c
-> +++ b/crypto/hash.c
-> @@ -1,6 +1,7 @@
->  /*
->   * QEMU Crypto hash algorithms
->   *
-> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
->   * Copyright (c) 2015 Red Hat, Inc.
->   *
->   * This library is free software; you can redistribute it and/or
-> @@ -77,6 +78,47 @@ int qcrypto_hash_bytes(QCryptoHashAlgorithm alg,
->      return qcrypto_hash_bytesv(alg, &iov, 1, result, resultlen, errp);
->  }
->  
-> +int qcrypto_hash_accumulate_bytesv(QCryptoHashAlgorithm alg,
-> +                                   qcrypto_hash_accumulate_ctx_t *accumulate_ctx,
-> +                                   const struct iovec *iov,
-> +                                   size_t niov,
-> +                                   uint8_t **result,
-> +                                   size_t *resultlen,
-> +                                   Error **errp)
-> +{
-> +#ifdef CONFIG_AF_ALG
-> +    qemu_log_mask(LOG_UNIMP, "%s: AF_ALG support unimplemented.\n", __func__);
-> +    return 1;
-> +#else
+The vmclock device addresses the problem of live migration with
+precision clocks. The tolerances of a hardware counter (e.g. TSC) are
+typically around =C2=B150PPM. A guest will use NTP/PTP/PPS to discipline th=
+at
+counter against an external source of 'real' time, and track the precise
+frequency of the counter as it changes with environmental conditions.
 
-This isn't ok - we need to have this new API design supported by the afalg
-implementation.
+When a guest is live migrated, anything it knows about the frequency of
+the underlying counter becomes invalid. It may move from a host where
+the counter running at -50PPM of its nominal frequency, to a host where
+it runs at +50PPM. There will also be a step change in the value of the
+counter, as the correctness of its absolute value at migration is
+limited by the accuracy of the source and destination host's time
+synchronization.
+
+The device exposes a shared memory region to guests, which can be mapped
+all the way to userspace. In the first phase, this merely advertises a
+'disruption_marker', which indicates that the guest should throw away any
+NTP synchronization it thinks it has, and start again.
+
+Because the region can be exposed all the way to userspace, applications
+can still use time from a fast vDSO 'system call', and check the
+disruption marker to be sure that their timestamp is indeed truthful.
+
+The structure also allows for the precise time, as known by the host, to
+be exposed directly to guests so that they don't have to wait for NTP to
+resync from scratch.
+
+The values and fields are based on the nascent virtio-rtc specification,
+and the intent is that a version (hopefully precisely this version) of
+this structure will be included as an optional part of that spec. In the
+meantime, a simple ACPI device along the lines of VMGENID is perfectly
+sufficient.
+
+Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+---
+v2:
+ =E2=80=A2 Change esterror/maxerror fields to nanoseconds
+ =E2=80=A2 Change to officially assigned AMZNC10C ACPI HID
+ =E2=80=A2 Fix little-endian handling of fields in update
+
+ hw/acpi/Kconfig           |   5 +
+ hw/acpi/meson.build       |   1 +
+ hw/acpi/vmclock-abi.h     | 186 ++++++++++++++++++++++++++++++++++++++
+ hw/acpi/vmclock.c         | 183 +++++++++++++++++++++++++++++++++++++
+ hw/i386/Kconfig           |   1 +
+ hw/i386/acpi-build.c      |  10 +-
+ include/hw/acpi/vmclock.h |  34 +++++++
+ 7 files changed, 419 insertions(+), 1 deletion(-)
+ create mode 100644 hw/acpi/vmclock-abi.h
+ create mode 100644 hw/acpi/vmclock.c
+ create mode 100644 include/hw/acpi/vmclock.h
+
+diff --git a/hw/acpi/Kconfig b/hw/acpi/Kconfig
+index e07d3204eb..1d4e9f0845 100644
+--- a/hw/acpi/Kconfig
++++ b/hw/acpi/Kconfig
+@@ -60,6 +60,11 @@ config ACPI_VMGENID
+     default y
+     depends on PC
+=20
++config ACPI_VMCLOCK
++    bool
++    default y
++    depends on PC
++
+ config ACPI_VIOT
+     bool
+     depends on ACPI
+diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
+index fa5c07db90..77566ae8a8 100644
+--- a/hw/acpi/meson.build
++++ b/hw/acpi/meson.build
+@@ -16,6 +16,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_NVDIMM', if_false: files('=
+acpi-nvdimm-stub.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_PCI', if_true: files('pci.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_CXL', if_true: files('cxl.c'), if_false: fi=
+les('cxl-stub.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_VMGENID', if_true: files('vmgenid.c'))
++acpi_ss.add(when: 'CONFIG_ACPI_VMCLOCK', if_true: files('vmclock.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_HW_REDUCED', if_true: files('generic_event_=
+device.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_HMAT', if_true: files('hmat.c'))
+ acpi_ss.add(when: 'CONFIG_ACPI_APEI', if_true: files('ghes.c'), if_false: =
+files('ghes-stub.c'))
+diff --git a/hw/acpi/vmclock-abi.h b/hw/acpi/vmclock-abi.h
+new file mode 100644
+index 0000000000..19cbf85efd
+--- /dev/null
++++ b/hw/acpi/vmclock-abi.h
+@@ -0,0 +1,186 @@
++/* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-2-Cl=
+ause) */
++
++/*
++ * This structure provides a vDSO-style clock to VM guests, exposing the
++ * relationship (or lack thereof) between the CPU clock (TSC, timebase, ar=
+ch
++ * counter, etc.) and real time. It is designed to address the problem of
++ * live migration, which other clock enlightenments do not.
++ *
++ * When a guest is live migrated, this affects the clock in two ways.
++ *
++ * First, even between identical hosts the actual frequency of the underly=
+ing
++ * counter will change within the tolerances of its specification (typical=
+ly
++ * =C2=B150PPM, or 4 seconds a day). This frequency also varies over time =
+on the
++ * same host, but can be tracked by NTP as it generally varies slowly. Wit=
+h
++ * live migration there is a step change in the frequency, with no warning=
+.
++ *
++ * Second, there may be a step change in the value of the counter itself, =
+as
++ * its accuracy is limited by the precision of the NTP synchronization on =
+the
++ * source and destination hosts.
++ *
++ * So any calibration (NTP, PTP, etc.) which the guest has done on the sou=
+rce
++ * host before migration is invalid, and needs to be redone on the new hos=
+t.
++ *
++ * In its most basic mode, this structure provides only an indication to t=
+he
++ * guest that live migration has occurred. This allows the guest to know t=
+hat
++ * its clock is invalid and take remedial action. For applications that ne=
+ed
++ * reliable accurate timestamps (e.g. distributed databases), the structur=
+e
++ * can be mapped all the way to userspace. This allows the application to =
+see
++ * directly for itself that the clock is disrupted and take appropriate
++ * action, even when using a vDSO-style method to get the time instead of =
+a
++ * system call.
++ *
++ * In its more advanced mode. this structure can also be used to expose th=
+e
++ * precise relationship of the CPU counter to real time, as calibrated by =
+the
++ * host. This means that userspace applications can have accurate time
++ * immediately after live migration, rather than having to pause operation=
+s
++ * and wait for NTP to recover. This mode does, of course, rely on the
++ * counter being reliable and consistent across CPUs.
++ *
++ * Note that this must be true UTC, never with smeared leap seconds. If a
++ * guest wishes to construct a smeared clock, it can do so. Presenting a
++ * smeared clock through this interface would be problematic because it
++ * actually messes with the apparent counter *period*. A linear smearing
++ * of 1 ms per second would effectively tweak the counter period by 1000PP=
+M
++ * at the start/end of the smearing period, while a sinusoidal smear would
++ * basically be impossible to represent.
++ *
++ * This structure is offered with the intent that it be adopted into the
++ * nascent virtio-rtc standard, as a virtio-rtc that does not address the =
+live
++ * migration problem seems a little less than fit for purpose. For that
++ * reason, certain fields use precisely the same numeric definitions as in
++ * the virtio-rtc proposal. The structure can also be exposed through an A=
+CPI
++ * device with the CID "VMCLOCK", modelled on the "VMGENID" device except =
+for
++ * the fact that it uses a real _CRS to convey the address of the structur=
+e
++ * (which should be a full page, to allow for mapping directly to userspac=
+e).
++ */
++
++#ifndef __VMCLOCK_ABI_H__
++#define __VMCLOCK_ABI_H__
++
++#ifdef __KERNEL__
++#include <linux/types.h>
++#else
++#include <stdint.h>
++#endif
++
++struct vmclock_abi {
++	/* CONSTANT FIELDS */
++	uint32_t magic;
++#define VMCLOCK_MAGIC	0x4b4c4356 /* "VCLK" */
++	uint32_t size;		/* Size of region containing this structure */
++	uint16_t version;	/* 1 */
++	uint8_t counter_id; /* Matches VIRTIO_RTC_COUNTER_xxx except INVALID */
++#define VMCLOCK_COUNTER_ARM_VCNT	0
++#define VMCLOCK_COUNTER_X86_TSC		1
++#define VMCLOCK_COUNTER_INVALID		0xff
++	uint8_t time_type; /* Matches VIRTIO_RTC_TYPE_xxx */
++#define VMCLOCK_TIME_UTC			0	/* Since 1970-01-01 00:00:00z */
++#define VMCLOCK_TIME_TAI			1	/* Since 1970-01-01 00:00:00z */
++#define VMCLOCK_TIME_MONOTONIC			2	/* Since undefined epoch */
++#define VMCLOCK_TIME_INVALID_SMEARED		3	/* Not supported */
++#define VMCLOCK_TIME_INVALID_MAYBE_SMEARED	4	/* Not supported */
++
++	/* NON-CONSTANT FIELDS PROTECTED BY SEQCOUNT LOCK */
++	uint32_t seq_count;	/* Low bit means an update is in progress */
++	/*
++	 * This field changes to another non-repeating value when the CPU
++	 * counter is disrupted, for example on live migration. This lets
++	 * the guest know that it should discard any calibration it has
++	 * performed of the counter against external sources (NTP/PTP/etc.).
++	 */
++	uint64_t disruption_marker;
++	uint64_t flags;
++	/* Indicates that the tai_offset_sec field is valid */
++#define VMCLOCK_FLAG_TAI_OFFSET_VALID		(1 << 0)
++	/*
++	 * Optionally used to notify guests of pending maintenance events.
++	 * A guest which provides latency-sensitive services may wish to
++	 * remove itself from service if an event is coming up. Two flags
++	 * indicate the approximate imminence of the event.
++	 */
++#define VMCLOCK_FLAG_DISRUPTION_SOON		(1 << 1) /* About a day */
++#define VMCLOCK_FLAG_DISRUPTION_IMMINENT	(1 << 2) /* About an hour */
++#define VMCLOCK_FLAG_PERIOD_ESTERROR_VALID	(1 << 3)
++#define VMCLOCK_FLAG_PERIOD_MAXERROR_VALID	(1 << 4)
++#define VMCLOCK_FLAG_TIME_ESTERROR_VALID	(1 << 5)
++#define VMCLOCK_FLAG_TIME_MAXERROR_VALID	(1 << 6)
++	/*
++	 * If the MONOTONIC flag is set then (other than leap seconds) it is
++	 * guaranteed that the time calculated according this structure at
++	 * any given moment shall never appear to be later than the time
++	 * calculated via the structure at any *later* moment.
++	 *
++	 * In particular, a timestamp based on a counter reading taken
++	 * immediately after setting the low bit of seq_count (and the
++	 * associated memory barrier), using the previously-valid time and
++	 * period fields, shall never be later than a timestamp based on
++	 * a counter reading taken immediately before *clearing* the low
++	 * bit again after the update, using the about-to-be-valid fields.
++	 */
++#define VMCLOCK_FLAG_TIME_MONOTONIC		(1 << 7)
++
++	uint8_t pad[2];
++	uint8_t clock_status;
++#define VMCLOCK_STATUS_UNKNOWN		0
++#define VMCLOCK_STATUS_INITIALIZING	1
++#define VMCLOCK_STATUS_SYNCHRONIZED	2
++#define VMCLOCK_STATUS_FREERUNNING	3
++#define VMCLOCK_STATUS_UNRELIABLE	4
++
++	/*
++	 * The time exposed through this device is never smeared. This field
++	 * corresponds to the 'subtype' field in virtio-rtc, which indicates
++	 * the smearing method. However in this case it provides a *hint* to
++	 * the guest operating system, such that *if* the guest OS wants to
++	 * provide its users with an alternative clock which does not follow
++	 * UTC, it may do so in a fashion consistent with the other systems
++	 * in the nearby environment.
++	 */
++	uint8_t leap_second_smearing_hint; /* Matches VIRTIO_RTC_SUBTYPE_xxx */
++#define VMCLOCK_SMEARING_STRICT		0
++#define VMCLOCK_SMEARING_NOON_LINEAR	1
++#define VMCLOCK_SMEARING_UTC_SLS	2
++	int16_t tai_offset_sec;
++	uint8_t leap_indicator;
++	/*
++	 * This field is based on the VIRTIO_RTC_LEAP_xxx values as defined
++	 * in the current draft of virtio-rtc, but since smearing cannot be
++	 * used with the shared memory device, some values are not used.
++	 *
++	 * The _POST_POS and _POST_NEG values allow the guest to perform
++	 * its own smearing during the day or so after a leap second when
++	 * such smearing may need to continue being applied for a leap
++	 * second which is now theoretically "historical".
++	 */
++#define VMCLOCK_LEAP_NONE	0x00	/* No known nearby leap second */
++#define VMCLOCK_LEAP_PRE_POS	0x01	/* Positive leap second at EOM */
++#define VMCLOCK_LEAP_PRE_NEG	0x02	/* Negative leap second at EOM */
++#define VMCLOCK_LEAP_POS	0x03	/* Set during 23:59:60 second */
++#define VMCLOCK_LEAP_POST_POS	0x04
++#define VMCLOCK_LEAP_POST_NEG	0x05
++
++	/* Bit shift for counter_period_frac_sec and its error rate */
++	uint8_t counter_period_shift;
++	/*
++	 * Paired values of counter and UTC at a given point in time.
++	 */
++	uint64_t counter_value;
++	/*
++	 * Counter period, and error margin of same. The unit of these
++	 * fields is 1/2^(64 + counter_period_shift) of a second.
++	 */
++	uint64_t counter_period_frac_sec;
++	uint64_t counter_period_esterror_rate_frac_sec;
++	uint64_t counter_period_maxerror_rate_frac_sec;
++
++	/*
++	 * Time according to time_type field above.
++	 */
++	uint64_t time_sec;		/* Seconds since time_type epoch */
++	uint64_t time_frac_sec;		/* Units of 1/2^64 of a second */
++	uint64_t time_esterror_nanosec;
++	uint64_t time_maxerror_nanosec;
++};
++
++#endif /*  __VMCLOCK_ABI_H__ */
+diff --git a/hw/acpi/vmclock.c b/hw/acpi/vmclock.c
+new file mode 100644
+index 0000000000..ca89cb3106
+--- /dev/null
++++ b/hw/acpi/vmclock.c
+@@ -0,0 +1,183 @@
++/*
++ * Virtual Machine Clock Device
++ *
++ * Copyright =C2=A9 2024 Amazon.com, Inc. or its affiliates. All Rights Re=
+served.
++ *
++ * Authors: David Woodhouse <dwmw2@infradead.org>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or late=
+r.
++ * See the COPYING file in the top-level directory.
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qemu/module.h"
++#include "hw/i386/e820_memory_layout.h"
++#include "hw/acpi/acpi.h"
++#include "hw/acpi/aml-build.h"
++#include "hw/acpi/vmclock.h"
++#include "hw/nvram/fw_cfg.h"
++#include "hw/qdev-properties.h"
++#include "hw/qdev-properties-system.h"
++#include "migration/vmstate.h"
++#include "sysemu/reset.h"
++
++#include "vmclock-abi.h"
++
++void vmclock_build_acpi(VmclockState *vms, GArray *table_data,
++                        BIOSLinker *linker, const char *oem_id)
++{
++    Aml *ssdt, *dev, *scope, *method, *addr, *crs;
++    AcpiTable table =3D { .sig =3D "SSDT", .rev =3D 1,
++                        .oem_id =3D oem_id, .oem_table_id =3D "VMCLOCK" };
++
++    /* Put VMCLOCK into a separate SSDT table */
++    acpi_table_begin(&table, table_data);
++    ssdt =3D init_aml_allocator();
++
++    scope =3D aml_scope("\\_SB");
++    dev =3D aml_device("VCLK");
++    aml_append(dev, aml_name_decl("_HID", aml_string("AMZNC10C")));
++    aml_append(dev, aml_name_decl("_CID", aml_string("VMCLOCK")));
++    aml_append(dev, aml_name_decl("_DDN", aml_string("VMCLOCK")));
++
++    /* Simple status method */
++    method =3D aml_method("_STA", 0, AML_NOTSERIALIZED);
++    addr =3D aml_local(0);
++    aml_append(method, aml_store(aml_int(0xf), addr));
++    aml_append(method, aml_return(addr));
++    aml_append(dev, method);
++
++    crs =3D aml_resource_template();
++    aml_append(crs, aml_qword_memory(AML_POS_DECODE,
++                                     AML_MIN_FIXED, AML_MAX_FIXED,
++                                     AML_CACHEABLE, AML_READ_ONLY,
++                                     0xffffffffffffffffULL,
++                                     vms->physaddr,
++                                     vms->physaddr + VMCLOCK_SIZE - 1,
++                                     0, VMCLOCK_SIZE));
++    aml_append(dev, aml_name_decl("_CRS", crs));
++    aml_append(scope, dev);
++    aml_append(ssdt, scope);
++
++    g_array_append_vals(table_data, ssdt->buf->data, ssdt->buf->len);
++    acpi_table_end(linker, &table);
++    free_aml_allocator();
++}
++
++static void vmclock_update_guest(VmclockState *vms)
++{
++    uint64_t disruption_marker;
++    uint32_t seq_count;
++
++    if (!vms->clk) {
++        return;
++    }
++
++    seq_count =3D le32_to_cpu(vms->clk->seq_count) | 1;
++    vms->clk->seq_count =3D cpu_to_le32(seq_count);
++    smp_wmb();
++
++    disruption_marker =3D le64_to_cpu(vms->clk->disruption_marker);
++    disruption_marker++;
++    vms->clk->disruption_marker =3D cpu_to_le64(disruption_marker);
++
++    smp_wmb();
++    vms->clk->seq_count =3D cpu_to_le32(seq_count + 1);
++}
++
++/* After restoring an image, we need to update the guest memory and notify
++ * it of a potential change to VM Generation ID
++ */
++static int vmclock_post_load(void *opaque, int version_id)
++{
++    VmclockState *vms =3D opaque;
++    vmclock_update_guest(vms);
++    return 0;
++}
++
++static const VMStateDescription vmstate_vmclock =3D {
++    .name =3D "vmclock",
++    .version_id =3D 1,
++    .minimum_version_id =3D 1,
++    .post_load =3D vmclock_post_load,
++    .fields =3D (const VMStateField[]) {
++        VMSTATE_UINT64(physaddr, VmclockState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static void vmclock_handle_reset(void *opaque)
++{
++    VmclockState *vms =3D VMCLOCK(opaque);
++
++    if (!memory_region_is_mapped(&vms->clk_page)) {
++        memory_region_add_subregion_overlap(get_system_memory(),
++                                            vms->physaddr,
++                                            &vms->clk_page, 0);
++    }
++}
++
++static void vmclock_realize(DeviceState *dev, Error **errp)
++{
++    VmclockState *vms =3D VMCLOCK(dev);
++
++    /* Given that this function is executing, there is at least one VMCLOC=
+K
++     * device. Check if there are several.
++     */
++    if (!find_vmclock_dev()) {
++        error_setg(errp, "at most one %s device is permitted", TYPE_VMCLOC=
+K);
++        return;
++    }
++
++    vms->physaddr =3D VMCLOCK_ADDR;
++
++    e820_add_entry(vms->physaddr, VMCLOCK_SIZE, E820_RESERVED);
++
++    memory_region_init_ram(&vms->clk_page, OBJECT(dev), "vmclock_page",
++                           VMCLOCK_SIZE, &error_abort);
++    memory_region_set_enabled(&vms->clk_page, true);
++    vms->clk =3D memory_region_get_ram_ptr(&vms->clk_page);
++    memset(vms->clk, 0, VMCLOCK_SIZE);
++
++    vms->clk->magic =3D cpu_to_le32(VMCLOCK_MAGIC);
++    vms->clk->size =3D cpu_to_le16(VMCLOCK_SIZE);
++    vms->clk->version =3D cpu_to_le16(1);
++
++    /* These are all zero and thus default, but be explicit */
++    vms->clk->clock_status =3D VMCLOCK_STATUS_UNKNOWN;
++    vms->clk->counter_id =3D VMCLOCK_COUNTER_INVALID;
++
++    qemu_register_reset(vmclock_handle_reset, vms);
++
++    vmclock_update_guest(vms);
++}
++
++static Property vmclock_device_properties[] =3D {
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void vmclock_device_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc =3D DEVICE_CLASS(klass);
++
++    dc->vmsd =3D &vmstate_vmclock;
++    dc->realize =3D vmclock_realize;
++    device_class_set_props(dc, vmclock_device_properties);
++    dc->hotpluggable =3D false;
++    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
++}
++
++static const TypeInfo vmclock_device_info =3D {
++    .name          =3D TYPE_VMCLOCK,
++    .parent        =3D TYPE_DEVICE,
++    .instance_size =3D sizeof(VmclockState),
++    .class_init    =3D vmclock_device_class_init,
++};
++
++static void vmclock_register_types(void)
++{
++    type_register_static(&vmclock_device_info);
++}
++
++type_init(vmclock_register_types)
+diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+index f4a33b6c08..86b00bb94f 100644
+--- a/hw/i386/Kconfig
++++ b/hw/i386/Kconfig
+@@ -43,6 +43,7 @@ config PC
+     select SERIAL_ISA
+     select ACPI_PCI
+     select ACPI_VMGENID
++    select ACPI_VMCLOCK
+     select VIRTIO_PMEM_SUPPORTED
+     select VIRTIO_MEM_SUPPORTED
+     select HV_BALLOON_SUPPORTED
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 5d4bd2b710..e4dfad148e 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -43,6 +43,7 @@
+ #include "sysemu/tpm.h"
+ #include "hw/acpi/tpm.h"
+ #include "hw/acpi/vmgenid.h"
++#include "hw/acpi/vmclock.h"
+ #include "hw/acpi/erst.h"
+ #include "hw/acpi/piix4.h"
+ #include "sysemu/tpm_backend.h"
+@@ -2505,7 +2506,7 @@ void acpi_build(AcpiBuildTables *tables, MachineState=
+ *machine)
+     uint8_t *u;
+     GArray *tables_blob =3D tables->table_data;
+     AcpiSlicOem slic_oem =3D { .id =3D NULL, .table_id =3D NULL };
+-    Object *vmgenid_dev;
++    Object *vmgenid_dev, *vmclock_dev;
+     char *oem_id;
+     char *oem_table_id;
+=20
+@@ -2578,6 +2579,13 @@ void acpi_build(AcpiBuildTables *tables, MachineStat=
+e *machine)
+                            tables->vmgenid, tables->linker, x86ms->oem_id)=
+;
+     }
+=20
++    vmclock_dev =3D find_vmclock_dev();
++    if (vmclock_dev) {
++        acpi_add_table(table_offsets, tables_blob);
++        vmclock_build_acpi(VMCLOCK(vmclock_dev), tables_blob, tables->link=
+er,
++                           x86ms->oem_id);
++    }
++
+     if (misc.has_hpet) {
+         acpi_add_table(table_offsets, tables_blob);
+         build_hpet(tables_blob, tables->linker, x86ms->oem_id,
+diff --git a/include/hw/acpi/vmclock.h b/include/hw/acpi/vmclock.h
+new file mode 100644
+index 0000000000..5605605812
+--- /dev/null
++++ b/include/hw/acpi/vmclock.h
+@@ -0,0 +1,34 @@
++#ifndef ACPI_VMCLOCK_H
++#define ACPI_VMCLOCK_H
++
++#include "hw/acpi/bios-linker-loader.h"
++#include "hw/qdev-core.h"
++#include "qemu/uuid.h"
++#include "qom/object.h"
++
++#define TYPE_VMCLOCK    "vmclock"
++
++#define VMCLOCK_ADDR    0xfeffb000
++#define VMCLOCK_SIZE    0x1000
++
++OBJECT_DECLARE_SIMPLE_TYPE(VmclockState, VMCLOCK)
++
++struct vmclock_abi;
++
++struct VmclockState {
++    DeviceState parent_obj;
++    MemoryRegion clk_page;
++    uint64_t physaddr;
++    struct vmclock_abi *clk;
++};
++
++/* returns NULL unless there is exactly one device */
++static inline Object *find_vmclock_dev(void)
++{
++    return object_resolve_path_type("", TYPE_VMCLOCK, NULL);
++}
++
++void vmclock_build_acpi(VmclockState *vms, GArray *table_data,
++                        BIOSLinker *linker, const char *oem_id);
++
++#endif
+--=20
+2.44.0
 
 
 
-> diff --git a/crypto/hashpriv.h b/crypto/hashpriv.h
-> index cee26ccb47..49b3927208 100644
-> --- a/crypto/hashpriv.h
-> +++ b/crypto/hashpriv.h
-> @@ -1,6 +1,7 @@
->  /*
->   * QEMU Crypto hash driver supports
->   *
-> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
->   * Copyright (c) 2017 HUAWEI TECHNOLOGIES CO., LTD.
->   *
->   * Authors:
-> @@ -24,6 +25,16 @@ struct QCryptoHashDriver {
->                         uint8_t **result,
->                         size_t *resultlen,
->                         Error **errp);
-> +    int (*hash_accumulate_bytesv)(QCryptoHashAlgorithm alg,
-> +                                  void *hash_ctx,
-> +                                  const struct iovec *iov,
-> +                                  size_t niov,
-> +                                  uint8_t **result,
-> +                                  size_t *resultlen,
-> +                                  Error **errp);
-> +    int (*accumulate_new_ctx)(QCryptoHashAlgorithm alg, void **hash_ctx,
-> +                              Error **errp);
-> +    int (*accumulate_free_ctx)(void *hash_ctx, Error **errp);
->  };
+--=-TEpLJ+6JHE/UTDK4E5k1
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
 
-We should split updating from finalizing, and use QCryptoHash
-as the type name for the context object. ie we need 4 callbacks
-in total:
-
-   QCryptoHash *(*hash_new)(QCryptoHashAlgorithm alg, Error **errp);
-   int (*hash_update)(QCryptoHashAlgorithm alg,
-                      const struct iovec *iov,
-                      size_t niov,
-                      Error **errp);
-   int (*hash_finalize)(QCryptoHashAlgorithm alg,
-                        uint8_t **result,
-                        size_t *resultlen,
-                        Error **errp);
-   (*hash_free)(QCryptoHash *hash);
-
-> diff --git a/include/crypto/hash.h b/include/crypto/hash.h
-> index 54d87aa2a1..fb8ae2d099 100644
-> --- a/include/crypto/hash.h
-> +++ b/include/crypto/hash.h
-> @@ -1,6 +1,7 @@
->  /*
->   * QEMU Crypto hash algorithms
->   *
-> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
->   * Copyright (c) 2015 Red Hat, Inc.
->   *
->   * This library is free software; you can redistribute it and/or
-> @@ -25,6 +26,8 @@
->  
->  /* See also "QCryptoHashAlgorithm" defined in qapi/crypto.json */
->  
-> +typedef void qcrypto_hash_accumulate_ctx_t;
-> +
-
-Style convention for types is initial caps, rather snake case.
-Also this can be massively shortened. So we get just
-
-  typedef struct QCryptoHash QCryptoHash;
-
->  /**
->   * qcrypto_hash_supports:
->   * @alg: the hash algorithm
-> @@ -120,6 +123,68 @@ int qcrypto_hash_digestv(QCryptoHashAlgorithm alg,
->                           char **digest,
->                           Error **errp);
->  
-> +/**
-> + * qcrypto_hash_accumulate_bytesv:
-> + * @alg: the hash algorithm
-> + * @accumulate_ctx: pointer to the algorithm's context for further hash operations
-> + * @iov: the array of memory regions to hash
-> + * @niov: the length of @iov
-> + * @result: pointer to hold output hash
-> + * @resultlen: pointer to hold length of @result
-> + * @errp: pointer to a NULL-initialized error object
-> + *
-> + * Computes the hash across all the memory regions
-> + * present in @iov using the existing hash context
-> + * given in @accumulate_ctx. The @result pointer will be
-> + * filled with raw bytes representing the computed
-> + * hash, which will have length @resultlen. The
-> + * memory pointer in @result must be released
-> + * with a call to g_free() when no longer required.
-> + *
-> + * Returns: 0 on success, -1 on error
-> + */
-> +int qcrypto_hash_accumulate_bytesv(QCryptoHashAlgorithm alg,
-> +                                   qcrypto_hash_accumulate_ctx_t *accumulate_ctx,
-> +                                   const struct iovec *iov,
-> +                                   size_t niov,
-> +                                   uint8_t **result,
-> +                                   size_t *resultlen,
-> +                                   Error **errp);
-
-Again, separate updating from finalizing, but in the public
-API we'll need the three finalizing variants. 
-
-Passing in 'alg' every time is also redundant when we have a context.
-
-So this should result in the following
-
-  int qcrypto_hash_update(QCryptoHash *hash,
-                          const struct iovec *iov,
-                          size_t niov,
-                          Error **errp);
-  int qcrypto_hash_finalize_bytes(QCryptoHash *hash,
-                                  uint8_t **result,
-                                  size_t *resultlen,
-                                  Error **errp);
-  int qcrypto_hash_finalize_digest(QCryptoHash *hash,
-                                   char **result,
-                                   Error **errp);
-  int qcrypto_hash_finalize_base64(QCryptoHash *hash,
-                                   char **result,
-                                   Error **errp);
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
+ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
+EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
+FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
+aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
+EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
+VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
+aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
+ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
+QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
+rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
+ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
+U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
+DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
+BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
+dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
+BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
+QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
+CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
+xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
+IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
+kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
+eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
+KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
+1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
+OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
+x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
+5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
+DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
+VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
+UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
+MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
+ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
+oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
+SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
+xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
+RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
+bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
+NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
+KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
+5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
+C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
+gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
+VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
+by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
+b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
+BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
+QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
+c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
+AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
+qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
+v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
+Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
+tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
+Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
+YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
+ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
+IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
+ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
+GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
+h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
+9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
+P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
+2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
+BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
+7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
+lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
+lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
+AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
+Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
+FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
+BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
+cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
+aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
+LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
+BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
+cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
+Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
+lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
+WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
+hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
+IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
+dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
+NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
+xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
+DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwNzMwMTYzMzU1WjAvBgkqhkiG9w0BCQQxIgQgkDMoXR7m
+pn0yAgfEFHvVocGbKBer1/FOiQb8eD3dVaAwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
+BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
+A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
+dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
+DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
+MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
+Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
+lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgCMu2HTmy0YO60i1PszPkGaERHgJkH9ekSK
+Or0gskc2/fnT8l/TtSnU5wr77uzsz5sUX3t1jOTQAng2lbA+gbzt1g2pOkSoH/Lqjuk/X3nvlQIX
+/uPZX14dtOOliNpVprjm7dtDF22XH7VWwi9sF8UahamUhGG2ga6j1yAnpl1T0JjhsWTi3gLu44HD
+6SYIhrHpLVUz5vpnOILYZyhKCWrbDFRY+XgsedRC7a8Hy+859uHq5qLD2FXuxPvUrfxVJshuYBkA
+JnfB/i1yrggb5/olRRpEgd6aH3fkBrqK9j73A1Mluu1GOeo6hJ5hKUXht9P5kvITrHAosUDlMpOu
+Ct/L03iH3QtDNh6sH7RZ++NQdxs6oxmY9aQSuwD5x6gXuJdAefV7ub8BDYxUfW/DI57pUHzuWgB9
+VVmCZAUWtiVurBZbngG4GtKYbqG9DkF+ymzbOWCE0Q90uYcvkePAHCAnTFk/3gltwi/WOLJPaTnz
+f4ZYQZN5+rMNxjixFxd1vSzIEIUJXqJoSiklS+vIxfO226qkHjsEjSkh+jol+qx1t9up/CCy/yPL
+Q9jWlGr23hGS76LgEuVT2JR8MpRqBG2dJXDVnLrnUXgrntGOzq67Dc744b08Yaojwg81ePTs/olc
+cbkkZuULzZGXNgMMGoCX7ZT2OZk+33bnBwUU0SFLjgAAAAAAAA==
 
 
-
-> +
-> +/**
-> + * qcrypto_hash_accumulate_new_ctx:
-> + * @alg: the hash algorithm
-> + * @accumulate_ctx: pointer to the pointer holding the algorithm's
-> + *                  context for further hash operations. The pointer will
-> + *                  be modified to point to the memory this function
-> + *                  allocates to hold the context.
-> + * @errp: pointer to a NULL-initialized error object
-> + *
-> + * Creates a new hashing context for the chosen algorithm for
-> + * usage with qcrypto_hash_accumulate_bytesv().
-> + * This is useful for when one has multiple inputs to compute a hash, but
-> + * not all are available at a single point in time, making qcrypto_hash_bytesv()
-> + * inadequate. The @accumulate_ctx pointer must be released with a call to
-> + * qcrypto_hash_accumulate_free_ctx() once all hash operations are complete.
-> + *
-> + * Returns: 0 on success, -1 on error
-> + */
-> +int qcrypto_hash_accumulate_new_ctx(QCryptoHashAlgorithm alg,
-> +                                    qcrypto_hash_accumulate_ctx_t **accumulate_ctx,
-> +                                    Error **errp);
-
-Needs to be
-
-  QCryptoHash *qcrypto_hash_new(QCryptoHashAlgorithm alg,
-                                Error **errp);
-
-> +
-> +/**
-> + * qcrypto_hash_accumulate_free_ctx:
-> + * @accumulate_ctx: pointer to the algorithm's context for further hash operations
-> + * @errp: pointer to a NULL-initialized error object
-> + *
-> + * frees a hashing context for the chosen algorithm.
-> + *
-> + * Returns: 0 on success, -1 on error
-> + */
-> +int qcrypto_hash_accumulate_free_ctx(qcrypto_hash_accumulate_ctx_t *accumulate_ctx,
-> +                                     Error **errp);
-
-Needs to be
-
-  QCryptoHash *qcrypto_hash_free(QCryptoHash *hash)
-
-We shouldn't have an Error **errp for the destructor, as we need to be
-able to create an cleanup func for it:
-
-  G_DEFINE_AUTOPTR_CLEANUP_FUNC(QCryptoHash, qcrypto_hash_free)
-
-
-Basically this ends up with the hash code looking very like the
-cipher.c code in terms of both public API and the internal driver
-design.
-
-Finally, overall I'd like this patch to be split into multiple patches,
-since the changes are going to be quite large
-
- * Define the new public API in hash.h & hash.c
- * Provide the new impl for each backend (one patch per driver please)
- * Add test cases to test-crypto-hash.c for the new APIs
- * Re-implement the existing public APIs in terms of the new
-   public APIs
- * Drop the old impl for each backend (one patch per driver please)
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+--=-TEpLJ+6JHE/UTDK4E5k1--
 
