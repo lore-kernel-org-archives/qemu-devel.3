@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BD88C3DA7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 16:25:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCE13C3DA70
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 16:25:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYpcf-0008Ps-2r; Tue, 30 Jul 2024 12:22:49 -0400
+	id 1sYpch-00008Z-E1; Tue, 30 Jul 2024 12:22:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYpcd-0008H4-0Z
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:22:47 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1sYpcg-0008VR-Cd
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:22:50 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYpcb-0003Xg-5Y
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:22:46 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a7ab76558a9so2406366b.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 09:22:44 -0700 (PDT)
+ id 1sYpce-0003Yw-MP
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:22:50 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a7ac469e4c4so5072566b.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 09:22:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722356563; x=1722961363; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722356567; x=1722961367; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GN1HaihudaqLLrp8IlR/d+UPmyEvWng1714T4YdfQiw=;
- b=a5PCfiwKoOmxH0ejGoXYV0/Rf6AIelag6X6c7gm6HIV1emMUAHokRmFpm9PHF+dKk3
- CLLc2T89j+9cfcdTU3xnC23totFQNQyi2FJVOfXwiaBcyoiOVhNb+/LLDUDO0UIWuCRZ
- 2qTzUWWPolKkdwqx5wnmdynzml1J29p/f5RDc1nrhL1XX+Jjkb785WJqMKNz3RuEJ8Kh
- TdIeao12/tEG/GP+H2hLWUpBNq2+bljNlcBmaxSeX3IGnFYhGnNB8K2wP9+n9O7rxw/w
- 0Ibf+qc3Z2We0nYxatfwp3qAyk0BeEZgFOpOujw6VKZGXCBPmXxDvM3xN3JhxUFOd1JS
- hQpA==
+ bh=AUsqRXTeW3XYv9I38g7wul3S13NoPU/K/kBqTz9dI9c=;
+ b=vWppsQGgXHW3oQ6/lKX6BZudG7Y8hA2XpcOhpaxA27HEr8j+eoW2wIPG/OAK8AhsoE
+ YCSTD+00v3Al3rsgqWgvxDC9wn6pqP/mr3X/50XiJkjKzmJlTb12ocIg/jTcCbS/Thrl
+ 5evHY2xXb3VatZ659UCM0lOnv3j3zNG80TpC1vzzTMlki4Fke6oH2JPEAh/GBHNuo5sL
+ lTDPe3AlTX28imCtIHWdzFYWS/Egh6mEyaiMCDJryGl5atiUY99P2PehlOku4RDTUJRX
+ xdc6bh9oMvIOGAPHurBybm+HlZWtdg53PS2KXqOrsFz9QFblvVnTTcECh7BQ9e19DWBe
+ TowQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722356563; x=1722961363;
+ d=1e100.net; s=20230601; t=1722356567; x=1722961367;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GN1HaihudaqLLrp8IlR/d+UPmyEvWng1714T4YdfQiw=;
- b=MmGWxaOuKsd10S17KS7r9MjMi5/rNv8SfO3FS/OKFQH376G8pWLce7P7TrBGjS5HD0
- XKGEqKGhYLOPw9/u/TJBLGl6bLEEgtRh0jUEFIhI/dxsffZ3S7KvuJdm3dOPRAz4vKlF
- Mk46uFDF++z8T6Tm6tS/FWJKqIPA2P92U/UGU82pVVQoMsetnyder/ClZP/YVZ8d4CrC
- 6RWuXi60tQEbpOprGANhoTTT+vdR/jeA8T1CHlLaDXESZf22HerZFphOyrXil1qm/y94
- WWFvLrFBaCB7hQwyMO+Sych6OY62jarmbpLOgxyft/M6FvtmF7DmyOetFZZXjTVIAXm4
- iRbQ==
-X-Gm-Message-State: AOJu0YwnUJawn/SKFAJePgrsiN9NOdZj7l3sy8zLm4oTJ0TvnJz1D/G0
- AAbTmBBGxPk+Wv+eeFZycFZpK8VlMpQo6lTuNn1wKnoHkt6RmOnQC+PoOGaCfrPFdieKSncOWGn
- n
-X-Google-Smtp-Source: AGHT+IEZUi76y+V7xML2jV9HXN1xlLgI3lAsBABwkfJb7aFBEh+AgUPwQ411TozVDM9sWnNzGBIZ8Q==
-X-Received: by 2002:a17:906:c10f:b0:a77:ca9d:1d46 with SMTP id
- a640c23a62f3a-a7d85abb7e7mr296828066b.33.1722356563324; 
- Tue, 30 Jul 2024 09:22:43 -0700 (PDT)
+ bh=AUsqRXTeW3XYv9I38g7wul3S13NoPU/K/kBqTz9dI9c=;
+ b=rjz0XvuTVJF0WV5S/L01isTGCLCPVBQH5x0yZo2Vq5DOJn0LdxFL81HRbThd6f4acC
+ 4OurimzSOI4691/Ww7XsuxrnhNYlCiGnVMiB+GSXdpgLuJ8tlN/foGpN681XA/Qv7kyl
+ i54Kam3QZLu9ypkGWDYuN1jNS9EuhJRYGlr54AYTJwR9Zf5DWXaKKGZYNyCkQQnlYXMV
+ 4iJx9c3hLJ2ePHboewKsnMHUNG48O7vKy+/QiicS6tOHWBMsSgMonGOLvXbIJpbfTnRN
+ K2gG3z9xkDioDiVjRirfYa3e9Deq/cWw/3ZlTwvM2bBjsdnVOL842vYFX8D9Arh0q8ke
+ cHZQ==
+X-Gm-Message-State: AOJu0YygrqgePLGOAm9FMzDwrHPbtA7uiea4Ho4dbXqPQcZReqSdTEG+
+ bgEZLH7ToHksUZqpdYTXvTQLWPAZySM0c0dh3lHHj3SGQBS4mvcm5nP+uubjgrY=
+X-Google-Smtp-Source: AGHT+IEemkYjxqr397Z5iEE5jkEbUAkPbEgoV8UFaCxLXwBdWOC1YI29FMc8YSHOQVwwXCBQ47RKkA==
+X-Received: by 2002:a17:907:3fa5:b0:a7a:bae8:f2b5 with SMTP id
+ a640c23a62f3a-a7d85a9b845mr309430166b.36.1722356566935; 
+ Tue, 30 Jul 2024 09:22:46 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ac6377e06fsm7493819a12.28.2024.07.30.09.22.40
+ a640c23a62f3a-a7acad411bcsm655186466b.109.2024.07.30.09.22.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jul 2024 09:22:40 -0700 (PDT)
+ Tue, 30 Jul 2024 09:22:45 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 671A05F94C;
- Tue, 30 Jul 2024 17:22:38 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 1AB8A5FA0F;
+ Tue, 30 Jul 2024 17:22:39 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
-Subject: [PULL 06/14] docs/devel: update the testing introduction
-Date: Tue, 30 Jul 2024 17:22:29 +0100
-Message-Id: <20240730162237.1425515-7-alex.bennee@linaro.org>
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 13/14] contrib/plugins: add compat for g_memdup2
+Date: Tue, 30 Jul 2024 17:22:36 +0100
+Message-Id: <20240730162237.1425515-14-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240730162237.1425515-1-alex.bennee@linaro.org>
 References: <20240730162237.1425515-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,49 +100,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the mention of "check-help" up to the intro text and also mention
-the meson test integration.
+We were premature if bumping this because some of our builds are still
+on older glibs. Just copy the compat handler for now and we can remove
+it later.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Fixes: ee293103b0 (plugins: update lockstep to use g_memdup2)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2161
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240729144414.830369-7-alex.bennee@linaro.org>
+Message-Id: <20240729144414.830369-14-alex.bennee@linaro.org>
 
-diff --git a/docs/devel/testing.rst b/docs/devel/testing.rst
-index 23d3f44f52..b984c5dd26 100644
---- a/docs/devel/testing.rst
-+++ b/docs/devel/testing.rst
-@@ -3,13 +3,28 @@
- Testing in QEMU
- ===============
+diff --git a/contrib/plugins/lockstep.c b/contrib/plugins/lockstep.c
+index 6a7e9bbb39..62981d4e09 100644
+--- a/contrib/plugins/lockstep.c
++++ b/contrib/plugins/lockstep.c
+@@ -101,6 +101,31 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+     plugin_cleanup(id);
+ }
  
--This document describes the testing infrastructure in QEMU.
-+QEMU's testing infrastructure is fairly complex as it covers
-+everything from unit testing and exercising specific sub-systems all
-+the way to full blown acceptance tests. To get an overview of the
-+tests you can run ``make check-help`` from either the source or build
-+tree.
++/*
++ * g_memdup has been deprecated in Glib since 2.68 and
++ * will complain about it if you try to use it. However until
++ * glib_req_ver for QEMU is bumped we make a copy of the glib-compat
++ * handler.
++ */
++static inline gpointer g_memdup2_qemu(gconstpointer mem, gsize byte_size)
++{
++#if GLIB_CHECK_VERSION(2, 68, 0)
++    return g_memdup2(mem, byte_size);
++#else
++    gpointer new_mem;
 +
-+Most (but not all) tests are also integrated into the meson build
-+system so can be run directly from the build tree, for example:
++    if (mem && byte_size != 0) {
++        new_mem = g_malloc(byte_size);
++        memcpy(new_mem, mem, byte_size);
++    } else {
++        new_mem = NULL;
++    }
 +
-+.. code::
++    return new_mem;
++#endif
++}
++#define g_memdup2(m, s) g_memdup2_qemu(m, s)
 +
-+  [./pyvenv/bin/]meson test --suite qemu:softfloat
-+
-+will run just the softfloat tests.
-+
-+The rest of this document will cover the details for specific test
-+groups.
- 
- Testing with "make check"
- -------------------------
- 
--The "make check" testing family includes most of the C based tests in QEMU. For
--a quick help, run ``make check-help`` from the source tree.
-+The "make check" testing family includes most of the C based tests in QEMU.
- 
- The usual way to run these tests is:
- 
+ static void report_divergance(ExecState *us, ExecState *them)
+ {
+     DivergeState divrec = { log, 0 };
 -- 
 2.39.2
 
