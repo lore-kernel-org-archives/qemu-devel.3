@@ -4,68 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43524C3DA70
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 14:51:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E619EC3DA70
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 14:52:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYoB7-0007fI-75; Tue, 30 Jul 2024 10:50:18 -0400
-Received: from eggs.gnu.org ([209.51.188.92])
+	id 1sYoBf-0008Fh-5z; Tue, 30 Jul 2024 10:50:51 -0400
+Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <n.novikov@syntacore.com>)
- id 1sYmG4-0005oc-Ie
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 08:47:25 -0400
-Received: from [89.207.88.248] (helo=mta-04.yadro.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sYoBd-0008F7-5j
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 10:50:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <n.novikov@syntacore.com>)
- id 1sYmEv-00089X-6H
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 08:47:06 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 7FE2BC0004
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1722342981;
- bh=V+l+hMPgpSjeGnJjRXQ9Se+/zBWez49MK5BRCt63NoE=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=nh6nwHJgdJp4nDGKt2I2qIzmpw1Tc1nFbwgC4mQzxFU8JP4/o46gBZdmbt26LDBOp
- cw6S2KvZyqo5NJgMSIY5dpQOuu07Ttpdb59RBVw3i2azs/dPUjOguc7qffeFPcz8pX
- Lpxkx3yLmheVqH8bxLs2U5n/eQBEhYqeeW/+yaQUuqx3OuTBPcCJVoQtroxtGoNkvn
- YfT8a6+8sqmA2qlj6ydLn2rUgaOqNLUlGvi2lDoL3+4OLrCznvSgRmrVQSoOhLbNHF
- 0zBqk4xfpnOK/BWiC+ajXP5v9oPguPZKYAGr0y4mNDtiTmAXDwnOm3YeCQxiemlN+r
- Ur+qvXSqydtYg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1722342981;
- bh=V+l+hMPgpSjeGnJjRXQ9Se+/zBWez49MK5BRCt63NoE=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=e71ss90Swa8jC8r2k2hWxQM8duJxzuhS1doTgU7siZG0MUJZocsenz075L0+oub7z
- MFGuT7iATB71lv1d1+l1B7Yt3ogG7eg2VdfcZCxeo4uWh6SFTaDcOL2RntePyRHKeB
- W5zh80bJwUmWxjwSROyW2Iife6loj4WzHIOP7sskWfFKzJ706mepGRENxX9j++J8vL
- MpA8qMKNma7+NpOj2k+Tw67d+tSjQlF3c84gTgZYCQXjyknVoEMUfUH27YibjwLPxm
- eIyQMPU8PVYYJcvKDTN1Qpx5FtDj8Ip9B84YjkxZelah5I3qEAdC6/rHZR2r8WtvQI
- 3eGnvRGl9aEUg==
-From: Nikita Novikov <n.novikov@syntacore.com>
-To: <lureau@redhat.com>
-CC: <pbonzini@redhat.com>, <qemu-devel@nongnu.org>, Nikita Novikov
- <n.novikov@syntacore.com>
-Subject: [PATCH] hw/char/riscv_htif: Fix 64-bit var write order in 32-bit
- system
-Date: Tue, 30 Jul 2024 15:35:59 +0300
-Message-ID: <20240730123559.35115-1-n.novikov@syntacore.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sYoBb-0000RY-6N
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 10:50:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722351043;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sbxSbKA0/v6Kfhk35rGqQxZ1h/RS7edIrdm5r5TJpi8=;
+ b=B5Dby6RwctFM0yxmRWF7u+iUeUzNMH6TM7KuRpdQoqcVzJhjyVGbUDYYi8zQeoDE08NCpz
+ PzFLZrtSX6j4aZYW4B7s+4Q/3ja2iuRKzJZJ0Xb+Oq81312LW/FMQPwjKlFYZXKSrT+Klz
+ 3MI01Dyl9LOEArmp6+ZtIqRZMboASUU=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-153-WvmSNtfdNFC5R46f1a5Shw-1; Tue, 30 Jul 2024 10:50:41 -0400
+X-MC-Unique: WvmSNtfdNFC5R46f1a5Shw-1
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4280e1852f3so29839065e9.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 07:50:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722351040; x=1722955840;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sbxSbKA0/v6Kfhk35rGqQxZ1h/RS7edIrdm5r5TJpi8=;
+ b=IKv1mBpkptAS4zQmzn2fUxUrB/sT1hz+sdJXZG63x7xCoPENqlsNgI0F66EpMc2I6y
+ n8aymEGpN5hJkm7IroW70UONKkrospQC9NRuAD4Aql6ywznaZV1xK0ZQrv66l6YN5pXs
+ Mfbj52qYQTZ/HCzggG0i9A230nOn4Ya+SkNaAEgfIcLPurcgmxUVT1Nwbcdc+Z6WIpzY
+ fL3tkRAcymk2e7hySq3pT1cV0HoQLcENuNDliZeMiwAZY1mBr5VvR2mTkv1gX+FN9QWA
+ cBe725FqjY0/oJ39exA7AOp1+Kpn7lZOIMQ/jOhri4kE8As+S0O9NY9wwxUzM+B7T8p6
+ glTg==
+X-Gm-Message-State: AOJu0YxDE1mIWDm8fVk1n6HyJL8zc7InIVo7C8bm8aEyjd02q1dzb+FL
+ uLnwhRP2AQApnMpNy3ZzmCNpEMu/cAp0itMoYkaGBIicZaIRUYnGIuTDYpblPxoWxViJnPdyTfk
+ ZMQB4qfuHZ7NaOV30kXLDBwyNOhHVKgAX6GsHcIdMJxsWpLbTjoWiD12QPdHY7MpY7EVi9Vtn3s
+ Nwr2OBQEg5qTmC/Ro6y1SfqvsJ05Vjs80ppdFwTg==
+X-Received: by 2002:a05:6000:1884:b0:366:e991:b9ac with SMTP id
+ ffacd0b85a97d-36b5cef8f6bmr8431066f8f.14.1722351039892; 
+ Tue, 30 Jul 2024 07:50:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGYTCB3hd50kHEpO0VDlUjgRoFoam2z+llf+zlSv0m8KMoYZIq8Z9mmBmnjKaZSn5lSxkEQkoV4r8imMSqp5uE=
+X-Received: by 2002:a05:6000:1884:b0:366:e991:b9ac with SMTP id
+ ffacd0b85a97d-36b5cef8f6bmr8431042f8f.14.1722351039477; Tue, 30 Jul 2024
+ 07:50:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: T-EXCH-08.corp.yadro.com (172.17.11.58) To
- T-EXCH-12.corp.yadro.com (172.17.11.143)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 89.207.88.248 (deferred)
-Received-SPF: permerror client-ip=89.207.88.248;
- envelope-from=n.novikov@syntacore.com; helo=mta-04.yadro.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RDNS_NONE=0.793, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+References: <20240729122553.2501133-1-peter.maydell@linaro.org>
+In-Reply-To: <20240729122553.2501133-1-peter.maydell@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 30 Jul 2024 16:50:28 +0200
+Message-ID: <CABgObfbBQsQjfktUmdECiC8mtrLdVK4R=3=bJTjZhqNh7EXvxw@mail.gmail.com>
+Subject: Re: [RFC] pythondeps: Split sphinx_rtd_theme into its own group
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 30 Jul 2024 10:50:09 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,126 +96,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we are trying to write 64-bit value in 32-bit system, the value in HTIF device divides
-on 2 separate 32-bit parts. So device expects write to xHOST_OFFSET1 first, then to xHOST_OFFSET2.
-But some compilers (ex. CLANG) can change the writing queue (xHOST_OFFSET2 first, xHOST_OFFSET1 second)
-because of machine instructions order swapping. That causes wrong behaviour of HTIF device.
-This patch is removing dependency of writing order, so the device will work correctly regardless of compilers.
+On Mon, Jul 29, 2024 at 2:26=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> Currently we have "sphinx" and "sphinx_rtd_theme" in a single
+> group in pythondeps.toml. This means that mkvenv will try to
+> install them both at once, which doesn't work if sphinx_rtd_theme
+> depends on a version of Sphinx which is newer than the system
+> one, even if the "sphinx" we're installing at the same time
+> would satisfy that dependency. For instance this:
+>
+>  sphinx =3D { accepted =3D ">=3D8.0.0rc1", installed =3D "8.0.0rc1", cana=
+ry =3D "sphinx-build" }
+>  sphinx_rtd_theme =3D { accepted =3D ">=3D2.1.0rc1", installed =3D "2.1.0=
+rc1" }
+>
+> fails like this:
+>
+> mkvenv: Creating non-isolated virtual environment at 'pyvenv'
+> mkvenv: checking for meson>=3D1.1.0
+> mkvenv: installing meson=3D=3D1.2.3
+> mkvenv: checking for sphinx>=3D8.0.0rc1
+> mkvenv: checking for sphinx_rtd_theme>=3D2.1.0rc1
+> mkvenv: installing sphinx=3D=3D8.0.0rc1, sphinx_rtd_theme=3D=3D2.1.0rc1
+> ERROR: Cannot install sphinx-rtd-theme=3D=3D2.1.0rc1 and sphinx=3D=3D8.0.=
+0rc1 because these package versions have conflicting dependencies.
+> ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest=
+/topics/dependency-resolution/#dealing-with-dependency-conflicts
+>
+> *** Ouch! ***
+>
+> Could not provide build dependency 'sphinx=3D=3D8.0.0rc1':
+>  =E2=80=A2 Python package 'sphinx' version '4.3.2' was found, but isn't s=
+uitable.
+>  =E2=80=A2 A suitable version could not be obtained from PyPI.
+>
+> (where 4.3.2 is the system version of sphinx on my system).
 
-Signed-off-by: Nikita Novikov <n.novikov@syntacore.com>
----
- hw/char/riscv_htif.c         | 43 +++++++++++++++++++-----------------
- include/hw/char/riscv_htif.h | 11 +++++++--
- 2 files changed, 32 insertions(+), 22 deletions(-)
+I think the error is a bit confusing, but the versions seem to be
+genuinely incompatibile. sphinx_rtd_theme is still incompatible with
+sphinx 8.0.0, and the error is correct:
 
-diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
-index 9bef60def1..d914f158ea 100644
---- a/hw/char/riscv_htif.c
-+++ b/hw/char/riscv_htif.c
-@@ -233,7 +233,8 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
-         if (cmd == HTIF_CONSOLE_CMD_GETC) {
-             /* this should be a queue, but not yet implemented as such */
-             s->pending_read = val_written;
--            s->tohost = 0; /* clear to indicate we read */
-+            s->tohost = 0;
-+            s->tohost_status = 0x0;     /* clear to indicate we read */
-             return;
-         } else if (cmd == HTIF_CONSOLE_CMD_PUTC) {
-             uint8_t ch = (uint8_t)payload;
-@@ -258,7 +259,8 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
-      *  }
-      */
-     s->fromhost = (val_written >> 48 << 48) | (resp << 16 >> 16);
--    s->tohost = 0; /* clear to indicate we read */
-+    s->tohost = 0;
-+    s->tohost_status = 0x0; /* clear to indicate we read */
- }
- 
- #define TOHOST_OFFSET1      (s->tohost_offset)
-@@ -291,32 +293,33 @@ static void htif_mm_write(void *opaque, hwaddr addr,
- {
-     HTIFState *s = opaque;
-     if (addr == TOHOST_OFFSET1) {
--        if (s->tohost == 0x0) {
--            s->allow_tohost = 1;
--            s->tohost = value & 0xFFFFFFFF;
--        } else {
--            s->allow_tohost = 0;
--        }
-+        s->tohost = deposit64(s->tohost, 0, 32, value);
-+        s->tohost_status |= 0x1;
-     } else if (addr == TOHOST_OFFSET2) {
--        if (s->allow_tohost) {
--            s->tohost |= value << 32;
--            htif_handle_tohost_write(s, s->tohost);
--        }
-+        s->tohost = deposit64(s->tohost, 32, 32, value);
-+        s->tohost_status |= 0x2;
-     } else if (addr == FROMHOST_OFFSET1) {
--        s->fromhost_inprogress = 1;
--        s->fromhost = value & 0xFFFFFFFF;
-+        s->fromhost = deposit64(s->fromhost, 0, 32, value);
-+        s->fromhost_status |= 0x1;
-     } else if (addr == FROMHOST_OFFSET2) {
--        s->fromhost |= value << 32;
--        s->fromhost_inprogress = 0;
-+        s->fromhost = deposit64(s->fromhost, 32, 32, value);
-+        s->fromhost_status |= 0x2;
-     } else {
--        qemu_log("Invalid htif write: address %016" PRIx64 "\n",
--            (uint64_t)addr);
-+        qemu_log("Invalid htif write: address %016" HWADDR_PRIu "\n", addr);
-+    }
-+    if (s->tohost_status == 0x3) {
-+        htif_handle_tohost_write(s, s->tohost);
-+        s->tohost_status = 0x0;
-     }
- }
- 
- static const MemoryRegionOps htif_mm_ops = {
-     .read = htif_mm_read,
-     .write = htif_mm_write,
-+    .valid.min_access_size = 4,
-+    .valid.max_access_size = 8,
-+    .impl.min_access_size = 4,
-+    .impl.max_access_size = 4
- };
- 
- HTIFState *htif_mm_init(MemoryRegion *address_space, Chardev *chr,
-@@ -343,8 +346,8 @@ HTIFState *htif_mm_init(MemoryRegion *address_space, Chardev *chr,
-     s->tohost_offset = tohost_offset;
-     s->fromhost_offset = fromhost_offset;
-     s->pending_read = 0;
--    s->allow_tohost = 0;
--    s->fromhost_inprogress = 0;
-+    s->tohost_status = 0;
-+    s->fromhost_status = 0;
-     qemu_chr_fe_init(&s->chr, chr, &error_abort);
-     qemu_chr_fe_set_handlers(&s->chr, htif_can_recv, htif_recv, htif_event,
-         htif_be_change, s, NULL, true);
-diff --git a/include/hw/char/riscv_htif.h b/include/hw/char/riscv_htif.h
-index df493fdf6b..2b6d50dc60 100644
---- a/include/hw/char/riscv_htif.h
-+++ b/include/hw/char/riscv_htif.h
-@@ -27,8 +27,15 @@
- #define TYPE_HTIF_UART "riscv.htif.uart"
- 
- typedef struct HTIFState {
--    int allow_tohost;
--    int fromhost_inprogress;
-+    /*
-+     * Vars below can be in 4 states:
-+     * 0x0 - nothing written
-+     * 0x1 - xHOST_OFFEST1 written
-+     * 0x2 - xHOST_OFFSET2 written
-+     * 0x3 - Both written
-+     */
-+    int tohost_status;
-+    int fromhost_status;
- 
-     uint64_t tohost;
-     uint64_t fromhost;
--- 
-2.34.1
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+$ python -m venv testvenv
+$ cd testvenv
+$ pip install 'sphinx=3D=3D8.0.0rc1' 'sphinx_rtd_theme=3D=3D2.1.0rc1'
+Defaulting to user installation because normal site-packages is not writeab=
+le
+Collecting sphinx=3D=3D8.0.0rc1
+  Downloading sphinx-8.0.0rc1-py3-none-any.whl.metadata (6.2 kB)
+Collecting sphinx_rtd_theme=3D=3D2.1.0rc1
+  Downloading sphinx_rtd_theme-2.1.0rc1-py2.py3-none-any.whl.metadata (4.4 =
+kB)
+Collecting sphinxcontrib-applehelp (from sphinx=3D=3D8.0.0rc1)
+  Downloading sphinxcontrib_applehelp-2.0.0-py3-none-any.whl.metadata (2.3 =
+kB)
+Requirement already satisfied: sphinxcontrib-devhelp in
+/usr/lib/python3.12/site-packages (from sphinx=3D=3D8.0.0rc1) (1.0.5)
+[more "requirement already satisfied" lines...]
+Requirement already satisfied: packaging>=3D23.0 in
+/usr/lib/python3.12/site-packages (from sphinx=3D=3D8.0.0rc1) (23.2)
+INFO: pip is looking at multiple versions of sphinx-rtd-theme to
+determine which version is compatible with other requirements. This
+could take a while.
+ERROR: Cannot install sphinx-rtd-theme=3D=3D2.1.0rc1 and sphinx=3D=3D8.0.0r=
+c1
+because these package versions have conflicting dependencies.
+
+The conflict is caused by:
+    The user requested sphinx=3D=3D8.0.0rc1
+    sphinx-rtd-theme 2.1.0rc1 depends on sphinx<8 and >=3D5
+To fix this you could try to:
+1. loosen the range of package versions you've specified
+2. remove package versions to allow pip attempt to solve the dependency con=
+flict
+
+ERROR: ResolutionImpossible: for help visit
+https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-de=
+pendency-conflicts
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+The reason why your patch works is weird, and it's apparent when you
+run the "pip install" commands one by one:
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+$ pip install 'sphinx_rtd_theme=3D=3D2.1.0rc1'
+Defaulting to user installation because normal site-packages is not writeab=
+le
+Collecting sphinx_rtd_theme=3D=3D2.1.0rc1
+  Using cached sphinx_rtd_theme-2.1.0rc1-py2.py3-none-any.whl.metadata (4.4=
+ kB)
+Collecting sphinx<8,>=3D5 (from sphinx_rtd_theme=3D=3D2.1.0rc1)
+  Downloading sphinx-7.4.7-py3-none-any.whl.metadata (6.1 kB)
+Requirement already satisfied: docutils<0.21 in
+/usr/lib/python3.12/site-packages (from sphinx_rtd_theme=3D=3D2.1.0rc1)
+(0.20.1)
+[more "requirement already satisfied" lines...]
+Downloading sphinx_rtd_theme-2.1.0rc1-py2.py3-none-any.whl (7.7 MB)
+Downloading sphinx-7.4.7-py3-none-any.whl (3.4 MB)
+Installing collected packages: sphinx, sphinx_rtd_theme
+  Attempting uninstall: sphinx
+    Found existing installation: Sphinx 8.0.0rc1
+    Uninstalling Sphinx-8.0.0rc1:
+      Successfully uninstalled Sphinx-8.0.0rc1
+Successfully installed sphinx-7.4.7 sphinx_rtd_theme-2.1.0rc1
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+It doesn't install 8.0.0rc1 at all... :)
+
+Paolo
 
 
