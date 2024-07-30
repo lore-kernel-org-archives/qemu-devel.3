@@ -4,77 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0989DC3DA61
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 07:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E193FC3DA61
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 08:10:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYhiL-00009S-MI; Tue, 30 Jul 2024 03:56:09 -0400
+	id 1sYhuz-0007qs-Nr; Tue, 30 Jul 2024 04:09:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sYhiK-00008U-4f; Tue, 30 Jul 2024 03:56:08 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sYhuy-0007pR-Gq
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:09:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sYhiE-0007I6-2Y; Tue, 30 Jul 2024 03:56:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1722326162; x=1753862162;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=iVM/lNIx9FLDzrJYFZIa7VB1NWYVO1TqB88lag6oSu4=;
- b=jzgjhr+4tZinSKNxDkjdPbF6M/7n+JJaqZeKQdlUObsZVww2d+o++kGv
- hVCmjW/92PkXwWTQd8d/KYbwyx+UYg4rf+QW+c7mbQOCImyBtl58ZkA1s
- N9iWSRaMdO/6aR6aW84YgnnwpjKLNzu0Xq0TH/jBQrX4JOQMO0W703MqX
- HAqo8iaFRtP9C6pXbwpp5vGgvlniSbxuPvDcJ94aaMfYxxiiV4zRFoRlM
- n3ku2MSL9T7QbBnbpKw3OScCQ7S8RTq9S7OGeTzVqGBow4xnrtOXXpraK
- s8qZC7JcJzaP7hCgMojO9+hXjeInBUqBjKGnyr8Ix8adNT0kvr7Noq6eB g==;
-X-CSE-ConnectionGUID: HqeuuRFsQGynOOAqwB/ibg==
-X-CSE-MsgGUID: 4RV1vAsRQG2kQKKRc6JV9w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11148"; a="19967178"
-X-IronPort-AV: E=Sophos;i="6.09,248,1716274800"; d="scan'208";a="19967178"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Jul 2024 00:55:59 -0700
-X-CSE-ConnectionGUID: Q2E2GV1PT1aKj92KyS1elw==
-X-CSE-MsgGUID: 1+APfD/eRfyG89D5H4OylQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,248,1716274800"; d="scan'208";a="58393322"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 30 Jul 2024 00:55:55 -0700
-Date: Tue, 30 Jul 2024 16:11:42 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 2/6] arm/virt: Wire up GPIO error source for ACPI / GHES
-Message-ID: <ZqigPgTl7quJ553J@intel.com>
-References: <cover.1722259246.git.mchehab+huawei@kernel.org>
- <e994c3944d31775d62bbd017dec3adff50ddf269.1722259246.git.mchehab+huawei@kernel.org>
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sYhuw-0000pc-Ib
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:09:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722326949;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0Za8N01neFRYJ+Ybu7cI0fTPx1xYupGwphv8Z+jK6eY=;
+ b=hyqp3vhvoEHCgI6SS6i2X/QrKnErc6/civiKzVpHDn39BlFtvjzb2pYQKGE4UGjr2szv0I
+ uQB22HwTsmeqI9O91XKBcMjRZWTMQs3qdInRw/iHpdA/1L1vH78fUieigacoT6x0UtAYWq
+ V8V/RPVzMcZL0F+aWU7cO813pRXSXPE=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-151-ZlVUb6sfOSOekBwPfKR-lw-1; Tue,
+ 30 Jul 2024 04:09:03 -0400
+X-MC-Unique: ZlVUb6sfOSOekBwPfKR-lw-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D820A1955D48; Tue, 30 Jul 2024 08:09:01 +0000 (UTC)
+Received: from t14s.redhat.com (unknown [10.39.193.34])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 13A4B1955F3B; Tue, 30 Jul 2024 08:08:58 +0000 (UTC)
+From: David Hildenbrand <david@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Collin Walling <walling@linux.ibm.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: [PULL 1/1] target/s390x: move @deprecated-props to CpuModelExpansion
+ Info
+Date: Tue, 30 Jul 2024 10:08:52 +0200
+Message-ID: <20240730080852.649251-2-david@redhat.com>
+In-Reply-To: <20240730080852.649251-1-david@redhat.com>
+References: <20240730080852.649251-1-david@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=gb2312
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <e994c3944d31775d62bbd017dec3adff50ddf269.1722259246.git.mchehab+huawei@kernel.org>
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,76 +83,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Mauro,
+From: Collin Walling <walling@linux.ibm.com>
 
-On Mon, Jul 29, 2024 at 03:21:06PM +0200, Mauro Carvalho Chehab wrote:
-> Date: Mon, 29 Jul 2024 15:21:06 +0200
-> From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> Subject: [PATCH v4 2/6] arm/virt: Wire up GPIO error source for ACPI / GHES
-> X-Mailer: git-send-email 2.45.2
-> 
-> From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> 
-> Creates a Generic Event Device (GED) as specified at
-> ACPI 6.5 specification at 18.3.2.7.2:
-> https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#event-notification-for-generic-error-sources
-> with HID PNP0C33.
-> 
-> The PNP0C33 device is used to report hardware errors to
-> the bios via ACPI APEI Generic Hardware Error Source (GHES).
-> 
-> It is aligned with Linux Kernel patch:
-> https://lore.kernel.org/lkml/1272350481-27951-8-git-send-email-ying.huang@intel.com/
-> 
-> [mchehab: use a define for the generic event pin number and do some cleanups]
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> ---
->  hw/arm/virt-acpi-build.c | 30 ++++++++++++++++++++++++++----
->  hw/arm/virt.c            | 14 ++++++++++++--
->  include/hw/arm/virt.h    |  1 +
->  include/hw/boards.h      |  1 +
->  4 files changed, 40 insertions(+), 6 deletions(-)
+CpuModelInfo is used both as command argument and in command
+returns.
 
-[snip]
+Its @deprecated-props array does not make any sense in arguments,
+and is silently ignored.  We actually want it only as return value
+of query-cpu-model-expansion.
 
-> +static void virt_set_error(void)
-> +{
-> +    qemu_set_irq(qdev_get_gpio_in(gpio_error_dev, 0), 1);
-> +}
-> +
+Move it from CpuModelInfo to CpuModelExpansionType, and document
+its dependence on expansion type property.
 
-[snip]
+This was identified late during review [1] and we have to fix it up
+while it's not part of an official QEMU release yet.
 
-> +    mc->generic_error_device_notify = virt_set_error;
+[1] https://lore.kernel.org/qemu-devel/20240719181741.35146-1-walling@linux.ibm.com/
 
-[snip]
+Message-ID: <20240726203646.20279-1-walling@linux.ibm.com>
+Fixes: eed0e8ffa38f ("target/s390x: filter deprecated properties based on model expansion type")
+Signed-off-by: Collin Walling <walling@linux.ibm.com>
+[ david: - add "Fixes", adjust description, reference v3 instead
+         - make property s390x-only and non-optional
+         - fixup "populate" vs. "populated" ]
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+ qapi/machine-target.json         | 19 +++++++++++--------
+ target/s390x/cpu_models_sysemu.c | 29 ++++++++++++++++++-----------
+ 2 files changed, 29 insertions(+), 19 deletions(-)
 
-> diff --git a/include/hw/boards.h b/include/hw/boards.h
-> index 48ff6d8b93f7..991f99138e57 100644
-> --- a/include/hw/boards.h
-> +++ b/include/hw/boards.h
-> @@ -308,6 +308,7 @@ struct MachineClass {
->      int64_t (*get_default_cpu_node_id)(const MachineState *ms, int idx);
->      ram_addr_t (*fixup_ram_size)(ram_addr_t size);
->      uint64_t smbios_memory_device_size;
-> +    void (*generic_error_device_notify)(void);
-
-The name looks inconsistent with the style of other MachineClass virtual
-methods. What about the name like "notify_xxx"? And pls add the comment
-about this new method.
-
-BTW, I found this method is called in generic_error_device_notify() of
-Patch 6. And the mc->generic_error_device_notify() - as the virtual
-metchod of MachineClass looks just to implement a hook, and it doesn't
-seem to have anything to do with MachineClass/MachineState, so my
-question is why do we need to add this method to MachineClass?
-
-Could we maintain a notifier list in ghes.c and expose an interface
-to allow arm code register a notifier? This eliminates the need to add
-the ¡°notify¡± method to MachineClass.
-
-Regards,
-Zhao
+diff --git a/qapi/machine-target.json b/qapi/machine-target.json
+index a552e2b0ce..00bbecc905 100644
+--- a/qapi/machine-target.json
++++ b/qapi/machine-target.json
+@@ -20,17 +20,11 @@
+ #
+ # @props: a dictionary of QOM properties to be applied
+ #
+-# @deprecated-props: a list of properties that are flagged as deprecated
+-#     by the CPU vendor.  These properties are either a subset of the
+-#     properties enabled on the CPU model, or a set of properties
+-#     deprecated across all models for the architecture.
+-#
+ # Since: 2.8
+ ##
+ { 'struct': 'CpuModelInfo',
+   'data': { 'name': 'str',
+-            '*props': 'any',
+-            '*deprecated-props': ['str'] } }
++            '*props': 'any' } }
+ 
+ ##
+ # @CpuModelExpansionType:
+@@ -248,10 +242,19 @@
+ #
+ # @model: the expanded CpuModelInfo.
+ #
++# @deprecated-props: a list of properties that are flagged as deprecated
++#     by the CPU vendor.  The list depends on the CpuModelExpansionType:
++#     "static" properties are a subset of the enabled-properties for
++#     the expanded model; "full" properties are a set of properties
++#     that are deprecated across all models for the architecture.
++#     (since: 9.1).
++#
+ # Since: 2.8
+ ##
+ { 'struct': 'CpuModelExpansionInfo',
+-  'data': { 'model': 'CpuModelInfo' },
++  'data': { 'model': 'CpuModelInfo',
++            'deprecated-props' : { 'type': ['str'],
++                                   'if': 'TARGET_S390X' } },
+   'if': { 'any': [ 'TARGET_S390X',
+                    'TARGET_I386',
+                    'TARGET_ARM',
+diff --git a/target/s390x/cpu_models_sysemu.c b/target/s390x/cpu_models_sysemu.c
+index 94dd798b4c..f6df691b66 100644
+--- a/target/s390x/cpu_models_sysemu.c
++++ b/target/s390x/cpu_models_sysemu.c
+@@ -174,15 +174,11 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
+                                 bool delta_changes)
+ {
+     QDict *qdict = qdict_new();
+-    S390FeatBitmap bitmap, deprecated;
++    S390FeatBitmap bitmap;
+ 
+     /* always fallback to the static base model */
+     info->name = g_strdup_printf("%s-base", model->def->name);
+ 
+-    /* features flagged as deprecated */
+-    bitmap_zero(deprecated, S390_FEAT_MAX);
+-    s390_get_deprecated_features(deprecated);
+-
+     if (delta_changes) {
+         /* features deleted from the base feature set */
+         bitmap_andnot(bitmap, model->def->base_feat, model->features,
+@@ -197,9 +193,6 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
+         if (!bitmap_empty(bitmap, S390_FEAT_MAX)) {
+             s390_feat_bitmap_to_ascii(bitmap, qdict, qdict_add_enabled_feat);
+         }
+-
+-        /* deprecated features that are a subset of the model's enabled features */
+-        bitmap_and(deprecated, deprecated, model->features, S390_FEAT_MAX);
+     } else {
+         /* expand all features */
+         s390_feat_bitmap_to_ascii(model->features, qdict,
+@@ -213,9 +206,6 @@ static void cpu_info_from_model(CpuModelInfo *info, const S390CPUModel *model,
+     } else {
+         info->props = QOBJECT(qdict);
+     }
+-
+-    s390_feat_bitmap_to_ascii(deprecated, &info->deprecated_props, list_add_feat);
+-    info->has_deprecated_props = !!info->deprecated_props;
+ }
+ 
+ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+@@ -226,6 +216,7 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+     CpuModelExpansionInfo *expansion_info = NULL;
+     S390CPUModel s390_model;
+     bool delta_changes = false;
++    S390FeatBitmap deprecated_feats;
+ 
+     /* convert it to our internal representation */
+     cpu_model_from_info(&s390_model, model, "model", &err);
+@@ -245,6 +236,22 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+     expansion_info = g_new0(CpuModelExpansionInfo, 1);
+     expansion_info->model = g_malloc0(sizeof(*expansion_info->model));
+     cpu_info_from_model(expansion_info->model, &s390_model, delta_changes);
++
++    /* populate list of deprecated features */
++    bitmap_zero(deprecated_feats, S390_FEAT_MAX);
++    s390_get_deprecated_features(deprecated_feats);
++
++    if (delta_changes) {
++        /*
++         * Only populate deprecated features that are a
++         * subset of the features enabled on the CPU model.
++         */
++        bitmap_and(deprecated_feats, deprecated_feats,
++                   s390_model.features, S390_FEAT_MAX);
++    }
++
++    s390_feat_bitmap_to_ascii(deprecated_feats,
++                              &expansion_info->deprecated_props, list_add_feat);
+     return expansion_info;
+ }
+ 
+-- 
+2.45.2
 
 
