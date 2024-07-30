@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80B39C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBCDDC3DA61
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:44:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYjLV-0004K5-IG; Tue, 30 Jul 2024 05:40:41 -0400
+	id 1sYjLR-00044C-Ni; Tue, 30 Jul 2024 05:40:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYjLO-0003rG-L8
+ id 1sYjLO-0003oo-2g
  for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:34 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYjLM-0000cw-KL
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:34 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-42816ca797fso20884055e9.2
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:40:32 -0700 (PDT)
+ id 1sYjLL-0000cd-RR
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:33 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3685afd0c56so2044926f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:40:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722332431; x=1722937231; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722332430; x=1722937230; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Rm4cAgPkSZIkkBZ/4z1vocwRbdja/wzHAdJooiJoAB0=;
- b=Mg//dpd3EZ8cAA+pczh29wbZphM7sdJM8IoaQXqHGbQEXaLryji8D3RKOFzFUNt2mt
- 6yyCGCtYhsA0DtRaTIVvK7KZT/PLlW92NEJPHF4WYtqSIxLEhKt/5x0MvK99CbB6D0D0
- /rLhEBY+ZxATtMuY8Zwjpqema43oOsKd/eR+xrIjZlA4uyl63Kw5/1Boga8BejNr30IZ
- 5P2CFJ9ka3tMVfnaDewZHsbHdE5TwGv3PhQQYdrfSdeDd1Lx/6XW5Ibzqh815l5hoFUR
- vOAmgfGi35MTny1obxQ/tpjeloWbbfoF8IiTn/RN7MGOkRWVXLow71b3r12AjgAOJ5D+
- h6ZA==
+ :reply-to; bh=06XQlRqaiDDlTS/bWwdh4Kb7Kl/gVH3uLLyO2TZuWqM=;
+ b=BtIIc3aRF1ZS62sZDoM5oACm8M+d9FWOPGsBpczLqKS0wnEATg0zm6luq8Rm7yi/nJ
+ z/xm6UsrxrhMSmxePSX/cSKbG4BChChWvGJ1oDkYq0ORK2iJfe3R19ay6qcEM1PLB3eg
+ j+wxKbBax2Jv18HtG/JSu5RHNP7Ap16he5hiWmtNVDLSciaDoKWcB50wmKGVp3RUxFdo
+ WWIlY6gK1ntPuo35L4polyl9VSqs/NCuD/nbtvfvbnMyZjj9doUJwNob8YNlWn8cAGP3
+ +PNgSY5aY+2n0C4rRht7Gza8PeWs+ymNikHMLgTyq/fuL+GWALgS+diYkQ1YIMJS4BGX
+ Nrog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722332431; x=1722937231;
+ d=1e100.net; s=20230601; t=1722332430; x=1722937230;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Rm4cAgPkSZIkkBZ/4z1vocwRbdja/wzHAdJooiJoAB0=;
- b=ui9WKgCOzf5oZ7gKCxuuNpVgqXgLV4WGjFUO3Y7v2VLKFM998yfW9CxV/rrR708c0G
- v5X+0MCKMlzkpZztPDay7S4d4D916adFHRhzvCQsi5Uxi8PhrggADR0kZTqAICV2jIUQ
- pjhBdU+mHufgds8Ink1xXdIjvOUoYD32BKkIy2GxqXo8zqCX8t3DZ5tqNeKJoI7BLPx+
- OJB2ej2gC2pzvzvaLsg/VA4AZzXI0LM+Z/iEO1LAleFFtjoQzZDTT+iRo/TaHdbYKYho
- GiWeJF7NcJ+DIXa5xoBx1e+Mi+tYaq/0eHZp3YMJpd5NuRP39uIVit3tiq0ue8zQNWSw
- lz0g==
-X-Gm-Message-State: AOJu0Yz9UlkooTJPL2eVWpgLGAhbwuHAvxdKUMLLsSkEdFfLLCsaBS+U
- n2+aoeYnpCDgtL8siz+D7XJ28/LNXCc13MN17SCbRvSLpli1ga1jXagqlPb0qB/jIuu0fTRyp2+
- W
-X-Google-Smtp-Source: AGHT+IGlO75m1Hn93j1EXTOTaS2rzk6rt/iDwBeeCAgSV3xt7YSgz8xNOhQW19fci+oKFqWg3St2IA==
-X-Received: by 2002:a05:6000:4d1:b0:367:8847:5bf4 with SMTP id
- ffacd0b85a97d-36b5cee9bbbmr7710993f8f.10.1722332430904; 
+ bh=06XQlRqaiDDlTS/bWwdh4Kb7Kl/gVH3uLLyO2TZuWqM=;
+ b=Wwi9WuisV5xlyyUG2XpAFyIGRDMUlzEAVhj57oEpYFpg1SsXtIitrCtQazkJjx0JKE
+ ChwyenjrgMZdjnAXP3TDiw4EwX2O0JQG65mGZqEMDbg6jMZXtBKIrbwi/AVeL0b3a2CT
+ uQjx7EomnxVjujhyY5cYnp3w3qelfkPwxyuKJhrA2cwJ0U8lO0DTEV02BvLxMO+Tjh0B
+ 18aVm2VPiep8RRKp4zl6guwRDGX1I691Z8lI0Yn8QcpiKstkp1YXI6zTWZ7yTYMtq9QK
+ I18RjoFSN0toaWiy2lSSCuX4bmFJC69BesbbgxgDY7icoqHq2aZ+UBNTXOl6uXmzlnsI
+ Qe3Q==
+X-Gm-Message-State: AOJu0Yw+lMaxcDG5Almge5RHubsyheMjXWcYgY6NMhJFOdjGcfHYokFo
+ fBG/+u4YgtYTjXyY0kboGtdSWx9weRLgKrdlXSj07OYmgc7p2vkHsbuP/mUF2EIRy8VN4PFikzc
+ k
+X-Google-Smtp-Source: AGHT+IGGl+mT0nTJTrpVzaH0YKACvStMEWK3mqHsRzeM5Iowa1ZPPJBzxdbJUsotIkrym+8yWd7FTw==
+X-Received: by 2002:a05:6000:186c:b0:368:4e28:47f7 with SMTP id
+ ffacd0b85a97d-36b5cefd51dmr8858749f8f.6.1722332430466; 
  Tue, 30 Jul 2024 02:40:30 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
@@ -61,18 +61,17 @@ Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  Tue, 30 Jul 2024 02:40:30 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 16/21] target/tricore: Use unsigned types for bitops in
- helper_eq_b()
-Date: Tue, 30 Jul 2024 10:40:15 +0100
-Message-Id: <20240730094020.2758637-17-peter.maydell@linaro.org>
+Subject: [PULL 15/21] target/arm: Ignore SMCR_EL2.LEN and SVCR_EL2.LEN if EL2
+ is not enabled
+Date: Tue, 30 Jul 2024 10:40:14 +0100
+Message-Id: <20240730094020.2758637-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240730094020.2758637-1-peter.maydell@linaro.org>
 References: <20240730094020.2758637-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,39 +94,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity points out that in helper_eq_b() we have an int32_t 'msk'
-and we end up shifting into its sign bit. This is OK for QEMU because
-we use -fwrapv to give this well defined semantics, but when you look
-at what this function is doing it's doing bit operations, so we
-should be using an unsigned variable anyway. This also matches the
-return type of the function.
+When determining the current vector length, the SMCR_EL2.LEN and
+SVCR_EL2.LEN settings should only be considered if EL2 is enabled
+(compare the pseudocode CurrentSVL and CurrentNSVL which call
+EL2Enabled()).
 
-Make 'ret' and 'msk' uint32_t.
+We were checking against ARM_FEATURE_EL2 rather than calling
+arm_is_el2_enabled(), which meant that we would look at
+SMCR_EL2/SVCR_EL2 when in Secure EL1 or Secure EL0 even if Secure EL2
+was not enabled.
 
-Resolves: Coverity CID 1547758
+Use the correct check in sve_vqm1_for_el_sm().
+
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240723151042.1396610-1-peter.maydell@linaro.org
+Message-id: 20240722172957.1041231-5-peter.maydell@linaro.org
 ---
- target/tricore/op_helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/arm/helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/tricore/op_helper.c b/target/tricore/op_helper.c
-index ba9c4444b39..a0d5a0da1df 100644
---- a/target/tricore/op_helper.c
-+++ b/target/tricore/op_helper.c
-@@ -1505,8 +1505,8 @@ uint32_t helper_sub_h(CPUTriCoreState *env, target_ulong r1, target_ulong r2)
- 
- uint32_t helper_eq_b(target_ulong r1, target_ulong r2)
- {
--    int32_t ret;
--    int32_t i, msk;
-+    uint32_t ret, msk;
-+    int32_t i;
- 
-     ret = 0;
-     msk = 0xff;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index ce319572354..8fb4b474e83 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -7232,7 +7232,7 @@ uint32_t sve_vqm1_for_el_sm(CPUARMState *env, int el, bool sm)
+     if (el <= 1 && !el_is_in_host(env, el)) {
+         len = MIN(len, 0xf & (uint32_t)cr[1]);
+     }
+-    if (el <= 2 && arm_feature(env, ARM_FEATURE_EL2)) {
++    if (el <= 2 && arm_is_el2_enabled(env)) {
+         len = MIN(len, 0xf & (uint32_t)cr[2]);
+     }
+     if (arm_feature(env, ARM_FEATURE_EL3)) {
 -- 
 2.34.1
 
