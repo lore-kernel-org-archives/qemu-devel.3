@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E1E1C3DA70
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 18:47:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEC00C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 18:54:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYrrm-0006rK-Ry; Tue, 30 Jul 2024 14:46:34 -0400
+	id 1sYryb-0003f8-7u; Tue, 30 Jul 2024 14:53:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYrrl-0006pi-Dm
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 14:46:33 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sYryY-0003e6-2L
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 14:53:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYrri-0004cG-NP
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 14:46:33 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sYryV-0005kC-D8
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 14:53:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722365189;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1722365609;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=yhdkLaCFVE43vsYLjFgMcHHxYaz1sdB8Cy44Q/hw71M=;
- b=HYl8UbdZq6wNEZnHhwwEVDyAzxAyIUUr9HLpl6HHUqMK2TLYcIeaFNBkbhGQXM/fGyWL7o
- S+jfzTw4tlnYyH4aG28z5A/8eayxDIhFnpcMUy3mkvuy5NZ3T1SXJveamSa9UR1HFikYWl
- qpIFeeN63yBL7qNJyCjXrRGkGfPWYqY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-57-75qLKNDgPsCiQyML4joC-w-1; Tue,
- 30 Jul 2024 14:46:26 -0400
-X-MC-Unique: 75qLKNDgPsCiQyML4joC-w-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6F17B1955BED; Tue, 30 Jul 2024 18:46:22 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.108])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D83301955D42; Tue, 30 Jul 2024 18:46:15 +0000 (UTC)
-Date: Tue, 30 Jul 2024 19:46:12 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
- akihiko.odaki@daynix.com, jasowang@redhat.com,
- sriram.yagnaraman@est.tech, sw@weilnetz.de, qemu-devel@nongnu.org,
- yan@daynix.com, Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <Zqk09BGxlpdxMBMx@redhat.com>
-References: <20240726020656-mutt-send-email-mst@kernel.org>
- <775ff713-f7d3-4fdc-8ba0-4ebde577040d@redhat.com>
- <ZqNiwmy29dxdyMA0@redhat.com> <ZqO2HvFJ8v7hZFOd@x1n>
- <ZqO7cR-UiGpX2rk0@redhat.com> <ZqQLbGxEW3XT7qL-@x1n>
- <Zqe8C9AfaojKHM8A@redhat.com> <ZqfKrtQSSRVnEOGt@x1n>
- <ZqfQ0cGf8t2trEdl@redhat.com> <ZqktXwxBWjuAgGxZ@x1n>
+ bh=q7b02CWXbm5YUrMNDi/6X5cokb+yPyu/dB2SOGtleIY=;
+ b=I1TbyV2Ha07uf5qYkNdOHFPVPK6LWLGY2tfQyVjt76WhSEw0GjLMaRVkOe6BD3w80c3Rf+
+ 5rdDFRsk/ieeqzw/GSpa/99inu2/EGxX+dgSQ8XqHFAjSh8xfpLpKwt48RFHBQKO9pPtTL
+ li/YCaR0MX/EXvYj7Mp19PS7t8d/giw=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-461-IZ4d3X9cNKieHci4iQzDdA-1; Tue, 30 Jul 2024 14:53:27 -0400
+X-MC-Unique: IZ4d3X9cNKieHci4iQzDdA-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-52efe4c2261so6677508e87.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 11:53:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722365606; x=1722970406;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=q7b02CWXbm5YUrMNDi/6X5cokb+yPyu/dB2SOGtleIY=;
+ b=g2rGjWWX4yngDDbwoqat67cq6RjKZNeL6M40gYk5wYTnWV4YGhBcWrf5eK96pODsDJ
+ 372aJzN+5B89O5+n6DVnO200RmBbBYdQosuU1ksKIR8vgM/gUrFJ8NE+NrbVpdhEjvV9
+ IZ7s6MOJFRwWicLxs5RdXbZJlOlTRr5GbWSmL0yJakJgcQz4xxQYPDC1pUo9+pUvNitY
+ Cm7DmDWYEGaIunEmXmxdgP7zYIXUyJaxCKiiETxzDmLszC03CD1TItCKMBdhRgfwBsPq
+ cf4pnNLpuQwmpAw6oYUJowwpL8nGCDXwMA0atu1tPZWidsdNby94B2UP6qlOXXCSf/Gd
+ 3hrw==
+X-Gm-Message-State: AOJu0YwQQqqJ69WkAG8nti/VWHF3qbu//eQqrKVcucxCcwtzqZeskkzc
+ pJYI1lXfz4jAiPMEjz32SaqXQLDHeecA0Np8eUBXzo67Xd49ksiMnywjBXHkSXqsToRDXId1/5b
+ pCNMNIpZHW1KJsdZRzy3IlioNegydgxkSewLfS+ZbbkaGg5rUbW5m
+X-Received: by 2002:ac2:4143:0:b0:52e:a03f:ef53 with SMTP id
+ 2adb3069b0e04-5309b28097amr9296518e87.24.1722365605479; 
+ Tue, 30 Jul 2024 11:53:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFRJH7+exzZM4Y0spZUEyBixCWOX+qwTAjLQAs0ep0knvEeWLS5ShQjzz+huNNIxlXusmQc6Q==
+X-Received: by 2002:ac2:4143:0:b0:52e:a03f:ef53 with SMTP id
+ 2adb3069b0e04-5309b28097amr9296499e87.24.1722365604634; 
+ Tue, 30 Jul 2024 11:53:24 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:176:ce53:abb9:7fe9:ef80:6a78])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7acad41479sm678934166b.123.2024.07.30.11.53.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Jul 2024 11:53:24 -0700 (PDT)
+Date: Tue, 30 Jul 2024 14:53:19 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Dominic Prinz <git@dprinz.de>
+Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Subject: Re: [PATCH] hw/acpi/ich9: Add periodic and swsmi timer
+Message-ID: <20240730145240-mutt-send-email-mst@kernel.org>
+References: <20240719102053.316744-1-git@dprinz.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZqktXwxBWjuAgGxZ@x1n>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <20240719102053.316744-1-git@dprinz.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -93,118 +95,258 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 30, 2024 at 02:13:51PM -0400, Peter Xu wrote:
-> On Mon, Jul 29, 2024 at 06:26:41PM +0100, Daniel P. Berrangé wrote:
-> > On Mon, Jul 29, 2024 at 01:00:30PM -0400, Peter Xu wrote:
-> > > On Mon, Jul 29, 2024 at 04:58:03PM +0100, Daniel P. Berrangé wrote:
-> > > > 
-> > > > We've got two mutually conflicting goals with the machine type
-> > > > definitions.
-> > > > 
-> > > > Primarily we use them to ensure stable ABI, but an important
-> > > > secondary goal is to enable new tunables to have new defaults
-> > > > set, without having to update every mgmt app.  The latter
-> > > > works very well when the defaults have no dependancy on the
-> > > > platform kernel/OS, but breaks migration when they do have a
-> > > > platform dependancy.
-> > > > 
-> > > > >   - Firstly, never quietly flipping any bit that affects the ABI...
-> > > > > 
-> > > > >   - Have a default value of off, then QEMU will always allow the VM to boot
-> > > > >     by default, while advanced users can opt-in on new features.  We can't
-> > > > >     make this ON by default otherwise some VMs can already fail to boot,
-> > > > > 
-> > > > >   - If the host doesn't support the feature while the cmdline enabled it,
-> > > > >     it needs to fail QEMU boot rather than flipping, so that it says "hey,
-> > > > >     this host does not support running such VM specified, due to XXX
-> > > > >     feature missing".
-> > > > > 
-> > > > > That's the only way an user could understand what happened, and IMHO that's
-> > > > > a clean way that we stick with QEMU cmdline on defining the guest ABI,
-> > > > > while in which the machine type is the fundation of such definition, as the
-> > > > > machine type can decides many of the rest compat properties.  And that's
-> > > > > the whole point of the compat properties too (to make sure the guest ABI is
-> > > > > stable).
-> > > > > 
-> > > > > If kernel breaks it easily, all compat property things that we maintain can
-> > > > > already stop making sense in general, because it didn't define the whole
-> > > > > guest ABI..
-> > > > > 
-> > > > > So AFAIU that's really what we used for years, I hope I didn't overlook
-> > > > > somehting.  And maybe we don't yet need the "-platform" layer if we can
-> > > > > keep up with this rule?
-> > > > 
-> > > > We've failed at this for years wrt enabling use of new defaults that have
-> > > > a platform depedancy, so historical practice isn't a good reference.
-> > > > 
-> > > > There are 100's (possibly 1000's) of tunables set implicitly as part of
-> > > > the machine type, and of those, libvirt likely only exposes a few 10's
-> > > > of tunables. The vast majority are low level details that no mgmt app
-> > > > wants to know about, they just want to accept QEMU's new defaults,
-> > > > while preserving machine ABI. This is a good thing. No one wants the
-> > > > burden of wiring up every single tunable into libvirt and mgmt apps.
-> > > > 
-> > > > This is what the "-platform" concept would be intended to preserve. It
-> > > > would allow a way to enable groups of settings that have a platform level
-> > > > dependancy, without ever having to teach either libvirt or the mgmt apps
-> > > > about the individual tunables.
-> > > 
-> > > Do you think we can achieve similar goal by simply turning the feature to
-> > > ON only after a few QEMU releases?  I also mentioned that idea below.
-> > > 
-> > > https://lore.kernel.org/r/ZqQNKZ9_OPhDq2AK@x1n
-> > > 
-> > > So far it really sounds like the right thing to do to me to fix all similar
-> > > issues, even without introducing anything new we need to maintain.
-> > 
-> > Turning a feature with a platform dependency to "on" implies that
-> > the machine type will cease to work out of the box for platforms
-> > which lack the feature. IMHO that's not acceptable behaviour for
-> > any of our supported platforms.
+On Fri, Jul 19, 2024 at 12:20:53PM +0200, Dominic Prinz wrote:
+> This patch implements the periodic and the swsmi ICH9 chipset timer. They are
+> especially useful when prototyping UEFI firmware (e.g. with EDK2's OVMF)
+> with QEMU.
 > 
-> Right, that's why I was thinking whether we should just always be on the
-> safe side, even if I just replied in the other email to Akihiko, that we do
-> have the option to make this more aggresive by turning those to ON after
-> even 1-2 years or even less.. and we have control of how aggressive this
-> can be.
+> This includes that writes to the SMI_STS register are enabled for the
+> corresponding two bits.
 > 
-> > 
-> > IOW, "after a few QEMU releases" implies a delay of as much as
-> > 5 years, while we wait for platforms which don't support the
-> > feature to drop out of our supported targets list.  I don't
-> > think that'll satisfy the desire to get the new feature
-> > available to users as soon as practical for their particular
-> > platform.
-> 
-> The feature is always available since the 1st day, right?  We just need the
-> user to opt-in, by specifying ON in the cmdline.
-> 
-> That'll be my take on this that QEMU's default VM setup should be always
-> bootable, migratable, and so on.  Then user opt-in on stuff like this one,
-> where there's implication on the ABIs.  The "user" can also include
-> Libvirt.  I mean when something is really important, Libvirt should, IMHO,
-> opt-in by treating that similarly like many cpu properties, and by probing
-> the host first.
-> 
-> IIUC there aren't a lot of things like that (part of guest ABI & host
-> kernel / HW dependent), am I right?  Otherwise I would expect more failures
-> like this one, but it isn't as much as that yet.  IIUC it means the efforts
-> to make Libvirt get involved should be hopefully under control too.  The
-> worst case is Libvirt doesn't auto-on it, but again the user should always
-> have the option to turn it on when it's necessary.
+> Signed-off-by: Dominic Prinz <git@dprinz.de>
 
-If it is left to libvirt, then it would very likely end up being a user
-opt-in, not auto-enabled.
+Without getting too deep into it, generally any guest visible
+behaviour change is best gated on a compat property,
+to prevent changing existing machine types.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> ---
+>  hw/acpi/ich9.c                | 15 +++++++
+>  hw/acpi/ich9_timer.c          | 79 +++++++++++++++++++++++++++++++++++
+>  hw/acpi/meson.build           |  2 +-
+>  hw/isa/lpc_ich9.c             |  6 +++
+>  include/hw/acpi/ich9.h        |  3 ++
+>  include/hw/acpi/ich9_timer.h  | 23 ++++++++++
+>  include/hw/southbridge/ich9.h |  4 ++
+>  7 files changed, 131 insertions(+), 1 deletion(-)
+>  create mode 100644 hw/acpi/ich9_timer.c
+>  create mode 100644 include/hw/acpi/ich9_timer.h
+> 
+> diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
+> index 02d8546bd3..97d645b750 100644
+> --- a/hw/acpi/ich9.c
+> +++ b/hw/acpi/ich9.c
+> @@ -35,6 +35,7 @@
+>  #include "sysemu/runstate.h"
+>  #include "hw/acpi/acpi.h"
+>  #include "hw/acpi/ich9_tco.h"
+> +#include "hw/acpi/ich9_timer.h"
+>  
+>  #include "hw/southbridge/ich9.h"
+>  #include "hw/mem/pc-dimm.h"
+> @@ -108,6 +109,16 @@ static void ich9_smi_writel(void *opaque, hwaddr addr, uint64_t val,
+>          }
+>          pm->smi_en &= ~pm->smi_en_wmask;
+>          pm->smi_en |= (val & pm->smi_en_wmask);
+> +        ich9_pm_update_swsmi_timer(pm, pm->smi_en &
+> +                                           ICH9_PMIO_SMI_EN_SWSMI_EN);
+> +        ich9_pm_update_periodic_timer(pm, pm->smi_en &
+> +                                              ICH9_PMIO_SMI_EN_PERIODIC_EN);
+> +        break;
+> +    case 4:
+> +        pm->smi_sts &= ~(ICH9_PMIO_SMI_STS_SWSMI_STS |
+> +                         ICH9_PMIO_SMI_STS_PERIODIC_STS);
+> +        pm->smi_sts |= val & (ICH9_PMIO_SMI_STS_SWSMI_STS |
+> +                              ICH9_PMIO_SMI_STS_PERIODIC_STS);
+>          break;
+>      }
+>  }
+> @@ -305,6 +316,10 @@ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
+>                            "acpi-smi", 8);
+>      memory_region_add_subregion(&pm->io, ICH9_PMIO_SMI_EN, &pm->io_smi);
+>  
+> +    pm->swsmi_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, ich9_swsmi_timer, pm);
+> +
+> +    pm->periodic_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, ich9_periodic_timer, pm);
+> +
+>      if (pm->enable_tco) {
+>          acpi_pm_tco_init(&pm->tco_regs, &pm->io);
+>      }
+> diff --git a/hw/acpi/ich9_timer.c b/hw/acpi/ich9_timer.c
+> new file mode 100644
+> index 0000000000..2e6b68f0fb
+> --- /dev/null
+> +++ b/hw/acpi/ich9_timer.c
+> @@ -0,0 +1,79 @@
+> +/*
+> + * QEMU ICH9 Timer emulation
+> + *
+> + * Copyright (c) 2024 Dominic Prinz <git@dprinz.de>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/core/cpu.h"
+> +#include "hw/pci/pci.h"
+> +#include "hw/southbridge/ich9.h"
+> +#include "qemu/timer.h"
+> +
+> +#include "hw/acpi/ich9_timer.h"
+> +
+> +void ich9_pm_update_swsmi_timer(ICH9LPCPMRegs *pm, bool enable)
+> +{
+> +    uint16_t swsmi_rate_sel;
+> +    int64_t expire_time;
+> +    ICH9LPCState *lpc;
+> +
+> +    if (enable) {
+> +        lpc = container_of(pm, ICH9LPCState, pm);
+> +        swsmi_rate_sel =
+> +            (pci_get_word(lpc->d.config + ICH9_LPC_GEN_PMCON_3) & 0xc0) >> 6;
+> +
+> +        if (swsmi_rate_sel == 0) {
+> +            expire_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + 1500000LL;
+> +        } else {
+> +            expire_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
+> +                          8 * (1 << swsmi_rate_sel) * 1000000LL;
+> +        }
+> +
+> +        timer_mod(pm->swsmi_timer, expire_time);
+> +    } else {
+> +        timer_del(pm->swsmi_timer);
+> +    }
+> +}
+> +
+> +void ich9_swsmi_timer(void *opaque)
+> +{
+> +    ICH9LPCPMRegs *pm = opaque;
+> +
+> +    pm->smi_sts |= ICH9_PMIO_SMI_STS_SWSMI_STS;
+> +    ich9_generate_smi();
+> +
+> +    ich9_pm_update_swsmi_timer(pm, pm->smi_en & ICH9_PMIO_SMI_EN_SWSMI_EN);
+> +}
+> +
+> +void ich9_pm_update_periodic_timer(ICH9LPCPMRegs *pm, bool enable)
+> +{
+> +    uint16_t per_smi_sel;
+> +    int64_t expire_time;
+> +    ICH9LPCState *lpc;
+> +
+> +    if (enable) {
+> +        lpc = container_of(pm, ICH9LPCState, pm);
+> +        per_smi_sel = pci_get_word(lpc->d.config + ICH9_LPC_GEN_PMCON_1) & 3;
+> +        expire_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
+> +                      8 * (1 << (3 - per_smi_sel)) * NANOSECONDS_PER_SECOND;
+> +
+> +        timer_mod(pm->periodic_timer, expire_time);
+> +    } else {
+> +        timer_del(pm->periodic_timer);
+> +    }
+> +}
+> +
+> +void ich9_periodic_timer(void *opaque)
+> +{
+> +    ICH9LPCPMRegs *pm = opaque;
+> +
+> +    pm->smi_sts = ICH9_PMIO_SMI_STS_PERIODIC_STS;
+> +    ich9_generate_smi();
+> +
+> +    ich9_pm_update_periodic_timer(pm,
+> +                                  pm->smi_en & ICH9_PMIO_SMI_EN_PERIODIC_EN);
+> +}
+> diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
+> index fa5c07db90..7f8ccc9b7a 100644
+> --- a/hw/acpi/meson.build
+> +++ b/hw/acpi/meson.build
+> @@ -24,7 +24,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_PCI_BRIDGE', if_true: files('pci-bridge.c'))
+>  acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_true: files('pcihp.c'))
+>  acpi_ss.add(when: 'CONFIG_ACPI_PCIHP', if_false: files('acpi-pci-hotplug-stub.c'))
+>  acpi_ss.add(when: 'CONFIG_ACPI_VIOT', if_true: files('viot.c'))
+> -acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c'))
+> +acpi_ss.add(when: 'CONFIG_ACPI_ICH9', if_true: files('ich9.c', 'ich9_tco.c', 'ich9_timer.c'))
+>  acpi_ss.add(when: 'CONFIG_ACPI_ERST', if_true: files('erst.c'))
+>  acpi_ss.add(when: 'CONFIG_IPMI', if_true: files('ipmi.c'), if_false: files('ipmi-stub.c'))
+>  acpi_ss.add(when: 'CONFIG_PC', if_false: files('acpi-x86-stub.c'))
+> diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
+> index bd727b2320..56daeeedbf 100644
+> --- a/hw/isa/lpc_ich9.c
+> +++ b/hw/isa/lpc_ich9.c
+> @@ -43,6 +43,7 @@
+>  #include "hw/southbridge/ich9.h"
+>  #include "hw/acpi/acpi.h"
+>  #include "hw/acpi/ich9.h"
+> +#include "hw/acpi/ich9_timer.h"
+>  #include "hw/pci/pci_bus.h"
+>  #include "hw/qdev-properties.h"
+>  #include "sysemu/runstate.h"
+> @@ -531,6 +532,11 @@ ich9_lpc_pmcon_update(ICH9LPCState *lpc)
+>      uint16_t gen_pmcon_1 = pci_get_word(lpc->d.config + ICH9_LPC_GEN_PMCON_1);
+>      uint16_t wmask;
+>  
+> +    ich9_pm_update_swsmi_timer(&lpc->pm, lpc->pm.smi_en &
+> +                                             ICH9_PMIO_SMI_EN_SWSMI_EN);
+> +    ich9_pm_update_periodic_timer(&lpc->pm, lpc->pm.smi_en &
+> +                                                ICH9_PMIO_SMI_EN_PERIODIC_EN);
+> +
+>      if (gen_pmcon_1 & ICH9_LPC_GEN_PMCON_1_SMI_LOCK) {
+>          wmask = pci_get_word(lpc->d.wmask + ICH9_LPC_GEN_PMCON_1);
+>          wmask &= ~ICH9_LPC_GEN_PMCON_1_SMI_LOCK;
+> diff --git a/include/hw/acpi/ich9.h b/include/hw/acpi/ich9.h
+> index 2faf7f0cae..940a3d795f 100644
+> --- a/include/hw/acpi/ich9.h
+> +++ b/include/hw/acpi/ich9.h
+> @@ -68,6 +68,9 @@ typedef struct ICH9LPCPMRegs {
+>      bool smm_compat;
+>      bool enable_tco;
+>      TCOIORegs tco_regs;
+> +
+> +    QEMUTimer *swsmi_timer;
+> +    QEMUTimer *periodic_timer;
+>  } ICH9LPCPMRegs;
+>  
+>  #define ACPI_PM_PROP_TCO_ENABLED "enable_tco"
+> diff --git a/include/hw/acpi/ich9_timer.h b/include/hw/acpi/ich9_timer.h
+> new file mode 100644
+> index 0000000000..e48f9918d8
+> --- /dev/null
+> +++ b/include/hw/acpi/ich9_timer.h
+> @@ -0,0 +1,23 @@
+> +/*
+> + * QEMU ICH9 Timer emulation
+> + *
+> + * Copyright (c) 2024 Dominic Prinz <git@dprinz.de>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + */
+> +
+> +#ifndef HW_ACPI_ICH9_TIMER_H
+> +#define HW_ACPI_ICH9_TIMER_H
+> +
+> +#include "hw/acpi/ich9.h"
+> +
+> +void ich9_pm_update_swsmi_timer(ICH9LPCPMRegs *pm, bool enable);
+> +
+> +void ich9_swsmi_timer(void *opaque);
+> +
+> +void ich9_pm_update_periodic_timer(ICH9LPCPMRegs *pm, bool enable);
+> +
+> +void ich9_periodic_timer(void *opaque);
+> +
+> +#endif
+> diff --git a/include/hw/southbridge/ich9.h b/include/hw/southbridge/ich9.h
+> index fd01649d04..6c60017024 100644
+> --- a/include/hw/southbridge/ich9.h
+> +++ b/include/hw/southbridge/ich9.h
+> @@ -196,8 +196,12 @@ struct ICH9LPCState {
+>  #define ICH9_PMIO_GPE0_LEN                      16
+>  #define ICH9_PMIO_SMI_EN                        0x30
+>  #define ICH9_PMIO_SMI_EN_APMC_EN                (1 << 5)
+> +#define ICH9_PMIO_SMI_EN_SWSMI_EN               (1 << 6)
+>  #define ICH9_PMIO_SMI_EN_TCO_EN                 (1 << 13)
+> +#define ICH9_PMIO_SMI_EN_PERIODIC_EN            (1 << 14)
+>  #define ICH9_PMIO_SMI_STS                       0x34
+> +#define ICH9_PMIO_SMI_STS_SWSMI_STS             (1 << 6)
+> +#define ICH9_PMIO_SMI_STS_PERIODIC_STS          (1 << 14)
+>  #define ICH9_PMIO_TCO_RLD                       0x60
+>  #define ICH9_PMIO_TCO_LEN                       32
+>  
+> -- 
+> 2.34.1
 
 
