@@ -4,92 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05913C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 06:07:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 021A5C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 06:17:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYg0X-00012g-6C; Tue, 30 Jul 2024 02:06:49 -0400
+	id 1sYgA9-0006nt-SK; Tue, 30 Jul 2024 02:16:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sYg0T-000101-KD
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 02:06:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1sYgA6-0006kl-Iz; Tue, 30 Jul 2024 02:16:43 -0400
+Received: from sin.source.kernel.org ([145.40.73.55])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sYg0R-0006Mi-Tb
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 02:06:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722319601;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HywbmjddgtngYN0oVDkoOoCPU/ETmtW6kyDDQ/H0O+s=;
- b=HUhIKXLtpCRuAYkfekYxRfx+yFNlXKOd4Z0HoU6u/nCG6APVOK1mtiqdtBOATnZereGHMf
- cu1iyUmqhbkPB0HKBcSiFYLhmbT4jH/9h+KO0ZwHuKAVHbJa35lojNY+K+P/nIo48gmXbx
- cXCBnwqv1Gwy8aFBpXyM5SYjYysJiFw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-35-m5w0q3oJOfCJp1GZujN6Fw-1; Tue, 30 Jul 2024 02:06:39 -0400
-X-MC-Unique: m5w0q3oJOfCJp1GZujN6Fw-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-368374dc565so1840485f8f.2
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 23:06:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722319598; x=1722924398;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HywbmjddgtngYN0oVDkoOoCPU/ETmtW6kyDDQ/H0O+s=;
- b=QKmZmF9ChDKqdC+UCIB9P7zpeWpV87aKwNfn+MuKwVs10xkfsDPEdDy/nF6JiBEFOS
- wvcBoslPo1o4ANM8mg461+H4y2zjdDn7lPRuwdSk34pwo2AwcU5P1in/Q6Uh1I4/MKQl
- EtwUxldK71VdEkQq+pX1p7OJ3C9VFqxdEKzYPn0Ik4KOyvqpaTyNKnqCPQ09M9EPZsBl
- olQhP60FV6VCijAXL/uwiTkapR+mA25gQmkRbd+c0MTN3xdpDLOxAeFYm05pZaZQrEvs
- GSn8bJJ4sGqXS1zYdo9OEtdF8hWm6LBAPkNEHtWl4O5aFV8P0sXwdctKscNbqZ6kbHJ4
- l+jA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV71TEQIUDimguy3O3WLLDx65zr9Vm0URAVent0GpeOLFyIIjRdH5aaO+U4jbRfS3sQBsFJq8qwQWqjWAug0qeQOY2DEtk=
-X-Gm-Message-State: AOJu0Yz0edncbbmb+GPhF5meDUOAqqPHZ9L2eeVc1/GKA1QiuXwKsPnn
- +41GDO+Db24RMxgNtV90OonJz8QkwoxwfWr1vrWcgfkmuWKOH0NVBbtC7fE6/Dp95tk+wASfCXi
- TqB85er3jiDmMumTU02PmooGyZVpbOAzAvoYjZ9qak12xvGOsxf9D+8yfQUOZzmtB5J6WxVRHs/
- qFBnNYZX1i9y1K6zfWMKgCCH0EQK8=
-X-Received: by 2002:a05:6000:18a1:b0:35f:2030:d42c with SMTP id
- ffacd0b85a97d-36b5cef9021mr7389840f8f.17.1722319598212; 
- Mon, 29 Jul 2024 23:06:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGLPZalJrLTyeos66N1u6nC9rbJ1iTUCM3oHCr2Ju6+bVTGc6LlU1WPtZXbHzlEsPoUGxHlcQIyhnwcgtDQ+a0=
-X-Received: by 2002:a05:6000:18a1:b0:35f:2030:d42c with SMTP id
- ffacd0b85a97d-36b5cef9021mr7389826f8f.17.1722319597862; Mon, 29 Jul 2024
- 23:06:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1sYgA4-00086P-4M; Tue, 30 Jul 2024 02:16:42 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sin.source.kernel.org (Postfix) with ESMTP id AAB82CE0AFC;
+ Tue, 30 Jul 2024 06:16:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE05BC32782;
+ Tue, 30 Jul 2024 06:16:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1722320192;
+ bh=BRy3EumtsayESW490iJoX78v2fJzwIdLETnfNWc7UdE=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=Ex+pIZyZGhCHy4nhR5GKhkx5L7jGhDcHpXlc4Al8Wf9/94EQLPHAf0qsyYY7PDgbV
+ sZsT3V0He1cO+zcu+cxCQVaYIOlR55SGxfUaU5E6280/ER3rDRNyoSGqfLEnRkTimO
+ +SHbfaZBKkl4NN5Org53nndC1KYXL0frMFUEA2LQbmbfXEmxdF/LuY3u1nBDju9geF
+ tZnFFFp+daHZBEGLkGMBqo2XTGx78hOdn9Ke8gtinwkwoXzSghxmW7B0GAhewQ/zXb
+ I8WdFqfzqq+ojiB4DSmB/AjSfElY8Kywu7JRW/mrW/1635OUtFITflTF8A/jJeHKFG
+ BCtSSudCSjsYg==
+Date: Tue, 30 Jul 2024 08:16:23 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>, Markus Armbruster
+ <armbru@redhat.com>
+Cc: Shiju Jose <shiju.jose@huawei.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, Dongjiu Geng
+ <gengdongjiu1@gmail.com>, Eric Blake <eblake@redhat.com>, Igor Mammedov
+ <imammedo@redhat.com>, Michael Roth <michael.roth@amd.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ <linux-kernel@vger.kernel.org>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v4 6/6] acpi/ghes: Add a logic to inject ARM processor CPER
+Message-ID: <20240730081610.6390c423@foz.lan>
+In-Reply-To: <20240729173109.00006911@Huawei.com>
+References: <cover.1722259246.git.mchehab+huawei@kernel.org>
+ <7e0c1ae181e9792e876ec0e7d2a9e7f32d7b60ac.1722259246.git.mchehab+huawei@kernel.org>
+ <20240729173109.00006911@Huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-References: <20240729094702.50282-1-kwolf@redhat.com>
- <20240729094702.50282-5-kwolf@redhat.com>
- <CABgObfYbpZ3JV5i_TKjobd6DrzYiy567YAfQbX+x5X7mj1=GKw@mail.gmail.com>
- <ZqeI8TiHg8caawXr@redhat.com>
- <CABgObfbecac_70Pt4DWKPRm96VCOOCjGOCSB3TkkK490FmvPsg@mail.gmail.com>
- <ZqfJcz6GTsWglrQ5@redhat.com>
-In-Reply-To: <ZqfJcz6GTsWglrQ5@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 30 Jul 2024 08:06:26 +0200
-Message-ID: <CABgObfa=QX6siAnhy-C1jQ0imRxcfxXnJuTPHLZiw_5zeh7Z3g@mail.gmail.com>
-Subject: Re: [PATCH 4/4] scsi-disk: Always report RESERVATION_CONFLICT to guest
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: "open list:Block layer core" <qemu-block@nongnu.org>,
- Fam Zheng <fam@euphon.net>, 
- "Hajnoczi, Stefan" <stefanha@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.40.73.55;
+ envelope-from=mchehab+huawei@kernel.org; helo=sin.source.kernel.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,22 +77,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 29, 2024 at 6:55=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrote=
-:
-> Ok, so modifying the commit message and removing the 'error'
-> initialisation it is. Maybe mention the cluster validation case in the
-> comment here to explain why we do this even for non-pr-manager cases,
-> but not as a FIXME or TODO because it's not a problem with the
-> implementation, but we don't have any other choice. Right?
+Em Mon, 29 Jul 2024 17:31:09 +0100
+Jonathan Cameron <Jonathan.Cameron@Huawei.com> escreveu:
 
-Yep, go ahead and do it.
+> On Mon, 29 Jul 2024 15:21:10 +0200
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-Paolo
+...
 
-> Should I send a v2 for this or is it okay to do this only while applying
-> the patch?
->
-> Kevin
->
+> Markus suggested:
+> 
+> > A target-specific command like this one should be conditional.  Try
+> > this:
+> > 
+> >     { 'command': 'arm-inject-error',
+> >       'data': { 'errortypes': ['ArmProcessorErrorType'] },
+> >       'features': [ 'unstable' ],
+> >       'if': 'TARGET_ARM' }
+> >
+> > No need to provide a qmp_arm_inject_error() stub then.  
+> 
+> (I noticed because never knew you could do this.)
+> 
+> Probably crossed with your v4 posting.
 
+Tried it, but can't figure out how to properly set it up at meson.build,
+as it is basically producing build time errors during qapi file generation
+on non-ARM platforms. For instance:
+
+FAILED: libqemuutil.a.p/meson-generated_.._qapi_qapi-visit-arm-error-inject.c.o 
+cc -m64 -Ilibqemuutil.a.p -I. -I.. -Isubprojects/libvhost-user -I../subprojects/libvhost-user -Iqapi -Itrace -Iui -Iui/shader -I/usr/include/glib-2.0 -I/usr/lib64/glib-2.0/include -I/usr/include/libmount -I/usr/include/blkid -I/usr/include/sysprof-6 -I/usr/include/gio-unix-2.0 -I/usr/include/p11-kit-1 -fdiagnostics-color=auto -Wall -Winvalid-pch -Werror -std=gnu11 -O2 -g -fstack-protector-strong -Wempty-body -Wendif-labels -Wexpansion-to-defined -Wformat-security -Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthrough=2 -Winit-self -Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs -Wold-style-declaration -Wold-style-definition -Wredundant-decls -Wshadow=local -Wstrict-prototypes -Wtype-limits -Wundef -Wvla -Wwrite-strings -Wno-missing-include-dirs -Wno-psabi -Wno-shift-negative-value -isystem /new_devel/edac/qemu/linux-headers -isystem linux-headers -iquote . -iquote /new_devel/edac/qemu -iquote /new_devel/edac/qemu/include -iquote /new_devel/edac/qemu/host/include/x8
+ 6_64 -iquote /new_devel/edac/qemu/host/include/generic -iquote /new_devel/edac/qemu/tcg/i386 -pthread -msse2 -mcx16 -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -fno-strict-aliasing -fno-common -fwrapv -ftrivial-auto-var-init=zero -fzero-call-used-regs=used-gpr -fPIE -DWITH_GZFILEOP -MD -MQ libqemuutil.a.p/meson-generated_.._qapi_qapi-visit-arm-error-inject.c.o -MF libqemuutil.a.p/meson-generated_.._qapi_qapi-visit-arm-error-inject.c.o.d -o libqemuutil.a.p/meson-generated_.._qapi_qapi-visit-arm-error-inject.c.o -c qapi/qapi-visit-arm-error-inject.c
+In file included from qapi/qapi-visit-arm-error-inject.h:17,
+                 from qapi/qapi-visit-arm-error-inject.c:15:
+qapi/qapi-types-arm-error-inject.h:18:13: error: attempt to use poisoned "TARGET_ARM"
+   18 | #if defined(TARGET_ARM)
+      |             ^
+In file included from /new_devel/edac/qemu/include/exec/poison.h:7,
+                 from /new_devel/edac/qemu/include/qemu/osdep.h:38,
+                 from qapi/qapi-visit-arm-error-inject.c:13:
+./config-poison.h:718:20: note: poisoned here
+
+Such error is created by two files generated from qapi, due
+to this change:
+
+	diff --git a/qapi/meson.build b/qapi/meson.build
+	index e7bc54e5d047..5927932c4be3 100644
+	--- a/qapi/meson.build
+	+++ b/qapi/meson.build
+	@@ -24,2 +24,3 @@ endif
+	 qapi_all_modules = [
+	+  'arm-error-inject',
+	   'authz',
+
+No idea how to fix it.
+
+Thanks,
+Mauro
 
