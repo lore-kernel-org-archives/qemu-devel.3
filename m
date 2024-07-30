@@ -4,99 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9383AC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 19:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A729FC49EA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 19:24:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYsFo-00057t-M8; Tue, 30 Jul 2024 15:11:24 -0400
+	id 1sYsRz-0002Z1-PA; Tue, 30 Jul 2024 15:23:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sYsFn-00056i-Au
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 15:11:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sYsRu-0002NS-6y; Tue, 30 Jul 2024 15:23:54 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sYsFi-0000GD-IP
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 15:11:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722366677;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1j5ENjtHekPa0AsZsCL8lQYhUWqqsL80WVTGDF3cPjc=;
- b=INgf5KQ1Um5n/5ZnbQ0UA7O+dV30mox6XZ+IjuINxlxEV3+LzcXlVmwfdzaEpMul6MOsK8
- lHBdhHpMloRJq/1oBuAMghIxeExMsmKLP6GdBP400m2PN5KwOAGN3scgf6zFcB0v2TbiKu
- 7X1uJu0v3YocLkGbqsL/DtWw+uteqWo=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-446-XPpAz8RYOyygJqpuOS3K2w-1; Tue, 30 Jul 2024 15:11:13 -0400
-X-MC-Unique: XPpAz8RYOyygJqpuOS3K2w-1
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-4503ee1b5d6so1030581cf.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 12:11:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722366672; x=1722971472;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1j5ENjtHekPa0AsZsCL8lQYhUWqqsL80WVTGDF3cPjc=;
- b=jjiZAqEpriBXzO5e7cdqI4TfyCBN9XXIExsH2ZJ74qSODHuFsZxACCLU5gjEaGNfSM
- ZiAMMAXXouzeqe5sJzwRvfiZ12yf5hOsCdhZkCu5pezHMYrDIg0fXPMjRCZUWJgevfw8
- kpDNKtBVAcxhaz2S6aSS3IogYFNLD2h4UNttrx/0HRTw1mP1RyZRgzxFZkG0oD+wXIkg
- hb7C1JhF5xxL68ZSXSEgWg84Xg2AwQ3ljYobJ650bWf9tIxQZdVCExM284JpGCwIlBeD
- DyfMOr9Uz9ifG/CICUMabBHb5bUainCq39Xnqndo2tPN/TRpkeWO32mZoekV6hDF8GWf
- GbSw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUR3pMMMrPDq/OKogQnIwMpyqWu7UYB1Or0oTnHRsQcze1LY+rEHh2xvo0Rj2b7Co3TGDovnASJNosa6tBT8FoX9O+FSgE=
-X-Gm-Message-State: AOJu0Yx72DbQxdfS3HyvBX7rXdMH/s+PsMG3JnLl5wfizsfGdzpAOhIA
- RHol/6dNJ3nXpJrKuicxY3OYUlblXhxNe6uHpupPUBfa/8tWCVY5BPo7tYw4kSCmDNOj7gjnQWI
- xusMyN7Oziiy7//N0Bl0Ap3dnyRRPgwB69HV2lHmRjlSrqSnJfKQU
-X-Received: by 2002:a05:622a:1903:b0:44f:de40:201e with SMTP id
- d75a77b69052e-44fe5b35db3mr147197811cf.9.1722366672493; 
- Tue, 30 Jul 2024 12:11:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH/qyQiiMooFeipKZmpx8TpfmTi4Drdk99hd6oGyiexQBhDqFa5f+FckkNBtGAb3MXVjDaYig==
-X-Received: by 2002:a05:622a:1903:b0:44f:de40:201e with SMTP id
- d75a77b69052e-44fe5b35db3mr147197571cf.9.1722366671943; 
- Tue, 30 Jul 2024 12:11:11 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-44fe8416c80sm52084351cf.96.2024.07.30.12.11.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jul 2024 12:11:11 -0700 (PDT)
-Date: Tue, 30 Jul 2024 15:11:03 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
- akihiko.odaki@daynix.com, jasowang@redhat.com,
- sriram.yagnaraman@est.tech, sw@weilnetz.de, qemu-devel@nongnu.org,
- yan@daynix.com, Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <Zqk6x2nd3Twz--75@x1n>
-References: <775ff713-f7d3-4fdc-8ba0-4ebde577040d@redhat.com>
- <ZqNiwmy29dxdyMA0@redhat.com> <ZqO2HvFJ8v7hZFOd@x1n>
- <ZqO7cR-UiGpX2rk0@redhat.com> <ZqQLbGxEW3XT7qL-@x1n>
- <Zqe8C9AfaojKHM8A@redhat.com> <ZqfKrtQSSRVnEOGt@x1n>
- <ZqfQ0cGf8t2trEdl@redhat.com> <ZqktXwxBWjuAgGxZ@x1n>
- <Zqk09BGxlpdxMBMx@redhat.com>
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sYsRr-0002GZ-Qx; Tue, 30 Jul 2024 15:23:53 -0400
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46UFPLYn030516;
+ Tue, 30 Jul 2024 19:23:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
+ IVOz0PUC7UK9mIwBCQ10IVcoyQIdfoGIptTF86r7v7U=; b=JJ1ZY6SZW5riZgcu
+ eTtwORrvYO2Kg/km4vdIlYcSwG/e09oAvh1m5Rlx1S+DW/S56tc4tWTP/YpGi3qQ
+ xnwb3CaM+cHykq5I5Jiyk/813nRYhakdLUJigqB+OAOIX9L+HU8hxSjHgZsp0xKc
+ 5dWuRLHDXI0aOLz8jQKsGWtTthDlx4WomyYu/EJ5+/l2tjxHNllx6+W1vvoQU5mM
+ +pChvXeFXET3EB5sojOcJdf7/d4hb+0JRTC3CsEqoSXM5M7mC0y7tv/qxtqveOne
+ S8wf1eMcUxNUoIBmBrDuBnveRPqwMSgDrExSZnmIGKrXwVBx3vCVuHKonFjAMuKX
+ T2tv2w==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40q13a8vtp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jul 2024 19:23:41 +0000 (GMT)
+Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46UJNfVg028323;
+ Tue, 30 Jul 2024 19:23:41 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40q13a8vtj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jul 2024 19:23:41 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46UGvBOa029094; Tue, 30 Jul 2024 19:23:40 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40nbm0punk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jul 2024 19:23:40 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46UJNYAC51839344
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Jul 2024 19:23:36 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B431F2004E;
+ Tue, 30 Jul 2024 19:23:34 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 75DE320040;
+ Tue, 30 Jul 2024 19:23:32 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com.com (unknown
+ [9.195.42.9]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 30 Jul 2024 19:23:32 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Subject: [PATCH v6 2/5] target/ppc: Introduce
+ 'PowerPCCPUClass::spapr_logical_pvr'
+Date: Wed, 31 Jul 2024 00:53:22 +0530
+Message-ID: <20240730192325.669771-3-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240730192325.669771-1-adityag@linux.ibm.com>
+References: <20240730192325.669771-1-adityag@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zqk09BGxlpdxMBMx@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 4OY11AtWUG836KPEPbhtNeAa3O5ypq1K
+X-Proofpoint-GUID: lbrLz2yc5wMiwJT96ucKt_Dv6scgh3WS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-30_15,2024-07-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0
+ adultscore=0 mlxlogscore=999 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 bulkscore=0 spamscore=0 mlxscore=0 suspectscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407300134
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,125 +119,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 30, 2024 at 07:46:12PM +0100, Daniel P. Berrangé wrote:
-> On Tue, Jul 30, 2024 at 02:13:51PM -0400, Peter Xu wrote:
-> > On Mon, Jul 29, 2024 at 06:26:41PM +0100, Daniel P. Berrangé wrote:
-> > > On Mon, Jul 29, 2024 at 01:00:30PM -0400, Peter Xu wrote:
-> > > > On Mon, Jul 29, 2024 at 04:58:03PM +0100, Daniel P. Berrangé wrote:
-> > > > > 
-> > > > > We've got two mutually conflicting goals with the machine type
-> > > > > definitions.
-> > > > > 
-> > > > > Primarily we use them to ensure stable ABI, but an important
-> > > > > secondary goal is to enable new tunables to have new defaults
-> > > > > set, without having to update every mgmt app.  The latter
-> > > > > works very well when the defaults have no dependancy on the
-> > > > > platform kernel/OS, but breaks migration when they do have a
-> > > > > platform dependancy.
-> > > > > 
-> > > > > >   - Firstly, never quietly flipping any bit that affects the ABI...
-> > > > > > 
-> > > > > >   - Have a default value of off, then QEMU will always allow the VM to boot
-> > > > > >     by default, while advanced users can opt-in on new features.  We can't
-> > > > > >     make this ON by default otherwise some VMs can already fail to boot,
-> > > > > > 
-> > > > > >   - If the host doesn't support the feature while the cmdline enabled it,
-> > > > > >     it needs to fail QEMU boot rather than flipping, so that it says "hey,
-> > > > > >     this host does not support running such VM specified, due to XXX
-> > > > > >     feature missing".
-> > > > > > 
-> > > > > > That's the only way an user could understand what happened, and IMHO that's
-> > > > > > a clean way that we stick with QEMU cmdline on defining the guest ABI,
-> > > > > > while in which the machine type is the fundation of such definition, as the
-> > > > > > machine type can decides many of the rest compat properties.  And that's
-> > > > > > the whole point of the compat properties too (to make sure the guest ABI is
-> > > > > > stable).
-> > > > > > 
-> > > > > > If kernel breaks it easily, all compat property things that we maintain can
-> > > > > > already stop making sense in general, because it didn't define the whole
-> > > > > > guest ABI..
-> > > > > > 
-> > > > > > So AFAIU that's really what we used for years, I hope I didn't overlook
-> > > > > > somehting.  And maybe we don't yet need the "-platform" layer if we can
-> > > > > > keep up with this rule?
-> > > > > 
-> > > > > We've failed at this for years wrt enabling use of new defaults that have
-> > > > > a platform depedancy, so historical practice isn't a good reference.
-> > > > > 
-> > > > > There are 100's (possibly 1000's) of tunables set implicitly as part of
-> > > > > the machine type, and of those, libvirt likely only exposes a few 10's
-> > > > > of tunables. The vast majority are low level details that no mgmt app
-> > > > > wants to know about, they just want to accept QEMU's new defaults,
-> > > > > while preserving machine ABI. This is a good thing. No one wants the
-> > > > > burden of wiring up every single tunable into libvirt and mgmt apps.
-> > > > > 
-> > > > > This is what the "-platform" concept would be intended to preserve. It
-> > > > > would allow a way to enable groups of settings that have a platform level
-> > > > > dependancy, without ever having to teach either libvirt or the mgmt apps
-> > > > > about the individual tunables.
-> > > > 
-> > > > Do you think we can achieve similar goal by simply turning the feature to
-> > > > ON only after a few QEMU releases?  I also mentioned that idea below.
-> > > > 
-> > > > https://lore.kernel.org/r/ZqQNKZ9_OPhDq2AK@x1n
-> > > > 
-> > > > So far it really sounds like the right thing to do to me to fix all similar
-> > > > issues, even without introducing anything new we need to maintain.
-> > > 
-> > > Turning a feature with a platform dependency to "on" implies that
-> > > the machine type will cease to work out of the box for platforms
-> > > which lack the feature. IMHO that's not acceptable behaviour for
-> > > any of our supported platforms.
-> > 
-> > Right, that's why I was thinking whether we should just always be on the
-> > safe side, even if I just replied in the other email to Akihiko, that we do
-> > have the option to make this more aggresive by turning those to ON after
-> > even 1-2 years or even less.. and we have control of how aggressive this
-> > can be.
-> > 
-> > > 
-> > > IOW, "after a few QEMU releases" implies a delay of as much as
-> > > 5 years, while we wait for platforms which don't support the
-> > > feature to drop out of our supported targets list.  I don't
-> > > think that'll satisfy the desire to get the new feature
-> > > available to users as soon as practical for their particular
-> > > platform.
-> > 
-> > The feature is always available since the 1st day, right?  We just need the
-> > user to opt-in, by specifying ON in the cmdline.
-> > 
-> > That'll be my take on this that QEMU's default VM setup should be always
-> > bootable, migratable, and so on.  Then user opt-in on stuff like this one,
-> > where there's implication on the ABIs.  The "user" can also include
-> > Libvirt.  I mean when something is really important, Libvirt should, IMHO,
-> > opt-in by treating that similarly like many cpu properties, and by probing
-> > the host first.
-> > 
-> > IIUC there aren't a lot of things like that (part of guest ABI & host
-> > kernel / HW dependent), am I right?  Otherwise I would expect more failures
-> > like this one, but it isn't as much as that yet.  IIUC it means the efforts
-> > to make Libvirt get involved should be hopefully under control too.  The
-> > worst case is Libvirt doesn't auto-on it, but again the user should always
-> > have the option to turn it on when it's necessary.
-> 
-> If it is left to libvirt, then it would very likely end up being a user
-> opt-in, not auto-enabled.
+Introduce 'PnvChipClass::spapr_logical_pvr' to know corresponding logical
+PVR of a PowerPC CPU.
+This helps to have a one-to-one mapping between PVR and logical PVR for
+a CPU, and used in a later commit to handle cases where PCR of two
+generations of Power chip is same, which causes regressions with
+compat-mode.
 
-Not sure whether there's other opinions, but that's definitely fine by me.
+Cc: Cédric Le Goater <clg@kaod.org>
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+---
+ target/ppc/cpu.h      | 1 +
+ target/ppc/cpu_init.c | 4 ++++
+ 2 files changed, 5 insertions(+)
 
-I think it even makes more sense, as even if Libvirt probed the host and
-auto-on the feature, it also means Libvirt made a decision for the user,
-saying "having a better performance" is more important than "being able to
-migrate this VM everywhere".
-
-I don't see a way that can make such fair decision besides requesting the
-user to opt-in always for those, then the user is fully aware what is
-enabled, with the hope that when a migration fails later with "target host
-doesn't support feature XXX" the user is crystal clear on what happened.
-
-Thanks,
-
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index 321ed2da75b7..752e11204b35 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -1482,6 +1482,7 @@ struct PowerPCCPUClass {
+     void (*parent_parse_features)(const char *type, char *str, Error **errp);
+ 
+     uint32_t pvr;
++    uint32_t spapr_logical_pvr;
+     /*
+      * If @best is false, match if pcc is in the family of pvr
+      * Else match only if pcc is the best match for pvr in this family.
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 4c7368cfaeb5..c5cd4133ea2f 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -6154,6 +6154,7 @@ POWERPC_FAMILY(POWER7)(ObjectClass *oc, void *data)
+ 
+     dc->fw_name = "PowerPC,POWER7";
+     dc->desc = "POWER7";
++    pcc->spapr_logical_pvr = CPU_POWERPC_LOGICAL_2_06_PLUS;
+     pcc->pvr_match = ppc_pvr_match_power7;
+     pcc->pcr_mask = PCR_VEC_DIS | PCR_VSX_DIS | PCR_COMPAT_2_05;
+     pcc->pcr_supported = PCR_COMPAT_2_06 | PCR_COMPAT_2_05;
+@@ -6317,6 +6318,7 @@ POWERPC_FAMILY(POWER8)(ObjectClass *oc, void *data)
+ 
+     dc->fw_name = "PowerPC,POWER8";
+     dc->desc = "POWER8";
++    pcc->spapr_logical_pvr = CPU_POWERPC_LOGICAL_2_07;
+     pcc->pvr_match = ppc_pvr_match_power8;
+     pcc->pcr_mask = PCR_TM_DIS | PCR_COMPAT_2_06 | PCR_COMPAT_2_05;
+     pcc->pcr_supported = PCR_COMPAT_2_07 | PCR_COMPAT_2_06 | PCR_COMPAT_2_05;
+@@ -6510,6 +6512,7 @@ POWERPC_FAMILY(POWER9)(ObjectClass *oc, void *data)
+ 
+     dc->fw_name = "PowerPC,POWER9";
+     dc->desc = "POWER9";
++    pcc->spapr_logical_pvr = CPU_POWERPC_LOGICAL_3_00;
+     pcc->pvr_match = ppc_pvr_match_power9;
+     pcc->pcr_mask = PPC_PCR_MASK_POWER9;
+     pcc->pcr_supported = PPC_PCR_SUPPORTED_POWER9;
+@@ -6644,6 +6647,7 @@ POWERPC_FAMILY(POWER10)(ObjectClass *oc, void *data)
+ 
+     dc->fw_name = "PowerPC,POWER10";
+     dc->desc = "POWER10";
++    pcc->spapr_logical_pvr = CPU_POWERPC_LOGICAL_3_10;
+     pcc->pvr_match = ppc_pvr_match_power10;
+     pcc->pcr_mask = PPC_PCR_MASK_POWER10;
+     pcc->pcr_supported = PPC_PCR_SUPPORTED_POWER10;
 -- 
-Peter Xu
+2.45.2
 
 
