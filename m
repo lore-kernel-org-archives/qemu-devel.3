@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 942D1C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:02:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7532C3DA61
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:03:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYik6-0005AN-R7; Tue, 30 Jul 2024 05:02:02 -0400
+	id 1sYiky-0008SL-5W; Tue, 30 Jul 2024 05:02:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYik2-00051z-KF
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:01:59 -0400
+ id 1sYiku-0008BA-25
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:02:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYik0-0001e0-Rj
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:01:58 -0400
+ id 1sYikq-0001kE-4b
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:02:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722330116;
+ s=mimecast20190719; t=1722330167;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2bb64z1B0PkvBwmQIOkISOJC81cCbnlZt6q61HyPEYo=;
- b=e/OJ9H9dAmfAXhRwiypOZr/XjpUcgxM3cFNP8phqRfPPRNMb/IGLE6nm/GZABEEQpeFxJV
- CA1+rQQId0XBrpJSd/UQofMIX67qp26TNeJTTXwYRe0c3YGLCMJXg6j3Xj/WzdUtMyy0CX
- E9JnCz4+VTq/4govl7VzoaSMEbc3UKo=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=MBwOk2rybr4Cx13x5qids7FEyTGoF/M1u/fGVdH5wmk=;
+ b=TzT48PHI8PM2ygnn/5tQD5bg6Jn3Jk5dAWHIBI3boh8wZsQDQigMAITzej36cQLrFxt/n2
+ lC0+BFA7d+kIewTeHTUniUKalYH4eQdzSdpZ1xykGkkOx7V8N6yWxfr3M174oOfD/ncHYE
+ A2mnPnspWQ+meSKTdiiSTTDlT4Hagto=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-353-mz5nYGKvNaqkVyLOfmD7IA-1; Tue,
- 30 Jul 2024 05:01:52 -0400
-X-MC-Unique: mz5nYGKvNaqkVyLOfmD7IA-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-461-Ff90LyE-P3Gck4jquHwqnQ-1; Tue,
+ 30 Jul 2024 05:02:42 -0400
+X-MC-Unique: Ff90LyE-P3Gck4jquHwqnQ-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 74EFA1955F41; Tue, 30 Jul 2024 09:01:47 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9F0401955D4A; Tue, 30 Jul 2024 09:02:37 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.108])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CBCAA19560B2; Tue, 30 Jul 2024 09:01:14 +0000 (UTC)
-Date: Tue, 30 Jul 2024 10:01:11 +0100
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16B26300019B; Tue, 30 Jul 2024 09:02:20 +0000 (UTC)
+Date: Tue, 30 Jul 2024 10:02:17 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com,
@@ -69,18 +69,18 @@ Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com,
  yuri.benditovich@daynix.com, zhao1.liu@intel.com,
  qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  kvm@vger.kernel.org
-Subject: Re: [PATCH 11/18] qapi/crypto: Rename QCryptoHashAlgorithm to *Algo, 
- and drop prefix
-Message-ID: <Zqir1y4qyp-lwyuz@redhat.com>
+Subject: Re: [PATCH 12/18] qapi/crypto: Rename QCryptoCipherAlgorithm to
+ *Algo, and drop prefix
+Message-ID: <ZqisGQF2fz6Qpvmi@redhat.com>
 References: <20240730081032.1246748-1-armbru@redhat.com>
- <20240730081032.1246748-12-armbru@redhat.com>
+ <20240730081032.1246748-13-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240730081032.1246748-12-armbru@redhat.com>
+In-Reply-To: <20240730081032.1246748-13-armbru@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -106,82 +106,52 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 30, 2024 at 10:10:25AM +0200, Markus Armbruster wrote:
+On Tue, Jul 30, 2024 at 10:10:26AM +0200, Markus Armbruster wrote:
 > QAPI's 'prefix' feature can make the connection between enumeration
 > type and its constants less than obvious.  It's best used with
 > restraint.
 > 
-> QCryptoHashAlgorithm has a 'prefix' that overrides the generated
-> enumeration constants' prefix to QCRYPTO_HASH_ALG.
+> QCryptoCipherAlgorithm has a 'prefix' that overrides the generated
+> enumeration constants' prefix to QCRYPTO_CIPHER_ALG.
 > 
 > We could simply drop 'prefix', but then the prefix becomes
-> QCRYPTO_HASH_ALGORITHM, which is rather long.
+> QCRYPTO_CIPHER_ALGORITHM, which is rather long.
 > 
-> We could additionally rename the type to QCryptoHashAlg, but I think
+> We could additionally rename the type to QCryptoCipherAlg, but I think
 > the abbreviation "alg" is less than clear.
-
-I would have gone with this, but it is a bit of a bike shed colouring
-debate so I'm not fussed
-
 > 
-> Rename the type to QCryptoHashAlgo instead.  The prefix becomes to
-> QCRYPTO_HASH_ALGO.
+> Rename the type to QCryptoCipherAlgo instead.  The prefix becomes
+> QCRYPTO_CIPHER_ALGO.
 > 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->  qapi/crypto.json                        | 17 +++++-----
->  crypto/blockpriv.h                      |  2 +-
->  crypto/hashpriv.h                       |  2 +-
->  crypto/hmacpriv.h                       |  4 +--
->  crypto/ivgenpriv.h                      |  2 +-
->  include/crypto/afsplit.h                |  8 ++---
->  include/crypto/block.h                  |  2 +-
->  include/crypto/hash.h                   | 18 +++++-----
->  include/crypto/hmac.h                   |  6 ++--
->  include/crypto/ivgen.h                  |  6 ++--
->  include/crypto/pbkdf.h                  | 10 +++---
->  backends/cryptodev-builtin.c            |  8 ++---
->  backends/cryptodev-lkcf.c               | 10 +++---
->  block/parallels-ext.c                   |  2 +-
->  block/quorum.c                          |  4 +--
->  crypto/afsplit.c                        |  6 ++--
->  crypto/block-luks.c                     | 16 ++++-----
->  crypto/block.c                          |  2 +-
->  crypto/hash-afalg.c                     | 26 +++++++--------
->  crypto/hash-gcrypt.c                    | 20 +++++------
->  crypto/hash-glib.c                      | 20 +++++------
->  crypto/hash-gnutls.c                    | 20 +++++------
->  crypto/hash-nettle.c                    | 18 +++++-----
->  crypto/hash.c                           | 30 ++++++++---------
->  crypto/hmac-gcrypt.c                    | 22 ++++++-------
->  crypto/hmac-glib.c                      | 22 ++++++-------
->  crypto/hmac-gnutls.c                    | 22 ++++++-------
->  crypto/hmac-nettle.c                    | 22 ++++++-------
->  crypto/hmac.c                           |  2 +-
->  crypto/ivgen.c                          |  4 +--
->  crypto/pbkdf-gcrypt.c                   | 36 ++++++++++----------
->  crypto/pbkdf-gnutls.c                   | 36 ++++++++++----------
->  crypto/pbkdf-nettle.c                   | 32 +++++++++---------
->  crypto/pbkdf-stub.c                     |  4 +--
->  crypto/pbkdf.c                          |  2 +-
->  hw/misc/aspeed_hace.c                   | 16 ++++-----
->  io/channel-websock.c                    |  2 +-
->  target/i386/sev.c                       |  6 ++--
->  tests/bench/benchmark-crypto-akcipher.c | 12 +++----
->  tests/bench/benchmark-crypto-hash.c     | 10 +++---
->  tests/bench/benchmark-crypto-hmac.c     |  6 ++--
->  tests/unit/test-crypto-afsplit.c        | 10 +++---
->  tests/unit/test-crypto-akcipher.c       |  6 ++--
->  tests/unit/test-crypto-block.c          | 16 ++++-----
->  tests/unit/test-crypto-hash.c           | 42 +++++++++++------------
->  tests/unit/test-crypto-hmac.c           | 16 ++++-----
->  tests/unit/test-crypto-ivgen.c          |  8 ++---
->  tests/unit/test-crypto-pbkdf.c          | 44 ++++++++++++-------------
->  ui/vnc.c                                |  2 +-
->  util/hbitmap.c                          |  2 +-
->  crypto/akcipher-gcrypt.c.inc            | 14 ++++----
->  crypto/akcipher-nettle.c.inc            | 26 +++++++--------
->  52 files changed, 350 insertions(+), 351 deletions(-)
+>  qapi/block-core.json                  |  2 +-
+>  qapi/crypto.json                      |  9 ++-
+>  crypto/blockpriv.h                    |  4 +-
+>  crypto/cipherpriv.h                   |  2 +-
+>  crypto/ivgenpriv.h                    |  2 +-
+>  include/crypto/cipher.h               | 18 +++---
+>  include/crypto/ivgen.h                | 10 +--
+>  include/crypto/pbkdf.h                |  4 +-
+>  backends/cryptodev-builtin.c          | 16 ++---
+>  block/rbd.c                           |  4 +-
+>  crypto/block-luks.c                   | 92 +++++++++++++--------------
+>  crypto/block-qcow.c                   |  4 +-
+>  crypto/block.c                        |  2 +-
+>  crypto/cipher-afalg.c                 | 24 +++----
+>  crypto/cipher.c                       | 72 ++++++++++-----------
+>  crypto/ivgen.c                        |  4 +-
+>  crypto/secret_common.c                |  2 +-
+>  tests/bench/benchmark-crypto-cipher.c | 22 +++----
+>  tests/unit/test-crypto-block.c        | 14 ++--
+>  tests/unit/test-crypto-cipher.c       | 66 +++++++++----------
+>  tests/unit/test-crypto-ivgen.c        |  8 +--
+>  ui/vnc.c                              |  4 +-
+>  crypto/cipher-builtin.c.inc           | 18 +++---
+>  crypto/cipher-gcrypt.c.inc            | 56 ++++++++--------
+>  crypto/cipher-gnutls.c.inc            | 38 +++++------
+>  crypto/cipher-nettle.c.inc            | 58 ++++++++---------
+>  26 files changed, 277 insertions(+), 278 deletions(-)
 
 Acked-by: Daniel P. Berrangé <berrange@redhat.com>
 
