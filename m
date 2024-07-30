@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D843C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 22:37:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C675C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 23:05:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYvSR-0005bU-FU; Tue, 30 Jul 2024 18:36:39 -0400
+	id 1sYvtW-0006mf-U6; Tue, 30 Jul 2024 19:04:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYvSP-0005Z4-FF
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 18:36:37 -0400
-Received: from mail-il1-x12d.google.com ([2607:f8b0:4864:20::12d])
+ id 1sYvtV-0006mB-BZ
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 19:04:37 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYvSL-0001RD-Ox
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 18:36:37 -0400
-Received: by mail-il1-x12d.google.com with SMTP id
- e9e14a558f8ab-395e9f2ebc0so29991295ab.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 15:36:33 -0700 (PDT)
+ id 1sYvtT-0006Mw-U3
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 19:04:37 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1fc5239faebso33553355ad.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 16:04:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722378992; x=1722983792; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722380674; x=1722985474; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ObO4rf3+Yh1uQa1rPri0fpxTbgw3SANBVkBBG+duNQk=;
- b=VOOQonCKsrt/K6aP23Uf1T0G++cwMad6JxvQWGA5a5cTQpFBNSec0DReYEtBmxHoh8
- 30SRvhDI5SPWt3I8UbeMXbI7zOSowpKTjr7PNBcn8SyqrGYER2EJYtrGECyHhxe83hwo
- fcgDImm/csG9fwBemDu5hdu7ygn3hlLEWpf8Uk5/UkJ+5IFra9Jyeeg1DQN10Y/vBvCv
- xXWqidN6nEfZJQXHWvpsl8HLG7i0LVgPFOCwNGrdgPntFVWOF2A4xnBFudOpakOhxvGK
- hvbbXBe6TU5qBByHpuTlMBr9UZ/y3884iqGgqxQGt1nN1JpkrQ4vLKhi2YstQrmYNIKj
- ul0g==
+ bh=VwgfPw1XCFUOGlNnoIqRvZJnLsAfZWYBgOQL00C4u78=;
+ b=bQ0p5lXte7qi53SrBKePi5v92MTW1MZR2NZIMTOjc1nmXblIuo47wf+q2iiQ2uOggJ
+ G1zgbAdfGDxttXbziQJqcI6XBt020ID2BXnyzxpGzGu3D2FeybyX2h8ZY+Lo+LsPYFOx
+ 71BS3ZtvA6e+dIp1kI7ZrvDUctlf3xeEArAUNqun+I65jN4yKpt37FqKP2YmVulmMBHo
+ zAbQT54PPzm2ZJgU6WPgjEKacFdjKTxTTcE1C+WSDXS56LvIvQi3gY5PpaicPOGS4kat
+ CZekdJODMOZsh6WzDVEh3+7fuwj3WSyoVObzztWiRKEJpzphwrpl/iKiyrZmZ6xQdCmW
+ Lhzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722378992; x=1722983792;
+ d=1e100.net; s=20230601; t=1722380674; x=1722985474;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ObO4rf3+Yh1uQa1rPri0fpxTbgw3SANBVkBBG+duNQk=;
- b=WVfQKEosQrQhxWFz/+5G/y9T3AwjyzCsFCN2kVSF82q/vGXDvArN2xpcJJpYOzjx7w
- BNAbS9NbHUhjf2oglKy6Z1FZfQxFERpPuN02rM740JmPLZWkZ1Sll1wJ7L43TFvJRU5Y
- sFI/mZVV5/Sm4zaifGOnGm6xg5DrQdgO+XKO/Zm4udsiVr3YOPvhdv6Qwx1fR8QaKg0v
- X49LE17kJ+OWJe1DVpdxKs5g8MUpL7rurZPVLmJDOrDjL6Oib75/cBK5C9oSumE1fozE
- /i3XEqgaJdopx3AEPmr3QSP5YmzMBsKiNEn8UsvVwK7i9f4RSbixIAlzcp5XjqS4PAQ+
- ilog==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXGnmYecuDX8EjFqUDUyrYBEIHcpsUN1mgac8iq1uTX5lR2NhQ1WKfCTZhOL2QKfwGMXBBx73MZJtWtwepXXc5cTbKNOsI=
-X-Gm-Message-State: AOJu0YyNKX0Hq4WmmW4ZI6rg+u5T9uGyEBbkT0UKOVN0lR8mLTBvyz5W
- Sam4qTetMzsynxa7+62V6ISQWh4W07+GjZQ7pIehendXcITg09J2wIsiI95/H8I=
-X-Google-Smtp-Source: AGHT+IFort65k2CnKQJNC5X+UbmYERnaCL1Fai51jHT1GGoXXxmFsE+LYb8pvo0U5+18TirPRKmvUw==
-X-Received: by 2002:a05:6e02:12cb:b0:374:a44b:1186 with SMTP id
- e9e14a558f8ab-39aec2df3e3mr172211655ab.12.1722378992169; 
- Tue, 30 Jul 2024 15:36:32 -0700 (PDT)
+ bh=VwgfPw1XCFUOGlNnoIqRvZJnLsAfZWYBgOQL00C4u78=;
+ b=kFUQ3KHFj+DylpTVpIrIUykuE2gRmMrbygW2k8OQx9Gyqrjd6MHqoXv2lybtcio8AW
+ 4tCbATjOrnrs0tfVBj3EBnQTuK/pQdEYFkRDnYLeULQ1W7Ni2DOKSFOdun0ixDDZHen0
+ PkpyQRCJSN2OsV4IjQTcaJe8sDayn5T4KRanUO8t5Eu0NgVkMWreEYVeFs/83/gIWqYJ
+ 3rTDMg3mMYn/ZCGLxQ4yJwSwwoalX59cjk0Bf2U5YCW/TI4bd9rhc5hyR4grq/Y0FI7q
+ LYVwB4yISGmCNR4jiDARUl5nSfMRcGWdNO13qMOJd7qio8C4XhnltHGMzBwgktsbDPVQ
+ 5fTw==
+X-Gm-Message-State: AOJu0YwE2v+InPYb1MlHyEKY6mEfy1q3fIMGP1Qp+BLxuReIPWz6Ocoz
+ ut8irFs4mH4gUPXg3HFGYrS1IHcBLtgfi/gXkzkstL8iUc6F5J7cSQTBC/mjnrI=
+X-Google-Smtp-Source: AGHT+IF+DGDiHE0hsN3eNYO7mteDZvWvdkjJcw8pi4Xqmvf221A+Y5O5cH0gZuVzr6+wED6OZ4Y8pw==
+X-Received: by 2002:a17:90b:3882:b0:2c8:da73:af7d with SMTP id
+ 98e67ed59e1d1-2cf7e09577cmr11037182a91.3.1722380673670; 
+ Tue, 30 Jul 2024 16:04:33 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7a9f7b7b029sm9310999a12.11.2024.07.30.15.36.29
+ 98e67ed59e1d1-2cdb73b7674sm13107976a91.20.2024.07.30.16.04.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jul 2024 15:36:31 -0700 (PDT)
-Message-ID: <7c9662a0-240b-4bf5-9676-5eff403f86ef@linaro.org>
-Date: Wed, 31 Jul 2024 08:36:24 +1000
+ Tue, 30 Jul 2024 16:04:33 -0700 (PDT)
+Message-ID: <d5e48656-737b-4a91-a004-1da913834594@linaro.org>
+Date: Wed, 31 Jul 2024 09:04:26 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/arm: Handle denormals correctly for FMOPA
- (widening)
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20240730155819.2958924-1-peter.maydell@linaro.org>
+Subject: Re: [PATCH] linux-user/main: Allow setting tb-size
+To: Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>
+Cc: qemu-devel@nongnu.org
+References: <20240730215532.1442-1-iii@linux.ibm.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240730155819.2958924-1-peter.maydell@linaro.org>
+In-Reply-To: <20240730215532.1442-1-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::12d;
- envelope-from=richard.henderson@linaro.org; helo=mail-il1-x12d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,19 +95,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/31/24 01:58, Peter Maydell wrote:
-> -void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
-> -                         void *vpm, void *vst, uint32_t desc)
-> +void HELPER(sme_fmopa_h)(CPUARMState *env,
-> +                         void *vza, void *vzn, void *vzm, void *vpn,
-> +                         void *vpm, uint32_t desc)
+On 7/31/24 07:54, Ilya Leoshkevich wrote:
+> While qemu-system can set tb-size using -accel tcg,tb-size=n, there
+> is no similar knob for qemu-user. Add one in a way similar to how
+> one-insn-per-tb is already handled.
+> 
+> Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
+> ---
+>   linux-user/main.c | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
 
-I think the env pointer should replace vst in the argument ordering.
-That keeps with the standard gvec signature.
-
-Otherwise,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
