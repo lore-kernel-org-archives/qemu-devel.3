@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A38AC3DA70
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 16:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BCA6C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 16:25:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYpcd-0008Gk-0U; Tue, 30 Jul 2024 12:22:47 -0400
+	id 1sYpcd-0008HT-4S; Tue, 30 Jul 2024 12:22:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYpcb-0008BG-Ki
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:22:45 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ id 1sYpcc-0008D7-21
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:22:46 -0400
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYpcY-0003Wy-GU
+ id 1sYpca-0003XJ-1o
  for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:22:45 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-a7a975fb47eso663999666b.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 09:22:42 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-52f025ab3a7so7508962e87.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 09:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1722356561; x=1722961361; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=o53zhyLHN7aZhlmeir/x1yyb+LIZzMpKweMU3c5VOlw=;
- b=Bumw/CXlJEbRZPa47vIYE7gVZlX6L2cTC2RBe3FS6AC56TlFzN3Wp8xEwFbUmP7WDa
- pF5g1OkFEUd0Qfqv4ltRHlwrtOJli6RblWg3idyc8YSj4Dmgbo6o39zCsiP7VoC+liou
- j+HogPK7q2stvNoOSCOO/mTSM3w79Jom84RZFul8Gs1HfIXdSFK6duClKDdYeablY3rj
- fdAR70hZRexmxrQNRe44zzzulEZweY8nJUkxmlpX3fY+2sc8gVEcBelmtZ/UnP3ELYVt
- ewfpvyC1bVi9XqwHwZP/Bl2sfJKVEvDYTbIrlx+M4Sm4z4WR6NfQ4nyf/qwW2T/grdb8
- 0LmA==
+ bh=/6pMZlm2bfjoRAj1q+Xtf7pWE5pLMJXZTwTQGH/c6jo=;
+ b=YDuQc8Fulx7EH6aE4cXJyl/C9RbEgl6Vz85IVGKf7Nd3QDBlWdEwkcF9OA65GQLWFK
+ TgHOk3WLPgw3L/C2fWPA3nLcfOH9AefnLkUSwvkFnnkXuazeFwRLUKdBCgKNTOE5ZFvI
+ Hmo1G7YC274sDVcEVF/gwCkD0zDUunW0yQgFBlxv3hO7d3mxKVCVAHCWWo3XY6Mu5COf
+ D/kqw0aFL+tttj4coCazBRyg7F/8ahpu0SYGc4GDKPHtnKDAtENo5fvlzd39TFZ7yMCX
+ lboMqd69Mps9KfLicLEV2OcmUYAYlqjEHNeZstQaAGqueAMrYzAV3D+mCIGx/mNgE7yH
+ sGQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1722356561; x=1722961361;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=o53zhyLHN7aZhlmeir/x1yyb+LIZzMpKweMU3c5VOlw=;
- b=gPyIjT6cT/Juaitsd2Mv84iflIdtGdxNj7cz5qJaeZYCTK3oOfYlgbz4U1Kc3piEib
- aXltyYJaG4jKe9jnajm9kztWw6u/rODdGMR4Rau3/UGQ1pK25fK66qzuhn5rhKVf2AHE
- q4cnHDdtQ1anBTynMM6B+K74LHOYR0JWGC/YIRkj8CrASaUYmusbX1HLzOaVFt+eBYhc
- 2qWXeDVeurbxh18yPNOJb1nd3Rz95bhO86TkPB4qHimCX4WtxXwW7wPs6qeV50+GHiG5
- KTpgR1RZetpyhPERzdFI8o0bRvPZ8vwHlWEXCS08LTam4DZ7JJfmM4OXhIwWSMNeoJQL
- 6Lyg==
-X-Gm-Message-State: AOJu0Yz3tjtDgWecyY5TGJgjAxVbOJqnyNmDnw4N8F19aIbBFGdmsium
- ZZTsqgsTW2D6EsW/xiDEtAntTCeFdGkI0510O34E+hbG9g8Q+EPsVMlH45i2spA=
-X-Google-Smtp-Source: AGHT+IFj0qEgnWwdWL5r7M2qhFzK8XTcqLWkgCc5gALWAuxDTdfcXcVuZ/cG1iSEgxseX1W90lJIVw==
-X-Received: by 2002:a17:907:9443:b0:a72:633d:5fd6 with SMTP id
- a640c23a62f3a-a7d400adb62mr737614266b.32.1722356560275; 
+ bh=/6pMZlm2bfjoRAj1q+Xtf7pWE5pLMJXZTwTQGH/c6jo=;
+ b=ikQydmMrOYr0Qnk7FiPvqcUhePk3itnOz30/7guQQb/fiorKo7EwMluGVkfSjUOzLs
+ N1Z4GwETJgOK+sMbLXKSyErPcKs1Xomih9WhdzwJ3YBBs4+G0JLbpSpZulkvJ5lLOF4P
+ /vB49gTYuw3UYsYsgN2ZrQ/nxWYHMfMItr84nQKYxbHHVLzBp4kCocoIgRe/b7ahhHcU
+ qmECtyCsRGyp+NN5+8UqC7r5XmoLFV9XBLvyD8O0UInNPjlHVldLMwbQjplzBOPedNLR
+ kQwLA9glTwkTptIDZe+JNc+AjoD0IxWsJC76jeU4KMuXUiwvTez675ptU3ihplO+tDop
+ XBhA==
+X-Gm-Message-State: AOJu0YzBGrj1OWM4IhMun28Wd7OJqWdfWOt0uJ5H5CI2fG+NvmOEAnmJ
+ aPpyMOwdUYbb8hL5DZDoVf5Dqm/2F0Xya3ECFKOONszmZHHPk2kZl0jnKKdjtvk=
+X-Google-Smtp-Source: AGHT+IF5P+/llTRtk+dQ4pOEKCik83nvrWvzJVlzgEa+9OPCALVnEyIDINIwXiaDbW6ZpToazPHLqQ==
+X-Received: by 2002:a19:7001:0:b0:52f:42a:a2db with SMTP id
+ 2adb3069b0e04-5309b28e7bdmr6535675e87.28.1722356560480; 
  Tue, 30 Jul 2024 09:22:40 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acad41621sm660753866b.113.2024.07.30.09.22.38
+ a640c23a62f3a-a7acad9d3f4sm659501066b.165.2024.07.30.09.22.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 30 Jul 2024 09:22:38 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 27DC15F92D;
- Tue, 30 Jul 2024 17:22:38 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id E34615F8BC;
+ Tue, 30 Jul 2024 17:22:37 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Song Gao <gaosong@loongson.cn>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- qemu-arm@nongnu.org (open list:ARM TCG CPUs),
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
- qemu-s390x@nongnu.org (open list:S390 TCG CPUs)
-Subject: [PULL 03/14] tests/tcg: Use --noexecstack with assembler files
-Date: Tue, 30 Jul 2024 17:22:26 +0100
-Message-Id: <20240730162237.1425515-4-alex.bennee@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Subject: [PULL 01/14] gitlab: record installed packages in /packages.txt in
+ containers
+Date: Tue, 30 Jul 2024 17:22:24 +0100
+Message-Id: <20240730162237.1425515-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240730162237.1425515-1-alex.bennee@linaro.org>
 References: <20240730162237.1425515-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,151 +103,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Add the --noexecstack assembler command-line option to avoid:
+The lcitool created containers save the full distro package list
+details into /packages.txt. The idea is that build jobs will 'cat'
+this file, so that the build log has a record of what packages
+were used. This is important info, because when it comes to debug
+failures, the original container is often lost.
 
-  /usr/bin/ld: warning: boot.o: missing .note.GNU-stack section implies executable stack
-  /usr/bin/ld: NOTE: This behaviour is deprecated and will be removed in a future version of the linker
+This extends the manually written dockerfiles to also create the
+/packages.txt file.
 
-which is enabled by default with current debian cross toolchains.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20240724010733.22129-2-richard.henderson@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-Id: <20240724095505.33544-2-berrange@redhat.com>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240729144414.830369-4-alex.bennee@linaro.org>
+Message-Id: <20240729144414.830369-2-alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
-index cb8cfeb6da..1f8e5b3d30 100644
---- a/tests/tcg/Makefile.target
-+++ b/tests/tcg/Makefile.target
-@@ -115,7 +115,7 @@ endif
- %: %.c
- 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
- %: %.S
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
-+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -Wa,--noexecstack $< -o $@ $(LDFLAGS)
- else
- # For system targets we include a different Makefile fragment as the
- # build options for bare programs are usually pretty different. They
-diff --git a/tests/tcg/aarch64/Makefile.softmmu-target b/tests/tcg/aarch64/Makefile.softmmu-target
-index dd6d595830..139e04d15f 100644
---- a/tests/tcg/aarch64/Makefile.softmmu-target
-+++ b/tests/tcg/aarch64/Makefile.softmmu-target
-@@ -28,7 +28,7 @@ config-cc.mak: Makefile
- .PRECIOUS: $(CRT_OBJS)
+diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/tests/docker/dockerfiles/debian-all-test-cross.docker
+index 6cc38a3633..8ab244e018 100644
+--- a/tests/docker/dockerfiles/debian-all-test-cross.docker
++++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
+@@ -62,7 +62,8 @@ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
+         gcc-s390x-linux-gnu \
+         libc6-dev-s390x-cross \
+         gcc-sparc64-linux-gnu \
+-        libc6-dev-sparc64-cross
++        libc6-dev-sparc64-cross && \
++        dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
  
- %.o: $(CRT_PATH)/%.S
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -c $< -o $@
-+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -Wa,--noexecstack -c $< -o $@
  
- # Build and link the tests
- %: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
-diff --git a/tests/tcg/alpha/Makefile.softmmu-target b/tests/tcg/alpha/Makefile.softmmu-target
-index 09193a62d6..a0eca4d6ea 100644
---- a/tests/tcg/alpha/Makefile.softmmu-target
-+++ b/tests/tcg/alpha/Makefile.softmmu-target
-@@ -22,7 +22,7 @@ LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
- .PRECIOUS: $(CRT_OBJS)
+ ENV QEMU_CONFIGURE_OPTS --disable-system --disable-docs --disable-tools
+diff --git a/tests/docker/dockerfiles/debian-hexagon-cross.docker b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+index f2d40f2dee..23152b4918 100644
+--- a/tests/docker/dockerfiles/debian-hexagon-cross.docker
++++ b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+@@ -33,7 +33,8 @@ RUN apt-get update && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/c++ && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/cc && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/g++ && \
+-    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
++    ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc && \
++    dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
  
- %.o: $(CRT_PATH)/%.S
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -c $< -o $@
-+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -Wa,--noexecstack -c $< -o $@
+ RUN /usr/bin/pip3 install tomli
  
- # Build and link the tests
- %: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
-diff --git a/tests/tcg/arm/Makefile.softmmu-target b/tests/tcg/arm/Makefile.softmmu-target
-index 547063c08c..b66074b0b4 100644
---- a/tests/tcg/arm/Makefile.softmmu-target
-+++ b/tests/tcg/arm/Makefile.softmmu-target
-@@ -36,7 +36,7 @@ LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
- .PRECIOUS: $(CRT_OBJS)
+diff --git a/tests/docker/dockerfiles/debian-legacy-test-cross.docker b/tests/docker/dockerfiles/debian-legacy-test-cross.docker
+index d75e0b85e2..5a6616b7d3 100644
+--- a/tests/docker/dockerfiles/debian-legacy-test-cross.docker
++++ b/tests/docker/dockerfiles/debian-legacy-test-cross.docker
+@@ -36,7 +36,8 @@ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
+         python3-pip \
+         python3-setuptools \
+         python3-venv \
+-        python3-wheel
++        python3-wheel && \
++        dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
  
- %.o: $(ARM_SRC)/%.S
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -c $< -o $@
-+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -Wa,--noexecstack -c $< -o $@
+ RUN /usr/bin/pip3 install tomli
  
- # Build and link the tests
- %: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
-diff --git a/tests/tcg/arm/Makefile.target b/tests/tcg/arm/Makefile.target
-index 8e287191af..06ddf3e04f 100644
---- a/tests/tcg/arm/Makefile.target
-+++ b/tests/tcg/arm/Makefile.target
-@@ -25,7 +25,7 @@ ARM_TESTS += test-arm-iwmmxt
- # Clang assembler does not support IWMXT, so use the external assembler.
- test-arm-iwmmxt: CFLAGS += -marm -march=iwmmxt -mabi=aapcs -mfpu=fpv4-sp-d16 $(CROSS_CC_HAS_FNIA)
- test-arm-iwmmxt: test-arm-iwmmxt.S
--	$(CC) $(CFLAGS) $< -o $@ $(LDFLAGS)
-+	$(CC) $(CFLAGS) -Wa,--noexecstack $< -o $@ $(LDFLAGS)
+diff --git a/tests/docker/dockerfiles/debian-loongarch-cross.docker b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+index 6a9197528b..79eab5621e 100644
+--- a/tests/docker/dockerfiles/debian-loongarch-cross.docker
++++ b/tests/docker/dockerfiles/debian-loongarch-cross.docker
+@@ -32,7 +32,8 @@ RUN apt-get update && \
+         python3-pip \
+         python3-setuptools \
+         python3-venv \
+-        python3-wheel
++        python3-wheel && \
++        dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
  
- # Float-convert Tests
- ARM_TESTS += fcvt
-diff --git a/tests/tcg/i386/Makefile.softmmu-target b/tests/tcg/i386/Makefile.softmmu-target
-index 5266f2335a..4096a1cf31 100644
---- a/tests/tcg/i386/Makefile.softmmu-target
-+++ b/tests/tcg/i386/Makefile.softmmu-target
-@@ -25,7 +25,7 @@ EXTRA_RUNS+=$(MULTIARCH_RUNS)
- .PRECIOUS: $(CRT_OBJS)
+ RUN /usr/bin/pip3 install tomli
  
- %.o: $(CRT_PATH)/%.S
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -c $< -o $@
-+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -Wa,--noexecstack -c $< -o $@
+diff --git a/tests/docker/dockerfiles/debian-tricore-cross.docker b/tests/docker/dockerfiles/debian-tricore-cross.docker
+index 16276aa21d..479b4d6eba 100644
+--- a/tests/docker/dockerfiles/debian-tricore-cross.docker
++++ b/tests/docker/dockerfiles/debian-tricore-cross.docker
+@@ -34,7 +34,8 @@ RUN apt update && \
+        python3-pip \
+        python3-setuptools \
+        python3-wheel \
+-       python3-venv
++       python3-venv && \
++       dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
  
- # Build and link the tests
- %: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
-diff --git a/tests/tcg/loongarch64/Makefile.softmmu-target b/tests/tcg/loongarch64/Makefile.softmmu-target
-index 908f3a8c0f..d5d5c1a7f6 100644
---- a/tests/tcg/loongarch64/Makefile.softmmu-target
-+++ b/tests/tcg/loongarch64/Makefile.softmmu-target
-@@ -22,7 +22,7 @@ LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
- .PRECIOUS: $(CRT_OBJS)
+ RUN /usr/bin/pip3 install tomli
  
- %.o: $(CRT_PATH)/%.S
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -c $< -o $@
-+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -x assembler-with-cpp -Wa,--noexecstack -c $< -o $@
+diff --git a/tests/docker/dockerfiles/debian-xtensa-cross.docker b/tests/docker/dockerfiles/debian-xtensa-cross.docker
+index 413881899b..d011eee2ad 100644
+--- a/tests/docker/dockerfiles/debian-xtensa-cross.docker
++++ b/tests/docker/dockerfiles/debian-xtensa-cross.docker
+@@ -16,7 +16,8 @@ RUN apt-get update && \
+         curl \
+         gettext \
+         git \
+-        python3-minimal
++        python3-minimal && \
++    dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
  
- # Build and link the tests
- %: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index d5b126e5f1..7c1d44d3f4 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -10,7 +10,7 @@ LDFLAGS = -T $(LINK_SCRIPT)
- CFLAGS += -g -Og
- 
- %.o: %.S
--	$(CC) $(CFLAGS) $< -c -o $@
-+	$(CC) $(CFLAGS) $< -Wa,--noexecstack -c -o $@
- %: %.o $(LINK_SCRIPT)
- 	$(LD) $(LDFLAGS) $< -o $@
- 
-diff --git a/tests/tcg/s390x/Makefile.softmmu-target b/tests/tcg/s390x/Makefile.softmmu-target
-index 4c8e15e625..f60f94b090 100644
---- a/tests/tcg/s390x/Makefile.softmmu-target
-+++ b/tests/tcg/s390x/Makefile.softmmu-target
-@@ -6,7 +6,7 @@ CFLAGS+=-ggdb -O0
- LDFLAGS=-nostdlib -static
- 
- %.o: %.S
--	$(CC) -march=z13 -m64 -c $< -o $@
-+	$(CC) -march=z13 -m64 -Wa,--noexecstack -c $< -o $@
- 
- %.o: %.c
- 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -march=z13 -m64 -c $< -o $@
-diff --git a/tests/tcg/x86_64/Makefile.softmmu-target b/tests/tcg/x86_64/Makefile.softmmu-target
-index 1bd763f2e6..ef6bcb4dc7 100644
---- a/tests/tcg/x86_64/Makefile.softmmu-target
-+++ b/tests/tcg/x86_64/Makefile.softmmu-target
-@@ -25,7 +25,7 @@ EXTRA_RUNS+=$(MULTIARCH_RUNS)
- .PRECIOUS: $(CRT_OBJS)
- 
- %.o: $(CRT_PATH)/%.S
--	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -c $< -o $@
-+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -Wa,--noexecstack -c $< -o $@
- 
- # Build and link the tests
- %: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
+ ENV CPU_LIST dc232b dc233c de233_fpu dsp3400
+ ENV TOOLCHAIN_RELEASE 2020.07
 -- 
 2.39.2
 
