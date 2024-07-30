@@ -4,101 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ED42C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 07:14:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F3B1C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 07:25:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYh3c-00013i-7C; Tue, 30 Jul 2024 03:14:04 -0400
+	id 1sYhDc-00082B-7C; Tue, 30 Jul 2024 03:24:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYh3X-000115-Fo
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 03:14:00 -0400
-Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYhDZ-0007yc-V9
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 03:24:21 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYh3U-00007G-Ii
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 03:13:59 -0400
-Received: by mail-lj1-x229.google.com with SMTP id
- 38308e7fff4ca-2f035ae1083so56222381fa.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 00:13:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYhDY-0001oI-7c
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 03:24:21 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-3687f8fcab5so1902677f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 00:24:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722323634; x=1722928434; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722324258; x=1722929058; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=jT6uKrdmKTDFk8SMNWCFqWwYL5UPEiOleM02gWFTC8g=;
- b=OAmMmVAC0C5e6cxaaRZ6DvjyV6CvwiWP4Clw+Gy3oklPVUy2DEqixQKD7DJ4bvq2QG
- FIR6AvYHv8HfukgD1YZzEKJMLsycXpMWAQCJGZ0p6CxHuxgI+I1A/2cwSfkubAnLfbPg
- Cj9cnjoqD/b7YojPHTpXUjp5DbEGkSI/bCipeIAFbhq8W9iYmYXU7adGNbFgTQLPE1du
- iyrU4vI0I5rOwjv+kFJMbMaXEV94BN6ikPTY+nBJro2FrX1MoRjAyC911IrV1sXsYDeT
- pi1X+G26y/1S+XRTDvo8qfHEA4juK+cw89x6OjPwA0TDYUtSO0If3+V6inzEPkgAOQ8E
- mMHQ==
+ bh=+hWEeZgmQLWvZKuUcgvuQYHB1gC3yeiQ+90apa7U6ww=;
+ b=loP+S2fj5rCD79Et3RCMs4HzpngL8RVtWwLrWMXcWiTZ2r5fCc5gQLf6tA5f7IDyTM
+ 951K6BPOUjqxqwUP+PR3U71e3KtuaDDlUW2olS9D/8rY+6wt07pL4B3UrcggS5bY6VwH
+ lBYne7lGqmb6RaJ4sWsga8Ef+D0oKm1QhgKdHv/FwgO6LkOPbXEYWe2HxSDNvaHOlb1V
+ cLB9a5XPuo2Uc8FrALDlt15wtaRvp7UnQ/0CAiv7UnTUsiC4n15WEExXkB2vGpr3COrx
+ MfcriKn0ZsGFRCucIEYbeqKs4H3dz0NXAAYOayGB40jtU0FrFT4I4YN/j67RjrVMQzw9
+ MMoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722323634; x=1722928434;
+ d=1e100.net; s=20230601; t=1722324258; x=1722929058;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jT6uKrdmKTDFk8SMNWCFqWwYL5UPEiOleM02gWFTC8g=;
- b=ByysF2dZgpYvt5srdts1fnEyD+C3zAIswD3dj0ZlJkjEh7qUTf2UMgqOxKfquvIR6r
- aNozcCeFBE3JoKA99DF/bkd+dty2OaVtLAIUuAhZqtLRBbRb8K+OhGSfHJ/1TtOCsLd2
- 4dQWnAnvIOfnldX+gwMEydhnGE159eb7U1E2K3guId4jFs7/L6BaBntQ/DKKZ49KPKu9
- 4RmLB/w31+ln4pyDDQv1txFTBV6kTHnNnOwC9wBM9Rk5pIhtDWCsLVHdfv3GPGqo6RC7
- 4gHa1ylJ6NMCFbU4FS2cbhWKeAFmBt9S5nscikfj/J1KCnvxK/Sr4G9G31mUm05rxwAl
- IfQQ==
+ bh=+hWEeZgmQLWvZKuUcgvuQYHB1gC3yeiQ+90apa7U6ww=;
+ b=mGdySNA5ok/A2u74yFuxg0LMRZCwGCQZi3RNIpgJx5M1qywoNPwklrffFCZ2MwC1WQ
+ liD1p6qV43TtNDlDTFINOGlpfO+wMWjkGH3gLyc06GrY9KAte498UsflFGOPR+LI5eAX
+ O3Uuz0jMvthvjc8VcPyZo/NQKtxs3sCuZE7TKr6UVoHtPMomLCA/Imi9QcvWlfm5mzRc
+ Zdsa0bRfHYzHkL72WLpRB5S6CKmaNiKDpsmWjhrGTjlOaa8j8+zK9I5k0u+tqd3yxEDQ
+ 5C3YzyjNpOJkRgRoAVGHWEUqt4cU7By2onWxALlnHKBshCz/+w4K3NSAm2bL6r4u71mp
+ Vj4w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFiEHn9ZbaRFYGajpN70W+SnJ6WeuOvfa8TzeUE7ZoMvsBtWNvfPg5Nmz+uW8NvkJ0+YfNOGqvYdfYkgBTK3GAo2FpCSM=
-X-Gm-Message-State: AOJu0YzzPd0BMe5Lg9wV8bY7VFCLd/9vDTBx/u330nyvPJDHUnn+5Cml
- Y2mLWpLbNF2Hnwnj/W5sJ+/BLrS3PpkRbhiBZlZHk9UFlTuUsl6gqu7NVsjyZ7A=
-X-Google-Smtp-Source: AGHT+IHE//bc+iZ0w4mjer5GvULNSaa5YgoBlEezNQlpg4UWqR7WJOzOH+bXAEISoTC/bsWkZkhBDQ==
-X-Received: by 2002:a2e:b52a:0:b0:2ef:243b:6dce with SMTP id
- 38308e7fff4ca-2f12edfb5aemr57832541fa.10.1722323634209; 
- Tue, 30 Jul 2024 00:13:54 -0700 (PDT)
+ AJvYcCXTvLsC9qWJP2sVeclR+loT2bUFBCBXLXmgsHWRzjbMOEcOkKb+Fv/ei9nSiuaOCcLrDPPIxWIex5Birb0P+tLnA4a95Hc=
+X-Gm-Message-State: AOJu0YzX38Y8P44xoIA7VzO9sj+X8cMojGyyxL0OhR68q8fLPdxZtB9h
+ gvJYslqt0fC5q3te/dWXvKYXURqrfeCqlUtkqblHPChpd3nfaeiz6Jt9wgBNYK0=
+X-Google-Smtp-Source: AGHT+IEiVk4MUKtRtkZZdaSlhl2OawIk0XrN256zxArHbWGc5CV+e7lAk510y2ZHj1KeFDE5WparQw==
+X-Received: by 2002:a5d:56c3:0:b0:367:96d6:4c2d with SMTP id
+ ffacd0b85a97d-36b5ceed146mr6509949f8f.25.1722324258253; 
+ Tue, 30 Jul 2024 00:24:18 -0700 (PDT)
 Received: from [192.168.38.175] (82.red-88-28-10.dynamicip.rima-tde.net.
  [88.28.10.82]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b367d9b30sm13956224f8f.40.2024.07.30.00.13.46
+ ffacd0b85a97d-36b36857ca5sm13941730f8f.89.2024.07.30.00.24.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jul 2024 00:13:53 -0700 (PDT)
-Message-ID: <05446d09-d5f1-4a6a-a816-ed9c28f6e82c@linaro.org>
-Date: Tue, 30 Jul 2024 09:13:43 +0200
+ Tue, 30 Jul 2024 00:24:17 -0700 (PDT)
+Message-ID: <89bfc587-8e32-44ac-8039-456b6fa0c663@linaro.org>
+Date: Tue, 30 Jul 2024 09:24:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 05/11] exec/ioport: Add portio_list_set_address()
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
- Sergio Lopez <slp@redhat.com>, =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?=
- <fbarrat@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
- Artyom Tarasenko <atar4qemu@gmail.com>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Hanna Reitz <hreitz@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- John Snow <jsnow@redhat.com>, Thomas Huth <huth@tuxfamily.org>,
- Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Leonardo Bras <leobras@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Aleksandar Rikalo <aleksandar.rikalo@syrmia.com>,
- Kevin Wolf <kwolf@redhat.com>, David Hildenbrand <david@redhat.com>
-References: <20240114123911.4877-1-shentey@gmail.com>
- <20240114123911.4877-6-shentey@gmail.com>
- <f5f5dfca-d60b-4b0d-add9-e41b42bd4ce2@linaro.org>
- <C0822DF6-EA81-48BB-9102-887E66441EF2@gmail.com>
+Subject: Re: [PATCH] target/arm: Fix BTI versus CF_PCREL
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+References: <20240730013922.540523-1-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <C0822DF6-EA81-48BB-9102-887E66441EF2@gmail.com>
+In-Reply-To: <20240730013922.540523-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::229;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x229.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,62 +95,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/7/24 23:07, Bernhard Beschow wrote:
+On 30/7/24 03:39, Richard Henderson wrote:
+> With pcrel, we cannot check the guarded page bit at translation
+> time, as different mappings of the same physical page may or may
+> not have the GP bit set.
 > 
+> Instead, add a couple of helpers to check the page at runtime,
+> after all other filters that might obviate the need for the check.
 > 
-> Am 29. Juli 2024 09:26:19 UTC schrieb "Philippe Mathieu-Daudé" <philmd@linaro.org>:
->> On 14/1/24 13:39, Bernhard Beschow wrote:
->>> Some SuperI/O devices such as the VIA south bridges or the PC87312 controller
->>> are able to relocate their SuperI/O functions. Add a convenience function for
->>> implementing this in the VIA south bridges.
->>>
->>> This convenience function relies on previous simplifications in exec/ioport
->>> which avoids some duplicate synchronization of I/O port base addresses. The
->>> naming of the function is inspired by its memory_region_set_address() pendant.
->>>
->>> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
->>> ---
->>>    docs/devel/migration.rst |  5 +++--
->>>    include/exec/ioport.h    |  2 ++
->>>    system/ioport.c          | 19 +++++++++++++++++++
->>>    3 files changed, 24 insertions(+), 2 deletions(-)
->>
->>
->>> +void portio_list_set_address(PortioList *piolist, uint32_t addr)
->>> +{
->>> +    MemoryRegionPortioList *mrpio;
->>> +    unsigned i, j;
->>> +
->>
->>        memory_region_transaction_begin();
->>
->>> +    for (i = 0; i < piolist->nr; ++i) {
->>> +        mrpio = container_of(piolist->regions[i], MemoryRegionPortioList, mr);
->>
->> Should we check mrpio->mr is disabled before changing its base address?
+> The set_btype_for_br call must be moved after the gen_a64_set_pc
+> call to ensure the current pc can still be computed.
 > 
-> Isn't that the responsibility of the guest? What should we do if the check fails?
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/arm/tcg/helper-a64.h    |  3 ++
+>   target/arm/tcg/translate.h     |  2 --
+>   target/arm/tcg/helper-a64.c    | 38 ++++++++++++++++++++
+>   target/arm/tcg/translate-a64.c | 64 ++++++++--------------------------
+>   4 files changed, 55 insertions(+), 52 deletions(-)
 
-What says the datasheet? At least we should log a GUEST_ERROR here.
-
-> 
->>
->>> +        memory_region_set_address(&mrpio->mr,
->>> +                                  mrpio->mr.addr - piolist->addr + addr);
->>> +        for (j = 0; mrpio->ports[j].size; ++j) {
->>> +            mrpio->ports[j].offset += addr - piolist->addr;
->>> +        }
->>
->>           memory_region_transaction_commit();
->>
->>> +    }
->>> +
->>> +    piolist->addr = addr;
->>> +}
->>> +
->>>    static void memory_region_portio_list_finalize(Object *obj)
->>>    {
->>>        MemoryRegionPortioList *mrpio = MEMORY_REGION_PORTIO_LIST(obj);
->>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
