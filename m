@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBCDDC3DA61
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:44:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D95F3C3DA61
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:44:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYjLR-00044C-Ni; Tue, 30 Jul 2024 05:40:37 -0400
+	id 1sYjLR-00043q-Jv; Tue, 30 Jul 2024 05:40:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYjLO-0003oo-2g
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:34 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1sYjLP-0003tp-7B
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:35 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYjLL-0000cd-RR
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:33 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3685afd0c56so2044926f8f.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:40:31 -0700 (PDT)
+ id 1sYjLN-0000dQ-CR
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:34 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3687f8fcab5so1997966f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:40:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722332430; x=1722937230; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722332432; x=1722937232; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=06XQlRqaiDDlTS/bWwdh4Kb7Kl/gVH3uLLyO2TZuWqM=;
- b=BtIIc3aRF1ZS62sZDoM5oACm8M+d9FWOPGsBpczLqKS0wnEATg0zm6luq8Rm7yi/nJ
- z/xm6UsrxrhMSmxePSX/cSKbG4BChChWvGJ1oDkYq0ORK2iJfe3R19ay6qcEM1PLB3eg
- j+wxKbBax2Jv18HtG/JSu5RHNP7Ap16he5hiWmtNVDLSciaDoKWcB50wmKGVp3RUxFdo
- WWIlY6gK1ntPuo35L4polyl9VSqs/NCuD/nbtvfvbnMyZjj9doUJwNob8YNlWn8cAGP3
- +PNgSY5aY+2n0C4rRht7Gza8PeWs+ymNikHMLgTyq/fuL+GWALgS+diYkQ1YIMJS4BGX
- Nrog==
+ :reply-to; bh=lVuR3ZLOLOt/AiMMURW3eUdzjUzZNpRvpqI9AHUBE2w=;
+ b=yPfzRwwXa0X/tc87ftEMJA0//2UCYz/gW8yn3/B+WvfCyAgsy2NlWx7JVUQqP6oUJo
+ Il2VCLX3teA+sPEVriJj7/8Ixi5vU1kWLMPLxFpfrZBmwN2FRvmEo8LXMiSYjc+jTaR2
+ zX2dFfbD4U8ms1ffXmcqeQuO4aGnDyI9V8TqJLHIvr4pP8VpzVv/a/IugHOOorIeUpiO
+ 3MZ5fFI6aLfCE97frjf+OODEBNnsrtixrzbHYEaDmLP0hXJ8ZW8tPJRMv+SbRGmgZwbP
+ Zxc/hdBPfe1E9pXlHXtUHalx865R8QHHBsG0+XZskUawZjsNKSMSKyzFw+ZDNSdObQ96
+ Ry5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722332430; x=1722937230;
+ d=1e100.net; s=20230601; t=1722332432; x=1722937232;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=06XQlRqaiDDlTS/bWwdh4Kb7Kl/gVH3uLLyO2TZuWqM=;
- b=Wwi9WuisV5xlyyUG2XpAFyIGRDMUlzEAVhj57oEpYFpg1SsXtIitrCtQazkJjx0JKE
- ChwyenjrgMZdjnAXP3TDiw4EwX2O0JQG65mGZqEMDbg6jMZXtBKIrbwi/AVeL0b3a2CT
- uQjx7EomnxVjujhyY5cYnp3w3qelfkPwxyuKJhrA2cwJ0U8lO0DTEV02BvLxMO+Tjh0B
- 18aVm2VPiep8RRKp4zl6guwRDGX1I691Z8lI0Yn8QcpiKstkp1YXI6zTWZ7yTYMtq9QK
- I18RjoFSN0toaWiy2lSSCuX4bmFJC69BesbbgxgDY7icoqHq2aZ+UBNTXOl6uXmzlnsI
- Qe3Q==
-X-Gm-Message-State: AOJu0Yw+lMaxcDG5Almge5RHubsyheMjXWcYgY6NMhJFOdjGcfHYokFo
- fBG/+u4YgtYTjXyY0kboGtdSWx9weRLgKrdlXSj07OYmgc7p2vkHsbuP/mUF2EIRy8VN4PFikzc
+ bh=lVuR3ZLOLOt/AiMMURW3eUdzjUzZNpRvpqI9AHUBE2w=;
+ b=NmMOqms/IS4oolttJRuAzkXoZuhT/5H/9RWXYxVXz+vaab1Tis5mLw6oDELqZqPylK
+ SzZkr8gOv1bs7gBflpdXl6zkkFKPdCWMrMErCBCfqgzbUavDHvrxaLjky9BTSxAR56vO
+ JP+Dl8wfTxD6vNmPzIg6K6zm3tT50WQxWM71KnYVzmH6xZc6gZmrNs6ckxNI24HTujg2
+ 4Y5gVF72KG9KeuTGpT8Nf3c3UdjzPYgoIoWnD4MZOh+l+IhoDREmjipVGvzEMbSBwFtd
+ E+pkar8QLBquQViKKI2dmwCY4vlye7wItv2m6h4cE2TZYFRQXqIOqY0cdqOC6g/LNkT5
+ PbFQ==
+X-Gm-Message-State: AOJu0YydkuiNaPySa0g6RfYZJWnPzubW/Z5nspE4+ldnDEie63+b6H/q
+ Mc481ovOxleuq7GYsoJWnmtePa1Px1DnvpAV7joXxSi+KwdKpuclcFF15s8RJxxLpMxC1Rg6HjT
  k
-X-Google-Smtp-Source: AGHT+IGGl+mT0nTJTrpVzaH0YKACvStMEWK3mqHsRzeM5Iowa1ZPPJBzxdbJUsotIkrym+8yWd7FTw==
-X-Received: by 2002:a05:6000:186c:b0:368:4e28:47f7 with SMTP id
- ffacd0b85a97d-36b5cefd51dmr8858749f8f.6.1722332430466; 
- Tue, 30 Jul 2024 02:40:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHg2dW/K/bkCA0b2pW4OxpUzaXwuxO+6wxsVEphb8AX+Cb8OluNUB6SQQbkSKgM6W1dhBjrXA==
+X-Received: by 2002:a05:6000:120f:b0:367:4383:d9b4 with SMTP id
+ ffacd0b85a97d-36b5d093e98mr6188697f8f.56.1722332431836; 
+ Tue, 30 Jul 2024 02:40:31 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b36862549sm14194974f8f.106.2024.07.30.02.40.30
+ ffacd0b85a97d-36b36862549sm14194974f8f.106.2024.07.30.02.40.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jul 2024 02:40:30 -0700 (PDT)
+ Tue, 30 Jul 2024 02:40:31 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/21] target/arm: Ignore SMCR_EL2.LEN and SVCR_EL2.LEN if EL2
- is not enabled
-Date: Tue, 30 Jul 2024 10:40:14 +0100
-Message-Id: <20240730094020.2758637-16-peter.maydell@linaro.org>
+Subject: [PULL 18/21] target/m68k: avoid shift into sign bit in
+ dump_address_map()
+Date: Tue, 30 Jul 2024 10:40:17 +0100
+Message-Id: <20240730094020.2758637-19-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240730094020.2758637-1-peter.maydell@linaro.org>
 References: <20240730094020.2758637-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,39 +95,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When determining the current vector length, the SMCR_EL2.LEN and
-SVCR_EL2.LEN settings should only be considered if EL2 is enabled
-(compare the pseudocode CurrentSVL and CurrentNSVL which call
-EL2Enabled()).
+Coverity complains (CID 1547592) that in dump_address_map() we take a
+value stored in a signed integer variable 'i' and shift it by enough
+to shift into the sign bit when we construct the value 'logical'.
+This isn't a bug for QEMU because we use -fwrapv semantics, but
+we can make Coverity happy by using an unsigned type for the loop
+variables i, j, k in this function.
 
-We were checking against ARM_FEATURE_EL2 rather than calling
-arm_is_el2_enabled(), which meant that we would look at
-SMCR_EL2/SVCR_EL2 when in Secure EL1 or Secure EL0 even if Secure EL2
-was not enabled.
+While we're changing the declaration of the variables, put them
+in the for() loops so their scope is the minimum required (a style
+now permitted by our coding style guide).
 
-Use the correct check in sve_vqm1_for_el_sm().
-
-Cc: qemu-stable@nongnu.org
+Resolves: Coverity CID 1547592
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240722172957.1041231-5-peter.maydell@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240723154207.1483665-1-peter.maydell@linaro.org
 ---
- target/arm/helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/m68k/helper.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index ce319572354..8fb4b474e83 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -7232,7 +7232,7 @@ uint32_t sve_vqm1_for_el_sm(CPUARMState *env, int el, bool sm)
-     if (el <= 1 && !el_is_in_host(env, el)) {
-         len = MIN(len, 0xf & (uint32_t)cr[1]);
+diff --git a/target/m68k/helper.c b/target/m68k/helper.c
+index 7967ad13cbf..4c85badd5d3 100644
+--- a/target/m68k/helper.c
++++ b/target/m68k/helper.c
+@@ -479,7 +479,6 @@ static void print_address_zone(uint32_t logical, uint32_t physical,
+ 
+ static void dump_address_map(CPUM68KState *env, uint32_t root_pointer)
+ {
+-    int i, j, k;
+     int tic_size, tic_shift;
+     uint32_t tib_mask;
+     uint32_t tia, tib, tic;
+@@ -502,19 +501,19 @@ static void dump_address_map(CPUM68KState *env, uint32_t root_pointer)
+         tic_shift = 12;
+         tib_mask = M68K_4K_PAGE_MASK;
      }
--    if (el <= 2 && arm_feature(env, ARM_FEATURE_EL2)) {
-+    if (el <= 2 && arm_is_el2_enabled(env)) {
-         len = MIN(len, 0xf & (uint32_t)cr[2]);
-     }
-     if (arm_feature(env, ARM_FEATURE_EL3)) {
+-    for (i = 0; i < M68K_ROOT_POINTER_ENTRIES; i++) {
++    for (unsigned i = 0; i < M68K_ROOT_POINTER_ENTRIES; i++) {
+         tia = address_space_ldl(cs->as, M68K_POINTER_BASE(root_pointer) + i * 4,
+                                 MEMTXATTRS_UNSPECIFIED, &txres);
+         if (txres != MEMTX_OK || !M68K_UDT_VALID(tia)) {
+             continue;
+         }
+-        for (j = 0; j < M68K_ROOT_POINTER_ENTRIES; j++) {
++        for (unsigned j = 0; j < M68K_ROOT_POINTER_ENTRIES; j++) {
+             tib = address_space_ldl(cs->as, M68K_POINTER_BASE(tia) + j * 4,
+                                     MEMTXATTRS_UNSPECIFIED, &txres);
+             if (txres != MEMTX_OK || !M68K_UDT_VALID(tib)) {
+                 continue;
+             }
+-            for (k = 0; k < tic_size; k++) {
++            for (unsigned k = 0; k < tic_size; k++) {
+                 tic = address_space_ldl(cs->as, (tib & tib_mask) + k * 4,
+                                         MEMTXATTRS_UNSPECIFIED, &txres);
+                 if (txres != MEMTX_OK || !M68K_PDT_VALID(tic)) {
 -- 
 2.34.1
 
