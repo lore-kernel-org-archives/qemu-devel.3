@@ -4,95 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BD1EC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 13:54:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3ED9C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 13:54:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYm5S-0003zv-SL; Tue, 30 Jul 2024 08:36:23 -0400
+	id 1sYn7C-0000cu-1n; Tue, 30 Jul 2024 09:42:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sYm5L-0003wo-6I
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 08:36:11 -0400
-Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1sYn6f-0000XD-RW
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 09:41:39 -0400
+Received: from mail-il1-x130.google.com ([2607:f8b0:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sYm4Y-0006HJ-7e
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 08:36:05 -0400
-Received: by mail-qt1-x82b.google.com with SMTP id
- d75a77b69052e-44fed0301b1so26161271cf.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 05:34:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1sYn3o-0006NO-4s
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 09:41:23 -0400
+Received: by mail-il1-x130.google.com with SMTP id
+ e9e14a558f8ab-3992195d08aso26635255ab.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 06:37:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722342844; x=1722947644;
- darn=nongnu.org; 
+ d=sifive.com; s=google; t=1722346601; x=1722951401; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=QdUh6HcQ4adt/jIrPH/oP+y+xFt8uHU7twjVYClZzvA=;
- b=rqKBmechFk47J51Pa0GLtdZFzUQ7DYoPjthEVu2kNhAZ+W861HHIbTyCvfangUnPTq
- 9W423HvQWCflYRA8jSju8oBzZadcAhr9CO3TB1n0ZgzgAwL/pYvms++Wr9pYxfuBmS2p
- MwQVWKTz/Qac4n1NGOCXdBQmvBkAtXDOyt/e1dd90Ohzmbtqg+nei5yYLCS6G1LtKet1
- W+0JBwDb61Ip+hu6IxcX9JwW+eCkMHV6DNQdMDjn/7bjrR5OLvlaFgMHWEImB2hpR7b7
- k7TrPzLvZ9lxUOhvT5KyZngX8blMZQc9DQpjJrPaMHRRN2Zqmjp/xYxLBKWns9s/vnHW
- mrRw==
+ bh=rGba+10zNXuurM/lwFKrTYh3r5c9cCPnSmp5y0KbeF0=;
+ b=KvA5v8/2y3tarBcSR+6y8vtrmQnTAuuz84/Bvq9JmXnj6Nijh/sxvOFj0DPuBFPLFf
+ CV5lkLJzIuaOq0HTeCUFwwNTHqN0IljWOFVVBlnzSu8xf7YSS14ivdJEtoHkxbOmFPn+
+ q0YB51Xiq9lkcahok8k+zhG7QfFA9M1D8FnTlVLi7meFKZ8LIm262JTFTSNvo/8ksbbF
+ TL0cbDNzwMHiTEGl/u0+PhNw1ti0W+ie1JgLp2dqDDJZ4NmKq0cnKGyAWRZoALjA+UcR
+ 00sdBSe2AAVzpNjMWdvmMK044XkwIc0hiU2cpSnaFNpiYZxSry5fLo1zrde1NqxnRZOT
+ 12JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722342844; x=1722947644;
+ d=1e100.net; s=20230601; t=1722346601; x=1722951401;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QdUh6HcQ4adt/jIrPH/oP+y+xFt8uHU7twjVYClZzvA=;
- b=w1a4oy8cIxtI0Tsvzf2m6upNdVvrX9OGtKsz/euhi8RcTBFs6X8Uogp77fouztJXas
- LibvZTvsPkAU9P4YgOzlC5hlILqMY7CJn+tPoPpFSsz6LhvFxSW3DAunwWTDqqmdd+To
- uNXPsf5GHe1wnTxHSdJOfmGjMPsUfR//jFkSmKgCMCFU0Hnr6S1dYRskm88OAhLD9X06
- nuVaaaueaj4vU6DsJZxOiiPQOIf266JTIFmuar8AMlCWyXkNKoqYDuY1K9aSVo30bpC9
- TOivmiNpFl8Upg/ufXF9s33fur/Myj9VJkqwPNnWkRy09hE3LnSeF1ZoCMLNJwl1OtQa
- 9P3g==
+ bh=rGba+10zNXuurM/lwFKrTYh3r5c9cCPnSmp5y0KbeF0=;
+ b=XrupnyO/XKhf+1Cm+QK6VxNcOGgmPhkvLlNVjJ1yn0xJ7IzfczDEmHcXR8R8wvPpRW
+ e3Ty6WQ3eBlMwVbnS/9mu1/6qv0XUZCeWEtnZcffNWNAEjBDsOGJUuvTTEwmZbxdeELW
+ OnRZUZI8LM8W791kM8cat7qITebVyiWfE+JuLIyi1foAJ9SOjpwNMjuWjDlgdTR7oNDC
+ 653t0VWc5bPfHpUiib8YT38tG/LZQ2++JV121h3pJh/EMVyUGaEm/P9SZ7OpaNizOSnA
+ J5kpkY+QIGZd0nary3HU79w1p+ZqQyTGAodiSyYTJJSaj9VFPTycPGZ5iI8LX0xSdru8
+ QekQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVgCD/k2GPYRKuxZbT7Hmt+TYahVJ0tbSeHIl+tdlKSFQj/GOkLeSTCR6dmSwAK6/Xtrjy3vNnCtkITEm2JDqWZykNHX5w=
-X-Gm-Message-State: AOJu0YypCj5bp/zUSkiY0723WxVolCRavAhX2QxHL6GE/izC6AeGPab+
- +kh8JLzl2VCCfXacwL88MziXnL0GXJ8gMep9p5vMCUl2JDObmvR7ucyEtoCt6BGhhBFZ9O8owgw
- LNfU=
-X-Google-Smtp-Source: AGHT+IHX8IkzkPLGLWjRdKmld2onQXR7oasW4hP1RqCvudyZIpeTWCTTbPigVfEnzusr6nsODJnCXQ==
-X-Received: by 2002:a17:903:1110:b0:1fd:8904:ecf6 with SMTP id
- d9443c01a7336-1ff048111b4mr92409535ad.21.1722342385384; 
- Tue, 30 Jul 2024 05:26:25 -0700 (PDT)
-Received: from [157.82.204.132] ([157.82.204.132])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fed7f2b80bsm100189425ad.205.2024.07.30.05.26.22
+ AJvYcCVElXZH7KFThB7yzxRjkD056uf0VzakeSRSx5jH9M8RkKXcl38cyJ880l5m3nnhB5D/jMOQiOzKjItokaNicqZ9uQRUaL4=
+X-Gm-Message-State: AOJu0YzvDob1RtDCqHnrhbvkjeSGrZfqJZ6AzhYyiB8NjXtt6RST3aJ2
+ ShtKgQL5Y3RysWgcM617ADrOC9c4bL7djAzmDysNb9oOpgLzegJyM+wLO+NlDQGljrMdQApszRD
+ CIVk=
+X-Google-Smtp-Source: AGHT+IH2r0rX+h58NGoqrHj47Usvq4GZ8Xplz2ngRvXteAg4Kq9DnbUIqpm+1jNlpMX9TzP7akrR4A==
+X-Received: by 2002:a05:6a20:7f94:b0:1c4:8da5:5825 with SMTP id
+ adf61e73a8af0-1c4a0e05515mr10370529637.0.1722346149859; 
+ Tue, 30 Jul 2024 06:29:09 -0700 (PDT)
+Received: from [100.64.0.1] (114-35-142-126.hinet-ip.hinet.net.
+ [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fed7d39489sm101615415ad.119.2024.07.30.06.29.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jul 2024 05:26:24 -0700 (PDT)
-Message-ID: <125b333d-36a3-49d2-84e5-76a5f9d23a48@daynix.com>
-Date: Tue, 30 Jul 2024 21:26:20 +0900
+ Tue, 30 Jul 2024 06:29:09 -0700 (PDT)
+Message-ID: <5b668c1b-24c9-4d54-80a5-cd92221b481c@sifive.com>
+Date: Tue, 30 Jul 2024 21:29:06 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/8] virtio-net: add support for SR-IOV emulation
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Yui Washizu <yui.washidu@gmail.com>
-References: <20240715-sriov-v5-0-3f5539093ffc@daynix.com>
- <20240730073712-mutt-send-email-mst@kernel.org>
+Subject: Re: [RFC PATCH v5 5/5] target/riscv: Inline unit-stride ld/st and
+ corresponding functions for performance
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20240717133936.713642-1-max.chou@sifive.com>
+ <20240717133936.713642-6-max.chou@sifive.com>
+ <abdab05e-3001-4a6f-afdc-05fc997657ee@linaro.org>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240730073712-mutt-send-email-mst@kernel.org>
+From: Max Chou <max.chou@sifive.com>
+In-Reply-To: <abdab05e-3001-4a6f-afdc-05fc997657ee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::82b;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-qt1-x82b.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, T_SPF_HELO_TEMPERROR=0.01,
- T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::130;
+ envelope-from=max.chou@sifive.com; helo=mail-il1-x130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,24 +106,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/07/30 20:37, Michael S. Tsirkin wrote:
-> On Mon, Jul 15, 2024 at 02:19:06PM +0900, Akihiko Odaki wrote:
->> Based-on: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
->> ("[PATCH v2 0/4] hw/pci: Convert rom_bar into OnOffAuto")
-> 
-> OK I will revert this for now. We'll try again after the release,
-> there will be time to address s390.
-> 
+On 2024/7/25 2:05 PM, Richard Henderson wrote:
+> On 7/17/24 23:39, Max Chou wrote:
+>> In the vector unit-stride load/store helper functions. the vext_ldst_us
+>> & vext_ldst_whole functions corresponding most of the execution time.
+>> Inline the functions can avoid the function call overhead to improve the
+>> helper function performance.
+>>
+>> Signed-off-by: Max Chou <max.chou@sifive.com>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/riscv/vector_helper.c | 56 +++++++++++++++++++-----------------
+>>   1 file changed, 30 insertions(+), 26 deletions(-)
+>
+> You'll want to mark vext_page_ldst_us similarly.
+>
+>
+> r~
+Yes, I'll mark vext_page_ldst_us at v6.
+Thanks.
 
-I'd like to know if anybody wants to use igb on a s390x machine 
-configured with libvirt. Such a configuration is already kind of broken, 
-and it is likely to require significant effort on both side of libvirt 
-and QEMU to fix it.
-
-As an alternative, I'm also introducing SR-IOV support to 
-virtio-net-pci. It does not suffer the same problem with igb thanks to 
-its flexible configuration mechanism.
-
-Regards,
-Akihiko Odaki
+Max.
 
