@@ -4,75 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFE5EC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 16:03:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D1D1C3DA70
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 16:03:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYpJj-0003Ee-Sw; Tue, 30 Jul 2024 12:03:15 -0400
+	id 1sYpJi-00037R-5M; Tue, 30 Jul 2024 12:03:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYpJh-00034b-I5
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:03:13 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1sYpJg-0002zN-9m
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:03:12 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYpJe-0000Fn-Mf
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:03:13 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3683178b226so2137778f8f.1
+ id 1sYpJe-0000FX-DL
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:03:11 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-428243f928cso7831595e9.3
  for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 09:03:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722355389; x=1722960189; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=J8QodGCyXxyaENLTKMO9Txf9gYtGANATnCYmDKKTwbU=;
- b=pMb9oii565HwEJFr2CgmyD59rMk/n9JX0/04HGWcG9Vad35iKrkX4tPZldxCiRzpi8
- 2k+otYTYcaIwTfpCv8rnkmE5t3Z6yVlYLf6Ryju5Ezeg7L2aUGx4KGEdYb9X5XnjoTOL
- qG9OsSZpj1gJTaTLlcqYLSvyTiwb89YEMMXTGf1UoB2RHTqqUmwiqLeeRBD6H8L2ws0h
- AnpQpze+djgnT69r41E3AqOR1WrkCGNTsGOi9fgVzXyFQJFOGO7as9iMF4nUY1BCfFdZ
- txm2iOwpAMpuffnYQePMOjXCkuZYi1ISkJpmbbWomjig2k758fziJ3aAv0zKmWOas9gF
- a4OQ==
+ d=linaro.org; s=google; t=1722355388; x=1722960188; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CTJ3lIzD5J0J/9BRp8dRBhOaBeOhbvt/dIYTSUl24hI=;
+ b=LBafKxqPsC3YKwCr9Dp/jMy5Tbl3oC17i9MeuS2sCYxt70UczYnnz+pJg1pZRJja4A
+ a/4tAVkaIhd9fL/xMR3NHEwhttp3IfQGenXzaXmTxq5hKPqmg7jE+hRBBqIVdS6bVxr/
+ YyD1htG7jyLjRS1B/D49LgwuctAcLzbsAsJ04WOTUP6h4AmZO81Gpd/KGmGC5mQ4sMna
+ GwqkeT4VqlS5se/LF6JxkiYO5LSKpOsY88+ECigf3mUac1WxBQ2iPs+idZZBtxj9K39U
+ YkO+YjVXwuTiUCHecw9EhfthfGktNfRCIxZxwXNzBbtUk7EsAC+fo5CTkHPjGcyHH2UU
+ IpGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722355389; x=1722960189;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=J8QodGCyXxyaENLTKMO9Txf9gYtGANATnCYmDKKTwbU=;
- b=K0sVzZ21kB8TPABWAKEttsFqOe0DZagbW/8yOq1V/7jUEE5kPsYII1d5mZEE/r1YYF
- ot8v1vOgKpYXyczWp61AjKNZKLc54u+IqAtSSQDW2ZH/fpqYV78GDjzP0tuz2YJY4C9X
- o8K95d+FT+vRQ154nR3t1Fq30njFdqkX6dOuLsPgXv/dDGMCnq4Lm53Z6Ut9NzsmZ9UB
- 0AdPPeN2ad/OwJDDOYJAH0eWpbjmCoGKQJHd+4cAf9n8O4eYg2CtJMuzY9cnHrYkwoRv
- eyQaEvUQJFeHQjjHymDX5BXY9fzmakC2D80IerT2CXiAOUcgInbxLE16IRrCxqit3Y/d
- Qfig==
+ d=1e100.net; s=20230601; t=1722355388; x=1722960188;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=CTJ3lIzD5J0J/9BRp8dRBhOaBeOhbvt/dIYTSUl24hI=;
+ b=wVhIVqwAXcte6+PInOt7a5qsNuUj7Bv+Sp+sGBsxIGELDNmU67Dbia7OpTfP/da+7S
+ wpPJGVkKVn20qfZ25giSv/RyeXkaX8y2VKedMc2fw4K5R/v/NhhL8yCVnnIBRvPVwoJL
+ 8PwNXSyUxcHyFyBSEMBKnxkJH63DGwc5W5Sp4yjxPgE2Ej2LM0lgZmq028P53z1gL1F8
+ bJ7vW4LrEKYGXhFy3lyvMWR3TJqfwOfWt6MJ3zuYOQU8wpI3zIDxqDEH6KYBgoY74N+S
+ 12L5UOt12XeAarO0f78PPusXEqKFdXad8XNZsFlyYSJMeLOQcPrut0gbtBbsx6MOgV5s
+ SA3A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXeG2Lltiy0+eIt7PputrSC4QClnrwTM7umWZZKpa/apSOLIr/lH7zstZhzUpR7DcToH0yt7+qJbk+wnwGlKt3G6l7QdNQ=
-X-Gm-Message-State: AOJu0YyxyA1ayP0VNcYsY3knFPd2vyuRTOkiTlV+Mpa6WpeHLLImfehu
- fZ56S/qtO0dFuegDr/KMoKG+i1OSyiUVYMC+EPKh3YJxHaloK1uECw3kRXZSybUHCK9hBpBlTLW
- f
-X-Google-Smtp-Source: AGHT+IGv6KAM2NIpBdX8j2d+sWyxJ7dI7m6Wx8zNbzHKmN0Rg8GfpvxIx+dOdVBRmX6AUPGoaLvV0g==
-X-Received: by 2002:a5d:698b:0:b0:367:9088:fecd with SMTP id
- ffacd0b85a97d-36b5cee2e4emr7735549f8f.7.1722355389158; 
- Tue, 30 Jul 2024 09:03:09 -0700 (PDT)
+ AJvYcCX4vnQorDA0+7Lgug4ZXY8NQFTqGFSNmamLf4l/h+GWrzd1QI6u72Gx2pztsMLqTHiu/haWpf3pzmqtTsMIXurPHbMfNtU=
+X-Gm-Message-State: AOJu0YxzNlhux6fzCbsVtA28q9A3Qg+Jldhu2zGWjLQzv2HBf5NaW06v
+ CFUxIjpr3ctEE7XVmCpT3Zw/W31qB/TPz+B4vKmWBKh5wqsbUdh+am9PIHCeOqs=
+X-Google-Smtp-Source: AGHT+IFTNmfQd6+vTBOQ2/N7wMRLY/09wzlk2Wx5kSHlWAEv6h8zDV1THI8jEvQb2XObNgB4IYfqcQ==
+X-Received: by 2002:a05:600c:3b07:b0:427:abed:3608 with SMTP id
+ 5b1f17b1804b1-42811d7ff92mr78410815e9.5.1722355388054; 
+ Tue, 30 Jul 2024 09:03:08 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b3685810csm15001676f8f.71.2024.07.30.09.03.08
+ ffacd0b85a97d-36b3685810csm15001676f8f.71.2024.07.30.09.03.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jul 2024 09:03:08 -0700 (PDT)
+ Tue, 30 Jul 2024 09:03:07 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 2/8] target/arm: Pass env pointer through to sme_bfmopa helper
-Date: Tue, 30 Jul 2024 17:03:00 +0100
-Message-Id: <20240730160306.2959745-3-peter.maydell@linaro.org>
+Subject: [PATCH 0/8] target/arm: Implement FEAT_EBF16
+Date: Tue, 30 Jul 2024 17:02:58 +0100
+Message-Id: <20240730160306.2959745-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240730160306.2959745-1-peter.maydell@linaro.org>
-References: <20240730160306.2959745-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,64 +91,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To implement the FEAT_EBF16 semantics, we are going to need
-the CPUARMState env pointer in every helper function which calls
-bfdotadd().
+This patchset implements the optional FEAT_EBF16 architectural feature.
+This feature only does one thing: it adds a new bit FPCR.EBF to the
+floating point control register, so that the guest can enable a
+slightly different set of semantics for the bfloat16 dot-product
+instructions (BFDOT, BFMMLA, BFMOPA, BFMOPS; also BFVDOT when we
+eventually implement SME2). When the bit is set:
+ * they honour FPCR.RMode to set the rounding mode
+ * they honour the FPCR bits controlling flushing of denormals
+ * they can generate default NaN and infinity as intermediate
+   sum-of-products
+ * the intermediate rounding handling changes
 
-Pass the env pointer through from generated code to the sme_bfmopa
-helper. (We'll add the code that uses it when we've adjusted
-all the helpers to have access to the env pointer.)
+In the Arm ARM these changes only affect the pseudocode BFDotAdd
+function, which in QEMU we implement in bfdotadd().
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/tcg/helper-sme.h    | 4 ++--
- target/arm/tcg/sme_helper.c    | 4 ++--
- target/arm/tcg/translate-sme.c | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+A lot of this series is plumbing -- we need the CPU env pointer
+now in the helper functions which call bfdotadd(), so we need
+to pass it through from the generated code. Once we have it,
+we can refactor the callsites in a manner suggested by RTH,
+so that we have bfdotadd() specialized for EBF=0 and bfdotadd_ebf()
+specialized for EBF=1. This lets us hoist the setup out of the
+inner loop:
+   float_status fpst, fpst_odd;
+   if (is_ebf(env, &fpst, &fpst_odd)) {
+       for (...) {
+           x = bfdotadd_ebf(..., &fpst, &fpst_odd);
+       }
+   } else {
+       for (...) {
+           x = bfdotadd(..., &fpst);
+       }
+   }
 
-diff --git a/target/arm/tcg/helper-sme.h b/target/arm/tcg/helper-sme.h
-index 659867a1faf..f12d903aa44 100644
---- a/target/arm/tcg/helper-sme.h
-+++ b/target/arm/tcg/helper-sme.h
-@@ -126,8 +126,8 @@ DEF_HELPER_FLAGS_7(sme_fmopa_s, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_7(sme_fmopa_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
--DEF_HELPER_FLAGS_6(sme_bfmopa, TCG_CALL_NO_RWG,
--                   void, ptr, ptr, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_7(sme_bfmopa, TCG_CALL_NO_RWG,
-+                   void, env, ptr, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_6(sme_smopa_s, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_6(sme_umopa_s, TCG_CALL_NO_RWG,
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index 2af2b957cb6..f172225b2f2 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -1080,8 +1080,8 @@ void HELPER(sme_fmopa_h)(CPUARMState *env,
-     }
- }
- 
--void HELPER(sme_bfmopa)(void *vza, void *vzn, void *vzm, void *vpn,
--                        void *vpm, uint32_t desc)
-+void HELPER(sme_bfmopa)(CPUARMState *env, void *vza, void *vzn, void *vzm,
-+                        void *vpn, void *vpm, uint32_t desc)
- {
-     intptr_t row, col, oprsz = simd_maxsz(desc);
-     uint32_t neg = simd_data(desc) * 0x80008000u;
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 8e9332f1898..bcb502feb05 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -355,7 +355,7 @@ TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a,
-            MO_64, FPST_FPCR, gen_helper_sme_fmopa_d)
- 
- /* TODO: FEAT_EBF16 */
--TRANS_FEAT(BFMOPA, aa64_sme, do_outprod, a, MO_32, gen_helper_sme_bfmopa)
-+TRANS_FEAT(BFMOPA, aa64_sme, do_outprod_env, a, MO_32, gen_helper_sme_bfmopa)
- 
- TRANS_FEAT(SMOPA_s, aa64_sme, do_outprod, a, MO_32, gen_helper_sme_smopa_s)
- TRANS_FEAT(UMOPA_s, aa64_sme, do_outprod, a, MO_32, gen_helper_sme_umopa_s)
+The implementation itself requires a fused paired-multiply-and-add;
+we use the same trick we already have in f16_dotadd() to implement
+this.
+
+Not intended for 9.1, obviously, but I figured since I'd written
+and tested it I might as well send it out to the list.
+
+Based-on: <20240730155819.2958924-1-peter.maydell@linaro.org>
+("target/arm: Handle denormals correctly for FMOPA (widening)")
+both for textual reasons and because that patch introduces the
+do_outprod_env() utility function we use here.
+
+thanks
+-- PMM
+
+Peter Maydell (8):
+  target/arm: Allow setting the FPCR.EBF bit for FEAT_EBF16
+  target/arm: Pass env pointer through to sme_bfmopa helper
+  target/arm: Pass env pointer through to gvec_bfdot helper
+  target/arm: Pass env pointer through to gvec_bfdot_idx helper
+  target/arm: Pass env pointer through to gvec_bfmmla helper
+  target/arm: Prepare bfdotadd() callers for FEAT_EBF support
+  target/arm: Implement FPCR.EBF=1 semantics for bfdotadd()
+  target/arm: Enable FEAT_EBF16 in the "max" CPU
+
+ docs/system/arm/emulation.rst   |   1 +
+ target/arm/cpu-features.h       |   5 +
+ target/arm/cpu.h                |   1 +
+ target/arm/helper.h             |  12 +-
+ target/arm/tcg/helper-sme.h     |   4 +-
+ target/arm/tcg/vec_internal.h   |  37 +++++-
+ target/arm/tcg/cpu64.c          |   4 +-
+ target/arm/tcg/sme_helper.c     |  78 ++++++++----
+ target/arm/tcg/translate-a64.c  |  40 ++++++-
+ target/arm/tcg/translate-neon.c |  43 ++++++-
+ target/arm/tcg/translate-sme.c  |   3 +-
+ target/arm/tcg/translate-sve.c  |  25 +++-
+ target/arm/tcg/vec_helper.c     | 202 +++++++++++++++++++++++++-------
+ target/arm/vfp_helper.c         |   8 +-
+ 14 files changed, 371 insertions(+), 92 deletions(-)
+
 -- 
 2.34.1
 
