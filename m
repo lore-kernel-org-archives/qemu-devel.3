@@ -4,101 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 913E1C3DA49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4662C3DA7E
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 14:35:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYmMx-0005Yp-6M; Tue, 30 Jul 2024 08:54:32 -0400
+	id 1sYnvx-0000m7-O4; Tue, 30 Jul 2024 10:34:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
- id 1sYmMc-0005W0-TX
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 08:54:05 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yuri.benditovich@daynix.com>)
- id 1sYmLv-0000kS-2I
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 08:53:56 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1fc566ac769so26390875ad.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 05:52:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722343921; x=1722948721;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=g/JSVeTJoLTcIvrAA9WELotBMxiMV0BbTZNVmGZiCH4=;
- b=K+Y/jSn7Hj4SceApM9UlJYWkIfGlyVb7IsUpwMLKJFGjAskbmKOzNmAeNEzm4mor4k
- Og4jjd7PHUKmXc1vJ4jBC2FYJoFzj865GQNrok1CbISD+ZNF+H5fKqpRRFnQeymvwRtm
- SrJWiDUxk02Ej+f+CAJo1WVbrAX2NkFA/jFe57DErj6f8E93RsJehKYIwGpAL7aWhVI8
- PtDXTruCc7KMtXJSwe7RSsrK1pjPDzeJJq6scJ20bG9AXkoOFkLTqeRdhnm/yqDieuCh
- N/va65Uz5YFPVb2rxGoEgvBqrSL6iSMc9WYp1TK+qufuGzz9cqw64PV05r5LSG4ZQMee
- WQ1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722343921; x=1722948721;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=g/JSVeTJoLTcIvrAA9WELotBMxiMV0BbTZNVmGZiCH4=;
- b=EJLcC6csiCc0GDofGisrnnGUv+PAB1R1lkjYuwPTHo/KLabyp0/kRKcYl9g7V/Dj/I
- SoamSwGu0/nI4g2+pmcg2X3xkdhLcXwiMGzV8HVNE7rkaz6QKOebKhVhfESWDMfas+6u
- GMol0ooRcKI7Cf6HtWCB6UbxsOrj43pJkiITYCKmHDtb78eibmYL1Sgka2MzAHBHQy54
- DYSuxsCh/QYzbFAGbU0YMMgsiIoWbf18Bkviarzqz4VvcQyCXWiIf1H7neNEAbfqx03Q
- HLrq4qL4vHdHlBx32Ku+8xjVfITzQjbINOrazeTWxzAiBR/0dr6Zos3ThfFPmHO3zhR1
- vjPw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhuuaJ1mpjQsGU9d7MiEE3ABgNes+UDces6jNM9zzmLPJz3fiXNg+ALwGZaSrULBRSNvASW0xOR2xp7IWLgdGlRUbU5Nk=
-X-Gm-Message-State: AOJu0YwLCeSQEB3xev/6372KmqZg/If3x1OFONudPcl1E5l0lWRvPZL9
- s5LagtHATTJ9sjoP6TrowRPOCnqXufjGIp7RyYAunrsrADi1+tIlH0fyenwSeWXXAzcxM/VWhdd
- s2bv3CZEBT5Yu/iTo3Gl3AO3Ozdqt12CksFH08ZzJ5spECaBlq3A=
-X-Google-Smtp-Source: AGHT+IF+lE/kP92Ub8FxDYo25ZVv6agxQJQCoOR6hOdAHcIhIjweVAGv19G0hgKh8SBEcQddmgEw9TUDCpsv7fICOmY=
-X-Received: by 2002:ac8:5953:0:b0:447:f5d2:7c5f with SMTP id
- d75a77b69052e-45004f4e50emr140532571cf.53.1722340366593; Tue, 30 Jul 2024
- 04:52:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berto@igalia.com>)
+ id 1sYnvw-0000hl-B0; Tue, 30 Jul 2024 10:34:36 -0400
+Received: from fanzine.igalia.com ([178.60.130.6] helo=fanzine2.igalia.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berto@igalia.com>)
+ id 1sYnvs-0004RT-46; Tue, 30 Jul 2024 10:34:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; 
+ s=20170329;
+ h=Content-Transfer-Encoding:MIME-Version:Message-Id:Date:Subject:
+ Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:Content-Description:
+ Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+ In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive;
+ bh=H7Mea8AhJANtTLIOkwdIE/zKAkIOn2Va3ejkl13aTxc=; b=WTfX3nIaWuigIeEzOKQvfPTCfI
+ 0j13ZlbzSiMouQEoJBgvgnJh9HGH6bh28cEUW+svhQWTAs/bKm+WYuTm3HUqvLyDZNwSM/53qqS/c
+ ElB7tjFtSYJ8/VtI+z/9gYputjuSFCbkKB9XlK+tXhErKYjLg4izGYaW/S3cSZ4IVZPc8PEVoWHer
+ U+YqnBc2Nuf+6pwaFHziTk8OW8FbZPU7J5tsSS1KiZqBSCsqqPh+7ZlA4bqGmX+wojFp5s6LDXuit
+ m1mVZOBmrYXd165Zv/8YhUv8uEg4v1Xa7dl2sAbGfoiCErjZMJKBZhLVfNMbuD2hijsVixGh6UoP9
+ 9fc1c/vQ==;
+Received: from ip40.wifi.igalia.com ([192.168.12.40] helo=zeus.local)
+ by fanzine2.igalia.com with esmtpsa 
+ (Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+ id 1sYne3-005cfB-HP; Tue, 30 Jul 2024 16:16:07 +0200
+Received: from berto by zeus.local with local (Exim 4.96)
+ (envelope-from <berto@igalia.com>) id 1sYne3-000FiW-0u;
+ Tue, 30 Jul 2024 16:16:07 +0200
+From: Alberto Garcia <berto@igalia.com>
+To: qemu-devel@nongnu.org
+Cc: Alberto Garcia <berto@igalia.com>, qemu-block@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Czenczek <hreitz@redhat.com>, Nir Soffer <nsoffer@redhat.com>,
+ Madeeha Javed <javed@igalia.com>
+Subject: [PATCH v4] scripts/qcow2-to-stdout.py: Add script to write qcow2
+ images to stdout
+Date: Tue, 30 Jul 2024 16:15:52 +0200
+Message-Id: <20240730141552.60404-1-berto@igalia.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-References: <ZqLPLBnbfD5r6z7D@x1n>
- <20240726020656-mutt-send-email-mst@kernel.org>
- <775ff713-f7d3-4fdc-8ba0-4ebde577040d@redhat.com>
- <ZqNiwmy29dxdyMA0@redhat.com>
- <ZqO2HvFJ8v7hZFOd@x1n> <ZqO7cR-UiGpX2rk0@redhat.com> <ZqQLbGxEW3XT7qL-@x1n>
- <5a74c1d4-3c33-42d1-8abf-e3aab71e13a5@daynix.com>
- <CACGkMEtgPvGu9=n6nQqDwkV77X4830PQwv-E4m-+93Y8OhoVnQ@mail.gmail.com>
- <f1d0621b-84f0-4c2c-b4f4-f8ebd494ec48@daynix.com> <ZqenSQHzniN14g7G@x1n>
- <720d7d64-2b65-48cc-afa7-3b5ebc17e283@daynix.com>
- <CACGkMEtPwdddgnmSqzS92Z7yNDfu_B8xaFujy9PqMks7m8jqiA@mail.gmail.com>
- <688dd596-888f-49e1-a19c-0d62d417cce4@daynix.com>
- <CACGkMEvgYTjQ5orDJMbmE8-Kwqko9dFPerTnxsRgs0EtnmKKTQ@mail.gmail.com>
- <bc2ef42e-9003-4a3e-aee5-e65d34f205bf@daynix.com>
- <CACGkMEvZgihjP3o3o6iLVJ69hHVZDoZdn3rJ5wohK+OEceStcA@mail.gmail.com>
- <90f29246-f63f-4cc4-935a-bb874ecae1a0@daynix.com>
- <CACGkMEtbeWde4_AbEZyTmShaXyo-WwAt7=o1=uimD0zmrKK8pg@mail.gmail.com>
- <87ab434e-ae8c-4170-9d7f-8875ecf915c3@daynix.com>
-In-Reply-To: <87ab434e-ae8c-4170-9d7f-8875ecf915c3@daynix.com>
-From: Yuri Benditovich <yuri.benditovich@daynix.com>
-Date: Tue, 30 Jul 2024 14:52:34 +0300
-Message-ID: <CAOEp5Ofhw-ELa+7QiLZBUd9NGUBOdF3ObstTS32pya=FyaNO9Q@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Jason Wang <jasowang@redhat.com>, Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- eduardo@habkost.net, 
- marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com, 
- dmitry.fleytman@gmail.com, sriram.yagnaraman@est.tech, sw@weilnetz.de, 
- qemu-devel@nongnu.org, yan@daynix.com, Fabiano Rosas <farosas@suse.de>, 
- devel@lists.libvirt.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: none client-ip=2607:f8b0:4864:20::62b;
- envelope-from=yuri.benditovich@daynix.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.60.130.6; envelope-from=berto@igalia.com;
+ helo=fanzine2.igalia.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,316 +75,532 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-@Akihiko Odaki The RSC is supported with vhost and without vhost
-The 'in-qemu RSC' is related to VIRTIO_NET_F_RSC_EXT feature, it is
-intended for one specific WHCK test only and should not be used in any
-functional setup.
-When it is used the vhost should be off
+This tool converts a disk image to qcow2, writing the result directly
+to stdout. This can be used for example to send the generated file
+over the network.
 
-On Tue, Jul 30, 2024 at 1:23=E2=80=AFPM Akihiko Odaki <akihiko.odaki@daynix=
-.com> wrote:
->
-> On 2024/07/30 12:45, Jason Wang wrote:
-> > On Tue, Jul 30, 2024 at 11:29=E2=80=AFAM Akihiko Odaki <akihiko.odaki@d=
-aynix.com> wrote:
-> >>
-> >> On 2024/07/30 12:17, Jason Wang wrote:
-> >>> On Tue, Jul 30, 2024 at 11:12=E2=80=AFAM Akihiko Odaki <akihiko.odaki=
-@daynix.com> wrote:
-> >>>>
-> >>>> On 2024/07/30 12:03, Jason Wang wrote:
-> >>>>> On Tue, Jul 30, 2024 at 10:57=E2=80=AFAM Akihiko Odaki <akihiko.oda=
-ki@daynix.com> wrote:
-> >>>>>>
-> >>>>>> On 2024/07/30 11:04, Jason Wang wrote:
-> >>>>>>> On Tue, Jul 30, 2024 at 12:43=E2=80=AFAM Akihiko Odaki <akihiko.o=
-daki@daynix.com> wrote:
-> >>>>>>>>
-> >>>>>>>> On 2024/07/29 23:29, Peter Xu wrote:
-> >>>>>>>>> On Mon, Jul 29, 2024 at 01:45:12PM +0900, Akihiko Odaki wrote:
-> >>>>>>>>>> On 2024/07/29 12:50, Jason Wang wrote:
-> >>>>>>>>>>> On Sun, Jul 28, 2024 at 11:19=E2=80=AFPM Akihiko Odaki <akihi=
-ko.odaki@daynix.com> wrote:
-> >>>>>>>>>>>>
-> >>>>>>>>>>>> On 2024/07/27 5:47, Peter Xu wrote:
-> >>>>>>>>>>>>> On Fri, Jul 26, 2024 at 04:17:12PM +0100, Daniel P. Berrang=
-=C3=A9 wrote:
-> >>>>>>>>>>>>>> On Fri, Jul 26, 2024 at 10:43:42AM -0400, Peter Xu wrote:
-> >>>>>>>>>>>>>>> On Fri, Jul 26, 2024 at 09:48:02AM +0100, Daniel P. Berra=
-ng=C3=A9 wrote:
-> >>>>>>>>>>>>>>>> On Fri, Jul 26, 2024 at 09:03:24AM +0200, Thomas Huth wr=
-ote:
-> >>>>>>>>>>>>>>>>> On 26/07/2024 08.08, Michael S. Tsirkin wrote:
-> >>>>>>>>>>>>>>>>>> On Thu, Jul 25, 2024 at 06:18:20PM -0400, Peter Xu wro=
-te:
-> >>>>>>>>>>>>>>>>>>> On Tue, Aug 01, 2023 at 01:31:48AM +0300, Yuri Bendit=
-ovich wrote:
-> >>>>>>>>>>>>>>>>>>>> USO features of virtio-net device depend on kernel a=
-bility
-> >>>>>>>>>>>>>>>>>>>> to support them, for backward compatibility by defau=
-lt the
-> >>>>>>>>>>>>>>>>>>>> features are disabled on 8.0 and earlier.
-> >>>>>>>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>>>>>>> Signed-off-by: Yuri Benditovich <yuri.benditovich@da=
-ynix.com>
-> >>>>>>>>>>>>>>>>>>>> Signed-off-by: Andrew Melnychecnko <andrew@daynix.co=
-m>
-> >>>>>>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>>>>>> Looks like this patch broke migration when the VM sta=
-rts on a host that has
-> >>>>>>>>>>>>>>>>>>> USO supported, to another host that doesn't..
-> >>>>>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>>>>> This was always the case with all offloads. The answer=
- at the moment is,
-> >>>>>>>>>>>>>>>>>> don't do this.
-> >>>>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>>>> May I ask for my understanding:
-> >>>>>>>>>>>>>>>>> "don't do this" =3D don't automatically enable/disable =
-virtio features in QEMU
-> >>>>>>>>>>>>>>>>> depending on host kernel features, or "don't do this" =
-=3D don't try to migrate
-> >>>>>>>>>>>>>>>>> between machines that have different host kernel featur=
-es?
-> >>>>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>>>>> Long term, we need to start exposing management APIs
-> >>>>>>>>>>>>>>>>>> to discover this, and management has to disable unsupp=
-orted features.
-> >>>>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>>>> Ack, this likely needs some treatments from the libvirt=
- side, too.
-> >>>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>>> When QEMU automatically toggles machine type featuers ba=
-sed on host
-> >>>>>>>>>>>>>>>> kernel, relying on libvirt to then disable them again is=
- impractical,
-> >>>>>>>>>>>>>>>> as we cannot assume that the libvirt people are using kn=
-ows about
-> >>>>>>>>>>>>>>>> newly introduced features. Even if libvirt is updated to=
- know about
-> >>>>>>>>>>>>>>>> it, people can easily be using a previous libvirt releas=
-e.
-> >>>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>>> QEMU itself needs to make the machine types do that they=
- are there
-> >>>>>>>>>>>>>>>> todo, which is to define a stable machine ABI.
-> >>>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>>> What QEMU is missing here is a "platform ABI" concept, t=
-o encode
-> >>>>>>>>>>>>>>>> sets of features which are tied to specific platform gen=
-erations.
-> >>>>>>>>>>>>>>>> As long as we don't have that we'll keep having these br=
-oken
-> >>>>>>>>>>>>>>>> migration problems from machine types dynamically changi=
-ng instead
-> >>>>>>>>>>>>>>>> of providing a stable guest ABI.
-> >>>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>> Any more elaboration on this idea?  Would it be easily fe=
-asible in
-> >>>>>>>>>>>>>>> implementation?
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> In terms of launching QEMU I'd imagine:
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>>          $QEMU -machine pc-q35-9.1 -platform linux-6.9 ...=
-args...
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> Any virtual machine HW features which are tied to host ker=
-nel features
-> >>>>>>>>>>>>>> would have their defaults set based on the requested -plat=
-form. The
-> >>>>>>>>>>>>>> -machine will be fully invariant wrt the host kernel.
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> You would have -platform hlep to list available platforms,=
- and
-> >>>>>>>>>>>>>> corresonding QMP "query-platforms" command to list what pl=
-atforms
-> >>>>>>>>>>>>>> are supported on a given host OS.
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> Downstream distros can provide their own platforms definit=
-ions
-> >>>>>>>>>>>>>> (eg "linux-rhel-9.5") if they have kernels whose feature s=
-et
-> >>>>>>>>>>>>>> diverges from upstream due to backports.
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> Mgmt apps won't need to be taught about every single littl=
-e QEMU
-> >>>>>>>>>>>>>> setting whose default is derived from the kernel. Individu=
-al
-> >>>>>>>>>>>>>> defaults are opaque and controlled by the requested platfo=
-rm.
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> Live migration has clearly defined semantics, and mgmt app=
- can
-> >>>>>>>>>>>>>> use query-platforms to validate two hosts are compatible.
-> >>>>>>>>>>>>>>
-> >>>>>>>>>>>>>> Omitting -platform should pick the very latest platform th=
-at is
-> >>>>>>>>>>>>>> cmpatible with the current host (not neccessarily the late=
-st
-> >>>>>>>>>>>>>> platform built-in to QEMU).
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> This seems to add one more layer to maintain, and so far I =
-don't know
-> >>>>>>>>>>>>> whether it's a must.
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> To put it simple, can we simply rely on qemu cmdline as "th=
-e guest ABI"?  I
-> >>>>>>>>>>>>> thought it was mostly the case already, except some extreme=
-ly rare
-> >>>>>>>>>>>>> outliers.
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> When we have one host that boots up a VM using:
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>>          $QEMU1 $cmdline
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> Then another host boots up:
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>>          $QEMU2 $cmdline -incoming XXX
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> Then migration should succeed if $cmdline is exactly the sa=
-me, and the VM
-> >>>>>>>>>>>>> can boot up all fine without errors on both sides.
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> AFAICT this has nothing to do with what kernel is underneat=
-h, even not
-> >>>>>>>>>>>>> Linux?  I think either QEMU1 / QEMU2 has the option to fail=
-.  But if it
-> >>>>>>>>>>>>> didn't, I thought the ABI should be guaranteed.
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> That's why I think this is a migration violation, as 99.99%=
- of other device
-> >>>>>>>>>>>>> properties should be following this rule.  The issue here i=
-s, we have the
-> >>>>>>>>>>>>> same virtio-net-pci cmdline on both sides in this case, but=
- the ABI got
-> >>>>>>>>>>>>> break.
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>> That's also why I was suggesting if the property contribute=
-s to the guest
-> >>>>>>>>>>>>> ABI, then AFAIU QEMU needs to:
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>>          - Firstly, never quietly flipping any bit that aff=
-ects the ABI...
-> >>>>>>>>>>>>>
-> >>>>>>>>>>>>>          - Have a default value of off, then QEMU will alwa=
-ys allow the VM to boot
-> >>>>>>>>>>>>>            by default, while advanced users can opt-in on n=
-ew features.  We can't
-> >>>>>>>>>>>>>            make this ON by default otherwise some VMs can a=
-lready fail to boot,
-> >>>>>>>>>>>>
-> >>>>>>>>>>>> It may not be necessary the case that old features are suppo=
-rted by
-> >>>>>>>>>>>> every systems. In an extreme case, a user may migrate a VM f=
-rom Linux to
-> >>>>>>>>>>>> Windows, which probably doesn't support any offloading at al=
-l. A more
-> >>>>>>>>>>>> convincing scenario is RSS offloading with eBPF; using eBPF =
-requires a
-> >>>>>>>>>>>> privilege so we cannot assume it is always available even on=
- the latest
-> >>>>>>>>>>>> version of Linux.
-> >>>>>>>>>>>
-> >>>>>>>>>>> I don't get why eBPF matters here. It is something that is no=
-t noticed
-> >>>>>>>>>>> by the guest and we have a fallback anyhow.
-> >>>>>>>>
-> >>>>>>>> It is noticeable for the guest, and the fallback is not effectiv=
-e with
-> >>>>>>>> vhost.
-> >>>>>>>
-> >>>>>>> It's a bug then. Qemu can fallback to tuntap if it sees issues in=
- vhost.
-> >>>>>>
-> >>>>>> We can certainly fallback to in-QEMU RSS by disabling vhost, but I=
- would
-> >>>>>> not say lack of such fallback is a bug.
-> >>>>>
-> >>>>> Such fallback is by design since the introduction of vhost.
-> >>>>>
-> >>>>>> We don't provide in-QEMU
-> >>>>>> fallback for other offloads.
-> >>>>>
-> >>>>> Yes but what I want to say is that eBPF RSS is different from those
-> >>>>> segmentation offloads. And technically, Qemu can do fallback for
-> >>>>> offloads (as RSC did).
-> >>>>
-> >>>> Well, I couldn't find any code disabling vhost for the in-QEMU RSC
-> >>>> implementation.
-> >>>
-> >>> It should be a bug (and I remember we disabled vhost when the patches
-> >>> were merged). Have you tested it in a guest to see if it can see RSC
-> >>> when vhost is enabled?
-> >>>
-> >>> I suspect we need to add the RSC bit into current kernel_feature_bits=
-:
-> >>>
-> >>> /* Features supported by host kernel. */
-> >>> static const int kernel_feature_bits[] =3D {
-> >>>       VIRTIO_F_NOTIFY_ON_EMPTY,
-> >>>       VIRTIO_RING_F_INDIRECT_DESC,
-> >>>       VIRTIO_RING_F_EVENT_IDX,
-> >>>       VIRTIO_NET_F_MRG_RXBUF,
-> >>>       VIRTIO_F_VERSION_1,
-> >>>       VIRTIO_NET_F_MTU,
-> >>>       VIRTIO_F_IOMMU_PLATFORM,
-> >>>       VIRTIO_F_RING_PACKED,
-> >>>       VIRTIO_F_RING_RESET,
-> >>>       VIRTIO_NET_F_HASH_REPORT,
-> >>>       VHOST_INVALID_FEATURE_BIT
-> >>> };
-> >>>
-> >>> As RSC won't be provided by TUN/TAP anyhow.
-> >>
-> >> Adding the RSC bit does not let QEMU disable vhost for RSC, but instea=
-d
-> >> it implicitly disables RSC in my understanding.
-> >
-> > Yes.
-> >
-> >> It is still better than
-> >> advertising the availability of that feature while it is missing.
-> >
-> > Down the road, we probably need to change the behaviour of disabling vh=
-ost-net.
-> >
-> >>
-> >>>
-> >>>>
-> >>>> Looking at the code, I also found the case of vhost-vdpa. vhost can =
-be
-> >>>> simply disabled if it is backed by tuntap, but it is not the case fo=
-r vDPA.
-> >>>
-> >>> True, technically, vDPA can fallback to SVQ, but it's another topic.
-> >>
-> >> My point of this discussion is that we cannot enable features just
-> >> because they are sufficiently old or because the user claims QEMU runs
-> >> on Linux sufficiently new. eBPF requires privilege, and vDPA requires
-> >> hardware feature. A fallback is not a silver bullet either, and there
-> >> are situations that providing a fallback is not a trivial task.
-> >
-> > To make sure we are on the same page. I just want to point out that
-> > eBPF RSS is not a good example in this context.
-> >
-> > It works only for tuntap, so we should stick to the behaviour of
-> > trying to fallback to userspace if we can as we've already had a
-> > userspace fallback. This is the fundamental difference with other
-> > features (like segmentation offload) or backend (vDPA) that doesn't
-> > have an existing fallback.
->
-> Some (probably not all) offloads are implemented in hw/net/net_tx_pkt.c.
-> They are not wired up to behave as a fallback when tuntap's vhost is
-> enabled as the in-QEMU RSS is not. In either case, we need to pay some
-> effort to wiring things.
->
-> I'm not sure it is worthwhile. I think there is a high chance that
-> selectively disabling vhost and keeping RSS enabled with fallback will
-> result in worse performance than keeping vhost enabled and disabling
-> RSS. Such a fallback can still function as an emergency escape hatch,
-> but it is also incomplete as we don't have fallbacks for other features.
-> I would rather make any features missing in the vhost backend fail to
-> keep things consistent.
->
-> Regards,
-> Akihiko Odaki
+This is equivalent to using qemu-img to convert a file to qcow2 and
+then writing the result to stdout, with the difference that this tool
+does not need to create this temporary qcow2 file and therefore does
+not need any additional disk space.
+
+Implementing this directly in qemu-img is not really an option because
+it expects the output file to be seekable and it is also meant to be a
+generic tool that supports all combinations of file formats and image
+options. Instead, this tool can only produce qcow2 files with the
+basic options, without compression, encryption or other features.
+
+The input file is read twice. The first pass is used to determine
+which clusters contain non-zero data and that information is used to
+create the qcow2 header, refcount table and blocks, and L1 and L2
+tables. After all that metadata is created then the second pass is
+used to write the guest data.
+
+By default qcow2-to-stdout.py expects the input to be a raw file, but
+if qemu-storage-daemon is available then it can also be used to read
+images in other formats. Alternatively the user can also run qemu-nbd
+or qemu-storage-daemon manually instead.
+
+Signed-off-by: Alberto Garcia <berto@igalia.com>
+Signed-off-by: Madeeha Javed <javed@igalia.com>
+---
+ scripts/qcow2-to-stdout.py | 449 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 449 insertions(+)
+ create mode 100755 scripts/qcow2-to-stdout.py
+
+v4:
+- Rewrite clusters_with_data() to simplify the code and to prevent the
+  same cluster from being returned more than once.
+- Add support for data_file and data_file_raw [Eric]
+- When allocating the l2_bitmap use the actual number of L1 entries
+  instead of the theoretical maximum. This reduces the memory
+  requirements significantly with larger cluster sizes.
+- Add align_up() function
+- Remove support for v2 images [Eric]
+- Fix typo in commit message [Eric]
+- Minor style fixes
+
+v3: https://lists.gnu.org/archive/html/qemu-block/2024-07/msg00597.html
+- Remove stale 'import atexit' [Nir]
+- Replace all instances of int(x / y) with x // y [Nir]
+- Rename bitmap_test() to bitmap_is_set() [Nir]
+- Use os.path.join() to construct path names [Nir]
+- Rename create_qcow2_file() to write_qcow2_content() [Nir]
+- Create a main() function [Nir]
+- Use os.pread() with the absolute offset instead of seek() [Nir]
+- Detect holes in the input file and skip reading them [Nir]
+
+v2: https://lists.gnu.org/archive/html/qemu-block/2024-07/msg00018.html
+- Define the QCOW2_V3_HDR_LENGTH and QCOW2_FEATURE_NAME_TABLE constants [Manos]
+- Define the QEMU_STORAGE_DAEMON constant
+- Use isfile() instead of exists() for the input file
+- Refuse to write to stdout if it's a tty [Manos]
+- Move the bulk of the code to a function called from __main__ [Manos]
+- Remove the qcow2_ prefix from qcow2_cluster_size and qcow2_refcount_bits
+- Formatting fixes suggested by the Python black formatter [Manos]
+- On error pass the string directly to sys.exit()
+- Capture the output of qemu-storage-daemon [Manos]
+- Use a contextmanager to run qemu-storage-daemon [Manos]
+- Update patch description to mention why this cannot be implemeted directly in qemu-img [Manos]
+
+v1: https://lists.gnu.org/archive/html/qemu-block/2024-06/msg00073.html
+
+diff --git a/scripts/qcow2-to-stdout.py b/scripts/qcow2-to-stdout.py
+new file mode 100755
+index 0000000000..06b7c13ccb
+--- /dev/null
++++ b/scripts/qcow2-to-stdout.py
+@@ -0,0 +1,449 @@
++#!/usr/bin/env python3
++
++# This tool reads a disk image in any format and converts it to qcow2,
++# writing the result directly to stdout.
++#
++# Copyright (C) 2024 Igalia, S.L.
++#
++# Authors: Alberto Garcia <berto@igalia.com>
++#          Madeeha Javed <javed@igalia.com>
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# qcow2 files produced by this script are always arranged like this:
++#
++# - qcow2 header
++# - refcount table
++# - refcount blocks
++# - L1 table
++# - L2 tables
++# - Data clusters
++#
++# A note about variable names: in qcow2 there is one refcount table
++# and one (active) L1 table, although each can occupy several
++# clusters. For the sake of simplicity the code sometimes talks about
++# refcount tables and L1 tables when referring to those clusters.
++
++import argparse
++import errno
++import math
++import os
++import signal
++import struct
++import subprocess
++import sys
++import tempfile
++import time
++from contextlib import contextmanager
++
++QCOW2_DEFAULT_CLUSTER_SIZE = 65536
++QCOW2_DEFAULT_REFCOUNT_BITS = 16
++QCOW2_FEATURE_NAME_TABLE = 0x6803F857
++QCOW2_DATA_FILE_NAME_STRING = 0x44415441
++QCOW2_V3_HEADER_LENGTH = 112  # Header length in QEMU 9.0. Must be a multiple of 8
++QCOW2_INCOMPAT_DATA_FILE_BIT = 2
++QCOW2_AUTOCLEAR_DATA_FILE_RAW_BIT = 1
++QCOW_OFLAG_COPIED = 1 << 63
++QEMU_STORAGE_DAEMON = "qemu-storage-daemon"
++
++
++def bitmap_set(bitmap, idx):
++    bitmap[idx // 8] |= 1 << (idx % 8)
++
++
++def bitmap_is_set(bitmap, idx):
++    return (bitmap[idx // 8] & (1 << (idx % 8))) != 0
++
++
++def bitmap_iterator(bitmap, length):
++    for idx in range(length):
++        if bitmap_is_set(bitmap, idx):
++            yield idx
++
++
++def align_up(num, d):
++    return d * math.ceil(num / d)
++
++
++# Holes in the input file contain only zeroes so we can skip them and
++# save time. This function returns the indexes of the clusters that
++# are known to contain data. Those are the ones that we need to read.
++def clusters_with_data(fd, cluster_size):
++    data_to = 0
++    while True:
++        try:
++            data_from = os.lseek(fd, data_to, os.SEEK_DATA)
++            data_to = align_up(os.lseek(fd, data_from, os.SEEK_HOLE), cluster_size)
++            for idx in range(data_from // cluster_size, data_to // cluster_size):
++                yield idx
++        except OSError as err:
++            if err.errno == errno.ENXIO:  # End of file reached
++                break
++            raise err
++
++
++# write_qcow2_content() expects a raw input file. If we have a different
++# format we can use qemu-storage-daemon to make it appear as raw.
++@contextmanager
++def get_input_as_raw_file(input_file, input_format):
++    if input_format == "raw":
++        yield input_file
++        return
++    try:
++        temp_dir = tempfile.mkdtemp()
++        pid_file = os.path.join(temp_dir, "pid")
++        raw_file = os.path.join(temp_dir, "raw")
++        open(raw_file, "wb").close()
++        ret = subprocess.run(
++            [
++                QEMU_STORAGE_DAEMON,
++                "--daemonize",
++                "--pidfile", pid_file,
++                "--blockdev", f"driver=file,node-name=file0,driver=file,filename={input_file},read-only=on",
++                "--blockdev", f"driver={input_format},node-name=disk0,file=file0,read-only=on",
++                "--export", f"type=fuse,id=export0,node-name=disk0,mountpoint={raw_file},writable=off",
++            ],
++            capture_output=True,
++        )
++        if ret.returncode != 0:
++            sys.exit("[Error] Could not start the qemu-storage-daemon:\n" +
++                     ret.stderr.decode().rstrip('\n'))
++        yield raw_file
++    finally:
++        # Kill the storage daemon on exit
++        # and remove all temporary files
++        if os.path.exists(pid_file):
++            with open(pid_file, "r") as f:
++                pid = int(f.readline())
++            os.kill(pid, signal.SIGTERM)
++            while os.path.exists(pid_file):
++                time.sleep(0.1)
++        os.unlink(raw_file)
++        os.rmdir(temp_dir)
++
++
++def write_features(cluster, offset, data_file_name):
++    if data_file_name is not None:
++        encoded_name = data_file_name.encode("utf-8")
++        padded_name_len = align_up(len(encoded_name), 8)
++        struct.pack_into(f">II{padded_name_len}s", cluster, offset,
++                         QCOW2_DATA_FILE_NAME_STRING,
++                         len(encoded_name),
++                         encoded_name)
++        offset += 8 + padded_name_len
++
++    qcow2_features = [
++        # Incompatible
++        (0, 0, "dirty bit"),
++        (0, 1, "corrupt bit"),
++        (0, 2, "external data file"),
++        (0, 3, "compression type"),
++        (0, 4, "extended L2 entries"),
++        # Compatible
++        (1, 0, "lazy refcounts"),
++        # Autoclear
++        (2, 0, "bitmaps"),
++        (2, 1, "raw external data"),
++    ]
++    struct.pack_into(">I", cluster, offset, QCOW2_FEATURE_NAME_TABLE)
++    struct.pack_into(">I", cluster, offset + 4, len(qcow2_features) * 48)
++    offset += 8
++    for feature_type, feature_bit, feature_name in qcow2_features:
++        struct.pack_into(">BB46s", cluster, offset,
++                         feature_type, feature_bit, feature_name.encode("ascii"))
++        offset += 48
++
++
++def write_qcow2_content(input_file, cluster_size, refcount_bits, data_file_name, data_file_raw):
++    # Some basic values
++    l1_entries_per_table = cluster_size // 8
++    l2_entries_per_table = cluster_size // 8
++    refcounts_per_table  = cluster_size // 8
++    refcounts_per_block  = cluster_size * 8 // refcount_bits
++
++    # Virtual disk size, number of data clusters and L1 entries
++    disk_size = align_up(os.path.getsize(input_file), 512)
++    total_data_clusters = math.ceil(disk_size / cluster_size)
++    l1_entries = math.ceil(total_data_clusters / l2_entries_per_table)
++    allocated_l1_tables = math.ceil(l1_entries / l1_entries_per_table)
++
++    # Max L1 table size is 32 MB (QCOW_MAX_L1_SIZE in block/qcow2.h)
++    if (l1_entries * 8) > (32 * 1024 * 1024):
++        sys.exit("[Error] The image size is too large. Try using a larger cluster size.")
++
++    # Two bitmaps indicating which L1 and L2 entries are set
++    l1_bitmap = bytearray(allocated_l1_tables * l1_entries_per_table // 8)
++    l2_bitmap = bytearray(l1_entries * l2_entries_per_table // 8)
++    allocated_l2_tables = 0
++    allocated_data_clusters = 0
++
++    if data_file_raw:
++        # If data_file_raw is set then all clusters are allocated and
++        # we don't need to read the input file at all.
++        allocated_l2_tables = l1_entries
++        for idx in range(l1_entries):
++            bitmap_set(l1_bitmap, idx)
++        for idx in range(total_data_clusters):
++            bitmap_set(l2_bitmap, idx)
++    else:
++        # Open the input file for reading
++        fd = os.open(input_file, os.O_RDONLY)
++        zero_cluster = bytes(cluster_size)
++        # Read all the clusters that contain data
++        for idx in clusters_with_data(fd, cluster_size):
++            cluster = os.pread(fd, cluster_size, cluster_size * idx)
++            # If the last cluster is smaller than cluster_size pad it with zeroes
++            if len(cluster) < cluster_size:
++                cluster += bytes(cluster_size - len(cluster))
++            # If a cluster has non-zero data then it must be allocated
++            # in the output file and its L2 entry must be set
++            if cluster != zero_cluster:
++                bitmap_set(l2_bitmap, idx)
++                allocated_data_clusters += 1
++                # Allocated data clusters also need their corresponding L1 entry and L2 table
++                l1_idx = math.floor(idx / l2_entries_per_table)
++                if not bitmap_is_set(l1_bitmap, l1_idx):
++                    bitmap_set(l1_bitmap, l1_idx)
++                    allocated_l2_tables += 1
++
++    # Total amount of allocated clusters excluding the refcount blocks and table
++    total_allocated_clusters = 1 + allocated_l1_tables + allocated_l2_tables
++    if data_file_name is None:
++        total_allocated_clusters += allocated_data_clusters
++
++    # Clusters allocated for the refcount blocks and table
++    allocated_refcount_blocks = math.ceil(total_allocated_clusters  / refcounts_per_block)
++    allocated_refcount_tables = math.ceil(allocated_refcount_blocks / refcounts_per_table)
++
++    # Now we have a problem because allocated_refcount_blocks and allocated_refcount_tables...
++    # (a) increase total_allocated_clusters, and
++    # (b) need to be recalculated when total_allocated_clusters is increased
++    # So we need to repeat the calculation as long as the numbers change
++    while True:
++        new_total_allocated_clusters = total_allocated_clusters + allocated_refcount_tables + allocated_refcount_blocks
++        new_allocated_refcount_blocks = math.ceil(new_total_allocated_clusters / refcounts_per_block)
++        if new_allocated_refcount_blocks > allocated_refcount_blocks:
++            allocated_refcount_blocks = new_allocated_refcount_blocks
++            allocated_refcount_tables = math.ceil(allocated_refcount_blocks / refcounts_per_table)
++        else:
++            break
++
++    # Now that we have the final numbers we can update total_allocated_clusters
++    total_allocated_clusters += allocated_refcount_tables + allocated_refcount_blocks
++
++    # At this point we have the exact number of clusters that the output
++    # image is going to use so we can calculate all the offsets.
++    current_cluster_idx = 1
++
++    refcount_table_offset = current_cluster_idx * cluster_size
++    current_cluster_idx += allocated_refcount_tables
++
++    refcount_block_offset = current_cluster_idx * cluster_size
++    current_cluster_idx += allocated_refcount_blocks
++
++    l1_table_offset = current_cluster_idx * cluster_size
++    current_cluster_idx += allocated_l1_tables
++
++    l2_table_offset = current_cluster_idx * cluster_size
++    current_cluster_idx += allocated_l2_tables
++
++    data_clusters_offset = current_cluster_idx * cluster_size
++
++    # Calculate some values used in the qcow2 header
++    if allocated_l1_tables == 0:
++        l1_table_offset = 0
++
++    hdr_cluster_bits = int(math.log2(cluster_size))
++    hdr_refcount_bits = int(math.log2(refcount_bits))
++    hdr_length = QCOW2_V3_HEADER_LENGTH
++    hdr_incompat_features = 0
++    if data_file_name is not None:
++        hdr_incompat_features |= 1 << QCOW2_INCOMPAT_DATA_FILE_BIT
++    hdr_autoclear_features = 0
++    if data_file_raw:
++        hdr_autoclear_features |= 1 << QCOW2_AUTOCLEAR_DATA_FILE_RAW_BIT
++
++    ### Write qcow2 header
++    cluster = bytearray(cluster_size)
++    struct.pack_into(">4sIQIIQIIQQIIQQQQII", cluster, 0,
++        b"QFI\xfb",            # QCOW magic string
++        3,                     # version
++        0,                     # backing file offset
++        0,                     # backing file sizes
++        hdr_cluster_bits,
++        disk_size,
++        0,                     # encryption method
++        l1_entries,
++        l1_table_offset,
++        refcount_table_offset,
++        allocated_refcount_tables,
++        0,                     # number of snapshots
++        0,                     # snapshot table offset
++        hdr_incompat_features,
++        0,                     # compatible features
++        hdr_autoclear_features,
++        hdr_refcount_bits,
++        hdr_length,
++    )
++
++    write_features(cluster, hdr_length, data_file_name)
++
++    sys.stdout.buffer.write(cluster)
++
++    ### Write refcount table
++    cur_offset = refcount_block_offset
++    remaining_refcount_table_entries = allocated_refcount_blocks # Each entry is a pointer to a refcount block
++    while remaining_refcount_table_entries > 0:
++        cluster = bytearray(cluster_size)
++        to_write = min(remaining_refcount_table_entries, refcounts_per_table)
++        remaining_refcount_table_entries -= to_write
++        for idx in range(to_write):
++            struct.pack_into(">Q", cluster, idx * 8, cur_offset)
++            cur_offset += cluster_size
++        sys.stdout.buffer.write(cluster)
++
++    ### Write refcount blocks
++    remaining_refcount_block_entries = total_allocated_clusters # One entry for each allocated cluster
++    for tbl in range(allocated_refcount_blocks):
++        cluster = bytearray(cluster_size)
++        to_write = min(remaining_refcount_block_entries, refcounts_per_block)
++        remaining_refcount_block_entries -= to_write
++        # All refcount entries contain the number 1. The only difference
++        # is their bit width, defined when the image is created.
++        for idx in range(to_write):
++            if refcount_bits == 64:
++                struct.pack_into(">Q", cluster, idx * 8, 1)
++            elif refcount_bits == 32:
++                struct.pack_into(">L", cluster, idx * 4, 1)
++            elif refcount_bits == 16:
++                struct.pack_into(">H", cluster, idx * 2, 1)
++            elif refcount_bits == 8:
++                cluster[idx] = 1
++            elif refcount_bits == 4:
++                cluster[idx // 2] |= 1 << ((idx % 2) * 4)
++            elif refcount_bits == 2:
++                cluster[idx // 4] |= 1 << ((idx % 4) * 2)
++            elif refcount_bits == 1:
++                cluster[idx // 8] |= 1 << (idx % 8)
++        sys.stdout.buffer.write(cluster)
++
++    ### Write L1 table
++    cur_offset = l2_table_offset
++    for tbl in range(allocated_l1_tables):
++        cluster = bytearray(cluster_size)
++        for idx in range(l1_entries_per_table):
++            l1_idx = tbl * l1_entries_per_table + idx
++            if bitmap_is_set(l1_bitmap, l1_idx):
++                struct.pack_into(">Q", cluster, idx * 8, cur_offset | QCOW_OFLAG_COPIED)
++                cur_offset += cluster_size
++        sys.stdout.buffer.write(cluster)
++
++    ### Write L2 tables
++    cur_offset = data_clusters_offset
++    for tbl in range(l1_entries):
++        # Skip the empty L2 tables. We can identify them because
++        # there is no L1 entry pointing at them.
++        if bitmap_is_set(l1_bitmap, tbl):
++            cluster = bytearray(cluster_size)
++            for idx in range(l2_entries_per_table):
++                l2_idx = tbl * l2_entries_per_table + idx
++                if bitmap_is_set(l2_bitmap, l2_idx):
++                    if data_file_name is None:
++                        struct.pack_into(">Q", cluster, idx * 8, cur_offset | QCOW_OFLAG_COPIED)
++                        cur_offset += cluster_size
++                    else:
++                        struct.pack_into(">Q", cluster, idx * 8, (l2_idx * cluster_size) | QCOW_OFLAG_COPIED)
++            sys.stdout.buffer.write(cluster)
++
++    ### Write data clusters
++    if data_file_name is None:
++        for idx in bitmap_iterator(l2_bitmap, total_data_clusters):
++            cluster = os.pread(fd, cluster_size, cluster_size * idx)
++            # If the last cluster is smaller than cluster_size pad it with zeroes
++            if len(cluster) < cluster_size:
++                cluster += bytes(cluster_size - len(cluster))
++            sys.stdout.buffer.write(cluster)
++
++    if not data_file_raw:
++        os.close(fd)
++
++
++def main():
++    # Command-line arguments
++    parser = argparse.ArgumentParser(
++        description="This program converts a QEMU disk image to qcow2 "
++        "and writes it to the standard output"
++    )
++    parser.add_argument("input_file", help="name of the input file")
++    parser.add_argument(
++        "-f",
++        dest="input_format",
++        metavar="input_format",
++        help="format of the input file (default: raw)",
++        default="raw",
++    )
++    parser.add_argument(
++        "-c",
++        dest="cluster_size",
++        metavar="cluster_size",
++        help=f"qcow2 cluster size (default: {QCOW2_DEFAULT_CLUSTER_SIZE})",
++        default=QCOW2_DEFAULT_CLUSTER_SIZE,
++        type=int,
++        choices=[1 << x for x in range(9, 22)],
++    )
++    parser.add_argument(
++        "-r",
++        dest="refcount_bits",
++        metavar="refcount_bits",
++        help=f"width of the reference count entries (default: {QCOW2_DEFAULT_REFCOUNT_BITS})",
++        default=QCOW2_DEFAULT_REFCOUNT_BITS,
++        type=int,
++        choices=[1 << x for x in range(7)],
++    )
++    parser.add_argument(
++        "-d",
++        dest="data_file",
++        help="create an image with input_file as an external data file",
++        action="store_true",
++    )
++    parser.add_argument(
++        "-R",
++        dest="data_file_raw",
++        help="enable data_file_raw on the generated image (implies -d)",
++        action="store_true",
++    )
++    args = parser.parse_args()
++
++    if args.data_file_raw:
++        args.data_file = True
++
++    if not os.path.isfile(args.input_file):
++        sys.exit(f"[Error] {args.input_file} does not exist or is not a regular file.")
++
++    if args.data_file and args.input_format != "raw":
++        sys.exit("[Error] External data files can only be used with raw input images")
++
++    # A 512 byte header is too small for the data file name extension
++    if args.data_file and args.cluster_size == 512:
++        sys.exit("[Error] External data files require a larger cluster size")
++
++    if sys.stdout.isatty():
++        sys.exit("[Error] Refusing to write to a tty. Try redirecting stdout.")
++
++    if args.data_file:
++        data_file_name = args.input_file
++    else:
++        data_file_name = None
++
++    with get_input_as_raw_file(args.input_file, args.input_format) as raw_file:
++        write_qcow2_content(
++            raw_file,
++            args.cluster_size,
++            args.refcount_bits,
++            data_file_name,
++            args.data_file_raw,
++        )
++
++
++if __name__ == "__main__":
++    main()
+-- 
+2.39.2
+
 
