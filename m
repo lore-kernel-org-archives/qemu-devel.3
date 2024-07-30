@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1637DC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5319DC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:23:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYj3j-0001G6-JV; Tue, 30 Jul 2024 05:22:19 -0400
+	id 1sYj3d-0000iI-1G; Tue, 30 Jul 2024 05:22:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYj3h-00018g-TN
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:22:17 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYj3b-0000bV-5Y
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:22:11 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYj3g-0005nY-AH
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:22:17 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4281faefea9so12650615e9.2
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:22:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sYj3Y-0005lM-Vo
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:22:10 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4281abc65daso18168545e9.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:22:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722331334; x=1722936134; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722331327; x=1722936127; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ugc2yLiSsI07WG//ugTlVImvOO+yujn7Q1YmHPiaYeY=;
- b=svE9vyBe4iLfuPzZ3CPXE+TN9XEPe1Pa4WFrbu0faWq9YD120fY/baAVbXZ4/mssYI
- f7jMRXgKz33DhaQ2YFPCL5XqeaY/8l/wTlCFVc1jPjSLbsU4eTqBTwZG3SsmefmYfc5o
- g2n/abH1neRSolNakGn2SYN1f+JG7H8hwzbSWHudoX7009r6cgfni+84rOpNcoabg6MO
- qKR+XqZOty/fNPPdlUPL/vAytzPpW2TDgXstWvTgVyB7RMD2Nzx3zDNKJ/WU2KNgknZv
- Oc6t/EfZVyPDb13G/gyzhyOJ12HFysaldlNSb6+uj0dVQ5i8mOpNiMXkd67pmC0w9lwf
- vsyw==
+ bh=OQ1Qo4EummoLtaisooBllEpj3+LWFIK8W5rm3kHkgq8=;
+ b=Zm3+08Gz9e2VswihpWAIfNRLWT7e22ZbRv74FjJHx6lHLX6A7vXYEKJlnEcA95BFJB
+ CV26TM3HjNoM/BI2Z2vcWDjMls6NoMGm+HW6u2+KC1FZEiJ3XhY2mWUbn1lv+9c2YhMU
+ qyGOzfjFa3Fi/9tMtnhtT3Grd5lHCi3nhQ4D7abpZ4BegbHnHA3x3K8Akmbzjej7+uWI
+ xHrwAUYvUi8EuAX+ZBspV4vx4/xS7+iqpYDaUrR/CfOzfLM6XUIW4O0j52cMIoy83w2x
+ HM8EnLf/2eX48dpwBENCpz0GbwypPNd17AUinggAk2BuxWm19SN5GGfUFyJKWvRpjR3p
+ QWFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722331334; x=1722936134;
+ d=1e100.net; s=20230601; t=1722331327; x=1722936127;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ugc2yLiSsI07WG//ugTlVImvOO+yujn7Q1YmHPiaYeY=;
- b=f+8i1vO2sSz+CR+Uokav2ed27mRdFjo9YjBXuL6pn1Q700+DWDJW48PIFoY7ltMNfc
- J8tIDBPzgHzm13Cyf9KjtjZ8pxTcVVIyN1Tc8SaHMTDZ6Q8ig9Wt0Ymy0pILe6S3eTRj
- fHhGAUeluQjDgIX0SFcbzaeaTZzkmXli8NvGaPmNCDMdCLoLLw8q0KuoG3tg9+EXMPSK
- X0Q/4YKveAiVKrb5f6Y/qYUmN2ATGS5ctvgL/57oGdO1R/M/m97fxIkiAzZewUfDNoLi
- BrxvMtagPo7aImjvMJi7sF1aLEImj470j24S+CS05h3SXanh9GZcfuOYMH+aRd0Y5CGE
- Q2tw==
-X-Gm-Message-State: AOJu0YxXUHYh6FGkMCsAHbjeD4NDXbzC4Y6eOk2bnX9E1Uxl8ePGqHlG
- Kijd6cZdtHWHn1f/RNYI/qDr9BE8UCalZXMTTYFZG31SApvVnSa76zIbPjcMihra2FOVWqZXXBO
- Yo2A=
-X-Google-Smtp-Source: AGHT+IGrxNlg8ZBJVA1vrv42R029iazlceOSbctY1GNsHcX+9VYtmRc2z2zSyU7fzJ/oWi5CIeQ8UA==
-X-Received: by 2002:a05:600c:4f8e:b0:426:6e9a:7a1c with SMTP id
- 5b1f17b1804b1-42811e12d86mr67992635e9.25.1722331334313; 
- Tue, 30 Jul 2024 02:22:14 -0700 (PDT)
+ bh=OQ1Qo4EummoLtaisooBllEpj3+LWFIK8W5rm3kHkgq8=;
+ b=xEMxa6lo8rMZQzaWffM1Fm9+GU8QTDB0sm1T9JZF2dgf7qsVRbNEg5Uc1xzbVgNgJ0
+ e35pt/57AL9uqN9ABY9hjdrQot2AHLTf9cNdTPFvackT8hhaUW2+JF8h5oPIwF9I9K/5
+ KR66sB/05spnUGiyQ0yEg2YLpisZG3+pS4AFKSOmaq5iKejlOkZEVJYBRjVwdhNTh3Ij
+ 3MrAw1128wzoooEKujLxyDgOzdTGwB2CaKSghteZzZ+IEvBhkMmLsRkkCE0e3FuHOD+A
+ QpqWP50UkxTCeCwJWBRig41cotTF14TcPImqZo/qYLbB5Td8A9GouQExFHVQc50iVN6Z
+ Jv+A==
+X-Gm-Message-State: AOJu0Yyo/kinxFVC8bIdDDIT+pazTOLEHrjmKvvoPRNETV4nr1HkULkO
+ ExLfWajcmm5YFKBQjD1xyc39dZ5q6cHK5Te7OTXIy223ToSrCrLKVTFg1uRWlF4HlTvxeuyAMdQ
+ A0oU=
+X-Google-Smtp-Source: AGHT+IFRTF+dUA9Tr+PQeP7ek4VXX28cN88EFTIOg8DPMdw2Go1EPZECbANoRDKe3r5gRZnwH/8ReQ==
+X-Received: by 2002:a05:600c:3541:b0:428:314:f08e with SMTP id
+ 5b1f17b1804b1-42811d736f4mr65614495e9.5.1722331326831; 
+ Tue, 30 Jul 2024 02:22:06 -0700 (PDT)
 Received: from localhost.localdomain (82.red-88-28-10.dynamicip.rima-tde.net.
  [88.28.10.82]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42809e4423dsm173477325e9.13.2024.07.30.02.22.12
+ 5b1f17b1804b1-427f93594b6sm251246625e9.5.2024.07.30.02.22.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 30 Jul 2024 02:22:13 -0700 (PDT)
+ Tue, 30 Jul 2024 02:22:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Bin Meng <bmeng.cn@gmail.com>, Zheyu Ma <zheyuma97@gmail.com>,
  qemu-block@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 4/5] hw/sd/sdhci: Trace ADMA descriptors
-Date: Tue, 30 Jul 2024 11:21:37 +0200
-Message-ID: <20240730092138.32443-5-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable@nongnu.org
+Subject: [PATCH-for-9.1 3/5] hw/sd/sdhci: Reset @data_count index on invalid
+ ADMA transfers
+Date: Tue, 30 Jul 2024 11:21:36 +0200
+Message-ID: <20240730092138.32443-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730092138.32443-1-philmd@linaro.org>
 References: <20240730092138.32443-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,64 +97,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+We neglected to clear the @data_count index on ADMA error,
+allowing to trigger assertion in sdhci_read_dataport() or
+sdhci_write_dataport().
+
+Cc: qemu-stable@nongnu.org
+Fixes: d7dfca0807 ("hw/sdhci: introduce standard SD host controller")
+Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2455
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/sd/sdhci.c      | 8 ++++++++
- hw/sd/trace-events | 1 +
- 2 files changed, 9 insertions(+)
+ hw/sd/sdhci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 8293d83556..66b9364e9e 100644
+index d02c3e3963..8293d83556 100644
 --- a/hw/sd/sdhci.c
 +++ b/hw/sd/sdhci.c
-@@ -693,6 +693,11 @@ typedef struct ADMADescr {
-     uint8_t incr;
- } ADMADescr;
- 
-+static void trace_adma_description(const char *type, const ADMADescr *dscr)
-+{
-+    trace_sdhci_adma_desc(type, dscr->addr, dscr->length, dscr->attr, dscr->incr);
-+}
-+
- static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
- {
-     uint32_t adma1 = 0;
-@@ -710,6 +715,7 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
-         dscr->length = (uint16_t)extract64(adma2, 16, 16);
-         dscr->attr = (uint8_t)extract64(adma2, 0, 7);
-         dscr->incr = 8;
-+        trace_adma_description("ADMA2_32", dscr);
-         break;
-     case SDHC_CTRL_ADMA1_32:
-         dma_memory_read(s->dma_as, entry_addr, &adma1, sizeof(adma1),
-@@ -723,6 +729,7 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
-         } else {
-             dscr->length = 4 * KiB;
-         }
-+        trace_adma_description("ADMA1_32", dscr);
-         break;
-     case SDHC_CTRL_ADMA2_64:
-         dma_memory_read(s->dma_as, entry_addr, &dscr->attr, 1,
-@@ -735,6 +742,7 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
-         dscr->addr = le64_to_cpu(dscr->addr);
-         dscr->attr &= (uint8_t) ~0xC0;
-         dscr->incr = 12;
-+        trace_adma_description("ADMA2_64", dscr);
-         break;
-     }
- }
-diff --git a/hw/sd/trace-events b/hw/sd/trace-events
-index 43671dc791..3d3f5c1cb7 100644
---- a/hw/sd/trace-events
-+++ b/hw/sd/trace-events
-@@ -35,6 +35,7 @@ sdhci_access(const char *access, unsigned int size, uint64_t offset, const char
- sdhci_read_dataport(uint16_t data_count) "all %u bytes of data have been read from input buffer"
- sdhci_write_dataport(uint16_t data_count) "write buffer filled with %u bytes of data"
- sdhci_capareg(const char *desc, uint16_t val) "%s: %u"
-+sdhci_adma_desc(const char *type, uint64_t addr, uint16_t length, uint8_t attr, uint8_t incr) "%s addr:0x%08"PRIx64" len:0x%x, attr:0x%x, incr:%u"
- 
- # sd.c
- sdcard_normal_command(const char *proto, const char *cmd_desc, uint8_t cmd, uint32_t arg, const char *state) "%s %20s/ CMD%02d arg 0x%08x (state %s)"
+@@ -846,6 +846,7 @@ static void sdhci_do_adma(SDHCIState *s)
+                 }
+             }
+             if (res != MEMTX_OK) {
++                s->data_count = 0;
+                 if (s->errintstsen & SDHC_EISEN_ADMAERR) {
+                     trace_sdhci_error("Set ADMA error flag");
+                     s->errintsts |= SDHC_EIS_ADMAERR;
 -- 
 2.45.2
 
