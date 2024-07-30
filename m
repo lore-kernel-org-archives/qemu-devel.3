@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF3EBC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 11:29:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99EE3C3DA7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 11:34:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYl2r-0006HE-Su; Tue, 30 Jul 2024 07:29:33 -0400
+	id 1sYl73-00032u-QF; Tue, 30 Jul 2024 07:33:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sYl2q-0006GV-Ku
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 07:29:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sYl2p-0002pN-42
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 07:29:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722338970;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=irfX0+RsgRcA6qBUsAOv5A+2smHa4tMsV0g+wH3goyM=;
- b=Lb7KYKNSB61qXbhxfH2mMSEfob2Zwrcn1wCDwK+rTxE1MX+LIwB6XpTxP83htgRhQXMQUH
- vKjUzzIzg4Cb3Re2XBrYuEuAz3cRAXTWFYhQ6qb6aywQmD90KBhCjDjw8Mq0Q9K8j2/bd+
- BC6dUt4Bway807ihbUGx0ZsfejpYWSQ=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-490-jDpbqmHhMWaJ15spssG8lQ-1; Tue, 30 Jul 2024 07:29:27 -0400
-X-MC-Unique: jDpbqmHhMWaJ15spssG8lQ-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-52efe4c2372so5078993e87.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 04:29:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sYl72-00031U-Pi
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 07:33:52 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sYl71-0003Yv-2A
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 07:33:52 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1fc52394c92so36209275ad.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 04:33:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722339229; x=1722944029; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YNB0aAcuCiZi0xjooF9GaiE5hnT1Sw4aBSA8wLWdHYM=;
+ b=BzA0ARq0ID0SQ2/WYfUIWSObjvBbQu8zA8eiEycsy7YzoG3Nz3aNcUMXHHw9yQBT37
+ J0+XIPJ0Pc4XNLjcU1s24zRgW1sOgaj4HtPQy+DketuldGOitgTxanCb7yYfvstI2Qvb
+ gxUn+kX0LQRvPfDozapXQc3W1oAlzLKXbDizsBPS8sGHL2rwkB4T1kBeoaBDN5HIhqzO
+ U89zfLGPFe7rvmH06dJta8xZvf4Ngyj1z7pIgX3iO2oQ+XJ0V9VaI5kFYlxK8PC9ls1Z
+ ifKGTyRYpwTM9oDU0EU4p2GBpkP5qBKu4nv0THckYWc5KBgfiLFmKpvTWlzp4tHZLIg2
+ GJyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722338966; x=1722943766;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=irfX0+RsgRcA6qBUsAOv5A+2smHa4tMsV0g+wH3goyM=;
- b=vQ2pInIF7IBKKagguW3PxsMPoMCe7QiSzbfJxmo1MBIFVwk3rIWWmCNWAf/zCe4spT
- Kj79HUcwUgX7sqdYIp3bYN9qcs2OX53nl86YQlwpdAIRDMjfClRhXkBCr+eh3YXz2b1R
- QpqMYbd3pjdO3eG6wXeO2ExMFlru8qBb4Y3am7Qprnj51OXHa3SBMQd1EH/OyMWbPLds
- EPEow8YJpPfuYWG3nX2glYAMCXfUF+jjEJziYFN8es77zw5MFv/hBra15IIb2eZnAEaC
- OOEC7rNQWbI5B91wtESJVnaPsRe5bZjwXQwREZ2CZRyMLnnp/Nk9yq8mvtCz+kUVc+Ru
- ymWg==
-X-Gm-Message-State: AOJu0YzdkXoclOHWmBFiexZWt+vXEwSipTcx0m/Z1CcwEDpYUtVYLUOs
- MJDEcsNo1myY8+jzUQhg5nIp10eCBlPgbKv1lFsAl/+XLES76K5YGfzmOmCBFvm7eAcaTJ8yibt
- rrH9bSVviUyw4yCTazQHD1vEy5b5kJLxe3nNGyHEiUlT8eDog/X9v
-X-Received: by 2002:a05:6512:781:b0:52c:d9b3:2b06 with SMTP id
- 2adb3069b0e04-5309b2c7a1fmr6516119e87.58.1722338966414; 
- Tue, 30 Jul 2024 04:29:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGT0jqUaaxcj8sKHT3GrVnxmtSqOGDtNNeH8+PSXNg+nniVCI1DikFrJOAhOw1YKSt+fw1rSQ==
-X-Received: by 2002:a05:6512:781:b0:52c:d9b3:2b06 with SMTP id
- 2adb3069b0e04-5309b2c7a1fmr6516104e87.58.1722338965658; 
- Tue, 30 Jul 2024 04:29:25 -0700 (PDT)
-Received: from redhat.com ([2.55.24.20]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5af473522cfsm5835844a12.86.2024.07.30.04.29.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jul 2024 04:29:24 -0700 (PDT)
-Date: Tue, 30 Jul 2024 07:29:17 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, Amit Shah <amit@kernel.org>
-Subject: Re: [PATCH] virtio-rng: block max-bytes=0
-Message-ID: <20240730072753-mutt-send-email-mst@kernel.org>
-References: <73a89a42d82ec8b47358f25119b87063e4a6ea57.1721818306.git.mst@redhat.com>
- <f6beb6d6-5434-4f85-a00b-20d662b77b36@redhat.com>
+ d=1e100.net; s=20230601; t=1722339229; x=1722944029;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YNB0aAcuCiZi0xjooF9GaiE5hnT1Sw4aBSA8wLWdHYM=;
+ b=KOAMOAQZC45FcY382rlGgY0x0/foGzIK976vDm1PxZYVIl1nRb8g0OJx2CLWBoAvHi
+ VQ1RSRA85bhbXQb163xL0UC8Xw/qGHo+Zp23AmgbCMLiBKDHoCiSJRrsAjxWBayCSSqs
+ kDVArtAwA6vc5bzB0+JKEKtkgQGusPVuDdzqKDsK18DTD4qBQodnNGOKMtTdZ6QMKLes
+ rPmLIPGI2T4sB9bi8TT9FUJQvK2r8uavujpFxGIYs1exfRRLRRLlL4lld/mrBBTZZZ2k
+ 9aNAyju3RGFPjsr2KwdgjkIpHwxAqV7Gv2upsTNE2EykAAgtJOu9+MvPmCw1J0/dQdSE
+ QsPQ==
+X-Gm-Message-State: AOJu0YzsL7OmOVhta8ihxalJ0WmQcAoMigVpMQrW4oYnxur4UA3FXxv1
+ DaZ+H+FlEtRMhEDAxirQ/TTmDRbQEckBpeKZFguXUnltZ+wENoRt/CZRSarPRe8=
+X-Google-Smtp-Source: AGHT+IH/LE0pczjoBiwHKxCDHdXuDowTpdXdAlmH3WfVuPPhNmghwWAUCmYnLhMcA9xZrLjssAp3Dw==
+X-Received: by 2002:a17:902:e741:b0:1fd:acd1:b642 with SMTP id
+ d9443c01a7336-1ff04926567mr130384925ad.64.1722339229143; 
+ Tue, 30 Jul 2024 04:33:49 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fed7ee1482sm100187485ad.155.2024.07.30.04.33.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Jul 2024 04:33:48 -0700 (PDT)
+Message-ID: <a71e9e79-6f26-4cab-b39c-b5f2fdc4c206@linaro.org>
+Date: Tue, 30 Jul 2024 21:33:40 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f6beb6d6-5434-4f85-a00b-20d662b77b36@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: Fix BTI versus CF_PCREL
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20240730013922.540523-1-richard.henderson@linaro.org>
+ <CAFEAcA-yuy54nnuoa_B32UpKPtfhRmo9sd1N7eYKSz4O0PC7qg@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFEAcA-yuy54nnuoa_B32UpKPtfhRmo9sd1N7eYKSz4O0PC7qg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,40 +96,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 30, 2024 at 11:07:11AM +0200, Laurent Vivier wrote:
-> On 24/07/2024 12:51, Michael S. Tsirkin wrote:
-> > with max-bytes set to 0, quota is 0 and so device does not work.
-> > block this to avoid user confusion
-> > 
-> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> > ---
-> >   hw/virtio/virtio-rng.c | 5 +++--
-> >   1 file changed, 3 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/hw/virtio/virtio-rng.c b/hw/virtio/virtio-rng.c
-> > index f74efffef7..7cf31da071 100644
-> > --- a/hw/virtio/virtio-rng.c
-> > +++ b/hw/virtio/virtio-rng.c
-> > @@ -184,8 +184,9 @@ static void virtio_rng_device_realize(DeviceState *dev, Error **errp)
-> >       /* Workaround: Property parsing does not enforce unsigned integers,
-> >        * So this is a hack to reject such numbers. */
-> > -    if (vrng->conf.max_bytes > INT64_MAX) {
-> > -        error_setg(errp, "'max-bytes' parameter must be non-negative, "
-> > +    if (vrng->conf.max_bytes == 0 ||
-> > +        vrng->conf.max_bytes > INT64_MAX) {
-> > +        error_setg(errp, "'max-bytes' parameter must be positive, "
-> >                      "and less than 2^63");
-> >           return;
-> >       }
+On 7/30/24 19:30, Peter Maydell wrote:
+>> +static bool is_guarded_page(CPUARMState *env, target_ulong addr)
+>> +{
+>> +#ifdef CONFIG_USER_ONLY
+>> +    return page_get_flags(addr) & PAGE_BTI;
+>> +#else
+>> +    CPUTLBEntryFull *full;
+>> +    void *host;
+>> +    int mmu_idx = cpu_mmu_index(env_cpu(env), true);
+>> +    int flags = probe_access_full(env, addr, 0, MMU_INST_FETCH, mmu_idx,
+>> +                                  false, &host, &full, 0);
+>> +
+>> +    assert(!(flags & TLB_INVALID_MASK));
 > 
-> Michael, do you plan to send the PR yourself? Or perhaps it can go via trivial?
-> 
-> Thanks,
-> Laurent
+> Is there a race condition here where some other vCPU
+> knocks this entry out of the TLB between the point when
+> we started executing the TB and when we made this helper
+> function call ?
 
-I will pick it up, I do not think this is appropriate for trivial though.
+I don't think so, because cross-cpu flushes use async_safe_run_on_cpu, which will wait 
+until this cpu returns to the main loop.  But it's just as easy to allow this probe to 
+fault and unwind, Just In Case.
 
--- 
-MST
 
+r~
 
