@@ -4,51 +4,190 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC55FC3DA70
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 15:59:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59BD0C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 16:02:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYpFg-0003HH-1h; Tue, 30 Jul 2024 11:59:04 -0400
+	id 1sYpIB-0005hg-LJ; Tue, 30 Jul 2024 12:01:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=7GHu=O6=kaod.org=clg@ozlabs.org>)
- id 1sYpFX-0002k2-2m; Tue, 30 Jul 2024 11:58:59 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <alejandro.zeise@seagate.com>)
+ id 1sYpI8-0005Zz-AN; Tue, 30 Jul 2024 12:01:36 -0400
+Received: from esa.hc4959-67.iphmx.com ([139.138.35.140])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=7GHu=O6=kaod.org=clg@ozlabs.org>)
- id 1sYpFT-0007ck-EW; Tue, 30 Jul 2024 11:58:54 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WYKdw6L45z4x8C;
- Wed, 31 Jul 2024 01:58:44 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WYKdt42Q7z4x89;
- Wed, 31 Jul 2024 01:58:42 +1000 (AEST)
-Message-ID: <fdc53976-2000-46cd-a65a-c9976fc8c9d1@kaod.org>
-Date: Tue, 30 Jul 2024 17:58:38 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] crypto: add support for accumulative hashing
-To: Alejandro Zeise <alejandro.zeise@seagate.com>, qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, berrange@redhat.com
+ (Exim 4.90_1) (envelope-from <alejandro.zeise@seagate.com>)
+ id 1sYpI6-0008Ge-2s; Tue, 30 Jul 2024 12:01:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=seagate.com; i=@seagate.com; q=dns/txt; s=stxiport;
+ t=1722355293; x=1753891293;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=tlKg1wkPVhf0tLdmujZFkyt5XvAOVk7PhdpehMq8agY=;
+ b=Q7xl1+g2lIaP94+HcHGPr2YJml0nKlIR5qwSyDKV64Xu1siGeT7v18Xc
+ +6BIYhvyeGlxL5xDy7fmpcStPW4uqwT6oJzvsnf4q2xN6Nv35+hStIX1h
+ clc+5EERMnXCJxc/ORf2udnptPVQPPDTKcTZXhuBOCjHufdylIxjCw8dK M=;
+X-CSE-ConnectionGUID: vXxZzFdtRPmlmpIZ9mnraQ==
+X-CSE-MsgGUID: ooi0LvzcSEeyL4hcHfgOCg==
+Received: from mail-mw2nam12lp2045.outbound.protection.outlook.com (HELO
+ NAM12-MW2-obe.outbound.protection.outlook.com) ([104.47.66.45])
+ by ob1.hc4959-67.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 30 Jul 2024 09:01:27 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=O7TnyMtdIeaBiIUKg24rOujcWliSX3CllR2ioDRGGzZE7lP/oTHkP2glgqXyOa2FP/Boxv+Znch88e6KDosx+WGU7GkZeVVMHV78F1/q8fRSMmmhYk1GoRhRpnYXEdg0mLSZjbE/w6muzk+FgaU/NpMISv3IWhUShB3aLyRmKE9N+UJiR5xcaORbolNX7pBqKvC1Aacgx2rXl11NrmvF9c8boXu3lR3VIM01i5jzxuxyWCrCA8f76WPfe2gxO+1AHP1g2BURX3PR0lzryutyId/jakGKDPEjNrlhuATlBHYW01CWD+kHr4jRy54Q4OuYQxOhV7CEoZViGPu3x6DDVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tlKg1wkPVhf0tLdmujZFkyt5XvAOVk7PhdpehMq8agY=;
+ b=sV27aUzRNPGegulpFzMYzb6I2BwuFZvKD6PQalevgXtT9UFqKgJxDtZ2JwqNJQPZdyroVOihalSsRr3AqBwfFS4mvvGsHPyQ5cqX/F/PDNjcbEoqS1gpq2hyaMUhEMpT+5CEo+gMkbsFLYx6qb4+WrP00V4Tl8s2O8lDexnUv07oAAEZMFXDdCDDijNaadOLv93VKIhPApBnOZSnLZO7bQft0WsSVHy6Fm9+duM/A502PlOwXlfArFxXxOYonIrgM2XdY/qe1UM8L6CbL84/Gez0Lr9DCHLdBHkDYmUOnaTd5Myk/MutEbQlH8cG64BI7jTmfVMkAw6W6lmgBjZJ6Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=seagate.com; dmarc=pass action=none header.from=seagate.com;
+ dkim=pass header.d=seagate.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seagate.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tlKg1wkPVhf0tLdmujZFkyt5XvAOVk7PhdpehMq8agY=;
+ b=QJ1Rr1soQI1tEsIjTZ+UoVam3hfSt71B/TcBSOcyn+PNuT0Tn4M7tEtCTouMkeI2haUSL3wj2TI17N1KmFdMSmwbpepyXynyn7D3yagJIOP5hP3VKYdYhTzjax7S1HrThrdrHwgobB1NOJwoBHQoIRmSUm61cNlK3MqXeipE9u4=
+Received: from LV8PR20MB6853.namprd20.prod.outlook.com (2603:10b6:408:203::21)
+ by SA1PR20MB7339.namprd20.prod.outlook.com (2603:10b6:806:3dd::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.32; Tue, 30 Jul
+ 2024 16:01:25 +0000
+Received: from LV8PR20MB6853.namprd20.prod.outlook.com
+ ([fe80::30b0:8e2a:9ac:20ad]) by LV8PR20MB6853.namprd20.prod.outlook.com
+ ([fe80::30b0:8e2a:9ac:20ad%6]) with mapi id 15.20.7807.026; Tue, 30 Jul 2024
+ 16:01:25 +0000
+From: Alejandro Zeise <alejandro.zeise@seagate.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "berrange@redhat.com"
+ <berrange@redhat.com>
+Subject: RE: [PATCH v2 2/2] hw/misc/aspeed_hace: Fix SG Accumulative hashing
+Thread-Topic: [PATCH v2 2/2] hw/misc/aspeed_hace: Fix SG Accumulative hashing
+Thread-Index: AQHa4enbvOxZS34yIUCjiaHsUo+eeLIPGgAAgABSDJA=
+Date: Tue, 30 Jul 2024 16:01:25 +0000
+Message-ID: <LV8PR20MB6853062C5F0569DE8FCED30AEFB02@LV8PR20MB6853.namprd20.prod.outlook.com>
 References: <20240729190035.3419649-1-alejandro.zeise@seagate.com>
- <20240729190035.3419649-2-alejandro.zeise@seagate.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20240729190035.3419649-2-alejandro.zeise@seagate.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=7GHu=O6=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
+ <20240729190035.3419649-3-alejandro.zeise@seagate.com>
+ <71d5b310-c2ba-49a3-8d95-5949f912dd76@kaod.org>
+In-Reply-To: <71d5b310-c2ba-49a3-8d95-5949f912dd76@kaod.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_10398c1c-5e94-454c-bbc4-eb8a4a50b8b0_ActionId=affb32a9-3a91-4cc9-a693-98992875dc29;
+ MSIP_Label_10398c1c-5e94-454c-bbc4-eb8a4a50b8b0_ContentBits=0;
+ MSIP_Label_10398c1c-5e94-454c-bbc4-eb8a4a50b8b0_Enabled=true;
+ MSIP_Label_10398c1c-5e94-454c-bbc4-eb8a4a50b8b0_Method=Privileged;
+ MSIP_Label_10398c1c-5e94-454c-bbc4-eb8a4a50b8b0_Name=Public;
+ MSIP_Label_10398c1c-5e94-454c-bbc4-eb8a4a50b8b0_SetDate=2024-07-30T15:49:13Z;
+ MSIP_Label_10398c1c-5e94-454c-bbc4-eb8a4a50b8b0_SiteId=d466216a-c643-434a-9c2e-057448c17cbe;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=seagate.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: LV8PR20MB6853:EE_|SA1PR20MB7339:EE_
+x-ms-office365-filtering-correlation-id: 7a977739-afba-4120-a3e5-08dcb0b0dd80
+stx-hosted-ironport-oubound: True
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|376014|366016|38070700018;
+x-microsoft-antispam-message-info: =?utf-8?B?blkvUVpKYjBZRitDTmQrdmlnNlF4SGxtWXZoSlYzaVpEUC9lSEVIMXdMSllm?=
+ =?utf-8?B?VUdvZ0JucEcwQUFrZTBLdzgxTDUxaVhzTnVvSk1aYm5reXVyNkpEd25ueC8v?=
+ =?utf-8?B?NTFOanhWVS9zaE9XTWFDRUpiL0xoOGNPZVRNSzlmQ294a1NxZi9hSmFEYnM4?=
+ =?utf-8?B?bmJHUDR2d2xGZzVySjB6K3pEVGd2RUszQzVyc1EzT0pNSkgvZHQ0cXJrYXhu?=
+ =?utf-8?B?RUZWS0NVM1NYcFVLdkdtOVNLY2t4Q1FLM3cvMFJwRm5PMjIrckVCWDB4a1Zr?=
+ =?utf-8?B?d3BDWVdJWUY3elVwWWVEUVVRZlYzdzB0d0Z2c21PN0VFOVczREszNEdEUVJt?=
+ =?utf-8?B?bVNWemY5UHJwMHpEOGJjdGl4bDJnWHNWbC8yV1RoU0diNVBicVpjMXk3ZHJY?=
+ =?utf-8?B?MUR0dFJzTTVOblRWM2tlTUg1QUVtTlVOZytNS1hteHV3NU0xQnhFRjJneEc3?=
+ =?utf-8?B?VTduVkNrUXJidDRlck9sMUN6STdHTnJJV0RUOXRIVjZqaVhjNUJsaXdVKzZj?=
+ =?utf-8?B?RTE5VWtoZ21CS2dBYm5hMHg4aHlUSnFTTlYzYVF0aVp3azQ2WjZ3VnhLMDY4?=
+ =?utf-8?B?MExqWFo0MjhjaWhKZVdSSE9XbjU0Q2NzRVFrTThYcGdmaklKOEhSdnY0cDlB?=
+ =?utf-8?B?VnNSN0IveEd0b041SXZmSVY2SHFqai9nNXAzcGVqNGxCSHhFSjRnZXpNbXNZ?=
+ =?utf-8?B?TzJwWElPQW1aSTNxaEV5N212c2Y5WFFhdzRQa2ErWC9kenREQVdBbDNQeU02?=
+ =?utf-8?B?U1ZFclFqMHN1ZFo1aXNEQ1hGbVRaREFsYXoxTkdYTmxCdkdYcjBGNlZ1Y1lj?=
+ =?utf-8?B?azhxbWp1dmJod3ROK1JTMjBndndvNjM2TmNZR2Z5MjhxVmY5cldqb0ZVWWhZ?=
+ =?utf-8?B?emh6UDl5VGVHdVFhSzkyaGNUakxYTDN4LzJjRHhKWWRNdFpUbkFHRDA1QXMz?=
+ =?utf-8?B?eEdQUUtSOWp0L1pvU3NZRVVidlRLY0NmMi95TjA1b25RUW5adWxUR0JMSkR2?=
+ =?utf-8?B?NFRwdmpQanRHUUx3UTFMMzZtZmdnSXFDWGVxVUVMczdkQ29FVC9FQkdqVVBH?=
+ =?utf-8?B?bzR2SFNSUkpMaFdHVzJvNWNHM0dDTTViYlZ3V1l2cFd1bTlBWHMwbUlqYWkr?=
+ =?utf-8?B?bktkQjdSSUJwWkJPT0JLTkFkTmNRK1plc280RDNIb2FHbksxL1ovMVlKeVFO?=
+ =?utf-8?B?ZGI4YVZLd244Z1JZa3JXRE5XVjB3WTVEN3BDQTA1NitiZVByV2J0ZEJ6Slkr?=
+ =?utf-8?B?b09EMFJxcFFEWVJZcEpJRzdzMXUveHhZSk90MGVnaEJNSmc5WGNITTFQSms5?=
+ =?utf-8?B?NTdxb0pyY2FFeXpEd2xNampNNExHcWRQL0QzQWc5c28vbGQ0cXk4UlpGVnBh?=
+ =?utf-8?B?Z0psKzA4WGtsc2JJOWlTR3dXVWN1V3ZMRnFmc0l1NFg5S2lxY0ZmNnl6eGJH?=
+ =?utf-8?B?N3RIbHQxb1ZoK1M4L3htdWxhZWt5ZXpVYWxPUy9iMGxoQlMvbnZLWDV0cWRJ?=
+ =?utf-8?B?MG5NSzhkTDh3aFJEMUFEYWxucHdubWE4VERnSXNITFozL3Jla1AxWWpiallO?=
+ =?utf-8?B?dG1TR29FZ1JFN3AvbkhsRUdkN2hjMm5PdmNybml0cEdHZFdkZGwvbHhvRGN3?=
+ =?utf-8?B?VWdCNWtwNTk0RjgwbzFDMFQrOE5PbTBMUThTcmI2VlJBTU90UDFLWk9wRitn?=
+ =?utf-8?B?RmVaa1RtRFhjS2E1YURRYi9hWlVxUmVibVpVV1A2ZS95VFRJd3l3OUpxdS9W?=
+ =?utf-8?B?cU1zUzlRRkEwSHUrWVBZM2hGOWo3SjZRcmQ0MUYxdWYvMTB0NERuZUQ1RkJV?=
+ =?utf-8?Q?KUD+gyjXaDcd/cBlPQQmwgacmtt4hhrgyUYlw=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:LV8PR20MB6853.namprd20.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016)(38070700018); DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?c2pQYkg0TWNBL3NmNHIxdGovVTBrY2VhYzRNSURkUndFMmIwNW9TTHVtS0d3?=
+ =?utf-8?B?OWUreTg2Vmk3Tk1PQkkvWEd1V0NLVldPdlB6NnFROEhZbUd0VEhmMlc2UCtN?=
+ =?utf-8?B?YkR3MUt1KzFJRlUrYUthT1JwU2ZJWm9GQjZRc3V6YXdLd3J4THFqMk5aa3dN?=
+ =?utf-8?B?ekJySExCWHl5OG14SWVHdVUxQ1RDcFdCOU1GS1QyQ0JBOHFhWUZFeWVRczVG?=
+ =?utf-8?B?b0cveFZ4akxGWjlKZ2RCRjhxNlpiV21RUTJPalJYLzViamNBblRCVkVkRW5r?=
+ =?utf-8?B?eVd4Rlp0WG5SRDVZcXpVcHZISGZHTzhZL3dreHhCREk1Y1F6VVptd3lIczNG?=
+ =?utf-8?B?a0NvTzA2c25ESGgxZVFhZkl5bC9KbkVHaTg3cWtGVmJjd2FVc01sdVNjZ3RI?=
+ =?utf-8?B?ZVVXQU9kUG5weGQ3cWdud2wwbFZDaFBOL2s4d2N6WWFwZkduRkorb0ZOU29R?=
+ =?utf-8?B?UUQ5dm9wYm9TMXdrQ1pUUnNDSEYvQzUwTDBDQUo3Rjl1UXJwaUwrbk85Y3hn?=
+ =?utf-8?B?L3p5TnV0SHhGSGtTdGs4VkVLU1Fkckc1S1krZHc0ZFIveFZUNk5FcDhrYmJq?=
+ =?utf-8?B?aXdMSDdtQUdiY2pFTGEwZXBKWXRJWmFxdUdwZzJNSWVnTWRSOXdkYTZDSmlo?=
+ =?utf-8?B?QXphTzlkaDJnRCtRajY5RzlwY0RtZmFTL3AxY1VUNmlGRWU2alNsN3Vkblpt?=
+ =?utf-8?B?M093MmdOR1cvKzAxa0kySDdVRWVldUpNamtHeDdZa1FBUlBhMWkxZGVzdVY5?=
+ =?utf-8?B?OU9ocE9nelU1dWgwOGNBdm5Talg4S1E4UWdPNm5zQUZWN2lqYWR4aVZQSVhL?=
+ =?utf-8?B?RTV5K1hWVUR0TWY4V0lRV05MOEM1aUwrZ2pZK2tEQ2JheEhDdHF5c0RRejZs?=
+ =?utf-8?B?Tm5nRkgrMjZhNXhRQW5xbGFycG9VU04rMUJaellSR0JTVmt4NWJVSWlpOGhr?=
+ =?utf-8?B?NTU4b3dVeVhTejFsRFJLL0poWERMRTExOEhNbElSTGdIc1AyeWxERGFtQnhv?=
+ =?utf-8?B?Nko1b0VTZXZlV2ltNUV2VWN6UkVRMUZwZlQxK25yK2V0Q2EzbkJXVjhMVURQ?=
+ =?utf-8?B?OVZFYWJWNjQ5RjNoTWF1Wmd3N0dia1RrUDQzMWRmSkVNMzZEWitBTmVmVzQr?=
+ =?utf-8?B?ekZySFZidUNrZGxTeDhYWlBOalA5NkdRSEYvUnpYVmR0eC9uSXBTaHl0RW1V?=
+ =?utf-8?B?ZG5yZ1IrVGpIcTY2UzMzc1RMcGpsUEtSN3ZRYXpCMG9IbE1SV1FybDF4NnBz?=
+ =?utf-8?B?elRYSXZhVXJmcFQ2Z0loNXY2NEVBTWJEMzg5VjllRFBmaVRBaitIZWNsanpV?=
+ =?utf-8?B?L0xyUloraVZmSHRWMXRQbVJDTnAzQmhXMCtMWG93YVZKSW9IbFBKb0lqTWlI?=
+ =?utf-8?B?dHZ5VEJ4Z0FnQkljSE9EZ2k3dFdqUHNzNkFNNGxsZDBPU2NHd3ROdStvMUFv?=
+ =?utf-8?B?SzQvZmV1cEVLWERwQmJtbUpyQzVSdWRDY3k2R2Yxc3QrUFRJUklLM25RY0dM?=
+ =?utf-8?B?Q24xbVJBaUxLYXpkdnZqTEQwN01iUmo3VWdXUUh1ejZFZm9NWTlEYWZHMnN4?=
+ =?utf-8?B?K1QyRWp0QXRWWFVSSXNjeFZ6SFZoUkhuY3V0T1pLL3BjSDFUSDZOblRZdXhD?=
+ =?utf-8?B?UzZTd2R0MUtQeVlTYllZZTZySEU4cnR2ZHV1WEhjY3pubEI5VzNYcFBHYjhE?=
+ =?utf-8?B?Tld1dElXU2UvTDF4R1c5Ny84Q0tybUE4UlJWa2lvV1B4eGVST1hYR0ozSkFi?=
+ =?utf-8?B?UVQySTJmM2FCODB0VnhmWmFDTGNNSkR4Yk5BbXp2SUlLT213N3d4YkZ4UTZl?=
+ =?utf-8?B?Q2Fka3pvWEtLNWszT20rYW9xdmpxOUFEcXRGNkJhM1lQRnVrSTR2eTJxVnd3?=
+ =?utf-8?B?dXZqOXhaTWtGSThqc1lQWXIyaytvZ0VzUDVNTVJCaFU1bXc0czhmQmxHUHJJ?=
+ =?utf-8?B?Qk5Cd0p4M3JTK3JzU2p4QktuTlBTT1NMSC9LbjFkUFdWdXQzdnhnRUMrYUND?=
+ =?utf-8?B?QU13TWhEakU2REdtQUhFT2lWcVFCZi9rRVVSdW5mTFJWSnovNktsODEyM0Vy?=
+ =?utf-8?B?eUs5OWtxN1lhZDlKUHluenJueWcvUVdEV0daYVdmWGl5S2hJcWFzY0pBM2JO?=
+ =?utf-8?B?NVNsMlJrNFpUVDFFOVlkYUtPK2craTcvRDdvZ0VBeFFJNmkzdlFXOXBkdGsx?=
+ =?utf-8?B?Qmc9PQ==?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: CThB6jXku5rO0vb7JzhJGnCMbWriMIgffwK5F7cz9057iVSjODpNAmhfW3wsY5M2deiQi0OQMOClyLamYrXicVfkwKQQdp/z4xcHVeh6UZ5C57bw2AHNANz5v5NidfwKvcFpmyHwxdFmMM0onS89IuPwl7YVKKQ0h7wWf/lxzLRIoHDPCT7IukLOilMG6YL6xLLWib3jQ7tP5+S/uTyKVJSIuyntcnIGDhhSNyBaGhgGcj0eFf08SUTavgPhe9CApTZ5eQE0ernwCoGTmyHLm/ZX6OIMIbmv0ZK43QrsyBo3meWcclN80g6S3bmbUzhuto2q9Diq/BqcrQobJ55VEnMQGqXXqwgLM28g3+S17EI6h/eD4rV+JXAGT/+3Uj9ApkR5EFTjnmZw4GmzUaCbqUIZpnWtMgnOHcKTizThmQcay8YCHAbLqZBJRa9sUlIarPYkL9An16zTK8fVT+8Tih6BHa8pT2AjSyeXHM+/d9UoGo5/Q3ZvyRholcULzuHVuH9b0s3m4MKWVFHOYYUZStckwe+fJSQYIRlrkXtc+SoJ2Vv/il+BZsssgDu6S79pexDnSMXCfBx9i0uynLS/4LNYUcBRFhpvU10Vgl4RYOk3WKAfXNfnaF7tiq962j8h
+X-OriginatorOrg: seagate.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR20MB6853.namprd20.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7a977739-afba-4120-a3e5-08dcb0b0dd80
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Jul 2024 16:01:25.6276 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: d466216a-c643-434a-9c2e-057448c17cbe
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: MiCvXJR1bflUh9lj8avj8XI1Vankiru/oqkgLLumExXBJ/bPYSsirDw/MttHs2UeXIlHQlOvL6D9gVmPgruMyjc5w/ipyABP8r3/CEEWxII=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR20MB7339
+Received-SPF: pass client-ip=139.138.35.140;
+ envelope-from=alejandro.zeise@seagate.com; helo=esa.hc4959-67.iphmx.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
 X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,666 +203,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/29/24 21:00, Alejandro Zeise wrote:
-> This change adds an accumulative hashing function
-> (qcrypto_hash_accumulate_bytesv) and implementation
-> for each of the crypto library backends that QEMU supports.
-> 
-> The QCrypto API did not support hashing in an accumulative mode.
-> As such, hardware hash modules (like the HACE from Aspeed's SoCs) are
-> unable to perform such operations correctly when the guest requires it.
-> 
-> The creation and freeing of each library's context is abstracted by
-> the qcrypto_hash_accumulate_new_ctx and qcrypto_hash_accumulate_free_ctx
-> functions.
-> 
-> Changes in V2:
-> * Fixed error checking bug in libgcrypt backend
-> 
-> Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
-> ---
->   crypto/hash-gcrypt.c  | 105 ++++++++++++++++++++++++++++++++++++++++++
->   crypto/hash-glib.c    |  89 +++++++++++++++++++++++++++++++++++
->   crypto/hash-gnutls.c  |  82 +++++++++++++++++++++++++++++++++
->   crypto/hash-nettle.c  |  93 +++++++++++++++++++++++++++++++++++++
->   crypto/hash.c         |  42 +++++++++++++++++
->   crypto/hashpriv.h     |  11 +++++
->   include/crypto/hash.h |  65 ++++++++++++++++++++++++++
->   7 files changed, 487 insertions(+)
-> 
-> diff --git a/crypto/hash-gcrypt.c b/crypto/hash-gcrypt.c
-> index 829e48258d..6ef7e67711 100644
-> --- a/crypto/hash-gcrypt.c
-> +++ b/crypto/hash-gcrypt.c
-> @@ -1,6 +1,7 @@
->   /*
->    * QEMU Crypto hash algorithms
->    *
-> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
->    * Copyright (c) 2016 Red Hat, Inc.
->    *
->    * This library is free software; you can redistribute it and/or
-> @@ -110,7 +111,111 @@ qcrypto_gcrypt_hash_bytesv(QCryptoHashAlgorithm alg,
->       return -1;
->   }
->   
-> +static
-> +int qcrypto_gcrypt_hash_accumulate_new_ctx(QCryptoHashAlgorithm alg,
-> +                                           qcrypto_hash_accumulate_ctx_t **accumulate_ctx,
-> +                                           Error **errp)
-> +{
-> +    int ret;
-> +
-> +    if (!qcrypto_hash_supports(alg)) {
-> +        error_setg(errp,
-> +                   "Unknown hash algorithm %d",
-> +                   alg);
-> +        return -1;
-> +    }
-> +
-> +    ret = gcry_md_open((gcry_md_hd_t *) accumulate_ctx, qcrypto_hash_alg_map[alg], 0);
-> +
-> +    if (ret < 0) {
-> +        error_setg(errp,
-> +                   "Unable to initialize hash algorithm: %s",
-> +                   gcry_strerror(ret));
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static
-> +int qcrypto_gcrypt_hash_accumulate_free_ctx(qcrypto_hash_accumulate_ctx_t *hash_ctx,
-> +                                            Error **errp)
-> +{
-> +    if (hash_ctx != NULL) {
-> +        gcry_md_close((gcry_md_hd_t) hash_ctx);
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static
-> +int qcrypto_gcrypt_hash_accumulate_bytesv(QCryptoHashAlgorithm alg,
-> +                                          qcrypto_hash_accumulate_ctx_t *accumulate_ctx,
-> +                                          const struct iovec *iov,
-> +                                          size_t niov,
-> +                                          uint8_t **result,
-> +                                          size_t *resultlen,
-> +                                          Error **errp)
-> +{
-> +    int i, ret;
-> +    gcry_md_hd_t ctx_copy;
-> +    unsigned char *digest;
-> +
-> +    if (!qcrypto_hash_supports(alg)) {
-> +        error_setg(errp,
-> +                   "Unknown hash algorithm %d",
-> +                   alg);
-> +        return -1;
-> +    }
-> +
-> +    for (i = 0; i < niov; i++) {
-> +        gcry_md_write((gcry_md_hd_t) accumulate_ctx, iov[i].iov_base, iov[i].iov_len);
-> +    }
-> +
-> +    ret = gcry_md_get_algo_dlen(qcrypto_hash_alg_map[alg]);
-> +    if (ret <= 0) {
-> +        error_setg(errp,
-> +                   "Unable to get hash length: %s",
-> +                   gcry_strerror(ret));
-> +        return -1;
-> +    }
-> +
-> +    if (*resultlen == 0) {
-> +        *resultlen = ret;
-> +        *result = g_new0(uint8_t, *resultlen);
-> +    } else if (*resultlen != ret) {
-> +        error_setg(errp,
-> +                   "Result buffer size %zu is smaller than hash %d",
-> +                   *resultlen, ret);
-> +        return -1;
-> +    }
-> +
-> +    /*
-> +     * Make a copy so we don't distort the main context
-> +     * by calculating the intermediate hash
-> +     */
-> +    ret = gcry_md_copy(&ctx_copy, (gcry_md_hd_t) accumulate_ctx);
-> +    if (ret) {
-> +        error_setg(errp, "Unable to make copy: %s", gcry_strerror(ret));
-> +        return -1;
-> +    }
-> +
-> +    digest = gcry_md_read(ctx_copy, 0);
-> +    if (!digest) {
-> +        error_setg(errp,
-> +                   "No digest produced");
-> +        return -1;
-> +    }
-> +    memcpy(*result, digest, *resultlen);
-> +    gcry_md_close(ctx_copy);
-> +
-> +    return 0;
-> +}
-> +
->   
->   QCryptoHashDriver qcrypto_hash_lib_driver = {
->       .hash_bytesv = qcrypto_gcrypt_hash_bytesv,
-> +    .hash_accumulate_bytesv = qcrypto_gcrypt_hash_accumulate_bytesv,
-> +    .accumulate_new_ctx = qcrypto_gcrypt_hash_accumulate_new_ctx,
-> +    .accumulate_free_ctx = qcrypto_gcrypt_hash_accumulate_free_ctx,
->   };
-> diff --git a/crypto/hash-glib.c b/crypto/hash-glib.c
-> index 82de9db705..c0d1d72c88 100644
-> --- a/crypto/hash-glib.c
-> +++ b/crypto/hash-glib.c
-> @@ -1,6 +1,7 @@
->   /*
->    * QEMU Crypto hash algorithms
->    *
-> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
->    * Copyright (c) 2016 Red Hat, Inc.
->    *
->    * This library is free software; you can redistribute it and/or
-> @@ -95,6 +96,94 @@ qcrypto_glib_hash_bytesv(QCryptoHashAlgorithm alg,
->   }
->   
->   
-> +static
-> +int qcrypto_glib_hash_accumulate_new_ctx(QCryptoHashAlgorithm alg,
-> +                                         qcrypto_hash_accumulate_ctx_t **accumulate_ctx,
-> +                                         Error **errp)
-> +{
-> +    if (!qcrypto_hash_supports(alg)) {
-> +        error_setg(errp,
-> +                   "Unknown hash algorithm %d",
-> +                   alg);
-> +        return -1;
-> +    }
-> +
-> +    *accumulate_ctx = g_checksum_new(qcrypto_hash_alg_map[alg]);
-> +
-> +    return 0;
-> +}
-> +
-> +static
-> +int qcrypto_glib_hash_accumulate_free_ctx(qcrypto_hash_accumulate_ctx_t *hash_ctx,
-> +                                          Error **errp)
-> +{
-> +    if (hash_ctx != NULL) {
-> +        g_checksum_free((GChecksum *) hash_ctx);
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +
-> +static
-> +int qcrypto_glib_hash_accumulate_bytesv(QCryptoHashAlgorithm alg,
-> +                                        qcrypto_hash_accumulate_ctx_t *accumulate_ctx,
-> +                                        const struct iovec *iov,
-> +                                        size_t niov,
-> +                                        uint8_t **result,
-> +                                        size_t *resultlen,
-> +                                        Error **errp)
-> +{
-> +    int i, ret;
-> +    GChecksum *ctx_copy;
-> +
-> +    if (!qcrypto_hash_supports(alg)) {
-> +        error_setg(errp,
-> +                   "Unknown hash algorithm %d",
-> +                   alg);
-> +        return -1;
-> +    }
-> +
-> +    for (i = 0; i < niov; i++) {
-> +        g_checksum_update((GChecksum *) accumulate_ctx, iov[i].iov_base, iov[i].iov_len);
-> +    }
-> +
-> +    ret = g_checksum_type_get_length(qcrypto_hash_alg_map[alg]);
-> +    if (ret < 0) {
-> +        error_setg(errp, "%s",
-> +                   "Unable to get hash length");
-> +        return -1;
-> +    }
-> +    if (*resultlen == 0) {
-> +        *resultlen = ret;
-> +        *result = g_new0(uint8_t, *resultlen);
-> +    } else if (*resultlen != ret) {
-> +        error_setg(errp,
-> +                   "Result buffer size %zu is smaller than hash %d",
-> +                   *resultlen, ret);
-> +        return -1;
-> +    }
-> +
-> +    /*
-> +    Make a copy so we don't distort the main context
-> +    by calculating the intermediate hash.
-> +    */
-> +    ctx_copy = g_checksum_copy((GChecksum *) accumulate_ctx);
-> +    if (ctx_copy == NULL) {
-> +        error_setg(errp, "Unable to make copy: %s", __func__);
-> +        return -1;
-> +    }
-> +
-> +    g_checksum_get_digest((GChecksum *) ctx_copy, *result, resultlen);
-> +    g_checksum_free(ctx_copy);
-> +
-> +    return 0;
-> +}
-> +
-> +
->   QCryptoHashDriver qcrypto_hash_lib_driver = {
->       .hash_bytesv = qcrypto_glib_hash_bytesv,
-> +    .hash_accumulate_bytesv = qcrypto_glib_hash_accumulate_bytesv,
-> +    .accumulate_new_ctx = qcrypto_glib_hash_accumulate_new_ctx,
-> +    .accumulate_free_ctx = qcrypto_glib_hash_accumulate_free_ctx,
->   };
-> diff --git a/crypto/hash-gnutls.c b/crypto/hash-gnutls.c
-> index 17911ac5d1..9464893213 100644
-> --- a/crypto/hash-gnutls.c
-> +++ b/crypto/hash-gnutls.c
-> @@ -1,6 +1,7 @@
->   /*
->    * QEMU Crypto hash algorithms
->    *
-> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
->    * Copyright (c) 2021 Red Hat, Inc.
->    *
->    * This library is free software; you can redistribute it and/or
-> @@ -99,6 +100,87 @@ qcrypto_gnutls_hash_bytesv(QCryptoHashAlgorithm alg,
->   }
->   
->   
-> +static
-> +int qcrypto_gnutls_hash_accumulate_new_ctx(QCryptoHashAlgorithm alg,
-> +                                           qcrypto_hash_accumulate_ctx_t **hash_ctx,
-> +                                           Error **errp)
-> +{
-> +    int ret;
-> +
-> +    if (!qcrypto_hash_supports(alg)) {
-> +        error_setg(errp,
-> +                   "Unknown hash algorithm %d",
-> +                   alg);
-> +        return -1;
-> +    }
-> +
-> +    ret = gnutls_hash_init((gnutls_hash_hd_t *) hash_ctx, qcrypto_hash_alg_map[alg]);
-> +    if (ret < 0) {
-> +        error_setg(errp,
-> +                   "Unable to initialize hash algorithm: %s",
-> +                   gnutls_strerror(ret));
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static
-> +int qcrypto_gnutls_hash_accumulate_free_ctx(qcrypto_hash_accumulate_ctx_t *hash_ctx,
-> +                                            Error **errp)
-> +{
-> +    if (hash_ctx != NULL) {
-> +        gnutls_hash_deinit((gnutls_hash_hd_t) hash_ctx, NULL);
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static
-> +int qcrypto_gnutls_hash_accumulate_bytesv(QCryptoHashAlgorithm alg,
-> +                                          qcrypto_hash_accumulate_ctx_t *hash_ctx,
-> +                                          const struct iovec *iov,
-> +                                          size_t niov,
-> +                                          uint8_t **result,
-> +                                          size_t *resultlen,
-> +                                          Error **errp)
-> +{
-> +    int i, ret;
-> +
-> +    if (!qcrypto_hash_supports(alg)) {
-> +        error_setg(errp,
-> +                   "Unknown hash algorithm %d",
-> +                   alg);
-> +        return -1;
-> +    }
-> +
-> +    ret = gnutls_hash_get_len(qcrypto_hash_alg_map[alg]);
-> +    if (*resultlen == 0) {
-> +        *resultlen = ret;
-> +        *result = g_new0(uint8_t, *resultlen);
-> +    } else if (*resultlen != ret) {
-> +        error_setg(errp,
-> +                   "Result buffer size %zu is smaller than hash %d",
-> +                   *resultlen, ret);
-> +        return -1;
-> +    }
-> +
-> +    for (i = 0; i < niov; i++) {
-> +        gnutls_hash((gnutls_hash_hd_t) hash_ctx,
-> +                    iov[i].iov_base, iov[i].iov_len);
-> +    }
-> +
-> +    /* Make a copy so we don't distort the main context */
-> +    gnutls_hash_hd_t copy = gnutls_hash_copy((gnutls_hash_hd_t) hash_ctx);
-> +    gnutls_hash_deinit(copy, *result);
-> +
-> +    return 0;
-> +}
-> +
-> +
->   QCryptoHashDriver qcrypto_hash_lib_driver = {
->       .hash_bytesv = qcrypto_gnutls_hash_bytesv,
-> +    .hash_accumulate_bytesv = qcrypto_gnutls_hash_accumulate_bytesv,
-> +    .accumulate_new_ctx = qcrypto_gnutls_hash_accumulate_new_ctx,
-> +    .accumulate_free_ctx = qcrypto_gnutls_hash_accumulate_free_ctx,
->   };
-> diff --git a/crypto/hash-nettle.c b/crypto/hash-nettle.c
-> index 1ca1a41062..e21d0c6cf9 100644
-> --- a/crypto/hash-nettle.c
-> +++ b/crypto/hash-nettle.c
-> @@ -1,6 +1,7 @@
->   /*
->    * QEMU Crypto hash algorithms
->    *
-> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
->    * Copyright (c) 2016 Red Hat, Inc.
->    *
->    * This library is free software; you can redistribute it and/or
-> @@ -155,7 +156,99 @@ qcrypto_nettle_hash_bytesv(QCryptoHashAlgorithm alg,
->       return 0;
->   }
->   
-> +static
-> +int qcrypto_nettle_hash_accumulate_new_ctx(QCryptoHashAlgorithm alg,
-> +                                           qcrypto_hash_accumulate_ctx_t **hash_ctx,
-> +                                           Error **errp)
-> +{
-> +    if (!qcrypto_hash_supports(alg)) {
-> +        error_setg(errp,
-> +                   "Unknown hash algorithm %d",
-> +                   alg);
-> +        return -1;
-> +    }
-> +
-> +    *((union qcrypto_hash_ctx **) hash_ctx) = g_malloc(sizeof(union qcrypto_hash_ctx));
-> +
-> +    qcrypto_hash_alg_map[alg].init(*((union qcrypto_hash_ctx **) accumulate_ctx));
-> +
-> +    return 0;
-> +}
-> +
-> +static
-> +int qcrypto_nettle_hash_accumulate_free_ctx(qcrypto_hash_accumulate_ctx_t *hash_ctx,
-> +                                            Error **errp)
-> +{
-> +    g_free((union qcrypto_hash_ctx *) hash_ctx);
-> +    return 0;
-> +}
-> +
-> +static
-> +int qcrypto_nettle_hash_accumulate_bytesv(QCryptoHashAlgorithm alg,
-> +                                          qcrypto_hash_accumulate_ctx_t *hash_ctx,
-> +                                          const struct iovec *iov,
-> +                                          size_t niov,
-> +                                          uint8_t **result,
-> +                                          size_t *resultlen,
-> +                                          Error **errp)
-> +{
-> +    union qcrypto_hash_ctx *ctx_copy;
-> +    int i;
-> +
-> +    if (!qcrypto_hash_supports(alg)) {
-> +        error_setg(errp,
-> +                   "Unknown hash algorithm %d",
-> +                   alg);
-> +        return -1;
-> +    }
-> +
-> +    for (i = 0; i < niov; i++) {
-> +        /* Some versions of nettle have functions
-> +         * declared with 'int' instead of 'size_t'
-> +         * so to be safe avoid writing more than
-> +         * UINT_MAX bytes at a time
-> +         */
-> +        size_t len = iov[i].iov_len;
-> +        uint8_t *base = iov[i].iov_base;
-> +        while (len) {
-> +            size_t shortlen = MIN(len, UINT_MAX);
-> +            qcrypto_hash_alg_map[alg].write((union qcrypto_hash_ctx *) hash_ctx,
-> +                                            len, base);
-> +            len -= shortlen;
-> +            base += len;
-> +        }
-> +    }
-> +
-> +    if (*resultlen == 0) {
-> +        *resultlen = qcrypto_hash_alg_map[alg].len;
-> +        *result = g_new0(uint8_t, *resultlen);
-> +    } else if (*resultlen != qcrypto_hash_alg_map[alg].len) {
-> +        error_setg(errp,
-> +                   "Result buffer size %zu is smaller than hash %zu",
-> +                   *resultlen, qcrypto_hash_alg_map[alg].len);
-> +        return -1;
-> +    }
-> +
-> +    /*
-> +    Make a copy so we don't distort the main context
-> +    by calculating the intermediate hash
-> +    */
-> +    ctx_copy = g_new(union qcrypto_hash_ctx, 1);
-> +    memcpy(ctx_copy, (union qcrypto_hash_ctx *) hash_ctx,
-> +           sizeof(union qcrypto_hash_ctx));
-> +
-> +    qcrypto_hash_alg_map[alg].result(ctx_copy,
-> +                                     *resultlen, *result);
-> +
-> +    g_free(ctx_copy);
-> +
-> +    return 0;
-> +}
-> +
->   
->   QCryptoHashDriver qcrypto_hash_lib_driver = {
->       .hash_bytesv = qcrypto_nettle_hash_bytesv,
-> +    .hash_accumulate_bytesv = qcrypto_nettle_hash_accumulate_bytesv,
-> +    .accumulate_new_ctx = qcrypto_nettle_hash_accumulate_new_ctx,
-> +    .accumulate_free_ctx = qcrypto_nettle_hash_accumulate_free_ctx,
->   };
-> diff --git a/crypto/hash.c b/crypto/hash.c
-> index b0f8228bdc..0d45ce1e1b 100644
-> --- a/crypto/hash.c
-> +++ b/crypto/hash.c
-> @@ -1,6 +1,7 @@
->   /*
->    * QEMU Crypto hash algorithms
->    *
-> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
->    * Copyright (c) 2015 Red Hat, Inc.
->    *
->    * This library is free software; you can redistribute it and/or
-> @@ -77,6 +78,47 @@ int qcrypto_hash_bytes(QCryptoHashAlgorithm alg,
->       return qcrypto_hash_bytesv(alg, &iov, 1, result, resultlen, errp);
->   }
->   
-> +int qcrypto_hash_accumulate_bytesv(QCryptoHashAlgorithm alg,
-> +                                   qcrypto_hash_accumulate_ctx_t *accumulate_ctx,
-> +                                   const struct iovec *iov,
-> +                                   size_t niov,
-> +                                   uint8_t **result,
-> +                                   size_t *resultlen,
-> +                                   Error **errp)
-> +{
-> +#ifdef CONFIG_AF_ALG
-> +    qemu_log_mask(LOG_UNIMP, "%s: AF_ALG support unimplemented.\n", __func__);
-> +    return 1;
-> +#else
-> +    return qcrypto_hash_lib_driver.hash_accumulate_bytesv(alg, accumulate_ctx,
-> +                                                          iov, niov, result,
-> +                                                          resultlen, NULL);
-> +#endif /* CONFIG_AF_ALG */
-> +}
-> +
-> +int qcrypto_hash_accumulate_new_ctx(QCryptoHashAlgorithm alg,
-> +                                    qcrypto_hash_accumulate_ctx_t **accumulate_ctx,
-> +                                    Error **errp)
-> +{
-> +#ifdef CONFIG_AF_ALG
-> +    qemu_log_mask(LOG_UNIMP, "%s: AF_ALG support unimplemented.\n", __func__);
-> +    return 1;
-> +#else
-> +    return qcrypto_hash_lib_driver.accumulate_new_ctx(alg, accumulate_ctx, errp);
-> +#endif /* CONFIG_AF_ALG */
-> +}
-> +
-> +int qcrypto_hash_accumulate_free_ctx(qcrypto_hash_accumulate_ctx_t *accumulate_ctx,
-> +                                     Error **errp)
-> +{
-> +#ifdef CONFIG_AF_ALG
-> +    qemu_log_mask(LOG_UNIMP, "%s: AF_ALG support unimplemented.\n", __func__);
-> +    return 1;
-> +#else
-> +    return qcrypto_hash_lib_driver.accumulate_free_ctx(accumulate_ctx, errp);
-> +#endif /* CONFIG_AF_ALG */
-> +}
-> +
->   static const char hex[] = "0123456789abcdef";
->   
->   int qcrypto_hash_digestv(QCryptoHashAlgorithm alg,
-> diff --git a/crypto/hashpriv.h b/crypto/hashpriv.h
-> index cee26ccb47..49b3927208 100644
-> --- a/crypto/hashpriv.h
-> +++ b/crypto/hashpriv.h
-> @@ -1,6 +1,7 @@
->   /*
->    * QEMU Crypto hash driver supports
->    *
-> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
->    * Copyright (c) 2017 HUAWEI TECHNOLOGIES CO., LTD.
->    *
->    * Authors:
-> @@ -24,6 +25,16 @@ struct QCryptoHashDriver {
->                          uint8_t **result,
->                          size_t *resultlen,
->                          Error **errp);
-> +    int (*hash_accumulate_bytesv)(QCryptoHashAlgorithm alg,
-> +                                  void *hash_ctx,
-> +                                  const struct iovec *iov,
-> +                                  size_t niov,
-> +                                  uint8_t **result,
-> +                                  size_t *resultlen,
-> +                                  Error **errp);
-> +    int (*accumulate_new_ctx)(QCryptoHashAlgorithm alg, void **hash_ctx,
-> +                              Error **errp);
-> +    int (*accumulate_free_ctx)(void *hash_ctx, Error **errp);
->   };
->   
->   extern QCryptoHashDriver qcrypto_hash_lib_driver;
-> diff --git a/include/crypto/hash.h b/include/crypto/hash.h
-> index 54d87aa2a1..fb8ae2d099 100644
-> --- a/include/crypto/hash.h
-> +++ b/include/crypto/hash.h
-> @@ -1,6 +1,7 @@
->   /*
->    * QEMU Crypto hash algorithms
->    *
-> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
->    * Copyright (c) 2015 Red Hat, Inc.
->    *
->    * This library is free software; you can redistribute it and/or
-> @@ -25,6 +26,8 @@
->   
->   /* See also "QCryptoHashAlgorithm" defined in qapi/crypto.json */
->   
-> +typedef void qcrypto_hash_accumulate_ctx_t;
-
-
-QCryptoHmac defines a similar API. I would do the same for the hash
-accumulative mode. See hmac files.
-
-Thanks,
-
-C.
-
-  
-
-  
-> +
->   /**
->    * qcrypto_hash_supports:
->    * @alg: the hash algorithm
-> @@ -120,6 +123,68 @@ int qcrypto_hash_digestv(QCryptoHashAlgorithm alg,
->                            char **digest,
->                            Error **errp);
->   
-> +/**
-> + * qcrypto_hash_accumulate_bytesv:
-> + * @alg: the hash algorithm
-> + * @accumulate_ctx: pointer to the algorithm's context for further hash operations
-> + * @iov: the array of memory regions to hash
-> + * @niov: the length of @iov
-> + * @result: pointer to hold output hash
-> + * @resultlen: pointer to hold length of @result
-> + * @errp: pointer to a NULL-initialized error object
-> + *
-> + * Computes the hash across all the memory regions
-> + * present in @iov using the existing hash context
-> + * given in @accumulate_ctx. The @result pointer will be
-> + * filled with raw bytes representing the computed
-> + * hash, which will have length @resultlen. The
-> + * memory pointer in @result must be released
-> + * with a call to g_free() when no longer required.
-> + *
-> + * Returns: 0 on success, -1 on error
-> + */
-> +int qcrypto_hash_accumulate_bytesv(QCryptoHashAlgorithm alg,
-> +                                   qcrypto_hash_accumulate_ctx_t *accumulate_ctx,
-> +                                   const struct iovec *iov,
-> +                                   size_t niov,
-> +                                   uint8_t **result,
-> +                                   size_t *resultlen,
-> +                                   Error **errp);
-> +
-> +/**
-> + * qcrypto_hash_accumulate_new_ctx:
-> + * @alg: the hash algorithm
-> + * @accumulate_ctx: pointer to the pointer holding the algorithm's
-> + *                  context for further hash operations. The pointer will
-> + *                  be modified to point to the memory this function
-> + *                  allocates to hold the context.
-> + * @errp: pointer to a NULL-initialized error object
-> + *
-> + * Creates a new hashing context for the chosen algorithm for
-> + * usage with qcrypto_hash_accumulate_bytesv().
-> + * This is useful for when one has multiple inputs to compute a hash, but
-> + * not all are available at a single point in time, making qcrypto_hash_bytesv()
-> + * inadequate. The @accumulate_ctx pointer must be released with a call to
-> + * qcrypto_hash_accumulate_free_ctx() once all hash operations are complete.
-> + *
-> + * Returns: 0 on success, -1 on error
-> + */
-> +int qcrypto_hash_accumulate_new_ctx(QCryptoHashAlgorithm alg,
-> +                                    qcrypto_hash_accumulate_ctx_t **accumulate_ctx,
-> +                                    Error **errp);
-> +
-> +/**
-> + * qcrypto_hash_accumulate_free_ctx:
-> + * @accumulate_ctx: pointer to the algorithm's context for further hash operations
-> + * @errp: pointer to a NULL-initialized error object
-> + *
-> + * frees a hashing context for the chosen algorithm.
-> + *
-> + * Returns: 0 on success, -1 on error
-> + */
-> +int qcrypto_hash_accumulate_free_ctx(qcrypto_hash_accumulate_ctx_t *accumulate_ctx,
-> +                                     Error **errp);
-> +
->   /**
->    * qcrypto_hash_digest:
->    * @alg: the hash algorithm
-
+SGVsbG8gQ8OpZHJpYywNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBD
+w6lkcmljIExlIEdvYXRlciA8Y2xnQGthb2Qub3JnPiANCj4gU2VudDogVHVlc2RheSwgSnVseSAz
+MCwgMjAyNCA1OjU1IEFNDQo+IFRvOiBBbGVqYW5kcm8gWmVpc2UgPGFsZWphbmRyby56ZWlzZUBz
+ZWFnYXRlLmNvbT47IHFlbXUtYXJtQG5vbmdudS5vcmcNCj4gQ2M6IHFlbXUtZGV2ZWxAbm9uZ251
+Lm9yZzsgcGV0ZXIubWF5ZGVsbEBsaW5hcm8ub3JnOyBiZXJyYW5nZUByZWRoYXQuY29tDQo+IFN1
+YmplY3Q6IFJlOiBbUEFUQ0ggdjIgMi8yXSBody9taXNjL2FzcGVlZF9oYWNlOiBGaXggU0cgQWNj
+dW11bGF0aXZlIGhhc2hpbmcNCg0KDQo+IFRoaXMgbWVzc2FnZSBoYXMgb3JpZ2luYXRlZCBmcm9t
+IGFuIEV4dGVybmFsIFNvdXJjZS4gUGxlYXNlIHVzZSBwcm9wZXIganVkZ21lbnQgYW5kIGNhdXRp
+b24gd2hlbiBvcGVuaW5nIGF0dGFjaG1lbnRzLCBjbGlja2luZyBsaW5rcywgb3IgcmVzcG9uZGlu
+ZyB0byB0aGlzIGVtYWlsLg0KDQoNCj4gSGVsbG8gQWxlamFuZHJvLA0KDQo+IE9uIDcvMjkvMjQg
+MjE6MDAsIEFsZWphbmRybyBaZWlzZSB3cm90ZToNCj4+IE1ha2UgdGhlIEFzcGVlZCBIQUNFIG1v
+ZHVsZSB1c2UgdGhlIG5ldyBxY3J5cHRvIGFjY3VtdWxhdGl2ZSBoYXNoaW5nIA0KPj4gZnVuY3Rp
+b25zIHdoZW4gaW4gc2NhdHRlci1nYXRoZXIgYWNjdW11bGF0aXZlIG1vZGUuIEEgaGFzaCBjb250
+ZXh0IA0KPj4gd2lsbCBtYWludGFpbiBhICJydW5uaW5nLWhhc2giIGFzIGVhY2ggc2NhdHRlci1n
+YXRoZXIgY2h1bmsgaXMgcmVjZWl2ZWQuDQo+Pg0KPj4gUHJldmlvdXNseSBlYWNoIHNjYXR0ZXIt
+Z2F0aGVyICJjaHVuayIgd2FzIGNhY2hlZCBzbyB0aGUgaGFzaCBjb3VsZCBiZSANCj4+IGNvbXB1
+dGVkIG9uY2UgdGhlIGZpbmFsIGNodW5rIHdhcyByZWNlaXZlZC4NCj4+IEhvd2V2ZXIsIHRoZSBj
+YWNoZSB3YXMgYSBzaGFsbG93IGNvcHksIHNvIG9uY2UgdGhlIGd1ZXN0IG92ZXJ3cm90ZSB0aGUg
+DQo+PiBtZW1vcnkgcHJvdmlkZWQgdG8gSEFDRSB0aGUgZmluYWwgaGFzaCB3b3VsZCBub3QgYmUg
+Y29ycmVjdC4NCj4+DQo+PiBQb3NzaWJseSByZWxhdGVkIHRvOiANCj4+IGh0dHBzOi8vc2VjdXJl
+LXdlYi5jaXNjby5jb20vMW0xWjJZQ3JWMnZob2NEZnRhdXU5MlplT2VncWVaZklSRlVBSkp3VmsN
+Cj4+IEY5Zkk1Q0VtcTlxOE0wb1lZVEtMSUJFN0g3QW5jOVc4UEcyaVljSzlMMXV6WGRnODBxTnR5
+Nlp1MVg2UU43clF2VjM5Y0ENCj4+IHFTOEFvV2NzWU1hQnpWbzZnR0tZMnVwTTZfOGVKbWlPeTJN
+N3ZyR21FYWFVRS1Tblc2ekNEMWJiSDNldDZuRXJXZ0dmZ3MNCj4+IFRJeHVpUnpnd3ZFN3dyVFBl
+d0E2aXNEeE9zV2VFY2xkQ0t1S2JtWUgyc1NuUTNqcGRaTUttcGdYOXRWWmZJQ0kzbndod2INCj4+
+IHd6OFJZQmdfNE9ILThrbDlFQ0VXNmdyS0RQUGk4WTBuaTN6TzhIUHl3cjM2bndraEF1WW1LOGhD
+Mjd2QmJmN3FmbG9NdTUNCj4+IHR6UkdKQlVQUWNkU2pXZUtfNE10cnhRQ29JcFVGRUtQTXFmLWll
+bFZNc0NUc3VZaDBBQmhCOXVyODRmY1Fwblh0VEZ1aWINCj4+IFd2UlU2eC1BUUdXMVdtWnpneFVB
+ck5uN19IYV9LZjBQa25JMmI5TEpJS2FTQ3VOYTR5Mzd4MGFRcE9fQllMMExCYVFFS0ENCj4+IGNV
+ZWRiYXhCLVEvaHR0cHMlM0ElMkYlMkZnaXRsYWIuY29tJTJGcWVtdS1wcm9qZWN0JTJGcWVtdSUy
+Ri0lMkZpc3N1ZXMNCj4+ICUyRjExMjENCj4+IEJ1Z2xpbms6IA0KPj4gaHR0cHM6Ly9zZWN1cmUt
+d2ViLmNpc2NvLmNvbS8xb2ZpWUZlMVNOUWd6UlEzRTNQUzlMSVRNaFVzREpaSVZXdU9vZ19Wag0K
+Pj4gdGduVGFieFg5TnFXNUxZcjRFUEZyVkN6UHRNZi1oQXg4N3FJa1Vpckw2d01ibkt5aGdDZW9i
+VUxVbTB3QllpOWJvdGZTbw0KPj4gREtGWGE2dkJPNkdnTmRWQkFiR01TQ08xSWdtb2dCWV9RMzNs
+TTZNN09GYk1pcHh4c0dEaElCSk1lWW5lYXFncjVRYXRkYw0KPj4gZ2NtQ2dqdThiMnY2MHEtZjd4
+eFRKRnREaWhPRDlyZkN6UGtzcHc5eTlNY1p5elVxVk9iLUZpbi1TWVFFYUM5c0VON3BGQw0KPj4g
+WnU1OWRqYVdvY0NJUkl1ZEdTVlB1Yk5DeVY2LUFmVU5sQUw2QmZoLWU5OV9Wb0RwQ012NktDWkdW
+b29SamNkQ3ZVVzR1Sg0KPj4gX3FoVmE3VlFLSk1RYkhKRUUtUXExaGRPbFBiUjJBZTVkUW9pekVh
+dENsSDA1SlpMRTFsamd1Mkp0QUlyaW9aN0p5Zm1Nbg0KPj4gai13OC1DaERER1lQZHRWTkxLazBf
+VHJoejRaOVd2dmxDLWdBV2lyeF9hRXd6QVlGN0ZSQzhJX29xQVpVb0REeEpSY1NZZA0KPj4gWXY0
+WGpDY3FHQS9odHRwcyUzQSUyRiUyRmdpdGh1Yi5jb20lMkZvcGVuYm1jJTJGcWVtdSUyRmlzc3Vl
+cyUyRjM2DQoNCg0KPiBUaGFua3MgZm9yIHRoZXNlIGNoYW5nZXMuDQoNCj4gSG93ZXZlciwgdGhp
+cyBpbnRyb2R1Y2VzIGEgcmVncmVzc2lvbiB3aGVuIGNvbXBpbGluZyBRRU1VIHdpdGggLS1kaXNh
+YmxlLWdjcnlwdC4gSXQgY2FuIGJlIHJlcHJvZHVjZWQgd2l0aCA6DQoNCiAgID4gbWFrZSBjaGVj
+ay1hdm9jYWRvIEFWT0NBRE9fVEFHUz1tYWNoaW5lOmFzdDEwMzAtZXZiDQoNCj4gb3IgZG93bmxv
+YWQgOg0KDQo+ICAgIGh0dHBzOi8vc2VjdXJlLXdlYi5jaXNjby5jb20vMXVtYkJnNUZodEhmQnJF
+RXY4aUlteUE2OU5jdnpnTHd1dFJZS1BWaG05VWpEM3UxRVREVXJFTWZuTlU1MHpKVkQ3MFEyUVV1
+ZWJ4Nkl1VFJiUmVGLXcyM2JWNWZyNnlId083MklkWEJ4WlNyUHVMRlpULXNQaUl6M3VpT0J5ekxs
+V0w2bVU0SVAxZFo2bnhmVHFHWTJRVGVndjUzTThkcU5pVWkzRF9TdGZjTElDNTZfYmNnWnIyTFRX
+ODZGQUpLeTdqQUNhSnNrOEF5dlllU3JDLS1ZWmVfYnB6UDdUWTJlaWdCZTRRZ19CSFVjSVdEVFIw
+YVh5cnhRWmpJZ3h4MDViWFEwbHE5dFF1UVVZRjdkOUxvVHNGaUoyMnhyWF9nS1U3bVRjR2JjMUkx
+VzRuSjFLRzY5VURCbHRqbmpnUENpbXFLeDB6V2hrUW5jQzNDcFN3VXJoTm9kYnVKZ01GS3luNThx
+N1dBZEw3ajBQeURxOWtIdDlkcm5haV80bE5EMm1ZaElGaFFIZmVHUjZxd1RSeGgxcC1pOEVNQVJU
+SGhNS3N0N1h1Mzd3dnpvRlZ0MVBySHd6aHNPRF94VHI5cTJyNkRHSzJ6UFh3cDVXejEzMHFNYzV3
+L2h0dHBzJTNBJTJGJTJGZ2l0aHViLmNvbSUyRkFzcGVlZFRlY2gtQk1DJTJGemVwaHlyJTJGcmVs
+ZWFzZXMlMkZkb3dubG9hZCUyRnYwMC4wMS4wNyUyRmFzdDEwMzAtZXZiLWRlbW8uemlwDQoNCj4g
+dW56aXAgYW5kIHJ1biA6DQoNCj4gICAgcGF0aC90by9xZW11LXN5c3RlbS1hcm0gLU0gYXN0MTAz
+MC1ldmIgLWtlcm5lbCAuL3plcGh5ci5iaW4gLW5vZ3JhcGhpYw0KDQo+IHRoZW4sIG9uIHRoZSBj
+b25zb2xlIDoNCg0KPiAgICB1YXJ0On4kIGhhc2ggdGVzdA0KPiAgICBzaGEyNTZfdGVzdA0KPiAg
+ICB0dlswXTpQQVNTDQo+ICAgIHR2WzFdOlBBU1MNCj4gICAgdHZbMl06UEFTUw0KPiAgICB0dlsz
+XTpQQVNTDQo+ICAgIHR2WzRdOlBBU1MNCj4gICAgc2hhMzg0X3Rlc3QNCj4gICAgdHZbMF06aGFz
+aF9maW5hbCBlcnJvcg0KPiAgICBzaGE1MTJfdGVzdA0KPiAgICB0dlswXTpTZWdtZW50YXRpb24g
+ZmF1bHQgKGNvcmUgZHVtcGVkKQ0KDQo+ICBJIGJlbGlldmUgdGhpcyBpcyBkdWUgdG8gdGhlIGNo
+YW5nZSB3aGljaCBub3cgYXNzaWducyBzLT50b3RhbF9yZXFfbGVuIHdoZW4gYWNjdW11bGF0aW9u
+IG1vZGUgaXMgZGVzaXJlZC4gSWYgdGhlIGNyeXB0byBjb250ZXh0IGZhaWxzIHRvIGFsbG9jYXRl
+IA0KPiAgKG5vIGdjcnlwdCksIHN0YXRlcyBhcmUgbm90IGNsZWFyZWQgaW4gdGhlIG1vZGVsIGFu
+ZCBwcmV2aW91cyB2YWx1ZXMgYXJlIHVzZWQgYnkgdGhlIG1vZGVsIHdoZW4gdGhlIE9TIHJ1bnMg
+dGhlIG5leHQgdGVzdCBhbmQgUUVNVSBzZWd2cyBpbiANCj4gaGFzX3BhZGRpbmcoKS4NCg0KPiBU
+byBmaXgsIEkgdGhpbmsgd2UgY291bGQgbW92ZSA6DQoNCj4gICAgICAgICAgaWYgKHMtPnFjcnlw
+dG9faGFzaF9jb250ZXh0ID09IE5VTEwgJiYNCj4gICAgICAgICAgICAgIHFjcnlwdG9faGFzaF9h
+Y2N1bXVsYXRlX25ld19jdHgoYWxnbywgJnMtPnFjcnlwdG9faGFzaF9jb250ZXh0LCBOVUxMKSkg
+ew0KPiAgICAgICAgICAgICAgcWVtdV9sb2dfbWFzayhMT0dfR1VFU1RfRVJST1IsDQo+ICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICIlczogcWNyeXB0byBmYWlsZWQgdG8gY3JlYXRlIGhhc2gg
+Y29udGV4dFxuIiwNCj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgX19mdW5jX18pOw0KPiAg
+ICAgICAgICAgICAgcmV0dXJuOw0KPiAgICAgICAgICB9DQoNCj4gIGF0IHRoZSBiZWdpbm5pbmcg
+b2YgZG9faGFzaF9vcGVyYXRpb24oKSA/DQoNCj4gIEMuDQoNCkdvb2QgY2F0Y2guIE1vdmluZyB0
+aGUgY29udGV4dCBhbGxvY2F0aW9uIHRvIHRoZSBiZWdpbm5pbmcgb2YgdGhlIGZ1bmN0aW9uIGRv
+ZXMgYXBwZWFyIHRvIGZpeCB0aGUgaXNzdWUuDQpJIHdpbGwgc3VibWl0IGEgbmV3IHBhdGNoIHNl
+cmllcyB3aXRoIHRoYXQgY2hhbmdlIGltcGxlbWVudGVkLg0KDQpUaGFua3MsDQpBbGVqYW5kcm8N
+Cg0K
 
