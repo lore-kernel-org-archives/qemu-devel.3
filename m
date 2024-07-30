@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 834E9C3DA61
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 02:16:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C78DFC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 02:16:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYcOd-000892-RB; Mon, 29 Jul 2024 22:15:27 -0400
+	id 1sYcOg-0008J4-Ef; Mon, 29 Jul 2024 22:15:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYcOc-00088I-1X
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:15:26 -0400
-Received: from mail-qt1-x833.google.com ([2607:f8b0:4864:20::833])
+ id 1sYcOf-0008E1-4C
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:15:29 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYcOa-0005OY-Ir
- for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:15:25 -0400
-Received: by mail-qt1-x833.google.com with SMTP id
- d75a77b69052e-44fffca4fb7so15994891cf.1
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 19:15:24 -0700 (PDT)
+ id 1sYcOd-0005Op-DY
+ for qemu-devel@nongnu.org; Mon, 29 Jul 2024 22:15:28 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-7a103ac7be3so2266765a12.3
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 19:15:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722305723; x=1722910523; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722305726; x=1722910526; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=tLrGX9Afltcgokadlb0YQI/9367xWPIB4Lrlteq6PUs=;
- b=lKC96hVuyT0lJ2/NTcQXobo4zAhvwRzccJx8FSrVkn8VStKQx4ZW9dyumJLR1k/sFV
- bfAViSU62GkU9JILNTAE2hMHiKa+BWz7TQak6jKK30MS8YD9voGubv+XEUUMuiFICBCC
- BftSEa5IRbOrD/54XOThO2Ic0Gq3nL254GFg0GrCGhvJiLWuw3CTTUtPMPOcbB/X8zvf
- qQmgwFoIgxZr5EVjYe/gaLXAsosXwYAgF7qjF5l+lrlNxWfc3hf8XlovJtjB6MMy28Y2
- +LbpUmRts7TyziXZVYIFq+lhhc751iDbi9FU2hTjDkk9RSVZg79ktd3P4YUQzgMnZNhZ
- TQjg==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pH+41rL90lFjbVWqrfAC1Tzfsae8MNVaqTWvWuyk3aM=;
+ b=WoSRAcf9cnJN3yCilx5XNjA4wos0JTF8TrlhYe3RCMjB166Enspeiy4BL6XtzN+Ck/
+ owaUNjIDiboxYuezc/41syLkHwvA2qG8lNP7oOooY52+szhI/zzK2KsPgtV4V9OiNQPg
+ WIIK3ms75MLKrZ95VNBcYsZlbDI4/fjaOcZwwJETsjVt4gnNkZVCR63mx6BRfwRwiSIR
+ kgVcrMrX2JPnIS/j6bZkKsvVD5yD2vZNN1TvQKcGoVheaHKqXleU+Gyb7E+06/mndYHW
+ 49TdQgeWFYTEgk3LAoDqTqWxHSS4I0bzvxqA3rvHnEDwzqd9a73QOtEnNf3AQEAnXY1W
+ 8Bgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722305723; x=1722910523;
+ d=1e100.net; s=20230601; t=1722305726; x=1722910526;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tLrGX9Afltcgokadlb0YQI/9367xWPIB4Lrlteq6PUs=;
- b=UOjn0+1LqqKAQx9gCdExCwEH39E20iitb4xcZNpUT1u4dR1VDvSMkxrvsIPZ7drFfW
- +HIkFXnUwRhzH/1vkB6FQxXzWxOIWS9uSavHTXFTi5pYPUXZKbaapYLgi0t6XUNa1TqV
- hp0DTfmfj7mHnGTgPVEwc9xmem7aQFO/GjW5+ImDIul4FSUJQ+4UFU25SsTfyQ5r6+bb
- wRatoNPmaq47xqMoECiH5sD+4Gzy/Gk6J7zO4jkPhaZT/q56bPvQa0OAi5Hs6Ur2XBoo
- ovJs6kcqtBMBRAWq8KPpyJd8fW9+KTwpb4mNCCdo8kxaqrzpcgRhTrWWR5SGhfeqr/P5
- xDyw==
-X-Gm-Message-State: AOJu0Yzv16W5cyCphlF1z4H8FYVZmWvjIGpE3eeuWAptjTiVHdLPwGhY
- /LfPM2fugTOTmgJ+WDEM9y5DeQs8i7qQP+c53hgt8hsXwmzmalMFzlvsw6qAisc2/HFRjqcmwhH
- FJNc=
-X-Google-Smtp-Source: AGHT+IGmZlGXbPQaMFUPkW2EUPbFQhCxhFr3kltuYgJsJd2wCPq6BJgcHeZQTkupelS8S5F/UHyjgQ==
-X-Received: by 2002:a05:6808:3086:b0:3d9:2bbb:1cb4 with SMTP id
- 5614622812f47-3db23a7dcf5mr10395701b6e.35.1722301932573; 
- Mon, 29 Jul 2024 18:12:12 -0700 (PDT)
+ bh=pH+41rL90lFjbVWqrfAC1Tzfsae8MNVaqTWvWuyk3aM=;
+ b=ogFpPs1xcWoackUuzb4nXVVVnDNKF3x1QKQP7qGEphdqWd54mqr/nNkjXJyliMR0aJ
+ HjXS4A64voa0gQrp46ZuqwH6Xr+iyrPbrS5YqOfx6smTTJg4Gs0zz54ReONbxoJLI1JS
+ J7sPE15MgcfZUF261s6+SYYQooLFJb5zjS+2hZfZc1hXG0sWVF64pjdOo8zDPFZBkDTQ
+ xwYakm/TFwh4tsar/6MA1uA4IllX75aLAyu4+aC5GHW/FRu43CITox9/vC7Mzv9sU9m+
+ wL2H26jQe4ik7OjtQ/Yx/Thj4ws9NVleC/8bmha5CBRIeWtnoH1/OBLNKbjeG1PMnWBg
+ QMLg==
+X-Gm-Message-State: AOJu0YxjAWZQBBTjhsivyj4lc7WtsLXyWXGdKRAtHsdPZ/GDA5eVa6zc
+ zKdtqYWQO3xqISfDFd92NSZdO3SF86+6hW7/jwWW0flZORXuO8hj+dIzYmjbZDmHZ4tTnTsLNjh
+ D+JE=
+X-Google-Smtp-Source: AGHT+IEriPcKSuasBU2TvkAdes5dggN2edS16cT0kZQzwQVIjC2YzfjHLjc3UXZmfpY5Kxx8xdT65Q==
+X-Received: by 2002:a05:6e02:20e1:b0:39a:ea89:22ec with SMTP id
+ e9e14a558f8ab-39aec2d76a3mr110796085ab.9.1722301930485; 
+ Mon, 29 Jul 2024 18:12:10 -0700 (PDT)
 Received: from stoup.. ([203.56.128.103]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7a9f7c6ff4bsm6750206a12.4.2024.07.29.18.12.10
- for <qemu-devel@nongnu.org>
+ 41be03b00d2f7-7a9f7c6ff4bsm6750206a12.4.2024.07.29.18.12.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 29 Jul 2024 18:12:12 -0700 (PDT)
+ Mon, 29 Jul 2024 18:12:10 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH for-9.1] tests/vm/openbsd: Install tomli
-Date: Tue, 30 Jul 2024 11:11:58 +1000
-Message-ID: <20240730011202.480829-3-richard.henderson@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>
+Subject: [PULL 1/5] target/rx: Use target_ulong for address in LI
+Date: Tue, 30 Jul 2024 11:11:57 +1000
+Message-ID: <20240730011202.480829-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240730011202.480829-1-richard.henderson@linaro.org>
 References: <20240730011202.480829-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::833;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x833.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,25 +93,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tomli is now required by configure.
+Using int32_t meant that the address was sign-extended to uint64_t
+when passing to translator_ld*, triggering an assert.
 
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2453
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/vm/openbsd | 1 +
- 1 file changed, 1 insertion(+)
+ target/rx/translate.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tests/vm/openbsd b/tests/vm/openbsd
-index 5e646f7c51..49cab08782 100755
---- a/tests/vm/openbsd
-+++ b/tests/vm/openbsd
-@@ -32,6 +32,7 @@ class OpenBSDVM(basevm.BaseVM):
-         "pkgconf",
-         "bzip2", "xz",
-         "ninja",
-+        "py3-tomli",
+diff --git a/target/rx/translate.c b/target/rx/translate.c
+index 9b81cf20b3..9aade2b6e5 100644
+--- a/target/rx/translate.c
++++ b/target/rx/translate.c
+@@ -85,7 +85,8 @@ static uint32_t decode_load_bytes(DisasContext *ctx, uint32_t insn,
  
-         # gnu tools
-         "bash",
+ static uint32_t li(DisasContext *ctx, int sz)
+ {
+-    int32_t tmp, addr;
++    target_ulong addr;
++    uint32_t tmp;
+     CPURXState *env = ctx->env;
+     addr = ctx->base.pc_next;
+ 
 -- 
 2.43.0
 
