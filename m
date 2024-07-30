@@ -4,19 +4,19 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 348DEC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 08:12:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49A4FC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 08:12:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYhwf-00055U-9w; Tue, 30 Jul 2024 04:10:57 -0400
+	id 1sYhwf-000558-7I; Tue, 30 Jul 2024 04:10:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYhwd-0004xb-9e
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:10:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYhwc-0004w3-Sz
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:10:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYhwZ-0001Fj-BR
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sYhwZ-0001Fa-DY
  for qemu-devel@nongnu.org; Tue, 30 Jul 2024 04:10:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1722327050;
@@ -24,28 +24,28 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=d28C3fhIW8Zmdyh2WGe0DiuQNiKqtcAT1V0R8mPG4+g=;
- b=dcNcE4GxegFjD1Xr+517LNhxFl+uXHSAvLUSfNRlsFsyNOJaZP2lyVzM/crOMUeY0QOwJW
- 1LKBGGJKyGC8oeZo6sptMxWYg02i6JToglc6XIWpjm5NbBc5aR+w8Ce8HVlagSiDXjhrDt
- 3/cz+GFEBWTFfNshIEMW+nVqeUvoP68=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=rEo38lpj5pKroMhTmXhAg9xdI4a0uSu2selrCgZQTVY=;
+ b=QBf39HhqrlFP/jZlitXuvwwW8Roenvn3FNY24e5q5rw+LQ10v3QUZBYdJh06lshB3oJ+4r
+ HMyunaeMhwqE1WV/A9SHVF7aW6iJmn76ZrB79zOkufrXC5E0dqonAsfRTfpmCwc7fmrpD/
+ PQBzm3PEa17DFZjQxMIAIFy/JtY0Aqw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-544-vzNeSrO-NlGRw4yEHyGQgw-1; Tue,
- 30 Jul 2024 04:10:47 -0400
-X-MC-Unique: vzNeSrO-NlGRw4yEHyGQgw-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-uYIN_LaRPM2GTvQ-9jPnAA-1; Tue,
+ 30 Jul 2024 04:10:44 -0400
+X-MC-Unique: uYIN_LaRPM2GTvQ-9jPnAA-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CBB8319560AB; Tue, 30 Jul 2024 08:10:42 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 66A411956095; Tue, 30 Jul 2024 08:10:39 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9434C1955E89; Tue, 30 Jul 2024 08:10:41 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 08C131955D47; Tue, 30 Jul 2024 08:10:35 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E6CC721F4B95; Tue, 30 Jul 2024 10:10:32 +0200 (CEST)
+ id D59B921F4B8E; Tue, 30 Jul 2024 10:10:32 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au, andrew@daynix.com,
@@ -64,24 +64,24 @@ Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au, andrew@daynix.com,
  vsementsov@yandex-team.ru, wangyanan55@huawei.com,
  yuri.benditovich@daynix.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
  qemu-arm@nongnu.org, qemu-s390x@nongnu.org, kvm@vger.kernel.org
-Subject: [PATCH 08/18] qapi/ui: Drop temporary 'prefix'
-Date: Tue, 30 Jul 2024 10:10:22 +0200
-Message-ID: <20240730081032.1246748-9-armbru@redhat.com>
+Subject: [PATCH 04/18] qapi/common: Drop temporary 'prefix'
+Date: Tue, 30 Jul 2024 10:10:18 +0200
+Message-ID: <20240730081032.1246748-5-armbru@redhat.com>
 In-Reply-To: <20240730081032.1246748-1-armbru@redhat.com>
 References: <20240730081032.1246748-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,235 +101,76 @@ Recent commit "qapi: Smarter camel_to_upper() to reduce need for
 'prefix'" added a temporary 'prefix' to delay changing the generated
 code.
 
-Revert it.  This improves DisplayGLMode's generated enumeration
-constant prefix from DISPLAYGL_MODE to DISPLAY_GL_MODE.
+Revert it.  This improves OffAutoPCIBAR's generated enumeration
+constant prefix from OFF_AUTOPCIBAR_OFF to OFF_AUTO_PCIBAR_OFF.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- qapi/ui.json      |  1 -
- system/vl.c       |  2 +-
- ui/dbus.c         |  8 ++++----
- ui/egl-context.c  |  2 +-
- ui/egl-headless.c |  2 +-
- ui/egl-helpers.c  | 12 ++++++------
- ui/gtk.c          |  4 ++--
- ui/sdl2-gl.c      |  8 ++++----
- ui/sdl2.c         |  2 +-
- ui/spice-core.c   |  2 +-
- 10 files changed, 21 insertions(+), 22 deletions(-)
+ qapi/common.json |  1 -
+ hw/vfio/pci.c    | 10 +++++-----
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/qapi/ui.json b/qapi/ui.json
-index 31c42821f6..46dde390a7 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -1396,7 +1396,6 @@
- # Since: 3.0
+diff --git a/qapi/common.json b/qapi/common.json
+index 25726d3113..7558ce5430 100644
+--- a/qapi/common.json
++++ b/qapi/common.json
+@@ -92,7 +92,6 @@
+ # Since: 2.12
  ##
- { 'enum'    : 'DisplayGLMode',
--  'prefix'  : 'DISPLAYGL_MODE', # TODO drop
-   'data'    : [ 'off', 'on', 'core', 'es' ] }
+ { 'enum': 'OffAutoPCIBAR',
+-  'prefix': 'OFF_AUTOPCIBAR',   # TODO drop
+   'data': [ 'off', 'auto', 'bar0', 'bar1', 'bar2', 'bar3', 'bar4', 'bar5' ] }
  
  ##
-diff --git a/system/vl.c b/system/vl.c
-index 9e8f16f155..706d2a6fd6 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -1971,7 +1971,7 @@ static void qemu_create_early_backends(void)
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 2407720c35..0a99e55247 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -1452,7 +1452,7 @@ static bool vfio_pci_relocate_msix(VFIOPCIDevice *vdev, Error **errp)
+     int target_bar = -1;
+     size_t msix_sz;
  
-     qemu_console_early_init();
- 
--    if (dpy.has_gl && dpy.gl != DISPLAYGL_MODE_OFF && display_opengl == 0) {
-+    if (dpy.has_gl && dpy.gl != DISPLAY_GL_MODE_OFF && display_opengl == 0) {
- #if defined(CONFIG_OPENGL)
-         error_report("OpenGL is not supported by the display");
- #else
-diff --git a/ui/dbus.c b/ui/dbus.c
-index e08b5de064..7ecd39e784 100644
---- a/ui/dbus.c
-+++ b/ui/dbus.c
-@@ -176,7 +176,7 @@ dbus_display_add_console(DBusDisplay *dd, int idx, Error **errp)
-     assert(con);
- 
-     if (qemu_console_is_graphic(con) &&
--        dd->gl_mode != DISPLAYGL_MODE_OFF) {
-+        dd->gl_mode != DISPLAY_GL_MODE_OFF) {
-         qemu_console_set_display_gl_ctx(con, &dd->glctx);
+-    if (!vdev->msix || vdev->msix_relo == OFF_AUTOPCIBAR_OFF) {
++    if (!vdev->msix || vdev->msix_relo == OFF_AUTO_PCIBAR_OFF) {
+         return true;
      }
  
-@@ -466,9 +466,9 @@ static const TypeInfo dbus_vc_type_info = {
- static void
- early_dbus_init(DisplayOptions *opts)
- {
--    DisplayGLMode mode = opts->has_gl ? opts->gl : DISPLAYGL_MODE_OFF;
-+    DisplayGLMode mode = opts->has_gl ? opts->gl : DISPLAY_GL_MODE_OFF;
+@@ -1464,7 +1464,7 @@ static bool vfio_pci_relocate_msix(VFIOPCIDevice *vdev, Error **errp)
+     /* PCI BARs must be a power of 2 */
+     msix_sz = pow2ceil(msix_sz);
  
--    if (mode != DISPLAYGL_MODE_OFF) {
-+    if (mode != DISPLAY_GL_MODE_OFF) {
- #ifdef CONFIG_OPENGL
-         egl_init(opts->u.dbus.rendernode, mode, &error_fatal);
- #else
-@@ -482,7 +482,7 @@ early_dbus_init(DisplayOptions *opts)
- static void
- dbus_init(DisplayState *ds, DisplayOptions *opts)
- {
--    DisplayGLMode mode = opts->has_gl ? opts->gl : DISPLAYGL_MODE_OFF;
-+    DisplayGLMode mode = opts->has_gl ? opts->gl : DISPLAY_GL_MODE_OFF;
- 
-     if (opts->u.dbus.addr && opts->u.dbus.p2p) {
-         error_report("dbus: can't accept both addr=X and p2p=yes options");
-diff --git a/ui/egl-context.c b/ui/egl-context.c
-index 9e0df466f3..aed3e3ba1f 100644
---- a/ui/egl-context.c
-+++ b/ui/egl-context.c
-@@ -17,7 +17,7 @@ QEMUGLContext qemu_egl_create_context(DisplayGLCtx *dgc,
-        EGL_CONTEXT_MINOR_VERSION_KHR, params->minor_ver,
-        EGL_NONE
-    };
--   bool gles = (qemu_egl_mode == DISPLAYGL_MODE_ES);
-+   bool gles = (qemu_egl_mode == DISPLAY_GL_MODE_ES);
- 
-    ctx = eglCreateContext(qemu_egl_display, qemu_egl_config,
-                           eglGetCurrentContext(),
-diff --git a/ui/egl-headless.c b/ui/egl-headless.c
-index 6187249c73..1f6b845500 100644
---- a/ui/egl-headless.c
-+++ b/ui/egl-headless.c
-@@ -207,7 +207,7 @@ static const DisplayGLCtxOps eglctx_ops = {
- 
- static void early_egl_headless_init(DisplayOptions *opts)
- {
--    DisplayGLMode mode = DISPLAYGL_MODE_ON;
-+    DisplayGLMode mode = DISPLAY_GL_MODE_ON;
- 
-     if (opts->has_gl) {
-         mode = opts->gl;
-diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-index 99b2ebbe23..81a57fa975 100644
---- a/ui/egl-helpers.c
-+++ b/ui/egl-helpers.c
-@@ -503,7 +503,7 @@ static int qemu_egl_init_dpy(EGLNativeDisplayType dpy,
-     EGLint major, minor;
-     EGLBoolean b;
-     EGLint n;
--    bool gles = (mode == DISPLAYGL_MODE_ES);
-+    bool gles = (mode == DISPLAY_GL_MODE_ES);
- 
-     qemu_egl_display = qemu_egl_get_display(dpy, platform);
-     if (qemu_egl_display == EGL_NO_DISPLAY) {
-@@ -533,7 +533,7 @@ static int qemu_egl_init_dpy(EGLNativeDisplayType dpy,
-         return -1;
-     }
- 
--    qemu_egl_mode = gles ? DISPLAYGL_MODE_ES : DISPLAYGL_MODE_CORE;
-+    qemu_egl_mode = gles ? DISPLAY_GL_MODE_ES : DISPLAY_GL_MODE_CORE;
-     return 0;
- }
- 
-@@ -564,8 +564,8 @@ int qemu_egl_init_dpy_mesa(EGLNativeDisplayType dpy, DisplayGLMode mode)
- int qemu_egl_init_dpy_win32(EGLNativeDisplayType dpy, DisplayGLMode mode)
- {
-     /* prefer GL ES, as that's what ANGLE supports */
--    if (mode == DISPLAYGL_MODE_ON) {
--        mode = DISPLAYGL_MODE_ES;
-+    if (mode == DISPLAY_GL_MODE_ON) {
-+        mode = DISPLAY_GL_MODE_ES;
-     }
- 
-     if (qemu_egl_init_dpy(dpy, 0, mode) < 0) {
-@@ -618,7 +618,7 @@ EGLContext qemu_egl_init_ctx(void)
-         EGL_CONTEXT_CLIENT_VERSION, 2,
-         EGL_NONE
-     };
--    bool gles = (qemu_egl_mode == DISPLAYGL_MODE_ES);
-+    bool gles = (qemu_egl_mode == DISPLAY_GL_MODE_ES);
-     EGLContext ectx;
-     EGLBoolean b;
- 
-@@ -642,7 +642,7 @@ bool egl_init(const char *rendernode, DisplayGLMode mode, Error **errp)
- {
-     ERRP_GUARD();
- 
--    if (mode == DISPLAYGL_MODE_OFF) {
-+    if (mode == DISPLAY_GL_MODE_OFF) {
-         error_setg(errp, "egl: turning off GL doesn't make sense");
-         return false;
-     }
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 8e14c2ac81..bf9d3dd679 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -2514,7 +2514,7 @@ static void early_gtk_display_init(DisplayOptions *opts)
-     }
- 
-     assert(opts->type == DISPLAY_TYPE_GTK);
--    if (opts->has_gl && opts->gl != DISPLAYGL_MODE_OFF) {
-+    if (opts->has_gl && opts->gl != DISPLAY_GL_MODE_OFF) {
- #if defined(CONFIG_OPENGL)
- #if defined(GDK_WINDOWING_WAYLAND)
-         if (GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default())) {
-@@ -2530,7 +2530,7 @@ static void early_gtk_display_init(DisplayOptions *opts)
- #endif
-         {
- #ifdef CONFIG_X11
--            DisplayGLMode mode = opts->has_gl ? opts->gl : DISPLAYGL_MODE_ON;
-+            DisplayGLMode mode = opts->has_gl ? opts->gl : DISPLAY_GL_MODE_ON;
-             gtk_egl_init(mode);
- #endif
+-    if (vdev->msix_relo == OFF_AUTOPCIBAR_AUTO) {
++    if (vdev->msix_relo == OFF_AUTO_PCIBAR_AUTO) {
+         /*
+          * TODO: Lookup table for known devices.
+          *
+@@ -1479,7 +1479,7 @@ static bool vfio_pci_relocate_msix(VFIOPCIDevice *vdev, Error **errp)
+             return false;
          }
-diff --git a/ui/sdl2-gl.c b/ui/sdl2-gl.c
-index 91b7ee2419..e01d9ab0c7 100644
---- a/ui/sdl2-gl.c
-+++ b/ui/sdl2-gl.c
-@@ -147,11 +147,11 @@ QEMUGLContext sdl2_gl_create_context(DisplayGLCtx *dgc,
-     SDL_GL_MakeCurrent(scon->real_window, scon->winctx);
- 
-     SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
--    if (scon->opts->gl == DISPLAYGL_MODE_ON ||
--        scon->opts->gl == DISPLAYGL_MODE_CORE) {
-+    if (scon->opts->gl == DISPLAY_GL_MODE_ON ||
-+        scon->opts->gl == DISPLAY_GL_MODE_CORE) {
-         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
-                             SDL_GL_CONTEXT_PROFILE_CORE);
--    } else if (scon->opts->gl == DISPLAYGL_MODE_ES) {
-+    } else if (scon->opts->gl == DISPLAY_GL_MODE_ES) {
-         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
-                             SDL_GL_CONTEXT_PROFILE_ES);
+     } else {
+-        target_bar = (int)(vdev->msix_relo - OFF_AUTOPCIBAR_BAR0);
++        target_bar = (int)(vdev->msix_relo - OFF_AUTO_PCIBAR_BAR0);
      }
-@@ -163,7 +163,7 @@ QEMUGLContext sdl2_gl_create_context(DisplayGLCtx *dgc,
-     /* If SDL fail to create a GL context and we use the "on" flag,
-      * then try to fallback to GLES.
-      */
--    if (!ctx && scon->opts->gl == DISPLAYGL_MODE_ON) {
-+    if (!ctx && scon->opts->gl == DISPLAY_GL_MODE_ON) {
-         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
-                             SDL_GL_CONTEXT_PROFILE_ES);
-         ctx = SDL_GL_CreateContext(scon->real_window);
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index 98ed974371..251ce97796 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -107,7 +107,7 @@ void sdl2_window_create(struct sdl2_console *scon)
-     if (scon->opengl) {
-         const char *driver = "opengl";
  
--        if (scon->opts->gl == DISPLAYGL_MODE_ES) {
-+        if (scon->opts->gl == DISPLAY_GL_MODE_ES) {
-             driver = "opengles2";
-         }
- 
-diff --git a/ui/spice-core.c b/ui/spice-core.c
-index 15be640286..bd9dbe03f1 100644
---- a/ui/spice-core.c
-+++ b/ui/spice-core.c
-@@ -840,7 +840,7 @@ static void qemu_spice_init(void)
-                          "incompatible with -spice port/tls-port");
-             exit(1);
-         }
--        egl_init(qemu_opt_get(opts, "rendernode"), DISPLAYGL_MODE_ON, &error_fatal);
-+        egl_init(qemu_opt_get(opts, "rendernode"), DISPLAY_GL_MODE_ON, &error_fatal);
-         spice_opengl = 1;
-     }
- #endif
+     /* I/O port BARs cannot host MSI-X structures */
+@@ -1624,7 +1624,7 @@ static bool vfio_msix_early_setup(VFIOPCIDevice *vdev, Error **errp)
+         } else if (vfio_pci_is(vdev, PCI_VENDOR_ID_BAIDU,
+                                PCI_DEVICE_ID_KUNLUN_VF)) {
+             msix->pba_offset = 0xb400;
+-        } else if (vdev->msix_relo == OFF_AUTOPCIBAR_OFF) {
++        } else if (vdev->msix_relo == OFF_AUTO_PCIBAR_OFF) {
+             error_setg(errp, "hardware reports invalid configuration, "
+                        "MSIX PBA outside of specified BAR");
+             g_free(msix);
+@@ -3403,7 +3403,7 @@ static Property vfio_pci_dev_properties[] = {
+                                    nv_gpudirect_clique,
+                                    qdev_prop_nv_gpudirect_clique, uint8_t),
+     DEFINE_PROP_OFF_AUTO_PCIBAR("x-msix-relocation", VFIOPCIDevice, msix_relo,
+-                                OFF_AUTOPCIBAR_OFF),
++                                OFF_AUTO_PCIBAR_OFF),
+ #ifdef CONFIG_IOMMUFD
+     DEFINE_PROP_LINK("iommufd", VFIOPCIDevice, vbasedev.iommufd,
+                      TYPE_IOMMUFD_BACKEND, IOMMUFDBackend *),
 -- 
 2.45.0
 
