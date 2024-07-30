@@ -4,76 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A733C3DA70
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 17:09:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF45C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 17:24:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYqIO-0006GI-0M; Tue, 30 Jul 2024 13:05:56 -0400
+	id 1sYqa9-0003uf-9h; Tue, 30 Jul 2024 13:24:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYqIA-0004xo-1l
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 13:05:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
+ id 1sYqa7-0003nH-4b; Tue, 30 Jul 2024 13:24:15 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYqI5-0002mv-LD
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 13:05:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722359136;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BObA73vbihWv9BJP7DmJKr61LXiksNCgCGE4QTyeRKU=;
- b=Qiole1B95BwhE7NeUT6XPfDHh3Tpbi93OFv1e0RNQulgvs0w5GQgdLt/MdJ3Sn7bCjgmzp
- vUtM5cZnLmhE/Q/MGUlhoPP7LgbRPFl1aK5UhGF0g8WnGbbLEGVIo0XKtZhE/fjIbT8AAv
- azvvqW37xMqqTaRNUTRwlx3qWM/rtkY=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-qffSm1rlMM-TcH6f7JlZ8A-1; Tue,
- 30 Jul 2024 13:05:31 -0400
-X-MC-Unique: qffSm1rlMM-TcH6f7JlZ8A-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3A87C1955D54; Tue, 30 Jul 2024 17:05:30 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.108])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C96283000197; Tue, 30 Jul 2024 17:05:26 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
+ id 1sYqa5-0006Kt-0t; Tue, 30 Jul 2024 13:24:14 -0400
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46UGQsMW017830;
+ Tue, 30 Jul 2024 17:23:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:mime-version:content-type
+ :content-transfer-encoding; s=pp1; bh=9OhhQEAQT9u+cigoCOk2ZkY4P1
+ yYi3PjmEYz0zY0c+E=; b=cz5ahfXqXBnMLlTQZgzfpEY4eqLrArcgCBpCT57yo0
+ XhiGBSVyrqDbycoZudKp2E3CyABD2/1LXIdDW0SIHENzsGRqEypUKI2fP5WPKwMX
+ oyB3v6s2COVDgeb0DcX60/lcgrH+JwHaaiJ/yEIYmq6gMWZRqmMs/1qpjmk0syb3
+ 6oeVRQp/PIlopNbSpDN5zANlwGpyBBOCI0pFIK0T6YNcoSbcHy7Ur2etLtr3cIW9
+ 7Pm+EMzgpQWeFBfy1V3cx5RYU8qa5/rCaKMlcCZ4O9Aj+6eI+Xkh3jBWduMccWRY
+ pZ0Msk6cNsgYxA9b66S/IpPPuXCI5FWazTtVVmVudXbQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40prr3aar5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jul 2024 17:23:59 +0000 (GMT)
+Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46UHNxhj015599;
+ Tue, 30 Jul 2024 17:23:59 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40prr3aar1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jul 2024 17:23:59 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46UGUe1j007470; Tue, 30 Jul 2024 17:23:58 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 40nb7u6ch9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 30 Jul 2024 17:23:58 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46UHNqRm54984966
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 30 Jul 2024 17:23:54 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8D39420043;
+ Tue, 30 Jul 2024 17:23:52 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A404920040;
+ Tue, 30 Jul 2024 17:23:50 +0000 (GMT)
+Received: from gfwr527.rchland.ibm.com (unknown [9.10.239.127])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 30 Jul 2024 17:23:50 +0000 (GMT)
+From: Chalapathi V <chalapathi.v@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 24/24] gitlab-ci: Add "check-functional" to the build tests
-Date: Tue, 30 Jul 2024 18:03:44 +0100
-Message-ID: <20240730170347.4103919-25-berrange@redhat.com>
-In-Reply-To: <20240730170347.4103919-1-berrange@redhat.com>
-References: <20240730170347.4103919-1-berrange@redhat.com>
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ clg@kaod.org, calebs@linux.ibm.com, chalapathi.v@ibm.com,
+ chalapathi.v@linux.ibm.com, saif.abrar@linux.ibm.com,
+ dantan@us.ibm.com, milesg@linux.ibm.com
+Subject: [PATCH v6 0/6] hw/ppc: SPI model
+Date: Tue, 30 Jul 2024 12:23:37 -0500
+Message-Id: <20240730172343.5818-1-chalapathi.v@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 2zWCp9WnhF1BvndFHgXqJ4udZadm26zE
+X-Proofpoint-GUID: Usk9CuuvZLlXFrkzUts_z8oLrOIC1DhQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-30_13,2024-07-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0
+ malwarescore=0 adultscore=0 mlxlogscore=531 suspectscore=0 bulkscore=0
+ mlxscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407300115
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=chalapathi.v@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,226 +113,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+Hello,
 
-Now that we converted many tests from the "check-avocado" test suite
-to the "check-functional" test suite, we should make sure that these
-also get tested in the CI.
+In patch v6 below issues detected during Coverity Scan were fixed.
+- CID 1558831:  Resource leaks  (RESOURCE_LEAK)
+  Variable "rsp_payload" going out of scope leaks the storage it points to.
+- CID 1558827:    (OVERRUN)
+  Overrunning array "s->seq_op" of 8 bytes at byte offset 16 using index
+  "get_seq_index(s) + 1" (which evaluates to 16).
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- .gitlab-ci.d/buildtest-template.yml |  3 +-
- .gitlab-ci.d/buildtest.yml          | 60 ++++++++++++++---------------
- 2 files changed, 32 insertions(+), 31 deletions(-)
+The qom-tree looks like below.
+(qemu) info qom-tree 
+/machine (powernv10-machine)
+  /chip[0] (power10_v2.0-pnv-chip)
+    /pib_spic[0] (pnv-spi)
+      /pnv-spi-bus.0 (SSI)
+      /xscom-spi[0] (memory-region)
+    /pib_spic[1] (pnv-spi)
+      /pnv-spi-bus.1 (SSI)
+      /xscom-spi[0] (memory-region)
+    /pib_spic[2] (pnv-spi)
+      /pnv-spi-bus.2 (SSI)
+      /xscom-spi[0] (memory-region)
+    /pib_spic[3] (pnv-spi)
+      /pnv-spi-bus.3 (SSI)
+      /xscom-spi[0] (memory-region)
+    /pib_spic[4] (pnv-spi)
+      /pnv-spi-bus.4 (SSI)
+      /xscom-spi[0] (memory-region)
+    /pib_spic[5] (pnv-spi)
+      /pnv-spi-bus.5 (SSI)
+      /xscom-spi[0] (memory-region)
 
-diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
-index 8f7ebfaed8..54cae74a8e 100644
---- a/.gitlab-ci.d/buildtest-template.yml
-+++ b/.gitlab-ci.d/buildtest-template.yml
-@@ -71,7 +71,7 @@
-     reports:
-       junit: build/meson-logs/testlog.junit.xml
- 
--.avocado_test_job_template:
-+.functional_test_job_template:
-   extends: .common_test_job_template
-   cache:
-     key: "${CI_JOB_NAME}-cache"
-@@ -98,6 +98,7 @@
-         du -chs ${CI_PROJECT_DIR}/avocado-cache ;
-       fi
-     - export AVOCADO_ALLOW_UNTRUSTED_CODE=1
-+    - export QEMU_TEST_ALLOW_UNTRUSTED_CODE=1
-   after_script:
-     - cd build
-     - du -chs ${CI_PROJECT_DIR}/avocado-cache
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index aa32782405..1d2afae996 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -22,14 +22,14 @@ check-system-alpine:
-     IMAGE: alpine
-     MAKE_CHECK_ARGS: check-unit check-qtest
- 
--avocado-system-alpine:
--  extends: .avocado_test_job_template
-+functional-system-alpine:
-+  extends: .functional_test_job_template
-   needs:
-     - job: build-system-alpine
-       artifacts: true
-   variables:
-     IMAGE: alpine
--    MAKE_CHECK_ARGS: check-avocado
-+    MAKE_CHECK_ARGS: check-avocado check-functional
-     AVOCADO_TAGS: arch:avr arch:loongarch64 arch:mips64 arch:mipsel
- 
- build-system-ubuntu:
-@@ -53,14 +53,14 @@ check-system-ubuntu:
-     IMAGE: ubuntu2204
-     MAKE_CHECK_ARGS: check
- 
--avocado-system-ubuntu:
--  extends: .avocado_test_job_template
-+functional-system-ubuntu:
-+  extends: .functional_test_job_template
-   needs:
-     - job: build-system-ubuntu
-       artifacts: true
-   variables:
-     IMAGE: ubuntu2204
--    MAKE_CHECK_ARGS: check-avocado
-+    MAKE_CHECK_ARGS: check-avocado check-functional
-     AVOCADO_TAGS: arch:alpha arch:microblazeel arch:mips64el
- 
- build-system-debian:
-@@ -85,14 +85,14 @@ check-system-debian:
-     IMAGE: debian
-     MAKE_CHECK_ARGS: check
- 
--avocado-system-debian:
--  extends: .avocado_test_job_template
-+functional-system-debian:
-+  extends: .functional_test_job_template
-   needs:
-     - job: build-system-debian
-       artifacts: true
-   variables:
-     IMAGE: debian
--    MAKE_CHECK_ARGS: check-avocado
-+    MAKE_CHECK_ARGS: check-avocado check-functional
-     AVOCADO_TAGS: arch:arm arch:i386 arch:riscv64 arch:sh4 arch:sparc arch:xtensa
- 
- crash-test-debian:
-@@ -129,14 +129,14 @@ check-system-fedora:
-     IMAGE: fedora
-     MAKE_CHECK_ARGS: check
- 
--avocado-system-fedora:
--  extends: .avocado_test_job_template
-+functional-system-fedora:
-+  extends: .functional_test_job_template
-   needs:
-     - job: build-system-fedora
-       artifacts: true
-   variables:
-     IMAGE: fedora
--    MAKE_CHECK_ARGS: check-avocado
-+    MAKE_CHECK_ARGS: check-avocado check-functional
-     AVOCADO_TAGS: arch:microblaze arch:mips arch:xtensa arch:m68k
-       arch:riscv32 arch:ppc arch:sparc64
- 
-@@ -243,14 +243,14 @@ check-system-centos:
-     IMAGE: centos9
-     MAKE_CHECK_ARGS: check
- 
--avocado-system-centos:
--  extends: .avocado_test_job_template
-+functional-system-centos:
-+  extends: .functional_test_job_template
-   needs:
-     - job: build-system-centos
-       artifacts: true
-   variables:
-     IMAGE: centos9
--    MAKE_CHECK_ARGS: check-avocado
-+    MAKE_CHECK_ARGS: check-avocado check-functional
-     AVOCADO_TAGS: arch:ppc64 arch:or1k arch:s390x arch:x86_64 arch:rx
-       arch:sh4
- 
-@@ -274,14 +274,14 @@ check-system-opensuse:
-     IMAGE: opensuse-leap
-     MAKE_CHECK_ARGS: check
- 
--avocado-system-opensuse:
--  extends: .avocado_test_job_template
-+functional-system-opensuse:
-+  extends: .functional_test_job_template
-   needs:
-     - job: build-system-opensuse
-       artifacts: true
-   variables:
-     IMAGE: opensuse-leap
--    MAKE_CHECK_ARGS: check-avocado
-+    MAKE_CHECK_ARGS: check-avocado check-functional
-     AVOCADO_TAGS: arch:s390x arch:x86_64 arch:aarch64
- 
- #
-@@ -302,15 +302,15 @@ build-system-flaky:
-       ppc64-softmmu rx-softmmu s390x-softmmu sh4-softmmu x86_64-softmmu
-     MAKE_CHECK_ARGS: check-build
- 
--avocado-system-flaky:
--  extends: .avocado_test_job_template
-+functional-system-flaky:
-+  extends: .functional_test_job_template
-   needs:
-     - job: build-system-flaky
-       artifacts: true
-   allow_failure: true
-   variables:
-     IMAGE: debian
--    MAKE_CHECK_ARGS: check-avocado
-+    MAKE_CHECK_ARGS: check-avocado check-functional
-     QEMU_JOB_OPTIONAL: 1
-     QEMU_TEST_FLAKY_TESTS: 1
-     AVOCADO_TAGS: flaky
-@@ -485,14 +485,14 @@ check-cfi-aarch64:
-     IMAGE: fedora
-     MAKE_CHECK_ARGS: check
- 
--avocado-cfi-aarch64:
--  extends: .avocado_test_job_template
-+functional-cfi-aarch64:
-+  extends: .functional_test_job_template
-   needs:
-     - job: build-cfi-aarch64
-       artifacts: true
-   variables:
-     IMAGE: fedora
--    MAKE_CHECK_ARGS: check-avocado
-+    MAKE_CHECK_ARGS: check-avocado check-functional
- 
- build-cfi-ppc64-s390x:
-   extends:
-@@ -523,14 +523,14 @@ check-cfi-ppc64-s390x:
-     IMAGE: fedora
-     MAKE_CHECK_ARGS: check
- 
--avocado-cfi-ppc64-s390x:
--  extends: .avocado_test_job_template
-+functional-cfi-ppc64-s390x:
-+  extends: .functional_test_job_template
-   needs:
-     - job: build-cfi-ppc64-s390x
-       artifacts: true
-   variables:
-     IMAGE: fedora
--    MAKE_CHECK_ARGS: check-avocado
-+    MAKE_CHECK_ARGS: check-avocado check-functional
- 
- build-cfi-x86_64:
-   extends:
-@@ -557,14 +557,14 @@ check-cfi-x86_64:
-     IMAGE: fedora
-     MAKE_CHECK_ARGS: check
- 
--avocado-cfi-x86_64:
--  extends: .avocado_test_job_template
-+functional-cfi-x86_64:
-+  extends: .functional_test_job_template
-   needs:
-     - job: build-cfi-x86_64
-       artifacts: true
-   variables:
-     IMAGE: fedora
--    MAKE_CHECK_ARGS: check-avocado
-+    MAKE_CHECK_ARGS: check-avocado check-functional
- 
- tsan-build:
-   extends: .native_build_job_template
+(qemu) info qom-tree 
+/machine (powernv10-machine)
+  /peripheral-anon (container)
+    /device[0] (25csm04)
+      /WP#[0] (irq)
+      /ssi-gpio-cs[0] (irq)
+
+Patches overview in v6.
+PATCH1: Remove ppc target dependency from include/hw/ppc/pnv_xscom.h so
+        that pnv_xscom.h can be included in hw/ssi/pnv_spi.c in PATCH2.
+PATCH2: Create a PNV SPI model and implement configuration unit
+        to model SCOM registers.
+PATCH3: Extend PNV SPI model: implement sequencer FSM and shift engine.
+PATCH4: Add Microchip's SEEPROM 25csm04 model on top of m25p80.
+PATCH5: Connect SPI controllers to p10 chip and connect cs lines.
+PATCH6: Write a qtest pnv-spi-seeprom-test to check the SPI transactions
+        between spi controller and seeprom device.
+
+Test covered:
+make check
+make check-avocado
+
+Thank You,
+Chalapathi
+
+Chalapathi V (6):
+  ppc/pnv: Remove ppc target dependency from pnv_xscom.h
+  hw/ssi: Add SPI model
+  hw/ssi: Extend SPI model
+  hw/block: Add Microchip's 25CSM04 to m25p80
+  hw/ppc: SPI controller wiring to P10 chip
+  tests/qtest: Add pnv-spi-seeprom qtest
+
+ include/hw/ppc/pnv_chip.h          |    3 +
+ include/hw/ppc/pnv_xscom.h         |    5 +-
+ include/hw/ssi/pnv_spi.h           |   67 ++
+ include/hw/ssi/pnv_spi_regs.h      |  133 +++
+ hw/block/m25p80.c                  |    3 +
+ hw/ppc/pnv.c                       |   21 +-
+ hw/ssi/pnv_spi.c                   | 1269 ++++++++++++++++++++++++++++
+ tests/qtest/pnv-spi-seeprom-test.c |  110 +++
+ hw/ppc/Kconfig                     |    3 +
+ hw/ssi/Kconfig                     |    4 +
+ hw/ssi/meson.build                 |    1 +
+ hw/ssi/trace-events                |   21 +
+ tests/qtest/meson.build            |    1 +
+ 13 files changed, 1639 insertions(+), 2 deletions(-)
+ create mode 100644 include/hw/ssi/pnv_spi.h
+ create mode 100644 include/hw/ssi/pnv_spi_regs.h
+ create mode 100644 hw/ssi/pnv_spi.c
+ create mode 100644 tests/qtest/pnv-spi-seeprom-test.c
+
 -- 
-2.45.2
+2.39.3
 
 
