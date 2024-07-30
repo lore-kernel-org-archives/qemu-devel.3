@@ -4,91 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 096C1C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 20:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36413C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 21:33:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYtjb-0008VL-QC; Tue, 30 Jul 2024 16:46:23 -0400
+	id 1sYuT0-000328-0p; Tue, 30 Jul 2024 17:33:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sYtjW-0008UQ-30
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 16:46:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sYuSz-00031f-7I
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 17:33:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sYtjR-0007U7-I6
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 16:46:08 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sYuSw-0006KT-Mt
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 17:33:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722372363;
+ s=mimecast20190719; t=1722375179;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=y6y1lSwXYkCKOrANSRMSIBcpwB1bECugWyhG3TV+rt4=;
- b=i+fuT/1d15HtX8kRjGUCGx5SQZgpLvt8cthTVaKdM0ILCln+ljDVw3Gxsw47THHBTCqTb0
- gQgEH7hBFivVlAlF+w+NZMrYJrD/Gje1crw9R+wPSAmmf7AZK2xw72O8nSJERG9QrjVkYO
- 36cEqiKAO92OwFjhEZWn5q0JJIieMAQ=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qJtI8N/n+/x1Q/3tK86+4wrW54PMPMdW8CL23Bw0nNA=;
+ b=TPPl35NFTo9ePuyedt6Gj46ARxojg0BTVmNzOcDtPdGG6qPqnnPOllydewDLtdkpe5yRB8
+ pM9rRW28LQZRanOBrDWf/HrG/m+uGkW/x9yIBG6ERFM4fca5/wUo0+CxD8p/PJNgbjKqHw
+ qQ04wBtLrBDlGqdDGY9S8es1afyL9O8=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-240-BmbTbMeLNRGiC2cGrcF6kw-1; Tue, 30 Jul 2024 16:46:01 -0400
-X-MC-Unique: BmbTbMeLNRGiC2cGrcF6kw-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a7a8281dba5so390521366b.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 13:46:01 -0700 (PDT)
+ us-mta-175-0yrU5kI5NQGiIZbfpjNwmg-1; Tue, 30 Jul 2024 17:32:58 -0400
+X-MC-Unique: 0yrU5kI5NQGiIZbfpjNwmg-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2ef244cdd30so52561191fa.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 14:32:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722372360; x=1722977160;
+ d=1e100.net; s=20230601; t=1722375176; x=1722979976;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=y6y1lSwXYkCKOrANSRMSIBcpwB1bECugWyhG3TV+rt4=;
- b=rAaJSU8YrDs6yBn31wY/CFLnas7Ptu+QYkXlzbX/KZdmpRup7VyNCuEbCKeTJm9Ruf
- 7XYi15OhcXjZL8MGEBJAwyXlDPjssX3b2bLdbfIb7O67axvcmh8NVQFLgTInBWG6xADf
- c93ywE4EuRVhRizu+r72YKM2PDbe7YW9mzIf8UjSTPNYQOHdVtsx3QYFbNX+lPt2dzZw
- 8ZiliVdeG+WUpZv5kX+yVg+bApttzSouHxNrHYbyUECjJgFTpgTdPwVQ4VulgMUZbLS8
- 4cgcMXopvriNJ5NHEgu6KDKGrxirmGQwzkeQy2YJDQEbkd2HJScYrSzMektF0ECy8pzf
- gTlA==
-X-Gm-Message-State: AOJu0Yw2ZQ7pEANtoruB9FEm9cET4tT2ZUVOCewERkBTkv+oLBHIc/yY
- UaZnNHHCFD2p2akfSaCoBmvtnQ9fksgyCjKa1+1wFLEBiVjXUP1ziWFM9oM5WwwA4pa9ENBlYb4
- 4/mmJ4Hde5xhXC0JgcmeydjmjqKf2gBcaU6jgIoLY0lBwRpW3lEqp
-X-Received: by 2002:a17:907:c00f:b0:a77:c827:2cb2 with SMTP id
- a640c23a62f3a-a7d40138f7emr547686966b.44.1722372360589; 
- Tue, 30 Jul 2024 13:46:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGaVREwSiJvASaLwyvBOSza909PptwLqrsLsvRt+byv+WW+KgGFt7STCGb4dsaje1pVOiGW+A==
-X-Received: by 2002:a17:907:c00f:b0:a77:c827:2cb2 with SMTP id
- a640c23a62f3a-a7d40138f7emr547684466b.44.1722372359789; 
- Tue, 30 Jul 2024 13:45:59 -0700 (PDT)
+ bh=qJtI8N/n+/x1Q/3tK86+4wrW54PMPMdW8CL23Bw0nNA=;
+ b=wIErLLPttW5pQ5adb1quDlvKxzmELjniQRUskZtSb9ejrv6Hf4xczDXEgxiRl8YMJQ
+ jIksWon4RUeeYsRhQOabCDDyUgS/ZcJcJvegLdyBNJa+Vm6CC2RFRFB/mLsZJlpDZ3e3
+ iBz5ba3kCk9Aj4bEReKB5q8kgknxYo1fxrcljK5AfdLo1zxlLbjMDyo+Gp28EmCiM58R
+ zkRqUtl1DJM4j1fanwEIAV8g/Nbwz1RoadZhkWdylCGQjTb9QJsyrE9CnbWRQJohdnkJ
+ ih/dUwmLhJNRi9wez+XrZX3fr7+JZRRsjzsCM7ghhD7HN2u5ZBZIGBcyFLDA4xKRrGuJ
+ BmvA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUjyK5/6sEMQda5bBH6qw69Pjvs0e67y9nuj/G4wr9NHJkZpm5dvOLiJHwLtyjlZO96B5GQ3JkzRuzImfvqV9pKSBTuWnM=
+X-Gm-Message-State: AOJu0YwTD7EwrFAkigyAxcaepti2GRviqCEs0akUam38OApf3tEUBoAp
+ C7ZzBHS0mm4hZvO2+a22w6geSrAZBhbF3lTOV04grNBOgFNJAFAuD6L93kk4XebpLMTBplNOU9R
+ z1ZHbRq6jI/b8QJuw1bS63+nYJe+BBGcR5pYwiIANu9ISU4gklycj
+X-Received: by 2002:a05:6512:36cd:b0:52e:9a91:bba3 with SMTP id
+ 2adb3069b0e04-5309b2707bbmr7002918e87.15.1722375176697; 
+ Tue, 30 Jul 2024 14:32:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEdjVyYBZJQiwFlh7JRqAY0LHjAjZU7dwIlT3mVwTUUklk1zA8Qbb8QCmTlgTvu54hRpT3qtg==
+X-Received: by 2002:a05:6512:36cd:b0:52e:9a91:bba3 with SMTP id
+ 2adb3069b0e04-5309b2707bbmr7002901e87.15.1722375175990; 
+ Tue, 30 Jul 2024 14:32:55 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:440:d5c3:625c:d5f0:e5f4:6579])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7d9043ca41sm79301566b.72.2024.07.30.13.45.55
+ a640c23a62f3a-a7acadb68c2sm689687966b.190.2024.07.30.14.32.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jul 2024 13:45:58 -0700 (PDT)
-Date: Tue, 30 Jul 2024 16:45:53 -0400
+ Tue, 30 Jul 2024 14:32:55 -0700 (PDT)
+Date: Tue, 30 Jul 2024 17:32:48 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: qemu-devel@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Hilber <peter.hilber@opensynergy.com>,
- "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>
-Subject: Re: [PATCH v2] hw/acpi: Add vmclock device
-Message-ID: <20240730164434-mutt-send-email-mst@kernel.org>
-References: <bc85aba60523e0d63e760d5143c5cb57688779d1.camel@infradead.org>
- <20240730135143-mutt-send-email-mst@kernel.org>
- <546A904C-FEEB-4365-B7AA-CA4E3D03300C@infradead.org>
+To: Peter Xu <peterx@redhat.com>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
+ akihiko.odaki@daynix.com, jasowang@redhat.com,
+ sriram.yagnaraman@est.tech, sw@weilnetz.de, qemu-devel@nongnu.org,
+ yan@daynix.com, Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
+Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
+Message-ID: <20240730172148-mutt-send-email-mst@kernel.org>
+References: <ZqO7cR-UiGpX2rk0@redhat.com> <ZqQLbGxEW3XT7qL-@x1n>
+ <Zqe8C9AfaojKHM8A@redhat.com> <ZqfKrtQSSRVnEOGt@x1n>
+ <ZqfQ0cGf8t2trEdl@redhat.com> <ZqktXwxBWjuAgGxZ@x1n>
+ <Zqk09BGxlpdxMBMx@redhat.com> <Zqk6x2nd3Twz--75@x1n>
+ <20240730151746-mutt-send-email-mst@kernel.org>
+ <ZqlHKaQXzKGcnoBM@x1n>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <546A904C-FEEB-4365-B7AA-CA4E3D03300C@infradead.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <ZqlHKaQXzKGcnoBM@x1n>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,20 +111,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 30, 2024 at 08:04:17PM +0100, David Woodhouse wrote:
-> On 30 July 2024 18:53:18 BST, "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> >We don't want to manually sync headers with Linux.
+On Tue, Jul 30, 2024 at 04:03:53PM -0400, Peter Xu wrote:
+> On Tue, Jul 30, 2024 at 03:22:50PM -0400, Michael S. Tsirkin wrote:
+> > This is not what we did historically. Why should we start now?
 > 
-> Indeed. I was briefly tempted to fake it, but figured it might get lost if we subsequently do run the script to automatically merge from Linux, before the guest driver is merged there.
+> It's a matter of whether we still want migration to randomly fail, like
+> what this patch does.
 > 
-> >I think Linux abi should live under uapi. When it is there, we can use
-> >./scripts/update-linux-headers.sh machinery to import it.
+> Or any better suggestions?  I'm definitely open to that.
 > 
-> This isn't just Linux ABI. It's intended as hypervisor to guest ABI too. In the fullness of time I'm hoping it'll actually be a virtio header. In the meantime, best not to overthink it. It's fine in hw/acpi alongside the device itself for now, I think.
+> Thanks,
+> 
+> -- 
+> Peter Xu
 
-This is exactly the same as e.g. virtio. We use Linux as a source of truth, it's
-easier to share with other hypervisors this way. And UAPI and hypervisor
-ABI requirements wrt stability are mostly the same. It works.
+Randomly is an overstatement. You need to switch between kernels
+where this feature differs. We did it with a ton of features
+in the past, donnu why we single out USO now.
+
+Basically downstreams just don't separately add kernel features vs
+qemu features. There's little reason for them to do so.
+
+
 
 -- 
 MST
