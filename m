@@ -4,67 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36F7AC3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 14:29:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1A99C3DA70
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 14:29:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYmCc-0002M7-8u; Tue, 30 Jul 2024 08:43:46 -0400
+	id 1sYn5U-0007Xk-Qk; Tue, 30 Jul 2024 09:40:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sYmCM-0002JI-3h
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 08:43:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sYmBq-0007qa-L2
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 08:43:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722343321;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JycbVMmMRlQiGwD4Kn9RJXFGAHh+tI+ECZkH/3uGGZs=;
- b=G+R4vqcTc5HFO1BMEBFBSu4tbqjMnR5aXgYj6MV1hlglQGMfchfhFQh83tyFQ3EdcYqSj3
- yKIZipl0N5JygGDd1Qdhj8aT7Ajdf0JVlHCpJE96DWlWOEG5fsuzRmkOwiUBLikrnDrKNL
- uC2LBtM3p1Mn+9qTbgcVgHOsoA910g4=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-172-qw8dK3LXNeGxtlG7eBZLrA-1; Tue,
- 30 Jul 2024 08:39:41 -0400
-X-MC-Unique: qw8dK3LXNeGxtlG7eBZLrA-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A531C1955D4D; Tue, 30 Jul 2024 12:39:40 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.72])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B12273000193; Tue, 30 Jul 2024 12:39:38 +0000 (UTC)
-Date: Tue, 30 Jul 2024 07:39:35 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, thuth@redhat.com, 
- kwolf@redhat.com, hreitz@redhat.com, den@virtuozzo.com
-Subject: Re: [PATCH] iotests/024: exclude 'backing file format' field from
- the output
-Message-ID: <mg4thvc6d2uhixhenryitgctf4hkzkxmefs7ykc2ywr3rjpuk2@vbxdqaqw6myi>
-References: <20240730094701.790624-1-andrey.drobyshev@virtuozzo.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sYn4t-0007H8-La
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 09:39:53 -0400
+Received: from [2607:f8b0:4864:20::72c] (helo=mail-qk1-x72c.google.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sYn4Q-0006UP-Sq
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 09:39:40 -0400
+Received: by mail-qk1-x72c.google.com with SMTP id
+ af79cd13be357-7a1d066a5daso314053885a.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 06:38:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722346675; x=1722951475; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=oZa+6PAPEgMz/YsT+iWVxJyWxpPIQHn7KQt9G5vV2Ug=;
+ b=ZUIGsSWCFvL5UVZw34YnSr59r/qkrHraUfSvBQagmpdeFoNeGcrJ8ZD+OUY24Aspfi
+ RIsdOd+9PHDNFBPziszSFQsAZaMoUBeK9AtItisXLJIpM5DA/560uETOFJekM/e4SfVG
+ 96PGXLSvfdYCHnOGoANVy1uuKCk68AisKetWtRIpqZVF83nH/VT9NRThzgMfZRGYd5Xu
+ t9T73BRZ5bJyejuR9cMCZxDqalN2foY8MBN4qwlToERaxiyuN95BKWYK+1kTnNN4hYZp
+ HcxBIHfXYnambWRim0CuEQDFTdaqpS3HqLtVAZUT38X3JO/MoSAguuGHBBz+vToka7+W
+ P1MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722346675; x=1722951475;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=oZa+6PAPEgMz/YsT+iWVxJyWxpPIQHn7KQt9G5vV2Ug=;
+ b=HFPmzOKIChaeT0l5su2M6b6gloJyBXXI98NsGzU036tUQjzPryro/GnaZMggMFAnNW
+ ZOIu1/KpqC9bmrQN0VZ4oNEnHPBJbx9hby5bO4hqmlTQB6PyAVEnEOzVswyiUKYoguGK
+ 2UgrO5vKxqY8U5P/4Y9GLBQ2jloU+8trogB9OHbQIdlTfTMTtRMfCHVFicd1TDleNX7Q
+ 7IWjvhpNaf7uzQhElN8akqa5RES+YznJ/+SCab6TZnZUrXSnNf9M13MSp+J3tHTKH4LV
+ r5BAGq3Cr7u0m5Oa8BehtqqZDsjZxY+bjPYmWAZR8KouojEwS2R7AmD6j4TFDab9U7Hu
+ RwPw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUCADa+X4mh4VpgEmSPEJSYND57GlsnDhti+YXxN2B5plcS170GcLI7k7jv+KtiEtwCOGD3nlcUG0XfQ6LvnLDeMmpsyvQ=
+X-Gm-Message-State: AOJu0YwNc15WCloSjotvaDVRyIdFVKlq/2WHrWIJhgAmDVZTCF+mWvnx
+ bKvCooH6LsqukOWIdRf0g3wI/V3N/0f4n/rOqN5rhP3X2zoSP2hF2WYjfY5cnVi+1fFUAsIj2tI
+ DfpzTqQ==
+X-Google-Smtp-Source: AGHT+IFp4hbwCagiHj9qrAhKu6N/vHx4h/6CNAHvRjeii+8bYtZ3KzzZAZd5gocP9Pm/Wa6NNK6Iag==
+X-Received: by 2002:a17:90b:4a83:b0:2c9:7d09:1e7b with SMTP id
+ 98e67ed59e1d1-2cf7e5e0c18mr9194378a91.27.1722342318022; 
+ Tue, 30 Jul 2024 05:25:18 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2cf28e424besm10387358a91.54.2024.07.30.05.25.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 30 Jul 2024 05:25:17 -0700 (PDT)
+Message-ID: <af7cf54f-0a88-4f17-a75d-51289a427a8c@linaro.org>
+Date: Tue, 30 Jul 2024 22:25:09 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240730094701.790624-1-andrey.drobyshev@virtuozzo.com>
-User-Agent: NeoMutt/20240425
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/1] s390x updates
+To: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Collin Walling <walling@linux.ibm.com>
+References: <20240730080852.649251-1-david@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240730080852.649251-1-david@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 2607:f8b0:4864:20::72c
+ (deferred)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x72c.google.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RDNS_NONE=0.793,
+ T_SPF_HELO_TEMPERROR=0.01,
  T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,34 +101,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 30, 2024 at 12:47:01PM GMT, Andrey Drobyshev wrote:
-> Apparently 'qemu-img info' doesn't report the backing file format field
-> for qed (as it does for qcow2):
+On 7/30/24 18:08, David Hildenbrand wrote:
+> The following changes since commit 8e466dd092469e5ab0f355775c571ea96f3a8e23:
 > 
-> $ qemu-img create -f qed base.qed 1M && qemu-img create -f qed -b base.qed -F qed top.qed 1M
-> $ qemu-img create -f qcow2 base.qcow2 1M && qemu-img create -f qcow2 -b base.qcow2 -F qcow2 top.qcow2 1M
-> $ qemu-img info top.qed | grep 'backing file format'
-> $ qemu-img info top.qcow2 | grep 'backing file format'
-> backing file format: qcow2
+>    gitlab-ci: Use -fno-sanitize=function in the clang-user job (2024-07-26 09:35:27 +1000)
 > 
-> This leads to the 024 test failure with -qed.  Let's just filter the
-> field out and exclude it from the output.
+> are available in the Git repository at:
 > 
-> This is a fixup for the commit f93e65ee51 ("iotests/{024, 271}: add
-> testcases for qemu-img rebase").
+>    https://github.com/davidhildenbrand/qemu.git tags/s390x-20240730
 > 
-> Found-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-> ---
->  tests/qemu-iotests/024     | 2 +-
->  tests/qemu-iotests/024.out | 1 -
->  2 files changed, 1 insertion(+), 2 deletions(-)
+> for you to fetch changes up to 442110bc6f3f308aedf884103fdba87ba906dfe7:
+> 
+>    target/s390x: move @deprecated-props to CpuModelExpansion Info (2024-07-29 21:47:16 +0200)
+> 
+> ----------------------------------------------------------------
+> s390x updates:
+> - fixup for a s390x-only query-cpu-model-expansion extension
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
+r~
 
