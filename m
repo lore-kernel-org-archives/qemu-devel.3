@@ -4,90 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3A37C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 19:24:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62249C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 19:24:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYsRu-0002MO-4q; Tue, 30 Jul 2024 15:23:54 -0400
+	id 1sYsS5-000310-Tb; Tue, 30 Jul 2024 15:24:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sYsRq-0002K6-Rz; Tue, 30 Jul 2024 15:23:51 -0400
+ id 1sYsS4-0002v8-BE; Tue, 30 Jul 2024 15:24:04 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sYsRn-0002FH-1I; Tue, 30 Jul 2024 15:23:49 -0400
+ id 1sYsS2-0002IK-LB; Tue, 30 Jul 2024 15:24:03 -0400
 Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46UHnkS5028503;
- Tue, 30 Jul 2024 19:23:36 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46UErsdq008404;
+ Tue, 30 Jul 2024 19:23:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:content-type
- :content-transfer-encoding:mime-version; s=pp1; bh=YnurlzIFcO7b4
- UsWOrgNQZ1rfjQQTPlXcfGrhS1whpc=; b=JghO36KKiJB4RAXuKOfoaho/IX4W1
- GW+01GW+dV+5GK4yil3e8evXySb5FI62mHADGQ0bVQbb2F4cg3ftX8QYjSndiBr9
- gj7EmxTItPVdhegyduHl+4XMbtaKxM17ThB/2mP/GcMG26VQtHbgM3WLyUGgt0mC
- 2+3Rg6gCZqJTEkMrc/yWWuuQmQ7omkkT4CJvwKhWJDL6oMeDxdUBIW2WcefkX968
- Uqz7568T3/YcyZ2onmVafVTVPqILsNmCSzEedpHfeolYs3fDFrlAhTuunSf7EAwh
- aDU+Kb9Nmp55mNzvikrqDxTxtntKmP0sropemWnzgpw4qQ0vYbKHY1d+Q==
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
+ MZiS3PyugNdhxJRW4N1qcZ8IFgGOP229AbZY8pDZNnQ=; b=gOHd/errZ+86FEPw
+ NRAgbTOANi9XO1GNjDkxeLOR01kAUABfngYlwnR+4DaByx80/ATCUre/ov3ikvKU
+ gF5x/CVYZV4dGkW51x/Zr1hbfvYpeek5/rlfsL7IQn71A2m4LfLIpiiKgf/dIIHa
+ hP5waS8FF0PWG07LIdXopcqi0Q4xGaaipYeSjONLrSg2lU0LuFbgH9/s/1dkzETG
+ hqo8244faPEMb5ZCLbLkviC64+xfDV5rAYEmonwt4wA46WMmgf73v9yu4WUkK5Jl
+ 76/NiLsBTa0ITS8zSa4dXfStzqxE3gBM7ECpHeT4j91LgaFSF5k+dKKVrnH/kOeE
+ Dgy4/Q==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40q13a8vta-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40q13a8vue-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jul 2024 19:23:36 +0000 (GMT)
+ Tue, 30 Jul 2024 19:23:50 +0000 (GMT)
 Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46UJNa6H028201;
- Tue, 30 Jul 2024 19:23:36 GMT
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46UJNKhs028082;
+ Tue, 30 Jul 2024 19:23:49 GMT
 Received: from ppma11.dal12v.mail.ibm.com
  (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40q13a8vt8-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40q13a8vu9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jul 2024 19:23:35 +0000 (GMT)
+ Tue, 30 Jul 2024 19:23:49 +0000 (GMT)
 Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
  by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 46UIF1L2009211; Tue, 30 Jul 2024 19:23:35 GMT
+ 46UIJwvN009202; Tue, 30 Jul 2024 19:23:49 GMT
 Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 40ndx2xby3-1
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 40ndx2xc07-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 30 Jul 2024 19:23:35 +0000
+ Tue, 30 Jul 2024 19:23:49 +0000
 Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
  [10.20.54.101])
  by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 46UJNTqE46268844
+ 46UJNhd451904986
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 30 Jul 2024 19:23:31 GMT
+ Tue, 30 Jul 2024 19:23:45 GMT
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7DD2520043;
- Tue, 30 Jul 2024 19:23:29 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8559220043;
+ Tue, 30 Jul 2024 19:23:43 +0000 (GMT)
 Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 717C920040;
- Tue, 30 Jul 2024 19:23:27 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BDA3C20040;
+ Tue, 30 Jul 2024 19:23:40 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com.com (unknown
  [9.195.42.9]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 30 Jul 2024 19:23:27 +0000 (GMT)
+ Tue, 30 Jul 2024 19:23:40 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
  Madhavan Srinivasan <maddy@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
-Subject: [PATCH v6 0/5] Power11 support for QEMU [PSeries]
-Date: Wed, 31 Jul 2024 00:53:20 +0530
-Message-ID: <20240730192325.669771-1-adityag@linux.ibm.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
+Subject: [PATCH v6 5/5] ppc/pseries: Add Power11 cpu type
+Date: Wed, 31 Jul 2024 00:53:25 +0530
+Message-ID: <20240730192325.669771-6-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.45.2
-Content-Type: text/plain; charset=UTF-8
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: zgU6KvpnQhOyWk16CnjmdpybQzlz56cG
-X-Proofpoint-GUID: XriJUK-Q7-3wL7IgPFe0M9gwjWEgVfhV
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+In-Reply-To: <20240730192325.669771-1-adityag@linux.ibm.com>
+References: <20240730192325.669771-1-adityag@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: QN5I9t08Yt4usP2vhiZrkZW-WPeOOp-4
+X-Proofpoint-GUID: eLn0vyGFoggiPujZSmy9AyVZbsXTgNAR
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-07-30_15,2024-07-30_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  clxscore=1015 impostorscore=0
- adultscore=0 mlxlogscore=999 priorityscore=1501 phishscore=0
+ adultscore=0 mlxlogscore=869 priorityscore=1501 phishscore=0
  lowpriorityscore=0 bulkscore=0 spamscore=0 mlxscore=0 suspectscore=0
  malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2407110000 definitions=main-2407300134
@@ -115,92 +120,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Overview
-============
+Add sPAPR CPU Core definition for Power11
 
-Split "Power11 support for QEMU" into 2 patch series: pseries & powernv.
+Cc: Cédric Le Goater <clg@kaod.org>
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
+Cc: David Gibson <david@gibson.dropbear.id.au>
+Cc: Frédéric Barrat <fbarrat@linux.ibm.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+---
+ docs/system/ppc/pseries.rst | 17 +++++++++++++----
+ hw/ppc/spapr_cpu_core.c     |  1 +
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-This patch series is for pseries support for Power11.
-
-As Power11 core is same as Power10, hence much of the code has been reused from
-Power10.
-
-Power11 was added in Linux in:
-  commit c2ed087ed35c ("powerpc: Add Power11 architected and raw mode")
-
-Git Tree for Testing
-====================
-
-QEMU: https://github.com/adi-g15-ibm/qemu/tree/p11-v6-pseries
-
-Has been tested with following cases:
-* '-M pseries' / '-M pseries -cpu Power11'
-* '-smp' option tested
-* with compat mode: 'max-cpu-compat=power10' and 'max-cpu-compat=power9'
-* with/without device 'virtio-scsi-pci'
-* with/without -kernel and -drive with qcow_file
-
-Linux with Power11 support: https://github.com/torvalds/linux, since v6.9-rc1
-
-Changelog
-=========
-v6: 
-  + reorganised patches such that Power11 introduction is at end, and
-  cleanups and fixes is done before
-  + patch #1: renamed macros from POWER_* to PCC_*
-  + patch #2: rename 'logical_pvr' to 'spapr_logical_pvr' to better convey
-  the context
-
-v5:
-  + split patch series into pseries+powernv
-  + patch #1: apply harsh's patch to reduce duplication
-  + patch #2: simplified, by removing duplication
-  + patch #3: update docs, according to harsh's suggestion
-  + patch #4: no functional change, #define used for P9 & P10 pcr_supported
-  + patch #5: no change
-
-v4:
-  + patch #5: fix memory leak in pnv_chip_power10_quad_realize
-  - no change in other patches
-
-v3:
-  + patch #1: version power11 as power11_v2.0
-  + patch #2: split target hw/pseries code into patch #2
-  + patch #3,#4: fix regression due to Power10 and Power11 having same PCR
-  + patch #5: create pnv_chip_power11_dt_populate and split pnv_chip_power10_common_realize as per review
-  + patch #6-#11: no change
-  - remove commit to make Power11 as default
-
-v2:
-  + split powernv patch into homer,lpc,occ,psi,sbe
-  + reduce code duplication by reusing power10 code
-  + make power11 as default
-  + rebase on qemu upstream/master
-  + add more information in commit descriptions
-  + update docs
-  + update skiboot.lid
-
-
-Aditya Gupta (4):
-  target/ppc: Introduce 'PowerPCCPUClass::spapr_logical_pvr'
-  target/ppc: Fix regression due to Power10 and Power11 having same PCR
-  target/ppc: Add Power11 DD2.0 processor
-  ppc/pseries: Add Power11 cpu type
-
-Harsh Prateek Bora (1):
-  target/ppc: Reduce code duplication across Power9/10 init code
-
- docs/system/ppc/pseries.rst |  17 +++-
- hw/ppc/spapr_cpu_core.c     |   1 +
- target/ppc/compat.c         |  11 +++
- target/ppc/cpu-models.c     |   3 +
- target/ppc/cpu-models.h     |   3 +
- target/ppc/cpu.h            |   3 +
- target/ppc/cpu_init.c       | 188 +++++++++++++++---------------------
- target/ppc/cpu_init.h       |  92 ++++++++++++++++++
- 8 files changed, 205 insertions(+), 113 deletions(-)
- create mode 100644 target/ppc/cpu_init.h
-
+diff --git a/docs/system/ppc/pseries.rst b/docs/system/ppc/pseries.rst
+index a876d897b6e4..bbc51aa7fcdb 100644
+--- a/docs/system/ppc/pseries.rst
++++ b/docs/system/ppc/pseries.rst
+@@ -14,10 +14,19 @@ virtualization capabilities.
+ Supported devices
+ =================
+ 
+- * Multi processor support for many Power processors generations: POWER7,
+-   POWER7+, POWER8, POWER8NVL, POWER9, and Power10. Support for POWER5+ exists,
+-   but its state is unknown.
+- * Interrupt Controller, XICS (POWER8) and XIVE (POWER9 and Power10)
++ * Multi processor support for many Power processors generations:
++   - POWER7, POWER7+
++   - POWER8, POWER8NVL
++   - POWER9
++   - Power10
++   - Power11
++   - Support for POWER5+ also exists, works with correct kernel/userspace
++ * Interrupt Controller
++    - XICS (POWER8)
++    - XIVE (Supported by below:)
++        - POWER9
++        - Power10
++        - Power11
+  * vPHB PCIe Host bridge.
+  * vscsi and vnet devices, compatible with the same devices available on a
+    PowerVM hypervisor with VIOS managing LPARs.
+diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
+index 56090abcd11a..347a1643ac7f 100644
+--- a/hw/ppc/spapr_cpu_core.c
++++ b/hw/ppc/spapr_cpu_core.c
+@@ -411,6 +411,7 @@ static const TypeInfo spapr_cpu_core_type_infos[] = {
+     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
++    DEFINE_SPAPR_CPU_CORE_TYPE("power11_v2.0"),
+ #ifdef CONFIG_KVM
+     DEFINE_SPAPR_CPU_CORE_TYPE("host"),
+ #endif
 -- 
 2.45.2
 
