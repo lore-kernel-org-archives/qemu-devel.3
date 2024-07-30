@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91992C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:42:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FED0C49EA1
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:42:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYjLN-0003lR-9F; Tue, 30 Jul 2024 05:40:33 -0400
+	id 1sYjLS-000464-Ce; Tue, 30 Jul 2024 05:40:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYjLK-0003ZA-75
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:30 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1sYjLP-0003vj-LE
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:35 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYjLH-0000XJ-25
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:29 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-36844375001so1777184f8f.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:40:26 -0700 (PDT)
+ id 1sYjLO-0000df-3N
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:35 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4280bca3960so25368305e9.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:40:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722332425; x=1722937225; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722332433; x=1722937233; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4T6pYopAN2oL2qteh+hB6Dilhk+gKXLQ4w62WyPdv7M=;
- b=sXe+lhNlOh0naJtgSUBry+o5EKssAHlpixEi9g3PI4nW1bZ1NbEawvG8kIzol7tlkq
- MFpAWwiBzZog412x1RFJ9pEkMVL2nc4w4T2CUqPQuboRRDljwmgE8a7RlpDNG2PGLGGk
- gPmRAe8C89EHFz0j3IfvNfCrhQGLGXCK/p4J3db8XVS0HuziR687+R6D04tOaJf5Fi0l
- gIOjR0wfESOh0b+7K+IbPgenc6gVLLnbdR36A+IL+S7wLyhX4qH7WwLpCfiRfAWIpzln
- oeNjhRpNuB2Y5ReK0uu4pakZIm8Cf0Vu54+E24n7KyDZDpXbSLs0jP8E7zhPauF3f8xm
- N6ew==
+ :reply-to; bh=/p7od16yWan/HDEkGj2xKqznwD/3Uyvk/bZAOed461U=;
+ b=aGWOjwOlSK8J+sC6ZJFJL5xn4uDPoP2r9y+PnjvTm4AiZrhZEdYkqUwA+Za0qNBgef
+ WJ4bEqSlF8CEJlfaodpfX6k6MJj00QxMAt7q6NmXRAy/iBHts9Zh3EZ7kKvMQ1qNs4yy
+ gfaNauvpvfljZcWLbWsSK4WhrJW1+TDVnX/RpYMw5qpYR++DHUjwC21EC63Nsv/jFr6l
+ DjGrkxGYluRrJ/FJE5tabXp+pMvt9gJEv5REwdtgc3x/x2EzLVXftcksZVCm9UYBaTup
+ G89y0viz8OOUgU75D0yU4PWhOND9MPEuYJ0gP0r6jsEFw5Nr1xoMB2uXsoz7ogdjuk4m
+ n1hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722332425; x=1722937225;
+ d=1e100.net; s=20230601; t=1722332433; x=1722937233;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4T6pYopAN2oL2qteh+hB6Dilhk+gKXLQ4w62WyPdv7M=;
- b=xRHzgWTJ9ITcwiTBIMPzULFn57REIogBW8tU57vXXE3wPRS01vF0iZwA9kEvCDRyCQ
- fyyD/Oul9Ye9SJRIS/9fyrWW0NjQyFDVI8wfqFAx0BUpWGTtxAdlov+I5vqr4KVqrpbP
- VrBRm0Tnn4HCR7ReGyypwNeAGWV4i0GXejV36QWOE1mvKJuHpvvANaaArwOslcdS2Idp
- MvjoRXThDitjx2UX+NQP6S7aVAjSHsvQXZUFyOiWEzKhPVEKjeQH9VV2xaw+022y88yT
- iR1bIaECSYRi2sCSlOD6bMSG1saCTP7Nw4xiULBhfKkK1fnbMpls+XITPwTAtF93ONJE
- nLYg==
-X-Gm-Message-State: AOJu0Yz6ICqGhTxS+ijViFrXLLc3p3H8mpUogDJsY3i/bPmK+zswDlU2
- yORI/90YIv0WB/15KUQK4tHB+TdojNg92E7TouyU0b+uZBgPMYpk8QXotwtO68b7v38HnNkrrOR
- e
-X-Google-Smtp-Source: AGHT+IGlsIBIILbHNvdg//vCxiB6b1koyFZ3anQCLh69NoOTrQuaXrF+ZRfHiG439oh7XVxA2iVs2A==
-X-Received: by 2002:a05:6000:1249:b0:367:f054:7aba with SMTP id
- ffacd0b85a97d-36b5d0bc571mr6269721f8f.41.1722332425648; 
- Tue, 30 Jul 2024 02:40:25 -0700 (PDT)
+ bh=/p7od16yWan/HDEkGj2xKqznwD/3Uyvk/bZAOed461U=;
+ b=RJn3A0AtQqd96/3C3V8kCfv3cIFWTK2/wD3CaHLlyW8+clAlS550NFKy4OxwBm5x6C
+ 070JuaVaKbVV9eKkIKcqAzXkp6O17puNpqyZgr8Qw3thq9YzBVKKp7h9xuscrklpaCoq
+ hZ/JWtuw3aQ7y/SkX56Bf8RmSbISfNjbEXk1QAbDHFBoBXBCg1uf345Bgxy88TpEajW9
+ RudyEVbaIBYwerDg5NuWv52nWYomfDHUQjaTHWLGgJDNMmEriba8+brpqre52pPuOy7m
+ XaC+rZeA6tlZh6wu5/mLaXKagsHY/eDWURxxoIMGhp8wQJpulOm3LVPp7klO0U2xwWcj
+ V17g==
+X-Gm-Message-State: AOJu0YyDzzjo/QlqYcV/viywDfQJz5mjikfL34D7V8XoS8LGNn0ZOXsB
+ yC6p6SgI1Dtghd3F22FmaEM0oKpGDiRgDPpLq1J4LItteCnxYbu5oYGvAu8uuZ7L/Cw6csMssjc
+ V
+X-Google-Smtp-Source: AGHT+IF+pNRJ3pVHCBr6CxeZULr52V7dsxz+Q49euP97uyNx8prcWL+oyFJOo9gR81G+7Li8QtV/Mg==
+X-Received: by 2002:a05:600c:6dce:b0:427:985b:178b with SMTP id
+ 5b1f17b1804b1-42811d871a4mr68531495e9.16.1722332432646; 
+ Tue, 30 Jul 2024 02:40:32 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b36862549sm14194974f8f.106.2024.07.30.02.40.25
+ ffacd0b85a97d-36b36862549sm14194974f8f.106.2024.07.30.02.40.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jul 2024 02:40:25 -0700 (PDT)
+ Tue, 30 Jul 2024 02:40:32 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/21] hvf: arm: Properly disable PMU
-Date: Tue, 30 Jul 2024 10:40:05 +0100
-Message-Id: <20240730094020.2758637-7-peter.maydell@linaro.org>
+Subject: [PULL 20/21] target/sh4: Avoid shift into sign bit in
+ update_itlb_use()
+Date: Tue, 30 Jul 2024 10:40:19 +0100
+Message-Id: <20240730094020.2758637-21-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240730094020.2758637-1-peter.maydell@linaro.org>
 References: <20240730094020.2758637-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,230 +95,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In update_itlb_use() the variables or_mask and and_mask are uint8_t,
+which means that in expressions like "and_mask << 24" the usual C
+arithmetic conversions will result in the shift being done as a
+signed int type, and so we will shift into the sign bit. For QEMU
+this isn't undefined behaviour because we use -fwrapv; but we can
+avoid it anyway by using uint32_t types for or_mask and and_mask.
 
-Setting pmu property used to have no effect for hvf so fix it.
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Resolves: Coverity CID 1547628
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
+Message-id: 20240723172431.1757296-1-peter.maydell@linaro.org
 ---
- target/arm/hvf/hvf.c | 186 +++++++++++++++++++++++--------------------
- 1 file changed, 98 insertions(+), 88 deletions(-)
+ target/sh4/helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 1a749534fb0..adcdfae0b17 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1204,45 +1204,50 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
-     ARMCPU *arm_cpu = ARM_CPU(cpu);
-     CPUARMState *env = &arm_cpu->env;
+diff --git a/target/sh4/helper.c b/target/sh4/helper.c
+index 67029106277..9659c695504 100644
+--- a/target/sh4/helper.c
++++ b/target/sh4/helper.c
+@@ -187,7 +187,7 @@ void superh_cpu_do_interrupt(CPUState *cs)
  
-+    if (arm_feature(env, ARM_FEATURE_PMU)) {
-+        switch (reg) {
-+        case SYSREG_PMCR_EL0:
-+            *val = env->cp15.c9_pmcr;
-+            return 0;
-+        case SYSREG_PMCCNTR_EL0:
-+            pmu_op_start(env);
-+            *val = env->cp15.c15_ccnt;
-+            pmu_op_finish(env);
-+            return 0;
-+        case SYSREG_PMCNTENCLR_EL0:
-+            *val = env->cp15.c9_pmcnten;
-+            return 0;
-+        case SYSREG_PMOVSCLR_EL0:
-+            *val = env->cp15.c9_pmovsr;
-+            return 0;
-+        case SYSREG_PMSELR_EL0:
-+            *val = env->cp15.c9_pmselr;
-+            return 0;
-+        case SYSREG_PMINTENCLR_EL1:
-+            *val = env->cp15.c9_pminten;
-+            return 0;
-+        case SYSREG_PMCCFILTR_EL0:
-+            *val = env->cp15.pmccfiltr_el0;
-+            return 0;
-+        case SYSREG_PMCNTENSET_EL0:
-+            *val = env->cp15.c9_pmcnten;
-+            return 0;
-+        case SYSREG_PMUSERENR_EL0:
-+            *val = env->cp15.c9_pmuserenr;
-+            return 0;
-+        case SYSREG_PMCEID0_EL0:
-+        case SYSREG_PMCEID1_EL0:
-+            /* We can't really count anything yet, declare all events invalid */
-+            *val = 0;
-+            return 0;
-+        }
-+    }
-+
-     switch (reg) {
-     case SYSREG_CNTPCT_EL0:
-         *val = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) /
-               gt_cntfrq_period_ns(arm_cpu);
-         return 0;
--    case SYSREG_PMCR_EL0:
--        *val = env->cp15.c9_pmcr;
--        return 0;
--    case SYSREG_PMCCNTR_EL0:
--        pmu_op_start(env);
--        *val = env->cp15.c15_ccnt;
--        pmu_op_finish(env);
--        return 0;
--    case SYSREG_PMCNTENCLR_EL0:
--        *val = env->cp15.c9_pmcnten;
--        return 0;
--    case SYSREG_PMOVSCLR_EL0:
--        *val = env->cp15.c9_pmovsr;
--        return 0;
--    case SYSREG_PMSELR_EL0:
--        *val = env->cp15.c9_pmselr;
--        return 0;
--    case SYSREG_PMINTENCLR_EL1:
--        *val = env->cp15.c9_pminten;
--        return 0;
--    case SYSREG_PMCCFILTR_EL0:
--        *val = env->cp15.pmccfiltr_el0;
--        return 0;
--    case SYSREG_PMCNTENSET_EL0:
--        *val = env->cp15.c9_pmcnten;
--        return 0;
--    case SYSREG_PMUSERENR_EL0:
--        *val = env->cp15.c9_pmuserenr;
--        return 0;
--    case SYSREG_PMCEID0_EL0:
--    case SYSREG_PMCEID1_EL0:
--        /* We can't really count anything yet, declare all events invalid */
--        *val = 0;
--        return 0;
-     case SYSREG_OSLSR_EL1:
-         *val = env->cp15.oslsr_el1;
-         return 0;
-@@ -1486,64 +1491,69 @@ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
-                            SYSREG_OP2(reg),
-                            val);
+ static void update_itlb_use(CPUSH4State * env, int itlbnb)
+ {
+-    uint8_t or_mask = 0, and_mask = (uint8_t) - 1;
++    uint32_t or_mask = 0, and_mask = 0xff;
  
--    switch (reg) {
--    case SYSREG_PMCCNTR_EL0:
--        pmu_op_start(env);
--        env->cp15.c15_ccnt = val;
--        pmu_op_finish(env);
--        return 0;
--    case SYSREG_PMCR_EL0:
--        pmu_op_start(env);
-+    if (arm_feature(env, ARM_FEATURE_PMU)) {
-+        switch (reg) {
-+        case SYSREG_PMCCNTR_EL0:
-+            pmu_op_start(env);
-+            env->cp15.c15_ccnt = val;
-+            pmu_op_finish(env);
-+            return 0;
-+        case SYSREG_PMCR_EL0:
-+            pmu_op_start(env);
- 
--        if (val & PMCRC) {
--            /* The counter has been reset */
--            env->cp15.c15_ccnt = 0;
--        }
--
--        if (val & PMCRP) {
--            unsigned int i;
--            for (i = 0; i < pmu_num_counters(env); i++) {
--                env->cp15.c14_pmevcntr[i] = 0;
-+            if (val & PMCRC) {
-+                /* The counter has been reset */
-+                env->cp15.c15_ccnt = 0;
-             }
-+
-+            if (val & PMCRP) {
-+                unsigned int i;
-+                for (i = 0; i < pmu_num_counters(env); i++) {
-+                    env->cp15.c14_pmevcntr[i] = 0;
-+                }
-+            }
-+
-+            env->cp15.c9_pmcr &= ~PMCR_WRITABLE_MASK;
-+            env->cp15.c9_pmcr |= (val & PMCR_WRITABLE_MASK);
-+
-+            pmu_op_finish(env);
-+            return 0;
-+        case SYSREG_PMUSERENR_EL0:
-+            env->cp15.c9_pmuserenr = val & 0xf;
-+            return 0;
-+        case SYSREG_PMCNTENSET_EL0:
-+            env->cp15.c9_pmcnten |= (val & pmu_counter_mask(env));
-+            return 0;
-+        case SYSREG_PMCNTENCLR_EL0:
-+            env->cp15.c9_pmcnten &= ~(val & pmu_counter_mask(env));
-+            return 0;
-+        case SYSREG_PMINTENCLR_EL1:
-+            pmu_op_start(env);
-+            env->cp15.c9_pminten |= val;
-+            pmu_op_finish(env);
-+            return 0;
-+        case SYSREG_PMOVSCLR_EL0:
-+            pmu_op_start(env);
-+            env->cp15.c9_pmovsr &= ~val;
-+            pmu_op_finish(env);
-+            return 0;
-+        case SYSREG_PMSWINC_EL0:
-+            pmu_op_start(env);
-+            pmswinc_write(env, val);
-+            pmu_op_finish(env);
-+            return 0;
-+        case SYSREG_PMSELR_EL0:
-+            env->cp15.c9_pmselr = val & 0x1f;
-+            return 0;
-+        case SYSREG_PMCCFILTR_EL0:
-+            pmu_op_start(env);
-+            env->cp15.pmccfiltr_el0 = val & PMCCFILTR_EL0;
-+            pmu_op_finish(env);
-+            return 0;
-         }
-+    }
- 
--        env->cp15.c9_pmcr &= ~PMCR_WRITABLE_MASK;
--        env->cp15.c9_pmcr |= (val & PMCR_WRITABLE_MASK);
--
--        pmu_op_finish(env);
--        return 0;
--    case SYSREG_PMUSERENR_EL0:
--        env->cp15.c9_pmuserenr = val & 0xf;
--        return 0;
--    case SYSREG_PMCNTENSET_EL0:
--        env->cp15.c9_pmcnten |= (val & pmu_counter_mask(env));
--        return 0;
--    case SYSREG_PMCNTENCLR_EL0:
--        env->cp15.c9_pmcnten &= ~(val & pmu_counter_mask(env));
--        return 0;
--    case SYSREG_PMINTENCLR_EL1:
--        pmu_op_start(env);
--        env->cp15.c9_pminten |= val;
--        pmu_op_finish(env);
--        return 0;
--    case SYSREG_PMOVSCLR_EL0:
--        pmu_op_start(env);
--        env->cp15.c9_pmovsr &= ~val;
--        pmu_op_finish(env);
--        return 0;
--    case SYSREG_PMSWINC_EL0:
--        pmu_op_start(env);
--        pmswinc_write(env, val);
--        pmu_op_finish(env);
--        return 0;
--    case SYSREG_PMSELR_EL0:
--        env->cp15.c9_pmselr = val & 0x1f;
--        return 0;
--    case SYSREG_PMCCFILTR_EL0:
--        pmu_op_start(env);
--        env->cp15.pmccfiltr_el0 = val & PMCCFILTR_EL0;
--        pmu_op_finish(env);
--        return 0;
-+    switch (reg) {
-     case SYSREG_OSLAR_EL1:
-         env->cp15.oslsr_el1 = val & 1;
-         return 0;
+     switch (itlbnb) {
+     case 0:
 -- 
 2.34.1
 
