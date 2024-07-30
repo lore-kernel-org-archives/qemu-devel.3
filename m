@@ -4,78 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E67EC3DA70
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 16:24:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF6AC3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 16:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYpce-0008NP-F5; Tue, 30 Jul 2024 12:22:48 -0400
+	id 1sYpck-0000Os-Tp; Tue, 30 Jul 2024 12:22:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYpcc-0008Gj-Uo
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:22:46 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1sYpcj-0000Gp-7D
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:22:53 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sYpca-0003XR-LU
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:22:46 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5a2ffc34722so52163a12.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 09:22:44 -0700 (PDT)
+ id 1sYpcg-0003ZI-Qb
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 12:22:52 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a7abf92f57bso624400466b.2
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 09:22:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722356563; x=1722961363; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722356569; x=1722961369; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=keY6VpPVumnjGkrnimQUeQrjJ9wrFpao2IDVhIYi/0I=;
- b=FphgzqXrRP54NFsWF9APP55aWbD/5pwaqEErffH/smztR6oGQVuOOkp2O3xqy+1gzA
- apseVmMv60WkN+hbq7FVaJSWcslroJ3tfuwjJr037uBHamIO2MYuqlnBzCqW6324pREF
- a+jdPBqcrbcNxO5nEFxChoN33jf+fz+g1kQaDi6Xn+LOdT2b0jLVz7wmWnPWpGtfvrae
- ntj+SSXr3PLbZxDCBYHTw39LryHcO3rFLIvzqzeZnCJQS9dDbUPpXuVyXYn/4zMHV+1y
- gm0S/R9BYJlWIveVKUFASfglNJdhKiMARZlDRbx+CZxgmczesnv+Q8e6N/66y5xgtrop
- 8gzw==
+ bh=5fyYDcDv5KTze2j09O6ktgDBKd/K+i4jbbZxm6SZYgw=;
+ b=Pt+uDukV6XzCkr4vg4hpZabtXJryBTUPsi7HPzhbappBGLSq3rjYUOaeSB1tA7z7ia
+ HXNlYXXoXaheWKfbU4ICtlGByMJ/09z4+0nZsqq0ZAi0S9zhgr2an6HYyaYFI21u2JNo
+ t37Y0ajHAxvfzwM4DLM6ODM3kbkwEQ9aYG24BsWcnWCsqlw8J9YPWJr5WhwvpJGgohnl
+ TTs+bSTuC+7fVq3HM58j1QZyTLeHTwNnqcZ+x0sZSUPaVDqXRkqhsQbC/TXvTt3cmYKs
+ 7dUEkH1aL6HdIk/ODIlHFKD9IiuutxDoYyO/jN1xaM5fb9C8Nf9omGmsu1E1Fx52BZ5O
+ Gs7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722356563; x=1722961363;
+ d=1e100.net; s=20230601; t=1722356569; x=1722961369;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=keY6VpPVumnjGkrnimQUeQrjJ9wrFpao2IDVhIYi/0I=;
- b=WedtOMQHpxkF6uV+THZECynUQZTLpE+g4VLi4BfaNBxhqJLynwduJek7ycnu8H/8jU
- +7HltVim0y2rT8gE9awRTpw2GQGI5ykiRF0gBr0+xLwDBLyaNntxhzH0cZywcSoHeIwx
- sH+BgzFMo9GLPUal/0dEFLq5VIKa1myt+r4qg+FHaiYXsj1rWrOYuPJMSp4jANL5UwXG
- zY5jNJndVvqkAjy7FoeBypLIfxCFN94wyphldYXTxOT4RVA3au76WOY+MI9bv81JNj4k
- qKmZRERxkg6uSpjSaqt5WKNwy9gU/y3XqD1ovVNrt7Vrvr0Wcd/xdjFx+NqPAdsoO4lK
- bRcw==
-X-Gm-Message-State: AOJu0Yw71WEiHwKRdAQOc+tpM1fNaFiCCmlEcuz9vUfpu9ia3JptBS/h
- q3G1QCj4lqDOv84klNpkHXwQja+e1wFKAQvSFu+u7SfegMiLy3HnwpN9wZyLwZ+9QDRbtgmSD3E
- O
-X-Google-Smtp-Source: AGHT+IHfQ5zdpuKYoSSOqbu3rVxgU1IcF5SN4aknac49jKQyMvDylO1sDAOKyv46RZ5Z6YbTqrQmeg==
-X-Received: by 2002:a50:931d:0:b0:5b4:cbba:902a with SMTP id
- 4fb4d7f45d1cf-5b4cbc9e0aamr2080087a12.4.1722356562894; 
- Tue, 30 Jul 2024 09:22:42 -0700 (PDT)
+ bh=5fyYDcDv5KTze2j09O6ktgDBKd/K+i4jbbZxm6SZYgw=;
+ b=SLj36Rs5RnGpWDAntausOCb6U37C1f5fRmt2Ml3D0qIoFhvT4FCC6Ld+QLob0YJ3WQ
+ xFaX/9V7OV0ffwO93ygvKGt3zBhxdHy9skqXcSy+m5cO7xJjGHp7h0vmjqYti9/CFCj1
+ 5ZgB2tbp7gev/hCkBCSafiY2mQelSvxeckS88GX1urjpYomLtOyBT7K5M1WihSVNVeUw
+ fY3yl163DZFj2+HYtp0SkNvyRRIST0YDGbS8DD7oPeiDcOPwM7LiD0UdRxIMSgnuin3A
+ BWxH6mPv2PlVfBbFi6xirK5Xa1QcNGE/yiwEY+2RxYVoGa0H3PoUBAwGPr66lvjx6u+C
+ ZGTw==
+X-Gm-Message-State: AOJu0YyQg0FNUmXUJWmI1msgpcCud3LxcVZcQCl8nY5ZO1JN7et6L5nX
+ 1ccepMmqNtcU/S4eN9a+Cb7njryqLazy4u4k2MLBc249ta6jUhJhItNvd41u0aI=
+X-Google-Smtp-Source: AGHT+IFWxAXdUncxTXiZl1ssCkZvkdc+Drue5mOXNNY6v8jjICG8loHUWTRYEqDjw/XGGqn7cEBXQw==
+X-Received: by 2002:a17:906:d555:b0:a7d:3ab9:6a5d with SMTP id
+ a640c23a62f3a-a7d40175219mr693454666b.69.1722356568939; 
+ Tue, 30 Jul 2024 09:22:48 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5af507c6e9bsm6119847a12.54.2024.07.30.09.22.40
+ a640c23a62f3a-a7acad903f1sm663624766b.152.2024.07.30.09.22.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jul 2024 09:22:40 -0700 (PDT)
+ Tue, 30 Jul 2024 09:22:45 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 523095F93A;
+ by draig.lan (Postfix) with ESMTP id B05D45FA06;
  Tue, 30 Jul 2024 17:22:38 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 05/14] tests/tcg: update README
-Date: Tue, 30 Jul 2024 17:22:28 +0100
-Message-Id: <20240730162237.1425515-6-alex.bennee@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Subject: [PULL 09/14] tests/tcg: move test plugins into tcg subdir
+Date: Tue, 30 Jul 2024 17:22:32 +0100
+Message-Id: <20240730162237.1425515-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240730162237.1425515-1-alex.bennee@linaro.org>
 References: <20240730162237.1425515-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,42 +104,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the document with details about the layout of tests. Remove the
-out of date cris comments. Refer to the developer guide for details
-about how to run the tests.
+You cannot use plugins without TCG enabled so it doesn't make sense to
+have them separated off in the test directory structure. While we are
+at it rename the directory to plugins to reflect the plural nature of
+the directory and match up with contrib/plugins.
 
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240729144414.830369-6-alex.bennee@linaro.org>
+Message-Id: <20240729144414.830369-10-alex.bennee@linaro.org>
 
-diff --git a/tests/tcg/README b/tests/tcg/README
-index 706bb185b4..6d08ca50dc 100644
---- a/tests/tcg/README
-+++ b/tests/tcg/README
-@@ -1,9 +1,14 @@
--This directory contains various interesting guest programs for
--regression testing. Tests are either multi-arch, meaning they can be
--built for all guest architectures that support linux-user executable,
--or they are architecture specific.
--
--CRIS
--====
--The testsuite for CRIS is in tests/tcg/cris.  You can run it
--with "make test-cris".
-+This directory contains various interesting guest binaries for
-+regression testing the Tiny Code Generator doing system and user-mode
-+emulation.
-+
-+The multiarch directory contains shared code for tests that can be
-+built for all guest architectures. Architecture specific code can be
-+found in their respective directories.
-+
-+System mode tests will be under the "system" subdirectories.
-+
-+GDB scripts for exercising the gdbstub on specific tests will be found
-+under the "gdbstb" subdirectories.
-+
-+See the developer guide for more instructions on "make check-tcg"
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 98eddf7ae1..72b3c67360 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3751,7 +3751,7 @@ R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ S: Maintained
+ F: docs/devel/tcg-plugins.rst
+ F: plugins/
+-F: tests/plugin/
++F: tests/tcg/plugins/
+ F: tests/avocado/tcg_plugins.py
+ F: contrib/plugins/
+ 
+diff --git a/tests/plugin/bb.c b/tests/tcg/plugins/bb.c
+similarity index 100%
+rename from tests/plugin/bb.c
+rename to tests/tcg/plugins/bb.c
+diff --git a/tests/plugin/empty.c b/tests/tcg/plugins/empty.c
+similarity index 100%
+rename from tests/plugin/empty.c
+rename to tests/tcg/plugins/empty.c
+diff --git a/tests/plugin/inline.c b/tests/tcg/plugins/inline.c
+similarity index 100%
+rename from tests/plugin/inline.c
+rename to tests/tcg/plugins/inline.c
+diff --git a/tests/plugin/insn.c b/tests/tcg/plugins/insn.c
+similarity index 100%
+rename from tests/plugin/insn.c
+rename to tests/tcg/plugins/insn.c
+diff --git a/tests/plugin/mem.c b/tests/tcg/plugins/mem.c
+similarity index 100%
+rename from tests/plugin/mem.c
+rename to tests/tcg/plugins/mem.c
+diff --git a/tests/plugin/syscall.c b/tests/tcg/plugins/syscall.c
+similarity index 100%
+rename from tests/plugin/syscall.c
+rename to tests/tcg/plugins/syscall.c
+diff --git a/tests/avocado/tcg_plugins.py b/tests/avocado/tcg_plugins.py
+index a930fca2c0..a6ff457e27 100644
+--- a/tests/avocado/tcg_plugins.py
++++ b/tests/avocado/tcg_plugins.py
+@@ -77,7 +77,7 @@ def test_aarch64_virt_insn(self):
+                                                  suffix=".log")
+ 
+         self.run_vm(kernel_path, kernel_command_line,
+-                    "tests/plugin/libinsn.so", plugin_log.name,
++                    "tests/tcg/plugins/libinsn.so", plugin_log.name,
+                     console_pattern)
+ 
+         with plugin_log as lf, \
+@@ -107,7 +107,7 @@ def test_aarch64_virt_insn_icount(self):
+                                                  suffix=".log")
+ 
+         self.run_vm(kernel_path, kernel_command_line,
+-                    "tests/plugin/libinsn.so", plugin_log.name,
++                    "tests/tcg/plugins/libinsn.so", plugin_log.name,
+                     console_pattern,
+                     args=('-icount', 'shift=1'))
+ 
+diff --git a/tests/meson.build b/tests/meson.build
+index acb6807094..80dd3029cf 100644
+--- a/tests/meson.build
++++ b/tests/meson.build
+@@ -78,7 +78,7 @@ subdir('decode')
+ 
+ if 'CONFIG_TCG' in config_all_accel
+   subdir('fp')
+-  subdir('plugin')
++  subdir('tcg/plugins')
+ endif
+ 
+ subdir('unit')
+diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
+index 1f8e5b3d30..452a2cde65 100644
+--- a/tests/tcg/Makefile.target
++++ b/tests/tcg/Makefile.target
+@@ -142,8 +142,8 @@ RUN_TESTS=$(patsubst %,run-%, $(TESTS))
+ 
+ # If plugins exist also include those in the tests
+ ifeq ($(CONFIG_PLUGIN),y)
+-PLUGIN_SRC=$(SRC_PATH)/tests/plugin
+-PLUGIN_LIB=../../plugin
++PLUGIN_SRC=$(SRC_PATH)/tests/tcg/plugins
++PLUGIN_LIB=../plugins
+ VPATH+=$(PLUGIN_LIB)
+ PLUGINS=$(patsubst %.c, lib%.so, $(notdir $(wildcard $(PLUGIN_SRC)/*.c)))
+ 
+diff --git a/tests/plugin/meson.build b/tests/tcg/plugins/meson.build
+similarity index 70%
+rename from tests/plugin/meson.build
+rename to tests/tcg/plugins/meson.build
+index 9eece5bab5..f847849b1b 100644
+--- a/tests/plugin/meson.build
++++ b/tests/tcg/plugins/meson.build
+@@ -2,15 +2,15 @@ t = []
+ if get_option('plugins')
+   foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'syscall']
+     if host_os == 'windows'
+-      t += shared_module(i, files(i + '.c') + '../../contrib/plugins/win32_linker.c',
+-                        include_directories: '../../include/qemu',
++      t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
++                        include_directories: '../../../include/qemu',
+                         link_depends: [win32_qemu_plugin_api_lib],
+                         link_args: ['-Lplugins', '-lqemu_plugin_api'],
+                         dependencies: glib)
+ 
+     else
+       t += shared_module(i, files(i + '.c'),
+-                        include_directories: '../../include/qemu',
++                        include_directories: '../../../include/qemu',
+                         dependencies: glib)
+     endif
+   endforeach
 -- 
 2.39.2
 
