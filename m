@@ -4,81 +4,163 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F05A6C3DA61
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:43:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 091F9C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:44:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYjLO-0003oz-66; Tue, 30 Jul 2024 05:40:34 -0400
+	id 1sYjNp-0003Q5-D3; Tue, 30 Jul 2024 05:43:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYjLL-0003fW-Mf
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:31 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYjLJ-0000Z2-Aj
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:31 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-427b1d4da32so15413695e9.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:40:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722332428; x=1722937228; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=6/3KP82EfN4i2J5+6pe3rVQ72AJnXOfkdmQBvmdb3yU=;
- b=R2Zve7nP4fw3rYQjKqgcHxi9Fmgu3AzYtnWU1G+ImKs1LvLe6My0Jl6PBQVlHHH1oR
- o1+FKBIfOpA8jDhU0YvNY4PgseTwEKeTL5kQE1tCf1/DSNBXB3+U2a576HHy1g+fhExZ
- RKvBufPd7xBofARuH92M6Y+WfriYv1s5EgFHmy8U72PNPNIubHUMXpltSHXzBeNrnZQn
- 1TU+an9dqygOdaP84Xyqv/c6oXCkPI2GFHvZ2tLCtfIH8dmcrYJJGsAS7Iz821dl+TD3
- 5sMfLWMooc0qkZRIhE85Ol7hQ7TpADcehq9xml+MgqnbyG5sU9uqy/EMRZgTDXoi+rNQ
- GCnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722332428; x=1722937228;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6/3KP82EfN4i2J5+6pe3rVQ72AJnXOfkdmQBvmdb3yU=;
- b=A2C7VL+Z+HaEuL3/2Lhe6ZCJHqKgsrCihKM3GUeuZs74lN/QXkvPCIKq+L0ak/IiVr
- VDp3rHKq3R1RhrPXj1OIZ0Ut/wae4QJ2gTyBBSaDsuLhzoE5SsRam7Omy5rAR4+ufiqA
- m+aAHaFwOGJNEYrDxSje6zMltMrKsJhoM3Z26m7OFOq1EEWpAthcBFkOQMXId563e58o
- aKEcziOHpiWIcN1lyRYq6B3glzZdiYv9uqPLaq7f4b/jE11LP0WStVlbwdRNULXhw/eC
- 4gd/xhFuHQX7a3u+ojYHiWu9Si1pnUlKX4BAXP0EphWoQyOCJ3wQGo55UIejpezsLaH9
- lLiA==
-X-Gm-Message-State: AOJu0YxXwDTBKOE8SrNJyi7QtY3RrtjCQSqhai2ZjcS3pKyd59N5j6BR
- S2DgaJhS6hgHZFoT21zRVVfwKzrhSUkiNPOcFVY0XECVzqxH2IMZcj8YptN+BweZq2dWYYg9aAB
- d
-X-Google-Smtp-Source: AGHT+IGYVooqxJ+G45vtZ1YU2jFN7xRAVkA1EhPZyw1n5kkPYosg2ArjqAevuKqaZvL9jRIkc0vSWw==
-X-Received: by 2002:adf:f8ca:0:b0:367:8e52:3bb9 with SMTP id
- ffacd0b85a97d-36b8c8e9a69mr873598f8f.22.1722332427858; 
- Tue, 30 Jul 2024 02:40:27 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b36862549sm14194974f8f.106.2024.07.30.02.40.27
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 30 Jul 2024 02:40:27 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 09/21] hw/misc/bcm2835_property: Avoid overflow in OTP access
- properties
-Date: Tue, 30 Jul 2024 10:40:08 +0100
-Message-Id: <20240730094020.2758637-10-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240730094020.2758637-1-peter.maydell@linaro.org>
-References: <20240730094020.2758637-1-peter.maydell@linaro.org>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1sYjNn-0002uB-1M; Tue, 30 Jul 2024 05:43:03 -0400
+Received: from mail-am0eur02on20704.outbound.protection.outlook.com
+ ([2a01:111:f403:2606::704]
+ helo=EUR02-AM0-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1sYjNj-00012T-Vv; Tue, 30 Jul 2024 05:43:02 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=upDuC0HN/6blGaaKEhoZxBg1vUh4f/gomG2JGjLxNjAT3/TsfK/X96pVwfdEh4fJxQbZ/vAxJfP4KbP8xwCaGSYyxzsY+jtvVZlGcUQu91jqGneAJ6RDRcg2JGSIrNu5T+UAKFi2OwwcivymJRXAietDAu1G/HXGr6xrwPw9EVACNGOw8Rk7LQTF4Po73reqzBJgg9RvLlmR/z1jFgzvRIGuJvt+5S71okh/zVIHwgnDCi9GXSlp8SNyPqdBeJ2JNdVbn/ZOM+RfQxZuFXRzmFjyXBNDf9q0bsh/xfSXGISVmYA+a0y+dh7TQh+ZVA5WRnOHOuDAd1L6dhjbU9Dclw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=u4O6bsIQc9U4IAmhl4AxUmrXLlkFrA0kaL+AHxnu7ts=;
+ b=Y/KLjETcO0amY+r2VOh33prBHCZJZDsGKFyx754mLPhwbWgXBf0wgdcY0Jlq3/xHY6y2x9V9i8cMHqhGA6rs7SRrY6RTuZ0BRnfCU0oBGprHBPQME/WEWo+A3vUGx9sgbkc89YFkoGKQw81/TUDs3kU/DRf3eowh/TBDK6B3PxhfWRvZG8oYTMDOGGaWLXUeUmezPB1/ahgF6Zc7mzmehEJVXIBQHe2GZ0AknbrL2Pm4X8LwTmOfZVzOUorTKfR1mAfaw9NfMVYEjT7dsU0CEHOQbjbwE8UIjUkWk0i/E19zTn3lJNYuipgysLtsAabICUdwnU0H2vKSdPaBaN9GFw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=u4O6bsIQc9U4IAmhl4AxUmrXLlkFrA0kaL+AHxnu7ts=;
+ b=uZ3XrkTRqx+AN/yH40n3VotzKd49AiTPjkTt0pE5Uwikb4cjpYs/NJ7NgeBxxPgFXorp/fChBTsS1UdmYQGhXTiDuo/XTx6/1JHJoLXygyORfOTpwKWgW/uB7CIYGSepLNhAWOEhp16Kvi4bKPELDYsJwPOAhxAptWqfl6EWmxeLVYz8aCBTLDtnZJaJlelJ81Co0pdtEk7w374vnzBS5S4IW587MwDe7a/k6qivVpPgVo2ViBId7zy5wXHRWh1lYYsgqci8qFV4plWTlGu2uRYBKTM7fvA4pmyrTM7QhbcJZQk11COJmNbHFsI5NV5Fb+PJndEzfsCrgueycnTqrw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by GV1PR08MB7682.eurprd08.prod.outlook.com
+ (2603:10a6:150:61::15) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7807.28; Tue, 30 Jul
+ 2024 09:42:51 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::7f30:b6c:9887:74a7]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::7f30:b6c:9887:74a7%3]) with mapi id 15.20.7807.026; Tue, 30 Jul 2024
+ 09:42:50 +0000
+Message-ID: <f5e8d3da-eba8-4217-adb2-6f11836e2f67@virtuozzo.com>
+Date: Tue, 30 Jul 2024 12:43:07 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 06/27] iotests/{024, 271}: add testcases for qemu-img rebase
+To: Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20231031185918.346940-1-kwolf@redhat.com>
+ <20231031185918.346940-7-kwolf@redhat.com>
+ <7757bd81-b74f-4862-b6f5-f9628410d84c@redhat.com>
+Content-Language: en-US
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <7757bd81-b74f-4862-b6f5-f9628410d84c@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+X-ClientProxiedBy: ZR2P278CA0022.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:46::7) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|GV1PR08MB7682:EE_
+X-MS-Office365-Filtering-Correlation-Id: efcb13b2-725a-4a05-c5db-08dcb07bfa5e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?S3psaTFOeFhkcDAya2h1TFloeERTbXFhbDFwdERqSFJ2bHVQQ3FxcVc5SUVk?=
+ =?utf-8?B?UUxpa1BJVGhQZGlKUEZYZS9JUUtMenpvd1hWSERMTmd0NWFFSGs0NEpNMXVC?=
+ =?utf-8?B?NkpUcm5nSTgrRnNRZ3hiNEg1NDd5KzE3MHlRdUthY000RnN4SExwOG9rOWI1?=
+ =?utf-8?B?Z2NnTElURWgwVHlpTEE2ejU2SEtoNjNxZzNNRHpQdTJMRG1wbFMrZHg0ZmR2?=
+ =?utf-8?B?Wm1TOEhLUXBUcG5CTUdhb1llMy9TM0xraWFQWXl2bHhTdWIwYkoza3haa3J3?=
+ =?utf-8?B?cXg1MnVlQlIrNHNNaXYzNEpSRWxIQk5nenFKZ0VjTE5vbUYxOTYybWxDK1ls?=
+ =?utf-8?B?WGxpMVpGMXJ5UTRrczJTTGtQQVlGMEx1WWZGWW02dXNZZGd5bWNKU2xaSkVw?=
+ =?utf-8?B?bUUweGRydWdVSk0zMWR2U1JoWjkxNmQ4aS9Wc1FxS3NJZmtBVE5nSDJDWWxi?=
+ =?utf-8?B?UFB0ZmJ5WVY1dHhvMFh1d1ZtTXZEMXZZTlNKQzBqQzg3UmRiMFgrZU5hN0dS?=
+ =?utf-8?B?bis1V0hLdVY3VlBhTVFOYzdzcjNOTXBZTzR5b0Q5WVFzUnI1eTBZZDJqS0pw?=
+ =?utf-8?B?WlVtVEFRYnhTWW95RWlER0o0RjN1OE8xSkFGS21tRlJKaHBBaFBIUjhSbXQ3?=
+ =?utf-8?B?TXVXdXhYNnF5QzJ6UlhKRkd1RTJEV1o0S25lRktFZkJTSVFxMVMwV3J1M3BE?=
+ =?utf-8?B?WVNhZkowVUJlaG9GRzVDSGdsOUVnVjFzcXEzTzF5UXFDL2hXZG5kY3MvZlJN?=
+ =?utf-8?B?QW5tVkpVdTlrTmRUZ09ZQ0I2dnFCNHFDc1gvSjl0OElUQlFyTjNmTkVzNGhW?=
+ =?utf-8?B?VmFiUFE4WS95eGFEbVp1NUhzSzRGWGV6V0QxTGNGZVJKbVh0RjFmZ0NzODVw?=
+ =?utf-8?B?M2I2aHRGZERieWRYa0V5emVVVWVxdHRmNERsUUhDd251a3lWdThCNTBuQVZh?=
+ =?utf-8?B?M1lBcXVHQS9VRzNMWGNpamczWlBSdmNRWW5NVWJ5Rm90ZXIydVdvWFE3M09E?=
+ =?utf-8?B?TjFVVVNkRzlLZ1AzSGRNdmhLTFlEZzRLVEJCcDJsVlRiYjJCKzVERm9IOWtL?=
+ =?utf-8?B?ZW0wcVhwY1RwVVJ6ZmY3TWM5VFpCanlHRUs0c2dFU3hhVlJ6ejU2U1hwd2Fv?=
+ =?utf-8?B?MUpVa3k2bTg4UVpDZkhEdnh0RUNuMFArSHJpNm4yWVc3d1VMamhMWS9wSFV3?=
+ =?utf-8?B?KzY1RTVoOVR2WW02SldwQTRpekNtbkV4bWp3cGZ3bGdraTFZUXJyR1U2eXN5?=
+ =?utf-8?B?ZHRjeE9EQUNZaEtUdWhBa3VrSFZNQ2VnMHFBMDdZNGlpR2hFbGFGRVRkMThQ?=
+ =?utf-8?B?b3A5SnlQN2pPRDhWZkNvcXJWWVBJYngwYm0zYUFleXNsTXZDVVJCUi9rNm0z?=
+ =?utf-8?B?bWtUUE9RZGxycG40aUFrVEpYd1BKOEtUSWl2ekxoYSs4QlZDdzl2Vkg5b2Yx?=
+ =?utf-8?B?RzUwYTJHd3JtVnoxWk1HWmJHbHlOVGM1cUdtZERJdWMxR1UzTmpvWndiZjZy?=
+ =?utf-8?B?c1gwSUltUlgvM0JpdWlYS2NyZWlPMUtiYmxqWUI4aW11MVVvSXVaaGx1Rm9n?=
+ =?utf-8?B?WGhISlRQWUN0bmJwY2pMcHlEa2poV0Z3WUl2K1QwZER5elZYR0E1Z2Z2Vm15?=
+ =?utf-8?B?bmdodHFvZTRBOWdab3ZOQVR6TFRSa292RThXellXYlYyYUFqY2dNR0svNDlq?=
+ =?utf-8?B?dGVkQ01pd2xWZW9RVkl5RXEvODFIOXJ1Y0R1SnZrQnlUcGdPWmVFMTZCRllD?=
+ =?utf-8?B?VjZFa1NrYXY5YXlEZU5CUTB0TXFhRlFHQU90Z0Qra285clJ0MWNsdU5ISU5w?=
+ =?utf-8?B?cXhrZDZqM0dScGZXNmpnUT09?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MHBuNTlUUy9TSjQ0N1d6T1ZxalJLUm1GbU1WTmUvTUphMnJ6SU0vYUVxTUJ0?=
+ =?utf-8?B?UXBxY25PRC81RXdCNzd1RjhZWVVLRlY3QjFjbGJ1U0huT2U1VVFPUXZPYTBP?=
+ =?utf-8?B?aHhOMDdKUnlvem1tWGVvZDNkSjNHNGJPMy8zZkg2NU1ESG9pQUJXMzhwWTJm?=
+ =?utf-8?B?VENQUkFHcmRNZmxGVUJEV1FhM0o1aFdsdVdZV1ErSit0elFhQi9FRkUxVnVv?=
+ =?utf-8?B?NTlOemZBZm90UlNYMDYwMDV1c013eTlpK01Cdm5Xd0EvWG41dysrNjI2SXNh?=
+ =?utf-8?B?WEpjTWlPYU1vU25wUUpKcml4ekhlOThTR2UzNlZ6MFloZGZLUXpTei9OUUYv?=
+ =?utf-8?B?dGc2UFR0Rnh1bzNBWUxNNnJId1lxbWFtNGFpVytreUZhVmtWMklqVk4zVHNN?=
+ =?utf-8?B?RWFFZFZ2dk1HZ2I3QVhjZ1BwWjJOUHE1c3pkTnYxYktiM2ZGZm05RHlSM1JC?=
+ =?utf-8?B?QVhVYzhjOXdSZ3lRSmRiazhtM3J1eTk2RldZVFdTZWI5Zy9PRDMyNlBlM3Zk?=
+ =?utf-8?B?aElKbGJyNWEyem5WQnFhZy9PVE84TENFcnQ1MGd5cUhBRjhSTUdpczhWWmpE?=
+ =?utf-8?B?S2svMEJBUCtIWUp0b2ljQTAvZDhQSzlCQ09Tc1dBVFU1anhKWGgrRzR6Q1NO?=
+ =?utf-8?B?UGtoN0FUTVcrdFU4SXlsUHR3U1VkMUxHUWRrbGlmNWpoY1VMK1BLRThGaGdJ?=
+ =?utf-8?B?VXhOVzJWZXZZSDlFSWpINk90UFpZY3FMMmVub0pTUHJLajNaUFhpRG10NWFL?=
+ =?utf-8?B?amJpWlM0VkVRRmxFVUdTR2d5U3EyM2tYTWljbWtoUzdzLzhwVXFxdmZQeVk4?=
+ =?utf-8?B?L1pKdjZVS290QVZZcjlrL09Qb2VRdGdlWVZkbXBYdGV4am9RdS9lUWF1cVhE?=
+ =?utf-8?B?MGN6N215cGp4WmsxZHl0bXorcmg5cFBTVEQxRituVkVydThIL2dMN1NhWFF4?=
+ =?utf-8?B?dS9ndUF2VzlqWTMycW9BYkU0UnFYdHFhd1RLcFZQZlFha0p4MTNZS2MzcDZP?=
+ =?utf-8?B?V1RKaHB3akk1U1RiaW5QVFY2UllsN3JtM1JySHBWbEdwYXVYc1kvOWZTZnFp?=
+ =?utf-8?B?TDNjc2VFL0NJNmEyR3g0cGozTjNBNVo2VG1MWXpLWVJtT1ErWEhWQzdwcVZv?=
+ =?utf-8?B?bXJTUGY1dWNrZEVDNHBLVitEREx1QTl0UWVOcTAraEpLcWJVM1dWd2Rkencv?=
+ =?utf-8?B?WDZnR2psWDI2R0h6V3I4OG4xTzhDZmlTbjVZM0NuandwSE1rVzRWOGVhS1RK?=
+ =?utf-8?B?Rmx4cFM2c1FIeEZkblYvWkZ2YjZOa2theUhSc2wzbSs4VWdOWU9pc2p4eGEx?=
+ =?utf-8?B?cW45L2dNT3lPUUtuRTRnT1dSU0F2bkhUWWs2bG8wT2U0QjVEUEYwMGVEOXlQ?=
+ =?utf-8?B?bHpvRSs2aXIyYjdIZ1FYRzh4TEVJV3pvajIrZG9Jell1bmJZWnR0NmxuOVNY?=
+ =?utf-8?B?aUwvNjJYazJxcXBNRlRRbzdJc3EzQ3FHaTRjU3Nna2lnS2srSW1DVDZLZEdJ?=
+ =?utf-8?B?Zkx6RC9RMUZaUUFGVHBFNHlNNU9jZGVIbDNyWnFRZy9qM2tFRVpMZ2ZrRC9F?=
+ =?utf-8?B?eWlOdjJTV2x6eHBPdnlKSWpaSEEvd091V0dRQkxHYUMzN3A2MnIzV0ZpWWdY?=
+ =?utf-8?B?cjNkM2hpemxySGZXYzFRM3UrbVlscjA5dzQxVm1aMXB3T3Q5MlRrR2NUZU5K?=
+ =?utf-8?B?MlpoSVY4aEkyYzJONVNVZ0d6YVNDOUdDcUNmVjhjMWZWL3JGd0VyYVA5eWZO?=
+ =?utf-8?B?aFFJNk5sU2M0Mis5Q3N5UFdMWXVJcjl0cmVaTzJYMGpMWTdMVFI2S2dMQzRQ?=
+ =?utf-8?B?MFE2d2dRbWlOMG8vMXBROG9ORVlPcms4dTR4K1U5aVpvOUpWZ3NDVkdWM0Qx?=
+ =?utf-8?B?d2hsY2tVMGRVUFdQOHd1cVFuOVlNSXZIMG1xY1hqek4waGIzTXI1WHpudy82?=
+ =?utf-8?B?US82d2lxbWp0TGxYaHErckdEamV6SUZiTlpreURxSHAwbWY4VmtJR0ZQb0Rr?=
+ =?utf-8?B?VC9UR0ZRUE5LQ0hRMytjTVJzZWpGbjJ2alhiWG82ckcwMDdtRHZrd0pXdWpU?=
+ =?utf-8?B?eUlXN0o5NVRQUkg3dWRZZWIzTEhzS1lTVHRYazVCZ0ZmYi90QjBVYVZoV243?=
+ =?utf-8?B?bFJ1RDhqK3VnbmNjMmJSSmZNaHN2UnJ3L0R3MFBYUEtOWUtsdzdWdUk3ZjZv?=
+ =?utf-8?B?K3c9PQ==?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: efcb13b2-725a-4a05-c5db-08dcb07bfa5e
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Jul 2024 09:42:50.8986 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: hnsRI1/6OmjR/etWtc+OGrUo4CNWaHDDEDsT1L2fm0z1BkK17TD8t7FVi4KGQNIhu8277ROcwBgz8C1SkzGm/j9EtmxVOxiwqWkSUlyRv9E=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR08MB7682
+Received-SPF: pass client-ip=2a01:111:f403:2606::704;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=EUR02-AM0-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,82 +177,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity points out that in our handling of the property
-RPI_FWREQ_SET_CUSTOMER_OTP we have a potential overflow.  This
-happens because we read start_num and number from the guest as
-unsigned 32 bit integers, but then the variable 'n' we use as a loop
-counter as we iterate from start_num to start_num + number is only an
-"int".  That means that if the guest passes us a very large start_num
-we will interpret it as negative.  This will result in an assertion
-failure inside bcm2835_otp_set_row(), which checks that we didn't
-pass it an invalid row number.
+On 7/22/24 10:18 AM, Thomas Huth wrote:
+> [Вы нечасто получаете письма от thuth@redhat.com. Узнайте, почему это
+> важно, по адресу https://aka.ms/LearnAboutSenderIdentification ]
+> 
+> On 31/10/2023 19.58, Kevin Wolf wrote:
+>> From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>>
+>> As the previous commit changes the logic of "qemu-img rebase" (it's using
+>> write alignment now), let's add a couple more test cases which would
+>> ensure it works correctly.  In particular, the following scenarios:
+>>
+>> 024: add test case for rebase within one backing chain when the overlay
+>>       cluster size > backings cluster size;
+>> 271: add test case for rebase images that contain subclusters.  Check
+>>       that no extra allocations are being made.
+>>
+>> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>> Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+>> Message-ID: <20230919165804.439110-7-andrey.drobyshev@virtuozzo.com>
+>> Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+>> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+>> ---
+>>   tests/qemu-iotests/024     | 60 ++++++++++++++++++++++++++++++++++
+>>   tests/qemu-iotests/024.out | 43 +++++++++++++++++++++++++
+>>   tests/qemu-iotests/271     | 66 ++++++++++++++++++++++++++++++++++++++
+>>   tests/qemu-iotests/271.out | 42 ++++++++++++++++++++++++
+>>   4 files changed, 211 insertions(+)
+> 
+>  Hi!
+> 
+> Seems like this patch now breaks the iotests when running with -qed :
+> 
+> $ ./check -qed 024
+> QEMU          -- ".../qemu-build/qemu-system-x86_64" -nodefaults -display
+> none -accel qtest
+> QEMU_IMG      -- ".../qemu-build/qemu-img"
+> QEMU_IO       -- ".../qemu-build/qemu-io" --cache writeback --aio
+> threads -f qed
+> QEMU_NBD      -- ".../qemu-build/qemu-nbd"
+> IMGFMT        -- qed
+> IMGPROTO      -- file
+> PLATFORM      -- Linux/x86_64 thuth-p1g4 6.9.9-200.fc40.x86_64
+> TEST_DIR      -- .../qemu-build/tests/qemu-iotests/scratch
+> SOCK_DIR      -- /tmp/qemu-iotests-b84qth8b
+> GDB_OPTIONS   --
+> VALGRIND_QEMU --
+> PRINT_QEMU_OUTPUT --
+> 
+> 024   fail       [09:14:06] [09:14:09]   2.9s                 output
+> mismatch (see
+> .../qemu-build/tests/qemu-iotests/scratch/qed-file-024/024.out.bad)
+> --- .../qemu/tests/qemu-iotests/024.out
+> +++ .../qemu-build/tests/qemu-iotests/scratch/qed-file-024/024.out.bad
+> @@ -214,7 +214,6 @@
+>  virtual size: 384 KiB (393216 bytes)
+>  cluster_size: 131072
+>  backing file: TEST_DIR/subdir/t.IMGFMT.base_old
+> -backing file format: IMGFMT
+> 
+>  Fill backing files with data
+> 
+> Failures: 024
+> Failed 1 of 1 iotests
+> 
+> Could you please have a look at it?
+> 
+>  Thanks,
+>   Thomas
+> 
 
-A similar issue applies to all the properties for accessing OTP rows
-where we are iterating through with a start and length read from the
-guest.
+Hi Thomas,
 
-Use uint32_t for the loop counter to avoid this problem. Because in
-all cases 'n' is only used as a loop counter, we can do this as
-part of the for(), restricting its scope to exactly where we need it.
+Thanks for the catch.  That seems to be a minor issue, apparently
+'qemu-img info' doesn't report the backing file format field for qed (as
+it does for qcow2):
 
-Resolves: Coverity CID 1549401
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20240723131029.1159908-3-peter.maydell@linaro.org
----
- hw/misc/bcm2835_property.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+# qemu-img create -f qed base.qed 1M && qemu-img create -f qed -b
+base.qed -F qed top.qed 1M
+# qemu-img create -f qcow2 base.qcow2 1M && qemu-img create -f qcow2 -b
+base.qcow2 -F qcow2 top.qcow2 1M
+# qemu-img info top.qed | grep 'backing file format'
+# qemu-img info top.qcow2 | grep 'backing file format'
+backing file format: qcow2
 
-diff --git a/hw/misc/bcm2835_property.c b/hw/misc/bcm2835_property.c
-index e28fdca9846..7eb623b4e90 100644
---- a/hw/misc/bcm2835_property.c
-+++ b/hw/misc/bcm2835_property.c
-@@ -30,7 +30,6 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
-     uint32_t tot_len;
-     size_t resplen;
-     uint32_t tmp;
--    int n;
-     uint32_t start_num, number, otp_row;
- 
-     /*
-@@ -337,7 +336,7 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
- 
-             resplen = 8 + 4 * number;
- 
--            for (n = start_num; n < start_num + number &&
-+            for (uint32_t n = start_num; n < start_num + number &&
-                  n < BCM2835_OTP_CUSTOMER_OTP_LEN; n++) {
-                 otp_row = bcm2835_otp_get_row(s->otp,
-                                               BCM2835_OTP_CUSTOMER_OTP + n);
-@@ -366,7 +365,7 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
-                 break;
-             }
- 
--            for (n = start_num; n < start_num + number &&
-+            for (uint32_t n = start_num; n < start_num + number &&
-                  n < BCM2835_OTP_CUSTOMER_OTP_LEN; n++) {
-                 otp_row = ldl_le_phys(&s->dma_as,
-                                       value + 20 + ((n - start_num) << 2));
-@@ -383,7 +382,7 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
- 
-             resplen = 8 + 4 * number;
- 
--            for (n = start_num; n < start_num + number &&
-+            for (uint32_t n = start_num; n < start_num + number &&
-                  n < BCM2835_OTP_PRIVATE_KEY_LEN; n++) {
-                 otp_row = bcm2835_otp_get_row(s->otp,
-                                               BCM2835_OTP_PRIVATE_KEY + n);
-@@ -403,7 +402,7 @@ static void bcm2835_property_mbox_push(BCM2835PropertyState *s, uint32_t value)
-                 break;
-             }
- 
--            for (n = start_num; n < start_num + number &&
-+            for (uint32_t n = start_num; n < start_num + number &&
-                  n < BCM2835_OTP_PRIVATE_KEY_LEN; n++) {
-                 otp_row = ldl_le_phys(&s->dma_as,
-                                       value + 20 + ((n - start_num) << 2));
--- 
-2.34.1
+I think we can just filter the field out and remove it from the expected
+output.
 
+Andrey
 
