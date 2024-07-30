@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 046BAC3DA7E
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 14:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43524C3DA70
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 14:51:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYoBB-0007sM-31; Tue, 30 Jul 2024 10:50:21 -0400
-Received: from [2001:470:142:3::10] (helo=eggs.gnu.org)
+	id 1sYoB7-0007fI-75; Tue, 30 Jul 2024 10:50:18 -0400
+Received: from eggs.gnu.org ([209.51.188.92])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <n.novikov@syntacore.com>)
- id 1sYnDE-0005tt-Qw
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 09:48:27 -0400
-Received: from mta-04.yadro.com ([89.207.88.248])
+ id 1sYmG4-0005oc-Ie
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 08:47:25 -0400
+Received: from [89.207.88.248] (helo=mta-04.yadro.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <n.novikov@syntacore.com>)
- id 1sYnBj-0007YP-RN
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 09:48:14 -0400
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 43893C0005
+ id 1sYmEv-00089X-6H
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 08:47:06 -0400
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 7FE2BC0004
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-04; t=1722343760;
+ s=mta-04; t=1722342981;
  bh=V+l+hMPgpSjeGnJjRXQ9Se+/zBWez49MK5BRCt63NoE=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=LS13GoxLrPWArJegBniHgW/BG7ArGWT7Vpe/kconv8SE9FV5zzkbbEu+/HhVa/1O/
- eGb3wkDDrOWwEi492w6u+kEWSglpyjJkgSvPhPccBnVZ7xTfEz5p1esF8ZXVeV7x6F
- dKU1PELRrdgrsD7nHQw+OgpTWzY0e4naP9bldnV1qK09JmpcZXdWZ3d6Loiv+E6vTB
- RlKM7C6To+FWH9jyMOJcEeuFDbYxMXdF4+8DGB5knLJ1wNUd0ZsfBDaJQEFJZA2Lzl
- nUTVGKzbvY/hhCroIh3x4ts5gJzxo2PLTaL1yU4+s8aTkl8POca4yR7ee59vrAQbqc
- qRwIen7jwcRgA==
+ b=nh6nwHJgdJp4nDGKt2I2qIzmpw1Tc1nFbwgC4mQzxFU8JP4/o46gBZdmbt26LDBOp
+ cw6S2KvZyqo5NJgMSIY5dpQOuu07Ttpdb59RBVw3i2azs/dPUjOguc7qffeFPcz8pX
+ Lpxkx3yLmheVqH8bxLs2U5n/eQBEhYqeeW/+yaQUuqx3OuTBPcCJVoQtroxtGoNkvn
+ YfT8a6+8sqmA2qlj6ydLn2rUgaOqNLUlGvi2lDoL3+4OLrCznvSgRmrVQSoOhLbNHF
+ 0zBqk4xfpnOK/BWiC+ajXP5v9oPguPZKYAGr0y4mNDtiTmAXDwnOm3YeCQxiemlN+r
+ Ur+qvXSqydtYg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- s=mta-03; t=1722343760;
+ s=mta-03; t=1722342981;
  bh=V+l+hMPgpSjeGnJjRXQ9Se+/zBWez49MK5BRCt63NoE=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:From;
- b=hSQ4uo70pPPFuSLTgU4vNdafXHCX7Eye+juAFkHs43JlGSiHr8w+Qyee5Z/9Erk+B
- NDjg+aWNh0AZ/zV1/mg1XY7Ryv+AMxRRh8OyHFfA+ODNpzcWlt/RaCJrHKSPWD72Ld
- micq4dt8g9FPG8d+7pft+yU5hMSOwcdAXxVUzkAnk/6UH3YjfDZUnOFOjO6kZ0Z4F4
- 7C2jMUPp1AfF2RoX7+yZC9ZVfECZQRPws8fOs0u38jV58optmO90w0+XK11SAQYNne
- 2/8XmjKusxXNDgODfC2R5UARUyRbl4b07d7nC0G2vpe1sYIl/ydfvwqz1i+6UTY83d
- YCYefvjF6Dmbw==
+ b=e71ss90Swa8jC8r2k2hWxQM8duJxzuhS1doTgU7siZG0MUJZocsenz075L0+oub7z
+ MFGuT7iATB71lv1d1+l1B7Yt3ogG7eg2VdfcZCxeo4uWh6SFTaDcOL2RntePyRHKeB
+ W5zh80bJwUmWxjwSROyW2Iife6loj4WzHIOP7sskWfFKzJ706mepGRENxX9j++J8vL
+ MpA8qMKNma7+NpOj2k+Tw67d+tSjQlF3c84gTgZYCQXjyknVoEMUfUH27YibjwLPxm
+ eIyQMPU8PVYYJcvKDTN1Qpx5FtDj8Ip9B84YjkxZelah5I3qEAdC6/rHZR2r8WtvQI
+ 3eGnvRGl9aEUg==
 From: Nikita Novikov <n.novikov@syntacore.com>
-To: <marcandre.lureau@redhat.com>
+To: <lureau@redhat.com>
 CC: <pbonzini@redhat.com>, <qemu-devel@nongnu.org>, Nikita Novikov
  <n.novikov@syntacore.com>
 Subject: [PATCH] hw/char/riscv_htif: Fix 64-bit var write order in 32-bit
  system
-Date: Tue, 30 Jul 2024 15:49:07 +0300
-Message-ID: <20240730124907.36119-1-n.novikov@syntacore.com>
+Date: Tue, 30 Jul 2024 15:35:59 +0300
+Message-ID: <20240730123559.35115-1-n.novikov@syntacore.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: T-EXCH-07.corp.yadro.com (172.17.11.57) To
+X-ClientProxiedBy: T-EXCH-08.corp.yadro.com (172.17.11.58) To
  T-EXCH-12.corp.yadro.com (172.17.11.143)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 89.207.88.248 (deferred)
 Received-SPF: permerror client-ip=89.207.88.248;
  envelope-from=n.novikov@syntacore.com; helo=mta-04.yadro.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- T_SPF_PERMERROR=0.01 autolearn=unavailable autolearn_force=no
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RDNS_NONE=0.793, T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Tue, 30 Jul 2024 10:50:09 -0400
 X-BeenThere: qemu-devel@nongnu.org
