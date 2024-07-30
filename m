@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09BF0C3DA61
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BEB0C3DA7F
 	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 09:40:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYjLM-0003hK-4t; Tue, 30 Jul 2024 05:40:32 -0400
+	id 1sYjLK-0003ZR-BE; Tue, 30 Jul 2024 05:40:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYjLI-0003UO-SJ
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:28 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ id 1sYjLH-0003SX-DF
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:27 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sYjLF-0000X1-K8
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:28 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2ef2cce8be8so56889371fa.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:40:25 -0700 (PDT)
+ id 1sYjLF-0000Wv-JZ
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 05:40:27 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3687fb526b9so1972703f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 02:40:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722332424; x=1722937224; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722332423; x=1722937223; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2hTb07T/lHUckLF9pRQZzZ733VhUGgQBsCLUx7kwgYc=;
- b=iqS8Xpws2CoA+TwvDX8+LigcHyYvEFkNraE3ZayKDHJT5r8Dklzx2cRQLfEr5vNjaq
- p02m8CBFrbyup1G5TDUiGZQs9Gtu+YE3OWB4j8y/Ywvc3jwMmRbEtWRQugQGKYf1HUpQ
- SrlBFUPYZfsMfN31dffih9Vey24CGoRLLS+ScrK6UTj9HpaDsWyO5O+2M5Wr/jDWxqWP
- UIgLCdwbuX5x/gopL/X2ZCYspnb1ScX9WSEmPaQHi90EJJDasEsM/7JxOJHrweM8gkqZ
- 7jX1/CrHfehu295kL+PDBvgVCjpogQepTEu/t6XaMtEcCbSHnqfbHvbf1BrvfBafX/ba
- k/2Q==
+ :reply-to; bh=B5RN4DpWdHMmOm58ODLLg2Ecn4bzdDrCkkEJlS4i1B8=;
+ b=qxeZjrZsVJoU76K4CaH4t0OnjVm2j1b4chcBtQF5FzIjDM81FEo35UVH6st6FOVx9H
+ xpBoOtkvY2fU1tdiM7XBjpC64wVu8xab2J8XL9oljSIZqnRgJ20FOzDzvD9R/t2VnG86
+ WJbkYnfrs1kO+S06Khecw3eFZmWmbX40iAQglrmUZAPcEoNb1UuMMTFOMB/rhTg/8T2T
+ ln5O6LJwq0CsrJjQp6t3TYaKiD8rwNKyS8ky/Ku0mgn8E9OKWWGl9XJ+FbdDPe0aSRH/
+ wJftKdIFEznwPnwT31d7F0Cc4p4t+RvoTpw5GarodbEqfKLBCiBGxRW7Lvjbz1aj7YGi
+ Ak1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722332424; x=1722937224;
+ d=1e100.net; s=20230601; t=1722332423; x=1722937223;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2hTb07T/lHUckLF9pRQZzZ733VhUGgQBsCLUx7kwgYc=;
- b=uZyPmJTZUM3RHQP/wf7bl2i3ec8j1d2yEWQmFV/a5QIBzRl5fSZVACWAvCj+CLGEEW
- hsYvdIOGVVwhDFuNF6CA95td9M2SgN3M5WcXnFLmtXuISW5BYq1krwMqG2CwNGy5HzX2
- Z3W5aWoBokRul+nsF/2n1E0SskSoeei1utWP1opJrPKL7TbMPUJ/Nx3mvxGVyi0ED6jw
- qCxgYFqYpcm2c/OdCO5JWj9SXCVgHHun6vLZcN5WHdp0KsK28g02e04UWYeiDvqTLEOI
- vOAjGTV+GfXn8bZqPgllspIrr4sd1+EJ24sJEu5OfHo1oXrBQWsthqOtJfquceafnPdm
- cUdQ==
-X-Gm-Message-State: AOJu0YyJBk4RLtdJQU8LNUzM30OobzmqGMKsOSXBIUXaGQgILMPvr6x8
- DH+4c1zmZpOMJ37xCmPWlm8wmEQZiZo7/GJwoZQ2T7eU8ez0PwGctz3AKDn8sn/7Ns7K5B1J04t
- S
-X-Google-Smtp-Source: AGHT+IH0l9SaoMYKqRC50b7VqcyLkdhJssvyjTnNLoEqGCVEhpzPbh4mrdx1ZAXJj4P7g4PhTGH99g==
-X-Received: by 2002:a2e:87d5:0:b0:2ef:1c0a:9b97 with SMTP id
- 38308e7fff4ca-2f12ebcaea9mr74174751fa.3.1722332423812; 
+ bh=B5RN4DpWdHMmOm58ODLLg2Ecn4bzdDrCkkEJlS4i1B8=;
+ b=C8/g2XlgzfJcgANdv5p0agsPvTn4RWDnCo7Yo3V0zEMKi8/LWDPlWXY0L0aiA9xAoL
+ 0iRwcSzMNV2Hzq/1XN09bwF0PiR541k7AAuXaAonVHE6peUpKlndEENCbhXRncibVvp6
+ f6XEl8HYQ93aQpXUzXzhL5rM11mTrBxm3P4vUlsxihZrbxqu/KrscPahhBc9u//WxvpR
+ rEKj6JXTwFikDR+olR9vwnbRP/N2uGrx9GrjAiaMZXz5QUT8RdQGCPySGF/m0wIkJj/q
+ /i9kcicBAV3poIjSizvGXAHaAgwPllwVqe9AvtjT8Sv2Lze7Nisc6aGjdTFYY4JK8O6F
+ 8c5g==
+X-Gm-Message-State: AOJu0YwSM7wRd6uWdddnqwz/K/gj1RfiU9H+grJ31QOR+PUQuUD3vHOc
+ w4sK+n36TQV2SdNUp3XaO8Gw9HGUaikP75KZ1EgTOnGOb8l47CNmCnbroISmxt2E1XWC86n8SNX
+ v
+X-Google-Smtp-Source: AGHT+IEir56mfxnFhQi9ENEt2QckaifU7OkniU19hBlCkrVvND2JYw6JeRaGxumqRCmRHxsyrEOVZA==
+X-Received: by 2002:adf:e60f:0:b0:368:3731:1614 with SMTP id
+ ffacd0b85a97d-36b5cf243f2mr6704492f8f.32.1722332423335; 
  Tue, 30 Jul 2024 02:40:23 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b36862549sm14194974f8f.106.2024.07.30.02.40.23
+ ffacd0b85a97d-36b36862549sm14194974f8f.106.2024.07.30.02.40.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 30 Jul 2024 02:40:23 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/21] hw/arm/smmuv3: Assert input to oas2bits() is valid
-Date: Tue, 30 Jul 2024 10:40:01 +0100
-Message-Id: <20240730094020.2758637-3-peter.maydell@linaro.org>
+Subject: [PULL 01/21] hw/char/bcm2835_aux: Fix assert when receive FIFO fills
+ up
+Date: Tue, 30 Jul 2024 10:40:00 +0100
+Message-Id: <20240730094020.2758637-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240730094020.2758637-1-peter.maydell@linaro.org>
 References: <20240730094020.2758637-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x235.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,41 +95,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mostafa Saleh <smostafa@google.com>
+From: Frederik van Hövell <frederik@fvhovell.nl>
 
-Coverity has spotted a possible problem with the OAS handling
-(CID 1558464), where the error return of oas2bits() -1 is not
-checked, which can cause an overflow in oas value.
+When a bare-metal application on the raspi3 board reads the
+AUX_MU_STAT_REG MMIO register while the device's buffer is
+at full receive FIFO capacity
+(i.e. `s->read_count == BCM2835_AUX_RX_FIFO_LEN`) the
+assertion `assert(s->read_count < BCM2835_AUX_RX_FIFO_LEN)`
+fails.
 
-oas2bits() is only called with valid inputs, harden the function
-to assert that.
-
-Reported-By: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Mostafa Saleh <smostafa@google.com>
+Reported-by: Cryptjar <cryptjar@junk.studio>
+Suggested-by: Cryptjar <cryptjar@junk.studio>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/459
+Signed-off-by: Frederik van Hövell <frederik@fvhovell.nl>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Message-id: 20240722103531.2377348-1-smostafa@google.com
-Link: https://lore.kernel.org/qemu-devel/CAFEAcA-H=n-3mHC+eL6YjfL1m+x+b+Fk3mkgZbN74WNxifFVow@mail.gmail.com/
-Signed-off-by: Mostafa Saleh <smostafa@google.com>
+[PMM: commit message tweaks]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/smmuv3-internal.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/char/bcm2835_aux.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-index 0ebf2eebcff..b6b7399347f 100644
---- a/hw/arm/smmuv3-internal.h
-+++ b/hw/arm/smmuv3-internal.h
-@@ -599,7 +599,8 @@ static inline int oas2bits(int oas_field)
-     case 5:
-         return 48;
-     }
--    return -1;
-+
-+    g_assert_not_reached();
- }
- 
- /* CD fields */
+diff --git a/hw/char/bcm2835_aux.c b/hw/char/bcm2835_aux.c
+index 83990e20f76..fca2f27a553 100644
+--- a/hw/char/bcm2835_aux.c
++++ b/hw/char/bcm2835_aux.c
+@@ -138,7 +138,7 @@ static uint64_t bcm2835_aux_read(void *opaque, hwaddr offset, unsigned size)
+         res = 0x30e; /* space in the output buffer, empty tx fifo, idle tx/rx */
+         if (s->read_count > 0) {
+             res |= 0x1; /* data in input buffer */
+-            assert(s->read_count < BCM2835_AUX_RX_FIFO_LEN);
++            assert(s->read_count <= BCM2835_AUX_RX_FIFO_LEN);
+             res |= ((uint32_t)s->read_count) << 16; /* rx fifo fill level */
+         }
+         return res;
 -- 
 2.34.1
 
