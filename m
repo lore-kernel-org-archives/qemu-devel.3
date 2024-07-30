@@ -4,85 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB2ECC3DA61
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 05:32:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05913C3DA49
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 06:07:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYfSb-0005tU-Th; Tue, 30 Jul 2024 01:31:45 -0400
+	id 1sYg0X-00012g-6C; Tue, 30 Jul 2024 02:06:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYfSa-0005sy-0X
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 01:31:44 -0400
-Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYfSY-0000QC-7n
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 01:31:43 -0400
-Received: by mail-ot1-x32d.google.com with SMTP id
- 46e09a7af769-7094641d4e6so1000995a34.3
- for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 22:31:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722317500; x=1722922300; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=mwLSu5y6Pw1eNTzcJj0xpU9SqbojhH4pdya7j4wqa6E=;
- b=lR2bjfQdrwkod8PEe9wxFYraOFEGALsZmmzNLj8SvQZeqn5KbFaNficeoJu9Fa6YUT
- WezWtOt13p66G6/PwlXVCz4ApKRnEL4i2IUeLXlIZZv7uLquf2thOX7t2wbO2IJDNYXU
- OVLaFZpvPxXHhmNKJEyCp8qlR9QIUs2dLVUhj9K4nUWM5oRKI7TVF/wby99PpeMKoRML
- Qvj2jzcfKstUtOKcwrTqMPQI2PZ1Jb+lgiImtFzHGh9WVPKWzDKReJ3F+iWwkLjYkhH7
- +R54gzC1Je0jrjNBshDimJNNd/92m7r15dJvaPl89uEfL2ZjDxORwsRzzpG5Icr+ULHj
- hbMA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sYg0T-000101-KD
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 02:06:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sYg0R-0006Mi-Tb
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 02:06:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722319601;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HywbmjddgtngYN0oVDkoOoCPU/ETmtW6kyDDQ/H0O+s=;
+ b=HUhIKXLtpCRuAYkfekYxRfx+yFNlXKOd4Z0HoU6u/nCG6APVOK1mtiqdtBOATnZereGHMf
+ cu1iyUmqhbkPB0HKBcSiFYLhmbT4jH/9h+KO0ZwHuKAVHbJa35lojNY+K+P/nIo48gmXbx
+ cXCBnwqv1Gwy8aFBpXyM5SYjYysJiFw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-35-m5w0q3oJOfCJp1GZujN6Fw-1; Tue, 30 Jul 2024 02:06:39 -0400
+X-MC-Unique: m5w0q3oJOfCJp1GZujN6Fw-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-368374dc565so1840485f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 29 Jul 2024 23:06:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722317500; x=1722922300;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mwLSu5y6Pw1eNTzcJj0xpU9SqbojhH4pdya7j4wqa6E=;
- b=flgjqH0/SBbwxUh8NT3VjUMtJLZu/R5cfk4OjPxbQFC/e/1RXBC8m1lmYbLtfNI2TI
- fx55eYCKqkMztsBc/BTUHu9D6cimdJ3CFPS557s+jVpy4/UnA/iSXfJSvqh5L0R53aBP
- GgWjJWMlXPRPayeDQ6jzQM9+3meGyV8mtRYNAQan1XLJRItTs+adTnbvA0IsF1xos/Yy
- tuG2JY46oe5agrnRMoOyqCDOITG7sAMreJquOpP6D/E4+O0tBPKxu/QyLNDfU4bucqPz
- J9hPwB2AF6PJ8FeTR/qFxU55n5D57totYixGrISrzT/hWdIRIlK2g8YcFNfwq97yNMvO
- YwVw==
-X-Gm-Message-State: AOJu0YzVtmHp2gk4VytKtm9tThQUzk7xZ+iJP2l3j7LYn1jI4vkDKiUM
- V11R8UrnI035PLSdf5GEj9nHcgLHs4WGv5Sk8/p2hVrwZkqTzVLgsM3JnZ7FxjWGcGhgEZL6Qqw
- i5q4=
-X-Google-Smtp-Source: AGHT+IGY98MLKM6jT99wpkEeVlyRUkbVrr6eJFfjwKeswy0v/UhCe7qQ8pvV+M34Pl1xof1gxHi8yw==
-X-Received: by 2002:a05:6830:6c0e:b0:703:64c6:305b with SMTP id
- 46e09a7af769-70940c054ebmr13956668a34.2.1722317500315; 
- Mon, 29 Jul 2024 22:31:40 -0700 (PDT)
-Received: from ?IPV6:2403:580a:f89b:0:3e4:c598:8b5f:3919?
- (2403-580a-f89b-0-3e4-c598-8b5f-3919.ip6.aussiebb.net.
- [2403:580a:f89b:0:3e4:c598:8b5f:3919])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead8146aesm7649341b3a.131.2024.07.29.22.31.38
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 29 Jul 2024 22:31:39 -0700 (PDT)
-Message-ID: <f2a1811f-82a1-4493-a0b1-2b65d17acb0b@linaro.org>
-Date: Tue, 30 Jul 2024 15:31:34 +1000
+ d=1e100.net; s=20230601; t=1722319598; x=1722924398;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HywbmjddgtngYN0oVDkoOoCPU/ETmtW6kyDDQ/H0O+s=;
+ b=QKmZmF9ChDKqdC+UCIB9P7zpeWpV87aKwNfn+MuKwVs10xkfsDPEdDy/nF6JiBEFOS
+ wvcBoslPo1o4ANM8mg461+H4y2zjdDn7lPRuwdSk34pwo2AwcU5P1in/Q6Uh1I4/MKQl
+ EtwUxldK71VdEkQq+pX1p7OJ3C9VFqxdEKzYPn0Ik4KOyvqpaTyNKnqCPQ09M9EPZsBl
+ olQhP60FV6VCijAXL/uwiTkapR+mA25gQmkRbd+c0MTN3xdpDLOxAeFYm05pZaZQrEvs
+ GSn8bJJ4sGqXS1zYdo9OEtdF8hWm6LBAPkNEHtWl4O5aFV8P0sXwdctKscNbqZ6kbHJ4
+ l+jA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV71TEQIUDimguy3O3WLLDx65zr9Vm0URAVent0GpeOLFyIIjRdH5aaO+U4jbRfS3sQBsFJq8qwQWqjWAug0qeQOY2DEtk=
+X-Gm-Message-State: AOJu0Yz0edncbbmb+GPhF5meDUOAqqPHZ9L2eeVc1/GKA1QiuXwKsPnn
+ +41GDO+Db24RMxgNtV90OonJz8QkwoxwfWr1vrWcgfkmuWKOH0NVBbtC7fE6/Dp95tk+wASfCXi
+ TqB85er3jiDmMumTU02PmooGyZVpbOAzAvoYjZ9qak12xvGOsxf9D+8yfQUOZzmtB5J6WxVRHs/
+ qFBnNYZX1i9y1K6zfWMKgCCH0EQK8=
+X-Received: by 2002:a05:6000:18a1:b0:35f:2030:d42c with SMTP id
+ ffacd0b85a97d-36b5cef9021mr7389840f8f.17.1722319598212; 
+ Mon, 29 Jul 2024 23:06:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGLPZalJrLTyeos66N1u6nC9rbJ1iTUCM3oHCr2Ju6+bVTGc6LlU1WPtZXbHzlEsPoUGxHlcQIyhnwcgtDQ+a0=
+X-Received: by 2002:a05:6000:18a1:b0:35f:2030:d42c with SMTP id
+ ffacd0b85a97d-36b5cef9021mr7389826f8f.17.1722319597862; Mon, 29 Jul 2024
+ 23:06:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/5] misc patch queue
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-References: <20240730011202.480829-1-richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20240730011202.480829-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240729094702.50282-1-kwolf@redhat.com>
+ <20240729094702.50282-5-kwolf@redhat.com>
+ <CABgObfYbpZ3JV5i_TKjobd6DrzYiy567YAfQbX+x5X7mj1=GKw@mail.gmail.com>
+ <ZqeI8TiHg8caawXr@redhat.com>
+ <CABgObfbecac_70Pt4DWKPRm96VCOOCjGOCSB3TkkK490FmvPsg@mail.gmail.com>
+ <ZqfJcz6GTsWglrQ5@redhat.com>
+In-Reply-To: <ZqfJcz6GTsWglrQ5@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 30 Jul 2024 08:06:26 +0200
+Message-ID: <CABgObfa=QX6siAnhy-C1jQ0imRxcfxXnJuTPHLZiw_5zeh7Z3g@mail.gmail.com>
+Subject: Re: [PATCH 4/4] scsi-disk: Always report RESERVATION_CONFLICT to guest
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: "open list:Block layer core" <qemu-block@nongnu.org>,
+ Fam Zheng <fam@euphon.net>, 
+ "Hajnoczi, Stefan" <stefanha@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,50 +105,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/30/24 11:11, Richard Henderson wrote:
-> The following changes since commit 93b799fafd9170da3a79a533ea6f73a18de82e22:
-> 
->    Merge tag 'pull-ppc-for-9.1-2-20240726-1' of https://gitlab.com/npiggin/qemu into staging (2024-07-26 15:10:45 +1000)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/rth7680/qemu.git tags/pull-misc-20240730
-> 
-> for you to fetch changes up to d9b019e0a05cbbaa184815dd201b25006950c6d7:
-> 
->    linux-user: open_self_stat: Implement num_threads (2024-07-30 07:59:23 +1000)
-> 
-> ----------------------------------------------------------------
-> util/getauxval: Ensure setting errno if not found
-> util/getauxval: Use elf_aux_info on OpenBSD
-> linux-user: open_self_stat: Implement num_threads
-> target/rx: Use target_ulong for address in LI
-> 
-> ----------------------------------------------------------------
-> Brad Smith (1):
->        util/cpuinfo: Make use of elf_aux_info(3) on OpenBSD
-> 
-> Fabio D'Urso (1):
->        linux-user: open_self_stat: Implement num_threads
-> 
-> Richard Henderson (1):
->        target/rx: Use target_ulong for address in LI
-> 
-> Vivian Wang (2):
->        util/getauxval: Ensure setting errno if not found
->        linux-user/main: Check errno when getting AT_EXECFD
-> 
->   linux-user/main.c      |  3 ++-
->   linux-user/syscall.c   | 10 ++++++++++
->   target/rx/translate.c  |  3 ++-
->   util/cpuinfo-aarch64.c |  9 ++++++---
->   util/cpuinfo-ppc.c     |  5 +++--
->   util/getauxval.c       |  9 +++++++--
->   meson.build            |  8 ++++++++
->   7 files changed, 38 insertions(+), 9 deletions(-)
+On Mon, Jul 29, 2024 at 6:55=E2=80=AFPM Kevin Wolf <kwolf@redhat.com> wrote=
+:
+> Ok, so modifying the commit message and removing the 'error'
+> initialisation it is. Maybe mention the cluster validation case in the
+> comment here to explain why we do this even for non-pr-manager cases,
+> but not as a FIXME or TODO because it's not a problem with the
+> implementation, but we don't have any other choice. Right?
 
+Yep, go ahead and do it.
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+Paolo
 
-r~
+> Should I send a v2 for this or is it okay to do this only while applying
+> the patch?
+>
+> Kevin
+>
+
 
