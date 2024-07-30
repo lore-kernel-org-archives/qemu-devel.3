@@ -4,69 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EAC6C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 12:27:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65B48C3DA7E
+	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 12:40:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYliB-0005RB-8u; Tue, 30 Jul 2024 08:12:20 -0400
+	id 1sYlwG-0007or-6Y; Tue, 30 Jul 2024 08:27:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYlhv-0005Nv-Iz
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 08:12:07 -0400
-Received: from [170.10.133.124] (helo=us-smtp-delivery-124.mimecast.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sYlhM-0002UH-R0
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 08:11:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722341401;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=lEWZXIbOPxifRh0tCzGglZf0QAJzKMvIhLQ4RwqE1wU=;
- b=boxJsq6eOKrOAlSYup21GSQjlUXrpxopYmTdcbXgUUfzDRoiQAc4xep+iICR49uH0zu4b4
- ttJ8ZZx+wfst1qnZ3rLgLkvdBVqWo04bJVTdGF+xsIqjLXnqaq9xMS4w9OUx10l8gvuZy8
- 0fIfZyk6kp8MrWH1C2btm89YxifQprw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-gBuobwmsNuq-ys-xk9V9Vg-1; Tue,
- 30 Jul 2024 08:01:51 -0400
-X-MC-Unique: gBuobwmsNuq-ys-xk9V9Vg-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6D8ED1955D47; Tue, 30 Jul 2024 12:01:50 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.108])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E1B5300018D; Tue, 30 Jul 2024 12:01:48 +0000 (UTC)
-Date: Tue, 30 Jul 2024 13:01:45 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: luzhipeng <luzhipeng@cestc.cn>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] sm4:Adjust the naming of SM4 encryption method
-Message-ID: <ZqjWKbiGcIM96DdO@redhat.com>
-References: <20240730113850.30-1-luzhipeng@cestc.cn>
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1sYlw1-0007np-A6
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 08:26:33 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1sYlvL-0004k5-0L
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 08:26:25 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4280772333eso1821925e9.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 05:25:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722342284; x=1722947084;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RnrHjU6Qii1wGn9F38c++27n0hhZOVgu1GhR/v/xyMo=;
+ b=2EucOFsoztdsLMsgd7frNcbv8NsL6AOx0ce8oph8dNT/B9gbeeOHsLnUso0sc7HmW5
+ ZQYtz6Vpkbvzej9PdcFK39RsQtY55cOBQErO+wdpIE+Gx/dh5D1GMR4EeUkP085frogv
+ rR13sKD8c2t1pXAVdfchNShf7RulPqUb4b1RJ/ZKXxv0Zti4uPdyqG5QAxXEQfjTdyUS
+ 2xxTgsiNVavUjqHfaHXv2cxZTR42NqFkFNYruqQYINGv1MBouhTJ0SjKqT6o7Rys7QAi
+ CtNBpkaQapnm+eWMSWCP7fISgZ5jsq82BNiEKvOPMMrDlDRI9cpMRdTCVTuYcpSPE+b6
+ oSIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722342284; x=1722947084;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RnrHjU6Qii1wGn9F38c++27n0hhZOVgu1GhR/v/xyMo=;
+ b=Hw1II4KuQsr0kW8807pdEl12nZ4GOakXno6VE5Ab9rgqC/OZNXWWE0sqy1XQH9o5JY
+ syX3BZKLwx1UDUMkj+JAnp2FaOv6Y5WPHS80AM/nD1MGfxwyDQ1qhBbek0Tcju/cGLbU
+ Hk6UuV69Tb076cmItmPW95YWBJOHQJFvWfo5pXFQC+DrKrhLJANTIgbaS5pDOBanHLzC
+ LF80RwE2czxSLPDqYz7URPwv/6J4q6//usDJmJEb2RCXeu9soytCOK2X4JlgqH26wqIk
+ Tm0aY38PzCLf8kjWRdk0PfTQdHeBjS47m2gi6sI3YdPlATlTtlMKeWFV0Y2psW8J4Yf9
+ gOPg==
+X-Gm-Message-State: AOJu0YyTsNIHorsLeYHBYN39o84+ja7N3TVOnafv3FaRur5uPgu+5n2N
+ rcI+BNire912E0aYVokuEQERwu21s9LGxlu4tGyMhgas1ePK6WYPXqOpblv0+93OVA2pOvZ5dXO
+ xefw=
+X-Google-Smtp-Source: AGHT+IH5ayAWqqzxkiR2qNjnvOBYMAJ4N2mAzX6sT+f2+sKAqEqeaDDS5iESvYW6iq9Hk4pL8J+jBQ==
+X-Received: by 2002:a5d:5f8c:0:b0:367:9cf7:6df8 with SMTP id
+ ffacd0b85a97d-36b34cec914mr7329214f8f.2.1722342284118; 
+ Tue, 30 Jul 2024 05:24:44 -0700 (PDT)
+Received: from carbon-x1.. ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36b36862549sm14577757f8f.106.2024.07.30.05.24.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 30 Jul 2024 05:24:43 -0700 (PDT)
+From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v6 3/5] net/tap: Factorize fd closing after forking
+Date: Tue, 30 Jul 2024 14:24:26 +0200
+Message-ID: <20240730122437.1749603-4-cleger@rivosinc.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240730122437.1749603-1-cleger@rivosinc.com>
+References: <20240730122437.1749603-1-cleger@rivosinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240730113850.30-1-luzhipeng@cestc.cn>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 170.10.133.124 (deferred)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RDNS_NONE=0.793, T_SPF_HELO_TEMPERROR=0.01,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=cleger@rivosinc.com; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, T_SPF_HELO_TEMPERROR=0.01,
  T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,59 +96,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 30, 2024 at 07:38:50PM +0800, luzhipeng wrote:
-> With reference to the naming conventions of other encryption algorithms,
-> the name of SM4 is modified.So libvirt and qemu are compatible.
-> 
-> Signed-off-by: luzhipeng <luzhipeng@cestc.cn>
-> ---
->  crypto/block-luks.c             | 2 +-
->  crypto/cipher-gcrypt.c.inc      | 4 ++--
->  crypto/cipher-nettle.c.inc      | 4 ++--
->  crypto/cipher.c                 | 4 ++--
->  qapi/crypto.json                | 4 ++--
->  tests/unit/test-crypto-cipher.c | 4 ++--
->  6 files changed, 11 insertions(+), 11 deletions(-)
-> 
-> diff --git a/qapi/crypto.json b/qapi/crypto.json
-> index e102be337b..1a28e312d8 100644
-> --- a/qapi/crypto.json
-> +++ b/qapi/crypto.json
-> @@ -94,7 +94,7 @@
->  #
->  # @twofish-256: Twofish with 256 bit / 32 byte keys
->  #
-> -# @sm4: SM4 with 128 bit / 16 byte keys (since 9.0)
-> +# @sm4-128: SM4 with 128 bit / 16 byte keys (since 9.0)
->  #
->  # Since: 2.6
->  ##
-> @@ -105,7 +105,7 @@
->             'cast5-128',
->             'serpent-128', 'serpent-192', 'serpent-256',
->             'twofish-128', 'twofish-192', 'twofish-256',
-> -           'sm4']}
-> +           'sm4-128']}
+The same code is used twice to actually close all open file descriptors
+after forking. Factorize it in a single place.
 
-This rename isn't permitted, as 'sm4' was already exposed as public API
-in the 9.0 release and thus this would break backwards compatibility.
+Signed-off-by: Clément Léger <cleger@rivosinc.com>
+---
+ net/tap.c | 27 +++++++++++++--------------
+ 1 file changed, 13 insertions(+), 14 deletions(-)
 
-I agree it would have been nice to call it 'sm4-128' and I dropped the
-ball by not suggesting a rename when this was first proposed. At this
-point though, I don't think  we need to go through the many release
-dance of deprecating the old name & introducing a new name & finally
-removing the old name, since IIUC, SM4 is always 128 bits in size.
-
-
-With regards,
-Daniel
+diff --git a/net/tap.c b/net/tap.c
+index 51f7aec39d..7b2d5d5703 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -385,6 +385,17 @@ static TAPState *net_tap_fd_init(NetClientState *peer,
+     return s;
+ }
+ 
++static void close_all_fds_after_fork(int excluded_fd)
++{
++    int open_max = sysconf(_SC_OPEN_MAX), i;
++
++    for (i = 3; i < open_max; i++) {
++        if (i != excluded_fd) {
++            close(i);
++        }
++    }
++}
++
+ static void launch_script(const char *setup_script, const char *ifname,
+                           int fd, Error **errp)
+ {
+@@ -400,13 +411,7 @@ static void launch_script(const char *setup_script, const char *ifname,
+         return;
+     }
+     if (pid == 0) {
+-        int open_max = sysconf(_SC_OPEN_MAX), i;
+-
+-        for (i = 3; i < open_max; i++) {
+-            if (i != fd) {
+-                close(i);
+-            }
+-        }
++        close_all_fds_after_fork(fd);
+         parg = args;
+         *parg++ = (char *)setup_script;
+         *parg++ = (char *)ifname;
+@@ -490,17 +495,11 @@ static int net_bridge_run_helper(const char *helper, const char *bridge,
+         return -1;
+     }
+     if (pid == 0) {
+-        int open_max = sysconf(_SC_OPEN_MAX), i;
+         char *fd_buf = NULL;
+         char *br_buf = NULL;
+         char *helper_cmd = NULL;
+ 
+-        for (i = 3; i < open_max; i++) {
+-            if (i != sv[1]) {
+-                close(i);
+-            }
+-        }
+-
++        close_all_fds_after_fork(sv[1]);
+         fd_buf = g_strdup_printf("%s%d", "--fd=", sv[1]);
+ 
+         if (strrchr(helper, ' ') || strrchr(helper, '\t')) {
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.45.2
 
 
