@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06B7FC3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 05:01:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80CC0C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 05:14:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ1Sn-0002NR-Ew; Wed, 31 Jul 2024 01:01:25 -0400
+	id 1sZ1e1-0008J2-UQ; Wed, 31 Jul 2024 01:13:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZ1SZ-0002Kk-RT
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 01:01:16 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZ1SX-0008A4-DS
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 01:01:11 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-6e7e23b42c3so3327621a12.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 22:01:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722402068; x=1723006868; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FOYOc9wy62itlpcBQ7DGJQj+MS4yToBJQm0iNdU0Iko=;
- b=Utd2V8dHNzw+h13HKRMgkURSQ8krzTjIgkf1AJostlqqoQxo2Q3pMhNHa7Hzqn8iWM
- iwFTmx/ExBih02p6E4a0rLZqioA2iNNRp6Xg+JFI+DDaxP2oCF9ERG1oD1WfbEihJipQ
- M7/Oing/ZrMgCKuAOOMTLQ151DYAWEtzeprTR8bzA+GBN2Vq79HoLT9R4zd7kS8cAsv/
- ZLg/aRquk8ifxYwXnLqjSkRqFM29DFfr1EZ4EB6o4Q0eNxSnNCOiQu7K7dWB3JF8kafx
- U92hlxHLo5Km1fZI2zyijO7UCIfsUY4c63e2OuAyLEaNMRfaDkGXDvZeIVbkXNsBIm4+
- bm/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722402068; x=1723006868;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FOYOc9wy62itlpcBQ7DGJQj+MS4yToBJQm0iNdU0Iko=;
- b=O57kSzJVskmjxMhwaNmF60TimqjurrwEHYG6X/D4AQR6e6nPGoG94+K/jsWfeIDqiX
- IVHVfw0B6JXmcXrEggkgtvL5mTmWsqvRpU7ucxG2eVMw7p1pfvCNselcAJhokYGXet8P
- o+rs7CN+9zhsBqp80/3LriDw+Lkz067B6F/eVuWQ0nCf8AT5BAYGO7ZMrK9ZtBOhSknd
- uRGF+7VApMQyOaM+daiEbIFTsj1c1eJ7yNakupZlBnZc0ykw8BnuDYcbeoC2eNNm6BqL
- dnmrza/+reT1c1Hm9MFxsxltQpNy0lx/BZDIRgQxDuretU7W7EW/F6u+W7if/OBgpq2Q
- D3Yw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVjK22sxiTapdJplQs+bwaj6VBrBy7zX4vW94NRu4+K3WYU5CnO604jEyOmprr9AoQNirApqPm/YIJ1kJqZcEOWFkQhKwA=
-X-Gm-Message-State: AOJu0YwIMgGwnnlvA61Y42ENgPsUi6RoSXSyxAqmciuSVgulF87DJMDi
- dLYTRJB1L1DXEwrSL8vXKcS6o0UBykObDE+V9whogup58IgpM+6J3CgV+eZFQ3Q=
-X-Google-Smtp-Source: AGHT+IHJNx0xz8JMLS6pVjfbm8vT2FXiML9t3PLr7jnFXMRBiSfpE/mX2BMQmi2KadKgBbPlpOk7Dw==
-X-Received: by 2002:a05:6a20:9e4b:b0:1bd:1df4:bd43 with SMTP id
- adf61e73a8af0-1c4a14fdcd6mr11195544637.54.1722402067658; 
- Tue, 30 Jul 2024 22:01:07 -0700 (PDT)
-Received: from ?IPV6:2403:580a:f89b:0:7406:659b:9ac8:69bb?
- (2403-580a-f89b-0-7406-659b-9ac8-69bb.ip6.aussiebb.net.
- [2403:580a:f89b:0:7406:659b:9ac8:69bb])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fed7c7f650sm111333505ad.59.2024.07.30.22.01.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jul 2024 22:01:07 -0700 (PDT)
-Message-ID: <354740c0-ac02-4be7-bf02-2b38ef55f807@linaro.org>
-Date: Wed, 31 Jul 2024 15:01:00 +1000
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZ1e0-0008FY-D9
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 01:13:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZ1dy-0001Qq-Hl
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 01:13:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722402777;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iVHQrxNekcxtK1Yq7919QcmyccPj5czJKpkTBAdsp/s=;
+ b=fhOjWul3xKZJ59yKpivh7vu1VaAHwJUVitAqfM6AqqQD+cEFVgly9DXfPq4cSygcRw7Om2
+ B1faBCGelyYrSr3ZT9q0MiS5zfjhqtdfrjnbR9awklObIsfb6kBcYiZ5Xk0jb9UTO4UfNW
+ s1RuYyiqjfWm5APQbPsPI7uSnikgPHI=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-474-dAPmUXj7O6O0ulCe7pCW5A-1; Wed,
+ 31 Jul 2024 01:12:52 -0400
+X-MC-Unique: dAPmUXj7O6O0ulCe7pCW5A-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 948711955BFC; Wed, 31 Jul 2024 05:12:45 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5BFAF1955F3B; Wed, 31 Jul 2024 05:12:40 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4BF7921E668A; Wed, 31 Jul 2024 07:12:38 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org,
+ alex.williamson@redhat.com,  andrew@codeconstruct.com.au,
+ andrew@daynix.com,  arei.gonglei@huawei.com,  berto@igalia.com,
+ borntraeger@linux.ibm.com,  clg@kaod.org,  david@redhat.com,
+ den@openvz.org,  eblake@redhat.com,  eduardo@habkost.net,
+ farman@linux.ibm.com,  farosas@suse.de,  hreitz@redhat.com,
+ idryomov@gmail.com,  iii@linux.ibm.com,  jamin_lin@aspeedtech.com,
+ jasowang@redhat.com,  joel@jms.id.au,  jsnow@redhat.com,
+ kwolf@redhat.com,  leetroy@gmail.com,  marcandre.lureau@redhat.com,
+ marcel.apfelbaum@gmail.com,  michael.roth@amd.com,  mst@redhat.com,
+ mtosatti@redhat.com,  nsg@linux.ibm.com,  pasic@linux.ibm.com,
+ pbonzini@redhat.com,  peter.maydell@linaro.org,  peterx@redhat.com,
+ philmd@linaro.org,  pizhenwei@bytedance.com,  pl@dlhnet.de,
+ richard.henderson@linaro.org,  stefanha@redhat.com,
+ steven_lee@aspeedtech.com,  thuth@redhat.com,  vsementsov@yandex-team.ru,
+ wangyanan55@huawei.com,  yuri.benditovich@daynix.com,
+ zhao1.liu@intel.com,  qemu-block@nongnu.org,  qemu-arm@nongnu.org,
+ qemu-s390x@nongnu.org,  kvm@vger.kernel.org,  =?utf-8?Q?C=C3=A9dric?= Le
+ Goater <clg@redhat.com>
+Subject: Re: [PATCH 01/18] qapi: Smarter camel_to_upper() to reduce need for
+ 'prefix'
+In-Reply-To: <9b147a34-4641-4b4c-a050-51ceb3ea6a67@nvidia.com> (Avihai Horon's
+ message of "Tue, 30 Jul 2024 16:33:31 +0300")
+References: <20240730081032.1246748-1-armbru@redhat.com>
+ <20240730081032.1246748-2-armbru@redhat.com>
+ <ZqiutRoQuAsrllfj@redhat.com> <87mslzgjde.fsf@pond.sub.org>
+ <9b147a34-4641-4b4c-a050-51ceb3ea6a67@nvidia.com>
+Date: Wed, 31 Jul 2024 07:12:38 +0200
+Message-ID: <87jzh2kuux.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/24] tests/functional: enable pre-emptive caching of
- assets
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
- Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>
-References: <20240730170347.4103919-1-berrange@redhat.com>
- <20240730170347.4103919-10-berrange@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240730170347.4103919-10-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,40 +107,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/31/24 03:03, Daniel P. Berrangé wrote:
-> Many tests need to access assets stored on remote sites. We don't want
-> to download these during test execution when run by meson, since this
-> risks hitting test timeouts when data transfers are slow.
-> 
-> Add support for pre-emptive caching of assets by setting the env var
-> QEMU_TEST_PRECACHE to point to a timestamp file. When this is set,
-> instead of running the test, the assets will be downloaded and saved
-> to the cache, then the timestamp file created.
-> 
-> A meson custom target is created as a dependency of each test suite
-> to trigger the pre-emptive caching logic before the test runs.
-> 
-> When run in caching mode, it will locate assets by looking for class
-> level variables with a name prefix "ASSET_", and type "Asset".
-> 
-> At the ninja level
-> 
->     ninja test --suite functional
-> 
-> will speculatively download any assets that are not already cached,
-> so it is advisable to set a timeout multiplier.
-> 
->     QEMU_TEST_NO_DOWNLOAD=1 ninja test --suite functional
-> 
-> will fail the test if a required asset is not already cached
-> 
->     nina check-func-precache
+Avihai Horon <avihaih@nvidia.com> writes:
 
-ninja or make, precache-functional.
+> On 30/07/2024 15:22, Markus Armbruster wrote:
+>>
+>> Avihai, there's a question for you on VfioMigrationState.
+>>
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>
+>>> On Tue, Jul 30, 2024 at 10:10:15AM +0200, Markus Armbruster wrote:
 
-Anyway, thanks for this.  I can confirm that it works, and that it takes ~50m to finish here.
+[...]
 
-Tested-by: Richard Henderson <richard.henderson@linaro.org>
+>> * VfioMigrationState
+>>
+>>    Can't see why this one has a prefix.  Avihai, can you enlighten me?
+>
+> linux-headers/linux/vfio.h defines enum vfio_device_mig_state with values=
+ VFIO_DEVICE_STATE_STOP etc.
 
-r~
+It does not define any VFIO_DEVICE_STATE_*, though.
+
+> I used the QAPI prefix to emphasize this is a QAPI entity rather than a V=
+FIO entity.
+
+We define about two dozen symbols starting with VFIO_, and several
+hundreds starting with vfio_.  What makes this enumeration type
+different so its members need emphasis?
+
+[...]
+
 
