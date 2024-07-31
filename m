@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F07CBC3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 23:19:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8495C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 23:19:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZIaP-0001Dl-W8; Wed, 31 Jul 2024 19:18:26 -0400
+	id 1sZIay-0001dC-Oj; Wed, 31 Jul 2024 19:19:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sZIaO-0001DE-4W
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 19:18:24 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sZIax-0001ba-2N
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 19:18:59 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sZIaL-0000V2-Pj
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 19:18:23 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-2cfdafdb914so960662a91.2
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 16:18:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sZIav-0000Xo-7s
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 19:18:58 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2cb5243766dso4695071a91.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 16:18:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1722467900; x=1723072700;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1722467936; x=1723072736;
  darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=XZvp4NEoHp+8Af1sqo4lSfk2q8TGuS6H3VFLlsPLY0Y=;
- b=isgSX7A2YRfFfh0uXSTIm5/b0LjnT5Veq52+4hwDkIjvyuhjih56UvMoK26BNHkobQ
- WYoMOPBtZo2afY6EM/IwJuOrJWAf1JUlzwYPXuhmAMEzEm9z4vjfV8PLpuKx4g3Ktmkt
- aTR54/S/JVUL+zG+zcI0AB3gFpWtlf1NIhMzHACZUkwj6bZ+jR/ujw/o+pQQEIock+bq
- DZWS1UI9dgSaXFz9ZBrE7Zk8n9mHpnoBXerYAhGf0mowJrPSCsNa8JfoMsyNyczXalmB
- GZaL2Il+cOfEvDXxkybbEmr2vLJ6YUj+Ha7e5WGjXteKMNlUWBeHEhnj2aNtAPVT7tDg
- GvQA==
+ bh=2UiXV0IWgI7DjlRQK0QoU9RGAmwcPxJEnLOB/ipa9jc=;
+ b=0n96Q4lyB/QHBqSaXlBnokeH7reX9FzRNZTRCIVKp6vto5rlj7oLQCzacYoGOo9J8m
+ w2Qw63/+4x0HIjhKr21RLd9eEZ26op87OxF4FeYtKSCE8MZDmICI8zgnpLeFj2yneKmb
+ 7Z/OOa8ag3tulqIkfTg9mtJHdaRkcIYjnKrXPiNYn0zILzW7axs4DFAB4GN8dfqa5oMs
+ RfMYHEb7xXLYPdi7RMNeOy+qR5NEjxT4obKg5wiw7Z8I2215KH4PDbA/qnZ0+ulC5NCA
+ 3YQbPzxeEiWoYD/Z1yfOKCbxMTtuy1EPXf+DBT0TC0DSMLXXgtnT4OFUDPYIPGw3NI+r
+ thVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722467900; x=1723072700;
+ d=1e100.net; s=20230601; t=1722467936; x=1723072736;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=XZvp4NEoHp+8Af1sqo4lSfk2q8TGuS6H3VFLlsPLY0Y=;
- b=c/hTbIJLZNZg0888hk43APrHsQJ/7Fp8OrXBrGz50Nb99Dg7Qfj9N7POK/o/11Oc6j
- lWxNFB7fFGYm5untA5Jm0bgk7SZVktMvK/X0M5T4uS+Xm6S5UYizLwCIE4ApWvqRjdXh
- 3ljekKLIlgiRTf7WZc+HiUzk0KzGQJxjrwVI3z+DwPYCIjYwWvXM8gEcsE4eo0YxstDG
- Qz1NLeoVoG9DPtDfFqpGnb1d3uKgJ2xzy3busDmWeKh28iwuCSdvY84HhMo5xWbvl0r6
- MSgUt71rtPJmuWYCvw7pd2ZuS1OBD64muKaqtNrV4nRCVjJ+wyiyrIe004Vs5nba1TFH
- byTA==
+ bh=2UiXV0IWgI7DjlRQK0QoU9RGAmwcPxJEnLOB/ipa9jc=;
+ b=DyiLDyCnGL2SgpWFEWb9O7E6/cXrWQH841b1yT1PYsH+oW+Tlg3fGHnnD5bPBeYzpd
+ yvVg5f2RJ01tZFEatWeTQ1OjdAeFurPvcMg3iScCVY7ITplebihO/+7H+q1VrljEByH4
+ N0QudJoKOSbJUqVyEbAtRra4WZ8Voz5d9bUEr8WEWeK0NI+UzVBW17paXKcjKue70xVF
+ PXHMsVF1GNJ0xYMmV1LIV154a/TuuUpoCnKLmCZYlj1VBh+1DmvFSY5aGWu8+QnwRJ4n
+ ZCWMBj8FBIsGLCqUgKum6XWU+WdOU2+75WJbbTaRSlmfgyKTX4mFKGwFQ7SC0w008/Tc
+ YZ0A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVnsQezndL/E0MEoTugS0QKpNpEQyf1pvrJY7vE1l+TAenijHcR1Cv0rAkWogFyFKUhl3l6TFcPDRX4@nongnu.org
-X-Gm-Message-State: AOJu0YzSERFMPHPG6i+geGicp0kVB0y2/Pr+v1gU2jXAYfl0XnjxXpb/
- sG3DECX+5Y7IVHlUFrG4XopPZh5VliPgfu4BFfQk80a/mlzcRkUTg2tB7wtn5g9md7RGSyotN4w
- fFLdD8QDpXKP+8UJgq4NsSPr72Y1qsdISoqfGzw==
-X-Google-Smtp-Source: AGHT+IEmekiRCIiOm4g0W8NEJ0h8B//z/OpeK/ZldPSF6SOtxAX3sBSrrfISxaIO0ogGUfgbsgzuwhDzvjq6QzTMQzU=
-X-Received: by 2002:a17:90b:4a07:b0:2c8:65cf:e820 with SMTP id
- 98e67ed59e1d1-2cfe7751d73mr986348a91.2.1722467899739; Wed, 31 Jul 2024
- 16:18:19 -0700 (PDT)
+ AJvYcCX0XwAjrOukI34CyzTmXDHBLFLu9Qz5T4AduNbQCinZ3DD43slZCG8D70KeXMHwBHapgVDwloQQwjeAU3BJs1BU1u7kaNY=
+X-Gm-Message-State: AOJu0YytHQP1wU2Lz4vkHFvUyZamoUOX9InfqRXASJdjpqvpPpnK7iue
+ Kt1+xeEP5ob9e8oWEEg+b8dGyYoAgV9sNLGiEKoln3VOisCKOnjS3MbFmG3+VhH7P7HK40kHvGK
+ dvIEysckdIzJyKI9ab4Ghb/cxRLH/qydA4hUEVw==
+X-Google-Smtp-Source: AGHT+IH5NmnRPwINjQLjIUWtEMjn3M8pNFNDRmBZ5GOVqmdnJ3CuGxGEGatqb/3vNnSU6t4ZVIWfBy4sPqjdt+ygziQ=
+X-Received: by 2002:a17:90b:33ca:b0:2c4:af69:5c39 with SMTP id
+ 98e67ed59e1d1-2cfe788e205mr1195082a91.13.1722467935868; Wed, 31 Jul 2024
+ 16:18:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240731144532.5997-1-iii@linux.ibm.com>
- <CANCZdfpw7iDr4fBmsuukA5aVzcWBgCX09DVngg1RYHtv832zQQ@mail.gmail.com>
- <248e99db-61ea-4996-a3fa-efc15824451b@linaro.org>
-In-Reply-To: <248e99db-61ea-4996-a3fa-efc15824451b@linaro.org>
+References: <20240731144428.5882-1-iii@linux.ibm.com>
+ <7c0af87c-466b-4dba-a132-b14c8d262fd4@linaro.org>
+ <CANCZdfrdXguv_Ynm24dW4d_LY1kDEbHGwQhADFjuPrEuRSiF3w@mail.gmail.com>
+In-Reply-To: <CANCZdfrdXguv_Ynm24dW4d_LY1kDEbHGwQhADFjuPrEuRSiF3w@mail.gmail.com>
 From: Warner Losh <imp@bsdimp.com>
-Date: Wed, 31 Jul 2024 17:18:08 -0600
-Message-ID: <CANCZdfrDu7p4wrBHOB0-R0fi=GomyH=NP0sMnE9vkq0Q_39Rag@mail.gmail.com>
-Subject: Re: [PATCH] bsd-user/main: Allow setting tb-size
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Ilya Leoshkevich <iii@linux.ibm.com>, Kyle Evans <kevans@freebsd.org>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000004d3003061e934ff6"
-Received-SPF: none client-ip=2607:f8b0:4864:20::102e;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x102e.google.com
+Date: Wed, 31 Jul 2024 17:18:44 -0600
+Message-ID: <CANCZdfrPcW+ZmjBCAOo9npmZavGfP5ZcGP08UZ-4vxPSE6Czuw@mail.gmail.com>
+Subject: Re: [PATCH] bsd-user/x86_64/target_arch_thread.h: Align stack
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>, Kyle Evans <kevans@freebsd.org>,
+ qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000747226061e9351b7"
+Received-SPF: none client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1034.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -90,107 +90,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004d3003061e934ff6
+--000000000000747226061e9351b7
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jul 31, 2024 at 3:42=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd=
-@linaro.org>
-wrote:
+On Wed, Jul 31, 2024 at 5:03=E2=80=AFPM Warner Losh <imp@bsdimp.com> wrote:
 
-> On 31/7/24 23:21, Warner Losh wrote:
-> > On Wed, Jul 31, 2024 at 8:45=E2=80=AFAM Ilya Leoshkevich <iii@linux.ibm=
-.com
-> > <mailto:iii@linux.ibm.com>> wrote:
-> >
-> >     While qemu-system can set tb-size using -accel tcg,tb-size=3Dn, the=
-re
-> >     is no similar knob for qemu-bsd-user. Add one in a way similar to h=
-ow
-> >     one-insn-per-tb is already handled.
-> >
-> >
-> > Cool! Are you using bsd-user and need this for some reason? Or is this
-> > purely theoretical? Is there a larger context I can read about somewher=
-e?
->
-> Trying to keep user interface parity between linux/bsd.
->
-> Ideally this duplication should be unified in common-user/.
->
-
-I'd love that.
-
-Anyway, both of these patches queued to my branch
-
-
-> > I'll merge it either way (so none of the above is a criticism, I'm
-> genuinely
-> > curious) , but I don't get too many bsd-user fixes and this one is
-> unusual.
-> >
-> >     Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org
-> >     <mailto:philmd@linaro.org>>
-> >     Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com
-> >     <mailto:iii@linux.ibm.com>>
-> >     ---
-> >       bsd-user/main.c | 9 +++++++++
-> >       1 file changed, 9 insertions(+)
+> Hmmm... All platforms likely need this....
+> Oh, they all have it except x86, both 32 and 64-bit.... but i386 is
+> already properly aligned (at least in the
+> FreeBSD kernel), so maybe that's not needed.
 >
 >
+> On Wed, Jul 31, 2024 at 4:43=E2=80=AFPM Richard Henderson <
+> richard.henderson@linaro.org> wrote:
+>
+>> On 8/1/24 00:44, Ilya Leoshkevich wrote:
+>> > bsd-user qemu-x86_64 almost immediately dies with:
+>> >
+>> >      qemu: 0x4002201a68: unhandled CPU exception 0xd - aborting
+>> >
+>> > on FreeBSD 14.1-RELEASE. This is an instruction that requires
+>> > alignment:
+>> >
+>> >      (gdb) x/i 0x4002201a68
+>> >         0x4002201a68:        movaps %xmm0,-0x40(%rbp)
+>> >
+>> > and the argument is not aligned:
+>> >
+>> >      (gdb) p/x env->regs[5]
+>> >      $1 =3D 0x822443b58
+>> >
+>> > A quick experiment shows that the userspace entry point expects
+>> > misaligned rsp:
+>> >
+>> >      (gdb) starti
+>> >      (gdb) p/x $rsp
+>> >      $1 =3D 0x7fffffffeaa8
+>> >
+>> > Emulate this behavior in bsd-user.
+>> >
+>> > Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+>> > ---
+>> >   bsd-user/x86_64/target_arch_thread.h | 2 +-
+>> >   1 file changed, 1 insertion(+), 1 deletion(-)
+>> >
+>> > diff --git a/bsd-user/x86_64/target_arch_thread.h
+>> b/bsd-user/x86_64/target_arch_thread.h
+>> > index 52c28906d6d..25233443c14 100644
+>> > --- a/bsd-user/x86_64/target_arch_thread.h
+>> > +++ b/bsd-user/x86_64/target_arch_thread.h
+>> > @@ -31,7 +31,7 @@ static inline void target_thread_init(struct
+>> target_pt_regs *regs,
+>> >       struct image_info *infop)
+>> >   {
+>> >       regs->rax =3D 0;
+>> > -    regs->rsp =3D infop->start_stack;
+>> > +    regs->rsp =3D (infop->start_stack & ~0xfUL) - 8;
+>>
+>> The formula in sys/amd64/amd64/exec_machdep.c, exec_setregs is
+>>
+>>    ((stack - 8) & ~0xful) + 8
+>>
+>> With that,
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>>
+>
+> Agreed.
+>
+> Reviewed-by: Warner Losh <imp@bsdimp.com>
+>
+> There's a *lot* that's missing on for amd64 emulation relative to the
+> other platforms.
+>
 
---0000000000004d3003061e934ff6
+Forgot to mention that I've queued this change with Richard's suggested
+modification.
+
+Warner
+
+--000000000000747226061e9351b7
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jul 31, 2024 at 3:42=E2=80=AF=
-PM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">phi=
-lmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
-ing-left:1ex">On 31/7/24 23:21, Warner Losh wrote:<br>
-&gt; On Wed, Jul 31, 2024 at 8:45=E2=80=AFAM Ilya Leoshkevich &lt;<a href=
-=3D"mailto:iii@linux.ibm.com" target=3D"_blank">iii@linux.ibm.com</a> <br>
-&gt; &lt;mailto:<a href=3D"mailto:iii@linux.ibm.com" target=3D"_blank">iii@=
-linux.ibm.com</a>&gt;&gt; wrote:<br>
+<div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jul 31, 2024 at 5:03=E2=80=AF=
+PM Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt;=
+ wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=
+=3D"ltr"><div dir=3D"ltr">Hmmm... All platforms likely need this....<div>Oh=
+, they all have it except x86, both 32 and 64-bit.... but i386 is already p=
+roperly aligned (at least in the</div><div>FreeBSD kernel), so maybe that&#=
+39;s not needed.</div><div><br></div></div><br><div class=3D"gmail_quote"><=
+div dir=3D"ltr" class=3D"gmail_attr">On Wed, Jul 31, 2024 at 4:43=E2=80=AFP=
+M Richard Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.org" tar=
+get=3D"_blank">richard.henderson@linaro.org</a>&gt; wrote:<br></div><blockq=
+uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
+x solid rgb(204,204,204);padding-left:1ex">On 8/1/24 00:44, Ilya Leoshkevic=
+h wrote:<br>
+&gt; bsd-user qemu-x86_64 almost immediately dies with:<br>
 &gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0While qemu-system can set tb-size using -accel tcg,=
-tb-size=3Dn, there<br>
-&gt;=C2=A0 =C2=A0 =C2=A0is no similar knob for qemu-bsd-user. Add one in a =
-way similar to how<br>
-&gt;=C2=A0 =C2=A0 =C2=A0one-insn-per-tb is already handled.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 qemu: 0x4002201a68: unhandled CPU exception 0xd - =
+aborting<br>
 &gt; <br>
+&gt; on FreeBSD 14.1-RELEASE. This is an instruction that requires<br>
+&gt; alignment:<br>
 &gt; <br>
-&gt; Cool! Are you using bsd-user and need this for some reason? Or is this=
-<br>
-&gt; purely theoretical? Is there a larger context I can read about somewhe=
-re?<br>
-<br>
-Trying to keep user interface parity between linux/bsd.<br>
-<br>
-Ideally this duplication should be unified in common-user/.<br></blockquote=
-><div><br></div><div>I&#39;d love that.</div><div><br></div><div>Anyway, bo=
-th of these patches queued to my branch</div><div>=C2=A0</div><blockquote c=
-lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
-d rgb(204,204,204);padding-left:1ex">
-&gt; I&#39;ll merge it either way (so none of the above is a criticism, I&#=
-39;m genuinely<br>
-&gt; curious) , but I don&#39;t get too many bsd-user fixes and this one is=
- unusual.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 (gdb) x/i 0x4002201a68<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00x4002201a68:=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 movaps %xmm0,-0x40(%rbp)<br>
 &gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Suggested-by: Philippe Mathieu-Daud=C3=A9 &lt;<a hr=
-ef=3D"mailto:philmd@linaro.org" target=3D"_blank">philmd@linaro.org</a><br>
-&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:philmd@linaro.org" tar=
-get=3D"_blank">philmd@linaro.org</a>&gt;&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0Signed-off-by: Ilya Leoshkevich &lt;<a href=3D"mail=
-to:iii@linux.ibm.com" target=3D"_blank">iii@linux.ibm.com</a><br>
-&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:iii@linux.ibm.com" tar=
-get=3D"_blank">iii@linux.ibm.com</a>&gt;&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0---<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0bsd-user/main.c | 9 +++++++++<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A01 file changed, 9 insertions(+)<br>
+&gt; and the argument is not aligned:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 (gdb) p/x env-&gt;regs[5]<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 $1 =3D 0x822443b58<br>
+&gt; <br>
+&gt; A quick experiment shows that the userspace entry point expects<br>
+&gt; misaligned rsp:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 (gdb) starti<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 (gdb) p/x $rsp<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 $1 =3D 0x7fffffffeaa8<br>
+&gt; <br>
+&gt; Emulate this behavior in bsd-user.<br>
+&gt; <br>
+&gt; Signed-off-by: Ilya Leoshkevich &lt;<a href=3D"mailto:iii@linux.ibm.co=
+m" target=3D"_blank">iii@linux.ibm.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0bsd-user/x86_64/target_arch_thread.h | 2 +-<br>
+&gt;=C2=A0 =C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+&gt; <br>
+&gt; diff --git a/bsd-user/x86_64/target_arch_thread.h b/bsd-user/x86_64/ta=
+rget_arch_thread.h<br>
+&gt; index 52c28906d6d..25233443c14 100644<br>
+&gt; --- a/bsd-user/x86_64/target_arch_thread.h<br>
+&gt; +++ b/bsd-user/x86_64/target_arch_thread.h<br>
+&gt; @@ -31,7 +31,7 @@ static inline void target_thread_init(struct target_=
+pt_regs *regs,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0struct image_info *infop)<br>
+&gt;=C2=A0 =C2=A0{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0regs-&gt;rax =3D 0;<br>
+&gt; -=C2=A0 =C2=A0 regs-&gt;rsp =3D infop-&gt;start_stack;<br>
+&gt; +=C2=A0 =C2=A0 regs-&gt;rsp =3D (infop-&gt;start_stack &amp; ~0xfUL) -=
+ 8;<br>
 <br>
-</blockquote></div></div>
+The formula in sys/amd64/amd64/exec_machdep.c, exec_setregs is<br>
+<br>
+=C2=A0 =C2=A0((stack - 8) &amp; ~0xful) + 8<br>
+<br>
+With that,<br>
+Reviewed-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@lina=
+ro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt;<br></blockqu=
+ote><div><br></div><div>Agreed.</div><div><br></div><div>Reviewed-by: Warne=
+r Losh &lt;<a href=3D"mailto:imp@bsdimp.com" target=3D"_blank">imp@bsdimp.c=
+om</a>&gt;=C2=A0</div><div><br></div><div>There&#39;s a *lot* that&#39;s mi=
+ssing on for amd64 emulation relative to the other platforms.</div></div></=
+div></blockquote><div><br></div><div>Forgot to mention that I&#39;ve queued=
+ this change with Richard&#39;s suggested modification.</div><div><br></div=
+><div>Warner=C2=A0</div></div></div>
 
---0000000000004d3003061e934ff6--
+--000000000000747226061e9351b7--
 
