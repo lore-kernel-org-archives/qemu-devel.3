@@ -4,107 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE045C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 19:10:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5FB4C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 19:18:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZEhi-0002Xa-8F; Wed, 31 Jul 2024 15:09:42 -0400
+	id 1sZEpR-0007xX-Cy; Wed, 31 Jul 2024 15:17:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sZEha-0002Us-Hl; Wed, 31 Jul 2024 15:09:36 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sZEhY-0005Zq-HJ; Wed, 31 Jul 2024 15:09:34 -0400
-Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46VHKZDq026382;
- Wed, 31 Jul 2024 19:09:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date
- :from:to:cc:subject:message-id:references:mime-version
- :content-type:content-transfer-encoding:in-reply-to; s=pp1; bh=U
- ZqAfn4T2UL4Y917Z+CmBvL/S9TKcTke18OJfNlBQQc=; b=pTGJy/pv7QwZo4nAu
- oKjKkQhDMdUM4ToBuo+Kpn9MLRxC0Vu72QDzAds21hzcDdxMUIWM5HNsVpJfQiPr
- CPZnc29PO2uiNGGp2StNJ2YauLcr/Kf6AY+6zs/CY2Kmjzl4nsAVJoawle/xos6J
- 6MqFKSjgMWm3cJZyc0l5ARJLSu2zpm55RTvCOvbykQAlllI6tI+evCqP4FkuxWlu
- 6eqczXKtAVY42HAUwsPUyKTesEZkl1nXROZYh7oeVhrQXcN0DC/0ehfcXDwBMPSP
- 07zg+f+q5e9+wA2S1wxwKOiYD6khWI33PGDPafrA93cZfuQrTESRt+DhuAb9unm1
- A9TWA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40qpmcgy7n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 31 Jul 2024 19:09:27 +0000 (GMT)
-Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46VJ9RCw030776;
- Wed, 31 Jul 2024 19:09:27 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40qpmcgy7k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 31 Jul 2024 19:09:27 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 46VGSHE8009218; Wed, 31 Jul 2024 19:09:26 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 40ndx353np-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 31 Jul 2024 19:09:26 +0000
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 46VJ9KpY52035900
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 31 Jul 2024 19:09:23 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D49C22004B;
- Wed, 31 Jul 2024 19:09:20 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 962A520040;
- Wed, 31 Jul 2024 19:09:18 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.124.222.219])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 31 Jul 2024 19:09:18 +0000 (GMT)
-Date: Thu, 1 Aug 2024 00:38:24 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
-Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?utf-8?B?RnLDqWTDqXJpYw==?= Barrat <fbarrat@linux.ibm.com>,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [RFC PATCH] hw/ppc: Implement -dtb support for PowerNV
-Message-ID: <rnb5kipb2zi7npkiq7vhdftiv6qdwmmu44wdlkcqjlxgvxd3j6@5cyzat6wgydz>
-References: <20240731132235.887918-1-adityag@linux.ibm.com>
- <5dfc59ec-fa30-47c5-a4e0-edea921098d3@kaod.org>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sZEpL-0007wL-M7
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 15:17:35 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sZEpJ-0000FY-GS
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 15:17:35 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-70d1a74a43bso4415835b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 12:17:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1722453452; x=1723058252; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vuvlbscv2fxE86Epu1744EkRqeC/nW3T1TIjVBij18w=;
+ b=byInlowv05jZJTtYeggJDEqJefi9GfsIZQgOq8acMnkHjn1WG35XmTMW8bt00rZMba
+ ymd6MOUeSDo3IQZKMVmqWLpb+HLnPgTgCIxteF8tddF20GFFUvMQ0WRAnvmA6WqUOwxl
+ YHwIne+XwiL14d7WbhuvHv+m/S7TElz4l4dnjcrQlbIn09gx4SHVkMHO8noRpGMxt8Zr
+ QUm0CLahcPKbco4pjr6YZB2zkVzT/p325AcNU6sl5xReOA7qAXMN6Igt0+uVf+QOr5H6
+ fA6KD26pAN08sjPQ7/gBVvuDouY6cKKpDW/LazUIpFWrcDEB3G4l8ojQCtADPMvZTu8i
+ AAYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722453452; x=1723058252;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vuvlbscv2fxE86Epu1744EkRqeC/nW3T1TIjVBij18w=;
+ b=BLGflvz8h1/oQJkdoCwNwbs1koe41KpRdJkkNbaEBURW0kJvTyLuJJlT/YG1V/GwU7
+ WFTQNj63I93yOioWQMHhle4bBqHbAH4zvR4n9XvwMzj2ud+QPdho/WWWSF5B1cjfu16J
+ ms/80vazdX/dvAjFQ2lMtWqEh3EYmlbOFYU7IK+beOkCo/dzaFMCVqLuFG6aUdRpb8+b
+ AuTem4k6YsbSFDWniU04dVIoQSMrtqU1F9aa3amslKVtEWLsn+Mezruuq5mE0B3heyLX
+ yAbsIBY/G3WzsR+iNXxMolTUI1gPJcD8RRbooSZaxcxvSbLtb2jb12UZHfPc2C0Sl4ul
+ HKWw==
+X-Gm-Message-State: AOJu0Ywj2Qt+wgo0S8smjttfSqJsAn4vlK8EEX2dyDGQ0B8Bp6mJjeA0
+ tclpchhTRcc1W0laxl1HWhHpvYtq0Mkrm7RysbgJSeV6GLO1H5YdMM8F/Wp14tI=
+X-Google-Smtp-Source: AGHT+IFbkkNaBQj+7tyvwpL3EWTFF++NWM/onsDiIIDbxBXHFyWpNYdtkgQNHYL1fZUnsrnQIcDaBA==
+X-Received: by 2002:a05:6a00:9165:b0:706:b10c:548a with SMTP id
+ d2e1a72fcca58-7105d7b2653mr252128b3a.22.1722453451700; 
+ Wed, 31 Jul 2024 12:17:31 -0700 (PDT)
+Received: from [192.168.68.110] ([177.197.107.101])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70ead72ad5asm10594206b3a.90.2024.07.31.12.17.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 31 Jul 2024 12:17:31 -0700 (PDT)
+Message-ID: <ad9acd2b-f76c-4e84-ad67-159c7623177c@ventanamicro.com>
+Date: Wed, 31 Jul 2024 16:17:27 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 13/13] docs/specs: add riscv-iommu
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ palmer@rivosinc.com, frank.chang@sifive.com, tjeznach@rivosinc.com,
+ jason.chien@sifive.com
+References: <20240708173501.426225-1-dbarboza@ventanamicro.com>
+ <20240708173501.426225-14-dbarboza@ventanamicro.com>
+ <CAKmqyKOA8VHg=BDBfhZcf0eU=3ts0=PoLEdzdd0rhNOz000=Xg@mail.gmail.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <CAKmqyKOA8VHg=BDBfhZcf0eU=3ts0=PoLEdzdd0rhNOz000=Xg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <5dfc59ec-fa30-47c5-a4e0-edea921098d3@kaod.org>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: iAD38pcozIIYd3Do90wviI7BrWsDeHqf
-X-Proofpoint-ORIG-GUID: LG4MiwzJlS13fWpSC8pzkL9_S8-48Q9d
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-31_10,2024-07-31_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 suspectscore=0
- malwarescore=0 impostorscore=0 clxscore=1015 phishscore=0
- priorityscore=1501 mlxlogscore=327 bulkscore=0 adultscore=0
- lowpriorityscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2407110000 definitions=main-2407310132
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,107 +100,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cedric,
 
-On 24/07/31 04:43PM, Cédric Le Goater wrote:
-> Hello Aditya,
+
+On 7/19/24 6:34 AM, Alistair Francis wrote:
+> On Tue, Jul 9, 2024 at 3:37 AM Daniel Henrique Barboza
+> <dbarboza@ventanamicro.com> wrote:
+>>
+>> Add a simple guideline to use the existing RISC-V IOMMU support we just
+>> added.
+>>
+>> This doc will be updated once we add the riscv-iommu-sys device.
+>>
+>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> ---
+>>   docs/specs/index.rst       |  1 +
+>>   docs/specs/riscv-iommu.rst | 55 ++++++++++++++++++++++++++++++++++++++
+>>   docs/system/riscv/virt.rst | 13 +++++++++
+>>   3 files changed, 69 insertions(+)
+>>   create mode 100644 docs/specs/riscv-iommu.rst
+>>
+>> diff --git a/docs/specs/index.rst b/docs/specs/index.rst
+>> index 1484e3e760..c68cd9ae6c 100644
+>> --- a/docs/specs/index.rst
+>> +++ b/docs/specs/index.rst
+>> @@ -33,3 +33,4 @@ guest hardware that is specific to QEMU.
+>>      virt-ctlr
+>>      vmcoreinfo
+>>      vmgenid
+>> +   riscv-iommu
+>> diff --git a/docs/specs/riscv-iommu.rst b/docs/specs/riscv-iommu.rst
+>> new file mode 100644
+>> index 0000000000..fa38ff7667
+>> --- /dev/null
+>> +++ b/docs/specs/riscv-iommu.rst
+>> @@ -0,0 +1,55 @@
+>> +.. _riscv-iommu:
+>> +
+>> +RISC-V IOMMU support for RISC-V machines
+>> +========================================
+>> +
+>> +QEMU implements a RISC-V IOMMU emulation based on the RISC-V IOMMU spec
+>> +version 1.0 [1].
+>> +
+>> +The emulation includes a PCI reference device, riscv-iommu-pci, that QEMU
+>> +RISC-V boards can use.  The 'virt' RISC-V machine is compatible with this
+>> +device.
+>> +
+>> +A platform device that implements the RISC-V IOMMU will be added in the
+>> +future.
+>> +
+>> +
+>> +riscv-iommu-pci reference device
+>> +--------------------------------
+>> +
+>> +This device implements the RISC-V IOMMU emulation as recommended by the section
+>> +"Integrating an IOMMU as a PCIe device" of [1]: a PCI device with base class 08h,
+>> +sub-class 06h and programming interface 00h.
+>> +
+>> +As a reference device it doesn't implement anything outside of the specification,
+>> +so it uses a generic default PCI ID given by QEMU: 1b36:0014.
+>> +
+>> +To include the device in the 'virt' machine:
+>> +
+>> +.. code-block:: bash
+>> +
+>> +  $ qemu-system-riscv64 -M virt -device riscv-iommu-pci (...)
 > 
-> On 7/31/24 15:22, Aditya Gupta wrote:
-> > Currently any device tree passed with -dtb option in QEMU, was ignored
-> > by the PowerNV code.
-> > 
-> > Read and pass the passed -dtb to the kernel, thus enabling easier
-> > debugging with custom DTBs.
-> 
-> I thought we had enough controls with the QEMU command line options to
-> generate a custom DTB. We should improve that first. Unless you want
-> to mimic a bogus DTB as generated by hostboot and check skiboot behavior.
-> 
-> Can you explain more the use case please ? Is it for skiboot testing ?
+> We should add a sentence saying what this does. As in what should a
+> user expect after they have done this
 
-My usecase is mostly experimental, where I am changing skiboot's
-relocation, trying to boot with almost no/minimal parts of skiboot, and
-thereby I am passing a custom DTB.
+Here's what was added at this point:
 
-Though the DTB I pass is basically the DTB QEMU passes to skiboot, and
-edited it to remove things, add an 'opal' node, and basically have more
-control on what device nodes QEMU passes to the firmware/kernel.
+  .. code-block:: bash
+  
+-  $ qemu-system-riscv64 -M virt -device riscv-iommu-pci (...)
++  $ qemu-system-riscv64 -M virt -device riscv-iommu-pci,[optional_pci_opts] (...)
++
++This will add a RISC-V IOMMU PCI device in the board following any additional
++PCI parameters (like PCI bus address).  The behavior of the RISC-V IOMMU is
++defined by the spec but its operation is OS dependent.  As of this writing the
++existing Linux kernel support `linux-v8`_, not yet merged, will configure the IOMMU
++to create IOMMU groups with any eligible cards available in the system,
++regardless of factors such as the order in which the devices are added in the
++command line.
++
++This means that these command lines are equivalent as far as the current
++IOMMU kernel driver behaves:
++
++.. code-block:: bash
++
++  $ qemu-system-riscv64 \
++        -M virt,aia=aplic-imsic,aia-guests=5 \
++        -device riscv-iommu-pci,addr=1.0,vendor-id=0x1efd,device-id=0xedf1 \
++        -device e1000e,netdev=net1 -netdev user,id=net1,net=192.168.0.0/24 \
++        -device e1000e,netdev=net2 -netdev user,id=net2,net=192.168.200.0/24 \
++        (...)
++
++  $ qemu-system-riscv64 \
++        -M virt,aia=aplic-imsic,aia-guests=5 \
++        -device e1000e,netdev=net1 -netdev user,id=net1,net=192.168.0.0/24 \
++        -device e1000e,netdev=net2 -netdev user,id=net2,net=192.168.200.0/24 \
++        -device riscv-iommu-pci,addr=1.0,vendor-id=0x1efd,device-id=0xedf1 \
++        (...)
++
++Both will create iommu groups for the two e1000e cards.
 
-The usecase you told seems interesting though, I have not encountered
-bogus DTBs by hostboot yet (still new), but might help test skiboot when
-that happens.
 
-'-dtb' option will not be for the usual usecase, but can help try these
-experimental things with a quick and dirty dtb.
+What I tried to say here is that the operation of the IOMMU device is OS dependent,
+and the current Linux driver doesn't care to things such as the order in which the
+devices were added. Is this what you had in mind?
+
+
+I also removed the platform device reference at the start of the doc. I think it was
+doing more harm than good. We'll need to change this doc when that device is added,
+might as well leave it as is for now.
+
 
 Thanks,
-Aditya Gupta
+
+Daniel
+
 
 > 
-> Thanks,
+> Alistair
 > 
-> C.
-> 
-> 
-> > The existing behaviour when -dtb is 'not' passed, is preserved as-is.
-> > 
-> > But when a '-dtb' is passed, it completely overrides any dtb nodes or
-> > changes QEMU might have done, such as '-append' arguments to the kernel
-> > (which are mentioned in /chosen/bootargs in the dtb), hence add warning
-> > when -dtb is being used
-> > 
-> > Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> > 
-> > ---
-> > This is an RFC patch, and hence might not be the final implementation,
-> > though this current one is a solution which works
-> > 
-> > ---
-> >   hw/ppc/pnv.c | 29 ++++++++++++++++++++++++++---
-> >   1 file changed, 26 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> > index 3526852685b4..12cc909b9e26 100644
-> > --- a/hw/ppc/pnv.c
-> > +++ b/hw/ppc/pnv.c
-> > @@ -714,6 +714,8 @@ static void pnv_reset(MachineState *machine, ShutdownCause reason)
-> >       PnvMachineState *pnv = PNV_MACHINE(machine);
-> >       IPMIBmc *bmc;
-> >       void *fdt;
-> > +    FILE *fdt_file;
-> > +    uint32_t fdt_size;
-> >       qemu_devices_reset(reason);
-> > @@ -736,10 +738,31 @@ static void pnv_reset(MachineState *machine, ShutdownCause reason)
-> >           }
-> >       }
-> > -    fdt = pnv_dt_create(machine);
-> > +    if (machine->dtb) {
-> > +        warn_report("with manually passed dtb, some options like '-append'"
-> > +                " might ignored and the dtb passed will be used as-is");
-> > -    /* Pack resulting tree */
-> > -    _FDT((fdt_pack(fdt)));
-> > +        fdt = g_malloc0(FDT_MAX_SIZE);
-> > +
-> > +        /* read the file 'machine->dtb', and load it into 'fdt' buffer */
-> > +        fdt_file = fopen(machine->dtb, "r");
-> > +        if (fdt_file != NULL) {
-> > +            fdt_size = fread(fdt, sizeof(char), FDT_MAX_SIZE, fdt_file);
-> > +            if (ferror(fdt_file) != 0) {
-> > +                error_report("Could not load dtb '%s'",
-> > +                             machine->dtb);
-> > +                exit(1);
-> > +            }
-> > +
-> > +            /* mark end of the fdt buffer with '\0' */
-> > +            ((char *)fdt)[fdt_size] = '\0';
-> > +        }
-> > +    } else {
-> > +        fdt = pnv_dt_create(machine);
-> > +
-> > +        /* Pack resulting tree */
-> > +        _FDT((fdt_pack(fdt)));
-> > +    }
-> >       qemu_fdt_dumpdtb(fdt, fdt_totalsize(fdt));
-> >       cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
-> 
+>> +
+>> +As of this writing the existing Linux kernel support [2], not yet merged, is being
+>> +created as a Rivos device, i.e. it uses Rivos vendor ID.  To use the riscv-iommu-pci
+>> +device with the existing kernel support we need to emulate a Rivos PCI IOMMU by
+>> +setting 'vendor-id' and 'device-id':
+>> +
+>> +.. code-block:: bash
+>> +
+>> +  $ qemu-system-riscv64 -M virt        \
+>> +     -device riscv-iommu-pci,vendor-id=0x1efd,device-id=0xedf1 (...)
+>> +
+>> +Several options are available to control the capabilities of the device, namely:
+>> +
+>> +- "bus"
+>> +- "ioatc-limit"
+>> +- "intremap"
+>> +- "ats"
+>> +- "off" (Out-of-reset translation mode: 'on' for DMA disabled, 'off' for 'BARE' (passthrough))
+>> +- "s-stage"
+>> +- "g-stage"
+>> +
+>> +
+>> +[1] https://github.com/riscv-non-isa/riscv-iommu/releases/download/v1.0/riscv-iommu.pdf
+>> +[2] https://lore.kernel.org/linux-riscv/cover.1718388908.git.tjeznach@rivosinc.com/
+>> diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
+>> index 9a06f95a34..8e9a2e4dda 100644
+>> --- a/docs/system/riscv/virt.rst
+>> +++ b/docs/system/riscv/virt.rst
+>> @@ -84,6 +84,19 @@ none``, as in
+>>
+>>   Firmware images used for pflash must be exactly 32 MiB in size.
+>>
+>> +riscv-iommu support
+>> +-------------------
+>> +
+>> +The board has support for the riscv-iommu-pci device by using the following
+>> +command line:
+>> +
+>> +.. code-block:: bash
+>> +
+>> +  $ qemu-system-riscv64 -M virt -device riscv-iommu-pci (...)
+>> +
+>> +Refer to :ref:`riscv-iommu` for more information on how the RISC-V IOMMU support
+>> +works.
+>> +
+>>   Machine-specific options
+>>   ------------------------
+>>
+>> --
+>> 2.45.2
+>>
+>>
 
