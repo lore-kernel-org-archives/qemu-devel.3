@@ -4,80 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B07E7C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 13:06:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D69AC3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 13:26:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ91c-0004jI-Ay; Wed, 31 Jul 2024 09:05:53 -0400
+	id 1sZ9Ku-0002nn-Po; Wed, 31 Jul 2024 09:25:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1sZ91W-0004et-Eq
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 09:05:46 -0400
-Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sZ9Kr-0002la-VR; Wed, 31 Jul 2024 09:25:45 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1sZ91U-0001sV-7A
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 09:05:46 -0400
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 2B29941207
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 13:05:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1722431140;
- bh=0ppAZKFYmOdqYyRRoQb4S1cbnkVOsnxbmg7QQmbtseg=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=K/Bbf7KCS3TAaYs1KLnuDL6d/eBaO45dIZAhZ6yG3oFN1+enyD8SKIZ3g6xyBDHVc
- bYPyXMoODlponZ1VQfCAy1dyMKZ3NPVNFI5Mkp5EOXBCiXrFhCDV3M9DR/jCxNXRTf
- c60RX4mZCW4z7gttuq8aSdYZWLW6SPqBM3YGeJRPTyX4n56dcKLuCtOzXPejXOU5cs
- 0JIecFAo+UT6d18Pp8u/CT4SWg4lp0cHYDxIs+3ihYlJdbQv8cf9usy8W5zx74ym62
- VqGXBC4KTOBd4Oov7O8HK4b+8C75O4NWXxMADezBBPLgf9JFyqLOmPUkNizJBGs0Uo
- jyFrB91TyPGzA==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id 218B87E1F6
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 13:05:40 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sZ9Kq-000582-47; Wed, 31 Jul 2024 09:25:45 -0400
+Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46VBSxQu005250;
+ Wed, 31 Jul 2024 13:25:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=pp1; bh=ovus5UlPKAld5lkd56ks4IhzGK
+ wS8+lccnIO2dZgV+Y=; b=jTVRxKfI2chSQcsLbCd90do7uSWCnHLBQECCpxNY8Z
+ CezfHbLSWid5qP3sNWLzYtNzF7y6c8LkjoDQUXNI3tkIzA67OrQy1cKVx+dX68tG
+ oc5tKvhtlQ3ZILXgXvePa30EnADbTnPBK6NePxQo3BM3dse3mYERapfUlBc1cKnA
+ tlLn8Hs6r5cSFQScUH1QRY38xsD5Bari5xFO1YeXtA5XTmTzu5TjRT8WofYWXCr/
+ 9jpYtNcfzWlIpDnTyMu0FJcUElP71IwuUKmPrkRSrEY6Z8XBqNlWDRRcvbs/+rdp
+ 61v6uBnLtodzGe+++Dna590tpKF0OyVtX2dLPNyFVTgA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40qme20bbm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 31 Jul 2024 13:25:34 +0000 (GMT)
+Received: from m0353723.ppops.net (m0353723.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46VDPWlY022998;
+ Wed, 31 Jul 2024 13:25:32 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40qme20b80-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 31 Jul 2024 13:25:32 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46VBAcKo007470; Wed, 31 Jul 2024 13:22:44 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 40nb7ubwer-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 31 Jul 2024 13:22:44 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46VDMd0q50594150
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 31 Jul 2024 13:22:41 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 472452004B;
+ Wed, 31 Jul 2024 13:22:39 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1E3AD20043;
+ Wed, 31 Jul 2024 13:22:37 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.in.ibm.com (unknown
+ [9.109.199.72]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 31 Jul 2024 13:22:36 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
+Subject: [RFC PATCH] hw/ppc: Implement -dtb support for PowerNV
+Date: Wed, 31 Jul 2024 18:52:35 +0530
+Message-ID: <20240731132235.887918-1-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 31 Jul 2024 12:56:24 -0000
-From: =?utf-8?q?Micha=C5=82_Fita?= <2072564@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- status=Triaged; importance=Undecided; assignee=sergio.durigan@canonical.com; 
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: dimitry.unified-streaming.com michal.fita sergiodj
-X-Launchpad-Bug-Reporter: Dimitry Andric (dimitry.unified-streaming.com)
-X-Launchpad-Bug-Modifier: =?utf-8?q?Micha=C5=82_Fita_=28michal=2Efita=29?=
-References: <172053137048.3332067.13534832802726064667.malonedeb@juju-98d295-prod-launchpad-7>
-Message-Id: <172243058497.3038745.7611135827346947168.malone@juju-98d295-prod-launchpad-7>
-Subject: [Bug 2072564] Re: qemu-aarch64-static segfaults running ldconfig.real
- (amd64 host)
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="e3ace39cea497a5ecb83e8fb6dd8e7e169f02939";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: ea9a332e36b19be6d5ee0b2167258aebecd9299a
-Received-SPF: pass client-ip=185.125.188.251;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: X6_iEZ2rvcHQfJkDVF3mdy1cTOD3Iy1V
+X-Proofpoint-GUID: wDCMDeeTJKyPmUQHQsliAGuZJcFEbvLg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-31_08,2024-07-31_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ phishscore=0 suspectscore=0 adultscore=0 mlxlogscore=427 impostorscore=0
+ bulkscore=0 spamscore=0 mlxscore=0 malwarescore=0 lowpriorityscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407310098
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -86,92 +111,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2072564 <2072564@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm using quemu to tweak Armbian Jammy images for Raspberry Pi 5 (so it
-would have ldconfig from 22.04) and I have signal 11 when libc
-reconfiguration is triggered by apt.
+Currently any device tree passed with -dtb option in QEMU, was ignored
+by the PowerNV code.
 
-What you may find interesting running the same process of updates on the
-same base image on Ubuntu 22.04 (which has qemu 6.2) works fine.
+Read and pass the passed -dtb to the kernel, thus enabling easier
+debugging with custom DTBs.
 
-My googling around "libc signal 11 quemu" lead to a lot of people
-reporting problems with docker buildx with qemu predating 7.0. This
-smells kind of regression in 8.2 used in 24.04. Then the issue linked
-above says affected ldconfigs are 2.33 to 2.35...
+The existing behaviour when -dtb is 'not' passed, is preserved as-is.
 
-Does Ubuntu really need to wait for upstream to deal with this? It's a
-huge slap in the face for everyone on 24.04 needing to meddle 22.04
-ARM64 images.
+But when a '-dtb' is passed, it completely overrides any dtb nodes or
+changes QEMU might have done, such as '-append' arguments to the kernel
+(which are mentioned in /chosen/bootargs in the dtb), hence add warning
+when -dtb is being used
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2072564
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 
-Title:
-  qemu-aarch64-static segfaults running ldconfig.real (amd64 host)
+---
+This is an RFC patch, and hence might not be the final implementation,
+though this current one is a solution which works
+---
+---
+ hw/ppc/pnv.c | 29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
-Status in QEMU:
-  New
-Status in qemu package in Ubuntu:
-  Triaged
-
-Bug description:
-  This affects the qemu-user-static 1:8.2.2+ds-0ubuntu1 package on
-  Ubuntu 24.04, running on a amd64 host.
-
-  When running docker containers with Ubuntu 22.04 in them, emulating
-  arm64 with qemu-aarch64-static, invocations of ldconfig (actually
-  ldconfig.real) segfault. For example:
-
-  $ docker run -ti --platform linux/arm64/v8 ubuntu:22.04=20
-  root@8861ff640a1c:/# /sbin/ldconfig.real
-  Segmentation fault
-
-  If you copy the ldconfig.real binary to the host, and run it directly
-  via qemu-aarch64-static:
-
-  $ gdb --args qemu-aarch64-static ./ldconfig.real=20
-  GNU gdb (Ubuntu 15.0.50.20240403-0ubuntu1) 15.0.50.20240403-git
-  Copyright (C) 2024 Free Software Foundation, Inc.
-  License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.h=
-tml>
-  This is free software: you are free to change and redistribute it.
-  There is NO WARRANTY, to the extent permitted by law.
-  Type "show copying" and "show warranty" for details.
-  This GDB was configured as "x86_64-linux-gnu".
-  Type "show configuration" for configuration details.
-  For bug reporting instructions, please see:
-  <https://www.gnu.org/software/gdb/bugs/>.
-  Find the GDB manual and other documentation resources online at:
-      <http://www.gnu.org/software/gdb/documentation/>.
-
-  For help, type "help".
-  Type "apropos word" to search for commands related to "word"...
-  Reading symbols from qemu-aarch64-static...
-  Reading symbols from /home/dim/.cache/debuginfod_client/86579812b213be096=
-4189499f62f176bea817bf2/debuginfo...
-  (gdb) r
-  Starting program: /usr/bin/qemu-aarch64-static ./ldconfig.real
-  [Thread debugging using libthread_db enabled]
-  Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-  [New Thread 0x7ffff76006c0 (LWP 28378)]
-
-  Thread 1 "qemu-aarch64-st" received signal SIGSEGV, Segmentation fault.
-  0x00007fffe801645b in ?? ()
-  (gdb) disassemble=20
-  No function contains program counter for selected frame.
-
-  It looks like this is a known qemu regression after v8.1.1:
-  https://gitlab.com/qemu-project/qemu/-/issues/1913
-
-  Downgrading the package to qemu-user-
-  static_8.0.4+dfsg-1ubuntu3_amd64.deb fixes the segfault.
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2072564/+subscriptions
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 3526852685b4..12cc909b9e26 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -714,6 +714,8 @@ static void pnv_reset(MachineState *machine, ShutdownCause reason)
+     PnvMachineState *pnv = PNV_MACHINE(machine);
+     IPMIBmc *bmc;
+     void *fdt;
++    FILE *fdt_file;
++    uint32_t fdt_size;
+ 
+     qemu_devices_reset(reason);
+ 
+@@ -736,10 +738,31 @@ static void pnv_reset(MachineState *machine, ShutdownCause reason)
+         }
+     }
+ 
+-    fdt = pnv_dt_create(machine);
++    if (machine->dtb) {
++        warn_report("with manually passed dtb, some options like '-append'"
++                " might ignored and the dtb passed will be used as-is");
+ 
+-    /* Pack resulting tree */
+-    _FDT((fdt_pack(fdt)));
++        fdt = g_malloc0(FDT_MAX_SIZE);
++
++        /* read the file 'machine->dtb', and load it into 'fdt' buffer */
++        fdt_file = fopen(machine->dtb, "r");
++        if (fdt_file != NULL) {
++            fdt_size = fread(fdt, sizeof(char), FDT_MAX_SIZE, fdt_file);
++            if (ferror(fdt_file) != 0) {
++                error_report("Could not load dtb '%s'",
++                             machine->dtb);
++                exit(1);
++            }
++
++            /* mark end of the fdt buffer with '\0' */
++            ((char *)fdt)[fdt_size] = '\0';
++        }
++    } else {
++        fdt = pnv_dt_create(machine);
++
++        /* Pack resulting tree */
++        _FDT((fdt_pack(fdt)));
++    }
+ 
+     qemu_fdt_dumpdtb(fdt, fdt_totalsize(fdt));
+     cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
+-- 
+2.45.2
 
 
