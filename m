@@ -4,64 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91A3CC3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 05:22:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C8A0C3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 05:51:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ1mw-0002le-9Q; Wed, 31 Jul 2024 01:22:14 -0400
+	id 1sZ2Ef-0002xZ-LT; Wed, 31 Jul 2024 01:50:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sZ1mu-0002fm-CR; Wed, 31 Jul 2024 01:22:12 -0400
-Received: from sin.source.kernel.org ([145.40.73.55])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sZ2Ed-0002nE-2Y; Wed, 31 Jul 2024 01:50:51 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sZ1ms-0002iW-2n; Wed, 31 Jul 2024 01:22:12 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 4AB2ACE0D24;
- Wed, 31 Jul 2024 05:22:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97588C116B1;
- Wed, 31 Jul 2024 05:22:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1722403324;
- bh=PQ0rvOL0SCooKEPFtRsKNPBkA8CYab0m/+Eba8BWVaI=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=Om+CYcFTpahto5bnDPvArAw4xmXCYoIk4U1Jmtec425rHsnaWgMYvgD82MgSTYkDf
- BrdnFzxHEMxOl6pUQ9mfGh9jkvFMpovc5zPzZZ3dkqNrnfOcRdH2mwdo2h7LY8Vk6B
- D9hyiRBhVIIfPtwyrNW9QP013xQi5EGOi+uKFEul0ZFE1X3AxpbVYpz5yTgbU/ahkl
- LLF5JOd0uW8iUhcv5JndGTFXURAgj2gluqcpjTRWEMc6pWrjNoHuqKxxcklJ9CMWh/
- Uel4AmJaZ5nnarALxL+JBnfm1OBeKKvaxD0GsrG5wNkWyWXBCZBPT1EqAoOB2aTtMq
- +5GKjHwcQHELQ==
-Date: Wed, 31 Jul 2024 07:21:58 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Philippe
- =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
- <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Igor Mammedov
- <imammedo@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter
- Maydell <peter.maydell@linaro.org>, Shannon Zhao
- <shannon.zhaosl@gmail.com>, Yanan Wang <wangyanan55@huawei.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 2/6] arm/virt: Wire up GPIO error source for ACPI / GHES
-Message-ID: <20240731072158.3aaf85ac@foz.lan>
-In-Reply-To: <ZqigPgTl7quJ553J@intel.com>
-References: <cover.1722259246.git.mchehab+huawei@kernel.org>
- <e994c3944d31775d62bbd017dec3adff50ddf269.1722259246.git.mchehab+huawei@kernel.org>
- <ZqigPgTl7quJ553J@intel.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sZ2Eb-0007Na-Ee; Wed, 31 Jul 2024 01:50:50 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46V5KIWR007694;
+ Wed, 31 Jul 2024 05:50:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
+ NdE/Fyel2C7AFtVEeKtdExqkuy8FZQ5dd9vlztjZABc=; b=gCQoZ2tSDDPBUCCT
+ A+ejLfUQt5Vin6vkNAAo9Cm9K0iJsWWya9VkzhazvFv7rpJgMjpV45MpFhDpICVj
+ lyoD3zxObKg/WuONihTALo6yOYgTK/KCPRkIvyzwuTjSbBr/hhgHVeib3oajkkp1
+ TO8K5gjbbN00mXPKWwbyf0wrlbcGhff/UAhT7Y+6gmWEbz0Kyapgq/tvyfm1hgpu
+ tV1e64p4yptYI9fgeS+HYe+600QtfXz+WDYgQjlbyYL3ExzjUZgkBupcug1oD1LL
+ Kgfbq87jrnncpGMoOxJOeR6Px5JUz2w9KV6hlUWX7jrSUKt2Rtw475ByMQ5whaGA
+ l9aiTg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40qcgvgbbr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 31 Jul 2024 05:50:39 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46V5od9L026425;
+ Wed, 31 Jul 2024 05:50:39 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40qcgvgbbj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 31 Jul 2024 05:50:38 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 46V5dIEi018811; Wed, 31 Jul 2024 05:50:37 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40nc7psmrf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 31 Jul 2024 05:50:37 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 46V5oVi453608924
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 31 Jul 2024 05:50:33 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D0B882004B;
+ Wed, 31 Jul 2024 05:50:31 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 14A5D20040;
+ Wed, 31 Jul 2024 05:50:30 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.in.ibm.com (unknown
+ [9.109.199.72]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 31 Jul 2024 05:50:29 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>
+Subject: [PATCH v6 RESEND 3/5] target/ppc: Fix regression due to Power10 and
+ Power11 having same PCR
+Date: Wed, 31 Jul 2024 11:20:20 +0530
+Message-ID: <20240731055022.696051-4-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240731055022.696051-1-adityag@linux.ibm.com>
+References: <20240731055022.696051-1-adityag@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=145.40.73.55;
- envelope-from=mchehab+huawei@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 1undvf2mfXac0xn0IF91kFSN7ImfIiS-
+X-Proofpoint-GUID: p30L59jvZik3sFtGckDO9bm-pWPxCVbp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-31_02,2024-07-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0
+ mlxlogscore=909 clxscore=1015 phishscore=0 mlxscore=0 priorityscore=1501
+ bulkscore=0 adultscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2407310039
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,95 +119,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Tue, 30 Jul 2024 16:11:42 +0800
-Zhao Liu <zhao1.liu@intel.com> escreveu:
+Power11 has the same PCR (Processor Compatibility Register) value, as
+Power10.
 
-> Hi Mauro,
->=20
-> On Mon, Jul 29, 2024 at 03:21:06PM +0200, Mauro Carvalho Chehab wrote:
-> > Date: Mon, 29 Jul 2024 15:21:06 +0200
-> > From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > Subject: [PATCH v4 2/6] arm/virt: Wire up GPIO error source for ACPI / =
-GHES
-> > X-Mailer: git-send-email 2.45.2
-> >=20
-> > From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> >=20
-> > Creates a Generic Event Device (GED) as specified at
-> > ACPI 6.5 specification at 18.3.2.7.2:
-> > https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#event=
--notification-for-generic-error-sources
-> > with HID PNP0C33.
-> >=20
-> > The PNP0C33 device is used to report hardware errors to
-> > the bios via ACPI APEI Generic Hardware Error Source (GHES).
-> >=20
-> > It is aligned with Linux Kernel patch:
-> > https://lore.kernel.org/lkml/1272350481-27951-8-git-send-email-ying.hua=
-ng@intel.com/
-> >=20
-> > [mchehab: use a define for the generic event pin number and do some cle=
-anups]
-> > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > ---
-> >  hw/arm/virt-acpi-build.c | 30 ++++++++++++++++++++++++++----
-> >  hw/arm/virt.c            | 14 ++++++++++++--
-> >  include/hw/arm/virt.h    |  1 +
-> >  include/hw/boards.h      |  1 +
-> >  4 files changed, 40 insertions(+), 6 deletions(-) =20
->=20
-> [snip]
->=20
-> > +static void virt_set_error(void)
-> > +{
-> > +    qemu_set_irq(qdev_get_gpio_in(gpio_error_dev, 0), 1);
-> > +}
-> > + =20
->=20
-> [snip]
->=20
-> > +    mc->generic_error_device_notify =3D virt_set_error; =20
->=20
-> [snip]
->=20
-> > diff --git a/include/hw/boards.h b/include/hw/boards.h
-> > index 48ff6d8b93f7..991f99138e57 100644
-> > --- a/include/hw/boards.h
-> > +++ b/include/hw/boards.h
-> > @@ -308,6 +308,7 @@ struct MachineClass {
-> >      int64_t (*get_default_cpu_node_id)(const MachineState *ms, int idx=
-);
-> >      ram_addr_t (*fixup_ram_size)(ram_addr_t size);
-> >      uint64_t smbios_memory_device_size;
-> > +    void (*generic_error_device_notify)(void); =20
->=20
-> The name looks inconsistent with the style of other MachineClass virtual
-> methods. What about the name like "notify_xxx"? And pls add the comment
-> about this new method.
->=20
-> BTW, I found this method is called in generic_error_device_notify() of
-> Patch 6. And the mc->generic_error_device_notify() - as the virtual
-> metchod of MachineClass looks just to implement a hook, and it doesn't
-> seem to have anything to do with MachineClass/MachineState, so my
-> question is why do we need to add this method to MachineClass?
->=20
-> Could we maintain a notifier list in ghes.c and expose an interface
-> to allow arm code register a notifier? This eliminates the need to add
-> the =E2=80=9Cnotify=E2=80=9D method to MachineClass.
+Due to this, QEMU considers Power11 as a valid compat-mode for Power10,
+ie. earlier it was possible to run QEMU with '-M pseries,max-compat-mode=power11 --cpu power10'
 
-Makes sense. I'll change the logic to use this notifier list code inside
-ghes.c, and drop generic_error_device_notify():
+Same PCR also introduced a regression where `-M pseries --cpu power10`
+boots as Power11 (ie. logical PVR is of Power11, even though PVR is Power10).
+The regression was due to 'do_client_architecture_support' checking for
+valid compat modes and finding Power11 to be a valid compat mode for
+Power10 (it happens even without passing 'max-compat-mode' explicitly).
 
-	NotifierList generic_error_notifiers =3D
-	    NOTIFIER_LIST_INITIALIZER(error_device_notifiers);
+Fix compat-mode issue and regression, by ensuring a future Power
+processor (with a higher logical_pvr value, eg. P11) cannot be valid
+compat-mode for an older Power processor (eg. P10)
 
-	/* Notify BIOS about an error via Generic Error Device - GED */
-	static void generic_error_device_notify(void)
-	{
-	    notifier_list_notify(&generic_error_notifiers, NULL);
-	}
+Cc: Cédric Le Goater <clg@kaod.org>
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+---
+ target/ppc/compat.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Regards,
-Mauro
+diff --git a/target/ppc/compat.c b/target/ppc/compat.c
+index ebef2cccecf3..5b20fd7ef04c 100644
+--- a/target/ppc/compat.c
++++ b/target/ppc/compat.c
+@@ -132,6 +132,10 @@ static bool pcc_compat(PowerPCCPUClass *pcc, uint32_t compat_pvr,
+         /* Outside specified range */
+         return false;
+     }
++    if (compat->pvr > pcc->spapr_logical_pvr) {
++        /* Older CPU cannot support a newer processor's compat mode */
++        return false;
++    }
+     if (!(pcc->pcr_supported & compat->pcr_level)) {
+         /* Not supported by this CPU */
+         return false;
+-- 
+2.45.2
+
 
