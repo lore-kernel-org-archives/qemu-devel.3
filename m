@@ -4,168 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E90FBC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 08:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17155C3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 08:58:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ52P-0002vG-Ms; Wed, 31 Jul 2024 04:50:25 -0400
+	id 1sZ59O-0003ER-J4; Wed, 31 Jul 2024 04:57:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1sZ52N-0002l6-Cm
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 04:50:23 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sZ59K-0003DF-A8; Wed, 31 Jul 2024 04:57:35 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1sZ52L-0004ym-18
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 04:50:23 -0400
-Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46UMs7UF026227;
- Wed, 31 Jul 2024 01:49:43 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=proofpoint20171006; bh=97433eYgz+gbNTe
- B8yVjIw2nay9XIP8r1mvMkZQh0uk=; b=DOiXOSTeNAHc+lAShOAJVIPG7KW+MYy
- vNyiIBJDsNArnO1jPK+MsA3oGqHsNYAxsUfBUi5jpzolaEytVZIXWnytCxHg+1fF
- CVQhONKciTJBsdHvoFFTH2tMu9ouEEwTtLcfwPRRjtQYNm906X3RGu3IVwiOzSpu
- 1JF1Dn88juPCLcnBojSi93umfEXD0oDijfdLCVLlU1AavN9Bs5S4CUSZ/HPjQHGj
- i3hkRVgsgN+Bp4wezSQBkl4PwE7JCAJJ3E/0srYAQxGD0OTkLpEFB2ojVCw7cHIA
- yHzKwa/Byxlsrvwi+s2hEywa+DvcNPNpVYwanmL4l5dOXca7lXPQ80Q==
-Received: from nam04-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam04lp2173.outbound.protection.outlook.com [104.47.73.173])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 40q9cg12wv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 31 Jul 2024 01:49:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kM+/0Mr6sP2ITKZ6RuWfbX191mzNQUZxNFeWIInR+HqY+Yvd/AptdVHrO7RUvO9xBuLB1HDzlYUzqXy5g9M/b089gYjwxeUij2VwJ/BFa+8QSSY4NVNzxDc77qLmYNu4mYhRdR7zR/Dxi+H7rBoXO7xxnF2JeFy0qBJhSkXfHgIAgECPNuRMt9mkKrgtFboR27gEnObYkcV1qnRSxobGb5cWaCPOs/xga9fu1ToZBrik0yUxW7i1KkRVDofIiJ08+kD0/3+McWEe8qLXY6ykgxUtnIej8ngt+n/4rXtuoozrvMDjNPjiu8WSeNzm4VZeNGIa6S5LyBLClzU7KdAOUg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=97433eYgz+gbNTeB8yVjIw2nay9XIP8r1mvMkZQh0uk=;
- b=fLeLBVLmvAWrdcytEz5ceLCixhK3FCbJDDhlv40C9MOPuoHnS13Z4dTDVfzHKOS30EP/fuKuQ+vIznYMxsdtfFSUcoaUP12Zwj/6G7ztqMAKEo07QAOswP7OV6/W40n3WREiO0gkpjVWzUSMyrNmquDaA6W9UJfMd+xshxKyZcE8xFjyu5UpYnhtLBC2BhP92VncovtFk+FYg3NIlwKITp/zS+YLgABKXwoIp62vRDUhdj1gKHOX++PnICoeHT7VqbvjUFDAu1Xsr/X8mvJ8eJDngFxluWY1jhdSfW5HmvYitklJTjGo1UF7+0dMCc5plCcECf+nb7tKF4CTF7p5fg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=97433eYgz+gbNTeB8yVjIw2nay9XIP8r1mvMkZQh0uk=;
- b=DdUvmsaCv0hNEP8g9XssxtohPhMoFKKUtIUO4uHJGYQmmIkSgbLx/+gUVLMoxp3uVguYrRbgSs5OVvzqmxPsJKJR5RewxBLwlbWE2g/VwFIOwnR/6O7Pkcj3MifbpRf291zuT5b/BL4NRlMJqZFFWWgxmgPo3XX/0R7ndDKa5JSp5DTV3qinWdAWbcyN54jNY2PW/yA+mNtDiE5//DAVf2J/zlzRrb9jk59MqmDKoSZtLp0jlT49eBRg1OtukjO87MAfbxHHEm3jnO+SapyNjq9FW/5qHU9kXrjYynHGh/K2RlLOihi+a95UexuHD+ZO9zGTftZ1s9z0yY9W1OQ+Bg==
-Received: from BY5PR02MB6753.namprd02.prod.outlook.com (2603:10b6:a03:209::17)
- by MW4PR02MB7250.namprd02.prod.outlook.com (2603:10b6:303:71::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.19; Wed, 31 Jul
- 2024 08:49:40 +0000
-Received: from BY5PR02MB6753.namprd02.prod.outlook.com
- ([fe80::94a9:746a:7967:ba88]) by BY5PR02MB6753.namprd02.prod.outlook.com
- ([fe80::94a9:746a:7967:ba88%7]) with mapi id 15.20.7828.016; Wed, 31 Jul 2024
- 08:49:40 +0000
-Date: Wed, 31 Jul 2024 09:49:28 +0100
-From: John Levon <john.levon@nutanix.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Manish <manish.mishra@nutanix.com>, Igor Mammedov <imammedo@redhat.com>,
- qemu-devel@nongnu.org, berrange@redhat.com, zhao1.liu@intel.com,
- pbonzini@redhat.com, bob.ball@nutanix.com, prerna.saxena@nutanix.com
-Subject: Re: [PATCH v1] target/i386: Always set leaf 0x1f
-Message-ID: <Zqn6mNuCH4/HJoO/@lent>
-References: <20240724075226.212882-1-manish.mishra@nutanix.com>
- <20240724110004.389c1a0c@imammedo.users.ipa.redhat.com>
- <21ca5c19-677b-4fac-84d4-72413577f260@nutanix.com>
- <6e65dbb2-461e-44f4-842c-249c7b333885@intel.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <6e65dbb2-461e-44f4-842c-249c7b333885@intel.com>
-X-Url: http://www.movementarian.org/
-X-ClientProxiedBy: AM0PR02CA0135.eurprd02.prod.outlook.com
- (2603:10a6:20b:28c::32) To BY5PR02MB6753.namprd02.prod.outlook.com
- (2603:10b6:a03:209::17)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sZ59H-0006FS-6w; Wed, 31 Jul 2024 04:57:33 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WYmBG5cv2z6K9Dq;
+ Wed, 31 Jul 2024 16:54:46 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 16F911408F9;
+ Wed, 31 Jul 2024 16:57:21 +0800 (CST)
+Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 31 Jul
+ 2024 09:57:20 +0100
+Date: Wed, 31 Jul 2024 09:57:19 +0100
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+CC: Igor Mammedov <imammedo@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>, Eric Blake <eblake@redhat.com>, Markus
+ Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ <linux-kernel@vger.kernel.org>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v3 4/7] acpi/ghes: Add a logic to handle block addresses
+ and FW first ARM processor error injection
+Message-ID: <20240731095719.000004dc@Huawei.com>
+In-Reply-To: <20240731091133.07ddd58c@foz.lan>
+References: <cover.1721630625.git.mchehab+huawei@kernel.org>
+ <6a3542a7d8acfbf88c906ec6f6dc5a697257b461.1721630625.git.mchehab+huawei@kernel.org>
+ <20240730131709.10e72c7d@imammedo.users.ipa.redhat.com>
+ <20240731091133.07ddd58c@foz.lan>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY5PR02MB6753:EE_|MW4PR02MB7250:EE_
-X-MS-Office365-Filtering-Correlation-Id: abbdc5a4-e290-4513-86db-08dcb13db6a1
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?zm5arWlUhWaood5b2ADrst4d5VSVnvVNtOWXJ1rmzyWVyz/mOLDfkL1/eZ5M?=
- =?us-ascii?Q?vFojD9DjKPUfJvEsTIq4t+RPEZ9q0atetX3MBwkk4PqcOSW8JTdRQ9VotC5q?=
- =?us-ascii?Q?xE4ZvoQZtT5uXLudfwxh2IEAPHO9GhLJSgsPz8XbOS7gsaSiekmG+SXUQxiw?=
- =?us-ascii?Q?9870YYKZAhk7AoYAs3CLNTCYwRC8ZZ1ofpeSnpFpOJeToMXhqy43bqbOrxkE?=
- =?us-ascii?Q?vJogqHMt1dpG9AM12+nYg/+5Fmy7Q154m6KhmYEfd0DaVW2HimQsfJ/eAmDm?=
- =?us-ascii?Q?pE5U/b9XZvoOr62VX8aqvqmGCMR0boqIJqtp/1FiGH8w4gW3zIImdxkp2a3D?=
- =?us-ascii?Q?wM/vESe0xd/AKouKPr8LAug8Q/0P+zaT60YndsVERmTh22tChcvzGBpZ54Qo?=
- =?us-ascii?Q?ytFjnJkHfqZPVB0KskdI1yBj+mUcwYyKkhlzhXctEffRTdBX34tqw8hJGeNC?=
- =?us-ascii?Q?4yZegYdLzfg52TL1341sErawbFutlPbw632FtwG1lN+aga/7fgauAbHjRML7?=
- =?us-ascii?Q?aC9eGWR9C3Zpl1hbuBa6dYs1hWLdaMplH6InEU3/JvTKtcMWsJqVVMGd9TDy?=
- =?us-ascii?Q?3fQminwIxN4lsORtjAT9Q1lV9faT3K9CZTEpjOAinHzZBegsEf+3Fx+KNegC?=
- =?us-ascii?Q?PjrVjoLWjg9UwL2pz/d7G98sQYrNei7ZhKDMprtpzUhkPTCCgFqA9f/OPa1I?=
- =?us-ascii?Q?lh8tu+StM14RPLZHN9ZxMOXD1U3lJFqS4oEw/qn6OL3EJ+BiV7WKbA1Xk0Mc?=
- =?us-ascii?Q?USFR6HFyjnsHmrScVzQiurDPYTYLbjNq4nZGOwfy3rQ47BviL0CP7zCga2Ci?=
- =?us-ascii?Q?TLAcSz2zMEKw0GCZZpJ+zHeJKAW4vtviGdDusfHzrRNxjkmQ6DmPgR1L3ElM?=
- =?us-ascii?Q?QtP1VMlO8nfXJob6yqN3mvkIL01CejCzCndC/LfOXNXLQcfk+r8OQ2SnqpXa?=
- =?us-ascii?Q?B2g9hgNb1nNSJgG4FFJBdpO6OAg/S+oo53m0NQgWFRXr3twKPGPdJFhlL3Qw?=
- =?us-ascii?Q?yV5wO0QEmuy3Ds2274LNDL9jx2ueMdP4oP/vG2IFgXRbAOuBpEYhqIrld7mg?=
- =?us-ascii?Q?SLPbKoRdAlgq2gNxUFsBvvTnxZ7HcftB2EKuS8w8LNfRFRURzcgicLiAnMOr?=
- =?us-ascii?Q?XyMQvg2Alv0kNSR0YACR+qzWccdxp7Tqnl5m7U4S/CO8UHxBvFw82O9dhjnT?=
- =?us-ascii?Q?2eN7bex2Vsit2TbP1fNQhdCia9SOEXR4/h0raVH/ySCvD23zV3E61euCoeoC?=
- =?us-ascii?Q?fS2GXKX8gCimMqz3usmxnyp104ktyO2kg5x15z/O7QfGNLRKhYAlzwsXVUH+?=
- =?us-ascii?Q?XrBrpiU5T7qLhpRPxD3mF2sXO4GBQR9nkT845y/6UupJ/w=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BY5PR02MB6753.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?JTRwQytlCetct/LkOcC9AsyGmHovL3/kS6y183o/lD5esqOQCs+Wev7JeNoA?=
- =?us-ascii?Q?NnptCFMPmrh0cVw8pCbebvhfoDdVplSYJcsFRDN2zQAIIozqZkQiSQ1z1n/g?=
- =?us-ascii?Q?opl9RxXCJh6lAFzuRy0Uzg7Iyc0Q5e8VpgpH/eomyTPlWw7o1GEWW8IgkYR6?=
- =?us-ascii?Q?p1ZlxeZScFna3XwK5Mrmi8XklrFgFLg7uw0xJF2kH6tDzDFKTCUKiE4bPy5w?=
- =?us-ascii?Q?2nOGWWvOWKyabJL7WiHp71/DKrAaP19KEAMdf5WY1oQ7Ik6/zpACTvFNgKwh?=
- =?us-ascii?Q?ncdqiUbexfgkVPzh8GcFhp9OeYIhlpzd85pkQjusLKCWqtrvev2qbJgWNEKM?=
- =?us-ascii?Q?zRJx0oSC+iOVf5SllBFVMtUPLKDYy24ymjOPdh8wJyf3xY+G3Cu7xoR4ZDfl?=
- =?us-ascii?Q?I0dkoKnA0RCgW+9RIDXwgiLnoWpPt2MoHVPWROWkd/9j75EeQBHCf/QPtucQ?=
- =?us-ascii?Q?lQBHxl/KwoXXzp1TkODVGRjBGunEzR+DPF6hWnrvbmiVwCBRztVFTVPlv/kt?=
- =?us-ascii?Q?TLQVUYRKJKcBg1AKmLSX3goQwt9sIbc5kY4HmSonDkFEgSxcwtZKyVkVgTMZ?=
- =?us-ascii?Q?VwPG6xjHY21XC6WyA1imvzitiF5YPJETlhY0eK6HBuaufqXezO6bcMhsK0KN?=
- =?us-ascii?Q?U+hxqlGmjSrK8SYRm/iXbKA22fgsCaKumPvfz2nkn5qQYclq8ofnRU18OCzS?=
- =?us-ascii?Q?yt9DEbkWR2PwtjX2gGkVCuy4fZVHCn4O/dHC9CdlThPWUYW6aPdVwrIbWjFR?=
- =?us-ascii?Q?vZRr1uJXlwMYjWVqXLs4T/jOqDZozy+qiSUxwOnkp1KEneIhtTyTe6S1UlxZ?=
- =?us-ascii?Q?AE1DU8ClOUE4ojn2meL/MWgx7CnJmf2FxmmYRLgUSPJg5kVJl4H/HOaxqZYW?=
- =?us-ascii?Q?beSfzm7d41iYRK50wnj3dDRFMm4APboC2ORP4aXAYqxNima5jkKwrBBX/i2I?=
- =?us-ascii?Q?EMoYFLU7b1g+4xMAB4yY4GUrQWvXDMEoGA6zgVNZh4QKzJkVe7GHUIydd1jL?=
- =?us-ascii?Q?2kn4/2Bo+5eyJQDKOFRV4oValcYXiV/63NmS/IKzJ+dqn3CsgKmYKl7ilIzc?=
- =?us-ascii?Q?njuq7hj2kkLnNoVJptH6sJGHUCBevJnClJEWxsLoRbNrfIDAvv9vR4FWM+8m?=
- =?us-ascii?Q?G2m1smjNXv45ftBGgLNWWDXimm2Zu+nvpjPOxWbt0BRKIDVuylcDXZ/sbtGZ?=
- =?us-ascii?Q?+K1THon0Iu4iSpeWaEvsZAF/ek1i4gyWHs+bXoyxwt9kIZiluIEpo2sldqnn?=
- =?us-ascii?Q?VyJj0YBgeL1ELKFQNR6z0WVusHudGpo3u3L/zzdUiwszX+Jhq4hl280kqvg7?=
- =?us-ascii?Q?7lZrtjNFAL5vjHkZkOBvXgI2RVj/I6m08SVH17mikI3CSiMStzCzvsX+Z5mP?=
- =?us-ascii?Q?wHijfSGNAz+KAJYbMcSlYRtIizjinN3C0PV5lRNam2bgW6kFen9MnBKtbc3C?=
- =?us-ascii?Q?OkLuF7xNQVHuC/aReWy1tlJ9EhbCEvam2C6iS5xqAU2DkzCQXal8pVvTakLs?=
- =?us-ascii?Q?vZBwfruLsDCCnFet6g60I3I6NDBbDy0DJlwKPmSXt+72+BUTMVIfqD/gAgyB?=
- =?us-ascii?Q?osKZitQeB2pMZ9pho+k5RqQ+aKiTJXY5B2epdLTX?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: abbdc5a4-e290-4513-86db-08dcb13db6a1
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR02MB6753.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jul 2024 08:49:40.1144 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: hYtKO4qi5R5QB2lXOR6DeNP8fdHP8+AwalupZyV6YEkrJbXxbGDFpJi/iyWaSz3yB0uEVGj4z1/LCiLHYA1PKQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR02MB7250
-X-Proofpoint-GUID: uOt6e5XoLTvL9EOOdgnz76rzKahlhHNR
-X-Proofpoint-ORIG-GUID: uOt6e5XoLTvL9EOOdgnz76rzKahlhHNR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-31_06,2024-07-30_01,2024-05-17_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,20 +73,186 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 31, 2024 at 03:02:15PM +0800, Xiaoyao Li wrote:
+On Wed, 31 Jul 2024 09:11:33 +0200
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> > Windows does not expect 0x1f to be present for any CPU model. But if it
-> > is exposed to the guest, it expects non-zero values.
+> Em Tue, 30 Jul 2024 13:17:09 +0200
+> Igor Mammedov <imammedo@redhat.com> escreveu:
 > 
-> Please fix Windows!
+> > On Mon, 22 Jul 2024 08:45:56 +0200
+> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> > 
+> > that's quite a bit of code that in 99% won't ever be used
+> > (assuming error injection testing scenario),
+> > not to mention it's a hw depended one and governed by different specs.
+> >
+> > Essentially we would need to create _whole_ lot of QAPI
+> > commands to cover possible errors for no benefit to QEMU.
 
-A ticket has been filed with MSFT, we are aware this is a guest bug.
+Fair point.  A 'few' error types might be helpful to general
+users like the original memory error injection this is built
+on which is reduce blast radius of a real error (and used in
+production VMM cases), but most are about testing the rest
+of the stack, not really QEMU.
 
-But that doesn't really help anybody trying to use Windows right now.
+So it's very helpful for a smallish group of users.
 
-regards
-john
+> > 
+> > Let take for example very simple _OST status reporting,
+> > QEMU of cause can decode values and present it to users in
+> > more 'presentable' form. However instead of translating
+> > numbers (aka. spec language) into a made up QEMU language,
+> > QEMU just passes values up the stack and users can use
+> > well defined spec to interpret its meaning.
+> > 
+> > benefits are: QEMU doesn't have to maintain translation
+> > code and QAPI ABI is limited to passing raw values.
+> > 
+> > Can we do similar thing here as well?
+> > i.e. simplify error injection commands to
+> > a command that takes raw value and passes it
+> > to guest (QEMU here acts as proxy, if I'm not
+> > mistaken)?
+> > 
+> > Preferably make it generic enough to handle
+> > not only ARM but other error formats HEST is
+> > able to handle.  
+> 
+> A too generic interface doesn't sound feasible to me, as the
+> EINJ code needs to check QEMU implementation details before
+> doing the error inject.
+
+To be clear we are talking here about a script that
+generates 'similar' stuff to ACPI EINJ does and injects
+via qapi, not guest injection (which is almost always locked
+down on production machines / distros because of the footgun
+aspect).  + ACPI EINJ interface suffers exactly the same
+problems with state discoverability we have with a raw interface here.
+(I checked with Mauro offline that I'd interpreted this
+comment correctly!)
+
+> 
+> See, processor is probably the simplest error injection
+> source, as most of the fields there aren't related to how
+> the hardware simulation is done.
+> 
+> Yet, if you see patch 7 of this series, you'll notice that some
+> fields should actually be filled based on the emulation.
+> 
+> On ARM, we have some IDs that depend on the emulation
+> (MIDR, MPIDR, power state). Doing that on userspace may require
+> a QAPI to query them.
+
+We could strip back the QAPI part to only the bits that are
+not dependent on state.  However, the kicker to that is we'd
+need to make sure all that state is available to an external
+tool (or fully controllable from initial launch command line).
+I'm not sure where the gaps are but, I'm fairly sure there
+will be some.  Doesn't save much code other than documentation
+of the QAPI.
+
+> 
+> The memory layout, however, is the most complex one. Even for
+> an ARM processor CPER (which is the simplest scenario), the 
+> physical/virtual address need to be checked against the emulation
+> environment.
+> 
+> Other error sources (like memory errors, CXL, etc) will require
+> a deep knowledge about how QEMU mapped such devices.
+
+For CXL stuff we'll piggy back on native error injection interfaces
+that are already there and couldn't be avoided because they
+are writing a bunch of register state (that we elide in the FW
+first path). 
+https://lore.kernel.org/qemu-devel/20240205141940.31111-12-Jonathan.Cameron@huawei.com/
+So we won't be adding new QAPI, but the error record generation logic
+will be in QEMU.  For background, the CXL FW first error injection
+has taken a back seat to the ARM errors because of the obvious
+other factor that CXL isn't supported on ARM in upstream QEMU.
+Once I escape a few near term deadlines I'll add the x86
+support for GHESv2 / SCI interrupt signaling as you'd see on a
+typical x86 server.
+
+> 
+> So, in practice, if we move this to an EINJ script, we'll need
+> to add a probably more complex QAPI to allow querying the memory
+> layout and other device and CPU specific bindings.
+> 
+> Also, we don't know what newer versions of ACPI spec will reserve
+> us. See, even the HEST table contents is dependent of the HEST 
+> revision number, as made clear at the ACPI 6.5 notes:
+> 
+> 	https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#acpi-error-source
+> 
+> and at:
+> 
+> 	https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#error-source-structure-header-type-12-onward
+> 
+> So, if we're willing to add support for a more generic "raw data"
+> QAPI, I would still do it per-type, and for the fields that won't
+> require knowledge of the device-emulation details.
+
+Could blend the two options and provide no qapi for the bits
+that are QEMU state dependent - if fuzzing, can inject
+the full record raw as doesn't have to be valid state anyway.
+
+> 
+> Btw, my proposal on patch 7 of this series is to have raw data
+> for:
+> 	- the error-info field;
+> 	- registers dump;
+> 	- micro-architecture specific data.
+> 
+> I don't mind trying to have more raw data there as I see (marginal) 
+> benefits of allowing to generate CPER invalid records [1], but some of
+> those  fields need to be validated and/or filled internally at QEMU - if
+> not forced to an specific value by the caller.
+> 
+> [1] a raw data EINJ can be useful for fuzzy logic fault detection to 
+>     check if badly formed packages won't cause a Kernel panic or be
+>     an exploit. Yet, not really a concern for APEI, as if the hardware
+>     is faulty, a Kernel panic is not out of the table. Also, if the
+>     the BIOS is already compromised and has malicious code on it, 
+>     the EINJ interface is not the main concern.
+> 
+> > PS:
+> > For user convenience, QEMU can carry a script that
+> > could help generate this raw value in user friendly way
+> > but at the same time it won't put maintenance
+> > burden on QEMU itself.  
+> 
+> The script will still require reviews, and the same code will 
+> be there. So, from maintenance burden, there won't be much
+> difference.
+
+Agreed. I'd also be very keen that the script is tightly coupled to
+QEMU as doesn't make sense to carry with kernel or RAS daemon and
+I'd want to ultimately get this stuff into all the appropriate
+CI flows.
+
+> 
+> Btw, I'm actually using myself a script to test it, currently
+> sitting together with rasdaemon - which is the Linux tool to detect
+> and handle hardware errors:
+> 
+> 	https://github.com/mchehab/rasdaemon/blob/master/contrib/qemu_einj.py
+> 
+> as it helps a lot when trying to simulate more complex errors.
+> 
+> Once QEMU gains support to inject processor errors, I can prepare a 
+> separate patch to move it to QEMU.
+> 
+> Thanks,
+> Mauro
+
+So tricky questions. I'm not sure which way is the least painful!
+
+Jonathan
+
+
 
