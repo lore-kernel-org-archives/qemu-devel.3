@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CABCC3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 22:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 747C0C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 22:44:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZHa9-0000t8-KV; Wed, 31 Jul 2024 18:14:05 -0400
+	id 1sZI2O-0000vM-HF; Wed, 31 Jul 2024 18:43:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZHa8-0000ms-2B
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 18:14:04 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1sZI2M-0000tT-5I
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 18:43:14 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZHa5-0007Gd-CG
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 18:14:03 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-70d1a74a43bso4542444b3a.1
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 15:14:00 -0700 (PDT)
+ id 1sZI2K-0001se-HK
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 18:43:13 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-7a92098ec97so4259859a12.2
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 15:43:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722464040; x=1723068840; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722465791; x=1723070591; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CE9fgF37GFZ/WnLbL0ZHd+GKYNoLQ9YgzLgWzB6XYlk=;
- b=ikQRtG/hW8AbrMVAg5hTVCAZYXaYCZpGT14Q3+dPNCDrOL/eZxTLUPa9mZkLEIu0k0
- M7/tfxieAkeiuTFKRfHUbjnbGlKNL1D3Key5R1a4gkrTG0pAJ+fkGnP4A5s+e6xBrnEi
- Eu2s6ZLBTZfaBb12MBkxDE5MxiN0jxuoUuY1Ig3LwdhAt+zVDj49UPIYi7gRKBclHQYH
- nQ64y/05w3MKX/IPNVfU5xrsdJoLhBVAsCjd4q2QhvMsl2pgJlM6pxIycj7h3DGYwXwB
- 6YCPqMIn9BWz8QSyRh+/KkOL/SmCMyF6ChCouEervNB1INCg/fSU1c/nIuCFNFX6FrA8
- 13QQ==
+ bh=8D6L6mlJmw04kaqjni1MaM8sLHZt7aAWE1fCvEn+rN8=;
+ b=Eec9nrvp+utPen/ZMeH+7DzwLyk70ByZE69yaUqB8MNq/72gTsw4tC22iaSWIpM/79
+ 2QoWdpWT/4WdWtyWh/RTgDTLpACtfzp4SFqJ7dbqIr+W5EffeIHnIz6gcL0N9KeYYxag
+ mJNO8pUFIvn50+76yUsAI9pt2oJye4RpqW1XyUBO4dQnvbF374WQkZYaOOOjMJNH5mys
+ O+sc0RY2o98MC5BsHzkaqF686AFh5OASYG//AHAvaIzXZouUykf/K6ZrQY/37qOv2N/V
+ lrykZ1iNflliMJZRAkkpK3Yq/OY/JSII7vvbEGU9780eU1qSo9IboF7+o2w5302w2d6q
+ BwaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722464040; x=1723068840;
+ d=1e100.net; s=20230601; t=1722465791; x=1723070591;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CE9fgF37GFZ/WnLbL0ZHd+GKYNoLQ9YgzLgWzB6XYlk=;
- b=a3rL0rGN7TVMfKdDCDMfHx4fgP04BicvwpcrZBDrwYjG2vmHLdST/K+DWbEZNTz+Cs
- T2O8ZZqHWD+K2XsYUSHE2Q8a83K0hTPdXAD8BGK5gypgrBB/08wGoRUSOufch3zjmxPP
- MTma7tOReJQLMX/5dv08JIVY0t4kg6Qqx0VVW/SyYNyM4ADSNUTlaGg8x49Zw726atIX
- ZcQrOOZ3p6eTmUgkD1QyYx41VOnvllnjo1etPihnpUUZFYajwKbHBhDfyV3wVOazOqkW
- UPEA5MvqNWvd9nvPa10JEHlPYeFtIp1BirxxBysMO9QZH5Pgung+zBHxevRE3yHFxxbD
- wNdw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUiUpnD+Q+zrFPwfKr0HUuJssojDSZC7KFSypmT5Zx32BxMYkYhgP9NBGUl6xl11KNqyFhElX9qF0HO1ooId4ZMJJOPxO8=
-X-Gm-Message-State: AOJu0YzXCH5TZBhlmbdh82CFrnTj5agcHG2J1FkNZqbXZ1r2cA9UPQSo
- BQ6C4a5jAInTnsVZBh3fIdxw7s98dWmAlOl11xfg4N7Juh2CzhokZMK+/7GCiR4=
-X-Google-Smtp-Source: AGHT+IFcgcVmNm6hbEuNls3IoMOzwJgWgY8zx8Hi8EvycK5xyIBBNIvijJex1bXeDexhtd+nrwAcqw==
-X-Received: by 2002:a05:6a00:188d:b0:70d:311b:8569 with SMTP id
- d2e1a72fcca58-7105d7da884mr808920b3a.26.1722464039630; 
- Wed, 31 Jul 2024 15:13:59 -0700 (PDT)
+ bh=8D6L6mlJmw04kaqjni1MaM8sLHZt7aAWE1fCvEn+rN8=;
+ b=eKza0mL1lNffFPXOAfisA2XN89HxvC8hawyDfgn1MsfLedwMrzrO5WhOqKxRQDgk4+
+ pdnEoPxcAYlFgu6nupyvJJTp1m8JJxuUNmWrTv92NHU2Uzu6PTcyezV/AaHaZFCMrgUh
+ pdrsnqbvJTBAY6OGjXlTzrm490Qcb/ndLQYtcTlyJGtM46SE5OCHnskPdO3tz/SPMkMK
+ /KNrk5A+GkkiSbMWfpCPg+79TC089Z/te6Gt/oA3IH7uv7oU/376vEwe0qNh2+VQQQ/P
+ SrtvO04j1afA7AJzm3VU1eNX8H5TNiJs1Vh5oCBzKlPePYnHVzdOcnRrFFwUSWlYz/jj
+ Vo8g==
+X-Gm-Message-State: AOJu0YwqW1EbLNLtqdW8WzVXYGsLH4ZP8QWXUdcmr569eJVG2Uy2H5z5
+ a4QulU5SU5Sv7YB0UVu7nmXn9k44lSToQC8L0UBj5Yb5T0nIXpCA+76bfFpzDc4=
+X-Google-Smtp-Source: AGHT+IFsFCc3Tawaz8KPT6OOy87cnZDT8hUe96ps0A5t2M466lJE+2H7t546F0h/+DNslq+ZaKfp7A==
+X-Received: by 2002:a05:6a20:1582:b0:1c0:ef1c:b80 with SMTP id
+ adf61e73a8af0-1c68d15ba68mr1057345637.52.1722465790543; 
+ Wed, 31 Jul 2024 15:43:10 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead874bf5sm10385597b3a.162.2024.07.31.15.13.57
+ d2e1a72fcca58-70ead6e18a4sm10460802b3a.9.2024.07.31.15.43.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jul 2024 15:13:59 -0700 (PDT)
-Message-ID: <f6a574f3-964e-4827-b3a0-b6360a53cfd0@linaro.org>
-Date: Thu, 1 Aug 2024 08:13:53 +1000
+ Wed, 31 Jul 2024 15:43:09 -0700 (PDT)
+Message-ID: <7c0af87c-466b-4dba-a132-b14c8d262fd4@linaro.org>
+Date: Thu, 1 Aug 2024 08:43:04 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] Makefile: trigger re-configure on updated pythondeps
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
-References: <20240731140232.22193-1-alex.bennee@linaro.org>
+Subject: Re: [PATCH] bsd-user/x86_64/target_arch_thread.h: Align stack
+To: Ilya Leoshkevich <iii@linux.ibm.com>, Warner Losh <imp@bsdimp.com>,
+ Kyle Evans <kevans@freebsd.org>
+Cc: qemu-devel@nongnu.org
+References: <20240731144428.5882-1-iii@linux.ibm.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240731140232.22193-1-alex.bennee@linaro.org>
+In-Reply-To: <20240731144428.5882-1-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,30 +96,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/1/24 00:02, Alex Bennée wrote:
-> If we add additional deps for meson we need to ensure we trigger a
-> reconfigure to make sure everything is set up.
+On 8/1/24 00:44, Ilya Leoshkevich wrote:
+> bsd-user qemu-x86_64 almost immediately dies with:
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>      qemu: 0x4002201a68: unhandled CPU exception 0xd - aborting
+> 
+> on FreeBSD 14.1-RELEASE. This is an instruction that requires
+> alignment:
+> 
+>      (gdb) x/i 0x4002201a68
+>         0x4002201a68:        movaps %xmm0,-0x40(%rbp)
+> 
+> and the argument is not aligned:
+> 
+>      (gdb) p/x env->regs[5]
+>      $1 = 0x822443b58
+> 
+> A quick experiment shows that the userspace entry point expects
+> misaligned rsp:
+> 
+>      (gdb) starti
+>      (gdb) p/x $rsp
+>      $1 = 0x7fffffffeaa8
+> 
+> Emulate this behavior in bsd-user.
+> 
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 > ---
->   Makefile | 2 +-
+>   bsd-user/x86_64/target_arch_thread.h | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/Makefile b/Makefile
-> index 02a257584b..0281a883a1 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -78,7 +78,7 @@ x := $(shell rm -rf meson-private meson-info meson-logs)
->   endif
->   
->   # 1. ensure config-host.mak is up-to-date
-> -config-host.mak: $(SRC_PATH)/configure $(SRC_PATH)/scripts/meson-buildoptions.sh $(SRC_PATH)/VERSION
-> +config-host.mak: $(SRC_PATH)/configure $(SRC_PATH)/scripts/meson-buildoptions.sh $(SRC_PATH)/pythondeps.toml $(SRC_PATH)/VERSION
->   	@echo config-host.mak is out-of-date, running configure
->   	@if test -f meson-private/coredata.dat; then \
->   	  ./config.status --skip-meson; \
+> diff --git a/bsd-user/x86_64/target_arch_thread.h b/bsd-user/x86_64/target_arch_thread.h
+> index 52c28906d6d..25233443c14 100644
+> --- a/bsd-user/x86_64/target_arch_thread.h
+> +++ b/bsd-user/x86_64/target_arch_thread.h
+> @@ -31,7 +31,7 @@ static inline void target_thread_init(struct target_pt_regs *regs,
+>       struct image_info *infop)
+>   {
+>       regs->rax = 0;
+> -    regs->rsp = infop->start_stack;
+> +    regs->rsp = (infop->start_stack & ~0xfUL) - 8;
 
+The formula in sys/amd64/amd64/exec_machdep.c, exec_setregs is
+
+   ((stack - 8) & ~0xful) + 8
+
+With that,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
