@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33346C3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 21:02:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCF99C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 21:08:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZGSp-0007oE-Vc; Wed, 31 Jul 2024 17:02:28 -0400
+	id 1sZGYG-0004zv-3F; Wed, 31 Jul 2024 17:08:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZGSm-0007lc-Sc
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 17:02:26 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZGYE-0004uJ-Tx
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 17:08:02 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZGSl-0008Eu-8a
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 17:02:24 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-428163f7635so39123375e9.2
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 14:02:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZGYD-0001fS-3L
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 17:08:02 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4280bca3960so40997555e9.3
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 14:08:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722459741; x=1723064541; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722460079; x=1723064879; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=TWa/d8sBb5qBc99DmU1vNEo5fOaSLn9wOwoILGuaWe8=;
- b=hQYk0IXPM9rXrhAnL0cfEtJWQINGFuQLOL//TdQk3xM5rWme9x74//UBS/tzx97oTe
- Y+385zejy4jNEClLmR0UmCw8wlk8Q5eLqWF33pC24NkjdTWjfZK5Jv05hl7O1ieSCKfJ
- FSzdmmQMhk2m9WxzOLX2KfwcU6/Xgd3g8NOmF/qGjRoq09kmwEY/BhltZnZzxzsFGtEW
- GABD1cYfW77ITwpDxeY8bSx9VipMd7FbIUtStxqeYV96SbzV4/EJukiL6OK5su1hF8ss
- rdYnaJk56NL44Jq1zOHVpiNuTwkmQF4pxx6mFET33AxW7htjHYozjVjNTQ9sfLhtOCXG
- bLbw==
+ bh=0A+P3SmHdS/9j6MmMFPW42jch3drvq8aoahoIRsD9l4=;
+ b=l5RUpdDHxQqIGrARSnY6y+A7VtuIyi1PQ+OnHAfELhzdSwVNcJra7tj3L6h/OdB4Sk
+ LMgraPcMNq9ik9hDoavHhDd8mR59mYrIv+kqG4/8htWgJJqLHP1hjzfyoHJDGBQbZI1Z
+ +AphcDv8YPbs/CSWz14codsyzVO2CAHyqGEh9lg3rqFs+/O96HjC1tWAExE0a7X7U3LH
+ 3F+THHXqY5Ad9Ium5ot2QKw1ztW8QpcMA4c3m8AesQZUgOhRWzd8D48V6LVmi7xL6qnb
+ r/3AHwuVv+l2gGG9kgEc5XGl5uv5fjRZ5nvJo1EyE/YQgdDc1h1D4XAPR8DNb43aoTpy
+ qpqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722459741; x=1723064541;
+ d=1e100.net; s=20230601; t=1722460079; x=1723064879;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TWa/d8sBb5qBc99DmU1vNEo5fOaSLn9wOwoILGuaWe8=;
- b=SBEw8m8y7cw5VkfrC10omZvyYms6Z7TI8QdgZrGPX/ABSp8FHo9zWUw3S5PK6ybdmT
- XIYPFmlA49SYY2D0oyWrFGtlgZsn4NTkWlwRaUVD47jG/3rQLUgLcnDAmSxZ6mKifU7l
- doaFLI1eGcZXu3di0Lg28rnhJNCJKkqVbQN2akE2PfpAjLK7aEuStx/UTJdYvBWnTuKJ
- OCzOlGRuyxVeBzY938sZj/I6xCGdN6u3EBckgvbqLwccykIcCccK++3OMYNXkWgJf1h5
- 2JFeN5lAPscQmobG7d8Ejf9dY1bo/bPLnr/0Wfy7DP7ES8CyZBAPY4oHdQWJz9BHkos0
- JJSA==
-X-Gm-Message-State: AOJu0YykYneAVOXpj/uTiiLSrIlwnhNFuMKWgrjw6CJk62mszkGs+BR4
- RPWE+hRKbAbNmJNrSd31lTW/Uqyjh1KAldiKt2o+7IHi4Q8jiA5/tb/4g98wXBE=
-X-Google-Smtp-Source: AGHT+IHa7BA3qTQ6dswN3jvXlWlB9x3IBq+25jBRKojE2ESuC2XpaxhdoPW+yDr29Rk/DT3zAvdRHA==
-X-Received: by 2002:a05:600c:19ce:b0:426:5546:71a with SMTP id
- 5b1f17b1804b1-428a99e08ccmr3827145e9.2.1722459741498; 
- Wed, 31 Jul 2024 14:02:21 -0700 (PDT)
+ bh=0A+P3SmHdS/9j6MmMFPW42jch3drvq8aoahoIRsD9l4=;
+ b=fp3N/MqItmqqmgn/9Cf4wYhItuPLPszAG8ZX1EMCBg4PHDHYsEVuiY8t7fMs6Yo7Pu
+ 1g/2418+4eWgiCEFJ1xEPMZS2fQ+tCcI9uZC8Cu68ML8UziUtIQ9T7LkO+xaDD/IXzPA
+ 9ljj2FRTQPGVLIkqTfqk6lh6XxEtSwV/+2VJOnOVdvPpcBReh8oTaEptEINWYl+ANOgJ
+ VdDUWwtr8+tM/2dK+rqdeqrPqj7s8FwHjmS0gKoFex5GTuYu3wHGOOarzrT241qtGtHJ
+ 6Z9oExCqJmuf6dw+N3GhCFWJrLigOkW9cHxWqh9L4oeaINAt/SqEHbPBVpzcvM/x5ysX
+ 9oDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUfO+psym0o7GNPOGD7h0CbJQJ7f29LNbmAVc219JBchSbFaLmR/v3V11ze+RvMQtq2GzTEvXe7dsNikoaAXQ8sAlw3gsY=
+X-Gm-Message-State: AOJu0YyP8zScdv3M5OKpulSJx5AFUlYF+9HCFzHv9xV+jmtDoZbvKFU5
+ Ex2Uz51xr09tIqpbIncst3yrF9JXzdNoGACT2ODsEsRnCQuJXEBiYzVMjH4MHTTb8SOqlmGZj3G
+ q
+X-Google-Smtp-Source: AGHT+IHEALno4qTHubtHn+asuXbvRaR8IR+Mu6ckLs6oqVI/beSP9x20oG+Du5QgLtk6qSnX3xqacQ==
+X-Received: by 2002:a05:600c:3ba7:b0:426:593c:935f with SMTP id
+ 5b1f17b1804b1-428a99dff79mr4133145e9.1.1722460079182; 
+ Wed, 31 Jul 2024 14:07:59 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.130.148])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4282babaaa8sm33471265e9.24.2024.07.31.14.02.19
+ 5b1f17b1804b1-4282b5fbb25sm34107125e9.0.2024.07.31.14.07.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jul 2024 14:02:21 -0700 (PDT)
-Message-ID: <6504c60d-e9b1-4f59-836d-ed65739a6034@linaro.org>
-Date: Wed, 31 Jul 2024 23:02:17 +0200
+ Wed, 31 Jul 2024 14:07:58 -0700 (PDT)
+Message-ID: <fe26dcae-7784-4285-89c2-ee27a1de7014@linaro.org>
+Date: Wed, 31 Jul 2024 23:07:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] hw/ide/pci.c: Remove dead code from
- bmdma_prepare_buf()
-To: Kevin Wolf <kwolf@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
- Stefan Weil <sw@weilnetz.de>, "Richard W.M. Jones" <rjones@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-References: <20240731143617.3391947-1-peter.maydell@linaro.org>
- <20240731143617.3391947-7-peter.maydell@linaro.org>
- <ZqpUgb1Y74-N9q0_@redhat.com>
+Subject: Re: [PATCH] hw/i386/amd_iommu: Don't leak memory in
+ amdvi_update_iotlb()
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240731170019.3590563-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZqpUgb1Y74-N9q0_@redhat.com>
+In-Reply-To: <20240731170019.3590563-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,74 +98,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/7/24 17:13, Kevin Wolf wrote:
-> Am 31.07.2024 um 16:36 hat Peter Maydell geschrieben:
->> Coverity notes that the code at the end of the loop in
->> bmdma_prepare_buf() is unreachable.  This is because in commit
->> 9fbf0fa81fca8f527 ("ide: remove hardcoded 2GiB transactional limit")
->> we removed the only codepath in the loop which could "break" out of
->> it, but didn't notice that this meant we should also remove the code
->> at the end of the loop.
->>
->> Remove the dead code.
->>
->> Resolves: Coverity CID 1547772
->> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->> ---
->>   hw/ide/pci.c | 4 ----
->>   1 file changed, 4 deletions(-)
->>
->> diff --git a/hw/ide/pci.c b/hw/ide/pci.c
->> index 4675d079a17..f2cb500a94f 100644
->> --- a/hw/ide/pci.c
->> +++ b/hw/ide/pci.c
->> @@ -266,10 +266,6 @@ static int32_t bmdma_prepare_buf(const IDEDMA *dma, int32_t limit)
->>               s->io_buffer_size += l;
->>           }
->>       }
->> -
->> -    qemu_sglist_destroy(&s->sg);
->> -    s->io_buffer_size = 0;
->> -    return -1;
->>   }
+On 31/7/24 19:00, Peter Maydell wrote:
+> In amdvi_update_iotlb() we will only put a new entry in the hash
+> table if to_cache.perm is not IOMMU_NONE.  However we allocate the
+> memory for the new AMDVIIOTLBEntry and for the hash table key
+> regardless.  This means that in the IOMMU_NONE case we will leak the
+> memory we alloacted.
 > 
-> Should we put a g_assert_not_reached() here instead to make it easier
-> for the reader to understand how this function works?
-
-Or break and keep returning at EOF:
-
--- >8 --
-diff --git a/hw/ide/pci.c b/hw/ide/pci.c
-index 4675d079a1..8386c4fe42 100644
---- a/hw/ide/pci.c
-+++ b/hw/ide/pci.c
-@@ -237,7 +237,7 @@ static int32_t bmdma_prepare_buf(const IDEDMA *dma, 
-int32_t limit)
-              /* end of table (with a fail safe of one page) */
-              if (bm->cur_prd_last ||
-                  (bm->cur_addr - bm->addr) >= BMDMA_PAGE_SIZE) {
--                return s->sg.size;
-+                break;
-              }
-              pci_dma_read(pci_dev, bm->cur_addr, &prd, 8);
-              bm->cur_addr += 8;
-@@ -267,9 +267,7 @@ static int32_t bmdma_prepare_buf(const IDEDMA *dma, 
-int32_t limit)
-          }
-      }
-
--    qemu_sglist_destroy(&s->sg);
--    s->io_buffer_size = 0;
--    return -1;
-+    return s->sg.size;
-  }
-
----
-
+> Move the allocations into the if() to the point where we know we're
+> going to add the item to the hash table.
 > 
-> Either way:
-> Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2452
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> Tested with 'make check' and 'make check-avocado' only, but the
+> bug and fix seem straightforward...
+> ---
+>   hw/i386/amd_iommu.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
