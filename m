@@ -4,100 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F966C3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 10:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C684C3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 10:11:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ6Ha-0007Ap-EU; Wed, 31 Jul 2024 06:10:10 -0400
+	id 1sZ6In-0001sx-9X; Wed, 31 Jul 2024 06:11:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1sZ6HX-00077Y-S9; Wed, 31 Jul 2024 06:10:07 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
+ id 1sZ3Xs-0005h8-TW
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 03:14:48 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1sZ6HV-0002hd-B9; Wed, 31 Jul 2024 06:10:07 -0400
-Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46V5ImJj028676;
- Wed, 31 Jul 2024 10:10:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=pp1; bh=svJzSp8Crzh8vmxDnOECq7w1I/
- 9ZCak5NMCdPaEIvi0=; b=o4HoCtRPq3DgG/Mk8T02iS2qEsm8mb887IXno5JpC9
- 5kupmFpZLTa63A8a4dQWUcL5FvnqbkkGeIz5C7+VpsGXyhbUX6BOpAFmxXz+FlCg
- a5W6H/+/0IGQgz8lnzmuWNzleGevbGbdK8BW34NJmPPOBrSp5aCdul5ieay8zFnP
- +l7rQG1yh303LoLsWZNoGPqQgpR9P150uWaJZ+PXqSDQUQw6zBuONW++L/FIXiZI
- 5glrh2KIiHO0181b0tnO0EiqrzwS8QzN/9G2soTy4JhloZdN82CiUzEtgNbPofwZ
- t1xoUMdEi7Wqg3fk/aYKilFXpf/1pRNspoMJHKmO9zkQ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40qeqbgpu8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 31 Jul 2024 10:10:01 +0000 (GMT)
-Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46VAA1Ax005862;
- Wed, 31 Jul 2024 10:10:01 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40qeqbgpu4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 31 Jul 2024 10:10:00 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 46V87sm3029128; Wed, 31 Jul 2024 10:09:59 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40nbm0u0ww-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 31 Jul 2024 10:09:59 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 46VA9tZJ55312814
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 31 Jul 2024 10:09:57 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AE55220156;
- Wed, 31 Jul 2024 10:09:55 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 56F9A20151;
- Wed, 31 Jul 2024 10:09:55 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.30.41])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 31 Jul 2024 10:09:55 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>, qemu-stable@nongnu.org
-Subject: [PATCH] target/ppc: Set ctx->opcode for decode_insn32()
-Date: Wed, 31 Jul 2024 12:07:48 +0200
-Message-ID: <20240731100953.14950-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.45.2
+ (Exim 4.90_1) (envelope-from <yilun.xu@linux.intel.com>)
+ id 1sZ3Xq-0004RZ-T9
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 03:14:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1722410087; x=1753946087;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=ssbII7MpEx5cZOyBZ8ZwGo8GeGJli2aCyYIPdwP4ZJA=;
+ b=kDFlgEe+hvge18NZv+dHYZ4wdpTKNoH81SEhvYH3RUQXrnOOrIAHctIs
+ 5uvjdA66rrCVAde27CTvj0zrje1x3vSsH0ypR5HUSK+RtYl6JYa6nS5Ih
+ Tzw9+EVcRvtRt+NSxfm1BS8dxGZfvWlhqehwtJH/aTbx9dG1dnAtBnmSY
+ ytGQrYXgPsNG+3Pzq3xrWeqokGm5wR0nEs29tQ4qFZytLZhdVZUruCJfh
+ uyTp8gvmQhCjrtXT2bLXIGDjX3SgEwibZEhJXPRsDlBoiYN893c0k6q3H
+ f6EB4+a4DM+jdOxXhVk4s0Y5F677LuCm7OFPal8AflPAaUW/AFPtWIBPE A==;
+X-CSE-ConnectionGUID: //sX5l0ZRAOH2GYvqmA5ZA==
+X-CSE-MsgGUID: QxHAoqFbSvu5CAh99ATkeQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11149"; a="45687469"
+X-IronPort-AV: E=Sophos;i="6.09,250,1716274800"; d="scan'208";a="45687469"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Jul 2024 00:14:42 -0700
+X-CSE-ConnectionGUID: 7xnhCxgnTAeY/NKjeetbXw==
+X-CSE-MsgGUID: trA+W0KpRZqggGOAshqrDA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,250,1716274800"; d="scan'208";a="55396439"
+Received: from yilunxu-optiplex-7050.sh.intel.com (HELO localhost)
+ ([10.239.159.165])
+ by orviesa008.jf.intel.com with ESMTP; 31 Jul 2024 00:14:38 -0700
+Date: Wed, 31 Jul 2024 15:12:44 +0800
+From: Xu Yilun <yilun.xu@linux.intel.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: "Tian, Kevin" <kevin.tian@intel.com>,
+ "Qiang, Chenyi" <chenyi.qiang@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+ "Williams, Dan J" <dan.j.williams@intel.com>,
+ "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
+ "Wang, Wei W" <wei.w.wang@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>,
+ "Gao, Chao" <chao.gao@intel.com>, "Wu, Hao" <hao.wu@intel.com>,
+ "Xu, Yilun" <yilun.xu@intel.com>
+Subject: Re: [RFC PATCH 0/6] Enable shared device assignment
+Message-ID: <Zqnj7PZKX6Rzh/yl@yilunxu-OptiPlex-7050>
+References: <20240725072118.358923-1-chenyi.qiang@intel.com>
+ <ace9bb98-1415-460f-b8f5-e50607fbce20@redhat.com>
+ <BN9PR11MB527635939C0A2A0763E326A58CB42@BN9PR11MB5276.namprd11.prod.outlook.com>
+ <c9556944-16e4-4eb0-b9cd-56426099f813@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: YdTwHovDHlk7-547ayWPpWWMU9pU-psR
-X-Proofpoint-GUID: WdyLqamPtTdSkGryCuE_Wb_n6cGbgqsB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-31_07,2024-07-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0
- malwarescore=0 mlxlogscore=838 suspectscore=0 adultscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 lowpriorityscore=0
- clxscore=1011 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407310073
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c9556944-16e4-4eb0-b9cd-56426099f813@redhat.com>
+Received-SPF: none client-ip=192.198.163.7;
+ envelope-from=yilun.xu@linux.intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 31 Jul 2024 06:11:23 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -112,47 +96,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-divdu (without a dot) sometimes updates cr0, even though it shouldn't.
-The reason is that gen_op_arith_divd() checks Rc(ctx->opcode), which is
-not initialized. This field is initialized only for instructions that
-go through decode_legacy(), and not decodetree.
+On Fri, Jul 26, 2024 at 09:08:51AM +0200, David Hildenbrand wrote:
+> On 26.07.24 07:02, Tian, Kevin wrote:
+> > > From: David Hildenbrand <david@redhat.com>
+> > > Sent: Thursday, July 25, 2024 10:04 PM
+> > > 
+> > > > Open
+> > > > ====
+> > > > Implementing a RamDiscardManager to notify VFIO of page conversions
+> > > > causes changes in semantics: private memory is treated as discarded (or
+> > > > hot-removed) memory. This isn't aligned with the expectation of current
+> > > > RamDiscardManager users (e.g. VFIO or live migration) who really
+> > > > expect that discarded memory is hot-removed and thus can be skipped
+> > > when
+> > > > the users are processing guest memory. Treating private memory as
+> > > > discarded won't work in future if VFIO or live migration needs to handle
+> > > > private memory. e.g. VFIO may need to map private memory to support
+> > > > Trusted IO and live migration for confidential VMs need to migrate
+> > > > private memory.
+> > > 
+> > > "VFIO may need to map private memory to support Trusted IO"
+> > > 
+> > > I've been told that the way we handle shared memory won't be the way
+> > > this is going to work with guest_memfd. KVM will coordinate directly
+> > > with VFIO or $whatever and update the IOMMU tables itself right in the
+> > > kernel; the pages are pinned/owned by guest_memfd, so that will just
+> > > work. So I don't consider that currently a concern. guest_memfd private
+> > > memory is not mapped into user page tables and as it currently seems it
+> > > never will be.
+> > 
+> > Or could extend MAP_DMA to accept guest_memfd+offset in place of
 
-There already was a similar issue fixed in commit 86e6202a57b1
-("target/ppc: Make divw[u] handler method decodetree compatible.").
+With TIO, I can imagine several buffer sharing requirements: KVM maps VFIO
+owned private MMIO, IOMMU maps gmem owned private memory, IOMMU maps VFIO
+owned private MMIO. These buffers cannot be found by user page table
+anymore. I'm wondering it would be messy to have specific PFN finding
+methods for each FD type. Is it possible we have a unified way for
+buffer sharing and PFN finding, is dma-buf a candidate?
 
-It's not immediately clear what else may access the uninitialized
-ctx->opcode, so instead of playing whack-a-mole and changing the check
-to compute_rc0, simply initialize ctx->opcode.
+> > 'vaddr' and have VFIO/IOMMUFD call guest_memfd helpers to retrieve
+> > the pinned pfn.
+> 
+> In theory yes, and I've been thinking of the same for a while. Until people
+> told me that it is unlikely that it will work that way in the future.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 99082815f17f ("target/ppc: Add infrastructure for prefixed insns")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- target/ppc/translate.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Could you help specify why it won't work? As Kevin mentioned below, SEV-TIO
+may still allow userspace to manage the IOMMU mapping for private. I'm
+not sure how they map private memory for IOMMU without touching gmemfd.
 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 71513ba9646..02c810e8848 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -6426,8 +6426,6 @@ static bool decode_legacy(PowerPCCPU *cpu, DisasContext *ctx, uint32_t insn)
-     opc_handler_t **table, *handler;
-     uint32_t inval;
- 
--    ctx->opcode = insn;
--
-     LOG_DISAS("translate opcode %08x (%02x %02x %02x %02x) (%s)\n",
-               insn, opc1(insn), opc2(insn), opc3(insn), opc4(insn),
-               ctx->le_mode ? "little" : "big");
-@@ -6561,6 +6559,7 @@ static void ppc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
-     ctx->base.pc_next = pc += 4;
- 
-     if (!is_prefix_insn(ctx, insn)) {
-+        ctx->opcode = insn;
-         ok = (decode_insn32(ctx, insn) ||
-               decode_legacy(cpu, ctx, insn));
-     } else if ((pc & 63) == 0) {
--- 
-2.45.2
+Thanks,
+Yilun
 
+> 
+> > 
+> > IMHO it's more the TIO arch deciding whether VFIO/IOMMUFD needs
+> > to manage the mapping of the private memory instead of the use of
+> > guest_memfd.
+> > 
+> > e.g. SEV-TIO, iiuc, introduces a new-layer page ownership tracker (RMP)
+> > to check the HPA after the IOMMU walks the existing I/O page tables.
+> > So reasonably VFIO/IOMMUFD could continue to manage those I/O
+> > page tables including both private and shared memory, with a hint to
+> > know where to find the pfn (host page table or guest_memfd).
+> > 
+> > But TDX Connect introduces a new I/O page table format (same as secure
+> > EPT) for mapping the private memory and further requires sharing the
+> > secure-EPT between CPU/IOMMU for private. Then it appears to be
+> > a different story.
+> 
+> Yes. This seems to be the future and more in-line with in-place/in-kernel
+> conversion as e.g., pKVM wants to have it. If you want to avoid user space
+> altogether when doing shared<->private conversions, then letting user space
+> manage the IOMMUs is not going to work.
+> 
+> 
+> If we ever have to go down that path (MAP_DMA of guest_memfd), we could have
+> two RAMDiscardManager for a RAM region, just like we have two memory
+> backends: one for shared memory populate/discard (what this series tries to
+> achieve), one for private memory populate/discard.
+> 
+> The thing is, that private memory will always have to be special-cased all
+> over the place either way, unfortunately.
+> 
+> -- 
+> Cheers,
+> 
+> David / dhildenb
+> 
+> 
 
