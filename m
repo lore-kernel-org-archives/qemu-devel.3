@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E061C3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 17:23:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93D81C3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 17:43:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZD2N-0000NQ-Es; Wed, 31 Jul 2024 13:22:55 -0400
+	id 1sZDL3-0001uu-OE; Wed, 31 Jul 2024 13:42:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZD2J-0000Mj-1r
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:22:52 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1sZDL1-0001tS-TU
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:42:11 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZD2H-0005ds-Ih
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:22:50 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-367963ea053so3734842f8f.2
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 10:22:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jcmvbkbc@gmail.com>)
+ id 1sZDL0-0005Wu-FZ
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:42:11 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2cfd1b25aaaso1402986a91.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 10:42:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722446567; x=1723051367; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=krq/DVBMGIf3UCTnG4Govxc+YjVtitrTOmfpG0clA+g=;
- b=B+OkF8R3MU3mfyP/hClSK8caTHzqdqQ2fbIX3lOyA0vZgeMeBbwyI6BhEvJ89RrCCx
- ZSEw2zB9k4yAe6ox0gkyaoSpvjngJUnPSyoQ6H7/vHUUYEPn3DPHEFWJkiiO00nvpTc8
- zbkZ8uurFCmo7b8HO/gJxnOHIpMEZD2qRniCEwDuYWVXfTLmuYMrKviEhFlvp8feZdRx
- FhGLIJnl/yfSyA5w6VRZkym5m33yAOGnC7l0fhh76WulWk/jsS8SsyClNAHTOc3sjHZl
- JA8evvvnbPgcaU4do/IKZq0WQWd1hD0luTeI+ZpMWxJloswtGtr7WgMNvgcSZB39CcKS
- +cNQ==
+ d=gmail.com; s=20230601; t=1722447729; x=1723052529; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cDBWqt0vVl8Oz4H/eG2HEFrOSA+R5dAusbhFBjlvK8g=;
+ b=gw7nIiTtyMNEVlEJ04i6/QDmMMLmI4PdknXxCD43ZQD82DbYY7aCqs2gSZMZoSoivX
+ yGVqREvsTIoBUCm/uLA6fqo7mmi9qBmpEShifJTbGgzJ4t9SWnngCqQgTCiF+7qCDynj
+ C8Xty2RZNZpizDkP7lHPlM2jR12qzVYDh9vuWvientLcNlDAYuL0nFUdADedG7ObhrT3
+ 2Fjlu8PucFhjkxYlQrbz3JL7bHGrnH0LfPGsfNVSn53ZTz3IvkFmj7qBbF2ytytSUUIy
+ 3hWrAeT0n4cmV12Ec5o1bDEFZHnJcNO3XZSpPEesXG+E9DOkl4vyfZ6xU83qn76HN+uv
+ VTuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722446567; x=1723051367;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=krq/DVBMGIf3UCTnG4Govxc+YjVtitrTOmfpG0clA+g=;
- b=m7F5g5O8bVeWlsxolA4uGDXGc0BuuVSQq1cZKDXUAxHzjMNGXpXb15RMJjLah0y/9e
- SOfLCc/9scBOSP6UiU2fyoC8KEvASzFD6mSdeuBJxfyAxFCt4/WT+iZYENLmV3LB74HQ
- 2i24q7S6nLdVFIwI9f/SJmkkT7RdD4czfdb0Babm4JpGQL7Q4JANCBT8dSRhAeqKnL7F
- nUkPzULXPK2Mvq8WiBg77Iq49R+yuC/jKAW8MNtRkmrGofSs8OwLLRQ71p/kx1flYAk5
- KlNUW8B6mQUSV0/67k1tcjGCXw6LSQroQYh3X1AWMC6SkA6hJTJu/ZCKGCjnP945Ko9n
- O2SA==
-X-Gm-Message-State: AOJu0YxNyQSV+nTg3U064yuad0oQ+Nv52J2ims3OrXiFA60TUDv6Wisd
- HX8hAHCJSvHBcINwT/BrGt2fxkvWpOcOupyBAwt71HGtxwAqf6DNjAvF5S6ZO+mIOL3Uu570TRv
- e
-X-Google-Smtp-Source: AGHT+IF3VIuzY4sZRhm2IyCP2I6uw4EW0NRqXNwuciEkXUbsHr9TawBA9fsA5Vidi5fccf5orWZNcg==
-X-Received: by 2002:a05:6000:b09:b0:368:5042:25f3 with SMTP id
- ffacd0b85a97d-36b5d092d74mr11872685f8f.34.1722446567545; 
- Wed, 31 Jul 2024 10:22:47 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b367e51f0sm17545140f8f.46.2024.07.31.10.22.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Jul 2024 10:22:47 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH] target/xtensa: Correct assert condition in handle_interrupt()
-Date: Wed, 31 Jul 2024 18:22:46 +0100
-Message-Id: <20240731172246.3682311-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1722447729; x=1723052529;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cDBWqt0vVl8Oz4H/eG2HEFrOSA+R5dAusbhFBjlvK8g=;
+ b=d4IhnOza+m0sBynWWdLODK2y/Tt4n9NWDC5QcQelAuOD/ajrpH9c9VaulViXbDMxfY
+ WHvoj4Uqzs0nziCr+F54L89Xj1mkoEcOBHVspx4pH1BnoOIhKf6xJlXl1JS5boTAbotf
+ IlngWZQRApJL9J3Ahqv9tc8T78Og846NdYzG0hEKQs3nqg2y/MHa4sqBBNmlpFJwUEWH
+ xbMGY2xU0IfBHYUXZXzv1C5jRGWtJdFaQgHEU8L/RKXvMHO2xbAm3qsbIcqXjohAxSUA
+ 5U74PuuFE+S0IU3jp51x53LjZL6sNkU2zMnQ+q/ifxCIklPA1D9//mLstRpQbD5X/dDZ
+ u/dw==
+X-Gm-Message-State: AOJu0YwWQYAY/bH4jyhzgyNm4GCdVQ91Vta6/ouRG4u/vulDvev2B2pv
+ /xc9Tli5t8l7/9kHNc+BBrqNq/oVkWxdf8xzt7tFfthk8Kl/E8jWhtn0+QmBiqpHRkUKkMzGY1w
+ mWhKZ+rswBrx/nBmUKeKQ6/GHkmg=
+X-Google-Smtp-Source: AGHT+IHO+7oXSo8sBPdMVayuCdXgPg9R2AVALQzN6ku3794snT6Wwak5wrQOWM5lS54fyQ/MQdwHzOPfjCZFyQqZrDc=
+X-Received: by 2002:a17:90a:3ec4:b0:2cb:4e14:fd5d with SMTP id
+ 98e67ed59e1d1-2cfe7886018mr49735a91.17.1722447728530; Wed, 31 Jul 2024
+ 10:42:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+References: <20240731172246.3682311-1-peter.maydell@linaro.org>
+In-Reply-To: <20240731172246.3682311-1-peter.maydell@linaro.org>
+From: Max Filippov <jcmvbkbc@gmail.com>
+Date: Wed, 31 Jul 2024 10:41:57 -0700
+Message-ID: <CAMo8Bf+B-B_jPJAOLzL_Cb45W+g6k+=oUJPsPjGmQ3Q57LQz1A@mail.gmail.com>
+Subject: Re: [PATCH] target/xtensa: Correct assert condition in
+ handle_interrupt()
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=jcmvbkbc@gmail.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_LOCAL_NOVOWEL=0.5, HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -91,36 +91,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In commit ad18376b90c8101 we added an assert that the level value was
-in-bounds for the array we're about to index into.  However, the
-assert condition is wrong -- env->config->interrupt_vector is an
-array of uint32_t, so we should bounds check the index against
-ARRAY_SIZE(...), not against sizeof().
+On Wed, Jul 31, 2024 at 10:22=E2=80=AFAM Peter Maydell <peter.maydell@linar=
+o.org> wrote:
+>
+> In commit ad18376b90c8101 we added an assert that the level value was
+> in-bounds for the array we're about to index into.  However, the
+> assert condition is wrong -- env->config->interrupt_vector is an
+> array of uint32_t, so we should bounds check the index against
+> ARRAY_SIZE(...), not against sizeof().
+>
+> Resolves: Coverity CID 1507131
+> Fixes: ad18376b90c8101 ("target/xtensa: Assert that interrupt level is wi=
+thin bounds")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> Spotted because Coverity (correctly) thought the issue was still
+> outstanding.
+> ---
+>  target/xtensa/exc_helper.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Resolves: Coverity CID 1507131
-Fixes: ad18376b90c8101 ("target/xtensa: Assert that interrupt level is within bounds")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-Spotted because Coverity (correctly) thought the issue was still
-outstanding.
----
- target/xtensa/exc_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Acked-by: Max Filippov <jcmvbkbc@gmail.com>
 
-diff --git a/target/xtensa/exc_helper.c b/target/xtensa/exc_helper.c
-index 0514c2c1f32..ca629f071d1 100644
---- a/target/xtensa/exc_helper.c
-+++ b/target/xtensa/exc_helper.c
-@@ -171,7 +171,7 @@ static void handle_interrupt(CPUXtensaState *env)
- 
-         if (level > 1) {
-             /* env->config->nlevel check should have ensured this */
--            assert(level < sizeof(env->config->interrupt_vector));
-+            assert(level < ARRAY_SIZE(env->config->interrupt_vector));
- 
-             env->sregs[EPC1 + level - 1] = env->pc;
-             env->sregs[EPS2 + level - 2] = env->sregs[PS];
--- 
-2.34.1
-
+--=20
+Thanks.
+-- Max
 
