@@ -4,97 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4929EC3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 08:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5284AC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 08:41:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ4st-0008Sy-1g; Wed, 31 Jul 2024 04:40:35 -0400
+	id 1sZ4sx-0000Bw-1o; Wed, 31 Jul 2024 04:40:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZ4sr-0008Q2-1y
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 04:40:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZ4so-0003BG-O7
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 04:40:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722415229;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TIZ6yR/fJa72L9JGLxe8WVIJuqve3vR0TgJazTSqTkQ=;
- b=BrV9vyz5Jg5QCmD9d5kbDSYvNUkP9wlhjr2t6Az4lW1M8NwP7yqjUpUNDQ0kAkLomK0fdu
- hBfGwmBTD9j55gZdKUDT3AUlKCNgLON15bCBJL0WfwI7IrunFlYFwG47uXpxhhMOpCYuOs
- tgksxfJbCFLL3RYpgZVmP+P3YOJxkY0=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-50-IS27nGl2PnWdGc3yfE-KOg-1; Wed, 31 Jul 2024 04:40:26 -0400
-X-MC-Unique: IS27nGl2PnWdGc3yfE-KOg-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a7d2f42df2dso94187966b.1
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 01:40:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZ4sw-0000BR-3r
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 04:40:38 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZ4su-0003EQ-Mb
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 04:40:37 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4280b3a7efaso35549915e9.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 01:40:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722415235; x=1723020035; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=58FUqkUuTZXvGCCud9UHy+VtIPb8Gsz6Db3sBkP8SEo=;
+ b=VojxNB8dXWt7sLk3/r8kbkhdYQd7CIyt/Ct+9HoxwP4fNQ2Uwh+RoqMhdMRVyTKbQZ
+ 4lWXDWp7+yPbpniq/Nrh2gbO9Ov2Q/c7qiNlfVFrQYVyHgZMDopjkDEEZ5q64fiEjySy
+ bdxm/3dhjdteO4auFiUAW4Lrgg4dgnsVh19S4eEpNXqL5qD2pbPS1gBrhF+4K6lBGqro
+ +MvPWHzmoPF85tr8qxceeXLA7ycQ56a/cxjlcM8ZPizICBAJJSXr4l1fJjHlvXuCzgSw
+ P/wsMtKYuw4YRy+CHrlPPpwM6J1sPoe2sUxOHzdkfJxWXN+wVm4462h2AQy+oxY1FiO1
+ YLDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722415225; x=1723020025;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TIZ6yR/fJa72L9JGLxe8WVIJuqve3vR0TgJazTSqTkQ=;
- b=byvLf3szAFC8+qopvygFJMzibHTl27jL6tAUieqV345kcN4t/6LrlAaAgQmbkzZHVv
- 4G+Wbo7vcex3UphSlPG6uQrEcmnzUmlf7RuuFNoG9OzZEbPKN6wtLgny7aI/0Wg2jyPS
- sjUVDxKzdVJ72bN+LxChbYDk0ngSXJeEDgaAFvCFVFqXFSg4Fww9qxAOW8inhs0NQqOB
- hDNgobp67u0CLhZoS4dUlsY6Vlz/7RFNOcjCNMZOmwk7DdLXsAxXMxVgjNsDEohIGU0m
- HD5cFZqP452wQfgxMhekmWf5aR97aUXLSekxhwquh3hFfF6gaRwR4PzqBxvEmMtWXBTx
- P9yg==
+ d=1e100.net; s=20230601; t=1722415235; x=1723020035;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=58FUqkUuTZXvGCCud9UHy+VtIPb8Gsz6Db3sBkP8SEo=;
+ b=Pfi55vWmRI2aA3MYeCUnyXT8a7UaW3Ocd63w/GbwpYKZPi4hlk6Yaee5X1v0l5qJk7
+ 7qnotKCAIytOXsX2llRJiPKXBuL++Sygk1X0aRtaTp54EznhFQpnAwTFwhucfsnstzLB
+ 3dR73LJ0CLDQy5lOQJWDQZHKhtRiDLOMasAD7hPhv0fhpqMZwhhWxAYW2GrTRFRJjRws
+ b6xN9pXpBH2oJKGU/8fNNj5b27nwzjMFDkLnCay6uWje1Cn+Iv7dH7Xu1tgigVpjC7kh
+ uAa4A2KBbGuFH13SpvAvr0rN+f/6TuBzx17dkV02MFtBN+GdgK8N+xac/L4msCIPdu0D
+ K8mA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWTSkJ6fuznCmTCNQgeMY966dJbnEgMwdbQV5m+WhtRGumF+75JoMPt51pksPYYqKKlpGdHvt4QPKXamo+Xsb2sSpSi9uQ=
-X-Gm-Message-State: AOJu0YyL1tilQfH7GCGssPzWemzCLC+gyChWEK7X+leBqhtdKyT5loDI
- vfrEZpu0dsKXSEZ51wiOYCynDJKa4IxyDQl7lygTp/oQccgr/mjCRhGM5cfHyEKCjHyxnodIJPq
- ND/c9qtyRakQkJb+PHGnBSc+H1EHlXUScPZD3tQi4JvG4ELHTMBMI
-X-Received: by 2002:a17:907:7211:b0:a6f:e7a0:91cf with SMTP id
- a640c23a62f3a-a7d85a67704mr451893666b.24.1722415225357; 
- Wed, 31 Jul 2024 01:40:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEnGltPfG+2Lj79J+sEtv204kxLWKz7aFhP2Ljt0ehWnquNyRtxt5r1N8iExcK8k8ODRrLsHw==
-X-Received: by 2002:a17:907:7211:b0:a6f:e7a0:91cf with SMTP id
- a640c23a62f3a-a7d85a67704mr451890266b.24.1722415224661; 
- Wed, 31 Jul 2024 01:40:24 -0700 (PDT)
-Received: from redhat.com ([2.55.44.248]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acad4148fsm748059166b.121.2024.07.31.01.40.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Jul 2024 01:40:23 -0700 (PDT)
-Date: Wed, 31 Jul 2024 04:40:17 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
- qemu-block@nongnu.org
-Subject: Re: [PATCH v2 0/4] hw/pci: Convert rom_bar into OnOffAuto
-Message-ID: <20240731043951-mutt-send-email-mst@kernel.org>
-References: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
- <87a5hyj71o.fsf@pond.sub.org>
+ AJvYcCXabovAIAcU4LUfmzhv9FtTJYwDGdu00Id40SAaBgOt4ia5jYDBOHVu2CBYRp74mfR/YSKEvWabVcHF2T6wIk7/MWMhjwA=
+X-Gm-Message-State: AOJu0YzaArGh5Qfxk8WRtZCRRynVYpddf3dZvpMVKHQm0Gz6YHhWApvD
+ g2SUEGSEND7f/hfF/MTjycLkhGXYMpbfCs5W0SiUp4EuQd8CCd7F8sgk/IfecPY=
+X-Google-Smtp-Source: AGHT+IFvW6Qd6mYrwb1MJDU8f5PW5uDb//1z1tOTDrII836edQ72yraiFDqxUev4Jy891RH52FRgDA==
+X-Received: by 2002:adf:e748:0:b0:368:87ca:3d8e with SMTP id
+ ffacd0b85a97d-36b5cee9d3fmr8107486f8f.4.1722415234669; 
+ Wed, 31 Jul 2024 01:40:34 -0700 (PDT)
+Received: from [192.168.1.67] ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36b367c0889sm16487234f8f.22.2024.07.31.01.40.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 31 Jul 2024 01:40:34 -0700 (PDT)
+Message-ID: <0480fbc8-4108-4060-a5dc-9ef6cbbae33c@linaro.org>
+Date: Wed, 31 Jul 2024 10:40:32 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87a5hyj71o.fsf@pond.sub.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/hexagon: define a v66 CPU
+To: Brian Cain <bcain@quicinc.com>, qemu-devel@nongnu.org
+Cc: quic_mathbern@quicinc.com, sidneym@quicinc.com, quic_mliebel@quicinc.com, 
+ ltaylorsimpson@gmail.com
+References: <20240731010954.1959253-1-bcain@quicinc.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240731010954.1959253-1-bcain@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,13 +96,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 31, 2024 at 10:32:19AM +0200, Markus Armbruster wrote:
-> Whether it would be worth your trouble and mine just to clean up
-> "rombar" seems highly dubious, though.
+On 31/7/24 03:09, Brian Cain wrote:
+> For now, v66 behavior is the same as other CPUs.
+> 
+> Signed-off-by: Brian Cain <bcain@quicinc.com>
+> ---
+>   target/hexagon/cpu-qom.h | 1 +
+>   target/hexagon/cpu.c     | 2 ++
+>   2 files changed, 3 insertions(+)
 
-Exactly.
-
--- 
-MST
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
