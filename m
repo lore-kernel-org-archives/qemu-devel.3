@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23330C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 22:13:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CABCC3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 22:14:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZHYU-0004Wd-Mx; Wed, 31 Jul 2024 18:12:22 -0400
+	id 1sZHa9-0000t8-KV; Wed, 31 Jul 2024 18:14:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZHYT-0004Sb-B9
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 18:12:21 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1sZHa8-0000ms-2B
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 18:14:04 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZHYQ-0004sR-Hq
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 18:12:21 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-70d150e8153so1023450b3a.0
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 15:12:18 -0700 (PDT)
+ id 1sZHa5-0007Gd-CG
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 18:14:03 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-70d1a74a43bso4542444b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 15:14:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722463937; x=1723068737; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722464040; x=1723068840; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GWvR2Jfw2jgkLNBIapIW04dsIj4XUJm+NF/jsDAElwQ=;
- b=oJnRWeIIamcs25lQDkQ+o7gbOxeO0xcouAv9Atf4dRc8yNdjwYRy51N01W3MbsK9nf
- 0jwnFBQjJobh0aTlImFH/F6c/sHKkoqMdCIBqGjVQ+DB0FqjiGnHoQ5leGUuoGHQyagX
- mz5rlolro4Wpnx7BH/GKY7gEGEWzJ8G4ASAyFZRUegQcHU2HbXvt95I0v+/TMFaJGynZ
- 00k1CFN+1s/ey56w90NdRKzw1h1iVAsif0lToFLKlzZ8yI9uCuwM57cvg6yPNpm7VmVh
- drSij7HGKFbvqqqEbcw2rBQ5K0QYUgPbBEoEwLVrHClVeT0S0DLHBZEv/b4W5ouwYIff
- FB6Q==
+ bh=CE9fgF37GFZ/WnLbL0ZHd+GKYNoLQ9YgzLgWzB6XYlk=;
+ b=ikQRtG/hW8AbrMVAg5hTVCAZYXaYCZpGT14Q3+dPNCDrOL/eZxTLUPa9mZkLEIu0k0
+ M7/tfxieAkeiuTFKRfHUbjnbGlKNL1D3Key5R1a4gkrTG0pAJ+fkGnP4A5s+e6xBrnEi
+ Eu2s6ZLBTZfaBb12MBkxDE5MxiN0jxuoUuY1Ig3LwdhAt+zVDj49UPIYi7gRKBclHQYH
+ nQ64y/05w3MKX/IPNVfU5xrsdJoLhBVAsCjd4q2QhvMsl2pgJlM6pxIycj7h3DGYwXwB
+ 6YCPqMIn9BWz8QSyRh+/KkOL/SmCMyF6ChCouEervNB1INCg/fSU1c/nIuCFNFX6FrA8
+ 13QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722463937; x=1723068737;
+ d=1e100.net; s=20230601; t=1722464040; x=1723068840;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GWvR2Jfw2jgkLNBIapIW04dsIj4XUJm+NF/jsDAElwQ=;
- b=gRVBj56zDMF5IkCoYB2T0zCHEeQW2qB4hbC7EN6EsF648YzWpKoEGS2iuzSkKcH/oR
- cB0PTF6v0cX+slLFjJJ3w2S5WjFUg85Ms1csXEV4xbnPXHJaQnivhNNr1DBM4cGFq8mc
- w0ytbQcfRwWeBamauG0usjHLKZpUF/S2bbGz9OOPg2oB3uRbtW3EXhaLy8CJ55adhTU8
- +M9a38Gxy8yhZlfJogOs4yTbfUndomQi8HurbHoJOUYRCZSYju1ELBevNyCcYY9oGo8L
- Gzfwgx42Vy840WDm8pPKVWWA3ujqjF46eWYfBQDyfw73EgjLwu32chySE3U/xVn/qNjF
- InoA==
+ bh=CE9fgF37GFZ/WnLbL0ZHd+GKYNoLQ9YgzLgWzB6XYlk=;
+ b=a3rL0rGN7TVMfKdDCDMfHx4fgP04BicvwpcrZBDrwYjG2vmHLdST/K+DWbEZNTz+Cs
+ T2O8ZZqHWD+K2XsYUSHE2Q8a83K0hTPdXAD8BGK5gypgrBB/08wGoRUSOufch3zjmxPP
+ MTma7tOReJQLMX/5dv08JIVY0t4kg6Qqx0VVW/SyYNyM4ADSNUTlaGg8x49Zw726atIX
+ ZcQrOOZ3p6eTmUgkD1QyYx41VOnvllnjo1etPihnpUUZFYajwKbHBhDfyV3wVOazOqkW
+ UPEA5MvqNWvd9nvPa10JEHlPYeFtIp1BirxxBysMO9QZH5Pgung+zBHxevRE3yHFxxbD
+ wNdw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVejjZ+/he9YLmCAIBXQQ+59xpoEP8TeIjfOtuxnVY1Dt/RLUTwIkjWdXmbNx/0gnFAzXzP7xMIXgBJVE6uv4euQMeLys8=
-X-Gm-Message-State: AOJu0YxHUwkKGwYTTy5Ku6OKHXW14WbNCY2C5PwCmV96Mp0XgIlkrbMC
- 0PkwNC/aCIzRF21ex5dsHOtRhSCMbmmnk7QiC1Y9DWpeVpD+e/d/01YbEl527gZ/ymQcrkceDu3
- hL87FkQ==
-X-Google-Smtp-Source: AGHT+IHXSxUkQQJ34+UZB26TpmSZrQrGvY2YWKW0tirXnr9NMkeJ3Qyjy5iG0YicA5AvPlnf1WJUAQ==
-X-Received: by 2002:a05:6a00:641a:b0:70d:34a1:5ccc with SMTP id
- d2e1a72fcca58-70efe4bee1fmr8825572b3a.13.1722463936833; 
- Wed, 31 Jul 2024 15:12:16 -0700 (PDT)
+ AJvYcCUiUpnD+Q+zrFPwfKr0HUuJssojDSZC7KFSypmT5Zx32BxMYkYhgP9NBGUl6xl11KNqyFhElX9qF0HO1ooId4ZMJJOPxO8=
+X-Gm-Message-State: AOJu0YzXCH5TZBhlmbdh82CFrnTj5agcHG2J1FkNZqbXZ1r2cA9UPQSo
+ BQ6C4a5jAInTnsVZBh3fIdxw7s98dWmAlOl11xfg4N7Juh2CzhokZMK+/7GCiR4=
+X-Google-Smtp-Source: AGHT+IFcgcVmNm6hbEuNls3IoMOzwJgWgY8zx8Hi8EvycK5xyIBBNIvijJex1bXeDexhtd+nrwAcqw==
+X-Received: by 2002:a05:6a00:188d:b0:70d:311b:8569 with SMTP id
+ d2e1a72fcca58-7105d7da884mr808920b3a.26.1722464039630; 
+ Wed, 31 Jul 2024 15:13:59 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead7181d5sm10406228b3a.88.2024.07.31.15.12.13
+ d2e1a72fcca58-70ead874bf5sm10385597b3a.162.2024.07.31.15.13.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jul 2024 15:12:16 -0700 (PDT)
-Message-ID: <fa0e81ac-3356-4775-a8a6-395ee5cdfe45@linaro.org>
-Date: Thu, 1 Aug 2024 08:12:10 +1000
+ Wed, 31 Jul 2024 15:13:59 -0700 (PDT)
+Message-ID: <f6a574f3-964e-4827-b3a0-b6360a53cfd0@linaro.org>
+Date: Thu, 1 Aug 2024 08:13:53 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/ppc: Set ctx->opcode for decode_insn32()
-To: Ilya Leoshkevich <iii@linux.ibm.com>, Nicholas Piggin
- <npiggin@gmail.com>, Daniel Henrique Barboza <danielhb413@gmail.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20240731100953.14950-1-iii@linux.ibm.com>
+Subject: Re: [RFC PATCH] Makefile: trigger re-configure on updated pythondeps
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
+References: <20240731140232.22193-1-alex.bennee@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240731100953.14950-1-iii@linux.ibm.com>
+In-Reply-To: <20240731140232.22193-1-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,29 +98,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/31/24 20:07, Ilya Leoshkevich wrote:
-> divdu (without a dot) sometimes updates cr0, even though it shouldn't.
-> The reason is that gen_op_arith_divd() checks Rc(ctx->opcode), which is
-> not initialized. This field is initialized only for instructions that
-> go through decode_legacy(), and not decodetree.
+On 8/1/24 00:02, Alex Bennée wrote:
+> If we add additional deps for meson we need to ensure we trigger a
+> reconfigure to make sure everything is set up.
 > 
-> There already was a similar issue fixed in commit 86e6202a57b1
-> ("target/ppc: Make divw[u] handler method decodetree compatible.").
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   Makefile | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> It's not immediately clear what else may access the uninitialized
-> ctx->opcode, so instead of playing whack-a-mole and changing the check
-> to compute_rc0, simply initialize ctx->opcode.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 99082815f17f ("target/ppc: Add infrastructure for prefixed insns")
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> diff --git a/Makefile b/Makefile
+> index 02a257584b..0281a883a1 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -78,7 +78,7 @@ x := $(shell rm -rf meson-private meson-info meson-logs)
+>   endif
+>   
+>   # 1. ensure config-host.mak is up-to-date
+> -config-host.mak: $(SRC_PATH)/configure $(SRC_PATH)/scripts/meson-buildoptions.sh $(SRC_PATH)/VERSION
+> +config-host.mak: $(SRC_PATH)/configure $(SRC_PATH)/scripts/meson-buildoptions.sh $(SRC_PATH)/pythondeps.toml $(SRC_PATH)/VERSION
+>   	@echo config-host.mak is out-of-date, running configure
+>   	@if test -f meson-private/coredata.dat; then \
+>   	  ./config.status --skip-meson; \
 
-Accessing opcode from decodetree should not happen -- divd needs fixing.
-
-But I agree this is a good short-term workaround for the release, so:
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-
 r~
-
 
