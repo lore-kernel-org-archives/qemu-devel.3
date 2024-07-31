@@ -4,93 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36AF8C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 09:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9D9EC3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 09:50:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ5vh-0006h3-RK; Wed, 31 Jul 2024 05:47:33 -0400
+	id 1sZ5yE-00051M-RD; Wed, 31 Jul 2024 05:50:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sZ5vf-0006WQ-Mh
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 05:47:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sZ5vc-000775-FG
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 05:47:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722419247;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RN/EvGyZRi8fcJaZUhpv7a+fbx4w4De6uL4ewPPPpWQ=;
- b=jEvz1X2d1/gwybdklsGKfH1TtKodEndRYxGVOv7atu7EtvuZuV8iFRTwefQS5Uq2aA5INE
- uT96I9XjI4aXyD5K4j/bRWvSv+wWo7LnaCrbqzBHyJuJzfJgEXI44A1pxIbTGlBCYMNlEn
- Ns+wG8azXNufLgxfULZHvj+s2A4Z/TA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-682-xHAaDux5OISdUE05SLOgAg-1; Wed,
- 31 Jul 2024 05:47:23 -0400
-X-MC-Unique: xHAaDux5OISdUE05SLOgAg-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AAAAF19560B1; Wed, 31 Jul 2024 09:47:12 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.33])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D59681955E80; Wed, 31 Jul 2024 09:46:55 +0000 (UTC)
-Date: Wed, 31 Jul 2024 10:46:52 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com,
- andrew@codeconstruct.com.au, andrew@daynix.com,
- arei.gonglei@huawei.com, berto@igalia.com,
- borntraeger@linux.ibm.com, clg@kaod.org, david@redhat.com,
- den@openvz.org, eblake@redhat.com, eduardo@habkost.net,
- farman@linux.ibm.com, farosas@suse.de, hreitz@redhat.com,
- idryomov@gmail.com, iii@linux.ibm.com, jamin_lin@aspeedtech.com,
- jasowang@redhat.com, joel@jms.id.au, jsnow@redhat.com,
- kwolf@redhat.com, leetroy@gmail.com, marcandre.lureau@redhat.com,
- marcel.apfelbaum@gmail.com, michael.roth@amd.com, mst@redhat.com,
- mtosatti@redhat.com, nsg@linux.ibm.com, pasic@linux.ibm.com,
- pbonzini@redhat.com, peter.maydell@linaro.org, peterx@redhat.com,
- philmd@linaro.org, pizhenwei@bytedance.com, pl@dlhnet.de,
- richard.henderson@linaro.org, stefanha@redhat.com,
- steven_lee@aspeedtech.com, thuth@redhat.com,
- vsementsov@yandex-team.ru, wangyanan55@huawei.com,
- yuri.benditovich@daynix.com, zhao1.liu@intel.com,
- qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
- kvm@vger.kernel.org
-Subject: Re: [PATCH 11/18] qapi/crypto: Rename QCryptoHashAlgorithm to *Algo, 
- and drop prefix
-Message-ID: <ZqoIDEjiUqK2dZx4@redhat.com>
-References: <20240730081032.1246748-1-armbru@redhat.com>
- <20240730081032.1246748-12-armbru@redhat.com>
- <Zqir1y4qyp-lwyuz@redhat.com> <8734nrgj5i.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sZ5y9-00050j-ED
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 05:50:05 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1sZ5y6-0007u5-D1
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 05:50:04 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a7a94478a4eso144234866b.1
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 02:50:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722419399; x=1723024199; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=ywDRHfZggrLOa3AidazXf0ImyOnlcAe2cGNjfEmiPEk=;
+ b=yizHdTnAneyyyPbvqrpmMC5Yzhvz0l7VXXfhBRzrJVjl9Zyf2SbQCXkGr9yUCfcQ5J
+ NiXT7nqFHftequtmgP56h5X0/xP/zp0Gi9i18MsriACyW3X7QuVf9oxfvalMkaXGNZbQ
+ +VpvYD8fYokE6VuarjqqON6lTEYAb2WcvjXjyl5csiffQrYhDHEw6tiiBa0xCGOVQO5y
+ N9acPFAf/cGIKz7L39fu+CPtCX3TjYCZK6EYDpDJRoWebQKVM6aQ7q5YFWK+I4oUKu9V
+ OkEJ5PsvELkofDuRi3xXix7cZexx8vUDpuZoIw/1UoCDuzTLWY9/HdzucaW/ct6llO2j
+ 7D5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722419399; x=1723024199;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ywDRHfZggrLOa3AidazXf0ImyOnlcAe2cGNjfEmiPEk=;
+ b=ejUHoHc8VMvdoq4ggI+73IaXybpxhlpAsJNo4KMygfGD80dwTWSW7EMiY5MFBREKCa
+ 3gMO1jdQKXbWKLYQqe+UgMGk7o3vouHkoqM6TvIpFumDuuhoYmaT629PvQ2Gp5bCalXW
+ PTiL0L1fPWkCUSsnZC3/MOZm5Q+g3VADui69ZM2DSrU80uyZAVk8p8YuDMlg4Ax5s+kS
+ Q10GmgUd+xHm/ZeWC0RfJhYajD8ExdwvrdM8msLpGYxjLoC5tdL8yq9ImYrECjU+3bAd
+ DyEjYk9nZaGr4rsdDJAes4D+yZif4OFVpTwHKRSipIFt/8kJ9PYmXS8bHGxlv+ayRZO/
+ 0urQ==
+X-Gm-Message-State: AOJu0YzKaAZj70c2LKyNQWNnjfNSSGwNBo8Od+kj8UQ9IAXl8EY21gXw
+ q+sf8r55YHP5Jpc+TE8jiUuRDZJy53KHll8ytNbgn/O84KmivCeyohEI8jHjYPg=
+X-Google-Smtp-Source: AGHT+IFoQLOQFIvtRDRHcx7MEvI7NZj7QFDCvnL9pro8ZTqYWUIC9/lADIvrU1pwxhs7LHLzdscLbg==
+X-Received: by 2002:a17:907:7249:b0:a7a:b18a:69 with SMTP id
+ a640c23a62f3a-a7d8590d130mr431073266b.10.1722419399443; 
+ Wed, 31 Jul 2024 02:49:59 -0700 (PDT)
+Received: from meli-email.org (adsl-146.37.6.160.tellas.gr. [37.6.160.146])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7acad411a6sm739844866b.117.2024.07.31.02.49.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 31 Jul 2024 02:49:59 -0700 (PDT)
+Date: Wed, 31 Jul 2024 12:41:08 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>,
+ Alex Benn=?UTF-8?B?w6kg?=e <alex.bennee@linaro.org>,
+ "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
+ Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [RFC PATCH v5 0/8] Add Rust support, implement ARM PL011
+User-Agent: meli 0.8.7
+References: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
+ <bc27a983-f0b7-4803-96f7-060a4a331348@redhat.com>
+ <h4gxy.dr366knvycy@linaro.org>
+ <CABgObfZOqBogWQtzfghjKMsW-J_sp-iL5dt7mmYnvE5eQb9G5w@mail.gmail.com>
+ <h61ku.ipxyjqsxu75@linaro.org>
+ <CABgObfa-dxDD_oVGu8PrQffVhvP=MFifUUTinC-brzTnqdkK0A@mail.gmail.com>
+ <h6cgm.o8scn84hx1ry@linaro.org>
+ <CABgObfbyw0qPM_T=SpGyHYD02x2jOdSy5nfwKpOx-WruhkJe9Q@mail.gmail.com>
+ <CAAjaMXY3jL=cVs=e+6kiJw_WrfG5vOaqaNFu74BdoK2-bO7ZLQ@mail.gmail.com>
+ <CABgObfb27wbwgErFsMdsuSo1BxQVBoRfbrUmK2k-x5Ya3ez0TA@mail.gmail.com>
+ <h7zb4.aog50x8tfxkp@linaro.org>
+ <CABgObfbJjcwXcJ-=c7yfXQX=xLnqqVsvDqibrFgiLPm4C_uC6Q@mail.gmail.com>
+ <CAAjaMXatq0jGrght=Fc-7TpZvuGzirhWyKsAsCRq1BW_U_CW=g@mail.gmail.com>
+In-Reply-To: <CAAjaMXatq0jGrght=Fc-7TpZvuGzirhWyKsAsCRq1BW_U_CW=g@mail.gmail.com>
+Message-ID: <hhfb9.99e4vl1r79fa@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <8734nrgj5i.fsf@pond.sub.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,108 +112,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 30, 2024 at 02:26:49PM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
-> 
-> > On Tue, Jul 30, 2024 at 10:10:25AM +0200, Markus Armbruster wrote:
-> >> QAPI's 'prefix' feature can make the connection between enumeration
-> >> type and its constants less than obvious.  It's best used with
-> >> restraint.
-> >> 
-> >> QCryptoHashAlgorithm has a 'prefix' that overrides the generated
-> >> enumeration constants' prefix to QCRYPTO_HASH_ALG.
-> >> 
-> >> We could simply drop 'prefix', but then the prefix becomes
-> >> QCRYPTO_HASH_ALGORITHM, which is rather long.
-> >> 
-> >> We could additionally rename the type to QCryptoHashAlg, but I think
-> >> the abbreviation "alg" is less than clear.
-> >
-> > I would have gone with this, but it is a bit of a bike shed colouring
-> > debate so I'm not fussed
-> 
-> Either solution seems okay, so I went with my personal preference.  Do
-> feel free to state yours and ask me to respin!
+On Fri, 26 Jul 2024 12:26, Manos Pitsidianakis <manos.pitsidianakis@linaro.org> wrote:
+>On Fri, 26 Jul 2024 at 11:19, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>> As I said, I don't see the point in discussing this more, and I'm not
+>> going to unless you provide a clear pointer to documentation that
+>> states the opposite.
+>
+>Same here.
 
-After reviewing the patches that follow, I'd observe that picking
-Algo has made the following patches much larger than if it had
-stuck with Alg. Basically changing both the types & constants,
-instead of only having to change the types. 
+Next patch series version is taking more time than I expected because of 
+unrelated issues, plus I'm on PTO these days, so I am posting the 
+resolution (which I hope satisfies everyone) here early:
 
-> 
-> >> Rename the type to QCryptoHashAlgo instead.  The prefix becomes to
-> >> QCRYPTO_HASH_ALGO.
-> >> 
-> >> Signed-off-by: Markus Armbruster <armbru@redhat.com>
-> >> ---
-> >>  qapi/crypto.json                        | 17 +++++-----
-> >>  crypto/blockpriv.h                      |  2 +-
-> >>  crypto/hashpriv.h                       |  2 +-
-> >>  crypto/hmacpriv.h                       |  4 +--
-> >>  crypto/ivgenpriv.h                      |  2 +-
-> >>  include/crypto/afsplit.h                |  8 ++---
-> >>  include/crypto/block.h                  |  2 +-
-> >>  include/crypto/hash.h                   | 18 +++++-----
-> >>  include/crypto/hmac.h                   |  6 ++--
-> >>  include/crypto/ivgen.h                  |  6 ++--
-> >>  include/crypto/pbkdf.h                  | 10 +++---
-> >>  backends/cryptodev-builtin.c            |  8 ++---
-> >>  backends/cryptodev-lkcf.c               | 10 +++---
-> >>  block/parallels-ext.c                   |  2 +-
-> >>  block/quorum.c                          |  4 +--
-> >>  crypto/afsplit.c                        |  6 ++--
-> >>  crypto/block-luks.c                     | 16 ++++-----
-> >>  crypto/block.c                          |  2 +-
-> >>  crypto/hash-afalg.c                     | 26 +++++++--------
-> >>  crypto/hash-gcrypt.c                    | 20 +++++------
-> >>  crypto/hash-glib.c                      | 20 +++++------
-> >>  crypto/hash-gnutls.c                    | 20 +++++------
-> >>  crypto/hash-nettle.c                    | 18 +++++-----
-> >>  crypto/hash.c                           | 30 ++++++++---------
-> >>  crypto/hmac-gcrypt.c                    | 22 ++++++-------
-> >>  crypto/hmac-glib.c                      | 22 ++++++-------
-> >>  crypto/hmac-gnutls.c                    | 22 ++++++-------
-> >>  crypto/hmac-nettle.c                    | 22 ++++++-------
-> >>  crypto/hmac.c                           |  2 +-
-> >>  crypto/ivgen.c                          |  4 +--
-> >>  crypto/pbkdf-gcrypt.c                   | 36 ++++++++++----------
-> >>  crypto/pbkdf-gnutls.c                   | 36 ++++++++++----------
-> >>  crypto/pbkdf-nettle.c                   | 32 +++++++++---------
-> >>  crypto/pbkdf-stub.c                     |  4 +--
-> >>  crypto/pbkdf.c                          |  2 +-
-> >>  hw/misc/aspeed_hace.c                   | 16 ++++-----
-> >>  io/channel-websock.c                    |  2 +-
-> >>  target/i386/sev.c                       |  6 ++--
-> >>  tests/bench/benchmark-crypto-akcipher.c | 12 +++----
-> >>  tests/bench/benchmark-crypto-hash.c     | 10 +++---
-> >>  tests/bench/benchmark-crypto-hmac.c     |  6 ++--
-> >>  tests/unit/test-crypto-afsplit.c        | 10 +++---
-> >>  tests/unit/test-crypto-akcipher.c       |  6 ++--
-> >>  tests/unit/test-crypto-block.c          | 16 ++++-----
-> >>  tests/unit/test-crypto-hash.c           | 42 +++++++++++------------
-> >>  tests/unit/test-crypto-hmac.c           | 16 ++++-----
-> >>  tests/unit/test-crypto-ivgen.c          |  8 ++---
-> >>  tests/unit/test-crypto-pbkdf.c          | 44 ++++++++++++-------------
-> >>  ui/vnc.c                                |  2 +-
-> >>  util/hbitmap.c                          |  2 +-
-> >>  crypto/akcipher-gcrypt.c.inc            | 14 ++++----
-> >>  crypto/akcipher-nettle.c.inc            | 26 +++++++--------
-> >>  52 files changed, 350 insertions(+), 351 deletions(-)
-> >
-> > Acked-by: Daniel P. Berrangé <berrange@redhat.com>
-> 
-> Thanks!
-> 
+It's possible to refactor this code (and any other similar cases) to 
+prevent recursive mutable calls:
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+diff --git a/rust/hw/char/pl011/src/device.rs 
+b/rust/hw/char/pl011/src/device.rs
+index 3643b7bdee..449930e34e 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -104,10 +127,14 @@ pub fn init(&mut self) {
+         }
+     }
+ 
+-    pub fn read(&mut self, offset: hwaddr, _size: core::ffi::c_uint) -> u64 {
++    pub fn read(
++        &mut self,
++        offset: hwaddr,
++        _size: core::ffi::c_uint,
++    ) -> std::ops::ControlFlow<u64, u64> {
+         use RegisterOffset::*;
+ 
+-        match RegisterOffset::try_from(offset) {
++        std::ops::ControlFlow::Break(match RegisterOffset::try_from(offset) {
+             Err(v) if (0x3f8..0x400).contains(&v) => {
+                 u64::from(PL011_ID_ARM[((offset - 0xfe0) >> 2) as usize])
+             }
+@@ -134,10 +161,8 @@ pub fn read(&mut self, offset: hwaddr, _size: core::ffi::c_uint) -> u64 {
+                 // Update error bits.
+                 self.receive_status_error_clear = c.to_be_bytes()[3].into();
+                 self.update();
+-                // SAFETY: self.char_backend is a valid CharBackend instance after it's been
+-                // initialized in realize().
+-                unsafe { qemu_chr_fe_accept_input(&mut self.char_backend) };
+-                c.into()
++                // Must call qemu_chr_fe_accept_input, so return Continue:
++                return std::ops::ControlFlow::Continue(c.into());
+             }
+             Ok(RSR) => u8::from(self.receive_status_error_clear).into(),
+             Ok(FR) => u16::from(self.flags).into(),
+@@ -159,7 +184,7 @@ pub fn read(&mut self, offset: hwaddr, _size: core::ffi::c_uint) -> u64 {
+                 0
+             }
+             Ok(DMACR) => self.dmacr.into(),
+-        }
++        })
+     }
+ 
+     pub fn write(&mut self, offset: hwaddr, value: u64) {
+diff --git a/rust/hw/char/pl011/src/memory_ops.rs b/rust/hw/char/pl011/src/memory_ops.rs
+index 6144d28586..5e185b7cd7 100644
+--- a/rust/hw/char/pl011/src/memory_ops.rs
++++ b/rust/hw/char/pl011/src/memory_ops.rs
+@@ -29,7 +29,18 @@
+ ) -> u64 {
+     assert!(!opaque.is_null());
+     let mut state = NonNull::new_unchecked(opaque.cast::<PL011State>());
+-    state.as_mut().read(addr, size)
++    let val = state.as_mut().read(addr, size);
++    match val {
++        std::ops::ControlFlow::Break(val) => val,
++        std::ops::ControlFlow::Continue(val) => {
++            // SAFETY: self.char_backend is a valid CharBackend instance after it's been
++            // initialized in realize().
++            let cb_ptr = core::ptr::addr_of_mut!(state.as_mut().char_backend);
++            unsafe { qemu_chr_fe_accept_input(cb_ptr) };
++
++            val
++        }
++    }
+ }
 
+When we iterate the APIs further we will find better idiomatic solutions 
+that do not rely on devices themselves to do this kind of stuff, but 
+offer interfaces from the `qemu_api` library crate.
+
+Manos
 
