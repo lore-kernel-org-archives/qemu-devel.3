@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B9B5C3DA49
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 01:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD1A0C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 01:54:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYyV1-0002J0-Mz; Tue, 30 Jul 2024 21:51:31 -0400
+	id 1sYyXo-0001eU-KI; Tue, 30 Jul 2024 21:54:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYyUz-00024K-AZ
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 21:51:29 -0400
-Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
+ id 1sYyXm-0001dJ-Uu
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 21:54:22 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYyUx-0001J0-3Q
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 21:51:29 -0400
-Received: by mail-oi1-x236.google.com with SMTP id
- 5614622812f47-3db23a60850so2721317b6e.0
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 18:51:26 -0700 (PDT)
+ id 1sYyXl-0001Zu-BI
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 21:54:22 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-70b703eda27so3254824b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 18:54:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722390685; x=1722995485; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722390859; x=1722995659; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=YodfNcbGtvoXcJeB7WPuIo6K9jXYBdtCULtnjlba9pw=;
- b=RLDz/S65If3gNkCmzCdzjXTVr3vQ0y/7A9OU1QOys8Lt8JTd6Q2/5F6F/+Jrjhcic/
- cx+uT5b8j9cCkTiYzXAucimBQ01X2zdwaBlZDId1IGVO/O4ak/Q/bQion2y6egAHTkd0
- Qphl/xwEYdUCGIpEatcqMPK0nP/rHJAOV7IDVzYJtI3mA9D/XvFNu+FDqLnyz/TTF6Ru
- KMgmHUTxr6MdG4GOV21AzUHTxum+xAhjWWFLmQxiEfTDGVEyscrCDwrxF4uXLD4LyZMf
- +I+eZ7mSo60Ff7S33qrClic7cphy2AC1fYiA4HrEtD6tFOLB+Cdu1qsYgqgcyx+9xJWp
- EfZw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0gAdli0Cj6MUdZc2HqpMRDIV6jZ9ikCRcSUpGYpt6NA=;
+ b=R/Cu+4QKbpIFTK1iZxPzgRurmNs5r7dzyD/hiLacPZ7hIgcEuKshSMxETwa4CywV1d
+ eRTYEqX7uTZ3Yu9RMyaQTRgjLY42u18J7C1SmkT9zTlvqiMh6CMLubbO2Mmrk0iyW82g
+ M/qhgP/BHYlOUCXiZUQu8QpscBTDcCtiYRxdQuvKbaWxm3tmVF91PnJB7NYJMgrPMuws
+ XFcskq1TXoKCVpGN/WzhZ9ym53IT/J5p3ZjO910KrvPzP96tdokM9PJIkGBZFZa0pW69
+ CVbUxmnFgJXqSmBOX3ety4G19lOnk+44Nj7HmbnaXxlzJKKljhu1PVxjQcgsjEBLcw/3
+ 2muw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722390685; x=1722995485;
+ d=1e100.net; s=20230601; t=1722390859; x=1722995659;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YodfNcbGtvoXcJeB7WPuIo6K9jXYBdtCULtnjlba9pw=;
- b=p4XdMcmlVTUb5MvGPADM3iaCpOQOxTUDCseDl6wqda4Dey6MUrA1L826KLUezWqApo
- QM8zPcLBS+t/8In6zRDmJ8OyHLzgg7CRp4MxNAaoOdtHmNN01wpSgds1PkpdTJHLjxfv
- c3ZuNBrJFV1oHJrY0mf8u7u5zhctvWktu+5UmmwmI9aXOF4r5gp6u8NSQ3oFvpQJY1/J
- rL4C3GqSfNOGf4lri6lXPM9KfhVVSCFL9YlP5xggdZ10aAbPPNclx6guAMAW6OyoFgLk
- CHwACKIQb0dAbLKvGKltIRX1Kui7T9yx2Z0ddnQtRSyVcJ3xjoAlNlkUcmztm1UGdS+3
- yKqg==
+ bh=0gAdli0Cj6MUdZc2HqpMRDIV6jZ9ikCRcSUpGYpt6NA=;
+ b=IsPjo5qKJsZoYVgCBosgfQ61DqVyZ/OBGP16yCoyoTyN8TXAdvAdXJYSSZ2mkVgMrH
+ TMeg0n6bnmtFOtc+8xH7otqsiXRa0a6qT4bzooRkOt4sNfE/QAKCLmKw2eArW+0fPYXM
+ eL7PSPGyC24Oeu3ytM0UmQFu3gBqdWTdgKKxrVFtUakP0aezmY/Gj2/MuE0exu+VfXTF
+ dB+DgKtz10cdwt5FIR4RvYLt6MHxcb2bE3LW3lL+9M9Gc/61sIJ95kNekFzpbeEIF3HT
+ tQIBXTSs4elWn5UI2qO8UeCqteeoEg+iCg9s4dRFwkVrcEcnpM2vzqWpjAAPl5HxFN8k
+ f7QQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVYpPi5bxxd99h3cN40wtYs7ePPyEGe6x3UbZM/Ulnf2JsqqCbKAhIpy9tPHdCRfo4ak4QnZ5EvY9srR6dOrUjumTRcwh8=
-X-Gm-Message-State: AOJu0YyCY925OLpzYNBni8ibCcIEHooJOxrTvGBAC5YKRX4a5vGjrsAK
- tpTydyLcT36vcmpdG1TF6PtLtKxh+zesrzKTo2Q8rWDyngBoEx9Qqb2GCnOboUA=
-X-Google-Smtp-Source: AGHT+IEta2/sogBQ8lm5ohg65nXUi1qsW9zueQ0ORLLLhEl+0ozJmyP0ZTZYfstBz4Zj85WDRX9I8Q==
-X-Received: by 2002:a05:6808:23c7:b0:3d9:ddce:ed31 with SMTP id
- 5614622812f47-3db23d381e7mr14964860b6e.45.1722390685657; 
- Tue, 30 Jul 2024 18:51:25 -0700 (PDT)
+ AJvYcCVin2bH19NtZGdMQ7Gpogk51a6pvfFugs5e2/rual4BjbCLZk8mZ/IJfnY0V4orn3QW60AEpKJO//Qr4weUtwXlM+LVAzE=
+X-Gm-Message-State: AOJu0YypMdgpPKRUywqGun6IS9khbDHFTe+ObPaH/G2L3urEnv2a2duq
+ m8a7S6YBXwdge4C9Nyek7auDcSAFHs4lk1SYJyTNcPdGG2GOqDAt9JuZskez1sg=
+X-Google-Smtp-Source: AGHT+IEGApD9wy09kEYKOyEFNafB8lgVMQTd8q9cALWOWORweMDTNO86xdu4k9dfEK1WqEPjua4kEw==
+X-Received: by 2002:a05:6a20:3049:b0:1c4:8690:9862 with SMTP id
+ adf61e73a8af0-1c4a14eefb7mr9309657637.43.1722390859060; 
+ Tue, 30 Jul 2024 18:54:19 -0700 (PDT)
 Received: from ?IPV6:2403:580a:f89b:0:7406:659b:9ac8:69bb?
  (2403-580a-f89b-0-7406-659b-9ac8-69bb.ip6.aussiebb.net.
  [2403:580a:f89b:0:7406:659b:9ac8:69bb])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7a9f9fbd763sm9523977a12.61.2024.07.30.18.51.23
+ 98e67ed59e1d1-2cfdc453f38sm100696a91.24.2024.07.30.18.54.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jul 2024 18:51:25 -0700 (PDT)
-Message-ID: <a7723de4-b4bb-4f69-87b7-39e5e682def8@linaro.org>
-Date: Wed, 31 Jul 2024 11:51:20 +1000
+ Tue, 30 Jul 2024 18:54:18 -0700 (PDT)
+Message-ID: <ee2865fb-e0be-417c-be28-c44ab04ddea1@linaro.org>
+Date: Wed, 31 Jul 2024 11:54:09 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] target/arm: Enable FEAT_EBF16 in the "max" CPU
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+Subject: Re: [PATCH v6 1/5] qemu/osdep: Move close_all_open_fds() to
+ oslib-posix
+To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
  qemu-devel@nongnu.org
-References: <20240730160306.2959745-1-peter.maydell@linaro.org>
- <20240730160306.2959745-9-peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240730122437.1749603-1-cleger@rivosinc.com>
+ <20240730122437.1749603-2-cleger@rivosinc.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240730160306.2959745-9-peter.maydell@linaro.org>
+In-Reply-To: <20240730122437.1749603-2-cleger@rivosinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x236.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,17 +104,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/31/24 02:03, Peter Maydell wrote:
-> Now that we've implemented the required behaviour for FEAT_EBF16, we
-> can enable it for the "max" CPU type, list it in our documentation,
-> and delete a TODO comment about it being missing.
+On 7/30/24 22:24, Clément Léger wrote:
+> Move close_all_open_fds() in oslib-posix, rename it
+> qemu_close_all_open_fds() and export it.
 > 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> Signed-off-by: Clément Léger<cleger@rivosinc.com>
 > ---
->   docs/system/arm/emulation.rst  | 1 +
->   target/arm/tcg/cpu64.c         | 4 ++--
->   target/arm/tcg/translate-sme.c | 1 -
->   3 files changed, 3 insertions(+), 3 deletions(-)
+>   include/qemu/osdep.h    |  7 +++++++
+>   system/async-teardown.c | 37 +------------------------------------
+>   util/oslib-posix.c      | 34 ++++++++++++++++++++++++++++++++++
+>   3 files changed, 42 insertions(+), 36 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
