@@ -4,83 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11EDEC3DA64
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3C16C52D1D
 	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 14:50:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZAeN-0004EM-St; Wed, 31 Jul 2024 10:49:59 -0400
+	id 1sZAe2-0002en-52; Wed, 31 Jul 2024 10:49:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philipp.reisner@linbit.com>)
- id 1sZAeL-00044P-BZ
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 10:49:58 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philipp.reisner@linbit.com>)
- id 1sZAeI-0005eo-Ql
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 10:49:57 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a7a975fb47eso809262366b.3
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 07:49:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linbit-com.20230601.gappssmtp.com; s=20230601; t=1722437391; x=1723042191;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0KaoxBzIIywVnQdSBrnOgH21sK/NEKHNZyj6SYMBRxs=;
- b=NBxP0jPdAN6cQ6okYaZmDTKLLR5U8tEIVj3T/Y4yQPUg0CcZRpUbJ5cN0nv6bF/3lT
- HxUck20KhKfoy63/XqUO+dc42e/BLNK5ZAB/9sfjiRU3w45c367IQoB8Ya7pJ8jIH8v2
- ElQ6e9IUzP+1SF4f3PMdDM1fuI9J47pQw4IOqiGPCTSL2KsUaLM8Ln7nkOxV9zJgVaCH
- M8xi9oDnUK6IFPSraBSeVJknrJ99g8LnbnkugMo3sFj28EdShGg5cspL9ZE+GwuWbrlZ
- /gdATMTYOGNCEklHCY+HsNEru+/k4/GJ0wb5fuR1iAsTBXQjWDCI8CtgtYFzPYwW8ah3
- 24Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722437391; x=1723042191;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0KaoxBzIIywVnQdSBrnOgH21sK/NEKHNZyj6SYMBRxs=;
- b=C1xzBU2jbbCBnxptS+/YR/hoM6e6z15Bnc+tue3KcoDcQeNVPUJfj0hlLv8xih2y6J
- hv/AwYQZz7hXoojq1cZtUgYHgjJ8xwCrFbhyvSmNsd7zYkrM/hRbINIsAhWrnj3WGGqT
- YIY4p616SCU5OAmzLEcNHpBVl9L4LaVArmIeBH/b/8QqDnTUVDyYDEhHQyscrBLKb9iy
- iVn2pZfkWKRAZmgxIDbrL/gofieIHU61t6dJiPQk+jE/Le5+oSsb0Zy7oVqGb+9yY0El
- ScYVhMz+eJr/DQYWyxXIyZ8QMTsjMjsEHPFtWOVlpnS5G8ri0piaTt5T8XpqquE14SZi
- P3ZA==
-X-Gm-Message-State: AOJu0YzlmEl4rVpBrKNnsgO5sSsAYAZ24EfR/QIgFZeZsU0oifwweMCI
- XvlhW1lTub+SqqpfTLpw7hobSRVb01y2C6aUN2SuRF7I5k/hg6CI7C2eBVyIwXFEH/L2IW4Mla3
- m
-X-Google-Smtp-Source: AGHT+IGRJujEA8FhVJdUsxTMGkfPJm0ohneerJcJ1QRysk3lrHNOmAyWkJ+auV6fyD2gNSYMsZQ2gQ==
-X-Received: by 2002:a17:907:3e1a:b0:a7a:9a78:4b4e with SMTP id
- a640c23a62f3a-a7d400e8951mr933366466b.40.1722437391499; 
- Wed, 31 Jul 2024 07:49:51 -0700 (PDT)
-Received: from ryzen9.home (193-80-247-151.adsl.highway.telekom.at.
- [193.80.247.151]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acab23125sm779180466b.1.2024.07.31.07.49.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Jul 2024 07:49:51 -0700 (PDT)
-From: Philipp Reisner <philipp.reisner@linbit.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Philipp Reisner <philipp.reisner@linbit.com>
-Subject: [PATCH] util: retry open() when it gets interrupted by a signal
-Date: Wed, 31 Jul 2024 16:49:46 +0200
-Message-ID: <20240731144946.322498-1-philipp.reisner@linbit.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <CAFEAcA9J37Z1JJb34zyRDo=ow0h1QgOq9bm10dCc0u5bMyQKpg@mail.gmail.com>
-References: <CAFEAcA9J37Z1JJb34zyRDo=ow0h1QgOq9bm10dCc0u5bMyQKpg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <SRS0=ZOnj=O7=kaod.org=clg@ozlabs.org>)
+ id 1sZAe0-0002aS-Pm; Wed, 31 Jul 2024 10:49:36 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=ZOnj=O7=kaod.org=clg@ozlabs.org>)
+ id 1sZAdx-0005br-Up; Wed, 31 Jul 2024 10:49:36 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WYw3Y1Xllz4wZx;
+ Thu,  1 Aug 2024 00:49:29 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WYw3V304Vz4wcl;
+ Thu,  1 Aug 2024 00:49:26 +1000 (AEST)
+Message-ID: <ceba3fd8-ac6b-4b84-ad1d-5854a0caf3eb@kaod.org>
+Date: Wed, 31 Jul 2024 16:49:24 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] hw/ppc: Implement -dtb support for PowerNV
+To: Aditya Gupta <adityag@linux.ibm.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+References: <20240731132235.887918-1-adityag@linux.ibm.com>
+ <Zqo9SOG_t-iI9xW4@redhat.com>
+ <fenybu4ixflehyc64kt4s73nqderhkl6xcik5gvgopot23dg75@e4asgghuctp3>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <fenybu4ixflehyc64kt4s73nqderhkl6xcik5gvgopot23dg75@e4asgghuctp3>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=philipp.reisner@linbit.com; helo=mail-ej1-x630.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=ZOnj=O7=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,38 +71,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As with many syscalls, open() might be interrupted by a signal.
+On 7/31/24 15:51, Aditya Gupta wrote:
+> Hi Daniel,
+> 
+> Thank you for the review.
+> 
+> On 24/07/31 02:34PM, Daniel P. Berrangé wrote:
+>> On Wed, Jul 31, 2024 at 06:52:35PM +0530, Aditya Gupta wrote:
+>>> Currently any device tree passed with -dtb option in QEMU, was ignored
+>>> by the PowerNV code.
+>>>
+>>> Read and pass the passed -dtb to the kernel, thus enabling easier
+>>> debugging with custom DTBs.
+>>>
+>>> The existing behaviour when -dtb is 'not' passed, is preserved as-is.
+>>>
+>>> But when a '-dtb' is passed, it completely overrides any dtb nodes or
+>>> changes QEMU might have done, such as '-append' arguments to the kernel
+>>> (which are mentioned in /chosen/bootargs in the dtb), hence add warning
+>>> when -dtb is being used
+>>>
+>>> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+>>>
+>>> ---
+>>> This is an RFC patch, and hence might not be the final implementation,
+>>> though this current one is a solution which works
+>>> ---
+>>> ---
+>>>   hw/ppc/pnv.c | 29 ++++++++++++++++++++++++++---
+>>>   1 file changed, 26 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+>>> index 3526852685b4..12cc909b9e26 100644
+>>> --- a/hw/ppc/pnv.c
+>>> +++ b/hw/ppc/pnv.c
+>>> @@ -714,6 +714,8 @@ static void pnv_reset(MachineState *machine, ShutdownCause reason)
+>>>       PnvMachineState *pnv = PNV_MACHINE(machine);
+>>>       IPMIBmc *bmc;
+>>>       void *fdt;
+>>> +    FILE *fdt_file;
+>>> +    uint32_t fdt_size;
+>>>   
+>>>       qemu_devices_reset(reason);
+>>>   
+>>> @@ -736,10 +738,31 @@ static void pnv_reset(MachineState *machine, ShutdownCause reason)
+>>>           }
+>>>       }
+>>>   
+>>> -    fdt = pnv_dt_create(machine);
+>>> +    if (machine->dtb) {
+>>> +        warn_report("with manually passed dtb, some options like '-append'"
+>>> +                " might ignored and the dtb passed will be used as-is");
+>>
+>> Check whether append is actually set, and report an fatal error in
+>> that case.
+> 
+> Got it.
 
-The experienced logfile entry is:
+and this check should be done preferably when the machine is initialized,
+not in the reset handler.
 
-qemu-system-x86_64: -device virtio-blk-pci,bus=pci.0,addr=0x7,drive=libvirt-2-format,id=virtio-disk0,bootindex=2,write-cache=on,serial=1b990c4d13b74a4e90ea: Could not open '/dev/drbd1003': Interrupted system call
+Thanks,
 
-Retry it until it is not interrupted by a signal.
-FYI, dd has the same kind of loop aroud open().
-https://github.com/coreutils/coreutils/blob/1ae98dbda7322427e8226356fd110d2553f5fac9/src/dd.c#L1294-L1299
-
-Signed-off-by: Philipp Reisner <philipp.reisner@linbit.com>
----
- util/osdep.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/util/osdep.c b/util/osdep.c
-index 770369831b..13a09d0dd5 100644
---- a/util/osdep.c
-+++ b/util/osdep.c
-@@ -295,9 +295,9 @@ static int qemu_open_cloexec(const char *name, int flags, mode_t mode)
- {
-     int ret;
- #ifdef O_CLOEXEC
--    ret = open(name, flags | O_CLOEXEC, mode);
-+    ret = RETRY_ON_EINTR(open(name, flags | O_CLOEXEC, mode));
- #else
--    ret = open(name, flags, mode);
-+    ret = RETRY_ON_EINTR(open(name, flags, mode));
-     if (ret >= 0) {
-         qemu_set_cloexec(ret);
-     }
--- 
-2.45.2
+C.
 
 
