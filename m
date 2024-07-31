@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 221A0C3DA49
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 02:06:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B64F0C3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 04:30:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYyjT-0001T9-5L; Tue, 30 Jul 2024 22:06:27 -0400
+	id 1sZ0yE-0000pF-Kx; Wed, 31 Jul 2024 00:29:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYyjQ-0001KH-NV
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 22:06:25 -0400
-Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
+ id 1sZ0yD-0000o5-Qu
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 00:29:49 -0400
+Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYyjP-0003m6-6P
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 22:06:24 -0400
-Received: by mail-oi1-x22a.google.com with SMTP id
- 5614622812f47-3db1e4219f8so2472935b6e.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 19:06:22 -0700 (PDT)
+ id 1sZ0yC-0002Jd-DD
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 00:29:49 -0400
+Received: by mail-pf1-x433.google.com with SMTP id
+ d2e1a72fcca58-70d23caf8ddso4664696b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 21:29:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722391582; x=1722996382; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722400187; x=1723004987; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/oZnIoWS8Boc6hr1jldAe1Z/o0jK9T0TOr7Ac5iafUg=;
- b=W3dy0qNOVEGiAxJvPCIjjRWYiI14YlBIFlpxI+mhFdu9ifiztfv0ZnQ1ggACSLkDim
- kdzU6tpE7kUmaB5xfFR/W7ju0NxexKmtI8BzVIvvp+5IJpvwvaWQR9iuN6Jgad2VtEE0
- /SynVZoQOmW4xsKHlv7YwZpnkE/yMk/EAQvOIh93665C9acsLvi77AC3WQfLAg8ZMZCg
- hb5mFmIituESB1BckiD/vW+crJFcn8cTy7Ibcu4iCHBZCmuckbQYSgSqA92wRhmu0vBg
- 94qe2AVVD3X2VZTqsiGCCnBJ67C2+YyK75fV+5aIyUkhrJgEmulOE1tlGec6mN45YOVv
- pjqA==
+ bh=RrcvB/2N6QRAt7REXOCYL+sKYE9m4S4VffXyA3NgLUQ=;
+ b=jhcWjdOFM5APHEOqYDl2qu6ii20qff4vMMDCAbzhcGnOqyUrMxYCbJN/UVmqnrlIo2
+ 3cc1L1zCqtTwaif/7COAvOXSTeEpxKul8rw87wyPhrrdBLt9A7DgaJ7tYEZUId8aLEtI
+ 6hnObuhSiBqhgBAkXXRz690/xGGFdR/+F4YdJFzbAvA+TJvT3jrcc0yguNs3d/RE/X/x
+ 0J3xZFqM6rdAEuijKi6fDWkk7Xn/nClveqtIpEcU1/wIObP0L4kfYlz+gYm6tgsUGeUP
+ iijM5zujWdxQccS5XUeOIfMMQZjYRJmMFyewsIRGY5BPTVnH7k9psjrBjFwsZYbNrAL4
+ +lKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722391582; x=1722996382;
+ d=1e100.net; s=20230601; t=1722400187; x=1723004987;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/oZnIoWS8Boc6hr1jldAe1Z/o0jK9T0TOr7Ac5iafUg=;
- b=bMqIKQY3X+bdOclSalZXS1H0+GmiprG4yJnoxY8HqKl+7A6G07BW5L9PJBDylzGXG2
- A6Vxt+Ek3LbfofTET37DBZyjbvP+bOXG+1iI4O5Ssl8X2+1ViaHQKdWxmAgbuxGC9dUh
- SQoco7ty/qGfCfCpXeTAlpQ+P/kbQZAJK6zG3qpKzIV7uEdEvAkCZ71Ehr4Y+kslGn/B
- Ckgbgsk0eGGcQ+joNri6zbhQNPnPHTX8sXFUl18TbiMaYeAuKwnQVw1fX75CMdm8N4v5
- U2W4ulfkomy/S/rSVq6L38Zsi28kMAxvr758+t0Vme2tYODjRX76//Y2oU9+g475KeXM
- UrDQ==
+ bh=RrcvB/2N6QRAt7REXOCYL+sKYE9m4S4VffXyA3NgLUQ=;
+ b=crcOggTUKy+E0a27tugMdEpeOI5QZ/Vpx46C2zm4Z42G3/opnkjO8EuhVibbAhP87s
+ Fq8ZcqAchcZ93rNE4kbjAU24XGOMx1oYsm4OWyKdYdYgJeE6VK6kZdOz8h8Mxbqi7p6k
+ bT4kdqOE7S8EgavJOLOqgAbCRLARZmmR5EtMJlYlqmVk0J2iPj02JAg/FcxesSYqbkv8
+ by3V8qkcxyAtldIfKVbFMNgJgvEy13kTFfJLbjNdBUBoBMTyDgNkxw9Qy9mT64jrrpop
+ mxJrAPT/8t1nhF1qdXtm9QhBAnTpgqrD0d6TznYpsO56f/uODxFSLAHLaE/okb4RgIKq
+ pFhg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWBLyWghrEdM3YYIlk9IYRvylkdZdxjINeTEmw0s593anmh/8dRN7WkQKNq2CW65bPBJcTDOsu53RuaEj9+joHejzP+yic=
-X-Gm-Message-State: AOJu0YydXjEq3c8w9Jit+vrt5QPINfPAZUh3kbsQgxR5nzV8veZr+R+y
- DTw56gzwovx993cPJRQQzLWoAqhgwMfKgUpzpDh/Crq7GBssTvRrS6G73mjLem0=
-X-Google-Smtp-Source: AGHT+IFEd/srs85hX95ZpkllaAvoD2x4oqxKoUJekiUgac6ozuEMMzcynCqr3KoCumNNQTtS62dF+A==
-X-Received: by 2002:a05:6808:d4d:b0:3db:3102:adc6 with SMTP id
- 5614622812f47-3db3102ba15mr9566839b6e.41.1722391581728; 
- Tue, 30 Jul 2024 19:06:21 -0700 (PDT)
+ AJvYcCXJDriniXfaBw3gr1coCSUHJJeL5nHCknjIZ0YcCv47JW8n2FOOeD3OYKwfdo29pUQ4/USrDRaDuYRv3+o3ppvaf7TX4NI=
+X-Gm-Message-State: AOJu0Yy1K8VF27FvCyyHGps7eYSJ8CzOc6/39aiGvtYdafbdUt87Zeah
+ v/mkatMlIQNyKMhFNkHPsdMxyblk1rlJ8NsbSSNOjYUq807RVmKBu1stP0VllcU=
+X-Google-Smtp-Source: AGHT+IFeT58ktmjImyJ6aGv87PT6HOHzCZ1z1xmoGqWW6y/KEwZGs4Wzp57IEwAoX1UZI3sJs8mxww==
+X-Received: by 2002:a05:6a21:3483:b0:1c4:818c:299d with SMTP id
+ adf61e73a8af0-1c4a1179127mr15376064637.11.1722400186570; 
+ Tue, 30 Jul 2024 21:29:46 -0700 (PDT)
 Received: from ?IPV6:2403:580a:f89b:0:7406:659b:9ac8:69bb?
  (2403-580a-f89b-0-7406-659b-9ac8-69bb.ip6.aussiebb.net.
  [2403:580a:f89b:0:7406:659b:9ac8:69bb])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7a9f8655dffsm8183847a12.39.2024.07.30.19.06.18
+ d9443c01a7336-1fed7ce6869sm110715255ad.78.2024.07.30.21.29.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jul 2024 19:06:21 -0700 (PDT)
-Message-ID: <96a752c9-0517-4f77-9370-cbdb171cda38@linaro.org>
-Date: Wed, 31 Jul 2024 12:06:15 +1000
+ Tue, 30 Jul 2024 21:29:45 -0700 (PDT)
+Message-ID: <b1e5571d-1b61-4ef0-af52-10bcdd2487a1@linaro.org>
+Date: Wed, 31 Jul 2024 14:29:38 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 5/5] net/tap: Use qemu_close_all_open_fd()
-To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
+Subject: Re: [PATCH-for-9.1 1/5] hw/sd/sdcard: Explicit dummy byte value
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240730122437.1749603-1-cleger@rivosinc.com>
- <20240730122437.1749603-6-cleger@rivosinc.com>
+Cc: Bin Meng <bmeng.cn@gmail.com>, Zheyu Ma <zheyuma97@gmail.com>,
+ qemu-block@nongnu.org
+References: <20240730092138.32443-1-philmd@linaro.org>
+ <20240730092138.32443-2-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240730122437.1749603-6-cleger@rivosinc.com>
+In-Reply-To: <20240730092138.32443-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,16 +102,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/30/24 22:24, Clément Léger wrote:
-> Instead of using a slow implementation to close all open fd after
-> forking, use qemu_close_all_open_fd().
+On 7/30/24 19:21, Philippe Mathieu-Daudé wrote:
+> On error the DAT lines are left unmodified to their
+> previous states. QEMU returns 0x00 for convenience.
 > 
-> Signed-off-by: Clément Léger<cleger@rivosinc.com>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   net/tap.c | 17 ++++++++++++-----
->   1 file changed, 12 insertions(+), 5 deletions(-)
+>   hw/sd/sd.c | 12 +++++++-----
+>   1 file changed, 7 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+> index 07cb97d88c..c02f04f1ea 100644
+> --- a/hw/sd/sd.c
+> +++ b/hw/sd/sd.c
+> @@ -2478,20 +2478,22 @@ void sd_write_byte(SDState *sd, uint8_t value)
+>   uint8_t sd_read_byte(SDState *sd)
+>   {
+>       /* TODO: Append CRCs */
+> +    static const uint8_t dummy_byte = 0x00;
 
+A zero doesn't need to be static.
+
+Otherwise,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
