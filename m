@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 470CFC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 21:57:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23330C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 22:13:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZHJa-0006k9-75; Wed, 31 Jul 2024 17:56:58 -0400
+	id 1sZHYU-0004Wd-Mx; Wed, 31 Jul 2024 18:12:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZHJZ-0006jN-7g
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 17:56:57 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1sZHYT-0004Sb-B9
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 18:12:21 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZHJX-0006s1-2e
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 17:56:56 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-70d19c525b5so4417993b3a.2
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 14:56:54 -0700 (PDT)
+ id 1sZHYQ-0004sR-Hq
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 18:12:21 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-70d150e8153so1023450b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 15:12:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722463013; x=1723067813; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722463937; x=1723068737; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4U0nCguInBLDwPgKbHbYIEF60NC3A7lwOm8TFXu11e4=;
- b=oGL3ccgfqfSvF1CFYlrkElHbTgPT2O8plx71GqPcCtiU1sofC/xJxX+zWl3hR7Ufe1
- 5agv22xvT4OoOD06cHD6BCjTdXJl5dF4lHLQnXehLlTQC1+KGzncK9CI32R/qNk5whr9
- OEAkn/NHA0BFcEchT4oMU8jsDp9gPhWJs37NQMF3juHRr6LER7NZWlieZtLS//JqfFL7
- vtKxzQ9V45+75uvHvH54VILxcvcEkxkozU1gHenI/DlZbb5bSDY2+FTn0A7aNfm4Uts6
- lUVb3e2D230qXl0M+Y0hxll0aXmQl71JJXmZ9CZ6fF1YAFv3TXnB6XEUsizV8BN0ETOV
- jwPQ==
+ bh=GWvR2Jfw2jgkLNBIapIW04dsIj4XUJm+NF/jsDAElwQ=;
+ b=oJnRWeIIamcs25lQDkQ+o7gbOxeO0xcouAv9Atf4dRc8yNdjwYRy51N01W3MbsK9nf
+ 0jwnFBQjJobh0aTlImFH/F6c/sHKkoqMdCIBqGjVQ+DB0FqjiGnHoQ5leGUuoGHQyagX
+ mz5rlolro4Wpnx7BH/GKY7gEGEWzJ8G4ASAyFZRUegQcHU2HbXvt95I0v+/TMFaJGynZ
+ 00k1CFN+1s/ey56w90NdRKzw1h1iVAsif0lToFLKlzZ8yI9uCuwM57cvg6yPNpm7VmVh
+ drSij7HGKFbvqqqEbcw2rBQ5K0QYUgPbBEoEwLVrHClVeT0S0DLHBZEv/b4W5ouwYIff
+ FB6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722463013; x=1723067813;
+ d=1e100.net; s=20230601; t=1722463937; x=1723068737;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4U0nCguInBLDwPgKbHbYIEF60NC3A7lwOm8TFXu11e4=;
- b=HV38HFhI20/y51N8Bbe6f0A8ZT5PtH1u5HBS63Mb1eWxKsDKka3h47WO5bYJnFt2sV
- iSwEgyt0tjTHlOkai8bl65KAPgvi9ytJ0Pizrjd4nMkRVTErt7I+SU/UYqjMnsgrRl6Q
- AzbEBCLASEFVSN8tg3gW5l88+GM0Wr/+M18xoeIFFCnLExIbEA5rlmWS4ehkUBbnkh4K
- DBRTTYQiCzXXWHi7UDxT96fZTVj4hOWUp5qhqLeXBzYnrRwiRriV/74rRXGhqCWpEE5d
- +LjDzvaMLq+howLOFpeVjtORhvTSL/3exZkhgGkfZ7wHpKHB70X0Fxik7uATEXYmirnS
- tg9A==
+ bh=GWvR2Jfw2jgkLNBIapIW04dsIj4XUJm+NF/jsDAElwQ=;
+ b=gRVBj56zDMF5IkCoYB2T0zCHEeQW2qB4hbC7EN6EsF648YzWpKoEGS2iuzSkKcH/oR
+ cB0PTF6v0cX+slLFjJJ3w2S5WjFUg85Ms1csXEV4xbnPXHJaQnivhNNr1DBM4cGFq8mc
+ w0ytbQcfRwWeBamauG0usjHLKZpUF/S2bbGz9OOPg2oB3uRbtW3EXhaLy8CJ55adhTU8
+ +M9a38Gxy8yhZlfJogOs4yTbfUndomQi8HurbHoJOUYRCZSYju1ELBevNyCcYY9oGo8L
+ Gzfwgx42Vy840WDm8pPKVWWA3ujqjF46eWYfBQDyfw73EgjLwu32chySE3U/xVn/qNjF
+ InoA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWKEzX++whNmSqyQRCaAsN+2CKUHtlXGuDN2Oes1MhjlS1s6T0n5wV26u7V9cpI+KyBOoWtpXIhFv5V/wPJgJPhKbo/FTA=
-X-Gm-Message-State: AOJu0YxJk8Iew0TN+uxMEnG9fIR3nKjyncG9DHFAMPYEjpUEAJ773JzT
- YlIxYZiG6EYf4HuHWpKHbJgPdpMBIsrdr8liBimOXnsEEoKXgiiXd+AQiRji9mI=
-X-Google-Smtp-Source: AGHT+IHb1LvaU7zuBa8+bt8YWSpNrTlS2KCbAJuzdQVVSJfIOQS1dYqZW5a49smX1ssJLH7LAHSMjg==
-X-Received: by 2002:a05:6a00:997:b0:70d:2583:7227 with SMTP id
- d2e1a72fcca58-7105d6a74c2mr633910b3a.6.1722463013147; 
- Wed, 31 Jul 2024 14:56:53 -0700 (PDT)
+ AJvYcCVejjZ+/he9YLmCAIBXQQ+59xpoEP8TeIjfOtuxnVY1Dt/RLUTwIkjWdXmbNx/0gnFAzXzP7xMIXgBJVE6uv4euQMeLys8=
+X-Gm-Message-State: AOJu0YxHUwkKGwYTTy5Ku6OKHXW14WbNCY2C5PwCmV96Mp0XgIlkrbMC
+ 0PkwNC/aCIzRF21ex5dsHOtRhSCMbmmnk7QiC1Y9DWpeVpD+e/d/01YbEl527gZ/ymQcrkceDu3
+ hL87FkQ==
+X-Google-Smtp-Source: AGHT+IHXSxUkQQJ34+UZB26TpmSZrQrGvY2YWKW0tirXnr9NMkeJ3Qyjy5iG0YicA5AvPlnf1WJUAQ==
+X-Received: by 2002:a05:6a00:641a:b0:70d:34a1:5ccc with SMTP id
+ d2e1a72fcca58-70efe4bee1fmr8825572b3a.13.1722463936833; 
+ Wed, 31 Jul 2024 15:12:16 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead6e1a2asm10315226b3a.23.2024.07.31.14.56.49
+ d2e1a72fcca58-70ead7181d5sm10406228b3a.88.2024.07.31.15.12.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jul 2024 14:56:52 -0700 (PDT)
-Message-ID: <5d6d52f3-7ce4-4b6b-a9d9-e0a5118b3a8f@linaro.org>
-Date: Thu, 1 Aug 2024 07:56:25 +1000
+ Wed, 31 Jul 2024 15:12:16 -0700 (PDT)
+Message-ID: <fa0e81ac-3356-4775-a8a6-395ee5cdfe45@linaro.org>
+Date: Thu, 1 Aug 2024 08:12:10 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/5] qemu/osdep: Add excluded fd parameter to
- qemu_close_all_open_fd()
-To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240731084832.1829291-1-cleger@rivosinc.com>
- <20240731084832.1829291-5-cleger@rivosinc.com>
+Subject: Re: [PATCH] target/ppc: Set ctx->opcode for decode_insn32()
+To: Ilya Leoshkevich <iii@linux.ibm.com>, Nicholas Piggin
+ <npiggin@gmail.com>, Daniel Henrique Barboza <danielhb413@gmail.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+References: <20240731100953.14950-1-iii@linux.ibm.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240731084832.1829291-5-cleger@rivosinc.com>
+In-Reply-To: <20240731100953.14950-1-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,89 +99,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/31/24 18:48, Clément Léger wrote:
-> @@ -823,8 +824,34 @@ static bool qemu_close_all_open_fd_proc(void)
->       dfd = dirfd(dir);
->   
->       for (de = readdir(dir); de; de = readdir(dir)) {
-> +        bool close_fd = true;
-> +
-> +        if (de->d_name[0] == '.') {
-> +            continue;
-> +        }
->           fd = atoi(de->d_name);
-> -        if (fd != dfd) {
-> +        if (fd == dfd) {
-> +            close_fd = false;
-> +            continue;
-> +        }
+On 7/31/24 20:07, Ilya Leoshkevich wrote:
+> divdu (without a dot) sometimes updates cr0, even though it shouldn't.
+> The reason is that gen_op_arith_divd() checks Rc(ctx->opcode), which is
+> not initialized. This field is initialized only for instructions that
+> go through decode_legacy(), and not decodetree.
+> 
+> There already was a similar issue fixed in commit 86e6202a57b1
+> ("target/ppc: Make divw[u] handler method decodetree compatible.").
+> 
+> It's not immediately clear what else may access the uninitialized
+> ctx->opcode, so instead of playing whack-a-mole and changing the check
+> to compute_rc0, simply initialize ctx->opcode.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 99082815f17f ("target/ppc: Add infrastructure for prefixed insns")
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Assignment to close_fd not used here.
+Accessing opcode from decodetree should not happen -- divd needs fixing.
 
-> +
-> +        for (unsigned int i = skip_start; i < skip_end; i++) {
-> +            if (fd < skip[i]) {
-> +                /* We are below the next skipped fd, break */
-> +                break;
-> +            } else if (fd == skip[i]) {
-> +                close_fd = false;
-> +                /* Restrict the range as we found fds matching start/end */
-> +                if (i == skip_start) {
-> +                    skip_start++;
-> +                } else if (i == skip_end) {
-> +                    skip_end--;
-> +                }
-> +                break;
-> +            }
-> +        }
-> +
-> +        if (close_fd) {
->               close(fd);
->           }
->       }
-> @@ -833,24 +860,68 @@ static bool qemu_close_all_open_fd_proc(void)
->       return true;
->   }
->   
-> -static bool qemu_close_all_open_fd_close_range(void)
-> +static bool qemu_close_all_open_fd_close_range(const int *skip,
-> +                                               unsigned int nskip,
-> +                                               int open_max)
->   {
->   #ifdef CONFIG_CLOSE_RANGE
-> -    int r = close_range(0, ~0U, 0);
-> -    if (!r) {
-> -        /* Success, no need to try other ways. */
-> -        return true;
-> -    }
-> -#endif
-> +    int first = 0, last = open_max;
-
-If this were really _SC_OPEN_MAX, this would be off-by-one.
-
-> -static void qemu_close_all_open_fd_fallback(void)
-> +static void qemu_close_all_open_fd_fallback(const int *skip, unsigned int nskip,
-> +                                            int open_max)
->   {
-> -    int open_max = sysconf(_SC_OPEN_MAX), i;
-> +    unsigned int cur_skip = 0;
->   
->       /* Fallback */
-> -    for (i = 0; i < open_max; i++) {
-> +    for (int i = 0; i < open_max; i++) {
-
-Because this isn't really _SC_OPEN_MAX, this *is* off-by-one.
-
-> -void qemu_close_all_open_fd(void)
-> +void qemu_close_all_open_fd(const int *skip, unsigned int nskip)
->   {
-> -    if (!qemu_close_all_open_fd_close_range() &&
-> -        !qemu_close_all_open_fd_proc()) {
-> -        qemu_close_all_open_fd_fallback();
-> +    int open_max = sysconf(_SC_OPEN_MAX) - 1;
-
-Better to move the -1 into qemu_close_all_open_fd_close_range where it's actually needed.
+But I agree this is a good short-term workaround for the release, so:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
+
 
