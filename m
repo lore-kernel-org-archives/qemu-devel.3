@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DED8C3DA49
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 01:37:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55555C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 01:38:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYyGk-0000a3-Hp; Tue, 30 Jul 2024 21:36:46 -0400
+	id 1sYyHw-0004R6-9G; Tue, 30 Jul 2024 21:38:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYyGi-0000WR-SQ
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 21:36:44 -0400
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
+ id 1sYyHu-0004KS-IX
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 21:37:58 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYyGh-0007Gh-0h
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 21:36:44 -0400
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-7093abb12edso3948308a34.3
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 18:36:42 -0700 (PDT)
+ id 1sYyHs-0007Px-1J
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 21:37:58 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-70d2b921c48so4002405b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 18:37:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722389801; x=1722994601; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722389874; x=1722994674; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=pQF4s9uQnFfbaRqSbtrsGmn90L2sjVXg9peNVQkjyHw=;
- b=aVXaodLfJASBGfH9PZcERvWruik3vYXJukumW5ry6Tkbl6xTQlutR0hMHH1drxWsTP
- AgJQDjRz7o9RCSGdmHWGcxQfIzXNv0fmsuQToVPswnxi4tZJaqROIAFFsBHYA1dPpb+0
- gX/lsrSY8jYDL6Qkj4jIsMp3Z6aiMaD/5+6EVG1j4irhG2KNiY0y8gsy/7wPemDc6VO3
- gx/j7HzcwGBsiGNVGIKa0qsSuwOH3OfYh23KLui2KKX0Nc+pyAWUNMsBPncCmdm8GyVf
- oCjVNRaLpvztlAMzvgf6J/Wv7D85Q+Sbz4CkUypjnLemM8aQxZazbLKzRYzUyenZX9cm
- h4yg==
+ bh=wxztcxgl1zl8L4/RBureT0HkZ2BHo50CPn9EIdINFdM=;
+ b=J7+A7cdm5kYj/llvQE6PqhnmaFF3tkkp5MdiSeq+xEYOlFKIpsah2ew9JY81vcFPqo
+ 3MR1LebbVxYRjRNa81Diedw4VNcafhaQIUiAWykOTSR7TGmOCAJbrTWqbci0jKqvr+O3
+ pjwQuvVe1S7U90DVnVxX5Wnn8MRXCg7L6WCFYJ97FAP3KB+Mak8riAz8GsA/B4Q5UyP+
+ wD4Po1YWWYWwETZz1E5sisxbcWSYL3NJkrgkBa1ATtc0OBtJ7gmtIZNhVc1UNZrGAbqC
+ KVyV79lC5x2mGdETBvTbEnJ8P9Opr3FsHPReWmNHQyAhGHR/X5uBnajU/7pceYjUVlkz
+ GnAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722389801; x=1722994601;
+ d=1e100.net; s=20230601; t=1722389874; x=1722994674;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pQF4s9uQnFfbaRqSbtrsGmn90L2sjVXg9peNVQkjyHw=;
- b=UFEPnHxE7bPkkctn3lKIA8uVKuZTNIVtBqt7wlv2qESulw7c0LxpMwI39iUt0UFfp3
- hdDzs1F//NP3QM5Mrrf/jg0rX96lbWTKsZNjqnFchUtgOH92oNmDzLJ/aGSeBS75bOPO
- wGDSNRGPQRbM8HbJpvLkEKuQooaWq7Ul7LVQhKcY0VXp7h2JaTDvQF33VWtSH2p7+w4A
- uaeqpFJzJXi/kG15PRx1LGTWgc2p7+wT4XSSzv05qX+40V6n7zB4lfRQrCusb2RR0MVv
- zbDHeQupEoqSJbOEEnkHgqFMNn8PdV2vLD6mMfLYOQS3rLZjo2DcFl+XOrFifJ86Mrfa
- HkKg==
+ bh=wxztcxgl1zl8L4/RBureT0HkZ2BHo50CPn9EIdINFdM=;
+ b=QEexshRmgyhaOHXlpKWazw2H64DosFtyzXR9KOpHrbuG5p03KbakZS/0VnjfTcnuWP
+ hemAftRSGyR+vqqUkeddKyMURvjNPAmqsdJDDrCOL2diAUupfuae6ZsfjvoCCrfz6Su2
+ LLicC4Zts+9utxtYGiN6rfHU4FgrhJKI/WL52sHFywy8waOMqCdkfuT6r8AJK98WxnLD
+ H7ncV3hnlLkqKvezsSEyqv3MAHi+3ZNAbpo6EsaXaG0TbMqti4ED1UY9LHImgAD5j+1H
+ FjSnJqWi9tU/bHVDoZszM4QdJLTA2gSUxuWylQtqibe3cVJSX1jqkQZZZ7pOCDzq5Qyl
+ s+4w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXRgZe5ycS+G03/kxMZEDh5+C2rAHod5r0lUgWXsns5j+Q7CnJTnBz/4aCjqpSwdXi1jQ8nHA9aiLeL51H2RTyZ+OKmv5c=
-X-Gm-Message-State: AOJu0YyeGZQ9Dp0iHUSKplVNH0RHbbuVWAVbE/KmkNHyXfjz8sIGg8hq
- G0ZhfFfapgryd/R2oSt9l7j2qYfgixmoAThAqUcuJRylwnenitfjg7z+/Jp9kHI=
-X-Google-Smtp-Source: AGHT+IFvXvQHLu7h37rSLPcRRGkIddaN8q+y2yYvH2Fo6I+zhgvpkfbXFnuqAOWvVP+zIUK1CC623g==
-X-Received: by 2002:a9d:7748:0:b0:703:5c2d:56a7 with SMTP id
- 46e09a7af769-70940c7016fmr14165611a34.24.1722389801178; 
- Tue, 30 Jul 2024 18:36:41 -0700 (PDT)
+ AJvYcCWlf4+yH6ul2z0lzdtGARHgHL92FIhAUQpPgDwNVIdMyDyePGjveZKNG4Y2vepzX/2PBjdw8bW3iwSODYgpTYQ0s8iiFCI=
+X-Gm-Message-State: AOJu0YxIhn3qM3bR7Yft5YKSdd7mO7umHFzDO5t1yxnc5I+F6A4B2+TH
+ 6WccwTBD2fEV8sbCFk79emgWHGts8o/EF5/CphOtY0bMevRSgniAnp9UMklQ/fM=
+X-Google-Smtp-Source: AGHT+IEuxcshsC4OJdNT/PZUx14wDeSfb9fSlGLDZJUA8FtHW/J64hT1DWUYSOdI5e8E2NG/awdDBg==
+X-Received: by 2002:a05:6a00:b55:b0:70a:9672:c3a2 with SMTP id
+ d2e1a72fcca58-70eceda187emr11001254b3a.24.1722389874498; 
+ Tue, 30 Jul 2024 18:37:54 -0700 (PDT)
 Received: from ?IPV6:2403:580a:f89b:0:7406:659b:9ac8:69bb?
  (2403-580a-f89b-0-7406-659b-9ac8-69bb.ip6.aussiebb.net.
  [2403:580a:f89b:0:7406:659b:9ac8:69bb])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead86ff31sm9330509b3a.144.2024.07.30.18.36.38
+ d2e1a72fcca58-7104e5411c8sm82301b3a.39.2024.07.30.18.37.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jul 2024 18:36:40 -0700 (PDT)
-Message-ID: <a1c3324c-6065-44cf-ac52-f7038f99680d@linaro.org>
-Date: Wed, 31 Jul 2024 11:36:35 +1000
+ Tue, 30 Jul 2024 18:37:54 -0700 (PDT)
+Message-ID: <b4719a70-3bc6-4017-9be3-aa145507112d@linaro.org>
+Date: Wed, 31 Jul 2024 11:37:48 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] target/arm: Pass env pointer through to gvec_bfdot
- helper
+Subject: Re: [PATCH 4/8] target/arm: Pass env pointer through to
+ gvec_bfdot_idx helper
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20240730160306.2959745-1-peter.maydell@linaro.org>
- <20240730160306.2959745-4-peter.maydell@linaro.org>
+ <20240730160306.2959745-5-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240730160306.2959745-4-peter.maydell@linaro.org>
+In-Reply-To: <20240730160306.2959745-5-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,41 +102,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/31/24 02:03, Peter Maydell wrote:
-> Pass the env pointer through to the gvec_bfdot helper,
+> Pass the env pointer through to the gvec_bfdot_idx helper,
 > so we can use it to add support for FEAT_EBF16.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
 >   target/arm/helper.h             |  4 ++--
->   target/arm/tcg/translate-a64.c  | 27 ++++++++++++++++++++++++-
->   target/arm/tcg/translate-neon.c | 35 +++++++++++++++++++++++++++++++--
->   target/arm/tcg/translate-sve.c  | 15 +++++++++++++-
->   target/arm/tcg/vec_helper.c     |  3 ++-
->   5 files changed, 77 insertions(+), 7 deletions(-)
-> 
-> diff --git a/target/arm/helper.h b/target/arm/helper.h
-> index 970d059dec5..aece9fd4aa7 100644
-> --- a/target/arm/helper.h
-> +++ b/target/arm/helper.h
-> @@ -1027,8 +1027,8 @@ DEF_HELPER_FLAGS_5(gvec_ummla_b, TCG_CALL_NO_RWG,
->   DEF_HELPER_FLAGS_5(gvec_usmmla_b, TCG_CALL_NO_RWG,
->                      void, ptr, ptr, ptr, ptr, i32)
->   
-> -DEF_HELPER_FLAGS_5(gvec_bfdot, TCG_CALL_NO_RWG,
-> -                   void, ptr, ptr, ptr, ptr, i32)
-> +DEF_HELPER_FLAGS_6(gvec_bfdot, TCG_CALL_NO_RWG,
-> +                   void, ptr, ptr, ptr, ptr, ptr, i32)
+>   target/arm/tcg/translate-a64.c  | 11 ++++++++++-
+>   target/arm/tcg/translate-neon.c |  4 ++--
+>   target/arm/tcg/translate-sve.c  |  8 +++++++-
+>   target/arm/tcg/vec_helper.c     |  2 +-
+>   5 files changed, 22 insertions(+), 7 deletions(-)
 
-Because env expands to TCGv_ptr in the translation context, I suspect that you can use 
-that here.  Worth a try, anyway, so that
-
-> -void HELPER(gvec_bfdot)(void *vd, void *vn, void *vm, void *va, uint32_t desc)
-> +void HELPER(gvec_bfdot)(void *vd, void *vn, void *vm, void *va,
-> +                        void *envp, uint32_t desc)
-
-this doesn't have to use void *.
-
-Either way,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
