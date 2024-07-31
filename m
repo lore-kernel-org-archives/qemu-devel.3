@@ -4,71 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41767C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 10:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A33F0C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 10:35:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ6ez-0003Vu-OG; Wed, 31 Jul 2024 06:34:21 -0400
+	id 1sZ6fz-0006lN-0j; Wed, 31 Jul 2024 06:35:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sZ6ey-0003Uk-40
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 06:34:20 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sZ6fu-0006a6-V6
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 06:35:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sZ6ev-0007Cx-T0
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 06:34:19 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sZ6ft-0007UA-FV
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 06:35:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722422055;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1722422115;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YQWIjwmJFrmFXp+UfOHsAmW4kJLnhJOkHqAGTjt1Sn4=;
- b=TfVauknEdmsV4EByHpdB8Hr+SbEyFevBAF14XxUDux/3wPhbVcTVSJWFTe3qSrZPOBCrwv
- 97F51DTn1zxD4KhgVXX/HUdZwfudUqqxpMzgQeQzL/BxhTA4cNtpnoN0XImoCz/vMCURGN
- A38H4vb63ifxebAoV7Eb9aJtsPsxH/g=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-458-YMV5Pxg9NqGJsEDJReNTqQ-1; Wed,
- 31 Jul 2024 06:34:11 -0400
-X-MC-Unique: YMV5Pxg9NqGJsEDJReNTqQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F03DC1955D42; Wed, 31 Jul 2024 10:34:09 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.33])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 710BB19560B2; Wed, 31 Jul 2024 10:34:07 +0000 (UTC)
-Date: Wed, 31 Jul 2024 11:34:03 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Itaru Kitayama <itaru.kitayama@linux.dev>, qemu-devel@nongnu.org,
- Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: Re: QEMU unexpectedly closed the monitor
-Message-ID: <ZqoTG0eYwNLAJu3D@redhat.com>
-References: <8AFDCC22-C476-45EF-9119-2E3C9A2A91C3@linux.dev>
- <87le1jc8qi.fsf@draig.linaro.org>
- <7F67EEEA-D222-4348-83EF-5C81C94C79D0@linux.dev>
- <87h6c5dh31.fsf@draig.linaro.org>
- <CAFEAcA_y1y+5aqDXDUmAzRJo2Kf9o+JwbH-6MB62UEZD=LQZ-w@mail.gmail.com>
+ bh=cdzPwaiNwHNCDBJE8ngGr2ArAngzavLEonuUm5mNPNI=;
+ b=NTqUdn9Y2T5aXshu4MVbwag1ghQ9UJus8ieDkMsERcaSgc7ToytfsXTre1pWZgGzvTGX/O
+ poQtOqeNdYU2rxONQCOvC0y7z3OhkOpXOb15i3XA1Ix8ZmvhaU2J+6cJovMXFP66U0PGCW
+ Sw85chGxSd5R5YuEn6hgAbQAWJLXwiI=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-150-eDzOGhyxPzGWNCA-UpOMGQ-1; Wed, 31 Jul 2024 06:35:14 -0400
+X-MC-Unique: eDzOGhyxPzGWNCA-UpOMGQ-1
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-2ef3133ca88so54233031fa.3
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 03:35:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722422113; x=1723026913;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cdzPwaiNwHNCDBJE8ngGr2ArAngzavLEonuUm5mNPNI=;
+ b=GAFMkmqGCCOsXY7TKM/TNsVeOUy45Ze645z9IWiMWVmH93QvOT7oS801ngejzKyydn
+ HwPknhQlLX4gw5Ffz/+GtcoLDrB90Iyc0cwBe9PEI67S76dRUhczqC1LfO4/lpoyGyIv
+ xXzjDhFYdsS8BILSwzXQPW+nAbGihFC8+1/CcUWsHtm3qYtYP1r0gAc4B/bhTAvhhyEE
+ E+yj4AIFYyzxnc8N4x9VIVyDXlHnI1Ds36//H5gGmklgKmEyUKPsgAuLqHeaMOvipmhO
+ k1uhSc1wkNcdtcuBml9ESrgwwyJfFSm6nn/qlCSCg2cy9OnM9TQw67rkPBmsi2A1kD/z
+ z1Cw==
+X-Gm-Message-State: AOJu0YyF9pzfzmy3TkCz6L/scRNBNaRi78lWAzHrESNHft0rPgZytddu
+ NO4zQ9uTpc2VQNrefWSnq5jgprIwmq7MliuaKpveeQrIT7hzGM+lg+2/llMpRsjv9XFjn3sOGzp
+ zGrI1y1Ib97QXLdVpm3RAxYplLLYxpxx9CamdOJl++fC4kHK+gSDQVUXRQoVhAfG4jNV4d7+80S
+ o71DHUjLp+o02m0acI+RxirdvDF3w=
+X-Received: by 2002:a2e:9091:0:b0:2ef:29b7:18a7 with SMTP id
+ 38308e7fff4ca-2f12ee5bc21mr89404911fa.37.1722422112877; 
+ Wed, 31 Jul 2024 03:35:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHwGbBGRUSuay0gVFdWktVdTRl0e3l55oSGi/yRntHaLJzCnQvHNqVvFBHyikt3Y9yPzAKxcKgI38hGJpx85S8=
+X-Received: by 2002:a2e:9091:0:b0:2ef:29b7:18a7 with SMTP id
+ 38308e7fff4ca-2f12ee5bc21mr89404671fa.37.1722422112547; Wed, 31 Jul 2024
+ 03:35:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA_y1y+5aqDXDUmAzRJo2Kf9o+JwbH-6MB62UEZD=LQZ-w@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+References: <rust-pl011-rfc-v5.git.manos.pitsidianakis@linaro.org>
+ <bc27a983-f0b7-4803-96f7-060a4a331348@redhat.com>
+ <h4gxy.dr366knvycy@linaro.org>
+ <CABgObfZOqBogWQtzfghjKMsW-J_sp-iL5dt7mmYnvE5eQb9G5w@mail.gmail.com>
+ <h61ku.ipxyjqsxu75@linaro.org>
+ <CABgObfa-dxDD_oVGu8PrQffVhvP=MFifUUTinC-brzTnqdkK0A@mail.gmail.com>
+ <h6cgm.o8scn84hx1ry@linaro.org>
+ <CABgObfbyw0qPM_T=SpGyHYD02x2jOdSy5nfwKpOx-WruhkJe9Q@mail.gmail.com>
+ <CAAjaMXY3jL=cVs=e+6kiJw_WrfG5vOaqaNFu74BdoK2-bO7ZLQ@mail.gmail.com>
+ <CABgObfb27wbwgErFsMdsuSo1BxQVBoRfbrUmK2k-x5Ya3ez0TA@mail.gmail.com>
+ <h7zb4.aog50x8tfxkp@linaro.org>
+ <CABgObfbJjcwXcJ-=c7yfXQX=xLnqqVsvDqibrFgiLPm4C_uC6Q@mail.gmail.com>
+ <CAAjaMXatq0jGrght=Fc-7TpZvuGzirhWyKsAsCRq1BW_U_CW=g@mail.gmail.com>
+ <hhfb9.99e4vl1r79fa@linaro.org>
+In-Reply-To: <hhfb9.99e4vl1r79fa@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 31 Jul 2024 12:35:01 +0200
+Message-ID: <CABgObfYWykrXt1Do_NtUb6nirhAALva1n5jpmS8w6NrGJ1h=Ww@mail.gmail.com>
+Subject: Re: [RFC PATCH v5 0/8] Add Rust support, implement ARM PL011
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?Q?Alex_Benn=C3=A9_e?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -89,35 +115,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 31, 2024 at 11:29:01AM +0100, Peter Maydell wrote:
-> On Wed, 31 Jul 2024 at 10:52, Alex Bennée <alex.bennee@linaro.org> wrote:
-> > You then need to manually strip out all the various chardevs for libvirt
-> > control sockets and you can an equivalent command line you can run from
-> > the console. One thing that did jump out as a bit weird to me was:
+On Wed, Jul 31, 2024 at 11:50=E2=80=AFAM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+>
+> On Fri, 26 Jul 2024 12:26, Manos Pitsidianakis <manos.pitsidianakis@linar=
+o.org> wrote:
+> >On Fri, 26 Jul 2024 at 11:19, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> >> As I said, I don't see the point in discussing this more, and I'm not
+> >> going to unless you provide a clear pointer to documentation that
+> >> states the opposite.
 > >
-> >  -rtc base=utc -no-shutdown -no-acpi -boot strict=on \
-> >  -kernel /home/realm/Image-v6.10 \
-> >  -initrd /home/realm/rootfs.cpio \
-> >  -append 'earlycon console=ttyAMA0 rdinit=/sbin/init rw root=/dev/vda acpi=on'
-> 
-> Also worth checking here I guess is whether virt-install
-> is running QEMU as a user which doesn't have access to
-> the /home/realm/Image-v6.10 etc files -- are they world
-> readable?
+> >Same here.
+>
+> Next patch series version is taking more time than I expected because of
+> unrelated issues, plus I'm on PTO these days, so I am posting the
+> resolution (which I hope satisfies everyone) here early:
 
-Most likely it is the directory permissions which are the problem since
-$HOME is typically set to deny access from other users, which would include
-the user QEMU runs as.
+I would be okay with just a TODO comment (I think we all agree that
+the issue is theoretical), but this one's okay too if you prefer.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Paolo
 
 
