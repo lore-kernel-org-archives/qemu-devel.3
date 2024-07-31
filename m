@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DA0BC3DA49
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 01:33:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DED8C3DA49
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 01:37:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYyCj-0003yh-UK; Tue, 30 Jul 2024 21:32:37 -0400
+	id 1sYyGk-0000a3-Hp; Tue, 30 Jul 2024 21:36:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYyCi-0003vK-IK
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 21:32:36 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1sYyGi-0000WR-SQ
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 21:36:44 -0400
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sYyCg-0006Yy-TH
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 21:32:36 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-70d18112b60so379572b3a.1
- for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 18:32:34 -0700 (PDT)
+ id 1sYyGh-0007Gh-0h
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 21:36:44 -0400
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-7093abb12edso3948308a34.3
+ for <qemu-devel@nongnu.org>; Tue, 30 Jul 2024 18:36:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722389553; x=1722994353; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722389801; x=1722994601; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1oteILznRxVr7CPFVh2RmwhT/jBsMn+PiHmOwHDEC+k=;
- b=phKotCfxFqeZ6FRt1VlahNmhaqAxCbJyRsKXfjDNda3pxDHC6mJs+9v5F9HeKCSf1L
- GjLzJ109aNGW8AC8BotiCbrwuIxtFHwLlR101AfdsZvQjWgJmylUH8u6H7/03vngbC9W
- XyyjnGrSm64BopRfLb+q+CvD5VVkewe79SZe4x01aYr6K4XuiARhXrsapwkLlgWVXaSL
- SrelCRn60t670QnyGiuSU3gty0q3bgBWDj8FQoP+AIug/3AlNtlCdJ9rgtvZY2oJoPse
- ad5WHeuBDTucxrqPFWjj7JdwkWroCfWieSnOu5CDvVFsK6TWZ+ApXNX5O+jkt32Ic88T
- oJ+g==
+ bh=pQF4s9uQnFfbaRqSbtrsGmn90L2sjVXg9peNVQkjyHw=;
+ b=aVXaodLfJASBGfH9PZcERvWruik3vYXJukumW5ry6Tkbl6xTQlutR0hMHH1drxWsTP
+ AgJQDjRz7o9RCSGdmHWGcxQfIzXNv0fmsuQToVPswnxi4tZJaqROIAFFsBHYA1dPpb+0
+ gX/lsrSY8jYDL6Qkj4jIsMp3Z6aiMaD/5+6EVG1j4irhG2KNiY0y8gsy/7wPemDc6VO3
+ gx/j7HzcwGBsiGNVGIKa0qsSuwOH3OfYh23KLui2KKX0Nc+pyAWUNMsBPncCmdm8GyVf
+ oCjVNRaLpvztlAMzvgf6J/Wv7D85Q+Sbz4CkUypjnLemM8aQxZazbLKzRYzUyenZX9cm
+ h4yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722389553; x=1722994353;
+ d=1e100.net; s=20230601; t=1722389801; x=1722994601;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1oteILznRxVr7CPFVh2RmwhT/jBsMn+PiHmOwHDEC+k=;
- b=LVvuhSn3vYk19NjsZOkurLGX5D63S4gnStyIfgDsgYwL9wiUEZ468XOGWi/72lMhqe
- F0EPL6t9TfApBf3KiSznUTHtnCLKYGwlIP6Gma6inUUT61wysmS3yUFNawq66fe2bUHm
- 6s5fGc8mwVOAa6NIQXPpATUc5j/vdF09yymwZbzK80P+5UwYBdX43sybX9rhXn/RVut7
- vVw/WQBpR2BXuFUDPaDXr0cqINjKzRU8xoYbX8r2xzh6METmmcNHV7UQ5+hnHPLAVZY3
- 43veetcGl4RvfDqRfXAxBJH6/xUNWjPe9GeiXA08q/FWxxnq+F9MDX8A3bCwjnZamLbQ
- rIeQ==
+ bh=pQF4s9uQnFfbaRqSbtrsGmn90L2sjVXg9peNVQkjyHw=;
+ b=UFEPnHxE7bPkkctn3lKIA8uVKuZTNIVtBqt7wlv2qESulw7c0LxpMwI39iUt0UFfp3
+ hdDzs1F//NP3QM5Mrrf/jg0rX96lbWTKsZNjqnFchUtgOH92oNmDzLJ/aGSeBS75bOPO
+ wGDSNRGPQRbM8HbJpvLkEKuQooaWq7Ul7LVQhKcY0VXp7h2JaTDvQF33VWtSH2p7+w4A
+ uaeqpFJzJXi/kG15PRx1LGTWgc2p7+wT4XSSzv05qX+40V6n7zB4lfRQrCusb2RR0MVv
+ zbDHeQupEoqSJbOEEnkHgqFMNn8PdV2vLD6mMfLYOQS3rLZjo2DcFl+XOrFifJ86Mrfa
+ HkKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXNFEhAEO7IhtwbJO+n8pIIfUdRrAzMP1OxjS7MHL1Fy2IJHsS2pDb3KNIMZwXsWczBWsr3vRSFiEcAzrcj9c7VYpiSYWw=
-X-Gm-Message-State: AOJu0YxnUHuma3DVa73LzBBRBjeAhRtgjBaKU78Q23knTssjjFIjsOeJ
- W9zdrEPPGmaw22MpA4DRtLeRSvEgu0wf5zgazsDqULw2TrsBcS0GZJroHfnyM8Q=
-X-Google-Smtp-Source: AGHT+IGrT7RV/PKnAuyxVEikx3DvLZaodMdy1e+oTNPHkZ7hlf8x0sTlcbUzIvqJLmxmtTbCp2wFnA==
-X-Received: by 2002:aa7:888a:0:b0:70e:cee8:264a with SMTP id
- d2e1a72fcca58-70efe400da0mr7110101b3a.1.1722389553101; 
- Tue, 30 Jul 2024 18:32:33 -0700 (PDT)
+ AJvYcCXRgZe5ycS+G03/kxMZEDh5+C2rAHod5r0lUgWXsns5j+Q7CnJTnBz/4aCjqpSwdXi1jQ8nHA9aiLeL51H2RTyZ+OKmv5c=
+X-Gm-Message-State: AOJu0YyeGZQ9Dp0iHUSKplVNH0RHbbuVWAVbE/KmkNHyXfjz8sIGg8hq
+ G0ZhfFfapgryd/R2oSt9l7j2qYfgixmoAThAqUcuJRylwnenitfjg7z+/Jp9kHI=
+X-Google-Smtp-Source: AGHT+IFvXvQHLu7h37rSLPcRRGkIddaN8q+y2yYvH2Fo6I+zhgvpkfbXFnuqAOWvVP+zIUK1CC623g==
+X-Received: by 2002:a9d:7748:0:b0:703:5c2d:56a7 with SMTP id
+ 46e09a7af769-70940c7016fmr14165611a34.24.1722389801178; 
+ Tue, 30 Jul 2024 18:36:41 -0700 (PDT)
 Received: from ?IPV6:2403:580a:f89b:0:7406:659b:9ac8:69bb?
  (2403-580a-f89b-0-7406-659b-9ac8-69bb.ip6.aussiebb.net.
  [2403:580a:f89b:0:7406:659b:9ac8:69bb])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7a9f7d6b09dsm9460736a12.10.2024.07.30.18.32.30
+ d2e1a72fcca58-70ead86ff31sm9330509b3a.144.2024.07.30.18.36.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 30 Jul 2024 18:32:32 -0700 (PDT)
-Message-ID: <f02477f2-2851-433a-b8d8-0c2b3d1358f5@linaro.org>
-Date: Wed, 31 Jul 2024 11:32:27 +1000
+ Tue, 30 Jul 2024 18:36:40 -0700 (PDT)
+Message-ID: <a1c3324c-6065-44cf-ac52-f7038f99680d@linaro.org>
+Date: Wed, 31 Jul 2024 11:36:35 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/8] target/arm: Pass env pointer through to sme_bfmopa
+Subject: Re: [PATCH 3/8] target/arm: Pass env pointer through to gvec_bfdot
  helper
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
 References: <20240730160306.2959745-1-peter.maydell@linaro.org>
- <20240730160306.2959745-3-peter.maydell@linaro.org>
+ <20240730160306.2959745-4-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240730160306.2959745-3-peter.maydell@linaro.org>
+In-Reply-To: <20240730160306.2959745-4-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,73 +102,43 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/31/24 02:03, Peter Maydell wrote:
-> To implement the FEAT_EBF16 semantics, we are going to need
-> the CPUARMState env pointer in every helper function which calls
-> bfdotadd().
-> 
-> Pass the env pointer through from generated code to the sme_bfmopa
-> helper. (We'll add the code that uses it when we've adjusted
-> all the helpers to have access to the env pointer.)
+> Pass the env pointer through to the gvec_bfdot helper,
+> so we can use it to add support for FEAT_EBF16.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   target/arm/tcg/helper-sme.h    | 4 ++--
->   target/arm/tcg/sme_helper.c    | 4 ++--
->   target/arm/tcg/translate-sme.c | 2 +-
->   3 files changed, 5 insertions(+), 5 deletions(-)
+>   target/arm/helper.h             |  4 ++--
+>   target/arm/tcg/translate-a64.c  | 27 ++++++++++++++++++++++++-
+>   target/arm/tcg/translate-neon.c | 35 +++++++++++++++++++++++++++++++--
+>   target/arm/tcg/translate-sve.c  | 15 +++++++++++++-
+>   target/arm/tcg/vec_helper.c     |  3 ++-
+>   5 files changed, 77 insertions(+), 7 deletions(-)
 > 
-> diff --git a/target/arm/tcg/helper-sme.h b/target/arm/tcg/helper-sme.h
-> index 659867a1faf..f12d903aa44 100644
-> --- a/target/arm/tcg/helper-sme.h
-> +++ b/target/arm/tcg/helper-sme.h
-> @@ -126,8 +126,8 @@ DEF_HELPER_FLAGS_7(sme_fmopa_s, TCG_CALL_NO_RWG,
->                      void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
->   DEF_HELPER_FLAGS_7(sme_fmopa_d, TCG_CALL_NO_RWG,
->                      void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
-> -DEF_HELPER_FLAGS_6(sme_bfmopa, TCG_CALL_NO_RWG,
-> -                   void, ptr, ptr, ptr, ptr, ptr, i32)
-> +DEF_HELPER_FLAGS_7(sme_bfmopa, TCG_CALL_NO_RWG,
-> +                   void, env, ptr, ptr, ptr, ptr, ptr, i32)
->   DEF_HELPER_FLAGS_6(sme_smopa_s, TCG_CALL_NO_RWG,
->                      void, ptr, ptr, ptr, ptr, ptr, i32)
->   DEF_HELPER_FLAGS_6(sme_umopa_s, TCG_CALL_NO_RWG,
-> diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-> index 2af2b957cb6..f172225b2f2 100644
-> --- a/target/arm/tcg/sme_helper.c
-> +++ b/target/arm/tcg/sme_helper.c
-> @@ -1080,8 +1080,8 @@ void HELPER(sme_fmopa_h)(CPUARMState *env,
->       }
->   }
+> diff --git a/target/arm/helper.h b/target/arm/helper.h
+> index 970d059dec5..aece9fd4aa7 100644
+> --- a/target/arm/helper.h
+> +++ b/target/arm/helper.h
+> @@ -1027,8 +1027,8 @@ DEF_HELPER_FLAGS_5(gvec_ummla_b, TCG_CALL_NO_RWG,
+>   DEF_HELPER_FLAGS_5(gvec_usmmla_b, TCG_CALL_NO_RWG,
+>                      void, ptr, ptr, ptr, ptr, i32)
 >   
-> -void HELPER(sme_bfmopa)(void *vza, void *vzn, void *vzm, void *vpn,
-> -                        void *vpm, uint32_t desc)
-> +void HELPER(sme_bfmopa)(CPUARMState *env, void *vza, void *vzn, void *vzm,
-> +                        void *vpn, void *vpm, uint32_t desc)
+> -DEF_HELPER_FLAGS_5(gvec_bfdot, TCG_CALL_NO_RWG,
+> -                   void, ptr, ptr, ptr, ptr, i32)
+> +DEF_HELPER_FLAGS_6(gvec_bfdot, TCG_CALL_NO_RWG,
+> +                   void, ptr, ptr, ptr, ptr, ptr, i32)
 
-Per this morning's review of do_outprod_env, I think env should be penultimate, as for 
-other gen_helper_gvec_5_ptr functions.
+Because env expands to TCGv_ptr in the translation context, I suspect that you can use 
+that here.  Worth a try, anyway, so that
 
-Otherwise,
+> -void HELPER(gvec_bfdot)(void *vd, void *vn, void *vm, void *va, uint32_t desc)
+> +void HELPER(gvec_bfdot)(void *vd, void *vn, void *vm, void *va,
+> +                        void *envp, uint32_t desc)
+
+this doesn't have to use void *.
+
+Either way,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
-
->   {
->       intptr_t row, col, oprsz = simd_maxsz(desc);
->       uint32_t neg = simd_data(desc) * 0x80008000u;
-> diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-> index 8e9332f1898..bcb502feb05 100644
-> --- a/target/arm/tcg/translate-sme.c
-> +++ b/target/arm/tcg/translate-sme.c
-> @@ -355,7 +355,7 @@ TRANS_FEAT(FMOPA_d, aa64_sme_f64f64, do_outprod_fpst, a,
->              MO_64, FPST_FPCR, gen_helper_sme_fmopa_d)
->   
->   /* TODO: FEAT_EBF16 */
-> -TRANS_FEAT(BFMOPA, aa64_sme, do_outprod, a, MO_32, gen_helper_sme_bfmopa)
-> +TRANS_FEAT(BFMOPA, aa64_sme, do_outprod_env, a, MO_32, gen_helper_sme_bfmopa)
->   
->   TRANS_FEAT(SMOPA_s, aa64_sme, do_outprod, a, MO_32, gen_helper_sme_smopa_s)
->   TRANS_FEAT(UMOPA_s, aa64_sme, do_outprod, a, MO_32, gen_helper_sme_umopa_s)
-
 
