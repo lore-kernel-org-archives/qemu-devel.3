@@ -4,83 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 766ADC3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 15:18:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2DB7C3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 15:22:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZB4v-000676-7q; Wed, 31 Jul 2024 11:17:25 -0400
+	id 1sZB91-0002ix-B6; Wed, 31 Jul 2024 11:21:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philipp.reisner@linbit.com>)
- id 1sZB4t-00065k-6R
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 11:17:23 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philipp.reisner@linbit.com>)
- id 1sZB4q-0005tq-Sc
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 11:17:22 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a7aa212c1c9so783472766b.2
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 08:17:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linbit-com.20230601.gappssmtp.com; s=20230601; t=1722439038; x=1723043838;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/Sh6zZA6XZUgT7LwMjMI+bUvSxGAEJP1sV+aVcQWSRY=;
- b=z2IIn6s3JHR759qMO5BtPJAFwDOyiGsxtZlz6nqKxpQf95OJgbYQafW6wk3xiA85ht
- y/XsedPLMOUIKncR3+wIZ14V2F0KULp5wbUHT8BeBldNhI3ttlQZ5x93D1PZUsi08kOy
- NgbhLSvOYxcPgohnOuv/tcNnHyuLa9MdM6tROF39JKNjUiDRTgKl2oFiEaukF4QeSe9I
- azQdy/RakUCzBSKKif4aAfPf7ilJ0nIxuUBZ9SF/ooWie31hhqJwsrJMgvQtAyDHzFE+
- oWpFQ/suVsNYMbQaWuL+PY4El3jXdp3PuaIxcbW+POYZ8XhI+DuDm7StDTb2EZxsGKPc
- bsfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722439038; x=1723043838;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/Sh6zZA6XZUgT7LwMjMI+bUvSxGAEJP1sV+aVcQWSRY=;
- b=bzIXxPxS0v+6BTcWA7CrS6/si8FrcW/QAvKTdb/GJqBjPabBTp/tgBdbmjLSxDPtfW
- TjdmfYSYrrH2cHC0f6Onhfko5hfucc9UEAUz8hoy7uqMFPtzvOdU0OFySnghn4Gpb7U3
- 0AuQXUI1ZwkbiXJDl+fgCeSgNB+0f5UBfMBkHGt38SBX2VhKAoRCvzQMzQBPrfGH2JZM
- oJcHYadhP1JC3UhnNAhDLM1CFsQgRfWWT6F7ShDZibPXj2BaJUcLnYVMc8So2m9Pz74M
- i1U6TLiOqfyqKtRRw0p04mnFsZZcnJnvfdIFw15stS/oVgz218Upk2yrKS5NifJ8MiJS
- P5xQ==
-X-Gm-Message-State: AOJu0Yz8A53pL13kzSw5sj2m7ZR4MMs7Mi2BSYcP6iNgbwpxOmZKex2/
- MxNdfiRq58AiUjqcQt9E3cm5IHWnd6mnkNoW+7dXzxMXId5sR5AHKDOQNThj7jbpqUkvQ7SPg6w
- m
-X-Google-Smtp-Source: AGHT+IGy74RlGanl1HZmBA7JKAIh1i9hNKo72fih0yYBD6+3BSBsbWDuIsK8xtE4wd+P/HVUTJEVcw==
-X-Received: by 2002:a17:906:c10f:b0:a7a:9f0f:ab17 with SMTP id
- a640c23a62f3a-a7d400afc1dmr1034715966b.32.1722439037839; 
- Wed, 31 Jul 2024 08:17:17 -0700 (PDT)
-Received: from ryzen9.home (193-80-247-151.adsl.highway.telekom.at.
- [193.80.247.151]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acad41dd2sm777683666b.107.2024.07.31.08.17.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Jul 2024 08:17:17 -0700 (PDT)
-From: Philipp Reisner <philipp.reisner@linbit.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
- Philipp Reisner <philipp.reisner@linbit.com>
-Subject: [PATCH] util: use RETRY_ON_EINTR() on open() more consistently
-Date: Wed, 31 Jul 2024 17:17:14 +0200
-Message-ID: <20240731151714.326879-1-philipp.reisner@linbit.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <CAFEAcA9J37Z1JJb34zyRDo=ow0h1QgOq9bm10dCc0u5bMyQKpg@mail.gmail.com>
-References: <CAFEAcA9J37Z1JJb34zyRDo=ow0h1QgOq9bm10dCc0u5bMyQKpg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sZB8z-0002i8-Fp
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 11:21:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sZB8x-0006hy-PK
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 11:21:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722439294;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pTogfFo0xxLk8tiw+WEKKwv4Dvgm3icbEeGCSVYs5+c=;
+ b=ZQYZu9JfDMkeD+UMjIUPp0gaDpuMSPrPK0FRBE19rASDjHAQYgonEh0FFI679idclkTosT
+ 10roEe44V0seZ7ehArfQu5jcblwjROj0qdJZLH0UB/Rwi+8T+ky1wnvCCJ0CoJ6m+cZy6a
+ SwEkWNi/Rb8pOmx0Z2r42PvCzXn0UDA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-0Cl10TstOTCdyLIDF3mQfQ-1; Wed,
+ 31 Jul 2024 11:21:30 -0400
+X-MC-Unique: 0Cl10TstOTCdyLIDF3mQfQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 097931977025; Wed, 31 Jul 2024 15:21:13 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.33])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6736F1955D42; Wed, 31 Jul 2024 15:21:09 +0000 (UTC)
+Date: Wed, 31 Jul 2024 16:21:05 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Philipp Reisner <philipp.reisner@linbit.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>
+Subject: Re: [PATCH] util: retry open() when it gets interrupted by a signal
+Message-ID: <ZqpWYfst2jsG3TB1@redhat.com>
+References: <20240731132524.308273-1-philipp.reisner@linbit.com>
+ <ZqpF6VoZgFsfhhl7@redhat.com>
+ <CAFEAcA9J37Z1JJb34zyRDo=ow0h1QgOq9bm10dCc0u5bMyQKpg@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philipp.reisner@linbit.com; helo=mail-ej1-x635.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <CAFEAcA9J37Z1JJb34zyRDo=ow0h1QgOq9bm10dCc0u5bMyQKpg@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,94 +86,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As with many syscalls, open() might be interrupted by a signal.
+On Wed, Jul 31, 2024 at 03:32:52PM +0100, Peter Maydell wrote:
+> On Wed, 31 Jul 2024 at 15:11, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> > On Wed, Jul 31, 2024 at 03:25:24PM +0200, Philipp Reisner wrote:
+> > > As with many syscalls, open() might be interrupted by a signal.
+> > >
+> > > The experienced logfile entry is:
+> > >
+> > > qemu-system-x86_64: -device virtio-blk-pci,bus=pci.0,addr=0x7,drive=libvirt-2-format,id=virtio-disk0,bootindex=2,write-cache=on,serial=1b990c4d13b74a4e90ea: Could not open '/dev/drbd1003': Interrupted system call
 
-The call trace
-img_open_file()
-  blk_new_open()
-    raw_open()
-      raw_open_common()
-        qemu_open()
-          qemu_open_internal()
-            qemu_open_cloexec()
+What is the actual signal you are seeing that impacts QEMU
+in this way ?
 
-Ended up in calling open() without a retry loop around it.
+> > > Retry it until it is not interrupted by a signal.
+> >
+> > As you say, many syscalls can be interruptted by signals, so
+> > special casing open() isn't really a solution - its just
+> > addressing one specific instance you happened to see.
+> >
+> > If there are certain signals that we don't want to have a
+> > fatal interruption for, it'd be better to set SA_RESTART
+> > with sigaction, which will auto-restart a large set of
+> > syscalls, while allowing other signals to be fatal.
+> 
+> This is why we have the RETRY_ON_EINTR() macro, right?
+> 
+> Currently we have some places that call qemu_open_old() inside
+> RETRY_ON_EINTR -- we should decide whether we want to
+> handle EINTR inside the qemu_open family of functions,
+> or make the caller deal with it, and put the macro uses
+> in the right place consistently.
 
-The experienced logfile entry is:
-qemu-system-x86_64: -device virtio-blk-pci,bus=pci.0,addr=0x7,drive=libvirt-2-format,id=virtio-disk0,bootindex=2,write-cache=on,serial=1b990c4d13b74a4e90ea: Could not open '/dev/drbd1003': Interrupted system call
+It is incredibly arbitrary where we use RETRY_ON_EINTR, which I think
+points towards it being a sub-optimal solution to the general problem.
 
-Add the RETRY_ON_EINTR() in qemu_open_cloexec() and remove it on
-call-sites using qemu_open_old().
+> 
+> I agree that it would be nicer if we could use SA_RESTART,
+> but presumably there's a reason why we don't. (At any
+> rate code that's shared with the user-mode emulation
+> has to be EINTR-resistant, because we can't force the
+> user-mode guest code to avoid registering signal handlers
+> that aren't SA_RESTART.)
 
-Signed-off-by: Philipp Reisner <philipp.reisner@linbit.com>
----
- chardev/char-fd.c   | 2 +-
- chardev/char-pipe.c | 4 ++--
- os-posix.c          | 2 +-
- util/osdep.c        | 4 ++--
- 4 files changed, 6 insertions(+), 6 deletions(-)
+For user mode emulation isn't it valid to just propagage the
+EINTR back up to the application, since EINTR is a valid errno
+they have to be willing to handle unless the app has itself
+use SA_RESTART.
 
-diff --git a/chardev/char-fd.c b/chardev/char-fd.c
-index d2c4923359..00a225bc48 100644
---- a/chardev/char-fd.c
-+++ b/chardev/char-fd.c
-@@ -198,7 +198,7 @@ int qmp_chardev_open_file_source(char *src, int flags, Error **errp)
- {
-     int fd = -1;
- 
--    fd = RETRY_ON_EINTR(qemu_open_old(src, flags, 0666));
-+    fd = qemu_open_old(src, flags, 0666);
-     if (fd == -1) {
-         error_setg_file_open(errp, errno, src);
-     }
-diff --git a/chardev/char-pipe.c b/chardev/char-pipe.c
-index 5ad30bcc59..c9dc793434 100644
---- a/chardev/char-pipe.c
-+++ b/chardev/char-pipe.c
-@@ -131,8 +131,8 @@ static void qemu_chr_open_pipe(Chardev *chr,
- 
-     filename_in = g_strdup_printf("%s.in", filename);
-     filename_out = g_strdup_printf("%s.out", filename);
--    fd_in = RETRY_ON_EINTR(qemu_open_old(filename_in, O_RDWR | O_BINARY));
--    fd_out = RETRY_ON_EINTR(qemu_open_old(filename_out, O_RDWR | O_BINARY));
-+    fd_in = qemu_open_old(filename_in, O_RDWR | O_BINARY);
-+    fd_out = qemu_open_old(filename_out, O_RDWR | O_BINARY);
-     g_free(filename_in);
-     g_free(filename_out);
-     if (fd_in < 0 || fd_out < 0) {
-diff --git a/os-posix.c b/os-posix.c
-index 43f9a43f3f..7401e7da6b 100644
---- a/os-posix.c
-+++ b/os-posix.c
-@@ -291,7 +291,7 @@ void os_setup_post(void)
-             error_report("not able to chdir to /: %s", strerror(errno));
-             exit(1);
-         }
--        fd = RETRY_ON_EINTR(qemu_open_old("/dev/null", O_RDWR));
-+        fd = qemu_open_old("/dev/null", O_RDWR);
-         if (fd == -1) {
-             exit(1);
-         }
-diff --git a/util/osdep.c b/util/osdep.c
-index 770369831b..13a09d0dd5 100644
---- a/util/osdep.c
-+++ b/util/osdep.c
-@@ -295,9 +295,9 @@ static int qemu_open_cloexec(const char *name, int flags, mode_t mode)
- {
-     int ret;
- #ifdef O_CLOEXEC
--    ret = open(name, flags | O_CLOEXEC, mode);
-+    ret = RETRY_ON_EINTR(open(name, flags | O_CLOEXEC, mode));
- #else
--    ret = open(name, flags, mode);
-+    ret = RETRY_ON_EINTR(open(name, flags, mode));
-     if (ret >= 0) {
-         qemu_set_cloexec(ret);
-     }
+With regards,
+Daniel
 -- 
-2.45.2
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
