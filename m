@@ -4,73 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B934AC52D54
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 11:19:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB65C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 11:19:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ7LX-0004pC-5g; Wed, 31 Jul 2024 07:18:19 -0400
+	id 1sZ7Lf-0005KJ-7A; Wed, 31 Jul 2024 07:18:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sZ7LV-0004oF-E2
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 07:18:17 -0400
+ id 1sZ7Ld-0005Dv-FF
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 07:18:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sZ7LT-0006kw-Pk
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 07:18:17 -0400
+ id 1sZ7Lb-0006mG-SJ
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 07:18:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722424694;
+ s=mimecast20190719; t=1722424703;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=eqtxkYA6jzPmq/0gV3zKrTvf9t84/rMwn6bJCgT2WeM=;
- b=OH9OuRtNJR7EKa4+LcwyFPdUtEWKlE6Ay66w3qzXJ4mdF6YG7fzbsIimrnkeiCC0GSGW6Z
- 9dEzD7yVTzSAjGuGDqXAWrcxi0eQNocWpZw+oU+VknTJ9y/UM9NwQ8tD27g65HtU06qpkE
- Bk7X4vL4dvpMwxPDxr2k71xCkcl538s=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YVLZx9cxauGLNxxqCHWm1ysmO8J+eGcn2LcW4LTM8N0=;
+ b=gGrEDrZZIkaqpH9/4Uz1Md1Kgo2bMOEKJutUU+0l7Jtw5rW0OPAJe3WLbDzcvN7AEb9oSR
+ ms3xDc3TyHYbw+m6JH9mfUk4lZ1D16UmJm9sfgcqqU911BspupMLXzqpjRajiXQpyzCaLv
+ B4kOU0K2g5TeUn1cLeOqX02R3n+zdjs=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-30-fd2-rl3xO5WU7REQp7VtUA-1; Wed, 31 Jul 2024 07:18:11 -0400
-X-MC-Unique: fd2-rl3xO5WU7REQp7VtUA-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a6f571c3eefso339140566b.2
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 04:18:11 -0700 (PDT)
+ us-mta-428-JmyQJ760P1OasYS_1BeFMw-1; Wed, 31 Jul 2024 07:18:22 -0400
+X-MC-Unique: JmyQJ760P1OasYS_1BeFMw-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-530ad977bccso1388905e87.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 04:18:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722424690; x=1723029490;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eqtxkYA6jzPmq/0gV3zKrTvf9t84/rMwn6bJCgT2WeM=;
- b=lijDxFd4GcRRjuR8RUOZhxWJuqwGik2SqdZobyEiDv9+0TMx/wTdoIpopwE1AIYsbL
- 57HyNyDkEvpl92iMqOJuVc8cJQ6i56zd7A5MCDSsctMcst5xyzqh5eII1nWCE87qr8zY
- E68y5CctfNOMwaor4FqC3UenDYe0biWGs05oXpF9B/3PGWaHAtLqyU2S34Hl+VaO2Qv3
- RwJ1r1CYEiCjcAUPj8ytQ3wQSFMLSBibILn4PMzF54e3ulTHmOGwPddD1qoDm/w9xqaR
- 6l37dJde8D5Qp6RaX86NhW2pcT6iVQFKtBFoIloTOSr5WO3kLY7rdUVzAQn1xsyd6BO7
- LmcQ==
-X-Gm-Message-State: AOJu0YzmGskPJxyD/OUA2foRdfLk9KxTesWUD+rvdpXeEkcdG9gNOTB6
- SOhmPj0zfBtWVFs9pmHSB4kdbqt/g3w2dcVPlGzDWVRSHxId1ycVfR7VNu2ikY9m4xefN/7bC8B
- e+9HIwaoibAV6HIt+r/G5srVB0ovt4LldmcWT42rKkGBREAxyPA+4hQLPuPKxZYNzzYbfPLwoiB
- zUkB+RlwsQhsfS20jI2JrtguWH74MnNTXUf62D
-X-Received: by 2002:a17:907:6d04:b0:a7a:a3f7:38a5 with SMTP id
- a640c23a62f3a-a7d400814a0mr1053491866b.33.1722424689749; 
- Wed, 31 Jul 2024 04:18:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IETPmXeDBFudQuFHLbo+lUFFnwdiAQN5MZsv3mZjybYrffeJHkerSZvHZIzJqa6/486YFU0bA==
-X-Received: by 2002:a17:907:6d04:b0:a7a:a3f7:38a5 with SMTP id
- a640c23a62f3a-a7d400814a0mr1053488766b.33.1722424689040; 
- Wed, 31 Jul 2024 04:18:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1722424700; x=1723029500;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YVLZx9cxauGLNxxqCHWm1ysmO8J+eGcn2LcW4LTM8N0=;
+ b=Nc13yNIDUfnjoUSbrSCHHnDAWI++Y1xWoNe21mBGjE49qlP9+lpcQM/jQl5KF0wxKy
+ /a/j24X/koOgBriIqSk9LvQMsZ6x/jxIa6gV83rLPNpwNbFqXIm3KrITFpGx5yO5ES8e
+ vdpY51ZCKggWgDSG1SlDSW4SzOxN0hMH6btL7s8tQEj6fqzNg7NvYFvRmjkhRbfKOaNP
+ d7xOMpucpbNjHaDKWLQ0FGPrzUd8YQZI+TMfAgocHNIN7CFLRZxpLp6dzE1nNYflsVeK
+ SHHj/E6b+UaxVNDAIdaZp+M9nW/l7VK8NI2R4D5yvs6+o6hkU82BQN2VIPmKAelwxaUu
+ XJGQ==
+X-Gm-Message-State: AOJu0YwSyGWBX5CzICHfnlMRM7pNHPcnCz5Ssw2CV9C6IilJXW4yoIua
+ cqmHA5MqttpUgR8HOj9KH8H9sA3m8KY/PCEC0btt3rKLwlAB3ndPjdTa2Nr1Q1pAdQe4Qj0gqrk
+ +Hy4OvmKeuVwIi9rY+Ejvez1Ri5Yzjl8zeGcW4lfJglYVRMfMK8kRRJY6j9emkG7M5G6snePK8R
+ Zw/r0AxlL6TPspEoAO5KrJMIO5DM8Uiav5fZpb
+X-Received: by 2002:ac2:4d19:0:b0:52c:dbc6:8eb0 with SMTP id
+ 2adb3069b0e04-5309b27227dmr7613412e87.21.1722424700072; 
+ Wed, 31 Jul 2024 04:18:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGbGV33v66AXlYzL0Rxv2r3llQ3tFveEhGcUPGUm69usdUj9r72dpteDIYmB5t0Pb09dk4FIg==
+X-Received: by 2002:ac2:4d19:0:b0:52c:dbc6:8eb0 with SMTP id
+ 2adb3069b0e04-5309b27227dmr7613394e87.21.1722424699512; 
+ Wed, 31 Jul 2024 04:18:19 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acad91eeesm765200266b.178.2024.07.31.04.18.08
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-a7d8288832fsm217166966b.6.2024.07.31.04.18.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Jul 2024 04:18:08 -0700 (PDT)
+ Wed, 31 Jul 2024 04:18:19 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/10] i386, tests/vm changes for QEMU 9.1-rc
-Date: Wed, 31 Jul 2024 13:17:56 +0200
-Message-ID: <20240731111806.167225-1-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 04/10] target/i386/cpu: Explicitly express SGX_LC and SGX
+ feature words dependency
+Date: Wed, 31 Jul 2024 13:18:00 +0200
+Message-ID: <20240731111806.167225-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240731111806.167225-1-pbonzini@redhat.com>
+References: <20240731111806.167225-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -98,54 +103,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 4e56e89d6c81589cc47cf5811f570c67889bd18a:
+From: Zhao Liu <zhao1.liu@intel.com>
 
-  Update version for v9.1.0-rc0 release (2024-07-31 16:21:21 +1000)
+At present, cpu_x86_cpuid() silently masks off SGX_LC if SGX is absent.
 
-are available in the Git repository at:
+This is not proper because the user is not told about the dependency
+between the two.
 
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+So explicitly define the dependency between SGX_LC and SGX feature
+words, so that user could get a warning when SGX_LC is enabled but
+SGX is absent.
 
-for you to fetch changes up to 2a99c2ba822ef9758d739ffdefbe6252520c1719:
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20240730045544.2516284-3-zhao1.liu@intel.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/cpu.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-  qemu-vmsr-helper: implement --verbose/-v (2024-07-31 13:15:06 +0200)
-
-----------------------------------------------------------------
-* target/i386: qemu-vmsr-helper fixes
-* target/i386: mask off SGX/SGX_LC feature words for non-PC machine
-* tests/vm/openbsd: Install tomli
-* fix issue with 64-bit features (vmx kvm-unit-tests)
-
-----------------------------------------------------------------
-Anthony Harivel (2):
-      target/i386: Fix typo that assign same value twice
-      target/i386: Clean up error cases for vmsr_read_thread_stat()
-
-Paolo Bonzini (2):
-      qemu-vmsr-helper: fix socket loop breakage
-      qemu-vmsr-helper: implement --verbose/-v
-
-Richard Henderson (1):
-      tests/vm/openbsd: Install tomli
-
-Xiong Zhang (1):
-      target/i386: Change unavail from u32 to u64
-
-Zhao Liu (4):
-      target/i386/cpu: Remove unnecessary SGX feature words checks
-      target/i386/cpu: Explicitly express SGX_LC and SGX feature words dependency
-      target/i386/cpu: Add dependencies of CPUID 0x12 leaves
-      target/i386/cpu: Mask off SGX/SGX_LC feature words for non-PC machine
-
- include/hw/i386/sgx-epc.h     |  1 +
- hw/i386/sgx-stub.c            |  5 +++++
- hw/i386/sgx.c                 |  8 +++++++
- target/i386/cpu.c             | 52 ++++++++++++++++++++++++++-----------------
- target/i386/kvm/kvm.c         |  4 ++--
- target/i386/kvm/vmsr_energy.c |  5 +++--
- tools/i386/qemu-vmsr-helper.c | 24 ++++++++++++++------
- tests/vm/openbsd              |  1 +
- 8 files changed, 69 insertions(+), 31 deletions(-)
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index a9535284aa9..e864f55d4fc 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1730,6 +1730,10 @@ static FeatureDep feature_dependencies[] = {
+         .from = { FEAT_7_1_EAX,             CPUID_7_1_EAX_WRMSRNS },
+         .to = { FEAT_7_1_EAX,               CPUID_7_1_EAX_FRED },
+     },
++    {
++        .from = { FEAT_7_0_EBX,             CPUID_7_0_EBX_SGX },
++        .to = { FEAT_7_0_ECX,               CPUID_7_0_ECX_SGX_LC },
++    },
+ };
+ 
+ typedef struct X86RegisterInfo32 {
+@@ -6545,11 +6549,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+                 *ecx |= CPUID_7_0_ECX_OSPKE;
+             }
+             *edx = env->features[FEAT_7_0_EDX]; /* Feature flags */
+-
+-            if ((*ecx & CPUID_7_0_ECX_SGX_LC)
+-                    && (!(*ebx & CPUID_7_0_EBX_SGX))) {
+-                *ecx &= ~CPUID_7_0_ECX_SGX_LC;
+-            }
+         } else if (count == 1) {
+             *eax = env->features[FEAT_7_1_EAX];
+             *edx = env->features[FEAT_7_1_EDX];
 -- 
 2.45.2
 
