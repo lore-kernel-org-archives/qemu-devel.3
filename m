@@ -4,85 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1C20C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 16:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D91AC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 17:01:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZCXU-0006RW-LP; Wed, 31 Jul 2024 12:51:00 -0400
+	id 1sZCgf-0008PC-76; Wed, 31 Jul 2024 13:00:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1sZCXT-0006Qa-Le
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 12:50:59 -0400
-Received: from mail-lf1-x131.google.com ([2a00:1450:4864:20::131])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sZCga-0008OR-DE
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:00:24 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1sZCXR-0003mL-ON
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 12:50:59 -0400
-Received: by mail-lf1-x131.google.com with SMTP id
- 2adb3069b0e04-52f04b3cb33so13263383e87.0
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 09:50:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sZCgY-0005aa-N7
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:00:24 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-42816ca782dso37738205e9.2
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 10:00:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1722444656; x=1723049456; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Oxj6cKW3l7RyCCn1nkATs5t6W7LBzcT0OUZC+QA/TY8=;
- b=ZNmIYXbpp3ovBYHxcWeMKE+xUMeHhPMqHP7daouwmijgeqM9ipOgHcjW8bTwhKNDWp
- ezz+xIzJ3YUc3lxzztROxPSZxx75UeYs0T3bivG8EBg/q/zBJlOWMXsRJixgIWa6q7XR
- eKD374FIwvF0MzsmFHqX0jeq55124xbWa5ml152UdxwBqXh/YlB6ScACsbct0FudiMzu
- BCjD1tmtjJw/Zauspfjbwro1ftW1X3ztRw+BCbvh/u8ZEOreYz6OG32NIfTf8Oz21HVA
- /NtYkQlN6H9klwP2H4+HHybrzoKFWw0U+LNUVSWwe6DBMEGz9G/LuQQPfqBrb/3MPMrV
- Q2fw==
+ d=linaro.org; s=google; t=1722445220; x=1723050020; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=GVfQXyh9sObTktsvqbAirmP7HyrwY7BxoUCuAv78J14=;
+ b=ujv7dLxR1dBgeGoDDzzTZ9hPx1vchtrSDLJClP9epAvM7bjXwpCaCrlIQP/MpLIxMJ
+ KbSEcYSWpLRF/wohlx6JG/wBhuOlYF0kJs59dsP5AkKVfz7Gy7i6053F1ElsE8ssP4Hm
+ 1c+wiDnS8pnSxymvkctTKTqppjQdh5+xlodzDNJGTnAcQ8bGfEMH1as0vZylw3SOjo1w
+ C7ZXK3+xLWvOtKhCJ7Z1yS3RV4ZVtNhQ494Te89muTHOWdeVuYqeJ6r3EWGWPcr/ZEQ8
+ ONh4PJxQCPWFNIJwUcjbXpGZ4OOktN5Oyrvt62aM8UAJOSw8byLSVqjRQPDnKsCTSXPT
+ om3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722444656; x=1723049456;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Oxj6cKW3l7RyCCn1nkATs5t6W7LBzcT0OUZC+QA/TY8=;
- b=SMor16v3xxgJs/6Ko9VabA3kPtj7WXzGntyDl6jlKOO82F5bnyuBGNQmHOhNRhNke2
- O65QXS7jw5ChvGFVCy3WFQ5kIKmJwQArN+FO+6J/7mZdgTd3YOx+/24p/0m5OJ3H+dRz
- jRNK6TeOJNg24IebRWFQcfQ+kulU786HQ6KCuYuf83RpINONFKz0DsaHvGX7ouKQHLYp
- OZ/m1i6eiuRUi0r9cAGZ0umSyiQ/Jz1A1elQ0xQUz0J8PoMQ5H4yxkEUPxxaVo6tVYsq
- DYEfs/ZhQDJDhIQfV/3xTY2Rh9TJclSKeXN15c1g7tzhI/J6+ixYI5oEqOU9gWgS/yn8
- EOVQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUIjswIHpXZRWxpHrQVbTApc7Gb426ERBM+CeLhVKooEK/F+1rQ5qwnAxW7dDJBCV4uHSmNq2l85dVbP1wznX6l+NSSVGA=
-X-Gm-Message-State: AOJu0YyuvMtFmKLxaj3ydNtUJQCqYMLxP5n1494ZSpDV7WpJht99zFZW
- TmEe4/SKDe16jcaIJWGQxsfb5onEVeZ3QD09IbmuZW0uG6TxO6GOwX9fI0Fv7fg=
-X-Google-Smtp-Source: AGHT+IHXFu30NQDQ2tNyjfzL5YnsV7w9ElawzOfW0q6h+Xpi3y3ErPJQ0RokcZPgqP4iuPwxVCnmpA==
-X-Received: by 2002:a2e:3311:0:b0:2ef:2677:7b74 with SMTP id
- 38308e7fff4ca-2f12ee62638mr128342691fa.41.1722444655297; 
- Wed, 31 Jul 2024 09:50:55 -0700 (PDT)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ d=1e100.net; s=20230601; t=1722445220; x=1723050020;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GVfQXyh9sObTktsvqbAirmP7HyrwY7BxoUCuAv78J14=;
+ b=B1X967EFvK9fUlhX44CL0N9UEMW4FhAtluK2Lpw265SlpbMu6dnruo6NuSU+kRkYmj
+ Boibv5UKvw337tHBDzlsivsFAEeY3o845Rc1wJIhkr4wEptA8hiNckxvdxgG4rOnqJWI
+ 7OgWyzgFbOvUVRWei13V0JmZBTV3Qpb21Hr+6AeFvxFtoGVkBy/u+v+ImAMBil4T0u1f
+ LbGbXoBKMVgr//q8TfNmhYp28HB+5od/ovR2ZGrNMpz4K9+RSYhBnmPvbJNvg9Zwv+zk
+ lZJxFw45mwQlJMb87Hw1ak4DrGhfrBA5MTrnIM6zAnOalc+40qCP1dD5+wDNKdQaqsat
+ ylfA==
+X-Gm-Message-State: AOJu0YwqnR7anyC946Qj5VAxLLTGqPBA6de3MAFtVkESPiM0cIeIMbrY
+ 6D1r31lnahVHeg9vvT10NZUg0otSDnOZDnj3PpogSyCsTRvoFnWeYhZMAQ9bNjZZ4/NT5RHbfjC
+ s
+X-Google-Smtp-Source: AGHT+IF4TXho/YVsnna+vH0liMMYR2EbE1VnukyTO/yor6mA7qsb/pUaEWUF/e08c/AHpNytvmbSuQ==
+X-Received: by 2002:a1c:770f:0:b0:426:6667:bbbe with SMTP id
+ 5b1f17b1804b1-428a9bdb988mr517715e9.9.1722445220416; 
+ Wed, 31 Jul 2024 10:00:20 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acab4e161sm786153066b.65.2024.07.31.09.50.54
+ 5b1f17b1804b1-4282b8a1840sm28186975e9.5.2024.07.31.10.00.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Jul 2024 09:50:54 -0700 (PDT)
-Date: Wed, 31 Jul 2024 18:50:53 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: Jason Chien <jason.chien@sifive.com>, qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, 
- zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com, frank.chang@sifive.com, 
- tjeznach@rivosinc.com
-Subject: Re: [PATCH v5 11/13] hw/riscv/riscv-iommu: Add another irq for mrif
- notifications
-Message-ID: <20240731-30c03698cd1c889a4485e2b0@orel>
-References: <20240708173501.426225-1-dbarboza@ventanamicro.com>
- <20240708173501.426225-12-dbarboza@ventanamicro.com>
- <8e54f48e-379b-42b8-8017-886ead154415@sifive.com>
- <49fe48d5-42d0-46fc-899e-50960941c3a2@ventanamicro.com>
+ Wed, 31 Jul 2024 10:00:20 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH] hw/i386/amd_iommu: Don't leak memory in amdvi_update_iotlb()
+Date: Wed, 31 Jul 2024 18:00:19 +0100
+Message-Id: <20240731170019.3590563-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <49fe48d5-42d0-46fc-899e-50960941c3a2@ventanamicro.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::131;
- envelope-from=ajones@ventanamicro.com; helo=mail-lf1-x131.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,51 +92,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 31, 2024 at 01:27:09PM GMT, Daniel Henrique Barboza wrote:
-> Hi Jason,
-> 
-> 
-> On 7/23/24 12:25 PM, Jason Chien wrote:
-> > Hi Daniel,
-> > 
-> > On 2024/7/9 上午 01:34, Daniel Henrique Barboza wrote:
-> > > From: Andrew Jones <ajones@ventanamicro.com>
-> > > 
-> > > And add mrif notification trace.
-> > > 
-> > > Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-> > > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> > > Reviewed-by: Frank Chang <frank.chang@sifive.com>
-> > > ---
-> > >   hw/riscv/riscv-iommu-pci.c | 2 +-
-> > >   hw/riscv/riscv-iommu.c     | 1 +
-> > >   hw/riscv/trace-events      | 1 +
-> > >   3 files changed, 3 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
-> > > index 7b82ce0645..d7e5f20885 100644
-> > > --- a/hw/riscv/riscv-iommu-pci.c
-> > > +++ b/hw/riscv/riscv-iommu-pci.c
-> > > @@ -81,7 +81,7 @@ static void riscv_iommu_pci_realize(PCIDevice *dev, Error **errp)
-> > >       pci_register_bar(dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY |
-> > >                        PCI_BASE_ADDRESS_MEM_TYPE_64, &s->bar0);
-> > > -    int ret = msix_init(dev, RISCV_IOMMU_INTR_COUNT,
-> > > +    int ret = msix_init(dev, RISCV_IOMMU_INTR_COUNT + 1,
-> > The new interrupt is not marked as used with msix_vector_use().
-> 
-> I took at look at what this patch is actually doing and, at least in the MRIF setup
-> I have, it's not doing much because we're not hitting the MRIF path inside the
-> emulation. So we're not hitting the trace and this extra MSI isn't being used.
-> 
-> Drew is taking a look into it in the kernel side. Until we get a better idea on what's
-> happening I'll remove this patch from the series. We can re-introduce it again later
-> in this series or in the follow-up.
+In amdvi_update_iotlb() we will only put a new entry in the hash
+table if to_cache.perm is not IOMMU_NONE.  However we allocate the
+memory for the new AMDVIIOTLBEntry and for the hash table key
+regardless.  This means that in the IOMMU_NONE case we will leak the
+memory we alloacted.
 
-I recommend adding the trace to whatever patch introduces the MRIF path in
-this series since we'll want the trace for testing regardless. If we need
-another fix to this series for MRIFs then I'll post that separately on
-top.
+Move the allocations into the if() to the point where we know we're
+going to add the item to the hash table.
 
-Thanks,
-drew
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2452
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+Tested with 'make check' and 'make check-avocado' only, but the
+bug and fix seem straightforward...
+---
+ hw/i386/amd_iommu.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 6d4fde72f9b..87643d28917 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -357,12 +357,12 @@ static void amdvi_update_iotlb(AMDVIState *s, uint16_t devid,
+                                uint64_t gpa, IOMMUTLBEntry to_cache,
+                                uint16_t domid)
+ {
+-    AMDVIIOTLBEntry *entry = g_new(AMDVIIOTLBEntry, 1);
+-    uint64_t *key = g_new(uint64_t, 1);
+-    uint64_t gfn = gpa >> AMDVI_PAGE_SHIFT_4K;
+-
+     /* don't cache erroneous translations */
+     if (to_cache.perm != IOMMU_NONE) {
++        AMDVIIOTLBEntry *entry = g_new(AMDVIIOTLBEntry, 1);
++        uint64_t *key = g_new(uint64_t, 1);
++        uint64_t gfn = gpa >> AMDVI_PAGE_SHIFT_4K;
++
+         trace_amdvi_cache_update(domid, PCI_BUS_NUM(devid), PCI_SLOT(devid),
+                 PCI_FUNC(devid), gpa, to_cache.translated_addr);
+ 
+-- 
+2.34.1
+
 
