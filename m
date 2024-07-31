@@ -4,83 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 747C0C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 22:44:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 874B7C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 23:01:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZI2O-0000vM-HF; Wed, 31 Jul 2024 18:43:16 -0400
+	id 1sZIJO-0007oD-52; Wed, 31 Jul 2024 19:00:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZI2M-0000tT-5I
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 18:43:14 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1sZIJM-0007lN-5x
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 19:00:48 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZI2K-0001se-HK
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 18:43:13 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-7a92098ec97so4259859a12.2
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 15:43:11 -0700 (PDT)
+ id 1sZIJK-0007t2-I5
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 19:00:47 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-70f5ef740b7so2381777b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 16:00:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722465791; x=1723070591; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722466844; x=1723071644; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=8D6L6mlJmw04kaqjni1MaM8sLHZt7aAWE1fCvEn+rN8=;
- b=Eec9nrvp+utPen/ZMeH+7DzwLyk70ByZE69yaUqB8MNq/72gTsw4tC22iaSWIpM/79
- 2QoWdpWT/4WdWtyWh/RTgDTLpACtfzp4SFqJ7dbqIr+W5EffeIHnIz6gcL0N9KeYYxag
- mJNO8pUFIvn50+76yUsAI9pt2oJye4RpqW1XyUBO4dQnvbF374WQkZYaOOOjMJNH5mys
- O+sc0RY2o98MC5BsHzkaqF686AFh5OASYG//AHAvaIzXZouUykf/K6ZrQY/37qOv2N/V
- lrykZ1iNflliMJZRAkkpK3Yq/OY/JSII7vvbEGU9780eU1qSo9IboF7+o2w5302w2d6q
- BwaQ==
+ bh=ZyPtboJt+m78kSqNs4mOUAYKCiN4YAze2Lx1xSh2y94=;
+ b=rDrMUkyGxE6ZYLm9XZEX3wowZR5vwlX2idS2N++r7ZinGdmvULIyPPmFxURBqAim0V
+ kfvGmZu876pMYTdDRb7yh2xqiED5PcIgDwqDd3CqjTAFbFgkdj2ZGpqdmloNkVoSRCmm
+ JNRnFM4dB9UcdPmTtba0FOLGZEM4m5YsFcuzFj/4dUAXuBMe4FnSy36gG8FUS0MoLKNP
+ svt2sefHuS+i0zIlau27WGYskNP5mEtzob4OB0WziMk8XOyI71Vnet2UUtIG580gDZVH
+ +bKBB9dT5ZCaR20rxAI57W20/cUe1omraEY9KKw7Oup1cveTK61d49KDuGytwT7wY1N2
+ 5bfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722465791; x=1723070591;
+ d=1e100.net; s=20230601; t=1722466844; x=1723071644;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8D6L6mlJmw04kaqjni1MaM8sLHZt7aAWE1fCvEn+rN8=;
- b=eKza0mL1lNffFPXOAfisA2XN89HxvC8hawyDfgn1MsfLedwMrzrO5WhOqKxRQDgk4+
- pdnEoPxcAYlFgu6nupyvJJTp1m8JJxuUNmWrTv92NHU2Uzu6PTcyezV/AaHaZFCMrgUh
- pdrsnqbvJTBAY6OGjXlTzrm490Qcb/ndLQYtcTlyJGtM46SE5OCHnskPdO3tz/SPMkMK
- /KNrk5A+GkkiSbMWfpCPg+79TC089Z/te6Gt/oA3IH7uv7oU/376vEwe0qNh2+VQQQ/P
- SrtvO04j1afA7AJzm3VU1eNX8H5TNiJs1Vh5oCBzKlPePYnHVzdOcnRrFFwUSWlYz/jj
- Vo8g==
-X-Gm-Message-State: AOJu0YwqW1EbLNLtqdW8WzVXYGsLH4ZP8QWXUdcmr569eJVG2Uy2H5z5
- a4QulU5SU5Sv7YB0UVu7nmXn9k44lSToQC8L0UBj5Yb5T0nIXpCA+76bfFpzDc4=
-X-Google-Smtp-Source: AGHT+IFsFCc3Tawaz8KPT6OOy87cnZDT8hUe96ps0A5t2M466lJE+2H7t546F0h/+DNslq+ZaKfp7A==
-X-Received: by 2002:a05:6a20:1582:b0:1c0:ef1c:b80 with SMTP id
- adf61e73a8af0-1c68d15ba68mr1057345637.52.1722465790543; 
- Wed, 31 Jul 2024 15:43:10 -0700 (PDT)
+ bh=ZyPtboJt+m78kSqNs4mOUAYKCiN4YAze2Lx1xSh2y94=;
+ b=si3qJRwjGyL9CJPalqdus3p2Z0+GIQOKFHnhtlp/ZXvdkRfl12gcnNIUNmzCdaU0m5
+ Br6nzAoLNA+b1sgR7+OkLa7HuYWNHtbnAfFp8YYB6yuRQ8LyCxqS5YqJFMAuqlD1ydYU
+ HdCFfIz+VD6d4+IfQAuj5S4FmUWoPLe9pU7X5tzmuSnH0T+c2EnqCgVojQjWODrzFDUp
+ xoaGqfF3z5A9bt6dgP7agqlx+ID4HnenQe0e0G2j97fbks1BjzfZLW/b0oAqf28qGM4C
+ +IYD0lw1TISRTjimngy/cIlBCo+W0Nfx4Vg21QrVcivQrUwShBLF1cUMjfaq5OkS6flW
+ jZcg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUsnlGF9gPtpb7tYZeQIdAu1Phumejym+QmrwI82eRVln3gsMAX414DYwj6hPV776uBrtmGvncjNASPFhfn4jL+rOGJAis=
+X-Gm-Message-State: AOJu0YwF5CQW9Wt2+2j2fzPXAzrHAxYlMvYt6kbIkT0C2Bqn2EMn+x/R
+ mORviLmQSx8A1m6CWtWWUJ8jWv1DB3pNSioWe8Z6tBuF0lcBa5tjEw9aKdVNtXM=
+X-Google-Smtp-Source: AGHT+IHgD9CNgGtk/cU0YFiVpIJI6mYOXMvY2uH4ytQlLvr5TVneThY7xQhFzmgtGDPmycP7Ok1XSw==
+X-Received: by 2002:a05:6a21:458b:b0:1c3:ce0f:bfb2 with SMTP id
+ adf61e73a8af0-1c68cf82b39mr699482637.23.1722466844244; 
+ Wed, 31 Jul 2024 16:00:44 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead6e18a4sm10460802b3a.9.2024.07.31.15.43.08
+ d2e1a72fcca58-70ead712682sm10451662b3a.60.2024.07.31.16.00.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jul 2024 15:43:09 -0700 (PDT)
-Message-ID: <7c0af87c-466b-4dba-a132-b14c8d262fd4@linaro.org>
-Date: Thu, 1 Aug 2024 08:43:04 +1000
+ Wed, 31 Jul 2024 16:00:43 -0700 (PDT)
+Message-ID: <42fb9582-9215-4ccc-bede-0c4f03fffd4c@linaro.org>
+Date: Thu, 1 Aug 2024 09:00:36 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] bsd-user/x86_64/target_arch_thread.h: Align stack
-To: Ilya Leoshkevich <iii@linux.ibm.com>, Warner Losh <imp@bsdimp.com>,
- Kyle Evans <kevans@freebsd.org>
-Cc: qemu-devel@nongnu.org
-References: <20240731144428.5882-1-iii@linux.ibm.com>
+Subject: Re: [PATCH v3 16/24] tests/functional: Convert the riscv_opensbi
+ avocado test into a standalone test
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
+ Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20240730170347.4103919-1-berrange@redhat.com>
+ <20240730170347.4103919-17-berrange@redhat.com>
+ <9fbf2f80-c7df-4819-8f74-c7ce75dc70a5@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240731144428.5882-1-iii@linux.ibm.com>
+In-Reply-To: <9fbf2f80-c7df-4819-8f74-c7ce75dc70a5@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,53 +106,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/1/24 00:44, Ilya Leoshkevich wrote:
-> bsd-user qemu-x86_64 almost immediately dies with:
+On 7/31/24 22:56, Philippe Mathieu-Daudé wrote:
+> On 30/7/24 19:03, Daniel P. Berrangé wrote:
+>> From: Thomas Huth <thuth@redhat.com>
+>>
+>> The avocado test defined test functions for both, riscv32 and riscv64.
+>> Since we can run the whole file with multiple targets in the new
+>> framework, we can now consolidate the functions so we have to only
+>> define one function per machine now.
+>>
+>> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   tests/avocado/riscv_opensbi.py         | 63 --------------------------
+>>   tests/functional/meson.build           |  8 ++++
+>>   tests/functional/test_riscv_opensbi.py | 36 +++++++++++++++
+>>   3 files changed, 44 insertions(+), 63 deletions(-)
+>>   delete mode 100644 tests/avocado/riscv_opensbi.py
+>>   create mode 100755 tests/functional/test_riscv_opensbi.py
 > 
->      qemu: 0x4002201a68: unhandled CPU exception 0xd - aborting
+> Please squash:
 > 
-> on FreeBSD 14.1-RELEASE. This is an instruction that requires
-> alignment:
-> 
->      (gdb) x/i 0x4002201a68
->         0x4002201a68:        movaps %xmm0,-0x40(%rbp)
-> 
-> and the argument is not aligned:
-> 
->      (gdb) p/x env->regs[5]
->      $1 = 0x822443b58
-> 
-> A quick experiment shows that the userspace entry point expects
-> misaligned rsp:
-> 
->      (gdb) starti
->      (gdb) p/x $rsp
->      $1 = 0x7fffffffeaa8
-> 
-> Emulate this behavior in bsd-user.
-> 
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> ---
->   bsd-user/x86_64/target_arch_thread.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/bsd-user/x86_64/target_arch_thread.h b/bsd-user/x86_64/target_arch_thread.h
-> index 52c28906d6d..25233443c14 100644
-> --- a/bsd-user/x86_64/target_arch_thread.h
-> +++ b/bsd-user/x86_64/target_arch_thread.h
-> @@ -31,7 +31,7 @@ static inline void target_thread_init(struct target_pt_regs *regs,
->       struct image_info *infop)
->   {
->       regs->rax = 0;
-> -    regs->rsp = infop->start_stack;
-> +    regs->rsp = (infop->start_stack & ~0xfUL) - 8;
+> -- >8 --
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 98eddf7ae1..a906218f9d 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -336,6 +337,7 @@ F: include/hw/riscv/
+>   F: linux-user/host/riscv32/
+>   F: linux-user/host/riscv64/
+>   F: tests/tcg/riscv64/
+> +F: tests/functional/test_riscv_opensbi.py
 
-The formula in sys/amd64/amd64/exec_machdep.c, exec_setregs is
+It seems worth taking this opportunity to add per-target subdirs of tests/functional/, so 
+that we don't have to list every individual test in MAINTAINERS.
 
-   ((stack - 8) & ~0xful) + 8
+Surely one
 
-With that,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+F: tests/functional/riscv/
+
+etc, is actually maintainable...
 
 
 r~
