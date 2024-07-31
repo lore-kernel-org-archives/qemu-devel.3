@@ -4,54 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13205C3DA49
-	for <qemu-devel@archiver.kernel.org>; Tue, 30 Jul 2024 23:05:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39866C3DA49
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 00:13:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sYvta-0006xh-CO; Tue, 30 Jul 2024 19:04:42 -0400
+	id 1sYwx8-0005qG-9B; Tue, 30 Jul 2024 20:12:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1sYvtY-0006t1-IM
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 19:04:40 -0400
-Received: from out-176.mta1.migadu.com ([2001:41d0:203:375::b0])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1sYwx6-0005pN-JO
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 20:12:24 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1sYvtU-0006M4-4O
- for qemu-devel@nongnu.org; Tue, 30 Jul 2024 19:04:40 -0400
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1722380667;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3OFw4TsbunpvM3ZYueHfARU/HyEM2bedWjz9HiQWivg=;
- b=LxowF5062hlIIDazLxDWc22nviGO5sPSc0elJbmnCwmgQ+poF3sbW1nPorXPpAUJx7+x8Y
- p2LGaUoveRsVTDHifCAy0FyHoV/IOtcmCc/zyIMY7wSM8WRDAw1+3P/YvBgn17BPCNit8k
- p/viK8hCE41fFANXqZW9y0sv0783QmE=
-From: Itaru Kitayama <itaru.kitayama@linux.dev>
-Message-Id: <7F67EEEA-D222-4348-83EF-5C81C94C79D0@linux.dev>
-Content-Type: multipart/mixed;
- boundary="Apple-Mail=_2ED71E53-A122-45C2-9FE2-38A64E29BCCD"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
-Subject: Re: QEMU unexpectedly closed the monitor
-Date: Wed, 31 Jul 2024 08:04:08 +0900
-In-Reply-To: <87le1jc8qi.fsf@draig.linaro.org>
-Cc: qemu-devel@nongnu.org, Jean-Philippe Brucker <jean-philippe@linaro.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>
-To: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <8AFDCC22-C476-45EF-9119-2E3C9A2A91C3@linux.dev>
- <87le1jc8qi.fsf@draig.linaro.org>
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:203:375::b0;
- envelope-from=itaru.kitayama@linux.dev; helo=out-176.mta1.migadu.com
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1sYwx2-0001l6-LT
+ for qemu-devel@nongnu.org; Tue, 30 Jul 2024 20:12:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=Q+j+gxXo9FX1pUGb7N3v76QML702ePVk7sMrCJeeDPI=; b=aZeMzIbhhUn1g+oL
+ AFGYFZsVBLQDNWm6V+Yc8lH8uHuRfL3rlbwIEg8mjyPtyuX10CyVIuE2vWobeEZOvp811Jw5zYMf7
+ wfsLPKknyUBXRptHN4I1sAB+UeyZHOmEOUVltN4ohP8/8arZF81wo07JuiPGnCk232FUtjDNx6QbH
+ 4nON4JYyWjfVnt46bFOlQ5dB11wSmU1EAkeIutlgV8y0K/Q+UFtBUUWHEvCvqJvWxQT37Vgqk050/
+ 9AhCA0IcMnPcWq9DGVd9wrjeMBHXNqdRZg7y8vXSvj4jsY7X77FxiayLRxfL5aKOw4axGOeU2ZB/z
+ 8kvbcUsdgSLrdsTY0w==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1sYwww-00EBsm-08;
+ Wed, 31 Jul 2024 00:12:14 +0000
+Date: Wed, 31 Jul 2024 00:12:13 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Josh Junon <junon@oro.sh>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>
+Subject: Re: [PATCH] qmp: Add 'memtranslate' QMP command
+Message-ID: <ZqmBXTVV52qkk9Ed@gallifrey>
+References: <20240730213432.18074-1-junon@oro.sh>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20240730213432.18074-1-junon@oro.sh>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-21-amd64 (x86_64)
+X-Uptime: 00:09:19 up 83 days, 11:23, 1 user, load average: 0.02, 0.03, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,665 +75,993 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+* Josh Junon (junon@oro.sh) wrote:
 
---Apple-Mail=_2ED71E53-A122-45C2-9FE2-38A64E29BCCD
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+Hi Josh,
 
-Hi Alex,
+> This commit adds a new QMP/HMP command `memtranslate`,
+> which translates a virtual address to a physical address
+> using the guest's MMU.
+> 
+> This uses the same mechanism that `[p]memsave` does to
+> perform the translation.
+> 
+> This commit also fixes a long standing issue of `[p]memsave`
+> not properly handling higher-half virtual addresses correctly,
+> namely when used over QMP/the monitor. The use and assumption of
+> signed integers caused issues when parsing otherwise valid
+> virtual addresses that instead caused signed integer overflow
+> or ERANGE errors.
+> 
+> Signed-off-by: Josh Junon <junon@oro.sh>
 
-> On Jul 30, 2024, at 22:25, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
-wrote:
->=20
-> Itaru Kitayama <itaru.kitayama@linux.dev> writes:
->=20
->> Hi,
->>=20
->> Executing virt-install with the following options:
->>=20
->> sudo virt-install --machine=3Dvirt --arch=3Daarch64 --name=3Dtest8 =
---disk
->> =
-path=3D/var/lib/libvirt/images/jammy.qcow2,format=3Dqcow2,device=3Ddisk,bu=
-s=3Dvirtio,cache=3Dnone
->> --memory=3D2048 --vcpu=3D1 --nographic --check all=3Doff --features =
-acpi=3Doff
->> --import --os-variant=3Dubuntu22.04 --virt-type kvm --boot
->> kernel=3DImage-guest-cca-v4,initrd=3Drootfs.cpio,kernel_args=3D'earlyco=
-n
->> console=3DttyAMA0 rdinit=3D/sbin/init rw root=3D/dev/vda acpi=3Doff' =
---network
->> none
->>=20
->> receives an error:
->>=20
->> Starting install...
->> ERROR    internal error: QEMU unexpectedly closed the monitor =
-(vm=3D'test8'): 2024-07-29T06:23:04.717118Z qemu-system-aarch64: could =
-not load kernel '/home/realm/Image-guest-cca-v4=E2=80=99
->>=20
->> I am not sure how to investigate as the kernel Image =
-(Image-guest-cca-v4) can work if it is used directly with the =
-qemu-system-aarch64, like:
->>=20
->> sudo qemu-system-aarch64 -kernel Image-guest-cca-v4 -initrd
->> rootfs.cpio -cpu host -M virt,gic-version=3D3,acpi=3Doff -enable-kvm =
--smp
->> 2 -m 2048M -nographic -append 'earlycon console=3DttyAMA0
->> rdinit=3D/sbin/init rw root=3D/dev/vda acpi=3Doff' -net none
->=20
-> Is there any way to get virt-install to dump its QEMU command line?
-> There obviously seems to be something off if it works when you build =
-the
-> command line by hand.
+There's a few different changes in this one patch; so the first
+thing is it needs splitting up; I suggest at least:
+   a) Fixing the signedness problems
+   b) The QMP implementation of the new command
+   c) The HMP implementation of the new command
 
-Not in a form we wish, but structured way, see the attached log with the =
-=E2=80=94debug option.
+That would make it a lot easier to review - also, it's good
+to get fixes in first!
 
-Itaru.
+Now, going back a step; how does this compare to the existing
+'gva2gpa' command which HMP has?
 
+Dave
 
---Apple-Mail=_2ED71E53-A122-45C2-9FE2-38A64E29BCCD
-Content-Disposition: attachment;
-	filename=log
-Content-Type: application/octet-stream;
-	x-unix-mode=0644;
-	name="log"
-Content-Transfer-Encoding: 7bit
-
-/home/realm/qemu-system-aarch64
-[Wed, 31 Jul 2024 07:57:39 virt-install 1311] DEBUG (cli:204) Version 4.1.0 launched with command line: /usr/bin/virt-install --machine=virt --arch=aarch64 --name=test8 --disk path=/var/lib/libvirt/images/jammy.qcow2,format=qcow2,device=disk,bus=virtio,cache=none --memory=2048 --vcpu=1 --nographic --check all=off --features acpi=off --import --os-variant=ubuntu22.04 --virt-type kvm --boot kernel=/home/realm/Image-v6.10,initrd=/home/realm/rootfs.cpio,kernel_args=earlycon console=ttyAMA0 rdinit=/sbin/init rw root=/dev/vda acpi=on --network none --debug
-[Wed, 31 Jul 2024 07:57:39 virt-install 1311] DEBUG (virtinstall:212) Distilled --network options: ['none']
-[Wed, 31 Jul 2024 07:57:39 virt-install 1311] DEBUG (virtinstall:249) --graphics compat generated: none
-[Wed, 31 Jul 2024 07:57:39 virt-install 1311] DEBUG (virtinstall:142) Distilled --disk options: ['path=/var/lib/libvirt/images/jammy.qcow2,format=qcow2,device=disk,bus=virtio,cache=none']
-[Wed, 31 Jul 2024 07:57:39 virt-install 1311] DEBUG (cli:217) Requesting libvirt URI default
-[Wed, 31 Jul 2024 07:57:49 virt-install 1311] DEBUG (connection:128) libvirt URI versions library=10.0.0 driver=10.0.0 hypervisor=8.2.2
-[Wed, 31 Jul 2024 07:57:54 virt-install 1311] DEBUG (connection:109) Fetched capabilities for qemu:///system: <capabilities>
-
-  <host>
-    <uuid>28dc3674-b910-4898-a6b0-4b6ed12d55ce</uuid>
-    <cpu>
-      <arch>aarch64</arch>
-      <topology sockets='1' dies='1' cores='8' threads='1'/>
-      <pages unit='KiB' size='4'/>
-      <pages unit='KiB' size='64'/>
-      <pages unit='KiB' size='2048'/>
-      <pages unit='KiB' size='32768'/>
-      <pages unit='KiB' size='1048576'/>
-    </cpu>
-    <power_management>
-      <suspend_mem/>
-    </power_management>
-    <iommu support='yes'/>
-    <migration_features>
-      <live/>
-      <uri_transports>
-        <uri_transport>tcp</uri_transport>
-        <uri_transport>rdma</uri_transport>
-      </uri_transports>
-    </migration_features>
-    <topology>
-      <cells num='1'>
-        <cell id='0'>
-          <memory unit='KiB'>3941700</memory>
-          <pages unit='KiB' size='4'>985425</pages>
-          <pages unit='KiB' size='64'>0</pages>
-          <pages unit='KiB' size='2048'>0</pages>
-          <pages unit='KiB' size='32768'>0</pages>
-          <pages unit='KiB' size='1048576'>0</pages>
-          <distances>
-            <sibling id='0' value='10'/>
-          </distances>
-          <cpus num='8'>
-            <cpu id='0' socket_id='0' die_id='0' core_id='0' siblings='0'/>
-            <cpu id='1' socket_id='0' die_id='0' core_id='1' siblings='1'/>
-            <cpu id='2' socket_id='0' die_id='0' core_id='2' siblings='2'/>
-            <cpu id='3' socket_id='0' die_id='0' core_id='3' siblings='3'/>
-            <cpu id='4' socket_id='0' die_id='0' core_id='4' siblings='4'/>
-            <cpu id='5' socket_id='0' die_id='0' core_id='5' siblings='5'/>
-            <cpu id='6' socket_id='0' die_id='0' core_id='6' siblings='6'/>
-            <cpu id='7' socket_id='0' die_id='0' core_id='7' siblings='7'/>
-          </cpus>
-        </cell>
-      </cells>
-    </topology>
-    <secmodel>
-      <model>none</model>
-      <doi>0</doi>
-    </secmodel>
-    <secmodel>
-      <model>dac</model>
-      <doi>0</doi>
-      <baselabel type='kvm'>+64055:+109</baselabel>
-      <baselabel type='qemu'>+64055:+109</baselabel>
-    </secmodel>
-  </host>
-
-  <guest>
-    <os_type>hvm</os_type>
-    <arch name='armv6l'>
-      <wordsize>32</wordsize>
-      <emulator>/usr/bin/qemu-system-arm</emulator>
-      <machine maxCpus='512'>virt-8.2</machine>
-      <machine canonical='virt-8.2' maxCpus='512'>virt</machine>
-      <machine maxCpus='2'>qcom-dc-scm-v1-bmc</machine>
-      <machine maxCpus='2'>mori-bmc</machine>
-      <machine maxCpus='2'>ast2600-evb</machine>
-      <machine maxCpus='1'>borzoi</machine>
-      <machine maxCpus='1'>tiogapass-bmc</machine>
-      <machine maxCpus='1'>spitz</machine>
-      <machine maxCpus='255'>virt-2.7</machine>
-      <machine maxCpus='2'>nuri</machine>
-      <machine maxCpus='2'>mcimx7d-sabre</machine>
-      <machine maxCpus='1'>romulus-bmc</machine>
-      <machine maxCpus='512'>virt-3.0</machine>
-      <machine maxCpus='512'>virt-5.0</machine>
-      <machine maxCpus='2'>npcm750-evb</machine>
-      <machine maxCpus='255'>virt-2.10</machine>
-      <machine maxCpus='2'>rainier-bmc</machine>
-      <machine maxCpus='1'>mps3-an547</machine>
-      <machine maxCpus='2'>musca-b1</machine>
-      <machine maxCpus='4'>realview-pbx-a9</machine>
-      <machine maxCpus='1'>versatileab</machine>
-      <machine maxCpus='1'>kzm</machine>
-      <machine maxCpus='255'>virt-2.8</machine>
-      <machine maxCpus='2'>fby35-bmc</machine>
-      <machine maxCpus='2'>musca-a</machine>
-      <machine maxCpus='512'>virt-3.1</machine>
-      <machine maxCpus='1'>mcimx6ul-evk</machine>
-      <machine maxCpus='512'>virt-5.1</machine>
-      <machine maxCpus='2'>smdkc210</machine>
-      <machine maxCpus='1'>sx1</machine>
-      <machine maxCpus='255'>virt-2.11</machine>
-      <machine maxCpus='1'>imx25-pdk</machine>
-      <machine maxCpus='1'>stm32vldiscovery</machine>
-      <machine maxCpus='255'>virt-2.9</machine>
-      <machine maxCpus='4'>orangepi-pc</machine>
-      <machine maxCpus='1'>quanta-q71l-bmc</machine>
-      <machine maxCpus='1'>z2</machine>
-      <machine maxCpus='512'>virt-5.2</machine>
-      <machine maxCpus='1'>xilinx-zynq-a9</machine>
-      <machine maxCpus='1'>tosa</machine>
-      <machine maxCpus='1'>mps2-an500</machine>
-      <machine maxCpus='255'>virt-2.12</machine>
-      <machine maxCpus='2'>mps2-an521</machine>
-      <machine maxCpus='4'>sabrelite</machine>
-      <machine maxCpus='1'>mps2-an511</machine>
-      <machine maxCpus='1'>canon-a1100</machine>
-      <machine maxCpus='1'>realview-eb</machine>
-      <machine maxCpus='2'>quanta-gbs-bmc</machine>
-      <machine maxCpus='1'>emcraft-sf2</machine>
-      <machine maxCpus='1'>realview-pb-a8</machine>
-      <machine maxCpus='1'>yosemitev2-bmc</machine>
-      <machine maxCpus='512'>virt-7.0</machine>
-      <machine maxCpus='512'>virt-4.0</machine>
-      <machine maxCpus='1'>raspi1ap</machine>
-      <machine maxCpus='1'>palmetto-bmc</machine>
-      <machine maxCpus='1'>sx1-v1</machine>
-      <machine maxCpus='1'>n810</machine>
-      <machine maxCpus='1'>g220a-bmc</machine>
-      <machine maxCpus='1'>n800</machine>
-      <machine maxCpus='512'>virt-7.1</machine>
-      <machine maxCpus='2'>tacoma-bmc</machine>
-      <machine maxCpus='2'>bletchley-bmc</machine>
-      <machine maxCpus='512'>virt-4.1</machine>
-      <machine maxCpus='2'>quanta-gsj</machine>
-      <machine maxCpus='1'>versatilepb</machine>
-      <machine maxCpus='1'>terrier</machine>
-      <machine maxCpus='1'>mainstone</machine>
-      <machine maxCpus='4'>realview-eb-mpcore</machine>
-      <machine maxCpus='1'>integratorcp</machine>
-      <machine maxCpus='512'>virt-7.2</machine>
-      <machine maxCpus='1'>supermicrox11-bmc</machine>
-      <machine maxCpus='512'>virt-4.2</machine>
-      <machine maxCpus='1'>witherspoon-bmc</machine>
-      <machine maxCpus='2'>qcom-firework-bmc</machine>
-      <machine maxCpus='2'>mps3-an524</machine>
-      <machine maxCpus='2'>kudo-bmc</machine>
-      <machine maxCpus='4'>vexpress-a9</machine>
-      <machine maxCpus='4'>midway</machine>
-      <machine maxCpus='1'>musicpal</machine>
-      <machine maxCpus='1'>lm3s811evb</machine>
-      <machine maxCpus='1'>lm3s6965evb</machine>
-      <machine maxCpus='1'>supermicro-x11spi-bmc</machine>
-      <machine maxCpus='1'>microbit</machine>
-      <machine maxCpus='3'>fby35</machine>
-      <machine maxCpus='1'>mps2-an505</machine>
-      <machine maxCpus='1'>mps2-an385</machine>
-      <machine maxCpus='512'>virt-6.0</machine>
-      <machine maxCpus='512'>virt-8.0</machine>
-      <machine maxCpus='1'>cubieboard</machine>
-      <machine maxCpus='1'>ast1030-evb</machine>
-      <machine maxCpus='1'>verdex</machine>
-      <machine maxCpus='1'>netduino2</machine>
-      <machine maxCpus='4'>bpim2u</machine>
-      <machine maxCpus='1'>mps2-an386</machine>
-      <machine maxCpus='1'>olimex-stm32-h405</machine>
-      <machine maxCpus='512'>virt-6.1</machine>
-      <machine maxCpus='512'>virt-8.1</machine>
-      <machine maxCpus='4'>raspi2b</machine>
-      <machine maxCpus='4'>vexpress-a15</machine>
-      <machine maxCpus='2'>fuji-bmc</machine>
-      <machine maxCpus='512'>virt-6.2</machine>
-      <machine maxCpus='1'>sonorapass-bmc</machine>
-      <machine maxCpus='1'>cheetah</machine>
-      <machine maxCpus='255'>virt-2.6</machine>
-      <machine maxCpus='1'>ast2500-evb</machine>
-      <machine maxCpus='4'>highbank</machine>
-      <machine maxCpus='1'>akita</machine>
-      <machine maxCpus='1'>connex</machine>
-      <machine maxCpus='1'>netduinoplus2</machine>
-      <machine maxCpus='1'>collie</machine>
-      <machine maxCpus='1'>raspi0</machine>
-      <machine maxCpus='1'>fp5280g2-bmc</machine>
-      <domain type='qemu'/>
-    </arch>
-    <features>
-      <cpuselection/>
-      <deviceboot/>
-      <disksnapshot default='on' toggle='no'/>
-      <externalSnapshot/>
-    </features>
-  </guest>
-
-  <guest>
-    <os_type>hvm</os_type>
-    <arch name='armv7l'>
-      <wordsize>32</wordsize>
-      <emulator>/usr/bin/qemu-system-aarch64</emulator>
-      <machine maxCpus='512'>virt-8.2</machine>
-      <machine canonical='virt-8.2' maxCpus='512'>virt</machine>
-      <machine maxCpus='2'>qcom-dc-scm-v1-bmc</machine>
-      <machine maxCpus='2'>mori-bmc</machine>
-      <machine maxCpus='2'>ast2600-evb</machine>
-      <machine maxCpus='1'>borzoi</machine>
-      <machine maxCpus='1'>tiogapass-bmc</machine>
-      <machine maxCpus='1'>spitz</machine>
-      <machine maxCpus='255'>virt-2.7</machine>
-      <machine maxCpus='2'>nuri</machine>
-      <machine maxCpus='2'>mcimx7d-sabre</machine>
-      <machine maxCpus='1'>romulus-bmc</machine>
-      <machine maxCpus='512'>virt-3.0</machine>
-      <machine maxCpus='512'>virt-5.0</machine>
-      <machine maxCpus='2'>npcm750-evb</machine>
-      <machine maxCpus='255'>virt-2.10</machine>
-      <machine maxCpus='2'>rainier-bmc</machine>
-      <machine maxCpus='1'>mps3-an547</machine>
-      <machine maxCpus='2'>musca-b1</machine>
-      <machine maxCpus='4'>realview-pbx-a9</machine>
-      <machine maxCpus='1'>versatileab</machine>
-      <machine maxCpus='1'>kzm</machine>
-      <machine maxCpus='255'>virt-2.8</machine>
-      <machine maxCpus='2'>fby35-bmc</machine>
-      <machine maxCpus='2'>musca-a</machine>
-      <machine maxCpus='512'>virt-3.1</machine>
-      <machine maxCpus='1'>mcimx6ul-evk</machine>
-      <machine maxCpus='512'>virt-5.1</machine>
-      <machine maxCpus='2'>smdkc210</machine>
-      <machine maxCpus='1'>sx1</machine>
-      <machine maxCpus='255'>virt-2.11</machine>
-      <machine maxCpus='1'>imx25-pdk</machine>
-      <machine maxCpus='1'>stm32vldiscovery</machine>
-      <machine maxCpus='255'>virt-2.9</machine>
-      <machine maxCpus='4'>orangepi-pc</machine>
-      <machine maxCpus='1'>quanta-q71l-bmc</machine>
-      <machine maxCpus='1'>z2</machine>
-      <machine maxCpus='512'>virt-5.2</machine>
-      <machine maxCpus='1'>xilinx-zynq-a9</machine>
-      <machine maxCpus='6'>xlnx-zcu102</machine>
-      <machine maxCpus='1'>tosa</machine>
-      <machine maxCpus='1'>mps2-an500</machine>
-      <machine maxCpus='255'>virt-2.12</machine>
-      <machine maxCpus='2'>mps2-an521</machine>
-      <machine maxCpus='4'>sabrelite</machine>
-      <machine maxCpus='1'>mps2-an511</machine>
-      <machine maxCpus='1'>canon-a1100</machine>
-      <machine maxCpus='1'>realview-eb</machine>
-      <machine maxCpus='2'>quanta-gbs-bmc</machine>
-      <machine maxCpus='1'>emcraft-sf2</machine>
-      <machine maxCpus='1'>realview-pb-a8</machine>
-      <machine maxCpus='512'>sbsa-ref</machine>
-      <machine maxCpus='1'>yosemitev2-bmc</machine>
-      <machine maxCpus='512'>virt-7.0</machine>
-      <machine maxCpus='512'>virt-4.0</machine>
-      <machine maxCpus='1'>raspi1ap</machine>
-      <machine maxCpus='1'>palmetto-bmc</machine>
-      <machine maxCpus='1'>sx1-v1</machine>
-      <machine maxCpus='1'>n810</machine>
-      <machine maxCpus='1'>g220a-bmc</machine>
-      <machine maxCpus='1'>n800</machine>
-      <machine maxCpus='512'>virt-7.1</machine>
-      <machine maxCpus='2'>tacoma-bmc</machine>
-      <machine maxCpus='2'>bletchley-bmc</machine>
-      <machine maxCpus='512'>virt-4.1</machine>
-      <machine maxCpus='2'>quanta-gsj</machine>
-      <machine maxCpus='1'>versatilepb</machine>
-      <machine maxCpus='1'>terrier</machine>
-      <machine maxCpus='1'>mainstone</machine>
-      <machine maxCpus='4'>realview-eb-mpcore</machine>
-      <machine maxCpus='1'>integratorcp</machine>
-      <machine maxCpus='512'>virt-7.2</machine>
-      <machine maxCpus='1'>supermicrox11-bmc</machine>
-      <machine maxCpus='512'>virt-4.2</machine>
-      <machine maxCpus='1'>witherspoon-bmc</machine>
-      <machine maxCpus='2'>qcom-firework-bmc</machine>
-      <machine maxCpus='2'>mps3-an524</machine>
-      <machine maxCpus='2'>kudo-bmc</machine>
-      <machine maxCpus='4'>vexpress-a9</machine>
-      <machine maxCpus='4'>midway</machine>
-      <machine maxCpus='1'>musicpal</machine>
-      <machine maxCpus='1'>lm3s811evb</machine>
-      <machine maxCpus='1'>lm3s6965evb</machine>
-      <machine maxCpus='1'>supermicro-x11spi-bmc</machine>
-      <machine maxCpus='1'>microbit</machine>
-      <machine maxCpus='3'>fby35</machine>
-      <machine maxCpus='1'>mps2-an505</machine>
-      <machine maxCpus='1'>mps2-an385</machine>
-      <machine maxCpus='512'>virt-6.0</machine>
-      <machine maxCpus='512'>virt-8.0</machine>
-      <machine maxCpus='4'>raspi3ap</machine>
-      <machine maxCpus='1'>cubieboard</machine>
-      <machine maxCpus='1'>ast1030-evb</machine>
-      <machine maxCpus='1'>verdex</machine>
-      <machine maxCpus='1'>netduino2</machine>
-      <machine maxCpus='4'>bpim2u</machine>
-      <machine maxCpus='4'>xlnx-versal-virt</machine>
-      <machine maxCpus='1'>mps2-an386</machine>
-      <machine maxCpus='1'>olimex-stm32-h405</machine>
-      <machine maxCpus='512'>virt-6.1</machine>
-      <machine maxCpus='512'>virt-8.1</machine>
-      <machine maxCpus='4'>raspi3b</machine>
-      <machine maxCpus='4'>raspi2b</machine>
-      <machine maxCpus='4'>vexpress-a15</machine>
-      <machine maxCpus='2'>fuji-bmc</machine>
-      <machine maxCpus='512'>virt-6.2</machine>
-      <machine maxCpus='1'>x-remote</machine>
-      <machine maxCpus='1'>cheetah</machine>
-      <machine maxCpus='1'>sonorapass-bmc</machine>
-      <machine maxCpus='255'>virt-2.6</machine>
-      <machine maxCpus='1'>ast2500-evb</machine>
-      <machine maxCpus='4'>highbank</machine>
-      <machine maxCpus='1'>akita</machine>
-      <machine maxCpus='1'>connex</machine>
-      <machine maxCpus='1'>netduinoplus2</machine>
-      <machine maxCpus='1'>collie</machine>
-      <machine maxCpus='1'>raspi0</machine>
-      <machine maxCpus='1'>fp5280g2-bmc</machine>
-      <domain type='qemu'/>
-      <domain type='kvm'/>
-    </arch>
-    <features>
-      <cpuselection/>
-      <deviceboot/>
-      <disksnapshot default='on' toggle='no'/>
-      <externalSnapshot/>
-    </features>
-  </guest>
-
-  <guest>
-    <os_type>hvm</os_type>
-    <arch name='aarch64'>
-      <wordsize>64</wordsize>
-      <emulator>/usr/bin/qemu-system-aarch64</emulator>
-      <machine maxCpus='512'>virt-8.2</machine>
-      <machine canonical='virt-8.2' maxCpus='512'>virt</machine>
-      <machine maxCpus='2'>qcom-dc-scm-v1-bmc</machine>
-      <machine maxCpus='2'>mori-bmc</machine>
-      <machine maxCpus='2'>ast2600-evb</machine>
-      <machine maxCpus='1'>borzoi</machine>
-      <machine maxCpus='1'>tiogapass-bmc</machine>
-      <machine maxCpus='1'>spitz</machine>
-      <machine maxCpus='255'>virt-2.7</machine>
-      <machine maxCpus='2'>nuri</machine>
-      <machine maxCpus='2'>mcimx7d-sabre</machine>
-      <machine maxCpus='1'>romulus-bmc</machine>
-      <machine maxCpus='512'>virt-3.0</machine>
-      <machine maxCpus='512'>virt-5.0</machine>
-      <machine maxCpus='2'>npcm750-evb</machine>
-      <machine maxCpus='255'>virt-2.10</machine>
-      <machine maxCpus='2'>rainier-bmc</machine>
-      <machine maxCpus='1'>mps3-an547</machine>
-      <machine maxCpus='2'>musca-b1</machine>
-      <machine maxCpus='4'>realview-pbx-a9</machine>
-      <machine maxCpus='1'>versatileab</machine>
-      <machine maxCpus='1'>kzm</machine>
-      <machine maxCpus='255'>virt-2.8</machine>
-      <machine maxCpus='2'>fby35-bmc</machine>
-      <machine maxCpus='2'>musca-a</machine>
-      <machine maxCpus='512'>virt-3.1</machine>
-      <machine maxCpus='1'>mcimx6ul-evk</machine>
-      <machine maxCpus='512'>virt-5.1</machine>
-      <machine maxCpus='2'>smdkc210</machine>
-      <machine maxCpus='1'>sx1</machine>
-      <machine maxCpus='255'>virt-2.11</machine>
-      <machine maxCpus='1'>imx25-pdk</machine>
-      <machine maxCpus='1'>stm32vldiscovery</machine>
-      <machine maxCpus='255'>virt-2.9</machine>
-      <machine maxCpus='4'>orangepi-pc</machine>
-      <machine maxCpus='1'>quanta-q71l-bmc</machine>
-      <machine maxCpus='1'>z2</machine>
-      <machine maxCpus='512'>virt-5.2</machine>
-      <machine maxCpus='1'>xilinx-zynq-a9</machine>
-      <machine maxCpus='6'>xlnx-zcu102</machine>
-      <machine maxCpus='1'>tosa</machine>
-      <machine maxCpus='1'>mps2-an500</machine>
-      <machine maxCpus='255'>virt-2.12</machine>
-      <machine maxCpus='2'>mps2-an521</machine>
-      <machine maxCpus='4'>sabrelite</machine>
-      <machine maxCpus='1'>mps2-an511</machine>
-      <machine maxCpus='1'>canon-a1100</machine>
-      <machine maxCpus='1'>realview-eb</machine>
-      <machine maxCpus='2'>quanta-gbs-bmc</machine>
-      <machine maxCpus='1'>emcraft-sf2</machine>
-      <machine maxCpus='1'>realview-pb-a8</machine>
-      <machine maxCpus='512'>sbsa-ref</machine>
-      <machine maxCpus='1'>yosemitev2-bmc</machine>
-      <machine maxCpus='512'>virt-7.0</machine>
-      <machine maxCpus='512'>virt-4.0</machine>
-      <machine maxCpus='1'>raspi1ap</machine>
-      <machine maxCpus='1'>palmetto-bmc</machine>
-      <machine maxCpus='1'>sx1-v1</machine>
-      <machine maxCpus='1'>n810</machine>
-      <machine maxCpus='1'>g220a-bmc</machine>
-      <machine maxCpus='1'>n800</machine>
-      <machine maxCpus='512'>virt-7.1</machine>
-      <machine maxCpus='2'>tacoma-bmc</machine>
-      <machine maxCpus='2'>bletchley-bmc</machine>
-      <machine maxCpus='512'>virt-4.1</machine>
-      <machine maxCpus='2'>quanta-gsj</machine>
-      <machine maxCpus='1'>versatilepb</machine>
-      <machine maxCpus='1'>terrier</machine>
-      <machine maxCpus='1'>mainstone</machine>
-      <machine maxCpus='4'>realview-eb-mpcore</machine>
-      <machine maxCpus='1'>integratorcp</machine>
-      <machine maxCpus='512'>virt-7.2</machine>
-      <machine maxCpus='1'>supermicrox11-bmc</machine>
-      <machine maxCpus='512'>virt-4.2</machine>
-      <machine maxCpus='1'>witherspoon-bmc</machine>
-      <machine maxCpus='2'>qcom-firework-bmc</machine>
-      <machine maxCpus='2'>mps3-an524</machine>
-      <machine maxCpus='2'>kudo-bmc</machine>
-      <machine maxCpus='4'>vexpress-a9</machine>
-      <machine maxCpus='4'>midway</machine>
-      <machine maxCpus='1'>musicpal</machine>
-      <machine maxCpus='1'>lm3s811evb</machine>
-      <machine maxCpus='1'>lm3s6965evb</machine>
-      <machine maxCpus='1'>supermicro-x11spi-bmc</machine>
-      <machine maxCpus='1'>microbit</machine>
-      <machine maxCpus='3'>fby35</machine>
-      <machine maxCpus='1'>mps2-an505</machine>
-      <machine maxCpus='1'>mps2-an385</machine>
-      <machine maxCpus='512'>virt-6.0</machine>
-      <machine maxCpus='512'>virt-8.0</machine>
-      <machine maxCpus='4'>raspi3ap</machine>
-      <machine maxCpus='1'>cubieboard</machine>
-      <machine maxCpus='1'>ast1030-evb</machine>
-      <machine maxCpus='1'>verdex</machine>
-      <machine maxCpus='1'>netduino2</machine>
-      <machine maxCpus='4'>bpim2u</machine>
-      <machine maxCpus='4'>xlnx-versal-virt</machine>
-      <machine maxCpus='1'>mps2-an386</machine>
-      <machine maxCpus='1'>olimex-stm32-h405</machine>
-      <machine maxCpus='512'>virt-6.1</machine>
-      <machine maxCpus='512'>virt-8.1</machine>
-      <machine maxCpus='4'>raspi3b</machine>
-      <machine maxCpus='4'>raspi2b</machine>
-      <machine maxCpus='4'>vexpress-a15</machine>
-      <machine maxCpus='2'>fuji-bmc</machine>
-      <machine maxCpus='512'>virt-6.2</machine>
-      <machine maxCpus='1'>x-remote</machine>
-      <machine maxCpus='1'>cheetah</machine>
-      <machine maxCpus='1'>sonorapass-bmc</machine>
-      <machine maxCpus='255'>virt-2.6</machine>
-      <machine maxCpus='1'>ast2500-evb</machine>
-      <machine maxCpus='4'>highbank</machine>
-      <machine maxCpus='1'>akita</machine>
-      <machine maxCpus='1'>connex</machine>
-      <machine maxCpus='1'>netduinoplus2</machine>
-      <machine maxCpus='1'>collie</machine>
-      <machine maxCpus='1'>raspi0</machine>
-      <machine maxCpus='1'>fp5280g2-bmc</machine>
-      <domain type='qemu'/>
-      <domain type='kvm'/>
-    </arch>
-    <features>
-      <acpi default='on' toggle='yes'/>
-      <cpuselection/>
-      <deviceboot/>
-      <disksnapshot default='on' toggle='no'/>
-      <externalSnapshot/>
-    </features>
-  </guest>
-
-</capabilities>
-
-[Wed, 31 Jul 2024 07:57:54 virt-install 1311] DEBUG (cli:220) Received libvirt URI qemu:///system
-[Wed, 31 Jul 2024 07:59:05 virt-install 1311] DEBUG (guest:341) Setting Guest osinfo name <_OsVariant name=generic>
-[Wed, 31 Jul 2024 07:59:05 virt-install 1311] DEBUG (guest:341) Setting Guest osinfo name <_OsVariant name=ubuntu22.04>
-[Wed, 31 Jul 2024 07:59:05 virt-install 1311] DEBUG (installer:542) No media for distro detection.
-[Wed, 31 Jul 2024 07:59:05 virt-install 1311] DEBUG (installer:544) installer.detect_distro returned=None
-[Wed, 31 Jul 2024 07:59:06 virt-install 1311] DEBUG (osdict:216) No recommended value found for key='n-cpus', using minimum=1 * 2
-[Wed, 31 Jul 2024 07:59:06 virt-install 1311] DEBUG (guest:546) Prefer EFI => True
-[Wed, 31 Jul 2024 07:59:06 virt-install 1311] DEBUG (guest:1113) Using num_pcie_root_ports=14
-[Wed, 31 Jul 2024 07:59:07 virt-install 1311] DEBUG (cli:322) Skipping --check path_in_use error condition 'Disk /var/lib/libvirt/images/jammy.qcow2 is already in use by other guests ['jammy', 'tmp9', 'tmp1', 'tmp19', 'test'].'
-[Wed, 31 Jul 2024 07:59:07 virt-install 1311] WARNING (cli:325) Disk /var/lib/libvirt/images/jammy.qcow2 is already in use by other guests ['jammy', 'tmp9', 'tmp1', 'tmp19', 'test'].
-[Wed, 31 Jul 2024 07:59:07 virt-install 1311] DEBUG (disk:239) DeviceDisk.check_path_search path=/var/lib/libvirt/images/jammy.qcow2
-[Wed, 31 Jul 2024 07:59:07 virt-install 1311] DEBUG (cli:266) 
-Starting install...
-[Wed, 31 Jul 2024 07:59:08 virt-install 1311] DEBUG (installer:587) Generated initial_xml: None required
-[Wed, 31 Jul 2024 07:59:08 virt-install 1311] DEBUG (installer:589) Generated final_xml: 
-<domain type="kvm">
-  <name>test8</name>
-  <uuid>b32a6305-44e2-470e-b514-2c0aff76549b</uuid>
-  <metadata>
-    <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
-      <libosinfo:os id="http://ubuntu.com/ubuntu/22.04"/>
-    </libosinfo:libosinfo>
-  </metadata>
-  <memory>2097152</memory>
-  <currentMemory>2097152</currentMemory>
-  <vcpu>1</vcpu>
-  <os>
-    <type arch="aarch64" machine="virt">hvm</type>
-    <kernel>/home/realm/Image-v6.10</kernel>
-    <initrd>/home/realm/rootfs.cpio</initrd>
-    <cmdline>earlycon console=ttyAMA0 rdinit=/sbin/init rw root=/dev/vda acpi=on</cmdline>
-  </os>
-  <cpu mode="host-passthrough"/>
-  <clock offset="utc"/>
-  <devices>
-    <emulator>/usr/bin/qemu-system-aarch64</emulator>
-    <disk type="file" device="disk">
-      <driver name="qemu" type="qcow2" cache="none"/>
-      <source file="/var/lib/libvirt/images/jammy.qcow2"/>
-      <target dev="vda" bus="virtio"/>
-    </disk>
-    <controller type="usb" model="qemu-xhci" ports="15"/>
-    <controller type="pci" model="pcie-root"/>
-    <controller type="pci" model="pcie-root-port"/>
-    <controller type="pci" model="pcie-root-port"/>
-    <controller type="pci" model="pcie-root-port"/>
-    <controller type="pci" model="pcie-root-port"/>
-    <controller type="pci" model="pcie-root-port"/>
-    <controller type="pci" model="pcie-root-port"/>
-    <controller type="pci" model="pcie-root-port"/>
-    <controller type="pci" model="pcie-root-port"/>
-    <controller type="pci" model="pcie-root-port"/>
-    <controller type="pci" model="pcie-root-port"/>
-    <controller type="pci" model="pcie-root-port"/>
-    <controller type="pci" model="pcie-root-port"/>
-    <controller type="pci" model="pcie-root-port"/>
-    <controller type="pci" model="pcie-root-port"/>
-    <console type="pty"/>
-    <channel type="unix">
-      <source mode="bind"/>
-      <target type="virtio" name="org.qemu.guest_agent.0"/>
-    </channel>
-    <memballoon model="virtio"/>
-    <rng model="virtio">
-      <backend model="random">/dev/urandom</backend>
-    </rng>
-  </devices>
-</domain>
-
-[Wed, 31 Jul 2024 07:59:10 virt-install 1311] DEBUG (cli:256)   File "/usr/bin/virt-install", line 8, in <module>
-    virtinstall.runcli()
-  File "/usr/share/virt-manager/virtinst/virtinstall.py", line 1233, in runcli
-    sys.exit(main())
-  File "/usr/share/virt-manager/virtinst/virtinstall.py", line 1226, in main
-    start_install(guest, installer, options)
-  File "/usr/share/virt-manager/virtinst/virtinstall.py", line 974, in start_install
-    fail(e, do_exit=False)
-  File "/usr/share/virt-manager/virtinst/cli.py", line 256, in fail
-    log.debug("".join(traceback.format_stack()))
-
-[Wed, 31 Jul 2024 07:59:10 virt-install 1311] ERROR (cli:257) internal error: QEMU unexpectedly closed the monitor (vm='test8'): 2024-07-30T22:59:10.099540Z qemu-system-aarch64: could not load kernel '/home/realm/Image-v6.10'
-[Wed, 31 Jul 2024 07:59:10 virt-install 1311] DEBUG (cli:259) 
-Traceback (most recent call last):
-  File "/usr/share/virt-manager/virtinst/virtinstall.py", line 954, in start_install
-    domain = installer.start_install(
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/share/virt-manager/virtinst/install/installer.py", line 695, in start_install
-    domain = self._create_guest(
-             ^^^^^^^^^^^^^^^^^^^
-  File "/usr/share/virt-manager/virtinst/install/installer.py", line 637, in _create_guest
-    domain = self.conn.createXML(initial_xml or final_xml, 0)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3/dist-packages/libvirt.py", line 4529, in createXML
-    raise libvirtError('virDomainCreateXML() failed')
-libvirt.libvirtError: internal error: QEMU unexpectedly closed the monitor (vm='test8'): 2024-07-30T22:59:10.099540Z qemu-system-aarch64: could not load kernel '/home/realm/Image-v6.10'
-[Wed, 31 Jul 2024 07:59:10 virt-install 1311] DEBUG (cli:272) Domain installation does not appear to have been successful.
-If it was, you can restart your domain by running:
-  virsh --connect qemu:///system start test8
-otherwise, please restart your installation.
-Domain installation does not appear to have been successful.
-If it was, you can restart your domain by running:
-  virsh --connect qemu:///system start test8
-otherwise, please restart your installation.
-
-Starting install...
-
---Apple-Mail=_2ED71E53-A122-45C2-9FE2-38A64E29BCCD
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
-
-
->=20
->>=20
->> Userland is Ubuntu 24.04, and the host and guest kernels are for the =
-protected VM (Realm) execution.
->> Any help would be appreciated.
->>=20
->> Thanks,
->> Itaru.
->=20
-> --=20
-> Alex Benn=C3=A9e
-> Virtualisation Tech Lead @ Linaro
-
-
-
---Apple-Mail=_2ED71E53-A122-45C2-9FE2-38A64E29BCCD--
+> ---
+>  docs/devel/loads-stores.rst |  11 ++
+>  hmp-commands.hx             |  16 ++-
+>  hw/core/machine-hmp-cmds.c  |  34 ++++-
+>  include/exec/cpu-common.h   |   5 +
+>  include/monitor/hmp.h       |   1 +
+>  include/qapi/qmp/qdict.h    |   4 +
+>  monitor/hmp-expr.inc        | 200 ++++++++++++++++++++++++++++++
+>  monitor/hmp.c               | 241 ++++++++----------------------------
+>  qapi/machine.json           |  42 ++++++-
+>  qobject/qdict.c             |  38 ++++++
+>  system/cpus.c               |  31 ++++-
+>  system/physmem.c            |  18 +++
+>  tests/qtest/test-hmp.c      |   1 +
+>  tests/unit/check-qdict.c    |  39 ++++++
+>  14 files changed, 482 insertions(+), 199 deletions(-)
+>  create mode 100644 monitor/hmp-expr.inc
+> 
+> diff --git a/docs/devel/loads-stores.rst b/docs/devel/loads-stores.rst
+> index ec627aa9c0..c2bf4bd015 100644
+> --- a/docs/devel/loads-stores.rst
+> +++ b/docs/devel/loads-stores.rst
+> @@ -465,6 +465,17 @@ For new code they are better avoided:
+>  Regexes for git grep:
+>   - ``\<cpu_physical_memory_\(read\|write\|rw\)\>``
+>  
+> +``cpu_memory_translate``
+> +~~~~~~~~~~~~~~~~~~~~~~~~
+> +
+> +Translates a virtual address to a physical address.
+> +
+> +This function is intended for use by QMP/HMP and similar code.
+> +It takes a virtual address and returns the physical address
+> +as it's seen by the MMU via a lookup, along with other attributes
+> +of the page as well as what occurred during the lookup itself.
+> +
+> +
+>  ``cpu_memory_rw_debug``
+>  ~~~~~~~~~~~~~~~~~~~~~~~
+>  
+> diff --git a/hmp-commands.hx b/hmp-commands.hx
+> index 06746f0afc..213279e340 100644
+> --- a/hmp-commands.hx
+> +++ b/hmp-commands.hx
+> @@ -796,12 +796,24 @@ SRST
+>    Stop capture with a given *index*, index can be obtained with::
+>  
+>      info capture
+> +ERST
+> +
+> +    {
+> +        .name       = "memtranslate",
+> +        .args_type  = "val:u",
+> +        .params     = "addr",
+> +        .help       = "translate a guest virtual address 'addr' to a physical address",
+> +        .cmd        = hmp_memtranslate,
+> +    },
+>  
+> +SRST
+> +``memtranslate`` *addr*
+> +  translate a guest virtual address *val* to a physical address
+>  ERST
+>  
+>      {
+>          .name       = "memsave",
+> -        .args_type  = "val:l,size:i,filename:s",
+> +        .args_type  = "val:u,size:u,filename:s",
+>          .params     = "addr size file",
+>          .help       = "save to disk virtual memory dump starting at 'addr' of size 'size'",
+>          .cmd        = hmp_memsave,
+> @@ -814,7 +826,7 @@ ERST
+>  
+>      {
+>          .name       = "pmemsave",
+> -        .args_type  = "val:l,size:i,filename:s",
+> +        .args_type  = "val:u,size:u,filename:s",
+>          .params     = "addr size file",
+>          .help       = "save to disk physical memory dump starting at 'addr' of size 'size'",
+>          .cmd        = hmp_pmemsave,
+> diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
+> index 8701f00cc7..cf4adfa80a 100644
+> --- a/hw/core/machine-hmp-cmds.c
+> +++ b/hw/core/machine-hmp-cmds.c
+> @@ -194,11 +194,37 @@ void hmp_system_powerdown(Monitor *mon, const QDict *qdict)
+>      qmp_system_powerdown(NULL);
+>  }
+>  
+> +void hmp_memtranslate(Monitor *mon, const QDict *qdict)
+> +{
+> +    uint64_t addr = qdict_get_uint(qdict, "val");
+> +    Error *err = NULL;
+> +    int cpu_index = monitor_get_cpu_index(mon);
+> +    MemTranslation *translation;
+> +
+> +    if (cpu_index < 0) {
+> +        monitor_printf(mon, "No CPU available\n");
+> +        return;
+> +    }
+> +
+> +    translation = qmp_memtranslate(addr, true, cpu_index, &err);
+> +
+> +    if (err == NULL) {
+> +        if (translation->phys == -1) {
+> +            monitor_printf(mon, "failed to translate\n");
+> +        } else {
+> +            monitor_printf(mon, "phys: 0x%" PRIx64 "\n", translation->phys);
+> +        }
+> +    }
+> +
+> +    qapi_free_MemTranslation(translation);
+> +    hmp_handle_error(mon, err);
+> +}
+> +
+>  void hmp_memsave(Monitor *mon, const QDict *qdict)
+>  {
+> -    uint32_t size = qdict_get_int(qdict, "size");
+> +    uint64_t size = qdict_get_uint(qdict, "size");
+>      const char *filename = qdict_get_str(qdict, "filename");
+> -    uint64_t addr = qdict_get_int(qdict, "val");
+> +    uint64_t addr = qdict_get_uint(qdict, "val");
+>      Error *err = NULL;
+>      int cpu_index = monitor_get_cpu_index(mon);
+>  
+> @@ -213,9 +239,9 @@ void hmp_memsave(Monitor *mon, const QDict *qdict)
+>  
+>  void hmp_pmemsave(Monitor *mon, const QDict *qdict)
+>  {
+> -    uint32_t size = qdict_get_int(qdict, "size");
+> +    uint64_t size = qdict_get_uint(qdict, "size");
+>      const char *filename = qdict_get_str(qdict, "filename");
+> -    uint64_t addr = qdict_get_int(qdict, "val");
+> +    uint64_t addr = qdict_get_uint(qdict, "val");
+>      Error *err = NULL;
+>  
+>      qmp_pmemsave(addr, size, filename, &err);
+> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+> index 2e1b499cb7..9484c82fe0 100644
+> --- a/include/exec/cpu-common.h
+> +++ b/include/exec/cpu-common.h
+> @@ -178,6 +178,11 @@ int ram_block_discard_guest_memfd_range(RAMBlock *rb, uint64_t start,
+>  
+>  #endif
+>  
+> +/* Returns: translated physical address on success, -1 on error.
+> + * If the address is not valid, `*attrs` is left untouched.
+> + */
+> +hwaddr cpu_memory_translate(CPUState *cpu, vaddr addr, MemTxAttrs *attrs);
+> +
+>  /* Returns: 0 on success, -1 on error */
+>  int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+>                          void *ptr, size_t len, bool is_write);
+> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+> index ae116d9804..febccf13cc 100644
+> --- a/include/monitor/hmp.h
+> +++ b/include/monitor/hmp.h
+> @@ -47,6 +47,7 @@ void hmp_system_powerdown(Monitor *mon, const QDict *qdict);
+>  void hmp_exit_preconfig(Monitor *mon, const QDict *qdict);
+>  void hmp_announce_self(Monitor *mon, const QDict *qdict);
+>  void hmp_cpu(Monitor *mon, const QDict *qdict);
+> +void hmp_memtranslate(Monitor *mon, const QDict *qdict);
+>  void hmp_memsave(Monitor *mon, const QDict *qdict);
+>  void hmp_pmemsave(Monitor *mon, const QDict *qdict);
+>  void hmp_ringbuf_write(Monitor *mon, const QDict *qdict);
+> diff --git a/include/qapi/qmp/qdict.h b/include/qapi/qmp/qdict.h
+> index 82e90fc072..38c310becb 100644
+> --- a/include/qapi/qmp/qdict.h
+> +++ b/include/qapi/qmp/qdict.h
+> @@ -52,17 +52,21 @@ const QDictEntry *qdict_next(const QDict *qdict, const QDictEntry *entry);
+>  
+>  void qdict_put_bool(QDict *qdict, const char *key, bool value);
+>  void qdict_put_int(QDict *qdict, const char *key, int64_t value);
+> +void qdict_put_uint(QDict *qdict, const char *key, uint64_t value);
+>  void qdict_put_null(QDict *qdict, const char *key);
+>  void qdict_put_str(QDict *qdict, const char *key, const char *value);
+>  
+>  double qdict_get_double(const QDict *qdict, const char *key);
+>  int64_t qdict_get_int(const QDict *qdict, const char *key);
+> +uint64_t qdict_get_uint(const QDict *qdict, const char *key);
+>  bool qdict_get_bool(const QDict *qdict, const char *key);
+>  QList *qdict_get_qlist(const QDict *qdict, const char *key);
+>  QDict *qdict_get_qdict(const QDict *qdict, const char *key);
+>  const char *qdict_get_str(const QDict *qdict, const char *key);
+>  int64_t qdict_get_try_int(const QDict *qdict, const char *key,
+>                            int64_t def_value);
+> +uint64_t qdict_get_try_uint(const QDict *qdict, const char *key,
+> +                          uint64_t def_value);
+>  bool qdict_get_try_bool(const QDict *qdict, const char *key, bool def_value);
+>  const char *qdict_get_try_str(const QDict *qdict, const char *key);
+>  
+> diff --git a/monitor/hmp-expr.inc b/monitor/hmp-expr.inc
+> new file mode 100644
+> index 0000000000..789a957ed2
+> --- /dev/null
+> +++ b/monitor/hmp-expr.inc
+> @@ -0,0 +1,200 @@
+> +#ifndef HMP_EXPR_INC_TY
+> +#error "missing HMP_EXPR_INC_TY"
+> +#endif
+> +
+> +#ifndef HMP_EXPR_INC_IDENT
+> +#error "missing HMP_EXPR_INC_IDENT"
+> +#endif
+> +
+> +static HMP_EXPR_INC_TY HMP_EXPR_INC_IDENT(expr_sum)(Monitor *mon);
+> +
+> +static HMP_EXPR_INC_TY HMP_EXPR_INC_IDENT(expr_unary)(Monitor *mon)
+> +{
+> +    HMP_EXPR_INC_TY n;
+> +    char *p;
+> +    int ret;
+> +
+> +    switch (*pch) {
+> +    case '+':
+> +        next();
+> +        n = HMP_EXPR_INC_IDENT(expr_unary)(mon);
+> +        break;
+> +    case '-':
+> +        next();
+> +        n = -HMP_EXPR_INC_IDENT(expr_unary)(mon);
+> +        break;
+> +    case '~':
+> +        next();
+> +        n = ~HMP_EXPR_INC_IDENT(expr_unary)(mon);
+> +        break;
+> +    case '(':
+> +        next();
+> +        n = HMP_EXPR_INC_IDENT(expr_sum)(mon);
+> +        if (*pch != ')') {
+> +            expr_error(mon, "')' expected");
+> +        }
+> +        next();
+> +        break;
+> +    case '\'':
+> +        pch++;
+> +        if (*pch == '\0') {
+> +            expr_error(mon, "character constant expected");
+> +        }
+> +        n = *pch;
+> +        pch++;
+> +        if (*pch != '\'') {
+> +            expr_error(mon, "missing terminating \' character");
+> +        }
+> +        next();
+> +        break;
+> +    case '$':
+> +        {
+> +            char buf[128], *q;
+> +            int64_t reg = 0;
+> +
+> +            pch++;
+> +            q = buf;
+> +            while ((*pch >= 'a' && *pch <= 'z') ||
+> +                   (*pch >= 'A' && *pch <= 'Z') ||
+> +                   (*pch >= '0' && *pch <= '9') ||
+> +                   *pch == '_' || *pch == '.') {
+> +                if ((q - buf) < sizeof(buf) - 1) {
+> +                    *q++ = *pch;
+> +                }
+> +                pch++;
+> +            }
+> +            while (qemu_isspace(*pch)) {
+> +                pch++;
+> +            }
+> +            *q = 0;
+> +            ret = get_monitor_def(mon, &reg, buf);
+> +            if (ret < 0) {
+> +                expr_error(mon, "unknown register");
+> +            }
+> +            n = (HMP_EXPR_INC_TY)reg;
+> +        }
+> +        break;
+> +    case '\0':
+> +        expr_error(mon, "unexpected end of expression");
+> +        n = 0;
+> +        break;
+> +    default:
+> +        errno = 0;
+> +        n = strtoull(pch, &p, 0);
+> +        if (errno == ERANGE) {
+> +            expr_error(mon, "number too large");
+> +        }
+> +        if (pch == p) {
+> +            expr_error(mon, "invalid char '%c' in expression", *p);
+> +        }
+> +        pch = p;
+> +        while (qemu_isspace(*pch)) {
+> +            pch++;
+> +        }
+> +        break;
+> +    }
+> +    return n;
+> +}
+> +
+> +static HMP_EXPR_INC_TY HMP_EXPR_INC_IDENT(expr_prod)(Monitor *mon)
+> +{
+> +    HMP_EXPR_INC_TY val, val2;
+> +    int op;
+> +
+> +    val = HMP_EXPR_INC_IDENT(expr_unary)(mon);
+> +    for (;;) {
+> +        op = *pch;
+> +        if (op != '*' && op != '/' && op != '%') {
+> +            break;
+> +        }
+> +        next();
+> +        val2 = HMP_EXPR_INC_IDENT(expr_unary)(mon);
+> +        switch (op) {
+> +        default:
+> +        case '*':
+> +            val *= val2;
+> +            break;
+> +        case '/':
+> +        case '%':
+> +            if (val2 == 0) {
+> +                expr_error(mon, "division by zero");
+> +            }
+> +            if (op == '/') {
+> +                val /= val2;
+> +            } else {
+> +                val %= val2;
+> +            }
+> +            break;
+> +        }
+> +    }
+> +    return val;
+> +}
+> +
+> +static HMP_EXPR_INC_TY HMP_EXPR_INC_IDENT(expr_logic)(Monitor *mon)
+> +{
+> +    HMP_EXPR_INC_TY val, val2;
+> +    int op;
+> +
+> +    val = HMP_EXPR_INC_IDENT(expr_prod)(mon);
+> +    for (;;) {
+> +        op = *pch;
+> +        if (op != '&' && op != '|' && op != '^') {
+> +            break;
+> +        }
+> +        next();
+> +        val2 = HMP_EXPR_INC_IDENT(expr_prod)(mon);
+> +        switch (op) {
+> +        default:
+> +        case '&':
+> +            val &= val2;
+> +            break;
+> +        case '|':
+> +            val |= val2;
+> +            break;
+> +        case '^':
+> +            val ^= val2;
+> +            break;
+> +        }
+> +    }
+> +    return val;
+> +}
+> +
+> +static HMP_EXPR_INC_TY HMP_EXPR_INC_IDENT(expr_sum)(Monitor *mon)
+> +{
+> +    HMP_EXPR_INC_TY val, val2;
+> +    int op;
+> +
+> +    val = HMP_EXPR_INC_IDENT(expr_logic)(mon);
+> +    for (;;) {
+> +        op = *pch;
+> +        if (op != '+' && op != '-') {
+> +            break;
+> +        }
+> +        next();
+> +        val2 = HMP_EXPR_INC_IDENT(expr_logic)(mon);
+> +        if (op == '+') {
+> +            val += val2;
+> +        } else {
+> +            val -= val2;
+> +        }
+> +    }
+> +    return val;
+> +}
+> +
+> +static int HMP_EXPR_INC_IDENT(get_expr)(Monitor *mon, HMP_EXPR_INC_TY *pval, const char **pp)
+> +{
+> +    pch = *pp;
+> +    if (sigsetjmp(expr_env, 0)) {
+> +        *pp = pch;
+> +        return -1;
+> +    }
+> +    while (qemu_isspace(*pch)) {
+> +        pch++;
+> +    }
+> +    *pval = HMP_EXPR_INC_IDENT(expr_sum)(mon);
+> +    *pp = pch;
+> +    return 0;
+> +}
+> +
+> +#undef HMP_EXPR_INC_TY
+> +#undef HMP_EXPR_INC_IDENT
+> diff --git a/monitor/hmp.c b/monitor/hmp.c
+> index 460e8832f6..95d965a20a 100644
+> --- a/monitor/hmp.c
+> +++ b/monitor/hmp.c
+> @@ -332,195 +332,13 @@ static void next(void)
+>      }
+>  }
+>  
+> -static int64_t expr_sum(Monitor *mon);
+> +#define HMP_EXPR_INC_TY int64_t
+> +#define HMP_EXPR_INC_IDENT(name) name ## _int64
+> +#include "monitor/hmp-expr.inc"
+>  
+> -static int64_t expr_unary(Monitor *mon)
+> -{
+> -    int64_t n;
+> -    char *p;
+> -    int ret;
+> -
+> -    switch (*pch) {
+> -    case '+':
+> -        next();
+> -        n = expr_unary(mon);
+> -        break;
+> -    case '-':
+> -        next();
+> -        n = -expr_unary(mon);
+> -        break;
+> -    case '~':
+> -        next();
+> -        n = ~expr_unary(mon);
+> -        break;
+> -    case '(':
+> -        next();
+> -        n = expr_sum(mon);
+> -        if (*pch != ')') {
+> -            expr_error(mon, "')' expected");
+> -        }
+> -        next();
+> -        break;
+> -    case '\'':
+> -        pch++;
+> -        if (*pch == '\0') {
+> -            expr_error(mon, "character constant expected");
+> -        }
+> -        n = *pch;
+> -        pch++;
+> -        if (*pch != '\'') {
+> -            expr_error(mon, "missing terminating \' character");
+> -        }
+> -        next();
+> -        break;
+> -    case '$':
+> -        {
+> -            char buf[128], *q;
+> -            int64_t reg = 0;
+> -
+> -            pch++;
+> -            q = buf;
+> -            while ((*pch >= 'a' && *pch <= 'z') ||
+> -                   (*pch >= 'A' && *pch <= 'Z') ||
+> -                   (*pch >= '0' && *pch <= '9') ||
+> -                   *pch == '_' || *pch == '.') {
+> -                if ((q - buf) < sizeof(buf) - 1) {
+> -                    *q++ = *pch;
+> -                }
+> -                pch++;
+> -            }
+> -            while (qemu_isspace(*pch)) {
+> -                pch++;
+> -            }
+> -            *q = 0;
+> -            ret = get_monitor_def(mon, &reg, buf);
+> -            if (ret < 0) {
+> -                expr_error(mon, "unknown register");
+> -            }
+> -            n = reg;
+> -        }
+> -        break;
+> -    case '\0':
+> -        expr_error(mon, "unexpected end of expression");
+> -        n = 0;
+> -        break;
+> -    default:
+> -        errno = 0;
+> -        n = strtoull(pch, &p, 0);
+> -        if (errno == ERANGE) {
+> -            expr_error(mon, "number too large");
+> -        }
+> -        if (pch == p) {
+> -            expr_error(mon, "invalid char '%c' in expression", *p);
+> -        }
+> -        pch = p;
+> -        while (qemu_isspace(*pch)) {
+> -            pch++;
+> -        }
+> -        break;
+> -    }
+> -    return n;
+> -}
+> -
+> -static int64_t expr_prod(Monitor *mon)
+> -{
+> -    int64_t val, val2;
+> -    int op;
+> -
+> -    val = expr_unary(mon);
+> -    for (;;) {
+> -        op = *pch;
+> -        if (op != '*' && op != '/' && op != '%') {
+> -            break;
+> -        }
+> -        next();
+> -        val2 = expr_unary(mon);
+> -        switch (op) {
+> -        default:
+> -        case '*':
+> -            val *= val2;
+> -            break;
+> -        case '/':
+> -        case '%':
+> -            if (val2 == 0) {
+> -                expr_error(mon, "division by zero");
+> -            }
+> -            if (op == '/') {
+> -                val /= val2;
+> -            } else {
+> -                val %= val2;
+> -            }
+> -            break;
+> -        }
+> -    }
+> -    return val;
+> -}
+> -
+> -static int64_t expr_logic(Monitor *mon)
+> -{
+> -    int64_t val, val2;
+> -    int op;
+> -
+> -    val = expr_prod(mon);
+> -    for (;;) {
+> -        op = *pch;
+> -        if (op != '&' && op != '|' && op != '^') {
+> -            break;
+> -        }
+> -        next();
+> -        val2 = expr_prod(mon);
+> -        switch (op) {
+> -        default:
+> -        case '&':
+> -            val &= val2;
+> -            break;
+> -        case '|':
+> -            val |= val2;
+> -            break;
+> -        case '^':
+> -            val ^= val2;
+> -            break;
+> -        }
+> -    }
+> -    return val;
+> -}
+> -
+> -static int64_t expr_sum(Monitor *mon)
+> -{
+> -    int64_t val, val2;
+> -    int op;
+> -
+> -    val = expr_logic(mon);
+> -    for (;;) {
+> -        op = *pch;
+> -        if (op != '+' && op != '-') {
+> -            break;
+> -        }
+> -        next();
+> -        val2 = expr_logic(mon);
+> -        if (op == '+') {
+> -            val += val2;
+> -        } else {
+> -            val -= val2;
+> -        }
+> -    }
+> -    return val;
+> -}
+> -
+> -static int get_expr(Monitor *mon, int64_t *pval, const char **pp)
+> -{
+> -    pch = *pp;
+> -    if (sigsetjmp(expr_env, 0)) {
+> -        *pp = pch;
+> -        return -1;
+> -    }
+> -    while (qemu_isspace(*pch)) {
+> -        pch++;
+> -    }
+> -    *pval = expr_sum(mon);
+> -    *pp = pch;
+> -    return 0;
+> -}
+> +#define HMP_EXPR_INC_TY uint64_t
+> +#define HMP_EXPR_INC_IDENT(name) name ## _uint64
+> +#include "monitor/hmp-expr.inc"
+>  
+>  static int get_double(Monitor *mon, double *pval, const char **pp)
+>  {
+> @@ -882,7 +700,7 @@ static QDict *monitor_parse_arguments(Monitor *mon,
+>                      }
+>                      typestr++;
+>                  }
+> -                if (get_expr(mon, &val, &p)) {
+> +                if (get_expr_int64(mon, &val, &p)) {
+>                      goto fail;
+>                  }
+>                  /* Check if 'i' is greater than 32-bit */
+> @@ -900,6 +718,51 @@ static QDict *monitor_parse_arguments(Monitor *mon,
+>                  qdict_put_int(qdict, key, val);
+>              }
+>              break;
+> +        case 'd':
+> +        case 'u':
+> +        case 'm':
+> +            {
+> +                uint64_t val;
+> +
+> +                while (qemu_isspace(*p)) {
+> +                    p++;
+> +                }
+> +                if (*typestr == '?' || *typestr == '.') {
+> +                    if (*typestr == '?') {
+> +                        if (*p == '\0') {
+> +                            typestr++;
+> +                            break;
+> +                        }
+> +                    } else {
+> +                        if (*p == '.') {
+> +                            p++;
+> +                            while (qemu_isspace(*p)) {
+> +                                p++;
+> +                            }
+> +                        } else {
+> +                            typestr++;
+> +                            break;
+> +                        }
+> +                    }
+> +                    typestr++;
+> +                }
+> +
+> +                if (get_expr_uint64(mon, &val, &p)) {
+> +                    goto fail;
+> +                }
+> +
+> +                /* Check if 'd' is greater than 32-bit */
+> +                if ((c == 'd') && ((val >> 32) & 0xffffffff)) {
+> +                    monitor_printf(mon, "\'%s\' has failed: ", cmd->name);
+> +                    monitor_printf(mon, "integer is for 32-bit values\n");
+> +                    goto fail;
+> +                } else if (c == 'm') {
+> +                    val *= MiB;
+> +                }
+> +
+> +                qdict_put_uint(qdict, key, val);
+> +            }
+> +            break;
+>          case 'o':
+>              {
+>                  int ret;
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index fcfd249e2d..7c2627c3e2 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -825,6 +825,44 @@
+>     'policy': 'HmatCacheWritePolicy',
+>     'line': 'uint16' }}
+>  
+> +##
+> +# @MemTranslation:
+> +#
+> +# Result of a virtual-to-physical memory translation via @memtranslate.
+> +#
+> +# @phys: the physical address corresponding to the virtual address,
+> +#     or -1 if the translation failed
+> +#
+> +# Since: TBD
+> +##
+> +{ 'struct': 'MemTranslation',
+> +  'data': { 'phys': 'uint64' } }
+> +
+> +##
+> +# @memtranslate:
+> +#
+> +# Translate a guest virtual address to a physical address.
+> +#
+> +# @val: the virtual address of the guest to translate
+> +#
+> +# @cpu-index: the index of the virtual CPU to use for translating the
+> +#     virtual address (defaults to CPU 0)
+> +#
+> +# Returns:
+> +#     @MemTranslation
+> +#
+> +# Since: TBD
+> +#
+> +# .. qmp-example::
+> +#
+> +#     -> { "execute": "memtranslate",
+> +#          "arguments": { "val": 10 } }
+> +#     <- { "return": { "phys": 20 } }
+> +##
+> +{ 'command': 'memtranslate',
+> +  'data': {'val': 'uint64', '*cpu-index': 'int'},
+> +  'returns': 'MemTranslation' }
+> +
+>  ##
+>  # @memsave:
+>  #
+> @@ -852,7 +890,7 @@
+>  #     <- { "return": {} }
+>  ##
+>  { 'command': 'memsave',
+> -  'data': {'val': 'int', 'size': 'int', 'filename': 'str', '*cpu-index': 'int'} }
+> +  'data': {'val': 'uint64', 'size': 'uint64', 'filename': 'str', '*cpu-index': 'int'} }
+>  
+>  ##
+>  # @pmemsave:
+> @@ -878,7 +916,7 @@
+>  #     <- { "return": {} }
+>  ##
+>  { 'command': 'pmemsave',
+> -  'data': {'val': 'int', 'size': 'int', 'filename': 'str'} }
+> +  'data': {'val': 'uint64', 'size': 'uint64', 'filename': 'str'} }
+>  
+>  ##
+>  # @Memdev:
+> diff --git a/qobject/qdict.c b/qobject/qdict.c
+> index 8faff230d3..9696eee57d 100644
+> --- a/qobject/qdict.c
+> +++ b/qobject/qdict.c
+> @@ -136,6 +136,11 @@ void qdict_put_int(QDict *qdict, const char *key, int64_t value)
+>      qdict_put(qdict, key, qnum_from_int(value));
+>  }
+>  
+> +void qdict_put_uint(QDict *qdict, const char *key, uint64_t value)
+> +{
+> +    qdict_put(qdict, key, qnum_from_uint(value));
+> +}
+> +
+>  void qdict_put_bool(QDict *qdict, const char *key, bool value)
+>  {
+>      qdict_put(qdict, key, qbool_from_bool(value));
+> @@ -209,6 +214,19 @@ int64_t qdict_get_int(const QDict *qdict, const char *key)
+>      return qnum_get_int(qobject_to(QNum, qdict_get(qdict, key)));
+>  }
+>  
+> +/**
+> + * qdict_get_int(): Get an unsigned integer mapped by 'key'
+> + *
+> + * This function assumes that 'key' exists and it stores a
+> + * QNum representable as uint.
+> + *
+> + * Return integer mapped by 'key'.
+> + */
+> +uint64_t qdict_get_uint(const QDict *qdict, const char *key)
+> +{
+> +    return qnum_get_uint(qobject_to(QNum, qdict_get(qdict, key)));
+> +}
+> +
+>  /**
+>   * qdict_get_bool(): Get a bool mapped by 'key'
+>   *
+> @@ -272,6 +290,26 @@ int64_t qdict_get_try_int(const QDict *qdict, const char *key,
+>      return val;
+>  }
+>  
+> +/**
+> + * qdict_get_try_uint(): Try to get unsigned integer mapped by 'key'
+> + *
+> + * Return integer mapped by 'key', if it is not present in the
+> + * dictionary or if the stored object is not a QNum representing an
+> + * unsigned integer, 'def_value' will be returned.
+> + */
+> +uint64_t qdict_get_try_uint(const QDict *qdict, const char *key,
+> +                          uint64_t def_value)
+> +{
+> +    QNum *qnum = qobject_to(QNum, qdict_get(qdict, key));
+> +    uint64_t val;
+> +
+> +    if (!qnum || !qnum_get_try_uint(qnum, &val)) {
+> +        return def_value;
+> +    }
+> +
+> +    return val;
+> +}
+> +
+>  /**
+>   * qdict_get_try_bool(): Try to get a bool mapped by 'key'
+>   *
+> diff --git a/system/cpus.c b/system/cpus.c
+> index 5e3a988a0a..25d7d7c93f 100644
+> --- a/system/cpus.c
+> +++ b/system/cpus.c
+> @@ -792,7 +792,34 @@ int vm_stop_force_state(RunState state)
+>      }
+>  }
+>  
+> -void qmp_memsave(int64_t addr, int64_t size, const char *filename,
+> +MemTranslation *qmp_memtranslate(uint64_t val, bool has_cpu_index, int64_t cpu_index, Error **errp)
+> +{
+> +    CPUState *cpu;
+> +    hwaddr phys_addr;
+> +    MemTxAttrs attrs;
+> +    MemTranslation *translation;
+> +
+> +    if (!has_cpu_index) {
+> +        cpu_index = 0;
+> +    }
+> +
+> +    cpu = qemu_get_cpu(cpu_index);
+> +    if (cpu == NULL) {
+> +        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "cpu-index",
+> +                   "a CPU number");
+> +        return NULL;
+> +    }
+> +
+> +    phys_addr = cpu_memory_translate(cpu, val, &attrs);
+> +
+> +    translation = g_new0(MemTranslation, 1);
+> +
+> +    translation->phys = phys_addr;
+> +
+> +    return translation;
+> +}
+> +
+> +void qmp_memsave(uint64_t addr, uint64_t size, const char *filename,
+>                   bool has_cpu, int64_t cpu_index, Error **errp)
+>  {
+>      FILE *f;
+> @@ -840,7 +867,7 @@ exit:
+>      fclose(f);
+>  }
+>  
+> -void qmp_pmemsave(int64_t addr, int64_t size, const char *filename,
+> +void qmp_pmemsave(uint64_t addr, uint64_t size, const char *filename,
+>                    Error **errp)
+>  {
+>      FILE *f;
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 0e19186e1b..d2fab35e3a 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -3524,6 +3524,24 @@ address_space_write_cached_slow(MemoryRegionCache *cache, hwaddr addr,
+>  #define RCU_READ_UNLOCK()        ((void)0)
+>  #include "memory_ldst.c.inc"
+>  
+> +/* virtual memory translation */
+> +hwaddr cpu_memory_translate(CPUState *cpu, vaddr addr, MemTxAttrs *attrs)
+> +{
+> +    hwaddr phys_addr, phys_addr_rel;
+> +    vaddr page;
+> +
+> +    page = addr & TARGET_PAGE_MASK;
+> +    phys_addr = cpu_get_phys_page_attrs_debug(cpu, page, attrs);
+> +
+> +    if (phys_addr == -1) {
+> +        return -1;
+> +    }
+> +
+> +    phys_addr_rel = phys_addr + (addr & ~TARGET_PAGE_MASK);
+> +
+> +    return phys_addr_rel;
+> +}
+> +
+>  /* virtual memory access for debug (includes writing to ROM) */
+>  int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+>                          void *ptr, size_t len, bool is_write)
+> diff --git a/tests/qtest/test-hmp.c b/tests/qtest/test-hmp.c
+> index 1b2e07522f..13c45deb35 100644
+> --- a/tests/qtest/test-hmp.c
+> +++ b/tests/qtest/test-hmp.c
+> @@ -44,6 +44,7 @@ static const char *hmp_cmds[] = {
+>      "i /w 0",
+>      "log all",
+>      "log none",
+> +    "memtranslate 0",
+>      "memsave 0 4096 \"/dev/null\"",
+>      "migrate_set_parameter xbzrle-cache-size 64k",
+>      "migrate_set_parameter downtime-limit 1",
+> diff --git a/tests/unit/check-qdict.c b/tests/unit/check-qdict.c
+> index b5efa859b0..09ebe08900 100644
+> --- a/tests/unit/check-qdict.c
+> +++ b/tests/unit/check-qdict.c
+> @@ -99,6 +99,21 @@ static void qdict_get_int_test(void)
+>      qobject_unref(tests_dict);
+>  }
+>  
+> +static void qdict_get_uint_test(void)
+> +{
+> +    int ret;
+> +    const unsigned int value = 100;
+> +    const char *key = "int";
+> +    QDict *tests_dict = qdict_new();
+> +
+> +    qdict_put_uint(tests_dict, key, value);
+> +
+> +    ret = qdict_get_uint(tests_dict, key);
+> +    g_assert(ret == value);
+> +
+> +    qobject_unref(tests_dict);
+> +}
+> +
+>  static void qdict_get_try_int_test(void)
+>  {
+>      int ret;
+> @@ -121,6 +136,28 @@ static void qdict_get_try_int_test(void)
+>      qobject_unref(tests_dict);
+>  }
+>  
+> +static void qdict_get_try_uint_test(void)
+> +{
+> +    int ret;
+> +    const unsigned int value = 100;
+> +    const char *key = "int";
+> +    QDict *tests_dict = qdict_new();
+> +
+> +    qdict_put_uint(tests_dict, key, value);
+> +    qdict_put_str(tests_dict, "string", "test");
+> +
+> +    ret = qdict_get_try_uint(tests_dict, key, 0);
+> +    g_assert(ret == value);
+> +
+> +    ret = qdict_get_try_uint(tests_dict, "missing", -42);
+> +    g_assert_cmpuint(ret, ==, -42);
+> +
+> +    ret = qdict_get_try_uint(tests_dict, "string", -42);
+> +    g_assert_cmpuint(ret, ==, -42);
+> +
+> +    qobject_unref(tests_dict);
+> +}
+> +
+>  static void qdict_get_str_test(void)
+>  {
+>      const char *p;
+> @@ -358,7 +395,9 @@ int main(int argc, char **argv)
+>      /* Continue, but now with fixtures */
+>      g_test_add_func("/public/get", qdict_get_test);
+>      g_test_add_func("/public/get_int", qdict_get_int_test);
+> +    g_test_add_func("/public/get_uint", qdict_get_uint_test);
+>      g_test_add_func("/public/get_try_int", qdict_get_try_int_test);
+> +    g_test_add_func("/public/get_try_uint", qdict_get_try_uint_test);
+>      g_test_add_func("/public/get_str", qdict_get_str_test);
+>      g_test_add_func("/public/get_try_str", qdict_get_try_str_test);
+>      g_test_add_func("/public/haskey_not", qdict_haskey_not_test);
+> -- 
+> 2.34.1
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
