@@ -4,93 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A160CC3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 21:21:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9F6AC3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 21:22:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZGk4-00077G-W5; Wed, 31 Jul 2024 17:20:17 -0400
+	id 1sZGlm-00031c-Gw; Wed, 31 Jul 2024 17:22:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZGk3-00076j-Aq
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 17:20:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZGjz-00009Y-5M
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 17:20:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722460804;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=aBR6zYDfiikOpHVZZ6bSKqdhTViuR/dky130Rj60/Qc=;
- b=YW/x1PkaaH+F4SmZtp4so/fmksQ3GCKKfQY3is1mTNjcOQoy+ICvswQtaSvhng2eN215sh
- gqmyEsQyR2yw2/bxEbHKGhdGpatyblmGmWSddmHA3QSHUU20+sSKcLiYX80YsalUQWs3QU
- NXLcE/Le9WyACwWtVcFZdp+nnUzNoTM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-255-7oe4haIBN0yhQxzuMHxOrw-1; Wed, 31 Jul 2024 17:20:02 -0400
-X-MC-Unique: 7oe4haIBN0yhQxzuMHxOrw-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3687f4f9fecso4022878f8f.1
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 14:20:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sZGlj-0002zs-SJ
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 17:22:00 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sZGlh-0000Ym-PM
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 17:21:59 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-7ab34117cc2so4104933a12.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 14:21:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1722460915; x=1723065715;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=4gWDI3hbSIuCO3hV2zJ/Jwi1EvlSwkpuTtPQ6xXktS0=;
+ b=oIgnpoYWHzCwRzYedLCTQAVJqIiuraArGwH9SmENQQxKv0JgGtm1FW0IJLi9O9I477
+ YGm/N+m3XmanoktwkJt/+TXITbfdKoqZIUzalCOZw6UjUsGVRUeeglp1P5nzJ3U5UENR
+ OHImkoCxwmkd+Q5iOJmjL8mwV5lkH08maYoooMkKc35/rFmO+75Y/nb2PG+NOUJHEiF7
+ EEqiH8LAw6i1IE5gv/O+QiOBIXJk6XGL7/rlBOz2LBLS1AmirKvyToWwRQ1ciL76CcFG
+ O9QjhGu9b/LVhLXecRgLQGoI5TFLM4LV8Ej/OIu5rWD+bOCkJ+VJ6ttP2FCVgxcdOx9P
+ 9aUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722460802; x=1723065602;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aBR6zYDfiikOpHVZZ6bSKqdhTViuR/dky130Rj60/Qc=;
- b=R8WEYzKnjAUa/786047wIiHDwItQH/GdJo5qOC5dCwfJLt+XbKMIb223wFUi3NEGOB
- D2wzumVfAYf/RldLOh8MqVBbGwIrwtaSSas4YcHSkP86xInoaNJVPYYxPhCgSrzmkPha
- dgrh5l878otngKgwd/AitxcsvW5oLlc85ptKwX9scfWhXDCkCXhS1ymDTxpkqyKLQ6mA
- ai90JpeaeHrlzAReh/wb4vkLHLERJMAbEkj+SgzwaeRfwo2L7I/5mmjjDjBvT4QV4CML
- QFpS48N/rUM8rOBXnFu6SqZ2ISbob+pGMwb0JO1Nadsjboz6UyiEh6QfDOgdHv/29Bhf
- FU8A==
-X-Gm-Message-State: AOJu0YxFipRPmIGV+qtNXqYOGSAdh0qyXrYHHRab0pOWVtcOQXbvzWsR
- NJCrb4o3mO3tGSiYsiv7D0curPTFan3CpZB1oaCDQLSDBblJW8rTv6VeHB6s9yxZJ7uKDoEgt1b
- +1TnKdb0LN1uwcEdIhh0QsRkxFGm2Cc7gAraqk3k7YvqGFo0rHU2T
-X-Received: by 2002:a5d:548a:0:b0:368:4e35:76f9 with SMTP id
- ffacd0b85a97d-36baaefe4abmr442702f8f.37.1722460801696; 
- Wed, 31 Jul 2024 14:20:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGv1+KzI5IeCjMn+hGSlQV/ZR7vKgifl+BFLKezY757mbRXTdlfBNWvzadlBWXqaGFNn79aWw==
-X-Received: by 2002:a5d:548a:0:b0:368:4e35:76f9 with SMTP id
- ffacd0b85a97d-36baaefe4abmr442678f8f.37.1722460801021; 
- Wed, 31 Jul 2024 14:20:01 -0700 (PDT)
-Received: from redhat.com ([2.55.14.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acab2314csm827557566b.14.2024.07.31.14.19.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Jul 2024 14:20:00 -0700 (PDT)
-Date: Wed, 31 Jul 2024 17:19:54 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: qemu-devel@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Hilber <peter.hilber@opensynergy.com>,
- "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>
-Subject: Re: [PATCH v2] hw/acpi: Add vmclock device
-Message-ID: <20240731171843-mutt-send-email-mst@kernel.org>
-References: <bc85aba60523e0d63e760d5143c5cb57688779d1.camel@infradead.org>
- <20240730135143-mutt-send-email-mst@kernel.org>
- <546A904C-FEEB-4365-B7AA-CA4E3D03300C@infradead.org>
- <20240730164434-mutt-send-email-mst@kernel.org>
- <9811E311-F599-4B2E-A3C2-5233D6F2D485@infradead.org>
+ d=1e100.net; s=20230601; t=1722460915; x=1723065715;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4gWDI3hbSIuCO3hV2zJ/Jwi1EvlSwkpuTtPQ6xXktS0=;
+ b=gWeKXhxdTM9H6Dawxut9V8SlLu0ZCJqAgPJudfqzdt5w14S0xyEO/lEFasU6jLnjPL
+ 0EowYl0MSYfcUS5Ea0q+63EVAd3uM+0bcecWW4KE1G5J7BvN5We9JCWMyRO30QmHfZLd
+ Ybxyd6TR8H5Dqp00eWVocYr7jGSxLu40IdEomzZee76ZhHFadhjUe6fjOc25LHJdzFVK
+ YU0BOLbW33nnxX46PUQatg3EyDkaVgOPT2OspuJVQRSAYCnKonxD4lGoFVUfklkpuXLQ
+ amSEgyNe6tnu+MSUtFaB3pUrOxZsBHM1wTlyd0PRr3IkcDAKvZAVBtEqQTfif3sUPbSh
+ MQPg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCcgIEVpxXSw20NzUoiOuss1UYibbq9XgnDbwcKbjqVLKO0dIvrv92m4F3B1t/Uq/Q2GPnjoBoeGLE+D+4Sz4tIIHd5hQ=
+X-Gm-Message-State: AOJu0YxCAxmRnjKpvnX0Vu/nxwwqbgGCYQl8M14O1qyxltnScNcO1bMV
+ KqevyXcUBXTgCxO4CediRPGTGzgjQ1K0ZHkeqNjm2cPOBynqb4953XpMEIYONZyKI1q9KZDsmke
+ gCMPIgaJQ18av29ZHqv9xj7xyU+FqqhDleT9inL/XHcsVYB9wGpg=
+X-Google-Smtp-Source: AGHT+IGgbtG8xu4IEvo8ooKHs0DRuF2BXcW39qBVG2ceaYnSNi6D7xAzc5eA7as6C9N/5JmFc0TlkN7ywwgOK5fSRTk=
+X-Received: by 2002:a05:6a21:1304:b0:1c4:9cf9:195b with SMTP id
+ adf61e73a8af0-1c68d05670bmr589467637.48.1722460915277; Wed, 31 Jul 2024
+ 14:21:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9811E311-F599-4B2E-A3C2-5233D6F2D485@infradead.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240731144532.5997-1-iii@linux.ibm.com>
+In-Reply-To: <20240731144532.5997-1-iii@linux.ibm.com>
+From: Warner Losh <imp@bsdimp.com>
+Date: Wed, 31 Jul 2024 15:21:44 -0600
+Message-ID: <CANCZdfpw7iDr4fBmsuukA5aVzcWBgCX09DVngg1RYHtv832zQQ@mail.gmail.com>
+Subject: Re: [PATCH] bsd-user/main: Allow setting tb-size
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Kyle Evans <kevans@freebsd.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000febbca061e91ae9b"
+Received-SPF: none client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pg1-x52e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,28 +89,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 31, 2024 at 01:23:49AM +0100, David Woodhouse wrote:
-> On 30 July 2024 21:45:53 BST, "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> >On Tue, Jul 30, 2024 at 08:04:17PM +0100, David Woodhouse wrote:
-> >> On 30 July 2024 18:53:18 BST, "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> >> >We don't want to manually sync headers with Linux.
-> >> 
-> >> Indeed. I was briefly tempted to fake it, but figured it might get lost if we subsequently do run the script to automatically merge from Linux, before the guest driver is merged there.
-> >> 
-> >> >I think Linux abi should live under uapi. When it is there, we can use
-> >> >./scripts/update-linux-headers.sh machinery to import it.
-> >> 
-> >> This isn't just Linux ABI. It's intended as hypervisor to guest ABI too. In the fullness of time I'm hoping it'll actually be a virtio header. In the meantime, best not to overthink it. It's fine in hw/acpi alongside the device itself for now, I think.
-> >
-> >This is exactly the same as e.g. virtio. We use Linux as a source of truth, it's
-> >easier to share with other hypervisors this way. And UAPI and hypervisor
-> >ABI requirements wrt stability are mostly the same. It works.
-> 
-> Perfect. So as and when the header is in its final form in Linux, it can be part of the automated import and we'll use that version. At that point we can drop the one that's sitting alongside the device itself in hw/acpi/.
+--000000000000febbca061e91ae9b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yes. Maybe add a comment in the temporary header.
+On Wed, Jul 31, 2024 at 8:45=E2=80=AFAM Ilya Leoshkevich <iii@linux.ibm.com=
+> wrote:
 
--- 
-MST
+> While qemu-system can set tb-size using -accel tcg,tb-size=3Dn, there
+> is no similar knob for qemu-bsd-user. Add one in a way similar to how
+> one-insn-per-tb is already handled.
+>
 
+Cool! Are you using bsd-user and need this for some reason? Or is this
+purely theoretical? Is there a larger context I can read about somewhere?
+
+I'll merge it either way (so none of the above is a criticism, I'm genuinel=
+y
+curious) , but I don't get too many bsd-user fixes and this one is unusual.
+
+
+> Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+> ---
+>  bsd-user/main.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+>
+> diff --git a/bsd-user/main.c b/bsd-user/main.c
+> index cc980e6f401..7c230b0c7a5 100644
+> --- a/bsd-user/main.c
+> +++ b/bsd-user/main.c
+> @@ -60,6 +60,7 @@ uintptr_t qemu_host_page_size;
+>  intptr_t qemu_host_page_mask;
+>
+>  static bool opt_one_insn_per_tb;
+> +static unsigned long opt_tb_size;
+>  uintptr_t guest_base;
+>  bool have_guest_base;
+>  /*
+> @@ -169,6 +170,7 @@ static void usage(void)
+>             "                  (use '-d help' for a list of log items)\n"
+>             "-D logfile        write logs to 'logfile' (default stderr)\n=
+"
+>             "-one-insn-per-tb  run with one guest instruction per emulate=
+d
+> TB\n"
+> +           "-tb-size size     TCG translation block cache size\n"
+>             "-strace           log system calls\n"
+>             "-trace
+> [[enable=3D]<pattern>][,events=3D<file>][,file=3D<file>]\n"
+>             "                  specify tracing options\n"
+> @@ -387,6 +389,11 @@ int main(int argc, char **argv)
+>              seed_optarg =3D optarg;
+>          } else if (!strcmp(r, "one-insn-per-tb")) {
+>              opt_one_insn_per_tb =3D true;
+> +        } else if (!strcmp(r, "tb-size")) {
+> +            r =3D argv[optind++];
+> +            if (qemu_strtoul(r, NULL, 0, &opt_tb_size)) {
+> +                usage();
+> +            }
+>          } else if (!strcmp(r, "strace")) {
+>              do_strace =3D 1;
+>          } else if (!strcmp(r, "trace")) {
+> @@ -452,6 +459,8 @@ int main(int argc, char **argv)
+>          accel_init_interfaces(ac);
+>          object_property_set_bool(OBJECT(accel), "one-insn-per-tb",
+>                                   opt_one_insn_per_tb, &error_abort);
+> +        object_property_set_int(OBJECT(accel), "tb-size",
+> +                                opt_tb_size, &error_abort);
+>          ac->init_machine(NULL);
+>      }
+>
+
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+
+I'll queue this to my bsd-user-2024-q3-2 branch. I hope to land it, just
+after 9.1.0 release.
+
+Warner
+
+--000000000000febbca061e91ae9b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">On Wed, Jul 31, 2024 at 8:45=E2=80=AFAM Ilya Leoshkevich &=
+lt;<a href=3D"mailto:iii@linux.ibm.com">iii@linux.ibm.com</a>&gt; wrote:<di=
+v class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0=
+px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">W=
+hile qemu-system can set tb-size using -accel tcg,tb-size=3Dn, there<br>
+is no similar knob for qemu-bsd-user. Add one in a way similar to how<br>
+one-insn-per-tb is already handled.<br></blockquote><div><br></div><div>Coo=
+l! Are you using bsd-user and need this for some reason? Or is this</div><d=
+iv>purely theoretical? Is there a larger context I can read about somewhere=
+?<br></div><div><br></div><div>I&#39;ll merge it either way (so none of the=
+ above is a criticism, I&#39;m genuinely</div><div>curious) , but I don&#39=
+;t get too many bsd-user fixes and this one is unusual.<br></div><div>=C2=
+=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
+x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+Suggested-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@lina=
+ro.org" target=3D"_blank">philmd@linaro.org</a>&gt;<br>
+Signed-off-by: Ilya Leoshkevich &lt;<a href=3D"mailto:iii@linux.ibm.com" ta=
+rget=3D"_blank">iii@linux.ibm.com</a>&gt;<br>
+---<br>
+=C2=A0bsd-user/main.c | 9 +++++++++<br>
+=C2=A01 file changed, 9 insertions(+)<br>
+<br>
+diff --git a/bsd-user/main.c b/bsd-user/main.c<br>
+index cc980e6f401..7c230b0c7a5 100644<br>
+--- a/bsd-user/main.c<br>
++++ b/bsd-user/main.c<br>
+@@ -60,6 +60,7 @@ uintptr_t qemu_host_page_size;<br>
+=C2=A0intptr_t qemu_host_page_mask;<br>
+<br>
+=C2=A0static bool opt_one_insn_per_tb;<br>
++static unsigned long opt_tb_size;<br>
+=C2=A0uintptr_t guest_base;<br>
+=C2=A0bool have_guest_base;<br>
+=C2=A0/*<br>
+@@ -169,6 +170,7 @@ static void usage(void)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (use &#39;-d help&#39; for a list of lo=
+g items)\n&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;-D logfile=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 write logs to &#39;logfile&#39; (default stderr)\n&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;-one-insn-per-tb=C2=A0 run =
+with one guest instruction per emulated TB\n&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;-tb-size size=C2=A0 =C2=A0 =
+=C2=A0TCG translation block cache size\n&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;-strace=C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0log system calls\n&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;-trace=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 [[enable=3D]&lt;pattern&gt;][,events=3D&lt;file&gt;][,=
+file=3D&lt;file&gt;]\n&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 specify tracing options\n&quot;<br>
+@@ -387,6 +389,11 @@ int main(int argc, char **argv)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0seed_optarg =3D optarg;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else if (!strcmp(r, &quot;one-insn-per-=
+tb&quot;)) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0opt_one_insn_per_tb =3D tru=
+e;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (!strcmp(r, &quot;tb-size&quot;)) {<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 r =3D argv[optind++];<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (qemu_strtoul(r, NULL, 0, &am=
+p;opt_tb_size)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 usage();<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else if (!strcmp(r, &quot;strace&quot;)=
+) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0do_strace =3D 1;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else if (!strcmp(r, &quot;trace&quot;))=
+ {<br>
+@@ -452,6 +459,8 @@ int main(int argc, char **argv)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0accel_init_interfaces(ac);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0object_property_set_bool(OBJECT(accel), &=
+quot;one-insn-per-tb&quot;,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 opt_one_insn_per_tb, &amp;err=
+or_abort);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 object_property_set_int(OBJECT(accel), &quot;t=
+b-size&quot;,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 opt_tb_size, &amp;error_abort);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ac-&gt;init_machine(NULL);<br>
+=C2=A0 =C2=A0 =C2=A0}<br></blockquote><div><br></div><div>Reviewed-by: Warn=
+er Losh &lt;<a href=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt;</div><=
+div><br></div><div>I&#39;ll queue this to my bsd-user-2024-q3-2 branch. I h=
+ope to land it, just after 9.1.0 release.<br></div><div><br></div><div>Warn=
+er<br></div></div></div>
+
+--000000000000febbca061e91ae9b--
 
