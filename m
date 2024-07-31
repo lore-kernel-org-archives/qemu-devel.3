@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE6B6C3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 14:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E017BC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 14:43:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZARN-0004kj-I9; Wed, 31 Jul 2024 10:36:33 -0400
+	id 1sZAXq-0001Ga-PJ; Wed, 31 Jul 2024 10:43:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZARH-0004V3-Sl
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 10:36:29 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1sZAXo-00019F-Mw
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 10:43:12 -0400
+Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZARD-0002eN-OD
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 10:36:26 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4281f00e70cso26130155e9.1
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 07:36:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1sZAXm-0004Qa-KI
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 10:43:12 -0400
+Received: by mail-oo1-xc2b.google.com with SMTP id
+ 006d021491bc7-5d5af7ae388so525338eaf.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 07:43:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722436582; x=1723041382; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1722436988; x=1723041788; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MAd46eTldG2I+2ED6a/rVkcfbA6YevMDXfrDk/LBM/Q=;
- b=R8kL5rlZThLIGA8FZC7y/fcakAuzaOdaxHQoVW6yhlnmNmr5Kkg9TULROnItIo8tDs
- syiDj3S1+0/sGJdER4TCxKAv2e+wev+Kip9yEUroMk3667fZX6V3hcz91VZtLUZ2Js+V
- bPo5Pq4ynjGUmy6QrvNLXa3FXI/+XCXOgNgHkzAdFy6mENXFfLJLK09mmN9+qPWvNESE
- 66ZfdaJFGWL18Z7KCpWOgCtuw4FQIHF5nweUzZ8jCX3BaCuzZ/SjIRcSF9Lp4hxkXOav
- P+9dGIXEXVbSLA+aCAiuZThn94P+9uNkoX7/+gjGRdwxNH9+mlOyMWmaHlAR296KSsHa
- LWew==
+ bh=AcbSoOBB4zsBd7C3R6ZBHOIVYaklvGZLq5eMHix/yHY=;
+ b=mykR8GRUdcp8CdoeI2jjzHs5i6CwP5BngHtT6xc3PZhSQrVXjatkleR9IZZde2UcGm
+ hZf5EIoP5AIIJOVx0tfG2B+gJFtvxhy0YpkPt+bgl7unzThu1rG8Hen/Dkcxy79Q/lke
+ gPj5Q2wPy7JsP9uaRqtAH/b/UYA73HQ0Wl3aEPhpZAGWFTBuF0YTryQl9grRQQt8X7qY
+ jjfEyjWE4bnkD5ye2LPb0BX7lhbWeIVBBsncXK1/EwZGJ3pbvQ8xeVd7B8+eJsnR6A4h
+ P3gZG+W5NrodrkUsbLqG9yKtZTQ9kcoDK8bYj9zigUAqcNSJtjCG9CCyULD+rIcSck4g
+ /BBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722436582; x=1723041382;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1722436988; x=1723041788;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MAd46eTldG2I+2ED6a/rVkcfbA6YevMDXfrDk/LBM/Q=;
- b=h5oMUuVUJ6f6r0YZuZgeM9lLMAQGistYQLKzkdw3nB/qizRI3EUNUkb3dXNIfx9yg/
- Sct+ofZjfWQ0tvFPt+uiilOOApz/Nq/dp+s2bjiLe4fTpw5ppLHm3Ypw1oGwohMO5SZf
- Fkwg1CMRH6ZEqSafRIECHoO1irBHaHN5Fe+fudAiTTre4dlCao850QXmwz/a9ot0tGgb
- A/rXPgE7rtKQ3dP4X2rIluq9UCckiiItwL+oIBczhaVuLyJziX2SiwEWGE6oUOU4U/1O
- +2P78t7ChZlmVh6kfn78yCMegvAn6CSZDWofomJjNH6KwVYKu2ts50+Tuz1gyvPt4/as
- hF5Q==
-X-Gm-Message-State: AOJu0Yx6Vpo9fabvl0ZXNE7KjuJ3yKsD3ZQWKKUOvyIn4jmS31UqfNbf
- 27XIsJN0hj2VN0xI1s60Jv524aEfXxrg7WEi8eQ1osg90ZdiT4cf25w4iiQ2AzzwqEa7D48OBmH
- 4
-X-Google-Smtp-Source: AGHT+IEhSBErl0jyu9s+g96bkqrq1Co2veAAhfqZmHeUBJ5zqUxDD5cMmMuB++ZoSsF8uwkFEz3kow==
-X-Received: by 2002:a05:600c:4c1a:b0:428:10e3:a000 with SMTP id
- 5b1f17b1804b1-42811dfe3f3mr77300845e9.37.1722436581874; 
- Wed, 31 Jul 2024 07:36:21 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4282b89a86dsm23976025e9.1.2024.07.31.07.36.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Jul 2024 07:36:21 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- John Snow <jsnow@redhat.com>, Stefan Weil <sw@weilnetz.de>,
- "Richard W.M. Jones" <rjones@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Subject: [PATCH 5/7] hw/block/fdc-isa: Assert that isa_fdc_get_drive_max_chs()
- found something
-Date: Wed, 31 Jul 2024 15:36:15 +0100
-Message-Id: <20240731143617.3391947-6-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240731143617.3391947-1-peter.maydell@linaro.org>
-References: <20240731143617.3391947-1-peter.maydell@linaro.org>
+ bh=AcbSoOBB4zsBd7C3R6ZBHOIVYaklvGZLq5eMHix/yHY=;
+ b=Tc1Ap34NHE3xRlJqi2hG9WmTSMVDpIO5OX6pZfwnDxfpvaujjdufOCBMJhA3OzsqcO
+ O1BusQcrjX8nme2QXdDzgpEYrSlDAZQLVRGSO9pOY4y6+CszsiRfhEH4kdVqxWpa0GzD
+ JjHbCakBZi3NnkeBWXRvKZ75Mx1vcmIKGQs3VY6DNRlpHvN0nSNO/zNwDOiurMewJMCw
+ SDd1T5IU51b0HoehMxTm8cEG2E2gPxdaEKoIJgih/xv+nCxV3chAH6PCaTfJwgX9sEYO
+ 1WewKjCtr9fhUY7Tw8C6sfNZY0fBBlXl4Td7SNbkCf9541v2jg3I/u6xjYZAEQs7ZIJE
+ eTIA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXP7Lv44Jxiz4DEFn42pv6ZnNU29A7mX/hi+fPg7eSWhfoC8VDSWAW8bktOQR5ABpvc3sPeEU8yL3UUA1+gzjI6pS1NgTc=
+X-Gm-Message-State: AOJu0YyqUQPoYTYXumj+bSW2EZROQsWCcp6wR+SGdKwx8k87BzzkStf7
+ Nwa5vGE+YftlNSMuYMJIro4Is60k0QfrDfLccvyqO/Ixl1aSS4BlmuzkLNKsxNqBSc+T8HFooFP
+ s98T4IiRTvUPbeczbFAkOuG5zQig=
+X-Google-Smtp-Source: AGHT+IFt5A3lOWQZ07oGEGRPecfQfj8+TmHwFw6brqATQtmHjGipKXeAc2hleBcGh4kx5RLzYZscBnnUF2NYYME5Bps=
+X-Received: by 2002:a05:6870:8a0e:b0:258:3455:4b2f with SMTP id
+ 586e51a60fabf-26822e30336mr2684384fac.17.1722436988499; Wed, 31 Jul 2024
+ 07:43:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+References: <20240708143027.480821-1-stefanha@redhat.com>
+ <87ttgyd4j9.fsf@pond.sub.org> <ZqpCinmDOyKuzJnO@angien.pipo.sk>
+In-Reply-To: <ZqpCinmDOyKuzJnO@angien.pipo.sk>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Wed, 31 Jul 2024 10:42:55 -0400
+Message-ID: <CAJSP0QXFMawAu7u+gEzp+j7RHQHqDrztgwj_xDFKLd2j7gF6Jw@mail.gmail.com>
+Subject: Re: [PATCH] qdev-monitor: QAPIfy QMP device_add
+To: Peter Krempa <pkrempa@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
+ envelope-from=stefanha@gmail.com; helo=mail-oo1-xc2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,37 +95,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity complains about an overflow in isa_fdc_get_drive_max_chs()
-that can happen if the loop over fd_formats never finds a match,
-because we initialize *maxc to 0 and then at the end of the
-function decrement it.
+On Wed, 31 Jul 2024 at 09:59, Peter Krempa <pkrempa@redhat.com> wrote:
+>
+> On Tue, Jul 09, 2024 at 16:27:22 +0200, Markus Armbruster wrote:
+> > Stefan Hajnoczi <stefanha@redhat.com> writes:
+> >
+> > > The QMP device_add monitor command converts the QDict arguments to
+> > > QemuOpts and then back again to QDict. This process only supports sca=
+lar
+> > > types. Device properties like virtio-blk-pci's iothread-vq-mapping (a=
+n
+> > > array of objects) are silently dropped by qemu_opts_from_qdict() duri=
+ng
+> > > the QemuOpts conversion even though QAPI is capable of validating the=
+m.
+> > > As a result, hotplugging virtio-blk-pci devices with the
+> > > iothread-vq-mapping property does not work as expected (the property =
+is
+> > > ignored). It's time to QAPIfy QMP device_add!
+> >
+> > This patch doesn't fully QAPIfy device_add: we still lack a schema
+> > and use 'gen': false.  It gets us closer, though.
+> >
+> > > Get rid of the QemuOpts conversion in qmp_device_add() and call
+> > > qdev_device_add_from_qdict() with from_json=3Dtrue. Using the QMP
+> > > command's QDict arguments directly allows non-scalar properties.
+> > >
+> > > The HMP is also adjusted since qmp_device_add()'s now expects properl=
+y
+> > > typed JSON arguments and cannot be used from HMP anymore. Move the co=
+de
+> > > that was previously in qmp_device_add() (with QemuOpts conversion and
+> > > from_json=3Dfalse) into hmp_device_add() so that its behavior is
+> > > unchanged.
+> > >
+> > > This patch changes the behavior of QMP device_add but not HMP
+> > > device_add. QMP clients that sent incorrectly typed device_add QMP
+> > > commands no longer work. This is a breaking change but clients should=
+ be
+> > > using the correct types already. See the netdev_add QAPIfication in
+> > > commit db2a380c8457 for similar reasoning.
+> >
+> > Another one is 9151e59a8b6e: it QAPIfied object-add.
+> >
+> > Both commits eliminated the roundtrip through QemuOpts, and weaned the
+> > command off 'gen': false.
+> >
+> > This commit eliminates the roundtrip, but keeps 'gen': false.  Best we
+> > can do now, but I'd like the commit message to make this clear.
+> >
+> > > Markus helped me figure this out and even provided a draft patch. The
+> > > code ended up very close to what he suggested.
+> > >
+> > > Suggested-by: Markus Armbruster <armbru@redhat.com>
+> > > Cc: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> > > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > > ---
+> > >  system/qdev-monitor.c | 41 ++++++++++++++++++++++++++++-------------
+> > >  1 file changed, 28 insertions(+), 13 deletions(-)
+>
+> [...]
+>
+> > Have a look at this TODO in vl.c:
+> >
+> >     QTAILQ_FOREACH(opt, &device_opts, next) {
+> >         DeviceState *dev;
+> >         loc_push_restore(&opt->loc);
+> >         /*
+> >          * TODO Eventually we should call qmp_device_add() here to make=
+ sure it
+> >          * behaves the same, but QMP still has to accept incorrectly ty=
+ped
+> >          * options until libvirt is fixed and we want to be strict on t=
+he CLI
+> >          * from the start, so call qdev_device_add_from_qdict() directl=
+y for
+> >          * now.
+> >          */
+>
+> So at least this TODO should already be handled on libvirt's side.
+>
+> With modern qemu libvirt is using JSON for -device and exactly the same
+> JSON for device_add. From what I remember from the time when I've
+> converted -device to use JSON, -device already required the correct
+> types, which would mean that also libvirt uses the correct types now.
 
-This can't ever actually happen because fd_formats has at least
-one entry for each FloppyDriveType, so we must at least once
-find a match and update *maxc, *maxh and *maxs. Assert that we
-did find a match, which should keep Coverity happy and will also
-detect possible bugs in the data in fd_formats.
+Great, thank you. I will update the code.
 
-Resolves: Coverity CID 1547663
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- hw/block/fdc-isa.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/hw/block/fdc-isa.c b/hw/block/fdc-isa.c
-index e43dc532af8..796835f57b3 100644
---- a/hw/block/fdc-isa.c
-+++ b/hw/block/fdc-isa.c
-@@ -147,6 +147,8 @@ static void isa_fdc_get_drive_max_chs(FloppyDriveType type, uint8_t *maxc,
-             *maxs = fdf->last_sect;
-         }
-     }
-+    /* fd_formats must contain at least one entry per FloppyDriveType */
-+    assert(*maxc);
-     (*maxc)--;
- }
- 
--- 
-2.34.1
-
+Stefan
 
