@@ -4,91 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC312C3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 09:35:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4879DC3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 09:35:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ5j7-0006H9-Rg; Wed, 31 Jul 2024 05:34:33 -0400
+	id 1sZ5jg-0006p3-UB; Wed, 31 Jul 2024 05:35:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yui.washidu@gmail.com>)
- id 1sZ5j6-0006FD-Ge; Wed, 31 Jul 2024 05:34:32 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sZ5je-0006gh-Mk; Wed, 31 Jul 2024 05:35:06 -0400
+Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yui.washidu@gmail.com>)
- id 1sZ5j4-0004Sf-R5; Wed, 31 Jul 2024 05:34:32 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-70ea2f25bfaso3927844b3a.1; 
- Wed, 31 Jul 2024 02:34:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sZ5jd-0004gT-1z; Wed, 31 Jul 2024 05:35:06 -0400
+Received: by mail-vk1-xa2d.google.com with SMTP id
+ 71dfb90a1353d-4f524fa193aso477994e0c.0; 
+ Wed, 31 Jul 2024 02:35:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722418469; x=1723023269; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=F7xTZJISBA2Q8qpu5RjFa1EqPQsdwXhNu3qjXfGS5eM=;
- b=aR2RdHsnOioQLSSRVR4gfvXp5y31nQAlPz1d1oE2vVh6b/gzNpaLGK956Kz9BOhMf6
- dBKEou7DrLwRIoJISJAaP5z7I+qtssT3iUPbqbLWrohdiuWd24TcJ54QCETI4PQtVC+j
- XOxbYlhw+tc7f+7zJCXHdYxF5g4hVOlPABDYbOUZQJl0XsWIfr+8ipuDsYWaVDk3bLYx
- W7kgC4m5ebDqvBV0DLFHcgXIhX/1bV39W3Qu/gSUfrKJODbcSkRjhP0nvDMW3Hc1tLWk
- 9mLtDZQPx4sAfiZORirHuuFNiu0jolTlc73dx0KXXlGQbAqKVJhvM00J7fpjRoCcczC/
- i6Xw==
+ d=gmail.com; s=20230601; t=1722418503; x=1723023303; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZqMSl8I9SORzqtd+odV06K7tSI6pNmP2+c9g8or19zE=;
+ b=JvPmb0vs65Nex5GeSZKBSb904lSHB/39K/SfDghEkcQ3BQWbmFGhh7qhMtAfqQsz4C
+ 7qxEg0Ug9hbgXSdDy5t0H3twWy5XCPbr+/h6Qo8a3bCD4u7vYEXA0qNC0Xu6XaerjL9J
+ /vl8dPb1xKO9ulAltJM44B6V55rxSOzzUVIU9BpFURvLqrL90xcH24s0s2JQrUieoybY
+ pvQ0rayyqCY5TN25QIpYQO7f8a/c8xD82bZaedkrxniLy8cEjWRwRwiYsg4mGe90KVP8
+ CLBMEyahMPImh7QUFLLA7uSGi4DyjTy3iJTHJdprA+oaNzMoch43g/sus+5CtR1bzTAP
+ P8QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722418469; x=1723023269;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F7xTZJISBA2Q8qpu5RjFa1EqPQsdwXhNu3qjXfGS5eM=;
- b=b3By+LUmxOgK1e37HifU1xU9QHBi9iFqhHbpvRZr0+H4CcH0Eww2CmV0pA3Of+sa+I
- 062c2ChhnCqyA+4w8NTqC8A8EHPq12zpBjrx/23V/B/cDQlSI0j2mgA8ZqSNxYxPeIfx
- 2SDnNwst2E+J/CungGe8hcAt2QRFDQUGJnvLmSTQ4byJECmNJxdN0g73vFwDOPfooDg2
- FN9vGn3wA6aIPVNkIDeRnzmr5bbRJ1Prf3AYiNt9JAPZhSnmHYSw0fo66AgOqlvhexU/
- DNXea4+zF9vc54cF2wwzEA1nmGsMc7lhLp+r2XiKQFRJnxpnEoAUvq4rORb+MQGIyJk8
- jpcw==
+ d=1e100.net; s=20230601; t=1722418503; x=1723023303;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZqMSl8I9SORzqtd+odV06K7tSI6pNmP2+c9g8or19zE=;
+ b=ES4chpIX/LseJsX1bE0prxi9p5mXFFZD+0IQ2i7r1wBeGTu6KEzpJe1XbSHXfqGIgz
+ hnKuiQ7MQF1GI73SD2ApVV55NHkruoFXPurCwhKKXYQYP57HieirPylxO0A6r2/y6v6Z
+ n/qBt+VWRDD8t0oQ9GZypYpPgT5d6tz/pkeM80wVwXkw4olULz9vYUuocsso2TbGhpzE
+ KLoIJ1g47/F1pKhBDqANrGH3cWoFeXX+LJh1e6cnDDZ7Vva79E04/XnXJPsqUz5ca7Qe
+ 2Lz17Wk8JDVVu+Emdt5HRoAV2ffRjGJbBgauvHQNcJhNu1oMAZjTOLW8GQtRVwKl+H7d
+ XpZg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW50fsYtPuXA0VCtaju0GRFjngbTPLqrfW4G6DW9VmCkBJXQK7IbwVAWNZMPYirQ4sjW+3dXIdNsTyrOrn4cSsh9e9D3TM=
-X-Gm-Message-State: AOJu0YxZnF66y0jDyqJtfILyB00scJS8iWARcusRMtALZOMsO82IS8WU
- WO9pvkMsYZniPJvyi7QzKKbE5hhPlcg/QwJY4kbNm0DJySVoqaI9
-X-Google-Smtp-Source: AGHT+IHcpJKPt4AnnObBIGNgvsminA8Qz2tyDUXdn/TsrOZm7+OZgbTFJx/bzmA/Y6eQLokyI+2lcA==
-X-Received: by 2002:a05:6a00:91d6:b0:70e:8f89:7e2e with SMTP id
- d2e1a72fcca58-70ecea32783mr11514289b3a.18.1722418468553; 
- Wed, 31 Jul 2024 02:34:28 -0700 (PDT)
-Received: from [172.20.149.24] ([222.151.198.97])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead8a3a91sm9642919b3a.195.2024.07.31.02.34.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jul 2024 02:34:28 -0700 (PDT)
-Message-ID: <90cef42c-dbb5-44fd-9b20-fe0996c9974b@gmail.com>
-Date: Wed, 31 Jul 2024 18:34:21 +0900
+ AJvYcCWp3FvGpN3n0BWf1IlChCnx1mlF+dCHNsCJ4DHCTZ7GMlqzvUrh7xaJ/lNqWDeX2TQpmNKUQ3NOhId7h9ijHcM2vu6eptw=
+X-Gm-Message-State: AOJu0YxspYJ2ofitwEUVqqnYYZMk2DLU0dOF21b4T/5IWd37OyohtY9L
+ uQnMxtTnl8YhZzm1+XLDwDRvd+5OcdhL8t5V937IatMw+GPXjSI2ZxR+wknw0IsevSA2dm7ySDV
+ t4Yh2bKDY5M+suf0psQDEyUInTrJwlzQHciI=
+X-Google-Smtp-Source: AGHT+IFvRNpWXpNva0Zm9LQtmUun/x+xswgQ/NaePx+Iqy8QO3E4Z3QKpDdX40cdZ4T8BeaTQskHS+XnQWTMhn+cMhc=
+X-Received: by 2002:a05:6122:3b08:b0:4f5:d98:5ec3 with SMTP id
+ 71dfb90a1353d-4f87f80f0e3mr2540452e0c.6.1722418503496; Wed, 31 Jul 2024
+ 02:35:03 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v4 0/7] virtio-net: add support for SR-IOV emulation
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20240428-sriov-v4-0-ac8ac6212982@daynix.com>
- <966b756c-f4b9-40da-ad35-ddb7c6e7da50@gmail.com>
- <88ffcfa0-f3c4-406c-ac79-456b0f8b38bd@daynix.com>
-Content-Language: en-US
-From: Yui Washizu <yui.washidu@gmail.com>
-In-Reply-To: <88ffcfa0-f3c4-406c-ac79-456b0f8b38bd@daynix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=yui.washidu@gmail.com; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+References: <20240724-fixes-v1-1-4a64596b0d64@rivosinc.com>
+ <CAKmqyKPhCzrYxwpBF+NQi-5KgcKkhWeVNX6nwwx3ZjeE9rWEAg@mail.gmail.com>
+ <CAHBxVyHBtnhFnFYN0=_5PoKvc7DadJABH71s+wCZzPiYAmPM_g@mail.gmail.com>
+In-Reply-To: <CAHBxVyHBtnhFnFYN0=_5PoKvc7DadJABH71s+wCZzPiYAmPM_g@mail.gmail.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 31 Jul 2024 19:34:37 +1000
+Message-ID: <CAKmqyKNM14jC+HVau=QDfHTztANmAEBiX5pQBnjFRDzRtrjr2w@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Add asserts for out-of-bound access
+To: Atish Kumar Patra <atishp@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
+ dbarboza@ventanamicro.com, alistair.francis@wdc.com, 
+ Peter Maydell <peter.maydell@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,90 +95,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 2024/07/15 14:15, Akihiko Odaki wrote:
-> On 2024/05/16 11:00, Yui Washizu wrote:
->>
->> On 2024/04/28 18:05, Akihiko Odaki wrote:
->>> Based-on: <20240315-reuse-v9-0-67aa69af4d53@daynix.com>
->>> ("[PATCH for 9.1 v9 00/11] hw/pci: SR-IOV related fixes and 
->>> improvements")
->>>
->>> Introduction
->>> ------------
->>>
->>> This series is based on the RFC series submitted by Yui Washizu[1].
->>> See also [2] for the context.
->>>
->>> This series enables SR-IOV emulation for virtio-net. It is useful
->>> to test SR-IOV support on the guest, or to expose several vDPA devices
->>> in a VM. vDPA devices can also provide L2 switching feature for
->>> offloading though it is out of scope to allow the guest to configure
->>> such a feature.
->>>
->>> The PF side code resides in virtio-pci. The VF side code resides in
->>> the PCI common infrastructure, but it is restricted to work only for
->>> virtio-net-pci because of lack of validation.
->>>
->>> User Interface
->>> --------------
->>>
->>> A user can configure a SR-IOV capable virtio-net device by adding
->>> virtio-net-pci functions to a bus. Below is a command line example:
->>>    -netdev user,id=n -netdev user,id=o
->>>    -netdev user,id=p -netdev user,id=q
->>>    -device pcie-root-port,id=b
->>>    -device virtio-net-pci,bus=b,addr=0x0.0x3,netdev=q,sriov-pf=f
->>>    -device virtio-net-pci,bus=b,addr=0x0.0x2,netdev=p,sriov-pf=f
->>>    -device virtio-net-pci,bus=b,addr=0x0.0x1,netdev=o,sriov-pf=f
->>>    -device virtio-net-pci,bus=b,addr=0x0.0x0,netdev=n,id=f
->>>
->>> The VFs specify the paired PF with "sriov-pf" property. The PF must be
->>> added after all VFs. It is user's responsibility to ensure that VFs 
->>> have
->>> function numbers larger than one of the PF, and the function numbers
->>> have a consistent stride.
->>
->>
->> I tried to start a VM with more than 8 VFs allocated using your patch,
->> but the following error occured and qemu didn't work:
->> VF function number overflows.
->>
->> I think the cause of this error is that virtio-net-pci PFs don't have 
->> ARI.
->> (pcie_ari_init is not added to virtio-net-pci when PFs are initialized.)
->> I think it is possible to add it later,
->> but how about adding pcie_ari_init ?
->>
->> As a trial,
->> adding pcie_ari_init to virtio_pci_realize enabled the creation of 
->> more than 8 VFs.
+On Sat, Jul 27, 2024 at 11:36=E2=80=AFAM Atish Kumar Patra <atishp@rivosinc=
+.com> wrote:
 >
-> I have just looked into that possibility, but adding pcie_ari_init to 
-> virtio_pci_realize has some implications. Unconditionally calling 
-> pcie_ari_init will break the existing configuration of virtio-pci 
-> devices so we need to implement some logic to detect when ARI is 
-> needed. Preferably such logic should be implemented in the common PCI 
-> infrastructure instead of implementing it in virtio-pci so that other 
-> PCI multifunction devices can benefit from it.
+> On Thu, Jul 25, 2024 at 10:12=E2=80=AFPM Alistair Francis <alistair23@gma=
+il.com> wrote:
+> >
+> > On Wed, Jul 24, 2024 at 6:33=E2=80=AFPM Atish Patra <atishp@rivosinc.co=
+m> wrote:
+> > >
+> > > Coverity complained about the possible out-of-bounds access with
+> > > counter_virt/counter_virt_prev because these two arrays are
+> > > accessed with privilege mode. However, these two arrays are accessed
+> > > only when virt is enabled. Thus, the privilege mode can't be M mode.
+> > >
+> > > Add the asserts anyways to detect any wrong usage of these arrays
+> > > in the future.
+> > >
+> > > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> > > Signed-off-by: Atish Patra <atishp@rivosinc.com>
+> >
+> > Fixes: Coverity CID 1558459
+> > Fixes: Coverity CID 1558462
+> >
 >
-> While I don't think implementing this will be too complicated, I need 
-> to ensure that such a feature is really needed before doing so.
+> I think one of the Coverity issues was about the get_field issue in
+> the other thread?
+> This doesn't necessarily fix the coverity issue also as the issue
+> reported is a false positive.
+> But I don't mind citing the coverity issues as it is reported by that.
+>
+> Is there a link to both coverity issues to know which issue describes
+> the out-of-bound access one ?
 
+I don't think so. I can see the report though and I think it should be
+both of them. They are hard to read, but they both seem relevant.
 
-OK.
-I want to use this emulation for offloading virtual network
-in a environment where there are many containers in VMs.
-So, I consider that the feature is need.
-I think that 7 VFs are too few.
-I'll keep thinking about the feature's necessity.
+1558462 is the confusing one, but it has
 
+CID 1558462:  Memory - corruptions  (OVERRUN)
+>>>     Overrunning callee's array of size 2 by passing argument "env->priv=
+" (which evaluates to 2) in call to "riscv_cpu_set_mode".
 
-I'll add other comments to RFC v5 patch.
+so I think this should fix it
 
-
-Regards,
-
-Yui Washizu
-
+Alistair
 
