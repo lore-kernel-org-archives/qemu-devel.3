@@ -4,77 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B426C3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 17:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A1B5C3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 17:16:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZCne-0005Aq-LR; Wed, 31 Jul 2024 13:07:42 -0400
+	id 1sZCvA-0001ca-4r; Wed, 31 Jul 2024 13:15:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZCnd-0005AN-Qf
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:07:41 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZCnc-0008EN-5q
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:07:41 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-52ed9b802ceso7419071e87.3
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 10:07:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722445658; x=1723050458; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=W8KfsaU+RrpUdcyCoU1oVeno1sj4n+D8TgOb2VnQEfk=;
- b=qLaLzbfSm7WSdUXl0smPFFjFtYpD8KvOyL3jFvhR+r+XY5WXmqc90JwTLj9KAHrYt6
- VbGQR2dxd3Ww/v3GBrt4WKnVqGaeAnU+VOoyyW/G8kV8JG/EeP0058riwwYuSl9X+ZmO
- vN/723jjAvntXDfUlCUc+FWrn9+AbWni1GbG7OPPQ1wcPAiPIk+e4VrbCpuurVWkLNsT
- s/tMlLteLjsIhtktKBUzER81zsObo+OivUGWonhsLoHIlDcjjs4MYcl2ilc1z6HY9FAK
- LfvAdrRAtyNWEHVdiQkqNe5ur9WLDiKGWqrN10qOziCGAXwVXLWzIN44d5qCQBzXMrUh
- SzTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722445658; x=1723050458;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=W8KfsaU+RrpUdcyCoU1oVeno1sj4n+D8TgOb2VnQEfk=;
- b=odb56R4IUVup8Vj6eKoAFQ5fCss8YSDPy/1RdrBuvNyUAQim51g6yKNjaBXAxAfl8C
- +CdhHi70A3tUTvQNH473ggOftsrAVXrdrpGz5RxZIrZUhatzF4EtQ69QPmgBmT+RxPAE
- fRIGwerxaILeJ/fGeYV2xAiVLpa42TP34CcCPBk1PVVAIxrnBMChUehIA6j2Ptn91kpL
- eKbamp2yqdoDRDy8i/8qC7g/f0Wxlv6wLsg//AQqvLoPQjqj6EmkQ5253NSXB7n5E8fF
- DBMkHTxNKhWrmfczJvJJ5W2M6CXJNvlsm32jYbQYvd0B2Fq2ndBoUlQknf0dLPieI3zl
- 4Njw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUr6WgM/dWe7S4nDmWojQAiozBL4cD0qI5WCK/+7HaCOIHpPF1Ka36MHI+6Mc/q18m/cwV3SZIh0fMyIr7W9VKXtVydWJw=
-X-Gm-Message-State: AOJu0Yx9HZXTOLI2q3RiuDDlJ5MH6tXJ1sf7cWLE9wwCKyrZQ55XPrER
- VRJI6RU20GjpU8ytphChZlL8eGkNoSmzA+FvQTyEjyAy30CPUfpfjJxw+B8vEQTGWfx/Cr6Er/n
- qfVWzGEoQGnP5NdlGlo0uUsrjceYLraY2DOKN5g==
-X-Google-Smtp-Source: AGHT+IGg6JQEQPdLgDi4BvhJ+AtLtefTbxZ45PGOJEnEOjeF5KDWCgM7z8FnWH4us6zFamgo8c94k+Nj5nI3B8da0Kg=
-X-Received: by 2002:ac2:5210:0:b0:52c:df83:ad52 with SMTP id
- 2adb3069b0e04-5309b2809acmr11209147e87.36.1722445657937; Wed, 31 Jul 2024
- 10:07:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1sZCv0-0001bd-Df
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:15:20 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1sZCux-0004Ax-T3
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:15:18 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46V98Gg9030656;
+ Wed, 31 Jul 2024 17:15:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 935VHct2+spX1ffOkmBtDKjXidr5uYlYG9QsnyIvzqg=; b=W05yAZFJEL677RnF
+ 8jjfXO4KtpsqQhd9KqBZF29iljUP28N3ic8kpWqTGuKLxW35RVi6Z48yDRiRUeFv
+ slCBcBWXQGGnd9mm0ek3SWA81tirvUnn3Z3xO3b88UwxHAA/OHe5bCggjldCrzmH
+ Uq00ORgKuMd6l27uDMUlZdkb8/NvcxLJykexBWs5YopeuwcO187plhqVKDeeVsun
+ hyYOHSsL6WAyu+kYcgL9YQUXGND3DRCscxJ9L0RoIjDSIwTxltFWCAE9aZkioXh5
+ dEHnrVHx+NoBZ/TdzZnrxIstEsq8smC1GPdNtJOPcCeQLQHzy78Ap53W/vT4TSmx
+ deeYIQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40ms43bxej-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 31 Jul 2024 17:15:10 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
+ [10.47.97.35])
+ by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id
+ 46VHFACe031005
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 31 Jul 2024 17:15:10 GMT
+Received: from [10.110.37.171] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 31 Jul
+ 2024 10:15:09 -0700
+Message-ID: <4dc9b238-bad7-4f13-9b22-73fd90914221@quicinc.com>
+Date: Wed, 31 Jul 2024 12:15:08 -0500
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/hexagon/idef-parser: Remove self-assignment
+To: Peter Maydell <peter.maydell@linaro.org>, Brian Cain <bcain@quicinc.com>
+CC: Anton Johansson <anjo@rev.ng>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
 References: <20230713120853.27023-1-anjo@rev.ng>
  <SN6PR02MB42058323403CE9291E40E005B837A@SN6PR02MB4205.namprd02.prod.outlook.com>
-In-Reply-To: <SN6PR02MB42058323403CE9291E40E005B837A@SN6PR02MB4205.namprd02.prod.outlook.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 31 Jul 2024 18:07:26 +0100
-Message-ID: <CAFEAcA_VttO0aEO6VBUAB4H9TVNH5tP5piZVq6F4Ao2MZF-UoA@mail.gmail.com>
-Subject: Re: [PATCH] target/hexagon/idef-parser: Remove self-assignment
-To: Brian Cain <bcain@quicinc.com>
-Cc: Anton Johansson <anjo@rev.ng>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12c.google.com
+ <CAFEAcA_VttO0aEO6VBUAB4H9TVNH5tP5piZVq6F4Ao2MZF-UoA@mail.gmail.com>
+Content-Language: en-US
+From: Brian Cain <quic_bcain@quicinc.com>
+In-Reply-To: <CAFEAcA_VttO0aEO6VBUAB4H9TVNH5tP5piZVq6F4Ao2MZF-UoA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-GUID: hzv8R-th3aRLxrcNAO87s3uwVP556iMX
+X-Proofpoint-ORIG-GUID: hzv8R-th3aRLxrcNAO87s3uwVP556iMX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-07-31_10,2024-07-31_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0
+ impostorscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ mlxlogscore=999 suspectscore=0 phishscore=0 priorityscore=1501
+ clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2407310120
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_bcain@quicinc.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,53 +104,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 13 Jul 2023 at 17:21, Brian Cain <bcain@quicinc.com> wrote:
->
->
->
-> > -----Original Message-----
-> > From: Anton Johansson <anjo@rev.ng>
-> > Sent: Thursday, July 13, 2023 7:09 AM
-> > To: qemu-devel@nongnu.org
-> > Cc: Brian Cain <bcain@quicinc.com>; peter.maydell@linaro.org
-> > Subject: [PATCH] target/hexagon/idef-parser: Remove self-assignment
-> >
-> > WARNING: This email originated from outside of Qualcomm. Please be wary of
-> > any links or attachments, and do not enable macros.
-> >
-> > The self assignment is clearly useless, and @1.last_column does not have
-> > to be set for an expression with only a single token, so remove it.
-> >
-> > Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> > Signed-off-by: Anton Johansson <anjo@rev.ng>
-> > ---
-> >  target/hexagon/idef-parser/idef-parser.y | 1 -
-> >  1 file changed, 1 deletion(-)
-> >
-> > diff --git a/target/hexagon/idef-parser/idef-parser.y b/target/hexagon/idef-
-> > parser/idef-parser.y
-> > index cd2612eb8c..a6587f5bcc 100644
-> > --- a/target/hexagon/idef-parser/idef-parser.y
-> > +++ b/target/hexagon/idef-parser/idef-parser.y
-> > @@ -802,7 +802,6 @@ rvalue : FAIL
-> >
-> >  lvalue : FAIL
-> >           {
-> > -             @1.last_column = @1.last_column;
-> >               yyassert(c, &@1, false, "Encountered a FAIL token as lvalue.\n");
-> >           }
-> >         | REG
-> > --
-> > 2.41.0
->
-> Reviewed-by: Brian Cain <bcain@quicinc.com>
 
+On 7/31/2024 12:07 PM, Peter Maydell wrote:
+> On Thu, 13 Jul 2023 at 17:21, Brian Cain <bcain@quicinc.com> wrote:
+>>
+>>
+>>> -----Original Message-----
+>>> From: Anton Johansson <anjo@rev.ng>
+>>> Sent: Thursday, July 13, 2023 7:09 AM
+>>> To: qemu-devel@nongnu.org
+>>> Cc: Brian Cain <bcain@quicinc.com>; peter.maydell@linaro.org
+>>> Subject: [PATCH] target/hexagon/idef-parser: Remove self-assignment
+>>>
+>>> WARNING: This email originated from outside of Qualcomm. Please be wary of
+>>> any links or attachments, and do not enable macros.
+>>>
+>>> The self assignment is clearly useless, and @1.last_column does not have
+>>> to be set for an expression with only a single token, so remove it.
+>>>
+>>> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+>>> Signed-off-by: Anton Johansson <anjo@rev.ng>
+>>> ---
+>>>   target/hexagon/idef-parser/idef-parser.y | 1 -
+>>>   1 file changed, 1 deletion(-)
+>>>
+>>> diff --git a/target/hexagon/idef-parser/idef-parser.y b/target/hexagon/idef-
+>>> parser/idef-parser.y
+>>> index cd2612eb8c..a6587f5bcc 100644
+>>> --- a/target/hexagon/idef-parser/idef-parser.y
+>>> +++ b/target/hexagon/idef-parser/idef-parser.y
+>>> @@ -802,7 +802,6 @@ rvalue : FAIL
+>>>
+>>>   lvalue : FAIL
+>>>            {
+>>> -             @1.last_column = @1.last_column;
+>>>                yyassert(c, &@1, false, "Encountered a FAIL token as lvalue.\n");
+>>>            }
+>>>          | REG
+>>> --
+>>> 2.41.0
+>> Reviewed-by: Brian Cain <bcain@quicinc.com>
+>
+> Ping -- I just noticed that this patch never seems to have
+> made it upstream. Brian, could you pick it up?
+>
+> (This fixes a Coverity issue: CID 976926.)
 
-Ping -- I just noticed that this patch never seems to have
-made it upstream. Brian, could you pick it up?
+Sorry about that!  Queued at https://github.com/quic/qemu/ hex.next -- 
+will include it in an upcoming PR.
 
-(This fixes a Coverity issue: CID 976926.)
-
-thanks
--- PMM
 
