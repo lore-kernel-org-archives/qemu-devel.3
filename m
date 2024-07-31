@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B093C3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 12:49:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A87F7C3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 12:49:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ8lY-0000Ud-EN; Wed, 31 Jul 2024 08:49:16 -0400
+	id 1sZ8m1-0002WC-8B; Wed, 31 Jul 2024 08:49:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZ8lW-0000Q5-WA
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 08:49:15 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZ8lz-0002RI-U7
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 08:49:43 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZ8lU-00071G-1K
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 08:49:14 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-42819654737so31551505e9.1
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 05:49:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZ8lx-00072t-Aw
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 08:49:43 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4280c493719so34384405e9.3
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 05:49:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722430150; x=1723034950; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722430180; x=1723034980; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Jp0XEWfoV6UAMUmJuEK79uZeFv0OkdbSZRZPPBr/GmM=;
- b=TNjUiiAcFH6b6335nS2neiS3JBGAGG2D/yOQ6O4WpUNd9jQAyEOyM5FOHDo8I31PGI
- rsHT+bre2ixYqalPAybyBT4TAukpxAWpozYKeSL/laMu8iZPeybLq8mNkkc7nj+Y8n0E
- x0ZjM2F5qk60rGeKvS5ASE0/8QPQLFk/G9bjz8lH8VFSiVzuGCEuH4qdToTjWavd7CIs
- AE6jjWCVj0yGt7HnRm7W/NEpw8SHlI2ONh5H7zbJIQtUbpmZNLowE/4s0jdHdeopKxib
- W5KA4yWQSz2kfShm15Qk1LLhOxL/hM1B2yCDqizmDMbD98McLIhmBQTwWMKGG7DKYSDX
- NUxA==
+ bh=RPucUTQVtF0V6TkpbC8BMHUq8utt2/CCWpIG/cxvpoA=;
+ b=mGsda0yHkqbVH1S7ELUtmiVPVRBKyHkdKGFFzd/j5C6j1bAbM9959ltOLqIgIVjBJD
+ NxbSxJ5P2Wqx7JdhqEfUiZm6I+2dWV8mF4LXxgo2oGVtj93fTFlKLHqLIlROJQaMjH2A
+ Teai0EaF3IloA0Yczr3B+nLYtlsWD+BQT4/j3xF0wapxPyLwknafofNCtkeisFoNR9uh
+ RCARwcFrOjmCcfQ9uAi4EqVVmlfm005LCGRGQrPufJO3ST175H6rHXZ+8JZWYZb/uPSi
+ A1IpBXz9k7hBh8gikjlRPDUeJGcfUliliVPJ1Xo6qDmrWpx9pU+0PGJgTstAqswZOUXk
+ ypEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722430150; x=1723034950;
+ d=1e100.net; s=20230601; t=1722430180; x=1723034980;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Jp0XEWfoV6UAMUmJuEK79uZeFv0OkdbSZRZPPBr/GmM=;
- b=YGJsAu7hFEsAZmnPc1noLm3SNl2MpiqKB1zaGRjIr2WVYvY1GTTnziW1K9Wqcagt3F
- SUduyXrDSy9jlFV3XklNHzPI9OJg8OSNhq3YqzZUNLhwQw1vAAOviK3XjoVtkZrBuUwp
- buB3opK9gQL2YhsdSkLwEXWzhAlCHMx+8t9bLKOD5IhYQRF5LTxlE+Fi9753Uk91BbM1
- MDcM1Wr6CAF10KeqkxkJ+ElBGVf4J4eYV+dXVP5LEnqwkyDhu0no088dNZo0kkwLOazr
- OdS7vQcu6RFZHYjn3a3XbsRk8XUgWlEkcXfLeCcpb/ajGmpUynUSK3z8hbiGe64ISoeM
- 3cgQ==
+ bh=RPucUTQVtF0V6TkpbC8BMHUq8utt2/CCWpIG/cxvpoA=;
+ b=jsh3G7nR/k1FgrSS9/Riw1r9ZtRIyYIb0kzbmQEZ9vbvX+v7jfewG7lR+L/6+G1r0S
+ 6Wt3kaZT8kMHTCbHFGV21HkQSpMRbUebWCFkOrLpCuV4CzOIQKpwrWDaMu+J0Yy4OiYQ
+ +0k0dAls33VtpmaWaKlY7WOCaJskoKmfG8GiZy6KBJWujrUSb3+8/dqrrSKoEXZnrZTT
+ kzXBoWee1g6wVC2d6jeNXXGgcdRDLCf0zuDMe7SXd0l4GfziqkB11+3Pm5xZ/0PZ4vHn
+ ZaAc7iwXSDTp+3c6Em8qUpPh4J1a7icKBo3TdjNzkVxcqkpNziQXZBNFWXHXHH/HEv4u
+ dxWw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUYrN9Qbechsp/+ogoiUZ1DFOz/RlwL1W1w7WoFliPumvBRFSLJP+gbHHqHwC1cItttTaagtlzqBQzKF0oawkGcFaTdRt0=
-X-Gm-Message-State: AOJu0Ywny98cqDH6a3Q+stMfV6hWouzqaa43Q71IpbBPMTKXmsz9V6hF
- 6dwtFZedMB77F3zUrnlZODljv8McrjYO1kSrQWpFwA9GdBnGsDveGznQk27yIhI=
-X-Google-Smtp-Source: AGHT+IH/TuMCUSBZVjKxsn7d0NGI/k4SSXOrP4kJDmvTaGmchBgnV04P1fxNrI7QGx3oAJmbt4ae5A==
-X-Received: by 2002:a05:600c:444d:b0:426:6e95:78d6 with SMTP id
- 5b1f17b1804b1-42811d71018mr92807465e9.4.1722430150492; 
- Wed, 31 Jul 2024 05:49:10 -0700 (PDT)
+ AJvYcCX1LVmB2WXhdU7FJnVGYH4LxkQlru9pbYe0fONQ6AbQN77w5j8FrphxVa/SmS9QSu2qa93JtxaSN/6t8BRZbmjhmZLcty4=
+X-Gm-Message-State: AOJu0YytwhGpMS8NHU8zrsm2YOrgVbZqtp0oywbSfcEWVQ57DDYhq8ay
+ Lz2bELPAPvmuOXctIopaYeJbvf49Ra/fg5h3Aw1mkqgqvU9ymcQpiek1JTjGsV4=
+X-Google-Smtp-Source: AGHT+IFm4kiHKXMnfrUgC+tDMWeXgqt0SPwL5BhpxPid0w10VcCcFRVnax3zUgIautCLmB5xJB5AdQ==
+X-Received: by 2002:a5d:6891:0:b0:368:6f19:cbf5 with SMTP id
+ ffacd0b85a97d-36b5d03cb72mr8605071f8f.31.1722430179593; 
+ Wed, 31 Jul 2024 05:49:39 -0700 (PDT)
 Received: from [192.168.214.175] (29.170.88.92.rev.sfr.net. [92.88.170.29])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4282bac5458sm20110455e9.23.2024.07.31.05.49.09
+ ffacd0b85a97d-36b367fc63esm16905872f8f.55.2024.07.31.05.49.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jul 2024 05:49:10 -0700 (PDT)
-Message-ID: <46673c5c-2f02-4d35-8a9b-04a8473889ee@linaro.org>
-Date: Wed, 31 Jul 2024 14:49:08 +0200
+ Wed, 31 Jul 2024 05:49:39 -0700 (PDT)
+Message-ID: <c98fd67a-84f8-49f6-91bb-315069617ac7@linaro.org>
+Date: Wed, 31 Jul 2024 14:49:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/24] python: Install pycotap in our venv if necessary
+Subject: Re: [PATCH v3 04/24] tests/Makefile.include: Increase the level of
+ indentation in the help text
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -71,21 +72,21 @@ Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>
 References: <20240730170347.4103919-1-berrange@redhat.com>
- <20240730170347.4103919-2-berrange@redhat.com>
+ <20240730170347.4103919-5-berrange@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240730170347.4103919-2-berrange@redhat.com>
+In-Reply-To: <20240730170347.4103919-5-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,22 +105,15 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 30/7/24 19:03, Daniel P. Berrangé wrote:
 > From: Thomas Huth <thuth@redhat.com>
 > 
-> The upcoming functional tests will require pycotap for providing
-> TAP output from the python-based tests. Since we want to be able
-> to run some of the tests offline by default, too, let's install
-> it along with meson in our venv if necessary (it's size is only
-> 5 kB, so adding the wheel here should not really be a problem).
+> The next patch is going to add some entries that need more space between
+> the command and the help text, so let's increase the indentation here
+> first.
 > 
-> The wheel file has been obtained with:
-> 
->   pip download --only-binary :all: --dest . --no-cache pycotap
-> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   python/wheels/pycotap-1.3.1-py3-none-any.whl | Bin 0 -> 5119 bytes
->   pythondeps.toml                              |   1 +
->   2 files changed, 1 insertion(+)
->   create mode 100644 python/wheels/pycotap-1.3.1-py3-none-any.whl
+>   tests/Makefile.include | 30 +++++++++++++++---------------
+>   1 file changed, 15 insertions(+), 15 deletions(-)
 
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
