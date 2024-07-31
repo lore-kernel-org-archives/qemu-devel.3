@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31946C3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 14:50:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11EDEC3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 14:50:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZAdy-0002S8-RJ; Wed, 31 Jul 2024 10:49:34 -0400
+	id 1sZAeN-0004EM-St; Wed, 31 Jul 2024 10:49:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZAdx-0002Og-Vq
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 10:49:34 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <philipp.reisner@linbit.com>)
+ id 1sZAeL-00044P-BZ
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 10:49:58 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZAdw-0005by-Dv
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 10:49:33 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5a167b9df7eso9360666a12.3
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 07:49:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philipp.reisner@linbit.com>)
+ id 1sZAeI-0005eo-Ql
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 10:49:57 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a7a975fb47eso809262366b.3
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 07:49:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722437370; x=1723042170; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=5NuSlD5hyOsRMOR77RKasUNaEXrV0ltqiuv56Yepehk=;
- b=Cg3JFNDsrkR2VKrb4W2z4YxNvHoIXKWOTHP/R2AyQWqI7SZbndxyJhVzXqurjDzH0i
- cDDxKXGwwnmAdWVDXWx+/8crF8jcp+zBP8WOFm0YTMh0+WSvamh8tVLScg6LAl6T1qtw
- VYtmy0GQdkFn2tuOpTaVW1MHWEL9YStlsaVDj6hJzVqxfaP6oHLMY6nimbin2gsMr7Ua
- jp5PStQe+vbZEkIHScly6eijh6FNN4YrbDOitYvapjrrSQbH5RGVKXB513D/RXbt6g1A
- 5Ksl0Ho+sVfyp3UsQSWE75SYHMIZNjsKvP47L6R24pk6a8k6puVCQ2Oj1ICZsGlOKonI
- ICSA==
+ d=linbit-com.20230601.gappssmtp.com; s=20230601; t=1722437391; x=1723042191;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0KaoxBzIIywVnQdSBrnOgH21sK/NEKHNZyj6SYMBRxs=;
+ b=NBxP0jPdAN6cQ6okYaZmDTKLLR5U8tEIVj3T/Y4yQPUg0CcZRpUbJ5cN0nv6bF/3lT
+ HxUck20KhKfoy63/XqUO+dc42e/BLNK5ZAB/9sfjiRU3w45c367IQoB8Ya7pJ8jIH8v2
+ ElQ6e9IUzP+1SF4f3PMdDM1fuI9J47pQw4IOqiGPCTSL2KsUaLM8Ln7nkOxV9zJgVaCH
+ M8xi9oDnUK6IFPSraBSeVJknrJ99g8LnbnkugMo3sFj28EdShGg5cspL9ZE+GwuWbrlZ
+ /gdATMTYOGNCEklHCY+HsNEru+/k4/GJ0wb5fuR1iAsTBXQjWDCI8CtgtYFzPYwW8ah3
+ 24Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722437370; x=1723042170;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5NuSlD5hyOsRMOR77RKasUNaEXrV0ltqiuv56Yepehk=;
- b=clAZy8yM2n4Rv/NlnxCvYYgL0SUV5LrX/raZYAs3HmhknBXhFzF8wsD7As2gxUXQSI
- X0efEtdwGn3XWdn5GqeBr4vRm4pfdCiRJ53k2HIikLsNmJpKXeUs15L9lkdGWNnJT1XY
- Wx6Xis6HxEg0AMH0/mFSM0fZwCZf7XmUf74QpJUFDcNzLUJ0T06tuos7ZydI4LPAZVGL
- XIDdYEV1K3BNYzQO7mA1bmY4mqql7Y4ODY14DP89MXfkDjRxJmX3BkWVMIQz/wAsd8hC
- 61vRLYTdIID1vIGwcEeNTXotUnJck1rQNjmfx0oX8gZ1D6h1trvEMjZpyXOTUpIMm7GH
- EpUw==
-X-Gm-Message-State: AOJu0YyMWZRrtCssPvPN4qirR2GCwzC7vMdb40AnZF8eDwQDbZ/PoSKi
- BsOk53ANx5D5XLRxeqZOdAufOJwm/7ABxa25yPKCb0fHtdzvxCXsnYHxk6brRJuTf+BMp9xe6yM
- P3OrkAyVhY53AX6b2gJW1Rf+e86yefapr2DNdsA==
-X-Google-Smtp-Source: AGHT+IFM6j/vsu5ZOQg3Smgz1SodAwiBfFFwAVfbxOZBQW2JqyYnY6YJsGRS14oX1NaKy620nVRsAFRTX1BDQUVq3O4=
-X-Received: by 2002:a05:6402:34d2:b0:58c:eee0:4913 with SMTP id
- 4fb4d7f45d1cf-5b021d22aa6mr9923226a12.27.1722437370170; Wed, 31 Jul 2024
- 07:49:30 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1722437391; x=1723042191;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0KaoxBzIIywVnQdSBrnOgH21sK/NEKHNZyj6SYMBRxs=;
+ b=C1xzBU2jbbCBnxptS+/YR/hoM6e6z15Bnc+tue3KcoDcQeNVPUJfj0hlLv8xih2y6J
+ hv/AwYQZz7hXoojq1cZtUgYHgjJ8xwCrFbhyvSmNsd7zYkrM/hRbINIsAhWrnj3WGGqT
+ YIY4p616SCU5OAmzLEcNHpBVl9L4LaVArmIeBH/b/8QqDnTUVDyYDEhHQyscrBLKb9iy
+ iVn2pZfkWKRAZmgxIDbrL/gofieIHU61t6dJiPQk+jE/Le5+oSsb0Zy7oVqGb+9yY0El
+ ScYVhMz+eJr/DQYWyxXIyZ8QMTsjMjsEHPFtWOVlpnS5G8ri0piaTt5T8XpqquE14SZi
+ P3ZA==
+X-Gm-Message-State: AOJu0YzlmEl4rVpBrKNnsgO5sSsAYAZ24EfR/QIgFZeZsU0oifwweMCI
+ XvlhW1lTub+SqqpfTLpw7hobSRVb01y2C6aUN2SuRF7I5k/hg6CI7C2eBVyIwXFEH/L2IW4Mla3
+ m
+X-Google-Smtp-Source: AGHT+IGRJujEA8FhVJdUsxTMGkfPJm0ohneerJcJ1QRysk3lrHNOmAyWkJ+auV6fyD2gNSYMsZQ2gQ==
+X-Received: by 2002:a17:907:3e1a:b0:a7a:9a78:4b4e with SMTP id
+ a640c23a62f3a-a7d400e8951mr933366466b.40.1722437391499; 
+ Wed, 31 Jul 2024 07:49:51 -0700 (PDT)
+Received: from ryzen9.home (193-80-247-151.adsl.highway.telekom.at.
+ [193.80.247.151]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7acab23125sm779180466b.1.2024.07.31.07.49.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 31 Jul 2024 07:49:51 -0700 (PDT)
+From: Philipp Reisner <philipp.reisner@linbit.com>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Philipp Reisner <philipp.reisner@linbit.com>
+Subject: [PATCH] util: retry open() when it gets interrupted by a signal
+Date: Wed, 31 Jul 2024 16:49:46 +0200
+Message-ID: <20240731144946.322498-1-philipp.reisner@linbit.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <CAFEAcA9J37Z1JJb34zyRDo=ow0h1QgOq9bm10dCc0u5bMyQKpg@mail.gmail.com>
+References: <CAFEAcA9J37Z1JJb34zyRDo=ow0h1QgOq9bm10dCc0u5bMyQKpg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240731143617.3391947-1-peter.maydell@linaro.org>
- <20240731143617.3391947-5-peter.maydell@linaro.org>
- <87bk2dliud.fsf@pond.sub.org>
-In-Reply-To: <87bk2dliud.fsf@pond.sub.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 31 Jul 2024 15:49:18 +0100
-Message-ID: <CAFEAcA8Mx-vANgzAwpzFhun0+YAtxE5erdNRMAnfsx0SLqKBiA@mail.gmail.com>
-Subject: Re: [PATCH 4/7] hw/ide/atapi: Be explicit that assigning to s->lcyl
- truncates
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- John Snow <jsnow@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
- "Richard W.M. Jones" <rjones@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=philipp.reisner@linbit.com; helo=mail-ej1-x630.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,63 +96,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 31 Jul 2024 at 15:47, Markus Armbruster <armbru@redhat.com> wrote:
->
-> Peter Maydell <peter.maydell@linaro.org> writes:
->
-> > In ide_atapi_cmd_reply_end() we calculate a 16-bit size, and then
-> > assign its two halves to s->lcyl and s->hcyl like this:
-> >
-> >            s->lcyl = size;
-> >            s->hcyl = size >> 8;
-> >
-> > Coverity warns that the first line here can overflow the
-> > 8-bit s->lcyl variable. This is true, and in this case we're
-> > deliberately only after the low 8 bits of the value. The
-> > code is clearer to both humans and Coverity if we're explicit
-> > that we only wanted the low 8 bits, though.
-> >
->
-> Resolves?
+As with many syscalls, open() might be interrupted by a signal.
 
-Whoops.
+The experienced logfile entry is:
 
-Resolves: Coverity CID 1547621
+qemu-system-x86_64: -device virtio-blk-pci,bus=pci.0,addr=0x7,drive=libvirt-2-format,id=virtio-disk0,bootindex=2,write-cache=on,serial=1b990c4d13b74a4e90ea: Could not open '/dev/drbd1003': Interrupted system call
 
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >  hw/ide/atapi.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/hw/ide/atapi.c b/hw/ide/atapi.c
-> > index fcb6cca1573..e82959dc2d3 100644
-> > --- a/hw/ide/atapi.c
-> > +++ b/hw/ide/atapi.c
-> > @@ -265,7 +265,7 @@ void ide_atapi_cmd_reply_end(IDEState *s)
->                /* a new transfer is needed */
->                s->nsector = (s->nsector & ~7) | ATAPI_INT_REASON_IO;
->                ide_bus_set_irq(s->bus);
->                byte_count_limit = atapi_byte_count_limit(s);
->                trace_ide_atapi_cmd_reply_end_bcl(s, byte_count_limit);
->                size = s->packet_transfer_size;
->                if (size > byte_count_limit) {
->                    /* byte count limit must be even if this case */
->                    if (byte_count_limit & 1)
-> >                      byte_count_limit--;
-> >                  size = byte_count_limit;
-> >              }
-> > -            s->lcyl = size;
-> > +            s->lcyl = size & 0xff;
-> >              s->hcyl = size >> 8;
-> >              s->elementary_transfer_size = size;
-> >              /* we cannot transmit more than one sector at a time */
->
-> @size is int.  I wonder why it's fine with size >> 8...  ah,
-> atapi_byte_count_limit() returns uint16_t, and Coverity is smart enough
-> to data-flow this via @byte_count_limit into @size.
->
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Retry it until it is not interrupted by a signal.
+FYI, dd has the same kind of loop aroud open().
+https://github.com/coreutils/coreutils/blob/1ae98dbda7322427e8226356fd110d2553f5fac9/src/dd.c#L1294-L1299
 
-thanks
--- PMM
+Signed-off-by: Philipp Reisner <philipp.reisner@linbit.com>
+---
+ util/osdep.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/util/osdep.c b/util/osdep.c
+index 770369831b..13a09d0dd5 100644
+--- a/util/osdep.c
++++ b/util/osdep.c
+@@ -295,9 +295,9 @@ static int qemu_open_cloexec(const char *name, int flags, mode_t mode)
+ {
+     int ret;
+ #ifdef O_CLOEXEC
+-    ret = open(name, flags | O_CLOEXEC, mode);
++    ret = RETRY_ON_EINTR(open(name, flags | O_CLOEXEC, mode));
+ #else
+-    ret = open(name, flags, mode);
++    ret = RETRY_ON_EINTR(open(name, flags, mode));
+     if (ret >= 0) {
+         qemu_set_cloexec(ret);
+     }
+-- 
+2.45.2
+
 
