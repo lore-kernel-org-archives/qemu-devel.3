@@ -4,74 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62939C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 07:03:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B772C3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 07:05:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ3M7-0003zV-EG; Wed, 31 Jul 2024 03:02:40 -0400
+	id 1sZ3OC-0008Gh-QU; Wed, 31 Jul 2024 03:04:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sZ3M2-0003y0-UZ
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 03:02:34 -0400
-Received: from mgamail.intel.com ([192.198.163.7])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sZ3OA-0008F7-Iv
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 03:04:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sZ3Lx-0002Px-CN
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 03:02:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1722409349; x=1753945349;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=tFcaMWnp1Awrg3A50K8+ER6rz36OBJRtVM4vkWnWJzo=;
- b=P/UMoWLdEaS0fBzfjkLNghxsd2nLCsjnFOjrzJYXuXnzdkl9CA/UV6Rg
- O73UuBr7hTjRXLDlgTXP95hsP49C/vSUJdXMIK2ntQvKb4cc9KyWCRZBc
- 7ZLJ6UvIvPXIpFngfi6tOuw6zhlDWbx1ZJ+FUdp9694+GJjI/Yb5GIs+3
- K1kouB/KXqBYYyD6JDiLx1Xrw2pY0dtnPG6F+s88V/wl4c9wenr02qX0f
- R8T35xLvyy8btwQ8Lh97N0TNb1Cg3x80v80kJxkENblx5EaOvI8N9j37G
- pVY89nPzkWJfz2s3wVFJmh0mR5cP9tGFTk6ddoKBayNqgmJZG95ft14kz w==;
-X-CSE-ConnectionGUID: zM6GmWaNQkeZ1yVZIs1E5Q==
-X-CSE-MsgGUID: mQp+TpuCT6Wn+D/TESL5PQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11149"; a="45685577"
-X-IronPort-AV: E=Sophos;i="6.09,250,1716274800"; d="scan'208";a="45685577"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Jul 2024 00:02:19 -0700
-X-CSE-ConnectionGUID: abT8NU6DTu6bgGmsXhpLPQ==
-X-CSE-MsgGUID: EEoDCRl8Qoy1EtxJKni9AA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,250,1716274800"; d="scan'208";a="85512040"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.26])
- ([10.124.240.26])
- by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 31 Jul 2024 00:02:18 -0700
-Message-ID: <6e65dbb2-461e-44f4-842c-249c7b333885@intel.com>
-Date: Wed, 31 Jul 2024 15:02:15 +0800
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sZ3O8-0002qG-I3
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 03:04:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722409482;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=OEZNWUe1vxMY1k8uF2z0Eg3hAaVbEMtXW5FWH5UP5WA=;
+ b=RU+KVtkxYqidmG2IMorcYYJnN1fIcRDZxLFhE+6vmTQLdYdn6khC53vCniAYQxtBnVFOmh
+ jIjVuzFQtr6huMtBQlTVWhYrNdm841a4AVJS1tozdTjl9YqB1xXxnqhCR1LNf32I5odlv0
+ 6JA1+dcdztb/Cx8mXIMfgotYTU/yDYM=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-zog0QwJeO0mXmbZajuf5xg-1; Wed,
+ 31 Jul 2024 03:04:38 -0400
+X-MC-Unique: zog0QwJeO0mXmbZajuf5xg-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 89D151955D47; Wed, 31 Jul 2024 07:04:35 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.33])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8B6C21955E80; Wed, 31 Jul 2024 07:04:27 +0000 (UTC)
+Date: Wed, 31 Jul 2024 08:04:24 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
+ akihiko.odaki@daynix.com, jasowang@redhat.com,
+ sriram.yagnaraman@est.tech, sw@weilnetz.de, qemu-devel@nongnu.org,
+ yan@daynix.com, Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
+Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
+Message-ID: <Zqnh-AJC4JPl5EkS@redhat.com>
+References: <ZqQLbGxEW3XT7qL-@x1n> <Zqe8C9AfaojKHM8A@redhat.com>
+ <ZqfKrtQSSRVnEOGt@x1n> <ZqfQ0cGf8t2trEdl@redhat.com>
+ <ZqktXwxBWjuAgGxZ@x1n> <Zqk09BGxlpdxMBMx@redhat.com>
+ <Zqk6x2nd3Twz--75@x1n>
+ <20240730151746-mutt-send-email-mst@kernel.org>
+ <ZqlHKaQXzKGcnoBM@x1n>
+ <20240730172148-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] target/i386: Always set leaf 0x1f
-To: Manish <manish.mishra@nutanix.com>, Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, zhao1.liu@intel.com,
- pbonzini@redhat.com, bob.ball@nutanix.com, prerna.saxena@nutanix.com,
- john.levon@nutanix.com
-References: <20240724075226.212882-1-manish.mishra@nutanix.com>
- <20240724110004.389c1a0c@imammedo.users.ipa.redhat.com>
- <21ca5c19-677b-4fac-84d4-72413577f260@nutanix.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <21ca5c19-677b-4fac-84d4-72413577f260@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240730172148-mutt-send-email-mst@kernel.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,66 +91,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/24/2024 6:29 PM, Manish wrote:
-> Thanks Igor
+On Tue, Jul 30, 2024 at 05:32:48PM -0400, Michael S. Tsirkin wrote:
+> On Tue, Jul 30, 2024 at 04:03:53PM -0400, Peter Xu wrote:
+> > On Tue, Jul 30, 2024 at 03:22:50PM -0400, Michael S. Tsirkin wrote:
+> > > This is not what we did historically. Why should we start now?
+> > 
+> > It's a matter of whether we still want migration to randomly fail, like
+> > what this patch does.
+> > 
+> > Or any better suggestions?  I'm definitely open to that.
+> > 
+> > Thanks,
+> > 
+> > -- 
+> > Peter Xu
 > 
-> On 24/07/24 2:30 pm, Igor Mammedov wrote:
->> !-------------------------------------------------------------------|
->>    CAUTION: External Email
->>
->> |-------------------------------------------------------------------!
->>
->> On Wed, 24 Jul 2024 07:52:26 +0000
->> "manish.mishra"<manish.mishra@nutanix.com>  wrote:
->>
->>> From: Manish Mishra<manish.mishra@nutanix.com>
->>>
->>> QEMU does not set 0x1f in case VM does not have extended CPU topology
->>> and expects guests to fallback to 0xb. Some versions of Windows does not
->>> like this behavior and expects this leaf to be populated. As a result 
->>> Windows
->>> VM fails with blue screen.
->> BSOD usually has error code displayed, it would be better to specify 
->> it here
->> this way whomever searching for the error, can find this patch/commit
-> Sorry for earlier response, i do not see blue screen it seems to be 
-> falling in uefi back quickly and i do not see any details here. I am 
-> attaching image.
->>
->>> Leaf 0x1f is superset of 0xb, so it makes sense to set 0x1f equivalent
->>> to 0xb by default and workaround windows issue.>
->>> This change adds a
->>> new property 'cpuid-0x1f-enforce' to set leaf 0x1f equivalent to 0xb in
->>> case extended CPU topology is not configured and behave as before 
->>> otherwise.
->> repeating question
->> why we need to use extra property instead of just adding 0x1f leaf for 
->> CPU models
->> that supposed to have it?
-> 
-> As i mentioned in earlier response. "Windows expects it only when we 
-> have set max cpuid level greater than or equal to 0x1f. I mean if it is 
-> exposed it should not be all zeros. SapphireRapids CPU definition raised 
-> cpuid level to 0x20, so we starting seeing it with SapphireRapids."
-> 
-> Windows does not expect 0x1f to be present for any CPU model. But if it 
-> is exposed to the guest, it expects non-zero values.
+> Randomly is an overstatement. You need to switch between kernels
+> where this feature differs. We did it with a ton of features
+> in the past, donnu why we single out USO now.
 
-Please fix Windows!
+This has been a problem with a ton of features in the past. We've
+ignored the problem, but that doesn't make it the right solution
 
-No guarantee from Intel that leaf 0x1f should report non-zero value when 
-max cpuid level >= 0x1f.
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-Please see SDM.vol2.CPUID chapter.
-
-INPUT EAX = 1FH: Returns V2 Extended Topology Information
-
-When CPUID executes with EAX set to 1FH, the processor returns 
-information about extended topology enumeration data. Software must 
-detect the presence of CPUID leaf 1FH by verifying (a) the highest leaf 
-index supported by CPUID is >= 1FH, and (b) CPUID.1FH:EBX[15:0] reports 
-a non-zero value. See Table 3-17.
 
