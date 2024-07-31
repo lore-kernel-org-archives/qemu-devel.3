@@ -4,102 +4,182 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80093C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 05:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AB49C3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 06:01:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ2EW-0002R0-7U; Wed, 31 Jul 2024 01:50:44 -0400
+	id 1sZ2Nh-000597-Cs; Wed, 31 Jul 2024 02:00:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sZ2ER-0002Ix-Bp; Wed, 31 Jul 2024 01:50:39 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1sZ2NP-00050C-Ie; Wed, 31 Jul 2024 01:59:55 -0400
+Received: from mail-mw2nam12on2061a.outbound.protection.outlook.com
+ ([2a01:111:f403:200a::61a]
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sZ2EP-0007MB-09; Wed, 31 Jul 2024 01:50:39 -0400
-Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46V4x7hv026992;
- Wed, 31 Jul 2024 05:50:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:content-type
- :content-transfer-encoding:mime-version; s=pp1; bh=6PUwUUuAaqT/1
- anauwpLbxDLyFSKsLmlyllK/6ZNB4Y=; b=XpV7UvaLhjOzyhjxvPhNOc2ZY2Jjs
- 1QRvmxvKrgSoQGqt3Ftnlbcj9km+0eh8Lirt1t3nZBJI/dTrq7GsdzI8fqE7NP7M
- 4qhwlloySHoFBbRw8if2mrFyt1ETgx/GxLoEpt3ZQvnXUkXxokoFLazO2nF5lEns
- wyGXWz92t7iRfkB5UvMH51mdlIzEEoSrZUrA7aljUkjKLY2cInujH6dKMJ+7+2bR
- NYg7A8z+35RfWRD9mf3v9bIqkGmAF/cV7WJlZgJJ5AWblYXE6+jYaUJZYvUmnSmv
- M6JFqpI4XWwGYRXaHEXMMUEgmpZj5pCS0qnrtdZXkdHe63+2MLKRh2Scw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40qeqbg2ux-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 31 Jul 2024 05:50:32 +0000 (GMT)
-Received: from m0353728.ppops.net (m0353728.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 46V5oVBF015704;
- Wed, 31 Jul 2024 05:50:31 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40qeqbg2uv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 31 Jul 2024 05:50:31 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 46V4lNnw007467; Wed, 31 Jul 2024 05:50:30 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 40nb7u9u57-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 31 Jul 2024 05:50:30 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 46V5oPeH54264202
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 31 Jul 2024 05:50:27 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3D3A42004D;
- Wed, 31 Jul 2024 05:50:25 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F3F152004E;
- Wed, 31 Jul 2024 05:50:22 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.in.ibm.com (unknown
- [9.109.199.72]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 31 Jul 2024 05:50:22 +0000 (GMT)
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
-Subject: [PATCH v6 RESEND 0/5] Power11 support for QEMU [PSeries]
-Date: Wed, 31 Jul 2024 11:20:17 +0530
-Message-ID: <20240731055022.696051-1-adityag@linux.ibm.com>
-X-Mailer: git-send-email 2.45.2
-Content-Type: text/plain; charset=UTF-8
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: MV2HEtyJWljBSXnu38FQn6s5fJACoNam
-X-Proofpoint-GUID: bSxxobMsGAySG-feTKNrcThYfTZE0fjI
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1sZ2NM-0008SP-MD; Wed, 31 Jul 2024 01:59:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=E+qrSmMw4qPkTDgDGy4YIsa6YNcwvwgcYkALKTJ6h5llazFy8b+CLtQ6R5PNkYoDMfjZrziKlzAFxDBy//XS8bfhABvZskJbKJ7T/6Ee5T7/rH/vBdp3pdakpr4hClhe9EjenfeoQVhz2NW/vCI1MeTWabsZIGa/imYJFmOz23YyRTtbSzrvjotJqnKku5UY+2aVAF/hnPYGTEMtULc1TXs85NLCdriZcLMDGVRJgixKBdW5PTNCxDzYDTh4pTH+MqykuFFZevHru3PuIrzY81TpfuLRe4Jl5wKmgzrKgeN/9Tv1XAuxLHDSfxCE7Hez7pijAQzGWHNzr7Gj9R8/Lg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9C0aFY27Nh6ZCQNtvWPO92VTpdsIz5+jJEfFksYlTEo=;
+ b=qUWGGXGcb4JbRK2XWAIePYL1AEojIzD3nXdtY9wM1uxhjP8oZH4AKkI9iiyOrOE5HEKlm+FmmBaYVfzn6bwa+LiB+T3I6I6Vl0FeTQRFobBU4j01qaT4SCv8ldpoTjsHuSWRjjwqGV/IqvDbfV1fOwmnGeGgIks9kl02THgDrH5iQR58C/1eUFi9vzkfBh1j2LF7r1ocaUav/9wbZb45J0rYvcZzVqAkXZGT5WglfeH3YkRUnH9wn0zPZ0h3JP8a82xqUEIKs3UpUmjahwZKqDZhuRq2mLWfN9E8Xhbpdvd/wRIPJgY6Ux34A+A6Ec0b4VQBOUBoiplYWvNDnK+rmg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9C0aFY27Nh6ZCQNtvWPO92VTpdsIz5+jJEfFksYlTEo=;
+ b=rJOaRts6BYhrF3a32C0TuuiXkhfPg5kzXihEfacD6D5SPo2qj1O+5LB7ZQFm9ahuFY/Wz4uBn8QiWN04/6Av9BOWmlWj2rjC/bXyVGTKFhxqRlIi2SsGLZ1Eovs6p8RcSOjfmBeS5lZDUHKjt9QorhzxSZYnyqNcFgds4c2Ycc5nTiks4ePUpa54vjbbuCT1k4OIz1lQOsLiscnzgxra243MGcy/Nbllae7mJpjBsaBicZx9UuMdcZAXrFa5Rw29poPKbu0VhL0pmPzM4/0ZUA+VRwuzqnfO4eGLhSQlIp+sK2eNxUZEaZUR2+YKbLQbjxNXdWgbCi9r2+voXpSBWQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
+ by PH0PR12MB7792.namprd12.prod.outlook.com (2603:10b6:510:281::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.20; Wed, 31 Jul
+ 2024 05:59:44 +0000
+Received: from DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::e2a0:b00b:806b:dc91]) by DM6PR12MB5549.namprd12.prod.outlook.com
+ ([fe80::e2a0:b00b:806b:dc91%6]) with mapi id 15.20.7828.016; Wed, 31 Jul 2024
+ 05:59:44 +0000
+Message-ID: <462d7540-f9ad-4380-8056-232e69f161e9@nvidia.com>
+Date: Wed, 31 Jul 2024 08:59:28 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/18] qapi: Smarter camel_to_upper() to reduce need for
+ 'prefix'
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, alex.williamson@redhat.com,
+ andrew@codeconstruct.com.au, andrew@daynix.com, arei.gonglei@huawei.com,
+ berto@igalia.com, borntraeger@linux.ibm.com, clg@kaod.org, david@redhat.com,
+ den@openvz.org, eblake@redhat.com, eduardo@habkost.net,
+ farman@linux.ibm.com, farosas@suse.de, hreitz@redhat.com,
+ idryomov@gmail.com, iii@linux.ibm.com, jamin_lin@aspeedtech.com,
+ jasowang@redhat.com, joel@jms.id.au, jsnow@redhat.com, kwolf@redhat.com,
+ leetroy@gmail.com, marcandre.lureau@redhat.com, marcel.apfelbaum@gmail.com,
+ michael.roth@amd.com, mst@redhat.com, mtosatti@redhat.com,
+ nsg@linux.ibm.com, pasic@linux.ibm.com, pbonzini@redhat.com,
+ peter.maydell@linaro.org, peterx@redhat.com, philmd@linaro.org,
+ pizhenwei@bytedance.com, pl@dlhnet.de, richard.henderson@linaro.org,
+ stefanha@redhat.com, steven_lee@aspeedtech.com, thuth@redhat.com,
+ vsementsov@yandex-team.ru, wangyanan55@huawei.com,
+ yuri.benditovich@daynix.com, zhao1.liu@intel.com, qemu-block@nongnu.org,
+ qemu-arm@nongnu.org, qemu-s390x@nongnu.org, kvm@vger.kernel.org,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20240730081032.1246748-1-armbru@redhat.com>
+ <20240730081032.1246748-2-armbru@redhat.com> <ZqiutRoQuAsrllfj@redhat.com>
+ <87mslzgjde.fsf@pond.sub.org>
+ <9b147a34-4641-4b4c-a050-51ceb3ea6a67@nvidia.com>
+ <87jzh2kuux.fsf@pond.sub.org>
+Content-Language: en-US
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <87jzh2kuux.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+X-ClientProxiedBy: LO2P265CA0069.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:60::33) To DM6PR12MB5549.namprd12.prod.outlook.com
+ (2603:10b6:5:209::13)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-31_02,2024-07-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 spamscore=0
- malwarescore=0 mlxlogscore=999 suspectscore=0 adultscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 lowpriorityscore=0
- clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407310039
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|PH0PR12MB7792:EE_
+X-MS-Office365-Filtering-Correlation-Id: e416e816-f88b-4dd2-e85a-08dcb125f9a2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?NHVFajVQd1FTMGJjcThzTXFYSEVabVgxdVM4UlpnVklUVjduY2FtMS9jMVFV?=
+ =?utf-8?B?Q2Q4dEJ1czlhQWUxSW9yeWRRN0kwN0dEdHhjQU01NG4zYnB6VTBlWjJubW9h?=
+ =?utf-8?B?VzBjdkdyYi8xZXhaeWpGL0RETGNEUjBtUWtDVDkzeS9OcnVJR0h3WlpYR3dP?=
+ =?utf-8?B?dU12NTNxaUhKQXJQWmZxOVN4TWp4emVRZ2ZiQVF1RHB3N2Z5cFlLaUZtTXAz?=
+ =?utf-8?B?THRORjlqQWF4L0hucTlvZGZiRTBIYnY4eVN3MExCdGRUUzBPc1JQYmVsQVVP?=
+ =?utf-8?B?bnhUbEpudGQ0eG1EdHlJVzBzMXVxNnJGT0t0YUQxVVNkSkYzYWJ1eVZROUoz?=
+ =?utf-8?B?RW85Ry81eHFKdElVQ1pVVTVxUW9NMnh6WWdwVmF3YVFHaUF6dGhSWXpUSjRF?=
+ =?utf-8?B?bExrTExVS0kyT3VZakoreks2cVZTUElQNUJvc1hkQjRKOURMSEJ2TmR0enRr?=
+ =?utf-8?B?NVJ6TEVBbWdEejdMRHpYRnBweUkrQTJ1REF2UFB4aHN4WlJuUEhBU2N3SFBB?=
+ =?utf-8?B?YndFWmdwYVNGdnpZN05JNzQvaDNodER3ZzFOY3N5NFVXQmdnQXJzZjNnbXcw?=
+ =?utf-8?B?dTNqQjFTVjkzYStsOXpQNE1XZ2ZnV3VBK0ZZekxhMVFjSU1ZTFgrT1F0YmVo?=
+ =?utf-8?B?b00yMVN0Q0tsM0N0cW9YOFp2T1BZUFVxbW85NENqQjduSFdBUnloSCthOVhJ?=
+ =?utf-8?B?S2wybUtQazlnOUdVZ3hZY0o5VjRPTXcyamdCNmwxeGwwVHRGQXRLemVwc0F3?=
+ =?utf-8?B?WXhkMnl6a2pYTnJ4ak94VnI3Nm1vb3A2UzNkZ3J5WThnaHZzcnBscUptQVBj?=
+ =?utf-8?B?dWRnUmpYK0tGWUpWYWtiMHN5emd4Ky9PNGV6U2NNK081Y2FjMCtQNHF0bHAx?=
+ =?utf-8?B?Y09XbE1hUitxRnJ5YXZmRWFyMm9OcTZNMnQ1bHRiQjg5TGVUWjFoU0hZMW9V?=
+ =?utf-8?B?Y2krSzBFMDZ0NXdpU3BxQVNxWjUwRGpTWWo4QnB4d3VxWW1zaDJjS3Zsc1pa?=
+ =?utf-8?B?L3RHclVTRmwwZDgxODdNWHplZndVK05NbHRNSlQ3d1MxNXZzQzMwVGhVWDVR?=
+ =?utf-8?B?M1VvWnZ3N2wwdWcrdW5FUXNSd2JrSlYybWNKeE0rL3FCWjRSdEhKcXFMckxq?=
+ =?utf-8?B?YXZjUXFnS29ubWVuMUtpSkQ3eGV6RzlTYVBSdVhZL3MyZDlkMFdId0t0N0Nn?=
+ =?utf-8?B?RldJWDVtakN1TERiVENmdHg0VjV0eGtaeHczY0ZEb2hUUVQ1TDczd3NxeTNT?=
+ =?utf-8?B?ZlEwK05zSlBVcHQwRk9yMStBRE5FQVBScXpwVTdaaUxtb2JwMFFlOVdTUG43?=
+ =?utf-8?B?SURoNFgyYityMkxTKzRmUXVhUHBwU3k0M1o5b0tta09RMUFSazdQbExuUWho?=
+ =?utf-8?B?bkdqYU9tbFArR1VWLzJSYVZBRUVMNng0cjR6S2EzZXAxL0NYeVYwOGdxQm9m?=
+ =?utf-8?B?K3F2ZktCUVNBQUFkNXFrVmx2V0J5TDNyTXlCSVdvVU9YTFBkbEJaMmo3UmdR?=
+ =?utf-8?B?OFdwS3lyYmI4aDVGaC9lcEJaWUFjK0I3Zm5rZDcrVS80U3dJWWdaSEw0Vys2?=
+ =?utf-8?B?VFNDZ0g4dkxHeG9vbVJwYThFMmRrMjRaeWVzK3lkMFNTdTd1d1l4ZFBIbGVF?=
+ =?utf-8?B?UXhIUjB4UkxCRUJrNTRLMDNRNkxXcmVqT00zZjgxYzRLQjErTEh4VjJsQUJO?=
+ =?utf-8?B?SUwzazFDVHVnWXo4Q2JlN011dFJOWDVpVWNYRjlBWDVaRHp4RmdyNlIxSXJo?=
+ =?utf-8?B?VUg2aEFBK01UbzZ6eDVYWHFIRGpCMHNCOTJRdTJ0S1QwUktHZ1lxdTd3bWRa?=
+ =?utf-8?B?ZEVEaWtCS0g5R05hS1Y5UT09?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?L3JJcE4zMlNHNlpPM3JGTHhvS1pqaXpjZDFYdXNQdy9xMUt1bmN5ekxxeDIy?=
+ =?utf-8?B?aG1NenBQRHhUK2NtcFVneW82cDFiYWdIdlVVTXNHRGw1RUgwZHIzT3I5R1p4?=
+ =?utf-8?B?VTRUMFlhQUFMcFZEbkZ0SXJUbXIzSmlZd3B4cUlYdmk3clhZVTlSblhaK1pY?=
+ =?utf-8?B?UktJenBIMW1pSTYwcTVYRFlVODBud0g3UzJRWmlyalVaRU5ZSDQwL3BxNktv?=
+ =?utf-8?B?ZXZrVlMwMnEyRVZENFNRK01vVFpjK2dVcW9QN2ZsTmlubFVJMDZsdDNGMGEz?=
+ =?utf-8?B?RGJ4UERlY3VZRkN4NjlPNkNlNTBXejIzUWFHcnFURHdsbkRNaTlVUHZjRnRQ?=
+ =?utf-8?B?c3prZG1JNlF5NTVYTC9FUlkrdnp3eXZUYzVBb254eDk4TXRYZE9xVkR1TUFu?=
+ =?utf-8?B?MTFYb1Z4N2NpNVVrbEdTdFBoZzQ5bXFFY3p5b0hjRStGc3duZGVWeEc2bHlG?=
+ =?utf-8?B?ZEszL2hoZlVQZlFwMURiSWtNNDFvZ21lRyt6WCtTbXViNEZ6OHFPQ0ZLaW9X?=
+ =?utf-8?B?Y1BxL0lzTmdDa09Nak4yMTZCUWRETDB6Qm9EaVl4MTd5YmR1dEhnMWNscWNJ?=
+ =?utf-8?B?V1orMEhXQm9FbFhUelhnRTVDUmFlTjk5SXdQYWQ4TmhZTi9uUS9ueWVRSnVR?=
+ =?utf-8?B?NG52RFp1WlR4ZnJpYjJiSk5uQTBzcDgyNC9IMDZUZFQxTkVRcThPd0lRQ0N6?=
+ =?utf-8?B?ZGNWMjk3NXYwSFJUeXg2UXZiQXloWm1QdTFrdzZRR3ZuSFVPMFhkeXZBUjN1?=
+ =?utf-8?B?RXEzMFd6YmNySzVmSGJpaUJWVklzQTBJNHE4K21tN2dzWHVtTFRneHp1VHcw?=
+ =?utf-8?B?czBMWGErQzVZMHMxa2x4eWI4OG5EUW1mOFhneW5ZcG83M1pUTjVqelFXZGti?=
+ =?utf-8?B?QnVWNXEvSzEwd0x2Yituam42dmdCRWNZayt1c0t1eDkzaGE5WDZXT3VpM1ZX?=
+ =?utf-8?B?dm5LU3hCdTZ0YjBHOXUrY1k5MjZjZE4rRncvRmVZdjF5L045U0dpY3VUOWlP?=
+ =?utf-8?B?NDA5My9lOGVJK3YrY005Mi8yN0VGWi9uWi9CV0tGK3RPUDJDWFNJVmJhbVZ4?=
+ =?utf-8?B?SVBQV01YSHRaQjd1ZEd6SkllT2ZNWWJId1U4RFNmYUlzNU9pbndTdnZvck4z?=
+ =?utf-8?B?MzhDTHNVTE5xempGNlhSNEVSclk4MlBDazdHVmRnREpESWNJTkxuOG9pUUhK?=
+ =?utf-8?B?dC94SUU0YmVvWnIxRkR3QTRSQVowaVZrT0cycHdicTk0OEFBY0ZzSkNvMjZZ?=
+ =?utf-8?B?NkNsWFFMSTNHQXpzRXY5T3ZUTXlSZDhiVnNYS3FRczU1NmVud1cyMis5SUhw?=
+ =?utf-8?B?akJVU1hHZUF0QXZvYS9McVdqYUprTjdGUkFDTUNTM1U0VEFiNnFwcG5CajQ0?=
+ =?utf-8?B?UERKUmYvb3BNbXRoQTVtb3YvN1ZPOUdJZGdsMnBhSWZJeXRjOENCR1pWV01W?=
+ =?utf-8?B?eWZQVWUxSFBpQmgwSytQZWlCeEN5dllVRkpwQmNEamlqMUFpRjhpNTM0TXZk?=
+ =?utf-8?B?MmFXeVN5MytxdDd4STJjd1duRGZkcy82K0huNmc1ODhWZWp1MWMvZ09KVjRy?=
+ =?utf-8?B?YWRMdndVbmZjQkh5TThLK0xSNWw2TlhoWTR6cllIZWc5bkRYTFRuQUVZdE4r?=
+ =?utf-8?B?YmZITVVINXNEditXVjlyV0dJTXVRSmNxYUJ1b1dlbjVteXlyV1JFWFhNQWZE?=
+ =?utf-8?B?ek1UQXYzQXFrSlZJOUhGWnl2NUZIY3RsL2ZZa2VZam9EYTV4MWh3Ynl0UXVO?=
+ =?utf-8?B?bXQ1SExkOHZxcmphNW1aTzhMRzRXMGZQSVM5cklDMStjNnkrcy9HSEo1WUtj?=
+ =?utf-8?B?L09TODV3UTdzZVhWcEpNY1hJMnlxUERzQnRlV1Q0U3h0M2RZQytCOWQwMkxW?=
+ =?utf-8?B?NmdIcVU0Z2VEVnNRN1FLeU11T2huSFlMbFhGN2Q5TVlvN1JFZm9aVFdiMjFN?=
+ =?utf-8?B?TzJjV1ZDdFMwbXhkdzRQN0NxUDVUOWpOTmlWcVcwam4yVjQ4dG9FeTU1L1Js?=
+ =?utf-8?B?Nmh0dlg4ZmMvQVJycnc2ZUhvVVEvdXM3NDZnb2xxR1dlSDNOU1hOeEZobTNm?=
+ =?utf-8?B?QndNcUN2a3VySE54dU1ZTWxMWjluVTlSeU1aS2E0ZVN1OTdzbzZ1ZVBReVZI?=
+ =?utf-8?Q?OF8aAQQzxWIsZO3M5GlBVhi9C?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e416e816-f88b-4dd2-e85a-08dcb125f9a2
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 31 Jul 2024 05:59:44.4048 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: A9/lNE5eBLGkG78liDaC6I0j0HSmVj/tskNrjfRYERlkTKgFCLeJrKStiCXBspfQxRBIBY4mvTszc55A4++E5Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7792
+Received-SPF: softfail client-ip=2a01:111:f403:200a::61a;
+ envelope-from=avihaih@nvidia.com;
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,96 +195,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Overview
-============
 
-Split "Power11 support for QEMU" into 2 patch series: pseries & powernv.
+On 31/07/2024 8:12, Markus Armbruster wrote:
+> External email: Use caution opening links or attachments
+>
+>
+> Avihai Horon <avihaih@nvidia.com> writes:
+>
+>> On 30/07/2024 15:22, Markus Armbruster wrote:
+>>> Avihai, there's a question for you on VfioMigrationState.
+>>>
+>>> Daniel P. Berrangé <berrange@redhat.com> writes:
+>>>
+>>>> On Tue, Jul 30, 2024 at 10:10:15AM +0200, Markus Armbruster wrote:
+> [...]
+>
+>>> * VfioMigrationState
+>>>
+>>>     Can't see why this one has a prefix.  Avihai, can you enlighten me?
+>> linux-headers/linux/vfio.h defines enum vfio_device_mig_state with values VFIO_DEVICE_STATE_STOP etc.
+> It does not define any VFIO_DEVICE_STATE_*, though.
+>
+>> I used the QAPI prefix to emphasize this is a QAPI entity rather than a VFIO entity.
+> We define about two dozen symbols starting with VFIO_, and several
+> hundreds starting with vfio_.  What makes this enumeration type
+> different so its members need emphasis?
 
-This patch series is for pseries support for Power11.
+Right. I thought it would be clearer with the QAPI prefix because 
+VFIO_DEVICE_STATE_* and VFIO_MIGRATION_STATE_* have similar values.
 
-As Power11 core is same as Power10, hence much of the code has been reused from
-Power10.
+But it's not a must. If you want to reduce prefix usage, go ahead, I 
+don't have a strong opinion about it.
 
-Power11 was added in Linux in:
-  commit c2ed087ed35c ("powerpc: Add Power11 architected and raw mode")
-
-Git Tree for Testing
-====================
-
-QEMU: https://github.com/adi-g15-ibm/qemu/tree/p11-v6-pseries
-
-Has been tested with following cases:
-* '-M pseries' / '-M pseries -cpu Power11'
-* '-smp' option tested
-* with compat mode: 'max-cpu-compat=power10' and 'max-cpu-compat=power9'
-* with/without device 'virtio-scsi-pci'
-* with/without -kernel and -drive with qcow_file
-
-Linux with Power11 support: https://github.com/torvalds/linux, since v6.9-rc1
-
-Changelog
-=========
-v6 RESEND:
-  + added my initials instead of PMM in patch #1 description
-
-v6: 
-  + reorganised patches such that Power11 introduction is at end, and
-  cleanups and fixes is done before
-  + patch #1: renamed macros from POWER_* to PCC_*
-  + patch #2: rename 'logical_pvr' to 'spapr_logical_pvr' to better convey
-  the context
-
-v5:
-  + split patch series into pseries+powernv
-  + patch #1: apply harsh's patch to reduce duplication
-  + patch #2: simplified, by removing duplication
-  + patch #3: update docs, according to harsh's suggestion
-  + patch #4: no functional change, #define used for P9 & P10 pcr_supported
-  + patch #5: no change
-
-v4:
-  + patch #5: fix memory leak in pnv_chip_power10_quad_realize
-  - no change in other patches
-
-v3:
-  + patch #1: version power11 as power11_v2.0
-  + patch #2: split target hw/pseries code into patch #2
-  + patch #3,#4: fix regression due to Power10 and Power11 having same PCR
-  + patch #5: create pnv_chip_power11_dt_populate and split pnv_chip_power10_common_realize as per review
-  + patch #6-#11: no change
-  - remove commit to make Power11 as default
-
-v2:
-  + split powernv patch into homer,lpc,occ,psi,sbe
-  + reduce code duplication by reusing power10 code
-  + make power11 as default
-  + rebase on qemu upstream/master
-  + add more information in commit descriptions
-  + update docs
-  + update skiboot.lid
-
-
-Aditya Gupta (4):
-  target/ppc: Introduce 'PowerPCCPUClass::spapr_logical_pvr'
-  target/ppc: Fix regression due to Power10 and Power11 having same PCR
-  target/ppc: Add Power11 DD2.0 processor
-  ppc/pseries: Add Power11 cpu type
-
-Harsh Prateek Bora (1):
-  target/ppc: Reduce code duplication across Power9/10 init code
-
- docs/system/ppc/pseries.rst |  17 +++-
- hw/ppc/spapr_cpu_core.c     |   1 +
- target/ppc/compat.c         |  11 +++
- target/ppc/cpu-models.c     |   3 +
- target/ppc/cpu-models.h     |   3 +
- target/ppc/cpu.h            |   3 +
- target/ppc/cpu_init.c       | 188 +++++++++++++++---------------------
- target/ppc/cpu_init.h       |  92 ++++++++++++++++++
- 8 files changed, 205 insertions(+), 113 deletions(-)
- create mode 100644 target/ppc/cpu_init.h
-
--- 
-2.45.2
-
+>
+> [...]
+>
 
