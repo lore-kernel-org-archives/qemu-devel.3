@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A667C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 09:45:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20866C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 09:45:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ5sz-0004kG-Ex; Wed, 31 Jul 2024 05:44:46 -0400
+	id 1sZ5th-00060F-6h; Wed, 31 Jul 2024 05:45:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sZ5sk-0004aE-UY
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 05:44:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sZ5si-0006HC-R4
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 05:44:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722419067;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NlUG8qVe5wIiIf508RxBtgklVOghS84a6q0P9i32l4w=;
- b=PtXVYMt2GjxV1gZ/yPDSR5+guhcb4JAteD1AnWhLF88mSR7/I68ukqskNStGm9L8eDoZmj
- uDIN4H/zvW/SsRXiD1F1F7Zp6Ht59naiL6yiBMNWPA+LMRwBXU7MQBDgUFiK9ShDK1Q+6r
- uiqfI3laIZkRT3Fv80GlhyK0kp5PKpI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-r8nXOTFzNsKJlug9DOsdQw-1; Wed,
- 31 Jul 2024 05:44:22 -0400
-X-MC-Unique: r8nXOTFzNsKJlug9DOsdQw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6C65B1955F3B; Wed, 31 Jul 2024 09:44:14 +0000 (UTC)
-Received: from redhat.com (unknown [10.39.194.1])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E8F1519560AA; Wed, 31 Jul 2024 09:43:54 +0000 (UTC)
-Date: Wed, 31 Jul 2024 11:43:52 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com,
- andrew@codeconstruct.com.au, andrew@daynix.com,
- arei.gonglei@huawei.com, berrange@redhat.com, berto@igalia.com,
- borntraeger@linux.ibm.com, clg@kaod.org, david@redhat.com,
- den@openvz.org, eblake@redhat.com, eduardo@habkost.net,
- farman@linux.ibm.com, farosas@suse.de, hreitz@redhat.com,
- idryomov@gmail.com, iii@linux.ibm.com, jamin_lin@aspeedtech.com,
- jasowang@redhat.com, joel@jms.id.au, jsnow@redhat.com,
- leetroy@gmail.com, marcandre.lureau@redhat.com,
- marcel.apfelbaum@gmail.com, michael.roth@amd.com, mst@redhat.com,
- mtosatti@redhat.com, nsg@linux.ibm.com, pasic@linux.ibm.com,
- pbonzini@redhat.com, peter.maydell@linaro.org, peterx@redhat.com,
- philmd@linaro.org, pizhenwei@bytedance.com, pl@dlhnet.de,
- richard.henderson@linaro.org, stefanha@redhat.com,
- steven_lee@aspeedtech.com, thuth@redhat.com,
- vsementsov@yandex-team.ru, wangyanan55@huawei.com,
- yuri.benditovich@daynix.com, zhao1.liu@intel.com,
- qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
- kvm@vger.kernel.org
-Subject: Re: [PATCH 01/18] qapi: Smarter camel_to_upper() to reduce need for
- 'prefix'
-Message-ID: <ZqoHWPOeqF7uGncx@redhat.com>
-References: <20240730081032.1246748-1-armbru@redhat.com>
- <20240730081032.1246748-2-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sZ5t6-0004ph-Hg
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 05:44:55 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sZ5t4-0006Ro-3l
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 05:44:51 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5a1f9bc80e3so4544845a12.2
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 02:44:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722419087; x=1723023887; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mKkedlz8qgq0I5fnBMu3HnJ8d7R8AOMNegXNNSRSQOw=;
+ b=pcUD+/KNo++QdI+EjP0x5Nm2y0OYjjK93fvIwbjZVlGsXS7YIUAAvOSbkTaVDty6F9
+ OrWrgwXZKxavLbX6B6QYNRfVV2tQnln7s6XwDiJl2Tfo/X3PTwz+oVDtgj8P+BRbApTl
+ rSIDz/E9lKMFPg2b8pwnLctOM+7Y2Tk5jTQ0367DvxBDEHCSwsAeaJHsvC3YqfjzkpYG
+ pBzhtGghb8dBGeh1QqpbW/6az9QFBmHvGBBqs06T5yFHlG9kxvt3/GwbIWv7a2WVPYJR
+ KWgkv3y8AwWiOPsUTKyB2XgaAhBL3VmI2jz6Y7EhiJPEh/EkxarI8atPgx0R4tBMViOQ
+ D5xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722419087; x=1723023887;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mKkedlz8qgq0I5fnBMu3HnJ8d7R8AOMNegXNNSRSQOw=;
+ b=A76ZZ/6yeCBzlLAXp7KKdo8oS9DX42XigA35mgEMzITRkZN9rofbnk2CZ5gqdpEmLv
+ kvRggZi3rujqKMm9l7Ast4gMXJ3Ki0rbGQjNZ7MRnYdUlAgPoznLGndu7OKxLxMyxT5a
+ jq4QNg/y/bHHZni4tE2P9ugV7HUHZxH/lcQUOqRQdFH2DgeiBHZhMchnguzsEXKKE8oJ
+ JRSMJ62MpOoqsVo2/CGjQPLVBdGFQK/PcFCfFlsH/yfZOoZZvJzo84Fvtf6XsCyV3ysC
+ C/Jc3L86K3Os1QIOWz3RkoZisZPY+5n7MkVqxzCzTSqcZgj7o3RPHpUpIrmoe+mcrayV
+ fhSA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU2+JZGc49+lLbG2Cz8W/4d0gFcg6XJOw7MDuXL87KEeRi2ZQHom5v6ZgnZUMG6yj2+LF4ki0J2jQEMpodQ11pY0kBYn10=
+X-Gm-Message-State: AOJu0Yy9dPIbyQv/Af+o7ysF3toJ850uu4Xn7auMmu5rtlhCbIbs29Ca
+ TOS4YTiFcJNu9isBPNF6gUJV6RS2VjKzzflyGjN2iysbbECF9rcmI16qMTAqdJ/Kr3eagqW1OvU
+ 1vKuhzFDi17JOE3GTCU/djg/+sigLfkVvyOPfVQ==
+X-Google-Smtp-Source: AGHT+IGVdFOf/HpsR1geNOfjv5SLl/36nOYmYP2ZuSZsk96DUvgL8R441p//1zdYPQocszyNCJ+S5zOQjmmdzNZIfgk=
+X-Received: by 2002:a50:d7c1:0:b0:57d:3df:f881 with SMTP id
+ 4fb4d7f45d1cf-5b021190495mr11985226a12.3.1722419087438; Wed, 31 Jul 2024
+ 02:44:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240730081032.1246748-2-armbru@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240724-fixes-v1-1-4a64596b0d64@rivosinc.com>
+ <CAKmqyKPhCzrYxwpBF+NQi-5KgcKkhWeVNX6nwwx3ZjeE9rWEAg@mail.gmail.com>
+ <CAHBxVyHBtnhFnFYN0=_5PoKvc7DadJABH71s+wCZzPiYAmPM_g@mail.gmail.com>
+In-Reply-To: <CAHBxVyHBtnhFnFYN0=_5PoKvc7DadJABH71s+wCZzPiYAmPM_g@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 31 Jul 2024 10:44:36 +0100
+Message-ID: <CAFEAcA8DJ8=O2C3XO0hTT3ujksq6MQOh8P-quaES3mpeit23iQ@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Add asserts for out-of-bound access
+To: Atish Kumar Patra <atishp@rivosinc.com>
+Cc: Alistair Francis <alistair23@gmail.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, 
+ palmer@dabbelt.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ bin.meng@windriver.com, dbarboza@ventanamicro.com, alistair.francis@wdc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,53 +96,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 30.07.2024 um 10:10 hat Markus Armbruster geschrieben:
-> camel_to_upper() converts its argument from camel case to upper case
-> with '_' between words.  Used for generated enumeration constant
-> prefixes.
-> 
-> When some of the words are spelled all caps, where exactly to insert
-> '_' is guesswork.  camel_to_upper()'s guesses are bad enough in places
-> to make people override them with a 'prefix' in the schema.
-> 
-> Rewrite it to guess better:
-> 
-> 1. Insert '_' after a non-upper case character followed by an upper
->    case character:
-> 
->        OneTwo -> ONE_TWO
->        One2Three -> ONE2_THREE
-> 
-> 2. Insert '_' before the last upper case character followed by a
->    non-upper case character:
-> 
->        ACRONYMWord -> ACRONYM_Word
-> 
->    Except at the beginning (as in OneTwo above), or when there is
->    already one:
-> 
->        AbCd -> AB_CD
+On Sat, 27 Jul 2024 at 02:36, Atish Kumar Patra <atishp@rivosinc.com> wrote=
+:
+>
+> On Thu, Jul 25, 2024 at 10:12=E2=80=AFPM Alistair Francis <alistair23@gma=
+il.com> wrote:
+> >
+> > On Wed, Jul 24, 2024 at 6:33=E2=80=AFPM Atish Patra <atishp@rivosinc.co=
+m> wrote:
+> > >
+> > > Coverity complained about the possible out-of-bounds access with
+> > > counter_virt/counter_virt_prev because these two arrays are
+> > > accessed with privilege mode. However, these two arrays are accessed
+> > > only when virt is enabled. Thus, the privilege mode can't be M mode.
+> > >
+> > > Add the asserts anyways to detect any wrong usage of these arrays
+> > > in the future.
+> > >
+> > > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> > > Signed-off-by: Atish Patra <atishp@rivosinc.com>
+> >
+> > Fixes: Coverity CID 1558459
+> > Fixes: Coverity CID 1558462
+> >
+>
+> I think one of the Coverity issues was about the get_field issue in
+> the other thread?
+> This doesn't necessarily fix the coverity issue also as the issue
+> reported is a false positive.
+> But I don't mind citing the coverity issues as it is reported by that.
+>
+> Is there a link to both coverity issues to know which issue describes
+> the out-of-bound access one ?
 
-Maybe it's just me, but the exception "at the beginning" (in the sense
-of "after the first character") seems to be exactly where I thought
-"that looks strange" while going through your list below. In particular,
-I'd expect X_DBG_* instead of XDBG_*. I also thought that the Q_*
-spelling made more sense, though this might be less clear. But in case
-of doubt, less exceptions seems like a good choice.
+You can't do deep links into the Coverity Scan UI, but if you
+want to ask for an account at https://scan.coverity.com/projects/qemu
+we generally give them to any developer who asks.
 
-> +    # Copy remainder of ``value`` to ``ret`` with '_' inserted
-> +    for ch in value[1:]:
-> +        if ch.isupper() == upc:
-> +            pass
-> +        elif upc:
-> +            # ``ret`` ends in upper case, next char isn't: insert '_'
-> +            # before the last upper case char unless there is one
-> +            # already, or it's at the beginning
-> +            if len(ret) > 2 and ret[-2] != '_':
-> +                ret = ret[:-1] + '_' + ret[-1]
+In this case 1558459 is complaining about the call to
+     riscv_pmu_update_fixed_ctrs(env, newpriv, virt_en);
+in riscv_cpu_set_mode(), and 1558462 is complaining about the call to
+ riscv_cpu_set_mode(env, PRV_M, virt)
+in riscv_cpu_do_interrupt().
 
-I think in the code this means I would have expected len(ret) >= 2.
+So it's basically reported the same problem twice, at different
+levels in the callstack. I don't know why it's done that, but it's
+not that uncommon that the same problem gets detected several ways.
 
-Kevin
+The complaints about get_field/set_field were different: those were
+1558461, 1558463. I've already marked those as false-positives in the UI.
 
+(Generally my practice is that where we think there's no point in
+making a change to QEMU's code I mark the issue as a false-positive;
+where we think it is reasonable to make a change to QEMU's code
+(e.g. to aid the human reader or where we think an assert() is useful)
+I leave it marked as "bug" to indicate we want to change something,
+even if Coverity's analysis is wrong and it's a can't-happen case.)
+
+thanks
+-- PMM
 
