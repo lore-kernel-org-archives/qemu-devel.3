@@ -4,95 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC3D9C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 06:38:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62939C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 07:03:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ2xy-0002hy-GU; Wed, 31 Jul 2024 02:37:42 -0400
+	id 1sZ3M7-0003zV-EG; Wed, 31 Jul 2024 03:02:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZ2xx-0002gT-0P
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 02:37:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1sZ3M2-0003y0-UZ
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 03:02:34 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZ2xv-0006cX-Fa
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 02:37:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722407858;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wnUTEtS+No9S/JuqPITES1G3oDrohvDkWf9tXSxF6fE=;
- b=FKx/PlCvHa5bQctYF7tReIPWefKPZID4lH4DGVpLRYcpL8+B3xPDlli5meaOncXyhr/OFb
- y2HOY7uL4RtHURLjwdx4x2CjX8Wfw59Fk6U6XekPLhSjev+742x0xZ6be9ExkN35v7WMbo
- xcyarc7Qgh4icF0lWYE2LsgBEthEcAY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-uE_kmhtRPSqnjMjlJ6wdWA-1; Wed,
- 31 Jul 2024 02:37:30 -0400
-X-MC-Unique: uE_kmhtRPSqnjMjlJ6wdWA-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EF29B1955D52; Wed, 31 Jul 2024 06:37:16 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7061D19560B2; Wed, 31 Jul 2024 06:37:13 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4172521E668B; Wed, 31 Jul 2024 08:37:11 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org,
- alex.williamson@redhat.com,  andrew@codeconstruct.com.au,
- andrew@daynix.com,  arei.gonglei@huawei.com,  berto@igalia.com,
- borntraeger@linux.ibm.com,  clg@kaod.org,  david@redhat.com,
- den@openvz.org,  eblake@redhat.com,  eduardo@habkost.net,
- farman@linux.ibm.com,  farosas@suse.de,  hreitz@redhat.com,
- idryomov@gmail.com,  iii@linux.ibm.com,  jamin_lin@aspeedtech.com,
- jasowang@redhat.com,  joel@jms.id.au,  jsnow@redhat.com,
- kwolf@redhat.com,  leetroy@gmail.com,  marcandre.lureau@redhat.com,
- marcel.apfelbaum@gmail.com,  michael.roth@amd.com,  mst@redhat.com,
- mtosatti@redhat.com,  nsg@linux.ibm.com,  pasic@linux.ibm.com,
- pbonzini@redhat.com,  peter.maydell@linaro.org,  peterx@redhat.com,
- philmd@linaro.org,  pizhenwei@bytedance.com,  pl@dlhnet.de,
- richard.henderson@linaro.org,  stefanha@redhat.com,
- steven_lee@aspeedtech.com,  thuth@redhat.com,  vsementsov@yandex-team.ru,
- wangyanan55@huawei.com,  yuri.benditovich@daynix.com,
- zhao1.liu@intel.com,  qemu-block@nongnu.org,  qemu-arm@nongnu.org,
- qemu-s390x@nongnu.org,  kvm@vger.kernel.org,  =?utf-8?Q?C=C3=A9dric?= Le
- Goater <clg@redhat.com>
-Subject: Re: [PATCH 01/18] qapi: Smarter camel_to_upper() to reduce need for
- 'prefix'
-In-Reply-To: <462d7540-f9ad-4380-8056-232e69f161e9@nvidia.com> (Avihai Horon's
- message of "Wed, 31 Jul 2024 08:59:28 +0300")
-References: <20240730081032.1246748-1-armbru@redhat.com>
- <20240730081032.1246748-2-armbru@redhat.com>
- <ZqiutRoQuAsrllfj@redhat.com> <87mslzgjde.fsf@pond.sub.org>
- <9b147a34-4641-4b4c-a050-51ceb3ea6a67@nvidia.com>
- <87jzh2kuux.fsf@pond.sub.org>
- <462d7540-f9ad-4380-8056-232e69f161e9@nvidia.com>
-Date: Wed, 31 Jul 2024 08:37:11 +0200
-Message-ID: <87wml2jcdk.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1sZ3Lx-0002Px-CN
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 03:02:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1722409349; x=1753945349;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=tFcaMWnp1Awrg3A50K8+ER6rz36OBJRtVM4vkWnWJzo=;
+ b=P/UMoWLdEaS0fBzfjkLNghxsd2nLCsjnFOjrzJYXuXnzdkl9CA/UV6Rg
+ O73UuBr7hTjRXLDlgTXP95hsP49C/vSUJdXMIK2ntQvKb4cc9KyWCRZBc
+ 7ZLJ6UvIvPXIpFngfi6tOuw6zhlDWbx1ZJ+FUdp9694+GJjI/Yb5GIs+3
+ K1kouB/KXqBYYyD6JDiLx1Xrw2pY0dtnPG6F+s88V/wl4c9wenr02qX0f
+ R8T35xLvyy8btwQ8Lh97N0TNb1Cg3x80v80kJxkENblx5EaOvI8N9j37G
+ pVY89nPzkWJfz2s3wVFJmh0mR5cP9tGFTk6ddoKBayNqgmJZG95ft14kz w==;
+X-CSE-ConnectionGUID: zM6GmWaNQkeZ1yVZIs1E5Q==
+X-CSE-MsgGUID: mQp+TpuCT6Wn+D/TESL5PQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11149"; a="45685577"
+X-IronPort-AV: E=Sophos;i="6.09,250,1716274800"; d="scan'208";a="45685577"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Jul 2024 00:02:19 -0700
+X-CSE-ConnectionGUID: abT8NU6DTu6bgGmsXhpLPQ==
+X-CSE-MsgGUID: EEoDCRl8Qoy1EtxJKni9AA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,250,1716274800"; d="scan'208";a="85512040"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.26])
+ ([10.124.240.26])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 31 Jul 2024 00:02:18 -0700
+Message-ID: <6e65dbb2-461e-44f4-842c-249c7b333885@intel.com>
+Date: Wed, 31 Jul 2024 15:02:15 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] target/i386: Always set leaf 0x1f
+To: Manish <manish.mishra@nutanix.com>, Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, zhao1.liu@intel.com,
+ pbonzini@redhat.com, bob.ball@nutanix.com, prerna.saxena@nutanix.com,
+ john.levon@nutanix.com
+References: <20240724075226.212882-1-manish.mishra@nutanix.com>
+ <20240724110004.389c1a0c@imammedo.users.ipa.redhat.com>
+ <21ca5c19-677b-4fac-84d4-72413577f260@nutanix.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <21ca5c19-677b-4fac-84d4-72413577f260@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,44 +88,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avihai Horon <avihaih@nvidia.com> writes:
-
-> On 31/07/2024 8:12, Markus Armbruster wrote:
->> External email: Use caution opening links or attachments
+On 7/24/2024 6:29 PM, Manish wrote:
+> Thanks Igor
+> 
+> On 24/07/24 2:30 pm, Igor Mammedov wrote:
+>> !-------------------------------------------------------------------|
+>>    CAUTION: External Email
 >>
+>> |-------------------------------------------------------------------!
 >>
->> Avihai Horon <avihaih@nvidia.com> writes:
+>> On Wed, 24 Jul 2024 07:52:26 +0000
+>> "manish.mishra"<manish.mishra@nutanix.com>  wrote:
 >>
->>> On 30/07/2024 15:22, Markus Armbruster wrote:
->>>> Avihai, there's a question for you on VfioMigrationState.
->>>>
->>>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
->>>>
->>>>> On Tue, Jul 30, 2024 at 10:10:15AM +0200, Markus Armbruster wrote:
->> [...]
->>
->>>> * VfioMigrationState
->>>>
->>>>     Can't see why this one has a prefix.  Avihai, can you enlighten me?
+>>> From: Manish Mishra<manish.mishra@nutanix.com>
 >>>
->>> linux-headers/linux/vfio.h defines enum vfio_device_mig_state with valu=
-es VFIO_DEVICE_STATE_STOP etc.
+>>> QEMU does not set 0x1f in case VM does not have extended CPU topology
+>>> and expects guests to fallback to 0xb. Some versions of Windows does not
+>>> like this behavior and expects this leaf to be populated. As a result 
+>>> Windows
+>>> VM fails with blue screen.
+>> BSOD usually has error code displayed, it would be better to specify 
+>> it here
+>> this way whomever searching for the error, can find this patch/commit
+> Sorry for earlier response, i do not see blue screen it seems to be 
+> falling in uefi back quickly and i do not see any details here. I am 
+> attaching image.
 >>
->> It does not define any VFIO_DEVICE_STATE_*, though.
->>
->>> I used the QAPI prefix to emphasize this is a QAPI entity rather than a=
- VFIO entity.
->>
->> We define about two dozen symbols starting with VFIO_, and several
->> hundreds starting with vfio_.  What makes this enumeration type
->> different so its members need emphasis?
->
-> Right. I thought it would be clearer with the QAPI prefix because VFIO_DE=
-VICE_STATE_* and VFIO_MIGRATION_STATE_* have similar values.
->
-> But it's not a must. If you want to reduce prefix usage, go ahead, I don'=
-t have a strong opinion about it.
+>>> Leaf 0x1f is superset of 0xb, so it makes sense to set 0x1f equivalent
+>>> to 0xb by default and workaround windows issue.>
+>>> This change adds a
+>>> new property 'cpuid-0x1f-enforce' to set leaf 0x1f equivalent to 0xb in
+>>> case extended CPU topology is not configured and behave as before 
+>>> otherwise.
+>> repeating question
+>> why we need to use extra property instead of just adding 0x1f leaf for 
+>> CPU models
+>> that supposed to have it?
+> 
+> As i mentioned in earlier response. "Windows expects it only when we 
+> have set max cpuid level greater than or equal to 0x1f. I mean if it is 
+> exposed it should not be all zeros. SapphireRapids CPU definition raised 
+> cpuid level to 0x20, so we starting seeing it with SapphireRapids."
+> 
+> Windows does not expect 0x1f to be present for any CPU model. But if it 
+> is exposed to the guest, it expects non-zero values.
 
-Thanks!
+Please fix Windows!
 
+No guarantee from Intel that leaf 0x1f should report non-zero value when 
+max cpuid level >= 0x1f.
+
+Please see SDM.vol2.CPUID chapter.
+
+INPUT EAX = 1FH: Returns V2 Extended Topology Information
+
+When CPUID executes with EAX set to 1FH, the processor returns 
+information about extended topology enumeration data. Software must 
+detect the presence of CPUID leaf 1FH by verifying (a) the highest leaf 
+index supported by CPUID is >= 1FH, and (b) CPUID.1FH:EBX[15:0] reports 
+a non-zero value. See Table 3-17.
 
