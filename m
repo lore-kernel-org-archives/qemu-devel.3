@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C238EC3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 08:30:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF5AC3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 08:33:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ4il-0003qA-2I; Wed, 31 Jul 2024 04:30:07 -0400
+	id 1sZ4lB-0002lp-JP; Wed, 31 Jul 2024 04:32:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZ4ii-0003gx-MP
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 04:30:04 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZ4if-000105-Fb
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 04:30:04 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5a108354819so8272876a12.0
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 01:30:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722414600; x=1723019400; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0YOTAMMf4iPZMx01Vfm9GIEOnEcMxS+mWoBS6sntgd0=;
- b=VAo305HqSonS2cY/sgCWvkVMTbpkZeh5iPHDq8SdjiL2BXJ+T2swRpLAQrrY8Nevh1
- k+hQWaFgRQkXSnycnbT7XUwGR9noXWNBZ6AhX8coIi+S3lvnSByCv1HR8Ro2uKFp8Hip
- zHvqvZ7haIcuHXem7wRlQ8RRkqOs6ljl1ozM9JFzTddi0EKq1/MCy+r8glC6+zLhUDAz
- s6cfaFHwL8cVi6ECTrJZm1Q12AEqDjMxZpvlBu+In8/yIC8Gry1gmxstW5Qr4AB3ecsH
- D4B/F9k7+PQBMcKrDgVoEkX26zn2FgjSfv1LeJzLyWlMGzivK1FRsyKJm9YoGLqiUflk
- q7IQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722414600; x=1723019400;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=0YOTAMMf4iPZMx01Vfm9GIEOnEcMxS+mWoBS6sntgd0=;
- b=mBz1bbDdXFkCFaQg4kng3KhDYd4lYjAo9cR4n1lYZhh/6fHDniOHmiDdjlup1GhnRC
- R+gEzzYEsHaegzBs9F/sq1axVw3h6yJXor/d3pPE+yPbTkwMoWwAqNyjI5KtpfC8AQsh
- SRWqXp4FHp+UjAyr5R+Tvq2RdlHc8zEpG4hdRiTrSYWjsFVDLGcO1hfxhPjwglD3JPNw
- 7fxE5mJxDJjh7WqD9dRom+7peobweuojD6hzurvemsWo8Q0PzCH2POth4edI12VLI6MW
- JnFmtKvOhs/LpxW/6GHj36erFee4vO2+TPrdsyJ0zjZxM1brpK0MHDBV4qjyz4Y8rO1Z
- tIlw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUyo5A53dkgrX95IDyY5mmnyF6pUFsXO4d/cmYsCCf1PonJH9ZJV9TAnFOEbcl47Z/PL2c+cemXW5mU9Fk3bTd6i+g212w=
-X-Gm-Message-State: AOJu0YxZ6IUjWavT2eUw77dYEahZiDrqj4edJubmgM1qTApAHEI6ER5h
- fOj7r8wAdPuCqTGnOyXPyjHISs1AIkIACSYXhWQUivjmRcLE+yAfsBkeyDIzhRADm8sRrc0e/3u
- neLDaIhuqklSPtbUWXCK18MNiM9b62nvagRaOuA==
-X-Google-Smtp-Source: AGHT+IE/JbTN7mef1C8ukMIfVrKp04lDJI3RqkUimLPjbr1sZ16BQS6P1SCwpLFBI3jtHpIHmtzzHqOMN4Q7ByuTBJY=
-X-Received: by 2002:a50:d55c:0:b0:57c:78fb:1a32 with SMTP id
- 4fb4d7f45d1cf-5b020ba8220mr8340344a12.19.1722414599667; Wed, 31 Jul 2024
- 01:29:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZ4lA-0002l8-Go
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 04:32:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZ4l7-0001YM-CG
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 04:32:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722414750;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=btIcE9RgOI2DuErRk2jZPSA4sTMB/8y0hynpBu3aXm0=;
+ b=WCcTAi5AhPSB99Y1WQu7LnQj0p39LJG5+RCzEQvwvCEGy60oYJaak4AH6MDIEHv+vAS4sr
+ nkGTKIqXLxI4J7Z0vvH96H4xViYF9nI3uDC4bmBX0L5TCjSNuPIxvGpnIBMZw3jGFYpgsC
+ vrNkjLtOBofB10xtCVQUuk5MwkbyCdk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-113-kUETRoRqOEy6Cc91dJnudA-1; Wed,
+ 31 Jul 2024 04:32:25 -0400
+X-MC-Unique: kUETRoRqOEy6Cc91dJnudA-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5BBB21955F56; Wed, 31 Jul 2024 08:32:23 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 338D719560AE; Wed, 31 Jul 2024 08:32:22 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id F23D221E6690; Wed, 31 Jul 2024 10:32:19 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  "Michael
+ S. Tsirkin"
+ <mst@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Alex
+ Williamson <alex.williamson@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,  Jason Wang
+ <jasowang@redhat.com>,  Keith Busch <kbusch@kernel.org>,  Klaus Jensen
+ <its@irrelevant.dk>,  qemu-devel@nongnu.org,  qemu-block@nongnu.org
+Subject: Re: [PATCH v2 0/4] hw/pci: Convert rom_bar into OnOffAuto
+In-Reply-To: <20240714-rombar-v2-0-af1504ef55de@daynix.com> (Akihiko Odaki's
+ message of "Sun, 14 Jul 2024 16:48:30 +0900")
+References: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
+Date: Wed, 31 Jul 2024 10:32:19 +0200
+Message-ID: <87a5hyj71o.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20240730155819.2958924-1-peter.maydell@linaro.org>
- <7c9662a0-240b-4bf5-9676-5eff403f86ef@linaro.org>
-In-Reply-To: <7c9662a0-240b-4bf5-9676-5eff403f86ef@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 31 Jul 2024 09:29:48 +0100
-Message-ID: <CAFEAcA_97tRc-=XuqUgVa=CF7y=PmV7pPjRVbRx7C4qVGHaC4A@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: Handle denormals correctly for FMOPA
- (widening)
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,27 +93,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 30 Jul 2024 at 23:36, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+
+> rom_bar is tristate but was defined as uint32_t so convert it into
+> OnOffAuto to clarify that. For compatibility, a uint32 value set via
+> QOM will be converted into OnOffAuto.
 >
-> On 7/31/24 01:58, Peter Maydell wrote:
-> > -void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
-> > -                         void *vpm, void *vst, uint32_t desc)
-> > +void HELPER(sme_fmopa_h)(CPUARMState *env,
-> > +                         void *vza, void *vzn, void *vzm, void *vpn,
-> > +                         void *vpm, uint32_t desc)
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+
+I agree making property "rombar" an integer was a design mistake.  I
+further agree that vfio_pci_size_rom() peeking into dev->opts to
+distinguish "user didn't set a value" from "user set the default value")
+is an unadvisable hack.
+
+However, ...
+
+> ---
+> Changes in v2:
+> - Documented in docs/about/deprecated.rst (Daniel P. Berrang=C3=A9)
+> - Link to v1: https://lore.kernel.org/r/20240706-rombar-v1-0-802daef2aec1=
+@daynix.com
 >
-> I think the env pointer should replace vst in the argument ordering.
-> That keeps with the standard gvec signature.
+> ---
+> Akihiko Odaki (4):
+>       qapi: Add visit_type_str_preserving()
+>       qapi: Do not consume a value when visit_type_enum() fails
+>       hw/pci: Convert rom_bar into OnOffAuto
+>       hw/qdev: Remove opts member
+>
+>  docs/about/deprecated.rst         |  7 +++++
+>  docs/igd-assign.txt               |  2 +-
+>  include/hw/pci/pci_device.h       |  2 +-
+>  include/hw/qdev-core.h            |  4 ---
+>  include/qapi/visitor-impl.h       |  3 ++-
+>  include/qapi/visitor.h            | 25 +++++++++++++----
+>  hw/core/qdev.c                    |  1 -
+>  hw/pci/pci.c                      | 57 +++++++++++++++++++++++++++++++++=
+++++--
+>  hw/vfio/pci-quirks.c              |  2 +-
+>  hw/vfio/pci.c                     | 11 ++++----
+>  hw/xen/xen_pt_load_rom.c          |  4 +--
+>  qapi/opts-visitor.c               | 12 ++++-----
+>  qapi/qapi-clone-visitor.c         |  2 +-
+>  qapi/qapi-dealloc-visitor.c       |  4 +--
+>  qapi/qapi-forward-visitor.c       |  4 ++-
+>  qapi/qapi-visit-core.c            | 21 ++++++++++++---
+>  qapi/qobject-input-visitor.c      | 23 ++++++++--------
+>  qapi/qobject-output-visitor.c     |  2 +-
+>  qapi/string-input-visitor.c       |  2 +-
+>  qapi/string-output-visitor.c      |  2 +-
+>  system/qdev-monitor.c             | 12 +++++----
+>  tests/qtest/virtio-net-failover.c | 32 +++++++++++-----------
+>  22 files changed, 161 insertions(+), 73 deletions(-)
+> ---
+> base-commit: f2cb4026fccfe073f84a4b440e41d3ed0c3134f6
+> change-id: 20240704-rombar-1a4ba2890d6c
+>
+> Best regards,
 
-Here I was going with our standard signature for everything
-that isn't gvec and putting the env pointer first. I'd have
-done that for the gvec helpers in the FEAT_EBF16 series too,
-except the gvec machinery doesn't allow it AFAICT (and also
-doesn't let you pass it as 'env' and insists on 'ptr' I think).
+... this is an awful lot of QAPI visitor infrastructure.  Infrastructure
+that will likely only ever be used for this one property.
 
-But I don't feel strongly, so I'll change this.
+Moreover, the property setter rom_bar_set() is a hack: it first tries to
+parse the value as enum, and if that fails, as uint32_t.  QAPI already
+provides a way to express "either this type or that type": alternate.
+Like this:
 
-thanks
--- PMM
+    { 'alternate': 'OnOffAutoUint32',
+      'data': { 'sym': 'OnOffAuto',
+                'uint': 'uint32' } }
+
+Unfortunately, such alternates don't work on the command line due to
+keyval visitor restrictions.  These cannot be lifted entirely, but we
+might be able to lift them sufficiently to make this alternate work.
+
+Whether it would be worth your trouble and mine just to clean up
+"rombar" seems highly dubious, though.
+
 
