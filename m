@@ -4,76 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 826DFC3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 13:35:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46B82C49EA1
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 13:45:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ9TN-0001Pu-HX; Wed, 31 Jul 2024 09:34:33 -0400
+	id 1sZ9dk-0000YC-02; Wed, 31 Jul 2024 09:45:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sZ9TL-0001OB-FV
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 09:34:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sZ9TJ-0006W8-BB
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 09:34:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722432867;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=QKhe1skX0A9BUM0iun7o2z0tKLunb3zPUTWJoI6hvNQ=;
- b=CFQDUotB38mArX93/dRNt3A+LBqhfIZ9p8yhjcOtR9vjj+Cj28TDhV67TX98V0YEPrBlB7
- JzKziQjsyyXnvmmiiZ+sQuwzJ9A1K/tPsdbVpNKBkGpbWHKY5rdoA556wAySefUqXd8t+R
- OtNqdQt3guk8YsVf5th6+o/9ihYkWbY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-330-B1KbsUNONqilnF8Tc79_eg-1; Wed,
- 31 Jul 2024 09:34:23 -0400
-X-MC-Unique: B1KbsUNONqilnF8Tc79_eg-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E241C1955F4A; Wed, 31 Jul 2024 13:34:13 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.33])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76BBC1955DE9; Wed, 31 Jul 2024 13:34:04 +0000 (UTC)
-Date: Wed, 31 Jul 2024 14:34:00 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Aditya Gupta <adityag@linux.ibm.com>
-Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?utf-8?B?RnLDqWTDqXJpYw==?= Barrat <fbarrat@linux.ibm.com>,
- qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Subject: Re: [RFC PATCH] hw/ppc: Implement -dtb support for PowerNV
-Message-ID: <Zqo9SOG_t-iI9xW4@redhat.com>
-References: <20240731132235.887918-1-adityag@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philipp.reisner@linbit.com>)
+ id 1sZ9Ks-0002m5-7n
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 09:25:46 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philipp.reisner@linbit.com>)
+ id 1sZ9Kp-00057w-HZ
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 09:25:45 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-a7a9a7af0d0so750202466b.3
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 06:25:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linbit-com.20230601.gappssmtp.com; s=20230601; t=1722432341; x=1723037141;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dxALnPUmyRoYA7morwgIVajtl32kZIWfqqOlhO4AnjU=;
+ b=wZ9Xe6eYmS+ygi4B1BPD/lGJoSri2rgONANkNFy0hExzjtWngVXAY57XAheYcwHD9v
+ BAelyCjfmqP91klwy6lsA40SeAcPC4F32bUozJJJ8o/ZHyn8+McNgZo7fcedoJRwLNM/
+ PASi+OM+OY7s/RWfNpT1wL17+b5c3AshufIKQNnhrTQHb4bcsLGoU8Sm1wYBUkx9cdPl
+ W0fB6iRwJc2E/JWp31MAtN52yhkn3WUPuzN73Jp5Ivrfcc8oTkWvcOPux+vJZYMhr+Q3
+ nWoejpl5jpNjqyyQ+k6seldxKzpRpcOfZ3KHEIwrDvBO2SRVT/VD51NmDcncb9PPEOaz
+ oskg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722432341; x=1723037141;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dxALnPUmyRoYA7morwgIVajtl32kZIWfqqOlhO4AnjU=;
+ b=YAdVlU5MkeL/c8Up83WT/e6I64D1ltW8Z+/4kkueoapyJXRperX4Rrx57zCBpYccJ9
+ 7HeRD4w5zJJyCTWyc6i48Sul9Bcno+qurOpGLD5rC7TJ18kka2VmDCnVra+Z4RKl+ySE
+ d0NWJzUzUDxNaKEOPQeRX+lJqw2wpMLHlcldxxjCQyTT+acrJkjwOFfruLuForDgQFGo
+ GXyVjy8Hr/FUfZi4vyoswsgsf8g8Vtw7waGhy6yIRXSTvO5bD+7XI+2czi1zNv9+xmH8
+ p5j4dH0idihvTMqeYe+LBlltYks/sHExH0enrtwqvUpEL9p562/CuEstv7emduWNhhxZ
+ PWrw==
+X-Gm-Message-State: AOJu0YzYnTdmWZC/uj2iH5EU130EVG+UoA2GXer5czz8KsvCAI3qo91F
+ IXNDrWushvLyh6FxfrzkthHsNmlZUPl1zCm/5qN+G7KJRdYs1iV3eqni9pKDvt4TWUPBn8T0TsO
+ X
+X-Google-Smtp-Source: AGHT+IF9wofbJ3/NgqqRuSMYl/jlVE/7xRp+MUHKtRVKoBPdC39XL3cBiO/2e9Rhc2q3iMJtuMsW1g==
+X-Received: by 2002:a17:907:86a2:b0:a7a:d093:f843 with SMTP id
+ a640c23a62f3a-a7d401605afmr953963566b.63.1722432340910; 
+ Wed, 31 Jul 2024 06:25:40 -0700 (PDT)
+Received: from ryzen9.home (193-80-247-151.adsl.highway.telekom.at.
+ [193.80.247.151]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7acad4aaa3sm772603866b.138.2024.07.31.06.25.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 31 Jul 2024 06:25:40 -0700 (PDT)
+From: Philipp Reisner <philipp.reisner@linbit.com>
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Philipp Reisner <philipp.reisner@linbit.com>
+Subject: [PATCH] util: retry open() when it gets interrupted by a signal
+Date: Wed, 31 Jul 2024 15:25:24 +0200
+Message-ID: <20240731132524.308273-1-philipp.reisner@linbit.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240731132235.887918-1-adityag@linux.ibm.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=philipp.reisner@linbit.com; helo=mail-ej1-x634.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 31 Jul 2024 09:45:07 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,99 +91,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jul 31, 2024 at 06:52:35PM +0530, Aditya Gupta wrote:
-> Currently any device tree passed with -dtb option in QEMU, was ignored
-> by the PowerNV code.
-> 
-> Read and pass the passed -dtb to the kernel, thus enabling easier
-> debugging with custom DTBs.
-> 
-> The existing behaviour when -dtb is 'not' passed, is preserved as-is.
-> 
-> But when a '-dtb' is passed, it completely overrides any dtb nodes or
-> changes QEMU might have done, such as '-append' arguments to the kernel
-> (which are mentioned in /chosen/bootargs in the dtb), hence add warning
-> when -dtb is being used
-> 
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> 
-> ---
-> This is an RFC patch, and hence might not be the final implementation,
-> though this current one is a solution which works
-> ---
-> ---
->  hw/ppc/pnv.c | 29 ++++++++++++++++++++++++++---
->  1 file changed, 26 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index 3526852685b4..12cc909b9e26 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -714,6 +714,8 @@ static void pnv_reset(MachineState *machine, ShutdownCause reason)
->      PnvMachineState *pnv = PNV_MACHINE(machine);
->      IPMIBmc *bmc;
->      void *fdt;
-> +    FILE *fdt_file;
-> +    uint32_t fdt_size;
->  
->      qemu_devices_reset(reason);
->  
-> @@ -736,10 +738,31 @@ static void pnv_reset(MachineState *machine, ShutdownCause reason)
->          }
->      }
->  
-> -    fdt = pnv_dt_create(machine);
-> +    if (machine->dtb) {
-> +        warn_report("with manually passed dtb, some options like '-append'"
-> +                " might ignored and the dtb passed will be used as-is");
+As with many syscalls, open() might be interrupted by a signal.
 
-Check whether append is actually set, and report an fatal error in
-that case. 
+The experienced logfile entry is:
 
->  
-> -    /* Pack resulting tree */
-> -    _FDT((fdt_pack(fdt)));
-> +        fdt = g_malloc0(FDT_MAX_SIZE);
-> +
-> +        /* read the file 'machine->dtb', and load it into 'fdt' buffer */
-> +        fdt_file = fopen(machine->dtb, "r");
-> +        if (fdt_file != NULL) {
-> +            fdt_size = fread(fdt, sizeof(char), FDT_MAX_SIZE, fdt_file);
-> +            if (ferror(fdt_file) != 0) {
-> +                error_report("Could not load dtb '%s'",
-> +                             machine->dtb);
-> +                exit(1);
-> +            }
-> +
-> +            /* mark end of the fdt buffer with '\0' */
-> +            ((char *)fdt)[fdt_size] = '\0';
-> +        }
+qemu-system-x86_64: -device virtio-blk-pci,bus=pci.0,addr=0x7,drive=libvirt-2-format,id=virtio-disk0,bootindex=2,write-cache=on,serial=1b990c4d13b74a4e90ea: Could not open '/dev/drbd1003': Interrupted system call
 
-Preferrable to use g_file_get_contents()
+Retry it until it is not interrupted by a signal.
+FYI, dd has the same kind of loop aroud open().
+https://github.com/coreutils/coreutils/blob/1ae98dbda7322427e8226356fd110d2553f5fac9/src/dd.c#L1294-L1299
 
-> +    } else {
-> +        fdt = pnv_dt_create(machine);
-> +
-> +        /* Pack resulting tree */
-> +        _FDT((fdt_pack(fdt)));
-> +    }
->  
->      qemu_fdt_dumpdtb(fdt, fdt_totalsize(fdt));
->      cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
-> -- 
-> 2.45.2
-> 
-> 
+Signed-off-by: Philipp Reisner <philipp.reisner@linbit.com>
+---
+ util/osdep.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-With regards,
-Daniel
+diff --git a/util/osdep.c b/util/osdep.c
+index 770369831b..a1269d9345 100644
+--- a/util/osdep.c
++++ b/util/osdep.c
+@@ -294,14 +294,17 @@ bool qemu_has_direct_io(void)
+ static int qemu_open_cloexec(const char *name, int flags, mode_t mode)
+ {
+     int ret;
++    do  {
+ #ifdef O_CLOEXEC
+-    ret = open(name, flags | O_CLOEXEC, mode);
++        ret = open(name, flags | O_CLOEXEC, mode);
+ #else
+-    ret = open(name, flags, mode);
+-    if (ret >= 0) {
+-        qemu_set_cloexec(ret);
+-    }
++        ret = open(name, flags, mode);
++        if (ret >= 0) {
++            qemu_set_cloexec(ret);
++        }
+ #endif
++    } while (ret == -1 && errno == EINTR);
++
+     return ret;
+ }
+ 
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.45.2
 
 
