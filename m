@@ -4,52 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4188C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 12:34:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 485BFC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 12:34:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ8VD-00023y-DM; Wed, 31 Jul 2024 08:32:23 -0400
+	id 1sZ8VV-0002aj-LV; Wed, 31 Jul 2024 08:32:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sZ8VB-00020I-UE
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 08:32:21 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sZ8VS-0002N1-EH
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 08:32:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sZ8VA-00046D-HY
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 08:32:21 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sZ8VQ-00047b-JI
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 08:32:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722429139;
+ s=mimecast20190719; t=1722429155;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Z/uiMfzB513CBRTKXjBJZePpGg7cf/Zjba5IDHN79WQ=;
- b=hx8uEL2Na+Dfbx51ADjUUcMiPNHd0E/IR2XwmF+sTAMyASe6WNGx8MHY6i+1zEgpybTQ8v
- jWsVRt/UMeUDT0Jm8UiXWc5gaUQeO3ppIM3t9eV59w58H8lpWepqob6R2yX1S/xCAT3xCM
- VgLE/MhsHCGGAC9wgjEdOGQISIEmbCo=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=48tv8E771azAG/7TbiDrxaNgby/yNJ6CX75QSGZBrqU=;
+ b=LkDiTdGREt18mt9c654fjjvWr4xXB4UO3zW2J7GVeko7eL2GCIk8FxrhYC9c5JRPIy4W6N
+ DIUZxAFpSbc2o3KfToBcPRcVwSEAo2hPunBSBaGGPHlovppHCrgTXYsfyNQnkgDBhbSQGk
+ UrvjsQEQIb3Yp4AAuFCSl5DIHFiOJ50=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-387-bOTCx2WrOde0vBRCuBc5Zg-1; Wed,
- 31 Jul 2024 08:32:16 -0400
-X-MC-Unique: bOTCx2WrOde0vBRCuBc5Zg-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-379-R_9h4kqYPRmLUp_jehdavg-1; Wed,
+ 31 Jul 2024 08:32:31 -0400
+X-MC-Unique: R_9h4kqYPRmLUp_jehdavg-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 24FED19054E3; Wed, 31 Jul 2024 12:32:15 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 723C119541AE; Wed, 31 Jul 2024 12:32:30 +0000 (UTC)
 Received: from merkur.redhat.com (unknown [10.39.194.1])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AB29219560B2; Wed, 31 Jul 2024 12:32:12 +0000 (UTC)
+ id 49D1D19560B2; Wed, 31 Jul 2024 12:32:22 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com, pbonzini@redhat.com, fam@euphon.net, stefanha@redhat.com,
  qemu-devel@nongnu.org
-Subject: [PATCH v2 0/4] scsi-block: Fix error handling with r/werror=stop
-Date: Wed, 31 Jul 2024 14:32:03 +0200
-Message-ID: <20240731123207.27636-1-kwolf@redhat.com>
+Subject: [PATCH v2 2/4] scsi-block: Don't skip callback for sgio error
+ status/driver_status
+Date: Wed, 31 Jul 2024 14:32:05 +0200
+Message-ID: <20240731123207.27636-3-kwolf@redhat.com>
+In-Reply-To: <20240731123207.27636-1-kwolf@redhat.com>
+References: <20240731123207.27636-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
@@ -77,35 +81,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Running validation tests in Windows 2019's Failover Cluster Manager
-fails in two different ways when run with rerror/werror=stop:
+Instead of calling into scsi_handle_rw_error() directly from
+scsi_block_sgio_complete() and skipping the normal callback, go through
+the normal cleanup path by calling the callback with a positive error
+value.
 
-1. It runs into an assertion failure because the sgio-based I/O path
-   takes shortcuts in its error handling that skip necessary cleanup
+The important difference here is not only that the code path is cleaner,
+but that the callbacks set r->req.aiocb = NULL. If we skip setting this
+and the error action is BLOCK_ERROR_ACTION_STOP, resuming the VM runs
+into an assertion failure in scsi_read_data() or scsi_write_data()
+because the dangling aiocb pointer is unexpected.
 
-2. RESERVATION_CONFLICT is treated as a host error and stops the VM,
-   which in some cases can't be resumed at all because nothing will make
-   the error go away on retry. The error should always go to the guest
-   instead, it's an invalid request from the guest.
+Fixes: a108557bbf ("scsi: inline sg_io_sense_from_errno() into the callers.")
+Buglink: https://issues.redhat.com/browse/RHEL-50000
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ hw/scsi/scsi-disk.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-This series fixes these problems.
-
-v2:
-- Patch 4: [Paolo]
-  * Set error = 0 explicitly, remove useless variable initialisation
-  * Add comment to explain why we consider it a guest error
-  * Mention scsi-block specifically in the commit message
-
-Kevin Wolf (4):
-  scsi-disk: Use positive return value for status in dma_readv/writev
-  scsi-block: Don't skip callback for sgio error status/driver_status
-  scsi-disk: Add warning comments that host_status errors take a
-    shortcut
-  scsi-disk: Always report RESERVATION_CONFLICT to guest
-
- hw/scsi/scsi-disk.c | 73 +++++++++++++++++++++++++++++++--------------
- 1 file changed, 51 insertions(+), 22 deletions(-)
-
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 3ff6798bde..6e1a5c98df 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -2832,16 +2832,6 @@ static void scsi_block_sgio_complete(void *opaque, int ret)
+         } else {
+             ret = io_hdr->status;
+         }
+-
+-        if (ret > 0) {
+-            if (scsi_handle_rw_error(r, ret, true)) {
+-                scsi_req_unref(&r->req);
+-                return;
+-            }
+-
+-            /* Ignore error.  */
+-            ret = 0;
+-        }
+     }
+ 
+     req->cb(req->cb_opaque, ret);
 -- 
 2.45.2
 
