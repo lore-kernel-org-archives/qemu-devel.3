@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D91AC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 17:01:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B426C3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 17:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZCgf-0008PC-76; Wed, 31 Jul 2024 13:00:31 -0400
+	id 1sZCne-0005Aq-LR; Wed, 31 Jul 2024 13:07:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZCga-0008OR-DE
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:00:24 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1sZCnd-0005AN-Qf
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:07:41 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZCgY-0005aa-N7
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:00:24 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-42816ca782dso37738205e9.2
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 10:00:22 -0700 (PDT)
+ id 1sZCnc-0008EN-5q
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:07:41 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-52ed9b802ceso7419071e87.3
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 10:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722445220; x=1723050020; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=GVfQXyh9sObTktsvqbAirmP7HyrwY7BxoUCuAv78J14=;
- b=ujv7dLxR1dBgeGoDDzzTZ9hPx1vchtrSDLJClP9epAvM7bjXwpCaCrlIQP/MpLIxMJ
- KbSEcYSWpLRF/wohlx6JG/wBhuOlYF0kJs59dsP5AkKVfz7Gy7i6053F1ElsE8ssP4Hm
- 1c+wiDnS8pnSxymvkctTKTqppjQdh5+xlodzDNJGTnAcQ8bGfEMH1as0vZylw3SOjo1w
- C7ZXK3+xLWvOtKhCJ7Z1yS3RV4ZVtNhQ494Te89muTHOWdeVuYqeJ6r3EWGWPcr/ZEQ8
- ONh4PJxQCPWFNIJwUcjbXpGZ4OOktN5Oyrvt62aM8UAJOSw8byLSVqjRQPDnKsCTSXPT
- om3A==
+ d=linaro.org; s=google; t=1722445658; x=1723050458; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=W8KfsaU+RrpUdcyCoU1oVeno1sj4n+D8TgOb2VnQEfk=;
+ b=qLaLzbfSm7WSdUXl0smPFFjFtYpD8KvOyL3jFvhR+r+XY5WXmqc90JwTLj9KAHrYt6
+ VbGQR2dxd3Ww/v3GBrt4WKnVqGaeAnU+VOoyyW/G8kV8JG/EeP0058riwwYuSl9X+ZmO
+ vN/723jjAvntXDfUlCUc+FWrn9+AbWni1GbG7OPPQ1wcPAiPIk+e4VrbCpuurVWkLNsT
+ s/tMlLteLjsIhtktKBUzER81zsObo+OivUGWonhsLoHIlDcjjs4MYcl2ilc1z6HY9FAK
+ LfvAdrRAtyNWEHVdiQkqNe5ur9WLDiKGWqrN10qOziCGAXwVXLWzIN44d5qCQBzXMrUh
+ SzTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722445220; x=1723050020;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1722445658; x=1723050458;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=GVfQXyh9sObTktsvqbAirmP7HyrwY7BxoUCuAv78J14=;
- b=B1X967EFvK9fUlhX44CL0N9UEMW4FhAtluK2Lpw265SlpbMu6dnruo6NuSU+kRkYmj
- Boibv5UKvw337tHBDzlsivsFAEeY3o845Rc1wJIhkr4wEptA8hiNckxvdxgG4rOnqJWI
- 7OgWyzgFbOvUVRWei13V0JmZBTV3Qpb21Hr+6AeFvxFtoGVkBy/u+v+ImAMBil4T0u1f
- LbGbXoBKMVgr//q8TfNmhYp28HB+5od/ovR2ZGrNMpz4K9+RSYhBnmPvbJNvg9Zwv+zk
- lZJxFw45mwQlJMb87Hw1ak4DrGhfrBA5MTrnIM6zAnOalc+40qCP1dD5+wDNKdQaqsat
- ylfA==
-X-Gm-Message-State: AOJu0YwqnR7anyC946Qj5VAxLLTGqPBA6de3MAFtVkESPiM0cIeIMbrY
- 6D1r31lnahVHeg9vvT10NZUg0otSDnOZDnj3PpogSyCsTRvoFnWeYhZMAQ9bNjZZ4/NT5RHbfjC
- s
-X-Google-Smtp-Source: AGHT+IF4TXho/YVsnna+vH0liMMYR2EbE1VnukyTO/yor6mA7qsb/pUaEWUF/e08c/AHpNytvmbSuQ==
-X-Received: by 2002:a1c:770f:0:b0:426:6667:bbbe with SMTP id
- 5b1f17b1804b1-428a9bdb988mr517715e9.9.1722445220416; 
- Wed, 31 Jul 2024 10:00:20 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4282b8a1840sm28186975e9.5.2024.07.31.10.00.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Jul 2024 10:00:20 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH] hw/i386/amd_iommu: Don't leak memory in amdvi_update_iotlb()
-Date: Wed, 31 Jul 2024 18:00:19 +0100
-Message-Id: <20240731170019.3590563-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ bh=W8KfsaU+RrpUdcyCoU1oVeno1sj4n+D8TgOb2VnQEfk=;
+ b=odb56R4IUVup8Vj6eKoAFQ5fCss8YSDPy/1RdrBuvNyUAQim51g6yKNjaBXAxAfl8C
+ +CdhHi70A3tUTvQNH473ggOftsrAVXrdrpGz5RxZIrZUhatzF4EtQ69QPmgBmT+RxPAE
+ fRIGwerxaILeJ/fGeYV2xAiVLpa42TP34CcCPBk1PVVAIxrnBMChUehIA6j2Ptn91kpL
+ eKbamp2yqdoDRDy8i/8qC7g/f0Wxlv6wLsg//AQqvLoPQjqj6EmkQ5253NSXB7n5E8fF
+ DBMkHTxNKhWrmfczJvJJ5W2M6CXJNvlsm32jYbQYvd0B2Fq2ndBoUlQknf0dLPieI3zl
+ 4Njw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUr6WgM/dWe7S4nDmWojQAiozBL4cD0qI5WCK/+7HaCOIHpPF1Ka36MHI+6Mc/q18m/cwV3SZIh0fMyIr7W9VKXtVydWJw=
+X-Gm-Message-State: AOJu0Yx9HZXTOLI2q3RiuDDlJ5MH6tXJ1sf7cWLE9wwCKyrZQ55XPrER
+ VRJI6RU20GjpU8ytphChZlL8eGkNoSmzA+FvQTyEjyAy30CPUfpfjJxw+B8vEQTGWfx/Cr6Er/n
+ qfVWzGEoQGnP5NdlGlo0uUsrjceYLraY2DOKN5g==
+X-Google-Smtp-Source: AGHT+IGg6JQEQPdLgDi4BvhJ+AtLtefTbxZ45PGOJEnEOjeF5KDWCgM7z8FnWH4us6zFamgo8c94k+Nj5nI3B8da0Kg=
+X-Received: by 2002:ac2:5210:0:b0:52c:df83:ad52 with SMTP id
+ 2adb3069b0e04-5309b2809acmr11209147e87.36.1722445657937; Wed, 31 Jul 2024
+ 10:07:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+References: <20230713120853.27023-1-anjo@rev.ng>
+ <SN6PR02MB42058323403CE9291E40E005B837A@SN6PR02MB4205.namprd02.prod.outlook.com>
+In-Reply-To: <SN6PR02MB42058323403CE9291E40E005B837A@SN6PR02MB4205.namprd02.prod.outlook.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 31 Jul 2024 18:07:26 +0100
+Message-ID: <CAFEAcA_VttO0aEO6VBUAB4H9TVNH5tP5piZVq6F4Ao2MZF-UoA@mail.gmail.com>
+Subject: Re: [PATCH] target/hexagon/idef-parser: Remove self-assignment
+To: Brian Cain <bcain@quicinc.com>
+Cc: Anton Johansson <anjo@rev.ng>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,47 +91,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In amdvi_update_iotlb() we will only put a new entry in the hash
-table if to_cache.perm is not IOMMU_NONE.  However we allocate the
-memory for the new AMDVIIOTLBEntry and for the hash table key
-regardless.  This means that in the IOMMU_NONE case we will leak the
-memory we alloacted.
+On Thu, 13 Jul 2023 at 17:21, Brian Cain <bcain@quicinc.com> wrote:
+>
+>
+>
+> > -----Original Message-----
+> > From: Anton Johansson <anjo@rev.ng>
+> > Sent: Thursday, July 13, 2023 7:09 AM
+> > To: qemu-devel@nongnu.org
+> > Cc: Brian Cain <bcain@quicinc.com>; peter.maydell@linaro.org
+> > Subject: [PATCH] target/hexagon/idef-parser: Remove self-assignment
+> >
+> > WARNING: This email originated from outside of Qualcomm. Please be wary of
+> > any links or attachments, and do not enable macros.
+> >
+> > The self assignment is clearly useless, and @1.last_column does not have
+> > to be set for an expression with only a single token, so remove it.
+> >
+> > Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> > Signed-off-by: Anton Johansson <anjo@rev.ng>
+> > ---
+> >  target/hexagon/idef-parser/idef-parser.y | 1 -
+> >  1 file changed, 1 deletion(-)
+> >
+> > diff --git a/target/hexagon/idef-parser/idef-parser.y b/target/hexagon/idef-
+> > parser/idef-parser.y
+> > index cd2612eb8c..a6587f5bcc 100644
+> > --- a/target/hexagon/idef-parser/idef-parser.y
+> > +++ b/target/hexagon/idef-parser/idef-parser.y
+> > @@ -802,7 +802,6 @@ rvalue : FAIL
+> >
+> >  lvalue : FAIL
+> >           {
+> > -             @1.last_column = @1.last_column;
+> >               yyassert(c, &@1, false, "Encountered a FAIL token as lvalue.\n");
+> >           }
+> >         | REG
+> > --
+> > 2.41.0
+>
+> Reviewed-by: Brian Cain <bcain@quicinc.com>
 
-Move the allocations into the if() to the point where we know we're
-going to add the item to the hash table.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2452
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-Tested with 'make check' and 'make check-avocado' only, but the
-bug and fix seem straightforward...
----
- hw/i386/amd_iommu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Ping -- I just noticed that this patch never seems to have
+made it upstream. Brian, could you pick it up?
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 6d4fde72f9b..87643d28917 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -357,12 +357,12 @@ static void amdvi_update_iotlb(AMDVIState *s, uint16_t devid,
-                                uint64_t gpa, IOMMUTLBEntry to_cache,
-                                uint16_t domid)
- {
--    AMDVIIOTLBEntry *entry = g_new(AMDVIIOTLBEntry, 1);
--    uint64_t *key = g_new(uint64_t, 1);
--    uint64_t gfn = gpa >> AMDVI_PAGE_SHIFT_4K;
--
-     /* don't cache erroneous translations */
-     if (to_cache.perm != IOMMU_NONE) {
-+        AMDVIIOTLBEntry *entry = g_new(AMDVIIOTLBEntry, 1);
-+        uint64_t *key = g_new(uint64_t, 1);
-+        uint64_t gfn = gpa >> AMDVI_PAGE_SHIFT_4K;
-+
-         trace_amdvi_cache_update(domid, PCI_BUS_NUM(devid), PCI_SLOT(devid),
-                 PCI_FUNC(devid), gpa, to_cache.translated_addr);
- 
--- 
-2.34.1
+(This fixes a Coverity issue: CID 976926.)
 
+thanks
+-- PMM
 
