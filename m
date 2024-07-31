@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A79C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 09:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A667C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 09:45:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZ5nD-0007gX-9L; Wed, 31 Jul 2024 05:38:47 -0400
+	id 1sZ5sz-0004kG-Ex; Wed, 31 Jul 2024 05:44:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sZ5nB-0007eW-Ny; Wed, 31 Jul 2024 05:38:45 -0400
-Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sZ5nA-0005O5-04; Wed, 31 Jul 2024 05:38:45 -0400
-Received: by mail-vs1-xe32.google.com with SMTP id
- ada2fe7eead31-492a774c807so1541720137.3; 
- Wed, 31 Jul 2024 02:38:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722418722; x=1723023522; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wOszWx/XhHUXM+Zid7l+V5RX375eUfOYEr09bcjfSM0=;
- b=fLRDUY7JCIdSC/T2hL3TLfZ4O55kvQiRfJUVi49rR0EOB5I61UGZ50saXyzPM74qqr
- EvaMqDyjsgjNbHrJ+e0Y2ebAwUe8GvZoMP0wKDWEkS0IyEb9Bofr9JNb4yyhKTT6xOG6
- pOZOEnZowqAv6/T2bARjhq2aar64Hey3QjvFCz0jnKc7LlwBE1gMddxMKSr7eN76SdhB
- aHZ6YlH0Pk9l6I+KvhqF0lF1iqiu/FiNWUBjCNYT2MWz4itA0UqBw75hwD8SVWMtU7jj
- RcesepkWcPi5yIcwzF2XqNCwtxlenko5foID83T6VnK3BgM1Pd1a0pVB2tTVcu6Go7IT
- yagA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722418722; x=1723023522;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wOszWx/XhHUXM+Zid7l+V5RX375eUfOYEr09bcjfSM0=;
- b=VWFkGcxDRU1thkkSvmYCvQYWTFqGKoc9usLFYpWdHfIdQ5/tTsDx92DaZvWIj/xWVs
- u7Kv5biNjOP8LR5BYgdWIkGcMqWZSuwOonaBsYlf3VLSJYiDWXj3ZtmrLC2QNKdwDV/s
- m/6FPXymzXJMQiPTlNEnWHsNkDLRKe3bIQBAI2oDmBmtoFe1+rUOstYJFpO+F2yHj7RO
- SKvwSSB1yE2hUX7I/AxNsB4Q/fKR+1WuzCNgngWf6hiB3KkWYqWjA4XHRkFzyCA53qrd
- IUoxpKf2JOggqyo0PmaKmojQd2mMLeUMUzWzSgsZPL4cHTWhRAAWkMrb0wyLnR1xJvY2
- CSsg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUV5+XTDbN9U2YTnEEN0zuPSBm437G0SZ1IF/TVhX9gqKi0oap70aq2dW88hqiAWHzZT6u+jE6WNzSEBSJATrUgcbYh8wVqPpRltEHzveTjkefz9wB5u2rsaQYsuA==
-X-Gm-Message-State: AOJu0YyecdHfrBmcmro450Tytb9Ty7XLGTVMdF4yt6csM249wqAKsoLb
- Ss9WzHn5kUwy4IXIAz/+MT9ZAbR5IWKUynsoPWcPFrfvO7uT4wKQomK1Ll5urxFKzCH/SOstb38
- Uj7/Cv4N9ls4mEzNcaLTGWFfSNmk=
-X-Google-Smtp-Source: AGHT+IGdlltPn5yc+kT0NHd9Gxv4Ug5tokZvgme0BRJDA9nriTk2xOH1y+D4pfEsFjh1VtY/Uz82Cip/FY37h81Uj98=
-X-Received: by 2002:a05:6102:41aa:b0:48f:de23:14f0 with SMTP id
- ada2fe7eead31-493fa19ab17mr17882871137.8.1722418721837; Wed, 31 Jul 2024
- 02:38:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sZ5sk-0004aE-UY
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 05:44:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sZ5si-0006HC-R4
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 05:44:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722419067;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NlUG8qVe5wIiIf508RxBtgklVOghS84a6q0P9i32l4w=;
+ b=PtXVYMt2GjxV1gZ/yPDSR5+guhcb4JAteD1AnWhLF88mSR7/I68ukqskNStGm9L8eDoZmj
+ uDIN4H/zvW/SsRXiD1F1F7Zp6Ht59naiL6yiBMNWPA+LMRwBXU7MQBDgUFiK9ShDK1Q+6r
+ uiqfI3laIZkRT3Fv80GlhyK0kp5PKpI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-r8nXOTFzNsKJlug9DOsdQw-1; Wed,
+ 31 Jul 2024 05:44:22 -0400
+X-MC-Unique: r8nXOTFzNsKJlug9DOsdQw-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6C65B1955F3B; Wed, 31 Jul 2024 09:44:14 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.194.1])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E8F1519560AA; Wed, 31 Jul 2024 09:43:54 +0000 (UTC)
+Date: Wed, 31 Jul 2024 11:43:52 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com,
+ andrew@codeconstruct.com.au, andrew@daynix.com,
+ arei.gonglei@huawei.com, berrange@redhat.com, berto@igalia.com,
+ borntraeger@linux.ibm.com, clg@kaod.org, david@redhat.com,
+ den@openvz.org, eblake@redhat.com, eduardo@habkost.net,
+ farman@linux.ibm.com, farosas@suse.de, hreitz@redhat.com,
+ idryomov@gmail.com, iii@linux.ibm.com, jamin_lin@aspeedtech.com,
+ jasowang@redhat.com, joel@jms.id.au, jsnow@redhat.com,
+ leetroy@gmail.com, marcandre.lureau@redhat.com,
+ marcel.apfelbaum@gmail.com, michael.roth@amd.com, mst@redhat.com,
+ mtosatti@redhat.com, nsg@linux.ibm.com, pasic@linux.ibm.com,
+ pbonzini@redhat.com, peter.maydell@linaro.org, peterx@redhat.com,
+ philmd@linaro.org, pizhenwei@bytedance.com, pl@dlhnet.de,
+ richard.henderson@linaro.org, stefanha@redhat.com,
+ steven_lee@aspeedtech.com, thuth@redhat.com,
+ vsementsov@yandex-team.ru, wangyanan55@huawei.com,
+ yuri.benditovich@daynix.com, zhao1.liu@intel.com,
+ qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
+ kvm@vger.kernel.org
+Subject: Re: [PATCH 01/18] qapi: Smarter camel_to_upper() to reduce need for
+ 'prefix'
+Message-ID: <ZqoHWPOeqF7uGncx@redhat.com>
+References: <20240730081032.1246748-1-armbru@redhat.com>
+ <20240730081032.1246748-2-armbru@redhat.com>
 MIME-Version: 1.0
-References: <20240723013012.1443-1-zhiwei_liu@linux.alibaba.com>
- <dea63117-cabd-4669-bffd-e8c0cb8d9147@linaro.org>
- <df37fdc2-79c6-420c-bcf4-e7c3649fe446@linux.alibaba.com>
- <8d12202f-7170-4127-a1a6-c23c03835cf6@linaro.org>
- <ca1b9449-f6e0-412c-829a-bc6258f461ff@linux.alibaba.com>
-In-Reply-To: <ca1b9449-f6e0-412c-829a-bc6258f461ff@linux.alibaba.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Wed, 31 Jul 2024 19:38:15 +1000
-Message-ID: <CAKmqyKMftPJuLDc=8vR5R=j90CPYHxM1NscMB_fXk2SUgfM5pQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] target/riscv: Remove redundant insn length check for
- zama16b
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe32.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240730081032.1246748-2-armbru@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,45 +99,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 25, 2024 at 11:53=E2=80=AFAM LIU Zhiwei
-<zhiwei_liu@linux.alibaba.com> wrote:
->
->
-> On 2024/7/23 13:59, Richard Henderson wrote:
-> > On 7/23/24 15:29, LIU Zhiwei wrote:
-> >> The more detailed information about its meaning is in priviledged
-> >> 1.13 specification. More exactly, in 3.6.4. Misaligned Atomicity
-> >> Granule PMA.
-> >>
-> >> The specification said:
-> >>
-> >> "The misaligned atomicity granule PMA applies only to AMOs, loads and
-> >> stores defined in the base
-> >> ISAs, and loads and stores of no more than MXLEN bits defined in the
-> >> F, D, and Q extensions. For an
-> >> instruction in that set, if all accessed bytes lie within the same
-> >> misaligned atomicity granule, the
-> >> instruction will not raise an exception for reasons of address
-> >> alignment, and the instruction will give
-> >> rise to only one memory operation for the purposes of RVWMO=E2=80=94i.=
-e., it
-> >> will execute atomically."
-> >>
-> >> That's the reason why I do not apply zama16b to compressed instruction=
-s.
-> > Given the non-specificity of this paragraph, I think not specifically
-> > calling out compressed forms of the base ISA is simply a documentation
-> > error.  In general, the compressed ISA is supposed to be a smaller
-> > encoding of the exact same instruction as the standard ISA.
->
-> Yes, it's a documentation error. We will fix in the specification.
->
-> https://github.com/riscv/riscv-isa-manual/pull/1557
+Am 30.07.2024 um 10:10 hat Markus Armbruster geschrieben:
+> camel_to_upper() converts its argument from camel case to upper case
+> with '_' between words.  Used for generated enumeration constant
+> prefixes.
+> 
+> When some of the words are spelled all caps, where exactly to insert
+> '_' is guesswork.  camel_to_upper()'s guesses are bad enough in places
+> to make people override them with a 'prefix' in the schema.
+> 
+> Rewrite it to guess better:
+> 
+> 1. Insert '_' after a non-upper case character followed by an upper
+>    case character:
+> 
+>        OneTwo -> ONE_TWO
+>        One2Three -> ONE2_THREE
+> 
+> 2. Insert '_' before the last upper case character followed by a
+>    non-upper case character:
+> 
+>        ACRONYMWord -> ACRONYM_Word
+> 
+>    Except at the beginning (as in OneTwo above), or when there is
+>    already one:
+> 
+>        AbCd -> AB_CD
 
-Thanks for getting that clarified
+Maybe it's just me, but the exception "at the beginning" (in the sense
+of "after the first character") seems to be exactly where I thought
+"that looks strange" while going through your list below. In particular,
+I'd expect X_DBG_* instead of XDBG_*. I also thought that the Q_*
+spelling made more sense, though this might be less clear. But in case
+of doubt, less exceptions seems like a good choice.
 
-What's the status of a followup patch? We should fix this before the releas=
-e
+> +    # Copy remainder of ``value`` to ``ret`` with '_' inserted
+> +    for ch in value[1:]:
+> +        if ch.isupper() == upc:
+> +            pass
+> +        elif upc:
+> +            # ``ret`` ends in upper case, next char isn't: insert '_'
+> +            # before the last upper case char unless there is one
+> +            # already, or it's at the beginning
+> +            if len(ret) > 2 and ret[-2] != '_':
+> +                ret = ret[:-1] + '_' + ret[-1]
 
-Alistair
+I think in the code this means I would have expected len(ret) >= 2.
+
+Kevin
+
 
