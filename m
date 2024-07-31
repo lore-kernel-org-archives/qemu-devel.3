@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A1B5C3DA64
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 17:16:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEAD8C3DA64
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 17:22:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZCvA-0001ca-4r; Wed, 31 Jul 2024 13:15:28 -0400
+	id 1sZD1L-0006d5-Ux; Wed, 31 Jul 2024 13:21:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1sZCv0-0001bd-Df
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:15:20 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1sZCux-0004Ax-T3
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:15:18 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 46V98Gg9030656;
- Wed, 31 Jul 2024 17:15:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 935VHct2+spX1ffOkmBtDKjXidr5uYlYG9QsnyIvzqg=; b=W05yAZFJEL677RnF
- 8jjfXO4KtpsqQhd9KqBZF29iljUP28N3ic8kpWqTGuKLxW35RVi6Z48yDRiRUeFv
- slCBcBWXQGGnd9mm0ek3SWA81tirvUnn3Z3xO3b88UwxHAA/OHe5bCggjldCrzmH
- Uq00ORgKuMd6l27uDMUlZdkb8/NvcxLJykexBWs5YopeuwcO187plhqVKDeeVsun
- hyYOHSsL6WAyu+kYcgL9YQUXGND3DRCscxJ9L0RoIjDSIwTxltFWCAE9aZkioXh5
- dEHnrVHx+NoBZ/TdzZnrxIstEsq8smC1GPdNtJOPcCeQLQHzy78Ap53W/vT4TSmx
- deeYIQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com
- [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40ms43bxej-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 31 Jul 2024 17:15:10 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
- [10.47.97.35])
- by NALASPPMTA03.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id
- 46VHFACe031005
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 31 Jul 2024 17:15:10 GMT
-Received: from [10.110.37.171] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 31 Jul
- 2024 10:15:09 -0700
-Message-ID: <4dc9b238-bad7-4f13-9b22-73fd90914221@quicinc.com>
-Date: Wed, 31 Jul 2024 12:15:08 -0500
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sZD1I-0006bT-Us
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:21:49 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sZD1H-0005WW-8R
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 13:21:48 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-70d2d7e692eso4925344b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 10:21:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1722446504; x=1723051304; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RCtWkp2h4+ZqzyNCHoeT7jWpnNpXfSOyTIR15sX5mrM=;
+ b=VpUSSEr6Q8n1iDRZ8YBJVYxfbdj4dQeo9C0b2XYgzUebZBrO9FDgcwgsBo4R8HT4T4
+ WmFghaEJ7huDyKabaNcHklHapwj9mHZ56PH8BNGIF6vHy980CufKFpLjvniU97gtXhdf
+ BroWgydsCx5XT2rlW7+b6r2+bF/QkY4dAknEWO/cUjkZ9HpCuc8Dlv9NdQ7S+6A11J6d
+ T73acI8jm6wMKuVEZnbryRqCXYid0CN9i0DSQbYqJq3g8x3j1iuHd33bbjOqli255p3K
+ Z9EEeXR4j/IQF78kcHR+0Y9PzKS0mFo4iP3l0gQ/+hJAOXJMwWe8FlS5ORKREoHingdV
+ 29BA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722446504; x=1723051304;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RCtWkp2h4+ZqzyNCHoeT7jWpnNpXfSOyTIR15sX5mrM=;
+ b=xQ7TdxJceR7MqYrbao2jHICBfkWqXwVIiSKQJpuOie95S0jiRb2PrsahxcPPrSCWyJ
+ XXQE1QWd6WcTC44ImfTyvOu0rWC6AKj1j+AjCz0V6amSRgk3tTLQ/va6+YmgpEdR6oic
+ IblhOONfmQXgnQjyQZVogNOXEoNyEU8kTSh5ed6cWjc7VjnzrS9SOPFukwa2rqp2HGA5
+ OFLeexroIOIcKZD0n9cs4vMn6N1H1r2arqZgErgmYeub5ie8KFYZkPjCetokcta2YptU
+ GzZE6inNl6z5QqPH3ynqRMlKQi9NjlEHii1bGz5lj4gzVKqeRTi16l9fBcj7+V5O+TgJ
+ L7ug==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWhrO0qJwJs8643oVlhWsflYPUF4wIMUEcRM1pScOV6jIzBc17V3DgbFeq5OQz4zwNgDNJ1iFhZftkEGOkNO1FMQ1Ip2/o=
+X-Gm-Message-State: AOJu0YwwIIfMx/4WvuhCwKpuFMpj1MC0Qb6HALyNMo/nNdFmQ4v0voBk
+ 7I06YFVnDT+ako8KtZeGgldVpqF2b0E10zbtVCgSFEWZqiwbMvSjWjw6+Q2JQAcJV57So7ZtJQH
+ 3
+X-Google-Smtp-Source: AGHT+IGMhlTWOMok+0cc0b6AMeUzCTX9Wp4mPqO4drG+RVvGIS3uw0CJ+vneLSLAoqGoHuPUAFupsQ==
+X-Received: by 2002:a05:6a00:9a6:b0:70d:1b17:3c5e with SMTP id
+ d2e1a72fcca58-70ece9fadc5mr13539351b3a.6.1722446504381; 
+ Wed, 31 Jul 2024 10:21:44 -0700 (PDT)
+Received: from [192.168.68.110] ([177.197.107.101])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70ead712e1csm10220331b3a.78.2024.07.31.10.21.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 31 Jul 2024 10:21:43 -0700 (PDT)
+Message-ID: <5b2cc922-892f-4c51-92cf-d33e79d85829@ventanamicro.com>
+Date: Wed, 31 Jul 2024 14:21:39 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/hexagon/idef-parser: Remove self-assignment
-To: Peter Maydell <peter.maydell@linaro.org>, Brian Cain <bcain@quicinc.com>
-CC: Anton Johansson <anjo@rev.ng>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-References: <20230713120853.27023-1-anjo@rev.ng>
- <SN6PR02MB42058323403CE9291E40E005B837A@SN6PR02MB4205.namprd02.prod.outlook.com>
- <CAFEAcA_VttO0aEO6VBUAB4H9TVNH5tP5piZVq6F4Ao2MZF-UoA@mail.gmail.com>
+Subject: Re: [PATCH v5 11/13] hw/riscv/riscv-iommu: Add another irq for mrif
+ notifications
+To: Andrew Jones <ajones@ventanamicro.com>
+Cc: Jason Chien <jason.chien@sifive.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
+ frank.chang@sifive.com, tjeznach@rivosinc.com
+References: <20240708173501.426225-1-dbarboza@ventanamicro.com>
+ <20240708173501.426225-12-dbarboza@ventanamicro.com>
+ <8e54f48e-379b-42b8-8017-886ead154415@sifive.com>
+ <49fe48d5-42d0-46fc-899e-50960941c3a2@ventanamicro.com>
+ <20240731-30c03698cd1c889a4485e2b0@orel>
 Content-Language: en-US
-From: Brian Cain <quic_bcain@quicinc.com>
-In-Reply-To: <CAFEAcA_VttO0aEO6VBUAB4H9TVNH5tP5piZVq6F4Ao2MZF-UoA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240731-30c03698cd1c889a4485e2b0@orel>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
- signatures=585085
-X-Proofpoint-GUID: hzv8R-th3aRLxrcNAO87s3uwVP556iMX
-X-Proofpoint-ORIG-GUID: hzv8R-th3aRLxrcNAO87s3uwVP556iMX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-07-31_10,2024-07-31_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- impostorscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
- mlxlogscore=999 suspectscore=0 phishscore=0 priorityscore=1501
- clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2407310120
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=quic_bcain@quicinc.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,52 +107,60 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 7/31/2024 12:07 PM, Peter Maydell wrote:
-> On Thu, 13 Jul 2023 at 17:21, Brian Cain <bcain@quicinc.com> wrote:
+
+On 7/31/24 1:50 PM, Andrew Jones wrote:
+> On Wed, Jul 31, 2024 at 01:27:09PM GMT, Daniel Henrique Barboza wrote:
+>> Hi Jason,
 >>
 >>
->>> -----Original Message-----
->>> From: Anton Johansson <anjo@rev.ng>
->>> Sent: Thursday, July 13, 2023 7:09 AM
->>> To: qemu-devel@nongnu.org
->>> Cc: Brian Cain <bcain@quicinc.com>; peter.maydell@linaro.org
->>> Subject: [PATCH] target/hexagon/idef-parser: Remove self-assignment
+>> On 7/23/24 12:25 PM, Jason Chien wrote:
+>>> Hi Daniel,
 >>>
->>> WARNING: This email originated from outside of Qualcomm. Please be wary of
->>> any links or attachments, and do not enable macros.
->>>
->>> The self assignment is clearly useless, and @1.last_column does not have
->>> to be set for an expression with only a single token, so remove it.
->>>
->>> Reported-by: Peter Maydell <peter.maydell@linaro.org>
->>> Signed-off-by: Anton Johansson <anjo@rev.ng>
->>> ---
->>>   target/hexagon/idef-parser/idef-parser.y | 1 -
->>>   1 file changed, 1 deletion(-)
->>>
->>> diff --git a/target/hexagon/idef-parser/idef-parser.y b/target/hexagon/idef-
->>> parser/idef-parser.y
->>> index cd2612eb8c..a6587f5bcc 100644
->>> --- a/target/hexagon/idef-parser/idef-parser.y
->>> +++ b/target/hexagon/idef-parser/idef-parser.y
->>> @@ -802,7 +802,6 @@ rvalue : FAIL
->>>
->>>   lvalue : FAIL
->>>            {
->>> -             @1.last_column = @1.last_column;
->>>                yyassert(c, &@1, false, "Encountered a FAIL token as lvalue.\n");
->>>            }
->>>          | REG
->>> --
->>> 2.41.0
->> Reviewed-by: Brian Cain <bcain@quicinc.com>
->
-> Ping -- I just noticed that this patch never seems to have
-> made it upstream. Brian, could you pick it up?
->
-> (This fixes a Coverity issue: CID 976926.)
+>>> On 2024/7/9 上午 01:34, Daniel Henrique Barboza wrote:
+>>>> From: Andrew Jones <ajones@ventanamicro.com>
+>>>>
+>>>> And add mrif notification trace.
+>>>>
+>>>> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+>>>> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>>>> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+>>>> ---
+>>>>    hw/riscv/riscv-iommu-pci.c | 2 +-
+>>>>    hw/riscv/riscv-iommu.c     | 1 +
+>>>>    hw/riscv/trace-events      | 1 +
+>>>>    3 files changed, 3 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
+>>>> index 7b82ce0645..d7e5f20885 100644
+>>>> --- a/hw/riscv/riscv-iommu-pci.c
+>>>> +++ b/hw/riscv/riscv-iommu-pci.c
+>>>> @@ -81,7 +81,7 @@ static void riscv_iommu_pci_realize(PCIDevice *dev, Error **errp)
+>>>>        pci_register_bar(dev, 0, PCI_BASE_ADDRESS_SPACE_MEMORY |
+>>>>                         PCI_BASE_ADDRESS_MEM_TYPE_64, &s->bar0);
+>>>> -    int ret = msix_init(dev, RISCV_IOMMU_INTR_COUNT,
+>>>> +    int ret = msix_init(dev, RISCV_IOMMU_INTR_COUNT + 1,
+>>> The new interrupt is not marked as used with msix_vector_use().
+>>
+>> I took at look at what this patch is actually doing and, at least in the MRIF setup
+>> I have, it's not doing much because we're not hitting the MRIF path inside the
+>> emulation. So we're not hitting the trace and this extra MSI isn't being used.
+>>
+>> Drew is taking a look into it in the kernel side. Until we get a better idea on what's
+>> happening I'll remove this patch from the series. We can re-introduce it again later
+>> in this series or in the follow-up.
+> 
+> I recommend adding the trace to whatever patch introduces the MRIF path in
+> this series since we'll want the trace for testing regardless. If we need
+> another fix to this series for MRIFs then I'll post that separately on
+> top.
 
-Sorry about that!  Queued at https://github.com/quic/qemu/ hex.next -- 
-will include it in an upcoming PR.
+I'll add the trace in patch 3 (or 9).
 
+
+Daniel
+
+
+> 
+> Thanks,
+> drew
 
