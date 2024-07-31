@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8804C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 14:34:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C8EFC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 31 Jul 2024 14:36:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZAO7-0008TW-58; Wed, 31 Jul 2024 10:33:11 -0400
+	id 1sZARG-0004SM-1X; Wed, 31 Jul 2024 10:36:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZAO5-0008So-Sz
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 10:33:10 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1sZARE-0004Qz-I3
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 10:36:24 -0400
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZAO4-0001kY-B9
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 10:33:09 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5a2ffc346ceso8224838a12.1
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 07:33:05 -0700 (PDT)
+ id 1sZARB-0002do-Pq
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 10:36:24 -0400
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2eeb1ba0468so90117981fa.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 07:36:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722436384; x=1723041184; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2YCN/rAfJQlh0rVEFLX4lBzMCM/vq0DJ6IDayn0JoJk=;
- b=QEv5I7Les8IOpJIPCO70/M4vkARquEEn02KrP8Ib7QfHO6TBFPBy95BfibCUJaTm+F
- WiPGIT28l7lguYgJmB3fL54vewhsDERq8PVZngaANPydrnhaAE+D5W1bf7B+9TqcrVxn
- GfUXowuQ0e6Qzz5T6oimgrjY7XvQc9g7revoNzQplLBgLPH9p6Mf0Y0HsQlVyqcEV3kS
- V1gsfSneQg+LKPldFmQsHkkScT4281U91tRJSMr274xpzZfL7MAsnvT6GMs29NMjnmX9
- p982fzzUylDGcVBA4LJw+6l4a9Ir0X4F5I2kgF1rGE8DMLHQdkBPeYX8SAsJhYIM6FWS
- 8qNw==
+ d=linaro.org; s=google; t=1722436579; x=1723041379; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=WJFK5vyGGdcL3oMdoUv5FkVPSRek6mnMGxS1HmBeMPU=;
+ b=YRECnmuMwu3WIwSAO3kbncYFifNhmgdSfdfFJlZxDI+6gHeJyfEqs7A2CdbKLuah32
+ ut0MOgsp6ZmuDkybtZP+OZb+ZqDNflEm+0mtssOJMw2bgyi2h+r7O7M0Wcy+mzoe7HIl
+ 4YUIkQm9Ka0I82r4gP0LnPVBB2WAufGbrD+hekm/iyzSgcsBvQlI/ev2NWivtNuf2lTi
+ /EgEXp59eKW9rD73CFn6C/hBCDTtAlK9YplTJYQGlBp1Fn0x+MZZEuKXeEEoFlPa/VE/
+ OIhShZMeC/nPfJPKgJIT9hZZ2lXzP6zv28e5UrErtqdzGOddfQwK9vyGdsVJn0MZr8su
+ tMOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722436384; x=1723041184;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2YCN/rAfJQlh0rVEFLX4lBzMCM/vq0DJ6IDayn0JoJk=;
- b=clxNWLElrHmHjk1MDezYjQzc6UjidZRmoALh5GK4CHycuymRHSKbCHxBus8wQM2NUP
- QEuEhty0gslaj8ApwhX+f9RPRSTIjHEqwpaRcPjnsKRhlw65Nt6a/1W0X7p+3tP6DLya
- RF1N+DEy7a3nCLsDEzjKQM5mKEvn/XRxCq49iyiuuOis0cbB+NYqLPDILaG4lNiDjp12
- DhVbegnf0km/fq3iMKWHaPt501rHqfodUbZpfG7UGT/c9somxtoQA+3a844RbNkeXil1
- EHPGlENkh8G1Co7SXLda3ifeNq52E2FsLiLXAEOA9AEdcy9svqBCGkbJ6D6qvQS1IA1W
- BkUA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWffi1hP390alv01cD3BmK6kEFAqfxfFNeOmadg8cdyZHanaN2Yr0ihRP4hrTFg2VzWBOgoCThkqwTatmBHqwXt/8xxFNs=
-X-Gm-Message-State: AOJu0YyyLaLbF9qqwAoy0gb5tjB7hG5ALFVhzdGQrg7EWCbKjw6Tv54r
- hsv4wwCurYGk5iKpSfDt9hnchQ8w1o3jFZn3fgFcHUHaHLU/EzeULnyFKXIYXoT0bai+RQh8Apb
- TzShjQc+gQWpD5x5E7U2ZYkIuHhmL/SpfYqotqw==
-X-Google-Smtp-Source: AGHT+IF863RjCgYdVYznzmle4Jyr0l/hPNBqjAGaY9VOrzNlLECym8I2dhLnnqmpMEw5oeSeAV/jtnaqaxKF6i7f6eA=
-X-Received: by 2002:a05:6402:40d2:b0:5a1:f9bc:7f17 with SMTP id
- 4fb4d7f45d1cf-5b02010339bmr11547922a12.5.1722436384016; Wed, 31 Jul 2024
- 07:33:04 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240731132524.308273-1-philipp.reisner@linbit.com>
- <ZqpF6VoZgFsfhhl7@redhat.com>
-In-Reply-To: <ZqpF6VoZgFsfhhl7@redhat.com>
+ d=1e100.net; s=20230601; t=1722436579; x=1723041379;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WJFK5vyGGdcL3oMdoUv5FkVPSRek6mnMGxS1HmBeMPU=;
+ b=FOVr+MiWQFD2BLU7OgAjtQKZ9qYEqi9RCOmXVXGCkq+S99zn32TQHLFvUnY/O0dUjz
+ dj2ejPhLX0lmm79Vt5saEYkFp3mvLoYYoY9szfB64VOqFIrpmYBTEFgI29uq31Q5fO+j
+ i5i9PBBvU3zjagGqWrsa4Sm18aJIhBo1XPz8amw82XbbeKzyqvrwh8kLHNz7v2RMzY2M
+ 8zzbDuCRZ8xt1FfKqOZkiO1+MPQAJeLLyLXl339eRcXIoSVfkuiFzSiSYdoBJuKrDsen
+ bSXd58M4VyVdnxFyI3KqkG+uoOVy55tUKXFVjgmlV8VsfqjtdpZ6QfePA8VS8qu3avJB
+ RjLw==
+X-Gm-Message-State: AOJu0Yxog2F94A7QoacWx+Nfyi5Q6v0SSsN+2qa4H3L7a3eLiNCO2jIm
+ BnXasv6Flfauv64bArfs2v+Nt64HN/VHaQjW+VUQaPSo8BdiyvyEeoA8JCST7zjijpyIdpQQ9pk
+ G
+X-Google-Smtp-Source: AGHT+IGB7mMK33xZehqT8II59fUfIb5rhksh3a9J3lEFpghCharsuCFQO5Z5Q8S0Zt3oKZiJ47wgZA==
+X-Received: by 2002:a2e:9350:0:b0:2f0:2760:407c with SMTP id
+ 38308e7fff4ca-2f12ee42005mr97876241fa.30.1722436578936; 
+ Wed, 31 Jul 2024 07:36:18 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4282b89a86dsm23976025e9.1.2024.07.31.07.36.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 31 Jul 2024 07:36:18 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 31 Jul 2024 15:32:52 +0100
-Message-ID: <CAFEAcA9J37Z1JJb34zyRDo=ow0h1QgOq9bm10dCc0u5bMyQKpg@mail.gmail.com>
-Subject: Re: [PATCH] util: retry open() when it gets interrupted by a signal
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Philipp Reisner <philipp.reisner@linbit.com>, qemu-devel@nongnu.org, 
- Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, David Hildenbrand <david@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x533.google.com
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ John Snow <jsnow@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ "Richard W.M. Jones" <rjones@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Subject: [PATCH 0/7] block: Miscellaneous minor Coverity fixes
+Date: Wed, 31 Jul 2024 15:36:10 +0100
+Message-Id: <20240731143617.3391947-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,45 +94,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 31 Jul 2024 at 15:11, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
->
-> On Wed, Jul 31, 2024 at 03:25:24PM +0200, Philipp Reisner wrote:
-> > As with many syscalls, open() might be interrupted by a signal.
-> >
-> > The experienced logfile entry is:
-> >
-> > qemu-system-x86_64: -device virtio-blk-pci,bus=3Dpci.0,addr=3D0x7,drive=
-=3Dlibvirt-2-format,id=3Dvirtio-disk0,bootindex=3D2,write-cache=3Don,serial=
-=3D1b990c4d13b74a4e90ea: Could not open '/dev/drbd1003': Interrupted system=
- call
-> >
-> > Retry it until it is not interrupted by a signal.
->
-> As you say, many syscalls can be interruptted by signals, so
-> special casing open() isn't really a solution - its just
-> addressing one specific instance you happened to see.
->
-> If there are certain signals that we don't want to have a
-> fatal interruption for, it'd be better to set SA_RESTART
-> with sigaction, which will auto-restart a large set of
-> syscalls, while allowing other signals to be fatal.
+This patchset is a collection of fixes for minor Coverity reported
+issues. In all cases, there isn't a user-visible problem, but
+the Coverity issue pointed up somewhere where we could clean
+up the code or make it a bit more obvious to a human reader
+what the intent was.
 
-This is why we have the RETRY_ON_EINTR() macro, right?
-
-Currently we have some places that call qemu_open_old() inside
-RETRY_ON_EINTR -- we should decide whether we want to
-handle EINTR inside the qemu_open family of functions,
-or make the caller deal with it, and put the macro uses
-in the right place consistently.
-
-I agree that it would be nicer if we could use SA_RESTART,
-but presumably there's a reason why we don't. (At any
-rate code that's shared with the user-mode emulation
-has to be EINTR-resistant, because we can't force the
-user-mode guest code to avoid registering signal handlers
-that aren't SA_RESTART.)
+Only lightly tested (with "make check" and "make check-avocado").
 
 thanks
 -- PMM
+
+Peter Maydell (7):
+  block/vdi.c: Avoid potential overflow when calculating size of write
+  block/gluster: Use g_autofree for string in qemu_gluster_parse_json()
+  hw/block/pflash_cfi01: Don't decrement pfl->counter below 0
+  hw/ide/atapi: Be explicit that assigning to s->lcyl truncates
+  hw/block/fdc-isa: Assert that isa_fdc_get_drive_max_chs() found
+    something
+  hw/ide/pci.c: Remove dead code from bmdma_prepare_buf()
+  block/ssh.c: Don't double-check that characters are hex digits
+
+ block/gluster.c         |  6 +-----
+ block/ssh.c             | 10 ++++++----
+ block/vdi.c             |  2 +-
+ hw/block/fdc-isa.c      |  2 ++
+ hw/block/pflash_cfi01.c |  1 +
+ hw/ide/atapi.c          |  2 +-
+ hw/ide/pci.c            |  4 ----
+ 7 files changed, 12 insertions(+), 15 deletions(-)
+
+-- 
+2.34.1
+
 
