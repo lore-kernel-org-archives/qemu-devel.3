@@ -4,73 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57FAAC52D54
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 14:07:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B0A8C3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 14:07:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZWRd-0005ms-Nf; Thu, 01 Aug 2024 10:06:17 -0400
+	id 1sZWRi-00063L-KX; Thu, 01 Aug 2024 10:06:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sZWRZ-0005kV-9E
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 10:06:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1sZWRX-0006pc-PL
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 10:06:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722521171;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9enReR5JuFIrgnsIdk8Cd7I6rD+zZR0rzF/C7cWcVs4=;
- b=AMHDinvXazUGDa5e9RsCGYwAwbtymjfG1uCh8sAMyHZVIkVHUJ5VjWHp3C0CHbBhSyiYxX
- nyfX0952NoKGGO/g86UGvDtoWjKyLCuPShJZ1SK07i5E1gRVCU4TQ5ovCTlEUBrl7ivAwi
- AAn0JQGTt5s4y4tAF+kQSzN39zm6k/Y=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-364-fDjmYv-MOCi_ZtfmT_0rYA-1; Thu,
- 01 Aug 2024 10:06:06 -0400
-X-MC-Unique: fDjmYv-MOCi_ZtfmT_0rYA-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4D5E01955BFA
- for <qemu-devel@nongnu.org>; Thu,  1 Aug 2024 14:06:05 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.116])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2151E300019E; Thu,  1 Aug 2024 14:06:03 +0000 (UTC)
-Date: Tue, 30 Jul 2024 12:53:45 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Hanna Czenczek <hreitz@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S . Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH v2 1/2] virtio: Allow .get_vhost() without vhost_started
-Message-ID: <20240730165345.GA650820@fedora.redhat.com>
-References: <20240723163941.48775-1-hreitz@redhat.com>
- <20240723163941.48775-2-hreitz@redhat.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="p4Rs4p5yfkuMd4ZM"
-Content-Disposition: inline
-In-Reply-To: <20240723163941.48775-2-hreitz@redhat.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_24_48=1.34,
- DKIMWL_WL_HIGH=-0.131, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1sZWRe-0005s1-TW
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 10:06:19 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1sZWRd-0006qg-9U
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 10:06:18 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1fc56fd4de1so16237805ad.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 07:06:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1722521175; x=1723125975; darn=nongnu.org;
+ h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bxeg5KXRrlKgteP3D/ZipXV3kyjL5x4E+NzJSexClU8=;
+ b=KnWKNITAelWktRSBR0BVM82HKesRzvEI3F1fq0hAXaxaSB+NImsMBMiMAfIbFviyiM
+ NiFh73ACdoTL3xzjlOTqfO7apLtc7qDJ0/l3pPpXKsXAcTv4nKM1czwHm6O8dZgMiEf4
+ kjDD6gnCGboFxewgQPNGOwhY1LijGbaVK/CahQ2LM2Pm5S3YU5/RBMYSOD+aymsdVuvH
+ 3/Cce19CumUzzjqmLsmB8e8CM3gD9FLMBt2Qc1qfegu8nYT3OiVdEaJpYIAwYKRJSUeG
+ R9N5Jr6KFpmelRlD8zfmSOSaVGJ6r3q1sxUei7D2jUrq3zpCySyADotLUkk+wJiX3VFh
+ 4Wig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722521175; x=1723125975;
+ h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bxeg5KXRrlKgteP3D/ZipXV3kyjL5x4E+NzJSexClU8=;
+ b=QJTxbr2WtkhWfk0d9U153EUNITc0ulsFN8DkKv7B5wcugHCySzO23D2OE0B2w7k9cb
+ 38IggM9wHmMEvo3+Bq7kdM4BchDKqbc5BcKPZhfndjVYSUiPFsXefpanHk4StvqqAIq+
+ Vw+HXmQR3z5XRKiZ9aN1VIsVN1y2MGstl0LxaE9FAGtBaWgjz/o88KpGZndMcFsBYcrm
+ voaGbDphNFoCGioHT/EoeJ2OcKGlcJawyb7Mxv7AhE78Hj50VtGpDN8baI5aQ28n7rDW
+ t5nduVVECVTOGkX1h04TcR3exAqBvLkqwEbD1rk87iAaeTuZft1gXqX2CuV79uNXBlKl
+ iLnA==
+X-Gm-Message-State: AOJu0YyCS4cwaTgXIN0Q4b1IxBsCte9/hiJ6xSVCZKI0Mtk603M/QERI
+ cfGCfjvP6BCr9qmqHaAC5bGDxZwbxCDAq4FpcR6WObSWkxvkezLIMFbzdOz5CPPgzBZLDckRDq7
+ 443dWlJwGOQPwBTllG7PHw+6JmqMibHp/q/lnY1YoARXES+FU692C+cCWd3kX8bs0w8jml/DYfS
+ FFcFKE64h+JMYHmTIPJQ+s+gRzS/C1vVNfNMpW
+X-Google-Smtp-Source: AGHT+IHRtWnk/YcpfiQatbyDq1rrOeIgO96EcGOIEfQRcDQtX/Sbzp8J/7XUU/nHS+4f9h66pqmRMg==
+X-Received: by 2002:a17:902:dac3:b0:1fa:2b11:657d with SMTP id
+ d9443c01a7336-1ff57b827c9mr1048365ad.10.1722521174975; 
+ Thu, 01 Aug 2024 07:06:14 -0700 (PDT)
+Received: from hsinchu26.internal.sifive.com
+ (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1fed7cc0213sm142631275ad.72.2024.08.01.07.06.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 Aug 2024 07:06:14 -0700 (PDT)
+From: Jim Shu <jim.shu@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Jim Shu <jim.shu@sifive.com>
+Subject: [PATCH v2 0/3] Several fixes of AXI-ethernet/DMA
+Date: Thu,  1 Aug 2024 22:06:06 +0800
+Message-Id: <20240801140609.26922-1-jim.shu@sifive.com>
+X-Mailer: git-send-email 2.17.1
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=jim.shu@sifive.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,49 +91,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+v2:
+- Remove redundant RCW1_RX checking in enet_write()
+- Remove qemu_set_irq() in DeviceState::reset()
 
---p4Rs4p5yfkuMd4ZM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Fix txlen value in the descriptor status field, DMA error handling,
+and ethernet/DMA reset flow.
 
-On Tue, Jul 23, 2024 at 06:39:39PM +0200, Hanna Czenczek wrote:
-> Historically, .get_vhost() was probably only called when
-> vdev->vhost_started is true.  However, we now decidedly want to call it
-> also when vhost_started is false, specifically so we can issue a reset
-> to the vhost back-end while device operation is stopped.
->=20
-> Some .get_vhost() implementations dereference some pointers (or return
-> offsets from them) that are probably guaranteed to be non-NULL when
-> vhost_started is true, but not necessarily otherwise.  This patch makes
-> all such implementations check all such pointers, returning NULL if any
-> is NULL.
->=20
-> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-> ---
->  include/hw/virtio/virtio.h  |  1 +
->  hw/display/vhost-user-gpu.c |  2 +-
->  hw/net/virtio-net.c         | 19 +++++++++++++++++--
->  hw/virtio/virtio-crypto.c   | 18 +++++++++++++++---
->  4 files changed, 34 insertions(+), 6 deletions(-)
+Jim Shu (3):
+  hw/dma: xilinx_axidma: Correct the txlen value in the descriptor
+  hw/dma: xilinx_axidma: Send DMA error IRQ if any memory access is
+    failed
+  hw/net: xilinx_axienet: Fix DMA RX IRQ if ethernet disable RX
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+ hw/dma/trace-events     |  1 +
+ hw/dma/xilinx_axidma.c  | 74 +++++++++++++++++++++++++++++------------
+ hw/net/xilinx_axienet.c | 71 +++++++++++++++++++++++----------------
+ 3 files changed, 95 insertions(+), 51 deletions(-)
 
---p4Rs4p5yfkuMd4ZM
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmapGpkACgkQnKSrs4Gr
-c8i36Qf/RKjv4WcB2GA8BlTtC8Vb7vRBpCQJGGp5ScO9ksaTelp9a/ZeYCrNJx7b
-vIy0lKWTD6xyZ1Jjf6aO89h5rBvzvuYNEEzVz89N3VtM4oQWzXxD7D1Z/FFYDIQE
-WaRTn9qK7H+JB6Vhxs8K02VSC3dj19nEfj2eXhaV6D39MGL9MsZLiga4UgDQq5Xe
-8eeYDcO9zF6P7UFMD086fIVgrsdznQ7VSU8gQfnE6MURI7W50iY0DFMhHYmoVVap
-Dkuw98BUi/z1oEW1/utCK9LtWchB8nos6ysM+lr1R4pZVJkh7tD2FPDMIU2Pad0/
-GqUlr1FpRtIb97CHyESmN29mbnkgWA==
-=qE3j
------END PGP SIGNATURE-----
-
---p4Rs4p5yfkuMd4ZM--
+-- 
+2.17.1
 
 
