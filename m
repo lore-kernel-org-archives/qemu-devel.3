@@ -4,62 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2814C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 12:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36829C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 12:58:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZVMR-0000YM-1b; Thu, 01 Aug 2024 08:56:51 -0400
+	id 1sZVNK-0004Bu-Vo; Thu, 01 Aug 2024 08:57:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sZVMO-0000Qm-Pv; Thu, 01 Aug 2024 08:56:48 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sZVMN-0000L7-2s; Thu, 01 Aug 2024 08:56:48 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 58ABF6125E;
- Thu,  1 Aug 2024 12:56:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A953C4AF09;
- Thu,  1 Aug 2024 12:56:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1722517003;
- bh=yUOmIatsa2JxbuH+5SkDj8HGMvb+bCebLi05n30xnAk=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=ZJmYrJzN4tAnymj5rYqbuo7vESrmbmpWK93FqK7UY+T3aU26iBz1tMvEvtdWu7pKY
- 4X/yWHt8lYHKWrsYo1KkRgrJdjgf8buhYSDnaQXlrKKo6zbugs3y5VigRBUHW51ebi
- mxRlWMz+PgMR1sXXNSPjEv+Y0GEznSW3qxvgA3BAehJ95JMwUaXTn6kW4Z9VG+4u1x
- 2SMSbY2fRmUT7vAJUEwUqkG5avwLE4gRGo9iIgNC7CPysortKI2QHMxXEwQpIXcNVE
- pqDo2XyZSu7PbNzke8huMKfs2YIsmEGIdfj5JiHf0MhY+mvr88DR3g5j0WKtLLiikm
- X9E67YJQ5n8PQ==
-Date: Thu, 1 Aug 2024 14:56:37 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>
-Cc: Shiju Jose <shiju.jose@huawei.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, Dongjiu Geng
- <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 3/7] acpi/ghes: Support GPIO error source.
-Message-ID: <20240801145637.03c34fd3@foz.lan>
-In-Reply-To: <20240730104028.4f503d91@imammedo.users.ipa.redhat.com>
-References: <cover.1721630625.git.mchehab+huawei@kernel.org>
- <64a31a09fe6b11bebad1c592ad20071a9d93fee5.1721630625.git.mchehab+huawei@kernel.org>
- <20240730104028.4f503d91@imammedo.users.ipa.redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZVN9-0003Jm-DV
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 08:57:38 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZVN6-0000Oi-9U
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 08:57:35 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3684e8220f9so1142927f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 05:57:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722517049; x=1723121849; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=W9BTOh2poU6JigM03HRrC0PUte6Uu+QGv/OjvnAPoog=;
+ b=ZXbyjyjC3ZIj1HefxCSFZRZRFv+11plox0FSqbujo/Ynj+19JV6JeWe/L+6UtIMruo
+ VlSaZsGHORTtDNanF85joXic/MqT756EoJ4qgoz/Wrf738/HxqNezZzuDk5YBsoTwKi7
+ 33BnsuD00Ax3PRE0i9e29PP2raQkJydeGOnhiiJxYoyV94NCSBlhFDk/o1/J1VoqpcSO
+ S98ihta+qG0YhI64pxY5cAt9HWLWDLBF+TxPikOouvwgkZss4RiJcVr4O0NyK4LYak+o
+ LBKqmZHOv2Cf+UHBlDVYwnLlYYkljtCyxRJqZL+HySDo3w7mUeNjqyn8s9h0gIQbVxga
+ xSGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722517049; x=1723121849;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=W9BTOh2poU6JigM03HRrC0PUte6Uu+QGv/OjvnAPoog=;
+ b=AtqgJL2MYgSCDU5SHapBfS5dKU0B4VzBBabJAGS4Rm28ukaSWhwsC6Yc7g/k2hbFog
+ BbQmDVbPc8NiujX9urQBiNvu71G9AJbbDyRAGqOWXwQoK436kb8HO2K1F/AvlBS9l8ui
+ Jewm/BjqxEkUWerdP+Kev4S4NB38UPB9VCqah/ppO6dZcd2zdN63QpbOWtX37vr4YMMG
+ L+RIrd5rUE/aDNTCelBm9e3s2SQHUM/WgVa8XelUvnYLtUSSoFTbfCRughe4W4FmDFgQ
+ 6Ngn0S7bLuyeaBOrRb3WuyIKzo0n0C2z/1nX4TjOyNM6VD1psBnxW3yabAm8wIv8U/Y5
+ xmgQ==
+X-Gm-Message-State: AOJu0YzHJeyLk5+9Qlfv9RCpqx0eJuKKwYT+P7Yebuo/+PXMD1S0TIrD
+ z+/Du06oR2r80Gj0rX8bdLvcD55JraRnHkZ/j3wT2JUSJg06w3xz45xYBfd0wWk=
+X-Google-Smtp-Source: AGHT+IFff809S2Cleb/DVo+qwAck9cEgo3thORGHzF3ijxw5uiish8tFPFDDeHTT4mwpcGte0MOZtw==
+X-Received: by 2002:a5d:6509:0:b0:362:4679:b5a with SMTP id
+ ffacd0b85a97d-36bb35c1044mr1423393f8f.16.1722517049398; 
+ Thu, 01 Aug 2024 05:57:29 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.130.148])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36b367d95dfsm19358613f8f.35.2024.08.01.05.57.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 Aug 2024 05:57:28 -0700 (PDT)
+Message-ID: <a3b0ebf6-47ca-4aad-9489-16458ffd6ff3@linaro.org>
+Date: Thu, 1 Aug 2024 14:57:25 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/10] tests/avocado/kvm_xen_guest.py: cope with asset RW
+ requirements
+To: Cleber Rosa <crosa@redhat.com>
+Cc: qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Radoslaw Biernacki <rad@semihalf.com>, Paul Durrant <paul@xen.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ Beraldo Leal <bleal@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ David Woodhouse <dwmw2@infradead.org>
+References: <20231208190911.102879-1-crosa@redhat.com>
+ <20231208190911.102879-7-crosa@redhat.com>
+ <20efca0c-982c-4962-8e0c-ea4959557a5e@linaro.org>
+ <CA+bd_6K5S9yrD6hsBsTmW4+eJpPsquE8Ud9eHZzptUwDrHcpeQ@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CA+bd_6K5S9yrD6hsBsTmW4+eJpPsquE8Ud9eHZzptUwDrHcpeQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,62 +108,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Tue, 30 Jul 2024 10:40:28 +0200
-Igor Mammedov <imammedo@redhat.com> escreveu:
+On 1/8/24 05:30, Cleber Rosa wrote:
+> On Mon, Dec 11, 2023 at 11:32 AM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+>>
+>> On 8/12/23 20:09, Cleber Rosa wrote:
+>>> Some of these tests actually require the root filesystem image,
+>>> obtained through Avocado's asset feature and kept in a common cache
+>>> location, to be writable.
+>>>
+>>> This makes a distinction between the tests that actually have this
+>>> requirement and those who don't.  The goal is to be as safe as
+>>> possible, avoiding causing cache misses (because the assets get
+>>> modified and thus need to be dowloaded again) while avoid copying the
+>>> root filesystem backing file whenever possible.
+>>
+>> Having cache assets modified is a design issue. We should assume
+>> the cache directory as read-only.
+>>
+> 
+> I agree those files should not be modified, but I wonder if you
+> thought about any solution to this? Given that the same user writes
+> (downloads) those files, do you think setting file permissions between
+> the download and the use of the files should be done?
 
-> > diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-> > index 674f6958e905..4f1ab1a73a06 100644
-> > --- a/include/hw/acpi/ghes.h
-> > +++ b/include/hw/acpi/ghes.h
-> > @@ -58,6 +58,7 @@ enum AcpiGhesNotifyType {
-> >  
-> >  enum {
-> >      ACPI_HEST_SRC_ID_SEA = 0,
-> > +    ACPI_HEST_SRC_ID_GPIO = 1,  
-> is it defined by some spec, or just a made up number?
+We want to share a cachedir on development hosts with multiple
+developers. OK to alter a downloaded file before adding it to
+the cache; but then once a file is added/hashed it shouldn't be
+modified IMO.
 
-I don't know. Maybe Jonathan or Shiju knows better, as the original patch
-came from them, but I didn't find any parts of the ACPI spec defining the
-values for source ID.
+So far this directory is group=RW but we like the ability to track
+a read-only directory (like owned by a particular user) and adding
+missing assets to current user cachedir, to avoid duplication of
+files and waste of network transfer.
 
-Checking at build_ghes_v2() implementation, this is used on two places:
+> That can make the management of the cache (such as pruning it) either
+> require undoing the restriction or being done by a super user.
+> 
+> Anyway, just curious.
+> 
+> Regards,
+> - Cleber.
+> 
 
-1. as GHESv2 source ID:
-    /*
-     * Type:
-     * Generic Hardware Error Source version 2(GHESv2 - Type 10)
-     */
-    build_append_int_noprefix(table_data, ACPI_GHES_SOURCE_GENERIC_ERROR_V2, 2);
-    /* Source Id */
-    build_append_int_noprefix(table_data, source_id, 2);
-    /* Related Source Id */
-    build_append_int_noprefix(table_data, 0xffff, 2);
-
-as an address offset:
-
-    address_offset = table_data->len;
-    /* Error Status Address */
-    build_append_gas(table_data, AML_AS_SYSTEM_MEMORY, 0x40, 0,
-                     4 /* QWord access */, 0);
-    bios_linker_loader_add_pointer(linker, ACPI_BUILD_TABLE_FILE,
-        address_offset + GAS_ADDR_OFFSET, sizeof(uint64_t),
-        ACPI_GHES_ERRORS_FW_CFG_FILE, source_id * sizeof(uint64_t));
-
-So, if I had to guess, I'd say that this was made up, in a way that
-the size of the table will fit just two sources, starting from zero.
-
-So, I'll change the code to just:
-
-	enum {
-            ACPI_HEST_SRC_ID_SEA = 0,
-            ACPI_HEST_SRC_ID_GPIO, 
-	    /* future ids go here */
-	    ACPI_HEST_SRC_ID_RESERVED,
-	};
-
-To remove the false impression that this could be originated from the
-spec.
-
-Thanks,
-Mauro
 
