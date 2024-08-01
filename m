@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F9FAC3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 21:50:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF3B2C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 21:51:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZdgb-0002MB-Ty; Thu, 01 Aug 2024 17:50:14 -0400
+	id 1sZdgd-0002PT-5V; Thu, 01 Aug 2024 17:50:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1sZd37-0006Jg-EL; Thu, 01 Aug 2024 17:09:28 -0400
+ id 1sZdYn-0005c2-1T; Thu, 01 Aug 2024 17:42:09 -0400
 Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <outgoing@sr.ht>)
- id 1sZd35-0002Nm-1V; Thu, 01 Aug 2024 17:09:25 -0400
+ id 1sZdYk-0001f4-5K; Thu, 01 Aug 2024 17:42:08 -0400
 DKIM-Signature: a=rsa-sha256; bh=UkruwxpzGN0nWml852+v7xpPKHyhVVIZCJ8N7KBWdEc=; 
  c=simple/simple; d=git.sr.ht; h=From:Date:Subject:Reply-to:To;
- q=dns/txt; s=20240113; t=1722546557; v=1;
- b=GUGyFzhUZz063e25UxUiXQWHa0jtbIGLAqA+SObN35od1suSBVp5mR9XF+DotxbFiR+tvLKu
- ddxW5x5i22XczRYvCI4W5DvfocHdNiEx9T94XL72iR+qF79X2nwafOitRXZwMRiUQlBzy99Sm6i
- oHl/t0zoQNFlBHGdfsCy7d8X8X2Tv/7xiGOTo5K/RwBmE36RpJ1/VUTDCrh3L3T5oTAP7p+0foa
- W27xE8NwxnDwuLdurjBYsPQM9Oj5MwuRNvc5hQrxEV/xuf1CmTbcEAYBCs4JgBz2xkXs731yyHN
- anBaNBj2QtEiooKGqmJKjV2NhNJ1aH7L1NtOq2EPHbTAw==
+ q=dns/txt; s=20240113; t=1722548523; v=1;
+ b=A1T+o2bcUkLdcso2OAw/NNR3mcMWXAX6LJfoxjvFiAwmVhu7p7IhusWzH/doagoP3hQZXjKI
+ tJtyY4yVbbn2e8p9mEpKXpPCJjI83kQNKDgmTk46ceYoSHSQ1C0fcUQWOJQZwh0L3GlWtku2//A
+ 5LmIPRU371pUMlWGkXwdaxPn91+yiPOV5cD5vXwYvF8ungRLvNRW3UQyg86kszB2W/zpFmuKSqJ
+ 0urccIcMompil4BNjdZSSzMCqiCqPj7c3nyW6iHd01lVIC6E+X/iSavIBYm/wj19t+EtKOkV253
+ Vuo2k6zyDNUVTQzgH+HAzi8ElGsnU/KQJSvAvoHXnS0sA==
 Received: from git.sr.ht (unknown [46.23.81.155])
- by mail-a.sr.ht (Postfix) with ESMTPSA id AC1E3201D3;
- Thu,  1 Aug 2024 21:09:17 +0000 (UTC)
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 1B1CE2026C;
+ Thu,  1 Aug 2024 21:42:03 +0000 (UTC)
 From: ~arichardson <arichardson@git.sr.ht>
 Date: Thu, 01 Aug 2024 13:22:57 -0700
 Subject: [PATCH qemu] target/arm: add support for 64-bit PMCCNTR in AArch32
  mode
-Message-ID: <172254655764.30961.6353738068636770908-0@git.sr.ht>
+Message-ID: <172254852305.13451.4513785887599072710-0@git.sr.ht>
 X-Mailer: git.sr.ht
 To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="utf-8"
