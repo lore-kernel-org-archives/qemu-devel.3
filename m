@@ -4,90 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD2E8C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 15:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F54FC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 15:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZXSU-0005zF-2p; Thu, 01 Aug 2024 11:11:14 -0400
+	id 1sZXTM-0007Hs-0o; Thu, 01 Aug 2024 11:12:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZXSR-0005vi-Um
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:11:12 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZXSP-0001NP-8y
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:11:11 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-428141be2ddso46663825e9.2
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 08:11:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722525067; x=1723129867; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LtzYU4EAQ/64KGY5dkVWVMjhw64MBBfi7ihRWhb5tSM=;
- b=Ik4s2WVcB1A4mUjRRvlXiYthX8K/gdpiXrvjbU0MhZf6LVnrbtupyppDrOqRV+xCGU
- Xp230DkwkIqb7qkCHKPOV4K0irVfPOB+1kvbVknp2xis878aSPRSHtoxwj3rYGH8ExaC
- QYuFPJ5EsUIyvT7udT8RMsMhsr401Kqpxda/1O/Oxy+aLSZ2LIVweyV/vveB11X5zvkV
- /epbGvs1ntulzF+orIvU8Pfdj3xkZ1skmt03RlE84lsjeVfCRKPIxBYuOTZmkF9/Wz4J
- B2dKPlI2512vLe52vAlKax1ADfEOgPA7r2hT/+xtcVOJUN9SyOpmC2cGifjak5z8RdzK
- PPmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722525067; x=1723129867;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LtzYU4EAQ/64KGY5dkVWVMjhw64MBBfi7ihRWhb5tSM=;
- b=VqfCTQp8utYP5PvYLyVEeJnmJCK40ZTCFC/O2TXwyPz2H3ezZP2K+WSCKyKAdiXUS1
- 6T548gnRU4KQ+Uzj1YRuqvp7wNUTDd0Q6YFjzSMgzdWN8ebELTtxeRVvypyBkQ1I+4N9
- ugNBt15b6AoS87+Mw14iNqQSyI3aE2B7QpxuPCYNjWGCnRnzaZMGoPjRGT2lku7Otjie
- Ky65dVZCn8SRUQo0E2UqVaT/iEBrCZUUXMBbfOLU7D8YYTepCdD2hFBxBS14hndVMYRb
- 58NTKjTmMh1VSuGnU0ayFpEVL2Gj8og8gGHzLYexndfg4GvzgdXHAW6BGeXYUqzt4aAf
- 5SDg==
-X-Gm-Message-State: AOJu0YwVTee0q7jmr8EK8ISx7jJygfhbZjPwYhT/aqs0bFmAawMz0o8y
- wV2iyROv4YCyGmf/A2FZro+Rwdo+WyI/9RnLNUwLt2rbC19LrK5gFjXspnwGD7s=
-X-Google-Smtp-Source: AGHT+IEeK37Y1i03cyHBJ6frJWV8rtiOL7azULrW4Vn5ikRZcdvVLYmNzuJ7tK4Xrse9YJO4EfrtYg==
-X-Received: by 2002:a05:6000:4595:b0:368:6678:f792 with SMTP id
- ffacd0b85a97d-36bbc16101fmr82278f8f.39.1722525067146; 
- Thu, 01 Aug 2024 08:11:07 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.130.148])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b368638fbsm19512217f8f.103.2024.08.01.08.11.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Aug 2024 08:11:06 -0700 (PDT)
-Message-ID: <b6cd444d-a530-43e8-93ce-0900c6c7c484@linaro.org>
-Date: Thu, 1 Aug 2024 17:11:03 +0200
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1sZXTL-0007F1-3q
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:12:07 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1sZXTH-0002Ij-S6
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:12:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1722525124; x=1754061124;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=jms0HdxrV1igDnOvzVyDB2B7twRaKKIogkK1DcUxunI=;
+ b=AZRecB0Hk23GCBRRlWGcR4fJNmnVHFcgtWDDre8MpqjfUjF51VLliTuO
+ sZSvmPCW5f9bJs1ardCVU+kTdBejt+dKfZt8VmKZiGNUNz5gNxe57YQ06
+ Z9qBAuQYjVCUqF9N284FQzpfvKTNqpvbyNB/EX0N67rrcHvtLVEEs6i/O
+ mYo6vSMrmmZCiBTo0k0JHAoipdmiyNx/ZMvAMvr6bT+9XFqFxoFHozW0u
+ kl6AATXOupqg55l1yA1VVwsOfKVxWjsrrlpqWWNNmwx6jZIDCAbDf/tvU
+ /+/t5pdzQ7h2HlTsD6P7K0OLJHDCwzToLSBSmoj5QpImRCOwzHiUC6hqv w==;
+X-CSE-ConnectionGUID: jIZ7MFYmTli3BZrzaF11Iw==
+X-CSE-MsgGUID: ZuS6C615R4iVN7z37KhfTA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11151"; a="20304572"
+X-IronPort-AV: E=Sophos;i="6.09,254,1716274800"; d="scan'208";a="20304572"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Aug 2024 08:12:00 -0700
+X-CSE-ConnectionGUID: 5C0CCv3NTpe8k19GRnSdCg==
+X-CSE-MsgGUID: dJ9BWU3BT86WznnO2sNymQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,254,1716274800"; d="scan'208";a="55147617"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.26])
+ ([10.124.240.26])
+ by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Aug 2024 08:11:56 -0700
+Message-ID: <e9f61d7d-2f72-4644-ba9f-241672d27cda@intel.com>
+Date: Thu, 1 Aug 2024 23:11:51 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 16/24] tests/functional: Convert the riscv_opensbi
- avocado test into a standalone test
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-ppc@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair.francis@wdc.com>
-References: <20240730170347.4103919-1-berrange@redhat.com>
- <20240730170347.4103919-17-berrange@redhat.com>
- <9fbf2f80-c7df-4819-8f74-c7ce75dc70a5@linaro.org>
- <42fb9582-9215-4ccc-bede-0c4f03fffd4c@linaro.org>
- <Zqte2ySm_scvu17t@redhat.com>
+Subject: Re: [PATCH v1] target/i386: Always set leaf 0x1f
+To: Igor Mammedov <imammedo@redhat.com>, Manish <manish.mishra@nutanix.com>
+Cc: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org,
+ berrange@redhat.com, zhao1.liu@intel.com, pbonzini@redhat.com,
+ bob.ball@nutanix.com, prerna.saxena@nutanix.com
+References: <20240724075226.212882-1-manish.mishra@nutanix.com>
+ <20240724110004.389c1a0c@imammedo.users.ipa.redhat.com>
+ <21ca5c19-677b-4fac-84d4-72413577f260@nutanix.com>
+ <6e65dbb2-461e-44f4-842c-249c7b333885@intel.com> <Zqn6mNuCH4/HJoO/@lent>
+ <bda03736-ade0-46a9-977f-1ae368374555@intel.com>
+ <d7de1729-e497-4913-be8e-8938e83b3a2a@nutanix.com>
+ <20240801122537.4307ea77@imammedo.users.ipa.redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Zqte2ySm_scvu17t@redhat.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20240801122537.4307ea77@imammedo.users.ipa.redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,67 +93,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/24 12:09, Daniel P. Berrangé wrote:
-> On Thu, Aug 01, 2024 at 09:00:36AM +1000, Richard Henderson wrote:
->> On 7/31/24 22:56, Philippe Mathieu-Daudé wrote:
->>> On 30/7/24 19:03, Daniel P. Berrangé wrote:
->>>> From: Thomas Huth <thuth@redhat.com>
->>>>
->>>> The avocado test defined test functions for both, riscv32 and riscv64.
->>>> Since we can run the whole file with multiple targets in the new
->>>> framework, we can now consolidate the functions so we have to only
->>>> define one function per machine now.
->>>>
->>>> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
->>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>>> ---
->>>>    tests/avocado/riscv_opensbi.py         | 63 --------------------------
->>>>    tests/functional/meson.build           |  8 ++++
->>>>    tests/functional/test_riscv_opensbi.py | 36 +++++++++++++++
->>>>    3 files changed, 44 insertions(+), 63 deletions(-)
->>>>    delete mode 100644 tests/avocado/riscv_opensbi.py
->>>>    create mode 100755 tests/functional/test_riscv_opensbi.py
+On 8/1/2024 6:25 PM, Igor Mammedov wrote:
+> On Thu, 1 Aug 2024 15:36:10 +0530
+> Manish <manish.mishra@nutanix.com> wrote:
+> 
+>> On 31/07/24 9:01 pm, Xiaoyao Li wrote:
+>>> !-------------------------------------------------------------------|
+>>>   CAUTION: External Email
 >>>
->>> Please squash:
+>>> |-------------------------------------------------------------------!
 >>>
->>> -- >8 --
->>> diff --git a/MAINTAINERS b/MAINTAINERS
->>> index 98eddf7ae1..a906218f9d 100644
->>> --- a/MAINTAINERS
->>> +++ b/MAINTAINERS
->>> @@ -336,6 +337,7 @@ F: include/hw/riscv/
->>>    F: linux-user/host/riscv32/
->>>    F: linux-user/host/riscv64/
->>>    F: tests/tcg/riscv64/
->>> +F: tests/functional/test_riscv_opensbi.py
+>>> On 7/31/2024 4:49 PM, John Levon wrote:
+>>>> On Wed, Jul 31, 2024 at 03:02:15PM +0800, Xiaoyao Li wrote:
+>>>>   
+>>>>>> Windows does not expect 0x1f to be present for any CPU model. But
+>>>>>> if it
+>>>>>> is exposed to the guest, it expects non-zero values.
+>>>>>
+>>>>> Please fix Windows!
+>>>>
+>>>> A ticket has been filed with MSFT, we are aware this is a guest bug.
+>>>>
+>>>> But that doesn't really help anybody trying to use Windows right now.
+>>>
+>>> For existing buggy Windows, we can still introduce
+>>> "cpuid-0x1f-enforce" but not make it default on.
+>>>
+>>> People want to boot the buggy Windows needs to opt-in it themselves
+>>> via "-cpu xxx,cpuid-0x1f-enforce=on". This way, we don't have live
+>>> migration issue and it doesn't affect anything.
 >>
->> It seems worth taking this opportunity to add per-target subdirs of
->> tests/functional/, so that we don't have to list every individual test in
->> MAINTAINERS.
 >>
->> Surely one
->>
->> F: tests/functional/riscv/
->>
->> etc, is actually maintainable...
+>> Yes, that makes sense, I will send a updated patch by tomorrow if no one
+>> has any objection with this.
 > 
-> Either that or wildcard the filenames
+> I'd rename it to
+>     x-have-cpuid-0x1f-leaf
+> (x-) to reflect that it's not stable/maintained and subject
+> to be dropped in future
 > 
->   F: tests/functional/test_riscv_*
-> 
-> 
-> but subdirs matching the target is probably a little nicer to really
-> encourage people to follow conventions more strictly. We would also
-> need a "tests/functional/common/" for tests which aren't target specific
+> Also please clearly spell out that it's a temporary workaround for ...
+> in commit message.
 
-Hmm I'm a bit reluctant to both suggestions. Various files are
-added to cover a feature which ends being tested on various archs.
+I have a patch at hand, to introduce enable_cpuid_0x1f similar as 
+enable_cpuid_0xb, for TDX:
 
-Once I wanted to use Avocado tags like GitLab labels, and keep a
-file where developers subscribe to tags; doing the parsing and
-label to developer conversion in Python (or Rust), and having a
-./get_maintainer.sh calling both the Perl one and anything we can
-add in Python/Rust.
+https://github.com/intel-staging/qemu-tdx/commit/de08fd30926bc9d7997af6bd12cfff1b998da8b7
 
-That said, wildcard pattern is a simpler start.
+It is not a temporary solution. So I would suggest to drop (x-).
+If no objection, I think Manish can start from my patch and it only 
+misses a property definition for windows case:
+
+   DEFINE_PROP_BOOL("cpuid-0x1f", X86CPU, enable_cpuid_0x1f, false);
+
+
+
+> 
+>>
+>>>   
+>>>> regards
+>>>> john
+>>
+>>
+>> Thanks
+>>
+>> Manish Mishra
+>>
+> 
+
 
