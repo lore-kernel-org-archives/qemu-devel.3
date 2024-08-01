@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B7BCC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 15:03:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C52ADC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 15:04:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZXKn-000666-4A; Thu, 01 Aug 2024 11:03:17 -0400
+	id 1sZXLY-0001Ly-LQ; Thu, 01 Aug 2024 11:04:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZXKf-0005mN-81
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:03:10 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZXLV-000199-8S
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:04:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZXKT-0005ds-Ph
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:03:08 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZXLT-0005pU-NR
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:04:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722524575;
+ s=mimecast20190719; t=1722524639;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2Lo+uGDIcyD7W0t4MDXDii2PLkA0SFngkBQWIS2XHb8=;
- b=XlNo8D7hLnmQkDD13okV7o3GKuXoFys4TBockR9CS03myWveynaaLKruOgG8gc1Hl0uFgW
- KevlJgmbInpTuVVcbSBh/JW8grbZ8F71kT5hEsf/bdnEpVssVjlkd4nzEreMrfqrUBhnTT
- eOIvMnGJUc6Q7LI9Z99ezxn/nXaoSUs=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=harx82TFcoQIcECbfllH51jR31LaBjnkPeCc/sWUtbY=;
+ b=Qhvy1x0Ig7zvUJpH3eXmtYrzqFJ8YyRZV5tfNfHdrlRwDBG4jmE7MHd5Mfjg6AEF7Syf2m
+ ljTMzUmbKIVKR0JEXSW6RGN4hUX7Lzs/R+L3dKIDC8TNh5tdekQ8sZSKx/64pavGgmONi/
+ NsMopO3TY/mzLsm3EI0e35tv8BFsu5Y=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-9-nTKgrokuNSSmSPYf6Hp6fg-1; Thu, 01 Aug 2024 11:02:51 -0400
-X-MC-Unique: nTKgrokuNSSmSPYf6Hp6fg-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2ef23969070so81574351fa.3
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 08:02:51 -0700 (PDT)
+ us-mta-171-lLrg6CXmOTydQlx63B1sQA-1; Thu, 01 Aug 2024 11:03:57 -0400
+X-MC-Unique: lLrg6CXmOTydQlx63B1sQA-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a7a97665b8bso632238766b.2
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 08:03:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722524570; x=1723129370;
+ d=1e100.net; s=20230601; t=1722524636; x=1723129436;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2Lo+uGDIcyD7W0t4MDXDii2PLkA0SFngkBQWIS2XHb8=;
- b=n8l3d/5ANVwDuktyHkpMWnvQcmqmTznhceTEW2PrJCGjTAKCostVV+4NBCssd4o+hK
- jO5/qb7AzRKvDdogkFJNInvTHRBOOL51rZ7n/rRwG4clSEDprclo9kPEqTyxBPIIU05E
- /AXqtgDyLpBBD8MgTxvVEmw5W2b96RslQCm7HV8D5nGRwMj8x4iPlIvBTPLWbaFasDAi
- uUaNJaMtFsWpieZrWZUS71koklWizf8X5VJAlHEpGxiyldISeU0bR/YJlvs+gH7ZZNpU
- 73gQDzhOuTBJt31yrhjAs+G67uBM3G5SD4KcvlNvcFto1RI/rckO06y2Od6SxILvBcXS
- CH/g==
-X-Gm-Message-State: AOJu0YyLVt/tE1Lt9wJ9KEoj7hZINaV4kEubDRhl+c4aRzZpKvtEd96N
- uw96tHSil6SqvUCRkh+qVDMErOtsbYWETy6kTgrRtc+q8FcIRkAlU9Wfhou5O9NDmlW8rwdG4Px
- 1Mk4VRgM278s+dUgKPyeyL5LIgFtpP/u8GupIb3YlCStqzeObLGb3
-X-Received: by 2002:a2e:8703:0:b0:2ef:1b1b:7f42 with SMTP id
- 38308e7fff4ca-2f15ab2a580mr4857811fa.36.1722524569968; 
- Thu, 01 Aug 2024 08:02:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHt7Z5lfoAg+BK1GDJ0NXZLTHsCNUWCr+4kl0JGmr7vAmjEPeh8ZF41DZm20A9ArgGebZU1zg==
-X-Received: by 2002:a2e:8703:0:b0:2ef:1b1b:7f42 with SMTP id
- 38308e7fff4ca-2f15ab2a580mr4856941fa.36.1722524568957; 
- Thu, 01 Aug 2024 08:02:48 -0700 (PDT)
+ bh=harx82TFcoQIcECbfllH51jR31LaBjnkPeCc/sWUtbY=;
+ b=k2sHClhDOZ1wZ9kvk0blpFNUTVPV6NTHXL86FET5kPgk9+R7CTjXRN5Ogi/PFfgsGU
+ o+kDnj7+duXC95zSMyYP4FiaqEDZHbraodOXTAhIZkwnGvijjT1D0RDULYkWdRjnn4Tp
+ DuDzHWWqKfEUHLahdxJtxbyjn9APptFq8CkQyCt4x9AKI3s11q2JPW9eqI3U4QjIfQGW
+ Le5GTgQAtQS2H8FVEg6M5GjwEGDgaBE2PR5LvNRigjc3NO+scBG6XhpaldwrKzzBtT16
+ Uuvofuxcryn/burmcamvwI2QRBUzLAxHudSx7Ba5aUq8eVfej/RpSK5RSFy9CdO81Qki
+ eYIw==
+X-Gm-Message-State: AOJu0YzqXnlzQiWf67p4+GEX7N5Myv/zmIJfeFoy2EdddihSLKCSSpvJ
+ 08pLoTQFaSHl/Gg+L6QxoEC1J9UNv56xV1ic6ixViXyOcSL3N6PqMd7Vne4F6G5klo5ljT6/a0R
+ IBJICD0PwxS1/KO6/NncKINbMBpAu5dzLC3F1Ukyj6xlE3zkcugOfgRQDyTGs
+X-Received: by 2002:a17:907:7b8a:b0:a77:cca9:b21c with SMTP id
+ a640c23a62f3a-a7dc4e8c3e5mr43552066b.34.1722524636051; 
+ Thu, 01 Aug 2024 08:03:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFLMvB3/EgsWlvqMCYloPyjYaSNTjWknhDo23OoG1WCL7rExqqiOE6lKd5+KQ6UrstqZgxhzA==
+X-Received: by 2002:a17:907:7b8a:b0:a77:cca9:b21c with SMTP id
+ a640c23a62f3a-a7dc4e8c3e5mr43542666b.34.1722524634952; 
+ Thu, 01 Aug 2024 08:03:54 -0700 (PDT)
 Received: from redhat.com ([2a02:14f:176:b4e2:f32f:7caa:572:123e])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acad9079bsm904803366b.166.2024.08.01.08.02.46
+ a640c23a62f3a-a7acab2388bsm910084066b.45.2024.08.01.08.03.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Aug 2024 08:02:47 -0700 (PDT)
-Date: Thu, 1 Aug 2024 11:02:43 -0400
+ Thu, 01 Aug 2024 08:03:54 -0700 (PDT)
+Date: Thu, 1 Aug 2024 11:03:50 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>
 Subject: Re: [PATCH-for-9.1 v2 2/2] hw/pci-host/gt64120: Set PCI base address
  register write mask
-Message-ID: <20240801105917-mutt-send-email-mst@kernel.org>
+Message-ID: <20240801110338-mutt-send-email-mst@kernel.org>
 References: <20240801145630.52680-1-philmd@linaro.org>
  <20240801145630.52680-3-philmd@linaro.org>
 MIME-Version: 1.0
@@ -154,15 +154,12 @@ On Thu, Aug 01, 2024 at 04:56:30PM +0200, Philippe Mathieu-Daudé wrote:
 > +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_4, 0xfffff009);
 > +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_5, 0xfffff001);
 > +
+
+weird to change wmask on reset.
+
 >      pci_set_long(d->config + PCI_BASE_ADDRESS_0, 0x00000008);
 >      pci_set_long(d->config + PCI_BASE_ADDRESS_1, 0x01000008);
 >      pci_set_long(d->config + PCI_BASE_ADDRESS_2, 0x1c000000);
-
-
-if you are tweaking wmask, I think migration will fail.
-So you have to make this depend on machine property, and
-put in compat machinery.
-
 > -- 
 > 2.45.2
 
