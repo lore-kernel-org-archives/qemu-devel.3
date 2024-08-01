@@ -4,83 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3B03C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 20:27:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B84EDC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 20:31:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZcNf-0006zq-3i; Thu, 01 Aug 2024 16:26:36 -0400
+	id 1sZcRk-0003Xk-IV; Thu, 01 Aug 2024 16:30:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1sZcNS-0006xj-PC; Thu, 01 Aug 2024 16:26:24 -0400
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1sZcRe-0003NP-OX; Thu, 01 Aug 2024 16:30:42 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1sZcNP-0006Um-Aa; Thu, 01 Aug 2024 16:26:21 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 471JMXuV006513;
- Thu, 1 Aug 2024 20:26:16 GMT
+ (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
+ id 1sZcRc-0007LV-Li; Thu, 01 Aug 2024 16:30:42 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 471KAkP2008579;
+ Thu, 1 Aug 2024 20:30:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding; s=pp1; bh=xY4rUoAL0RCl2l0h8JdFmjmqQR
- S67f9QZ2RFIrSgCzE=; b=Hb0zx+ZZy5kMypB+giuInRNyntbNa41q/gEQt2QtPh
- cyR1+FEBKAymDrhL/JP4z1/DApZriWUTj8y6vifNM8H6OJeztL++BbOO2t6Ql6NQ
- /b7kHxc3WVyvKHcyJm1qXfipCpsOGlr2gXgEsk/DNypq+uJw11N0cjc7kFebjtvC
- hQRaJTsRAZth0oWUAuuba/08xpHjh2Z7SPz1Qa08sc6ibrjLXBRs7RewFd+v+9wb
- FxUM8hWYEJa83hcZU7EkvBhfWha2IRjaOV4kL0nySP5RmdUsABp2Mf9M9sA5HLga
- +cjXNdl8JokUqWoZ4bZJk8GKKCWq5uYAuzxvVeACj04g==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40rebqgc7d-1
+ :to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding; s=pp1; bh=zdJy1daR0QDrr
+ HuiDrIp4CSYEBMf0S9T9xPOtJgFipI=; b=qP8Ey2blcEFGxDVDCza/J+UmXv+gK
+ l8msfYlh4DKusjksdeI1vAkDUgDbBbim3019VZPgFwIzrBLNomb87KrLhkDCN6oR
+ 3nkjrDt0A9gns6daSrgT8W6LcXFVIZHc7+TjALCY2Wo//5p55IWM7HNuE+5RERow
+ 7wl2ipBPvJe8RIc6lc/J6fL8CpXUgVuvByuNmQqrWiGkuEfK5LFIL7zxbO8Z/+BM
+ MjN8qfXNueg/ba3tQC9Pg2aM8+DR0fSySCMf14Z6waxgdoaTT6+YiJdB2LaRhhP/
+ zw0E0OZ1TbAok+WtryoWMpuuYagcKDhzsW+N+1mJZBRDqlC0tvybfd+zw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40rh0501t6-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Aug 2024 20:26:15 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 471J5He4011295; Thu, 1 Aug 2024 20:23:46 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40ncqn3nhn-1
+ Thu, 01 Aug 2024 20:30:31 +0000 (GMT)
+Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 471KUVLE008134;
+ Thu, 1 Aug 2024 20:30:31 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40rh0501t3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Aug 2024 20:23:46 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 471KNgtA31326850
+ Thu, 01 Aug 2024 20:30:31 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 471Hf2VX029103; Thu, 1 Aug 2024 20:30:30 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40nbm13wum-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 01 Aug 2024 20:30:30 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 471KUPbl55116126
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 1 Aug 2024 20:23:44 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 51A3C20040;
- Thu,  1 Aug 2024 20:23:42 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E53C820043;
- Thu,  1 Aug 2024 20:23:41 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.14.120])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  1 Aug 2024 20:23:41 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
- qemu-stable@nongnu.org
-Subject: [PATCH] linux-user/elfload: Fix pr_pid values in core files
-Date: Thu,  1 Aug 2024 22:23:22 +0200
-Message-ID: <20240801202340.21845-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.45.2
+ Thu, 1 Aug 2024 20:30:27 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E4EFF20040;
+ Thu,  1 Aug 2024 20:30:24 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B6E162004E;
+ Thu,  1 Aug 2024 20:30:23 +0000 (GMT)
+Received: from gfwr518.rchland.ibm.com (unknown [9.10.239.106])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  1 Aug 2024 20:30:23 +0000 (GMT)
+From: Michael Kowal <kowal@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
+ npiggin@gmail.com, milesg@linux.ibm.com
+Subject: [PATCH 04/13] pnv/xive2: Support for "OS LGS Push" TIMA operation
+Date: Thu,  1 Aug 2024 15:29:59 -0500
+Message-Id: <20240801203008.11224-5-kowal@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20240801203008.11224-1-kowal@linux.ibm.com>
+References: <20240801203008.11224-1-kowal@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: GKN4UiD4jdY1DoPxIpjTlHbbQ-Gi9_Jb
-X-Proofpoint-ORIG-GUID: GKN4UiD4jdY1DoPxIpjTlHbbQ-Gi9_Jb
+X-Proofpoint-ORIG-GUID: lEUkOB3OfsT4F7nqo8F4QZsI6yfFbBec
+X-Proofpoint-GUID: jAhuonMfnMTIwHc7T5jfoDCA0f2Enk65
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-01_18,2024-08-01_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0
- clxscore=1015 lowpriorityscore=0 spamscore=0 malwarescore=0 mlxscore=0
- suspectscore=0 phishscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=999
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2408010135
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ suspectscore=0
+ priorityscore=1501 clxscore=1015 bulkscore=0 adultscore=0
+ lowpriorityscore=0 impostorscore=0 malwarescore=0 spamscore=0 phishscore=0
+ mlxlogscore=960 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408010135
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=kowal@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -19
 X-Spam_score: -2.0
@@ -105,59 +113,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Analyzing qemu-produced core dumps of multi-threaded apps runs into:
+From: Glenn Miles <milesg@linux.vnet.ibm.com>
 
-    (gdb) info threads
-      [...]
-      21   Thread 0x3ff83cc0740 (LWP 9295) warning: Couldn't find general-purpose registers in core file.
-    <unavailable> in ?? ()
+Adds support for single byte writes to offset 0x15 of the TIMA address
+space.  This offset holds the Logical Server Group Size (LGS) field.
+The field is used to evenly distribute the interrupt load among the
+members of a group, but is unused in the current implementation so we
+just support the writing of the value for now.
 
-The reason is that all pr_pid values are the same, because the same
-TaskState is used for all CPUs when generating NT_PRSTATUS notes.
-
-Fix by using TaskStates associated with individual CPUs.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 243c47066253 ("linux-user/elfload: Write corefile elf header in one block")
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
+Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 ---
- linux-user/elfload.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ hw/intc/xive.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 7ecbc8a7cc0..0861f115fc4 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -4102,8 +4102,7 @@ static void fill_elf_note_phdr(struct elf_phdr *phdr, size_t sz, off_t offset)
-     bswap_phdr(phdr, 1);
+diff --git a/hw/intc/xive.c b/hw/intc/xive.c
+index 8e62c7e75f..8605dd618f 100644
+--- a/hw/intc/xive.c
++++ b/hw/intc/xive.c
+@@ -341,6 +341,19 @@ static void xive_tm_set_os_cppr(XivePresenter *xptr, XiveTCTX *tctx,
+     xive_tctx_set_cppr(tctx, TM_QW1_OS, value & 0xff);
  }
  
--static void fill_prstatus_note(void *data, const TaskState *ts,
--                               CPUState *cpu, int signr)
-+static void fill_prstatus_note(void *data, CPUState *cpu, int signr)
- {
-     /*
-      * Because note memory is only aligned to 4, and target_elf_prstatus
-@@ -4113,7 +4112,7 @@ static void fill_prstatus_note(void *data, const TaskState *ts,
-     struct target_elf_prstatus prstatus = {
-         .pr_info.si_signo = signr,
-         .pr_cursig = signr,
--        .pr_pid = ts->ts_tid,
-+        .pr_pid = get_task_state(cpu)->ts_tid,
-         .pr_ppid = getppid(),
-         .pr_pgrp = getpgrp(),
-         .pr_sid = getsid(0),
-@@ -4428,8 +4427,7 @@ static int elf_core_dump(int signr, const CPUArchState *env)
-         CPU_FOREACH(cpu_iter) {
-             dptr = fill_note(&hptr, NT_PRSTATUS, "CORE",
-                              sizeof(struct target_elf_prstatus));
--            fill_prstatus_note(dptr, ts, cpu_iter,
--                               cpu_iter == cpu ? signr : 0);
-+            fill_prstatus_note(dptr, cpu_iter, cpu_iter == cpu ? signr : 0);
-         }
- 
-         if (dump_write(fd, header, data_offset) < 0) {
++static void xive_tctx_set_lgs(XiveTCTX *tctx, uint8_t ring, uint8_t lgs)
++{
++    uint8_t *regs = &tctx->regs[ring];
++
++    regs[TM_LGS] = lgs;
++}
++
++static void xive_tm_set_os_lgs(XivePresenter *xptr, XiveTCTX *tctx,
++                          hwaddr offset, uint64_t value, unsigned size)
++{
++    xive_tctx_set_lgs(tctx, TM_QW1_OS, value & 0xff);
++}
++
+ /*
+  * Adjust the IPB to allow a CPU to process event queues of other
+  * priorities during one physical interrupt cycle.
+@@ -525,6 +538,8 @@ static const XiveTmOp xive2_tm_operations[] = {
+                                                      NULL },
+     { XIVE_TM_HV_PAGE, TM_QW1_OS + TM_WORD2,      4, xive2_tm_push_os_ctx,
+                                                      NULL },
++    { XIVE_TM_OS_PAGE, TM_QW1_OS + TM_LGS,        1, xive_tm_set_os_lgs,
++                                                     NULL },
+     { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_CPPR,  1, xive_tm_set_hv_cppr,
+                                                      NULL },
+     { XIVE_TM_HV_PAGE, TM_QW3_HV_PHYS + TM_WORD2, 1, xive_tm_vt_push,
 -- 
-2.45.2
+2.43.0
 
 
