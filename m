@@ -4,63 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C734EC49EA1
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 18:39:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88492C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 18:39:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZahj-00013W-Jq; Thu, 01 Aug 2024 14:39:11 -0400
+	id 1sZahn-0001FC-Or; Thu, 01 Aug 2024 14:39:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZahh-00012E-GI
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 14:39:09 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sZahl-00017l-Kd
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 14:39:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZahf-0000b9-MV
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 14:39:09 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sZahk-0000bn-9R
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 14:39:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722537545;
+ s=mimecast20190719; t=1722537551;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=KhQzkF+doxEnfCrfk3CA66aicUlOg5P9VPSpXa1z/js=;
- b=gT6WbCDYyWPLPYDF3Z5ICa5p54m2araq6yyDBn6vPoCIx+qSRZVgR6myerCyEwU8TObrkR
- 5Et/uCriRQwdQI9vu5tYuS4hPRwBgQ/ow+Ad2s/u7dRezmrgSksj7KAID5Yc83e95zgvuS
- A7dJVq17Ia7H4ST+f1Y3zCloQLxYkwU=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-100-UJwlzfHcO5ShqP3VLEJlHQ-1; Thu,
- 01 Aug 2024 14:39:02 -0400
-X-MC-Unique: UJwlzfHcO5ShqP3VLEJlHQ-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4A38E19560A2; Thu,  1 Aug 2024 18:39:00 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.72])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 42F943000198; Thu,  1 Aug 2024 18:38:56 +0000 (UTC)
-Date: Thu, 1 Aug 2024 13:38:53 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Stefan Hajnoczi <stefanha@redhat.com>, 
- "Denis V. Lunev" <den@openvz.org>, Jiri Pirko <jiri@resnulli.us>
-Subject: Re: [PATCH 2/5] docs/interop/nbd.txt: Convert to rST
-Message-ID: <okjnkgp7cfoa53ubbkeotfanyijak7x4avhlwa3ydfwzpo2qk4@7vni4uw4ihtc>
-References: <20240801170131.3977807-1-peter.maydell@linaro.org>
- <20240801170131.3977807-3-peter.maydell@linaro.org>
+ bh=zTRzUoNwHapsdSMNntojf7QOiCcABfzYMaNvq/H8KyM=;
+ b=MAs1TfZH9q0Ti/aiNRAjZneVQafuMRFQ5SsUCKi6z6b5n7Guvu4OeuJarRH0iRBrpxhHjK
+ iHEGacJaQc/KzPYy5FDOyrHaJZDLAjM58ixl0bBWJvAk3Otbe02CLppklXLpMI69ZnARR2
+ LjDB9UKz5QOk2scWkfecQB+DEmp2EB0=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-62-AHcpL0N2NUm1gfKPX5K7NA-1; Thu, 01 Aug 2024 14:39:08 -0400
+X-MC-Unique: AHcpL0N2NUm1gfKPX5K7NA-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6b7a47a271cso16496996d6.2
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 11:39:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722537547; x=1723142347;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zTRzUoNwHapsdSMNntojf7QOiCcABfzYMaNvq/H8KyM=;
+ b=CgiaDx+3adpE0yj/tSPjDi5eQQ3iXNb+1a00KxItDBjx/zqRmp9Hs3Kt3K2j4tE+lR
+ PjToXeHYc75XfsASIuiRVewwgxv5ECV4CO0LTGctAF4E0VSRgUUQt969fYRocqRJrIOt
+ qUlYiViv7l+0nOm0SVN0KiPfUwhyHdeYqqK0rIMmRn2t92ut+WulHEROnthJ/2lKP3iW
+ gQQBiPHpB6AbVqLFl/fPpidTd0VxS65YW3LsWG48uieczDV6x1zrt/LPMpi3FRdXuW6r
+ 6SToFJA1aLMVAgjc2vHr/mlrc0Ej+rywgU/MzFujdaW09bKSW9vQiPB9uUwn28dA6XVK
+ s+3w==
+X-Gm-Message-State: AOJu0YxBPVyeOlmHasujv4RRFWFPP4tZ4sd7F4LohH61Wusoc3WFIbuD
+ oQmqhOtg0fz2zoBWDnKBmGOBKS9mxurapjAndZ2D6sgwhViLIGmDkHzmqbUcX2aIJFM7bZe8mwP
+ 7nwbqDpq/fGzG/iTbPAzDY9oKonj94m8CF8G1EIOJlQKtwHQy52p3UsWblrzg
+X-Received: by 2002:ad4:5b8d:0:b0:6b0:6370:28d4 with SMTP id
+ 6a1803df08f44-6bb983d7175mr7201296d6.6.1722537547565; 
+ Thu, 01 Aug 2024 11:39:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH/oFKSGYF9hDMsxn0vNPWmVMancOGNcGsulE/0ntHPh8Vrm9AjmoMhaMDo0YJ9Wu0VbvYVCg==
+X-Received: by 2002:ad4:5b8d:0:b0:6b0:6370:28d4 with SMTP id
+ 6a1803df08f44-6bb983d7175mr7201196d6.6.1722537547174; 
+ Thu, 01 Aug 2024 11:39:07 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6bb99a1e4bbsm1376016d6.37.2024.08.01.11.39.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 Aug 2024 11:39:06 -0700 (PDT)
+Date: Thu, 1 Aug 2024 14:39:05 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Jim Fehlig <jfehlig@suse.com>
+Subject: Re: [PATCH 1/2] migration: Fix cleanup of iochannel in file migration
+Message-ID: <ZqvWSYlio5gOVy5I@x1n>
+References: <20240801174101.31806-1-farosas@suse.de>
+ <20240801174101.31806-2-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240801170131.3977807-3-peter.maydell@linaro.org>
-User-Agent: NeoMutt/20240425
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+In-Reply-To: <20240801174101.31806-2-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -85,111 +99,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 01, 2024 at 06:01:28PM GMT, Peter Maydell wrote:
-> Convert nbd.txt to rST format.
+On Thu, Aug 01, 2024 at 02:41:00PM -0300, Fabiano Rosas wrote:
+> The QIOChannelFile object already has its reference decremented by
+> g_autoptr. Trying to unref an extra time causes:
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  MAINTAINERS            |  2 +-
->  docs/interop/index.rst |  1 +
->  docs/interop/nbd.rst   | 89 ++++++++++++++++++++++++++++++++++++++++++
->  docs/interop/nbd.txt   | 72 ----------------------------------
->  4 files changed, 91 insertions(+), 73 deletions(-)
->  create mode 100644 docs/interop/nbd.rst
->  delete mode 100644 docs/interop/nbd.txt
+> ERROR:../qom/object.c:1241:object_unref: assertion failed: (obj->ref > 0)
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 2a183fe960b..dd159053dbd 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3869,7 +3869,7 @@ F: nbd/
->  F: include/block/nbd*
->  F: qemu-nbd.*
->  F: blockdev-nbd.c
-> -F: docs/interop/nbd.txt
-> +F: docs/interop/nbd.rst
+> Fixes: a701c03dec ("migration: Drop reference to QIOChannel if file seeking fails")
+> Fixes: 6d3279655a ("migration: Fix file migration with fdset")
+> Reported-by: Jim Fehlig <jfehlig@suse.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-Upstream NBD has a link to the nbd.txt page; I'll have to update that
-link to the new name.  Is it worth creating a git symlink so the old
-name remains a stable point to link to (even though it is no longer
-purely text)?
+Ouch..
 
->  F: docs/tools/qemu-nbd.rst
->  F: tests/qemu-iotests/tests/*nbd*
->  T: git https://repo.or.cz/qemu/ericb.git nbd
-> diff --git a/docs/interop/index.rst b/docs/interop/index.rst
-> index ed65395bfb2..b9ceaabc648 100644
-> --- a/docs/interop/index.rst
-> +++ b/docs/interop/index.rst
-> @@ -14,6 +14,7 @@ are useful for making QEMU interoperate with other software.
->     dbus-vmstate
->     dbus-display
->     live-block-operations
-> +   nbd
->     pr-helper
->     qmp-spec
->     qemu-ga
-> diff --git a/docs/interop/nbd.rst b/docs/interop/nbd.rst
-> new file mode 100644
-> index 00000000000..de079d31fd8
-> --- /dev/null
-> +++ b/docs/interop/nbd.rst
-> @@ -0,0 +1,89 @@
-> +QEMU NBD protocol support
-> +=========================
-> +
-> +QEMU supports the NBD protocol, and has an internal NBD client (see
-> +``block/nbd.c``), an internal NBD server (see ``blockdev-nbd.c``), and an
-> +external NBD server tool (see ``qemu-nbd.c``). The common code is placed
-> +in ``nbd/*``.
-
-Accurate translation, and accurate information although incomplete -
-maybe I should do a followup patch to mention that qemu-storage-daemon
-can also expose an NBD server?  Doesn't affect review of this patch.
-
-> +
-> +The NBD protocol is specified here:
-> +https://github.com/NetworkBlockDevice/nbd/blob/master/doc/proto.md
-> +
-> +The following paragraphs describe some specific properties of NBD
-> +protocol realization in QEMU.
-> +
-> +Metadata namespaces
-> +-------------------
-> +
-> +QEMU supports the ``base:allocation`` metadata context as defined in the
-> +NBD protocol specification, and also defines an additional metadata
-> +namespace ``qemu``.
-> +
-> +``qemu`` namespace
-> +------------------
-> +
-> +The ``qemu`` namespace currently contains two available metadata context
-> +types.  The first is related to exposing the contents of a dirty
-> +bitmap alongside the associated disk contents.  That metadata context
-> +is named with the following form::
-> +
-> +    qemu:dirty-bitmap:<dirty-bitmap-export-name>
-> +
-> +Each dirty-bitmap metadata context defines only one flag for extents
-> +in reply for ``NBD_CMD_BLOCK_STATUS``:
-> +
-> +bit 0:
-> +  ``NBD_STATE_DIRTY``, set when the extent is "dirty"
-> +
-> +The second is related to exposing the source of various extents within
-> +the image, with a single metadata context named::
-
-I'm not an rst expert, so I'm assuming the difference between ending a
-line in : vs :: is intentional and affects the rendering; but as far
-as I can tell, the rendered result worked, so I don't see any problems
-with the patch.
-
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+Peter Xu
 
 
