@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10DC2C3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 09:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7264EC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 09:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZSQo-0005Fv-N5; Thu, 01 Aug 2024 05:49:10 -0400
+	id 1sZSTw-0001mH-1Y; Thu, 01 Aug 2024 05:52:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
- id 1sZSQm-0005EL-BT
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 05:49:08 -0400
-Received: from va-2-32.ptr.blmpb.com ([209.127.231.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
- id 1sZSQh-0003fU-LO
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 05:49:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=dayudpu-com.20200927.dkim.feishu.cn; t=1722505718;
- h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=VzDKqb5cywqOkSOGbX8+L8Sdk7F2n3pVd4J/YH+RTZE=;
- b=oCR6FHNDNYT5Nb1pqva7LQilpqmIAZXKHdJhloxAL8Uc/ljNS9WSsqw2EqnwrZ92PDzaMq
- N7M40GCJeoGR73kMhbXHLjXOJOLKAXOE7xJmZlKYfnqGH5pKcotOPIBdMiA3s0Z8QMih4i
- ac2KvTDDi0YRmS092PB5yT482JuoZ25kuoa02OZLI2/w3DTRI5p5mCrNRiDW1LQDlD+eZn
- SghemyHHJx/JS9vJ+Rny2VXbRwABms52X2sYeD6xGMpS+xDc4Q7qUe3z3ReTLFobv5gYnW
- afgRoU67gkjs+HofDALL9LnjBRWNV1G2SkqV7oDEKH77J583lzMzTATncaeHlQ==
-Message-Id: <fba0cfc406f202976ef5ac5d129e08524ce06bbf.cce6af4a.43f3.41da.bd6c.5fdb96e92401@feishu.cn>
-Subject: Re: [PATCH v2] vhsot-user: Do not wait for replay for not sent
- VHOST_USER_SET_LOG_BASE
-Mime-Version: 1.0
-X-Lms-Return-Path: <lba+166ab59f5+cdcf46+nongnu.org+xiangwencheng@dayudpu.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Date: Thu, 01 Aug 2024 17:48:36 +0800
-Cc: <qemu-devel@nongnu.org>
-From: "BillXiang" <xiangwencheng@dayudpu.com>
-References: <20240718083103.56214-1-xiangwencheng@dayudpu.com>
- <20240720145819-mutt-send-email-mst@kernel.org>
- <fba0cfc406f202976ef5ac5d129e08524ce06bbf.0ff73b39.722e.4462.b426.f477adef04f2@feishu.cn>
- <20240801042507-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240801042507-mutt-send-email-mst@kernel.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Received-SPF: pass client-ip=209.127.231.32;
- envelope-from=xiangwencheng@dayudpu.com; helo=va-2-32.ptr.blmpb.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <SRS0=3ESM=PA=kaod.org=clg@ozlabs.org>)
+ id 1sZSTu-0001ky-Ne; Thu, 01 Aug 2024 05:52:22 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=3ESM=PA=kaod.org=clg@ozlabs.org>)
+ id 1sZSTs-0004NM-K6; Thu, 01 Aug 2024 05:52:22 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WZPQ753dMz4wx5;
+ Thu,  1 Aug 2024 19:52:15 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WZPQ40y5Lz4w2R;
+ Thu,  1 Aug 2024 19:52:11 +1000 (AEST)
+Message-ID: <e376f6ce-4ade-455b-853b-270172317437@kaod.org>
+Date: Thu, 1 Aug 2024 11:52:07 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/ppc: Implement -dtb support for PowerNV
+To: Aditya Gupta <adityag@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+References: <20240801085133.59781-1-adityag@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <20240801085133.59781-1-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=3ESM=PA=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,112 +69,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 8/1/24 10:51, Aditya Gupta wrote:
+> Currently any device tree passed with -dtb option in QEMU, was ignored
+> by the PowerNV code.
+> 
+> Read and pass the passed -dtb to the kernel, thus enabling easier
+> debugging with custom DTBs.
+> 
+> The existing behaviour when -dtb is 'not' passed, is preserved as-is.
+> 
+> But when a '-dtb' is passed, it completely overrides any dtb nodes or
+> changes QEMU might have done, such as '-append' arguments to the kernel
+> (which are mentioned in /chosen/bootargs in the dtb), hence add warning
+> when -dtb is being used
+> 
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> 
+> ---
+> Changelog
+> ===========
+> v2:
+>   + move reading dtb and warning to pnv_init
+> 
+> v1:
+>   + use 'g_file_get_contents' and add check for -append & -dtb as suggested by Daniel
+> ---
+> ---
+>   hw/ppc/pnv.c         | 29 ++++++++++++++++++++++++++---
+>   include/hw/ppc/pnv.h |  2 ++
+>   2 files changed, 28 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 3526852685b4..047725bd97fc 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -736,11 +736,14 @@ static void pnv_reset(MachineState *machine, ShutdownCause reason)
+>           }
+>       }
+>   
+> -    fdt = pnv_dt_create(machine);
+> +    if (!pnv->fdt) {
+> +        pnv->fdt = pnv_dt_create(machine);
 
-> From: "Michael S. Tsirkin"<mst@redhat.com>
-> Date:=C2=A0 Thu, Aug 1, 2024, 16:26
-> Subject:=C2=A0 Re: [PATCH v2] vhsot-user: Do not wait for replay for not =
-sent VHOST_USER_SET_LOG_BASE
-> To: "BillXiang"<xiangwencheng@dayudpu.com>
-> Cc: <qemu-devel@nongnu.org>
-> On Sun, Jul 21, 2024 at 11:20:56AM +0800, BillXiang wrote:
-> >=C2=A0
-> > > From: "Michael S. Tsirkin"<mst@redhat.com>
-> > > Date:=C2=A0 Sun, Jul 21, 2024, 03:01
-> > > Subject:=C2=A0 Re: [PATCH v2] vhsot-user: Do not wait for replay for =
-not sent VHOST_USER_SET_LOG_BASE
-> > > To: "BillXiang"<xiangwencheng@dayudpu.com>
-> > > Cc: <qemu-devel@nongnu.org>
-> > > typos in subject do not inspire confidence.
-> >=C2=A0
-> > Sorry
-> >=C2=A0
-> > >=C2=A0
-> > > On Thu, Jul 18, 2024 at 04:31:03PM +0800, BillXiang wrote:
-> > > > From: BillXiang <xiangwencheng@dayudpu.com>
-> > > >=C2=A0
-> > > > We have added VHOST_USER_SET_LOG_BASE to vhost_user_per_device_requ=
-est
-> > > > in https://lists.nongnu.org/archive/html/qemu-devel/2024-06/msg0255=
-9.html
-> > >=C2=A0
-> > > Pls put commit here not ML link:
-> > > commit ABCDEFGHIKLM ("subject")
-> > >=C2=A0
-> > > > and will send this message only for vq 0.
-> > >=C2=A0
-> > > you mean "should send"?
-> > >=C2=A0
-> >=C2=A0
-> > What I mean is the commit 7c211eb078c4 ("vhost-user: Skip unnecessary d=
-uplicated VHOST_USER_SET_LOG_BASE requests")=C2=A0
-> > will cause VHOST_USER_SET_LOG_BASE to be sent only when 'vq_index =3D=
-=3D 0' in vhost_user_write,=C2=A0
-> > so that we can not use vhost_user_read to get reply when 'vq_index !=3D=
- 0'
->=C2=A0
->=C2=A0
-> do we try to do it now? in which configurations?
->=C2=A0
+At next reset, the dtb specified on the command line will be ignored.
+Please reverse the logic :
 
-Sorry, I'm not certain about what you're instructing me to do.
+     if (pnv->fdt) {
+         fdt = pnv->fdt;
+     } else {
+         fdt = pnv_dt_create(machine);
+         /* Pack resulting tree */
+         _FDT((fdt_pack(fdt)));
+     }
 
-Maybe I should merge this patch whit commit 7c211eb078c4
-("vhost-user: Skip unnecessary duplicated VHOST_USER_SET_LOG_BASE requests"=
-)=C2=A0
-=C2=A0and "[PATCH] vhsot-user: Remove redundant judgment" into one patch.
+but, at the end of pnv_reset(), beware of :
 
-All of these three patches are aimed to do the same thing as=C2=A0
-commit c98ac64cfb53 ("vhost-user: send set log base message only once")
-which is not a good solution because there is already a function vhost_user=
-_per_device_request
-for those messages that should be sent only once per device.
+     g_free(machine->fdt);
+     machine->fdt = fdt;
 
-In commit 7c211eb078c4 ("vhost-user: Skip unnecessary duplicated VHOST_USER=
-_SET_LOG_BASE requests")=C2=A0
-I added VHOST_USER_SET_LOG_BASE to vhost_user_per_device_request so that it=
- will be sent only once=C2=A0
-per device when 'vq_index =3D=3D 0'.
-After that we should remove the check add by commit c98ac64cfb53 ("vhost-us=
-er: send set log base message only once")
-in "[PATCH] vhsot-user: Remove redundant judgment".
-And last, in current patch "vhsot-user: Do not wait for replay for not sent=
- VHOST_USER_SET_LOG_BASE"
-we should only read reply when 'vq_index =3D=3D 0'.
 
->=C2=A0
-> > >=C2=A0
-> > > >=C2=A0
-> > > > Signed-off-by: BillXiang <xiangwencheng@dayudpu.com>
-> > > > ---
-> > > > V1[1] -> V2:
-> > > >=C2=A0 - Refrain from appending flags to messages that could=C2=A0
-> > > > precipitate validation failures upon execution of the=C2=A0
-> > > > `vhost_user_read_header` function.=C2=A0
-> > > >=C2=A0
-> > > > [1]https://lists.nongnu.org/archive/html/qemu-devel/2024-07/msg0192=
-3.html
-> > > > ---
-> > > >=C2=A0 hw/virtio/vhost-user.c | 2 +-
-> > > >=C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)
-> > > >=C2=A0
-> > > > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> > > > index 00561daa06..fd12992d15 100644
-> > > > --- a/hw/virtio/vhost-user.c
-> > > > +++ b/hw/virtio/vhost-user.c
-> > > > @@ -460,7 +460,7 @@ static int vhost_user_set_log_base(struct vhost=
-_dev *dev, uint64_t base,
-> > > > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 return ret;
-> > > > =C2=A0 =C2=A0=C2=A0 }
-> > > > =C2=A0
-> > > > - =C2=A0=C2=A0 if (shmfd) {
-> > > > + =C2=A0=C2=A0 if (shmfd && (dev->vq_index =3D=3D 0)) {
-> > >=C2=A0
-> > > extra () not needed here.
-> > >=C2=A0
-> > > > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 msg.hdr.size =3D 0;
-> > > > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 ret =3D vhost_user_read(dev, &msg=
-);
-> > > > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 if (ret < 0) {
-> > > > --=C2=A0
-> > > > 2.30.0
+> -    /* Pack resulting tree */
+> -    _FDT((fdt_pack(fdt)));
+> +        /* Pack resulting tree */
+> +        _FDT((fdt_pack(pnv->fdt)));
+> +    }
+>   
+> +    fdt = pnv->fdt;
+>       qemu_fdt_dumpdtb(fdt, fdt_totalsize(fdt));
+>       cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
+>   
+> @@ -952,6 +955,14 @@ static void pnv_init(MachineState *machine)
+>           g_free(sz);
+>           exit(EXIT_FAILURE);
+>       }
+> +
+> +    /* checks for invalid option combinations */
+> +    if (machine->dtb && (strlen(machine->kernel_cmdline) != 0)) {
+> +        error_report("-append and -dtb cannot be used together, as passed"
+> +                " command line is ignored in case of custom dtb");
+> +        exit(EXIT_FAILURE);
+
+I think this is redundant with the warn report below.
+
+> +    }
+> +
+>       memory_region_add_subregion(get_system_memory(), 0, machine->ram);
+>   
+>       /*
+> @@ -1003,6 +1014,18 @@ static void pnv_init(MachineState *machine)
+>           }
+>       }
+>   
+> +    /* load dtb if passed */
+> +    if (machine->dtb) {
+> +        warn_report("with manually passed dtb, some options like '-append'"
+> +                " will get ignored and the dtb passed will be used as-is");
+> +
+> +        /* read the file 'machine->dtb', and load it into 'fdt' buffer */
+> +        if (!g_file_get_contents(machine->dtb, (gchar **)&pnv->fdt, NULL, NULL)) {
+> +            error_report("Could not load dtb '%s'", machine->dtb);
+> +            exit(1);
+> +        }
+
+There is a load_device_tree() routine you could use. Please check how other
+machines handle -dtb for examples.
+
+
+Thanks,
+
+C.
+
+
+
+> +    }
+> +
+>       /* MSIs are supported on this platform */
+>       msi_nonbroken = true;
+>   
+> diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+> index fcb6699150c8..20b68fd9264e 100644
+> --- a/include/hw/ppc/pnv.h
+> +++ b/include/hw/ppc/pnv.h
+> @@ -91,6 +91,8 @@ struct PnvMachineState {
+>       uint32_t     initrd_base;
+>       long         initrd_size;
+>   
+> +    void         *fdt;
+> +
+>       uint32_t     num_chips;
+>       PnvChip      **chips;
+>   
+
 
