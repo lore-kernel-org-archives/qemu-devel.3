@@ -4,79 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F47C3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 09:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C41F1C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 09:22:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZRsT-0005uz-2G; Thu, 01 Aug 2024 05:13:41 -0400
+	id 1sZS0J-0005w9-OC; Thu, 01 Aug 2024 05:21:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZRsR-0005h8-2y
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 05:13:39 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZRsP-0007lX-E9
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 05:13:38 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a7d26c2297eso825197066b.2
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 02:13:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722503615; x=1723108415; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=VBO+j2SR1ZsWcanf9TAJdGUloHo2mhXLXHkhbDgN34A=;
- b=TLbQoLqMq3J9BMfps2Qx5V7khyiN2OT7u8vPRD/Nzv61UexWXj1/crb5RYa/D9AL8l
- v0AvrbkkFUTrLec7Llmp/8FHHvIp2N/uQF0/V6X4K9nSI7iAVtwQwOD4KxjQK97sQt6U
- Kk4lgMDJjeQbbgVyW0B2ytvqzVL/mwMGbuqAfEMJ4N3CTHNOD8jxb5mA9DUitG5MSHXT
- hbEbkSEHZgbs40dn7SQEa00bun1h2mI4KkH9ej7WNf2ztZOPLAz6abyxdrzyk0o/CQea
- EMF7+HsuuzLtI/XTho6h2zz9RsVuYpdejuMzzr0U2ixxCw7mA5ZZwltWOcZN8iNUdmAo
- +rVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722503615; x=1723108415;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VBO+j2SR1ZsWcanf9TAJdGUloHo2mhXLXHkhbDgN34A=;
- b=Pm6+npM4GCdFgzWjbHLTBn+v4R/h8ScbUsaDsuVjUHdRRxRUXGEQM1v/N2yN/mfXbB
- RwtfLZrOtgkGdfk/8QR02a4nhaMknLh7lyeMfPEKF16kbii+o5cqijPycadQVnD/HZ+D
- /JlmnBzBvAoa+FIwJXqq9klSPtxAFW2GQM1Mn8ow12bew6rLgfruQhwctlEIHlVW6NON
- hJr1HSXX84HEPmNLxV0X5anmdxRJM0B8OfJOFE/P/FMP9NbrDZFAVot81+vQu6tHAq9z
- 2Ppc3CsyvbTRmJ0mEGR7OcIXLwvYeo7XkFjqD9zm8mI+YlLmArUeHxdu0ov5F8lVdZrJ
- ZrnA==
-X-Gm-Message-State: AOJu0YxhBLnimNrONAO5j126nfSOv4U7IpGjW2g2fnj9nvbtqmyQrsrn
- ZPaqr0CWvGfuEjA1iu5AUhlD0nSOSmIxwQhaYhpmp/vRxrdMXbRuudBorOF2QhdA+9PJrbMpneb
- r
-X-Google-Smtp-Source: AGHT+IHZOLuUEEVD8hmVkDnqMkO+nOEe/PCGDOaov3V4i0fjiLcwRun9oxQyK0l1ilmN/+SaP7StJg==
-X-Received: by 2002:a17:907:8dcf:b0:a7a:a5ae:11bd with SMTP id
- a640c23a62f3a-a7daf9c9045mr129556266b.67.1722503615301; 
- Thu, 01 Aug 2024 02:13:35 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.130.148])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acab23f21sm869694266b.37.2024.08.01.02.13.33
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 Aug 2024 02:13:34 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
- Aurelien Jarno <aurelien@aurel32.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1] hw/pci-host/gt64120: Set PCI base address register
- write mask
-Date: Thu,  1 Aug 2024 11:13:32 +0200
-Message-ID: <20240801091332.49256-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sZS0E-0005sX-UT; Thu, 01 Aug 2024 05:21:44 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sZS0B-0002Y2-7n; Thu, 01 Aug 2024 05:21:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1722504100; x=1754040100;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Xmg/968fCVUCGZYT797Z9jjQKkMZwiEQFs2Df4qxxrw=;
+ b=nEcp1w3nT5VQZ2QHfj2l4eDQLHofZ8tM+TQhWqw280p/bEr3IDd11+ng
+ GDJ/WRSmT9NO6bG9P5PQ9MM7fMxMnTfjOiJWOzm8sOUAUM/Qwmw0RFVzs
+ LpUClwnO287DM5DJMAv1EJe6vyl7N+PKNZAHyIXenbLXLVcPqRx5yxv62
+ n3+rhdwuIjVBTWdlnyyohdP7EyjdYykZ1U7fhxsy/C+axE6ucNfhXG3m+
+ yknJvSiyK/IRlS62lJ2/AtrIM0g26sj5/PEy24+Th82btwaI3ccl7Nn3U
+ nOBKGVFVuQjRoSJuuPHK3uPFTd1cQKtmtsDerXc1XzDBtkFvGBZQkfLPc w==;
+X-CSE-ConnectionGUID: 0sCktYJQQlOAapkoS+KQWQ==
+X-CSE-MsgGUID: dUOJ9P98SeufBIFaO9mLAQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11150"; a="20385178"
+X-IronPort-AV: E=Sophos;i="6.09,254,1716274800"; d="scan'208";a="20385178"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Aug 2024 02:21:21 -0700
+X-CSE-ConnectionGUID: D84dmaN6SuK0K8x9jJDrlw==
+X-CSE-MsgGUID: YCFLQ0uPTG+Bm5RJ5hwSpA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,254,1716274800"; d="scan'208";a="59787927"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa005.jf.intel.com with ESMTP; 01 Aug 2024 02:21:16 -0700
+Date: Thu, 1 Aug 2024 17:37:03 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>
+Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache object
+Message-ID: <ZqtXP9MViOlyhEsu@intel.com>
+References: <20240704031603.1744546-1-zhao1.liu@intel.com>
+ <20240704031603.1744546-9-zhao1.liu@intel.com>
+ <87r0bl35ug.fsf@pond.sub.org> <Zp5vxtXWDeHAdPok@intel.com>
+ <87bk2nnev2.fsf@pond.sub.org> <ZqEN1kZaQcuY4UPG@intel.com>
+ <87le1psuv3.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87le1psuv3.fsf@pond.sub.org>
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,86 +98,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When booting Linux we see:
+On Thu, Jul 25, 2024 at 11:07:12AM +0200, Markus Armbruster wrote:
+> Date: Thu, 25 Jul 2024 11:07:12 +0200
+> From: Markus Armbruster <armbru@redhat.com>
+> Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache
+>  object
+> 
+> Zhao Liu <zhao1.liu@intel.com> writes:
+> 
+> > Hi Markus and Daniel,
+> >
+> > I have the questions about the -object per cache implementation:
+> >
+> > On Wed, Jul 24, 2024 at 02:39:29PM +0200, Markus Armbruster wrote:
+> >> Date: Wed, 24 Jul 2024 14:39:29 +0200
+> >> From: Markus Armbruster <armbru@redhat.com>
+> >> Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache
+> >>  object
+> >> 
+> >> Zhao Liu <zhao1.liu@intel.com> writes:
+> >> 
+> >> > Hi Markus,
+> >> >
+> >> > On Mon, Jul 22, 2024 at 03:37:43PM +0200, Markus Armbruster wrote:
+> >> >> Date: Mon, 22 Jul 2024 15:37:43 +0200
+> >> >> From: Markus Armbruster <armbru@redhat.com>
+> >> >> Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache
+> >> >>  object
+> >> >> 
+> >> >> Zhao Liu <zhao1.liu@intel.com> writes:
+> >> >> 
+> >> >> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> >> >> 
+> >> >> This patch is just documentation.  The code got added in some previous
+> >> >> patch.  Would it make sense to squash this patch into that previous
+> >> >> patch?
+> >> >
+> >> > OK, I'll merge them.
+> >> >
+> >> >> > ---
+> >> >> > Changes since RFC v2:
+> >> >> >  * Rewrote the document of smp-cache object.
+> >> >> >
+> >> >> > Changes since RFC v1:
+> >> >> >  * Use "*_cache=topo_level" as -smp example as the original "level"
+> >> >> >    term for a cache has a totally different meaning. (Jonathan)
+> >> >> > ---
+> >> >> >  qemu-options.hx | 58 +++++++++++++++++++++++++++++++++++++++++++++++++
+> >> >> >  1 file changed, 58 insertions(+)
+> >> >> >
+> >> >> > diff --git a/qemu-options.hx b/qemu-options.hx
+> >> >> > index 8ca7f34ef0c8..4b84f4508a6e 100644
+> >> >> > --- a/qemu-options.hx
+> >> >> > +++ b/qemu-options.hx
+> >> >> > @@ -159,6 +159,15 @@ SRST
+> >> >> >          ::
+> >> >> >  
+> >> >> >              -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
+> >> >> > +
+> >> >> > +    ``smp-cache='id'``
+> >> >> > +        Allows to configure cache property (now only the cache topology level).
+> >> >> > +
+> >> >> > +        For example:
+> >> >> > +        ::
+> >> >> > +
+> >> >> > +            -object '{"qom-type":"smp-cache","id":"cache","caches":[{"name":"l1d","topo":"core"},{"name":"l1i","topo":"core"},{"name":"l2","topo":"module"},{"name":"l3","topo":"die"}]}'
+> >> >> > +            -machine smp-cache=cache
+> >> >> >  ERST
+> >> >> >  
+> >> >> >  DEF("M", HAS_ARG, QEMU_OPTION_M,
+> >> >> > @@ -5871,6 +5880,55 @@ SRST
+> >> >> >          ::
+> >> >> >  
+> >> >> >              (qemu) qom-set /objects/iothread1 poll-max-ns 100000
+> >> >> > +
+> >> >> > +    ``-object '{"qom-type":"smp-cache","id":id,"caches":[{"name":cache_name,"topo":cache_topo}]}'``
+> >> >> > +        Create an smp-cache object that configures machine's cache
+> >> >> > +        property. Currently, cache property only include cache topology
+> >> >> > +        level.
+> >> >> > +
+> >> >> > +        This option must be written in JSON format to support JSON list.
+> >> >> 
+> >> >> Why?
+> >> >
+> >> > I'm not familiar with this, so I hope you could educate me if I'm wrong.
+> >> >
+> >> > All I know so far is for -object that defining a list can only be done in
+> >> > JSON format and not with a numeric index like a keyval based option, like:
+> >> >
+> >> > -object smp-cache,id=cache0,caches.0.name=l1i,caches.0.topo=core: Parameter 'caches' is missing
+> >> >
+> >> > the above doesn't work.
+> >> >
+> >> > Is there any other way to specify a list in command line?
+> >> 
+> >> The command line is a big, sprawling mess :)
+> >> 
+> >> -object supports either a JSON or a QemuOpts argument.  *Not* keyval!
+> >> 
+> >> Both QemuOpts and keyval parse something like KEY=VALUE,...  Keyval
+> >> supports arrays and objects via dotted keys.  QemuOpts doesn't natively
+> >> support arrays and objects, but its users can hack around that
+> >> limitation in various ways.  -object doesn't.  So you're right, it's
+> >> JSON or bust here.
+> >> 
+> >> However, if we used one object per cache instead, we could get something
+> >> like
+> >> 
+> >>     -object smp-cache,name=l1d,...
+> >>     -object smp-cache,name=l1u,...
+> >>     -object smp-cache,name=l2,...
+> >>     ...
+> >
+> > Current, I use -object to create a smp_cache object, and link it to
+> > MachineState by -machine,smp-cache=obj_id.
+> >
+> > Then for the objects per cache, how could I link them to machine?
+> >
+> > Is it possible that I create something static in smp_cache.c and expose
+> > all the cache information to machine through some interface?
+> 
+> Good questions.  However, before we head deeper into the weeds here, I
+> feel we should discuss the things below.  And before we do that, I need
+> a clear understanding of the use case.  Elsewhere in this thread, I just
+> described the use case as I understand it.  Please reply there.  I'll
+> then come back to this message.
+> 
+> [...]
 
-  PCI host bridge to bus 0000:00
-  pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
-  pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
-  pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
-  pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
-  pci 0000:00:00.0: [Firmware Bug]: reg 0x14: invalid BAR (can't size)
-  pci 0000:00:00.0: [Firmware Bug]: reg 0x18: invalid BAR (can't size)
-  pci 0000:00:00.0: [Firmware Bug]: reg 0x1c: invalid BAR (can't size)
-  pci 0000:00:00.0: [Firmware Bug]: reg 0x20: invalid BAR (can't size)
-  pci 0000:00:00.0: [Firmware Bug]: reg 0x24: invalid BAR (can't size)
+Jonathan and I provided different use cases for x86 and Arm. Could we
+come back here to continue the discussion? :)
 
-This is due to missing base address register write mask.
-Add it to get:
+Thanks,
+Zhao
 
-  PCI host bridge to bus 0000:00
-  pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
-  pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
-  pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
-  pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
-  pci 0000:00:00.0: reg 0x10: [mem 0x00000000-0x00000fff pref]
-  pci 0000:00:00.0: reg 0x14: [mem 0x01000000-0x01000fff pref]
-  pci 0000:00:00.0: reg 0x18: [mem 0x1c000000-0x1c000fff]
-  pci 0000:00:00.0: reg 0x1c: [mem 0x1f000000-0x1f000fff]
-  pci 0000:00:00.0: reg 0x20: [mem 0x1be00000-0x1be00fff]
-  pci 0000:00:00.0: reg 0x24: [io  0x14000000-0x14000007]
-
-Mention the datasheet referenced. Remove the "Malta assumptions ahead"
-comment since the reset values from the datasheet are used.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/pci-host/gt64120.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
-index e02efc9e2e..0b00e98e0a 100644
---- a/hw/pci-host/gt64120.c
-+++ b/hw/pci-host/gt64120.c
-@@ -1,6 +1,8 @@
- /*
-  * QEMU GT64120 PCI host
-  *
-+ * (Datasheet GT-64120 Rev 1.4 from Sep 14, 1999)
-+ *
-  * Copyright (c) 2006,2007 Aurelien Jarno
-  *
-  * Permission is hereby granted, free of charge, to any person obtaining a copy
-@@ -1213,17 +1215,28 @@ static void gt64120_realize(DeviceState *dev, Error **errp)
- 
- static void gt64120_pci_realize(PCIDevice *d, Error **errp)
- {
--    /* FIXME: Malta specific hw assumptions ahead */
-+
-+    /* Values from chapter 17.16 "PCI Configuration" */
-+
-     pci_set_word(d->config + PCI_COMMAND, 0);
-     pci_set_word(d->config + PCI_STATUS,
-                  PCI_STATUS_FAST_BACK | PCI_STATUS_DEVSEL_MEDIUM);
-     pci_config_set_prog_interface(d->config, 0);
-+
-+    pci_set_long(d->wmask + PCI_BASE_ADDRESS_0, 0xfffff009);
-+    pci_set_long(d->wmask + PCI_BASE_ADDRESS_1, 0xfffff009);
-+    pci_set_long(d->wmask + PCI_BASE_ADDRESS_2, 0xfffff009);
-+    pci_set_long(d->wmask + PCI_BASE_ADDRESS_3, 0xfffff009);
-+    pci_set_long(d->wmask + PCI_BASE_ADDRESS_4, 0xfffff009);
-+    pci_set_long(d->wmask + PCI_BASE_ADDRESS_5, 0xfffff009);
-+
-     pci_set_long(d->config + PCI_BASE_ADDRESS_0, 0x00000008);
-     pci_set_long(d->config + PCI_BASE_ADDRESS_1, 0x01000008);
-     pci_set_long(d->config + PCI_BASE_ADDRESS_2, 0x1c000000);
-     pci_set_long(d->config + PCI_BASE_ADDRESS_3, 0x1f000000);
-     pci_set_long(d->config + PCI_BASE_ADDRESS_4, 0x14000000);
-     pci_set_long(d->config + PCI_BASE_ADDRESS_5, 0x14000001);
-+
-     pci_set_byte(d->config + 0x3d, 0x01);
- }
- 
--- 
-2.45.2
 
 
