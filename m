@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06D1BC3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 17:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BD42C49EA1
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 17:02:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZZBY-0003cv-Rb; Thu, 01 Aug 2024 13:01:52 -0400
+	id 1sZZBQ-0003Ff-Qj; Thu, 01 Aug 2024 13:01:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZZBN-0003B5-92
+ id 1sZZBN-0003BE-AX
  for qemu-devel@nongnu.org; Thu, 01 Aug 2024 13:01:41 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZZBI-0003PW-AZ
+ id 1sZZBI-0003PR-8B
  for qemu-devel@nongnu.org; Thu, 01 Aug 2024 13:01:40 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-42816ca782dso46527745e9.2
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-428e1915e18so6434195e9.1
  for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 10:01:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722531695; x=1723136495; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722531694; x=1723136494; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NnaoF6Fbe7vpRk+nEopMX5bSeltvF/nw8CMgLdRDdWs=;
- b=fHEo60nQypRuNqiNQbMcK9yX16dUTxXFS3rxRzuwY8JCvIM28BED67d99z1Q87e3Rc
- n6Z5+LiieZC3abILAcfo5kKqQAOKAFUORrEkW3bumwx1sPLY9e4jIj+qNy4/28MR91me
- RYGP5KltogXHQP1OKxMpa9jTI7GxUjXBvSEXxu7O5i+bhneBbipNwP+GxWYbhCwYa75v
- vT4bcOPiv+ykhrcDibTZsdtLq9/3/UrijcixKBKoJLLEL3jXVzNWBuguG8CpJ/wY/yW4
- 6qigobp2jyOd/ZxNOpOc4lTF7UCUwX4WvBgZ/YRfJ8J2aV1Qhs46TWxLWcP+BSu7C8S9
- uVSg==
+ bh=dw4w8DX6EHAaNzhMmT3/w3NtJlxoy987bWug5+S1bQA=;
+ b=NCoq2Ppy4+kARIyBSI6Y2NMD6l47g8MSWSTTotjT09zVDPu+Gv6nGedqxebSblju+s
+ dzABJ44sEO85Otgo59iOO9sCPIK9fYFoVdV3Yhb+RpEDYCKkn6v6PPzTLP/vWyuwVMyo
+ g9XrjFnxkvPfIAM8Q2cB3uu55dWAm8XI6XEl+ECQQqkVXQDdzezQT9o/1AyRZTiejGEK
+ bPCOpPR+vZ2MDLEZM/aTrxas4FhoTJAMny5taqnSrX/ym/+QhjV/Rd8W+n40ZdpRoInj
+ 4t6L1/KFo3WjmIPLBn2ym+mgxiMwHTFAzBGor30F7YFYuGE4wppb3ZAcTSWD3kZJy+G9
+ 0kqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722531695; x=1723136495;
+ d=1e100.net; s=20230601; t=1722531694; x=1723136494;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NnaoF6Fbe7vpRk+nEopMX5bSeltvF/nw8CMgLdRDdWs=;
- b=AOSApoTOtW8x0Im8g1nxt/zL0e16rhtRjEFtjEk1V4/BW2hN/BxXcqmgy26PfCodiN
- 4+7RRQJD1BwTb6fbIPYy4c6Fja9Pq0qxL4xfExyS2lTdj2F0v8Nrl9kSJtvhy0re4CzX
- QLvZndtkUjf0T9bC7M093ttr9K6nZp0PSGCoLkM7e2SV34m7f60HscRXEoUb6cZKRdRn
- m0fqXWDCtgPurJDzPDsGN+1Q3y/kHKCDPlkbLXc05dqq70vL0dtLPQRLlNiauVSQo+8f
- pXHU25N2Xh0J91tEajvvMM48Z+6dQUFquJfOlvE8/heo857CFp9FObTPwqX53cY9aYOG
- n0bQ==
-X-Gm-Message-State: AOJu0Yx06qb/KH0j0LbHXn5Wu5wliKR7+PiB39dgFT2XLyUuMB/50r6y
- AXXUf+mH8sP5XvtLFegeA8W7kRnnIRP8VFExzVBxsMYsk0wPm4A+/y4bfDxRzf1ppPbFp7xBgiq
- g
-X-Google-Smtp-Source: AGHT+IEvlbN77RGfdvoSzyp4jaggmfMxzJg/9LQ2qXJhCXPexJ5uB0H/kSo+AtJ9I5jcRpy2qUlxsQ==
-X-Received: by 2002:a05:600c:5489:b0:426:629f:154e with SMTP id
- 5b1f17b1804b1-428e6b7c5cemr3426935e9.30.1722531694435; 
- Thu, 01 Aug 2024 10:01:34 -0700 (PDT)
+ bh=dw4w8DX6EHAaNzhMmT3/w3NtJlxoy987bWug5+S1bQA=;
+ b=HniiADE4LvbzRXusDBcxUodwtUU9K/4EUTmnkd8GEZDPKu6aV7GZaAUxWwlqagFuyv
+ AQTpN/AJDpjxlnrRRuxYNeQbor/nxcK30iPPFL0U2VNiMZwK/NSD/H+0H1ho4GKpSeQA
+ DpK3Nw2P9xWEukN6OLhvSbMLPXpZdYRGaYLzZeYSzLAGE9akn4bPQOuuQSLNJ44iLRrH
+ AiOtkZ1ft5HHhsjEkDSIIMNuoi9ishN29p+6QWR04BL5i4/xMI+yCc1CCNd82Li7HuHi
+ JhzsasGPHBDgz891cE0arhGskilXtj//LQZwC4eHRwcSviCMx2li1d6gNhwKkIWNiq81
+ MVxg==
+X-Gm-Message-State: AOJu0Yworgl3A585CYWOL43HsYASaeW7D5GUt1Dd808+Ga6n0d7dDwpC
+ HNSq51D27SzQp1K7yNu0DyrRWHzMDeZe9WZ6Ylltfd9lHokCR30mgQq19v35M/1HZhsveq3/cA7
+ i
+X-Google-Smtp-Source: AGHT+IHN+2zq8car3XrKKSsg6/HQyT5+NbDlX9w7OcIy8ogQnoVvXbe1tu7LeH7WkobxgiJAnVTrbQ==
+X-Received: by 2002:a05:600c:314a:b0:426:6688:2421 with SMTP id
+ 5b1f17b1804b1-428e6b059a6mr3862475e9.11.1722531693854; 
+ Thu, 01 Aug 2024 10:01:33 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
  5b1f17b1804b1-428e24c2b4csm30385255e9.31.2024.08.01.10.01.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Aug 2024 10:01:34 -0700 (PDT)
+ Thu, 01 Aug 2024 10:01:33 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Eric Blake <eblake@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Stefan Hajnoczi <stefanha@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
  Jiri Pirko <jiri@resnulli.us>
-Subject: [PATCH 3/5] docs/interop/parallels.txt: Convert to rST
-Date: Thu,  1 Aug 2024 18:01:29 +0100
-Message-Id: <20240801170131.3977807-4-peter.maydell@linaro.org>
+Subject: [PATCH 2/5] docs/interop/nbd.txt: Convert to rST
+Date: Thu,  1 Aug 2024 18:01:28 +0100
+Message-Id: <20240801170131.3977807-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240801170131.3977807-1-peter.maydell@linaro.org>
 References: <20240801170131.3977807-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,236 +97,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert parallels.txt to rST format.
+Convert nbd.txt to rST format.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- MAINTAINERS                                   |   2 +-
- docs/interop/index.rst                        |   1 +
- docs/interop/{parallels.txt => parallels.rst} | 108 ++++++++++--------
- 3 files changed, 60 insertions(+), 51 deletions(-)
- rename docs/interop/{parallels.txt => parallels.rst} (72%)
+ MAINTAINERS            |  2 +-
+ docs/interop/index.rst |  1 +
+ docs/interop/nbd.rst   | 89 ++++++++++++++++++++++++++++++++++++++++++
+ docs/interop/nbd.txt   | 72 ----------------------------------
+ 4 files changed, 91 insertions(+), 73 deletions(-)
+ create mode 100644 docs/interop/nbd.rst
+ delete mode 100644 docs/interop/nbd.txt
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index dd159053dbd..37cfe16fd09 100644
+index 2a183fe960b..dd159053dbd 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -3962,7 +3962,7 @@ L: qemu-block@nongnu.org
- S: Supported
- F: block/parallels.c
- F: block/parallels-ext.c
--F: docs/interop/parallels.txt
-+F: docs/interop/parallels.rst
- T: git https://src.openvz.org/scm/~den/qemu.git parallels
- 
- qed
+@@ -3869,7 +3869,7 @@ F: nbd/
+ F: include/block/nbd*
+ F: qemu-nbd.*
+ F: blockdev-nbd.c
+-F: docs/interop/nbd.txt
++F: docs/interop/nbd.rst
+ F: docs/tools/qemu-nbd.rst
+ F: tests/qemu-iotests/tests/*nbd*
+ T: git https://repo.or.cz/qemu/ericb.git nbd
 diff --git a/docs/interop/index.rst b/docs/interop/index.rst
-index b9ceaabc648..70bba62d907 100644
+index ed65395bfb2..b9ceaabc648 100644
 --- a/docs/interop/index.rst
 +++ b/docs/interop/index.rst
-@@ -15,6 +15,7 @@ are useful for making QEMU interoperate with other software.
+@@ -14,6 +14,7 @@ are useful for making QEMU interoperate with other software.
+    dbus-vmstate
     dbus-display
     live-block-operations
-    nbd
-+   parallels
++   nbd
     pr-helper
     qmp-spec
     qemu-ga
-diff --git a/docs/interop/parallels.txt b/docs/interop/parallels.rst
-similarity index 72%
-rename from docs/interop/parallels.txt
-rename to docs/interop/parallels.rst
-index bb3fadf3692..7b328a40c80 100644
---- a/docs/interop/parallels.txt
-+++ b/docs/interop/parallels.rst
-@@ -1,41 +1,46 @@
--= License =
-+Parallels Expandable Image File Format
-+======================================
- 
--Copyright (c) 2015 Denis Lunev
--Copyright (c) 2015 Vladimir Sementsov-Ogievskiy
-+..
-+   Copyright (c) 2015 Denis Lunev
-+   Copyright (c) 2015 Vladimir Sementsov-Ogievskiy
- 
--This work is licensed under the terms of the GNU GPL, version 2 or later.
--See the COPYING file in the top-level directory.
-+   This work is licensed under the terms of the GNU GPL, version 2 or later.
-+   See the COPYING file in the top-level directory.
- 
--= Parallels Expandable Image File Format =
- 
- A Parallels expandable image file consists of three consecutive parts:
--    * header
--    * BAT
--    * data area
+diff --git a/docs/interop/nbd.rst b/docs/interop/nbd.rst
+new file mode 100644
+index 00000000000..de079d31fd8
+--- /dev/null
++++ b/docs/interop/nbd.rst
+@@ -0,0 +1,89 @@
++QEMU NBD protocol support
++=========================
 +
-+* header
-+* BAT
-+* data area
- 
- All numbers in a Parallels expandable image are stored in little-endian byte
- order.
- 
- 
--== Definitions ==
-+Definitions
-+-----------
- 
--    Sector    A 512-byte data chunk.
-+Sector
-+  A 512-byte data chunk.
- 
--    Cluster   A data chunk of the size specified in the image header.
--              Currently, the default size is 1MiB (2048 sectors). In previous
--              versions, cluster sizes of 63 sectors, 256 and 252 kilobytes were
--              used.
-+Cluster
-+  A data chunk of the size specified in the image header.
-+  Currently, the default size is 1MiB (2048 sectors). In previous
-+  versions, cluster sizes of 63 sectors, 256 and 252 kilobytes were used.
- 
--    BAT       Block Allocation Table, an entity that contains information for
--              guest-to-host I/O data address translation.
-+BAT
-+  Block Allocation Table, an entity that contains information for
-+  guest-to-host I/O data address translation.
- 
++QEMU supports the NBD protocol, and has an internal NBD client (see
++``block/nbd.c``), an internal NBD server (see ``blockdev-nbd.c``), and an
++external NBD server tool (see ``qemu-nbd.c``). The common code is placed
++in ``nbd/*``.
++
++The NBD protocol is specified here:
++https://github.com/NetworkBlockDevice/nbd/blob/master/doc/proto.md
++
++The following paragraphs describe some specific properties of NBD
++protocol realization in QEMU.
++
++Metadata namespaces
++-------------------
++
++QEMU supports the ``base:allocation`` metadata context as defined in the
++NBD protocol specification, and also defines an additional metadata
++namespace ``qemu``.
++
++``qemu`` namespace
++------------------
++
++The ``qemu`` namespace currently contains two available metadata context
++types.  The first is related to exposing the contents of a dirty
++bitmap alongside the associated disk contents.  That metadata context
++is named with the following form::
++
++    qemu:dirty-bitmap:<dirty-bitmap-export-name>
++
++Each dirty-bitmap metadata context defines only one flag for extents
++in reply for ``NBD_CMD_BLOCK_STATUS``:
++
++bit 0:
++  ``NBD_STATE_DIRTY``, set when the extent is "dirty"
++
++The second is related to exposing the source of various extents within
++the image, with a single metadata context named::
++
++    qemu:allocation-depth
++
++In the allocation depth context, the entire 32-bit value represents a
++depth of which layer in a thin-provisioned backing chain provided the
++data (0 for unallocated, 1 for the active layer, 2 for the first
++backing layer, and so forth).
++
++For ``NBD_OPT_LIST_META_CONTEXT`` the following queries are supported
++in addition to the specific ``qemu:allocation-depth`` and
++``qemu:dirty-bitmap:<dirty-bitmap-export-name>``:
++
++``qemu:``
++  returns list of all available metadata contexts in the namespace
++``qemu:dirty-bitmap:``
++  returns list of all available dirty-bitmap metadata contexts
++
++Features by version
++-------------------
++
++The following list documents which qemu version first implemented
++various features (both as a server exposing the feature, and as a
++client taking advantage of the feature when present), to make it
++easier to plan for cross-version interoperability.  Note that in
++several cases, the initial release containing a feature may require
++additional patches from the corresponding stable branch to fix bugs in
++the operation of that feature.
++
++2.6
++  ``NBD_OPT_STARTTLS`` with TLS X.509 Certificates
++2.8
++  ``NBD_CMD_WRITE_ZEROES``
++2.10
++  ``NBD_OPT_GO``, ``NBD_INFO_BLOCK``
++2.11
++  ``NBD_OPT_STRUCTURED_REPLY``
++2.12
++  ``NBD_CMD_BLOCK_STATUS`` for ``base:allocation``
++3.0
++  ``NBD_OPT_STARTTLS`` with TLS Pre-Shared Keys (PSK),
++  ``NBD_CMD_BLOCK_STATUS`` for ``qemu:dirty-bitmap:``, ``NBD_CMD_CACHE``
++4.2
++  ``NBD_FLAG_CAN_MULTI_CONN`` for shareable read-only exports,
++  ``NBD_CMD_FLAG_FAST_ZERO``
++5.2
++  ``NBD_CMD_BLOCK_STATUS`` for ``qemu:allocation-depth``
++7.1
++  ``NBD_FLAG_CAN_MULTI_CONN`` for shareable writable exports
++8.2
++  ``NBD_OPT_EXTENDED_HEADERS``, ``NBD_FLAG_BLOCK_STATUS_PAYLOAD``
+diff --git a/docs/interop/nbd.txt b/docs/interop/nbd.txt
+deleted file mode 100644
+index 18efb251de9..00000000000
+--- a/docs/interop/nbd.txt
++++ /dev/null
+@@ -1,72 +0,0 @@
+-QEMU supports the NBD protocol, and has an internal NBD client (see
+-block/nbd.c), an internal NBD server (see blockdev-nbd.c), and an
+-external NBD server tool (see qemu-nbd.c). The common code is placed
+-in nbd/*.
 -
--== Header ==
-+Header
-+------
- 
- The header is placed at the start of an image and contains the following
--fields:
-+fields::
- 
--Bytes:
-+ Bytes:
-    0 - 15:    magic
-               Must contain "WithoutFreeSpace" or "WithouFreSpacExt".
- 
-@@ -103,44 +108,46 @@ Bytes:
-               ext_off must meet the same requirements as cluster offsets
-               defined by BAT entries (see below).
- 
+-The NBD protocol is specified here:
+-https://github.com/NetworkBlockDevice/nbd/blob/master/doc/proto.md
 -
--== BAT ==
-+BAT
-+---
- 
- BAT is placed immediately after the image header. In the file, BAT is a
- contiguous array of 32-bit unsigned little-endian integers with
--(bat_entries * 4) bytes size.
-+``(bat_entries * 4)`` bytes size.
- 
- Each BAT entry contains an offset from the start of the file to the
--corresponding cluster. The offset set in clusters for "WithouFreSpacExt" images
--and in sectors for "WithoutFreeSpace" images.
-+corresponding cluster. The offset set in clusters for ``WithouFreSpacExt``
-+images and in sectors for ``WithoutFreeSpace`` images.
- 
- If a BAT entry is zero, the corresponding cluster is not allocated and should
- be considered as filled with zeroes.
- 
- Cluster offsets specified by BAT entries must meet the following requirements:
--    - the value must not be lower than data offset (provided by header.data_off
--      or calculated as specified above),
--    - the value must be lower than the desired file size,
--    - the value must be unique among all BAT entries,
--    - the result of (cluster offset - data offset) must be aligned to cluster
--      size.
- 
-+- the value must not be lower than data offset (provided by ``header.data_off``
-+  or calculated as specified above)
-+- the value must be lower than the desired file size
-+- the value must be unique among all BAT entries
-+- the result of ``(cluster offset - data offset)`` must be aligned to
-+  cluster size
- 
--== Data Area ==
-+Data Area
-+---------
- 
--The data area is an area from the data offset (provided by header.data_off or
--calculated as specified above) to the end of the file. It represents a
-+The data area is an area from the data offset (provided by ``header.data_off``
-+or calculated as specified above) to the end of the file. It represents a
- contiguous array of clusters. Most of them are allocated by the BAT, some may
--be allocated by the ext_off field in the header while other may be allocated by
--extensions. All clusters allocated by ext_off and extensions should meet the
--same requirements as clusters specified by BAT entries.
-+be allocated by the ``ext_off`` field in the header while other may be
-+allocated by extensions. All clusters allocated by ``ext_off`` and extensions
-+should meet the same requirements as clusters specified by BAT entries.
- 
- 
--== Format Extension ==
-+Format Extension
-+----------------
- 
- The Format Extension is an area 1 cluster in size that provides additional
- format features. This cluster is addressed by the ext_off field in the header.
--The format of the Format Extension area is the following:
-+The format of the Format Extension area is the following::
- 
-    0 -  7:    magic
-               Must be 0xAB234CEF23DCEA87
-@@ -149,10 +156,10 @@ The format of the Format Extension area is the following:
-               The MD5 checksum of the entire Header Extension cluster except
-               the first 24 bytes.
- 
--    The above are followed by feature sections or "extensions". The last
--    extension must be "End of features" (see below).
-+The above are followed by feature sections or "extensions". The last
-+extension must be "End of features" (see below).
- 
--Each feature section has the following format:
-+Each feature section has the following format::
- 
-    0 -  7:    magic
-               The identifier of the feature:
-@@ -183,16 +190,17 @@ Each feature section has the following format:
- 
-   variable:   data (data_size bytes)
- 
--    The above is followed by padding to the next 8 bytes boundary, then the
--    next extension starts.
-+The above is followed by padding to the next 8 bytes boundary, then the
-+next extension starts.
- 
--    The last extension must be "End of features" with all the fields set to 0.
-+The last extension must be "End of features" with all the fields set to 0.
- 
- 
--=== Dirty bitmaps feature ===
-+Dirty bitmaps feature
-+---------------------
- 
- This feature provides a way of storing dirty bitmaps in the image. The fields
--of its data area are:
-+of its data area are::
- 
-    0 -  7:    size
-               The bitmap size, should be equal to disk size in sectors.
-@@ -215,7 +223,7 @@ clusters inside the Parallels image file. The offsets of these clusters are
- saved in the L1 offset table specified by the feature extension. Each L1 table
- entry is a 64 bit integer as described below:
- 
--Given an offset in bytes into the bitmap data, corresponding L1 entry is
-+Given an offset in bytes into the bitmap data, corresponding L1 entry is::
- 
-     l1_table[offset / cluster_size]
- 
-@@ -227,6 +235,6 @@ are assumed to be 1.
- 
- If an L1 table entry is not 0 or 1, it contains the corresponding cluster
- offset (in 512b sectors). Given an offset in bytes into the bitmap data the
--offset in bytes into the image file can be obtained as follows:
-+offset in bytes into the image file can be obtained as follows::
- 
-     offset = l1_table[offset / cluster_size] * 512 + (offset % cluster_size)
+-The following paragraphs describe some specific properties of NBD
+-protocol realization in QEMU.
+-
+-= Metadata namespaces =
+-
+-QEMU supports the "base:allocation" metadata context as defined in the
+-NBD protocol specification, and also defines an additional metadata
+-namespace "qemu".
+-
+-== "qemu" namespace ==
+-
+-The "qemu" namespace currently contains two available metadata context
+-types.  The first is related to exposing the contents of a dirty
+-bitmap alongside the associated disk contents.  That metadata context
+-is named with the following form:
+-
+-    qemu:dirty-bitmap:<dirty-bitmap-export-name>
+-
+-Each dirty-bitmap metadata context defines only one flag for extents
+-in reply for NBD_CMD_BLOCK_STATUS:
+-
+-    bit 0: NBD_STATE_DIRTY, set when the extent is "dirty"
+-
+-The second is related to exposing the source of various extents within
+-the image, with a single metadata context named:
+-
+-    qemu:allocation-depth
+-
+-In the allocation depth context, the entire 32-bit value represents a
+-depth of which layer in a thin-provisioned backing chain provided the
+-data (0 for unallocated, 1 for the active layer, 2 for the first
+-backing layer, and so forth).
+-
+-For NBD_OPT_LIST_META_CONTEXT the following queries are supported
+-in addition to the specific "qemu:allocation-depth" and
+-"qemu:dirty-bitmap:<dirty-bitmap-export-name>":
+-
+-* "qemu:" - returns list of all available metadata contexts in the
+-            namespace.
+-* "qemu:dirty-bitmap:" - returns list of all available dirty-bitmap
+-                         metadata contexts.
+-
+-= Features by version =
+-
+-The following list documents which qemu version first implemented
+-various features (both as a server exposing the feature, and as a
+-client taking advantage of the feature when present), to make it
+-easier to plan for cross-version interoperability.  Note that in
+-several cases, the initial release containing a feature may require
+-additional patches from the corresponding stable branch to fix bugs in
+-the operation of that feature.
+-
+-* 2.6: NBD_OPT_STARTTLS with TLS X.509 Certificates
+-* 2.8: NBD_CMD_WRITE_ZEROES
+-* 2.10: NBD_OPT_GO, NBD_INFO_BLOCK
+-* 2.11: NBD_OPT_STRUCTURED_REPLY
+-* 2.12: NBD_CMD_BLOCK_STATUS for "base:allocation"
+-* 3.0: NBD_OPT_STARTTLS with TLS Pre-Shared Keys (PSK),
+-NBD_CMD_BLOCK_STATUS for "qemu:dirty-bitmap:", NBD_CMD_CACHE
+-* 4.2: NBD_FLAG_CAN_MULTI_CONN for shareable read-only exports,
+-NBD_CMD_FLAG_FAST_ZERO
+-* 5.2: NBD_CMD_BLOCK_STATUS for "qemu:allocation-depth"
+-* 7.1: NBD_FLAG_CAN_MULTI_CONN for shareable writable exports
+-* 8.2: NBD_OPT_EXTENDED_HEADERS, NBD_FLAG_BLOCK_STATUS_PAYLOAD
 -- 
 2.34.1
 
