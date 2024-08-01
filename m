@@ -4,79 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1E7C3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 07:00:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6225FC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 07:02:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZPnM-0002ot-FZ; Thu, 01 Aug 2024 03:00:16 -0400
+	id 1sZPox-0007KL-1k; Thu, 01 Aug 2024 03:01:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sZPnJ-0002nn-Tk
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 03:00:14 -0400
-Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sZPou-0007Gp-Nh
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 03:01:52 -0400
+Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sZPnG-0005cQ-VR
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 03:00:13 -0400
-Received: by mail-yb1-xb2a.google.com with SMTP id
- 3f1490d57ef6-e0878971aa9so1438494276.0
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 00:00:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sZPos-0005up-Bv
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 03:01:52 -0400
+Received: by mail-oa1-x33.google.com with SMTP id
+ 586e51a60fabf-260f81f7fb5so4243800fac.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 00:01:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722495606; x=1723100406;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722495709; x=1723100509;
  darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PE2yF/IDMq4m/DeSYnAqyzZd19W1t/pWFKq5VLAEMLE=;
- b=IXe3kJm5QmYVrrsUVLB2wPvOLP/cd5HWXxA5/vMGJmRci1gV2lqOk4MpiLreLMDy9s
- +HYqscQ3z7oAetiEehD+WndicvMA1goobNraMffZ61O5ZXf3qvyQJPnDXb7YpwYYkwQz
- 4JZAlo7g1Xgk0y5mfbMDBS+TuRfjZH9/TlxT7793HkjFxSxeidJ7bozsHGqyF8bx0NB9
- NrrQoRzphelphZBVB1IcVsCHCoIVV3ZzXNr5t+13uEsqGr58ZG0x68XWrpgEZl+SQzDF
- h1FOG4BpR+FUwCPvUG5dHJzVpuGmAgseZSC3c3vwq6P+Kpm+4BAf6vdOczFvDdPb4xAw
- zz3A==
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=U3OyFyJMm7DE0+LmkOnr1LnHwmEy+eI8Z4WFiC09V+E=;
+ b=ITSCfLor5TYxqh30VnbA89YZ/5rLc3tFoUb9eak//SJJS/WyJ0FwiZ4bKoCstDMZ+J
+ 9LBa1PltMWlQXGLQxXyhMSJD9T8+YHSBtJ5YBWL2I1H01L3imsp66iT4qvsH/TBCl9Im
+ 6um14oneOOu8s/p/8zUNqqBfHMzuo7YW/PHJvn79T3xM2udIZnU13swDimEpGnhui4AS
+ 9y/tt+Q0qhwOS1aUn6lsbZEk8eBAS6Qs5HOO31MURXgzUS/XwG4B2xT+EqaJkGOgy0sN
+ Pv2NDtEJyhfzfz09OkuqxYdpwgQqJq+f3ReuRiTm1KDz30OTkXozQwUJhy1e52Az3FNw
+ evSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722495606; x=1723100406;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PE2yF/IDMq4m/DeSYnAqyzZd19W1t/pWFKq5VLAEMLE=;
- b=e8pj5aIC8yjG+SaaUbw4zb0yjRY41KbHp4eOQpXrQ1XcIG1WtLlSzfGyTv8aXjgsP9
- jfOrKTBiUnMhnHFs3tUj/tzEJpikT+4LLOdi+Z9HYSE3PKICOzzObYiwBwpg6o+OwNfp
- FuPez5AYBDyAhZYRQ+avu7WAy2px5m2QEyZvbqlsfx/zNCorKc1wZ/4x3AJUw0pGBKYG
- o2f0HnG49qmiKGkTDv6mjdivgVN900AnL0f1LHhhppGh1CYoV7N36mYZQUxqOPFWuEzk
- RnB5iWA3IsMhIt3F+HG5Ps0LryC+Rf2N5EEkN6esA31RUx7qkCEsZm3vwBZPT//9owhW
- xPTQ==
-X-Gm-Message-State: AOJu0YzqkK5eoxcfIQHwUkUNi/TLqBXhA/oRw4hVL9fjgbua3VCtsilv
- K1BCdiC0lPhvXoSqEU4r9L3dkozzVtwfVmM1VDWo9+g0ATHTLnQ0JZFp+Q2AOQyTAmn8uMShN4o
- u/VKGefDH3lAYPzQ4ckpvWY5Nt2W2dDVH2xAEew==
-X-Google-Smtp-Source: AGHT+IHPcaDTBIRELdXRt4An0y9A5huenk7NoTqD+jUAN4kXtSPjuB4i8BnBoohYFsxzk+Rd9Yp237nTtvT0s01NWJc=
-X-Received: by 2002:a25:ef0c:0:b0:e0b:528b:1ee2 with SMTP id
- 3f1490d57ef6-e0bd5ae204bmr260175276.27.1722495606482; Thu, 01 Aug 2024
- 00:00:06 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1722495709; x=1723100509;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=U3OyFyJMm7DE0+LmkOnr1LnHwmEy+eI8Z4WFiC09V+E=;
+ b=xNsWtQl4Ln8nU5IA4Ru4lmLMQ7jS9du5hoiW4wAqhkXRi+h1iNJJ5vc2D28EoIGUPZ
+ +NUv41+QOf3O8f1WwHssltQcg8sVIMl9GLVB2Y2TkedYGDtustdjAS7oTiLk51NN8XOK
+ GBkJdGaU0I4cXbmYiHHPZjefOHJ0yerSXJpwFmf/PgXNsqewrtekiCFEeg2QyUG0kXOW
+ l60r6xSiSrBmygdBWkc4sBWdEXFfDr2XzhVUdescM1hoi/bFNzHwvoac/froehvR7zhS
+ +A3RT1RhhGjeGqFRlq0kxuHpNgwpPfn3RFYIy5TgivnEuKpBPZJbYG78IMfSCjURW2c/
+ 3uGw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUjkiwwaEcyHjFDP7xmSc2hCEPhogiiG6lQ0L31HaxSQkNJhOS8FTTCpDsy5zE71SYG2vrax/sWJtHja2Q8T/Modu60nTE=
+X-Gm-Message-State: AOJu0YwE/ONb+KTHwSlwrXGMdXVRt9VNxHRLMKmiWxoOVhMFj3x6lruY
+ C6wQlewEhwWDFRzu1omjvG9vC3mjDBGRM4/FWyH4iD0VYredzYXfJ7sB/cnKALc=
+X-Google-Smtp-Source: AGHT+IHkoLb6YFONyBqchwplJnJ4JVYDPrEYumf/EN3N7u2N80AYv8zDRXIhMOQHOCYZsZWNByx3dQ==
+X-Received: by 2002:a05:6870:7194:b0:25e:8509:160e with SMTP id
+ 586e51a60fabf-2687a36745fmr1835132fac.3.1722495708982; 
+ Thu, 01 Aug 2024 00:01:48 -0700 (PDT)
+Received: from ?IPV6:2400:4050:a840:1e00:32ed:25ae:21b1:72d6?
+ ([2400:4050:a840:1e00:32ed:25ae:21b1:72d6])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70ead712691sm10909265b3a.49.2024.08.01.00.01.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 Aug 2024 00:01:48 -0700 (PDT)
+Message-ID: <8ee4464e-f9b3-48bc-9fa3-0b5f0d2a5faf@daynix.com>
+Date: Thu, 1 Aug 2024 16:01:44 +0900
 MIME-Version: 1.0
-References: <20240729175327.73705-1-debug@rivosinc.com>
- <20240729175327.73705-6-debug@rivosinc.com>
- <ed23bcbc-fdc4-4492-803c-daa95880375a@linaro.org>
-In-Reply-To: <ed23bcbc-fdc4-4492-803c-daa95880375a@linaro.org>
-From: Deepak Gupta <debug@rivosinc.com>
-Date: Wed, 31 Jul 2024 23:59:51 -0700
-Message-ID: <CAKC1njQJiNHT1b2jD009zsNeXrUZ9OG2S4VTeFmnAS4c_f-kAA@mail.gmail.com>
-Subject: Re: [PATCH v2 05/24] target/riscv: tracking indirect branches (fcfi)
- for zicfilp
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
- envelope-from=debug@rivosinc.com; helo=mail-yb1-xb2a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] hw/pci: Convert rom_bar into OnOffAuto
+To: Markus Armbruster <armbru@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+References: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
+ <87a5hyj71o.fsf@pond.sub.org>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <87a5hyj71o.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2001:4860:4864:20::33;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oa1-x33.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,119 +109,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 29, 2024 at 7:34=E2=80=AFPM Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 7/30/24 03:53, Deepak Gupta wrote:
-> > diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> > index acba90f170..c746d7df08 100644
-> > --- a/target/riscv/translate.c
-> > +++ b/target/riscv/translate.c
-> > @@ -20,6 +20,7 @@
-> >   #include "qemu/log.h"
-> >   #include "cpu.h"
-> >   #include "tcg/tcg-op.h"
-> > +#include "tcg/tcg-temp-internal.h"
->
-> No, this is internal to tcg, as the filename says.
+On 2024/07/31 17:32, Markus Armbruster wrote:
+> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+> 
+>> rom_bar is tristate but was defined as uint32_t so convert it into
+>> OnOffAuto to clarify that. For compatibility, a uint32 value set via
+>> QOM will be converted into OnOffAuto.
+>>
+>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> 
+> I agree making property "rombar" an integer was a design mistake.  I
+> further agree that vfio_pci_size_rom() peeking into dev->opts to
+> distinguish "user didn't set a value" from "user set the default value")
+> is an unadvisable hack.
+> 
+> However, ...
+> 
+>> ---
+>> Changes in v2:
+>> - Documented in docs/about/deprecated.rst (Daniel P. Berrangé)
+>> - Link to v1: https://lore.kernel.org/r/20240706-rombar-v1-0-802daef2aec1@daynix.com
+>>
+>> ---
+>> Akihiko Odaki (4):
+>>        qapi: Add visit_type_str_preserving()
+>>        qapi: Do not consume a value when visit_type_enum() fails
+>>        hw/pci: Convert rom_bar into OnOffAuto
+>>        hw/qdev: Remove opts member
+>>
+>>   docs/about/deprecated.rst         |  7 +++++
+>>   docs/igd-assign.txt               |  2 +-
+>>   include/hw/pci/pci_device.h       |  2 +-
+>>   include/hw/qdev-core.h            |  4 ---
+>>   include/qapi/visitor-impl.h       |  3 ++-
+>>   include/qapi/visitor.h            | 25 +++++++++++++----
+>>   hw/core/qdev.c                    |  1 -
+>>   hw/pci/pci.c                      | 57 +++++++++++++++++++++++++++++++++++++--
+>>   hw/vfio/pci-quirks.c              |  2 +-
+>>   hw/vfio/pci.c                     | 11 ++++----
+>>   hw/xen/xen_pt_load_rom.c          |  4 +--
+>>   qapi/opts-visitor.c               | 12 ++++-----
+>>   qapi/qapi-clone-visitor.c         |  2 +-
+>>   qapi/qapi-dealloc-visitor.c       |  4 +--
+>>   qapi/qapi-forward-visitor.c       |  4 ++-
+>>   qapi/qapi-visit-core.c            | 21 ++++++++++++---
+>>   qapi/qobject-input-visitor.c      | 23 ++++++++--------
+>>   qapi/qobject-output-visitor.c     |  2 +-
+>>   qapi/string-input-visitor.c       |  2 +-
+>>   qapi/string-output-visitor.c      |  2 +-
+>>   system/qdev-monitor.c             | 12 +++++----
+>>   tests/qtest/virtio-net-failover.c | 32 +++++++++++-----------
+>>   22 files changed, 161 insertions(+), 73 deletions(-)
+>> ---
+>> base-commit: f2cb4026fccfe073f84a4b440e41d3ed0c3134f6
+>> change-id: 20240704-rombar-1a4ba2890d6c
+>>
+>> Best regards,
+> 
+> ... this is an awful lot of QAPI visitor infrastructure.  Infrastructure
+> that will likely only ever be used for this one property.
+> 
+> Moreover, the property setter rom_bar_set() is a hack: it first tries to
+> parse the value as enum, and if that fails, as uint32_t.  QAPI already
+> provides a way to express "either this type or that type": alternate.
+> Like this:
+> 
+>      { 'alternate': 'OnOffAutoUint32',
+>        'data': { 'sym': 'OnOffAuto',
+>                  'uint': 'uint32' } }
+> 
+> Unfortunately, such alternates don't work on the command line due to
+> keyval visitor restrictions.  These cannot be lifted entirely, but we
+> might be able to lift them sufficiently to make this alternate work.
 
-Ok
+The keyval visitor cannot implement alternates because the command line 
+input does not have type information. For example, you cannot 
+distinguish string "0" and integer 0.
 
->
->
-> >   #include "exec/exec-all.h"
-> >   #include "exec/helper-proto.h"
-> >   #include "exec/helper-gen.h"
-> > @@ -44,6 +45,7 @@ static TCGv load_val;
-> >   /* globals for PM CSRs */
-> >   static TCGv pm_mask;
-> >   static TCGv pm_base;
-> > +static TCGOp *cfi_lp_check;
-> >
-> >   /*
-> >    * If an operation is being performed on less than TARGET_LONG_BITS,
-> > @@ -116,6 +118,9 @@ typedef struct DisasContext {
-> >       bool frm_valid;
-> >       bool insn_start_updated;
-> >       const GPtrArray *decoders;
-> > +    /* zicfilp extension. cfi enabled or not. lp expected or not */
-> > +    bool fcfi_enabled;
-> > +    bool fcfi_lp_expected;
-> >   } DisasContext;
-> >
-> >   static inline bool has_ext(DisasContext *ctx, uint32_t ext)
-> > @@ -1238,6 +1243,8 @@ static void riscv_tr_init_disas_context(DisasCont=
-extBase *dcbase, CPUState *cs)
-> >       ctx->pm_base_enabled =3D FIELD_EX32(tb_flags, TB_FLAGS, PM_BASE_E=
-NABLED);
-> >       ctx->ztso =3D cpu->cfg.ext_ztso;
-> >       ctx->itrigger =3D FIELD_EX32(tb_flags, TB_FLAGS, ITRIGGER);
-> > +    ctx->fcfi_lp_expected =3D FIELD_EX32(tb_flags, TB_FLAGS, FCFI_LP_E=
-XPECTED);
-> > +    ctx->fcfi_enabled =3D cpu_get_fcfien(env) && ctx->fcfi_lp_expected=
-;
->
-> This is incorrect.  You cannot check fcfien like this here; you must plac=
-e it in a tb flag
-> like "lp_expected".
+> 
+> Whether it would be worth your trouble and mine just to clean up
+> "rombar" seems highly dubious, though.
 
-hmm... you've suggested below to use `aarch64_tr_translate_insn` and
-check if it's the first instruction.
-and put the check there.
-In that case I won't need FCFI_LP_EXPECTED TB flag.
-Then I would rather use it as FCFI_ENABLED TB flag.
+rom_bar_set() and and underlying visit_type_str_preserving() are ugly, 
+but we can remove them once the deprecation period ends. On the other 
+hand, if we don't make this change, dev->opts will keep floating around, 
+and we will even have another use of it for "[PATCH v5 1/8] hw/pci: Do 
+not add ROM BAR for SR-IOV VF"[1]. Eventually, having this refactoring 
+early will result in less mess in the future.
 
->
->
-> > @@ -1245,6 +1252,39 @@ static void riscv_tr_init_disas_context(DisasCon=
-textBase *dcbase, CPUState *cs)
-> >
-> >   static void riscv_tr_tb_start(DisasContextBase *db, CPUState *cpu)
-> >   {
-> > +    DisasContext *ctx =3D container_of(db, DisasContext, base);
-> > +
-> > +    if (ctx->fcfi_lp_expected) {
-> > +        /*
-> > +         * Since we can't look ahead to confirm that the first
-> > +         * instruction is a legal landing pad instruction, emit
-> > +         * compare-and-branch sequence that will be fixed-up in
-> > +         * riscv_tr_tb_stop() to either statically hit or skip an
-> > +         * illegal instruction exception depending on whether the
-> > +         * flag was lowered by translation of a CJLP or JLP as
-> > +         * the first instruction in the block.
-> > +         */
-> > +        TCGv_i32 immediate;
-> > +        TCGLabel *l;
-> > +        l =3D gen_new_label();
-> > +        immediate =3D tcg_temp_new_i32();
-> > +        tcg_gen_movi_i32(immediate, 0);
-> > +        cfi_lp_check =3D tcg_last_op();
-> > +        tcg_gen_brcondi_i32(TCG_COND_EQ, immediate, 0, l);
-> > +        tcg_temp_free_i32(immediate);
-> > +        tcg_gen_st_tl(
-> > +            tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
-> > +            tcg_env, offsetof(CPURISCVState, sw_check_code));
-> > +        generate_exception(ctx, RISCV_EXCP_SW_CHECK);
-> > +        gen_set_label(l);
-> > +        /*
-> > +         * Despite the use of gen_exception_illegal(), the rest of
-> > +         * the TB needs to be generated. The TCG optimizer will
-> > +         * clean things up depending on which path ends up being
-> > +         * active.
-> > +         */
-> > +        ctx->base.is_jmp =3D DISAS_NEXT;
-> > +    }
-> >   }
->
-> Better to simply delay the check to the first insn load.
-> See aarch64_tr_translate_insn, dc_isar_feature(aa64_bti, s).
-
-Hmmm...
-Thanks, I think it'll probably make it simpler.
-Let me re-work this logic and test it out if it works.
-
->
->
-> r~
->
+[1]: lore.kernel.org/r/20240715-sriov-v5-1-3f5539093ffc@daynix.com
 
