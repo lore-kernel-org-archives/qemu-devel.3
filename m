@@ -4,83 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 081FBC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 17:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E735C3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 17:13:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZZKa-0002ce-Ho; Thu, 01 Aug 2024 13:11:12 -0400
+	id 1sZZMl-0000kv-Sf; Thu, 01 Aug 2024 13:13:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZZKZ-0002Wz-21
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 13:11:11 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sZZMj-0000jU-9Y
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 13:13:25 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZZKW-0008C8-Rc
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 13:11:10 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5a309d1a788so9470482a12.3
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 10:11:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sZZMh-0000PH-Km
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 13:13:25 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5b3fff87e6bso4676293a12.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 10:13:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722532267; x=1723137067; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6mqXJquTnHdY/YtS54manBY5C+91VQc0Rygeywp5xE4=;
- b=nFDdG/1i254+JjFP6OPUTTmzejJMsgOzcNDH2AA/4JhFRU1xy7Lsm8B47m8FUSiHAu
- Q0sPuOjxGZyLnHDLSHBJadQi1HbPdPPD0KF6pQF4HjZIvTQt11JBNtUqsWFOYz4hvUl4
- PXlAp2GZP2NHD6CqfD9QnYum0ovvq/x3gwcF7VJAQ6DhvvhNL/bjJqLnCoRiMaGXttHH
- ZDKzx1kc5Ym2Z0QiFXH2kPiEtOgJIVlUbJ+7Id0kmGxw0PvtEMkprUwW9r917dnYMCHS
- IZJ9kZSPsja8Us3sDvC7eHFjzXsKyksgNzllf6fgDov9uLEXbZOcE6qYte1v8mAQlybD
- Bwjw==
+ d=linaro.org; s=google; t=1722532402; x=1723137202; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XX6xyXp3Eu7eHbz0e73qKBkFrUxsWO22pZYUSP2GSv4=;
+ b=h/wGLoiFCM8A9hJlPXU0jQILsUltGEMuT+cfoom7ctQXE9r9ToH3E9QNZzfmR5r6uL
+ uTni643IRecdLQTwCDBfuMVZE73hw0NLYcy349bPoWf5QWM6+HZcS/TQTNyFUrIuTwTQ
+ /RKpZ2OXu/dqngZ/vXRGS+NxeNUmHceTfunLkaeVVxwvwmp/0dhPrkQlpQbEGWUTWZan
+ COLaCDvUsEQP2+JaoaNUck850P/2yWnIlurRPCZWCdRawPtPXXYJ9qYXvJ0iyoxOgPwt
+ 1Oomoq3HS3/R0RERE+4uAMbepx6y2Ji0Kak7zfMUcIzc9kwOfjUzrLJ8fDyK0Tceax1I
+ GJ+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722532267; x=1723137067;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6mqXJquTnHdY/YtS54manBY5C+91VQc0Rygeywp5xE4=;
- b=YtilPBUAyrzyEj+YAgayota+GXpWYcOWSOh2kKlz6SSDRzHXWJePFD8b+xAQtnnBlJ
- ehDyxzqpeod5KakWbptZuqut3MfVldJtk0CCJ1aWsFzhSv4h/+HWM0zpMz/8H0ozNiW7
- e2crcJwrJ5YZad/JgWiUhqO3dhLY0Gm2lzzbkrJLI45mzhZ0DL074dw+Q2I1Gzbmiwfy
- WYt1fwAM78In+OWqWCULjG01wR4wQDIpjS1WFtBUP17G4cwdEixi91o6sf8sLb/7N9ML
- TGaGLZCmQM4rOmT0IEVwWSZp3a/GXy7G6vk0Gv9zB+nxuMmYxTfEcjdp/mfHM7fush3y
- CIeQ==
+ d=1e100.net; s=20230601; t=1722532402; x=1723137202;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XX6xyXp3Eu7eHbz0e73qKBkFrUxsWO22pZYUSP2GSv4=;
+ b=tcSx62qAh2ps8wvz/gyYA9qPaIjCL/ubGPQhhOqAjVXokFf10yxI2qS/hlrocPKmGN
+ IDqTIL9N8y+cRE2jqDPxVV58Me/1FCeosxEl+Tx24MLJH/b2c8xDvkkVVIZkgzIP1Chl
+ R6q2/0AjyRyTtbas5EJdfz+oEsYoBrKymaZrn1ri4T+cQmZRV71NmJ/KNvMkxblBy2qh
+ Jr7ThOQi+8QIN8hqcO5lL+qAScQ1LazOjAwpngOzYQgrail/Xna95XKzAr/lmn98TOs5
+ uWg4BSiMhtmnceFx9WS9HF13lAv5ks31Tq12n4t7x8N/QiWfwz8qLv4LB0Fd1G0xo2A+
+ Uj9w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV7370MOgPCoTfLDhfTXXFo+3FGtCjJYKiJAMG2oPd5XQdOA5YpNwbFUfL0LN6wNgWTC/caPUSoo5FeozekadSlAqhmm60=
-X-Gm-Message-State: AOJu0YzrbCZJ3Xr34odHhMdh98Mc4EiaE/IOaXPPOgNyWdZvY97ryiRR
- uwEC9dpNikN6FScE700+EpTajui5G2g3CLrcq7CDKj4JfYFWfKTPfHV5UOElzeCQOhiJ5IpCFL1
- hfuw=
-X-Google-Smtp-Source: AGHT+IHo3VsVJ1vJiEN0oTzOvljVrVHgZlDukt2+k9AqGOpF0Wkjmb1M7Y3/Em4C363Y8FhH/mczIQ==
-X-Received: by 2002:a50:eaca:0:b0:5af:5342:c5bf with SMTP id
- 4fb4d7f45d1cf-5b7f540a6bcmr829042a12.29.1722532266682; 
- Thu, 01 Aug 2024 10:11:06 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.211.94])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5b83b82bf63sm4230a12.75.2024.08.01.10.11.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Aug 2024 10:11:06 -0700 (PDT)
-Message-ID: <0f30e83a-2048-4dcb-ba41-47920c62e1e1@linaro.org>
-Date: Thu, 1 Aug 2024 19:11:01 +0200
+ AJvYcCU9hOODbAsxlORwUqLsxwdf2LwlVBjYf7UKRpLwQDNkxHpg6rlj36PJRZALccgCJ7R172ffLThTn5E6UA6W4/40qdkRYhE=
+X-Gm-Message-State: AOJu0YzwkV4NRAl1NYb9sZlH5L1NyeIMgl9fc3uAEVGs62wkhwWYrLnv
+ yKiLg+D7+SRsSq9WXGDwhSbSeDIv2VZ7hBxem+9eXIqBKVkW+EhLiReIXhJiEnWSXBBCcP9Xecd
+ equK4hV8sbd1MlWmgWg9dMysNUiNhtWqSyJYy5g==
+X-Google-Smtp-Source: AGHT+IFsPibWC0IuIoyt+PMJtZQMkXdIMToJJkrk0OwSlsMXjUJeVh3c5hHJN6rmRgB3reef6R/z6E4w0FeWxGRX2lg=
+X-Received: by 2002:a05:6402:1642:b0:5a2:2101:a714 with SMTP id
+ 4fb4d7f45d1cf-5b7f540abfamr721274a12.25.1722532401880; Thu, 01 Aug 2024
+ 10:13:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 13/24] tests/functional: Convert the s390x avocado
- tests into standalone tests
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, qemu-s390x <qemu-s390x@nongnu.org>
-Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>
-References: <20240730170347.4103919-1-berrange@redhat.com>
- <20240730170347.4103919-14-berrange@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240730170347.4103919-14-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
+References: <20240801150021.52977-1-philmd@linaro.org>
+ <20240801150021.52977-2-philmd@linaro.org>
+ <5e765e4d-5314-0737-fccf-635d9365f796@eik.bme.hu>
+ <20240801113646-mutt-send-email-mst@kernel.org>
+ <0d19415f-4ec8-4089-b158-3cc3183232ed@linaro.org>
+In-Reply-To: <0d19415f-4ec8-4089-b158-3cc3183232ed@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 1 Aug 2024 18:13:10 +0100
+Message-ID: <CAFEAcA9EfC9yB8EYy_wpfGh-1pHx0hByqSkCfcXpKGH7hgFihg@mail.gmail.com>
+Subject: Re: [PATCH-for-9.1 v3 1/2] hw/pci-host/gt64120: Reset config
+ registers during RESET phase
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,147 +98,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/7/24 19:03, Daniel P. Berrangé wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> These tests use archive.lzma_uncompress() from the Avocado utils,
-> so provide a small helper function for this, based on the
-> standard lzma module from Python instead.
-> 
-> And while we're at it, replace the MD5 hashes in the topology test
-> with proper SHA256 hashes, since MD5 should not be used anymore
-> nowadays.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   MAINTAINERS                                   |  4 +-
->   tests/functional/meson.build                  |  6 ++
->   tests/functional/qemu_test/utils.py           | 14 +++
->   .../test_s390x_ccw_virtio.py}                 | 79 ++++++++---------
->   .../test_s390x_topology.py}                   | 86 ++++++++-----------
->   5 files changed, 94 insertions(+), 95 deletions(-)
->   rename tests/{avocado/machine_s390_ccw_virtio.py => functional/test_s390x_ccw_virtio.py} (85%)
->   mode change 100644 => 100755
->   rename tests/{avocado/s390_topology.py => functional/test_s390x_topology.py} (88%)
->   mode change 100644 => 100755
+On Thu, 1 Aug 2024 at 18:03, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+>
+> +Peter who is tackling our Reset interface limitations,
+> +Daniel for deprecation advices.
+>
+> On 1/8/24 17:37, Michael S. Tsirkin wrote:
+> > On Thu, Aug 01, 2024 at 05:30:38PM +0200, BALATON Zoltan wrote:
+> >> On Thu, 1 Aug 2024, Philippe Mathieu-Daud=C3=A9 wrote:
+> >>> Reset config values in the device RESET phase, not only once
+> >>> when the device is realized, because otherwise the device can
+> >>> use unknown values at reset.
+> >>>
+> >>> Mention the datasheet referenced. Remove the "Malta assumptions
+> >>> ahead" comment since the reset values from the datasheet are used.
+> >>>
+> >>> Reported-by: Michael S. Tsirkin <mst@redhat.com>
+> >>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> >>> ---
+> >>> hw/pci-host/gt64120.c | 14 +++++++++++---
+> >>> 1 file changed, 11 insertions(+), 3 deletions(-)
+>
+>
+> >>> @@ -1231,8 +1238,9 @@ static void gt64120_pci_class_init(ObjectClass =
+*klass, void *data)
+> >>> {
+> >>>      PCIDeviceClass *k =3D PCI_DEVICE_CLASS(klass);
+> >>>      DeviceClass *dc =3D DEVICE_CLASS(klass);
+> >>> +    ResettableClass *rc =3D RESETTABLE_CLASS(klass);
+> >>>
+> >>> -    k->realize =3D gt64120_pci_realize;
+> >>> +    rc->phases.hold =3D gt64120_pci_reset_hold;
+> >>
+> >> Why reset_hold and not a simple reset method which is more usual?
+>
+> DeviceReset is deprecated since 4 years now, see commit c11256aa6f
+> ("hw/core: add Resettable support to BusClass and DeviceClass") and
+> the effort to convert the legacy interface to this new API:
 
-Conversion LGTM, so:
+> Peter, Daniel, do we have a way to hint developers about
+> deprecated API uses (like for versioned machines macros,
+> commit a35f8577a0 "hw: add macros for deprecation & removal
+> of versioned machines"), to settle on a release when API
+> must be converted by?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+For reset, the stuff I really want to get converted is
+the complex stuff (eg bus reset, cases where a device
+reset method needs to call its parent method, etc), and
+the ancient legacy stuff (eg qemu_register_reset()).
+Converting that will make the reset process more uniform
+and allow us to get rid of some annoying inter-compatibility
+machinery. (Some of this I've already done -- if you look
+at the commits in that list, you'll see that a lot of them
+are conversions because those classes were using some API
+I wanted to remove like device_class_set_parent_reset().
+Still haven't quite got rid of that because s390 CPUs are
+doing something a bit awkward...)
 
-Now while testing I'm getting errors, but maybe pre-existing...
+Also devices where there's something it needs to do in
+reset that should properly be done in a phase other than
+'hold' obviously need conversion.
 
-pyvenv/bin/meson test  --no-rebuild -t 1 --setup thorough 
---num-processes 1 --print-errorlogs  --suite func-s390x  --suite 
-func-s390x-thorough
-qemu:func-thorough+func-s390x-thorough+thorough / 
-func-s390x-s390x_ccw_virtio time out (After 180.0 seconds)
-1/5 qemu:func-thorough+func-s390x-thorough+thorough / 
-func-s390x-s390x_ccw_virtio        TIMEOUT        180.05s   killed by 
-signal 15 SIGTERM
-▶ 2/5 test_empty_cpu_model.EmptyCPUModel.test 
-                 FAIL
-2/5 qemu:func-quick+func-s390x / func-s390x-empty_cpu_model 
-                 ERROR            0.21s   exit status 1
-stderr:
-Traceback (most recent call last):
-   File "/home/user/qemu/tests/functional/test_empty_cpu_model.py", line 
-21, in test
-     self.assertRegex(self.vm.get_log(), r'-cpu option cannot be empty')
-AssertionError: Regex didn't match: '-cpu option cannot be empty' not 
-found in 'Could not access KVM kernel module: Permission 
-denied\nqemu-system-s390x: failed to initialize kvm: Permission denied\n'
+For a simple leaf device reset, a DeviceClass::reset method
+and a ResettableClass::reset_hold method are essentially
+identical, and the amount of glue code we need to make
+the Resettable machinery be able to call a DeviceClass:reset
+method is minimal. So I don't care about trying to convert
+any of the existing uses in the tree or marking
+DeviceClass::reset as deprecated.
 
+If we're adding a reset method to a device which didn't
+previously have it, I guess Resettable is preferable,
+but I don't feel strongly enough about that to ask for
+a change at code-review time, and I suspect I've written
+new DeviceClass::reset methods myself.
 
-(test program exited with status code 1)
-▶ 4/5 test_version.Version.test_qmp_human_info_version 
-                 FAIL
-Traceback (most recent call last):
-   File "/home/user/qemu/python/qemu/qmp/protocol.py", line 425, in 
-_session_guard
-     await coro
-   File "/home/user/qemu/python/qemu/qmp/qmp_client.py", line 250, in 
-_establish_session
-     self._greeting = await self._get_greeting()
-   File "/home/user/qemu/python/qemu/qmp/qmp_client.py", line 270, in 
-_get_greeting
-     msg = await self._recv()
-   File "/home/user/qemu/python/qemu/qmp/protocol.py", line 1009, in _recv
-     message = await self._do_recv()
-   File "/home/user/qemu/python/qemu/qmp/qmp_client.py", line 402, in 
-_do_recv
-     msg_bytes = await self._readline()
-   File "/home/user/qemu/python/qemu/qmp/protocol.py", line 977, in 
-_readline
-     raise EOFError
-EOFError
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-   File "/home/user/qemu/python/qemu/machine/machine.py", line 448, in 
-launch
-     self._launch()
-   File "/home/user/qemu/python/qemu/machine/machine.py", line 487, in 
-_launch
-     self._post_launch()
-   File "/home/user/qemu/python/qemu/machine/machine.py", line 381, in 
-_post_launch
-     self._qmp.connect()
-   File "/home/user/qemu/python/qemu/qmp/legacy.py", line 153, in connect
-     self._sync(
-   File "/home/user/qemu/python/qemu/qmp/legacy.py", line 102, in _sync
-     return self._aloop.run_until_complete(
-   File "/usr/lib/python3.10/asyncio/base_events.py", line 649, in 
-run_until_complete
-     return future.result()
-   File "/usr/lib/python3.10/asyncio/tasks.py", line 408, in wait_for
-     return await fut
-   File "/home/user/qemu/python/qemu/qmp/protocol.py", line 382, in connect
-     await self._session_guard(
-   File "/home/user/qemu/python/qemu/qmp/protocol.py", line 456, in 
-_session_guard
-     raise ConnectError(emsg, err) from err
-qemu.qmp.protocol.ConnectError: Failed to establish session: EOFError
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-   File "/home/user/qemu/tests/functional/test_version.py", line 22, in 
-test_qmp_human_info_version
-     self.vm.launch()
-   File "/home/user/qemu/python/qemu/machine/machine.py", line 461, in 
-launch
-     raise VMLaunchFailure(
-qemu.machine.machine.VMLaunchFailure: ConnectError: Failed to establish 
-session: EOFError
-	Exit code: 1
-	Command: qemu-system-s390x -display none -vga none -chardev 
-socket,id=mon,fd=5 -mon chardev=mon,mode=control -machine none -nodefaults
-	Output: Could not access KVM kernel module: Permission denied
-qemu-system-s390x: failed to initialize kvm: Permission denied
-
-5/5 qemu:func-thorough+func-s390x-thorough+thorough / 
-func-s390x-s390x_topology          SKIP             1.14s   0 subtests 
-passed
-
-Summary of Failures:
-
-1/5 qemu:func-thorough+func-s390x-thorough+thorough / 
-func-s390x-s390x_ccw_virtio TIMEOUT        180.05s   killed by signal 15 
-SIGTERM
-2/5 qemu:func-quick+func-s390x / func-s390x-empty_cpu_model 
-          ERROR            0.21s   exit status 1
-4/5 qemu:func-quick+func-s390x / func-s390x-version 
-          ERROR            0.25s   exit status 1
-
-I'm surprised by "Could not access KVM kernel module" because
-kvm_available() checks for RW access:
-
-   def kvm_available(target_arch: Optional[str] = None,
-                     qemu_bin: Optional[str] = None) -> bool:
-       if not os.access("/dev/kvm", os.R_OK | os.W_OK):
-           return False
-
-Maybe missing require_accelerator() in tests?
+thanks
+-- PMM
 
