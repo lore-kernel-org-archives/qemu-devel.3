@@ -4,150 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 829CDC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 06:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7262BC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 06:59:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZPWG-0006Qa-BX; Thu, 01 Aug 2024 02:42:36 -0400
+	id 1sZPlY-0006uz-Rz; Thu, 01 Aug 2024 02:58:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Marco.Palumbi@tii.ae>)
- id 1sZPWB-0006Mj-RV; Thu, 01 Aug 2024 02:42:32 -0400
-Received: from mail-dx2are01on20700.outbound.protection.outlook.com
- ([2a01:111:f403:2026::700]
- helo=ARE01-DX2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZPlX-0006uE-BJ
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 02:58:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Marco.Palumbi@tii.ae>)
- id 1sZPW9-00006z-I3; Thu, 01 Aug 2024 02:42:31 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tAin2oqNmbk8K+OT7K/FYKvo2lzJgwtLdwYg3NUGNeZramSTM6WCeOCjmX8Je7DcFAbre04xmh4hZhpIReAgPP7zNHXFxROoFMJJuG46gP/cmgt3rMflh+jY8QGKlvULr+xN6nM0aJFohYBbBioDGfw5tc1S/B5yXi1wegl+3Rl8GZzwvRxT5NBJouWXNe+FlnAPYipT+8DYQTrmdsboYMwacEXgMUt3EdO5hkSHm/8rcFkVuzD9FCCYrj8kBUHTwWsunLTLJR9cbOW3RStHlUjvvbOVUvCsgI7z3puqI6Z2uiZxmZ3X46XT2WqvcUSU4XL7dL3Ovu5TXhRAWkHgHw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zyTasB6JA70G0JvyWp1rZXgz/E10f+5aFS+B2lq2gQM=;
- b=p9zNVxnWnTD02C9Jr17aTOli1nZdeiTlVvY3frQlcxJvQxonQp1MmvmVuP7WMyqx5hsXE2kdxpd63VYyfp+MQIixs6EsOCaswQI7c53+cGMMO5J2Zc0AFYDV637MhYoObKvDA0UX8H3yI/f/UGCrG6GnVge2t0Vv2pAeDWpiJZQ8fpzCG6WyxUpTsN/HN8mfjtPsIKY+lTVS1fp11/mcq96WpC2yonNAkxpqB4Ji66Rct+yHOs0o0Dndh4B5dUtB9Cp0GFIn1EEwl1ndlsnJOozKWXMM74qzJvduQu933aJB8dLnwZ2TW9RvUplrhm58b4D+xWYEP4JFl2NitersoA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=tii.ae; dmarc=pass action=none header.from=tii.ae; dkim=pass
- header.d=tii.ae; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tii.ae; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zyTasB6JA70G0JvyWp1rZXgz/E10f+5aFS+B2lq2gQM=;
- b=XyPw6Ppzw2ybrMxgsb4ET1DH1a7Wm6p4FV5OIidnvfhSQrlTXZYvyRiEj4+vLoAoi3skcWz0wNnqt/YyQnxBb634oQ0fh6mcwhUPrcFNkaM5orHxlZ5iZ4sd5BHXRHymrSKDoCzNAYkNmKLOnMBJUa7uzmVYxuykkD8BsvlXm66R4x2ByNLLcbGCA6JWfFX0BjgGwERbUlT5jhlYJjjnsUsqyCxLIPaOH4oSmoQCtXiwzkEKRrTEcBGHfBagkc9OUqyzM+ODd3Bpi2lVtS/+hamqmqfhLCSvMzyZcnJabl82di5kssM9ICg5ZnD4XK/pOvP9WXubIQwU69liggSmgA==
-Received: from DX1P273MB1304.AREP273.PROD.OUTLOOK.COM (2603:1086:300:65::7) by
- AU2P273MB0308.AREP273.PROD.OUTLOOK.COM (2603:1086:200:2f::13) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7807.28; Thu, 1 Aug 2024 06:42:19 +0000
-Received: from DX1P273MB1304.AREP273.PROD.OUTLOOK.COM
- ([fe80::15bb:cb8f:883c:e1e1]) by DX1P273MB1304.AREP273.PROD.OUTLOOK.COM
- ([fe80::15bb:cb8f:883c:e1e1%4]) with mapi id 15.20.7828.016; Thu, 1 Aug 2024
- 06:42:18 +0000
-From: Marco Palumbi <Marco.Palumbi@tii.ae>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>,
- "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
-Subject: RE: [PATCH] hw/arm/mps2-tz.c: fix RX/TX interrupts order
-Thread-Topic: [PATCH] hw/arm/mps2-tz.c: fix RX/TX interrupts order
-Thread-Index: AQHa4lKe8XYFywo3GE2HZHp1T92H0bIQt6EAgAE/GjA=
-Date: Thu, 1 Aug 2024 06:42:18 +0000
-Message-ID: <DX1P273MB1304F6482821EF17109510FA96B22@DX1P273MB1304.AREP273.PROD.OUTLOOK.COM>
-References: <20240730073123.72992-1-marco@palumbi.it>
- <CAFEAcA_7QDUuQ-zs53Xp2zcO83rDzj0Smga49GZ8J9gg26VBdw@mail.gmail.com>
-In-Reply-To: <CAFEAcA_7QDUuQ-zs53Xp2zcO83rDzj0Smga49GZ8J9gg26VBdw@mail.gmail.com>
-Accept-Language: it-IT, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=tii.ae;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DX1P273MB1304:EE_|AU2P273MB0308:EE_
-x-ms-office365-filtering-correlation-id: 2022c4a3-04e4-4911-180a-08dcb1f516e5
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700018;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?vtQAPZuaBQ3IodHgGcwfEmal8B9fNVl+bvyc5HhKQXsAOJr3TQ7a2juF1j?=
- =?iso-8859-1?Q?XI+tTakIV0bfyE2bR0MSSJ55ZjAvBU5CVMfFEASqwppTxQxv/qMmU8/voX?=
- =?iso-8859-1?Q?K/gKlz63MAZ18L0tGq6WtF70paKmy95aehZuVDZ3/yjOxFzsXufaAexnGx?=
- =?iso-8859-1?Q?IIlcQlctJkNJwVcCPN/uPiXTuCj8a90SVAGZew3wdnbVg50urr4/oB/C11?=
- =?iso-8859-1?Q?ZScl+kHaCT7J0q4kSalcXm6WkQbmyc0ZUfs3wQ9QFA33JZ9dHaTgaX7Ft8?=
- =?iso-8859-1?Q?wWgWJ3Kq+fnfruHb6RxXpLpN4pn+Tp27E2gStoSib3/r2rQ41FtabR3wzV?=
- =?iso-8859-1?Q?SZSBx38IDRrHM/mnCm8XNKcqG8uNEkpDPVGvNBqSZbTVT7prSSIvvc9tHS?=
- =?iso-8859-1?Q?yrQGUAzaqeq9Aa7ob2vUVlUwbyIM1wXTJ4HqUrlu7w+70/FyofMeImGR4j?=
- =?iso-8859-1?Q?s7leAvY2WhSPn5zDPXLb14s/5C0KaJtP4gmL/XHWW3k6gtd42NHm2Eyv45?=
- =?iso-8859-1?Q?C4D1GlTJqpKuvlLyDZqrigyag4flFT8r/3jY9Oet6ARqSeQxtPnpnhmNHf?=
- =?iso-8859-1?Q?BPscJVYwceFrqA8H0zcNFwvgkITmXOSrAGwslBPLO451L6Iwpr/jLRzN2P?=
- =?iso-8859-1?Q?Q3JjdoRoQcEUHDDu23wd78NOXHyMMDsqmyL6yqKfsGpfs7SjoZYC+k+2g+?=
- =?iso-8859-1?Q?hWBIvxianV2vbGgjs9HyB6R74bTjnkvyMbZBpm0TzlRu4BRkZ8IWfdGjsW?=
- =?iso-8859-1?Q?msoD/JD284F7NkwrSwD+qbfUpfF+ypG07h2YCZm9bKGf850mZxLQKKsFDj?=
- =?iso-8859-1?Q?mQjiyu7EyLadN3Xsxh6kkS1+TiBJMG8QPXGW5x/uGY23c+NkATMfJC4AZF?=
- =?iso-8859-1?Q?zS7HhMyTkmTTj1yF0SsOixrtPMIBI4tvK07IS4OmHBspcxiKysZsP6+JTp?=
- =?iso-8859-1?Q?b5HYVgYM69AYkCrO60sKMDAj8CoiCbYs9U6B/k8r5cjobtTsKFu3uc7lQH?=
- =?iso-8859-1?Q?UNTzYJQlArR33Rzr9KYbD8CGzQMS6AzXxzBPW6+4JPuQKTz5erb9TZtXAU?=
- =?iso-8859-1?Q?ZtK8p+h5unkRKGsbNJzBNwVWG8zoDXRJmw3xR4VmBjls5W6lB7XJVZwoAA?=
- =?iso-8859-1?Q?jqD+D/UxhpxuOdeWe2CqmxoDH+OVB0uoTjyjAN5s7cq3p/u28M7A8VT1CC?=
- =?iso-8859-1?Q?uxTyjN2J+3QHNGuGOSRIb1b+xi9rAJJUz8fgN/Ll5JIVRNeAjVSZy0zU00?=
- =?iso-8859-1?Q?XA+kO6UNeKXkl6RXmJgBLjKVEwP6PYEDUip97T/nQkZkl9B6PYIcD/6iMz?=
- =?iso-8859-1?Q?wZ0XcZ3c28YTqJB2WUMBLtc8eRMcs/d3M5Ul09i8AeHwT3ClTcvDWp+We3?=
- =?iso-8859-1?Q?shnOh5AjaR/9/OVhVfOzTe7SIHT958AQtoFodwb72KAM3PPYd79dO5xnJd?=
- =?iso-8859-1?Q?yFQa6UDQHVFdB0xz24U83sbYxCyUm8aXW9qk4g=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DX1P273MB1304.AREP273.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(38070700018); DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?rrfdjWES8nraSF5e8BJIoDaLga6ZAz21BPrxBp+8zBB4M7tUqKzK6XX00i?=
- =?iso-8859-1?Q?9/aDaJu2uqwN3O74+js3l3kHcfHSBupyLxJjBy9e+i6GUKyxvGWJrFez9F?=
- =?iso-8859-1?Q?dSO7fnS+DoL4cik2NIbi5zmI+D1cIhKuim3hcPuiZFm3VUhE/deXQzG7sV?=
- =?iso-8859-1?Q?o8c2oHaERs3k7Ain+u73MCyUs+tffRPQAey9qL2Dd63iG/EckjYCWZM5kc?=
- =?iso-8859-1?Q?QOVxJgvJBlrCG23HMIBPRi+TkZpi+U4eh7Xz6+yTE60S0RhIz2e2o8x91q?=
- =?iso-8859-1?Q?HDxpYSPiAZwrRwgytV03xUJi75WUB+75lDaeC/IV73HZzkLn6DoG3bzLSv?=
- =?iso-8859-1?Q?IrZJVhj3oU9+/5Fyz2Aj/Ghll9En7TJDwY/GtqJ2NIOyBoVpa0pr9cilbp?=
- =?iso-8859-1?Q?VfTh7AdFH76tA9lV6811AIVx+fJnuJqSpPNQHTV1z7HgI0Go9y/TC9j8G5?=
- =?iso-8859-1?Q?QwQsaHoU8p6QdZ6Oah9vbLhdAVDncl2DKWVLRrO2VCPifY90ct+RjNRQbe?=
- =?iso-8859-1?Q?aWeXrXh8SwpyFzXPAh8oQ/yg2vuGGMBWvIn70Pq+o/Y2VNw4YjgEZK7g3N?=
- =?iso-8859-1?Q?Ymqcmdmml7weE35IoD+hvcppWG/NSZhJkToMWAQuvHgW/k8knpVHIljx5U?=
- =?iso-8859-1?Q?lWii8sEjPDROHTdbBUMoy+ImcLbxmmnusQnu79s3xVWoxa17/ll/y9goSK?=
- =?iso-8859-1?Q?clV9f2ixxJtepE5+egh9RQbvmGjCTQ0AeAdYIoRc3qAAm1Z1ogB3pJwg39?=
- =?iso-8859-1?Q?vfyo8A17WUqpPFiyZhq+yYMYQyATopGBqYCCKmp/0QLsEBUa3uchjv3w9e?=
- =?iso-8859-1?Q?SdvUrOuDZW8vhoS8kOKavZWvKrZ0h9g58f7ESw1AkxqhJ/KvcnHg8RHOME?=
- =?iso-8859-1?Q?tZtOHzxGnmYXuVpnk6Wb6Ot9BPChnfIjL3dhC57jg75ATcO3+Uorx/duUR?=
- =?iso-8859-1?Q?tX5Klbq+ZCOZRr5gc65Nd1h24OFQ6bL90AhCSY+q5as6EcEJ8rDVdO2Tdx?=
- =?iso-8859-1?Q?8YYNbNbSlAP9MqxhSHa4DB8mMSE0bXgr1ax96BloN/75MkT1MzoE4jqMfH?=
- =?iso-8859-1?Q?KpxuBeG+n2fH5yVfcOukmb73T7Df0nAQF1k94vz9pKomkbqtOMim2E4m4l?=
- =?iso-8859-1?Q?aCAGooEYQyrLmhcJeZiJObaxlq1Rwqlu0Od/mGW5rWYwqWJvwWLUf7jVDR?=
- =?iso-8859-1?Q?atIvhAW0AEoE8YKUU3N3GqLBq+YIzODXj5zl8aDJNyNhyH5mwYKUsVv6fM?=
- =?iso-8859-1?Q?InUmDFXmWk53BwpnvYFB4Cir5UVOcWs8+5Ury/1fOJwnpwWwbPnE4Qd3p+?=
- =?iso-8859-1?Q?btQtP0VyAkx2K5RjqNnCMrcteY2jWqbeNQTytHOyQ1hw5edel76w7OtWmC?=
- =?iso-8859-1?Q?wZ+Cze1UBrhiawBwihNOsm7BXvkz3d4HHiJdm9yFc6HeggoiMfiHiOj3Hy?=
- =?iso-8859-1?Q?sXisBIh2Y9si4yb7FN3aMav5iAqZ2b6O1NBcOm+zI8WjGqDPYuUOA/7Dwk?=
- =?iso-8859-1?Q?Y3M5gb8mTcNmgpSC6Vu88I73HzlhuHTmxt9KAGrAJxG3jv3ReBSADJdRtf?=
- =?iso-8859-1?Q?rElwxqKioOPprAUibiiV5oXWBNcBql+vYE9MJlfLJbHcaXUxuFt5bU1yGV?=
- =?iso-8859-1?Q?/4wnV5BAb0MG8=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZPlV-0005Et-68
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 02:58:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722495499;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lYBCzb2E3FyybqN2WXwxvnfu9DHmMiJODCcOpo9qf9k=;
+ b=f8kTyFG3eqE6Mipk29YUXSauybwvwpknz6H8Lt2vL5XOtJdA7cM+nHIiUaB75y4X1GxNFv
+ ZXPbB34JWdyzMAbiwuNBVMag6CzqzJ096rlJEWTk/dBuTzKCGSt31nVvt/gA8Z6yDRHhfp
+ SzuVU1g4b7/S+nUkmtzNNgD+IPDQkG0=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-275-365VSHYQMi-Y8JoFWlw8MA-1; Thu,
+ 01 Aug 2024 02:58:15 -0400
+X-MC-Unique: 365VSHYQMi-Y8JoFWlw8MA-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B453A19560AD; Thu,  1 Aug 2024 06:58:13 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C814D300019B; Thu,  1 Aug 2024 06:58:12 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id A349621E668A; Thu,  1 Aug 2024 08:58:10 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ qemu-devel@nongnu.org,  pbonzini@redhat.com,
+ richard.henderson@linaro.org,  eduardo@habkost.net
+Subject: object_new() cannot fail, and that's fundamental (was: [PATCH v2
+ 1/2] qom/object, qdev: move globals functions to object.c)
+In-Reply-To: <ZqPR_dFL5O6IFHlk@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Fri, 26 Jul 2024 17:42:37 +0100")
+References: <20240703204149.1957136-1-dbarboza@ventanamicro.com>
+ <20240703204149.1957136-2-dbarboza@ventanamicro.com>
+ <ZqPR_dFL5O6IFHlk@redhat.com>
+Date: Thu, 01 Aug 2024 08:58:10 +0200
+Message-ID: <87mslwhgql.fsf_-_@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-OriginatorOrg: tii.ae
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DX1P273MB1304.AREP273.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2022c4a3-04e4-4911-180a-08dcb1f516e5
-X-MS-Exchange-CrossTenant-originalarrivaltime: 01 Aug 2024 06:42:18.8808 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: f0869253-be00-4a37-9c77-37742cb15c38
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: NExSArk7i8dBCyA04HAV+9J4uJRSgsYAcua+29jhZunNcdaRim/flw4juvwvM0BmVPE2/JpWfHXzfPi2m6lc5w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AU2P273MB0308
-Received-SPF: pass client-ip=2a01:111:f403:2026::700;
- envelope-from=Marco.Palumbi@tii.ae;
- helo=ARE01-DX2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,100 +90,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks Peter for your time!
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-
-Marco Palumbi
-Senior Cryptography Engineer
-
-PO=A0Box: 9639
-Masdar City, Abu Dhabi, UAE
-
-M: +39 349 786 0737
-E: marco.palumbi@tii.ae=A0
-
-tii.ae
-
-This email and any files transmitted with it are strictly confidential and =
-intended solely for the use of the individual or entity to whom they are ad=
-dressed. If you have received this email in error please notify the sender.=
- This message contains confidential information and is intended only for th=
-e individual named. If you are not the named addressee you should not disse=
-minate, distribute or copy this e-mail. Please notify the sender immediatel=
-y by e-mail if you have received this e-mail by mistake and delete this e-m=
-ail from your system. If you are not the intended recipient you are notifie=
-d that disclosing, copying, distributing or taking any action in reliance o=
-n the contents of this information is strictly prohibited.
-
-
------Original Message-----
-From: Peter Maydell <peter.maydell@linaro.org>=20
-Sent: Wednesday, July 31, 2024 1:38 PM
-To: marco@palumbi.it
-Cc: qemu-devel@nongnu.org; Marco Palumbi <Marco.Palumbi@tii.ae>; qemu-arm@n=
-ongnu.org; qemu-stable@nongnu.org; qemu-trivial@nongnu.org
-Subject: Re: [PATCH] hw/arm/mps2-tz.c: fix RX/TX interrupts order
-
-On Tue, 30 Jul 2024 at 08:32, <marco@palumbi.it> wrote:
+> CC: Markus since he's had opinions on stuff related to -global  in
+> the past.
 >
-> From: Marco Palumbi <Marco.Palumbi@tii.ae>
+> On Wed, Jul 03, 2024 at 05:41:48PM -0300, Daniel Henrique Barboza wrote:
+>> Next patch will add Accel globals support. This means that globals won't=
+ be
+>> qdev exclusive logic since it'll have to deal with TYPE_ACCEL objects.
+>>=20
+>> Move all globals related functions and declarations to object.c. Each
+>> function is renamed from 'qdev_' to 'object_':
+>>=20
+>> - qdev_prop_register_global() is now object_prop_register_global()
+>> - qdev_find_global_prop() is now object_find_global_prop()
+>> - qdev_prop_check_globals() is now object_prop_check_globals()
+>> - qdev_prop_set_globals() is now object_prop_set_globals()
+>>=20
+>> For object_prop_set_globals() an additional change was made: the function
+>> was hardwired to be used with DeviceState, where dev->hotplugged is chec=
+ked
+>> to determine if object_apply_global_props() will receive a NULL or an
+>> &error_fatal errp. The function now receives an Object and an errp, and
+>> logic using dev->hotplugged is moved to its caller (device_post_init()).
+>>=20
+>> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+[...]
+
+>> diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+>> index f3a996f57d..894372b776 100644
+>> --- a/hw/core/qdev.c
+>> +++ b/hw/core/qdev.c
+>> @@ -673,7 +673,7 @@ static void device_post_init(Object *obj)
+>>       * precedence.
+>>       */
+>>      object_apply_compat_props(obj);
+>> -    qdev_prop_set_globals(DEVICE(obj));
+>> +    object_prop_set_globals(obj, DEVICE(obj)->hotplugged ? NULL : &erro=
+r_fatal);
+>>  }
 >
-> The order of the RX and TX interrupts are swapped.
-> This commit fixes the order as per the following documents:
->  *=20
-> https://are01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fprot
-> ect.checkpoint.com%2Fv2%2F___https%3A%2F%2Fdeveloper.arm.com%2Fdocumen
-> tation%2Fdai0505%2Flatest%2F___.bWVjMTp0ZWNobm9sb2d5aW5ub3ZhdGlvbmluc3
-> RpdHV0ZTpjOm86YTlkNGRjMjcxZTBmMWJjNjlmMzc2NGE0OWY4ZmU5MWY6Njo0MzVhOjY3
-> NjVkOGIwNWJkMzgwMGJkMzdlMWJmYmE5MmFhY2E2MzhhOTQyZjQ4ZDA5MmI0ODg2NTc1Yj
-> QxYzM1MzY4N2Q6cDpUOk4&data=3D05%7C02%7CMarco.Palumbi%40tii.ae%7C063b7e0f
-> d4634265eb5808dcb155575b%7Cf0869253be004a379c7737742cb15c38%7C1%7C0%7C
-> 638580227306410621%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjo
-> iV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=3DnW%2F6AR%2F
-> E2tlpQ%2FSNSvDJyQf71YIbk83KVcZzGnmP5Lk%3D&reserved=3D0
->  *=20
-> https://are01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fprot
-> ect.checkpoint.com%2Fv2%2F___https%3A%2F%2Fdeveloper.arm.com%2Fdocumen
-> tation%2Fdai0521%2Flatest%2F___.bWVjMTp0ZWNobm9sb2d5aW5ub3ZhdGlvbmluc3
-> RpdHV0ZTpjOm86YTlkNGRjMjcxZTBmMWJjNjlmMzc2NGE0OWY4ZmU5MWY6NjoxM2NkOjY4
-> YTI5ZTFmNDU4YTg3NTQxZGJmMzE1ZjQ4MWU3MTk1ZWRiMWRiOTdmNTIwMWU1OGYyNThkZm
-> U4MzkzNWZkY2Y6cDpUOk4&data=3D05%7C02%7CMarco.Palumbi%40tii.ae%7C063b7e0f
-> d4634265eb5808dcb155575b%7Cf0869253be004a379c7737742cb15c38%7C1%7C0%7C
-> 638580227306419690%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjo
-> iV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=3DYGw4NsxbW01
-> i46Gm%2BgBzQIOB6nOqL16P3Deblg3OcRw%3D&reserved=3D0
->  *=20
-> https://are01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fprot
-> ect.checkpoint.com%2Fv2%2F___https%3A%2F%2Fdeveloper.arm.com%2Fdocumen
-> tation%2Fdai0524%2Flatest%2F___.bWVjMTp0ZWNobm9sb2d5aW5ub3ZhdGlvbmluc3
-> RpdHV0ZTpjOm86YTlkNGRjMjcxZTBmMWJjNjlmMzc2NGE0OWY4ZmU5MWY6Njo3N2NjOmQx
-> YmIyN2YxY2Q3YWJjMTBhM2I1Zjk1NGM4NTBjZDlhNTVhYjA2NDMwZDQwOTUzZjNkZmU4ZG
-> NjYmNkMmUxMTI6cDpUOk4&data=3D05%7C02%7CMarco.Palumbi%40tii.ae%7C063b7e0f
-> d4634265eb5808dcb155575b%7Cf0869253be004a379c7737742cb15c38%7C1%7C0%7C
-> 638580227306425926%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjo
-> iV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=3D0poH91SU6NE
-> f4%2BD3%2BqH5WNDgTXXfZ4PA7buG0bwKQlE%3D&reserved=3D0
->  *=20
-> https://are01.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fprot
-> ect.checkpoint.com%2Fv2%2F___https%3A%2F%2Fdeveloper.arm.com%2Fdocumen
-> tation%2Fdai0547%2Flatest%2F___.bWVjMTp0ZWNobm9sb2d5aW5ub3ZhdGlvbmluc3
-> RpdHV0ZTpjOm86YTlkNGRjMjcxZTBmMWJjNjlmMzc2NGE0OWY4ZmU5MWY6NjplOTcyOmUy
-> MzEyNTdlYzlmOTRjOWY5NjY4YmExZDc3NGQ5NWNhYmY2NmEzNjI2ZGMwYjI3ZWZlZTU2YW
-> UyZjQ1NDFhMTI6cDpUOk4&data=3D05%7C02%7CMarco.Palumbi%40tii.ae%7C063b7e0f
-> d4634265eb5808dcb155575b%7Cf0869253be004a379c7737742cb15c38%7C1%7C0%7C
-> 638580227306430786%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjo
-> iV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C0%7C%7C%7C&sdata=3DLWgkq6rb9vQ
-> 0q4VhuPmflWyFLCtMTjg6DWe3j9h381w%3D&reserved=3D0
+> This is pretty awkward :-(
 >
-> Signed-off-by: Marco Palumbi <Marco.Palumbi@tii.ae>
+> If we're generalizing this global properties concept, then we want
+> object_prop_set_globals to be called from the Object base class
+> code.
 
-Thanks for this patch, I've applied it to my target-arm.next queue.
+Yes.  This series copies the concept from devices to accelerators.  But
+since it clearly makes sense for any kind of object, we better move it
+to objects instead.  We may not be able to get there in one step,
+though.
 
-I checked the other boards that use the cmsdk UART, and they all get the tx=
-/rx interrupt order right, so this is the only place that needed fixing. I =
-suspect that the guest images I tested didn't care about the separate tx/rx=
- interrupts and only used the combined irq.
+>       We can't do that given this need to check the 'hotplugged'
+> property.
+>
+> That check, however, is total insanity. Pre-existing problem,
+> not your fault.
+>
+> I imagine the rationale is that we don't want to kill QEMU
+> if setting a global fails, and we're in middle of device_add
+> on a running VM.
 
-thanks
--- PMM
+Yes.
+
+> Throwing away errors though is unacceptable IMHO.
+
+To be precise: we're silently ignoring any -global that fail to apply.
+
+I agree that's wrong.
+
+>                                                   device_add
+> can report errors and we should be propagating them. Likewise
+> for object_add, or any object HMP command creating QOM types.
+>
+> The trouble is that we're about 4-5 levels deep in a call
+> chain that lacks "Error **errp".
+>
+> The root problem is that none of object_new, object_new_with_class
+> and object_new_with_type have a "Error *errp" parameter.
+
+This is a fundamental QOM design decision.
+
+Not mine, mind.  Moreover, I wasn't there, so my idea on design
+rationale may well be off; keep that in mind.
+
+QOM properties are not declared statically, they are created
+dynamically.  Aside: this is, in my not particularly humble opinion, a
+spectacularly bad idea.
+
+Properties are generally created in instance_init() methods.
+
+Fine print: we later added "class properties", which are created
+dynamically within the class, and cloned into the instance before=20
+its instance_init() method runs.
+
+Object creation doesn't take arguments, and cannot fail.  An
+instance_init() method doesn't take arguments, and cannot fail.
+
+Objects are configured via properties.  Property setters take an
+argument (the property value), and can fail.
+
+Any part of object creation + configuration that could fail must be done
+in property setters.
+
+Common usage is create object, configure by setting properties, operate.
+
+The state transition between "configuring" and "operating" is important.
+For devices, this state transition happens when property "realized" is
+set to true.  For user-creatable objects it happens when method
+complete() is called.  Both can fail.  For everything else, the
+transition is implicit / ad hoc / unclear.
+
+For more on this (and other QOM design issues), see my memo "Dynamic &
+heterogeneous machines, initial configuration: problems", in particular
+section "Problem 5: QOM lacks a clear life cycle".
+Message-ID: <87o7d1i7ky.fsf@pond.sub.org>
+https://lore.kernel.org/qemu-devel/87o7d1i7ky.fsf@pond.sub.org/
+
+To introspect properties, you need an object.  You can always create one
+for that (can't fail).  Properties created outside object initialization
+cannot be introspected that way.  This is how qom-list-properties works.
+
+> object_new_with_props and object_new_with_propv both *do* have
+> a "Error *errp" parameter,
+
+Yes, because they combine object creation, which cannot fail, with
+setting properties, which can fail.
+
+>                            but then they call into object_new_with_type
+> and can't get errors back from that.
+>
+> IMHO we need to fix this inability to report errors from object
+> construction. It will certainly be a painful refactoring job,
+> but I think its neccessary in order to support global props
+> without this horrible hack checking the "hotpluggable" flag.
+
+Beyond painful.  Possibly infeasible.
+
+Object creation cannot fail.  If we revise this fundamental QOM design
+decision, we get to update all call chains leading to object creation.
+That's a *massive* undertaking.
+
+Can we solve the problems we have without revising QOM design?
+
+We'd need to delay the actual failure to a point where the design admits
+failure.
+
+Here's an idea.  Formalize the life cycle, i.e. make it an explicit
+state machine.  Add a "failed" state.  Any error during object creation
+makes the object go to "failed".  Going from "failed" to "operating"
+fails.  Which is fine, because the design admits failure there.
+
+Thoughts?
+
 
