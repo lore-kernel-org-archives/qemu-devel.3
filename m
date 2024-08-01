@@ -4,107 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A60ACC49EA1
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 08:52:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8676C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 09:13:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZRXE-0003cZ-G4; Thu, 01 Aug 2024 04:51:44 -0400
+	id 1sZRrX-00046j-Ee; Thu, 01 Aug 2024 05:12:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sZRX6-0003ak-VD; Thu, 01 Aug 2024 04:51:38 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1sZRX4-0002HU-Ru; Thu, 01 Aug 2024 04:51:36 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47125DZJ007742;
- Thu, 1 Aug 2024 08:51:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:date:mime-version:subject:to:cc:references:from
- :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=w
- kxYim9tPssgr3piD6/mojVZMmBPSlN2nsNfTM5QP0o=; b=aKT4zByowb8ZJ3opg
- d4Fksy+V8uUE0eSq6SH1Jbn1ULp03AuYvVzIRJBs92VIQtzlCXkni3t3Tr8gKcBG
- Np32T5Uq+OFEYTS56tEjpNBBDB7qaqVKIEnuPXQfJyf4m+6voG+v6AY9uWhFY+2D
- Ql//lVFMP/cYQllC3Aq2546Kiwv2OXwAQuAv4FJq8S5Kj+JdoMakMeIbgfxUGP/G
- 5LwWRG9Yc3b8KVhNMLXgE6jlovRUtK5JRDFNYWAqs2EmZ0yy9X4wNEec5+P/3RcN
- 1OYr1+Gaj3B/Ca4jwytwoPtEmnTnMC85urj89j1UMDtcrTUpxHLleYvDwXLJHayg
- H23mw==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40qxygs48u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Aug 2024 08:51:25 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4718pO0S016235;
- Thu, 1 Aug 2024 08:51:24 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40qxygs48t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Aug 2024 08:51:24 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 47180Vfj007457; Thu, 1 Aug 2024 08:51:23 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 40nb7uh1nc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Aug 2024 08:51:23 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4718pIcu51511680
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 1 Aug 2024 08:51:20 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0B5AE20043;
- Thu,  1 Aug 2024 08:51:18 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BFD7820040;
- Thu,  1 Aug 2024 08:51:15 +0000 (GMT)
-Received: from [9.109.199.72] (unknown [9.109.199.72])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  1 Aug 2024 08:51:15 +0000 (GMT)
-Message-ID: <ad48593a-ca93-494a-bbe6-da433b547cb9@linux.ibm.com>
-Date: Thu, 1 Aug 2024 14:21:14 +0530
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sZRrV-000452-QZ
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 05:12:41 -0400
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sZRrU-0007bN-8Z
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 05:12:41 -0400
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-3db22c02a42so3833548b6e.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 02:12:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722503559; x=1723108359; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AikQYzZLvJC1qAr5mnVkHuc3qnQ4VJKU1Kq1tgMFSIM=;
+ b=nbT9k+WjWefQzteKB/+UH8jz7b1pVIaPtY0w5xBX/IikmIQugzOcMHYBEnxzvwRtIl
+ X3qDticvqHrwDs76W6hV89CkH6RetAGWhD9W1f5uUAWxIX3tP3inUZsB34wrLZvDENZa
+ H67aGb4kKwLw6zZtWLcgocITSfzo8raaoYyvgXkKB5Z5PrrIe5oS5csDXnE4F96Dzi90
+ xHuLjR2LIfv8HwJ9V57vzc8277KbLkiNwLfJDR6RQi4lbUN1lDwFamdjvFJ+MhYCeRb+
+ 78VQqYvOl4/P98ETSEZbM8+S5B6WQuzuHnPDdVynrnDU48BfvSYjPJHWwEWGaodLjJya
+ gIcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722503559; x=1723108359;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AikQYzZLvJC1qAr5mnVkHuc3qnQ4VJKU1Kq1tgMFSIM=;
+ b=GVRjT4CubogRFmW5kCytgxjMecNjoQUzjbBsEeXf1tfhBYD3Lbmc4vAUwRmpEaRPTs
+ JIV6EJP3ozmBGfUBn/yxmvC1He0oZlIumbPxFbrFFSLf3/kbgefwHyQMUesQLSWxlFOV
+ 3hvBUe6duLgztRoJMisIb7i70Ilf8QfhjaboUrO9oXhe+HewL+C0Q0/TKH57RqMSXf7X
+ 4fmMAPEjVjlsPt9dLyk+p8ctIynZhPGVnrAV6R3m2+UhzXXmtfwcU7YqFQ2Ft5PAJEvK
+ yPa7QGliiiVNEOagRR+iEYHfchvTDDXXR/dLpZUTveZvokAzmm7X5s88Jn5R2bI0HF8j
+ j+cA==
+X-Gm-Message-State: AOJu0Yz60IRrTJtgAjAOTFBp48W9+YCCRLC0FkSFut+26m0X7B4IitO4
+ xWb83IM1GX9bfaIYaCVN+kKdxgaLrLlVlc8gYho2LTquhXxtW3Iq8nNw24feYoI=
+X-Google-Smtp-Source: AGHT+IGyDLpEbphrYhlw6NBYr9HAlQcsgGSDRg/8IHNyskHA+N817T9Fzjcw/hLOv8ICixlPaOzGAQ==
+X-Received: by 2002:a05:6808:3099:b0:3db:15ed:2a24 with SMTP id
+ 5614622812f47-3db511e5cabmr2090494b6e.24.1722503558642; 
+ Thu, 01 Aug 2024 02:12:38 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-70ead890eeasm11113934b3a.154.2024.08.01.02.12.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 Aug 2024 02:12:38 -0700 (PDT)
+Message-ID: <0cbb34e8-fa32-469a-a516-4f9ac91a6eff@linaro.org>
+Date: Thu, 1 Aug 2024 19:12:31 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/ppc: Implement -dtb support for PowerNV
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20240731201039.1011028-1-adityag@linux.ibm.com>
- <1cbec992-4eaa-4506-b6e4-1bd91e0c39ce@kaod.org>
+Subject: Re: [PATCH v2 05/24] target/riscv: tracking indirect branches (fcfi)
+ for zicfilp
+To: Deepak Gupta <debug@rivosinc.com>
+Cc: qemu-devel@nongnu.org
+References: <20240729175327.73705-1-debug@rivosinc.com>
+ <20240729175327.73705-6-debug@rivosinc.com>
+ <ed23bcbc-fdc4-4492-803c-daa95880375a@linaro.org>
+ <CAKC1njQJiNHT1b2jD009zsNeXrUZ9OG2S4VTeFmnAS4c_f-kAA@mail.gmail.com>
 Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <1cbec992-4eaa-4506-b6e4-1bd91e0c39ce@kaod.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAKC1njQJiNHT1b2jD009zsNeXrUZ9OG2S4VTeFmnAS4c_f-kAA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Bd3toYi9yk__-ZLC8l2feTP7YvqtJSDD
-X-Proofpoint-GUID: Zsc2jGQ_KIQTBbIuCds7m-YWgKEs1i_A
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-01_05,2024-07-31_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=791
- priorityscore=1501 adultscore=0 impostorscore=0 spamscore=0 malwarescore=0
- clxscore=1015 bulkscore=0 lowpriorityscore=0 mlxscore=0 phishscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408010050
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x230.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,84 +99,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Cedric,
+On 8/1/24 16:59, Deepak Gupta wrote:
+> hmm... you've suggested below to use `aarch64_tr_translate_insn` and
+> check if it's the first instruction.
+> and put the check there.
+> In that case I won't need FCFI_LP_EXPECTED TB flag.
+> Then I would rather use it as FCFI_ENABLED TB flag.
+
+You will need both bits.
 
 
->> <...snip...>
->>
->> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
->> index 3526852685b4..03600fa62cbd 100644
->> --- a/hw/ppc/pnv.c
->> +++ b/hw/ppc/pnv.c
->> @@ -736,10 +736,21 @@ static void pnv_reset(MachineState *machine, 
->> ShutdownCause reason)
->>           }
->>       }
->>   -    fdt = pnv_dt_create(machine);
->> +    if (machine->dtb) {
->> +        warn_report("with manually passed dtb, some options like 
->> '-append'"
->> +                " will get ignored and the dtb passed will be used 
->> as-is");
->
-> This warning should come after all other checks. See below.
->
->
->> -    /* Pack resulting tree */
->> -    _FDT((fdt_pack(fdt)));
->> +        /* read the file 'machine->dtb', and load it into 'fdt' 
->> buffer */
->> +        if (!g_file_get_contents(machine->dtb, (gchar **)&fdt, NULL, 
->> NULL)) {
->> +            error_report("Could not load dtb '%s'", machine->dtb);
->> +            exit(1);
->> +        }
->
-> We should try to report such errors earlier than in reset.
->
-Thanks, I will remember this from next time.
-
-> Can you please introduce a PnvMachineState::dtb attribute and 
-> initialize it
-> in pnv_init() after ->initrd_filename.
->
-Sure, I will move it to pnv_init.
-
-
-Thanks,
-
-Aditya Gupta
-
->
->
-> Thanks,
->
-> C.
->
->
->
->> +    } else {
->> +        fdt = pnv_dt_create(machine);
->> +
->> +        /* Pack resulting tree */
->> +        _FDT((fdt_pack(fdt)));
->> +    }
->>         qemu_fdt_dumpdtb(fdt, fdt_totalsize(fdt));
->>       cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
->> @@ -952,6 +963,14 @@ static void pnv_init(MachineState *machine)
->>           g_free(sz);
->>           exit(EXIT_FAILURE);
->>       }
->> +
->> +    /* checks for invalid option combinations */
->> +    if (machine->dtb && (strlen(machine->kernel_cmdline) != 0)) {
->> +        error_report("-append and -dtb cannot be used together, as 
->> passed"
->> +                " command line is ignored in case of custom dtb");
->> +        exit(EXIT_FAILURE);
->> +    }
->> +
->>       memory_region_add_subregion(get_system_memory(), 0, machine->ram);
->>         /*
->
+r~
 
