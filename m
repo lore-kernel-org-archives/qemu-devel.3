@@ -4,79 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 946EBC3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 13:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C3DDC52D54
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 13:16:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZVe1-0000ZP-VQ; Thu, 01 Aug 2024 09:15:01 -0400
+	id 1sZVew-0003Zs-TR; Thu, 01 Aug 2024 09:15:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZVe0-0000YY-I8
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 09:15:00 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZVdy-0007U9-QP
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 09:15:00 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-52f025bc147so9761505e87.3
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 06:14:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722518096; x=1723122896; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=7jwh8lRQxFh4MuUn3bOEyy7JI6tHJM1nsPaQiEvU4+o=;
- b=lpgjrqae2LJ7EmskjYMD70ejmfc2Qn2TdyUpFZS75hMBSsXQs4vhGUbIcipSlDQ3Ob
- wSQ2zyFK3mxnTUcyddahUI9JsF/jocbSiek/3G1GcdbZmHk8FXufYqIEc7tn/erB34a0
- 4S6VYuIbNR6jnGZepr57Z9a6Po8epum8KCcsyQrmnT0cwM2VySs5cKZd08nUYZz6MFi1
- TK1gANgi+zfiThgEVc+o46mESxzzAt08tVzcUMKqe1lgsePqVNCZVbN5Luai5nMA7+W7
- IhSibZv3ZrRC95aUbxhFDUvXqN8OitUhrxXomF67qFGbN7o03N/cRSNo9eaNaAJkFQhH
- siQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722518096; x=1723122896;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7jwh8lRQxFh4MuUn3bOEyy7JI6tHJM1nsPaQiEvU4+o=;
- b=uPjsKG19uCJlj15CKgMf++Dwdg7Q8yMJ+rxSbCeDMOoaDG7U5WjNVGo9wmBLPFMUGj
- OcbRc+dH6Cd/7u5ZEW81PQDK2QSg6xCURTn1PmYBPat4+RlROhCqmxV7dXmHnzjS7NOj
- DZ7z2G1UKQKfC7qb6FLIzTj0e+jD2Is8qDUG4VLfrkoVq5u3mE6LjXOGDMyF3Kxceahl
- lFAjJpLKDd4ILLqD7vJEWx8sBZR56g02SOvD9IoguM6lKev9+LJxx86eespIwUwiAXSO
- qjEQawbkFHZkdazGam8wXDemkZW7CDgRDnWA2RA9Dm2XgpJ1+PvIkRFVyTj6pXuf0qv9
- HzdQ==
-X-Gm-Message-State: AOJu0Yzrnz2ev46sG/PgFXMpCezwWg5eX0Y8Yh5GaUEo8l3D0fJtTjBz
- l6oO4VSx1/wjrOjOzxLkJo5bGTuiSBFj4/0MSIBNjcwrhiUdz9je32iI1SNDlkXDrLJ8Xm8/I6o
- 2L0w=
-X-Google-Smtp-Source: AGHT+IFDltY5HLk7iJijJ61W0mkLA6AfANbssOvnrf19t4bwqkm9cChuhqIDqQl8XZkgIc1M5ajjIw==
-X-Received: by 2002:a05:6512:2208:b0:52e:9b92:4999 with SMTP id
- 2adb3069b0e04-530b61a986bmr1708141e87.2.1722518096232; 
- Thu, 01 Aug 2024 06:14:56 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.130.148])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acab4de47sm899780766b.67.2024.08.01.06.14.53
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 Aug 2024 06:14:55 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1? v2] hw/pci/pci-hmp-cmds: Avoid displaying bogus size
- in 'info pci'
-Date: Thu,  1 Aug 2024 15:14:49 +0200
-Message-ID: <20240801131449.51328-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1sZVes-0003Hp-Dr; Thu, 01 Aug 2024 09:15:54 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1sZVeq-0007ht-5M; Thu, 01 Aug 2024 09:15:54 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id A4959628B7;
+ Thu,  1 Aug 2024 13:15:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1840EC32786;
+ Thu,  1 Aug 2024 13:15:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1722518150;
+ bh=/ynuOET3kqXPxIs7OTQjFHflicpksvorsX2OImbJQXQ=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=DzclRxhrP1lTsQq9QJqhnAOyyl1UR+j+M8xVPNUAwklNL+E/9AJ0EbloztWcn9oeg
+ DTn5fUH1AaD/aFKaGtFvGgyPWrsN+tsbOm3ORrQVLrtNm9fXebQmhklGL/lqKrlvvX
+ ZH+vE+8TBf591YEJ8xbjKY6EUfKgVKmGyqUrRlm4ctN5WyC1oZTF2ptyo4q0PkLtC0
+ 5Wj8DCjn72GChw54Br/o+QcCSddlM/TKmrRIZThxH2n3dKU1OvZAxvzGR6lPve1Omr
+ ltZneqv8/FzN/kXYFFCSGS8UVEyvVt2uaUhSaeHo3IHT3+m85yM27PjSsOthW9wmGE
+ RGQjgHDUSPwtw==
+Date: Thu, 1 Aug 2024 15:15:44 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>, "Michael
+ S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, Shannon Zhao
+ <shannon.zhaosl@gmail.com>, linux-kernel@vger.kernel.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 1/7] arm/virt: place power button pin number on a define
+Message-ID: <20240801151544.2f315598@foz.lan>
+In-Reply-To: <20240730132620.46cca4ce@imammedo.users.ipa.redhat.com>
+References: <cover.1721630625.git.mchehab+huawei@kernel.org>
+ <bf8367bddfdc95e378b5725c732533c3ba20d388.1721630625.git.mchehab+huawei@kernel.org>
+ <20240730092549.6898ff3c@imammedo.users.ipa.redhat.com>
+ <CAFEAcA8VWc3eQZqfJP9k5LYF-9aLChHQ+uS9UBfGV6nvybDxqQ@mail.gmail.com>
+ <20240730132620.46cca4ce@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,80 +77,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When BAR aren't mapped, we get:
+Em Tue, 30 Jul 2024 13:26:20 +0200
+Igor Mammedov <imammedo@redhat.com> escreveu:
 
-  (qemu) info pci
-    Bus  0, device   0, function 0:
-      Host bridge: PCI device dead:beef
-        ...
-        BAR4: 32 bit memory at 0xffffffffffffffff [0x00000ffe].
-        BAR5: I/O at 0xffffffffffffffff [0x0ffe].
+> On Tue, 30 Jul 2024 09:29:37 +0100
+> Peter Maydell <peter.maydell@linaro.org> wrote:
+> 
+> > On Tue, 30 Jul 2024 at 08:26, Igor Mammedov <imammedo@redhat.com> wrote:  
+> > >
+> > > On Mon, 22 Jul 2024 08:45:53 +0200
+> > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> > >    
+> > > > Having magic numbers inside the code is not a good idea, as it
+> > > > is error-prone. So, instead, create a macro with the number
+> > > > definition.
+> > > >
+> > > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>    
+> >   
+> > > > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> > > > index b0c68d66a345..c99c8b1713c6 100644
+> > > > --- a/hw/arm/virt.c
+> > > > +++ b/hw/arm/virt.c
+> > > > @@ -1004,7 +1004,7 @@ static void virt_powerdown_req(Notifier *n, void *opaque)
+> > > >      if (s->acpi_dev) {
+> > > >          acpi_send_event(s->acpi_dev, ACPI_POWER_DOWN_STATUS);
+> > > >      } else {
+> > > > -        /* use gpio Pin 3 for power button event */
+> > > > +        /* use gpio Pin for power button event */
+> > > >          qemu_set_irq(qdev_get_gpio_in(gpio_key_dev, 0), 1);    
+> > >
+> > > /me confused, it was saying Pin 3 but is passing 0 as argument where as elsewhere
+> > > you are passing 3. Is this a bug?    
+> > 
+> > No. The gpio_key_dev is a gpio-key device which has one
+> > input (which you assert to "press the key") and one output,
+> > which goes high when the key is pressed and then falls
+> > 100ms later. The virt board wires up the output of the
+> > gpio-key device to input 3 on the PL061 GPIO controller.
+> > (This happens in create_gpio_keys().) So the code is correct
+> > to assert input 0 on the gpio-key device and the comment
+> > isn't wrong that this results in GPIO pin 3 being asserted:
+> > the link is just indirect.  
+> 
+> it's likely obvious to ARM folks, but maybe comment should
+> clarify above for unaware.
 
-Check the BAR is mapped comparing its address to PCI_BAR_UNMAPPED
-which is what the PCI layer uses for unmapped BARs.
-See pci_bar_address and pci_update_mappings implementations and
-in "hw/pci/pci.h":
+Not sure if a comment here with the pin number is a good idea.
+After all, this patch was originated because we were using
+Pin 6 for GPIO error, while the comment was outdated (stating
+that it was pin 8 instead) :-)
 
-  typedef struct PCIIORegion {
-      pcibus_t addr; /* current PCI mapping address. -1 means not mapped */
-  #define PCI_BAR_UNMAPPED (~(pcibus_t)0)
-      ...
+After this series, there will be two GPIO pins used inside arm/virt,
+both defined at arm/virt.h:
 
-This improves the logging, not displaying bogus sizes:
+	/* GPIO pins */
+	#define GPIO_PIN_POWER_BUTTON  3
+	#define GPIO_PIN_GENERIC_ERROR 6
 
-  (qemu) info pci
-    Bus  0, device   0, function 0:
-      Host bridge: PCI device dead:beef
-        ...
-      BAR4: 32 bit memory (not mapped)
-      BAR5: I/O (not mapped)
+Those macros are used when GPIOs are created:
 
-Remove trailing dot which is not used in other commands format.
+	static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
+	                             uint32_t phandle)
+	{
+	    gpio_key_dev = sysbus_create_simple("gpio-key", -1,
+	                                        qdev_get_gpio_in(pl061_dev,
+                                                         GPIO_PIN_POWER_BUTTON));
+	    gpio_error_dev = sysbus_create_simple("gpio-key", -1,
+	                                          qdev_get_gpio_in(pl061_dev,
+	                                                           GPIO_PIN_GENERIC_ERROR));
+So, at least for me, it is clear that gpio_key_dev is using pin 3.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/pci/pci-hmp-cmds.c | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
-
-diff --git a/hw/pci/pci-hmp-cmds.c b/hw/pci/pci-hmp-cmds.c
-index b09fce9377..fdfe44435c 100644
---- a/hw/pci/pci-hmp-cmds.c
-+++ b/hw/pci/pci-hmp-cmds.c
-@@ -83,15 +83,25 @@ static void hmp_info_pci_device(Monitor *mon, const PciDeviceInfo *dev)
-         monitor_printf(mon, "      BAR%" PRId64 ": ", region->value->bar);
- 
-         if (!strcmp(region->value->type, "io")) {
--            monitor_printf(mon, "I/O at 0x%04" PRIx64
--                                " [0x%04" PRIx64 "].\n",
--                           addr, addr + size - 1);
-+            if (addr != PCI_BAR_UNMAPPED) {
-+                monitor_printf(mon, "I/O at 0x%04" PRIx64
-+                                    " [0x%04" PRIx64 "]\n",
-+                               addr, addr + size - 1);
-+            } else {
-+                monitor_printf(mon, "I/O (not mapped)\n");
-+            }
-         } else {
--            monitor_printf(mon, "%d bit%s memory at 0x%08" PRIx64
--                               " [0x%08" PRIx64 "].\n",
--                           region->value->mem_type_64 ? 64 : 32,
--                           region->value->prefetch ? " prefetchable" : "",
--                           addr, addr + size - 1);
-+            if (addr != PCI_BAR_UNMAPPED) {
-+                monitor_printf(mon, "%d bit%s memory at 0x%08" PRIx64
-+                                   " [0x%08" PRIx64 "]\n",
-+                               region->value->mem_type_64 ? 64 : 32,
-+                               region->value->prefetch ? " prefetchable" : "",
-+                               addr, addr + size - 1);
-+            } else {
-+                monitor_printf(mon, "%d bit%s memory (not mapped)\n",
-+                               region->value->mem_type_64 ? 64 : 32,
-+                               region->value->prefetch ? " prefetchable" : "");
-+            }
-         }
-     }
- 
--- 
-2.45.2
-
+Thanks,
+Mauro
 
