@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38346C3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 10:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4489AC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 10:25:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZSlD-000375-0Z; Thu, 01 Aug 2024 06:10:15 -0400
+	id 1sZSz4-0000OS-RP; Thu, 01 Aug 2024 06:24:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sZSlA-0002zK-P0
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 06:10:12 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sZSl7-0007e9-Jr
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 06:10:12 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-5a79df5af51so3511742a12.0
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 03:10:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722507006; x=1723111806; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=s3fRlURdb45/5xQ0tKGyepiwT9X1nBv2BpjzcUfb2so=;
- b=Ft+JYq4ppmt/dFMNUEVBbGX4znfn2won8qzkVad7/GegTgTqdQKoBRa+9dfVvKHRmz
- CwDRn95RsgYfKbzfW5Fs1EwQw/+L5sv7pQv5c1c/4CBTRX1aL7Uk2Z5fKX9R4Iz8vLIE
- X2i7Yi6TY0zNsbdLS4x79u70/dtXuTHV7GeR8ikNPSmuWSS7fYuf9rYzXTPTGzB1VajB
- q9ERopQCEplPh4w5hZvIkZBIxy6md4jSPqHdib6fyZLT3I135iR9YaSDBDRTqLUpqTim
- eKHst8tEib/LY7imsO/I6ZtzXSIvzZ9fyydL40VmWaDOQi/TEqdBOD2+HE1X/ZnJ4C3Y
- /36g==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZSz3-0000Nx-9F
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 06:24:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZSz1-0007Us-LL
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 06:24:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722507870;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ue0bwFEg3ak0yzV0XsNJ0siyWMjbU6WQfndneOoCMuk=;
+ b=DU2fkPPAqkNYELftSKEWoPRptaGURADRTb7IS8J221fQJB2hnGl0mOjfMHnYd9chysyo0C
+ Y4kUQKUYDs4SfUulM1i0EghK2DFr21c7c3ejWlLNYemyNFW4bvqfuC8BNEw/844evNmjMR
+ YXcRb3rVVID1an2KGwnHQmmn5Itc2bM=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-523-nkNTA9JwM6Obw2W9BMUEQg-1; Thu, 01 Aug 2024 06:24:28 -0400
+X-MC-Unique: nkNTA9JwM6Obw2W9BMUEQg-1
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-a7a97665b8bso608390566b.2
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 03:24:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722507006; x=1723111806;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=s3fRlURdb45/5xQ0tKGyepiwT9X1nBv2BpjzcUfb2so=;
- b=decaBr6+PzHvLAYjrAI2waVcOneloCzG6Q7A1VzKofZvdmEkWpI2snG79yTSl455RZ
- rwgFNO+0oCt7E/2Fu1F4jNTEMCxdA10RoE/WENdv8gVdZ5YMEi0cBn+LBal+1EUhcS/D
- 4zEoJx17inX8LX79Xahj+Rg6z2DPNe2vjsz/WFJVJiZM+We9al+Yu06BU8h5KXwYK6R5
- bZAIJVS9juG1eBWMFjWkHV1J/63ZM1E3l61+zj13hoWyC3mHQa/+aBUAH5IxKmYfdAWB
- EmZ0y55lZXm/DT95In1PQ4sCYj3fyO9P0koFIgjBVMssMG/Pz5pw37SqQG2CsxOHI25a
- H/hw==
-X-Gm-Message-State: AOJu0YwIPX20IfJQC0m7sMFqyuPJXGKPM3ANPeiACC+qggrrlDVBv73C
- +kVDMnUkgzps1jFyL39sexlVW1ZaBp9LuEUgLvMFrTLLzsQ51NfRql9OrsLW0tU=
-X-Google-Smtp-Source: AGHT+IHaJgPhIpHdQowJGPxOUCZFu1DmSYh8brYpdrD68QFhJkwUcjlNbN1dm8ewAQrDGx3b6X7psA==
-X-Received: by 2002:a17:907:843:b0:a7a:b561:358e with SMTP id
- a640c23a62f3a-a7dbcd197bbmr72134666b.33.1722507005774; 
- Thu, 01 Aug 2024 03:10:05 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acac61218sm883512066b.94.2024.08.01.03.10.05
+ d=1e100.net; s=20230601; t=1722507867; x=1723112667;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ue0bwFEg3ak0yzV0XsNJ0siyWMjbU6WQfndneOoCMuk=;
+ b=I3lYpdvHVxS9s8OEuGW87aq+Vk5LgINs4Uq/MTgwPS9AcKsUvHYE0T1weKvlMMIVYz
+ eCUt+xFF5+oN73119d2wkvrDj/nElZkD/O+lAHMlWUfGlBKURhzjd040ei17Hn+UESwY
+ kSOrZUhZfELO5eJG4QGBGBCAYSkaISdCx/BTvbgKxpUbl3648u2JwFjSRBYQyOmV9+x5
+ EXJ3Kyfe4kpj4PTvhLcMSpB+5Wd/1WxE6P7SwyVR7eLSw4gg2ENSe/j4lecVVLYH/ZTj
+ oVQbfbjFg6sMWoMeKo1G+XaC77w47JlJvPSQkY4QgG/4+JJphtoQcccS3LkIrLsu4nRR
+ v4dA==
+X-Gm-Message-State: AOJu0YyMEOFu2nX0iqh+M+2+JzmUmkKYL3h8yw/Gk8IxslPCTLQtGZ1n
+ elPnWgvsdToXbP0Reqt6d7msuoE+z4ufIYiK3CQEcYQoZQKQnWCYRNfeR+wdv+vlqjP17RKFSqa
+ oSCTO3g7jEeI+jRk/murG9eMnW9VRObA7DtkbTJDqoY5Ttw3Jb8rG
+X-Received: by 2002:a17:906:bc17:b0:a7a:8c8d:40ac with SMTP id
+ a640c23a62f3a-a7daf4fc972mr189976766b.4.1722507867542; 
+ Thu, 01 Aug 2024 03:24:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFQwhi431Q8HVpbAao4OELzZ1P4Ap3H0TaEpvhulQ/ixG1w3MbWTClbE0JFUG8X+dW9Ss+uvw==
+X-Received: by 2002:a17:906:bc17:b0:a7a:8c8d:40ac with SMTP id
+ a640c23a62f3a-a7daf4fc972mr189973866b.4.1722507866700; 
+ Thu, 01 Aug 2024 03:24:26 -0700 (PDT)
+Received: from redhat.com ([2.55.44.248]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7acad90fe2sm879132966b.156.2024.08.01.03.24.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Aug 2024 03:10:05 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4F3435F80C;
- Thu,  1 Aug 2024 11:10:04 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Fabiano Rosas <farosas@suse.de>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  John
- Snow <jsnow@redhat.com>,  qemu-ppc@nongnu.org,  Richard Henderson
- <richard.henderson@linaro.org>,  Ani Sinha <anisinha@redhat.com>,  Thomas
- Huth <thuth@redhat.com>
-Subject: Re: [PATCH v3 03/24] tests/functional: Set up logging
-In-Reply-To: <20240730170347.4103919-4-berrange@redhat.com> ("Daniel P.
- =?utf-8?Q?Berrang=C3=A9=22's?= message of "Tue, 30 Jul 2024 18:03:23
- +0100")
-References: <20240730170347.4103919-1-berrange@redhat.com>
- <20240730170347.4103919-4-berrange@redhat.com>
-Date: Thu, 01 Aug 2024 11:10:04 +0100
-Message-ID: <875xskeepv.fsf@draig.linaro.org>
+ Thu, 01 Aug 2024 03:24:25 -0700 (PDT)
+Date: Thu, 1 Aug 2024 06:24:17 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>
+Subject: Re: [PATCH-for-9.1] hw/pci-host/gt64120: Set PCI base address
+ register write mask
+Message-ID: <20240801062148-mutt-send-email-mst@kernel.org>
+References: <20240801091332.49256-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240801091332.49256-1-philmd@linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,55 +99,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-
-> From: Thomas Huth <thuth@redhat.com>
->
-> Create log files for each test separately, one file that contains
-> the basic logging and one that contains the console output.
->
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+On Thu, Aug 01, 2024 at 11:13:32AM +0200, Philippe Mathieu-Daudé wrote:
+> When booting Linux we see:
+> 
+>   PCI host bridge to bus 0000:00
+>   pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
+>   pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
+>   pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
+>   pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
+>   pci 0000:00:00.0: [Firmware Bug]: reg 0x14: invalid BAR (can't size)
+>   pci 0000:00:00.0: [Firmware Bug]: reg 0x18: invalid BAR (can't size)
+>   pci 0000:00:00.0: [Firmware Bug]: reg 0x1c: invalid BAR (can't size)
+>   pci 0000:00:00.0: [Firmware Bug]: reg 0x20: invalid BAR (can't size)
+>   pci 0000:00:00.0: [Firmware Bug]: reg 0x24: invalid BAR (can't size)
+> 
+> This is due to missing base address register write mask.
+> Add it to get:
+> 
+>   PCI host bridge to bus 0000:00
+>   pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
+>   pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
+>   pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
+>   pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
+>   pci 0000:00:00.0: reg 0x10: [mem 0x00000000-0x00000fff pref]
+>   pci 0000:00:00.0: reg 0x14: [mem 0x01000000-0x01000fff pref]
+>   pci 0000:00:00.0: reg 0x18: [mem 0x1c000000-0x1c000fff]
+>   pci 0000:00:00.0: reg 0x1c: [mem 0x1f000000-0x1f000fff]
+>   pci 0000:00:00.0: reg 0x20: [mem 0x1be00000-0x1be00fff]
+>   pci 0000:00:00.0: reg 0x24: [io  0x14000000-0x14000007]
+> 
+> Mention the datasheet referenced. Remove the "Malta assumptions ahead"
+> comment since the reset values from the datasheet are used.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  tests/functional/qemu_test/testcase.py | 27 +++++++++++++++++++++++++-
->  1 file changed, 26 insertions(+), 1 deletion(-)
->
-> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qe=
-mu_test/testcase.py
-> index 82cc1d454f..27bbf4a0af 100644
-> --- a/tests/functional/qemu_test/testcase.py
-> +++ b/tests/functional/qemu_test/testcase.py
-> @@ -31,7 +31,8 @@ class QemuBaseTest(unittest.TestCase):
->      arch =3D None
->=20=20
->      workdir =3D None
-> -    log =3D logging.getLogger('qemu-test')
-> +    log =3D None
-> +    logdir =3D None
->=20=20
->      def setUp(self, bin_prefix):
->          self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must =
-be set')
-> @@ -42,6 +43,20 @@ def setUp(self, bin_prefix):
->          if not os.path.exists(self.workdir):
->              os.makedirs(self.workdir)
->=20=20
-> +        self.logdir =3D self.workdir
-> +        self.log =3D logging.getLogger('qemu-test')
-> +        self.log.setLevel(logging.DEBUG)
-> +        self._log_fh =3D logging.FileHandler(os.path.join(self.logdir,
-> +                                                        'base.log'), mod=
-e=3D'w')
-> +        self._log_fh.setLevel(logging.DEBUG)
-> +        fileFormatter =3D logging.Formatter(
-> +            '%(asctime)s - %(levelname)s: %(message)s')
-> +        self._log_fh.setFormatter(fileFormatter)
-> +        self.log.addHandler(self._log_fh)
+>  hw/pci-host/gt64120.c | 15 ++++++++++++++-
+>  1 file changed, 14 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
+> index e02efc9e2e..0b00e98e0a 100644
+> --- a/hw/pci-host/gt64120.c
+> +++ b/hw/pci-host/gt64120.c
+> @@ -1,6 +1,8 @@
+>  /*
+>   * QEMU GT64120 PCI host
+>   *
+> + * (Datasheet GT-64120 Rev 1.4 from Sep 14, 1999)
+> + *
+>   * Copyright (c) 2006,2007 Aurelien Jarno
+>   *
+>   * Permission is hereby granted, free of charge, to any person obtaining a copy
+> @@ -1213,17 +1215,28 @@ static void gt64120_realize(DeviceState *dev, Error **errp)
+>  
+>  static void gt64120_pci_realize(PCIDevice *d, Error **errp)
+>  {
+> -    /* FIXME: Malta specific hw assumptions ahead */
+> +
+> +    /* Values from chapter 17.16 "PCI Configuration" */
+> +
+>      pci_set_word(d->config + PCI_COMMAND, 0);
+>      pci_set_word(d->config + PCI_STATUS,
+>                   PCI_STATUS_FAST_BACK | PCI_STATUS_DEVSEL_MEDIUM);
+>      pci_config_set_prog_interface(d->config, 0);
+> +
+> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_0, 0xfffff009);
+> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_1, 0xfffff009);
+> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_2, 0xfffff009);
+> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_3, 0xfffff009);
+> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_4, 0xfffff009);
+> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_5, 0xfffff009);
+> +
 
-This is in the wrong place, we have a unique machine directory for each
-run, the console.log should go in there.
+If you make these writeable, then you should set them on reset,
+as opposed to unrealize.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
+>      pci_set_long(d->config + PCI_BASE_ADDRESS_0, 0x00000008);
+>      pci_set_long(d->config + PCI_BASE_ADDRESS_1, 0x01000008);
+>      pci_set_long(d->config + PCI_BASE_ADDRESS_2, 0x1c000000);
+>      pci_set_long(d->config + PCI_BASE_ADDRESS_3, 0x1f000000);
+>      pci_set_long(d->config + PCI_BASE_ADDRESS_4, 0x14000000);
+>      pci_set_long(d->config + PCI_BASE_ADDRESS_5, 0x14000001);
+> +
+>      pci_set_byte(d->config + 0x3d, 0x01);
+>  }
+>  
+> -- 
+> 2.45.2
+
 
