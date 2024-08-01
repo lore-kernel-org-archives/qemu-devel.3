@@ -4,93 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D567C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 08:26:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33529C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 08:27:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZR7v-0001s7-7G; Thu, 01 Aug 2024 04:25:35 -0400
+	id 1sZR8y-0005jo-Bw; Thu, 01 Aug 2024 04:26:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sZR7t-0001rE-4D
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 04:25:33 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZR8q-0005F1-QS
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 04:26:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sZR7q-0000nO-KI
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 04:25:32 -0400
-Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4713RkQI022418;
- Thu, 1 Aug 2024 08:25:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:subject:from:to:cc:date:in-reply-to:references
- :content-type:mime-version; s=pp1; bh=EmwCwrwM8W1s9BPntm8b+KuwwO
- kTiPeye8rMMeQ68ac=; b=FvlTrDw1SshruQulgmTzZkJGAWOnDXfI4KvaaV5aQg
- HuFWuKRSUHgf1W5Wgh6gYyiHTwc/8ofxHqMss3qPBr9ZgfzgWmk6jIPkKfZg6NhX
- Qwbl8ZNGkdbamytjhKNVrwy8i1hT6vx2PpfcFrtOQ5eHYyUZPpcNSgSzKU3AI7jO
- CH17AFU417n4oiQJZqLNvjF2f51iV4UJ0XuL0LnIVftdRq2+Qj5AgxZ64kK5x4ov
- RRzTy1sEtsA1ZM/2OXOu9M0PJ7QeFVV/VNv5VZx5Fmnv6FD/UqsbpvGGtW7Hwg0f
- KgCPBnS5xhyjuPC4ze8Fm2Zffr+W7TOI4FjkBOFS1jAQ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40r1m68qbj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Aug 2024 08:25:19 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 47170T1u007462; Thu, 1 Aug 2024 08:23:25 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 40nb7ugx7j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Aug 2024 08:23:25 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4718NLaO47644942
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 1 Aug 2024 08:23:23 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 950D02004E;
- Thu,  1 Aug 2024 08:23:21 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2E56720040;
- Thu,  1 Aug 2024 08:23:21 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  1 Aug 2024 08:23:21 +0000 (GMT)
-Message-ID: <fd23f7fd27a9928fd0a07b2cbe72e1487bf063c1.camel@linux.ibm.com>
-Subject: Re: [PATCH] bsd-user/main: Allow setting tb-size
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Warner Losh <imp@bsdimp.com>
-Cc: Kyle Evans <kevans@freebsd.org>, Richard Henderson
- <richard.henderson@linaro.org>, qemu-devel@nongnu.org, Philippe
- =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Date: Thu, 01 Aug 2024 10:23:20 +0200
-In-Reply-To: <CANCZdfpw7iDr4fBmsuukA5aVzcWBgCX09DVngg1RYHtv832zQQ@mail.gmail.com>
-References: <20240731144532.5997-1-iii@linux.ibm.com>
- <CANCZdfpw7iDr4fBmsuukA5aVzcWBgCX09DVngg1RYHtv832zQQ@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="=-eZugFKfRAHVhtUADjttt"
-User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZR8p-0000sp-75
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 04:26:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722500789;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mhZ6QMQB3142AyvmbG2JjrA9Ti0/Hp7zJ/w803wTJzE=;
+ b=ewOJfa6xbTlYIIev6bkO7YVoA+cAcWl/DhxRI1hqwz5xWn6dxvGFqLKbP5DWas82zB3xBU
+ INcPqPCq6H2IlKael6u6LrHVwgxKrdk8MRVHAEyrEwHZf1rXAksd81TkK5VrPXTCINOXmc
+ uS002SeGaHOq8/w8bYg4X0TBGCVus8o=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-518-M59pHjDKNR2bLj5oEFQ3hg-1; Thu, 01 Aug 2024 04:26:28 -0400
+X-MC-Unique: M59pHjDKNR2bLj5oEFQ3hg-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5a8b0832defso2897068a12.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 01:26:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722500787; x=1723105587;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mhZ6QMQB3142AyvmbG2JjrA9Ti0/Hp7zJ/w803wTJzE=;
+ b=lOOJmD4c0lAn9p3+KNb4bx2tFZxgDeA/JbcNMIVTZqch0KmXwtHDY1tW3D/cRwnt8d
+ i4K1G5M4N5th8d6Lkm4b2bo8M00vQZ6qQTn+t2XiF02HnsoMtg218iHrdPzf+9M5r90Q
+ 3Vw+SuxwBVfTnfvaSqDhhGWGvBXiUHHRf1tw16uAZPmH4rMb6buZKvGjQdKnwuApWlv4
+ 1jbyMv3/v9R6wvPrM3/AZPs+vH7iJ5BmLohv+82/khlG2iEyyCt4LIekeELKRxLhDF70
+ g0oYvLBj5ifU7821xCBVPQgxy+o+Gg8iiY7f1aUbMfbBy9L83bl0/bHsTdFiipqLHvNt
+ wlfA==
+X-Gm-Message-State: AOJu0YykiYQTH7+RKwXG7ANUe4OaDjfJMsQeGp6FVw0OQObildGVw9Yu
+ Kxa9NVMTrtUPJHDHhuXx/inMFvA9iGaCL3ZLXpUuAiapihmcLgz2g14C72xMy34/ixmqjKYQRDG
+ udvEJqeOIRdUqZph9gXAEHWMiMF5q28bU2KEaWHWbSWorBG6dll2O2htcOrZw
+X-Received: by 2002:a05:6402:b1c:b0:57c:b82e:884b with SMTP id
+ 4fb4d7f45d1cf-5b77d476c87mr475542a12.19.1722500786992; 
+ Thu, 01 Aug 2024 01:26:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEpGdRh25n1ZQD31NClMBUwI7PQZnOCxPbbiTly6N9X01N16TdE/fN1E7QkKG9+AnULD7eoLA==
+X-Received: by 2002:a05:6402:b1c:b0:57c:b82e:884b with SMTP id
+ 4fb4d7f45d1cf-5b77d476c87mr475516a12.19.1722500786297; 
+ Thu, 01 Aug 2024 01:26:26 -0700 (PDT)
+Received: from redhat.com ([2.55.44.248]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5ac63590d29sm9730818a12.21.2024.08.01.01.26.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 Aug 2024 01:26:23 -0700 (PDT)
+Date: Thu, 1 Aug 2024 04:26:13 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: BillXiang <xiangwencheng@dayudpu.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] vhsot-user: Do not wait for replay for not sent
+ VHOST_USER_SET_LOG_BASE
+Message-ID: <20240801042507-mutt-send-email-mst@kernel.org>
+References: <20240718083103.56214-1-xiangwencheng@dayudpu.com>
+ <20240720145819-mutt-send-email-mst@kernel.org>
+ <fba0cfc406f202976ef5ac5d129e08524ce06bbf.0ff73b39.722e.4462.b426.f477adef04f2@feishu.cn>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: uFm2HgyeSpJEMEv85-RkP0j10_ZzhLL5
-X-Proofpoint-ORIG-GUID: uFm2HgyeSpJEMEv85-RkP0j10_ZzhLL5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-01_05,2024-07-31_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- bulkscore=0 mlxscore=0
- impostorscore=0 malwarescore=0 mlxlogscore=679 suspectscore=0
- lowpriorityscore=0 priorityscore=1501 clxscore=1015 adultscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408010050
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fba0cfc406f202976ef5ac5d129e08524ce06bbf.0ff73b39.722e.4462.b426.f477adef04f2@feishu.cn>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_FONT_LOW_CONTRAST=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,111 +101,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-eZugFKfRAHVhtUADjttt
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, 2024-07-31 at 15:21 -0600, Warner Losh wrote:
-> On Wed, Jul 31, 2024 at 8:=E2=80=8A45 AM Ilya Leoshkevich
-> <iii@=E2=80=8Alinux.=E2=80=8Aibm.=E2=80=8Acom> wrote: While qemu-system c=
-an set tb-size using
-> -accel tcg,tb-size=3Dn, there is no similar knob for qemu-bsd-user. Add
-> one in a way similar to how one-insn-per-tb is already
->=20
->=20
->=20
-> On Wed, Jul 31, 2024 at 8:45=E2=80=AFAM Ilya Leoshkevich <iii@linux.ibm.c=
-om>
-> wrote:
-> > While qemu-system can set tb-size using -accel tcg,tb-size=3Dn, there
-> > is no similar knob for qemu-bsd-user. Add one in a way similar to
-> > how
-> > one-insn-per-tb is already handled.
-> >=20
->=20
->=20
-> Cool! Are you using bsd-user and need this for some reason? Or is
-> this
-> purely theoretical? Is there a larger context I can read about
-> somewhere?
-
-I needed this on Linux in order to debug an issue where I suspected
-full TB invalidation may be an issue.
-It turned out to be something completely different, but I found it
-useful: setting it to, e.g., 4096 makes full TB invalidation very rare,
-so if a problem is still reproducible, then the root causes is
-something else.
-Philippe suggested to implement this for BSD as well in order to keep
-the interfaces in sync.
-
-[...]
+On Sun, Jul 21, 2024 at 11:20:56AM +0800, BillXiang wrote:
+> 
+> > From: "Michael S. Tsirkin"<mst@redhat.com>
+> > Date:  Sun, Jul 21, 2024, 03:01
+> > Subject:  Re: [PATCH v2] vhsot-user: Do not wait for replay for not sent VHOST_USER_SET_LOG_BASE
+> > To: "BillXiang"<xiangwencheng@dayudpu.com>
+> > Cc: <qemu-devel@nongnu.org>
+> > typos in subject do not inspire confidence.
+> 
+> Sorry
+> 
+> > 
+> > On Thu, Jul 18, 2024 at 04:31:03PM +0800, BillXiang wrote:
+> > > From: BillXiang <xiangwencheng@dayudpu.com>
+> > > 
+> > > We have added VHOST_USER_SET_LOG_BASE to vhost_user_per_device_request
+> > > in https://lists.nongnu.org/archive/html/qemu-devel/2024-06/msg02559.html
+> > 
+> > Pls put commit here not ML link:
+> > commit ABCDEFGHIKLM ("subject")
+> > 
+> > > and will send this message only for vq 0.
+> > 
+> > you mean "should send"?
+> > 
+> 
+> What I mean is the commit 7c211eb078c4 ("vhost-user: Skip unnecessary duplicated VHOST_USER_SET_LOG_BASE requests") 
+> will cause VHOST_USER_SET_LOG_BASE to be sent only when 'vq_index == 0' in vhost_user_write, 
+> so that we can not use vhost_user_read to get reply when 'vq_index != 0'
 
 
---=-eZugFKfRAHVhtUADjttt
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-
-<html><head>
-<style>
-  #pfptBannerh50g9tm { all: revert !important; display: block !important;=20
-    visibility: visible !important; opacity: 1 !important;=20
-    background-color: #D0D8DC !important;=20
-    max-width: none !important; max-height: none !important }
-  .pfptPrimaryButtonh50g9tm:hover, .pfptPrimaryButtonh50g9tm:focus {
-    background-color: #b4c1c7 !important; }
-  .pfptPrimaryButtonh50g9tm:active {
-    background-color: #90a4ae !important; }
-</style>
+do we try to do it now? in which configurations?
 
 
-<style>pre,code,address {
-  margin: 0px;
-}
-h1,h2,h3,h4,h5,h6 {
-  margin-top: 0.2em;
-  margin-bottom: 0.2em;
-}
-ol,ul {
-  margin-top: 0em;
-  margin-bottom: 0em;
-}
-blockquote {
-  margin-top: 0em;
-  margin-bottom: 0em;
-}
-</style></head><!-- BaNnErBlUrFlE-BoDy-start -->
-<!-- Preheader Text : BEGIN -->
-<body><div>On Wed, 2024-07-31 at 15:21 -0600, Warner Losh wrote:</div><bloc=
-kquote type=3D"cite" style=3D"margin:0 0 0 .8ex; border-left:2px #729fcf so=
-lid;padding-left:1ex"><div style=3D"display:none !important;display:none;vi=
-sibility:hidden;mso-hide:all;font-size:1px;color:#ffffff;line-height:1px;he=
-ight:0px;max-height:0px;opacity:0;overflow:hidden;">On Wed, Jul 31, 2024 at=
- 8:=E2=80=8A45 AM Ilya Leoshkevich &lt;iii@=E2=80=8Alinux.=E2=80=8Aibm.=E2=
-=80=8Acom&gt; wrote: While qemu-system can set tb-size using -accel tcg,tb-=
-size=3Dn, there is no similar knob for qemu-bsd-user. Add one in a way simi=
-lar to how one-insn-per-tb is already</div><div><!-- Preheader Text : END -=
--> <!-- Email Banner : BEGIN --></div><div style=3D"display:none !important=
-;display:none;visibility:hidden;mso-hide:all;font-size:1px;color:#ffffff;li=
-ne-height:1px;height:0px;max-height:0px;opacity:0;overflow:hidden;"></div><=
-div><!-- Email Banner : END --> <!-- BaNnErBlUrFlE-BoDy-end --></div><div d=
-ir=3D"ltr">On Wed, Jul 31, 2024 at 8:45=E2=80=AFAM Ilya Leoshkevich &lt;<a =
-href=3D"mailto:iii@linux.ibm.com">iii@linux.ibm.com</a>&gt; wrote:<div clas=
-s=3D"gmail_quote"><blockquote type=3D"cite" style=3D"margin:0 0 0 .8ex; bor=
-der-left:2px #729fcf solid;padding-left:1ex"><div>While qemu-system can set=
- tb-size using -accel tcg,tb-size=3Dn, there<br>is no similar knob for qemu=
--bsd-user. Add one in a way similar to how<br>one-insn-per-tb is already ha=
-ndled.<br></div><br></blockquote><div><br></div><div>Cool! Are you using bs=
-d-user and need this for some reason? Or is this</div><div>purely theoretic=
-al? Is there a larger context I can read about somewhere?<br></div></div></=
-div></blockquote><div><br></div><div>I needed this on Linux in order to deb=
-ug an issue where I suspected full TB invalidation may be an issue.</div><d=
-iv>It turned out to be something completely different, but I found it usefu=
-l: setting it to, e.g., 4096 makes full TB invalidation very rare, so if a =
-problem is still reproducible, then the root causes is something else.</div=
-><div>Philippe suggested to implement this for BSD as well in order to keep=
- the interfaces in sync.</div><div><br></div><div>[...]</div><div><br></div=
-><div><span></span></div></body></html>
-
---=-eZugFKfRAHVhtUADjttt--
+> > 
+> > > 
+> > > Signed-off-by: BillXiang <xiangwencheng@dayudpu.com>
+> > > ---
+> > > V1[1] -> V2:
+> > >  - Refrain from appending flags to messages that could 
+> > > precipitate validation failures upon execution of the 
+> > > `vhost_user_read_header` function. 
+> > > 
+> > > [1]https://lists.nongnu.org/archive/html/qemu-devel/2024-07/msg01923.html
+> > > ---
+> > >  hw/virtio/vhost-user.c | 2 +-
+> > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > 
+> > > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> > > index 00561daa06..fd12992d15 100644
+> > > --- a/hw/virtio/vhost-user.c
+> > > +++ b/hw/virtio/vhost-user.c
+> > > @@ -460,7 +460,7 @@ static int vhost_user_set_log_base(struct vhost_dev *dev, uint64_t base,
+> > >          return ret;
+> > >      }
+> > >  
+> > > -    if (shmfd) {
+> > > +    if (shmfd && (dev->vq_index == 0)) {
+> > 
+> > extra () not needed here.
+> > 
+> > >          msg.hdr.size = 0;
+> > >          ret = vhost_user_read(dev, &msg);
+> > >          if (ret < 0) {
+> > > -- 
+> > > 2.30.0
 
 
