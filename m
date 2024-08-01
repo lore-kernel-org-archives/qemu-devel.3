@@ -4,79 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED52EC52D54
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 15:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC600C52D54
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 15:45:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZXyD-0006So-Jd; Thu, 01 Aug 2024 11:44:03 -0400
+	id 1sZXy5-0006Ls-Bf; Thu, 01 Aug 2024 11:43:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sZXy0-0006Ic-Ff
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:43:49 -0400
-Received: from mail-io1-xd2e.google.com ([2607:f8b0:4864:20::d2e])
+ id 1sZXxx-0006Hr-MM
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:43:47 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sZXxy-0004vB-Vq
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:43:48 -0400
-Received: by mail-io1-xd2e.google.com with SMTP id
- ca18e2360f4ac-81f94ce2272so271521639f.2
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 08:43:46 -0700 (PDT)
+ id 1sZXxv-0004up-Ba
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:43:44 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-70eb73a9f14so5346567b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 08:43:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1722527025; x=1723131825; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wmgSaVL8dhq5nP6b5OzdsZKAt0sQ4+L9Gnx6E+G/OOg=;
- b=JDMFkqj3zpf/48FLOo6RFHhZ+Z81ntIEf67K2RTLK5so+kLWl4pceEynevCHGCglkS
- S+R0UuJU/9wyYkuYShBNzMN4u0/JXxX4umSPdkup09R14JwCyGZBu9W3fW3jvdWAidDh
- SrV2kSMiE97Kgnwt+KVdo5Yc82LrbWv9Fy+CoEjBAiIAF95yz0/gKrL/GeDE6Q6het/w
- hTJOynGFHV1yQDstR43LLDVcqGk4vaudXhbooGmnFoWkVwY91YVn6bWSfcTuTjx4uuNq
- vNz0axSI8TuZRQJ1kNyzkU/H8hzHoHsPDSEuAXUoaeGfHWfOXZtxbT8x+9BSQtrGTXOS
- 5xmg==
+ d=ventanamicro.com; s=google; t=1722527021; x=1723131821; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=z4eXq8oEdUXQrhLUHBWnxm31duZG6qEdQtX+afbt/hw=;
+ b=LaqLLB/0Osa7mTKRtRFaP0FyZiCYmNqnCirgbiioZkM8kx/DaxOvPcTri7gtXYhTZg
+ 90+QCgJnAeFAH1XleLJYRQY8XgICtDbbHKGXXhJiWZfijYMpEocQKpM1MEWjX4pDkO3H
+ OpMX+xQifvvioth4u9T7EuXgctOKccGI6b1y7+s8gDQM4qYNger/AvYZBHuvTK4ukqvt
+ KS1VbAB/zqmBZx4NBa/F7qCLITCRQliF663e+WMlV5ZZKo965JHWpVdMQ0DzdRRr7wqv
+ m8sqKauShTbZeRME+7nkIV3QhORYrUVfHkkg1KFsqjkdT4R890fGJxugnbyFeNfzF8cG
+ Uaag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722527025; x=1723131825;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wmgSaVL8dhq5nP6b5OzdsZKAt0sQ4+L9Gnx6E+G/OOg=;
- b=vHn9vdX25qCksynx8MiycZ7fS7jCKVlLSpzUCszQovojd5pv2rpyE68kKj7jI1oZnW
- 7TJjg7ri6ke1wDsSh2JdyVi7umrOMJXFFvW/5w3L2SmSNtAqfAijAnJlsPijnzbEfIfO
- l/W79CCDFD14sFfQF/2DStYze/j3V4OMcrFBZWsztvwVnC8LXGpidWBYNob08kNe0CH1
- l433krREWcVg6UGPQIHhxcXs45eolMIcyF0UQGMr7P7hb3WwYuZXcT35kAjC6rUX3Ydk
- elZBg0e4Nl8IwBD0ueg9Uwpu3s97253R04zzplbRStIrG4itFXIEHOGyhTZMycHmqrqg
- Q3yQ==
-X-Gm-Message-State: AOJu0YzUapzCluQzEkcWzbvvr8AD+MTVkCIrlI6HW8V58UvniWeK4t5R
- jNE+oPzFXOsu8GKvUaTBJtNOK2q6yQy3LGRUeociETjF+dtgOYPPVewDLhoAA78fPL+c57prqQQ
- 9
-X-Google-Smtp-Source: AGHT+IHzyAeYJ3Uvstn1GJm9hScDb9jWMAVg631hWCE4vXOnxDrSLKzNr7XgXyOAc9tccsIH00hOHg==
-X-Received: by 2002:a05:6e02:1d81:b0:37a:7662:7591 with SMTP id
- e9e14a558f8ab-39b1fb6c01emr9052535ab.6.1722527025076; 
- Thu, 01 Aug 2024 08:43:45 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1722527021; x=1723131821;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=z4eXq8oEdUXQrhLUHBWnxm31duZG6qEdQtX+afbt/hw=;
+ b=O5/pWLmzuJPedQeGVp4B/82A4AFtAuPgvD5yRYmXwH0ABMPXrjO14QZNNrJxyGMEv1
+ FaNFk+zD6FyGO/Uj/7qA8U77f3/Kz1IIkFmj63bBjam0a0rXGNkudd0XfnAFmbPv2kxH
+ 0K8TKIheBBYXBk8a3CkSS6S1DtD3fvQkwDHUdOQMkxsbv5Mantx0KuGxSmTrPTF4HhS2
+ ZOfFIqfcOXv43afzBX/2s26WvnYZbhscbCuoXNYnUARsAx8kt+EMeqjahgUvf60LR+rT
+ +SOM/whCF5F2mwR+BsQN48qWywx8fOA3OeRuW3xKUXS2K4sRaBwBj1H6FJ9tx8dpMfEc
+ B+ug==
+X-Gm-Message-State: AOJu0YzPC9UlxSpRowjbqLiRnJzLgw5t1lo+X/VfRO32lTZmAmxCmHkf
+ w9VQNDlBd89575U3AOC/EUy6WTcfGv/jh2ienyv+D2q8G2HCVAGHLdtEtd8Hg70AuFpzcKWXF8Z
+ h
+X-Google-Smtp-Source: AGHT+IGFntwRqLdom6EBVR6T/u+hqt8M7IKN7JdQEWm0A5GGoyGDCwwtuHSckDwYmlLEX8jGM8vOXw==
+X-Received: by 2002:a05:6a00:4b11:b0:70d:2b95:d9c0 with SMTP id
+ d2e1a72fcca58-7106cfd2249mr820269b3a.14.1722527021270; 
+ Thu, 01 Aug 2024 08:43:41 -0700 (PDT)
 Received: from grind.dc1.ventanamicro.com ([177.197.107.101])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7b762e9c650sm17183a12.16.2024.08.01.08.43.41
+ 41be03b00d2f7-7b762e9c650sm17183a12.16.2024.08.01.08.43.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Aug 2024 08:43:44 -0700 (PDT)
+ Thu, 01 Aug 2024 08:43:40 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
  jason.chien@sifive.com, frank.chang@sifive.com, ajones@ventanamicro.com,
- Tomasz Jeznach <tjeznach@rivosinc.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH for-9.2 v6 01/12] exec/memtxattr: add process identifier to
- the transaction attributes
-Date: Thu,  1 Aug 2024 12:43:22 -0300
-Message-ID: <20240801154334.1009852-2-dbarboza@ventanamicro.com>
+Subject: [PATCH for-9.2 v6 00/12] riscv: QEMU RISC-V IOMMU Support
+Date: Thu,  1 Aug 2024 12:43:21 -0300
+Message-ID: <20240801154334.1009852-1-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240801154334.1009852-1-dbarboza@ventanamicro.com>
-References: <20240801154334.1009852-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2e;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-io1-xd2e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,37 +94,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
+Hi,
 
-Extend memory transaction attributes with process identifier to allow
-per-request address translation logic to use requester_id / process_id
-to identify memory mapping (e.g. enabling IOMMU w/ PASID translations).
+In this new version the most notable change is how we're dealing with
+ICVEC updates. Instead of hardcoding the vectors being used in
+riscv-iommu-pci, a new interface was created to allow IOMMU devices to
+receive ICVEC updates and act accordingly.
 
-Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Jason Chien <jason.chien@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- include/exec/memattrs.h | 5 +++++
- 1 file changed, 5 insertions(+)
+riscv-iommu-pci will receive this notification, mark any existing MSIX
+vectors as 'unused' and use the new ones provided by ICVEC.
 
-diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
-index 14cdd8d582..e27c18f3dc 100644
---- a/include/exec/memattrs.h
-+++ b/include/exec/memattrs.h
-@@ -52,6 +52,11 @@ typedef struct MemTxAttrs {
-     unsigned int memory:1;
-     /* Requester ID (for MSI for example) */
-     unsigned int requester_id:16;
-+
-+    /*
-+     * PID (PCI PASID) support: Limited to 8 bits process identifier.
-+     */
-+    unsigned int pid:8;
- } MemTxAttrs;
- 
- /* Bus masters which don't specify any attributes will get this,
+Series based on master. 
+
+Patches missing acks/reviews: 3, 12
+
+Changes from v5:
+- patch 11: dropped
+- patch 2:
+  - align RISCV_IOMMU_REG_SIZE
+- patch 3:
+  - RISCV_IOMMU_REG_IVEC renamed to RISCV_IOMMU_REG_ICVEC to match the
+    reg name used in the specification
+  - created riscv_iommu_process_icvec_update() to process updates done
+    in ICVEC (via riscv_iommu_mmio_write())
+  - created a new 'icvec_update' interface to allow devices to receive
+    new ICVEC vectors
+  - added riscv_iommu_mrif_notification trace at the end of
+    riscv_iommu_msi_write()
+- patch 5:
+  - added a new icvec_vectors[] RISCVIOMMUStatePci property
+  - created a new riscv_iommu_pci_icvec_update() function that
+    implements the new 'icvec_update' IOMMU interface. This function
+    will update all MSIX vector usage based on the current CIV, FIV,
+    PMIV and PIV values
+- patch 12 (former 13):
+  - added more details on what to expect when adding a riscv-iommu-pci
+    device in the 'virt' machine
+- v5 link: https://lore.kernel.org/qemu-riscv/20240708173501.426225-1-dbarboza@ventanamicro.com/
+
+
+Daniel Henrique Barboza (4):
+  pci-ids.rst: add Red Hat pci-id for RISC-V IOMMU device
+  test/qtest: add riscv-iommu-pci tests
+  qtest/riscv-iommu-test: add init queues test
+  docs/specs: add riscv-iommu
+
+Tomasz Jeznach (8):
+  exec/memtxattr: add process identifier to the transaction attributes
+  hw/riscv: add riscv-iommu-bits.h
+  hw/riscv: add RISC-V IOMMU base emulation
+  hw/riscv: add riscv-iommu-pci reference device
+  hw/riscv/virt.c: support for RISC-V IOMMU PCIDevice hotplug
+  hw/riscv/riscv-iommu: add Address Translation Cache (IOATC)
+  hw/riscv/riscv-iommu: add ATS support
+  hw/riscv/riscv-iommu: add DBG support
+
+ docs/specs/index.rst             |    1 +
+ docs/specs/pci-ids.rst           |    2 +
+ docs/specs/riscv-iommu.rst       |   80 +
+ docs/system/riscv/virt.rst       |   13 +
+ hw/riscv/Kconfig                 |    4 +
+ hw/riscv/meson.build             |    1 +
+ hw/riscv/riscv-iommu-bits.h      |  417 ++++++
+ hw/riscv/riscv-iommu-pci.c       |  208 +++
+ hw/riscv/riscv-iommu.c           | 2392 ++++++++++++++++++++++++++++++
+ hw/riscv/riscv-iommu.h           |  152 ++
+ hw/riscv/trace-events            |   15 +
+ hw/riscv/trace.h                 |    1 +
+ hw/riscv/virt.c                  |   33 +-
+ include/exec/memattrs.h          |    5 +
+ include/hw/pci/pci.h             |    1 +
+ include/hw/riscv/iommu.h         |   36 +
+ meson.build                      |    1 +
+ tests/qtest/libqos/meson.build   |    4 +
+ tests/qtest/libqos/riscv-iommu.c |   76 +
+ tests/qtest/libqos/riscv-iommu.h |  100 ++
+ tests/qtest/meson.build          |    1 +
+ tests/qtest/riscv-iommu-test.c   |  234 +++
+ 22 files changed, 3776 insertions(+), 1 deletion(-)
+ create mode 100644 docs/specs/riscv-iommu.rst
+ create mode 100644 hw/riscv/riscv-iommu-bits.h
+ create mode 100644 hw/riscv/riscv-iommu-pci.c
+ create mode 100644 hw/riscv/riscv-iommu.c
+ create mode 100644 hw/riscv/riscv-iommu.h
+ create mode 100644 hw/riscv/trace-events
+ create mode 100644 hw/riscv/trace.h
+ create mode 100644 include/hw/riscv/iommu.h
+ create mode 100644 tests/qtest/libqos/riscv-iommu.c
+ create mode 100644 tests/qtest/libqos/riscv-iommu.h
+ create mode 100644 tests/qtest/riscv-iommu-test.c
+
 -- 
 2.45.2
 
