@@ -4,82 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4622CC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 15:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF1AAC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 15:02:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZXID-0002vo-Bv; Thu, 01 Aug 2024 11:00:37 -0400
+	id 1sZXJh-0001ky-R9; Thu, 01 Aug 2024 11:02:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZXIB-0002oz-94
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:00:35 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
+ id 1sZXJe-0001cG-5R
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:02:06 -0400
+Received: from va-2-40.ptr.blmpb.com ([209.127.231.40])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZXI9-0005BJ-IX
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:00:35 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-428e1915e18so5613065e9.1
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 08:00:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722524431; x=1723129231; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=whLuDOK9toAT29dbP2+0VZN5lCFcvZojP5d7snHmEIM=;
- b=AvnRqI5vhN6SHiOonItss9l9jCYs8Fwkbkr4vkP0CLJz4owrLFK1mOVfMZp+rtNxje
- vbVvdz2Vf6JIzghO1wq5pbZSqZ8tZ2/7HdQ4i5NeQM1kXXsfDAgs6EfDWcTELjDecuhQ
- 4c6EpmnWe5G1lv+/IXQMm7SWJGQdXcXimhF8rdhFXWqTY7fvcD2+JFS8RV9K8+hkEDhk
- sGJlc9rD9P2IMndbKdqY+j7TozxR8dXEzxR8JtAAkV4w7tA3Hk81g/O+2Hecd8HUAuXU
- 0kg/JQ/FCaoBkIT6Js8El5zlYpZZcEGV9MxdDPBoBYktzwauyteLjrSFL5TetGHaUYIn
- A8LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722524431; x=1723129231;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=whLuDOK9toAT29dbP2+0VZN5lCFcvZojP5d7snHmEIM=;
- b=XFBnQ7P0zDPTRwdkBsIcnhT3L3QQ3VPqdw6kixCoJUQZpAf0Sqad0WSl8JHaGeVw3y
- sf8zfz+aYMlKHRiIVhs6hhUdDx16TF8zDMbTiw6Dx1kmtsXbyzI9NPZqRzi6XyJYdNMk
- vvkaDPQOchSnXD7HThFeBEEsj5JX6LCDkZwKLh6yTpQEfaAZ/hHRAQOcTWBNWDhs92eR
- O9AcThCrFgGLzuqASefFakAF3XKt+IX/SNW6Fp7BICub+sGLEYLWZPuXPLUcjXt+e1ni
- SNkP2lomzlkWOj7cahBOYuS+3wvK2Fm/wDCF5ibYYEET/6XJN9jtsbWE/qTqil7Uuwbo
- vrdg==
-X-Gm-Message-State: AOJu0YwOFAu+2jB47l9fuZoAj1ONsI+dcCePvZeWioZVtDFekTIc6IDh
- 2AoL7RSXkNR466nGd8WwLRoPpjJF5XPejmhTqbRuiEv31VXJIqeDoWdnFQPuKG5vZ/kE0ZHZ9Pb
- pvOY=
-X-Google-Smtp-Source: AGHT+IEyZMB96EhTN7JPn4P6Dtx42cn1y/+EBRVNCUUPEnteTJuvgKTzXb5Ub6CL5LbaLPjRYOu3Fg==
-X-Received: by 2002:a05:600c:4684:b0:426:618f:1a31 with SMTP id
- 5b1f17b1804b1-428e6b96485mr956025e9.34.1722524431280; 
- Thu, 01 Aug 2024 08:00:31 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.130.148])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4282bb6405csm61714935e9.34.2024.08.01.08.00.29
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 01 Aug 2024 08:00:30 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Aurelien Jarno <aurelien@aurel32.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH-for-9.1 v3 1/2] hw/pci-host/gt64120: Reset config registers
- during RESET phase
-Date: Thu,  1 Aug 2024 17:00:20 +0200
-Message-ID: <20240801150021.52977-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240801150021.52977-1-philmd@linaro.org>
-References: <20240801150021.52977-1-philmd@linaro.org>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
+ id 1sZXJY-0005Px-Co
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:02:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=s1; d=dayudpu-com.20200927.dkim.feishu.cn; t=1722524513;
+ h=from:subject:mime-version:from:date:message-id:subject:to:cc:
+ reply-to:content-type:mime-version:in-reply-to:message-id;
+ bh=yt+pRC5FOXmek1RzZeuSU/uGknOLwlYhS4JyyYu7eRY=;
+ b=lM+jS0fLI8uFiHI1RIj39t+xNg6O0mXCnxD8u+dsP5dFZ9wERSeq4R71JGJk01kyR2dsgu
+ 4H0s+n65nNiEP2nDnReevL8DE7+PevZ6ndSKa0lERR83f56LRroXpVvw4CsjnDjJhDXzNu
+ Q11Zcvd/NhtU+br9AsQX6Xw6TaTg7cDzaf+3N6nUgxduY/iFvLzw8Fdtz48VfEyzRp1gMk
+ FLzO7813sMo2sAjBCMZh2L/d32tHcomP6XXLrZapcO80i/3zldqcoMrtoOY5AJO5NoiVkQ
+ 8KK3foiePbSJYfZeXkE0QRE1yzgQ9Z7Nd063sn+m6Pe7xBqEBMyF9PjopSs8zg==
+References: <20240801124540.38774-1-xiangwencheng@dayudpu.com>
+ <20240801101210-mutt-send-email-mst@kernel.org>
+X-Lms-Return-Path: <lba+166aba360+c8091c+nongnu.org+xiangwencheng@dayudpu.com>
+In-Reply-To: <20240801101210-mutt-send-email-mst@kernel.org>
+Date: Thu, 01 Aug 2024 23:01:51 +0800
+Cc: <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v3] vhost-user: Do not wait for reply for not sent
+ VHOST_USER_SET_LOG_BASE
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <fba0cfc406f202976ef5ac5d129e08524ce06bbf.d4485eba.82f2.4fda.af98.6cd4ae867655@feishu.cn>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+From: "BillXiang" <xiangwencheng@dayudpu.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=209.127.231.40;
+ envelope-from=xiangwencheng@dayudpu.com; helo=va-2-40.ptr.blmpb.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,71 +68,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reset config values in the device RESET phase, not only once
-when the device is realized, because otherwise the device can
-use unknown values at reset.
 
-Mention the datasheet referenced. Remove the "Malta assumptions
-ahead" comment since the reset values from the datasheet are used.
+> From: "Michael S. Tsirkin"<mst@redhat.com>
+> Date:=C2=A0 Thu, Aug 1, 2024, 22:13
+> Subject:=C2=A0 Re: [PATCH v3] vhost-user: Do not wait for reply for not s=
+ent VHOST_USER_SET_LOG_BASE
+> To: "BillXiang"<xiangwencheng@dayudpu.com>
+> Cc: <qemu-devel@nongnu.org>
+> On Thu, Aug 01, 2024 at 08:45:40PM +0800, BillXiang wrote:
+> > From: BillXiang <xiangwencheng@dayudpu.com>
+> >=C2=A0
+> > Currently, we have added VHOST_USER_SET_LOG_BASE to=C2=A0
+> > vhost_user_per_device_request in commit 7c211eb078c4=C2=A0
+> > ("vhost-user: Skip unnecessary duplicated VHOST_USER_SET_LOG_BASE reque=
+sts"),=C2=A0
+> > as a result, VHOST_USER_SET_LOG_BASE will be sent only once=C2=A0
+> > when 'vq_index =3D=3D 0'.
+> > In this patch we add the check of 'vq_index =3D=3D 0' before=C2=A0
+> > vhost_user_read, such that we do not wait for reply for not
+> > sent VHOST_USER_SET_LOG_BASE.
+> >=C2=A0
+> > Signed-off-by: BillXiang <xiangwencheng@dayudpu.com>
+> > ---
+> >=C2=A0 hw/virtio/vhost-user.c | 2 +-
+> >=C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)
+> >=C2=A0
+> > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+> > index 00561daa06..fd12992d15 100644
+> > --- a/hw/virtio/vhost-user.c
+> > +++ b/hw/virtio/vhost-user.c
+> > @@ -460,7 +460,7 @@ static int vhost_user_set_log_base(struct vhost_dev=
+ *dev, uint64_t base,
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 return ret;
+> > =C2=A0 =C2=A0=C2=A0 }
+> > =C2=A0
+> > - =C2=A0=C2=A0 if (shmfd) {
+> > + =C2=A0=C2=A0 if (shmfd && (dev->vq_index =3D=3D 0)) {
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 msg.hdr.size =3D 0;
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 ret =3D vhost_user_read(dev, &msg);
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 if (ret < 0) {
+>=C2=A0
+>=C2=A0
+>=C2=A0
+> How do things work now after 7c211eb078c4 then?
 
-Reported-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/pci-host/gt64120.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+It does not really work after 7c211eb078c4 and it's my mistake.=C2=A0
+I forgot to submit the code to check vq_index in 7c211eb078c4.
 
-diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
-index e02efc9e2e..b68d647753 100644
---- a/hw/pci-host/gt64120.c
-+++ b/hw/pci-host/gt64120.c
-@@ -1,6 +1,8 @@
- /*
-  * QEMU GT64120 PCI host
-  *
-+ * (Datasheet GT-64120 Rev 1.4 from Sep 14, 1999)
-+ *
-  * Copyright (c) 2006,2007 Aurelien Jarno
-  *
-  * Permission is hereby granted, free of charge, to any person obtaining a copy
-@@ -1211,19 +1213,24 @@ static void gt64120_realize(DeviceState *dev, Error **errp)
-     empty_slot_init("GT64120", 0, 0x20000000);
- }
- 
--static void gt64120_pci_realize(PCIDevice *d, Error **errp)
-+static void gt64120_pci_reset_hold(Object *obj, ResetType type)
- {
--    /* FIXME: Malta specific hw assumptions ahead */
-+    PCIDevice *d = PCI_DEVICE(obj);
-+
-+    /* Values from chapter 17.16 "PCI Configuration" */
-+
-     pci_set_word(d->config + PCI_COMMAND, 0);
-     pci_set_word(d->config + PCI_STATUS,
-                  PCI_STATUS_FAST_BACK | PCI_STATUS_DEVSEL_MEDIUM);
-     pci_config_set_prog_interface(d->config, 0);
-+
-     pci_set_long(d->config + PCI_BASE_ADDRESS_0, 0x00000008);
-     pci_set_long(d->config + PCI_BASE_ADDRESS_1, 0x01000008);
-     pci_set_long(d->config + PCI_BASE_ADDRESS_2, 0x1c000000);
-     pci_set_long(d->config + PCI_BASE_ADDRESS_3, 0x1f000000);
-     pci_set_long(d->config + PCI_BASE_ADDRESS_4, 0x14000000);
-     pci_set_long(d->config + PCI_BASE_ADDRESS_5, 0x14000001);
-+
-     pci_set_byte(d->config + 0x3d, 0x01);
- }
- 
-@@ -1231,8 +1238,9 @@ static void gt64120_pci_class_init(ObjectClass *klass, void *data)
- {
-     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
- 
--    k->realize = gt64120_pci_realize;
-+    rc->phases.hold = gt64120_pci_reset_hold;
-     k->vendor_id = PCI_VENDOR_ID_MARVELL;
-     k->device_id = PCI_DEVICE_ID_MARVELL_GT6412X;
-     k->revision = 0x10;
--- 
-2.45.2
-
+>=C2=A0
+> > --=C2=A0
+> > 2.30.0
 
