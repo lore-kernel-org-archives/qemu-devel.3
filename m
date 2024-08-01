@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 765B3C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 21:35:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9450C3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 21:46:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZdRG-0000ys-TW; Thu, 01 Aug 2024 17:34:23 -0400
+	id 1sZdcR-0005wO-7K; Thu, 01 Aug 2024 17:45:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZdRA-0000y2-IU
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 17:34:16 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1sZdcQ-0005vJ-4s
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 17:45:54 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZdR9-0006YY-2a
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 17:34:16 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-70d399da0b5so6436411b3a.3
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 14:34:14 -0700 (PDT)
+ id 1sZdcO-0002kX-Al
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 17:45:53 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1fdd6d81812so63671105ad.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 14:45:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722548053; x=1723152853; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722548750; x=1723153550; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Agg+f3TAaoPVGYVcu4+Zv+v4vAFHFvy0lLGDVaB5LNg=;
- b=M4/KhANEhmnsZTEMLQNKy3/XzByZPBZBU8RKmcIVDG3rTqoUtaVdnYSv+YU7qwiX0P
- 3j09jnvev7EWPiRUWecTQHnyKXUYv1SSylRkpj/taJl7IW3ZnpDl1voG8kAe0oJkieU6
- Jyp7wc/I2BqhyI8gYMKRLQvnoZGs4kOV1Lqr4gtXsF1pELdZjv0wmSq/u3iHW/hR9C1L
- gQcCzrDtmlktzrUZgslN6mJE3CQJzabRw9FYhR5Wd5ybdzgrhqIq4cr7LS9zjGZ/kWIX
- h8ZDDIcqP/YD7e/geOEVAV/Mo+lF3tksG7snF+OyZyIUWxUChojOze3mau3Q2D7PvUee
- YRCw==
+ bh=hc4xtEaiX30Nyl8erbHoU7MATPZiavrbhzAiAwpQ1b8=;
+ b=Hg824RMXW2jRkd7BHbC6pelXwhqCgiae1oq1v5GhFNU3lkpS0wrgeIeVya4BJWFe6w
+ IkI5OMcOqxBYarD85Jg2DDpeZawGLvmEp8/lyiSyifiHZ98Uh++Z3oyxS/sQ5j71y2M9
+ 0Lq1YnDWZXzTMIxkg57e351fa9TDlFU7ZBflY8OWksMZ5hBe4K88iD1EqHUv94Inxkyr
+ LUmLpdp4m5N2JQ9y3B+Kq0rseiPMbX9mN1e79cfk9P8I6EdrPsXHfiVVWjGL3zeVsmhS
+ PBfBRhWS+3VfUqQyCv98aPnqiyTCzSDmDSrNRnmE2SercEbfEjiUPa9PSzLSVnaKxv4o
+ CSvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722548053; x=1723152853;
+ d=1e100.net; s=20230601; t=1722548750; x=1723153550;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Agg+f3TAaoPVGYVcu4+Zv+v4vAFHFvy0lLGDVaB5LNg=;
- b=Zq2hUu7jY79IHRDYrdmBh+sQE5tKFQMm8l4146RikDt3VIjdUgglEErWqEg64RwWHY
- 9oGNQRWNElNEHuIqbdHqhJOVTtzJCXO24pwvPTXyRD80+Vui+ZPeIGJa5k5kmHKVF4K3
- aSEEfKrLn13iIGbx1YvtO7LAoXJxi+8Be6qv9QBAhoYLjiMj7xGiME94/E5D+vAkINaA
- VXX99PcKQwMIu9XQklo6judi1haKr8MJFVVYhg/V1opE090d91s14CBWol2Y+3u7tcjW
- MLJXoviPdQUweYi2a539tDwGfh5DkGnWPT+BLgYFo9uZpSQbYCrOB2RiKxJ0Aolt4XM0
- 6OxQ==
-X-Gm-Message-State: AOJu0Yz35Z4Hc0FCLDuhSJ8ltWMgK5Ra/wFKZ8FdYTZiOLdpAtRnOD5N
- A9IOBzj6YPhG+yyygxx4iISqkdHlCa3NDT7Qtzs/oaLy7s3zp6TRbppth8uV3rI=
-X-Google-Smtp-Source: AGHT+IE7eAPaD/TKtbv1YJN7xrB3nP6lJaUPadgpE4rR2TS8+WQomYgjqHD4yW96cAs3j1+sgkcRsw==
-X-Received: by 2002:a05:6a21:7896:b0:1c4:818c:299d with SMTP id
- adf61e73a8af0-1c699554699mr2518684637.11.1722548053029; 
- Thu, 01 Aug 2024 14:34:13 -0700 (PDT)
+ bh=hc4xtEaiX30Nyl8erbHoU7MATPZiavrbhzAiAwpQ1b8=;
+ b=LkLfNvDJC8VcqE5msJfdP+es0WmqgMG3NZPO0x5/MYThd7VnPCsSO/BeHeQOBHQ3/f
+ uR97OJoVo/A8F6rsCg/dermesEZBVk99+r8LmmdTSTVp+ih/mwU3idgLXW5ihdYDBAmx
+ bGGIpWSzQfYPH1kZEldxKoRLVQeEI2THTGO3UkBknTbHX7wG0DVHrIEuFsZI7JtkIJCs
+ 82GiESOgaqEg2dHhE5B3gMtF1ADCflEj6TQ/0woGV3LYPXtSGK/qjdxUeSJxTpy8hmQX
+ p8wu7E5u/WT/JsjZtmbmXSfgi4U4RTKmaycaIVYNFQIukrK+DhdtMRbZ0K6Z5PA73Ca5
+ xeJQ==
+X-Gm-Message-State: AOJu0YxhSkxQ4yGk7ONCCHJO3bMX0OiQIuSxCCGhMMsu6iNru+lEy92W
+ /gT/wzfTyZOflZJgcMcE493rDCsy4STJci9bONXFE/AZmUQEmpsBdFAe8JEHi9foK4BG07/Oh5V
+ l/qv7Ug==
+X-Google-Smtp-Source: AGHT+IHW+74B9IiwgpaatUYCfH/jh9MkuwK00Xlu+v+AG+N+z3JE+KMZJzBOCQgjt4FFCSHO0vSb9Q==
+X-Received: by 2002:a17:903:1cb:b0:1fd:927e:7d23 with SMTP id
+ d9443c01a7336-1ff5737e5e5mr18610035ad.42.1722548749613; 
+ Thu, 01 Aug 2024 14:45:49 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7106ecdfee1sm265966b3a.136.2024.08.01.14.34.11
+ d9443c01a7336-1ff5929ad79sm3576085ad.264.2024.08.01.14.45.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Aug 2024 14:34:12 -0700 (PDT)
-Message-ID: <81bf91ac-e449-4a05-946f-bfdb7164281a@linaro.org>
-Date: Fri, 2 Aug 2024 07:34:00 +1000
+ Thu, 01 Aug 2024 14:45:49 -0700 (PDT)
+Message-ID: <113a8d28-006c-4ab7-b66c-666c4cc52dde@linaro.org>
+Date: Fri, 2 Aug 2024 07:45:42 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/24] target/riscv: tracking indirect branches (fcfi)
- for zicfilp
-To: Deepak Gupta <debug@rivosinc.com>
-Cc: qemu-devel@nongnu.org
-References: <20240729175327.73705-1-debug@rivosinc.com>
- <20240729175327.73705-6-debug@rivosinc.com>
- <ed23bcbc-fdc4-4492-803c-daa95880375a@linaro.org>
- <CAKC1njQJiNHT1b2jD009zsNeXrUZ9OG2S4VTeFmnAS4c_f-kAA@mail.gmail.com>
- <0cbb34e8-fa32-469a-a516-4f9ac91a6eff@linaro.org>
- <CAKC1njQqfOrzodxSYK93vQGb_g0oQA4EK7_q-zi4bW5pERvv2g@mail.gmail.com>
+Subject: Re: [PATCH] linux-user/elfload: Fix pr_pid values in core files
+To: Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+References: <20240801202340.21845-1-iii@linux.ibm.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAKC1njQqfOrzodxSYK93vQGb_g0oQA4EK7_q-zi4bW5pERvv2g@mail.gmail.com>
+In-Reply-To: <20240801202340.21845-1-iii@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,64 +96,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/2/24 03:05, Deepak Gupta wrote:
-> On Thu, Aug 1, 2024 at 2:12 AM Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> On 8/1/24 16:59, Deepak Gupta wrote:
->>> hmm... you've suggested below to use `aarch64_tr_translate_insn` and
->>> check if it's the first instruction.
->>> and put the check there.
->>> In that case I won't need FCFI_LP_EXPECTED TB flag.
->>> Then I would rather use it as FCFI_ENABLED TB flag.
->>
->> You will need both bits.
+On 8/2/24 06:23, Ilya Leoshkevich wrote:
+> Analyzing qemu-produced core dumps of multi-threaded apps runs into:
 > 
-> I was thinking of following logic and wanted to run by you to check if
-> I am missing something
-> obvious.
+>      (gdb) info threads
+>        [...]
+>        21   Thread 0x3ff83cc0740 (LWP 9295) warning: Couldn't find general-purpose registers in core file.
+>      <unavailable> in ?? ()
 > 
-> ---Recording fcfi_enabled in disascontext---
-> Add a FCFI_ENABLED TB flag which gets set (or not set) in `cpu_get_tb_cpu_state`
+> The reason is that all pr_pid values are the same, because the same
+> TaskState is used for all CPUs when generating NT_PRSTATUS notes.
 > 
-> And `riscv_tr_init_disas_context` does
-> DisasContext->fcfi_enabled = extracts FCFI_ENABLED TB flag.
+> Fix by using TaskStates associated with individual CPUs.
 > 
-> 
-> ---Set elp on translation of indirect jump/call----
-> translation for jalr (instruction which triggers elp state) does following
-> 
-> trans_jalr:
-> if (DisasContext->fcfi_enabled)
->      env->elp = LP_EXPECTED
-> 
-> ---Check if first instruction is not a landing pad----
-> In `riscv_tr_translate_insn`
-> 
-> if (first instruction of TB && env->elp) {
+> Cc:qemu-stable@nongnu.org
+> Fixes: 243c47066253 ("linux-user/elfload: Write corefile elf header in one block")
+> Signed-off-by: Ilya Leoshkevich<iii@linux.ibm.com>
+> ---
+>   linux-user/elfload.c | 8 +++-----
+>   1 file changed, 3 insertions(+), 5 deletions(-)
 
-You can't access env->elp during translation like this.
-That's why you need either
+Oops,
 
-(1) the LP_EXPECTED bit in tb_flags as well, or
-(2) a runtime test against elp.
-
->        if (`insn` is not a `lpad` (landing pad) encoding)
->           raise_exception();
-> }
-> 
-> ---label check embedded in landing pad instruction---
-> In `trans_lpad`
-> 
-> env->elp =  NO_LP_EXPECTED
-> invoke a helper which will check embedded label value against value in
-> ISA defined register (x7)
-
-You don't need a helper for such a trivial operation.
-
-   tcg_gen_extract_tl(tmp, get_gpr(ctx, 7, EXT_NONE), 12, 20);
-   tcg_gen_brcondi_tl(TCG_COND_EQ, tmp, a->imm, skip);
-   generate_exception(...);
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
