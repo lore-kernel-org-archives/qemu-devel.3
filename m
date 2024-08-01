@@ -4,79 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8676C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 09:13:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2F47C3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 09:14:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZRrX-00046j-Ee; Thu, 01 Aug 2024 05:12:43 -0400
+	id 1sZRsT-0005uz-2G; Thu, 01 Aug 2024 05:13:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZRrV-000452-QZ
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 05:12:41 -0400
-Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZRsR-0005h8-2y
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 05:13:39 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZRrU-0007bN-8Z
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 05:12:41 -0400
-Received: by mail-oi1-x230.google.com with SMTP id
- 5614622812f47-3db22c02a42so3833548b6e.3
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 02:12:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZRsP-0007lX-E9
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 05:13:38 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a7d26c2297eso825197066b.2
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 02:13:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722503559; x=1723108359; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=AikQYzZLvJC1qAr5mnVkHuc3qnQ4VJKU1Kq1tgMFSIM=;
- b=nbT9k+WjWefQzteKB/+UH8jz7b1pVIaPtY0w5xBX/IikmIQugzOcMHYBEnxzvwRtIl
- X3qDticvqHrwDs76W6hV89CkH6RetAGWhD9W1f5uUAWxIX3tP3inUZsB34wrLZvDENZa
- H67aGb4kKwLw6zZtWLcgocITSfzo8raaoYyvgXkKB5Z5PrrIe5oS5csDXnE4F96Dzi90
- xHuLjR2LIfv8HwJ9V57vzc8277KbLkiNwLfJDR6RQi4lbUN1lDwFamdjvFJ+MhYCeRb+
- 78VQqYvOl4/P98ETSEZbM8+S5B6WQuzuHnPDdVynrnDU48BfvSYjPJHWwEWGaodLjJya
- gIcg==
+ d=linaro.org; s=google; t=1722503615; x=1723108415; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=VBO+j2SR1ZsWcanf9TAJdGUloHo2mhXLXHkhbDgN34A=;
+ b=TLbQoLqMq3J9BMfps2Qx5V7khyiN2OT7u8vPRD/Nzv61UexWXj1/crb5RYa/D9AL8l
+ v0AvrbkkFUTrLec7Llmp/8FHHvIp2N/uQF0/V6X4K9nSI7iAVtwQwOD4KxjQK97sQt6U
+ Kk4lgMDJjeQbbgVyW0B2ytvqzVL/mwMGbuqAfEMJ4N3CTHNOD8jxb5mA9DUitG5MSHXT
+ hbEbkSEHZgbs40dn7SQEa00bun1h2mI4KkH9ej7WNf2ztZOPLAz6abyxdrzyk0o/CQea
+ EMF7+HsuuzLtI/XTho6h2zz9RsVuYpdejuMzzr0U2ixxCw7mA5ZZwltWOcZN8iNUdmAo
+ +rVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722503559; x=1723108359;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AikQYzZLvJC1qAr5mnVkHuc3qnQ4VJKU1Kq1tgMFSIM=;
- b=GVRjT4CubogRFmW5kCytgxjMecNjoQUzjbBsEeXf1tfhBYD3Lbmc4vAUwRmpEaRPTs
- JIV6EJP3ozmBGfUBn/yxmvC1He0oZlIumbPxFbrFFSLf3/kbgefwHyQMUesQLSWxlFOV
- 3hvBUe6duLgztRoJMisIb7i70Ilf8QfhjaboUrO9oXhe+HewL+C0Q0/TKH57RqMSXf7X
- 4fmMAPEjVjlsPt9dLyk+p8ctIynZhPGVnrAV6R3m2+UhzXXmtfwcU7YqFQ2Ft5PAJEvK
- yPa7QGliiiVNEOagRR+iEYHfchvTDDXXR/dLpZUTveZvokAzmm7X5s88Jn5R2bI0HF8j
- j+cA==
-X-Gm-Message-State: AOJu0Yz60IRrTJtgAjAOTFBp48W9+YCCRLC0FkSFut+26m0X7B4IitO4
- xWb83IM1GX9bfaIYaCVN+kKdxgaLrLlVlc8gYho2LTquhXxtW3Iq8nNw24feYoI=
-X-Google-Smtp-Source: AGHT+IGyDLpEbphrYhlw6NBYr9HAlQcsgGSDRg/8IHNyskHA+N817T9Fzjcw/hLOv8ICixlPaOzGAQ==
-X-Received: by 2002:a05:6808:3099:b0:3db:15ed:2a24 with SMTP id
- 5614622812f47-3db511e5cabmr2090494b6e.24.1722503558642; 
- Thu, 01 Aug 2024 02:12:38 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
+ d=1e100.net; s=20230601; t=1722503615; x=1723108415;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VBO+j2SR1ZsWcanf9TAJdGUloHo2mhXLXHkhbDgN34A=;
+ b=Pm6+npM4GCdFgzWjbHLTBn+v4R/h8ScbUsaDsuVjUHdRRxRUXGEQM1v/N2yN/mfXbB
+ RwtfLZrOtgkGdfk/8QR02a4nhaMknLh7lyeMfPEKF16kbii+o5cqijPycadQVnD/HZ+D
+ /JlmnBzBvAoa+FIwJXqq9klSPtxAFW2GQM1Mn8ow12bew6rLgfruQhwctlEIHlVW6NON
+ hJr1HSXX84HEPmNLxV0X5anmdxRJM0B8OfJOFE/P/FMP9NbrDZFAVot81+vQu6tHAq9z
+ 2Ppc3CsyvbTRmJ0mEGR7OcIXLwvYeo7XkFjqD9zm8mI+YlLmArUeHxdu0ov5F8lVdZrJ
+ ZrnA==
+X-Gm-Message-State: AOJu0YxhBLnimNrONAO5j126nfSOv4U7IpGjW2g2fnj9nvbtqmyQrsrn
+ ZPaqr0CWvGfuEjA1iu5AUhlD0nSOSmIxwQhaYhpmp/vRxrdMXbRuudBorOF2QhdA+9PJrbMpneb
+ r
+X-Google-Smtp-Source: AGHT+IHZOLuUEEVD8hmVkDnqMkO+nOEe/PCGDOaov3V4i0fjiLcwRun9oxQyK0l1ilmN/+SaP7StJg==
+X-Received: by 2002:a17:907:8dcf:b0:a7a:a5ae:11bd with SMTP id
+ a640c23a62f3a-a7daf9c9045mr129556266b.67.1722503615301; 
+ Thu, 01 Aug 2024 02:13:35 -0700 (PDT)
+Received: from m1x-phil.lan ([176.176.130.148])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead890eeasm11113934b3a.154.2024.08.01.02.12.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Aug 2024 02:12:38 -0700 (PDT)
-Message-ID: <0cbb34e8-fa32-469a-a516-4f9ac91a6eff@linaro.org>
-Date: Thu, 1 Aug 2024 19:12:31 +1000
+ a640c23a62f3a-a7acab23f21sm869694266b.37.2024.08.01.02.13.33
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 01 Aug 2024 02:13:34 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-9.1] hw/pci-host/gt64120: Set PCI base address register
+ write mask
+Date: Thu,  1 Aug 2024 11:13:32 +0200
+Message-ID: <20240801091332.49256-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/24] target/riscv: tracking indirect branches (fcfi)
- for zicfilp
-To: Deepak Gupta <debug@rivosinc.com>
-Cc: qemu-devel@nongnu.org
-References: <20240729175327.73705-1-debug@rivosinc.com>
- <20240729175327.73705-6-debug@rivosinc.com>
- <ed23bcbc-fdc4-4492-803c-daa95880375a@linaro.org>
- <CAKC1njQJiNHT1b2jD009zsNeXrUZ9OG2S4VTeFmnAS4c_f-kAA@mail.gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAKC1njQJiNHT1b2jD009zsNeXrUZ9OG2S4VTeFmnAS4c_f-kAA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x230.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,15 +93,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/1/24 16:59, Deepak Gupta wrote:
-> hmm... you've suggested below to use `aarch64_tr_translate_insn` and
-> check if it's the first instruction.
-> and put the check there.
-> In that case I won't need FCFI_LP_EXPECTED TB flag.
-> Then I would rather use it as FCFI_ENABLED TB flag.
+When booting Linux we see:
 
-You will need both bits.
+  PCI host bridge to bus 0000:00
+  pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
+  pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
+  pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
+  pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
+  pci 0000:00:00.0: [Firmware Bug]: reg 0x14: invalid BAR (can't size)
+  pci 0000:00:00.0: [Firmware Bug]: reg 0x18: invalid BAR (can't size)
+  pci 0000:00:00.0: [Firmware Bug]: reg 0x1c: invalid BAR (can't size)
+  pci 0000:00:00.0: [Firmware Bug]: reg 0x20: invalid BAR (can't size)
+  pci 0000:00:00.0: [Firmware Bug]: reg 0x24: invalid BAR (can't size)
 
+This is due to missing base address register write mask.
+Add it to get:
 
-r~
+  PCI host bridge to bus 0000:00
+  pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
+  pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
+  pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
+  pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
+  pci 0000:00:00.0: reg 0x10: [mem 0x00000000-0x00000fff pref]
+  pci 0000:00:00.0: reg 0x14: [mem 0x01000000-0x01000fff pref]
+  pci 0000:00:00.0: reg 0x18: [mem 0x1c000000-0x1c000fff]
+  pci 0000:00:00.0: reg 0x1c: [mem 0x1f000000-0x1f000fff]
+  pci 0000:00:00.0: reg 0x20: [mem 0x1be00000-0x1be00fff]
+  pci 0000:00:00.0: reg 0x24: [io  0x14000000-0x14000007]
+
+Mention the datasheet referenced. Remove the "Malta assumptions ahead"
+comment since the reset values from the datasheet are used.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/pci-host/gt64120.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
+index e02efc9e2e..0b00e98e0a 100644
+--- a/hw/pci-host/gt64120.c
++++ b/hw/pci-host/gt64120.c
+@@ -1,6 +1,8 @@
+ /*
+  * QEMU GT64120 PCI host
+  *
++ * (Datasheet GT-64120 Rev 1.4 from Sep 14, 1999)
++ *
+  * Copyright (c) 2006,2007 Aurelien Jarno
+  *
+  * Permission is hereby granted, free of charge, to any person obtaining a copy
+@@ -1213,17 +1215,28 @@ static void gt64120_realize(DeviceState *dev, Error **errp)
+ 
+ static void gt64120_pci_realize(PCIDevice *d, Error **errp)
+ {
+-    /* FIXME: Malta specific hw assumptions ahead */
++
++    /* Values from chapter 17.16 "PCI Configuration" */
++
+     pci_set_word(d->config + PCI_COMMAND, 0);
+     pci_set_word(d->config + PCI_STATUS,
+                  PCI_STATUS_FAST_BACK | PCI_STATUS_DEVSEL_MEDIUM);
+     pci_config_set_prog_interface(d->config, 0);
++
++    pci_set_long(d->wmask + PCI_BASE_ADDRESS_0, 0xfffff009);
++    pci_set_long(d->wmask + PCI_BASE_ADDRESS_1, 0xfffff009);
++    pci_set_long(d->wmask + PCI_BASE_ADDRESS_2, 0xfffff009);
++    pci_set_long(d->wmask + PCI_BASE_ADDRESS_3, 0xfffff009);
++    pci_set_long(d->wmask + PCI_BASE_ADDRESS_4, 0xfffff009);
++    pci_set_long(d->wmask + PCI_BASE_ADDRESS_5, 0xfffff009);
++
+     pci_set_long(d->config + PCI_BASE_ADDRESS_0, 0x00000008);
+     pci_set_long(d->config + PCI_BASE_ADDRESS_1, 0x01000008);
+     pci_set_long(d->config + PCI_BASE_ADDRESS_2, 0x1c000000);
+     pci_set_long(d->config + PCI_BASE_ADDRESS_3, 0x1f000000);
+     pci_set_long(d->config + PCI_BASE_ADDRESS_4, 0x14000000);
+     pci_set_long(d->config + PCI_BASE_ADDRESS_5, 0x14000001);
++
+     pci_set_byte(d->config + 0x3d, 0x01);
+ }
+ 
+-- 
+2.45.2
+
 
