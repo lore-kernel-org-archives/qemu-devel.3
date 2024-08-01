@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BA88C3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 16:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2B6EC3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 16:52:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZZ1h-0005sV-2l; Thu, 01 Aug 2024 12:51:41 -0400
+	id 1sZZ1z-00065r-65; Thu, 01 Aug 2024 12:51:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZZ1f-0005rz-8p
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:51:39 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZZ1w-00064c-8H
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:51:56 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZZ1c-0000q9-Uy
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:51:38 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3685b3dbcdcso4002180f8f.3
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 09:51:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZZ1t-0000su-Cm
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:51:55 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-428035c0bb2so13743115e9.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 09:51:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722531095; x=1723135895; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722531111; x=1723135911; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hfYXU/9f3xWlX2Xhivq7cPfsuP9qqDgAw2oGd7GPKMU=;
- b=Vt0OwETR3gDRmChm+KsSzmoQMbTR/InrlO9ugx8jpSf4lFMr4ro4Hk/6vvoO/9OJUw
- PrYZFeSO10F6zQiDfEXMDIf7YC6znZvQdAxRIUAvtuIBXKViRtPMCrusJUD/yWVcUqxW
- zYqyvGxKPVFFzj1mMOhuE6KYo9MRSxSlFDBNjWjZiSo42Ee3PG618jYYMcE3pfbQwSnJ
- Ruu2YbinZcA/7fNcVlPDp2aoKikxwndmDtzPNt0Y9f13hKFRaA6lc9OQR8aZLm1rm9dR
- yJXmf76PblJVjJcFRojbOzl7yzHc7ZusbmoP0p58tvpz1Vb91vh47Z4n82iR1G2Kg+3m
- YV3Q==
+ bh=fiyAA99o6BBsuJwiHEPgeXOgq2sEvsUPG2YrT4GL3wE=;
+ b=PeqnXP0j402t1YDBuOMk6wHtU6b1G0Q/tk6Fa2VtNbMpjHScu9tTh2oFS8LBti2lyR
+ evDnIWYDbPayx8p3WaDY292YLf+Wx5bMdYJX3Ws57GqxC5i+Z55DW3QEMe1QrTLAls99
+ TsoUsy+iETCeqfX4BgI44EalAxJ2hTHLaqgc2mUyLse8cqA3BZ3INzFZKuGvkBdBlHFZ
+ cKWJV+TaYAilSOGU0o16YKJJefE55LiFRqIdDopo3V5EwpEIb4s9ClqzI4G+9q7439el
+ 6DxKqiuJYst6c1yi+SOUvjbKkgzZBfUCX3yabp7sj4xkb1hkAIIzPg4fI3uurk90NxrO
+ EOfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722531095; x=1723135895;
+ d=1e100.net; s=20230601; t=1722531111; x=1723135911;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hfYXU/9f3xWlX2Xhivq7cPfsuP9qqDgAw2oGd7GPKMU=;
- b=piAD32zEyH2121f5Wfrk9l7xQwkJxJGX7N7FPxo05YcjmvwCWycv8mJTWzus5/93kq
- j+91yqQzRaDqVvwTrW4xAoOsiWM34PGTYtGMEwaXk9Xeq7CUX/AfPnEX8he2pidLVgzl
- uVvy8JsgpgWw89Eo0VwXa1IDt0iQcYgMJHtyFE4aBgko2RKPzYIdAB/QDmxfvlXRpDhv
- siwFK1gwRbRBdp6DRu82soXCmBb2IQyTjZQPuB2bwMQSEY9wh+Nxd3CtG4Cid7rcxb8G
- ToAln4qgH7mCgs1FLDz0GIgk1HkmQ/VV0Q+M8vM6S6n4+6CKlUbtfrUbpor3rkCYcY0f
- 5Jxg==
-X-Gm-Message-State: AOJu0YykYnKtHV66mX+bgA0qTy+nT9ZxBhJ91Ag42Rrq8rMkRTpSfGO9
- Hp5yrLOnnQIyBVUd+Mvs5yHtXT9MfBYKCgmwRdu7s1CkUPnkwvr/crad+aO/tD86wYSq0nMo9hb
- OKTA=
-X-Google-Smtp-Source: AGHT+IFhrU3/HncR6s9Rz3h6npk9Um1FlZRJWsdEf9crSdSMeAIxy+s3Jfmkid6qSuOMXniaxpYJ3Q==
-X-Received: by 2002:a5d:5918:0:b0:367:97fd:1d75 with SMTP id
- ffacd0b85a97d-36bbc12bd31mr332152f8f.27.1722531094834; 
- Thu, 01 Aug 2024 09:51:34 -0700 (PDT)
+ bh=fiyAA99o6BBsuJwiHEPgeXOgq2sEvsUPG2YrT4GL3wE=;
+ b=SIDrJauBaKDW30sqy2Tx7IK8SnDk36mgVqd+pd3qytQ/94ohWa6/gJsuSdc5GhOBye
+ x+9N+5O9Hmx6cOUF4hCozmou2pUOkTiA57Az+AH8u+9MbjEuVaTqic0HA6H7UNlVQxLG
+ UlJ/O7jI3YZKnw1buuAX9vJN7gLd+8y+S2bSc+hQOyXZL4GibnFGnoYtvvQspkp/uRhn
+ W7tf6f4iPouSjgCJLdSWgCv3J420zJahrM6jEKPa0sDc1H1gDW7Kl3yMgw5YWCxFUwuL
+ vja7tv+Sx2qG/qNhu7nEGwyTlHQcjmb5rn/uopbzhlNT3li3r9dwTZoYoeepjrufd7oZ
+ /6qw==
+X-Gm-Message-State: AOJu0Yz9T3RLkqurr947v79HLTv1DaCMb6/6TGlnkjcnjsugtzuj7tsK
+ RE1DZ9dFebPCdv9mZ1miOsT3A3w6ny8BrQL+lhGcOF1se6OM9/w2x2YS+eb2dEY=
+X-Google-Smtp-Source: AGHT+IGC67z5iLUmukMN2JxfEeo82ESEvCt7uv3zCnzgkwD4v4+jIxd8zne8Ip+QCpIymimw9LOyrw==
+X-Received: by 2002:a05:6000:2a88:b0:36b:bb99:d7ce with SMTP id
+ ffacd0b85a97d-36bbb99e185mr1215824f8f.9.1722531111427; 
+ Thu, 01 Aug 2024 09:51:51 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.211.94])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36bbd0597ddsm16268f8f.77.2024.08.01.09.51.33
+ 5b1f17b1804b1-428e6d6b8e4sm3025045e9.3.2024.08.01.09.51.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Aug 2024 09:51:34 -0700 (PDT)
-Message-ID: <b2e586da-9975-4814-8783-b26e2653ee70@linaro.org>
-Date: Thu, 1 Aug 2024 18:51:32 +0200
+ Thu, 01 Aug 2024 09:51:50 -0700 (PDT)
+Message-ID: <03f213d3-c083-4b4a-a65a-bff6eddc4ca4@linaro.org>
+Date: Thu, 1 Aug 2024 18:51:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH-for-9.1 v2 2/2] hw/pci-host/gt64120: Set PCI base address
@@ -73,8 +72,8 @@ From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 In-Reply-To: <20240801105917-mutt-send-email-mst@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -161,5 +160,7 @@ On 1/8/24 17:02, Michael S. Tsirkin wrote:
 
 Fortunately we don't need because this device is only meant to
 be used by MIPS machines which aren't versioned.
+
+I'll mention that in the description.
 
 
