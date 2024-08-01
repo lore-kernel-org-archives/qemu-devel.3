@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00D74C3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 20:32:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49F20C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 20:32:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZcRl-0003kj-CN; Thu, 01 Aug 2024 16:30:49 -0400
+	id 1sZcRe-0003LJ-EV; Thu, 01 Aug 2024 16:30:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1sZcRd-0003LM-5r; Thu, 01 Aug 2024 16:30:42 -0400
+ id 1sZcRY-0003Jd-OQ; Thu, 01 Aug 2024 16:30:36 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1sZcRZ-0007KX-Kt; Thu, 01 Aug 2024 16:30:40 -0400
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 471Jwxdm026354;
- Thu, 1 Aug 2024 20:30:28 GMT
+ id 1sZcRW-0007IS-M3; Thu, 01 Aug 2024 16:30:36 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 471JRvFe003746;
+ Thu, 1 Aug 2024 20:30:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
  :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding; s=pp1; bh=23Puxz6fl0lho
- /ggfLtK45cd575EjyFn+ySPBY4s+8k=; b=JPWVrmH8wo2ORVIym2pxzBYJ+PMpP
- 3RZXLUAg7Dw5icOSDvTk+HA9OxoKqiAy+YihPfyvzX9L9+g9NEzJhcwSKKA0Ux77
- UhIbn/AES0ZtBWhrChUS04/B2bKD+kPiZt/GVBUcDvsXohKT7YTEcrEfexidc3Qe
- gCByjSwPm1xmoHjLFqDWWqcxfCyJp4EPV5S2Gd1PqfaNHrPPiDNHjrIADc/MUU+m
- fTbtycb4nSPsgsX1v56O3fLSFmlRAS9oeWibVU7YAv79KSig5dHuvQKyqsrPE5Qe
- 37Kfu7aFNQO5VdGQi+I4vFbp2s+gE4TqnO61/WMy1Cbm9EvHK0+ifxm7Q==
+ :mime-version:content-transfer-encoding; s=pp1; bh=TZ2SvFO9PXHXl
+ aZz+i43JjBJ0qzlCa8tKG2JmhJ1y7E=; b=s590Be50jV92K2j9lx70SHqd5G+YB
+ 2zAZAwZc1XVCgIWyUIxgL3Lf1E6usLdA/8CFd8LjznUCk5H5MszZ8RiiCgEk58qx
+ QFx8V9l8/yK1zNREsWEqRR/wsyFkimzD6iRus8sufCC/MjRYfrgrRq5hSzXrkGx6
+ bLNJu6Gk4ftIXoOMe1vMlJS6AasDzOOqLzGum8d3b8bh9ZRXDFMSnePiR1l08dVX
+ hMc0rizAr+5RoridZMFsjodytNyxXjoal09dVjsF/s1k5voo9bqA1mvngqwe51eT
+ daCJSGRcoysVEEvoCzh9TiFraCsd2TU7t2KWvBaWTfqxJ+YUbrLc5yw1w==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40rh05022a-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40rf7v09k1-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Aug 2024 20:30:28 +0000 (GMT)
-Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 471KUS5C012673;
- Thu, 1 Aug 2024 20:30:28 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40rh050229-1
+ Thu, 01 Aug 2024 20:30:30 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 471KUTEe011567;
+ Thu, 1 Aug 2024 20:30:29 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40rf7v09k0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Aug 2024 20:30:28 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 471GmL9r009233; Thu, 1 Aug 2024 20:30:27 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 40ndx3befk-1
+ Thu, 01 Aug 2024 20:30:29 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 471IlK7I018928; Thu, 1 Aug 2024 20:30:29 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40nc7q3reg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 01 Aug 2024 20:30:27 +0000
+ Thu, 01 Aug 2024 20:30:29 +0000
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 471KUMQX56361218
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 471KUNZK56885614
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 1 Aug 2024 20:30:24 GMT
+ Thu, 1 Aug 2024 20:30:25 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0245620063;
+ by IMSVA (Postfix) with ESMTP id 722012004B;
+ Thu,  1 Aug 2024 20:30:23 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 484AD2004E;
  Thu,  1 Aug 2024 20:30:22 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CC87220040;
- Thu,  1 Aug 2024 20:30:20 +0000 (GMT)
 Received: from gfwr518.rchland.ibm.com (unknown [9.10.239.106])
  by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  1 Aug 2024 20:30:20 +0000 (GMT)
+ Thu,  1 Aug 2024 20:30:22 +0000 (GMT)
 From: Michael Kowal <kowal@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, clg@kaod.org, fbarrat@linux.ibm.com,
  npiggin@gmail.com, milesg@linux.ibm.com
-Subject: [PATCH 02/13] pnv/xive2: Define OGEN field in the TIMA
-Date: Thu,  1 Aug 2024 15:29:57 -0500
-Message-Id: <20240801203008.11224-3-kowal@linux.ibm.com>
+Subject: [PATCH 03/13] ppc/xive2: Support TIMA "Pull OS Context to Odd Thread
+ Reporting Line"
+Date: Thu,  1 Aug 2024 15:29:58 -0500
+Message-Id: <20240801203008.11224-4-kowal@linux.ibm.com>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20240801203008.11224-1-kowal@linux.ibm.com>
 References: <20240801203008.11224-1-kowal@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: mHdcPlc6mqEG-ppcJ6lhpOcyI3ok546s
-X-Proofpoint-ORIG-GUID: CoXDFQ4LDGi3wYZkTg4Zo3qdoarnEXHi
+X-Proofpoint-ORIG-GUID: 1qVYoz4bkCBUJLbskW8OT6PUj7_mt_LH
+X-Proofpoint-GUID: pzZWC-5M3elFBCOHJRD1-pD-2b2z_RsQ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-01_18,2024-08-01_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0
- bulkscore=0 impostorscore=0 phishscore=0 adultscore=0 spamscore=0
- priorityscore=1501 malwarescore=0 mlxscore=0 mlxlogscore=639
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ mlxlogscore=946 clxscore=1015
+ suspectscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0
+ impostorscore=0 priorityscore=1501 spamscore=0 adultscore=0 bulkscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2407110000 definitions=main-2408010135
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=kowal@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
@@ -115,43 +116,263 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Frederic Barrat <fbarrat@linux.ibm.com>
 
-The OGEN field at offset 0x1F is a new field for Gen2 TIMA. This
-patch defines it.
+Adds support for single byte writes to offset 0xC18 of the TIMA address
+space.  When this offset is written to, the hardware disables the OS
+context and copies the current state information to the odd cache line
+of the pair specified by the NVT structure indexed by the OS CAM entry.
 
 Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
 Signed-off-by: Michael Kowal <kowal@linux.vnet.ibm.com>
 ---
- include/hw/ppc/xive_regs.h | 1 +
- hw/intc/xive.c             | 4 ++++
- 2 files changed, 5 insertions(+)
+ include/hw/ppc/xive2.h      |   2 +
+ include/hw/ppc/xive2_regs.h |   2 +
+ include/hw/ppc/xive_regs.h  |   3 +
+ hw/intc/xive.c              |   2 +
+ hw/intc/xive2.c             | 150 +++++++++++++++++++++++++++++-------
+ 5 files changed, 132 insertions(+), 27 deletions(-)
 
+diff --git a/include/hw/ppc/xive2.h b/include/hw/ppc/xive2.h
+index ab68f8d157..654f485e9b 100644
+--- a/include/hw/ppc/xive2.h
++++ b/include/hw/ppc/xive2.h
+@@ -107,5 +107,7 @@ void xive2_tm_push_os_ctx(XivePresenter *xptr, XiveTCTX *tctx, hwaddr offset,
+                            uint64_t value, unsigned size);
+ uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+                                hwaddr offset, unsigned size);
++void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
++                             hwaddr offset, uint64_t value, unsigned size);
+ 
+ #endif /* PPC_XIVE2_H */
+diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
+index 4349d009d0..7acf7dccf3 100644
+--- a/include/hw/ppc/xive2_regs.h
++++ b/include/hw/ppc/xive2_regs.h
+@@ -171,7 +171,9 @@ typedef struct Xive2Nvp {
+ #define NVP2_W5_VP_END_BLOCK       PPC_BITMASK32(4, 7)
+ #define NVP2_W5_VP_END_INDEX       PPC_BITMASK32(8, 31)
+         uint32_t       w6;
++#define NVP2_W6_REPORTING_LINE     PPC_BITMASK32(4, 31)
+         uint32_t       w7;
++#define NVP2_W7_REPORTING_LINE     PPC_BITMASK32(0, 23)
+ } Xive2Nvp;
+ 
+ #define xive2_nvp_is_valid(nvp)    (be32_to_cpu((nvp)->w0) & NVP2_W0_VALID)
 diff --git a/include/hw/ppc/xive_regs.h b/include/hw/ppc/xive_regs.h
-index 9d52d464d9..9062c6abf6 100644
+index 9062c6abf6..27a744d50d 100644
 --- a/include/hw/ppc/xive_regs.h
 +++ b/include/hw/ppc/xive_regs.h
-@@ -79,6 +79,7 @@
+@@ -77,6 +77,7 @@
+ #define TM_LSMFB                0x3  /*  -   +   +   +  */
+ #define TM_ACK_CNT              0x4  /*  -   +   -   -  */
  #define TM_INC                  0x5  /*  -   +   -   +  */
++#define TM_LGS                  0x5  /*  +   +   +   +  */ /* Rename P10 */
  #define TM_AGE                  0x6  /*  -   +   -   +  */
  #define TM_PIPR                 0x7  /*  -   +   -   +  */
-+#define TM_OGEN                 0xF  /*  -   +   -   -  */ /* P10 only */
- 
- #define TM_WORD0                0x0
- #define TM_WORD1                0x4
+ #define TM_OGEN                 0xF  /*  -   +   -   -  */ /* P10 only */
+@@ -129,6 +130,8 @@
+ #define TM_SPC_PULL_USR_CTX_OL  0xc08   /* Store8 Pull/Inval usr ctx to odd   */
+                                         /* line                               */
+ #define TM_SPC_ACK_OS_EL        0xc10   /* Store8 ack OS irq to even line     */
++#define TM_SPC_PULL_OS_CTX_OL   0xc18   /* Pull/Invalidate OS context to      */
++                                        /* odd Thread reporting line          */
+ #define TM_SPC_ACK_HV_POOL_EL   0xc20   /* Store8 ack HV evt pool to even     */
+                                         /* line                               */
+ #define TM_SPC_ACK_HV_EL        0xc30   /* Store8 ack HV irq to even line     */
 diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index 2fb38e2102..136d82338a 100644
+index 136d82338a..8e62c7e75f 100644
 --- a/hw/intc/xive.c
 +++ b/hw/intc/xive.c
-@@ -742,6 +742,10 @@ void xive_tctx_reset(XiveTCTX *tctx)
-     tctx->regs[TM_QW1_OS + TM_LSMFB] = 0xFF;
-     tctx->regs[TM_QW1_OS + TM_ACK_CNT] = 0xFF;
-     tctx->regs[TM_QW1_OS + TM_AGE] = 0xFF;
-+    if (!(xive_presenter_get_config(tctx->xptr) &
-+          XIVE_PRESENTER_GEN1_TIMA_OS)) {
-+        tctx->regs[TM_QW1_OS + TM_OGEN] = 2;
-+    }
+@@ -547,6 +547,8 @@ static const XiveTmOp xive2_tm_operations[] = {
+                                                      xive_tm_pull_pool_ctx },
+     { XIVE_TM_HV_PAGE, TM_SPC_PULL_POOL_CTX,      8, NULL,
+                                                      xive_tm_pull_pool_ctx },
++    { XIVE_TM_HV_PAGE, TM_SPC_PULL_OS_CTX_OL,     1, xive2_tm_pull_os_ctx_ol,
++                                                     NULL },
+ };
  
-     /*
-      * Initialize PIPR to 0xFF to avoid phantom interrupts when the
+ static const XiveTmOp *xive_tm_find_op(XivePresenter *xptr, hwaddr offset,
+diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+index 1f150685bf..dd3ae102fb 100644
+--- a/hw/intc/xive2.c
++++ b/hw/intc/xive2.c
+@@ -26,6 +26,23 @@ uint32_t xive2_router_get_config(Xive2Router *xrtr)
+     return xrc->get_config(xrtr);
+ }
+ 
++static int xive2_router_get_block_id(Xive2Router *xrtr)
++{
++   Xive2RouterClass *xrc = XIVE2_ROUTER_GET_CLASS(xrtr);
++
++   return xrc->get_block_id(xrtr);
++}
++
++static uint64_t xive2_nvp_reporting_addr(Xive2Nvp *nvp)
++{
++    uint64_t cache_addr;
++
++    cache_addr = xive_get_field32(NVP2_W6_REPORTING_LINE, nvp->w6) << 24 |
++        xive_get_field32(NVP2_W7_REPORTING_LINE, nvp->w7);
++    cache_addr <<= 8; /* aligned on a cache line pair */
++    return cache_addr;
++}
++
+ void xive2_eas_pic_print_info(Xive2Eas *eas, uint32_t lisn, GString *buf)
+ {
+     if (!xive2_eas_is_valid(eas)) {
+@@ -270,6 +287,27 @@ static void xive2_os_cam_decode(uint32_t cam, uint8_t *nvp_blk,
+     *ho = !!(cam & TM2_QW1W2_HO);
+ }
+ 
++
++/*
++ * Encode the HW CAM line with 7bit or 8bit thread id. The thread id
++ * width and block id width is configurable at the IC level.
++ *
++ *    chipid << 24 | 0000 0000 0000 0000 1 threadid (7Bit)
++ *    chipid << 24 | 0000 0000 0000 0001 threadid   (8Bit)
++ */
++static uint32_t xive2_tctx_hw_cam_line(XivePresenter *xptr, XiveTCTX *tctx)
++{
++    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
++    CPUPPCState *env = &POWERPC_CPU(tctx->cs)->env;
++    uint32_t pir = env->spr_cb[SPR_PIR].default_value;
++    uint8_t blk = xive2_router_get_block_id(xrtr);
++    uint8_t tid_shift =
++        xive2_router_get_config(xrtr) & XIVE2_THREADID_8BITS ? 8 : 7;
++    uint8_t tid_mask = (1 << tid_shift) - 1;
++
++    return xive2_nvp_cam_line(blk, 1 << tid_shift | (pir & tid_mask));
++}
++
+ uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+                               hwaddr offset, unsigned size)
+ {
+@@ -301,6 +339,91 @@ uint64_t xive2_tm_pull_os_ctx(XivePresenter *xptr, XiveTCTX *tctx,
+     return qw1w2;
+ }
+ 
++#define REPORT_LINE_GEN1_SIZE       16
++
++static void xive2_tm_report_line_gen1(XiveTCTX *tctx, uint8_t *data,
++                                      uint8_t size)
++{
++    uint8_t *regs = tctx->regs;
++
++    g_assert(size == REPORT_LINE_GEN1_SIZE);
++    memset(data, 0, size);
++    /*
++     * See xive architecture for description of what is saved. It is
++     * hand-picked information to fit in 16 bytes.
++     */
++    data[0x0] = regs[TM_QW3_HV_PHYS + TM_NSR];
++    data[0x1] = regs[TM_QW3_HV_PHYS + TM_CPPR];
++    data[0x2] = regs[TM_QW3_HV_PHYS + TM_IPB];
++    data[0x3] = regs[TM_QW2_HV_POOL + TM_IPB];
++    data[0x4] = regs[TM_QW1_OS + TM_ACK_CNT];
++    data[0x5] = regs[TM_QW3_HV_PHYS + TM_LGS];
++    data[0x6] = 0xFF;
++    data[0x7] = regs[TM_QW3_HV_PHYS + TM_WORD2] & 0x80;
++    data[0x7] |= (regs[TM_QW2_HV_POOL + TM_WORD2] & 0x80) >> 1;
++    data[0x7] |= (regs[TM_QW1_OS + TM_WORD2] & 0x80) >> 2;
++    data[0x7] |= (regs[TM_QW3_HV_PHYS + TM_WORD2] & 0x3);
++    data[0x8] = regs[TM_QW1_OS + TM_NSR];
++    data[0x9] = regs[TM_QW1_OS + TM_CPPR];
++    data[0xA] = regs[TM_QW1_OS + TM_IPB];
++    data[0xB] = regs[TM_QW1_OS + TM_LGS];
++    if (regs[TM_QW0_USER + TM_WORD2] & 0x80) {
++        /*
++         * Logical server extension, except VU bit replaced by EB bit
++         * from NSR
++         */
++        data[0xC] = regs[TM_QW0_USER + TM_WORD2];
++        data[0xC] &= ~0x80;
++        data[0xC] |= regs[TM_QW0_USER + TM_NSR] & 0x80;
++        data[0xD] = regs[TM_QW0_USER + TM_WORD2 + 1];
++        data[0xE] = regs[TM_QW0_USER + TM_WORD2 + 2];
++        data[0xF] = regs[TM_QW0_USER + TM_WORD2 + 3];
++    }
++}
++
++void xive2_tm_pull_os_ctx_ol(XivePresenter *xptr, XiveTCTX *tctx,
++                             hwaddr offset, uint64_t value, unsigned size)
++{
++    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
++    uint32_t hw_cam, nvp_idx, xive2_cfg, reserved;
++    uint8_t nvp_blk;
++    Xive2Nvp nvp;
++    uint64_t phys_addr;
++
++    hw_cam = xive2_tctx_hw_cam_line(xptr, tctx);
++    nvp_blk = xive2_nvp_blk(hw_cam);
++    nvp_idx = xive2_nvp_idx(hw_cam);
++
++    if (xive2_router_get_nvp(xrtr, nvp_blk, nvp_idx, &nvp)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVP %x/%x\n",
++                      nvp_blk, nvp_idx);
++        return;
++    }
++
++    if (!xive2_nvp_is_valid(&nvp)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid NVP %x/%x\n",
++                      nvp_blk, nvp_idx);
++        return;
++    }
++
++    xive2_cfg = xive2_router_get_config(xrtr);
++
++    phys_addr = xive2_nvp_reporting_addr(&nvp) + 0x80; /* odd line */
++    if (xive2_cfg & XIVE2_GEN1_TIMA_OS) {
++        uint8_t pull_ctxt[REPORT_LINE_GEN1_SIZE];
++
++        xive2_tm_report_line_gen1(tctx, pull_ctxt, REPORT_LINE_GEN1_SIZE);
++        cpu_physical_memory_write(phys_addr, pull_ctxt, REPORT_LINE_GEN1_SIZE);
++    } else {
++        cpu_physical_memory_write(phys_addr, &tctx->regs, 64);
++        reserved = 0xFFFFFFFF;
++        cpu_physical_memory_write(phys_addr + 12, &reserved, 4);
++    }
++
++    /* the rest is similar to pull OS context to registers */
++    xive2_tm_pull_os_ctx(xptr, tctx, offset, size);
++}
++
+ static uint8_t xive2_tctx_restore_os_ctx(Xive2Router *xrtr, XiveTCTX *tctx,
+                                         uint8_t nvp_blk, uint32_t nvp_idx,
+                                         Xive2Nvp *nvp)
+@@ -471,33 +594,6 @@ int xive2_router_write_nvp(Xive2Router *xrtr, uint8_t nvp_blk, uint32_t nvp_idx,
+    return xrc->write_nvp(xrtr, nvp_blk, nvp_idx, nvp, word_number);
+ }
+ 
+-static int xive2_router_get_block_id(Xive2Router *xrtr)
+-{
+-   Xive2RouterClass *xrc = XIVE2_ROUTER_GET_CLASS(xrtr);
+-
+-   return xrc->get_block_id(xrtr);
+-}
+-
+-/*
+- * Encode the HW CAM line with 7bit or 8bit thread id. The thread id
+- * width and block id width is configurable at the IC level.
+- *
+- *    chipid << 24 | 0000 0000 0000 0000 1 threadid (7Bit)
+- *    chipid << 24 | 0000 0000 0000 0001 threadid   (8Bit)
+- */
+-static uint32_t xive2_tctx_hw_cam_line(XivePresenter *xptr, XiveTCTX *tctx)
+-{
+-    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
+-    CPUPPCState *env = &POWERPC_CPU(tctx->cs)->env;
+-    uint32_t pir = env->spr_cb[SPR_PIR].default_value;
+-    uint8_t blk = xive2_router_get_block_id(xrtr);
+-    uint8_t tid_shift =
+-        xive2_router_get_config(xrtr) & XIVE2_THREADID_8BITS ? 8 : 7;
+-    uint8_t tid_mask = (1 << tid_shift) - 1;
+-
+-    return xive2_nvp_cam_line(blk, 1 << tid_shift | (pir & tid_mask));
+-}
+-
+ /*
+  * The thread context register words are in big-endian format.
+  */
 -- 
 2.43.0
 
