@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B80DEC3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 16:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72A3DC3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 16:41:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZYkJ-0006ov-IF; Thu, 01 Aug 2024 12:33:43 -0400
+	id 1sZYrI-0004mA-A4; Thu, 01 Aug 2024 12:40:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZYkC-0006jv-U9
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:33:36 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZYrF-0004hj-84
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:40:53 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZYkB-00034U-0Q
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:33:36 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5af51684d52so8137086a12.1
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 09:33:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZYrD-0007WO-NL
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:40:52 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5a156557026so9708783a12.2
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 09:40:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722530013; x=1723134813; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722530450; x=1723135250; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=cu4Wz0iHkSYgVesZOWF+MNHxKYpOMXeHGu3wWKL/III=;
- b=Y/4BDpHbHcpevN/VAG2lHumk/0k70kscKvt1w/TVBzVj9yk+igdCrt5UQu5c7yqHFp
- o/Zi87XWc16TOsUElmgoRg0nFI3hL0hl+da9dohrRSUdXPNbtdW0HD9jtT3cFhQIRaXd
- oWAJxPZYn1PcEGh6eHkwFOZwg87N32HlPLldoqQQ8WP1rMGMa0iiJaYyZRsUeuvcc0nH
- 5jyZj2q+9NbhiGagGFgimqCNpfcjsgH395MljgB+m0+bS8nr9TnVObYqyW6iiYb34oPd
- U53HB+xfJtTvIQ1AynrUdT8aUF2x1vXTNBlBeb6MxgTFhvJ7ed5Tymonb3PDjyz0KjSM
- pDyg==
+ bh=gFv8+bFaAX4XJAhR/zrYQwvP5KXnyrUNY4dtNIYiqOU=;
+ b=pWxBXef9YX+ZCqN57p1NZxwPh2b8QXdlSJn1py/x3MPRXmsP/yQeY+4BuC3Z8Gk9SR
+ y9VdG74Z6lkdeLoa6SpErd/8gv1WvBaXThH3GEPkJvUL36nWyX/YrdUQbtjpvhOpwIW6
+ qv/lsiAF6uElYuk9ZFrPOz84SGHZDGnTELl7GUZ7fgvnACfBAyaHZ2tCslckv2l3rSNR
+ AJtQXfIOmIG7ev0KwCk0ayqWkY8jnyoRQuIaPoMgc0QkZdQIuDypssh+fDet6DtgCW7M
+ FqIj4klK2Z8v6ZEDab/jlhcVD8LXTKhemT05uptxn+2SuyPly3tREjVNBoKRCQZrDdWj
+ ADZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722530013; x=1723134813;
+ d=1e100.net; s=20230601; t=1722530450; x=1723135250;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cu4Wz0iHkSYgVesZOWF+MNHxKYpOMXeHGu3wWKL/III=;
- b=gsj9J0vJe6Eo/zEeyypF67su2S/2/3Tpbny/5olgsyMqX1zes1tnecN6K5275hZbRR
- qN6L1jsIPD1kN/S1d0f3jCPoXFeHCFTTMBdw1fclnpEf0KWh2I251PjeS5i/KSR2AJi/
- jUmJlRD0gTmuYfEZHJA1CoZ31vYVNq2I48ogCg3vYhBV/BmNFH1p0CkAOEeHqYOBikoe
- pDni3sCjtwFvdrr1BUu+TYzFzf1rpPOOkRxxZKBPaJzatylM4EJR7pWu17AtH1qtTKCB
- mh0Qp5BAvg9QeygDs20NF4ss6G7OY+L0QVNZqpX3QNpY+IMT0XdQxRUlP/Wi2EgYk3Ty
- rwCg==
+ bh=gFv8+bFaAX4XJAhR/zrYQwvP5KXnyrUNY4dtNIYiqOU=;
+ b=k6QIqtyF4iJ4CGcUCaolLVfGYDliWcq4yuU6d+YJ1ZwCPMZ8cMNmmNrf4hHpPytDVM
+ GZ40b1fZNU/AcVEniHKBAmhCVfcxYx5a9xhTZWgDyMxgmrEEYJdSXe31k04iBzSW0pZP
+ uHPBZLzNYLOpWrRBrtkimA8qgIR3vc3H2Ne9nI/z9d6DCArqosjMfiY43pK9xgXcutY2
+ rWtnVOumX6ses9qIawBe4R8uTzKsZX+8icP6wJCEfAp6y+p8YChaEVaAl6Pkgkei8Ja6
+ cap3/f3Jz6n09JEMk/f5sTIRsL6zHopAaXd+rmDYrT8Eo3FlZDi+HaqdyifMCV4Kr38+
+ iu+w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVh4HPTPfvFr5V2eAnNU97aPtyKyMoDQcsx4dcSk/gVagjTmPwcrqeF3r9RRLiRWk1aVxxzjDdyO35sjLl+dKZ/ML264YY=
-X-Gm-Message-State: AOJu0YzEsLWb0zVwc22B8aQ6ywYZAIc92xh+NXzBrvCje72Wy3Q/auoy
- k2V41x6UoHfxHFlYxxzFSTZOlB5KZokuYibKe1EdJocBduICV/j4tsqAZqDS/9g=
-X-Google-Smtp-Source: AGHT+IHz1cboMKJATvItabnnmckKz8w9lk4syDdiUzBFD1gNZN361U0oxqbWfKhwztM0FC08NJqYqw==
-X-Received: by 2002:a05:6402:40c:b0:59e:a1a6:134d with SMTP id
- 4fb4d7f45d1cf-5b7f56fc987mr662651a12.32.1722530012929; 
- Thu, 01 Aug 2024 09:33:32 -0700 (PDT)
+ AJvYcCULEV1mzJ3Wta0S6RyR7PVTJuABUfrmgpT6IBytZjU2wRnOmpTx/AAJta48Tn5dv9mBrFljmaM5i7XHReeXJkmuN2FDsLk=
+X-Gm-Message-State: AOJu0Yx2BFwTs+J2/9QEfODmK0SoyQeqiJ1V1DtzjxIdRC1wUMcTBR0x
+ JP43N57XxYAbHMtWdC2Iyq++jJ9MZPYc8zhC6wso4S5kylagyL+dFCAdjPz4hY8=
+X-Google-Smtp-Source: AGHT+IHasACKbww1xqE33+RoP9nl56m8M5t+NVrlo3GaX8XGYOAsgbCEoqUUGgeOPYFyJGo81r9Nqg==
+X-Received: by 2002:aa7:dcd9:0:b0:5a1:40d9:6a46 with SMTP id
+ 4fb4d7f45d1cf-5b7f5dc5d68mr638962a12.36.1722530450069; 
+ Thu, 01 Aug 2024 09:40:50 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.211.94])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ac63b59cb0sm10483978a12.45.2024.08.01.09.33.31
+ 4fb4d7f45d1cf-5ac63590e73sm10459950a12.35.2024.08.01.09.40.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Aug 2024 09:33:32 -0700 (PDT)
-Message-ID: <7985c207-6816-4346-8037-c829085bfab1@linaro.org>
-Date: Thu, 1 Aug 2024 18:33:29 +0200
+ Thu, 01 Aug 2024 09:40:49 -0700 (PDT)
+Message-ID: <64746db0-7ae0-40bf-8c0f-9c5a3dacdb1d@linaro.org>
+Date: Thu, 1 Aug 2024 18:40:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 21/24] tests/functional: Convert the m68k nextcube test
- with tesseract
+Subject: Re: [PATCH v3 24/24] gitlab-ci: Add "check-functional" to the build
+ tests
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -72,14 +72,14 @@ Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>
 References: <20240730170347.4103919-1-berrange@redhat.com>
- <20240730170347.4103919-22-berrange@redhat.com>
+ <20240730170347.4103919-25-berrange@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240730170347.4103919-22-berrange@redhat.com>
+In-Reply-To: <20240730170347.4103919-25-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,22 +105,16 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 30/7/24 19:03, Daniel P. Berrangé wrote:
 > From: Thomas Huth <thuth@redhat.com>
 > 
-> The code that handles running of tesseract needs to be tweaked a little
-> bit to be able to run without the functions from avocado.utils, and
-> while we're at it, drop some legacy stuff that was still there due to
-> Tesseract 3 support that we already dropped a while ago.
+> Now that we converted many tests from the "check-avocado" test suite
+> to the "check-functional" test suite, we should make sure that these
+> also get tested in the CI.
 > 
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   tests/avocado/tesseract_utils.py              | 46 -------------------
->   tests/functional/meson.build                  |  4 ++
->   tests/functional/qemu_test/tesseract.py       | 35 ++++++++++++++
->   .../test_m68k_nextcube.py}                    | 29 ++++++------
->   4 files changed, 55 insertions(+), 59 deletions(-)
->   delete mode 100644 tests/avocado/tesseract_utils.py
->   create mode 100644 tests/functional/qemu_test/tesseract.py
->   rename tests/{avocado/machine_m68k_nextcube.py => functional/test_m68k_nextcube.py} (76%)
->   mode change 100644 => 100755
+>   .gitlab-ci.d/buildtest-template.yml |  3 +-
+>   .gitlab-ci.d/buildtest.yml          | 60 ++++++++++++++---------------
+>   2 files changed, 32 insertions(+), 31 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
