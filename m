@@ -4,97 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57374C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 14:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06E41C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 14:27:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZWks-0007NB-TM; Thu, 01 Aug 2024 10:26:10 -0400
+	id 1sZWll-0002vg-U0; Thu, 01 Aug 2024 10:27:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sZWkq-0007Dn-Iy
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 10:26:08 -0400
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sZWko-0003oA-Po
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 10:26:08 -0400
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-52ef95ec938so8445415e87.3
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 07:26:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722522364; x=1723127164; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=YBkM2j0NcezYrn6YO324onq9oz5rzqnzoHsPNTbVU3M=;
- b=TBftRRlx/rPiFWxgj7VxmNCxk64/jUkrm1NUDdlnsTEuVbetiFb48huPc8mgAZuRAm
- ipO9zGlrCOr8Xq1ogDBO9+1FIgJ6f9MlMRZiFWFUjsJbM+8bA+qDrcliUS57a/euFaMo
- zYsZdUAhVhiNdVLWnT2T9b54rlXCmQC/4176VxV1I3vv8Er9ZLRw7xbBcBPu4vo1zw8w
- 2VsmIJPV4pGovkuOW+yfDo1pMLlpeJ/EcrNyV0Ivhg+fJzfMbpHau/MwJeuAa2ncWOHR
- oA7t9jFcojaBJ2PjutNl1EP69bg4iv0DqTBk3YlMFMcSANILdjQQ5cfQ/rGqNXTCn3aY
- KDrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722522364; x=1723127164;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=YBkM2j0NcezYrn6YO324onq9oz5rzqnzoHsPNTbVU3M=;
- b=LkpA2fkxY7oDPXQYTiWNuDEMIxgijQZV4YGZioKfL2JYPk5m1vAcJXSRYYZSF3OKgb
- hW102CMOawRkpBCYbY2ZwqKySwz+6ApggV6POt5uvfhBRbX1kRUG139t0h+EEkXmtcYD
- Ek+uVW7QKQJQ8BMULoHr/bSVHGjGIUOTE7qWXo5o4lLrPkfalDuHUcFvm2jUR5bpeRxu
- 01LhR9g3H8YOMAQVLw9bjqv8Ivi/IuPCrLptOss0zhmhkYBSy2PXEFMXhkwB8IeGs/4Y
- yMWVshd1Inx1AENUoiOenAVUHNCWXoZ8kTu3q8qCfLnKXjUEYclNRohlxFm0pDSk5mO5
- FB5g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVUa6hn/EC6kk1uC1qCv91rM8CHnk0AIfV5ZHam5wgXPzFrvjstc9O35n3gm6UshHQjWjeJQ1iq9niLtrZJQRb0ol1hPkw=
-X-Gm-Message-State: AOJu0YxspHl+3sl9cHUC3QL3akkgoL3kpCPntasK8DD1lkRywZUrmTHi
- BCZtU/955d/YirJTpe5bm9Il/XnI8PnnAl3W94ubz4SfIRoqaIVZpNx4fvA+n6s=
-X-Google-Smtp-Source: AGHT+IEjrlTiyBUYaINP9uK712VXKR5kixtvXc4di6YloeiU5uT5+Bl4vrpU/jHF166KdbS64KlpIw==
-X-Received: by 2002:a05:6512:3a95:b0:52c:e084:bb1e with SMTP id
- 2adb3069b0e04-530bb397748mr31883e87.13.1722522363952; 
- Thu, 01 Aug 2024 07:26:03 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5ac63d4720dsm10348802a12.58.2024.08.01.07.26.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Aug 2024 07:26:03 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6CEA45F80C;
- Thu,  1 Aug 2024 15:26:02 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: David Woodhouse <dwmw2@infradead.org>
-Cc: "Daniel P." =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Cleber Rosa
- <crosa@redhat.com>,  qemu-devel@nongnu.org,  Peter Maydell
- <peter.maydell@linaro.org>,  Thomas Huth <thuth@redhat.com>,  Beraldo Leal
- <bleal@redhat.com>,  Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Leif Lindholm
- <quic_llindhol@quicinc.com>,  Jiaxun Yang <jiaxun.yang@flygoat.com>,
- kvm@vger.kernel.org,  Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,  qemu-arm@nongnu.org,
- Radoslaw Biernacki <rad@semihalf.com>,  Paul Durrant <paul@xen.org>,
- Paolo Bonzini <pbonzini@redhat.com>,  Akihiko Odaki
- <akihiko.odaki@daynix.com>
-Subject: Re: [PATCH 07/13] tests/avocado/kvm_xen_guest.py: cope with asset
- RW requirements
-In-Reply-To: <63ef2c5b9ab213f544173df027abf5b056d59e8a.camel@infradead.org>
- (David Woodhouse's message of "Mon, 29 Jul 2024 13:03:46 +0100")
-References: <20240726134438.14720-1-crosa@redhat.com>
- <20240726134438.14720-8-crosa@redhat.com>
- <Zqd10nIix4gXKtDw@redhat.com>
- <63ef2c5b9ab213f544173df027abf5b056d59e8a.camel@infradead.org>
-Date: Thu, 01 Aug 2024 15:26:02 +0100
-Message-ID: <87wml0coat.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1sZWlk-0002pN-4Y; Thu, 01 Aug 2024 10:27:04 -0400
+Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1sZWlg-00059a-Tj; Thu, 01 Aug 2024 10:27:03 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sin.source.kernel.org (Postfix) with ESMTP id ECACCCE19AF;
+ Thu,  1 Aug 2024 14:26:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE43C32786;
+ Thu,  1 Aug 2024 14:26:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1722522416;
+ bh=rDxYwbBlVpDK1JuWRuGnNLHkJWYCXiccTbJEbCBu9FM=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=ld27awUm8k35yn4pUWyoXEhV7XNUBGGhIgrgocUuDgQ4aUOz3/4t4wgD76m3Et+rz
+ Huar1PiuT4Vi8hzXnxX1Ty/HdehxFGZ+4ht80m7Fi0dI8RNDV7BrDIjmf9omJdTb/r
+ GjhNEJ520ck/IX7papOAxQ4nSbS41mBtTelrCiG6GD0+7InBq7OeYjzNoE/CalEEt7
+ 7+u/cao34kgFabG+djoXCwODoe4AAlhVsZy8mi+6DeO+WW6R8PmW3yhYuYGasNUeB+
+ WbeA64VlLN4MZp2KwNg/oI009cV67Dc7V7GuzxQcKnYo+je6f5iB+Btk8GdnUCwjwM
+ CLsM/PNaSRPpA==
+Date: Thu, 1 Aug 2024 16:26:50 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@Huawei.com>, Shiju Jose
+ <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
+ <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>, Eric Blake
+ <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, Michael Roth
+ <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, <linux-kernel@vger.kernel.org>,
+ <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v3 4/7] acpi/ghes: Add a logic to handle block addresses
+ and FW first ARM processor error injection
+Message-ID: <20240801162650.3dcbd24e@foz.lan>
+In-Reply-To: <20240801103623.2a74012e@imammedo.users.ipa.redhat.com>
+References: <cover.1721630625.git.mchehab+huawei@kernel.org>
+ <6a3542a7d8acfbf88c906ec6f6dc5a697257b461.1721630625.git.mchehab+huawei@kernel.org>
+ <20240730131709.10e72c7d@imammedo.users.ipa.redhat.com>
+ <20240731091133.07ddd58c@foz.lan>
+ <20240731095719.000004dc@Huawei.com>
+ <20240801103623.2a74012e@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
+ envelope-from=mchehab+huawei@kernel.org; helo=sin.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,52 +81,207 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-David Woodhouse <dwmw2@infradead.org> writes:
+Em Thu, 1 Aug 2024 10:36:23 +0200
+Igor Mammedov <imammedo@redhat.com> escreveu:
 
-> On Mon, 2024-07-29 at 11:58 +0100, Daniel P. Berrang=C3=A9 wrote:
->> On Fri, Jul 26, 2024 at 09:44:32AM -0400, Cleber Rosa wrote:
->> > Some of these tests actually require the root filesystem image,
->> > obtained through Avocado's asset feature and kept in a common cache
->> > location, to be writable.
->
-> Hm, I'm not sure *why* they require a writable image. Mostly they're
-> just testing the interrupt routing. What's the failure mode for a read-
-> only image?
+> On Wed, 31 Jul 2024 09:57:19 +0100
+> Jonathan Cameron <Jonathan.Cameron@Huawei.com> wrote:
+> 
+> > On Wed, 31 Jul 2024 09:11:33 +0200
+> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> >   
+> > > Em Tue, 30 Jul 2024 13:17:09 +0200
+> > > Igor Mammedov <imammedo@redhat.com> escreveu:
+> > >     
+> > > > On Mon, 22 Jul 2024 08:45:56 +0200
+> > > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:  
+> [...]
+> > > > Preferably make it generic enough to handle
+> > > > not only ARM but other error formats HEST is
+> > > > able to handle.      
+> > > 
+> > > A too generic interface doesn't sound feasible to me, as the
+> > > EINJ code needs to check QEMU implementation details before
+> > > doing the error inject.    
+> > 
+> > To be clear we are talking here about a script that
+> > generates 'similar' stuff to ACPI EINJ does and injects
+> > via qapi, not guest injection (which is almost always locked
+> > down on production machines / distros because of the footgun
+> > aspect).  + ACPI EINJ interface suffers exactly the same
+> > problems with state discoverability we have with a raw interface here.
+> > (I checked with Mauro offline that I'd interpreted this
+> > comment correctly!)
+> >   
+> > > 
+> > > See, processor is probably the simplest error injection
+> > > source, as most of the fields there aren't related to how
+> > > the hardware simulation is done.
+> > > 
+> > > Yet, if you see patch 7 of this series, you'll notice that some
+> > > fields should actually be filled based on the emulation.
+> > > 
+> > > On ARM, we have some IDs that depend on the emulation
+> > > (MIDR, MPIDR, power state). Doing that on userspace may require
+> > > a QAPI to query them.    
+> 
+> QEMU has qmp commands to query QOM tree, device properties is
+> likely what you'd be interested with.
+> Adding new QAPI might be not necessary as long as needed
+> data point are exposed via device's properties.
+> 
+> And additional properties are relatively cheap, especially if their
+> names prefixed with 'x-' which by convention means
+> /internal use, not stable, not ABI/
+> 
+> Well whole qmp tree structure hasn't been declared as ABI (as far as I know),
+> but it's relatively stable and we try not to mess with it much
+> (especially for mainstream virt machines), as some external users
+> might (ab)use it anyway (no promises on QEMU side though).
+> 
+> On contrary QAPI is mostly considered as ABI QEMU provides
+> to its users with burden to maintain it stability.
+> 
+> If injection script is internal tool to QEMU, it should be fine
+> for it to use qom introspection to get data and limit QAPI
+> necessary minimum only.
 
-There are no real failures with readonly=3Don although you do see init
-complain a bit about not being able to mount /dev and open log files.
-snapshot allows that to happen but doesn't change the underlying
-storage.
+OK, good. Anyway, after sleeping on it, I decided to not focus at
+the query for now, as my goal is to validate Linux Kernel and 
+rasdaemon. So, I'll just fill them when calling the error inject
+script.
 
->
->> > @@ -56,11 +57,19 @@ def common_vm_setup(self):
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "367962983d0d32109998a70b45dcee4672d0b045=
-")
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 self.rootfs =3D self.=
-get_asset("rootfs.ext4",
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 "f1478401ea4b3fa2ea196396be44315bab2bb5e4")
->> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if readwrite:
->> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 de=
-st =3D os.path.join(self.workdir, os.path.basename(self.rootfs))
->> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sh=
-util.copy(self.rootfs, dest)
->> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 se=
-lf.rootfs =3D dest
->>=20
->> This is a very expensive way of creating a writable disk. Better to
->> avoid adding this 'readwrite' parameter at all, and instead create
->> a throwaway qcow2 overlay for the image for all tests. That ensures
->> writability for everything in a cheap manner.
->
-> Or just use -snapshot?
+As a reference, for ARM Processor error injection, there are just 4
+fields that would benefit for a query to fill the default values:
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+	- mpidr-el1
+	- midr-el1
+	- power_state
+	- ARM context registers and its type
+
+> To make sure it won't be broken silently by 'innocent' QEMU
+> contributors, have a CI job to make sure that it still works
+> as intended.
+> 
+> > We could strip back the QAPI part to only the bits that are
+> > not dependent on state.  However, the kicker to that is we'd
+> > need to make sure all that state is available to an external
+> > tool (or fully controllable from initial launch command line).
+> > I'm not sure where the gaps are but, I'm fairly sure there
+> > will be some.  Doesn't save much code other than documentation
+> > of the QAPI.
+> >   
+> > > 
+> > > The memory layout, however, is the most complex one. Even for
+> > > an ARM processor CPER (which is the simplest scenario), the 
+> > > physical/virtual address need to be checked against the emulation
+> > > environment.
+> > > 
+> > > Other error sources (like memory errors, CXL, etc) will require
+> > > a deep knowledge about how QEMU mapped such devices.    
+> > 
+> > For CXL stuff we'll piggy back on native error injection interfaces
+> > that are already there and couldn't be avoided because they
+> > are writing a bunch of register state (that we elide in the FW
+> > first path). 
+> > https://lore.kernel.org/qemu-devel/20240205141940.31111-12-Jonathan.Cameron@huawei.com/
+> > So we won't be adding new QAPI, but the error record generation logic
+> > will be in QEMU.  For background, the CXL FW first error injection
+> > has taken a back seat to the ARM errors because of the obvious
+> > other factor that CXL isn't supported on ARM in upstream QEMU.
+> > Once I escape a few near term deadlines I'll add the x86
+> > support for GHESv2 / SCI interrupt signaling as you'd see on a
+> > typical x86 server.
+> >   
+> > > 
+> > > So, in practice, if we move this to an EINJ script, we'll need
+> > > to add a probably more complex QAPI to allow querying the memory
+> > > layout and other device and CPU specific bindings.
+> > > 
+> > > Also, we don't know what newer versions of ACPI spec will reserve
+> > > us. See, even the HEST table contents is dependent of the HEST 
+> > > revision number, as made clear at the ACPI 6.5 notes:
+> > > 
+> > > 	https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#acpi-error-source
+> > > 
+> > > and at:
+> > > 
+> > > 	https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#error-source-structure-header-type-12-onward
+> > > 
+> > > So, if we're willing to add support for a more generic "raw data"
+> > > QAPI, I would still do it per-type, and for the fields that won't
+> > > require knowledge of the device-emulation details.    
+> > 
+> > Could blend the two options and provide no qapi for the bits
+> > that are QEMU state dependent - if fuzzing, can inject
+> > the full record raw as doesn't have to be valid state anyway.
+> >   
+> > > 
+> > > Btw, my proposal on patch 7 of this series is to have raw data
+> > > for:
+> > > 	- the error-info field;
+> > > 	- registers dump;
+> > > 	- micro-architecture specific data.
+> > > 
+> > > I don't mind trying to have more raw data there as I see (marginal) 
+> > > benefits of allowing to generate CPER invalid records [1], but some of
+> > > those  fields need to be validated and/or filled internally at QEMU - if
+> > > not forced to an specific value by the caller.
+> > > 
+> > > [1] a raw data EINJ can be useful for fuzzy logic fault detection to 
+> > >     check if badly formed packages won't cause a Kernel panic or be
+> > >     an exploit. Yet, not really a concern for APEI, as if the hardware
+> > >     is faulty, a Kernel panic is not out of the table. Also, if the
+> > >     the BIOS is already compromised and has malicious code on it, 
+> > >     the EINJ interface is not the main concern.
+> > >     
+> > > > PS:
+> > > > For user convenience, QEMU can carry a script that
+> > > > could help generate this raw value in user friendly way
+> > > > but at the same time it won't put maintenance
+> > > > burden on QEMU itself.      
+> > > 
+> > > The script will still require reviews, and the same code will 
+> > > be there. So, from maintenance burden, there won't be much
+> > > difference.    
+> 
+> it makes a lot of difference if code is integral part qemu binary,
+> (less people have to spend time on reviewing it, avoid increasing
+> attack surface, ... (other made up reasons)).
+
+I see.
+
+> Implementing shim/proxy in QEMU and putting all error composing logic
+> into a separate script (even if it's a part QEMU source), shifts
+> most of the burden to whomever (I'd assume you'd volunteer yourself)
+> would maintain the script.
+
+Yes, I'll maintain it.
+
+> If script breaks, it doesn't affect QEMU itself (nor I believe it
+> should affect release process), script's maintainer(s) can have their
+> own schedule/process on how to deal with it.
+
+That's good.
+
+> > Agreed. I'd also be very keen that the script is tightly coupled to
+> > QEMU as doesn't make sense to carry with kernel or RAS daemon and
+> > I'd want to ultimately get this stuff into all the appropriate
+> > CI flows.  
+> 
+> Agreed, it makes much more sense to carry such script as a part of QEMU.
+
+Ok, I'll be submitting a v4 using the CPER raw data plus script approach.
+I'll be placing the script at the final patch.
+
+I opted to make the simplest possible QAPI (keeping it marked as unstable),
+as we might need/want to improve it to support other features.
+
+Btw, as error injection is not trivial, and using the script is the best
+way to do it, I would prefer to keep such QAPI always marked as unstable,
+as it is preferred that QEMU users to use it (and submit patches improving
+it) instead of manually crafting CPER records with their own scripts.
+
+Thanks,
+Mauro
 
