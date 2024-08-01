@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7262BC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 06:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1E7C3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 07:00:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZPlY-0006uz-Rz; Thu, 01 Aug 2024 02:58:24 -0400
+	id 1sZPnM-0002ot-FZ; Thu, 01 Aug 2024 03:00:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZPlX-0006uE-BJ
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 02:58:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZPlV-0005Et-68
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 02:58:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722495499;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=lYBCzb2E3FyybqN2WXwxvnfu9DHmMiJODCcOpo9qf9k=;
- b=f8kTyFG3eqE6Mipk29YUXSauybwvwpknz6H8Lt2vL5XOtJdA7cM+nHIiUaB75y4X1GxNFv
- ZXPbB34JWdyzMAbiwuNBVMag6CzqzJ096rlJEWTk/dBuTzKCGSt31nVvt/gA8Z6yDRHhfp
- SzuVU1g4b7/S+nUkmtzNNgD+IPDQkG0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-275-365VSHYQMi-Y8JoFWlw8MA-1; Thu,
- 01 Aug 2024 02:58:15 -0400
-X-MC-Unique: 365VSHYQMi-Y8JoFWlw8MA-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B453A19560AD; Thu,  1 Aug 2024 06:58:13 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C814D300019B; Thu,  1 Aug 2024 06:58:12 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A349621E668A; Thu,  1 Aug 2024 08:58:10 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- qemu-devel@nongnu.org,  pbonzini@redhat.com,
- richard.henderson@linaro.org,  eduardo@habkost.net
-Subject: object_new() cannot fail, and that's fundamental (was: [PATCH v2
- 1/2] qom/object, qdev: move globals functions to object.c)
-In-Reply-To: <ZqPR_dFL5O6IFHlk@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Fri, 26 Jul 2024 17:42:37 +0100")
-References: <20240703204149.1957136-1-dbarboza@ventanamicro.com>
- <20240703204149.1957136-2-dbarboza@ventanamicro.com>
- <ZqPR_dFL5O6IFHlk@redhat.com>
-Date: Thu, 01 Aug 2024 08:58:10 +0200
-Message-ID: <87mslwhgql.fsf_-_@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1sZPnJ-0002nn-Tk
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 03:00:14 -0400
+Received: from mail-yb1-xb2a.google.com ([2607:f8b0:4864:20::b2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1sZPnG-0005cQ-VR
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 03:00:13 -0400
+Received: by mail-yb1-xb2a.google.com with SMTP id
+ 3f1490d57ef6-e0878971aa9so1438494276.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 00:00:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722495606; x=1723100406;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PE2yF/IDMq4m/DeSYnAqyzZd19W1t/pWFKq5VLAEMLE=;
+ b=IXe3kJm5QmYVrrsUVLB2wPvOLP/cd5HWXxA5/vMGJmRci1gV2lqOk4MpiLreLMDy9s
+ +HYqscQ3z7oAetiEehD+WndicvMA1goobNraMffZ61O5ZXf3qvyQJPnDXb7YpwYYkwQz
+ 4JZAlo7g1Xgk0y5mfbMDBS+TuRfjZH9/TlxT7793HkjFxSxeidJ7bozsHGqyF8bx0NB9
+ NrrQoRzphelphZBVB1IcVsCHCoIVV3ZzXNr5t+13uEsqGr58ZG0x68XWrpgEZl+SQzDF
+ h1FOG4BpR+FUwCPvUG5dHJzVpuGmAgseZSC3c3vwq6P+Kpm+4BAf6vdOczFvDdPb4xAw
+ zz3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722495606; x=1723100406;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=PE2yF/IDMq4m/DeSYnAqyzZd19W1t/pWFKq5VLAEMLE=;
+ b=e8pj5aIC8yjG+SaaUbw4zb0yjRY41KbHp4eOQpXrQ1XcIG1WtLlSzfGyTv8aXjgsP9
+ jfOrKTBiUnMhnHFs3tUj/tzEJpikT+4LLOdi+Z9HYSE3PKICOzzObYiwBwpg6o+OwNfp
+ FuPez5AYBDyAhZYRQ+avu7WAy2px5m2QEyZvbqlsfx/zNCorKc1wZ/4x3AJUw0pGBKYG
+ o2f0HnG49qmiKGkTDv6mjdivgVN900AnL0f1LHhhppGh1CYoV7N36mYZQUxqOPFWuEzk
+ RnB5iWA3IsMhIt3F+HG5Ps0LryC+Rf2N5EEkN6esA31RUx7qkCEsZm3vwBZPT//9owhW
+ xPTQ==
+X-Gm-Message-State: AOJu0YzqkK5eoxcfIQHwUkUNi/TLqBXhA/oRw4hVL9fjgbua3VCtsilv
+ K1BCdiC0lPhvXoSqEU4r9L3dkozzVtwfVmM1VDWo9+g0ATHTLnQ0JZFp+Q2AOQyTAmn8uMShN4o
+ u/VKGefDH3lAYPzQ4ckpvWY5Nt2W2dDVH2xAEew==
+X-Google-Smtp-Source: AGHT+IHPcaDTBIRELdXRt4An0y9A5huenk7NoTqD+jUAN4kXtSPjuB4i8BnBoohYFsxzk+Rd9Yp237nTtvT0s01NWJc=
+X-Received: by 2002:a25:ef0c:0:b0:e0b:528b:1ee2 with SMTP id
+ 3f1490d57ef6-e0bd5ae204bmr260175276.27.1722495606482; Thu, 01 Aug 2024
+ 00:00:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20240729175327.73705-1-debug@rivosinc.com>
+ <20240729175327.73705-6-debug@rivosinc.com>
+ <ed23bcbc-fdc4-4492-803c-daa95880375a@linaro.org>
+In-Reply-To: <ed23bcbc-fdc4-4492-803c-daa95880375a@linaro.org>
+From: Deepak Gupta <debug@rivosinc.com>
+Date: Wed, 31 Jul 2024 23:59:51 -0700
+Message-ID: <CAKC1njQJiNHT1b2jD009zsNeXrUZ9OG2S4VTeFmnAS4c_f-kAA@mail.gmail.com>
+Subject: Re: [PATCH v2 05/24] target/riscv: tracking indirect branches (fcfi)
+ for zicfilp
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2a;
+ envelope-from=debug@rivosinc.com; helo=mail-yb1-xb2a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,160 +92,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-
-> CC: Markus since he's had opinions on stuff related to -global  in
-> the past.
+On Mon, Jul 29, 2024 at 7:34=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
 >
-> On Wed, Jul 03, 2024 at 05:41:48PM -0300, Daniel Henrique Barboza wrote:
->> Next patch will add Accel globals support. This means that globals won't=
- be
->> qdev exclusive logic since it'll have to deal with TYPE_ACCEL objects.
->>=20
->> Move all globals related functions and declarations to object.c. Each
->> function is renamed from 'qdev_' to 'object_':
->>=20
->> - qdev_prop_register_global() is now object_prop_register_global()
->> - qdev_find_global_prop() is now object_find_global_prop()
->> - qdev_prop_check_globals() is now object_prop_check_globals()
->> - qdev_prop_set_globals() is now object_prop_set_globals()
->>=20
->> For object_prop_set_globals() an additional change was made: the function
->> was hardwired to be used with DeviceState, where dev->hotplugged is chec=
-ked
->> to determine if object_apply_global_props() will receive a NULL or an
->> &error_fatal errp. The function now receives an Object and an errp, and
->> logic using dev->hotplugged is moved to its caller (device_post_init()).
->>=20
->> Suggested-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
-[...]
-
->> diff --git a/hw/core/qdev.c b/hw/core/qdev.c
->> index f3a996f57d..894372b776 100644
->> --- a/hw/core/qdev.c
->> +++ b/hw/core/qdev.c
->> @@ -673,7 +673,7 @@ static void device_post_init(Object *obj)
->>       * precedence.
->>       */
->>      object_apply_compat_props(obj);
->> -    qdev_prop_set_globals(DEVICE(obj));
->> +    object_prop_set_globals(obj, DEVICE(obj)->hotplugged ? NULL : &erro=
-r_fatal);
->>  }
+> On 7/30/24 03:53, Deepak Gupta wrote:
+> > diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> > index acba90f170..c746d7df08 100644
+> > --- a/target/riscv/translate.c
+> > +++ b/target/riscv/translate.c
+> > @@ -20,6 +20,7 @@
+> >   #include "qemu/log.h"
+> >   #include "cpu.h"
+> >   #include "tcg/tcg-op.h"
+> > +#include "tcg/tcg-temp-internal.h"
 >
-> This is pretty awkward :-(
+> No, this is internal to tcg, as the filename says.
+
+Ok
+
 >
-> If we're generalizing this global properties concept, then we want
-> object_prop_set_globals to be called from the Object base class
-> code.
-
-Yes.  This series copies the concept from devices to accelerators.  But
-since it clearly makes sense for any kind of object, we better move it
-to objects instead.  We may not be able to get there in one step,
-though.
-
->       We can't do that given this need to check the 'hotplugged'
-> property.
 >
-> That check, however, is total insanity. Pre-existing problem,
-> not your fault.
+> >   #include "exec/exec-all.h"
+> >   #include "exec/helper-proto.h"
+> >   #include "exec/helper-gen.h"
+> > @@ -44,6 +45,7 @@ static TCGv load_val;
+> >   /* globals for PM CSRs */
+> >   static TCGv pm_mask;
+> >   static TCGv pm_base;
+> > +static TCGOp *cfi_lp_check;
+> >
+> >   /*
+> >    * If an operation is being performed on less than TARGET_LONG_BITS,
+> > @@ -116,6 +118,9 @@ typedef struct DisasContext {
+> >       bool frm_valid;
+> >       bool insn_start_updated;
+> >       const GPtrArray *decoders;
+> > +    /* zicfilp extension. cfi enabled or not. lp expected or not */
+> > +    bool fcfi_enabled;
+> > +    bool fcfi_lp_expected;
+> >   } DisasContext;
+> >
+> >   static inline bool has_ext(DisasContext *ctx, uint32_t ext)
+> > @@ -1238,6 +1243,8 @@ static void riscv_tr_init_disas_context(DisasCont=
+extBase *dcbase, CPUState *cs)
+> >       ctx->pm_base_enabled =3D FIELD_EX32(tb_flags, TB_FLAGS, PM_BASE_E=
+NABLED);
+> >       ctx->ztso =3D cpu->cfg.ext_ztso;
+> >       ctx->itrigger =3D FIELD_EX32(tb_flags, TB_FLAGS, ITRIGGER);
+> > +    ctx->fcfi_lp_expected =3D FIELD_EX32(tb_flags, TB_FLAGS, FCFI_LP_E=
+XPECTED);
+> > +    ctx->fcfi_enabled =3D cpu_get_fcfien(env) && ctx->fcfi_lp_expected=
+;
 >
-> I imagine the rationale is that we don't want to kill QEMU
-> if setting a global fails, and we're in middle of device_add
-> on a running VM.
+> This is incorrect.  You cannot check fcfien like this here; you must plac=
+e it in a tb flag
+> like "lp_expected".
 
-Yes.
+hmm... you've suggested below to use `aarch64_tr_translate_insn` and
+check if it's the first instruction.
+and put the check there.
+In that case I won't need FCFI_LP_EXPECTED TB flag.
+Then I would rather use it as FCFI_ENABLED TB flag.
 
-> Throwing away errors though is unacceptable IMHO.
-
-To be precise: we're silently ignoring any -global that fail to apply.
-
-I agree that's wrong.
-
->                                                   device_add
-> can report errors and we should be propagating them. Likewise
-> for object_add, or any object HMP command creating QOM types.
 >
-> The trouble is that we're about 4-5 levels deep in a call
-> chain that lacks "Error **errp".
 >
-> The root problem is that none of object_new, object_new_with_class
-> and object_new_with_type have a "Error *errp" parameter.
-
-This is a fundamental QOM design decision.
-
-Not mine, mind.  Moreover, I wasn't there, so my idea on design
-rationale may well be off; keep that in mind.
-
-QOM properties are not declared statically, they are created
-dynamically.  Aside: this is, in my not particularly humble opinion, a
-spectacularly bad idea.
-
-Properties are generally created in instance_init() methods.
-
-Fine print: we later added "class properties", which are created
-dynamically within the class, and cloned into the instance before=20
-its instance_init() method runs.
-
-Object creation doesn't take arguments, and cannot fail.  An
-instance_init() method doesn't take arguments, and cannot fail.
-
-Objects are configured via properties.  Property setters take an
-argument (the property value), and can fail.
-
-Any part of object creation + configuration that could fail must be done
-in property setters.
-
-Common usage is create object, configure by setting properties, operate.
-
-The state transition between "configuring" and "operating" is important.
-For devices, this state transition happens when property "realized" is
-set to true.  For user-creatable objects it happens when method
-complete() is called.  Both can fail.  For everything else, the
-transition is implicit / ad hoc / unclear.
-
-For more on this (and other QOM design issues), see my memo "Dynamic &
-heterogeneous machines, initial configuration: problems", in particular
-section "Problem 5: QOM lacks a clear life cycle".
-Message-ID: <87o7d1i7ky.fsf@pond.sub.org>
-https://lore.kernel.org/qemu-devel/87o7d1i7ky.fsf@pond.sub.org/
-
-To introspect properties, you need an object.  You can always create one
-for that (can't fail).  Properties created outside object initialization
-cannot be introspected that way.  This is how qom-list-properties works.
-
-> object_new_with_props and object_new_with_propv both *do* have
-> a "Error *errp" parameter,
-
-Yes, because they combine object creation, which cannot fail, with
-setting properties, which can fail.
-
->                            but then they call into object_new_with_type
-> and can't get errors back from that.
+> > @@ -1245,6 +1252,39 @@ static void riscv_tr_init_disas_context(DisasCon=
+textBase *dcbase, CPUState *cs)
+> >
+> >   static void riscv_tr_tb_start(DisasContextBase *db, CPUState *cpu)
+> >   {
+> > +    DisasContext *ctx =3D container_of(db, DisasContext, base);
+> > +
+> > +    if (ctx->fcfi_lp_expected) {
+> > +        /*
+> > +         * Since we can't look ahead to confirm that the first
+> > +         * instruction is a legal landing pad instruction, emit
+> > +         * compare-and-branch sequence that will be fixed-up in
+> > +         * riscv_tr_tb_stop() to either statically hit or skip an
+> > +         * illegal instruction exception depending on whether the
+> > +         * flag was lowered by translation of a CJLP or JLP as
+> > +         * the first instruction in the block.
+> > +         */
+> > +        TCGv_i32 immediate;
+> > +        TCGLabel *l;
+> > +        l =3D gen_new_label();
+> > +        immediate =3D tcg_temp_new_i32();
+> > +        tcg_gen_movi_i32(immediate, 0);
+> > +        cfi_lp_check =3D tcg_last_op();
+> > +        tcg_gen_brcondi_i32(TCG_COND_EQ, immediate, 0, l);
+> > +        tcg_temp_free_i32(immediate);
+> > +        tcg_gen_st_tl(
+> > +            tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
+> > +            tcg_env, offsetof(CPURISCVState, sw_check_code));
+> > +        generate_exception(ctx, RISCV_EXCP_SW_CHECK);
+> > +        gen_set_label(l);
+> > +        /*
+> > +         * Despite the use of gen_exception_illegal(), the rest of
+> > +         * the TB needs to be generated. The TCG optimizer will
+> > +         * clean things up depending on which path ends up being
+> > +         * active.
+> > +         */
+> > +        ctx->base.is_jmp =3D DISAS_NEXT;
+> > +    }
+> >   }
 >
-> IMHO we need to fix this inability to report errors from object
-> construction. It will certainly be a painful refactoring job,
-> but I think its neccessary in order to support global props
-> without this horrible hack checking the "hotpluggable" flag.
+> Better to simply delay the check to the first insn load.
+> See aarch64_tr_translate_insn, dc_isar_feature(aa64_bti, s).
 
-Beyond painful.  Possibly infeasible.
+Hmmm...
+Thanks, I think it'll probably make it simpler.
+Let me re-work this logic and test it out if it works.
 
-Object creation cannot fail.  If we revise this fundamental QOM design
-decision, we get to update all call chains leading to object creation.
-That's a *massive* undertaking.
-
-Can we solve the problems we have without revising QOM design?
-
-We'd need to delay the actual failure to a point where the design admits
-failure.
-
-Here's an idea.  Formalize the life cycle, i.e. make it an explicit
-state machine.  Add a "failed" state.  Any error during object creation
-makes the object go to "failed".  Going from "failed" to "operating"
-fails.  Which is fine, because the design admits failure there.
-
-Thoughts?
-
+>
+>
+> r~
+>
 
