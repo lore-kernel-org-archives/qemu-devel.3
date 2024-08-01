@@ -4,94 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E34EC3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 05:38:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AD52C3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 05:38:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZOVp-0006u4-5n; Thu, 01 Aug 2024 01:38:05 -0400
+	id 1sZOW8-0007Lx-Q7; Thu, 01 Aug 2024 01:38:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sZOVn-0006t8-Fk
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 01:38:03 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sZOVl-0007b8-H0
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 01:38:03 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-70b703eda27so4191639b3a.3
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 22:38:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722490680; x=1723095480;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lIdz4H2124aQyqA3C6kYgFVMZviQ0s3kHmoq8FeGpK4=;
- b=kE3pD8bb6XWMDaUvVdduMErT0tJAhIHurTfrmzScsXGxZqQgA87r532Oazw9dTzJPd
- G0SVnicpdvEhoEE8UWbjQBugjvfZUR7kNL+naAPv3gQcdjDILM9htMmJOkDexDKJk5ce
- FhWcYkn166oH23eS6/AG62IeW5WkQc7ojEGoRCUHX42w4VT2fTNX5r464nBDQ2goCLbP
- +mjdxr0OEBPFgFf75P/ekmrOXh51r/EIwU3Xh1ZqA1USN7D+yP9wh1OdxQZz3ccVfM+l
- TuzwW4bfpaG7FEOrN37w38V2qrGfh15ETXWKKTmYxGpoFQW8+K4OEhosdNLDiOA+GC2L
- QmMg==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZOW7-0007Ig-Rj
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 01:38:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZOW6-0007cq-4O
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 01:38:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722490701;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=vvU6MiXagV7sOAqShKol3qt3aDdMNeEYJNvrTNc2CVc=;
+ b=IPyqF9NiRA5JzikjQ4Fy5S8rtll6fe2YJgQCDxEXIqYxiGY65dojOfBKxj8zje1i1z2MfX
+ IW+vTLRNBW0yBIPocb0XE1bPx6wgYh3isRnY0O3Et80monpDU0pMt0cAfBixEv6TGl3Cap
+ Mxzkz3lTGFicGAqSvjFf25oDs2/mN80=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-424-nD7POfx0NYyj62c_2ugIQw-1; Thu, 01 Aug 2024 01:38:16 -0400
+X-MC-Unique: nD7POfx0NYyj62c_2ugIQw-1
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5af95f7d65bso4611948a12.3
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 22:38:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722490680; x=1723095480;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lIdz4H2124aQyqA3C6kYgFVMZviQ0s3kHmoq8FeGpK4=;
- b=Zy47HfU4IkNRa4twNj8fXt4yv5boQgAjzOSH6+X6jFiJER5imZbm6nYCpw4xgkOeLO
- aHGA0qxeJ8N6wmz4Jhx0stetUFaSudWtrvctO1kGKTSdlEcZo8utowhBiBbwGBFR5qdD
- kfuH97X+74siMWwyyKhtFf00s/aquXvwiukfCnsf/5NDFse2F6IRxaf+02tMLklc8s2c
- 38wsx5uCDxopdKm2qZNDbyOqxqWz4AeywmqqKVCtF4KYjZ4vS105BkfEEHr42gV2g93Z
- 46aSa6DTlszkmvE4NZOgdWcpibSuwwbyFH+r2230TdVYmDRFgsmrVfN8kPnqb75e1mCu
- y/og==
-X-Gm-Message-State: AOJu0YzUHdoMW+hC2UCht9K5IAEQJ/dB7eG9r0RUy91PQcoWsvsRpWZ7
- mSgZ8qzKLAtryjZy5XrITXtwS4TS/2LCqld5OAF6p4z8XEx0oduTA2xjvwcAD+laarMXM2kJ0SL
- K
-X-Google-Smtp-Source: AGHT+IE29vN/QGEbEC+P9B1Kd9LBSKH59/2MaJjPzIPSGhyA6lVj0gqB1JJzgl5iH/uk9l74GEOTQA==
-X-Received: by 2002:a05:6a00:22cb:b0:705:c0a1:61c9 with SMTP id
- d2e1a72fcca58-7105d6e3c35mr1719087b3a.9.1722490679945; 
- Wed, 31 Jul 2024 22:37:59 -0700 (PDT)
-Received: from [157.82.201.15] ([157.82.201.15])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-70ead89e564sm10783550b3a.189.2024.07.31.22.37.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jul 2024 22:37:59 -0700 (PDT)
-Message-ID: <36c4c10b-0b5c-44ad-978f-29ba5162ef2b@daynix.com>
-Date: Thu, 1 Aug 2024 14:37:55 +0900
+ d=1e100.net; s=20230601; t=1722490695; x=1723095495;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vvU6MiXagV7sOAqShKol3qt3aDdMNeEYJNvrTNc2CVc=;
+ b=GsoRp++eSXpClyg/glNSjOFAe3TJNAFGa3OVJ4v8J4+0TV5mO2P5ykXBq/xO+/a9qp
+ m/WvKeJsAno3/tHI1o86NT+qo4if9nH8QiMw+GnCSqmgWV2zjZsBQLybrD80lbKCpknx
+ QkU/BD64vA36LzRvERVZ6FPBkL1rCusNODkR4n2d8D2B3nGPxi87NtEFjj4kklWs0xLG
+ 05DqVCLavznISi2w+IAB8UYaIRGMLhMgV0qqV/8K0gbkDZaPKdNjDxaZ2zc3oyYIzhAp
+ omtmiukmHr+j2CzRfABWJpT8EFCiBHea8hPKzlWfu8j7LZxz6vINrGsJZNS6jFqvOY5P
+ W3Fg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXp4qOKHakkHA7qYmgQqNbY5Mn0fxw5QTqmw9OFFZnxelp1pbsMJZ3fMWQ+l0gk6D4sTk1RcEbrnSp67I4YFdSr1jxqmP0=
+X-Gm-Message-State: AOJu0YwXvKYuxF4oNVWIxEU7rietRbNMe3KFwm7JGvJVOHoidWbRPj1V
+ qO+BYv1PEKNXsyWm/i7J5gT1sv8b7PoJ0l/HUmCS9MbxVomynxMTqsUBUzP2WrFMIqfxtP7pPKH
+ Tjv9BX7a3UeMQ9uap9VEg+bjWNhE8zmWctKF3cM1z1TusaJLqjNWB
+X-Received: by 2002:aa7:da4d:0:b0:5a2:8802:8e10 with SMTP id
+ 4fb4d7f45d1cf-5b6fe72a922mr622352a12.8.1722490695530; 
+ Wed, 31 Jul 2024 22:38:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG6bxNVotBbvMWVhZjqmX3NVrat8liDnYJ3dI43Vj6tZtP0JceUp2QTQKU3iW81jlRCbSFjQA==
+X-Received: by 2002:aa7:da4d:0:b0:5a2:8802:8e10 with SMTP id
+ 4fb4d7f45d1cf-5b6fe72a922mr622323a12.8.1722490694669; 
+ Wed, 31 Jul 2024 22:38:14 -0700 (PDT)
+Received: from redhat.com ([2.55.44.248]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5af758a6c36sm8038513a12.73.2024.07.31.22.38.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 31 Jul 2024 22:38:13 -0700 (PDT)
+Date: Thu, 1 Aug 2024 01:38:07 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
+ jasowang@redhat.com, sriram.yagnaraman@est.tech, sw@weilnetz.de,
+ qemu-devel@nongnu.org, yan@daynix.com,
+ Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
+Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
+Message-ID: <20240801013539-mutt-send-email-mst@kernel.org>
+References: <20230731223148.1002258-5-yuri.benditovich@daynix.com>
+ <ZqLPLBnbfD5r6z7D@x1n>
+ <20240726020656-mutt-send-email-mst@kernel.org>
+ <775ff713-f7d3-4fdc-8ba0-4ebde577040d@redhat.com>
+ <ZqNiwmy29dxdyMA0@redhat.com> <ZqO2HvFJ8v7hZFOd@x1n>
+ <ZqO7cR-UiGpX2rk0@redhat.com> <ZqQLbGxEW3XT7qL-@x1n>
+ <Zqe8C9AfaojKHM8A@redhat.com>
+ <da9de7f6-da16-4858-b680-0e2ee15162dc@daynix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v4 0/7] virtio-net: add support for SR-IOV emulation
-To: Yui Washizu <yui.washidu@gmail.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20240428-sriov-v4-0-ac8ac6212982@daynix.com>
- <966b756c-f4b9-40da-ad35-ddb7c6e7da50@gmail.com>
- <88ffcfa0-f3c4-406c-ac79-456b0f8b38bd@daynix.com>
- <90cef42c-dbb5-44fd-9b20-fe0996c9974b@gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <90cef42c-dbb5-44fd-9b20-fe0996c9974b@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::429;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <da9de7f6-da16-4858-b680-0e2ee15162dc@daynix.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,100 +112,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/07/31 18:34, Yui Washizu wrote:
+On Tue, Jul 30, 2024 at 02:02:27AM +0900, Akihiko Odaki wrote:
+> I think it is simpler to analyze the platform dependency and dump it for the
+> management layer. For example, libvirt can request QEMU to analyze the
+> platform dependency when it creates a new domain. QEMU will then figure out
+> that the host kernel is capable of USO and bake it as a platform dependency.
 > 
-> On 2024/07/15 14:15, Akihiko Odaki wrote:
->> On 2024/05/16 11:00, Yui Washizu wrote:
->>>
->>> On 2024/04/28 18:05, Akihiko Odaki wrote:
->>>> Based-on: <20240315-reuse-v9-0-67aa69af4d53@daynix.com>
->>>> ("[PATCH for 9.1 v9 00/11] hw/pci: SR-IOV related fixes and 
->>>> improvements")
->>>>
->>>> Introduction
->>>> ------------
->>>>
->>>> This series is based on the RFC series submitted by Yui Washizu[1].
->>>> See also [2] for the context.
->>>>
->>>> This series enables SR-IOV emulation for virtio-net. It is useful
->>>> to test SR-IOV support on the guest, or to expose several vDPA devices
->>>> in a VM. vDPA devices can also provide L2 switching feature for
->>>> offloading though it is out of scope to allow the guest to configure
->>>> such a feature.
->>>>
->>>> The PF side code resides in virtio-pci. The VF side code resides in
->>>> the PCI common infrastructure, but it is restricted to work only for
->>>> virtio-net-pci because of lack of validation.
->>>>
->>>> User Interface
->>>> --------------
->>>>
->>>> A user can configure a SR-IOV capable virtio-net device by adding
->>>> virtio-net-pci functions to a bus. Below is a command line example:
->>>>    -netdev user,id=n -netdev user,id=o
->>>>    -netdev user,id=p -netdev user,id=q
->>>>    -device pcie-root-port,id=b
->>>>    -device virtio-net-pci,bus=b,addr=0x0.0x3,netdev=q,sriov-pf=f
->>>>    -device virtio-net-pci,bus=b,addr=0x0.0x2,netdev=p,sriov-pf=f
->>>>    -device virtio-net-pci,bus=b,addr=0x0.0x1,netdev=o,sriov-pf=f
->>>>    -device virtio-net-pci,bus=b,addr=0x0.0x0,netdev=n,id=f
->>>>
->>>> The VFs specify the paired PF with "sriov-pf" property. The PF must be
->>>> added after all VFs. It is user's responsibility to ensure that VFs 
->>>> have
->>>> function numbers larger than one of the PF, and the function numbers
->>>> have a consistent stride.
->>>
->>>
->>> I tried to start a VM with more than 8 VFs allocated using your patch,
->>> but the following error occured and qemu didn't work:
->>> VF function number overflows.
->>>
->>> I think the cause of this error is that virtio-net-pci PFs don't have 
->>> ARI.
->>> (pcie_ari_init is not added to virtio-net-pci when PFs are initialized.)
->>> I think it is possible to add it later,
->>> but how about adding pcie_ari_init ?
->>>
->>> As a trial,
->>> adding pcie_ari_init to virtio_pci_realize enabled the creation of 
->>> more than 8 VFs.
->>
->> I have just looked into that possibility, but adding pcie_ari_init to 
->> virtio_pci_realize has some implications. Unconditionally calling 
->> pcie_ari_init will break the existing configuration of virtio-pci 
->> devices so we need to implement some logic to detect when ARI is 
->> needed. Preferably such logic should be implemented in the common PCI 
->> infrastructure instead of implementing it in virtio-pci so that other 
->> PCI multifunction devices can benefit from it.
->>
->> While I don't think implementing this will be too complicated, I need 
->> to ensure that such a feature is really needed before doing so.
-> 
-> 
-> OK.
-> I want to use this emulation for offloading virtual network
-> in a environment where there are many containers in VMs.
-> So, I consider that the feature is need.
-> I think that 7 VFs are too few.
-> I'll keep thinking about the feature's necessity.
+> Regards,
+> Akihiko Odaki
 
-I understand there could be many containers in VMs, but will a single 
-device deal with them? If the virtio-net VFs are backed by the vDPA 
-capability of one physical device, it will not have VFs more than that. 
-The VMs must have several PFs individually paired with VFs to 
-accommodate more containers on one VM.
+I think for starters, we can just have dump-features as a QEMU command.
+Pass it on command line on destination.
+Achieves the same thing as making userspace pass each flag
+manually, but without the pain of teaching management to enable
+each new feature.
 
-I don't know much about vDPA-capable device, but as a reference, igb 
-only has 8 VFs.
 
-> 
-> 
-> I'll add other comments to RFC v5 patch.
+-- 
+MST
 
-The RFC tag is already dropped.
-
-Regards,
-Akihiko Odaki
 
