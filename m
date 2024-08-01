@@ -4,81 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3DCAC3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 15:26:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 846C0C3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 15:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZXgT-0002er-PU; Thu, 01 Aug 2024 11:25:41 -0400
+	id 1sZXlR-00087X-J9; Thu, 01 Aug 2024 11:30:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sZXgR-0002dm-PO
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:25:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sZXlQ-00086u-3P
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:30:48 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sZXgF-0006RU-Sa
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:25:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722525925;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=HRxp1FCm+PYLVUhihCS2lS8QnG0y1jl8FCuOVBsPuD4=;
- b=DVFvbZi6YwrBgvlNh7S7J6Han37hjDrkUIu2oc+ZmAILs8jiQXKBIWA0yeOEzxpz3zCXmU
- XRg7NK5kGgu6CH/+72UseHtD481hv/mGeTjK7ChUv9az3di87zmdAn3uJ/R/6i62GR26uY
- y05l4PdRwLmFDg7aAPESoZD3tUe+ECc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-68-e2u0jA0zONS6rIGZ_u0_uw-1; Thu,
- 01 Aug 2024 11:25:24 -0400
-X-MC-Unique: e2u0jA0zONS6rIGZ_u0_uw-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 14CD81955F43; Thu,  1 Aug 2024 15:25:21 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.109])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 198B919560AE; Thu,  1 Aug 2024 15:25:14 +0000 (UTC)
-Date: Thu, 1 Aug 2024 16:25:11 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>,
- Thomas Huth <thuth@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
- jasowang@redhat.com, sriram.yagnaraman@est.tech, sw@weilnetz.de,
- qemu-devel@nongnu.org, yan@daynix.com,
- Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <Zquo11q12lqbDlY4@redhat.com>
-References: <ZqQLbGxEW3XT7qL-@x1n> <Zqe8C9AfaojKHM8A@redhat.com>
- <ZqfKrtQSSRVnEOGt@x1n> <ZqfQ0cGf8t2trEdl@redhat.com>
- <ZqktXwxBWjuAgGxZ@x1n> <Zqk09BGxlpdxMBMx@redhat.com>
- <Zqk6x2nd3Twz--75@x1n>
- <39a8bb8b-4191-4f41-aaf7-06df24bf3280@daynix.com>
- <ZqumIZcs1tCNTpRE@x1n>
- <20240801111435-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1sZXlN-00087n-I6
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:30:47 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C6E444E6013;
+ Thu, 01 Aug 2024 17:30:40 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id TmfR3gtvcsa2; Thu,  1 Aug 2024 17:30:38 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id C7E524E6010; Thu, 01 Aug 2024 17:30:38 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C5FE174577C;
+ Thu, 01 Aug 2024 17:30:38 +0200 (CEST)
+Date: Thu, 1 Aug 2024 17:30:38 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>, 
+ "Michael S . Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH-for-9.1 v3 1/2] hw/pci-host/gt64120: Reset config registers
+ during RESET phase
+In-Reply-To: <20240801150021.52977-2-philmd@linaro.org>
+Message-ID: <5e765e4d-5314-0737-fccf-635d9365f796@eik.bme.hu>
+References: <20240801150021.52977-1-philmd@linaro.org>
+ <20240801150021.52977-2-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240801111435-mutt-send-email-mst@kernel.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-602474402-1722526238=:15560"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -93,51 +66,94 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 01, 2024 at 11:15:47AM -0400, Michael S. Tsirkin wrote:
-> On Thu, Aug 01, 2024 at 11:13:37AM -0400, Peter Xu wrote:
-> > Do we really concern about users not enabling features that much?  I
-> > thought users always can manually change the XML and add whatever they
-> > need, and device properties do not like too special here to me.  I mean, we
-> > have bunch of "features" exported as new "-devices" and users must opt-in
-> > for them by changing the XML.  We never worried on user not using them.  I
-> > doubt whether we worried too much on user not opt-in, especially for
-> > performance features, because they're, IMHO, targeting advanced users.
-> 
-> What I do not like, is pushing the knowledge of what good defaults
-> are to libvirt.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-With the -platform concept, libvirt wouldn't need to know anything about
-the settings being used, nor the defaults.
+--3866299591-602474402-1722526238=:15560
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Consider how it works for machine types. Libvirt queries the machine
-types, and gets a list back, and QEMU expresses a default. eg saying
-that 'pc-i440fx-9.1.0' is aliased to 'pc'. So libvirt can expand
-'pc' to a particular version that QEMU has chosen as the default.
+On Thu, 1 Aug 2024, Philippe Mathieu-Daudé wrote:
+> Reset config values in the device RESET phase, not only once
+> when the device is realized, because otherwise the device can
+> use unknown values at reset.
+>
+> Mention the datasheet referenced. Remove the "Malta assumptions
+> ahead" comment since the reset values from the datasheet are used.
+>
+> Reported-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> hw/pci-host/gt64120.c | 14 +++++++++++---
+> 1 file changed, 11 insertions(+), 3 deletions(-)
+>
+> diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
+> index e02efc9e2e..b68d647753 100644
+> --- a/hw/pci-host/gt64120.c
+> +++ b/hw/pci-host/gt64120.c
+> @@ -1,6 +1,8 @@
+> /*
+>  * QEMU GT64120 PCI host
+>  *
+> + * (Datasheet GT-64120 Rev 1.4 from Sep 14, 1999)
+> + *
+>  * Copyright (c) 2006,2007 Aurelien Jarno
+>  *
+>  * Permission is hereby granted, free of charge, to any person obtaining a copy
+> @@ -1211,19 +1213,24 @@ static void gt64120_realize(DeviceState *dev, Error **errp)
+>     empty_slot_init("GT64120", 0, 0x20000000);
+> }
+>
+> -static void gt64120_pci_realize(PCIDevice *d, Error **errp)
+> +static void gt64120_pci_reset_hold(Object *obj, ResetType type)
+> {
+> -    /* FIXME: Malta specific hw assumptions ahead */
+> +    PCIDevice *d = PCI_DEVICE(obj);
+> +
+> +    /* Values from chapter 17.16 "PCI Configuration" */
+> +
+>     pci_set_word(d->config + PCI_COMMAND, 0);
+>     pci_set_word(d->config + PCI_STATUS,
+>                  PCI_STATUS_FAST_BACK | PCI_STATUS_DEVSEL_MEDIUM);
+>     pci_config_set_prog_interface(d->config, 0);
+> +
+>     pci_set_long(d->config + PCI_BASE_ADDRESS_0, 0x00000008);
+>     pci_set_long(d->config + PCI_BASE_ADDRESS_1, 0x01000008);
+>     pci_set_long(d->config + PCI_BASE_ADDRESS_2, 0x1c000000);
+>     pci_set_long(d->config + PCI_BASE_ADDRESS_3, 0x1f000000);
+>     pci_set_long(d->config + PCI_BASE_ADDRESS_4, 0x14000000);
+>     pci_set_long(d->config + PCI_BASE_ADDRESS_5, 0x14000001);
+> +
+>     pci_set_byte(d->config + 0x3d, 0x01);
+> }
+>
+> @@ -1231,8 +1238,9 @@ static void gt64120_pci_class_init(ObjectClass *klass, void *data)
+> {
+>     PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+>     DeviceClass *dc = DEVICE_CLASS(klass);
+> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
+>
+> -    k->realize = gt64120_pci_realize;
+> +    rc->phases.hold = gt64120_pci_reset_hold;
 
-Conceptually I could see something similar working for the -platform
-concept. Libvirt would ask QEMU for all the "platform" variants that
-are available on the current running kernel. QEMU can reply with the
-list, and indicate which of those is the "newest" in some manner.
+Why reset_hold and not a simple reset method which is more usual?  If 
+there's an explanation maybe it could be mentioned in the commit message. 
+Other than that this should work so you can add:
 
-Absent any preference from the mgmt app, libvirt would use whichever
-one QEMU indicates was the newest. This optimizes for best featureset
-on the current kernel, as the cost of possibly reduced migration
-compatibility.
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
 
-When a mgmt app is caring about migration, they would explicitly tell
-libvirt which platform version to use, just as they would explicitly
-ask for a specific machine type version, rather than accepting the 'pc'
-default.
+if that helps but I don't know much about this chip (even if it's similar 
+to mv6436x).
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Regards,
+BALATON Zoltan
 
+>     k->vendor_id = PCI_VENDOR_ID_MARVELL;
+>     k->device_id = PCI_DEVICE_ID_MARVELL_GT6412X;
+>     k->revision = 0x10;
+>
+--3866299591-602474402-1722526238=:15560--
 
