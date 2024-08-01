@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2B6EC3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 16:52:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DE25C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 17:02:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZZ1z-00065r-65; Thu, 01 Aug 2024 12:51:59 -0400
+	id 1sZZAp-0002a1-Hd; Thu, 01 Aug 2024 13:01:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZZ1w-00064c-8H
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:51:56 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZZ1t-0000su-Cm
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:51:55 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-428035c0bb2so13743115e9.1
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 09:51:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722531111; x=1723135911; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fiyAA99o6BBsuJwiHEPgeXOgq2sEvsUPG2YrT4GL3wE=;
- b=PeqnXP0j402t1YDBuOMk6wHtU6b1G0Q/tk6Fa2VtNbMpjHScu9tTh2oFS8LBti2lyR
- evDnIWYDbPayx8p3WaDY292YLf+Wx5bMdYJX3Ws57GqxC5i+Z55DW3QEMe1QrTLAls99
- TsoUsy+iETCeqfX4BgI44EalAxJ2hTHLaqgc2mUyLse8cqA3BZ3INzFZKuGvkBdBlHFZ
- cKWJV+TaYAilSOGU0o16YKJJefE55LiFRqIdDopo3V5EwpEIb4s9ClqzI4G+9q7439el
- 6DxKqiuJYst6c1yi+SOUvjbKkgzZBfUCX3yabp7sj4xkb1hkAIIzPg4fI3uurk90NxrO
- EOfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722531111; x=1723135911;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fiyAA99o6BBsuJwiHEPgeXOgq2sEvsUPG2YrT4GL3wE=;
- b=SIDrJauBaKDW30sqy2Tx7IK8SnDk36mgVqd+pd3qytQ/94ohWa6/gJsuSdc5GhOBye
- x+9N+5O9Hmx6cOUF4hCozmou2pUOkTiA57Az+AH8u+9MbjEuVaTqic0HA6H7UNlVQxLG
- UlJ/O7jI3YZKnw1buuAX9vJN7gLd+8y+S2bSc+hQOyXZL4GibnFGnoYtvvQspkp/uRhn
- W7tf6f4iPouSjgCJLdSWgCv3J420zJahrM6jEKPa0sDc1H1gDW7Kl3yMgw5YWCxFUwuL
- vja7tv+Sx2qG/qNhu7nEGwyTlHQcjmb5rn/uopbzhlNT3li3r9dwTZoYoeepjrufd7oZ
- /6qw==
-X-Gm-Message-State: AOJu0Yz9T3RLkqurr947v79HLTv1DaCMb6/6TGlnkjcnjsugtzuj7tsK
- RE1DZ9dFebPCdv9mZ1miOsT3A3w6ny8BrQL+lhGcOF1se6OM9/w2x2YS+eb2dEY=
-X-Google-Smtp-Source: AGHT+IGC67z5iLUmukMN2JxfEeo82ESEvCt7uv3zCnzgkwD4v4+jIxd8zne8Ip+QCpIymimw9LOyrw==
-X-Received: by 2002:a05:6000:2a88:b0:36b:bb99:d7ce with SMTP id
- ffacd0b85a97d-36bbb99e185mr1215824f8f.9.1722531111427; 
- Thu, 01 Aug 2024 09:51:51 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.211.94])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-428e6d6b8e4sm3025045e9.3.2024.08.01.09.51.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Aug 2024 09:51:50 -0700 (PDT)
-Message-ID: <03f213d3-c083-4b4a-a65a-bff6eddc4ca4@linaro.org>
-Date: Thu, 1 Aug 2024 18:51:49 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sZZAf-0002W1-9e
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 13:01:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sZZAc-0003MQ-Qf
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 13:00:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722531653;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FAPOHpgR1rlppHkVZwm24AUL5VzrImG+dlMjIOkZCXo=;
+ b=GnEBVWW1fiCVXDdQgolcLv2KqaJuX89Be7TlgXRFpTe5yHV/tSww7GPbJzj09+ZYkECq6T
+ HAtXgm1/cUXrwFtweNZFx7buFeCzPWVIJhVGM4VMs5M1HhWtL0TY1FNSZCuOP+N09EkVEl
+ +kMNP2f2xd6Ig0c8DCieJBggVjzbNB0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-669-lU1ZvgxIOu2f4mboJ1enWQ-1; Thu,
+ 01 Aug 2024 13:00:49 -0400
+X-MC-Unique: lU1ZvgxIOu2f4mboJ1enWQ-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ACFDC1955D4F; Thu,  1 Aug 2024 17:00:47 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.109])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8AF69195605A; Thu,  1 Aug 2024 17:00:43 +0000 (UTC)
+Date: Thu, 1 Aug 2024 18:00:40 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v3 08/24] tests/functional: add a module for handling
+ asset download & caching
+Message-ID: <Zqu_OGRE_uTtof79@redhat.com>
+References: <20240730170347.4103919-1-berrange@redhat.com>
+ <20240730170347.4103919-9-berrange@redhat.com>
+ <b9a55935-ccf6-4f13-9437-52608afc0db3@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 v2 2/2] hw/pci-host/gt64120: Set PCI base address
- register write mask
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>
-References: <20240801145630.52680-1-philmd@linaro.org>
- <20240801145630.52680-3-philmd@linaro.org>
- <20240801105917-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240801105917-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <b9a55935-ccf6-4f13-9437-52608afc0db3@linaro.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,74 +91,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/24 17:02, Michael S. Tsirkin wrote:
-> On Thu, Aug 01, 2024 at 04:56:30PM +0200, Philippe Mathieu-Daudé wrote:
->> When booting Linux we see:
->>
->>    PCI host bridge to bus 0000:00
->>    pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
->>    pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
->>    pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
->>    pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
->>    pci 0000:00:00.0: [Firmware Bug]: reg 0x14: invalid BAR (can't size)
->>    pci 0000:00:00.0: [Firmware Bug]: reg 0x18: invalid BAR (can't size)
->>    pci 0000:00:00.0: [Firmware Bug]: reg 0x1c: invalid BAR (can't size)
->>    pci 0000:00:00.0: [Firmware Bug]: reg 0x20: invalid BAR (can't size)
->>    pci 0000:00:00.0: [Firmware Bug]: reg 0x24: invalid BAR (can't size)
->>
->> This is due to missing base address register write mask.
->> Add it to get:
->>
->>    PCI host bridge to bus 0000:00
->>    pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
->>    pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
->>    pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
->>    pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
->>    pci 0000:00:00.0: reg 0x10: [mem 0x00000000-0x00000fff pref]
->>    pci 0000:00:00.0: reg 0x14: [mem 0x01000000-0x01000fff pref]
->>    pci 0000:00:00.0: reg 0x18: [mem 0x1c000000-0x1c000fff]
->>    pci 0000:00:00.0: reg 0x1c: [mem 0x1f000000-0x1f000fff]
->>    pci 0000:00:00.0: reg 0x20: [mem 0x1be00000-0x1be00fff]
->>    pci 0000:00:00.0: reg 0x24: [io  0x14000000-0x14000007]
->>
->> Mention the datasheet referenced. Remove the "Malta assumptions ahead"
->> comment since the reset values from the datasheet are used.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/pci-host/gt64120.c | 7 +++++++
->>   1 file changed, 7 insertions(+)
->>
->> diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
->> index b68d647753..344baf55db 100644
->> --- a/hw/pci-host/gt64120.c
->> +++ b/hw/pci-host/gt64120.c
->> @@ -1224,6 +1224,13 @@ static void gt64120_pci_reset_hold(Object *obj, ResetType type)
->>                    PCI_STATUS_FAST_BACK | PCI_STATUS_DEVSEL_MEDIUM);
->>       pci_config_set_prog_interface(d->config, 0);
->>   
->> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_0, 0xfffff009);
->> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_1, 0xfffff009);
->> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_2, 0xfffff009);
->> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_3, 0xfffff009);
->> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_4, 0xfffff009);
->> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_5, 0xfffff001);
->> +
->>       pci_set_long(d->config + PCI_BASE_ADDRESS_0, 0x00000008);
->>       pci_set_long(d->config + PCI_BASE_ADDRESS_1, 0x01000008);
->>       pci_set_long(d->config + PCI_BASE_ADDRESS_2, 0x1c000000);
+On Thu, Aug 01, 2024 at 06:20:58PM +0200, Philippe Mathieu-Daudé wrote:
+> On 30/7/24 19:03, Daniel P. Berrangé wrote:
+> > The 'Asset' class is a simple module that declares a downloadable
+> > asset that can be cached locally. Downloads are stored in the user's
+> > home dir at ~/.cache/qemu/download, using a sha256 sum of the URL.
+> > 
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >   tests/functional/qemu_test/__init__.py |  1 +
+> >   tests/functional/qemu_test/asset.py    | 96 ++++++++++++++++++++++++++
+> >   2 files changed, 97 insertions(+)
+> >   create mode 100644 tests/functional/qemu_test/asset.py
+> > 
+> > diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
+> > index 2f1e0bc70d..db05c8f412 100644
+> > --- a/tests/functional/qemu_test/__init__.py
+> > +++ b/tests/functional/qemu_test/__init__.py
+> > @@ -6,6 +6,7 @@
+> >   # later.  See the COPYING file in the top-level directory.
+> > +from .asset import Asset
 > 
+> For next patch?
 > 
-> if you are tweaking wmask, I think migration will fail.
-> So you have to make this depend on machine property, and
-> put in compat machinery.
+> >   from .config import BUILD_DIR
+> >   from .cmd import has_cmd, has_cmds, run_cmd, is_readable_executable_file, \
+> >       interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
+> > diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+> > new file mode 100644
+> > index 0000000000..6432da2e0b
+> > --- /dev/null
+> > +++ b/tests/functional/qemu_test/asset.py
+> > @@ -0,0 +1,96 @@
+> > +# Test utilities for fetching & caching assets
+> > +#
+> > +# Copyright 2024 Red Hat, Inc.
+> > +#
+> > +# This work is licensed under the terms of the GNU GPL, version 2 or
+> > +# later.  See the COPYING file in the top-level directory.
+> > +
+> > +import hashlib
+> > +import logging
+> > +import os
+> > +import subprocess
+> > +import urllib.request
+> > +from pathlib import Path
+> > +from shutil import copyfileobj
+> > +
+> > +
+> > +# Instances of this class must be declared as class level variables
+> > +# starting with a name "ASSET_". This enables the pre-caching logic
+> > +# to easily find all referenced assets and download them prior to
+> > +# execution of the tests.
+> > +class Asset:
+> > +
+> > +    def __init__(self, url, hash):
+> > +        self.url = url
+> > +        self.hash = hash
+> > +        self.cache_dir = Path(Path("~").expanduser(),
+> > +                              ".cache", "qemu", "download")
+> > +        self.cache_file = Path(self.cache_dir,
+> > +                               hashlib.sha256(url.encode("utf-8")).hexdigest())
+> > +        self.log = logging.getLogger('qemu-test')
+> > +
+> > +    def __repr__(self):
+> > +        return "Asset: url=%s hash=%s cache=%s" % (
+> > +            self.url, self.hash, self.cache_file)
+> > +
+> > +    def _check(self, cache_file):
+> > +        if self.hash is None:
+> > +            return True
+> > +        if len(self.hash) == 40:
+> > +            sum_prog = 'sha1sum'
+> > +        elif len(self.hash) == 64:
+> > +            sum_prog = 'sha256sum'
+> 
+> Do we want to support these? Should we declare them deprecated
+> and emit a warning?
 
-Fortunately we don't need because this device is only meant to
-be used by MIPS machines which aren't versioned.
+Oh thanks for the reminder. I wanted to standardize on sha256 ,since
+sha1 is broken and sha512 is overkill.
 
-I'll mention that in the description.
+Since I've run the tests once I've got everything download and can
+now trivially generate the sha256 for everything we need.
+
+> 
+> > +        elif len(self.hash) == 128:
+> > +            sum_prog = 'sha512sum'
+> > +        else:
+> > +            raise Exception("unknown hash type")
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+> Very nice :)
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
