@@ -4,115 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BAA4C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 19:15:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3B03C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 20:27:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZbFl-0003Kk-4e; Thu, 01 Aug 2024 15:14:21 -0400
+	id 1sZcNf-0006zq-3i; Thu, 01 Aug 2024 16:26:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sZbFh-0003Jk-TU; Thu, 01 Aug 2024 15:14:18 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sZbFg-0002gq-4e; Thu, 01 Aug 2024 15:14:17 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D2B661F889;
- Thu,  1 Aug 2024 19:14:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1722539653; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YepaHKW/K1SqTvoDvWg4jGwZ3ZL2sNO3kD7h9wwLUlY=;
- b=Ri2Pq8FO2u/aBapLjjxiffAJ6KZIJvSx+kvBAbCTBSXdA8+2zbw+QplLg0CksqI82onsvb
- nUZwmErJ+vc8oVjwlMX8rhmwFmvkTuaVlfOzfZk1X4X0YFpLfTmxNNd4X0ycMOY1UN6iQL
- 9MU/qbGAMFjShKLw4FDJr/H+hSnLjUM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1722539653;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YepaHKW/K1SqTvoDvWg4jGwZ3ZL2sNO3kD7h9wwLUlY=;
- b=Jg5Id+W1boh5cZt9LwCusNy1D75q7LAuwyPAxAr3eHGqO1NahjQ0iLtUavytPJAdn3m+Gn
- s0BWHvE/qZV4lICw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=adsEUCuR;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=BovfYDzx
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1722539652; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YepaHKW/K1SqTvoDvWg4jGwZ3ZL2sNO3kD7h9wwLUlY=;
- b=adsEUCuRrv01hnta30II1PnCHZ/3LS8ElZVZ1xXQiTj1VGmm/mYHwzOPEU3jdMANfYloir
- hOrbMxEC0Urs9AO1qrT/ne3eYhYiDK8HWIZI5LKZzHGg3rz+FKiLWyO33Oy22wI6Ffdhbw
- ovaaIyUURsyc2EeDKxd2shPNvW5Kw/g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1722539652;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YepaHKW/K1SqTvoDvWg4jGwZ3ZL2sNO3kD7h9wwLUlY=;
- b=BovfYDzxu11xI52AizNn6MDX3FxnqfrfZIcnJtdITQyKchf0O4mTJNdZwnmDgS9bl5dk97
- JA96TeGRefg13mDg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 50A89136CF;
- Thu,  1 Aug 2024 19:14:12 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id lb4oBoTeq2bAUQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 01 Aug 2024 19:14:12 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, Jim Fehlig
- <jfehlig@suse.com>
-Subject: Re: [PATCH 2/2] migration/multifd: Fix multifd_send_setup cleanup
- when channel creation fails
-In-Reply-To: <ZqvWOEHfLCqnu4dP@x1n>
-References: <20240801174101.31806-1-farosas@suse.de>
- <20240801174101.31806-3-farosas@suse.de> <ZqvWOEHfLCqnu4dP@x1n>
-Date: Thu, 01 Aug 2024 16:14:09 -0300
-Message-ID: <874j84xdha.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1sZcNS-0006xj-PC; Thu, 01 Aug 2024 16:26:24 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1sZcNP-0006Um-Aa; Thu, 01 Aug 2024 16:26:21 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 471JMXuV006513;
+ Thu, 1 Aug 2024 20:26:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=pp1; bh=xY4rUoAL0RCl2l0h8JdFmjmqQR
+ S67f9QZ2RFIrSgCzE=; b=Hb0zx+ZZy5kMypB+giuInRNyntbNa41q/gEQt2QtPh
+ cyR1+FEBKAymDrhL/JP4z1/DApZriWUTj8y6vifNM8H6OJeztL++BbOO2t6Ql6NQ
+ /b7kHxc3WVyvKHcyJm1qXfipCpsOGlr2gXgEsk/DNypq+uJw11N0cjc7kFebjtvC
+ hQRaJTsRAZth0oWUAuuba/08xpHjh2Z7SPz1Qa08sc6ibrjLXBRs7RewFd+v+9wb
+ FxUM8hWYEJa83hcZU7EkvBhfWha2IRjaOV4kL0nySP5RmdUsABp2Mf9M9sA5HLga
+ +cjXNdl8JokUqWoZ4bZJk8GKKCWq5uYAuzxvVeACj04g==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40rebqgc7d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 01 Aug 2024 20:26:15 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 471J5He4011295; Thu, 1 Aug 2024 20:23:46 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40ncqn3nhn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 01 Aug 2024 20:23:46 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 471KNgtA31326850
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 1 Aug 2024 20:23:44 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 51A3C20040;
+ Thu,  1 Aug 2024 20:23:42 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E53C820043;
+ Thu,  1 Aug 2024 20:23:41 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.171.14.120])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  1 Aug 2024 20:23:41 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Laurent Vivier <laurent@vivier.eu>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>,
+ qemu-stable@nongnu.org
+Subject: [PATCH] linux-user/elfload: Fix pr_pid values in core files
+Date: Thu,  1 Aug 2024 22:23:22 +0200
+Message-ID: <20240801202340.21845-1-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.31 / 50.00];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
- FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCPT_COUNT_THREE(0.00)[4];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
- imap1.dmz-prg2.suse.org:helo, suse.de:email, suse.de:dkim]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: D2B661F889
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: GKN4UiD4jdY1DoPxIpjTlHbbQ-Gi9_Jb
+X-Proofpoint-ORIG-GUID: GKN4UiD4jdY1DoPxIpjTlHbbQ-Gi9_Jb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-01_18,2024-08-01_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0
+ clxscore=1015 lowpriorityscore=0 spamscore=0 malwarescore=0 mlxscore=0
+ suspectscore=0 phishscore=0 bulkscore=0 priorityscore=1501 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408010135
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -130,65 +105,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Analyzing qemu-produced core dumps of multi-threaded apps runs into:
 
-> On Thu, Aug 01, 2024 at 02:41:01PM -0300, Fabiano Rosas wrote:
->> When a channel fails to create, the code currently just returns. This
->> is wrong for two reasons:
->> 
->> 1) Channel n+1 will not get to initialize it's semaphores, leading to
->>    an assert when terminate_threads tries to post to it:
->> 
->>  qemu-system-x86_64: ../util/qemu-thread-posix.c:92:
->>  qemu_mutex_lock_impl: Assertion `mutex->initialized' failed.
->> 
->> 2) (theoretical) If channel n-1 already started creation it will
->>    defeat the purpose of the channels_created logic which is in place
->>    to avoid migrate_fd_cleanup() to run while channels are still being
->>    created.
->> 
->>    This cannot really happen today because the current failure cases
->>    for multifd_new_send_channel_create() are all synchronous,
->>    resulting from qio_channel_file_new_path() getting a bad
->>    filename. This would hit all channels equally.
->> 
->>    But I don't want to set a trap for future people, so have all
->>    channels try to create (even if failing), and only fail after the
->>    channels_created semaphore has been posted.
->> 
->> While here, remove the error_report_err call. There's one already at
->> migrate_fd_cleanup later on.
->> 
->> Cc: qemu-stable@nongnu.org
->> Reported-by: Jim Fehlig <jfehlig@suse.com>
->> Fixes: bd8b0a8f82 ("migration/multifd: Move multifd_send_setup error handling in to the function")
->
-> Should it be this one instead?
->
-> b7b03eb614 ("migration/multifd: Add outgoing QIOChannelFile support")
+    (gdb) info threads
+      [...]
+      21   Thread 0x3ff83cc0740 (LWP 9295) warning: Couldn't find general-purpose registers in core file.
+    <unavailable> in ?? ()
 
-Yep, thanks. I'll fix it up.
+The reason is that all pr_pid values are the same, because the same
+TaskState is used for all CPUs when generating NT_PRSTATUS notes.
 
->
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->
-> Reviewed-by: Peter Xu <peterx@redhat.com>
->
-> PS: what's your plan on your other multifd SendData series?  I got a bit
-> overloaded on downstream stuff and I still have plenty review debts
-> recently (CPR one of them.. needs follow ups), so just to say I may delay a
-> bit on reading that one.  I assume it's next-release stuff anyway, but let
-> me know otherwise.
+Fix by using TaskStates associated with individual CPUs.
 
-That one is pretty ready. From my side I don't intend to change anything
-else, save for review comments. And it's definitely 9.2 material.
+Cc: qemu-stable@nongnu.org
+Fixes: 243c47066253 ("linux-user/elfload: Write corefile elf header in one block")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ linux-user/elfload.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-I think CPR is more important at this point because it's been lagging
-behind for a while.
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 7ecbc8a7cc0..0861f115fc4 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -4102,8 +4102,7 @@ static void fill_elf_note_phdr(struct elf_phdr *phdr, size_t sz, off_t offset)
+     bswap_phdr(phdr, 1);
+ }
+ 
+-static void fill_prstatus_note(void *data, const TaskState *ts,
+-                               CPUState *cpu, int signr)
++static void fill_prstatus_note(void *data, CPUState *cpu, int signr)
+ {
+     /*
+      * Because note memory is only aligned to 4, and target_elf_prstatus
+@@ -4113,7 +4112,7 @@ static void fill_prstatus_note(void *data, const TaskState *ts,
+     struct target_elf_prstatus prstatus = {
+         .pr_info.si_signo = signr,
+         .pr_cursig = signr,
+-        .pr_pid = ts->ts_tid,
++        .pr_pid = get_task_state(cpu)->ts_tid,
+         .pr_ppid = getppid(),
+         .pr_pgrp = getpgrp(),
+         .pr_sid = getsid(0),
+@@ -4428,8 +4427,7 @@ static int elf_core_dump(int signr, const CPUArchState *env)
+         CPU_FOREACH(cpu_iter) {
+             dptr = fill_note(&hptr, NT_PRSTATUS, "CORE",
+                              sizeof(struct target_elf_prstatus));
+-            fill_prstatus_note(dptr, ts, cpu_iter,
+-                               cpu_iter == cpu ? signr : 0);
++            fill_prstatus_note(dptr, cpu_iter, cpu_iter == cpu ? signr : 0);
+         }
+ 
+         if (dump_write(fd, header, data_offset) < 0) {
+-- 
+2.45.2
 
-I have a PR to send with these fixes and catch up on that virtio-net
-discussion. After that I should be able to get some reviews done.
-
->
-> Thanks,
 
