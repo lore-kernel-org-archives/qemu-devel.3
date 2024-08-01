@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D3DCC3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 22:19:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55C4DC3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 23:26:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZe7q-0002Up-QB; Thu, 01 Aug 2024 18:18:22 -0400
+	id 1sZfAu-0004i0-P5; Thu, 01 Aug 2024 19:25:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZe7o-0002UJ-Vq
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 18:18:21 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1sZfAs-0004gi-3y
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 19:25:35 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZe7m-0003t7-EZ
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 18:18:20 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2cd48ad7f0dso5768433a91.0
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 15:18:17 -0700 (PDT)
+ id 1sZfAp-0003yJ-TB
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 19:25:33 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1fd65aaac27so19511705ad.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 16:25:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722550696; x=1723155496; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722554730; x=1723159530; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=YYHyrXWepqo8U6UmJuQoFjxTQY2pPVkiK+pQavR3nNY=;
- b=e0qQIuLkklru+D45EQ4DT5430ov3jVjOVKR0efGwuTwkbWetdPIIVWLts3sNX02+Kt
- 7thnASamWauf1RY8Jjk1xYCKz4XkS6ASQvd6pUAEOTd8YPiXRSFRS6+24QbeRq+2O4KC
- 3ClNC3rqwvMkFgH73nYpjc0GkEwuSgaDLHnFoLKap1k1AIlRnr22LIEI+yK/R6HSqAYf
- 5RmwF5gnvDG3rX+pY1hpuOhNX+FeaDGGWuJXhcewEvJUCtxqh0MDK96L3yNdAndXJQOw
- vtdvzVRgpOyiTuwgj8AtCUhFc7d4L4wZPZwo49gTP8gXvTCoSMX0w1Z5Ybu4mlMTpJyP
- DlSw==
+ bh=kXM7W3/jhxd5wifpkZ1D9zZCgLojbR5Gopr8jAtYbAA=;
+ b=bBYJFQ2cm1seYOHuu/ohHVRsTIQzS5cZwL+usgYMwHRErn+YPgw1hXokzUNtsdfKBi
+ i4/yCGGl6+0y+7WvzLJQHuoT7Fr8TZtTgIc60YpdytHdbBNqR2n8hE4RZqTjOxnUPZMK
+ LWTennS8O4TZ2lSnf6IwYAVwXhHYUir3mpD0ZCAXwiGZX2QzI3Cpc4Ipkj7Es232Rb54
+ TB4UavjiPILQslqFZa8iENspc/jjSDHDWwMpTUYdnpZxUH67hrhDkm3Mz8QC6Pw9fPJY
+ zk1r5j1jAIj6GTgwEVojVfUCCi6i0hraux60GArDKaLetbRG+DrwFnJhCbOv8Fx0KGtn
+ jKrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722550696; x=1723155496;
+ d=1e100.net; s=20230601; t=1722554730; x=1723159530;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YYHyrXWepqo8U6UmJuQoFjxTQY2pPVkiK+pQavR3nNY=;
- b=Qt/qa/JzirAMzvLxKRXupPWmIFRz27hzmpC++xtZ/rq9/VpA6v1cUE+tpbGcNNR7kf
- 1t2z0S/0AZIbP+QEfffIYwYcIvr1gg+A0O+nbT37NSDgK6iJo4y1n/0k6AVCPY8v4EGb
- e1zOvLq8Kr1OKMVtuL2WsGcexedUG7NcS+tplgqcH4ZXHShaRXU8Lb1jQ62MbmQegSQY
- 4A+DsMSHfNl/NpDu6/5ZCltitTRLBrikAKjkFpfoKm+7LhPBOpxZxMuylipywB9JbdIQ
- 6y71KPaJftnxyzCbOPeHDDUYvA/QNhrBn4LQwccf+iDNg+IfpF4fHStiySi1T8h2UL/Q
- L39w==
+ bh=kXM7W3/jhxd5wifpkZ1D9zZCgLojbR5Gopr8jAtYbAA=;
+ b=AjLpVcDYf6wrAFZfWv6nPTuwJ9xijSqjSDXYSczIg6q9JPsFGfW1/zSP2dQtXs+O1I
+ MsDy37mxN/CFUpM/rcU+RbXOcc4BSzQs85sYQbILpmiB336p/CbMmESBAzbzOO7mHN7Y
+ U8my7n6EwGU5VpZZkSv8CRXosr+dUJ5ix2KvD6KXsKS+ACuLH497upzdUlOrR9YW6xrT
+ YWMTNK+uhegvkEkm6QcQjfeSRpR+ojVeGRFvGCMuCuz8qbxjlg+j5GDuye3jymX03hx3
+ GBgx8WqLIjuNF+A9u2G8+e++Yo/Arfj5+vsPFn51aO/T1LLudl+C/vI7CVmlVojhLZHj
+ deGA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWku+cUdKV4jcekWxPcVvdgqRO5FRl2QkXH7fodkjhMVokGp6CeQVi95mnU/jFx/KiRqADxT6FfR6YgHfkJ/i3ZOX67nP8=
-X-Gm-Message-State: AOJu0YzgkUHVPdSNp0okd6VkQnCZqOQ8gYrHg7dQKojipLhbQHo/RyEa
- 41N6JZHoVoJPGWSEvw0n7jNJCtuan4LPFHrcNXD4LdckN9V/PAAO4AKAofuO5Go=
-X-Google-Smtp-Source: AGHT+IFJdH8r9rPLWwe6/J9g3YUYPd3Zl64oYZakoHggi/W6OdgBHsRmKTETotB6PkhHrTGvnOrY7Q==
-X-Received: by 2002:a17:90b:4b92:b0:2c9:9a8b:8d6a with SMTP id
- 98e67ed59e1d1-2cff9582988mr1897411a91.41.1722550696234; 
- Thu, 01 Aug 2024 15:18:16 -0700 (PDT)
+ AJvYcCXgL6KJ+wUWKUEP0xNcWjl7h5VlJElFXOsnMzkwkzyc1avwAJa1+hOjpy69IgjyD2iDmXBaLEfUad5uWSst7bQhSnOgWBw=
+X-Gm-Message-State: AOJu0YzHYVfMEagpmYhEXAHjrJD2JrCruX1kFhAQGVQmN0entf0lk36w
+ 6l5tUe0emT89C9CSbNjrmLRVaAnm6ex4NsUPJvomB2G6Egwt+7kR32NP4JZjvbY=
+X-Google-Smtp-Source: AGHT+IHiO6t70Gsvaw2CFD+Zf507/IKl4bP4eimyd5SFH8iWClzMQJRmXW4Isd3D4znIAD0irrYZqg==
+X-Received: by 2002:a17:903:98d:b0:1fd:6033:f94e with SMTP id
+ d9443c01a7336-1ff57edfe1amr26271545ad.27.1722554729137; 
+ Thu, 01 Aug 2024 16:25:29 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cfdc406481sm3944462a91.2.2024.08.01.15.18.12
+ d9443c01a7336-1ff592981aesm4352875ad.265.2024.08.01.16.25.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Aug 2024 15:18:14 -0700 (PDT)
-Message-ID: <8c4dc915-af9d-4cfa-ac26-9853a7785f0d@linaro.org>
-Date: Fri, 2 Aug 2024 08:18:06 +1000
+ Thu, 01 Aug 2024 16:25:28 -0700 (PDT)
+Message-ID: <b09d230e-de05-4cf5-84ba-75ded34d674e@linaro.org>
+Date: Fri, 2 Aug 2024 09:25:21 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/19] virtio,pci,pc: fixes
-To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-References: <cover.1722508478.git.mst@redhat.com>
+Subject: Re: [PATCH 0/5] docs: more conversions from txt to rst
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Stefan Hajnoczi <stefanha@redhat.com>, "Denis V. Lunev" <den@openvz.org>,
+ Jiri Pirko <jiri@resnulli.us>
+References: <20240801170131.3977807-1-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <cover.1722508478.git.mst@redhat.com>
+In-Reply-To: <20240801170131.3977807-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,28 +100,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/1/24 20:35, Michael S. Tsirkin wrote:
-> The following changes since commit e9d2db818ff934afb366aea566d0b33acf7bced1:
-> 
->    Merge tag 'for-upstream' ofhttps://gitlab.com/bonzini/qemu into staging (2024-08-01 07:31:49 +1000)
-> 
-> are available in the Git repository at:
-> 
->    https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
-> 
-> for you to fetch changes up to 515457757ff8540c524ff39ea1d9564b251c6532:
-> 
->    intel_iommu: Fix for IQA reg read dropped DW field (2024-08-01 04:32:00 -0400)
-> 
-> ----------------------------------------------------------------
-> virtio,pci,pc: fixes
-> 
-> revert virtio pci/SR-IOV emulation at author's request
-> a couple of fixes in virtio,vtd
-> 
-> Signed-off-by: Michael S. Tsirkin<mst@redhat.com>
+On 8/2/24 03:01, Peter Maydell wrote:
+> Peter Maydell (5):
+>    docs/specs/rocker.txt: Convert to rST
+>    docs/interop/nbd.txt: Convert to rST
+>    docs/interop/parallels.txt: Convert to rST
+>    docs/interop/prl-xml.txt: Convert to rST
+>    docs/interop/prl-xml.rst: Fix minor grammar nits
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
