@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8096DC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 03:31:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92D88C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 03:40:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZMWb-0001XD-3u; Wed, 31 Jul 2024 23:30:45 -0400
+	id 1sZMfT-0007Rw-Ug; Wed, 31 Jul 2024 23:39:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sZMWZ-0001VC-J3
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 23:30:43 -0400
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sZMfR-0007Or-8I
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 23:39:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sZMWY-0007pr-4D
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 23:30:43 -0400
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sZMfP-0001RP-4c
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 23:39:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722483041;
+ s=mimecast20190719; t=1722483589;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yRnIoxhtmS04LUR5Fr2AhObq2Vi0UowFWVOhiKEXTVQ=;
- b=Q8P7oVqy3q1j3v/9p4t/aJs/+RB2SbRoCXyMu0xun/y+Zbw33ScJVvd+Kqvn+lYkuUnuSb
- KGPWZghXGO23bFrioiDO+PpIr7cFoQLrnpU701Js7hh+lRjY7m5/imJtRWxXfWiRwDZFkr
- ZyXoPVoFmoF/nOCMhBJOOG4M7ec9470=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=a9W2VRIIGErciPW7gZomIT9/wCLlvJpDwZh2b3ecZfw=;
+ b=Zh3uhhOd9/s5i20Prnd+UkjoqOTjCNpj//kECTRFyhVPjn95NkigSnhH70uc5abPA6z5OC
+ iihXlLCgxpZ07dQq9QMf/PJj1tcZEsgt7Knnn5qnmDPis5HyyrKfKL8D9lDCFaaMo4dQQl
+ L7ZovpjOrpyTQEG5Fac8mfJHYhptDaU=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-362-FR0daI1RNMS-sHm8KehuTw-1; Wed, 31 Jul 2024 23:30:39 -0400
-X-MC-Unique: FR0daI1RNMS-sHm8KehuTw-1
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-664bc570740so28551677b3.0
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 20:30:39 -0700 (PDT)
+ us-mta-650-y04cw0dMMvei4KFET2u2JQ-1; Wed, 31 Jul 2024 23:39:48 -0400
+X-MC-Unique: y04cw0dMMvei4KFET2u2JQ-1
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-668e964ffd9so135296777b3.3
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 20:39:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722483038; x=1723087838;
+ d=1e100.net; s=20230601; t=1722483588; x=1723088388;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yRnIoxhtmS04LUR5Fr2AhObq2Vi0UowFWVOhiKEXTVQ=;
- b=Urh3mYlR+n+V9sXMS7y7Dh0glMgLeS4xNS/VX8jHPQczvBMhT8Jl+APY1as+dBh+i0
- 40XC8aC8fiC7EDdKAoAlQihbosXAttRL78le0kQ5LZEoHRhiNIQul3YNQWHMIhRKIZTD
- 5J2CRaJsZpGKOm11HhaJ32G1PB6XdnN6y06BaZhvvrlqOaNB9NzaT6DUnSrDBga7Wd9X
- 1gnSXQTp+HikvT/ikVpVhY0OpTD1/31uHO+d/dEeOFt+1ldUyE/uh0Oesi7TX+pe2Goe
- k9dMVxXwpw5ChoSar48P0n90D8R9zsNxA/XtmCEGE5bTAlwW20gIga2wOcT/p2H7DaMt
- kRiA==
-X-Gm-Message-State: AOJu0YxgJu2tn6ffee6EGzcI5VYNmtoGjkOJ7SHQUd5ZTYuQP3Ox5ky5
- qeo5jM8bG/6vKksDtCIwa25/F5+UiA8T9osgprbl7+VR5Y9H9Kv8mR1K9uL49wS7vnvdy7+NVag
- 3ug7i7ni6iApmlWzkUcKWJKM/3HWUzpSnF1jl25Yn0+bRV+KL2EvH1HxBkwkDWERrlvOWRM21Os
- 5Sto6nF3H62Fbi9QabgfXRDUrqmWA=
-X-Received: by 2002:a0d:e944:0:b0:640:aec2:101c with SMTP id
- 00721157ae682-68741ef40fdmr8392007b3.2.1722483038631; 
- Wed, 31 Jul 2024 20:30:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFEc+0R+0iZI0YY0geNnyOpj9rwwTrXQrSh9z23VQ/Gn0T+AatmnUkFA7gwngv+CD5YcR7Jqfteif4Li0UMq2M=
-X-Received: by 2002:a0d:e944:0:b0:640:aec2:101c with SMTP id
- 00721157ae682-68741ef40fdmr8391817b3.2.1722483038348; Wed, 31 Jul 2024
- 20:30:38 -0700 (PDT)
+ bh=a9W2VRIIGErciPW7gZomIT9/wCLlvJpDwZh2b3ecZfw=;
+ b=hKRhPmBk23d11F2YCYb7ADlliicp+WNgMXCj8XjdHZ+vph1TxLulI1AAr1zUdqLj16
+ r+AC+jsthtjgHtiBDHACYD+cntB3ql/KrWxHrpYN9DG/2bBpRqmKxWXwyN7qP+gcdVs9
+ vMWBMPcSbozVmFlqMHxJ37ZHLSfoDh/mPLPFJKUEuf2PhOyS+3I3PI1N7dZl0GRI8Wn+
+ fjsw980n9Ao5vz4IsM3YFltmnXbgk78OU7NPJbGN6aopATRzjrWnLuGNZ3QWapCaT9Nz
+ 3naDos3B5i6eIxRDEunm2lmZQFj2DA3dKxT5NcrCRaQio7/LxN9+L8vFtAy1hHAdNo5c
+ CqoA==
+X-Gm-Message-State: AOJu0Yz1tX6snXQj7xjkwPSGIVoN35rG8kNHeyqpE66FF9WOVJ4DInes
+ CpUyqRQ1hVYEsmViBms1CSvqB8245e/hvq07lpYkB5c/DHTTmF+nuHSXGfg0tXHu8tdBUw2/hUd
+ FkpkTwyzUxLz61MqShMrBAMthdN7yFkds8AKIo3+nl/ePuUDZpfnZ1ovukwLtQcGzMUM3bO91Ir
+ ny1uxwzC4FBpKhKPmw+Li3XGzU7Ts=
+X-Received: by 2002:a0d:dc81:0:b0:65f:8218:8b2f with SMTP id
+ 00721157ae682-6874f605a38mr12027987b3.43.1722483587796; 
+ Wed, 31 Jul 2024 20:39:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFLNXMjkzKFeq0Hkwcz0rr8sBTxEfS/YnzcIywxu4UXEdTXHUdyXidwbCMQ4MFl7YAW13Q/2xD4unAf0lbN7CQ=
+X-Received: by 2002:a0d:dc81:0:b0:65f:8218:8b2f with SMTP id
+ 00721157ae682-6874f605a38mr12027747b3.43.1722483587507; Wed, 31 Jul 2024
+ 20:39:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <20231208190911.102879-1-crosa@redhat.com>
- <20231208190911.102879-7-crosa@redhat.com>
- <20efca0c-982c-4962-8e0c-ea4959557a5e@linaro.org>
-In-Reply-To: <20efca0c-982c-4962-8e0c-ea4959557a5e@linaro.org>
+References: <20240726134438.14720-1-crosa@redhat.com>
+ <20240726134438.14720-11-crosa@redhat.com>
+ <a7f2d78a-4de6-4bc6-9d54-ee646a9001fe@linaro.org>
+In-Reply-To: <a7f2d78a-4de6-4bc6-9d54-ee646a9001fe@linaro.org>
 From: Cleber Rosa <crosa@redhat.com>
-Date: Wed, 31 Jul 2024 23:30:27 -0400
-Message-ID: <CA+bd_6K5S9yrD6hsBsTmW4+eJpPsquE8Ud9eHZzptUwDrHcpeQ@mail.gmail.com>
-Subject: Re: [PATCH 06/10] tests/avocado/kvm_xen_guest.py: cope with asset RW
- requirements
+Date: Wed, 31 Jul 2024 23:39:36 -0400
+Message-ID: <CA+bd_6L7o05mENKVuLLfMFK9OF6ckU23ue0xmxiWO5oiT4ZEbw@mail.gmail.com>
+Subject: Re: [PATCH 10/13] tests/avocado/tuxrun_baselines.py: use Avocado's
+ zstd support
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Radoslaw Biernacki <rad@semihalf.com>, Paul Durrant <paul@xen.org>, 
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- Leif Lindholm <quic_llindhol@quicinc.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, kvm@vger.kernel.org, 
- qemu-arm@nongnu.org, Beraldo Leal <bleal@redhat.com>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>, 
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- David Woodhouse <dwmw2@infradead.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, Beraldo Leal <bleal@redhat.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ David Woodhouse <dwmw2@infradead.org>, 
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, kvm@vger.kernel.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-arm@nongnu.org, 
+ Radoslaw Biernacki <rad@semihalf.com>, Paul Durrant <paul@xen.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=crosa@redhat.com;
@@ -107,35 +108,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 11, 2023 at 11:32=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+On Mon, Jul 29, 2024 at 10:39=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
 <philmd@linaro.org> wrote:
 >
-> On 8/12/23 20:09, Cleber Rosa wrote:
-> > Some of these tests actually require the root filesystem image,
-> > obtained through Avocado's asset feature and kept in a common cache
-> > location, to be writable.
+> On 26/7/24 15:44, Cleber Rosa wrote:
+> > Signed-off-by: Cleber Rosa <crosa@redhat.com>
+> > ---
+> >   tests/avocado/tuxrun_baselines.py | 16 ++++++----------
+> >   1 file changed, 6 insertions(+), 10 deletions(-)
 > >
-> > This makes a distinction between the tests that actually have this
-> > requirement and those who don't.  The goal is to be as safe as
-> > possible, avoiding causing cache misses (because the assets get
-> > modified and thus need to be dowloaded again) while avoid copying the
-> > root filesystem backing file whenever possible.
+> > diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_b=
+aselines.py
+> > index 736e4aa289..bd02e88ed6 100644
+> > --- a/tests/avocado/tuxrun_baselines.py
+> > +++ b/tests/avocado/tuxrun_baselines.py
+> > @@ -17,6 +17,7 @@
+> >   from avocado_qemu import QemuSystemTest
+> >   from avocado_qemu import exec_command, exec_command_and_wait_for_patt=
+ern
+> >   from avocado_qemu import wait_for_console_pattern
+> > +from avocado.utils import archive
+> >   from avocado.utils import process
+> >   from avocado.utils.path import find_command
+> >
+> > @@ -40,17 +41,12 @@ def get_tag(self, tagname, default=3DNone):
+> >
+> >           return default
+> >
+> > +    @skipUnless(archive._probe_zstd_cmd(),
 >
-> Having cache assets modified is a design issue. We should assume
-> the cache directory as read-only.
+> _probe_zstd_cmd() isn't public AFAICT, but more importantly
+> this doesn't work because this method has been added in v101.0.
 >
 
-I agree those files should not be modified, but I wonder if you
-thought about any solution to this? Given that the same user writes
-(downloads) those files, do you think setting file permissions between
-the download and the use of the files should be done?
+While it's not the best practice to use private functions, I just
+couldn't accept rewriting that for the skip condition.  I can make
+sure future  versions (including 103.1) make it public.
 
-That can make the management of the cache (such as pruning it) either
-require undoing the restriction or being done by a super user.
-
-Anyway, just curious.
-
-Regards,
-- Cleber.
+Also, these patches count on the bump to 103.0 indeed.
 
 
