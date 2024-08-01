@@ -4,66 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C969C3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 18:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7313C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 18:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZa5X-00028K-Q9; Thu, 01 Aug 2024 13:59:44 -0400
+	id 1sZahW-0000qE-6M; Thu, 01 Aug 2024 14:38:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sZa5U-0001x9-Vi
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 13:59:40 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sZahU-0000op-MZ
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 14:38:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sZa5T-0005vG-6e
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 13:59:40 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sZahS-0000Z1-PU
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 14:38:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722535177;
+ s=mimecast20190719; t=1722537533;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SasQSSECtI5DkO6YiV8MC31dvU9pBpDLxRDKkUkwUys=;
- b=Mv4dAPr21h29YuATuoR7b1gitMTvTOxs0WOndaxrUOai8+xY0i1qWGlNLF6lrk2SGMXTtK
- 76Z2T+CRtZV7frpiwTQZhh+7fyzzRD3/8H0v7LoBaiHSvqEYP3waFfefqcRvtZuflAJQGd
- r7BxcaRj/hnBwm22oY8Dy/eT/B5piJs=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-iut_6S-ROiy00YWqmBTNdA-1; Thu,
- 01 Aug 2024 13:59:35 -0400
-X-MC-Unique: iut_6S-ROiy00YWqmBTNdA-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 73A7A1955D4D; Thu,  1 Aug 2024 17:59:34 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.17])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EB95B195605A; Thu,  1 Aug 2024 17:59:30 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 5/6] qapi: apply schema prefix to QAPI feature enum constants
-Date: Thu,  1 Aug 2024 18:59:12 +0100
-Message-ID: <20240801175913.669013-6-berrange@redhat.com>
-In-Reply-To: <20240801175913.669013-1-berrange@redhat.com>
-References: <20240801175913.669013-1-berrange@redhat.com>
+ bh=HtpRxL9zFKQPOMFpdkGTEixDlUXM8Rr9CS7r7HFkInM=;
+ b=bFNuj2jR6MPJ4wXsiz+l8fIvLnL25TrGr4TNxVNSb8qepMVwXFQQ6d3tBGXVm0YvLoYrbf
+ jbudKMLmbh0PInF91bCDtFJGP6dUFtBJgTUHCTigtE5wL8Iv6z2xVLx+YwsliwbuWObb1A
+ d09G00YdUsPEFqtkHpkczjfGPzSKh/M=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-453-ak23VwbfMUWWdbAPQguWCQ-1; Thu, 01 Aug 2024 14:38:52 -0400
+X-MC-Unique: ak23VwbfMUWWdbAPQguWCQ-1
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7a1d09e4b53so3473885a.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 11:38:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722537531; x=1723142331;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HtpRxL9zFKQPOMFpdkGTEixDlUXM8Rr9CS7r7HFkInM=;
+ b=TCGVGrdgtSbOiPhft6IbkFKPkO8rGK07TOnozBnQGptm06AI69n7LmXVkKuWE542cE
+ w2NYlyQIcSx+SuG+IW//szEIQNrZmJ7hfLPx2M8tYRBD14StD3SbvouhTmUPxz3aAYyN
+ Vwzep1Ge8DFbwv9zeo6hZ9wZlMiw6TD99e5I4nIJO/NQg7gNMW8e2pGPY09CSDQIdSDi
+ PQw0kpfgibEMXCEAdFdk9naI5MW+uXZr7TjrAag5E2GxWJUNa55I49SSNhPF6ULt1+nT
+ hEemfJLMQYOQ/qkTOXd+3p35S7wq/SQGrMcd148DEj+bzQO3qrQTn1ca7h8U0nCtgUow
+ QJ0w==
+X-Gm-Message-State: AOJu0YzqzaGjkFsSD77j8svKb9TRxGLoloog23TV6nCA2cNfm3ER2RPu
+ G14CBBIy8PVY/iyzaVAuGJfDeM7/xoiKmh4pSUyq1SwDXe35aO/u3I6C81yBpWmz78L1NLeYYAp
+ 2JblMTXrHYnjSenon9enWGHYT78qJQU7k5A9RAkEUSvGcGUs65W9UPdDkUepG
+X-Received: by 2002:a05:620a:3721:b0:7a3:4fbf:d926 with SMTP id
+ af79cd13be357-7a34fbfdf73mr22022385a.4.1722537531272; 
+ Thu, 01 Aug 2024 11:38:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGrHRmRM6vxHZCU9CeS1UUjYErRWJsTdwUdBUeKAPsmgskfV6stDQRoRFIktZkoRFeVKGRCyw==
+X-Received: by 2002:a05:620a:3721:b0:7a3:4fbf:d926 with SMTP id
+ af79cd13be357-7a34fbfdf73mr22020985a.4.1722537530824; 
+ Thu, 01 Aug 2024 11:38:50 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a34f7724b4sm15257885a.81.2024.08.01.11.38.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 Aug 2024 11:38:50 -0700 (PDT)
+Date: Thu, 1 Aug 2024 14:38:48 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ Jim Fehlig <jfehlig@suse.com>
+Subject: Re: [PATCH 2/2] migration/multifd: Fix multifd_send_setup cleanup
+ when channel creation fails
+Message-ID: <ZqvWOEHfLCqnu4dP@x1n>
+References: <20240801174101.31806-1-farosas@suse.de>
+ <20240801174101.31806-3-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240801174101.31806-3-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -88,141 +101,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This allows us to include multiple QAPI schemas in the same file.
+On Thu, Aug 01, 2024 at 02:41:01PM -0300, Fabiano Rosas wrote:
+> When a channel fails to create, the code currently just returns. This
+> is wrong for two reasons:
+> 
+> 1) Channel n+1 will not get to initialize it's semaphores, leading to
+>    an assert when terminate_threads tries to post to it:
+> 
+>  qemu-system-x86_64: ../util/qemu-thread-posix.c:92:
+>  qemu_mutex_lock_impl: Assertion `mutex->initialized' failed.
+> 
+> 2) (theoretical) If channel n-1 already started creation it will
+>    defeat the purpose of the channels_created logic which is in place
+>    to avoid migrate_fd_cleanup() to run while channels are still being
+>    created.
+> 
+>    This cannot really happen today because the current failure cases
+>    for multifd_new_send_channel_create() are all synchronous,
+>    resulting from qio_channel_file_new_path() getting a bad
+>    filename. This would hit all channels equally.
+> 
+>    But I don't want to set a trap for future people, so have all
+>    channels try to create (even if failing), and only fail after the
+>    channels_created semaphore has been posted.
+> 
+> While here, remove the error_report_err call. There's one already at
+> migrate_fd_cleanup later on.
+> 
+> Cc: qemu-stable@nongnu.org
+> Reported-by: Jim Fehlig <jfehlig@suse.com>
+> Fixes: bd8b0a8f82 ("migration/multifd: Move multifd_send_setup error handling in to the function")
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- scripts/qapi/commands.py | 7 ++++---
- scripts/qapi/events.py   | 3 ++-
- scripts/qapi/gen.py      | 6 +++---
- scripts/qapi/types.py    | 5 +++--
- scripts/qapi/visit.py    | 5 +++--
- 5 files changed, 15 insertions(+), 11 deletions(-)
+Should it be this one instead?
 
-diff --git a/scripts/qapi/commands.py b/scripts/qapi/commands.py
-index d629d2d97e..81134de6c0 100644
---- a/scripts/qapi/commands.py
-+++ b/scripts/qapi/commands.py
-@@ -280,7 +280,8 @@ def gen_register_command(name: str,
-                          success_response: bool,
-                          allow_oob: bool,
-                          allow_preconfig: bool,
--                         coroutine: bool) -> str:
-+                         coroutine: bool,
-+                         prefix: str) -> str:
-     options = []
- 
-     if not success_response:
-@@ -298,7 +299,7 @@ def gen_register_command(name: str,
- ''',
-                 name=name, c_name=c_name(name),
-                 opts=' | '.join(options) or 0,
--                feats=gen_features(features))
-+                feats=gen_features(prefix, features))
-     return ret
- 
- 
-@@ -407,7 +408,7 @@ def visit_command(self,
-             with ifcontext(ifcond, self._genh, self._genc):
-                 self._genc.add(gen_register_command(
-                     name, features, success_response, allow_oob,
--                    allow_preconfig, coroutine))
-+                    allow_preconfig, coroutine, self._prefix))
- 
- 
- def gen_commands(schema: QAPISchema,
-diff --git a/scripts/qapi/events.py b/scripts/qapi/events.py
-index d1f639981a..8a489e559a 100644
---- a/scripts/qapi/events.py
-+++ b/scripts/qapi/events.py
-@@ -218,7 +218,8 @@ def visit_end(self) -> None:
-         self._genh.add(gen_enum(self._event_enum_name,
-                                 self._event_enum_members))
-         self._genc.add(gen_enum_lookup(self._event_enum_name,
--                                       self._event_enum_members))
-+                                       self._event_enum_members,
-+                                       self._prefix))
-         self._genh.add(mcgen('''
- 
- void %(event_emit)s(%(event_enum)s event, QDict *qdict);
-diff --git a/scripts/qapi/gen.py b/scripts/qapi/gen.py
-index 036977d989..399a0ae62d 100644
---- a/scripts/qapi/gen.py
-+++ b/scripts/qapi/gen.py
-@@ -41,9 +41,9 @@
- from .source import QAPISourceInfo
- 
- 
--def gen_features(features: Sequence[QAPISchemaFeature]) -> str:
--    features = [f"1u << {c_enum_const('QAPI_FEATURE', feat.name)}"
--                for feat in features if feat.is_special()]
-+def gen_features(prefix, features: Sequence[QAPISchemaFeature]) -> str:
-+    features = [f"1u << {c_enum_const(prefix + 'QAPI_FEATURE', feat.name)}"
-+                for feat in features]
-     return ' | '.join(features) or '0'
- 
- 
-diff --git a/scripts/qapi/types.py b/scripts/qapi/types.py
-index ade6b7a3d7..b2d26c2ea8 100644
---- a/scripts/qapi/types.py
-+++ b/scripts/qapi/types.py
-@@ -43,6 +43,7 @@
- 
- def gen_enum_lookup(name: str,
-                     members: List[QAPISchemaEnumMember],
-+                    modprefix: str,
-                     prefix: Optional[str] = None) -> str:
-     max_index = c_enum_const(name, '_MAX', prefix)
-     feats = ''
-@@ -61,7 +62,7 @@ def gen_enum_lookup(name: str,
-                      index=index, name=memb.name)
-         ret += memb.ifcond.gen_endif()
- 
--        features = gen_features(memb.features)
-+        features = gen_features(modprefix, memb.features)
-         if features != '0':
-             feats += mcgen('''
-         [%(index)s] = %(features)s,
-@@ -331,7 +332,7 @@ def visit_enum_type(self,
-                         prefix: Optional[str]) -> None:
-         with ifcontext(ifcond, self._genh, self._genc):
-             self._genh.preamble_add(gen_enum(name, members, prefix))
--            self._genc.add(gen_enum_lookup(name, members, prefix))
-+            self._genc.add(gen_enum_lookup(name, members, self._prefix, prefix))
- 
-     def visit_array_type(self,
-                          name: str,
-diff --git a/scripts/qapi/visit.py b/scripts/qapi/visit.py
-index 8dbf4ef1c3..883d720e36 100644
---- a/scripts/qapi/visit.py
-+++ b/scripts/qapi/visit.py
-@@ -62,6 +62,7 @@ def gen_visit_members_decl(name: str) -> str:
- 
- 
- def gen_visit_object_members(name: str,
-+                             prefix: str,
-                              base: Optional[QAPISchemaObjectType],
-                              members: List[QAPISchemaObjectTypeMember],
-                              branches: Optional[QAPISchemaBranches]) -> str:
-@@ -103,7 +104,7 @@ def gen_visit_object_members(name: str,
- ''',
-                          name=memb.name, has=has)
-             indent.increase()
--        features = gen_features(memb.features)
-+        features = gen_features(prefix, memb.features)
-         if features != '0':
-             ret += mcgen('''
-     if (visit_policy_reject(v, "%(name)s", %(features)s, errp)) {
-@@ -402,7 +403,7 @@ def visit_object_type(self,
-             return
-         with ifcontext(ifcond, self._genh, self._genc):
-             self._genh.add(gen_visit_members_decl(name))
--            self._genc.add(gen_visit_object_members(name, base,
-+            self._genc.add(gen_visit_object_members(name, self._prefix, base,
-                                                     members, branches))
-             # TODO Worth changing the visitor signature, so we could
-             # directly use rather than repeat type.is_implicit()?
+b7b03eb614 ("migration/multifd: Add outgoing QIOChannelFile support")
+
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+
+PS: what's your plan on your other multifd SendData series?  I got a bit
+overloaded on downstream stuff and I still have plenty review debts
+recently (CPR one of them.. needs follow ups), so just to say I may delay a
+bit on reading that one.  I assume it's next-release stuff anyway, but let
+me know otherwise.
+
+Thanks,
+
 -- 
-2.45.2
+Peter Xu
 
 
