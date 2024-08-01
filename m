@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05AB5C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 03:25:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8096DC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 03:31:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZMRJ-0004XB-Kn; Wed, 31 Jul 2024 23:25:18 -0400
+	id 1sZMWb-0001XD-3u; Wed, 31 Jul 2024 23:30:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sZMRG-0004WY-S9
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 23:25:14 -0400
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sZMWZ-0001VC-J3
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 23:30:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sZMRF-00056o-Gu
- for qemu-devel@nongnu.org; Wed, 31 Jul 2024 23:25:14 -0400
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sZMWY-0007pr-4D
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 23:30:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722482712;
+ s=mimecast20190719; t=1722483041;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LIA8qtIEwBqGQojB8vR+PEMLSgLeUXkAJyI8y+mq9FA=;
- b=A1jG9AbfrDoH9/BN5TJchnL0Ub5vIAKD8u82fvkSKLkmF3F1Wtyf2mFbFUSPaf35hAiVXr
- g+zL9C1HullYJLv6TG+QtBsrTz6brUQ8T+OwlZorDpx+TM2dJ1z0e6tBvd/1BOBD+W9JXS
- GywUAHNP/D4ini4iwIcv7TFmpHLGgRM=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yRnIoxhtmS04LUR5Fr2AhObq2Vi0UowFWVOhiKEXTVQ=;
+ b=Q8P7oVqy3q1j3v/9p4t/aJs/+RB2SbRoCXyMu0xun/y+Zbw33ScJVvd+Kqvn+lYkuUnuSb
+ KGPWZghXGO23bFrioiDO+PpIr7cFoQLrnpU701Js7hh+lRjY7m5/imJtRWxXfWiRwDZFkr
+ ZyXoPVoFmoF/nOCMhBJOOG4M7ec9470=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-374-BMETwDrVMmS28Ff5DEwyKg-1; Wed, 31 Jul 2024 23:25:10 -0400
-X-MC-Unique: BMETwDrVMmS28Ff5DEwyKg-1
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-66a2aee82a0so125419287b3.0
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 20:25:10 -0700 (PDT)
+ us-mta-362-FR0daI1RNMS-sHm8KehuTw-1; Wed, 31 Jul 2024 23:30:39 -0400
+X-MC-Unique: FR0daI1RNMS-sHm8KehuTw-1
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-664bc570740so28551677b3.0
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 20:30:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722482709; x=1723087509;
+ d=1e100.net; s=20230601; t=1722483038; x=1723087838;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LIA8qtIEwBqGQojB8vR+PEMLSgLeUXkAJyI8y+mq9FA=;
- b=KCjpMRLygEqJ8bAK4RPgSeRLUoT5+JMqIPmPExuEW3Y5zgpewYkksgDbxrpZT8rSc3
- KxeKu4irLFydiK+6jDlcd9IEYJe/0Jg4ik9YjlQwt6drq4mKSoHYpU7+qeLQaKQd1IF2
- UlP8lVHanvGVxDMvRA4hiuB4gKcULt3hgG8WSBj0UPbkLlQBJOe60QVyJSHzDjlvKGRR
- NS0XLqZSrrTA2ZFbLaijQizMjID6S2AO4/WVE1W6ppIxhAJsJpTqfyxIg9ROHcKjl+XL
- R+j2yqOpY1z/zsn3ur112Lx4I2dTOfCBMCu3HNhWVSm5vtqOCiMXYff0fPx2ddRtv6DQ
- W1gA==
-X-Gm-Message-State: AOJu0YxW06wuHFQHqOFG27pCNtJingxPf7QhZVwbs64LxyOYINgQJKjg
- wZk9SFHH8hl0lekbiNn6WM8EfxxqP2EcfYsLYixomfafeEefieyiTOcQsvdqHPhbn9ZAAWP3yGh
- pfqCWwwtvMcyAZVIC5Z7HDM7x8XcSG/j3p+R3jPYv10qPsTbrxPVugU6oJtxzje0RLzb86axe+Y
- Xg+imYLZjBjKRphTzWrKyiFL58zKM=
-X-Received: by 2002:a81:5b04:0:b0:66a:843c:4c38 with SMTP id
- 00721157ae682-687521b9560mr5159487b3.37.1722482709706; 
- Wed, 31 Jul 2024 20:25:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEdm8eONMfPaB0Qsap8XfUDxD67qSjsWH3V5PzSZRWN1oS7bhdQe8tBToa8XMYEsh5v+snsMPZPXHV3aL0f7zE=
-X-Received: by 2002:a81:5b04:0:b0:66a:843c:4c38 with SMTP id
- 00721157ae682-687521b9560mr5159337b3.37.1722482709450; Wed, 31 Jul 2024
- 20:25:09 -0700 (PDT)
+ bh=yRnIoxhtmS04LUR5Fr2AhObq2Vi0UowFWVOhiKEXTVQ=;
+ b=Urh3mYlR+n+V9sXMS7y7Dh0glMgLeS4xNS/VX8jHPQczvBMhT8Jl+APY1as+dBh+i0
+ 40XC8aC8fiC7EDdKAoAlQihbosXAttRL78le0kQ5LZEoHRhiNIQul3YNQWHMIhRKIZTD
+ 5J2CRaJsZpGKOm11HhaJ32G1PB6XdnN6y06BaZhvvrlqOaNB9NzaT6DUnSrDBga7Wd9X
+ 1gnSXQTp+HikvT/ikVpVhY0OpTD1/31uHO+d/dEeOFt+1ldUyE/uh0Oesi7TX+pe2Goe
+ k9dMVxXwpw5ChoSar48P0n90D8R9zsNxA/XtmCEGE5bTAlwW20gIga2wOcT/p2H7DaMt
+ kRiA==
+X-Gm-Message-State: AOJu0YxgJu2tn6ffee6EGzcI5VYNmtoGjkOJ7SHQUd5ZTYuQP3Ox5ky5
+ qeo5jM8bG/6vKksDtCIwa25/F5+UiA8T9osgprbl7+VR5Y9H9Kv8mR1K9uL49wS7vnvdy7+NVag
+ 3ug7i7ni6iApmlWzkUcKWJKM/3HWUzpSnF1jl25Yn0+bRV+KL2EvH1HxBkwkDWERrlvOWRM21Os
+ 5Sto6nF3H62Fbi9QabgfXRDUrqmWA=
+X-Received: by 2002:a0d:e944:0:b0:640:aec2:101c with SMTP id
+ 00721157ae682-68741ef40fdmr8392007b3.2.1722483038631; 
+ Wed, 31 Jul 2024 20:30:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFEc+0R+0iZI0YY0geNnyOpj9rwwTrXQrSh9z23VQ/Gn0T+AatmnUkFA7gwngv+CD5YcR7Jqfteif4Li0UMq2M=
+X-Received: by 2002:a0d:e944:0:b0:640:aec2:101c with SMTP id
+ 00721157ae682-68741ef40fdmr8391817b3.2.1722483038348; Wed, 31 Jul 2024
+ 20:30:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240726134438.14720-1-crosa@redhat.com>
- <20240726134438.14720-10-crosa@redhat.com>
- <Zqd2edn1-aNiVriv@redhat.com>
-In-Reply-To: <Zqd2edn1-aNiVriv@redhat.com>
+References: <20231208190911.102879-1-crosa@redhat.com>
+ <20231208190911.102879-7-crosa@redhat.com>
+ <20efca0c-982c-4962-8e0c-ea4959557a5e@linaro.org>
+In-Reply-To: <20efca0c-982c-4962-8e0c-ea4959557a5e@linaro.org>
 From: Cleber Rosa <crosa@redhat.com>
-Date: Wed, 31 Jul 2024 23:24:58 -0400
-Message-ID: <CA+bd_6JBpV3A_yyi_R5uELfZkf4zfKJSW9YuZd+am-guK7-QjQ@mail.gmail.com>
-Subject: Re: [PATCH 09/13] tests/avocado/boot_xen.py: fetch kernel during test
- setUp()
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, Beraldo Leal <bleal@redhat.com>, 
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- David Woodhouse <dwmw2@infradead.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, kvm@vger.kernel.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-arm@nongnu.org, 
- Radoslaw Biernacki <rad@semihalf.com>, Paul Durrant <paul@xen.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Wed, 31 Jul 2024 23:30:27 -0400
+Message-ID: <CA+bd_6K5S9yrD6hsBsTmW4+eJpPsquE8Ud9eHZzptUwDrHcpeQ@mail.gmail.com>
+Subject: Re: [PATCH 06/10] tests/avocado/kvm_xen_guest.py: cope with asset RW
+ requirements
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Radoslaw Biernacki <rad@semihalf.com>, Paul Durrant <paul@xen.org>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, kvm@vger.kernel.org, 
+ qemu-arm@nongnu.org, Beraldo Leal <bleal@redhat.com>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@est.tech>, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ David Woodhouse <dwmw2@infradead.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=crosa@redhat.com;
@@ -109,26 +107,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 29, 2024 at 7:01=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
+On Mon, Dec 11, 2023 at 11:32=E2=80=AFAM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
 >
-> On Fri, Jul 26, 2024 at 09:44:34AM -0400, Cleber Rosa wrote:
-> > The kernel is a common blob used in all tests.  By moving it to the
-> > setUp() method, the "fetch asset" plugin will recognize the kernel and
-> > attempt to fetch it and cache it before the tests are started.
+> On 8/12/23 20:09, Cleber Rosa wrote:
+> > Some of these tests actually require the root filesystem image,
+> > obtained through Avocado's asset feature and kept in a common cache
+> > location, to be writable.
+> >
+> > This makes a distinction between the tests that actually have this
+> > requirement and those who don't.  The goal is to be as safe as
+> > possible, avoiding causing cache misses (because the assets get
+> > modified and thus need to be dowloaded again) while avoid copying the
+> > root filesystem backing file whenever possible.
 >
-> The other tests don't call  fetch_asset() from their setUp
-> method - what's different about this test that prevents the
-> asset caching working ?
+> Having cache assets modified is a design issue. We should assume
+> the cache directory as read-only.
 >
 
-The "wizardry" of the "fetch asset" plugin limits itself to analyzing
-test methods and the setUp() method.  This test currently does that in
-the "fetch_guest_kernel()" method, which makes it blind to the "fetch
-asset" plugin.
+I agree those files should not be modified, but I wonder if you
+thought about any solution to this? Given that the same user writes
+(downloads) those files, do you think setting file permissions between
+the download and the use of the files should be done?
 
-If there are other tests doing that (in custom methods), then a
-similar change would be desirable.
+That can make the management of the cache (such as pruning it) either
+require undoing the restriction or being done by a super user.
+
+Anyway, just curious.
 
 Regards,
 - Cleber.
