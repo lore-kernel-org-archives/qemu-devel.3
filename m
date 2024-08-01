@@ -4,79 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D1E5C3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 10:25:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09D4AC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 10:26:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZSzt-00011g-KX; Thu, 01 Aug 2024 06:25:25 -0400
+	id 1sZT0G-0002qy-F9; Thu, 01 Aug 2024 06:25:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZSzr-00010O-UO
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 06:25:23 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sZSzp-0007qW-9L
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 06:25:23 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4281d812d3eso46990405e9.3
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 03:25:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722507918; x=1723112718; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=LGj9xUPuFQKz+iRXpwtcPvUOjN63NyRT7V4lFqRZMPE=;
- b=lnDH/I+MBS2wiQxqQYWNhuO82uZqCvsZcMH0gFWTWVXhbhspNWv4pkjhStk+5QzeCf
- 1sHcjSJx2UxCsspYQNfSKKDIAgAdTA3lDLMDqmNoFrlyku43M4xTZXyXEuzCiBPVF3W6
- CUlzqHXci4yBK6Q7uEWn545SyCbN+Q1IpMoIvM2K1ZSy6r7ZYqpwsgAibDkrQzS6cZg0
- Vmf6SJMEDHtuGvyhqa9hpP/VNkep31KQbcw2Af+1/22M0SOOKhtt28wWhTDWkb8JBz0C
- EKAvhYrvyfDkskWoFhXztXq7Vu9H1B+I47jCuL167Nan7qleLn1KxPXpa+Nf9RA36dTm
- bytA==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sZT0E-0002kr-N7
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 06:25:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sZT0B-0007xy-Qp
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 06:25:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722507943;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4GEfj283YW3vI+Cv4waBmHqqVswXd/eX6JpuwFWvIeU=;
+ b=B1K1t1QFgUbNcGElhRastQSWec+5/9xQ+w260i/ZQM/jx9CANJz+y09ovpRHdgwvFEaV6T
+ X2VvKm9z7fTxfn8FaghkbNvSM52PjLNh070i7d3nXLnHKQNCopdM2Bgh35YUoQWEh0e/z5
+ Y2gPpMCZcF3Pw0YhOS16KL5suD5Cnl8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-244-ZAXQmnFOOUqgI-0NFh2cjw-1; Thu, 01 Aug 2024 06:25:41 -0400
+X-MC-Unique: ZAXQmnFOOUqgI-0NFh2cjw-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4280f233115so43451585e9.2
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 03:25:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722507918; x=1723112718;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LGj9xUPuFQKz+iRXpwtcPvUOjN63NyRT7V4lFqRZMPE=;
- b=IsQw3PFosRAy6/aG+OmTfKJp7CO4lafEgQ2RpukcM6PnkDZYcrdCVYTT9849WULj0I
- 6PTHQpXGsCT9d6Dm8zu19CffOCBnMAez+PIC71H7CxZmGtxdEU5m6dpytWfddUZ+ClGv
- Khq8CzkwfhuliB3QWTXSFmaWuI7eNcvBjsA7G2ToDyv6v0r7Wgq5KcnGimfWBGoZ+Aa7
- DszN2Tt3als4mpW5DKasBSJjFygwCCrfkVxB8xVTKkpqSPUhp+ukSE7ZJZ5OXk8j1a5M
- d9RiBrqDDGb9937NT+aEjeOb/If+IgBuhQ8ix8OiwGBcgR9s4uK+4deI0LfDOoypf/KF
- l1FQ==
-X-Gm-Message-State: AOJu0YxIHIWmo3t3x67WAvXHiBdkAIK8eZ55HbvjD/+93ChcUJ4o1D7h
- kaiuObr31iziemtXcRkYGOds7CbqZb6pKmGIPx4OAHxSL6kMPwAbVlpKZuQ4YC2ho4/N74OzL05
- v
-X-Google-Smtp-Source: AGHT+IHf748LX2HEdOtRqhDU6nTzs5Npe0Q4NkH3ErpYw0aDqYLV2uKT96BX+DBA2Z5/4L8rb9GuTQ==
-X-Received: by 2002:a05:600c:46c9:b0:426:593c:9359 with SMTP id
- 5b1f17b1804b1-428b8a2a666mr20757835e9.32.1722507917829; 
- Thu, 01 Aug 2024 03:25:17 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4282bb223f6sm52381275e9.45.2024.08.01.03.25.17
+ d=1e100.net; s=20230601; t=1722507940; x=1723112740;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4GEfj283YW3vI+Cv4waBmHqqVswXd/eX6JpuwFWvIeU=;
+ b=dk6jNj0Z7cdUbMAOrKUvwC70ihvdpkQsn6hqZ0xlOylhNgWaooshWg3iAcbOReToNa
+ RuK5OCk+Y/DqPGrToncBV4DjO6J7dEzhdq0Z3Vta/etsNPXe1weLUY3J7rXYrlYyxFcU
+ YnlEeBm7PTegg8DnN4unTb4efSjn98iCFBxjjnisoJgJKToXW0v7PSL3vCaii24uO3gm
+ Ez7xVBF8Huquj699hExGYgOCWRYq0N6WgUA4XMAjbILiRp329No9NnwPQjjeBCnw1sX3
+ GOmbv2dj4D5/DvwusNf0kiimrJt9e6ay0mpilBYNWJgw6k75HwDA17Lr1q5IY5c2mLsi
+ 7XiQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXSO16W1CRbvzd8DK7jDJ3n0pLAeiBPztKMpRfB/0HKjvja8eA7FX/afDbX2Kq75hJGpnu42UPlefuxVcShqN0A2S8XeU8=
+X-Gm-Message-State: AOJu0YyI1xl+Wb28pBfu8CmFlnHviIfzZ+pl80GfWLh2kQFYxudj5DSa
+ q9OCjc5W/ZSRiMRiF/mzcDSRCPCljq/MM6EHEk4mATBdJTgL9JixwuXHrfUx097t/bG8T/hLVQr
+ bpho031Lg0oBHE4JrUnxgeZuQyKBEsXV4dkeBRBGkOVWZBQaAlMlb
+X-Received: by 2002:a05:600c:154d:b0:428:abd:1df1 with SMTP id
+ 5b1f17b1804b1-428a9bdb800mr16587615e9.9.1722507940321; 
+ Thu, 01 Aug 2024 03:25:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE6vz9Ly4NKF10mrQpScLeuPxSfm+gLYXwmRxfIaFzEExfY6LzLHp2bQ/5NiYSvn8nGUzAvCQ==
+X-Received: by 2002:a05:600c:154d:b0:428:abd:1df1 with SMTP id
+ 5b1f17b1804b1-428a9bdb800mr16587445e9.9.1722507939854; 
+ Thu, 01 Aug 2024 03:25:39 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4282baf39f3sm50189875e9.36.2024.08.01.03.25.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Aug 2024 03:25:17 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org,
-	Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH] include: Fix typo in name of MAKE_IDENTFIER macro
-Date: Thu,  1 Aug 2024 11:25:16 +0100
-Message-Id: <20240801102516.3843780-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ Thu, 01 Aug 2024 03:25:39 -0700 (PDT)
+Date: Thu, 1 Aug 2024 12:25:37 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Manish <manish.mishra@nutanix.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, John Levon <john.levon@nutanix.com>,
+ qemu-devel@nongnu.org, berrange@redhat.com, zhao1.liu@intel.com,
+ pbonzini@redhat.com, bob.ball@nutanix.com, prerna.saxena@nutanix.com
+Subject: Re: [PATCH v1] target/i386: Always set leaf 0x1f
+Message-ID: <20240801122537.4307ea77@imammedo.users.ipa.redhat.com>
+In-Reply-To: <d7de1729-e497-4913-be8e-8938e83b3a2a@nutanix.com>
+References: <20240724075226.212882-1-manish.mishra@nutanix.com>
+ <20240724110004.389c1a0c@imammedo.users.ipa.redhat.com>
+ <21ca5c19-677b-4fac-84d4-72413577f260@nutanix.com>
+ <6e65dbb2-461e-44f4-842c-249c7b333885@intel.com>
+ <Zqn6mNuCH4/HJoO/@lent>
+ <bda03736-ade0-46a9-977f-1ae368374555@intel.com>
+ <d7de1729-e497-4913-be8e-8938e83b3a2a@nutanix.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,94 +111,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In commit bb71846325e23 we added some macro magic to avoid
-variable-shadowing when using some of our more complicated
-macros. One of the internal components of this is a macro
-named MAKE_IDENTFIER. Fix the typo in its name: it should
-be MAKE_IDENTIFIER.
+On Thu, 1 Aug 2024 15:36:10 +0530
+Manish <manish.mishra@nutanix.com> wrote:
 
-Commit created with
- sed -i -e 's/MAKE_IDENTFIER/MAKE_IDENTIFIER/g' include/qemu/*.h include/qapi/qmp/qobject.h
+> On 31/07/24 9:01 pm, Xiaoyao Li wrote:
+> > !-------------------------------------------------------------------|
+> > =C2=A0CAUTION: External Email
+> >
+> > |-------------------------------------------------------------------!
+> >
+> > On 7/31/2024 4:49 PM, John Levon wrote: =20
+> >> On Wed, Jul 31, 2024 at 03:02:15PM +0800, Xiaoyao Li wrote:
+> >> =20
+> >>>> Windows does not expect 0x1f to be present for any CPU model. But=20
+> >>>> if it
+> >>>> is exposed to the guest, it expects non-zero values. =20
+> >>>
+> >>> Please fix Windows! =20
+> >>
+> >> A ticket has been filed with MSFT, we are aware this is a guest bug.
+> >>
+> >> But that doesn't really help anybody trying to use Windows right now. =
+=20
+> >
+> > For existing buggy Windows, we can still introduce=20
+> > "cpuid-0x1f-enforce" but not make it default on.
+> >
+> > People want to boot the buggy Windows needs to opt-in it themselves=20
+> > via "-cpu xxx,cpuid-0x1f-enforce=3Don". This way, we don't have live=20
+> > migration issue and it doesn't affect anything. =20
+>=20
+>=20
+> Yes, that makes sense, I will send a updated patch by tomorrow if no one=
+=20
+> has any objection with this.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- include/qapi/qmp/qobject.h | 2 +-
- include/qemu/atomic.h      | 2 +-
- include/qemu/compiler.h    | 2 +-
- include/qemu/osdep.h       | 6 +++---
- 4 files changed, 6 insertions(+), 6 deletions(-)
+I'd rename it to
+   x-have-cpuid-0x1f-leaf
+(x-) to reflect that it's not stable/maintained and subject
+to be dropped in future=20
 
-diff --git a/include/qapi/qmp/qobject.h b/include/qapi/qmp/qobject.h
-index 89b97d88bca..256d782688c 100644
---- a/include/qapi/qmp/qobject.h
-+++ b/include/qapi/qmp/qobject.h
-@@ -54,7 +54,7 @@ struct QObject {
-     typeof(obj) _obj = (obj);                                   \
-     _obj ? container_of(&_obj->base, QObject, base) : NULL;     \
- })
--#define QOBJECT(obj) QOBJECT_INTERNAL((obj), MAKE_IDENTFIER(_obj))
-+#define QOBJECT(obj) QOBJECT_INTERNAL((obj), MAKE_IDENTIFIER(_obj))
- 
- /* Required for qobject_to() */
- #define QTYPE_CAST_TO_QNull     QTYPE_QNULL
-diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
-index dc4118ddd9e..7a3f2e6576b 100644
---- a/include/qemu/atomic.h
-+++ b/include/qemu/atomic.h
-@@ -128,7 +128,7 @@
-     _val;                                               \
-     })
- #define qatomic_rcu_read(ptr) \
--    qatomic_rcu_read_internal((ptr), MAKE_IDENTFIER(_val))
-+    qatomic_rcu_read_internal((ptr), MAKE_IDENTIFIER(_val))
- 
- #define qatomic_rcu_set(ptr, i) do {                   \
-     qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE); \
-diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
-index 554c5ce7df7..c06954ccb41 100644
---- a/include/qemu/compiler.h
-+++ b/include/qemu/compiler.h
-@@ -38,7 +38,7 @@
- #endif
- 
- /* Expands into an identifier stemN, where N is another number each time */
--#define MAKE_IDENTFIER(stem) glue(stem, __COUNTER__)
-+#define MAKE_IDENTIFIER(stem) glue(stem, __COUNTER__)
- 
- #ifndef likely
- #define likely(x)   __builtin_expect(!!(x), 1)
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 720ed21a7e4..38a127a699e 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -399,7 +399,7 @@ void QEMU_ERROR("code path is reachable")
-     })
- #undef MIN
- #define MIN(a, b) \
--    MIN_INTERNAL((a), (b), MAKE_IDENTFIER(_a), MAKE_IDENTFIER(_b))
-+    MIN_INTERNAL((a), (b), MAKE_IDENTIFIER(_a), MAKE_IDENTIFIER(_b))
- 
- #define MAX_INTERNAL(a, b, _a, _b)                      \
-     ({                                                  \
-@@ -408,7 +408,7 @@ void QEMU_ERROR("code path is reachable")
-     })
- #undef MAX
- #define MAX(a, b) \
--    MAX_INTERNAL((a), (b), MAKE_IDENTFIER(_a), MAKE_IDENTFIER(_b))
-+    MAX_INTERNAL((a), (b), MAKE_IDENTIFIER(_a), MAKE_IDENTIFIER(_b))
- 
- #ifdef __COVERITY__
- # define MIN_CONST(a, b) ((a) < (b) ? (a) : (b))
-@@ -440,7 +440,7 @@ void QEMU_ERROR("code path is reachable")
-         _a == 0 ? _b : (_b == 0 || _b > _a) ? _a : _b;  \
-     })
- #define MIN_NON_ZERO(a, b) \
--    MIN_NON_ZERO_INTERNAL((a), (b), MAKE_IDENTFIER(_a), MAKE_IDENTFIER(_b))
-+    MIN_NON_ZERO_INTERNAL((a), (b), MAKE_IDENTIFIER(_a), MAKE_IDENTIFIER(_b))
- 
- /*
-  * Round number down to multiple. Safe when m is not a power of 2 (see
--- 
-2.34.1
+Also please clearly spell out that it's a temporary workaround for ...
+in commit message.
+
+
+>=20
+> > =20
+> >> regards
+> >> john =20
+>=20
+>=20
+> Thanks
+>=20
+> Manish Mishra
+>=20
 
 
