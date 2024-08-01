@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AD52C3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 05:38:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FD6CC3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 05:42:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZOW8-0007Lx-Q7; Thu, 01 Aug 2024 01:38:24 -0400
+	id 1sZOZe-0007St-Cb; Thu, 01 Aug 2024 01:42:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZOW7-0007Ig-Rj
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 01:38:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZOZL-0007Rl-Ja
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 01:41:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZOW6-0007cq-4O
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 01:38:23 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZOZJ-0001qD-O2
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 01:41:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722490701;
+ s=mimecast20190719; t=1722490900;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=vvU6MiXagV7sOAqShKol3qt3aDdMNeEYJNvrTNc2CVc=;
- b=IPyqF9NiRA5JzikjQ4Fy5S8rtll6fe2YJgQCDxEXIqYxiGY65dojOfBKxj8zje1i1z2MfX
- IW+vTLRNBW0yBIPocb0XE1bPx6wgYh3isRnY0O3Et80monpDU0pMt0cAfBixEv6TGl3Cap
- Mxzkz3lTGFicGAqSvjFf25oDs2/mN80=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NktRsDxeEC0eGyhn7hbLjpa+ogRehzlxHVdf+BeEVDI=;
+ b=hac1tuCGjS3dKdnr529n0TKod9oulKLrW5cI97pjkXS2uzmf8AYnFk9A1lyE+JpbQ0qj9x
+ 0rSndOsbp6smCWXgYyXZo8rYKYxheOP2k70HibSI0UtbdeHFsc2g2WgXJRKFDy6Mti0L0j
+ G+Nq0QDhsqmmUg/pDp/Ek74wOSfHido=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-424-nD7POfx0NYyj62c_2ugIQw-1; Thu, 01 Aug 2024 01:38:16 -0400
-X-MC-Unique: nD7POfx0NYyj62c_2ugIQw-1
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5af95f7d65bso4611948a12.3
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 22:38:16 -0700 (PDT)
+ us-mta-587-0G31rPRrP6C464gRDThsEg-1; Thu, 01 Aug 2024 01:41:39 -0400
+X-MC-Unique: 0G31rPRrP6C464gRDThsEg-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-52f02f1773fso7343717e87.3
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 22:41:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722490695; x=1723095495;
+ d=1e100.net; s=20230601; t=1722490898; x=1723095698;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vvU6MiXagV7sOAqShKol3qt3aDdMNeEYJNvrTNc2CVc=;
- b=GsoRp++eSXpClyg/glNSjOFAe3TJNAFGa3OVJ4v8J4+0TV5mO2P5ykXBq/xO+/a9qp
- m/WvKeJsAno3/tHI1o86NT+qo4if9nH8QiMw+GnCSqmgWV2zjZsBQLybrD80lbKCpknx
- QkU/BD64vA36LzRvERVZ6FPBkL1rCusNODkR4n2d8D2B3nGPxi87NtEFjj4kklWs0xLG
- 05DqVCLavznISi2w+IAB8UYaIRGMLhMgV0qqV/8K0gbkDZaPKdNjDxaZ2zc3oyYIzhAp
- omtmiukmHr+j2CzRfABWJpT8EFCiBHea8hPKzlWfu8j7LZxz6vINrGsJZNS6jFqvOY5P
- W3Fg==
+ bh=NktRsDxeEC0eGyhn7hbLjpa+ogRehzlxHVdf+BeEVDI=;
+ b=UJVhRLh7VFAobq7w7fiGN2F0blRAfUhV6aPvxodcHMkiAN3CsAkY3cGXpi+hOJlRLO
+ 5SUP46ZCqOgHLh9+lh002JsyE3x4AiI/KIPZxyaTa+Fnz2bRlq+bm1RR0vbNRIDINz8/
+ 1AzkIhVTYbgLpsn6NCXUDTOfE/LxsIqUnqE3tXEE4U8MSVJRkE0gS0Y75LBvdHtYPV2f
+ TtcIkuYkPQKlInroew7ij0MfI1kZL4uSc40Z42wGtUaaPIqXf8Rg3tEOcA03Bb/EodFa
+ DHEv2Y7AocjvokaCfHI487RLlky+7o+pyC7oZTKV83DcLp+7Ps/io9QwkqD3Wx2q2vFU
+ Ci8A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXp4qOKHakkHA7qYmgQqNbY5Mn0fxw5QTqmw9OFFZnxelp1pbsMJZ3fMWQ+l0gk6D4sTk1RcEbrnSp67I4YFdSr1jxqmP0=
-X-Gm-Message-State: AOJu0YwXvKYuxF4oNVWIxEU7rietRbNMe3KFwm7JGvJVOHoidWbRPj1V
- qO+BYv1PEKNXsyWm/i7J5gT1sv8b7PoJ0l/HUmCS9MbxVomynxMTqsUBUzP2WrFMIqfxtP7pPKH
- Tjv9BX7a3UeMQ9uap9VEg+bjWNhE8zmWctKF3cM1z1TusaJLqjNWB
-X-Received: by 2002:aa7:da4d:0:b0:5a2:8802:8e10 with SMTP id
- 4fb4d7f45d1cf-5b6fe72a922mr622352a12.8.1722490695530; 
- Wed, 31 Jul 2024 22:38:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG6bxNVotBbvMWVhZjqmX3NVrat8liDnYJ3dI43Vj6tZtP0JceUp2QTQKU3iW81jlRCbSFjQA==
-X-Received: by 2002:aa7:da4d:0:b0:5a2:8802:8e10 with SMTP id
- 4fb4d7f45d1cf-5b6fe72a922mr622323a12.8.1722490694669; 
- Wed, 31 Jul 2024 22:38:14 -0700 (PDT)
+ AJvYcCXY2mSWQ0MtK4i9fgWVXvpLaeZKH+xPZmFnfpoiDko2TzTiqQU/HiNGekx/A1y9OzwW7bOrKw2t1Zk1NZYYhKDumiE7txA=
+X-Gm-Message-State: AOJu0YyNHQMesMIy05UmGegpuugpHQ4h9gvB87ZL0L9tYRmD4oBIZq00
+ vebNfMWk8dEVqOtnkFwJ2sBDXZnLGPRN4riyYqfZiSjVL5WaRfwG+zgB+g6/7C8oGIgaPgXLBkm
+ kjFXxoCNEIo5x28rBzO0qf3cPzB/0m5+Gok9HLwfibsu8eOv9urxE
+X-Received: by 2002:a05:6512:2c90:b0:530:ae4a:58ce with SMTP id
+ 2adb3069b0e04-530b619a8f6mr762581e87.11.1722490897686; 
+ Wed, 31 Jul 2024 22:41:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEb7oMEF1ivDPBIyU5TmsCRvgelayVQs9m7PgG3SNmvBrexul8KscFRQ7ECv3zLmuVjTFitHQ==
+X-Received: by 2002:a05:6512:2c90:b0:530:ae4a:58ce with SMTP id
+ 2adb3069b0e04-530b619a8f6mr762553e87.11.1722490896896; 
+ Wed, 31 Jul 2024 22:41:36 -0700 (PDT)
 Received: from redhat.com ([2.55.44.248]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5af758a6c36sm8038513a12.73.2024.07.31.22.38.10
+ a640c23a62f3a-a7acadbb910sm851016766b.225.2024.07.31.22.41.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 31 Jul 2024 22:38:13 -0700 (PDT)
-Date: Thu, 1 Aug 2024 01:38:07 -0400
+ Wed, 31 Jul 2024 22:41:36 -0700 (PDT)
+Date: Thu, 1 Aug 2024 01:41:30 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>,
+To: Thomas Huth <thuth@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>,
  Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
  marcel.apfelbaum@gmail.com, philmd@linaro.org,
  wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
- jasowang@redhat.com, sriram.yagnaraman@est.tech, sw@weilnetz.de,
- qemu-devel@nongnu.org, yan@daynix.com,
- Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
+ akihiko.odaki@daynix.com, jasowang@redhat.com,
+ sriram.yagnaraman@est.tech, sw@weilnetz.de, qemu-devel@nongnu.org,
+ yan@daynix.com, Fabiano Rosas <farosas@suse.de>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ devel@lists.libvirt.org
 Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <20240801013539-mutt-send-email-mst@kernel.org>
-References: <20230731223148.1002258-5-yuri.benditovich@daynix.com>
+Message-ID: <20240801013925-mutt-send-email-mst@kernel.org>
+References: <20230731223148.1002258-1-yuri.benditovich@daynix.com>
+ <20230731223148.1002258-5-yuri.benditovich@daynix.com>
  <ZqLPLBnbfD5r6z7D@x1n>
  <20240726020656-mutt-send-email-mst@kernel.org>
  <775ff713-f7d3-4fdc-8ba0-4ebde577040d@redhat.com>
- <ZqNiwmy29dxdyMA0@redhat.com> <ZqO2HvFJ8v7hZFOd@x1n>
- <ZqO7cR-UiGpX2rk0@redhat.com> <ZqQLbGxEW3XT7qL-@x1n>
- <Zqe8C9AfaojKHM8A@redhat.com>
- <da9de7f6-da16-4858-b680-0e2ee15162dc@daynix.com>
+ <20240726032520-mutt-send-email-mst@kernel.org>
+ <fb5fbcbd-ff55-466f-b48b-aa12adca3179@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <da9de7f6-da16-4858-b680-0e2ee15162dc@daynix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+In-Reply-To: <fb5fbcbd-ff55-466f-b48b-aa12adca3179@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,21 +112,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 30, 2024 at 02:02:27AM +0900, Akihiko Odaki wrote:
-> I think it is simpler to analyze the platform dependency and dump it for the
-> management layer. For example, libvirt can request QEMU to analyze the
-> platform dependency when it creates a new domain. QEMU will then figure out
-> that the host kernel is capable of USO and bake it as a platform dependency.
-> 
-> Regards,
-> Akihiko Odaki
+On Fri, Jul 26, 2024 at 07:39:46PM +0200, Thomas Huth wrote:
+> Anyway, while we're discussing solutions: We are in softfreeze already.
+> Should we disable the UFO bits in the new 9.1 machine type for the time
+> being to avoid that more people are running into this problem?
 
-I think for starters, we can just have dump-features as a QEMU command.
-Pass it on command line on destination.
-Achieves the same thing as making userspace pass each flag
-manually, but without the pain of teaching management to enable
-each new feature.
-
+At the moment I'm looking at solutions for 9.2 I don't see how
+we can do much for 9.1. I mean we can move it back to behave like
+8.1 (IIRC), but that is not much.
 
 -- 
 MST
