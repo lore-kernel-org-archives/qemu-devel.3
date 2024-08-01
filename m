@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36829C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 12:58:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 095E8C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 13:00:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZVNK-0004Bu-Vo; Thu, 01 Aug 2024 08:57:47 -0400
+	id 1sZVPH-00044w-Ef; Thu, 01 Aug 2024 08:59:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZVN9-0003Jm-DV
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 08:57:38 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZVPF-0003vY-02
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 08:59:45 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZVN6-0000Oi-9U
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 08:57:35 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3684e8220f9so1142927f8f.1
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 05:57:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZVPD-0000nz-Br
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 08:59:44 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-368313809a4so1233879f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 05:59:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722517049; x=1723121849; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722517182; x=1723121982; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=W9BTOh2poU6JigM03HRrC0PUte6Uu+QGv/OjvnAPoog=;
- b=ZXbyjyjC3ZIj1HefxCSFZRZRFv+11plox0FSqbujo/Ynj+19JV6JeWe/L+6UtIMruo
- VlSaZsGHORTtDNanF85joXic/MqT756EoJ4qgoz/Wrf738/HxqNezZzuDk5YBsoTwKi7
- 33BnsuD00Ax3PRE0i9e29PP2raQkJydeGOnhiiJxYoyV94NCSBlhFDk/o1/J1VoqpcSO
- S98ihta+qG0YhI64pxY5cAt9HWLWDLBF+TxPikOouvwgkZss4RiJcVr4O0NyK4LYak+o
- LBKqmZHOv2Cf+UHBlDVYwnLlYYkljtCyxRJqZL+HySDo3w7mUeNjqyn8s9h0gIQbVxga
- xSGw==
+ bh=reWrZU/QJhlSWLyInbA0OjyEvus8Fj5OWJF3KGaYwP4=;
+ b=m7A3zDxr8gq2BthJPH2vN+VRDdWbv9ZpD9m8VKcZR/MRc7YPCKY3KgDacCBNKFt9iK
+ 1k4kUKpIjLx/fw3COWVCBxEFH/1eXqCQpZ6euVSiYl53GWXCKJTjNzI0XKGfAaqqIFR2
+ ZjelxNl8u9a262SsADVyumzCQNE3IaZlLWtfCYLXT8zQa8LxJrSHSLLfi/FdGDHWCky4
+ wEuDONnHqkjm6QKdquJ/kJKlJajA1jmFXqHYWuXHE1OMvvXsAWvC17hmZFEV+vLMmVTP
+ jd9QNxopgCwzcRI+cW+k83TQb2g+tWK9NLy3GW8iNYKCauH5VrhcHwW6ps0FBMHKY7ps
+ klcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722517049; x=1723121849;
+ d=1e100.net; s=20230601; t=1722517182; x=1723121982;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=W9BTOh2poU6JigM03HRrC0PUte6Uu+QGv/OjvnAPoog=;
- b=AtqgJL2MYgSCDU5SHapBfS5dKU0B4VzBBabJAGS4Rm28ukaSWhwsC6Yc7g/k2hbFog
- BbQmDVbPc8NiujX9urQBiNvu71G9AJbbDyRAGqOWXwQoK436kb8HO2K1F/AvlBS9l8ui
- Jewm/BjqxEkUWerdP+Kev4S4NB38UPB9VCqah/ppO6dZcd2zdN63QpbOWtX37vr4YMMG
- L+RIrd5rUE/aDNTCelBm9e3s2SQHUM/WgVa8XelUvnYLtUSSoFTbfCRughe4W4FmDFgQ
- 6Ngn0S7bLuyeaBOrRb3WuyIKzo0n0C2z/1nX4TjOyNM6VD1psBnxW3yabAm8wIv8U/Y5
- xmgQ==
-X-Gm-Message-State: AOJu0YzHJeyLk5+9Qlfv9RCpqx0eJuKKwYT+P7Yebuo/+PXMD1S0TIrD
- z+/Du06oR2r80Gj0rX8bdLvcD55JraRnHkZ/j3wT2JUSJg06w3xz45xYBfd0wWk=
-X-Google-Smtp-Source: AGHT+IFff809S2Cleb/DVo+qwAck9cEgo3thORGHzF3ijxw5uiish8tFPFDDeHTT4mwpcGte0MOZtw==
-X-Received: by 2002:a5d:6509:0:b0:362:4679:b5a with SMTP id
- ffacd0b85a97d-36bb35c1044mr1423393f8f.16.1722517049398; 
- Thu, 01 Aug 2024 05:57:29 -0700 (PDT)
+ bh=reWrZU/QJhlSWLyInbA0OjyEvus8Fj5OWJF3KGaYwP4=;
+ b=H6lwTEE2nvpHJj0PVo0cB/oMkzA7uw26QPfFZYYclnRzK/it3dFviYqScdB4xEis0M
+ TN9WkyHlPJFOjew/JgpmVmvmzTggpdEITIt7wr4nMNIcbGoQKe1+HBt8rq1REpKGxrsn
+ xuoxlKxfMN+H32KjCL8iVtnnzg5QVCAFAlx1qLRZojC4mtngjw86wLrpogauAivqeo6H
+ p1srAxN3iGTnKV5Pw9TvqHSnssZ5jhH9AAykAiyNatNL6oB4M/AaW0AXHvkr0HMfCi2G
+ rMVwV8DktEY9DVLIbfq0uvtsNyS5EVyrAiP22Lr+4WEGQoN908sNlxmj/XMfm4wBGNri
+ HSww==
+X-Gm-Message-State: AOJu0YzoEFnimnYsKoWmyKlslxVSM+B++q6YJRZ4vTzSIgr+dI9aObz+
+ t6aJJYH3gH8lbSZdUnhKXMV1JktScIqbcpaIiOnKjV0Iyx/OJpHkD77oXh9GpZY=
+X-Google-Smtp-Source: AGHT+IEnKobr50cUvKpNW3LP+tEde2Lwq8dMN/vsZsHAj9TorGHmI2pf873uTdTxjhnLjEz93nmnWA==
+X-Received: by 2002:a05:6000:1b0b:b0:367:940b:b662 with SMTP id
+ ffacd0b85a97d-36bb35d6147mr1226150f8f.31.1722517181543; 
+ Thu, 01 Aug 2024 05:59:41 -0700 (PDT)
 Received: from [192.168.69.100] ([176.176.130.148])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36b367d95dfsm19358613f8f.35.2024.08.01.05.57.26
+ ffacd0b85a97d-36b36857d66sm19329382f8f.83.2024.08.01.05.59.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Aug 2024 05:57:28 -0700 (PDT)
-Message-ID: <a3b0ebf6-47ca-4aad-9489-16458ffd6ff3@linaro.org>
-Date: Thu, 1 Aug 2024 14:57:25 +0200
+ Thu, 01 Aug 2024 05:59:40 -0700 (PDT)
+Message-ID: <68710de3-02da-4fa3-936c-62c85197893c@linaro.org>
+Date: Thu, 1 Aug 2024 14:59:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/10] tests/avocado/kvm_xen_guest.py: cope with asset RW
- requirements
+Subject: Re: [PATCH 10/13] tests/avocado/tuxrun_baselines.py: use Avocado's
+ zstd support
 To: Cleber Rosa <crosa@redhat.com>
-Cc: qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Radoslaw Biernacki <rad@semihalf.com>, Paul Durrant <paul@xen.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Beraldo Leal <bleal@redhat.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ David Woodhouse <dwmw2@infradead.org>,
  Leif Lindholm <quic_llindhol@quicinc.com>,
- Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, kvm@vger.kernel.org, qemu-arm@nongnu.org,
- Beraldo Leal <bleal@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, kvm@vger.kernel.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- David Woodhouse <dwmw2@infradead.org>
-References: <20231208190911.102879-1-crosa@redhat.com>
- <20231208190911.102879-7-crosa@redhat.com>
- <20efca0c-982c-4962-8e0c-ea4959557a5e@linaro.org>
- <CA+bd_6K5S9yrD6hsBsTmW4+eJpPsquE8Ud9eHZzptUwDrHcpeQ@mail.gmail.com>
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-arm@nongnu.org,
+ Radoslaw Biernacki <rad@semihalf.com>, Paul Durrant <paul@xen.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Akihiko Odaki <akihiko.odaki@daynix.com>
+References: <20240726134438.14720-1-crosa@redhat.com>
+ <20240726134438.14720-11-crosa@redhat.com>
+ <a7f2d78a-4de6-4bc6-9d54-ee646a9001fe@linaro.org>
+ <CA+bd_6L7o05mENKVuLLfMFK9OF6ckU23ue0xmxiWO5oiT4ZEbw@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CA+bd_6K5S9yrD6hsBsTmW4+eJpPsquE8Ud9eHZzptUwDrHcpeQ@mail.gmail.com>
+In-Reply-To: <CA+bd_6L7o05mENKVuLLfMFK9OF6ckU23ue0xmxiWO5oiT4ZEbw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,47 +107,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/24 05:30, Cleber Rosa wrote:
-> On Mon, Dec 11, 2023 at 11:32 AM Philippe Mathieu-Daudé
+On 1/8/24 05:39, Cleber Rosa wrote:
+> On Mon, Jul 29, 2024 at 10:39 AM Philippe Mathieu-Daudé
 > <philmd@linaro.org> wrote:
 >>
->> On 8/12/23 20:09, Cleber Rosa wrote:
->>> Some of these tests actually require the root filesystem image,
->>> obtained through Avocado's asset feature and kept in a common cache
->>> location, to be writable.
+>> On 26/7/24 15:44, Cleber Rosa wrote:
+>>> Signed-off-by: Cleber Rosa <crosa@redhat.com>
+>>> ---
+>>>    tests/avocado/tuxrun_baselines.py | 16 ++++++----------
+>>>    1 file changed, 6 insertions(+), 10 deletions(-)
 >>>
->>> This makes a distinction between the tests that actually have this
->>> requirement and those who don't.  The goal is to be as safe as
->>> possible, avoiding causing cache misses (because the assets get
->>> modified and thus need to be dowloaded again) while avoid copying the
->>> root filesystem backing file whenever possible.
+>>> diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
+>>> index 736e4aa289..bd02e88ed6 100644
+>>> --- a/tests/avocado/tuxrun_baselines.py
+>>> +++ b/tests/avocado/tuxrun_baselines.py
+>>> @@ -17,6 +17,7 @@
+>>>    from avocado_qemu import QemuSystemTest
+>>>    from avocado_qemu import exec_command, exec_command_and_wait_for_pattern
+>>>    from avocado_qemu import wait_for_console_pattern
+>>> +from avocado.utils import archive
+>>>    from avocado.utils import process
+>>>    from avocado.utils.path import find_command
+>>>
+>>> @@ -40,17 +41,12 @@ def get_tag(self, tagname, default=None):
+>>>
+>>>            return default
+>>>
+>>> +    @skipUnless(archive._probe_zstd_cmd(),
 >>
->> Having cache assets modified is a design issue. We should assume
->> the cache directory as read-only.
+>> _probe_zstd_cmd() isn't public AFAICT, but more importantly
+>> this doesn't work because this method has been added in v101.0.
 >>
 > 
-> I agree those files should not be modified, but I wonder if you
-> thought about any solution to this? Given that the same user writes
-> (downloads) those files, do you think setting file permissions between
-> the download and the use of the files should be done?
-
-We want to share a cachedir on development hosts with multiple
-developers. OK to alter a downloaded file before adding it to
-the cache; but then once a file is added/hashed it shouldn't be
-modified IMO.
-
-So far this directory is group=RW but we like the ability to track
-a read-only directory (like owned by a particular user) and adding
-missing assets to current user cachedir, to avoid duplication of
-files and waste of network transfer.
-
-> That can make the management of the cache (such as pruning it) either
-> require undoing the restriction or being done by a super user.
+> While it's not the best practice to use private functions, I just
+> couldn't accept rewriting that for the skip condition.  I can make
+> sure future  versions (including 103.1) make it public.
 > 
-> Anyway, just curious.
-> 
-> Regards,
-> - Cleber.
-> 
+> Also, these patches count on the bump to 103.0 indeed.
 
+Then either mention it in the commit description to avoid wasting
+time to developers cherry-picking / testing this single patch, or
+move it after the version bump, avoiding bisectability issues.
+
+Thanks,
+
+Phil.
 
