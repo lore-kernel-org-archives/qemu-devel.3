@@ -4,55 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF1AAC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 15:02:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B7BCC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 15:03:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZXJh-0001ky-R9; Thu, 01 Aug 2024 11:02:09 -0400
+	id 1sZXKn-000666-4A; Thu, 01 Aug 2024 11:03:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
- id 1sZXJe-0001cG-5R
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:02:06 -0400
-Received: from va-2-40.ptr.blmpb.com ([209.127.231.40])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xiangwencheng@dayudpu.com>)
- id 1sZXJY-0005Px-Co
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:02:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=dayudpu-com.20200927.dkim.feishu.cn; t=1722524513;
- h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=yt+pRC5FOXmek1RzZeuSU/uGknOLwlYhS4JyyYu7eRY=;
- b=lM+jS0fLI8uFiHI1RIj39t+xNg6O0mXCnxD8u+dsP5dFZ9wERSeq4R71JGJk01kyR2dsgu
- 4H0s+n65nNiEP2nDnReevL8DE7+PevZ6ndSKa0lERR83f56LRroXpVvw4CsjnDjJhDXzNu
- Q11Zcvd/NhtU+br9AsQX6Xw6TaTg7cDzaf+3N6nUgxduY/iFvLzw8Fdtz48VfEyzRp1gMk
- FLzO7813sMo2sAjBCMZh2L/d32tHcomP6XXLrZapcO80i/3zldqcoMrtoOY5AJO5NoiVkQ
- 8KK3foiePbSJYfZeXkE0QRE1yzgQ9Z7Nd063sn+m6Pe7xBqEBMyF9PjopSs8zg==
-References: <20240801124540.38774-1-xiangwencheng@dayudpu.com>
- <20240801101210-mutt-send-email-mst@kernel.org>
-X-Lms-Return-Path: <lba+166aba360+c8091c+nongnu.org+xiangwencheng@dayudpu.com>
-In-Reply-To: <20240801101210-mutt-send-email-mst@kernel.org>
-Date: Thu, 01 Aug 2024 23:01:51 +0800
-Cc: <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v3] vhost-user: Do not wait for reply for not sent
- VHOST_USER_SET_LOG_BASE
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <fba0cfc406f202976ef5ac5d129e08524ce06bbf.d4485eba.82f2.4fda.af98.6cd4ae867655@feishu.cn>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-From: "BillXiang" <xiangwencheng@dayudpu.com>
-Content-Type: text/plain; charset=UTF-8
-Received-SPF: pass client-ip=209.127.231.40;
- envelope-from=xiangwencheng@dayudpu.com; helo=va-2-40.ptr.blmpb.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZXKf-0005mN-81
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:03:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZXKT-0005ds-Ph
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:03:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722524575;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2Lo+uGDIcyD7W0t4MDXDii2PLkA0SFngkBQWIS2XHb8=;
+ b=XlNo8D7hLnmQkDD13okV7o3GKuXoFys4TBockR9CS03myWveynaaLKruOgG8gc1Hl0uFgW
+ KevlJgmbInpTuVVcbSBh/JW8grbZ8F71kT5hEsf/bdnEpVssVjlkd4nzEreMrfqrUBhnTT
+ eOIvMnGJUc6Q7LI9Z99ezxn/nXaoSUs=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-9-nTKgrokuNSSmSPYf6Hp6fg-1; Thu, 01 Aug 2024 11:02:51 -0400
+X-MC-Unique: nTKgrokuNSSmSPYf6Hp6fg-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2ef23969070so81574351fa.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 08:02:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722524570; x=1723129370;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2Lo+uGDIcyD7W0t4MDXDii2PLkA0SFngkBQWIS2XHb8=;
+ b=n8l3d/5ANVwDuktyHkpMWnvQcmqmTznhceTEW2PrJCGjTAKCostVV+4NBCssd4o+hK
+ jO5/qb7AzRKvDdogkFJNInvTHRBOOL51rZ7n/rRwG4clSEDprclo9kPEqTyxBPIIU05E
+ /AXqtgDyLpBBD8MgTxvVEmw5W2b96RslQCm7HV8D5nGRwMj8x4iPlIvBTPLWbaFasDAi
+ uUaNJaMtFsWpieZrWZUS71koklWizf8X5VJAlHEpGxiyldISeU0bR/YJlvs+gH7ZZNpU
+ 73gQDzhOuTBJt31yrhjAs+G67uBM3G5SD4KcvlNvcFto1RI/rckO06y2Od6SxILvBcXS
+ CH/g==
+X-Gm-Message-State: AOJu0YyLVt/tE1Lt9wJ9KEoj7hZINaV4kEubDRhl+c4aRzZpKvtEd96N
+ uw96tHSil6SqvUCRkh+qVDMErOtsbYWETy6kTgrRtc+q8FcIRkAlU9Wfhou5O9NDmlW8rwdG4Px
+ 1Mk4VRgM278s+dUgKPyeyL5LIgFtpP/u8GupIb3YlCStqzeObLGb3
+X-Received: by 2002:a2e:8703:0:b0:2ef:1b1b:7f42 with SMTP id
+ 38308e7fff4ca-2f15ab2a580mr4857811fa.36.1722524569968; 
+ Thu, 01 Aug 2024 08:02:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHt7Z5lfoAg+BK1GDJ0NXZLTHsCNUWCr+4kl0JGmr7vAmjEPeh8ZF41DZm20A9ArgGebZU1zg==
+X-Received: by 2002:a2e:8703:0:b0:2ef:1b1b:7f42 with SMTP id
+ 38308e7fff4ca-2f15ab2a580mr4856941fa.36.1722524568957; 
+ Thu, 01 Aug 2024 08:02:48 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:176:b4e2:f32f:7caa:572:123e])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7acad9079bsm904803366b.166.2024.08.01.08.02.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 Aug 2024 08:02:47 -0700 (PDT)
+Date: Thu, 1 Aug 2024 11:02:43 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>
+Subject: Re: [PATCH-for-9.1 v2 2/2] hw/pci-host/gt64120: Set PCI base address
+ register write mask
+Message-ID: <20240801105917-mutt-send-email-mst@kernel.org>
+References: <20240801145630.52680-1-philmd@linaro.org>
+ <20240801145630.52680-3-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240801145630.52680-3-philmd@linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,54 +102,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Aug 01, 2024 at 04:56:30PM +0200, Philippe Mathieu-Daudé wrote:
+> When booting Linux we see:
+> 
+>   PCI host bridge to bus 0000:00
+>   pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
+>   pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
+>   pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
+>   pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
+>   pci 0000:00:00.0: [Firmware Bug]: reg 0x14: invalid BAR (can't size)
+>   pci 0000:00:00.0: [Firmware Bug]: reg 0x18: invalid BAR (can't size)
+>   pci 0000:00:00.0: [Firmware Bug]: reg 0x1c: invalid BAR (can't size)
+>   pci 0000:00:00.0: [Firmware Bug]: reg 0x20: invalid BAR (can't size)
+>   pci 0000:00:00.0: [Firmware Bug]: reg 0x24: invalid BAR (can't size)
+> 
+> This is due to missing base address register write mask.
+> Add it to get:
+> 
+>   PCI host bridge to bus 0000:00
+>   pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
+>   pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
+>   pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
+>   pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
+>   pci 0000:00:00.0: reg 0x10: [mem 0x00000000-0x00000fff pref]
+>   pci 0000:00:00.0: reg 0x14: [mem 0x01000000-0x01000fff pref]
+>   pci 0000:00:00.0: reg 0x18: [mem 0x1c000000-0x1c000fff]
+>   pci 0000:00:00.0: reg 0x1c: [mem 0x1f000000-0x1f000fff]
+>   pci 0000:00:00.0: reg 0x20: [mem 0x1be00000-0x1be00fff]
+>   pci 0000:00:00.0: reg 0x24: [io  0x14000000-0x14000007]
+> 
+> Mention the datasheet referenced. Remove the "Malta assumptions ahead"
+> comment since the reset values from the datasheet are used.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  hw/pci-host/gt64120.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
+> index b68d647753..344baf55db 100644
+> --- a/hw/pci-host/gt64120.c
+> +++ b/hw/pci-host/gt64120.c
+> @@ -1224,6 +1224,13 @@ static void gt64120_pci_reset_hold(Object *obj, ResetType type)
+>                   PCI_STATUS_FAST_BACK | PCI_STATUS_DEVSEL_MEDIUM);
+>      pci_config_set_prog_interface(d->config, 0);
+>  
+> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_0, 0xfffff009);
+> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_1, 0xfffff009);
+> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_2, 0xfffff009);
+> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_3, 0xfffff009);
+> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_4, 0xfffff009);
+> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_5, 0xfffff001);
+> +
+>      pci_set_long(d->config + PCI_BASE_ADDRESS_0, 0x00000008);
+>      pci_set_long(d->config + PCI_BASE_ADDRESS_1, 0x01000008);
+>      pci_set_long(d->config + PCI_BASE_ADDRESS_2, 0x1c000000);
 
-> From: "Michael S. Tsirkin"<mst@redhat.com>
-> Date:=C2=A0 Thu, Aug 1, 2024, 22:13
-> Subject:=C2=A0 Re: [PATCH v3] vhost-user: Do not wait for reply for not s=
-ent VHOST_USER_SET_LOG_BASE
-> To: "BillXiang"<xiangwencheng@dayudpu.com>
-> Cc: <qemu-devel@nongnu.org>
-> On Thu, Aug 01, 2024 at 08:45:40PM +0800, BillXiang wrote:
-> > From: BillXiang <xiangwencheng@dayudpu.com>
-> >=C2=A0
-> > Currently, we have added VHOST_USER_SET_LOG_BASE to=C2=A0
-> > vhost_user_per_device_request in commit 7c211eb078c4=C2=A0
-> > ("vhost-user: Skip unnecessary duplicated VHOST_USER_SET_LOG_BASE reque=
-sts"),=C2=A0
-> > as a result, VHOST_USER_SET_LOG_BASE will be sent only once=C2=A0
-> > when 'vq_index =3D=3D 0'.
-> > In this patch we add the check of 'vq_index =3D=3D 0' before=C2=A0
-> > vhost_user_read, such that we do not wait for reply for not
-> > sent VHOST_USER_SET_LOG_BASE.
-> >=C2=A0
-> > Signed-off-by: BillXiang <xiangwencheng@dayudpu.com>
-> > ---
-> >=C2=A0 hw/virtio/vhost-user.c | 2 +-
-> >=C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)
-> >=C2=A0
-> > diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-> > index 00561daa06..fd12992d15 100644
-> > --- a/hw/virtio/vhost-user.c
-> > +++ b/hw/virtio/vhost-user.c
-> > @@ -460,7 +460,7 @@ static int vhost_user_set_log_base(struct vhost_dev=
- *dev, uint64_t base,
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 return ret;
-> > =C2=A0 =C2=A0=C2=A0 }
-> > =C2=A0
-> > - =C2=A0=C2=A0 if (shmfd) {
-> > + =C2=A0=C2=A0 if (shmfd && (dev->vq_index =3D=3D 0)) {
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 msg.hdr.size =3D 0;
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 ret =3D vhost_user_read(dev, &msg);
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0=C2=A0 if (ret < 0) {
->=C2=A0
->=C2=A0
->=C2=A0
-> How do things work now after 7c211eb078c4 then?
 
-It does not really work after 7c211eb078c4 and it's my mistake.=C2=A0
-I forgot to submit the code to check vq_index in 7c211eb078c4.
+if you are tweaking wmask, I think migration will fail.
+So you have to make this depend on machine property, and
+put in compat machinery.
 
->=C2=A0
-> > --=C2=A0
-> > 2.30.0
+> -- 
+> 2.45.2
+
 
