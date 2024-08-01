@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1BD3C3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 15:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA276C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 16:02:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZYCL-0003sE-Ex; Thu, 01 Aug 2024 11:58:37 -0400
+	id 1sZYF1-000653-CH; Thu, 01 Aug 2024 12:01:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sZYCI-0003fY-7u
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:58:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sZYCF-0008Je-C9
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:58:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722527909;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=47nvAc0T0Uug6qvmgG658rUZGi8EVVmvavXa3Ool2QE=;
- b=Rf2lF8Tt+q7Hlm2y8YAfBfuki6Awa00wpjJNxsxqm0/K3eyIJI/I2cVhPlh9wc6L3lW2jZ
- yY9W80Tlw0ZbPmxnEoQ3valbQl6O0h7H0BR8eU7akVTtMSdZmJLmDd5olXBmK0kuduT0XP
- An6G92HR5dwrqbwJ+JZKIr23by0kJiI=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-681-Ram8xBgbO_C5V2g0Kd9ljg-1; Thu,
- 01 Aug 2024 11:58:24 -0400
-X-MC-Unique: Ram8xBgbO_C5V2g0Kd9ljg-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 475BF1955D62; Thu,  1 Aug 2024 15:58:22 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.109])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8BE3D1955D42; Thu,  1 Aug 2024 15:58:16 +0000 (UTC)
-Date: Thu, 1 Aug 2024 16:58:12 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
- akihiko.odaki@daynix.com, jasowang@redhat.com,
- sriram.yagnaraman@est.tech, sw@weilnetz.de, qemu-devel@nongnu.org,
- yan@daynix.com, Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <ZquwlFrRVNyN7MjH@redhat.com>
-References: <Zqk6x2nd3Twz--75@x1n>
- <20240730151746-mutt-send-email-mst@kernel.org>
- <ZqlHKaQXzKGcnoBM@x1n>
- <20240730172148-mutt-send-email-mst@kernel.org>
- <Zqnh-AJC4JPl5EkS@redhat.com>
- <20240731033803-mutt-send-email-mst@kernel.org>
- <Zqo00Na1MZpksY9A@x1n>
- <20240801014222-mutt-send-email-mst@kernel.org>
- <ZqutjR8WH2Owm9q8@redhat.com>
- <20240801114900-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZYEr-0005V5-Ci
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:01:15 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZYEp-0000iE-AR
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:01:13 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-58ef19aa69dso7702160a12.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 09:01:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722528068; x=1723132868; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=C7XiHRxBjUr+HUlbfd+0KbWq7BgvR1k3pX23yefkUgo=;
+ b=LkXax9p2knc6Hvc9lRATe4YEXfZgN0N60q/jm5mlR57+AdRU3zm+MbWGV/c5NNK7+K
+ zZmRsD4sUXRrX5OTMUyYkhaRzLRZ8BJIEznlv75g/dADWNDqF3AgJ1AWhgqBBaK76Yf7
+ cVbtQnzvC+S/1F/Cl/PKEtSCRbvWGp/hLya4RmDWWCc3aoVmsNVcsM2xp+mLdhRHaTds
+ meTxw6y3EmzGid7n9ZafOKcjwGNkw/wRmEfjMLs2PIWP1pQY2IM19IcRNvwNLXAfXmj5
+ +2Y3KpRljjItL8R2mdB7bqcVhMn95JkklWkmoaEIV2kjakoY3CiCHRc4fyUgLyrVgyZK
+ 4bmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722528068; x=1723132868;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=C7XiHRxBjUr+HUlbfd+0KbWq7BgvR1k3pX23yefkUgo=;
+ b=AdoFQdvAlO9cSuL8CN9hS7Q7ENe5crsELeMIJYC47CKKs1x5+AelTjasOgJgaXkUJu
+ S0+IrxF1RCdpxAzEaMoU3GcrIVm/8ZPAihPsjOucfjrxMWAJkbWIIjZPzWBh1y4OOT8b
+ zMnIWIumIpoFoMjGvauV8Xf/RGY4YcGUzD1CPgNCLczAFgTj67iDtV/q3Qvi0TC9fBIL
+ 3PtQdR2U0kHOotDcEu52GbltKprw5u/7z0vZLGhJKO18FCqGjVj5uKo7Ev2+uJbpjj85
+ BR2AIsE5DkjRsjMgs+DZDpuTJHlH1aQUxVAwVejK8a83123ia1CsBJzqErJZQKfbLR6z
+ YCIQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUMTVqQ1vzI5B57IVhSXGBGFNm/EHVn90C7jLWdx2mn6I/Pf2aL545Zn22c3fzwbHG1k2Dwdp42ihIJ3fWK5G24/sG6nUc=
+X-Gm-Message-State: AOJu0Yzo9sT7Qp6e6wJnNlbIzXUJtOJQrNvvhV8Z9hqtRs6vRNqo3u5f
+ NRZJJvG0jCHA7XZx2u2znaDGxChqrBBgQ0HXlszY7107j8dMURSOze8O7O5ov8M=
+X-Google-Smtp-Source: AGHT+IGaj3B/duKhhxZ4FsGcSTinvWiS87drMiQb6i/TJ8a7YjvDRaaLk/ys/EF7kIsrp3y6DNLPfw==
+X-Received: by 2002:a50:e602:0:b0:5a2:763e:b8bf with SMTP id
+ 4fb4d7f45d1cf-5b7f53146d9mr592296a12.25.1722528067969; 
+ Thu, 01 Aug 2024 09:01:07 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.130.148])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5ac6377d005sm10310179a12.38.2024.08.01.09.01.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 Aug 2024 09:01:07 -0700 (PDT)
+Message-ID: <3d157a13-f256-4344-8d17-2babd6e99a54@linaro.org>
+Date: Thu, 1 Aug 2024 18:01:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 09/24] tests/functional: enable pre-emptive caching of
+ assets
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>
+References: <20240730170347.4103919-1-berrange@redhat.com>
+ <20240730170347.4103919-10-berrange@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240730170347.4103919-10-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240801114900-mutt-send-email-mst@kernel.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,40 +99,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 01, 2024 at 11:50:40AM -0400, Michael S. Tsirkin wrote:
-> On Thu, Aug 01, 2024 at 04:45:17PM +0100, Daniel P. Berrangé wrote:
-> > So to ensure a QEMU is started with migration compatible features
-> > will still require teaching libvirt about every single feature
-> > that has a host kernel dependancy, so libvirt (or the app using
-> > libvirt) knows to turn this off. This is alot more work for both
-> > libvirt & the mgmt app, than having QEMU provide the generic
-> > "platforms" concept which is extensible without needing further
-> > work outside QEMU.
+On 30/7/24 19:03, Daniel P. Berrangé wrote:
+> Many tests need to access assets stored on remote sites. We don't want
+> to download these during test execution when run by meson, since this
+> risks hitting test timeouts when data transfers are slow.
 > 
-> I am just not sure it can all amount to selecting from a list.
-> For example, some resource can be limited on one host or another.
-> Thus we get a number. Or there could be a set of N flags, with 2^N
-> combinations.
+> Add support for pre-emptive caching of assets by setting the env var
+> QEMU_TEST_PRECACHE to point to a timestamp file. When this is set,
+> instead of running the test, the assets will be downloaded and saved
+> to the cache, then the timestamp file created.
+> 
+> A meson custom target is created as a dependency of each test suite
+> to trigger the pre-emptive caching logic before the test runs.
+> 
+> When run in caching mode, it will locate assets by looking for class
+> level variables with a name prefix "ASSET_", and type "Asset".
+> 
+> At the ninja level
+> 
+>     ninja test --suite functional
+> 
+> will speculatively download any assets that are not already cached,
+> so it is advisable to set a timeout multiplier.
+> 
+>     QEMU_TEST_NO_DOWNLOAD=1 ninja test --suite functional
+> 
+> will fail the test if a required asset is not already cached
+> 
+>     nina check-func-precache
+> 
+> will download and cache all assets required by the functional
+> tests
+> 
+> At the make level, precaching is always done by
+> 
+>     make check-functional
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   tests/Makefile.include                 |  3 ++-
+>   tests/functional/meson.build           | 33 +++++++++++++++++++++++--
+>   tests/functional/qemu_test/asset.py    | 34 ++++++++++++++++++++++++++
+>   tests/functional/qemu_test/testcase.py |  8 ++++++
+>   4 files changed, 75 insertions(+), 3 deletions(-)
 
-We don't have to support all possible combinations IMHO. If a user
-really does require precise control over every combination of some
-settings, then exposing those tunables in libvirt is inevitable.
 
-The platform concept only has to be able to express a "good enough"
-subset of combinations, such that it is unlikely users will need to
-have fine tuning for most of the tunables. We might end up exposing
-a handful of tunables in libvirt anyway, but as long as we get the
-common case satisifed, we'll eliminate most of the ongoing burden.
+> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+> index 27bbf4a0af..21dbd90613 100644
+> --- a/tests/functional/qemu_test/testcase.py
+> +++ b/tests/functional/qemu_test/testcase.py
+> @@ -21,6 +21,7 @@
+>   from qemu.machine import QEMUMachine
+>   from qemu.utils import kvm_available, tcg_available
+>   
+> +from .asset import Asset
+>   from .cmd import run_cmd
+>   from .config import BUILD_DIR
+>   
+> @@ -58,6 +59,13 @@ def tearDown(self):
+>           self.log.removeHandler(self._log_fh)
+>   
+>       def main():
+> +        path = os.path.basename(sys.argv[0])[:-3]
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+This line should be added here in patch #2 in order to
+avoid ...
+
+> +
+> +        cache = os.environ.get("QEMU_TEST_PRECACHE", None)
+> +        if cache is not None:
+> +            Asset.precache_suites(path, cache)
+> +            return
+> +
+>           tr = pycotap.TAPTestRunner(message_log = pycotap.LogMode.LogToError,
+>                                      test_output_log = pycotap.LogMode.LogToError)
+>           path = os.path.basename(sys.argv[0])[:-3]
+
+.... this duplication.
 
 
