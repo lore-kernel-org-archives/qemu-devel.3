@@ -4,81 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26337C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 10:10:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38346C3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 10:10:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZSkn-0001at-MO; Thu, 01 Aug 2024 06:09:49 -0400
+	id 1sZSlD-000375-0Z; Thu, 01 Aug 2024 06:10:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sZSkl-0001T7-K7
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 06:09:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sZSkj-0007QU-IV
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 06:09:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722506985;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=r0VMI7Or2ebFT8na4YBzWTfxv52cy1HsikMjHoVlw5I=;
- b=RwqMeAJdZx08imjf/RBCpRsFfnsGtajV2A+1qqlfIb+TBb4RCAu2vXrnXwu/WUuga9n3yl
- 2ynrSlP3wgQHlRV2CAfX75Mkahr8UzDakZS8zqVVeSASGjfNmTx4rZV+uGEButRZIrok7F
- Lj+dji61ACwT3uoqpWm0KsGY7PtdGgA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-156-M7EP8uTaOGuwQqRql5XTvA-1; Thu,
- 01 Aug 2024 06:09:42 -0400
-X-MC-Unique: M7EP8uTaOGuwQqRql5XTvA-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 918021955D52; Thu,  1 Aug 2024 10:09:39 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.109])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 37B541955F23; Thu,  1 Aug 2024 10:09:34 +0000 (UTC)
-Date: Thu, 1 Aug 2024 11:09:31 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
- qemu-ppc@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair.francis@wdc.com>
-Subject: Re: [PATCH v3 16/24] tests/functional: Convert the riscv_opensbi
- avocado test into a standalone test
-Message-ID: <Zqte2ySm_scvu17t@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sZSlA-0002zK-P0
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 06:10:12 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sZSl7-0007e9-Jr
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 06:10:12 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5a79df5af51so3511742a12.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 03:10:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722507006; x=1723111806; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=s3fRlURdb45/5xQ0tKGyepiwT9X1nBv2BpjzcUfb2so=;
+ b=Ft+JYq4ppmt/dFMNUEVBbGX4znfn2won8qzkVad7/GegTgTqdQKoBRa+9dfVvKHRmz
+ CwDRn95RsgYfKbzfW5Fs1EwQw/+L5sv7pQv5c1c/4CBTRX1aL7Uk2Z5fKX9R4Iz8vLIE
+ X2i7Yi6TY0zNsbdLS4x79u70/dtXuTHV7GeR8ikNPSmuWSS7fYuf9rYzXTPTGzB1VajB
+ q9ERopQCEplPh4w5hZvIkZBIxy6md4jSPqHdib6fyZLT3I135iR9YaSDBDRTqLUpqTim
+ eKHst8tEib/LY7imsO/I6ZtzXSIvzZ9fyydL40VmWaDOQi/TEqdBOD2+HE1X/ZnJ4C3Y
+ /36g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722507006; x=1723111806;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=s3fRlURdb45/5xQ0tKGyepiwT9X1nBv2BpjzcUfb2so=;
+ b=decaBr6+PzHvLAYjrAI2waVcOneloCzG6Q7A1VzKofZvdmEkWpI2snG79yTSl455RZ
+ rwgFNO+0oCt7E/2Fu1F4jNTEMCxdA10RoE/WENdv8gVdZ5YMEi0cBn+LBal+1EUhcS/D
+ 4zEoJx17inX8LX79Xahj+Rg6z2DPNe2vjsz/WFJVJiZM+We9al+Yu06BU8h5KXwYK6R5
+ bZAIJVS9juG1eBWMFjWkHV1J/63ZM1E3l61+zj13hoWyC3mHQa/+aBUAH5IxKmYfdAWB
+ EmZ0y55lZXm/DT95In1PQ4sCYj3fyO9P0koFIgjBVMssMG/Pz5pw37SqQG2CsxOHI25a
+ H/hw==
+X-Gm-Message-State: AOJu0YwIPX20IfJQC0m7sMFqyuPJXGKPM3ANPeiACC+qggrrlDVBv73C
+ +kVDMnUkgzps1jFyL39sexlVW1ZaBp9LuEUgLvMFrTLLzsQ51NfRql9OrsLW0tU=
+X-Google-Smtp-Source: AGHT+IHaJgPhIpHdQowJGPxOUCZFu1DmSYh8brYpdrD68QFhJkwUcjlNbN1dm8ewAQrDGx3b6X7psA==
+X-Received: by 2002:a17:907:843:b0:a7a:b561:358e with SMTP id
+ a640c23a62f3a-a7dbcd197bbmr72134666b.33.1722507005774; 
+ Thu, 01 Aug 2024 03:10:05 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7acac61218sm883512066b.94.2024.08.01.03.10.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 01 Aug 2024 03:10:05 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 4F3435F80C;
+ Thu,  1 Aug 2024 11:10:04 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Fabiano Rosas <farosas@suse.de>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  John
+ Snow <jsnow@redhat.com>,  qemu-ppc@nongnu.org,  Richard Henderson
+ <richard.henderson@linaro.org>,  Ani Sinha <anisinha@redhat.com>,  Thomas
+ Huth <thuth@redhat.com>
+Subject: Re: [PATCH v3 03/24] tests/functional: Set up logging
+In-Reply-To: <20240730170347.4103919-4-berrange@redhat.com> ("Daniel P.
+ =?utf-8?Q?Berrang=C3=A9=22's?= message of "Tue, 30 Jul 2024 18:03:23
+ +0100")
 References: <20240730170347.4103919-1-berrange@redhat.com>
- <20240730170347.4103919-17-berrange@redhat.com>
- <9fbf2f80-c7df-4819-8f74-c7ce75dc70a5@linaro.org>
- <42fb9582-9215-4ccc-bede-0c4f03fffd4c@linaro.org>
+ <20240730170347.4103919-4-berrange@redhat.com>
+Date: Thu, 01 Aug 2024 11:10:04 +0100
+Message-ID: <875xskeepv.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <42fb9582-9215-4ccc-bede-0c4f03fffd4c@linaro.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,67 +99,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 01, 2024 at 09:00:36AM +1000, Richard Henderson wrote:
-> On 7/31/24 22:56, Philippe Mathieu-Daudé wrote:
-> > On 30/7/24 19:03, Daniel P. Berrangé wrote:
-> > > From: Thomas Huth <thuth@redhat.com>
-> > > 
-> > > The avocado test defined test functions for both, riscv32 and riscv64.
-> > > Since we can run the whole file with multiple targets in the new
-> > > framework, we can now consolidate the functions so we have to only
-> > > define one function per machine now.
-> > > 
-> > > Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> > > Signed-off-by: Thomas Huth <thuth@redhat.com>
-> > > ---
-> > >   tests/avocado/riscv_opensbi.py         | 63 --------------------------
-> > >   tests/functional/meson.build           |  8 ++++
-> > >   tests/functional/test_riscv_opensbi.py | 36 +++++++++++++++
-> > >   3 files changed, 44 insertions(+), 63 deletions(-)
-> > >   delete mode 100644 tests/avocado/riscv_opensbi.py
-> > >   create mode 100755 tests/functional/test_riscv_opensbi.py
-> > 
-> > Please squash:
-> > 
-> > -- >8 --
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index 98eddf7ae1..a906218f9d 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -336,6 +337,7 @@ F: include/hw/riscv/
-> >   F: linux-user/host/riscv32/
-> >   F: linux-user/host/riscv64/
-> >   F: tests/tcg/riscv64/
-> > +F: tests/functional/test_riscv_opensbi.py
-> 
-> It seems worth taking this opportunity to add per-target subdirs of
-> tests/functional/, so that we don't have to list every individual test in
-> MAINTAINERS.
-> 
-> Surely one
-> 
-> F: tests/functional/riscv/
-> 
-> etc, is actually maintainable...
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Either that or wildcard the filenames
+> From: Thomas Huth <thuth@redhat.com>
+>
+> Create log files for each test separately, one file that contains
+> the basic logging and one that contains the console output.
+>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>  tests/functional/qemu_test/testcase.py | 27 +++++++++++++++++++++++++-
+>  1 file changed, 26 insertions(+), 1 deletion(-)
+>
+> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qe=
+mu_test/testcase.py
+> index 82cc1d454f..27bbf4a0af 100644
+> --- a/tests/functional/qemu_test/testcase.py
+> +++ b/tests/functional/qemu_test/testcase.py
+> @@ -31,7 +31,8 @@ class QemuBaseTest(unittest.TestCase):
+>      arch =3D None
+>=20=20
+>      workdir =3D None
+> -    log =3D logging.getLogger('qemu-test')
+> +    log =3D None
+> +    logdir =3D None
+>=20=20
+>      def setUp(self, bin_prefix):
+>          self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must =
+be set')
+> @@ -42,6 +43,20 @@ def setUp(self, bin_prefix):
+>          if not os.path.exists(self.workdir):
+>              os.makedirs(self.workdir)
+>=20=20
+> +        self.logdir =3D self.workdir
+> +        self.log =3D logging.getLogger('qemu-test')
+> +        self.log.setLevel(logging.DEBUG)
+> +        self._log_fh =3D logging.FileHandler(os.path.join(self.logdir,
+> +                                                        'base.log'), mod=
+e=3D'w')
+> +        self._log_fh.setLevel(logging.DEBUG)
+> +        fileFormatter =3D logging.Formatter(
+> +            '%(asctime)s - %(levelname)s: %(message)s')
+> +        self._log_fh.setFormatter(fileFormatter)
+> +        self.log.addHandler(self._log_fh)
 
- F: tests/functional/test_riscv_*
+This is in the wrong place, we have a unique machine directory for each
+run, the console.log should go in there.
 
-
-but subdirs matching the target is probably a little nicer to really
-encourage people to follow conventions more strictly. We would also
-need a "tests/functional/common/" for tests which aren't target specific
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
