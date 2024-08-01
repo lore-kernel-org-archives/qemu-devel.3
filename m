@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EDC0C3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 07:59:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 496EEC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 08:00:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZQiC-0002yp-FW; Thu, 01 Aug 2024 03:59:00 -0400
+	id 1sZQiF-0003BP-HM; Thu, 01 Aug 2024 03:59:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZQiB-0002tq-7a
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 03:58:59 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1sZQiE-00035Y-1V
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 03:59:02 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZQi9-00066j-Bb
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 03:58:58 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-7ab09739287so4032321a12.3
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 00:58:56 -0700 (PDT)
+ id 1sZQiB-000678-Tw
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 03:59:01 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1fc47abc040so45162475ad.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 00:58:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722499136; x=1723103936; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722499138; x=1723103938; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OtOFpryN5p45NTecQPUgADSe7EdyZv6yuf4iUoGdYsY=;
- b=WaO8sY4mQk7hFRWdhdAdiVAC0EkdkJdXZtHhWn9gSYplNfe67GLe0E0iz5nFEtHV0w
- zZY6iWiQJxyNW5MhFxwKBJOHKMvoR9fhZBUZ2ynbHHTh9pEqvpRObkKhR+9ALawvQBM7
- 7bStpH1DmrkuWJxDoiYIXOrKL9JH85h5DMBimidldCTpX9ZYtOibWrINaa+VmeILpeK8
- qmc0zprZnLAA/I+NayfK4ICDRFml40OX+zoG5VclGIS+J6byRpnWF6nYoCE/xAMkeiI8
- UpszWod2RByicONrkjCJHgKWsmjfBUrpm1lqD/cu1nfy7gSJlC10SkV7wwCJO4CMCGKE
- dy5g==
+ bh=BAAECdtbSk5fdUDNbIHhRihYh/Jpb523HvXDAZ9nrWw=;
+ b=GDRqKjn3PMIAdIGybPjtU6oIsee6t59ROEbAsUklY86bDNJPY8PZ00GK+uYaeZIAAB
+ ogaSlDbfgvNIkyeLcGgjCmFR6FAD9Ki+/lsGMa80XwQx7nmv8uBkY4dSSB0TC9t2Z32i
+ Cy8t3PrcWwRBa5NygyUpgzGSjYZH0as9y+3Ozwi2EpF1FuDuQ/U7yPq/KDtHPObqktw+
+ 1orKN79U+CoWsgLQRhiz+9sko6G7yxYYLmsa3WpP8lnQApSjj59kfxqQc109g46wCORb
+ igL5YMjcJ0aW4s8LMV+TeNlPgFRkTve3TkFIdY+6T4vM2Et9qHi9oUYvtv9yPv/7qkFO
+ UqRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722499136; x=1723103936;
+ d=1e100.net; s=20230601; t=1722499138; x=1723103938;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OtOFpryN5p45NTecQPUgADSe7EdyZv6yuf4iUoGdYsY=;
- b=xVCEoQrpd/IuGnrWh2nhtXe2SJbefq0td+kHSCEw9SW4y8De/vemwuq2R5rxCfVM2I
- TdyPMa1s3yEiyi2k2caA71eFIQDFZWos56rjLL/tcZDau3d6Z1AUNcungGR/XN+SJ5Ji
- InI97dwnTc2Ku/gjertOdTBGrt08hes5emjtWFpPv4OB4ES1fPt2rrmeCg4j4GlAw4oc
- yURwPG1ywIQJOtHfVw0IjnTYnBIC2fPmgRHHLsIWXnk1STzBa5nC+sir7q+7MA5ixOIQ
- tI1hpIdxiSdvXPO3cjI4n87qlRG7P5tdLbdRhOZkmW7rYUr+3dfdJpkCJ1EeWre24njB
- 1c3g==
-X-Gm-Message-State: AOJu0Yz+7+akIz42Zvf2LJzW6Mq9+3Ax4pYTABpJv09UcAklyk8h9NHO
- W+p7IgJjB5r5Wk6hzayvniQ9kmM+ffTBhNAhhZFN2G5hjDPQr8EJ0ICwsnMBahHJbBtUir1SzuR
- DfW3W8Q==
-X-Google-Smtp-Source: AGHT+IHEW0Wfepqox45QrZeYKkEpa9nifERVt7/0luIBoJNxBNlikXOU5p5nJH1l3YPR6kSVtXzYnQ==
-X-Received: by 2002:a05:6a20:c70b:b0:1c4:a49b:403 with SMTP id
- adf61e73a8af0-1c68d23fc64mr2026758637.46.1722499135559; 
- Thu, 01 Aug 2024 00:58:55 -0700 (PDT)
+ bh=BAAECdtbSk5fdUDNbIHhRihYh/Jpb523HvXDAZ9nrWw=;
+ b=k2+Xk8YaHlGM0zyvIodev9Ultj6c/fpjyci4aXW2NuW5D4spdCwuqIiBYN9Che8foH
+ zw2rQjSOIrHMLA8vRFJa9yQEPkcOCZV1LO5dQGGzHgw/GDAHgtC4JyIF19wxHclxNbC+
+ ZJRxEX7mcWjxex+godQs/GuovOJohQVTpq4sF1HefVq8dw4P9ZCHqz/bCU5yfd3X0DlX
+ U6pGXMcO+tgaoYnP8BI7hDIDjKT0ji0PMxzWuOfP2wT//69CIzgoOKScPVixcN54eufC
+ pvSHv9XHedBSEAoC4bQf8z0lnzIzk2yCXjBi/FWYJSV44Fu/KF2/0PMLL8+Ige8Ar14D
+ TpDA==
+X-Gm-Message-State: AOJu0YyGMYwZy/T5eof4jNyDPgQeQi0QzbJf5DKnWz6/wGioLZ49MfrI
+ gIOmD/7jNX7CxiEg48fkdisLGlWjJ4ptjT6QH57K2NwCbx4S1ZeSLayFGA6rzf9CabOTNBO+tQN
+ 1XeYkzw==
+X-Google-Smtp-Source: AGHT+IGsr36IOpqYaCXN2JUcn51KSb4nPwLO6GtOq1gP17DWM72JyJY6ALgh8CnGjuSa/72WVwwKfA==
+X-Received: by 2002:a17:903:1245:b0:1fd:6c83:3394 with SMTP id
+ d9443c01a7336-1ff4ce70235mr24610185ad.7.1722499138033; 
+ Thu, 01 Aug 2024 00:58:58 -0700 (PDT)
 Received: from stoup.. ([203.56.128.103]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fed7ee148dsm132195755ad.144.2024.08.01.00.58.53
+ d9443c01a7336-1fed7ee148dsm132195755ad.144.2024.08.01.00.58.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Aug 2024 00:58:55 -0700 (PDT)
+ Thu, 01 Aug 2024 00:58:57 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com
-Subject: [PATCH 1/2] target/i386: Split out gen_prepare_val_nz
-Date: Thu,  1 Aug 2024 17:58:44 +1000
-Message-ID: <20240801075845.573075-2-richard.henderson@linaro.org>
+Subject: [PATCH 2/2] target/i386: Fix carry flag for BLSI
+Date: Thu,  1 Aug 2024 17:58:45 +1000
+Message-ID: <20240801075845.573075-3-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240801075845.573075-1-richard.henderson@linaro.org>
 References: <20240801075845.573075-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,62 +93,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split out the TCG_COND_TSTEQ logic from gen_prepare_eflags_z,
-and use it for CC_OP_BMILG* as well.  Prepare for requiring
-both zero and non-zero senses.
+BLSI has inverted semantics for C as compared to the other two
+BMI1 instructions, BLSMSK and BLSR.  Introduce CC_OP_BLSI* for
+this purpose.
 
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2175
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/i386/tcg/translate.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ target/i386/cpu.h                        |  5 +++++
+ target/i386/tcg/cc_helper.c              | 18 ++++++++++++++++++
+ target/i386/tcg/translate.c              |  5 +++++
+ tests/tcg/x86_64/test-2175.c             | 24 ++++++++++++++++++++++++
+ target/i386/tcg/cc_helper_template.h.inc | 18 ++++++++++++++++++
+ target/i386/tcg/emit.c.inc               |  2 +-
+ tests/tcg/x86_64/Makefile.target         |  1 +
+ 7 files changed, 72 insertions(+), 1 deletion(-)
+ create mode 100644 tests/tcg/x86_64/test-2175.c
 
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index c6cc035df3..14edd57a37 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1339,6 +1339,11 @@ typedef enum {
+     CC_OP_BMILGL,
+     CC_OP_BMILGQ,
+ 
++    CC_OP_BLSIB, /* Z,S via CC_DST, C = SRC!=0; O=0; P,A undefined */
++    CC_OP_BLSIW,
++    CC_OP_BLSIL,
++    CC_OP_BLSIQ,
++
+     /*
+      * Note that only CC_OP_POPCNT (i.e. the one with MO_TL size)
+      * is used or implemented, because the translation needs
+diff --git a/target/i386/tcg/cc_helper.c b/target/i386/tcg/cc_helper.c
+index 301ed95406..dbddaa2fcb 100644
+--- a/target/i386/tcg/cc_helper.c
++++ b/target/i386/tcg/cc_helper.c
+@@ -186,6 +186,13 @@ target_ulong helper_cc_compute_all(target_ulong dst, target_ulong src1,
+     case CC_OP_BMILGL:
+         return compute_all_bmilgl(dst, src1);
+ 
++    case CC_OP_BLSIB:
++        return compute_all_blsib(dst, src1);
++    case CC_OP_BLSIW:
++        return compute_all_blsiw(dst, src1);
++    case CC_OP_BLSIL:
++        return compute_all_blsil(dst, src1);
++
+     case CC_OP_ADCX:
+         return compute_all_adcx(dst, src1, src2);
+     case CC_OP_ADOX:
+@@ -216,6 +223,8 @@ target_ulong helper_cc_compute_all(target_ulong dst, target_ulong src1,
+         return compute_all_sarq(dst, src1);
+     case CC_OP_BMILGQ:
+         return compute_all_bmilgq(dst, src1);
++    case CC_OP_BLSIQ:
++        return compute_all_blsiq(dst, src1);
+ #endif
+     }
+ }
+@@ -308,6 +317,13 @@ target_ulong helper_cc_compute_c(target_ulong dst, target_ulong src1,
+     case CC_OP_BMILGL:
+         return compute_c_bmilgl(dst, src1);
+ 
++    case CC_OP_BLSIB:
++        return compute_c_blsib(dst, src1);
++    case CC_OP_BLSIW:
++        return compute_c_blsiw(dst, src1);
++    case CC_OP_BLSIL:
++        return compute_c_blsil(dst, src1);
++
+ #ifdef TARGET_X86_64
+     case CC_OP_ADDQ:
+         return compute_c_addq(dst, src1);
+@@ -321,6 +337,8 @@ target_ulong helper_cc_compute_c(target_ulong dst, target_ulong src1,
+         return compute_c_shlq(dst, src1);
+     case CC_OP_BMILGQ:
+         return compute_c_bmilgq(dst, src1);
++    case CC_OP_BLSIQ:
++        return compute_c_blsiq(dst, src1);
+ #endif
+     }
+ }
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 95bad55bf4..e62ffa2858 100644
+index e62ffa2858..fb0d01b356 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -865,6 +865,18 @@ static CCPrepare gen_prepare_sign_nz(TCGv src, MemOp size)
-     }
- }
- 
-+static CCPrepare gen_prepare_val_nz(TCGv src, MemOp size, bool eqz)
-+{
-+    if (size == MO_TL) {
-+        return (CCPrepare) { .cond = eqz ? TCG_COND_EQ : TCG_COND_NE,
-+                             .reg = src };
-+    } else {
-+        return (CCPrepare) { .cond = eqz ? TCG_COND_TSTEQ : TCG_COND_TSTNE,
-+                             .imm = MAKE_64BIT_MASK(0, 8 << size),
-+                             .reg = src };
-+    }
-+}
-+
- /* compute eflags.C, trying to store it in reg if not NULL */
- static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
- {
-@@ -908,8 +920,7 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
- 
-     case CC_OP_BMILGB ... CC_OP_BMILGQ:
+@@ -304,6 +304,7 @@ static const uint8_t cc_op_live[CC_OP_NB] = {
+     [CC_OP_SHLB ... CC_OP_SHLQ] = USES_CC_DST | USES_CC_SRC,
+     [CC_OP_SARB ... CC_OP_SARQ] = USES_CC_DST | USES_CC_SRC,
+     [CC_OP_BMILGB ... CC_OP_BMILGQ] = USES_CC_DST | USES_CC_SRC,
++    [CC_OP_BLSIB ... CC_OP_BLSIQ] = USES_CC_DST | USES_CC_SRC,
+     [CC_OP_ADCX] = USES_CC_DST | USES_CC_SRC,
+     [CC_OP_ADOX] = USES_CC_SRC | USES_CC_SRC2,
+     [CC_OP_ADCOX] = USES_CC_DST | USES_CC_SRC | USES_CC_SRC2,
+@@ -922,6 +923,10 @@ static CCPrepare gen_prepare_eflags_c(DisasContext *s, TCGv reg)
          size = s->cc_op - CC_OP_BMILGB;
--        gen_ext_tl(cpu_cc_src, cpu_cc_src, size, false);
--        return (CCPrepare) { .cond = TCG_COND_EQ, .reg = cpu_cc_src };
-+        return gen_prepare_val_nz(cpu_cc_src, size, true);
+         return gen_prepare_val_nz(cpu_cc_src, size, true);
  
++    case CC_OP_BLSIB ... CC_OP_BLSIQ:
++        size = s->cc_op - CC_OP_BLSIB;
++        return gen_prepare_val_nz(cpu_cc_src, size, false);
++
      case CC_OP_ADCX:
      case CC_OP_ADCOX:
-@@ -1006,12 +1017,7 @@ static CCPrepare gen_prepare_eflags_z(DisasContext *s, TCGv reg)
-     default:
-         {
-             MemOp size = (s->cc_op - CC_OP_ADDB) & 3;
--            if (size == MO_TL) {
--                return (CCPrepare) { .cond = TCG_COND_EQ, .reg = cpu_cc_dst };
--            } else {
--                return (CCPrepare) { .cond = TCG_COND_TSTEQ, .reg = cpu_cc_dst,
--                                     .imm = (1ull << (8 << size)) - 1 };
--            }
-+            return gen_prepare_val_nz(cpu_cc_dst, size, true);
-         }
-     }
+         return (CCPrepare) { .cond = TCG_COND_NE, .reg = cpu_cc_dst,
+diff --git a/tests/tcg/x86_64/test-2175.c b/tests/tcg/x86_64/test-2175.c
+new file mode 100644
+index 0000000000..aafd037bce
+--- /dev/null
++++ b/tests/tcg/x86_64/test-2175.c
+@@ -0,0 +1,24 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* See https://gitlab.com/qemu-project/qemu/-/issues/2185 */
++
++#include <assert.h>
++
++int test_setc(unsigned int x, unsigned int y)
++{
++    asm("blsi %1, %0; setc %b0" : "+r"(x) : "r"(y));
++    return (unsigned char)x;
++}
++
++int test_pushf(unsigned int x, unsigned int y)
++{
++    asm("blsi %1, %0; pushf; pop %q0" : "+r"(x) : "r"(y));
++    return x & 1;
++}
++
++int main()
++{
++    assert(test_setc(1, 0xedbf530a));
++    assert(test_pushf(1, 0xedbf530a));
++    return 0;
++}
++
+diff --git a/target/i386/tcg/cc_helper_template.h.inc b/target/i386/tcg/cc_helper_template.h.inc
+index bb611feb04..c5425e57cf 100644
+--- a/target/i386/tcg/cc_helper_template.h.inc
++++ b/target/i386/tcg/cc_helper_template.h.inc
+@@ -235,6 +235,24 @@ static int glue(compute_c_bmilg, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
+     return src1 == 0;
  }
+ 
++static int glue(compute_all_blsi, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
++{
++    int cf, pf, af, zf, sf, of;
++
++    cf = (src1 != 0);
++    pf = 0; /* undefined */
++    af = 0; /* undefined */
++    zf = (dst == 0) * CC_Z;
++    sf = lshift(dst, 8 - DATA_BITS) & CC_S;
++    of = 0;
++    return cf | pf | af | zf | sf | of;
++}
++
++static int glue(compute_c_blsi, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
++{
++    return src1 != 0;
++}
++
+ #undef DATA_BITS
+ #undef SIGN_MASK
+ #undef DATA_TYPE
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index 016dce8146..3e867135dd 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -1299,7 +1299,7 @@ static void gen_BLSI(DisasContext *s, X86DecodedInsn *decode)
+     /* input in T1, which is ready for prepare_update2_cc  */
+     tcg_gen_neg_tl(s->T0, s->T1);
+     tcg_gen_and_tl(s->T0, s->T0, s->T1);
+-    prepare_update2_cc(decode, s, CC_OP_BMILGB + ot);
++    prepare_update2_cc(decode, s, CC_OP_BLSIB + ot);
+ }
+ 
+ static void gen_BLSMSK(DisasContext *s, X86DecodedInsn *decode)
+diff --git a/tests/tcg/x86_64/Makefile.target b/tests/tcg/x86_64/Makefile.target
+index eda9bd7396..783ab5b21a 100644
+--- a/tests/tcg/x86_64/Makefile.target
++++ b/tests/tcg/x86_64/Makefile.target
+@@ -16,6 +16,7 @@ X86_64_TESTS += noexec
+ X86_64_TESTS += cmpxchg
+ X86_64_TESTS += adox
+ X86_64_TESTS += test-1648
++X86_64_TESTS += test-2175
+ TESTS=$(MULTIARCH_TESTS) $(X86_64_TESTS) test-x86_64
+ else
+ TESTS=$(MULTIARCH_TESTS)
 -- 
 2.43.0
 
