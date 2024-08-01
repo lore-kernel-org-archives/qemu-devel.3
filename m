@@ -4,102 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17908C3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 08:23:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D567C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 08:26:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZR5f-0001YH-7c; Thu, 01 Aug 2024 04:23:15 -0400
+	id 1sZR7v-0001s7-7G; Thu, 01 Aug 2024 04:25:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sZR5d-0001Xj-TY
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 04:23:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sZR7t-0001rE-4D
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 04:25:33 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sZR5c-0005SB-51
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 04:23:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722500588;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=keJs/l4xu4+z2oxXxkAWZ2XWAcI6whwPSbiDiu8nmpY=;
- b=h7cAmGHPueknJSpyM3sstC5yySbRSPM98U93AarSl9Z2wqu9Y+ZwwqS1X6LauLk9OgtdRC
- ssqxPsWFmARbhxkupiHDRRN9IRNFpEWq0JEbYUOP37b2tRz/I0T0dMrDZFr+dVyE+GijI9
- PV7O70LdBC3qdD8SsKxFLlyfRNeqrCU=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-192-OtuyM8WHM4eCF775wHmiGQ-1; Thu, 01 Aug 2024 04:23:07 -0400
-X-MC-Unique: OtuyM8WHM4eCF775wHmiGQ-1
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-666010fb35cso31497827b3.0
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 01:23:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722500587; x=1723105387;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=keJs/l4xu4+z2oxXxkAWZ2XWAcI6whwPSbiDiu8nmpY=;
- b=aUa2NPrBz95iBbJf1x+wuk2B5840KJk+X+c9XyGfqYLxqgD82y+K3AFk1wxAuik2Xw
- VueXSbwOIwPCuVNflul7DT/l7btOIcPXI1eiHn029r28z9wSwunkbsgZx0HSiaCe5ETA
- sWYQlXy48pfZa0hxLwyIDiuSMXXZJO/PVO+AC+Ym26iyfxcB8gnpICCyDxRPyZ8xwgKZ
- ny6VZ8nIIG4O76dPmX1aIXQsRnE+BhjqkD+GdhmmcZeogL0JeHkMxKkP3pVfsFrOfMXI
- +R0Nplw+DImtKo8QQGhJ31EN1pVtSJYB4YFpA484YQC42V2jXqg1e8VDGJsW41SMTcDa
- APYg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVz1ZLfXunMCoBltBvX6UbkoAn3jcSmFl9gugvcayJmbRzIDwwGNNNGhBoXzvyprpbL54tPjfADgQBgoXt6Rk/0phPtCl0=
-X-Gm-Message-State: AOJu0YyJhc/f0z3e3lMQ6BJUk8TuZVCrAOTWul678KORE9SO2xfsQs9A
- FSyPguaCcsEBxak1pqCiHQkG9p8NF9HKI6gsR0P4dkAhWEEDFGxzW2Xf+5qKCANhLW3YWVstIo8
- KM2LNau4mlugJFpKf6usYtNYAUpLolZjRBy97UIwKfKukQAfddtf1XOkYhQulh6hQrwm5yxgc9A
- ODlw0HmsGrZeDbtjhd92lFF/hRsRo=
-X-Received: by 2002:a81:8a84:0:b0:62f:60db:326 with SMTP id
- 00721157ae682-688553e839bmr3517027b3.20.1722500586656; 
- Thu, 01 Aug 2024 01:23:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG2XN/cIkf09QuLeRbnP+3kk1Tibt4otwCWth8YxBCmlIYGVLnMASSqMfnf8B/aYsw7t3del94XBWio5Sz5QUM=
-X-Received: by 2002:a81:8a84:0:b0:62f:60db:326 with SMTP id
- 00721157ae682-688553e839bmr3516867b3.20.1722500586303; Thu, 01 Aug 2024
- 01:23:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sZR7q-0000nO-KI
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 04:25:32 -0400
+Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4713RkQI022418;
+ Thu, 1 Aug 2024 08:25:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:subject:from:to:cc:date:in-reply-to:references
+ :content-type:mime-version; s=pp1; bh=EmwCwrwM8W1s9BPntm8b+KuwwO
+ kTiPeye8rMMeQ68ac=; b=FvlTrDw1SshruQulgmTzZkJGAWOnDXfI4KvaaV5aQg
+ HuFWuKRSUHgf1W5Wgh6gYyiHTwc/8ofxHqMss3qPBr9ZgfzgWmk6jIPkKfZg6NhX
+ Qwbl8ZNGkdbamytjhKNVrwy8i1hT6vx2PpfcFrtOQ5eHYyUZPpcNSgSzKU3AI7jO
+ CH17AFU417n4oiQJZqLNvjF2f51iV4UJ0XuL0LnIVftdRq2+Qj5AgxZ64kK5x4ov
+ RRzTy1sEtsA1ZM/2OXOu9M0PJ7QeFVV/VNv5VZx5Fmnv6FD/UqsbpvGGtW7Hwg0f
+ KgCPBnS5xhyjuPC4ze8Fm2Zffr+W7TOI4FjkBOFS1jAQ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40r1m68qbj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 01 Aug 2024 08:25:19 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 47170T1u007462; Thu, 1 Aug 2024 08:23:25 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 40nb7ugx7j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 01 Aug 2024 08:23:25 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4718NLaO47644942
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 1 Aug 2024 08:23:23 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 950D02004E;
+ Thu,  1 Aug 2024 08:23:21 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2E56720040;
+ Thu,  1 Aug 2024 08:23:21 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  1 Aug 2024 08:23:21 +0000 (GMT)
+Message-ID: <fd23f7fd27a9928fd0a07b2cbe72e1487bf063c1.camel@linux.ibm.com>
+Subject: Re: [PATCH] bsd-user/main: Allow setting tb-size
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Warner Losh <imp@bsdimp.com>
+Cc: Kyle Evans <kevans@freebsd.org>, Richard Henderson
+ <richard.henderson@linaro.org>, qemu-devel@nongnu.org, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Date: Thu, 01 Aug 2024 10:23:20 +0200
+In-Reply-To: <CANCZdfpw7iDr4fBmsuukA5aVzcWBgCX09DVngg1RYHtv832zQQ@mail.gmail.com>
+References: <20240731144532.5997-1-iii@linux.ibm.com>
+ <CANCZdfpw7iDr4fBmsuukA5aVzcWBgCX09DVngg1RYHtv832zQQ@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="=-eZugFKfRAHVhtUADjttt"
+User-Agent: Evolution 3.50.4 (3.50.4-1.fc39) 
 MIME-Version: 1.0
-References: <20240410100345.389462-1-eperezma@redhat.com>
- <CACGkMEv7wukFdXrA--DzA7U7VYWQq6UAVmi-0=pTAOuJ1nc_7Q@mail.gmail.com>
- <CAJaqyWdtdfbQi4PrbC-ASRo7dHsT7Nw3dmw66K9D9ZeoqyV=ng@mail.gmail.com>
- <CACGkMEs=-teddtO4ctLdJiwm2gu3sZrKOww-TC+5o2_19Sph4w@mail.gmail.com>
- <CAJaqyWeKfVXYj61sgvFrUTpOgy0k-zsLoR4JePEo0Q8XuXYbmA@mail.gmail.com>
- <CACGkMEt+TLqpbw2N4m7Ez4edTBztRUxiAt6=NLuFR3c7F7Z_jA@mail.gmail.com>
- <CAJaqyWc18UeBHeQSoAFF1u1nkjaAfj0Y85pgSHbhV8xxExjcgg@mail.gmail.com>
- <CACGkMEtrPAMb-ZN7AAE8cjEzjZY1Hnm29J7PhUYgwv26=YcdQw@mail.gmail.com>
- <84374c5a-d937-4cb5-aafb-45ad75e2d837@oracle.com>
- <CAJaqyWfekhhG+5Zp4eddpp-2N=SjUL+7zs+YqS5xx6eWxa-PqQ@mail.gmail.com>
- <CACGkMEvYSBZpVG2x6q_viekods+QWrjoCETQcsgnHM+Ng4NWGw@mail.gmail.com>
- <CAJaqyWfm1zjU-eQ-j+GaWMHGt7Dk5nGUCUEA75yCga9sBxu39Q@mail.gmail.com>
- <2b2bf1a7-9ba9-4da9-b220-ce516ac029cc@oracle.com>
- <CAJaqyWf-Tcu0RdiWU3m9P07xJ7c33QXwSDH0-D=8u2FHC-=uZA@mail.gmail.com>
- <15d9fb93-58f9-4078-8f07-2ebf0f228d3b@oracle.com>
- <50fd84e1-a8af-4c61-90cc-2ceb653869f6@oracle.com>
-In-Reply-To: <50fd84e1-a8af-4c61-90cc-2ceb653869f6@oracle.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Thu, 1 Aug 2024 10:22:29 +0200
-Message-ID: <CAJaqyWcLW3tTdQLM65voYzKQ_S-5ZTQh5NAQAzU88m=BTyWa5g@mail.gmail.com>
-Subject: Re: [RFC 0/2] Identify aliased maps in vdpa SVQ iova_tree
-To: Si-Wei Liu <si-wei.liu@oracle.com>
-Cc: Jonah Palmer <jonah.palmer@oracle.com>, Jason Wang <jasowang@redhat.com>,
- qemu-devel@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
- Peter Xu <peterx@redhat.com>, Dragos Tatulea <dtatulea@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: uFm2HgyeSpJEMEv85-RkP0j10_ZzhLL5
+X-Proofpoint-ORIG-GUID: uFm2HgyeSpJEMEv85-RkP0j10_ZzhLL5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-01_05,2024-07-31_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ bulkscore=0 mlxscore=0
+ impostorscore=0 malwarescore=0 mlxlogscore=679 suspectscore=0
+ lowpriorityscore=0 priorityscore=1501 clxscore=1015 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408010050
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_FONT_LOW_CONTRAST=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,117 +107,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 1, 2024 at 2:41=E2=80=AFAM Si-Wei Liu <si-wei.liu@oracle.com> w=
-rote:
->
-> Hi Jonah,
->
-> On 7/31/2024 7:09 AM, Jonah Palmer wrote:
-> >
-> >>>>>>>>>> Let me clarify, correct me if I was wrong:
-> >>>>>>>>>>
-> >>>>>>>>>> 1) IOVA allocator is still implemented via a tree, we just
-> >>>>>>>>>> don't need
-> >>>>>>>>>> to store how the IOVA is used
-> >>>>>>>>>> 2) A dedicated GPA -> IOVA tree, updated via listeners and is
-> >>>>>>>>>> used in
-> >>>>>>>>>> the datapath SVQ translation
-> >>>>>>>>>> 3) A linear mapping or another SVQ -> IOVA tree used for SVQ
-> >>>>>>>>>>
-> >>>>>>>>>
-> >>>>>>>>> His solution is composed of three trees:
-> >>>>>>>>> 1) One for the IOVA allocations, so we know where to allocate
-> >>>>>>>>> new ranges
-> >>>>>>>>> 2) One of the GPA -> SVQ IOVA translations.
-> >>>>>>>>> 3) Another one for SVQ vrings translations.
-> >>>>>>>>>
-> >>>>>
-> >>>
-> >
-> > For my understanding, say we have those 3 memory mappings:
-> >
-> > HVA                    GPA                IOVA
-> > ---------------------------------------------------
-> > Map
-> > (1) [0x7f7903e00000, 0x7f7983e00000)    [0x0, 0x80000000) [0x1000,
-> > 0x80000000)
-> > (2) [0x7f7983e00000, 0x7f9903e00000)    [0x100000000, 0x2080000000)
-> > [0x80001000, 0x2000001000)
-> > (3) [0x7f7903ea0000, 0x7f7903ec0000)    [0xfeda0000, 0xfedc0000)
-> > [0x2000001000, 0x2000021000)
-> >
-> > And then say when we go to unmap (e.g. vhost_vdpa_svq_unmap_ring)
-> > we're given an HVA of 0x7f7903eb0000, which fits in both the first and
-> > third mappings.
-> >
-> > The correct one to remove here would be the third mapping, right? Not
-> > only because the HVA range of the third mapping has a more "specific"
-> > or "tighter" range fit given an HVA of 0x7f7903eb0000 (which, as I
-> > understand, may not always be the case in other scenarios), but mainly
-> > because the HVA->GPA translation would give GPA 0xfedb0000, which only
-> > fits in the third mapping's GPA range. Am I understanding this correctl=
-y?
-> You're correct, we would still need a GPA -> IOVA tree for mapping and
-> unmapping on guest mem. I've talked to Eugenio this morning and I think
-> he is now aligned. Granted, this GPA tree is partial in IOVA space that
-> doesn't contain ranges from host-only memory (e.g. backed by SVQ
-> descriptors or buffers), we could create an API variant to
-> vhost_iova_tree_map_alloc() and vhost_iova_tree_map_remove(), which not
-> just adds IOVA -> HVA range to the HVA tree, but also manipulates the
-> GPA tree to maintain guest memory mappings, i.e. only invoked from the
-> memory listener ops. Such that this new API is distinguishable from the
-> one in the SVQ mapping and unmapping path that only manipulates the HVA
-> tree.
->
+--=-eZugFKfRAHVhtUADjttt
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Right, I think I understand both Jason's and your approach better, and
-I think it is the best one. To modify the lookup API is hard, as the
-caller does not know if the HVA looked up is contained in the guest
-memory or not. To modify the add or remove regions is easier, as they
-know it.
+On Wed, 2024-07-31 at 15:21 -0600, Warner Losh wrote:
+> On Wed, Jul 31, 2024 at 8:=E2=80=8A45 AM Ilya Leoshkevich
+> <iii@=E2=80=8Alinux.=E2=80=8Aibm.=E2=80=8Acom> wrote: While qemu-system c=
+an set tb-size using
+> -accel tcg,tb-size=3Dn, there is no similar knob for qemu-bsd-user. Add
+> one in a way similar to how one-insn-per-tb is already
+>=20
+>=20
+>=20
+> On Wed, Jul 31, 2024 at 8:45=E2=80=AFAM Ilya Leoshkevich <iii@linux.ibm.c=
+om>
+> wrote:
+> > While qemu-system can set tb-size using -accel tcg,tb-size=3Dn, there
+> > is no similar knob for qemu-bsd-user. Add one in a way similar to
+> > how
+> > one-insn-per-tb is already handled.
+> >=20
+>=20
+>=20
+> Cool! Are you using bsd-user and need this for some reason? Or is
+> this
+> purely theoretical? Is there a larger context I can read about
+> somewhere?
 
-> I think the only case that you may need to pay attention to in
-> implementation is in the SVQ address translation path, where if you come
-> to an HVA address for translation, you would need to tell apart which
-> tree you'd have to look up - if this HVA is backed by guest mem you
-> could use API qemu_ram_block_from_host() to infer the ram block then the
-> GPA, so you end up doing a lookup on the GPA tree; or else the HVA may
-> be from the SVQ mappings, where you'd have to search the HVA tree again
-> to look for host-mem-only range before you can claim the HVA is a
-> bogus/unmapped address...
+I needed this on Linux in order to debug an issue where I suspected
+full TB invalidation may be an issue.
+It turned out to be something completely different, but I found it
+useful: setting it to, e.g., 4096 makes full TB invalidation very rare,
+so if a problem is still reproducible, then the root causes is
+something else.
+Philippe suggested to implement this for BSD as well in order to keep
+the interfaces in sync.
 
-I'd leave this HVA -> IOVA tree for future performance optimization on
-top, and focus on the aliased maps for a first series.
+[...]
 
-However, calling qemu_ram_block_from_host is actually not needed if
-the HVA tree contains all the translations, both SVQ and guest buffers
-in memory.
 
-> For now, this additional second lookup is
-> sub-optimal but inadvitable, but I think both of us agreed that you
-> could start to implement this version first, and look for future
-> opportunity to optimize the lookup performance on top.
->
+--=-eZugFKfRAHVhtUADjttt
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-Right, thanks for explaining!
+<html><head>
+<style>
+  #pfptBannerh50g9tm { all: revert !important; display: block !important;=20
+    visibility: visible !important; opacity: 1 !important;=20
+    background-color: #D0D8DC !important;=20
+    max-width: none !important; max-height: none !important }
+  .pfptPrimaryButtonh50g9tm:hover, .pfptPrimaryButtonh50g9tm:focus {
+    background-color: #b4c1c7 !important; }
+  .pfptPrimaryButtonh50g9tm:active {
+    background-color: #90a4ae !important; }
+</style>
 
-> >
-> > ---
-> >
-> > In the case where the first mapping here is removed (GPA [0x0,
-> > 0x80000000)), why do we use the word "reintroduce" here? As I
-> > understand it, when we remove a mapping, we're essentially
-> > invalidating the IOVA range associated with that mapping, right? In
-> > other words, the IOVA ranges here don't overlap, so removing a mapping
-> > where its HVA range overlaps another mapping's HVA range shouldn't
-> > affect the other mapping since they have unique IOVA ranges. Is my
-> > understanding correct here or am I probably missing something?
-> With the GPA tree I think this case should work fine. I've double
-> checked the implementation of vhost-vdpa iotlb, and doesn't see a red
-> flag there.
->
-> Thanks,
-> -Siwei
->
+
+<style>pre,code,address {
+  margin: 0px;
+}
+h1,h2,h3,h4,h5,h6 {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+}
+ol,ul {
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+blockquote {
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+</style></head><!-- BaNnErBlUrFlE-BoDy-start -->
+<!-- Preheader Text : BEGIN -->
+<body><div>On Wed, 2024-07-31 at 15:21 -0600, Warner Losh wrote:</div><bloc=
+kquote type=3D"cite" style=3D"margin:0 0 0 .8ex; border-left:2px #729fcf so=
+lid;padding-left:1ex"><div style=3D"display:none !important;display:none;vi=
+sibility:hidden;mso-hide:all;font-size:1px;color:#ffffff;line-height:1px;he=
+ight:0px;max-height:0px;opacity:0;overflow:hidden;">On Wed, Jul 31, 2024 at=
+ 8:=E2=80=8A45 AM Ilya Leoshkevich &lt;iii@=E2=80=8Alinux.=E2=80=8Aibm.=E2=
+=80=8Acom&gt; wrote: While qemu-system can set tb-size using -accel tcg,tb-=
+size=3Dn, there is no similar knob for qemu-bsd-user. Add one in a way simi=
+lar to how one-insn-per-tb is already</div><div><!-- Preheader Text : END -=
+-> <!-- Email Banner : BEGIN --></div><div style=3D"display:none !important=
+;display:none;visibility:hidden;mso-hide:all;font-size:1px;color:#ffffff;li=
+ne-height:1px;height:0px;max-height:0px;opacity:0;overflow:hidden;"></div><=
+div><!-- Email Banner : END --> <!-- BaNnErBlUrFlE-BoDy-end --></div><div d=
+ir=3D"ltr">On Wed, Jul 31, 2024 at 8:45=E2=80=AFAM Ilya Leoshkevich &lt;<a =
+href=3D"mailto:iii@linux.ibm.com">iii@linux.ibm.com</a>&gt; wrote:<div clas=
+s=3D"gmail_quote"><blockquote type=3D"cite" style=3D"margin:0 0 0 .8ex; bor=
+der-left:2px #729fcf solid;padding-left:1ex"><div>While qemu-system can set=
+ tb-size using -accel tcg,tb-size=3Dn, there<br>is no similar knob for qemu=
+-bsd-user. Add one in a way similar to how<br>one-insn-per-tb is already ha=
+ndled.<br></div><br></blockquote><div><br></div><div>Cool! Are you using bs=
+d-user and need this for some reason? Or is this</div><div>purely theoretic=
+al? Is there a larger context I can read about somewhere?<br></div></div></=
+div></blockquote><div><br></div><div>I needed this on Linux in order to deb=
+ug an issue where I suspected full TB invalidation may be an issue.</div><d=
+iv>It turned out to be something completely different, but I found it usefu=
+l: setting it to, e.g., 4096 makes full TB invalidation very rare, so if a =
+problem is still reproducible, then the root causes is something else.</div=
+><div>Philippe suggested to implement this for BSD as well in order to keep=
+ the interfaces in sync.</div><div><br></div><div>[...]</div><div><br></div=
+><div><span></span></div></body></html>
+
+--=-eZugFKfRAHVhtUADjttt--
 
 
