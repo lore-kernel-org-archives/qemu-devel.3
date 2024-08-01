@@ -4,109 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A131C3DA64
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75EDAC52D6F
 	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 07:35:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZQL9-0002RZ-0s; Thu, 01 Aug 2024 03:35:11 -0400
+	id 1sZQL9-0002Xs-QD; Thu, 01 Aug 2024 03:35:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <huangwenyuu@outlook.com>)
- id 1sZOY7-000670-Mm
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 01:40:27 -0400
-Received: from mail-japaneastazolkn19010007.outbound.protection.outlook.com
- ([52.103.43.7] helo=TY3P286CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <Lei.Huang@amd.com>) id 1sZM2W-0007Id-HG
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 22:59:40 -0400
+Received: from mail-sn1nam02on2084.outbound.protection.outlook.com
+ ([40.107.96.84] helo=NAM02-SN1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <huangwenyuu@outlook.com>)
- id 1sZOY5-0000Hn-TE
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 01:40:27 -0400
+ (Exim 4.90_1) (envelope-from <Lei.Huang@amd.com>) id 1sZM2U-00005l-Av
+ for qemu-devel@nongnu.org; Wed, 31 Jul 2024 22:59:40 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Y62ugUyAxXZsLI0Jc4F7M4y/euzDLOLCpJCNOaSlyl7xMw1q39XoX5C3+Hmdzmx28U6cYQ6mTUDAWWmOjDZ+IC0BK7SBrnYZEuqzhFc9o/j9MLDAb2BG+NSUVmsh6UOjJ1yCtiDKrluO1DwaJPPJDgk+U/T90U/VM1gQjqjUMiqy/jcdjl9793BXU4Eac3Qa0XWT5WiqgNGS1nEPY4DixRIr+kTwOVdBKF/ezqYPLvoc0IGl67EBMdEtmmHEobPIa8pxDHAYOSqpA2xxTwJGOBd0BKpm3IW9JYaMCWUq82AciOCUBGEqAGX/Q7qPnHWOMuXAkKmsDYiF1mQomZo7Aw==
+ b=G9xamc5qVqNGuwmVvGQGS0rV+PbNsvw36Hts0IeuWVnmOhHd2M74yCwrW6D3+nHyFTugZt9bO3LdBK59lDNJNCnq6Qy15WI9xquugTvsG8s2RUYD6e6kiBWZvvVobED7wlwbHudtJdi0P4nWzK/QpOC7cdRpDUwDzcBk4Xc/XKgos25MvA/Yg4EERdIEvD1JrVQLKzGrNs2kU4A6vgH5meUk4lt9dDuCFTXpp308YBYRBG098aBwPLY85Jjb8AkWINV8uswoX+AmZVhH33RrD5xX8Q/KXLZcD7UQciy5Bj97rYxcXS4a4qK/o0PggvEpXrM69bxP8AUZSeV2SbdxBA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vui7lRF/9oAhPSfpV8XMH4Wv3GXoEOSQvGa+5vxowzU=;
- b=sb2I/LNutVNlHBkfgFHJunjr0hEO2oaOpooK4x/1n+FQnti9ICT8CJ4nInlOirngXzy3SwmNVOWQFgk+Yh2xGkZnlUdjgGheKftg4Ph54FnTl/XdYPFHYmNK56m4vHjPEz8zHxZgkhnLoc0aSgNrRoOjb61UojrVwjx19ClhvlhmrQ4y1svmzHtjO+zCTXq0F8J/Jgi8ToLMXjUdF3B7fT9zXfpJpuuCdHFVbZZqqD5fFhkD47lHfWXPi6R4QoLjwjEMMhU72QXxOwwbyVllnVnobIqH0EKjQmJAp4stcg4ieWQoFSW39f00ibG/QtjWHvusBOlKDHdvq+vLOF3SQQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
+ bh=rEyp91BPa1yfxNezhgfvY/5qVTDiZ2g0iNDgBTUTqe4=;
+ b=yAirWQDBYSGyE6tXkBYyxrWIdPGOTEDqlN3qJg9RtLNL2RpTaqcIkz5flF7aY5xhMlRmsICNICoNSROyKHZRkxfcqHd5T1Drg/ITF34jjnti4wQJ920OOgQkRNo1FXSzKPf1akj9E8Hlgaym2YAhM1X6IosrA8f9iJlgBT3bzOvURmp9BujG9RQzhpdn+tuU7jdlF8X2h2tyYcN2bti3qWtAgeXu4UEv5qMSY/niumgSD/4KaNbxqbQlaPC8Zc1mF5TmDl9zGL4/0Xgmeahixg4QdpslH8BM2taQNFmYDHN+jCIHZZuHeve8smElAWQoEk9/2u/fgiWGU6AZnJ1Saw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vui7lRF/9oAhPSfpV8XMH4Wv3GXoEOSQvGa+5vxowzU=;
- b=Cm3VOlUQCaobFfvzM0OTm1WRzM/LfPAUiaMW5Gh9tNXxVAQPGJANA3+Uro/+Bq6pDf+JFxWnhYgqhojV4VWrIKBsACiPdxN9N5gcQP04lx4GSaPQGy92b4lQ4A+6L4BBJLFHdO7mLMhOeCKe9UADna1EJPS8la0dWUnc3H78mthdfJqqCr2heMbIUYsRmdjzXEQB+YjUDO/rN4kMgfR8uTpDCcn4L7V5nBeHykf3vxqZWqBqOq0X+vvz+uY4/cXJg//xyOUdPHFxWrv+XJODkl9thDZMy4O5YTIk/P8zhn/8Y1y3HUKBdNpf2jW0v3aOj7uDB1KaYPxSlxi1hTf9jA==
-Received: from TYBP286MB0365.JPNP286.PROD.OUTLOOK.COM (2603:1096:404:8022::15)
- by TY1P286MB3181.JPNP286.PROD.OUTLOOK.COM (2603:1096:400:2e4::10)
+ bh=rEyp91BPa1yfxNezhgfvY/5qVTDiZ2g0iNDgBTUTqe4=;
+ b=J8O1J4Z/c9JXtvwiIBjXssCSjlEMtIkmuNI7xIvSqO0ixAXHwrOrr0mevoYyDJOmDE9HmwJPjtkmUaRpXLjFwezqZ13wZf96JwYnTct3WgVbQfqxJhWcAKGkeok3sTsOxLniKpbwv8ae2BPJFJ0nhUBLh2ArbSkSx592MS6OHPE=
+Received: from BN0PR10CA0019.namprd10.prod.outlook.com (2603:10b6:408:143::8)
+ by MN0PR12MB6103.namprd12.prod.outlook.com (2603:10b6:208:3c9::19)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7807.28; Thu, 1 Aug
- 2024 05:35:16 +0000
-Received: from TYBP286MB0365.JPNP286.PROD.OUTLOOK.COM
- ([fe80::948f:9ea:14f6:1f5e]) by TYBP286MB0365.JPNP286.PROD.OUTLOOK.COM
- ([fe80::948f:9ea:14f6:1f5e%6]) with mapi id 15.20.7807.026; Thu, 1 Aug 2024
- 05:35:16 +0000
-From: Wenyu Huang <huangwenyuu@outlook.com>
-To: mst@redhat.com,
-	qemu-devel@nongnu.org
-Cc: huangwenyuu@outlook.com
-Subject: [PATCH] Cleanup: rename virtio_split_packed_update_used_idx
-Date: Thu,  1 Aug 2024 01:35:12 -0400
-Message-ID: <TYBP286MB036536B9015994AA5F3E4495ACB22@TYBP286MB0365.JPNP286.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.43.0
+ 2024 02:54:30 +0000
+Received: from BN1PEPF00004682.namprd03.prod.outlook.com
+ (2603:10b6:408:143:cafe::ff) by BN0PR10CA0019.outlook.office365.com
+ (2603:10b6:408:143::8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.35 via Frontend
+ Transport; Thu, 1 Aug 2024 02:54:30 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BN1PEPF00004682.mail.protection.outlook.com (10.167.243.88) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7828.19 via Frontend Transport; Thu, 1 Aug 2024 02:54:30 +0000
+Received: from SHA-L-LEIHUANG.amd.com (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 31 Jul
+ 2024 21:54:09 -0500
+From: Lei Huang <Lei.Huang@amd.com>
+To: <mst@redhat.com>
+CC: <leihuang@amd.com>, <pierre-eric.pelloux-prayer@amd.com>,
+ <ken.xue@amd.com>, <qemu-devel@nongnu.org>, Lei Huang <Lei.Huang@amd.com>
+Subject: [PATCH v2 0/1] Brief description of the patch series
+Date: Thu, 1 Aug 2024 10:53:32 +0800
+Message-ID: <20240801025334.1610-1-Lei.Huang@amd.com>
+X-Mailer: git-send-email 2.44.0.windows.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-TMN: [1CTvf/sxOZY9sH7Hnaa4I6NWQyu2ZyhR]
-X-ClientProxiedBy: SI1PR02CA0034.apcprd02.prod.outlook.com
- (2603:1096:4:1f6::10) To TYBP286MB0365.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:404:8022::15)
-X-Microsoft-Original-Message-ID: <20240801053512.25778-1-huangwenyuu@outlook.com>
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: TYBP286MB0365:EE_|TY1P286MB3181:EE_
-X-MS-Office365-Filtering-Correlation-Id: 89bbbd4f-3190-4bb9-f8d5-08dcb1ebb8f7
-X-MS-Exchange-SLBlob-MailProps: Cq7lScuPrnpXB0xcNeDVdJIgd0h0Wm5onx2dxdB74NOio1nCkB3wnBMb4nwPtDJVsgcPYrzem1xBM8/mncG5kq5fU4n8GO72/7+1paEyfqlBoRFr33TXjGpX4YuZezlKvAAe1fsDhdxBzYlSs0UiW9YfQk2vmcxXOuuVp99L2jbxFGz7zmyzDlsMiIpyjjn4VurBY9gM/2ATqyLskcpjeB9aTYcU9gv6ytnkxdCXONt7VtuVc82E7/NZgPaWj8h7Wye8e01S1y4myZb4F5h8Wzj/ZAAwVJ1mZ43u1Xc4Gg7/SU27rTE3dJJ35W5KKD1iEDrJVIOvN82obDcEjL6eaznlei75Kh35lXrp4OUare77X/HtFXhRSwPiDREr1gfhdXPgfos04+28oySAkAANEz0taRcE8W+/LX0t8A+wtPnuL4HI4L15Rm8tw856HfBCydU7d5dl/L8lSLtIir0r3LinncuVXsA4r96QViNm3gmhB1voVN9FskxtYeTMOj7pON7DKHHwICWZr29ZwWiwENF/sZxB1N3LyWvCQ+pDB/uLqNNqFuFuK0HN1bCXt0gi7welWOQqX8hrlQe2QJU/HkvZk+kwzNyua/aZ6p9gBkRENdiVUV5TpitjvBoj7SPfmgSwY64PiFTeUaA6Z8BpjmRyyxthc+jpDk/kKNcPNXy99CKTWQoWbJM60QQH9xGyflxMi/ZsH9rYsDPLFRCGy+RznyUqReo5ddr9t8LZHiv00XC1NO0H1J8A0hxAcTZfSpPK6Qy8aEE=
+X-MS-TrafficTypeDiagnostic: BN1PEPF00004682:EE_|MN0PR12MB6103:EE_
+X-MS-Office365-Filtering-Correlation-Id: bafedf0c-461e-463b-bcfe-08dcb1d54414
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:14566002|461199028|5072599009|8060799006|19110799003|3412199025|440099028|1710799026;
-X-Microsoft-Antispam-Message-Info: qk7+xqizqxwzvRt8+e0wFwDlE9EUYKPf5tHFGcw/eZ6P2CjHG6sdk9pkKfbmdWIEP+VZR29h8JgSc3/VhLoV30k15CYlM+nsWxXhrTIm9lFOFHBSJMZ7Mz8DjoaUozUOPp2KsvHbafEYoUYGa+qT5isZ3mOp4bXz9lHHH/NF8gu+7hR48caDAtd8X8zlaN5cURPkU04ESHHHVUTDte7UE3jpNNKqVzhphSI711OAcpI7V1MHJTAcs8tUQZn7kh4S+1Kfzwb9tqynKGtd6WJUahxPZ9P/QV76P5IQp/nX+jaQz1OLPCbVnkmpGhN2XNSaWgj6Ab3D0KknzMxor1wq0HvG43QB/KjjlOCUm3wR0/nlL1tMzdlU+pJID/j3MlNuiV0MQPX9ms+MPeYPoByu2gU/YfNXTjcyxXfnKCXUuPehspi2CZMV2DD/MopPrQeGFd/ThsvnQI5E9u9mKCpUVsD5/QBv4vETxISew4m6+gQ7DBH39epUMz5kzAaa3XLMaDTV/yBJcRu0RaMO0kTCsn4nr/cZwlm5IfsPPPM3sr8RTKPiM+Dr2DOOCl+eN1Bz6FpyOtZDbcmYtBFzfQ1NF7LVGJxJSKNVM/bgxNMgtO+2MqX0+ZqdG+8pVmDKgXe/+mCMjSB0CWvXmYP1vEnjGsewodrpRr3lbb14pt7IobmX6JiRbnyZY9CPjjgfObWirMtOlCkvC0RmaEbmWy4Cyw==
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?TTFC3H836CScOEXKKphyXFVwN5gM6ijuIzej7eC5lBIgnYlWDPkPIYArHu1c?=
- =?us-ascii?Q?Q1zjuj7VU0S5F3tLVR8TUz3WnyekuUmFLERYNHNO2F/aeaJC23wC1vMPXBuL?=
- =?us-ascii?Q?7PxQ4PDYb0bFOILx3MjhzGoVdCVT0NUUVwz39j4OLAUOUa7zQPJrdO7vSxz2?=
- =?us-ascii?Q?CZq7n/UzIM8DSYi8dLCASwx7R+SeC97T9Wf059hsoQZ9MIhVjncudPySCFD5?=
- =?us-ascii?Q?tESxWBRR4hnnFPHnIoYAP6GTKRVEsDGyqaEcLrDPO3VuzVvr7kYmXkpf3d22?=
- =?us-ascii?Q?kHobNEhwWiZl/6StuG3/32hvM9tC8cqOdhCsCCZ+R903xaO43b6VSm3tXfdO?=
- =?us-ascii?Q?p2l9TDxJQESu74FUrRxmEyl+Xk3JDkKu0x/Ua2/HIE4jtny79bdnBUWBTc4J?=
- =?us-ascii?Q?852hlMQeL4ZJE9Mh3R9Oyui3ASLrbEO+Ev/eWzle4VxMooFjFlnPfvFMjLy6?=
- =?us-ascii?Q?XCRZhW9fjtaD6/1+bwzrXqWhaKS4zmpESYSf4Kt7FsZ9xj8mYwQ7rCav8QCI?=
- =?us-ascii?Q?vD8WP0z9bPfVGIJOf7vY5o+CBeSjFEYm/Mvo3HBGiLn+lpmB/sOkFkf+h666?=
- =?us-ascii?Q?0y19pOitONUv90ZY6U/9oMVb79QUAnx4lZ/CIWDm78e+5/e4tdkx1OPybf5d?=
- =?us-ascii?Q?i2trJmPoM2uIBq8B3QcMxxhtT4yFMyeAYFStVQspWJh58uVJzls91I/WUD6f?=
- =?us-ascii?Q?FOL/+tFjbtn4eR47mmSuUeazc/lUS1a2v/ji402mSVmlGM0h67k8Xi7Sdbaw?=
- =?us-ascii?Q?rujXuKcZr6DQSLmnVbVpzGoWPNwbUKH0EVWnmksNzFqbcIFQ21Kl1TARtHuz?=
- =?us-ascii?Q?mYjI4Zk4Iocq1dUKk3xBglt/knecL6NDGNGwwJPPUyKyFb5KCkpP2zSPZWE4?=
- =?us-ascii?Q?Px3NP4WrCxEa83w9+3Yf3D4tyr45/StdXyU2FUGuzL3EENsS+rB59hM4aTb2?=
- =?us-ascii?Q?Nf4FLPxhPCmRIwuB2TWXIxCc3xSyAKvn5hR0g0TM1mFOroOJ9uZgWNcGhxi+?=
- =?us-ascii?Q?15As4yxXfFr1dAaTljbBDl6Gmt2dOqhomY2zCA+C8/gKROoRVZT0W5iKYouS?=
- =?us-ascii?Q?UTzbXqTZ9K8gjZkeoY7RjP7NMbkUrFTdXsL+8vJkZcz/QDM9GoKs1gnDBa9F?=
- =?us-ascii?Q?8Z5MeCJfuf2GPtIQmBHWPrX8nJ2o+SsX6a0w3tVRuMLV0rrCKKgytcjdFaeh?=
- =?us-ascii?Q?QnGpgIh5NXAYXN1Wru6G+0BtqwQk/xL+cEbkP8bR21ozqjnZ5KZT0Mh3ZI0u?=
- =?us-ascii?Q?B8QTAblNspVy9YNsOSOn?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 89bbbd4f-3190-4bb9-f8d5-08dcb1ebb8f7
-X-MS-Exchange-CrossTenant-AuthSource: TYBP286MB0365.JPNP286.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Aug 2024 05:35:16.2581 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY1P286MB3181
-Received-SPF: pass client-ip=52.103.43.7; envelope-from=huangwenyuu@outlook.com;
- helo=TY3P286CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ ARA:13230040|82310400026|1800799024|376014|36860700013; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?vrGc4FHLa9IJ6/P9adlL5S2kBp40/5O5ER5glXMXZCsf+86o69gLs3Ebcmyd?=
+ =?us-ascii?Q?JNZ69LtYmD29b0l8tANLdzm678kuzCis6wKcV5CIfJpqLHvJvfLG6rPiYGus?=
+ =?us-ascii?Q?+5AOpMkKaxgGpX/IS6Yx8/MrRgTnWYu6R9jOxc63f0cIbTOuBovZxPnczf9i?=
+ =?us-ascii?Q?dfIA2IncqsYcDjgjT3ZEZycBTo0FBmMGYvOIN6TACtlNE2KF/ohDsIT4g3bE?=
+ =?us-ascii?Q?K3kfAVXBn//DalfAAo9mMawwh6C+Ac1n5kF6oiKt5EqQsATRs2GZZ4IW5Yoj?=
+ =?us-ascii?Q?pZRABzzKRlNqQu3ryreLOayuFw9ai0eLTabTiy7fMFbjIU2fsj8r1XIHM5wO?=
+ =?us-ascii?Q?ZdyidvMw3b7I3KLFqh/fB6+P2n/vow0ZstYyLg435ZJFZg1Tp7OKpFAFVGW0?=
+ =?us-ascii?Q?3A7eTwb2nLBd7+BcoFk50x2sSXX3hklMr+9soyH2mhImWIS79P4CVQkg0JBH?=
+ =?us-ascii?Q?qUE+fqPg1IGZJXMO9IsBAYxV5zkv2U7qI/P4my5AW8foNK9A43M/HnpzpW3U?=
+ =?us-ascii?Q?a7P0gFYfOBg1NLLsJtVAsUFjt+iMuKYcifz2J52wNT/5cXUUXAba+iVlw0pY?=
+ =?us-ascii?Q?DF9Tq5G0sugeY6+RI0PfXPftnFndmdv4pUZ8fm4tCE9sgmPJ9K4ovCva19Ft?=
+ =?us-ascii?Q?y7y6Ca5Jqiuj8s6RXZfd2KjPyNqSJ4lrk9y9Vyy9PXMq78SAp0lYyR/46BQy?=
+ =?us-ascii?Q?PVfrnkrnBtkqcs4rTXATJJ9pAtTgp3D+jLq/RjEjppdzqPhu73CokGdTDeda?=
+ =?us-ascii?Q?94WgblvZqoroPoYKj7SLWHrUEVJrh7VLqPxk+mhb2421/PHBhbPLjuYi/oDt?=
+ =?us-ascii?Q?9uLImlDByWddATOjwfYV0W/UCvpiiOec1wQrYBnjBcbQvH8fw1paN4COh86Q?=
+ =?us-ascii?Q?ll9URk3rAevKj0HbBERVfleGjsW7mcfCa9pAeUbCAfONdIcOr16awQPEuOfW?=
+ =?us-ascii?Q?iCQ930omd178HaAR8x+K8Te1MlirjZR3KTiwghswQC54jfE3xvbkefrTM7HM?=
+ =?us-ascii?Q?ZZ01HY3UGznST89N7u0nZP5OGvwjHuTfYeXZGr6Yqcchbkej7miz6dl77dAm?=
+ =?us-ascii?Q?VgE1bqaNWTPH5kHdS1EhICkDwKYj2zPy6FCzgvlkUxQ2twyE0O0np3EyVyYz?=
+ =?us-ascii?Q?317Z+NtgzXoLiTQ1+hCQhgjsqtOALKIEO4LL5+Jy3YznxVwZ8zX5O54bJxE3?=
+ =?us-ascii?Q?dni5P4jd9r1jgKgIbvzlFsKgcWoqgyx3dciNzjVyri80VWr54QDTASojKg7h?=
+ =?us-ascii?Q?cwhqxr8eRZZ2XSTE+FpHc4oWw6ZDTRk06XTE65BsdL9G+VD1DISuxBS/075F?=
+ =?us-ascii?Q?82LxmGA5kk1TauModtOm09butn38isJccAKZ7SrPiAlFpjNLCcHGxW6OL5Qt?=
+ =?us-ascii?Q?m7CE9opFFs3W1WfRoDFq3V0v1Buo?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(1800799024)(376014)(36860700013); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Aug 2024 02:54:30.7190 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: bafedf0c-461e-463b-bcfe-08dcb1d54414
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00004682.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6103
+Received-SPF: permerror client-ip=40.107.96.84; envelope-from=Lei.Huang@amd.com;
+ helo=NAM02-SN1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -125,38 +143,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_split_packed_update_used_idx should be
-virtio_queue_split_update_used_idx like
-virtio_split_packed_update_used_idx.
+The purpose of this patch is customize refresh rate and resolution 
+for the guest VM instead of being limited by the actual resolution 
+of the host.
 
-Signed-off-by: Wenyu Huang <huangwenyuu@outlook.com>
----
- hw/virtio/virtio.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Although it is possible to configure the VM kernel cmdline to set the 
+EDID, such as with drm.edid_firmware=edid/1920x1080.bin, this approach
+is very inconvenient for three reasons:
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 397c261c3c..5836f680f0 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3609,7 +3609,7 @@ static void virtio_queue_packed_update_used_idx(VirtIODevice *vdev, int n)
-     return;
- }
- 
--static void virtio_split_packed_update_used_idx(VirtIODevice *vdev, int n)
-+static void virtio_queue_split_update_used_idx(VirtIODevice *vdev, int n)
- {
-     RCU_READ_LOCK_GUARD();
-     if (vdev->vq[n].vring.desc) {
-@@ -3622,7 +3622,7 @@ void virtio_queue_update_used_idx(VirtIODevice *vdev, int n)
-     if (virtio_vdev_has_feature(vdev, VIRTIO_F_RING_PACKED)) {
-         return virtio_queue_packed_update_used_idx(vdev, n);
-     } else {
--        return virtio_split_packed_update_used_idx(vdev, n);
-+        return virtio_queue_split_update_used_idx(vdev, n);
-     }
- }
- 
+1.Some systems, like Android, cannot dynamically set the kernel cmdline 
+and require recompiling the Android image.
+
+2.If the guest VM's DRM driver is built-in, the EDID file also needs to 
+be built-in. If it is placed in the filesystem, the DRM driver will fail 
+to load the firmware because the filesystem is not yet mounted when the 
+driver starts.
+
+3.Some tools for generating EDID files
+like:https://github.com/akatrevorjay/edid-generator.git have a limitation 
+where the maximum main clock can only be 655 MHz, making it impossible to 
+generate an EDID file for resolutions like 3840x2160@120Hz.
+
+The following patches are included in this series:
+
+1. [PATCH 1/1] virtio-gpu: customize EDID for vms
+
+Thank you for reviewing these patches.
+
+Best regards,
+Lei Huang
+Lei.Huang@amd.com
+
+Lei Huang (1):
+  virtio-gpu: customize EDID for vms
+
+ hw/display/virtio-gpu-base.c   | 41 ++++++++++++++++++++++++++++------
+ hw/display/virtio-gpu.c        |  1 +
+ include/hw/virtio/virtio-gpu.h | 26 +++++++++++++++++++++
+ 3 files changed, 61 insertions(+), 7 deletions(-)
+
 -- 
-2.43.0
+2.45.2
 
 
