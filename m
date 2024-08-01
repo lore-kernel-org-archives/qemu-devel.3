@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86850C3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 14:48:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 923D4C3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 14:48:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZX5R-000171-N4; Thu, 01 Aug 2024 10:47:25 -0400
+	id 1sZX5P-0000zZ-VS; Thu, 01 Aug 2024 10:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sZX5P-0000xT-Dk; Thu, 01 Aug 2024 10:47:23 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ id 1sZX5N-0000vD-GS; Thu, 01 Aug 2024 10:47:21 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sZX5L-0001qc-Si; Thu, 01 Aug 2024 10:47:23 -0400
+ id 1sZX5L-0001qW-Pk; Thu, 01 Aug 2024 10:47:21 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 916B5628E2;
- Thu,  1 Aug 2024 14:47:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B82C4AF0A;
+ by dfw.source.kernel.org (Postfix) with ESMTP id F06A46288B;
+ Thu,  1 Aug 2024 14:47:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E211C4AF0F;
  Thu,  1 Aug 2024 14:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1722523637;
- bh=rzo7GJ37SsXEzwNYx2lTpLxCPLuIqxbfFLqogTN1q0I=;
+ bh=wmX5BOavDV5A0y4JGTIfwXXXDCYeYux2q4KKf6xw9vs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=RSrEZGAX5YKi3zi0HAIJjqeM1Z7Khuttolv7Jr4WvlWNpsbAzRIgEGH+eK3sRxPLa
- ge9K0LmDqGJikLiHJ8KPb4QJJFlhwcgXT3JTpr3lWaJ987NAdHdDrGLgIyNRs3PMAV
- eqpnexjA18ou56zk0P3MN3T47XqVx2Uml4mfs4PVQVQL8FpFtdntBpqdFodNt8Dra2
- da8dboPSG4qJU/LdVaS+ZCsG8GXWRBNTeCCgsprBx+/eqbt4sJVixTEvBwdk+XNqVZ
- lAFNnDWf93Hwf+ksDi/4DerXOOzQWhB2D7krg+DWgG3mkFEMWj18Q59EISmCjhFf1V
- Ufyp/s6kIeQGw==
+ b=XEiVgpxRD5QuvI2aa7eSeynvkq9I/k9VUg7fXPfxYcnSAT6CBRMyz3bNwuEATzv9Z
+ cpdb/WkMG9CvS7af3RiJRP7aNAHw6i3TkOwS3LL9EboTKkOrg0j2qXq8uhzuw4qGWv
+ uoVX1iW3cQckjEyjBOh5C5SvJIBuJK1nnj6pDzU3K0q0cH0Y+ltEcJmlNiQqhTdR2p
+ G0CPpxya5vTC+9Cce0C9J9O4F2tyoSN1cIcAUEOCFCPFWUGDsYJXH/yrxB5Uz1wQlD
+ fA1X/oAA9KC5284Eya4YzLoDvowI4ZKDW+ky3vnc/GmlkrkpfbOPAudbJjALTMTRfx
+ sGXUdrNcI981A==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1sZX5H-00000001WCZ-32Su; Thu, 01 Aug 2024 16:47:15 +0200
+ id 1sZX5H-00000001WCT-2os4; Thu, 01 Aug 2024 16:47:15 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: 
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, Igor Mammedov <imammedo@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Shannon Zhao <shannon.zhaosl@gmail.com>, linux-kernel@vger.kernel.org,
  qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v4 3/7] arm/virt: Wire up GPIO error source for ACPI / GHES
-Date: Thu,  1 Aug 2024 16:47:06 +0200
-Message-ID: <b7e886506d4a97e11ab7bf8a5f3e299ccf22540a.1722523312.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v4 1/7] arm/virt: place power button pin number on a define
+Date: Thu,  1 Aug 2024 16:47:04 +0200
+Message-ID: <e5afbbaf2836ebe22b48c455285eccef86db966b.1722523312.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <cover.1722523312.git.mchehab+huawei@kernel.org>
 References: <cover.1722523312.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=139.178.84.217;
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
  envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,205 +78,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds support to ARM virtualization to allow handling
-a General Purpose Event (GPE) via GED error device.
+Having magic numbers inside the code is not a good idea, as it
+is error-prone. So, instead, create a macro with the number
+definition.
 
-It is aligned with Linux Kernel patch:
-https://lore.kernel.org/lkml/1272350481-27951-8-git-send-email-ying.huang@intel.com/
-
-Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- hw/acpi/ghes.c           |  3 +++
- hw/arm/virt-acpi-build.c | 21 +++++++++++++++++----
- hw/arm/virt.c            | 26 +++++++++++++++++++++++---
- include/hw/acpi/ghes.h   |  3 +++
- include/hw/arm/virt.h    |  2 ++
- 5 files changed, 48 insertions(+), 7 deletions(-)
+ hw/arm/virt-acpi-build.c | 6 +++---
+ hw/arm/virt.c            | 7 ++++---
+ include/hw/arm/virt.h    | 3 +++
+ 3 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index e9511d9b8f71..8d0262e6c1aa 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -444,6 +444,9 @@ int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
-     return ret;
- }
- 
-+NotifierList generic_error_notifiers =
-+    NOTIFIER_LIST_INITIALIZER(error_device_notifiers);
-+
- bool acpi_ghes_present(void)
- {
-     AcpiGedState *acpi_ged_state;
 diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index f76fb117adff..cdd1c6d9f1a3 100644
+index e10cad86dd73..f76fb117adff 100644
 --- a/hw/arm/virt-acpi-build.c
 +++ b/hw/arm/virt-acpi-build.c
-@@ -142,6 +142,8 @@ static void acpi_dsdt_add_pci(Aml *scope, const MemMapEntry *memmap,
- static void acpi_dsdt_add_gpio(Aml *scope, const MemMapEntry *gpio_memmap,
-                                            uint32_t gpio_irq)
- {
-+    uint32_t pin;
-+
-     Aml *dev = aml_device("GPO0");
-     aml_append(dev, aml_name_decl("_HID", aml_string("ARMH0061")));
-     aml_append(dev, aml_name_decl("_UID", aml_int(0)));
-@@ -155,7 +157,12 @@ static void acpi_dsdt_add_gpio(Aml *scope, const MemMapEntry *gpio_memmap,
+@@ -154,10 +154,10 @@ static void acpi_dsdt_add_gpio(Aml *scope, const MemMapEntry *gpio_memmap,
+     aml_append(dev, aml_name_decl("_CRS", crs));
  
      Aml *aei = aml_resource_template();
- 
--    const uint32_t pin = GPIO_PIN_POWER_BUTTON;
-+    pin = GPIO_PIN_POWER_BUTTON;
-+    aml_append(aei, aml_gpio_int(AML_CONSUMER, AML_EDGE, AML_ACTIVE_HIGH,
-+                                 AML_EXCLUSIVE, AML_PULL_UP, 0, &pin, 1,
-+                                 "GPO0", NULL, 0));
+-    /* Pin 3 for power button */
+-    const uint32_t pin_list[1] = {3};
 +
-+    pin = GPIO_PIN_GENERIC_ERROR;
++    const uint32_t pin = GPIO_PIN_POWER_BUTTON;
      aml_append(aei, aml_gpio_int(AML_CONSUMER, AML_EDGE, AML_ACTIVE_HIGH,
-                                  AML_EXCLUSIVE, AML_PULL_UP, 0, &pin, 1,
+-                                 AML_EXCLUSIVE, AML_PULL_UP, 0, pin_list, 1,
++                                 AML_EXCLUSIVE, AML_PULL_UP, 0, &pin, 1,
                                   "GPO0", NULL, 0));
-@@ -166,6 +173,12 @@ static void acpi_dsdt_add_gpio(Aml *scope, const MemMapEntry *gpio_memmap,
-     aml_append(method, aml_notify(aml_name(ACPI_POWER_BUTTON_DEVICE),
-                                   aml_int(0x80)));
-     aml_append(dev, method);
-+
-+    method = aml_method("_E06", 0, AML_NOTSERIALIZED);
-+    aml_append(method, aml_notify(aml_name(ACPI_APEI_ERROR_DEVICE),
-+                                  aml_int(0x80)));
-+    aml_append(dev, method);
-+
-     aml_append(scope, dev);
- }
+     aml_append(dev, aml_name_decl("_AEI", aei));
  
-@@ -841,10 +854,9 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-                       HOTPLUG_HANDLER(vms->acpi_dev),
-                       irqmap[VIRT_ACPI_GED] + ARM_SPI_BASE, AML_SYSTEM_MEMORY,
-                       memmap[VIRT_ACPI_GED].base);
--    } else {
--        acpi_dsdt_add_gpio(scope, &memmap[VIRT_GPIO],
--                           (irqmap[VIRT_GPIO] + ARM_SPI_BASE));
-     }
-+    acpi_dsdt_add_gpio(scope, &memmap[VIRT_GPIO],
-+                       irqmap[VIRT_GPIO] + ARM_SPI_BASE);
- 
-     if (vms->acpi_dev) {
-         uint32_t event = object_property_get_uint(OBJECT(vms->acpi_dev),
-@@ -858,6 +870,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-     }
- 
-     acpi_dsdt_add_power_button(scope);
-+    acpi_dsdt_add_error_device(scope);
- #ifdef CONFIG_TPM
-     acpi_dsdt_add_tpm(scope, vms);
- #endif
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 687fe0bb8bc9..e76cc9690788 100644
+index 719e83e6a1e7..687fe0bb8bc9 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -73,6 +73,7 @@
- #include "standard-headers/linux/input.h"
- #include "hw/arm/smmuv3.h"
- #include "hw/acpi/acpi.h"
-+#include "hw/acpi/ghes.h"
- #include "target/arm/cpu-qom.h"
- #include "target/arm/internals.h"
- #include "target/arm/multiprocessing.h"
-@@ -677,7 +678,7 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
-     DeviceState *dev;
-     MachineState *ms = MACHINE(vms);
-     int irq = vms->irqmap[VIRT_ACPI_GED];
--    uint32_t event = ACPI_GED_PWR_DOWN_EVT;
-+    uint32_t event = ACPI_GED_PWR_DOWN_EVT | ACPI_GED_ERROR_EVT;
- 
-     if (ms->ram_slots) {
-         event |= ACPI_GED_MEM_HOTPLUG_EVT;
-@@ -1009,12 +1010,28 @@ static void virt_powerdown_req(Notifier *n, void *opaque)
+@@ -1004,7 +1004,7 @@ static void virt_powerdown_req(Notifier *n, void *opaque)
+     if (s->acpi_dev) {
+         acpi_send_event(s->acpi_dev, ACPI_POWER_DOWN_STATUS);
+     } else {
+-        /* use gpio Pin 3 for power button event */
++        /* use gpio Pin for power button event */
+         qemu_set_irq(qdev_get_gpio_in(gpio_key_dev, 0), 1);
      }
  }
- 
-+static DeviceState *gpio_error_dev;
-+static void virt_generic_error_req(Notifier *n, void *opaque)
-+{
-+    VirtMachineState *s = container_of(n, VirtMachineState, generic_error_notifier);
-+
-+    if (s->acpi_dev) {
-+        acpi_send_event(s->acpi_dev, ACPI_GENERIC_ERROR);
-+    } else {
-+        /* use gpio Pin for power button event */
-+        qemu_set_irq(qdev_get_gpio_in(gpio_error_dev, 0), 1);
-+    }
-+}
-+
- static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
+@@ -1013,7 +1013,8 @@ static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
                               uint32_t phandle)
  {
      gpio_key_dev = sysbus_create_simple("gpio-key", -1,
-                                         qdev_get_gpio_in(pl061_dev,
-                                                          GPIO_PIN_POWER_BUTTON));
-+    gpio_error_dev = sysbus_create_simple("gpio-key", -1,
-+                                          qdev_get_gpio_in(pl061_dev,
-+                                                           GPIO_PIN_GENERIC_ERROR));
+-                                        qdev_get_gpio_in(pl061_dev, 3));
++                                        qdev_get_gpio_in(pl061_dev,
++                                                         GPIO_PIN_POWER_BUTTON));
  
      qemu_fdt_add_subnode(fdt, "/gpio-keys");
      qemu_fdt_setprop_string(fdt, "/gpio-keys", "compatible", "gpio-keys");
-@@ -2385,9 +2402,8 @@ static void machvirt_init(MachineState *machine)
+@@ -1024,7 +1025,7 @@ static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
+     qemu_fdt_setprop_cell(fdt, "/gpio-keys/poweroff", "linux,code",
+                           KEY_POWER);
+     qemu_fdt_setprop_cells(fdt, "/gpio-keys/poweroff",
+-                           "gpios", phandle, 3, 0);
++                           "gpios", phandle, GPIO_PIN_POWER_BUTTON, 0);
+ }
  
-     if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
-         vms->acpi_dev = create_acpi_ged(vms);
--    } else {
--        create_gpio_devices(vms, VIRT_GPIO, sysmem);
-     }
-+    create_gpio_devices(vms, VIRT_GPIO, sysmem);
- 
-     if (vms->secure && !vmc->no_secure_gpio) {
-         create_gpio_devices(vms, VIRT_SECURE_GPIO, secure_sysmem);
-@@ -2397,6 +2413,10 @@ static void machvirt_init(MachineState *machine)
-      vms->powerdown_notifier.notify = virt_powerdown_req;
-      qemu_register_powerdown_notifier(&vms->powerdown_notifier);
- 
-+     vms->generic_error_notifier.notify = virt_generic_error_req;
-+     notifier_list_add(&generic_error_notifiers,
-+                       &vms->generic_error_notifier);
-+
-     /* Create mmio transports, so the user can create virtio backends
-      * (which will be automatically plugged in to the transports). If
-      * no backend is created the transport will just sit harmlessly idle.
-diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 674f6958e905..6891eafff5ab 100644
---- a/include/hw/acpi/ghes.h
-+++ b/include/hw/acpi/ghes.h
-@@ -23,6 +23,9 @@
- #define ACPI_GHES_H
- 
- #include "hw/acpi/bios-linker-loader.h"
-+#include "qemu/notify.h"
-+
-+extern NotifierList generic_error_notifiers;
- 
- /*
-  * Values for Hardware Error Notification Type field
+ #define SECURE_GPIO_POWEROFF 0
 diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index a4d937ed45ac..0cbe9a05605f 100644
+index ab961bb6a9b8..a4d937ed45ac 100644
 --- a/include/hw/arm/virt.h
 +++ b/include/hw/arm/virt.h
-@@ -49,6 +49,7 @@
+@@ -47,6 +47,9 @@
+ /* See Linux kernel arch/arm64/include/asm/pvclock-abi.h */
+ #define PVTIME_SIZE_PER_CPU 64
  
- /* GPIO pins */
- #define GPIO_PIN_POWER_BUTTON  3
-+#define GPIO_PIN_GENERIC_ERROR 6
- 
++/* GPIO pins */
++#define GPIO_PIN_POWER_BUTTON  3
++
  enum {
      VIRT_FLASH,
-@@ -175,6 +176,7 @@ struct VirtMachineState {
-     DeviceState *gic;
-     DeviceState *acpi_dev;
-     Notifier powerdown_notifier;
-+    Notifier generic_error_notifier;
-     PCIBus *bus;
-     char *oem_id;
-     char *oem_table_id;
+     VIRT_MEM,
 -- 
 2.45.2
 
