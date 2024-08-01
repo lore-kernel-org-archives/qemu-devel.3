@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C08F0C3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 16:14:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26E8FC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 16:22:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZYRB-0008Ix-7T; Thu, 01 Aug 2024 12:13:57 -0400
+	id 1sZYYD-0008Ik-Sq; Thu, 01 Aug 2024 12:21:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZYR9-0008Ad-5t
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:13:55 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZYY7-0008Cp-1Z
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:21:07 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZYR7-0007FO-5W
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:13:54 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-428e3129851so6074885e9.3
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 09:13:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZYY4-0000rn-Fd
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 12:21:06 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-368526b1333so1430432f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 09:21:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722528831; x=1723133631; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=KAXwL2mhIWfi7sHKoa5OtK/N/I+aT6da9xS5mNjTsvM=;
- b=QgcBa28aZ1CMIL06ckEOVFhGnHGBXRuOjj0PmvCxxnUj/ABuZyN6M99XiD2pCbaVZg
- LkCNHK1bGHQoVy1sdBy5x0JourAeXfgyt+F5QUT+Ezvf4mflbPx8sbN1SansYgO35z0j
- m3/Lr3+ezlZaDOcfJR85+j1NyMNPWmHk1G4D29vqzTXs7pDr5x1pXyXNKNsjjOnlc1lU
- wDLT4yNMSTnhgTYPCUIiJ+132NZCrFHpfMLjGD9cGDEooKptbKNH2leNgAhoiimphc8U
- ywvLJUE+ns8HAP/2eMidi/SHDoGWwKw0qg2/QABtVdPF5+mypCz9GchyjOv0mq5JJtP+
- rgrg==
+ d=linaro.org; s=google; t=1722529262; x=1723134062; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jlt49guQypMiSGg3hxDUfC7FlhfTy7GveVwPenePirk=;
+ b=y5e2uDSo3bmx6r7f/Ysf6tHea4iz/+tjDLU04eAhi/b53LJm5zFoE83q3Y0ZoorfW8
+ eRGN7HKcOvqbsm50kJOAnGnhgmNDxqnPHEsb480I6UNxoNFIWxA3hHHpSGwEfNUI1t0O
+ BcRJR8Z2RzSaRaagMRS91d5UdxhlczqSG2cFpz5Pkf/vGNVB8+7JOvRHSZDf+nauoZP8
+ OupUfJT7Iy76tLOdHAsuonxv5lhfiUNBBPZXrEBZsSjbiw7rXo1wTTnQkZMdE7HSF9an
+ ch/1CItjcFlhMdVtzcmuoMJLiWwA6Bv3ppHlWq5PQZp78IdFlVdQA9D9/e0iKlZq271U
+ zvMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722528831; x=1723133631;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1722529262; x=1723134062;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KAXwL2mhIWfi7sHKoa5OtK/N/I+aT6da9xS5mNjTsvM=;
- b=DoTTmWcsB6ztY5hDJFurAcCbqIBOkMAAc5v013G1D+1uvcOlHbhubXOyKaxwbZYBhY
- MeNNdPlLo/wOXf6EWONAk4nAW20b4wVncLkAO/by8Gvi2uQKolQ7/wlCMSIHYgoMWFyM
- w15yyhrTSCi94OYdGqurCk403RV1z9PvDIpJWU3b7TTcrZLn1g16nlfmNAdKh+Qzh8/w
- 9b64uq50WX05U46HW1TEVMdMAULa/XuGWGxvVtKEYvbvGMTrDpAT22HUiBcnaaToiQs7
- Ho6OrzXdGrKfWo3PT9OX60hmLt2eSTL2kO9ZK4grFZSejBNxAFIPZk2KZ+mGyP1wCIu0
- J5mg==
+ bh=jlt49guQypMiSGg3hxDUfC7FlhfTy7GveVwPenePirk=;
+ b=QkLm3nmfJnTiZpsWlHBJmgdOLcGomdmzb5ssaKhpeBGgetO3FDlHvau0WXueH0zl7A
+ MknjxhD9TOKsC/8gRTa964hMMaKtl5yTealp+RmoADHjMZyPbvLif3lqasxowRgosxYf
+ kqrYhd0kQlW1oBIclh0y95QSGY+IKb71j+L8xoVoa4V6FRp1eLsv0rUxcJygZ7XzlTMk
+ 8dg0bkkkZm4us+gKaIsDNBhZeWzaM7pSjhLVWIfV0pBsNcuEhkZ5GQQqneU9N2O/aDC4
+ 8yyUsx3+D46wPz/hHzyQvlf6rKNbJ0fhKi67/NGQrG211dsQbTsSk2+FwjZ/wHWFcaBO
+ 7c3w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUF/PcQx7O7Vvdovg092uQkG+fBMkY+xlDDFsG86OrsxasF7W2dR05AGhAXq8Jzvr1Nqg7yVaKtWRVaghVRKuLvzihJxdw=
-X-Gm-Message-State: AOJu0YxZVPiq3JGst9ksr1JkTkQ+i9djq83SFMIfBghCn6kPnjvMIEE3
- qqh73R/4UBlN9jLDa4uZvb39XBzjjes+YzNlP4M5mergaViIqAjlqgMquynSkxw=
-X-Google-Smtp-Source: AGHT+IEQ54Yd8VTxMPlSyDD9v2miTnxQjQmIRu0139C4Kssx93UNzgLZx+nLSyk1+qJEhlx99B/WGA==
-X-Received: by 2002:a05:600c:35d2:b0:427:ff7a:79e with SMTP id
- 5b1f17b1804b1-428e6b08baemr2995335e9.16.1722528831393; 
- Thu, 01 Aug 2024 09:13:51 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.130.148])
+ AJvYcCX2wigUF2I5RyLkgCJqvEk+EiY3vsaJkVzr8nTudx/A+gWonrRB1cZu+8INpY0LD2+J+UpHspxEl62D@nongnu.org
+X-Gm-Message-State: AOJu0YyS7G5ueilZeaDrSvYjpMlrr5hujt0t4JV43I2gCpxlMZYx9QZP
+ YmZDdvohOIubVCPNjD9U85ojElpQ8CH3MMOzNsu6CodF+aAYHDitoPPzZQ9AqT0=
+X-Google-Smtp-Source: AGHT+IFvLiAVJFh3JkQgPLUKAjQSfAPRF6fdzXkLpXdf3vD9WEfJwZwmlWbLpQs4WybCWQqAzO2VCA==
+X-Received: by 2002:a05:6000:b50:b0:367:938f:550 with SMTP id
+ ffacd0b85a97d-36bb35de344mr1952963f8f.25.1722529262161; 
+ Thu, 01 Aug 2024 09:21:02 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.211.94])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-428e6e9c9fdsm1877295e9.41.2024.08.01.09.13.49
+ 5b1f17b1804b1-4282baba4f1sm62769695e9.23.2024.08.01.09.21.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Aug 2024 09:13:50 -0700 (PDT)
-Message-ID: <5928c6f5-98af-4853-82d6-ff424e67680c@linaro.org>
-Date: Thu, 1 Aug 2024 18:13:48 +0200
+ Thu, 01 Aug 2024 09:21:01 -0700 (PDT)
+Message-ID: <b9a55935-ccf6-4f13-9437-52608afc0db3@linaro.org>
+Date: Thu, 1 Aug 2024 18:20:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/24] tests/functional: Convert avocado tests that
- just need a small adjustment
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 08/24] tests/functional: add a module for handling
+ asset download & caching
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -73,14 +72,14 @@ Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>
 References: <20240730170347.4103919-1-berrange@redhat.com>
- <20240730170347.4103919-8-berrange@redhat.com>
- <66e83689-3b38-43b1-855b-3f4b167f07d5@linaro.org>
+ <20240730170347.4103919-9-berrange@redhat.com>
 Content-Language: en-US
-In-Reply-To: <66e83689-3b38-43b1-855b-3f4b167f07d5@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240730170347.4103919-9-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,34 +102,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 31/7/24 14:55, Philippe Mathieu-Daudé wrote:
-> On 30/7/24 19:03, Daniel P. Berrangé wrote:
->> From: Thomas Huth <thuth@redhat.com>
->>
->> These simple tests can be converted to stand-alone tests quite easily,
->> e.g. by just setting the machine to 'none' now manually or by adding
->> "-cpu" command line parameters, since we don't support the corresponding
->> avocado tags in the new python test framework.
->>
->> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   tests/functional/meson.build                  |  6 ++
->>   .../test_info_usernet.py}                     | 11 ++-
->>   .../test_ppc_74xx.py}                         | 74 ++++++++-----------
->>   .../version.py => functional/test_version.py} | 13 ++--
->>   4 files changed, 53 insertions(+), 51 deletions(-)
->>   rename tests/{avocado/info_usernet.py => 
->> functional/test_info_usernet.py} (87%)
->>   mode change 100644 => 100755
->>   rename tests/{avocado/ppc_74xx.py => functional/test_ppc_74xx.py} (74%)
->>   mode change 100644 => 100755
->>   rename tests/{avocado/version.py => functional/test_version.py} (78%)
->>   mode change 100644 => 100755
-
-> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 30/7/24 19:03, Daniel P. Berrangé wrote:
+> The 'Asset' class is a simple module that declares a downloadable
+> asset that can be cached locally. Downloads are stored in the user's
+> home dir at ~/.cache/qemu/download, using a sha256 sum of the URL.
 > 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   tests/functional/qemu_test/__init__.py |  1 +
+>   tests/functional/qemu_test/asset.py    | 96 ++++++++++++++++++++++++++
+>   2 files changed, 97 insertions(+)
+>   create mode 100644 tests/functional/qemu_test/asset.py
+> 
+> diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
+> index 2f1e0bc70d..db05c8f412 100644
+> --- a/tests/functional/qemu_test/__init__.py
+> +++ b/tests/functional/qemu_test/__init__.py
+> @@ -6,6 +6,7 @@
+>   # later.  See the COPYING file in the top-level directory.
+>   
+>   
+> +from .asset import Asset
+
+For next patch?
+
+>   from .config import BUILD_DIR
+>   from .cmd import has_cmd, has_cmds, run_cmd, is_readable_executable_file, \
+>       interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
+> diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+> new file mode 100644
+> index 0000000000..6432da2e0b
+> --- /dev/null
+> +++ b/tests/functional/qemu_test/asset.py
+> @@ -0,0 +1,96 @@
+> +# Test utilities for fetching & caching assets
+> +#
+> +# Copyright 2024 Red Hat, Inc.
+> +#
+> +# This work is licensed under the terms of the GNU GPL, version 2 or
+> +# later.  See the COPYING file in the top-level directory.
+> +
+> +import hashlib
+> +import logging
+> +import os
+> +import subprocess
+> +import urllib.request
+> +from pathlib import Path
+> +from shutil import copyfileobj
+> +
+> +
+> +# Instances of this class must be declared as class level variables
+> +# starting with a name "ASSET_". This enables the pre-caching logic
+> +# to easily find all referenced assets and download them prior to
+> +# execution of the tests.
+> +class Asset:
+> +
+> +    def __init__(self, url, hash):
+> +        self.url = url
+> +        self.hash = hash
+> +        self.cache_dir = Path(Path("~").expanduser(),
+> +                              ".cache", "qemu", "download")
+> +        self.cache_file = Path(self.cache_dir,
+> +                               hashlib.sha256(url.encode("utf-8")).hexdigest())
+> +        self.log = logging.getLogger('qemu-test')
+> +
+> +    def __repr__(self):
+> +        return "Asset: url=%s hash=%s cache=%s" % (
+> +            self.url, self.hash, self.cache_file)
+> +
+> +    def _check(self, cache_file):
+> +        if self.hash is None:
+> +            return True
+> +        if len(self.hash) == 40:
+> +            sum_prog = 'sha1sum'
+> +        elif len(self.hash) == 64:
+> +            sum_prog = 'sha256sum'
+
+Do we want to support these? Should we declare them deprecated
+and emit a warning?
+
+> +        elif len(self.hash) == 128:
+> +            sum_prog = 'sha512sum'
+> +        else:
+> +            raise Exception("unknown hash type")
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Very nice :)
 
