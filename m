@@ -4,96 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28E1FC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 05:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 667FBC3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 05:35:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZOMj-00046M-RZ; Thu, 01 Aug 2024 01:28:42 -0400
+	id 1sZOSX-0002Xc-Jd; Thu, 01 Aug 2024 01:34:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sZOMi-00045X-1e
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 01:28:40 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sZOMd-0003Md-Qv
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 01:28:39 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1fc4fccdd78so47823615ad.2
- for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 22:28:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722490114; x=1723094914;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vpF9C2q3R9ZQtAetHx4QHtyEFrmlQwAecWxHeVwSnQk=;
- b=y07dylDJ8PV7DJbZBH6Jc12THaoWYeUoHGJZ3NPgblzNTqCypibwAXr2neH01B52pz
- 5ME8ts5Z8IjxovOnqmuL7xlQM6aXP40Efb8QZRWl/2NBFd6hLgbLKngrPyBwK2FtQLCy
- cit7nkzHotGfeodfld+fqW85MHcpLmKxMGrAYETBigaShlU2QaleJMEI9LsUIiHes94m
- ctWV8CHW7mjgjoxzt6Rijg3BQ0SPueQai68idqzOedC6wkEhR91J+fXFM3rdZ2SwctKe
- 97zS3uiNmOiHSqoH87gc2AtlTfZ3VSpI7Nyh9kgdt7JxnUcfKyCyZPHCAn44lFtuQHCb
- SyEg==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZOSV-0002WH-EN
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 01:34:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZOST-0005VL-FD
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 01:34:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722490476;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=GMrgDhMfc9CKt2gVVjNvRvfVLKwiESGIuWn3Ez2J56A=;
+ b=iiK1DFR3QdyuksoRs3CP0RpuB3o5w3t1ncLuhK3ROqfcY262mgy0g+6G0807OnWVRnplQF
+ t15aIRRfZzMydRUQPUoaf0KaV5P7U4RQPmcgvpN+dyV3aNH3SB1bN9656Qyw9W3G9iOn9m
+ 1mLnQyCKgK2taCooXa+Okmd2CxDgnCA=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-597-tKWfv9NqN02hsx77SYNTjw-1; Thu, 01 Aug 2024 01:34:34 -0400
+X-MC-Unique: tKWfv9NqN02hsx77SYNTjw-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a7d2f42df2dso227980366b.1
+ for <qemu-devel@nongnu.org>; Wed, 31 Jul 2024 22:34:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722490114; x=1723094914;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vpF9C2q3R9ZQtAetHx4QHtyEFrmlQwAecWxHeVwSnQk=;
- b=eEa3vDvX2Bn51x19PIYbOo0Iwn2C/6z3z5YOfYkZP9aKBe5HhL7Tzfk6KLjkUhUB5H
- SixUkDvQO+um/HIPrSfxUKSZ4oNzJlf+hfZhl4yzVfMhmPee8pRcmLNNpD6m9+SkM3gs
- GNggvNA0O+yPOhmkWH5mWx8C2Y412Cg9A5bd39AeDzvOqKhtG2mNYeOW4Qf0W/Ath31W
- stJdVYWilmqOlkT5bSgki/vGgsXPPHsV27wdValK6SeDTP9eODYv0Th3A/AE+xYIFDSc
- 12rimAiBUVZYySwpIddDeo3/mrvg8Am6qTGIBQggJtFuLn/hXMWOvdIic/MvX9IAnuTA
- Aojg==
+ d=1e100.net; s=20230601; t=1722490473; x=1723095273;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GMrgDhMfc9CKt2gVVjNvRvfVLKwiESGIuWn3Ez2J56A=;
+ b=Mz49ivN2cawz24+whqiQzudxos/0pyJdLQdQSLkhZ9UWh4U32bq1XqjzfmpzqxxA+/
+ dp4TUOOrRojPUiu+Sa7UZF4LM38ODS+seaIqr8x/CPbusjCiCcVRoE9G7ENfnaCjrYkS
+ xnBZv1S9rRBnq2bCsjc9vXbknQxqBJJljHAnAFSTa3z+MG9VxCIgIX1HQJh5g1oFcIyz
+ +a4DP5iPSCYrYafsrEUeFdWccroPavfhOwGw9MT740kgqpFUpxOXvE3ughPEVfo346Rd
+ Q0f/8hjvlsoQV/YVMRuI3kLk2MTtADsfEfXKsqRuM0IU6YLWwGknDl5CktOcNvHIIdcn
+ 6elw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXzTH6OrLrox0GnIOcNH2cWqmFwNfkmyYCwhsNVyGXDHVERuxCv+dxJw6Vxk7DNbQ6AyKXJXlTKNHfEH8rnKEyuNGAQrc0=
-X-Gm-Message-State: AOJu0Yyk0RdqqHRjfvgw8zkGWMt5hsrGsvdL+CYTqK9nGi/liln8wZRd
- y0hLppNfPNSWc4lNCDLi5IIzPMbW+d55k7UeRHw1yHKvKKNRCYrvbg1O18Z5/Zg=
-X-Google-Smtp-Source: AGHT+IGXlBHMKzaG2Jmyi/GOesU3IdL50qUFpUqK+vulcUkiR/VQGqBFEJLKSiXMNw+DXWy/iykUJg==
-X-Received: by 2002:a17:902:e752:b0:1fc:6a81:c5a1 with SMTP id
- d9443c01a7336-1ff4ce85acemr18380745ad.12.1722490113948; 
- Wed, 31 Jul 2024 22:28:33 -0700 (PDT)
-Received: from [157.82.201.15] ([157.82.201.15])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1fed7ce41c5sm129710165ad.85.2024.07.31.22.28.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 31 Jul 2024 22:28:33 -0700 (PDT)
-Message-ID: <2da4ebcd-2058-49c3-a4ec-8e60536e5cbb@daynix.com>
-Date: Thu, 1 Aug 2024 14:28:29 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-To: Jason Wang <jasowang@redhat.com>, Peter Xu <peterx@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ AJvYcCU65JMnDcflcdz9WNvz9vyFiyZceByPDSfxc48AOAkDW9Ykj4d6m081zOUDJFPgtK81HLiHcqoKw7dF6O6he+4htT3ul7Q=
+X-Gm-Message-State: AOJu0Yz9Aee8f1cGnPXZs10/eZ5FsWXyqPE+kGRcByry+FpgdF9z171U
+ uGBR5btI9BWULXBlbmQ33cqsTGuZ1tRRn00jNdAfVTavecWVOSi0Eh5W6iu+nHQlhdVmj96n2bB
+ TRpNzmpiZzZ2osD3F65wceZSDMaIgb8S2vLmW2efB0uHzw7fBDiiZ
+X-Received: by 2002:a17:907:6e87:b0:a7a:b26d:fb5 with SMTP id
+ a640c23a62f3a-a7dbcc28512mr16630666b.19.1722490472925; 
+ Wed, 31 Jul 2024 22:34:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGoksaLjNM5+JVeONY/yIZsg8LYpulT3X6jto6/mRvGLG7FbFONsGhL53/tU9yuM2bW3cEiMA==
+X-Received: by 2002:a17:907:6e87:b0:a7a:b26d:fb5 with SMTP id
+ a640c23a62f3a-a7dbcc28512mr16628366b.19.1722490472097; 
+ Wed, 31 Jul 2024 22:34:32 -0700 (PDT)
+Received: from redhat.com ([2.55.44.248]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7acab23125sm848450966b.1.2024.07.31.22.34.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 31 Jul 2024 22:34:31 -0700 (PDT)
+Date: Thu, 1 Aug 2024 01:34:24 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>,
  Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
- dmitry.fleytman@gmail.com, sriram.yagnaraman@est.tech, sw@weilnetz.de,
- qemu-devel@nongnu.org, yan@daynix.com, Fabiano Rosas <farosas@suse.de>,
- devel@lists.libvirt.org
-References: <ZqfKrtQSSRVnEOGt@x1n> <ZqfQ0cGf8t2trEdl@redhat.com>
- <ZqktXwxBWjuAgGxZ@x1n> <Zqk09BGxlpdxMBMx@redhat.com> <Zqk6x2nd3Twz--75@x1n>
- <20240730151746-mutt-send-email-mst@kernel.org> <ZqlHKaQXzKGcnoBM@x1n>
- <20240730172148-mutt-send-email-mst@kernel.org> <Zqnh-AJC4JPl5EkS@redhat.com>
- <20240731033803-mutt-send-email-mst@kernel.org> <Zqo00Na1MZpksY9A@x1n>
- <CACGkMEuM+nONim_gNsjgxu9R+0=vcKGx7SQaTGMOoczL6666fw@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CACGkMEuM+nONim_gNsjgxu9R+0=vcKGx7SQaTGMOoczL6666fw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::635;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
+ akihiko.odaki@daynix.com, jasowang@redhat.com,
+ sriram.yagnaraman@est.tech, sw@weilnetz.de, qemu-devel@nongnu.org,
+ yan@daynix.com, Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
+Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
+Message-ID: <20240801012923-mutt-send-email-mst@kernel.org>
+References: <ZqfQ0cGf8t2trEdl@redhat.com> <ZqktXwxBWjuAgGxZ@x1n>
+ <Zqk09BGxlpdxMBMx@redhat.com> <Zqk6x2nd3Twz--75@x1n>
+ <20240730151746-mutt-send-email-mst@kernel.org>
+ <ZqlHKaQXzKGcnoBM@x1n>
+ <20240730172148-mutt-send-email-mst@kernel.org>
+ <Zqnh-AJC4JPl5EkS@redhat.com>
+ <20240731033803-mutt-send-email-mst@kernel.org>
+ <Zqo00Na1MZpksY9A@x1n>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zqo00Na1MZpksY9A@x1n>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,82 +112,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/08/01 11:28, Jason Wang wrote:
-> On Wed, Jul 31, 2024 at 8:58 PM Peter Xu <peterx@redhat.com> wrote:
->>
->> On Wed, Jul 31, 2024 at 03:41:00AM -0400, Michael S. Tsirkin wrote:
->>> On Wed, Jul 31, 2024 at 08:04:24AM +0100, Daniel P. Berrangé wrote:
->>>> On Tue, Jul 30, 2024 at 05:32:48PM -0400, Michael S. Tsirkin wrote:
->>>>> On Tue, Jul 30, 2024 at 04:03:53PM -0400, Peter Xu wrote:
->>>>>> On Tue, Jul 30, 2024 at 03:22:50PM -0400, Michael S. Tsirkin wrote:
->>>>>>> This is not what we did historically. Why should we start now?
->>>>>>
->>>>>> It's a matter of whether we still want migration to randomly fail, like
->>>>>> what this patch does.
->>>>>>
->>>>>> Or any better suggestions?  I'm definitely open to that.
->>>>>>
->>>>>> Thanks,
->>>>>>
->>>>>> --
->>>>>> Peter Xu
->>>>>
->>>>> Randomly is an overstatement. You need to switch between kernels
->>>>> where this feature differs. We did it with a ton of features
->>>>> in the past, donnu why we single out USO now.
->>>>
->>>> This has been a problem with a ton of features in the past. We've
->>>> ignored the problem, but that doesn't make it the right solution
->>>>
->>>> With regards,
->>>> Daniel
->>>
->>> Pushing it to domain xml does not really help,
->>> migration will still fail unexpectedly (after wasting
->>> a ton of resources copying memory, and getting
->>> a downtime bump, I might add).
->>
->> Could you elaborate why it would fail if with what I proposed?
->>
->> Note that if this is a generic comment about "any migration can fail if we
->> found a device mismatch", we have plan to fix that to some degree. It's
->> just that we don't have enough people working on these topics yet. See:
->>
->> https://wiki.qemu.org/ToDo/LiveMigration#Migration_handshake
->>
->> It includes:
->>
->>   "Check device tree on both sides, etc., to make sure the migration is
->>    applicable. E.g., we should fail early and clearly on any device
->>    mismatch."
->>
->> However I don't think it'll cover all checks, e.g. I _think_ even if we
->> verify VMSDs then post_load() hooks can still fail, and there can be some
->> corner cases to think.  And of course, this may not even apply to virtio
->> since virtio manages migration itself, without providing a top-level vmsd.
->>
->>>
->>> The right solution is to have a tool that can query
->>> backends, and that given the results from all of the cluster,
->>> generate a set of parameters that will ensure migration works.
+On Wed, Jul 31, 2024 at 08:57:52AM -0400, Peter Xu wrote:
+> > 
+> > The right solution is to have a tool that can query
+> > backends, and that given the results from all of the cluster,
+> > generate a set of parameters that will ensure migration works.
+> > Kind of like qemu-img, but for migration.
 > 
-> This seems to be very hard for vhost-users.
+> This is adding extra work, IMHO.
 
-Can you elaborate more? I was thinking something like follows:
-1. Prepare a QEMU command line.
-2. Run the command line appended with -dump-platform on all hosts, which 
-dumps platform features automatically enabled. For virtio devices, we 
-can dump "host_features" variable.
-3. Run the command line appended with -merge-platform with all dumps. 
-For most virtio devices, this would be AND operations on "host_features" 
-variable.
-4. Run the command line appended with -use-platform with the merged 
-dump. This will run VMs with features available on all hosts.
+Agreed that it's a lot of work.
 
-I may have missed something but this seems good enough for me. Of course 
-this requires changes throughout the stack (QEMU common and 
-device-specific code, libvirt, and even higher layers like OpenStack).
+> If we stick with "qemu cmdline as guest ABI" concept, I think we're all
+> fine, as that work is done by QEMU booting up first on both sides,
+> including dest.  Basically Libvirt already plays this role of the new tool
+> without any new code to be added at all: what captured on the boot failure
+> log will be the output of that tool if we write it.
 
-Regards,
-Akihiko Odaki
+However, this means we can never add new features without
+also teaching libvirt to enable them.
+
+
+How about we add some kind of command on source qemu
+to return description of all working features?
+Then when qemu is started on destination, this data can be passed in,
+and validated.
+
+Hmm?
+
+-- 
+MST
+
 
