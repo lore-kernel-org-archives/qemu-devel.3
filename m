@@ -4,60 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD6D7C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 08:42:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CF33C3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 08:45:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZRO2-0005ZC-Cn; Thu, 01 Aug 2024 04:42:14 -0400
+	id 1sZRQt-0003DY-Vo; Thu, 01 Aug 2024 04:45:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sZRNz-0005Wr-VW; Thu, 01 Aug 2024 04:42:12 -0400
+ id 1sZRQr-0003D4-Hs
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 04:45:09 -0400
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sZRNx-0003tW-7Q; Thu, 01 Aug 2024 04:42:11 -0400
-Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 531F56103E;
- Thu,  1 Aug 2024 11:42:04 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b657::1:21] (unknown
- [2a02:6b8:b081:b657::1:21])
- by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 3gSalg7Ih8c0-7pyDOdyc; Thu, 01 Aug 2024 11:42:03 +0300
+ id 1sZRQp-0005n1-Hn
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 04:45:09 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:a52d:0:640:f75d:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 41D3760AF8;
+ Thu,  1 Aug 2024 11:45:04 +0300 (MSK)
+Received: from vsementsov-lin.. (unknown [2a02:6b8:b081:b657::1:21])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id giSnBU7GXSw0-XwVR4L84; Thu, 01 Aug 2024 11:45:03 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1722501723;
- bh=C/IsV5nC0FrdraocW71gfsdgyCoaqfwOFFN/8A4EkQo=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=vFp6BjTQH9Qnq2cAET9y2X9caBDGQncA8ieqtRyfuGVelJBPwcDgD9L0x2HINYMAx
- uu9zrPlXdoyP2jhkZTPiQu6snaf33dZFR1J+DjG+S7Jbp4jldkmUgimJ3VEZEQlWGl
- 8aQzeRd92uR+4YYJroJMyOuHP1o393hRCinecM/c=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
+ s=default; t=1722501903;
+ bh=z25aylodNUmaRECFBFJ0qpEZDzKdJk8uzwwNHcV1bMA=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=aXwP/D0fUkD0TBjIxPW/f86e4TfWSPTUmeHUlUUzZ4r5ls0uoJJNGW6hBBoGvGjiU
+ gg4g3xt351biEhdB0kAyQi5j3AW4E88Dv/gAeAzWlVmMXD4UQZv/q5iF/ybMSixqlo
+ zZWbA1abIDKH2XS27JqwKQP2/QpePAmnruxjBMdE=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <9c3b8489-4c91-427d-816c-76fdb0083083@yandex-team.ru>
-Date: Thu, 1 Aug 2024 11:42:03 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/3] vhost-user-blk: live resize additional APIs
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Raphael Norwitz <raphael@enfabrica.net>, qemu-block@nongnu.org,
- qemu-devel@nongnu.org, armbru@redhat.com, eblake@redhat.com,
- eduardo@habkost.net, berrange@redhat.com, pbonzini@redhat.com,
- hreitz@redhat.com, kwolf@redhat.com, yc-core@yandex-team.ru
-References: <20240625121843.120035-1-vsementsov@yandex-team.ru>
- <CAMDpr=cyULZmtaodbmET_NEfYMhfXT2ndQ8S8vjDrapG6PUsRg@mail.gmail.com>
- <20240701165515-mutt-send-email-mst@kernel.org>
- <96c93d33-ac30-4c0d-97a4-4696825d436d@yandex-team.ru>
- <20240801043643-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240801043643-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, raphael@enfabrica.net,
+ mst@redhat.com, yc-core@yandex-team.ru, den-plotnikov@yandex-team.ru,
+ vsementsov@yandex-team.ru, d-tatianin@yandex-team.ru
+Subject: [PATCH] char-socket: grow timeout from smaller value
+Date: Thu,  1 Aug 2024 11:44:39 +0300
+Message-Id: <20240801084439.10515-1-vsementsov@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
@@ -82,61 +74,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01.08.24 11:37, Michael S. Tsirkin wrote:
-> On Thu, Aug 01, 2024 at 11:35:19AM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> On 01.07.24 23:55, Michael S. Tsirkin wrote:
->>> On Mon, Jul 01, 2024 at 08:42:39AM -0400, Raphael Norwitz wrote:
->>>> I have no issues with these APIs, but I'm not a QMP expert so others
->>>> should review those bits.
->>>>
->>>> For the vhost-user-blk code:
->>>>
->>>> Acked-by: Raphael Norwitz <raphael@enfabrica.net>
->>>
->>> Could the relevant bits get ack from qapi maintainers please?
->>>
->>
->> We go them. Could you queue the patches please?
-> 
-> 
-> Tagged for after the freeze. Thanks!
+The smallest possible timeout for reconnect to set in QAPI is 1 second.
+But for system where reconnect is considered a regular situation and
+backend is guaranteed to start in tens of milliseconds this timeout of
+1 second becomes an extra throttling.
 
-Oh right, I missed the freeze. OK, thanks!
+On the other hand, just allowing smaller timeout would be ineffective
+when we consider unplanned disconnect for larger time.
 
-> 
->>>
->>>
->>>> On Tue, Jun 25, 2024 at 8:19 AM Vladimir Sementsov-Ogievskiy
->>>> <vsementsov@yandex-team.ru> wrote:
->>>>>
->>>>> v5:
->>>>> 03: drop extra check on is is runstate running
->>>>>
->>>>>
->>>>> Vladimir Sementsov-Ogievskiy (3):
->>>>>     qdev-monitor: add option to report GenericError from find_device_state
->>>>>     vhost-user-blk: split vhost_user_blk_sync_config()
->>>>>     qapi: introduce device-sync-config
->>>>>
->>>>>    hw/block/vhost-user-blk.c | 27 ++++++++++++++------
->>>>>    hw/virtio/virtio-pci.c    |  9 +++++++
->>>>>    include/hw/qdev-core.h    |  3 +++
->>>>>    qapi/qdev.json            | 24 ++++++++++++++++++
->>>>>    system/qdev-monitor.c     | 53 ++++++++++++++++++++++++++++++++++++---
->>>>>    5 files changed, 105 insertions(+), 11 deletions(-)
->>>>>
->>>>> --
->>>>> 2.34.1
->>>>>
->>>
->>
->> -- 
->> Best regards,
->> Vladimir
-> 
+Let's do a simple thing: without any change to API, start reconnecting
+with some small constant timeout (5 ms), increasing it exponentially up
+to user given value.
 
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+---
+
+Hi all! We faced too long (1 second) pauses in IO during reconnect to
+vhost server, and this 1 second is exactly reconnect=1 parameter of
+char-socket. Here is our solution for the problem.
+
+ chardev/char-socket.c         | 21 ++++++++++++++++-----
+ include/chardev/char-socket.h |  5 ++++-
+ 2 files changed, 20 insertions(+), 6 deletions(-)
+
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index 1ca9441b1b..4a35f75ebe 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -74,9 +74,10 @@ static void qemu_chr_socket_restart_timer(Chardev *chr)
+     assert(!s->reconnect_timer);
+     name = g_strdup_printf("chardev-socket-reconnect-%s", chr->label);
+     s->reconnect_timer = qemu_chr_timeout_add_ms(chr,
+-                                                 s->reconnect_time * 1000,
++                                                 s->reconnect_ms,
+                                                  socket_reconnect_timeout,
+                                                  chr);
++    s->reconnect_ms = MIN(s->reconnect_ms * 2, s->reconnect_ms_max);
+     g_source_set_name(s->reconnect_timer, name);
+     g_free(name);
+ }
+@@ -481,7 +482,7 @@ static void tcp_chr_disconnect_locked(Chardev *chr)
+     if (emit_close) {
+         qemu_chr_be_event(chr, CHR_EVENT_CLOSED);
+     }
+-    if (s->reconnect_time && !s->reconnect_timer) {
++    if (s->reconnect_ms && !s->reconnect_timer) {
+         qemu_chr_socket_restart_timer(chr);
+     }
+ }
+@@ -1080,9 +1081,11 @@ static int tcp_chr_wait_connected(Chardev *chr, Error **errp)
+         } else {
+             Error *err = NULL;
+             if (tcp_chr_connect_client_sync(chr, &err) < 0) {
+-                if (s->reconnect_time) {
++                if (s->reconnect_ms) {
+                     error_free(err);
+-                    g_usleep(s->reconnect_time * 1000ULL * 1000ULL);
++                    g_usleep(s->reconnect_ms * 1000ULL);
++                    s->reconnect_ms = MIN(s->reconnect_ms * 2,
++                                          s->reconnect_ms_max);
+                 } else {
+                     error_propagate(errp, err);
+                     return -1;
+@@ -1091,6 +1094,10 @@ static int tcp_chr_wait_connected(Chardev *chr, Error **errp)
+         }
+     }
+ 
++    if (s->reconnect_ms) {
++        s->reconnect_ms = SOCKET_CHARDEV_RECONNECT_MS_MIN;
++    }
++
+     return 0;
+ }
+ 
+@@ -1147,6 +1154,9 @@ static void qemu_chr_socket_connected(QIOTask *task, void *opaque)
+         goto cleanup;
+     }
+ 
++    if (s->reconnect_ms) {
++        s->reconnect_ms = SOCKET_CHARDEV_RECONNECT_MS_MIN;
++    }
+     s->connect_err_reported = false;
+     tcp_chr_new_client(chr, sioc);
+ 
+@@ -1273,7 +1283,8 @@ static int qmp_chardev_open_socket_client(Chardev *chr,
+     SocketChardev *s = SOCKET_CHARDEV(chr);
+ 
+     if (reconnect > 0) {
+-        s->reconnect_time = reconnect;
++        s->reconnect_ms_max = reconnect * 1000;
++        s->reconnect_ms = SOCKET_CHARDEV_RECONNECT_MS_MIN;
+         tcp_chr_connect_client_async(chr);
+         return 0;
+     } else {
+diff --git a/include/chardev/char-socket.h b/include/chardev/char-socket.h
+index 0708ca6fa9..f464c4c1c7 100644
+--- a/include/chardev/char-socket.h
++++ b/include/chardev/char-socket.h
+@@ -33,6 +33,8 @@
+ 
+ #define TCP_MAX_FDS 16
+ 
++#define SOCKET_CHARDEV_RECONNECT_MS_MIN 5
++
+ typedef struct {
+     char buf[21];
+     size_t buflen;
+@@ -74,7 +76,8 @@ struct SocketChardev {
+     bool is_websock;
+ 
+     GSource *reconnect_timer;
+-    int64_t reconnect_time;
++    int64_t reconnect_ms_max;
++    int64_t reconnect_ms;
+     bool connect_err_reported;
+ 
+     QIOTask *connect_task;
 -- 
-Best regards,
-Vladimir
+2.34.1
 
 
