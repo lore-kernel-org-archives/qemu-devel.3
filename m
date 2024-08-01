@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E43EC3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 14:48:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86850C3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 14:48:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZX5S-00019i-CP; Thu, 01 Aug 2024 10:47:26 -0400
+	id 1sZX5R-000171-N4; Thu, 01 Aug 2024 10:47:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sZX5Q-00012j-LI; Thu, 01 Aug 2024 10:47:24 -0400
-Received: from sin.source.kernel.org ([145.40.73.55])
+ id 1sZX5P-0000xT-Dk; Thu, 01 Aug 2024 10:47:23 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sZX5O-0001qu-En; Thu, 01 Aug 2024 10:47:24 -0400
+ id 1sZX5L-0001qc-Si; Thu, 01 Aug 2024 10:47:23 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 7A9AACE19AC;
+ by dfw.source.kernel.org (Postfix) with ESMTP id 916B5628E2;
  Thu,  1 Aug 2024 14:47:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A744C4AF0E;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B82C4AF0A;
  Thu,  1 Aug 2024 14:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1722523637;
- bh=ZSlU9yW3n4NevgGhDHVq1qOszSSTbSe+VJ0pqN5i5yU=;
+ bh=rzo7GJ37SsXEzwNYx2lTpLxCPLuIqxbfFLqogTN1q0I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=b8yFjYE76/sFm9kbAue+HHob2c5rr4BMxKxJvju+zUE1QBo8L+DDi7BoYg+rNASaT
- oWxANK4T34KKSGddhezbOdMgwXehm+CALhcwnqYICwXTCFpHb3g4ySoWN3mydHZPLD
- Mp61xPxdczn0BbCZByv8O1VimxSsUTlhs7hwogRPgWaxnyK7eeGZsGahVW5XEXl3Qd
- b+shdSCgtkCXFMlDAX2GWUz+ZTPPzdtnKT8QDAYxDd8CZsWHRTeqmTnL652yI+JNq2
- 65IUwJg5ST6bDvCVyhVm2LEClX64Q3PdfVydMmcrnE7ZYygriL6/m4DqsO7U3bSp9z
- h91yk9X3NcWlA==
+ b=RSrEZGAX5YKi3zi0HAIJjqeM1Z7Khuttolv7Jr4WvlWNpsbAzRIgEGH+eK3sRxPLa
+ ge9K0LmDqGJikLiHJ8KPb4QJJFlhwcgXT3JTpr3lWaJ987NAdHdDrGLgIyNRs3PMAV
+ eqpnexjA18ou56zk0P3MN3T47XqVx2Uml4mfs4PVQVQL8FpFtdntBpqdFodNt8Dra2
+ da8dboPSG4qJU/LdVaS+ZCsG8GXWRBNTeCCgsprBx+/eqbt4sJVixTEvBwdk+XNqVZ
+ lAFNnDWf93Hwf+ksDi/4DerXOOzQWhB2D7krg+DWgG3mkFEMWj18Q59EISmCjhFf1V
+ Ufyp/s6kIeQGw==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1sZX5H-00000001WCf-398k; Thu, 01 Aug 2024 16:47:15 +0200
+ id 1sZX5H-00000001WCZ-32Su; Thu, 01 Aug 2024 16:47:15 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: 
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Subject: [PATCH v4 4/7] acpi/ghes: Support GPIO error source
-Date: Thu,  1 Aug 2024 16:47:07 +0200
-Message-ID: <eaf7f137d3760edfe2ff49cc3f23c4e7c595c5bf.1722523312.git.mchehab+huawei@kernel.org>
+ Shiju Jose <shiju.jose@huawei.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>, Igor Mammedov <imammedo@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, linux-kernel@vger.kernel.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v4 3/7] arm/virt: Wire up GPIO error source for ACPI / GHES
+Date: Thu,  1 Aug 2024 16:47:06 +0200
+Message-ID: <b7e886506d4a97e11ab7bf8a5f3e299ccf22540a.1722523312.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <cover.1722523312.git.mchehab+huawei@kernel.org>
 References: <cover.1722523312.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=145.40.73.55;
- envelope-from=mchehab+huawei@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -71
+X-Spam_score: -7.2
+X-Spam_bar: -------
+X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_DNSWL_HI=-5, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -77,90 +79,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Adds support to ARM virtualization to allow handling
+a General Purpose Event (GPE) via GED error device.
 
-Add error notification to GHES v2 using the GPIO source.
+It is aligned with Linux Kernel patch:
+https://lore.kernel.org/lkml/1272350481-27951-8-git-send-email-ying.huang@intel.com/
 
-[mchehab: do some cleanups at ACPI_HEST_SRC_ID_* checks]
-
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- hw/acpi/ghes.c         | 16 ++++++++++------
- include/hw/acpi/ghes.h |  3 ++-
- 2 files changed, 12 insertions(+), 7 deletions(-)
+ hw/acpi/ghes.c           |  3 +++
+ hw/arm/virt-acpi-build.c | 21 +++++++++++++++++----
+ hw/arm/virt.c            | 26 +++++++++++++++++++++++---
+ include/hw/acpi/ghes.h   |  3 +++
+ include/hw/arm/virt.h    |  2 ++
+ 5 files changed, 48 insertions(+), 7 deletions(-)
 
 diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 8d0262e6c1aa..a745dcc7be5e 100644
+index e9511d9b8f71..8d0262e6c1aa 100644
 --- a/hw/acpi/ghes.c
 +++ b/hw/acpi/ghes.c
-@@ -34,8 +34,8 @@
- /* The max size in bytes for one error block */
- #define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
- 
--/* Now only support ARMv8 SEA notification type error source */
--#define ACPI_GHES_ERROR_SOURCE_COUNT        1
-+/* Support ARMv8 SEA notification type error source and GPIO interrupt. */
-+#define ACPI_GHES_ERROR_SOURCE_COUNT        2
- 
- /* Generic Hardware Error Source version 2 */
- #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
-@@ -290,6 +290,9 @@ void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
- static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
- {
-     uint64_t address_offset;
-+
-+    assert(source_id < ACPI_HEST_SRC_ID_RESERVED);
-+
-     /*
-      * Type:
-      * Generic Hardware Error Source version 2(GHESv2 - Type 10)
-@@ -327,6 +330,9 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
-          */
-         build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_SEA);
-         break;
-+    case ACPI_HEST_SRC_ID_GPIO:
-+        build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_GPIO);
-+        break;
-     default:
-         error_report("Not support this error source");
-         abort();
-@@ -370,6 +376,7 @@ void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
-     /* Error Source Count */
-     build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
-     build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
-+    build_ghes_v2(table_data, ACPI_HEST_SRC_ID_GPIO, linker);
- 
-     acpi_table_end(linker, &table);
+@@ -444,6 +444,9 @@ int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
+     return ret;
  }
-@@ -406,10 +413,7 @@ int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
-     start_addr = le64_to_cpu(ags->ghes_addr_le);
  
-     if (physical_address) {
--
--        if (source_id < ACPI_HEST_SRC_ID_RESERVED) {
--            start_addr += source_id * sizeof(uint64_t);
--        }
-+        start_addr += source_id * sizeof(uint64_t);
++NotifierList generic_error_notifiers =
++    NOTIFIER_LIST_INITIALIZER(error_device_notifiers);
++
+ bool acpi_ghes_present(void)
+ {
+     AcpiGedState *acpi_ged_state;
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index f76fb117adff..cdd1c6d9f1a3 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -142,6 +142,8 @@ static void acpi_dsdt_add_pci(Aml *scope, const MemMapEntry *memmap,
+ static void acpi_dsdt_add_gpio(Aml *scope, const MemMapEntry *gpio_memmap,
+                                            uint32_t gpio_irq)
+ {
++    uint32_t pin;
++
+     Aml *dev = aml_device("GPO0");
+     aml_append(dev, aml_name_decl("_HID", aml_string("ARMH0061")));
+     aml_append(dev, aml_name_decl("_UID", aml_int(0)));
+@@ -155,7 +157,12 @@ static void acpi_dsdt_add_gpio(Aml *scope, const MemMapEntry *gpio_memmap,
  
-         cpu_physical_memory_read(start_addr, &error_block_addr,
-                                  sizeof(error_block_addr));
+     Aml *aei = aml_resource_template();
+ 
+-    const uint32_t pin = GPIO_PIN_POWER_BUTTON;
++    pin = GPIO_PIN_POWER_BUTTON;
++    aml_append(aei, aml_gpio_int(AML_CONSUMER, AML_EDGE, AML_ACTIVE_HIGH,
++                                 AML_EXCLUSIVE, AML_PULL_UP, 0, &pin, 1,
++                                 "GPO0", NULL, 0));
++
++    pin = GPIO_PIN_GENERIC_ERROR;
+     aml_append(aei, aml_gpio_int(AML_CONSUMER, AML_EDGE, AML_ACTIVE_HIGH,
+                                  AML_EXCLUSIVE, AML_PULL_UP, 0, &pin, 1,
+                                  "GPO0", NULL, 0));
+@@ -166,6 +173,12 @@ static void acpi_dsdt_add_gpio(Aml *scope, const MemMapEntry *gpio_memmap,
+     aml_append(method, aml_notify(aml_name(ACPI_POWER_BUTTON_DEVICE),
+                                   aml_int(0x80)));
+     aml_append(dev, method);
++
++    method = aml_method("_E06", 0, AML_NOTSERIALIZED);
++    aml_append(method, aml_notify(aml_name(ACPI_APEI_ERROR_DEVICE),
++                                  aml_int(0x80)));
++    aml_append(dev, method);
++
+     aml_append(scope, dev);
+ }
+ 
+@@ -841,10 +854,9 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+                       HOTPLUG_HANDLER(vms->acpi_dev),
+                       irqmap[VIRT_ACPI_GED] + ARM_SPI_BASE, AML_SYSTEM_MEMORY,
+                       memmap[VIRT_ACPI_GED].base);
+-    } else {
+-        acpi_dsdt_add_gpio(scope, &memmap[VIRT_GPIO],
+-                           (irqmap[VIRT_GPIO] + ARM_SPI_BASE));
+     }
++    acpi_dsdt_add_gpio(scope, &memmap[VIRT_GPIO],
++                       irqmap[VIRT_GPIO] + ARM_SPI_BASE);
+ 
+     if (vms->acpi_dev) {
+         uint32_t event = object_property_get_uint(OBJECT(vms->acpi_dev),
+@@ -858,6 +870,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     }
+ 
+     acpi_dsdt_add_power_button(scope);
++    acpi_dsdt_add_error_device(scope);
+ #ifdef CONFIG_TPM
+     acpi_dsdt_add_tpm(scope, vms);
+ #endif
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 687fe0bb8bc9..e76cc9690788 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -73,6 +73,7 @@
+ #include "standard-headers/linux/input.h"
+ #include "hw/arm/smmuv3.h"
+ #include "hw/acpi/acpi.h"
++#include "hw/acpi/ghes.h"
+ #include "target/arm/cpu-qom.h"
+ #include "target/arm/internals.h"
+ #include "target/arm/multiprocessing.h"
+@@ -677,7 +678,7 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+     DeviceState *dev;
+     MachineState *ms = MACHINE(vms);
+     int irq = vms->irqmap[VIRT_ACPI_GED];
+-    uint32_t event = ACPI_GED_PWR_DOWN_EVT;
++    uint32_t event = ACPI_GED_PWR_DOWN_EVT | ACPI_GED_ERROR_EVT;
+ 
+     if (ms->ram_slots) {
+         event |= ACPI_GED_MEM_HOTPLUG_EVT;
+@@ -1009,12 +1010,28 @@ static void virt_powerdown_req(Notifier *n, void *opaque)
+     }
+ }
+ 
++static DeviceState *gpio_error_dev;
++static void virt_generic_error_req(Notifier *n, void *opaque)
++{
++    VirtMachineState *s = container_of(n, VirtMachineState, generic_error_notifier);
++
++    if (s->acpi_dev) {
++        acpi_send_event(s->acpi_dev, ACPI_GENERIC_ERROR);
++    } else {
++        /* use gpio Pin for power button event */
++        qemu_set_irq(qdev_get_gpio_in(gpio_error_dev, 0), 1);
++    }
++}
++
+ static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
+                              uint32_t phandle)
+ {
+     gpio_key_dev = sysbus_create_simple("gpio-key", -1,
+                                         qdev_get_gpio_in(pl061_dev,
+                                                          GPIO_PIN_POWER_BUTTON));
++    gpio_error_dev = sysbus_create_simple("gpio-key", -1,
++                                          qdev_get_gpio_in(pl061_dev,
++                                                           GPIO_PIN_GENERIC_ERROR));
+ 
+     qemu_fdt_add_subnode(fdt, "/gpio-keys");
+     qemu_fdt_setprop_string(fdt, "/gpio-keys", "compatible", "gpio-keys");
+@@ -2385,9 +2402,8 @@ static void machvirt_init(MachineState *machine)
+ 
+     if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
+         vms->acpi_dev = create_acpi_ged(vms);
+-    } else {
+-        create_gpio_devices(vms, VIRT_GPIO, sysmem);
+     }
++    create_gpio_devices(vms, VIRT_GPIO, sysmem);
+ 
+     if (vms->secure && !vmc->no_secure_gpio) {
+         create_gpio_devices(vms, VIRT_SECURE_GPIO, secure_sysmem);
+@@ -2397,6 +2413,10 @@ static void machvirt_init(MachineState *machine)
+      vms->powerdown_notifier.notify = virt_powerdown_req;
+      qemu_register_powerdown_notifier(&vms->powerdown_notifier);
+ 
++     vms->generic_error_notifier.notify = virt_generic_error_req;
++     notifier_list_add(&generic_error_notifiers,
++                       &vms->generic_error_notifier);
++
+     /* Create mmio transports, so the user can create virtio backends
+      * (which will be automatically plugged in to the transports). If
+      * no backend is created the transport will just sit harmlessly idle.
 diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 6891eafff5ab..33be1eb5acf4 100644
+index 674f6958e905..6891eafff5ab 100644
 --- a/include/hw/acpi/ghes.h
 +++ b/include/hw/acpi/ghes.h
-@@ -59,9 +59,10 @@ enum AcpiGhesNotifyType {
-     ACPI_GHES_NOTIFY_RESERVED = 12
- };
+@@ -23,6 +23,9 @@
+ #define ACPI_GHES_H
  
-+/* Those are used as table indexes when building GHES tables */
+ #include "hw/acpi/bios-linker-loader.h"
++#include "qemu/notify.h"
++
++extern NotifierList generic_error_notifiers;
+ 
+ /*
+  * Values for Hardware Error Notification Type field
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index a4d937ed45ac..0cbe9a05605f 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -49,6 +49,7 @@
+ 
+ /* GPIO pins */
+ #define GPIO_PIN_POWER_BUTTON  3
++#define GPIO_PIN_GENERIC_ERROR 6
+ 
  enum {
-     ACPI_HEST_SRC_ID_SEA = 0,
--    /* future ids go here */
-+    ACPI_HEST_SRC_ID_GPIO,
-     ACPI_HEST_SRC_ID_RESERVED,
- };
- 
+     VIRT_FLASH,
+@@ -175,6 +176,7 @@ struct VirtMachineState {
+     DeviceState *gic;
+     DeviceState *acpi_dev;
+     Notifier powerdown_notifier;
++    Notifier generic_error_notifier;
+     PCIBus *bus;
+     char *oem_id;
+     char *oem_table_id;
 -- 
 2.45.2
 
