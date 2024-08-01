@@ -4,90 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DCE5C3DA64
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 10:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2FDEC3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 11:01:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZTBj-0004KP-MG; Thu, 01 Aug 2024 06:37:39 -0400
+	id 1sZTXZ-0005Xw-R7; Thu, 01 Aug 2024 07:00:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZTBa-0003V7-V8
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 06:37:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZTXX-0005WT-RA
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 07:00:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZTBX-0001rU-Rp
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 06:37:30 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZTXV-000367-Am
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 07:00:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722508647;
+ s=mimecast20190719; t=1722510007;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DU7KGa++gwwIicNjWXeVcClxHOVzOhaCuJuqsj2Fe7w=;
- b=KDz2JVjwlr+8bTymPzToQoNzqico5ub2PtdV7HnIg88erGmIcA8q8mUcDs41sCQU3wiFFn
- q5H0ArZR+GIebH+Rvu5jwFDa6n9MPTyKNYHcgbKqS88NxCIj+GIeVHKfknwUMwL7AUJnwt
- 81X0g59ftBIY2WDKQowrEUZOcd8UrbI=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-575-Rx_PeyNjP9qwG9AlXwhU_g-1; Thu, 01 Aug 2024 06:37:26 -0400
-X-MC-Unique: Rx_PeyNjP9qwG9AlXwhU_g-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a7aa5885be3so605015866b.0
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 03:37:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722508644; x=1723113444;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DU7KGa++gwwIicNjWXeVcClxHOVzOhaCuJuqsj2Fe7w=;
- b=viQBc/hNRqvvAOxLxA+bXb6cvwW7N2qeFaQk5kAT1K6V46WXw88oD+WEnDMeEa8E0W
- TvnwqkasjmqjcXoqWACbBS0ktoz4H94/cSwodPKVzpN+Z7EDMB51RcrThPLEUVsqdiDU
- Qs3ICM10zHp17ujGPjANVLTZZxOunqUlpL7UCy68AIBRWrzLqV2ZElDfXuvMj2swocKV
- JqvtY3nq5XfqYrCANB6SrGHo4oBOgQiXKV8BF7oclyUyvD4/iijthbbZJ+FQDNOGW2em
- HMPGiQKUylPiEenoc6Dh98UrS6E9/Km11YUl2SPS8ABjQJp5DRf6cB3hqVEqRBHg4RYs
- 5Lwg==
-X-Gm-Message-State: AOJu0Yx7aj5PjVUlkWRioPAWps07Uv/F7cgywDb6avOLSYlEbBw+WnPF
- FikjSD0TJXm3aI+9hMM5nVpBBHcDVD4dj/LvIo3Hzuhfitkp77rsgfI+06NMn4hzTFJyjmdIFIg
- 2jbCT0IWl0eoSarlLMSCVcJ0eNQ+r6U0oJoHucBZ5FXcskoLrd/ctnVl8Qq8nNwb9jUivOwDRI1
- 81FhBIzZni2ICzyGw30p6fl6Ny4WQLXQ==
-X-Received: by 2002:a17:906:caea:b0:a7d:a25b:31be with SMTP id
- a640c23a62f3a-a7daf51ccd8mr155638266b.39.1722508644608; 
- Thu, 01 Aug 2024 03:37:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHm9R6o8hktFQi7D+CHwbuIk0rKKqyF/OtdLHMoscFAYnHfDKTsnT2hEUwJ6C6nK5RVj8s2Cg==
-X-Received: by 2002:a17:906:caea:b0:a7d:a25b:31be with SMTP id
- a640c23a62f3a-a7daf51ccd8mr155634466b.39.1722508643923; 
- Thu, 01 Aug 2024 03:37:23 -0700 (PDT)
-Received: from redhat.com ([2.55.44.248]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acab231f2sm876174866b.7.2024.08.01.03.37.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Aug 2024 03:37:21 -0700 (PDT)
-Date: Thu, 1 Aug 2024 06:37:18 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- yeeli <seven.yi.lee@gmail.com>, Jason Wang <jasowang@redhat.com>,
- Yi Liu <yi.l.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 19/19] intel_iommu: Fix for IQA reg read dropped DW field
-Message-ID: <515457757ff8540c524ff39ea1d9564b251c6532.1722508478.git.mst@redhat.com>
-References: <cover.1722508478.git.mst@redhat.com>
+ bh=zqmco2BoOAbprzEGhESuG53s62PGf38ko48l4pyKGqo=;
+ b=BErehbBk689X6jKZ1n/MQF6Y994SCcb7FtrE9FEpoqDBRG987OuNMhegWPjosj4QuZeW4R
+ rEBFN/Vj/pIBHLE0+ctPzpqmRdTczuHPgbGlWlI+E5HNA/dWd8CmdR/09rq35BfceWXBM4
+ k/ECzSHOEyyoJQgZrlbVarwHx4TrYZE=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-70-xbYWKAviPrm5BM12jDnyzQ-1; Thu,
+ 01 Aug 2024 07:00:03 -0400
+X-MC-Unique: xbYWKAviPrm5BM12jDnyzQ-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2503F1955D5F; Thu,  1 Aug 2024 11:00:01 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AE6781955E76; Thu,  1 Aug 2024 10:59:59 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8E24921E6692; Thu,  1 Aug 2024 12:59:57 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  "Michael
+ S. Tsirkin"
+ <mst@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Alex
+ Williamson <alex.williamson@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,  Jason Wang
+ <jasowang@redhat.com>,  Keith Busch <kbusch@kernel.org>,  Klaus Jensen
+ <its@irrelevant.dk>,  qemu-devel@nongnu.org,  qemu-block@nongnu.org
+Subject: Re: [PATCH v2 0/4] hw/pci: Convert rom_bar into OnOffAuto
+In-Reply-To: <8ee4464e-f9b3-48bc-9fa3-0b5f0d2a5faf@daynix.com> (Akihiko
+ Odaki's message of "Thu, 1 Aug 2024 16:01:44 +0900")
+References: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
+ <87a5hyj71o.fsf@pond.sub.org>
+ <8ee4464e-f9b3-48bc-9fa3-0b5f0d2a5faf@daynix.com>
+Date: Thu, 01 Aug 2024 12:59:57 +0200
+Message-ID: <87h6c4fqz6.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1722508478.git.mst@redhat.com>
-X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,72 +96,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: yeeli <seven.yi.lee@gmail.com>
+Akihiko Odaki <akihiko.odaki@daynix.com> writes:
 
-If VT-D hardware supports scalable mode, Linux will set the IQA DW field
-(bit11). In qemu, the vtd_mem_write and vtd_update_iq_dw set DW field well.
-However, vtd_mem_read the DW field wrong because "& VTD_IQA_QS" dropped the
-value of DW.
-Replace "&VTD_IQA_QS" with "& (VTD_IQA_QS | VTD_IQA_DW_MASK)" could save
-the DW field.
+> On 2024/07/31 17:32, Markus Armbruster wrote:
+>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+>>=20
+>>> rom_bar is tristate but was defined as uint32_t so convert it into
+>>> OnOffAuto to clarify that. For compatibility, a uint32 value set via
+>>> QOM will be converted into OnOffAuto.
+>>>
+>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>=20
+>> I agree making property "rombar" an integer was a design mistake.  I
+>> further agree that vfio_pci_size_rom() peeking into dev->opts to
+>> distinguish "user didn't set a value" from "user set the default value")
+>> is an unadvisable hack.
+>>=20
+>> However, ...
+>>=20
+>>> ---
+>>> Changes in v2:
+>>> - Documented in docs/about/deprecated.rst (Daniel P. Berrang=C3=A9)
+>>> - Link to v1: https://lore.kernel.org/r/20240706-rombar-v1-0-802daef2ae=
+c1@daynix.com
+>>>
+>>> ---
+>>> Akihiko Odaki (4):
+>>>        qapi: Add visit_type_str_preserving()
+>>>        qapi: Do not consume a value when visit_type_enum() fails
+>>>        hw/pci: Convert rom_bar into OnOffAuto
+>>>        hw/qdev: Remove opts member
+>>>
+>>>   docs/about/deprecated.rst         |  7 +++++
+>>>   docs/igd-assign.txt               |  2 +-
+>>>   include/hw/pci/pci_device.h       |  2 +-
+>>>   include/hw/qdev-core.h            |  4 ---
+>>>   include/qapi/visitor-impl.h       |  3 ++-
+>>>   include/qapi/visitor.h            | 25 +++++++++++++----
+>>>   hw/core/qdev.c                    |  1 -
+>>>   hw/pci/pci.c                      | 57 ++++++++++++++++++++++++++++++=
++++++++--
+>>>   hw/vfio/pci-quirks.c              |  2 +-
+>>>   hw/vfio/pci.c                     | 11 ++++----
+>>>   hw/xen/xen_pt_load_rom.c          |  4 +--
+>>>   qapi/opts-visitor.c               | 12 ++++-----
+>>>   qapi/qapi-clone-visitor.c         |  2 +-
+>>>   qapi/qapi-dealloc-visitor.c       |  4 +--
+>>>   qapi/qapi-forward-visitor.c       |  4 ++-
+>>>   qapi/qapi-visit-core.c            | 21 ++++++++++++---
+>>>   qapi/qobject-input-visitor.c      | 23 ++++++++--------
+>>>   qapi/qobject-output-visitor.c     |  2 +-
+>>>   qapi/string-input-visitor.c       |  2 +-
+>>>   qapi/string-output-visitor.c      |  2 +-
+>>>   system/qdev-monitor.c             | 12 +++++----
+>>>   tests/qtest/virtio-net-failover.c | 32 +++++++++++-----------
+>>>   22 files changed, 161 insertions(+), 73 deletions(-)
+>>> ---
+>>> base-commit: f2cb4026fccfe073f84a4b440e41d3ed0c3134f6
+>>> change-id: 20240704-rombar-1a4ba2890d6c
+>>>
+>>> Best regards,
+>>=20
+>> ... this is an awful lot of QAPI visitor infrastructure.  Infrastructure
+>> that will likely only ever be used for this one property.
+>>=20
+>> Moreover, the property setter rom_bar_set() is a hack: it first tries to
+>> parse the value as enum, and if that fails, as uint32_t.  QAPI already
+>> provides a way to express "either this type or that type": alternate.
+>> Like this:
+>>=20
+>>      { 'alternate': 'OnOffAutoUint32',
+>>        'data': { 'sym': 'OnOffAuto',
+>>                  'uint': 'uint32' } }
+>>=20
+>> Unfortunately, such alternates don't work on the command line due to
+>> keyval visitor restrictions.  These cannot be lifted entirely, but we
+>> might be able to lift them sufficiently to make this alternate work.
+>
+> The keyval visitor cannot implement alternates because the command line=20
+> input does not have type information. For example, you cannot=20
+> distinguish string "0" and integer 0.
 
-Test patch as below:
+Correct.
 
-config the "x-scalable-mode" option:
-"-device intel-iommu,caching-mode=on,x-scalable-mode=on,aw-bits=48"
+For alternate types, an input visitor picks the branch based on the
+QType.
 
-After Linux OS boot, check the IQA_REG DW Field by usage 1 or 2:
+With JSON, we have scalar types null, number, string, and bool.
 
-1. IOMMU_DEBUGFS:
-Before fix:
-cat /sys/kernel/debug/iommu/intel/iommu_regset |grep IQA
-IQA             	0x90		0x00000001001da001
+With keyval, we only have string.  Alternates with more than one scalar
+branch don't work.
 
-After fix:
-cat /sys/kernel/debug/iommu/intel/iommu_regset |grep IQA
-IQA             	0x90		0x00000001001da801
+They could be made to work to some degree, though.  Observe:
 
-Check DW field(bit11) is 1.
+* Any value can be a string.
 
-2. devmem2 read the IQA_REG (offset 0x90):
-Before fix:
-devmem2 0xfed90090
-/dev/mem opened.
-Memory mapped at address 0x7f72c795b000.
-Value at address 0xFED90090 (0x7f72c795b090): 0x1DA001
+* "frob" can be nothing else.
 
-After fix:
-devmem2 0xfed90090
-/dev/mem opened.
-Memory mapped at address 0x7fc95281c000.
-Value at address 0xFED90090 (0x7fc95281c090): 0x1DA801
+* "on" and "off" can also be bool.
 
-Check DW field(bit11) is 1.
+* "123" and "1e3" can also be number or enum.
 
-Signed-off-by: yeeli <seven.yi.lee@gmail.com>
-Message-Id: <20240725031858.1529902-1-seven.yi.lee@gmail.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- hw/i386/intel_iommu.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Instead of picking the branch based on the QType, we could pick based on
+QType and value, where the value part is delegated to a visitor method.
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 9a768f0b44..16d2885fcc 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -2947,7 +2947,9 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
- 
-     /* Invalidation Queue Address Register, 64-bit */
-     case DMAR_IQA_REG:
--        val = s->iq | (vtd_get_quad(s, DMAR_IQA_REG) & VTD_IQA_QS);
-+        val = s->iq |
-+              (vtd_get_quad(s, DMAR_IQA_REG) &
-+              (VTD_IQA_QS | VTD_IQA_DW_MASK));
-         if (size == 4) {
-             val = val & ((1ULL << 32) - 1);
-         }
--- 
-MST
+This is also new infrastructure.  But it's more generally useful
+infrastructure.
+
+>> Whether it would be worth your trouble and mine just to clean up
+>> "rombar" seems highly dubious, though.
+>
+> rom_bar_set() and and underlying visit_type_str_preserving() are ugly,=20
+> but we can remove them once the deprecation period ends. On the other=20
+> hand, if we don't make this change, dev->opts will keep floating around,=
+=20
+> and we will even have another use of it for "[PATCH v5 1/8] hw/pci: Do=20
+> not add ROM BAR for SR-IOV VF"[1]. Eventually, having this refactoring=20
+> early will result in less mess in the future.
+>
+> [1]: lore.kernel.org/r/20240715-sriov-v5-1-3f5539093ffc@daynix.com
+
+Here's another idea.
+
+Property "rombar" is backed by PCIDevice member uint32_t rom_bar, and
+defaults to 1.
+
+The code uses member rom_bar as if it was a boolean: it tests
+zero/non-zero.
+
+vfio_pci_size_rom() additionally uses qdict_haskey(dev->opts, "rombar")
+to see whether "rombar" was set by the user.
+
+Taken together, "rom_bar" has three abstract states: zero,
+non-zero-default, non-zero-user.  The concrete representation uses
+dev->opts in addition to member rom_bar.  This is unusual.
+
+You propose to represent as OnOffAuto instead, with On for
+non-zero-user, Off for zero, Auto for non-zero-default.  Fine, except
+for the compatibility headaches.
+
+OnOffAuto is not the only option for encoding these three states.  We
+could also do positive, 0, negative.  Like this:
+
+* Change "rombar" from unsigned to signed.
+
+* Change its default to -1.
+
+* Now 0 means off, positive means on, and negative means auto.
+
+The change to signed breaks rombar=3DN for 2^31<=3DN<2^32.  Do we care?
+Only if we have reason to fear something passes such values.  I doubt
+it.  I'd expect only rombar=3D0 and rombar=3D1.
+
+If we do care, we could create a special kind of property that maps any
+positive value to 1.
+
+With the change, we no longer reject rombar=3DN for -2^31<=3DN<0.  That's
+not a compatiblity break.
+
+Thoughts?
 
 
