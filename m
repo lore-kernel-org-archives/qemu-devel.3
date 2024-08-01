@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C52ADC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 15:04:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD2E8C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 15:11:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZXLY-0001Ly-LQ; Thu, 01 Aug 2024 11:04:04 -0400
+	id 1sZXSU-0005zF-2p; Thu, 01 Aug 2024 11:11:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZXLV-000199-8S
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:04:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZXLT-0005pU-NR
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:04:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722524639;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=harx82TFcoQIcECbfllH51jR31LaBjnkPeCc/sWUtbY=;
- b=Qhvy1x0Ig7zvUJpH3eXmtYrzqFJ8YyRZV5tfNfHdrlRwDBG4jmE7MHd5Mfjg6AEF7Syf2m
- ljTMzUmbKIVKR0JEXSW6RGN4hUX7Lzs/R+L3dKIDC8TNh5tdekQ8sZSKx/64pavGgmONi/
- NsMopO3TY/mzLsm3EI0e35tv8BFsu5Y=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-171-lLrg6CXmOTydQlx63B1sQA-1; Thu, 01 Aug 2024 11:03:57 -0400
-X-MC-Unique: lLrg6CXmOTydQlx63B1sQA-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a7a97665b8bso632238766b.2
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 08:03:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZXSR-0005vi-Um
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:11:12 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZXSP-0001NP-8y
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 11:11:11 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-428141be2ddso46663825e9.2
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 08:11:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722525067; x=1723129867; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LtzYU4EAQ/64KGY5dkVWVMjhw64MBBfi7ihRWhb5tSM=;
+ b=Ik4s2WVcB1A4mUjRRvlXiYthX8K/gdpiXrvjbU0MhZf6LVnrbtupyppDrOqRV+xCGU
+ Xp230DkwkIqb7qkCHKPOV4K0irVfPOB+1kvbVknp2xis878aSPRSHtoxwj3rYGH8ExaC
+ QYuFPJ5EsUIyvT7udT8RMsMhsr401Kqpxda/1O/Oxy+aLSZ2LIVweyV/vveB11X5zvkV
+ /epbGvs1ntulzF+orIvU8Pfdj3xkZ1skmt03RlE84lsjeVfCRKPIxBYuOTZmkF9/Wz4J
+ B2dKPlI2512vLe52vAlKax1ADfEOgPA7r2hT/+xtcVOJUN9SyOpmC2cGifjak5z8RdzK
+ PPmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722524636; x=1723129436;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1722525067; x=1723129867;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=harx82TFcoQIcECbfllH51jR31LaBjnkPeCc/sWUtbY=;
- b=k2sHClhDOZ1wZ9kvk0blpFNUTVPV6NTHXL86FET5kPgk9+R7CTjXRN5Ogi/PFfgsGU
- o+kDnj7+duXC95zSMyYP4FiaqEDZHbraodOXTAhIZkwnGvijjT1D0RDULYkWdRjnn4Tp
- DuDzHWWqKfEUHLahdxJtxbyjn9APptFq8CkQyCt4x9AKI3s11q2JPW9eqI3U4QjIfQGW
- Le5GTgQAtQS2H8FVEg6M5GjwEGDgaBE2PR5LvNRigjc3NO+scBG6XhpaldwrKzzBtT16
- Uuvofuxcryn/burmcamvwI2QRBUzLAxHudSx7Ba5aUq8eVfej/RpSK5RSFy9CdO81Qki
- eYIw==
-X-Gm-Message-State: AOJu0YzqXnlzQiWf67p4+GEX7N5Myv/zmIJfeFoy2EdddihSLKCSSpvJ
- 08pLoTQFaSHl/Gg+L6QxoEC1J9UNv56xV1ic6ixViXyOcSL3N6PqMd7Vne4F6G5klo5ljT6/a0R
- IBJICD0PwxS1/KO6/NncKINbMBpAu5dzLC3F1Ukyj6xlE3zkcugOfgRQDyTGs
-X-Received: by 2002:a17:907:7b8a:b0:a77:cca9:b21c with SMTP id
- a640c23a62f3a-a7dc4e8c3e5mr43552066b.34.1722524636051; 
- Thu, 01 Aug 2024 08:03:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFLMvB3/EgsWlvqMCYloPyjYaSNTjWknhDo23OoG1WCL7rExqqiOE6lKd5+KQ6UrstqZgxhzA==
-X-Received: by 2002:a17:907:7b8a:b0:a77:cca9:b21c with SMTP id
- a640c23a62f3a-a7dc4e8c3e5mr43542666b.34.1722524634952; 
- Thu, 01 Aug 2024 08:03:54 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:176:b4e2:f32f:7caa:572:123e])
+ bh=LtzYU4EAQ/64KGY5dkVWVMjhw64MBBfi7ihRWhb5tSM=;
+ b=VqfCTQp8utYP5PvYLyVEeJnmJCK40ZTCFC/O2TXwyPz2H3ezZP2K+WSCKyKAdiXUS1
+ 6T548gnRU4KQ+Uzj1YRuqvp7wNUTDd0Q6YFjzSMgzdWN8ebELTtxeRVvypyBkQ1I+4N9
+ ugNBt15b6AoS87+Mw14iNqQSyI3aE2B7QpxuPCYNjWGCnRnzaZMGoPjRGT2lku7Otjie
+ Ky65dVZCn8SRUQo0E2UqVaT/iEBrCZUUXMBbfOLU7D8YYTepCdD2hFBxBS14hndVMYRb
+ 58NTKjTmMh1VSuGnU0ayFpEVL2Gj8og8gGHzLYexndfg4GvzgdXHAW6BGeXYUqzt4aAf
+ 5SDg==
+X-Gm-Message-State: AOJu0YwVTee0q7jmr8EK8ISx7jJygfhbZjPwYhT/aqs0bFmAawMz0o8y
+ wV2iyROv4YCyGmf/A2FZro+Rwdo+WyI/9RnLNUwLt2rbC19LrK5gFjXspnwGD7s=
+X-Google-Smtp-Source: AGHT+IEeK37Y1i03cyHBJ6frJWV8rtiOL7azULrW4Vn5ikRZcdvVLYmNzuJ7tK4Xrse9YJO4EfrtYg==
+X-Received: by 2002:a05:6000:4595:b0:368:6678:f792 with SMTP id
+ ffacd0b85a97d-36bbc16101fmr82278f8f.39.1722525067146; 
+ Thu, 01 Aug 2024 08:11:07 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.130.148])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7acab2388bsm910084066b.45.2024.08.01.08.03.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 01 Aug 2024 08:03:54 -0700 (PDT)
-Date: Thu, 1 Aug 2024 11:03:50 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>
-Subject: Re: [PATCH-for-9.1 v2 2/2] hw/pci-host/gt64120: Set PCI base address
- register write mask
-Message-ID: <20240801110338-mutt-send-email-mst@kernel.org>
-References: <20240801145630.52680-1-philmd@linaro.org>
- <20240801145630.52680-3-philmd@linaro.org>
+ ffacd0b85a97d-36b368638fbsm19512217f8f.103.2024.08.01.08.11.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 Aug 2024 08:11:06 -0700 (PDT)
+Message-ID: <b6cd444d-a530-43e8-93ce-0900c6c7c484@linaro.org>
+Date: Thu, 1 Aug 2024 17:11:03 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 16/24] tests/functional: Convert the riscv_opensbi
+ avocado test into a standalone test
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-ppc@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Alistair Francis <alistair.francis@wdc.com>
+References: <20240730170347.4103919-1-berrange@redhat.com>
+ <20240730170347.4103919-17-berrange@redhat.com>
+ <9fbf2f80-c7df-4819-8f74-c7ce75dc70a5@linaro.org>
+ <42fb9582-9215-4ccc-bede-0c4f03fffd4c@linaro.org>
+ <Zqte2ySm_scvu17t@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <Zqte2ySm_scvu17t@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240801145630.52680-3-philmd@linaro.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,65 +103,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 01, 2024 at 04:56:30PM +0200, Philippe Mathieu-Daud� wrote:
-> When booting Linux we see:
+On 1/8/24 12:09, Daniel P. Berrangé wrote:
+> On Thu, Aug 01, 2024 at 09:00:36AM +1000, Richard Henderson wrote:
+>> On 7/31/24 22:56, Philippe Mathieu-Daudé wrote:
+>>> On 30/7/24 19:03, Daniel P. Berrangé wrote:
+>>>> From: Thomas Huth <thuth@redhat.com>
+>>>>
+>>>> The avocado test defined test functions for both, riscv32 and riscv64.
+>>>> Since we can run the whole file with multiple targets in the new
+>>>> framework, we can now consolidate the functions so we have to only
+>>>> define one function per machine now.
+>>>>
+>>>> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+>>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>>> ---
+>>>>    tests/avocado/riscv_opensbi.py         | 63 --------------------------
+>>>>    tests/functional/meson.build           |  8 ++++
+>>>>    tests/functional/test_riscv_opensbi.py | 36 +++++++++++++++
+>>>>    3 files changed, 44 insertions(+), 63 deletions(-)
+>>>>    delete mode 100644 tests/avocado/riscv_opensbi.py
+>>>>    create mode 100755 tests/functional/test_riscv_opensbi.py
+>>>
+>>> Please squash:
+>>>
+>>> -- >8 --
+>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>> index 98eddf7ae1..a906218f9d 100644
+>>> --- a/MAINTAINERS
+>>> +++ b/MAINTAINERS
+>>> @@ -336,6 +337,7 @@ F: include/hw/riscv/
+>>>    F: linux-user/host/riscv32/
+>>>    F: linux-user/host/riscv64/
+>>>    F: tests/tcg/riscv64/
+>>> +F: tests/functional/test_riscv_opensbi.py
+>>
+>> It seems worth taking this opportunity to add per-target subdirs of
+>> tests/functional/, so that we don't have to list every individual test in
+>> MAINTAINERS.
+>>
+>> Surely one
+>>
+>> F: tests/functional/riscv/
+>>
+>> etc, is actually maintainable...
 > 
->   PCI host bridge to bus 0000:00
->   pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
->   pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
->   pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
->   pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
->   pci 0000:00:00.0: [Firmware Bug]: reg 0x14: invalid BAR (can't size)
->   pci 0000:00:00.0: [Firmware Bug]: reg 0x18: invalid BAR (can't size)
->   pci 0000:00:00.0: [Firmware Bug]: reg 0x1c: invalid BAR (can't size)
->   pci 0000:00:00.0: [Firmware Bug]: reg 0x20: invalid BAR (can't size)
->   pci 0000:00:00.0: [Firmware Bug]: reg 0x24: invalid BAR (can't size)
+> Either that or wildcard the filenames
 > 
-> This is due to missing base address register write mask.
-> Add it to get:
+>   F: tests/functional/test_riscv_*
 > 
->   PCI host bridge to bus 0000:00
->   pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
->   pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
->   pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
->   pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
->   pci 0000:00:00.0: reg 0x10: [mem 0x00000000-0x00000fff pref]
->   pci 0000:00:00.0: reg 0x14: [mem 0x01000000-0x01000fff pref]
->   pci 0000:00:00.0: reg 0x18: [mem 0x1c000000-0x1c000fff]
->   pci 0000:00:00.0: reg 0x1c: [mem 0x1f000000-0x1f000fff]
->   pci 0000:00:00.0: reg 0x20: [mem 0x1be00000-0x1be00fff]
->   pci 0000:00:00.0: reg 0x24: [io  0x14000000-0x14000007]
 > 
-> Mention the datasheet referenced. Remove the "Malta assumptions ahead"
-> comment since the reset values from the datasheet are used.
-> 
-> Signed-off-by: Philippe Mathieu-Daud� <philmd@linaro.org>
-> ---
->  hw/pci-host/gt64120.c | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
-> index b68d647753..344baf55db 100644
-> --- a/hw/pci-host/gt64120.c
-> +++ b/hw/pci-host/gt64120.c
-> @@ -1224,6 +1224,13 @@ static void gt64120_pci_reset_hold(Object *obj, ResetType type)
->                   PCI_STATUS_FAST_BACK | PCI_STATUS_DEVSEL_MEDIUM);
->      pci_config_set_prog_interface(d->config, 0);
->  
-> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_0, 0xfffff009);
-> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_1, 0xfffff009);
-> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_2, 0xfffff009);
-> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_3, 0xfffff009);
-> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_4, 0xfffff009);
-> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_5, 0xfffff001);
-> +
+> but subdirs matching the target is probably a little nicer to really
+> encourage people to follow conventions more strictly. We would also
+> need a "tests/functional/common/" for tests which aren't target specific
 
-weird to change wmask on reset.
+Hmm I'm a bit reluctant to both suggestions. Various files are
+added to cover a feature which ends being tested on various archs.
 
->      pci_set_long(d->config + PCI_BASE_ADDRESS_0, 0x00000008);
->      pci_set_long(d->config + PCI_BASE_ADDRESS_1, 0x01000008);
->      pci_set_long(d->config + PCI_BASE_ADDRESS_2, 0x1c000000);
-> -- 
-> 2.45.2
+Once I wanted to use Avocado tags like GitLab labels, and keep a
+file where developers subscribe to tags; doing the parsing and
+label to developer conversion in Python (or Rust), and having a
+./get_maintainer.sh calling both the Perl one and anything we can
+add in Python/Rust.
 
+That said, wildcard pattern is a simpler start.
 
