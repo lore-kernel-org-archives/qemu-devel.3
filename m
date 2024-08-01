@@ -4,85 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C41F1C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 09:22:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1F6C3DA64
+	for <qemu-devel@archiver.kernel.org>; Thu,  1 Aug 2024 09:49:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZS0J-0005w9-OC; Thu, 01 Aug 2024 05:21:48 -0400
+	id 1sZSQO-0004aH-9n; Thu, 01 Aug 2024 05:48:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sZS0E-0005sX-UT; Thu, 01 Aug 2024 05:21:44 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from
+ <BATV+dbee7cb4c0de7920b212+7648+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sZSQM-0004ZN-F0
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 05:48:42 -0400
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sZS0B-0002Y2-7n; Thu, 01 Aug 2024 05:21:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1722504100; x=1754040100;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=Xmg/968fCVUCGZYT797Z9jjQKkMZwiEQFs2Df4qxxrw=;
- b=nEcp1w3nT5VQZ2QHfj2l4eDQLHofZ8tM+TQhWqw280p/bEr3IDd11+ng
- GDJ/WRSmT9NO6bG9P5PQ9MM7fMxMnTfjOiJWOzm8sOUAUM/Qwmw0RFVzs
- LpUClwnO287DM5DJMAv1EJe6vyl7N+PKNZAHyIXenbLXLVcPqRx5yxv62
- n3+rhdwuIjVBTWdlnyyohdP7EyjdYykZ1U7fhxsy/C+axE6ucNfhXG3m+
- yknJvSiyK/IRlS62lJ2/AtrIM0g26sj5/PEy24+Th82btwaI3ccl7Nn3U
- nOBKGVFVuQjRoSJuuPHK3uPFTd1cQKtmtsDerXc1XzDBtkFvGBZQkfLPc w==;
-X-CSE-ConnectionGUID: 0sCktYJQQlOAapkoS+KQWQ==
-X-CSE-MsgGUID: dUOJ9P98SeufBIFaO9mLAQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11150"; a="20385178"
-X-IronPort-AV: E=Sophos;i="6.09,254,1716274800"; d="scan'208";a="20385178"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Aug 2024 02:21:21 -0700
-X-CSE-ConnectionGUID: D84dmaN6SuK0K8x9jJDrlw==
-X-CSE-MsgGUID: YCFLQ0uPTG+Bm5RJ5hwSpA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,254,1716274800"; d="scan'208";a="59787927"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa005.jf.intel.com with ESMTP; 01 Aug 2024 02:21:16 -0700
-Date: Thu, 1 Aug 2024 17:37:03 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>
-Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache object
-Message-ID: <ZqtXP9MViOlyhEsu@intel.com>
-References: <20240704031603.1744546-1-zhao1.liu@intel.com>
- <20240704031603.1744546-9-zhao1.liu@intel.com>
- <87r0bl35ug.fsf@pond.sub.org> <Zp5vxtXWDeHAdPok@intel.com>
- <87bk2nnev2.fsf@pond.sub.org> <ZqEN1kZaQcuY4UPG@intel.com>
- <87le1psuv3.fsf@pond.sub.org>
+ (Exim 4.90_1) (envelope-from
+ <BATV+dbee7cb4c0de7920b212+7648+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1sZSQC-0003aL-DM
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 05:48:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=2/ABZobOn2g8OFzXKtukb7tYaMh9J42JeVoW1CcuHOw=; b=lWOywtORg1uz6jkf7oImLAwYgz
+ 2F3CrsojxonAx2v7XewVHS8ugI/p310lau1uV1qwgjPSsqQh9qgg45xpCr5cFU9uVwPHir9yoPOwI
+ Ei555s+Hx5b593ZZ0oYgjlk834wQhqxHZ97i2HsV/Xxeyy2+GcpTQ5m/TRPIpRHlG7pB68u+e5xqs
+ LjZASTudyUgI2WbI6Q19SxvpoHAddWtm2TeQjmn8kuRfGbfr0wq1cXoy9tSqYkNocn4cXkOJsjrWB
+ jLlCU9D+Hc21X19gw9C25zgqY7FaD3L/QeLL74Zu/rfop48G551j0VrpzxVnvJTtpv8hCKpk2sx6x
+ 7PLr6cZA==;
+Received: from [2001:8b0:10b:5:6bc8:e78:2c4f:f682]
+ (helo=u3832b3a9db3152.ant.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
+ id 1sZSQ7-0000000HHNm-15Lw; Thu, 01 Aug 2024 09:48:27 +0000
+Message-ID: <97ec9198156107c34f1aedddc1a98c5617784a0b.camel@infradead.org>
+Subject: Re: [PULL 02/22] tests/avocado: use snapshot=on in kvm_xen_guest
+From: David Woodhouse <dwmw2@infradead.org>
+To: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org
+Cc: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, Paul
+ Durrant <paul@xen.org>, Cleber Rosa <crosa@redhat.com>, Wainer dos Santos
+ Moschetta <wainersm@redhat.com>, Beraldo Leal <bleal@redhat.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, "open list:Overall KVM CPUs"
+ <kvm@vger.kernel.org>
+Date: Thu, 01 Aug 2024 10:48:26 +0100
+In-Reply-To: <20240112110435.3801068-3-alex.bennee@linaro.org>
+References: <20240112110435.3801068-1-alex.bennee@linaro.org>
+ <20240112110435.3801068-3-alex.bennee@linaro.org>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-8/RbjRwbEZBx5aH0K6P7"
+User-Agent: Evolution 3.44.4-0ubuntu2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87le1psuv3.fsf@pond.sub.org>
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+dbee7cb4c0de7920b212+7648+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
 X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,139 +82,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jul 25, 2024 at 11:07:12AM +0200, Markus Armbruster wrote:
-> Date: Thu, 25 Jul 2024 11:07:12 +0200
-> From: Markus Armbruster <armbru@redhat.com>
-> Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache
->  object
-> 
-> Zhao Liu <zhao1.liu@intel.com> writes:
-> 
-> > Hi Markus and Daniel,
-> >
-> > I have the questions about the -object per cache implementation:
-> >
-> > On Wed, Jul 24, 2024 at 02:39:29PM +0200, Markus Armbruster wrote:
-> >> Date: Wed, 24 Jul 2024 14:39:29 +0200
-> >> From: Markus Armbruster <armbru@redhat.com>
-> >> Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache
-> >>  object
-> >> 
-> >> Zhao Liu <zhao1.liu@intel.com> writes:
-> >> 
-> >> > Hi Markus,
-> >> >
-> >> > On Mon, Jul 22, 2024 at 03:37:43PM +0200, Markus Armbruster wrote:
-> >> >> Date: Mon, 22 Jul 2024 15:37:43 +0200
-> >> >> From: Markus Armbruster <armbru@redhat.com>
-> >> >> Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache
-> >> >>  object
-> >> >> 
-> >> >> Zhao Liu <zhao1.liu@intel.com> writes:
-> >> >> 
-> >> >> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> >> >> 
-> >> >> This patch is just documentation.  The code got added in some previous
-> >> >> patch.  Would it make sense to squash this patch into that previous
-> >> >> patch?
-> >> >
-> >> > OK, I'll merge them.
-> >> >
-> >> >> > ---
-> >> >> > Changes since RFC v2:
-> >> >> >  * Rewrote the document of smp-cache object.
-> >> >> >
-> >> >> > Changes since RFC v1:
-> >> >> >  * Use "*_cache=topo_level" as -smp example as the original "level"
-> >> >> >    term for a cache has a totally different meaning. (Jonathan)
-> >> >> > ---
-> >> >> >  qemu-options.hx | 58 +++++++++++++++++++++++++++++++++++++++++++++++++
-> >> >> >  1 file changed, 58 insertions(+)
-> >> >> >
-> >> >> > diff --git a/qemu-options.hx b/qemu-options.hx
-> >> >> > index 8ca7f34ef0c8..4b84f4508a6e 100644
-> >> >> > --- a/qemu-options.hx
-> >> >> > +++ b/qemu-options.hx
-> >> >> > @@ -159,6 +159,15 @@ SRST
-> >> >> >          ::
-> >> >> >  
-> >> >> >              -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
-> >> >> > +
-> >> >> > +    ``smp-cache='id'``
-> >> >> > +        Allows to configure cache property (now only the cache topology level).
-> >> >> > +
-> >> >> > +        For example:
-> >> >> > +        ::
-> >> >> > +
-> >> >> > +            -object '{"qom-type":"smp-cache","id":"cache","caches":[{"name":"l1d","topo":"core"},{"name":"l1i","topo":"core"},{"name":"l2","topo":"module"},{"name":"l3","topo":"die"}]}'
-> >> >> > +            -machine smp-cache=cache
-> >> >> >  ERST
-> >> >> >  
-> >> >> >  DEF("M", HAS_ARG, QEMU_OPTION_M,
-> >> >> > @@ -5871,6 +5880,55 @@ SRST
-> >> >> >          ::
-> >> >> >  
-> >> >> >              (qemu) qom-set /objects/iothread1 poll-max-ns 100000
-> >> >> > +
-> >> >> > +    ``-object '{"qom-type":"smp-cache","id":id,"caches":[{"name":cache_name,"topo":cache_topo}]}'``
-> >> >> > +        Create an smp-cache object that configures machine's cache
-> >> >> > +        property. Currently, cache property only include cache topology
-> >> >> > +        level.
-> >> >> > +
-> >> >> > +        This option must be written in JSON format to support JSON list.
-> >> >> 
-> >> >> Why?
-> >> >
-> >> > I'm not familiar with this, so I hope you could educate me if I'm wrong.
-> >> >
-> >> > All I know so far is for -object that defining a list can only be done in
-> >> > JSON format and not with a numeric index like a keyval based option, like:
-> >> >
-> >> > -object smp-cache,id=cache0,caches.0.name=l1i,caches.0.topo=core: Parameter 'caches' is missing
-> >> >
-> >> > the above doesn't work.
-> >> >
-> >> > Is there any other way to specify a list in command line?
-> >> 
-> >> The command line is a big, sprawling mess :)
-> >> 
-> >> -object supports either a JSON or a QemuOpts argument.  *Not* keyval!
-> >> 
-> >> Both QemuOpts and keyval parse something like KEY=VALUE,...  Keyval
-> >> supports arrays and objects via dotted keys.  QemuOpts doesn't natively
-> >> support arrays and objects, but its users can hack around that
-> >> limitation in various ways.  -object doesn't.  So you're right, it's
-> >> JSON or bust here.
-> >> 
-> >> However, if we used one object per cache instead, we could get something
-> >> like
-> >> 
-> >>     -object smp-cache,name=l1d,...
-> >>     -object smp-cache,name=l1u,...
-> >>     -object smp-cache,name=l2,...
-> >>     ...
-> >
-> > Current, I use -object to create a smp_cache object, and link it to
-> > MachineState by -machine,smp-cache=obj_id.
-> >
-> > Then for the objects per cache, how could I link them to machine?
-> >
-> > Is it possible that I create something static in smp_cache.c and expose
-> > all the cache information to machine through some interface?
-> 
-> Good questions.  However, before we head deeper into the weeds here, I
-> feel we should discuss the things below.  And before we do that, I need
-> a clear understanding of the use case.  Elsewhere in this thread, I just
-> described the use case as I understand it.  Please reply there.  I'll
-> then come back to this message.
-> 
-> [...]
 
-Jonathan and I provided different use cases for x86 and Arm. Could we
-come back here to continue the discussion? :)
+--=-8/RbjRwbEZBx5aH0K6P7
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-Thanks,
-Zhao
+T24gRnJpLCAyMDI0LTAxLTEyIGF0IDExOjA0ICswMDAwLCBBbGV4IEJlbm7DqWUgd3JvdGU6Cj4g
+VGhpcyBlbnN1cmVzIHRoZSByb290ZnMgaXMgbmV2ZXIgcGVybWFuZW50bHkgY2hhbmdlZCBhcyB3
+ZSBkb24ndCBuZWVkCj4gcGVyc2lzdGVuY2UgYmV0d2VlbiB0ZXN0cyBhbnl3YXkuCj4gCj4gTWVz
+c2FnZS1JZDogPDIwMjQwMTAzMTczMzQ5LjM5ODUyNi0zLWFsZXguYmVubmVlQGxpbmFyby5vcmc+
+Cj4gU2lnbmVkLW9mZi1ieTogQWxleCBCZW5uw6llIDxhbGV4LmJlbm5lZUBsaW5hcm8ub3JnPgo+
+IFJldmlld2VkLWJ5OiBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSA8cGhpbG1kQGxpbmFyby5vcmc+
+Cj4gCj4gZGlmZiAtLWdpdCBhL3Rlc3RzL2F2b2NhZG8va3ZtX3hlbl9ndWVzdC5weSBiL3Rlc3Rz
+L2F2b2NhZG8va3ZtX3hlbl9ndWVzdC5weQo+IGluZGV4IDUzOTEyODMxMTNlLi5mOGNiNDU4ZDVk
+YiAxMDA2NDQKPiAtLS0gYS90ZXN0cy9hdm9jYWRvL2t2bV94ZW5fZ3Vlc3QucHkKPiArKysgYi90
+ZXN0cy9hdm9jYWRvL2t2bV94ZW5fZ3Vlc3QucHkKPiBAQCAtNTksNyArNTksNyBAQCBkZWYgY29t
+bW9uX3ZtX3NldHVwKHNlbGYpOgo+IMKgwqDCoMKgIGRlZiBydW5fYW5kX2NoZWNrKHNlbGYpOgo+
+IMKgwqDCoMKgwqDCoMKgwqAgc2VsZi52bS5hZGRfYXJncygnLWtlcm5lbCcsIHNlbGYua2VybmVs
+X3BhdGgsCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqAgJy1hcHBlbmQnLCBzZWxmLmtlcm5lbF9wYXJhbXMsCj4gLcKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAnLWRyaXZlJyzCoCBmImZpbGU9e3NlbGYucm9v
+dGZzfSxpZj1ub25lLGZvcm1hdD1yYXcsaWQ9ZHJ2MCIsCj4gK8KgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAnLWRyaXZlJyzCoCBmImZpbGU9e3NlbGYucm9v
+dGZzfSxpZj1ub25lLHNuYXBzaG90PW9uLGZvcm1hdD1yYXcsaWQ9ZHJ2MCIsCj4gwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgJy1kZXZpY2UnLCAneGVu
+LWRpc2ssZHJpdmU9ZHJ2MCx2ZGV2PXh2ZGEnLAo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgICctZGV2aWNlJywgJ3ZpcnRpby1uZXQtcGNpLG5ldGRl
+dj11bmV0JywKPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoCAnLW5ldGRldicsICd1c2VyLGlkPXVuZXQsaG9zdGZ3ZD06MTI3LjAuMC4xOjAtOjIyJykK
+CkkgZG9uJ3QgZXZlbiB1bmRlcnN0YW5kIHdoeSBpdCBuZWVkcyB0byBiZSB3cml0YWJsZSBhdCBh
+bGwuIENvdWxkIHdlIGp1c3QgZml4IHRoYXQ/Cg==
 
 
+--=-8/RbjRwbEZBx5aH0K6P7
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
+ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
+EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
+FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
+aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
+EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
+VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
+aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
+ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
+QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
+rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
+ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
+U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
+DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
+BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
+dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
+BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
+QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
+CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
+xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
+IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
+kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
+eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
+KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
+1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
+OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
+x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
+5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
+DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
+VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
+UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
+MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
+ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
+oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
+SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
+xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
+RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
+bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
+NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
+KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
+5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
+C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
+gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
+VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
+by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
+b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
+BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
+QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
+c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
+AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
+qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
+v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
+Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
+tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
+Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
+YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
+ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
+IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
+ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
+GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
+h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
+9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
+P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
+2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
+BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
+7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
+lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
+lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
+AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
+Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
+FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
+BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
+cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
+aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
+LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
+BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
+cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
+Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
+lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
+WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
+hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
+IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
+dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
+NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
+xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
+DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQwODAxMDk0ODI2WjAvBgkqhkiG9w0BCQQxIgQgMfJ/rQXG
+u6BmN2fPvEvYQZXEw1pXPdxHABz+1YeazAgwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
+BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
+A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
+dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
+DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
+MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
+Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
+lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgAqm5zMhe0fva3ckpYUQvZ43ZQbmaUEBjlz
+Ty2sbUEb28z9VWlDQq/+OFG3Dfc/6Npm+xGSEzuxqrAfMqltiUbDYi/8juVp0dEBmEjH92nsocl5
+ulq5F3rBykajtwvXcdirMOrneiJls6Eglx97+r1NmW/Jb2+EIxI/4c8I97IENGd1wA18gLhQPuYw
+5xW9UpsayPLjqOzrhQrNrGCoxW/FiEakb3Pc6RHys58g+K9edkwDyq3zYbkyFlXDras5CFSHOtGZ
+j5Xs31ad/mAUnp2bJ5zYA2NRYQwpnG4tKLGWmVD5TQTbI7zmgF+j3tuczBYtUGBN0mZmjAKvWkys
+wuGPjZQyxJ76f0zvVTR4I0BILoBVPmMf2F8QE87SELY5TW4VakLazneqFiNZVHS74CV6C4mbEaW1
+PzCNH57y2aIF9mBEptJs68vytYfpDM2KGd/FrOiMTsdJQzTZ/bYdsCGhyd6UyYKybsv8/mnRwPLC
+gjqy0O/kvmEcIYPN5fRAKltYQ8f36GhqmVNNvf2lSpyY49POhWu2gvhH12VZg37U7leGpW3Zpa94
+sWKNlob1vYfvcJxIRv+C6jSC7FPoMd4/wqMtWdB880QLtZwypOpERj6LWBVpthb/tt8lyOHp75kS
+4zE+hmkt2g0Xn1FB98X6VW/pUEQnE6G7NYPW2OcTGAAAAAAAAA==
+
+
+--=-8/RbjRwbEZBx5aH0K6P7--
 
