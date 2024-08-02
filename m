@@ -4,63 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 994E7C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 10:59:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBD72C52D6D
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 11:11:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZq00-0002Hv-L7; Fri, 02 Aug 2024 06:59:04 -0400
+	id 1sZqBb-0001EJ-07; Fri, 02 Aug 2024 07:11:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sZpzy-0002Gb-JD; Fri, 02 Aug 2024 06:59:02 -0400
-Received: from forwardcorp1b.mail.yandex.net
- ([2a02:6b8:c02:900:1:45:d181:df01])
+ id 1sZqBV-0001C6-Ia; Fri, 02 Aug 2024 07:10:57 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sZpzv-0007Jf-Nh; Fri, 02 Aug 2024 06:59:02 -0400
-Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c24:25c3:0:640:236:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id E388660AB4;
- Fri,  2 Aug 2024 13:58:52 +0300 (MSK)
+ id 1sZqBS-0004mK-UY; Fri, 02 Aug 2024 07:10:56 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:6401:0:640:7e6f:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 4F81460B52;
+ Fri,  2 Aug 2024 14:10:50 +0300 (MSK)
 Received: from [IPV6:2a02:6b8:b081:b725::1:34] (unknown
  [2a02:6b8:b081:b725::1:34])
- by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id qwVHAR1VmGk0-omwRdX15; Fri, 02 Aug 2024 13:58:52 +0300
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id nAWlw38IcCg0-dMoKrgoX; Fri, 02 Aug 2024 14:10:49 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1722596332;
- bh=FsOwMPO25IFC9uKSCzyfkPBT4YVy2Vgr/v4rr9b03TQ=;
+ s=default; t=1722597049;
+ bh=XGWR8kuofwt84k9I/kYRha2MxzC+QzNYpbmNvp4lHnk=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=VztyMyV/15CXic8y7uH1BdFeOP9i6s9elNoyWonpr3ekXG1ZsFZKB+GJltaYhl0VD
- XUcEaxxdzqzdFYChCC1pDk42V2nuqIQpeVG9SM30DS0cR4+SDXtFNuD+Sj2kEE7r0f
- XS6HXYOt7KaGMVzyqDsklvmCtFoYkUNp22j6ZbIM=
-Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ b=f+gZaFcsaaVG24fD1/tzMqzRBEUnQXo6HD5BjZBEsECdQVpVNGiGPIhM4yFLSGUyY
+ gly8HsNqTnB9SoeBXe7kX2zT+dWoHc/mpkxNrSZppXmxVwCYtanRiObzM8KQH/3o0k
+ WhnF+7usD6SGSUzyrJ4Gi/wxfU6XEf2dFxSgNxHg=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <9a4ad6af-d222-4d7a-9446-2ea090954731@yandex-team.ru>
-Date: Fri, 2 Aug 2024 13:58:52 +0300
+Message-ID: <2ee88d14-98a0-4189-96fe-be737f915744@yandex-team.ru>
+Date: Fri, 2 Aug 2024 14:10:49 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] block: allow commit to unmap zero blocks
-To: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>, qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>
-References: <20240713215644.742244-1-libvirt-e6954efa@volkihar.be>
- <20240713215644.742244-4-libvirt-e6954efa@volkihar.be>
+Subject: Re: [PATCH v2 6/7] qapi/block-core: derpecate block-job-change
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, eblake@redhat.com,
+ devel@lists.libvirt.org, hreitz@redhat.com, kwolf@redhat.com,
+ jsnow@redhat.com, pkrempa@redhat.com, f.ebner@proxmox.com
+References: <20240626110124.374336-1-vsementsov@yandex-team.ru>
+ <20240626110124.374336-7-vsementsov@yandex-team.ru>
+ <87frs7x8tm.fsf@pond.sub.org>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240713215644.742244-4-libvirt-e6954efa@volkihar.be>
+In-Reply-To: <87frs7x8tm.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,77 +78,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.07.24 00:56, Vincent Vanlaer wrote:
-> Non-active block commits do not discard blocks only containing zeros,
-> causing images to lose sparseness after the commit. This commit fixes
-> that by writing zero blocks using blk_co_pwrite_zeroes rather than
-> writing them out as any other arbitrary data.
+On 18.07.24 14:01, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 > 
-> Signed-off-by: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>
-> ---
->   block/commit.c | 19 +++++++++++++++++++
->   1 file changed, 19 insertions(+)
+>> That's a first step to move on newer job-* APIs.
+>>
+>> The difference between block-job-change and job-change is in
+>> find_block_job_locked() vs find_job_locked() functions. What's
+>> different?
+>>
+>> 1. find_block_job_locked() do check, is found job a block-job. This OK
 > 
-> diff --git a/block/commit.c b/block/commit.c
-> index fb54fc9560..6ce30927ac 100644
-> --- a/block/commit.c
-> +++ b/block/commit.c
-> @@ -130,6 +130,7 @@ static void commit_clean(Job *job)
->   
->   typedef enum CommitMethod {
->       COMMIT_METHOD_COPY,
-> +    COMMIT_METHOD_ZERO,
->       COMMIT_METHOD_IGNORE,
->   } CommitMethod;
->   
-> @@ -185,6 +186,18 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
->           if (ret >= 0) {
->               if (!(ret & BDRV_BLOCK_ALLOCATED)) {
->                   commit_method = COMMIT_METHOD_IGNORE;
-> +            } else if (ret & BDRV_BLOCK_ZERO) {
-> +                int64_t target_offset;
-> +                int64_t target_bytes;
-> +                WITH_GRAPH_RDLOCK_GUARD() {
-> +                    bdrv_round_to_subclusters(s->base_bs, offset, n,
-> +                                           &target_offset, &target_bytes);
+> Do you mean something like find_block_job_locked() finds only block
+> jobs, whereas find_job_locked() finds any kind of job?
 
-indentation broken
+Yes
 
-> +                }
-> +
-> +                if (target_offset == offset &&
-> +                    target_bytes == n) {
-> +                    commit_method = COMMIT_METHOD_ZERO;
-
-Why this is needed? Could we blindly do write-zeroes at original (offset, n)? Underlying logic would use any possiblity to write zeroes effectively, and unaligned tails (if any) would be written as data.
-
-> +                }
->               }
->   
->               switch (commit_method) {
-> @@ -198,6 +211,11 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
->                       }
->                   }
->                   break;
-> +            case COMMIT_METHOD_ZERO:
-> +                ret = blk_co_pwrite_zeroes(s->base, offset, n,
-> +                    BDRV_REQ_MAY_UNMAP);
-> +                error_in_source = false;
-> +                break;
->               case COMMIT_METHOD_IGNORE:
->                   break;
->               default:
-> @@ -216,6 +234,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
->                   continue;
->               }
->           }
-> +
-
-extra unrelated hunk for style, I'd drop it
-
->           /* Publish progress */
->           job_progress_update(&s->common.job, n);
->   
+> 
+>>     when moving to more generic API, no needs to document this change.
+>>
+>> 2. find_block_job_locked() reports DeviceNotActive on failure, when
+>>     find_job_locked() reports GenericError. Still, for block-job-change
+>>     errors are not documented at all, so be silent in deprecated.txt as
+>>     well.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> 
 
 -- 
 Best regards,
