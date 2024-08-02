@@ -4,107 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D61C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 14:53:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D7DC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 14:55:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZtec-0007Qw-7l; Fri, 02 Aug 2024 10:53:14 -0400
+	id 1sZtg2-0002ZS-5m; Fri, 02 Aug 2024 10:54:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sZtea-0007QN-3l
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 10:53:12 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1sZtg0-0002VD-Re
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 10:54:40 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sZteX-0004M6-Ka
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 10:53:11 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 0E06021A2F;
- Fri,  2 Aug 2024 14:53:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1722610387; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=JWSU4zlp5AoEsL8vM5hc3GxnsfclPF7Jq6P0lVaztxE=;
- b=Fo2iJnm0DmYQaHZ8jb+ffxa1198u+oNJ7eBfK/yNwWS7uwSeyhJO2gCVz50tKetcqkgZr2
- m43SPUtOxX/QpSc69jUxsZjenOZMO+WRu9HImBbC3aFzRkWw3tme1NiGNShx2m2LxJXtuv
- gyYhXtZc3cKcv9sYZYj3X9Dpz0WL6DI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1722610387;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=JWSU4zlp5AoEsL8vM5hc3GxnsfclPF7Jq6P0lVaztxE=;
- b=yxprW/9nf4M8fMPKWbRcLEca2fQZP3nVs1R6TP7Wvg+Pz73LLGb8SxKhsTHScdl0K0TbjL
- cB5Xa23nIbHgB7CA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=d351Bt5G;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=mJ0sJ8Xz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1722610386; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=JWSU4zlp5AoEsL8vM5hc3GxnsfclPF7Jq6P0lVaztxE=;
- b=d351Bt5GVDwXHjctB0rSEYXlnQR2pgnyH+dIIjwAqTuNu3Mzn5vPgAfqwQ5Xx0qHzU1d4y
- qTxi8zHj4aozibg0kDSKYm72g9nPJUtMJ1spJBk7FTJhwTY/H9/VYrRD6ty8IJeoUx7f8I
- u/aACsE08EVx7+EPWH8bYOZwXQp/PoA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1722610386;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=JWSU4zlp5AoEsL8vM5hc3GxnsfclPF7Jq6P0lVaztxE=;
- b=mJ0sJ8Xzdz15BAAlEKCTti/8NWuSy2xntXFrjH7QpovSctilT9yzhVQMq2G5oEMBnYbBFE
- 19BOrz/2tLpxIzDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D875913999;
- Fri,  2 Aug 2024 14:53:04 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id l0FEJ9DyrGbKCQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 02 Aug 2024 14:53:04 +0000
-From: Fabiano Rosas <farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
+ id 1sZtfy-0005Dv-CO
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 10:54:40 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1fc53171e56so5152335ad.3
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 07:54:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722610476; x=1723215276;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=2wKnSaxwAurxqVOmTM00rPFAGyNfPCMfOr7fL121OPg=;
+ b=r32HeYo46e05OUdqUYtxHgHNWZ9F+WhaB2HbXBy2cZWYUjZ4nJ/9F2AEV5v+3LSXAP
+ Tk9uYNTCPWxNRG/eESvDnuqVhevOU5yikleRtZ2kTB3qraXC28rr4sqGhNU7g7VUbkdY
+ EZurgW++wcqRmf3q9uwNaEIIES++V4fIhSd+sXZrqNQguJjYLXeNbWEU4OhD8oBnBK0Q
+ X1DBVa2rHSW7J2p4E8DVv7/VoZwxPxLiQWhJN1kiYEWHPsJNSmg3ElSOY3OqBSuJcDc/
+ sqF8isf2p9ROHwQgyDAd+TMcQqYzbdnpH7uJnrFsMYA5c4A32To+qR3STHPGyw39h8HX
+ htwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722610476; x=1723215276;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2wKnSaxwAurxqVOmTM00rPFAGyNfPCMfOr7fL121OPg=;
+ b=Yydv69kuk3sD79/atVdbOPrxP4R6mzVXJp+sXplwuCtDqTcXjDqSuYntLXRmahqW0C
+ GWVIZjuzvPUpbxtPvsnzmqZnIU2bchRyquVu2G2fQC6pCvqNI8TW9Z3R73DpLaqVqRxf
+ mjaQm8glQsC6VGxJUKfE1ro/XhsiG2YXIUeeRvCLt3xdELEMbyJ0M45hCLQJKmGVSOC1
+ GTpKjhZDtNq/MpttPJpQzhcpErf+gzNnh1qQpYjPki3wHHuHWuQCf+oT6iAQcPnavNfQ
+ sdtk8MMebK5PE9sbR9rnk1aCAKCtuWl8r4GOcpikJDDEgkEwqqWLdfCb0UtTRWvPoNfm
+ aAQg==
+X-Gm-Message-State: AOJu0YwzdANZbX/az+hMoBCgFRY3w8wolgwE7nfiA7WfYTh2RpvBFiXu
+ 1RHnzNFKR7YUleyuqh8G0cweEXKEIviaxhhwr9cjEz/vYLmTE9zIvvC/SLfk2tTD5Bphzh216o5
+ sjg4=
+X-Google-Smtp-Source: AGHT+IFbG5Zb//fBxukt4QXHIaj+Gq2rUCb01AXDNSzEGv3MTrXwILzTFdx6PtKh9LU+U4Qy71TmUA==
+X-Received: by 2002:a17:902:d502:b0:1fc:5cc8:bb1b with SMTP id
+ d9443c01a7336-1ff57422457mr28400875ad.7.1722610476078; 
+ Fri, 02 Aug 2024 07:54:36 -0700 (PDT)
+Received: from carbon-x1.. ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1ff592aee19sm17920635ad.282.2024.08.02.07.54.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 02 Aug 2024 07:54:35 -0700 (PDT)
+From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
-	Thomas Huth <thuth@redhat.com>
-Subject: [PATCH for-9.2] tests/qtest/migration: Remove vmstate-static-checker
- test
-Date: Fri,  2 Aug 2024 11:53:01 -0300
-Message-Id: <20240802145301.29629-1-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
+Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Jason Wang <jasowang@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v8 0/5] qemu/osdep: add a qemu_close_all_open_fd() helper
+Date: Fri,  2 Aug 2024 16:54:16 +0200
+Message-ID: <20240802145423.3232974-1-cleger@rivosinc.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_THREE(0.00)[3];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
- imap1.dmz-prg2.suse.org:helo, suse.de:email, suse.de:dkim]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 0E06021A2F
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=cleger@rivosinc.com; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,186 +96,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I fumbled one of my last pull requests when fixing in-tree an issue
-with commit 87d67fadb9 ("monitor: Stop removing non-duplicated
-fds"). Basically mixed-up my `git add -p` and `git checkout -p` and
-committed a piece of test infra that has not been reviewed yet.
+Since commit 03e471c41d8b ("qemu_init: increase NOFILE soft limit on
+POSIX"), the maximum number of file descriptors that can be opened are
+raised to nofile.rlim_max. On recent debian distro, this yield a maximum
+of 1073741816 file descriptors. Now, when forking to start
+qemu-bridge-helper, this actually calls close() on the full possible file
+descriptor range (more precisely [3 - sysconf(_SC_OPEN_MAX)]) which
+takes a considerable amount of time. In order to reduce that time,
+factorize existing code to close all open files descriptors in a new
+qemu_close_all_open_fd() function. This function uses various methods
+to close all the open file descriptors ranging from the most efficient
+one to the least one. It also accepts an ordered array of file
+descriptors that should not be closed since this is required by the
+callers that calls it after forking. Since this function is not used
+for Win32, do not implement it to force an error at link time if used.
 
-This has not caused any bad symptoms because the test is not enabled
-by default anywhere: make check doesn't use two qemu binaries and the
-CI doesn't have PYTHON set for the compat tests. Besides, the test
-works fine anyway, it would not break anything.
-
-Remove this because it was never intended to be merged.
-
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/libqtest.c       | 17 +++-----
- tests/qtest/libqtest.h       |  2 -
- tests/qtest/migration-test.c | 82 ------------------------------------
- 3 files changed, 6 insertions(+), 95 deletions(-)
+v8:
+ - Fix erroneous -1 added to open_max
+ - Remove useless close_fd assignation
+ - v7: https://lore.kernel.org/qemu-devel/20240731084832.1829291-1-cleger@rivosinc.com/
 
-diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-index 1326e34291..9d07de1fbd 100644
---- a/tests/qtest/libqtest.c
-+++ b/tests/qtest/libqtest.c
-@@ -514,7 +514,12 @@ static QTestState *qtest_init_internal(const char *qemu_bin,
-         kill(s->qemu_pid, SIGSTOP);
-     }
- #endif
--    return s;
-+
-+    /* ask endianness of the target */
-+
-+    s->big_endian = qtest_query_target_endianness(s);
-+
-+   return s;
- }
- 
- QTestState *qtest_init_without_qmp_handshake(const char *extra_args)
-@@ -522,21 +527,11 @@ QTestState *qtest_init_without_qmp_handshake(const char *extra_args)
-     return qtest_init_internal(qtest_qemu_binary(NULL), extra_args);
- }
- 
--QTestState *qtest_init_with_env_no_handshake(const char *var,
--                                             const char *extra_args)
--{
--    return qtest_init_internal(qtest_qemu_binary(var), extra_args);
--}
--
- QTestState *qtest_init_with_env(const char *var, const char *extra_args)
- {
-     QTestState *s = qtest_init_internal(qtest_qemu_binary(var), extra_args);
-     QDict *greeting;
- 
--    /* ask endianness of the target */
--
--    s->big_endian = qtest_query_target_endianness(s);
--
-     /* Read the QMP greeting and then do the handshake */
-     greeting = qtest_qmp_receive(s);
-     qobject_unref(greeting);
-diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
-index c261b7e0b3..beb96b18eb 100644
---- a/tests/qtest/libqtest.h
-+++ b/tests/qtest/libqtest.h
-@@ -68,8 +68,6 @@ QTestState *qtest_init(const char *extra_args);
-  */
- QTestState *qtest_init_with_env(const char *var, const char *extra_args);
- 
--QTestState *qtest_init_with_env_no_handshake(const char *var,
--                                             const char *extra_args);
- /**
-  * qtest_init_without_qmp_handshake:
-  * @extra_args: other arguments to pass to QEMU.  CAUTION: these
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 70b606b888..c3201c5b19 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -64,7 +64,6 @@ static QTestMigrationState dst_state;
- #define DIRTYLIMIT_TOLERANCE_RANGE  25  /* MB/s */
- 
- #define ANALYZE_SCRIPT "scripts/analyze-migration.py"
--#define VMSTATE_CHECKER_SCRIPT "scripts/vmstate-static-checker.py"
- 
- #define QEMU_VM_FILE_MAGIC 0x5145564d
- #define FILE_TEST_FILENAME "migfile"
-@@ -1688,85 +1687,6 @@ static void test_analyze_script(void)
-     test_migrate_end(from, to, false);
-     cleanup("migfile");
- }
--
--static void test_vmstate_checker_script(void)
--{
--    g_autofree gchar *cmd_src = NULL;
--    g_autofree gchar *cmd_dst = NULL;
--    g_autofree gchar *vmstate_src = NULL;
--    g_autofree gchar *vmstate_dst = NULL;
--    const char *machine_alias, *machine_opts = "";
--    g_autofree char *machine = NULL;
--    const char *arch = qtest_get_arch();
--    int pid, wstatus;
--    const char *python = g_getenv("PYTHON");
--
--    if (!getenv(QEMU_ENV_SRC) && !getenv(QEMU_ENV_DST)) {
--        g_test_skip("Test needs two different QEMU versions");
--        return;
--    }
--
--    if (!python) {
--        g_test_skip("PYTHON variable not set");
--        return;
--    }
--
--    if (strcmp(arch, "i386") == 0 || strcmp(arch, "x86_64") == 0) {
--        if (g_str_equal(arch, "i386")) {
--            machine_alias = "pc";
--        } else {
--            machine_alias = "q35";
--        }
--    } else if (g_str_equal(arch, "s390x")) {
--        machine_alias = "s390-ccw-virtio";
--    } else if (strcmp(arch, "ppc64") == 0) {
--        machine_alias = "pseries";
--    } else if (strcmp(arch, "aarch64") == 0) {
--        machine_alias = "virt";
--    } else {
--        g_assert_not_reached();
--    }
--
--    if (!qtest_has_machine(machine_alias)) {
--        g_autofree char *msg = g_strdup_printf("machine %s not supported", machine_alias);
--        g_test_skip(msg);
--        return;
--    }
--
--    machine = resolve_machine_version(machine_alias, QEMU_ENV_SRC,
--                                      QEMU_ENV_DST);
--
--    vmstate_src = g_strdup_printf("%s/vmstate-src", tmpfs);
--    vmstate_dst = g_strdup_printf("%s/vmstate-dst", tmpfs);
--
--    cmd_dst = g_strdup_printf("-machine %s,%s -dump-vmstate %s",
--                              machine, machine_opts, vmstate_dst);
--    cmd_src = g_strdup_printf("-machine %s,%s -dump-vmstate %s",
--                              machine, machine_opts, vmstate_src);
--
--    qtest_init_with_env_no_handshake(QEMU_ENV_SRC, cmd_src);
--    qtest_init_with_env_no_handshake(QEMU_ENV_DST, cmd_dst);
--
--    pid = fork();
--    if (!pid) {
--        close(1);
--        open("/dev/null", O_WRONLY);
--        execl(python, python, VMSTATE_CHECKER_SCRIPT,
--              "-s", vmstate_src,
--              "-d", vmstate_dst,
--              NULL);
--        g_assert_not_reached();
--    }
--
--    g_assert(waitpid(pid, &wstatus, 0) == pid);
--    if (!WIFEXITED(wstatus) || WEXITSTATUS(wstatus) != 0) {
--        g_test_message("Failed to run vmstate-static-checker.py");
--        g_test_fail();
--    }
--
--    cleanup("vmstate-src");
--    cleanup("vmstate-dst");
--}
- #endif
- 
- static void test_precopy_common(MigrateCommon *args)
-@@ -3819,8 +3739,6 @@ int main(int argc, char **argv)
-     migration_test_add("/migration/bad_dest", test_baddest);
- #ifndef _WIN32
-     migration_test_add("/migration/analyze-script", test_analyze_script);
--    migration_test_add("/migration/vmstate-checker-script",
--                       test_vmstate_checker_script);
- #endif
- 
-     if (is_x86) {
+v7:
+ - Passed open_max to qemu_close_all_open_fd() subfunctions
+ - Remove extra whitespace
+ - Reduce some variable scopes
+ - v7: https://lore.kernel.org/qemu-devel/20240730122437.1749603-1-cleger@rivosinc.com/
+
+v6:
+ - Split patch in multiple commits
+ - Drop Richard Henderson Reviewed-by since there was a lot of
+   modifications
+ - Remove useless #ifdef LINUX in qemu_close_all_open_fd_proc()
+ - v5: https://lore.kernel.org/qemu-devel/20240726075502.4054284-1-cleger@rivosinc.com/
+
+v5:
+ - Move qemu_close_all_open_fd() to oslib-posix.c since it does not
+   compile on windows and is not even used on it.
+ - v4: https://lore.kernel.org/qemu-devel/20240717124534.1200735-1-cleger@rivosinc.com/
+
+v4:
+ - Add a comment saying that qemu_close_all_open_fd() can take a NULL skip
+   array and nskip == 0
+ - Added an assert in qemu_close_all_open_fd() to check for skip/nskip
+   parameters
+ - Fix spurious tabs instead of spaces
+ - Applied checkpatch
+ - v3: https://lore.kernel.org/qemu-devel/20240716144006.6571-1-cleger@rivosinc.com/
+
+v3:
+ - Use STD*_FILENO defines instead of raw values
+ - Fix indentation of close_all_fds_after_fork()
+ - Check for nksip in fallback code
+ - Check for path starting with a '.' in qemu_close_all_open_fd_proc()
+ - Use unsigned for cur_skip
+ - Move ifdefs inside close_fds functions rather than redefining them
+ - Remove uneeded 'if(nskip)' test
+ - Add comments to close_range version
+ - Reduce range of skip fd as we find them in
+ - v2: https://lore.kernel.org/qemu-devel/20240618111704.63092-1-cleger@rivosinc.com/
+
+v2:
+ - Factorize async_teardown.c close_fds implementation as well as tap.c ones
+ - Apply checkpatch
+ - v1: https://lore.kernel.org/qemu-devel/20240617162520.4045016-1-cleger@rivosinc.com/
+
+Clément Léger (5):
+  qemu/osdep: Move close_all_open_fds() to oslib-posix
+  qemu/osdep: Split qemu_close_all_open_fd() and add fallback
+  net/tap: Factorize fd closing after forking
+  qemu/osdep: Add excluded fd parameter to qemu_close_all_open_fd()
+  net/tap: Use qemu_close_all_open_fd()
+
+ include/qemu/osdep.h    |  11 ++++
+ net/tap.c               |  34 ++++++-----
+ system/async-teardown.c |  37 +----------
+ util/oslib-posix.c      | 132 ++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 164 insertions(+), 50 deletions(-)
+
 -- 
-2.35.3
+2.45.2
 
 
