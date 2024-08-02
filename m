@@ -4,56 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 102FBC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 19:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F514C52D6F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 19:42:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZxq3-0003BZ-Jf; Fri, 02 Aug 2024 15:21:19 -0400
+	id 1sZyAN-000286-4t; Fri, 02 Aug 2024 15:42:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sZxpz-0003An-2h
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 15:21:15 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZyAJ-00022e-RD
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 15:42:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1sZxpw-0005mf-QV
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 15:21:14 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8AF4E4E6004;
- Fri, 02 Aug 2024 21:21:02 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id RLe42StmQCbM; Fri,  2 Aug 2024 21:21:00 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 928304E6001; Fri, 02 Aug 2024 21:21:00 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 90C8374577C;
- Fri, 02 Aug 2024 21:21:00 +0200 (CEST)
-Date: Fri, 2 Aug 2024 21:21:00 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH-for-9.1 v4 1/2] hw/pci-host/gt64120: Set PCI base address
- register write mask
-In-Reply-To: <20240802171023.85719-2-philmd@linaro.org>
-Message-ID: <0319cc95-fb5b-d904-4043-00384ac9df4e@eik.bme.hu>
-References: <20240802171023.85719-1-philmd@linaro.org>
- <20240802171023.85719-2-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZyAI-0006Ql-Ac
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 15:42:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722627733;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zujWLanYU65hRJrPq3mrZmUXtKznUN/BGwM9MRtRTtE=;
+ b=WnceGgKZhlG25Pw9rVSme6oBxm6cDypgV38TLyZpUtUV2A7cCLmDNGakt+STBsWQlzYeby
+ sxeiUoth8KgaYqaH7UOWgA8/X+rt3X9caox73NbUcEaTEGfXxhIFqJ86lU/FxzQSnto/im
+ 5LzIjRhRCbpm90FBf8Lo7RZNhtltRwE=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-18-R71nrcNcMwalGvZc5B7s5A-1; Fri,
+ 02 Aug 2024 15:42:07 -0400
+X-MC-Unique: R71nrcNcMwalGvZc5B7s5A-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 107B91955D5A; Fri,  2 Aug 2024 19:42:05 +0000 (UTC)
+Received: from green.redhat.com (unknown [10.2.16.72])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7336F195605A; Fri,  2 Aug 2024 19:42:03 +0000 (UTC)
+From: Eric Blake <eblake@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, rjones@redhat.com,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: [PATCH 2/2] qemu-img: CVE-XXX Sanitize untrusted output from NBD
+ server
+Date: Fri,  2 Aug 2024 14:26:06 -0500
+Message-ID: <20240802194156.2131519-6-eblake@redhat.com>
+In-Reply-To: <20240802194156.2131519-4-eblake@redhat.com>
+References: <20240802194156.2131519-4-eblake@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- BOUNDARY="3866299591-1803442020-1722625654=:46709"
-Content-ID: <5d4ff228-0391-e18f-4409-e569fcf807c8@eik.bme.hu>
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.124,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,106 +83,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Error messages from an NBD server must be treated as untrusted; a
+malicious server can inject escape sequences to try and trigger RCE
+flaws via escape sequences to whatever terminal happens to be running
+qemu-img.  The easiest solution is to sanitize the output with the
+same code we use to produce sanitized (pseudo-)JSON over QMP.
 
---3866299591-1803442020-1722625654=:46709
-Content-Type: text/plain; CHARSET=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 8BIT
-Content-ID: <a704aec2-d86d-051f-d235-8068947911f1@eik.bme.hu>
+Rich Jones originally pointed this flaw out at:
+https://lists.libguestfs.org/archives/list/guestfs@lists.libguestfs.org/thread/2NXA23G2V3HPWJYAO726PLNBEAAEUJAU/
 
-On Fri, 2 Aug 2024, Philippe Mathieu-Daudé wrote:
-> When booting Linux we see:
->
->  PCI host bridge to bus 0000:00
->  pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
->  pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
->  pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
->  pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
->  pci 0000:00:00.0: [Firmware Bug]: reg 0x14: invalid BAR (can't size)
->  pci 0000:00:00.0: [Firmware Bug]: reg 0x18: invalid BAR (can't size)
->  pci 0000:00:00.0: [Firmware Bug]: reg 0x1c: invalid BAR (can't size)
->  pci 0000:00:00.0: [Firmware Bug]: reg 0x20: invalid BAR (can't size)
->  pci 0000:00:00.0: [Firmware Bug]: reg 0x24: invalid BAR (can't size)
->
-> This is due to missing base address register write mask.
-> Add it to get:
->
->  PCI host bridge to bus 0000:00
->  pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
->  pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
->  pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
->  pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
->  pci 0000:00:00.0: reg 0x10: [mem 0x00000000-0x00000fff pref]
->  pci 0000:00:00.0: reg 0x14: [mem 0x01000000-0x01000fff pref]
->  pci 0000:00:00.0: reg 0x18: [mem 0x1c000000-0x1c000fff]
->  pci 0000:00:00.0: reg 0x1c: [mem 0x1f000000-0x1f000fff]
->  pci 0000:00:00.0: reg 0x20: [mem 0x1be00000-0x1be00fff]
->  pci 0000:00:00.0: reg 0x24: [io  0x14000000-0x14000fff]
->
-> Since this device is only used by MIPS machines which aren't
-> versioned, we don't need to update migration compat machinery.
->
-> Mention the datasheet referenced. Remove the "Malta assumptions
-> ahead" comment since the reset values from the datasheet are used.
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> hw/pci-host/gt64120.c | 14 +++++++++++++-
-> 1 file changed, 13 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
-> index e02efc9e2e..7df2855f32 100644
-> --- a/hw/pci-host/gt64120.c
-> +++ b/hw/pci-host/gt64120.c
-> @@ -1,6 +1,8 @@
-> /*
->  * QEMU GT64120 PCI host
->  *
-> + * (Datasheet GT-64120 Rev 1.4 from Sep 14, 1999)
-> + *
->  * Copyright (c) 2006,2007 Aurelien Jarno
->  *
->  * Permission is hereby granted, free of charge, to any person obtaining a copy
-> @@ -1213,17 +1215,27 @@ static void gt64120_realize(DeviceState *dev, Error **errp)
->
-> static void gt64120_pci_realize(PCIDevice *d, Error **errp)
-> {
-> -    /* FIXME: Malta specific hw assumptions ahead */
-> +    /* Values from chapter 17.16 "PCI Configuration" */
-> +
->     pci_set_word(d->config + PCI_COMMAND, 0);
->     pci_set_word(d->config + PCI_STATUS,
->                  PCI_STATUS_FAST_BACK | PCI_STATUS_DEVSEL_MEDIUM);
->     pci_config_set_prog_interface(d->config, 0);
-> +
-> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_0, 0xfffff009);
-> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_1, 0xfffff009);
-> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_2, 0xfffff009);
-> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_3, 0xfffff009);
-> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_4, 0xfffff009);
+With this patch, and a malicious server run with nbdkit 1.40 as:
 
-Documentation says bit 0 is read only 0 for these? Why mask ending with 9 
-not 8? Also prefetch bit 3 is read only 0 for the last one BAR4. 
-Otherwise:
+$ nbdkit --log=null eval open=' printf \
+  "EPERM x\\r mess up the output \e[31mmess up the output\e[m mess up" >&2; \
+  exit 1 ' get_size=' echo 0 ' --run 'qemu-img info "$uri"'
 
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+we now get:
 
-Regards,
-BALATON Zoltan
+qemu-img: Could not open 'nbd://localhost': Requested export not available
+server reported: /tmp/nbdkitOZHOKB/open: x\r mess up the output \u001B[31mmess up the output\u001B[m mess up
 
-> +    pci_set_long(d->wmask + PCI_BASE_ADDRESS_5, 0xfffff001);
-> +
->     pci_set_long(d->config + PCI_BASE_ADDRESS_0, 0x00000008);
->     pci_set_long(d->config + PCI_BASE_ADDRESS_1, 0x01000008);
->     pci_set_long(d->config + PCI_BASE_ADDRESS_2, 0x1c000000);
->     pci_set_long(d->config + PCI_BASE_ADDRESS_3, 0x1f000000);
->     pci_set_long(d->config + PCI_BASE_ADDRESS_4, 0x14000000);
->     pci_set_long(d->config + PCI_BASE_ADDRESS_5, 0x14000001);
-> +
->     pci_set_byte(d->config + 0x3d, 0x01);
-> }
->
->
---3866299591-1803442020-1722625654=:46709--
+instead of an attempt to hide the name of the Unix socket and forcing
+the terminal to render part of the text red.
+
+Note that I did _not_ sanitize the string being sent through
+trace-events in trace_nbd_server_error_msg; this is because I assume
+that our trace engines already treat all string strings as untrusted
+input and apply their own escaping as needed.
+
+Reported-by: "Richard W.M. Jones" <rjones@redhat.com>
+Signed-off-by: Eric Blake <eblake@redhat.com>
+
+---
+
+If my assumption about allowing raw escape bytes through to trace_
+calls is wrong (such as when tracing to stderr), let me know.  That's
+a much bigger audit to determine which trace points, if any, should
+sanitize data before tracing, and/or change the trace engines to
+sanitize all strings (with possible knock-on effects if trace output
+changes unexpectedly for a tool expecting something unsanitized).
+---
+ nbd/client.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/nbd/client.c b/nbd/client.c
+index c89c7504673..baa20d10d69 100644
+--- a/nbd/client.c
++++ b/nbd/client.c
+@@ -23,6 +23,7 @@
+ #include "trace.h"
+ #include "nbd-internal.h"
+ #include "qemu/cutils.h"
++#include "qemu/unicode.h"
+
+ /* Definitions for opaque data types */
+
+@@ -230,7 +231,9 @@ static int nbd_handle_reply_err(QIOChannel *ioc, NBDOptionReply *reply,
+     }
+
+     if (msg) {
+-        error_append_hint(errp, "server reported: %s\n", msg);
++        g_autoptr(GString) buf = g_string_sized_new(reply->length);
++        mod_utf8_sanitize(buf, msg);
++        error_append_hint(errp, "server reported: %s\n", buf->str);
+     }
+
+  err:
+-- 
+2.45.2
+
 
