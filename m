@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4531DC52D71
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 06:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C91CFC52D70
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 06:51:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZm6D-0004YF-Ps; Fri, 02 Aug 2024 02:49:13 -0400
+	id 1sZm7a-0001Q3-7l; Fri, 02 Aug 2024 02:50:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZm6B-0004UG-LY
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 02:49:11 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sZm7Y-0001Ha-5J
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 02:50:36 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZm69-0000Cy-U1
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 02:49:11 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-2cb55ff1007so5280363a91.0
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 23:49:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sZm7W-0000wb-Lf
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 02:50:35 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-6e7e23b42c3so4998127a12.1
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 23:50:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722581348; x=1723186148; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1XT25LlmPDhPO2b7/0lbnD/fY7z8TW6QtI0bYE+GIck=;
- b=VvQsTpZHxBr6miBMSCEiM4USw7akp/whm2gcLSbVReX1/8193KOQV2ny9UrcFIK3cX
- 6721qMYPEuztF29xFOQw1QfbTXGv4hf3/JmqTSIAmNrurJVbeYLUrxIBb/RhF08PJm/P
- UfVYRNi/DBkAv3uMn9EsyTd/NVvKe5eD6czw+lTApYNAckDOZU/hNKzQR3am3y2o2AFc
- 2Alq52lfWImDgeueH2yel+IXjSxdhPbjiyraUSeXzWzbk/8tWktYqWf64Xd0x1ihwzQU
- BQN87DDfl2gGwP0iojOV/EdUTGa9yASY0Gx1c8BAuv4EYmdzxYw/2Rt5FA/UBk9u03/o
- gaaQ==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722581433; x=1723186233;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=ZZGRu8v6oxuF32W/xrA/69BjX55/YFUQg7PXZsmlE7o=;
+ b=bwQhuOwtdn8cs7TWkvhG7XUHPvhXg5Fop+3Imn0OTePQBH8Vn74GjoIC8HgSCN9Ee1
+ oWMb+GjiWmUKqhwxwVbIfbbIx08l4jqA46em7scmE/7o6ELYVYASuTRCPaOIj5wgD8UZ
+ qs7Y3sZq2in73kjTuJV5EzGcAW4SNobmjhewfq+VhzBQqDqXiq3DwBzZyU9ufO14CXwb
+ z/TdVFTQdo3wIrAtP+L6RSucybC4pnJ+mM6W4DCpSpBF72HcbrWFJ0CGq9LuypIA4yvo
+ +ppOzFjv7UALEedynQ9eecLun3M6CE7r6KYCyif18JjkADlq/EID1WS+QyacK8fRDPHw
+ ejaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722581348; x=1723186148;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1XT25LlmPDhPO2b7/0lbnD/fY7z8TW6QtI0bYE+GIck=;
- b=mhOkpSyyUV70AxkgXm3Jqmg97iSTxkUxvbTYcVNKyG68tKhgYAe6sXZAWIOj8RUryJ
- zzr5NlsA0zpn8uQZhm9xVghmaRbLWqkBG4iL7cW62H8FPExW8NqBXNZKM8z/VM4mFpeD
- NpeHPUmKcGIgeSmDEQaOV7QhYxxmj4LYHDJkvqtfnxWCQGnpETGIzq1J/fWq1ZMo+0vG
- PSZXJ9VW6WFjCTe1PPv3r9dUFrwRkxRcz3eVl2Hix3TlRBtq4SB7/Z/wXCpd8v0q8r5M
- //lBwIDixOQfr6IkE7HKPc4J5Y8SBDNyhtGGWsn0QFRY0OqzRyto9iigMMxKZGt7Nfdd
- 0+qw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVCDvtYby786GNsB/9woMrUQwoN27efE42lEPexpgvg1Aff+0MKVZoZN/U4+Pw9G9H9UfLjRrSBDkVS@nongnu.org
-X-Gm-Message-State: AOJu0YyZgakYgCweOgFpkmXI2C2VyawmHWb3N8PWAKhKU6n4JbSwcsEd
- Ro9YmI/U6GSqeng8USJvsNeoF0vAru9IMno4RFFZOwsZ9uCgYq+bh9P50B4If7s=
-X-Google-Smtp-Source: AGHT+IFy/ilY73Qlg0jeTTPW7kOWnWvsHUgAm5sC1gjPyRsStDpvWdFsZ9ittRnd/0aDlthqAb9FMA==
-X-Received: by 2002:a17:90b:194c:b0:2c9:6f03:6fd6 with SMTP id
- 98e67ed59e1d1-2cff941b383mr3217398a91.17.1722581348348; 
- Thu, 01 Aug 2024 23:49:08 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cfca29fd5dsm4651093a91.0.2024.08.01.23.49.04
+ d=1e100.net; s=20230601; t=1722581433; x=1723186233;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZZGRu8v6oxuF32W/xrA/69BjX55/YFUQg7PXZsmlE7o=;
+ b=PWxSls3jOms5GhqIHONgGQNtaR3m+oYza4jT5q4SLAAf2Nd7h0HiBmCi1s6x7VOPkB
+ duh/tCEuBC46VjRo0KFRHjzwotEVswzOpqnEyM9sfmbvoL1s7kaMqk5DmlK+tcdA1a57
+ olW9ILj/4mo7mH1MoShhKYahGuDiXG4TqQYcJOMpY3s5va1SbKhs+deefJjV5dnHR9vC
+ dyA+6FIblA4mQMAtrU0+1ca24zGi7pLSEonXpFQ1imcktfSgPvItIN+2T7vouF/a3/Ic
+ bvRnrd+Dlnul+A0u8eZWzJ1citBkDycYifWN6MfCsa0Z0YobFvZb7mM6yqurlNL02BZf
+ CuNg==
+X-Gm-Message-State: AOJu0YySFbSQ9PMwkCTGlyiTO4J7MX8rqTPLNnvt0rK+dTWNSaFcYrA3
+ ZBpSrSwKGyfY7Vvsm82eHukETOIoprD81jPSqcX+KejVrVR5CJMEp5BhQKVmTZU=
+X-Google-Smtp-Source: AGHT+IGwVSyhB8pGmmvcsq34mHa6UqBFBHAfw36HYcu5TpzyDqYgSyynLNp5G3/5WfJuDonlIjlRUQ==
+X-Received: by 2002:a05:6a21:b85:b0:1c4:a30a:c819 with SMTP id
+ adf61e73a8af0-1c699559e30mr2937915637.21.1722581433243; 
+ Thu, 01 Aug 2024 23:50:33 -0700 (PDT)
+Received: from localhost ([157.82.201.15]) by smtp.gmail.com with UTF8SMTPSA id
+ d9443c01a7336-1ff58f5a473sm9934605ad.106.2024.08.01.23.50.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Aug 2024 23:49:07 -0700 (PDT)
-Message-ID: <9c090b8a-24d5-4bec-84e1-be59e4faa55a@linaro.org>
-Date: Fri, 2 Aug 2024 16:49:01 +1000
+ Thu, 01 Aug 2024 23:50:32 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Fri, 02 Aug 2024 15:49:47 +0900
+Subject: [PATCH for-9.2 v6 3/9] pcie_sriov: Ensure PF and VF are mutually
+ exclusive
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] target/riscv: Relax fld alignment requirement
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com
-References: <20240802031612.604-1-zhiwei_liu@linux.alibaba.com>
- <20240802031612.604-4-zhiwei_liu@linux.alibaba.com>
- <05d5a772-a7b9-4bfd-8ca0-f85dcf2d1505@linaro.org>
- <eb6a4c26-dd25-4be6-aca7-e0ef1b133d7a@linux.alibaba.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <eb6a4c26-dd25-4be6-aca7-e0ef1b133d7a@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20240802-sriov-v6-3-0c8ff49c4276@daynix.com>
+References: <20240802-sriov-v6-0-0c8ff49c4276@daynix.com>
+In-Reply-To: <20240802-sriov-v6-0-0c8ff49c4276@daynix.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Jason Wang <jasowang@redhat.com>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Yui Washizu <yui.washidu@gmail.com>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: none client-ip=2607:f8b0:4864:20::535;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,13 +103,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/2/24 16:27, LIU Zhiwei wrote:
->> Does this really have byte atomicity, not atomic on two aligned 32-bit loads (which 
->> would be MO_ATOM_IFALIGN_PAIR).
-> The specification doesn't rule it. I think we can choose either way. The byte atomicity 
-> may expose more problems on alignment.
+A device cannot be a SR-IOV PF and a VF at the same time.
 
-Ok.
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ hw/pci/pcie_sriov.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-r~
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index 56523ab4e833..ec8fc0757b92 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -42,6 +42,11 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+     uint8_t *cfg = dev->config + offset;
+     uint8_t *wmask;
+ 
++    if (pci_is_vf(dev)) {
++        error_setg(errp, "a device cannot be a SR-IOV PF and a VF at the same time");
++        return false;
++    }
++
+     if (total_vfs) {
+         uint16_t ari_cap = pcie_find_capability(dev, PCI_EXT_CAP_ID_ARI);
+         uint16_t first_vf_devfn = dev->devfn + vf_offset;
+
+-- 
+2.45.2
+
 
