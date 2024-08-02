@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95986C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 08:37:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 715A7C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 08:38:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZnka-0008Nh-0u; Fri, 02 Aug 2024 04:35:00 -0400
+	id 1sZnnX-00048Q-0u; Fri, 02 Aug 2024 04:38:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sZnkX-0008FN-TB
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:34:57 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sZnnV-00044O-U6
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:38:01 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sZnkW-0006Sm-9j
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:34:57 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-70d150e8153so2060114b3a.0
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 01:34:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sZnnU-0007it-31
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:38:01 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1fc566ac769so58208465ad.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 01:37:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722587695; x=1723192495; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3NW5Vf8ctLM3k+PwXCXDOXjwI/0K8umnSkecfcCvyd0=;
- b=HC5cAhEiREV/xGNsRM/914/5KqO+vpTls5gzqo2WZYmUQECPq1Kw2UAknvUtuQKhxO
- EVgPaNssyBhWyDKHEfX1ETx+HjkEnF4Jp0+gs7ctmNom12KG2e0t6PZwy0DCPR349xQu
- 1x57+1Lv1cBHyTa9VG7FhPqQZPOUkfjcSkATXkPkKRE2yZsCQFoLyRirvOnViYb/h4Ew
- 3+PKE9cd6d65QCfNTmrSP/Rtszeliint6MnltMKNas8zElaK+B1s+LCnULSdZ0gmlN1T
- yYfmizQYQhIseCsPEDm1tPxX+MWyo4LGa9UhTiofqLZrw6vvrx/KAuwzx+5nRnUSqBKZ
- h8aw==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722587878; x=1723192678;
+ darn=nongnu.org; 
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=WJIpyRy6I81yiihct6rsczqT9e/JyDXswHZw9OWSliA=;
+ b=xOuGTjDAUG7mZCmI882j8j0fFdxQ2OnfkvxmIga5eOJoK5/TWsDvM32rYUIpxW+dA6
+ vPzJy9c+q7b/BX5IvGNb5aHRd/9gdUfqgWTmtqbmskek6IFyWyOX4SvWHxm2HJA/67E0
+ lQBUp5MapL1UFAbaipJhj3HPBKXYDYieh4wZGhiE9andw4z18hgKBxIAYJ2rI3bs5VG/
+ 8+W0U9f1yexqpc5Iyr6dTOtsKjnA+X8HFJcb5NONaPbH+hDbaRTWUsVRgqXbfYFd/jNt
+ RN2m3ixmQjcaFRYWYCKF/Xnobm0VJh1xhUlKWM21ygDIZRAuWrSKWRxpDgIoAgNjcoh2
+ X0qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722587695; x=1723192495;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3NW5Vf8ctLM3k+PwXCXDOXjwI/0K8umnSkecfcCvyd0=;
- b=maCALBCyRlRY66588kB1EHNE9cF47dxu3V4KgHGpfR5KCzNz30dsKmMKC6oD6dgxID
- 2XYgOsMLKznRfmydxIpxDbf6/RWSrUZl1/uUpGjIEoiRM5C8SGT4Tdy5ZQ4UzL+JIHvx
- 9T1YtwwleiLTyLq+C1XKXtKUuQF7K/LeeaaLYQof9aXhMyMvgrV54WQ5Z8MafZ3Fterx
- R0zM/XIxfsJTBMlX0qdHr+zPyvJMHrerAuWbAeNCTfn/cTQeQSDFWlDb31r93SmEHWJE
- a+EVExfOyzQ7zhDVJBm1EpDyfIUunb34KRGBOyqqazRTrcm5np0OXHU3mfLND9kKMyMm
- Hx+Q==
-X-Gm-Message-State: AOJu0YyWlPuWFfsQKoCyYaATd9b1ArH7B/2i9vbKFFAbUB7gxUkQTlKM
- Jg3suFGvM9wtOBCOja4+GxMdhU+3Ajk7PDyJHjTiF5uoWaABAHAB1QwRUoR3DNQ=
-X-Google-Smtp-Source: AGHT+IFvAJu05tNTzClhqDKz/gQOsEIDDYrTD+8KcxoWB1Vh0tQ30ZNd/7VToU10F2DxS9rtgYZHog==
-X-Received: by 2002:a05:6a00:66e7:b0:70d:2208:c98e with SMTP id
- d2e1a72fcca58-7106d8d6efcmr4361867b3a.0.1722587694611; 
- Fri, 02 Aug 2024 01:34:54 -0700 (PDT)
-Received: from localhost.localdomain ([203.87.101.91])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7106ec06a25sm951673b3a.33.2024.08.02.01.34.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Aug 2024 01:34:54 -0700 (PDT)
-From: Ajeet Singh <itachis6234@gmail.com>
-X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
-To: qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, Mark Corbin <mark.corbin@embecsom.com>,
- Ajeet Singh <itachis@FreeBSD.org>
-Subject: [PATCH 08/18] bsd-user: Add RISC-V signal trampoline setup function
-Date: Fri,  2 Aug 2024 18:34:13 +1000
-Message-Id: <20240802083423.142365-9-itachis@FreeBSD.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240802083423.142365-1-itachis@FreeBSD.org>
-References: <20240802083423.142365-1-itachis@FreeBSD.org>
+ d=1e100.net; s=20230601; t=1722587878; x=1723192678;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WJIpyRy6I81yiihct6rsczqT9e/JyDXswHZw9OWSliA=;
+ b=M6bQpgsIO3B+DMnUxI3nvP47pFVpx2LREeqSSBiKj5jQh+wa7bg3lrfitcp98jKWkS
+ 8Pi0TSGRRVXzuJ2hxoVZGvzIGcFImOUfKsMZ6hyaR+STo7EXt3GUSXAJ9S2NygzTEKlJ
+ kYAUGbT6jlgxArEXcUVydMdOfuN81fq5ZiztHcKTxnVEesONFewG7YNW1xkblkznieov
+ 9e50DaO3Sy2Hp9IJXTdtm9WotehikmRQYZIrgSiIB++BDW0Qnr9IjSHwIGkcbcZ/Gt1t
+ jmUjSp2DZIZt7P46ejhBNHZAc7Y/DAjoRNwhKPUg+4dB20G0g721/Vy1JwhMcARbENVE
+ 7+nA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUk3wwCyrUsndsmGfXimyADzFZ10xo3bK/pJlWndsUeqW5yZeoB46TwCzynuWYWbWAfCtHZlvS1BG1e85IeDOGtHw3ykq0=
+X-Gm-Message-State: AOJu0Yy2JmONCVPTlHcTqxHvab714eKTb4LoGI68UcBngKoSlcp3vZ0U
+ yNSzoV4KM6Hky1hzchpR21E7kAGMQSed4nhceXJ4CtczOLMjB6KTMOQEjYdJyGM=
+X-Google-Smtp-Source: AGHT+IHBu7VrMfwxBriL69FaXJr60emKRrnFuW8SoViaV4xCP/8NwXbK0j4S/SB+Y7Xzqq0FFEUDNA==
+X-Received: by 2002:a17:902:cf01:b0:1fb:4a57:7cba with SMTP id
+ d9443c01a7336-1ff572f812bmr33603635ad.34.1722587878557; 
+ Fri, 02 Aug 2024 01:37:58 -0700 (PDT)
+Received: from localhost ([157.82.202.230])
+ by smtp.gmail.com with UTF8SMTPSA id
+ d9443c01a7336-1ff5929ad84sm11703835ad.270.2024.08.02.01.37.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 Aug 2024 01:37:58 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Fri, 02 Aug 2024 17:37:52 +0900
+Subject: [PATCH] hvf: arm: Fix hvf_sysreg_read_cp() call
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=itachis6234@gmail.com; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240802-hvf-v1-1-e2c0292037e5@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAN+arGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDCwMj3YyyNF0TA0tzw2RTk9Tk5DQloMqCotS0zAqwKdGxtbUAd0rl3VU
+ AAAA=
+To: Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: none client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,71 +98,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Corbin <mark.corbin@embecsom.com>
+Commit 05b8d7249109 ("hvf: arm: Do not advance PC when raising an
+exception") changed val from uint64_t to a pointer to uint64_t in
+hvf_sysreg_read(), but didn't change its hvf_sysreg_read_cp() call.
 
-Implemented the `setup_sigtramp` function for setting up the signal
-trampoline code in the RISC-V architecture.
-
-Signed-off-by: Mark Corbin <mark.corbin@embecsom.com>
-Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Fixes: 05b8d7249109 ("hvf: arm: Do not advance PC when raising an exception")
+Reported-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- bsd-user/riscv/target_arch_sigtramp.h | 46 +++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
- create mode 100644 bsd-user/riscv/target_arch_sigtramp.h
+ target/arm/hvf/hvf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/bsd-user/riscv/target_arch_sigtramp.h b/bsd-user/riscv/target_arch_sigtramp.h
-new file mode 100644
-index 0000000000..39c878db22
---- /dev/null
-+++ b/bsd-user/riscv/target_arch_sigtramp.h
-@@ -0,0 +1,46 @@
-+/*
-+ * RISC-V sigcode
-+ *
-+ * Copyright (c) 2019 Mark Corbin
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License as published by the Free Software Foundation; either
-+ * version 2 of the License, or (at your option) any later version.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#ifndef TARGET_ARCH_SIGTRAMP_H
-+#define TARGET_ARCH_SIGTRAMP_H
-+
-+/* Compare with sigcode() in riscv/riscv/locore.S */
-+static inline abi_long setup_sigtramp(abi_ulong offset, unsigned sigf_uc,
-+        unsigned sys_sigreturn)
-+{
-+    int i;
-+    uint32_t sys_exit = TARGET_FREEBSD_NR_exit;
-+
-+    uint32_t sigtramp_code[] = {
-+    /* 1 */ 0x00010513,                         /* mv a0, sp */
-+    /* 2 */ 0x00050513 + (sigf_uc << 20),       /* addi a0, a0, sigf_uc */
-+    /* 3 */ 0x00000293 + (sys_sigreturn << 20), /* li t0, sys_sigreturn */
-+    /* 4 */ 0x00000073,                         /* ecall */
-+    /* 5 */ 0x00000293 + (sys_exit << 20),      /* li t0, sys_exit */
-+    /* 6 */ 0x00000073,                         /* ecall */
-+    /* 7 */ 0xFF1FF06F                          /* b -16 */
-+    };
-+
-+    for (i = 0; i < 7; i++) {
-+        tswap32s(&sigtramp_code[i]);
-+    }
-+
-+    return memcpy_to_target(offset, sigtramp_code, TARGET_SZSIGCODE);
-+}
-+#endif /* TARGET_ARCH_SIGTRAMP_H */
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index c1496ad5be9b..ace83671b594 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1280,7 +1280,7 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
+     case SYSREG_ICC_SRE_EL1:
+     case SYSREG_ICC_CTLR_EL1:
+         /* Call the TCG sysreg handler. This is only safe for GICv3 regs. */
+-        if (hvf_sysreg_read_cp(cpu, reg, &val)) {
++        if (hvf_sysreg_read_cp(cpu, reg, val)) {
+             return 0;
+         }
+         break;
+
+---
+base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
+change-id: 20240802-hvf-40971c54eccf
+
+Best regards,
 -- 
-2.34.1
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
