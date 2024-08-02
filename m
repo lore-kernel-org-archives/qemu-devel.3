@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A855DC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 08:35:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82475C3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 08:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZnkg-0000QK-El; Fri, 02 Aug 2024 04:35:06 -0400
+	id 1sZnkR-0007hv-DC; Fri, 02 Aug 2024 04:34:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sZnkd-0000Et-Uk
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:35:03 -0400
-Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
+ id 1sZnkQ-0007dh-AD
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:34:50 -0400
+Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sZnkc-0006Tz-3f
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:35:03 -0400
-Received: by mail-oi1-x236.google.com with SMTP id
- 5614622812f47-3db35ec5688so3485552b6e.3
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 01:35:01 -0700 (PDT)
+ id 1sZnkO-0006RQ-Pr
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:34:50 -0400
+Received: by mail-oa1-x30.google.com with SMTP id
+ 586e51a60fabf-264545214efso4362441fac.3
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 01:34:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722587700; x=1723192500; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1722587687; x=1723192487; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=V1PoKK1KvQqOqMpcnJ72usaN63rv4asAXIIrjwlK4wk=;
- b=jNBpK244LpT0fRHAybjfYQj84rQ49a+XvXbJauOi6E3K0PJgk1EY+wzxUu4F0X6Lp6
- rUOxOGxBflQ5SDctgDlesFyU29nP/tUzUqX4xz6qCMsnDYi1bjnno1qVYNopJ12XN7VG
- iOsxkdgf/bdVf27WBHSbcROxmuxYb9w1JeUOyJqQRGuPJI7o2HLYhjw+FCywU1X9P0KE
- TSga5lBJCAnKofAZKEzspsyWCX2Os1sQ5rtz5ZanApi1IeWhn1LAnHb0+j06VafW1Dng
- H4AqXSfgAP/dIw3eWFwjt5rkhC5eRH3/rpGVBjyv9lsppjG+TvmrhS87OwvdPeauZ3rl
- CEgg==
+ bh=VazBiqHhZAFXJRh0kGe4jPT2Ftyb2VHZzmL3PXBSHfI=;
+ b=dUfjgF9bD+he1daPNaXDTFpYU845Me2KJKccV5maDhpzqYWOX+o0a5jE42WeQrbuyE
+ XVn/1PGm6BzpeVeVxwBJ6SCqZRYXywJUqi5XmuPHBCJtDZzg4odgauGqd9FfEz70l2UD
+ 9UyZvrSF7upN2AZaD0YL1YC8rsoFy/uIpcYjVuCKveN5aHbijEkdrgbS1wd5PVerRV5m
+ 6wOmDPVoFzYE4WoZH0J5Q4zOiplDqOyuuTcMsO3NJjJq8J1LdflvWU7wxea0krinZWBX
+ Sk6UMLYbbSFX+Cm8jxKv9H1MvurytP5SAktWvyF0+wWvGae8jyvzcktK0xjmyMUCkZwm
+ LBIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722587700; x=1723192500;
+ d=1e100.net; s=20230601; t=1722587687; x=1723192487;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=V1PoKK1KvQqOqMpcnJ72usaN63rv4asAXIIrjwlK4wk=;
- b=ZBTom6fbBKVSiaov2VJKHBpBAw1Zm5nzAKrnMTo2Nv/HNubrm57uMwxAAWpyWG+m66
- 08XjMj0AsxaTyXRXfcUmQv1FFW1mfcgJyPxcWhFlhYm16sQNy3cW75rwfzk8QfxYSt0q
- R4pLW0shXwGivUyfjghTHZKnDcbqRD5FTjbWcA/bWcvJOfvC7JDdKvTfpSohI/zZ0gdA
- N0/O8OJ9yQT7FCsfHB7JfQO9NQ26CBRe9mUrkwe0I2MwS4c9rwbFcQdtudnngX8139jr
- fSuwlsSTbPSpSQrH3VFxfKF2TBZvssjlyebO8ko6Ax/bRI7zxzkBglVjjS0WJLYS694f
- fyKg==
-X-Gm-Message-State: AOJu0YyKguKK6iHkFhocc9hhChDul5Eevke+tyfplELWQaeSFYMc5wGP
- 4teG/7JZt2neAAEdrI2mHhlv/d+FgRzDjTehoU4mutTy0PsEMtmyu3OLwADDr40=
-X-Google-Smtp-Source: AGHT+IF+GV3LThP32it/10m6OeWMJN5p4Vx/OC2hGAYKFG1Gz1gvqMvPmbslSMdMC3dOXXusUH1eqg==
-X-Received: by 2002:a05:6808:2014:b0:3da:a16e:1759 with SMTP id
- 5614622812f47-3db558401famr2873155b6e.48.1722587699843; 
- Fri, 02 Aug 2024 01:34:59 -0700 (PDT)
+ bh=VazBiqHhZAFXJRh0kGe4jPT2Ftyb2VHZzmL3PXBSHfI=;
+ b=rhK7fPHB13gR1k29wMkH9YFr3hNl0TNwSxzSVdz2Qi9Q+xG31gcmAnK6TYqHDlkCyP
+ L5kVyOhpVObQmxQuOsNmYYdcFxDvgye3W5UIGSveLIneaaYYENErMiF0v7vGEPNQOvWC
+ i6gkyaS3rydCW0spFpFaxILhMgs1bGt0DZhL6vJd5qzKtBGKn78luM1NRQ2+ToCG/FRY
+ gEbBClCO3CnvqB3xoIV69POLfxq7Yi+8yeET+CDVPn9aL86wpF8lDJiJB0YtrX1/isIw
+ O7h3k6yG0d5olqteuPIwEQe8S46BC4JU+JXOBY9n75JWVjUPrB5r15JO5dcoDjipDZ2Z
+ FbDg==
+X-Gm-Message-State: AOJu0Yzf74JTrolIGopGT19+IYVlSGs+XH4Q+rfofvczhfzKvVIxYxhF
+ ccSQM40YafMHfESEG534ICOqlKv5RTNJeVXn0YHYJfjcddl5Bwf4FaAzGZ4UkgE=
+X-Google-Smtp-Source: AGHT+IEuwSBw4WAiH2ew67G6Hy7fTG3vHUSaj4p4IDz7a4FNNAT+dcsck7En9c8bCJMVZDCp3hyXmw==
+X-Received: by 2002:a05:6870:15d5:b0:263:3b45:b7dd with SMTP id
+ 586e51a60fabf-26891a7f2eemr3155497fac.1.1722587687176; 
+ Fri, 02 Aug 2024 01:34:47 -0700 (PDT)
 Received: from localhost.localdomain ([203.87.101.91])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7106ec06a25sm951673b3a.33.2024.08.02.01.34.57
+ d2e1a72fcca58-7106ec06a25sm951673b3a.33.2024.08.02.01.34.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Aug 2024 01:34:59 -0700 (PDT)
+ Fri, 02 Aug 2024 01:34:46 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Mark Corbin <mark.corbin@embecsom.com>,
- Ajeet Singh <itachis@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>,
- Kyle Evans <kevans@FreeBSD.org>
-Subject: [PATCH 10/18] bsd-user: Add RISC-V thread setup and initialization
- support
-Date: Fri,  2 Aug 2024 18:34:15 +1000
-Message-Id: <20240802083423.142365-11-itachis@FreeBSD.org>
+ Ajeet Singh <itachis@FreeBSD.org>
+Subject: [PATCH 05/18] bsd-user: Add prototype for RISC-V TLS register setup
+Date: Fri,  2 Aug 2024 18:34:10 +1000
+Message-Id: <20240802083423.142365-6-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240802083423.142365-1-itachis@FreeBSD.org>
 References: <20240802083423.142365-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
- envelope-from=itachis6234@gmail.com; helo=mail-oi1-x236.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::30;
+ envelope-from=itachis6234@gmail.com; helo=mail-oa1-x30.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,75 +98,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Corbin <mark.corbin@embecsom.com>
 
-Implemented functions for setting up and initializing threads in the
-RISC-V architecture.
-The 'target_thread_set_upcall' function sets up the stack pointer,
-program counter, and function argument for new threads.
-The 'target_thread_init' function initializes thread registers based on
-the provided image information.
+Included the prototype for the 'target_cpu_set_tls' function in the
+'target_arch.h' header file. This function is responsible for setting
+the Thread Local Storage (TLS) register for RISC-V architecture.
 
 Signed-off-by: Mark Corbin <mark.corbin@embecsom.com>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-Co-authored-by: Jessica Clarke <jrtc27@jrtc27.com>
-Co-authored-by: Kyle Evans <kevans@FreeBSD.org>
 ---
- bsd-user/riscv/target_arch_thread.h | 47 +++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
- create mode 100644 bsd-user/riscv/target_arch_thread.h
+ bsd-user/riscv/target_arch.h | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+ create mode 100644 bsd-user/riscv/target_arch.h
 
-diff --git a/bsd-user/riscv/target_arch_thread.h b/bsd-user/riscv/target_arch_thread.h
+diff --git a/bsd-user/riscv/target_arch.h b/bsd-user/riscv/target_arch.h
 new file mode 100644
-index 0000000000..faabb9fb45
+index 0000000000..26ce07f343
 --- /dev/null
-+++ b/bsd-user/riscv/target_arch_thread.h
-@@ -0,0 +1,47 @@
++++ b/bsd-user/riscv/target_arch.h
+@@ -0,0 +1,27 @@
 +/*
-+ *  RISC-V thread support
++ * RISC-V specific prototypes
 + *
-+ *  Copyright (c) 2019 Mark Corbin
++ * Copyright (c) 2019 Mark Corbin <mark.corbin@embecsom.com>
 + *
-+ *  This program is free software; you can redistribute it and/or modify
-+ *  it under the terms of the GNU General Public License as published by
-+ *  the Free Software Foundation; either version 2 of the License, or
-+ *  (at your option) any later version.
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2 of the License, or (at your option) any later version.
 + *
-+ *  This program is distributed in the hope that it will be useful,
-+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ *  GNU General Public License for more details.
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
 + *
-+ *  You should have received a copy of the GNU General Public License
-+ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
 + */
 +
-+#ifndef TARGET_ARCH_THREAD_H
-+#define TARGET_ARCH_THREAD_H
++#ifndef TARGET_ARCH_H
++#define TARGET_ARCH_H
 +
-+/* Compare with cpu_set_upcall() in riscv/riscv/vm_machdep.c */
-+static inline void target_thread_set_upcall(CPURISCVState *regs,
-+    abi_ulong entry, abi_ulong arg, abi_ulong stack_base,
-+    abi_ulong stack_size)
-+{
-+    abi_ulong sp;
++#include "qemu.h"
 +
-+    sp = (abi_ulong)(stack_base + stack_size) & ~(16 - 1);
++void target_cpu_set_tls(CPURISCVState *env, target_ulong newtls);
 +
-+    regs->gpr[xSP] = sp;
-+    regs->pc = entry;
-+    regs->gpr[xA0] = arg;
-+}
-+
-+/* Compare with exec_setregs() in riscv/riscv/machdep.c */
-+static inline void target_thread_init(struct target_pt_regs *regs,
-+    struct image_info *infop)
-+{
-+    regs->sepc = infop->entry;
-+    regs->regs[xRA] = infop->entry;
-+    regs->regs[10] = infop->start_stack;               /* a0 */
-+    regs->regs[xSP] = infop->start_stack & ~(16 - 1);
-+}
-+
-+#endif /* TARGET_ARCH_THREAD_H */
++#endif /* TARGET_ARCH_H */
 -- 
 2.34.1
 
