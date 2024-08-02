@@ -4,100 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FC8C52D71
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 05:51:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A523C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 05:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZlBX-0000f0-B1; Fri, 02 Aug 2024 01:50:39 -0400
+	id 1sZlDl-0005ic-FA; Fri, 02 Aug 2024 01:52:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <k831.kim@samsung.com>)
- id 1sZkhE-0006NI-16
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 01:19:20 -0400
-Received: from mailout3.samsung.com ([203.254.224.33])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <k831.kim@samsung.com>)
- id 1sZkhA-0006x7-07
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 01:19:19 -0400
-Received: from epcas2p2.samsung.com (unknown [182.195.41.54])
- by mailout3.samsung.com (KnoxPortal) with ESMTP id
- 20240802051904epoutp0384a7913f7b42cbe0aff025a78d0da0c1~n0bIAEKN53074930749epoutp03n
- for <qemu-devel@nongnu.org>; Fri,  2 Aug 2024 05:19:04 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
- 20240802051904epoutp0384a7913f7b42cbe0aff025a78d0da0c1~n0bIAEKN53074930749epoutp03n
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1722575944;
- bh=Gb8B3TXn+xo9h4l6vSboE3RdLHUd/nPBab6r1NkFaV0=;
- h=Subject:Reply-To:From:To:CC:Date:References:From;
- b=m3ZDQVrdET3eZ7s5g4hx8bVYLCD6TElEAP5DhZR+2WxT4nqHAGQnXedtutsFqOOz3
- JT+8P6lSyoimg9oAYRpzs+1Dj+C4VGVbQon+YjXUh+hhi/AEZWht6HckgYJqtiVvde
- N81lC3Il44qndvw+NA7ABw7eLapMKqg5eX40QZJ4=
-Received: from epsnrtp1.localdomain (unknown [182.195.42.162]) by
- epcas2p4.samsung.com (KnoxPortal) with ESMTP id
- 20240802051904epcas2p4657d6102cf1a37cd71457662ddb530f2~n0bHQ8-ip0256902569epcas2p4F;
- Fri,  2 Aug 2024 05:19:04 +0000 (GMT)
-Received: from epsmges2p2.samsung.com (unknown [182.195.36.99]) by
- epsnrtp1.localdomain (Postfix) with ESMTP id 4WZvJR2Dd9z4x9QB; Fri,  2 Aug
- 2024 05:19:03 +0000 (GMT)
-X-AuditID: b6c32a46-4b7fa70000002752-d3-66ac6c471356
-Received: from epcas2p1.samsung.com ( [182.195.41.53]) by
- epsmges2p2.samsung.com (Symantec Messaging Gateway) with SMTP id
- B5.31.10066.74C6CA66; Fri,  2 Aug 2024 14:19:03 +0900 (KST)
-Mime-Version: 1.0
-Subject: [PATCH] hw/ufs: add basic info of query response upiu
-From: Kyoungrul Kim <k831.kim@samsung.com>
-To: Jeuk Kim <jeuk20.kim@samsung.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Kyoungrul Kim
- <k831.kim@samsung.com>, Minwoo Im <minwoo.im@samsung.com>, SSDR Gost Dev
- <gost.dev@samsung.com>
-X-Priority: 3
-X-Content-Kind-Code: NORMAL
-X-CPGS-Detection: blocking_info_exchange
-X-Drm-Type: N,general
-X-Msg-Generator: Mail
-X-Msg-Type: PERSONAL
-X-Reply-Demand: N
-Message-ID: <20240802051902epcms2p319bc095a15eaef8de4e6955f6718371d@epcms2p3>
-Date: Fri, 02 Aug 2024 14:19:02 +0900
-X-CMS-MailID: 20240802051902epcms2p319bc095a15eaef8de4e6955f6718371d
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: AUTO_CONFIDENTIAL
-CMS-TYPE: 102P
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrHKsWRmVeSWpSXmKPExsWy7bCmqa57zpo0gz1v+SxuHtjJZHF/6zVG
- iymbvjJaPDt9gNnieO8OFgdWjyfXNjN59G1ZxRjAFJVtk5GamJJapJCal5yfkpmXbqvkHRzv
- HG9qZmCoa2hpYa6kkJeYm2qr5OIToOuWmQO0TkmhLDGnFCgUkFhcrKRvZ1OUX1qSqpCRX1xi
- q5RakJJTYF6gV5yYW1yal66Xl1piZWhgYGQKVJiQndH84B5zwR7hio5j31kaGB/xdzFyckgI
- mEi83fiMpYuRi0NIYAejxKznraxdjBwcvAKCEn93CIPUCAvYScx+/psVxBYSkJO4Pr+bFSKu
- I9Hd/IEZxGYT0JLYeHwjG4gtIqAq8WrxJrCZzALLGCU2zT3LDrGMV2JG+1MWCFtaYvvyrYwQ
- tobEj2W9zBC2qMTN1W/ZYez3x+ZD1YhItN47C1UjKPHg526ouKTEjGNtUPFqiauNu8EWSwh0
- MEq0tD5khUiYS6xcfQmsgVfAV+L2j7dgcRagS+ed2gBV4yKx+dZrMJtZQF5i+9s5zKCAYBbQ
- lFi/Sx/ElBBQljhyiwWigk+i4/BfuLd2zHvCBGErSbRvuwo1UULi2cQLzBCtHhKHX0VAgjBQ
- 4v/H2YwTGBVmIQJ6FpK1sxDWLmBkXsUollpQnJueWmxUYASP2+T83E2M4ISn5baDccrbD3qH
- GJk4GA8xSnAwK4nwCp1cmSbEm5JYWZValB9fVJqTWnyI0RTo4YnMUqLJ+cCUm1cSb2hiaWBi
- ZmZobmRqYK4kznuvdW6KkEB6YklqdmpqQWoRTB8TB6dUA9PORPlbC59Uxvc133rozW6s2y+z
- zYvlU5y7iVpYo4XK3l1fG3kX3OB6vpep+5yBSlF6j4joy2tSnznmbVmQn9GRtrPGvez252tH
- /i/J4HxdOTm2iaPLbqKxYtC1pIyP8rfkU9NseqY2663aceVdndGVaxzNa9dPODlXMO/+0pl/
- q5Zez/4XtVvj6e7E64Jcof1HSjuXtVTaHHPjnHuvXVH/+vY3TVfaP29aJ2AfIX2H4cjXJO/V
- 0ppaG8OnyLbtz6258GuBUbxg46FYxbMveXg7Ozue+jtKyu24+4N7Q8zZJ1PelUn0bnOyebNS
- PrlhDUexXW+Z9MajMmYXTTwt25yW7bufvyUg49XPnFv9vEosxRmJhlrMRcWJABtE9VoBBAAA
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20240802051902epcms2p319bc095a15eaef8de4e6955f6718371d
-References: <CGME20240802051902epcms2p319bc095a15eaef8de4e6955f6718371d@epcms2p3>
-Received-SPF: pass client-ip=203.254.224.33; envelope-from=k831.kim@samsung.com;
- helo=mailout3.samsung.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sZlDj-0005he-Vp
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 01:52:55 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sZlDi-0004zO-9B
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 01:52:55 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1fc65329979so66821605ad.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 22:52:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722577973; x=1723182773; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bY7BVRfBqy6iYMMzmN5KLGNncvw44+7/dKhAArB4df0=;
+ b=LSl2scN1RQEaSQvo9yUm5pKLQtBJXFUEWQ4/z5jBXrhY0setBp5J95K0LEgn4Gp3Bu
+ V0UgnAOkz6RFA2i269aLJAoQWtDqyQgaFvkqeqemffnIj8WFw4wwIGiIZvyoFpx1LqOZ
+ gNfL9VWVlJQecW5VrGh5vNQDxRJHvB/LOenwjDS6BkYMVbbpFKTIWkB4F2NjmVvRmTyY
+ FiKSi6SMn/dAwaJQfq/wV8wx6H2GdeLUxIQ3LDuX7lDhQOT93hzSqD3dviGf/tdauiIa
+ PiEvIpK8zRguRttlOjewM+3vouy8hd56MyAFAe68ZRcIDKeV3PLnS8k/4Ye0sqFnxKM+
+ vhIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722577973; x=1723182773;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=bY7BVRfBqy6iYMMzmN5KLGNncvw44+7/dKhAArB4df0=;
+ b=arifbh9Kg5PnZ3lH37FV9JfbWa2ovbCVcWbJPhKKS8LwHICvP6ZB4VTlp2FNcXmBOp
+ TeZI2G5PPWGUGCCrD3NejEGp9FsYiNK1p4rKXUNT3NQ+qin1mGhCcy4/sXEsLiQgW9UF
+ oWsBKTQkJ6nw6F8sQZ1qJqcXlcFsdJX5Njoc3qVcD43baib6Zam1jH9+bAL8poQQjWiU
+ Q7n+gfpe2jdBvGZSB4nsYkyn/YokgxKZXyzlVQRJfwx0XLhBvTIaew8D5dbeBYGpUeIG
+ N0q50AVINRC7RIDYI4N1JNVEt38Vhign8bG9vkcMBwyo/1s8k+hLBNX4F6PCws77NrI7
+ uN3w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU326doPDlxcO6I2bhp+Sgsjyd59jOTDjn6rDfBVpyCkD4BAlqVtNvP1z6EeddKEpNmtRh88l3Ebo1pAHq805ezSWNx95s=
+X-Gm-Message-State: AOJu0YxRneh4XTz4BLrZW4xvsLTfKf/x6p97qQ8EG09Jb3nRMMYSExkT
+ 3+B6fMSXsRenhfqi5dM8BBYWPbAKMDhWdr3X6jxUH/MmIBfyo8YlQcKIbQMZ0l8=
+X-Google-Smtp-Source: AGHT+IGENa6GmRyUU9QT6ZvD2PgZXOke1fAUS8usczqiNS/q43dZDJ2L/KAHNJtd/XB7ecmoPbPszA==
+X-Received: by 2002:a17:902:da82:b0:1fd:791d:1437 with SMTP id
+ d9443c01a7336-1ff5722da46mr34681355ad.6.1722577972572; 
+ Thu, 01 Aug 2024 22:52:52 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1ff592b659asm8509315ad.301.2024.08.01.22.52.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 01 Aug 2024 22:52:52 -0700 (PDT)
+Message-ID: <05d5a772-a7b9-4bfd-8ca0-f85dcf2d1505@linaro.org>
+Date: Fri, 2 Aug 2024 15:52:46 +1000
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/3] target/riscv: Relax fld alignment requirement
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com
+References: <20240802031612.604-1-zhiwei_liu@linux.alibaba.com>
+ <20240802031612.604-4-zhiwei_liu@linux.alibaba.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240802031612.604-4-zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 02 Aug 2024 01:50:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,70 +96,66 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: k831.kim@samsung.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Modify to fill the opcode, idn, index, selector information of
-all Query Response UPIU. because attr and flag operation of query
-response upiu need these information too.
+On 8/2/24 13:16, LIU Zhiwei wrote:
+> According to the risc-v specification:
+> "FLD and FSD are only guaranteed to execute atomically if the effective
+> address is naturally aligned and XLEN≥64."
+> 
+> We currently implement fld as MO_ATOM_IFALIGN when XLEN < 64, which does
+> not violate the rules. But it will hide some problems. So relax it to
+> MO_ATOM_NONE.
+> 
+> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+> ---
+>   target/riscv/insn_trans/trans_rvd.c.inc | 26 ++++++++++++++++++-------
+>   1 file changed, 19 insertions(+), 7 deletions(-)
+> 
+> diff --git a/target/riscv/insn_trans/trans_rvd.c.inc b/target/riscv/insn_trans/trans_rvd.c.inc
+> index dbe508c7e0..458d7db745 100644
+> --- a/target/riscv/insn_trans/trans_rvd.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvd.c.inc
+> @@ -48,12 +48,20 @@ static bool trans_fld(DisasContext *ctx, arg_fld *a)
+>       REQUIRE_EXT(ctx, RVD);
+>   
+>       /*
+> -     * Zama16b applies to loads and stores of no more than MXLEN bits defined
+> -     * in the F, D, and Q extensions. Otherwise, it falls through to default
+> -     * MO_ATOM_IFALIGN.
+> +     * FLD and FSD are only guaranteed to execute atomically if the effective
+> +     * address is naturally aligned and XLEN≥64.
+>        */
+> -    if ((ctx->misa_mxl_max >= MXL_RV64) && ctx->cfg_ptr->ext_zama16b) {
+> -        memop |= MO_ATOM_WITHIN16;
+> +    if (ctx->misa_mxl_max >= MXL_RV64) {
+> +        /*
+> +         * Zama16b applies to loads and stores of no more than MXLEN bits
+> +         * defined in the F, D, and Q extensions. Otherwise, it falls through
+> +         * to default MO_ATOM_IFALIGN.
+> +         */
+> +        if (ctx->cfg_ptr->ext_zama16b) {
+> +            memop |= MO_ATOM_WITHIN16;
+> +        }
+> +    } else {
+> +        memop |= MO_ATOM_NONE;
+>       }
 
-Signed-off-by: KyoungrulKim <k831.kim@samsung.com>
----
- hw/ufs/ufs.c | 13 +++++++++----
- hw/ufs/ufs.h |  1 +
- 2 files changed, 10 insertions(+), 4 deletions(-)
+Does this really have byte atomicity, not atomic on two aligned 32-bit loads (which would 
+be MO_ATOM_IFALIGN_PAIR).
 
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 945a0ea127..ce2c96aeea 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -851,6 +851,14 @@ void ufs_build_upiu_header(UfsRequest *req, uint8_t trans_type, uint8_t flags,
-     req->rsp_upiu.header.data_segment_length = cpu_to_be16(data_segment_length);
- }
- 
-+void ufs_build_query_response(UfsRequest *req)
-+{
-+    req->rsp_upiu.qr.opcode = req->req_upiu.qr.opcode;
-+    req->rsp_upiu.qr.idn = req->req_upiu.qr.idn;
-+    req->rsp_upiu.qr.index = req->req_upiu.qr.index;
-+    req->rsp_upiu.qr.selector = req->req_upiu.qr.selector;
-+}
-+
- static UfsReqResult ufs_exec_scsi_cmd(UfsRequest *req)
- {
-     UfsHc *u = req->hc;
-@@ -1327,10 +1335,6 @@ static QueryRespCode ufs_read_desc(UfsRequest *req)
-     if (length > req->rsp_upiu.qr.data[0]) {
-         length = req->rsp_upiu.qr.data[0];
+It's probably clearer to fill out the if-tree completely,
+rather than explain about defaults.
+
+     if (get_mxl(ctx) == MXL_RV32) {
+         memop |= MO_ATOM_NONE;
+     } else if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
+     } else {
+         memop |= MO_ATOM_IFALIGN;
      }
--    req->rsp_upiu.qr.opcode = req->req_upiu.qr.opcode;
--    req->rsp_upiu.qr.idn = req->req_upiu.qr.idn;
--    req->rsp_upiu.qr.index = req->req_upiu.qr.index;
--    req->rsp_upiu.qr.selector = req->req_upiu.qr.selector;
-     req->rsp_upiu.qr.length = cpu_to_be16(length);
- 
-     return status;
-@@ -1411,6 +1415,7 @@ static UfsReqResult ufs_exec_query_cmd(UfsRequest *req)
-     data_segment_length = be16_to_cpu(req->rsp_upiu.qr.length);
-     ufs_build_upiu_header(req, UFS_UPIU_TRANSACTION_QUERY_RSP, 0, status, 0,
-                           data_segment_length);
-+    ufs_build_query_response(req);
- 
-     if (status != UFS_QUERY_RESULT_SUCCESS) {
-         return UFS_REQUEST_FAIL;
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index 6c9382cbc4..4bcc41f53a 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -228,6 +228,7 @@ static inline bool is_wlun(uint8_t lun)
- void ufs_build_upiu_header(UfsRequest *req, uint8_t trans_type, uint8_t flags,
-                            uint8_t response, uint8_t scsi_status,
-                            uint16_t data_segment_length);
-+void ufs_build_query_response(UfsRequest *req);
- void ufs_complete_req(UfsRequest *req, UfsReqResult req_result);
- void ufs_init_wlu(UfsLu *wlu, uint8_t wlun);
- #endif /* HW_UFS_UFS_H */
--- 
-2.34.1
+
+
+r~
 
