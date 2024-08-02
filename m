@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AC35C52D70
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 05:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6810DC52D70
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 05:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZkhX-0007u4-SG; Fri, 02 Aug 2024 01:19:39 -0400
+	id 1sZkzr-00035N-7s; Fri, 02 Aug 2024 01:38:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sZkhV-0007kg-Lj
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 01:19:37 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1sZkzo-00034o-Mx
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 01:38:32 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sZkhT-00070Z-Jt
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 01:19:37 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1fd65aaac27so20889545ad.1
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 22:19:35 -0700 (PDT)
+ id 1sZkzm-0003gn-Ld
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 01:38:32 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1fc6a017abdso52784435ad.0
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 22:38:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722575974; x=1723180774;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722577109; x=1723181909;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0RYDgLdr7HQ010CTBqvRUSBgNA/oE/wNQ3ZQWiob4V0=;
- b=XtZ1g8JqBzX0FYFoyj4Nz6/zHzalerpjrEbyC1aOwTZLhYU2zK5WtTK45CC4+GjdwP
- fUg8uDhhz2Z5tfozJ/ydXRtXPfn0dfugV24IjQVWVGmhuuSXmp31vwDRApolu7HgGXMM
- tFqCttFgXQXOFnRD8dbQwu7hUW7dpI+cP/NNHfZ9ZZPj+7QsCbEx1b2VmUUFhi727ao+
- UChIIQKMM+WJOTfGUG4w6HGzHwMDwUOWDUyONuDg/4F+7uxlhN1seSi3wl8HxzAzoSU7
- s5FOj2pU/N+0kjGDM8a7qM9v/I7f/zYOX/J//kvX8y3dN+mOY24CHpj+fa6ldkPVOema
- 9shw==
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=eGaTYy3U1N6gj26D8cJ144df6qPTUusOZaXUi98TAYc=;
+ b=h8tEM6NWojcFj0H1+MOtCzmlSVA7PGuO0YAJ2KRhb1ctpnwtGEZcLPsnd0NLQv0yFB
+ hjJX24xgAM4PKEvL+GwzoRXP9WkSqSW1AwTF+9bidpKr2nr3ClxK6wUiO90PmR4VB3xS
+ guRq09NJhitY/eJ8dwjRYEmLhxrBSrP1Oj2TBmD4MhuxXvmgbHndwF7ozr34U55PATvN
+ oZjZa8MrrtxSuDTkAKhVeltVIhJfRsztoQ4qe04qnIkS5HKwctBWis/CCOHYvmq+iW4y
+ IpCvp+TlGWAib5cqc2MYIhkP5CAI6U+q3qlpQL5th5vaFJatCdB1a2ku7d/lm63pmrJS
+ 1PdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722575974; x=1723180774;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0RYDgLdr7HQ010CTBqvRUSBgNA/oE/wNQ3ZQWiob4V0=;
- b=DvWVhw9MbNrd1uhYFwDB/XusnnYdTGY247PdHuvdksCmSJMYY6zf1A3Ja3pwiLfwWp
- ixXkRL68r9S2/gYFauVnBmjH8mgaKtJQQlG377VSEi90zdbcWnL8xiRVBxnRM604rolL
- EiIxPCuXa+YhGqpkULpnxbcDurbmrTBLpcyJtwTDqWdlfwvcfa+D7Iq560K7hI4xDinF
- y+7gpruW9pknP6avqItb+pJdXRgj34USfX956uGaARMIDjeWS/LaBZxsJJmTCUMqSL+f
- rMewbTZSFscJmqEQvIVUqLMZ7HqJNppHg7lz+JYPUMvQykJnxJxvSBXSJHOTpskCH/U6
- EPKg==
-X-Gm-Message-State: AOJu0YzkC5mygTqge2utVZhIaAuOXqQ0teBoyshdFdp+C4uBOlTYEFog
- BwJCzR98ykNuWTexsFLH/3mbL/RAYt/dMvq3nfbBdnw1YdHl3QI9f5yDRZMhBMU=
-X-Google-Smtp-Source: AGHT+IEDYHPvHBQL+TTvTJTSvHIjVBsC1UHTTOyjd66+dQwL02gyRtvLyK4DiPHH7qZRais7zdk0wg==
-X-Received: by 2002:a17:902:e5cb:b0:1fb:6ea1:6e with SMTP id
- d9443c01a7336-1ff5240bc5fmr50314765ad.9.1722575973716; 
- Thu, 01 Aug 2024 22:19:33 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1722577109; x=1723181909;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=eGaTYy3U1N6gj26D8cJ144df6qPTUusOZaXUi98TAYc=;
+ b=MEbwk0o+UqUHJdZpTSx8yRJYO553bLglVzgsHfKFE4TaJixj9h0rIS9eEmC+sL6cZY
+ tS+qQP6Wk8vGzOIqAfM4IkZ0I4Ts2NFnHoBJs/93ElswjE3WKSvsFLhZK3KU2oSSoYL5
+ iHs86zn4x7Z4xiZuAuFeU9j9iD/7abnnLNGUKwtJ31UnoR4ni0fe6a4KzveVInW5vFzw
+ CE3wyIQfFDV2rA+iT9sTFHWah+50VQUzJzXtZJdc85uNifFJisIJU9T56qU5nGGPT8O9
+ t3EBpOgYx/FukuHeN7+5ZyhvhRtrM14dGPIJ8SSJxrpcsF/Iyb2Niv2ZCE78t+gdanQd
+ 09jg==
+X-Gm-Message-State: AOJu0YwROeUJ3FdugrLUxv9+GWHLcZyo+ql7aYEDXsg/bexUv7NIg6u5
+ x3RZ0nzc0MMnm6C6Nh5Dp95xAQxLDI6twVVe5cPYxsjOcnwvLm5dRz/EcPKeUAk=
+X-Google-Smtp-Source: AGHT+IFDOsyyz6BkWTABeJbiANg1s3wnYDMd3J2PGo5tIcpCkIxbXygTH2dzH4fiUA6OtBNpXtM6UQ==
+X-Received: by 2002:a17:902:e741:b0:1fa:925b:5b77 with SMTP id
+ d9443c01a7336-1ff574e2846mr30983025ad.64.1722577108902; 
+ Thu, 01 Aug 2024 22:38:28 -0700 (PDT)
 Received: from localhost ([157.82.201.15]) by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1ff58f62e7asm8094375ad.115.2024.08.01.22.19.30
+ d9443c01a7336-1ff58f53832sm8387965ad.73.2024.08.01.22.38.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Aug 2024 22:19:33 -0700 (PDT)
+ Thu, 01 Aug 2024 22:38:28 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 02 Aug 2024 14:18:01 +0900
-Subject: [PATCH for-9.2 v11 11/11] hw/qdev: Remove opts member
+Date: Fri, 02 Aug 2024 14:38:19 +0900
+Subject: [PATCH] vhost: Add VIRTIO_NET_F_RSC_EXT to vhost feature bits
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240802-reuse-v11-11-fb83bb8c19fb@daynix.com>
-References: <20240802-reuse-v11-0-fb83bb8c19fb@daynix.com>
-In-Reply-To: <20240802-reuse-v11-0-fb83bb8c19fb@daynix.com>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240802-rsc-v1-1-2b607bd2f555@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAMpwrGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDCwMj3aLiZN1US4O0JBNTo6QU8zQloMqCotS0zAqwKdGxtbUA3lLU4VU
+ AAAA=
+To: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>, 
+ Yuri Benditovich <yuri.benditovich@daynix.com>, 
+ Peter Xu <peterx@redhat.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
+ Thomas Huth <thuth@redhat.com>, eduardo@habkost.net, 
+ marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com, 
+ dmitry.fleytman@gmail.com, sriram.yagnaraman@ericsson.com, sw@weilnetz.de, 
+ yan@daynix.com, Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::631;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,78 +101,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer used.
+VIRTIO_NET_F_RSC_EXT is implemented in the rx data path, which vhost
+implements, so vhost needs to support the feature if it is ever to be
+enabled with vhost. The feature must be disabled otherwise.
 
+Fixes: 2974e916df87 ("virtio-net: support RSC v4/v6 tcp traffic for Windows HCK")
+Reported-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
- include/hw/qdev-core.h |  4 ----
- hw/core/qdev.c         |  1 -
- system/qdev-monitor.c  | 12 +++++++-----
- 3 files changed, 7 insertions(+), 10 deletions(-)
+ hw/net/vhost_net.c | 2 ++
+ net/vhost-vdpa.c   | 1 +
+ 2 files changed, 3 insertions(+)
 
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index 77bfcbdf732a..a3757e6769f8 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -237,10 +237,6 @@ struct DeviceState {
-      * @pending_deleted_expires_ms: optional timeout for deletion events
-      */
-     int64_t pending_deleted_expires_ms;
--    /**
--     * @opts: QDict of options for the device
--     */
--    QDict *opts;
-     /**
-      * @hotplugged: was device added after PHASE_MACHINE_READY?
-      */
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index f3a996f57dee..2fc84699d432 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -706,7 +706,6 @@ static void device_finalize(Object *obj)
-         dev->canonical_path = NULL;
-     }
- 
--    qobject_unref(dev->opts);
-     g_free(dev->id);
- }
- 
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 6af6ef7d667f..3551989d5153 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -624,6 +624,7 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
-     char *id;
-     DeviceState *dev = NULL;
-     BusState *bus = NULL;
-+    QDict *properties;
- 
-     driver = qdict_get_try_str(opts, "driver");
-     if (!driver) {
-@@ -705,13 +706,14 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
-     }
- 
-     /* set properties */
--    dev->opts = qdict_clone_shallow(opts);
--    qdict_del(dev->opts, "driver");
--    qdict_del(dev->opts, "bus");
--    qdict_del(dev->opts, "id");
-+    properties = qdict_clone_shallow(opts);
-+    qdict_del(properties, "driver");
-+    qdict_del(properties, "bus");
-+    qdict_del(properties, "id");
- 
--    object_set_properties_from_keyval(&dev->parent_obj, dev->opts, from_json,
-+    object_set_properties_from_keyval(&dev->parent_obj, properties, from_json,
-                                       errp);
-+    qobject_unref(properties);
-     if (*errp) {
-         goto err_del_dev;
-     }
+diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
+index a788e6937e03..dedf9ad7c242 100644
+--- a/hw/net/vhost_net.c
++++ b/hw/net/vhost_net.c
+@@ -50,6 +50,7 @@ static const int kernel_feature_bits[] = {
+     VIRTIO_F_RING_RESET,
+     VIRTIO_F_IN_ORDER,
+     VIRTIO_F_NOTIFICATION_DATA,
++    VIRTIO_NET_F_RSC_EXT,
+     VIRTIO_NET_F_HASH_REPORT,
+     VHOST_INVALID_FEATURE_BIT
+ };
+@@ -81,6 +82,7 @@ static const int user_feature_bits[] = {
+     VIRTIO_F_RING_RESET,
+     VIRTIO_F_IN_ORDER,
+     VIRTIO_NET_F_RSS,
++    VIRTIO_NET_F_RSC_EXT,
+     VIRTIO_NET_F_HASH_REPORT,
+     VIRTIO_NET_F_GUEST_USO4,
+     VIRTIO_NET_F_GUEST_USO6,
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 03457ead663a..46b02c50be8c 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -88,6 +88,7 @@ const int vdpa_feature_bits[] = {
+     VIRTIO_NET_F_MQ,
+     VIRTIO_NET_F_MRG_RXBUF,
+     VIRTIO_NET_F_MTU,
++    VIRTIO_NET_F_RSC_EXT,
+     VIRTIO_NET_F_RSS,
+     VIRTIO_NET_F_STATUS,
+     VIRTIO_RING_F_EVENT_IDX,
 
+---
+base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
+change-id: 20240802-rsc-e90fb452bd7f
+
+Best regards,
 -- 
-2.45.2
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
