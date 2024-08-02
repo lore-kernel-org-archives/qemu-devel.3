@@ -4,117 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7960C52D6F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 14:27:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EA23C52D6F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 14:28:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZtF2-0002qQ-E0; Fri, 02 Aug 2024 10:26:48 -0400
+	id 1sZtG2-0005eB-Rq; Fri, 02 Aug 2024 10:27:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sZtF0-0002hR-5h; Fri, 02 Aug 2024 10:26:46 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1sZtEy-000735-Fk; Fri, 02 Aug 2024 10:26:45 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZtG1-0005TZ-FA
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 10:27:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZtFz-00078u-Tt
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 10:27:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722608867;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0AF836Ndnqh+hwBkZ5YXfF8VJZkH/V2VUoPsaRxoRbo=;
+ b=BeAGCcPPj1I2FGe234tYtT/GAw8ItBoe4jvIj0tBTORPGMDTm2NrPcKBrSWYZWgZ+JQsHn
+ iEOZ7kA2ILEgDJBTRpls9FKKJpVd8/M1Zm7c55wzXua1csVYtGXLnDdcWEhWoEqQXJyAum
+ 851Fv0KeeiU03aUeYrnZ/ALm1lSnEww=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-447-XWO4I8cYMCuIDar7bdZhBw-1; Fri,
+ 02 Aug 2024 10:27:43 -0400
+X-MC-Unique: XWO4I8cYMCuIDar7bdZhBw-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id BA01C219B0;
- Fri,  2 Aug 2024 14:26:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1722608802; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5peLPVnPJdFKgWkLmCkRk/7aqMYafpu+BVohwSAu31s=;
- b=MaMffkvPb3LVgkfZ8X+m3TZQ5i16jbkI5mlposk+A8H3xZ4qo/h5veJN3NDDcoG2/EbBjQ
- lemYjkkbRzSmLuw/yZiwlHVi84rrITIUFQHxOgDWQHGYUYCXNPmVYqHTaBWOpbpwFiTrim
- N1hF6qwaewoasenJQ1slE3tfrjOiB+A=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1722608802;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5peLPVnPJdFKgWkLmCkRk/7aqMYafpu+BVohwSAu31s=;
- b=GUNwV7gEKmEoSwN+e5pyhXw8dgSn9gJdjHfKKuaRNXNZtfYKPn8T28QPqKzvmwDCgwNf4t
- +VElzl8Prt51dqCw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=MaMffkvP;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=GUNwV7gE
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1722608802; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5peLPVnPJdFKgWkLmCkRk/7aqMYafpu+BVohwSAu31s=;
- b=MaMffkvPb3LVgkfZ8X+m3TZQ5i16jbkI5mlposk+A8H3xZ4qo/h5veJN3NDDcoG2/EbBjQ
- lemYjkkbRzSmLuw/yZiwlHVi84rrITIUFQHxOgDWQHGYUYCXNPmVYqHTaBWOpbpwFiTrim
- N1hF6qwaewoasenJQ1slE3tfrjOiB+A=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1722608802;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=5peLPVnPJdFKgWkLmCkRk/7aqMYafpu+BVohwSAu31s=;
- b=GUNwV7gEKmEoSwN+e5pyhXw8dgSn9gJdjHfKKuaRNXNZtfYKPn8T28QPqKzvmwDCgwNf4t
- +VElzl8Prt51dqCw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 24B6513999;
- Fri,  2 Aug 2024 14:26:40 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id INkBN6DsrGZ2AQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 02 Aug 2024 14:26:40 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-stable@nongnu.org,
- Jim Fehlig <jfehlig@suse.com>
-Subject: [PULL 3/3] migration/multifd: Fix multifd_send_setup cleanup when
- channel creation fails
-Date: Fri,  2 Aug 2024 11:26:33 -0300
-Message-Id: <20240802142633.19249-4-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20240802142633.19249-1-farosas@suse.de>
-References: <20240802142633.19249-1-farosas@suse.de>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 28AEC1955F3B; Fri,  2 Aug 2024 14:27:30 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E9187300018D; Fri,  2 Aug 2024 14:27:25 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id B5E1B21E668F; Fri,  2 Aug 2024 16:27:23 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  alex.williamson@redhat.com,
+ andrew@codeconstruct.com.au,  andrew@daynix.com,
+ arei.gonglei@huawei.com,  berto@igalia.com,  borntraeger@linux.ibm.com,
+ clg@kaod.org,  david@redhat.com,  den@openvz.org,  eblake@redhat.com,
+ eduardo@habkost.net,  farman@linux.ibm.com,  farosas@suse.de,
+ hreitz@redhat.com,  idryomov@gmail.com,  iii@linux.ibm.com,
+ jamin_lin@aspeedtech.com,  jasowang@redhat.com,  joel@jms.id.au,
+ jsnow@redhat.com,  kwolf@redhat.com,  leetroy@gmail.com,
+ marcandre.lureau@redhat.com,  marcel.apfelbaum@gmail.com,
+ michael.roth@amd.com,  mst@redhat.com,  mtosatti@redhat.com,
+ nsg@linux.ibm.com,  pasic@linux.ibm.com,  pbonzini@redhat.com,
+ peter.maydell@linaro.org,  peterx@redhat.com,  philmd@linaro.org,
+ pizhenwei@bytedance.com,  pl@dlhnet.de,  richard.henderson@linaro.org,
+ stefanha@redhat.com,  steven_lee@aspeedtech.com,  thuth@redhat.com,
+ vsementsov@yandex-team.ru,  wangyanan55@huawei.com,
+ yuri.benditovich@daynix.com,  zhao1.liu@intel.com,
+ qemu-block@nongnu.org,  qemu-arm@nongnu.org,  qemu-s390x@nongnu.org,
+ kvm@vger.kernel.org
+Subject: Re: [PATCH 11/18] qapi/crypto: Rename QCryptoHashAlgorithm to
+ *Algo, and drop prefix
+In-Reply-To: <ZqoIDEjiUqK2dZx4@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Wed, 31 Jul 2024 10:46:52 +0100")
+References: <20240730081032.1246748-1-armbru@redhat.com>
+ <20240730081032.1246748-12-armbru@redhat.com>
+ <Zqir1y4qyp-lwyuz@redhat.com> <8734nrgj5i.fsf@pond.sub.org>
+ <ZqoIDEjiUqK2dZx4@redhat.com>
+Date: Fri, 02 Aug 2024 16:27:23 +0200
+Message-ID: <87le1fxano.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-2.01 / 50.00];
- DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: BA01C219B0
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.124,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,109 +107,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a channel fails to create, the code currently just returns. This
-is wrong for two reasons:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-1) Channel n+1 will not get to initialize it's semaphores, leading to
-   an assert when terminate_threads tries to post to it:
+> On Tue, Jul 30, 2024 at 02:26:49PM +0200, Markus Armbruster wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > On Tue, Jul 30, 2024 at 10:10:25AM +0200, Markus Armbruster wrote:
+>> >> QAPI's 'prefix' feature can make the connection between enumeration
+>> >> type and its constants less than obvious.  It's best used with
+>> >> restraint.
+>> >>=20
+>> >> QCryptoHashAlgorithm has a 'prefix' that overrides the generated
+>> >> enumeration constants' prefix to QCRYPTO_HASH_ALG.
+>> >>=20
+>> >> We could simply drop 'prefix', but then the prefix becomes
+>> >> QCRYPTO_HASH_ALGORITHM, which is rather long.
+>> >>=20
+>> >> We could additionally rename the type to QCryptoHashAlg, but I think
+>> >> the abbreviation "alg" is less than clear.
+>> >
+>> > I would have gone with this, but it is a bit of a bike shed colouring
+>> > debate so I'm not fussed
+>>=20
+>> Either solution seems okay, so I went with my personal preference.  Do
+>> feel free to state yours and ask me to respin!
+>
+> After reviewing the patches that follow, I'd observe that picking
+> Algo has made the following patches much larger than if it had
+> stuck with Alg. Basically changing both the types & constants,
+> instead of only having to change the types.=20
 
- qemu-system-x86_64: ../util/qemu-thread-posix.c:92:
- qemu_mutex_lock_impl: Assertion `mutex->initialized' failed.
-
-2) (theoretical) If channel n-1 already started creation it will
-   defeat the purpose of the channels_created logic which is in place
-   to avoid migrate_fd_cleanup() to run while channels are still being
-   created.
-
-   This cannot really happen today because the current failure cases
-   for multifd_new_send_channel_create() are all synchronous,
-   resulting from qio_channel_file_new_path() getting a bad
-   filename. This would hit all channels equally.
-
-   But I don't want to set a trap for future people, so have all
-   channels try to create (even if failing), and only fail after the
-   channels_created semaphore has been posted.
-
-While here, remove the error_report_err call. There's one already at
-migrate_fd_cleanup later on.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: Jim Fehlig <jfehlig@suse.com>
-Fixes: b7b03eb614 ("migration/multifd: Add outgoing QIOChannelFile support")
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- migration/multifd.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
-
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 0b4cbaddfe..552f9723c8 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -1156,7 +1156,6 @@ static bool multifd_new_send_channel_create(gpointer opaque, Error **errp)
- bool multifd_send_setup(void)
- {
-     MigrationState *s = migrate_get_current();
--    Error *local_err = NULL;
-     int thread_count, ret = 0;
-     uint32_t page_count = MULTIFD_PACKET_SIZE / qemu_target_page_size();
-     bool use_packets = multifd_use_packets();
-@@ -1177,6 +1176,7 @@ bool multifd_send_setup(void)
- 
-     for (i = 0; i < thread_count; i++) {
-         MultiFDSendParams *p = &multifd_send_state->params[i];
-+        Error *local_err = NULL;
- 
-         qemu_sem_init(&p->sem, 0);
-         qemu_sem_init(&p->sem_sync, 0);
-@@ -1196,7 +1196,8 @@ bool multifd_send_setup(void)
-         p->write_flags = 0;
- 
-         if (!multifd_new_send_channel_create(p, &local_err)) {
--            return false;
-+            migrate_set_error(s, local_err);
-+            ret = -1;
-         }
-     }
- 
-@@ -1209,24 +1210,27 @@ bool multifd_send_setup(void)
-         qemu_sem_wait(&multifd_send_state->channels_created);
-     }
- 
-+    if (ret) {
-+        goto err;
-+    }
-+
-     for (i = 0; i < thread_count; i++) {
-         MultiFDSendParams *p = &multifd_send_state->params[i];
-+        Error *local_err = NULL;
- 
-         ret = multifd_send_state->ops->send_setup(p, &local_err);
-         if (ret) {
--            break;
-+            migrate_set_error(s, local_err);
-+            goto err;
-         }
-     }
- 
--    if (ret) {
--        migrate_set_error(s, local_err);
--        error_report_err(local_err);
--        migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
--                          MIGRATION_STATUS_FAILED);
--        return false;
--    }
--
-     return true;
-+
-+err:
-+    migrate_set_state(&s->state, MIGRATION_STATUS_SETUP,
-+                      MIGRATION_STATUS_FAILED);
-+    return false;
- }
- 
- bool multifd_recv(void)
--- 
-2.35.3
+Yes.  Worth the more obvious names to me, but again, feel free to ask me
+to respin for less churn.
 
 
