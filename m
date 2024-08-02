@@ -4,64 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 633FEC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 16:22:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B781AC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 16:26:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZv2R-0005uW-C9; Fri, 02 Aug 2024 12:21:55 -0400
+	id 1sZv6u-0002SY-Dd; Fri, 02 Aug 2024 12:26:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZv2P-0005s5-7z
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 12:21:53 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sZv6t-0002Rt-2H
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 12:26:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZv2M-0004pX-TV
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 12:21:52 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sZv6r-0006fJ-5S
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 12:26:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722615708;
+ s=mimecast20190719; t=1722615987;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=sNOljK0okF7uSxHuQ1zXWhuuviWxCBy/uyg6qnt6+dw=;
- b=RxdIEClSWaHYGvQn6oiAvmvw82hVpxGx+eV6tHzVIW+zvH4MMEgRsB1j7Oi/5mKu6rlZYq
- Wc/44GEOMB5vvstyTxfT6q7aLT/Zu7x7hnl4z3fFpSdocLFo0SwcxiV1MZOYBH9iTXVx/T
- y8IWyIXgHL1v4yELLtNoGL3elYrSV3A=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-299-JPBjtOM5MNWAsNrLjEvAJw-1; Fri,
- 02 Aug 2024 12:21:43 -0400
-X-MC-Unique: JPBjtOM5MNWAsNrLjEvAJw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8AFA7196E020; Fri,  2 Aug 2024 16:21:41 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.72])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B797819560AA; Fri,  2 Aug 2024 16:21:38 +0000 (UTC)
-Date: Fri, 2 Aug 2024 11:21:35 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, den@virtuozzo.com, 
- andrey.drobyshev@virtuozzo.com, kwolf@redhat.com, hreitz@redhat.com,
- berrange@redhat.com, Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-Subject: Re: [PATCH v2 1/3] nbd: CVE-XXX: Use cookie to track generation of
- nbd-server
-Message-ID: <pttia6mzcrnzq6w7o67v2xdufbhtz67kyfmms4kfidvybj4kw2@xtedyj52jfrl>
-References: <20240802014824.1906798-5-eblake@redhat.com>
- <20240802014824.1906798-6-eblake@redhat.com>
- <b91052fc-0286-4161-8a3b-10bd45c3485a@yandex-team.ru>
+ bh=WYJP2WPweH6IxZbIiJtkBYnDl1I6THBDCKGTlL4gQIg=;
+ b=IzTD0c4cJ5IKut5xgyMlg8SwXLI8dELlmXLmmZw9ogzPxtwR6mqpX0VGM1S06ZAYzyYkwL
+ y5PJ4I4ROVVeSj3A5WwcZU8IOC+AWZKrA53RXh0hi9gutXPsP/TmR1lZOFJpAYidWcyQxU
+ v0bqEFJHDEAfK6e66Tbm+vU9x0sZYPs=
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
+ [209.85.210.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-3-Nm6xgg9POf-os-QuD7M5bQ-1; Fri, 02 Aug 2024 12:26:26 -0400
+X-MC-Unique: Nm6xgg9POf-os-QuD7M5bQ-1
+Received: by mail-ot1-f72.google.com with SMTP id
+ 46e09a7af769-7093890e502so1676843a34.3
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 09:26:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722615985; x=1723220785;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WYJP2WPweH6IxZbIiJtkBYnDl1I6THBDCKGTlL4gQIg=;
+ b=Yx3wuBl8Dj/zBfmuPVqUgfLYGNrXt83BcQfgRL3pmReCVWMwu1s6y8e4tZjnyJrFDo
+ gQswJmTYMIX9gUxfGu+9gBkxNBCYUj65wbTP+B7kBa2tQB2kkR9/10t28zQdB3JrZSYh
+ VDfisO2UA2G68etDzqxGAUlG2JkNxxpfAUz5KDKXn4ab1SEX0SX1J3EJtQOnzOQK5MtB
+ 6uHxIPGcJFrtzHbdAiQu9LmsESgY1OfFy2iqp6APbay0edyeehZphK6NmqHLNzR/6fEu
+ mXGNPCQV5oGw6dPjUS1J6iBbm6ZfHSc08BQqcGp+r/dMaADSIU7RK/YZrW1IqZXd1JFl
+ s9sw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWq3uPK3Zz0wT5/Pe+mL+dT6WqEhmq0kwjk7DL49QsuWB0tcnSAe9tYWhiGHrWeeSUb300vCZnUtc6x@nongnu.org
+X-Gm-Message-State: AOJu0YxL211ztUOR/42NyEo2cF2sYwq9CkkBLTZpK6GPMvLTWYyFuS+N
+ ibEziXSiWO6MgIYXauCaJ3bW/Rc/8DNXhac/Hv1sL1+fxclz8r9v6sEwnm3UnFFblvaoD6/Ix2k
+ FgOzKZhGabk0reGDWnj5g+YlNb6E8QAZRye8iLvsLDJPTbTcT7L5U
+X-Received: by 2002:a05:6830:f81:b0:704:4987:2342 with SMTP id
+ 46e09a7af769-709b995bb2cmr2833611a34.3.1722615985614; 
+ Fri, 02 Aug 2024 09:26:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE1LnH/41L+D8cOHKMlQonebCkfoWyKDvfc4BrAcVmfOvTEb6TDuTUllCcs5ZapQnCasoj/Rw==
+X-Received: by 2002:a05:6830:f81:b0:704:4987:2342 with SMTP id
+ 46e09a7af769-709b995bb2cmr2833576a34.3.1722615985204; 
+ Fri, 02 Aug 2024 09:26:25 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6bb9c78b17fsm8438446d6.34.2024.08.02.09.26.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 02 Aug 2024 09:26:24 -0700 (PDT)
+Date: Fri, 2 Aug 2024 12:26:22 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
+ jasowang@redhat.com, sriram.yagnaraman@est.tech, sw@weilnetz.de,
+ qemu-devel@nongnu.org, yan@daynix.com,
+ Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
+Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
+Message-ID: <Zq0IrhV-DgStpJtk@x1n>
+References: <ZqfKrtQSSRVnEOGt@x1n> <ZqfQ0cGf8t2trEdl@redhat.com>
+ <ZqktXwxBWjuAgGxZ@x1n> <Zqk09BGxlpdxMBMx@redhat.com>
+ <Zqk6x2nd3Twz--75@x1n>
+ <39a8bb8b-4191-4f41-aaf7-06df24bf3280@daynix.com>
+ <ZqumIZcs1tCNTpRE@x1n>
+ <b70d09a5-554a-456b-904e-59cec5836ae8@daynix.com>
+ <Zqz1vvYqRuIAPnod@x1n>
+ <c5ea7a57-fc52-4bb7-bc4c-f3aca8da0574@daynix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <b91052fc-0286-4161-8a3b-10bd45c3485a@yandex-team.ru>
-User-Agent: NeoMutt/20240425
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+In-Reply-To: <c5ea7a57-fc52-4bb7-bc4c-f3aca8da0574@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -70,7 +98,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.124,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,86 +114,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 02, 2024 at 06:00:32PM GMT, Vladimir Sementsov-Ogievskiy wrote:
-> On 02.08.24 04:32, Eric Blake wrote:
-
-> [..]
-> 
-> > -static void nbd_blockdev_client_closed(NBDClient *client, bool ignored)
-> > +static void nbd_blockdev_client_closed(NBDClient *client, uint32_t cookie,
-> > +                                       bool ignored)
-> >   {
-> >       nbd_client_put(client);
-> > -    assert(nbd_server->connections > 0);
-> > -    nbd_server->connections--;
-> > -    nbd_update_server_watch(nbd_server);
-> > +    /* Ignore any (late) connection made under a previous server */
-> > +    if (cookie == nbd_cookie) {
-> 
-> creating a getter nbd_client_get_cookie(client), and use it instead of passing together with client, will simplify the patch a lot. [*]
-
-I may be able to avoid the cookie altogether if I can add an
-AIO_WAIT_WHILE(, nbd_server->connections > 0) after forcefully closing
-all of the client sockets (nbd_client_new _should_ progress pretty
-rapidly towards eventually calling nbd_blockdev_client_closed once the
-socket is closed) - but that still requires patch 2 to keep a list of
-open clients.
-
-> 
-> Hmm.. don't we need some atomic accessors for nbd_cookie? and for nbs_server->connections.. The function is called from client, which live in coroutine and maybe in another thread? At least client code do atomic accesses of client->refcount..
-> 
-> > +        assert(nbd_server->connections > 0);
-> > +        nbd_server->connections--;
-> > +        nbd_update_server_watch(nbd_server);
-> > +    }
-> >   }
+On Sat, Aug 03, 2024 at 12:54:51AM +0900, Akihiko Odaki wrote:
+> > > > I'm not sure if I read it right.  Perhaps you meant something more generic
+> > > > than -platform but similar?
+> > > > 
+> > > > For example, "-profile [PROFILE]" qemu cmdline, where PROFILE can be either
+> > > > "perf" or "compat", while by default to "compat"?
+> > > 
+> > > "perf" would cover 4) and "compat" will cover 1). However neither of them
+> > > will cover 2) because an enum is not enough to know about all hosts. I
+> > > presented a design that will cover 2) in:
+> > > https://lore.kernel.org/r/2da4ebcd-2058-49c3-a4ec-8e60536e5cbb@daynix.com
 > > 
+> > "-merge-platform" shouldn't be a QEMU parameter, but should be something
+> > separate.
 > 
-> [..]
-> 
-> > @@ -1621,7 +1622,7 @@ static void client_close(NBDClient *client, bool negotiated)
-> > 
-> >       /* Also tell the client, so that they release their reference.  */
-> >       if (client->close_fn) {
-> > -        client->close_fn(client, negotiated);
-> > +        client->close_fn(client, client->close_cookie, negotiated);
-> 
-> [*] passing client->close_cokkie together with client itself looks like we lack a getter for .close_cookie
+> Do you mean merging platform dumps should be done with another command? I
+> think we will want to know the QOM tree is in use when implementing
+> -merge-platform. For example, you cannot define a "platform" when e.g., you
+> don't know what netdev backend (e.g., user, vhost-net, vhost-vdpa) is
+> connected to virtio-net devices. Of course we can include those information
+> in dumps, but we don't do so for VMState.
 
-Whether the cookie be a uint32_t or the void* server object itself, it
-is opaque to the client, but the server needs to track something.
+What I was thinking is the generated platform dump shouldn't care about
+what is used as backend: it should try to probe whatever is specified in
+the qemu cmdline, and it's the user's job to make sure the exact same qemu
+cmdline is used in other hosts to dump this information.
 
+IOW, the dump will only contain the information that was based on the qemu
+cmdline.  E.g., if it doesn't include virtio device at all, and if we only
+support such dump for virtio, it should dump nothing.
 
-> 
-> >       }
-> >   }
-> > 
-> 
-> [..]
-> 
-> 
-> Hmm, instead of cookies and additional NBDConn objects in the next patch, could we simply have a list of connected NBDClient objects in NBDServer and link to NBDServer in NBDClient? (Ok we actually don't have NBDServer, but NBDServerData in qemu, and several global variables in qemu-nbd, so some refactoring is needed, to put common state to NBDServer, and add clients list to it)
-> 
-> This way, in nbd_server_free we'll just call client_close() in a loop. And in client_close we'll have nbd_server_client_detach(client->server, client), instead of client->close_fn(...). And server is freed only after all clients are closed. And client never try to detach from another server.
-> 
-> This way, we also may implement several NBD servers working simultaneously if we want.
+Then the -merge-platform will expect all dumps to look the same too,
+merging them with AND on each field.
 
-Yes, we do eventually want to get to the point of being able to open
-parallel NBD servers on different ports simultaneously, at which point
-having a client remember which server it is associated makes sense (so
-at a bare minimum, pass in a void* instead of a uint32_t to
-nbd_client_new).  And given that we can have an NBD server with more
-than one export, and with exports running in different threads (if
-multithread io is enabled), I probably also need to add missing
-locking to protect nbd_server (whether or not it stays global or we
-eventually reach the point of having parallel servers on separate
-ports).
+Said that, I actually am still not clear on how / whether it should work at
+last.  At least my previous concern (1) didn't has a good answer yet, on
+what we do when profile collisions with qemu cmdlines.  So far I actually
+still think it more straightforward that in migration we handshake on these
+capabilities if possible.
 
-Looks like I have work cut out for me before posting a v3.
+And that's why I was thinking (where I totally agree with you on this) that
+whether we should settle a short term plan first to be on the safe side
+that we start with migration always being compatible, then we figure the
+other approach.  That seems easier to me, and it's also a matter of whether
+we want to do something for 9.1, or leaving that for 9.2 for USO*.
+
+Thanks,
 
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+Peter Xu
 
 
