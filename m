@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABF1AC52D6D
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 23:58:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51DA7C52D6D
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 23:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sa29j-0001wG-FW; Fri, 02 Aug 2024 19:57:55 -0400
+	id 1sa29k-0001yZ-2r; Fri, 02 Aug 2024 19:57:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sa29a-0001Tl-LV
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sa29Z-0001TH-C9
  for qemu-devel@nongnu.org; Fri, 02 Aug 2024 19:57:46 -0400
-Received: from mail-io1-xd29.google.com ([2607:f8b0:4864:20::d29])
+Received: from mail-io1-xd34.google.com ([2607:f8b0:4864:20::d34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sa29Z-0004EO-5H
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 19:57:46 -0400
-Received: by mail-io1-xd29.google.com with SMTP id
- ca18e2360f4ac-8152f0c63c1so310173339f.1
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 16:57:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sa29X-0004As-Kg
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 19:57:44 -0400
+Received: by mail-io1-xd34.google.com with SMTP id
+ ca18e2360f4ac-81fb80d3887so213703239f.2
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 16:57:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1722643063; x=1723247863;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1722643062; x=1723247862;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i+M2MfyOC3APTOH0qT5489YkK6Lsz6CNB5NL1MMUEoY=;
- b=C/aJSUEOjiak6/wTjfAkly0xjzXO1HfzVJK6xhYJnAXxZtHpRALUAllEUO98BsvjD+
- 3x5+1rzPvZgC22dhCxY/jUjr0KQlCCnzDt37ZzDrUkbLJ2+B05UlA7KtsnR3CUtUe0L9
- f1KXrNnTjYKyTbzSd5Nj0ch4fC23ZfmOiP0+tVSo5p6ZpT613MhK5mRgiEbMcbWZvFZl
- rE9k5FtA//xFP+bc9gGvGXzeMysCdy60nuQwsNXL1cAR/BLF+Qg+OR0CT3IZBO9UOe7v
- AD5ArL3thBoQ/GF8iBlascgqNozVKvpxMMlGIiTjVKctkupWolNEMqFGKoVhicGtiZxA
- EVxA==
+ bh=+YbJS1lujiJw+GBrT/gz6au1tdNTic+L9ACEewZENu4=;
+ b=d9YXHKVkSCtdHQkUyV2Hr9rL3OtKk1HuDE8d+vRiRlSI7iN9Z7A3vUPcZRt6iOGMzF
+ VGCNxpgTR3wTPJVQ3z89CZ0Ue4q5e7s1ww0ZVoG7Wp+qR/4A8C53gl5esuDO2sCxxb3s
+ fYc8NbdS5yoNncYwcKVod+RIqUil2R0J9clO5/ZfPn+3bQ0g9H8QqSi5k+fhtlunMSib
+ 1m1TbTWVTJejwdj3Hw7NU++FbhRELMJo+HfD5NNFu6AkBPH+Nz22lUviiXw3q6SSOHwr
+ RSkyVpLpFlRTpMpUsJeIsKcF/oGT9diMfzZ1tw0eYFVO84sCcF13AOfEd/7zBdQbe5rH
+ EEiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722643063; x=1723247863;
+ d=1e100.net; s=20230601; t=1722643062; x=1723247862;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i+M2MfyOC3APTOH0qT5489YkK6Lsz6CNB5NL1MMUEoY=;
- b=TYdfH7Dep0Kh6DyTlr0TL6yBUWdfkPuPhkuKqcKRFgVK3V0bQIbol1IDH7o+qZhJPL
- OziT6Oy5lUjeNEP2hAwbfHbpgKN7+y2TIvFXd60yncRLCEWoulDFsuP/fXmfUIu1CfwT
- xkzmq4IgCt/zhd6S4bo84rt17OLHVWgMoensbkt+AuKht1xDGacnmLBnG9X0Aj4gzrVp
- D7uX49EAuCR0UTKHvTtKlAuFJ45BOB06iMp1M3qji79PSa0y9thnIMSoGYJXQ0ZT2NJO
- XW3HwF0vsKzxRk4bZTkxGVQz3gglQu04nnRcqB0yB1ebd5Kj42pWUk38yrwu3ApY4s1k
- nxBQ==
-X-Gm-Message-State: AOJu0YwcWgZxbXOSSmdqjyj14GfroobUu0y0yWnHKtHG9SpESizca04m
- NWpP3ExdawhXp/F0c9kpdOc6yyyTRzsRHtatRIvQ1bVyFzrYKf8okn4Qs7yW0Ce8sDvCb36pBVu
- EbOo=
-X-Google-Smtp-Source: AGHT+IGppSYYqBA7hedKkDI4HBy9gNIJuSyRuommAOrM1q9arH0ioYRQOjbSk/3u+KaDK4EMElyGNQ==
-X-Received: by 2002:a05:6602:2cc8:b0:81f:9826:19ff with SMTP id
- ca18e2360f4ac-81fd4374a3dmr708269339f.9.1722643063174; 
- Fri, 02 Aug 2024 16:57:43 -0700 (PDT)
+ bh=+YbJS1lujiJw+GBrT/gz6au1tdNTic+L9ACEewZENu4=;
+ b=l8rjwFSEM+GoLFG/+Ak7RT7FFuBGV6UM7w+VHETbsYcxQbHxYqdQ3wfazpydVDfDgO
+ uzzpzrq7bcBoC6++jKX70dtwA5V34g1AQKG/EI51S77epmDESXXmDY0MBZ8U401cciOJ
+ 7F7XQBaV15/8Br/t/V9yqIZGkpLtZZOUiVzdkgV01pQ0cYNAJG3gqqua/Mx7wpGeKvJ1
+ t6E8YJg9bzvEWV06n2w96PRZ1AGdoFvwDDhvOgiIFRRMeMWSthW6hZhI/2UPEMjTmXpG
+ 8BbAPPs8vWinf0yCc99m3hBPxML+clxxmCYJ7UVjE0adNDxz22LQ879DjRN1Mfh21DvV
+ 936g==
+X-Gm-Message-State: AOJu0YymtCl5QWxvvFF7BpZIlxY3tiSsUNIA50FCJPtLwV+QmELgwuWK
+ 7O/j2kR8Ph9VTnihep2Zy0lHPupCBBL7WOTtyd1gYP8dSGavWoqRDwmDpVf+WIIrsS9lfe9ku5j
+ Zsps=
+X-Google-Smtp-Source: AGHT+IHkmOSmtZ3pI8aGjUdQpwWcYxsDJX+nfQRwPEykWpmePdwc9GGimkCC7JuU1e4iMrHmpvP+Tw==
+X-Received: by 2002:a05:6602:2b8c:b0:7f9:6afc:182 with SMTP id
+ ca18e2360f4ac-81fd437a289mr747985339f.9.1722643062138; 
+ Fri, 02 Aug 2024 16:57:42 -0700 (PDT)
 Received: from dune.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4c8d69a8227sm683131173.47.2024.08.02.16.57.42
+ 8926c6da1cb9f-4c8d69a8227sm683131173.47.2024.08.02.16.57.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Aug 2024 16:57:42 -0700 (PDT)
+ Fri, 02 Aug 2024 16:57:41 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- Jessica Clarke <jrtc27@jrtc27.com>, Stacey Son <sson@FreeBSD.org>,
- Justin Hibbits <chmeeedalf@gmail.com>
-Subject: [PATCH 04/17] bsd-user: Implement cpu_copy()
-Date: Fri,  2 Aug 2024 17:56:04 -0600
-Message-ID: <20240802235617.7971-5-imp@bsdimp.com>
+ Jessica Clarke <jrtc27@jrtc27.com>
+Subject: [PATCH 03/17] bsd-user: Make cpu_model and cpu_type file scope
+Date: Fri,  2 Aug 2024 17:56:03 -0600
+Message-ID: <20240802235617.7971-4-imp@bsdimp.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240802235617.7971-1-imp@bsdimp.com>
 References: <20240802235617.7971-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::d29;
- envelope-from=imp@bsdimp.com; helo=mail-io1-xd29.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::d34;
+ envelope-from=imp@bsdimp.com; helo=mail-io1-xd34.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -94,62 +93,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stacey Son <sson@FreeBSD.org>
+linux-user already does this since 2278b93941d4. That same commit just
+added them with main() scope to bsd-user. We need the cpu_type, like
+linux-user does, to create new CPUs outside of main to support
+threading. Move both cpu_model and cpu_type to mirror linux-user/main.c.
 
-Catch up with 30ba0ee52d15 and implement cpu_copy(). It's needed for
-threading. Stacey's original code, with bug fixes from Jessica, Justin
-and myself.
-
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Signed-off-by: Jessica Clarke <jrtc27@jrtc27.com>
-Signed-off-by: Justin Hibbits <chmeeedalf@gmail.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/main.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ bsd-user/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 1533fd51168..9ad31bd1efe 100644
+index 4d29e13a8f5..1533fd51168 100644
 --- a/bsd-user/main.c
 +++ b/bsd-user/main.c
-@@ -224,6 +224,37 @@ void init_task_state(TaskState *ts)
-     };
- }
- 
-+CPUArchState *cpu_copy(CPUArchState *env)
-+{
-+    CPUState *cpu = env_cpu(env);
-+    CPUState *new_cpu = cpu_create(cpu_type);
-+    CPUArchState *new_env = cpu_env(new_cpu);
-+    CPUBreakpoint *bp;
-+    CPUWatchpoint *wp;
-+
-+    /* Reset non arch specific state */
-+    cpu_reset(new_cpu);
-+
-+    new_cpu->tcg_cflags = cpu->tcg_cflags;
-+    memcpy(new_env, env, sizeof(CPUArchState));
-+
-+    /*
-+     * Clone all break/watchpoints.
-+     * Note: Once we support ptrace with hw-debug register access, make sure
-+     * BP_CPU break/watchpoints are handled correctly on clone.
-+     */
-+    QTAILQ_INIT(&cpu->breakpoints);
-+    QTAILQ_INIT(&cpu->watchpoints);
-+    QTAILQ_FOREACH(bp, &cpu->breakpoints, entry) {
-+        cpu_breakpoint_insert(new_cpu, bp->pc, bp->flags, NULL);
-+    }
-+    QTAILQ_FOREACH(wp, &cpu->watchpoints, entry) {
-+        cpu_watchpoint_insert(new_cpu, wp->vaddr, wp->len, wp->flags, NULL);
-+    }
-+
-+    return new_env;
-+}
-+
- void gemu_log(const char *fmt, ...)
+@@ -62,6 +62,8 @@ intptr_t qemu_host_page_mask;
+ static bool opt_one_insn_per_tb;
+ uintptr_t guest_base;
+ bool have_guest_base;
++static const char *cpu_model;
++static const char *cpu_type;
+ /*
+  * When running 32-on-64 we should make sure we can fit all of the possible
+  * guest address space into a contiguous chunk of virtual host memory.
+@@ -251,8 +253,6 @@ adjust_ssize(void)
+ int main(int argc, char **argv)
  {
-     va_list ap;
+     const char *filename;
+-    const char *cpu_model;
+-    const char *cpu_type;
+     const char *log_file = NULL;
+     const char *log_mask = NULL;
+     const char *seed_optarg = NULL;
 -- 
 2.45.1
 
