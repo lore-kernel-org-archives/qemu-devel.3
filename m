@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FE21C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 13:26:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11391C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 13:27:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZsHk-00056E-QE; Fri, 02 Aug 2024 09:25:32 -0400
+	id 1sZsJU-0004Ja-Q0; Fri, 02 Aug 2024 09:27:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZsHj-0004zn-5Q
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:25:32 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sZsJS-0004DM-QK
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:27:18 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZsHh-0007dg-Fo
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:25:30 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4280c55e488so19402955e9.0
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 06:25:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sZsJQ-0007r0-OG
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:27:18 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-70d199fb3dfso6858181b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 06:27:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722605128; x=1723209928; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722605235; x=1723210035; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Q3mIPqJh8BOz0AuzS7FzeKZvEUsY6afgM71FCBzle2g=;
- b=eWkAtDGwlwCqtID8soJ2TKxFc7z7wgrWExRV2s+5gRumUv7FZBQfluac/av9T+OV+J
- oWaSrn6dh5e8oQENbl2ZtnuzJNs1VYKDTr8e/AJD9NGeK4oKeNsvd7yUfM2ig1Hqx9VZ
- fhsv9lggadCj7UBOXw9AqSd1+fRR0ARNnIb1iRIFn5ZEIXA6m3Q/A+jkpdPtATp5ThFT
- R9gmHieJDcjLucNvHPY/LR0/6+QNAP4WTIAvYUkSmsVuxoCBN4eklgwle579Dig+Pn++
- 8xLMmpvrd955PDBzVtbIta70KduOTRFGLCHtvxGYeSvm2/GF6WhckwKabVZQKVSlyNQY
- 9uVQ==
+ bh=H99bqgf0CxSuHb8b7TGVs7lmWj6sT28gHoNgJP1HL5g=;
+ b=g6n+5Ti/DU0RmQc6dWwhtpt4d8io0jzv3geEMkkGLE6B0GaMO0iPif9vGVbUEViAE2
+ AY71jkThjD9CP4coA7qcUBwlB3sKcUpYKgynFXuSe6g9AcP9+0VxpKyxCgzxgJYNUhoF
+ bixKv6pRvWwvPPERBTRH3bX98eZF0kfGAEcdnYkdPKappgy6xbe7ZXSRR16c2jTbANAD
+ 5kAqFDYRSDddQETll0Hszcjj9FJTKA6zFPt2NFoC/Uhhaj2QK5PHZ6QZShOm3OCYb84H
+ rODnnIujWy+/v/0jngAqRa0btbTYCHRBYLxNlx+qiq04IR9vvtQpUG+J3Eox1elWK4dD
+ 8O4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722605128; x=1723209928;
+ d=1e100.net; s=20230601; t=1722605235; x=1723210035;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Q3mIPqJh8BOz0AuzS7FzeKZvEUsY6afgM71FCBzle2g=;
- b=HRcMB058WbU0zMr0KKV7kf5FFBWe/hrHcWMPwmmQ+Po2qf8snOxqlJ67eHkjNmVaHt
- cyYUY+VBllzCiB6fG4ABPKUaGG9URmPJtM9HL9IHMrcmoWkHOJhLktyh9+NFE3FFgN1s
- XbTV6ckefH1oE1HXop0xuW1kAeBWJEUmPDrIy7aEyrs07Q7HydEAW1flvZTs0Dytv156
- fhHDXjd9R+mk/HEYgWGaozodO2tKX/xH34NUbDzm/l78aWTXu3PkugKV+42sAVPvmpQF
- nFMtzW5KfaXXMXSp1MeWEc+ewtYDOWhCOefnj4OgxbpH2uF8uBuGQbj3shRTQ0F1+1yb
- mXBA==
-X-Gm-Message-State: AOJu0YxbPkXyYlavjkeSlnM0G5BxHzsxai+fCCA6AT/NjyBb1V57Utrl
- Qa0Oq2buzgaEXGNj07uhAN4url29QTmjZDreK9eOjkntkJUWNqwzpMApTRa4T8M=
-X-Google-Smtp-Source: AGHT+IEeQE/LmQA7X/BF4qt42x67LAGYPdaHZwc4+81SWCNiSTSHiYEXmgjmUpMlojoBEKNgjHrvOQ==
-X-Received: by 2002:a05:600c:4507:b0:426:5fa7:b495 with SMTP id
- 5b1f17b1804b1-428e69f6162mr25481375e9.15.1722605127565; 
- Fri, 02 Aug 2024 06:25:27 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.211.94])
+ bh=H99bqgf0CxSuHb8b7TGVs7lmWj6sT28gHoNgJP1HL5g=;
+ b=WMwmzBDk4+HexVFzH+HourVcEJFYuj6PwC19r2jCAVMq5ZHlY1JxBlhkTTzG2GY85x
+ ihCbtbrBjCBYrxRhtQaczpDAonazYkFH+6qq0HKJrC49KwD4cK2uOUFGuIiT9fURrhpv
+ HXzIEfY3HCxDq3NqY0y3fTwCQka61MabVdCKaSAIAljNG49RaFOUzQLY0kWaYGZpuRoR
+ m75wtZtfw4ayYq7MRYH4G0zDawSd532yuQA4IiFveIV0h/jq6aODf+ZzvbTKix1mNtfb
+ /qa19tsJlrZXR+rs3ak4nPFZK+auVTF6ny9yfapBtLI9ID1PlXxM8BoSR1RJkyIRvlJ7
+ FX6w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXCX/SEY/dd/lAk+c/li+w/3xrd5jVoqaTS3T6VY2GGCZRe3z6fFZ59pJ/iOtI31MnNZ6LFnebtpqWmH7X98T09t4Q+Vzw=
+X-Gm-Message-State: AOJu0YwTxHM9pwMyofJwQG19xGldYjfGbusLyDQ7mrbZ7x4EhCS2xovt
+ ae4gsP7yntIFq81frF/RzYf+SBmU+HT+rhAqiIQ3ySoDpQOYTYPoIlJpqytLITPghAHD1Y4lVBd
+ sEILM0Q==
+X-Google-Smtp-Source: AGHT+IHqXH2azE4ZvbVJBumBkLX7hmIBA/PvvwhBdsQtdb5DNvEGz7izQH1tQq4fUvBDGMzcwfQ6gw==
+X-Received: by 2002:a05:6a21:478b:b0:1c4:9cf9:195b with SMTP id
+ adf61e73a8af0-1c69968cc51mr3915618637.48.1722605234799; 
+ Fri, 02 Aug 2024 06:27:14 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4282b8ad475sm94878965e9.13.2024.08.02.06.25.25
+ d9443c01a7336-1ff590600e4sm16874995ad.144.2024.08.02.06.27.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 Aug 2024 06:25:27 -0700 (PDT)
-Message-ID: <8756361d-fc46-4a04-bcba-9200d739c404@linaro.org>
-Date: Fri, 2 Aug 2024 15:25:24 +0200
+ Fri, 02 Aug 2024 06:27:14 -0700 (PDT)
+Message-ID: <5a695971-ef34-4595-a247-322149be221c@linaro.org>
+Date: Fri, 2 Aug 2024 23:27:09 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 13/24] tests/functional: Convert the s390x avocado
- tests into standalone tests
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-s390x <qemu-s390x@nongnu.org>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>
-References: <20240730170347.4103919-1-berrange@redhat.com>
- <20240730170347.4103919-14-berrange@redhat.com>
- <0f30e83a-2048-4dcb-ba41-47920c62e1e1@linaro.org>
- <ZqvIHb15uzWZw6Qt@redhat.com>
+Subject: Re: [PATCH 09/18] bsd-user: Implement RISC-V sysarch system call
+ emulation
+To: Ajeet Singh <itachis6234@gmail.com>, qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>, Mark Corbin <mark.corbin@embecsom.com>,
+ Ajeet Singh <itachis@FreeBSD.org>
+References: <20240802083423.142365-1-itachis@FreeBSD.org>
+ <20240802083423.142365-10-itachis@FreeBSD.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ZqvIHb15uzWZw6Qt@redhat.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240802083423.142365-10-itachis@FreeBSD.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,44 +101,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/24 19:38, Daniel P. Berrangé wrote:
-> On Thu, Aug 01, 2024 at 07:11:01PM +0200, Philippe Mathieu-Daudé wrote:
->> On 30/7/24 19:03, Daniel P. Berrangé wrote:
->>> From: Thomas Huth <thuth@redhat.com>
->>>
->>> These tests use archive.lzma_uncompress() from the Avocado utils,
->>> so provide a small helper function for this, based on the
->>> standard lzma module from Python instead.
->>>
->>> And while we're at it, replace the MD5 hashes in the topology test
->>> with proper SHA256 hashes, since MD5 should not be used anymore
->>> nowadays.
->>>
->>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>> ---
->>>    MAINTAINERS                                   |  4 +-
->>>    tests/functional/meson.build                  |  6 ++
->>>    tests/functional/qemu_test/utils.py           | 14 +++
->>>    .../test_s390x_ccw_virtio.py}                 | 79 ++++++++---------
->>>    .../test_s390x_topology.py}                   | 86 ++++++++-----------
->>>    5 files changed, 94 insertions(+), 95 deletions(-)
->>>    rename tests/{avocado/machine_s390_ccw_virtio.py => functional/test_s390x_ccw_virtio.py} (85%)
->>>    mode change 100644 => 100755
->>>    rename tests/{avocado/s390_topology.py => functional/test_s390x_topology.py} (88%)
->>>    mode change 100644 => 100755
->>
->> Conversion LGTM, so:
->>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>
->> Now while testing I'm getting errors, but maybe pre-existing...
+On 8/2/24 18:34, Ajeet Singh wrote:
+> From: Mark Corbin <mark.corbin@embecsom.com>
 > 
-> What host arch / OS are you running tests from ?
+> Added the 'do_freebsd_arch_sysarch' function to emulate the 'sysarch'
+> system call for the RISC-V architecture.
+> Currently, this function returns '-TARGET_EOPNOTSUPP' to indicate that
+> the operation is not supported.
 > 
-> I got through the full set of testing on Fedora x86_64, so
-> wondering if something differs.
+> Signed-off-by: Mark Corbin <mark.corbin@embecsom.com>
+> Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+> ---
+>   bsd-user/riscv/target_arch_sysarch.h | 41 ++++++++++++++++++++++++++++
+>   1 file changed, 41 insertions(+)
+>   create mode 100644 bsd-user/riscv/target_arch_sysarch.h
 
-Linux s390x but I'm not in the KVM group, I need to find
-another place to run these (or ask Alex :P).
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
+r~
 
