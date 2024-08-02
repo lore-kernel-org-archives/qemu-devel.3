@@ -4,88 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5D15C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 09:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31AC0C3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 10:03:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZovQ-0007DE-1l; Fri, 02 Aug 2024 05:50:22 -0400
+	id 1sZp7A-0007Ah-UI; Fri, 02 Aug 2024 06:02:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZovN-00075L-LE
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 05:50:14 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZovM-0001WI-4R
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 05:50:13 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1fc5549788eso63654135ad.1
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 02:50:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722592211; x=1723197011; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iL8zIXOgW+JeIC4273pCkQw1ENrYCzK7uuoMXuKFmLA=;
- b=DRkdSo+ZAveQ1o+ZLErpXNs/SDZD5zvB4VRFZdRaT/Rgn/qEPL2+6T+GsuvFyHzxvB
- z3aBXLHEWQ4Ibkzvk3L/6SDjzJKt76+2xDmdoaD2f67dFEyXQrTpVF5EXpYe2Lh4Qt1y
- 5XB+2o2Qt4f+sD6qM6j0pIa1wwfWvned8WGeTG3qnKXAD5OHH2TGwPIIk5sdXx8cxKGT
- 5/unQLKFY9v0MkjGMIGOfNHQ89KcxuLiHJpnaxTRnefFHfKCNwTCu+f7It0aNwpgBm15
- V9HYZeR/46QPnQI0ghR5e5W6kTuPcnpMEasyaGbl4NKs4e+2Sj+RwyJnCwwDAYwbcs2h
- AbqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722592211; x=1723197011;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iL8zIXOgW+JeIC4273pCkQw1ENrYCzK7uuoMXuKFmLA=;
- b=Ciyffd70ZIwyULOYJNXi71JGVsmX7KqFWSd0kDkOBpm0p9aGXgR42IZdHhzesUhIJ5
- wDgXToe6nsGNb9EpYfTlyLbSZLVohatLtz99ZHLP3uvauS7PJQni0ktSI8rBOkr3p0HX
- T++BRJglGJqsOBQDj4dMIHpPNnRWSxHNBQ0AawTb6ee4CQCEFu7QZAXXpuV7yWJ6xgmt
- Lvk/Jt/HWb3OwNUjzu3sMMO71X7SRW2dn5Pn2w+8apjmXT/Btjt/4ZkNmzWLYixKTvFp
- 1Xivv+Mif4kaF+eS7FuM709phWr/kzXDH6kqIXu8mSWEmUNMCxGTsxi5R5JlMV6Kx+87
- 0Xlg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWlppPZ8ymAoCddo4Vb+kmzvH4PhH4FMuLGrEsHvkdnjElrZOwc4kZLdib5iltGiHZlgBaLaE5QLD8m1KZE1Y71waCyNb8=
-X-Gm-Message-State: AOJu0YxXHQ3iMzntql2coDjz12DK3FTfxt3JN/iz2Se7sVc7JqiVzMIb
- RpSZwTjnCaZQfYXoPPKDvDRmEYop9VGOSsmelOoxn+hojR2GxtcR6NRzna48aqr9S+PBEls4hKl
- Pwqg85w==
-X-Google-Smtp-Source: AGHT+IFkz1K+asSWPBEDXz/dhX2JtciaIegI6JNvPl15cM4HRmcLvctd3TtAKbP0IcxZc24HBlw1zg==
-X-Received: by 2002:a05:6a21:789c:b0:1c4:a67d:3b24 with SMTP id
- adf61e73a8af0-1c6995cbc34mr4213753637.25.1722592210507; 
- Fri, 02 Aug 2024 02:50:10 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff5905c86esm13112625ad.168.2024.08.02.02.50.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 Aug 2024 02:50:09 -0700 (PDT)
-Message-ID: <403570be-bbea-4165-b0c4-b7c5dfdf1a80@linaro.org>
-Date: Fri, 2 Aug 2024 19:50:04 +1000
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sZp78-00078i-Jn
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 06:02:22 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1sZp76-0004ct-HU
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 06:02:22 -0400
+Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4729wYtD005048;
+ Fri, 2 Aug 2024 10:02:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=pp1; bh=67D/psam2pBIbOJ5yrm3XI/eqD
+ jbaXCyF59EYQmlD0E=; b=ZBkkrBas/bp6fT0mNcCZ1HcfbNc8A4KRmpV7IBRbT/
+ aDoRQdjZ8A8ximIqQljgy5P9C3GesDgO8I+ijxt3cnO0HZ4TCxv5zkxoStdsgmsv
+ I5meixuS2IX/KBUw5VuoJkD2ag2SK2qDd4Dzn2dAMWZBheFgVGkQihkKQf/cD+R9
+ mnvHvb6KDp8FOoTP/RuofUo8q7ksnXg0EdAQlsZowFSFzJw+Qf23V3d3fORZJspv
+ FHrER89YSe2g6XnYCUZkbSsQSEtQOqWoBoCxZJJB26OVm6gKJAQo++1E7UX8v/rP
+ dJqZt3cI3Qe0UFczRiHxCXjismpmPGyY7shJgdVmvVfQ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40rw9vr098-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 02 Aug 2024 10:02:17 +0000 (GMT)
+Received: from m0353724.ppops.net (m0353724.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 472A2Gff011264;
+ Fri, 2 Aug 2024 10:02:16 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40rw9vr090-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 02 Aug 2024 10:02:16 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 47271LWb018770; Fri, 2 Aug 2024 10:02:14 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40nc7q6n2q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 02 Aug 2024 10:02:14 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 472A2Avx44696002
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 2 Aug 2024 10:02:12 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C79262004E;
+ Fri,  2 Aug 2024 10:02:10 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6FC322004F;
+ Fri,  2 Aug 2024 10:02:10 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.171.14.120])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  2 Aug 2024 10:02:10 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH 0/4] linux-user/i386: Emulate orig_ax
+Date: Fri,  2 Aug 2024 11:59:13 +0200
+Message-ID: <20240802095942.34565-1-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hvf: arm: Fix hvf_sysreg_read_cp() call
-To: Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-References: <20240802-hvf-v1-1-e2c0292037e5@daynix.com>
- <CAFEAcA_-bfGnQRc6cjp8Ej3WKTJGkKfELzv5j3Zc-2vyNHm9ng@mail.gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAFEAcA_-bfGnQRc6cjp8Ej3WKTJGkKfELzv5j3Zc-2vyNHm9ng@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: sjl18K1M0tV6oluNCZ8Nh2phsvJs-vTn
+X-Proofpoint-GUID: JDYJYH7NhJ9kFsCpl7edgN2YWdme1v9_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-02_06,2024-08-01_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 mlxlogscore=842
+ clxscore=1011 priorityscore=1501 impostorscore=0 suspectscore=0 mlxscore=0
+ spamscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408020066
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,23 +114,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/2/24 18:44, Peter Maydell wrote:
-> On Fri, 2 Aug 2024 at 09:37, Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
->>
->> Commit 05b8d7249109 ("hvf: arm: Do not advance PC when raising an
->> exception") changed val from uint64_t to a pointer to uint64_t in
->> hvf_sysreg_read(), but didn't change its hvf_sysreg_read_cp() call.
->>
->> Fixes: 05b8d7249109 ("hvf: arm: Do not advance PC when raising an exception")
->> Reported-by: Richard Henderson <richard.henderson@linaro.org>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> 
-> Richard: I'm not going to be back at work til next Thursday:
-> feel free to grab this and apply directly to fix the cirrus
-> build.
+Hi,
 
-Will do, thanks for the heads up.
+Currently gdbstub is barely usable with i386-linux-user: GDB cannot
+even parse a shared library list, so no symbols are available. This
+boils down to unavailability of info proc, which is gated behind
+org.gnu.gdb.i386.linux. See amd64_linux_init_abi(); info proc is
+enabled by amd64_linux_init_abi_common() -> linux_init_abi().
 
+This series adds orig_ax support to the emulator and gdbstub, and
+enables the existing test-proc-mappings.py on i386.
 
-r~
+Best regards,
+Ilya
+
+Ilya Leoshkevich (5):
+  include/exec: Introduce env_cpu_const()
+  linux-user/i386: Emulate orig_ax
+  target/i386/gdbstub: Factor out gdb_get_reg() and gdb_write_reg()
+  target/i386/gdbstub: Expose orig_ax
+  tests/tcg: Run test-proc-mappings.py on i386
+
+ configs/targets/i386-linux-user.mak           |   2 +-
+ configs/targets/x86_64-linux-user.mak         |   2 +-
+ gdb-xml/i386-32bit-linux.xml                  |  11 ++
+ gdb-xml/i386-64bit-linux.xml                  |  11 ++
+ include/exec/cpu-common.h                     |  13 ++-
+ linux-user/elfload.c                          |   6 +-
+ linux-user/i386/cpu_loop.c                    |   3 +
+ linux-user/qemu.h                             |   5 +
+ target/i386/cpu.c                             |   1 +
+ target/i386/cpu.h                             |   1 +
+ target/i386/gdbstub.c                         | 103 ++++++++++++++----
+ .../multiarch/gdbstub/test-proc-mappings.py   |  17 +--
+ 12 files changed, 137 insertions(+), 38 deletions(-)
+ create mode 100644 gdb-xml/i386-32bit-linux.xml
+ create mode 100644 gdb-xml/i386-64bit-linux.xml
+
+-- 
+2.45.2
+
 
