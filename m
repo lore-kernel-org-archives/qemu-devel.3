@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F2EC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 23:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B26C8C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 23:59:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sa29p-0002M6-Kl; Fri, 02 Aug 2024 19:58:01 -0400
+	id 1sa29b-0001Vw-7x; Fri, 02 Aug 2024 19:57:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sa29h-0001pz-97
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 19:57:53 -0400
-Received: from mail-io1-xd2b.google.com ([2607:f8b0:4864:20::d2b])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sa29X-0001Rg-Fh
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 19:57:43 -0400
+Received: from mail-io1-xd36.google.com ([2607:f8b0:4864:20::d36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sa29f-0004IU-FV
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 19:57:52 -0400
-Received: by mail-io1-xd2b.google.com with SMTP id
- ca18e2360f4ac-81f8f0198beso363089939f.1
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 16:57:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sa29V-000458-M0
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 19:57:43 -0400
+Received: by mail-io1-xd36.google.com with SMTP id
+ ca18e2360f4ac-81fe38c7255so3103039f.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 16:57:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1722643070; x=1723247870;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1722643060; x=1723247860;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=h8/T8Zg48KUN7dtjWNUDu011IwEcHhj9Ls+BvEab5T4=;
- b=iP5jsyp48iBDvkuhUy7ioYtn6RFziXLGpW9UuMy/P0R7npximG3M464GeGEUiuEA+5
- okbqoIL6VD/qA3RhmM29CfaDcdeKrgrtTLOmtPxlr9IJ2Qj4wmtNehQMLXZNP76TJfaR
- Xa6AB6f6H2p4G9ZKnsghhgzaqOvYCfEYz21Jd8ObYmWkxzLzONlfdW+bIALj5NZ1deGn
- Xx/z4ByoLC/2dldT2Cl7RIMfv22QXQ5p+amlgANyVFbmMXMXQNbSUOtbffMNydF3Zi/D
- DMyRQWf34XCzC2JugX2mkN7dQO9no1DIU/sD8Qi7dK6yuzs6q9ayE+gda6VPaEwNtc6t
- 7V8A==
+ bh=P0Hc+tmyI2fNQswWMe99iI3Cy9S9k8Dxg+dtGkJKvsc=;
+ b=Rb2vXvFkt2mn3vLamOLDFSAXUsegdlikrSXYsrxSsnUWr8bztrpbRQsnGzpcjR6LcE
+ W1HcgiRJLO6qZQjUW8HkxIks0gBAyaMzYvC4VwC50sZ0hCfrvIu9fMEMvAtGnNoNYrGe
+ dmCF6D0v7K2gvK9ZdL9WKNqkL87hyD38vvpPCj8IGXzi4vcwilyLVd9oh68m9BQVyopO
+ ezgblLKAygVgO3KWrgPYRoKOXZC6JcadukREcDcuFJqwNvrdgxIuwjMBWeWeiF8xkhYG
+ D8qHG3vmRAvYYo3e6DM9MiTEUHL4mAE3AWThO+CS6hvxwmHYgDB+6DFaNhXuocechY/k
+ vc7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722643070; x=1723247870;
+ d=1e100.net; s=20230601; t=1722643060; x=1723247860;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=h8/T8Zg48KUN7dtjWNUDu011IwEcHhj9Ls+BvEab5T4=;
- b=bjs5HI9kprb1Lejl9BbKXJg/9emtOSajV03MzfmX4Cr5tXoUwrg4ccW08dZbn+OVN1
- e5OLLf2KJoEdqO0WPqeRyOiSpf7QwmXSZl9AAFU1xOEurP0shg5jSYOrEaq8svPoVi8A
- HRD3FSzzxciT2pg3IlOmoJvo2SQDF40/5nYlNgt8OC1NMJr7YuD/1A4ery9/c26OwLfl
- BjkBgj6Kgi4QleTNbz7iUUmt+vrzOgX9GzJal+2dSmvf9qQ+f2WU8+pStK219J96c5ZS
- ZFnTnvXZXS95Q3lUWYb/BfU80ecZ0UxGt5X3syjI4YmEO5MXAvXH0rssb3oWG8J9XM8z
- J9hw==
-X-Gm-Message-State: AOJu0YyTB35YcV/K74zngfji3EuHgPB3IAjvsGPQ/c3T7YCoQfkYY+hI
- SL+kI8qemYeJ5ucgqecZJcKAz5xwlERxjjTEwYpl/VpwWw4avdW5jCdFTvaX0znND4T7MX1XzdS
- 4Vro=
-X-Google-Smtp-Source: AGHT+IFypnwCX92FWsXd9Iwc3Ip+JeDls2I4arRl7Tzy3Hr7pVFB8PfUcwlFTGxdjuPbwqi8Vdp2Wg==
-X-Received: by 2002:a05:6602:6d17:b0:81f:9328:9631 with SMTP id
- ca18e2360f4ac-81fd434decdmr572602639f.2.1722643069922; 
- Fri, 02 Aug 2024 16:57:49 -0700 (PDT)
+ bh=P0Hc+tmyI2fNQswWMe99iI3Cy9S9k8Dxg+dtGkJKvsc=;
+ b=XXs7CsIiQGhiAy/xrX9kE2C1tASFmhZa71mDCzkcocvHUGhuVQONJ1XwF4LZtHgq4H
+ wP1BZfy9tZRVaXGd4/PXq94IUKNnudt7dcXq9Ey/5uleirDC2Gx95SsYHznwm8zyIN/R
+ eayCYCVjE8LHWH3LHpc0Heka3ksKLRl5JDcUJwIv0OVdE697UzNKq+gPYSVVg/zaueQJ
+ v5GkFj9xJFeqbJlVOngLb/0BsmiOTbtdPrFB+l5Wt0z1rxc9MVzlUcl5Ar+O6q91XxP3
+ qLYcTC1xMGCSPfBSx4uoAPNRRmPdHhsLPQ9DE1FP4SpcaTkUzFPgsyazN0K9GcKmH/n/
+ ZgVQ==
+X-Gm-Message-State: AOJu0YzIKZNvul4aF8Gn3sPskNL1Rc10KBXx3LdrRrmMZ3QtQKagyjps
+ LsLWWob90GNNnELb+sdnbwQN/WNYrpNviGVnxAxHYXMKYSh/uH5+YFf7FlvSJYXJJWw16lRALhq
+ Ofr0=
+X-Google-Smtp-Source: AGHT+IHNPRICCGvgkgl8kGlCYZIWMu3VHcnnPJ540hiqUAA7KZyeQ/9qom0J8Sdm/SbB7oOnJGI9Lw==
+X-Received: by 2002:a05:6602:1509:b0:7f6:8636:f89d with SMTP id
+ ca18e2360f4ac-81fd4348a4dmr649254039f.3.1722643059875; 
+ Fri, 02 Aug 2024 16:57:39 -0700 (PDT)
 Received: from dune.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4c8d69a8227sm683131173.47.2024.08.02.16.57.48
+ 8926c6da1cb9f-4c8d69a8227sm683131173.47.2024.08.02.16.57.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Aug 2024 16:57:49 -0700 (PDT)
+ Fri, 02 Aug 2024 16:57:39 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
  Jessica Clarke <jrtc27@jrtc27.com>
-Subject: [PATCH 10/17] bsd-user: Pass image name down the stack
-Date: Fri,  2 Aug 2024 17:56:10 -0600
-Message-ID: <20240802235617.7971-11-imp@bsdimp.com>
+Subject: [PATCH 01/17] bsd-user: Delete TaskState next member
+Date: Fri,  2 Aug 2024 17:56:01 -0600
+Message-ID: <20240802235617.7971-2-imp@bsdimp.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240802235617.7971-1-imp@bsdimp.com>
 References: <20240802235617.7971-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::d2b;
- envelope-from=imp@bsdimp.com; helo=mail-io1-xd2b.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::d36;
+ envelope-from=imp@bsdimp.com; helo=mail-io1-xd36.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -93,79 +93,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass the image name down the stack so that we can give better error
-messages. Inspired by similar work in linux-user, and more likely to
-come.
+The next struct member of TaskState is unused. Remove it.
 
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/elfload.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ bsd-user/qemu.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/bsd-user/elfload.c b/bsd-user/elfload.c
-index caf8a1adf2d..dba03f17465 100644
---- a/bsd-user/elfload.c
-+++ b/bsd-user/elfload.c
-@@ -36,8 +36,8 @@ abi_ulong target_stksiz;
- abi_ulong target_stkbas;
+diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
+index 3736c417860..4ccbee265a1 100644
+--- a/bsd-user/qemu.h
++++ b/bsd-user/qemu.h
+@@ -83,7 +83,6 @@ struct emulated_sigtable {
+ struct TaskState {
+     pid_t ts_tid;     /* tid (or pid) of this task */
  
- static int elf_core_dump(int signr, CPUArchState *env);
--static int load_elf_sections(const struct elfhdr *hdr, struct elf_phdr *phdr,
--    int fd, abi_ulong rbase, abi_ulong *baddrp);
-+static int load_elf_sections(const char *image_name, const struct elfhdr *hdr,
-+    struct elf_phdr *phdr, int fd, abi_ulong rbase, abi_ulong *baddrp);
- 
- static inline void memcpy_fromfs(void *to, const void *from, unsigned long n)
- {
-@@ -268,7 +268,8 @@ static void padzero(abi_ulong elf_bss, abi_ulong last_bss)
-     }
- }
- 
--static abi_ulong load_elf_interp(struct elfhdr *interp_elf_ex,
-+static abi_ulong load_elf_interp(const char *elf_interpreter,
-+                                 struct elfhdr *interp_elf_ex,
-                                  int interpreter_fd,
-                                  abi_ulong *interp_load_addr)
- {
-@@ -335,7 +336,7 @@ static abi_ulong load_elf_interp(struct elfhdr *interp_elf_ex,
-         }
-     }
- 
--    error = load_elf_sections(interp_elf_ex, elf_phdata, interpreter_fd, rbase,
-+    error = load_elf_sections(elf_interpreter, interp_elf_ex, elf_phdata, interpreter_fd, rbase,
-         &baddr);
-     if (error != 0) {
-         perror("load_elf_sections");
-@@ -526,8 +527,9 @@ int is_target_elf_binary(int fd)
- }
- 
- static int
--load_elf_sections(const struct elfhdr *hdr, struct elf_phdr *phdr, int fd,
--    abi_ulong rbase, abi_ulong *baddrp)
-+load_elf_sections(const char *image_name, const struct elfhdr *hdr,
-+                  struct elf_phdr *phdr, int fd, abi_ulong rbase,
-+                  abi_ulong *baddrp)
- {
-     struct elf_phdr *elf_ppnt;
-     abi_ulong baddr;
-@@ -764,7 +766,7 @@ int load_elf_binary(struct bsd_binprm *bprm, struct image_info *info)
- 
-     info->elf_flags = elf_ex.e_flags;
- 
--    error = load_elf_sections(&elf_ex, elf_phdata, bprm->fd, et_dyn_addr,
-+    error = load_elf_sections(bprm->filename, &elf_ex, elf_phdata, bprm->fd, et_dyn_addr,
-         &load_addr);
-     for (i = 0, elf_ppnt = elf_phdata; i < elf_ex.e_phnum; i++, elf_ppnt++) {
-         if (elf_ppnt->p_type != PT_LOAD) {
-@@ -780,7 +782,8 @@ int load_elf_binary(struct bsd_binprm *bprm, struct image_info *info)
-     }
- 
-     if (elf_interpreter) {
--        elf_entry = load_elf_interp(&interp_elf_ex, interpreter_fd,
-+        elf_entry = load_elf_interp(elf_interpreter,
-+                                    &interp_elf_ex, interpreter_fd,
-                                     &interp_load_addr);
-         reloc_func_desc = interp_load_addr;
+-    struct TaskState *next;
+     struct bsd_binprm *bprm;
+     struct image_info *info;
  
 -- 
 2.45.1
