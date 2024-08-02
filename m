@@ -4,84 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AB67C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 11:13:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E43AC52D6D
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 11:13:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZqDD-0007V9-Vh; Fri, 02 Aug 2024 07:12:45 -0400
+	id 1sZqDI-0007sD-VY; Fri, 02 Aug 2024 07:12:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sZqDB-0007Qc-VP
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 07:12:41 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sZqDA-0006jb-Df
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 07:12:41 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5a1337cfbb5so12865945a12.3
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 04:12:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722597158; x=1723201958; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=lavbJMgYEf9moKbNFJH2GN3J9/8/DEWhuvohPFrHTlw=;
- b=fbTW92kK7JzB4uEIKsY+j2fS0Osr15ccEisTFUmzVg6NVFxuqOrmTttqwxYHvx5Qz2
- xQp7ex8e1HqLwwi5tjwibl/ItynuDxi3DJ97NGF1ZYrh5xF1LvewF4LUUXFbkvKFVVWI
- P2Bw1EXZDLgHIsLKEyqYlzBXEIgXXZOsMj6Y6c0SSSTFHPLb70Rnk8Upx10z6gxYC64u
- 19/hzkS1LC0TMUvNbi1Z/mHno1v1DBQVZ4ekiB8boJVdtp/63ZFcz4GLDYgkCgkgtZ+h
- i7j5yzHx+VFk6UDxjwyprrLjnTPtq1T8d2Fspyu9p/Cp//+mACQq5aQbJKdYoL2Lb1KT
- 4FeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722597158; x=1723201958;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lavbJMgYEf9moKbNFJH2GN3J9/8/DEWhuvohPFrHTlw=;
- b=pLFF2qddA2CiL6r8wftpbChOCnfnk5yAYjnQDqjfBiLmb+4pWLK1g0yrckgD0C0YuY
- kpuLj3Yo+grm/06KKgWqizWvPug19KUQlKBkUsDuDDZpusDPt9H2HSTyXltKzUa/up3M
- yNKOoffW8zXzS3n/YYpMnDc/97wQZA5Wd6OAKSxXkPOTzy+Ar7wxbzm6bIemFLQ36EIL
- ZCEzx7/edlHlHn/C6+qmPDmommATBtaQRGKoZUG8W6ZrjKU2Us3L3c7IQ0dETjsm0jB9
- mSG8NFTVQvKgXLJhfOr3a57hX7yxsj9Ow165nYMAy3QEgtsMfumMJQRtwSvylOdUQqst
- THxg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVzPu/W/uznVPVlPktz6HOR4LkT2ToYHBYFOKjZM10NS7iJTsEf2uLmMRn3R4kY33DoNWeOu354lkVunRaF52AckFRMbCI=
-X-Gm-Message-State: AOJu0YzKzGuTeHj4n6y29Y+lUuV9NvjCwEdX1MDsXiUplFWsULogLpZ0
- +GEHgLe8LfdQR+8Bwo9rSe0DI0UiPJ5XHnHfsLFfyvjHke091W9qIqnNEZg8tcA=
-X-Google-Smtp-Source: AGHT+IFmi190W8igl6I6jkfSY+KqxYZx/GkSPxJDLTEU6FD/GC5G4gQwIzsaWzTeb+a/WvIie2A8CA==
-X-Received: by 2002:a17:907:9486:b0:a6f:59dc:4ece with SMTP id
- a640c23a62f3a-a7dc4dc3c72mr253654066b.2.1722597158360; 
- Fri, 02 Aug 2024 04:12:38 -0700 (PDT)
-Received: from meli-email.org (adsl-146.37.6.160.tellas.gr. [37.6.160.146])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7dc9ecb546sm85952766b.224.2024.08.02.04.12.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Aug 2024 04:12:38 -0700 (PDT)
-Date: Fri, 02 Aug 2024 14:11:20 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: Volker R=?UTF-8?B?w7w=?= melin <vr_qemu@t-online.de>,
- Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
- Zheyu Ma <zheyuma97@gmail.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/audio/virtio-snd: fix invalid param check
-User-Agent: meli 0.8.7
-References: <20240802071805.7123-1-vr_qemu@t-online.de>
-In-Reply-To: <20240802071805.7123-1-vr_qemu@t-online.de>
-Message-ID: <hl8gz.cfuid0km5pqb@linaro.org>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sZqDG-0007iq-Js; Fri, 02 Aug 2024 07:12:47 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1sZqDE-00070G-OY; Fri, 02 Aug 2024 07:12:46 -0400
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:3f48:0:640:7695:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id A011560B44;
+ Fri,  2 Aug 2024 14:12:41 +0300 (MSK)
+Received: from [IPV6:2a02:6b8:b081:b725::1:34] (unknown
+ [2a02:6b8:b081:b725::1:34])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id eCWwmO1i50U0-LYVbBluM; Fri, 02 Aug 2024 14:12:41 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1722597161;
+ bh=pI/v/gsk/i9psjofdTPyP2tExkz6Ncm4IpcpASdlVqU=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=AlK1m2tZR4mNfsPzfgaTvb7aGGkHJBmmJGh6O7BqPL8OT075W98h9c6Hn0MlX24ic
+ Vgi7ZK/EMdY21IX913nqtKK7TIiSOany7RbEIjki1v4RwuohbclBB23SV2Jj0bmEK/
+ f7Q7iMopM2F5BjPOy38O13IAaDhOixKpspI3kTzE=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <5afaa49a-db2f-4f97-9c7f-2978c0519264@yandex-team.ru>
+Date: Fri, 2 Aug 2024 14:12:40 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] block/commit: implement final flush
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com,
+ jsnow@redhat.com, den@openvz.org, f.ebner@proxmox.com
+References: <20240626145038.458709-1-vsementsov@yandex-team.ru>
+ <20240626145038.458709-2-vsementsov@yandex-team.ru>
+ <ZplrhoVskeiK0R4c@redhat.com>
+ <c4ae737c-853d-4a0d-8f7c-e5502c824bd7@yandex-team.ru>
+ <ZqeKKCWxhoVnGKWV@redhat.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <ZqeKKCWxhoVnGKWV@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,44 +79,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 02 Aug 2024 10:18, Volker Rümelin <vr_qemu@t-online.de> wrote:
->Commit 9b6083465f ("virtio-snd: check for invalid param shift
->operands") tries to prevent invalid parameters specified by the
->guest. However, the code is not correct.
->
->Change the code so that the parameters format and rate, which are
->a bit numbers, are compared with the bit size of the data type.
->
->Fixes: 9b6083465f ("virtio-snd: check for invalid param shift operands")
->Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
->---
-> hw/audio/virtio-snd.c | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
->
->diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
->index e5196aa4bb..d1cf5eb445 100644
->--- a/hw/audio/virtio-snd.c
->+++ b/hw/audio/virtio-snd.c
->@@ -282,12 +282,12 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
->         error_report("Number of channels is not supported.");
->         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
->     }
->-    if (BIT(params->format) > sizeof(supported_formats) ||
->+    if (params->format >= sizeof(supported_formats) * BITS_PER_BYTE ||
->         !(supported_formats & BIT(params->format))) {
->         error_report("Stream format is not supported.");
->         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
->     }
->-    if (BIT(params->rate) > sizeof(supported_rates) ||
->+    if (params->rate >= sizeof(supported_rates) * BITS_PER_BYTE ||
->         !(supported_rates & BIT(params->rate))) {
->         error_report("Stream rate is not supported.");
->         return cpu_to_le32(VIRTIO_SND_S_NOT_SUPP);
->-- 
->2.35.3
->
+On 29.07.24 15:25, Kevin Wolf wrote:
+> Am 19.07.2024 um 12:35 hat Vladimir Sementsov-Ogievskiy geschrieben:
+>> On 18.07.24 22:22, Kevin Wolf wrote:
+>>> Am 26.06.2024 um 16:50 hat Vladimir Sementsov-Ogievskiy geschrieben:
+>>>> Actually block job is not completed without the final flush. It's
+>>>> rather unexpected to have broken target when job was successfully
+>>>> completed long ago and now we fail to flush or process just
+>>>> crashed/killed.
+>>>>
+>>>> Mirror job already has mirror_flush() for this. So, it's OK.
+>>>>
+>>>> Do this for commit job too.
+>>>>
+>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>>> ---
+>>>>    block/commit.c | 41 +++++++++++++++++++++++++++--------------
+>>>>    1 file changed, 27 insertions(+), 14 deletions(-)
+>>>>
+>>>> diff --git a/block/commit.c b/block/commit.c
+>>>> index 7c3fdcb0ca..81971692a2 100644
+>>>> --- a/block/commit.c
+>>>> +++ b/block/commit.c
+>>>> @@ -134,6 +134,7 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+>>>>        int64_t n = 0; /* bytes */
+>>>>        QEMU_AUTO_VFREE void *buf = NULL;
+>>>>        int64_t len, base_len;
+>>>> +    bool need_final_flush = true;
+>>>>        len = blk_co_getlength(s->top);
+>>>>        if (len < 0) {
+>>>> @@ -155,8 +156,8 @@ static int coroutine_fn commit_run(Job *job, Error **errp)
+>>>>        buf = blk_blockalign(s->top, COMMIT_BUFFER_SIZE);
+>>>> -    for (offset = 0; offset < len; offset += n) {
+>>>> -        bool copy;
+>>>> +    for (offset = 0; offset < len || need_final_flush; offset += n) {
+>>>
+>>> In general, the control flow would be nicer to read if the final flush
+>>> weren't integrated into the loop, but just added after it.
+>>>
+>>> But I assume this is pretty much required for pausing the job during
+>>> error handling in the final flush if you don't want to duplicate a lot
+>>> of the logic into a second loop?
+>>
+>> Right, that's the reason.
+> 
+> This would probably be the right solution if it affected only commit.
+> But I've thought a bit more about this and given that the same thing
+> happens in all of the block jobs, I'm really wondering if introducing a
+> block job helper function wouldn't be better, so that each block job
+> could just add something like this after its main loop:
+> 
+>      do {
+>          ret = blk_co_flush();
+>      } while (block_job_handle_error(job, ret));
+> 
+> And the helper would call block_job_error_action(), stop the job if
+> necessary, check if it's cancelled, include a pause point etc.
+> 
 
-Thanks for the fix Volker :)
+Agree. Thanks, I'll try.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+-- 
+Best regards,
+Vladimir
+
 
