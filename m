@@ -4,88 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6CE7C52D6D
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 13:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA7F7C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 13:31:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZsMq-0001wx-40; Fri, 02 Aug 2024 09:30:48 -0400
+	id 1sZsNZ-0005Qw-SB; Fri, 02 Aug 2024 09:31:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZsMk-0001rG-ME
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:30:42 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZsMi-0008LS-PO
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:30:42 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-7104f939aa7so2622572b3a.1
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 06:30:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722605439; x=1723210239; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lJF6OXA8C/Y1QICtD5IvcceFO/fI3pk8Ew6d8EDRZFA=;
- b=x3ne/9MnK8pEUvTeRf5+V9Dl3398l5yGAFmBzKLdBxmMDGVnb/NZ0KtZLRdeQqU9oz
- 0Wt92YIurqJiM6rCHBalABvzlM4nSPP+mW9DV4WHKlRo6LCfYeEWm4HR3AkDZ7sgzyco
- W2uck+5idieeziJUXFlupaE58X1j+mBqwk/OIOC7najF2JmkvFoKTOPTVBzFCNgIsuhf
- WBu9lXTwR1X4Ijq9L0nwR1TVtweVIuR3O/bn2DHaW/vRsxjPtTim1xrrwnQ3U/TcbgV0
- 0nArxbvlvOhCQFzfu91MEzTLNRTVnQD78obAknnzKVDYpyzNOtmEKaeveviYX9ct17DI
- skVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722605439; x=1723210239;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lJF6OXA8C/Y1QICtD5IvcceFO/fI3pk8Ew6d8EDRZFA=;
- b=KI7ooXt51lxnb/5rrf3A69ELO2yQNk/wYRn/ib3uwBYzoIaj3V4eKgcy4sRm+kwqxK
- ZIVvfwGd9GDs6rlyDwWocGXD0MZgh/u9RiL8Wde9LErUD+0GeY8/Buk12nEN24tKw+EK
- d7wJBh4s2v0GUk3pB2CDpF8S3FY78QTN8rD6OZT0PMi1kLB9bVLlf0hk21ObIHbUT5AL
- RvCDLoIGZhe/37Q4vR/+V7B/rM6dc+uG4JpIHoutX+AX97UEWTXEnoDdHJZati2v2AV0
- KRkYCuKxKVHJVNSiHfhUeVNrKnS8643vBmEGt1a8QDhLJUeYlxPtmmWg8kJTYIWXJIoP
- Y92A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWP9+YpFFKN5fnZjrZuebt1Gtcd9LdAYgMBIJopua7Lly2GQQ9xQ0dxQhaWh2q2PawUvcoRL4cFcYexFcR1QEdDmMXJTdQ=
-X-Gm-Message-State: AOJu0YxxZgDy+qGtRY7EzN7C/DXeqqXxYOSz/8yMCTHy1u7eiUqUzR/O
- cSpGOwsyyR6/o0kyeoy5J7zvBAEfU7Baxq3Gfx4QFk/o6BwD1CJN47CQ4vTpv+Y=
-X-Google-Smtp-Source: AGHT+IGkpjgZFzgJaJu7jPFFw2ZF59idNuvh4gdLC9lapOlPQyhndBdjB9xC2jkqmHf2wLZ6PWWu1g==
-X-Received: by 2002:a05:6a00:14c8:b0:706:31d9:9c99 with SMTP id
- d2e1a72fcca58-7106cdceb8emr5244159b3a.0.1722605438900; 
- Fri, 02 Aug 2024 06:30:38 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7106ec01cfesm1351579b3a.4.2024.08.02.06.30.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 Aug 2024 06:30:38 -0700 (PDT)
-Message-ID: <4cdcacde-a5f8-4365-bd6c-65e98a77eada@linaro.org>
-Date: Fri, 2 Aug 2024 23:30:32 +1000
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZsNW-0005Do-Up
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:31:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZsNU-0008Pi-N4
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:31:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722605487;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Yo5BVyYft/wo2qmrPf3ogseBvKslv5f4dp2wV7Z51Fc=;
+ b=fKb6HT1i/i5FJC7MPB6MOEzumTC7BUxeZo8xLHIDyxheKnf0f/11lB8nkiZhUcPeLojo30
+ kzeujlWaSw6T7bD4ABAdEeC3gVmbjvgi5rgZNKULo0DbIhKx0JYyTtYqphPqGz58TOzDX+
+ 3o38tv2euUT+gIZhNle7sJPY736v9wI=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-335-52K6dT1LMYaLKuPQv0DpGA-1; Fri,
+ 02 Aug 2024 09:31:26 -0400
+X-MC-Unique: 52K6dT1LMYaLKuPQv0DpGA-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5EE461956088; Fri,  2 Aug 2024 13:31:25 +0000 (UTC)
+Received: from green.redhat.com (unknown [10.2.16.72])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3FDC81955E80; Fri,  2 Aug 2024 13:31:24 +0000 (UTC)
+From: Eric Blake <eblake@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org,
+	richard.henderson@linaro.org
+Subject: [PATCH 6/5] docs: Typo fix in live disk backup
+Date: Fri,  2 Aug 2024 08:30:25 -0500
+Message-ID: <20240802133118.2000067-2-eblake@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/18] bsd-user: Add RISC-V thread setup and
- initialization support
-To: Ajeet Singh <itachis6234@gmail.com>, qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, Mark Corbin <mark.corbin@embecsom.com>,
- Ajeet Singh <itachis@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>,
- Kyle Evans <kevans@FreeBSD.org>
-References: <20240802083423.142365-1-itachis@FreeBSD.org>
- <20240802083423.142365-11-itachis@FreeBSD.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240802083423.142365-11-itachis@FreeBSD.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.124,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,84 +79,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/2/24 18:34, Ajeet Singh wrote:
-> From: Mark Corbin <mark.corbin@embecsom.com>
-> 
-> Implemented functions for setting up and initializing threads in the
-> RISC-V architecture.
-> The 'target_thread_set_upcall' function sets up the stack pointer,
-> program counter, and function argument for new threads.
-> The 'target_thread_init' function initializes thread registers based on
-> the provided image information.
-> 
-> Signed-off-by: Mark Corbin <mark.corbin@embecsom.com>
-> Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-> Co-authored-by: Jessica Clarke <jrtc27@jrtc27.com>
-> Co-authored-by: Kyle Evans <kevans@FreeBSD.org>
-> ---
->   bsd-user/riscv/target_arch_thread.h | 47 +++++++++++++++++++++++++++++
->   1 file changed, 47 insertions(+)
->   create mode 100644 bsd-user/riscv/target_arch_thread.h
-> 
-> diff --git a/bsd-user/riscv/target_arch_thread.h b/bsd-user/riscv/target_arch_thread.h
-> new file mode 100644
-> index 0000000000..faabb9fb45
-> --- /dev/null
-> +++ b/bsd-user/riscv/target_arch_thread.h
-> @@ -0,0 +1,47 @@
-> +/*
-> + *  RISC-V thread support
-> + *
-> + *  Copyright (c) 2019 Mark Corbin
-> + *
-> + *  This program is free software; you can redistribute it and/or modify
-> + *  it under the terms of the GNU General Public License as published by
-> + *  the Free Software Foundation; either version 2 of the License, or
-> + *  (at your option) any later version.
-> + *
-> + *  This program is distributed in the hope that it will be useful,
-> + *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-> + *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> + *  GNU General Public License for more details.
-> + *
-> + *  You should have received a copy of the GNU General Public License
-> + *  along with this program; if not, see <http://www.gnu.org/licenses/>.
-> + */
-> +
-> +#ifndef TARGET_ARCH_THREAD_H
-> +#define TARGET_ARCH_THREAD_H
-> +
-> +/* Compare with cpu_set_upcall() in riscv/riscv/vm_machdep.c */
-> +static inline void target_thread_set_upcall(CPURISCVState *regs,
-> +    abi_ulong entry, abi_ulong arg, abi_ulong stack_base,
-> +    abi_ulong stack_size)
-> +{
-> +    abi_ulong sp;
-> +
-> +    sp = (abi_ulong)(stack_base + stack_size) & ~(16 - 1);
-> +
-> +    regs->gpr[xSP] = sp;
-> +    regs->pc = entry;
-> +    regs->gpr[xA0] = arg;
-> +}
-> +
-> +/* Compare with exec_setregs() in riscv/riscv/machdep.c */
+Add in the missing space in the section header.
 
-exec_machdep.c.
+Fixes: 1084159b31 ("qapi: deprecate drive-backup", v6.2.0)
+Signed-off-by: Eric Blake <eblake@redhat.com>
 
-> +static inline void target_thread_init(struct target_pt_regs *regs,
-> +    struct image_info *infop)
-> +{
-> +    regs->sepc = infop->entry;
-> +    regs->regs[xRA] = infop->entry;
-> +    regs->regs[10] = infop->start_stack;               /* a0 */
+---
 
-xA0
+Noticed while figuring out where nbd docs would appear in [1] once [2]
+goes live:
+[1] https://www.qemu.org/docs/master/interop/index.html
+[2] https://lists.gnu.org/archive/html/qemu-devel/2024-08/msg00223.html
 
-> +    regs->regs[xSP] = infop->start_stack & ~(16 - 1);
+---
+ docs/interop/live-block-operations.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-ROUND_DOWN.
+diff --git a/docs/interop/live-block-operations.rst b/docs/interop/live-block-operations.rst
+index 691429c7afe..6b549ede7c9 100644
+--- a/docs/interop/live-block-operations.rst
++++ b/docs/interop/live-block-operations.rst
+@@ -931,8 +931,8 @@ Shutdown the guest, by issuing the ``quit`` QMP command::
+     }
 
 
-r~
+-Live disk backup --- ``blockdev-backup`` and the deprecated``drive-backup``
+----------------------------------------------------------------------------
++Live disk backup --- ``blockdev-backup`` and the deprecated ``drive-backup``
++----------------------------------------------------------------------------
+
+ The ``blockdev-backup`` (and the deprecated ``drive-backup``) allows
+ you to create a point-in-time snapshot.
+-- 
+2.45.2
+
 
