@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA969C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 21:32:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6255AC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 21:38:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZzsB-0005wZ-2L; Fri, 02 Aug 2024 17:31:39 -0400
+	id 1sZzz0-0003Z5-1o; Fri, 02 Aug 2024 17:38:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZzs7-0005mv-OZ
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 17:31:36 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZzyx-0003Wi-Mw
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 17:38:39 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZzs5-0003J6-6t
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 17:31:34 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5a10835487fso11776371a12.1
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 14:31:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZzyw-0006aI-4r
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 17:38:39 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a7d26c2297eso1083087566b.2
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 14:38:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722634291; x=1723239091; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4bGJmkWTOT3c/YDzrQKbOjU81hBSqBBa98tYGP+qJ3Y=;
- b=gCxf7g+np4tQxpAf62hxQX3FgQfH1OdoyrtwZAezKS9iLsdupg93FjRNWKS8KbriaP
- 7VFy4iS9tVVSW0dgcwjsrthXxCCxT2eFdPzu1OKP3ZVWOPm9L6rBQMGz9dT5KoOt6ffc
- FSWiiucSOn/jcyBpYNf3d6967FYO6AW3QDg3ae/++oPaS0z7WjSiFuIMeyEUz4Kj/CzR
- XBcCKPGBhpXkXHPxBxq/ZeJ5kDX0l25KhGcqaULZrwDva70rb8TbCczpFiKpjdlz+OUH
- 1V0cRktRXpziYLhM91XtV1pdgNPd0RhBW8TNl7ZlIS6X1mfcb4ErkvaaKA72MygQEQ0F
- zEug==
+ d=linaro.org; s=google; t=1722634716; x=1723239516; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DrMy0r6qtp0ap9X+3XwWcJzzskVnRzE9X486ESn9B64=;
+ b=mXCfSPDoqNy72z1FvLn5X2NTr1xys+Da9fMRVkGa3qAhvztXuND/Z3Qd+6A1u4MSAM
+ FyLTlO8VvkvmG6xqAW1wWo8hbZHJtyVWt5xElO+80a0s24QGjD/bOrTrMhWZQJkr1xNW
+ xZuu7X6oXieKq4PhMisYXAWgwYV+kLR/XNy+taEV4bJ7avqxHflPZxyUYIpc6AP8iDEc
+ awQcyI1cCozK7DrBaiNPs8eI+XHjRP05gB/ni6IoXU2D2aJxG3MZ3gdGTmHcN8IzC8al
+ uhxuRj5WCJ77gCJ8562z5FEV2oNu8JROn365iJVI7pEhu2UTZKFe4E5/1l/urDkJcos/
+ lldQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722634291; x=1723239091;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4bGJmkWTOT3c/YDzrQKbOjU81hBSqBBa98tYGP+qJ3Y=;
- b=K14XWF3CpALruMrYecybsNLUFw/3OQWZzQtA8qSmntDGfBMpG951W4yMf5iPFFtrx9
- jcbegJzuRit656czS6pbNo2n9ep3Jb6rnB5nUkxtwVTvP7R7gxwCv7EJMv7CbIs2jIVR
- Y3X+i6XBv4SIJvbGsHjy/fLc4+XAWfOMYF6K6jPtVqhz8OThT1Q63QdFGXCzupUcl8TV
- YB8mHcWiSdydaTCKfe9+ZgQsA24LqsWUgRc1jI80Gd3Ath1bSyawMwi5xgiPI200eSra
- 380QMpUYurY8JKP3wTuwlyugsbtj/JMRb79te7L9w0NEZdJK49NygNEdy9dcSLe8OyJS
- 37Jg==
-X-Gm-Message-State: AOJu0Yzc9IQVI3DDBZmlXWvt+YoJXQzgCBxjRycJxm4eeOsXkP8SX3vh
- CQLq0OXMCl/JwA6YzZ5HNoX5pG4nkNRzKIa9f5v72ZtrBA8eiMyajJiefv88mH8cZIp64crw64D
- 8
-X-Google-Smtp-Source: AGHT+IEJ3U6+/4toOPgx3z5KjP4ohlgc4lTQFJx6yuiiHBUyhwzBmd7ttEVxjNtauwlXMLUQTEbldw==
-X-Received: by 2002:a17:907:2dac:b0:a6f:586b:6c2 with SMTP id
- a640c23a62f3a-a7dc510131cmr315701666b.60.1722634291324; 
- Fri, 02 Aug 2024 14:31:31 -0700 (PDT)
-Received: from m1x-phil.lan (cvl92-h01-176-184-49-210.dsl.sta.abo.bbox.fr.
+ d=1e100.net; s=20230601; t=1722634716; x=1723239516;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DrMy0r6qtp0ap9X+3XwWcJzzskVnRzE9X486ESn9B64=;
+ b=XMFEqyjXxgOd0RG4fD9SNlbfjDUcuHpoD275hKhhlHi5dM87/7FG+tYj/yLrwB240h
+ yxJbtjUwaDUpAuZuPN8wO1CNQcHElVmSEixRQSJ/RfpcPkC7pkpc1ZeNeSa3/XQg6r+R
+ Dp+KMatncgv0MVnxayk0eq3o+IAKPJw6F3y1cT71G3v9Szws/fDaDGgB/mUc/B+LPSYC
+ GJecotiv0zRATvgjXVndcZKw+E4f6XVs+zgF32WGSVNIJySjd+aYzBQNAKfKaa0i2gdR
+ 4V1m6NhSu8M6jtPTJAWuaaA1DMrwr9/mfTKRtD4sWIFFghc4a7M1Z88u4TtlXFaBpwuo
+ dzQw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVVSxNa2BKA5G28kXqIg5CcKxA2U0CFAjy9APN6HFZsXaFcfpgnAYZSMK726H56z1lnyhhBnoctJWsEoIotl8F7o2q6grg=
+X-Gm-Message-State: AOJu0YwvYiX9wROqx6xWI4OTgJqjqlGksOy7SrQRSXCCYbWsDzeMte4p
+ 2zl6Ar2rEp9J6uNX6mKAW3ZIZxytW9UkkEL+J07UFohuBEWpBYL5AHHFOJAXq9k=
+X-Google-Smtp-Source: AGHT+IGb5vUO59oRaIm9psCWcmZxzQ67NAg0sT5kJMWkNwKGpg7Rz58sktsg97dIBF7S5GKliqMKAA==
+X-Received: by 2002:a17:906:c115:b0:a7a:97ca:3056 with SMTP id
+ a640c23a62f3a-a7dc4e56bffmr346101466b.16.1722634716155; 
+ Fri, 02 Aug 2024 14:38:36 -0700 (PDT)
+Received: from [192.168.69.100] (cvl92-h01-176-184-49-210.dsl.sta.abo.bbox.fr.
  [176.184.49.210]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7dc9c0c578sm139991666b.73.2024.08.02.14.31.29
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 02 Aug 2024 14:31:30 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>
-Subject: [PATCH-for-9.1 v5 1/2] hw/pci-host/gt64120: Set PCI base address
- register write mask
-Date: Fri,  2 Aug 2024 23:31:21 +0200
-Message-ID: <20240802213122.86852-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240802213122.86852-1-philmd@linaro.org>
-References: <20240802213122.86852-1-philmd@linaro.org>
+ a640c23a62f3a-a7dc9bc4219sm139530366b.30.2024.08.02.14.38.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 02 Aug 2024 14:38:35 -0700 (PDT)
+Message-ID: <571a2dd5-16f0-4fcf-aa3f-aa758bef3c45@linaro.org>
+Date: Fri, 2 Aug 2024 23:38:33 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] util: Refactor json-writer's string sanitizer to be
+ public
+To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, rjones@redhat.com,
+ Markus Armbruster <armbru@redhat.com>
+References: <20240802194156.2131519-4-eblake@redhat.com>
+ <20240802194156.2131519-5-eblake@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240802194156.2131519-5-eblake@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,89 +98,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When booting Linux we see:
+On 2/8/24 21:26, Eric Blake wrote:
+> My next patch needs to convert text from an untrusted input into an
+> output representation that is suitable for display on a terminal is
+> useful to more than just the json-writer; the text should normally be
+> UTF-8, but blindly allowing all Unicode code points (including ASCII
+> ESC) through to a terminal risks remote-code-execution attacks on some
+> terminals.  Extract the existing body of json-writer's quoted_strinto
+> a new helper routine mod_utf8_sanitize, and generalize it to also work
+> on data that is length-limited rather than NUL-terminated.  [I was
+> actually surprised that glib does not have such a sanitizer already -
+> Google turns up lots of examples of rolling your own string
+> sanitizer.]
+> 
+> If desired in the future, we may want to tweak whether the output is
+> guaranteed to be ASCII (using lots of \u escape sequences, including
+> surrogate pairs for code points outside the BMP) or if we are okay
+> passing printable Unicode through (we still need to escape control
+> characters).  But for now, I went for minimal code churn, including
+> the fact that the resulting function allows a non-UTF-8 2-byte synonym
+> for U+0000.
+> 
+> Signed-off-by: Eric Blake <eblake@redhat.com>
+> ---
+>   include/qemu/unicode.h |  3 ++
+>   qobject/json-writer.c  | 47 +----------------------
+>   util/unicode.c         | 84 ++++++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 88 insertions(+), 46 deletions(-)
 
-  PCI host bridge to bus 0000:00
-  pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
-  pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
-  pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
-  pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
-  pci 0000:00:00.0: [Firmware Bug]: reg 0x14: invalid BAR (can't size)
-  pci 0000:00:00.0: [Firmware Bug]: reg 0x18: invalid BAR (can't size)
-  pci 0000:00:00.0: [Firmware Bug]: reg 0x1c: invalid BAR (can't size)
-  pci 0000:00:00.0: [Firmware Bug]: reg 0x20: invalid BAR (can't size)
-  pci 0000:00:00.0: [Firmware Bug]: reg 0x24: invalid BAR (can't size)
+Preferably moving the docstring help to the header,
 
-This is due to missing base address register write mask.
-Add it to get:
-
-  PCI host bridge to bus 0000:00
-  pci_bus 0000:00: root bus resource [mem 0x10000000-0x17ffffff]
-  pci_bus 0000:00: root bus resource [io  0x1000-0x1fffff]
-  pci_bus 0000:00: No busn resource found for root bus, will use [bus 00-ff]
-  pci 0000:00:00.0: [11ab:4620] type 00 class 0x060000
-  pci 0000:00:00.0: reg 0x10: [mem 0x00000000-0x00000fff pref]
-  pci 0000:00:00.0: reg 0x14: [mem 0x01000000-0x01000fff pref]
-  pci 0000:00:00.0: reg 0x18: [mem 0x1c000000-0x1c000fff]
-  pci 0000:00:00.0: reg 0x1c: [mem 0x1f000000-0x1f000fff]
-  pci 0000:00:00.0: reg 0x20: [mem 0x1be00000-0x1be00fff]
-  pci 0000:00:00.0: reg 0x24: [io  0x14000000-0x14000fff]
-
-Since this device is only used by MIPS machines which aren't
-versioned, we don't need to update migration compat machinery.
-
-Mention the datasheet referenced. Remove the "Malta assumptions
-ahead" comment since the reset values from the datasheet are used.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- hw/pci-host/gt64120.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/hw/pci-host/gt64120.c b/hw/pci-host/gt64120.c
-index e02efc9e2e..573d2619ee 100644
---- a/hw/pci-host/gt64120.c
-+++ b/hw/pci-host/gt64120.c
-@@ -1,6 +1,8 @@
- /*
-  * QEMU GT64120 PCI host
-  *
-+ * (Datasheet GT-64120 Rev 1.4 from Sep 14, 1999)
-+ *
-  * Copyright (c) 2006,2007 Aurelien Jarno
-  *
-  * Permission is hereby granted, free of charge, to any person obtaining a copy
-@@ -1213,17 +1215,27 @@ static void gt64120_realize(DeviceState *dev, Error **errp)
- 
- static void gt64120_pci_realize(PCIDevice *d, Error **errp)
- {
--    /* FIXME: Malta specific hw assumptions ahead */
-+    /* Values from chapter 17.16 "PCI Configuration" */
-+
-     pci_set_word(d->config + PCI_COMMAND, 0);
-     pci_set_word(d->config + PCI_STATUS,
-                  PCI_STATUS_FAST_BACK | PCI_STATUS_DEVSEL_MEDIUM);
-     pci_config_set_prog_interface(d->config, 0);
-+
-+    pci_set_long(d->wmask + PCI_BASE_ADDRESS_0, 0xfffff008); /* SCS[1:0] */
-+    pci_set_long(d->wmask + PCI_BASE_ADDRESS_1, 0xfffff008); /* SCS[3:2] */
-+    pci_set_long(d->wmask + PCI_BASE_ADDRESS_2, 0xfffff008); /* CS[2:0] */
-+    pci_set_long(d->wmask + PCI_BASE_ADDRESS_3, 0xfffff008); /* CS[3], BootCS */
-+    pci_set_long(d->wmask + PCI_BASE_ADDRESS_4, 0xfffff000); /* ISD MMIO */
-+    pci_set_long(d->wmask + PCI_BASE_ADDRESS_5, 0xfffff001); /* ISD I/O */
-+
-     pci_set_long(d->config + PCI_BASE_ADDRESS_0, 0x00000008);
-     pci_set_long(d->config + PCI_BASE_ADDRESS_1, 0x01000008);
-     pci_set_long(d->config + PCI_BASE_ADDRESS_2, 0x1c000000);
-     pci_set_long(d->config + PCI_BASE_ADDRESS_3, 0x1f000000);
-     pci_set_long(d->config + PCI_BASE_ADDRESS_4, 0x14000000);
-     pci_set_long(d->config + PCI_BASE_ADDRESS_5, 0x14000001);
-+
-     pci_set_byte(d->config + 0x3d, 0x01);
- }
- 
--- 
-2.45.2
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
