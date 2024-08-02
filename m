@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDC8FC52D6D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8662C52D6F
 	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 11:23:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZqMl-0007Qa-3h; Fri, 02 Aug 2024 07:22:35 -0400
+	id 1sZqMj-0007NC-Oy; Fri, 02 Aug 2024 07:22:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1sZqMh-0007Ll-Fc
+ id 1sZqMh-0007Lk-D9
  for qemu-devel@nongnu.org; Fri, 02 Aug 2024 07:22:31 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1sZqMf-0007Ah-6f
+ id 1sZqMf-0007Ag-6R
  for qemu-devel@nongnu.org; Fri, 02 Aug 2024 07:22:31 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-1fd65aaac27so22722025ad.1
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1fed72d23a7so62201705ad.1
  for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 04:22:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=gmail.com; s=20230601; t=1722597747; x=1723202547; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=y82r/XxOIkgx1ODHTsgWMJ/HRE9njRvzy0BrWUZyvFU=;
- b=ZGI07wNyTCn1r70xDZC8f82n/RzdPjDbGBiN1AU1Sxb58s80l7SdqPvpa3fli0jRDa
- ZyaCpookPH12b9c3jF6eli+3fjCh0XC3RhSkXdGkE6pkt5liaCMP8aXo5oNyqd0ajeNd
- 0PNl20cbM1YbTIZALMJ/NmO81PFM8sh0AArS0DeO/CAoOSUPiw44K8/BspcD/lWRvkqn
- 7nxOwkBAj8OAJek+E0NrzHydRos0wJK1FRxAOjmA7/A9sSukDevtrb0yuy/tl9VTv35M
- mO8gIPiV4OqvcYNbG215WamvjKzD4cVuNxMg8OSKjRNODe+rBv5N2Hli1qbDtyHTMyAq
- jCXQ==
+ bh=MyC2BLuXP5sFjH8Ztz03XnFHAotL08YDixT81uIemh4=;
+ b=mUbtnrQVuTG0DkJaYA+be5QrKigUzwxzOnm8UEJDG+v7zzlkZUl+Ki2POraA7I9pK/
+ B+YNcagVBpAfBwrF/Ao09GKhtb0brw1no+Sh2x4HRncuZHYKKLt6uw3UyqH3v/MOcpEV
+ /BwiFv0F0jACEmSNOKQmHd5ZGnw1g1Cu7R0KNMDLMQSEVh0WAnXcQX+1mWsUyw6hoUyv
+ Bq26ciWDbgwGcnVyfPYpUzZ3pa54i7a4RaCvYkf+/1GntOmd6p//FiuahUjRVyKCvVHi
+ 7ok/iH60E31YefkFSRtKk5laEyStc62Rq4vFvSlG1J5ot2rjthRD+Eah7/szJ4JcfgxL
+ 96PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1722597747; x=1723202547;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=y82r/XxOIkgx1ODHTsgWMJ/HRE9njRvzy0BrWUZyvFU=;
- b=tExFGnTLNcKCwL+lUVkad7th6Z7BLRwdZNJwNY8RMz/td0y/bMNdCm/OeDYmZh2aip
- OJU0S6xO8HD8wcyOfb9X+A5NpnIi24m7S4YkDUD7vSwkBHdfQ+L5lVB+hD9SHOJyB0Fo
- czvSlrL9Huq0plqd5TBE8s12tj0WCqOrxinRpRMexcKIDHekCYDI2ZF/Wmnvp8wRJVP3
- 5MpXVcSL8im9saIQbkdVWS1/rVkc2NYbwjJJvRdqcEoLnBKjpqCohlK+pOWpbK3X3cH6
- HyUa5oRg3/R58SPPSC/REd5d3iQCTqpv7pWW6vuwlYIyNCyLkg+V5lCMRgd7TwR0Wp5j
- hxFg==
+ bh=MyC2BLuXP5sFjH8Ztz03XnFHAotL08YDixT81uIemh4=;
+ b=AHfgct0lzkc6kRwV7Qs5rlnWc4VHjDzxwa/IGJBmXox4JYXd5tLyAFLmLW1n3N/6CI
+ j5RSr1xo9s5HtGxHsPffe1zcARQhAU2SuRqGmkd4/puSH6bAI7Gh/SNiLdJeDhuAUbDY
+ st9mq2piEQpeIL/WoWb8qElKosGhZI+sXgU+kVqRPEQmnmaVScLQ6wH3lAPUYBC+j62a
+ f8EKE1BU1zKkvX7jmItGJMLSoCPxu03RIVR1N5LVZF0Wubg1zexp5FFbxZj+SQZH/Mni
+ KcDTeb5kVx84L6oZ7FZPoYiuGLCATqJmJz4wwx+6kWjMUrFo2hpgMty9BgUjx1mkxii0
+ 69Mw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVeV+NbInFt8DJYhfOOJLH28JK054FLDZ4vE00adhQmc17hVHFezn6PxPqIhyezMgRU4JlfslElyUN+YPuTzUZRzriVhxQ=
-X-Gm-Message-State: AOJu0Yx+dDPYFf0f+h0qdR0o4enLNF3kHGSIADulJ8Jba7a4xhSqFiQK
- +KqLhiMD+JXDof1iRMbex2BR0VpsIlI37lkjrg2xcO0Rb7ZKFrlehoP5+g==
-X-Google-Smtp-Source: AGHT+IEjKKuG/jOVKz0Pj/NChouyUQS/lojdEBLOojX6hs/DyhiHWXBnvRw81UxmzYr1f1LWIXFPIA==
-X-Received: by 2002:a17:903:2443:b0:1fd:cda0:77fd with SMTP id
- d9443c01a7336-1ff523ef645mr68374335ad.3.1722597746042; 
- Fri, 02 Aug 2024 04:22:26 -0700 (PDT)
+ AJvYcCU1Dd5At4CCV0nDlQTlgJjXK6FDZLm0nCtolQ+k9k0kh4KzWtYqWSUpdlhgs4JWkFBPk/pXadqeQL1o4l/EOH5NYSteO0g=
+X-Gm-Message-State: AOJu0Yy5c7JBXSsR5NWDchQX5j78Rw7FKVU9e0K7MC+Ym8XvS8505EEu
+ thy1hJTq37mqtaUa3fTawCAoSGflf7Op6zLu3bjN9GDJJGmMtAjf4O0+eg==
+X-Google-Smtp-Source: AGHT+IFws+o+ly+gd7s/LSCb5p3zoW36HcGWh4dkerD+3A7XPYF9dyu6yR4cjneNy+d67WsQjEcoaQ==
+X-Received: by 2002:a17:902:e541:b0:1fb:3107:ec45 with SMTP id
+ d9443c01a7336-1ff5746512cmr31645505ad.54.1722597739574; 
+ Fri, 02 Aug 2024 04:22:19 -0700 (PDT)
 Received: from valdaarhun.. ([223.233.85.12]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff5929ae4esm14801335ad.269.2024.08.02.04.22.23
+ d9443c01a7336-1ff5929ae4esm14801335ad.269.2024.08.02.04.22.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Aug 2024 04:22:25 -0700 (PDT)
+ Fri, 02 Aug 2024 04:22:19 -0700 (PDT)
 From: Sahil Siddiq <icegambit91@gmail.com>
 X-Google-Original-From: Sahil Siddiq <sahilcdq@proton.me>
 To: eperezma@redhat.com,
 	sgarzare@redhat.com
 Cc: mst@redhat.com, qemu-devel@nongnu.org, icegambit91@gmail.com,
  Sahil Siddiq <sahilcdq@proton.me>
-Subject: [RFC v3 3/3] vhost: Allocate memory for packed vring
-Date: Fri,  2 Aug 2024 16:51:38 +0530
-Message-ID: <20240802112138.46831-4-sahilcdq@proton.me>
+Subject: [RFC v3 2/3] vhost: Data structure changes to support packed vqs
+Date: Fri,  2 Aug 2024 16:51:37 +0530
+Message-ID: <20240802112138.46831-3-sahilcdq@proton.me>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240802112138.46831-1-sahilcdq@proton.me>
 References: <20240802112138.46831-1-sahilcdq@proton.me>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=icegambit91@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=icegambit91@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: 15
 X-Spam_score: 1.5
 X-Spam_bar: +
@@ -97,139 +97,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allocate memory for the packed vq format and support
-packed vq in the SVQ "start" and "stop" operations.
+Introduce "struct vring_packed".
+
+Modify VhostShadowVirtqueue so it can support split
+and packed virtqueue formats.
 
 Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
 ---
-Changes v2 -> v3:
-* vhost-shadow-virtqueue.c
-  (vhost_svq_memory_packed): New function
-  (vhost_svq_start):
-  - Remove common variables out of if-else branch.
-  (vhost_svq_stop):
-  - Add support for packed vq.
-  (vhost_svq_get_vring_addr): Revert changes
-  (vhost_svq_get_vring_addr_packed): Likwise.
-* vhost-shadow-virtqueue.h
-  - Revert changes made to "vhost_svq_get_vring_addr*"
-    functions.
-* vhost-vdpa.c: Revert changes.
+No changes from v1/v2 -> v3
 
- hw/virtio/vhost-shadow-virtqueue.c | 56 +++++++++++++++++++++++-------
- hw/virtio/vhost-shadow-virtqueue.h |  4 +++
- 2 files changed, 47 insertions(+), 13 deletions(-)
+ hw/virtio/vhost-shadow-virtqueue.h | 66 ++++++++++++++++++++----------
+ 1 file changed, 44 insertions(+), 22 deletions(-)
 
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index 4c308ee53d..f4285db2b4 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -645,6 +645,8 @@ void vhost_svq_set_svq_call_fd(VhostShadowVirtqueue *svq, int call_fd)
- 
- /**
-  * Get the shadow vq vring address.
-+ * This is used irrespective of whether the
-+ * split or packed vq format is used.
-  * @svq: Shadow virtqueue
-  * @addr: Destination to store address
-  */
-@@ -672,6 +674,16 @@ size_t vhost_svq_device_area_size(const VhostShadowVirtqueue *svq)
-     return ROUND_UP(used_size, qemu_real_host_page_size());
- }
- 
-+size_t vhost_svq_memory_packed(const VhostShadowVirtqueue *svq)
-+{
-+    size_t desc_size = sizeof(struct vring_packed_desc) * svq->num_free;
-+    size_t driver_event_suppression = sizeof(struct vring_packed_desc_event);
-+    size_t device_event_suppression = sizeof(struct vring_packed_desc_event);
-+
-+    return ROUND_UP(desc_size + driver_event_suppression + device_event_suppression,
-+                    qemu_real_host_page_size());
-+}
-+
- /**
-  * Set a new file descriptor for the guest to kick the SVQ and notify for avail
-  *
-@@ -726,17 +738,30 @@ void vhost_svq_start(VhostShadowVirtqueue *svq, VirtIODevice *vdev,
- 
-     svq->vring.num = virtio_queue_get_num(vdev, virtio_get_queue_index(vq));
-     svq->num_free = svq->vring.num;
--    svq->vring.desc = mmap(NULL, vhost_svq_driver_area_size(svq),
--                           PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS,
--                           -1, 0);
--    desc_size = sizeof(vring_desc_t) * svq->vring.num;
--    svq->vring.avail = (void *)((char *)svq->vring.desc + desc_size);
--    svq->vring.used = mmap(NULL, vhost_svq_device_area_size(svq),
--                           PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS,
--                           -1, 0);
--    svq->desc_state = g_new0(SVQDescState, svq->vring.num);
--    svq->desc_next = g_new0(uint16_t, svq->vring.num);
--    for (unsigned i = 0; i < svq->vring.num - 1; i++) {
-+    svq->is_packed = virtio_vdev_has_feature(svq->vdev, VIRTIO_F_RING_PACKED);
-+
-+    if (virtio_vdev_has_feature(svq->vdev, VIRTIO_F_RING_PACKED)) {
-+        svq->vring_packed.vring.desc = mmap(NULL, vhost_svq_memory_packed(svq),
-+                                            PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS,
-+                                            -1, 0);
-+        desc_size = sizeof(struct vring_packed_desc) * svq->vring.num;
-+        svq->vring_packed.vring.driver = (void *)((char *)svq->vring_packed.vring.desc + desc_size);
-+        svq->vring_packed.vring.device = (void *)((char *)svq->vring_packed.vring.driver +
-+                                                  sizeof(struct vring_packed_desc_event));
-+    } else {
-+        svq->vring.desc = mmap(NULL, vhost_svq_driver_area_size(svq),
-+                               PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS,
-+                               -1, 0);
-+        desc_size = sizeof(vring_desc_t) * svq->vring.num;
-+        svq->vring.avail = (void *)((char *)svq->vring.desc + desc_size);
-+        svq->vring.used = mmap(NULL, vhost_svq_device_area_size(svq),
-+                               PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANONYMOUS,
-+                               -1, 0);
-+    }
-+
-+    svq->desc_state = g_new0(SVQDescState, svq->num_free);
-+    svq->desc_next = g_new0(uint16_t, svq->num_free);
-+    for (unsigned i = 0; i < svq->num_free - 1; i++) {
-         svq->desc_next[i] = cpu_to_le16(i + 1);
-     }
- }
-@@ -776,8 +801,13 @@ void vhost_svq_stop(VhostShadowVirtqueue *svq)
-     svq->vq = NULL;
-     g_free(svq->desc_next);
-     g_free(svq->desc_state);
--    munmap(svq->vring.desc, vhost_svq_driver_area_size(svq));
--    munmap(svq->vring.used, vhost_svq_device_area_size(svq));
-+
-+    if (svq->is_packed) {
-+        munmap(svq->vring_packed.vring.desc, vhost_svq_memory_packed(svq));
-+    } else {
-+        munmap(svq->vring.desc, vhost_svq_driver_area_size(svq));
-+        munmap(svq->vring.used, vhost_svq_device_area_size(svq));
-+    }
-     event_notifier_set_handler(&svq->hdev_call, NULL);
- }
- 
 diff --git a/hw/virtio/vhost-shadow-virtqueue.h b/hw/virtio/vhost-shadow-virtqueue.h
-index ee1a87f523..03b722a186 100644
+index 19c842a15b..ee1a87f523 100644
 --- a/hw/virtio/vhost-shadow-virtqueue.h
 +++ b/hw/virtio/vhost-shadow-virtqueue.h
-@@ -67,6 +67,9 @@ struct vring_packed {
+@@ -46,10 +46,53 @@ typedef struct VhostShadowVirtqueueOps {
+     VirtQueueAvailCallback avail_handler;
+ } VhostShadowVirtqueueOps;
  
++struct vring_packed {
++    /* Actual memory layout for this queue. */
++    struct {
++        unsigned int num;
++        struct vring_packed_desc *desc;
++        struct vring_packed_desc_event *driver;
++        struct vring_packed_desc_event *device;
++    } vring;
++
++    /* Avail used flags. */
++    uint16_t avail_used_flags;
++
++    /* Index of the next avail descriptor. */
++    uint16_t next_avail_idx;
++
++    /* Driver ring wrap counter */
++    bool avail_wrap_counter;
++};
++
  /* Shadow virtqueue to relay notifications */
  typedef struct VhostShadowVirtqueue {
-+    /* True if packed virtqueue */
-+    bool is_packed;
++    /* Virtio queue shadowing */
++    VirtQueue *vq;
 +
-     /* Virtio queue shadowing */
-     VirtQueue *vq;
++    /* Virtio device */
++    VirtIODevice *vdev;
++
++    /* SVQ vring descriptors state */
++    SVQDescState *desc_state;
++
++    /*
++     * Backup next field for each descriptor so we can recover securely, not
++     * needing to trust the device access.
++     */
++    uint16_t *desc_next;
++
++    /* Next free descriptor */
++    uint16_t free_head;
++
++    /* Size of SVQ vring free descriptors */
++    uint16_t num_free;
++
+     /* Shadow vring */
+-    struct vring vring;
++    union {
++        struct vring vring;
++        struct vring_packed vring_packed;
++    };
  
-@@ -150,6 +153,7 @@ void vhost_svq_get_vring_addr(const VhostShadowVirtqueue *svq,
-                               struct vhost_vring_addr *addr);
- size_t vhost_svq_driver_area_size(const VhostShadowVirtqueue *svq);
- size_t vhost_svq_device_area_size(const VhostShadowVirtqueue *svq);
-+size_t vhost_svq_memory_packed(const VhostShadowVirtqueue *svq);
+     /* Shadow kick notifier, sent to vhost */
+     EventNotifier hdev_kick;
+@@ -69,27 +112,12 @@ typedef struct VhostShadowVirtqueue {
+     /* Guest's call notifier, where the SVQ calls guest. */
+     EventNotifier svq_call;
  
- void vhost_svq_start(VhostShadowVirtqueue *svq, VirtIODevice *vdev,
-                      VirtQueue *vq, VhostIOVATree *iova_tree);
+-    /* Virtio queue shadowing */
+-    VirtQueue *vq;
+-
+-    /* Virtio device */
+-    VirtIODevice *vdev;
+-
+     /* IOVA mapping */
+     VhostIOVATree *iova_tree;
+ 
+-    /* SVQ vring descriptors state */
+-    SVQDescState *desc_state;
+-
+     /* Next VirtQueue element that guest made available */
+     VirtQueueElement *next_guest_avail_elem;
+ 
+-    /*
+-     * Backup next field for each descriptor so we can recover securely, not
+-     * needing to trust the device access.
+-     */
+-    uint16_t *desc_next;
+-
+     /* Caller callbacks */
+     const VhostShadowVirtqueueOps *ops;
+ 
+@@ -99,17 +127,11 @@ typedef struct VhostShadowVirtqueue {
+     /* Next head to expose to the device */
+     uint16_t shadow_avail_idx;
+ 
+-    /* Next free descriptor */
+-    uint16_t free_head;
+-
+     /* Last seen used idx */
+     uint16_t shadow_used_idx;
+ 
+     /* Next head to consume from the device */
+     uint16_t last_used_idx;
+-
+-    /* Size of SVQ vring free descriptors */
+-    uint16_t num_free;
+ } VhostShadowVirtqueue;
+ 
+ bool vhost_svq_valid_features(uint64_t features, Error **errp);
 -- 
 2.45.2
 
