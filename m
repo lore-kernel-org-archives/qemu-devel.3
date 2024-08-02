@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6255AC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 21:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B86C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 21:42:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZzz0-0003Z5-1o; Fri, 02 Aug 2024 17:38:42 -0400
+	id 1sa01u-0008BI-Tf; Fri, 02 Aug 2024 17:41:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZzyx-0003Wi-Mw
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 17:38:39 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sa01t-00089W-Q1
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 17:41:41 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZzyw-0006aI-4r
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 17:38:39 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a7d26c2297eso1083087566b.2
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 14:38:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sa01r-0006y7-NB
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 17:41:41 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5b391c8abd7so8090865a12.2
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 14:41:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722634716; x=1723239516; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722634898; x=1723239698; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=DrMy0r6qtp0ap9X+3XwWcJzzskVnRzE9X486ESn9B64=;
- b=mXCfSPDoqNy72z1FvLn5X2NTr1xys+Da9fMRVkGa3qAhvztXuND/Z3Qd+6A1u4MSAM
- FyLTlO8VvkvmG6xqAW1wWo8hbZHJtyVWt5xElO+80a0s24QGjD/bOrTrMhWZQJkr1xNW
- xZuu7X6oXieKq4PhMisYXAWgwYV+kLR/XNy+taEV4bJ7avqxHflPZxyUYIpc6AP8iDEc
- awQcyI1cCozK7DrBaiNPs8eI+XHjRP05gB/ni6IoXU2D2aJxG3MZ3gdGTmHcN8IzC8al
- uhxuRj5WCJ77gCJ8562z5FEV2oNu8JROn365iJVI7pEhu2UTZKFe4E5/1l/urDkJcos/
- lldQ==
+ bh=xxHXksN8bUg1QWy9ag8p/fWj8jd1Vr521xmJPRZNlkE=;
+ b=K3kLI1NJeCsgDJE++8xdt3Mkxlx4Hog3U/KtJjnRj/6TiCuj2jsYsaZT6hGqhI64oX
+ D1xHZWWAux7GChrb2+H2TH2MeFrmz63qPVGamQLKDcZpda6e2Q00fb0TrLHZHgiZ2eV2
+ FluyX0GG6BQlXJqLemTtnRGDIA9MAXRMNfqPa/jvWb85iwhyxXClc9KAPCkPGOlZtQS3
+ uAh7rRaXPCUmQZchCM+HgDVUFhgCbeq0eF5cTLG81IfKzgu0O4uruZpQ5D1sROH9kIW6
+ IkflVz7Bu2vZOOsE+WZ1J8EmvBTg3oqo0I5cxddqx/e7NmLnGbh6vEKTb3Gd30dudK3m
+ +I4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722634716; x=1723239516;
+ d=1e100.net; s=20230601; t=1722634898; x=1723239698;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DrMy0r6qtp0ap9X+3XwWcJzzskVnRzE9X486ESn9B64=;
- b=XMFEqyjXxgOd0RG4fD9SNlbfjDUcuHpoD275hKhhlHi5dM87/7FG+tYj/yLrwB240h
- yxJbtjUwaDUpAuZuPN8wO1CNQcHElVmSEixRQSJ/RfpcPkC7pkpc1ZeNeSa3/XQg6r+R
- Dp+KMatncgv0MVnxayk0eq3o+IAKPJw6F3y1cT71G3v9Szws/fDaDGgB/mUc/B+LPSYC
- GJecotiv0zRATvgjXVndcZKw+E4f6XVs+zgF32WGSVNIJySjd+aYzBQNAKfKaa0i2gdR
- 4V1m6NhSu8M6jtPTJAWuaaA1DMrwr9/mfTKRtD4sWIFFghc4a7M1Z88u4TtlXFaBpwuo
- dzQw==
+ bh=xxHXksN8bUg1QWy9ag8p/fWj8jd1Vr521xmJPRZNlkE=;
+ b=moV/vtc/hcruNzP3jWETNAYff3sDbRXj25338FUL1fI3Ovqf1S5rSdY/BYY32foNui
+ 1+Jizn4boaWyBy51kGus3b68i6K8No3cm891Xex8sRDcDm5s8a0ZoyAqsrD+j+Aca0kL
+ TJIEMn10aoXH4TyFFtdNjQ05bBySclLp3d4nXs1Ea+tXe12ZqF8nmA7XnvNVbnRDtATl
+ mjba4swlkW+2/v2FsbLJPFUpYOmrbDqhBT7WPpxUhsACysBlfrDAgn0Cy3zpqefzWYch
+ wQaKPEctzJ7mpU9mKRqORTv0t7Ak4D1nVGtLBkOiaYi0iI0hSryQFYXup2c0fsDdu0qh
+ o0ZQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVVSxNa2BKA5G28kXqIg5CcKxA2U0CFAjy9APN6HFZsXaFcfpgnAYZSMK726H56z1lnyhhBnoctJWsEoIotl8F7o2q6grg=
-X-Gm-Message-State: AOJu0YwvYiX9wROqx6xWI4OTgJqjqlGksOy7SrQRSXCCYbWsDzeMte4p
- 2zl6Ar2rEp9J6uNX6mKAW3ZIZxytW9UkkEL+J07UFohuBEWpBYL5AHHFOJAXq9k=
-X-Google-Smtp-Source: AGHT+IGb5vUO59oRaIm9psCWcmZxzQ67NAg0sT5kJMWkNwKGpg7Rz58sktsg97dIBF7S5GKliqMKAA==
-X-Received: by 2002:a17:906:c115:b0:a7a:97ca:3056 with SMTP id
- a640c23a62f3a-a7dc4e56bffmr346101466b.16.1722634716155; 
- Fri, 02 Aug 2024 14:38:36 -0700 (PDT)
+ AJvYcCXIx+aABQgJY8LNMFMs7BM9vuKJVqdRwqvNVm9woHQ12rCVVg51N+DbMaezgSkYD7M/rNmKFHTAOZIU6MWbiBaGbdP8+zs=
+X-Gm-Message-State: AOJu0Yz+USv5D2/KrcXxh1kZk+rndRXdm3/S7kvtJTX/7rS/gx8OdJ4K
+ fj51PKmkYkEt33cuFxxL9TCgJZBDieIDGe2uEy10VtVpu2cGe47PsqkKFt9wld4=
+X-Google-Smtp-Source: AGHT+IHPA85ZgVx8AeCMoZp/XDBtNLqmyOF2SOasHl2V+L3kF9plqZyVtO7uDz0r7qbI7ag9lLP82g==
+X-Received: by 2002:aa7:c3cc:0:b0:5af:2e08:d362 with SMTP id
+ 4fb4d7f45d1cf-5b7f540af9fmr3449242a12.23.1722634897872; 
+ Fri, 02 Aug 2024 14:41:37 -0700 (PDT)
 Received: from [192.168.69.100] (cvl92-h01-176-184-49-210.dsl.sta.abo.bbox.fr.
  [176.184.49.210]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7dc9bc4219sm139530366b.30.2024.08.02.14.38.34
+ 4fb4d7f45d1cf-5b83b723e78sm1567043a12.59.2024.08.02.14.41.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 Aug 2024 14:38:35 -0700 (PDT)
-Message-ID: <571a2dd5-16f0-4fcf-aa3f-aa758bef3c45@linaro.org>
-Date: Fri, 2 Aug 2024 23:38:33 +0200
+ Fri, 02 Aug 2024 14:41:37 -0700 (PDT)
+Message-ID: <ac870295-4fe0-4c46-a5f1-36eb2945a5dd@linaro.org>
+Date: Fri, 2 Aug 2024 23:41:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] util: Refactor json-writer's string sanitizer to be
- public
-To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/2] qemu-img: CVE-XXX Sanitize untrusted output from NBD
+ server
+To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>
 Cc: qemu-block@nongnu.org, rjones@redhat.com,
- Markus Armbruster <armbru@redhat.com>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 References: <20240802194156.2131519-4-eblake@redhat.com>
- <20240802194156.2131519-5-eblake@redhat.com>
+ <20240802194156.2131519-6-eblake@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240802194156.2131519-5-eblake@redhat.com>
+In-Reply-To: <20240802194156.2131519-6-eblake@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,34 +100,53 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2/8/24 21:26, Eric Blake wrote:
-> My next patch needs to convert text from an untrusted input into an
-> output representation that is suitable for display on a terminal is
-> useful to more than just the json-writer; the text should normally be
-> UTF-8, but blindly allowing all Unicode code points (including ASCII
-> ESC) through to a terminal risks remote-code-execution attacks on some
-> terminals.  Extract the existing body of json-writer's quoted_strinto
-> a new helper routine mod_utf8_sanitize, and generalize it to also work
-> on data that is length-limited rather than NUL-terminated.  [I was
-> actually surprised that glib does not have such a sanitizer already -
-> Google turns up lots of examples of rolling your own string
-> sanitizer.]
+> Error messages from an NBD server must be treated as untrusted; a
+> malicious server can inject escape sequences to try and trigger RCE
+> flaws via escape sequences to whatever terminal happens to be running
+> qemu-img.  The easiest solution is to sanitize the output with the
+> same code we use to produce sanitized (pseudo-)JSON over QMP.
 > 
-> If desired in the future, we may want to tweak whether the output is
-> guaranteed to be ASCII (using lots of \u escape sequences, including
-> surrogate pairs for code points outside the BMP) or if we are okay
-> passing printable Unicode through (we still need to escape control
-> characters).  But for now, I went for minimal code churn, including
-> the fact that the resulting function allows a non-UTF-8 2-byte synonym
-> for U+0000.
+> Rich Jones originally pointed this flaw out at:
+> https://lists.libguestfs.org/archives/list/guestfs@lists.libguestfs.org/thread/2NXA23G2V3HPWJYAO726PLNBEAAEUJAU/
 > 
+> With this patch, and a malicious server run with nbdkit 1.40 as:
+> 
+> $ nbdkit --log=null eval open=' printf \
+>    "EPERM x\\r mess up the output \e[31mmess up the output\e[m mess up" >&2; \
+>    exit 1 ' get_size=' echo 0 ' --run 'qemu-img info "$uri"'
+> 
+> we now get:
+> 
+> qemu-img: Could not open 'nbd://localhost': Requested export not available
+> server reported: /tmp/nbdkitOZHOKB/open: x\r mess up the output \u001B[31mmess up the output\u001B[m mess up
+> 
+> instead of an attempt to hide the name of the Unix socket and forcing
+> the terminal to render part of the text red.
+> 
+> Note that I did _not_ sanitize the string being sent through
+> trace-events in trace_nbd_server_error_msg; this is because I assume
+> that our trace engines already treat all string strings as untrusted
+> input and apply their own escaping as needed.
+> 
+> Reported-by: "Richard W.M. Jones" <rjones@redhat.com>
 > Signed-off-by: Eric Blake <eblake@redhat.com>
+> 
 > ---
->   include/qemu/unicode.h |  3 ++
->   qobject/json-writer.c  | 47 +----------------------
->   util/unicode.c         | 84 ++++++++++++++++++++++++++++++++++++++++++
->   3 files changed, 88 insertions(+), 46 deletions(-)
+> 
+> If my assumption about allowing raw escape bytes through to trace_
+> calls is wrong (such as when tracing to stderr), let me know.  That's
+> a much bigger audit to determine which trace points, if any, should
+> sanitize data before tracing, and/or change the trace engines to
+> sanitize all strings (with possible knock-on effects if trace output
+> changes unexpectedly for a tool expecting something unsanitized).
 
-Preferably moving the docstring help to the header,
+I doubt the trace core layer sanitizes, but it feels it is the
+trace backend responsibility, since core layer might just pass
+pointer to the backends.
+
+> ---
+>   nbd/client.c | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
