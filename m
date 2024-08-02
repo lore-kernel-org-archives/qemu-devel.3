@@ -4,164 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F639C3DA49
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 08:36:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E83C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 08:36:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZnkN-0007SO-ND; Fri, 02 Aug 2024 04:34:47 -0400
+	id 1sZnkq-0001GA-HE; Fri, 02 Aug 2024 04:35:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1sZnkL-0007Ki-MX
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:34:45 -0400
-Received: from mail-mw2nam10on2059.outbound.protection.outlook.com
- ([40.107.94.59] helo=NAM10-MW2-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1sZnkJ-0006QJ-Jb
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:34:45 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jOTlNxCO65+45z3YFJTYgsREkvpRd5LK3mHZmwBqU7dJ7evc3FLDrfjFTQBkniv1NDVKZ96K9c2YCdD+/kq3A0HEpjRCLUhSdNonEYpc24AXQKocCAJrB9vhHjPuv/4iEIDvNoA6IxBtQvGvFwl6ZobA31TVZGvMme9Xc7EiFxX17UTJDghPuIeDeAVSUINCRO+ZtNn8Rr0EsSGidntJGbxd7QPN4uuabMoLy3TY2/kc9zw5KjmasEzp87gs5k0yQHZHHte9yqAoyfCt4CNTeoZOk0UaXvZenzWfYTTqECQU4pBoe8JcL8PBBadpktRXCO1acxdk0H5zb1/gtnTXBQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hBA8GUWQE5qPMusOe0iYHFPprDpxlHQgMyAZk0jLwFw=;
- b=oqJ7/hnZnZELDrhOZ8ah7Bg/5Yyg9HOznSbHX8aukYw4zTpLEJQD6LMixVm2/K94DTz4W2I7ouWt7jEFCsET58OObHP7AgbVR/+xaYSqzjxlFJArAx4uPpE/lIMpBWpbtj98EWs7B5UT9S67GbQV9aKLPuL8unHAh4OS8+9+2DdH1P30JzMbfmYQ54sUyxNEeDtrDRlo+Q5+JCfu4U7tpiBvrCJb3SXrM7vyY3HWf1si1IQhMmukXv9UYnvDOtqKUyKovD9Jr8faVxfdl11V6CDixJkLmaqqRWG7YCZgGF4zip6bWokuDzJ0Qu8w0NHfx0fWrSE614BWWZzmxxM+wQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hBA8GUWQE5qPMusOe0iYHFPprDpxlHQgMyAZk0jLwFw=;
- b=2qsNBWeGuLMvqB28aeprn5KBfFmPvXqlg6XrCKlNVkVM9WKFGEQ1NiO/6Ik+dnO40KmW0nVnYytPfFLd1BqGjy3PNXMOmmC4JRHtaqp75CYYaaggB8/2CLJ0vPFhDdVYKVaw4/0EMPf/pRgBdK7VCFSWoSr5et33MnB/8FoX1go=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from IA1PR12MB8189.namprd12.prod.outlook.com (2603:10b6:208:3f0::13)
- by PH7PR12MB7284.namprd12.prod.outlook.com (2603:10b6:510:20b::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.22; Fri, 2 Aug
- 2024 08:29:35 +0000
-Received: from IA1PR12MB8189.namprd12.prod.outlook.com
- ([fe80::193b:bbfd:9894:dc48]) by IA1PR12MB8189.namprd12.prod.outlook.com
- ([fe80::193b:bbfd:9894:dc48%6]) with mapi id 15.20.7807.026; Fri, 2 Aug 2024
- 08:29:35 +0000
-Message-ID: <de1d3350-152f-9424-bc03-05bf216739be@amd.com>
-Date: Fri, 2 Aug 2024 10:29:30 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH] target/i386: SEV: fix mismatch in vcek-disabled property
- name
-Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Zixi Chen <zixchen@redhat.com>
-References: <20240801234345.355447-1-pbonzini@redhat.com>
-From: "Gupta, Pankaj" <pankaj.gupta@amd.com>
-In-Reply-To: <20240801234345.355447-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR3P281CA0124.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:94::15) To IA1PR12MB8189.namprd12.prod.outlook.com
- (2603:10b6:208:3f0::13)
+ (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
+ id 1sZnko-000122-I3
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:35:14 -0400
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
+ id 1sZnkl-0006i6-Mv
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:35:14 -0400
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-68aa9c894c7so2538267b3.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 01:35:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1722587709; x=1723192509; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3CPFezZ+3JBewhbWuELhuuqGJLgvyqacF3/NeINriXU=;
+ b=AivtNNOIRxgiTqpIngxDAbNbg9Dy0q5nmiqCXJMgHXkFSG8aX4h0Oj2gXfIQRc28nw
+ ucCF2ojsKSujW3OLTDajkzdXBPvsFvp0V3fZY/EnxfsDv+OK8Vj8zQVlefRqFsgANOff
+ dBCZFt4nEL1IVmnkMnVaHPVP9Ewl5w3a+cG5/esIm2vEfZshH9xFFgD18Wfz2QFu9E2W
+ zskqFj6o2vnNL1/93RJW+LucgN0OE0vN16387ySHpv6e+lgwBGtTyVBGZlNxPsga0UXT
+ ZWT9/J/B6uBViWRbgzo1kDFu7VDoLRZGB4xDSJOukqSIJHNaoDSg6s/tBq25OApuG/gW
+ OXXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722587709; x=1723192509;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3CPFezZ+3JBewhbWuELhuuqGJLgvyqacF3/NeINriXU=;
+ b=dYgjdG60+OpMbJpmyLNFxLZE32uMsWQcSemQZATLR2FWlm/DiJPjNqkqn/2g9MRF6v
+ N9crMM8sAjDXzvWjZFs1N/DlE8C+5qpDRR6Uf8i4uzIKsuQtL20FgDakVUdRUVLG4B9p
+ Ckcw9MBKxC0vJHpTOwUsaKdGKE2Sux071CiF8CtKxYJ8ooOFMGLbjYoRadZRj/sQp4vi
+ UgfHThZdBwm57wB9bmvVefVhwx2h2CoaXTyiLEjCp1Ixfkyz9deZUgQPBJs4RC/xZY1y
+ inyvOaXwMKf5/+BnflpFLkn38ohqNRe1ntily5FV0N2/tr1HBlYcqAaePUjgDW+wu11i
+ GV9g==
+X-Gm-Message-State: AOJu0Ywu7dvNxBTxycHgO95DU/q9NcrZRIsbDGxOFzU3hwWfLoLbGVQN
+ +yK0rK1Urn4SJYIFqyCSRmyO9WzexTb/+I9lZAf2XbyHNzVHxiXzIGPWXLMbqto=
+X-Google-Smtp-Source: AGHT+IEnfSUuPxzKSy+V4uqZDRADoDY0ZQnNeMNvnr/DxIuvm3EhVE2/3AodeYPcVT8o6TgdLTl2kw==
+X-Received: by 2002:a0d:c306:0:b0:664:7b3d:a53f with SMTP id
+ 00721157ae682-68964591506mr24985477b3.45.1722587709186; 
+ Fri, 02 Aug 2024 01:35:09 -0700 (PDT)
+Received: from localhost.localdomain ([203.87.101.91])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7106ec06a25sm951673b3a.33.2024.08.02.01.35.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 02 Aug 2024 01:35:08 -0700 (PDT)
+From: Ajeet Singh <itachis6234@gmail.com>
+X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
+To: qemu-devel@nongnu.org
+Cc: Warner Losh <imp@bsdimp.com>, Mark Corbin <mark.corbin@embecsom.com>,
+ Ajeet Singh <itachis@FreeBSD.org>
+Subject: [PATCH 14/18] bsd-user: Define RISC-V signal handling structures and
+ constants
+Date: Fri,  2 Aug 2024 18:34:19 +1000
+Message-Id: <20240802083423.142365-15-itachis@FreeBSD.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240802083423.142365-1-itachis@FreeBSD.org>
+References: <20240802083423.142365-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR12MB8189:EE_|PH7PR12MB7284:EE_
-X-MS-Office365-Filtering-Correlation-Id: 04371347-6a8f-45d9-e717-08dcb2cd3d6d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Z2dTTE96eCtzb09kZEFiU3VXOTc0eWVIVXFuVzZYNlExUlphNUE1RjNYRUdx?=
- =?utf-8?B?NFB6SWNjb21OVXlTRzRDTnFSMVRnc0tHZndwdkl5eXVJTkRTRmZiaG43aHBa?=
- =?utf-8?B?NkRITVdrVUlMMFFlMDlmQ0ErTkhPRDBMc3VnNk4wc0lFblVxVEkwekY0Rmsr?=
- =?utf-8?B?VU9SL2YrQ2duNzQ1RmNoMXBBbmQ4Q2poY2VVTVE3U05GOG15eXY5Wi9peEM3?=
- =?utf-8?B?ajBBL0pZNmRnT2w4eFZIb0xNTzJUZkMwZ2FHa21SMURPeTRiQXpXcjVyTzVD?=
- =?utf-8?B?djZ2QWlSQnVvbVVaRjdyQmkxcG4xSTUrWHg4Z0I2dmRtS2kzcTFvdGFIK0Mw?=
- =?utf-8?B?aDhzdk9xYW54SThoV1ZJQ0RQeU5taFRoRTJ1UGtMajQwbW9NbTVjc2RNY0Z0?=
- =?utf-8?B?bkM2dTQ1Mnh6RjRaYUMzd0l1enhpZmpXTWcybUxJSGNVUEpCdEp0N2lDR0ZD?=
- =?utf-8?B?SWNhSWxrb1pCc1BoZVRWcjV5b3N2ZThWY3I3T3VuVEV3cnJkbXFyVTVhWVVF?=
- =?utf-8?B?blRQUTF2Sllsc213R1I4a1d5ajNWTkFmR09hc0xrTTdWSVJnWUZzY2kyWXFn?=
- =?utf-8?B?SkQxczVrMC9xckpIaCtTbEVjc1RNUTBHZ1BBVzEvblNUZCs1TnhpdmhkeVFX?=
- =?utf-8?B?VkFOZjBiT0NuRFNneGhuWVdhNmpUWmNWRGZYbENucHFCQ21qZUw4R2RnN2NF?=
- =?utf-8?B?azJqc0prbzd6QWtSdnNrNDBNaG9DakVWdENDcHg3bmJJSS9uWFlma3l1amJG?=
- =?utf-8?B?bEhJVTFOZTlOTGt0eTU5RE13YU11WE1rNE94ek4rNlhaRGJlS3JoaENuMUJY?=
- =?utf-8?B?bmxBdWVMVkpzNU1IOWVxL0dnbTNvWXhBSm8vZEs0ekZ0UTlMMlcyTkxrUlBF?=
- =?utf-8?B?ZlZSQzhvajd1UGI5WGZFSkozV2gvL0thd3o0OGhyTmhFanNKdUoyL0Z2T1Q0?=
- =?utf-8?B?MFVzUHlGWHhxQ3RiY0dKWjB0MzVYclJBRUx4bi9qeG5mNW1HRUw5MVo2ODll?=
- =?utf-8?B?blhaR2ZobCtiRW5CbXEyZS9adkdhczlSeVhpZXIyMjA0QlZKcEI1N2xlbU5u?=
- =?utf-8?B?OVJPRURhdW5xV0h3Znh4SGhvZ1RYcWlFTlpEaSs4MmhnbHM1WUp3UEVPSmd0?=
- =?utf-8?B?US9CUnJpb3Y1M0tMWDUwM1g1bEtJQkFQK0FRNk9nMUpRbmVYOG5YYkdQMnpq?=
- =?utf-8?B?RWJEaGF5d2h5dEZ3RUtCYUVScHFHd1pkTERBVEdzeWlwbmRrMHY0NGNtTTdD?=
- =?utf-8?B?V0QrTjEwdGtLMnQ4SHkzaEo5czIzMHNPb1FEOWtSTW52WkJvMTg4TmptU21Q?=
- =?utf-8?B?UUpBY09rTHNBMEQyNFJCZTF5SFZjcExRdzFyYjdHWERHTm9vSVZzQTlmb2dM?=
- =?utf-8?B?R1pMVElXNGVHUzJsUkRkTXk0L0tIVlNYazZIejlHNTBrVHJHaUlFSEEyOGRV?=
- =?utf-8?B?ME5pSjFCRWJJdjNOeFdKdk1QVzBrN3JJbnFmZnB4YmdQN3VqbG1TaDNYZEFM?=
- =?utf-8?B?OXArTzRGVHZWOUtXY1FqQ3VuQTF3QXRsc3NhZVRMNFNVblRPL2JybnRDWmpz?=
- =?utf-8?B?UXRVY2dLK1ppYjlNVUNTTFZyZi9BeVA1UCtFV3hrNm5oSlFkVDdwU3MyNEFw?=
- =?utf-8?B?a0padjUwZHhiRVJwRFAwVHlURy9NSldLRTg0MmI3eSs4MTNMcndNc2RYUTJa?=
- =?utf-8?B?K1NKMWpWUlU0NFlTYjhseUVpa0FXSXIzNEFpSTZRZXorUzhleUs5bDV3cjVl?=
- =?utf-8?B?Y1dJN21MdUZ3cjYwQXlEb3AzcCtleVo4VkdoVE9NeU9MWkpzeWtaeDNUNXZD?=
- =?utf-8?B?N0FtYm52SHdnSjA2TmNuQT09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR12MB8189.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MEtPSURtaVBiWWYyQjJkMWdjU0IxT1FZQzZSTFpLNXlwZHhDNU9lM05PaW9E?=
- =?utf-8?B?aytVYVhDKytVWm5zNTJNV2RNV0FjeGZXVFp3OTBWU1laU2xIVlVxN1Y4QkM5?=
- =?utf-8?B?c1daS20zejR3VTA4WEQ1SmFFem9yTjdQeVhHK0VIT3JsOWovZVhpajlsM0ti?=
- =?utf-8?B?UWJkQ3FSODN4bFBoMkx1RUlsMlRUcDM0bTlvdXBOc24yTWVqOWsvWmlMNHhp?=
- =?utf-8?B?cVV5U1lDVjhyK3lBeFJlZ0tjZ2JCdVBBY2tybFBxdlBsZXVsMmFYc1FISkRR?=
- =?utf-8?B?cEhOS2NiVC9FSm5NNTcxRC9KcEhIUXZrM0pMckhrTnZ5ZlQ2eTF0ZlJuMXZM?=
- =?utf-8?B?K29vUkROK3ovdU4zWFAxNGp3aXRFOEw5MWR3WkR2QWNJYStPSkRneDhISEZ6?=
- =?utf-8?B?bHFnY3orUUQ2SWtSL05taExvOXRKWDI2UERpZ2NZMW5JVDd2R3JMN0cyQ2t5?=
- =?utf-8?B?TU84Rmt3U3lzQlc3K0c2SzNwVGVUNFNiaVdXL2dLUE83ZHBVN0l0L1JYcTBW?=
- =?utf-8?B?bmRaZld4SjBkZjMzakkxdHJMVG5GQUsrWm5RRDNKZlF1bGVDc2tibE8zRnVR?=
- =?utf-8?B?RnRVakMwYzYrVGIxVklzVnVQTXptZlFZa1lVVUo2bjd5ZUNhd2o3TmxkdDMy?=
- =?utf-8?B?WjFIR3ZvMHkvY29kUUpUaFoyYjRsOU5ZUGRUa01iODJoUUozWGZRa1UrZUJY?=
- =?utf-8?B?akRIS0lRMGVIQ0JtR0pUdlhXWG9hWUx6RUtZZWhMSXU3Q2h5MUlpSUU0OFNI?=
- =?utf-8?B?S3N4Umdlc1ZRNTIrU2k5WU1hV2lnYWZtT1Q0emEzOUkvcFk5REN5MllCUExC?=
- =?utf-8?B?VTNRaElYZ21uZEMvYnMxS3dRMkcwSHhxWmRnUG9wSDBjdzVaMzY1SWlicWNJ?=
- =?utf-8?B?VG5ESzJMNjNCYmlrWG80cUFERHQvbElYeEdacTl1MTdHbGwwTDJSZENkNDlj?=
- =?utf-8?B?Mm14cGI1dS9XSnd0dGtjZUM2NjhRRm9sV2MwTFdnZVRObDBXTnhYVm91T2pH?=
- =?utf-8?B?SjBiZ3c4dFJJWi9jTUpLdDJ3Wkl3QUxoczVEUTRsUFZDc2lBc29samlkKzJt?=
- =?utf-8?B?TXczMk1zM0F6MFRJUno2U25ObDZHK0puU2FqaEsrUVluL2NuRll3ekIvVmlY?=
- =?utf-8?B?YitoTkdKWFFOV0RFejlCVUhKOEZ0QjA4d0hjd0k1RmVaTkh6Zk5sN0VtK2FM?=
- =?utf-8?B?U1hESVFUYTRMK21tWGRqak9ZamNRSmFwS0F2N2xtZ01hRDRia3EzNVhUV0xZ?=
- =?utf-8?B?OUdQNDhvMTZudGh5TzFjazFYUlFtck1oYjB6QUptTVNNQm9HaDdmNkR5QUYy?=
- =?utf-8?B?eW5sNGR2ZmU0bkJPRVNFV1dBN0xpMDNweVRJNjRqTkRpTE43TjhzOG45ZEJN?=
- =?utf-8?B?ZTJsMlFkSHR5Y3FaUlpEWVRydDJWd3BOREp0OTdtSFVPSnJLN2dJdjFoWmFD?=
- =?utf-8?B?U0tjaWZVQUEyQlRSZ3pXRDRQOVZ1OHVCQk1yVlM5QWcvSjk0bllhSm1xVVQ0?=
- =?utf-8?B?YTZoTzFQQmZUaU8xSzJHbUx3NnoyZ1hFc2kyTStOckxkdFI2Q1h5MUxhSkhX?=
- =?utf-8?B?NGJCRmhobUxJdWdnYUJTL0pTUlJLYTNZQjY4b0dqakU4ZitQeE1RaVZZQnor?=
- =?utf-8?B?YVBXTFYxOHYxczlOTFJSa2xFeHRUakR5VjVKQ3EyS29kcUNHaEhSNmVxWk1F?=
- =?utf-8?B?aUhmRlVZWkk5MnBVSGpjcjg3SnRncVRIU0JVazNiSFNKbDlKeGhnTXhQSjlj?=
- =?utf-8?B?bnhqa3RVVFBqa3k0WCswMmEvaWNJYXIwUmhteW1TcFFmQjVKdWE4T3o3bjFI?=
- =?utf-8?B?UXA5ZjY5Rlh2RlkrVW82a1JsVkVoQ3AydnkzbG4yZ0hyaTBlOFZCUW1hSnhF?=
- =?utf-8?B?bXRGWWlZb2crV2NaMnVmdklIQ05NajVFTVdoYXI4QUtBakRpR0lJWGtQRElU?=
- =?utf-8?B?ZHRyc2lDS09WdnpucTlpN2hHUERtb1BLbHVpQ2ZMczkwV0V3aG40SG0yNDBG?=
- =?utf-8?B?TmUwYmJIQkFaeHNYTXVXSGs1NnRKOFZDN2FVeGJWeVNmSXJlcWtnckUvdGd0?=
- =?utf-8?B?RnQ1dnJZWGY3YVJBWVloS3E0anI2MitSNGpmNFo4TDgxOVR5OVUvdmJYM1o0?=
- =?utf-8?Q?opxRaljMSt+DA3Ah7WPtNaxoj?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 04371347-6a8f-45d9-e717-08dcb2cd3d6d
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB8189.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Aug 2024 08:29:35.0105 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: VxhxLVbu9A/i8O8JUG7Fixh9XoEqKuOPaNFZmkqUxkt4Q0dC5CREdhPiUBpiR/hBWKqBP2kIn3rUbjA4eS9gDg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7284
-Received-SPF: permerror client-ip=40.107.94.59;
- envelope-from=Pankaj.Gupta@amd.com;
- helo=NAM10-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- NICE_REPLY_A=-1.288, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=itachis6234@gmail.com; helo=mail-yw1-x112f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -177,31 +97,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/2/2024 1:43 AM, Paolo Bonzini wrote:
-> The vcek-disabled property of the sev-snp-guest object is misspelled
-> vcek-required (which I suppose would use the opposite polarity) in
-> the call to object_class_property_add_bool().  Fix it.
-> 
-> Reported-by: Zixi Chen <zixchen@redhat.com>
-> Cc: Pankaj Gupta <pankaj.gupta@amd.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   target/i386/sev.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/i386/sev.c b/target/i386/sev.c
-> index a1157c0ede6..a0d271f8986 100644
-> --- a/target/i386/sev.c
-> +++ b/target/i386/sev.c
-> @@ -2422,7 +2422,7 @@ sev_snp_guest_class_init(ObjectClass *oc, void *data)
->       object_class_property_add_bool(oc, "author-key-enabled",
->                                      sev_snp_guest_get_author_key_enabled,
->                                      sev_snp_guest_set_author_key_enabled);
-> -    object_class_property_add_bool(oc, "vcek-required",
-> +    object_class_property_add_bool(oc, "vcek-disabled",
->                                      sev_snp_guest_get_vcek_disabled,
->                                      sev_snp_guest_set_vcek_disabled);
->       object_class_property_add_str(oc, "host-data",
+From: Mark Corbin <mark.corbin@embecsom.com>
 
-Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+Added definitions for RISC-V signal handling, including structures
+and constants for managing signal frames and context
+
+Signed-off-by: Mark Corbin <mark.corbin@embecsom.com>
+Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Co-authored-by: Warner Losh <imp@bsdimp.com>
+---
+ bsd-user/riscv/target_arch_signal.h | 75 +++++++++++++++++++++++++++++
+ 1 file changed, 75 insertions(+)
+ create mode 100644 bsd-user/riscv/target_arch_signal.h
+
+diff --git a/bsd-user/riscv/target_arch_signal.h b/bsd-user/riscv/target_arch_signal.h
+new file mode 100644
+index 0000000000..1a634b865b
+--- /dev/null
++++ b/bsd-user/riscv/target_arch_signal.h
+@@ -0,0 +1,75 @@
++/*
++ *  RISC-V signal definitions
++ *
++ *  Copyright (c) 2019 Mark Corbin
++ *
++ *  This program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2 of the License, or
++ *  (at your option) any later version.
++ *
++ *  This program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with this program; if not, see <http://www.gnu.org/licenses/>.
++ */
++
++#ifndef TARGET_ARCH_SIGNAL_H
++#define TARGET_ARCH_SIGNAL_H
++
++#include "cpu.h"
++
++
++#define TARGET_INSN_SIZE     4  /* riscv instruction size */
++
++/* Size of the signal trampoline code placed on the stack. */
++#define TARGET_SZSIGCODE    ((abi_ulong)(7 * TARGET_INSN_SIZE))
++
++/* Compare with riscv/include/_limits.h */
++#define TARGET_MINSIGSTKSZ  (1024 * 4)
++#define TARGET_SIGSTKSZ     (TARGET_MINSIGSTKSZ + 32768)
++
++struct target_gpregs {
++    uint64_t    gp_ra;
++    uint64_t    gp_sp;
++    uint64_t    gp_gp;
++    uint64_t    gp_tp;
++    uint64_t    gp_t[7];
++    uint64_t    gp_s[12];
++    uint64_t    gp_a[8];
++    uint64_t    gp_sepc;
++    uint64_t    gp_sstatus;
++};
++
++struct target_fpregs {
++    uint64_t        fp_x[32][2];
++    uint64_t        fp_fcsr;
++    uint32_t        fp_flags;
++    uint32_t        pad;
++};
++
++typedef struct target_mcontext {
++    struct target_gpregs   mc_gpregs;
++    struct target_fpregs   mc_fpregs;
++    uint32_t               mc_flags;
++#define TARGET_MC_FP_VALID 0x01
++    uint32_t               mc_pad;
++    uint64_t               mc_spare[8];
++} target_mcontext_t;
++
++#define TARGET_MCONTEXT_SIZE 864
++#define TARGET_UCONTEXT_SIZE 936
++
++#include "target_os_ucontext.h"
++
++struct target_sigframe {
++    target_ucontext_t   sf_uc; /* = *sf_uncontext */
++    target_siginfo_t    sf_si; /* = *sf_siginfo (SA_SIGINFO case)*/
++};
++
++#define TARGET_SIGSTACK_ALIGN 16
++
++#endif /* TARGET_ARCH_SIGNAL_H */
+-- 
+2.34.1
+
 
