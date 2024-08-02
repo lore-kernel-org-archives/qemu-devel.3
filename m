@@ -4,98 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A12A3C52D6D
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 13:22:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C4AEC52D6D
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 13:22:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZsEI-0005GM-2I; Fri, 02 Aug 2024 09:21:58 -0400
+	id 1sZsE6-0004GT-TT; Fri, 02 Aug 2024 09:21:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZsEC-0004wc-RS
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:21:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZsDl-00033G-6i
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:21:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZsEB-0002s5-6Z
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:21:52 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sZsDj-0002lo-Ln
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:21:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722604910;
+ s=mimecast20190719; t=1722604881;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Ygo9Zxm7XJbNXR2NlBRzxSVXU6sKWIafqoynLfwiPLQ=;
- b=ECAOK6Kh619n115jzs9p5tGkBfHxcoyoIFSi64o3wp4/tGO7SUu7xlT5Zp0QnTPmocqaAQ
- mSPzLFr6EQAzkj4OXhW0PoI84EiPoOtd/mNu0QFb6Ub+cUrslxN65T7xhN/13ce+DJztVa
- BG4yHb1iw7g0nsAOnWsdyvmj70bGO4E=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-440-RLPPo_CvN1mM0uXVAQWRqg-1; Fri, 02 Aug 2024 09:21:47 -0400
-X-MC-Unique: RLPPo_CvN1mM0uXVAQWRqg-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4280a39ecebso16256315e9.0
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 06:21:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722604906; x=1723209706;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ygo9Zxm7XJbNXR2NlBRzxSVXU6sKWIafqoynLfwiPLQ=;
- b=XVN8EhKf1wHemJvP/ttYbL5R7EjeJf3d9jaq/wvN3NkgrzECrYG8CJ8auQYq+p6z7L
- 0keau1dKChUGZIUa8tFcWIio73A/N2oJ+oBU5tK+maM+iZvqb39HcSMPZ5mbaVuH9IaH
- xvVAfnK7+oYSFAR8CBFbbTd2+HMddTJa2wVAQ/uWD0+zG+J4fx/8T+cWyE+sdTiPeTi+
- bqvDxSw0ZB/O1ew8+hoMDWo2XWVmI4IZEStEW5Rg5ddHVLpvshRnGmXocs06dHb1323I
- SzVeJVQiAUvkWmNO4jjldrV6A45vL4eMmWDfkBrwHXWXSZPgbsdyy5HbuAybsfgpAdAD
- tQvQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU7ZHzXtH61CFbQrjhuz4/ugZTtvqKTYCInAiSRZsx2UR5tlukP+flojDCmx+/9NAo2vLOBRGEgIoimqSN9ZH6HBUox0Io=
-X-Gm-Message-State: AOJu0YxFiwn4/DV+mQ4wcIxtx/YM6JdemEDqV4dCj2kjBpz7dJo6H9yT
- Iy9dZIXkn97Qnpmlp/p5IBw2hrl6QWU/z17DfA787j4Kti9I188+Hr7ov3CTJyGPDpGUz24oRWu
- lm+5NBvGObnJSZ16sKMNZ4/y9WR7OE0ZBn6YXWC1+Q9H8y/Ah4iWI
-X-Received: by 2002:a05:600c:190e:b0:426:6327:5a16 with SMTP id
- 5b1f17b1804b1-428e69f6157mr23619905e9.18.1722604906099; 
- Fri, 02 Aug 2024 06:21:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE4kSORYtIKW9c+e1lMe0GvV5AoqUFQSvZcmpg9k9il2WVmwzr+eghaGlxJN5rxMq57aCMaDg==
-X-Received: by 2002:a05:600c:190e:b0:426:6327:5a16 with SMTP id
- 5b1f17b1804b1-428e69f6157mr23619675e9.18.1722604905357; 
- Fri, 02 Aug 2024 06:21:45 -0700 (PDT)
-Received: from redhat.com ([2.55.39.123]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4282b8ada7esm95736325e9.15.2024.08.02.06.21.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Aug 2024 06:21:43 -0700 (PDT)
-Date: Fri, 2 Aug 2024 09:21:30 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Peter Xu <peterx@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
- jasowang@redhat.com, sriram.yagnaraman@est.tech, sw@weilnetz.de,
- qemu-devel@nongnu.org, yan@daynix.com,
- Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <20240802091927-mutt-send-email-mst@kernel.org>
-References: <ZqQLbGxEW3XT7qL-@x1n> <Zqe8C9AfaojKHM8A@redhat.com>
- <ZqfKrtQSSRVnEOGt@x1n> <ZqfQ0cGf8t2trEdl@redhat.com>
- <ZqktXwxBWjuAgGxZ@x1n> <Zqk09BGxlpdxMBMx@redhat.com>
- <Zqk6x2nd3Twz--75@x1n>
- <39a8bb8b-4191-4f41-aaf7-06df24bf3280@daynix.com>
- <ZqumIZcs1tCNTpRE@x1n>
- <b70d09a5-554a-456b-904e-59cec5836ae8@daynix.com>
+ bh=ZtWMul2/VEOhNTkdkl9SidPcnbfJN9l8hvPyRJRUJi8=;
+ b=RhCpL4COt1GuGOOwKqxoPzWyDJOgtOpsO2YZctwasng0jKfzKjCo+MVIAWG+LMD3ZMTzO4
+ hsysi1ypLYflZIwb2THyzIaCLisiL2XMp0bjLE1p9ygheWjYYQNTiQ+chCWhERCLXZ90bj
+ lzfNWarZs/chQpWdbWEdewUUW/9YXQA=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-377-E_jQbnAUNG6QEH5OrG9-fw-1; Fri,
+ 02 Aug 2024 09:21:18 -0400
+X-MC-Unique: E_jQbnAUNG6QEH5OrG9-fw-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 777AF1955F43; Fri,  2 Aug 2024 13:21:16 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 42CFF1955D42; Fri,  2 Aug 2024 13:21:15 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 5468821E668B; Fri,  2 Aug 2024 15:21:13 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Josh Junon <junon@oro.sh>
+Cc: qemu-devel@nongnu.org,  "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,  Philippe =?utf-8?Q?Mathi?=
+ =?utf-8?Q?eu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Yanan Wang <wangyanan55@huawei.com>,  Zhao Liu
+ <zhao1.liu@intel.com>,  Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] qmp: Fix higher half vaddrs for [p]memsave
+In-Reply-To: <ZqzK/Wja59qAjbCY@DESKTOP-TBGODF1.localdomain> (Josh Junon's
+ message of "Fri, 2 Aug 2024 14:03:09 +0200")
+References: <20240731135031.11260-1-junon@oro.sh> <87bk2b2ly4.fsf@pond.sub.org>
+ <ZqzK/Wja59qAjbCY@DESKTOP-TBGODF1.localdomain>
+Date: Fri, 02 Aug 2024 15:21:13 +0200
+Message-ID: <87sevn12nq.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b70d09a5-554a-456b-904e-59cec5836ae8@daynix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.124,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,23 +90,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 02, 2024 at 01:30:51PM +0900, Akihiko Odaki wrote:
-> 4) is the second easiest to implement, but the design of 4) will depend on
-> whether we will satisfy 2) or 3). In the email I cited earlier, I suggested
-> an option -use-platform to specify the expectation on the platform. If it is
-> ever to be implemented, that option can take a special value, "host" to tell
-> QEMU that it can use any features it finds on the current host.
+Josh Junon <junon@oro.sh> writes:
 
-In practice, lots of people would benefit from ability to migrate
-using host features (checking that hosts are compatibile,
-as they often are).
-If we are going to go to great lengths adding new interfaces,
-I think that would be a really useful thing to address.
+> On Fri, Aug 02, 2024 at 01:39:15PM +0200, Markus Armbruster wrote:
 
+[...]
 
+>> I'd go for a much smaller solution: change the QMP commands to unsigned,
+>> keep the HMP commands signed, with a silent conversion just like
+>> hmp_memory_dump() & friends.
+>> 
+>
+> Sounds good to me, thanks for the review!
 
-
--- 
-MST
+You're welcome!  Looking forward to v2.
 
 
