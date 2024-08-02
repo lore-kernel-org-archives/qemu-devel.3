@@ -4,86 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A312CC52D6D
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 13:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E78B6C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 14:05:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZsgQ-0002Fu-G8; Fri, 02 Aug 2024 09:51:02 -0400
+	id 1sZstr-0003gv-1p; Fri, 02 Aug 2024 10:04:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZsgO-00027u-JS
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:51:00 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sZsgN-0007kN-03
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:51:00 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-70eec5f2401so5349181b3a.3
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 06:50:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722606657; x=1723211457; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=R+SP8gCi3n4QYtDs0BpWrKmxu7C+O9ZP4XqePPh7v0o=;
- b=C3YEZWBjaLAC1kegLVs6beBL/kkUH0bTPEeNMb0bt4ryakG0PiU64ky/bHY7oBa3ji
- 68xuEGJO+F2o2RqzKofQ+09W15OGaf5OQuQGbVoxZI+B08Zeqg8DCm4by29/xXnCNtzG
- JB0p16bOwnRw9fiWQYHKIW0n5/ugCRgzODA1jXy6Htg8jz3PdL/iRHMBrp8ZopxDBkoT
- NGmHn7n1vLRo0uI7xIPcP0zLHakhGa+o2lEjDGaUaGIN/zxwjhMkaVC7U0YRnXoioOhr
- kPdYlHtpd6s5t1hgiy5VWl+u+kf2cX1XwjWnenRchCOHl4UcuLx1C8EBOI9t1AqTwJry
- K3iA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722606657; x=1723211457;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R+SP8gCi3n4QYtDs0BpWrKmxu7C+O9ZP4XqePPh7v0o=;
- b=Dg4yO4Wq5jWrkqDX9BdCnkektFh16yvaPeBs4WC4x0yJWrEEXwNnISveRM61SyZqyK
- d0qPcp7o1lb3tk+d5D6Y/gKuUPSLU8bRkC1eRxGjLzh4A2pHOiFH88iNCmCCSUaEhvD3
- 1zdSA0jLrjl+DbNHeoWqAle+7Kyh5GQVb7PIi26CTBSetUudXMWpT5+/NuHHzYRABffU
- tIdx0TIcutl4FzstUqeFUZ0LNb+8z+RooQu+15uU8clAGJ96OHI1GUzcbVvwEUp13hP2
- 427WrQRswASWGksLWfv4o/vtzlLY07T+PeUnjGshaZfieJxs0x07aHtfUBueX36HWeli
- p3Hw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXJMg6faS0lqjhUdWBLbugOqrGW/5ei4CI9TZKO05T8Txoa1laIE8xEWZIVUUxpm2gSiSBuRd1UwOZ+xIbQLKQlPEUffr8=
-X-Gm-Message-State: AOJu0YyVx+m93Lh9fqnHfaKtc4nnN4XuEWNrtUr2xyXw5BU0s1p340pu
- 42tuYy5W6FuDMyAjtqrqQV9YoTt3zlEbJNA76/eA57N58/HoY/3RKpkupNQKbHM=
-X-Google-Smtp-Source: AGHT+IGc0AcqCWNsflf9yCyWTuEAUlCYGbuwqP6bKqIgKdwpXZkmIfWiZfg9+OaOQmib4e2u1wMWfA==
-X-Received: by 2002:a05:6a21:6d83:b0:1c4:6e7d:2ae8 with SMTP id
- adf61e73a8af0-1c699572d62mr4787992637.11.1722606657364; 
- Fri, 02 Aug 2024 06:50:57 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff590608b2sm17136835ad.152.2024.08.02.06.50.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 Aug 2024 06:50:57 -0700 (PDT)
-Message-ID: <46af1474-abb0-4e47-a522-942456dc56f5@linaro.org>
-Date: Fri, 2 Aug 2024 23:50:51 +1000
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZstp-0003f2-6B
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 10:04:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZstn-0000Sq-5C
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 10:04:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722607489;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=wdifgzxbp5ac7lD3fy430ZGdFCLk2H/FlSucbDLsi2I=;
+ b=PcgyyYmaHAANYO08g0LIvcJ3kGLov36Y+fj0aaLrCfr77azXMI3WHy9u5V55T1aOY6Xv9c
+ Md0mrVQOPIQOUtvkSL4WO2LtPuEx6lsNqUuPYA2CtsAezYbZLZhHqkQOcVkYzTkzmAoF4I
+ ys7TDDEwB46kGrKmTIUWTSV4osRNmJI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-374-AkG45xfnP1ClUjW5h7Khsg-1; Fri,
+ 02 Aug 2024 10:04:47 -0400
+X-MC-Unique: AkG45xfnP1ClUjW5h7Khsg-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A865E1955EA7; Fri,  2 Aug 2024 14:04:44 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.72])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A1B0F19560AA; Fri,  2 Aug 2024 14:04:41 +0000 (UTC)
+Date: Fri, 2 Aug 2024 09:04:38 -0500
+From: Eric Blake <eblake@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, den@virtuozzo.com, 
+ andrey.drobyshev@virtuozzo.com, vsementsov@yandex-team.ru, kwolf@redhat.com,
+ hreitz@redhat.com, 
+ berrange@redhat.com, Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+Subject: Re: [PATCH v2 1/3] nbd: CVE-XXX: Use cookie to track generation of
+ nbd-server
+Message-ID: <huhjgqsj7dzwdphz6maoz63q6wowqudyo6r6wh6y4t4txsgf4h@sacrygikvt36>
+References: <20240802014824.1906798-5-eblake@redhat.com>
+ <20240802014824.1906798-6-eblake@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/18] bsd-user: Add RISC-V 64-bit Target Configuration
- and Debug XML Files
-To: Ajeet Singh <itachis6234@gmail.com>, qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, Ajeet Singh <itachis@FreeBSD.org>
-References: <20240802083423.142365-1-itachis@FreeBSD.org>
- <20240802083423.142365-19-itachis@FreeBSD.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240802083423.142365-19-itachis@FreeBSD.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240802014824.1906798-6-eblake@redhat.com>
+User-Agent: NeoMutt/20240425
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.124,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,19 +86,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/2/24 18:34, Ajeet Singh wrote:
-> From: Warner Losh<imp@bsdimp.com>
-> 
-> Added configuration for RISC-V 64-bit target to the build system.
-> 
-> Signed-off-by: Warner Losh<imp@bsdimp.com>
-> Signed-off-by: Ajeet Singh<itachis@FreeBSD.org>
-> ---
->   configs/targets/riscv64-bsd-user.mak | 4 ++++
->   1 file changed, 4 insertions(+)
->   create
+On Thu, Aug 01, 2024 at 08:32:06PM GMT, Eric Blake wrote:
+> As part of the QMP command nbd-server-start, the blockdev code was
+> creating a single global nbd_server object, and telling the qio code
+> to accept one or more client connections to the exposed listener
+> socket.  But even though we tear down the listener socket during a
+> subsequent QMP nbd-server-stop, the qio code has handed off to a
+> coroutine that may be executing asynchronously with the server
+> shutdown, such that a client that connects to the socket before
+> nbd-server-stop but delays disconnect or completion of the NBD
+> handshake until after the followup QMP command can result in the
+> nbd_blockdev_client_closed() callback running after nbd_server has
+> already been torn down, causing a SEGV.  Worse, if a second nbd_server
+> object is created (possibly on a different socket address), a late
+> client resolution from the first server can subtly interfere with the
+> second server.  This can be abused by a malicious client that does not
+> know TLS secrets to cause qemu to SEGV after a legitimate client has
+> concluded storage migration to a destination qemu, which can be turned
+> into a denial of service attack even when qemu is set up to require
+> only TLS clients.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Now assigned CVE-2024-7409; I'll make sure that is mentioned in the
+commit message, whether a v2 is needed or whether this gets a positive
+review as-is modulo the reference.
 
-r~
+I have not (yet?) determined how long the bug has existed, but note
+that the code in question appears unchanged since at least qemu 6.0
+(from 2021), and probably predates that, so it is long-standing.
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
+
 
