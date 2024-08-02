@@ -4,81 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A71CAC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 13:21:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A12A3C52D6D
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 13:22:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZsD2-00087g-MK; Fri, 02 Aug 2024 09:20:40 -0400
+	id 1sZsEI-0005GM-2I; Fri, 02 Aug 2024 09:21:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZsCo-00080q-3L
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:20:27 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZsCm-0002Wf-Ga
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:20:25 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-42803bbf842so72080875e9.1
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 06:20:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722604822; x=1723209622; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=WrEZu6nyJazvpwdG4DLuA6n59C3JvsgZMtnUKZZ9qRY=;
- b=ESIM7yBg90dmJ6VPEXhA6LfQB3r0D6Y40FRxQmwIfT6Hw0QaKb50cJnf34MudUWKo1
- 7tC4aeoV2lkBGZioEcCS0hX7Rn9YsmjkSXTtp20ZE2yMurdewUzcpnWx0JNcIbYI5I9K
- DeaIaV5jW5hrjIKZWg2ZuMogXmu794Eg9lJ8RAUAsj/3+xXuBdbfbaDtgJTAgMUhsrtx
- z/Nei7UoWm18uOD1biiUwk9nWChWi0ptk+8qosxxPAR8Ef8CHcxLCl34KRuFpIHtCN+R
- pH0VCGqNHdkfBZfB2zWFtIyqO02Z7H849Ep5Q/6AXF18VdIIE2Mo7lz4DHfirH6+kZ0f
- lrzA==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZsEC-0004wc-RS
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:21:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZsEB-0002s5-6Z
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:21:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722604910;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ygo9Zxm7XJbNXR2NlBRzxSVXU6sKWIafqoynLfwiPLQ=;
+ b=ECAOK6Kh619n115jzs9p5tGkBfHxcoyoIFSi64o3wp4/tGO7SUu7xlT5Zp0QnTPmocqaAQ
+ mSPzLFr6EQAzkj4OXhW0PoI84EiPoOtd/mNu0QFb6Ub+cUrslxN65T7xhN/13ce+DJztVa
+ BG4yHb1iw7g0nsAOnWsdyvmj70bGO4E=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-440-RLPPo_CvN1mM0uXVAQWRqg-1; Fri, 02 Aug 2024 09:21:47 -0400
+X-MC-Unique: RLPPo_CvN1mM0uXVAQWRqg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4280a39ecebso16256315e9.0
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 06:21:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722604822; x=1723209622;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WrEZu6nyJazvpwdG4DLuA6n59C3JvsgZMtnUKZZ9qRY=;
- b=awG6sYKlhkDr0/gk7rJwZsEpEoUVfgIb42jRLQnlLV+x4HDEpZeP8vJdeVm6q4uvFG
- P9KGdg8OB5C4kFJorrad2tWxknPWQvWhwnqMdSUI78RrXtCABLpB+CEOzWt1lVULf18F
- Jweeff2Bod/AK6Kq1XhZvQQn8+iYsjA5gXlc6mmnBUYL5k1xHsHairTRs0sg7qnTRxJ3
- QNbGpEjAPcT5rN2yzRgzSCLnLMNdp0gnD2MnleM9D1axzv877mOVx8qTJKuFz/my5++w
- hEKF0h1HJprNe5cokp2WkiYC7wqqUXXvauP7xuwIMNuRBKJbFrjeVWUjH1zwaTONIUe0
- Y9Rg==
-X-Gm-Message-State: AOJu0YzuG84eHsO8hcbIBcOGqnPU6BUEnIg38nADUoeKZzaf2itjvfro
- PrI6/VVmwHyni63Ti21raJ0rHDHP6KHdNPBkRo4FbIT1cmI17BGM5zXK/qhKEEI=
-X-Google-Smtp-Source: AGHT+IHSfcx0fQ+13XwvpZpHwu/VYQh/YphZOnLvWeWYztkzTLsrbgtWMb2NoHazPlyYaupVzo3Frw==
-X-Received: by 2002:a05:600c:4f07:b0:426:6714:5415 with SMTP id
- 5b1f17b1804b1-428e6b7e993mr26762205e9.30.1722604821948; 
- Fri, 02 Aug 2024 06:20:21 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.211.94])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-428e6d6b902sm33097525e9.4.2024.08.02.06.20.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 Aug 2024 06:20:21 -0700 (PDT)
-Message-ID: <a218c0ba-3527-4e31-b8a7-e34b6f2bad1f@linaro.org>
-Date: Fri, 2 Aug 2024 15:20:19 +0200
+ d=1e100.net; s=20230601; t=1722604906; x=1723209706;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ygo9Zxm7XJbNXR2NlBRzxSVXU6sKWIafqoynLfwiPLQ=;
+ b=XVN8EhKf1wHemJvP/ttYbL5R7EjeJf3d9jaq/wvN3NkgrzECrYG8CJ8auQYq+p6z7L
+ 0keau1dKChUGZIUa8tFcWIio73A/N2oJ+oBU5tK+maM+iZvqb39HcSMPZ5mbaVuH9IaH
+ xvVAfnK7+oYSFAR8CBFbbTd2+HMddTJa2wVAQ/uWD0+zG+J4fx/8T+cWyE+sdTiPeTi+
+ bqvDxSw0ZB/O1ew8+hoMDWo2XWVmI4IZEStEW5Rg5ddHVLpvshRnGmXocs06dHb1323I
+ SzVeJVQiAUvkWmNO4jjldrV6A45vL4eMmWDfkBrwHXWXSZPgbsdyy5HbuAybsfgpAdAD
+ tQvQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU7ZHzXtH61CFbQrjhuz4/ugZTtvqKTYCInAiSRZsx2UR5tlukP+flojDCmx+/9NAo2vLOBRGEgIoimqSN9ZH6HBUox0Io=
+X-Gm-Message-State: AOJu0YxFiwn4/DV+mQ4wcIxtx/YM6JdemEDqV4dCj2kjBpz7dJo6H9yT
+ Iy9dZIXkn97Qnpmlp/p5IBw2hrl6QWU/z17DfA787j4Kti9I188+Hr7ov3CTJyGPDpGUz24oRWu
+ lm+5NBvGObnJSZ16sKMNZ4/y9WR7OE0ZBn6YXWC1+Q9H8y/Ah4iWI
+X-Received: by 2002:a05:600c:190e:b0:426:6327:5a16 with SMTP id
+ 5b1f17b1804b1-428e69f6157mr23619905e9.18.1722604906099; 
+ Fri, 02 Aug 2024 06:21:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE4kSORYtIKW9c+e1lMe0GvV5AoqUFQSvZcmpg9k9il2WVmwzr+eghaGlxJN5rxMq57aCMaDg==
+X-Received: by 2002:a05:600c:190e:b0:426:6327:5a16 with SMTP id
+ 5b1f17b1804b1-428e69f6157mr23619675e9.18.1722604905357; 
+ Fri, 02 Aug 2024 06:21:45 -0700 (PDT)
+Received: from redhat.com ([2.55.39.123]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4282b8ada7esm95736325e9.15.2024.08.02.06.21.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 02 Aug 2024 06:21:43 -0700 (PDT)
+Date: Fri, 2 Aug 2024 09:21:30 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Peter Xu <peterx@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
+ jasowang@redhat.com, sriram.yagnaraman@est.tech, sw@weilnetz.de,
+ qemu-devel@nongnu.org, yan@daynix.com,
+ Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
+Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
+Message-ID: <20240802091927-mutt-send-email-mst@kernel.org>
+References: <ZqQLbGxEW3XT7qL-@x1n> <Zqe8C9AfaojKHM8A@redhat.com>
+ <ZqfKrtQSSRVnEOGt@x1n> <ZqfQ0cGf8t2trEdl@redhat.com>
+ <ZqktXwxBWjuAgGxZ@x1n> <Zqk09BGxlpdxMBMx@redhat.com>
+ <Zqk6x2nd3Twz--75@x1n>
+ <39a8bb8b-4191-4f41-aaf7-06df24bf3280@daynix.com>
+ <ZqumIZcs1tCNTpRE@x1n>
+ <b70d09a5-554a-456b-904e-59cec5836ae8@daynix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/elfload: Fix pr_pid values in core files
-To: Ilya Leoshkevich <iii@linux.ibm.com>, Laurent Vivier <laurent@vivier.eu>, 
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-References: <20240801202340.21845-1-iii@linux.ibm.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240801202340.21845-1-iii@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b70d09a5-554a-456b-904e-59cec5836ae8@daynix.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.124,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,32 +113,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/8/24 22:23, Ilya Leoshkevich wrote:
-> Analyzing qemu-produced core dumps of multi-threaded apps runs into:
-> 
->      (gdb) info threads
->        [...]
->        21   Thread 0x3ff83cc0740 (LWP 9295) warning: Couldn't find general-purpose registers in core file.
->      <unavailable> in ?? ()
-> 
-> The reason is that all pr_pid values are the same, because the same
-> TaskState is used for all CPUs when generating NT_PRSTATUS notes.
-> 
-> Fix by using TaskStates associated with individual CPUs.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: 243c47066253 ("linux-user/elfload: Write corefile elf header in one block")
+On Fri, Aug 02, 2024 at 01:30:51PM +0900, Akihiko Odaki wrote:
+> 4) is the second easiest to implement, but the design of 4) will depend on
+> whether we will satisfy 2) or 3). In the email I cited earlier, I suggested
+> an option -use-platform to specify the expectation on the platform. If it is
+> ever to be implemented, that option can take a special value, "host" to tell
+> QEMU that it can use any features it finds on the current host.
 
-Isn't it
+In practice, lots of people would benefit from ability to migrate
+using host features (checking that hosts are compatibile,
+as they often are).
+If we are going to go to great lengths adding new interfaces,
+I think that would be a really useful thing to address.
 
-Fixes: edf8e2af14 ("linux-user: implemented ELF coredump")
 
-?
-> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-> ---
->   linux-user/elfload.c | 8 +++-----
->   1 file changed, 3 insertions(+), 5 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+-- 
+MST
 
 
