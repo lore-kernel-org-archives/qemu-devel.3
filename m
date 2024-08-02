@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D362C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 21:01:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3338DC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 21:03:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZzO9-0000BN-4J; Fri, 02 Aug 2024 17:00:37 -0400
+	id 1sZzQh-0004uy-T0; Fri, 02 Aug 2024 17:03:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1sZzO7-00008C-DD
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 17:00:35 -0400
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1sZzQf-0004sp-Hu
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 17:03:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1sZzO5-00088W-CT
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 17:00:35 -0400
+ (Exim 4.90_1) (envelope-from <rjones@redhat.com>) id 1sZzQd-0000IU-RV
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 17:03:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722632432;
+ s=mimecast20190719; t=1722632591;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ewistRBsZ/2rKq49a4EnqcioqEwnygURuqRkeEhmNN8=;
- b=KFol3eUDoOFZ7JYdYBXoObdrVdZuQhAzIlmxSy0SuQdWePTXbyDISJMn6K20N341XFrUHp
- bZrNoWYJ4cy8X/uZSE7KOQtPp+TQXGQvNihueVeLJHVBjv3GZvjREl3G7glGQ3u1phW8mM
- aR39oulXGRXMjAXn2NxFT6/UIo8fkEQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ipwF7cvTS655MUkRwrwzTFWPUlKb6aDId/vFEfgKTXw=;
+ b=Ka0OlCn7QUdOxamvZ4Cfcs5gIp6zCqgArDQVBCYN+Snb4S2MEOUQ9L7d4BcsvaStq2pspH
+ +4G0cZr+RRel0rIWAiG1vPGAMNldA272Lt30FlnCzi0SfSwGmaa8niJuxMOfEbOWfzHr47
+ jRSCB08HmQoiocFHe/0lDZIfgyT9gq4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-150-bHMqgM3eN7Oz0JCPMiKbIw-1; Fri,
- 02 Aug 2024 17:00:30 -0400
-X-MC-Unique: bHMqgM3eN7Oz0JCPMiKbIw-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-xB9qAFvIM6qNK3RKengrmQ-1; Fri,
+ 02 Aug 2024 17:03:08 -0400
+X-MC-Unique: xB9qAFvIM6qNK3RKengrmQ-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 850441955BEE; Fri,  2 Aug 2024 21:00:29 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 27DFC1944A90; Fri,  2 Aug 2024 21:03:07 +0000 (UTC)
 Received: from localhost (unknown [10.42.28.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 88D68300018D; Fri,  2 Aug 2024 21:00:28 +0000 (UTC)
-Date: Fri, 2 Aug 2024 22:00:27 +0100
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 97CF71955E80; Fri,  2 Aug 2024 21:03:06 +0000 (UTC)
+Date: Fri, 2 Aug 2024 22:03:05 +0100
 From: "Richard W.M. Jones" <rjones@redhat.com>
 To: Eric Blake <eblake@redhat.com>
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH 1/2] util: Refactor json-writer's string sanitizer to be
- public
-Message-ID: <20240802210027.GW1450@redhat.com>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH 2/2] qemu-img: CVE-XXX Sanitize untrusted output from NBD
+ server
+Message-ID: <20240802210305.GX1450@redhat.com>
 References: <20240802194156.2131519-4-eblake@redhat.com>
- <20240802194156.2131519-5-eblake@redhat.com>
+ <20240802194156.2131519-6-eblake@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240802194156.2131519-5-eblake@redhat.com>
+In-Reply-To: <20240802194156.2131519-6-eblake@redhat.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=rjones@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -84,217 +84,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 02, 2024 at 02:26:05PM -0500, Eric Blake wrote:
-> My next patch needs to convert text from an untrusted input into an
-> output representation that is suitable for display on a terminal is
-> useful to more than just the json-writer; the text should normally be
-> UTF-8, but blindly allowing all Unicode code points (including ASCII
-> ESC) through to a terminal risks remote-code-execution attacks on some
-> terminals.  Extract the existing body of json-writer's quoted_strinto
-> a new helper routine mod_utf8_sanitize, and generalize it to also work
-> on data that is length-limited rather than NUL-terminated.  [I was
-> actually surprised that glib does not have such a sanitizer already -
-> Google turns up lots of examples of rolling your own string
-> sanitizer.]
+On Fri, Aug 02, 2024 at 02:26:06PM -0500, Eric Blake wrote:
+> Error messages from an NBD server must be treated as untrusted; a
+> malicious server can inject escape sequences to try and trigger RCE
+> flaws via escape sequences to whatever terminal happens to be running
+> qemu-img.  The easiest solution is to sanitize the output with the
+> same code we use to produce sanitized (pseudo-)JSON over QMP.
 > 
-> If desired in the future, we may want to tweak whether the output is
-> guaranteed to be ASCII (using lots of \u escape sequences, including
-> surrogate pairs for code points outside the BMP) or if we are okay
-> passing printable Unicode through (we still need to escape control
-> characters).  But for now, I went for minimal code churn, including
-> the fact that the resulting function allows a non-UTF-8 2-byte synonym
-> for U+0000.
+> Rich Jones originally pointed this flaw out at:
+> https://lists.libguestfs.org/archives/list/guestfs@lists.libguestfs.org/thread/2NXA23G2V3HPWJYAO726PLNBEAAEUJAU/
 > 
+> With this patch, and a malicious server run with nbdkit 1.40 as:
+> 
+> $ nbdkit --log=null eval open=' printf \
+>   "EPERM x\\r mess up the output \e[31mmess up the output\e[m mess up" >&2; \
+>   exit 1 ' get_size=' echo 0 ' --run 'qemu-img info "$uri"'
+> 
+> we now get:
+> 
+> qemu-img: Could not open 'nbd://localhost': Requested export not available
+> server reported: /tmp/nbdkitOZHOKB/open: x\r mess up the output \u001B[31mmess up the output\u001B[m mess up
+> 
+> instead of an attempt to hide the name of the Unix socket and forcing
+> the terminal to render part of the text red.
+> 
+> Note that I did _not_ sanitize the string being sent through
+> trace-events in trace_nbd_server_error_msg; this is because I assume
+> that our trace engines already treat all string strings as untrusted
+> input and apply their own escaping as needed.
+> 
+> Reported-by: "Richard W.M. Jones" <rjones@redhat.com>
 > Signed-off-by: Eric Blake <eblake@redhat.com>
-
-I have to admit I'd never heard of "modified UTF-8" before, but it's a
-thing:
-
-https://en.wikipedia.org/wiki/UTF-8#Modified_UTF-8
-
-As the patch is almost a simple code motion:
+> 
+> ---
+> 
+> If my assumption about allowing raw escape bytes through to trace_
+> calls is wrong (such as when tracing to stderr), let me know.  That's
+> a much bigger audit to determine which trace points, if any, should
+> sanitize data before tracing, and/or change the trace engines to
+> sanitize all strings (with possible knock-on effects if trace output
+> changes unexpectedly for a tool expecting something unsanitized).
+> ---
+>  nbd/client.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/nbd/client.c b/nbd/client.c
+> index c89c7504673..baa20d10d69 100644
+> --- a/nbd/client.c
+> +++ b/nbd/client.c
+> @@ -23,6 +23,7 @@
+>  #include "trace.h"
+>  #include "nbd-internal.h"
+>  #include "qemu/cutils.h"
+> +#include "qemu/unicode.h"
+> 
+>  /* Definitions for opaque data types */
+> 
+> @@ -230,7 +231,9 @@ static int nbd_handle_reply_err(QIOChannel *ioc, NBDOptionReply *reply,
+>      }
+> 
+>      if (msg) {
+> -        error_append_hint(errp, "server reported: %s\n", msg);
+> +        g_autoptr(GString) buf = g_string_sized_new(reply->length);
+> +        mod_utf8_sanitize(buf, msg);
+> +        error_append_hint(errp, "server reported: %s\n", buf->str);
+>      }
 
 Reviewed-by: Richard W.M. Jones <rjones@redhat.com>
-
-Rich.
-
-> ---
->  include/qemu/unicode.h |  3 ++
->  qobject/json-writer.c  | 47 +----------------------
->  util/unicode.c         | 84 ++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 88 insertions(+), 46 deletions(-)
-> 
-> diff --git a/include/qemu/unicode.h b/include/qemu/unicode.h
-> index 7fa10b8e604..e1013b29f72 100644
-> --- a/include/qemu/unicode.h
-> +++ b/include/qemu/unicode.h
-> @@ -4,4 +4,7 @@
->  int mod_utf8_codepoint(const char *s, size_t n, char **end);
->  ssize_t mod_utf8_encode(char buf[], size_t bufsz, int codepoint);
-> 
-> +void mod_utf8_sanitize(GString *buf, const char *str);
-> +void mod_utf8_sanitize_len(GString *buf, const char *str, ssize_t len);
-> +
->  #endif
-> diff --git a/qobject/json-writer.c b/qobject/json-writer.c
-> index 309a31d57a9..5c14574efee 100644
-> --- a/qobject/json-writer.c
-> +++ b/qobject/json-writer.c
-> @@ -104,53 +104,8 @@ static void pretty_newline_or_space(JSONWriter *writer)
-> 
->  static void quoted_str(JSONWriter *writer, const char *str)
->  {
-> -    const char *ptr;
-> -    char *end;
-> -    int cp;
-> -
->      g_string_append_c(writer->contents, '"');
-> -
-> -    for (ptr = str; *ptr; ptr = end) {
-> -        cp = mod_utf8_codepoint(ptr, 6, &end);
-> -        switch (cp) {
-> -        case '\"':
-> -            g_string_append(writer->contents, "\\\"");
-> -            break;
-> -        case '\\':
-> -            g_string_append(writer->contents, "\\\\");
-> -            break;
-> -        case '\b':
-> -            g_string_append(writer->contents, "\\b");
-> -            break;
-> -        case '\f':
-> -            g_string_append(writer->contents, "\\f");
-> -            break;
-> -        case '\n':
-> -            g_string_append(writer->contents, "\\n");
-> -            break;
-> -        case '\r':
-> -            g_string_append(writer->contents, "\\r");
-> -            break;
-> -        case '\t':
-> -            g_string_append(writer->contents, "\\t");
-> -            break;
-> -        default:
-> -            if (cp < 0) {
-> -                cp = 0xFFFD; /* replacement character */
-> -            }
-> -            if (cp > 0xFFFF) {
-> -                /* beyond BMP; need a surrogate pair */
-> -                g_string_append_printf(writer->contents, "\\u%04X\\u%04X",
-> -                                       0xD800 + ((cp - 0x10000) >> 10),
-> -                                       0xDC00 + ((cp - 0x10000) & 0x3FF));
-> -            } else if (cp < 0x20 || cp >= 0x7F) {
-> -                g_string_append_printf(writer->contents, "\\u%04X", cp);
-> -            } else {
-> -                g_string_append_c(writer->contents, cp);
-> -            }
-> -        }
-> -    };
-> -
-> +    mod_utf8_sanitize(writer->contents, str);
->      g_string_append_c(writer->contents, '"');
->  }
-> 
-> diff --git a/util/unicode.c b/util/unicode.c
-> index 8580bc598b3..a419ed4de35 100644
-> --- a/util/unicode.c
-> +++ b/util/unicode.c
-> @@ -154,3 +154,87 @@ ssize_t mod_utf8_encode(char buf[], size_t bufsz, int codepoint)
->      buf[4] = 0;
->      return 4;
->  }
-> +
-> +/**
-> + * mod_utf8_sanitize:
-> + * @buf: Destination buffer
-> + * @str: Modified UTF-8 string to sanitize
-> + *
-> + * Append the contents of the NUL-terminated Modified UTF-8 string
-> + * @str into @buf, with escape sequences used for non-printable ASCII
-> + * and for quote characters.  The result is therefore safe for output
-> + * to a terminal.
-> + *
-> + * Modified UTF-8 is exactly like UTF-8, except U+0000 is encoded as
-> + * "\xC0\x80".
-> + */
-> +void mod_utf8_sanitize(GString *buf, const char *str)
-> +{
-> +    mod_utf8_sanitize_len(buf, str, -1);
-> +}
-> +
-> +/**
-> + * mod_utf8_sanitize:
-> + * @buf: Destination buffer
-> + * @str: Modified UTF-8 string to sanitize
-> + * @len: Length of @str, or negative to stop at NUL terminator
-> + *
-> + * Append the contents of @len bytes of the Modified UTF-8 string
-> + * @str into @buf, with escape sequences used for non-printable ASCII
-> + * and for quote characters.  The result is therefore safe for output
-> + * to a terminal.
-> + *
-> + * Modified UTF-8 is exactly like UTF-8, except U+0000 is encoded as
-> + * "\xC0\x80".
-> + */
-> +void mod_utf8_sanitize_len(GString *buf, const char *str, ssize_t len)
-> +{
-> +    const char *ptr;
-> +    char *end;
-> +    int cp;
-> +
-> +    if (len < 0) {
-> +        len = strlen(str);
-> +    }
-> +
-> +    for (ptr = str; *ptr; ptr = end) {
-> +        cp = mod_utf8_codepoint(ptr, MIN(6, str + len - ptr), &end);
-> +        switch (cp) {
-> +        case '\"':
-> +            g_string_append(buf, "\\\"");
-> +            break;
-> +        case '\\':
-> +            g_string_append(buf, "\\\\");
-> +            break;
-> +        case '\b':
-> +            g_string_append(buf, "\\b");
-> +            break;
-> +        case '\f':
-> +            g_string_append(buf, "\\f");
-> +            break;
-> +        case '\n':
-> +            g_string_append(buf, "\\n");
-> +            break;
-> +        case '\r':
-> +            g_string_append(buf, "\\r");
-> +            break;
-> +        case '\t':
-> +            g_string_append(buf, "\\t");
-> +            break;
-> +        default:
-> +            if (cp < 0) {
-> +                cp = 0xFFFD; /* replacement character */
-> +            }
-> +            if (cp > 0xFFFF) {
-> +                /* beyond BMP; need a surrogate pair */
-> +                g_string_append_printf(buf, "\\u%04X\\u%04X",
-> +                                       0xD800 + ((cp - 0x10000) >> 10),
-> +                                       0xDC00 + ((cp - 0x10000) & 0x3FF));
-> +            } else if (cp < 0x20 || cp >= 0x7F) {
-> +                g_string_append_printf(buf, "\\u%04X", cp);
-> +            } else {
-> +                g_string_append_c(buf, cp);
-> +            }
-> +        }
-> +    }
-> +}
-> -- 
-> 2.45.2
 
 -- 
 Richard Jones, Virtualization Group, Red Hat http://people.redhat.com/~rjones
 Read my programming and virtualization blog: http://rwmj.wordpress.com
-virt-p2v converts physical machines to virtual machines.  Boot with a
-live CD or over the network (PXE) and turn machines into KVM guests.
-http://libguestfs.org/virt-v2v
+nbdkit - Flexible, fast NBD server with plugins
+https://gitlab.com/nbdkit/nbdkit
 
 
