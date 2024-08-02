@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A243C52D6D
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 13:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3F2BC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 13:43:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZsUC-0000UE-OM; Fri, 02 Aug 2024 09:38:24 -0400
+	id 1sZsYs-0000VW-EV; Fri, 02 Aug 2024 09:43:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZsUA-0000Mr-Ta
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:38:22 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZsYn-0000UL-QV
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:43:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZsU9-0002xi-8n
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:38:22 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZsYl-0004bi-RS
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 09:43:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722605900;
+ s=mimecast20190719; t=1722606186;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=76X2gLmSh91Q7+zu1kNaeBaPwdxCniEJ0/G6OTn3N1o=;
- b=FOWnNRjD5AYq6DRSdkBQf9r8Zpqpff4GmelE3y7UZKmAZai0Es44gxs1E8WiSoev1GdGyo
- dg8Cmsi7IcEeTyMvJz6PncQn39lemrAfuQPnvINWQ0Xfl8pHtn/zvDaF4TycxwkljPOsDu
- cGRcHzWby+sEyEJL9dlFSBS9lzznGg4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ in-reply-to:in-reply-to; bh=a9clmzeU4uKBjTa5VAdEu4dGOCTUQQ1dQrERXd4tumI=;
+ b=YDrgaErmU/i+hdQjR3wS/OwNDDnuMQDon0NpOb5XafryHHMZkyRb0gVOQFWWFdLdWr8ETa
+ pJS4gkF1m2ClRJ6T52gd8bGLkiEppzoA3xdiDX9A6ZbatwF5FCqY/x5HwIN0RemQ6nzOas
+ 3ZvJiEulSoJx1EiCq4Aq99n+G0Citi0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-KRCKrrK1OCKyeIlraDWx0Q-1; Fri,
- 02 Aug 2024 09:38:18 -0400
-X-MC-Unique: KRCKrrK1OCKyeIlraDWx0Q-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-480-B3VhYycFN5OeyFvTQtGGxg-1; Fri,
+ 02 Aug 2024 09:43:04 -0400
+X-MC-Unique: B3VhYycFN5OeyFvTQtGGxg-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 718691944B30; Fri,  2 Aug 2024 13:38:16 +0000 (UTC)
-Received: from green.redhat.com (unknown [10.2.16.72])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B13F1195605A; Fri,  2 Aug 2024 13:38:15 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 07C111944A87; Fri,  2 Aug 2024 13:43:03 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.72])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7E6A71955F6B; Fri,  2 Aug 2024 13:43:01 +0000 (UTC)
+Date: Fri, 2 Aug 2024 08:42:58 -0500
 From: Eric Blake <eblake@redhat.com>
-To: nbd@other.debian.org
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH] docs: Tweak location of qemu nbd extensions
-Date: Fri,  2 Aug 2024 08:36:43 -0500
-Message-ID: <20240802133811.2001029-1-eblake@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, richard.henderson@linaro.org
+Subject: Re: [PATCH 6/5] docs: Typo fix in live disk backup
+Message-ID: <k4y4dyjspkugla3243nlrdskqrlftk5ddkvphy33cqcolsrs3h@23p3cvbynnrj>
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240801170131.3977807-1-peter.maydell@linaro.org>
+User-Agent: NeoMutt/20240425
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -78,38 +79,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Upstream QEMU is moving the location of its NBD docs, as of its commit
-XXXX[1].  Instead of pointing to the raw git source file, point to the
-rendered html version built from rST.
+On Fri, Aug 02, 2024 at 08:30:25AM GMT, Eric Blake wrote:
+> Add in the missing space in the section header.
+> 
+> Fixes: 1084159b31 ("qapi: deprecate drive-backup", v6.2.0)
+> Signed-off-by: Eric Blake <eblake@redhat.com>
 
-CC: qemu-devel@nongnu.org
-Signed-off-by: Eric Blake <eblake@redhat.com>
+Regarding the subject line using [PATCH 6/5]: I meant to send the
+patch in-reply-to <20240801170131.3977807-1-peter.maydell@linaro.org>
+rather than as a standalone thread. Time to see if my attempt to
+rectify that mid-thread messes up anyone's mailer threading :)
 
----
-
-[1] Commit id TBD, I will update this patch to match reality once
-qemu's patch lands, and only push this once the new link actually
-exists.  See also
-https://lists.gnu.org/archive/html/qemu-devel/2024-08/msg00223.html
-
----
- doc/proto.md | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/doc/proto.md b/doc/proto.md
-index cf1f60f..565fbeb 100644
---- a/doc/proto.md
-+++ b/doc/proto.md
-@@ -963,7 +963,7 @@ Namespaces MUST be consist of one of the following:
- Third-party implementations can register additional namespaces by
- simple request to the mailing-list. The following additional
- third-party namespaces are currently registered:
--* `qemu`, maintained by [qemu.org](https://gitlab.com/qemu-project/qemu/-/blob/master/docs/interop/nbd.txt)
-+* `qemu`, maintained by [qemu.org](https://www.qemu.org/docs/master/interop/nbd.html)
-
- Save in respect of the `base:` namespace described below, this specification
- requires no specific semantics of metadata contexts, except that all the
 -- 
-2.45.2
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
