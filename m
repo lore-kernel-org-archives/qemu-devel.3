@@ -4,56 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0A01C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 01:49:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44B55C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 01:49:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZhPY-0000p2-8k; Thu, 01 Aug 2024 21:48:52 -0400
+	id 1sZhPO-0000BI-Cu; Thu, 01 Aug 2024 21:48:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZhPW-0000jR-8c
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 21:48:50 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZhPM-00009q-HO
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 21:48:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZhPU-0001xu-P7
- for qemu-devel@nongnu.org; Thu, 01 Aug 2024 21:48:49 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sZhPK-0001wf-G8
+ for qemu-devel@nongnu.org; Thu, 01 Aug 2024 21:48:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722563328;
+ s=mimecast20190719; t=1722563317;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=W+ocFGmg17RpHpMuCKxkl0vQ5+ZuyZySzGSS1ZlXAEk=;
- b=YdgkARPPIBvZqxW9C2k5Vclg4muDY2B0BmxZYbuV5czzs0WLVTnS6k0QXzi3bXofnTGwuS
- OBwdwGuC7SCxBiW8fBLHwW6weHkVfynVj6BGduDRuOrPMfpj7MRpvbEX3wZMTFl55YGFSr
- tDsSe5QqWne336D3RorQdquf12vXC/Q=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=9uFJRE9LT2GDABzWrPy+vqa1ZqrveZQtNa1KSxb+l1U=;
+ b=jEAXy3uqWP0B1HY9JxvRuctlwncHY6k5enfOJN1SIEJEZJn8nK6pQm3wjuf+or97ZHQfEJ
+ zy2wXHf4eJ30hAkF09B+Gw8Xmk5XXqHsmSp16MmigXooqXNvcqj/Dm8eWn/UgsP5aMGGSd
+ Fh8GoWpd3zMOPJLZei0BMUWUbiXPoWU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-WMtS9pGePhGtwsjZdxflOA-1; Thu,
- 01 Aug 2024 21:48:45 -0400
-X-MC-Unique: WMtS9pGePhGtwsjZdxflOA-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-281-rSigsGCbPXW5Dgddu2Zjmg-1; Thu,
+ 01 Aug 2024 21:48:34 -0400
+X-MC-Unique: rSigsGCbPXW5Dgddu2Zjmg-1
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 610F91956064; Fri,  2 Aug 2024 01:48:42 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 270941955D4D; Fri,  2 Aug 2024 01:48:33 +0000 (UTC)
 Received: from green.redhat.com (unknown [10.2.16.72])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BA397195605A; Fri,  2 Aug 2024 01:48:38 +0000 (UTC)
+ id B356E19560AA; Fri,  2 Aug 2024 01:48:29 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, den@virtuozzo.com, andrey.drobyshev@virtuozzo.com,
  vsementsov@yandex-team.ru, kwolf@redhat.com, hreitz@redhat.com,
  berrange@redhat.com, Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-Subject: [PATCH v2 3/3] nbd: Minor style fixes
-Date: Thu,  1 Aug 2024 20:32:08 -0500
-Message-ID: <20240802014824.1906798-8-eblake@redhat.com>
-In-Reply-To: <20240802014824.1906798-5-eblake@redhat.com>
-References: <20240802014824.1906798-5-eblake@redhat.com>
+Subject: [PATCH v2 for-9.1 0/3] Avoid NBD crash on nbd-server-stop
+Date: Thu,  1 Aug 2024 20:32:05 -0500
+Message-ID: <20240802014824.1906798-5-eblake@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
@@ -83,42 +80,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Touch up a comment with the wrong type name, and an over-long line,
-both noticed while working on the previous patches.
+v1 was here:
+https://lists.gnu.org/archive/html/qemu-devel/2024-06/msg01609.html
 
-Signed-off-by: Eric Blake <eblake@redhat.com>
----
- nbd/server.c | 2 +-
- qemu-nbd.c   | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+Since then, I've applied with Red Hat to get a CVE assigned (a client
+not using TLS should never be able to cause the destination qemu to
+crash during live storage migration), and will update to include that
+number once it is assigned.  But since the issue has already been on
+list, I see no need to further embargo this patch attempt.
 
-diff --git a/nbd/server.c b/nbd/server.c
-index 7c37d9753f0..3debc416dd0 100644
---- a/nbd/server.c
-+++ b/nbd/server.c
-@@ -1973,7 +1973,7 @@ static void nbd_export_request_shutdown(BlockExport *blk_exp)
+I've also concluded from my audit that Alexander's initial hunch was
+right: there's nothing simple we can do to prevent qio coroutines from
+reaching our callback into nbd_blockdev_client_closed() after a QMP
+nbd-server-stop (I could not find a graceful way to close the qio
+channel and then forcefully wait for the coroutine to finish), so that
+function has to be prepared to handle late clients, but the fix in
+patch 1 is a bit more involved than Alexander's attempt since we must
+also not corrupt a subsequent nbd-server-start.  Patch 2 is
+insufficient on its own to prevent the problems, but reduces the
+amount of time that a client can hang on to server resources after
+nbd-server-stop (the client will see EPIPE rather than being able to
+carry on a prolonged NBD_OPT_* conversation).
 
-     blk_exp_ref(&exp->common);
-     /*
--     * TODO: Should we expand QMP NbdServerRemoveNode enum to allow a
-+     * TODO: Should we expand QMP BlockExportRemoveMode enum to allow a
-      * close mode that stops advertising the export to new clients but
-      * still permits existing clients to run to completion? Because of
-      * that possibility, nbd_export_close() can be called more than
-diff --git a/qemu-nbd.c b/qemu-nbd.c
-index 3ad50eec18e..c0bd16217cd 100644
---- a/qemu-nbd.c
-+++ b/qemu-nbd.c
-@@ -589,7 +589,8 @@ int main(int argc, char **argv)
-     pthread_t client_thread;
-     const char *fmt = NULL;
-     Error *local_err = NULL;
--    BlockdevDetectZeroesOptions detect_zeroes = BLOCKDEV_DETECT_ZEROES_OPTIONS_OFF;
-+    BlockdevDetectZeroesOptions detect_zeroes =
-+        BLOCKDEV_DETECT_ZEROES_OPTIONS_OFF;
-     QDict *options = NULL;
-     const char *export_name = NULL; /* defaults to "" later for server mode */
-     const char *export_description = NULL;
+[I'm also aware of some Coverity analysis pointing to potential race
+conditions in block/nbd.c; if those need fixes, I hope to also post
+patches for those in time for inclusion in the same pull request that
+picks up this series]
+
+Eric Blake (3):
+  nbd: CVE-XXX: Use cookie to track generation of nbd-server
+  nbd: CVE-XXX: Close stray client sockets at server shutdown
+  nbd: Minor style fixes
+
+ include/block/nbd.h |  3 ++-
+ blockdev-nbd.c      | 39 ++++++++++++++++++++++++++++++++++-----
+ nbd/server.c        | 14 +++++++++-----
+ qemu-nbd.c          |  8 +++++---
+ 4 files changed, 50 insertions(+), 14 deletions(-)
+
 -- 
 2.45.2
 
