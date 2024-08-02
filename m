@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 766BDC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 08:36:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CFCEC3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 08:37:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZnkM-0007NO-D0; Fri, 02 Aug 2024 04:34:46 -0400
+	id 1sZnkx-0001vQ-G0; Fri, 02 Aug 2024 04:35:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sZnkL-0007Jk-Fe
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:34:45 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1sZnkw-0001qp-9y
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:35:22 -0400
+Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sZnkK-0006QZ-2S
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:34:45 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-70d18112b60so2430572b3a.1
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 01:34:43 -0700 (PDT)
+ id 1sZnku-0006mM-Gb
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:35:21 -0400
+Received: by mail-oi1-x22c.google.com with SMTP id
+ 5614622812f47-3db16b2c1d2so5501923b6e.2
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 01:35:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722587682; x=1723192482; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1722587719; x=1723192519; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UPxKuHfJ8Jlg3MccCfTTfm7YXqCA76DHADjCciQTBLI=;
- b=YCpJ31lvbf79kY6UXEtuLtLJfXGSMHVzQE025T04doXHf4BLeIvbMXcWA4rmJrDuxK
- wz0B7bL/Ar13vhIPHnt7nD3qPVvaz8gxBvBUY8uGMAdV2tnvMR5NZQyhfHa86QrtoKGo
- WVycRymExCfWZvUQhvZ9KSngrccPlsEkTByk908UpsVizaA3Wj38c1b2iy9G53esPDyK
- wjjGVhW2nBEx9J1yd/wB4APKP5Ta5HZUhv7YRS7Lsr7XCPdfdjieWzO4F+2qdJVSjE+a
- f9DBVbLTPcCe+gTWOT7ZTwVWmRcT0oJBNYiH5P/YpsElgz9AxKzxJISgxFduwIiKd9pa
- OdCg==
+ bh=2/c7XPXCGphIQcWf9DM6pYQS1OQlMPuogQElOCWHT9Q=;
+ b=brJoU8mECo9LGSeyRiHdDCk6e0lYkLf/KTHBZdhpe43jXEyovyG6T0x0r/YCbbLEr4
+ 93B2z8N+2KxMHt0/Ii34fbGUtVHillJuaT4yTmBlyH9vgYsmrRyqsdYEgm22ceoxugL+
+ MxSGVEHvSNuXWzyaSExzkxvtlGQ66EqPZjyinVlQddAXiIPZhBlasKjTfyxWyHtXIicu
+ qgZMXYyXQeZdWvCwrsbIsQajTVba4S+tn378C8xyY6tuLTXMJdvZAa74VIqOe6d/UfCL
+ nDFwwAv6lSK8jzVXChLKj0tn3bESZ60Zwc5tfR6q+uTUX+zTd/mtevdyJX4LHyjDu8UU
+ EXsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722587682; x=1723192482;
+ d=1e100.net; s=20230601; t=1722587719; x=1723192519;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UPxKuHfJ8Jlg3MccCfTTfm7YXqCA76DHADjCciQTBLI=;
- b=RCQVZZCTuiyYDpGqSQKGEi74N+Ch/qYhohPQmiP3UnL7DJ3RK8YfbvmosOaZadcL6w
- Wbx4X9iwC+WohSGnMO2wqyRG9roUCEpsVgzn/cDG/fHbD5/JGdiAATvrIg3UpHfOkAsz
- bmWBp7YNQKi7bjGfpQivyDpELY/fM3gzbTtuMvNqpCpUV2j33ZapbCL+ujjiU4+yTrpP
- 1YlL/8VTHg9+noFsY9GkH0lVlX0NQTOfsC/UvnYNuiFNhF2eeBbP5A4DHEOSS6kIYJK4
- n9BNK0s4xwsLUJfz0eKZQ1J2abv849M9e3TSYQca+C9pWA3kxt1e9mtooh1vr9Wge8VU
- 4hsA==
-X-Gm-Message-State: AOJu0YywWpLtcVBVZFmntKBU3fCBDdqUMD4+uMV90xKVrmSOgqKyWO2L
- VcaQfoJz4Awt0p6B/EW2Xf/qA4kUVnvg8U0VGMRVJ9RiavIwoFQuonO+iikl2pE=
-X-Google-Smtp-Source: AGHT+IGkxm+nA1G2P9Io6wcZyFfCM1tOL2WIHZMrfGGuz6GFHO1WQfqq2Fb2fz7yOk7+1ABrl6W0YA==
-X-Received: by 2002:a05:6a00:66da:b0:70e:cf57:93da with SMTP id
- d2e1a72fcca58-71065dd6a98mr7405251b3a.2.1722587682345; 
- Fri, 02 Aug 2024 01:34:42 -0700 (PDT)
+ bh=2/c7XPXCGphIQcWf9DM6pYQS1OQlMPuogQElOCWHT9Q=;
+ b=BestxiefyEvDLop4Uw8uCYq3hIliFJB0dnutAZuwwjYDvZ7MpNAGLl478b3F1z6Xyq
+ KpOUKYp2OW2KiuUNzjdbdC2RZ24mIuwIF7kOuJyMzitdrKk6wr9gIsdknpEdKRqwEO6K
+ ht/5gxnX2gOSFwhuwbQEl33LsVVsbXovu5nrslcXjjyrCgFph3Fuhpc13UwhZgo6VS5J
+ k0Tyayxzu8NpI+9qO0KlZqqic0pLGIxNcSO+c8fQmgdzB3YUWpc4QXNKAxDlNnzcfBe3
+ 0tx94e/P1lcDbBIzbwb1IB4auN6zHx5f6RyGJUXd9xffWIxSOYUGAIiP3yQew4HuGKtW
+ z8Cg==
+X-Gm-Message-State: AOJu0YzmLwAep1cT0SXCEk8uLAadA94w+g/XLkI6+h7JXzW8IQ2xOpXf
+ 4Ov26sORH09PSwP5H5pJvSWbLORf/UP0S7iGOXIfBIZBTwV+O0hmMlBVlfKAxOk=
+X-Google-Smtp-Source: AGHT+IE4B2z66dlStDzJhfHcDP54JjZEW/FzE/yfrOxG8aajSbi3qz96Wk8yh2kOXPs0xOW1l7Cx3w==
+X-Received: by 2002:a05:6808:302c:b0:3d9:2373:e75d with SMTP id
+ 5614622812f47-3db55830825mr2982065b6e.35.1722587718902; 
+ Fri, 02 Aug 2024 01:35:18 -0700 (PDT)
 Received: from localhost.localdomain ([203.87.101.91])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7106ec06a25sm951673b3a.33.2024.08.02.01.34.40
+ d2e1a72fcca58-7106ec06a25sm951673b3a.33.2024.08.02.01.35.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Aug 2024 01:34:42 -0700 (PDT)
+ Fri, 02 Aug 2024 01:35:18 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, Mark Corbin <mark.corbin@embecsom.com>,
- Ajeet Singh <itachis@FreeBSD.org>
-Subject: [PATCH 03/18] bsd-user: Implement RISC-V CPU register cloning and
- reset functions
-Date: Fri,  2 Aug 2024 18:34:08 +1000
-Message-Id: <20240802083423.142365-4-itachis@FreeBSD.org>
+Cc: Warner Losh <imp@bsdimp.com>,
+	Ajeet Singh <itachis@FreeBSD.org>
+Subject: [PATCH 18/18] bsd-user: Add RISC-V 64-bit Target Configuration and
+ Debug XML Files
+Date: Fri,  2 Aug 2024 18:34:23 +1000
+Message-Id: <20240802083423.142365-19-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240802083423.142365-1-itachis@FreeBSD.org>
 References: <20240802083423.142365-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=itachis6234@gmail.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
+ envelope-from=itachis6234@gmail.com; helo=mail-oi1-x22c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,40 +97,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Corbin <mark.corbin@embecsom.com>
+From: Warner Losh <imp@bsdimp.com>
 
-Added functions for cloning CPU registers and resetting the CPU state
-for RISC-V architecture.
+Added configuration for RISC-V 64-bit target to the build system.
 
-Signed-off-by: Mark Corbin <mark.corbin@embecsom.com>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
 ---
- bsd-user/riscv/target_arch_cpu.h | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ configs/targets/riscv64-bsd-user.mak | 4 ++++
+ 1 file changed, 4 insertions(+)
+ create mode 100644 configs/targets/riscv64-bsd-user.mak
 
-diff --git a/bsd-user/riscv/target_arch_cpu.h b/bsd-user/riscv/target_arch_cpu.h
-index 5b436b2ac9..53db790517 100644
---- a/bsd-user/riscv/target_arch_cpu.h
-+++ b/bsd-user/riscv/target_arch_cpu.h
-@@ -130,4 +130,18 @@ static inline void target_cpu_loop(CPURISCVState *env)
-     }
- }
- 
-+static inline void target_cpu_clone_regs(CPURISCVState *env, target_ulong newsp)
-+{
-+    if (newsp) {
-+        env->gpr[xSP] = newsp;
-+    }
-+
-+    env->gpr[xA0] = 0; /* a0 */
-+    env->gpr[5] = 0;   /* t0 */
-+}
-+
-+static inline void target_cpu_reset(CPUArchState *env)
-+{
-+}
-+
- #endif /* TARGET_ARCH_CPU_H */
+diff --git a/configs/targets/riscv64-bsd-user.mak b/configs/targets/riscv64-bsd-user.mak
+new file mode 100644
+index 0000000000..191c2c483f
+--- /dev/null
++++ b/configs/targets/riscv64-bsd-user.mak
+@@ -0,0 +1,4 @@
++TARGET_ARCH=riscv64
++TARGET_BASE_ARCH=riscv
++TARGET_ABI_DIR=riscv
++TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml
 -- 
 2.34.1
 
