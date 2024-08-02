@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6810DC52D70
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 05:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6184C52D71
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 05:39:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZkzr-00035N-7s; Fri, 02 Aug 2024 01:38:35 -0400
+	id 1sZl0I-0003KR-8d; Fri, 02 Aug 2024 01:39:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sZkzo-00034o-Mx
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 01:38:32 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sZl0F-0003Hu-6k
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 01:38:59 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sZkzm-0003gn-Ld
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 01:38:32 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-1fc6a017abdso52784435ad.0
- for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 22:38:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sZl0C-0004kr-QY
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 01:38:58 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2cf78366187so5198390a91.3
+ for <qemu-devel@nongnu.org>; Thu, 01 Aug 2024 22:38:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722577109; x=1723181909;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=eGaTYy3U1N6gj26D8cJ144df6qPTUusOZaXUi98TAYc=;
- b=h8tEM6NWojcFj0H1+MOtCzmlSVA7PGuO0YAJ2KRhb1ctpnwtGEZcLPsnd0NLQv0yFB
- hjJX24xgAM4PKEvL+GwzoRXP9WkSqSW1AwTF+9bidpKr2nr3ClxK6wUiO90PmR4VB3xS
- guRq09NJhitY/eJ8dwjRYEmLhxrBSrP1Oj2TBmD4MhuxXvmgbHndwF7ozr34U55PATvN
- oZjZa8MrrtxSuDTkAKhVeltVIhJfRsztoQ4qe04qnIkS5HKwctBWis/CCOHYvmq+iW4y
- IpCvp+TlGWAib5cqc2MYIhkP5CAI6U+q3qlpQL5th5vaFJatCdB1a2ku7d/lm63pmrJS
- 1PdA==
+ d=linaro.org; s=google; t=1722577135; x=1723181935; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=c+9sBtiZAjrr81TBDIdY/JfIv4KYPYV/s5wq5dTS7nU=;
+ b=dRulNQbLsBCUrx62un5I7YnqHmBcAsJPVYaRkmePEEz29mf3bYaxRTBNZB33bWMQyS
+ rjtU8M9EB3B/MUPE1GXctP5yZstmerN8woUxmvjYR1D9m2l8m07wJXZoZQUGmCIZ5o4H
+ m8Ouzfsi8lMyDE8MFhVMoupSMLXSxOgqv+8aPxzq99GSqBqzFk02d7QH5TM+AmAzvecw
+ R+0TyBxwhtT35iG5Akjd8X4q66QTytpqlaYGZo9B8b0aLIjTcaOGKeMepTkU6CWH9So8
+ JdniTKJbwmn8rw6lXLIb9q/MXWZPsy56fiSpOoH4mvQ7b1xvJy5ThvC6axHzT9mm401H
+ cGlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722577109; x=1723181909;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=eGaTYy3U1N6gj26D8cJ144df6qPTUusOZaXUi98TAYc=;
- b=MEbwk0o+UqUHJdZpTSx8yRJYO553bLglVzgsHfKFE4TaJixj9h0rIS9eEmC+sL6cZY
- tS+qQP6Wk8vGzOIqAfM4IkZ0I4Ts2NFnHoBJs/93ElswjE3WKSvsFLhZK3KU2oSSoYL5
- iHs86zn4x7Z4xiZuAuFeU9j9iD/7abnnLNGUKwtJ31UnoR4ni0fe6a4KzveVInW5vFzw
- CE3wyIQfFDV2rA+iT9sTFHWah+50VQUzJzXtZJdc85uNifFJisIJU9T56qU5nGGPT8O9
- t3EBpOgYx/FukuHeN7+5ZyhvhRtrM14dGPIJ8SSJxrpcsF/Iyb2Niv2ZCE78t+gdanQd
- 09jg==
-X-Gm-Message-State: AOJu0YwROeUJ3FdugrLUxv9+GWHLcZyo+ql7aYEDXsg/bexUv7NIg6u5
- x3RZ0nzc0MMnm6C6Nh5Dp95xAQxLDI6twVVe5cPYxsjOcnwvLm5dRz/EcPKeUAk=
-X-Google-Smtp-Source: AGHT+IFDOsyyz6BkWTABeJbiANg1s3wnYDMd3J2PGo5tIcpCkIxbXygTH2dzH4fiUA6OtBNpXtM6UQ==
-X-Received: by 2002:a17:902:e741:b0:1fa:925b:5b77 with SMTP id
- d9443c01a7336-1ff574e2846mr30983025ad.64.1722577108902; 
- Thu, 01 Aug 2024 22:38:28 -0700 (PDT)
-Received: from localhost ([157.82.201.15]) by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1ff58f53832sm8387965ad.73.2024.08.01.22.38.25
+ d=1e100.net; s=20230601; t=1722577135; x=1723181935;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=c+9sBtiZAjrr81TBDIdY/JfIv4KYPYV/s5wq5dTS7nU=;
+ b=jeTIbDgBJgCgGJR6d/tv7XRduQUr28GHLKS+hes2riwtfshn1IVn+xyNTkSL+gpQwB
+ z6M2YX+hsh9CuNb31I4asMQIglC+KGvzVBsj+/NiBfncwW2/n5fkdPmcpImT1NV1xpnX
+ Qq+W3VksBj93r2zN+Jqiz3jzjwCx0afiueYEaOUFo0MAQSTnbfXs3DPrbkO6JX8ztbSB
+ VJL5OmHR6rfF2Df91Ci3MYrixs8PCgO60fB2rZ1An4gp/361o1bWGHA+14GT/hejqWji
+ m2jRjAeUGS7AOyNCJ5TpZLE/slS18YvnbFrxbGMRTpISU8dMlfecu2aU3VopWOWo6nN9
+ elDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXQR6CEQ+7M6zJFQwbA/5TIbw7av3UCbtCZpmPTpRrnWwLzswZpgeXAdqPeLU0apEUriT74+dZLUXWNLQN2lKBxtKvkUVk=
+X-Gm-Message-State: AOJu0YzVyfPc+rdwxtE+KzkwQacjUgBgT2wIN3JVwsrEAg4rtICpZfDz
+ 8N2J4ZbAvxBMaUlmEMKiYPr8htOxG2d1JNKiJ7kw5zSs0KqL8Mgr1ex1pZva8tI=
+X-Google-Smtp-Source: AGHT+IHy2/HGYjpQ0tWMrYhDLbb9WYaXDGwfxw0o+VR2d0kxvcnIFRSBUw634bAu05ptgUsNGPcOwQ==
+X-Received: by 2002:a17:90a:e997:b0:2c8:6bfa:bbf1 with SMTP id
+ 98e67ed59e1d1-2cff94494bemr3125775a91.23.1722577135204; 
+ Thu, 01 Aug 2024 22:38:55 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2cfdc4064c3sm4336749a91.10.2024.08.01.22.38.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 01 Aug 2024 22:38:28 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 02 Aug 2024 14:38:19 +0900
-Subject: [PATCH] vhost: Add VIRTIO_NET_F_RSC_EXT to vhost feature bits
+ Thu, 01 Aug 2024 22:38:54 -0700 (PDT)
+Message-ID: <6a533a62-ed00-49bf-8922-fe1d30ce0857@linaro.org>
+Date: Fri, 2 Aug 2024 15:38:47 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] target/riscv: Remove redundant insn length check
+ for zama16b
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com
+References: <20240802031612.604-1-zhiwei_liu@linux.alibaba.com>
+ <20240802031612.604-2-zhiwei_liu@linux.alibaba.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240802031612.604-2-zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240802-rsc-v1-1-2b607bd2f555@daynix.com>
-X-B4-Tracking: v=1; b=H4sIAMpwrGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDCwMj3aLiZN1US4O0JBNTo6QU8zQloMqCotS0zAqwKdGxtbUA3lLU4VU
- AAAA=
-To: "Michael S. Tsirkin" <mst@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>, 
- Yuri Benditovich <yuri.benditovich@daynix.com>, 
- Peter Xu <peterx@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>, eduardo@habkost.net, 
- marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com, 
- dmitry.fleytman@gmail.com, sriram.yagnaraman@ericsson.com, sw@weilnetz.de, 
- yan@daynix.com, Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::62f;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,57 +100,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VIRTIO_NET_F_RSC_EXT is implemented in the rx data path, which vhost
-implements, so vhost needs to support the feature if it is ever to be
-enabled with vhost. The feature must be disabled otherwise.
+On 8/2/24 13:16, LIU Zhiwei wrote:
+> @@ -47,7 +47,12 @@ static bool trans_fld(DisasContext *ctx, arg_fld *a)
+>       REQUIRE_FPU;
+>       REQUIRE_EXT(ctx, RVD);
+>   
+> -    if (ctx->cfg_ptr->ext_zama16b && (ctx->cur_insn_len != 2)) {
+> +    /*
+> +     * Zama16b applies to loads and stores of no more than MXLEN bits defined
+> +     * in the F, D, and Q extensions. Otherwise, it falls through to default
+> +     * MO_ATOM_IFALIGN.
+> +     */
+> +    if ((ctx->xl >= MXL_RV64) && (ctx->cfg_ptr->ext_zama16b)) {
 
-Fixes: 2974e916df87 ("virtio-net: support RSC v4/v6 tcp traffic for Windows HCK")
-Reported-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- hw/net/vhost_net.c | 2 ++
- net/vhost-vdpa.c   | 1 +
- 2 files changed, 3 insertions(+)
+I think you meant to add the mxlen check in the next patch,
+because you modify this line again.
 
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index a788e6937e03..dedf9ad7c242 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -50,6 +50,7 @@ static const int kernel_feature_bits[] = {
-     VIRTIO_F_RING_RESET,
-     VIRTIO_F_IN_ORDER,
-     VIRTIO_F_NOTIFICATION_DATA,
-+    VIRTIO_NET_F_RSC_EXT,
-     VIRTIO_NET_F_HASH_REPORT,
-     VHOST_INVALID_FEATURE_BIT
- };
-@@ -81,6 +82,7 @@ static const int user_feature_bits[] = {
-     VIRTIO_F_RING_RESET,
-     VIRTIO_F_IN_ORDER,
-     VIRTIO_NET_F_RSS,
-+    VIRTIO_NET_F_RSC_EXT,
-     VIRTIO_NET_F_HASH_REPORT,
-     VIRTIO_NET_F_GUEST_USO4,
-     VIRTIO_NET_F_GUEST_USO6,
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index 03457ead663a..46b02c50be8c 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -88,6 +88,7 @@ const int vdpa_feature_bits[] = {
-     VIRTIO_NET_F_MQ,
-     VIRTIO_NET_F_MRG_RXBUF,
-     VIRTIO_NET_F_MTU,
-+    VIRTIO_NET_F_RSC_EXT,
-     VIRTIO_NET_F_RSS,
-     VIRTIO_NET_F_STATUS,
-     VIRTIO_RING_F_EVENT_IDX,
 
----
-base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
-change-id: 20240802-rsc-e90fb452bd7f
-
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
-
+r~
 
