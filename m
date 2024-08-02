@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB98C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 16:12:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0010C52D6F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 16:17:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZutI-0007MY-9e; Fri, 02 Aug 2024 12:12:28 -0400
+	id 1sZuxD-0004es-OM; Fri, 02 Aug 2024 12:16:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZutD-00074J-LV
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 12:12:25 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZuxA-0004aa-PT
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 12:16:28 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZutB-0000bs-Jb
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 12:12:23 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5ab2baf13d9so11507736a12.2
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 09:12:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sZux8-0003vy-Ri
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 12:16:28 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-2ef2d582e31so97866761fa.2
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 09:16:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722615137; x=1723219937; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=w6lMpd/mk58x+BP/eh1vbRB8wIq5F4cRw0VBvVfXlKg=;
- b=r2EQdMsoU5FADnNlWzbifgsWeqkGxfsE7k4o0EBpChUJDAIjwnNiTmE7PvAafpv2Lv
- MCfnc74/vr2GavdHL2r5jSsJgbPAoHp8t1n86IUE2b7SOoHVNrFsPipiKH7LW52WsUP6
- R220pa5arpy5A+yNVKyqv2FMa1xpSpQxU+iJn2h+q7T4waJBDXQJhL8Y2igDXFx1S6Eh
- rqMrcTuZAyvblAsSWuNHRT9oWG7EdpxkMFoyGJPt4cAOMNHjiH3QgQgSKFMrTLIt9AP6
- KHKLzbZKCmqz0UatS7AW7WjkuRBLLGjEby3UqGe7tjrFlbb7p64eRsD6IaGaU2mQA3e9
- DO6w==
+ d=linaro.org; s=google; t=1722615384; x=1723220184; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RHvtbsP1QBQ8VBwkkDlqlRLce7yHF8Xc9/y40ogOaeY=;
+ b=YHbHmgcUGCe5atkcmGsxAVCiAGlffDBWJVMWJY6cuvDvHx2vaD11FHT8a498/f/uGr
+ KPRV2tDr6flk/QMqQm+ZEIBIvx+ShYdQlTDJLATe8X/8W5RQ3YqnWOjWg+yl37kJqoPD
+ FlGjEE+dAoBiHCh4q0mwfH86AjpcIciFN4JhY1JiJHJQTrGdOjaIeJu5jTReig0w7nbM
+ SZWaj44jNToKST8KPIkhmV6jNNDsyoJ//uUGqWjuw/x6VaZNrFFMc+G0SOYeyD0Ylo8H
+ qtP3JFV7lKj9l9hZ+8Gotbk4vK6Niql5k3YxXh7236ctjBj3/shENPbwGVaqQnxUZZWF
+ aKBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722615137; x=1723219937;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1722615384; x=1723220184;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w6lMpd/mk58x+BP/eh1vbRB8wIq5F4cRw0VBvVfXlKg=;
- b=Zzv9mmGdwHEhLsmSWWwgp62/2BEvEJxdo/NPm4eSzyEIoT9fwjZp1R+Kqi12y+uXgD
- z7izgXgRGQO4ZOwtphnF2ZHWfdWT2K9JfcDyJZMnCzp6r2OOVAmlSQbtWvJ2Z549lgEK
- nfHOefxJ5MY5d3Ze0cst1L8qrLYNoV7wYC8/S2/0KeWoicq/23frM4BxXms10k/iD0zO
- lwGPoTK4ok4ZlxxRRxEzRNW2KMRuAOlk6jdeOFDt9XkDcioj3D6f8dHkSpTYPaavMme8
- kJ3Ou+OI3joMroYpWc/VPL4vK2UwqVkt5CPY6lax/10tDPRtZYslh9uEXaOg1Zdgp3qQ
- nV0A==
+ bh=RHvtbsP1QBQ8VBwkkDlqlRLce7yHF8Xc9/y40ogOaeY=;
+ b=X88aXGZ5sVk5jxnPpbgO5wMjODVD3nA7AGUw9K4eOY17hQQRoxg+Zcf6WA6O7kVt3r
+ xRNRqV61q0y8ytjeVfCbjZGhknVZwApkpI+rk8Jx5ABaVUmUFo5jtN6QBJhh8tgmt/zU
+ f0uC1IDBZ/e+jXVLii7yjS8zjCKo9QtvABPKo0UY47GO43D4LASpHDoSE5fTtZc30yU+
+ PvxDFu1i8ZfA4t2+xkfs1OZ5XSZGD7a6BOrlI6OXsdIB3W4pdR3boivrkDCe2B3Wr63d
+ Tus0nEP1AMcMTHkCmBNSQ7fc98yWL+++0YTeyLiB8UYoT9N8+QCX2E89TVlRYGsuIud4
+ u5Lw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGSAYqWeH/CU0rI4hXUBQLhwVqnaNq09roJPCWlYBWPlPKlH5C4myVX1277YZ47E9RG7c4NrxU9qU32L3hcVExnhH69es=
-X-Gm-Message-State: AOJu0YzAatCTuvlEKoawjTUkNcBqq1+vbpJKSweKh031qrESERIAj8Lw
- 3A7JrYo9akqFZdwzQtrwJoB4BIhP8gNw5gnoqsuNSgw4+g/q42L8g1i29wAS5Ig=
-X-Google-Smtp-Source: AGHT+IGzyU8l374ALhTybXTojUIf4nWgyeBdLVj9DYAXasbnb5SJPsb8qz/5CFLmLZnnQmYOUWZ5Jg==
-X-Received: by 2002:a05:6402:549:b0:5a1:5dce:3427 with SMTP id
- 4fb4d7f45d1cf-5b7f56fe9d4mr3177960a12.23.1722615136442; 
- Fri, 02 Aug 2024 09:12:16 -0700 (PDT)
+ AJvYcCXmLH3l2NH1/2E9+E7dw9raiFffBh44Rda7vMmiONhDh9NKgBgDFnsX/P6pSLVhxw3Rvv3G+1t/xIcEmOaJSrjZYrK9sbM=
+X-Gm-Message-State: AOJu0YzcW1JelFKCIp35GkqIFFyglya1qVl/XkzmWCDzNCCAW4fX8NOX
+ lOyXJC/fobBIMcRH8TFDQ78Nfyb4khIU7ES222Zs3VGZa3X1WpvFP63HGKGQstU=
+X-Google-Smtp-Source: AGHT+IHAZKp94kqphrlj6I5JCxnobfkqDYl7K9Hp50tJnzxj9EQVmVzNQzNwYYXAnSmBSPnJPETLVA==
+X-Received: by 2002:a2e:9199:0:b0:2ef:1c07:475b with SMTP id
+ 38308e7fff4ca-2f15aa95c6amr30003491fa.15.1722615384270; 
+ Fri, 02 Aug 2024 09:16:24 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.211.94])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5b83960f101sm1279359a12.20.2024.08.02.09.12.12
+ 5b1f17b1804b1-428e4073f7bsm60697105e9.18.2024.08.02.09.16.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 02 Aug 2024 09:12:16 -0700 (PDT)
-Message-ID: <7fba140f-ed8f-4faf-8887-6bbac9d6a447@linaro.org>
-Date: Fri, 2 Aug 2024 18:12:10 +0200
+ Fri, 02 Aug 2024 09:16:23 -0700 (PDT)
+Message-ID: <abc56db7-8221-40bc-b3a5-3ca639ba9b31@linaro.org>
+Date: Fri, 2 Aug 2024 18:16:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 22/24] tests/functional: Convert the acpi-bits test
- into a standalone test
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 15/24] tests/functional: Convert the microblaze avocado
+ tests into standalone tests
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -73,21 +72,21 @@ Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>
 References: <20240730170347.4103919-1-berrange@redhat.com>
- <20240730170347.4103919-23-berrange@redhat.com>
- <37b06e6c-ed74-4782-8a47-5205d81e0a00@linaro.org>
+ <20240730170347.4103919-16-berrange@redhat.com>
 Content-Language: en-US
-In-Reply-To: <37b06e6c-ed74-4782-8a47-5205d81e0a00@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240730170347.4103919-16-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,40 +102,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/8/24 18:10, Philippe Mathieu-Daudé wrote:
-> On 30/7/24 19:03, Daniel P. Berrangé wrote:
->> From: Thomas Huth <thuth@redhat.com>
->>
->> Mostly a straight-forward conversion. Looks like we can simply drop
->> the avocado datadrainer stuff when not using the avocado framework
->> anymore.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   .../acpi-bits/bits-config/bits-cfg.txt        |  0
->>   .../acpi-bits/bits-tests/smbios.py2           |  0
->>   .../acpi-bits/bits-tests/smilatency.py2       |  0
->>   .../acpi-bits/bits-tests/testacpi.py2         |  0
->>   .../acpi-bits/bits-tests/testcpuid.py2        |  0
->>   tests/functional/meson.build                  |  2 +
->>   .../test_acpi_bits.py}                        | 81 ++++++++++---------
->>   7 files changed, 43 insertions(+), 40 deletions(-)
->>   rename tests/{avocado => 
->> functional}/acpi-bits/bits-config/bits-cfg.txt (100%)
->>   rename tests/{avocado => functional}/acpi-bits/bits-tests/smbios.py2 
->> (100%)
->>   rename tests/{avocado => 
->> functional}/acpi-bits/bits-tests/smilatency.py2 (100%)
->>   rename tests/{avocado => 
->> functional}/acpi-bits/bits-tests/testacpi.py2 (100%)
->>   rename tests/{avocado => 
->> functional}/acpi-bits/bits-tests/testcpuid.py2 (100%)
->>   rename tests/{avocado/acpi-bits.py => functional/test_acpi_bits.py} 
->> (86%)
->>   mode change 100644 => 100755
+On 30/7/24 19:03, Daniel P. Berrangé wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> The machine_microblaze.py file contained two tests, one for each
+> endianess. Since we only support one QEMU target binary per file
+> in the new functional test environment, we have to split this file
+> up into two files now.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   MAINTAINERS                                   |  2 +-
+>   tests/avocado/machine_microblaze.py           | 61 -------------------
+>   tests/functional/meson.build                  |  8 +++
+>   .../functional/test_microblaze_s3adsp1800.py  | 39 ++++++++++++
+>   .../test_microblazeel_s3adsp1800.py           | 42 +++++++++++++
+>   5 files changed, 90 insertions(+), 62 deletions(-)
+>   delete mode 100644 tests/avocado/machine_microblaze.py
+>   create mode 100755 tests/functional/test_microblaze_s3adsp1800.py
+>   create mode 100755 tests/functional/test_microblazeel_s3adsp1800.py
 
-(missing MAINTAINERS update)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
