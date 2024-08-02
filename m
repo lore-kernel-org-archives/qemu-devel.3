@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D741C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 08:35:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26BB4C3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 08:35:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZnkh-0000Uh-IK; Fri, 02 Aug 2024 04:35:07 -0400
+	id 1sZnkU-0007sx-2L; Fri, 02 Aug 2024 04:34:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sZnkf-0000NL-P4
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:35:05 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1sZnkS-0007o9-TD
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:34:52 -0400
+Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <itachis6234@gmail.com>)
- id 1sZnkd-0006Wq-So
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:35:05 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7105043330aso2172619b3a.0
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 01:35:03 -0700 (PDT)
+ id 1sZnkR-0006S1-AC
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 04:34:52 -0400
+Received: by mail-ot1-x329.google.com with SMTP id
+ 46e09a7af769-7093f3a1af9so4748175a34.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 01:34:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722587702; x=1723192502; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1722587690; x=1723192490; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IXOzHuv1KBwhfMLjBnTL63jnN0X+gTMftdAakppgxGM=;
- b=Hyhjder7vum4+kme6hdluG8jzb1CSXXUKIxiiGY7vaAMlITh5TZWj8mlywGaq03ZIu
- WUSa9g6bDkukykVplgp11VP+uwljHu7w3+1YYXuFMYWQTzO/MTPLjde7EXYPuCQqKHaS
- 5xJFzIiK2IzWm6POnV6n9ZG2Vos435+69jviGKq8d8oqFORxpA6J9hUWEWPnGubV9lIo
- mGGpOlmUWg6E2oSu4BE2TxhjDCfvSmo5nWrrNKTUvbptDpRNS0CmnfXCfr0B1CiODY9K
- GgFhpttHpyWzZB8gQrqC4xbWQKapOHCJhCQL6y7aLa3Ww1L+psa+GQl4iyNfMWuY3Znr
- GQ5Q==
+ bh=M6q+0lPGAHAs7rCnOgD6eUq4VRS7CW83rLTiEpszDko=;
+ b=TDJTVhcFT4Gs7fhMogahOMcVLaUiOYd0biaBb5RVI6OBI1SClgp4FLYc5pglcjdg2P
+ 646UafCqcPxzA5WzvfsPV46I1bTrB/tktkEbU/8A8daeDBe+NDrSHtc2HuGRmQBRvqZc
+ h0yM01USqlEhIA8NkgxTpCVi14kmdCCYj8Brex1XVUQdFlUntuBTfdAxx9aTVquHHmHk
+ ZYDHV/lUZfBxJqn2LsdPLCsVc7boJtdPtmjTYLnJgxWv0A3PtEGxBMWL2/7RAYRMo8iY
+ yCQdijnsRh3/ArHgcDbP6SpqAQ70CGB7PoZj1JQXRb6eyD3XsKtUoxWlCk20RAVIirsU
+ SpXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722587702; x=1723192502;
+ d=1e100.net; s=20230601; t=1722587690; x=1723192490;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IXOzHuv1KBwhfMLjBnTL63jnN0X+gTMftdAakppgxGM=;
- b=jy31X3lW6RkRzdogbGs15wvS3/55QKMa6p1OViM661J4HGWnZS13Js2NuLGpSVS08m
- lXWdOozXh0R7PeSgivvnfrCDF6lZlOgbLh3TFhk1gjO1kjorzQogEySc2GYGOm4bKnAu
- 5QuB6RD3MJir860OTTJmFg3zr351adT2GV1nqufgkB0wALx7eSGgx3biP9h3ySnfAGmG
- Lph3LUJTEi7/meiSBLycIRPsMM4fbyNVIJs4VBp21py/XwstEtbIbixpfWd8BpXLFYtb
- 5zRXBJZlthBQ37cygPTjgfT7IEOsyKXnLEHmVKwiRYogVDscHWnbgXnbXewjOhTAHHSg
- aaYg==
-X-Gm-Message-State: AOJu0YyqKL8gUW0S5tEW58C5CcyTp+Wu18hfNj/wUfLIccAAYsNgZqUj
- 37DiuVSGtWFjUJNoqNS/W/CQ0qIGDChwRcfaQvDXXOX3FH3G8OKWnXZn3h7qh0c=
-X-Google-Smtp-Source: AGHT+IGkoihWQrgJou95dzuMHPBiWUfAjA+2xXQr2z9g59U1fu9fJ49fFHn/hhUD6ApQEc62R8AA9w==
-X-Received: by 2002:a05:6a00:4f82:b0:70d:2497:383 with SMTP id
- d2e1a72fcca58-7106cfe179cmr3197936b3a.18.1722587702173; 
- Fri, 02 Aug 2024 01:35:02 -0700 (PDT)
+ bh=M6q+0lPGAHAs7rCnOgD6eUq4VRS7CW83rLTiEpszDko=;
+ b=lbEQxfWzB10jtxMOxXJd+47IFVtVwpxV/1Q+cyMofIedRhm3JQ9VMkEkl+a90K2scf
+ 4BSP9ASX3qSVECei2rmcJ+Vb4j1niOoz3zd2Q+vYD9VCLWTcNUl1DX+6CnUFuIIDRnp8
+ T/i2Xp2NgmX6S7boVwYvEjDpNJNkxQ33tvJI+eQYsh1O/Q/IhX7kqTpnTVD2caAbmT6j
+ /RqJBsuzgAwvyBFsXHoU7cdsXZTE/vfIBm9K99SdEkHnfVwLVgDhkz0d5N8JKZdQ7lCZ
+ 0U2pssbDbrgJagcsl4P7yZM0rnqILIv9pGNYiGjBElAxeb/xHLdxIbtG0HyJqAupOoDc
+ 3ygw==
+X-Gm-Message-State: AOJu0YzILOIJXBcnYUMAXErpi72ddBjOHkLWw7nRiy/DlVqPrfLM/mA8
+ PHtyGnS56WgL+GbggbEzaVJapts4m/fq7w/OehSTnZEMj8U6E50zU+Ggj3/tBDk=
+X-Google-Smtp-Source: AGHT+IF3BnhgPFivw8S722iZKHAm0/QVDu8qUhUpZwbYzLTLhPh/NDR+3LDD9qs975mLQtVJa3rPKg==
+X-Received: by 2002:a05:6830:6dcf:b0:709:49c5:fd99 with SMTP id
+ 46e09a7af769-709b31fc75cmr4133273a34.4.1722587689953; 
+ Fri, 02 Aug 2024 01:34:49 -0700 (PDT)
 Received: from localhost.localdomain ([203.87.101.91])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7106ec06a25sm951673b3a.33.2024.08.02.01.35.00
+ d2e1a72fcca58-7106ec06a25sm951673b3a.33.2024.08.02.01.34.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Aug 2024 01:35:01 -0700 (PDT)
+ Fri, 02 Aug 2024 01:34:49 -0700 (PDT)
 From: Ajeet Singh <itachis6234@gmail.com>
 X-Google-Original-From: Ajeet Singh <itachis@FreeBSD.org>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Mark Corbin <mark.corbin@embecsom.com>,
- Ajeet Singh <itachis@FreeBSD.org>
-Subject: [PATCH 11/18] bsd-user: Define RISC-V VM parameters and helper
- functions
-Date: Fri,  2 Aug 2024 18:34:16 +1000
-Message-Id: <20240802083423.142365-12-itachis@FreeBSD.org>
+ Ajeet Singh <itachis@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>
+Subject: [PATCH 06/18] bsd-user: Add RISC-V ELF definitions and hardware
+ capability detection
+Date: Fri,  2 Aug 2024 18:34:11 +1000
+Message-Id: <20240802083423.142365-7-itachis@FreeBSD.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240802083423.142365-1-itachis@FreeBSD.org>
 References: <20240802083423.142365-1-itachis@FreeBSD.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=itachis6234@gmail.com; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
+ envelope-from=itachis6234@gmail.com; helo=mail-ot1-x329.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,27 +99,28 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mark Corbin <mark.corbin@embecsom.com>
 
-Added definitions for RISC-V VM parameters, including maximum and
-default sizes for text, data, and stack, as well as address space
-limits.
-Implemented helper functions for retrieving and setting specific
-values in the CPU state, such as stack pointer and return values.
+Introduced RISC-V specific ELF definitions and hardware capability
+detection.
+Additionally, a function to retrieve hardware capabilities
+('get_elf_hwcap') is implemented, which returns the common bits set in
+each CPU's ISA strings.
 
 Signed-off-by: Mark Corbin <mark.corbin@embecsom.com>
 Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+Co-authored-by: Kyle Evans <kevans@FreeBSD.org>
 ---
- bsd-user/riscv/target_arch_vmparam.h | 53 ++++++++++++++++++++++++++++
- 1 file changed, 53 insertions(+)
- create mode 100644 bsd-user/riscv/target_arch_vmparam.h
+ bsd-user/riscv/target_arch_elf.h | 48 ++++++++++++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
+ create mode 100644 bsd-user/riscv/target_arch_elf.h
 
-diff --git a/bsd-user/riscv/target_arch_vmparam.h b/bsd-user/riscv/target_arch_vmparam.h
+diff --git a/bsd-user/riscv/target_arch_elf.h b/bsd-user/riscv/target_arch_elf.h
 new file mode 100644
-index 0000000000..0f2486def1
+index 0000000000..dfb2a3e32e
 --- /dev/null
-+++ b/bsd-user/riscv/target_arch_vmparam.h
-@@ -0,0 +1,53 @@
++++ b/bsd-user/riscv/target_arch_elf.h
+@@ -0,0 +1,48 @@
 +/*
-+ *  RISC-V VM parameters definitions
++ *  RISC-V ELF definitions
 + *
 + *  Copyright (c) 2019 Mark Corbin
 + *
@@ -137,40 +138,35 @@ index 0000000000..0f2486def1
 + *  along with this program; if not, see <http://www.gnu.org/licenses/>.
 + */
 +
-+#ifndef TARGET_ARCH_VMPARAM_H
-+#define TARGET_ARCH_VMPARAM_H
++#ifndef TARGET_ARCH_ELF_H
++#define TARGET_ARCH_ELF_H
 +
-+#include "cpu.h"
++#define elf_check_arch(x) ((x) == EM_RISCV)
++#define ELF_START_MMAP 0x80000000
++#define ELF_ET_DYN_LOAD_ADDR    0x100000
++#define ELF_CLASS   ELFCLASS64
 +
-+/* Compare with riscv/include/vmparam.h */
-+#define TARGET_MAXTSIZ      (1 * GiB)           /* max text size */
-+#define TARGET_DFLDSIZ      (128 * MiB)         /* initial data size limit */
-+#define TARGET_MAXDSIZ      (1 * GiB)           /* max data size */
-+#define TARGET_DFLSSIZ      (128 * MiB)         /* initial stack size limit */
-+#define TARGET_MAXSSIZ      (1 * GiB)           /* max stack size */
-+#define TARGET_SGROWSIZ     (128 * KiB)         /* amount to grow stack */
++#define ELF_DATA    ELFDATA2LSB
++#define ELF_ARCH    EM_RISCV
 +
-+#define TARGET_VM_MINUSER_ADDRESS   (0x0000000000000000UL)
-+#define TARGET_VM_MAXUSER_ADDRESS   (0x0000004000000000UL)
-+
-+#define TARGET_USRSTACK (TARGET_VM_MAXUSER_ADDRESS - TARGET_PAGE_SIZE)
-+
-+static inline abi_ulong get_sp_from_cpustate(CPURISCVState *state)
++/*
++ * Note: FreeBSD returns things a litle differently than this, but this is as
++ * close we have in the emulator. The FreeBSD/riscv64 kernel (in identcpu.c)
++ * returns the common bits set in each of the CPUs' ISA strings. Also, unlike
++ * linux, we don't mask out specific bits.
++ */
++#define ELF_HWCAP get_elf_hwcap()
++static uint32_t get_elf_hwcap(void)
 +{
-+    return state->gpr[xSP];
++    RISCVCPU *cpu = RISCV_CPU(thread_cpu);
++
++    return cpu->env.misa_ext_mask;
 +}
 +
-+static inline void set_second_rval(CPURISCVState *state, abi_ulong retval2)
-+{
-+    state->gpr[xA1] = retval2;
-+}
++#define USE_ELF_CORE_DUMP
++#define ELF_EXEC_PAGESIZE        4096
 +
-+static inline abi_ulong get_second_rval(CPURISCVState *state)
-+{
-+    return state->gpr[xA1];
-+}
-+
-+#endif /* TARGET_ARCH_VMPARAM_H */
++#endif /* TARGET_ARCH_ELF_H */
 -- 
 2.34.1
 
