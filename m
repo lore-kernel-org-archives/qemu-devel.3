@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A8BBC52D6F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 16:41:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C127C52D6F
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 16:54:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZvKk-0008Sv-UE; Fri, 02 Aug 2024 12:40:50 -0400
+	id 1sZvWi-0001TW-Kt; Fri, 02 Aug 2024 12:53:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZvKj-0008LJ-3o
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 12:40:49 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZvWh-0001Rq-D6
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 12:53:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZvKg-0003w6-Hg
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 12:40:48 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sZvWf-0003bW-0A
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 12:53:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722616845;
+ s=mimecast20190719; t=1722617587;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Ry6wCSh/Co7KiFNuWJObLspvr5yfVahyZDCoBi1HSEA=;
- b=E8GevpcRGdUpn6OERKmSTqAh279eOGufjpaNoHtarAROl2vXJC+xxwVgPfOZTYorR7pp8G
- /uwBSdB0gCIqBNDV/E91dGcEHvfxU79TLZZvxw7Lzwbv6bfocVodAKI+fDKuu67kghZ75H
- /Nj9UVToO2XAW6OG3ObWCl+b8xTYW0s=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JjBkgDXfZ4Ivjyv1O8UHc1PGSEmnokEtXxYejfzK+NI=;
+ b=Nh7A0uwRMhCUruN4Ku0+UqdLTpoWww9RYl9hgov2QCtW/iVg7MHCDjLgR+QbgJUh2rqduX
+ pMgmTdEwsTk8h9jskNpTEkeVPKx0Jw/16tHSL6mj3im3omBeKYmxvfRxTizuIkdgbwNFAl
+ U6YrqlHWPGEdTbaVRy4c7TbOYe5ajP8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-498-Ujy_4fW_Orm_vJgsfxf17Q-1; Fri, 02 Aug 2024 12:40:43 -0400
-X-MC-Unique: Ujy_4fW_Orm_vJgsfxf17Q-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2ef2018bb2dso79586791fa.0
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 09:40:43 -0700 (PDT)
+ us-mta-628-JbSWDsztMsy2eCCVcfzohA-1; Fri, 02 Aug 2024 12:53:06 -0400
+X-MC-Unique: JbSWDsztMsy2eCCVcfzohA-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4281d0d1c57so17105395e9.1
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 09:53:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722616842; x=1723221642;
+ d=1e100.net; s=20230601; t=1722617585; x=1723222385;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ry6wCSh/Co7KiFNuWJObLspvr5yfVahyZDCoBi1HSEA=;
- b=Jah/2cQVppyWb+DPCk1/ZdK4WZPApcJSl5MEC5MiBgsAl5rdmYhoipOl0i81QhfCad
- 9p3k2ejXejds6PrVwx0yZdpSfOAd4AhKJmh/lFdagXLetpP0J3U3c+Kj03spqwh4e1NI
- vUmzO0oJion63OGitlxSn7aDUVlok13UaAirxUI6/6T5dKGuya6s7eNzyxpvWW5MCogt
- H0Fqjxh6Azx9agsHRnQX2Gpw42mNTUI6dnxBRFRS06h8MloMQ5WQc53RjwY+bxu7acNY
- pXjFky/em+t2Ozgr0bmH2pTOWdKNWR2iXF0WUwVdWJLVIHx52XFEnYIAaGPLK6pWrzzR
- 2QQA==
+ bh=JjBkgDXfZ4Ivjyv1O8UHc1PGSEmnokEtXxYejfzK+NI=;
+ b=GSnuNtO1B6e8ELkNsLElXvs9c0AHU1PAnmJWG30eG0PStT39AjrJIYl4VhLPc+omVv
+ sK+jIV9SPDLQCWFSy86PCgpH3dJn05DfEu/PgUGn8r402FykheM0KAv+cy5MqDOaQv9F
+ w4XFBlQIZJvaPbCmn7Q/hNONhMmrzcfjfCnpfzBVHIOxJkBUbz5fFFn2SlVHgQ7inhN2
+ 9FUDG2pCfhgOTy43sx/3XSmwyILbKWdYkQ8zUewsHblU1tU5bOt52JO8oGkzYHstyoV4
+ StYbAE3JZ+YoGseuMWUa+stduh/QfLCeOkE8c9faSgUEJMThZwlWzwbiyAvq6PPMRm39
+ yyJw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWoBcj5apAH2ceZ6VmHw5QvzUlvvAGtxD/4Hoo1vMRfZTyy7hCFMojgkTE35bPw0xYDCV6qhKIv7vwVjNSBoSpZAPhVYPY=
-X-Gm-Message-State: AOJu0YxKsX16egOghjqng8RYQ8U892AvGupkrePg1CzsxTHOfVK97Z0c
- 8+nUczMZUpaIjowOGAFezxwMEb3kr8LneIM/jTQtcQcxeovBkOsG0gAmCKpA73il1/6UPZqZFUV
- W2OVfrsJLWp+UyBVbj53k+UMOppoAiDA097liCXNcfj6tp3DpdAnotUFunA5LaSU=
-X-Received: by 2002:a2e:87ce:0:b0:2ec:89b8:3d2f with SMTP id
- 38308e7fff4ca-2f15aa87851mr30338231fa.19.1722616841767; 
- Fri, 02 Aug 2024 09:40:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHD/r9hpxL1VDCpM7UJbeCae1B2I8YvLCNehmjTO31kcekQcCkkbJYsMozPCrjwxpXkbzBmKw==
-X-Received: by 2002:a2e:87ce:0:b0:2ec:89b8:3d2f with SMTP id
- 38308e7fff4ca-2f15aa87851mr30337821fa.19.1722616840792; 
- Fri, 02 Aug 2024 09:40:40 -0700 (PDT)
+ AJvYcCVYCnlmOIDu+JRrAI+/alZmukq9LmA1wSO7DLKVqT2owtP0az7GQlJ0rUQUQitUA1gFVde6NIAjJadyqBIcnIYn5FMTmq8=
+X-Gm-Message-State: AOJu0Yxp0UXg79bxzFptNkrMHNdupM/JcUSLhVMFhMSMXta+2zWICkG7
+ 0159R5l+tCz3qdf+zR8V1ad7UTEvRw4wH2QLNTV13CeuMSNJtC6U57e1d/p+m2Q8+y2JmmOcbBR
+ wYrYu/oELO7zKSU/BYjc37+UvvxHmsDaLRq0UjYwCx6jpd69nBN9H
+X-Received: by 2002:adf:f60b:0:b0:36b:aa96:d1e5 with SMTP id
+ ffacd0b85a97d-36bbbe5b841mr3502142f8f.18.1722617585004; 
+ Fri, 02 Aug 2024 09:53:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG2mPhvXqUKWcX3r7C0v3gkaIfy5REYH4ttR5ojgGhiC9HKC7wIOM3fRFcLiI4DwMJZq6g8Bw==
+X-Received: by 2002:adf:f60b:0:b0:36b:aa96:d1e5 with SMTP id
+ ffacd0b85a97d-36bbbe5b841mr3502105f8f.18.1722617584102; 
+ Fri, 02 Aug 2024 09:53:04 -0700 (PDT)
 Received: from redhat.com ([31.187.78.99]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4282bb63f16sm99174985e9.33.2024.08.02.09.40.36
+ ffacd0b85a97d-36bbcf1e175sm2330207f8f.29.2024.08.02.09.53.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Aug 2024 09:40:39 -0700 (PDT)
-Date: Fri, 2 Aug 2024 12:40:33 -0400
+ Fri, 02 Aug 2024 09:53:03 -0700 (PDT)
+Date: Fri, 2 Aug 2024 12:52:57 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
- jasowang@redhat.com, sriram.yagnaraman@est.tech, sw@weilnetz.de,
- qemu-devel@nongnu.org, yan@daynix.com,
- Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <20240802123127-mutt-send-email-mst@kernel.org>
-References: <ZqfQ0cGf8t2trEdl@redhat.com> <ZqktXwxBWjuAgGxZ@x1n>
- <Zqk09BGxlpdxMBMx@redhat.com> <Zqk6x2nd3Twz--75@x1n>
- <39a8bb8b-4191-4f41-aaf7-06df24bf3280@daynix.com>
- <ZqumIZcs1tCNTpRE@x1n>
- <b70d09a5-554a-456b-904e-59cec5836ae8@daynix.com>
- <Zqz1vvYqRuIAPnod@x1n>
- <c5ea7a57-fc52-4bb7-bc4c-f3aca8da0574@daynix.com>
- <Zq0IrhV-DgStpJtk@x1n>
+ Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH for-9.2 v11 08/11] pcie_sriov: Remove num_vfs from
+ PCIESriovPF
+Message-ID: <20240802124956-mutt-send-email-mst@kernel.org>
+References: <20240802-reuse-v11-0-fb83bb8c19fb@daynix.com>
+ <20240802-reuse-v11-8-fb83bb8c19fb@daynix.com>
+ <20240802083911-mutt-send-email-mst@kernel.org>
+ <5058d9d4-7922-4746-b6d1-b16046bf69f9@daynix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zq0IrhV-DgStpJtk@x1n>
+In-Reply-To: <5058d9d4-7922-4746-b6d1-b16046bf69f9@daynix.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -114,36 +114,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 02, 2024 at 12:26:22PM -0400, Peter Xu wrote:
-> And that's why I was thinking (where I totally agree with you on this) that
-> whether we should settle a short term plan first to be on the safe side
-> that we start with migration always being compatible, then we figure the
-> other approach.
+On Sat, Aug 03, 2024 at 12:38:10AM +0900, Akihiko Odaki wrote:
+> On 2024/08/02 21:58, Michael S. Tsirkin wrote:
+> > On Fri, Aug 02, 2024 at 02:17:58PM +0900, Akihiko Odaki wrote:
+> > > num_vfs is not migrated so use PCI_SRIOV_CTRL_VFE and PCI_SRIOV_NUM_VF
+> > > instead.
+> > > 
+> > > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > > ---
+> > >   include/hw/pci/pcie_sriov.h |  1 -
+> > >   hw/pci/pcie_sriov.c         | 28 ++++++++++++++++++++--------
+> > >   hw/pci/trace-events         |  2 +-
+> > >   3 files changed, 21 insertions(+), 10 deletions(-)
+> > > 
+> > > diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
+> > > index 70649236c18a..5148c5b77dd1 100644
+> > > --- a/include/hw/pci/pcie_sriov.h
+> > > +++ b/include/hw/pci/pcie_sriov.h
+> > > @@ -16,7 +16,6 @@
+> > >   #include "hw/pci/pci.h"
+> > >   typedef struct PCIESriovPF {
+> > > -    uint16_t num_vfs;   /* Number of virtual functions created */
+> > >       uint8_t vf_bar_type[PCI_NUM_REGIONS];   /* Store type for each VF bar */
+> > >       PCIDevice **vf;     /* Pointer to an array of num_vfs VF devices */
+> > >   } PCIESriovPF;
+> > > diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+> > > index 9bd7f8acc3f4..fae6acea4acb 100644
+> > > --- a/hw/pci/pcie_sriov.c
+> > > +++ b/hw/pci/pcie_sriov.c
+> > > @@ -57,7 +57,6 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+> > >       pcie_add_capability(dev, PCI_EXT_CAP_ID_SRIOV, 1,
+> > >                           offset, PCI_EXT_CAP_SRIOV_SIZEOF);
+> > >       dev->exp.sriov_cap = offset;
+> > > -    dev->exp.sriov_pf.num_vfs = 0;
+> > >       dev->exp.sriov_pf.vf = NULL;
+> > >       pci_set_word(cfg + PCI_SRIOV_VF_OFFSET, vf_offset);
+> > > @@ -186,6 +185,12 @@ void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,
+> > >       }
+> > >   }
+> > > +static void clear_ctrl_vfe(PCIDevice *dev)
+> > > +{
+> > > +    uint8_t *ctrl = dev->config + dev->exp.sriov_cap + PCI_SRIOV_CTRL;
+> > 
+> > space here, after definition
+> > 
+> > > +    pci_set_word(ctrl, pci_get_word(ctrl) & ~PCI_SRIOV_CTRL_VFE);
+> > > +}
+> > > +
+> > 
+> > Pls use pci_word_test_and_clear_mask
+> 
+> That sounds good. I'll do so with the next version.
+> 
+> > 
+> > 
+> > >   static void register_vfs(PCIDevice *dev)
+> > >   {
+> > >       uint16_t num_vfs;
+> > > @@ -195,6 +200,7 @@ static void register_vfs(PCIDevice *dev)
+> > >       assert(sriov_cap > 0);
+> > >       num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
+> > >       if (num_vfs > pci_get_word(dev->config + sriov_cap + PCI_SRIOV_TOTAL_VF)) {
+> > > +        clear_ctrl_vfe(dev);
+> > >           return;
+> > >       }
+> > > @@ -203,20 +209,18 @@ static void register_vfs(PCIDevice *dev)
+> > >       for (i = 0; i < num_vfs; i++) {
+> > >           pci_set_enabled(dev->exp.sriov_pf.vf[i], true);
+> > >       }
+> > > -    dev->exp.sriov_pf.num_vfs = num_vfs;
+> > >   }
+> > >   static void unregister_vfs(PCIDevice *dev)
+> > >   {
+> > > -    uint16_t num_vfs = dev->exp.sriov_pf.num_vfs;
+> > >       uint16_t i;
+> > > +    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
+> > >       trace_sriov_unregister_vfs(dev->name, PCI_SLOT(dev->devfn),
+> > > -                               PCI_FUNC(dev->devfn), num_vfs);
+> > > -    for (i = 0; i < num_vfs; i++) {
+> > > +                               PCI_FUNC(dev->devfn));
+> > > +    for (i = 0; i < pci_get_word(cfg + PCI_SRIOV_TOTAL_VF); i++) {
+> > 
+> > Why PCI_SRIOV_TOTAL_VF not PCI_SRIOV_NUM_VF/pcie_sriov_num_vfs?
+> 
+> Because PCI_SRIOV_NUM_VF is overwritten when unregister_vfs() is called.
 
 
-We have two big issues around migration compatibility we never solved:
+maybe this function should get the range of VFs to unregister, then.
 
-- some guest visible behaviour depends on a package outside of qemu:
-  as that package can change, so can qemu behaviour
+> > 
+> > 
+> > >           pci_set_enabled(dev->exp.sriov_pf.vf[i], false);
+> > >       }
+> > > -    dev->exp.sriov_pf.num_vfs = 0;
+> > >   }
+> > >   void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+> > > @@ -242,6 +246,9 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
+> > >           } else {
+> > >               unregister_vfs(dev);
+> > >           }
+> > > +    } else if (range_covers_byte(off, len, PCI_SRIOV_NUM_VF)) {
+> > > +        clear_ctrl_vfe(dev);
+> > > +        unregister_vfs(dev);
+> > 
+> > So any write into PCI_SRIOV_NUM_VF automatically clears VFE?
+> > 
+> > Yes writing into PCI_SRIOV_NUM_VF should not happen when VFE
+> > is set, but spec does not say we need to clear it automatically.
+> > Why come up with random rules? just don't special case it,
+> > whatever happens, let it happen.
+> > 
+> > And what does this change have to do with getting rid of
+> > num_vfs?
+> 
+> Keeping VFs working requires to know the number of VFs, but we do no longer
+> know it because PCI_SRIOV_NUM_VF is overwritten. This disables all VFs
+> instead of trying to keep VFs alive.
+> 
+> Regards,
+> Akihiko Odaki
 
-- sometimes we change guest visible behaviour and only
-  discover this after the release: fixing that breaks
-  migration to one version, not fixing breaks migration to another
-
-
-These, to me, look similar enough that I feel we should look
-at them together from QAPI POV.
-
-Both issues sometimes can have work-arounds, enabling these
-would be nice.
-Also, both issues have a clean solution, which can come in
-two flavors:
-1. basic: detecting incompatibility
-and not starting qemu on destination (or failing migration,
-possibly early, which I consider a less clean solution).
-2. advanced: ability to go from a set of configurations to
-a flag making them compatible.
-
+However, we then get into a situation where VFE is set but
+PCI_SRIOV_NUM_VF no longer reflects the # of registered VFs.
+Given you removed num_vfs which was exactly
+the # of registered VFs, it is hard to say if that will lead to
+confusion now or later.
 
 -- 
 MST
