@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58637C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 23:58:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D109C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 23:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sa29o-0002Iv-TO; Fri, 02 Aug 2024 19:58:00 -0400
+	id 1sa29k-00020j-N5; Fri, 02 Aug 2024 19:57:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sa29m-0002AM-UA
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 19:57:59 -0400
-Received: from mail-io1-xd30.google.com ([2607:f8b0:4864:20::d30])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sa29d-0001en-Gb
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 19:57:51 -0400
+Received: from mail-io1-xd2d.google.com ([2607:f8b0:4864:20::d2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sa29l-0004Jg-Bs
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 19:57:58 -0400
-Received: by mail-io1-xd30.google.com with SMTP id
- ca18e2360f4ac-81f921c40a0so346408939f.0
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 16:57:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1sa29c-0004Hm-2m
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 19:57:49 -0400
+Received: by mail-io1-xd2d.google.com with SMTP id
+ ca18e2360f4ac-81fd1e05a5aso92144839f.0
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 16:57:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1722643076; x=1723247876;
+ d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1722643067; x=1723247867;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LSto2JlTblPm7lL32v0n5cXRXHwEk3Eun8OyV2xgFYk=;
- b=M8MHeNzvfF2sOKpKUlIqBAvlluww7MREpGVSzIu1ee92vVlLt6xDxFxR4T0qEEV6ya
- IsVOTWgNy/QopAbJBB/nXlCoDYY0sF6Yl+lzOq78duZLL6vmqVzuUo6zC85ShcNfd9rc
- Nj2W417++sPI/d0O7Cn/LrNpa0CcOtBLfiKtyEAMpYy0uuA/bOVRP88q/QKwCJqTGdPw
- 8DX84wmhTM3Hcb0CX7FJSsFt3HtO4a4xwgJG6FCNNjwu+16GQoW1O7aXBsIk2XQXys1R
- sSXM1Rx0XcvbKIIv7NklqBgqBJiZPAYCAsp8IPse6xxyOCrsdJFkx9BBz2QbPTkba9eo
- 8Fnw==
+ bh=ARXUdRtW9JUYDBe/PGc2EUZh9mbaCTufkya2rCFHUZQ=;
+ b=Kds3UqA9UUv2PDtcSSJjaNZwFHeZvU7RQFOkgeV1av6J9IMJRly5BT8J6QSZRhw3Yk
+ cK16uppq1XU77/sH7tcQB6C3Xslj2ZPlarrULYGi3Mjb/44aHAuOoyvjwP25HwZ9mrQl
+ j2kULE0G4HVPJRnoPTPfOouvfFaqmAj3PWSF5SvvzWlbonrpnU0gMjsgamqkiJ4aJZvO
+ rQ8go1OeDum0X88toXGiSIzSN0LI9SvY0qUmvKI8ZeC2/7IuNGLRsOKAZlHFGLnxlNn2
+ /WWWE1RyhknuhxaRd3cZkQy+mTzFvz+ovzo0srtYqA0X39S8BiV5ReeuPfa2cBjrL/ZG
+ vQtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722643076; x=1723247876;
+ d=1e100.net; s=20230601; t=1722643067; x=1723247867;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LSto2JlTblPm7lL32v0n5cXRXHwEk3Eun8OyV2xgFYk=;
- b=rAHh9y731PxYXIAvlA3GDuOCJgRDyIqiRpJQvOIv0eDvYVqwgWAFpksCSdeCll+gcu
- Xx919PJQYyB5RRn/1Q+4qOfMyVs5doEOsa0VSaIJbVV/8ENEGmnUEknATAQdGkMW02PR
- zvj86wtTzewdS6hvzDzXe2cWDLwFd7grJuBvXB/bVLUmw6kb15tkaEgO+0PwYY5l2tMr
- xBH0JSJqYXMrU3Twq5qbAlvziW72/5R7B5crEP/1JC4nk5osv7FrnCrFnX9O70uaRoi4
- RoCcvb/lUp8sNk7adbQDiAI1BLUTr0mzOaPhvfdpSrExSjw/N5RUX1S/vfsnhaaBOorh
- hIiA==
-X-Gm-Message-State: AOJu0YwdGnBaouB8uypIM2C7nTlFD3qzgi+gha90+Mv8Kvft1nvZH79Z
- VR2kWhucNN7zhkELcPI5kgo+2G7oIai9xqtoT+fcjhaRaO4J6b2siNXmqDLjtUTB3bRpu0Rs9Ww
- rmSc=
-X-Google-Smtp-Source: AGHT+IETbXa+Mp5jDXt73Y3oKpH6ChskQHJZmg8+gfksu4bMm78r8LCx3sJZIP9WjRcX2pnEp4DOIQ==
-X-Received: by 2002:a05:6602:13d4:b0:7fb:87d6:64b with SMTP id
- ca18e2360f4ac-81fd4405a91mr605406939f.17.1722643075646; 
- Fri, 02 Aug 2024 16:57:55 -0700 (PDT)
+ bh=ARXUdRtW9JUYDBe/PGc2EUZh9mbaCTufkya2rCFHUZQ=;
+ b=NJOaDsOrfY+VTtMapUh1x0ESkKH6o0yDceYf990KfxqxQnVv9bWvTKvp8SF+u+oDHS
+ iyF6Hltz46YjDImZeHL6vWmnUOVcozUzipOXPzd39YoSDQKFdNfqojenIZbDWb5QBFJx
+ CpV/UTiAs/AiUB/Y8o0ky5Y6MOVOnUoHEZUzJnNHMwzzBxpjAubcMSzsi2G2sQnslXVn
+ uD38iZGaKY2K7bUaRqjg7dvGKREXzQQmMTZLveq3tBqT9FLWX8Nz+eyyflW3xD+dey4y
+ l7E9+fuu9Lv5tEt8SPnpggQxicSUE+7ZKt+pyH92esVbqm2XeEgImcVyraiHmjHt94Pb
+ onHA==
+X-Gm-Message-State: AOJu0YwhKJApy9TUVPGinX8wNIW1ryqNL3O/QR5NCYM7NcUlsEHKF1VS
+ 4NWKJG6bmGiZKZe42nYiQevWj8gRDchpWq+dzcw97OwtHmthrIbJ3YjBcbzPk4O1cYLPGP93cmW
+ 1k7E=
+X-Google-Smtp-Source: AGHT+IGJ8kBl1jAk/AiBp+gXJapmmr90k+KYMEUr1aXQGBzm5v5FOeHeCD46xd5FHzwZ2op+oj4ZNg==
+X-Received: by 2002:a05:6602:1512:b0:7fc:89ed:c15d with SMTP id
+ ca18e2360f4ac-81fd43e16a7mr672562239f.13.1722643066686; 
+ Fri, 02 Aug 2024 16:57:46 -0700 (PDT)
 Received: from dune.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4c8d69a8227sm683131173.47.2024.08.02.16.57.54
+ 8926c6da1cb9f-4c8d69a8227sm683131173.47.2024.08.02.16.57.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 02 Aug 2024 16:57:54 -0700 (PDT)
+ Fri, 02 Aug 2024 16:57:45 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
  Jessica Clarke <jrtc27@jrtc27.com>
-Subject: [PATCH 15/17] bsd-user: target_mprotect: use helper host_page_size
- local
-Date: Fri,  2 Aug 2024 17:56:15 -0600
-Message-ID: <20240802235617.7971-16-imp@bsdimp.com>
+Subject: [PATCH 07/17] bsd-user: Remove deprecated -p argument
+Date: Fri,  2 Aug 2024 17:56:07 -0600
+Message-ID: <20240802235617.7971-8-imp@bsdimp.com>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20240802235617.7971-1-imp@bsdimp.com>
 References: <20240802235617.7971-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::d30;
- envelope-from=imp@bsdimp.com; helo=mail-io1-xd30.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::d2d;
+ envelope-from=imp@bsdimp.com; helo=mail-io1-xd2d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -94,70 +93,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use helper variable for host_page_size. Linux-user uses a similar helper
-to make the code smaller after the multi-page-size migration.
+FreeBSD never really used the -p argument, so it's safe to remove
+entirely.
 
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/mmap.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ bsd-user/main.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
-index 2118972f073..ffecf52a72a 100644
---- a/bsd-user/mmap.c
-+++ b/bsd-user/mmap.c
-@@ -63,6 +63,7 @@ void mmap_fork_end(int child)
- /* NOTE: all the constants are the HOST ones, but addresses are target. */
- int target_mprotect(abi_ulong start, abi_ulong len, int target_prot)
- {
-+    int host_page_size = qemu_real_host_page_size();
-     abi_ulong end, host_start, host_end, addr;
-     int prot1, ret;
- 
-@@ -83,7 +84,7 @@ int target_mprotect(abi_ulong start, abi_ulong len, int target_prot)
-         return 0;
- 
-     mmap_lock();
--    host_start = start & qemu_host_page_mask;
-+    host_start = start & -host_page_size;
-     host_end = HOST_PAGE_ALIGN(end);
-     if (start > host_start) {
-         /* handle host page containing start */
-@@ -91,28 +92,28 @@ int target_mprotect(abi_ulong start, abi_ulong len, int target_prot)
-         for (addr = host_start; addr < start; addr += TARGET_PAGE_SIZE) {
-             prot1 |= page_get_flags(addr);
-         }
--        if (host_end == host_start + qemu_host_page_size) {
-+        if (host_end == host_start + host_page_size) {
-             for (addr = end; addr < host_end; addr += TARGET_PAGE_SIZE) {
-                 prot1 |= page_get_flags(addr);
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index 9ad31bd1efe..709ab10ddc1 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -388,14 +388,6 @@ int main(int argc, char **argv)
              }
-             end = host_end;
-         }
-         ret = mprotect(g2h_untagged(host_start),
--                       qemu_host_page_size, prot1 & PAGE_RWX);
-+                       host_page_size, prot1 & PAGE_RWX);
-         if (ret != 0)
-             goto error;
--        host_start += qemu_host_page_size;
-+        host_start += host_page_size;
-     }
-     if (end < host_end) {
-         prot1 = target_prot;
-         for (addr = end; addr < host_end; addr += TARGET_PAGE_SIZE) {
-             prot1 |= page_get_flags(addr);
-         }
--        ret = mprotect(g2h_untagged(host_end - qemu_host_page_size),
--                       qemu_host_page_size, prot1 & PAGE_RWX);
-+        ret = mprotect(g2h_untagged(host_end - host_page_size),
-+                       host_page_size, prot1 & PAGE_RWX);
-         if (ret != 0)
-             goto error;
--        host_end -= qemu_host_page_size;
-+        host_end -= host_page_size;
-     }
- 
-     /* handle the pages in the middle */
+         } else if (!strcmp(r, "L")) {
+             interp_prefix = argv[optind++];
+-        } else if (!strcmp(r, "p")) {
+-            unsigned size, want = qemu_real_host_page_size();
+-
+-            r = argv[optind++];
+-            if (qemu_strtoui(r, NULL, 10, &size) || size != want) {
+-                warn_report("Deprecated page size option cannot "
+-                            "change host page size (%u)", want);
+-            }
+         } else if (!strcmp(r, "g")) {
+             gdbstub = g_strdup(argv[optind++]);
+         } else if (!strcmp(r, "r")) {
 -- 
 2.45.1
 
