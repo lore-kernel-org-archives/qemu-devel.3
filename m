@@ -4,63 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 229E3C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 10:23:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 768FAC3DA49
+	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 10:41:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZpQh-0005PE-RG; Fri, 02 Aug 2024 06:22:35 -0400
+	id 1sZpib-0005lx-DE; Fri, 02 Aug 2024 06:41:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sZpQf-0005Hj-Ew; Fri, 02 Aug 2024 06:22:33 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1sZpQb-0005df-In; Fri, 02 Aug 2024 06:22:33 -0400
-Received: from mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net
- [IPv6:2a02:6b8:c12:2287:0:640:bdb:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 0439460DAB;
- Fri,  2 Aug 2024 13:22:24 +0300 (MSK)
-Received: from [IPV6:2a02:6b8:b081:b725::1:34] (unknown
- [2a02:6b8:b081:b725::1:34])
- by mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id MMVIMj2g74Y0-r64fm5OD; Fri, 02 Aug 2024 13:22:23 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1722594143;
- bh=GM3QPe9asR8jjs2PyWJ73NAjOVguxe8Y7L1iAJFvbzA=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=KknFu322maEXE2phpfVbhiJfJcvSWyD2ebCYi+QDRbfXmJOq5Sb9RJP2DAG7onIVh
- rGSq6P7XnBJd0f9J2zZdRnzSokMIknYE/FldKClYBT27mTVcWqu4SBpWRiYErQvfel
- mnLxQ1jsmwfiIgjK0Leu5yppFpN8YWKNATxD+pg8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-26.myt.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <3b6cbb23-beb8-4ec6-9907-0fa6425fec27@yandex-team.ru>
-Date: Fri, 2 Aug 2024 13:22:22 +0300
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sZpiZ-0005lC-66
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 06:41:03 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sZpiX-0002TC-6o
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 06:41:02 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5a1c49632deso10508610a12.2
+ for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 03:40:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722595258; x=1723200058; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=KaEekznGiuQmxgotdY68FtlBSpUh28C4n2k+xpgE/DI=;
+ b=TJY28zcvfO8wJf7j6+++NvQppWglcVgpJjM15wZN815wCPT6Sf1wn06UVTW8zDtd42
+ FGb8UUGaxG0wehY8V/BPFomj2qW6Su8OvJchNIUWpeiRX/ubLEDMOxrrWuUSPB4uyBUH
+ taOgi4qrcgHyYRYMz0l9eyjygwRf4GqArCf96JHwHH9dj8REj4EyjR55z71haH9amJbC
+ 5rMemM0kMzVZrXHr2NqwyHbTHhF84CDwAI4iKr4zkEJPzCHEFGaLttU3NaU/15bwpg10
+ Xli5YbJhNusFn2J3wsbWj4LujUBX1ByLHZWS8R9ajGdDW5Ix05ZWpxTcRbN6ZnlaPErm
+ 8ozQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722595258; x=1723200058;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KaEekznGiuQmxgotdY68FtlBSpUh28C4n2k+xpgE/DI=;
+ b=Te4Dhk1x8CmLrDiVBOarTdtjt/DO+ZjpOitqwVvAQpevUpHzoLSTi2xNnjqhLdbQ52
+ hF8+AudnHr7htHiKhb7fz/znnR26kEgsEERaFCZjvzF2bFmm71G3q1UIvm/ZZHliUdLU
+ 9dREchhYS+rYRslD9pwBIht9SREAQqISBKR3JNoP0tfmruxftt7USlfXpApNbOYMAJn+
+ tXikAduPWUCLeJFSQU/Tcs8941SglCMCcvRe0JVLFXvhfpOBkKrrhFBSiHWLbej6zzjT
+ rtHOEYnnaQ8Vnep94wR96K+oU6btVt1FRkMmhm5c+IX3Bd8NxC3Bhktj5PCe1PcYgSmN
+ pQbw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW85WjOih/SYuL5L2VUL8EZLDUEqoRawRfP2AyUc/euNbgDOHRuTjMDvAUI2QF2AhuKiuNTBKsp0icUd+bqf5MA0mjkhJk=
+X-Gm-Message-State: AOJu0YxkUuLrHNtt905fZMLgHVgHX9RKrmPFvGOx6hAkvrPwrV6OV0YF
+ gy/yg3L6vWPn++Y2CcnvOlZJbZHPI48mO4YF6rbxqGk0le/BS0BMDmNwsOIoSzQ=
+X-Google-Smtp-Source: AGHT+IGz7cUbjaVOpNo4jtvmLGnU/bveSogoDhxYfv/3OnBJNiZX8Ue4sdv2jtiFVuk/zUBjoNlGVQ==
+X-Received: by 2002:a17:907:7f21:b0:a7a:9144:e254 with SMTP id
+ a640c23a62f3a-a7dc4d94affmr236903966b.10.1722595253282; 
+ Fri, 02 Aug 2024 03:40:53 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7dc9c0c557sm83422966b.53.2024.08.02.03.40.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 02 Aug 2024 03:40:52 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B7FE95F8A9;
+ Fri,  2 Aug 2024 11:40:51 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Laurent Vivier <laurent@vivier.eu>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Richard
+ Henderson <richard.henderson@linaro.org>,  qemu-devel@nongnu.org
+Subject: Re: [PATCH 5/5] tests/tcg: Run test-proc-mappings.py on i386
+In-Reply-To: <20240802095942.34565-6-iii@linux.ibm.com> (Ilya Leoshkevich's
+ message of "Fri, 2 Aug 2024 11:59:18 +0200")
+References: <20240802095942.34565-1-iii@linux.ibm.com>
+ <20240802095942.34565-6-iii@linux.ibm.com>
+Date: Fri, 02 Aug 2024 11:40:51 +0100
+Message-ID: <87o76bcimk.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] block: refactor commit_run for multiple write types
-To: Vincent Vanlaer <libvirt-e6954efa@volkihar.be>, qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>
-References: <20240713215644.742244-1-libvirt-e6954efa@volkihar.be>
- <20240713215644.742244-3-libvirt-e6954efa@volkihar.be>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20240713215644.742244-3-libvirt-e6954efa@volkihar.be>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,35 +101,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.07.24 00:56, Vincent Vanlaer wrote:
-> Signed-off-by: Vincent Vanlaer<libvirt-e6954efa@volkihar.be>
+Ilya Leoshkevich <iii@linux.ibm.com> writes:
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Now that orig_ax is exposed and GDB is happy, don't skip
+> test-proc-mappings.py on i386. In fact, it's broken only on
+> m68k now, so skip only this architecture.
+>
+> Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
-Honestly, I don't like this (mostly preexisting, but your patch make the problem more obvious) code for its "nested success path"
+Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-if (ret >= 0) {
-   ret = ...
-   if (ret >= 0) {
-
-    ...
-
-
-That's because we have the same complex error handling for all these errors. If refactor the commit_run(), I'd move get-block-status together with "if (copy)" block to separate function commmit_iteration(), which would have more readable style of error reporting, like:
-
-ret = ...
-if (ret < 0) {
-    return ret;
-}
-
-ret = ...
-if (ret < 0) {
-    return ret;
-}
-
-  
--- 
-Best regards,
-Vladimir
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
