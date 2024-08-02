@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 420AFC3DA4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B1E7C49EA1
 	for <qemu-devel@archiver.kernel.org>; Fri,  2 Aug 2024 03:17:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sZimc-0007fo-7d; Thu, 01 Aug 2024 23:16:46 -0400
+	id 1sZimv-00080o-Ps; Thu, 01 Aug 2024 23:17:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sZimb-0007f3-7q; Thu, 01 Aug 2024 23:16:45 -0400
-Received: from out30-111.freemail.mail.aliyun.com ([115.124.30.111])
+ id 1sZimu-0007y2-9W; Thu, 01 Aug 2024 23:17:04 -0400
+Received: from out30-112.freemail.mail.aliyun.com ([115.124.30.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sZimW-000743-KP; Thu, 01 Aug 2024 23:16:43 -0400
+ id 1sZimr-00076x-UI; Thu, 01 Aug 2024 23:17:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1722568586; h=From:To:Subject:Date:Message-Id:MIME-Version:Content-Type;
- bh=oNvuh2j8JCTwpcZKbtfxd8+VNqgNcaLqgGg8ENxQoMg=;
- b=oyWwrOrNXyBwu8k4UU0ar8/k38UP4z1VaezqjGl+p12Nwvd6++ytxomV7dFWyowUl+oT+kPFgMO8YW+jpiq70Txt4JxQ+N6vymql8X6LOlc2FVUjOPPhHPdeT6Sox3MlD/p7pYn/XymX5/dJK3ZINOgpopBDTGR1L7VMse72Xjg=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R161e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032019045;
+ t=1722568616; h=From:To:Subject:Date:Message-Id:MIME-Version;
+ bh=6qg6J+iIOAJu3sGQvXUBjTvfLvpSIluiwde+u+Oi1AU=;
+ b=ti7JEJgkG+EysvCEQbLcgJmocdyRipIXSAC2Nz/dzUS/i9LJqk/XsYhMQwbEivRsP7l3EHDGFSol/I+ExYjU94VcGxKfUaN/rEyvZKqR+Ip0zzyvUX8lcKV0jnbmWMgAnNyoMWZ8hQ/I/LqifciVpSXlO1m0eNdS9mKe7oYDXUY=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R761e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037067111;
  MF=zhiwei_liu@linux.alibaba.com; NM=1; PH=DS; RN=8; SR=0;
- TI=SMTPD_---0WBvrvNf_1722568583; 
+ TI=SMTPD_---0WBvqpPj_1722568615; 
 Received: from L-PF1D6DP4-1208.hz.ali.com(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WBvrvNf_1722568583) by smtp.aliyun-inc.com;
- Fri, 02 Aug 2024 11:16:24 +0800
+ fp:SMTPD_---0WBvqpPj_1722568615) by smtp.aliyun-inc.com;
+ Fri, 02 Aug 2024 11:16:55 +0800
 From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
  dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
  zhiwei_liu@linux.alibaba.com
-Subject: [PATCH v2 0/3] target/riscv: Remove redundant insn length check for
+Subject: [PATCH v2 1/3] target/riscv: Remove redundant insn length check for
  zama16b
-Date: Fri,  2 Aug 2024 11:16:09 +0800
-Message-Id: <20240802031612.604-1-zhiwei_liu@linux.alibaba.com>
+Date: Fri,  2 Aug 2024 11:16:10 +0800
+Message-Id: <20240802031612.604-2-zhiwei_liu@linux.alibaba.com>
 X-Mailer: git-send-email 2.23.0
+In-Reply-To: <20240802031612.604-1-zhiwei_liu@linux.alibaba.com>
+References: <20240802031612.604-1-zhiwei_liu@linux.alibaba.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.111;
+Received-SPF: pass client-ip=115.124.30.112;
  envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-111.freemail.mail.aliyun.com
+ helo=out30-112.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -70,31 +71,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In this patch set, we remove the redundant insn length check for zama16b as the
-specification clarified that zama16b applies to compressed encodings[1].
+Compressed encodings also applies to zama16b.
+https://github.com/riscv/riscv-isa-manual/pull/1557
 
-Richard points out we should obey the MXLEN requirement for F/D/Q loads or stores,
-so we add this constraint for trans_fld/fsd.
+Suggested-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+---
+ target/riscv/insn_trans/trans_rvd.c.inc | 9 +++++++--
+ target/riscv/insn_trans/trans_rvf.c.inc | 4 ++--
+ target/riscv/insn_trans/trans_rvi.c.inc | 4 ++--
+ 3 files changed, 11 insertions(+), 6 deletions(-)
 
-I notice that we have a too strict aligment implementation for fld/fsd when xlen < 64.
-It will hide some problems. So relex it from MO_ATOM_IFALIGN to MO_ATOM_NONE.
-
-[1]: https://github.com/riscv/riscv-isa-manual/pull/1557
-
-v2<-v1:
-  1. Add mxlen check for fld when applies zama16b.
-  2. Relax fld/fsd alignment for MO_ATOM_IFALIGN to MO_ATOM_NONE.
-
-LIU Zhiwei (3):
-  target/riscv: Remove redundant insn length check for zama16b
-  target/riscv: Add MXLEN check for F/D/Q applies to zama16b
-  target/riscv: Relax fld alignment requirement
-
- target/riscv/insn_trans/trans_rvd.c.inc | 25 +++++++++++++++++++++----
- target/riscv/insn_trans/trans_rvf.c.inc |  4 ++--
- target/riscv/insn_trans/trans_rvi.c.inc |  4 ++--
- 3 files changed, 25 insertions(+), 8 deletions(-)
-
+diff --git a/target/riscv/insn_trans/trans_rvd.c.inc b/target/riscv/insn_trans/trans_rvd.c.inc
+index 1f5fac65a2..2be037930a 100644
+--- a/target/riscv/insn_trans/trans_rvd.c.inc
++++ b/target/riscv/insn_trans/trans_rvd.c.inc
+@@ -47,7 +47,12 @@ static bool trans_fld(DisasContext *ctx, arg_fld *a)
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVD);
+ 
+-    if (ctx->cfg_ptr->ext_zama16b && (ctx->cur_insn_len != 2)) {
++    /*
++     * Zama16b applies to loads and stores of no more than MXLEN bits defined
++     * in the F, D, and Q extensions. Otherwise, it falls through to default
++     * MO_ATOM_IFALIGN.
++     */
++    if ((ctx->xl >= MXL_RV64) && (ctx->cfg_ptr->ext_zama16b)) {
+         memop |= MO_ATOM_WITHIN16;
+     }
+ 
+@@ -67,7 +72,7 @@ static bool trans_fsd(DisasContext *ctx, arg_fsd *a)
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVD);
+ 
+-    if (ctx->cfg_ptr->ext_zama16b && (ctx->cur_insn_len != 2)) {
++    if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
+     }
+ 
+diff --git a/target/riscv/insn_trans/trans_rvf.c.inc b/target/riscv/insn_trans/trans_rvf.c.inc
+index f771aa1939..0222a728df 100644
+--- a/target/riscv/insn_trans/trans_rvf.c.inc
++++ b/target/riscv/insn_trans/trans_rvf.c.inc
+@@ -48,7 +48,7 @@ static bool trans_flw(DisasContext *ctx, arg_flw *a)
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVF);
+ 
+-    if (ctx->cfg_ptr->ext_zama16b && (ctx->cur_insn_len != 2)) {
++    if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
+     }
+ 
+@@ -70,7 +70,7 @@ static bool trans_fsw(DisasContext *ctx, arg_fsw *a)
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVF);
+ 
+-    if (ctx->cfg_ptr->ext_zama16b && (ctx->cur_insn_len != 2)) {
++    if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
+     }
+ 
+diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
+index 98e3806d5e..fab5c06719 100644
+--- a/target/riscv/insn_trans/trans_rvi.c.inc
++++ b/target/riscv/insn_trans/trans_rvi.c.inc
+@@ -268,7 +268,7 @@ static bool gen_load(DisasContext *ctx, arg_lb *a, MemOp memop)
+ {
+     bool out;
+ 
+-    if (ctx->cfg_ptr->ext_zama16b && (ctx->cur_insn_len != 2)) {
++    if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
+     }
+     decode_save_opc(ctx);
+@@ -369,7 +369,7 @@ static bool gen_store_i128(DisasContext *ctx, arg_sb *a, MemOp memop)
+ 
+ static bool gen_store(DisasContext *ctx, arg_sb *a, MemOp memop)
+ {
+-    if (ctx->cfg_ptr->ext_zama16b && (ctx->cur_insn_len != 2)) {
++    if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
+     }
+     decode_save_opc(ctx);
 -- 
 2.25.1
 
