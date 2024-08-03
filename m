@@ -4,88 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45B06C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Aug 2024 09:34:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1C63C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Aug 2024 13:19:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1saB8z-0005By-H2; Sat, 03 Aug 2024 05:33:45 -0400
+	id 1saEez-0005bd-01; Sat, 03 Aug 2024 09:19:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1saB8x-0005BN-Oq
- for qemu-devel@nongnu.org; Sat, 03 Aug 2024 05:33:43 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1saB8w-0001Je-2U
- for qemu-devel@nongnu.org; Sat, 03 Aug 2024 05:33:43 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1fd69e44596so29300115ad.1
- for <qemu-devel@nongnu.org>; Sat, 03 Aug 2024 02:33:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722677620; x=1723282420; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DtSe1LGY1zs26bYsLaiYqbZlc6MwT/mSuOTWJzgck20=;
- b=JyxcUbNBK2LDA0Lda9lRZQPxZVhzoFZ7vUAHHn8+xAyVF2N9LREeA7+VrXs+2ZtUeO
- VSOyTjOJpc3MCoYx0PE/jsxvP1aJpD0fTprcn2CKN4/8iBDu3f/0bB0Yen0YoY7GW8La
- 8gan5pNNHsJPzpu3ASsESYZhXk771lwcn9iCSL4Wn8OwlolXbNDs/jkEdiZ5nkDIJNTk
- 0jgYkx2Z+ogmgLEYFdKP68rY+gLfB4FSZxK7iAn7aXob+GPPldjP4qOWURHrAQRaXgFS
- fXWkR7ICJuhFwJmOBYyYZQdRI0moX1npj6Jh5nVcDWVng2QbsbQTaKwAx/46PZ+WldMM
- nk1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722677620; x=1723282420;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DtSe1LGY1zs26bYsLaiYqbZlc6MwT/mSuOTWJzgck20=;
- b=rncruODqZfjsl47K7UkvgTfpbdqSYbqufTxaa4vEPj9/sVRW/W2ZNhgAaXiyHhR+TN
- rwVhWT3cdl/v8bl4+cM+vdrF0vW5+ve43P72zeiYdybf0zBtkkd2JWCsdFmEgExeFdIx
- O6cKZbXkSXX629mvt1NIVjF+vgjPZWw6ko/sSycoOMls121czwijczujE27lOMP3njLW
- aFrLiot3CIEoYh2vKOgRx+PDVE/u5ah3fNB/tOg4yHzn9HWhUCjNUcGMZhF+OFbWSY52
- w/16ebV+V8Z+DZBFPbcFCpKTyPtdKUSHpvA3+QbSPk7dV5QRbze5j1om45gQdjBzdyJw
- mHCQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWWPO9ZcCVMDy/MUgS7yy5GOmQXUptMT/AmTjUhrMjDCsE0pey3p8/9KLCbFNZPXc3FxJ5GWiBNDCQJFff9chFZWWkl/GE=
-X-Gm-Message-State: AOJu0YyfBZ+/fNlIM+GIVdBkow2BsbreoEvgnu8o46YjP2yG8wQKaQ/U
- QZsv0lgMxQ0AHvGvO6R1S4UETArYC+3eW8DXmKk3LGX4uLhOzGVeru0adVJxkZA=
-X-Google-Smtp-Source: AGHT+IFKBerlsDyk8trES6oZaVfbuiff2doNZFbbryLnUFcnRJnoy9Cz31TSrZ8Vf2XtEsBBPIkd1Q==
-X-Received: by 2002:a17:902:f650:b0:1fb:d07c:64cd with SMTP id
- d9443c01a7336-1ff52492003mr116342115ad.21.1722677620074; 
- Sat, 03 Aug 2024 02:33:40 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff5905e6b6sm30421745ad.140.2024.08.03.02.33.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 03 Aug 2024 02:33:39 -0700 (PDT)
-Message-ID: <720adf5e-0cd0-4b9c-b851-baa7d51c7e53@linaro.org>
-Date: Sat, 3 Aug 2024 19:33:31 +1000
+ (Exim 4.90_1) (envelope-from <w@uter.be>) id 1saEew-0005b2-CH
+ for qemu-devel@nongnu.org; Sat, 03 Aug 2024 09:18:58 -0400
+Received: from lounge.grep.be ([2a01:4f8:200:91e8::2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <w@uter.be>) id 1saEet-0003kl-Pk
+ for qemu-devel@nongnu.org; Sat, 03 Aug 2024 09:18:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=uter.be;
+ s=2021.lounge; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+ Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive;
+ bh=9cC1egtmn/Lo8zik2HWOOWN9Ibmq25pzFz70kK2mYPg=; b=kpaGVmEt92stLE4IdfE+OhScV+
+ 96iWXZMkO4t90N3wlZu9QEdI74Bq34Kl0fZd0bEw/rFEyYoAXTy80naMds8q0iieI/ByzOexfHi25
+ MA95/NnwRbNDdVhYNSZf7+rkyZxRanFqkJO4c+7PWuajNi/bTBJraP9EDFJJa6RzBUw0N0No/RTub
+ r5mePISWk1FLPdK9riJFllF3GgJ4p9NzmkOtD/EZP4nNiQZ2xLSvUknBv3mJajavTiXukPMxpHVoT
+ D+a8Eq8a/q8QkmrSjZUzeLKKFYj/hdjVABHA+hhXFKZdAc7L0jry8L8J+xJ7ezCXkLyhPZjhGogfk
+ X1G6NdOA==;
+Received: from [102.39.154.62] (helo=pc220518)
+ by lounge.grep.be with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.96)
+ (envelope-from <w@uter.be>) id 1saEeg-00Chc8-38;
+ Sat, 03 Aug 2024 15:18:42 +0200
+Received: from wouter by pc220518 with local (Exim 4.98)
+ (envelope-from <w@uter.be>) id 1saEeZ-000000001uG-3qBA;
+ Sat, 03 Aug 2024 15:18:35 +0200
+Date: Sat, 3 Aug 2024 15:18:35 +0200
+From: Wouter Verhelst <w@uter.be>
+To: Eric Blake <eblake@redhat.com>
+Cc: nbd@other.debian.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH] docs: Tweak location of qemu nbd extensions
+Message-ID: <Zq4uK9Z6GX7Ga-qY@pc220518.home.grep.be>
+References: <20240802133811.2001029-1-eblake@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/18] bsd-user: Implement RISC-V signal trampoline setup
- functions
-To: Warner Losh <imp@bsdimp.com>
-Cc: Ajeet Singh <itachis6234@gmail.com>, qemu-devel@nongnu.org,
- Mark Corbin <mark.corbin@embecsom.com>, Ajeet Singh <itachis@freebsd.org>
-References: <20240802083423.142365-1-itachis@FreeBSD.org>
- <20240802083423.142365-16-itachis@FreeBSD.org>
- <e336b442-cd6c-40ac-9a48-3f9356bd0c48@linaro.org>
- <CANCZdfqKRVR+1p_zADs8f_3Bi4F4y2Pa4fXCNLhi2_JBkMeZrQ@mail.gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CANCZdfqKRVR+1p_zADs8f_3Bi4F4y2Pa4fXCNLhi2_JBkMeZrQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240802133811.2001029-1-eblake@redhat.com>
+X-Speed: Gates' Law: Every 18 months, the speed of software halves.
+Organization: none
+Received-SPF: pass client-ip=2a01:4f8:200:91e8::2; envelope-from=w@uter.be;
+ helo=lounge.grep.be
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,18 +74,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/3/24 10:04, Warner Losh wrote:
->      > +     regs->pc = ka->_sa_handler;
->      > +     regs->gpr[2] = frame_addr;
->      > +     regs->gpr[1] = TARGET_PS_STRINGS - TARGET_SZSIGCODE;
-> 
->     xRA, xSP.
-> 
-> 
-> So to be clear, this is 'use these constants rather than the raw numbers for the array 
-> subscripts' right?
+On Fri, Aug 02, 2024 at 08:36:43AM -0500, Eric Blake wrote:
+> Upstream QEMU is moving the location of its NBD docs, as of its commit
+> XXXX[1].  Instead of pointing to the raw git source file, point to the
+> rendered html version built from rST.
 
-Exactly.
+ACK. Please push as soon as that lands.
 
-r~
+-- 
+     w@uter.{be,co.za}
+wouter@{grep.be,fosdem.org,debian.org}
+
+I will have a Tin-Actinium-Potassium mixture, thanks.
 
