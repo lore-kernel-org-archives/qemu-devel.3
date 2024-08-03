@@ -4,79 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4FC5C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sat,  3 Aug 2024 00:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEC24C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Sat,  3 Aug 2024 02:30:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sa2HC-0006kO-U4; Fri, 02 Aug 2024 20:05:38 -0400
+	id 1sa4WH-0003Og-HC; Fri, 02 Aug 2024 22:29:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sa2H8-0006Rz-92
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 20:05:34 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1sa2H5-0007tV-W3
- for qemu-devel@nongnu.org; Fri, 02 Aug 2024 20:05:34 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-2cfdafdb914so2725559a91.2
- for <qemu-devel@nongnu.org>; Fri, 02 Aug 2024 17:05:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1722643530; x=1723248330;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rGL7gFaq9AjBCZ3FNbpSbx3DRAa14kb1+hBLcMNR70o=;
- b=teyhxfZ4tC5WnK9eWM7aPLUVhPvD3buDYkUfLQvk+2u5DjVYQDfIYesZuzP/UXchbP
- SPrcsf+GOOQEneyKZvmo7w8LCP1epsD2RB4k7j0mtDjax5KnQ5thxdalQEg4xIzk9sCx
- VOIVcJjqkUf63kCAmKNttaIgXXKngNbuThAEDMAzPnpBaHcycOHiCim0HcmSos5ARECK
- +N6jioAnFPbw8N6xxvqtofxvuQjtSdIA0cbOJz4a4tsjMCX04l+82n4NC9AyRLTTK2bk
- xhnO7RntFlXKA5hmtLkh+KccLnxyNYpTWp+HzxaKfNwYtDr3qCH868RmQ8xCRksgnX1V
- e7gQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722643530; x=1723248330;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rGL7gFaq9AjBCZ3FNbpSbx3DRAa14kb1+hBLcMNR70o=;
- b=QR5TbSxZT3ZoyFiioS8m8g/foOLNhughSSSw8DdK7V2dM0KYAks+9Oi+qO4y1LM1/m
- aYja6hKZyXEOoVl280bo52Yav0cyQZAQUDuUU/SJGjfl8c2puFiiGEuwikC/MfPb2R6g
- GB8ElGHSujFmeGaqj8MgLriEs06tYBAJFQDQ5jaANy2sb6yCCqlTzXYeWA03v0jeIetX
- wmkqF1CqGmsIFNEItLrwyOV1+kPsGlJunosjddVrUwLNhmvKYa3Q/QvbbXmYSbr3/qE+
- ZnMlXP0hiVDTJWOsXNY7IkYEw0JTLLcFHD58jiGIrZqt01p6w803wnSuHNcjaMjKXDZ2
- G+pQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXaulD94fHf+jjQ7rcdOOnQU6gkTDkgwAU8/hHcSD8aRHOZdqr9cf0t/3X4go8dyw+uA8lUBFf3PO7K63J8OrNLl/Bm//w=
-X-Gm-Message-State: AOJu0YxueXLMHE1djmrX/UR4OJSSLOqSKm8OWIqidc7oFxjkdR0FqktZ
- M/7E9CwHMl4NnbbLEGgqHd6pVzVrH8DqFCoP+KRnNctjpio9SpobVlXUg6faXnYjW4JroKlQoHC
- xFACmAtC/dswg4E2FxiNsdc4Qghb0B2Z4ropdtA==
-X-Google-Smtp-Source: AGHT+IFWSilvrgtMYiNLwI5VDayllompmJ9UL1ZiWEDX2ziU+vAnJRFea0hmWDly4NWqMYujKNusUB1d5THcztwG36c=
-X-Received: by 2002:a17:90b:883:b0:2cb:4c06:8f11 with SMTP id
- 98e67ed59e1d1-2d00e6a3b36mr1205149a91.22.1722643530218; Fri, 02 Aug 2024
- 17:05:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sa4WG-0003OC-KB
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 22:29:20 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1sa4WE-00076V-F8
+ for qemu-devel@nongnu.org; Fri, 02 Aug 2024 22:29:20 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 601C380B91;
+ Sat,  3 Aug 2024 05:28:47 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2933811ACA6;
+ Sat,  3 Aug 2024 05:29:13 +0300 (MSK)
+Message-ID: <7762115d-cf9d-4505-a3c7-6782433e2521@tls.msk.ru>
+Date: Sat, 3 Aug 2024 05:29:13 +0300
 MIME-Version: 1.0
-References: <20240802083423.142365-1-itachis@FreeBSD.org>
- <20240802083423.142365-11-itachis@FreeBSD.org>
- <4cdcacde-a5f8-4365-bd6c-65e98a77eada@linaro.org>
-In-Reply-To: <4cdcacde-a5f8-4365-bd6c-65e98a77eada@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Fri, 2 Aug 2024 18:05:19 -0600
-Message-ID: <CANCZdfpRL7BN1LT-O0Fuw_HiPxujBw6oNqusstnOhGs6NGUh_A@mail.gmail.com>
-Subject: Re: [PATCH 10/18] bsd-user: Add RISC-V thread setup and
- initialization support
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: Ajeet Singh <itachis6234@gmail.com>, qemu-devel@nongnu.org, 
- Mark Corbin <mark.corbin@embecsom.com>, Ajeet Singh <itachis@freebsd.org>, 
- Jessica Clarke <jrtc27@jrtc27.com>, Kyle Evans <kevans@freebsd.org>
-Content-Type: multipart/alternative; boundary="000000000000b19a64061ebc335b"
-Received-SPF: none client-ip=2607:f8b0:4864:20::1033;
- envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1033.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 11/63] hw/virtio: move stubs out of stubs/
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+References: <20240423150951.41600-1-pbonzini@redhat.com>
+ <20240423150951.41600-12-pbonzini@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240423150951.41600-12-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,222 +85,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000b19a64061ebc335b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+23.04.2024 18:08, Paolo Bonzini wrote:
+> Since the virtio memory device stubs are needed exactly when the
+> Kconfig symbol is not enabled, they can be placed in hw/virtio/ and
+> conditionalized on CONFIG_VIRTIO_MD.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Message-ID: <20240408155330.522792-12-pbonzini@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   stubs/virtio-md-pci.c => hw/virtio/virtio-md-stubs.c | 0
+>   hw/virtio/meson.build                                | 2 ++
+>   stubs/meson.build                                    | 1 -
+>   3 files changed, 2 insertions(+), 1 deletion(-)
+>   rename stubs/virtio-md-pci.c => hw/virtio/virtio-md-stubs.c (100%)
 
-On Fri, Aug 2, 2024 at 7:30=E2=80=AFAM Richard Henderson <
-richard.henderson@linaro.org> wrote:
+FWIW, this broke a minimal microvm build for debian:
 
-> On 8/2/24 18:34, Ajeet Singh wrote:
-> > From: Mark Corbin <mark.corbin@embecsom.com>
-> >
-> > Implemented functions for setting up and initializing threads in the
-> > RISC-V architecture.
-> > The 'target_thread_set_upcall' function sets up the stack pointer,
-> > program counter, and function argument for new threads.
-> > The 'target_thread_init' function initializes thread registers based on
-> > the provided image information.
-> >
-> > Signed-off-by: Mark Corbin <mark.corbin@embecsom.com>
-> > Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
-> > Co-authored-by: Jessica Clarke <jrtc27@jrtc27.com>
-> > Co-authored-by: Kyle Evans <kevans@FreeBSD.org>
-> > ---
-> >   bsd-user/riscv/target_arch_thread.h | 47 ++++++++++++++++++++++++++++=
-+
-> >   1 file changed, 47 insertions(+)
-> >   create mode 100644 bsd-user/riscv/target_arch_thread.h
-> >
-> > diff --git a/bsd-user/riscv/target_arch_thread.h
-> b/bsd-user/riscv/target_arch_thread.h
-> > new file mode 100644
-> > index 0000000000..faabb9fb45
-> > --- /dev/null
-> > +++ b/bsd-user/riscv/target_arch_thread.h
-> > @@ -0,0 +1,47 @@
-> > +/*
-> > + *  RISC-V thread support
-> > + *
-> > + *  Copyright (c) 2019 Mark Corbin
-> > + *
-> > + *  This program is free software; you can redistribute it and/or modi=
-fy
-> > + *  it under the terms of the GNU General Public License as published =
-by
-> > + *  the Free Software Foundation; either version 2 of the License, or
-> > + *  (at your option) any later version.
-> > + *
-> > + *  This program is distributed in the hope that it will be useful,
-> > + *  but WITHOUT ANY WARRANTY; without even the implied warranty of
-> > + *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-> > + *  GNU General Public License for more details.
-> > + *
-> > + *  You should have received a copy of the GNU General Public License
-> > + *  along with this program; if not, see <http://www.gnu.org/licenses/
-> >.
-> > + */
-> > +
-> > +#ifndef TARGET_ARCH_THREAD_H
-> > +#define TARGET_ARCH_THREAD_H
-> > +
-> > +/* Compare with cpu_set_upcall() in riscv/riscv/vm_machdep.c */
-> > +static inline void target_thread_set_upcall(CPURISCVState *regs,
-> > +    abi_ulong entry, abi_ulong arg, abi_ulong stack_base,
-> > +    abi_ulong stack_size)
-> > +{
-> > +    abi_ulong sp;
-> > +
-> > +    sp =3D (abi_ulong)(stack_base + stack_size) & ~(16 - 1);
-> > +
-> > +    regs->gpr[xSP] =3D sp;
-> > +    regs->pc =3D entry;
-> > +    regs->gpr[xA0] =3D arg;
-> > +}
-> > +
-> > +/* Compare with exec_setregs() in riscv/riscv/machdep.c */
->
-> exec_machdep.c.
->
-> > +static inline void target_thread_init(struct target_pt_regs *regs,
-> > +    struct image_info *infop)
-> > +{
-> > +    regs->sepc =3D infop->entry;
-> > +    regs->regs[xRA] =3D infop->entry;
-> > +    regs->regs[10] =3D infop->start_stack;               /* a0 */
->
-> xA0
->
-> > +    regs->regs[xSP] =3D infop->start_stack & ~(16 - 1);
->
-> ROUND_DOWN.
->
-
-Oh, I should do a pass through our tree for rounding like this to add this
-macro.
-
-Warner
+/usr/bin/ld: libqemu-x86_64-softmmu.a.p/hw_i386_pc.c.o: in function `pc_machine_device_pre_plug_cb':
+./b/microvm/hw/i386/pc.c:1377: undefined reference to `virtio_md_pci_pre_plug'
+/usr/bin/ld: libqemu-x86_64-softmmu.a.p/hw_i386_pc.c.o: in function `pc_machine_device_unplug_request_cb':
+./b/microvm/hw/i386/pc.c:1427: undefined reference to `virtio_md_pci_unplug_request'
+/usr/bin/ld: libqemu-x86_64-softmmu.a.p/hw_i386_pc.c.o: in function `pc_machine_device_unplug_cb':
+./b/microvm/hw/i386/pc.c:1443: undefined reference to `virtio_md_pci_unplug'
+/usr/bin/ld: libqemu-x86_64-softmmu.a.p/hw_i386_pc.c.o: in function `pc_machine_device_plug_cb':
+./b/microvm/hw/i386/pc.c:1413: undefined reference to `virtio_md_pci_plug'
+collect2: error: ld returned 1 exit status
 
 
->
-> r~
->
+../configure --disable-install-blobs \
+	--without-default-features \
+	--target-list=x86_64-softmmu --enable-kvm --disable-tcg \
+	--enable-pixman --enable-vnc \
+	--enable-virtfs \
+	--enable-linux-aio --enable-linux-io-uring \
+	--enable-numa \
+	--enable-attr \
+	--enable-coroutine-pool \
+	--audio-drv-list="" \
+	--without-default-devices \
+	--with-devices-x86_64=microvm \
+	--enable-vhost-kernel --enable-vhost-net \
+	--enable-vhost-vdpa \
+	--enable-vhost-user --enable-vhost-user-blk-server \
+	--enable-vhost-crypto \
+	--enable-seccomp \
+	
+with the following contents of microvm-devices.mak:
 
---000000000000b19a64061ebc335b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+# see configs/devices/i386-softmmu/default.mak
+# for additional devices which can be disabled
+#
+CONFIG_PCI_DEVICES=n
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Fri, Aug 2, 2024 at 7:30=E2=80=AFA=
-M Richard Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.org">ric=
-hard.henderson@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
-4,204);padding-left:1ex">On 8/2/24 18:34, Ajeet Singh wrote:<br>
-&gt; From: Mark Corbin &lt;<a href=3D"mailto:mark.corbin@embecsom.com" targ=
-et=3D"_blank">mark.corbin@embecsom.com</a>&gt;<br>
-&gt; <br>
-&gt; Implemented functions for setting up and initializing threads in the<b=
-r>
-&gt; RISC-V architecture.<br>
-&gt; The &#39;target_thread_set_upcall&#39; function sets up the stack poin=
-ter,<br>
-&gt; program counter, and function argument for new threads.<br>
-&gt; The &#39;target_thread_init&#39; function initializes thread registers=
- based on<br>
-&gt; the provided image information.<br>
-&gt; <br>
-&gt; Signed-off-by: Mark Corbin &lt;<a href=3D"mailto:mark.corbin@embecsom.=
-com" target=3D"_blank">mark.corbin@embecsom.com</a>&gt;<br>
-&gt; Signed-off-by: Ajeet Singh &lt;itachis@FreeBSD.org&gt;<br>
-&gt; Co-authored-by: Jessica Clarke &lt;<a href=3D"mailto:jrtc27@jrtc27.com=
-" target=3D"_blank">jrtc27@jrtc27.com</a>&gt;<br>
-&gt; Co-authored-by: Kyle Evans &lt;kevans@FreeBSD.org&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0bsd-user/riscv/target_arch_thread.h | 47 +++++++++++++++++=
-++++++++++++<br>
-&gt;=C2=A0 =C2=A01 file changed, 47 insertions(+)<br>
-&gt;=C2=A0 =C2=A0create mode 100644 bsd-user/riscv/target_arch_thread.h<br>
-&gt; <br>
-&gt; diff --git a/bsd-user/riscv/target_arch_thread.h b/bsd-user/riscv/targ=
-et_arch_thread.h<br>
-&gt; new file mode 100644<br>
-&gt; index 0000000000..faabb9fb45<br>
-&gt; --- /dev/null<br>
-&gt; +++ b/bsd-user/riscv/target_arch_thread.h<br>
-&gt; @@ -0,0 +1,47 @@<br>
-&gt; +/*<br>
-&gt; + *=C2=A0 RISC-V thread support<br>
-&gt; + *<br>
-&gt; + *=C2=A0 Copyright (c) 2019 Mark Corbin<br>
-&gt; + *<br>
-&gt; + *=C2=A0 This program is free software; you can redistribute it and/o=
-r modify<br>
-&gt; + *=C2=A0 it under the terms of the GNU General Public License as publ=
-ished by<br>
-&gt; + *=C2=A0 the Free Software Foundation; either version 2 of the Licens=
-e, or<br>
-&gt; + *=C2=A0 (at your option) any later version.<br>
-&gt; + *<br>
-&gt; + *=C2=A0 This program is distributed in the hope that it will be usef=
-ul,<br>
-&gt; + *=C2=A0 but WITHOUT ANY WARRANTY; without even the implied warranty =
-of<br>
-&gt; + *=C2=A0 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.=C2=A0 S=
-ee the<br>
-&gt; + *=C2=A0 GNU General Public License for more details.<br>
-&gt; + *<br>
-&gt; + *=C2=A0 You should have received a copy of the GNU General Public Li=
-cense<br>
-&gt; + *=C2=A0 along with this program; if not, see &lt;<a href=3D"http://w=
-ww.gnu.org/licenses/" rel=3D"noreferrer" target=3D"_blank">http://www.gnu.o=
-rg/licenses/</a>&gt;.<br>
-&gt; + */<br>
-&gt; +<br>
-&gt; +#ifndef TARGET_ARCH_THREAD_H<br>
-&gt; +#define TARGET_ARCH_THREAD_H<br>
-&gt; +<br>
-&gt; +/* Compare with cpu_set_upcall() in riscv/riscv/vm_machdep.c */<br>
-&gt; +static inline void target_thread_set_upcall(CPURISCVState *regs,<br>
-&gt; +=C2=A0 =C2=A0 abi_ulong entry, abi_ulong arg, abi_ulong stack_base,<b=
-r>
-&gt; +=C2=A0 =C2=A0 abi_ulong stack_size)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 abi_ulong sp;<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 sp =3D (abi_ulong)(stack_base + stack_size) &amp; ~(16 =
-- 1);<br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 regs-&gt;gpr[xSP] =3D sp;<br>
-&gt; +=C2=A0 =C2=A0 regs-&gt;pc =3D entry;<br>
-&gt; +=C2=A0 =C2=A0 regs-&gt;gpr[xA0] =3D arg;<br>
-&gt; +}<br>
-&gt; +<br>
-&gt; +/* Compare with exec_setregs() in riscv/riscv/machdep.c */<br>
-<br>
-exec_machdep.c.<br>
-<br>
-&gt; +static inline void target_thread_init(struct target_pt_regs *regs,<br=
->
-&gt; +=C2=A0 =C2=A0 struct image_info *infop)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 regs-&gt;sepc =3D infop-&gt;entry;<br>
-&gt; +=C2=A0 =C2=A0 regs-&gt;regs[xRA] =3D infop-&gt;entry;<br>
-&gt; +=C2=A0 =C2=A0 regs-&gt;regs[10] =3D infop-&gt;start_stack;=C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* a0 */<br>
-<br>
-xA0<br>
-<br>
-&gt; +=C2=A0 =C2=A0 regs-&gt;regs[xSP] =3D infop-&gt;start_stack &amp; ~(16=
- - 1);<br>
-<br>
-ROUND_DOWN.<br></blockquote><div><br></div><div>Oh, I should do a pass thro=
-ugh our tree for rounding like this to add this macro.</div><div><br></div>=
-<div>Warner</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">
-<br>
-r~<br>
-</blockquote></div></div>
+# we can't disable all machine types (boards) as of 6.1
+# since the resulting binary fails to link
+#CONFIG_ISAPC=y
+#CONFIG_I440FX=y
+CONFIG_Q35=y
+CONFIG_MICROVM=y
 
---000000000000b19a64061ebc335b--
+CONFIG_VIRTIO_BLK=y
+CONFIG_VIRTIO_SERIAL=y
+CONFIG_VIRTIO_INPUT=y
+CONFIG_VIRTIO_INPUT_HOST=y
+CONFIG_VHOST_USER_INPUT=y
+CONFIG_VIRTIO_NET=y
+CONFIG_VIRTIO_SCSI=y
+CONFIG_VIRTIO_RNG=y
+CONFIG_VIRTIO_CRYPTO=y
+CONFIG_VIRTIO_BALLOON=y
+CONFIG_VIRTIO_MEM=y
+CONFIG_VIRTIO_PMEM=y
+CONFIG_VIRTIO_GPU=y
+CONFIG_VHOST_USER_GPU=y
+
+
+> diff --git a/stubs/virtio-md-pci.c b/hw/virtio/virtio-md-stubs.c
+> similarity index 100%
+> rename from stubs/virtio-md-pci.c
+> rename to hw/virtio/virtio-md-stubs.c
+> diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
+> index d7f18c96e60..621fc65454c 100644
+> --- a/hw/virtio/meson.build
+> +++ b/hw/virtio/meson.build
+> @@ -87,6 +87,8 @@ specific_virtio_ss.add_all(when: 'CONFIG_VIRTIO_PCI', if_true: virtio_pci_ss)
+>   system_ss.add_all(when: 'CONFIG_VIRTIO', if_true: system_virtio_ss)
+>   system_ss.add(when: 'CONFIG_VIRTIO', if_false: files('vhost-stub.c'))
+>   system_ss.add(when: 'CONFIG_VIRTIO', if_false: files('virtio-stub.c'))
+> +system_ss.add(when: 'CONFIG_VIRTIO_MD', if_false: files('virtio-md-stubs.c'))
+> +
+>   system_ss.add(files('virtio-hmp-cmds.c'))
+>   
+>   specific_ss.add_all(when: 'CONFIG_VIRTIO', if_true: specific_virtio_ss)
+> diff --git a/stubs/meson.build b/stubs/meson.build
+> index 45616afbfaa..60e32d363fa 100644
+> --- a/stubs/meson.build
+> +++ b/stubs/meson.build
+> @@ -57,7 +57,6 @@ if have_system
+>     stub_ss.add(files('fw_cfg.c'))
+>     stub_ss.add(files('semihost.c'))
+>     stub_ss.add(files('xen-hw-stub.c'))
+> -  stub_ss.add(files('virtio-md-pci.c'))
+>   else
+>     stub_ss.add(files('qdev.c'))
+>   endif
+
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+
 
