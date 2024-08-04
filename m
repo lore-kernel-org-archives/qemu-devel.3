@@ -4,98 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E7E3C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 09:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E8E2C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 11:39:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1saXGy-0000ZN-Rr; Sun, 04 Aug 2024 05:11:28 -0400
+	id 1saZZn-0003eT-HT; Sun, 04 Aug 2024 07:39:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1saXGu-0000MN-SK
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 05:11:25 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1saZZk-0003du-Dw
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 07:39:00 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1saXGs-0002Uz-Ts
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 05:11:24 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-70eb0ae23e4so6833822b3a.0
- for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 02:11:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1saZZi-00044K-S4
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 07:39:00 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-70eae5896bcso8217771b3a.2
+ for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 04:38:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722762681; x=1723367481;
- darn=nongnu.org; 
+ d=linaro.org; s=google; t=1722771536; x=1723376336; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=0AU6SCxZvqbJ3FAJC+6m51jznIlKNtpmUeyB5zy8ZWE=;
- b=jN+PFTIDF4PRopbpAhAgO/4WAf+OxhW9m7VDTPUGZgo4dT8GFWzIPSt47Gj5kpJRvf
- F6HKvRcP9952MOXQLqW7yrmQnKlDeNrdmm8kbTyzBdeiKZiqmFTRaa2+lPzCtAqJ/2u9
- A4HnIEHBcq1REESa0vlTiMIrMwRzZlf3W1r+nBkdiI6n3ovQdqUwcPMJ5b8zgm1E1zzZ
- t61aSowL6gnNr+c4ylvnxQQBgw1sJWhFkBfziVkMjijt2EBGOn15myUII1kGx2oPpcVB
- gV12QgTWPnQORqleIzRybLztPR8ocDrJKJydRKkBpKMW+AggG9dTF5vEP6UGzxJM6FTE
- gnyg==
+ bh=k10QrI9uz+NsHkHp2qDHbSR2Lse9i1jIO2kUQdtgKU0=;
+ b=w+AgiAIbLo5CzoFk7QuduD3PKpJzRlwpxfnN0a8t6d0iYrZ1Wxa8hPVgdMRrKhCeEr
+ 6UQUvfj+MPjXqu+vh8G01lJCknmiqfPWkKalzzYgoB9FitbclsFWL0+AYuQsRf6o4LFo
+ nx3tafyI5FnUWYdnX3sL2aBmN93Xp/YJcz8/Ea6zEsDKvnbi/c9iXjdLW31/bItkt4F5
+ 45Uyss42Cjfhu4yacoO4YORheP5GVxEjRLZjBIhzaIQtvXfGM6XDNbNzncy5y8c0wxU/
+ OCwUX8j2bqg7RmStvOfwij5u5pDF77EU9sGFmKg16W6uWx8eN6+VX0H9IV23LkUOL+VO
+ UiWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722762681; x=1723367481;
+ d=1e100.net; s=20230601; t=1722771536; x=1723376336;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0AU6SCxZvqbJ3FAJC+6m51jznIlKNtpmUeyB5zy8ZWE=;
- b=I3++uxaMcMvcis/epLKTf9/oOTY8GxcaK9emPkaupyORd0uzc8LiJN8OE6r+811rxw
- X+XTHZ0YVZg4O9oWtrelhUJ9k8WyTVnekBP8pQIP9ZUUIGzrCAcPo/YXE27jPz6pUQqu
- 0vo26mgM7vSy81eD9pkSY+CMMsK+DR4Ucbh5UJ8BmDXH10TDuVIK5SGyRx9CEW9ZB0vY
- jqtyIJ4fP+0TX8q4/tdzJiISiWo6kq9NIIgYwR+9VDhGHCPnunxkH1jXjwi+Ax9EvUjP
- 8vu04ua8sBjNbj0vmxjInhlv7AHFRABoa8pJv0Yr2jdfOxkvbZxAciIkOlDavDBAi8px
- aoMQ==
+ bh=k10QrI9uz+NsHkHp2qDHbSR2Lse9i1jIO2kUQdtgKU0=;
+ b=PY8xWUmyOssOEFci5uw99i6xdQfayqs/cBruQPzOERUDouzom6wvflT6Qj11EbwZTY
+ XO4GfO22fOMmya7SGsJ/j4+orcmgAKJXITpoZD2p1xA3shKf7fzSV0pjMvPhBiOz+Kck
+ TLXpwfz56+9x1JE+bWzvya8zfQ63MbezX8VOmKgAoCgrhUCJ9OUasfaiCFnKRxrHNtCb
+ F/Kbq2nh5FzgVcRsWEF9kvx8nZYxXuhk438g3+yef370n/r9n5+7EOjZgCLhffKiJFZI
+ 5KNNy30DDndhBuV+cc7ainX5v4P2NovTGv4WaP+kL4+yRV7DytaIDuFNT8j5c1r2fGEx
+ 59ow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBcepBHS0KRwLoOigd6SeTY65ozJ/0VPet/23rAopNVbRJ/4iNBV+BulAPTK7AYO8SC+X5z2rLqVXiBTeDq2jjXuxFDSo=
-X-Gm-Message-State: AOJu0YzPTVMcPpSF2v8YMqTDCPTGIQEGVZponA17Mx5GIIlDgVeOBPH8
- anfCggicR9s0spzb8oaZo5A1V9Pha292oovu6C+cJ9sKMVino/lv+H78WGfMKc4=
-X-Google-Smtp-Source: AGHT+IEklpdcsEJZXLvef3te9We6NvnH9sZHjrxqE6I63QrZqSvE45xMsGS9IHtZu1DDl5J63xsJrA==
-X-Received: by 2002:a05:6a00:a16:b0:70d:3354:a190 with SMTP id
- d2e1a72fcca58-7106d046b59mr8571299b3a.27.1722762680589; 
- Sun, 04 Aug 2024 02:11:20 -0700 (PDT)
-Received: from [157.82.202.230] ([157.82.202.230])
+ AJvYcCUSFCuSfmUPcgowkOecAHF3TfVXMj6s8lxVaxH8wx3ZwajtHa9ymHrzk4pmhOJxMz/etAEEyvJqGOhU1d5JCttf4ubhiPk=
+X-Gm-Message-State: AOJu0Yz9EoTr+6ZBSICq0eb1yLRXcIOi6Ua6dhxlNGxAC6P6dscNHqE4
+ bY3urh8iFUuEWcKj7gO/BB9alhHrEUydMsZk6YqW/PDc84kehea7v21JJswfl0E=
+X-Google-Smtp-Source: AGHT+IGRNZStelsxmJLqCaf340ARbuMfyVL1sckcivJLivQqTP4pmeLdTkYVmE4vPi+viT8J1xVfaw==
+X-Received: by 2002:a05:6a20:3942:b0:1be:c4bb:6f31 with SMTP id
+ adf61e73a8af0-1c6995815a0mr12846770637.18.1722771536347; 
+ Sun, 04 Aug 2024 04:38:56 -0700 (PDT)
+Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7106ec4169csm3709890b3a.64.2024.08.04.02.11.17
+ d2e1a72fcca58-7106ecdfec9sm3957558b3a.97.2024.08.04.04.38.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Aug 2024 02:11:20 -0700 (PDT)
-Message-ID: <3670cc79-d52c-4e64-98a7-8a76bb7685bb@daynix.com>
-Date: Sun, 4 Aug 2024 18:11:16 +0900
+ Sun, 04 Aug 2024 04:38:55 -0700 (PDT)
+Message-ID: <7db89270-05e3-483f-80aa-fc044ea6b9b0@linaro.org>
+Date: Sun, 4 Aug 2024 21:38:47 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 v11 08/11] pcie_sriov: Remove num_vfs from
- PCIESriovPF
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20240802-reuse-v11-0-fb83bb8c19fb@daynix.com>
- <20240802-reuse-v11-8-fb83bb8c19fb@daynix.com>
- <20240802083911-mutt-send-email-mst@kernel.org>
- <5058d9d4-7922-4746-b6d1-b16046bf69f9@daynix.com>
- <20240802124956-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH 11/17] bsd-user: Replace set_brk and padzero with zerobss
+ from linux-user
+To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
+Cc: Kyle Evans <kevans@freebsd.org>, Jessica Clarke <jrtc27@jrtc27.com>
+References: <20240802235617.7971-1-imp@bsdimp.com>
+ <20240802235617.7971-12-imp@bsdimp.com>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240802124956-mutt-send-email-mst@kernel.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240802235617.7971-12-imp@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::432;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,140 +99,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/08/03 1:52, Michael S. Tsirkin wrote:
-> On Sat, Aug 03, 2024 at 12:38:10AM +0900, Akihiko Odaki wrote:
->> On 2024/08/02 21:58, Michael S. Tsirkin wrote:
->>> On Fri, Aug 02, 2024 at 02:17:58PM +0900, Akihiko Odaki wrote:
->>>> num_vfs is not migrated so use PCI_SRIOV_CTRL_VFE and PCI_SRIOV_NUM_VF
->>>> instead.
->>>>
->>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>> ---
->>>>    include/hw/pci/pcie_sriov.h |  1 -
->>>>    hw/pci/pcie_sriov.c         | 28 ++++++++++++++++++++--------
->>>>    hw/pci/trace-events         |  2 +-
->>>>    3 files changed, 21 insertions(+), 10 deletions(-)
->>>>
->>>> diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
->>>> index 70649236c18a..5148c5b77dd1 100644
->>>> --- a/include/hw/pci/pcie_sriov.h
->>>> +++ b/include/hw/pci/pcie_sriov.h
->>>> @@ -16,7 +16,6 @@
->>>>    #include "hw/pci/pci.h"
->>>>    typedef struct PCIESriovPF {
->>>> -    uint16_t num_vfs;   /* Number of virtual functions created */
->>>>        uint8_t vf_bar_type[PCI_NUM_REGIONS];   /* Store type for each VF bar */
->>>>        PCIDevice **vf;     /* Pointer to an array of num_vfs VF devices */
->>>>    } PCIESriovPF;
->>>> diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
->>>> index 9bd7f8acc3f4..fae6acea4acb 100644
->>>> --- a/hw/pci/pcie_sriov.c
->>>> +++ b/hw/pci/pcie_sriov.c
->>>> @@ -57,7 +57,6 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
->>>>        pcie_add_capability(dev, PCI_EXT_CAP_ID_SRIOV, 1,
->>>>                            offset, PCI_EXT_CAP_SRIOV_SIZEOF);
->>>>        dev->exp.sriov_cap = offset;
->>>> -    dev->exp.sriov_pf.num_vfs = 0;
->>>>        dev->exp.sriov_pf.vf = NULL;
->>>>        pci_set_word(cfg + PCI_SRIOV_VF_OFFSET, vf_offset);
->>>> @@ -186,6 +185,12 @@ void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,
->>>>        }
->>>>    }
->>>> +static void clear_ctrl_vfe(PCIDevice *dev)
->>>> +{
->>>> +    uint8_t *ctrl = dev->config + dev->exp.sriov_cap + PCI_SRIOV_CTRL;
->>>
->>> space here, after definition
->>>
->>>> +    pci_set_word(ctrl, pci_get_word(ctrl) & ~PCI_SRIOV_CTRL_VFE);
->>>> +}
->>>> +
->>>
->>> Pls use pci_word_test_and_clear_mask
->>
->> That sounds good. I'll do so with the next version.
->>
->>>
->>>
->>>>    static void register_vfs(PCIDevice *dev)
->>>>    {
->>>>        uint16_t num_vfs;
->>>> @@ -195,6 +200,7 @@ static void register_vfs(PCIDevice *dev)
->>>>        assert(sriov_cap > 0);
->>>>        num_vfs = pci_get_word(dev->config + sriov_cap + PCI_SRIOV_NUM_VF);
->>>>        if (num_vfs > pci_get_word(dev->config + sriov_cap + PCI_SRIOV_TOTAL_VF)) {
->>>> +        clear_ctrl_vfe(dev);
->>>>            return;
->>>>        }
->>>> @@ -203,20 +209,18 @@ static void register_vfs(PCIDevice *dev)
->>>>        for (i = 0; i < num_vfs; i++) {
->>>>            pci_set_enabled(dev->exp.sriov_pf.vf[i], true);
->>>>        }
->>>> -    dev->exp.sriov_pf.num_vfs = num_vfs;
->>>>    }
->>>>    static void unregister_vfs(PCIDevice *dev)
->>>>    {
->>>> -    uint16_t num_vfs = dev->exp.sriov_pf.num_vfs;
->>>>        uint16_t i;
->>>> +    uint8_t *cfg = dev->config + dev->exp.sriov_cap;
->>>>        trace_sriov_unregister_vfs(dev->name, PCI_SLOT(dev->devfn),
->>>> -                               PCI_FUNC(dev->devfn), num_vfs);
->>>> -    for (i = 0; i < num_vfs; i++) {
->>>> +                               PCI_FUNC(dev->devfn));
->>>> +    for (i = 0; i < pci_get_word(cfg + PCI_SRIOV_TOTAL_VF); i++) {
->>>
->>> Why PCI_SRIOV_TOTAL_VF not PCI_SRIOV_NUM_VF/pcie_sriov_num_vfs?
->>
->> Because PCI_SRIOV_NUM_VF is overwritten when unregister_vfs() is called.
+On 8/3/24 09:56, Warner Losh wrote:
+> The zero_bss interface from linux-user is much better at doing this. Use
+> it in preference to set_brk (badly named) and padzero. These both have
+> issues with the new variable page size code, so it's best to just retire
+> them and reuse the code from linux-user. Also start to use the error
+> reporting code that linux-user uses to give better error messages on
+> failure.
 > 
-> 
-> maybe this function should get the range of VFs to unregister, then.
+> Signed-off-by: Warner Losh<imp@bsdimp.com>
+> ---
+>   bsd-user/elfload.c | 110 +++++++++++++++++++++++----------------------
+>   1 file changed, 57 insertions(+), 53 deletions(-)
 
-PCI_SRIOV_TOTAL_VF gives always a valid value, and it is the only value 
-known to valid when PCI_SRIOV_CTRL gets written with a value clearing 
-PCI_SRIOV_CTRL_VFE.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> 
->>>
->>>
->>>>            pci_set_enabled(dev->exp.sriov_pf.vf[i], false);
->>>>        }
->>>> -    dev->exp.sriov_pf.num_vfs = 0;
->>>>    }
->>>>    void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
->>>> @@ -242,6 +246,9 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
->>>>            } else {
->>>>                unregister_vfs(dev);
->>>>            }
->>>> +    } else if (range_covers_byte(off, len, PCI_SRIOV_NUM_VF)) {
->>>> +        clear_ctrl_vfe(dev);
->>>> +        unregister_vfs(dev);
->>>
->>> So any write into PCI_SRIOV_NUM_VF automatically clears VFE?
->>>
->>> Yes writing into PCI_SRIOV_NUM_VF should not happen when VFE
->>> is set, but spec does not say we need to clear it automatically.
->>> Why come up with random rules? just don't special case it,
->>> whatever happens, let it happen.
->>>
->>> And what does this change have to do with getting rid of
->>> num_vfs?
->>
->> Keeping VFs working requires to know the number of VFs, but we do no longer
->> know it because PCI_SRIOV_NUM_VF is overwritten. This disables all VFs
->> instead of trying to keep VFs alive.
->>
->> Regards,
->> Akihiko Odaki
-> 
-> However, we then get into a situation where VFE is set but
-> PCI_SRIOV_NUM_VF no longer reflects the # of registered VFs.
-> Given you removed num_vfs which was exactly
-> the # of registered VFs, it is hard to say if that will lead to
-> confusion now or later.
-
-I masked writes to PCI_SRIOV_NUM_VF when PCI_SRIOV_CTRL_VFE is set in v12.
-
-Regards,
-Akihiko Odaki
+r~
 
