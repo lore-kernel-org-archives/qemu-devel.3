@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97AFCC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 09:04:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F67C52D6D
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 09:04:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1saX8d-00032y-Sc; Sun, 04 Aug 2024 05:02:53 -0400
+	id 1saX8M-0001d6-MF; Sun, 04 Aug 2024 05:02:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1saX8X-0002TZ-0j
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 05:02:45 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1saX8B-0001Ne-BR
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 05:02:27 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1saX8V-0001GU-9Y
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 05:02:44 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1ff1cd07f56so73426725ad.2
- for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 02:02:41 -0700 (PDT)
+ id 1saX89-0001Cg-NG
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 05:02:22 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-7ab34117cc2so6270833a12.0
+ for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 02:02:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722762161; x=1723366961;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722762140; x=1723366940;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0RYDgLdr7HQ010CTBqvRUSBgNA/oE/wNQ3ZQWiob4V0=;
- b=IEe2YGLZj9Jwt0yq3+i2rGq2XDB3cpwLBf1UojUjehWxFkwhM+mZufc/QHfkkV8q38
- fOsg9dsE4oJh/u7Z6n3Oq/P+LaKkP0k3ZrfSSWbFFSdh44HhHtJjqZl2fkcq9/tmxOQt
- r3qGgqhWZO/j9CSGp0nqecPuv0kvoia8BqvEJWrO77Odcvbsm3zAyICr657HZRM8+5Ig
- mxOnK/NepoffbvjgzLnulbtRa+vvlAlsD+z+hrqAoOd4nlFWdX4gxRmSuLDvUOozW25n
- QqNFBzdZYuZnh1p0ZJPFXT8MczgLcqGLGbV79NCNfz5JgIW2osk/Z4V4KiHkTaMdEwOz
- IJIA==
+ :reply-to; bh=4tfsLBSp5P9Enjc3prc0IqWrh95La08LAkdzlIXsS/A=;
+ b=SIdCVoD4T0C3Z3WnwPWzxzTokka/VMmqMXCcjPq623o5Vzk8dRzzSYwkjmRfz5QZGe
+ IsY4K+FFGwEpTbgDcDsibHdGR9B3n5VjDzNiZRwn65D3YY7F+LrFOSbiWqJkPnbm71W9
+ 8fR813/mGyjFUmfzJ8j/iZENq0AFmW4WWTBnas4SQlxdM7npkwkD6tlUUdtc1RHDXdMQ
+ z1QWRIsQjsmNvylgFz5K5sOGKi9kvFL5r27bc/jsTgP4OzK9syRSCj2462MSZwM+sWqh
+ e9J3SkGIbJI3nKFCBdNiYmg6K4U8G7QgtyvZY1xwCUxvUvS6Ekn5TCbLDaFOSCmDhz9j
+ D1uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722762161; x=1723366961;
+ d=1e100.net; s=20230601; t=1722762140; x=1723366940;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0RYDgLdr7HQ010CTBqvRUSBgNA/oE/wNQ3ZQWiob4V0=;
- b=nfeDD+9mGwENuWsPTjFFhEFZEVFhODBaadlAdMRiRePwoeNXAHWDRcP/tZ8FI7atNb
- G8TOLw6ZAFEkwLsqr8Wc/PR/vyZ8uRoFJK5QkyveQtGurzgVbwMFBQida/IIm/yHOxpx
- n+Oz3aWdPIj8ueHLZP/yOYZCDpGva8Ga7P1yeWDdLBKUWHcA2JO0z49y0MEILuHTkgl1
- USNa3gHv7rSKhI4n1sWlOYufqsXQizsmFXE+gRe+lRy6LyoJCqjIvwMGsK+bcjzGKsYd
- z26rd2EN/Y7GaghupbR4fo3ttzfgeKod6sU8goWHf/9Rww1kq7dxBvoCGe+HQ7tvVdF2
- BNYw==
-X-Gm-Message-State: AOJu0YzzxA8ako9D+EROSGivJ70+RlsaXrrrf8plZPF+0ANnOGq3kJOP
- HHUfhaELxlKLJdmFq2Ln6xgu21vMoir9+FEDJciw2IVK584WsRN9xQP6ssnCL/0=
-X-Google-Smtp-Source: AGHT+IEGs28GgpgVkfAxo4hHfuFgbz/jAGMJv5YQ0s77KSiTsTfjwX2Wwdqka3+VfAxTRjDMo6DPAQ==
-X-Received: by 2002:a17:902:ce8c:b0:1fd:a0e9:910 with SMTP id
- d9443c01a7336-1ff574a6ff9mr105256825ad.62.1722762160991; 
- Sun, 04 Aug 2024 02:02:40 -0700 (PDT)
+ bh=4tfsLBSp5P9Enjc3prc0IqWrh95La08LAkdzlIXsS/A=;
+ b=mX8KOiUvwFFUapgxEaPcbf7JLWwvzgKFBu5kWzppMiZITpcivYyEJXs7behLkN9WRe
+ jQj6TscsiOO1SdFNDJeQ2z+/WkqG6ZzkBg0Ot6KqLALlROsF3IlYdKUZ8VbE19Z0Etu/
+ niymtP/vPLz3C6MB/3vRuK3+8QicCQEdYLT+pkVheK/tzClTSd1zJX0ZkP7Q7kdJ4pll
+ GdHi2k93IuPmIQuhbp/eKi+xokjks0MMBgmV8hpVZ3RzyB0T+gN7Tk0z5xTJoYdGI59j
+ d5gDf/gzZdjSisQ4W/P9Um8wDAo2EzwsctIa6stTErGM7gzLZfqZFPfgGMn58QVVAUpq
+ Xokw==
+X-Gm-Message-State: AOJu0Yw2RoHQ7gl6YHeSkH8FLwudjqpH2ITdwzICXPgOd5zW//9RuGEj
+ 8BeQL9lrG2LRELAO3/R96EwV0msQh02T2L5/YStuckQyEnRjbPWSBHd5ssc3iJM=
+X-Google-Smtp-Source: AGHT+IG27Fp4WR8hpKUwyCNT3d2754w+qcOovL4tQ6FOiPucwI8PpeN/WObFFL9a+eRY5eZoTm6zIw==
+X-Received: by 2002:a17:90a:db12:b0:2c9:65df:f871 with SMTP id
+ 98e67ed59e1d1-2cff9430e17mr9434670a91.15.1722762139908; 
+ Sun, 04 Aug 2024 02:02:19 -0700 (PDT)
 Received: from localhost ([157.82.202.230])
  by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1ff5928f518sm45979585ad.234.2024.08.04.02.02.37
+ 98e67ed59e1d1-2cfca2a8330sm4525031a91.0.2024.08.04.02.02.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Aug 2024 02:02:40 -0700 (PDT)
+ Sun, 04 Aug 2024 02:02:19 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sun, 04 Aug 2024 18:01:47 +0900
-Subject: [PATCH for-9.2 v12 11/11] hw/qdev: Remove opts member
+Date: Sun, 04 Aug 2024 18:01:43 +0900
+Subject: [PATCH for-9.2 v12 07/11] pcie_sriov: Release VFs failed to
+ realize
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240804-reuse-v12-11-d3930c4111b2@daynix.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240804-reuse-v12-7-d3930c4111b2@daynix.com>
 References: <20240804-reuse-v12-0-d3930c4111b2@daynix.com>
 In-Reply-To: <20240804-reuse-v12-0-d3930c4111b2@daynix.com>
 To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
@@ -81,8 +82,8 @@ To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
 Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::636;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -104,76 +105,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It is no longer used.
+Release VFs failed to realize just as we do in unregister_vfs().
 
+Fixes: 7c0fa8dff811 ("pcie: Add support for Single Root I/O Virtualization (SR/IOV)")
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
 ---
- include/hw/qdev-core.h |  4 ----
- hw/core/qdev.c         |  1 -
- system/qdev-monitor.c  | 12 +++++++-----
- 3 files changed, 7 insertions(+), 10 deletions(-)
+ hw/pci/pcie_sriov.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index 77bfcbdf732a..a3757e6769f8 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -237,10 +237,6 @@ struct DeviceState {
-      * @pending_deleted_expires_ms: optional timeout for deletion events
-      */
-     int64_t pending_deleted_expires_ms;
--    /**
--     * @opts: QDict of options for the device
--     */
--    QDict *opts;
-     /**
-      * @hotplugged: was device added after PHASE_MACHINE_READY?
-      */
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index f3a996f57dee..2fc84699d432 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -706,7 +706,6 @@ static void device_finalize(Object *obj)
-         dev->canonical_path = NULL;
-     }
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index faadb0d2ea85..9bd7f8acc3f4 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -99,6 +99,8 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+         vf->exp.sriov_vf.vf_number = i;
  
--    qobject_unref(dev->opts);
-     g_free(dev->id);
- }
- 
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 6af6ef7d667f..3551989d5153 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -624,6 +624,7 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
-     char *id;
-     DeviceState *dev = NULL;
-     BusState *bus = NULL;
-+    QDict *properties;
- 
-     driver = qdict_get_try_str(opts, "driver");
-     if (!driver) {
-@@ -705,13 +706,14 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
-     }
- 
-     /* set properties */
--    dev->opts = qdict_clone_shallow(opts);
--    qdict_del(dev->opts, "driver");
--    qdict_del(dev->opts, "bus");
--    qdict_del(dev->opts, "id");
-+    properties = qdict_clone_shallow(opts);
-+    qdict_del(properties, "driver");
-+    qdict_del(properties, "bus");
-+    qdict_del(properties, "id");
- 
--    object_set_properties_from_keyval(&dev->parent_obj, dev->opts, from_json,
-+    object_set_properties_from_keyval(&dev->parent_obj, properties, from_json,
-                                       errp);
-+    qobject_unref(properties);
-     if (*errp) {
-         goto err_del_dev;
-     }
+         if (!qdev_realize(&vf->qdev, bus, errp)) {
++            object_unparent(OBJECT(vf));
++            object_unref(vf);
+             unparent_vfs(dev, i);
+             return false;
+         }
 
 -- 
 2.45.2
