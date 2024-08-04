@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92476C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 21:45:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18801C3DA64
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 21:48:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1saj25-0004wf-DK; Sun, 04 Aug 2024 17:44:53 -0400
+	id 1saj5C-0000n6-Si; Sun, 04 Aug 2024 17:48:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1saj23-0004w8-9d
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 17:44:51 -0400
-Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
+ id 1saj5B-0000ma-Bz
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 17:48:05 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1saj21-0004AE-Hh
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 17:44:51 -0400
-Received: by mail-ot1-x32d.google.com with SMTP id
- 46e09a7af769-7093d565310so8123300a34.2
- for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 14:44:48 -0700 (PDT)
+ id 1saj59-0004j8-DW
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 17:48:04 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-1fd69e44596so35314975ad.1
+ for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 14:48:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722807888; x=1723412688; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722808082; x=1723412882; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=GkZuqKMpffW2rN6hnGfO4Sor8puJN9jsiGe1b+cHRMY=;
- b=INJwx5drExYHXUboFW6vemQmiV8/e7ePGqRTE4Rwj/p63UfJPW2Ri2yQLFXKyFEhPr
- o266gfHTM2dEl7XhSu7vwzh/UjDsd32psprwgV5RSSXook7oGYawmoOz8jqCq76pT4G9
- FkxwJsIBNrislku/k1HJq77g4cFeKWKQ9W1iwEmlRWluxRqMG4WBKAOZ3WXhPxgKb3zV
- EY6uNAmqz5cQjNIsQF3K1I2ohzGeWLcdk4KmuENDt9uCS1Zr3lQpukTWU8iYQO7+K0bE
- foLQZG23ApNIpphTldMCQqbj9yltCRVJ5SoPEEHcyG8pSZLNLnUYBrb8k6se+K10qNIb
- 20VA==
+ bh=XFI5vtmgOxVHEWEbSJx6bc4CIzbmwo3HRIJ/0zjQscw=;
+ b=MRLGuBaLmt7BK/0ARnMdEy5jWlWoVcaunB7NhsELgVDlwSRenjriQePMDVztDEizzp
+ nuAdErp6LjWMwLsRgReTjs+Wq29NKF3HNCKBGThFnTM1R5W2b/h5IBMJk3PwrrLtBKn9
+ 0d4TJmlgUnOSYQVpF6EnIdqf1JQRSes1HpZujlkZM7Cxw89NJEjFgOMf4GpYBonO4irT
+ 5+QsjxTrp+fj4/mrytHkgYwpd1Q0PR4Xe1xlTQN88E/YeDf1Bo6P84a/UTwwVZfVET6l
+ 1Jw5GoRWzy4Qvf8IMG7A4lFsi5SS/8rMpqZgO/PCCvkwKx/y7m80R8qM95138F+/fJfs
+ DulQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722807888; x=1723412688;
+ d=1e100.net; s=20230601; t=1722808082; x=1723412882;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GkZuqKMpffW2rN6hnGfO4Sor8puJN9jsiGe1b+cHRMY=;
- b=p8knc39zVhPWBASFA3AMdl21TL5YZ50nvoqbwzpKt+HHeg1Cb6RIuSY4K6O+EoDcPI
- vS1ztVGjx6c7Tx6AXMj4BzafkhC5mfH6VXblxxEWhuiDy9DRDZnnVtXvWoievxsNWuTF
- 1fOO8SyoOBhaC4SY+HHE1Ui270PDikgxGJxYmU74V7Fv48wuF7e81mld/6fyrFaFm4Sk
- Azl/oyPrACJ9PwZt6rFs8XBs6l5j3eK/QIid1W6W3mLU1mcOt+f66gVCuDeFO5XfXhfZ
- PQvyUa3F2cRkE8ZnPXiFVIsOC6d1jOx9sSaGGaC5Ij6a/JFiixfweDOoQ5iGJihPox2Z
- ze8Q==
+ bh=XFI5vtmgOxVHEWEbSJx6bc4CIzbmwo3HRIJ/0zjQscw=;
+ b=WcWxco/PU7/9oXT58DIVpUWTAvS9EhI9+13FLsNPF3A3axfST3XzHutqjPWchuTguf
+ caGlBjeZl96VzHK60C+1tkl5JceBvpUejWMj8X3vF6rX7liCDMLz9IxdeFZAzNu9Scr2
+ W2HUGm3V42Ng2ONBvoxACMZkbVaD1AcGy9V2m4XE+3pUgu/jAoMQhpL1q8HWLoIDhDPa
+ GqWuRC1FeDQ7cdx05Ydl5vebGlBXN+GphfZUF3IXSHo8Y0u4HONXr7tadCgrBlW1CZDO
+ uOrJc3nknNLealh2Gf5DyVq7Sqmwlgp4Jb4yjeCzOxZEsy8/u5822S4DJWB0QbuJtO+m
+ 7FlQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVe3LwfIDHhDXHasptOH7EVd178nhipCb2nuegJw+pYqeWBixufeb+QAzvIkD9NApxIlm/wYKhYTOVLFkDAnw3dU9Xg7l4=
-X-Gm-Message-State: AOJu0YxNRsXy56fc1WAwASyB/QNUDTKZzM6oPf4t4Lm1FCgxJBfddm9A
- akRr76PS8ujWATFtIXdrHDKeiidqYCMohQwggK/fTNJGOccbUZNsPp+ekBb6q6s=
-X-Google-Smtp-Source: AGHT+IFg0DYDr1DVKPkmJohpyNjqT0wKpFK4xv/krJMzrXDNuAJ0aFa+ct/0y9q/cPH1p2JDr5k8HQ==
-X-Received: by 2002:a05:6830:6dc5:b0:703:6311:7798 with SMTP id
- 46e09a7af769-709aa00b761mr15696328a34.5.1722807888047; 
- Sun, 04 Aug 2024 14:44:48 -0700 (PDT)
+ AJvYcCVyYtEdOdKnFG8jWbAsr931ij2vcDEDVRxsj2oecuf0O3NFYG6O1u/36PGjPNf7p9TB1b5LmurSgqGi9ZRLRl0QvbOepkE=
+X-Gm-Message-State: AOJu0YyRoMDpdG5KOW1EeqL/tb2ZkS8AGIxYfHpIM9KYWpfOtjqw4Ebr
+ yTPD9CFW0az4aMCFllMSV9FMMfxlPftJEOPe+4xFE3VXxyt+u62FzF3brZ1+QJs=
+X-Google-Smtp-Source: AGHT+IEq8GbllRR3+5CGDmiSl/40UyXqP/Yt+YsZDVKKpuwIxYfhqFXNsoqm0RMVJHoAv3zi1Ivb6w==
+X-Received: by 2002:a17:902:e5cd:b0:1ff:5135:131f with SMTP id
+ d9443c01a7336-1ff57ea4b92mr161063895ad.25.1722808081794; 
+ Sun, 04 Aug 2024 14:48:01 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cffb091a99sm5613754a91.21.2024.08.04.14.44.45
+ d9443c01a7336-1ff590608a7sm53752345ad.141.2024.08.04.14.47.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Aug 2024 14:44:47 -0700 (PDT)
-Message-ID: <32fa8fc3-6554-465f-9208-236016f76fd0@linaro.org>
-Date: Mon, 5 Aug 2024 07:44:41 +1000
+ Sun, 04 Aug 2024 14:48:01 -0700 (PDT)
+Message-ID: <ba76ae2a-77a6-4d11-875f-f6bf77039109@linaro.org>
+Date: Mon, 5 Aug 2024 07:47:56 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/17] bsd-user: Define validate_prot_to_pageflags and use
- in mprotect
+Subject: Re: [PATCH 17/17] bsd-user: copy linux-user target_mprotect impl
 To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Jessica Clarke <jrtc27@jrtc27.com>
 References: <20240802235617.7971-1-imp@bsdimp.com>
- <20240802235617.7971-17-imp@bsdimp.com>
+ <20240802235617.7971-18-imp@bsdimp.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240802235617.7971-17-imp@bsdimp.com>
+In-Reply-To: <20240802235617.7971-18-imp@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,35 +99,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/3/24 09:56, Warner Losh wrote:
-> Define validate_prot_to_pageflags. Use it in target_mprotect to validate
-> the flags. Our taraget_mmap needs more work before it can be used there,
-> do don't copy linux-user's use of it there. This should hvae no net
-> functional change, but does make target_mprotect more similar to
-> linux-user's.
+> Now that we're closer to the linux-user target_mprotect code, go ahead
+> and grab the rest of the implementation. This moves from a stard, end
+> impl to a start, last which will allow last page mapping, etc. This also
+> moves to a more general algorithm. We're close enough that this jump
+> isn't so large, and doing it incrementally further has become too
+> much work for too little gain.
 > 
-> Signed-off-by: Warner Losh <imp@bsdimp.com>
+> Signed-off-by: Warner Losh<imp@bsdimp.com>
 > ---
->   bsd-user/mmap.c | 28 +++++++++++++++++++++++-----
->   1 file changed, 23 insertions(+), 5 deletions(-)
+>   bsd-user/mmap.c | 138 +++++++++++++++++++++++++++++++-----------------
+>   1 file changed, 90 insertions(+), 48 deletions(-)
 
-> +/*
-> + * Validate target prot bitmask.
-> + * Return the prot bitmask for the host in *HOST_PROT.
-> + * Return 0 if the target prot bitmask is invalid, otherwise
-> + * the internal qemu page_flags (which will include PAGE_VALID).
-> + */
-> +static int validate_prot_to_pageflags(int prot)
-> +{
-> +    int valid = PROT_READ | PROT_WRITE | PROT_EXEC;
-> +    int page_flags = (prot & PAGE_RWX) | PAGE_VALID;
-> +
-> +    return prot & ~valid ? 0 : page_flags;
-> +}
-
-Comment still refers to @host_prot, which you removed.
-
-Otherwise,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Acked-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
