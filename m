@@ -4,86 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76EAAC3DA64
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 07:29:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF430C3DA64
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 09:02:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1saVgH-0006Tl-A4; Sun, 04 Aug 2024 03:29:29 -0400
+	id 1saX7n-0000b0-Vy; Sun, 04 Aug 2024 05:02:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1saVgF-0006Kb-Tw
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 03:29:27 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1saX7n-0000XA-2i
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 05:01:59 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1saVgD-0005W7-6K
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 03:29:26 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-7163489149eso6802379a12.1
- for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 00:29:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1saX7l-0001A1-EW
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 05:01:58 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1fc56fd4de1so33046235ad.0
+ for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 02:01:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722756563; x=1723361363; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QXk+aCctF48qXKK0HsbaK+451sObEGqqVawFAyXim1k=;
- b=snNxOTZUrKWBLAjgkxDE1F7V+b9LTV5gWN27g0ZIVANVhqJOmETp9r0Q7eHbc/o1A/
- +Uggm9I6w0CBZNJ7NEXsgSw/EGbst0bTlIyC5YEVdcftrINElzSQ3ZXVyI5qMH0lsfSl
- JseBE4pYJSBRlX7X8kjhkWmWRhUISk4L/UVHwPxGOR014wncYf5H1WjK01SfXQok0qBa
- rWzctE1kcWTHnaHsQOhyYwDs7hhhW/J1Sjra9dFx5F1xYh4B0euDfZbuBwOsepGNDvtA
- V/19WNQoKXxocv4xWVYqvYvbwgW9z66x9nS4Ma5XTrshgInl/89Ma1OJZpZGLic6kRFH
- 8dgg==
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722762116; x=1723366916;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=h49lGewxT9hFA+tlJrf36flRr26IrZVQVpZMqnu2U/A=;
+ b=DFGTpe5FkK5NSoLKnyGB3CDrJ8XKRYFODYkfxVgbxw1gyrsgp/qRaLaDr5/Ac14+3N
+ 98bmQBWRIJ3QAvnzDoZFhl0F1sB0AhoHjb6BDRYBPT19Ndv5Dn0kDBCFJtdIOTSzTQ+s
+ cC+zT3sSGWg7c3SDSbA/LjoSCi8l+QV8ZhjRkEfew0glq5UAyhykLxT90inK4H2ekqjG
+ lRU2ubHlZTb0HfZ3CjE2YhBoYxnWjBf7F4gsVb53HW1Bzu6yLtpOQyboUOzkFOjckxUb
+ u/7Ginb/z5Vv3Su2Bcs/xW6LqlzC+nnVgD93N0DjxwfN1Mo0RQ8FgSxbJN+Wxnj+kg4D
+ pJcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722756563; x=1723361363;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QXk+aCctF48qXKK0HsbaK+451sObEGqqVawFAyXim1k=;
- b=Ud2e25w0SjxXk80EdxzKfZpqyNNEGWgcTnilc+nF+6hsi9kPU2g3kjGwziqWDx/psO
- mzLkMnEM2dcPZAv/Na3taTMGpECADZ6qQStcA5qrwjiZd33mI01tkx2zxblaHoXWAQHG
- OcJpvpT0KBH86eKCBx89SxWAQCJbdEZ+rT/iwiFOMyT9DPCQuOncfW5i10dnHegZTVWM
- cW+iIbVdFoIvVqfZDgZqdSbAZuf811TlUQ9eGTmFRYiranbw9FEmuegz6rp672bTuApN
- 3MoXDpx6ZPCfdT4LpLE9FmZAjMo59J1XtvvHGWbM5ypOrIfaRqEviT0hhLEPMzhetWWm
- OujA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWj+Kljpy+X18x3DrN3c+T3c5ocnVX4n+iCglQcN57MF5IpuemhIf36SSCZiqPFHcbFcmi+qZXbqMUH1exXtmg2QNTE90g=
-X-Gm-Message-State: AOJu0YxyfjLyXmtAw47iHV48KvLK4LShvQGxp0xEI30FlzA9ISaj05Mw
- dgUQOdfEZuNJqAZFt+2s5tozCfKnIoJwHUzq3J00pjIQNmclna3np2J4Ta7Xw7/Yhi7I5t1At3g
- kgW73Lg==
-X-Google-Smtp-Source: AGHT+IGF6wWcdymnBSLXcZGCpP1T9PhQ6d2MFqPUlYz45cstLL26SRfE3y0sMcFkPUYeBe7ugQejRw==
-X-Received: by 2002:a05:6a20:d70a:b0:1c4:c449:41e6 with SMTP id
- adf61e73a8af0-1c6995b8042mr11301633637.31.1722756563353; 
- Sun, 04 Aug 2024 00:29:23 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7106ec410d1sm3611103b3a.66.2024.08.04.00.29.20
+ d=1e100.net; s=20230601; t=1722762116; x=1723366916;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=h49lGewxT9hFA+tlJrf36flRr26IrZVQVpZMqnu2U/A=;
+ b=M54M3wvijbe/gTV9Xihkk4B0jWcqcPRCLN40l9jSntqKuws/g9m8lyJRvdfBXggHVc
+ pMggaSIHTCwTWoSpPNnQzsG2NVPsUThTjW9CrpwBOwtCQqJMhzGa/v+5NCfgeBSCaRBE
+ 8wursFERAZ+l0ivZNHR+hJuMVYkjnSUXdPwSC9KUeMHen7iGJySBFWtqyTIHHyGOWd9o
+ AAimPFzgjvTBIs56A6uQT+mSMhq/zcMSlgAqxAeJhd9oQ4AWHbEcXzBoF1sZoW7mbVcE
+ do56hwW+4IttVC6v8OoswW7FUZeRrBoAQrqFrZvOgaatbohQhpslzEH1Et5XWgSZFAZX
+ T5OA==
+X-Gm-Message-State: AOJu0YxebgPHWbKL0drSizq22aqKGH2KydCWPvmdSo8gmWQa+OmBXWpy
+ eDKH0wtgXXUTsOiASbIG8JbXh3VKQsC4tNECuFBb8N7Q2ds7EDQ69J1rGWb6VT0=
+X-Google-Smtp-Source: AGHT+IH6hvACC0/67UXXIMR8Dw71AM1UrQVeCxJ8kTmPPYgkbvYXlf0nAAGLQnFgQQc4gqpJWplcZA==
+X-Received: by 2002:a17:902:c947:b0:1fa:97ec:3a4 with SMTP id
+ d9443c01a7336-1ff57b81828mr150036305ad.8.1722762116065; 
+ Sun, 04 Aug 2024 02:01:56 -0700 (PDT)
+Received: from localhost ([157.82.202.230])
+ by smtp.gmail.com with UTF8SMTPSA id
+ d9443c01a7336-1ff58f19f0asm46257095ad.6.2024.08.04.02.01.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Aug 2024 00:29:22 -0700 (PDT)
-Message-ID: <c2bdf6c5-0028-4168-8640-244bc1c7d243@linaro.org>
-Date: Sun, 4 Aug 2024 17:29:18 +1000
+ Sun, 04 Aug 2024 02:01:55 -0700 (PDT)
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Date: Sun, 04 Aug 2024 18:01:38 +0900
+Subject: [PATCH for-9.2 v12 02/11] hw/ppc/spapr_pci: Do not create DT for
+ disabled PCI device
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/17] bsd-user: Pass image name down the stack
-To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, Jessica Clarke <jrtc27@jrtc27.com>
-References: <20240802235617.7971-1-imp@bsdimp.com>
- <20240802235617.7971-11-imp@bsdimp.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240802235617.7971-11-imp@bsdimp.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20240804-reuse-v12-2-d3930c4111b2@daynix.com>
+References: <20240804-reuse-v12-0-d3930c4111b2@daynix.com>
+In-Reply-To: <20240804-reuse-v12-0-d3930c4111b2@daynix.com>
+To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Alex Williamson <alex.williamson@redhat.com>, 
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
+ Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ Akihiko Odaki <akihiko.odaki@daynix.com>
+X-Mailer: b4 0.14-dev-fd6e3
+Received-SPF: none client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,17 +105,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/3/24 09:56, Warner Losh wrote:
-> Pass the image name down the stack so that we can give better error
-> messages. Inspired by similar work in linux-user, and more likely to
-> come.
-> 
-> Signed-off-by: Warner Losh<imp@bsdimp.com>
-> ---
->   bsd-user/elfload.c | 19 +++++++++++--------
->   1 file changed, 11 insertions(+), 8 deletions(-)
+Disabled means it is a disabled SR-IOV VF or it is powered off, and
+hidden from the guest.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ hw/ppc/spapr_pci.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-r~
+diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
+index 7cf9904c3546..f63182a03c41 100644
+--- a/hw/ppc/spapr_pci.c
++++ b/hw/ppc/spapr_pci.c
+@@ -1296,6 +1296,10 @@ static void spapr_dt_pci_device_cb(PCIBus *bus, PCIDevice *pdev,
+         return;
+     }
+ 
++    if (!pdev->enabled) {
++        return;
++    }
++
+     err = spapr_dt_pci_device(p->sphb, pdev, p->fdt, p->offset);
+     if (err < 0) {
+         p->err = err;
+
+-- 
+2.45.2
+
 
