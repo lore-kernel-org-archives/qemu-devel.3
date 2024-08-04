@@ -4,95 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6570BC3DA64
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 15:44:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 062BCC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 15:51:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sadOH-0005Ga-IT; Sun, 04 Aug 2024 11:43:25 -0400
+	id 1sadV0-0001fx-1z; Sun, 04 Aug 2024 11:50:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sadOF-0005F3-Q1
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 11:43:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sadOD-0005OJ-L3
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 11:43:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722786198;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=LPBShP6gLkVLC4k9oCbDnZ/GHvgHuKYiNh1jOXPc5yE=;
- b=Cftr7vnd1Uog2KfappOsTFO+fxH8oAEvZ5BNxDZ/7cqCIs6mC45L0fYlVeVTSTxA+Tjis1
- 9+oWXXvZif2DYxZ1kwitB1ctdGEl6aiNhnIhCLF6e+IBHFyfeJyruLvvQ7iQ+bTzJMwq7T
- jt1T76bf+PreMVXcMt4Xsl3eMo/oef4=
-Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com
- [209.85.210.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-267-cBohN2xkNEKcZKLOzWu7hw-1; Sun, 04 Aug 2024 11:43:17 -0400
-X-MC-Unique: cBohN2xkNEKcZKLOzWu7hw-1
-Received: by mail-ot1-f71.google.com with SMTP id
- 46e09a7af769-70954de6142so1727165a34.0
- for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 08:43:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luzhixing12345@gmail.com>)
+ id 1sadUx-0001f0-NY
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 11:50:19 -0400
+Received: from mail-oa1-x41.google.com ([2001:4860:4864:20::41])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luzhixing12345@gmail.com>)
+ id 1sadUw-0006Zh-6X
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 11:50:19 -0400
+Received: by mail-oa1-x41.google.com with SMTP id
+ 586e51a60fabf-25e3d8d9f70so5931451fac.2
+ for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 08:50:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1722786616; x=1723391416; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=5wMP4WTzU0xCZQ55XMOPYDIvPMxtBsKQOe0XlHntDvA=;
+ b=G0bHL0j4zIW5R2hXhwQqo+Qefu44KzozAWH8jtyoVtWgs9sJ+MLEzLfdOa8/nNnqTm
+ FVJmHYRjFckczLT1QtSUjBT6/cjoXh+Xqj0xy+sHwhlFK0hgtQJqVdCxSo/TURD6ML3Q
+ 04VO0dBaFxiapYf8CMEs9YqeoTnvLiX1jYZFTTNxNrhKaDeL3s+q+7S84l1APvAE7r3L
+ BfHrx4kEJZuyYrztueXHSyeRPbR6Y+F/+L1BGBSt9hiKZpP02EBEn6oRtKSz0CfCw8M1
+ PPGQIOsZzlvb36NMMxLaU2s+cfiVcgDbx+TV7OWWf/ngrlZk9AFR68TeK0U24WFJnyat
+ g58g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722786196; x=1723390996;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LPBShP6gLkVLC4k9oCbDnZ/GHvgHuKYiNh1jOXPc5yE=;
- b=ktkFXK04OZBZsN/u+m0yOGPbIsoHDS/ClD8B05QdRLasDLR9E0IWiratumsZUMR+s7
- 5BSOxf12nzk2Hld2YnplhsOAs52ULgoCY24+PtJiAb46GJAT/B3S9FEuNZ83zWS97xUs
- InueFtvUOS6i+miKClM4Yd6TLZ6WhtlMUg/YoSd8SgQqgWvjm2/7XeHAqNFQiCFFp7NC
- rHbthX5BOZ9P7f9Yw2RWfKKAYGBc2tOQsZRLf8Z3AnrByP/BR1PjRt0kG4iSWVcRFtL7
- dbsN72hZihyKJTM8DAh7xqVmsVExEICWJQ/a4NyKblPkog3qvULjCOmsAIjcd3Qh8E/b
- GOQQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUOvc8WohLpOfiOeVdizk7viQra84+7oGyCumDsm75sPaY2YaNNuN5NHIIg+VKCR5oKTD8MAsl8/dsw@nongnu.org
-X-Gm-Message-State: AOJu0YzzGrrd37hW8OxLS5WWZTVCUWQFRdn/pAGI/l3s4+KFSrCC9TNY
- V8UFOEquyUoK1BGWYCv5ZJiFmyc7uthSb8inClyx9Hpo0D4ihgIDl5vUDLBYCZw0gXVOSCREElC
- DEIEGB+3jUNJjTyA5saaCk2LgUaCssm/Y0+5FjUQYcqJlJ+nkjNI7
-X-Received: by 2002:a05:6830:6188:b0:708:b80d:f3f with SMTP id
- 46e09a7af769-709b996b07fmr6408337a34.4.1722786196177; 
- Sun, 04 Aug 2024 08:43:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHBJ2jfbD9XAW6u0h1bV4NdLix+NkmEFNg/TV8p9dP/irC0EaA7+yNhh+AAaPz8IWJ4UziKyg==
-X-Received: by 2002:a05:6830:6188:b0:708:b80d:f3f with SMTP id
- 46e09a7af769-709b996b07fmr6408323a34.4.1722786195827; 
- Sun, 04 Aug 2024 08:43:15 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6bb9c87c487sm26759996d6.131.2024.08.04.08.43.14
+ d=1e100.net; s=20230601; t=1722786616; x=1723391416;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5wMP4WTzU0xCZQ55XMOPYDIvPMxtBsKQOe0XlHntDvA=;
+ b=EV5wI1hAfuzyrpp06XH7aBaQC3OGVdMbYW/k+JHAdLD7LqDY3CxhUUj/4uTuBe5prM
+ +1hgU+hR5APsokyD2aU4dp7MtAmVtDVMij4Wnm7DyhWPnlQoM6GwFCcPiAMabjq/HYFD
+ bEAC74JjQ+HU4Gmx4YtIP0pp/0xjKtijOn/MrZHkruGne4+eHtvxTei8ghSTzaPukacg
+ JM/Dp9lJnKJKXdSzFQE4vFBUN9GBHkvYvAr1lDO+brC2NUPu4tjRXqWMPIHLTx5kz53+
+ TC9WcBnrsQMFoNaaJkZNaCLTOzOm82FMRQgMPBIHnkja9608pn5ho0bxa2/HNwQcBDEI
+ YS0A==
+X-Gm-Message-State: AOJu0YwJ32jEvLwXNwdYhVbWxh7zJF5w8GBaMnzi9YaUtMYNCoBsooDJ
+ JPe6Rum+cJBTtjbkiyP7t+h8p1U5dxThW9QNKi5gfypundJVep2IpgtDES914Ic=
+X-Google-Smtp-Source: AGHT+IEKlrZ/vD3R2AUzU0t8bCw+QNJXUwilfniBvHhX5mCBt+3C090cXHOyVhxigZ2Jcpawf+unEQ==
+X-Received: by 2002:a05:6871:5a16:b0:268:ada1:5eba with SMTP id
+ 586e51a60fabf-268ada172bdmr5509176fac.19.1722786616504; 
+ Sun, 04 Aug 2024 08:50:16 -0700 (PDT)
+Received: from localhost.localdomain ([223.104.134.101])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7106ed30840sm4056724b3a.210.2024.08.04.08.50.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 Aug 2024 08:43:15 -0700 (PDT)
-Date: Sun, 4 Aug 2024 11:43:13 -0400
-From: Peter Xu <peterx@redhat.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V2 00/11] Live update: cpr-exec
-Message-ID: <Zq-hkUnPGWHMoEY0@x1n>
-References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
- <Zpk7Mf2c7LiNV2xC@x1n>
- <37d9e725-1be7-48e1-b621-3f657192f124@redhat.com>
+ Sun, 04 Aug 2024 08:50:16 -0700 (PDT)
+From: luzhixing12345 <luzhixing12345@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: luzhixing12345 <luzhixing12345@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH] vhost-user: add NEED_REPLY flag
+Date: Sun,  4 Aug 2024 23:48:59 +0800
+Message-Id: <20240804154859.28342-1-luzhixing12345@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <37d9e725-1be7-48e1-b621-3f657192f124@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::41;
+ envelope-from=luzhixing12345@gmail.com; helo=mail-oa1-x41.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,36 +93,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 22, 2024 at 10:59:47AM +0200, David Hildenbrand wrote:
-> > So I wonder whether there's comparison between exec() and transfer mode
-> > that you recently proposed.
-> > 
-> > I'm asking because exec() (besides all the rest of things that I dislike on
-> > it in this approach..) should be simply slower, logically, due to the
-> > serialized operation to (1) tearing down the old mm, (2) reload the new
-> > ELF, then (3) runs through the QEMU init process.
-> > 
-> > If with a generic migration solution, the dest QEMU can start running (2+3)
-> > concurrently without even need to run (1).
-> 
-> I'll note (not sure if already discussed) that with the "async-teardown"
-> option we have a way to move the MM teardown to a separate process, such
-> that it will happen asynchronously.
+Front-end message requests which need reply should set NEED_REPLY_MASK
+in flag, and response from slave need clear NEED_REPLY_MASK flag.
 
-I just had a look, maybe it won't trivially work, as it relies on QEMU
-process to quit first..
+---
+ hw/virtio/vhost-user.c                    | 2 +-
+ subprojects/libvhost-user/libvhost-user.c | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-async_teardown_fn():
-    if (the_ppid == getppid()) {
-        pause();
-    }
-
-While if we stick with exec(), then PID shouldn't change, so the teardown
-process can hold the mm and pause until the VM is destroyed..
-
-Thanks,
-
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 00561daa06..edf2271e0a 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -1082,7 +1082,7 @@ static int vhost_user_get_u64(struct vhost_dev *dev, int request, uint64_t *u64)
+     int ret;
+     VhostUserMsg msg = {
+         .hdr.request = request,
+-        .hdr.flags = VHOST_USER_VERSION,
++        .hdr.flags = VHOST_USER_VERSION | VHOST_USER_NEED_REPLY_MASK,
+     };
+ 
+     if (vhost_user_per_device_request(request) && dev->vq_index != 0) {
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 9c630c2170..40f665bd7f 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -667,6 +667,7 @@ vu_send_reply(VuDev *dev, int conn_fd, VhostUserMsg *vmsg)
+ {
+     /* Set the version in the flags when sending the reply */
+     vmsg->flags &= ~VHOST_USER_VERSION_MASK;
++    vmsg->flags &= ~VHOST_USER_NEED_REPLY_MASK;
+     vmsg->flags |= VHOST_USER_VERSION;
+     vmsg->flags |= VHOST_USER_REPLY_MASK;
+ 
 -- 
-Peter Xu
+2.34.1
 
 
