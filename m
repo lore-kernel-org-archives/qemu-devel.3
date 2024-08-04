@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9AD2C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 21:31:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE418C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 21:32:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1saiof-0004L7-MJ; Sun, 04 Aug 2024 17:31:01 -0400
+	id 1saiph-0006Ic-GG; Sun, 04 Aug 2024 17:32:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1saiod-0004KV-8n
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 17:30:59 -0400
-Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ id 1saipb-0005uH-Be
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 17:32:01 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1saiob-0001ji-R2
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 17:30:59 -0400
-Received: by mail-oi1-x22e.google.com with SMTP id
- 5614622812f47-3db145c8010so6409507b6e.3
- for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 14:30:57 -0700 (PDT)
+ id 1saipZ-0001ol-Bn
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 17:31:58 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-7a1be7b5d70so3633623a12.0
+ for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 14:31:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722807056; x=1723411856; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722807116; x=1723411916; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=maKEfPGhDz8Q8REyjHDSk3c5Ot+5RjEQp9kMRfvaAkA=;
- b=nI/DZLD63rdks2xfrLcPFDT1lB1v+p2XqvEz08wOuhdHZTxHADviKMdEWOc3kSkiSx
- FOlb1biYP1DYtDQDiaUlydizvA4NE/qO13mnDidn/CHC7XMQNncnAOHIoTGuOk9BFaqJ
- GHlmPd9U/0X+wflQBA8lG/48RqNu7HuuVZAi7ESttc2Y114uvZxpp/WS4bSP2ZaUprEK
- V9uJvr3+8O2b2BvACPtmunXKwDC77g6dSyDdfvNe5fB37vCz54Zk9TEzzmXyA2kt6l7G
- FBBIn0tyF5/XG0xzds4bmVlg5ILiQEr/NxKxv46rXDahmTocTdunfXcyB7HBr7zDKDnX
- Jhpg==
+ bh=ZU9VzSI2f7jEOQ8xfL60XLpm6G2xywpUBVql+uACQ9M=;
+ b=LZUOLoT1orb+1sL8j4cVuPGugd/J3HYpTqtd1ag8rM97xLFxyhOSSL48592Of+XNnN
+ vzQmdqhvUgRnQGAIbajDy+329Wjt2kVwyWK/7Sfo0Mn0oNET3AtemIHAMX2/2yKBkss8
+ 3uLT0iv/OgZtvTonSZR0jd8Y9qQENewMbPLC7NE6O0o9ovFfBRi2eYpEitJ43Ipm48XN
+ aUSsPY6HFlYA2B8VP59rE65gicD4DL8ZXyCRncYwBYMxjF6FLX6cJxncfR9GtMutkxnd
+ kiGlmzpI2ObMOoFny052r1Anr3nvTMshzpi2fUhC1Zg0K2/bx5KCPoK5L4zUyFyMh99z
+ ojag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722807056; x=1723411856;
+ d=1e100.net; s=20230601; t=1722807116; x=1723411916;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=maKEfPGhDz8Q8REyjHDSk3c5Ot+5RjEQp9kMRfvaAkA=;
- b=ciesoywVeh41bo/uutG5YfeT6R2nmyPOywQ0SZuEwNjAsRxF2za9CP6MUImEvH38nh
- IJ10k/9RSnTlEsYGd6AC49WMx78QJhITupYB4CSdFeYjeMBzxJy6T1T6nsFCPKn5OXSW
- bpOIa6KaPYOd9heq+OTCkawJ9Oj4IsFUYMDNp9plcQoBNeJGdaCL21xHOp6UXQXRvJP/
- NRDcd3uACND14SPIwdtPpG7mL2Ym/9JjG+UO0ohEssYogt3kIfAPPsTtx0DGiWo9osZd
- SpQGAhnfdJXgsmv0pBQRtzoRQpme7r4daZfkNx9eYZF6HDJEGvhpPIsLQSLa5jHooAeG
- R/3Q==
+ bh=ZU9VzSI2f7jEOQ8xfL60XLpm6G2xywpUBVql+uACQ9M=;
+ b=xKBU72lQB9FBd49gOb5E4Neu+GJ+MK6GokSJp2OikswLHoc1con23elIBHShmU7suE
+ Cuw6K7Lq0DpR5lJsjaCXVQI3e46f+0tIn4PZbg5BoOPZs9X3tYgPE7O9JdV14O0hxJkE
+ roCMpA1gdgkmEcPM+BLiP21lQO6hHoCdPdDG31pQaeLW3q7wmPkqr2OeevZLEklHnR4z
+ O9sqryn8NQF1hkDDaHEPpINm+V9RhZcsgSLSBGVGshl23E7IC+Lr87M0EVekqDTiZZl5
+ in/k/d2WoYz0IfNCXJfygPaf9XmcNcV+0DUO3KiELGlYSbFPMlzN9tqoZbT21HEmePBo
+ 9zfQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW+ZBfobOziW448kQFsBftPj3kyev37c9m5QlLRORxatRy4pKDz5SpG/+0avbQYAL3snW5Cn2n3jG21ds52IbEadNUXmpI=
-X-Gm-Message-State: AOJu0YxlCYqMHfkOGZwi7Tglnk5UM2t3zWULj7wBAh2x9yaTKyKXeo1t
- Na694n6bbS/pX8hfD9nlZ9039PPU1HTabPFZC9PHQxSYktQGlx3qJLIK+T4Zync=
-X-Google-Smtp-Source: AGHT+IGSG3hYunos95UVI0VjBQ7ufi0bCkjp0fsb+/tNI72+OZJaKU8zqmrXfjilhRvctjcebLnlPQ==
-X-Received: by 2002:a05:6808:d48:b0:3da:9fe6:9719 with SMTP id
- 5614622812f47-3db5582f1a2mr13300931b6e.31.1722807056005; 
- Sun, 04 Aug 2024 14:30:56 -0700 (PDT)
+ AJvYcCVAHwIO4NGKloChXjHMD7uG0OvQHA82ScGDRtTpB0IFVEatq10PvPRl+Aa2SgQ5lc0Xrwk9LaD4AWYkhsvcDlMo5v3giS8=
+X-Gm-Message-State: AOJu0YwNIdx5UYscefbWDbr6eEXEyNiFG492EOF2XHZ5UL3IwPy0y/7X
+ z0U/CWFooYDNUmrxtHtXJw0MY64PlLaBwbz1NZRuE4XlysTRrs9fqNzCtAX6+bSE96jaK7mL7L3
+ +sV3W3Q==
+X-Google-Smtp-Source: AGHT+IFz1nTobCi1C6SQhWI3JbfIruLAFr7cdMQS5dLZcRFJZdpUyZ4mmSBYSBhBC/XaMSWDQX99CQ==
+X-Received: by 2002:a17:90b:4a8b:b0:2c7:49b4:7e3a with SMTP id
+ 98e67ed59e1d1-2cff09346a1mr17399198a91.7.1722807115607; 
+ Sun, 04 Aug 2024 14:31:55 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7106ec4d998sm4308991b3a.82.2024.08.04.14.30.53
+ 98e67ed59e1d1-2cfdc4cf0f9sm8878283a91.46.2024.08.04.14.31.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Aug 2024 14:30:55 -0700 (PDT)
-Message-ID: <5e330644-7114-4202-be2b-fa41434fcc53@linaro.org>
-Date: Mon, 5 Aug 2024 07:30:45 +1000
+ Sun, 04 Aug 2024 14:31:55 -0700 (PDT)
+Message-ID: <74e6836a-63f0-4f93-bddf-bbe280e45189@linaro.org>
+Date: Mon, 5 Aug 2024 07:31:49 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/17] bsd-user: Use guest_range_valid_untagged to
- validate range
+Subject: Re: [PATCH 13/17] bsd-user: target_mprotect: rename prot to
+ target_prot
 To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Jessica Clarke <jrtc27@jrtc27.com>
 References: <20240802235617.7971-1-imp@bsdimp.com>
- <20240802235617.7971-13-imp@bsdimp.com>
+ <20240802235617.7971-14-imp@bsdimp.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240802235617.7971-13-imp@bsdimp.com>
+In-Reply-To: <20240802235617.7971-14-imp@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,13 +101,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/3/24 09:56, Warner Losh wrote:
-> This is the generic validation function, so remove some hand-rolled
-> ones.
+> Linux-user's target_mprotect uses this convention, so move to it.
 > 
 > Signed-off-by: Warner Losh<imp@bsdimp.com>
 > ---
->   bsd-user/mmap.c | 11 +++++++----
->   1 file changed, 7 insertions(+), 4 deletions(-)
+>   bsd-user/mmap.c | 18 +++++++++---------
+>   1 file changed, 9 insertions(+), 9 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
