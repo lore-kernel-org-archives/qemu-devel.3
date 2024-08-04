@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F14BC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 07:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFF70C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 07:27:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1saVe0-0004Np-HG; Sun, 04 Aug 2024 03:27:08 -0400
+	id 1saVeh-0007w2-3K; Sun, 04 Aug 2024 03:27:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1saVdz-0004Du-2R
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 03:27:07 -0400
-Received: from mail-yb1-xb2c.google.com ([2607:f8b0:4864:20::b2c])
+ id 1saVeg-0007ss-8W
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 03:27:50 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1saVdx-0005Mh-HS
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 03:27:06 -0400
-Received: by mail-yb1-xb2c.google.com with SMTP id
- 3f1490d57ef6-e0bf97a2b96so935016276.3
- for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 00:27:05 -0700 (PDT)
+ id 1saVee-0005Q0-Mt
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 03:27:49 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-67682149265so78185877b3.2
+ for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 00:27:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722756424; x=1723361224; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722756467; x=1723361267; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ODODGyF0jDqpgjd44c35DlSyRsyYpcN+GwIJ8WkWVwo=;
- b=dLTnrHokvDhsO0Hl68fQ5qjybCJazxg/Phngwnr0uRXqO67dbYKmkUIycxhNM3Very
- MlP+nZY1muOqiIpnGtP4CCP4L0hkhYYz/Zx5MD/5O7LE+eNYIuvYrcC6QODxmZniHAim
- eUHYe03dx5TnbxvIIgqdBM5iReLBpBQmyKJB+cJGzvQl1o7lu61C7j1bTlVbUZZqvwE6
- ssjKb/nSyGUauuJTo6v9jlJ7ZKz8vHP3rHvLWCDlOt64bHCYMpvzuEm6dvg7DgvTd+K4
- N99ch7G7wOyi0itcDqOalxsTpwuPlKzE7p+BL9r4OVQOI+dWWaZX6x7PrZAD4gAsTInA
- bm2g==
+ bh=bgVSXfPavHCdHWfidzj5WorDJapaUZ4NG5qpIWpkBdo=;
+ b=eSusGVJYgWtBFJqoAIxONtX4QhdMHDIHJduMNmNOXECsK2ALG0peOG2b74naxnaDfT
+ zeXrfoCbJPBYa0dT5ZxF8MMwwwS+fAzTsp2gCRGeZ28o3ehxN7Oim2gipu1JRPKq7ziC
+ w4JcDYN3oh7ZRnMQ3e1I0yn3I2ZfWuP3pT1gkPyTHLhC91kSvY8AasetUtM2HtrcnX0H
+ tIzx9AYaOsUHqr5+OeklCB+bVya7gN5f+sKNi6L7k/VnGPaRVmUsvmveIeheKSuYGSg0
+ T0wB1BElsiIdfrqusu/Tv7A3LKmyYbwdGki/JbBRIECWTpUG8NZwHzJIq8BI6hbPc9Z3
+ dVGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722756424; x=1723361224;
+ d=1e100.net; s=20230601; t=1722756467; x=1723361267;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ODODGyF0jDqpgjd44c35DlSyRsyYpcN+GwIJ8WkWVwo=;
- b=AA0isFXTxzxmdvp3tHGtDtzP+nTJk2OD0ah2jJSSwfBimJJ+t6iFiQMPxATAx13r9+
- 7AUQqn/HzPiqCocC2gWb9m+s2wFKj6JsHf1kN9T6LfxKlCm+qQt2a0MuE4HSB7sMI5ph
- xxQWSb+XnbIpi4sC/TiEPV8U7Y0X61A9uK3yXLvE0e1/SD4QN8su59BHLucvLQHss1In
- wl6CggYcoy6FqgmMa5SOl63rHalvX18ZBx2twK7ENWTvTcYADmj3LaRMV3aVUAJDl++O
- Iy1E3mBYwkfoq6bXPbB/rdTvDm98ynepqGyX+pdMVaHpL4q0Y5CdB2WB9rEyT/gYMJbT
- ty/w==
+ bh=bgVSXfPavHCdHWfidzj5WorDJapaUZ4NG5qpIWpkBdo=;
+ b=Narh2gapm2QNORJweScGd8aii3z/VK1MWQ0pyjmjj//dZ+XaHufxD9XVZmYrg5leA8
+ riX49VuNpNDjZSZAFl1J8vkb5HL5o56SYj6efdf9W4yZMo/SV+DQ0dza7dSE4o88+jy3
+ zpGKKVuCvhLtUSXWPPStj3JOPA13Q1n+TnciEmkphU7cOUxIoYpt1XGbKk5UgJuS6siJ
+ uRrwa2ZywUqr2QFYmrpbr0i49fAGAOqsqrPWPxzsqpZU6QyxPOpRgkLvwV7gusf9q33G
+ 1Qm3dLXGYmAJW1804J65yMAggIcpm/hqivuw2uvxAaB4QHOhBitrXZcJFHEn/yJwIOGK
+ xP0A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWcIHgVsZNViqe69MyO3c2Y4UxFex9bGuM2MT/R4GAqR3PeUmR9Y6Vfd1375fpRMHVrCfbHeZrl7KGVYiU4PtuXVau4XJI=
-X-Gm-Message-State: AOJu0Yy2txFb23FB6yfv/Q8cb4aKgFMkl4ttjeIH9VYpmvUPfZN/MPnp
- T78qtNYAyYcDeStmJcMk5tc5scRdjl2Ip7TMjyJT4BLn1doG/BHVkFbd4bpGZoRJvODzThX8S2c
- It7QfXw==
-X-Google-Smtp-Source: AGHT+IE6BYTMKCsQIoDYUzXQzLENZUouGxLMF912x/1Tr8bPs0UQnqEqw50bfPXJIavEs+F6Nfv07Q==
-X-Received: by 2002:a05:6902:2b83:b0:e03:6023:ef75 with SMTP id
- 3f1490d57ef6-e0bde408988mr10155959276.38.1722756424291; 
- Sun, 04 Aug 2024 00:27:04 -0700 (PDT)
+ AJvYcCVI7qmnK9peHTBfDzhW7wOMP0KGxw+UPAEk3DZBnfCXJ7l220WFv/1J5ns1ZWuS/BiZ0aENLK0Ct/1h5u0B5alGsN2raBY=
+X-Gm-Message-State: AOJu0YwaPTuMI9JVQ/ptVjN1qaf6bL0e9NNn2Fy9//pp4qUft9F1jvdU
+ l77WoFvjnpCQ9Z3l78gC7de1rQ4pAnQu/gTwSJFEV9QF/2NZUXMcg0tBT+Jv+DE=
+X-Google-Smtp-Source: AGHT+IGL+DoeUtgM8qlWusxIZakssnLd9kjqww/xUfqHdezOwr/sYnn6RlbNXoAMmDUNyxEi/W5j0w==
+X-Received: by 2002:a05:6902:1207:b0:e02:3e43:f1c7 with SMTP id
+ 3f1490d57ef6-e0bde32787bmr10153631276.13.1722756467102; 
+ Sun, 04 Aug 2024 00:27:47 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cfdc4cf660sm7966105a91.42.2024.08.04.00.27.01
+ 98e67ed59e1d1-2cffaf69d54sm4643790a91.12.2024.08.04.00.27.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Aug 2024 00:27:03 -0700 (PDT)
-Message-ID: <16b1f448-b281-4e94-a87c-aba8db94b6cd@linaro.org>
-Date: Sun, 4 Aug 2024 17:26:58 +1000
+ Sun, 04 Aug 2024 00:27:46 -0700 (PDT)
+Message-ID: <694ea475-f6f4-4208-a2c8-3657404e9171@linaro.org>
+Date: Sun, 4 Aug 2024 17:27:41 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/17] bsd-user: Remove deprecated -p argument
+Subject: Re: [PATCH 08/17] bsd-user: Eliminate unused qemu_uname_release
 To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Jessica Clarke <jrtc27@jrtc27.com>
 References: <20240802235617.7971-1-imp@bsdimp.com>
- <20240802235617.7971-8-imp@bsdimp.com>
+ <20240802235617.7971-9-imp@bsdimp.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240802235617.7971-8-imp@bsdimp.com>
+In-Reply-To: <20240802235617.7971-9-imp@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2c;
- envelope-from=richard.henderson@linaro.org; helo=mail-yb1-xb2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,13 +99,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/3/24 09:56, Warner Losh wrote:
-> FreeBSD never really used the -p argument, so it's safe to remove
-> entirely.
+> bsd-user has never supported this, and FreeBSD make it easy to set this
+> on a per-jail basis, so that the normal reporting routines that we pass
+> through just work. Since this was never used, and never even in the
+> usage(), retire it to cut down on the clutter. It was literally just a
+> write-only variable.
 > 
 > Signed-off-by: Warner Losh<imp@bsdimp.com>
 > ---
->   bsd-user/main.c | 8 --------
->   1 file changed, 8 deletions(-)
+>   bsd-user/main.c | 3 ---
+>   bsd-user/qemu.h | 1 -
+>   2 files changed, 4 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
