@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0598C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 07:08:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42AA2C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Sun,  4 Aug 2024 07:09:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1saVLH-00006g-UQ; Sun, 04 Aug 2024 03:07:48 -0400
+	id 1saVMJ-0002Mf-TD; Sun, 04 Aug 2024 03:08:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1saVLD-00005P-O3
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 03:07:45 -0400
-Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ id 1saVMI-0002HI-GJ
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 03:08:50 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1saVLC-0008W5-41
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 03:07:43 -0400
-Received: by mail-oi1-x235.google.com with SMTP id
- 5614622812f47-3db50abf929so2677331b6e.2
- for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 00:07:41 -0700 (PDT)
+ id 1saVMG-00009u-VZ
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 03:08:50 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-7ae3d7222d4so5736959a12.3
+ for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 00:08:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722755260; x=1723360060; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722755327; x=1723360127; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=A3lNU17jn/QDRp8Us9zspjpnW7qIJkNwZeWAUd4deWE=;
- b=mhKBEjOquyFdl3lPNDU+H4E3otexuv1jphKTAB+xsJGZ2LIHmawR+y4k1m+/6i+50I
- O7o2/2YP2O+zwbjFcD5Kj13FqqXbPlRVI67ifxQzna9iKBERyul4ohppVc2AEri/Z4os
- xmOFJwYMu4RVPrVpun7jmw6NBRgIOQfhWfomnsKrVLHPiEnliLwkatKL3ntsaglcSlue
- AXAEMNL8x1viA3qzavnvUK7NMi3pAr7Ms2/sxqu1xzJCcyOIsGRHH3/CJonialqjYyvh
- PmQ4+rOvVJRH6v0VTmTJts7O+er5wxJJiiBHZ5toZK2JhHlTYQctaBoy/rb9EvF1LIrm
- dlMA==
+ bh=U2sg0dqgEPlR41KrMaUbMHNXvHprXODEYnEIYICokyc=;
+ b=ApSoUZF1V4UXUl1ZZQU0wORkneT33hfNKRInVwSog7sNsFLoZvYlanqbblOaEnDlyD
+ 2pUUZtk3eQElw0WyeGyYkdriV4vHe3wV4ot1FzLLqpXj2+uZJMe31VwtxcY8moQBI6jA
+ gZZVlANklDjPgquoCrb1FzoK9cIhXwJDkS59N2OLOH7R3i+6dVoIuO9dh+Hj7DGVbZNP
+ t1e5yKduyxKoK0xLikvg2fG2/p/bWMpO3/3M9hOZdkY8dT6pbVzMI9kDpRUEzEfGfx/g
+ f1mvf03pbF8+u8w/nXgHnluuSrDwJwN5zdcUAik4oP+EjjDIwf7kRyYkwGWhH3gkX1Na
+ 2kXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722755260; x=1723360060;
+ d=1e100.net; s=20230601; t=1722755327; x=1723360127;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=A3lNU17jn/QDRp8Us9zspjpnW7qIJkNwZeWAUd4deWE=;
- b=TAZ1OmkAvXmqQ/yk1ik7cKRrx9lggPNonxhTn3DC6bb7b07Aj378LEkuk/QmzuvZTm
- 7bEkxSueba3lS6f5d3VgKJDloddSm3KBCnB0qrAQhXkbbvusz0da/1DAbgbAYMGXOzMc
- HFsmuRMDWZW8lHDkEQ8iXZ4Sfy/oOPdQXjrNMYsYN9wlG6COIAqlFEXZgBkThvxxTNIU
- 5PrftYANCC0Qraw8qV+00oelklCe/af0XSp1VIJJvGaR5d6VoV86TmoC6BuPUZgCdYTn
- ONQ9knkAIG7nwH72eZyQLSwyGIgz19tnHamtoD8FPN0BYXyMZBV8errDq4aLYqRcPx7+
- zUAg==
+ bh=U2sg0dqgEPlR41KrMaUbMHNXvHprXODEYnEIYICokyc=;
+ b=nff7sWdP4aD32zU5bnGJ/SjhtKEo5Trntkrh7PWj5F6Q2G0JD/YBTK7xb2AnBn1K96
+ h3BP3LQynVCuBiY0wL1URLS9WWnLXc1XQcXDL4HJouE01Idu1s/8VEzJrjECR7DVXqIz
+ 5ucXvVKGls3I29zZXuw49a3fi+ocWxBp5IYmzykqG7jb4PXv/YbFMrqa2ydrnLkhlawA
+ 8moWb2dijLeXLYp0hfWNuxP/jN84m/Yh7gfHJCA6Vf60dqchEt+XgqZss87L7qrySGGx
+ BJY4SQ2imfRPd/QD3AnqfBlXAr32lq9EkAwLUGjHhqXtezaxh3igBAVKAKHEzyVrwSgp
+ zJyA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUN55K5DIrqJwUOmuJUkB8uOGUkG1pRJhFIV559spxW22K4z5+urrDMFMKY5jIRyh1x5pPgS6zTFInIQjjttFLsJXYjrEc=
-X-Gm-Message-State: AOJu0YztXuYh8GpyX3VU7vHHokrSUZmA7st1EM+M3vYkJoAnBSZ4cPpB
- T5RNsQqx7C/g2sgj1QhkFrp7JtydxCs36wDZJXdvMqPtYIlctnd74ORvbITK2lA=
-X-Google-Smtp-Source: AGHT+IGEGPp15kRoe/iDjbO4Dom6vUbDuhWi4ubx4YU+uXp8WUQU54s8ozb6hHUh2NAv0JraXruxMQ==
-X-Received: by 2002:a05:6830:4981:b0:709:44dc:dde7 with SMTP id
- 46e09a7af769-709b32190c7mr13915628a34.9.1722755260078; 
- Sun, 04 Aug 2024 00:07:40 -0700 (PDT)
+ AJvYcCVVv/HiDyWqYJUWrIZIquaH1hwZxSUF0Lg2JzN23e9Bc/3jN6aQbu5h6RnCMfDO3sQoS+HtT+XnrwPIQo9pVTqBZkuNXg4=
+X-Gm-Message-State: AOJu0YyWe81IHlynhqU29LHId8iFjkDcQcieoPKoP6VCF30lyt85F0Uw
+ Kq1gm0mdZsYj/9/5sSUkL8SHLXD3S+eBipP965tSicKm19RUdDfBckBknX3+/Xs=
+X-Google-Smtp-Source: AGHT+IGQNxOxgMFCn0T0NyXZjT4oTQ914maM1orLPj0PrDQgNGFPPsvfvQGoRQ8X1GrKWiJtf8CIHA==
+X-Received: by 2002:a17:90a:c241:b0:2c9:7219:1db0 with SMTP id
+ 98e67ed59e1d1-2cff93d410cmr10037852a91.3.1722755327198; 
+ Sun, 04 Aug 2024 00:08:47 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cfdc406a01sm8100414a91.7.2024.08.04.00.07.37
+ 98e67ed59e1d1-2cffb36f12fsm4525735a91.43.2024.08.04.00.08.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 04 Aug 2024 00:07:39 -0700 (PDT)
-Message-ID: <9a9edeac-e2d4-4301-8b4a-c08390518574@linaro.org>
-Date: Sun, 4 Aug 2024 17:07:32 +1000
+ Sun, 04 Aug 2024 00:08:46 -0700 (PDT)
+Message-ID: <47462fd1-ac72-4386-88be-fa9dc1d69c0c@linaro.org>
+Date: Sun, 4 Aug 2024 17:08:38 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/17] bsd-user: Delete TaskState next member
+Subject: Re: [PATCH 02/17] bsd-user: Make init_task_state global
 To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Jessica Clarke <jrtc27@jrtc27.com>
 References: <20240802235617.7971-1-imp@bsdimp.com>
- <20240802235617.7971-2-imp@bsdimp.com>
+ <20240802235617.7971-3-imp@bsdimp.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240802235617.7971-2-imp@bsdimp.com>
+In-Reply-To: <20240802235617.7971-3-imp@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x235.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,12 +99,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/3/24 09:56, Warner Losh wrote:
-> The next struct member of TaskState is unused. Remove it.
+> Restore init_task_state to its global status. It's needed for threading
+> support outside of main.
 > 
-> Signed-off-by: Warner Losh<imp@bsdimp.com>
+> Signed-off-by: Warner Losh <imp@bsdimp.com>
 > ---
->   bsd-user/qemu.h | 1 -
->   1 file changed, 1 deletion(-)
+>   bsd-user/main.c | 2 +-
+>   bsd-user/qemu.h | 1 +
+>   2 files changed, 2 insertions(+), 1 deletion(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
