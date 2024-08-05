@@ -4,102 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B19DCC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 10:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EDE8C52D70
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 10:22:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1saudx-0002Xr-5W; Mon, 05 Aug 2024 06:08:45 -0400
+	id 1sauqm-0000SW-0M; Mon, 05 Aug 2024 06:22:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1saudv-0002SN-L6
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 06:08:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sauqk-0000S2-Jj
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 06:21:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1saudu-00030x-43
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 06:08:43 -0400
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sauqi-00050t-Hi
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 06:21:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722852521;
+ s=mimecast20190719; t=1722853313;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Q1QOHUERsARlTO0UwyGrm9hG4qoFIsvU40N7npvYiU8=;
- b=acVDpgSuJE+EBgFvZSWcaoyGrijB0T7P/r2bsu4b1W8KN3ROTRpZ7bnxjMhwpeyR1HsYI5
- UwnzO5kOMD+PF/34hEwbhTri1+h2/nUCMMEDR/Owstp5lJMLQVqs8hj+easYEdc6sFrCbo
- JiaUEiKAaX5O62sr0E/nNL+dP2dqueA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=eGL/5XaGw4L9foaBL7Q1IGixdt40JqzA2I9CGK+aghU=;
+ b=Tcau9jZbdv0tFy/W0jR5oMMS1jliOIh5LoPoMMrZdlVN3BXt7PId20gAXKqeLc5rSjkZuD
+ ctbW479Eio7gXbtkP4lUhR7i067roWa+cCpuwYKaMlCYbmhXPG2t+FCHb256eww3/CINj4
+ T8EBQYz9RpvixIo4+oGdXG8CZWoX5RM=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-221-AcxlCKmJOya4IOeUvewoTw-1; Mon, 05 Aug 2024 06:08:39 -0400
-X-MC-Unique: AcxlCKmJOya4IOeUvewoTw-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-427b7a2052bso102071775e9.2
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 03:08:38 -0700 (PDT)
+ us-mta-630-Q15uoCjwP9eAQoYVdT1hSA-1; Mon, 05 Aug 2024 06:21:51 -0400
+X-MC-Unique: Q15uoCjwP9eAQoYVdT1hSA-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6b7a1c45abbso112114526d6.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 03:21:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722852518; x=1723457318;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Q1QOHUERsARlTO0UwyGrm9hG4qoFIsvU40N7npvYiU8=;
- b=motUNicfDjzGTCuFmyFASwWjMmq8Qu3xQrqBvK2DSRQ0SFz166a5CWZugRNefKV650
- Jyby1DKZKuM8irC233HhZd/TS8JHtUmytv+l1XXZSDzu2E/GuG6MeK8Txa7LktI+ZgSp
- Bn4RXk6x0lffEbCQ9zmvr11Vw4IUYAKHo/Hj5Cz1CQKXcKpl70EuMBVsJhg8rU7uKUsH
- 18JlyxJgqGhJ3x/MeM900WNAB5+txQXyOKvdz44ceIBe1TFNigeKaRNwtSQbqfy75mfB
- NxRHQ1TDu/stCsQdu+NzfmQRdzXEmaqsLfZdYjiQOEGJvSp0A0OwG53xI+dKHcocw/uU
- AUpA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVvDvFAItYNMvCQ1AFALg2Glt3O1q0E+EzhS4EcfQsZNUvHqAs4S4VYOSDqJ4orxscG8zT0GOEXvsYGk9XAt8ZOfMoLt5w=
-X-Gm-Message-State: AOJu0YwYTbd/yqNnRn5qdClgSlerCnYTpq4TfwuMqVuAuYugrbjXBGjf
- B4JyF+GjgUCCi7jcMQOt5t+lgYyrZeDfBgGBFPEGPEqJz7oDqcyXyz3F3QrLdraZn9lydac9txY
- 86Ihhmkwcw2uX/c2d3232hAF5oXs4ujiBj6pkn7qtpcPAdiUGApCH
-X-Received: by 2002:adf:f4c1:0:b0:368:7f53:6b57 with SMTP id
- ffacd0b85a97d-36bbc0ff305mr8706750f8f.18.1722852517737; 
- Mon, 05 Aug 2024 03:08:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IELRTv1nxDzFYRBsD8ArRpDvoqVV5FjSzbR8NU1nNPoph5y2b/0vhdXmUPs1XRpVARcqWcYjg==
-X-Received: by 2002:adf:f4c1:0:b0:368:7f53:6b57 with SMTP id
- ffacd0b85a97d-36bbc0ff305mr8706704f8f.18.1722852516844; 
- Mon, 05 Aug 2024 03:08:36 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:17d:dd95:f049:da1a:7ecb:6d9])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36bbcd02563sm9409060f8f.0.2024.08.05.03.08.32
+ d=1e100.net; s=20230601; t=1722853311; x=1723458111;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eGL/5XaGw4L9foaBL7Q1IGixdt40JqzA2I9CGK+aghU=;
+ b=FFe2U0DIGcmswRXU1XS5eyQFUjzLtyCNaAyGozBZfwpga6aHBzm4WIxFxblTvbVDrb
+ bFma7Q1bVpllHxu8ZAABQfkwscjfId47lL1YplvmkIyT1nfSvZJAqeBoZJ7v49C989ZQ
+ PaIGblIzo9ie9R/CfQ7GFza8fiWxnee9vdges3sczo8IJOdppc/XKjn1Iu/SC1ngB0pz
+ 0AABilOZxS1fLE4xSxHzN/EMM9Nd6iHNXalfHTiXc4uMsvMpzA10ndhfDrZSe/ZIBxBq
+ C4lDwjdSozOg/vFNez9nAsOLwtGg7bybWAQu8i2OKX9QMNl5Puc6oVJc5NiP4BrEESwF
+ M9pg==
+X-Gm-Message-State: AOJu0Yya6OW2nvSHb8pPyMNfARfNyADu4ewsx/CPZe+c0BBTDcOAXUgd
+ v//swp1iFTo+yU1L1eDcAMf3nhZw4L/e1eQosPf0UP9jIiTQkH81gQVTH6tV2MQVdGH7i/z9rVV
+ HzkOoZuMxfFT4UjABljHe/DE3TpgEygLVGPCfqcTp2Ac1i8b6KkA8
+X-Received: by 2002:a05:6214:84d:b0:6b5:2be1:cd6e with SMTP id
+ 6a1803df08f44-6bb91d372acmr216972876d6.4.1722853311055; 
+ Mon, 05 Aug 2024 03:21:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEWOyqnNM5DYw8Lhxh7reA4Isy3hGrrRHlRPgxudaBPmm4ff4RMobjmJDD0ca7yoT+Khs/jcg==
+X-Received: by 2002:a05:6214:84d:b0:6b5:2be1:cd6e with SMTP id
+ 6a1803df08f44-6bb91d372acmr216972616d6.4.1722853310583; 
+ Mon, 05 Aug 2024 03:21:50 -0700 (PDT)
+Received: from sgarzare-redhat (host-82-57-51-79.retail.telecomitalia.it.
+ [82.57.51.79]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6bb9c79b2aasm33874626d6.54.2024.08.05.03.21.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Aug 2024 03:08:36 -0700 (PDT)
-Date: Mon, 5 Aug 2024 06:08:29 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Peter Xu <peterx@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
- jasowang@redhat.com, sriram.yagnaraman@est.tech, sw@weilnetz.de,
- qemu-devel@nongnu.org, yan@daynix.com,
- Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <20240805060544-mutt-send-email-mst@kernel.org>
-References: <ZqumIZcs1tCNTpRE@x1n>
- <b70d09a5-554a-456b-904e-59cec5836ae8@daynix.com>
- <Zqz1vvYqRuIAPnod@x1n>
- <c5ea7a57-fc52-4bb7-bc4c-f3aca8da0574@daynix.com>
- <Zq0IrhV-DgStpJtk@x1n>
- <8ad96f43-83ae-49ae-abc1-1e17ee15f24d@daynix.com>
- <20240805032937-mutt-send-email-mst@kernel.org>
- <cb71a6de-eb7a-402b-a58a-89198b4343f5@daynix.com>
- <20240805041650-mutt-send-email-mst@kernel.org>
- <c7447c6c-0562-4e0f-bc1b-61a1430c9852@daynix.com>
+ Mon, 05 Aug 2024 03:21:50 -0700 (PDT)
+Date: Mon, 5 Aug 2024 12:21:45 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: luzhixing12345 <luzhixing12345@gmail.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] docs: fix vhost-user protocol doc
+Message-ID: <tqmw3wdsxkm66yh7qwpf2r2xdpckvf7hofblsyan2pmnfbttys@eh326n7d326m>
+References: <20240804050420.20165-1-luzhixing12345@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Disposition: inline
-In-Reply-To: <c7447c6c-0562-4e0f-bc1b-61a1430c9852@daynix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240804050420.20165-1-luzhixing12345@gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,14 +101,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 05, 2024 at 06:37:58PM +0900, Akihiko Odaki wrote:
-> If cross-migrate=off, QEMU can still migrate on the same host (checkpoint
-> and restart). QEMU can also migrate across hosts if the user ensures they
-> are on the same platform.
+On Sun, Aug 04, 2024 at 01:04:20PM GMT, luzhixing12345 wrote:
+>add a ref link to Memory region description
+>
+>add extra type(64 bits) to Log description structure fields
+>
+>fix ’s to 's
+>
+>---
+> docs/interop/vhost-user.rst | 22 +++++++++++++---------
+> 1 file changed, 13 insertions(+), 9 deletions(-)
 
-What is so special about checkpoint/restart? I guess we hope that
-downgrades are uncommon, but they are possible...
--- 
-MST
+Please run `scripts/checkpatch.pl` before sending.
+
+S-o-b missing here.
+
+>
+>diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+>index d8419fd2f1..e34b305bd9 100644
+>--- a/docs/interop/vhost-user.rst
+>+++ b/docs/interop/vhost-user.rst
+>@@ -167,6 +167,8 @@ A vring address description
+> Note that a ring address is an IOVA if ``VIRTIO_F_IOMMU_PLATFORM`` has
+> been negotiated. Otherwise it is a user address.
+>
+>+.. _memory_region_description:
+>+
+> Memory region description
+> ^^^^^^^^^^^^^^^^^^^^^^^^^
+>
+>@@ -180,7 +182,7 @@ Memory region description
+>
+> :user address: a 64-bit user address
+>
+>-:mmap offset: 64-bit offset where region starts in the mapped memory
+>+:mmap offset: a 64-bit offset where region starts in the mapped memory
+>
+> When the ``VHOST_USER_PROTOCOL_F_XEN_MMAP`` protocol feature has been
+> successfully negotiated, the memory region description contains two extra
+>@@ -190,7 +192,7 @@ fields at the end.
+> | guest address | size | user address | mmap offset | xen mmap flags | domid |
+> +---------------+------+--------------+-------------+----------------+-------+
+>
+>-:xen mmap flags: 32-bit bit field
+>+:xen mmap flags: a 32-bit bit field
+>
+> - Bit 0 is set for Xen foreign memory mapping.
+> - Bit 1 is set for Xen grant memory mapping.
+>@@ -211,6 +213,8 @@ Single memory region description
+>
+> :padding: 64-bit
+>
+>+:region: :ref:`Memory region description <memory_region_description>`
+>+
+> A region is represented by Memory region description.
+
+Should we merge this line with the one added?
+
+>
+> Multiple Memory regions description
+
+Should we extend also the Multiple Memory region description?
+
+>@@ -233,9 +237,9 @@ Log description
+> | log size | log offset |
+> +----------+------------+
+>
+>-:log size: size of area used for logging
+>+:log size: a 64-bit size of area used for logging
+>
+>-:log offset: offset from start of supplied file descriptor where
+>+:log offset: a 64-bit offset from start of supplied file descriptor where
+>              logging starts (i.e. where guest address 0 would be
+>              logged)
+>
+>@@ -382,7 +386,7 @@ the kernel implementation.
+>
+> The communication consists of the *front-end* sending message requests and
+> the *back-end* sending message replies. Most of the requests don't require
+>-replies. Here is a list of the ones that do:
+>+replies, except for the following requests:
+>
+> * ``VHOST_USER_GET_FEATURES``
+> * ``VHOST_USER_GET_PROTOCOL_FEATURES``
+>@@ -1239,11 +1243,11 @@ Front-end message types
+>   (*a vring descriptor index for split virtqueues* vs. *vring descriptor
+>   indices for packed virtqueues*).
+>
+>-  When and as long as all of a device’s vrings are stopped, it is
+>+  When and as long as all of a device's vrings are stopped, it is
+>   *suspended*, see :ref:`Suspended device state
+>   <suspended_device_state>`.
+>
+>-  The request payload’s *num* field is currently reserved and must be
+>+  The request payload's *num* field is currently reserved and must be
+>   set to 0.
+>
+> ``VHOST_USER_SET_VRING_KICK``
+>@@ -1662,7 +1666,7 @@ Front-end message types
+>   :reply payload: ``u64``
+>
+>   Front-end and back-end negotiate a channel over which to transfer the
+>-  back-end’s internal state during migration.  Either side (front-end or
+>+  back-end's internal state during migration.  Either side (front-end or
+>   back-end) may create the channel.  The nature of this channel is not
+>   restricted or defined in this document, but whichever side creates it
+>   must create a file descriptor that is provided to the respectively
+>@@ -1714,7 +1718,7 @@ Front-end message types
+>   :request payload: N/A
+>   :reply payload: ``u64``
+>
+>-  After transferring the back-end’s internal state during migration (see
+>+  After transferring the back-end's internal state during migration (see
+>   the :ref:`Migrating back-end state <migrating_backend_state>`
+>   section), check whether the back-end was able to successfully fully
+>   process the state.
+>-- 
+>2.34.1
+>
 
 
