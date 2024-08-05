@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BD6BC3DA4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34BD3C3DA7F
 	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 06:31:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sarEj-0001yk-CO; Mon, 05 Aug 2024 02:30:29 -0400
+	id 1sarFP-000334-Um; Mon, 05 Aug 2024 02:31:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sarEe-0001qy-WE
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:30:26 -0400
+ id 1sarF7-0002n8-8C
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:30:57 -0400
 Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sarEc-00029G-42
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:30:23 -0400
+ id 1sarF3-0002Cr-NC
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:30:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1722839422; x=1754375422;
+ t=1722839450; x=1754375450;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=MsprqmxtgK1HuYvpPYAbr8ekbcHQ69W7VlCS7gqHGXM=;
- b=kPiN7yX3j9Lko/t/rkxacNp0WmUEZD2W8a4JVvwzohT/1unEuLlz7U0q
- v6kS39rt0mLdvVcgqNUHDk8K7JB25+Ts0saFIJb8IstYYH7gck1Yyg88y
- m1oWEQYR5viEOV1l4W2arsro1uhbM6Np5pkv7y3QUy/niPjfPPVzKQVW4
- MinkM1SSDdnBfV0sAYS2uyAHPVwzUIsssqpsA52+fnHojKiy7AcTmi0eu
- TgWCNfh7lVH2RLfsBYTJ6GOGRb38TAgfswpiggVLps81A5LJK3JxeskA1
- kUL9JrZb/BqznDC6zXzXHI2uUdTNk+uclowfwtmAhqNGogxSbrwWmLjMb w==;
-X-CSE-ConnectionGUID: GwAGK9MqSdiQ+AzK0OX7AQ==
-X-CSE-MsgGUID: cwXf4B0IRxeCeuWEtb/qmw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11154"; a="38282687"
-X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="38282687"
+ bh=tyTUGMCms0hzjN7qnTn/8Dv0La9ACcHcXuKiSuT8dg8=;
+ b=nJGfexGLJs5v4T19zEYPwz6VHjQ1PLAlt/Egp7vKHqVxfDogAEufA8d/
+ YBqskRAWoCd9sAGY25DGLsM/z/5ZuV4TyeYons3feIX0Gqz5MAkV9FnZx
+ tS+Goy70khL5vIxc4yQtmMqja1JcK1CSsymGx4FTpK1zqCDsmB9ptL9IE
+ R03hUeDTcufBwkmu/RcILWX5FcJwLmJ4uHUtF8aQ1bTr9mj5DyeA9OCwI
+ fw3NfTm9QpbSdFhhUiCiQKUS+ns4lxM21w1ZrrUWqbjaXzdG8V2mSYykn
+ 9ddYy4im1FlhnYnCLmkOPWtP3bLO0xMC8fFMBUBo7r/DuT8ih+ja9MDjo A==;
+X-CSE-ConnectionGUID: ymP9SDMtTpmlJ/8yZxbjZw==
+X-CSE-MsgGUID: FRzJ8aIeT3yQIIZVjzqQNw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11154"; a="38282736"
+X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="38282736"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Aug 2024 23:30:22 -0700
-X-CSE-ConnectionGUID: tBna07eAT8u3JMg038EitQ==
-X-CSE-MsgGUID: U4Mf0B7lRZWDyHloVLhExA==
+ 04 Aug 2024 23:30:45 -0700
+X-CSE-ConnectionGUID: nh3FWfN/TKqDTejqjXTZnA==
+X-CSE-MsgGUID: zyfkortoRFWe22vjy3+64Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="56786578"
+X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="56786824"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Aug 2024 23:30:17 -0700
+ 04 Aug 2024 23:30:40 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -57,14 +57,15 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v2 03/17] intel_iommu: Add a placeholder variable for scalable
- modern mode
-Date: Mon,  5 Aug 2024 14:27:13 +0800
-Message-Id: <20240805062727.2307552-4-zhenzhong.duan@intel.com>
+Subject: [PATCH v2 08/17] intel_iommu: Set accessed and dirty bits during
+ first stage translation
+Date: Mon,  5 Aug 2024 14:27:18 +0800
+Message-Id: <20240805062727.2307552-9-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240805062727.2307552-1-zhenzhong.duan@intel.com>
 References: <20240805062727.2307552-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.8;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -90,64 +91,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an new element scalable_mode in IntelIOMMUState to mark scalable
-modern mode, this element will be exposed as an intel_iommu property
-finally.
+From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
 
-For now, it's only a placehholder and used for address width
-compatibility check and block host device passthrough until nesting
-is supported.
-
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/hw/i386/intel_iommu.h |  1 +
- hw/i386/intel_iommu.c         | 12 +++++++++---
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ hw/i386/intel_iommu_internal.h |  3 +++
+ hw/i386/intel_iommu.c          | 24 ++++++++++++++++++++++++
+ 2 files changed, 27 insertions(+)
 
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index 1eb05c29fc..788ed42477 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -262,6 +262,7 @@ struct IntelIOMMUState {
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 668583aeca..7786ef7624 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -324,6 +324,7 @@ typedef enum VTDFaultReason {
  
-     bool caching_mode;              /* RO - is cap CM enabled? */
-     bool scalable_mode;             /* RO - is Scalable Mode supported? */
-+    bool scalable_modern;           /* RO - is modern SM supported? */
-     bool snoop_control;             /* RO - is SNP filed supported? */
+     /* Output address in the interrupt address range for scalable mode */
+     VTD_FR_SM_INTERRUPT_ADDR = 0x87,
++    VTD_FR_FS_BIT_UPDATE_FAILED = 0x91, /* SFS.10 */
+     VTD_FR_MAX,                 /* Guard */
+ } VTDFaultReason;
  
-     dma_addr_t root;                /* Current root table pointer */
+@@ -549,6 +550,8 @@ typedef struct VTDRootEntry VTDRootEntry;
+ /* Masks for First Level Paging Entry */
+ #define VTD_FL_P                    1ULL
+ #define VTD_FL_RW_MASK              (1ULL << 1)
++#define VTD_FL_A                    0x20
++#define VTD_FL_D                    0x40
+ 
+ /* Second Level Page Translation Pointer*/
+ #define VTD_SM_PASID_ENTRY_SLPTPTR     (~0xfffULL)
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index e3465fc27d..c1382a5651 100644
+index 6121cca4cd..3c2ceed284 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -3872,7 +3872,13 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
-         return false;
-     }
+@@ -1822,6 +1822,7 @@ static const bool vtd_qualified_faults[] = {
+     [VTD_FR_PASID_TABLE_ENTRY_INV] = true,
+     [VTD_FR_SM_INTERRUPT_ADDR] = true,
+     [VTD_FR_FS_NON_CANONICAL] = true,
++    [VTD_FR_FS_BIT_UPDATE_FAILED] = true,
+     [VTD_FR_MAX] = false,
+ };
  
--    return true;
-+    if (!s->scalable_modern) {
-+        /* All checks requested by VTD non-modern mode pass */
-+        return true;
-+    }
-+
-+    error_setg(errp, "host device is unsupported in scalable modern mode yet");
-+    return false;
+@@ -1939,6 +1940,20 @@ static bool vtd_iova_fl_check_canonical(IntelIOMMUState *s, uint64_t iova,
+             );
  }
  
- static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-@@ -4262,9 +4268,9 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
++static MemTxResult vtd_set_flag_in_pte(dma_addr_t base_addr, uint32_t index,
++                                       uint64_t pte, uint64_t flag)
++{
++    if (pte & flag) {
++        return MEMTX_OK;
++    }
++    pte |= flag;
++    pte = cpu_to_le64(pte);
++    return dma_memory_write(&address_space_memory,
++                            base_addr + index * sizeof(pte),
++                            &pte, sizeof(pte),
++                            MEMTXATTRS_UNSPECIFIED);
++}
++
+ /*
+  * Given the @iova, get relevant @flptep. @flpte_level will be the last level
+  * of the translation, can be used for deciding the size of large page.
+@@ -1990,7 +2005,16 @@ static int vtd_iova_to_flpte(IntelIOMMUState *s, VTDContextEntry *ce,
+             return -VTD_FR_PAGING_ENTRY_RSVD;
          }
-     }
  
--    /* Currently only address widths supported are 39 and 48 bits */
-     if ((s->aw_bits != VTD_HOST_AW_39BIT) &&
--        (s->aw_bits != VTD_HOST_AW_48BIT)) {
-+        (s->aw_bits != VTD_HOST_AW_48BIT) &&
-+        !s->scalable_modern) {
-         error_setg(errp, "Supported values for aw-bits are: %d, %d",
-                    VTD_HOST_AW_39BIT, VTD_HOST_AW_48BIT);
-         return false;
++        if (vtd_set_flag_in_pte(addr, offset, flpte, VTD_FL_A) != MEMTX_OK) {
++            return -VTD_FR_FS_BIT_UPDATE_FAILED;
++        }
++
+         if (vtd_is_last_pte(flpte, level)) {
++            if (is_write &&
++                (vtd_set_flag_in_pte(addr, offset, flpte, VTD_FL_D) !=
++                                                                    MEMTX_OK)) {
++                    return -VTD_FR_FS_BIT_UPDATE_FAILED;
++            }
+             *flptep = flpte;
+             *flpte_level = level;
+             return 0;
 -- 
 2.34.1
 
