@@ -4,78 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED5FAC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 15:00:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E01BC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 15:23:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sazBM-0001m5-61; Mon, 05 Aug 2024 10:59:32 -0400
+	id 1sazXk-00034A-Hc; Mon, 05 Aug 2024 11:22:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sazBK-0001lV-Cu
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 10:59:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1sazXg-00030V-0A; Mon, 05 Aug 2024 11:22:36 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sazBI-0001Hy-U7
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 10:59:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722869967;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4NDRTjT/f5325YOFvvRaqaiH+8aAUyhnD2gA/s+vx+E=;
- b=QhiqsugBFXTg3bPFZkB4VYfb37zZvG0NVfCcZZ8Tz6Ez4fR6xcWq+GxKKAN6tM4yFkxgde
- OvbhbBNmVF9YmarUWrFII5oykOnkngPPov27pjrnrCp17AkB6/tZkV/cf53c+8CohWqnGv
- q1HHZKz21VMvIJXaqd9cMVrOwt7QsUQ=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-422-zHJTtApsO0OevvDPgwqzoQ-1; Mon,
- 05 Aug 2024 10:59:23 -0400
-X-MC-Unique: zHJTtApsO0OevvDPgwqzoQ-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A583919560B0; Mon,  5 Aug 2024 14:59:22 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.193.245])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 02B1A30001A7; Mon,  5 Aug 2024 14:59:22 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D3A5421E66E5; Mon,  5 Aug 2024 16:59:19 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Michael
- Roth <michael.roth@amd.com>
-Subject: Re: [PATCH 5/6] qapi: apply schema prefix to QAPI feature enum
- constants
-In-Reply-To: <87frrjkrct.fsf@pond.sub.org> (Markus Armbruster's message of
- "Mon, 05 Aug 2024 15:54:10 +0200")
-References: <20240801175913.669013-1-berrange@redhat.com>
- <20240801175913.669013-6-berrange@redhat.com>
- <87y15bnoq0.fsf@pond.sub.org> <ZrDGoSTUIcpaVGO8@redhat.com>
- <87a5hrm7wv.fsf@pond.sub.org> <ZrDSqXtiT2U7zS-p@redhat.com>
- <87frrjkrct.fsf@pond.sub.org>
-Date: Mon, 05 Aug 2024 16:59:19 +0200
-Message-ID: <87ikwfj9rs.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1sazXb-0005AT-5e; Mon, 05 Aug 2024 11:22:34 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id A432B60C55;
+ Mon,  5 Aug 2024 15:22:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21125C4AF0E;
+ Mon,  5 Aug 2024 15:22:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1722871340;
+ bh=8abpcgimZ8zhWhHlWs9YVGQE18wAOSsWG48ZhjBiE8Y=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=J+EcWmFrHfavILP+4wyerdS0sBKsXIKEo3qbw9viOT6Bs+G+kubhy4Fl8O/dMnFtG
+ WqjI/2UQgkmzntO+dtXM5QNqfz3EtVaZ8v4pyFUvFr43pWlZDPVUCNP3zT3Kxsc4E/
+ ZT9omEnyzxHC0mJhbzLQ9e91Y78JaRqIHwC8eTT2oHKML+gCszAlkAbrbM55Ml605u
+ jb5bACG5+6otD/RqFVCU3pzBXI1Lbqf8wLej5cEnVgs/XlOCD27LlcLCVxmxqGL8Ll
+ +9wNpzgXZWENUSsa08mq4Zap2rDloxyKIShZGl+XRvVQjzJZadd23YlO5qv0x2yRUJ
+ 9qDfaS9A2Hjzw==
+Date: Mon, 5 Aug 2024 17:22:15 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>, "Michael
+ S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, Shannon Zhao
+ <shannon.zhaosl@gmail.com>, linux-kernel@vger.kernel.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 1/7] arm/virt: place power button pin number on a define
+Message-ID: <20240805172215.0c8c2597@foz.lan>
+In-Reply-To: <20240805160439.0bafb58d@imammedo.users.ipa.redhat.com>
+References: <cover.1721630625.git.mchehab+huawei@kernel.org>
+ <bf8367bddfdc95e378b5725c732533c3ba20d388.1721630625.git.mchehab+huawei@kernel.org>
+ <20240730092549.6898ff3c@imammedo.users.ipa.redhat.com>
+ <CAFEAcA8VWc3eQZqfJP9k5LYF-9aLChHQ+uS9UBfGV6nvybDxqQ@mail.gmail.com>
+ <20240730132620.46cca4ce@imammedo.users.ipa.redhat.com>
+ <20240801151544.2f315598@foz.lan>
+ <20240805160439.0bafb58d@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -71
+X-Spam_score: -7.2
+X-Spam_bar: -------
+X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,7 +79,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's not just tests.  QAPI-related headers have deteriorated, and pull
-in too much.  I'll try to clean this up.  Thanks!
+Em Mon, 5 Aug 2024 16:04:39 +0200
+Igor Mammedov <imammedo@redhat.com> escreveu:
 
+> On Thu, 1 Aug 2024 15:15:44 +0200
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> 
+> > Em Tue, 30 Jul 2024 13:26:20 +0200
+> > Igor Mammedov <imammedo@redhat.com> escreveu:
+> >   
+> > > On Tue, 30 Jul 2024 09:29:37 +0100
+> > > Peter Maydell <peter.maydell@linaro.org> wrote:
+> > >     
+> > > > On Tue, 30 Jul 2024 at 08:26, Igor Mammedov <imammedo@redhat.com> wrote:      
+> > > > >
+> > > > > On Mon, 22 Jul 2024 08:45:53 +0200
+> > > > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> > > > >        
+> > > > > > Having magic numbers inside the code is not a good idea, as it
+> > > > > > is error-prone. So, instead, create a macro with the number
+> > > > > > definition.
+> > > > > >
+> > > > > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> > > > > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>        
+> > > >       
+> > > > > > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> > > > > > index b0c68d66a345..c99c8b1713c6 100644
+> > > > > > --- a/hw/arm/virt.c
+> > > > > > +++ b/hw/arm/virt.c
+> > > > > > @@ -1004,7 +1004,7 @@ static void virt_powerdown_req(Notifier *n, void *opaque)
+> > > > > >      if (s->acpi_dev) {
+> > > > > >          acpi_send_event(s->acpi_dev, ACPI_POWER_DOWN_STATUS);
+> > > > > >      } else {
+> > > > > > -        /* use gpio Pin 3 for power button event */
+> > > > > > +        /* use gpio Pin for power button event */
+> > > > > >          qemu_set_irq(qdev_get_gpio_in(gpio_key_dev, 0), 1);        
+> > > > >
+> > > > > /me confused, it was saying Pin 3 but is passing 0 as argument where as elsewhere
+> > > > > you are passing 3. Is this a bug?        
+> > > > 
+> > > > No. The gpio_key_dev is a gpio-key device which has one
+> > > > input (which you assert to "press the key") and one output,
+> > > > which goes high when the key is pressed and then falls
+> > > > 100ms later. The virt board wires up the output of the
+> > > > gpio-key device to input 3 on the PL061 GPIO controller.
+> > > > (This happens in create_gpio_keys().) So the code is correct
+> > > > to assert input 0 on the gpio-key device and the comment
+> > > > isn't wrong that this results in GPIO pin 3 being asserted:
+> > > > the link is just indirect.      
+> > > 
+> > > it's likely obvious to ARM folks, but maybe comment should
+> > > clarify above for unaware.    
+> > 
+> > Not sure if a comment here with the pin number is a good idea.
+> > After all, this patch was originated because we were using
+> > Pin 6 for GPIO error, while the comment was outdated (stating
+> > that it was pin 8 instead) :-)
+> > 
+> > After this series, there will be two GPIO pins used inside arm/virt,
+> > both defined at arm/virt.h:
+> > 
+> > 	/* GPIO pins */
+> > 	#define GPIO_PIN_POWER_BUTTON  3
+> > 	#define GPIO_PIN_GENERIC_ERROR 6
+> > 
+> > Those macros are used when GPIOs are created:
+> > 
+> > 	static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
+> > 	                             uint32_t phandle)
+> > 	{
+> > 	    gpio_key_dev = sysbus_create_simple("gpio-key", -1,
+> > 	                                        qdev_get_gpio_in(pl061_dev,
+> >                                                          GPIO_PIN_POWER_BUTTON));
+> > 	    gpio_error_dev = sysbus_create_simple("gpio-key", -1,
+> > 	                                          qdev_get_gpio_in(pl061_dev,
+> > 	                                                           GPIO_PIN_GENERIC_ERROR));
+> > So, at least for me, it is clear that gpio_key_dev is using pin 3.  
+> 
+> if you switch to using already existing GED device,
+> then this patch will go away since event will be delivered by GED
+> instead of GPIO + _AEI.
+
+This patch is actually independent from the rest. It is related to a power
+down event, and not related at all with error inject.
+
+The rationale for keeping it on this series was due to the original
+patch 2 (as otherwise merge conflicts would rise). It can now be merged
+in separate.
+
+Btw, this is doing a cleanup requested by Michael and Peter:
+
+	https://lore.kernel.org/qemu-devel/CAFEAcA-PYnZ-32MRX+PgvzhnoAV80zBKMYg61j2f=oHaGfwSsg@mail.gmail.com/
+
+Thanks,
+Mauro
 
