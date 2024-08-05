@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0083FC52D6D
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 23:29:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FDDBC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 23:29:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb77v-0003T4-N4; Mon, 05 Aug 2024 19:28:31 -0400
+	id 1sb780-0003eZ-1z; Mon, 05 Aug 2024 19:28:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sb77u-0003Qz-5k; Mon, 05 Aug 2024 19:28:30 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
+ id 1sb77y-0003dd-Ij; Mon, 05 Aug 2024 19:28:34 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sb77r-0001NO-FH; Mon, 05 Aug 2024 19:28:28 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-7a0e8b76813so28009a12.3; 
- Mon, 05 Aug 2024 16:28:26 -0700 (PDT)
+ id 1sb77w-0001Nf-5W; Mon, 05 Aug 2024 19:28:33 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-2cb5789297eso7131854a91.3; 
+ Mon, 05 Aug 2024 16:28:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722900504; x=1723505304; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=zX611xNhJwGNque8kF8FVT+t2czRfZk5H6ijtB8fyTc=;
- b=c5vj+aU5i1Nqyudvpm89vR6qAZ3ifSAT3FzJ7UwvR5tQxvZ6/Zd8h8hE4986CbftSP
- QwZiuKO36jNu/tORxWf1opmG9hWtoIAWTtnxMQd3ruJ9yjc6UgrGoZ/KF/i4rqMhZ5oY
- /gtQBq9/ZMJe9DfNxrzd757guV/3ii/S4qTgZpLQZ0pZOpfYFZ5KayTXVtpmGTDUicsI
- LmvUTJrp07+qgEkED/+nF0Hktikjf/JqzOxnCDFXAdWsbUIbETcxucbN7xF1KDHE7ycZ
- 5fInDkuEOpKNnvluyI9DJpkjTI5FM0c9F8ADFl6yaCpIa9T3O2wWa0SwPdHWi/UhSIGo
- ZQ+g==
+ d=gmail.com; s=20230601; t=1722900509; x=1723505309; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=865ipMsfnPjqevXUhuNC1hjLcECXbBAzIH19t+juWX8=;
+ b=PVh/5S5+qutUwz63BWDwdc18mqUDXkbq8is0ofYIPgKCs0UmV7GlVsD2GFK/qcELkm
+ XsI3Eo3jePBQc5FqPGOrb6+bJPJAzzne7pmSLDgr6LtuWqUhUzefGzOpkhwBlt3iYuND
+ Mzqg0yNQXBukN7wSw7ELEorZ9qamludz1Ddf+O39huVSNNyJpd70ofWz2b4F07c/dFUK
+ 1tNYjW6ImkCH2/JYKaxwLY7/pcsAjQZ9o7B7UTYKt3nduy4/Drsju3BJT8k27hDPfMnY
+ YwoET7GS+TwJABV0VlEk3575UTmpQpJtwogTfSuBW74lF8dU5nZidr9ZyBBjjhfCuwGE
+ oKJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722900504; x=1723505304;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zX611xNhJwGNque8kF8FVT+t2czRfZk5H6ijtB8fyTc=;
- b=jnvx9MzssTispMEnSwFXNpCCY5UknPbfj1C720P/yLKhhg+XghQ9E3krZu8QKIh6dJ
- +eVYXBd8kOn2+vKJOKu+wFgx2S7dM+ZbZL56NvLOO+arHaTY+rUjR5fG1OGHWBke9yqK
- GiCONLlW61ZDXnf/ZouDA7w0cBIZANCU/RGFcMCGJlYm8UpSbgQ/nWP5C9B1fGn8WXOA
- tjEGBHMESrCbxhMTbG5kO6z1CqtHY9FqZlX59j2d8sM1gKgg0+F2VScZYExQl9ViSJT6
- 4VseiQvUrHmDuGR3G9uwN6chxvK3l2VN7xbynBBkpkDjrWLPX4upAGpvvUxFxKza/bTB
- gsCg==
+ d=1e100.net; s=20230601; t=1722900509; x=1723505309;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=865ipMsfnPjqevXUhuNC1hjLcECXbBAzIH19t+juWX8=;
+ b=r/FQaMtPyPSuZcz/Yx50jnKRjQEu52ElNGMTY4ss6RxMICq8PYtP3Gm3fCtjgUaMHO
+ KklBHeik/jnPISy6HGZiOMhymcBKZphOo6569dZzgGPXleKRw/kyEJ2F45r931F6FO2u
+ l2YCwGkQLzqGMWmaKxZROxoxWkEBFVfQ5T4RDTOezFQY0qIHJWUrTNeZBGz/c258tujb
+ 9U64fRqytL4NSA7OmqjmVIslfQHik8sBoDm1wMrZH7nKume7mlcrxgwC7HUw0S5Ym36l
+ ND7k7ii+OnQYdhBzOgvCAaWy/hl30G3aLyOHzxiKTGgvPHZ+/dPzYF369DDhLUAsybHw
+ Z6qw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVlvITKNRFDIJFzpeDwTEu3DQ/qd10j4R+IRuk9ebpV9VdB+0pSaqtyUnRrMIMJpOsxUorSugvzafFN9FphPXCKSOn9
-X-Gm-Message-State: AOJu0Ywq7m0Q7+tlt9QKhNR/AWRXt2RhQZ5/VdqgFLb2j9WZB6QBS2dY
- hIyKb9H3Jc5akrdQF1Bj4hkrOUEFCqwYEi3byJwsgMe8kLQn68XLEEPgTQ==
-X-Google-Smtp-Source: AGHT+IGuGVB5UY5Dee8cuMAI+vU7Zw6q6dx5xxqpkeh9m4PcanAk8rqM1zy0+YrkGdEF3BhQiFkatw==
-X-Received: by 2002:a17:90a:9a82:b0:2c7:700e:e2b7 with SMTP id
- 98e67ed59e1d1-2cff95829c6mr17488586a91.39.1722900504039; 
- Mon, 05 Aug 2024 16:28:24 -0700 (PDT)
+ AJvYcCXldQSvvoJsvY+voxnQAWFa1y4U/kAuVJev/wlxY3fjmKAyytUHeVmSPte1ZIEWvWr+4jeMadd18nUm6JAVEJXnOukm
+X-Gm-Message-State: AOJu0YzAUSZ3znyFZJ4elSChpC4ewxtFWe+73AXWdBLpkRN99XfTtR42
+ aRR2hqf/DNCLOmFCCmZ8vn6UVg2Hl/2GQXkGznBe4gKX8HGp3VZgQTGKkw==
+X-Google-Smtp-Source: AGHT+IHeyx8Reax/Kx5/pMzlzcTkQymdBtooJ6suwFvh3pAEapv44zYVZLeqXV4Ara8yVFVovFD0cw==
+X-Received: by 2002:a17:90b:1e4c:b0:2c9:57a4:a8c4 with SMTP id
+ 98e67ed59e1d1-2cff955901dmr11301565a91.42.1722900509438; 
+ Mon, 05 Aug 2024 16:28:29 -0700 (PDT)
 Received: from wheely.local0.net ([1.145.206.202])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cffb390be6sm7659100a91.51.2024.08.05.16.28.18
+ 98e67ed59e1d1-2cffb390be6sm7659100a91.51.2024.08.05.16.28.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Aug 2024 16:28:23 -0700 (PDT)
+ Mon, 05 Aug 2024 16:28:29 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Fabiano Rosas <farosas@suse.de>,
@@ -67,14 +68,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Fabiano Rosas <farosas@suse.de>,
  Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 0/2] tests/avocado: Fix exec_command and enable ppc_hv_tests.py
-Date: Tue,  6 Aug 2024 09:28:11 +1000
-Message-ID: <20240805232814.267843-1-npiggin@gmail.com>
+Subject: [PATCH 1/2] tests/avocado: exec_command should not consume console
+ output
+Date: Tue,  6 Aug 2024 09:28:12 +1000
+Message-ID: <20240805232814.267843-2-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240805232814.267843-1-npiggin@gmail.com>
+References: <20240805232814.267843-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x52c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,22 +101,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This fixes an issue with exec_command eating console output and causing
-the ppc_hv_tests.py to fail. A few other tests also use exec_command but
-I didn't see any that subsequently checked console output.
+_console_interaction reads data from the console even when there is only
+an input string to send, and no output data to wait on. This can cause
+lines to be missed by wait_for_console_pattern calls that follows an
+exec_command. Fix this by not reading the console if there is no pattern
+to wait for.
 
-Thanks,
-Nick
+This solves occasional hangs in ppc_hv_tests.py, usually when run on KVM
+hosts that are fast enough to output important lines quickly enough to be
+consumed by exec_command, so they get missed by subsequent wait for
+pattern calls.
 
-Nicholas Piggin (2):
-  tests/avocado: exec_command should not consume console output
-  tests/avocado: Mark ppc_hv_tests.py as non-flaky after fixed console
-    interaction
-
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
  tests/avocado/avocado_qemu/__init__.py | 7 +++++++
- tests/avocado/ppc_hv_tests.py          | 1 -
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ 1 file changed, 7 insertions(+)
 
+diff --git a/tests/avocado/avocado_qemu/__init__.py b/tests/avocado/avocado_qemu/__init__.py
+index a3da2a96bb..ef935614cf 100644
+--- a/tests/avocado/avocado_qemu/__init__.py
++++ b/tests/avocado/avocado_qemu/__init__.py
+@@ -135,6 +135,13 @@ def _console_interaction(test, success_message, failure_message,
+             vm.console_socket.sendall(send_string.encode())
+             if not keep_sending:
+                 send_string = None # send only once
++
++        # Only consume console output if waiting for something
++        if success_message is None and failure_message is None:
++            if send_string is None:
++                break
++            continue
++
+         try:
+             msg = console.readline().decode().strip()
+         except UnicodeDecodeError:
 -- 
 2.45.2
 
