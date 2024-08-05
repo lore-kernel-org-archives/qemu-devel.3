@@ -4,84 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2B71C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 08:37:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 881CDC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 08:47:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1satD0-0005DT-Tt; Mon, 05 Aug 2024 04:36:51 -0400
+	id 1satND-0002wf-UY; Mon, 05 Aug 2024 04:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1satCv-0005C8-Ah
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 04:36:45 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1satCs-0003ki-Oz
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 04:36:44 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4266dc7591fso65536985e9.0
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 01:36:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722847000; x=1723451800; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pKBiIltAVoXZZg0LL7Muk/bomt5G37qqc5x4duMKkRI=;
- b=P7iOzvnAnt444Ti/PtvoJjSJiXvPYFcyJFGDNQA/Zx7ox0Q5FPO9UlrHpHo8OwgN/t
- mboJlo+tS3rzCuhg/gpys6IL4/4SmWSrwQI6rCXYA1BrnYUuNtnNixO54ABbvxPEeHez
- fkMod+avM0mycCs3MIMwcE0eQpv1EgO2N/nM0OywLqJotA7ljlk8WR1rqGTQciTEvCZI
- 2uV+VH3NfKNV29zQNBWP7RRTROzMWUpDmNyXBd/pKY2pSrLYYHCjlKLt/og40Nt1xIvC
- LWpDNot7WYakWuOoeRe4Gf6tnQ3CLX0HtB/rzqWs/7Q2DlJzFc52QGy+07wwIZraoNXj
- PW8A==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1satNB-0002tu-JU
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 04:47:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1satN9-0004zf-Ru
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 04:47:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722847639;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=IhXyA6kTxfGcw/ADEWO7uSjk15D6VpbfbtQJR0MexUs=;
+ b=V5XL3A5d3MAcvzxTN70/86YzRDux9weXwiuSJbU+NC1XtEFKa0wQ9xwuipRT800jyRHAK6
+ VDy7iiaJ+TAXFTCzYg+eAmzZuC7+sCJMKHZ0y7ll6PK2hWb1eZ8wirKBNKC0MCVpQEs0eC
+ pEhyRz1HvfH6FOi/1bK92Y+bl9UbbgE=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-628-l8bAIHq2NCqXlXTR8mtqoA-1; Mon, 05 Aug 2024 04:47:12 -0400
+X-MC-Unique: l8bAIHq2NCqXlXTR8mtqoA-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a7ab644746eso854329666b.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 01:47:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722847000; x=1723451800;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pKBiIltAVoXZZg0LL7Muk/bomt5G37qqc5x4duMKkRI=;
- b=PHtz2ud5ymYVP10WAXgFJ21KlLWQTBbs+3N0A3CE1atkGqfA/1xIdJshju5LQ3zBRG
- HyhhY67Y0FJ2wyfpPnov/MyJJ7zhdVsFe8das+pnokC/TTwZnZplIizm1GCUMUurHIeO
- fQHTQbC3ctP4jWB1Mv/g6cxZ9WSmEZQm276ggGZUHWad/dn+JZW7SzzSS/xux91U1VzA
- cEpRQ0q0zcbcwki0vVNqWm+7NpAwMbzdD/1Y1Y0JLutZSTbQMlCAxYRvrgMyW1rrXcP3
- q45i6Pv9cBFnEIXOAevY5KDgHNOpMoWuVtHlr9g5R0JaufSepI4+1Q4dHqqRy8AqwhZY
- nViQ==
+ d=1e100.net; s=20230601; t=1722847632; x=1723452432;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IhXyA6kTxfGcw/ADEWO7uSjk15D6VpbfbtQJR0MexUs=;
+ b=giDKCsISJDRfluqZqFF0qeqbG4o/xfsS/fSObeVBzLO0QGtgYYQxAZWHdvJrvUbLEs
+ EGjR15suA7NlRKpKxp7A/IF2LQ8/KrqfCcJ8EUG6FqgY0peD0U9F5Yz3VksO97r4+Nlb
+ rgNzqHLyzdmgylDIo8b6D20X278rdMU7RxzWcvPvAak39UbntSPujvJ0gw+HDwnJ40VS
+ KnJSZh7yg/QPEvZaEO/5yfR6h4cMKLUR7zv/aAFulEkFxJczr68Gs5Hk8a+M5J+1fciY
+ x2jrPVaYB+oEUhryGtS1+sFDxPc8CNtXp9XqXrxvANbHuJG1imbTgoyeSgY2MWf7t38l
+ yXCQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWAXSTLoZvQw8B+TdGQUGL52UY0g5QRjlHK6j06zcLVvxXLWBXc8OWfwd99+w6vnhFGkKW/nbKCUWzkYcrD+b8L4vy2zu4=
-X-Gm-Message-State: AOJu0YzwV6J92O9NRfbAs4e+fbPHrM9zsaCnMLXR5CeMYHgEojXB/juB
- suKyXPpfMenS1kBq2IK2lzMOiPeSuM36psIPh75HeARnmzvYjXW/YEFavmpS2hk=
-X-Google-Smtp-Source: AGHT+IFoJAeNS1BHCpnYK6EybdfIAlD8BhWtpEEkU+ivX0W0RcXn1imU8aVkIR/SUmXWrWxyQkbghg==
-X-Received: by 2002:a05:600c:1552:b0:426:6822:861 with SMTP id
- 5b1f17b1804b1-428e6b925c7mr71984905e9.36.1722847000027; 
- Mon, 05 Aug 2024 01:36:40 -0700 (PDT)
-Received: from [192.168.1.102] (cor91-h02-176-184-30-132.dsl.sta.abo.bbox.fr.
- [176.184.30.132]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-428e6e9cd4esm127446015e9.44.2024.08.05.01.36.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Aug 2024 01:36:39 -0700 (PDT)
-Message-ID: <f4f5b4a0-536e-4eb4-aa50-8c694d9ed9e7@linaro.org>
-Date: Mon, 5 Aug 2024 10:36:36 +0200
+ AJvYcCXwWW6WFMxqAeQXRIyL0WAGCcfYHLZNLaze3L5HO8o4kCunwmQrY18eJ/POTZRGGKJ9dcVEDrMrX11nmOq9lVEVkdwRSVk=
+X-Gm-Message-State: AOJu0YyTzuBGG2TsDtq/9ujrdY7SYyfSbu5pFnUJz1StGbrdn5gdEVJs
+ 7EOK1Vce9cuhjcddGIMrZmqHmv169pN5u/bgvpFd1yDHEx70riSQFw7iT1e+JECPhr1nniB6nYW
+ qsScjRIRoi5PB6ErjEkD6IAI0bbOHD99fJ590NEO/c1xsDGQAxohu
+X-Received: by 2002:a17:907:d8b:b0:a7a:9447:3e8b with SMTP id
+ a640c23a62f3a-a7dc4eac568mr692790366b.25.1722847631677; 
+ Mon, 05 Aug 2024 01:47:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFujEsSyAysf5dKCKkHnWg52wzyxZ+FFN8D1gxoP7zkxapDHMntEUa9zzGmzwN0eeAK6wsv7g==
+X-Received: by 2002:a17:907:d8b:b0:a7a:9447:3e8b with SMTP id
+ a640c23a62f3a-a7dc4eac568mr692786266b.25.1722847630792; 
+ Mon, 05 Aug 2024 01:47:10 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:17d:dd95:f049:da1a:7ecb:6d9])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7dc9bcadbesm424707666b.21.2024.08.05.01.47.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 05 Aug 2024 01:47:10 -0700 (PDT)
+Date: Mon, 5 Aug 2024 04:47:06 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
+ Klaus Jensen <its@irrelevant.dk>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org
+Subject: Re: [PATCH for-9.2 v12 00/11] hw/pci: SR-IOV related fixes and
+ improvements
+Message-ID: <20240805042635-mutt-send-email-mst@kernel.org>
+References: <20240804-reuse-v12-0-d3930c4111b2@daynix.com>
+ <20240805023719-mutt-send-email-mst@kernel.org>
+ <42a4ef02-a14a-41a2-b1a9-357511afa163@daynix.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc: fix incorrect spelling of PowerMac
-To: Tejas Vipin <tejasvipin76@gmail.com>, mark.cave-ayland@ilande.co.uk
-Cc: qemu-trivial@nongnu.org, qemu-ppc@nongnu.org, qemu-devel@nongnu.org,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-References: <20240805070150.369824-1-tejasvipin76@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240805070150.369824-1-tejasvipin76@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <42a4ef02-a14a-41a2-b1a9-357511afa163@daynix.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,61 +113,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tejas,
-
-On 5/8/24 09:01, Tejas Vipin wrote:
-> PowerMac is spelled as PowerMAC (Media Access Control) in some places.
-> This is misleading.
+On Mon, Aug 05, 2024 at 04:10:02PM +0900, Akihiko Odaki wrote:
+> On 2024/08/05 15:39, Michael S. Tsirkin wrote:
+> > On Sun, Aug 04, 2024 at 06:01:36PM +0900, Akihiko Odaki wrote:
+> > > Supersedes: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
+> > > ("[PATCH v2 0/4] hw/pci: Convert rom_bar into OnOffAuto")
+> > > 
+> > > I submitted a RFC series[1] to add support for SR-IOV emulation to
+> > > virtio-net-pci. During the development of the series, I fixed some
+> > > trivial bugs and made improvements that I think are independently
+> > > useful. This series extracts those fixes and improvements from the RFC
+> > > series.
+> > > 
+> > > [1]: https://patchew.org/QEMU/20231210-sriov-v2-0-b959e8a6dfaf@daynix.com/
+> > > 
+> > > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > > ---
+> > > Changes in v12:
+> > > - Changed to ignore invalid PCI_SRIOV_NUM_VF writes as done for
+> > >    PCI_SRIOV_CTRL_VFE.
+> > > - Updated the message for patch "hw/pci: Use -1 as the default value for
+> > >    rombar". (Markus Armbruster)
+> > > - Link to v11: https://lore.kernel.org/r/20240802-reuse-v11-0-fb83bb8c19fb@daynix.com
+> > 
+> > The igb issue is still with us, is it not?
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2297
-> Signed-off-by: Tejas Vipin <tejasvipin76@gmail.com>
-> ---
->   docs/system/ppc/powermac.rst | 4 ++--
->   hw/ppc/mac_newworld.c        | 2 +-
->   hw/ppc/mac_oldworld.c        | 2 +-
->   3 files changed, 4 insertions(+), 4 deletions(-)
+> Yes, if you are talking about the problem with s390x/libvirt. That is why it
+> has for-9.2 tag.
 > 
-> diff --git a/docs/system/ppc/powermac.rst b/docs/system/ppc/powermac.rst
-> index 04334ba210..3eac81c491 100644
-> --- a/docs/system/ppc/powermac.rst
-> +++ b/docs/system/ppc/powermac.rst
-> @@ -4,8 +4,8 @@ PowerMac family boards (``g3beige``, ``mac99``)
->   Use the executable ``qemu-system-ppc`` to simulate a complete PowerMac
->   PowerPC system.
->   
-> -- ``g3beige``              Heathrow based PowerMAC
-> -- ``mac99``                Mac99 based PowerMAC
-> +- ``g3beige``              Heathrow based PowerMac
-> +- ``mac99``                Mac99 based PowerMac
->   
->   Supported devices
->   -----------------
-> diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
-> index ff9e490c4e..9d249a506c 100644
-> --- a/hw/ppc/mac_newworld.c
-> +++ b/hw/ppc/mac_newworld.c
-> @@ -571,7 +571,7 @@ static void core99_machine_class_init(ObjectClass *oc, void *data)
->       MachineClass *mc = MACHINE_CLASS(oc);
->       FWPathProviderClass *fwc = FW_PATH_PROVIDER_CLASS(oc);
->   
-> -    mc->desc = "Mac99 based PowerMAC";
-> +    mc->desc = "Mac99 based PowerMac";
->       mc->init = ppc_core99_init;
->       mc->block_default_type = IF_IDE;
->       /* SMP is not supported currently */
-> diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
-> index 1981d3d8f6..eef3261002 100644
-> --- a/hw/ppc/mac_oldworld.c
-> +++ b/hw/ppc/mac_oldworld.c
-> @@ -411,7 +411,7 @@ static void heathrow_class_init(ObjectClass *oc, void *data)
->       MachineClass *mc = MACHINE_CLASS(oc);
->       FWPathProviderClass *fwc = FW_PATH_PROVIDER_CLASS(oc);
->   
-> -    mc->desc = "Heathrow based PowerMAC";
-> +    mc->desc = "Heathrow based PowerMac";
+> It is actually not specific to igb but also affects nvme. The upcoming
+> virtio-net-pci's SR-IOV will not be affected, but it is not present yet.
 
-It seems it is even spelt with a space as "Power Mac".
-Anyhow this is still better than MAC, so:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+How about we fix it then? There's time enough for 9.2.
+Also breaking any configurations should be documented in a commit log
+of the change that causes the breakage. Pls do that in the future.
+
+I understand the fact that you are trying to prevent errors
+since it is hard to report them to guest cleanly.
+But I guess we can pretend device does not respond to config cycles?
+
+
+-- 
+MST
 
 
