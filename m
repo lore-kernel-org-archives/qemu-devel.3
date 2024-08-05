@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15B3DC52D71
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:19:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9CD0C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:19:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb49j-0005Mp-EP; Mon, 05 Aug 2024 16:18:11 -0400
+	id 1sb49F-0002Wo-8j; Mon, 05 Aug 2024 16:17:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3dDOxZgUKCtsQ7SFMDLLDIB.9LJNBJR-ABSBIKLKDKR.LOD@flex--tavip.bounces.google.com>)
- id 1sb49c-0004XP-TA
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:18:05 -0400
-Received: from mail-yb1-xb49.google.com ([2607:f8b0:4864:20::b49])
+ <3WDOxZgUKCr8yf0nulttlqj.htrvjrz-ij0jqstslsz.twl@flex--tavip.bounces.google.com>)
+ id 1sb49A-00027p-6O
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:36 -0400
+Received: from mail-yb1-xb4a.google.com ([2607:f8b0:4864:20::b4a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3dDOxZgUKCtsQ7SFMDLLDIB.9LJNBJR-ABSBIKLKDKR.LOD@flex--tavip.bounces.google.com>)
- id 1sb49Y-0001X1-6h
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:18:04 -0400
-Received: by mail-yb1-xb49.google.com with SMTP id
- 3f1490d57ef6-e0bfd36cda0so4034171276.0
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 13:17:58 -0700 (PDT)
+ <3WDOxZgUKCr8yf0nulttlqj.htrvjrz-ij0jqstslsz.twl@flex--tavip.bounces.google.com>)
+ id 1sb495-0001PB-Os
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:35 -0400
+Received: by mail-yb1-xb4a.google.com with SMTP id
+ 3f1490d57ef6-e08bc29c584so16243575276.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 13:17:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1722889077; x=1723493877; darn=nongnu.org;
+ d=google.com; s=20230601; t=1722889048; x=1723493848; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=uWXVZOdEqjXdKO04u4G3py2UIxHgdgvpM9yktaFqR4s=;
- b=TyNyglI0Wm0hq600I5vrTma3NUxb3X1E4DY3LNGV01r3WzvnQBheevL9RhYLvwEcr6
- S4xbu7NjEd+C6HyifnD8dJTyzElbqZaULqpD+pAIq8HCDMnAlfSe5RcysVyKkBM4Aezl
- 9spGypb/XTkSRmgQIRc4izUWmf+qFRFNW+75UXbo7FHuEV7X5cuYshUTOLud6H8uDIRP
- kZX4an4GZRzR7LcftLnrAfKPWsGHAjf3ZWW+jazzfoAgOFA0PPUzlCHy2BeI2dp5o9C2
- G4sD7qN7klwdvNV0mBMVTWZXGyP3OLPS2O87GzYwrBZ9aFjKm+OucZlP2dznv7iszOw3
- eYuQ==
+ bh=4wdCCjeNwO8Nd9IfMEbL3mdHNd1GL/ZDoT8770kOdC0=;
+ b=WrqolcYQBHWy7OionzClsj44BhCmSQiASSBGyWqwgpymxsAzjdx2rsmBFi62Kfxlyw
+ W/ma450owifF6OI1wfkPGodGqROI4J/w0sl7C9D6JIs0T6ZOqg5Vmi0gkpdtHby2CzgA
+ 2oNbzQDbEWGKgep4znkRXuusLfdJcqcaLzBgEn8A2pm4aaBIX0QKnLmg0Q+Rru0cFv3r
+ HmJ/z6+lefWX6pFri4bD9VrVOrGABdQDsdHsQoHoHV+DIa2wRwBjpg0MVcqv37jYv5/6
+ 4LMqazq07GdYg4i/Fe452U03jWo+Q3fX8VQ9/VJsNdaucUk+3EhBJw4RSkugfVvjFp7Q
+ Ab8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722889077; x=1723493877;
+ d=1e100.net; s=20230601; t=1722889048; x=1723493848;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uWXVZOdEqjXdKO04u4G3py2UIxHgdgvpM9yktaFqR4s=;
- b=mVV8l4kst3bBR9IxuX7Iwr+ZPn69NReUnB/eu/m1s3aJPPiQFrAoG0Pn9/iX9j4yRQ
- ESulF6RkYjRGh5c1LfidsUkQcWWz57TyqIgbCFNozDdaOw4PM9b2k8tJZkwQmPDnN7LK
- 9Pv+O3olGX5oKQ5D6xxtbnMcveoXlPqUgctYHMDOX5dA4Il1cil4LzL3QNVyyd48a1kW
- UprIBKHOacHDqWPiTWi/Pz9zqTN/usJ3WR1wwvqJB88mi/LOGp/2KIE1WoLyH2QZwjW8
- uabuYgCeaPXgtQrZDLCAgoX2VPKoH+0pGCFfMRXFWIjwGINTXcAhaufRcV3tsMqTTPcs
- ghJw==
-X-Gm-Message-State: AOJu0YxIKL1hFOtV8wR+eZ7Yj/9mYQfqZkoGaYVEyG9DIdIypD/T/Iq7
- Hr+Q9QgWqXbUgIBfES1J3JQbBURHka5g7XDPmTJRBd6W2gV337mG85pm+G0u2fppHWgg1IhqOr3
- h9ElrUiI1v6IqMB1QZYtIo29Rrg0zrHWsY4Tm7icalwenuh98u4qCifQZl6Lo8owAh+drmx4lIj
- wJzuK3qz5KmpgsXQrDQRJiCASOkQ==
-X-Google-Smtp-Source: AGHT+IF6ad53oY6Byn5ycWISeZ4CH5DfNX2AzNIngdoOEtPty6mxbdGKKGCvTPgplaEx4QLHEjhsPUrOdQ==
+ bh=4wdCCjeNwO8Nd9IfMEbL3mdHNd1GL/ZDoT8770kOdC0=;
+ b=TeJ2b/cE3YkLJgAUMkWi0HWUSutXvX1mWosgsn9bicpVIoVc2C0bbqw/ljkpSjGqIy
+ kATiL2XCMsvdtBpNX573kvv1p4CQKriwE0GtfeDWLw9GGyQHbnavSemnrJm3Lh+V87Wq
+ N8O/zQChsfawdF8jAEtqg7ifHBzaMp8X475EjeKd7eNKwH51CVQbrU7JNj/mAbBbFw4y
+ krERLg50CBIU7MXKbsdD5mvKZ7uyh9PoTrUrukC7R4RLJYbFRs7AXaJp6o3X/gCCtIfO
+ wGA5A2MsjeNK7aqg5/i95+41AOQzpRsgdcw+nHamUF+2X2jUmSJ9TpT9addm8JKJXJnV
+ JOiA==
+X-Gm-Message-State: AOJu0YyJJzkB90N0bI1sRnlSpLgKsryc8Pbjtylv21nMNKLZ2qj2uz8I
+ +edtqCJs+YXqgSbFwNa9vl+ZHt9sgDP+cOBUkPO7u8wbplmUztIZvEhDjn6vUOirSeM5TScE75T
+ r5emEiFphUn8/MtCRJ/FGRAq5sI5Y1tLDznAccbUYWra5Z1/tT65XmwWseLelmhSRkVeG5CiUcT
+ QaOqXyKxD+csONip/4O5BfxHq+Iw==
+X-Google-Smtp-Source: AGHT+IFc6T3TAxrL7s5Lv7ug2GUJd5MzzOoyezk2KKzPhvbVP98dIUt1LyxRK3Igl2effMsOknmdhYg5+A==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a25:ce54:0:b0:e0b:e23a:9713 with
- SMTP id
- 3f1490d57ef6-e0be23a97a3mr31090276.1.1722889076722; Mon, 05 Aug 2024 13:17:56
+ (user=tavip job=sendgmr) by 2002:a05:6902:709:b0:e0b:9412:3295
+ with SMTP id
+ 3f1490d57ef6-e0bde1eaf4bmr23833276.3.1722889048127; Mon, 05 Aug 2024 13:17:28
  -0700 (PDT)
-Date: Mon,  5 Aug 2024 13:17:15 -0700
+Date: Mon,  5 Aug 2024 13:16:59 -0700
 In-Reply-To: <20240805201719.2345596-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20240805201719.2345596-1-tavip@google.com>
 X-Mailer: git-send-email 2.46.0.rc2.264.g509ed76dc8-goog
-Message-ID: <20240805201719.2345596-21-tavip@google.com>
-Subject: [RFC PATCH 20/23] hw/ssi: add support for flexspi
+Message-ID: <20240805201719.2345596-5-tavip@google.com>
+Subject: [RFC PATCH 04/23] hw/arm: add SVD file for NXP i.MX RT595
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -71,9 +71,9 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  marcandre.lureau@redhat.com, alistair@alistair23.me, berrange@redhat.com, 
  philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, bleal@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b49;
- envelope-from=3dDOxZgUKCtsQ7SFMDLLDIB.9LJNBJR-ABSBIKLKDKR.LOD@flex--tavip.bounces.google.com;
- helo=mail-yb1-xb49.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b4a;
+ envelope-from=3WDOxZgUKCr8yf0nulttlqj.htrvjrz-ij0jqstslsz.twl@flex--tavip.bounces.google.com;
+ helo=mail-yb1-xb4a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -96,335 +96,1752 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is mostly a stub which completes SPI transactions as noops
-by masking out the error interrupts and never clearing the IPCMDDONE
-interrupt.
+Picked from:
 
-Although incomplete, this allows software that uses NXP's mcuxpresso
-SDK to run the SDK board initialization functions.
+https://github.com/nxp-mcuxpresso/mcux-soc-svd/blob/main/MIMXRT595S/MIMXRT595S_cm33.xml
 
-It also supports AHB memory access, aka XIP, for now as simple RAM
-memory regions.
+NOTE: the file is truncated to keep the email size reasonable. Please
+use the link above and download the full file if you want to try out
+the patch.
 
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- hw/arm/svd/meson.build   |   4 +
- hw/ssi/Kconfig           |   4 +
- hw/ssi/flexspi.c         | 216 +++++++++++++++++++++++++++++++++++++++
- hw/ssi/meson.build       |   1 +
- hw/ssi/trace-events      |   4 +
- include/hw/ssi/flexspi.h |  34 ++++++
- 6 files changed, 263 insertions(+)
- create mode 100644 hw/ssi/flexspi.c
- create mode 100644 include/hw/ssi/flexspi.h
+ hw/arm/svd/MIMXRT595S_cm33.xml | 224052 ++++++++++++++++++++++++++++++
+ 1 file changed, 224052 insertions(+)
+ create mode 100644 hw/arm/svd/MIMXRT595S_cm33.xml
 
-diff --git a/hw/arm/svd/meson.build b/hw/arm/svd/meson.build
-index 6ab13f8757..22f75880f5 100644
---- a/hw/arm/svd/meson.build
-+++ b/hw/arm/svd/meson.build
-@@ -22,3 +22,7 @@ genh += custom_target('rt500_clkctl1.h',
-                       output: 'rt500_clkctl1.h',
-                       input: 'MIMXRT595S_cm33.xml',
-                       command: [ svd_gen_header, '-i', '@INPUT@', '-o', '@OUTPUT@', '-p', 'CLKCTL1', '-t', 'RT500_CLKCTL1'])
-+genh += custom_target('flexspi.h',
-+                      output: 'flexspi.h',
-+                      input: 'MIMXRT595S_cm33.xml',
-+                      command: [ svd_gen_header, '-i', '@INPUT@', '-o', '@OUTPUT@', '-p', 'FLEXSPI0', '-t', 'FLEXSPI'])
-diff --git a/hw/ssi/Kconfig b/hw/ssi/Kconfig
-index 83ee53c1d0..fb8feeb024 100644
---- a/hw/ssi/Kconfig
-+++ b/hw/ssi/Kconfig
-@@ -24,3 +24,7 @@ config STM32F2XX_SPI
- config BCM2835_SPI
-     bool
-     select SSI
-+
-+config FLEXSPI
-+    bool
-+    select SSI
-diff --git a/hw/ssi/flexspi.c b/hw/ssi/flexspi.c
+diff --git a/hw/arm/svd/MIMXRT595S_cm33.xml b/hw/arm/svd/MIMXRT595S_cm33.xml
 new file mode 100644
-index 0000000000..305d1a5bac
+index 0000000000..8943aa3555
 --- /dev/null
-+++ b/hw/ssi/flexspi.c
-@@ -0,0 +1,216 @@
-+/*
-+ * QEMU model for FLEXSPI
-+ *
-+ * Copyright (c) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/mmap-alloc.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "qemu/units.h"
-+#include "hw/irq.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/qdev-properties-system.h"
-+#include "migration/vmstate.h"
-+#include "exec/address-spaces.h"
-+#include "hw/regs.h"
-+#include "hw/ssi/flexspi.h"
-+#include "hw/arm/svd/flexspi.h"
-+
-+#include "trace.h"
-+
-+#define reg(field) offsetof(FLEXSPI_Type, field)
-+#define regi(x) (reg(x) / sizeof(uint32_t))
-+#define REG_NO (sizeof(FLEXSPI_Type) / sizeof(uint32_t))
-+
-+static FLEXSPI_REGISTER_NAMES_ARRAY(reg_names);
-+
-+static void flexspi_reset(DeviceState *dev)
-+{
-+    FlexSpiState *s = FLEXSPI(dev);
-+
-+    memset(&s->regs, 0, sizeof(s->regs));
-+
-+    flexspi_reset_registers(&s->regs);
-+
-+    /* idle immediately after reset */
-+    s->regs.STS0_b.SEQIDLE = 1;
-+}
-+
-+static MemTxResult flexspi_read(void *opaque, hwaddr addr,
-+                                     uint64_t *data, unsigned size,
-+                                     MemTxAttrs attrs)
-+{
-+    FlexSpiState *s = opaque;
-+    MemTxResult ret = MEMTX_OK;
-+
-+    if (!reg32_aligned_access(addr, size)) {
-+        ret = MEMTX_ERROR;
-+        goto out;
-+    }
-+
-+    switch (addr) {
-+    default:
-+        *data = reg32_read(&s->regs, addr);
-+        break;
-+    }
-+
-+out:
-+    trace_flexspi_reg_read(DEVICE(s)->id, reg_names[addr], addr, *data);
-+    return ret;
-+}
-+
-+static uint32_t wr_mask[REG_NO] = {
-+    [regi(MCR0)] = BITS(31, 14) | BITS(12, 8) | BITS(5, 4) | BITS(1, 0),
-+    [regi(MCR1)] = BITS(31, 0),
-+    [regi(MCR2)] = BITS(31, 24) | BIT(11),
-+    [regi(AHBCR)] = BIT(10) | BITS(7, 2) | BIT(0),
-+    [regi(INTEN)] = BITS(13, 0),
-+    /*
-+     * TODO: once SPI transfers are implemented restore mask to:
-+     *
-+     * [regi(INTR)] = BIT(16) | BITS(12, 0).
-+     *
-+     * In the meantime this INTR mask allows for fake SPI transfers.
-+     */
-+    [regi(INTR)] = BIT(0),
-+    [regi(LUTKEY)] = BITS(31, 0),
-+    [regi(LUTCR)] = BITS(1, 0),
-+    [regi(AHBRXBUF0CR0)] = BIT(31) | BITS(26, 24) | BITS(19, 16) | BITS(7, 0),
-+    [regi(AHBRXBUF1CR0)] = BIT(31) | BITS(26, 24) | BITS(19, 16) | BITS(7, 0),
-+    [regi(AHBRXBUF2CR0)] = BIT(31) | BITS(26, 24) | BITS(19, 16) | BITS(7, 0),
-+    [regi(AHBRXBUF3CR0)] = BIT(31) | BITS(26, 24) | BITS(19, 16) | BITS(7, 0),
-+    [regi(AHBRXBUF4CR0)] = BIT(31) | BITS(26, 24) | BITS(19, 16) | BITS(7, 0),
-+    [regi(AHBRXBUF5CR0)] = BIT(31) | BITS(26, 24) | BITS(19, 16) | BITS(7, 0),
-+    [regi(AHBRXBUF6CR0)] = BIT(31) | BITS(26, 24) | BITS(19, 16) | BITS(7, 0),
-+    [regi(AHBRXBUF7CR0)] = BIT(31) | BITS(26, 24) | BITS(19, 16) | BITS(7, 0),
-+    [regi(FLSHA1CR0)] = BITS(22, 0),
-+    [regi(FLSHA2CR0)] = BITS(22, 0),
-+    [regi(FLSHB1CR0)] = BITS(22, 0),
-+    [regi(FLSHB2CR0)] = BITS(22, 0),
-+    [regi(FLSHCR1A1)] = BITS(31, 0),
-+    [regi(FLSHCR1A2)] = BITS(31, 0),
-+    [regi(FLSHCR1B1)] = BITS(31, 0),
-+    [regi(FLSHCR1B2)] = BITS(31, 0),
-+    [regi(FLSHCR2A1)] = BITS(30, 13) | BITS(11, 5) | BITS(3, 0),
-+    [regi(FLSHCR2A2)] = BITS(30, 13) | BITS(11, 5) | BITS(3, 0),
-+    [regi(FLSHCR2B1)] = BITS(30, 13) | BITS(11, 5) | BITS(3, 0),
-+    [regi(FLSHCR2B2)] = BITS(30, 13) | BITS(11, 5) | BITS(3, 0),
-+    [regi(FLSHCR4)] = BITS(3, 2) | BIT(0),
-+    [regi(IPCR0)] = BITS(31, 0),
-+    [regi(IPCR1)] = BIT(31) | BITS(26, 24) | BITS(19, 0),
-+    [regi(IPCMD)] = BIT(1),
-+    [regi(DLPR)] = BITS(31, 0),
-+    [regi(IPRXFCR)] = BITS(8, 0),
-+    [regi(IPTXFCR)] = BITS(8, 0),
-+    [regi(DLLCRA)] = BITS(14, 8) | BITS(6, 3) | BITS(1, 0),
-+    [regi(DLLCRB)] = BITS(14, 8) | BITS(6, 3) | BITS(1, 0),
-+    [regi(HADDRSTART)] = BITS(31, 12) | BIT(0),
-+    [regi(HADDREND)] = BITS(31, 12),
-+    [regi(HADDROFFSET)] = BITS(31, 12),
-+};
-+
-+static MemTxResult flexspi_write(void *opaque, hwaddr addr,
-+                                      uint64_t value, unsigned size,
-+                                      MemTxAttrs attrs)
-+{
-+    FlexSpiState *s = opaque;
-+    MemTxResult ret = MEMTX_OK;
-+
-+    trace_flexspi_reg_write(DEVICE(s)->id, reg_names[addr], addr, value);
-+
-+    if (!reg32_aligned_access(addr, size)) {
-+        ret = MEMTX_ERROR;
-+        goto out;
-+    }
-+
-+    switch (addr) {
-+    case reg(MCR0):
-+    {
-+        reg32_write(&s->regs, addr, value, wr_mask);
-+
-+        if (s->regs.MCR0_b.SWRESET) {
-+            s->regs.MCR0_b.SWRESET = 0;
-+        }
-+        break;
-+    }
-+
-+    default:
-+        reg32_write(&s->regs, addr, value, wr_mask);
-+        break;
-+    }
-+
-+out:
-+    return ret;
-+}
-+
-+static const MemoryRegionOps flexspi_ops = {
-+    .read_with_attrs = flexspi_read,
-+    .write_with_attrs = flexspi_write,
-+    .endianness = DEVICE_NATIVE_ENDIAN,
-+};
-+
-+static Property flexspi_properties[] = {
-+    DEFINE_PROP_UINT32("mmap_base", FlexSpiState, mmap_base, 0),
-+    DEFINE_PROP_UINT32("mmap_size", FlexSpiState, mmap_size, 0),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void flexspi_init(Object *obj)
-+{
-+    FlexSpiState *s = FLEXSPI(obj);
-+
-+    memory_region_init_io(&s->mmio, obj, &flexspi_ops, s, TYPE_FLEXSPI,
-+                          sizeof(FLEXSPI_Type));
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
-+}
-+
-+static void flexspi_realize(DeviceState *dev, Error **errp)
-+{
-+    FlexSpiState *s = FLEXSPI(dev);
-+
-+    if (s->mmap_size) {
-+        memory_region_init_ram(&s->mem, OBJECT(s), DEVICE(s)->id, s->mmap_size,
-+                               NULL);
-+        memory_region_add_subregion(get_system_memory(), s->mmap_base, &s->mem);
-+    }
-+}
-+
-+static void flexspi_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->reset = flexspi_reset;
-+    dc->realize = flexspi_realize;
-+    device_class_set_props(dc, flexspi_properties);
-+}
-+
-+static const TypeInfo flexspi_info = {
-+    .name          = TYPE_FLEXSPI,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(FlexSpiState),
-+    .instance_init = flexspi_init,
-+    .class_init    = flexspi_class_init,
-+};
-+
-+static void flexspi_register_types(void)
-+{
-+    int i;
-+
-+    for (i = 0; i < 32; i++) {
-+        wr_mask[regi(TFDR[i])] = BITS(31, 0);
-+    }
-+    for (i = 0; i < 64; i++) {
-+        wr_mask[regi(LUT[i])] = BITS(31, 0);
-+    }
-+
-+    type_register_static(&flexspi_info);
-+}
-+
-+type_init(flexspi_register_types)
-diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
-index 57d3e14727..c5b7e0a6e2 100644
---- a/hw/ssi/meson.build
-+++ b/hw/ssi/meson.build
-@@ -13,3 +13,4 @@ system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_spi.c'))
- system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_spi_host.c'))
- system_ss.add(when: 'CONFIG_BCM2835_SPI', if_true: files('bcm2835_spi.c'))
- system_ss.add(when: 'CONFIG_FLEXCOMM', if_true: files('flexcomm_spi.c'))
-+system_ss.add(when: 'CONFIG_FLEXSPI', if_true: files('flexspi.c'))
-diff --git a/hw/ssi/trace-events b/hw/ssi/trace-events
-index 5caa1c17ac..d623022a79 100644
---- a/hw/ssi/trace-events
-+++ b/hw/ssi/trace-events
-@@ -40,3 +40,7 @@ flexcomm_spi_fifostat(const char *id, uint32_t fifostat, uint32_t fifoinstat) "%
- flexcomm_spi_irq(const char *id, bool irq, bool fifoirqs, bool perirqs, bool enabled) "%s: %d %d %d %d"
- flexcomm_spi_chr_rx_space(const char *id, uint32_t rx) "%s: %d"
- flexcomm_spi_chr_rx(const char *id) "%s"
-+
-+# flexspi.c
-+flexspi_reg_read(const char *id, const char *reg_name, uint32_t addr, uint32_t val) " %s: %s[0x%04x] -> 0x%08x"
-+flexspi_reg_write(const char *id, const char *reg_name, uint32_t addr, uint32_t val) "%s: %s[0x%04x] <- 0x%08x"
-diff --git a/include/hw/ssi/flexspi.h b/include/hw/ssi/flexspi.h
-new file mode 100644
-index 0000000000..f5fea9dee9
---- /dev/null
-+++ b/include/hw/ssi/flexspi.h
-@@ -0,0 +1,34 @@
-+/*
-+ * QEMU model for FLEXSPI
-+ *
-+ * Copyright (c) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#ifndef HW_RT500_FLEXSPI_H
-+#define HW_RT500_FLEXSPI_H
-+
-+#include "hw/sysbus.h"
-+#include "hw/ssi/ssi.h"
-+#include "hw/arm/svd/flexspi.h"
-+
-+#define TYPE_FLEXSPI "flexspi"
-+#define FLEXSPI(obj) OBJECT_CHECK(FlexSpiState, (obj), TYPE_FLEXSPI)
-+
-+typedef struct {
-+    /* <private> */
-+    SysBusDevice parent_obj;
-+
-+    /* <public> */
-+    MemoryRegion mmio;
-+    FLEXSPI_Type regs;
-+    MemoryRegion mem;
-+    uint32_t mmap_base;
-+    uint32_t mmap_size;
-+} FlexSpiState;
-+
-+#endif /* HW_RT500_FLEXSPI_H */
++++ b/hw/arm/svd/MIMXRT595S_cm33.xml
+@@ -0,0 +1,1725 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<device schemaVersion="1.3" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="CMSIS-SVD.xsd">
++  <vendor>nxp.com</vendor>
++  <name>MIMXRT595S_cm33</name>
++  <version>1.0</version>
++  <description>MIMXRT595SFAWC,MIMXRT595SFFOC</description>
++  <licenseText>
++Copyright 2016-2023 NXP
++SPDX-License-Identifier: BSD-3-Clause
++  </licenseText>
++  <cpu>
++    <name>CM33</name>
++    <revision>r2p0</revision>
++    <endian>little</endian>
++    <mpuPresent>true</mpuPresent>
++    <fpuPresent>true</fpuPresent>
++    <vtorPresent>true</vtorPresent>
++    <nvicPrioBits>3</nvicPrioBits>
++    <vendorSystickConfig>false</vendorSystickConfig>
++  </cpu>
++  <addressUnitBits>8</addressUnitBits>
++  <width>32</width>
++  <peripherals>
++    <peripheral>
++      <name>RSTCTL0</name>
++      <description>Reset Controller 0</description>
++      <groupName>RSTCTL0</groupName>
++      <baseAddress>0x40000000</baseAddress>
++      <addressBlock>
++        <offset>0</offset>
++        <size>0x7C</size>
++        <usage>registers</usage>
++      </addressBlock>
++      <registers>
++        <register>
++          <name>SYSRSTSTAT</name>
++          <description>System Reset Status Register</description>
++          <addressOffset>0</addressOffset>
++          <size>32</size>
++          <access>read-write</access>
++          <resetValue>0x1</resetValue>
++          <resetMask>0xFFFFFFFF</resetMask>
++          <fields>
++            <field>
++              <name>VDD_POR</name>
++              <description>VDD CORE Power-On Reset (POR) was detected</description>
++              <bitOffset>0</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>VDD_POR_EVENT_IS_NOT_DETECTED</name>
++                  <description>No VDD CORE POR event is detected</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>VDD_POR_EVENT_WAS_DETECTED</name>
++                  <description>VDD CORE POR event was detected</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>PAD_RESET</name>
++              <description>RESETN pin reset was detected</description>
++              <bitOffset>4</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>PAD_RESET_IS_NOT_DETECTED</name>
++                  <description>No RESETN pin event is detected</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>PAD_RESET_WAS_DETECTED</name>
++                  <description>RESETN pin event was detected. Write '1' to clear this bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>ARM_RESET</name>
++              <description>ARM reset was detected</description>
++              <bitOffset>5</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>ARM_RESET_IS_NOT_DETECTED</name>
++                  <description>No ARM reset event is detected</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>ARM_RESET_WAS_DETECTED</name>
++                  <description>ARM reset was detected. Write '1' to clear this bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>WDT0_RESET</name>
++              <description>WatchDog Timer 0 reset was detected</description>
++              <bitOffset>6</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>WDT0_RESET_IS_NOT_DETECTED</name>
++                  <description>No WDT0 reset event detected</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>WDT0_RESET_WAS_DETECTED</name>
++                  <description>WDT0 reset event detected. Write '1' to clear this bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>WDT1_RESET</name>
++              <description>WatchDog Timer 1 reset was detected</description>
++              <bitOffset>7</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>WDT1_RESET_IS_NOT_DETECTED</name>
++                  <description>No WDT1 reset event detected</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>WDT1_RESET_WAS_DETECTED</name>
++                  <description>WDT1 reset event detected. Write '1' to clear this bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++          </fields>
++        </register>
++        <register>
++          <name>PRSTCTL0</name>
++          <description>Peripheral Reset Control Register 0</description>
++          <addressOffset>0x10</addressOffset>
++          <size>32</size>
++          <access>read-write</access>
++          <resetValue>0x7DF51F0A</resetValue>
++          <resetMask>0xFFFFFFFF</resetMask>
++          <fields>
++            <field>
++              <name>DSP</name>
++              <description>Fusion F1 DSP reset control</description>
++              <bitOffset>1</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>DSP_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>DSP_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>AXI_SWITCH</name>
++              <description>AXI Switch reset control</description>
++              <bitOffset>3</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>AXI_SWITCH_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>AXI_SWITCH_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>POWERQUAD</name>
++              <description>POWERQUAD reset control</description>
++              <bitOffset>8</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>POWERQUAD_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>POWERQUAD_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>CASPER</name>
++              <description>CASPER reset control</description>
++              <bitOffset>9</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>CASPER_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>CASPER_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>HASHCRYPT</name>
++              <description>Hash-Crypt reset control</description>
++              <bitOffset>10</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>HASHCRYPT_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>HASHCRYPT_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>PUF</name>
++              <description>PUF reset control</description>
++              <bitOffset>11</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>PUF_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>PUF_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>RNG</name>
++              <description>RNG reset control</description>
++              <bitOffset>12</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>RNG_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>RNG_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>FLEXSPI0_OTFAD</name>
++              <description>FLEXSPI0 and OTFAD reset control</description>
++              <bitOffset>16</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>FLEXSPI0_OTFAD_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>FLEXSPI0_OTFAD_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>FLEXSPI1</name>
++              <description>FLEXSPI1 reset control</description>
++              <bitOffset>18</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>FLEXSPI1_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>FLEXSPI1_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>USBHS_PHY</name>
++              <description>USB PHY reset control</description>
++              <bitOffset>20</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>USBHS_PHY_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>USBHS_PHY_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>USBHS_DEVICE</name>
++              <description>USB HS Device reset control</description>
++              <bitOffset>21</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>USBHS_DEVICE_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>USBHS_DEVICE_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>USBHS_HOST</name>
++              <description>USB HOST reset control</description>
++              <bitOffset>22</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>USBHS_HOST_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>USBHS_HOST_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>USBHS_SRAM</name>
++              <description>USB RAM reset control</description>
++              <bitOffset>23</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>USBHS_SRAM_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>USBHS_SRAM_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>SCT</name>
++              <description>SCTimer reset control</description>
++              <bitOffset>24</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>SCT_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>SCT_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>GPU</name>
++              <description>GPU reset control</description>
++              <bitOffset>26</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>GPU_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>GPU_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>DISPLAY_CONTROLLER</name>
++              <description>LCDIF Display Controller reset control</description>
++              <bitOffset>27</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>DISPLAY_CONTROLLER_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>DISPLAY_CONTROLLER_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>MIPI_DSI_CONTROLLER</name>
++              <description>MIPI Digital serial Interface controller reset control</description>
++              <bitOffset>28</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>MIPI_DSI_CONTROLLER_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>MIPI_DSI_CONTROLLER_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>MIPI_DSI_PHY</name>
++              <description>MIPI DSI PHY reset control</description>
++              <bitOffset>29</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>MIPI_DSI_PHY_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>MIPI_DSI_PHY_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>SMARTDMA</name>
++              <description>SMARTDMA Event/Algorithm handler reset control</description>
++              <bitOffset>30</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>SMARTDMA_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>SMARTDMA_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++          </fields>
++        </register>
++        <register>
++          <name>PRSTCTL1</name>
++          <description>Peripheral Reset Control Register 1</description>
++          <addressOffset>0x14</addressOffset>
++          <size>32</size>
++          <access>read-write</access>
++          <resetValue>0x101800C</resetValue>
++          <resetMask>0xFFFFFFFF</resetMask>
++          <fields>
++            <field>
++              <name>SDIO0</name>
++              <description>SDIO0 reset control</description>
++              <bitOffset>2</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>SDIO0_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>SDIO0_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>SDIO1</name>
++              <description>SDIO1 reset control</description>
++              <bitOffset>3</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>SDIO1_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>SDIO1_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>ACMP0</name>
++              <description>Analog comparator reset control</description>
++              <bitOffset>15</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>ACMP0_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>ACMP0_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>ADC0</name>
++              <description>Analog-to-Digital converter reset control</description>
++              <bitOffset>16</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>ADC0_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>ADC0_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>SHSGPIO0</name>
++              <description>Secure GPIO 0 reset control</description>
++              <bitOffset>24</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>SHSGPIO0_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>SHSGPIO0_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++          </fields>
++        </register>
++        <register>
++          <name>PRSTCTL2</name>
++          <description>Peripheral Reset Control Register 2</description>
++          <addressOffset>0x18</addressOffset>
++          <size>32</size>
++          <access>read-write</access>
++          <resetValue>0x1C000001</resetValue>
++          <resetMask>0xFFFFFFFF</resetMask>
++          <fields>
++            <field>
++              <name>UTICK0</name>
++              <description>Micro-tick timer reset control</description>
++              <bitOffset>0</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>UTICK0_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>UTICK0_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>WWDT0</name>
++              <description>Watchdog timer reset control</description>
++              <bitOffset>1</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>read-write</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>WWDT0_CLR</name>
++                  <description>Clear Reset</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>WWDT0_SET</name>
++                  <description>Set Reset</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++          </fields>
++        </register>
++        <register>
++          <name>PRSTCTL0_SET</name>
++          <description>Peripheral Reset Control Register 0 SET</description>
++          <addressOffset>0x40</addressOffset>
++          <size>32</size>
++          <access>write-only</access>
++          <resetValue>0</resetValue>
++          <resetMask>0</resetMask>
++          <fields>
++            <field>
++              <name>DSP</name>
++              <description>Fusion_ DSP reset set</description>
++              <bitOffset>1</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>DSP_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>DSP_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>AXI_SWITCH</name>
++              <description>AXI SWITCH reset set</description>
++              <bitOffset>3</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>AXI_SWITCH_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>AXI_SWITCH_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>POWERQUAD</name>
++              <description>POWERQUAD reset set</description>
++              <bitOffset>8</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>POWERQUAD_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>POWERQUAD_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>CASPER</name>
++              <description>CASPER reset set</description>
++              <bitOffset>9</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>CASPER_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>CASPER_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>HASHCRYPT</name>
++              <description>HASHCRYPT reset set</description>
++              <bitOffset>10</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>HASHCRYPT_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>HASHCRYPT_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>PUF</name>
++              <description>PUF reset set</description>
++              <bitOffset>11</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>PUF_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>PUF_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>RNG</name>
++              <description>RNG reset set</description>
++              <bitOffset>12</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>RNG_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>RNG_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>FLEXSPI0_OTFAD</name>
++              <description>FLEXSPI0 and OTFAD reset set</description>
++              <bitOffset>16</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>FLEXSPI0_OTFAD_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>FLEXSPI0_OTFAD_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>FLEXSPI1</name>
++              <description>FLEXSPI1 reset set</description>
++              <bitOffset>18</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>FLEXSPI1_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>FLEXSPI1_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>USBHS_PHY</name>
++              <description>USB PHY reset set</description>
++              <bitOffset>20</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>USBHS_PHY_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>USBHS_PHY_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>USBHS_DEVICE</name>
++              <description>USB Device reset set</description>
++              <bitOffset>21</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>USBHS_DEVICE_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>USBHS_DEVICE_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>USBHS_HOST</name>
++              <description>USB HOST reset set</description>
++              <bitOffset>22</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>USBHS_HOST_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>USBHS_HOST_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>USBHS_SRAM</name>
++              <description>USBHS SRAM reset set</description>
++              <bitOffset>23</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>USBHS_SRAM_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>USBHS_SRAM_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>SCT</name>
++              <description>SCTimer reset set</description>
++              <bitOffset>24</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>SCT_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>SCT_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>GPU</name>
++              <description>GPU reset set</description>
++              <bitOffset>26</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>GPU_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>GPU_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>DISPLAY_CONTROLLER</name>
++              <description>LCDIF DISPLAY CONTROLLER reset set</description>
++              <bitOffset>27</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>DISPLAY_CONTROLLER_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>DISPLAY_CONTROLLER_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>MIPI_DSI_CONTROLLER</name>
++              <description>MIPI DSI controller reset set</description>
++              <bitOffset>28</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>MIPI_DSI_CONTROLLER_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>MIPI_DSI_CONTROLLER_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>MIPI_DSI_PHY</name>
++              <description>MIPI DSI PHY reset set</description>
++              <bitOffset>29</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>MIPI_DSI_PHY_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>MIPI_DSI_PHY_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>SMARTDMA</name>
++              <description>SMARTDMA Event/Algorithm handler reset set</description>
++              <bitOffset>30</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>SMARTDMA_CLR</name>
++                  <description>No Effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>SMARTDMA_SET</name>
++                  <description>Sets the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++          </fields>
++        </register>
++        <register>
++          <name>PRSTCTL1_SET</name>
++          <description>Peripheral Reset Control Register 1 SET</description>
++          <addressOffset>0x44</addressOffset>
++          <size>32</size>
++          <access>write-only</access>
++          <resetValue>0</resetValue>
++          <resetMask>0</resetMask>
++          <fields>
++            <field>
++              <name>SDIO0</name>
++              <description>SDIO0 reset set</description>
++              <bitOffset>2</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>SDIO0_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>SDIO0_SET</name>
++                  <description>Sets the PRSTCTL1 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>SDIO1</name>
++              <description>SDIO1 reset set</description>
++              <bitOffset>3</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>SDIO1_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>SDIO1_SET</name>
++                  <description>Sets the PRSTCTL1 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>ACMP0</name>
++              <description>ACMP0 reset set</description>
++              <bitOffset>15</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>ACMP0_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>ACMP0_SET</name>
++                  <description>Sets the PRSTCTL1 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>ADC0</name>
++              <description>ADC0 reset set</description>
++              <bitOffset>16</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>ADC0_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>ADC0_SET</name>
++                  <description>Sets the PRSTCTL1 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>SHSGPIO0</name>
++              <description>SHSGPIO0 reset set</description>
++              <bitOffset>24</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>SHSGPIO0_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>SHSGPIO0_SET</name>
++                  <description>Sets the PRSTCTL1 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++          </fields>
++        </register>
++        <register>
++          <name>PRSTCTL2_SET</name>
++          <description>Peripheral Reset Control Register 2 SET</description>
++          <addressOffset>0x48</addressOffset>
++          <size>32</size>
++          <access>write-only</access>
++          <resetValue>0</resetValue>
++          <resetMask>0</resetMask>
++          <fields>
++            <field>
++              <name>UTICK0</name>
++              <description>Micro-tick timer 0 reset set</description>
++              <bitOffset>0</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>UTICK0_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>UTICK0_SET</name>
++                  <description>Sets the PRSTCTL2 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>WWDT0</name>
++              <description>WWDT0 reset set</description>
++              <bitOffset>1</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>WWDT0_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>WWDT0_SET</name>
++                  <description>Sets the PRSTCTL2 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++          </fields>
++        </register>
++        <register>
++          <name>PRSTCTL0_CLR</name>
++          <description>Peripheral Reset Control Register 0 CLR</description>
++          <addressOffset>0x70</addressOffset>
++          <size>32</size>
++          <access>write-only</access>
++          <resetValue>0</resetValue>
++          <resetMask>0</resetMask>
++          <fields>
++            <field>
++              <name>DSP</name>
++              <description>Fusion_ F1 DSP reset clear</description>
++              <bitOffset>1</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>DSP_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>DSP_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>AXI_SWITCH</name>
++              <description>AXI SWITCH reset clear</description>
++              <bitOffset>3</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>AXI_SWITCH_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>AXI_SWITCH_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>POWERQUAD</name>
++              <description>POWERQUAD reset clear</description>
++              <bitOffset>8</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>POWERQUAD_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>POWERQUAD_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>CASPER</name>
++              <description>CASPER reset clear</description>
++              <bitOffset>9</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>CASPER_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>CASPER_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>HASHCRYPT</name>
++              <description>HASHCRYPT reset clear</description>
++              <bitOffset>10</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>HASHCRYPT_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>HASHCRYPT_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>PUF</name>
++              <description>PUF reset clear</description>
++              <bitOffset>11</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>PUF_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>PUF_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>RNG</name>
++              <description>RNG reset clear</description>
++              <bitOffset>12</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>RNG_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>RNG_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>FLEXSPI0_OTFAD</name>
++              <description>FLEXSPI0 and OTFAD reset clear</description>
++              <bitOffset>16</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>FLEXSPI0_OTFAD_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>FLEXSPI0_OTFAD_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>FLEXSPI1</name>
++              <description>FLEXSPI1 reset clear</description>
++              <bitOffset>18</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>FLEXSPI1_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>FLEXSPI1_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>USBHS_PHY</name>
++              <description>USB PHY reset clear</description>
++              <bitOffset>20</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>USBHS_PHY_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>USBHS_PHY_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>USBHS_DEVICE</name>
++              <description>USB DEVICE reset clear</description>
++              <bitOffset>21</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>USBHS_DEVICE_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>USBHS_DEVICE_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>USBHS_HOST</name>
++              <description>USB HOST reset clear</description>
++              <bitOffset>22</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>USBHS_HOST_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>USBHS_HOST_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>USBHS_SRAM</name>
++              <description>USBHS SRAM reset clear</description>
++              <bitOffset>23</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>USBHS_SRAM_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>USBHS_SRAM_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>SCT</name>
++              <description>SCT reset clear</description>
++              <bitOffset>24</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>SCT_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>SCT_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>GPU</name>
++              <description>GPU reset clear</description>
++              <bitOffset>26</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>GPU_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>GPU_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>DISPLAY_CONTROLLER</name>
++              <description>LCDIF DISPLAY CONTROLLER reset clear</description>
++              <bitOffset>27</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>DISPLAY_CONTROLLER_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>DISPLAY_CONTROLLER_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>MIPI_DSI_CONTROLLER</name>
++              <description>MIPI DSI controller reset clear</description>
++              <bitOffset>28</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>MIPI_DSI_CONTROLLER_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>MIPI_DSI_CONTROLLER_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>MIPI_DSI_PHY</name>
++              <description>MIPI DSI PHY reset clear</description>
++              <bitOffset>29</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>MIPI_DSI_PHY_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>MIPI_DSI_PHY_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>SMARTDMA</name>
++              <description>SMARTDMA Event/Algorithm handler reset clear</description>
++              <bitOffset>30</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>SMARTDMA_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>SMARTDMA_SET</name>
++                  <description>Clears the PRSTCTL0 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++          </fields>
++        </register>
++        <register>
++          <name>PRSTCTL1_CLR</name>
++          <description>Peripheral Reset Control Register 1 CLR</description>
++          <addressOffset>0x74</addressOffset>
++          <size>32</size>
++          <access>write-only</access>
++          <resetValue>0</resetValue>
++          <resetMask>0</resetMask>
++          <fields>
++            <field>
++              <name>SDIO0</name>
++              <description>SDIO0 reset clear</description>
++              <bitOffset>2</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>SDIO0_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>SDIO0_SET</name>
++                  <description>Clears the PRSTCTL1 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>SDIO1</name>
++              <description>SDIO1 reset clear</description>
++              <bitOffset>3</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>SDIO1_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>SDIO1_SET</name>
++                  <description>Clears the PRSTCTL1 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>ACMP0</name>
++              <description>ACMP0 reset clear</description>
++              <bitOffset>15</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>ACMP0_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>ACMP0_SET</name>
++                  <description>Clears the PRSTCTL1 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>ADC0</name>
++              <description>ADC0 reset clear</description>
++              <bitOffset>16</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>ADC0_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>ADC0_SET</name>
++                  <description>Clears the PRSTCTL1 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>SHSGPIO0</name>
++              <description>Secure HSGPIO0 reset clear</description>
++              <bitOffset>24</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>SHSGPIO0_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>SHSGPIO0_SET</name>
++                  <description>Clears the PRSTCTL1 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++          </fields>
++        </register>
++        <register>
++          <name>PRSTCTL2_CLR</name>
++          <description>Peripheral Reset Control Register 2 CLR</description>
++          <addressOffset>0x78</addressOffset>
++          <size>32</size>
++          <access>write-only</access>
++          <resetValue>0</resetValue>
++          <resetMask>0</resetMask>
++          <fields>
++            <field>
++              <name>UTICK0</name>
++              <description>Micro-tick timer 0 reset clear</description>
++              <bitOffset>0</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>UTICK0_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>UTICK0_SET</name>
++                  <description>Clears the PRSTCTL2 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++            <field>
++              <name>WWDT0</name>
++              <description>WWDT0 reset clear</description>
++              <bitOffset>1</bitOffset>
++              <bitWidth>1</bitWidth>
++              <access>write-only</access>
++              <enumeratedValues>
++                <enumeratedValue>
++                  <name>WWDT0_CLR</name>
++                  <description>No effect</description>
++                  <value>0</value>
++                </enumeratedValue>
++                <enumeratedValue>
++                  <name>WWDT0_SET</name>
++                  <description>Clears the PRSTCTL2 Bit</description>
++                  <value>0x1</value>
++                </enumeratedValue>
++              </enumeratedValues>
++            </field>
++          </fields>
++        </register>
++      </registers>
++    </peripheral>
++  </peripherals>
++</device>
+\ No newline at end of file
 -- 
 2.46.0.rc2.264.g509ed76dc8-goog
 
