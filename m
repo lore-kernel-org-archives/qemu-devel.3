@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 658CAC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BDC8C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:18:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb49X-0003sW-UU; Mon, 05 Aug 2024 16:18:00 -0400
+	id 1sb49k-0005Xz-EH; Mon, 05 Aug 2024 16:18:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3azOxZgUKCtIHyJ6D4CC492.0CAE2AI-12J29BCB4BI.CF4@flex--tavip.bounces.google.com>)
- id 1sb49S-0003ed-BS
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:54 -0400
-Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
+ <3eDOxZgUKCt8UBWJQHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--tavip.bounces.google.com>)
+ id 1sb49f-0004pH-2u
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:18:07 -0400
+Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3azOxZgUKCtIHyJ6D4CC492.0CAE2AI-12J29BCB4BI.CF4@flex--tavip.bounces.google.com>)
- id 1sb49O-0001Uy-Kh
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:54 -0400
-Received: by mail-pl1-x64a.google.com with SMTP id
- d9443c01a7336-1fc5e651bcdso117281125ad.3
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 13:17:48 -0700 (PDT)
+ <3eDOxZgUKCt8UBWJQHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--tavip.bounces.google.com>)
+ id 1sb49a-0001Xg-NC
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:18:06 -0400
+Received: by mail-yw1-x114a.google.com with SMTP id
+ 00721157ae682-68dcbd6135dso64352827b3.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 13:18:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1722889068; x=1723493868; darn=nongnu.org;
+ d=google.com; s=20230601; t=1722889080; x=1723493880; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=tlHjF4vRKeBL3TO5oBeur+r2v3G8z+HC6VUlJGVX4fk=;
- b=j1IHkbTe50+42nRoCH2pHjE+8E0rSy9qA+2lk6GLgqRIbDKrX2C/sWi055+/vmUe85
- +HW5RteRc1Ba37sDGGKb7vJgcApCpDz2AAzoMUk5G8RCnblfp5U0FKCTxcMy4ApD7gsP
- ZB1p4dhDAFXwdHzgKHnEWzD3pZ6CnDJbGRFa2MoBiVkxfBO3UhfDragVm9q1M6TR4S/0
- QvrtDeQENTi40UqUjis9+U45yFHHsAyLgszF4VcdMw/MLf/TmhndIpsIvn5N6hea/DEQ
- WQD7aXW57tJ82DW2zpe+VLnpJbIHJItMxYT8W5WqnCdmnwJL2XWFCPpvASLO+Vtk0mG8
- glhg==
+ bh=4u1P5SIla3BTMDBQNng926h7zNREK6etGIfsOHcMKR0=;
+ b=W+xt1ui9C6SahVsxDgI27zBE7YqWEYkpfFj86gqECR5HYzPT7azq4OWpIdNglB2YMP
+ kMhr2itAneQh2CK+A+31gHSQp7G0JrihO7SrJGa8gXBn00+3vGofgf8dtdgITXOkI/Wi
+ Hqs1cb6tBFkUUlOu8H02tSY0w93TZIvV6nYv5lCSZodmSjDiKtijxaRoRBfKRTaTzICF
+ D9NEmivVV9xKr9EFaFke56qulBi2leOv//RMwe8IIiuQeZMBgcSu8mApkanTTnnkMAUQ
+ bnm/hXOS7R0Lu7TOqdEqaFVXb+xIHCB7V1QWh78oiDnCs5Hd1MYAXLKKFcCBTgtHKEIi
+ VmXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722889068; x=1723493868;
+ d=1e100.net; s=20230601; t=1722889080; x=1723493880;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tlHjF4vRKeBL3TO5oBeur+r2v3G8z+HC6VUlJGVX4fk=;
- b=QBVLgZFG5IB3HnjGONQGue/p6DnCf8YFLa7JqRUSzSmEhneDIwG1JnQ9xzmnkViiQs
- MFhq2F0/W4Xabju4asS2igscsJK6pvGCOnJP183nQsoAI/a3YbHOwo15Rycr+3DJrTXb
- K8T0dlQuDftmJ6zmC/oqUrqCBZTJn281BR3boLC1kCP3cNHlRTqOSI8TK/iZovejeWbB
- 7jCrQuKzkzXYGYbKIrS3mdkjgCRdYYAd5YdRBjTUGKy1xadvR49NhLrqbdoG8HLgHUra
- U5zDNoRktWv/08fm9AVtTry3H0ydenTjD3KoK9nIZCCqAS5DofGhwag306k0w4INivnT
- L9IA==
-X-Gm-Message-State: AOJu0Yzu3HOFgsPJKK6MAtv+3FhCz7L64LqS71rbL8MZPLyghBfoYZdQ
- 6r2gl7lGjILziUcb9QZzNrfIWyRnhaS9+8zkZT0GaV8O5GzHl3yx1Af6A3GA22z7TIkQrl+R+QW
- 2mNt/Ysu+6teoOp2Va45041MnhIZuIDv2O9BVu63531ldSzu9ic55HPIM8PAwniCQqoz7ErPuJN
- 4ttCNLyk5BBQc15e3XFo78XEp6vA==
-X-Google-Smtp-Source: AGHT+IFPemp2sc6tjT2XKanRsS0vFFuKY6C/1QzGpCElqtmWwxiPKcpufHzMF5kfVgvwLX0f1fXpqgpNLw==
+ bh=4u1P5SIla3BTMDBQNng926h7zNREK6etGIfsOHcMKR0=;
+ b=dN914UHnS8+emjSLvBA7HKV0vu2qDqt9OLGXHWauE+WIJaxR/ORCkzzFjwuEIigH+s
+ d4XMMY1iWHx9CJiSFoe30h9R+E/6ympTqEadhRHM6S8C80y2aM2fVJ8ZAKYoeFxzYC4w
+ ktVaPWZBgPw5lVkC34HJql6gmxx8OYqqEV/7h0gPEBfmUoU5IUQ5tYmSbdyN7a+xpjPw
+ Hi37Yxj6PUhBZZ+oisB9U5/PJACTnTOiLm15ycODBCUmdCOaz2jwvgurdh0Xjbvr8KQV
+ i3AgNMUn3G+qQuXwq+wRB36FXYBKeSde8crOPxK0LAnEVhEPcppjb5vdKTJzTnXcDzgv
+ 6Zsw==
+X-Gm-Message-State: AOJu0YyVHHVFwYzJsq0zz+hyvWNftnKg4wNNo0YDJRYYBrxlIGpQNonm
+ vv0IVfnquiraY3mZXipcVvwYKmQtdN10JoBxEUuKtzK+1NmnwgU/FUe5qMAPiOBRY6X88Sz21Xr
+ xOyrzkPpVCAm+5KP+y+YEGP82iXca+k4203jG4aY80w1NyTVr9IWzD3nT3x42PR9jm9hr+t1yio
+ YAeNAQy4kN6/EmSyp5DMKuCIEQ0Q==
+X-Google-Smtp-Source: AGHT+IETKmxMUfzjPk4qDciUlfp9GgJp/XDZSs4LIyahMhe5QVAt6LybinSSK4kDNRuQBJAnL26S8NRD1Q==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a17:902:dac4:b0:1fd:d6d8:134e
+ (user=tavip job=sendgmr) by 2002:a05:690c:660d:b0:691:2f66:4af9
  with SMTP id
- d9443c01a7336-1ff573a358bmr8377605ad.8.1722889067793; Mon, 05 Aug 2024
- 13:17:47 -0700 (PDT)
-Date: Mon,  5 Aug 2024 13:17:10 -0700
+ 00721157ae682-6912f664f8amr3358477b3.4.1722889080107; Mon, 05 Aug 2024
+ 13:18:00 -0700 (PDT)
+Date: Mon,  5 Aug 2024 13:17:17 -0700
 In-Reply-To: <20240805201719.2345596-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20240805201719.2345596-1-tavip@google.com>
 X-Mailer: git-send-email 2.46.0.rc2.264.g509ed76dc8-goog
-Message-ID: <20240805201719.2345596-16-tavip@google.com>
-Subject: [RFC PATCH 15/23] hw/ssi: add support for flexcomm spi
+Message-ID: <20240805201719.2345596-23-tavip@google.com>
+Subject: [RFC PATCH 22/23] hw/arm: add basic support for the RT500 SoC
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -71,16 +71,16 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  marcandre.lureau@redhat.com, alistair@alistair23.me, berrange@redhat.com, 
  philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, bleal@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
- envelope-from=3azOxZgUKCtIHyJ6D4CC492.0CAE2AI-12J29BCB4BI.CF4@flex--tavip.bounces.google.com;
- helo=mail-pl1-x64a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
+ envelope-from=3eDOxZgUKCt8UBWJQHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--tavip.bounces.google.com;
+ helo=mail-yw1-x114a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
 X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,79 +96,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sebastian Ene <sebastianene@google.com>
+Add basic support for the RT500 SoC. It supports enough peripherals to
+run the NXP's microXpresso SDK hello world example.
 
-From: Sebastian Ene <sebastianene@google.com>
-
-Add support for NXP's flexcomm spi. It supports FIFO access,
-interrupts and master mode only. It does not support DMA.
-
-Signed-off-by: Sebastian Ene <sebastianene@google.com>
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- hw/arm/svd/meson.build        |   4 +
- hw/misc/flexcomm.c            |   6 +
- hw/ssi/flexcomm_spi.c         | 443 ++++++++++++++++++++++++++++++++++
- hw/ssi/meson.build            |   1 +
- hw/ssi/trace-events           |   8 +
- include/hw/misc/flexcomm.h    |   8 +
- include/hw/ssi/flexcomm_spi.h |  20 ++
- tests/unit/meson.build        |   7 +
- 8 files changed, 497 insertions(+)
- create mode 100644 hw/ssi/flexcomm_spi.c
- create mode 100644 include/hw/ssi/flexcomm_spi.h
+ hw/arm/Kconfig         |   8 +
+ hw/arm/meson.build     |   1 +
+ hw/arm/rt500.c         | 348 +++++++++++++++++++++++++++++++++++++++++
+ hw/arm/svd/meson.build |   6 +
+ include/hw/arm/rt500.h |  49 ++++++
+ 5 files changed, 412 insertions(+)
+ create mode 100644 hw/arm/rt500.c
+ create mode 100644 include/hw/arm/rt500.h
 
-diff --git a/hw/arm/svd/meson.build b/hw/arm/svd/meson.build
-index fa0d3da829..8b3b045137 100644
---- a/hw/arm/svd/meson.build
-+++ b/hw/arm/svd/meson.build
-@@ -10,3 +10,7 @@ genh += custom_target('flexcomm_i2c_regs.h',
-                       output: 'flexcomm_i2c.h',
-                       input: 'MIMXRT595S_cm33.xml',
-                       command: [ svd_gen_header, '-i', '@INPUT@', '-o', '@OUTPUT@', '-p', 'I2C0', '-t', 'FLEXCOMM_I2C'])
-+genh += custom_target('flexcomm_spi.h',
-+                      output: 'flexcomm_spi.h',
-+                      input: 'MIMXRT595S_cm33.xml',
-+                      command: [ svd_gen_header, '-i', '@INPUT@', '-o', '@OUTPUT@', '-p', 'SPI0', '-t', 'FLEXCOMM_SPI'])
-diff --git a/hw/misc/flexcomm.c b/hw/misc/flexcomm.c
-index 2722c1d6a9..6f3ce62448 100644
---- a/hw/misc/flexcomm.c
-+++ b/hw/misc/flexcomm.c
-@@ -24,6 +24,7 @@
- #include "hw/misc/flexcomm.h"
- #include "hw/char/flexcomm_usart.h"
- #include "hw/i2c/flexcomm_i2c.h"
-+#include "hw/ssi/flexcomm_spi.h"
- 
- #define reg(field) offsetof(FLEXCOMM_Type, field)
- #define regi(x) (reg(x) / sizeof(uint32_t))
-@@ -233,6 +234,10 @@ static void flexcomm_realize(DeviceState *dev, Error **errp)
-     if (has_function(s, FLEXCOMM_FUNC_I2C)) {
-         flexcomm_i2c_init(s);
-     }
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 1ad60da7aa..7ffece3dec 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -712,3 +712,11 @@ config ARMSSE
+     select UNIMP
+     select SSE_COUNTER
+     select SSE_TIMER
 +
-+    if (has_function(s, FLEXCOMM_FUNC_SPI)) {
-+        flexcomm_spi_init(s);
-+    }
- }
++config RT500
++    bool
++    select FLEXCOMM
++    select RT500_CLKCTL0
++    select RT500_CLKCTL1
++    select FLEXSPI
++    select RT500_RSTCTL
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index eb604d00cf..7d827d512c 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -59,6 +59,7 @@ arm_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
+ arm_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
+ arm_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
+ arm_ss.add(when: 'CONFIG_XEN', if_true: files('xen_arm.c'))
++arm_ss.add(when: 'CONFIG_RT500', if_true: files('rt500.c'))
  
- static void flexcomm_class_init(ObjectClass *klass, void *data)
-@@ -245,6 +250,7 @@ static void flexcomm_class_init(ObjectClass *klass, void *data)
- 
-     flexcomm_usart_register();
-     flexcomm_i2c_register();
-+    flexcomm_spi_register();
- }
- 
- static const TypeInfo flexcomm_info = {
-diff --git a/hw/ssi/flexcomm_spi.c b/hw/ssi/flexcomm_spi.c
+ system_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmu-common.c'))
+ system_ss.add(when: 'CONFIG_CHEETAH', if_true: files('palm.c'))
+diff --git a/hw/arm/rt500.c b/hw/arm/rt500.c
 new file mode 100644
-index 0000000000..7b649ba17e
+index 0000000000..0866ef3ef6
 --- /dev/null
-+++ b/hw/ssi/flexcomm_spi.c
-@@ -0,0 +1,443 @@
++++ b/hw/arm/rt500.c
+@@ -0,0 +1,348 @@
 +/*
-+ * QEMU model for NXP's FLEXCOMM SPI
++ * i.MX RT500 platforms.
 + *
 + * Copyright (c) 2024 Google LLC
 + *
@@ -179,556 +156,411 @@ index 0000000000..7b649ba17e
 + */
 +
 +#include "qemu/osdep.h"
-+#include "hw/irq.h"
-+#include "hw/qdev-properties.h"
-+#include "qemu/cutils.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "exec/address-spaces.h"
 +#include "qapi/error.h"
-+#include "trace.h"
-+#include "hw/regs.h"
-+#include "hw/ssi/flexcomm_spi.h"
++#include "hw/sysbus.h"
++#include "hw/arm/boot.h"
++#include "hw/boards.h"
++#include "hw/irq.h"
++#include "qemu/log.h"
++#include "qemu/datadir.h"
++#include "exec/address-spaces.h"
++#include "sysemu/reset.h"
++#include "sysemu/runstate.h"
++#include "sysemu/sysemu.h"
++#include "hw/arm/armv7m.h"
++#include "hw/loader.h"
++#include "hw/qdev-clock.h"
++#include "hw/misc/unimp.h"
++#include "hw/arm/rt500.h"
++#include "hw/arm/svd/rt500.h"
 +
-+#define reg(field) offsetof(FLEXCOMM_SPI_Type, field)
-+#define regi(x) (reg(x) / sizeof(uint32_t))
-+#define REG_NO (sizeof(FLEXCOMM_SPI_Type) / sizeof(uint32_t))
++#define MMAP_SRAM_CODE_BASE   (0x0)
++#define MMAP_SRAM_DATA_BASE   (0x20000000)
++#define MMAP_SRAM_SIZE        (5 * MiB)
++#define MMAP_BOOT_ROM_BASE    (0x03000000)
++#define MMAP_BOOT_ROM_SIZE    (192 * KiB)
++#define MMAP_SDMA_RAM_BASE    (0x24100000)
++#define MMAP_SDMA_RAM_SIZE    (32 * KiB)
++#define MMAP_FLEXSPI0_BASE    (0x08000000)
++#define MMAP_FLEXSPI0_SIZE    (128 * MiB)
++#define MMAP_FLEXSPI1_BASE    (0x28000000)
++#define MMAP_FLEXSPI1_SIZE    (128 * MiB)
 +
-+#define FLEXCOMM_SSEL_ASSERTED             (0)
-+#define FLEXCOMM_SSEL_DEASSERTED           (1)
++#define SECURE_OFFSET    (0x10000000)
 +
-+#define FLEXCOMM_SPI_FIFOWR_LEN_MIN        (3)
-+#define FLEXCOMM_SPI_FIFOWR_LEN_MAX        (15)
++typedef enum MemInfoType {
++    MEM_RAM,
++    MEM_ROM,
++    MEM_ALIAS
++} MemInfoType;
 +
-+static FLEXCOMM_SPI_REGISTER_NAMES_ARRAY(reg_names);
-+
-+static void flexcomm_spi_reset(FlexcommState *s)
++static void do_sys_reset(void *opaque, int n, int level)
 +{
-+    flexcomm_spi_reset_registers(&s->regs.spi);
-+    s->regs.spi.FIFOSIZE_b.FIFOSIZE = 0x8;
-+}
-+
-+static void update_fifo_stat(FlexcommState *s)
-+{
-+    int rxlvl = fifo32_num_used(&s->rx_fifo);
-+    int txlvl = fifo32_num_used(&s->tx_fifo);
-+
-+    s->regs.spi.FIFOSTAT_b.RXLVL = fifo32_num_used(&s->rx_fifo);
-+    s->regs.spi.FIFOSTAT_b.TXLVL = fifo32_num_used(&s->tx_fifo);
-+    s->regs.spi.FIFOSTAT_b.RXFULL = fifo32_is_full(&s->rx_fifo) ? 1 : 0;
-+    s->regs.spi.FIFOSTAT_b.RXNOTEMPTY = !fifo32_is_empty(&s->rx_fifo) ? 1 : 0;
-+    s->regs.spi.FIFOSTAT_b.TXNOTFULL = !fifo32_is_full(&s->tx_fifo) ? 1 : 0;
-+    s->regs.spi.FIFOSTAT_b.TXEMPTY = fifo32_is_empty(&s->tx_fifo) ? 1 : 0;
-+
-+    if (s->regs.spi.FIFOTRIG_b.RXLVLENA &&
-+        (rxlvl > s->regs.spi.FIFOTRIG_b.RXLVL)) {
-+        s->regs.spi.FIFOINTSTAT_b.RXLVL = 1;
-+    } else {
-+        s->regs.spi.FIFOINTSTAT_b.RXLVL = 0;
-+    }
-+
-+    if (s->regs.spi.FIFOTRIG_b.TXLVLENA &&
-+        (txlvl <= s->regs.spi.FIFOTRIG_b.TXLVL)) {
-+        s->regs.spi.FIFOINTSTAT_b.TXLVL = 1;
-+    } else {
-+        s->regs.spi.FIFOINTSTAT_b.TXLVL = 0;
-+    }
-+
-+    trace_flexcomm_spi_fifostat(DEVICE(s)->id, s->regs.spi.FIFOSTAT,
-+                               s->regs.spi.FIFOINTSTAT);
-+}
-+
-+static void flexcomm_spi_irq_update(FlexcommState *s)
-+{
-+    bool irq, per_irqs, fifo_irqs, enabled = s->regs.spi.CFG_b.ENABLE;
-+
-+    update_fifo_stat(s);
-+    fifo_irqs = s->regs.spi.FIFOINTSTAT & s->regs.spi.FIFOINTENSET;
-+
-+    s->regs.spi.INTSTAT = s->regs.spi.STAT & s->regs.spi.INTENSET;
-+    per_irqs = s->regs.spi.INTSTAT != 0;
-+
-+    irq = enabled && (fifo_irqs || per_irqs);
-+
-+    trace_flexcomm_spi_irq(DEVICE(s)->id, irq, fifo_irqs, per_irqs, enabled);
-+    flexcomm_irq(s, irq);
-+}
-+
-+static void flexcomm_spi_select(void *opaque, FlexcommState *s, int f,
-+                               bool set)
-+{
-+    if (set) {
-+        int i;
-+
-+        flexcomm_spi_reset(s);
-+        fifo32_create(&s->rx_fifo, s->regs.spi.FIFOSIZE_b.FIFOSIZE);
-+        fifo32_create(&s->tx_fifo, s->regs.spi.FIFOSIZE_b.FIFOSIZE);
-+        for (i = 0; i < ARRAY_SIZE(s->cs); i++) {
-+            bool spol = s->regs.spi.CFG & (FLEXCOMM_SPI_CFG_SPOL0_Msk << i);
-+
-+            s->cs_asserted[i] = false;
-+            qemu_set_irq(s->cs[i], !spol);
-+        }
-+    } else {
-+        fifo32_destroy(&s->rx_fifo);
-+        fifo32_destroy(&s->tx_fifo);
++    if (level) {
++        qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
 +    }
 +}
 +
-+static MemTxResult flexcomm_spi_reg_read(void *opaque, FlexcommState *s,
-+                                        int f, hwaddr addr, uint64_t *data,
-+                                        unsigned size)
++static void rt500_init(Object *obj)
 +{
-+    MemTxResult ret = MEMTX_OK;
-+
-+    /*
-+     * Allow 8/16 bits access to the FIFORD LSB half-word. This is supported by
-+     * hardware and required for 1/2 byte(s) width DMA transfers.
-+     */
-+    if (!reg32_aligned_access(addr, size) && addr != reg(FIFORD)) {
-+        ret = MEMTX_ERROR;
-+        goto out;
-+    }
-+
-+    switch (addr) {
-+    case reg(FIFORD):
-+    {
-+        /* If we are running in loopback mode get the data from TX FIFO */
-+        if (s->regs.spi.CFG_b.LOOP &&
-+            s->regs.spi.CFG_b.MASTER)
-+        {
-+            if (!fifo32_is_empty(&s->tx_fifo)) {
-+                *data = fifo32_pop(&s->tx_fifo);
-+            }
-+            break;
-+        }
-+
-+        if (!fifo32_is_empty(&s->rx_fifo)) {
-+            *data = fifo32_pop(&s->rx_fifo);
-+            qemu_chr_fe_accept_input(&s->chr);
-+        }
-+        break;
-+    }
-+    case reg(FIFORDNOPOP):
-+    {
-+        if (!fifo32_is_empty(&s->rx_fifo)) {
-+            *data = fifo32_peek(&s->rx_fifo);
-+        }
-+        break;
-+    }
-+    default:
-+        *data = reg32_read(&s->regs, addr);
-+        break;
-+    }
-+
-+    flexcomm_spi_irq_update(s);
-+
-+out:
-+    trace_flexcomm_spi_reg_read(DEVICE(s)->id, reg_names[addr], addr, *data);
-+    return ret;
-+}
-+
-+static uint32_t fifowr_len_bits(uint32_t val)
-+{
-+    int len = (val & FLEXCOMM_SPI_FIFOWR_LEN_Msk) >>
-+        FLEXCOMM_SPI_FIFOWR_LEN_Pos;
-+
-+    if (len < FLEXCOMM_SPI_FIFOWR_LEN_MIN ||
-+        len > FLEXCOMM_SPI_FIFOWR_LEN_MAX) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid spi xfer len %d\n",
-+                      __func__, val);
-+        return 0;
-+    }
-+
-+    return len + 1;
-+}
-+
-+static inline uint32_t fifowr_len_mask(uint32_t val)
-+{
-+    return (1 << fifowr_len_bits(val)) - 1;
-+}
-+
-+static inline uint32_t fifowr_len_bytes(uint32_t val)
-+{
-+    return fifowr_len_bits(val) > 8 ? 2 : 1;
-+}
-+
-+static uint32_t flexcomm_spi_xfer_word(FlexcommState *s,
-+                                      uint32_t out_data,
-+                                      int bytes,
-+                                      bool be)
-+{
-+    uint32_t word = 0;
++    RT500State *s = RT500(obj);
 +    int i;
-+    int out = 0;
 +
-+    for (i = 0; i < bytes; i++) {
-+        if (be) {
-+            int byte_offset = bytes - i - 1;
-+            out = (out_data & (0xFF << byte_offset * 8)) >> byte_offset * 8;
-+            word |= ssi_transfer(s->spi, out) << byte_offset * 8;
-+        } else {
-+            out = (out_data & (0xFF << i * 8)) >> i * 8;
-+            word |= ssi_transfer(s->spi, out) << i * 8;
-+        }
++    /* Add ARMv7-M device */
++    object_initialize_child(obj, "armv7m", &s->armv7m, TYPE_ARMV7M);
++
++    for (i = 0; i < RT500_FLEXCOMM_NUM; i++) {
++        char id[] = "flexcommXX";
++
++        snprintf(id, sizeof(id), "flexcomm%d", i);
++        object_initialize_child(obj, id, &s->flexcomm[i], TYPE_FLEXCOMM);
++        DEVICE(&s->flexcomm[i])->id = g_strdup(id);
 +    }
 +
-+    return word;
-+}
++    object_initialize_child(obj, "clkctl0", &s->clkctl0, TYPE_RT500_CLKCTL0);
++    object_initialize_child(obj, "clkctl1", &s->clkctl1, TYPE_RT500_CLKCTL1);
 +
-+static uint32_t flexcomm_spi_get_ss_mask(FlexcommState *s,
-+                                        uint32_t txfifo_val)
-+{
-+    uint32_t slave_select_mask = 0;
-+    for (int i = 0; i < ARRAY_SIZE(s->cs); i++) {
-+        int tx_ss_pos = FLEXCOMM_SPI_FIFOWR_TXSSEL0_N_Pos + i;
-+        uint32_t state = (txfifo_val & (1 << tx_ss_pos)) >> tx_ss_pos;
-+        bool spol = s->regs.spi.CFG & (FLEXCOMM_SPI_CFG_SPOL0_Msk << i);
-+        int irq_level = state ? spol : !spol;
++    /* Initialize clocks */
++    s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
++    s->refclk = qdev_init_clock_in(DEVICE(s), "refclk", NULL, NULL, 0);
 +
-+        slave_select_mask |= (state << i);
-+        s->cs_asserted[i] = state;
-+        qemu_set_irq(s->cs[i], irq_level);
++    for (i = 0; i < RT500_FLEXSPI_NUM; i++) {
++        char id[] = "flexspiXX";
++
++        snprintf(id, sizeof(id), "flexspi%d", i);
++        object_initialize_child(obj, id, &s->flexspi[i], TYPE_FLEXSPI);
++        DEVICE(&s->flexspi[i])->id = g_strdup(id);
 +    }
 +
-+    return slave_select_mask;
++    for (i = 0; i < RT500_RSTCTL_NUM; i++) {
++        char id[] = "rstctlX";
++
++        snprintf(id, sizeof(id), "rstctl%d", i);
++        object_initialize_child(obj, id, &s->rstctl[i],
++                                TYPE_RT500_RSTCTL);
++        DEVICE(&s->rstctl[i])->id = g_strdup(id);
++    }
 +}
 +
-+static MemTxResult flexcomm_spi_reg_write(void *opaque, FlexcommState *s,
-+                                         int f, hwaddr addr, uint64_t value,
-+                                         unsigned size)
++static void rt500_realize_memory(RT500State *s, Error **errp)
 +{
-+    MemTxResult ret = MEMTX_OK;
-+    static uint32_t mask[REG_NO] = {
-+        [regi(CFG)] = BITS(11, 7) | BITS(5, 2) | BIT(0),
-+        [regi(DLY)] = BITS(15, 0),
-+        [regi(STAT)] = BIT(7) | BIT(5) | BIT(4),
-+        [regi(INTENSET)] = BIT(8) | BITS(5, 4),
-+        [regi(INTENCLR)] = BIT(8) | BITS(5, 4),
-+        [regi(DIV)] = BITS(15, 0),
-+        [regi(FIFOCFG)] = BITS(18, 12) | BITS(1, 0),
-+        [regi(FIFOSTAT)] = BITS(1, 0),
-+        [regi(FIFOTRIG)] = BITS(19, 16) | BITS(11, 8) | BITS(1, 0),
-+        [regi(FIFOINTENSET)] = BITS(3, 0),
-+        [regi(FIFOINTENCLR)] = BITS(3, 0),
-+        [regi(FIFOWR)] = BITS(27, 0),
++    const struct {
++        const char *name;
++        hwaddr base;
++        size_t size;
++        MemInfoType type;
++        int alias_for;
++    } mem_info[] = {
++        {
++            .name = "SRAM (code bus)",
++            .base = MMAP_SRAM_CODE_BASE,
++            .size = MMAP_SRAM_SIZE,
++            .type = MEM_RAM,
++        },
++        {
++            .name = "BOOT-ROM",
++            .base = MMAP_BOOT_ROM_BASE,
++            .size = MMAP_BOOT_ROM_SIZE,
++            .type = MEM_ROM,
++        },
++        {
++            .name = "Smart DMA RAM",
++            .base = MMAP_SDMA_RAM_BASE,
++            .size = MMAP_SDMA_RAM_SIZE,
++            .type = MEM_RAM,
++        },
++        {
++            .name = "SRAM (data bus)",
++            .base = MMAP_SRAM_DATA_BASE,
++            .size = MMAP_SRAM_SIZE,
++            .type = MEM_ALIAS,
++            .alias_for = 0
++        },
 +    };
++    int i;
 +
-+    /*
-+     * Allow 8/16 bits access to both the FIFOWR MSB and LSB half-words. The
-+     * former is required for updating the control bits while the latter for DMA
-+     * transfers of 1/2 byte(s) width.
-+     */
-+    if (!reg32_aligned_access(addr, size) && (addr / 4 * 4 != reg(FIFOWR))) {
-+        ret = MEMTX_ERROR;
-+        goto out;
-+    }
++    s->mem = g_malloc_n(2 * ARRAY_SIZE(mem_info), sizeof(MemoryRegion));
++    for (i = 0; i < ARRAY_SIZE(mem_info); i++) {
++        const char *name = mem_info[i].name;
++        int size = mem_info[i].size;
++        int type = mem_info[i].type;
++        int alias_for = mem_info[i].alias_for;
++        MemoryRegion *mem = &s->mem[i];
++        uint32_t base = mem_info[i].base;
++        MemoryRegion *sec_mem;
++        char sec_name[256];
 +
-+    switch (addr) {
-+    case reg(CFG):
-+    {
-+        reg32_write(&s->regs, addr, value, mask);
++        switch (type) {
++        case MEM_RAM:
++            memory_region_init_ram(mem, OBJECT(s), name, size, errp);
++            break;
++        case MEM_ROM:
++            memory_region_init_rom(mem, OBJECT(s), name, size, errp);
++            break;
++        case MEM_ALIAS:
++        {
++            MemoryRegion *orig = &s->mem[alias_for];
 +
-+        if (s->regs.spi.CFG_b.ENABLE) {
-+            qemu_chr_fe_accept_input(&s->chr);
-+        }
-+
-+        break;
-+    }
-+    case reg(INTENCLR):
-+    {
-+        reg32_write(&s->regs, addr, value, mask);
-+        s->regs.spi.INTENSET &= ~s->regs.spi.INTENCLR;
-+        break;
-+    }
-+    case reg(FIFOCFG):
-+    {
-+        reg32_write(&s->regs, addr, value, mask);
-+        if (s->regs.spi.FIFOCFG_b.EMPTYRX) {
-+            s->regs.spi.FIFOCFG_b.EMPTYRX = 0;
-+            fifo32_reset(&s->rx_fifo);
-+        }
-+        if (s->regs.spi.FIFOCFG_b.EMPTYTX) {
-+            s->regs.spi.FIFOCFG_b.EMPTYTX = 0;
-+            fifo32_reset(&s->tx_fifo);
-+        }
-+        if (s->regs.spi.FIFOCFG_b.ENABLERX) {
-+            qemu_chr_fe_accept_input(&s->chr);
-+        }
-+        break;
-+    }
-+    case reg(FIFOSTAT):
-+    {
-+        bool rxerr = s->regs.spi.FIFOSTAT_b.RXERR;
-+        bool txerr = s->regs.spi.FIFOSTAT_b.TXERR;
-+
-+        reg32_write(&s->regs, addr, value, mask);
-+
-+        if (rxerr && s->regs.spi.FIFOSTAT_b.RXERR) {
-+            rxerr = false;
-+        }
-+        if (txerr && s->regs.spi.FIFOSTAT_b.TXERR) {
-+            txerr = false;
-+        }
-+
-+        s->regs.spi.FIFOSTAT_b.RXERR = rxerr;
-+        s->regs.spi.FIFOSTAT_b.TXERR = txerr;
-+        break;
-+    }
-+    case reg(FIFOINTENSET):
-+    {
-+        s->regs.spi.FIFOINTENSET |= value & mask[addr / 4];
-+        break;
-+    }
-+    case reg(FIFOINTENCLR):
-+    {
-+        reg32_write(&s->regs, addr, value, mask);
-+        s->regs.spi.FIFOINTENSET &= ~s->regs.spi.FIFOINTENCLR;
-+        break;
-+    }
-+    /* update control bits but don't push into the FIFO */
-+    case reg(FIFOWR) + 2:
-+    {
-+        if (size > 2) {
-+            ret = MEMTX_ERROR;
++            memory_region_init_alias(mem, OBJECT(s), name, orig, 0, size);
 +            break;
 +        }
-+        if (value != 0) {
-+            s->spi_tx_ctrl = value << 16;
-+        }
-+        break;
-+    }
-+    /* update control bits but don't push into the FIFO */
-+    case reg(FIFOWR) + 3:
-+    {
-+        if (size > 1) {
-+            ret = MEMTX_ERROR;
-+            break;
-+        }
-+        if (value != 0) {
-+            s->spi_tx_ctrl = value << 24;
-+        }
-+        break;
-+    }
-+    case reg(FIFOWR):
-+    {
-+        /* fifo value contains both data and control bits */
-+        uint32_t txfifo_val;
-+
-+        if (size > 2 && (value & ~FLEXCOMM_SPI_FIFOWR_TXDATA_Msk) != 0) {
-+            /* non-zero writes to control bits updates them */
-+            s->spi_tx_ctrl = value & ~FLEXCOMM_SPI_FIFOWR_TXDATA_Msk;
-+            txfifo_val = value;
-+        } else {
-+            /* otherwise reuse previous control bits */
-+            txfifo_val = value | s->spi_tx_ctrl;
++        default:
++            g_assert_not_reached();
 +        }
 +
-+        if (!fifo32_is_full(&s->tx_fifo)) {
-+            fifo32_push(&s->tx_fifo, txfifo_val);
++        memory_region_add_subregion(get_system_memory(), base, mem);
++
++        /* create secure alias */
++        snprintf(sec_name, sizeof(sec_name), "SECURE %s", name);
++        sec_mem = &s->mem[ARRAY_SIZE(mem_info) + i];
++        if (type == MEM_ALIAS) {
++            mem = &s->mem[alias_for];
 +        }
++        memory_region_init_alias(sec_mem, OBJECT(s), sec_name, mem, 0, size);
++        memory_region_add_subregion(get_system_memory(), base + SECURE_OFFSET,
++                                    sec_mem);
 +
-+        if (!s->regs.spi.CFG_b.ENABLE || !s->regs.spi.FIFOCFG_b.ENABLETX) {
-+            break;
-+        }
++        if (mem_info[i].type == MEM_ROM) {
++            char *fname = qemu_find_file(QEMU_FILE_TYPE_BIOS, "rt500.rom");
 +
-+        /*
-+         * On loopback mode we just insert the values in the TX FIFO. On slave
-+         * mode master needs to initiate the SPI transfer.
-+         */
-+        if (s->regs.spi.CFG_b.LOOP || !s->regs.spi.CFG_b.MASTER) {
-+            break;
-+        }
++            if (fname) {
++                int fsize = get_image_size(fname);
++                int ret;
 +
-+        while (!fifo32_is_empty(&s->tx_fifo)) {
-+            txfifo_val = fifo32_pop(&s->tx_fifo);
-+
-+            uint32_t ss_mask = flexcomm_spi_get_ss_mask(s, txfifo_val);
-+            uint32_t data = txfifo_val & fifowr_len_mask(txfifo_val);
-+            uint8_t bytes = fifowr_len_bytes(txfifo_val);
-+            bool msb = !s->regs.spi.CFG_b.LSBF;
-+            uint32_t val32;
-+
-+            val32 = flexcomm_spi_xfer_word(s, data, bytes, msb);
-+
-+            if (!fifo32_is_full(&s->rx_fifo)) {
-+                /* Append the mask that informs which client is active */
-+                val32 |= (ss_mask << FLEXCOMM_SPI_FIFORD_RXSSEL0_N_Pos);
-+                fifo32_push(&s->rx_fifo, val32);
-+            }
-+
-+            /* If this is the end of the transfer raise the CS line */
-+            if (txfifo_val & FLEXCOMM_SPI_FIFOWR_EOT_Msk) {
-+                bool spol[ARRAY_SIZE(s->cs)] = {
-+                    s->regs.spi.CFG_b.SPOL0,
-+                    s->regs.spi.CFG_b.SPOL1,
-+                    s->regs.spi.CFG_b.SPOL2,
-+                    s->regs.spi.CFG_b.SPOL3,
-+                };
-+
-+                for (int i = 0; i < ARRAY_SIZE(s->cs); i++) {
-+                    if (s->cs_asserted[i]) {
-+                        s->cs_asserted[i] = false;
-+                        qemu_set_irq(s->cs[i], !spol[i]);
++                if (fsize > size) {
++                    error_setg(errp, "rom file too big: %d > %d", fsize, size);
++                } else {
++                    ret = load_image_targphys(fname, base, size);
++                    if (ret < 0) {
++                        error_setg(errp, "could not load rom: %s", fname);
 +                    }
 +                }
 +            }
++            g_free(fname);
 +        }
-+        break;
 +    }
-+    default:
-+        reg32_write(&s->regs, addr, value, mask);
-+        break;
-+    }
-+
-+    flexcomm_spi_irq_update(s);
-+
-+out:
-+    trace_flexcomm_spi_reg_write(DEVICE(s)->id, reg_names[addr], addr, value);
-+    return ret;
 +}
 +
-+static const FlexcommFunctionOps flexcomm_spi_ops = {
-+    .select = flexcomm_spi_select,
-+    .reg_read = flexcomm_spi_reg_read,
-+    .reg_write = flexcomm_spi_reg_write,
++static void rt500_realize(DeviceState *dev, Error **errp)
++{
++    MachineState *ms = MACHINE(qdev_get_machine());
++    RT500State *s = RT500(dev);
++    int i;
++
++    rt500_realize_memory(s, errp);
++
++    /* Setup ARMv7M CPU */
++    qdev_prop_set_uint32(DEVICE(&s->armv7m), "num-irq",
++                         RT500_FLEXCOMM16_IRQn + 1);
++    qdev_prop_set_uint8(DEVICE(&s->armv7m), "num-prio-bits", 3);
++    qdev_prop_set_string(DEVICE(&s->armv7m), "cpu-type", ms->cpu_type);
++    object_property_set_link(OBJECT(&s->armv7m), "memory",
++                             OBJECT(get_system_memory()), &error_abort);
++    if (!ms->kernel_filename) {
++        qdev_prop_set_uint32(DEVICE(&s->armv7m), "init-nsvtor",
++                             MMAP_BOOT_ROM_BASE);
++        qdev_prop_set_uint32(DEVICE(&s->armv7m), "init-svtor",
++                             MMAP_BOOT_ROM_BASE + SECURE_OFFSET);
++    }
++
++    qdev_connect_clock_in(DEVICE(&s->armv7m), "cpuclk", s->sysclk);
++    qdev_connect_clock_in(DEVICE(&s->armv7m), "refclk",
++                     qdev_get_clock_out(DEVICE(&s->clkctl0), "systick_clk"));
++
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(&s->armv7m), errp);
++    qdev_connect_gpio_out_named(DEVICE(&s->armv7m), "SYSRESETREQ", 0,
++                                qemu_allocate_irq(&do_sys_reset, NULL, 0));
++
++    /* Setup FLEXCOMM */
++    for (i = 0; i < RT500_FLEXCOMM_NUM; i++) {
++        const uint32_t addr[] = {
++            RT500_FLEXCOMM0_BASE, RT500_FLEXCOMM1_BASE, RT500_FLEXCOMM2_BASE,
++            RT500_FLEXCOMM3_BASE, RT500_FLEXCOMM4_BASE, RT500_FLEXCOMM5_BASE,
++            RT500_FLEXCOMM6_BASE, RT500_FLEXCOMM7_BASE, RT500_FLEXCOMM8_BASE,
++            RT500_FLEXCOMM8_BASE, RT500_FLEXCOMM10_BASE, RT500_FLEXCOMM11_BASE,
++            RT500_FLEXCOMM12_BASE, RT500_FLEXCOMM13_BASE, RT500_FLEXCOMM14_BASE,
++            RT500_FLEXCOMM15_BASE, RT500_FLEXCOMM16_BASE
++        };
++        const int irq[] = {
++            RT500_FLEXCOMM0_IRQn, RT500_FLEXCOMM1_IRQn, RT500_FLEXCOMM2_IRQn,
++            RT500_FLEXCOMM3_IRQn, RT500_FLEXCOMM4_IRQn, RT500_FLEXCOMM5_IRQn,
++            RT500_FLEXCOMM6_IRQn, RT500_FLEXCOMM7_IRQn, RT500_FLEXCOMM8_IRQn,
++            RT500_FLEXCOMM9_IRQn, RT500_FLEXCOMM10_IRQn, RT500_FLEXCOMM11_IRQn,
++            RT500_FLEXCOMM12_IRQn, RT500_FLEXCOMM13_IRQn, RT500_FLEXCOMM14_IRQn,
++            RT500_FLEXCOMM15_IRQn, RT500_FLEXCOMM16_IRQn
++        };
++        const int functions[] = {
++            FLEXCOMM_FULL, FLEXCOMM_FULL, FLEXCOMM_FULL,
++            FLEXCOMM_FULL, FLEXCOMM_FULL, FLEXCOMM_FULL,
++            FLEXCOMM_FULL, FLEXCOMM_FULL, FLEXCOMM_FULL,
++            FLEXCOMM_FULL, FLEXCOMM_FULL, FLEXCOMM_FULL,
++            FLEXCOMM_FULL, FLEXCOMM_FULL, FLEXCOMM_HSSPI,
++            FLEXCOMM_PMICI2C, FLEXCOMM_HSSPI
++        };
++        DeviceState *ds = DEVICE(&s->flexcomm[i]);
++        char id[] = "flexcommXX";
++
++        snprintf(id, sizeof(id), "flexcomm%d", i);
++        qdev_prop_set_uint32(ds, "functions", functions[i]);
++        qdev_prop_set_chr(ds, "chardev", qemu_chr_find(id));
++        sysbus_realize_and_unref(SYS_BUS_DEVICE(ds), errp);
++        sysbus_mmio_map(SYS_BUS_DEVICE(ds), 0, addr[i]);
++        sysbus_connect_irq(SYS_BUS_DEVICE(ds), 0,
++                           qdev_get_gpio_in(DEVICE(&s->armv7m), irq[i]));
++    }
++
++    /* Setup CTLCTL0 */
++    qdev_connect_clock_in(DEVICE(&s->clkctl0), "sysclk", s->sysclk);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(DEVICE(&s->clkctl0)), errp);
++    sysbus_mmio_map(SYS_BUS_DEVICE(DEVICE(&s->clkctl0)), 0, RT500_CLKCTL0_BASE);
++
++    /* Setup CTLCTL1 */
++    qdev_connect_clock_in(DEVICE(&s->clkctl1), "sysclk", s->sysclk);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(DEVICE(&s->clkctl1)), errp);
++    sysbus_mmio_map(SYS_BUS_DEVICE(DEVICE(&s->clkctl1)), 0, RT500_CLKCTL1_BASE);
++
++    /* Setup FlexSPI */
++    for (i = 0; i < RT500_FLEXSPI_NUM; i++) {
++        const uint32_t addr[] = {
++            RT500_FLEXSPI0_BASE, RT500_FLEXSPI1_BASE
++        };
++        const uint32_t mmap_base[] = {
++            MMAP_FLEXSPI0_BASE, MMAP_FLEXSPI1_BASE
++        };
++        const uint32_t mmap_size[] = {
++            MMAP_FLEXSPI0_SIZE, MMAP_FLEXSPI1_SIZE,
++        };
++        DeviceState *ds = DEVICE(&s->flexspi[i]);
++
++        qdev_prop_set_uint32(ds, "mmap_base", mmap_base[i]);
++        qdev_prop_set_uint32(ds, "mmap_size", mmap_size[i]);
++        sysbus_realize_and_unref(SYS_BUS_DEVICE(ds), errp);
++        sysbus_mmio_map(SYS_BUS_DEVICE(ds), 0, addr[i]);
++    }
++
++    /* Setup reset controllers */
++    for (i = 0; i < RT500_RSTCTL_NUM; i++) {
++        DeviceState *ds = DEVICE(&s->rstctl[i]);
++
++        const uint32_t addr[] = {
++            RT500_RSTCTL0_BASE, RT500_RSTCTL1_BASE
++        };
++
++        qdev_prop_set_uint32(ds, "num", i);
++        sysbus_realize_and_unref(SYS_BUS_DEVICE(ds), errp);
++        sysbus_mmio_map(SYS_BUS_DEVICE(ds), 0, addr[i]);
++    }
++}
++
++static void rt500_finalize(Object *obj)
++{
++    RT500State *s = RT500(obj);
++
++    g_free(s->mem);
++}
++
++static void rt500_reset(DeviceState *ds)
++{
++}
++
++static Property rt500_properties[] = {
++    DEFINE_PROP_END_OF_LIST(),
 +};
 +
-+void flexcomm_spi_init(FlexcommState *s)
++static void rt500_class_init(ObjectClass *oc, void *data)
 +{
-+    s->spi = ssi_create_bus(DEVICE(s), "spi");
-+    qdev_init_gpio_out_named(DEVICE(s), &s->cs[0], "cs", ARRAY_SIZE(s->cs));
++    DeviceClass *dc = DEVICE_CLASS(oc);
++
++    device_class_set_props(dc, rt500_properties);
++    dc->realize = rt500_realize;
++    dc->desc = "RT500 (ARM Cortex-M33)";
++    dc->reset = rt500_reset;
 +}
 +
-+/* Register the SPI operations with the flexcomm upper layer */
-+void flexcomm_spi_register(void)
++static const TypeInfo rt500_type_info = {
++    .name = TYPE_RT500,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(RT500State),
++    .instance_init = rt500_init,
++    .instance_finalize = rt500_finalize,
++    .class_init = rt500_class_init,
++};
++
++static void rt500_register_types(void)
 +{
-+    Error *err = NULL;
-+
-+    if (!flexcomm_register_ops(FLEXCOMM_FUNC_SPI, NULL,
-+                               &flexcomm_spi_ops, &err)) {
-+        error_report_err(err);
-+    }
++    type_register_static(&rt500_type_info);
 +}
-diff --git a/hw/ssi/meson.build b/hw/ssi/meson.build
-index b999aeb027..57d3e14727 100644
---- a/hw/ssi/meson.build
-+++ b/hw/ssi/meson.build
-@@ -12,3 +12,4 @@ system_ss.add(when: 'CONFIG_IMX', if_true: files('imx_spi.c'))
- system_ss.add(when: 'CONFIG_OMAP', if_true: files('omap_spi.c'))
- system_ss.add(when: 'CONFIG_IBEX', if_true: files('ibex_spi_host.c'))
- system_ss.add(when: 'CONFIG_BCM2835_SPI', if_true: files('bcm2835_spi.c'))
-+system_ss.add(when: 'CONFIG_FLEXCOMM', if_true: files('flexcomm_spi.c'))
-diff --git a/hw/ssi/trace-events b/hw/ssi/trace-events
-index 2d5bd2b83d..5caa1c17ac 100644
---- a/hw/ssi/trace-events
-+++ b/hw/ssi/trace-events
-@@ -32,3 +32,11 @@ ibex_spi_host_reset(const char *msg) "%s"
- ibex_spi_host_transfer(uint32_t tx_data, uint32_t rx_data) "tx_data: 0x%" PRIx32 " rx_data: @0x%" PRIx32
- ibex_spi_host_write(uint64_t addr, uint32_t size, uint64_t data) "@0x%" PRIx64 " size %u: 0x%" PRIx64
- ibex_spi_host_read(uint64_t addr, uint32_t size) "@0x%" PRIx64 " size %u:"
 +
-+# flexcomm_spi.c
-+flexcomm_spi_reg_read(const char *id, const char *reg_name, uint32_t addr, uint32_t val) " %s: %s[0x%04x] -> 0x%08x"
-+flexcomm_spi_reg_write(const char *id, const char *reg_name, uint32_t addr, uint32_t val) "%s: %s[0x%04x] <- 0x%08x"
-+flexcomm_spi_fifostat(const char *id, uint32_t fifostat, uint32_t fifoinstat) "%s: %08x %08x"
-+flexcomm_spi_irq(const char *id, bool irq, bool fifoirqs, bool perirqs, bool enabled) "%s: %d %d %d %d"
-+flexcomm_spi_chr_rx_space(const char *id, uint32_t rx) "%s: %d"
-+flexcomm_spi_chr_rx(const char *id) "%s"
-diff --git a/include/hw/misc/flexcomm.h b/include/hw/misc/flexcomm.h
-index 3d042a3511..62f327925d 100644
---- a/include/hw/misc/flexcomm.h
-+++ b/include/hw/misc/flexcomm.h
-@@ -15,9 +15,12 @@
- #include "hw/sysbus.h"
- #include "chardev/char-fe.h"
- #include "hw/i2c/i2c.h"
-+#include "hw/ssi/ssi.h"
- #include "hw/arm/svd/flexcomm.h"
- #include "hw/arm/svd/flexcomm_usart.h"
- #include "hw/arm/svd/flexcomm_i2c.h"
-+#undef EOF
-+#include "hw/arm/svd/flexcomm_spi.h"
- #include "qemu/fifo32.h"
- 
- #define TYPE_FLEXCOMM "flexcomm"
-@@ -49,6 +52,7 @@ typedef struct {
-         FLEXCOMM_Type flex;
-         FLEXCOMM_USART_Type usart;
-         FLEXCOMM_I2C_Type i2c;
-+        FLEXCOMM_SPI_Type spi;
-     } regs;
-     uint32_t functions;
-     qemu_irq irq;
-@@ -57,6 +61,10 @@ typedef struct {
-     Fifo32 tx_fifo;
-     Fifo32 rx_fifo;
-     I2CBus *i2c;
-+    SSIBus *spi;
-+    qemu_irq cs[4];
-+    bool cs_asserted[4];
-+    uint32_t spi_tx_ctrl;
- } FlexcommState;
- 
- typedef struct {
-diff --git a/include/hw/ssi/flexcomm_spi.h b/include/hw/ssi/flexcomm_spi.h
++type_init(rt500_register_types)
+diff --git a/hw/arm/svd/meson.build b/hw/arm/svd/meson.build
+index 72a7421c6f..930a8b7343 100644
+--- a/hw/arm/svd/meson.build
++++ b/hw/arm/svd/meson.build
+@@ -34,3 +34,9 @@ genh += custom_target('rt500_rstctl1.h',
+                       output: 'rt500_rstctl1.h',
+                       input: 'MIMXRT595S_cm33.xml',
+                       command: [ svd_gen_header, '-i', '@INPUT@', '-o', '@OUTPUT@', '-p', 'RSTCTL1', '-t', 'RT500_RSTCTL1'])
++genh += custom_target('rt500.h',
++                      output: 'rt500.h',
++                      input: 'MIMXRT595S_cm33.xml',
++                      command: [ svd_gen_header,'-i', '@INPUT@', '-o', '@OUTPUT@', '-s', 'RT500',
++		                 '-p', 'FLEXCOMM0', '-p', 'CLKCTL0', '-p', 'CLKCTL1',
++				 '-p', 'FLEXSPI0', '-p', 'FLEXSPI1', '-p', 'RSTCTL0', '-p', 'RSTCTL1'])
+diff --git a/include/hw/arm/rt500.h b/include/hw/arm/rt500.h
 new file mode 100644
-index 0000000000..d5567aa1e6
+index 0000000000..8ca7972f8a
 --- /dev/null
-+++ b/include/hw/ssi/flexcomm_spi.h
-@@ -0,0 +1,20 @@
++++ b/include/hw/arm/rt500.h
+@@ -0,0 +1,49 @@
 +/*
-+ * QEMU model for NXP's FLEXCOMM SPI
++ * i.MX RT500 platforms.
 + *
 + * Copyright (c) 2024 Google LLC
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
++ * Contributions after 2012-01-13 are licensed under the terms of the
++ * GNU GPL, version 2 or (at your option) any later version.
 + */
 +
-+#ifndef HW_CHAR_FLEXCOMM_SPI_H
-+#define HW_CHAR_FLEXCOMM_SPI_H
++#ifndef HW_ARM_RT500_H
++#define HW_ARM_RT500_H
 +
++#include "qemu/osdep.h"
++#include "qemu/units.h"
++#include "hw/arm/boot.h"
++#include "hw/arm/armv7m.h"
 +#include "hw/misc/flexcomm.h"
++#include "hw/misc/rt500_clkctl0.h"
++#include "hw/misc/rt500_clkctl1.h"
++#include "hw/ssi/flexspi.h"
++#include "hw/misc/rt500_rstctl.h"
 +
-+void flexcomm_spi_init(FlexcommState *s);
-+void flexcomm_spi_register(void);
++#define TYPE_RT500 "rt500"
++#define RT500(obj) OBJECT_CHECK(RT500State, (obj), TYPE_RT500)
 +
-+#endif /* HW_CHAR_FLEXCOMM_SPI_H */
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index 3491e2003b..1ddd174576 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -150,6 +150,8 @@ if have_system
-       meson.project_source_root() / 'hw/char/flexcomm_usart.c',
-       meson.project_source_root() / 'hw/i2c/flexcomm_i2c.c',
-       meson.project_source_root() / 'hw/i2c/core.c',
-+      meson.project_source_root() / 'hw/ssi/flexcomm_spi.c',
-+      meson.project_source_root() / 'hw/ssi/ssi.c',
-      ],
-     'test-flexcomm-usart': [
-       hwcore, chardev, qom, migration,
-@@ -159,6 +161,8 @@ if have_system
-       meson.project_source_root() / 'hw/char/flexcomm_usart.c',
-       meson.project_source_root() / 'hw/i2c/flexcomm_i2c.c',
-       meson.project_source_root() / 'hw/i2c/core.c',
-+      meson.project_source_root() / 'hw/ssi/flexcomm_spi.c',
-+      meson.project_source_root() / 'hw/ssi/ssi.c',
-     ],
-     'test-flexcomm-i2c': [
-       hwcore, chardev, qom, migration,
-@@ -169,6 +173,9 @@ if have_system
-       meson.project_source_root() / 'hw/i2c/flexcomm_i2c.c',
-       meson.project_source_root() / 'hw/i2c/core.c',
-       'i2c_tester.c',
-+      meson.project_source_root() / 'hw/ssi/flexcomm_spi.c',
-+      meson.project_source_root() / 'hw/ssi/ssi.c',
-+    ],
-     ],
-   }
-   if config_host_data.get('CONFIG_INOTIFY1')
++#define RT500_FLEXCOMM_NUM (17)
++#define RT500_FLEXSPI_NUM (2)
++#define RT500_RSTCTL_NUM (2)
++
++typedef struct RT500State {
++    /*< private >*/
++    SysBusDevice parent_obj;
++
++    /*< public >*/
++    ARMv7MState armv7m;
++    MemoryRegion *mem;
++    FlexcommState flexcomm[RT500_FLEXCOMM_NUM];
++    RT500ClkCtl0State clkctl0;
++    RT500ClkCtl1State clkctl1;
++    FlexSpiState flexspi[RT500_FLEXSPI_NUM];
++    RT500RstCtlState rstctl[RT500_RSTCTL_NUM];
++
++    Clock *sysclk;
++    Clock *refclk;
++} RT500State;
++
++#endif /* HW_ARM_RT500_H */
 -- 
 2.46.0.rc2.264.g509ed76dc8-goog
 
