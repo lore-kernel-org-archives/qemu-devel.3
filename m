@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ABF0C3DA7F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C115C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:18:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb49f-0004Rq-Hy; Mon, 05 Aug 2024 16:18:09 -0400
+	id 1sb49Q-0003RA-23; Mon, 05 Aug 2024 16:17:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3bzOxZgUKCtYL2NAH8GG8D6.4GEI6EM-56N6DFGF8FM.GJ8@flex--tavip.bounces.google.com>)
- id 1sb49V-0003t9-Vg
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:58 -0400
-Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
+ <3ZDOxZgUKCssArCz6x55x2v.t537v3B-uvCv2454x4B.58x@flex--tavip.bounces.google.com>)
+ id 1sb49L-00036l-6P
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:47 -0400
+Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3bzOxZgUKCtYL2NAH8GG8D6.4GEI6EM-56N6DFGF8FM.GJ8@flex--tavip.bounces.google.com>)
- id 1sb49T-0001Vp-45
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:57 -0400
-Received: by mail-pl1-x64a.google.com with SMTP id
- d9443c01a7336-1ff3dfaa090so56173155ad.3
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 13:17:52 -0700 (PDT)
+ <3ZDOxZgUKCssArCz6x55x2v.t537v3B-uvCv2454x4B.58x@flex--tavip.bounces.google.com>)
+ id 1sb49H-0001Td-84
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:46 -0400
+Received: by mail-yw1-x114a.google.com with SMTP id
+ 00721157ae682-664916e5b40so2092217b3.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 13:17:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1722889071; x=1723493871; darn=nongnu.org;
+ d=google.com; s=20230601; t=1722889060; x=1723493860; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=wzBmDOceMrnHqMQIWuQIRSZOR9yk0Yvpmsomz+UG+gg=;
- b=O3PgGvJq0KeHXh/UXMpemJC46Dp/bohzJ8pJdeBz8zkAVHh00+KxRhlNPael4tibPs
- SCT916P9BE11j++9g/WyWc3LzOVRwg0N7dqsdNxTDCQBeDaSiDunnKYVtb0oH8uj3to7
- ZC/aTkGUQllEiXgJmh68hW4IiD9mep6hB4HoS6Z0Ywe61a5lf38KAX8BDjq6I9E4y6yO
- oH4FH00VlXBU/bIottUWf/iYKU0SRbRGMMhphf4Xc5RUQyfveRdkMWaPf3iNULK7gB2z
- KAPQt5TGAWGFydnWxMSFebUKoPSv6NcwfISoAAmqRvLCdSzS2q2ZVXanMPbg25wpW6tU
- jMlg==
+ bh=4nDAaRYoPQUybXMrCeQ4yM0etvHUlZuu5xJy/FcdLbg=;
+ b=VjJbhMzZZvfUmILjLUPhDyy594hs6XjOdfWPM3GnzoDbDjemVaNqYgEkmz/5R1M7GS
+ Z9kJnQhP01Crp/H2Ekl82mH9cJXpwNXVnB83yp15vf0kwNtP8BlQhFoXqtyyawnUmnNm
+ lxBR82csc51d9rZIYr4jZHtytVQ4Jfy32IasdgBRr0WKFstMTpW8R+ToWJfeVbkCykEt
+ S0GtxUuMQr0wWTMHz+FUv155Go4uwFZd+wHC+Pn0tJF+TbajSdJUlvXTo1okLFKBz2jn
+ dgBzdYJpk7gcAkWjIcZtN6+eL5RzO1RQNGpBbWS4N6f1rG3emaUs73glG1cU4xydzrbf
+ KESw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722889071; x=1723493871;
+ d=1e100.net; s=20230601; t=1722889060; x=1723493860;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wzBmDOceMrnHqMQIWuQIRSZOR9yk0Yvpmsomz+UG+gg=;
- b=Hug4BOmX92WNsDgLFuMYTWlpnpmjCy3fcxheXK4q26yJ6b5XW2+izHgJE//XAlbDsy
- VKAjC+V3RDWOZj6q9urQ8Za5lGVXd6dBE7K1pAdkvb9782c76CoEb8xu5IYwn5FH8Qxc
- VgNcso/5b268HonZijqW/t6ff87ITwgcN9jrOMVtEztoZ7YddxgYPOxhcKIaFyjATOIE
- EjIRirrF0AWz/nBN9LKZEIuhUPrg9YYJbpQn5SMeIcSWVI3HcQ/LrmJBQVyjRHJs6n8p
- Gc3xFW1ZGTfH7a9IWjoOP4rsG+6W7b5I8RZuEIa7yfMgGQxrUWVuhr0CzxWq8HBxT5tr
- 4xXQ==
-X-Gm-Message-State: AOJu0YwVdMTDwidKOM/t2FpA0op3OZk4LVcq08DGaIgxM1RKttGTJ86g
- SUG/4t2LHTHk3f/uU8FdGaNLyUcUp04YgGROlRxaY+CSc76PO+9xECREz5CGjNEW2OVqZiedcI4
- xYsyLRcl83A474YbWONlAajfdD18e4tx4cBCc0xiyg8KI4k6eAqdqXTB5cIoo39jaA0H23RAB0e
- Dgk6eBkays2TgX1ydQfNhUgU9Pqw==
-X-Google-Smtp-Source: AGHT+IHVi7BSDYYhjOka8/Q/qJLSQwS1b7zusawaDngOT+BQcrbPW5yMM/adD7GWmfTork0iu8CQc2L59Q==
+ bh=4nDAaRYoPQUybXMrCeQ4yM0etvHUlZuu5xJy/FcdLbg=;
+ b=EF3aG5WuOVhf0rtAwG+MZ8GBeIZ6rk1vkPZkWCX7OVvlTLTCtGaBg9L0ENU9mhzGBO
+ jpJbGEgL7mYbsSlZv4kvJh0LN2/P8D/qyulGr9xveYUUlc6+uUcxMlDvEwY2qQns6igL
+ Lj5uS52sxvfhQ8wUb/OeYZENDsJDAkuExCEDz7vmhshWHhmBApsa1nNFFY1IluIOJn4J
+ Mlkw5FMxM6qGOoi6rbxXDNvGh+DpPpBLZHZgo+Ou7OCFSOk6LmNgIZtBoGgZhRjyFt5t
+ hWJqBZlwry5ALlN25FE9EM7Qstn+vDJmK4WkXJVHZ3NFOINpprTHQjxD/FJUEgbO4fgO
+ 6xzA==
+X-Gm-Message-State: AOJu0Yz8QNx4GCelUZlArcTpKuh50xOQFx/8elefxhaQqczS4TP2Gr13
+ LdwseFNfQm3XKPq32jxFOaqmJdgm881qcDIhEwy8im94XJr4NBoZPT4ceGIib8JZI676U1S3oXS
+ 5WaVY45pPvMVB+GRe5iDYLpfg4bnzenoTk42IASi5iz4qf4ygtKW/nomjthmMZ9RMe06rBTY062
+ xR/rvXOgPxTd5AnLgkIItqGG+irg==
+X-Google-Smtp-Source: AGHT+IEbUnH+6fvsnahVEKUA+AUBoPinsmnz1TNDh7dXnwnN24dOVdyWczd/BAVBFAEQ1m9fDZI+fItK6w==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a17:902:ec85:b0:1fb:1ae6:6ab9
- with SMTP id
- d9443c01a7336-1ff570db092mr4983795ad.0.1722889071130; Mon, 05 Aug 2024
- 13:17:51 -0700 (PDT)
-Date: Mon,  5 Aug 2024 13:17:12 -0700
+ (user=tavip job=sendgmr) by 2002:a0d:c843:0:b0:665:7b0d:ed27 with
+ SMTP id
+ 00721157ae682-688b7457a53mr986987b3.2.1722889060159; Mon, 05 Aug 2024
+ 13:17:40 -0700 (PDT)
+Date: Mon,  5 Aug 2024 13:17:06 -0700
 In-Reply-To: <20240805201719.2345596-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20240805201719.2345596-1-tavip@google.com>
 X-Mailer: git-send-email 2.46.0.rc2.264.g509ed76dc8-goog
-Message-ID: <20240805201719.2345596-18-tavip@google.com>
-Subject: [RFC PATCH 17/23] test/unit: add unit tests for flexcomm spi
+Message-ID: <20240805201719.2345596-12-tavip@google.com>
+Subject: [RFC PATCH 11/23] test/unit: add flexcomm usart unit test
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -71,16 +71,16 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  marcandre.lureau@redhat.com, alistair@alistair23.me, berrange@redhat.com, 
  philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, bleal@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
- envelope-from=3bzOxZgUKCtYL2NAH8GG8D6.4GEI6EM-56N6DFGF8FM.GJ8@flex--tavip.bounces.google.com;
- helo=mail-pl1-x64a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
+ envelope-from=3ZDOxZgUKCssArCz6x55x2v.t537v3B-uvCv2454x4B.58x@flex--tavip.bounces.google.com;
+ helo=mail-yw1-x114a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
 X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,50 +96,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sebastian Ene <sebastianene@google.com>
+Add polling and irq unit tests for the flexcomm usart device model.
 
-From: Sebastian Ene <sebastianene@google.com>
-
-Add master and loopback tests for flexcomm spi.
-
-Signed-off-by: Sebastian Ene <sebastianene@google.com>
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- tests/unit/meson.build         |  11 ++
- tests/unit/test-flexcomm-spi.c | 204 +++++++++++++++++++++++++++++++++
- 2 files changed, 215 insertions(+)
- create mode 100644 tests/unit/test-flexcomm-spi.c
+ tests/unit/meson.build           |   7 +
+ tests/unit/test-flexcomm-usart.c | 321 +++++++++++++++++++++++++++++++
+ 2 files changed, 328 insertions(+)
+ create mode 100644 tests/unit/test-flexcomm-usart.c
 
 diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index 1ddd174576..7a28e7b521 100644
+index 70e816c034..dcfd2e661c 100644
 --- a/tests/unit/meson.build
 +++ b/tests/unit/meson.build
-@@ -176,6 +176,17 @@ if have_system
-       meson.project_source_root() / 'hw/ssi/flexcomm_spi.c',
-       meson.project_source_root() / 'hw/ssi/ssi.c',
-     ],
-+    'test-flexcomm-spi': [
-+      qom, hwcore, migration, chardev,
+@@ -149,6 +149,13 @@ if have_system
+       meson.project_source_root() / 'hw/misc/flexcomm.c',
+       meson.project_source_root() / 'hw/char/flexcomm_usart.c',
+      ],
++    'test-flexcomm-usart': [
++      hwcore, chardev, qom, migration,
 +      meson.project_source_root() / 'hw/core/gpio.c',
 +      meson.project_source_root() / 'tests/unit/sysbus-mock.c',
 +      meson.project_source_root() / 'hw/misc/flexcomm.c',
 +      meson.project_source_root() / 'hw/char/flexcomm_usart.c',
-+      meson.project_source_root() / 'hw/i2c/flexcomm_i2c.c',
-+      meson.project_source_root() / 'hw/i2c/core.c',
-+      meson.project_source_root() / 'hw/ssi/flexcomm_spi.c',
-+      meson.project_source_root() / 'hw/ssi/ssi.c',
-+      'spi_tester.c',
-     ],
++    ],
    }
    if config_host_data.get('CONFIG_INOTIFY1')
-diff --git a/tests/unit/test-flexcomm-spi.c b/tests/unit/test-flexcomm-spi.c
+     tests += {'test-util-filemonitor': []}
+diff --git a/tests/unit/test-flexcomm-usart.c b/tests/unit/test-flexcomm-usart.c
 new file mode 100644
-index 0000000000..4aaf511d70
+index 0000000000..645f3b4c26
 --- /dev/null
-+++ b/tests/unit/test-flexcomm-spi.c
-@@ -0,0 +1,204 @@
++++ b/tests/unit/test-flexcomm-usart.c
+@@ -0,0 +1,321 @@
 +/*
-+ * Copyright (c) 2024 Google LLC.
++ * Copyright (C) 2024 Google LLC
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
@@ -160,30 +151,23 @@ index 0000000000..4aaf511d70
 +#include "exec/memory.h"
 +#include "hw/irq.h"
 +#include "hw/qdev-properties.h"
-+#include "hw/qdev-core.h"
 +
 +#include "hw/misc/flexcomm.h"
-+#include "spi_tester.h"
 +#include "sysbus-mock.h"
 +#include "reg-utils.h"
 +
-+/* The number of words sent on the SPI in loopback mode. */
-+#define SEQ_LOOPBACK_MODE   (8)
-+
-+/* This value is used to set the cycle counter for the spi tester */
-+#define SPI_TESTER_CONFIG (0x10)
-+
-+#define FLEXCOMM_BASE 0x40106000UL
-+#define FLEXCOMM_SPI_BASE FLEXCOMM_BASE
-+
 +typedef struct {
 +    DeviceState *dev;
-+    DeviceState *periph;
++    int sock;
++    Chardev *chr;
 +    bool irq;
 +} TestFixture;
 +
++#define FLEXCOMM_BASE 0x40106000UL
++#define FLEXCOMM_USART_BASE FLEXCOMM_BASE
++
 +/* Callback for the interrupt line. */
-+static void spi_irq_set(void *opaque, int line, int level)
++static void usart_irq_set(void *opaque, int line, int level)
 +{
 +    TestFixture *f = (TestFixture *)opaque;
 +
@@ -195,13 +179,41 @@ index 0000000000..4aaf511d70
 + */
 +static void set_up(TestFixture *f, gconstpointer data)
 +{
++    struct sockaddr_in sockaddr = {
++        .sin_family = AF_INET,
++    };
++    socklen_t sockaddr_len = sizeof(sockaddr);
++    char chr_opts[] = "udp:127.0.0.1:xxxxx";
 +    FlexcommState *s;
++    char buf[] = "xxx";
++    int port;
++
++    /* create "server" socket and bind to a random port */
++    f->sock = socket(AF_INET, SOCK_DGRAM, 0);
++    g_assert(f->sock >= 0);
++    g_assert(bind(f->sock, &sockaddr, sizeof(sockaddr)) == 0);
++    g_assert(getsockname(f->sock, &sockaddr, &sockaddr_len) == 0);
++
++    /* create the an UDP char device and connect it to the sever */
++    port = ntohs(sockaddr.sin_port);
++    g_assert(port != 0);
++    snprintf(chr_opts, sizeof(chr_opts), "udp:127.0.0.1:%d", port);
++    f->chr = qemu_chr_new("udp", chr_opts, NULL);
++    g_assert_nonnull(f->chr);
++
++    /* test connectivity and connect server to UDP char device  */
++    qemu_chr_write_all(f->chr, (const uint8_t *)"210", sizeof("210"));
++    recvfrom(f->sock, buf, sizeof(buf), 0, &sockaddr, &sockaddr_len);
++    g_assert(strcmp(buf, "210") == 0);
++    g_assert(sockaddr_len == sizeof(sockaddr));
++    g_assert(connect(f->sock, &sockaddr, sockaddr_len) == 0);
 +
 +    f->dev = qdev_new(TYPE_FLEXCOMM);
 +    g_assert(f->dev);
 +
 +    s = FLEXCOMM(f->dev);
-+    s->irq = qemu_allocate_irq(spi_irq_set, f, 0);
++    s->irq = qemu_allocate_irq(usart_irq_set, f, 0);
++    g_assert(qemu_chr_fe_init(&s->chr, f->chr, &error_abort));
 +
 +    if (data != NULL) {
 +        qdev_prop_set_int32(DEVICE(f->dev), "functions", (uintptr_t)data);
@@ -210,112 +222,208 @@ index 0000000000..4aaf511d70
 +    qdev_realize_and_unref(f->dev, NULL, &error_abort);
 +    sysbus_mmio_map(SYS_BUS_DEVICE(f->dev), 0, FLEXCOMM_BASE);
 +
-+    device_cold_reset(f->dev);
++    qemu_chr_be_update_read_handlers(f->chr, NULL);
 +
-+    f->periph = ssi_create_peripheral(s->spi, TYPE_SPI_TESTER);
-+    s->cs[0] = qdev_get_gpio_in_named(f->periph, SSI_GPIO_CS, 0);
++    device_cold_reset(f->dev);
 +}
 +
 +static void tear_down(TestFixture *f, gconstpointer user_data)
 +{
 +    qdev_unrealize(f->dev);
-+    qdev_unrealize(DEVICE(f->periph));
++    object_unparent(OBJECT(f->chr));
++    close(f->sock);
 +    g_free(f->dev);
 +}
 +
-+static void configure_spi(TestFixture *f, bool master, bool is_loopback_mode)
-+{
-+    uint32_t tmp;
-+
-+    /* Select and lock SPI */
-+    tmp = FLEXCOMM_PSELID_LOCK_Msk | FLEXCOMM_PERSEL_SPI;
-+    REG32_WRITE(f->dev, FLEXCOMM, PSELID, tmp);
-+
-+    /* Disable the FIFO */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, ENABLE, 0);
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, FIFOCFG, ENABLETX, 0);
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, FIFOCFG, ENABLERX, 0);
-+
-+    if (is_loopback_mode) {
-+        /* Set up SPI interface - loop mode, master mode */
-+        REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, LOOP, 1);
-+        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, CFG, LOOP) == 1);
-+    }
-+
-+    if (master) {
-+        REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, MASTER, 1);
-+        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, CFG, MASTER) == 1);
-+    } else {
-+        REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, MASTER, 0);
-+        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, CFG, MASTER) == 0);
-+    }
-+
-+    /* Enable the FIFO */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, FIFOCFG, ENABLETX, 1);
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, FIFOCFG, ENABLERX, 1);
-+
-+    /* Enable the SPI */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, ENABLE, 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, CFG, ENABLE) == 1);
-+}
-+
-+/* The SPI controller running in master mode can run in loopback mode for */
-+/* internal testing. Transmit and receive lines are connected together. */
-+static void loopback_test(TestFixture *f, gconstpointer user_data)
++static void polling_test(TestFixture *f, gconstpointer user_data)
 +{
 +    int i;
++    uint32_t tmp;
++    unsigned char byte;
++    int fifo_size;
 +
-+    configure_spi(f, true, true);
++    /* select and lock USART */
++    tmp = FLEXCOMM_PSELID_LOCK_Msk | FLEXCOMM_PERSEL_USART;
++    REG32_WRITE(f->dev, FLEXCOMM, PSELID, tmp);
 +
-+    /* Write a sequence */
-+    for (i = 0; i < SEQ_LOOPBACK_MODE; i++) {
-+        REG32_WRITE(f->dev, FLEXCOMM_SPI, FIFOWR, i);
++    fifo_size = REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSIZE, FIFOSIZE);
++
++    /* enable USART */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, CFG, ENABLE, 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, CFG, ENABLE) == 1);
++
++    /* enable TX and RX FIFO */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLETX, 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLETX) == 1);
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLERX, 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLERX) == 1);
++
++    /* test writes and fifo counters wrap */
++    for (i = 0; i < fifo_size / 2; i++) {
++        /* check fifostat */
++        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXFULL) ==
++                 0);
++        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXNOTEMPTY)
++                 == 0);
++        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXNOTFULL)
++                 == 1);
++        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXEMPTY) ==
++                 1);
++
++        REG32_WRITE(f->dev, FLEXCOMM_USART, FIFOWR, 'a' + i);
++        recv(f->sock, &byte, 1, 0);
++        g_assert_cmpuint(byte, ==, 'a' + i);
 +    }
 +
-+    /* Read the sequence back */
-+    for (i = 0; i < SEQ_LOOPBACK_MODE; i++) {
-+        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFORD, RXDATA) == i);
++    /* test reads and fifo level */
++
++    for (i = 0; i < fifo_size / 2; i++) {
++        byte = 'A' + i;
++        g_assert(send(f->sock, &byte, 1, 0) == 1);
 +    }
++
++    /* wait for the RXLVL to update */
++    WAIT_REG32_FIELD(1000, f->dev, FLEXCOMM_USART, FIFOSTAT, RXLVL,
++                     fifo_size / 2);
++
++    /* check fifo stat */
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXFULL) == 0);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXNOTEMPTY)
++             == 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXNOTFULL)
++             == 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXEMPTY)
++             == 1);
++
++    /* send until FIFO is full */
++    for (i = fifo_size / 2; i < fifo_size; i++) {
++        byte = 'A' + i;
++        g_assert(send(f->sock, &byte, 1, 0) == 1);
++    }
++
++    /* wait for the RXLVL to update */
++    WAIT_REG32_FIELD(1000, f->dev, FLEXCOMM_USART, FIFOSTAT, RXLVL, fifo_size);
++
++    /* check fifo stat */
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXFULL) == 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXNOTEMPTY) ==
++             1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXNOTFULL) ==
++             1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXEMPTY) ==
++             1);
++
++    /* check read no pop */
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFORDNOPOP, RXDATA) ==
++             'A');
++
++    /* now read from the fifo  */
++    for (i = 0; i < fifo_size; i++) {
++        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFORD, RXDATA) ==
++                 'A' + i);
++    }
++
++    /* check fifostat */
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXFULL) == 0);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXNOTEMPTY) ==
++             0);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXNOTFULL) ==
++             1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXEMPTY) == 1);
 +}
 +
-+static void spi_master_test(TestFixture *f, gconstpointer user_data)
++static void irq_test(TestFixture *f, gconstpointer user_data)
 +{
++    char buf[256] = { 0, };
 +    uint32_t tmp;
 +
-+    configure_spi(f, true, false);
++    /* select and lock FLEXCOMM_USART */
++    tmp = FLEXCOMM_PSELID_LOCK_Msk | FLEXCOMM_PERSEL_USART;
++    REG32_WRITE(f->dev, FLEXCOMM, PSELID, tmp);
 +
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, LSBF, 1);
++    /*
++     * set RX IRQ/DMA trigger level to 4 bytes - value 3 in FIFOTRIG
++     *
++     * 0000 - Trigger when the RX FIFO has received 1 entry (is no longer empty)
++     * 0001 - Trigger when the RX FIFO has received 2 entries
++     * 1111 - Trigger when the RX FIFO has received 16 entries (has become full)
++     */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, RXLVL, 3);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, RXLVL) == 3);
 +
-+    /* single 16bit word transfer */
++    /* enable RX trigger for IRQ/DMA  */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, RXLVLENA, 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, RXLVLENA) == 1);
 +
-+    tmp = 0x1122;
-+    tmp |= FLEXCOMM_SPI_FIFOWR_EOT_Msk;
-+    tmp |= FLEXCOMM_SPI_FIFOWR_TXSSEL0_N_Msk;
-+    tmp |= (0xF << FLEXCOMM_SPI_FIFOWR_LEN_Pos);
-+    REG32_WRITE(f->dev, FLEXCOMM_SPI, FIFOWR, tmp);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFOSTAT, RXNOTEMPTY) == 1);
-+    g_assert_cmpuint(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFORD, RXDATA),
-+                     ==, 0x1122);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFOSTAT, RXNOTEMPTY) == 0);
++    /* enable RXLVL interrupt */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOINTENSET, RXLVL, 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTENSET, RXLVL)
++             == 1);
 +
-+    /* multi word 8 bits transfer */
++    /* enable FLEXCOMM_USART */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, CFG, ENABLE, 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, CFG, ENABLE) == 1);
 +
-+    tmp = 0x11;
-+    tmp |= FLEXCOMM_SPI_FIFOWR_TXSSEL0_N_Msk;
-+    tmp |= (0x7 << FLEXCOMM_SPI_FIFOWR_LEN_Pos);
-+    REG32_WRITE(f->dev, FLEXCOMM_SPI, FIFOWR, tmp);
-+    tmp = 0x22;
-+    tmp |= FLEXCOMM_SPI_FIFOWR_EOT_Msk;
-+    tmp |= FLEXCOMM_SPI_FIFOWR_TXSSEL0_N_Msk;
-+    tmp |= (0x7 << FLEXCOMM_SPI_FIFOWR_LEN_Pos);
-+    REG32_WRITE(f->dev, FLEXCOMM_SPI, FIFOWR, tmp);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFOSTAT, RXNOTEMPTY) == 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFORD, RXDATA) == 0x11);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFOSTAT, RXNOTEMPTY) == 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFORD, RXDATA) == 0x22);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFOSTAT, RXNOTEMPTY) == 0);
++    /* enable TX and RX FIFO */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLETX, 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLETX) == 1);
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLERX, 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLERX) == 1);
++
++    /* check interrupt status */
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTSTAT, RXLVL) == 0);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTSTAT, TXLVL) == 0);
++    g_assert(f->irq == false);
++
++    /* enable TX trigger for IRQ/DMA  */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, TXLVLENA, 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, TXLVLENA) == 1);
++
++    /* enable irq for TX */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOINTENSET, TXLVL, 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTENSET, TXLVL) ==
++             1);
++
++    /* check TX irq */
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTSTAT, TXLVL) == 1);
++    g_assert(f->irq == true);
++
++    /* disable irq for TX */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, TXLVLENA, 0);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, TXLVLENA) == 0);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTSTAT, TXLVL) == 0);
++    g_assert(f->irq == false);
++
++    /* send 3 bytes */
++    g_assert(send(f->sock, buf, 3, 0) == 3);
++
++    /* check that we have 3 bytes in the fifo */
++    WAIT_REG32_FIELD(1000, f->dev, FLEXCOMM_USART, FIFOSTAT, RXLVL, 3);
++
++    /* and no interrupt has been triggered yet */
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTSTAT, RXLVL) == 0);
++    g_assert(f->irq == false);
++
++    /* push it over the edge */
++    g_assert(send(f->sock, buf, 1, 0) == 1);
++
++    /* check that we have 4 bytes in the fifo */
++    WAIT_REG32_FIELD(1000, f->dev, FLEXCOMM_USART, FIFOSTAT, RXLVL, 4);
++
++    /* and the interrupt has been triggered */
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTSTAT, RXLVL) == 1);
++    g_assert(f->irq == true);
++
++    /* read one byte from the fifo */
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFORD, RXDATA) == 0);
++
++    /* we should have 3 bytes in the FIFO */
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXLVL) == 3);
++
++    /* and no interrupts active */
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTSTAT, RXLVL) == 0);
++    g_assert(f->irq == false);
 +}
-+
 +
 +/* mock-up */
 +const PropertyInfo qdev_prop_chr;
@@ -332,13 +440,13 @@ index 0000000000..4aaf511d70
 +    module_call_init(MODULE_INIT_QOM);
 +    qemu_add_opts(&qemu_chardev_opts);
 +
-+    g_test_add("/flexcomm-spi/loopback", TestFixture,
-+               (gconstpointer)(1 << FLEXCOMM_FUNC_SPI),
-+               set_up, loopback_test, tear_down);
++    g_test_add("/flexcomm-usart/polling", TestFixture,
++               (gconstpointer)(1 << FLEXCOMM_FUNC_USART),
++               set_up, polling_test, tear_down);
 +
-+    g_test_add("/flexcomm-spi/master", TestFixture,
-+               (gconstpointer)(1 << FLEXCOMM_FUNC_SPI),
-+               set_up, spi_master_test, tear_down);
++    g_test_add("/flexcomm-usart/irq", TestFixture,
++               (gconstpointer)(1 << FLEXCOMM_FUNC_USART),
++               set_up, irq_test, tear_down);
 +
 +    return g_test_run();
 +}
