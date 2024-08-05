@@ -4,85 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AA29C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 04:35:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E566C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 06:14:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sapPv-0001v9-LQ; Mon, 05 Aug 2024 00:33:55 -0400
+	id 1saqy2-0002mD-W2; Mon, 05 Aug 2024 02:13:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sapPq-0001qp-Jd; Mon, 05 Aug 2024 00:33:52 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1saqxv-0002jh-1C
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:13:08 -0400
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sapPo-0002rl-Hh; Mon, 05 Aug 2024 00:33:50 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1fec34f94abso78181245ad.2; 
- Sun, 04 Aug 2024 21:33:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1saqxp-000833-FX
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:13:06 -0400
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-52f04150796so15640703e87.3
+ for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 23:12:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722832425; x=1723437225; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=H+UbJav6pWivA5AV05dEiug1fpI419gYUieSJhjV/Dc=;
- b=NLXCyjgNNiCc/aJgqYYdN98L3HdamUuroiMm0+85JQx3xSe5Y1mYyLnCciW3+w96Q5
- GH7GD/mjPuetPeCM219x0VuPQVsb/UjolRh9hRDMe+8J5eShgvsB1k1fsAFCFEXf3UW0
- dKiyOGi1Y1frjj2YdYVijJqyuOyHgt4gKRqrPM+uQ70ZB2uGNOYyiDCvS78WrcLhi3Jo
- D9uhJ87hclag0N0bHQxT6CxsmU6YBGwool4+ooIfVhQzOs8605uuGOC8ErctTg09YdUV
- 3MW5Sw2EBwNRTEHnkbUgUKn9i7Pi7qEKHV4IWsp6Th27iadeEZIR5UsU3yCFzK1aiEbM
- BAPg==
+ d=gmail.com; s=20230601; t=1722838378; x=1723443178; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=qKfUThdQsLkFA6LYklbVLSCEwFJGaxuCvq2ljSDF5/M=;
+ b=iwgYjPesHaqZeZVvvC4OE3/TE8LxsSwlUW0IHlKby3X2xU/wBPJxtFcQ9QQ//uj4xF
+ bUNbyRWyhS7JH/Ec5eABwOsmkFyQNzuCOBvEJ9SmMfd+GwFk8SC+SWEe2vjgwpQJmw6r
+ 600Z8t+ri5X0C1SxT2lk1HK6NPVIZD4l5ifkziwdrrortLowdiwKhsIL7PHFJ91RJgwL
+ 3GPnGINwR/AxjWdrmC6Ptb6EadmSqsLwBfBkumZSLGp4xITkwL1rAY/klp3HeIVYhigN
+ 56PM7FHkNTj07lV7SBzYFQBX64ZaJJWxQH2X6wo6SX7gcw/Aw10uYel4EhozoAs3A3r8
+ VLIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722832425; x=1723437225;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=H+UbJav6pWivA5AV05dEiug1fpI419gYUieSJhjV/Dc=;
- b=trcbqC7xyqYO7djk5ITixsZNur+kcLEmKTYj8NpClGLdf5N1YviFoPmfyArx56Zn26
- 40tC9gnxtzxFpz193z4J3JAGZjWq4hJOnqeocjGF8ZGAua5fvYgvPCjW+yRq+b+tfFA9
- 3B4kipP0MPLFa6Ed70vhFGWOonwN/wcGwt8oIe5o0qL7I9W+xL8DzQ8WnKz1eWLvRSHt
- w+4NkbssyBpjfNOPpgCw8E+QqtwjJGumH73/LaFFGcgpPMqlOWdB3d5+GKGdYE9itbvp
- fCOk9Dcm4JcLJY2QWMFaQKsUCqW2N09XUmngiLJDiCOlDfXoChJZ1feoqwjeTkh0n21V
- BDqg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVXXW47dBC/YCLurXrXncKea1JJxULP5Ckvm+DyV/rkerq2PBZMZHtfCEPEdbFAdJo10nqUdU9GMrvs0NK3ZUFfwKTcUBo=
-X-Gm-Message-State: AOJu0Yz+0kpyb/HoSDaID5Y63YHdGdmd6rQaC9PhoKJhxgrjdMXmPCKd
- Dt5P+LuDKrSYDSA6YdtqQIR8/EGqfNem2/Xr426JtCdkEnmp6P+jIR/EArgl
-X-Google-Smtp-Source: AGHT+IHBAcFG94kdXeMF7wbU9eeD1/+ebRMAN41RVdGzCYS7lw7DpHBM7R+9snfEBUXtxoaN9I+LAA==
-X-Received: by 2002:a17:902:ce91:b0:1fd:96e1:802a with SMTP id
- d9443c01a7336-1ff5749b888mr95073665ad.59.1722832425188; 
- Sun, 04 Aug 2024 21:33:45 -0700 (PDT)
-Received: from toolbox.alistair23.me
- (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
- [2403:580b:97e8:0:82ce:f179:8a79:69f4])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff58f29cd5sm57420725ad.56.2024.08.04.21.33.40
+ d=1e100.net; s=20230601; t=1722838378; x=1723443178;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=qKfUThdQsLkFA6LYklbVLSCEwFJGaxuCvq2ljSDF5/M=;
+ b=olMX2KwpP5OnRazi04N4dDrtYtFhtc1XE8PqDDcHress70rHrncy2xMzMLwQHaVQ1Z
+ 4JtkCPRD4Aq1tT99PIioRE9rL7LqJthWSOK7Cpz55iVx7bvKul3QJou05OCVK3maXUsI
+ 4Ae/tz/olZ4nKumnS+Cxs1bSYB/ixirkeIIaVy5Aw/0frQo3d9xHZy2PGcQGMXrXsegI
+ Q/uungq4c65tMFJNR6gNO+suxwAvSas9J24t44TpkY7sThQKO1JAU35uSrTdHu9PyORG
+ fJGRAAfVrChiN5lgAsIir0S+U+cibM91b8TY1zf2wO3i7DYKGJC7fSPtD2+6JVDJ8o+B
+ 3IAQ==
+X-Gm-Message-State: AOJu0YyTy3ltbUwV9vfvFFmbgbPVGyZry7M1NmvvT0A7pcbNovifTiJ1
+ N0qUzgGZS4/GJx/1+jN6RAjCwkFaEV9b+XS+es6Mh9zUoo1FZa++
+X-Google-Smtp-Source: AGHT+IEe+PmHDPI7oF+fo+ak4vt7dP7sQyr1eoXWAXQHzgm5gUvuBqC6Bzu+RLNXe+LPY3jqKG+UEQ==
+X-Received: by 2002:ac2:4c51:0:b0:52e:9882:2cd8 with SMTP id
+ 2adb3069b0e04-530bb3670f6mr6590163e87.4.1722838377189; 
+ Sun, 04 Aug 2024 23:12:57 -0700 (PDT)
+Received: from localhost (cpc1-brnt4-2-0-cust862.4-2.cable.virginm.net.
+ [86.9.131.95]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-428e6e7d585sm124194775e9.35.2024.08.04.23.12.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 Aug 2024 21:33:44 -0700 (PDT)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
-To: qemu-devel@nongnu.org,
-	peter.maydell@linaro.org
-Cc: dbarboza@ventanamicro.com, Palmer Dabbelt <palmer@dabbelt.com>,
- Weiwei Li <liwei1518@gmail.com>, zhiwei_liu@linux.alibaba.com,
- Alistair Francis <alistair.francis@wdc.com>, atishp@rivosinc.com,
- bmeng.cn@gmail.com, qemu-riscv@nongnu.org, alistair23@gmail.com
-Subject: [PATCH 0/2] target/riscv: Convert RISC-V custom bitops to standard
- ones
-Date: Mon,  5 Aug 2024 14:33:34 +1000
-Message-ID: <20240805043336.72548-1-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.45.2
-Content-Type: text/plain; charset="utf-8"
+ Sun, 04 Aug 2024 23:12:55 -0700 (PDT)
+Date: Mon, 5 Aug 2024 07:12:55 +0100
+From: Stafford Horne <shorne@gmail.com>
+To: Joel Holdsworth <jholdsworth@nvidia.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH] hw/openrisc: Fixed undercounting of TTCR in continuous
+ mode
+Message-ID: <ZrBtZ4VKEC0dgmWG@antec>
+References: <20240607222933.45791-1-jholdsworth@nvidia.com>
+ <ZmTbnfrp73tAt3KY@antec>
+ <DM4PR12MB65656FF201E6BFB43FDB4A3BC8C62@DM4PR12MB6565.namprd12.prod.outlook.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+In-Reply-To: <DM4PR12MB65656FF201E6BFB43FDB4A3BC8C62@DM4PR12MB6565.namprd12.prod.outlook.com>
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=shorne@gmail.com; helo=mail-lf1-x134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,33 +95,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Based on discussions at [1] this is a simple conversion from using the
-RISC-V specific bit operations to using standard QEMU ones.
+On Mon, Jun 10, 2024 at 07:29:15PM +0000, Joel Holdsworth wrote:
+> Hi Stafford, thanks for your response.
+> 
+> > - You sent this 2 times, is the only change in v2 the sender address?
+> 
+> Yes, I was just having some difficulty with Git and SMTP. Should be fixed now.
 
-This series adds two new bit op helpers mask_extract64() and
-mask_deposit64() which the RISC-V target can then use.
+OK.
 
-1: https://mail.gnu.org/archive/html/qemu-devel/2024-07/msg05976.html
+> >> In the existing design, TTCR is prone to undercounting when running in
+> >> continuous mode. This manifests as a timer interrupt appearing to
+> >> trigger a few cycles prior to the deadline set in SPR_TTMR_TP.
+> 
+> > This is a good find, I have noticed the timer is off when running on OpenRISC
+> > but never tracked it down to this undercounting issue.  I also notice
+> > unexplained RCU stalls when running in Linux when tere is no load, this timer
+> issue might be related.
+> 
+> > Did you notice this via other system symptoms when running OpenRISC or just via
+> > code auditing of QEMU?
+> 
+> I'm working on an OpenRISC port of Zephyr. The under-counting issue causes
+> consistent deadlocks in my experiments with the test suite. I wouldn't be
+> surprised if it causes problems for other OS's.
 
-Alistair Francis (2):
-  include: bitops: Add mask extract64/deposit64
-  target/riscv: Remove get_field and set_field
+Thats cool.  I got around to testing the patch with Linux, unfortunately I didnt
+see an improvement in the lockups I have been seeing during boot time.  But I am
+sure this is a step in the right direction.
 
- include/qemu/bitops.h     | 35 +++++++++++++++++
- target/riscv/cpu.h        | 10 ++---
- target/riscv/cpu_bits.h   |  6 ---
- target/riscv/pmp.h        |  6 +--
- target/riscv/cpu.c        | 20 +++++-----
- target/riscv/cpu_helper.c | 83 ++++++++++++++++++++-------------------
- target/riscv/csr.c        | 82 +++++++++++++++++++-------------------
- target/riscv/debug.c      | 14 +++----
- target/riscv/monitor.c    |  8 ++--
- target/riscv/op_helper.c  | 70 +++++++++++++++++----------------
- target/riscv/pmu.c        |  6 +--
- target/riscv/zce_helper.c |  2 +-
- 12 files changed, 191 insertions(+), 151 deletions(-)
+> > In QEMU there is a function clock_ns_to_ticks(). Could this maybe be used
+> > instead to give us more standard fix?
+> 
+> Seems like a good idea, and I now have some nearly-complete patch that brings
+> hw/openrisc/cputimer.c into closer alignment with
+> target/mips/sysemu/cp0_timer.c.
 
--- 
-2.45.2
+Hi, I was waiting for this second version patch, v2.  Have you ever completed it?
 
+> However, don't we run into problems with undercounting with clock_ns_to_ticks,
+> because if I understand correctly it will round ticks down, not up?, which is
+> the problem I was trying to avoid in the first place.
+
+You might be right, but if that is the case maybe it's a but to raise to the
+maintainers directly.  I was planning to look into this more cosely after you
+sent the followup patch.
+
+-Stafford
 
