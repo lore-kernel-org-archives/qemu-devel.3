@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23D5DC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 06:32:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E092AC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 06:32:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sarFy-0005Pm-5f; Mon, 05 Aug 2024 02:31:46 -0400
+	id 1sarFw-00053A-Na; Mon, 05 Aug 2024 02:31:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sarFm-0004QB-2f
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:31:36 -0400
+ id 1sarFY-0003XM-SI
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:31:21 -0400
 Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sarFj-0002FJ-Fm
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:31:33 -0400
+ id 1sarFU-0002DM-Oy
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:31:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1722839491; x=1754375491;
+ t=1722839476; x=1754375476;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=+gTPb7kGR/A9WlIO3Qas3Y/8henOtiHRKV6x1G6ILnU=;
- b=N/cEqF6wsY4nkSx3Ri/eQM7RZoKkypiLfiCGl/j/SKnwV1nhQKpwbjTp
- GPf8PMzEIvc4+0At/ZdwGN3GAv4FYwh6az2fzM8Pn5x47v+wFLp8DUfUJ
- i0Vt7iyssHyNwA3PyFzxAyVzw0jOZJ8+Bsko8Zw4bduP70WciKrrxjwH5
- YAeBWVx9uI1uCKL1l2w9DHXEM9+unB+QDxCHOcoHzVDY4CMA4dLLPZFpx
- 8XFPh8Tl2NxD8Dk1Z1ZFYvKpS/cfZsTWKXKgvxY24Xj2QJfqOjGPzJQxh
- xL1nv06NLVFaFGN7Nqfj+vv6rAodLSGlhjSfb+HozecI49I3a1EA3R7so w==;
-X-CSE-ConnectionGUID: Wd+1EXyISaClsvr8h/pYtw==
-X-CSE-MsgGUID: vof6zuwbQ5+6yCinxNpRIg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11154"; a="38282934"
-X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="38282934"
+ bh=GFvOFa9P+mYkjosgDpkYes8UGBsmHawsSqhMW/hkTRs=;
+ b=AnzDJfX/pRxevqhBSXTOuHm3H/xe7I1ibRMX/QSOuUsQQwiM+Z7qWYMC
+ Gz1Pc1qwx+hvfTsu3hi00ZSZWnFDROAbMuzHFAFzMUAfXjckRik/8YJc0
+ 79Ii9pt8ItGY/3w4ACvIc/TThPZkQ2mSLFVYmLK9a7ZDCro+f9LfKbREc
+ sv4UYzoDXs3WLMY6UB/VvTnEVw21XnNX/zz/tY6Xosg8OaAHPsU+cckAR
+ kWK4vwdqMHw9m9+fEHaecQeseJ0RpIOW9ubNNEoK9FC/I9bL+YwHhofVW
+ uCY6NvsIjRiUcbyG5Yp/vN5uol5v+le7x7uENbw+DygpBKd82gWu/DDQx A==;
+X-CSE-ConnectionGUID: rGouqvh7T6qrP5Ol4t18Qw==
+X-CSE-MsgGUID: JfmfLLysRomire3QgKL62Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11154"; a="38282879"
+X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="38282879"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Aug 2024 23:31:27 -0700
-X-CSE-ConnectionGUID: ZkXQbJ9ARaOca9OKR20anw==
-X-CSE-MsgGUID: q/XYb0LFTa+YzFz2dbx/TQ==
+ 04 Aug 2024 23:31:13 -0700
+X-CSE-ConnectionGUID: c/I1cMjFSq2yMGtwbjl+fQ==
+X-CSE-MsgGUID: JYtLWmxRQcqWf6wsUYVyag==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="56787193"
+X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="56787061"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Aug 2024 23:31:23 -0700
+ 04 Aug 2024 23:31:09 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -54,11 +54,13 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 17/17] tests/qtest: Add intel-iommu test
-Date: Mon,  5 Aug 2024 14:27:27 +0800
-Message-Id: <20240805062727.2307552-18-zhenzhong.duan@intel.com>
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v2 14/17] intel_iommu: Set default aw_bits to 48 in scalable
+ modren mode
+Date: Mon,  5 Aug 2024 14:27:24 +0800
+Message-Id: <20240805062727.2307552-15-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240805062727.2307552-1-zhenzhong.duan@intel.com>
 References: <20240805062727.2307552-1-zhenzhong.duan@intel.com>
@@ -89,134 +91,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the framework to test the intel-iommu device.
+According to VTD spec, stage-1 page table could support 4-level and
+5-level paging.
 
-Currently only tested cap/ecap bits correctness in scalable
-modern mode. Also tested cap/ecap bits consistency before
-and after system reset.
+However, 5-level paging translation emulation is unsupported yet.
+That means the only supported value for aw_bits is 48.
+
+So default aw_bits to 48 in scalable modern mode. In other cases,
+it is still default to 39 for compatibility.
+
+Add a check to ensure user specified value is 48 in modern mode
+for now.
 
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
 ---
- MAINTAINERS                    |  1 +
- include/hw/i386/intel_iommu.h  |  1 +
- tests/qtest/intel-iommu-test.c | 70 ++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build        |  1 +
- 4 files changed, 73 insertions(+)
- create mode 100644 tests/qtest/intel-iommu-test.c
+ include/hw/i386/intel_iommu.h |  2 +-
+ hw/i386/intel_iommu.c         | 16 +++++++++++++++-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e34c2bd4cd..c9a2321f1c 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3673,6 +3673,7 @@ S: Supported
- F: hw/i386/intel_iommu.c
- F: hw/i386/intel_iommu_internal.h
- F: include/hw/i386/intel_iommu.h
-+F: tests/qtest/intel-iommu-test.c
- 
- AMD-Vi Emulation
- S: Orphan
 diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index f6d9b41b80..0c9bb8eab6 100644
+index b843d069cc..48134bda11 100644
 --- a/include/hw/i386/intel_iommu.h
 +++ b/include/hw/i386/intel_iommu.h
-@@ -47,6 +47,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(IntelIOMMUState, INTEL_IOMMU_DEVICE)
+@@ -45,7 +45,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(IntelIOMMUState, INTEL_IOMMU_DEVICE)
+ #define DMAR_REG_SIZE               0x230
+ #define VTD_HOST_AW_39BIT           39
  #define VTD_HOST_AW_48BIT           48
- #define VTD_HOST_AW_AUTO            0xff
+-#define VTD_HOST_ADDRESS_WIDTH      VTD_HOST_AW_39BIT
++#define VTD_HOST_AW_AUTO            0xff
  #define VTD_HAW_MASK(aw)            ((1ULL << (aw)) - 1)
-+#define VTD_MGAW_FROM_CAP(cap)      ((cap >> 16) & 0x3fULL)
  
  #define DMAR_REPORT_F_INTR          (1)
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 317e630e08..5469ab4f9b 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -3770,7 +3770,7 @@ static Property vtd_properties[] = {
+                             ON_OFF_AUTO_AUTO),
+     DEFINE_PROP_BOOL("x-buggy-eim", IntelIOMMUState, buggy_eim, false),
+     DEFINE_PROP_UINT8("aw-bits", IntelIOMMUState, aw_bits,
+-                      VTD_HOST_ADDRESS_WIDTH),
++                      VTD_HOST_AW_AUTO),
+     DEFINE_PROP_BOOL("caching-mode", IntelIOMMUState, caching_mode, FALSE),
+     DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUState, scalable_mode, FALSE),
+     DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
+@@ -4685,6 +4685,14 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
+         }
+     }
  
-diff --git a/tests/qtest/intel-iommu-test.c b/tests/qtest/intel-iommu-test.c
-new file mode 100644
-index 0000000000..fa9169f1a3
---- /dev/null
-+++ b/tests/qtest/intel-iommu-test.c
-@@ -0,0 +1,70 @@
-+/*
-+ * QTest testcase for intel-iommu
-+ *
-+ * Copyright (c) 2024 Intel, Inc.
-+ *
-+ * Author: Zhenzhong Duan <zhenzhong.duan@intel.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
++    if (s->aw_bits == VTD_HOST_AW_AUTO) {
++        if (s->scalable_modern) {
++            s->aw_bits = VTD_HOST_AW_48BIT;
++        } else {
++            s->aw_bits = VTD_HOST_AW_39BIT;
++        }
++    }
 +
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "hw/i386/intel_iommu_internal.h"
+     if ((s->aw_bits != VTD_HOST_AW_39BIT) &&
+         (s->aw_bits != VTD_HOST_AW_48BIT) &&
+         !s->scalable_modern) {
+@@ -4693,6 +4701,12 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
+         return false;
+     }
+ 
++    if ((s->aw_bits != VTD_HOST_AW_48BIT) && s->scalable_modern) {
++        error_setg(errp, "Supported values for aw-bits are: %d",
++                   VTD_HOST_AW_48BIT);
++        return false;
++    }
 +
-+#define CAP_MODERN_FIXED1    (VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND | \
-+                              VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SLLPS)
-+#define ECAP_MODERN_FIXED1   (VTD_ECAP_QI |  VTD_ECAP_IR | VTD_ECAP_IRO | \
-+                              VTD_ECAP_MHMV | VTD_ECAP_SMTS | VTD_ECAP_FLTS)
-+
-+static inline uint32_t vtd_reg_readl(QTestState *s, uint64_t offset)
-+{
-+    return qtest_readl(s, Q35_HOST_BRIDGE_IOMMU_ADDR + offset);
-+}
-+
-+static inline uint64_t vtd_reg_readq(QTestState *s, uint64_t offset)
-+{
-+    return qtest_readq(s, Q35_HOST_BRIDGE_IOMMU_ADDR + offset);
-+}
-+
-+static void test_intel_iommu_modern(void)
-+{
-+    uint8_t init_csr[DMAR_REG_SIZE];     /* register values */
-+    uint8_t post_reset_csr[DMAR_REG_SIZE];     /* register values */
-+    uint64_t cap, ecap, tmp;
-+    QTestState *s;
-+
-+    s = qtest_init("-M q35 -device intel-iommu,x-scalable-mode=modern");
-+
-+    cap = vtd_reg_readq(s, DMAR_CAP_REG);
-+    g_assert((cap & CAP_MODERN_FIXED1) == CAP_MODERN_FIXED1);
-+
-+    tmp = cap & VTD_CAP_SAGAW_MASK;
-+    g_assert(tmp == (VTD_CAP_SAGAW_39bit | VTD_CAP_SAGAW_48bit));
-+
-+    tmp = VTD_MGAW_FROM_CAP(cap);
-+    g_assert(tmp == VTD_HOST_AW_48BIT - 1);
-+
-+    ecap = vtd_reg_readq(s, DMAR_ECAP_REG);
-+    g_assert((ecap & ECAP_MODERN_FIXED1) == ECAP_MODERN_FIXED1);
-+
-+    qtest_memread(s, Q35_HOST_BRIDGE_IOMMU_ADDR, init_csr, DMAR_REG_SIZE);
-+
-+    qobject_unref(qtest_qmp(s, "{ 'execute': 'system_reset' }"));
-+    qtest_qmp_eventwait(s, "RESET");
-+
-+    qtest_memread(s, Q35_HOST_BRIDGE_IOMMU_ADDR, post_reset_csr, DMAR_REG_SIZE);
-+    /* Ensure registers are consistent after hard reset */
-+    g_assert(!memcmp(init_csr, post_reset_csr, DMAR_REG_SIZE));
-+
-+    qtest_quit(s);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    qtest_add_func("/q35/intel-iommu/modern", test_intel_iommu_modern);
-+
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 2f0d3ef080..76d183df74 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -79,6 +79,7 @@ qtests_i386 = \
-   (config_all_devices.has_key('CONFIG_SB16') ? ['fuzz-sb16-test'] : []) +                   \
-   (config_all_devices.has_key('CONFIG_SDHCI_PCI') ? ['fuzz-sdcard-test'] : []) +            \
-   (config_all_devices.has_key('CONFIG_ESP_PCI') ? ['am53c974-test'] : []) +                 \
-+  (config_all_devices.has_key('CONFIG_VTD') ? ['intel-iommu-test'] : []) +                 \
-   (host_os != 'windows' and                                                                \
-    config_all_devices.has_key('CONFIG_ACPI_ERST') ? ['erst-test'] : []) +                   \
-   (config_all_devices.has_key('CONFIG_PCIE_PORT') and                                       \
+     if (s->scalable_mode && !s->dma_drain) {
+         error_setg(errp, "Need to set dma_drain for scalable mode");
+         return false;
 -- 
 2.34.1
 
