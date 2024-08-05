@@ -4,103 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F59EC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 08:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2B71C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 08:37:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sat0e-0007ps-BN; Mon, 05 Aug 2024 04:24:04 -0400
+	id 1satD0-0005DT-Tt; Mon, 05 Aug 2024 04:36:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sat0c-0007of-7Q
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 04:24:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sat0a-0001Q0-D1
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 04:24:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722846238;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=nNMNttYYfVprmlt5gv7GcUzumKfOGJyN5wjbkY8akBw=;
- b=cLT+Zb6JJRDKc+xZkg5nFSpkkpezJaTUC9ZWuZI8+gx6VKIuFsrzmV3CRuzlpnfjyHOdWV
- kmWuIve1PjxqGU9eW9XqYC8LWiCj9H9wgpZrAoaSNxo+7kJJ2bjG+NBqlPO4iGUKXhDEs1
- cE2KjcznuIdgxO8pT1soIwTgYIPtRzU=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-126-pRxZRvGyM6yhpgPcVfcgSw-1; Mon, 05 Aug 2024 04:23:56 -0400
-X-MC-Unique: pRxZRvGyM6yhpgPcVfcgSw-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3686d709f6dso5999631f8f.0
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 01:23:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1satCv-0005C8-Ah
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 04:36:45 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1satCs-0003ki-Oz
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 04:36:44 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4266dc7591fso65536985e9.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 01:36:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722847000; x=1723451800; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pKBiIltAVoXZZg0LL7Muk/bomt5G37qqc5x4duMKkRI=;
+ b=P7iOzvnAnt444Ti/PtvoJjSJiXvPYFcyJFGDNQA/Zx7ox0Q5FPO9UlrHpHo8OwgN/t
+ mboJlo+tS3rzCuhg/gpys6IL4/4SmWSrwQI6rCXYA1BrnYUuNtnNixO54ABbvxPEeHez
+ fkMod+avM0mycCs3MIMwcE0eQpv1EgO2N/nM0OywLqJotA7ljlk8WR1rqGTQciTEvCZI
+ 2uV+VH3NfKNV29zQNBWP7RRTROzMWUpDmNyXBd/pKY2pSrLYYHCjlKLt/og40Nt1xIvC
+ LWpDNot7WYakWuOoeRe4Gf6tnQ3CLX0HtB/rzqWs/7Q2DlJzFc52QGy+07wwIZraoNXj
+ PW8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722846235; x=1723451035;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nNMNttYYfVprmlt5gv7GcUzumKfOGJyN5wjbkY8akBw=;
- b=t1ZFMFPOkD4gjkfVi9qPKOPgmnXvFhmqwYZXj+z2e3YUuY+qZbl4lNmZDDTSApjFpr
- Je19AslrH8lwW0FOlmVM+/c2x2rpDHbs4aodpPplvX42VILVtpu5Nu5XLQt/l/8KwslF
- XDDw+995BsaymPfpBgQsIk42zOGYEpFK6anU94dqOykRcI4wVfk7R8EtwwG/G4shDYb3
- cqs3k01Ao1z8G3q5KzMYYHf3W6PwgvQTqD7qpf73L3fI6k0Ys0rmj7PZtmvj5BWIenNP
- r1oGMvbTUXxWP19y3Eh8yH1a+cwpyEyi+2h4mA/DzItODZPrgmGjRhwnkAvQImhhgsLK
- 8V0g==
+ d=1e100.net; s=20230601; t=1722847000; x=1723451800;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pKBiIltAVoXZZg0LL7Muk/bomt5G37qqc5x4duMKkRI=;
+ b=PHtz2ud5ymYVP10WAXgFJ21KlLWQTBbs+3N0A3CE1atkGqfA/1xIdJshju5LQ3zBRG
+ HyhhY67Y0FJ2wyfpPnov/MyJJ7zhdVsFe8das+pnokC/TTwZnZplIizm1GCUMUurHIeO
+ fQHTQbC3ctP4jWB1Mv/g6cxZ9WSmEZQm276ggGZUHWad/dn+JZW7SzzSS/xux91U1VzA
+ cEpRQ0q0zcbcwki0vVNqWm+7NpAwMbzdD/1Y1Y0JLutZSTbQMlCAxYRvrgMyW1rrXcP3
+ q45i6Pv9cBFnEIXOAevY5KDgHNOpMoWuVtHlr9g5R0JaufSepI4+1Q4dHqqRy8AqwhZY
+ nViQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW7fwETzJIfTVBvRTt0tO661fqSeJzcYUQz5gbpyT3V6WMxQsUU7FwbF4uZaLxVv0t3+SOX6CDFlMZ7jhQ+QcMisMzgJDs=
-X-Gm-Message-State: AOJu0Yxpz5g2j7OeZ01p4jYuYwaPXrwN3tabE+Jk29iaRdI9aCpKw/GF
- /rd3Y6RwCU/+VY3hIi547sEjp6ul5fEZ3wWKwJldMjYIJWh9Zn9p10vwdOoSiFNCG1I0mDPfVgz
- LQz1KR+TdE4NDDw4T/2rP8zz6gcLKLbvrG49hX4IkhzbQFWkx0Q2+
-X-Received: by 2002:a5d:6287:0:b0:368:7f4f:9e95 with SMTP id
- ffacd0b85a97d-36bbc0e5ee5mr5882581f8f.10.1722846235542; 
- Mon, 05 Aug 2024 01:23:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHNd+OSB6y4qg2sVmYeGoDTRk3+T0gJsfc8Fv7G54Lwdin/KoAt0bi5wwME8zFnvo8I0qhYkQ==
-X-Received: by 2002:a5d:6287:0:b0:368:7f4f:9e95 with SMTP id
- ffacd0b85a97d-36bbc0e5ee5mr5882542f8f.10.1722846234716; 
- Mon, 05 Aug 2024 01:23:54 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:17d:dd95:f049:da1a:7ecb:6d9])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36bbcf1db70sm8935226f8f.32.2024.08.05.01.23.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Aug 2024 01:23:54 -0700 (PDT)
-Date: Mon, 5 Aug 2024 04:23:44 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Peter Xu <peterx@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
- jasowang@redhat.com, sriram.yagnaraman@est.tech, sw@weilnetz.de,
- qemu-devel@nongnu.org, yan@daynix.com,
- Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <20240805041650-mutt-send-email-mst@kernel.org>
-References: <Zqk6x2nd3Twz--75@x1n>
- <39a8bb8b-4191-4f41-aaf7-06df24bf3280@daynix.com>
- <ZqumIZcs1tCNTpRE@x1n>
- <b70d09a5-554a-456b-904e-59cec5836ae8@daynix.com>
- <Zqz1vvYqRuIAPnod@x1n>
- <c5ea7a57-fc52-4bb7-bc4c-f3aca8da0574@daynix.com>
- <Zq0IrhV-DgStpJtk@x1n>
- <8ad96f43-83ae-49ae-abc1-1e17ee15f24d@daynix.com>
- <20240805032937-mutt-send-email-mst@kernel.org>
- <cb71a6de-eb7a-402b-a58a-89198b4343f5@daynix.com>
+ AJvYcCWAXSTLoZvQw8B+TdGQUGL52UY0g5QRjlHK6j06zcLVvxXLWBXc8OWfwd99+w6vnhFGkKW/nbKCUWzkYcrD+b8L4vy2zu4=
+X-Gm-Message-State: AOJu0YzwV6J92O9NRfbAs4e+fbPHrM9zsaCnMLXR5CeMYHgEojXB/juB
+ suKyXPpfMenS1kBq2IK2lzMOiPeSuM36psIPh75HeARnmzvYjXW/YEFavmpS2hk=
+X-Google-Smtp-Source: AGHT+IFoJAeNS1BHCpnYK6EybdfIAlD8BhWtpEEkU+ivX0W0RcXn1imU8aVkIR/SUmXWrWxyQkbghg==
+X-Received: by 2002:a05:600c:1552:b0:426:6822:861 with SMTP id
+ 5b1f17b1804b1-428e6b925c7mr71984905e9.36.1722847000027; 
+ Mon, 05 Aug 2024 01:36:40 -0700 (PDT)
+Received: from [192.168.1.102] (cor91-h02-176-184-30-132.dsl.sta.abo.bbox.fr.
+ [176.184.30.132]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-428e6e9cd4esm127446015e9.44.2024.08.05.01.36.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 Aug 2024 01:36:39 -0700 (PDT)
+Message-ID: <f4f5b4a0-536e-4eb4-aa50-8c694d9ed9e7@linaro.org>
+Date: Mon, 5 Aug 2024 10:36:36 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cb71a6de-eb7a-402b-a58a-89198b4343f5@daynix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ppc: fix incorrect spelling of PowerMac
+To: Tejas Vipin <tejasvipin76@gmail.com>, mark.cave-ayland@ilande.co.uk
+Cc: qemu-trivial@nongnu.org, qemu-ppc@nongnu.org, qemu-devel@nongnu.org,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+References: <20240805070150.369824-1-tejasvipin76@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240805070150.369824-1-tejasvipin76@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,51 +97,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 05, 2024 at 04:53:52PM +0900, Akihiko Odaki wrote:
-> On 2024/08/05 16:30, Michael S. Tsirkin wrote:
-> > On Sun, Aug 04, 2024 at 03:49:45PM +0900, Akihiko Odaki wrote:
-> > > I suggest disabling all offload features of virtio-net with 9.2.
-> > 
-> > Yea ... no.
-> > 
-> > > I want to keep things consistent so I want to disable all at once. This
-> > > change will be very uncomfortable for us, who are implementing offload
-> > > features, but I hope it will motivate us to implement a proper solution.
-> > 
-> > It's uncomfortable for users.
+Hi Tejas,
+
+On 5/8/24 09:01, Tejas Vipin wrote:
+> PowerMac is spelled as PowerMAC (Media Access Control) in some places.
+> This is misleading.
 > 
-> An obvious alternative is to set cross-migrate=off by default (I dropped the
-> no- prefix because no-cross-migrate=off is confusing). I don't have a
-> particular idea whether cross-migrate should be on or off by default.
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2297
+> Signed-off-by: Tejas Vipin <tejasvipin76@gmail.com>
+> ---
+>   docs/system/ppc/powermac.rst | 4 ++--
+>   hw/ppc/mac_newworld.c        | 2 +-
+>   hw/ppc/mac_oldworld.c        | 2 +-
+>   3 files changed, 4 insertions(+), 4 deletions(-)
 > 
-> This is a trade-off of safety and performance. In general, I believe safety
-> should come first before performance.
+> diff --git a/docs/system/ppc/powermac.rst b/docs/system/ppc/powermac.rst
+> index 04334ba210..3eac81c491 100644
+> --- a/docs/system/ppc/powermac.rst
+> +++ b/docs/system/ppc/powermac.rst
+> @@ -4,8 +4,8 @@ PowerMac family boards (``g3beige``, ``mac99``)
+>   Use the executable ``qemu-system-ppc`` to simulate a complete PowerMac
+>   PowerPC system.
+>   
+> -- ``g3beige``              Heathrow based PowerMAC
+> -- ``mac99``                Mac99 based PowerMAC
+> +- ``g3beige``              Heathrow based PowerMac
+> +- ``mac99``                Mac99 based PowerMac
+>   
+>   Supported devices
+>   -----------------
+> diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
+> index ff9e490c4e..9d249a506c 100644
+> --- a/hw/ppc/mac_newworld.c
+> +++ b/hw/ppc/mac_newworld.c
+> @@ -571,7 +571,7 @@ static void core99_machine_class_init(ObjectClass *oc, void *data)
+>       MachineClass *mc = MACHINE_CLASS(oc);
+>       FWPathProviderClass *fwc = FW_PATH_PROVIDER_CLASS(oc);
+>   
+> -    mc->desc = "Mac99 based PowerMAC";
+> +    mc->desc = "Mac99 based PowerMac";
+>       mc->init = ppc_core99_init;
+>       mc->block_default_type = IF_IDE;
+>       /* SMP is not supported currently */
+> diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
+> index 1981d3d8f6..eef3261002 100644
+> --- a/hw/ppc/mac_oldworld.c
+> +++ b/hw/ppc/mac_oldworld.c
+> @@ -411,7 +411,7 @@ static void heathrow_class_init(ObjectClass *oc, void *data)
+>       MachineClass *mc = MACHINE_CLASS(oc);
+>       FWPathProviderClass *fwc = FW_PATH_PROVIDER_CLASS(oc);
+>   
+> -    mc->desc = "Heathrow based PowerMAC";
+> +    mc->desc = "Heathrow based PowerMac";
 
-There's no actual safety issue here. You can't migrate certain configurations.
-So I don't really understand what "cross-migrate" is supposed to do:
-fail migration in 100% of cases?
-
-I can see value in getting configuration from source and not starting
-qemu on destination if it can not be migrated. This is rather
-straight-forward, and seems directly useful for management.
-I also see value in getting configuration from destination and starting
-on source only if it can be migrated. As a variant of last one, I maybe
-see value in getting that info from multiple destinations. Using this
-last kind of thing would be trickier because it's not at the libvirt level,
-so we would need very good documentation.
-
-> On the other hand, disabling offload features is a breaking change. QEMU
-> also has -only-migratable option; it is more consistent to make the
-> additional assurance for migration opt-in instead of opt-out. Finally, I see
-> migration across hosts as an advanced feature, and perhaps it can be
-> justified to make it more like an optional feature.
-> 
-> Regards,
-> Akihiko Odaki
-
-It's already an optional feature.
-
--- 
-MST
+It seems it is even spelt with a space as "Power Mac".
+Anyhow this is still better than MAC, so:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
