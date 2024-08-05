@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C65BC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 06:32:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81808C52D6F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 06:32:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sarFY-0003U0-2l; Mon, 05 Aug 2024 02:31:20 -0400
+	id 1sarFy-0005RT-Qz; Mon, 05 Aug 2024 02:31:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sarFR-0003AF-O6
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:31:15 -0400
+ id 1sarFi-0004Bl-Fm
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:31:30 -0400
 Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sarFO-0002DM-RJ
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:31:13 -0400
+ id 1sarFf-0002FJ-Pg
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:31:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1722839470; x=1754375470;
+ t=1722839487; x=1754375487;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=HxQt+ElF7mrJns/ADRBCw0L2nr7XnpTAqOvZ+vtE2kc=;
- b=J5kys9jundmYx0Xj2D/DSaRoR222fZg/RHSHoLg65M6aGBJNyabT3GZM
- 0eNyegVJusUlUW55I2WsK1z7N6elb3UALlQ7jVuJr9FluSYiQY9zPHU+5
- XrKifLVotZnl5R7bB/RsvIww/vuuXh7gmNx8kvY9reok2xWxLF1fdBsb0
- qRHXh1gQSMjVpCT3V+YQr6ckdLdMZTAEM1FAMY5xjaEvX+mgWr2wO219h
- a0GlTG9EpUdU9Sjyt+G3mKLWLNaleo+LY1nPhFoawMZ4hHlIOPWAmIkGl
- 1jsWCeAcgySrBDrTnKghzG8Bi6Mo4s4ydhH6FwvsS1sfDOKoUdhyCkbmQ g==;
-X-CSE-ConnectionGUID: fCNk2XqMQW2x7RH2zQLDJw==
-X-CSE-MsgGUID: nizyGoaDTMCS4qldAHzNSw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11154"; a="38282843"
-X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="38282843"
+ bh=+/iT+1PlOBLDvVOFj8Pdp2LZI5Rw1SSeDRcMpgXV3ys=;
+ b=cIsP9xSqhsz79tfUBs0mfyvVI27aLLLGjukxFOxBhfwiNowuvpss8p6c
+ FbfDwVgrQYHTjU1z8vq3amOzctWBJezC2nvvlrhcH5W3QVfycB/4NqDOT
+ nYggZiHdqpaLlCZwCOFct2stXQ3O+6GhBHILfGdqi3MmUTuFdBvfXKJKI
+ bmxknHtKFzOurFZnTHmf5HaV/8UYVdXGXIa7o9/SQ1T3Hw1AjxhFZkVKZ
+ vT5bui/vvXBVzitB6rsgvEFfUMvRBawbmiR4xCxCO1/sr5tilUNUH+Uri
+ +S1kmC7U8t4H+PYDDHgJNsdVNBPVbBV/xThoDWY3BVmsJYI+S/ID7KjOa Q==;
+X-CSE-ConnectionGUID: NuR+j1A8S8KMR5qgcxTS4g==
+X-CSE-MsgGUID: HxjPKBEySOq9ZWZg7piJww==
+X-IronPort-AV: E=McAfee;i="6700,10204,11154"; a="38282923"
+X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="38282923"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Aug 2024 23:31:08 -0700
-X-CSE-ConnectionGUID: 0hEBrKbXShiaff6cLz561g==
-X-CSE-MsgGUID: eymxisgBTLK8ERjwX12Cuw==
+ 04 Aug 2024 23:31:23 -0700
+X-CSE-ConnectionGUID: G9meqiI4SZWbaWWIKEo4Sw==
+X-CSE-MsgGUID: zM53ChTtQKGstNUoVYgcpQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="56787015"
+X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="56787175"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Aug 2024 23:31:04 -0700
+ 04 Aug 2024 23:31:18 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -57,14 +57,14 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v2 13/17] intel_iommu: piotlb invalidation should notify unmap
-Date: Mon,  5 Aug 2024 14:27:23 +0800
-Message-Id: <20240805062727.2307552-14-zhenzhong.duan@intel.com>
+Subject: [PATCH v2 16/17] intel_iommu: Introduce a property to control FS1GP
+ cap bit setting
+Date: Mon,  5 Aug 2024 14:27:26 +0800
+Message-Id: <20240805062727.2307552-17-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240805062727.2307552-1-zhenzhong.duan@intel.com>
 References: <20240805062727.2307552-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=192.198.163.8;
  envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
@@ -90,77 +90,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is used by some emulated devices which caches address
-translation result. When piotlb invalidation issued in guest,
-those caches should be refreshed.
+When host IOMMU doesn't support FS1GP but vIOMMU does, host IOMMU
+can't translate stage-1 page table from guest correctly.
 
-Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+Add a property x-cap-fs1gp for user to turn FS1GP off so that
+nested page table on host side works.
+
+This property has no effect when vIOMMU isn't in scalable modern
+mode.
+
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
 ---
- hw/i386/intel_iommu.c | 35 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 34 insertions(+), 1 deletion(-)
+ include/hw/i386/intel_iommu.h | 1 +
+ hw/i386/intel_iommu.c         | 5 ++++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
+diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+index 650641544c..f6d9b41b80 100644
+--- a/include/hw/i386/intel_iommu.h
++++ b/include/hw/i386/intel_iommu.h
+@@ -308,6 +308,7 @@ struct IntelIOMMUState {
+     bool dma_drain;                 /* Whether DMA r/w draining enabled */
+     bool dma_translation;           /* Whether DMA translation supported */
+     bool pasid;                     /* Whether to support PASID */
++    bool fs1gp;                     /* First Stage 1-GByte Page Support */
+ 
+     /*
+      * Protects IOMMU states in general.  Currently it protects the
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index fa00f85fd7..317e630e08 100644
+index 9e973bd710..d7e7354db4 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -2907,7 +2907,7 @@ static void vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
-                 continue;
-             }
+@@ -3778,6 +3778,7 @@ static Property vtd_properties[] = {
+     DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
+     DEFINE_PROP_BOOL("dma-drain", IntelIOMMUState, dma_drain, true),
+     DEFINE_PROP_BOOL("dma-translation", IntelIOMMUState, dma_translation, true),
++    DEFINE_PROP_BOOL("x-cap-fs1gp", IntelIOMMUState, fs1gp, true),
+     DEFINE_PROP_END_OF_LIST(),
+ };
  
--            if (!s->scalable_modern) {
-+            if (!s->scalable_modern || !vtd_as_has_map_notifier(vtd_as)) {
-                 vtd_address_space_sync(vtd_as);
-             }
-         }
-@@ -2919,6 +2919,9 @@ static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
-                                        bool ih)
- {
-     VTDIOTLBPageInvInfo info;
-+    VTDAddressSpace *vtd_as;
-+    VTDContextEntry ce;
-+    hwaddr size = (1 << am) * VTD_PAGE_SIZE;
- 
-     info.domain_id = domain_id;
-     info.pasid = pasid;
-@@ -2929,6 +2932,36 @@ static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
-     g_hash_table_foreach_remove(s->iotlb,
-                                 vtd_hash_remove_by_page_piotlb, &info);
-     vtd_iommu_unlock(s);
-+
-+    QLIST_FOREACH(vtd_as, &s->vtd_as_with_notifiers, next) {
-+        if (!vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus),
-+                                      vtd_as->devfn, &ce) &&
-+            domain_id == vtd_get_domain_id(s, &ce, vtd_as->pasid)) {
-+            uint32_t rid2pasid = VTD_CE_GET_RID2PASID(&ce);
-+            IOMMUTLBEvent event;
-+
-+            if ((vtd_as->pasid != PCI_NO_PASID || pasid != rid2pasid) &&
-+                vtd_as->pasid != pasid) {
-+                continue;
-+            }
-+
-+            /*
-+             * Page-Selective-within-PASID PASID-based-IOTLB Invalidation
-+             * does not flush stage-2 entries. See spec section 6.5.2.4
-+             */
-+            if (!s->scalable_modern) {
-+                continue;
-+            }
-+
-+            event.type = IOMMU_NOTIFIER_UNMAP;
-+            event.entry.target_as = &address_space_memory;
-+            event.entry.iova = addr;
-+            event.entry.perm = IOMMU_NONE;
-+            event.entry.addr_mask = size - 1;
-+            event.entry.translated_addr = 0;
-+            memory_region_notify_iommu(&vtd_as->iommu, 0, event);
+@@ -4506,7 +4507,9 @@ static void vtd_cap_init(IntelIOMMUState *s)
+     /* TODO: read cap/ecap from host to decide which cap to be exposed. */
+     if (s->scalable_modern) {
+         s->ecap |= VTD_ECAP_SMTS | VTD_ECAP_FLTS;
+-        s->cap |= VTD_CAP_FS1GP;
++        if (s->fs1gp) {
++            s->cap |= VTD_CAP_FS1GP;
 +        }
-+    }
- }
- 
- static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
+     } else if (s->scalable_mode) {
+         s->ecap |= VTD_ECAP_SMTS | VTD_ECAP_SRS | VTD_ECAP_SLTS;
+     }
 -- 
 2.34.1
 
