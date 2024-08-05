@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D47DAC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:18:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66BF2C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:18:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb49R-0003bh-SH; Mon, 05 Aug 2024 16:17:54 -0400
+	id 1sb49C-0002Fs-AU; Mon, 05 Aug 2024 16:17:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3aDOxZgUKCs8EvG3A19916z.x97Bz7F-yzGz689818F.9C1@flex--tavip.bounces.google.com>)
- id 1sb49P-0003P6-DZ
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:51 -0400
-Received: from mail-pj1-x1049.google.com ([2607:f8b0:4864:20::1049])
+ <3WTOxZgUKCsAzg1ovmuumrk.iuswks0-jk1krtutmt0.uxm@flex--tavip.bounces.google.com>)
+ id 1sb499-00026I-S5
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:35 -0400
+Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3aDOxZgUKCs8EvG3A19916z.x97Bz7F-yzGz689818F.9C1@flex--tavip.bounces.google.com>)
- id 1sb49M-0001UI-DX
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:50 -0400
-Received: by mail-pj1-x1049.google.com with SMTP id
- 98e67ed59e1d1-2cff79ae0f3so4096152a91.0
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 13:17:47 -0700 (PDT)
+ <3WTOxZgUKCsAzg1ovmuumrk.iuswks0-jk1krtutmt0.uxm@flex--tavip.bounces.google.com>)
+ id 1sb497-0001Pu-Vn
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:35 -0400
+Received: by mail-pg1-x54a.google.com with SMTP id
+ 41be03b00d2f7-7b04199911bso5796187a12.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 13:17:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1722889066; x=1723493866; darn=nongnu.org;
+ d=google.com; s=20230601; t=1722889050; x=1723493850; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=yKViGbBXbgsf40jDlea1Rbu9Pc/wgyZ+coz/6jiEdWo=;
- b=TTFrgSvOk16Gwg0E4EM49VxC+sCASYSVRwsmx0NJw8dssUcWd6G5sV+UZRZalSF4LK
- aKKl+Xi0cZiE9A7JgFgR1/Gy2VGI5WTY5vCzenhmcM098lgt+FSMFQHXThgViK4+7GTI
- VrYkIbdrG5y506LW5/fPZGYXOsAl8I3zGA7Rk8vN58xyIoZCnk5MHpPMV3/TZcPmd3ts
- TydypEll3hXLJbTM8UfJPhZLbJTTZmv8P2tf8q09TGIIHyom2SCsH8dY00w0EvS2jt1X
- bLKe5WU3st0BOj+MmZpQs+dlvK1M83hBuh6a/et1u7kjeiLqtFGWR2P2mp1UzgHOWaim
- QVcw==
+ bh=SynE1NM0itYAW6y78a0dTYINIivdU1VNZIPOm/FZTSQ=;
+ b=DCXqC7f9kTxmFQzSruXWMX/P2LgEAcImIH1X0H8wstda6iFSy2GAzeV7FOr0Pq8NiZ
+ WpLXEUbDhNbCy/3cgK5BABCuY8WQsVfy82t/MSiOZiLp9PNuP31GU1yuKFsHeji0RFZJ
+ 1oha8xuehJzM8MjjvKO42mpalPBvvP7SptPJJZaerMzFN0bTQM0nGOwqYxP6I+KTVzUl
+ ogzccrMYVMcW0qcb4j0gMMQ6Z5vPa2yet9WGkUNNxLAPO83Gh4KWHoj9+umqohUXB7BW
+ mgb/0uPbB3PL+FqRn0opu87fLkgmguSMAF2Otd6Deyd/pP3FrE9zZ3b9VS2FyvF9YqHu
+ ThEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722889066; x=1723493866;
+ d=1e100.net; s=20230601; t=1722889050; x=1723493850;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yKViGbBXbgsf40jDlea1Rbu9Pc/wgyZ+coz/6jiEdWo=;
- b=avkh5edue9TcOe4FIaNdyfpuNaQc8IwTLC6S7dm5mSU7D4bUlVnHLzSXuOGzmJGEHl
- gn/LvHfGTtnIPOv0o3UJtkShgf22Cub5rgqyKw1ar7tt2+r82mw33uMZfOFjrQSd2pgv
- nNLXXiL83/Ki7/UCRHmneZ3ysHgOMxo7Iuzeth6Nn0PLVhyo6wl6HMg3GQDEigwMihAe
- 8CWs+62NepgfLm2BK+gOpFgav+6uttQdFRvnTOP8GoCzfqizOLmWc57Dk20QxFItj7Y3
- p2OBuRqB3X7edbItL4TYQDxWKwRhbXYgwjUv5RvKjXV/jmqMKQCJxKgrxueKOkb3mztm
- wrwQ==
-X-Gm-Message-State: AOJu0YyEeLbKFFVHBlB4TvcyU1U0TZFbQq4XsJFridhVEA9/5pXZOf03
- ls36nuJjkQ68HxAeeuPJub82P4eOz4L7s76SF31xXMpWfpCY8RPGtbW+KyOFfJA5jHF/0cOfNHL
- NCIsKPEqkYfEhjPDYf2/D6haeLQVyAC1TfqhUguSQgq5Lbf/vYCoYuAGYotgIY8wJUlmBkQunSx
- lbjXB803jre9rZkaSoCqq3rZ16DA==
-X-Google-Smtp-Source: AGHT+IEru86bm/+1q+FLmL7wwlYksXRv1IHzcU3JoLAoRcdP6I9MQ8+1J/BYTCPAlqTiOGFbzd7E25IUmA==
+ bh=SynE1NM0itYAW6y78a0dTYINIivdU1VNZIPOm/FZTSQ=;
+ b=YObONFlOHcK0ldqHklxeKKNBqVZbYTYi1wqOAEku6bpvXT4aVOAiIBr01UeZQDPQES
+ V0+BimjgXXZjyEhBDqC4sbgV/D6vp3oCJ5F9+gH4g4DNuc8YiFQJtnpWsQVJRF+A6Ryf
+ x4rgGZoWZzLVkUl34xf6jRG/BWjTVyuZz4CHobuVjbsogCh8I51iMfzIEYV+p9J/+Cw5
+ dUJ1nXlTw5ZlDj1+jMPpnbqeFT3mbZZzrSDW2vokZkxy9YooeDLbSZY3GWiyAHb2+9FQ
+ HUeY2wO9qLtmtJ2qKylmHbh+hp714n9EAGn0F+mB1jRcHUzZCkwmfULj9b2tkKAuIJ0p
+ AjZw==
+X-Gm-Message-State: AOJu0YxsPX5ottniQEDir0mfAwSLDqtPIz0U7MzuvdI31j1SlUKrZXab
+ 4JwzAbnNnzs2zmgiLPBSCpXXfnYcaooyAUSucWZevSYAW6km+UkgOqQy/ClngAbULkw/qsFUyr9
+ wOXOjIAsRWKYUTk1LCjFrpRPTWWjzRgix38/2rko5hr6BHi4hR182NHva18SaFchpgSk/B6hwIH
+ GnG8Auul2Y8S+bGkT9sK6dzP8uvg==
+X-Google-Smtp-Source: AGHT+IFfBSsEqahvMxIS6/LupdiNY3e6rJCtmeO4bkS0j6KTqHR7pmRUWlSDt8ZH4z2nOAzbSbhP6de15w==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a17:90a:c982:b0:2c9:63d6:a183
- with SMTP id
- 98e67ed59e1d1-2cff955376dmr29109a91.7.1722889064153; Mon, 05 Aug 2024
- 13:17:44 -0700 (PDT)
-Date: Mon,  5 Aug 2024 13:17:08 -0700
+ (user=tavip job=sendgmr) by 2002:a17:90a:1fc9:b0:2c8:632:7efe with
+ SMTP id
+ 98e67ed59e1d1-2cff0c5c916mr186752a91.4.1722889049713; Mon, 05 Aug 2024
+ 13:17:29 -0700 (PDT)
+Date: Mon,  5 Aug 2024 13:17:00 -0700
 In-Reply-To: <20240805201719.2345596-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20240805201719.2345596-1-tavip@google.com>
 X-Mailer: git-send-email 2.46.0.rc2.264.g509ed76dc8-goog
-Message-ID: <20240805201719.2345596-14-tavip@google.com>
-Subject: [RFC PATCH 13/23] test/unit: add i2c-tester
+Message-ID: <20240805201719.2345596-6-tavip@google.com>
+Subject: [RFC PATCH 05/23] hw: add register access utility functions
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -71,9 +71,9 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  marcandre.lureau@redhat.com, alistair@alistair23.me, berrange@redhat.com, 
  philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, bleal@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1049;
- envelope-from=3aDOxZgUKCs8EvG3A19916z.x97Bz7F-yzGz689818F.9C1@flex--tavip.bounces.google.com;
- helo=mail-pj1-x1049.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
+ envelope-from=3WTOxZgUKCsAzg1ovmuumrk.iuswks0-jk1krtutmt0.uxm@flex--tavip.bounces.google.com;
+ helo=mail-pg1-x54a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -96,28 +96,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a simple i2c peripheral to be used for testing I2C device
-models. The peripheral has a fixed number of registers that can be
-read and written.
+Add register access utility functions for device models, like checking
+aligned access and reading and writing to a register backstore.
 
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- tests/unit/i2c_tester.c | 111 ++++++++++++++++++++++++++++++++++++++++
- tests/unit/i2c_tester.h |  34 ++++++++++++
- 2 files changed, 145 insertions(+)
- create mode 100644 tests/unit/i2c_tester.c
- create mode 100644 tests/unit/i2c_tester.h
+ include/hw/regs.h | 89 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 89 insertions(+)
+ create mode 100644 include/hw/regs.h
 
-diff --git a/tests/unit/i2c_tester.c b/tests/unit/i2c_tester.c
+diff --git a/include/hw/regs.h b/include/hw/regs.h
 new file mode 100644
-index 0000000000..ea36a17f1f
+index 0000000000..8d0da0629d
 --- /dev/null
-+++ b/tests/unit/i2c_tester.c
-@@ -0,0 +1,111 @@
++++ b/include/hw/regs.h
+@@ -0,0 +1,89 @@
 +/*
-+ * Simple I2C peripheral for testing I2C device models.
++ * Useful macros/functions for register handling.
 + *
-+ * Copyright (c) 2024 Google LLC
++ * Copyright (c) 2021 Google LLC
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
@@ -125,146 +122,84 @@ index 0000000000..ea36a17f1f
 + * See the COPYING file in the top-level directory.
 + */
 +
-+#include "i2c_tester.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
++#ifndef HW_REGS_H
++#define HW_REGS_H
 +
-+static void i2c_tester_reset(DeviceState *ds)
-+{
-+    I2cTesterState *s = I2C_TESTER(ds);
++#include "exec/hwaddr.h"
++#include "exec/memattrs.h"
 +
-+    s->set_reg_idx = false;
-+    s->reg_idx     = 0;
-+    memset(s->regs, 0, I2C_TESTER_NUM_REGS);
-+}
++#define BITS(hi, lo)       (BIT(hi + 1) - BIT(lo))
++#define BIT_IS_SET(v, b)   (((v) & BIT(b)) != 0)
 +
-+static int i2c_tester_event(I2CSlave *i2c, enum i2c_event event)
-+{
-+    I2cTesterState *s = I2C_TESTER(i2c);
-+
-+    if (event == I2C_START_SEND) {
-+        s->set_reg_idx = true;
-+    }
-+
-+    return 0;
-+}
-+
-+static uint8_t i2c_tester_rx(I2CSlave *i2c)
-+{
-+    I2cTesterState *s = I2C_TESTER(i2c);
-+
-+    if (s->reg_idx >= I2C_TESTER_NUM_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid reg 0x%02x\n", __func__,
-+                      s->reg_idx);
-+        return I2C_NACK;
-+    }
-+
-+    return s->regs[s->reg_idx];
-+}
-+
-+static int i2c_tester_tx(I2CSlave *i2c, uint8_t data)
-+{
-+    I2cTesterState *s = I2C_TESTER(i2c);
-+
-+    if (s->set_reg_idx) {
-+        /* Setting the register in which the operation will be done. */
-+        s->reg_idx = data;
-+        s->set_reg_idx = false;
-+        return 0;
-+    }
-+
-+    if (s->reg_idx >= I2C_TESTER_NUM_REGS) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid reg 0x%02x\n", __func__,
-+                      s->reg_idx);
-+        return I2C_NACK;
-+    }
-+
-+    /* Write reg data. */
-+    s->regs[s->reg_idx] = data;
-+
-+    return 0;
-+}
-+
-+static void i2c_tester_init(Object *obj)
-+{
-+}
-+
-+static void i2c_tester_realize(DeviceState *ds, Error **errp)
-+{
-+}
-+
-+static void i2c_tester_unrealize(DeviceState *dev)
-+{
-+}
-+
-+static void i2c_tester_class_init(ObjectClass *oc, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+    I2CSlaveClass *isc = I2C_SLAVE_CLASS(oc);
-+
-+    dc->reset = i2c_tester_reset;
-+    dc->realize   = i2c_tester_realize;
-+    dc->unrealize = i2c_tester_unrealize;
-+
-+    isc->event = i2c_tester_event;
-+    isc->recv = i2c_tester_rx;
-+    isc->send = i2c_tester_tx;
-+}
-+
-+static const TypeInfo i2c_tester_info = {
-+    .name = TYPE_I2C_TESTER,
-+    .parent = TYPE_I2C_SLAVE,
-+    .instance_size = sizeof(I2cTesterState),
-+    .instance_init = i2c_tester_init,
-+    .class_init = i2c_tester_class_init
-+};
-+
-+static void i2c_tester_register_type(void)
-+{
-+    type_register_static(&i2c_tester_info);
-+}
-+
-+type_init(i2c_tester_register_type);
-diff --git a/tests/unit/i2c_tester.h b/tests/unit/i2c_tester.h
-new file mode 100644
-index 0000000000..9eebe1b6e3
---- /dev/null
-+++ b/tests/unit/i2c_tester.h
-@@ -0,0 +1,34 @@
 +/*
++ * reg32_aligned_access
++ * @addr: address to check
++ * @size: size of access
 + *
-+ * Copyright (c) 2024 Google LLC
++ * Check if access to a hardware address is 32bit aligned.
 + *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
++ * Returns: true if access is 32bit aligned, false otherwise
 + */
++static inline bool reg32_aligned_access(hwaddr addr, unsigned size)
++{
++    if (size != 4 || addr % 4 != 0) {
++        return false;
++    }
++    return true;
++}
 +
-+#ifndef TESTS_UNIT_I2C_TESTER_H
-+#define TESTS_UNIT_I2C_TESTER_H
++/*
++ * reg32_write
++ * @base: base address
++ * @addr: register offset in bytes
++ * @val: value to write
++ * @wr_bits_array: RW bitmask array
++ *
++ * Update the RW/WO bits of a 32bit register backstore with a given value
++ * (discarding updats to the RO bits). The RW/WO bits are encoded in the
++ * @wr_bits_array with bits set being RW and bits unset being RO.
++ *
++ * Usage example:
++ *
++ * wr_bits_array[] = {
++ *    [REG1_ADDR/4] = 0xFF000000, // MSB byte writable
++ *    [REG2_ADDR/4] = 0xFF,       // LSB byte writable
++ *    // all other registers are read-only
++ * };
++ *
++ * // backstore is updated to 0x12000000
++ * reg32_write(&backstore, REG1_ADDR, 0x12345678, wr_bits_array);
++ * // backstore is updated to 0x78
++ * reg32_write(&backstore, REG2_ADDR, 0x12345678, wr_bits_array);
++ */
++static inline uint32_t reg32_write(void *base, uint32_t off, uint32_t val,
++                                   const uint32_t *rw_bits_array)
++{
++    uint32_t *ptr = base + addr;
++    uint32_t old_value = *ptr;
++    uint32_t mask = rw_bits_array ? rw_bits_array[addr / 4] : 0xFFFFFFFF;
 +
-+#include "qemu/osdep.h"
-+#include "hw/i2c/i2c.h"
-+#include "hw/irq.h"
++    /* set WO/RW bits */
++    *ptr |= val & mask;
++    /* clear RO bits */
++    *ptr &= val | ~mask;
 +
-+#define I2C_TESTER_NUM_REGS    0x31
++    return old_value;
++}
 +
-+#define TYPE_I2C_TESTER "i2c_tester"
-+#define I2C_TESTER(obj) OBJECT_CHECK(I2cTesterState, (obj), TYPE_I2C_TESTER)
++/*
++ * reg32_read
++ * @base: base address
++ * @addr: register offset in bytes
++ *
++ * Returns: 32bit value from register backstore
++ */
++static inline uint32_t reg32_read(void *base, uint32_t addr)
++{
++    return *(uint32_t *)(base + addr);
++}
 +
-+typedef struct {
-+    /* <private> */
-+    I2CSlave i2c;
-+
-+    /* <public> */
-+    bool set_reg_idx;
-+
-+    uint8_t reg_idx;
-+    uint8_t regs[I2C_TESTER_NUM_REGS];
-+} I2cTesterState;
-+
-+#endif /* TESTS_UNIT_I2C_TESTER_H */
++#endif /* HW_REGS_H */
 -- 
 2.46.0.rc2.264.g509ed76dc8-goog
 
