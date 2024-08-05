@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 594EDC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 22:00:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34B61C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 22:01:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb5kA-0002x5-Q1; Mon, 05 Aug 2024 17:59:54 -0400
+	id 1sb5l7-0003WO-Pe; Mon, 05 Aug 2024 18:00:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sb5k5-0002ug-Bx
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 17:59:49 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1sb5kj-0003Nd-3z
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 18:00:30 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sb5k3-0006RF-KG
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 17:59:49 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-7a18ba4143bso7558242a12.2
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 14:59:46 -0700 (PDT)
+ id 1sb5kh-0006fB-FF
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 18:00:28 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-70d399da0b5so9402008b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 15:00:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722895185; x=1723499985; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ze4f5WWRI0v4Ei0sg6/Kj76OA6a3KyEEqX7xYsmSIkc=;
- b=HzTQyHifu+TKmu1oTzQfrHmDJopFOx9u/957GrX1STCqRXR5bm2SD/baqRE+Z0z2pb
- M+FZP6GBLbIi0aHCiqXZ6KX3wMhmuJh/3GPY6JSv6bzuq2/ixUD8LjPDeT2gco8lZX29
- lixVeNK9kaXN/qUBRfHE0187LdQsdfLGPgvKwR3hfrrhNtiEsWxDpiIYRYmXULNsfQu0
- rwgqeJIauTtT8iQX4gYsMmc0WL4CHIXwIeUZ6eayRpH3KFh5aNd2CFTpjFjDy4ZNVb6Q
- U2zrgofcADvG+4EzGeG8JXDOTZ4wkpMHlGK+D8oGmowYLq6PwpChyfj8SvARrAcRr/BQ
- 6qLg==
+ d=linaro.org; s=google; t=1722895226; x=1723500026; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=NTttE00CmzfFjdscIumMFzaKp8EO2aBOHKD2eCYpcHo=;
+ b=TnTqKUORsY8GXIT1Virvbxt7SuzP7VFfCZkw4eCWdSFzz6hyIGyZ/VIYW9Wc/Co/Gc
+ bpF0/B3DBkJofmBD0pclJ7Ez6TstkwlL+mYoeB6t59jE2N4ShdGWUsPAjhUI6UqknepZ
+ fPbkPeSuHonDRWTgJGzrVZudXzAkzWkj9gDfZCluhe0+NWsCwmWAXbSXnfFX53r4q1cz
+ c1cKZ4lEAHY2wF4381q7TBxZOAIn9RLMUvd+Cqmd+BX9aUYinKOCoXLSrAJELQ09pB2G
+ o/2XrTIscFcSTGiLKK0qUJ9Jb9Paw+JL8otluhGEiAbzJsfZ+QXMdJsFG2AUjgJF3o3f
+ UUIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722895185; x=1723499985;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1722895226; x=1723500026;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ze4f5WWRI0v4Ei0sg6/Kj76OA6a3KyEEqX7xYsmSIkc=;
- b=Ab8iYBSsmPlaP6nwvOhJ9qZs55APOhrUh7RWVrmwTNHp1cugnBWhdKTfZXRPKrFUzF
- uKWZVN1Vx/pBBROdMGznlariH2Y30mfvP3tQC6lT8ATe1FxbLZA2jpJHfaiQKuj7ryA2
- OBlqZR77Y8HTa2mwUdxwStuWiqgKyGfcpOGhLrfGUftjUdKMs5NXzn9zwXLwLhpQabxl
- nnfWskvJlixFg0xYep0ssMi+a/yjSFeV49E335I1U/PbD30aA5iP3hCkZtQrcu6oyMoe
- 6rTub12BDi0wHQmUZXvRm8uyxV/4E+qp4ddyETv3OszwcBrc76ewlWBp/i4PT60Tb3rA
- 3ZPw==
-X-Gm-Message-State: AOJu0YzsW3j/yP5FBquJw9z8M6288I/ZP0Pxvxu+rhGauarTsKwzs63w
- ITAOkkJtAs1PxzCu5voUis+LgDKcx4PUSNnfVF0iQGkEHCY8Q2D5p+gE2THoxuJ+n1syObQRPda
- 3y0g=
-X-Google-Smtp-Source: AGHT+IHjx9Xjh9u+T9f1BuKfWnEiLG7VFCqkYVzMNXd/lxSGLn8VqtEgqPchY4Z8w7Av97aBWvb/cg==
-X-Received: by 2002:a17:90b:1e4c:b0:2c9:57a4:a8c4 with SMTP id
- 98e67ed59e1d1-2cff955901dmr11095275a91.42.1722895184806; 
- Mon, 05 Aug 2024 14:59:44 -0700 (PDT)
+ bh=NTttE00CmzfFjdscIumMFzaKp8EO2aBOHKD2eCYpcHo=;
+ b=PM3e7uNm8FnVaGkfsacnB7UBGlZhEoKC9JKUdgLMflEGzFAPQ191pauN3z7ovms1pY
+ i9aetpGm5Ytv+pz6tjaN4bh4ZRuDcBIiZL5HQMX6crWpRDBK0WpctNlsK07qO8wAn3v2
+ EmcOgoZ/e899jTfOtQArlm11Utpj1VlzVdoFv1AfL1QnDX/K7GwKD61oUJoQ9bhTYHDJ
+ CWGqGPXIaAuJcKJrfxxAoOXadmDa4RfCtm0w+Kr8nBsVFyLhZVW+JCQSw0/yXvtG1lbo
+ ZqflJGKFfehh6oooQUNQrwAMVkdCPf8/pbP/SUg17Q635OeJKCApncqg3MCkJ2AzrNMu
+ ciPg==
+X-Gm-Message-State: AOJu0YzLam/TL51YAVuabgqqQdCWHr6ZP5ETKDSHX5rneZQbJwf2FErh
+ 2i5FzczrcSPsZW3i9N+qjURrMgRjwM1hAjg7PeIeDPAcfao3Oi9xDxINSVvknMY=
+X-Google-Smtp-Source: AGHT+IFdTBNm6dFZhmJdwyZ3jcEbCq/blQzqrmppIV3KHoX54VVq4sVWuJvDYO3wU+XoH66TQMu4/w==
+X-Received: by 2002:a05:6a00:140b:b0:70e:8dfd:412e with SMTP id
+ d2e1a72fcca58-7106cfd9d29mr16369826b3a.18.1722895225596; 
+ Mon, 05 Aug 2024 15:00:25 -0700 (PDT)
 Received: from [192.168.0.152] ([144.6.121.55])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cffaf69a1csm7572143a91.7.2024.08.05.14.59.41
- for <qemu-devel@nongnu.org>
+ d2e1a72fcca58-7106ecdffd9sm5816464b3a.129.2024.08.05.15.00.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Aug 2024 14:59:44 -0700 (PDT)
-Message-ID: <1943ce20-91a6-4942-9dd6-9d1024dc2728@linaro.org>
-Date: Tue, 6 Aug 2024 07:59:38 +1000
+ Mon, 05 Aug 2024 15:00:25 -0700 (PDT)
+Message-ID: <aca5616b-0e3d-40d2-ae6d-c7ea631119d2@linaro.org>
+Date: Tue, 6 Aug 2024 08:00:20 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/6] misc patch queue
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-References: <20240805003130.1421051-1-richard.henderson@linaro.org>
+Subject: Re: [PULL 0/8] Net patches
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20240802031929.44060-1-jasowang@redhat.com>
+ <01fe2ff5-d630-4608-9ae1-cce62f290594@linaro.org>
+ <CACGkMEtFHxRdxh6ZLJM=C5qok_Xjd5btqHUYpbQQhrqa9+BKJA@mail.gmail.com>
 Content-Language: en-US
-In-Reply-To: <20240805003130.1421051-1-richard.henderson@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CACGkMEtFHxRdxh6ZLJM=C5qok_Xjd5btqHUYpbQQhrqa9+BKJA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -96,26 +97,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/5/24 10:31, Richard Henderson wrote:
-> The following changes since commit f9851d2ffef59b3a7f39513469263ab3b019480f:
+On 8/5/24 12:38, Jason Wang wrote:
+> Hi Richard:
 > 
->    Merge tag 'migration-20240802-pull-request' ofhttps://gitlab.com/farosas/qemu into staging (2024-08-03 07:26:26 +1000)
+> On Fri, Aug 2, 2024 at 5:48 PM Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> On 8/2/24 13:19, Jason Wang wrote:
+>>> The following changes since commit 31669121a01a14732f57c49400bc239cf9fd505f:
+>>>
+>>>     Merge tag 'pull-target-arm-20240801' ofhttps://git.linaro.org/people/pmaydell/qemu-arm into staging (2024-08-02 08:18:37 +1000)
+>>>
+>>> are available in the Git repository at:
+>>>
+>>>     https://github.com/jasowang/qemu.git tags/net-pull-request
+>>>
+>>> for you to fetch changes up to 64f75f57f9d2c8c12ac6d9355fa5d3a2af5879ca:
+>>>
+>>>     net: Reinstate '-net nic, model=help' output as documented in man page (2024-08-02 11:09:52 +0800)
+>>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>>
+>>
 > 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/rth7680/qemu.git tags/pull-misc-20240805
-> 
-> for you to fetch changes up to 9996a35c6433c0e019a1c05791299db5e63a5db7:
-> 
->    net/tap: Use qemu_close_all_open_fd() (2024-08-05 08:33:36 +1000)
-> 
-> ----------------------------------------------------------------
-> linux-user/elfload: Fix pr_pid values in core files
-> util: Add qemu_close_all_open_fd
-> net/tap: Use qemu_close_all_open_fd
+> I guess it means it has been merged :) ?
 
+Whoops, yes, wrong macro button pushed.  :-)
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
 r~
 
