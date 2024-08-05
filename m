@@ -4,83 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2761FC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5449AC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:21:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb49l-0005n4-Ft; Mon, 05 Aug 2024 16:18:13 -0400
+	id 1sb4CM-0001LU-D4; Mon, 05 Aug 2024 16:20:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3ejOxZgUKCuEWDYLSJRRJOH.FRPTHPX-GHYHOQRQJQX.RUJ@flex--tavip.bounces.google.com>)
- id 1sb49g-0004wE-Iu
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:18:09 -0400
-Received: from mail-pf1-x44a.google.com ([2607:f8b0:4864:20::44a])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sb4CJ-00010B-Mw
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:20:52 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3ejOxZgUKCuEWDYLSJRRJOH.FRPTHPX-GHYHOQRQJQX.RUJ@flex--tavip.bounces.google.com>)
- id 1sb49e-0001YG-Pr
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:18:08 -0400
-Received: by mail-pf1-x44a.google.com with SMTP id
- d2e1a72fcca58-71065f49b10so4642372b3a.0
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 13:18:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1722889084; x=1723493884; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=3GjBap7FxZdPpDdgQeaY7XNjHE33uQ9g7r73DwU0Kyw=;
- b=pWxmf9Aoupp/srEsQyrS2UCJIHAwT1L7Ou3GOx9mAdhznqSok6OPw1BGzskOSLfALr
- XJwzaoQ6WjKvdpC7Q5YabiT7J+kkLVc7hzc1kfL7UMhGe9UinqZMhHjW0gVQYZkVCFAi
- wtBS7Uac0vlf9IosOJN/0ZIoEa0iE6gDiTW4XsDHZjHGOmZIcWrh/65JczlR2BL0Gb6S
- njaItpeoQL7DyDtqrZgnJppnvkbj/ocJ8ABek+foXLpKQUKgeEQu+eNaPS3StwGJo1rP
- rqYXD2mLsQpTWlMC5kkj4YfY0HhBqqt9XUrNaavBk48qOqJohVDGFgQ7PyrjNjOT6Zg3
- wBiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722889084; x=1723493884;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3GjBap7FxZdPpDdgQeaY7XNjHE33uQ9g7r73DwU0Kyw=;
- b=HKxdznFdD6EP0IAeh88mW3cv/KfxCq1lB9yF66GZc1IeZ7kFvQd4KbiBnS7i6TaKKW
- pxNAHBxgVVgRA+QW/QuV6oSQC2y5VsTosDw9PxQFuOgh4sMgpkvF3VF5UPnuLHSrswOd
- zsqJhvnTxcRGqm+vquYd+zM5/kAbl3Ustc4pyAYErsSHYPHZFDUL1E75Tye984xGzEh8
- zmaUVMiY2pSemdGnlYoK0V0zbMdZIDoa4RtseSjecz9/2eGJReYn5jkqX/Jpht0EWt89
- 7O5jtMaBCsfQhdV+oFdr5G+xCq3212xQxsGS3F8R1NAAChs4ouEdnyautfoI5RAF/l78
- tgJQ==
-X-Gm-Message-State: AOJu0YxpC6HDHkYvBmwMGK2iGfc3g6z6uRZOAvKAQi6ECeuwP1vqRnyJ
- Mq5pvXnfbc6tg84olYelupJ2b31UaBmQpGxcukE3BSBHBCDDcmfRGtcHqkFHrt4AgXhLDOR3WrN
- bZ5qMKJrwGZSqCBCGJdXnQo8O7ddNPoG/vb87yAWNvlkx0eGVg0hfDA+NQikUdqS3Op2XrZS/ze
- 5V87v8vljl5IYtXzVIbUI2p4I3cw==
-X-Google-Smtp-Source: AGHT+IEXkrqOE/XzNbGuVKsM0VKvpvoMdnNt3Ub2rtyWCRwYu7a+ohGR2cw4S360MRHtx60w8KRKA+NVSw==
-X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a05:6a00:9153:b0:710:5798:44de
- with SMTP id
- d2e1a72fcca58-7106cf97a92mr55487b3a.2.1722889082012; Mon, 05 Aug 2024
- 13:18:02 -0700 (PDT)
-Date: Mon,  5 Aug 2024 13:17:18 -0700
-In-Reply-To: <20240805201719.2345596-1-tavip@google.com>
-Mime-Version: 1.0
-References: <20240805201719.2345596-1-tavip@google.com>
-X-Mailer: git-send-email 2.46.0.rc2.264.g509ed76dc8-goog
-Message-ID: <20240805201719.2345596-24-tavip@google.com>
-Subject: [RFC PATCH 23/23] hw/arm: add RT595-EVK board
-From: Octavian Purdila <tavip@google.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sb4CH-00022H-MP
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:20:51 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 1E39F21C89;
+ Mon,  5 Aug 2024 20:20:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1722889246; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ikF+DtANi/r1AIRSe1GmX1n1cKKTQvrQZuBTXHOwalI=;
+ b=XqqfGX4GEvYN2vlqyVfv6G2S0Y9UbKzindYdOrvWManozI4LqWQ4BaYVc+seZZjG1KwPwQ
+ 2oJmFg6FjN59nstIN4HKq6kjK/6ZXZIayq31ePVeSHJmKueOadD9JEkxdUQQWhCvlkDFYU
+ E2O8Yy9UM4UhcoLPspdtVl8BxRB80o8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1722889246;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ikF+DtANi/r1AIRSe1GmX1n1cKKTQvrQZuBTXHOwalI=;
+ b=VoakXUJf7UNGU/ZK9rrNZqSqDQ/w7mDwUvLKaySxuyE9FayNgeptz6FU6pbTfyPd2HnxXI
+ tHZoEmTmFuLB2sBw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=XqqfGX4G;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VoakXUJf
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1722889246; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ikF+DtANi/r1AIRSe1GmX1n1cKKTQvrQZuBTXHOwalI=;
+ b=XqqfGX4GEvYN2vlqyVfv6G2S0Y9UbKzindYdOrvWManozI4LqWQ4BaYVc+seZZjG1KwPwQ
+ 2oJmFg6FjN59nstIN4HKq6kjK/6ZXZIayq31ePVeSHJmKueOadD9JEkxdUQQWhCvlkDFYU
+ E2O8Yy9UM4UhcoLPspdtVl8BxRB80o8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1722889246;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=ikF+DtANi/r1AIRSe1GmX1n1cKKTQvrQZuBTXHOwalI=;
+ b=VoakXUJf7UNGU/ZK9rrNZqSqDQ/w7mDwUvLKaySxuyE9FayNgeptz6FU6pbTfyPd2HnxXI
+ tHZoEmTmFuLB2sBw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 07FF513254;
+ Mon,  5 Aug 2024 20:20:43 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id fYYNMBs0sWYcNAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 05 Aug 2024 20:20:43 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
- alex.bennee@linaro.org, thuth@redhat.com, peter.maydell@linaro.org, 
- marcandre.lureau@redhat.com, alistair@alistair23.me, berrange@redhat.com, 
- philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, bleal@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::44a;
- envelope-from=3ejOxZgUKCuEWDYLSJRRJOH.FRPTHPX-GHYHOQRQJQX.RUJ@flex--tavip.bounces.google.com;
- helo=mail-pf1-x44a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+Cc: Paolo Bonzini <pbonzini@redhat.com>, jpoimboe@kernel.org,
+ Babu Moger <babu.moger@amd.com>, Dario Faggioli <dfaggioli@suse.com>,
+ Fabian Vogt <fvogt@suse.de>, Nikolay Borisov <nik.borisov@suse.com>
+Subject: [PATCH] target/i386: Expose IBPB-BRTYPE and SBPB CPUID bits to the
+ guest
+Date: Mon,  5 Aug 2024 17:20:41 -0300
+Message-Id: <20240805202041.5936-1-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-5.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 1E39F21C89
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,113 +120,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add basic support for the RT595-EVK board, enough to be able to run
-the NXP's microXpresso SDK hello world example.
+According to AMD's Speculative Return Stack Overflow whitepaper (link
+below), the hypervisor should synthesize the value of IBPB_BRTYPE and
+SBPB CPUID bits to the guest.
 
-Signed-off-by: Octavian Purdila <tavip@google.com>
+Support for this is already present in the kernel with commit
+e47d86083c66 ("KVM: x86: Add SBPB support") and commit 6f0f23ef76be
+("KVM: x86: Add IBPB_BRTYPE support").
+
+Add support in QEMU to expose the bits to the guest OS.
+
+host:
+  # cat /sys/devices/system/cpu/vulnerabilities/spec_rstack_overflow
+  Mitigation: Safe RET
+
+before (guest):
+  $ cpuid -l 0x80000021 -1 -r
+  0x80000021 0x00: eax=0x00000045 ebx=0x00000000 ecx=0x00000000 edx=0x00000000
+                            ^
+  $ cat /sys/devices/system/cpu/vulnerabilities/spec_rstack_overflow
+  Vulnerable: Safe RET, no microcode
+
+after (guest):
+  $ cpuid -l 0x80000021 -1 -r
+  0x80000021 0x00: eax=0x18000045 ebx=0x00000000 ecx=0x00000000 edx=0x00000000
+                            ^
+  $ cat /sys/devices/system/cpu/vulnerabilities/spec_rstack_overflow
+  Mitigation: Safe RET
+
+Reported-by: Fabian Vogt <fvogt@suse.de>
+Link: https://www.amd.com/content/dam/amd/en/documents/corporate/cr/speculative-return-stack-overflow-whitepaper.pdf
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- hw/arm/Kconfig     |  5 ++++
- hw/arm/meson.build |  1 +
- hw/arm/rt595-evk.c | 64 ++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 70 insertions(+)
- create mode 100644 hw/arm/rt595-evk.c
+More info on this thread:
+https://lore.kernel.org/r/68f8b8b1ca1bf58b059f52afbd1c9c51108a074a.camel@suse.com
+---
+ target/i386/cpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 7ffece3dec..26ec3d391a 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -720,3 +720,8 @@ config RT500
-     select RT500_CLKCTL1
-     select FLEXSPI
-     select RT500_RSTCTL
-+
-+config RT595_EVK
-+    bool
-+    default y
-+    select RT500
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 7d827d512c..9792c93142 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -60,6 +60,7 @@ arm_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-e
- arm_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
- arm_ss.add(when: 'CONFIG_XEN', if_true: files('xen_arm.c'))
- arm_ss.add(when: 'CONFIG_RT500', if_true: files('rt500.c'))
-+arm_ss.add(when: 'CONFIG_RT595_EVK', if_true: files('rt595-evk.c'))
- 
- system_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmu-common.c'))
- system_ss.add(when: 'CONFIG_CHEETAH', if_true: files('palm.c'))
-diff --git a/hw/arm/rt595-evk.c b/hw/arm/rt595-evk.c
-new file mode 100644
-index 0000000000..fff3004195
---- /dev/null
-+++ b/hw/arm/rt595-evk.c
-@@ -0,0 +1,64 @@
-+/*
-+ * i.MX RT595 EVK
-+ *
-+ * Copyright (c) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "elf.h"
-+#include "exec/address-spaces.h"
-+#include "hw/loader.h"
-+#include "hw/sysbus.h"
-+#include "hw/boards.h"
-+#include "qemu/log.h"
-+#include "hw/arm/armv7m.h"
-+#include "hw/misc/unimp.h"
-+#include "hw/arm/rt500.h"
-+#include "hw/qdev-clock.h"
-+#include "sysemu/reset.h"
-+
-+static void rt595_evk_reset(MachineState *ms, ShutdownCause reason)
-+{
-+    /*
-+     * CPU reset is not done by default, we need to do it manually when the
-+     * machine is reset.
-+     */
-+    cpu_reset(first_cpu);
-+
-+    qemu_devices_reset(reason);
-+}
-+
-+static void rt595_evk_init(MachineState *ms)
-+{
-+    RT500State *s;
-+    Clock *sysclk;
-+
-+    sysclk = clock_new(OBJECT(ms), "SYSCLK");
-+    clock_set_hz(sysclk, 200000000);
-+
-+    s = RT500(object_new(TYPE_RT500));
-+    qdev_connect_clock_in(DEVICE(s), "sysclk", sysclk);
-+    object_property_add_child(OBJECT(ms), "soc", OBJECT(s));
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
-+
-+    if (ms->kernel_filename) {
-+        armv7m_load_kernel(ARM_CPU(first_cpu), ms->kernel_filename, 0, 0);
-+    }
-+}
-+
-+static void rt595_evk_machine_init(MachineClass *mc)
-+{
-+    mc->desc  = "RT595 EVK Machine (ARM Cortex-M33)";
-+    mc->init  = rt595_evk_init;
-+    mc->reset = rt595_evk_reset;
-+
-+    mc->default_cpu_type = ARM_CPU_TYPE_NAME("cortex-m33");
-+    mc->ignore_memory_transaction_failures = true;
-+}
-+
-+DEFINE_MACHINE("rt595-evk", rt595_evk_machine_init);
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 85ef7452c0..d33401c922 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1221,8 +1221,8 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+             NULL, NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+-            NULL, NULL, NULL, NULL,
+-            NULL, NULL, NULL, NULL,
++            NULL, NULL, NULL, "sbpb",
++            "ibpb-brtype", NULL, NULL, NULL,
+         },
+         .cpuid = { .eax = 0x80000021, .reg = R_EAX, },
+         .tcg_features = 0,
 -- 
-2.46.0.rc2.264.g509ed76dc8-goog
+2.35.3
 
 
