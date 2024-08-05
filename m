@@ -4,81 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E566C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 06:14:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F3C6C52D6F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 06:31:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1saqy2-0002mD-W2; Mon, 05 Aug 2024 02:13:15 -0400
+	id 1sarFe-0003rr-59; Mon, 05 Aug 2024 02:31:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1saqxv-0002jh-1C
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:13:08 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1saqxp-000833-FX
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:13:06 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-52f04150796so15640703e87.3
- for <qemu-devel@nongnu.org>; Sun, 04 Aug 2024 23:12:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722838378; x=1723443178; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=qKfUThdQsLkFA6LYklbVLSCEwFJGaxuCvq2ljSDF5/M=;
- b=iwgYjPesHaqZeZVvvC4OE3/TE8LxsSwlUW0IHlKby3X2xU/wBPJxtFcQ9QQ//uj4xF
- bUNbyRWyhS7JH/Ec5eABwOsmkFyQNzuCOBvEJ9SmMfd+GwFk8SC+SWEe2vjgwpQJmw6r
- 600Z8t+ri5X0C1SxT2lk1HK6NPVIZD4l5ifkziwdrrortLowdiwKhsIL7PHFJ91RJgwL
- 3GPnGINwR/AxjWdrmC6Ptb6EadmSqsLwBfBkumZSLGp4xITkwL1rAY/klp3HeIVYhigN
- 56PM7FHkNTj07lV7SBzYFQBX64ZaJJWxQH2X6wo6SX7gcw/Aw10uYel4EhozoAs3A3r8
- VLIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722838378; x=1723443178;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qKfUThdQsLkFA6LYklbVLSCEwFJGaxuCvq2ljSDF5/M=;
- b=olMX2KwpP5OnRazi04N4dDrtYtFhtc1XE8PqDDcHress70rHrncy2xMzMLwQHaVQ1Z
- 4JtkCPRD4Aq1tT99PIioRE9rL7LqJthWSOK7Cpz55iVx7bvKul3QJou05OCVK3maXUsI
- 4Ae/tz/olZ4nKumnS+Cxs1bSYB/ixirkeIIaVy5Aw/0frQo3d9xHZy2PGcQGMXrXsegI
- Q/uungq4c65tMFJNR6gNO+suxwAvSas9J24t44TpkY7sThQKO1JAU35uSrTdHu9PyORG
- fJGRAAfVrChiN5lgAsIir0S+U+cibM91b8TY1zf2wO3i7DYKGJC7fSPtD2+6JVDJ8o+B
- 3IAQ==
-X-Gm-Message-State: AOJu0YyTy3ltbUwV9vfvFFmbgbPVGyZry7M1NmvvT0A7pcbNovifTiJ1
- N0qUzgGZS4/GJx/1+jN6RAjCwkFaEV9b+XS+es6Mh9zUoo1FZa++
-X-Google-Smtp-Source: AGHT+IEe+PmHDPI7oF+fo+ak4vt7dP7sQyr1eoXWAXQHzgm5gUvuBqC6Bzu+RLNXe+LPY3jqKG+UEQ==
-X-Received: by 2002:ac2:4c51:0:b0:52e:9882:2cd8 with SMTP id
- 2adb3069b0e04-530bb3670f6mr6590163e87.4.1722838377189; 
- Sun, 04 Aug 2024 23:12:57 -0700 (PDT)
-Received: from localhost (cpc1-brnt4-2-0-cust862.4-2.cable.virginm.net.
- [86.9.131.95]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-428e6e7d585sm124194775e9.35.2024.08.04.23.12.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 04 Aug 2024 23:12:55 -0700 (PDT)
-Date: Mon, 5 Aug 2024 07:12:55 +0100
-From: Stafford Horne <shorne@gmail.com>
-To: Joel Holdsworth <jholdsworth@nvidia.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Subject: Re: [PATCH] hw/openrisc: Fixed undercounting of TTCR in continuous
- mode
-Message-ID: <ZrBtZ4VKEC0dgmWG@antec>
-References: <20240607222933.45791-1-jholdsworth@nvidia.com>
- <ZmTbnfrp73tAt3KY@antec>
- <DM4PR12MB65656FF201E6BFB43FDB4A3BC8C62@DM4PR12MB6565.namprd12.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sarFa-0003eF-HJ
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:31:22 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sarFY-0002Ek-Be
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:31:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1722839480; x=1754375480;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=lM5Q+xxz8bPYCwNtaOw3pHfsq3bdb1ineJ7VWmFGFa0=;
+ b=TTMqXM/F+fp28mJMUtDVCTbXzIdnqNoRguZVGsZwCJKsH1Z0V7JbGWXt
+ DtNuv0YTarwcUi7gfX8HgPUnBeVtatNiaUNf+98TyEIpRFis/0eNvCRKE
+ ka3yUSvphC5Tg+dh/mUvPJy7PWGCl1B3R1LAJl90aJ0Q7FVh5S3wEBTvJ
+ Zx9GZ2mt6w8z0XGibiboBrFlG3ovacUhcxDCoc+TnWxLfCkcEjKyW3492
+ sZv9SV9Q508+FCKwjH26DvOImsA+BlqpEobMdYNp2CWkflaJcW+C2joCR
+ I7KAZRS2p+iXgcxkRTHYGGmjSJmnlvIZ4SUihTriaKqUhzHa6jAM0AcAO Q==;
+X-CSE-ConnectionGUID: ub38+sd+RpO1Nwe/GXoNRw==
+X-CSE-MsgGUID: azpMmegNS6Oa4UD2+VMBsw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11154"; a="38282905"
+X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="38282905"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Aug 2024 23:31:18 -0700
+X-CSE-ConnectionGUID: 8skcEn5yTWiiJ/nRtMY2ug==
+X-CSE-MsgGUID: h0csB4qMT1CBUjtv3q3QWA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="56787118"
+Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
+ by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Aug 2024 23:31:13 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
+ mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH v2 15/17] intel_iommu: Modify x-scalable-mode to be string
+ option to expose scalable modern mode
+Date: Mon,  5 Aug 2024 14:27:25 +0800
+Message-Id: <20240805062727.2307552-16-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240805062727.2307552-1-zhenzhong.duan@intel.com>
+References: <20240805062727.2307552-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <DM4PR12MB65656FF201E6BFB43FDB4A3BC8C62@DM4PR12MB6565.namprd12.prod.outlook.com>
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=shorne@gmail.com; helo=mail-lf1-x134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=192.198.163.8;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,51 +90,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 10, 2024 at 07:29:15PM +0000, Joel Holdsworth wrote:
-> Hi Stafford, thanks for your response.
-> 
-> > - You sent this 2 times, is the only change in v2 the sender address?
-> 
-> Yes, I was just having some difficulty with Git and SMTP. Should be fixed now.
+From: Yi Liu <yi.l.liu@intel.com>
 
-OK.
+Intel VT-d 3.0 introduces scalable mode, and it has a bunch of capabilities
+related to scalable mode translation, thus there are multiple combinations.
+While this vIOMMU implementation wants to simplify it for user by providing
+typical combinations. User could config it by "x-scalable-mode" option. The
+usage is as below:
 
-> >> In the existing design, TTCR is prone to undercounting when running in
-> >> continuous mode. This manifests as a timer interrupt appearing to
-> >> trigger a few cycles prior to the deadline set in SPR_TTMR_TP.
-> 
-> > This is a good find, I have noticed the timer is off when running on OpenRISC
-> > but never tracked it down to this undercounting issue.  I also notice
-> > unexplained RCU stalls when running in Linux when tere is no load, this timer
-> issue might be related.
-> 
-> > Did you notice this via other system symptoms when running OpenRISC or just via
-> > code auditing of QEMU?
-> 
-> I'm working on an OpenRISC port of Zephyr. The under-counting issue causes
-> consistent deadlocks in my experiments with the test suite. I wouldn't be
-> surprised if it causes problems for other OS's.
+"-device intel-iommu,x-scalable-mode=["legacy"|"modern"|"off"]"
 
-Thats cool.  I got around to testing the patch with Linux, unfortunately I didnt
-see an improvement in the lockups I have been seeing during boot time.  But I am
-sure this is a step in the right direction.
+ - "legacy": gives support for stage-2 page table
+ - "modern": gives support for stage-1 page table
+ - "off": no scalable mode support
+ - any other string, will throw error
 
-> > In QEMU there is a function clock_ns_to_ticks(). Could this maybe be used
-> > instead to give us more standard fix?
-> 
-> Seems like a good idea, and I now have some nearly-complete patch that brings
-> hw/openrisc/cputimer.c into closer alignment with
-> target/mips/sysemu/cp0_timer.c.
+If x-scalable-mode is not configured, it is equivalent to x-scalable-mode=off.
 
-Hi, I was waiting for this second version patch, v2.  Have you ever completed it?
+With scalable modern mode exposed to user, also accurate the pasid entry
+check in vtd_pe_type_check().
 
-> However, don't we run into problems with undercounting with clock_ns_to_ticks,
-> because if I understand correctly it will round ticks down, not up?, which is
-> the problem I was trying to avoid in the first place.
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ hw/i386/intel_iommu_internal.h |  2 ++
+ include/hw/i386/intel_iommu.h  |  1 +
+ hw/i386/intel_iommu.c          | 46 ++++++++++++++++++++++++++--------
+ 3 files changed, 39 insertions(+), 10 deletions(-)
 
-You might be right, but if that is the case maybe it's a but to raise to the
-maintainers directly.  I was planning to look into this more cosely after you
-sent the followup patch.
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 52bdbf3bc5..af99deb4cd 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -195,6 +195,7 @@
+ #define VTD_ECAP_PASID              (1ULL << 40)
+ #define VTD_ECAP_SMTS               (1ULL << 43)
+ #define VTD_ECAP_SLTS               (1ULL << 46)
++#define VTD_ECAP_FLTS               (1ULL << 47)
+ 
+ /* CAP_REG */
+ /* (offset >> 4) << 24 */
+@@ -211,6 +212,7 @@
+ #define VTD_CAP_SLLPS               ((1ULL << 34) | (1ULL << 35))
+ #define VTD_CAP_DRAIN_WRITE         (1ULL << 54)
+ #define VTD_CAP_DRAIN_READ          (1ULL << 55)
++#define VTD_CAP_FS1GP               (1ULL << 56)
+ #define VTD_CAP_DRAIN               (VTD_CAP_DRAIN_READ | VTD_CAP_DRAIN_WRITE)
+ #define VTD_CAP_CM                  (1ULL << 7)
+ #define VTD_PASID_ID_SHIFT          20
+diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+index 48134bda11..650641544c 100644
+--- a/include/hw/i386/intel_iommu.h
++++ b/include/hw/i386/intel_iommu.h
+@@ -263,6 +263,7 @@ struct IntelIOMMUState {
+ 
+     bool caching_mode;              /* RO - is cap CM enabled? */
+     bool scalable_mode;             /* RO - is Scalable Mode supported? */
++    char *scalable_mode_str;        /* RO - admin's Scalable Mode config */
+     bool scalable_modern;           /* RO - is modern SM supported? */
+     bool snoop_control;             /* RO - is SNP filed supported? */
+ 
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 5469ab4f9b..9e973bd710 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -803,16 +803,18 @@ static inline bool vtd_is_fl_level_supported(IntelIOMMUState *s, uint32_t level)
+ }
+ 
+ /* Return true if check passed, otherwise false */
+-static inline bool vtd_pe_type_check(X86IOMMUState *x86_iommu,
+-                                     VTDPASIDEntry *pe)
++static inline bool vtd_pe_type_check(IntelIOMMUState *s, VTDPASIDEntry *pe)
+ {
+     switch (VTD_PE_GET_TYPE(pe)) {
+-    case VTD_SM_PASID_ENTRY_SLT:
+-        return true;
+-    case VTD_SM_PASID_ENTRY_PT:
+-        return x86_iommu->pt_supported;
+     case VTD_SM_PASID_ENTRY_FLT:
++        return !!(s->ecap & VTD_ECAP_FLTS);
++    case VTD_SM_PASID_ENTRY_SLT:
++        return !!(s->ecap & VTD_ECAP_SLTS) || !(s->ecap & VTD_ECAP_SMTS);
+     case VTD_SM_PASID_ENTRY_NESTED:
++        /* Not support NESTED page table type yet */
++        return false;
++    case VTD_SM_PASID_ENTRY_PT:
++        return !!(s->ecap & VTD_ECAP_PT);
+     default:
+         /* Unknown type */
+         return false;
+@@ -861,7 +863,6 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
+     uint8_t pgtt;
+     uint32_t index;
+     dma_addr_t entry_size;
+-    X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
+ 
+     index = VTD_PASID_TABLE_INDEX(pasid);
+     entry_size = VTD_PASID_ENTRY_SIZE;
+@@ -875,7 +876,7 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
+     }
+ 
+     /* Do translation type check */
+-    if (!vtd_pe_type_check(x86_iommu, pe)) {
++    if (!vtd_pe_type_check(s, pe)) {
+         return -VTD_FR_PASID_TABLE_ENTRY_INV;
+     }
+ 
+@@ -3772,7 +3773,7 @@ static Property vtd_properties[] = {
+     DEFINE_PROP_UINT8("aw-bits", IntelIOMMUState, aw_bits,
+                       VTD_HOST_AW_AUTO),
+     DEFINE_PROP_BOOL("caching-mode", IntelIOMMUState, caching_mode, FALSE),
+-    DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUState, scalable_mode, FALSE),
++    DEFINE_PROP_STRING("x-scalable-mode", IntelIOMMUState, scalable_mode_str),
+     DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
+     DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
+     DEFINE_PROP_BOOL("dma-drain", IntelIOMMUState, dma_drain, true),
+@@ -4503,7 +4504,10 @@ static void vtd_cap_init(IntelIOMMUState *s)
+     }
+ 
+     /* TODO: read cap/ecap from host to decide which cap to be exposed. */
+-    if (s->scalable_mode) {
++    if (s->scalable_modern) {
++        s->ecap |= VTD_ECAP_SMTS | VTD_ECAP_FLTS;
++        s->cap |= VTD_CAP_FS1GP;
++    } else if (s->scalable_mode) {
+         s->ecap |= VTD_ECAP_SMTS | VTD_ECAP_SRS | VTD_ECAP_SLTS;
+     }
+ 
+@@ -4685,6 +4689,28 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
+         }
+     }
+ 
++    if (s->scalable_mode_str &&
++        (strcmp(s->scalable_mode_str, "off") &&
++         strcmp(s->scalable_mode_str, "modern") &&
++         strcmp(s->scalable_mode_str, "legacy"))) {
++        error_setg(errp, "Invalid x-scalable-mode config,"
++                         "Please use \"modern\", \"legacy\" or \"off\"");
++        return false;
++    }
++
++    if (s->scalable_mode_str &&
++        !strcmp(s->scalable_mode_str, "legacy")) {
++        s->scalable_mode = true;
++        s->scalable_modern = false;
++    } else if (s->scalable_mode_str &&
++        !strcmp(s->scalable_mode_str, "modern")) {
++        s->scalable_mode = true;
++        s->scalable_modern = true;
++    } else {
++        s->scalable_mode = false;
++        s->scalable_modern = false;
++    }
++
+     if (s->aw_bits == VTD_HOST_AW_AUTO) {
+         if (s->scalable_modern) {
+             s->aw_bits = VTD_HOST_AW_48BIT;
+-- 
+2.34.1
 
--Stafford
 
