@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 987F3C3DA7F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9D78C52D6F
 	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 15:55:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb020-0002RG-MW; Mon, 05 Aug 2024 11:53:56 -0400
+	id 1sb02T-0004m6-9Y; Mon, 05 Aug 2024 11:54:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.zeise@seagate.com>)
- id 1sb01o-0001bS-Sq; Mon, 05 Aug 2024 11:53:45 -0400
+ id 1sb01z-0002O4-5w; Mon, 05 Aug 2024 11:53:55 -0400
 Received: from esa.hc4959-67.iphmx.com ([216.71.153.94])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alejandro.zeise@seagate.com>)
- id 1sb01g-0003vb-JN; Mon, 05 Aug 2024 11:53:38 -0400
+ id 1sb01v-0003zt-St; Mon, 05 Aug 2024 11:53:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
  d=seagate.com; i=@seagate.com; q=dns/txt; s=stxiport;
- t=1722873216; x=1754409216;
+ t=1722873231; x=1754409231;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=YAcpsHbRyjafddjdwq3SOJPAqP0qhBsQDpIJXGUFrD4=;
- b=Tu0w2jHJGFCqcACucp2luhuWkoA6X3pbHVkl26+ehmeWyGe40iJmMx4V
- xNFzAyGVbzpLd6cQ000voQjOP/Bc6HbzJIJ2C0dWjAi2d9RmxMwtVpMV+
- u9QFZ5tmbqhE3fTatiVAyrVfv6cm83YrTBrvyVZTPI1DL+1wQ9j7TF4mm E=;
-X-CSE-ConnectionGUID: sknDlHmBTW6kTuLTTW//ZQ==
-X-CSE-MsgGUID: BHuKFwi5TV+EmaqQjzPpMw==
-Received: from mail-dm6nam11lp2169.outbound.protection.outlook.com (HELO
- NAM11-DM6-obe.outbound.protection.outlook.com) ([104.47.57.169])
+ bh=saA95osssa8AeMH7Yu9KKleRexPwEpxUkGPRk/wFjpM=;
+ b=pARDEpSQ3q+EkoCiQhQtVkiLNEuVbllztt1thVSmcHToXOsThNSSMCDz
+ tLe9+EU6JDsnhlruUz5kk2nv/H8aeAvHw9HJSe1a1GSKYSdGELWHyxFcb
+ rVKVHaWHOqVwkF8Z3rjhsw9KyzFTg9QMuOuGhJiLf77tqNVO49gJ1yaWH A=;
+X-CSE-ConnectionGUID: dIZ8+kPbQ2GVk/7MmFmnoA==
+X-CSE-MsgGUID: pHxfDycmSLauNL+8ke+8BQ==
+Received: from mail-mw2nam04lp2168.outbound.protection.outlook.com (HELO
+ NAM04-MW2-obe.outbound.protection.outlook.com) ([104.47.73.168])
  by ob1.hc4959-67.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Aug 2024 08:53:33 -0700
+ 05 Aug 2024 08:53:49 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ukcXA4w2wGbZJu8HxwombSBwOVfRNi6zU+GtL7UL466SxO8EEyjE31zY9gvCxUxB2hDEh9foON5XXLVUFK2biwHN7pydWL4pAJHcsKQAQyRGi2g0wtAd7X9nOUk6arJph6b6A2zBi73Gr/NIHutWR71fuHpElQxoEc2mZZy/DQ/oJRuiO1kipRCd9/rKdCQWf7SxBxBCs0/0WSsDSNqeUcXdJabbF1HR+798aZDp3X8jrBHdEMxVZM4OEeIZvrJUZyDIqcectiapNlEKQPa3DCpZ83pgeESamSqW99yT9mtOI3sWkTtKcIP12QkbvQEe3OVb19NNX82HcZPvd2gqXQ==
+ b=x7Iri8qW5Uj8tmaKAJiYd7mkMFPrLMiUMkkT6xFJpQkwQSe1hr2/rA4HTrmW+FoRortLrz656zj9XlHxlb7TTqBo/P/46SQqdL4vVthfcAZjD0ArpmrKgA1bmXsPJ/Hjqs8R+BVfT5/XgPST0OMnQXENUGHFNBfdD3ho/SFEJljHXLToH5yU38i+UZyuWAq59QMUBEIJrpM/esVjIMWMu+0pT+dttvyiw0+Oq3V8tBG6UcyuawzfUBVCaPJ9z27tabhiuQM/JDPSmxvzAKSy3qt8swX10sBMvXBWp4sBr4NE6lEvDoDyMjjBPrfMKAh2QiPt0iCAsJusIayuy6NK8w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OkkETshu4Tahurh9Otyue1OjYmjFHx7HywzpAfsFfvA=;
- b=kR8Gl7gi7Op9zp71cdVHe7/FZF1CFc6gwedTeoT0vryQRRzWpljnrXVPvnWYjih2ocDyr0b1TPvicPg+UbXfG2sQiCXZtmiB3tVhl9Fa6qSYDwmUqqz/kZyfR2TfuF12YUhdgDXGr6tzxxScY1aCjbqkmZag4fsFmVCGu5p030ZbCVuXFYc2hf+M6Q+djqIOSbU+zMdx+HQUGCF2ybI6I/gjgue/3pdL6fRbR3vinWsA+1vvZoGx5qSvUA3HlyBkW86CRLqx9eFbY8mvn7wBbBNV1BsTHbRQe8qwAuyi/9vuKxb4ccAUgg/DTid0Os9ssZQQxJ3GI5PFVH5YhuGpIA==
+ bh=I25AJqAsM94Uq8gEkIofuhgDPg0ApU6468m0GKyke+k=;
+ b=iaGuHO0gGABEJPcAdRpADwTnvny1azNpj82O3IMBHpAcYe4RFYVHhjI3bBD1DacaJL38MXUn2423BUQVOeVJOepOP+KSvHvcfq+OAXslmOu+CG0G77JQ24TMWKvv+LikwvOplVz9X7HP95SLSw5ZrwI+hCHAzK+8Hkgh2T/qcmXwfLLBOfPRmM5eypX9rJi/dy+5vlwS5kh1wps2uFi3yqn15/IcsxkAfbj1SJN9zq5/rPD/Bn6SlWEHAICwMOpF3VvyXNwfzPhJDX6zG9DGULRJjadvou5FOKiTzBaPXE9wY8hW3O6eEgkshDJok7B75mRbxvPJgAXqLzUckxXyxg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
  is 134.204.222.53) smtp.rcpttodomain=nongnu.org smtp.mailfrom=seagate.com;
  dmarc=fail (p=reject sp=reject pct=100) action=oreject
@@ -47,43 +47,43 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seagate.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OkkETshu4Tahurh9Otyue1OjYmjFHx7HywzpAfsFfvA=;
- b=HSdMpYmozYCtNNFhmToiTn9+toFrX5Mh/CXpEMek2ggI3sK4Alo7CapKKKVZLdlBwLMvsd2+7MMtLSQwoqWsjJufWMFebI6VWS4VazmxzfCdVc5QZNhzuzPTIyGTHEFlx/Zefy20QRAH65STma7zIALUpe7OAF6q6mYPsnjDqEc=
-Received: from MW4PR04CA0380.namprd04.prod.outlook.com (2603:10b6:303:81::25)
- by MN0PR20MB7295.namprd20.prod.outlook.com (2603:10b6:208:4c6::8)
+ bh=I25AJqAsM94Uq8gEkIofuhgDPg0ApU6468m0GKyke+k=;
+ b=V7fjS7PW0d3N2PMdOuTAStyHW33AD+ZExTSSOIWvLsXP/jxqYYhoLzy0nznUpCXswtFXpL0slhYX14Ht7bCgD5pQFXnPKQtL7Wr9pSHy6RE2dglHVYEKWw/CYYP8qFQoCElUeMcrQvIFm5L01kh6FEbNHPfOp7f9j8HFw03bWuc=
+Received: from MW4PR04CA0388.namprd04.prod.outlook.com (2603:10b6:303:81::33)
+ by MW5PR20MB4523.namprd20.prod.outlook.com (2603:10b6:303:19b::9)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.21; Mon, 5 Aug
- 2024 15:53:31 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.26; Mon, 5 Aug
+ 2024 15:53:47 +0000
 Received: from CO1PEPF000044F2.namprd05.prod.outlook.com
- (2603:10b6:303:81:cafe::18) by MW4PR04CA0380.outlook.office365.com
- (2603:10b6:303:81::25) with Microsoft SMTP Server (version=TLS1_2,
+ (2603:10b6:303:81:cafe::3) by MW4PR04CA0388.outlook.office365.com
+ (2603:10b6:303:81::33) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.26 via Frontend
- Transport; Mon, 5 Aug 2024 15:53:30 +0000
+ Transport; Mon, 5 Aug 2024 15:53:47 +0000
 X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is
  134.204.222.53) smtp.mailfrom=seagate.com; dkim=none (message not signed)
  header.d=none;dmarc=fail action=oreject header.from=seagate.com;
 Received: from lcopzesaa002.seagate.com (134.204.222.53) by
  CO1PEPF000044F2.mail.protection.outlook.com (10.167.241.72) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7849.8 via Frontend Transport; Mon, 5 Aug 2024 15:53:30 +0000
-X-CSE-ConnectionGUID: q97XCLWNRPmrSLawGTm+TQ==
-X-CSE-MsgGUID: 2hQxtgTRRdGFu85gIoALKg==
+ 15.20.7849.8 via Frontend Transport; Mon, 5 Aug 2024 15:53:46 +0000
+X-CSE-ConnectionGUID: 1vnnKV2aSBuHEyE+rgBLXQ==
+X-CSE-MsgGUID: vKbHVfTDSqSVFHEvXSmQOg==
 Received: from lcopiesaa001.seagate.com ([10.230.120.52])
- by lcopzesaa002.seagate.com with ESMTP; 05 Aug 2024 08:58:22 -0700
-X-CSE-ConnectionGUID: jehKeLENROKMeNOsFpFrbw==
-X-CSE-MsgGUID: 1w1V3s5ZT8yvlgGAFyHBdg==
-X-IronPort-AV: E=Sophos;i="6.09,265,1716274800"; d="scan'208";a="106920703"
+ by lcopzesaa002.seagate.com with ESMTP; 05 Aug 2024 08:58:39 -0700
+X-CSE-ConnectionGUID: d0sgbfWyRQ6aM/V2TTjQGA==
+X-CSE-MsgGUID: KA3r4+R5TpObQkYavaqjNA==
+X-IronPort-AV: E=Sophos;i="6.09,265,1716274800"; d="scan'208";a="106920710"
 STX-Internal-Mailhost: TRUE
 Received: from unknown (HELO cortana..) ([10.4.50.14])
- by lcopiesaa001.seagate.com with ESMTP; 05 Aug 2024 08:53:22 -0700
+ by lcopiesaa001.seagate.com with ESMTP; 05 Aug 2024 08:53:39 -0700
 From: Alejandro Zeise <alejandro.zeise@seagate.com>
 To: qemu-arm@nongnu.org
 Cc: alejandro.zeise@seagate.com, kris.conklin@seagate.com,
  jonathan.henze@seagate.com, evan.burgess@seagate.com, clg@kaod.org,
  peter.maydell@linaro.org, berrange@redhat.com, qemu-devel@nongnu.org
-Subject: [PATCH v3 09/12] crypto/hash-nettle: Implement new hash API
-Date: Mon,  5 Aug 2024 15:50:44 +0000
-Message-Id: <20240805155047.3151540-10-alejandro.zeise@seagate.com>
+Subject: [PATCH v3 12/12] hw/misc/aspeed_hace: Fix SG Accumulative hashing
+Date: Mon,  5 Aug 2024 15:50:47 +0000
+Message-Id: <20240805155047.3151540-13-alejandro.zeise@seagate.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240805155047.3151540-1-alejandro.zeise@seagate.com>
 References: <20240805155047.3151540-1-alejandro.zeise@seagate.com>
@@ -91,55 +91,54 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000044F2:EE_|MN0PR20MB7295:EE_
+X-MS-TrafficTypeDiagnostic: CO1PEPF000044F2:EE_|MW5PR20MB4523:EE_
 Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: 1c5c9f7a-1a58-4cdf-9772-08dcb566c100
+X-MS-Office365-Filtering-Correlation-Id: 9a6ae526-9fc9-4902-d8b7-08dcb566caa1
 STX-Hosted-IronPort-Oubound: True
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|376014|82310400026|36860700013|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?A7pAufSjiE//STcc2lV2iQ0+sU+k9gCzMd6BIiwI38lkE4koRmbCzeS6nHqT?=
- =?us-ascii?Q?xRZyDS5W8JXQjnFSETE0piaqD9n1QZyNCFOQ0GfbDi6AF6WaKNS428AyRjBG?=
- =?us-ascii?Q?GGMApUaRf0GGVAhqvdt46iMrfrXCdGnPBE/0fu8lH4C1gRWtc1gDjVeGOS3q?=
- =?us-ascii?Q?utkatxIMUcjff/J2bpGcnhnYJEQ2nQaMXKl08lVO4p0Sg3/xHlWdvgzAVScg?=
- =?us-ascii?Q?YHJvQzrefkQswY3xzLZQDZ4FoQFYzqHCnl/WNlEb65AXuuuizelk+Rlv3klz?=
- =?us-ascii?Q?hSuAdg9L9enJSOWKFNdigk3gC+hbSDXuSrwEZIHZpdaN02wX/IYFjcOjSRQX?=
- =?us-ascii?Q?dtapuNTzz/w0DZnY4tl8wJq7FISvhjpN+Bn2ymWfDfGJN6PVioeFZZU0BruW?=
- =?us-ascii?Q?6bKtA5N2TNgbn8dRU6y/5hNliUOcYq4cwVEv40C1b38AUnZ8Q/sOdT4e45iB?=
- =?us-ascii?Q?YfhI8KiBHrUO+NgID44yxwb71yhRW/0kDpbHuqdWqXc3rhxs5A6YoFFEVhFz?=
- =?us-ascii?Q?5ReQu3ree+fMpdV2Y7fOEp4LF1yfw/Qs1w1AGRi4mfc2NWr0HPQeBKzEd7fD?=
- =?us-ascii?Q?bTQzUSW6eGQpIkD7a4IDukKeF+lC1FO7jCN2UwbZGZk6WkLbHUDhWnxfuR5A?=
- =?us-ascii?Q?IGmkfTAwHOnpHMQcT7wNhPT/PqiEprYRO6MdPUBbr8sUeHxCwCAdsef6Q/9B?=
- =?us-ascii?Q?RRjel21sAqq1ykezSYmHrIuEsUT3x0g3BruzoCgFnbdAq7PaypRP/2kH0wx4?=
- =?us-ascii?Q?0hpXw5QFQzdg1TR0hvICoAWaU6acsRfCLBl7BV3jyiVddqc+dceAThtScnmX?=
- =?us-ascii?Q?PwpjRF1dQjMRZ2EhCegbVB3+vrI/q+UK2atf5D+M7yqiTgQNMyrVCzuJb7Qp?=
- =?us-ascii?Q?vpDhlaxapCKAGxY4Ct18PxtTlV23OkLH05EAs8NqddpwqYsHaq4P0Pabvbpu?=
- =?us-ascii?Q?+EAegXOd8bA3rjqE3eHcxXnaYHeGanevkJ8T1gZTEJN4IqfwrKP5JFpFabv1?=
- =?us-ascii?Q?WgoRwdqWDj5z6Y38Fzx/khFSz0LiNQj+5dzfa8OXSTpYraFi4cljWaepDyno?=
- =?us-ascii?Q?DoBIYuJNH8kSxnhXH0eRRCeho1pkot9ueDbxm1FWsSHnL6R1VIbQdE2I24KQ?=
- =?us-ascii?Q?7w5K2+pEZunezkXvWc6eBVcnyqjJ7EdjCdQVM/REpYrrzrB3z/goURqtgVvr?=
- =?us-ascii?Q?mfs40FFnTzGC5Mtw6kZ1sAV9G8JPGB55XWpZnU21yBoFPUu1aGsMGEDjFOGB?=
- =?us-ascii?Q?6df8sLyA5IWEm8osqEzTj35dF7MUs23X87MgzUJr5RUQU4J8HBCnCmvsmTA/?=
- =?us-ascii?Q?TjH1FZqDfHXFBpASnXMC9GEVrim97pi1dC9ouO6iguzI/7usMktElPZz8M0V?=
- =?us-ascii?Q?ejOnMb9Jb2lvC0V5+kfB2j5pZnx9k64GQbO53whlwEHa5XBtky/kqoyouNbC?=
- =?us-ascii?Q?8h0fj0DLpo5YnzkNvY6qJLjROTzaakEY?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?0xFj/iTna5S+S89pMxV9DUv3VGWMkFM9D/JSmYPjoQqnyfhEgEmEOZB7vDYt?=
+ =?us-ascii?Q?2hI/+oPFJVQyKvM6OE9yfVJxcVvpk1YZoNsqqA6N1VJuqYtr2Skn862qzFo/?=
+ =?us-ascii?Q?4ELJbJa9/A6He/WTYEHBgWqoj6nciK4iK94pctpxI0lIe2YFWTbdnNU4kOzl?=
+ =?us-ascii?Q?/YQijH/z50PUS87CYwirMsahH+hGUB3VdEJgqV7jaMhJDDPo7wbpNO4Vmruz?=
+ =?us-ascii?Q?6FTQv5JRh6c7Iii5E7AkqefxtwFATqFxZN6P9/AOPgybLwQFPKSl/JMZ9W2w?=
+ =?us-ascii?Q?IjY3bzsSUG/rL2BchBJVpeAOpQHVYZ2aD9tzSiRwORXf31zngcffffkBs5XT?=
+ =?us-ascii?Q?GyPP7JtB45NKdV/vv4BcI6wVBaJyg78qDMBTbsDCrKZ+hafjSM4nQTFXD5w3?=
+ =?us-ascii?Q?Q0U+zmr701aPpIoruLZqaxVEvTVTEjLZW597nRmOmSkNNv7AMG36rJ7dQHNI?=
+ =?us-ascii?Q?fg1qgUvmKJxFH47CeLvs68A25zCSo87qzVQe3OHrEUEm/JsCBOjMQgnpZNqa?=
+ =?us-ascii?Q?jrq7eaUrVO9GokwV6sEpYeQH180XpKgslL4VeU9UQOM1ViFUDGKiXGBeNRxL?=
+ =?us-ascii?Q?jTf4sBD90yYY77P5G/a2T2KjEo0vwh8UCDITLmGOSfGIdyHZwmD7HS4XQuVk?=
+ =?us-ascii?Q?WHlqfzxV60N4oq4BwA5gLUswv7KCguvDGYk3x1E/hEJ3RPiRgkhwWpiK7JsJ?=
+ =?us-ascii?Q?x/kWTx+w1PZ4tHKwHH0WR1ZOl8VMaicXZ10qJyQmXS46jNBrDVUAu/u/KlMd?=
+ =?us-ascii?Q?GinFEgZ6QHDklrq+Yh1BLz2EEZVAs/3FfRRkFiu1rVIQBDu0TNiDLkTVKewC?=
+ =?us-ascii?Q?pycaD3lryg+GhqGtmvcABuCRSjhjSt53VLu9iIlIP1n/sbJJSXrqwML/QGGV?=
+ =?us-ascii?Q?s2oULEBN1y1/rmuMxw9wnxjUN9dPUZMXKwptuJciGG/smj9Gd2J2aqURJnhQ?=
+ =?us-ascii?Q?YdukQBtauMMZMp725K6l+Z71g4/xJq8guT7895kUX0g8zt+VR96sCMzPcdxM?=
+ =?us-ascii?Q?wQuqrkrT+4QFLFXWFhfa9e4SsSK+X040WAP97On+1QGo3Iq7W/MU40mb5S72?=
+ =?us-ascii?Q?+pOdRofkXSNVWcXbp0awBJZZjJJkBD71UwRp1zD8ZFaMulIipMgmcCRSK+FE?=
+ =?us-ascii?Q?PKEIZ5iOgLf4jbgDotEcVHMuiQlufXKGb8MJWtI5txww+MoghVeYK2qrSYO5?=
+ =?us-ascii?Q?QiQV0Fiq5aLCWeeeQuGtQ44Y6YJ1ipFA03yVVYpQ7LSKEGRIc1eY1p5yFTMX?=
+ =?us-ascii?Q?MDgb4Cw1bPf+qgLGBOf2JeC1YmKqlgqVml/QleRLzMKho61MqB1j63EBhTsl?=
+ =?us-ascii?Q?JYHtbYaT9dX/zDsawUm+H0GaZJDu54Q/mgodnQgN5Pi2av8ara5cEosEOkDx?=
+ =?us-ascii?Q?UhpXPUT46h7Rq+9Pm4j0lED2o33mE8IvgULzzWLO7KwlsI2KwQ=3D=3D?=
 X-Forefront-Antispam-Report: CIP:134.204.222.53; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:lcopzesaa002.seagate.com; PTR:InfoDomainNonexistent;
  CAT:NONE; SFS:(13230040)(376014)(82310400026)(36860700013)(1800799024);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 0qAbv+Qch0JsTy/jxjDzjiRlgsXwUUonx8LJDeG3Vbl3Th9uwsz2qR0h/aHTUo0ijgAL+CSIfw/oWzCYlsRzvhWwv6ZU2pxis9X7krW5EvfTTnXuqXQspTNXR18uOrANWmZzgqx1SkePiscw1gJy9tSwPfMRCu0SaotWZ9fALTpqmQWQeD6+2M7ZmoDZRBXVj4CcbxueTbqp0daB49Wq0wC+sphYN2vLt2cwPDcUuEOZRw7cNXFfTqFkhjfxjkb5v5xu1sHgXdlD3Ng1P4QHCvbgigpacvqVdvMJQUn7jAEdq5EjlH9w+h8vYAvdPJCG9N0m8cpnqc3QS+cP7Ckr5zmouvB1jM/GButruHvdvlKtjbKRwsJ5yArtUe7Bgtw4A7z+nSs3N18FqtgfWB1nM3EWNfqCugN+wIDP1cpW6v3vLwPRa7wklCia6PP5IZaYPeVq8przcMunD6p60UZoJ3wn6HH7WxiraaOXRK/jM6BII21j6mE3WMeNqmezG4+nUWUP1Jv5mphrB4AV3Mof8NVYTfgDPXNSyX/4b68zqmk99j0e8fAODXhyj8Z+6d6ZeUl3NO6KAznsR2dNNIh+3P7ZKzka2/o/njLW7dtPihX019rum5RkEZqwd5daAsJd
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 5L//RX8ZtDkX4rLtxgeN9tpyUJxrhYf77Kp6Beyy0HtyD1WQETmx07eOGzMWDjLO7Ypa8V2X5c4NJ2xeqYPBK54jEiNWfBbv5c0Q/c7gJe2nOaDS4C0X71+O4hZqU8H+lD5H0tcK0mb71vhRGh0pJtODnOjXwnhlEiN0eqQtdWT6NXvCb+RA/vcqABf6s1kmqEuethRo2YP/kguV7iJtjGYnP16FKkQ7j7IUEjUPGQWZ9kieCVlzmXQ7Irxfw+AH8HxHTuyamdkjX0P72MNvCC2Y8G2SxpjERS28Sb+i+sCB5B+U7xvAhDLDvU26ouohcCRHOQHdHrqoEtxOCKYLs/6KsFJMLmzJWV5gNVpxrB8g56ezN9tFsTs/K/qhfpp4RcCYkTH5G1dfJ1zRFiSk7TfgJ2drFzoarzCFyYcSrb9MPrL0IYwtqDye0i2Qs91t7+iB6nLebiwqsIIRgDlSELL3tFACBPTrUhz226NbFAFCOblWeBhtEAmOXNmABIb1edPDkfc4xMrfNueEpXU61YV1bQVk3jLSGfkSnLwMWLoBLhsD4t78+1Ig4GAbgLQxVonNUs1V7Ke6vm2IpXbhDnpVdpV+fW/2WwoKqGlWNGSg4iXdJlRdzOyy3yGdVSjf
 X-OriginatorOrg: seagate.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2024 15:53:30.5038 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1c5c9f7a-1a58-4cdf-9772-08dcb566c100
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Aug 2024 15:53:46.7695 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9a6ae526-9fc9-4902-d8b7-08dcb566caa1
 X-MS-Exchange-CrossTenant-Id: d466216a-c643-434a-9c2e-057448c17cbe
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=d466216a-c643-434a-9c2e-057448c17cbe; Ip=[134.204.222.53];
  Helo=[lcopzesaa002.seagate.com]
 X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000044F2.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR20MB7295
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR20MB4523
 Received-SPF: pass client-ip=216.71.153.94;
  envelope-from=alejandro.zeise@seagate.com; helo=esa.hc4959-67.iphmx.com
 X-Spam_score_int: -44
@@ -164,113 +163,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implements the new hashing API in the nettle hash driver.
-Supports creating/destroying a context, updating the context
-with input data and obtaining an output hash.
+Make the Aspeed HACE module use the new qcrypto accumulative hashing functions
+when in scatter-gather accumulative mode. A hash context will maintain a
+"running-hash" as each scatter-gather chunk is received.
+
+Previously each scatter-gather "chunk" was cached
+so the hash could be computed once the final chunk was received.
+However, the cache was a shallow copy, so once the guest overwrote the
+memory provided to HACE the final hash would not be correct.
+
+Possibly related to: https://gitlab.com/qemu-project/qemu/-/issues/1121
+Buglink: https://github.com/openbmc/qemu/issues/36
 
 Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
 ---
- crypto/hash-nettle.c | 81 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 81 insertions(+)
+ hw/misc/aspeed_hace.c         | 92 ++++++++++++++++++-----------------
+ include/hw/misc/aspeed_hace.h |  4 ++
+ 2 files changed, 52 insertions(+), 44 deletions(-)
 
-diff --git a/crypto/hash-nettle.c b/crypto/hash-nettle.c
-index dbf1d96dfe..643f3d68b8 100644
---- a/crypto/hash-nettle.c
-+++ b/crypto/hash-nettle.c
-@@ -23,6 +23,7 @@
- #include "qapi/error.h"
- #include "crypto/hash.h"
- #include "hashpriv.h"
-+#include <gnutls/crypto.h>
- #include <nettle/md5.h>
- #include <nettle/sha.h>
- #include <nettle/ripemd160.h>
-@@ -105,7 +106,85 @@ gboolean qcrypto_hash_supports(QCryptoHashAlgorithm alg)
+diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
+index c06c04ddc6..5077204ee6 100644
+--- a/hw/misc/aspeed_hace.c
++++ b/hw/misc/aspeed_hace.c
+@@ -1,6 +1,7 @@
+ /*
+  * ASPEED Hash and Crypto Engine
+  *
++ * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
+  * Copyright (C) 2021 IBM Corp.
+  *
+  * Joel Stanley <joel@jms.id.au>
+@@ -151,50 +152,28 @@ static int reconstruct_iov(AspeedHACEState *s, struct iovec *iov, int id,
+     return iov_count;
  }
  
+-/**
+- * Generate iov for accumulative mode.
+- *
+- * @param s             aspeed hace state object
+- * @param iov           iov of the current request
+- * @param id            index of the current iov
+- * @param req_len       length of the current request
+- *
+- * @return count of iov
+- */
+-static int gen_acc_mode_iov(AspeedHACEState *s, struct iovec *iov, int id,
+-                            hwaddr *req_len)
+-{
+-    uint32_t pad_offset;
+-    uint32_t total_msg_len;
+-    s->total_req_len += *req_len;
+-
+-    if (has_padding(s, &iov[id], *req_len, &total_msg_len, &pad_offset)) {
+-        if (s->iov_count) {
+-            return reconstruct_iov(s, iov, id, &pad_offset);
+-        }
+-
+-        *req_len -= s->total_req_len - total_msg_len;
+-        s->total_req_len = 0;
+-        iov[id].iov_len = *req_len;
+-    } else {
+-        s->iov_cache[s->iov_count].iov_base = iov->iov_base;
+-        s->iov_cache[s->iov_count].iov_len = *req_len;
+-        ++s->iov_count;
+-    }
+-
+-    return id + 1;
+-}
+-
+ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+                               bool acc_mode)
+ {
+     struct iovec iov[ASPEED_HACE_MAX_SG];
++    uint32_t total_msg_len;
++    uint32_t pad_offset;
+     g_autofree uint8_t *digest_buf = NULL;
+     size_t digest_len = 0;
+-    int niov = 0;
++    bool sg_acc_mode_final_request = false;
+     int i;
+     void *haddr;
  
-+static
-+QCryptoHash *qcrypto_nettle_hash_new(QCryptoHashAlgorithm alg, Error **errp)
-+{
-+    QCryptoHash *hash = NULL;
-+
-+    if (!qcrypto_hash_supports(alg)) {
-+        error_setg(errp,
-+                   "Unknown hash algorithm %d",
-+                   alg);
-+    } else {
-+        hash = g_new(QCryptoHash, 1);
-+        hash->alg = alg;
-+        hash->opaque = g_new(union qcrypto_hash_ctx, 1);
-+
-+        qcrypto_hash_alg_map[alg].init(hash->opaque);
-+    }
-+
-+    return hash;
-+}
-+
-+static
-+int qcrypto_nettle_hash_free(QCryptoHash *hash)
-+{
-+    union qcrypto_hash_ctx *ctx = hash->opaque;
-+
-+    g_free(ctx);
-+    g_free(hash);
-+
-+    return 0;
-+}
-+
-+static
-+int qcrypto_nettle_hash_update(QCryptoHash *hash,
-+                               const struct iovec *iov,
-+                               size_t niov,
-+                               Error **errp)
-+{
-+    union qcrypto_hash_ctx *ctx = hash->opaque;
-+
-+    for (int i = 0; i < niov; i++) {
-+        /*
-+         * Some versions of nettle have functions
-+         * declared with 'int' instead of 'size_t'
-+         * so to be safe avoid writing more than
-+         * UINT_MAX bytes at a time
-+         */
-+        size_t len = iov[i].iov_len;
-+        uint8_t *base = iov[i].iov_base;
-+        while (len) {
-+            size_t shortlen = MIN(len, UINT_MAX);
-+            qcrypto_hash_alg_map[hash->alg].write(ctx, len, base);
-+            len -= shortlen;
-+            base += len;
++    if (acc_mode && s->hash_ctx == NULL) {
++        s->hash_ctx = qcrypto_hash_new(algo, NULL);
++        if (s->hash_ctx == NULL) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: qcrypto failed to create hash context\n",
++                          __func__);
++            return;
 +        }
 +    }
 +
-+    return 0;
-+}
-+
-+static
-+int qcrypto_nettle_hash_finalize(QCryptoHash *hash,
-+                                 uint8_t **result,
-+                                 size_t *result_len,
-+                                 Error **errp)
-+{
-+    union qcrypto_hash_ctx *ctx = hash->opaque;
-+
-+    *result_len = qcrypto_hash_alg_map[hash->alg].len;
-+    *result = g_new(uint8_t, *result_len);
-+
-+    qcrypto_hash_alg_map[hash->alg].result(ctx, *result_len, *result);
-+
-+    return 0;
-+}
+     if (sg_mode) {
+         uint32_t len = 0;
  
+@@ -226,8 +203,15 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+             }
+             iov[i].iov_base = haddr;
+             if (acc_mode) {
+-                niov = gen_acc_mode_iov(s, iov, i, &plen);
+-
++                s->total_req_len += plen;
++
++                if (has_padding(s, &iov[i], plen, &total_msg_len, &pad_offset)) {
++                    /* Padding being present indicates the final request */
++                    sg_acc_mode_final_request = true;
++                    iov[i].iov_len = pad_offset;
++                } else {
++                    iov[i].iov_len = plen;
++                }
+             } else {
+                 iov[i].iov_len = plen;
+             }
+@@ -252,20 +236,38 @@ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,
+              * required to check whether cache is empty. If no, we should
+              * combine cached iov and the current iov.
+              */
+-            uint32_t total_msg_len;
+-            uint32_t pad_offset;
+             s->total_req_len += len;
+             if (has_padding(s, iov, len, &total_msg_len, &pad_offset)) {
+-                niov = reconstruct_iov(s, iov, 0, &pad_offset);
++                i = reconstruct_iov(s, iov, 0, &pad_offset);
+             }
+         }
+     }
  
- QCryptoHashDriver qcrypto_hash_lib_driver = {
-+    .hash_new      = qcrypto_nettle_hash_new,
-+    .hash_free     = qcrypto_nettle_hash_free,
-+    .hash_update   = qcrypto_nettle_hash_update,
-+    .hash_finalize = qcrypto_nettle_hash_finalize
+-    if (niov) {
+-        i = niov;
+-    }
++    if (acc_mode) {
++        if (qcrypto_hash_update(s->hash_ctx, iov, i, NULL) < 0) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: qcrypto hash update failed\n", __func__);
++            return;
++        }
++
++        if (sg_acc_mode_final_request) {
++            if (qcrypto_hash_finalize_bytes(s->hash_ctx, &digest_buf,
++                                            &digest_len, NULL)) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "%s: qcrypto failed to finalize hash\n", __func__);
++            }
+ 
+-    if (qcrypto_hash_bytesv(algo, iov, i, &digest_buf, &digest_len, NULL) < 0) {
++            if (qcrypto_hash_free(s->hash_ctx)) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "%s: qcrypto failed to free context\n", __func__);
++            }
++
++            s->hash_ctx = NULL;
++            s->iov_count = 0;
++            s->total_req_len = 0;
++        }
++    } else if (qcrypto_hash_bytesv(algo, iov, i, &digest_buf,
++                                   &digest_len, NULL) < 0) {
+         qemu_log_mask(LOG_GUEST_ERROR, "%s: qcrypto failed\n", __func__);
+         return;
+     }
+@@ -397,6 +396,11 @@ static void aspeed_hace_reset(DeviceState *dev)
+ {
+     struct AspeedHACEState *s = ASPEED_HACE(dev);
+ 
++    if (s->hash_ctx != NULL) {
++        qcrypto_hash_free(s->hash_ctx);
++        s->hash_ctx = NULL;
++    }
++
+     memset(s->regs, 0, sizeof(s->regs));
+     s->iov_count = 0;
+     s->total_req_len = 0;
+diff --git a/include/hw/misc/aspeed_hace.h b/include/hw/misc/aspeed_hace.h
+index ecb1b67de8..4af9919195 100644
+--- a/include/hw/misc/aspeed_hace.h
++++ b/include/hw/misc/aspeed_hace.h
+@@ -1,6 +1,7 @@
+ /*
+  * ASPEED Hash and Crypto Engine
+  *
++ * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
+  * Copyright (C) 2021 IBM Corp.
+  *
+  * SPDX-License-Identifier: GPL-2.0-or-later
+@@ -10,6 +11,7 @@
+ #define ASPEED_HACE_H
+ 
+ #include "hw/sysbus.h"
++#include "crypto/hash.h"
+ 
+ #define TYPE_ASPEED_HACE "aspeed.hace"
+ #define TYPE_ASPEED_AST2400_HACE TYPE_ASPEED_HACE "-ast2400"
+@@ -35,6 +37,8 @@ struct AspeedHACEState {
+ 
+     MemoryRegion *dram_mr;
+     AddressSpace dram_as;
++
++    QCryptoHash *hash_ctx;
  };
+ 
+ 
 -- 
 2.34.1
 
