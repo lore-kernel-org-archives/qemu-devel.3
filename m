@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D4A0C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:19:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C7E0C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:19:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb49U-0003lZ-7k; Mon, 05 Aug 2024 16:17:56 -0400
+	id 1sb49j-0005QD-PK; Mon, 05 Aug 2024 16:18:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3aTOxZgUKCtAFwH4B2AA270.yA8C08G-z0H079A929G.AD2@flex--tavip.bounces.google.com>)
- id 1sb49R-0003YK-6p
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:53 -0400
-Received: from mail-yb1-xb49.google.com ([2607:f8b0:4864:20::b49])
+ <3cjOxZgUKCtkO5QDKBJJBG9.7JHL9HP-89Q9GIJIBIP.JMB@flex--tavip.bounces.google.com>)
+ id 1sb49c-0004XO-So
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:18:05 -0400
+Received: from mail-pg1-x549.google.com ([2607:f8b0:4864:20::549])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3aTOxZgUKCtAFwH4B2AA270.yA8C08G-z0H079A929G.AD2@flex--tavip.bounces.google.com>)
- id 1sb49M-0001Ua-QM
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:52 -0400
-Received: by mail-yb1-xb49.google.com with SMTP id
- 3f1490d57ef6-e0ba4d19585so12221910276.0
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 13:17:47 -0700 (PDT)
+ <3cjOxZgUKCtkO5QDKBJJBG9.7JHL9HP-89Q9GIJIBIP.JMB@flex--tavip.bounces.google.com>)
+ id 1sb49X-0001Wt-Rr
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:18:04 -0400
+Received: by mail-pg1-x549.google.com with SMTP id
+ 41be03b00d2f7-7a267d9e7b0so8383193a12.2
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 13:17:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1722889066; x=1723493866; darn=nongnu.org;
+ d=google.com; s=20230601; t=1722889076; x=1723493876; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=ZCjJ5sPbPGT4/PTAX3XbZdjutmIYVAwZmRenYV+abhM=;
- b=nN6T+zNebGkR+9/2SR8+ARnk98GB+/+d+nP312ksC/Bn/FijEizrVu+pW1fMsrIib2
- BkcuyUbh/qMO99cuxg2WSf91IJU2yovUjiz5UKrB08pGvzdKKhV4hvgH1R9rD7puNLK7
- XkLldWV/Cdlw8EK/kU3Morwl+rxvPoAiO9F9yybQGCBzkvjh+/rTt41DRukeRJPSWlZ0
- jJWZjlGEcR3s2EILTVJG6wNgFgD886NxNUwiJa3C7loeQvJxqJT8mH/cfhhz/IH+JZLN
- uD2iXzdwFzJsO3VymKwSTNrWrTyZJEelRcU4e9nkus93DIWL5A6DgR3j7U8PV6GO1f3/
- hsEA==
+ bh=TDXUM/DnNUUyn6pHbVPdEoD8ZybpFrPwu+WD1vFxHS8=;
+ b=P0jeBNKe9VJyfd1tjbon6jVJ51NGTCE0bMyIsbeVWloxuS+i+nn3m2x6yUfNzXI+q7
+ iD4UPUytwT/nzlNKXFPbk/Mi+QQzUBsUQ4HvE1qXPK2ZLTSN7apz4BSPDl1YNl5vu1LD
+ 4oMOgu2OsV+IxdC2NjVuRTlsBo1EWvIXjQDhuf+o6mX8lLZ6bMKnJF3VBVniicBXdR1w
+ ZrbETAwTRbhNR0b91BaNWcf59vI9RvGKYDH8AKeHwRWtVhISCKgvcrVKIhPujT4KE1On
+ ZZUd3KGnh2Q1mgsBduQR2AQlEr3pyX5jDrFwYMlth+0x6U+Dmmp0pOlS1jGvVvWD5KTC
+ szcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722889066; x=1723493866;
+ d=1e100.net; s=20230601; t=1722889076; x=1723493876;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZCjJ5sPbPGT4/PTAX3XbZdjutmIYVAwZmRenYV+abhM=;
- b=PST0zBMibx1eRk2PzF550GUYvm7xGrWkULr82EzD/MhLsboBnY25RY2VhjE9FlWwYE
- MXvRDVz/xqhIGvlLKSuN0B39/18qUXdSutSODyqCF0qEAndRXfE5D2RLrw81uBJM8go1
- tRrW5TLTRTbiKMsDqILziG2iJLc4YoWZ3O7IwOrr0jcAm0T/AJl7+6MSyZs8bN7hFFhb
- 6eMju0n8tFOhpq1OTRkYgWgfAmm9HeOE26GXx07ZdaqrKblUU6hOGk2A0YmdB+LkyRRr
- 2dt3rmtkigDrFJd3Lnbz8pvRirhLaurS6scSLpHh1Zq/d4fpzbwseqArss7lsaVy2UXp
- f4Ug==
-X-Gm-Message-State: AOJu0YwXSsOEbvRSfqJ45TlFZTFwH8ezIXpRlO/qwV0PG4Gk9o9KcsoR
- 5cGpfDAFeNtKA7mwy83c7d1xbtFhYX9uWpJoAWhz1pkWWFJPTYRrrehBjOOLxtiKirZNySibIU3
- 032nA5ygle/1b6/ePa/1ad9r/xNQv9A7gXPzzinarpd7y6LYv95lcvpQsEB/uOVTuc8yekZckPH
- KuQEKd+eaqseMrHboToD7FjGl4Vw==
-X-Google-Smtp-Source: AGHT+IG1Pt6E3mwx56V6QB58tAS/P9w8eY0tLuEvmxKONHteSzlgUW4zheNvXzY2wiJgw8FsY0r8S0yjHw==
+ bh=TDXUM/DnNUUyn6pHbVPdEoD8ZybpFrPwu+WD1vFxHS8=;
+ b=PQJV//NG4jrYcFG0fjhyy1Ma4uLWkf4UiQUUYaLVLlHInM6aSoRuM3wLTrQKHt+hQR
+ Dp/FjQaZQAQZNq/IHSXcYxBeezCisTu9vG5JNOjo1d1Ss7vaCtlnNh6++sGHj1UYHKIU
+ KHtVkDt1ei3EtuwOBVeqdOnvGcwNrdYXwzOaaFLN2QVzMYfGuc+KsoRSei+t308kI3i4
+ EIlh2taL3U+Jlf6F8X8XsYgzOK09JMgoYjA2NDakqQrGXLrsVSRyFEpDstzAOJhbmDD4
+ FlJppJbF8tM86zgDVUJoU5RaD+hjXEXOe3rEfV+acO2YMVBfK7CplfbjNW8ERApAM/+0
+ XB3g==
+X-Gm-Message-State: AOJu0Yza65vlPuew7f9Acgd8sxOjZkC9y4xTzyuOaBRvIX62zBTOWmZT
+ VecGjRbvBhFw22GM2zMuYCPgLahC4rD3gTBFsdFh5e24zpT8QVZb402L08MMktuTDq7sh+2W0W5
+ HXcn4wISeNg58bJ4UakpxpYaVzkxi3udXIc7OhgM0bKJLnWGzZUR6POF0behZlhWdoIXf8X6NSy
+ 8r2MZLH6wJzA6/SLTJGqXo0/N82w==
+X-Google-Smtp-Source: AGHT+IFnbKW0982idR2ThGvBGZQLmLXkxC9szOhbfZs08+ppAvucuotVSSXrQPXEto+7IAj1EGypCgRzBg==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a05:6902:154e:b0:e02:c06f:1db8
+ (user=tavip job=sendgmr) by 2002:a17:90b:1b05:b0:2ca:7e66:2d90
  with SMTP id
- 3f1490d57ef6-e0bde2612ebmr23616276.4.1722889065783; Mon, 05 Aug 2024 13:17:45
- -0700 (PDT)
-Date: Mon,  5 Aug 2024 13:17:09 -0700
+ 98e67ed59e1d1-2cff955f924mr72168a91.7.1722889074724; Mon, 05 Aug 2024
+ 13:17:54 -0700 (PDT)
+Date: Mon,  5 Aug 2024 13:17:14 -0700
 In-Reply-To: <20240805201719.2345596-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20240805201719.2345596-1-tavip@google.com>
 X-Mailer: git-send-email 2.46.0.rc2.264.g509ed76dc8-goog
-Message-ID: <20240805201719.2345596-15-tavip@google.com>
-Subject: [RFC PATCH 14/23] test/unit: add unit tests for flexcomm i2c
+Message-ID: <20240805201719.2345596-20-tavip@google.com>
+Subject: [RFC PATCH 19/23] test/unit: add unit tests for RT500's clock
+ controller
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -71,9 +72,9 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  marcandre.lureau@redhat.com, alistair@alistair23.me, berrange@redhat.com, 
  philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, bleal@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b49;
- envelope-from=3aTOxZgUKCtAFwH4B2AA270.yA8C08G-z0H079A929G.AD2@flex--tavip.bounces.google.com;
- helo=mail-yb1-xb49.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::549;
+ envelope-from=3cjOxZgUKCtkO5QDKBJJBG9.7JHL9HP-89Q9GIJIBIP.JMB@flex--tavip.bounces.google.com;
+ helo=mail-pg1-x549.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -96,44 +97,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add master mode tests for flexcomm i2c.
+Add test to exercise clocks set and clear, system PLL initialization,
+audio PLL initialization, systick and ostimer clock source selection.
 
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- tests/unit/meson.build         |  10 ++
- tests/unit/test-flexcomm-i2c.c | 209 +++++++++++++++++++++++++++++++++
- 2 files changed, 219 insertions(+)
- create mode 100644 tests/unit/test-flexcomm-i2c.c
+ tests/unit/meson.build         |   7 +
+ tests/unit/test-rt500-clkctl.c | 270 +++++++++++++++++++++++++++++++++
+ 2 files changed, 277 insertions(+)
+ create mode 100644 tests/unit/test-rt500-clkctl.c
 
 diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index 4c22cb3ccc..3491e2003b 100644
+index 7a28e7b521..be3062acbf 100644
 --- a/tests/unit/meson.build
 +++ b/tests/unit/meson.build
-@@ -160,6 +160,16 @@ if have_system
-       meson.project_source_root() / 'hw/i2c/flexcomm_i2c.c',
-       meson.project_source_root() / 'hw/i2c/core.c',
+@@ -188,6 +188,13 @@ if have_system
+       meson.project_source_root() / 'hw/ssi/ssi.c',
+       'spi_tester.c',
      ],
-+    'test-flexcomm-i2c': [
-+      hwcore, chardev, qom, migration,
++    'test-rt500-clkctl': [
++      hwcore,
 +      meson.project_source_root() / 'hw/core/gpio.c',
++      meson.project_source_root() / 'hw/misc/rt500_clkctl0.c',
++      meson.project_source_root() / 'hw/misc/rt500_clkctl1.c',
 +      meson.project_source_root() / 'tests/unit/sysbus-mock.c',
-+      meson.project_source_root() / 'hw/misc/flexcomm.c',
-+      meson.project_source_root() / 'hw/char/flexcomm_usart.c',
-+      meson.project_source_root() / 'hw/i2c/flexcomm_i2c.c',
-+      meson.project_source_root() / 'hw/i2c/core.c',
-+      'i2c_tester.c',
 +    ],
    }
    if config_host_data.get('CONFIG_INOTIFY1')
      tests += {'test-util-filemonitor': []}
-diff --git a/tests/unit/test-flexcomm-i2c.c b/tests/unit/test-flexcomm-i2c.c
+diff --git a/tests/unit/test-rt500-clkctl.c b/tests/unit/test-rt500-clkctl.c
 new file mode 100644
-index 0000000000..9d02c94101
+index 0000000000..9312091c46
 --- /dev/null
-+++ b/tests/unit/test-flexcomm-i2c.c
-@@ -0,0 +1,209 @@
++++ b/tests/unit/test-rt500-clkctl.c
+@@ -0,0 +1,270 @@
 +/*
-+ * Copyright (c) 2024 Google LLC.
++ * Copyright (c) 2024 Google LLC
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
@@ -142,202 +141,263 @@ index 0000000000..9d02c94101
 + */
 +
 +#include "qemu/osdep.h"
-+
-+#include "qemu/config-file.h"
 +#include "qemu/log.h"
 +#include "qemu/module.h"
-+#include "qapi/error.h"
-+#include "qemu/sockets.h"
-+#include "sysemu/sysemu.h"
 +#include "qemu/main-loop.h"
-+#include "qemu/option.h"
 +#include "exec/memory.h"
++#include "hw/clock.h"
 +#include "hw/irq.h"
++#include "hw/qdev-clock.h"
 +#include "hw/qdev-properties.h"
-+#include "hw/qdev-core.h"
 +
-+#include "hw/i2c/flexcomm_i2c.h"
-+#include "i2c_tester.h"
++#include "hw/misc/rt500_clkctl0.h"
++#include "hw/misc/rt500_clkctl1.h"
++#include "hw/misc/rt500_clk_freqs.h"
 +#include "sysbus-mock.h"
 +#include "reg-utils.h"
 +
-+#define PERIPH_ADDR (0x20)
-+#define INVALID_ADDR (0x10)
-+
-+#define REG_ADDR 0x11
-+#define REG_VALUE 0xAA
-+
-+#define FLEXCOMM_BASE 0x40106000UL
-+#define FLEXCOMM_I2C_BASE FLEXCOMM_BASE
-+
 +typedef struct {
-+    DeviceState *dev;
-+    I2CSlave *periph;
-+    bool irq;
++    DeviceState *clk0;
++    DeviceState *clk1;
++    Clock *sysclk;
++    Clock *systick_clk;
++    Clock *ostimer_clk;
 +} TestFixture;
 +
-+/* Callback for the interrupt line. */
-+static void spi_irq_set(void *opaque, int line, int level)
-+{
-+    TestFixture *f = (TestFixture *)opaque;
++#define SYSCLK_HZ 100000000
 +
-+    f->irq = level;
-+}
++#define RT500_CLKCTL0_BASE 0x40001000UL
++#define RT500_CLKCTL1_BASE 0x40021000UL
 +
 +/*
 + * Test fixture initialization.
 + */
 +static void set_up(TestFixture *f, gconstpointer data)
 +{
-+    FlexcommState *s;
++    f->clk0 = qdev_new(TYPE_RT500_CLKCTL0);
++    g_assert(f->clk0);
 +
-+    f->dev = qdev_new(TYPE_FLEXCOMM);
-+    g_assert(f->dev);
++    f->clk1 = qdev_new(TYPE_RT500_CLKCTL1);
++    g_assert(f->clk1);
 +
-+    s = FLEXCOMM(f->dev);
-+    s->irq = qemu_allocate_irq(spi_irq_set, f, 0);
++    f->sysclk = clock_new(OBJECT(&f->clk0->parent_obj), "SYSCLK");
++    clock_set_hz(f->sysclk, SYSCLK_HZ);
 +
-+    if (data != NULL) {
-+        qdev_prop_set_int32(DEVICE(f->dev), "functions", (uintptr_t)data);
-+    }
++    qdev_connect_clock_in(f->clk0, "sysclk", f->sysclk);
++    f->systick_clk = RT500_CLKCTL0(f->clk0)->systick_clk;
 +
-+    qdev_realize_and_unref(f->dev, NULL, &error_abort);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(f->dev), 0, FLEXCOMM_BASE);
++    qdev_connect_clock_in(f->clk1, "sysclk", f->sysclk);
++    f->ostimer_clk = RT500_CLKCTL1(f->clk1)->ostimer_clk;
 +
-+    device_cold_reset(f->dev);
++    qdev_realize_and_unref(f->clk0, NULL, NULL);
++    sysbus_mmio_map(SYS_BUS_DEVICE(f->clk0), 0, RT500_CLKCTL0_BASE);
 +
-+    f->periph = i2c_slave_create_simple(s->i2c, TYPE_I2C_TESTER, PERIPH_ADDR);
++    qdev_realize_and_unref(f->clk1, NULL, NULL);
++    sysbus_mmio_map(SYS_BUS_DEVICE(f->clk1), 0, RT500_CLKCTL1_BASE);
++
++    device_cold_reset(f->clk0);
++    device_cold_reset(f->clk1);
 +}
 +
 +static void tear_down(TestFixture *f, gconstpointer user_data)
 +{
-+    qdev_unrealize(f->dev);
-+    qdev_unrealize(DEVICE(f->periph));
++    qdev_unrealize(f->clk0);
++    qdev_unrealize(f->clk1);
++    g_free(f->clk0);
++    g_free(f->clk1);
 +}
 +
-+static void master_test(TestFixture *f, gconstpointer user_data)
++#undef CLKCTL0
++#undef CLKCTL1
++
++static void pscctl_test(TestFixture *f, gconstpointer user_data)
 +{
-+    uint32_t tmp;
++    /* rom controller clock should be enabled at reset */
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, PSCCTL0, ROM_CTRLR_CLK)
++             == 1);
 +
-+    /* Select and lock I2C */
-+    tmp = FLEXCOMM_PSELID_LOCK_Msk | FLEXCOMM_PERSEL_I2C;
-+    REG32_WRITE(f->dev, FLEXCOMM, PSELID, tmp);
++    /* DSP clk is disabled at reset */
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, PSCCTL0, DSP_CLK) == 0);
 +
-+    /* Enable master mode */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_I2C, CFG, MSTEN, 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, CFG, MSTEN) == 1);
++    /* check PSCTL_SET functionality */
++    REG32_WRITE(f->clk0, RT500_CLKCTL0, PSCCTL0_SET,
++                RT500_CLKCTL0_PSCCTL0_DSP_CLK_Msk);
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, PSCCTL0, DSP_CLK) == 1);
 +
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, STAT, MSTPENDING) == 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, STAT, MSTSTATE) ==
-+             MSTSTATE_IDLE);
++    /* check PSCTL_CLR functionality */
++    REG32_WRITE(f->clk0, RT500_CLKCTL0, PSCCTL0_CLR,
++                RT500_CLKCTL0_PSCCTL0_DSP_CLK_Msk);
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, PSCCTL0, DSP_CLK) == 0);
 +
-+    /* Enable interrupts */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_I2C, INTENSET, MSTPENDINGEN, 1);
-+    g_assert(f->irq == true);
++    /* FLEXIO clk is disabled at reset */
++    g_assert(REG32_READ_FIELD(f->clk1, RT500_CLKCTL1, PSCCTL0, FlexIO) == 0);
 +
-+    /* start for invalid address  */
-+    REG32_WRITE(f->dev, FLEXCOMM_I2C, MSTDAT, INVALID_ADDR);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTSTART, 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, STAT, MSTSTATE) ==
-+             MSTSTATE_NAKADR);
-+    g_assert(f->irq == true);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTSTOP, 1);
++    /* check PSCTL_SET functionality */
++    REG32_WRITE(f->clk1, RT500_CLKCTL1, PSCCTL0_SET,
++                RT500_CLKCTL1_PSCCTL0_FlexIO_Msk);
++    g_assert(REG32_READ_FIELD(f->clk1, RT500_CLKCTL1, PSCCTL0, FlexIO) == 1);
 +
-+    /* write past the last register */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_I2C, MSTDAT, DATA, PERIPH_ADDR);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTSTART, 1);
-+    g_assert(f->irq == true);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, STAT, MSTSTATE) ==
-+             MSTSTATE_TXRDY);
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_I2C, MSTDAT, DATA,
-+                    (I2C_TESTER_NUM_REGS + 10));
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTCONTINUE, 1);
-+    g_assert(f->irq == true);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, STAT, MSTSTATE) ==
-+             MSTSTATE_TXRDY);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTCONTINUE, 1);
-+    g_assert(f->irq == true);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, STAT, MSTSTATE) ==
-+             MSTSTATE_NAKDAT);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTSTOP, 1);
-+
-+    /* write value to register */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_I2C, MSTDAT, DATA, PERIPH_ADDR);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTSTART, 1);
-+    g_assert(f->irq == true);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, STAT, MSTSTATE) ==
-+             MSTSTATE_TXRDY);
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_I2C, MSTDAT, DATA, REG_ADDR);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTCONTINUE, 1);
-+    g_assert(f->irq == true);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, STAT, MSTSTATE) ==
-+             MSTSTATE_TXRDY);
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_I2C, MSTDAT, DATA, REG_VALUE);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTCONTINUE, 1);
-+    g_assert(f->irq == true);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, STAT, MSTSTATE) ==
-+             MSTSTATE_TXRDY);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTSTOP, 1);
-+    g_assert(f->irq == true);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, STAT, MSTSTATE) ==
-+             MSTSTATE_IDLE);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTSTOP, 1);
-+
-+    /* read value back from register */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_I2C, MSTDAT, DATA, PERIPH_ADDR);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTSTART, 1);
-+    g_assert(f->irq == true);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, STAT, MSTSTATE) ==
-+             MSTSTATE_TXRDY);
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_I2C, MSTDAT, DATA, REG_ADDR);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTCONTINUE, 1);
-+    g_assert(f->irq == true);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, STAT, MSTSTATE) ==
-+             MSTSTATE_TXRDY);
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_I2C, MSTDAT, DATA, (PERIPH_ADDR + 1));
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTSTART, 1);
-+    g_assert(f->irq == true);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, STAT, MSTSTATE) ==
-+             MSTSTATE_RXRDY);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTCONTINUE, 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, MSTDAT, DATA) == REG_VALUE);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTSTOP, 1);
-+
-+    /*
-+     * Check that the master ended the transaction (i.e. i2c_end_transfer was
-+     * called). If the master does not properly end the transaction this would
-+     * be seen as a restart and it would not be NACKed.
-+     */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_I2C, MSTDAT, DATA, INVALID_ADDR);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTSTART, 1);
-+
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_I2C, STAT, MSTSTATE) ==
-+             MSTSTATE_NAKADR);
-+    g_assert(f->irq == true);
-+    REG32_WRITE_FIELD_NOUPDATE(f->dev, FLEXCOMM_I2C, MSTCTL, MSTSTOP, 1);
-+
-+    /* Disable interrupts */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_I2C, INTENCLR, MSTPENDINGCLR, 1);
-+    g_assert(f->irq == false);
++    /* check PSCTL_CLR functionality */
++    REG32_WRITE(f->clk1, RT500_CLKCTL1, PSCCTL0_CLR,
++                RT500_CLKCTL1_PSCCTL0_FlexIO_Msk);
++    g_assert(REG32_READ_FIELD(f->clk1, RT500_CLKCTL1, PSCCTL0, FlexIO) == 0);
 +}
 +
-+/* mock-up */
-+const PropertyInfo qdev_prop_chr;
++static void audiopll0pfd_test(TestFixture *f, gconstpointer user_data)
++{
++    /*  audio plls are gated at boot */
++    g_assert(REG32_READ_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD,
++                              PFD3_CLKGATE) == 1);
++    g_assert(REG32_READ_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD,
++                              PFD2_CLKGATE) == 1);
++    g_assert(REG32_READ_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD,
++                              PFD1_CLKGATE) == 1);
++    g_assert(REG32_READ_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD,
++                              PFD0_CLKGATE) == 1);
++
++    /*  ,,, and clocks are not ready */
++    g_assert(REG32_READ_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD, PFD3_CLKRDY)
++             == 0);
++    g_assert(REG32_READ_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD, PFD2_CLKRDY)
++             == 0);
++    g_assert(REG32_READ_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD, PFD1_CLKRDY)
++             == 0);
++    g_assert(REG32_READ_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD, PFD0_CLKRDY)
++             == 0);
++
++    /* ungate all plls and check that clocks are ready */
++    REG32_WRITE_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD, PFD3_CLKGATE, 0);
++    REG32_WRITE_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD, PFD2_CLKGATE, 0);
++    REG32_WRITE_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD, PFD1_CLKGATE, 0);
++    REG32_WRITE_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD, PFD0_CLKGATE, 0);
++
++    g_assert(REG32_READ_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD, PFD3_CLKRDY)
++             == 1);
++    g_assert(REG32_READ_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD, PFD2_CLKRDY)
++             == 1);
++    g_assert(REG32_READ_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD, PFD1_CLKRDY)
++             == 1);
++    g_assert(REG32_READ_FIELD(f->clk1, RT500_CLKCTL1, AUDIOPLL0PFD, PFD0_CLKRDY)
++             == 1);
++}
++
++static void syspll0pfd_test(TestFixture *f, gconstpointer user_data)
++{
++    /*  system plls are gated at boot */
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKGATE)
++             == 1);
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKGATE)
++             == 1);
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKGATE)
++             == 1);
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKGATE)
++             == 1);
++
++    /*  ,,, and clocks are not ready */
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKRDY)
++             == 0);
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKRDY)
++             == 0);
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKRDY)
++             == 0);
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKRDY)
++             == 0);
++
++    /* ungate all plls and check that clocks are ready */
++    REG32_WRITE_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKGATE, 0);
++    REG32_WRITE_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKGATE, 0);
++    REG32_WRITE_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKGATE, 0);
++    REG32_WRITE_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKGATE, 0);
++
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD3_CLKRDY)
++             == 1);
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD2_CLKRDY)
++             == 1);
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD1_CLKRDY)
++             == 1);
++    g_assert(REG32_READ_FIELD(f->clk0, RT500_CLKCTL0, SYSPLL0PFD, PFD0_CLKRDY)
++             == 1);
++}
++
++static void systick_clk_test(TestFixture *f, gconstpointer user_data)
++{
++    /* systick is not running at reset */
++    g_assert(clock_get_hz(f->systick_clk) == 0);
++
++    /* select divout no divisor */
++    REG32_WRITE_FIELD(f->clk0, RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
++                    SYSTICKFCLKSEL_DIVOUT);
++    g_assert(clock_get_hz(f->systick_clk) == SYSCLK_HZ);
++
++    /* change divisor to 2 */
++    REG32_WRITE_FIELD(f->clk0, RT500_CLKCTL0, SYSTICKFCLKDIV, DIV, 1);
++    g_assert(clock_get_hz(f->systick_clk) == SYSCLK_HZ / 2);
++
++    /* select lpsoc */
++    REG32_WRITE_FIELD(f->clk0, RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
++                    SYSTICKFCLKSEL_LPOSC);
++    g_assert(clock_get_hz(f->systick_clk) == LPOSC_CLK_HZ);
++
++    /* select lpsoc */
++    REG32_WRITE_FIELD(f->clk0, RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
++                    SYSTICKFCLKSEL_32KHZRTC);
++    g_assert(clock_get_hz(f->systick_clk) == RTC32KHZ_CLK_HZ);
++
++    /* disable clock */
++    REG32_WRITE_FIELD(f->clk0, RT500_CLKCTL0, SYSTICKFCLKSEL, SEL,
++                    SYSTICKFCLKSEL_NONE);
++    g_assert(clock_get_hz(f->systick_clk) == 0);
++}
++
++static void ostimer_clk_test(TestFixture *f, gconstpointer user_data)
++{
++    /* systick is not running at reset */
++    g_assert(clock_get_hz(f->ostimer_clk) == 0);
++
++    /* select lpsoc */
++    REG32_WRITE_FIELD(f->clk1, RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
++                    OSEVENTTFCLKSEL_LPOSC);
++    g_assert(clock_get_hz(f->ostimer_clk) == LPOSC_CLK_HZ);
++
++
++    /* select 32khz RTC */
++    REG32_WRITE_FIELD(f->clk1, RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
++                    OSEVENTTFCLKSEL_32KHZRTC);
++    g_assert(clock_get_hz(f->ostimer_clk) == RTC32KHZ_CLK_HZ);
++
++    /* select hclk */
++    REG32_WRITE_FIELD(f->clk1, RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
++                    OSEVENTTFCLKSEL_HCLK);
++    g_assert(clock_get_hz(f->ostimer_clk) == SYSCLK_HZ);
++
++    /* disable clock */
++    REG32_WRITE_FIELD(f->clk1, RT500_CLKCTL1, OSEVENTTFCLKSEL, SEL,
++                    OSEVENTTFCLKSEL_NONE);
++    g_assert(clock_get_hz(f->ostimer_clk) == 0);
++}
 +
 +int main(int argc, char **argv)
 +{
-+    qemu_init_main_loop(&error_abort);
-+
 +    g_test_init(&argc, &argv, NULL);
 +
 +    /* Initialize object types. */
 +    sysbus_mock_init();
 +    module_call_init(MODULE_INIT_QOM);
-+    qemu_add_opts(&qemu_chardev_opts);
 +
-+    g_test_add("/flexcomm-i2c/master", TestFixture,
-+               (gconstpointer)(1 << FLEXCOMM_FUNC_I2C),
-+               set_up, master_test, tear_down);
++    g_test_add("/rt500-clkctl/pscctl-test", TestFixture, NULL,
++               set_up, pscctl_test, tear_down);
++
++    g_test_add("/rt500-clkctl/syspll0pfd-test", TestFixture, NULL,
++               set_up, syspll0pfd_test, tear_down);
++
++    g_test_add("/rt500-clkctl/audiopll0pfd-test", TestFixture, NULL,
++               set_up, audiopll0pfd_test, tear_down);
++
++    g_test_add("/rt500-clkctl/systick-test", TestFixture, NULL,
++               set_up, systick_clk_test, tear_down);
++
++    g_test_add("/rt500-clkctl/ostimer-clk-test", TestFixture, NULL,
++               set_up, ostimer_clk_test, tear_down);
 +
 +    return g_test_run();
 +}
