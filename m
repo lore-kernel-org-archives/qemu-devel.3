@@ -4,52 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 494C5C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 21:10:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E870C52D6D
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 21:10:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb4x0-0008IK-Ba; Mon, 05 Aug 2024 17:09:06 -0400
+	id 1sb4xJ-0000Z3-Cz; Mon, 05 Aug 2024 17:09:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sb4wy-0008Gv-Po
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 17:09:04 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sb4xF-00009t-3J
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 17:09:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sb4wx-0008SK-3p
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 17:09:04 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sb4xB-0008TO-4j
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 17:09:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722892141;
+ s=mimecast20190719; t=1722892154;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=oX2DP96yCeF2DgkPvt2MQVPJep14EgN0KTP79m5EVB4=;
- b=FwHmNBYEkE/583xJCXVoMZ/MCObZ2C4zmRU4f9Q+qgJzCrHlxo5JXBcG9SXp2N7bV6GfEl
- XOa+KnTb0WaQC/NXUQQ3mr/6cGQVPgW8sqoFO//x0rkbVvN6GbvHp8Pny4uqHOZTIryiV6
- F3YRx4EcoMasrRwXWuZlRHmM0wYLeDM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8S4R7oZAhxgp9+WrqCsInnag+q6eChG8pRT5Mw+3qaA=;
+ b=bSSckfScUPXnn6e9MBnz9qRJ+v2CpzJcdXI5Ae7mcJ/+NwFxB7z3tUUdr/NS1lWdDLw+Ss
+ hHinHickllZvZBMio2wViClNmk4XRzIqspPDxyjb4pll/k6JYO9J9NEuRARobb7ygYxnpS
+ zEH7B8KSW6olmAK0u3sOfsjBE98JSYw=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-682-3oNvngJPMPCd7LbkCrnLAw-1; Mon,
- 05 Aug 2024 17:08:57 -0400
-X-MC-Unique: 3oNvngJPMPCd7LbkCrnLAw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-228-oO8LGGZzOMeggQp4xQtN5A-1; Mon,
+ 05 Aug 2024 17:09:12 -0400
+X-MC-Unique: oO8LGGZzOMeggQp4xQtN5A-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 07E0F1955D48; Mon,  5 Aug 2024 21:08:57 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 68A101955D44; Mon,  5 Aug 2024 21:09:11 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.39.193.224])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9D63230001AA; Mon,  5 Aug 2024 21:08:55 +0000 (UTC)
+ id EF50D30001AA; Mon,  5 Aug 2024 21:09:09 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 00/13] Block layer patches
-Date: Mon,  5 Aug 2024 23:08:38 +0200
-Message-ID: <20240805210851.314076-1-kwolf@redhat.com>
+Subject: [PULL 05/13] scsi-block: Don't skip callback for sgio error
+ status/driver_status
+Date: Mon,  5 Aug 2024 23:08:43 +0200
+Message-ID: <20240805210851.314076-6-kwolf@redhat.com>
+In-Reply-To: <20240805210851.314076-1-kwolf@redhat.com>
+References: <20240805210851.314076-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
@@ -61,7 +65,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,66 +81,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit f9851d2ffef59b3a7f39513469263ab3b019480f:
+Instead of calling into scsi_handle_rw_error() directly from
+scsi_block_sgio_complete() and skipping the normal callback, go through
+the normal cleanup path by calling the callback with a positive error
+value.
 
-  Merge tag 'migration-20240802-pull-request' of https://gitlab.com/farosas/qemu into staging (2024-08-03 07:26:26 +1000)
+The important difference here is not only that the code path is cleaner,
+but that the callbacks set r->req.aiocb = NULL. If we skip setting this
+and the error action is BLOCK_ERROR_ACTION_STOP, resuming the VM runs
+into an assertion failure in scsi_read_data() or scsi_write_data()
+because the dangling aiocb pointer is unexpected.
 
-are available in the Git repository at:
+Fixes: a108557bbf ("scsi: inline sg_io_sense_from_errno() into the callers.")
+Buglink: https://issues.redhat.com/browse/RHEL-50000
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Acked-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <20240731123207.27636-3-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ hw/scsi/scsi-disk.c | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-  https://repo.or.cz/qemu/kevin.git tags/for-upstream
-
-for you to fetch changes up to 833362e55d9acc6b7ccc1d80d8cd84688e7f5761:
-
-  iotests/024: exclude 'backing file format' field from the output (2024-08-05 23:00:42 +0200)
-
-----------------------------------------------------------------
-Block layer patches
-
-- scsi-block: Fix error handling with r/werror=stop
-- Depend on newer clang for TSA, make WITH_GRAPH_RDLOCK_GUARD() fully
-  checked, fix block-copy to add missing lock
-- vvfat: Fix write bugs for large files and add iotests
-- Clean up blockdev-snapshot-internal-sync doc
-- Fix iotests 024 for qed
-
-----------------------------------------------------------------
-Amjad Alsharafi (5):
-      vvfat: Fix bug in writing to middle of file
-      vvfat: Fix usage of `info.file.offset`
-      vvfat: Fix wrong checks for cluster mappings invariant
-      vvfat: Fix reading files with non-continuous clusters
-      iotests: Add `vvfat` tests
-
-Andrey Drobyshev (1):
-      iotests/024: exclude 'backing file format' field from the output
-
-Kevin Wolf (6):
-      block-copy: Fix missing graph lock
-      block/graph-lock: Make WITH_GRAPH_RDLOCK_GUARD() fully checked
-      scsi-disk: Use positive return value for status in dma_readv/writev
-      scsi-block: Don't skip callback for sgio error status/driver_status
-      scsi-disk: Add warning comments that host_status errors take a shortcut
-      scsi-disk: Always report RESERVATION_CONFLICT to guest
-
-Markus Armbruster (1):
-      qapi-block-core: Clean up blockdev-snapshot-internal-sync doc
-
- qapi/block-core.json               |   7 +-
- include/block/graph-lock.h         |  21 +-
- block/block-copy.c                 |   4 +-
- block/vvfat.c                      |  27 +-
- hw/scsi/scsi-disk.c                |  73 ++--
- tests/qemu-iotests/fat16.py        | 690 +++++++++++++++++++++++++++++++++++++
- tests/qemu-iotests/testenv.py      |   2 +-
- meson.build                        |  14 +-
- tests/qemu-iotests/024             |   2 +-
- tests/qemu-iotests/024.out         |   1 -
- tests/qemu-iotests/check           |   2 +-
- tests/qemu-iotests/tests/vvfat     | 485 ++++++++++++++++++++++++++
- tests/qemu-iotests/tests/vvfat.out |   5 +
- 13 files changed, 1280 insertions(+), 53 deletions(-)
- create mode 100644 tests/qemu-iotests/fat16.py
- create mode 100755 tests/qemu-iotests/tests/vvfat
- create mode 100755 tests/qemu-iotests/tests/vvfat.out
+diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
+index 3ff6798bde..6e1a5c98df 100644
+--- a/hw/scsi/scsi-disk.c
++++ b/hw/scsi/scsi-disk.c
+@@ -2832,16 +2832,6 @@ static void scsi_block_sgio_complete(void *opaque, int ret)
+         } else {
+             ret = io_hdr->status;
+         }
+-
+-        if (ret > 0) {
+-            if (scsi_handle_rw_error(r, ret, true)) {
+-                scsi_req_unref(&r->req);
+-                return;
+-            }
+-
+-            /* Ignore error.  */
+-            ret = 0;
+-        }
+     }
+ 
+     req->cb(req->cb_opaque, ret);
+-- 
+2.45.2
 
 
