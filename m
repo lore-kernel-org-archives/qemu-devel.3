@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6339FC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 12:41:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA1A4C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 12:42:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sax1q-0001LA-Ke; Mon, 05 Aug 2024 08:41:34 -0400
+	id 1sax25-0002KV-Uf; Mon, 05 Aug 2024 08:41:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sax1o-0001CN-70
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 08:41:32 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sax1m-0005LY-L0
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 08:41:31 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2ef2d96164aso114834691fa.3
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 05:41:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722861688; x=1723466488; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xdLYvMBdwZXRyAq8zx7Lu0UhGl1/Y8CL4Ifn6yeBmeI=;
- b=wN6syAi/TY0NGlL1+aqAKQYWe/SRjw6GnSRgV/FkBvE7wWskF7kzAjfIRDGSdiLIDN
- JPmn957hTGXqzCKFMauC1+DwnMEj99XtCkGkkHBggR8/tkKrBgBSlVeVGfulAJFxZPSf
- Bm4NQ7L0gQpQ0KIqX0BK0qmDH3ToRNjbQbzg0HguMvYZeGWphG6dHs+PHz9phjOq6ACP
- UqhQ5PUC4IJfj4j2a+uIJjHns29POsNsA5pMoZjev0vQtg1u7TTod/f/VB7ze2xvQzkg
- YwhkAicCxODFnkOxsBurvM8Qa/nlRdcTnYs7hLtlGSPiKq9l5dzXJeApeoSGhWnkOXrm
- 3G8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722861688; x=1723466488;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xdLYvMBdwZXRyAq8zx7Lu0UhGl1/Y8CL4Ifn6yeBmeI=;
- b=p2Y/PnZeW0vEjj45ZrcankATWX+RL5VVKb4GqdlqFK625TX7ciq1QYrJIibonm43ya
- v9Hf+bpMLoZxuJEtL+nqCWWLuI5sfiATA+GYsdsz66DI2uB9MVd++qGKx8zBrPIqxemI
- KCLfjeaeWrTP/hR9s76e1gZU8lK1mWyPTw0i5svZTRkHHRJNsTP2lMC6q8vY4e/SXcPJ
- +2AXih85IdcTm0fHNAv+SoXidQPJHJNMi8Cv4P44zTYRDwX8dw8JsqwTijURxStdAeem
- IvgiiYNSnrreorPoRUb6XkxaCndrg9KBmtCrxg35qPnK6Ye7+7k8nLzCjj7bo6FOPWmm
- FYew==
-X-Gm-Message-State: AOJu0YzzOqrcq9c4CERO2IcLnAM6XRePgDqisxP0lPGDtVerfTll0EdG
- TO9WfExMoF+NSYFysjlRerWstxisksii22pFsszXAcUIfOzffRIhKavRZgyqdn0=
-X-Google-Smtp-Source: AGHT+IH6B1yFUSo9VABE7ZNOOBXpMGvOHfhypqcK48TI2EFXl9vrx2TfYo0UbpW7tzV7fENmcZNMXQ==
-X-Received: by 2002:a2e:87c3:0:b0:2ee:7bcd:a52 with SMTP id
- 38308e7fff4ca-2f15ab53020mr73326171fa.46.1722861688312; 
- Mon, 05 Aug 2024 05:41:28 -0700 (PDT)
-Received: from [192.168.1.102] (cor91-h02-176-184-30-132.dsl.sta.abo.bbox.fr.
- [176.184.30.132]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36bbd059e18sm9719434f8f.68.2024.08.05.05.41.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Aug 2024 05:41:27 -0700 (PDT)
-Message-ID: <3e93ed77-fa43-4f2e-923f-8d5578716a04@linaro.org>
-Date: Mon, 5 Aug 2024 14:41:25 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sax24-0002FO-Q0
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 08:41:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sax22-0005Ng-5W
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 08:41:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722861705;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:resent-to:
+ resent-from:resent-message-id:in-reply-to:in-reply-to:  references:references; 
+ bh=OrkoDqnLrylzbyU6S29huBZeRASqMSKXIb6SprjWd5s=;
+ b=iE3VP46smnxUFwroLKb7KqlWrJGczHQ9LrPLYDmH6Fj7F2fgKj2u6n/UkK0Ogc5VP4r6cs
+ Cp2jEOkNWZEeMU6ZzxFJ+wn0kY9SPvBx1S8XgvJEuGjc2Dg+zCF/fAh4eyqnMe0WnaSuMA
+ UCkoYUWw+N4a+z37ON+Dia0JlSY4/WM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-108-vK7XLp8oNpeQpe8jblZQdA-1; Mon,
+ 05 Aug 2024 08:41:41 -0400
+X-MC-Unique: vK7XLp8oNpeQpe8jblZQdA-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A383519560BA; Mon,  5 Aug 2024 12:41:40 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.193.245])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 656DA19560AE; Mon,  5 Aug 2024 12:41:40 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2E6F321E6692; Mon,  5 Aug 2024 14:41:38 +0200 (CEST)
+Resent-To: michael.roth@amd.com, philmd@linaro.org, qemu-devel@nongnu.org
+Resent-From: Markus Armbruster <armbru@redhat.com>
+Resent-Date: Mon, 05 Aug 2024 14:41:38 +0200
+Resent-Message-ID: <87ikwfm9a5.fsf@pond.sub.org>
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Michael
+ Roth <michael.roth@amd.com>
+Subject: Re: [PATCH 5/6] qapi: apply schema prefix to QAPI feature enum
+ constants
+In-Reply-To: <20240801175913.669013-6-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Thu, 1 Aug 2024 18:59:12
+ +0100")
+References: <20240801175913.669013-1-berrange@redhat.com>
+ <20240801175913.669013-6-berrange@redhat.com>
+Date: Mon, 05 Aug 2024 14:22:47 +0200
+Message-ID: <87y15bnoq0.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] tests/avocado: Re-enable gdbsim-r5f562n8 testing
- U-Boot
-To: Yoshinori Sato <ysato@users.sourceforge.jp>
-Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240801172332.65701-1-philmd@linaro.org>
- <87r0b3e9yp.wl-ysato@users.sourceforge.jp>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87r0b3e9yp.wl-ysato@users.sourceforge.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,29 +95,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/8/24 08:54, Yoshinori Sato wrote:
-> On Fri, 02 Aug 2024 02:23:32 +0900,
-> Philippe Mathieu-Daudé wrote:
->>
->> We disabled all RX tests on commit 9b45cc9931 ("docs/devel:
->> rationalise unstable gitlab tests under FLAKY_TESTS") for
->> being flaky. However I don't recall the U-Boot test to fail
->> (the problematic line checking the 'version' string is already
->> commented out), and I'm running this test reliably, so re-enable
->> it.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   tests/avocado/machine_rx_gdbsim.py | 2 --
->>   1 file changed, 2 deletions(-)
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
+> This allows us to include multiple QAPI schemas in the same file.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-Thanks, I'll queue this patch for 9.2 to avoid messing
-with the next release.
-
-Regards,
-
-Phil.
+I figure you had reason to simultaneously include headers generated for
+multiple schemas.  Do tell :)
 
 
