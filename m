@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BDC8C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:18:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ABF0C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:18:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb49k-0005Xz-EH; Mon, 05 Aug 2024 16:18:12 -0400
+	id 1sb49f-0004Rq-Hy; Mon, 05 Aug 2024 16:18:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3eDOxZgUKCt8UBWJQHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--tavip.bounces.google.com>)
- id 1sb49f-0004pH-2u
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:18:07 -0400
-Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
+ <3bzOxZgUKCtYL2NAH8GG8D6.4GEI6EM-56N6DFGF8FM.GJ8@flex--tavip.bounces.google.com>)
+ id 1sb49V-0003t9-Vg
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:58 -0400
+Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3eDOxZgUKCt8UBWJQHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--tavip.bounces.google.com>)
- id 1sb49a-0001Xg-NC
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:18:06 -0400
-Received: by mail-yw1-x114a.google.com with SMTP id
- 00721157ae682-68dcbd6135dso64352827b3.3
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 13:18:01 -0700 (PDT)
+ <3bzOxZgUKCtYL2NAH8GG8D6.4GEI6EM-56N6DFGF8FM.GJ8@flex--tavip.bounces.google.com>)
+ id 1sb49T-0001Vp-45
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:57 -0400
+Received: by mail-pl1-x64a.google.com with SMTP id
+ d9443c01a7336-1ff3dfaa090so56173155ad.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 13:17:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1722889080; x=1723493880; darn=nongnu.org;
+ d=google.com; s=20230601; t=1722889071; x=1723493871; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=4u1P5SIla3BTMDBQNng926h7zNREK6etGIfsOHcMKR0=;
- b=W+xt1ui9C6SahVsxDgI27zBE7YqWEYkpfFj86gqECR5HYzPT7azq4OWpIdNglB2YMP
- kMhr2itAneQh2CK+A+31gHSQp7G0JrihO7SrJGa8gXBn00+3vGofgf8dtdgITXOkI/Wi
- Hqs1cb6tBFkUUlOu8H02tSY0w93TZIvV6nYv5lCSZodmSjDiKtijxaRoRBfKRTaTzICF
- D9NEmivVV9xKr9EFaFke56qulBi2leOv//RMwe8IIiuQeZMBgcSu8mApkanTTnnkMAUQ
- bnm/hXOS7R0Lu7TOqdEqaFVXb+xIHCB7V1QWh78oiDnCs5Hd1MYAXLKKFcCBTgtHKEIi
- VmXg==
+ bh=wzBmDOceMrnHqMQIWuQIRSZOR9yk0Yvpmsomz+UG+gg=;
+ b=O3PgGvJq0KeHXh/UXMpemJC46Dp/bohzJ8pJdeBz8zkAVHh00+KxRhlNPael4tibPs
+ SCT916P9BE11j++9g/WyWc3LzOVRwg0N7dqsdNxTDCQBeDaSiDunnKYVtb0oH8uj3to7
+ ZC/aTkGUQllEiXgJmh68hW4IiD9mep6hB4HoS6Z0Ywe61a5lf38KAX8BDjq6I9E4y6yO
+ oH4FH00VlXBU/bIottUWf/iYKU0SRbRGMMhphf4Xc5RUQyfveRdkMWaPf3iNULK7gB2z
+ KAPQt5TGAWGFydnWxMSFebUKoPSv6NcwfISoAAmqRvLCdSzS2q2ZVXanMPbg25wpW6tU
+ jMlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722889080; x=1723493880;
+ d=1e100.net; s=20230601; t=1722889071; x=1723493871;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4u1P5SIla3BTMDBQNng926h7zNREK6etGIfsOHcMKR0=;
- b=dN914UHnS8+emjSLvBA7HKV0vu2qDqt9OLGXHWauE+WIJaxR/ORCkzzFjwuEIigH+s
- d4XMMY1iWHx9CJiSFoe30h9R+E/6ympTqEadhRHM6S8C80y2aM2fVJ8ZAKYoeFxzYC4w
- ktVaPWZBgPw5lVkC34HJql6gmxx8OYqqEV/7h0gPEBfmUoU5IUQ5tYmSbdyN7a+xpjPw
- Hi37Yxj6PUhBZZ+oisB9U5/PJACTnTOiLm15ycODBCUmdCOaz2jwvgurdh0Xjbvr8KQV
- i3AgNMUn3G+qQuXwq+wRB36FXYBKeSde8crOPxK0LAnEVhEPcppjb5vdKTJzTnXcDzgv
- 6Zsw==
-X-Gm-Message-State: AOJu0YyVHHVFwYzJsq0zz+hyvWNftnKg4wNNo0YDJRYYBrxlIGpQNonm
- vv0IVfnquiraY3mZXipcVvwYKmQtdN10JoBxEUuKtzK+1NmnwgU/FUe5qMAPiOBRY6X88Sz21Xr
- xOyrzkPpVCAm+5KP+y+YEGP82iXca+k4203jG4aY80w1NyTVr9IWzD3nT3x42PR9jm9hr+t1yio
- YAeNAQy4kN6/EmSyp5DMKuCIEQ0Q==
-X-Google-Smtp-Source: AGHT+IETKmxMUfzjPk4qDciUlfp9GgJp/XDZSs4LIyahMhe5QVAt6LybinSSK4kDNRuQBJAnL26S8NRD1Q==
+ bh=wzBmDOceMrnHqMQIWuQIRSZOR9yk0Yvpmsomz+UG+gg=;
+ b=Hug4BOmX92WNsDgLFuMYTWlpnpmjCy3fcxheXK4q26yJ6b5XW2+izHgJE//XAlbDsy
+ VKAjC+V3RDWOZj6q9urQ8Za5lGVXd6dBE7K1pAdkvb9782c76CoEb8xu5IYwn5FH8Qxc
+ VgNcso/5b268HonZijqW/t6ff87ITwgcN9jrOMVtEztoZ7YddxgYPOxhcKIaFyjATOIE
+ EjIRirrF0AWz/nBN9LKZEIuhUPrg9YYJbpQn5SMeIcSWVI3HcQ/LrmJBQVyjRHJs6n8p
+ Gc3xFW1ZGTfH7a9IWjoOP4rsG+6W7b5I8RZuEIa7yfMgGQxrUWVuhr0CzxWq8HBxT5tr
+ 4xXQ==
+X-Gm-Message-State: AOJu0YwVdMTDwidKOM/t2FpA0op3OZk4LVcq08DGaIgxM1RKttGTJ86g
+ SUG/4t2LHTHk3f/uU8FdGaNLyUcUp04YgGROlRxaY+CSc76PO+9xECREz5CGjNEW2OVqZiedcI4
+ xYsyLRcl83A474YbWONlAajfdD18e4tx4cBCc0xiyg8KI4k6eAqdqXTB5cIoo39jaA0H23RAB0e
+ Dgk6eBkays2TgX1ydQfNhUgU9Pqw==
+X-Google-Smtp-Source: AGHT+IHVi7BSDYYhjOka8/Q/qJLSQwS1b7zusawaDngOT+BQcrbPW5yMM/adD7GWmfTork0iu8CQc2L59Q==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a05:690c:660d:b0:691:2f66:4af9
+ (user=tavip job=sendgmr) by 2002:a17:902:ec85:b0:1fb:1ae6:6ab9
  with SMTP id
- 00721157ae682-6912f664f8amr3358477b3.4.1722889080107; Mon, 05 Aug 2024
- 13:18:00 -0700 (PDT)
-Date: Mon,  5 Aug 2024 13:17:17 -0700
+ d9443c01a7336-1ff570db092mr4983795ad.0.1722889071130; Mon, 05 Aug 2024
+ 13:17:51 -0700 (PDT)
+Date: Mon,  5 Aug 2024 13:17:12 -0700
 In-Reply-To: <20240805201719.2345596-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20240805201719.2345596-1-tavip@google.com>
 X-Mailer: git-send-email 2.46.0.rc2.264.g509ed76dc8-goog
-Message-ID: <20240805201719.2345596-23-tavip@google.com>
-Subject: [RFC PATCH 22/23] hw/arm: add basic support for the RT500 SoC
+Message-ID: <20240805201719.2345596-18-tavip@google.com>
+Subject: [RFC PATCH 17/23] test/unit: add unit tests for flexcomm spi
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -71,9 +71,9 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  marcandre.lureau@redhat.com, alistair@alistair23.me, berrange@redhat.com, 
  philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, bleal@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
- envelope-from=3eDOxZgUKCt8UBWJQHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--tavip.bounces.google.com;
- helo=mail-yw1-x114a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
+ envelope-from=3bzOxZgUKCtYL2NAH8GG8D6.4GEI6EM-56N6DFGF8FM.GJ8@flex--tavip.bounces.google.com;
+ helo=mail-pl1-x64a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -96,58 +96,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add basic support for the RT500 SoC. It supports enough peripherals to
-run the NXP's microXpresso SDK hello world example.
+From: Sebastian Ene <sebastianene@google.com>
 
+From: Sebastian Ene <sebastianene@google.com>
+
+Add master and loopback tests for flexcomm spi.
+
+Signed-off-by: Sebastian Ene <sebastianene@google.com>
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- hw/arm/Kconfig         |   8 +
- hw/arm/meson.build     |   1 +
- hw/arm/rt500.c         | 348 +++++++++++++++++++++++++++++++++++++++++
- hw/arm/svd/meson.build |   6 +
- include/hw/arm/rt500.h |  49 ++++++
- 5 files changed, 412 insertions(+)
- create mode 100644 hw/arm/rt500.c
- create mode 100644 include/hw/arm/rt500.h
+ tests/unit/meson.build         |  11 ++
+ tests/unit/test-flexcomm-spi.c | 204 +++++++++++++++++++++++++++++++++
+ 2 files changed, 215 insertions(+)
+ create mode 100644 tests/unit/test-flexcomm-spi.c
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 1ad60da7aa..7ffece3dec 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -712,3 +712,11 @@ config ARMSSE
-     select UNIMP
-     select SSE_COUNTER
-     select SSE_TIMER
-+
-+config RT500
-+    bool
-+    select FLEXCOMM
-+    select RT500_CLKCTL0
-+    select RT500_CLKCTL1
-+    select FLEXSPI
-+    select RT500_RSTCTL
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index eb604d00cf..7d827d512c 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -59,6 +59,7 @@ arm_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
- arm_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
- arm_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
- arm_ss.add(when: 'CONFIG_XEN', if_true: files('xen_arm.c'))
-+arm_ss.add(when: 'CONFIG_RT500', if_true: files('rt500.c'))
- 
- system_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmu-common.c'))
- system_ss.add(when: 'CONFIG_CHEETAH', if_true: files('palm.c'))
-diff --git a/hw/arm/rt500.c b/hw/arm/rt500.c
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index 1ddd174576..7a28e7b521 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -176,6 +176,17 @@ if have_system
+       meson.project_source_root() / 'hw/ssi/flexcomm_spi.c',
+       meson.project_source_root() / 'hw/ssi/ssi.c',
+     ],
++    'test-flexcomm-spi': [
++      qom, hwcore, migration, chardev,
++      meson.project_source_root() / 'hw/core/gpio.c',
++      meson.project_source_root() / 'tests/unit/sysbus-mock.c',
++      meson.project_source_root() / 'hw/misc/flexcomm.c',
++      meson.project_source_root() / 'hw/char/flexcomm_usart.c',
++      meson.project_source_root() / 'hw/i2c/flexcomm_i2c.c',
++      meson.project_source_root() / 'hw/i2c/core.c',
++      meson.project_source_root() / 'hw/ssi/flexcomm_spi.c',
++      meson.project_source_root() / 'hw/ssi/ssi.c',
++      'spi_tester.c',
+     ],
+   }
+   if config_host_data.get('CONFIG_INOTIFY1')
+diff --git a/tests/unit/test-flexcomm-spi.c b/tests/unit/test-flexcomm-spi.c
 new file mode 100644
-index 0000000000..0866ef3ef6
+index 0000000000..4aaf511d70
 --- /dev/null
-+++ b/hw/arm/rt500.c
-@@ -0,0 +1,348 @@
++++ b/tests/unit/test-flexcomm-spi.c
+@@ -0,0 +1,204 @@
 +/*
-+ * i.MX RT500 platforms.
-+ *
-+ * Copyright (c) 2024 Google LLC
++ * Copyright (c) 2024 Google LLC.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
@@ -156,411 +148,200 @@ index 0000000000..0866ef3ef6
 + */
 +
 +#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/sysbus.h"
-+#include "hw/arm/boot.h"
-+#include "hw/boards.h"
-+#include "hw/irq.h"
++
++#include "qemu/config-file.h"
 +#include "qemu/log.h"
-+#include "qemu/datadir.h"
-+#include "exec/address-spaces.h"
-+#include "sysemu/reset.h"
-+#include "sysemu/runstate.h"
++#include "qemu/module.h"
++#include "qapi/error.h"
++#include "qemu/sockets.h"
 +#include "sysemu/sysemu.h"
-+#include "hw/arm/armv7m.h"
-+#include "hw/loader.h"
-+#include "hw/qdev-clock.h"
-+#include "hw/misc/unimp.h"
-+#include "hw/arm/rt500.h"
-+#include "hw/arm/svd/rt500.h"
++#include "qemu/main-loop.h"
++#include "qemu/option.h"
++#include "exec/memory.h"
++#include "hw/irq.h"
++#include "hw/qdev-properties.h"
++#include "hw/qdev-core.h"
 +
-+#define MMAP_SRAM_CODE_BASE   (0x0)
-+#define MMAP_SRAM_DATA_BASE   (0x20000000)
-+#define MMAP_SRAM_SIZE        (5 * MiB)
-+#define MMAP_BOOT_ROM_BASE    (0x03000000)
-+#define MMAP_BOOT_ROM_SIZE    (192 * KiB)
-+#define MMAP_SDMA_RAM_BASE    (0x24100000)
-+#define MMAP_SDMA_RAM_SIZE    (32 * KiB)
-+#define MMAP_FLEXSPI0_BASE    (0x08000000)
-+#define MMAP_FLEXSPI0_SIZE    (128 * MiB)
-+#define MMAP_FLEXSPI1_BASE    (0x28000000)
-+#define MMAP_FLEXSPI1_SIZE    (128 * MiB)
-+
-+#define SECURE_OFFSET    (0x10000000)
-+
-+typedef enum MemInfoType {
-+    MEM_RAM,
-+    MEM_ROM,
-+    MEM_ALIAS
-+} MemInfoType;
-+
-+static void do_sys_reset(void *opaque, int n, int level)
-+{
-+    if (level) {
-+        qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-+    }
-+}
-+
-+static void rt500_init(Object *obj)
-+{
-+    RT500State *s = RT500(obj);
-+    int i;
-+
-+    /* Add ARMv7-M device */
-+    object_initialize_child(obj, "armv7m", &s->armv7m, TYPE_ARMV7M);
-+
-+    for (i = 0; i < RT500_FLEXCOMM_NUM; i++) {
-+        char id[] = "flexcommXX";
-+
-+        snprintf(id, sizeof(id), "flexcomm%d", i);
-+        object_initialize_child(obj, id, &s->flexcomm[i], TYPE_FLEXCOMM);
-+        DEVICE(&s->flexcomm[i])->id = g_strdup(id);
-+    }
-+
-+    object_initialize_child(obj, "clkctl0", &s->clkctl0, TYPE_RT500_CLKCTL0);
-+    object_initialize_child(obj, "clkctl1", &s->clkctl1, TYPE_RT500_CLKCTL1);
-+
-+    /* Initialize clocks */
-+    s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
-+    s->refclk = qdev_init_clock_in(DEVICE(s), "refclk", NULL, NULL, 0);
-+
-+    for (i = 0; i < RT500_FLEXSPI_NUM; i++) {
-+        char id[] = "flexspiXX";
-+
-+        snprintf(id, sizeof(id), "flexspi%d", i);
-+        object_initialize_child(obj, id, &s->flexspi[i], TYPE_FLEXSPI);
-+        DEVICE(&s->flexspi[i])->id = g_strdup(id);
-+    }
-+
-+    for (i = 0; i < RT500_RSTCTL_NUM; i++) {
-+        char id[] = "rstctlX";
-+
-+        snprintf(id, sizeof(id), "rstctl%d", i);
-+        object_initialize_child(obj, id, &s->rstctl[i],
-+                                TYPE_RT500_RSTCTL);
-+        DEVICE(&s->rstctl[i])->id = g_strdup(id);
-+    }
-+}
-+
-+static void rt500_realize_memory(RT500State *s, Error **errp)
-+{
-+    const struct {
-+        const char *name;
-+        hwaddr base;
-+        size_t size;
-+        MemInfoType type;
-+        int alias_for;
-+    } mem_info[] = {
-+        {
-+            .name = "SRAM (code bus)",
-+            .base = MMAP_SRAM_CODE_BASE,
-+            .size = MMAP_SRAM_SIZE,
-+            .type = MEM_RAM,
-+        },
-+        {
-+            .name = "BOOT-ROM",
-+            .base = MMAP_BOOT_ROM_BASE,
-+            .size = MMAP_BOOT_ROM_SIZE,
-+            .type = MEM_ROM,
-+        },
-+        {
-+            .name = "Smart DMA RAM",
-+            .base = MMAP_SDMA_RAM_BASE,
-+            .size = MMAP_SDMA_RAM_SIZE,
-+            .type = MEM_RAM,
-+        },
-+        {
-+            .name = "SRAM (data bus)",
-+            .base = MMAP_SRAM_DATA_BASE,
-+            .size = MMAP_SRAM_SIZE,
-+            .type = MEM_ALIAS,
-+            .alias_for = 0
-+        },
-+    };
-+    int i;
-+
-+    s->mem = g_malloc_n(2 * ARRAY_SIZE(mem_info), sizeof(MemoryRegion));
-+    for (i = 0; i < ARRAY_SIZE(mem_info); i++) {
-+        const char *name = mem_info[i].name;
-+        int size = mem_info[i].size;
-+        int type = mem_info[i].type;
-+        int alias_for = mem_info[i].alias_for;
-+        MemoryRegion *mem = &s->mem[i];
-+        uint32_t base = mem_info[i].base;
-+        MemoryRegion *sec_mem;
-+        char sec_name[256];
-+
-+        switch (type) {
-+        case MEM_RAM:
-+            memory_region_init_ram(mem, OBJECT(s), name, size, errp);
-+            break;
-+        case MEM_ROM:
-+            memory_region_init_rom(mem, OBJECT(s), name, size, errp);
-+            break;
-+        case MEM_ALIAS:
-+        {
-+            MemoryRegion *orig = &s->mem[alias_for];
-+
-+            memory_region_init_alias(mem, OBJECT(s), name, orig, 0, size);
-+            break;
-+        }
-+        default:
-+            g_assert_not_reached();
-+        }
-+
-+        memory_region_add_subregion(get_system_memory(), base, mem);
-+
-+        /* create secure alias */
-+        snprintf(sec_name, sizeof(sec_name), "SECURE %s", name);
-+        sec_mem = &s->mem[ARRAY_SIZE(mem_info) + i];
-+        if (type == MEM_ALIAS) {
-+            mem = &s->mem[alias_for];
-+        }
-+        memory_region_init_alias(sec_mem, OBJECT(s), sec_name, mem, 0, size);
-+        memory_region_add_subregion(get_system_memory(), base + SECURE_OFFSET,
-+                                    sec_mem);
-+
-+        if (mem_info[i].type == MEM_ROM) {
-+            char *fname = qemu_find_file(QEMU_FILE_TYPE_BIOS, "rt500.rom");
-+
-+            if (fname) {
-+                int fsize = get_image_size(fname);
-+                int ret;
-+
-+                if (fsize > size) {
-+                    error_setg(errp, "rom file too big: %d > %d", fsize, size);
-+                } else {
-+                    ret = load_image_targphys(fname, base, size);
-+                    if (ret < 0) {
-+                        error_setg(errp, "could not load rom: %s", fname);
-+                    }
-+                }
-+            }
-+            g_free(fname);
-+        }
-+    }
-+}
-+
-+static void rt500_realize(DeviceState *dev, Error **errp)
-+{
-+    MachineState *ms = MACHINE(qdev_get_machine());
-+    RT500State *s = RT500(dev);
-+    int i;
-+
-+    rt500_realize_memory(s, errp);
-+
-+    /* Setup ARMv7M CPU */
-+    qdev_prop_set_uint32(DEVICE(&s->armv7m), "num-irq",
-+                         RT500_FLEXCOMM16_IRQn + 1);
-+    qdev_prop_set_uint8(DEVICE(&s->armv7m), "num-prio-bits", 3);
-+    qdev_prop_set_string(DEVICE(&s->armv7m), "cpu-type", ms->cpu_type);
-+    object_property_set_link(OBJECT(&s->armv7m), "memory",
-+                             OBJECT(get_system_memory()), &error_abort);
-+    if (!ms->kernel_filename) {
-+        qdev_prop_set_uint32(DEVICE(&s->armv7m), "init-nsvtor",
-+                             MMAP_BOOT_ROM_BASE);
-+        qdev_prop_set_uint32(DEVICE(&s->armv7m), "init-svtor",
-+                             MMAP_BOOT_ROM_BASE + SECURE_OFFSET);
-+    }
-+
-+    qdev_connect_clock_in(DEVICE(&s->armv7m), "cpuclk", s->sysclk);
-+    qdev_connect_clock_in(DEVICE(&s->armv7m), "refclk",
-+                     qdev_get_clock_out(DEVICE(&s->clkctl0), "systick_clk"));
-+
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(&s->armv7m), errp);
-+    qdev_connect_gpio_out_named(DEVICE(&s->armv7m), "SYSRESETREQ", 0,
-+                                qemu_allocate_irq(&do_sys_reset, NULL, 0));
-+
-+    /* Setup FLEXCOMM */
-+    for (i = 0; i < RT500_FLEXCOMM_NUM; i++) {
-+        const uint32_t addr[] = {
-+            RT500_FLEXCOMM0_BASE, RT500_FLEXCOMM1_BASE, RT500_FLEXCOMM2_BASE,
-+            RT500_FLEXCOMM3_BASE, RT500_FLEXCOMM4_BASE, RT500_FLEXCOMM5_BASE,
-+            RT500_FLEXCOMM6_BASE, RT500_FLEXCOMM7_BASE, RT500_FLEXCOMM8_BASE,
-+            RT500_FLEXCOMM8_BASE, RT500_FLEXCOMM10_BASE, RT500_FLEXCOMM11_BASE,
-+            RT500_FLEXCOMM12_BASE, RT500_FLEXCOMM13_BASE, RT500_FLEXCOMM14_BASE,
-+            RT500_FLEXCOMM15_BASE, RT500_FLEXCOMM16_BASE
-+        };
-+        const int irq[] = {
-+            RT500_FLEXCOMM0_IRQn, RT500_FLEXCOMM1_IRQn, RT500_FLEXCOMM2_IRQn,
-+            RT500_FLEXCOMM3_IRQn, RT500_FLEXCOMM4_IRQn, RT500_FLEXCOMM5_IRQn,
-+            RT500_FLEXCOMM6_IRQn, RT500_FLEXCOMM7_IRQn, RT500_FLEXCOMM8_IRQn,
-+            RT500_FLEXCOMM9_IRQn, RT500_FLEXCOMM10_IRQn, RT500_FLEXCOMM11_IRQn,
-+            RT500_FLEXCOMM12_IRQn, RT500_FLEXCOMM13_IRQn, RT500_FLEXCOMM14_IRQn,
-+            RT500_FLEXCOMM15_IRQn, RT500_FLEXCOMM16_IRQn
-+        };
-+        const int functions[] = {
-+            FLEXCOMM_FULL, FLEXCOMM_FULL, FLEXCOMM_FULL,
-+            FLEXCOMM_FULL, FLEXCOMM_FULL, FLEXCOMM_FULL,
-+            FLEXCOMM_FULL, FLEXCOMM_FULL, FLEXCOMM_FULL,
-+            FLEXCOMM_FULL, FLEXCOMM_FULL, FLEXCOMM_FULL,
-+            FLEXCOMM_FULL, FLEXCOMM_FULL, FLEXCOMM_HSSPI,
-+            FLEXCOMM_PMICI2C, FLEXCOMM_HSSPI
-+        };
-+        DeviceState *ds = DEVICE(&s->flexcomm[i]);
-+        char id[] = "flexcommXX";
-+
-+        snprintf(id, sizeof(id), "flexcomm%d", i);
-+        qdev_prop_set_uint32(ds, "functions", functions[i]);
-+        qdev_prop_set_chr(ds, "chardev", qemu_chr_find(id));
-+        sysbus_realize_and_unref(SYS_BUS_DEVICE(ds), errp);
-+        sysbus_mmio_map(SYS_BUS_DEVICE(ds), 0, addr[i]);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(ds), 0,
-+                           qdev_get_gpio_in(DEVICE(&s->armv7m), irq[i]));
-+    }
-+
-+    /* Setup CTLCTL0 */
-+    qdev_connect_clock_in(DEVICE(&s->clkctl0), "sysclk", s->sysclk);
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(DEVICE(&s->clkctl0)), errp);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(DEVICE(&s->clkctl0)), 0, RT500_CLKCTL0_BASE);
-+
-+    /* Setup CTLCTL1 */
-+    qdev_connect_clock_in(DEVICE(&s->clkctl1), "sysclk", s->sysclk);
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(DEVICE(&s->clkctl1)), errp);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(DEVICE(&s->clkctl1)), 0, RT500_CLKCTL1_BASE);
-+
-+    /* Setup FlexSPI */
-+    for (i = 0; i < RT500_FLEXSPI_NUM; i++) {
-+        const uint32_t addr[] = {
-+            RT500_FLEXSPI0_BASE, RT500_FLEXSPI1_BASE
-+        };
-+        const uint32_t mmap_base[] = {
-+            MMAP_FLEXSPI0_BASE, MMAP_FLEXSPI1_BASE
-+        };
-+        const uint32_t mmap_size[] = {
-+            MMAP_FLEXSPI0_SIZE, MMAP_FLEXSPI1_SIZE,
-+        };
-+        DeviceState *ds = DEVICE(&s->flexspi[i]);
-+
-+        qdev_prop_set_uint32(ds, "mmap_base", mmap_base[i]);
-+        qdev_prop_set_uint32(ds, "mmap_size", mmap_size[i]);
-+        sysbus_realize_and_unref(SYS_BUS_DEVICE(ds), errp);
-+        sysbus_mmio_map(SYS_BUS_DEVICE(ds), 0, addr[i]);
-+    }
-+
-+    /* Setup reset controllers */
-+    for (i = 0; i < RT500_RSTCTL_NUM; i++) {
-+        DeviceState *ds = DEVICE(&s->rstctl[i]);
-+
-+        const uint32_t addr[] = {
-+            RT500_RSTCTL0_BASE, RT500_RSTCTL1_BASE
-+        };
-+
-+        qdev_prop_set_uint32(ds, "num", i);
-+        sysbus_realize_and_unref(SYS_BUS_DEVICE(ds), errp);
-+        sysbus_mmio_map(SYS_BUS_DEVICE(ds), 0, addr[i]);
-+    }
-+}
-+
-+static void rt500_finalize(Object *obj)
-+{
-+    RT500State *s = RT500(obj);
-+
-+    g_free(s->mem);
-+}
-+
-+static void rt500_reset(DeviceState *ds)
-+{
-+}
-+
-+static Property rt500_properties[] = {
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void rt500_class_init(ObjectClass *oc, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+
-+    device_class_set_props(dc, rt500_properties);
-+    dc->realize = rt500_realize;
-+    dc->desc = "RT500 (ARM Cortex-M33)";
-+    dc->reset = rt500_reset;
-+}
-+
-+static const TypeInfo rt500_type_info = {
-+    .name = TYPE_RT500,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(RT500State),
-+    .instance_init = rt500_init,
-+    .instance_finalize = rt500_finalize,
-+    .class_init = rt500_class_init,
-+};
-+
-+static void rt500_register_types(void)
-+{
-+    type_register_static(&rt500_type_info);
-+}
-+
-+type_init(rt500_register_types)
-diff --git a/hw/arm/svd/meson.build b/hw/arm/svd/meson.build
-index 72a7421c6f..930a8b7343 100644
---- a/hw/arm/svd/meson.build
-+++ b/hw/arm/svd/meson.build
-@@ -34,3 +34,9 @@ genh += custom_target('rt500_rstctl1.h',
-                       output: 'rt500_rstctl1.h',
-                       input: 'MIMXRT595S_cm33.xml',
-                       command: [ svd_gen_header, '-i', '@INPUT@', '-o', '@OUTPUT@', '-p', 'RSTCTL1', '-t', 'RT500_RSTCTL1'])
-+genh += custom_target('rt500.h',
-+                      output: 'rt500.h',
-+                      input: 'MIMXRT595S_cm33.xml',
-+                      command: [ svd_gen_header,'-i', '@INPUT@', '-o', '@OUTPUT@', '-s', 'RT500',
-+		                 '-p', 'FLEXCOMM0', '-p', 'CLKCTL0', '-p', 'CLKCTL1',
-+				 '-p', 'FLEXSPI0', '-p', 'FLEXSPI1', '-p', 'RSTCTL0', '-p', 'RSTCTL1'])
-diff --git a/include/hw/arm/rt500.h b/include/hw/arm/rt500.h
-new file mode 100644
-index 0000000000..8ca7972f8a
---- /dev/null
-+++ b/include/hw/arm/rt500.h
-@@ -0,0 +1,49 @@
-+/*
-+ * i.MX RT500 platforms.
-+ *
-+ * Copyright (c) 2024 Google LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * Contributions after 2012-01-13 are licensed under the terms of the
-+ * GNU GPL, version 2 or (at your option) any later version.
-+ */
-+
-+#ifndef HW_ARM_RT500_H
-+#define HW_ARM_RT500_H
-+
-+#include "qemu/osdep.h"
-+#include "qemu/units.h"
-+#include "hw/arm/boot.h"
-+#include "hw/arm/armv7m.h"
 +#include "hw/misc/flexcomm.h"
-+#include "hw/misc/rt500_clkctl0.h"
-+#include "hw/misc/rt500_clkctl1.h"
-+#include "hw/ssi/flexspi.h"
-+#include "hw/misc/rt500_rstctl.h"
++#include "spi_tester.h"
++#include "sysbus-mock.h"
++#include "reg-utils.h"
 +
-+#define TYPE_RT500 "rt500"
-+#define RT500(obj) OBJECT_CHECK(RT500State, (obj), TYPE_RT500)
++/* The number of words sent on the SPI in loopback mode. */
++#define SEQ_LOOPBACK_MODE   (8)
 +
-+#define RT500_FLEXCOMM_NUM (17)
-+#define RT500_FLEXSPI_NUM (2)
-+#define RT500_RSTCTL_NUM (2)
++/* This value is used to set the cycle counter for the spi tester */
++#define SPI_TESTER_CONFIG (0x10)
 +
-+typedef struct RT500State {
-+    /*< private >*/
-+    SysBusDevice parent_obj;
++#define FLEXCOMM_BASE 0x40106000UL
++#define FLEXCOMM_SPI_BASE FLEXCOMM_BASE
 +
-+    /*< public >*/
-+    ARMv7MState armv7m;
-+    MemoryRegion *mem;
-+    FlexcommState flexcomm[RT500_FLEXCOMM_NUM];
-+    RT500ClkCtl0State clkctl0;
-+    RT500ClkCtl1State clkctl1;
-+    FlexSpiState flexspi[RT500_FLEXSPI_NUM];
-+    RT500RstCtlState rstctl[RT500_RSTCTL_NUM];
++typedef struct {
++    DeviceState *dev;
++    DeviceState *periph;
++    bool irq;
++} TestFixture;
 +
-+    Clock *sysclk;
-+    Clock *refclk;
-+} RT500State;
++/* Callback for the interrupt line. */
++static void spi_irq_set(void *opaque, int line, int level)
++{
++    TestFixture *f = (TestFixture *)opaque;
 +
-+#endif /* HW_ARM_RT500_H */
++    f->irq = level;
++}
++
++/*
++ * Test fixture initialization.
++ */
++static void set_up(TestFixture *f, gconstpointer data)
++{
++    FlexcommState *s;
++
++    f->dev = qdev_new(TYPE_FLEXCOMM);
++    g_assert(f->dev);
++
++    s = FLEXCOMM(f->dev);
++    s->irq = qemu_allocate_irq(spi_irq_set, f, 0);
++
++    if (data != NULL) {
++        qdev_prop_set_int32(DEVICE(f->dev), "functions", (uintptr_t)data);
++    }
++
++    qdev_realize_and_unref(f->dev, NULL, &error_abort);
++    sysbus_mmio_map(SYS_BUS_DEVICE(f->dev), 0, FLEXCOMM_BASE);
++
++    device_cold_reset(f->dev);
++
++    f->periph = ssi_create_peripheral(s->spi, TYPE_SPI_TESTER);
++    s->cs[0] = qdev_get_gpio_in_named(f->periph, SSI_GPIO_CS, 0);
++}
++
++static void tear_down(TestFixture *f, gconstpointer user_data)
++{
++    qdev_unrealize(f->dev);
++    qdev_unrealize(DEVICE(f->periph));
++    g_free(f->dev);
++}
++
++static void configure_spi(TestFixture *f, bool master, bool is_loopback_mode)
++{
++    uint32_t tmp;
++
++    /* Select and lock SPI */
++    tmp = FLEXCOMM_PSELID_LOCK_Msk | FLEXCOMM_PERSEL_SPI;
++    REG32_WRITE(f->dev, FLEXCOMM, PSELID, tmp);
++
++    /* Disable the FIFO */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, ENABLE, 0);
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, FIFOCFG, ENABLETX, 0);
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, FIFOCFG, ENABLERX, 0);
++
++    if (is_loopback_mode) {
++        /* Set up SPI interface - loop mode, master mode */
++        REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, LOOP, 1);
++        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, CFG, LOOP) == 1);
++    }
++
++    if (master) {
++        REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, MASTER, 1);
++        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, CFG, MASTER) == 1);
++    } else {
++        REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, MASTER, 0);
++        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, CFG, MASTER) == 0);
++    }
++
++    /* Enable the FIFO */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, FIFOCFG, ENABLETX, 1);
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, FIFOCFG, ENABLERX, 1);
++
++    /* Enable the SPI */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, ENABLE, 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, CFG, ENABLE) == 1);
++}
++
++/* The SPI controller running in master mode can run in loopback mode for */
++/* internal testing. Transmit and receive lines are connected together. */
++static void loopback_test(TestFixture *f, gconstpointer user_data)
++{
++    int i;
++
++    configure_spi(f, true, true);
++
++    /* Write a sequence */
++    for (i = 0; i < SEQ_LOOPBACK_MODE; i++) {
++        REG32_WRITE(f->dev, FLEXCOMM_SPI, FIFOWR, i);
++    }
++
++    /* Read the sequence back */
++    for (i = 0; i < SEQ_LOOPBACK_MODE; i++) {
++        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFORD, RXDATA) == i);
++    }
++}
++
++static void spi_master_test(TestFixture *f, gconstpointer user_data)
++{
++    uint32_t tmp;
++
++    configure_spi(f, true, false);
++
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, LSBF, 1);
++
++    /* single 16bit word transfer */
++
++    tmp = 0x1122;
++    tmp |= FLEXCOMM_SPI_FIFOWR_EOT_Msk;
++    tmp |= FLEXCOMM_SPI_FIFOWR_TXSSEL0_N_Msk;
++    tmp |= (0xF << FLEXCOMM_SPI_FIFOWR_LEN_Pos);
++    REG32_WRITE(f->dev, FLEXCOMM_SPI, FIFOWR, tmp);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFOSTAT, RXNOTEMPTY) == 1);
++    g_assert_cmpuint(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFORD, RXDATA),
++                     ==, 0x1122);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFOSTAT, RXNOTEMPTY) == 0);
++
++    /* multi word 8 bits transfer */
++
++    tmp = 0x11;
++    tmp |= FLEXCOMM_SPI_FIFOWR_TXSSEL0_N_Msk;
++    tmp |= (0x7 << FLEXCOMM_SPI_FIFOWR_LEN_Pos);
++    REG32_WRITE(f->dev, FLEXCOMM_SPI, FIFOWR, tmp);
++    tmp = 0x22;
++    tmp |= FLEXCOMM_SPI_FIFOWR_EOT_Msk;
++    tmp |= FLEXCOMM_SPI_FIFOWR_TXSSEL0_N_Msk;
++    tmp |= (0x7 << FLEXCOMM_SPI_FIFOWR_LEN_Pos);
++    REG32_WRITE(f->dev, FLEXCOMM_SPI, FIFOWR, tmp);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFOSTAT, RXNOTEMPTY) == 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFORD, RXDATA) == 0x11);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFOSTAT, RXNOTEMPTY) == 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFORD, RXDATA) == 0x22);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFOSTAT, RXNOTEMPTY) == 0);
++}
++
++
++/* mock-up */
++const PropertyInfo qdev_prop_chr;
++
++int main(int argc, char **argv)
++{
++    qemu_init_main_loop(&error_abort);
++    socket_init();
++
++    g_test_init(&argc, &argv, NULL);
++
++    /* Initialize object types. */
++    sysbus_mock_init();
++    module_call_init(MODULE_INIT_QOM);
++    qemu_add_opts(&qemu_chardev_opts);
++
++    g_test_add("/flexcomm-spi/loopback", TestFixture,
++               (gconstpointer)(1 << FLEXCOMM_FUNC_SPI),
++               set_up, loopback_test, tear_down);
++
++    g_test_add("/flexcomm-spi/master", TestFixture,
++               (gconstpointer)(1 << FLEXCOMM_FUNC_SPI),
++               set_up, spi_master_test, tear_down);
++
++    return g_test_run();
++}
 -- 
 2.46.0.rc2.264.g509ed76dc8-goog
 
