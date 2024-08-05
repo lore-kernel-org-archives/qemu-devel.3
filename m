@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E092AC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 06:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77033C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 06:32:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sarFw-00053A-Na; Mon, 05 Aug 2024 02:31:44 -0400
+	id 1sarFM-0002vA-Pl; Mon, 05 Aug 2024 02:31:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sarFY-0003XM-SI
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:31:21 -0400
+ id 1sarF5-0002n6-8x
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:30:57 -0400
 Received: from mgamail.intel.com ([192.198.163.8])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1sarFU-0002DM-Oy
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:31:20 -0400
+ id 1sarEv-0002As-RQ
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 02:30:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1722839476; x=1754375476;
+ t=1722839442; x=1754375442;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=GFvOFa9P+mYkjosgDpkYes8UGBsmHawsSqhMW/hkTRs=;
- b=AnzDJfX/pRxevqhBSXTOuHm3H/xe7I1ibRMX/QSOuUsQQwiM+Z7qWYMC
- Gz1Pc1qwx+hvfTsu3hi00ZSZWnFDROAbMuzHFAFzMUAfXjckRik/8YJc0
- 79Ii9pt8ItGY/3w4ACvIc/TThPZkQ2mSLFVYmLK9a7ZDCro+f9LfKbREc
- sv4UYzoDXs3WLMY6UB/VvTnEVw21XnNX/zz/tY6Xosg8OaAHPsU+cckAR
- kWK4vwdqMHw9m9+fEHaecQeseJ0RpIOW9ubNNEoK9FC/I9bL+YwHhofVW
- uCY6NvsIjRiUcbyG5Yp/vN5uol5v+le7x7uENbw+DygpBKd82gWu/DDQx A==;
-X-CSE-ConnectionGUID: rGouqvh7T6qrP5Ol4t18Qw==
-X-CSE-MsgGUID: JfmfLLysRomire3QgKL62Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11154"; a="38282879"
-X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="38282879"
+ bh=38HYgjgTWR4uxnvcTJKXQdnXnLtWPR0LnXj/4FiurfI=;
+ b=lJrcLQeZzjtuOUMXXXS+vCPLVG3oFUbT7ZffWRHjsfGOrmo3w3GjbFuo
+ x9rdDb/W91vPyDr2OakEoCgymHQq6ai7NdL2ktQWNlzQhMixmgeZSD/sA
+ NMk1/YEAVVr5J+Iec1LWGUTiPMDdRL/jOLqYynFR/Mp9/osoWBND/TMwx
+ OqegfLMZh0oErsnLHuciJiZDmCgbpwdtoN3R4STpYmbdwTA8IhFo7CFO8
+ pz3YCTLwj5Llle3flg9rt3xV6wlfUSLLPFDZx6rjb1DOj1q8mJmtOjAxe
+ 67CDJJkeyv9jl6/iyPtckcMpheBraJd90pOXQ86x/HKdAJfXZxFMlUtWE A==;
+X-CSE-ConnectionGUID: UuNAPx9bQHm7wrlSaT8BTA==
+X-CSE-MsgGUID: 6Lte/eJUShOBeUn4C63baQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11154"; a="38282727"
+X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="38282727"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Aug 2024 23:31:13 -0700
-X-CSE-ConnectionGUID: c/I1cMjFSq2yMGtwbjl+fQ==
-X-CSE-MsgGUID: JYtLWmxRQcqWf6wsUYVyag==
+ 04 Aug 2024 23:30:41 -0700
+X-CSE-ConnectionGUID: BkuhIYXdT8eOZDQIf/89rg==
+X-CSE-MsgGUID: 6HhGqKy8TcWWIfSGbvzXeA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="56787061"
+X-IronPort-AV: E=Sophos;i="6.09,263,1716274800"; d="scan'208";a="56786784"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Aug 2024 23:31:09 -0700
+ 04 Aug 2024 23:30:36 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -57,10 +57,9 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v2 14/17] intel_iommu: Set default aw_bits to 48 in scalable
- modren mode
-Date: Mon,  5 Aug 2024 14:27:24 +0800
-Message-Id: <20240805062727.2307552-15-zhenzhong.duan@intel.com>
+Subject: [PATCH v2 07/17] intel_iommu: Check if the input address is canonical
+Date: Mon,  5 Aug 2024 14:27:17 +0800
+Message-Id: <20240805062727.2307552-8-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240805062727.2307552-1-zhenzhong.duan@intel.com>
 References: <20240805062727.2307552-1-zhenzhong.duan@intel.com>
@@ -91,79 +90,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to VTD spec, stage-1 page table could support 4-level and
-5-level paging.
+From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
 
-However, 5-level paging translation emulation is unsupported yet.
-That means the only supported value for aw_bits is 48.
+First stage translation must fail if the address to translate is
+not canonical.
 
-So default aw_bits to 48 in scalable modern mode. In other cases,
-it is still default to 39 for compatibility.
-
-Add a check to ensure user specified value is 48 in modern mode
-for now.
-
+Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
 ---
- include/hw/i386/intel_iommu.h |  2 +-
- hw/i386/intel_iommu.c         | 16 +++++++++++++++-
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ hw/i386/intel_iommu_internal.h |  2 ++
+ hw/i386/intel_iommu.c          | 21 +++++++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index b843d069cc..48134bda11 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -45,7 +45,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(IntelIOMMUState, INTEL_IOMMU_DEVICE)
- #define DMAR_REG_SIZE               0x230
- #define VTD_HOST_AW_39BIT           39
- #define VTD_HOST_AW_48BIT           48
--#define VTD_HOST_ADDRESS_WIDTH      VTD_HOST_AW_39BIT
-+#define VTD_HOST_AW_AUTO            0xff
- #define VTD_HAW_MASK(aw)            ((1ULL << (aw)) - 1)
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 51e9b1fc43..668583aeca 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -320,6 +320,8 @@ typedef enum VTDFaultReason {
+     VTD_FR_PASID_ENTRY_P = 0x59,
+     VTD_FR_PASID_TABLE_ENTRY_INV = 0x5b,  /*Invalid PASID table entry */
  
- #define DMAR_REPORT_F_INTR          (1)
++    VTD_FR_FS_NON_CANONICAL = 0x80, /* SNG.1 : Address for FS not canonical.*/
++
+     /* Output address in the interrupt address range for scalable mode */
+     VTD_FR_SM_INTERRUPT_ADDR = 0x87,
+     VTD_FR_MAX,                 /* Guard */
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 317e630e08..5469ab4f9b 100644
+index 0bcbd5b777..6121cca4cd 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -3770,7 +3770,7 @@ static Property vtd_properties[] = {
-                             ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BOOL("x-buggy-eim", IntelIOMMUState, buggy_eim, false),
-     DEFINE_PROP_UINT8("aw-bits", IntelIOMMUState, aw_bits,
--                      VTD_HOST_ADDRESS_WIDTH),
-+                      VTD_HOST_AW_AUTO),
-     DEFINE_PROP_BOOL("caching-mode", IntelIOMMUState, caching_mode, FALSE),
-     DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUState, scalable_mode, FALSE),
-     DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
-@@ -4685,6 +4685,14 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
-         }
-     }
+@@ -1821,6 +1821,7 @@ static const bool vtd_qualified_faults[] = {
+     [VTD_FR_PASID_ENTRY_P] = true,
+     [VTD_FR_PASID_TABLE_ENTRY_INV] = true,
+     [VTD_FR_SM_INTERRUPT_ADDR] = true,
++    [VTD_FR_FS_NON_CANONICAL] = true,
+     [VTD_FR_MAX] = false,
+ };
  
-+    if (s->aw_bits == VTD_HOST_AW_AUTO) {
-+        if (s->scalable_modern) {
-+            s->aw_bits = VTD_HOST_AW_48BIT;
-+        } else {
-+            s->aw_bits = VTD_HOST_AW_39BIT;
-+        }
+@@ -1924,6 +1925,20 @@ static inline bool vtd_flpte_present(uint64_t flpte)
+     return !!(flpte & VTD_FL_P);
+ }
+ 
++/* Return true if IOVA is canonical, otherwise false. */
++static bool vtd_iova_fl_check_canonical(IntelIOMMUState *s, uint64_t iova,
++                                        VTDContextEntry *ce, uint32_t pasid)
++{
++    uint64_t iova_limit = vtd_iova_limit(s, ce, s->aw_bits, pasid);
++    uint64_t upper_bits_mask = ~(iova_limit - 1);
++    uint64_t upper_bits = iova & upper_bits_mask;
++    bool msb = ((iova & (iova_limit >> 1)) != 0);
++    return !(
++             (!msb && (upper_bits != 0)) ||
++             (msb && (upper_bits != upper_bits_mask))
++            );
++}
++
+ /*
+  * Given the @iova, get relevant @flptep. @flpte_level will be the last level
+  * of the translation, can be used for deciding the size of large page.
+@@ -1939,6 +1954,12 @@ static int vtd_iova_to_flpte(IntelIOMMUState *s, VTDContextEntry *ce,
+     uint32_t offset;
+     uint64_t flpte;
+ 
++    if (!vtd_iova_fl_check_canonical(s, iova, ce, pasid)) {
++        error_report_once("%s: detected non canonical IOVA (iova=0x%" PRIx64 ","
++                          "pasid=0x%" PRIx32 ")", __func__, iova, pasid);
++        return -VTD_FR_FS_NON_CANONICAL;
 +    }
 +
-     if ((s->aw_bits != VTD_HOST_AW_39BIT) &&
-         (s->aw_bits != VTD_HOST_AW_48BIT) &&
-         !s->scalable_modern) {
-@@ -4693,6 +4701,12 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
-         return false;
-     }
- 
-+    if ((s->aw_bits != VTD_HOST_AW_48BIT) && s->scalable_modern) {
-+        error_setg(errp, "Supported values for aw-bits are: %d",
-+                   VTD_HOST_AW_48BIT);
-+        return false;
-+    }
-+
-     if (s->scalable_mode && !s->dma_drain) {
-         error_setg(errp, "Need to set dma_drain for scalable mode");
-         return false;
+     while (true) {
+         offset = vtd_iova_level_offset(iova, level);
+         flpte = vtd_get_pte(addr, offset);
 -- 
 2.34.1
 
