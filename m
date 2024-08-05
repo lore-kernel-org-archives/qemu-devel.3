@@ -4,87 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC9BAC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 10:51:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF1ABC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 12:00:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1savIB-0002uu-6u; Mon, 05 Aug 2024 06:50:19 -0400
+	id 1sawNC-0004qZ-OL; Mon, 05 Aug 2024 07:59:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1savHz-0002qv-Ua
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 06:50:09 -0400
-Received: from fout1-smtp.messagingengine.com ([103.168.172.144])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sawNA-0004nk-NJ
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 07:59:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1savHw-00019v-S3
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 06:50:07 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
- by mailfout.nyi.internal (Postfix) with ESMTP id 0C1FE138FD78;
- Mon,  5 Aug 2024 06:49:49 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute6.internal (MEProxy); Mon, 05 Aug 2024 06:49:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
- :cc:content-transfer-encoding:content-type:date:date:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to; s=fm2; t=1722854989; x=1722941389; bh=4RU+Dc1Cnp6lCR44m9Pzg
- Vxzi1qrBMsWqfFd5se/mTE=; b=F4tedkUzTv00PxumA+Kk0/rEjZkQPgzocSb9r
- Ilm5NJ8s1IfTF78DjMlmap/DHm9dmlOAOZnorJnlOJkUbMnql4y/C3MWrSbA1uVt
- odp+txx+kOJm9wFh3d8O0mgCbttOIr2+bctPPwi46utH130giyP7/axZ5vNdUbXZ
- KnF+uFMQiQHYzDYGinHIVsaBwsj20w789oohb6wEI3EdkUHgsu/UpkgP5SzUnVRY
- mdWINPocZl8iPlvKf3u57wv8jOLy1vZvUJ91O0d2Mtc6EXedB42R2gI8yQETJVPo
- d1rQ13Sz1Bc8YgjKePKG6YicVD3yP336lb1jmgu0zinQhaCQw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:feedback-id:feedback-id:from:from
- :in-reply-to:message-id:mime-version:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm3; t=1722854989; x=1722941389; bh=4RU+Dc1Cnp6lCR44m9PzgVxzi1qr
- BMsWqfFd5se/mTE=; b=F0YCP6EHVGZ5wA+Jx38ynWRQ1Pg1iLEXot0OQ07DygnE
- rwXjdK6p3OhtQ0pH0R6EkbL5qEwICME7xI+uGa3SX4IzBuy0+zuYNs/YEsLPAxaA
- J7BZxD4Cchr588XjOjJmbqSiXJqEr3F37/YNanoPCp67KgY03+kZBiYQbjug8VOR
- YEU6qxk95ldCD6VDIAM2jKZRWNNTxxIUsB+V39bTJPWeFOKcfeOMC343RfnIy0Jd
- zxDcSby+iUBCLunKNpNrqpV+6fxxXasVQ1puLcgZjJf4rT2rB1xP/nw3679o6mtF
- xA7m8WiBiVX0b2vx0v6TlWKuPMAXaE6UijnCloT5Jg==
-X-ME-Sender: <xms:TK6wZol0hDJFy4Z36gg6lBUc0rFYXepY-qYJW_thMEMKuwvo0O2ynA>
- <xme:TK6wZn3QWgdkbDBDj5hAfmNE-TdRMZ1Gth9GaYDoDYUhnEpW8KL13KHM4IrB-dA3m
- bQT4cOnI40SGoMDyg>
-X-ME-Received: <xmr:TK6wZmprl0mr0rKwKuLxZsqzTWO75zKu2sCi21SAK6Rsg7slqrntzGwFJh6Lg2y389Do8BhycRZqTXFnARrSCm5T_LQr>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrkeeigdefgecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefhvfevufffkffoggfgsedtkeertdertddtnecuhfhrohhmpeetlhihshhsrgcu
- tfhoshhsuceohhhisegrlhihshhsrgdrihhsqeenucggtffrrghtthgvrhhnpeehkefgtd
- evtedtkeduudeguefgudejheeugfelgeettdfhffduhfehudfhudeuhfenucevlhhushht
- vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehhihesrghlhihsshgrrd
- hishdpnhgspghrtghpthhtoheptd
-X-ME-Proxy: <xmx:TK6wZklklZaalUhBk593rJGUe1bPjOc9OgVXyvClBl1y8qumXl35SA>
- <xmx:TK6wZm0NRVOeXl6y0RtNmGmiQz7lMNo7bzGiKF0EqzMkm8VOxIxdCQ>
- <xmx:TK6wZrtB2eWdmC1j0R2XRiDhIxgZ_wLGKl5HaEhiBcPSaD7OouR6Dw>
- <xmx:TK6wZiWQkEN6SI0kCWoYGSGDWOSa8g26ZkTXzTOL4NVDL76AYBK4Cg>
- <xmx:Ta6wZkB7yf9FprZMzJs4vYuCWvCE6E0IGezyqt9o5K5_KQss8IYjuh1L>
-Feedback-ID: i12284293:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 Aug 2024 06:49:48 -0400 (EDT)
-Received: by mbp.qyliss.net (Postfix, from userid 1000)
- id D34933ED9; Mon, 05 Aug 2024 12:49:46 +0200 (CEST)
-From: Alyssa Ross <hi@alyssa.is>
-To: Brian Cain <bcain@quicinc.com>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH] target/hexagon: don't look for static glib
-Date: Mon,  5 Aug 2024 12:49:21 +0200
-Message-ID: <20240805104921.4035256-1-hi@alyssa.is>
-X-Mailer: git-send-email 2.45.2
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1sawN8-0005fR-Ft
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 07:59:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722859168;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SGMVRffDSeS79H8EkhpOqfk41vYplIpeHBgL6uL/YXg=;
+ b=P7zVl76qJb1j1+ZGPjZ6UJ3L9rUDfJAd/Cw9///LQFwEh9J0YbX19qg0J0gAhRk4KpH6Ht
+ G7B6k56rDF5wb4wmNpFI0hMqZtEZqqVpBBSuRc/80rjYSCqr3foX3iOdTe8HGnUBI0QWPS
+ H6uvEWHQ3g0P9RN8FNc6t9oDRufRZZY=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-dELrkOF8NKm10t2d0ehqfQ-1; Mon,
+ 05 Aug 2024 07:59:26 -0400
+X-MC-Unique: dELrkOF8NKm10t2d0ehqfQ-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3D7F91955BED; Mon,  5 Aug 2024 11:59:24 +0000 (UTC)
+Received: from redhat.com (unknown [10.39.193.224])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C45019560B2; Mon,  5 Aug 2024 11:59:20 +0000 (UTC)
+Date: Mon, 5 Aug 2024 13:59:18 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: "Denis V. Lunev" <den@virtuozzo.com>
+Cc: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org, hreitz@redhat.com,
+ vsementsov@yandex-team.ru, pbonzini@redhat.com, eesposit@redhat.com
+Subject: Re: [PATCH v3 1/3] block: zero data data corruption using
+ prealloc-filter
+Message-ID: <ZrC-liyd3CL0LXlq@redhat.com>
+References: <20240716144123.651476-1-andrey.drobyshev@virtuozzo.com>
+ <20240716144123.651476-2-andrey.drobyshev@virtuozzo.com>
+ <Zpk5-GDaqmD4c-EF@redhat.com>
+ <03492477-fe98-4a3d-a892-7c6a143ee048@virtuozzo.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=103.168.172.144; envelope-from=hi@alyssa.is;
- helo=fout1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <03492477-fe98-4a3d-a892-7c6a143ee048@virtuozzo.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,43 +87,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When cross compiling QEMU configured with --static, I've been getting
-configure errors like the following:
+Am 18.07.2024 um 21:46 hat Denis V. Lunev geschrieben:
+> On 7/18/24 17:51, Kevin Wolf wrote:
+> > Am 16.07.2024 um 16:41 hat Andrey Drobyshev geschrieben:
+> > > From: "Denis V. Lunev" <den@openvz.org>
+> > > 
+> > > We have observed that some clusters in the QCOW2 files are zeroed
+> > > while preallocation filter is used.
+> > > 
+> > > We are able to trace down the following sequence when prealloc-filter
+> > > is used:
+> > >      co=0x55e7cbed7680 qcow2_co_pwritev_task()
+> > >      co=0x55e7cbed7680 preallocate_co_pwritev_part()
+> > >      co=0x55e7cbed7680 handle_write()
+> > >      co=0x55e7cbed7680 bdrv_co_do_pwrite_zeroes()
+> > >      co=0x55e7cbed7680 raw_do_pwrite_zeroes()
+> > >      co=0x7f9edb7fe500 do_fallocate()
+> > > 
+> > > Here coroutine 0x55e7cbed7680 is being blocked waiting while coroutine
+> > > 0x7f9edb7fe500 will finish with fallocate of the file area. OK. It is
+> > > time to handle next coroutine, which
+> > >      co=0x55e7cbee91b0 qcow2_co_pwritev_task()
+> > >      co=0x55e7cbee91b0 preallocate_co_pwritev_part()
+> > >      co=0x55e7cbee91b0 handle_write()
+> > >      co=0x55e7cbee91b0 bdrv_co_do_pwrite_zeroes()
+> > >      co=0x55e7cbee91b0 raw_do_pwrite_zeroes()
+> > >      co=0x7f9edb7deb00 do_fallocate()
+> > > 
+> > > The trouble comes here. Coroutine 0x55e7cbed7680 has not advanced
+> > > file_end yet and coroutine 0x55e7cbee91b0 will start fallocate() for
+> > > the same area. This means that if (once fallocate is started inside
+> > > 0x7f9edb7deb00) original fallocate could end and the real write will
+> > > be executed. In that case write() request is handled at the same time
+> > > as fallocate().
+> > > 
+> > > The patch moves s->file_lock assignment before fallocate and that is
+> > s/file_lock/file_end/?
+> > 
+> > > crucial. The idea is that all subsequent requests into the area
+> > > being preallocation will be issued as just writes without fallocate
+> > > to this area and they will not proceed thanks to overlapping
+> > > requests mechanics. If preallocation will fail, we will just switch
+> > > to the normal expand-by-write behavior and that is not a problem
+> > > except performance.
+> > > 
+> > > Signed-off-by: Denis V. Lunev <den@openvz.org>
+> > > Tested-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> > > ---
+> > >   block/preallocate.c | 8 +++++++-
+> > >   1 file changed, 7 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/block/preallocate.c b/block/preallocate.c
+> > > index d215bc5d6d..ecf0aa4baa 100644
+> > > --- a/block/preallocate.c
+> > > +++ b/block/preallocate.c
+> > > @@ -383,6 +383,13 @@ handle_write(BlockDriverState *bs, int64_t offset, int64_t bytes,
+> > >       want_merge_zero = want_merge_zero && (prealloc_start <= offset);
+> > > +    /*
+> > > +     * Assign file_end before making actual preallocation. This will ensure
+> > > +     * that next request performed while preallocation is in progress will
+> > > +     * be passed without preallocation.
+> > > +     */
+> > > +    s->file_end = prealloc_end;
+> > > +
+> > >       ret = bdrv_co_pwrite_zeroes(
+> > >               bs->file, prealloc_start, prealloc_end - prealloc_start,
+> > >               BDRV_REQ_NO_FALLBACK | BDRV_REQ_SERIALISING | BDRV_REQ_NO_WAIT);
+> > > @@ -391,7 +398,6 @@ handle_write(BlockDriverState *bs, int64_t offset, int64_t bytes,
+> > >           return false;
+> > >       }
+> > > -    s->file_end = prealloc_end;
+> > >       return want_merge_zero;
+> > >   }
+> > Until bdrv_co_pwrite_zeroes() completes successfully, the file size is
+> > unchanged. In other words, if anything calls preallocate_co_getlength()
+> > in the meantime, don't we run into...
+> > 
+> >      ret = bdrv_co_getlength(bs->file->bs);
+> > 
+> >      if (has_prealloc_perms(bs)) {
+> >          s->file_end = s->zero_start = s->data_end = ret;
+> >      }
+> > 
+> > ...and reset s->file_end back to the old value, re-enabling the bug
+> > you're trying to fix here?
+> > 
+> > Or do we know that no such code path can be called concurrently for some
+> > reason?
+> > 
+> > Kevin
+> > 
+> After more detailed thinking I tend to disagree.
+> Normally we would not hit the problem. Though
+> this was not obvious at the beginning :)
+> 
+> The point in handle_write() where we move
+> file_end assignment is reachable only if the
+> following code has been executed
+> 
+>     if (s->data_end < 0) {
+>         s->data_end = bdrv_co_getlength(bs->file->bs);
+>         if (s->data_end < 0) {
+>             return false;
+>         }
+> 
+>         if (s->file_end < 0) {
+>             s->file_end = s->data_end;
+>         }
+>     }
+> 
+>     if (end <= s->data_end) {
+>         return false;
+>     }
+> 
+> which means that s->data_end > 0.
+> 
+> Thus
+> 
+> static int64_t coroutine_fn GRAPH_RDLOCK
+> preallocate_co_getlength(BlockDriverState *bs)
+> {
+>     int64_t ret;
+>     BDRVPreallocateState *s = bs->opaque;
+> 
+>     if (s->data_end >= 0) {
+>         return s->data_end; <--- we will return here
+>     }
+> 
+>     ret = bdrv_co_getlength(bs->file->bs);
+> 
+>     if (has_prealloc_perms(bs)) {
+>         s->file_end = s->zero_start = s->data_end = ret;
+>     }
+> 
+>     return ret;
+> }
 
-    Build-time dependency glib-2.0 found: NO
+I think you're right there. And the other places that update s->file_end
+should probably be okay because of the request serialisation.
 
-    ../target/hexagon/meson.build:303:15: ERROR: Dependency lookup for glib-2.0 with method 'pkgconfig' failed: Could not generate libs for glib-2.0:
-    Package libpcre2-8 was not found in the pkg-config search path.
-    Perhaps you should add the directory containing `libpcre2-8.pc'
-    to the PKG_CONFIG_PATH environment variable
-    Package 'libpcre2-8', required by 'glib-2.0', not found
+I'm okay with applying this patch as it seems to fix a corruption, but
+the way this whole block driver operates doesn't feel very robust to me.
+There seem to be a lot of implicit assumptions that make the code hard
+to understand even though it's quite short.
 
-This happens because --static sets the prefer_static Meson option, but
-my build machine doesn't have a static libpcre2.  I don't think it
-makes sense to insist that native dependencies are static, just
-because I want the non-native QEMU binaries to be static.
-
-Signed-off-by: Alyssa Ross <hi@alyssa.is>
----
- target/hexagon/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
-index b0b253aa6b..9ea1f4fc59 100644
---- a/target/hexagon/meson.build
-+++ b/target/hexagon/meson.build
-@@ -300,7 +300,7 @@ if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
-         arguments: ['@INPUT@', '--defines=@OUTPUT1@', '--output=@OUTPUT0@']
-     )
- 
--    glib_dep = dependency('glib-2.0', native: true)
-+    glib_dep = dependency('glib-2.0', native: true, static: false)
- 
-     idef_parser = executable(
-         'idef-parser',
-
-base-commit: f9851d2ffef59b3a7f39513469263ab3b019480f
--- 
-2.45.2
+Kevin
 
 
