@@ -4,91 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B60B0C52D70
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 10:01:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ABCBC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 10:01:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sauVt-00061u-0q; Mon, 05 Aug 2024 06:00:25 -0400
+	id 1sauX4-0005SG-O4; Mon, 05 Aug 2024 06:01:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sauVm-0005eG-OU
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 06:00:22 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sauVj-0001ea-LF
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 06:00:18 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1fd6ed7688cso83416275ad.3
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 03:00:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722852013; x=1723456813;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=To+Ctud3IiVbBDGeLTlPr7QPErynCEwbUoWpPwlxWjU=;
- b=MfQD87xb0ZFC0m7vw/cqclGfSfBd2//K5mleQ+C92ux1AMrZEsEJOA05wWeMiJKsph
- FO4u/NeS8xIf0V205yLhe5JqeQG/dcZ/PqrKS0u4Hi7izPb+j3KfOnCWlQFMKiwASqu9
- W84NxXtxu6en6sgOsiU6+Eta+MKpwVmRA4Qxr5j/EJDAbQ1aLwArR6f2N+MHSXTc4hET
- QVS8Xz5HT8BaDeRKw9Bt5W1KaLJNTvSQ2jUohdRXTE4NMQCh8Kowm9VEEf0Qnhfjkw2m
- MwZTdg5AJlFFL1/KYE5tfJYERPlgT2EWnYJ/Vi5gsbNIHZe3U16qS0H7mCqO4jiiLCt6
- A0sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722852013; x=1723456813;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=To+Ctud3IiVbBDGeLTlPr7QPErynCEwbUoWpPwlxWjU=;
- b=J11nGFeUQ7Wkk3Ijp5seUP4MKEzWZzzmcn54hMjHxwoRooyAb9dMi7f7wJLRlpN5RI
- FdPLaJwjCQw/q8HhezOWs6WlUcUBV5DXvlZVEl5w45v2KdF8KxCQK+J3B0aa+qKxVQJ5
- mFHLiP5YgtsXVoQ7pQrLsV9vZ2ru4OvomYYHYfwiHb+pViuNJnyTBnqe43QSHmeJpFO2
- VnNpF0EENpWIt58iusbYYDljxCi9KBB4Ei6s4oXdAH5iDolUYN2OmdVciwMsyvgkmk84
- FG1NDzqsI4g0cFF3gPOIIMewQS9ialxCQ2wb7ZhDEc1/G2LtTTZLgFw+CXgHCmOopP25
- fNBw==
-X-Gm-Message-State: AOJu0Yz2KTVQbWVWar0t4vLF1E0ria1WXF1FqGbdIJorcNqkE5zm7Y4w
- KfBcW89WkknLRhGgYYtaN9gSeZwqGQ1rTQRTPHiZIFsW3V1nmGSjzWIGFqXGlJM=
-X-Google-Smtp-Source: AGHT+IEWO+amb9QWF5YS5JTUjbvkpwD+WkE3hYlSaIg5RY2zqq4XYUN+my/OSAQKlUXAUQIMaKItNA==
-X-Received: by 2002:a17:902:c402:b0:1fd:d4c2:a2ef with SMTP id
- d9443c01a7336-1ff572910d9mr124199815ad.21.1722852013232; 
- Mon, 05 Aug 2024 03:00:13 -0700 (PDT)
-Received: from localhost ([157.82.202.230])
- by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-1ff58f29e02sm63801855ad.18.2024.08.05.03.00.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Aug 2024 03:00:12 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Mon, 05 Aug 2024 18:59:07 +0900
-Subject: [PATCH for-9.2 v13 10/12] pcie_sriov: Register VFs after migration
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sauX3-0005D3-9V
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 06:01:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sauX1-00026l-8Y
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 06:01:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722852092;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=ztgT8ra/T2koBE+RWMqzRZZj3ngMYY96BS9nQ4dkgLw=;
+ b=WDWuzT146Eh/l5YLJBOp2CCjsx6J1nVV5RH45H4E8/7kJTI9GyQ1LXN7bxgXjlEpA8j5zN
+ UUztiPOzw2uaAwCqDT/vZajaSEr5bUOy9AvCWFHmF/+nfiJ6Z6iUwQEXomGULrI+RuTWoZ
+ gEf0p819XnbSuwanT6sAXmsz7JL3wVw=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-AHo1aTqeMzSbUXPWusr3lg-1; Mon,
+ 05 Aug 2024 06:01:29 -0400
+X-MC-Unique: AHo1aTqeMzSbUXPWusr3lg-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AD6191955D4E; Mon,  5 Aug 2024 10:01:27 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.36])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C9F6219560AE; Mon,  5 Aug 2024 10:01:23 +0000 (UTC)
+Date: Mon, 5 Aug 2024 11:01:20 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V2 00/11] Live update: cpr-exec
+Message-ID: <ZrCi8DWCKFiBHQAQ@redhat.com>
+References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
+ <Zpk7Mf2c7LiNV2xC@x1n>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240805-reuse-v13-10-aaeaa4d7dfd2@daynix.com>
-References: <20240805-reuse-v13-0-aaeaa4d7dfd2@daynix.com>
-In-Reply-To: <20240805-reuse-v13-0-aaeaa4d7dfd2@daynix.com>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, 
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>, 
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::631;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x631.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Zpk7Mf2c7LiNV2xC@x1n>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,77 +85,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-pcie_sriov doesn't have code to restore its state after migration, but
-igb, which uses pcie_sriov, naively claimed its migration capability.
+On Thu, Jul 18, 2024 at 11:56:33AM -0400, Peter Xu wrote:
+> Steve,
+> 
+> On Sun, Jun 30, 2024 at 12:40:23PM -0700, Steve Sistare wrote:
+> > What?
+> 
+> Thanks for trying out with the cpr-transfer series.  I saw that that series
+> missed most of the cc list here, so I'm attaching the link here:
+> 
+> https://lore.kernel.org/r/1719776648-435073-1-git-send-email-steven.sistare@oracle.com
+> 
+> I think most of my previous questions for exec() solution still are there,
+> I'll try to summarize them all in this reply as much as I can.
+> 
+> > 
+> > This patch series adds the live migration cpr-exec mode, which allows
+> > the user to update QEMU with minimal guest pause time, by preserving
+> > guest RAM in place, albeit with new virtual addresses in new QEMU, and
+> > by preserving device file descriptors.
+> > 
+> > The new user-visible interfaces are:
+> >   * cpr-exec (MigMode migration parameter)
+> >   * cpr-exec-command (migration parameter)
+> 
+> I really, really hope we can avoid this..
+> 
+> It's super cumbersome to pass in a qemu cmdline in a qemu migration
+> parameter.. if we can do that with generic live migration ways, I hope we
+> stick with the clean approach.
 
-Add code to register VFs after migration and fix igb migration.
+A further issue I have is that it presumes the QEMU configuration is
+fully captured by the command line. We have a long term design goal
+in QEMU to get away from specifying configuration on the command
+line, and move entirely to configuring QEMU via a series of QMP
+commands.
 
-Fixes: 3a977deebe6b ("Intrdocue igb device emulation")
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- include/hw/pci/pcie_sriov.h | 2 ++
- hw/pci/pci.c                | 7 +++++++
- hw/pci/pcie_sriov.c         | 7 +++++++
- 3 files changed, 16 insertions(+)
+This proposed command is introducing the concept of command line argv
+as a formal part of the QEMU API and IMHO that is undesirable. Even
+today we have backend configuration steps only done via QMP, and I'm
+wondering how it would fit in with how mgmt apps currently doing live
+migration.
 
-diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
-index 5148c5b77dd1..c5d2d318d330 100644
---- a/include/hw/pci/pcie_sriov.h
-+++ b/include/hw/pci/pcie_sriov.h
-@@ -57,6 +57,8 @@ void pcie_sriov_pf_add_sup_pgsize(PCIDevice *dev, uint16_t opt_sup_pgsize);
- void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
-                              uint32_t val, int len);
- 
-+void pcie_sriov_pf_post_load(PCIDevice *dev);
-+
- /* Reset SR/IOV */
- void pcie_sriov_pf_reset(PCIDevice *dev);
- 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 5c0050e1786a..4c7be5295110 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -733,10 +733,17 @@ static bool migrate_is_not_pcie(void *opaque, int version_id)
-     return !pci_is_express((PCIDevice *)opaque);
- }
- 
-+static int pci_post_load(void *opaque, int version_id)
-+{
-+    pcie_sriov_pf_post_load(opaque);
-+    return 0;
-+}
-+
- const VMStateDescription vmstate_pci_device = {
-     .name = "PCIDevice",
-     .version_id = 2,
-     .minimum_version_id = 1,
-+    .post_load = pci_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_INT32_POSITIVE_LE(version_id, PCIDevice),
-         VMSTATE_BUFFER_UNSAFE_INFO_TEST(config, PCIDevice,
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index 91b6ed46959d..663c1d0cab00 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -254,6 +254,13 @@ void pcie_sriov_config_write(PCIDevice *dev, uint32_t address,
-     }
- }
- 
-+void pcie_sriov_pf_post_load(PCIDevice *dev)
-+{
-+    if (dev->exp.sriov_cap) {
-+        register_vfs(dev);
-+    }
-+}
-+
- 
- /* Reset SR/IOV */
- void pcie_sriov_pf_reset(PCIDevice *dev)
+The flipside, however, is that localhost migration via 2 separate QEMU
+processes has issues where both QEMUs want to be opening the very same
+file, and only 1 of them can ever have them open.
 
+
+With regards,
+Daniel
 -- 
-2.45.2
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
