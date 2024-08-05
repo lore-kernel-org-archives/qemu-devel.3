@@ -4,65 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E01BC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 15:23:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28ACEC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 15:28:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sazXk-00034A-Hc; Mon, 05 Aug 2024 11:22:40 -0400
+	id 1sazcv-0002Ro-Fl; Mon, 05 Aug 2024 11:28:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sazXg-00030V-0A; Mon, 05 Aug 2024 11:22:36 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sazXb-0005AT-5e; Mon, 05 Aug 2024 11:22:34 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id A432B60C55;
- Mon,  5 Aug 2024 15:22:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21125C4AF0E;
- Mon,  5 Aug 2024 15:22:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1722871340;
- bh=8abpcgimZ8zhWhHlWs9YVGQE18wAOSsWG48ZhjBiE8Y=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=J+EcWmFrHfavILP+4wyerdS0sBKsXIKEo3qbw9viOT6Bs+G+kubhy4Fl8O/dMnFtG
- WqjI/2UQgkmzntO+dtXM5QNqfz3EtVaZ8v4pyFUvFr43pWlZDPVUCNP3zT3Kxsc4E/
- ZT9omEnyzxHC0mJhbzLQ9e91Y78JaRqIHwC8eTT2oHKML+gCszAlkAbrbM55Ml605u
- jb5bACG5+6otD/RqFVCU3pzBXI1Lbqf8wLej5cEnVgs/XlOCD27LlcLCVxmxqGL8Ll
- +9wNpzgXZWENUSsa08mq4Zap2rDloxyKIShZGl+XRvVQjzJZadd23YlO5qv0x2yRUJ
- 9qDfaS9A2Hjzw==
-Date: Mon, 5 Aug 2024 17:22:15 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>, "Michael
- S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, Shannon Zhao
- <shannon.zhaosl@gmail.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 1/7] arm/virt: place power button pin number on a define
-Message-ID: <20240805172215.0c8c2597@foz.lan>
-In-Reply-To: <20240805160439.0bafb58d@imammedo.users.ipa.redhat.com>
-References: <cover.1721630625.git.mchehab+huawei@kernel.org>
- <bf8367bddfdc95e378b5725c732533c3ba20d388.1721630625.git.mchehab+huawei@kernel.org>
- <20240730092549.6898ff3c@imammedo.users.ipa.redhat.com>
- <CAFEAcA8VWc3eQZqfJP9k5LYF-9aLChHQ+uS9UBfGV6nvybDxqQ@mail.gmail.com>
- <20240730132620.46cca4ce@imammedo.users.ipa.redhat.com>
- <20240801151544.2f315598@foz.lan>
- <20240805160439.0bafb58d@imammedo.users.ipa.redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <luzhixing12345@gmail.com>)
+ id 1sazct-0002RJ-SM
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 11:28:00 -0400
+Received: from mail-pf1-x444.google.com ([2607:f8b0:4864:20::444])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luzhixing12345@gmail.com>)
+ id 1sazcs-0006Qe-09
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 11:27:59 -0400
+Received: by mail-pf1-x444.google.com with SMTP id
+ d2e1a72fcca58-7106cf5771bso2988094b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 08:27:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1722871676; x=1723476476; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yUH2/zeWtJC7SNP7K/QMSJcOd8bIWt0Lfr5toA+ucYE=;
+ b=fUt3n3qlJWEUue5fabDWUSfeMAx6Hz3s2hBWA6ezCWCmc52AHWwdZWSbT8ag29BhKp
+ H3s0CQk5Jyd/FTn369gqUjYHPl2KZiu3jjjYLzHYimwATBSh6MhNxcWdHm/OJrV9HWYs
+ +c9ENpAz6WqY+sVs9Md8+Ml02dLG5zGcKVTzxlvsPgkuVvB+kQ0ZVFP1j3Tz/TomcAwx
+ tftJhd00eGYTh+2aXiVmwBHxmf+LpG4xKMTajqHuR56X0Vqx5B74YnMTMwpVFOo/+JXR
+ D6AFVBUOlwMCNhjUoM7RC1SXoRAjPRqKAdxR+03gLHuZAgy+yaQi9i9y5ApqEMVQuMxw
+ E5vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722871676; x=1723476476;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yUH2/zeWtJC7SNP7K/QMSJcOd8bIWt0Lfr5toA+ucYE=;
+ b=NvrghP+NeykZCnq2XGLLJPWUn5A3+FJcLWgRgiotU+K9c7bvcq0UmaI2JeixuD9KH7
+ o8NAX7hhesC55IW3Poe4hma9cRjps+XZZ+B1ZsP17KDPgbTuo6Ew1xN1b0CMJjAVFMnU
+ 93GvUprSxx7CIa47yRT7T95NQFmEnZhsimoZUvrFmwu/V4zxDxHwC5O8JSoh4KXqTvlt
+ gRUyogMvMpartnWMn0Za1HwQuzke4PbFhLCq4r3Q07QAF8iEAVv6dSys0Kx5lJsJE7U+
+ esmSn8qGe+7noURGxhS1RR3aK+9xOw4osqb3aR5Fw7vcA8CN5GixEfGD3whN8ELm88oa
+ YGDA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXSOKenChmausKuZFxwIAp+yd2RVP5etDAacXM/v20ohWg1RhZyto9jvGzvEX8/Ef6Ig767rDfLOOZw3fugF84Jb8I2wGQ=
+X-Gm-Message-State: AOJu0YxLKTK0jlOA+8oyMU6f9iooH2oF6AEutn+K6Gp1MCR40DyrHfsk
+ aaBEwMJEh8m0THiRI8Z2JfUQ8p8UY5aT9K46RSVEHuHRWM3En6o2dOLqwGiT2WyQPQ==
+X-Google-Smtp-Source: AGHT+IEmJV2DX0/H8nOCsO8z8KV7WJeA3NHq8L6TppnWN36z9oJV8QV/LxWI6X0FzdO3iPxfsXcRgQ==
+X-Received: by 2002:a05:6a21:e91:b0:1c2:94ad:1c66 with SMTP id
+ adf61e73a8af0-1c69953c220mr9748070637.5.1722871675947; 
+ Mon, 05 Aug 2024 08:27:55 -0700 (PDT)
+Received: from localhost.localdomain ([39.144.190.14])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2cfdc4cf655sm10560189a91.38.2024.08.05.08.27.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 05 Aug 2024 08:27:55 -0700 (PDT)
+From: luzhixing12345 <luzhixing12345@gmail.com>
+To: sgarzare@redhat.com
+Cc: luzhixing12345@gmail.com,
+	mst@redhat.com,
+	qemu-devel@nongnu.org
+Subject: Re: [PATCH] vhost-user: rewrite vu_dispatch with if-else
+Date: Mon,  5 Aug 2024 23:27:27 +0800
+Message-Id: <20240805152727.32364-1-luzhixing12345@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <3ah6jmrx7buizqytjgzx2oe5jlyv225pa4dih3tfs4g4ovngyd@t3sdu6mhmghr>
+References: <3ah6jmrx7buizqytjgzx2oe5jlyv225pa4dih3tfs4g4ovngyd@t3sdu6mhmghr>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::444;
+ envelope-from=luzhixing12345@gmail.com; helo=mail-pf1-x444.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -79,98 +98,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Mon, 5 Aug 2024 16:04:39 +0200
-Igor Mammedov <imammedo@redhat.com> escreveu:
+Signed-off-by: luzhixing12345 <luzhixing12345@gmail.com>
 
-> On Thu, 1 Aug 2024 15:15:44 +0200
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> 
-> > Em Tue, 30 Jul 2024 13:26:20 +0200
-> > Igor Mammedov <imammedo@redhat.com> escreveu:
-> >   
-> > > On Tue, 30 Jul 2024 09:29:37 +0100
-> > > Peter Maydell <peter.maydell@linaro.org> wrote:
-> > >     
-> > > > On Tue, 30 Jul 2024 at 08:26, Igor Mammedov <imammedo@redhat.com> wrote:      
-> > > > >
-> > > > > On Mon, 22 Jul 2024 08:45:53 +0200
-> > > > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> > > > >        
-> > > > > > Having magic numbers inside the code is not a good idea, as it
-> > > > > > is error-prone. So, instead, create a macro with the number
-> > > > > > definition.
-> > > > > >
-> > > > > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > > > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>        
-> > > >       
-> > > > > > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> > > > > > index b0c68d66a345..c99c8b1713c6 100644
-> > > > > > --- a/hw/arm/virt.c
-> > > > > > +++ b/hw/arm/virt.c
-> > > > > > @@ -1004,7 +1004,7 @@ static void virt_powerdown_req(Notifier *n, void *opaque)
-> > > > > >      if (s->acpi_dev) {
-> > > > > >          acpi_send_event(s->acpi_dev, ACPI_POWER_DOWN_STATUS);
-> > > > > >      } else {
-> > > > > > -        /* use gpio Pin 3 for power button event */
-> > > > > > +        /* use gpio Pin for power button event */
-> > > > > >          qemu_set_irq(qdev_get_gpio_in(gpio_key_dev, 0), 1);        
-> > > > >
-> > > > > /me confused, it was saying Pin 3 but is passing 0 as argument where as elsewhere
-> > > > > you are passing 3. Is this a bug?        
-> > > > 
-> > > > No. The gpio_key_dev is a gpio-key device which has one
-> > > > input (which you assert to "press the key") and one output,
-> > > > which goes high when the key is pressed and then falls
-> > > > 100ms later. The virt board wires up the output of the
-> > > > gpio-key device to input 3 on the PL061 GPIO controller.
-> > > > (This happens in create_gpio_keys().) So the code is correct
-> > > > to assert input 0 on the gpio-key device and the comment
-> > > > isn't wrong that this results in GPIO pin 3 being asserted:
-> > > > the link is just indirect.      
-> > > 
-> > > it's likely obvious to ARM folks, but maybe comment should
-> > > clarify above for unaware.    
-> > 
-> > Not sure if a comment here with the pin number is a good idea.
-> > After all, this patch was originated because we were using
-> > Pin 6 for GPIO error, while the comment was outdated (stating
-> > that it was pin 8 instead) :-)
-> > 
-> > After this series, there will be two GPIO pins used inside arm/virt,
-> > both defined at arm/virt.h:
-> > 
-> > 	/* GPIO pins */
-> > 	#define GPIO_PIN_POWER_BUTTON  3
-> > 	#define GPIO_PIN_GENERIC_ERROR 6
-> > 
-> > Those macros are used when GPIOs are created:
-> > 
-> > 	static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
-> > 	                             uint32_t phandle)
-> > 	{
-> > 	    gpio_key_dev = sysbus_create_simple("gpio-key", -1,
-> > 	                                        qdev_get_gpio_in(pl061_dev,
-> >                                                          GPIO_PIN_POWER_BUTTON));
-> > 	    gpio_error_dev = sysbus_create_simple("gpio-key", -1,
-> > 	                                          qdev_get_gpio_in(pl061_dev,
-> > 	                                                           GPIO_PIN_GENERIC_ERROR));
-> > So, at least for me, it is clear that gpio_key_dev is using pin 3.  
-> 
-> if you switch to using already existing GED device,
-> then this patch will go away since event will be delivered by GED
-> instead of GPIO + _AEI.
+>On Sun, Aug 04, 2024 at 10:23:53PM GMT, luzhixing12345 wrote:
+>>rewrite with if-else instead of goto
+>
+>Why?
+>
+>IMHO was better before this patch with a single error path.
 
-This patch is actually independent from the rest. It is related to a power
-down event, and not related at all with error inject.
+I think this if-else version is more clear for me, and it's good to
+keep things the way they are.
 
-The rationale for keeping it on this series was due to the original
-patch 2 (as otherwise merge conflicts would rise). It can now be merged
-in separate.
+>
+>>
+>>and I have a question, in two incorrent cases
+>>
+>>- need reply but no reply_requested
+>>- no need reply but has reply_requested
+>>
+>>should we call vu_panic or print warning message?
+>>
+>>---
+>> subprojects/libvhost-user/libvhost-user.c | 39 +++++++++++++----------
+>> subprojects/libvhost-user/libvhost-user.h |  6 ++--
+>> 2 files changed, 27 insertions(+), 18 deletions(-)
+>>
+>>diff --git a/subprojects/libvhost-user/libvhost-user.c 
+>>b/subprojects/libvhost-user/libvhost-user.c
+>>index 9c630c2170..187e25f9bb 100644
+>>--- a/subprojects/libvhost-user/libvhost-user.c
+>>+++ b/subprojects/libvhost-user/libvhost-user.c
+>>@@ -2158,32 +2158,39 @@ vu_dispatch(VuDev *dev)
+>> {
+>>     VhostUserMsg vmsg = { 0, };
+>>     int reply_requested;
+>>-    bool need_reply, success = false;
+>>+    bool need_reply, success = true;
+>>
+>>     if (!dev->read_msg(dev, dev->sock, &vmsg)) {
+>>-        goto end;
+>>+        success = false;
+>>+        free(vmsg.data);
+>>+        return success;
+>>     }
+>>
+>>     need_reply = vmsg.flags & VHOST_USER_NEED_REPLY_MASK;
+>>
+>>     reply_requested = vu_process_message(dev, &vmsg);
+>>-    if (!reply_requested && need_reply) {
+>>-        vmsg_set_reply_u64(&vmsg, 0);
+>>-        reply_requested = 1;
+>>-    }
+>>-
+>>-    if (!reply_requested) {
+>>-        success = true;
+>>-        goto end;
+>>-    }
+>>
+>>-    if (!vu_send_reply(dev, dev->sock, &vmsg)) {
+>>-        goto end;
+>>+    if (need_reply) {
+>>+        if (reply_requested) {
+>>+            if (!vu_send_reply(dev, dev->sock, &vmsg)) {
+>>+                success = false;
+>>+            }
+>>+        } else {
+>>+            // need reply but no reply requested, return 0(u64)
+>>+            vmsg_set_reply_u64(&vmsg, 0);
+>>+            if (!vu_send_reply(dev, dev->sock, &vmsg)) {
+>>+                success = false;
+>>+            }
+>>+        }
+>>+    } else {
+>>+        // no need reply but reply requested, send a reply
+>>+        if (reply_requested) {
+>>+            if (!vu_send_reply(dev, dev->sock, &vmsg)) {
+>>+                success = false;
+>>+            }
+>>+        }
+>>     }
+>>
+>>-    success = true;
+>>-
+>>-end:
+>>     free(vmsg.data);
+>>     return success;
+>> }
+>>diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libvhost-user/libvhost-user.h
+>>index deb40e77b3..2daf8578f6 100644
+>>--- a/subprojects/libvhost-user/libvhost-user.h
+>>+++ b/subprojects/libvhost-user/libvhost-user.h
+>>@@ -238,6 +238,8 @@ typedef struct VuDev VuDev;
+>>
+>> typedef uint64_t (*vu_get_features_cb) (VuDev *dev);
+>> typedef void (*vu_set_features_cb) (VuDev *dev, uint64_t features);
+>>+typedef uint64_t (*vu_get_protocol_features_cb) (VuDev *dev);
+>>+typedef void (*vu_set_protocol_features_cb) (VuDev *dev, uint64_t features);
+>
+>Are these changes related?
+>
+>Stefano
+>
+>> typedef int (*vu_process_msg_cb) (VuDev *dev, VhostUserMsg *vmsg,
+>>                                   int *do_reply);
+>> typedef bool (*vu_read_msg_cb) (VuDev *dev, int sock, VhostUserMsg *vmsg);
+>>@@ -256,9 +258,9 @@ typedef struct VuDevIface {
+>>     vu_set_features_cb set_features;
+>>     /* get the protocol feature bitmask from the underlying vhost
+>>      * implementation */
+>>-    vu_get_features_cb get_protocol_features;
+>>+    vu_get_protocol_features_cb get_protocol_features;
+>>     /* enable protocol features in the underlying vhost implementation. */
+>>-    vu_set_features_cb set_protocol_features;
+>>+    vu_set_protocol_features_cb set_protocol_features;
+>>     /* process_msg is called for each vhost-user message received */
+>>     /* skip libvhost-user processing if return value != 0 */
+>>     vu_process_msg_cb process_msg;
+>>-- 
+>>2.34.1
+>>
 
-Btw, this is doing a cleanup requested by Michael and Peter:
+Yes, I'm sorry that I forget to message about it.
 
-	https://lore.kernel.org/qemu-devel/CAFEAcA-PYnZ-32MRX+PgvzhnoAV80zBKMYg61j2f=oHaGfwSsg@mail.gmail.com/
+Although get/set_protocol_features and get/set_protocol_features actually have the same type, I think the return type of function pointers should be explicit for user interface APIs. So typedef vu_get_protocol_features_cb and vu_set_protocol_features_cb
 
-Thanks,
-Mauro
+luzhixing
 
