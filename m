@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C115C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:18:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D730EC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:18:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb49Q-0003RA-23; Mon, 05 Aug 2024 16:17:52 -0400
+	id 1sb49k-0005co-NW; Mon, 05 Aug 2024 16:18:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3ZDOxZgUKCssArCz6x55x2v.t537v3B-uvCv2454x4B.58x@flex--tavip.bounces.google.com>)
- id 1sb49L-00036l-6P
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:47 -0400
-Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
+ <3djOxZgUKCt0S9UHOFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--tavip.bounces.google.com>)
+ id 1sb49e-0004kR-FJ
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:18:07 -0400
+Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3ZDOxZgUKCssArCz6x55x2v.t537v3B-uvCv2454x4B.58x@flex--tavip.bounces.google.com>)
- id 1sb49H-0001Td-84
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:17:46 -0400
-Received: by mail-yw1-x114a.google.com with SMTP id
- 00721157ae682-664916e5b40so2092217b3.1
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 13:17:41 -0700 (PDT)
+ <3djOxZgUKCt0S9UHOFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--tavip.bounces.google.com>)
+ id 1sb49a-0001Xd-Ue
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:18:06 -0400
+Received: by mail-pj1-x104a.google.com with SMTP id
+ 98e67ed59e1d1-2cd2c7904dcso10970947a91.0
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 13:18:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1722889060; x=1723493860; darn=nongnu.org;
+ d=google.com; s=20230601; t=1722889080; x=1723493880; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=4nDAaRYoPQUybXMrCeQ4yM0etvHUlZuu5xJy/FcdLbg=;
- b=VjJbhMzZZvfUmILjLUPhDyy594hs6XjOdfWPM3GnzoDbDjemVaNqYgEkmz/5R1M7GS
- Z9kJnQhP01Crp/H2Ekl82mH9cJXpwNXVnB83yp15vf0kwNtP8BlQhFoXqtyyawnUmnNm
- lxBR82csc51d9rZIYr4jZHtytVQ4Jfy32IasdgBRr0WKFstMTpW8R+ToWJfeVbkCykEt
- S0GtxUuMQr0wWTMHz+FUv155Go4uwFZd+wHC+Pn0tJF+TbajSdJUlvXTo1okLFKBz2jn
- dgBzdYJpk7gcAkWjIcZtN6+eL5RzO1RQNGpBbWS4N6f1rG3emaUs73glG1cU4xydzrbf
- KESw==
+ bh=u4G3+QfEQuPGYkcQf8AOgE2UDxpBxkJrxB1kWGdX9cU=;
+ b=ez+dIN6o0yfY+RQX3vua/ge+lTOQ3I095HhrufQmI3cW1wXip0gLTiH65Vs3XbQ67H
+ YirHe/M8H9eEfekVjtsI9DlNws6DWBdkgaShHvhd4sC6pPV7rkARZ+mmh/g8X7ZWYC7T
+ gsiKmttveQOFb67G+6jdvwG1ao9JagpRI2s1RwpA4A/qYNSHbDtRT8G4YJcH8uJbBrz0
+ 0OLXqhEpNEd0E8Fm3lEWUrfgGthYMKNKZSess28958ZCwNGr16ldiTOQBL/YmaLbY7a6
+ hjxADkP+Wnu8iY/yLcH/B4ZyPczPMBYBKqAjMbwQxtkH4xGIubKmy2AGYSJpcpjeM6sI
+ 8r7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722889060; x=1723493860;
+ d=1e100.net; s=20230601; t=1722889080; x=1723493880;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4nDAaRYoPQUybXMrCeQ4yM0etvHUlZuu5xJy/FcdLbg=;
- b=EF3aG5WuOVhf0rtAwG+MZ8GBeIZ6rk1vkPZkWCX7OVvlTLTCtGaBg9L0ENU9mhzGBO
- jpJbGEgL7mYbsSlZv4kvJh0LN2/P8D/qyulGr9xveYUUlc6+uUcxMlDvEwY2qQns6igL
- Lj5uS52sxvfhQ8wUb/OeYZENDsJDAkuExCEDz7vmhshWHhmBApsa1nNFFY1IluIOJn4J
- Mlkw5FMxM6qGOoi6rbxXDNvGh+DpPpBLZHZgo+Ou7OCFSOk6LmNgIZtBoGgZhRjyFt5t
- hWJqBZlwry5ALlN25FE9EM7Qstn+vDJmK4WkXJVHZ3NFOINpprTHQjxD/FJUEgbO4fgO
- 6xzA==
-X-Gm-Message-State: AOJu0Yz8QNx4GCelUZlArcTpKuh50xOQFx/8elefxhaQqczS4TP2Gr13
- LdwseFNfQm3XKPq32jxFOaqmJdgm881qcDIhEwy8im94XJr4NBoZPT4ceGIib8JZI676U1S3oXS
- 5WaVY45pPvMVB+GRe5iDYLpfg4bnzenoTk42IASi5iz4qf4ygtKW/nomjthmMZ9RMe06rBTY062
- xR/rvXOgPxTd5AnLgkIItqGG+irg==
-X-Google-Smtp-Source: AGHT+IEbUnH+6fvsnahVEKUA+AUBoPinsmnz1TNDh7dXnwnN24dOVdyWczd/BAVBFAEQ1m9fDZI+fItK6w==
+ bh=u4G3+QfEQuPGYkcQf8AOgE2UDxpBxkJrxB1kWGdX9cU=;
+ b=N+NdQj+y67MzWenynRKjtimHAxleZq8TYp5ycw2Pa/SE7zolY/TlwH0D55LWoX1r7n
+ 0T5Clm0NO3RSYF21ZOVOkrfvLg6AXNw644112P9l0p+SI1RHWjK0EPFa58WEZx9XV1+H
+ ByWYntBI8J90wL6+WauaJdLiPXcnbcVqNGxz8+b0RBDai7mStAjlVp6W95lM2biFGlPn
+ X9CWvA2E5JL2Jm9IfigVDfJm7VJBMAi81npZ9TdsUu2pnsJFuOpsmti8uu433cR4VTCj
+ a9jLuCusyr43Nl1zNzMzkjWqnNbQ4igpH89zszY7hE+DATWTGIL2KcjvaGFkc02KegN8
+ taUA==
+X-Gm-Message-State: AOJu0YxRPov8UUJ/0QAcwEWpR44GMJ7kEYS8Fi12RdwXKnG1sltvPu3J
+ pJfucrzQ3xpHHPVEzdQ/kRrUMYxLgVAnnn2fuBC4vjQng+pjlD0r/CPRYyy50wZYgNoqBVEuFHN
+ hUT1sqLd0MPvSMDe58SA9Cr9lmaZWCrVxvTRzNCznxXWKmXQCXsfr+El7DNji2dSlozHJrAUXXy
+ wkAVbkdbnJFDdYAAVzcjRrIve47g==
+X-Google-Smtp-Source: AGHT+IFou9H80QB90t2SGEHQlrSm6cRFXg4Q/BYZGtoq36SYjaPwpS566HoPuRH/kcQrZnxxlae98b/Ryw==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a0d:c843:0:b0:665:7b0d:ed27 with
- SMTP id
- 00721157ae682-688b7457a53mr986987b3.2.1722889060159; Mon, 05 Aug 2024
- 13:17:40 -0700 (PDT)
-Date: Mon,  5 Aug 2024 13:17:06 -0700
+ (user=tavip job=sendgmr) by 2002:a17:90a:6042:b0:2c3:1985:e9c3
+ with SMTP id
+ 98e67ed59e1d1-2cff95243c6mr34825a91.3.1722889078446; Mon, 05 Aug 2024
+ 13:17:58 -0700 (PDT)
+Date: Mon,  5 Aug 2024 13:17:16 -0700
 In-Reply-To: <20240805201719.2345596-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20240805201719.2345596-1-tavip@google.com>
 X-Mailer: git-send-email 2.46.0.rc2.264.g509ed76dc8-goog
-Message-ID: <20240805201719.2345596-12-tavip@google.com>
-Subject: [RFC PATCH 11/23] test/unit: add flexcomm usart unit test
+Message-ID: <20240805201719.2345596-22-tavip@google.com>
+Subject: [RFC PATCH 21/23] hw/misc: add support for RT500 reset controller
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -71,9 +71,9 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  marcandre.lureau@redhat.com, alistair@alistair23.me, berrange@redhat.com, 
  philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, bleal@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
- envelope-from=3ZDOxZgUKCssArCz6x55x2v.t537v3B-uvCv2454x4B.58x@flex--tavip.bounces.google.com;
- helo=mail-yw1-x114a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
+ envelope-from=3djOxZgUKCt0S9UHOFNNFKD.BNLPDLT-CDUDKMNMFMT.NQF@flex--tavip.bounces.google.com;
+ helo=mail-pj1-x104a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -96,41 +96,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add polling and irq unit tests for the flexcomm usart device model.
+The RT500 reset controller has two instances that have the same
+register layout but with different fields for some registers.
+
+The model only provides set and clear functionality for the various
+reset lines which is common for both instances. Because of that only
+one type is implemented for both controllers.
 
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- tests/unit/meson.build           |   7 +
- tests/unit/test-flexcomm-usart.c | 321 +++++++++++++++++++++++++++++++
- 2 files changed, 328 insertions(+)
- create mode 100644 tests/unit/test-flexcomm-usart.c
+ hw/arm/svd/meson.build         |   8 ++
+ hw/misc/Kconfig                |   3 +
+ hw/misc/meson.build            |   1 +
+ hw/misc/rt500_rstctl.c         | 219 +++++++++++++++++++++++++++++++++
+ hw/misc/trace-events           |   4 +
+ include/hw/misc/rt500_rstctl.h |  38 ++++++
+ 6 files changed, 273 insertions(+)
+ create mode 100644 hw/misc/rt500_rstctl.c
+ create mode 100644 include/hw/misc/rt500_rstctl.h
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index 70e816c034..dcfd2e661c 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -149,6 +149,13 @@ if have_system
-       meson.project_source_root() / 'hw/misc/flexcomm.c',
-       meson.project_source_root() / 'hw/char/flexcomm_usart.c',
-      ],
-+    'test-flexcomm-usart': [
-+      hwcore, chardev, qom, migration,
-+      meson.project_source_root() / 'hw/core/gpio.c',
-+      meson.project_source_root() / 'tests/unit/sysbus-mock.c',
-+      meson.project_source_root() / 'hw/misc/flexcomm.c',
-+      meson.project_source_root() / 'hw/char/flexcomm_usart.c',
-+    ],
-   }
-   if config_host_data.get('CONFIG_INOTIFY1')
-     tests += {'test-util-filemonitor': []}
-diff --git a/tests/unit/test-flexcomm-usart.c b/tests/unit/test-flexcomm-usart.c
+diff --git a/hw/arm/svd/meson.build b/hw/arm/svd/meson.build
+index 22f75880f5..72a7421c6f 100644
+--- a/hw/arm/svd/meson.build
++++ b/hw/arm/svd/meson.build
+@@ -26,3 +26,11 @@ genh += custom_target('flexspi.h',
+                       output: 'flexspi.h',
+                       input: 'MIMXRT595S_cm33.xml',
+                       command: [ svd_gen_header, '-i', '@INPUT@', '-o', '@OUTPUT@', '-p', 'FLEXSPI0', '-t', 'FLEXSPI'])
++genh += custom_target('rt500_rstctl0.h',
++                      output: 'rt500_rstctl0.h',
++                      input: 'MIMXRT595S_cm33.xml',
++                      command: [ svd_gen_header, '-i', '@INPUT@', '-o', '@OUTPUT@', '-p', 'RSTCTL0', '-t', 'RT500_RSTCTL0'])
++genh += custom_target('rt500_rstctl1.h',
++                      output: 'rt500_rstctl1.h',
++                      input: 'MIMXRT595S_cm33.xml',
++                      command: [ svd_gen_header, '-i', '@INPUT@', '-o', '@OUTPUT@', '-p', 'RSTCTL1', '-t', 'RT500_RSTCTL1'])
+diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
+index 392ae9e84f..70a2a269ac 100644
+--- a/hw/misc/Kconfig
++++ b/hw/misc/Kconfig
+@@ -222,4 +222,7 @@ config RT500_CLKCTL0
+ config RT500_CLKCTL1
+     bool
+ 
++config RT500_RSTCTL
++    bool
++
+ source macio/Kconfig
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 68929949a6..5e2728e982 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -160,3 +160,4 @@ system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
+ system_ss.add(when: 'CONFIG_FLEXCOMM', if_true: files('flexcomm.c'))
+ system_ss.add(when: 'CONFIG_RT500_CLKCTL0', if_true: files('rt500_clkctl0.c'))
+ system_ss.add(when: 'CONFIG_RT500_CLKCTL1', if_true: files('rt500_clkctl1.c'))
++system_ss.add(when: 'CONFIG_RT500_RSTCTL', if_true: files('rt500_rstctl.c'))
+diff --git a/hw/misc/rt500_rstctl.c b/hw/misc/rt500_rstctl.c
 new file mode 100644
-index 0000000000..645f3b4c26
+index 0000000000..2806a94150
 --- /dev/null
-+++ b/tests/unit/test-flexcomm-usart.c
-@@ -0,0 +1,321 @@
++++ b/hw/misc/rt500_rstctl.c
+@@ -0,0 +1,219 @@
 +/*
-+ * Copyright (C) 2024 Google LLC
++ * QEMU model for RT500 Reset Controller
++ *
++ * Copyright (c) 2024 Google LLC
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
@@ -139,317 +170,269 @@ index 0000000000..645f3b4c26
 + */
 +
 +#include "qemu/osdep.h"
-+
-+#include "qemu/config-file.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "qapi/error.h"
-+#include "qemu/sockets.h"
-+#include "sysemu/sysemu.h"
-+#include "qemu/main-loop.h"
-+#include "qemu/option.h"
-+#include "exec/memory.h"
 +#include "hw/irq.h"
 +#include "hw/qdev-properties.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "exec/address-spaces.h"
++#include "hw/regs.h"
++#include "hw/misc/rt500_rstctl.h"
 +
-+#include "hw/misc/flexcomm.h"
-+#include "sysbus-mock.h"
-+#include "reg-utils.h"
-+
-+typedef struct {
-+    DeviceState *dev;
-+    int sock;
-+    Chardev *chr;
-+    bool irq;
-+} TestFixture;
-+
-+#define FLEXCOMM_BASE 0x40106000UL
-+#define FLEXCOMM_USART_BASE FLEXCOMM_BASE
-+
-+/* Callback for the interrupt line. */
-+static void usart_irq_set(void *opaque, int line, int level)
-+{
-+    TestFixture *f = (TestFixture *)opaque;
-+
-+    f->irq = level;
-+}
++#include "trace.h"
 +
 +/*
-+ * Test fixture initialization.
++ * There are two intances for RSTCTL with the same register names but
++ * with different fields.
 + */
-+static void set_up(TestFixture *f, gconstpointer data)
++#define reg(field) offsetof(RT500_RSTCTL0_Type, field)
++#define regi(x) (reg(x) / sizeof(uint32_t))
++#define REG_NO (sizeof(RT500_RSTCTL0_Type) / sizeof(uint32_t))
++
++#define RSTCTL_SYSRSTSTAT_WMASK (BITS(7, 4) | BIT(0))
++#define RSTCL0_PRSCTL0_WMASK (BITS(30, 26) | BITS(24, 20) | BIT(18) | \
++                              BIT(16) | BITS(12, 8) | BIT(3) | BIT(1))
++#define RSTCL0_PRSCTL1_WMASK (BIT(24) | BITS(16, 15) | BITS(3, 2))
++#define RSTCL0_PRSCTL2_WMASK (BITS(1, 0))
++#define RSTCL1_PRSCTL0_WMASK (BIT(29) | BIT(27) |  BITS(25, 8))
++#define RSTCL1_PRSCTL1_WMASK (BIT(31) | BITS(29, 28) | BITS(24, 23) | \
++                              BIT(16) | BITS(7, 0))
++#define RSTCL1_PRSCTL2_WMASK (BITS(31, 30) | BITS(17, 16) | BIT(10) | \
++                              BIT(8) | BITS(4, 0))
++
++static RT500_RSTCTL0_REGISTER_NAMES_ARRAY(reg_names);
++
++static MemTxResult rt500_rstctl_read(void *opaque, hwaddr addr,
++                                     uint64_t *data, unsigned size,
++                                     MemTxAttrs attrs)
 +{
-+    struct sockaddr_in sockaddr = {
-+        .sin_family = AF_INET,
++    RT500RstCtlState *s = opaque;
++    MemTxResult ret = MEMTX_OK;
++
++    if (s->num > 1 || !reg32_aligned_access(addr, size)) {
++        ret = MEMTX_ERROR;
++        goto out;
++    }
++
++    switch (addr) {
++    case reg(SYSRSTSTAT):
++    case reg(PRSTCTL0):
++    case reg(PRSTCTL1):
++    case reg(PRSTCTL2):
++        *data = reg32_read(&s->regs.ctl0, addr);
++        break;
++    default:
++        ret = MEMTX_ERROR;
++    }
++
++out:
++    trace_rt500_rstctl_reg_read(DEVICE(s)->id, reg_names[addr], addr, *data);
++    return ret;
++}
++
++static MemTxResult rt500_rstctl_write(void *opaque, hwaddr addr,
++                                      uint64_t value, unsigned size,
++                                      MemTxAttrs attrs)
++{
++    RT500RstCtlState *s = opaque;
++    static uint32_t mask0[REG_NO] = {
++        [regi(SYSRSTSTAT)] = RSTCTL_SYSRSTSTAT_WMASK,
++        [regi(PRSTCTL0)] = RSTCL0_PRSCTL0_WMASK,
++        [regi(PRSTCTL1)] = RSTCL0_PRSCTL1_WMASK,
++        [regi(PRSTCTL2)] = RSTCL0_PRSCTL2_WMASK,
++        [regi(PRSTCTL0_SET)] = RSTCL0_PRSCTL0_WMASK,
++        [regi(PRSTCTL1_SET)] = RSTCL0_PRSCTL1_WMASK,
++        [regi(PRSTCTL2_SET)] = RSTCL0_PRSCTL2_WMASK,
++        [regi(PRSTCTL0_CLR)] = RSTCL0_PRSCTL0_WMASK,
++        [regi(PRSTCTL1_CLR)] = RSTCL0_PRSCTL1_WMASK,
++        [regi(PRSTCTL2_CLR)] = RSTCL0_PRSCTL2_WMASK,
 +    };
-+    socklen_t sockaddr_len = sizeof(sockaddr);
-+    char chr_opts[] = "udp:127.0.0.1:xxxxx";
-+    FlexcommState *s;
-+    char buf[] = "xxx";
-+    int port;
++    static uint32_t mask1[REG_NO] = {
++        [regi(SYSRSTSTAT)] = RSTCTL_SYSRSTSTAT_WMASK,
++        [regi(PRSTCTL0)] = RSTCL1_PRSCTL0_WMASK,
++        [regi(PRSTCTL1)] = RSTCL1_PRSCTL1_WMASK,
++        [regi(PRSTCTL2)] = RSTCL1_PRSCTL2_WMASK,
++        [regi(PRSTCTL0_SET)] = RSTCL1_PRSCTL0_WMASK,
++        [regi(PRSTCTL1_SET)] = RSTCL1_PRSCTL1_WMASK,
++        [regi(PRSTCTL2_SET)] = RSTCL1_PRSCTL2_WMASK,
++        [regi(PRSTCTL0_CLR)] = RSTCL1_PRSCTL0_WMASK,
++        [regi(PRSTCTL1_CLR)] = RSTCL1_PRSCTL1_WMASK,
++        [regi(PRSTCTL2_CLR)] = RSTCL1_PRSCTL2_WMASK,
++    };
++    uint32_t mask;
 +
-+    /* create "server" socket and bind to a random port */
-+    f->sock = socket(AF_INET, SOCK_DGRAM, 0);
-+    g_assert(f->sock >= 0);
-+    g_assert(bind(f->sock, &sockaddr, sizeof(sockaddr)) == 0);
-+    g_assert(getsockname(f->sock, &sockaddr, &sockaddr_len) == 0);
++    trace_rt500_rstctl_reg_write(DEVICE(s)->id, reg_names[addr], addr, value);
 +
-+    /* create the an UDP char device and connect it to the sever */
-+    port = ntohs(sockaddr.sin_port);
-+    g_assert(port != 0);
-+    snprintf(chr_opts, sizeof(chr_opts), "udp:127.0.0.1:%d", port);
-+    f->chr = qemu_chr_new("udp", chr_opts, NULL);
-+    g_assert_nonnull(f->chr);
-+
-+    /* test connectivity and connect server to UDP char device  */
-+    qemu_chr_write_all(f->chr, (const uint8_t *)"210", sizeof("210"));
-+    recvfrom(f->sock, buf, sizeof(buf), 0, &sockaddr, &sockaddr_len);
-+    g_assert(strcmp(buf, "210") == 0);
-+    g_assert(sockaddr_len == sizeof(sockaddr));
-+    g_assert(connect(f->sock, &sockaddr, sockaddr_len) == 0);
-+
-+    f->dev = qdev_new(TYPE_FLEXCOMM);
-+    g_assert(f->dev);
-+
-+    s = FLEXCOMM(f->dev);
-+    s->irq = qemu_allocate_irq(usart_irq_set, f, 0);
-+    g_assert(qemu_chr_fe_init(&s->chr, f->chr, &error_abort));
-+
-+    if (data != NULL) {
-+        qdev_prop_set_int32(DEVICE(f->dev), "functions", (uintptr_t)data);
++    if (s->num > 1 || !reg32_aligned_access(addr, size)) {
++        return MEMTX_ERROR;
 +    }
 +
-+    qdev_realize_and_unref(f->dev, NULL, &error_abort);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(f->dev), 0, FLEXCOMM_BASE);
++    if (s->num == 0) {
++        mask = mask0[addr / sizeof(uint32_t)];
++    } else {
++        mask = mask1[addr / sizeof(uint32_t)];
++    }
 +
-+    qemu_chr_be_update_read_handlers(f->chr, NULL);
++    switch (addr) {
++    case reg(SYSRSTSTAT):
++    {
++        /* write 1 to clear bits */
++        s->regs.ctl0.SYSRSTSTAT &= ~(value & mask);
++        break;
++    }
++    case reg(PRSTCTL0):
++    case reg(PRSTCTL1):
++    case reg(PRSTCTL2):
++    {
++        uint32_t idx = addr / sizeof(uint32_t);
 +
-+    device_cold_reset(f->dev);
++        s->regs.raw[idx] = (value & mask);
++        break;
++    }
++    case reg(PRSTCTL0_SET):
++    case reg(PRSTCTL1_SET):
++    case reg(PRSTCTL2_SET):
++    {
++        uint32_t idx;
++
++        idx = (reg(PRSTCTL0) + (addr - reg(PRSTCTL0_SET))) / sizeof(uint32_t);
++        s->regs.raw[idx] |= (value & mask);
++        break;
++    }
++    case reg(PRSTCTL0_CLR):
++    case reg(PRSTCTL1_CLR):
++    case reg(PRSTCTL2_CLR):
++    {
++        uint32_t idx;
++
++        idx = (reg(PRSTCTL0) + (addr - reg(PRSTCTL0_CLR))) / sizeof(uint32_t);
++        s->regs.raw[idx] &= ~(value & mask);
++        break;
++    }
++    }
++
++    return MEMTX_OK;
 +}
 +
-+static void tear_down(TestFixture *f, gconstpointer user_data)
++
++static const MemoryRegionOps rt500_rstctl_ops = {
++    .read_with_attrs = rt500_rstctl_read,
++    .write_with_attrs = rt500_rstctl_write,
++    .endianness = DEVICE_NATIVE_ENDIAN,
++};
++
++static Property rt500_rstctl_properties[] = {
++    DEFINE_PROP_UINT32("num", RT500RstCtlState, num, 0),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void rt500_rstctl_reset(DeviceState *dev)
 +{
-+    qdev_unrealize(f->dev);
-+    object_unparent(OBJECT(f->chr));
-+    close(f->sock);
-+    g_free(f->dev);
++    RT500RstCtlState *s = RT500_RSTCTL(dev);
++
++    memset(&s->regs, 0, sizeof(s->regs));
++
++    switch (s->num) {
++    case 0:
++        rt500_rstctl0_reset_registers(&s->regs.ctl0);
++        break;
++    case 1:
++        rt500_rstctl1_reset_registers(&s->regs.ctl1);
++        break;
++    }
 +}
 +
-+static void polling_test(TestFixture *f, gconstpointer user_data)
++static void rt500_rstctl_init(Object *obj)
 +{
-+    int i;
-+    uint32_t tmp;
-+    unsigned char byte;
-+    int fifo_size;
++    RT500RstCtlState *s = RT500_RSTCTL(obj);
 +
-+    /* select and lock USART */
-+    tmp = FLEXCOMM_PSELID_LOCK_Msk | FLEXCOMM_PERSEL_USART;
-+    REG32_WRITE(f->dev, FLEXCOMM, PSELID, tmp);
-+
-+    fifo_size = REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSIZE, FIFOSIZE);
-+
-+    /* enable USART */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, CFG, ENABLE, 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, CFG, ENABLE) == 1);
-+
-+    /* enable TX and RX FIFO */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLETX, 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLETX) == 1);
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLERX, 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLERX) == 1);
-+
-+    /* test writes and fifo counters wrap */
-+    for (i = 0; i < fifo_size / 2; i++) {
-+        /* check fifostat */
-+        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXFULL) ==
-+                 0);
-+        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXNOTEMPTY)
-+                 == 0);
-+        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXNOTFULL)
-+                 == 1);
-+        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXEMPTY) ==
-+                 1);
-+
-+        REG32_WRITE(f->dev, FLEXCOMM_USART, FIFOWR, 'a' + i);
-+        recv(f->sock, &byte, 1, 0);
-+        g_assert_cmpuint(byte, ==, 'a' + i);
-+    }
-+
-+    /* test reads and fifo level */
-+
-+    for (i = 0; i < fifo_size / 2; i++) {
-+        byte = 'A' + i;
-+        g_assert(send(f->sock, &byte, 1, 0) == 1);
-+    }
-+
-+    /* wait for the RXLVL to update */
-+    WAIT_REG32_FIELD(1000, f->dev, FLEXCOMM_USART, FIFOSTAT, RXLVL,
-+                     fifo_size / 2);
-+
-+    /* check fifo stat */
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXFULL) == 0);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXNOTEMPTY)
-+             == 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXNOTFULL)
-+             == 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXEMPTY)
-+             == 1);
-+
-+    /* send until FIFO is full */
-+    for (i = fifo_size / 2; i < fifo_size; i++) {
-+        byte = 'A' + i;
-+        g_assert(send(f->sock, &byte, 1, 0) == 1);
-+    }
-+
-+    /* wait for the RXLVL to update */
-+    WAIT_REG32_FIELD(1000, f->dev, FLEXCOMM_USART, FIFOSTAT, RXLVL, fifo_size);
-+
-+    /* check fifo stat */
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXFULL) == 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXNOTEMPTY) ==
-+             1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXNOTFULL) ==
-+             1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXEMPTY) ==
-+             1);
-+
-+    /* check read no pop */
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFORDNOPOP, RXDATA) ==
-+             'A');
-+
-+    /* now read from the fifo  */
-+    for (i = 0; i < fifo_size; i++) {
-+        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFORD, RXDATA) ==
-+                 'A' + i);
-+    }
-+
-+    /* check fifostat */
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXFULL) == 0);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXNOTEMPTY) ==
-+             0);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXNOTFULL) ==
-+             1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, TXEMPTY) == 1);
++    memory_region_init_io(&s->mmio, obj, &rt500_rstctl_ops, s,
++                          TYPE_RT500_RSTCTL, sizeof(s->regs));
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
 +}
 +
-+static void irq_test(TestFixture *f, gconstpointer user_data)
++static void rt500_rstctl_realize(DeviceState *dev, Error **errp)
 +{
-+    char buf[256] = { 0, };
-+    uint32_t tmp;
-+
-+    /* select and lock FLEXCOMM_USART */
-+    tmp = FLEXCOMM_PSELID_LOCK_Msk | FLEXCOMM_PERSEL_USART;
-+    REG32_WRITE(f->dev, FLEXCOMM, PSELID, tmp);
-+
-+    /*
-+     * set RX IRQ/DMA trigger level to 4 bytes - value 3 in FIFOTRIG
-+     *
-+     * 0000 - Trigger when the RX FIFO has received 1 entry (is no longer empty)
-+     * 0001 - Trigger when the RX FIFO has received 2 entries
-+     * 1111 - Trigger when the RX FIFO has received 16 entries (has become full)
-+     */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, RXLVL, 3);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, RXLVL) == 3);
-+
-+    /* enable RX trigger for IRQ/DMA  */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, RXLVLENA, 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, RXLVLENA) == 1);
-+
-+    /* enable RXLVL interrupt */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOINTENSET, RXLVL, 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTENSET, RXLVL)
-+             == 1);
-+
-+    /* enable FLEXCOMM_USART */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, CFG, ENABLE, 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, CFG, ENABLE) == 1);
-+
-+    /* enable TX and RX FIFO */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLETX, 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLETX) == 1);
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLERX, 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOCFG, ENABLERX) == 1);
-+
-+    /* check interrupt status */
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTSTAT, RXLVL) == 0);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTSTAT, TXLVL) == 0);
-+    g_assert(f->irq == false);
-+
-+    /* enable TX trigger for IRQ/DMA  */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, TXLVLENA, 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, TXLVLENA) == 1);
-+
-+    /* enable irq for TX */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOINTENSET, TXLVL, 1);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTENSET, TXLVL) ==
-+             1);
-+
-+    /* check TX irq */
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTSTAT, TXLVL) == 1);
-+    g_assert(f->irq == true);
-+
-+    /* disable irq for TX */
-+    REG32_WRITE_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, TXLVLENA, 0);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOTRIG, TXLVLENA) == 0);
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTSTAT, TXLVL) == 0);
-+    g_assert(f->irq == false);
-+
-+    /* send 3 bytes */
-+    g_assert(send(f->sock, buf, 3, 0) == 3);
-+
-+    /* check that we have 3 bytes in the fifo */
-+    WAIT_REG32_FIELD(1000, f->dev, FLEXCOMM_USART, FIFOSTAT, RXLVL, 3);
-+
-+    /* and no interrupt has been triggered yet */
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTSTAT, RXLVL) == 0);
-+    g_assert(f->irq == false);
-+
-+    /* push it over the edge */
-+    g_assert(send(f->sock, buf, 1, 0) == 1);
-+
-+    /* check that we have 4 bytes in the fifo */
-+    WAIT_REG32_FIELD(1000, f->dev, FLEXCOMM_USART, FIFOSTAT, RXLVL, 4);
-+
-+    /* and the interrupt has been triggered */
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTSTAT, RXLVL) == 1);
-+    g_assert(f->irq == true);
-+
-+    /* read one byte from the fifo */
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFORD, RXDATA) == 0);
-+
-+    /* we should have 3 bytes in the FIFO */
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOSTAT, RXLVL) == 3);
-+
-+    /* and no interrupts active */
-+    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_USART, FIFOINTSTAT, RXLVL) == 0);
-+    g_assert(f->irq == false);
 +}
 +
-+/* mock-up */
-+const PropertyInfo qdev_prop_chr;
-+
-+int main(int argc, char **argv)
++static void rt500_rstctl_class_init(ObjectClass *klass, void *data)
 +{
-+    qemu_init_main_loop(&error_abort);
-+    socket_init();
++    DeviceClass *dc = DEVICE_CLASS(klass);
 +
-+    g_test_init(&argc, &argv, NULL);
-+
-+    /* Initialize object types. */
-+    sysbus_mock_init();
-+    module_call_init(MODULE_INIT_QOM);
-+    qemu_add_opts(&qemu_chardev_opts);
-+
-+    g_test_add("/flexcomm-usart/polling", TestFixture,
-+               (gconstpointer)(1 << FLEXCOMM_FUNC_USART),
-+               set_up, polling_test, tear_down);
-+
-+    g_test_add("/flexcomm-usart/irq", TestFixture,
-+               (gconstpointer)(1 << FLEXCOMM_FUNC_USART),
-+               set_up, irq_test, tear_down);
-+
-+    return g_test_run();
++    dc->reset = rt500_rstctl_reset;
++    device_class_set_props(dc, rt500_rstctl_properties);
++    dc->realize = rt500_rstctl_realize;
 +}
++
++static const TypeInfo rt500_rstctl_info = {
++    .name          = TYPE_RT500_RSTCTL,
++    .parent        = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(RT500RstCtlState),
++    .instance_init = rt500_rstctl_init,
++    .class_init    = rt500_rstctl_class_init,
++};
++
++static void rt500_rstctl_register_types(void)
++{
++    type_register_static(&rt500_rstctl_info);
++}
++
++type_init(rt500_rstctl_register_types)
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index e65fcfa613..41a94d5ef6 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -365,3 +365,7 @@ rt500_clkctl0_reg_write(const char *regname, uint32_t addr, uint32_t val) "%s[0x
+ # rt500_clkctl1.c
+ rt500_clkctl1_reg_read(const char *regname, uint32_t addr, uint32_t val) "%s[0x%04x] -> 0x%08x"
+ rt500_clkctl1_reg_write(const char *regname, uint32_t addr, uint32_t val) "%s[0x%04x] <- 0x%08x"
++
++# rt500_rstctl.c
++rt500_rstctl_reg_read(const char *id, const char *regname, uint32_t addr, uint32_t val) "%s: %s[0x%04x] -> 0x%08x"
++rt500_rstctl_reg_write(const char *id, const char *regname, uint32_t addr, uint32_t val) "%s: %s[0x%04x] <- 0x%08x"
+diff --git a/include/hw/misc/rt500_rstctl.h b/include/hw/misc/rt500_rstctl.h
+new file mode 100644
+index 0000000000..d9726df5f6
+--- /dev/null
++++ b/include/hw/misc/rt500_rstctl.h
+@@ -0,0 +1,38 @@
++/*
++ * QEMU model for RT500 Reset Controller
++ *
++ * Copyright (c) 2024 Google LLC
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#ifndef HW_MISC_RT500_RSTCTL_H
++#define HW_MISC_RT500_RSTCTL_H
++
++#include "hw/arm/svd/rt500_rstctl0.h"
++#include "hw/arm/svd/rt500_rstctl1.h"
++#include "hw/sysbus.h"
++
++#define RSTCTL_Type RSTCTL0_Type
++
++#define TYPE_RT500_RSTCTL "rt500-rstctl"
++#define RT500_RSTCTL(o) OBJECT_CHECK(RT500RstCtlState, o, TYPE_RT500_RSTCTL)
++
++typedef struct {
++    /* <private> */
++    SysBusDevice parent_obj;
++
++    /* <public> */
++    MemoryRegion mmio;
++    uint32_t num;
++    union {
++        RT500_RSTCTL0_Type ctl0;
++        RT500_RSTCTL1_Type ctl1;
++        uint32_t raw[sizeof(RT500_RSTCTL0_Type) / sizeof(uint32_t)];
++    } regs;
++} RT500RstCtlState;
++
++#endif /* HW_MISC_RT500_RSTCTL_H */
 -- 
 2.46.0.rc2.264.g509ed76dc8-goog
 
