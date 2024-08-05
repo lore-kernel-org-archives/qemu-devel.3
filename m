@@ -4,71 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C471CC52D70
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 07:36:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A06B0C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 07:54:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sasGQ-0002PZ-3b; Mon, 05 Aug 2024 03:36:18 -0400
+	id 1sasXa-0008Hw-OW; Mon, 05 Aug 2024 03:54:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sasGP-0002P3-3k
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 03:36:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sasGM-0002ag-VP
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 03:36:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722843373;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8cf/cHAVrXm7eCNMkospG8HwfZK+0s4SCrPxnZS8spU=;
- b=InP6QzMRT0gI1Czo8AX6gHEh0sdmKO6shtd0hRV2jb13Gu1Kgdz5J2FgJoXXUKyGpylKhQ
- ggDodbDcTrTZrKnm3FqORjMDQW9/dYujyx75Id5/zWBJF6EdIJQoF0/HTOZyiE1h6za/7S
- b9bR3nnImmsRJfc8uwNPffzrq/b3bLY=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-hu8sYrbCOg-e97xLHU92Bg-1; Mon,
- 05 Aug 2024 03:36:11 -0400
-X-MC-Unique: hu8sYrbCOg-e97xLHU92Bg-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5A0CD19054CB
- for <qemu-devel@nongnu.org>; Mon,  5 Aug 2024 07:36:10 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.65])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EE7DA1955E80
- for <qemu-devel@nongnu.org>; Mon,  5 Aug 2024 07:36:09 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9653621E5A6B; Mon,  5 Aug 2024 09:36:07 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: eblake@redhat.com,  jsnow@redhat.com
-Subject: Re: [PATCH] qapi: Refill doc comments to conform to conventions
-In-Reply-To: <20240729065220.860163-1-armbru@redhat.com> (Markus Armbruster's
- message of "Mon, 29 Jul 2024 08:52:20 +0200")
-References: <20240729065220.860163-1-armbru@redhat.com>
-Date: Mon, 05 Aug 2024 09:36:07 +0200
-Message-ID: <87plqnqv4o.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sasXY-0008Gw-HS
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 03:54:00 -0400
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sasXW-0004e3-Jo
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 03:54:00 -0400
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-3d9e13ef9aaso7221868b6e.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 00:53:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722844437; x=1723449237;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=F1mG8lUGWXEpebCiFpH6qM5dInW31EtodQquCTR1D2I=;
+ b=r2Dr5QHsXYNAC2kNLLukc1BQDmDLIM8mXxKwf085elBqq4D4zCDb+k/6ho0fxYLBLt
+ h3fcxm8tNroCKKCy5EtOMLlU1aVU/6MNJ6tLHWCL3seDvI9rQPCT39SQswuRCUuPgqSR
+ BnYtv0QlN3GHLJSLMe2/KoLLIqYP7yooy+hFljHrA+CIB+oY3IeBxYvnqhD1f8ftn6BK
+ wI8UWEtjyh6fQxJNZrBqHkyuVPD1ApNX/OVw48fBxux3QiCmTM3tqYRKEimQtmHRQxE9
+ FO1t4THaGmTXlmFeGEhw7pQ+eL2slGE4ro9uNV/oiUwvaSqSZO/dLCUdU6fQuCtDt6Rf
+ ehow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722844437; x=1723449237;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=F1mG8lUGWXEpebCiFpH6qM5dInW31EtodQquCTR1D2I=;
+ b=GRN2vX68S6Bjsdj0bvlBfzaVbyhOQ2XnnTW535lUbgnuk711ckNdEO6GGfRphTaWzh
+ qVVU/zRApPcddlWupThpMGpGFC+/oiXuNQQj/BW9CZR1ncGExdOGYyA+Hw206LBREOXN
+ EtScrCR3bOfDlxHHhDK1yda65ZQB7Sbl+4t6U1OYAOOonRM10EwKHIE1tNU6jz2V2iX5
+ ZYqQDQNdB14+MTRbNAlNlPNuSVjIfju/9nOMFshVf6/3gDuwgy7GgA+I6V3leNQPJCaD
+ 46dDowjeZcrbIeAkETUXE0lroLGcGXEq1iZYu5Ky9kMZrOSXEGVMjggKuCpDDB6RcHNz
+ Y08w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVLbjnKkOWO3T/IIh55GWEysZFUOM9NpLK6ReUkBI5Q8mocHaQWsRc5a69SZKSYsFGWho0+OaEWJik+YwUuTIsSUY4bsj0=
+X-Gm-Message-State: AOJu0YzaPdELQfutjZUqB+fDmqnzBcT56HrKpXZvhyLTY+J8ghA83AfN
+ qvlZdXNb16o+EKF2y1CUk5nNiCJgiFL+sO5tBdtmdKfNDoV+R7ZAS0ohdEonmHI=
+X-Google-Smtp-Source: AGHT+IHVOjRqO7ZiZKMVtqGYO/ig0LjmhRnvtXsTXCJGAi8V+Gik7b7Ma9bsbVJnKJRQx/5lswh8zw==
+X-Received: by 2002:a05:6870:910e:b0:25e:f4e:da53 with SMTP id
+ 586e51a60fabf-26891eb0564mr13399819fac.37.1722844436668; 
+ Mon, 05 Aug 2024 00:53:56 -0700 (PDT)
+Received: from [157.82.202.230] ([157.82.202.230])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7106ec010b4sm4893381b3a.27.2024.08.05.00.53.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 05 Aug 2024 00:53:56 -0700 (PDT)
+Message-ID: <cb71a6de-eb7a-402b-a58a-89198b4343f5@daynix.com>
+Date: Mon, 5 Aug 2024 16:53:52 +0900
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.145,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
+ dmitry.fleytman@gmail.com, jasowang@redhat.com, sriram.yagnaraman@est.tech,
+ sw@weilnetz.de, qemu-devel@nongnu.org, yan@daynix.com,
+ Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
+References: <ZqktXwxBWjuAgGxZ@x1n> <Zqk09BGxlpdxMBMx@redhat.com>
+ <Zqk6x2nd3Twz--75@x1n> <39a8bb8b-4191-4f41-aaf7-06df24bf3280@daynix.com>
+ <ZqumIZcs1tCNTpRE@x1n> <b70d09a5-554a-456b-904e-59cec5836ae8@daynix.com>
+ <Zqz1vvYqRuIAPnod@x1n> <c5ea7a57-fc52-4bb7-bc4c-f3aca8da0574@daynix.com>
+ <Zq0IrhV-DgStpJtk@x1n> <8ad96f43-83ae-49ae-abc1-1e17ee15f24d@daynix.com>
+ <20240805032937-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20240805032937-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::230;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x230.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,19 +108,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+On 2024/08/05 16:30, Michael S. Tsirkin wrote:
+> On Sun, Aug 04, 2024 at 03:49:45PM +0900, Akihiko Odaki wrote:
+>> I suggest disabling all offload features of virtio-net with 9.2.
+> 
+> Yea ... no.
+> 
+>> I want to keep things consistent so I want to disable all at once. This
+>> change will be very uncomfortable for us, who are implementing offload
+>> features, but I hope it will motivate us to implement a proper solution.
+> 
+> It's uncomfortable for users.
 
-> Sweep the entire documentation again.  Last done in commit
-> 209e64d9edf (qapi: Refill doc comments to conform to current
-> conventions).
->
-> To check the generated documentation does not change, I compared the
-> generated HTML before and after this commit with "wdiff -3".  Finds no
-> differences.  Comparing with diff is not useful, as the reflown
-> paragraphs are visible there.
->
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+An obvious alternative is to set cross-migrate=off by default (I dropped 
+the no- prefix because no-cross-migrate=off is confusing). I don't have 
+a particular idea whether cross-migrate should be on or off by default.
 
-Queued for 9.1.
+This is a trade-off of safety and performance. In general, I believe 
+safety should come first before performance.
 
+On the other hand, disabling offload features is a breaking change. QEMU 
+also has -only-migratable option; it is more consistent to make the 
+additional assurance for migration opt-in instead of opt-out. Finally, I 
+see migration across hosts as an advanced feature, and perhaps it can be 
+justified to make it more like an optional feature.
+
+Regards,
+Akihiko Odaki
 
