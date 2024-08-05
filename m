@@ -4,85 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 336ADC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 13:17:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDCDFC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 13:25:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1saxaO-0003i6-Ul; Mon, 05 Aug 2024 09:17:18 -0400
+	id 1saxi5-0001Lh-Hk; Mon, 05 Aug 2024 09:25:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1saxaM-0003bI-WD
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 09:17:15 -0400
-Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1saxaL-0002MB-3b
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 09:17:14 -0400
-Received: by mail-lj1-x235.google.com with SMTP id
- 38308e7fff4ca-2f1870c355cso4723661fa.1
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 06:17:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722863831; x=1723468631; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VEAorHw3iySICsknNuJ2mKl2TzQoX2wxyxH/XPe4xZ0=;
- b=N+vGvLSnYvknaL2kFUBZRcMfsQr7Vdmqgnf66ldatO8DRsOj67mW7HYvT9YjFm8Vvp
- yc74zsnbOMD3GMJZ84MndqlxYPXGQj1Benni5N4zHHpZ4GP0vaodCgMQjjsZt+ppbQ4K
- +BPjj9opvYJMTZDrdjuK3bOQjzJCrI+lYP1UVG1H49NGOqZNNBdGRhH046Md3nTTV0om
- baTWJ66Q72RxhSoTRkwMrZrCL/s1xBKpK/eYzCU4eY+EsPWKIpEWWa4S5W7ecp+XYTnx
- lxmgVy2ilE4f7rW1fxdrwf59tYFT/nzieCb51/R9nHks5IkvipdXqF8rrtVJG8v9xYuv
- 0JWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722863831; x=1723468631;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VEAorHw3iySICsknNuJ2mKl2TzQoX2wxyxH/XPe4xZ0=;
- b=YTo8qjXfIDWcIbppD225WApmQYplJHWWb3RjcCzLzqO1skYQvnMqrKxrloE8SBJWVz
- e8RBnCP65tq62Nar0kA1sJLbqx4chM3+VU6tmcbeq5FtNrnI2Z4tR0cfZDykoybqBWTi
- dKh5c3LD8lG2P74ZugeR9+hVwOEyYiiEh/w+PtgKLhQPws41ltiXFNuTA8IyYSiQbhE+
- ylgYqJI/d8EBxlwBwFQi8dLkJPf6jXGwVjHCKMaHNL+yTMyB3/Qk0jD41XrYKNB5XJcr
- mE9ku3ZBLkiPrfl4NfC09Er9puWp9DAR7p3tRLE5lno9vtnYBEhV13wDDanL0c00eoTU
- 7R9Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXffx5/pPOG4GJ1gPbqaWksGnVgiim5Z+uT+mmfID+M4+wuENXd07nT48EZ4oDEnlSPzcQ9it6Q61c+W81MGI0sk3hdnW4=
-X-Gm-Message-State: AOJu0YyRTqwgok23dnpyVPjUYFoTj+d4aEqX4dj6g4uY97hOnAnAWhTb
- Hqyofn5SJTkxQSDfFhSVyu0HNhf4Wmh4CnV9buBSdmuocWAxWi+VDxxGUfVscQH65wa396WEGXE
- B
-X-Google-Smtp-Source: AGHT+IHmWrZ8fUlQIQbY1P9HQwzWebpMjewEutgdVLGDe2q07oU2Rb4eYIy3kg/yPmQO1W/gW7QehA==
-X-Received: by 2002:a2e:96d9:0:b0:2ee:974c:596f with SMTP id
- 38308e7fff4ca-2f15aac18f0mr79588101fa.28.1722863830051; 
- Mon, 05 Aug 2024 06:17:10 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4282babaab3sm198293425e9.28.2024.08.05.06.17.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Aug 2024 06:17:09 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4FC365F882;
- Mon,  5 Aug 2024 14:17:08 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Alyssa Ross <hi@alyssa.is>
-Cc: Brian Cain <bcain@quicinc.com>,  qemu-devel@nongnu.org
-Subject: Re: [PATCH] target/hexagon: don't look for static glib
-In-Reply-To: <20240805104921.4035256-1-hi@alyssa.is> (Alyssa Ross's message of
- "Mon, 5 Aug 2024 12:49:21 +0200")
-References: <20240805104921.4035256-1-hi@alyssa.is>
-Date: Mon, 05 Aug 2024 14:17:08 +0100
-Message-ID: <87zfprqfcb.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1saxi3-0001LA-K9
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 09:25:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1saxi1-0003kK-D5
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 09:25:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722864307;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fMk2xJy+hizaSNo05vyxCc1NUwUMbhmnaaCpVx4gcdg=;
+ b=NWin/eGrvgKMeLYZos/2QVkQ6eptITdinK78j4hOV3VngyTxGse9tnGibBP/3i8N7paBqC
+ RC4f7+FxpnRpYWrUFEhiVJL8uIu7AlLrObwUcnIs5qHzLb/XOwrDTaFsXHo5SF5Yi3bZUy
+ 9dDPXp+TGt5WBVc316i/CV4sO5BOYZ0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-bi-SYYdMOoi84XMkmQYT6w-1; Mon,
+ 05 Aug 2024 09:25:04 -0400
+X-MC-Unique: bi-SYYdMOoi84XMkmQYT6w-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 546701955D48; Mon,  5 Aug 2024 13:25:03 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.36])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8164D1955D42; Mon,  5 Aug 2024 13:25:00 +0000 (UTC)
+Date: Mon, 5 Aug 2024 14:24:57 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Michael Roth <michael.roth@amd.com>
+Subject: Re: [PATCH 5/6] qapi: apply schema prefix to QAPI feature enum
+ constants
+Message-ID: <ZrDSqXtiT2U7zS-p@redhat.com>
+References: <20240801175913.669013-1-berrange@redhat.com>
+ <20240801175913.669013-6-berrange@redhat.com>
+ <87y15bnoq0.fsf@pond.sub.org> <ZrDGoSTUIcpaVGO8@redhat.com>
+ <87a5hrm7wv.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::235;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x235.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <87a5hrm7wv.fsf@pond.sub.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,33 +90,152 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alyssa Ross <hi@alyssa.is> writes:
+On Mon, Aug 05, 2024 at 03:11:12PM +0200, Markus Armbruster wrote:
+> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>=20
+> > On Mon, Aug 05, 2024 at 02:22:47PM +0200, Markus Armbruster wrote:
+> >> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+> >>=20
+> >> > This allows us to include multiple QAPI schemas in the same file.
+> >> >
+> >> > Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> >>=20
+> >> I figure you had reason to simultaneously include headers generated for
+> >> multiple schemas.  Do tell :)
+> >
+> > I didn't want to have this patch, but the unit tests do this :-(
+> >
+> > [2/37] Compiling C object tests/libtestqapi.a.p/meson-generated_.._test=
+-qapi-commands-sub-sub-module.c.o
+> > FAILED: tests/libtestqapi.a.p/meson-generated_.._test-qapi-commands-sub=
+-sub-module.c.o=20
+> > cc -m64 -Itests/libtestqapi.a.p -Itests -I../tests -I. -Iqapi -Itrace -=
+Iui -Iui/shader -Itests/include -I/usr/include/glib-2.0 -I/usr/lib64/glib-2=
+=2E0/include -I/usr/include/sysprof-6 -fdiagnostics-color=3Dauto -Wall -Win=
+valid-pch -Werror -std=3Dgnu11 -O2 -g -fstack-protector-strong -Wempty-body=
+ -Wendif-labels -Wexpansion-to-defined -Wformat-security -Wformat-y2k -Wign=
+ored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self -Wmissing-format-att=
+ribute -Wmissing-prototypes -Wnested-externs -Wold-style-declaration -Wold-=
+style-definition -Wredundant-decls -Wshadow=3Dlocal -Wstrict-prototypes -Wt=
+ype-limits -Wundef -Wvla -Wwrite-strings -Wno-missing-include-dirs -Wno-psa=
+bi -Wno-shift-negative-value -isystem /var/home/berrange/src/virt/qemu/linu=
+x-headers -isystem linux-headers -iquote . -iquote /var/home/berrange/src/v=
+irt/qemu -iquote /var/home/berrange/src/virt/qemu/include -iquote /var/home=
+/berrange/src/virt/qemu/host/include/x86_64 -iquote /var/home/berrange/src/=
+virt/qemu/host/include/generic -iquote /var/home/berrange/src/virt/qemu/tcg=
+/i386 -pthread -msse2 -mcx16 -D_GNU_SOURCE -D_FILE_OFFSET_BITS=3D64 -D_LARG=
+EFILE_SOURCE -fno-strict-aliasing -fno-common -fwrapv -ftrivial-auto-var-in=
+it=3Dzero -fzero-call-used-regs=3Dused-gpr -fPIE -MD -MQ tests/libtestqapi.=
+a.p/meson-generated_.._test-qapi-commands-sub-sub-module.c.o -MF tests/libt=
+estqapi.a.p/meson-generated_.._test-qapi-commands-sub-sub-module.c.o.d -o t=
+ests/libtestqapi.a.p/meson-generated_.._test-qapi-commands-sub-sub-module.c=
+=2Eo -c tests/test-qapi-commands-sub-sub-module.c
+> > In file included from tests/test-qapi-types-sub-sub-module.h:17,
+> >                  from tests/test-qapi-visit-sub-sub-module.h:17,
+> >                  from tests/test-qapi-commands-sub-sub-module.c:19:
+> > tests/test-qapi-features.h:16:5: error: redeclaration of enumerator =E2=
+=80=98QAPI_FEATURE_DEPRECATED=E2=80=99
+> >    16 |     QAPI_FEATURE_DEPRECATED,
+> >       |     ^~~~~~~~~~~~~~~~~~~~~~~
+> > In file included from ./qapi/qapi-types-error.h:17,
+> >                  from /var/home/berrange/src/virt/qemu/include/qapi/err=
+or.h:275,
+> >                  from /var/home/berrange/src/virt/qemu/include/qapi/com=
+pat-policy.h:16,
+> >                  from tests/test-qapi-commands-sub-sub-module.c:14:
+> > ./qapi/qapi-features.h:16:5: note: previous definition of =E2=80=98QAPI=
+_FEATURE_DEPRECATED=E2=80=99 with type =E2=80=98enum <anonymous>=E2=80=99
+> >    16 |     QAPI_FEATURE_DEPRECATED,
+> >       |     ^~~~~~~~~~~~~~~~~~~~~~~
+> > ninja: build stopped: subcommand failed.
+> > make[1]: *** [Makefile:167: run-ninja] Error 1
+> > make[1]: Leaving directory '/var/home/berrange/src/virt/qemu/build'
+> > make: *** [GNUmakefile:6: build] Error 2
+>=20
+> Compiles for me with PATCH 5/6 taken out.  What am I doing wrong?
 
-> When cross compiling QEMU configured with --static, I've been getting
-> configure errors like the following:
->
->     Build-time dependency glib-2.0 found: NO
->
->     ../target/hexagon/meson.build:303:15: ERROR: Dependency lookup for gl=
-ib-2.0 with method 'pkgconfig' failed: Could not generate libs for glib-2.0:
->     Package libpcre2-8 was not found in the pkg-config search path.
->     Perhaps you should add the directory containing `libpcre2-8.pc'
->     to the PKG_CONFIG_PATH environment variable
->     Package 'libpcre2-8', required by 'glib-2.0', not found
->
-> This happens because --static sets the prefer_static Meson option, but
-> my build machine doesn't have a static libpcre2.  I don't think it
-> makes sense to insist that native dependencies are static, just
-> because I want the non-native QEMU binaries to be static.
+The bit in patch 6 which generates the enum still has the prefix:
 
-Makes sense:
++        self._genh.add("typedef enum {\n")
++        for name in features:
++            self._genh.add(f"    {c_enum_const(self._prefix + 'QAPI_FEATUR=
+E', name)},\n")
++
++        self._genh.add("} " + c_name(self._prefix + 'QapiFeature') + ";\n")
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
+>=20
+> > I would be nice to eliminate that, but some parts of the test appear
+> > to pull in more of the system emulator code which forces in the main
+> > qapi schema
+> >
+> > n file included from ./qapi/qapi-types-block-core.h:17,
+> >                  from /var/home/berrange/src/virt/qemu/include/block/bl=
+ock-common.h:27,
+> >                  from /var/home/berrange/src/virt/qemu/include/block/bl=
+ock-global-state.h:27,
+> >                  from /var/home/berrange/src/virt/qemu/include/block/bl=
+ock.h:27,
+> >                  from /var/home/berrange/src/virt/qemu/include/monitor/=
+monitor.h:4,
+> >                  from /var/home/berrange/src/virt/qemu/include/qapi/qmp=
+/dispatch.h:17,
+> >                  from tests/test-qapi-init-commands.h:16,
+> >                  from tests/test-qapi-init-commands.c:15:
+> > ./qapi/qapi-features.h:16:5: error: redeclaration of enumerator =E2=80=
+=98QAPI_FEATURE_DEPRECATED=E2=80=99
+> >    16 |     QAPI_FEATURE_DEPRECATED,
+> >       |     ^~~~~~~~~~~~~~~~~~~~~~~
+> > In file included from tests/include/../test-qapi-types-sub-sub-module.h=
+:17,
+> >                  from tests/include/../test-qapi-commands-sub-sub-modul=
+e.h:16,
+> >                  from tests/include/test-qapi-commands-sub-module.h:16,
+> >                  from tests/test-qapi-commands.h:16,
+> >                  from tests/test-qapi-init-commands.c:14:
+> > tests/include/../test-qapi-features.h:16:5: note: previous definition o=
+f =E2=80=98QAPI_FEATURE_DEPRECATED=E2=80=99 with type =E2=80=98enum <anonym=
+ous>=E2=80=99
+> >    16 |     QAPI_FEATURE_DEPRECATED,
+> >       |     ^~~~~~~~~~~~~~~~~~~~~~~
+> > tests/test-qapi-init-commands.c: In function =E2=80=98test_qmp_init_mar=
+shal=E2=80=99:
+> > tests/test-qapi-init-commands.c:64:71: error: =E2=80=98TEST_QAPI_FEATUR=
+E_DEPRECATED=E2=80=99 undeclared (first use in this function); did you mean=
+ =E2=80=98QAPI_FEATURE_DEPRECATED=E2=80=99?
+> >    64 |                          qmp_marshal_test_command_features1, 0,=
+ 1u << TEST_QAPI_FEATURE_DEPRECATED);
+> >       |                                                                =
+       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >       |                                                                =
+       QAPI_FEATURE_DEPRECATED
+> > tests/test-qapi-init-commands.c:64:71: note: each undeclared identifier=
+ is reported only once for each function it appears in
+> >
+> >
+> > Maybe the test needs to be split into two ?  One test exclusively testi=
+ng
+> > with the tests/qapi-schema/qapi-schema-test.json, and one test exclusiv=
+ely
+> > with the main QMP QAPI schema ?
+>=20
+> Which test is it?
+
+I'm unclear which is using this - its just failing with plain 'make' for
+me.
+
+With regards,
+Daniel
 --=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange=
+ :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com=
+ :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange=
+ :|
+
 
