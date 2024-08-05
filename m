@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACE6DC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 13:16:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 336ADC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 13:17:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1saxZA-0000Mx-CS; Mon, 05 Aug 2024 09:16:00 -0400
+	id 1saxaO-0003i6-Ul; Mon, 05 Aug 2024 09:17:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1saxYp-0000L0-V2
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 09:15:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1saxYm-0001uC-Rc
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 09:15:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722863734;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=BQAqkOI7P4U3IWYXhpuHguud+3t+IUquf4iJMA0SvKPyKSlmytZ3VfZrqPr70yog3TgXa8
- 6rf3ctPUamvl9+EOpBEkw+8OBEAG8js6sbNV3o3Lmh1bbJQCdtI0gF6UyV/QszN0vdCLlK
- Jks34cGtzN+EfY8nbGmCcZgvXHMPnvI=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-47-nDme9TzTMgKLgUZJFr1LEQ-1; Mon, 05 Aug 2024 09:15:33 -0400
-X-MC-Unique: nDme9TzTMgKLgUZJFr1LEQ-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-52efd629749so13469731e87.2
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 06:15:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1saxaM-0003bI-WD
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 09:17:15 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1saxaL-0002MB-3b
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 09:17:14 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2f1870c355cso4723661fa.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 06:17:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722863831; x=1723468631; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=VEAorHw3iySICsknNuJ2mKl2TzQoX2wxyxH/XPe4xZ0=;
+ b=N+vGvLSnYvknaL2kFUBZRcMfsQr7Vdmqgnf66ldatO8DRsOj67mW7HYvT9YjFm8Vvp
+ yc74zsnbOMD3GMJZ84MndqlxYPXGQj1Benni5N4zHHpZ4GP0vaodCgMQjjsZt+ppbQ4K
+ +BPjj9opvYJMTZDrdjuK3bOQjzJCrI+lYP1UVG1H49NGOqZNNBdGRhH046Md3nTTV0om
+ baTWJ66Q72RxhSoTRkwMrZrCL/s1xBKpK/eYzCU4eY+EsPWKIpEWWa4S5W7ecp+XYTnx
+ lxmgVy2ilE4f7rW1fxdrwf59tYFT/nzieCb51/R9nHks5IkvipdXqF8rrtVJG8v9xYuv
+ 0JWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722863731; x=1723468531;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1722863831; x=1723468631;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=dwOd4EbneAUuFn59RC1Xqcg5id4sFYT7v0V3jmEqFj4EnhOkdtzoYVP6AbARIPs2gN
- ksUxWxkBaFFuav7lLCahwWZBHMfKFPPCVMicScXceLaVyd0yqLxUFZYd2XLNyqP25Hca
- dMIigUwZQqN5cXV7oe+KT7E/A+wVtyZfo5EDsg7jWpEw7YW/UtGXtfVm5fWLadZgIACF
- 3qx+epuIZ36zvDX1Qkd43+1HUoh+L3OgI409IXY1+0+VQq6okPbEtsMC8GJiLcYVuu7D
- RqBf9qmrS6AswNpHpbUzwgyxl3Tu2A4Nc6q0j0WyczCkuYbeSwOyaB4Snfcbe2Lz/n9H
- /QjQ==
+ bh=VEAorHw3iySICsknNuJ2mKl2TzQoX2wxyxH/XPe4xZ0=;
+ b=YTo8qjXfIDWcIbppD225WApmQYplJHWWb3RjcCzLzqO1skYQvnMqrKxrloE8SBJWVz
+ e8RBnCP65tq62Nar0kA1sJLbqx4chM3+VU6tmcbeq5FtNrnI2Z4tR0cfZDykoybqBWTi
+ dKh5c3LD8lG2P74ZugeR9+hVwOEyYiiEh/w+PtgKLhQPws41ltiXFNuTA8IyYSiQbhE+
+ ylgYqJI/d8EBxlwBwFQi8dLkJPf6jXGwVjHCKMaHNL+yTMyB3/Qk0jD41XrYKNB5XJcr
+ mE9ku3ZBLkiPrfl4NfC09Er9puWp9DAR7p3tRLE5lno9vtnYBEhV13wDDanL0c00eoTU
+ 7R9Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU6sJxz+3kg4U0nteVXvaG/ip4myiInHmcJ03FkQZx3KZnLk+vCDrLepq3hM+VAKkrhq32HGlec/T9Yko0rjmARp9YqE9s=
-X-Gm-Message-State: AOJu0Yxh97tKhTHBHyqrBZQfDRNFg0vxf7nROuYcI7CdYqjaI6npujnC
- KAF/979ToeW8oauOGAky3Ks4qXlJ9A0uMryqGJrNDTLzz0VFmKLjl3/JPVIKfzzkf5TnOHCQQIe
- fiWFsqqDXay2OF+AwqCm7ttZHXs/syjKlSFQqNKw+QZgA5rQebt1m
-X-Received: by 2002:a05:6512:1323:b0:52e:95dd:a8ef with SMTP id
- 2adb3069b0e04-530bb3837eamr7942704e87.27.1722863731255; 
- Mon, 05 Aug 2024 06:15:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFqyxy1W6+Nj6WrJmHMcoZHh0Fb1T/ADTtC9xHRVQNriZth9jYgYH6oMy3FwJDA5LcywMrAYw==
-X-Received: by 2002:a05:6512:1323:b0:52e:95dd:a8ef with SMTP id
- 2adb3069b0e04-530bb3837eamr7942677e87.27.1722863730606; 
- Mon, 05 Aug 2024 06:15:30 -0700 (PDT)
-Received: from avogadro.local ([151.95.101.29])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7dc9d437d4sm451267966b.132.2024.08.05.06.15.29
+ AJvYcCXffx5/pPOG4GJ1gPbqaWksGnVgiim5Z+uT+mmfID+M4+wuENXd07nT48EZ4oDEnlSPzcQ9it6Q61c+W81MGI0sk3hdnW4=
+X-Gm-Message-State: AOJu0YyRTqwgok23dnpyVPjUYFoTj+d4aEqX4dj6g4uY97hOnAnAWhTb
+ Hqyofn5SJTkxQSDfFhSVyu0HNhf4Wmh4CnV9buBSdmuocWAxWi+VDxxGUfVscQH65wa396WEGXE
+ B
+X-Google-Smtp-Source: AGHT+IHmWrZ8fUlQIQbY1P9HQwzWebpMjewEutgdVLGDe2q07oU2Rb4eYIy3kg/yPmQO1W/gW7QehA==
+X-Received: by 2002:a2e:96d9:0:b0:2ee:974c:596f with SMTP id
+ 38308e7fff4ca-2f15aac18f0mr79588101fa.28.1722863830051; 
+ Mon, 05 Aug 2024 06:17:10 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4282babaab3sm198293425e9.28.2024.08.05.06.17.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Aug 2024 06:15:30 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ Mon, 05 Aug 2024 06:17:09 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 4FC365F882;
+ Mon,  5 Aug 2024 14:17:08 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Alyssa Ross <hi@alyssa.is>
-Cc: Brian Cain <bcain@quicinc.com>,
-	qemu-devel@nongnu.org
+Cc: Brian Cain <bcain@quicinc.com>,  qemu-devel@nongnu.org
 Subject: Re: [PATCH] target/hexagon: don't look for static glib
-Date: Mon,  5 Aug 2024 15:15:28 +0200
-Message-ID: <20240805131528.489043-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240805104921.4035256-1-hi@alyssa.is>
-References: 
+In-Reply-To: <20240805104921.4035256-1-hi@alyssa.is> (Alyssa Ross's message of
+ "Mon, 5 Aug 2024 12:49:21 +0200")
+References: <20240805104921.4035256-1-hi@alyssa.is>
+Date: Mon, 05 Aug 2024 14:17:08 +0100
+Message-ID: <87zfprqfcb.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x235.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,8 +98,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+Alyssa Ross <hi@alyssa.is> writes:
 
-Paolo
+> When cross compiling QEMU configured with --static, I've been getting
+> configure errors like the following:
+>
+>     Build-time dependency glib-2.0 found: NO
+>
+>     ../target/hexagon/meson.build:303:15: ERROR: Dependency lookup for gl=
+ib-2.0 with method 'pkgconfig' failed: Could not generate libs for glib-2.0:
+>     Package libpcre2-8 was not found in the pkg-config search path.
+>     Perhaps you should add the directory containing `libpcre2-8.pc'
+>     to the PKG_CONFIG_PATH environment variable
+>     Package 'libpcre2-8', required by 'glib-2.0', not found
+>
+> This happens because --static sets the prefer_static Meson option, but
+> my build machine doesn't have a static libpcre2.  I don't think it
+> makes sense to insist that native dependencies are static, just
+> because I want the non-native QEMU binaries to be static.
 
+Makes sense:
+
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
