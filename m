@@ -4,98 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5449AC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:21:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AE8FC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 20:29:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb4CM-0001LU-D4; Mon, 05 Aug 2024 16:20:54 -0400
+	id 1sb4Jn-0000E2-1R; Mon, 05 Aug 2024 16:28:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sb4CJ-00010B-Mw
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:20:52 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sb4Jm-0000AF-5N
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:28:34 -0400
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sb4CH-00022H-MP
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:20:51 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sb4Jj-00035s-Ts
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 16:28:33 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 1E39F21C89;
- Mon,  5 Aug 2024 20:20:46 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id C666A21C91;
+ Mon,  5 Aug 2024 20:28:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1722889246; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=ikF+DtANi/r1AIRSe1GmX1n1cKKTQvrQZuBTXHOwalI=;
- b=XqqfGX4GEvYN2vlqyVfv6G2S0Y9UbKzindYdOrvWManozI4LqWQ4BaYVc+seZZjG1KwPwQ
- 2oJmFg6FjN59nstIN4HKq6kjK/6ZXZIayq31ePVeSHJmKueOadD9JEkxdUQQWhCvlkDFYU
- E2O8Yy9UM4UhcoLPspdtVl8BxRB80o8=
+ t=1722889709; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9ePoJJiF8D2v8INiMCjSWRfu3g2oSzoZaf7FWrTQeHo=;
+ b=G3qmdIKSFAZ3BhL/r7XSNQ/wP3pXTDwtE7cgIRBJRh09MDCFRzmPcvPWulX0HBg1I4DtKP
+ ZxrjxzbZXC3P/VDLff2oRcnj8KFopJGWM74XEbgse/wrUf/SnUyxjtx9hOVA3bUakYL82h
+ 1oFzFZiUcYf2zZvqnFCRLM8F2pjAzME=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1722889246;
+ s=susede2_ed25519; t=1722889709;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=ikF+DtANi/r1AIRSe1GmX1n1cKKTQvrQZuBTXHOwalI=;
- b=VoakXUJf7UNGU/ZK9rrNZqSqDQ/w7mDwUvLKaySxuyE9FayNgeptz6FU6pbTfyPd2HnxXI
- tHZoEmTmFuLB2sBw==
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9ePoJJiF8D2v8INiMCjSWRfu3g2oSzoZaf7FWrTQeHo=;
+ b=wsa9PEoILTL4nksCP08n8RNcnvIthsRvd+pBnHfDcE6VornKd4a7p9RLK5d6DBiOVPuPKY
+ 9JyDOXBhONo60vCg==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=XqqfGX4G;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=VoakXUJf
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=08C7IaR6;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=3g82TFsd
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1722889246; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=ikF+DtANi/r1AIRSe1GmX1n1cKKTQvrQZuBTXHOwalI=;
- b=XqqfGX4GEvYN2vlqyVfv6G2S0Y9UbKzindYdOrvWManozI4LqWQ4BaYVc+seZZjG1KwPwQ
- 2oJmFg6FjN59nstIN4HKq6kjK/6ZXZIayq31ePVeSHJmKueOadD9JEkxdUQQWhCvlkDFYU
- E2O8Yy9UM4UhcoLPspdtVl8BxRB80o8=
+ t=1722889708; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9ePoJJiF8D2v8INiMCjSWRfu3g2oSzoZaf7FWrTQeHo=;
+ b=08C7IaR6rhBGJgjYyQASqacqptyu16MuRIS/qh15hFNHiQXz3WkTTEYC3UcjS5vZWGoJa3
+ 7VfqrWbehuGoles7jHaFhtWVm5qR/9tXC19f3cm1xVU9Gu/VxOP4Zvtux5RkQpsrZetJ6j
+ bcNmwXbzbvCHSvQ4SnuSG0C8ZkECLS8=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1722889246;
+ s=susede2_ed25519; t=1722889708;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=ikF+DtANi/r1AIRSe1GmX1n1cKKTQvrQZuBTXHOwalI=;
- b=VoakXUJf7UNGU/ZK9rrNZqSqDQ/w7mDwUvLKaySxuyE9FayNgeptz6FU6pbTfyPd2HnxXI
- tHZoEmTmFuLB2sBw==
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9ePoJJiF8D2v8INiMCjSWRfu3g2oSzoZaf7FWrTQeHo=;
+ b=3g82TFsdOOVBGM3OivKg8Mx1y1l05Lnr5BoQGg1tj+eYFgL8PHNkS7DmJG81vKbOthDt9f
+ r6KxEd7sWgoRWDCA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 07FF513254;
- Mon,  5 Aug 2024 20:20:43 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4CD8B13254;
+ Mon,  5 Aug 2024 20:28:28 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id fYYNMBs0sWYcNAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 05 Aug 2024 20:20:43 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id SzlNBew1sWbtNQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 05 Aug 2024 20:28:28 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, jpoimboe@kernel.org,
- Babu Moger <babu.moger@amd.com>, Dario Faggioli <dfaggioli@suse.com>,
- Fabian Vogt <fvogt@suse.de>, Nikolay Borisov <nik.borisov@suse.com>
-Subject: [PATCH] target/i386: Expose IBPB-BRTYPE and SBPB CPUID bits to the
- guest
-Date: Mon,  5 Aug 2024 17:20:41 -0300
-Message-Id: <20240805202041.5936-1-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
+To: Dario Faggioli <dfaggioli@suse.com>, qemu-devel@nongnu.org
+Cc: jpoimboe@kernel.org, Paolo Bonzini <pbonzini@redhat.com>, Fabian Vogt
+ <fvogt@suse.de>, Nikolay Borisov <nik.borisov@suse.com>,
+ fabiano.rosas@suse.com
+Subject: Re: SRSO mitigation in microcode not passed through to VMs
+In-Reply-To: <68f8b8b1ca1bf58b059f52afbd1c9c51108a074a.camel@suse.com>
+References: <68f8b8b1ca1bf58b059f52afbd1c9c51108a074a.camel@suse.com>
+Date: Mon, 05 Aug 2024 17:28:25 -0300
+Message-ID: <87r0b2hfyu.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-5.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: C666A21C91
+X-Spamd-Result: default: False [-6.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  DWL_DNSWL_MED(-2.00)[suse.de:dkim];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[7]; RCVD_TLS_ALL(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.com:email,suse.com:url];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
  DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Queue-Id: 1E39F21C89
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
  helo=smtp-out1.suse.de
 X-Spam_score_int: -43
@@ -120,60 +124,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to AMD's Speculative Return Stack Overflow whitepaper (link
-below), the hypervisor should synthesize the value of IBPB_BRTYPE and
-SBPB CPUID bits to the guest.
+Dario Faggioli <dfaggioli@suse.com> writes:
 
-Support for this is already present in the kernel with commit
-e47d86083c66 ("KVM: x86: Add SBPB support") and commit 6f0f23ef76be
-("KVM: x86: Add IBPB_BRTYPE support").
+> Hello,
+>
+> So, even if SRSO is fully mitigated on the host, we still see as not
+> completely patched inside of the VMs running on Zen 3 and 4 hosts
+> (e.g., AMD EPYC 7713)
+>
+> We can see an example of that here:
+> https://bugzilla.suse.com/show_bug.cgi?id=1228079
+>
+> This specific bug is about SLE15SP5, where we have old versions of QEMU
+> and kernel (and the kernel was missing a backport), but we see it also
+> on openSUSE Tumbleweed, where we have kernel 6.9.9 and QEMU 9.0.2, e.g:
+>
+>
+>   ### Host
+>   virt136:~ # uname -a
+>   Linux virt136 6.9.9-1-default #1 SMP PREEMPT_DYNAMIC Thu Jul 11 11:31:54 UTC 2024 (8c0f797) x86_64 x86_64 x86_64 GNU/Linux
+>
+>   virt136:~ # qemu-system-x86_64 --version
+>   QEMU emulator version 9.0.2 (openSUSE Tumbleweed)
+>
+>   virt136:~ # cat /proc/cpuinfo | grep -e "vendor\|family\|model\|stepping\|microcode" | tail -5
+>   cpu family	: 25
+>   model		: 1
+>   model name	: AMD EPYC 7713 64-Core Processor
+>   stepping	: 1
+>   microcode	: 0xa0011d5
+>
+>   virt136:~ # lscpu | grep rstack
+>   Vulnerability Spec rstack overflow:   Mitigation; Safe RET
+>
+>   ### Guest
+>   virt136:~ # virsh console opensusetumbleweed
+>   Connected to domain 'opensusetumbleweed'
+>   Escape character is ^] (Ctrl + ])
+>
+>   localhost:~ # uname -a
+>   Linux localhost.localdomain 6.9.9-1-default #1 SMP PREEMPT_DYNAMIC Thu Jul 11 11:31:54 UTC 2024 (8c0f797) x86_64 x86_64 x86_64 GNU/Linux
+>
+>   localhost:~ # lscpu | grep rstack
+>   Vulnerability Spec rstack overflow:   Vulnerable: Safe RET, no microcode
+>
+>
+> Fabian and Nikolay (Cc-ed) can provide more details, if necessary.
+> AFAIUI this is due to how/when the proper bit in CPUID is set, on this
+> specific CPU model.
+>
+> In fact (and I'm quoting Nikolay): "the problem with the IBPB_BRTYPE
+> flag is that on CPUs which require the microcode fix, the flag is not
+> shown by CPUID despite it actually being available. Ini this case the
+> kernel checks whether the feature is valid by doing a specific wrmsr
+> and, if it is, it sets the flag internally in the kernel and in KVM's
+> cpuid representation".
+>
+> Yet, we don't see this in the VM, because QEMU seems to be masking it
+> (as visible, e.g., here:
+> https://bugzilla.suse.com/show_bug.cgi?id=1228079#c2)
+>
+> In one of the thread on LKML where this mitigation was discussed, we
+> found mentions (from Josh, Cc-ed) to a QEMU patch being necessary, and
+> also being ready and about to be submitted, e.g.:
+>
+> https://lore.kernel.org/lkml/20230821170520.dcovzudamnoqp7jc@treble/
+>
 
-Add support in QEMU to expose the bits to the guest OS.
+After reading some more about the subject I think the correct way
+forward is indeed a patch like the one above. I sent something to the
+list with a slight modification, you are all in copy.
 
-host:
-  # cat /sys/devices/system/cpu/vulnerabilities/spec_rstack_overflow
-  Mitigation: Safe RET
-
-before (guest):
-  $ cpuid -l 0x80000021 -1 -r
-  0x80000021 0x00: eax=0x00000045 ebx=0x00000000 ecx=0x00000000 edx=0x00000000
-                            ^
-  $ cat /sys/devices/system/cpu/vulnerabilities/spec_rstack_overflow
-  Vulnerable: Safe RET, no microcode
-
-after (guest):
-  $ cpuid -l 0x80000021 -1 -r
-  0x80000021 0x00: eax=0x18000045 ebx=0x00000000 ecx=0x00000000 edx=0x00000000
-                            ^
-  $ cat /sys/devices/system/cpu/vulnerabilities/spec_rstack_overflow
-  Mitigation: Safe RET
-
-Reported-by: Fabian Vogt <fvogt@suse.de>
-Link: https://www.amd.com/content/dam/amd/en/documents/corporate/cr/speculative-return-stack-overflow-whitepaper.pdf
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
-More info on this thread:
-https://lore.kernel.org/r/68f8b8b1ca1bf58b059f52afbd1c9c51108a074a.camel@suse.com
----
- target/i386/cpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 85ef7452c0..d33401c922 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1221,8 +1221,8 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
--            NULL, NULL, NULL, NULL,
--            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, "sbpb",
-+            "ibpb-brtype", NULL, NULL, NULL,
-         },
-         .cpuid = { .eax = 0x80000021, .reg = R_EAX, },
-         .tcg_features = 0,
--- 
-2.35.3
-
+https://lore.kernel.org/r/20240805202041.5936-1-farosas@suse.de
 
