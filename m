@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 238D7C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 07:11:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BFA5C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 07:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sarrL-0003Ui-FK; Mon, 05 Aug 2024 03:10:24 -0400
+	id 1sas8I-00026Z-7o; Mon, 05 Aug 2024 03:27:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sarrE-0003Sa-Nj
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 03:10:16 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1sas8H-000266-9A
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 03:27:53 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sarrB-0007Cy-G9
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 03:10:16 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-70eb0ae23e4so7236145b3a.0
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 00:10:08 -0700 (PDT)
+ id 1sas8E-00012D-T5
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 03:27:53 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2cf98ba0559so5435134a91.2
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 00:27:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722841806; x=1723446606;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1722842869; x=1723447669;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Fokt5wozGra5SCB9gEb2R68L3YNDR6Y6CY6GKhUpbxA=;
- b=Qo63Z3R7YEo9DAXZWb/6pTu1pRn3C6K59Wq/YUTgaNaZbe5HO5SgYIg6Oae0wAzqqi
- kfTyphMGISPbg1RdOqVnT3AhoOT9GbsQpWPCfOiIJ6lBWDiHMgVkbklteoFqLrZzZUEg
- lpdV/PxC19qXxSdKa+ZFI24FLuSW8JLxS8YSKHkefuMKty4Vupy6ILF9X87E2FVPELBe
- amM+zCp+h1W5P1Ubqckw3x6SocTynwW3TQTb3OkP63zyG23jjdg6WCIbtZsVM1+5x8Zn
- lSaFe7tNpM8Kr3mDKCPLJ4Xv+yRxcd7eFh3RVYYCK14l3EhA6AhHp/eBEoUgN4BGW3u9
- z2Ow==
+ bh=WEcnKxM26QCAmU8OuRDs2l1WoeZmP4wJpzI3LYIASN4=;
+ b=ouCtOthEMVdL3J6QvlUCzV0rRfKRawP16nw/yXamjjtPJJQo93q44i2gfQeDlOZ2nw
+ 5GkN1oFQ86vbnijsm/R28JoqtmUJK5u154/Oi99qOkzrzBdwBaEX03J8jh5ygzxg5W8o
+ vncnJgic81DxZjoJNkijXxxfoeLsdmcsYiW9RXqO2dpM2u08rKFJMuHBS76bJK/9/oXQ
+ sNohjiE8N8qMQ1nOrYQDItdp83+PImgZaQp+EzVP9Sb+PCfjZvjWTVIuu047oPpMeTAu
+ Ehvru/lzQFfxm52bgH1+OP/Y+ZpGRjip/C1jo+WMZRgZvYEU2ois9XA4sUrV80EtjTE2
+ HVqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722841806; x=1723446606;
+ d=1e100.net; s=20230601; t=1722842869; x=1723447669;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Fokt5wozGra5SCB9gEb2R68L3YNDR6Y6CY6GKhUpbxA=;
- b=nvOPP2KrmTDGacwMV8cb2UQkEnr5mftxs6lLP+B+W6XbIKQx+o7hXcSH3lsGSDYWRw
- RgP7yJtI/udwtusp1M0XqWv982XP+AZPYZsZ1MQ2M2c3mI43KFJo5cpFva3C5Qnz2lW3
- fHyoZo92vp23CUP5cOxD5miM/wrb2NrPpbg9syJMbNW+RLgwd77Sphzz6xKkz1WGg/mZ
- utgmzTPLAXsruf/1URaaxnRplqqymtHHDPUxen5q6dcBb1J49BjYyVD217smahGLGymR
- xlnKhQxnGdruFKG9s6B702psAqGw6GXv5cKXO58hfCuACEfxKrJXaMyq+5plR1YqRPpd
- 7tWQ==
+ bh=WEcnKxM26QCAmU8OuRDs2l1WoeZmP4wJpzI3LYIASN4=;
+ b=q5wc0SKiIrh2TfKC/gHOlnr7U3D9axZE/hsVNFtTnXUqIqOkBeUm69aX9ZrhMPxJmY
+ qJFoeh4vf41VPak5X9scJM6oQM3aFLHJSqpBSBrETQsPdz75ejA6oDPPX+bUOvP0mbEW
+ sYXrfMap50b+qvw85bTxPfLPoB2UJ8WW/O1J8fuLyy5wDzwjb7TZSTfwAITyYhGnWHqy
+ v78Q3OpT8QyiLukF95OeRo5Vat1XpgLXgJFSyLwXupJx8UNrIxCpmGCNaCFpxX+OAof9
+ pssua6WronH6NVGayzGX5o2wrLy1Hg/Y0Xc6SycNxki+L9MizHGJ/v3fowrIyV8L4MM7
+ qoFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVy7t/GwmeAyE6IMBCfAeDh6mtqwnQNe9oJkC0wi+T1tdMYIhU9IK/xc/KH/Pti4sTn0LQvr7jHSBLoIt8jxmxHys8AEjw=
-X-Gm-Message-State: AOJu0YwFB6LihA4eg8A9GJqj6deDCv48S+BQB/RJzB5UV137ReuiDJYj
- WkUtE1/p2im1hzm228Cb5016yfnLP5GwVJd3CmAkfDtIw8wEpUafo2vFic7HcPQ=
-X-Google-Smtp-Source: AGHT+IHhiQMhe+6oBFoQEISANdQgdkcYQ/IXf69DtNfva1zz4t7+mu5qHGyAeQOkil22TPPu64Fasw==
-X-Received: by 2002:a05:6a21:32a6:b0:1c2:8fd1:a47d with SMTP id
- adf61e73a8af0-1c6995284d2mr11694577637.6.1722841806480; 
- Mon, 05 Aug 2024 00:10:06 -0700 (PDT)
+ AJvYcCWeoDzHYp3Au3NHWPnAEqF0fpTVLfOZeqE5T9BZk/EaESITNTuvifN60loXtc5Bx7pCzbid3qTtkLfCxrQt1V/iqOaPVnY=
+X-Gm-Message-State: AOJu0Ywsu+ErV9YJRpQzjwyHssReyKC+4pEG2hNw8PZILE/wcfYlula/
+ zYtr8l7HpMQGNP5juKUIRHKD/85G9s4RsFmUL1lKuZyewJGwcMYslwx/RN22rrw=
+X-Google-Smtp-Source: AGHT+IH3vBERfzhNwqfmwXmY/UvMu2CHSHZU84XfXGTXu7bKJei6dYE2+CAEl3akM/jvZ+QZrL5OYQ==
+X-Received: by 2002:a17:90a:788a:b0:2cf:f3e9:d5c9 with SMTP id
+ 98e67ed59e1d1-2cff94581b3mr9316262a91.21.1722842869092; 
+ Mon, 05 Aug 2024 00:27:49 -0700 (PDT)
 Received: from [157.82.202.230] ([157.82.202.230])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7106ed14f38sm4795666b3a.184.2024.08.05.00.10.03
+ 98e67ed59e1d1-2cfdc4064c3sm9670369a91.10.2024.08.05.00.27.45
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 05 Aug 2024 00:10:06 -0700 (PDT)
-Message-ID: <42a4ef02-a14a-41a2-b1a9-357511afa163@daynix.com>
-Date: Mon, 5 Aug 2024 16:10:02 +0900
+ Mon, 05 Aug 2024 00:27:48 -0700 (PDT)
+Message-ID: <d94e8fda-23bb-4905-b656-3e1cb247079d@daynix.com>
+Date: Mon, 5 Aug 2024 16:27:43 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 v12 00/11] hw/pci: SR-IOV related fixes and
- improvements
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Markus Armbruster <armbru@redhat.com>,
- qemu-devel@nongnu.org, qemu-block@nongnu.org
-References: <20240804-reuse-v12-0-d3930c4111b2@daynix.com>
- <20240805023719-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
+To: Peter Xu <peterx@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
+ dmitry.fleytman@gmail.com, jasowang@redhat.com, sriram.yagnaraman@est.tech,
+ sw@weilnetz.de, qemu-devel@nongnu.org, yan@daynix.com,
+ Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
+References: <ZqktXwxBWjuAgGxZ@x1n> <Zqk09BGxlpdxMBMx@redhat.com>
+ <Zqk6x2nd3Twz--75@x1n> <39a8bb8b-4191-4f41-aaf7-06df24bf3280@daynix.com>
+ <ZqumIZcs1tCNTpRE@x1n> <b70d09a5-554a-456b-904e-59cec5836ae8@daynix.com>
+ <Zqz1vvYqRuIAPnod@x1n> <c5ea7a57-fc52-4bb7-bc4c-f3aca8da0574@daynix.com>
+ <Zq0IrhV-DgStpJtk@x1n> <8ad96f43-83ae-49ae-abc1-1e17ee15f24d@daynix.com>
+ <Zq99NcMkDMkDKBLv@x1n>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20240805023719-mutt-send-email-mst@kernel.org>
+In-Reply-To: <Zq99NcMkDMkDKBLv@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::42b;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42b.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -108,33 +108,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/08/05 15:39, Michael S. Tsirkin wrote:
-> On Sun, Aug 04, 2024 at 06:01:36PM +0900, Akihiko Odaki wrote:
->> Supersedes: <20240714-rombar-v2-0-af1504ef55de@daynix.com>
->> ("[PATCH v2 0/4] hw/pci: Convert rom_bar into OnOffAuto")
+On 2024/08/04 22:08, Peter Xu wrote:
+> On Sun, Aug 04, 2024 at 03:49:45PM +0900, Akihiko Odaki wrote:
+>> On 2024/08/03 1:26, Peter Xu wrote:
+>>> On Sat, Aug 03, 2024 at 12:54:51AM +0900, Akihiko Odaki wrote:
+>>>>>>> I'm not sure if I read it right.  Perhaps you meant something more generic
+>>>>>>> than -platform but similar?
+>>>>>>>
+>>>>>>> For example, "-profile [PROFILE]" qemu cmdline, where PROFILE can be either
+>>>>>>> "perf" or "compat", while by default to "compat"?
+>>>>>>
+>>>>>> "perf" would cover 4) and "compat" will cover 1). However neither of them
+>>>>>> will cover 2) because an enum is not enough to know about all hosts. I
+>>>>>> presented a design that will cover 2) in:
+>>>>>> https://lore.kernel.org/r/2da4ebcd-2058-49c3-a4ec-8e60536e5cbb@daynix.com
+>>>>>
+>>>>> "-merge-platform" shouldn't be a QEMU parameter, but should be something
+>>>>> separate.
+>>>>
+>>>> Do you mean merging platform dumps should be done with another command? I
+>>>> think we will want to know the QOM tree is in use when implementing
+>>>> -merge-platform. For example, you cannot define a "platform" when e.g., you
+>>>> don't know what netdev backend (e.g., user, vhost-net, vhost-vdpa) is
+>>>> connected to virtio-net devices. Of course we can include those information
+>>>> in dumps, but we don't do so for VMState.
+>>>
+>>> What I was thinking is the generated platform dump shouldn't care about
+>>> what is used as backend: it should try to probe whatever is specified in
+>>> the qemu cmdline, and it's the user's job to make sure the exact same qemu
+>>> cmdline is used in other hosts to dump this information.
+>>>
+>>> IOW, the dump will only contain the information that was based on the qemu
+>>> cmdline.  E.g., if it doesn't include virtio device at all, and if we only
+>>> support such dump for virtio, it should dump nothing.
+>>>
+>>> Then the -merge-platform will expect all dumps to look the same too,
+>>> merging them with AND on each field.
 >>
->> I submitted a RFC series[1] to add support for SR-IOV emulation to
->> virtio-net-pci. During the development of the series, I fixed some
->> trivial bugs and made improvements that I think are independently
->> useful. This series extracts those fixes and improvements from the RFC
->> series.
->>
->> [1]: https://patchew.org/QEMU/20231210-sriov-v2-0-b959e8a6dfaf@daynix.com/
->>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->> Changes in v12:
->> - Changed to ignore invalid PCI_SRIOV_NUM_VF writes as done for
->>    PCI_SRIOV_CTRL_VFE.
->> - Updated the message for patch "hw/pci: Use -1 as the default value for
->>    rombar". (Markus Armbruster)
->> - Link to v11: https://lore.kernel.org/r/20240802-reuse-v11-0-fb83bb8c19fb@daynix.com
+>> I think we will still need the QOM tree in that case. I think the platform
+>> information will look somewhat similar to VMState, which requires the QOM
+>> tree to interpret.
 > 
-> The igb issue is still with us, is it not?
+> Ah yes, I assume you meant when multiple devices can report different thing
+> even if with the same frontend / device type.  QOM should work, or anything
+> that can identify a device, e.g. with id / instance_id attached along with
+> the device class.
+> 
+> One thing that I still don't know how it works is how it interacts with new
+> hosts being added.
+> 
+> This idea is based on the fact that the cluster is known before starting
+> any VM.  However in reality I think it can happen when VMs started with a
+> small cluster but then cluster extended, when the -merge-platform has been
+> done on the smaller set.
+> 
+>>
+>>>
+>>> Said that, I actually am still not clear on how / whether it should work at
+>>> last.  At least my previous concern (1) didn't has a good answer yet, on
+>>> what we do when profile collisions with qemu cmdlines.  So far I actually
+>>> still think it more straightforward that in migration we handshake on these
+>>> capabilities if possible.
+>>>
+>>> And that's why I was thinking (where I totally agree with you on this) that
+>>> whether we should settle a short term plan first to be on the safe side
+>>> that we start with migration always being compatible, then we figure the
+>>> other approach.  That seems easier to me, and it's also a matter of whether
+>>> we want to do something for 9.1, or leaving that for 9.2 for USO*.
+>>
+>> I suggest disabling all offload features of virtio-net with 9.2.
+>>
+>> I want to keep things consistent so I want to disable all at once. This
+>> change will be very uncomfortable for us, who are implementing offload
+>> features, but I hope it will motivate us to implement a proper solution.
+>>
+>> That said, it will be surely a breaking change so we should wait for 9.1
+>> before making such a change.
+> 
+> Personally I don't worry too much on other offload bits besides USO* so far
+> if we have them ON for longer time.  My wish was that they're old good
+> kernel features mostly supported everywhere who runs QEMU, then we're good.
 
-Yes, if you are talking about the problem with s390x/libvirt. That is 
-why it has for-9.2 tag.
+Unfortunately, we cannot expect everyone runs Linux, and the offload 
+features are provided by Linux. However, QEMU can run on other 
+platforms, and offload features may be provided by vhost-user or vhost-vdpa.
 
-It is actually not specific to igb but also affects nvme. The upcoming 
-virtio-net-pci's SR-IOV will not be affected, but it is not present yet.
+> 
+> And I definitely worry about future offload features, or any feature that
+> may probe host like this and auto-OFF: I hope we can do them on the safe
+> side starting from day1.
+> 
+> So I don't know whether we should do that to USO* only or all.  But I agree
+> with you that'll definitely be cleaner.
+> 
+> On the details of how to turn them off properly..  Taking an example if we
+> want to turn off all the offload features by default (or simply we replace
+> that with USO-only)..
+> 
+> Upstream machine type is flexible to all kinds of kernels, so we may not
+> want to regress anyone using an existing machine type even on perf,
+> especially if we want to turn off all.
+> 
+> In that case we may need one more knob (I'm assuming this is virtio-net
+> specific issue, but maybe not; using it as an example) to make sure the old
+> machine types perfs as well, with:
+> 
+>    - x-virtio-net-offload-enforce
+> 
+>      When set, the offload features with value ON are enforced, so when
+>      the host doesn't support a offload feature it will fail to boot,
+>      showing the error that specific offload feature is not supported by the
+>      virtio backend.
+> 
+>      When clear, the offload features with value ON are not enforced, so
+>      these features can be automatically turned OFF when it's detected the
+>      backend doesn't support them.  This may bring best perf but has the
+>      risk of breaking migration.
+
+"[PATCH v3 0/5] virtio-net: Convert feature properties to OnOffAuto" 
+adds "x-force-features-auto" compatibility property to virtio-net for 
+this purpose:
+https://lore.kernel.org/r/20240714-auto-v3-0-e27401aabab3@daynix.com
+
+> 
+> With that,
+> 
+>    - On old machine types (compat properties):
+> 
+>      - set "x-virtio-net-offload-enforce" OFF
+>      - set all offload features ON
+> 
+>    - On new machine types (the default values):
+> 
+>      - set "x-virtio-net-offload-enforce" ON
+>      - set all offload features OFF
+> 
+> And yes, we can do that until 9.2, but with above even 9.1 should be safe
+> to do.  9.2 might be still easier just to think everything through again,
+> after all at least USO was introduced in 8.2 so not a regress in 9.1.
+> 
+>>
+>> By the way, I am wondering perhaps the "no-cross-migrate" scenario can be
+>> implemented relatively easy in a way similar to compatibility properties.
+>> The idea is to add the "no-cross-migrate" property to machines. If the
+>> property is set to "on", all offload features of virtio-net will be set to
+>> "auto". virtio-net will then probe the offload features and enable available
+>> offloading features.
+> 
+> If it'll become a device property, there's still the trick / concern where
+> no-cross-migrate could conflict with the other offload feature that was
+> selected explicilty by an user (e.g. no-cross-migrate=ON + uso=OFF).
+With no-cross-migrate=ON + uso=OFF, no-cross-migrate will set uso=auto, 
+but the user overrides with uso=off. As the consequence, USO will be 
+disabled but all other available offload features will be enabled.
+
+Regards,
+Akihiko Odaki
 
