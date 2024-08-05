@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A8E0C52D70
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 534B7C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 08:10:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sasnJ-0005bl-Lp; Mon, 05 Aug 2024 04:10:17 -0400
+	id 1sasnJ-0005aR-KL; Mon, 05 Aug 2024 04:10:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gorg@gorgnet.net>) id 1sao8P-0008Jc-VZ
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 23:11:46 -0400
+ (Exim 4.90_1) (envelope-from <gorg@gorgnet.net>) id 1sao8C-0008Dv-KP
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 23:11:32 -0400
 Received: from gorgnet.net ([2a01:4f9:c012:ca43::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gorg@gorgnet.net>) id 1sao8N-0007kq-Pm
- for qemu-devel@nongnu.org; Sun, 04 Aug 2024 23:11:45 -0400
+ (Exim 4.90_1) (envelope-from <gorg@gorgnet.net>) id 1sao88-0007hA-70
+ for qemu-devel@nongnu.org; Sun, 04 Aug 2024 23:11:32 -0400
 DKIM-Signature: v=1; a=ed25519-sha256; c=simple/simple;
- d=gorgnet.net; s=b1; x=1723432298; q=dns/txt; h=Received:
- Received:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
- References:MIME-Version:Content-Transfer-Encoding; bh=12ZBLluo2
- HT3x9B1em7w3Kj1MlSenqoqprkQNsCQdhw=; b=QiRw7SIHjjTOi8jDtDhLxFbIS
- QLZ+osZQXdT9+151rpdcV4mVQXu4oNMc5bZMSUqdZBDK7LAYW45yqFFCxL+CA==
+ d=gorgnet.net; s=b1; x=1723432279; q=dns/txt; h=Received:
+ Received:From:To:Cc:Subject:Date:Message-ID:MIME-Version:
+ Content-Transfer-Encoding; bh=Xz285uRSybBtiTbzvqcQNiuBc2k3ceYY0
+ 2oDTMiNJwQ=; b=ypfmbzc2jvSsuKaS4gxOEOMYjUnaFR40KsX5vV5blIIclb+rk
+ PaKaNfie2E5oxbIFYwFzt0I4YflU9WMDF/rAQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=gorgnet.net; s=a1; x=1723432298; q=dns/txt; h=Received:
- Received:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
- References:MIME-Version:Content-Transfer-Encoding; bh=12ZBLluo2
- HT3x9B1em7w3Kj1MlSenqoqprkQNsCQdhw=; b=sMgmL59RND/qSHgII5nsOvLjC
- vtrX9iknOXqKMSIy+5VJRvdMeE72nwgG73PafLFLxFQwBUQOwCbvr+GK+nFsQJLA
- oAOG44MFxArzIQvkN38sCGb6wZcJqlrLSGO1KOfngQ5U4Rg/y4Fe67VgvyVFq3L4
- n/TpREoLwUY2whIPzcaijbPvLNgPK5LlIt4cEKQ8MKjeZQYuj7roOPk57sZjpgoD
- XoCkoQvaV+543TSlTla9NyjPu9oGvRZTiQMvB/BdAntBOnWsyr9LsvYPIG5x3P33
- 3hAgn/J2PqziGGmMpd+2lNBcTj9kzmfjsDRVmuTpGaG/r7canIkzWo3rF80DA==
-Received: (qmail 9682 invoked from network); 5 Aug 2024 03:11:37 -0000
+ d=gorgnet.net; s=a1; x=1723432279; q=dns/txt; h=Received:
+ Received:From:To:Cc:Subject:Date:Message-ID:MIME-Version:
+ Content-Transfer-Encoding; bh=Xz285uRSybBtiTbzvqcQNiuBc2k3ceYY0
+ 2oDTMiNJwQ=; b=Of65wOQh+PkVgog2MEzmhqauZrCKAVhOJnJKj/1+7oyP23X1A
+ Lg2wH+Cx9rJbKf7ArTf71dbYQ0cTymS4eNZ7AtfIrqd1UcslP+yOkBxUxQwKNc7k
+ MpgABzmDFxa48ny1Dj2TVexsE3VL56Q2CYH5IoWaNt1JHIJW9iOKa7hBVlhNTYLJ
+ 2ZoFHmBwvR04/YQAqinQJLUdwVhihPU6BGoii6L4Raj+i27G7yxCpY3JzSB7YzdQ
+ SEJtk4iUUWJx9DHFr6ZWfn2njHAjP2V940WPHL316Op1EpJQ+cRRKimAvjWI02RK
+ zewf8jbW+M2tZtb7W6CdOgmRPIeOLY4423Qww==
+Received: (qmail 7206 invoked from network); 5 Aug 2024 03:11:18 -0000
 Received: from unknown (HELO localhost.localdomain)
  (gorg@gorgnet.net@73.203.127.165)
  de/crypted with TLSv1.2: ECDHE-ECDSA-CHACHA20-POLY1305 [unknown/unknown] 
- DN=none by 0 with ESMTPSA; 5 Aug 2024 03:11:37 -0000
+ DN=none by 0 with ESMTPSA; 5 Aug 2024 03:11:18 -0000
 To: qemu-devel@nongnu.org
 Cc: qemu-trivial@nongnu.org, mst@redhat.com, marcel.apfelbaum@gmail.com,
  George Matsumura <gorg@gorgnet.net>
-Subject: [PATCH 2/2] docs/specs/pci-ids: Fix markup
-Date: Sun,  4 Aug 2024 21:10:13 -0600
-Message-ID: <20240805031012.16547-4-gorg@gorgnet.net>
+Subject: [PATCH 1/2] docs/specs/pci-ids: Add missing devices
+Date: Sun,  4 Aug 2024 21:10:11 -0600
+Message-ID: <20240805031012.16547-2-gorg@gorgnet.net>
 X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240805031012.16547-2-gorg@gorgnet.net>
-References: <20240805031012.16547-2-gorg@gorgnet.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a01:4f9:c012:ca43::1;
@@ -76,32 +74,31 @@ From:  George Matsumura via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This fixes the markup of the PCI and PCIe Expander Bridge entries to be
-consistent with the rest of the file.
+Add the missing devices 1b36:000c (PCIe root port) and 1b36:000e
+(PCIe-to-PCI bridge).
 
 Signed-off-by: George Matsumura <gorg@gorgnet.net>
 ---
- docs/specs/pci-ids.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ docs/specs/pci-ids.rst | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
-index 0de13de1e4..328ab31fe8 100644
+index c0a3dec2e7..0de13de1e4 100644
 --- a/docs/specs/pci-ids.rst
 +++ b/docs/specs/pci-ids.rst
-@@ -77,11 +77,11 @@ PCI devices (other than virtio):
- 1b36:0008
-   PCIe host bridge
- 1b36:0009
--  PCI Expander Bridge (-device pxb)
-+  PCI Expander Bridge (``-device pxb``)
- 1b36:000a
+@@ -82,8 +82,12 @@ PCI devices (other than virtio):
    PCI-PCI bridge (multiseat)
  1b36:000b
--  PCIe Expander Bridge (-device pxb-pcie)
-+  PCIe Expander Bridge (``-device pxb-pcie``)
- 1b36:000c
-   PCIe Root Port (``-device pcie-root-port``)
+   PCIe Expander Bridge (-device pxb-pcie)
++1b36:000c
++  PCIe Root Port (``-device pcie-root-port``)
  1b36:000d
+   PCI xhci usb host adapter
++1b36:000e
++  PCIe-to-PCI bridge (``-device pcie-pci-bridge``)
+ 1b36:000f
+   mdpy (mdev sample device), ``linux/samples/vfio-mdev/mdpy.c``
+ 1b36:0010
 -- 
 2.46.0
 
