@@ -4,86 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FDDBC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 23:29:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2108BC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 23:35:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb780-0003eZ-1z; Mon, 05 Aug 2024 19:28:36 -0400
+	id 1sb7Do-0000qN-R1; Mon, 05 Aug 2024 19:34:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sb77y-0003dd-Ij; Mon, 05 Aug 2024 19:28:34 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sb7Dn-0000p2-Ht; Mon, 05 Aug 2024 19:34:35 -0400
+Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sb77w-0001Nf-5W; Mon, 05 Aug 2024 19:28:33 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2cb5789297eso7131854a91.3; 
- Mon, 05 Aug 2024 16:28:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sb7Dm-0001xa-0i; Mon, 05 Aug 2024 19:34:35 -0400
+Received: by mail-vk1-xa2b.google.com with SMTP id
+ 71dfb90a1353d-4ef76f04977so37497e0c.2; 
+ Mon, 05 Aug 2024 16:34:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722900509; x=1723505309; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1722900872; x=1723505672; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=865ipMsfnPjqevXUhuNC1hjLcECXbBAzIH19t+juWX8=;
- b=PVh/5S5+qutUwz63BWDwdc18mqUDXkbq8is0ofYIPgKCs0UmV7GlVsD2GFK/qcELkm
- XsI3Eo3jePBQc5FqPGOrb6+bJPJAzzne7pmSLDgr6LtuWqUhUzefGzOpkhwBlt3iYuND
- Mzqg0yNQXBukN7wSw7ELEorZ9qamludz1Ddf+O39huVSNNyJpd70ofWz2b4F07c/dFUK
- 1tNYjW6ImkCH2/JYKaxwLY7/pcsAjQZ9o7B7UTYKt3nduy4/Drsju3BJT8k27hDPfMnY
- YwoET7GS+TwJABV0VlEk3575UTmpQpJtwogTfSuBW74lF8dU5nZidr9ZyBBjjhfCuwGE
- oKJg==
+ bh=+cb3dDnvI4ENJjMQ0jNRvNM9q+TfH0RxzcjqT34rBw4=;
+ b=AWnvDsLrgkxjY67rPYIQ8ooxUGbhhWGcMyruUBvwuvjNKHyXZXmA7yJ5nvwwoBc0Zs
+ uLgrNAi2xDzQlpiXN8TQobJYl26nJgcIhkKaAni8k0SDDcUNuLxCsyV2rIeq2l8bnSre
+ tc9blTez4144WeUeL0OyL6kZ5gRKeJ8KB/FVyIqVCMZHeS3Sr0UHcQdBjt/+VU2sArG1
+ oY2LD2WNG8h5UWJJNZZgZTWfxnlUQ8jHfRxXzGF5Cj/BY995s6vN2yq0u9zExZmlIbIv
+ ycj99l/F6zsmVta5he8Mx9iCCYYCTSo2beL22xsMYpCfxo/oaFHiFW26R0/9yfh3we1u
+ 0Jew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722900509; x=1723505309;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1722900872; x=1723505672;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=865ipMsfnPjqevXUhuNC1hjLcECXbBAzIH19t+juWX8=;
- b=r/FQaMtPyPSuZcz/Yx50jnKRjQEu52ElNGMTY4ss6RxMICq8PYtP3Gm3fCtjgUaMHO
- KklBHeik/jnPISy6HGZiOMhymcBKZphOo6569dZzgGPXleKRw/kyEJ2F45r931F6FO2u
- l2YCwGkQLzqGMWmaKxZROxoxWkEBFVfQ5T4RDTOezFQY0qIHJWUrTNeZBGz/c258tujb
- 9U64fRqytL4NSA7OmqjmVIslfQHik8sBoDm1wMrZH7nKume7mlcrxgwC7HUw0S5Ym36l
- ND7k7ii+OnQYdhBzOgvCAaWy/hl30G3aLyOHzxiKTGgvPHZ+/dPzYF369DDhLUAsybHw
- Z6qw==
+ bh=+cb3dDnvI4ENJjMQ0jNRvNM9q+TfH0RxzcjqT34rBw4=;
+ b=fl+AIIMkKwHebHQbZ0yo3se7JE09Q17sDZuLOLkVQ7OpG0UMPAYCt9vVPn7OYCB+jJ
+ JJL7jz2GOQr08MlhvTJCF9uWaHaw8c3Q9P2wAFwtAkhlTs51Oh+VR32gnLJ4OblIT7O6
+ 1JGsD/JIa5m9n0xN3ScM9bwjz4pJ2cHinUspPCKbVIZkpoXo1N9KrgaV761JSLt9NVmF
+ 4SK+toUQzNgHCsRDyG3liCJb4u1hd0xywMDM6TZrN3IFMoPtsei+poefaoGtuuiRh+gY
+ wfTkjYWPw9aKkWHQLpaxsfZq+L5T6I17VophbP+GMVJ5qpoga+oMr82P1OcNlJlArSjw
+ EepQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXldQSvvoJsvY+voxnQAWFa1y4U/kAuVJev/wlxY3fjmKAyytUHeVmSPte1ZIEWvWr+4jeMadd18nUm6JAVEJXnOukm
-X-Gm-Message-State: AOJu0YzAUSZ3znyFZJ4elSChpC4ewxtFWe+73AXWdBLpkRN99XfTtR42
- aRR2hqf/DNCLOmFCCmZ8vn6UVg2Hl/2GQXkGznBe4gKX8HGp3VZgQTGKkw==
-X-Google-Smtp-Source: AGHT+IHeyx8Reax/Kx5/pMzlzcTkQymdBtooJ6suwFvh3pAEapv44zYVZLeqXV4Ara8yVFVovFD0cw==
-X-Received: by 2002:a17:90b:1e4c:b0:2c9:57a4:a8c4 with SMTP id
- 98e67ed59e1d1-2cff955901dmr11301565a91.42.1722900509438; 
- Mon, 05 Aug 2024 16:28:29 -0700 (PDT)
-Received: from wheely.local0.net ([1.145.206.202])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2cffb390be6sm7659100a91.51.2024.08.05.16.28.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Aug 2024 16:28:29 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 1/2] tests/avocado: exec_command should not consume console
- output
-Date: Tue,  6 Aug 2024 09:28:12 +1000
-Message-ID: <20240805232814.267843-2-npiggin@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240805232814.267843-1-npiggin@gmail.com>
-References: <20240805232814.267843-1-npiggin@gmail.com>
+ AJvYcCU+G97/kLO+hFCmR1di9ZFFz3W2OoCjfgY9J+Z3Cqf+bCvCAfbQza3aZnWH1YQPIfPBRO3Wa8YX6Gap9jBIHGTbPzyaAaM=
+X-Gm-Message-State: AOJu0Yw0Rxq11hOPp8J8Nrnjt9BMlHIhN99zs6cFr+up3hg6WVE1Dzp/
+ c/YE4BhHQ2bJtGGRtGSclsBGi1t7f83ddFj4owJVr/Iy0pt6Q1Da2m8QIY1GsZIixPHKsMbvx8r
+ xf4MUzRobVVzQwaltNQjXnMEdsx0=
+X-Google-Smtp-Source: AGHT+IHr+QnZDK7As6676AVokfTnm5ZZyercudkQEeBcxcSrdVEnOT8L3LF3jS7gGRNwGGLVU/WMp5rLahy8e8JoWck=
+X-Received: by 2002:a05:6122:1ad0:b0:4f5:12d3:799a with SMTP id
+ 71dfb90a1353d-4f89ff3c57fmr16232406e0c.2.1722900871728; Mon, 05 Aug 2024
+ 16:34:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1036.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+References: <20240805120259.1705016-1-dbarboza@ventanamicro.com>
+ <20240805120259.1705016-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20240805120259.1705016-2-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 6 Aug 2024 09:34:05 +1000
+Message-ID: <CAKmqyKNvYdvrOmoW4SdycSu1Bi9fwtx3SHF04L=bAM+i5WNhEA@mail.gmail.com>
+Subject: Re: [PATCH for-9.1 1/1] roms/opensbi: Update to v1.5.1
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -101,41 +93,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-_console_interaction reads data from the console even when there is only
-an input string to send, and no output data to wait on. This can cause
-lines to be missed by wait_for_console_pattern calls that follows an
-exec_command. Fix this by not reading the console if there is no pattern
-to wait for.
+On Mon, Aug 5, 2024 at 10:05=E2=80=AFPM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> A new minor version of OpenSBI was just released after our bump to
+> OpenSBI 1.5. It contains significant bug fixes that it's worth doing
+> a new update for QEMU 9.1.
+>
+> Submodule roms/opensbi 455de672dd..43cace6c36:
+>   > lib: sbi: check result of pmp_get() in is_pmp_entry_mapped()
+>   > lib: sbi: fwft: fix incorrect size passed to sbi_zalloc()
+>   > lib: sbi: dbtr: fix potential NULL pointer dereferences
+>   > include: Adjust Sscofpmf mhpmevent mask for upper 8 bits
+>   > lib: sbi_hsm: Save/restore menvcfg only when it exists
+>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-This solves occasional hangs in ppc_hv_tests.py, usually when run on KVM
-hosts that are fast enough to output important lines quickly enough to be
-consumed by exec_command, so they get missed by subsequent wait for
-pattern calls.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- tests/avocado/avocado_qemu/__init__.py | 7 +++++++
- 1 file changed, 7 insertions(+)
+Alistair
 
-diff --git a/tests/avocado/avocado_qemu/__init__.py b/tests/avocado/avocado_qemu/__init__.py
-index a3da2a96bb..ef935614cf 100644
---- a/tests/avocado/avocado_qemu/__init__.py
-+++ b/tests/avocado/avocado_qemu/__init__.py
-@@ -135,6 +135,13 @@ def _console_interaction(test, success_message, failure_message,
-             vm.console_socket.sendall(send_string.encode())
-             if not keep_sending:
-                 send_string = None # send only once
-+
-+        # Only consume console output if waiting for something
-+        if success_message is None and failure_message is None:
-+            if send_string is None:
-+                break
-+            continue
-+
-         try:
-             msg = console.readline().decode().strip()
-         except UnicodeDecodeError:
--- 
-2.45.2
-
+> ---
+>  .../opensbi-riscv32-generic-fw_dynamic.bin    | Bin 268312 -> 268312 byt=
+es
+>  .../opensbi-riscv64-generic-fw_dynamic.bin    | Bin 272504 -> 272504 byt=
+es
+>  roms/opensbi                                  |   2 +-
+>  3 files changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/pc-bios/opensbi-riscv32-generic-fw_dynamic.bin b/pc-bios/ope=
+nsbi-riscv32-generic-fw_dynamic.bin
+> index 7ec260ff40..b2e740010b 100644
+> Binary files a/pc-bios/opensbi-riscv32-generic-fw_dynamic.bin and b/pc-bi=
+os/opensbi-riscv32-generic-fw_dynamic.bin differ
+> diff --git a/pc-bios/opensbi-riscv64-generic-fw_dynamic.bin b/pc-bios/ope=
+nsbi-riscv64-generic-fw_dynamic.bin
+> index 090c0cf6ac..018b4731a7 100644
+> Binary files a/pc-bios/opensbi-riscv64-generic-fw_dynamic.bin and b/pc-bi=
+os/opensbi-riscv64-generic-fw_dynamic.bin differ
+> diff --git a/roms/opensbi b/roms/opensbi
+> index 455de672dd..43cace6c36 160000
+> --- a/roms/opensbi
+> +++ b/roms/opensbi
+> @@ -1 +1 @@
+> -Subproject commit 455de672dd7c2aa1992df54dfb08dc11abbc1b1a
+> +Subproject commit 43cace6c3671e5172d0df0a8963e552bb04b7b20
+> --
+> 2.45.2
+>
+>
 
