@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2108BC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 23:35:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0C31C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon,  5 Aug 2024 23:36:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb7Do-0000qN-R1; Mon, 05 Aug 2024 19:34:36 -0400
+	id 1sb7FE-0004Y8-4O; Mon, 05 Aug 2024 19:36:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sb7Dn-0000p2-Ht; Mon, 05 Aug 2024 19:34:35 -0400
-Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
+ id 1sb7FC-0004TZ-Vv; Mon, 05 Aug 2024 19:36:03 -0400
+Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sb7Dm-0001xa-0i; Mon, 05 Aug 2024 19:34:35 -0400
-Received: by mail-vk1-xa2b.google.com with SMTP id
- 71dfb90a1353d-4ef76f04977so37497e0c.2; 
- Mon, 05 Aug 2024 16:34:32 -0700 (PDT)
+ id 1sb7F2-0002Fx-OR; Mon, 05 Aug 2024 19:35:54 -0400
+Received: by mail-vs1-xe2a.google.com with SMTP id
+ ada2fe7eead31-4928989e272so70083137.2; 
+ Mon, 05 Aug 2024 16:35:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722900872; x=1723505672; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1722900951; x=1723505751; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+cb3dDnvI4ENJjMQ0jNRvNM9q+TfH0RxzcjqT34rBw4=;
- b=AWnvDsLrgkxjY67rPYIQ8ooxUGbhhWGcMyruUBvwuvjNKHyXZXmA7yJ5nvwwoBc0Zs
- uLgrNAi2xDzQlpiXN8TQobJYl26nJgcIhkKaAni8k0SDDcUNuLxCsyV2rIeq2l8bnSre
- tc9blTez4144WeUeL0OyL6kZ5gRKeJ8KB/FVyIqVCMZHeS3Sr0UHcQdBjt/+VU2sArG1
- oY2LD2WNG8h5UWJJNZZgZTWfxnlUQ8jHfRxXzGF5Cj/BY995s6vN2yq0u9zExZmlIbIv
- ycj99l/F6zsmVta5he8Mx9iCCYYCTSo2beL22xsMYpCfxo/oaFHiFW26R0/9yfh3we1u
- 0Jew==
+ bh=uw4csCZKo0Irivc1VoFyWmCXAXveMzT4tgkHTvKy88I=;
+ b=ZPLh9yKwJJ/rcdn5CLBGVx+lObOv5XNfgDAEuZ9zYaD933NJ+Rw2DZhTHpMU6uh72/
+ Ch1k9kGyEcHQ+cZnOcPDPIPMZrqVRxTbWMqfQdY8Qf6rT8qfnFalVCDbjlahHc50zSqJ
+ NLLKo82I+JeLAQla2r0WZhFdVEyPLZcMbjUrZSrq/FqFG3Zh+YHrMmqqhoBK8tgY3/Mr
+ oJ700UYxv4tvIyzFfQLbMpVptjVavrM/u6SZMN3x8gD+aZUeuCajF+Y4HVFn5Oo8hcSL
+ efab5fIM/xpIDl81jhkZzkCClwuxlhV113TKV6xa7exl6+kWsGEw5bS3x4ct+ZT6Dwsj
+ HEyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722900872; x=1723505672;
+ d=1e100.net; s=20230601; t=1722900951; x=1723505751;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+cb3dDnvI4ENJjMQ0jNRvNM9q+TfH0RxzcjqT34rBw4=;
- b=fl+AIIMkKwHebHQbZ0yo3se7JE09Q17sDZuLOLkVQ7OpG0UMPAYCt9vVPn7OYCB+jJ
- JJL7jz2GOQr08MlhvTJCF9uWaHaw8c3Q9P2wAFwtAkhlTs51Oh+VR32gnLJ4OblIT7O6
- 1JGsD/JIa5m9n0xN3ScM9bwjz4pJ2cHinUspPCKbVIZkpoXo1N9KrgaV761JSLt9NVmF
- 4SK+toUQzNgHCsRDyG3liCJb4u1hd0xywMDM6TZrN3IFMoPtsei+poefaoGtuuiRh+gY
- wfTkjYWPw9aKkWHQLpaxsfZq+L5T6I17VophbP+GMVJ5qpoga+oMr82P1OcNlJlArSjw
- EepQ==
+ bh=uw4csCZKo0Irivc1VoFyWmCXAXveMzT4tgkHTvKy88I=;
+ b=k6gSC9Bssq4F5o5xbeXRIGuHElzs+JuHjgYtTa533Bh4VeNLxQ3QjcYQ5AZtCobW9U
+ ESB36/L8aD6MHipAdevs6S0oajNALcvdA+fWkI/HHBBbd5U341WhDxw3SYJAVVFCWBVo
+ 1yFr4VqRLSPcxltF0aU723asDmuZyUbnN3Zpb8YYsX/VdtV99J+rbOah1bN0R35nf2/y
+ ZUA++ciwNonr2qjwbY8O4cdcCdnb6y1CRaLL43fazWQQG8/2DmJcUIjhykb85cKQs5ij
+ bn26fer7Yek6NjcFJPQDHulDOotUyxf7ordSQpyM1GrJCVmbozW/6+kebURGRQWWh0cH
+ rGQw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+G97/kLO+hFCmR1di9ZFFz3W2OoCjfgY9J+Z3Cqf+bCvCAfbQza3aZnWH1YQPIfPBRO3Wa8YX6Gap9jBIHGTbPzyaAaM=
-X-Gm-Message-State: AOJu0Yw0Rxq11hOPp8J8Nrnjt9BMlHIhN99zs6cFr+up3hg6WVE1Dzp/
- c/YE4BhHQ2bJtGGRtGSclsBGi1t7f83ddFj4owJVr/Iy0pt6Q1Da2m8QIY1GsZIixPHKsMbvx8r
- xf4MUzRobVVzQwaltNQjXnMEdsx0=
-X-Google-Smtp-Source: AGHT+IHr+QnZDK7As6676AVokfTnm5ZZyercudkQEeBcxcSrdVEnOT8L3LF3jS7gGRNwGGLVU/WMp5rLahy8e8JoWck=
-X-Received: by 2002:a05:6122:1ad0:b0:4f5:12d3:799a with SMTP id
- 71dfb90a1353d-4f89ff3c57fmr16232406e0c.2.1722900871728; Mon, 05 Aug 2024
- 16:34:31 -0700 (PDT)
+ AJvYcCXxxum7hOlGVTLziSASc+FS/iQTvMzLLusBR0RFShXj9IXOMO8EJ+HLrODfZyVhNXDPw4VSIK4ypzaVeaXUVpskAbK2uow=
+X-Gm-Message-State: AOJu0YyG4bW2G34DUy0Q2Z55b2aRC07u1QKGg6M2imdiOr3eCM/mF4bP
+ xlGRbwJ6PdrTO9wo4h2prrfm8DYDHDLInZOlHQMFXb2HpsTLZYrKDgMc3qHD8mTGydmvkNTPLSO
+ kMpo9xgqksU2PhkXZIt2HvWQJTSM=
+X-Google-Smtp-Source: AGHT+IE6IQNab4+LdvDil9FmyUSimZANYn/eG4GZqWC0s4F8AymZP6GN1871zPPmAazABj4IiL27OPMZ6ufKEpaJTGw=
+X-Received: by 2002:a05:6102:c4d:b0:492:a8ed:e32f with SMTP id
+ ada2fe7eead31-4945beafef3mr15175611137.21.1722900950751; Mon, 05 Aug 2024
+ 16:35:50 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240805120259.1705016-1-dbarboza@ventanamicro.com>
- <20240805120259.1705016-2-dbarboza@ventanamicro.com>
-In-Reply-To: <20240805120259.1705016-2-dbarboza@ventanamicro.com>
+In-Reply-To: <20240805120259.1705016-1-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 6 Aug 2024 09:34:05 +1000
-Message-ID: <CAKmqyKNvYdvrOmoW4SdycSu1Bi9fwtx3SHF04L=bAM+i5WNhEA@mail.gmail.com>
-Subject: Re: [PATCH for-9.1 1/1] roms/opensbi: Update to v1.5.1
+Date: Tue, 6 Aug 2024 09:35:24 +1000
+Message-ID: <CAKmqyKNOAuRzOMimjnxhr7sxq8htv7Otv69Kzpz7HCXJ8yrTzQ@mail.gmail.com>
+Subject: Re: [PATCH for-9.1 0/1] roms/opensbi: update to v1.5.1
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
  palmer@rivosinc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2a;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -93,27 +92,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 5, 2024 at 10:05=E2=80=AFPM Daniel Henrique Barboza
+On Mon, Aug 5, 2024 at 10:04=E2=80=AFPM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> A new minor version of OpenSBI was just released after our bump to
-> OpenSBI 1.5. It contains significant bug fixes that it's worth doing
-> a new update for QEMU 9.1.
+> Hi,
 >
-> Submodule roms/opensbi 455de672dd..43cace6c36:
->   > lib: sbi: check result of pmp_get() in is_pmp_entry_mapped()
->   > lib: sbi: fwft: fix incorrect size passed to sbi_zalloc()
->   > lib: sbi: dbtr: fix potential NULL pointer dereferences
->   > include: Adjust Sscofpmf mhpmevent mask for upper 8 bits
->   > lib: sbi_hsm: Save/restore menvcfg only when it exists
+> OpenSBI v1.5.1, a bug fix release launched shortly after v1.5, contains
+> several bug fixes that we ended up missing in our refresh to v1.5 a
+> couple of weeks ago.
 >
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> It's a purely bug fix update from what we already have in v1.5, so I
+> believe we're justified into doing this update during the bug fix
+> freeze.
+>
+> Alistair, the patch was created with --no-binary as you suggested in the
+> last OpenSBI update I sent. Please fetch both binaries from:
+>
+> https://gitlab.com/danielhb/qemu/-/commits/opensbi1.5.1
+>
+>
+> Daniel Henrique Barboza (1):
+>   roms/opensbi: Update to v1.5.1
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
-> ---
+>
 >  .../opensbi-riscv32-generic-fw_dynamic.bin    | Bin 268312 -> 268312 byt=
 es
 >  .../opensbi-riscv64-generic-fw_dynamic.bin    | Bin 272504 -> 272504 byt=
@@ -121,23 +128,6 @@ es
 >  roms/opensbi                                  |   2 +-
 >  3 files changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/pc-bios/opensbi-riscv32-generic-fw_dynamic.bin b/pc-bios/ope=
-nsbi-riscv32-generic-fw_dynamic.bin
-> index 7ec260ff40..b2e740010b 100644
-> Binary files a/pc-bios/opensbi-riscv32-generic-fw_dynamic.bin and b/pc-bi=
-os/opensbi-riscv32-generic-fw_dynamic.bin differ
-> diff --git a/pc-bios/opensbi-riscv64-generic-fw_dynamic.bin b/pc-bios/ope=
-nsbi-riscv64-generic-fw_dynamic.bin
-> index 090c0cf6ac..018b4731a7 100644
-> Binary files a/pc-bios/opensbi-riscv64-generic-fw_dynamic.bin and b/pc-bi=
-os/opensbi-riscv64-generic-fw_dynamic.bin differ
-> diff --git a/roms/opensbi b/roms/opensbi
-> index 455de672dd..43cace6c36 160000
-> --- a/roms/opensbi
-> +++ b/roms/opensbi
-> @@ -1 +1 @@
-> -Subproject commit 455de672dd7c2aa1992df54dfb08dc11abbc1b1a
-> +Subproject commit 43cace6c3671e5172d0df0a8963e552bb04b7b20
 > --
 > 2.45.2
 >
