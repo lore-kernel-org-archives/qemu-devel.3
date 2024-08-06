@@ -4,74 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFA1EC3DA64
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC89CC49EA1
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:15:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbK15-0005gx-1o; Tue, 06 Aug 2024 09:14:19 -0400
+	id 1sbK0P-0002vq-HA; Tue, 06 Aug 2024 09:13:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sbK0j-0004E0-Ge; Tue, 06 Aug 2024 09:13:58 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1sbK0L-0002iP-Te; Tue, 06 Aug 2024 09:13:34 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sbK0f-0003Ws-TF; Tue, 06 Aug 2024 09:13:56 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-1fd9e70b592so5886315ad.3; 
- Tue, 06 Aug 2024 06:13:52 -0700 (PDT)
+ id 1sbK0K-0003U4-7A; Tue, 06 Aug 2024 09:13:33 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-70f5ef740b7so465205b3a.2; 
+ Tue, 06 Aug 2024 06:13:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722950030; x=1723554830; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6XYyJCLzvnn8wO2a9+7AscKvhpo1XrKV7Sx5tGxYTLM=;
- b=EpS8697Nwudjvl0eIj1OD+SsMSbRFRYLSUmPnweSxc+3x10UGTlQUYGmVVaZFxW1bu
- iO1cCtXgScLNVfW07trCZ1RWtubraa+F1d7wKxQj9+AWhqV6PQ9HxicNEaPybNWpv9fJ
- aE+sPwXvedq/m0bqSIPqYL8i46KBez/xTnKv+PSh5FQEfpkK0q7HuPBIQIO211WxnnxL
- rbnF8K6I+rCUVnulG5TOeoSyFJ89R9t0CE42vY5cIUSteC3KA0HZMB58SgX4AYqoDibz
- GIuvRXDuYBsxL/tJCxmrow5lZB+m+yzapVY/gC5g9ODsn7en5GFhp9RULeD8FUsSvTaZ
- w9OQ==
+ d=gmail.com; s=20230601; t=1722950008; x=1723554808; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qlAsZT4AulQJCTyqDzqJuYc0MJQ/i/89K4mepYy3Dcc=;
+ b=gxm75Hr3/gnPBsFAPR9M1jz/phqxeBl7CRA162qCrmwTy+eTAh8HSrc78QSctVmxeR
+ NfuJVAwyGn9AhnwIblOkNalHVNgmBc2/Cl91KStAQP02fIoKfQ6w6nMoQNKYq3blHVv/
+ fiadAspuUJu4MjJOFT2uFSVvo0d1q3BGdo1KUNKXFGp3Fud6QhpEnL5QVobJ2crPYdEt
+ fKeEhox1QBOikWAhC22fRtc2m/n8eRyCps83FHAUvTnj4Q3FfyWWemqqmi9B7hjmk7+O
+ 6/pWkmRItDdRBf9ghpPzljeaEl0zdHodlVuYjqHHl3607+b/b+hZvVm6i4qlhhk/5tMN
+ NwXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722950030; x=1723554830;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6XYyJCLzvnn8wO2a9+7AscKvhpo1XrKV7Sx5tGxYTLM=;
- b=k/cBk2UFEsHm87ABueY1Ls9WRreh5ObBi9XPzmj1qKssOr5fJF1BlTtA7twH6EKWIj
- tPrFztKciBBcXqB0xI/gB8R0wPxG0h6ODfIUq93DYBCIHuyV7o50KIBxUkyHFQqLL5P2
- vWcTxr007Y0FjOQgiBqcRgSkOHNpGWKMemp35tfKmXBl583+2wNQY6sAIGk840RFyKH+
- 9qBtUlCiPE0sRuZnK1clWAw3lwi6ERVIAZD/La+ThWd3RNDgZd8O0VaKWPlm0bu8FZfe
- 6URMMHNKg4qJTbTocnWBXz4uVq6I9Q0+1D1PSXITPv2uWx2ux5Ku7yUTnGpdjJCbeG1M
- c+XA==
+ d=1e100.net; s=20230601; t=1722950008; x=1723554808;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qlAsZT4AulQJCTyqDzqJuYc0MJQ/i/89K4mepYy3Dcc=;
+ b=IhiUm9geIB7ZQXlCgET4PiBZmFrDjhKOkg3CywoLGfCZfaRBMAa7zYXkVzrXKfkjYi
+ IxGar1Ak/mcTWL6qH8iVAESqEgBSk8OkHHzPMi76625IXGlwwBY3ThgWXX/W098GjTGg
+ LxsQkYNzkygWWcDfwL0fa4yxccmFemN3fYE8tpWDbA2qxsNmlBg3ylGwiws/e5yGv52j
+ uQIPXw8ZOmhpbI7NSuJAdAh+P2rXpHD1ARJE+ay36Ixasu0n1w7AT5+3iwC8wDDlnbuB
+ NE/osVRXA9lUmQpDQA7YzzF3I3aG12I9YDx79ZNquDwzWxjyNiXqS//aMUmQJKwsLPEp
+ paNg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXCe3ctG7pqpn6U02sgx6hs8tNRGiJx/ck1Y6sL1Xnx6nEoUO1nhdN4bteF2K13sRbKeo5HVcYNrxwLVMxRxYFISObDUY0=
-X-Gm-Message-State: AOJu0YwXxgGsOx3LUGyvu8cSZ7mLNJynYYMR1RsCpox9vrgV0TGlDLwM
- GpmWuz6zozJ1YsNOJ8u1TuQkbxiwrT2POwTzDq0N3BMMh0b+2NCtz/DzVdd4
-X-Google-Smtp-Source: AGHT+IFVTUR2zNJzggAN83mRWimea12aZp2Q4ejiZxQJ7ffEe/QORbo0/RtebXbwUR/u4Mxnr/Ub1Q==
-X-Received: by 2002:a17:902:db04:b0:200:7d10:b7c9 with SMTP id
- d9443c01a7336-2007d10b8e1mr9796865ad.28.1722950030218; 
- Tue, 06 Aug 2024 06:13:50 -0700 (PDT)
+ AJvYcCXX7PEXHllvYlId8MQixvTpekJRCFDfcM/yYy0dl8KGd0OnLZyfSPK5cYMiZGUerQo+tNFrijAdkP+SWdrPiH8hSCJli0o=
+X-Gm-Message-State: AOJu0Yyr5cLXn75EHRtLYIr4OmmTjrUe7hBKqb1oHjKqxmffzhCHu+/+
+ 0qpMw4lBj8oKlI61Ij2UzAIAA4TWIWNlRMxqTI1gUT/Dn9VTwgAZQGXLQcF9
+X-Google-Smtp-Source: AGHT+IGeW8y6gkuGjKe53Zv2BJrnusZSo+B8HeCxlMNBC+E/LMIxfUqt8e57voYp8cIq96CI4VWvMw==
+X-Received: by 2002:a17:902:e5c2:b0:1fc:6740:3ce6 with SMTP id
+ d9443c01a7336-1ff572592f9mr189276275ad.20.1722950008023; 
+ Tue, 06 Aug 2024 06:13:28 -0700 (PDT)
 Received: from wheely.local0.net ([1.145.149.136])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff5905b4ddsm87403425ad.173.2024.08.06.06.13.47
+ d9443c01a7336-1ff5905b4ddsm87403425ad.173.2024.08.06.06.13.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Aug 2024 06:13:49 -0700 (PDT)
+ Tue, 06 Aug 2024 06:13:27 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH 6/7] target/ppc: Fix HFSCR facility checks
-Date: Tue,  6 Aug 2024 23:13:16 +1000
-Message-ID: <20240806131318.275109-7-npiggin@gmail.com>
+Subject: [PATCH 0/7] various ppc fixes
+Date: Tue,  6 Aug 2024 23:13:10 +1000
+Message-ID: <20240806131318.275109-1-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240806131318.275109-1-npiggin@gmail.com>
-References: <20240806131318.275109-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,29 +91,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The HFSCR defines were being encoded as bit masks, but the users
-expect (and analogous FSCR defines are) bit numbers.
+This fixes LPC serirq Coverity issues introduced in the merge
+window that Cedric reported. Also fixes for an assorted bunch of 
+emulation issues recently turned up when running PowerVM firmware
+on the model.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- target/ppc/cpu.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Thanks,
+Nick
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index bd32a1a5f8..f7a2da2bbe 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -635,8 +635,8 @@ FIELD(MSR, LE, MSR_LE, 1)
- #define PSSCR_EC          PPC_BIT(43) /* Exit Criterion */
- 
- /* HFSCR bits */
--#define HFSCR_MSGP     PPC_BIT(53) /* Privileged Message Send Facilities */
--#define HFSCR_BHRB     PPC_BIT(59) /* BHRB Instructions */
-+#define HFSCR_MSGP     PPC_BIT_NR(53) /* Privileged Message Send Facilities */
-+#define HFSCR_BHRB     PPC_BIT_NR(59) /* BHRB Instructions */
- #define HFSCR_IC_MSGP  0xA
- 
- #define DBCR0_ICMP (1 << 27)
+Nicholas Piggin (7):
+  ppc/pnv: Fix LPC serirq routing calculation
+  ppc/pnv: Fix LPC POWER8 register sanity check
+  target/ppc: Fix mtDPDES targeting SMT siblings
+  target/ppc: PMIs are level triggered
+  target/ppc: Fix doorbell delivery to threads in powersave
+  target/ppc: Fix HFSCR facility checks
+  target/ppc: Fix VRMA to not check virtual page class key protection
+
+ target/ppc/cpu.h         |  5 +++--
+ hw/ppc/pnv_lpc.c         | 14 ++++++++++----
+ target/ppc/excp_helper.c | 21 +++++++++++++--------
+ target/ppc/misc_helper.c |  2 +-
+ target/ppc/mmu-hash64.c  |  9 ++++++++-
+ 5 files changed, 35 insertions(+), 16 deletions(-)
+
 -- 
 2.45.2
 
