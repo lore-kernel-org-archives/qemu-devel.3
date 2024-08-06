@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF93C52D73
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:14:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7891C49EA1
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:14:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbK0k-0004Gx-S4; Tue, 06 Aug 2024 09:14:01 -0400
+	id 1sbK0U-0003Hh-Uq; Tue, 06 Aug 2024 09:13:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sbK0a-0003dO-4W; Tue, 06 Aug 2024 09:13:48 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1sbK0S-00037O-9M; Tue, 06 Aug 2024 09:13:40 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sbK0X-0003Vi-9S; Tue, 06 Aug 2024 09:13:47 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-7a18ba4143bso348334a12.2; 
- Tue, 06 Aug 2024 06:13:42 -0700 (PDT)
+ id 1sbK0Q-0003VM-Hw; Tue, 06 Aug 2024 09:13:39 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-1fc65329979so4977545ad.0; 
+ Tue, 06 Aug 2024 06:13:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722950020; x=1723554820; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1722950016; x=1723554816; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n3vOJHdBSCS5r7re3EDV7tdNgSsbH1n37vePYDuNuvo=;
- b=is+m2jKqj1iM9YGg0pFY857XIbdg5GnnR1vHCN/QTz193adeTrwJy3VKjYFkT0J8nr
- UAG4zJJF33/r8gTBdUdabCLYgKPGfgxvZ+nIGHgHwnRUcqOD4XhbA6SfpquAinLSbOps
- 6SW/MEmGwmSE06JGmdCXwf9mHhpWSmVqbzhRfy1h0KW4OaIklnnVWDwQM1woNMSnf+LV
- N4ZvsyIz29+SYp/ZcTFpHLdNFSguouNa0oUiBDaZgUwDX15vR9nDSMLwnoJKRyzq7PjM
- sWDMSwaZdcVD5bGeKi/vCQUPxBSlg5N44A/GsL9+m2qZkpE16w/6WDP2mduotLmNZn3W
- cQBA==
+ bh=mnebB2MqX6EetROF6uhcR3JDthmIaqX5oq8YhYJ9rA4=;
+ b=VUhGPm2B59ELmnRYSjEMJ3gmgfWhOYcZ3rWizkXnmf89ltc8E5N7EkD2bcsjbtkslZ
+ pTykFnZuPry1qI6tQDWc9r3eXiS/JATpdg/v5GkzX/tTs6ZsHCUt9A/HYxRmqr0AYVQV
+ gnrsIh5J/elq2blxpraLk2BZwsYEWmyr5Xs2xMRGiKV3HtiZAIIIoJkL7TCIk1hoNMLS
+ hOOC5jO7iXiUqNGcHsztLjmsNvgbFqdix/vaUJeuVnzji1zKYdFqn5mR37UJZUq0WgrI
+ odqm8bxX26rs/ESk//+AtfLRSzQnV/ZJSTkWHGtdyIEj1vb28zM50Ws/oyI4hixz86js
+ 6kxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722950020; x=1723554820;
+ d=1e100.net; s=20230601; t=1722950016; x=1723554816;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=n3vOJHdBSCS5r7re3EDV7tdNgSsbH1n37vePYDuNuvo=;
- b=mv45OdlO+e0yjUfWXa345V9P7keze+yb9wZFbNNhWKOBMFIwbNDFr5PTTT8ZHrUbQI
- HdPaK8f7wkh4XiR7BW+SLzyFm30J/JoMXHG1wgYSn5IJhk+i7YVNLemenefT58XXXxwR
- s7Ld8wUKHJzinbUXmkMkR/wTg6vfbZz/yR1FHgfuSxDAzc6l1MFmr/JXR6q7Jx+iC+LK
- z3R4G0ffU5A09fNAdx0hyvnHhFLvrzVOXtOuhMlK1t9F0wpVCX4PPhD4Blr4iU2r5vMK
- W2Mwvz3HeOsy+OGPoImbNKrR59zHZIzRwesvoE3+65pTUoE8gnqbgsg6GFQOYASKfZoM
- I5Cg==
+ bh=mnebB2MqX6EetROF6uhcR3JDthmIaqX5oq8YhYJ9rA4=;
+ b=od/vdHg66ngfBsy23MhEtIRfSI9dj3Bn5af0q1n5TC60dMl2mVZ9EzCkPRyZvPmyWG
+ 9ToOhsu3SztyhxuNidW1tDic8k2e5iyld760VtpznGhulmkSW6lZB2uzkstKwqECYck4
+ U5ke+Fx68H5xeI5zHClj+Wa0hLMIZcq6Po/IVtLbyDHMx2fiPrIwidM/69p5yPqYKjHL
+ 3WT1fzdtmgY3NSV3lpkX6lBKxgP3oEMOco3Qq4uUwMvDhnkdE74Tmxwk0A7/SkMVSCTU
+ gwfHOHog46+ZKpGjFSctXk0E5S9nNEYRrpu214+ozfnWn0o2qKzjIu2LSFugUtSVZ1/3
+ Shtg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUvJRYR4FEKAT7TmJ1fkXWkjFCJHALxuxbh0EWD4U1CtAdMKi5cbqjQnyk+WM4dK5jygLDdxFnG/WLuNsRiUB9L1pe0BP4=
-X-Gm-Message-State: AOJu0Yy17Ibt/9JG5KFSEKThmDK5+JUBQIHZdyiYycgr0F1dTFTgjNVh
- o1sv4FvSllO7jNMt04VwhHaA77iyNTSNPd/ujGPL0PHsZfVBSYePEVm9VfD5
-X-Google-Smtp-Source: AGHT+IGW5IBw63fnL89t7pHof4im9YaPlCM4KPYrf2wAncSb1N1oJYXR7tea7mLnB6tNmQJqekXJwQ==
-X-Received: by 2002:a17:902:ce82:b0:1fd:a942:154d with SMTP id
- d9443c01a7336-1ff572c488dmr122962095ad.22.1722950020008; 
- Tue, 06 Aug 2024 06:13:40 -0700 (PDT)
+ AJvYcCXFw2nYB+0HDFHNuSd1FrM97KXqqVgsBbhmmvS2XvnbBG2cPeK5zera6EkVVJCq6rqLOh2D2KmMfapWg5RT0ABga+NMKis=
+X-Gm-Message-State: AOJu0YzagGRKfXwdUr7bDnBlzQZlhioGZ2t/uzE36PYnKebVq0AYg9Qg
+ Z74jpASLvFuaX9A3aXvXBlu38JY/J8mradqloeMsQ6CsnplA2fR19dZOM00d
+X-Google-Smtp-Source: AGHT+IHc+zac+YHMwx3ht7IXL+rjtWbA7Ny23MxRqjxjqH5H3NM6TWrgEM2VI0DEvnY3dAE5h3WzuQ==
+X-Received: by 2002:a17:902:f54b:b0:1fb:6151:f62f with SMTP id
+ d9443c01a7336-1ff572957c5mr188262655ad.28.1722950016200; 
+ Tue, 06 Aug 2024 06:13:36 -0700 (PDT)
 Received: from wheely.local0.net ([1.145.149.136])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff5905b4ddsm87403425ad.173.2024.08.06.06.13.36
+ d9443c01a7336-1ff5905b4ddsm87403425ad.173.2024.08.06.06.13.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Aug 2024 06:13:39 -0700 (PDT)
+ Tue, 06 Aug 2024 06:13:35 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH 3/7] target/ppc: Fix mtDPDES targeting SMT siblings
-Date: Tue,  6 Aug 2024 23:13:13 +1000
-Message-ID: <20240806131318.275109-4-npiggin@gmail.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH 2/7] ppc/pnv: Fix LPC POWER8 register sanity check
+Date: Tue,  6 Aug 2024 23:13:12 +1000
+Message-ID: <20240806131318.275109-3-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240806131318.275109-1-npiggin@gmail.com>
 References: <20240806131318.275109-1-npiggin@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,28 +95,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A typo in the loop over SMT threads to set irq level for doorbells
-when storing to DPDES meant everything was aimed at the CPU executing
-the instruction.
+POWER8 does not have the ISA IRQ -> SERIRQ routing system of later
+CPUs, instead all ISA IRQs are sent to the CPU via a single PSI
+interrupt. There is a sanity check in the POWER8 case to ensure the
+routing bits have not been set, because that would indicate a
+programming error.
 
+Those bits were incorrectly specified because of ppc bit numbering
+fun. Coverity detected this as an always-zero expression.
+
+Reported-by: Cédric Le Goater <clg@redhat.com>
+Resolves: Coverity CID 1558829 (partially)
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/misc_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/ppc/pnv_lpc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
-index 1b83971375..f0ca80153b 100644
---- a/target/ppc/misc_helper.c
-+++ b/target/ppc/misc_helper.c
-@@ -288,7 +288,7 @@ void helper_store_dpdes(CPUPPCState *env, target_ulong val)
-         PowerPCCPU *ccpu = POWERPC_CPU(ccs);
-         uint32_t thread_id = ppc_cpu_tir(ccpu);
+diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
+index 80b79dfbbc..8c203d2059 100644
+--- a/hw/ppc/pnv_lpc.c
++++ b/hw/ppc/pnv_lpc.c
+@@ -427,8 +427,8 @@ static void pnv_lpc_eval_serirq_routes(PnvLpcController *lpc)
+     int irq;
  
--        ppc_set_irq(cpu, PPC_INTERRUPT_DOORBELL, val & (0x1 << thread_id));
-+        ppc_set_irq(ccpu, PPC_INTERRUPT_DOORBELL, val & (0x1 << thread_id));
-     }
-     bql_unlock();
- }
+     if (!lpc->psi_has_serirq) {
+-        if ((lpc->opb_irq_route0 & PPC_BITMASK(8, 13)) ||
+-            (lpc->opb_irq_route1 & PPC_BITMASK(4, 31))) {
++        if ((lpc->opb_irq_route0 & PPC_BITMASK32(8, 13)) ||
++            (lpc->opb_irq_route1 & PPC_BITMASK32(4, 31))) {
+             qemu_log_mask(LOG_GUEST_ERROR,
+                 "OPB: setting serirq routing on POWER8 system, ignoring.\n");
+         }
 -- 
 2.45.2
 
