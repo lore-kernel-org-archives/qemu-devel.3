@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF58C3DA64
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 07:33:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0D31C3DA64
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 07:33:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbEgX-0000Vt-1g; Tue, 06 Aug 2024 03:32:45 -0400
+	id 1sbEhM-0004L9-Uu; Tue, 06 Aug 2024 03:33:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sbEgV-0000Q9-JE
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 03:32:43 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbEhA-0003Pj-6w
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 03:33:26 -0400
+Received: from mail-lj1-x22d.google.com ([2a00:1450:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sbEgT-0004BG-HP
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 03:32:43 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-7105043330aso264554b3a.0
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 00:32:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbEh6-0004FY-TK
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 03:33:22 -0400
+Received: by mail-lj1-x22d.google.com with SMTP id
+ 38308e7fff4ca-2eeb1ba0481so3455181fa.2
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 00:33:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722929559; x=1723534359; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722929599; x=1723534399; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7+pB1ILbLQxz3WhUA3kvRMP32yn3VDwTFc5aFAi1MPM=;
- b=BVHpOo0oIbrlRSU00n1ugbpPquCUMPYCXrC8cKS8rjZ9KnAxar1nhi46fWYJJXzLy9
- 6eVxXqQxorslA5Y1opKjGSxnBUj+79MlhdsHU8YxKiIlZXXcOne1vDbU38KKJyhNQ3e8
- QIh7hnK8qU+zrlsWRv5NdTShCQgW1puSPRY/HE7DlsY6jaRRyn2vriLNBZQPi8g2/UMi
- KunlFCEdRLmAXopATukmTCKI+WdaTcvTpOndx3MfoE+bjezEIflRKxPFLlVX0dxt+JBV
- foPr+dE4M/C0x7XO3Ejbe+M3O2jM+ip8UQy4WAh/Ar7wwuokagLl2SJn5xsKI/7rkcyL
- FyJw==
+ bh=CQrirKIsu1h7yRBRE4BeL1Y9tux6J2tEp0DQHqMY8EE=;
+ b=pL2aYdLeTeZcA+hbC7TTtOvL2T3OtqMKwdXoxSkWFXFbwXQHDtIPJeFBalytVReujv
+ jsBcFd8Tm8Nd/lWw16WspeFqlZa06wR8qYQm+c5W9T/fqdyAML7xHRuNMz030HHlOVXk
+ VDyqL4eOb/SU19OY/jOI7lDgCLdyPGIiy2WWyAI5C9bD98YIQB4KqhFmsx1Cgveo0L3Z
+ Y14ObHzKWKFX+RILC/U9c/4o5J7c1jQAUoEfmny/eRmAE/mBE3FqaUoQKNtjn2wMAmaA
+ S3eif6da0maNkoIXSOLgxBmfYQxDs2hfc5Mkdj7asdciRw0UlZN4mtPp4YeEb/jPbT6e
+ BcPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722929559; x=1723534359;
+ d=1e100.net; s=20230601; t=1722929599; x=1723534399;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7+pB1ILbLQxz3WhUA3kvRMP32yn3VDwTFc5aFAi1MPM=;
- b=g3+cE/Vq8lzel1OG0Kx8tbdhV+LvHHPPEV6aEF6Wm51sbSvlLiIlhiXf287LxmdNKW
- Cm77jEzjebJ1fVDtHJHJ3GF88o6TL+meVcaV/3qQpjmEgUEoWb1rQGA7467KGJiILxm1
- 591jRjN/OIxKoxNK0dZVUBKBD8OAOJ/E1iuz2/0CzCKWOUwYL2sx4VmcXw3OjGPa8zGv
- upc2WY9nskthH7swnL0j0sac/sNVfr6ULvHn4pGYulRAScaO1RkC3MBWJmBU9DRGSJPU
- odcoEMS1UfxqphmqVR7HPn3t7VWRFBK6WfHKGWvKlafZNPalekej74r1wyvjlpc0mrS/
- aXNA==
+ bh=CQrirKIsu1h7yRBRE4BeL1Y9tux6J2tEp0DQHqMY8EE=;
+ b=tmh/vZVYY4ElEsRvVct6cm9aM07nxQ8qMx5/jhWM5f4wnDxN6Gu0UaOQl9WYW96foI
+ Wq1zTMJgNVSwYH2s+zq5D+Es4aZmWn+R5UVsYDGLw1a2JhbdkCowKj9OtCxmYo8M9vlo
+ Berd97Vo7DOlfs1gLDfpLpqMH+bP2aZqrEzZM4VgElHfQW9zIcKinfe60o+vryehO2X7
+ TIV6KscELUikkRBvZ+KgDWKumgGc/fT3aa8WgON8COzOCKiSpuA+SQRAeeHOzXq4tSUm
+ o7SYbVihMV/cuHNY1vc7nXnu6JQZUnmSJVQwKEBOffkECWd0X8vHNBgq4kIJH9Ljh3y2
+ /PDQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWEmyakURI4v8RuAYUKrf58nbutGYYxRlDDfmetO0llou2bc3m5XFU1FZAts7Kg1+U4O9i1Re0oYOVpBre+MwyLu+o1Knk=
-X-Gm-Message-State: AOJu0Yy7xNUPcrCdC17V8j9r13FmmB0mUaXOVwYMDZ4lCkCTY3Z1pjNV
- t7uENny0U3KSdx0hM4Mjjd9SPmKeq/K9W0Y+rt3vnjQpqs4O4GmAaAuh1q09uGHR29uYjcdW/rp
- Gb5I=
-X-Google-Smtp-Source: AGHT+IG9LTD1TG9OvNZXRrlPD5OO9e47LAmpJ/EyjxB9WjjK0idowjVTtQWP5Fkj8rn7iEN8FmYeVA==
-X-Received: by 2002:a05:6a21:628:b0:1c6:ba9c:5d7b with SMTP id
- adf61e73a8af0-1c6ba9c6e34mr5467476637.23.1722929558652; 
- Tue, 06 Aug 2024 00:32:38 -0700 (PDT)
-Received: from [192.168.1.113] ([203.56.128.103])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff58f53985sm80989285ad.76.2024.08.06.00.32.34
+ AJvYcCVr/CcXrL8yx4kPBKSKs6iPWdeG+w317JEf1McSwTRbm3cKNup8mROM5JpCbkR8UAzhht4bsvkllGCUH+0/QsaZmvtFjEQ=
+X-Gm-Message-State: AOJu0Yw9oXM0iaBJ7zaSg6uMHKRH7a89hUjGtHKyy1iyJlQBzd6o3TFs
+ nGlGIyhjbDP239ElqNOFn/824+4vmJbca8DsN2qHcOgfPaJaEAafeGHb3skeEPs=
+X-Google-Smtp-Source: AGHT+IF8yESOckIVJDeGfazLHyz5eHBmH3EuRa5DO/1sefdDzdJDtqRlWUrmu5zpeOwkxcGFM/UAfg==
+X-Received: by 2002:a2e:3505:0:b0:2ef:22ed:3818 with SMTP id
+ 38308e7fff4ca-2f15ab0bf4cmr95870081fa.32.1722929598421; 
+ Tue, 06 Aug 2024 00:33:18 -0700 (PDT)
+Received: from [192.168.69.100] (cor91-h02-176-184-30-206.dsl.sta.abo.bbox.fr.
+ [176.184.30.206]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4282b8adc7dsm228931375e9.14.2024.08.06.00.33.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Aug 2024 00:32:38 -0700 (PDT)
-Message-ID: <9da48ab0-d88e-4d80-aca6-79dfa083bb9b@linaro.org>
-Date: Tue, 6 Aug 2024 17:29:21 +1000
+ Tue, 06 Aug 2024 00:33:17 -0700 (PDT)
+Message-ID: <eef17fc4-c73e-4926-b67e-fc967fe316a0@linaro.org>
+Date: Tue, 6 Aug 2024 09:33:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] include: bitops: Add mask extract64/deposit64
-To: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org,
- peter.maydell@linaro.org
-Cc: dbarboza@ventanamicro.com, Palmer Dabbelt <palmer@dabbelt.com>,
- Weiwei Li <liwei1518@gmail.com>, zhiwei_liu@linux.alibaba.com,
- Alistair Francis <alistair.francis@wdc.com>, atishp@rivosinc.com,
- bmeng.cn@gmail.com, qemu-riscv@nongnu.org
-References: <20240805043336.72548-1-alistair.francis@wdc.com>
- <20240805043336.72548-2-alistair.francis@wdc.com>
+Subject: Re: [PATCH 1/3] hw/display/virtio-gpu: Improve "opengl is not
+ available" error message
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>
+References: <20240731154136.3494621-1-peter.maydell@linaro.org>
+ <20240731154136.3494621-2-peter.maydell@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240805043336.72548-2-alistair.francis@wdc.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240731154136.3494621-2-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22d;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,50 +99,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/5/24 14:33, Alistair Francis wrote:
-> Based on the RISC-V get_field() and set_field() macros add
-> mask_extract64() and mask_deposit64() bitop functions. These can extrac
-> and deposit values into fields using a bit field mask directly instead
-> of a length and shift.
+On 31/7/24 17:41, Peter Maydell wrote:
+> If the user tries to use the virtio-gpu-gl device but the display
+> backend doesn't have OpenGL support enabled, we currently print a
+> rather uninformative error message:
 > 
-> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> $ qemu-system-aarch64 -M virt -device virtio-gpu-gl
+> qemu-system-aarch64: -device virtio-gpu-gl: opengl is not available
+> 
+> Since OpenGL is not enabled on display frontends by default, users
+> are quite likely to run into this. Improve the error message to
+> be more specific and to suggest to the user a path forward.
+> 
+> Note that the case of "user tried to enable OpenGL but the display
+> backend doesn't handle it" is caught elsewhere first, so we can
+> assume that isn't the problem:
+> 
+> $ qemu-system-aarch64 -M virt -device virtio-gpu-gl -display curses,gl=on
+> qemu-system-aarch64: OpenGL is not supported by the display
+> 
+> (Use of error_append_hint() requires us to add an ERRP_GUARD() to
+> the function, as noted in include/qapi/error.h.)
+> 
+> With this commit we now produce the hopefully more helpful error:
+> $ ./build/x86/qemu-system-aarch64 -M virt -device virtio-gpu-gl
+> qemu-system-aarch64: -device virtio-gpu-gl: The display backend does not have OpenGL support enabled
+> It can be enabled with '-display BACKEND,gl=on' where BACKEND is the name of the display backend to use.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2443
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   include/qemu/bitops.h | 35 +++++++++++++++++++++++++++++++++++
->   1 file changed, 35 insertions(+)
-> 
-> diff --git a/include/qemu/bitops.h b/include/qemu/bitops.h
-> index 2c0a2fe751..dd26f4a6b5 100644
-> --- a/include/qemu/bitops.h
-> +++ b/include/qemu/bitops.h
-> @@ -409,6 +409,22 @@ static inline uint64_t extract64(uint64_t value, int start, int length)
->       return (value >> start) & (~0ULL >> (64 - length));
->   }
->   
-> +/**
-> + * mask_extract64:
-> + * @value: the value to extract the bit field from
-> + * @mask: the mask bit field to extract
-> + *
-> + * Extract from the 64 bit input @value the bit mask specified by the
-> + * @mask parameter, and return it. The value returned is shifted
-> + * so that only the bit field is returned.
-> + *
-> + * Returns: the value of the bit field extracted from the input value.
-> + */
-> +static inline uint64_t mask_extract64(uint64_t value, uint64_t mask)
-> +{
-> +    return (value & mask) / (mask & ~(mask << 1));
-> +}
+>   hw/display/virtio-gpu-gl.c | 8 +++++++-
+>   1 file changed, 7 insertions(+), 1 deletion(-)
 
-Adding these miss the point of using "standard" qemu operations.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-But if we were going to add this, avoid the division.
-
-  (value & mask) >> ctz64(mask)
-
-I presume the original formulation is so that the macro can be used in the context of a 
-compile-time constant.
-
-
-r~
 
