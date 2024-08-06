@@ -4,65 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9497EC3DA64
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 09:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10B4CC3DA64
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 09:37:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbGZ5-0004xr-GA; Tue, 06 Aug 2024 05:33:11 -0400
+	id 1sbGdI-0003pK-Oq; Tue, 06 Aug 2024 05:37:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sbGZ3-0004oV-6d
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 05:33:09 -0400
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sbGdH-0003me-5b
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 05:37:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sbGZ0-00034G-5c
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 05:33:08 -0400
+ (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sbGdF-0003aA-JR
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 05:37:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722936785;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=F30WIPSvFy4+NVmGmvL/VlEj4NDidU1MYee025KwEEA=;
- b=ARaSmJGfrfuoQIDexWKvGfJN1XW+Y1ycqCsH8NmGLBG+EyvYiogVc6NUGlkhQCbsHxMJZQ
- 44LTa+IMsR+9JFzlz+q2vGKiIemHFm4xT+CjFIKnCw/ffuteOsuNdOG9JuIoX8V+xe8O+I
- 8mzK1NyreTqfNSSCGx8yQLOpAjocmBo=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1722937049;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Y043/K7nB0ES738Ru7zyw3j7IHFLYkdCff8anvZ/cJo=;
+ b=arBL6r3a4jNH4EKdLjgXs0bc3W/vyezwD7rhaCX6YM/fafuM5FdJrhsU7yiUSy851g637j
+ Fi6SxmhoPRQjrXMAvnE9/zesSMwEJNlCIZtpfEzL5n0T/c/76i67IXvfYJ6Cta1GQj/xp0
+ PJx2oHjFXmxjA/Kn5lkOavO1V1DpTWg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-454-dS08DuSnPTWRSPVOhU4wuw-1; Tue,
- 06 Aug 2024 05:33:02 -0400
-X-MC-Unique: dS08DuSnPTWRSPVOhU4wuw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-5blphtULNFuPZyU5rOmJGw-1; Tue,
+ 06 Aug 2024 05:37:23 -0400
+X-MC-Unique: 5blphtULNFuPZyU5rOmJGw-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 878041955D45; Tue,  6 Aug 2024 09:33:00 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.106])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4C0DA195605A; Tue,  6 Aug 2024 09:32:57 +0000 (UTC)
-Date: Tue, 6 Aug 2024 10:32:54 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
- qemu-block@nongnu.org, den@virtuozzo.com,
- andrey.drobyshev@virtuozzo.com, alexander.ivanov@virtuozzo.com,
- vsementsov@yandex-team.ru
-Subject: Re: [PATCH v3 2/2] nbd: Clean up clients more efficiently
-Message-ID: <ZrHtxrb5dyh3eKJu@redhat.com>
-References: <20240806022542.381883-4-eblake@redhat.com>
- <20240806022542.381883-6-eblake@redhat.com>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 55BAD1955BED; Tue,  6 Aug 2024 09:37:22 +0000 (UTC)
+Received: from server.redhat.com (unknown [10.72.112.8])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 401E21955F66; Tue,  6 Aug 2024 09:37:18 +0000 (UTC)
+From: Cindy Lu <lulu@redhat.com>
+To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+Subject: [PATCH v6] virtio-pci: Fix the use of an uninitialized irqfd
+Date: Tue,  6 Aug 2024 17:37:12 +0800
+Message-ID: <20240806093715.65105-1-lulu@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240806022542.381883-6-eblake@redhat.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -83,216 +73,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 05, 2024 at 09:21:36PM -0500, Eric Blake wrote:
-> Since an NBD server may be long-living, serving clients that
-> repeatedly connect and disconnect, it can be more efficient to clean
-> up after each client disconnects, rather than storing a list of
-> resources to clean up when the server exits.  Rewrite the list of
-> known clients to be double-linked so that we can get O(1) deletion to
-> keep the list pruned to size as clients exit.  This in turn requires
-> each client to track an opaque pointer of owner information (although
-> qemu-nbd doesn't need to refer to it).
+The crash was reported in MAC OS and NixOS, here is the link for this bug
+https://gitlab.com/qemu-project/qemu/-/issues/2334
+https://gitlab.com/qemu-project/qemu/-/issues/2321
 
-I tend to feel that this needs to be squashed into the previous
-patch.  The previous patch effectively creates unbounded memory
-usage in the NBD server. ie consider a client that connects and
-immediately disconnects, not sending any data, in a tight loop.
-It will "leak" NBDConn & QIOChanelSocket pointers for each
-iteration of the loop, only to be cleaned up when the NBD Server
-is shutdown.
+In this bug, they are using the virtio_input device. The guest notifier was
+not supported for this device, The function virtio_pci_set_guest_notifiers()
+was not called, and the vector_irqfd was not initialized.
 
-Especially given that we tagged the previous commit with a CVE
-and not this commit,  people could be misled into backporting
-only the former commit leaving them open to the leak.
+So the fix is adding the check for vector_irqfd in virtio_pci_get_notifier()
 
-> 
-> Signed-off-by: Eric Blake <eblake@redhat.com>
-> ---
->  include/block/nbd.h |  4 +++-
->  blockdev-nbd.c      | 27 ++++++++++++++++-----------
->  nbd/server.c        | 15 ++++++++++++---
->  qemu-nbd.c          |  2 +-
->  4 files changed, 32 insertions(+), 16 deletions(-)
-> 
-> diff --git a/include/block/nbd.h b/include/block/nbd.h
-> index 4e7bd6342f9..7dce9b9c35b 100644
-> --- a/include/block/nbd.h
-> +++ b/include/block/nbd.h
-> @@ -405,7 +405,9 @@ NBDExport *nbd_export_find(const char *name);
->  void nbd_client_new(QIOChannelSocket *sioc,
->                      QCryptoTLSCreds *tlscreds,
->                      const char *tlsauthz,
-> -                    void (*close_fn)(NBDClient *, bool));
-> +                    void (*close_fn)(NBDClient *, bool),
-> +                    void *owner);
-> +void *nbd_client_owner(NBDClient *client);
->  void nbd_client_get(NBDClient *client);
->  void nbd_client_put(NBDClient *client);
-> 
-> diff --git a/blockdev-nbd.c b/blockdev-nbd.c
-> index b8f00f402c6..660f89d881e 100644
-> --- a/blockdev-nbd.c
-> +++ b/blockdev-nbd.c
-> @@ -23,7 +23,7 @@
-> 
->  typedef struct NBDConn {
->      QIOChannelSocket *cioc;
-> -    QSLIST_ENTRY(NBDConn) next;
-> +    QLIST_ENTRY(NBDConn) next;
->  } NBDConn;
-> 
->  typedef struct NBDServerData {
-> @@ -32,10 +32,11 @@ typedef struct NBDServerData {
->      char *tlsauthz;
->      uint32_t max_connections;
->      uint32_t connections;
-> -    QSLIST_HEAD(, NBDConn) conns;
-> +    QLIST_HEAD(, NBDConn) conns;
->  } NBDServerData;
-> 
->  static NBDServerData *nbd_server;
-> +static uint32_t nbd_cookie; /* Generation count of nbd_server */
->  static int qemu_nbd_connections = -1; /* Non-negative if this is qemu-nbd */
-> 
->  static void nbd_update_server_watch(NBDServerData *s);
-> @@ -57,10 +58,16 @@ int nbd_server_max_connections(void)
-> 
->  static void nbd_blockdev_client_closed(NBDClient *client, bool ignored)
->  {
-> +    NBDConn *conn = nbd_client_owner(client);
-> +
->      assert(qemu_in_main_thread() && nbd_server);
-> 
-> +    object_unref(OBJECT(conn->cioc));
-> +    QLIST_REMOVE(conn, next);
-> +    g_free(conn);
-> +
->      nbd_client_put(client);
-> -    assert(nbd_server->connections > 0);
-> +    assert(nbd_server && nbd_server->connections > 0);
->      nbd_server->connections--;
->      nbd_update_server_watch(nbd_server);
->  }
-> @@ -74,12 +81,12 @@ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
->      nbd_server->connections++;
->      object_ref(OBJECT(cioc));
->      conn->cioc = cioc;
-> -    QSLIST_INSERT_HEAD(&nbd_server->conns, conn, next);
-> +    QLIST_INSERT_HEAD(&nbd_server->conns, conn, next);
->      nbd_update_server_watch(nbd_server);
-> 
->      qio_channel_set_name(QIO_CHANNEL(cioc), "nbd-server");
->      nbd_client_new(cioc, nbd_server->tlscreds, nbd_server->tlsauthz,
-> -                   nbd_blockdev_client_closed);
-> +                   nbd_blockdev_client_closed, conn);
->  }
-> 
->  static void nbd_update_server_watch(NBDServerData *s)
-> @@ -93,6 +100,8 @@ static void nbd_update_server_watch(NBDServerData *s)
-> 
->  static void nbd_server_free(NBDServerData *server)
->  {
-> +    NBDConn *conn, *tmp;
-> +
->      if (!server) {
->          return;
->      }
-> @@ -103,14 +112,9 @@ static void nbd_server_free(NBDServerData *server)
->       */
->      qio_net_listener_disconnect(server->listener);
->      object_unref(OBJECT(server->listener));
-> -    while (!QSLIST_EMPTY(&server->conns)) {
-> -        NBDConn *conn = QSLIST_FIRST(&server->conns);
-> -
-> +    QLIST_FOREACH_SAFE(conn, &server->conns, next, tmp) {
->          qio_channel_shutdown(QIO_CHANNEL(conn->cioc), QIO_CHANNEL_SHUTDOWN_BOTH,
->                               NULL);
-> -        object_unref(OBJECT(conn->cioc));
-> -        QSLIST_REMOVE_HEAD(&server->conns, next);
-> -        g_free(conn);
->      }
-> 
->      AIO_WAIT_WHILE_UNLOCKED(NULL, server->connections > 0);
-> @@ -119,6 +123,7 @@ static void nbd_server_free(NBDServerData *server)
->          object_unref(OBJECT(server->tlscreds));
->      }
->      g_free(server->tlsauthz);
-> +    nbd_cookie++;
-> 
->      g_free(server);
->  }
-> diff --git a/nbd/server.c b/nbd/server.c
-> index 892797bb111..90f48b42a47 100644
-> --- a/nbd/server.c
-> +++ b/nbd/server.c
-> @@ -124,6 +124,7 @@ struct NBDMetaContexts {
->  struct NBDClient {
->      int refcount; /* atomic */
->      void (*close_fn)(NBDClient *client, bool negotiated);
-> +    void *owner;
-> 
->      QemuMutex lock;
-> 
-> @@ -3205,14 +3206,15 @@ static coroutine_fn void nbd_co_client_start(void *opaque)
->  }
-> 
->  /*
-> - * Create a new client listener using the given channel @sioc.
-> + * Create a new client listener using the given channel @sioc and @owner.
->   * Begin servicing it in a coroutine.  When the connection closes, call
-> - * @close_fn with an indication of whether the client completed negotiation.
-> + * @close_fn and an indication of whether the client completed negotiation.
->   */
->  void nbd_client_new(QIOChannelSocket *sioc,
->                      QCryptoTLSCreds *tlscreds,
->                      const char *tlsauthz,
-> -                    void (*close_fn)(NBDClient *, bool))
-> +                    void (*close_fn)(NBDClient *, bool),
-> +                    void *owner)
->  {
->      NBDClient *client;
->      Coroutine *co;
-> @@ -3231,7 +3233,14 @@ void nbd_client_new(QIOChannelSocket *sioc,
->      client->ioc = QIO_CHANNEL(sioc);
->      object_ref(OBJECT(client->ioc));
->      client->close_fn = close_fn;
-> +    client->owner = owner;
-> 
->      co = qemu_coroutine_create(nbd_co_client_start, client);
->      qemu_coroutine_enter(co);
->  }
-> +
-> +void *
-> +nbd_client_owner(NBDClient *client)
-> +{
-> +    return client->owner;
-> +}
-> diff --git a/qemu-nbd.c b/qemu-nbd.c
-> index d7b3ccab21c..da6e36a2a34 100644
-> --- a/qemu-nbd.c
-> +++ b/qemu-nbd.c
-> @@ -390,7 +390,7 @@ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
-> 
->      nb_fds++;
->      nbd_update_server_watch();
-> -    nbd_client_new(cioc, tlscreds, tlsauthz, nbd_client_closed);
-> +    nbd_client_new(cioc, tlscreds, tlsauthz, nbd_client_closed, NULL);
->  }
-> 
->  static void nbd_update_server_watch(void)
-> -- 
-> 2.45.2
-> 
+The function virtio_pci_get_notifier() can be used in various devices.
+It could also be called when VIRTIO_CONFIG_S_DRIVER_OK is not set. In this situation,
+the vector_irqfd being NULL is acceptable. We can allow the device continue to boot
 
-With regards,
-Daniel
+If the vector_irqfd still hasn't been initialized after VIRTIO_CONFIG_S_DRIVER_OK
+is set, it means that the function set_guest_notifiers was not called before the
+driver started. This indicates that the device is not using the notifier.
+At this point, we will let the check fail.
+
+This fix is verified in vyatta,MacOS,NixOS,fedora system.
+
+The bt tree for this bug is:
+Thread 6 "CPU 0/KVM" received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 0x7c817be006c0 (LWP 1269146)]
+kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
+817         if (irqfd->users == 0) {
+(gdb) thread apply all bt
+...
+Thread 6 (Thread 0x7c817be006c0 (LWP 1269146) "CPU 0/KVM"):
+0  kvm_virtio_pci_vq_vector_use () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:817
+1  kvm_virtio_pci_vector_use_one () at ../qemu-9.0.0/hw/virtio/virtio-pci.c:893
+2  0x00005983657045e2 in memory_region_write_accessor () at ../qemu-9.0.0/system/memory.c:497
+3  0x0000598365704ba6 in access_with_adjusted_size () at ../qemu-9.0.0/system/memory.c:573
+4  0x0000598365705059 in memory_region_dispatch_write () at ../qemu-9.0.0/system/memory.c:1528
+5  0x00005983659b8e1f in flatview_write_continue_step.isra.0 () at ../qemu-9.0.0/system/physmem.c:2713
+6  0x000059836570ba7d in flatview_write_continue () at ../qemu-9.0.0/system/physmem.c:2743
+7  flatview_write () at ../qemu-9.0.0/system/physmem.c:2774
+8  0x000059836570bb76 in address_space_write () at ../qemu-9.0.0/system/physmem.c:2894
+9  0x0000598365763afe in address_space_rw () at ../qemu-9.0.0/system/physmem.c:2904
+10 kvm_cpu_exec () at ../qemu-9.0.0/accel/kvm/kvm-all.c:2917
+11 0x000059836576656e in kvm_vcpu_thread_fn () at ../qemu-9.0.0/accel/kvm/kvm-accel-ops.c:50
+12 0x0000598365926ca8 in qemu_thread_start () at ../qemu-9.0.0/util/qemu-thread-posix.c:541
+13 0x00007c8185bcd1cf in ??? () at /usr/lib/libc.so.6
+14 0x00007c8185c4e504 in clone () at /usr/lib/libc.so.6
+
+Fixes: 2ce6cff94d ("virtio-pci: fix use of a released vector")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Cindy Lu <lulu@redhat.com>
+---
+ hw/virtio/virtio-pci.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 592fdaa10f..dc31a37ec0 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -860,6 +860,9 @@ static int virtio_pci_get_notifier(VirtIOPCIProxy *proxy, int queue_no,
+     VirtIODevice *vdev = virtio_bus_get_device(&proxy->bus);
+     VirtQueue *vq;
+ 
++    if (!proxy->vector_irqfd && vdev->status & VIRTIO_CONFIG_S_DRIVER_OK)
++        return -1;
++
+     if (queue_no == VIRTIO_CONFIG_IRQ_IDX) {
+         *n = virtio_config_get_guest_notifier(vdev);
+         *vector = vdev->config_vector;
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.45.0
 
 
