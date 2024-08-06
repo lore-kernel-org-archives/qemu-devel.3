@@ -4,75 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50124C3DA64
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 07:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF58C3DA64
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 07:33:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbEgb-0000pB-G4; Tue, 06 Aug 2024 03:32:49 -0400
+	id 1sbEgX-0000Vt-1g; Tue, 06 Aug 2024 03:32:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sbEgZ-0000h6-O5
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 03:32:47 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ id 1sbEgV-0000Q9-JE
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 03:32:43 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sbEgX-0004By-47
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 03:32:47 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1fc692abba4so4205035ad.2
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 00:32:44 -0700 (PDT)
+ id 1sbEgT-0004BG-HP
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 03:32:43 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7105043330aso264554b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 00:32:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722929563; x=1723534363; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722929559; x=1723534359; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hEySo4ELoiD1N2a0rOiicpq47pHf4iQHTPdQaJF9qwA=;
- b=VKDmOj/GuvrJqy+vCnJh442LWoitvaK6HJtMmX4ow7vGTqjYqoT3g2Nv/gdj1YCGy6
- KXj9YkiVIP02of4g5nw8uJVRRAcyTZyp4W1uijOszkyHMpwo5CBerSGn+LPEw9tP/QyJ
- ejetINznV31iFfwUN9pxcy7x7MjPWt4Xb9xDmwsi35pu6+MLkGRFBrXRfOa5A4Ej81kc
- CrjTiQQJag8Cs+XR4cCTMFyhfGwYJ70HeyG48hhTHGUj/hoUMwHp0cnSXiHwoY5BS1v5
- LAuDUAqewzDGr1QKm1vJPTio07MrTZXaY1DLcHkeHN0SmBnPYQbTlRwr/ZoME0WouVPL
- +qlA==
+ bh=7+pB1ILbLQxz3WhUA3kvRMP32yn3VDwTFc5aFAi1MPM=;
+ b=BVHpOo0oIbrlRSU00n1ugbpPquCUMPYCXrC8cKS8rjZ9KnAxar1nhi46fWYJJXzLy9
+ 6eVxXqQxorslA5Y1opKjGSxnBUj+79MlhdsHU8YxKiIlZXXcOne1vDbU38KKJyhNQ3e8
+ QIh7hnK8qU+zrlsWRv5NdTShCQgW1puSPRY/HE7DlsY6jaRRyn2vriLNBZQPi8g2/UMi
+ KunlFCEdRLmAXopATukmTCKI+WdaTcvTpOndx3MfoE+bjezEIflRKxPFLlVX0dxt+JBV
+ foPr+dE4M/C0x7XO3Ejbe+M3O2jM+ip8UQy4WAh/Ar7wwuokagLl2SJn5xsKI/7rkcyL
+ FyJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722929563; x=1723534363;
+ d=1e100.net; s=20230601; t=1722929559; x=1723534359;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hEySo4ELoiD1N2a0rOiicpq47pHf4iQHTPdQaJF9qwA=;
- b=ZQ6fX/hgdfvSy/HJpZvEJhx+3FSEMVbjadww4rH51PzFOwZfow4HBFNbx1jqlpehC4
- K9e2fI4KZEtn8v5ag+d1lY0YC1UoX4pto2+86E59yb4dDqc9uDrvhZfhVu8MQq7h1ttX
- yNHU4EkNOHzeqvv6hdM+O8hKz5hiLR3LGeJ6kyKMYL320nWpMrV3PmbkWPZL5bwn8nc8
- Hg48MD8mk2oXFi0chnLjAYSIgYwbPdg6OeckPbSXXUtYkkzjwNVbW20dumqx26VGQ1rT
- f9ZtfxRAABgG/iZE3QaTrVdua4reTOUCVZsSBtH4ix6O2FamS7XfWKli+iNh725whDis
- /98Q==
-X-Gm-Message-State: AOJu0Yy0FR8yds+AiBwH3pV/kZRoGsiO+mTad8eXTokLABvxTzdr30vn
- B1XiB2ErKuOJwsjSMF+rla6FZxus2cX7UZkk5G+D0dUBnytOZ8/sarg62tBygpc=
-X-Google-Smtp-Source: AGHT+IFQo4xsvh8ckTk78bNzIwNfCQJwUQ6q9+4n9xhdXn8mYTL3+0jWD2IQuYUp3WwCmSV9/2jQCg==
-X-Received: by 2002:a17:902:d2cc:b0:1fb:54d9:ebbb with SMTP id
- d9443c01a7336-1ff57295018mr134268595ad.22.1722929563302; 
- Tue, 06 Aug 2024 00:32:43 -0700 (PDT)
+ bh=7+pB1ILbLQxz3WhUA3kvRMP32yn3VDwTFc5aFAi1MPM=;
+ b=g3+cE/Vq8lzel1OG0Kx8tbdhV+LvHHPPEV6aEF6Wm51sbSvlLiIlhiXf287LxmdNKW
+ Cm77jEzjebJ1fVDtHJHJ3GF88o6TL+meVcaV/3qQpjmEgUEoWb1rQGA7467KGJiILxm1
+ 591jRjN/OIxKoxNK0dZVUBKBD8OAOJ/E1iuz2/0CzCKWOUwYL2sx4VmcXw3OjGPa8zGv
+ upc2WY9nskthH7swnL0j0sac/sNVfr6ULvHn4pGYulRAScaO1RkC3MBWJmBU9DRGSJPU
+ odcoEMS1UfxqphmqVR7HPn3t7VWRFBK6WfHKGWvKlafZNPalekej74r1wyvjlpc0mrS/
+ aXNA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWEmyakURI4v8RuAYUKrf58nbutGYYxRlDDfmetO0llou2bc3m5XFU1FZAts7Kg1+U4O9i1Re0oYOVpBre+MwyLu+o1Knk=
+X-Gm-Message-State: AOJu0Yy7xNUPcrCdC17V8j9r13FmmB0mUaXOVwYMDZ4lCkCTY3Z1pjNV
+ t7uENny0U3KSdx0hM4Mjjd9SPmKeq/K9W0Y+rt3vnjQpqs4O4GmAaAuh1q09uGHR29uYjcdW/rp
+ Gb5I=
+X-Google-Smtp-Source: AGHT+IG9LTD1TG9OvNZXRrlPD5OO9e47LAmpJ/EyjxB9WjjK0idowjVTtQWP5Fkj8rn7iEN8FmYeVA==
+X-Received: by 2002:a05:6a21:628:b0:1c6:ba9c:5d7b with SMTP id
+ adf61e73a8af0-1c6ba9c6e34mr5467476637.23.1722929558652; 
+ Tue, 06 Aug 2024 00:32:38 -0700 (PDT)
 Received: from [192.168.1.113] ([203.56.128.103])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff58f53985sm80989285ad.76.2024.08.06.00.32.40
+ d9443c01a7336-1ff58f53985sm80989285ad.76.2024.08.06.00.32.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Aug 2024 00:32:42 -0700 (PDT)
-Message-ID: <2ff6be31-e726-4522-8601-19a9be187bf3@linaro.org>
-Date: Tue, 6 Aug 2024 17:32:29 +1000
+ Tue, 06 Aug 2024 00:32:38 -0700 (PDT)
+Message-ID: <9da48ab0-d88e-4d80-aca6-79dfa083bb9b@linaro.org>
+Date: Tue, 6 Aug 2024 17:29:21 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/13] Block layer patches
-To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org
-References: <20240805210851.314076-1-kwolf@redhat.com>
+Subject: Re: [PATCH 1/2] include: bitops: Add mask extract64/deposit64
+To: Alistair Francis <alistair23@gmail.com>, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org
+Cc: dbarboza@ventanamicro.com, Palmer Dabbelt <palmer@dabbelt.com>,
+ Weiwei Li <liwei1518@gmail.com>, zhiwei_liu@linux.alibaba.com,
+ Alistair Francis <alistair.francis@wdc.com>, atishp@rivosinc.com,
+ bmeng.cn@gmail.com, qemu-riscv@nongnu.org
+References: <20240805043336.72548-1-alistair.francis@wdc.com>
+ <20240805043336.72548-2-alistair.francis@wdc.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240805210851.314076-1-kwolf@redhat.com>
+In-Reply-To: <20240805043336.72548-2-alistair.francis@wdc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x632.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,34 +103,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/6/24 07:08, Kevin Wolf wrote:
-> The following changes since commit f9851d2ffef59b3a7f39513469263ab3b019480f:
+On 8/5/24 14:33, Alistair Francis wrote:
+> Based on the RISC-V get_field() and set_field() macros add
+> mask_extract64() and mask_deposit64() bitop functions. These can extrac
+> and deposit values into fields using a bit field mask directly instead
+> of a length and shift.
 > 
->    Merge tag 'migration-20240802-pull-request' ofhttps://gitlab.com/farosas/qemu into staging (2024-08-03 07:26:26 +1000)
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
+>   include/qemu/bitops.h | 35 +++++++++++++++++++++++++++++++++++
+>   1 file changed, 35 insertions(+)
 > 
-> are available in the Git repository at:
-> 
->    https://repo.or.cz/qemu/kevin.git tags/for-upstream
-> 
-> for you to fetch changes up to 833362e55d9acc6b7ccc1d80d8cd84688e7f5761:
-> 
->    iotests/024: exclude 'backing file format' field from the output (2024-08-05 23:00:42 +0200)
-> 
-> ----------------------------------------------------------------
-> Block layer patches
-> 
-> - scsi-block: Fix error handling with r/werror=stop
-> - Depend on newer clang for TSA, make WITH_GRAPH_RDLOCK_GUARD() fully
->    checked, fix block-copy to add missing lock
-> - vvfat: Fix write bugs for large files and add iotests
-> - Clean up blockdev-snapshot-internal-sync doc
-> - Fix iotests 024 for qed
+> diff --git a/include/qemu/bitops.h b/include/qemu/bitops.h
+> index 2c0a2fe751..dd26f4a6b5 100644
+> --- a/include/qemu/bitops.h
+> +++ b/include/qemu/bitops.h
+> @@ -409,6 +409,22 @@ static inline uint64_t extract64(uint64_t value, int start, int length)
+>       return (value >> start) & (~0ULL >> (64 - length));
+>   }
+>   
+> +/**
+> + * mask_extract64:
+> + * @value: the value to extract the bit field from
+> + * @mask: the mask bit field to extract
+> + *
+> + * Extract from the 64 bit input @value the bit mask specified by the
+> + * @mask parameter, and return it. The value returned is shifted
+> + * so that only the bit field is returned.
+> + *
+> + * Returns: the value of the bit field extracted from the input value.
+> + */
+> +static inline uint64_t mask_extract64(uint64_t value, uint64_t mask)
+> +{
+> +    return (value & mask) / (mask & ~(mask << 1));
+> +}
 
-Auto-merging qapi/block-core.json
-CONFLICT (content): Merge conflict in qapi/block-core.json
-Automatic merge failed; fix conflicts and then commit the result.
+Adding these miss the point of using "standard" qemu operations.
 
-Please re-spin, thanks.
+But if we were going to add this, avoid the division.
+
+  (value & mask) >> ctz64(mask)
+
+I presume the original formulation is so that the macro can be used in the context of a 
+compile-time constant.
 
 
 r~
