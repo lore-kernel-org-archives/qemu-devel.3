@@ -4,71 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DC1BC3DA64
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 12:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8084BC3DA64
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 12:47:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbJVc-00044R-HL; Tue, 06 Aug 2024 08:41:48 -0400
+	id 1sbJat-0000JV-1m; Tue, 06 Aug 2024 08:47:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJVa-00043w-Jv
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:41:46 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJaE-0000GO-H4
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:46:41 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJVY-0006vp-Jj
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:41:46 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5af326eddb2so10674542a12.1
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 05:41:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJaC-0007by-Be
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:46:34 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-a7d26c2297eso85998266b.2
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 05:46:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722948102; x=1723552902; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=tQs7092ZSxdRDUP+AqGLcg98ipEOV78qfOl0IcLywt4=;
- b=MroP/3rfeFoCqxPuRIM7LVMxsI5VDX5GF6rtlza9ZxiUBwMPsF/FhJEqCvO7oV3tnb
- CtehJMR+1ps5eH3cHfi5f4wftMAZlwVL8uUONUhGlVibHi1wkRCT9ngcLYwD2iv65PNo
- oMR9PxSNAWiPtBPYBwfsgaIR/OXr2Aotp2wLGrngvxykmSFDliyEojIDvspNnWm+aXtx
- 8DC/fHFylwBcCT6ROt+ke9NLdkqsvaM7ShHE8MYDERaUfDNO7kO+a1w6h5g438JDsrXR
- naqjhpSuVZUYGp13ghaN+bG4mP1tiThi/6BGPMyB5cSRt/Ov0V60+5ewyu/wpmDFTfWq
- uliQ==
+ d=linaro.org; s=google; t=1722948390; x=1723553190; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=HWB6LIVN+Zwnu4OWUNEBlS8UUHECbtdYiXqrZjFNRBA=;
+ b=HrzigwESO1sMiHokhZw9nzRvyrwgna4mgOHqlg9oa5mBjLksb4lpl0kp9C6XDqFT6r
+ MGk+vPxnCTird8qBDw4c7pc4mBLEB6uoCmyQW/qevJvaQeXYNHuBaz9r3ftv5Ud/Di9H
+ ghgifisCdqvJD+r7CxZbkD0fFGRTceF0XJnPbJceHqSUQaZAKRSl8kuzAddLkNYUfSKI
+ 4cNv61axUZy++RcIf8RhrG5e3NE8tZZllPoUq+9TXMhmEOVs75gnEIXhrhJ4btCu9t7t
+ MjMyo+xF1K87jIfBsrzEo+Vx4SvLv8kvMhMTb+a4LlF647zmA0VYwvRzXGwe5qpqs9lN
+ 2caQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722948102; x=1723552902;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tQs7092ZSxdRDUP+AqGLcg98ipEOV78qfOl0IcLywt4=;
- b=XdqQIATGnuDPuK37NcBq5uDWVhGS2IwuTSBG1Rp8fJ0SdNcSCuxGFsTn/J1KyBj3uX
- nuRphf8PCtmv6qGLrCIA1NS+rxWROgbWia7px4W21z7gSmUdiOFw2yWF30ZhE6JQ8f2N
- Muo3OWSLDhVdrjFTJgejva14ajx+huTCKa6qqVKMAi+s4IL89WbmbVosyS7eTgG0enW/
- 5BTTthPffickCeIPJrpz55KdffHkVIxmTD29W3oVpuenEZm9LsieTzUbicVr5llpP69p
- 1h/scq2NUBLvhCmRmS8vQRck/HLP/z34f72XcsIizEarWmApM/rT5KbHAvcqihgLd2mw
- zfUA==
-X-Gm-Message-State: AOJu0Yy9FDYdRFKUCYWaeIyyS11hlEUwTZ5vsasiTNmeJ/FzquGDs9jN
- 0Esi5jmhhagyU6iu28cODOSNFX4DWPF7Rafmrd6iugPablo9EqxVnRqi5rr2EX6WAPl8c9sG5OF
- l
-X-Google-Smtp-Source: AGHT+IE3PLzY8/uAlD7gioNMjWDeh4MTKJEas60nnnQ+cgUE77wLEs9G49hm7ZPMtPT+kayvzQvW+Q==
-X-Received: by 2002:a17:907:3184:b0:a7a:bae8:f2b5 with SMTP id
- a640c23a62f3a-a7dc62d867cmr1269057866b.36.1722948101860; 
- Tue, 06 Aug 2024 05:41:41 -0700 (PDT)
-Received: from m1x-phil.lan (cor91-h02-176-184-30-206.dsl.sta.abo.bbox.fr.
+ d=1e100.net; s=20230601; t=1722948390; x=1723553190;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HWB6LIVN+Zwnu4OWUNEBlS8UUHECbtdYiXqrZjFNRBA=;
+ b=MdZfGrnaJBMgtFfQQ/Z5qOXsgUATifAv93c9PLa08EkPR2awCeiyorLAaouvFLAzF+
+ /Pbt9846ERrodXXgi3+a7iOp1P2B56tGFWbj5kgrMlbLgYt2TnsAoa4kN3oe7uJGiLdk
+ 8hKNL0EpMxAxKix6W9fSdU3yQVbYxOhK2Huq5H944EbCpGATqMB5AeVPTF1OpTDn+eHf
+ qBVJXuGyrZlGHc78ffmXsBMvFniVzzLHFqYuAIoqZlSIdRF+rcCfhQZIZizQfSiI1+Os
+ AtdG+8knaiTiP9sc9tP3569rO6y2FwHIWeRGdGfIN+X9i13dbyTLuUTBoIV/fOnmJ8wZ
+ 4W3w==
+X-Gm-Message-State: AOJu0Yw7Ii2ndu1PZKOLPaj25lRXcApqwdFihN7MsWZvajUXaknCfOrN
+ 0PHw3+WvIT4SBZ7JW3c8Bz2FMVYpdm1S96Z5jLq1+iLi955EFh++JL00d5olya4=
+X-Google-Smtp-Source: AGHT+IFuzz9hkW9P08+XMatbEVBhDjRSTDOyLMVrzsHywLg7EbPkPCqkbE6hxcs7qa2Wn/54qY3pOA==
+X-Received: by 2002:a17:907:97c9:b0:a7a:aa35:4089 with SMTP id
+ a640c23a62f3a-a7dc4e87671mr1176340166b.24.1722948389769; 
+ Tue, 06 Aug 2024 05:46:29 -0700 (PDT)
+Received: from [192.168.69.100] (cor91-h02-176-184-30-206.dsl.sta.abo.bbox.fr.
  [176.184.30.206]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7dc9bc3c7asm557554066b.14.2024.08.06.05.41.40
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 Aug 2024 05:41:41 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1?] qapi/util: Include missing 'qapi/error.h' header
-Date: Tue,  6 Aug 2024 14:41:38 +0200
-Message-ID: <20240806124138.90636-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
+ a640c23a62f3a-a7dc9e80e6asm545799966b.165.2024.08.06.05.46.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 06 Aug 2024 05:46:29 -0700 (PDT)
+Message-ID: <95478a0c-0da3-425c-b6a7-83eced408bd9@linaro.org>
+Date: Tue, 6 Aug 2024 14:46:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] virtio-gpu-gl: Improve OpenGL and related display
+ error messages
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240731154136.3494621-1-peter.maydell@linaro.org>
+ <CAJ+F1CK3C0dM5vq8=VP63mg1xCC25XEEhsRFXaXQBeRw+ZYYRQ@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAJ+F1CK3C0dM5vq8=VP63mg1xCC25XEEhsRFXaXQBeRw+ZYYRQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,41 +97,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qapi_enum_parse() uses the Error type which is
-declared in "qapi/error.h". Include "qapi/error.h"
-in order to avoid:
+On 31/7/24 17:59, Marc-André Lureau wrote:
 
-  include/qapi/util.h:27:30: error: unknown type name 'Error'
-                    int def, Error **errp);
-                             ^
+> Series:
+> Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com 
+> <mailto:marcandre.lureau@redhat.com>>
 
-Note we include it after the QEnumLookup declaration
-to avoid:
-
-  In file included from include/qapi/error.h:275:
-  qapi/qapi-types-error.h:30:14: error: unknown type name 'QEnumLookup'
-  extern const QEnumLookup QapiErrorClass_lookup;
-               ^
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/qapi/util.h | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/include/qapi/util.h b/include/qapi/util.h
-index b8254247b8..568f31ac9e 100644
---- a/include/qapi/util.h
-+++ b/include/qapi/util.h
-@@ -22,6 +22,8 @@ typedef struct QEnumLookup {
-     const int size;
- } QEnumLookup;
- 
-+#include "qapi/error.h"
-+
- const char *qapi_enum_lookup(const QEnumLookup *lookup, int val);
- int qapi_enum_parse(const QEnumLookup *lookup, const char *buf,
-                     int def, Error **errp);
--- 
-2.45.2
+I'll queue this via my hw-misc tree, thanks.
 
 
