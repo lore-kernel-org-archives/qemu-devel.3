@@ -4,74 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE838C49EA1
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 21:49:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 927C1C49EA1
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 22:20:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbS2Y-0007W0-CU; Tue, 06 Aug 2024 17:48:22 -0400
+	id 1sbSWj-00013w-MH; Tue, 06 Aug 2024 18:19:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gkm@rivosinc.com>) id 1sbS2X-0007VL-D2
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 17:48:21 -0400
-Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sbSWi-00013A-KF
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 18:19:32 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gkm@rivosinc.com>) id 1sbS2V-000897-B8
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 17:48:21 -0400
-Received: by mail-lf1-x135.google.com with SMTP id
- 2adb3069b0e04-52efd8807aaso1721255e87.3
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 14:48:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sbSWf-0003qr-9W
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 18:19:32 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-2cf93dc11c6so867927a91.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 15:19:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722980896; x=1723585696;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=syzepl4SjgrdYUW0tFvUjUq1128Ibw/4sc3lcdby8+c=;
- b=jhzyprCiBbE47KUlVJtLgSLrTFNp2RDHLKx3l2nDy8TzxSX4kVwm04uK5S4a3onUOH
- P7CXObJ2zB3RxTXQaKOF4TCjsaLOPvzORudbpeFmnTZRSQjHXW9c1lfQBHD83IbTuXjd
- 4ewQRoNUy1zWcx9Xkoq+HPaGO48ukJpj0xl4rSSeg5EmAGrJXSFUwft/b267M+oaV+Wr
- 5MRTGx6ZPaAIEw7ICm+3vm+apla+IjwN0qqVvOUQpAhufLL+oGlRDqHwqMfZFQJjaAgk
- m7Fp2Ac+vO48thyiYoH0SbxbUHzhO6UMTbrUYDBODkHEqfz6LPcqi7KCZkpt0H0RpjQ7
- E2Wg==
+ d=linaro.org; s=google; t=1722982766; x=1723587566; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=P4PgLfc4sPViRb2xw8vsREFOBq2byaL6LSyElc66Pic=;
+ b=e2PkO8b/2MJEc9rHq4bmBuJTILI8nmmcwf/ooJO8PLQKvbC+hvIZDPZ/SIAEoEtRDZ
+ HuEHBLh28mtXmVB0wHPPgaDsNKhtxCJOCsm9f2xQLM2Fy5ykAe1kmqJqzdLUB1Azino4
+ Vm6flfZgPPrZrYzOQVjRXTiumyjADA5Qk69Y5aM2hyMY3jwk0afLoPfACBObJxn5QPjC
+ qtCVpJ5RyNS6IucNRTwc7Y5P6JnfHbeZheYAn88E8ds1tbdQbo0cWDVB+JT6myDkybpB
+ 2cNJjeJLhytTzW8ZeVmSjeoeU22b3DD37phcYTJKOMZdjJ3Wi1wKhwTvoAkQx2YafRsz
+ IrFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722980896; x=1723585696;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=syzepl4SjgrdYUW0tFvUjUq1128Ibw/4sc3lcdby8+c=;
- b=YEcpNqoxaSJqTzua5QKqeJ4vN5/ZtfEGUfPXTO11FayFkD9LmsvHJJ97yluzFLa4FS
- yC7HEPpMR7PidxkQU9+o5eHEubbr8Wjj7KBrlbOWXTj4mGZmeyF8JEVUaMPQMDbG5BpW
- j8qSV99gc3ecSZ3d0P7PBjJn50PIFPpT0EUOrfxjYkqpKoX53MgaM8H43XfXX4L0wKBz
- iX+dvKv9QrMj22Ha6FimN8nbApbWxqFX7oMtgjrtddZUDiKudKXXDPBHo11Yz7APxleC
- /9c5hvtenrND1f1obLO0qcEtaz7twjob7UhFMw6wiNWVOBdXnA/4rkohhITyog15XaI7
- jcEg==
-X-Gm-Message-State: AOJu0YzyMUFokH8IJRzKBBgys5OVgYDfNgYxFmTP8fEqESYWKcyWrhu7
- dmlcHa7Jn+TCPlGodxSnSVwak0/N6LqtCvUiK0YSPruhbnDZlJDohrWryF446riYA1mtm9ECUPm
- MF4KX/DhAe1AGzwdLNbB6F+CYRrEbDc/oGat07A==
-X-Google-Smtp-Source: AGHT+IHPmXyQDoHUEWyzbMajqiK7GJlamTjPGGlZ6U5PlDj9KBS9uOBPaAp+ErUqNlLdiJZ0tlJv0bzBb6dyfYahk6c=
-X-Received: by 2002:ac2:4e0b:0:b0:52f:cbce:b9b7 with SMTP id
- 2adb3069b0e04-530bb3307a6mr11520714e87.0.1722980896151; Tue, 06 Aug 2024
- 14:48:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1722982766; x=1723587566;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=P4PgLfc4sPViRb2xw8vsREFOBq2byaL6LSyElc66Pic=;
+ b=eYbS6zbbJWzDA7lC9IOjYig1gukI0vT1K3Bg0ryMqDOR9tEFpBv5D5iJxm0hGQ+4b5
+ Ets1AHm5/dA4dwvAkik6h0SctyRV9Hdvny0qEpvCkzynOPlY2Vi6qwzOVtKwUv7nrWrG
+ cKEBbu4GxZrqjMh3H/cY4JxEbU8w+jq7eje7oXCLv9m71q1c3KnAj7Sx4lr725AxSuJn
+ QuoV6UUdXFiTD1C+9nJdUAZr9FUoa5NDPIJ14WCyrg64ses3X7abVTSJ66xrmqaoO5G1
+ 8i8vtcILYhGKlhqhFrUNTQEedYECxI5z+XA9E3k64nIG67BUAsQF7jqv9FYwnjYuGoff
+ ylWA==
+X-Gm-Message-State: AOJu0YzbGYUVHi5g+Atwxiv619EgRyWuw3xAw+9IsiMQWWlNXFzaTv4D
+ UyEcn25BjENV6QHIHIPKbEQPK6Dhzy2EAdv+04Ye6Ap7A+rPLLzJVKmPnqf03W8=
+X-Google-Smtp-Source: AGHT+IG2lww5mNFwH4UXA9tpEUDJItEwl2vl1J0IgxpVKYNDcXRDM23RJetwvG+9EQgM4fIW8cl56Q==
+X-Received: by 2002:a17:90a:d146:b0:2c9:7849:4e28 with SMTP id
+ 98e67ed59e1d1-2cff952d37fmr20899536a91.27.1722982766135; 
+ Tue, 06 Aug 2024 15:19:26 -0700 (PDT)
+Received: from [192.168.1.113] ([203.30.4.111])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2d1b36dd511sm23245a91.34.2024.08.06.15.19.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 06 Aug 2024 15:19:25 -0700 (PDT)
+Message-ID: <c8d1a52f-edba-46e8-90ba-50078434bf1e@linaro.org>
+Date: Wed, 7 Aug 2024 08:19:19 +1000
 MIME-Version: 1.0
-References: <20240805161951.2701529-1-gkm@rivosinc.com>
- <87a5hpsvno.fsf@draig.linaro.org>
-In-Reply-To: <87a5hpsvno.fsf@draig.linaro.org>
-From: Greg McGary <gkm@rivosinc.com>
-Date: Tue, 6 Aug 2024 14:48:05 -0700
-Message-ID: <CACe4iF2eCFeN7qxfa8Uk_850adb3K31RGSAyxq5hPGRxFrwekw@mail.gmail.com>
-Subject: Re: [PATCH] Add plugin bbvgen: basic block icounts for topblocks +
- simpoints
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] various ppc fixes
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
 Cc: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000004530cf061f0ac069"
-Received-SPF: pass client-ip=2a00:1450:4864:20::135;
- envelope-from=gkm@rivosinc.com; helo=mail-lf1-x135.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240806131318.275109-1-npiggin@gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240806131318.275109-1-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,24 +95,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004530cf061f0ac069
-Content-Type: text/plain; charset="UTF-8"
+On 8/6/24 23:13, Nicholas Piggin wrote:
+> Nicholas Piggin (7):
+>    ppc/pnv: Fix LPC serirq routing calculation
+>    ppc/pnv: Fix LPC POWER8 register sanity check
+>    target/ppc: Fix mtDPDES targeting SMT siblings
+>    target/ppc: PMIs are level triggered
+>    target/ppc: Fix doorbell delivery to threads in powersave
+>    target/ppc: Fix HFSCR facility checks
+>    target/ppc: Fix VRMA to not check virtual page class key protection
 
-> Are there any tools that consume this data?
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Yes. I will post one soon as a follow-up patch. It takes the bbvi.json.gz as
-input and produces a report sorted by icount of disassembled top blocks.
-
-G
-
---0000000000004530cf061f0ac069
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr">&gt; Are there any tools that consume thi=
-s data?<br><br>Yes. I will post one soon as a follow-up patch. It takes the=
- bbvi.json.gz as<br>input and produces a report sorted by icount of disasse=
-mbled top blocks.<br><br>G</div></div>
-
---0000000000004530cf061f0ac069--
+r~
 
