@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D033C52D6D
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 06:27:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 825B9C52D6D
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 06:27:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbDe9-0003Ud-Dg; Tue, 06 Aug 2024 02:26:13 -0400
+	id 1sbDe0-0002za-PT; Tue, 06 Aug 2024 02:26:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sbDe8-0003QA-0J
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 02:26:12 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1sbDdz-0002uq-Fs
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 02:26:03 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sbDe5-0003yx-S6
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 02:26:11 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1fd69e44596so3678765ad.1
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 23:26:09 -0700 (PDT)
+ id 1sbDdx-0003wd-Lo
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 02:26:03 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1fc52394c92so4168905ad.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 23:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722925568; x=1723530368; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1722925559; x=1723530359; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rIl02MTGpKMjmvTqt9QTISYxUzrPTliJWcVLJpIrITo=;
- b=Tm0mLU3f8U7J3Sr21hd4InKIXhTc9Dh1GI4LDjdHd/Aj4J7KVhhB24eZQ8/23nfnS0
- /Tt7blz1DSaIGVYzO51tQ+ZKlxP90N+s0XRGoHNktm61Tn0jdHI2N6k9S4dT7lYUOyrP
- 4V5H39+Hj/VCvjtf31dGMEPjoXD0Xg1EjpQLIs4bMQlKiM0bTos/H5njUx6VSEGXrSMe
- GN1IN2S/5r/jKupkIu7mOsNXDBlvNXTzheXiQxf0Pfxm/KbwnpIBbhCfBz6cOsRV274n
- 6XpkK6oV9eGPxDbnP1CqFHcHT8NBT5XRguCH9fb05PWg6xxJJCOfmaURrDsM7e+3mDu9
- lrig==
+ bh=kqP4ivw7uQVKQSYmqJWEmyZWTEcacM5pMYJS2o///Ys=;
+ b=WNcxVnR9M1VFqjtL+po2VPZw4PQPvZhxn3J61uuFnUyb1iDg6lPfNhDpnhsj6HZ8jt
+ Hk7AMad5xEsgNNt3tDdrEwSfn1VIQYwuHdlIOfAHVspABCqr9xN759bKDFtfrp84gChu
+ CHB77UlWxt7YPCZ4FMix/VC/SMGsDMEKPx+ShCEFG8coQD8Gzx3T6f1JwSseuQj/quxJ
+ HKFsA2etHIwdmRrFH4i8emYAb+CYISU8r2BgLEiCxCkj3lFhKe9IrLzUlRrMkgQVwIHf
+ EIMXZJyNqkctx4D98XUAjUcaF+NL0D77gBcxbGAbR9Y9VPIGJY9Mkw3LMeM0lHsJhTqS
+ KYrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722925568; x=1723530368;
+ d=1e100.net; s=20230601; t=1722925559; x=1723530359;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rIl02MTGpKMjmvTqt9QTISYxUzrPTliJWcVLJpIrITo=;
- b=QDm4zEhu0RhDMC5gf5wZMfRmSpNd021Gio3VicZ9xNS+56FL5TjJR2iGhKD9zd+/ww
- A+mlwk1XqXN2zTluIQ/SRMh6bZX8bW6hMFHAAMI6a9YFU1OGVDe8IsaeqSnnV0drVUeb
- F6PMDJMIY9qB8BmTOHM60ouVMsP1v6yXpLj5LXfQXasgTbn4fiMxG6vZX0BTIXmb5Ob8
- BoLpzGzmHpLILT1IvmSg0x4OFGCK6SGwXsXbtP0fBmP7k2W1jNikkKmERgwDzCAcEwp9
- LXfUfvTj/Q1mhkI1MR6Gx8IkZLRc7MpN+wFSAKPHzYp4O3hV4a59ANt0RPZcBO9DBnhV
- 1SZw==
-X-Gm-Message-State: AOJu0YyQgMy5uCrIl9T1wkyK4yo7Qkgl/YV+hacfvvMq3rOUYHJdxDS2
- WXVjfIEoMAGCsE66OA61CeeT7MqdYnmuhLqLPeRwTEfT7TNxGbgv+yMQt1Pj
-X-Google-Smtp-Source: AGHT+IF2StyMO+TE6pXy0EkMoCl3aVVqXH7bU7UWvt/7od5BX1lNAvKJ9ZJYokYxPGiegAJObMjr7Q==
-X-Received: by 2002:a17:902:dac3:b0:1fa:2b11:657d with SMTP id
- d9443c01a7336-1ff57b827c9mr222497785ad.10.1722925567929; 
- Mon, 05 Aug 2024 23:26:07 -0700 (PDT)
+ bh=kqP4ivw7uQVKQSYmqJWEmyZWTEcacM5pMYJS2o///Ys=;
+ b=iBYpWnhSoCKsfuR6/YNeti9eQR8Lo0F0xcg8Zw5NvfMTIxAQk04g9Q1Fhw964dwIPR
+ SfbPbbZ6unEbTdA54enBcL+70yRYYu7npCzSyOsFD0vUxLGit0qTP4f3euQ8pd25iu5O
+ hxYe/Y+JPw91F3XcDllC8pRFo1opZv5JpCGp/s+xOyH49wV/JI6ei2vxb5oWOXxNLylI
+ 2VPl4fKaM7ginO0PvM3EKNiu7SLzNr98hM/BCW4BT4ze96rVB870aDkeGXShK5nVXCH1
+ /F+00jty6JYJRoSJYLMG5MItNKhD/iTIaneQiMV9RFI3EidbgtZ+5gD/Xu7sq6i+G2qw
+ a8IA==
+X-Gm-Message-State: AOJu0YwS5wuuiRVnUcwmyOmw++QpaP+hH1T/+cXkHhRtZ/Mp3yRjDa4D
+ 0ZQ1jz2G2vi9c2a6fh7+avDrujIWq0bHAUYfp3/DuDJAmWZGLkQeMbOIm6gP
+X-Google-Smtp-Source: AGHT+IE0HC2Vrz6UuBTBb25TQ3gWeAZLMY0BZXqlSDs6NgOPNuxNpwSnS0x4GprcH8LLvljO0Gq/3w==
+X-Received: by 2002:a17:902:f68e:b0:1f9:f1e1:da72 with SMTP id
+ d9443c01a7336-1ff574a6fecmr171649735ad.63.1722925558906; 
+ Mon, 05 Aug 2024 23:25:58 -0700 (PDT)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff5927f161sm79464975ad.232.2024.08.05.23.26.05
+ d9443c01a7336-1ff5927f161sm79464975ad.232.2024.08.05.23.25.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 05 Aug 2024 23:26:07 -0700 (PDT)
+ Mon, 05 Aug 2024 23:25:58 -0700 (PDT)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Atish Patra <atishp@rivosinc.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 4/5] target/riscv: Add asserts for out-of-bound access
-Date: Tue,  6 Aug 2024 16:25:44 +1000
-Message-ID: <20240806062545.1250910-5-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 1/5] target/riscv: Remove redundant insn length check for
+ zama16b
+Date: Tue,  6 Aug 2024 16:25:41 +1000
+Message-ID: <20240806062545.1250910-2-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240806062545.1250910-1-alistair.francis@wdc.com>
 References: <20240806062545.1250910-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,63 +100,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Atish Patra <atishp@rivosinc.com>
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 
-Coverity complained about the possible out-of-bounds access with
-counter_virt/counter_virt_prev because these two arrays are
-accessed with privilege mode. However, these two arrays are accessed
-only when virt is enabled. Thus, the privilege mode can't be M mode.
+Compressed encodings also applies to zama16b.
+https://github.com/riscv/riscv-isa-manual/pull/1557
 
-Add the asserts anyways to detect any wrong usage of these arrays
-in the future.
-
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Atish Patra <atishp@rivosinc.com>
-Fixes: Coverity CID 1558459
-Fixes: Coverity CID 1558462
+Suggested-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20240724-fixes-v1-1-4a64596b0d64@rivosinc.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240802072417.659-2-zhiwei_liu@linux.alibaba.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/pmu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/riscv/insn_trans/trans_rvd.c.inc | 4 ++--
+ target/riscv/insn_trans/trans_rvf.c.inc | 4 ++--
+ target/riscv/insn_trans/trans_rvi.c.inc | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/target/riscv/pmu.c b/target/riscv/pmu.c
-index 3cc0b3648c..e05ab067d2 100644
---- a/target/riscv/pmu.c
-+++ b/target/riscv/pmu.c
-@@ -204,6 +204,7 @@ static void riscv_pmu_icount_update_priv(CPURISCVState *env,
+diff --git a/target/riscv/insn_trans/trans_rvd.c.inc b/target/riscv/insn_trans/trans_rvd.c.inc
+index 1f5fac65a2..0ac42c3223 100644
+--- a/target/riscv/insn_trans/trans_rvd.c.inc
++++ b/target/riscv/insn_trans/trans_rvd.c.inc
+@@ -47,7 +47,7 @@ static bool trans_fld(DisasContext *ctx, arg_fld *a)
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVD);
+ 
+-    if (ctx->cfg_ptr->ext_zama16b && (ctx->cur_insn_len != 2)) {
++    if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
      }
  
-     if (env->virt_enabled) {
-+        g_assert(env->priv <= PRV_S);
-         counter_arr = env->pmu_fixed_ctrs[1].counter_virt;
-         snapshot_prev = env->pmu_fixed_ctrs[1].counter_virt_prev;
-     } else {
-@@ -212,6 +213,7 @@ static void riscv_pmu_icount_update_priv(CPURISCVState *env,
+@@ -67,7 +67,7 @@ static bool trans_fsd(DisasContext *ctx, arg_fsd *a)
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVD);
+ 
+-    if (ctx->cfg_ptr->ext_zama16b && (ctx->cur_insn_len != 2)) {
++    if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
      }
  
-     if (new_virt) {
-+        g_assert(newpriv <= PRV_S);
-         snapshot_new = env->pmu_fixed_ctrs[1].counter_virt_prev;
-     } else {
-         snapshot_new = env->pmu_fixed_ctrs[1].counter_prev;
-@@ -242,6 +244,7 @@ static void riscv_pmu_cycle_update_priv(CPURISCVState *env,
+diff --git a/target/riscv/insn_trans/trans_rvf.c.inc b/target/riscv/insn_trans/trans_rvf.c.inc
+index f771aa1939..0222a728df 100644
+--- a/target/riscv/insn_trans/trans_rvf.c.inc
++++ b/target/riscv/insn_trans/trans_rvf.c.inc
+@@ -48,7 +48,7 @@ static bool trans_flw(DisasContext *ctx, arg_flw *a)
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVF);
+ 
+-    if (ctx->cfg_ptr->ext_zama16b && (ctx->cur_insn_len != 2)) {
++    if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
      }
  
-     if (env->virt_enabled) {
-+        g_assert(env->priv <= PRV_S);
-         counter_arr = env->pmu_fixed_ctrs[0].counter_virt;
-         snapshot_prev = env->pmu_fixed_ctrs[0].counter_virt_prev;
-     } else {
-@@ -250,6 +253,7 @@ static void riscv_pmu_cycle_update_priv(CPURISCVState *env,
+@@ -70,7 +70,7 @@ static bool trans_fsw(DisasContext *ctx, arg_fsw *a)
+     REQUIRE_FPU;
+     REQUIRE_EXT(ctx, RVF);
+ 
+-    if (ctx->cfg_ptr->ext_zama16b && (ctx->cur_insn_len != 2)) {
++    if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
      }
  
-     if (new_virt) {
-+        g_assert(newpriv <= PRV_S);
-         snapshot_new = env->pmu_fixed_ctrs[0].counter_virt_prev;
-     } else {
-         snapshot_new = env->pmu_fixed_ctrs[0].counter_prev;
+diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
+index 98e3806d5e..fab5c06719 100644
+--- a/target/riscv/insn_trans/trans_rvi.c.inc
++++ b/target/riscv/insn_trans/trans_rvi.c.inc
+@@ -268,7 +268,7 @@ static bool gen_load(DisasContext *ctx, arg_lb *a, MemOp memop)
+ {
+     bool out;
+ 
+-    if (ctx->cfg_ptr->ext_zama16b && (ctx->cur_insn_len != 2)) {
++    if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
+     }
+     decode_save_opc(ctx);
+@@ -369,7 +369,7 @@ static bool gen_store_i128(DisasContext *ctx, arg_sb *a, MemOp memop)
+ 
+ static bool gen_store(DisasContext *ctx, arg_sb *a, MemOp memop)
+ {
+-    if (ctx->cfg_ptr->ext_zama16b && (ctx->cur_insn_len != 2)) {
++    if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
+     }
+     decode_save_opc(ctx);
 -- 
 2.45.2
 
