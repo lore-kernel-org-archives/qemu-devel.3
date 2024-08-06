@@ -4,86 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E396C3DA64
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 09:33:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9497EC3DA64
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 09:33:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbGYR-0002t0-Ki; Tue, 06 Aug 2024 05:32:31 -0400
+	id 1sbGZ5-0004xr-GA; Tue, 06 Aug 2024 05:33:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sbGYO-0002rj-PD
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 05:32:29 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sbGZ3-0004oV-6d
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 05:33:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sbGYN-00032L-3i
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 05:32:28 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sbGZ0-00034G-5c
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 05:33:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722936746;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zNPu6LDpYhbJ2jHL6PKAzJIFj3TmTcV+iCxzYNSBT/0=;
- b=SdtM8pNsdFbdOm45J2uBtzIHTzfiefEyYNP8UhU3ghRgOgr0/5R95gDN3uPbeSOU6269fS
- lUcZl6wGCaS3dDARL9jPaEyY66KZ/oQTHbpZ3WIumQMXeZ6VR8y0iqgCCXtMHU4tgdM/P8
- 7LH19jhZlesm/Xp1glPfwx3wIm/0z4Y=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-34-7E88Jzr7O2u07NHyUJLClQ-1; Tue, 06 Aug 2024 05:32:23 -0400
-X-MC-Unique: 7E88Jzr7O2u07NHyUJLClQ-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2ef23ec8dceso4258531fa.0
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 02:32:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722936742; x=1723541542;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=zNPu6LDpYhbJ2jHL6PKAzJIFj3TmTcV+iCxzYNSBT/0=;
- b=u1hETdMOEi/vbjvL5f4D/IcuI8YRhDmz++7ByXt69BgK0HsvJzqDdf1H3PsJJLu57l
- JoU79cNH14Te7qB2twZcUNhmhxMXU4GEug+YmGzweYpKVlnpvtL7cTpXWu5C34/9DvKo
- /a1LRtiVmJHOECo5a/YdPS5to/+OxQKr08lY+5A88jzvimgTPcR+4LN884bzWukQvXis
- GGHitAsITHH4kv+fOaOCtI4WqHGzh5+K3TIZQJIn6TAnDeCx7YGSZJFpfAqkcizDwk1l
- eNsKkkUgDPpAvQS4CNHmQKJvnQHMDP2viYNwd3tt8F7+cXmTZeFGxbiN5cnEMgYkIYCq
- /cXA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX76dZDPEaCmKANJLpKjgdGpqRY7yzO4UTin56yh6B998HcxaS9XXftM3a2fpMujD3R4Iy6Il+0VTShakbOXM89fl/788Q=
-X-Gm-Message-State: AOJu0Yyc7vhynYKoaVCbeal+2ZOqwoRaae8GdHzIAeMOhzEOiWYafbse
- ZJG+WRnHYh8IdXR2pr0MWkOPLzom48voH1PqZjyLHCUdBbUtFhcTLI99nevaJJUPCheDnkDs2w2
- neJitVqqA1UeZ2cZ00TCEO2SQeGYqhCYpSWrb7X3t8vw15vsaI5z6
-X-Received: by 2002:a2e:968b:0:b0:2ec:56b9:259b with SMTP id
- 38308e7fff4ca-2f15ab5db15mr94720591fa.49.1722936742176; 
- Tue, 06 Aug 2024 02:32:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEow/WATG8BQ3G1Izu1sXI36xWSPlf4kPcR6y+06fEg5iiFT1qOQ5VcUBxZEzK3GuW8lZA1nQ==
-X-Received: by 2002:a2e:968b:0:b0:2ec:56b9:259b with SMTP id
- 38308e7fff4ca-2f15ab5db15mr94720281fa.49.1722936741527; 
- Tue, 06 Aug 2024 02:32:21 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4282b89a86dsm233403665e9.1.2024.08.06.02.32.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Aug 2024 02:32:20 -0700 (PDT)
-Date: Tue, 6 Aug 2024 11:32:19 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 4/7] acpi/ghes: Support GPIO error source
-Message-ID: <20240806113219.02ba0fdd@imammedo.users.ipa.redhat.com>
-In-Reply-To: <5d53042ebc5bc73bbc71f600e1ec1dea41f346b9.1722634602.git.mchehab+huawei@kernel.org>
-References: <cover.1722634602.git.mchehab+huawei@kernel.org>
- <5d53042ebc5bc73bbc71f600e1ec1dea41f346b9.1722634602.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ s=mimecast20190719; t=1722936785;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=F30WIPSvFy4+NVmGmvL/VlEj4NDidU1MYee025KwEEA=;
+ b=ARaSmJGfrfuoQIDexWKvGfJN1XW+Y1ycqCsH8NmGLBG+EyvYiogVc6NUGlkhQCbsHxMJZQ
+ 44LTa+IMsR+9JFzlz+q2vGKiIemHFm4xT+CjFIKnCw/ffuteOsuNdOG9JuIoX8V+xe8O+I
+ 8mzK1NyreTqfNSSCGx8yQLOpAjocmBo=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-454-dS08DuSnPTWRSPVOhU4wuw-1; Tue,
+ 06 Aug 2024 05:33:02 -0400
+X-MC-Unique: dS08DuSnPTWRSPVOhU4wuw-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 878041955D45; Tue,  6 Aug 2024 09:33:00 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.106])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4C0DA195605A; Tue,  6 Aug 2024 09:32:57 +0000 (UTC)
+Date: Tue, 6 Aug 2024 10:32:54 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Eric Blake <eblake@redhat.com>
+Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
+ qemu-block@nongnu.org, den@virtuozzo.com,
+ andrey.drobyshev@virtuozzo.com, alexander.ivanov@virtuozzo.com,
+ vsementsov@yandex-team.ru
+Subject: Re: [PATCH v3 2/2] nbd: Clean up clients more efficiently
+Message-ID: <ZrHtxrb5dyh3eKJu@redhat.com>
+References: <20240806022542.381883-4-eblake@redhat.com>
+ <20240806022542.381883-6-eblake@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240806022542.381883-6-eblake@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -104,101 +83,216 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri,  2 Aug 2024 23:43:59 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+On Mon, Aug 05, 2024 at 09:21:36PM -0500, Eric Blake wrote:
+> Since an NBD server may be long-living, serving clients that
+> repeatedly connect and disconnect, it can be more efficient to clean
+> up after each client disconnects, rather than storing a list of
+> resources to clean up when the server exits.  Rewrite the list of
+> known clients to be double-linked so that we can get O(1) deletion to
+> keep the list pruned to size as clients exit.  This in turn requires
+> each client to track an opaque pointer of owner information (although
+> qemu-nbd doesn't need to refer to it).
 
-> From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+I tend to feel that this needs to be squashed into the previous
+patch.  The previous patch effectively creates unbounded memory
+usage in the NBD server. ie consider a client that connects and
+immediately disconnects, not sending any data, in a tight loop.
+It will "leak" NBDConn & QIOChanelSocket pointers for each
+iteration of the loop, only to be cleaned up when the NBD Server
+is shutdown.
+
+Especially given that we tagged the previous commit with a CVE
+and not this commit,  people could be misled into backporting
+only the former commit leaving them open to the leak.
+
 > 
-> Add error notification to GHES v2 using the GPIO source.
-> 
-> [mchehab: do some cleanups at ACPI_HEST_SRC_ID_* checks]
-> 
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Signed-off-by: Eric Blake <eblake@redhat.com>
 > ---
->  hw/acpi/ghes.c         | 16 ++++++++++------
->  include/hw/acpi/ghes.h |  3 ++-
->  2 files changed, 12 insertions(+), 7 deletions(-)
+>  include/block/nbd.h |  4 +++-
+>  blockdev-nbd.c      | 27 ++++++++++++++++-----------
+>  nbd/server.c        | 15 ++++++++++++---
+>  qemu-nbd.c          |  2 +-
+>  4 files changed, 32 insertions(+), 16 deletions(-)
 > 
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index 8d0262e6c1aa..a745dcc7be5e 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -34,8 +34,8 @@
->  /* The max size in bytes for one error block */
->  #define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
->  
-> -/* Now only support ARMv8 SEA notification type error source */
-> -#define ACPI_GHES_ERROR_SOURCE_COUNT        1
-> +/* Support ARMv8 SEA notification type error source and GPIO interrupt. */
-> +#define ACPI_GHES_ERROR_SOURCE_COUNT        2
->  
->  /* Generic Hardware Error Source version 2 */
->  #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
-> @@ -290,6 +290,9 @@ void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
->  static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
+> diff --git a/include/block/nbd.h b/include/block/nbd.h
+> index 4e7bd6342f9..7dce9b9c35b 100644
+> --- a/include/block/nbd.h
+> +++ b/include/block/nbd.h
+> @@ -405,7 +405,9 @@ NBDExport *nbd_export_find(const char *name);
+>  void nbd_client_new(QIOChannelSocket *sioc,
+>                      QCryptoTLSCreds *tlscreds,
+>                      const char *tlsauthz,
+> -                    void (*close_fn)(NBDClient *, bool));
+> +                    void (*close_fn)(NBDClient *, bool),
+> +                    void *owner);
+> +void *nbd_client_owner(NBDClient *client);
+>  void nbd_client_get(NBDClient *client);
+>  void nbd_client_put(NBDClient *client);
+> 
+> diff --git a/blockdev-nbd.c b/blockdev-nbd.c
+> index b8f00f402c6..660f89d881e 100644
+> --- a/blockdev-nbd.c
+> +++ b/blockdev-nbd.c
+> @@ -23,7 +23,7 @@
+> 
+>  typedef struct NBDConn {
+>      QIOChannelSocket *cioc;
+> -    QSLIST_ENTRY(NBDConn) next;
+> +    QLIST_ENTRY(NBDConn) next;
+>  } NBDConn;
+> 
+>  typedef struct NBDServerData {
+> @@ -32,10 +32,11 @@ typedef struct NBDServerData {
+>      char *tlsauthz;
+>      uint32_t max_connections;
+>      uint32_t connections;
+> -    QSLIST_HEAD(, NBDConn) conns;
+> +    QLIST_HEAD(, NBDConn) conns;
+>  } NBDServerData;
+> 
+>  static NBDServerData *nbd_server;
+> +static uint32_t nbd_cookie; /* Generation count of nbd_server */
+>  static int qemu_nbd_connections = -1; /* Non-negative if this is qemu-nbd */
+> 
+>  static void nbd_update_server_watch(NBDServerData *s);
+> @@ -57,10 +58,16 @@ int nbd_server_max_connections(void)
+> 
+>  static void nbd_blockdev_client_closed(NBDClient *client, bool ignored)
 >  {
->      uint64_t address_offset;
+> +    NBDConn *conn = nbd_client_owner(client);
 > +
-> +    assert(source_id < ACPI_HEST_SRC_ID_RESERVED);
+>      assert(qemu_in_main_thread() && nbd_server);
+> 
+> +    object_unref(OBJECT(conn->cioc));
+> +    QLIST_REMOVE(conn, next);
+> +    g_free(conn);
 > +
->      /*
->       * Type:
->       * Generic Hardware Error Source version 2(GHESv2 - Type 10)
-> @@ -327,6 +330,9 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
->           */
->          build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_SEA);
->          break;
-> +    case ACPI_HEST_SRC_ID_GPIO:
-> +        build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_GPIO);
-
-perhaps ACPI_GHES_NOTIFY_EXTERNAL fits better here?
-
-> +        break;
->      default:
->          error_report("Not support this error source");
->          abort();
-> @@ -370,6 +376,7 @@ void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
->      /* Error Source Count */
->      build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
->      build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
-> +    build_ghes_v2(table_data, ACPI_HEST_SRC_ID_GPIO, linker);
->  
->      acpi_table_end(linker, &table);
+>      nbd_client_put(client);
+> -    assert(nbd_server->connections > 0);
+> +    assert(nbd_server && nbd_server->connections > 0);
+>      nbd_server->connections--;
+>      nbd_update_server_watch(nbd_server);
 >  }
-> @@ -406,10 +413,7 @@ int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
->      start_addr = le64_to_cpu(ags->ghes_addr_le);
->  
->      if (physical_address) {
+> @@ -74,12 +81,12 @@ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
+>      nbd_server->connections++;
+>      object_ref(OBJECT(cioc));
+>      conn->cioc = cioc;
+> -    QSLIST_INSERT_HEAD(&nbd_server->conns, conn, next);
+> +    QLIST_INSERT_HEAD(&nbd_server->conns, conn, next);
+>      nbd_update_server_watch(nbd_server);
+> 
+>      qio_channel_set_name(QIO_CHANNEL(cioc), "nbd-server");
+>      nbd_client_new(cioc, nbd_server->tlscreds, nbd_server->tlsauthz,
+> -                   nbd_blockdev_client_closed);
+> +                   nbd_blockdev_client_closed, conn);
+>  }
+> 
+>  static void nbd_update_server_watch(NBDServerData *s)
+> @@ -93,6 +100,8 @@ static void nbd_update_server_watch(NBDServerData *s)
+> 
+>  static void nbd_server_free(NBDServerData *server)
+>  {
+> +    NBDConn *conn, *tmp;
+> +
+>      if (!server) {
+>          return;
+>      }
+> @@ -103,14 +112,9 @@ static void nbd_server_free(NBDServerData *server)
+>       */
+>      qio_net_listener_disconnect(server->listener);
+>      object_unref(OBJECT(server->listener));
+> -    while (!QSLIST_EMPTY(&server->conns)) {
+> -        NBDConn *conn = QSLIST_FIRST(&server->conns);
 > -
-> -        if (source_id < ACPI_HEST_SRC_ID_RESERVED) {
-> -            start_addr += source_id * sizeof(uint64_t);
-> -        }
-> +        start_addr += source_id * sizeof(uint64_t);
+> +    QLIST_FOREACH_SAFE(conn, &server->conns, next, tmp) {
+>          qio_channel_shutdown(QIO_CHANNEL(conn->cioc), QIO_CHANNEL_SHUTDOWN_BOTH,
+>                               NULL);
+> -        object_unref(OBJECT(conn->cioc));
+> -        QSLIST_REMOVE_HEAD(&server->conns, next);
+> -        g_free(conn);
+>      }
+> 
+>      AIO_WAIT_WHILE_UNLOCKED(NULL, server->connections > 0);
+> @@ -119,6 +123,7 @@ static void nbd_server_free(NBDServerData *server)
+>          object_unref(OBJECT(server->tlscreds));
+>      }
+>      g_free(server->tlsauthz);
+> +    nbd_cookie++;
+> 
+>      g_free(server);
+>  }
+> diff --git a/nbd/server.c b/nbd/server.c
+> index 892797bb111..90f48b42a47 100644
+> --- a/nbd/server.c
+> +++ b/nbd/server.c
+> @@ -124,6 +124,7 @@ struct NBDMetaContexts {
+>  struct NBDClient {
+>      int refcount; /* atomic */
+>      void (*close_fn)(NBDClient *client, bool negotiated);
+> +    void *owner;
+> 
+>      QemuMutex lock;
+> 
+> @@ -3205,14 +3206,15 @@ static coroutine_fn void nbd_co_client_start(void *opaque)
+>  }
+> 
+>  /*
+> - * Create a new client listener using the given channel @sioc.
+> + * Create a new client listener using the given channel @sioc and @owner.
+>   * Begin servicing it in a coroutine.  When the connection closes, call
+> - * @close_fn with an indication of whether the client completed negotiation.
+> + * @close_fn and an indication of whether the client completed negotiation.
+>   */
+>  void nbd_client_new(QIOChannelSocket *sioc,
+>                      QCryptoTLSCreds *tlscreds,
+>                      const char *tlsauthz,
+> -                    void (*close_fn)(NBDClient *, bool))
+> +                    void (*close_fn)(NBDClient *, bool),
+> +                    void *owner)
+>  {
+>      NBDClient *client;
+>      Coroutine *co;
+> @@ -3231,7 +3233,14 @@ void nbd_client_new(QIOChannelSocket *sioc,
+>      client->ioc = QIO_CHANNEL(sioc);
+>      object_ref(OBJECT(client->ioc));
+>      client->close_fn = close_fn;
+> +    client->owner = owner;
+> 
+>      co = qemu_coroutine_create(nbd_co_client_start, client);
+>      qemu_coroutine_enter(co);
+>  }
+> +
+> +void *
+> +nbd_client_owner(NBDClient *client)
+> +{
+> +    return client->owner;
+> +}
+> diff --git a/qemu-nbd.c b/qemu-nbd.c
+> index d7b3ccab21c..da6e36a2a34 100644
+> --- a/qemu-nbd.c
+> +++ b/qemu-nbd.c
+> @@ -390,7 +390,7 @@ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
+> 
+>      nb_fds++;
+>      nbd_update_server_watch();
+> -    nbd_client_new(cioc, tlscreds, tlsauthz, nbd_client_closed);
+> +    nbd_client_new(cioc, tlscreds, tlsauthz, nbd_client_closed, NULL);
+>  }
+> 
+>  static void nbd_update_server_watch(void)
+> -- 
+> 2.45.2
+> 
 
-why check is being removed?
-
->  
->          cpu_physical_memory_read(start_addr, &error_block_addr,
->                                   sizeof(error_block_addr));
-> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-> index 6891eafff5ab..33be1eb5acf4 100644
-> --- a/include/hw/acpi/ghes.h
-> +++ b/include/hw/acpi/ghes.h
-> @@ -59,9 +59,10 @@ enum AcpiGhesNotifyType {
->      ACPI_GHES_NOTIFY_RESERVED = 12
->  };
->  
-> +/* Those are used as table indexes when building GHES tables */
->  enum {
->      ACPI_HEST_SRC_ID_SEA = 0,
-> -    /* future ids go here */
-> +    ACPI_HEST_SRC_ID_GPIO,
->      ACPI_HEST_SRC_ID_RESERVED,
->  };
->  
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
