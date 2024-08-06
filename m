@@ -4,63 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E36C52D71
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 00:59:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CCE9C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 01:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sb8X5-0003Vm-7w; Mon, 05 Aug 2024 20:58:35 -0400
+	id 1sb8gF-00085N-8r; Mon, 05 Aug 2024 21:08:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sb8X3-0003Ul-9d
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 20:58:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1sb8X1-0003zj-8P
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 20:58:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722905908;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=sYBraCN/YUQ5Ewx2AyTEf3Tbh7NtDdgADZ0SChU3wWw=;
- b=ZxsGXy3wcSeJ3VVwYewIDlXWCiPrEaE5ita4Z69OZ0ISWkLe8LU37UB1nKOXMRooPzGqgG
- bm5eD/WTtSacxgg91VLdXU+M7jWjAs3okwwGW4q7CzewSRBVZ0kRAa+vjBMIksoI4IZVt7
- 9a3tUgTuN+i+Nyn4R1GhxYCwwZy63Uc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-247-JjuksZmYNXOYEppL_o53tw-1; Mon,
- 05 Aug 2024 20:58:25 -0400
-X-MC-Unique: JjuksZmYNXOYEppL_o53tw-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2911B1955F42
- for <qemu-devel@nongnu.org>; Tue,  6 Aug 2024 00:58:24 +0000 (UTC)
-Received: from server.redhat.com (unknown [10.72.112.8])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F176819560AE; Tue,  6 Aug 2024 00:58:20 +0000 (UTC)
-From: Cindy Lu <lulu@redhat.com>
-To: lulu@redhat.com, mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org
-Subject: [PATCH 1/3] virtio_net: Add the check for vdpa's mac address
-Date: Tue,  6 Aug 2024 08:58:01 +0800
-Message-ID: <20240806005814.51651-1-lulu@redhat.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ (Exim 4.90_1) (envelope-from
+ <3ZnexZgUKClcIzK7E5DD5A3.1DBF3BJ-23K3ACDC5CJ.DG5@flex--tavip.bounces.google.com>)
+ id 1sb8g9-00084G-Ny
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 21:07:57 -0400
+Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3ZnexZgUKClcIzK7E5DD5A3.1DBF3BJ-23K3ACDC5CJ.DG5@flex--tavip.bounces.google.com>)
+ id 1sb8g7-0005IQ-E3
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 21:07:57 -0400
+Received: by mail-pg1-x54a.google.com with SMTP id
+ 41be03b00d2f7-7163489149fso272446a12.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 18:07:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1722906471; x=1723511271; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=YKDqBEkcEgbwXXYQYGSpBK/+edTF0cuks2Y9pNIpECw=;
+ b=iZMkmoPx0DwNay5FzSTzaLH8JwO3WIUe0n7E7ZETndS3xhxKAvDGhm9LNScNwecNbo
+ 3fqBw5YgTBfkjlJ9/iO4MTR5r+hFUxb4FlmFaqQBR+2Gu3XibOzW3al0VGEgbADmg+r6
+ ATO2sF8LUPt5UlolPzkp0x8ijTIPJC+NV1Z9UFrQJd5dxzluOWRB9Hbchjxzx5gKbWyn
+ QflLVgIkntwtDlMrMH9ZgLacTiB2tnu0kZdZhZD4yHdk8YO1SGip89FcZ6YLBIYIg5z2
+ GU+mqvr6VrDeXAnteF1sE1Jf7xCF/c0mNqCDPefMRhsp0oTba2VO+kbzVWL89cUV3EIo
+ 8Lgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722906471; x=1723511271;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YKDqBEkcEgbwXXYQYGSpBK/+edTF0cuks2Y9pNIpECw=;
+ b=c9s5gypV+hPsDrYUfiCYYNvjKlycU8CpEbn0zVPtILwCuL+raJAjg5RSKNVJgMgWHu
+ aY4KEO0nl5boOXOykkk2yyhMpnIeLwH12Lmwmt1cIu8v27+W2CxXnwJ7955fJyAgXNrE
+ rlPrS9upheSOzJFKQXwNzcDbslkjqFgs7WptC8YwCUr8Aigmwrp8C6zE6kdgxaBMa688
+ ChhVDQTky13vF0lRpDshMzWIWzIZM25y+zY+5SCdoKLhYR0Eehx5j12vx7+11fyVq0tX
+ 2Yf3uKtJW2q31IBHMW8AqEpn/5i5DgnBnXQoGJ6AwvL5plQBmANCyHUP1jLDRaHyopxv
+ FrDw==
+X-Gm-Message-State: AOJu0YxOCFwMgyXXXIwydTASPn1bBlFKLkxtNyvKgPyyHG63rRsjIui2
+ 80uLkPHiStETdNPGul9Zvgw+X7m2H2kk8kOnoEopMggBgjAvblFNR+wTYXk7x/uOfzuMv/EmmWM
+ p49dYdw0Opu4q4FvM/dAZyMrZjJXnlNsDwpiQo7CYvq/vD200jGL6H51G6B/K9AgOOtaszH+r79
+ VK0B73PZIxwZgT9h/tSmFHxdbEaQ==
+X-Google-Smtp-Source: AGHT+IH6xE0e4hsgRn/vQs8w/ReU/gNeeMjHTB8IuUXEwjD3KMu9rMytsMJ/MeOhGQmXhtYaupFGQ51QyA==
+X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
+ (user=tavip job=sendgmr) by 2002:a63:6d47:0:b0:675:12f2:dca9 with
+ SMTP id
+ 41be03b00d2f7-7b74679e34fmr24876a12.1.1722906470700; Mon, 05 Aug 2024
+ 18:07:50 -0700 (PDT)
+Date: Mon,  5 Aug 2024 18:07:35 -0700
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.46.0.rc2.264.g509ed76dc8-goog
+Message-ID: <20240806010735.2450555-1-tavip@google.com>
+Subject: [PATCH v4] chardev: add path option for pty backend
+From: Octavian Purdila <tavip@google.com>
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, eblake@redhat.com, armbru@redhat.com, 
+ peter.maydell@linaro.org, berrange@redhat.com, 
+ Octavian Purdila <tavip@google.com>, Paulo Neves <ptsneves@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
+ envelope-from=3ZnexZgUKClcIzK7E5DD5A3.1DBF3BJ-23K3ACDC5CJ.DG5@flex--tavip.bounces.google.com;
+ helo=mail-pg1-x54a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,81 +93,287 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When using a VDPA device, it is important to ensure that
-the MAC address in the hardware matches the MAC address
-from the QEMU command line.
-This will allow the device to boot.
+Add path option to the pty char backend which will create a symbolic
+link to the given path that points to the allocated PTY.
 
-Signed-off-by: Cindy Lu <lulu@redhat.com>
+This avoids having to make QMP or HMP monitor queries to find out what
+the new PTY device path is.
+
+Based on patch from Paulo Neves:
+
+https://patchew.org/QEMU/1548509635-15776-1-git-send-email-ptsneves@gmail.com/
+
+Tested with the following invocations that the link is created and
+removed when qemu stops:
+
+  qemu-system-x86_64 -nodefaults -mon chardev=compat_monitor \
+  -chardev pty,path=test,id=compat_monitor0
+
+  qemu-system-x86_64 -nodefaults -monitor pty:test
+
+  # check QMP invocation with path set
+  qemu-system-x86_64 -nodefaults -qmp tcp:localhost:4444,server=on,wait=off
+  nc localhost 4444
+  > {"execute": "qmp_capabilities"}
+  > {"execute": "chardev-add", "arguments": {"id": "bar", "backend": {
+      "type": "pty", "data": {"path": "test" }}}}
+
+  # check QMP invocation with path not set
+  qemu-system-x86_64 -nodefaults -qmp tcp:localhost:4444,server=on,wait=off
+  nc localhost 4444
+  > {"execute": "qmp_capabilities"}
+  > {"execute": "chardev-add", "arguments": {"id": "bar", "backend": {
+      "type": "pty", "data": {}}}}
+
+Also tested that when a link path is not passed invocations still work, e.g.:
+
+  qemu-system-x86_64 -monitor pty
+
+Co-authored-by: Paulo Neves <ptsneves@gmail.com>
+Signed-off-by: Paulo Neves <ptsneves@gmail.com>
+[OP: rebase and address original patch review comments]
+Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- hw/net/virtio-net.c | 33 +++++++++++++++++++++++++++++----
- 1 file changed, 29 insertions(+), 4 deletions(-)
+Changes since v3:
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 9c7e85caea..7f51bd0dd3 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3579,12 +3579,36 @@ static bool failover_hide_primary_device(DeviceListener *listener,
-     /* failover_primary_hidden is set during feature negotiation */
-     return qatomic_read(&n->failover_primary_hidden);
- }
-+static bool virtio_net_check_vdpa_mac(NetClientState *nc, VirtIONet *n, MACAddr *cmdline_mac,
-+				      Error **errp)
-+{
-+	struct virtio_net_config hwcfg = {};
-+	static const MACAddr zero = { .a = { 0, 0, 0, 0, 0, 0 } };
-+
-+	vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *)&hwcfg, ETH_ALEN);
-+
-+    /*
-+     * For VDPA device: Only two situations are acceptable:
-+     * 1.The hardware MAC address is the same as the QEMU command line MAC
-+     *   address, and both of them are not 0.
-+     */
-+
-+	if (memcmp(&hwcfg.mac, &zero, sizeof(MACAddr)) != 0) {
-+		if ((memcmp(&hwcfg.mac, cmdline_mac, sizeof(MACAddr)) == 0)) {
-+			return true;
-+		}
-+	}
-+	error_setg(errp, "vDPA device's mac != the mac address from qemu cmdline"
-+			 "Please check the the vdpa device's setting.");
+  * update documentation with note about user's resposability to check
+    and remove the symlink since it can't be removed on crashes or
+    certain startup errors
+
+  * use a dedicated ChardevPty structure instead of relying on
+    ChardevHostdev
+
+Changes since v2:
+
+ * remove NULL path check, g_strdup() allows NULL inputs 
+
+Changes since v1:
+
+ * Keep the original Signed-off-by from Paulo and add one line
+    description with further changes
+
+ * Update commit message with justification for why the new
+    functionality is useful
+
+ * Don't close master_fd when symlink creation fails to avoid double
+    close
+
+ * Update documentation for clarity
  
-+	return false;
+ chardev/char-pty.c | 33 +++++++++++++++++++++++++++++++++
+ chardev/char.c     |  5 +++++
+ qapi/char.json     | 27 ++++++++++++++++++++++++++-
+ qemu-options.hx    | 33 +++++++++++++++++++++++++++------
+ 4 files changed, 91 insertions(+), 7 deletions(-)
+
+diff --git a/chardev/char-pty.c b/chardev/char-pty.c
+index cc2f7617fe..cbb21b76ae 100644
+--- a/chardev/char-pty.c
++++ b/chardev/char-pty.c
+@@ -29,6 +29,7 @@
+ #include "qemu/sockets.h"
+ #include "qemu/error-report.h"
+ #include "qemu/module.h"
++#include "qemu/option.h"
+ #include "qemu/qemu-print.h"
+ 
+ #include "chardev/char-io.h"
+@@ -41,6 +42,7 @@ struct PtyChardev {
+ 
+     int connected;
+     GSource *timer_src;
++    char *path;
+ };
+ typedef struct PtyChardev PtyChardev;
+ 
+@@ -204,6 +206,12 @@ static void char_pty_finalize(Object *obj)
+     Chardev *chr = CHARDEV(obj);
+     PtyChardev *s = PTY_CHARDEV(obj);
+ 
++    /* unlink symlink */
++    if (s->path) {
++        unlink(s->path);
++        g_free(s->path);
++    }
++
+     pty_chr_state(chr, 0);
+     object_unref(OBJECT(s->ioc));
+     pty_chr_timer_cancel(s);
+@@ -330,6 +338,7 @@ static void char_pty_open(Chardev *chr,
+     int master_fd, slave_fd;
+     char pty_name[PATH_MAX];
+     char *name;
++    char *path = backend->u.pty.data->path;
+ 
+     master_fd = qemu_openpty_raw(&slave_fd, pty_name);
+     if (master_fd < 0) {
+@@ -354,12 +363,36 @@ static void char_pty_open(Chardev *chr,
+     g_free(name);
+     s->timer_src = NULL;
+     *be_opened = false;
++
++    /* create symbolic link */
++    if (path) {
++        int res = symlink(pty_name, path);
++
++        if (res != 0) {
++            error_setg_errno(errp, errno, "Failed to create PTY symlink");
++        } else {
++            s->path = g_strdup(path);
++        }
++    }
 +}
- static void virtio_net_device_realize(DeviceState *dev, Error **errp)
++
++static void char_pty_parse(QemuOpts *opts, ChardevBackend *backend,
++                           Error **errp)
++{
++    const char *path = qemu_opt_get(opts, "path");
++    ChardevPty *pty;
++
++    backend->type = CHARDEV_BACKEND_KIND_PTY;
++    pty = backend->u.pty.data = g_new0(ChardevPty, 1);
++    qemu_chr_parse_common(opts, qapi_ChardevPty_base(pty));
++    pty->path = g_strdup(path);
+ }
+ 
+ static void char_pty_class_init(ObjectClass *oc, void *data)
  {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VirtIONet *n = VIRTIO_NET(dev);
-     NetClientState *nc;
-+    MACAddr macaddr_cmdline;
-     int i;
+     ChardevClass *cc = CHARDEV_CLASS(oc);
  
-     if (n->net_conf.mtu) {
-@@ -3692,6 +3716,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-     virtio_net_add_queue(n, 0);
- 
-     n->ctrl_vq = virtio_add_queue(vdev, 64, virtio_net_handle_ctrl);
-+    memcpy(&macaddr_cmdline, &n->nic_conf.macaddr, sizeof(n->mac));
-     qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
-     memcpy(&n->mac[0], &n->nic_conf.macaddr, sizeof(n->mac));
-     n->status = VIRTIO_NET_S_LINK_UP;
-@@ -3739,10 +3764,10 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
-     nc->rxfilter_notify_enabled = 1;
- 
-    if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_VHOST_VDPA) {
--        struct virtio_net_config netcfg = {};
--        memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
--        vhost_net_set_config(get_vhost_net(nc->peer),
--            (uint8_t *)&netcfg, 0, ETH_ALEN, VHOST_SET_CONFIG_TYPE_FRONTEND);
-+	   if (!virtio_net_check_vdpa_mac(nc, n, &macaddr_cmdline, errp)) {
-+		   virtio_cleanup(vdev);
-+		   return;
-+	   }
++    cc->parse = char_pty_parse;
+     cc->open = char_pty_open;
+     cc->chr_write = char_pty_chr_write;
+     cc->chr_update_read_handler = pty_chr_update_read_handler;
+diff --git a/chardev/char.c b/chardev/char.c
+index 3c43fb1278..404c6b8a4f 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -428,6 +428,11 @@ QemuOpts *qemu_chr_parse_compat(const char *label, const char *filename,
+         qemu_opt_set(opts, "path", p, &error_abort);
+         return opts;
      }
-     QTAILQ_INIT(&n->rsc_chains);
-     n->qdev = dev;
++    if (strstart(filename, "pty:", &p)) {
++        qemu_opt_set(opts, "backend", "pty", &error_abort);
++        qemu_opt_set(opts, "path", p, &error_abort);
++        return opts;
++    }
+     if (strstart(filename, "tcp:", &p) ||
+         strstart(filename, "telnet:", &p) ||
+         strstart(filename, "tn3270:", &p) ||
+diff --git a/qapi/char.json b/qapi/char.json
+index 777dde55d9..953d519066 100644
+--- a/qapi/char.json
++++ b/qapi/char.json
+@@ -431,6 +431,20 @@
+   'base': 'ChardevCommon',
+   'if': 'CONFIG_SPICE_PROTOCOL' }
+ 
++##
++# @ChardevPty:
++#
++# Configuration info for pty implementation.
++#
++# @path: optional path to create a symbolic link that points to the
++#     allocated PTY
++#
++# Since: 9.2
++##
++{ 'struct': 'ChardevPty',
++  'data': { '*path': 'str' },
++  'base': 'ChardevCommon' }
++
+ ##
+ # @ChardevBackendKind:
+ #
+@@ -630,6 +644,17 @@
+ { 'struct': 'ChardevRingbufWrapper',
+   'data': { 'data': 'ChardevRingbuf' } }
+ 
++
++##
++# @ChardevPtyWrapper:
++#
++# @data: Configuration info for pty chardevs
++#
++# Since: 9.2
++##
++{ 'struct': 'ChardevPtyWrapper',
++  'data': { 'data': 'ChardevPty' } }
++
+ ##
+ # @ChardevBackend:
+ #
+@@ -650,7 +675,7 @@
+             'pipe': 'ChardevHostdevWrapper',
+             'socket': 'ChardevSocketWrapper',
+             'udp': 'ChardevUdpWrapper',
+-            'pty': 'ChardevCommonWrapper',
++            'pty': 'ChardevPtyWrapper',
+             'null': 'ChardevCommonWrapper',
+             'mux': 'ChardevMuxWrapper',
+             'msmouse': 'ChardevCommonWrapper',
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 8ca7f34ef0..08d8f8c559 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -3569,7 +3569,7 @@ DEF("chardev", HAS_ARG, QEMU_OPTION_chardev,
+     "-chardev console,id=id[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
+     "-chardev serial,id=id,path=path[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
+ #else
+-    "-chardev pty,id=id[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
++    "-chardev pty,id=id[,path=path][,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
+     "-chardev stdio,id=id[,mux=on|off][,signal=on|off][,logfile=PATH][,logappend=on|off]\n"
+ #endif
+ #ifdef CONFIG_BRLAPI
+@@ -3808,12 +3808,22 @@ The available backends are:
+ 
+     ``path`` specifies the name of the serial device to open.
+ 
+-``-chardev pty,id=id``
+-    Create a new pseudo-terminal on the host and connect to it. ``pty``
+-    does not take any options.
++``-chardev pty,id=id[,path=path]``
++    Create a new pseudo-terminal on the host and connect to it.
+ 
+     ``pty`` is not available on Windows hosts.
+ 
++    If ``path`` is specified, QEMU will create a symbolic link at
++    that location which points to the new PTY device.
++
++    This avoids having to make QMP or HMP monitor queries to find out
++    what the new PTY device path is.
++
++    Note that while QEMU will remove the symlink when it exits
++    gracefully, it will not do so in case of crashes or on certain
++    startup errors. It is recommended that the user checks and removes
++    the symlink after qemu terminates to account for this.
++
+ ``-chardev stdio,id=id[,signal=on|off]``
+     Connect to standard input and standard output of the QEMU process.
+ 
+@@ -4171,8 +4181,19 @@ SRST
+ 
+             vc:80Cx24C
+ 
+-    ``pty``
+-        [Linux only] Pseudo TTY (a new PTY is automatically allocated)
++    ``pty[:path]``
++        [Linux only] Pseudo TTY (a new PTY is automatically allocated).
++
++        If ``path`` is specified, QEMU will create a symbolic link at
++        that location which points to the new PTY device.
++
++        This avoids having to make QMP or HMP monitor queries to find
++        out what the new PTY device path is.
++
++        Note that while QEMU will remove the symlink when it exits
++        gracefully, it will not do so in case of crashes or on certain
++        startup errors. It is recommended that the user checks and
++        removes the symlink after qemu terminates to account for this.
+ 
+     ``none``
+         No device is allocated. Note that for machine types which
 -- 
-2.45.0
+2.46.0.rc2.264.g509ed76dc8-goog
 
 
