@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74EE6C52D70
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:15:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFA1EC3DA64
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:15:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbK14-0005bA-0B; Tue, 06 Aug 2024 09:14:18 -0400
+	id 1sbK15-0005gx-1o; Tue, 06 Aug 2024 09:14:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sbK0l-0004Lj-Gp; Tue, 06 Aug 2024 09:14:01 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1sbK0j-0004E0-Ge; Tue, 06 Aug 2024 09:13:58 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sbK0i-0003XD-Nb; Tue, 06 Aug 2024 09:13:58 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1fd65aaac27so46087765ad.1; 
- Tue, 06 Aug 2024 06:13:55 -0700 (PDT)
+ id 1sbK0f-0003Ws-TF; Tue, 06 Aug 2024 09:13:56 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1fd9e70b592so5886315ad.3; 
+ Tue, 06 Aug 2024 06:13:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722950034; x=1723554834; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1722950030; x=1723554830; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hYtQ+iWLl5Zd5RwOL72P9POMBpC2vDPbojh7D+T2lE0=;
- b=SeKMSWmzG2LpTGWFRaAV83QZrq6upBXg90Yi9Cn0W3zykX40J9XgP3mOKEcFbGVCFg
- vIvRCNkvSIk0yaa5LP9dS0qqAsRS4w69GWghqv+FC6TPkSzXReKJKFqCW+z+bDOuDssq
- qENoFvpFFyVwf51e34uw4A7M+l9ErTRGj7QnLgFeuOM2n8BCW83GTUQlwUN4sqkB2MuU
- bafdOi/WJlwgs4bDVxoxY6lfaJTFMiSEoHe/sG6fQl9h1cHCVMyP1uJpr0w2RvPo49SU
- yo7+IatZnWcKnA4Pa05o1CB43vJHRdzOW8t7lAf5oswTzPbMIiGEOKXj9yR9TcqQlGUz
- kKoA==
+ bh=6XYyJCLzvnn8wO2a9+7AscKvhpo1XrKV7Sx5tGxYTLM=;
+ b=EpS8697Nwudjvl0eIj1OD+SsMSbRFRYLSUmPnweSxc+3x10UGTlQUYGmVVaZFxW1bu
+ iO1cCtXgScLNVfW07trCZ1RWtubraa+F1d7wKxQj9+AWhqV6PQ9HxicNEaPybNWpv9fJ
+ aE+sPwXvedq/m0bqSIPqYL8i46KBez/xTnKv+PSh5FQEfpkK0q7HuPBIQIO211WxnnxL
+ rbnF8K6I+rCUVnulG5TOeoSyFJ89R9t0CE42vY5cIUSteC3KA0HZMB58SgX4AYqoDibz
+ GIuvRXDuYBsxL/tJCxmrow5lZB+m+yzapVY/gC5g9ODsn7en5GFhp9RULeD8FUsSvTaZ
+ w9OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722950034; x=1723554834;
+ d=1e100.net; s=20230601; t=1722950030; x=1723554830;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hYtQ+iWLl5Zd5RwOL72P9POMBpC2vDPbojh7D+T2lE0=;
- b=wJaBRs1qTggphz/xKhsdW+vtX+lxtFr9+rkCc3IGdb4ifP6IneggwIntv1tiAFyAH9
- fsMEU4raLu5lJKZqKP8cpGnUcyYGnz3J+sjyqk5SabXZIAYajTNFIcHN4VwZctuzYOkk
- w8QDBSpjABaZACHcf4JakFK+aCkJM30HRSovIqwV96gr5zTPG5EX0XwAb4NY7amORvZA
- 3ihpwuNDtoJZbHq4AfDD09neEinbwW5aJkfsFZj0GCRoE5f480poVlSAKVuPdB1ol9uR
- bgtbKsOroJKOXObn8gFzI+Vrw7Y+yJwZjq9C/9cTVIyneXPdw/OkoYtq7gcuhfixWVRn
- mkgg==
+ bh=6XYyJCLzvnn8wO2a9+7AscKvhpo1XrKV7Sx5tGxYTLM=;
+ b=k/cBk2UFEsHm87ABueY1Ls9WRreh5ObBi9XPzmj1qKssOr5fJF1BlTtA7twH6EKWIj
+ tPrFztKciBBcXqB0xI/gB8R0wPxG0h6ODfIUq93DYBCIHuyV7o50KIBxUkyHFQqLL5P2
+ vWcTxr007Y0FjOQgiBqcRgSkOHNpGWKMemp35tfKmXBl583+2wNQY6sAIGk840RFyKH+
+ 9qBtUlCiPE0sRuZnK1clWAw3lwi6ERVIAZD/La+ThWd3RNDgZd8O0VaKWPlm0bu8FZfe
+ 6URMMHNKg4qJTbTocnWBXz4uVq6I9Q0+1D1PSXITPv2uWx2ux5Ku7yUTnGpdjJCbeG1M
+ c+XA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXGlqFV4g/z7s57M5OsCe/DgghI4vQtNjxtQWUGAQxMkvJd7QfpW6rmerCyaY7YsxqpdWMz+ZKlqlnWnV/0b3Th9nmcXXU=
-X-Gm-Message-State: AOJu0YxRgDXHJs1wEt0PpHv+m8aZuass86QPHxRO5XKgZ3CxN45Kyqof
- Wuz2Ebh+9+E9CwlqIyPsz3KCdQndnZSaPmQvrvSMiQjEwxdEDzdd0cuMl3mp
-X-Google-Smtp-Source: AGHT+IFXwEEbAbqNJy2gwj2saeY3w8iWaRaOmOAMT8/USpcib0DdzlQ5uKTM26+6H/t+BlxSvijbRw==
-X-Received: by 2002:a17:903:1209:b0:1f4:a04e:8713 with SMTP id
- d9443c01a7336-1ff57f062b9mr270064675ad.28.1722950033738; 
- Tue, 06 Aug 2024 06:13:53 -0700 (PDT)
+ AJvYcCXCe3ctG7pqpn6U02sgx6hs8tNRGiJx/ck1Y6sL1Xnx6nEoUO1nhdN4bteF2K13sRbKeo5HVcYNrxwLVMxRxYFISObDUY0=
+X-Gm-Message-State: AOJu0YwXxgGsOx3LUGyvu8cSZ7mLNJynYYMR1RsCpox9vrgV0TGlDLwM
+ GpmWuz6zozJ1YsNOJ8u1TuQkbxiwrT2POwTzDq0N3BMMh0b+2NCtz/DzVdd4
+X-Google-Smtp-Source: AGHT+IFVTUR2zNJzggAN83mRWimea12aZp2Q4ejiZxQJ7ffEe/QORbo0/RtebXbwUR/u4Mxnr/Ub1Q==
+X-Received: by 2002:a17:902:db04:b0:200:7d10:b7c9 with SMTP id
+ d9443c01a7336-2007d10b8e1mr9796865ad.28.1722950030218; 
+ Tue, 06 Aug 2024 06:13:50 -0700 (PDT)
 Received: from wheely.local0.net ([1.145.149.136])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff5905b4ddsm87403425ad.173.2024.08.06.06.13.50
+ d9443c01a7336-1ff5905b4ddsm87403425ad.173.2024.08.06.06.13.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Aug 2024 06:13:53 -0700 (PDT)
+ Tue, 06 Aug 2024 06:13:49 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH 7/7] target/ppc: Fix VRMA to not check virtual page class key
- protection
-Date: Tue,  6 Aug 2024 23:13:17 +1000
-Message-ID: <20240806131318.275109-8-npiggin@gmail.com>
+Subject: [PATCH 6/7] target/ppc: Fix HFSCR facility checks
+Date: Tue,  6 Aug 2024 23:13:16 +1000
+Message-ID: <20240806131318.275109-7-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240806131318.275109-1-npiggin@gmail.com>
 References: <20240806131318.275109-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,48 +94,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hash virtual real mode addressing is defined by the architecture
-to not perform virtual page class key protection checks.
+The HFSCR defines were being encoded as bit masks, but the users
+expect (and analogous FSCR defines are) bit numbers.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/mmu-hash64.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ target/ppc/cpu.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/ppc/mmu-hash64.c b/target/ppc/mmu-hash64.c
-index 5e1983e334..c8c2f8910a 100644
---- a/target/ppc/mmu-hash64.c
-+++ b/target/ppc/mmu-hash64.c
-@@ -993,6 +993,7 @@ bool ppc_hash64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-     int exec_prot, pp_prot, amr_prot, prot;
-     int need_prot;
-     hwaddr raddr;
-+    bool vrma = false;
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index bd32a1a5f8..f7a2da2bbe 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -635,8 +635,8 @@ FIELD(MSR, LE, MSR_LE, 1)
+ #define PSSCR_EC          PPC_BIT(43) /* Exit Criterion */
  
-     /*
-      * Note on LPCR usage: 970 uses HID4, but our special variant of
-@@ -1022,6 +1023,7 @@ bool ppc_hash64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
-             }
-         } else if (ppc_hash64_use_vrma(env)) {
-             /* Emulated VRMA mode */
-+            vrma = true;
-             slb = &vrma_slbe;
-             if (build_vrma_slbe(cpu, slb) != 0) {
-                 /* Invalid VRMA setup, machine check */
-@@ -1136,7 +1138,12 @@ bool ppc_hash64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+ /* HFSCR bits */
+-#define HFSCR_MSGP     PPC_BIT(53) /* Privileged Message Send Facilities */
+-#define HFSCR_BHRB     PPC_BIT(59) /* BHRB Instructions */
++#define HFSCR_MSGP     PPC_BIT_NR(53) /* Privileged Message Send Facilities */
++#define HFSCR_BHRB     PPC_BIT_NR(59) /* BHRB Instructions */
+ #define HFSCR_IC_MSGP  0xA
  
-     exec_prot = ppc_hash64_pte_noexec_guard(cpu, pte);
-     pp_prot = ppc_hash64_pte_prot(mmu_idx, slb, pte);
--    amr_prot = ppc_hash64_amr_prot(cpu, pte);
-+    if (vrma) {
-+        /* VRMA does not check keys */
-+        amr_prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-+    } else {
-+        amr_prot = ppc_hash64_amr_prot(cpu, pte);
-+    }
-     prot = exec_prot & pp_prot & amr_prot;
- 
-     need_prot = check_prot_access_type(PAGE_RWX, access_type);
+ #define DBCR0_ICMP (1 << 27)
 -- 
 2.45.2
 
