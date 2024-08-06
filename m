@@ -4,77 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC83CC52D6F
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 19:28:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E06E1C52D6F
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 19:29:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbPqL-0002QU-FQ; Tue, 06 Aug 2024 15:27:37 -0400
+	id 1sbPrj-0006By-TP; Tue, 06 Aug 2024 15:29:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbPq5-0002Od-EF
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 15:27:24 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbPri-00064J-08
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 15:29:02 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbPq2-0006B0-Ua
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 15:27:21 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-428141be2ddso7128025e9.2
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 12:27:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbPrg-0006J8-BE
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 15:29:01 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3684407b2deso527081f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 12:28:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722972437; x=1723577237; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722972539; x=1723577339; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vrc+zi0ziRwPOBhP9AUlUNaD7G3Gwwzt97+a5Kmq/oU=;
- b=cVvGxTXyA8s7V5Vymucbirec2+MEMKRbT3jCUYPNqYi3HKC6FiCcfT/c/LQlWiLdTs
- +cHe5QytJ2DELoZI9uN1VZzoy6TS13rlLqKyovx/1U/3eYPyoH13YM4BxZHT49imFVOJ
- qZaS0RTPsIHdGTZG+pYYGR8TrOWj/KbNLJUFUl8r7CLHJv9KZY+9xUC+7btrkAMnJEog
- F6pzvS/a34Q0rZ2WMcKYcLicJTwXvc8aHJP6utshz4iuY3QFGMuB3vz7lf3zh3oYZh9O
- zxlCoqWW0cbtHrtHzZdfAlY9w3DK0r3YwVLkknr7UZSz5Uvl9fjKAppqStuF+eTzgZAL
- C66Q==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=x9ggTlFpDeO3tzm3B+faf6LESHtYJaV4u5jSKjfZQ7c=;
+ b=MPNY8syOuaM6sawOArRuugFhZUZMKQwYFkYxaMZ+tK5yVfha1L0V/gc6+ti/SQPzWt
+ 1yawxMRK7rEzCmsY2jF3G9p35FbsmR+nqX7nrdEJwV+/bwsp1GR5TUgTOeDH8XgrL0MQ
+ UCMYv0ssXYsaUujVKMSHxUHFyl3cReAWllyvAlz2HunpDKpaFm1bifZHc/Nh1JlqW4Nx
+ tUNpVVp1WQs8joK3OCClX1ciLNRlEdI5WW/SyIl2YP8jD2mF6iRmQjJtbNlTVy/rEoWW
+ 6vRNhNm4BxEra6nPjj3qnvV/zbMDJcQl2leqRwh+YjVFgv9uxPzx4OrXzYgKOyj2J7d3
+ 9Dmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722972437; x=1723577237;
+ d=1e100.net; s=20230601; t=1722972539; x=1723577339;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vrc+zi0ziRwPOBhP9AUlUNaD7G3Gwwzt97+a5Kmq/oU=;
- b=gJ+wBZ1PrNzX4MA6GrExEB3Gm8XzK6wTS81EY4aWDZtl4v0kE5l0DdsF4xT5Ls/VKK
- Hvv/YALONi/o4ZQUPu+3mr0ntgqR/aCZIsoaolt1Ho7qdGz7MgnrotbahQpct1s5NrP8
- g1b8CB6kn/L5vyFAmjFt1snuk12/4TBHNvyKcIGm52PnFgD3NdMc1v4nQcJffeZ6+qLJ
- 8LScrXL+3kBDXE49xUWgYYti6V6VAH+Agz6cMiffgiuKJrU8ZVFezvb0TESAd4kpqstS
- HL24Vfpw/eTLAO9CoS4CQYq2CM3zcAAOBrJuA6Hx23ng+IwI8ASBFeEuLZUOmANBiG7b
- lU5Q==
+ bh=x9ggTlFpDeO3tzm3B+faf6LESHtYJaV4u5jSKjfZQ7c=;
+ b=PioSfl0QCvnDW4IuUCD+2de/kIS49vHwozijHxVzlPTNbQenCv9zmr7G66afYfuxdW
+ 7KGBrKd0+4moTaP0kOjlOJ5cQAJ5fUbGmZGHodvgvBgyVCU/fBCiuodDU7XTTVPfx9fD
+ IkVyDMDh4Idxz1TR3Ooe62Hc0IhmPKgeguX2IX56HK1t/JNfXu0Frxkj22/G7wBuV4w4
+ SddqvbRWs0/5ia4gqk9HMpvg5i30Z0zpn8igkR90I1SneYfNhM9XPx9F0kdIYLUyt1Z2
+ e+ZYcDaCg5ULJycPQNMss/C2yLKkH+IKmxWQddn5vX8vxxvbV0eLxyve4iLHt6XLUpE8
+ Mm2A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU2V4ybhxN8X4Wj3H43fLNqi7ODSjXI3gi9NpIC159da5bpcbbNJ+rSKa/Fuk7ACCxFIQbSZ8O8lNFpPUTdE7KeW1sHifY=
-X-Gm-Message-State: AOJu0Yyn0Vkx3I4ePQcXO1V4z26TInSF9xBlQ4GCMZRLrZ5z3oUebu1f
- sgA7scCcSbeDtxGK+wUTpWfbGMzQXOftrm1XVW0BKKLQffbXaxy89T/pHMVOnlI=
-X-Google-Smtp-Source: AGHT+IEoOe9USr/ZchT9KQX0EH+1KHtpml1Eosj/ugoW/5WxVtA6rY1te/VAfUF0L7HyR80fmUjYpg==
-X-Received: by 2002:a05:600c:46d5:b0:428:e820:37ae with SMTP id
- 5b1f17b1804b1-428e8203c23mr109476355e9.1.1722972436808; 
- Tue, 06 Aug 2024 12:27:16 -0700 (PDT)
+ AJvYcCXc1GXEOjEcQ2q2PzvulHr4nes/O7Jw7DRDy1jPPJ1HhAGNOAXpWREYsXb+58gRssA2aG4m6fx5Vqznyc52tU6Zq2fS7dg=
+X-Gm-Message-State: AOJu0Yy0ciElC5KhJTaxVB0zydZqTzeQvCy8EoeyUqN7wIhZceCiftoJ
+ ht+QXs5vlCEdBRnIOXVbVGEiNNi5GOK0LmIMDEbAGx3CL9YvvHQPFcmuKUxdisQ=
+X-Google-Smtp-Source: AGHT+IGL95hmR91RbPW7U18cwZze82jNZRU9+smHhYyTBI74N3P45y9f5389mZP9Wnej1IeYT+r52Q==
+X-Received: by 2002:a05:6000:dc1:b0:367:926a:7413 with SMTP id
+ ffacd0b85a97d-36bbc189bc0mr8767580f8f.63.1722972538773; 
+ Tue, 06 Aug 2024 12:28:58 -0700 (PDT)
 Received: from [192.168.69.100] (vau06-h02-176-184-43-141.dsl.sta.abo.bbox.fr.
  [176.184.43.141]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36bbd059e60sm13920147f8f.82.2024.08.06.12.27.15
+ ffacd0b85a97d-36bc5a6fa1csm13026553f8f.78.2024.08.06.12.28.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Aug 2024 12:27:16 -0700 (PDT)
-Message-ID: <4ed90c17-03ab-4e3d-889a-42a986b625bd@linaro.org>
-Date: Tue, 6 Aug 2024 21:27:14 +0200
+ Tue, 06 Aug 2024 12:28:57 -0700 (PDT)
+Message-ID: <640b97b4-583c-4fa5-8ea1-be6c120aea8b@linaro.org>
+Date: Tue, 6 Aug 2024 21:28:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] system/vl.c: Expand OpenGL related errors
-To: Antonio Caggiano <quic_acaggian@quicinc.com>, qemu-devel@nongnu.org
-References: <20240731154136.3494621-1-peter.maydell@linaro.org>
- <20240731154136.3494621-3-peter.maydell@linaro.org>
- <871q31sr90.fsf@draig.linaro.org>
- <137030be-f5b0-45e4-97d5-0d17aa8d6347@quicinc.com>
+Subject: Re: [PATCH v2 2/9] tests/avocado: apply proper skipUnless decorator
+To: Cleber Rosa <crosa@redhat.com>, qemu-devel@nongnu.org
+Cc: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Radoslaw Biernacki <rad@semihalf.com>, Troy Lee <leetroy@gmail.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Beraldo Leal <bleal@redhat.com>,
+ kvm@vger.kernel.org, Joel Stanley <joel@jms.id.au>,
+ Paolo Bonzini <pbonzini@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, Paul Durrant
+ <paul@xen.org>, Eric Auger <eric.auger@redhat.com>,
+ David Woodhouse <dwmw2@infradead.org>, qemu-arm@nongnu.org,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Steven Lee
+ <steven_lee@aspeedtech.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Leif Lindholm <quic_llindhol@quicinc.com>
+References: <20240806173119.582857-1-crosa@redhat.com>
+ <20240806173119.582857-3-crosa@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <137030be-f5b0-45e4-97d5-0d17aa8d6347@quicinc.com>
+In-Reply-To: <20240806173119.582857-3-crosa@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,76 +112,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/8/24 17:20, Antonio Caggiano wrote:
-> Hi
+On 6/8/24 19:31, Cleber Rosa wrote:
+> Commit 9b45cc993 added many cases of skipUnless for the sake of
+> organizing flaky tests.  But, Python decorators *must* follow what
+> they decorate, so the newlines added should *not* exist there.
 > 
-> On 06/08/2024 15:41, Alex Bennée wrote:
->> Peter Maydell <peter.maydell@linaro.org> writes:
->>
->>> Expand the OpenGL related error messages we produce for various
->>> "OpenGL not present/not supported" cases, to hopefully guide the
->>> user towards how to fix things.
->>>
->>> Now if the user tries to enable GL on a backend that doesn't
->>> support it the error message is a bit more precise:
->>>
->>> $ qemu-system-aarch64 -M virt -device virtio-gpu-gl -display 
->>> curses,gl=on
->>> qemu-system-aarch64: OpenGL is not supported by display backend 'curses'
->>>
->>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->>> ---
->>>   system/vl.c | 5 +++--
->>>   1 file changed, 3 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/system/vl.c b/system/vl.c
->>> index 9e8f16f1551..213ee6a6a92 100644
->>> --- a/system/vl.c
->>> +++ b/system/vl.c
->>> @@ -1973,9 +1973,10 @@ static void qemu_create_early_backends(void)
->>>       if (dpy.has_gl && dpy.gl != DISPLAYGL_MODE_OFF && 
->>> display_opengl == 0) {
->>>   #if defined(CONFIG_OPENGL)
->>> -        error_report("OpenGL is not supported by the display");
->>> +        error_report("OpenGL is not supported by display backend '%s'",
->>> +                     DisplayType_str(dpy.type));
->>>   #else
->>> -        error_report("OpenGL support is disabled");
->>> +        error_report("OpenGL support was disabled when QEMU was
->>>       compiled");
->>
->> Maybe "OpenGL support was not enabled in this build of QEMU"?
-> 
-> To stay aligned with the other changes, this can provide even more 
-> details with another hint.
-> 
-> "OpenGL support was disabled at QEMU configuration time."
-> "It can be enabled by running `./configure --enable-opengl` before 
-> compilation"
-> 
-> 
-> BTW, whole series:
-> Reviewed-by: Antonio Caggiano <quic_acaggian@quicinc.com>
+> Signed-off-by: Cleber Rosa <crosa@redhat.com>
+> ---
+>   tests/avocado/boot_linux_console.py | 1 -
+>   tests/avocado/intel_iommu.py        | 1 -
+>   tests/avocado/linux_initrd.py       | 1 -
+>   tests/avocado/machine_aspeed.py     | 2 --
+>   tests/avocado/machine_mips_malta.py | 2 --
+>   tests/avocado/machine_rx_gdbsim.py  | 2 --
+>   tests/avocado/reverse_debugging.py  | 4 ----
+>   tests/avocado/smmu.py               | 1 -
+>   8 files changed, 14 deletions(-)
 
-Thanks Antonio. I already posted the pull request and it is
-being tested. I'll include your R-b tag if there is an issue
-and I need to repost it.
-
-> 
-> Cheers,
-> Antonio
-> 
->>
->> Anyway:
->>
->> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
->>
->>
->>
->>>   #endif
->>>           exit(1);
->>>       }
->>
-> 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
