@@ -4,101 +4,207 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7D1C52D6F
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 20:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 827FFC52D70
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 20:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbR0k-0000oY-0g; Tue, 06 Aug 2024 16:42:26 -0400
+	id 1sbRAK-0005k3-KK; Tue, 06 Aug 2024 16:52:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sbR0d-0000nr-4l
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 16:42:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1sbRAI-0005it-DX
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 16:52:18 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sbR0Y-0008BR-Uj
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 16:42:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722976931;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6DhCNNcF3Fj+cRZ4IZmusNhI6TMMDRpZqUDObeYIpi0=;
- b=OCmkGfKOy5jyu8vU1lwh/jSmubKdXdVn6Fv3fs5GSgRvHDdwpS13DDsDiagkXy656tNATC
- l2EEEmNYXc5nbt08xcfFsEUKRAplH1JDZcqbmvNxyMaMuFSS/Y0brL7SxnyW/09gVBcfAl
- bLOXsBK7Q0miT+YGogqfK7vT15iA1h0=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-206-GrziHadqP9KBB9NiG0b6Dw-1; Tue, 06 Aug 2024 16:42:09 -0400
-X-MC-Unique: GrziHadqP9KBB9NiG0b6Dw-1
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6b95c005dbcso3129976d6.1
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 13:42:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722976923; x=1723581723;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6DhCNNcF3Fj+cRZ4IZmusNhI6TMMDRpZqUDObeYIpi0=;
- b=hcwYtonkKWkI6f7ApJjpGfjnKD1PU/4K+HGVq2tsTHi/f/FOh1j6PHL9CC6jIn2weg
- wNcwPR5u1Uk8aFa1Ze/KxMgPlaMjXqDNixkIvan3p8I1SvXndfySvFmwJLCUio3uAaNn
- 9jo1vwXZ7IUL4+WmC6F6nmiFgQp9pfB7+xDsQDSpcDUJc+D/ZJtcY+yNzPh+0hMZn8s2
- owpTr3KW7733SWugZM2R/OY/yokq2ISDHJkrCcLuT20gT9lhiH/oVN0UE75vR8TekLBb
- S9TWfzupEmfxoaA/bJYH0EI4HSVSUdXZJoN+EL1k5Ejc9vO3byiz8j+YQWVLyXfiftvz
- CPjA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVe9rLWAlQjvqlmGCZfc5V7u46U5q7wq7kX+TMR1ILfvCZ5DHLYaU4KHjpdRLNk7mreHTQ9Mcc8VESJ@nongnu.org
-X-Gm-Message-State: AOJu0Yx7B0jZn7MLv9UERovVh7ZU1pnvdGJptuxf+9aUiTSyFNgIfWtK
- CuAKYGz6x8Awlu/Rg2JXnFsOi5PDNDI19h2jTFWgw/IYnARCX2LoQUGNUntfS1YjO7PTLx4wa/4
- LCZ1jqAzIZqZWy8lYBXgqJSrYkO71g46sVRCOkIcc5mlF+ArTfhlB
-X-Received: by 2002:a05:620a:2981:b0:79f:190a:8ad0 with SMTP id
- af79cd13be357-7a34ef42e81mr1083621385a.3.1722976923434; 
- Tue, 06 Aug 2024 13:42:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHcYAFjh2j6cEDIvNaM6USlIvFelX27i45yav+HkBZk40fuA5YvUZulG+CdyJyV/ZRVtPQfIA==
-X-Received: by 2002:a05:620a:2981:b0:79f:190a:8ad0 with SMTP id
- af79cd13be357-7a34ef42e81mr1083619685a.3.1722976922982; 
- Tue, 06 Aug 2024 13:42:02 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a34f6dcf20sm490103685a.20.2024.08.06.13.42.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Aug 2024 13:42:02 -0700 (PDT)
-Date: Tue, 6 Aug 2024 16:41:59 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
- jasowang@redhat.com, sriram.yagnaraman@est.tech, sw@weilnetz.de,
- qemu-devel@nongnu.org, yan@daynix.com,
- Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <ZrKKl2uxzGfl6SEA@x1n>
-References: <Zqk6x2nd3Twz--75@x1n>
- <39a8bb8b-4191-4f41-aaf7-06df24bf3280@daynix.com>
- <ZqumIZcs1tCNTpRE@x1n>
- <b70d09a5-554a-456b-904e-59cec5836ae8@daynix.com>
- <Zqz1vvYqRuIAPnod@x1n>
- <c5ea7a57-fc52-4bb7-bc4c-f3aca8da0574@daynix.com>
- <Zq0IrhV-DgStpJtk@x1n>
- <8ad96f43-83ae-49ae-abc1-1e17ee15f24d@daynix.com>
- <Zq99NcMkDMkDKBLv@x1n>
- <d94e8fda-23bb-4905-b656-3e1cb247079d@daynix.com>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1sbRAG-000152-94
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 16:52:18 -0400
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 476Eb1vj023462;
+ Tue, 6 Aug 2024 20:52:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+ message-id:date:subject:to:cc:references:from:in-reply-to
+ :content-type:content-transfer-encoding:mime-version; s=
+ corp-2023-11-20; bh=nIITzeQ9v3qpO6OCGRgTrjOoxBLMfqZh37b5vaujB28=; b=
+ A1Aoss5xwDVPyCmO/zPUhQCPugInenEJ2JuCAQRbwUh2M/HbH2EVV8H859UNQA3Z
+ HoyuvXNaGGCUIrgC1VMO5iedZnNoOc2UENBiizizDpDK20akzCyXz0sSan7xNr9d
+ aky9xlWvBE7UeKOcv99eYVBkFPiwd1rSM/lNkNTb8wQ9mfwtE0+H5fKB+WrWKHBL
+ 8x/v9ET1grKpRpujeH3yPmlCVX4NzUvuhWKovYxu1zmqw3bNFnLfzQkWSSuazKaq
+ NCkzlq6ChnUuP8SmKaSJR0YwIi2zcQPYuDrLz5xeIucxsQhqxEYw3/GAJgT/2aaS
+ vPO3PAnny0RMmq1b4h01vQ==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40saye69wy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 06 Aug 2024 20:52:10 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 476JgJWZ019687; Tue, 6 Aug 2024 20:52:09 GMT
+Received: from nam12-mw2-obe.outbound.protection.outlook.com
+ (mail-mw2nam12lp2049.outbound.protection.outlook.com [104.47.66.49])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 40sb096f5s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 06 Aug 2024 20:52:09 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=C2YuZO5PnZDJnzVY6VQ24Jk5dNYaYs7d31+WPiRA7R2uZ+D4A/B5PWRuD35mu7Ao/xbENWTLr9NySAf33KVmBVuF9JCVVsnAtXXP0K3gQ9Kx3efrhYWTkF/6fV937VkbDWcOZ3lUEEgWSWXLccZqFt2tAwiwQO1L04sDYY2e3SIdyfoyCgJeUvk2mAI68ROEnoent27z3fPTHH+0r2+erVNuxYpLkTwJ5dO383YxGRyZRGGd4IJk3RuC1XZq740xOa4uy1YVI1fgDcFsWc36OaUacAVPGTmOriHVNslt79qKArQvxlH/Z3YE4lhN+Z/s2oldodnwnKVYDn/Q1QFGeA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=nIITzeQ9v3qpO6OCGRgTrjOoxBLMfqZh37b5vaujB28=;
+ b=xaEfK/MtOGn7e/R3eRLAYDs2HFi9Blu7IDUA1/WhcF1GnKSsfEphfZhdE/Zb3y9/LqAvH3BdmzNpm6Ll2OnWu43KHKT5+Q9JNFKXC6/CYw3dpzCrku8kxbcC/hBWedfaiL4NTbuFHNoi+z0KBvHN1J268EBakaxVcFkbhERJJGJlgSxSTi4phEuFwoo0n6gs0DkMMhtkYR/T5qGeEtI++vxoILnpPqJUo4JpXawo/03RpzG4dqOT3p8JiAGeE+mx/7j/Y8ZycVAAwtuS8jFHRkliSIVG/TtbHOx9u1bbTWBfPMtFIwW/pfBqbyeLRoi2rytElugqsV8hvOBiZOYTRw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nIITzeQ9v3qpO6OCGRgTrjOoxBLMfqZh37b5vaujB28=;
+ b=Ro7ML2RjUUplp2xqgHbh2a8yJtBMK/OcWB2TNJ9/JbXUTCBy3nisIQoHvnDnsnAT6FXLCUTZudVbS56mlxdc+U82tCzoeC5ooiEK8nhguxUqxteg0c1nR34dZDhW2I5551jaCyXqkxloIihCMgnS1rlX2jnc+T0l5lWYIoXi69Q=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by PH7PR10MB6579.namprd10.prod.outlook.com (2603:10b6:510:206::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.22; Tue, 6 Aug
+ 2024 20:52:06 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%7]) with mapi id 15.20.7828.023; Tue, 6 Aug 2024
+ 20:52:06 +0000
+Message-ID: <205005e6-9442-49f0-9856-619429554a33@oracle.com>
+Date: Tue, 6 Aug 2024 16:52:01 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V2 04/11] migration: stop vm earlier for cpr
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
+ <1719776434-435013-5-git-send-email-steven.sistare@oracle.com>
+ <87sew726b9.fsf@suse.de> <0d1e8314-cc14-4bd2-8d80-93f6291ada1f@oracle.com>
+ <87v80xzgoy.fsf@suse.de>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+Organization: Oracle Corporation
+In-Reply-To: <87v80xzgoy.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BN9PR03CA0947.namprd03.prod.outlook.com
+ (2603:10b6:408:108::22) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <d94e8fda-23bb-4905-b656-3e1cb247079d@daynix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|PH7PR10MB6579:EE_
+X-MS-Office365-Filtering-Correlation-Id: 396dc04f-9d3f-40c3-0e95-08dcb659a1ad
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?OVlueTRCVGprSjdqRXZKTXE4eXY1cEEzQzAzYmdjZFkySTZFMWs1dWsyUzFX?=
+ =?utf-8?B?YXEyUzFXVzIrUTRTdXliSlNzbWhERzZJMjVFOFBQU000Z2FBMDRNRlJSZTln?=
+ =?utf-8?B?SGtNdEZ1dnVpdXVOQjRTbUdOV1JPWXFmbHI0N1lDVG9HNm5ZUzRKUW9BNEVP?=
+ =?utf-8?B?ekxLQy94MHprVGE4WkdZL29YbUFROThVUi9oa1l3YWVRK2hZN21GaFlydVFR?=
+ =?utf-8?B?M2E4ZmtYcjNZWkhyTG1ZeTh3RmhSbzJvdnZ0UUwraVduaGg5RWhyczFiSlFJ?=
+ =?utf-8?B?Tm5vU2RQQXo2aVM3MHdieEVZWTBsb2hUUFdlcndPUkpHWlhiU1RLYS9LdmlC?=
+ =?utf-8?B?ZU5tcE5UeW9CelVEeFVGZzdvNlBtQ0pnckhidW5PRjlDb2Y0OXZNanRsZG1s?=
+ =?utf-8?B?TTVBdTZERU1SU1dGdXpmOWNNNDN3MnRNelpxZUt6ajdBTGV3c09lNlhkODha?=
+ =?utf-8?B?UGYyNWw3aHA5VDVITUxraFNXVmRLQUZpMklwV0JrR3ZtNWcxNzhiSVkwNGR0?=
+ =?utf-8?B?TGlCamNXQlBLK2kxVlZ1M3JPdmNraFJTYVk2cnA5Q0lWVWhKeDFyZWNuSkt6?=
+ =?utf-8?B?VlNSUDNnMHJGNTdxRVJtUUdXRituR3FMNDVQeDFwZWhwTzNSQ3ZPaHVWbDN5?=
+ =?utf-8?B?aHk4SWEvQjVCdzNBWkUxM0JtajFCUlhjQmp5MU4vVTFaZ1FvTDJxZFFtdjI0?=
+ =?utf-8?B?eXpsRVdTVitKM3ZOaVMrUmJXczVkbjVrQ2xZYlhkQ0w3RDhiSGw3T2FlbnM0?=
+ =?utf-8?B?RU0ySm00MjJKR0p0aDdIN2k5S2F4ekpIZnFZSjZlYjdqcGdUZkRTQjNFRThi?=
+ =?utf-8?B?ZURRK1V3TG5PRzhNemNyZDMzbkFUTHV4dHBtYTlybEJHMGRUNFVuNVBhYU1R?=
+ =?utf-8?B?b3BwRkJVS3BodVZzTWppcVJXb01kUkV5YjJnUDY0SWtkNjdPaWxKa25yZ1pK?=
+ =?utf-8?B?cmRDYXVvbWtQaHRPY05lRTJ2T2llQ3N0YytuWUY0eWRPRTVKemtQM0FZV1N1?=
+ =?utf-8?B?eE82N2cwUzlYVFVQUGdBN2xaa0s5dzI5eE9CclYrdVpYV2lPSXJQREw1Ny83?=
+ =?utf-8?B?T0ZYY1RaejErTWRnUTNiSnV2NksydXMydFhUYTBKZzc2SnQ3dnJJSC9EOC9S?=
+ =?utf-8?B?MnhJTEZTZWQybzIrcGpLSXVlaDArcjFkUHBkK3VST1pnWVZ0OXAyQndYakJq?=
+ =?utf-8?B?V2NXNWFCTytpYklZSFlWLzFpYlNVbkZjTDJ1bVY2Um9RVk84Uk5iUXFKTXB3?=
+ =?utf-8?B?THRIRnEyMTU4MDVONGZLekUyWS9sbnVQYWhsMTBZN211b1JoNWtjTlB1aldQ?=
+ =?utf-8?B?UXRoRkJseHNsU2plNGNITkh0Y3hMS1FzdWtBUWJGb05sZ215SEptbzdmSXd4?=
+ =?utf-8?B?NXBXc0xWd2F4aXE5Q1VMRGNTMGozNHJzSGltNzFIZWhnbzg4YnFobnZQdDc2?=
+ =?utf-8?B?WG9FOW9HdlRQSy9EbUUrY2lYRWhxNWpkUUZmVk1vdnRCT0dpazU1TmxNN3c5?=
+ =?utf-8?B?ZkhvZ20xbzZIbTYzakVKTnExWlpNYm5pQ2FkREVDcFFEVktqWUZEMkZDWWow?=
+ =?utf-8?B?WDRlZ0kzTnd4QUdSbkdVVVZpQ3kxSEZ6bGlqaFRodmdsZ3ljdlRReVIvUUFa?=
+ =?utf-8?B?bmxFVGdST251MGVvWi9rL3V1VXlBb3Y4Um1pOXdJS0FPUnQxMUVJeVduVTdq?=
+ =?utf-8?B?eFR0bkp0eThBanFWTHhrQUtEWW12TGtWQVZNRExhMFdlUWVidWRDeERDOWFr?=
+ =?utf-8?B?VjlKZHpPNGp4RklXaEdTMUh5cjZJU0o4OURZa2poblpTWWNxZnZXblFhTXdD?=
+ =?utf-8?B?UXU5MUtwTGlyTnlLQngzdz09?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a0hHdUxwY21Ha3FuUmtSVXlaUTN0K2xCK0JOekUySStiK0Fab1E2eE5zb0dP?=
+ =?utf-8?B?M3poa2NzYUhsL09heGxMK0N5ZG5BWUdwTXkvbWRORHpxd01uR3ptNzdKTm96?=
+ =?utf-8?B?WUpWQUxDaWFBOGxsbWhiSHV5U1N5bXFWbDJSRDhqNzlkdm1hcTl4Y2orRHlp?=
+ =?utf-8?B?ODg3QjNXRGVNbDlSNitYSmQwWGZnQ2VuM2pRQnhmZVN0cHRuWnQxNEJySGdH?=
+ =?utf-8?B?YVBBVmpLc3dvYmNiWUFvODd2YVpuRzlOOVkvMloxNUtpMFBmZzR1ZmV3cXUv?=
+ =?utf-8?B?bjZ3MDhpQVZDTVRVa3d6N25aNnAvT3h2OUkzcXptak1HdTB6aWFGOEpXTHdF?=
+ =?utf-8?B?SW1pakFJSTY2bXVDaDZzckh0dm9ac1hkb29wMlNDUklnTWZOc24xeEMraXFM?=
+ =?utf-8?B?VTlnek1GTVJYYkdSU29OL2FMcGhJQk4rYUV0aTdIYktTM2FQdDFZRXZOYUQ5?=
+ =?utf-8?B?L1B2azlOM2swMUlkQUZmWmNuV1JKUFFMdGlKYm5XSFZ6N2pRWTNTQTdsdEdI?=
+ =?utf-8?B?R3RTRVM2SFN4MVA0YUh1Q3JoYnNrNE43OXIvMFdreEZtdW9tc0xPV2RmeHZQ?=
+ =?utf-8?B?TjNMODEyVDBYK0YzL0VOcXlLRnRoYSs5bG02bmoxUWJVSjh2QzJpbU9CZFRB?=
+ =?utf-8?B?cDJGbFpkTXJiTThjb0dSdWFlVkJXWlBLa2IyWWdvbmpPS1djM0VEVGVBQ2ZZ?=
+ =?utf-8?B?VEV4R1RibjJMd3NKUEdFaTJqMkZjOUpDWGY0ckpOaUpEZHFmTFpKMWNrZmMr?=
+ =?utf-8?B?UElMZkZHeU92UkJrSDZieHorcWpMdmFaQ3lzSEtDVi81bnlod1hhckpKZERU?=
+ =?utf-8?B?WVBwT2FQMEovcFcwb3QxdGZ1aEN2YzJha2ZtWTMyeWI0eVkzRU5pNjh0VUFp?=
+ =?utf-8?B?cUY1VHRiOG92THlENXJiaWFCa1BaSHhmUEpwZWc2N3JvdUtTbnFpZ09wcE9P?=
+ =?utf-8?B?Z3pmNE9nSSt5M0Zra3BrSC95MFRCZDYzaWdheTUrdzg0MkkvSVVuQyt6Yi83?=
+ =?utf-8?B?Y1FUUUtJblJnU1I3SnM2YWcyek1RTXVzM3RIMG5FK1FraTFFVDBRa2I0UHVX?=
+ =?utf-8?B?cGxsaTJESlkvZFVoeFRQWmY5dmY4Y2RqbktqUWxaZ3pJaE5ZRjNTeC83UkFG?=
+ =?utf-8?B?R2Rkd1pMcHl5QytjQnpvanZabEYrWWhIdSt4eDhGU3RnMlRjYUE1L3lWS0p0?=
+ =?utf-8?B?VTBNdlYxZXhlMzhJakZ3OVM4elk4YkUrTmhtcm5TUis2VlY5K1NuN0Z5R3BU?=
+ =?utf-8?B?eEc2VnYzejF4WURLM2VUZTVCa0xUczVIRnp3TUtIN1F2bG9RbnpodWtycjV3?=
+ =?utf-8?B?cFdnRGFhYWV0NVU0RE1YWEtXNjRHaHoyVm1wNGZHTGdUcXY3UWV3b1pjMFRm?=
+ =?utf-8?B?dncrK1NMTm9ZNGp3VHd2N3prWm5VWkhjV3IrS3ZJL0RxYUtrdURJSEgzK1lW?=
+ =?utf-8?B?UWlMeTd5dW9MM3g1b1EwQkFucGNTalB5RzZMVDFXTk8zREVMOENCQTd3VVVB?=
+ =?utf-8?B?SUROMWkydTJaSytISmhBbm1ncXlUSExGdXZLL1V3MkZUcnpFR1RlbWxvTjF4?=
+ =?utf-8?B?ZFYzMkUzWEljTjNtOGI5c2JBQUgwN0NjdWtNSkluWVR3WDhUS0cvN1ZqbmJ3?=
+ =?utf-8?B?alNzenRRMmlWaTJnNUNlbkhXQzV5Y3kwVkwyU2xaK29XZ0RTVzBYSk5SUXJH?=
+ =?utf-8?B?T1J4NU9LNDlvZk8vVEVNR3hhbDYxTi8wTWxTemYvQm43dXdQWExKcWE4V0Fh?=
+ =?utf-8?B?L2ExdDFrUkNQOTFQcVY5b05TTzVPYU9YcmtpNUxjc0RHZXp1WFdIU0hWYTJS?=
+ =?utf-8?B?YVpDRTZzYlIvYWh3VjZQcC9jdENVb083VVh6LzBlWjNWWDhhMWZPWVVoYXY2?=
+ =?utf-8?B?eS94amxQYXBlR1JwT3dSVlh5a0ZGN2tlT2g4cFM5OTBQNTNYSC9kVnVGdUly?=
+ =?utf-8?B?WmhCQkxmekFTYTE1MTdkYUV4ZW5EYjRrUm1HSzVPaXEzdi83Z25lZ2VzcE55?=
+ =?utf-8?B?M2pSaDFtOVJVeTlmS1V4ZTdxMEZvVzNzMUZGaTNySUZnUTVOU2VMTURIMFdZ?=
+ =?utf-8?B?V2lKajdqS0RsblhaeDN6TnVqelhRWFVHQmlRdFduU0J2Q1ZqZ2FIcDk4clpJ?=
+ =?utf-8?B?SjI0WTB1Z0F2QXM5ZjlySnpYYlE1SysrZzk4NmZxYm15MUljdlNKa1FMZ1pK?=
+ =?utf-8?B?OFE9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: /qG5NT42OzjNrfMAZ7WoQ30hm8ay6MkZhQa0fpNv/uopdXJbu0+bUK0BH2vc5vRhqVrLVmqwB97aF2zZmobCrD9swNLxN5WCKoiSxyhXzeCWwWrqOxFxphCNN6DKak9Kn6wJ9tjrYSLYA6qgCfrzSsF26skn9F0lnUaa3mfX4X+wVp6zxqR6B/212ZsmAy+MP2R6Vq+Tx2IZCyoy1U8MzEJVRXA3rOOMpct53fUs/L7L9JSWajlHzdi/SVpXpjO46PV4jt69gtfecURNs7y0P/UjB7dV0TFhIxZrgDx6DYwFROYx3BHTGdOkDv9Zy9l3U1379fQkdpMjKt1RPcmjTZjx90QuIORBtzBVyIVxXJvU2FrWD8JbxzJfjlo+/79+6r4a6y7A7AM45eVxvFTVrrPlGd5BgOhejkhmj75dT1VBq51TfoaeM1PfLDAsRgdI7CnmyYH6ZKm6zlUElrgbNrSOlvgYTm/7xcENs+sSSDZIBV6bOdWjeLbz6LSpL20UbBRBl314nYWs8H18Y/1gjvkyK6ogtjS0zgrMJotHKoQBFHCLGAaJcU5O+2fTg3Fk6+WU8Uu59v0S46RFT9kHKiARx0bYCEldHEIIGOxrerw=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 396dc04f-9d3f-40c3-0e95-08dcb659a1ad
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Aug 2024 20:52:06.2269 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: VNUwk/0E3vxHHytpdB0y08HgyX/a8my1HGOj5y1M6Jr4RuRH/qtMO9PBgZ5Pk8KezbomAnXjcoyQleKyH2eJhpr/TpIjMca/g58QRthLd40=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB6579
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-06_17,2024-08-06_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ adultscore=0
+ mlxlogscore=999 phishscore=0 bulkscore=0 mlxscore=0 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2407110000 definitions=main-2408060145
+X-Proofpoint-ORIG-GUID: S9BtYLNqVgJAWvzf4uUleBkFs7xJOo7E
+X-Proofpoint-GUID: S9BtYLNqVgJAWvzf4uUleBkFs7xJOo7E
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -116,189 +222,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 05, 2024 at 04:27:43PM +0900, Akihiko Odaki wrote:
-> On 2024/08/04 22:08, Peter Xu wrote:
-> > On Sun, Aug 04, 2024 at 03:49:45PM +0900, Akihiko Odaki wrote:
-> > > On 2024/08/03 1:26, Peter Xu wrote:
-> > > > On Sat, Aug 03, 2024 at 12:54:51AM +0900, Akihiko Odaki wrote:
-> > > > > > > > I'm not sure if I read it right.  Perhaps you meant something more generic
-> > > > > > > > than -platform but similar?
-> > > > > > > > 
-> > > > > > > > For example, "-profile [PROFILE]" qemu cmdline, where PROFILE can be either
-> > > > > > > > "perf" or "compat", while by default to "compat"?
-> > > > > > > 
-> > > > > > > "perf" would cover 4) and "compat" will cover 1). However neither of them
-> > > > > > > will cover 2) because an enum is not enough to know about all hosts. I
-> > > > > > > presented a design that will cover 2) in:
-> > > > > > > https://lore.kernel.org/r/2da4ebcd-2058-49c3-a4ec-8e60536e5cbb@daynix.com
-> > > > > > 
-> > > > > > "-merge-platform" shouldn't be a QEMU parameter, but should be something
-> > > > > > separate.
-> > > > > 
-> > > > > Do you mean merging platform dumps should be done with another command? I
-> > > > > think we will want to know the QOM tree is in use when implementing
-> > > > > -merge-platform. For example, you cannot define a "platform" when e.g., you
-> > > > > don't know what netdev backend (e.g., user, vhost-net, vhost-vdpa) is
-> > > > > connected to virtio-net devices. Of course we can include those information
-> > > > > in dumps, but we don't do so for VMState.
-> > > > 
-> > > > What I was thinking is the generated platform dump shouldn't care about
-> > > > what is used as backend: it should try to probe whatever is specified in
-> > > > the qemu cmdline, and it's the user's job to make sure the exact same qemu
-> > > > cmdline is used in other hosts to dump this information.
-> > > > 
-> > > > IOW, the dump will only contain the information that was based on the qemu
-> > > > cmdline.  E.g., if it doesn't include virtio device at all, and if we only
-> > > > support such dump for virtio, it should dump nothing.
-> > > > 
-> > > > Then the -merge-platform will expect all dumps to look the same too,
-> > > > merging them with AND on each field.
-> > > 
-> > > I think we will still need the QOM tree in that case. I think the platform
-> > > information will look somewhat similar to VMState, which requires the QOM
-> > > tree to interpret.
-> > 
-> > Ah yes, I assume you meant when multiple devices can report different thing
-> > even if with the same frontend / device type.  QOM should work, or anything
-> > that can identify a device, e.g. with id / instance_id attached along with
-> > the device class.
-> > 
-> > One thing that I still don't know how it works is how it interacts with new
-> > hosts being added.
-> > 
-> > This idea is based on the fact that the cluster is known before starting
-> > any VM.  However in reality I think it can happen when VMs started with a
-> > small cluster but then cluster extended, when the -merge-platform has been
-> > done on the smaller set.
-> > 
-> > > 
-> > > > 
-> > > > Said that, I actually am still not clear on how / whether it should work at
-> > > > last.  At least my previous concern (1) didn't has a good answer yet, on
-> > > > what we do when profile collisions with qemu cmdlines.  So far I actually
-> > > > still think it more straightforward that in migration we handshake on these
-> > > > capabilities if possible.
-> > > > 
-> > > > And that's why I was thinking (where I totally agree with you on this) that
-> > > > whether we should settle a short term plan first to be on the safe side
-> > > > that we start with migration always being compatible, then we figure the
-> > > > other approach.  That seems easier to me, and it's also a matter of whether
-> > > > we want to do something for 9.1, or leaving that for 9.2 for USO*.
-> > > 
-> > > I suggest disabling all offload features of virtio-net with 9.2.
-> > > 
-> > > I want to keep things consistent so I want to disable all at once. This
-> > > change will be very uncomfortable for us, who are implementing offload
-> > > features, but I hope it will motivate us to implement a proper solution.
-> > > 
-> > > That said, it will be surely a breaking change so we should wait for 9.1
-> > > before making such a change.
-> > 
-> > Personally I don't worry too much on other offload bits besides USO* so far
-> > if we have them ON for longer time.  My wish was that they're old good
-> > kernel features mostly supported everywhere who runs QEMU, then we're good.
+On 7/22/2024 9:42 AM, Fabiano Rosas wrote:
+> Steven Sistare <steven.sistare@oracle.com> writes:
 > 
-> Unfortunately, we cannot expect everyone runs Linux, and the offload
-> features are provided by Linux. However, QEMU can run on other platforms,
-> and offload features may be provided by vhost-user or vhost-vdpa.
-
-I see.  I am not familiar with the status quo there, so I'll leave that to
-you and other experts that know better on this..
-
-Personally I do care more on Linux, as that's what we ship within RH..
-
+>> On 7/17/2024 2:59 PM, Fabiano Rosas wrote:
+>>> Steve Sistare <steven.sistare@oracle.com> writes:
+>>>
+>>>> Stop the vm earlier for cpr, to guarantee consistent device state when
+>>>> CPR state is saved.
+>>>>
+>>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>>> ---
+>>>>    migration/migration.c | 22 +++++++++++++---------
+>>>>    1 file changed, 13 insertions(+), 9 deletions(-)
+>>>>
+>>>> diff --git a/migration/migration.c b/migration/migration.c
+>>>> index 0f47765..8a8e927 100644
+>>>> --- a/migration/migration.c
+>>>> +++ b/migration/migration.c
+>>>> @@ -2077,6 +2077,7 @@ void qmp_migrate(const char *uri, bool has_channels,
+>>>>        MigrationState *s = migrate_get_current();
+>>>>        g_autoptr(MigrationChannel) channel = NULL;
+>>>>        MigrationAddress *addr = NULL;
+>>>> +    bool stopped = false;
+>>>>    
+>>>>        /*
+>>>>         * Having preliminary checks for uri and channel
+>>>> @@ -2120,6 +2121,15 @@ void qmp_migrate(const char *uri, bool has_channels,
+>>>>            }
+>>>>        }
+>>>>    
+>>>> +    if (migrate_mode_is_cpr(s)) {
+>>>> +        int ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+>>>> +        if (ret < 0) {
+>>>> +            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+>>>> +            goto out;
+>>>> +        }
+>>>> +        stopped = true;
+>>>> +    }
+>>>> +
+>>>>        if (cpr_state_save(&local_err)) {
+>>>>            goto out;
+>>>>        }
+>>>> @@ -2155,6 +2165,9 @@ out:
+>>>>            }
+>>>>            migrate_fd_error(s, local_err);
+>>>>            error_propagate(errp, local_err);
+>>>> +        if (stopped && runstate_is_live(s->vm_old_state)) {
+>>>> +            vm_start();
+>>>> +        }
+>>>
+>>> What about non-live states? Shouldn't this be:
+>>>
+>>> if (stopped) {
+>>>      vm_resume();
+>>> }
+>>
+>> Not quite.  vm_old_state may be a stopped state, so we don't want to resume.
+>> However, I should probably restore the old stopped state here.  I'll try some more
+>> error recovery scenarios.
 > 
-> > 
-> > And I definitely worry about future offload features, or any feature that
-> > may probe host like this and auto-OFF: I hope we can do them on the safe
-> > side starting from day1.
-> > 
-> > So I don't know whether we should do that to USO* only or all.  But I agree
-> > with you that'll definitely be cleaner.
-> > 
-> > On the details of how to turn them off properly..  Taking an example if we
-> > want to turn off all the offload features by default (or simply we replace
-> > that with USO-only)..
-> > 
-> > Upstream machine type is flexible to all kinds of kernels, so we may not
-> > want to regress anyone using an existing machine type even on perf,
-> > especially if we want to turn off all.
-> > 
-> > In that case we may need one more knob (I'm assuming this is virtio-net
-> > specific issue, but maybe not; using it as an example) to make sure the old
-> > machine types perfs as well, with:
-> > 
-> >    - x-virtio-net-offload-enforce
-> > 
-> >      When set, the offload features with value ON are enforced, so when
-> >      the host doesn't support a offload feature it will fail to boot,
-> >      showing the error that specific offload feature is not supported by the
-> >      virtio backend.
-> > 
-> >      When clear, the offload features with value ON are not enforced, so
-> >      these features can be automatically turned OFF when it's detected the
-> >      backend doesn't support them.  This may bring best perf but has the
-> >      risk of breaking migration.
+> AIUI vm_resume() does the right thing already:
 > 
-> "[PATCH v3 0/5] virtio-net: Convert feature properties to OnOffAuto" adds
-> "x-force-features-auto" compatibility property to virtio-net for this
-> purpose:
-> https://lore.kernel.org/r/20240714-auto-v3-0-e27401aabab3@daynix.com
+> void vm_resume(RunState state)
+> {
+>      if (runstate_is_live(state)) {
+>          vm_start();
+>      } else {
+>          runstate_set(state);
+>      }
+> }
 
-Ah ok.  But note that there's still a slight difference: we need to avoid
-AUTO being an option, at all, IMHO.
+Yes, thanks, I do need to set vm_old_state if not live.  It should be:
 
-It's about making qemu cmdline the ABI: when with AUTO it's still possible
-the user uses AUTO on both sides, then ABI may not be guaranteed.
+out:
+     ...
+     if (stopped) {
+         vm_resume(s->vm_old_state);
+     }
 
-AUTO would be fine if: (1) the property doesn't affect guest ABI, or (2)
-the AUTO bit will always generate the same thing on both hosts.  However
-USO* isn't such case.. so the AUTO option is IMHO not wanted.
+- Steve
 
-What I mentioned above "x-virtio-net-offload-enforce" shouldn't add
-anything new to "uso"; it still can only be ON/OFF.  However it should
-affect "flip that to OFF automatically" or "fail the boot" behavior on
-missing features.
-
-> 
-> > 
-> > With that,
-> > 
-> >    - On old machine types (compat properties):
-> > 
-> >      - set "x-virtio-net-offload-enforce" OFF
-> >      - set all offload features ON
-> > 
-> >    - On new machine types (the default values):
-> > 
-> >      - set "x-virtio-net-offload-enforce" ON
-> >      - set all offload features OFF
-> > 
-> > And yes, we can do that until 9.2, but with above even 9.1 should be safe
-> > to do.  9.2 might be still easier just to think everything through again,
-> > after all at least USO was introduced in 8.2 so not a regress in 9.1.
-> > 
-> > > 
-> > > By the way, I am wondering perhaps the "no-cross-migrate" scenario can be
-> > > implemented relatively easy in a way similar to compatibility properties.
-> > > The idea is to add the "no-cross-migrate" property to machines. If the
-> > > property is set to "on", all offload features of virtio-net will be set to
-> > > "auto". virtio-net will then probe the offload features and enable available
-> > > offloading features.
-> > 
-> > If it'll become a device property, there's still the trick / concern where
-> > no-cross-migrate could conflict with the other offload feature that was
-> > selected explicilty by an user (e.g. no-cross-migrate=ON + uso=OFF).
-> With no-cross-migrate=ON + uso=OFF, no-cross-migrate will set uso=auto, but
-> the user overrides with uso=off. As the consequence, USO will be disabled
-> but all other available offload features will be enabled.
-
-Basically you're saying that no-cross-migrate has lower priority than
-specific feature bits.  That's OK to me.
-
-Thanks,
-
--- 
-Peter Xu
-
+>>>>            return;
+>>>>        }
+>>>>    }
+>>>> @@ -3738,7 +3751,6 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+>>>>        Error *local_err = NULL;
+>>>>        uint64_t rate_limit;
+>>>>        bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
+>>>> -    int ret;
+>>>>    
+>>>>        /*
+>>>>         * If there's a previous error, free it and prepare for another one.
+>>>> @@ -3810,14 +3822,6 @@ void migrate_fd_connect(MigrationState *s, Error *error_in)
+>>>>            return;
+>>>>        }
+>>>>    
+>>>> -    if (migrate_mode_is_cpr(s)) {
+>>>> -        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+>>>> -        if (ret < 0) {
+>>>> -            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+>>>> -            goto fail;
+>>>> -        }
+>>>> -    }
+>>>> -
+>>>>        if (migrate_background_snapshot()) {
+>>>>            qemu_thread_create(&s->thread, "mig/snapshot",
+>>>>                    bg_migration_thread, s, QEMU_THREAD_JOINABLE);
 
