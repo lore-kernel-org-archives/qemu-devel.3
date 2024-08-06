@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2EDDC3DA64
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A9DC3DA64
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:14:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbJi2-0001Ym-2g; Tue, 06 Aug 2024 08:54:42 -0400
+	id 1sbK14-0005d3-Gt; Tue, 06 Aug 2024 09:14:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJhg-0000F4-Oa
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:54:24 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sbK0c-0003mM-Dp; Tue, 06 Aug 2024 09:13:53 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJhb-0000MA-TZ
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:54:13 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-2ef32fea28dso6962461fa.2
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 05:54:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1sbK0Z-0003Vz-MJ; Tue, 06 Aug 2024 09:13:49 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1ff67158052so4288115ad.0; 
+ Tue, 06 Aug 2024 06:13:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722948849; x=1723553649; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1722950023; x=1723554823; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gv+R0AOxTRNRr/YYta1DbILbzN2/ozjvln37VG+akqw=;
- b=pMqQlNuhvjAjZ/LZtahOeUPMpwtwcsQFzPfPSHOwHYr8IkA18U5kfNmpnN2Hs9I2Ef
- fr/v13JgebmIAV/bw843V47ESuhVkL12S4hxqUwtWbAssE0ywieUrlHQaq6HCzf5el2e
- cRXzgVkOoOwhbP916+veJqzy+OU1gSZWeDyoZfBGrbCGFy58R33bIFDghUpbiwX63SkC
- 9Y6jgtdUOLDF7ySuw8RCpx/BfO8pwNKfEo9hFExBAomWwQA7foD8s+W1ZhgaqOMQTgYV
- 37Z+hoDKoxyl1s9V1cuhAmQQdWa+crysZ5qP0NaKYYBNsDNrGDPxgz4hOHXlZ0xAdseU
- H4Cw==
+ bh=KIbYNlJMBEsCqBxxwTzqQf1JhWU8VE32ZNkapVqS6C8=;
+ b=TG0Ak+TFPK95pY1TGuao6kTrQZBVYdxngiItFJSN9P/vW4dUCfFwduHkmWv2SbgWp1
+ jdXvk0BH6iDr8XmJlhpZ65ppMZbIajCpCplAC1c77epjzWUsZCZMWI7L5/x4R1qt3RUw
+ yRKraRvO/IjTXqhxtoxDW+Eq+l5Osqq1Y0oWBDldB8qwjmjg1rq2Q/5V1OmTeIOPZEcF
+ sqQYDuWPXOgjLEwICzis/6hbLZCBMHVSSWrjjzcHZ3sHudTm0XlFXXtCsqVvdzBwTIc+
+ Eh5SoMQVp3DGNOz5mvPH8ZsXB7xWk4ZryVxFxVQbjPFjtaMOBd6z2AcgiE3XT3y+43Ln
+ VkfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722948849; x=1723553649;
+ d=1e100.net; s=20230601; t=1722950023; x=1723554823;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gv+R0AOxTRNRr/YYta1DbILbzN2/ozjvln37VG+akqw=;
- b=n01DbxhFfyrmFQpo/prEma1sy7EMVZvkRNcrqOHXPq1WOdEHomwIg+gZzy+anNeSLp
- qA5AZsIeE97j0GQeIyWWcJLgtJA1kNlYkYfxnq8llA16OLlCdHulvDnWvqAeZDWTFB7w
- 9unmV2kubi2nX/i3T7zWEe8URs6QxDA7sqj+WJbVNeQOCzbgH5Imdy+rhN0Ub1DAaA+E
- qAU89IQAGPdhp2ybRzdYsY3GHmwPePek2gmwC+sZeR5ZQI4WTpocgRJe/X1drpDjurev
- IbTsw7DIBOeSo/IOMdZGszDAfMke/GBC1Xy2gxvuRF8IBrpkqEZVOB+ItxfhNht36Jjy
- 5MHQ==
-X-Gm-Message-State: AOJu0Yydo86uBHraLbzIH4r7b1wbciCrtXTOLMorZ+JDTO5sitOsIefq
- sx3p0XdzhF7S/GgvTdEMx6Kx9yCONDV74N8MHMpIIXOP1vMMYh8czuWQ0UmAtP6S5QqLSY+4rVR
- S
-X-Google-Smtp-Source: AGHT+IEjUA7XHVQZQ9IKvGvDk1ZhAIr83KVOzxwR2ijFBWm9ba6PraKB14zqi/sY1NsIg+m0hfzMvA==
-X-Received: by 2002:a2e:98c3:0:b0:2ef:2b06:e554 with SMTP id
- 38308e7fff4ca-2f15aa87375mr99364231fa.15.1722948849227; 
- Tue, 06 Aug 2024 05:54:09 -0700 (PDT)
-Received: from m1x-phil.lan (cor91-h02-176-184-30-206.dsl.sta.abo.bbox.fr.
- [176.184.30.206]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bb88d1d9a3sm2558061a12.26.2024.08.06.05.54.08
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 Aug 2024 05:54:08 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 21/28] hw/ide/pci: Remove dead code from bmdma_prepare_buf()
-Date: Tue,  6 Aug 2024 14:51:49 +0200
-Message-ID: <20240806125157.91185-22-philmd@linaro.org>
+ bh=KIbYNlJMBEsCqBxxwTzqQf1JhWU8VE32ZNkapVqS6C8=;
+ b=Wpw1cbAAdu7Y9RTkwXTPtgulDMkTNyvU3Xurbjgf/9SXqj9BWcQ8yDdLuaH5jnhSm+
+ jlwRhaQCwEu3gpNEAf5AP0A7mS6BTxm2SGNAu1dStK+pFJf32gEbv0J36ORxwWmvWxYp
+ ENcoSwXKBReuJUIdCmFvrWnXYNRKag/BubRfW2VBSQFWevgeXOFG/fJwVQOI4JmTyXdi
+ UKnb6l6aR7auFsO5ImzLVauAd+fPEMyJxxuYWcevZN5AA7IPCmg2jAFycFQN0O4bjwUd
+ dHxvYXcgwoYwq7jjMPGb3pmD8gTMibZSHJaRF8n9ltPnZAsE9beCwAqA+30yo53gC0CW
+ bUug==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUgHPj+oDtFGAD03fCvjiTnCa528V5TuBRuqnzMgtAD8VxGVyTs2l5JjeARgKbA0wMxPYhF332vPeiTxGue3IQpHFYctcc=
+X-Gm-Message-State: AOJu0YwnuHBO95NlLMuknh373uql1dp2SBKfzStctgXjxslZdmC06S/s
+ iZsEUHt/rXVlZKegLQ1XvxFomHc53mNAPcd/R2a4XRn9VqH45L/TtZw4RCvl
+X-Google-Smtp-Source: AGHT+IE/Wm7PJAZf+CMGRmjGZndGLRL+exg55KjpuAvnXHRI1c1l4AVKIwxy63x1NWJH+DgwRbecCQ==
+X-Received: by 2002:a17:902:b192:b0:1fb:5574:7554 with SMTP id
+ d9443c01a7336-1ff572b97cfmr110012275ad.28.1722950022804; 
+ Tue, 06 Aug 2024 06:13:42 -0700 (PDT)
+Received: from wheely.local0.net ([1.145.149.136])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1ff5905b4ddsm87403425ad.173.2024.08.06.06.13.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 06 Aug 2024 06:13:42 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH 4/7] target/ppc: PMIs are level triggered
+Date: Tue,  6 Aug 2024 23:13:14 +1000
+Message-ID: <20240806131318.275109-5-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240806125157.91185-1-philmd@linaro.org>
-References: <20240806125157.91185-1-philmd@linaro.org>
+In-Reply-To: <20240806131318.275109-1-npiggin@gmail.com>
+References: <20240806131318.275109-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,54 +94,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+In Book-S / Power processors, the performance monitor interrupts are
+driven by the MMCR0[PMAO] bit, which is level triggered and not cleared
+by the interrupt.
 
-Coverity notes that the code at the end of the loop in
-bmdma_prepare_buf() is unreachable.  This is because in commit
-9fbf0fa81fca8f527 ("ide: remove hardcoded 2GiB transactional limit")
-we removed the only codepath in the loop which could "break" out of
-it, but didn't notice that this meant we should also remove the code
-at the end of the loop.
+Others may have different performance monitor architecture, but none of
+those are implemented by QEMU.
 
-Remove the dead code.
-
-Resolves: Coverity CID 1547772
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-[PMD: Break and return once at EOF]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240805182419.22239-1-philmd@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ide/pci.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ target/ppc/excp_helper.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/hw/ide/pci.c b/hw/ide/pci.c
-index 4675d079a1..a008fe7316 100644
---- a/hw/ide/pci.c
-+++ b/hw/ide/pci.c
-@@ -237,7 +237,7 @@ static int32_t bmdma_prepare_buf(const IDEDMA *dma, int32_t limit)
-             /* end of table (with a fail safe of one page) */
-             if (bm->cur_prd_last ||
-                 (bm->cur_addr - bm->addr) >= BMDMA_PAGE_SIZE) {
--                return s->sg.size;
-+                break;
-             }
-             pci_dma_read(pci_dev, bm->cur_addr, &prd, 8);
-             bm->cur_addr += 8;
-@@ -266,10 +266,7 @@ static int32_t bmdma_prepare_buf(const IDEDMA *dma, int32_t limit)
-             s->io_buffer_size += l;
-         }
-     }
--
--    qemu_sglist_destroy(&s->sg);
--    s->io_buffer_size = 0;
--    return -1;
-+    return s->sg.size;
- }
- 
- /* return 0 if buffer completed */
+diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+index f33fc36db2..701abe1b6d 100644
+--- a/target/ppc/excp_helper.c
++++ b/target/ppc/excp_helper.c
+@@ -2187,7 +2187,6 @@ static void p7_deliver_interrupt(CPUPPCState *env, int interrupt)
+         powerpc_excp(cpu, POWERPC_EXCP_DECR);
+         break;
+     case PPC_INTERRUPT_PERFM:
+-        env->pending_interrupts &= ~PPC_INTERRUPT_PERFM;
+         powerpc_excp(cpu, POWERPC_EXCP_PERFM);
+         break;
+     case 0:
+@@ -2250,7 +2249,6 @@ static void p8_deliver_interrupt(CPUPPCState *env, int interrupt)
+         powerpc_excp(cpu, POWERPC_EXCP_SDOOR_HV);
+         break;
+     case PPC_INTERRUPT_PERFM:
+-        env->pending_interrupts &= ~PPC_INTERRUPT_PERFM;
+         powerpc_excp(cpu, POWERPC_EXCP_PERFM);
+         break;
+     case PPC_INTERRUPT_EBB: /* EBB exception */
+@@ -2330,7 +2328,6 @@ static void p9_deliver_interrupt(CPUPPCState *env, int interrupt)
+         powerpc_excp(cpu, POWERPC_EXCP_SDOOR_HV);
+         break;
+     case PPC_INTERRUPT_PERFM:
+-        env->pending_interrupts &= ~PPC_INTERRUPT_PERFM;
+         powerpc_excp(cpu, POWERPC_EXCP_PERFM);
+         break;
+     case PPC_INTERRUPT_EBB: /* EBB exception */
+@@ -2444,7 +2441,6 @@ static void ppc_deliver_interrupt(CPUPPCState *env, int interrupt)
+         powerpc_excp(cpu, POWERPC_EXCP_SDOOR_HV);
+         break;
+     case PPC_INTERRUPT_PERFM:
+-        env->pending_interrupts &= ~PPC_INTERRUPT_PERFM;
+         powerpc_excp(cpu, POWERPC_EXCP_PERFM);
+         break;
+     case PPC_INTERRUPT_THERM:  /* Thermal interrupt */
 -- 
 2.45.2
 
