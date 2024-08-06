@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E06E1C52D6F
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 19:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5624C52D70
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 19:30:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbPrj-0006By-TP; Tue, 06 Aug 2024 15:29:03 -0400
+	id 1sbPtC-0003Ku-LC; Tue, 06 Aug 2024 15:30:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbPri-00064J-08
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 15:29:02 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbPtA-0003HL-L7
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 15:30:32 -0400
+Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbPrg-0006J8-BE
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 15:29:01 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3684407b2deso527081f8f.1
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 12:28:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbPt8-0006dq-S8
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 15:30:32 -0400
+Received: by mail-lj1-x232.google.com with SMTP id
+ 38308e7fff4ca-2f136e23229so11034801fa.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 12:30:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722972539; x=1723577339; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722972628; x=1723577428; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=x9ggTlFpDeO3tzm3B+faf6LESHtYJaV4u5jSKjfZQ7c=;
- b=MPNY8syOuaM6sawOArRuugFhZUZMKQwYFkYxaMZ+tK5yVfha1L0V/gc6+ti/SQPzWt
- 1yawxMRK7rEzCmsY2jF3G9p35FbsmR+nqX7nrdEJwV+/bwsp1GR5TUgTOeDH8XgrL0MQ
- UCMYv0ssXYsaUujVKMSHxUHFyl3cReAWllyvAlz2HunpDKpaFm1bifZHc/Nh1JlqW4Nx
- tUNpVVp1WQs8joK3OCClX1ciLNRlEdI5WW/SyIl2YP8jD2mF6iRmQjJtbNlTVy/rEoWW
- 6vRNhNm4BxEra6nPjj3qnvV/zbMDJcQl2leqRwh+YjVFgv9uxPzx4OrXzYgKOyj2J7d3
- 9Dmw==
+ bh=P76gTOzFzXU4EN8b7uHbluQmlo5oYvuNAX6IWkFa11Q=;
+ b=rBoqQ5wKKlZojwpIzyuo4TVCVj7GaX65/X1WlZ92ALhnmLft4LAlLk63vejTI9NGsU
+ S5g4dAHCNwNZiYlZCCr8/7gGGDD42s4q/WFwwrNqah2RI6hMEam4eRD+MCend6tP0o8e
+ xWHGBcV0r0VBnSdVTLUeyGNHpXs02OPZK0yVUf+/vI6ZIkABp7jz/nBYGHfjOwU1t9AO
+ JgmCq3D3CfoqyR64QQIkjovYmTPIQwuicxTx7xC8jLK7hpgbmIgQgsMxz09QjqlEMDra
+ 3SV1l0l/Jj6vrbGLipx7ZCIe+LOKq71RVGSsUDE+5dZcGIoSD+vjrcDizMl0jy3lVYgK
+ 53qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722972539; x=1723577339;
+ d=1e100.net; s=20230601; t=1722972628; x=1723577428;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=x9ggTlFpDeO3tzm3B+faf6LESHtYJaV4u5jSKjfZQ7c=;
- b=PioSfl0QCvnDW4IuUCD+2de/kIS49vHwozijHxVzlPTNbQenCv9zmr7G66afYfuxdW
- 7KGBrKd0+4moTaP0kOjlOJ5cQAJ5fUbGmZGHodvgvBgyVCU/fBCiuodDU7XTTVPfx9fD
- IkVyDMDh4Idxz1TR3Ooe62Hc0IhmPKgeguX2IX56HK1t/JNfXu0Frxkj22/G7wBuV4w4
- SddqvbRWs0/5ia4gqk9HMpvg5i30Z0zpn8igkR90I1SneYfNhM9XPx9F0kdIYLUyt1Z2
- e+ZYcDaCg5ULJycPQNMss/C2yLKkH+IKmxWQddn5vX8vxxvbV0eLxyve4iLHt6XLUpE8
- Mm2A==
+ bh=P76gTOzFzXU4EN8b7uHbluQmlo5oYvuNAX6IWkFa11Q=;
+ b=bqOovvztKLlJnSR0FgAbMnAH7wJJ/tRNHPzLlzK3jFYuUi3tMttr9pNyiHvkrId/O/
+ 6lufp/e7MmN4xymO9VfZTZjjtrgOjQTUqcOfFPuTSM24Yz+Nm5Tkyee2XXeMKxwwuhrO
+ wnlr6X9K6ys6ehDdp+7TCVPMtnmCIkYkZXUbzQUeOe1c0WdYvXPHbERNRX28lGCJsUkL
+ LXpyE2rv2qW+IJBodNUKYKX8jYn2G2G3wCxTqKy+QjRKPo4zH+esBywnY23ZTQAmz+NE
+ 1OLqWdukMAO2AHhlex02+BGyYHtTzRV51ao7QkLBl2ReP4HXxsz5+PQMdLuh4AKeDXn0
+ ZN+Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXc1GXEOjEcQ2q2PzvulHr4nes/O7Jw7DRDy1jPPJ1HhAGNOAXpWREYsXb+58gRssA2aG4m6fx5Vqznyc52tU6Zq2fS7dg=
-X-Gm-Message-State: AOJu0Yy0ciElC5KhJTaxVB0zydZqTzeQvCy8EoeyUqN7wIhZceCiftoJ
- ht+QXs5vlCEdBRnIOXVbVGEiNNi5GOK0LmIMDEbAGx3CL9YvvHQPFcmuKUxdisQ=
-X-Google-Smtp-Source: AGHT+IGL95hmR91RbPW7U18cwZze82jNZRU9+smHhYyTBI74N3P45y9f5389mZP9Wnej1IeYT+r52Q==
-X-Received: by 2002:a05:6000:dc1:b0:367:926a:7413 with SMTP id
- ffacd0b85a97d-36bbc189bc0mr8767580f8f.63.1722972538773; 
- Tue, 06 Aug 2024 12:28:58 -0700 (PDT)
+ AJvYcCUXq9lD3JXpejuONtrpHwmRvAYNXELHkb/hRHHZ1vgPpDRmJYUv10cVfcRoaMbh6tigKzQ/nQ14cwxppaqBDA4uZbRiKbE=
+X-Gm-Message-State: AOJu0YztWBJawTPd21b8DyOvC2j05YrBGuU01dlwm0s+syjyS9KXLHeC
+ 4S5p+5EnCUyuGqI+WkqVxPWLzXI3xggm+pKcbGv4l2dftl4qYfhOIhFUFxA4w/Y=
+X-Google-Smtp-Source: AGHT+IEr8TsGyQqAdDFzXKk6b+H4wmROdXIZsZxEzGySz0nVAFbPsUXyNA9aBvNixrGUipAd/jr1vQ==
+X-Received: by 2002:a2e:96d1:0:b0:2ef:208f:9ec0 with SMTP id
+ 38308e7fff4ca-2f15aa92e12mr116284951fa.14.1722972628189; 
+ Tue, 06 Aug 2024 12:30:28 -0700 (PDT)
 Received: from [192.168.69.100] (vau06-h02-176-184-43-141.dsl.sta.abo.bbox.fr.
  [176.184.43.141]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36bc5a6fa1csm13026553f8f.78.2024.08.06.12.28.55
+ 5b1f17b1804b1-428e6e01d0asm188941585e9.16.2024.08.06.12.30.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Aug 2024 12:28:57 -0700 (PDT)
-Message-ID: <640b97b4-583c-4fa5-8ea1-be6c120aea8b@linaro.org>
-Date: Tue, 6 Aug 2024 21:28:54 +0200
+ Tue, 06 Aug 2024 12:30:27 -0700 (PDT)
+Message-ID: <fff8c0f4-881a-4317-857a-0d20a72484eb@linaro.org>
+Date: Tue, 6 Aug 2024 21:30:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/9] tests/avocado: apply proper skipUnless decorator
+Subject: Re: [PATCH v2 8/9] tests/avocado/machine_aarch64_sbsaref.py: allow
+ for rw usage of image
 To: Cleber Rosa <crosa@redhat.com>, qemu-devel@nongnu.org
 Cc: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
  Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
@@ -82,14 +83,14 @@ Cc: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
  Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Leif Lindholm <quic_llindhol@quicinc.com>
 References: <20240806173119.582857-1-crosa@redhat.com>
- <20240806173119.582857-3-crosa@redhat.com>
+ <20240806173119.582857-9-crosa@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240806173119.582857-3-crosa@redhat.com>
+In-Reply-To: <20240806173119.582857-9-crosa@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::232;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,22 +114,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/8/24 19:31, Cleber Rosa wrote:
-> Commit 9b45cc993 added many cases of skipUnless for the sake of
-> organizing flaky tests.  But, Python decorators *must* follow what
-> they decorate, so the newlines added should *not* exist there.
-> 
-> Signed-off-by: Cleber Rosa <crosa@redhat.com>
-> ---
->   tests/avocado/boot_linux_console.py | 1 -
->   tests/avocado/intel_iommu.py        | 1 -
->   tests/avocado/linux_initrd.py       | 1 -
->   tests/avocado/machine_aspeed.py     | 2 --
->   tests/avocado/machine_mips_malta.py | 2 --
->   tests/avocado/machine_rx_gdbsim.py  | 2 --
->   tests/avocado/reverse_debugging.py  | 4 ----
->   tests/avocado/smmu.py               | 1 -
->   8 files changed, 14 deletions(-)
+> When the OpenBSD based tests are run in parallel, the previously
+> single instance of the image would become corrupt.  Let's give each
+> test its own snapshot.
+>
+
+Suggested-by: Alex Bennée <alex.bennee@linaro.org>
+?
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> Signed-off-by: Cleber Rosa <crosa@redhat.com>
+> ---
+>   tests/avocado/machine_aarch64_sbsaref.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tests/avocado/machine_aarch64_sbsaref.py b/tests/avocado/machine_aarch64_sbsaref.py
+> index 756f316ac9..f8bf40c192 100644
+> --- a/tests/avocado/machine_aarch64_sbsaref.py
+> +++ b/tests/avocado/machine_aarch64_sbsaref.py
+> @@ -190,7 +190,7 @@ def boot_openbsd73(self, cpu):
+>               "-cpu",
+>               cpu,
+>               "-drive",
+> -            f"file={img_path},format=raw",
+> +            f"file={img_path},format=raw,snapshot=on",
+>           )
+>   
+>           self.vm.launch()
 
 
