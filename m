@@ -4,91 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 661E0C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 02:58:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6AE7C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 03:08:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbANl-00034r-5R; Mon, 05 Aug 2024 22:57:05 -0400
+	id 1sbAXd-0001v2-Sm; Mon, 05 Aug 2024 23:07:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sbANi-00030X-Hq
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 22:57:02 -0400
-Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
- id 1sbANg-0002fX-3e
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 22:57:02 -0400
-Received: by mail-lj1-x22f.google.com with SMTP id
- 38308e7fff4ca-2ef2cb7d562so972051fa.3
- for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 19:56:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1722913012; x=1723517812; darn=nongnu.org;
- h=cc:to:subject:message-id:date:in-reply-to:user-agent:from
- :references:mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JAq8I2sCkcX9cChWGPw8eAGXe99pddgncfo1O4lMiyw=;
- b=UxWqtNiuAxtN71Fl9W7vtNxvbwfANyND30FxeCpCHK6HpmFbJHfyzDjZFDhgXhf8WM
- qTRLLDc247WatZIxfuHvVOIf30O4qMCJkWktYo0t16A6ACrRaYrD0xe2npys9b+L33jT
- A3GrBRsXHjvKndZ8gV1wTeI8ywOKoqUIr6kh9WBoOf+uF49Ud/XKF2AMgZZAoTYcgapN
- O7Si8uC4c6noNsPGtFp4UBe27VCYrjDTmUzBxD+92gyzHPN5/RhmLyRNp2w8nkwRXRMb
- 7xKsfG5FcapyLY39YHF1qWuia0pfIyzJha/Nl+4PWZ5K18cktUT5NaNsn6W5rKvCxOL3
- s78g==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1sbAXc-0001uS-9Q
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 23:07:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1sbAXa-0003vD-Lv
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 23:07:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722913631;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9wXoEHq0f1uxpOhiZEHaKDocCWiDnPzPwBOmJ8uzH/o=;
+ b=To7p8JJBs4rk/trvVQ3gpD9ma/gihPGA3A+SR8QfgIjL25MDGCqBaurDQ3XQqbMbYKlgT1
+ HSftZxe2EFBh01hSPkeftENOpIx5Zcgog+gwTE9//CT8f9Jzm+osCoULkMhCwd4hNuYT9A
+ kflcKQoB8aifg7pS+Tq7XP2AhDDk6g0=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-237-p8OR1a-HPE2CYiJrIRrpnQ-1; Mon, 05 Aug 2024 23:07:10 -0400
+X-MC-Unique: p8OR1a-HPE2CYiJrIRrpnQ-1
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-2cb600e1169so218308a91.1
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 20:07:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722913012; x=1723517812;
- h=cc:to:subject:message-id:date:in-reply-to:user-agent:from
- :references:mime-version:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JAq8I2sCkcX9cChWGPw8eAGXe99pddgncfo1O4lMiyw=;
- b=hTX8DIrGcXoWNF/IIlMyIljoebJglD4n0t4GlRoNyvzi81gqdNO6D4gOoUBjpvkeEu
- K9K9z4+SGtbDtHEszsdtJAlb7JNMQ96LuHMoJS5QI5Jdyp9tcrbO9sGd3+JL6LaVSF+x
- 52S9Q7ofVvrSrWulTkrIsfMRFAJ3K12g3ljhyiqp/af7OuwxfCKXmkLlrD6XqJsEwXLG
- rO8gj6EudC1gTxZOI61flZy2pMJP17vWAGpcNAe5uXqN26YPA2E/wTkhazVH90Ih4Z9q
- aJTNVvCR6i+E4eeS7aeAcSzbTix92aWLl+R3hVVdmRLgdK9Aa7qugjJ9gb5fyte02vtg
- WMJg==
+ d=1e100.net; s=20230601; t=1722913629; x=1723518429;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9wXoEHq0f1uxpOhiZEHaKDocCWiDnPzPwBOmJ8uzH/o=;
+ b=hJv7SwxRJjdEczNNLB7Q8gMlbzq/QkePaRuRhVrhjKERcnXzNDb/f1ZryayDKVATbb
+ yicdirevMhIncSKm/aTbN3S53D1mAQ2oxH2NcyA4TjSlaVnOUBsiJqdaWtxspn/YbZ1k
+ fp0s53qlDzYaL4BBQ3rdo+VtL0Feowe8RtY8dRMlw9VQoW8TPNKIv7fNSA5YsSQq7eSM
+ M7BrPEGWIJl04/dSiyrZS/ckuEOgFxk7WvL1luYOMP1DWLq/F1K+L04QqSga7Ijc6fBf
+ xtkh9KX6K8Ii5zsCYhN5zcfFIzp9I+7N4miNDOosFOvFb4tvPVT5itgk1BCCWhk5ci0o
+ nunw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUrSWhVshjst0qaGCG/rYpFEtCFZgeOInMCUyON8PhQcGCj5PvRDlhgyPdqCSPRNmiG3dQZNZEWD05AQdiVAaYUa+u+aSU=
-X-Gm-Message-State: AOJu0YxiPCKctFNJnEol+T3C2z2sw7Tm/lICDbCEinxyR6C9N/to8C+i
- 4g0Q8xxvUIQkwrR5erEiPW8Um3jBfHpTHozn2rWbe/FA50A+rB/iSOxkRGheKClmJWu58Mxrr+h
- zbB3yrrm87lnToTkZWoimGeaOGEWqA1oidmHj8g==
-X-Google-Smtp-Source: AGHT+IH6fhUZTGHRp/KRo5+tNE91gkR9cGdwkA95XM/gWJXQ7p44XI7db1uybv0jpZJovOWCZVVlb+RQ2/0l+6MyAYc=
-X-Received: by 2002:a2e:9893:0:b0:2f1:563d:ec8a with SMTP id
- 38308e7fff4ca-2f15ab24d9emr96683911fa.41.1722913012114; Mon, 05 Aug 2024
- 19:56:52 -0700 (PDT)
-Received: from 44278815321 named unknown by gmailapi.google.com with HTTPREST; 
- Tue, 6 Aug 2024 04:56:51 +0200
-Mime-Version: 1.0
-References: <20240712023650.45626-1-luchangqi.123@bytedance.com>
- <20240712023650.45626-10-luchangqi.123@bytedance.com>
- <ZpT1ZnOjx48_6q0j@cormorant.local>
- <58383d65-83df-4527-81e4-b4d12c409b22@bytedance.com>
- <CAO5cSZDc9_o4=VZRDFA-CXAkF12r=v95zhNQ0gBM0NHExgkbMw@mail.gmail.com>
- <ZqNBSGmVTg-xkTs3@cormorant.local>
- <3a799eb6-3350-4b35-8e75-68d9020443cb@bytedance.com>
-From: =?UTF-8?B?5Y2i6ZW/5aWH?= <luchangqi.123@bytedance.com>
-X-Original-From: =?UTF-8?B?5Y2i6ZW/5aWHIDxsdWNoYW5ncWkuMTIzQGJ5dGVkYW5jZS5jb20+?=
-User-Agent: Mozilla Thunderbird
-In-Reply-To: <3a799eb6-3350-4b35-8e75-68d9020443cb@bytedance.com>
-Date: Tue, 6 Aug 2024 04:56:51 +0200
-Message-ID: <CAO5cSZDgv0V=bJx2Bj6p-Bx+1_2E4QcMrq2fSSdgoU_BtPLkrg@mail.gmail.com>
-Subject: Ping: Re: [PATCH v9 09/10] hw/nvme: add reservation protocal command
-To: Klaus Jensen <its@irrelevant.dk>, Klaus Jensen <k.jensen@samsung.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com, 
- hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net, 
- ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de, 
- kbusch@kernel.org, foss@defmacro.it, philmd@linaro.org, 
- pizhenwei@bytedance.com
-Content-Type: multipart/alternative; boundary="000000000000114d3d061efaf27c"
-Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
- envelope-from=luchangqi.123@bytedance.com; helo=mail-lj1-x22f.google.com
-X-Spam_score_int: 15
-X-Spam_score: 1.5
-X-Spam_bar: +
-X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_MUA_MOZILLA=2.309,
- HTML_MESSAGE=0.001, NUMERIC_HTTP_ADDR=1.242, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_PORT=0.001 autolearn=no autolearn_force=no
+ AJvYcCUABe8//H8nVHPOK7sJWBDQ9ftL0fi+dQWdQ04Q8H7uW+xFpL0QQmcxUMQHUcFO7ElcYaHnLqWJG+DIRpVqo3kspxE1GRk=
+X-Gm-Message-State: AOJu0YxH/4m6q/EaDFx4SEWubxvIZi5XLj7c0ouCOTF59zfaZmLaiGTP
+ c7ozSsWmMlfFqLQTiBCqFF2Xtgkj30q1zkFWMUP13Q+zUB6vER4MxIU8VvfqT7hey4fy6SZTw8z
+ 62MwuTnYWINuPZRjOANXjiTyemcZSrN1EHgKK1lIhu0JfQWw6+nTj4X8JQwJt8B0c0F5Ldc8oXG
+ pihTr0EHjwOThWaizAhSzNOdwQYak=
+X-Received: by 2002:a17:90a:6042:b0:2c8:ea7b:8891 with SMTP id
+ 98e67ed59e1d1-2cff95144c8mr12507621a91.29.1722913629107; 
+ Mon, 05 Aug 2024 20:07:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHJcxijXYRfmYGGNk6h4L5orUK7wOGWmclJKVLnTGQ8PZVVeezyHu5F1TWYl6+8O9h2AAJJ9Ev5VKQjhiF2r0I=
+X-Received: by 2002:a17:90a:6042:b0:2c8:ea7b:8891 with SMTP id
+ 98e67ed59e1d1-2cff95144c8mr12507593a91.29.1722913628376; Mon, 05 Aug 2024
+ 20:07:08 -0700 (PDT)
+MIME-Version: 1.0
+References: <20240806005814.51651-1-lulu@redhat.com>
+In-Reply-To: <20240806005814.51651-1-lulu@redhat.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 6 Aug 2024 11:06:55 +0800
+Message-ID: <CACGkMEuCJT8KYsDgJaXzvy1Fhm6+tJinowdTtoAngsnvYjB54Q@mail.gmail.com>
+Subject: Re: [PATCH 1/3] virtio_net: Add the check for vdpa's mac address
+To: Cindy Lu <lulu@redhat.com>
+Cc: mst@redhat.com, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,236 +98,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000114d3d061efaf27c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Tue, Aug 6, 2024 at 8:58=E2=80=AFAM Cindy Lu <lulu@redhat.com> wrote:
+>
+> When using a VDPA device, it is important to ensure that
+> the MAC address in the hardware matches the MAC address
+> from the QEMU command line.
+> This will allow the device to boot.
+>
+> Signed-off-by: Cindy Lu <lulu@redhat.com>
+> ---
+>  hw/net/virtio-net.c | 33 +++++++++++++++++++++++++++++----
+>  1 file changed, 29 insertions(+), 4 deletions(-)
+>
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 9c7e85caea..7f51bd0dd3 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -3579,12 +3579,36 @@ static bool failover_hide_primary_device(DeviceLi=
+stener *listener,
+>      /* failover_primary_hidden is set during feature negotiation */
+>      return qatomic_read(&n->failover_primary_hidden);
+>  }
+> +static bool virtio_net_check_vdpa_mac(NetClientState *nc, VirtIONet *n, =
+MACAddr *cmdline_mac,
+> +                                     Error **errp)
+> +{
+> +       struct virtio_net_config hwcfg =3D {};
+> +       static const MACAddr zero =3D { .a =3D { 0, 0, 0, 0, 0, 0 } };
+> +
+> +       vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *)&hwcfg, =
+ETH_ALEN);
+> +
+> +    /*
+> +     * For VDPA device: Only two situations are acceptable:
+> +     * 1.The hardware MAC address is the same as the QEMU command line M=
+AC
+> +     *   address, and both of them are not 0.
 
-Hi;
+I guess there should be a bullet 2?
 
-Klaus, Does the test method in the above email work properly?
+> +     */
+> +
+> +       if (memcmp(&hwcfg.mac, &zero, sizeof(MACAddr)) !=3D 0) {
+> +               if ((memcmp(&hwcfg.mac, cmdline_mac, sizeof(MACAddr)) =3D=
+=3D 0)) {
+> +                       return true;
+> +               }
+> +       }
+> +       error_setg(errp, "vDPA device's mac !=3D the mac address from qem=
+u cmdline"
+> +                        "Please check the the vdpa device's setting.");
 
-On 2024/7/26 17:53, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
-> Hi;
->
-> You can test it in spdk.
-> First start spdk and execute the following command.
->
-> ```
-> dd if=3D/dev/zero of=3Dtest.img bs=3D1G count=3D10
-> RPC=3D/root/source/spdk/spdk/scripts/rpc.py
-> FILE=3D/root/test.img
->
-> $RPC bdev_aio_create $FILE aio0 512
-> $RPC iscsi_create_portal_group 1 127.0.0.1:3260
-> $RPC iscsi_create_initiator_group 2 ANY ANY
-> $RPC iscsi_create_target_node target0 target0_alias aio0:0 1:2 64 -d
-> ```
->
-> Then start qemu and mount an nvme disk.
-> Execute the following test command.
-> ```
-> #reporter
-> nvme resv-report /dev/nvme0n1
-> #register
-> nvme resv-register /dev/nvme0n1 --nrkey 3 --rrega 0
-> #unregister
-> nvme resv-register /dev/nvme0n1 --crkey 3 --rrega 1
-> # register replace
-> nvme resv-register /dev/nvme0n1 --crkey 3 --nrkey 5 --rrega 2
-> #release
-> nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 0
-> #clear
-> nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 1
-> #reserve
-> nvme resv-acquire /dev/nvme0n1 --crkey 3 --rtype 1 --racqa 0
-> #premmpt
-> nvme resv-acquire /dev/nvme0n1 --crkey 6 --prkey 3 --rtype 1 --racqa 1
-> ```
->
->
->
-> On 2024/7/26 14:25, Klaus Jensen wrote:
->> On Jul 25 19:42, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
->>> Hi,
->>>
->>> ```
->>> 2685 nvme_status->regctl_ds[i].cntlid =3D nvme_ctrl(req)->cntlid;
->>> 2686 nvme_status->regctl_ds[i].rkey =3D keys_info->keys[i];
->>> 2687 nvme_status->regctl_ds[i].rcsts =3D keys_info->keys[i] =3D=3D
->>> 2688 reservation->key ? 1 : 0;
->>> 2689 /* hostid is not supported currently */
->>> 2670 memset(&nvme_status->regctl_ds[i].hostid, 0, 8);
->>> ```
->>>
->>> Klaus, I think hostid(2685) is stored locally like cntlid, i
->>> can get cntlid by nvme_ctrl(req)->cntlid, but I can't
->>> find a good way to get the host ID(2670). So I add a comment
->>> "/* hostid is not supported currently */". Could you give me
->>> some advices?
->>>
->>
->> The Host Identifier is just a 64 or 128 bit value that the host can set
->> with Set Feature. So, it is fine (and normal) that the value is
->> initially zero, but the host should be able to set it on controllers
->> with Set Feature to indicate if a controller belongs to the same host or
->> not.
->>
->>> And using spdk as target will not fail, but it will show 0 at hostid
->>> at present.
->>
->> Host Identifier 0 is a valid value when used with reservations; 0
->> indicates that the host associated with the controller is not associated
->> with any other controllers in the subsystem. So if two controllers have
->> Host Identifier set to 0, that implicitly mean they are associated with
->> two different hosts.
->>
->>> The relevant tests in qemu are as follows=EF=BC=8C
->>>
->>> ```
->>> root@node1:~# nvme resv-report /dev/nvme0n1
->>> NVME Reservation Report success
->>>
->>> NVME Reservation status:
->>>
->>> gen : 1
->>> regctl : 1
->>> rtype : 0
->>> ptpls : 0
->>> regctl[0] :
->>> cntlid : 0
->>> rcsts : 0
->>> hostid : 0
->>> rkey : 6
->>> ```
->>
->> I was hoping for an example on how to setup some simple iscsi stuff so I
->> could test the feature.
+For error messages I think it's better to use english instead of "!=3D"
+to describe the issue.
 
---000000000000114d3d061efaf27c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+>
+> +       return false;
+> +}
+>  static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+>  {
+>      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
+>      VirtIONet *n =3D VIRTIO_NET(dev);
+>      NetClientState *nc;
+> +    MACAddr macaddr_cmdline;
+>      int i;
+>
+>      if (n->net_conf.mtu) {
+> @@ -3692,6 +3716,7 @@ static void virtio_net_device_realize(DeviceState *=
+dev, Error **errp)
+>      virtio_net_add_queue(n, 0);
+>
+>      n->ctrl_vq =3D virtio_add_queue(vdev, 64, virtio_net_handle_ctrl);
+> +    memcpy(&macaddr_cmdline, &n->nic_conf.macaddr, sizeof(n->mac));
+>      qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
+>      memcpy(&n->mac[0], &n->nic_conf.macaddr, sizeof(n->mac));
+>      n->status =3D VIRTIO_NET_S_LINK_UP;
+> @@ -3739,10 +3764,10 @@ static void virtio_net_device_realize(DeviceState=
+ *dev, Error **errp)
+>      nc->rxfilter_notify_enabled =3D 1;
+>
+>     if (nc->peer && nc->peer->info->type =3D=3D NET_CLIENT_DRIVER_VHOST_V=
+DPA) {
+> -        struct virtio_net_config netcfg =3D {};
+> -        memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
+> -        vhost_net_set_config(get_vhost_net(nc->peer),
+> -            (uint8_t *)&netcfg, 0, ETH_ALEN, VHOST_SET_CONFIG_TYPE_FRONT=
+END);
+> +          if (!virtio_net_check_vdpa_mac(nc, n, &macaddr_cmdline, errp))=
+ {
+> +                  virtio_cleanup(vdev);
+> +                  return;
+> +          }
 
-<p>Hi;
-<br>
-<br>Klaus, Does the test method in the above email work properly?
-<br>
-<br>On 2024/7/26 17:53, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
-<br>&gt; Hi;
-<br>&gt;=20
-<br>&gt; You can test it in spdk.
-<br>&gt; First start spdk and execute the following command.
-<br>&gt;=20
-<br>&gt; ```
-<br>&gt; dd if=3D/dev/zero of=3Dtest.img bs=3D1G count=3D10
-<br>&gt; RPC=3D/root/source/spdk/spdk/scripts/rpc.py
-<br>&gt; FILE=3D/root/test.img
-<br>&gt;=20
-<br>&gt; $RPC bdev_aio_create $FILE aio0 512
-<br>&gt; $RPC iscsi_create_portal_group 1 <a href=3D"http://127.0.0.1:3260"=
->127.0.0.1:3260</a>
-<br>&gt; $RPC iscsi_create_initiator_group 2 ANY ANY
-<br>&gt; $RPC iscsi_create_target_node target0 target0_alias aio0:0 1:2 64 =
--d
-<br>&gt; ```
-<br>&gt;=20
-<br>&gt; Then start qemu and mount an nvme disk.
-<br>&gt; Execute the following test command.
-<br>&gt; ```
-<br>&gt; #reporter
-<br>&gt; nvme resv-report /dev/nvme0n1
-<br>&gt; #register
-<br>&gt; nvme resv-register /dev/nvme0n1 --nrkey 3  --rrega 0
-<br>&gt; #unregister
-<br>&gt; nvme resv-register /dev/nvme0n1 --crkey 3  --rrega 1
-<br>&gt; # register replace
-<br>&gt; nvme resv-register /dev/nvme0n1 --crkey 3 --nrkey 5 --rrega 2
-<br>&gt; #release
-<br>&gt; nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 0
-<br>&gt; #clear
-<br>&gt; nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 1
-<br>&gt; #reserve
-<br>&gt; nvme resv-acquire /dev/nvme0n1 --crkey 3 --rtype 1 --racqa 0
-<br>&gt; #premmpt
-<br>&gt; nvme resv-acquire /dev/nvme0n1 --crkey 6 --prkey 3 --rtype 1 --rac=
-qa 1
-<br>&gt; ```
-<br>&gt;=20
-<br>&gt;=20
-<br>&gt;=20
-<br>&gt; On 2024/7/26 14:25, Klaus Jensen wrote:
-<br>&gt;&gt; On Jul 25 19:42, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
-<br>&gt;&gt;&gt; Hi,
-<br>&gt;&gt;&gt;
-<br>&gt;&gt;&gt; ```
-<br>&gt;&gt;&gt; 2685 nvme_status-&gt;regctl_ds[i].cntlid =3D nvme_ctrl(req=
-)-&gt;cntlid;
-<br>&gt;&gt;&gt; 2686 nvme_status-&gt;regctl_ds[i].rkey =3D keys_info-&gt;k=
-eys[i];
-<br>&gt;&gt;&gt; 2687 nvme_status-&gt;regctl_ds[i].rcsts =3D keys_info-&gt;=
-keys[i] =3D=3D
-<br>&gt;&gt;&gt; 2688 reservation-&gt;key ? 1 : 0;
-<br>&gt;&gt;&gt; 2689 /* hostid is not supported currently */
-<br>&gt;&gt;&gt; 2670 memset(&amp;nvme_status-&gt;regctl_ds[i].hostid, 0, 8=
-);
-<br>&gt;&gt;&gt; ```
-<br>&gt;&gt;&gt;
-<br>&gt;&gt;&gt; Klaus, I think hostid(2685) is stored locally like cntlid,=
- i
-<br>&gt;&gt;&gt; can get cntlid by nvme_ctrl(req)-&gt;cntlid, but I can&#39=
-;t
-<br>&gt;&gt;&gt; find a good way to get the host ID(2670). So I add a comme=
-nt
-<br>&gt;&gt;&gt; &quot;/* hostid is not supported currently */&quot;. Could=
- you give me
-<br>&gt;&gt;&gt; some advices?
-<br>&gt;&gt;&gt;
-<br>&gt;&gt;
-<br>&gt;&gt; The Host Identifier is just a 64 or 128 bit value that the hos=
-t can set
-<br>&gt;&gt; with Set Feature. So, it is fine (and normal) that the value i=
-s
-<br>&gt;&gt; initially zero, but the host should be able to set it on contr=
-ollers
-<br>&gt;&gt; with Set Feature to indicate if a controller belongs to the sa=
-me host or
-<br>&gt;&gt; not.
-<br>&gt;&gt;
-<br>&gt;&gt;&gt; And using spdk as target will not fail, but it will show 0=
- at hostid
-<br>&gt;&gt;&gt; at present.
-<br>&gt;&gt;
-<br>&gt;&gt; Host Identifier 0 is a valid value when used with reservations=
-; 0
-<br>&gt;&gt; indicates that the host associated with the controller is not =
-associated
-<br>&gt;&gt; with any other controllers in the subsystem. So if two control=
-lers have
-<br>&gt;&gt; Host Identifier set to 0, that implicitly mean they are associ=
-ated with
-<br>&gt;&gt; two different hosts.
-<br>&gt;&gt;
-<br>&gt;&gt;&gt; The relevant tests in qemu are as follows=EF=BC=8C
-<br>&gt;&gt;&gt;
-<br>&gt;&gt;&gt; ```
-<br>&gt;&gt;&gt; root@node1:~# nvme resv-report /dev/nvme0n1
-<br>&gt;&gt;&gt; NVME Reservation Report success
-<br>&gt;&gt;&gt;
-<br>&gt;&gt;&gt; NVME Reservation status:
-<br>&gt;&gt;&gt;
-<br>&gt;&gt;&gt; gen : 1
-<br>&gt;&gt;&gt; regctl : 1
-<br>&gt;&gt;&gt; rtype : 0
-<br>&gt;&gt;&gt; ptpls : 0
-<br>&gt;&gt;&gt; regctl[0] :
-<br>&gt;&gt;&gt; cntlid : 0
-<br>&gt;&gt;&gt; rcsts : 0
-<br>&gt;&gt;&gt; hostid : 0
-<br>&gt;&gt;&gt; rkey : 6
-<br>&gt;&gt;&gt; ```
-<br>&gt;&gt;
-<br>&gt;&gt; I was hoping for an example on how to setup some simple iscsi =
-stuff so I
-<br>&gt;&gt; could test the feature.</p>
+Any reason we remove vhost_net_set_config() here? It is not described
+in the commit or does it belong to another patch?
 
---000000000000114d3d061efaf27c--
+Thanks
+
+>      }
+>      QTAILQ_INIT(&n->rsc_chains);
+>      n->qdev =3D dev;
+> --
+> 2.45.0
+>
+
 
