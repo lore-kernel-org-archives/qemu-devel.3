@@ -4,86 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5367C52D70
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D16E5C3DA64
 	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 11:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbI90-00063T-8O; Tue, 06 Aug 2024 07:14:22 -0400
+	id 1sbI8j-0005r9-T6; Tue, 06 Aug 2024 07:14:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yvugenfi@redhat.com>)
- id 1sbI8w-00062a-Dg
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 07:14:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1sbI8S-0005og-NL; Tue, 06 Aug 2024 07:13:51 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yvugenfi@redhat.com>)
- id 1sbI8s-0001BA-En
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 07:14:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722942846;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RPam5XtrtzfL5H+cB6My2oOmySe8txmtEsZNEufCKqQ=;
- b=OfuvYIPfZXE+r1B01OW2FAYzzat+DucAwwN3T+8F7ARlkpVotHiZzLHgncqNEK0MNLdoE9
- 9Xq5EPd5Y7rkDuLc0eiXSxm8TMfre9kFDoD6TFoeWjlZXQaXvoMGmEx3wqW9sjcRK7hm5+
- +kiQ11mSDqSCZ6IDOANsbmgWEro70Jo=
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-338-QjHtZ_5dPHepZHmc0uUghw-1; Tue, 06 Aug 2024 07:12:56 -0400
-X-MC-Unique: QjHtZ_5dPHepZHmc0uUghw-1
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-8213223337eso195249241.0
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 04:12:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722942775; x=1723547575;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=RPam5XtrtzfL5H+cB6My2oOmySe8txmtEsZNEufCKqQ=;
- b=uw33xeXvoBZJad9yDdMEtoe8s1i8qb9SiXXcpQSKdgUGNSoUIiIx97m8Hf1YbxNh/C
- /EwK/1jHCWLJCDXLeGSvqoJhA3rKSPfEDNwByUQF96m79W5vLoV+ffdi23xrCM5xt5lu
- LdmtOfJvjy2UxiduGJfpx14gC0L8tJHGfocRXQII7C10c9jY7OINy7sc8n+sRDzok5+3
- Wr350jK5ZsqsabXNsP/RTmIBt4A8QAo34+HgEKUhj1/X1BEbAHmMga8M9k2zwNrvMeUn
- fYicWXrqSYe/YHXiQVyGRIg+Hakp38BzgzQoBSr1VTpFn3N1xNIXFh6DoPJpk3dd/xP0
- pJKQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXsCPho98sRX9mif3TZXIXJMMgmKA3QWGTQKxQgYEYqG1BnqpJ0KsZzV8Aahvyt5EBm38cPlUYrFdsScMKjWxCc7ZUzpXQ=
-X-Gm-Message-State: AOJu0YzM1k9/iV+d44pn1OlNu2zrxkYPJS+uWybG/SULuUQyiV3HKaa1
- tTkMJTgjHsxCvSIyoj5ak1G52qDGIr4I8Gw1L9LwpIC2TM3QWpBw/4dbhxb90i3qtKUV53uin4d
- 1hT9ZN24NLz1McrzTtUc1jJ9+Tw6NrL97tpalSITsVejSD0UEMf2oBj4qgmyFuHusB8V1ykdooi
- iNF2daVMYgZfu6XN0yO7pHpBm11sw=
-X-Received: by 2002:a05:6122:2090:b0:4f6:ae65:1e10 with SMTP id
- 71dfb90a1353d-4f89ff60bb5mr18910675e0c.4.1722942775509; 
- Tue, 06 Aug 2024 04:12:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFis24odXYa45lD5Fvw9ep4xIh/FqPuvK4zVAx5auGbJWvu6jRJm8cokKn8zdxprHgPk/fISgfQg/zr+ZKcrp8=
-X-Received: by 2002:a05:6122:2090:b0:4f6:ae65:1e10 with SMTP id
- 71dfb90a1353d-4f89ff60bb5mr18910654e0c.4.1722942775154; Tue, 06 Aug 2024
- 04:12:55 -0700 (PDT)
-MIME-Version: 1.0
-References: <20240806005814.51651-1-lulu@redhat.com>
- <CACGkMEuCJT8KYsDgJaXzvy1Fhm6+tJinowdTtoAngsnvYjB54Q@mail.gmail.com>
- <CACLfguU47TPw5=GpS93AMWEYcy95JJ6+uG-PYpdmeD=hrKGa1Q@mail.gmail.com>
-In-Reply-To: <CACLfguU47TPw5=GpS93AMWEYcy95JJ6+uG-PYpdmeD=hrKGa1Q@mail.gmail.com>
-From: Yan Vugenfirer <yvugenfi@redhat.com>
-Date: Tue, 6 Aug 2024 14:12:44 +0300
-Message-ID: <CAGoVJZw5=1nsdpJu86QTQqc-2nuWjwRGpe1qaO1wvQF4u=9L4Q@mail.gmail.com>
-Subject: Re: [PATCH 1/3] virtio_net: Add the check for vdpa's mac address
-To: Cindy Lu <lulu@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>, mst@redhat.com, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
+ id 1sbI8G-00019L-3N; Tue, 06 Aug 2024 07:13:45 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WdVwL6TShz6K7Fc;
+ Tue,  6 Aug 2024 19:10:42 +0800 (CST)
+Received: from lhrpeml500001.china.huawei.com (unknown [7.191.163.213])
+ by mail.maildlp.com (Postfix) with ESMTPS id 19489140B3C;
+ Tue,  6 Aug 2024 19:13:26 +0800 (CST)
+Received: from lhrpeml500006.china.huawei.com (7.191.161.198) by
+ lhrpeml500001.china.huawei.com (7.191.163.213) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Tue, 6 Aug 2024 12:13:25 +0100
+Received: from lhrpeml500006.china.huawei.com ([7.191.161.198]) by
+ lhrpeml500006.china.huawei.com ([7.191.161.198]) with mapi id 15.01.2507.039; 
+ Tue, 6 Aug 2024 12:13:25 +0100
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+CC: Jonathan Cameron <jonathan.cameron@huawei.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, Dongjiu Geng
+ <gengdongjiu1@gmail.com>, Igor Mammedov <imammedo@redhat.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+Subject: RE: [PATCH v5 6/7] acpi/ghes: add support for generic error injection
+ via QAPI
+Thread-Topic: [PATCH v5 6/7] acpi/ghes: add support for generic error
+ injection via QAPI
+Thread-Index: AQHa5SUqlFywcvx4lEKDYS91pOZMWrIaGOEQ
+Date: Tue, 6 Aug 2024 11:13:25 +0000
+Message-ID: <e41d0c8cc8b54643adc318c1bb7bd26c@huawei.com>
+References: <cover.1722634602.git.mchehab+huawei@kernel.org>
+ <20c491e357340e0062b6ff09867c1661ed4d2479.1722634602.git.mchehab+huawei@kernel.org>
+In-Reply-To: <20c491e357340e0062b6ff09867c1661ed4d2479.1722634602.git.mchehab+huawei@kernel.org>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.48.150.120]
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=yvugenfi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+MIME-Version: 1.0
+Received-SPF: pass client-ip=185.176.79.56; envelope-from=shiju.jose@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,140 +77,263 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shiju Jose <shiju.jose@huawei.com>
+From:  Shiju Jose via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do we check that the MAC from the command line or HW was formed
-correctly and doesn't include multicast bit?
-
-Best regards,
-Yan.
-
-
-On Tue, Aug 6, 2024 at 12:45=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
+>-----Original Message-----
+>From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+>Sent: 02 August 2024 22:44
+>Cc: Jonathan Cameron <jonathan.cameron@huawei.com>; Shiju Jose
+><shiju.jose@huawei.com>; Mauro Carvalho Chehab
+><mchehab+huawei@kernel.org>; Michael S. Tsirkin <mst@redhat.com>; Ani
+>Sinha <anisinha@redhat.com>; Dongjiu Geng <gengdongjiu1@gmail.com>; Igor
+>Mammedov <imammedo@redhat.com>; linux-kernel@vger.kernel.org; qemu-
+>arm@nongnu.org; qemu-devel@nongnu.org
+>Subject: [PATCH v5 6/7] acpi/ghes: add support for generic error injection=
+ via
+>QAPI
 >
-> On Tue, 6 Aug 2024 at 11:07, Jason Wang <jasowang@redhat.com> wrote:
-> >
-> > On Tue, Aug 6, 2024 at 8:58=E2=80=AFAM Cindy Lu <lulu@redhat.com> wrote=
-:
-> > >
-> > > When using a VDPA device, it is important to ensure that
-> > > the MAC address in the hardware matches the MAC address
-> > > from the QEMU command line.
-> > > This will allow the device to boot.
-> > >
-> > > Signed-off-by: Cindy Lu <lulu@redhat.com>
-> > > ---
-> > >  hw/net/virtio-net.c | 33 +++++++++++++++++++++++++++++----
-> > >  1 file changed, 29 insertions(+), 4 deletions(-)
-> > >
-> > > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> > > index 9c7e85caea..7f51bd0dd3 100644
-> > > --- a/hw/net/virtio-net.c
-> > > +++ b/hw/net/virtio-net.c
-> > > @@ -3579,12 +3579,36 @@ static bool failover_hide_primary_device(Devi=
-ceListener *listener,
-> > >      /* failover_primary_hidden is set during feature negotiation */
-> > >      return qatomic_read(&n->failover_primary_hidden);
-> > >  }
-> > > +static bool virtio_net_check_vdpa_mac(NetClientState *nc, VirtIONet =
-*n, MACAddr *cmdline_mac,
-> > > +                                     Error **errp)
-> > > +{
-> > > +       struct virtio_net_config hwcfg =3D {};
-> > > +       static const MACAddr zero =3D { .a =3D { 0, 0, 0, 0, 0, 0 } }=
-;
-> > > +
-> > > +       vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *)&hwc=
-fg, ETH_ALEN);
-> > > +
-> > > +    /*
-> > > +     * For VDPA device: Only two situations are acceptable:
-> > > +     * 1.The hardware MAC address is the same as the QEMU command li=
-ne MAC
-> > > +     *   address, and both of them are not 0.
-> >
-> > I guess there should be a bullet 2?
-> >
-> yes, there is a section 2, will change this code here
-> Thanks
-> cindy
-> > > +     */
-> > > +
-> > > +       if (memcmp(&hwcfg.mac, &zero, sizeof(MACAddr)) !=3D 0) {
-> > > +               if ((memcmp(&hwcfg.mac, cmdline_mac, sizeof(MACAddr))=
- =3D=3D 0)) {
-> > > +                       return true;
-> > > +               }
-> > > +       }
-> > > +       error_setg(errp, "vDPA device's mac !=3D the mac address from=
- qemu cmdline"
-> > > +                        "Please check the the vdpa device's setting.=
-");
-> >
-> > For error messages I think it's better to use english instead of "!=3D"
-> > to describe the issue.
-> >
-> > >
-> > > +       return false;
-> > > +}
-> > >  static void virtio_net_device_realize(DeviceState *dev, Error **errp=
-)
-> > >  {
-> > >      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
-> > >      VirtIONet *n =3D VIRTIO_NET(dev);
-> > >      NetClientState *nc;
-> > > +    MACAddr macaddr_cmdline;
-> > >      int i;
-> > >
-> > >      if (n->net_conf.mtu) {
-> > > @@ -3692,6 +3716,7 @@ static void virtio_net_device_realize(DeviceSta=
-te *dev, Error **errp)
-> > >      virtio_net_add_queue(n, 0);
-> > >
-> > >      n->ctrl_vq =3D virtio_add_queue(vdev, 64, virtio_net_handle_ctrl=
-);
-> > > +    memcpy(&macaddr_cmdline, &n->nic_conf.macaddr, sizeof(n->mac));
-> > >      qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
-> > >      memcpy(&n->mac[0], &n->nic_conf.macaddr, sizeof(n->mac));
-> > >      n->status =3D VIRTIO_NET_S_LINK_UP;
-> > > @@ -3739,10 +3764,10 @@ static void virtio_net_device_realize(DeviceS=
-tate *dev, Error **errp)
-> > >      nc->rxfilter_notify_enabled =3D 1;
-> > >
-> > >     if (nc->peer && nc->peer->info->type =3D=3D NET_CLIENT_DRIVER_VHO=
-ST_VDPA) {
-> > > -        struct virtio_net_config netcfg =3D {};
-> > > -        memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
-> > > -        vhost_net_set_config(get_vhost_net(nc->peer),
-> > > -            (uint8_t *)&netcfg, 0, ETH_ALEN, VHOST_SET_CONFIG_TYPE_F=
-RONTEND);
-> > > +          if (!virtio_net_check_vdpa_mac(nc, n, &macaddr_cmdline, er=
-rp)) {
-> > > +                  virtio_cleanup(vdev);
-> > > +                  return;
-> > > +          }
-> >
-> > Any reason we remove vhost_net_set_config() here? It is not described
-> > in the commit or does it belong to another patch?
-> >
-> > Thanks
-> >
-> as we discussed before=EF=BC=8C the MAC address in hardware should have a
-> "higher priority"
-> than the MAC address in qemu cmdline. So I remove the set_config there,
-> the MAC address from the hardware will overwrite the MAC in qemu
-> cmdline. so don't need to set_config to hardware now
-> Thanks,
-> cindy
-> > >      }
-> > >      QTAILQ_INIT(&n->rsc_chains);
-> > >      n->qdev =3D dev;
-> > > --
-> > > 2.45.0
-> > >
-> >
+>Provide a generic interface for error injection via GHESv2.
 >
+>This patch is co-authored:
+>    - original ghes logic to inject a simple ARM record by Shiju Jose;
+>    - generic logic to handle block addresses by Jonathan Cameron;
+>    - generic GHESv2 error inject by Mauro Carvalho Chehab;
 >
+>Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>Co-authored-by: Shiju Jose <shiju.jose@huawei.com>
+>Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+>Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>Cc: Shiju Jose <shiju.jose@huawei.com>
+>Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+
+Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+
+>---
+> hw/acpi/ghes.c         | 159 ++++++++++++++++++++++++++++++++++++++---
+> hw/acpi/ghes_cper.c    |   2 +-
+> include/hw/acpi/ghes.h |   3 +
+> 3 files changed, 152 insertions(+), 12 deletions(-)
+>
+>diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c index
+>a745dcc7be5e..e125c9475773 100644
+>--- a/hw/acpi/ghes.c
+>+++ b/hw/acpi/ghes.c
+>@@ -395,23 +395,22 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags,
+>FWCfgState *s,
+>     ags->present =3D true;
+> }
+>
+>+static uint64_t ghes_get_state_start_address(void)
+>+{
+>+    AcpiGedState *acpi_ged_state =3D
+>+        ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED, NULL));
+>+    AcpiGhesState *ags =3D &acpi_ged_state->ghes_state;
+>+
+>+    return le64_to_cpu(ags->ghes_addr_le); }
+>+
+> int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)=
+  {
+>     uint64_t error_block_addr, read_ack_register_addr, read_ack_register =
+=3D 0;
+>-    uint64_t start_addr;
+>+    uint64_t start_addr =3D ghes_get_state_start_address();
+>     bool ret =3D -1;
+>-    AcpiGedState *acpi_ged_state;
+>-    AcpiGhesState *ags;
+>-
+>     assert(source_id < ACPI_HEST_SRC_ID_RESERVED);
+>
+>-    acpi_ged_state =3D ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GE=
+D,
+>-                                                       NULL));
+>-    g_assert(acpi_ged_state);
+>-    ags =3D &acpi_ged_state->ghes_state;
+>-
+>-    start_addr =3D le64_to_cpu(ags->ghes_addr_le);
+>-
+>     if (physical_address) {
+>         start_addr +=3D source_id * sizeof(uint64_t);
+>
+>@@ -448,9 +447,147 @@ int acpi_ghes_record_errors(uint8_t source_id,
+>uint64_t physical_address)
+>     return ret;
+> }
+>
+>+/*
+>+ * Error register block data layout
+>+ *
+>+ * | +---------------------+ ges.ghes_addr_le
+>+ * | |error_block_address0 |
+>+ * | +---------------------+
+>+ * | |error_block_address1 |
+>+ * | +---------------------+ --+--
+>+ * | |    .............    | GHES_ADDRESS_SIZE
+>+ * | +---------------------+ --+--
+>+ * | |error_block_addressN |
+>+ * | +---------------------+
+>+ * | | read_ack0           |
+>+ * | +---------------------+ --+--
+>+ * | | read_ack1           | GHES_ADDRESS_SIZE
+>+ * | +---------------------+ --+--
+>+ * | |   .............     |
+>+ * | +---------------------+
+>+ * | | read_ackN           |
+>+ * | +---------------------+ --+--
+>+ * | |      CPER           |   |
+>+ * | |      ....           | GHES_MAX_RAW_DATA_LENGT
+>+ * | |      CPER           |   |
+>+ * | +---------------------+ --+--
+>+ * | |    ..........       |
+>+ * | +---------------------+
+>+ * | |      CPER           |
+>+ * | |      ....           |
+>+ * | |      CPER           |
+>+ * | +---------------------+
+>+ */
+>+
+>+/* Map from uint32_t notify to entry offset in GHES */ static const
+>+uint8_t error_source_to_index[] =3D { 0xff, 0xff, 0xff, 0xff,
+>+                                                 0xff, 0xff, 0xff, 1,
+>+0};
+>+
+>+static bool ghes_get_addr(uint32_t notify, uint64_t *error_block_addr,
+>+                          uint64_t *read_ack_addr) {
+>+    uint64_t base;
+>+
+>+    if (notify >=3D ACPI_GHES_NOTIFY_RESERVED) {
+>+        return false;
+>+    }
+>+
+>+    /* Find and check the source id for this new CPER */
+>+    if (error_source_to_index[notify] =3D=3D 0xff) {
+>+        return false;
+>+    }
+>+
+>+    base =3D ghes_get_state_start_address();
+>+
+>+    *read_ack_addr =3D base +
+>+        ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t) +
+>+        error_source_to_index[notify] * sizeof(uint64_t);
+>+
+>+    /* Could also be read back from the error_block_address register */
+>+    *error_block_addr =3D base +
+>+        ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t) +
+>+        ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t) +
+>+        error_source_to_index[notify] * ACPI_GHES_MAX_RAW_DATA_LENGTH;
+>+
+>+    return true;
+>+}
+>+
+> NotifierList generic_error_notifiers =3D
+>     NOTIFIER_LIST_INITIALIZER(error_device_notifiers);
+>
+>+void ghes_record_cper_errors(AcpiGhesCper *cper, Error **errp,
+>+                             uint32_t notify) {
+>+    int read_ack =3D 0;
+>+    uint32_t i;
+>+    uint64_t read_ack_addr =3D 0;
+>+    uint64_t error_block_addr =3D 0;
+>+    uint32_t data_length;
+>+    GArray *block;
+>+
+>+    if (!ghes_get_addr(notify, &error_block_addr, &read_ack_addr)) {
+>+        error_setg(errp, "GHES: Invalid error block/ack address(es)");
+>+        return;
+>+    }
+>+
+>+    cpu_physical_memory_read(read_ack_addr,
+>+                             &read_ack, sizeof(uint64_t));
+>+
+>+    /* zero means OSPM does not acknowledge the error */
+>+    if (!read_ack) {
+>+        error_setg(errp,
+>+                   "Last CPER record was not acknowledged yet");
+>+        read_ack =3D 1;
+>+        cpu_physical_memory_write(read_ack_addr,
+>+                                  &read_ack, sizeof(uint64_t));
+>+        return;
+>+    }
+>+
+>+    read_ack =3D cpu_to_le64(0);
+>+    cpu_physical_memory_write(read_ack_addr,
+>+                              &read_ack, sizeof(uint64_t));
+>+
+>+    /* Build CPER record */
+>+
+>+    /*
+>+     * Invalid fru id: ACPI 4.0: 17.3.2.6.1 Generic Error Data,
+>+     * Table 17-13 Generic Error Data Entry
+>+     */
+>+    QemuUUID fru_id =3D {};
+>+
+>+    block =3D g_array_new(false, true /* clear */, 1);
+>+    data_length =3D ACPI_GHES_DATA_LENGTH + cper->data_len;
+>+
+>+    /*
+>+        * It should not run out of the preallocated memory if
+>+        * adding a new generic error data entry
+>+        */
+>+    assert((data_length + ACPI_GHES_GESB_SIZE) <=3D
+>+            ACPI_GHES_MAX_RAW_DATA_LENGTH);
+>+
+>+    /* Build the new generic error status block header */
+>+    acpi_ghes_generic_error_status(block, ACPI_GEBS_UNCORRECTABLE,
+>+                                    0, 0, data_length,
+>+                                    ACPI_CPER_SEV_RECOVERABLE);
+>+
+>+    /* Build this new generic error data entry header */
+>+    acpi_ghes_generic_error_data(block, cper->guid,
+>+                                ACPI_CPER_SEV_RECOVERABLE, 0, 0,
+>+                                cper->data_len, fru_id, 0);
+>+
+>+    /* Add CPER data */
+>+    for (i =3D 0; i < cper->data_len; i++) {
+>+        build_append_int_noprefix(block, cper->data[i], 1);
+>+    }
+>+
+>+    /* Write the generic error data entry into guest memory */
+>+    cpu_physical_memory_write(error_block_addr, block->data,
+>+ block->len);
+>+
+>+    g_array_free(block, true);
+>+
+>+    notifier_list_notify(&generic_error_notifiers, NULL); }
+>+
+> bool acpi_ghes_present(void)
+> {
+>     AcpiGedState *acpi_ged_state;
+>diff --git a/hw/acpi/ghes_cper.c b/hw/acpi/ghes_cper.c index
+>7aa7e71e90dc..d7ff7debee74 100644
+>--- a/hw/acpi/ghes_cper.c
+>+++ b/hw/acpi/ghes_cper.c
+>@@ -39,7 +39,7 @@ void qmp_ghes_cper(CommonPlatformErrorRecord
+>*qmp_cper,
+>         return;
+>     }
+>
+>-    /* TODO: call a function at ghes */
+>+    ghes_record_cper_errors(&cper, errp, ACPI_GHES_NOTIFY_GPIO);
+>
+>     g_free(cper.data);
+> }
+>diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h index
+>06a5b8820cd5..ee6f6cd96911 100644
+>--- a/include/hw/acpi/ghes.h
+>+++ b/include/hw/acpi/ghes.h
+>@@ -85,6 +85,9 @@ typedef struct AcpiGhesCper {
+>     size_t data_len;
+> } AcpiGhesCper;
+>
+>+void ghes_record_cper_errors(AcpiGhesCper *cper, Error **errp,
+>+                             uint32_t notify);
+>+
+> /**
+>  * acpi_ghes_present: Report whether ACPI GHES table is present
+>  *
+>--
+>2.45.2
 
 
