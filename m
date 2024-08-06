@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F4F4C52D73
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CC21C3DA64
 	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 14:20:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbL2d-0001Kq-6J; Tue, 06 Aug 2024 10:20:00 -0400
+	id 1sbL2p-0001a1-Hy; Tue, 06 Aug 2024 10:20:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbL2Z-00019e-Ef
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 10:19:55 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbL2e-0001PF-7L
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 10:20:02 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbL2W-0004TF-Bg
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 10:19:54 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5b5b67d0024so1062422a12.0
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 07:19:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbL2c-0004Vq-FP
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 10:19:59 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5a20de39cfbso762493a12.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 07:19:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722953990; x=1723558790; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722953996; x=1723558796; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=70dZ265UG/nvEVWlFD0BHxq9nX6raHr8FzG2unqteF0=;
- b=cNvD9IKaCHUFmgZrniHWHPt9EH8xIzoA9Db1dFf6ebHxUQlpTXyP0XgFfRjWihp7Qh
- J7oLkBlsShWFW88Or7QjAa6Tz1oDJ29wCo5KUThzZ1/4F9viJIROuKvb2QbazncKz8MG
- x2hH4NAMrjRV1HEUxBDTHEKe1SjzFnWi/jTNE/nKTVg2GnfZXhrPEtp6z8ZDMhSBdF6P
- Qj50nWLoZn+0W8IDg76wWgmtmEGtv3qFWXxQR4t3kGtGB6iVs2d670rWcUgogIjaJwCm
- zQJYydDU6hLjRf4Ub5T0i6bJrkFNGSCp9RASMkIig50I4+LfLKrCbPho2QdLECB7954M
- d+yw==
+ bh=sEYxqiGFTFwjc+puEXGbYroS/ETTWPFhLrPNeiiUdpw=;
+ b=nI/GErxmlImr3E7+3KSu2D5M8kL6DAJsQnshfyVpZhFp+fRxpW9qj9CBl0Dj5R3L+7
+ gzpG+V2WfkWcy4yQobAVEqS2Utx8kKiXh9IWHcCCy6TWmNR5ZaLF/8a+KP+8m3I/k56t
+ Hk8HZ95bK2LeIWNNm/1ERQmXzEqg+KOzN7v8/6+neJTdDPqftMZ55qqG9UwnNssm5boE
+ w2LD4zD13Dl0ORXd5ym+Bq4r3jq7QCm99MdZIgP+d0Hkqd4vlBULQ3USWE/Bh9N3ucni
+ ZlnORhI/PJxhm1Z4TFVNG6p6nNBcZbrzpyO6EQunt75zgagYEHsPkfUqNgSpbiFN2yQx
+ enMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722953990; x=1723558790;
+ d=1e100.net; s=20230601; t=1722953996; x=1723558796;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=70dZ265UG/nvEVWlFD0BHxq9nX6raHr8FzG2unqteF0=;
- b=eBToE6O9irZfnkDqt4szOQyenrmcvfUPi/eyMvXskP0zbt5FnyprMVTCipAfwGF/Vm
- 1D6MTM+XEDW23xvswAbI8EH+qcMF7hcwo+IfaK/DHM1l4g2/RQpxGNFghBzWsGt1U1tG
- aMpBHWrKTb8r2uCzpSkkxptmCPuhePSBK/AnELNHTjesSs6i19QAVfRkSYLbA0qoGWNU
- 0Wu3Tv890D0mzfncTEdZrhr6pb81pjznQAK203YenGXitrsY+YD2raeRG5uq2f4z/zKH
- A6xlSuT5CiRH8I2F7tsNO5+oJlNwshRpqbgbETyLPdDbGgbbKZ6sHXxyfQV01B4xmRdp
- LUSg==
-X-Gm-Message-State: AOJu0YzeVnGfnFFJSnxLiGEfj0/TlUBwxA5CW8bA/Y6g31grWUtVUst2
- MgmTSF+a+VtYKQmE94QWOefZhXBX+TCXMDM/KnJ8UVxYh5ya0Hosd3m9m4j8gY+ZjjSz8Aik1g9
- J
-X-Google-Smtp-Source: AGHT+IGYpL9w1iiwBHk85bkzsNH0CGFYdU3ik66UseJhCgEgRNkNvNXOOsg4kYeJmnVqlzB2YG0IYg==
-X-Received: by 2002:a17:907:2d91:b0:a71:ddb8:9394 with SMTP id
- a640c23a62f3a-a7dc4ff1ad2mr1102470266b.40.1722953989744; 
- Tue, 06 Aug 2024 07:19:49 -0700 (PDT)
+ bh=sEYxqiGFTFwjc+puEXGbYroS/ETTWPFhLrPNeiiUdpw=;
+ b=JOxnKbD1KVLgCUObFCYzX3wypmvdVHIVCagmWzXA007Sh1jlxh1Jg1EPabpOMzXm2Y
+ 9VA20E3froRwp4gpAu4SnAaA8mJQzHX7mPn2fwJYucDXK0lCNaFsv1a23yAoETWc0f6M
+ REUd1pGdXITBYq37CylJg6g2IeSN8IXNa7UvgvcP7AwyuY4lDP2PNdu2lQQ4x1ArCIqp
+ LnKo826czSCc1dG1otwgC/HEFk4fE0UzN0T3G4P3/7lvfsiSsxk+BUqa9FdXV6j5CLdQ
+ kiwQJP59oivWBaBsXMq6KQ3azH4CvPALwVTRbLZLu8ER3BxdlnNygjFLgkq69kO0hYBy
+ k5/g==
+X-Gm-Message-State: AOJu0YyBYcfITqVjADQ8fO8IdM65gc/S0oqy0DedUhwMaMC/kmE1SmvY
+ k0zrQ9s9qOyw0TUVjmOjypnPeDJv+sx/A66zZwvMEvuQ3ZDNgXSPpzc+k36sO4+U6iTfiXBLzIp
+ x
+X-Google-Smtp-Source: AGHT+IH1kVcq6PvtuOsEvVhlvCsjwjhTyIAny7uNav/VWxKNC7GH+B4O2p/YfJoLMZUgZ+ht4eAxaw==
+X-Received: by 2002:a17:907:2cc4:b0:a77:abe5:5f47 with SMTP id
+ a640c23a62f3a-a7dc50a2e83mr1153162066b.63.1722953995801; 
+ Tue, 06 Aug 2024 07:19:55 -0700 (PDT)
 Received: from m1x-phil.lan (cor91-h02-176-184-30-206.dsl.sta.abo.bbox.fr.
  [176.184.30.206]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7dc9c12ad3sm552622066b.88.2024.08.06.07.19.48
+ a640c23a62f3a-a7dc9d45452sm550439066b.111.2024.08.06.07.19.54
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 Aug 2024 07:19:49 -0700 (PDT)
+ Tue, 06 Aug 2024 07:19:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
  qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH-for-9.1? 1/2] target/arm: Move
- qmp_query_gic_capabilities() to hw/intc/
-Date: Tue,  6 Aug 2024 16:19:39 +0200
-Message-ID: <20240806141940.22095-2-philmd@linaro.org>
+Subject: [RFC PATCH-for-9.1? 2/2] hw/intc/arm_gic: Only provide
+ query-gic-capabilities when GIC built-in
+Date: Tue,  6 Aug 2024 16:19:40 +0200
+Message-ID: <20240806141940.22095-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240806141940.22095-1-philmd@linaro.org>
 References: <20240806141940.22095-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,163 +97,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qmp_query_gic_capabilities() is not specific to the ARM
-architecture but to the GIC device which is modelled in
-hw/intc/, so move the code there for clarity. No logical
-change intended.
+When configuring QEMU with --without-default-devices and
+not including machines using a GIC, the GIC model is not
+built in but the 'query-gic-capabilities' command still
+returns false hopes about GIC:
 
+  {"execute": "query-gic-capabilities"}
+  {"return": [{"emulated": true, "version": 3, "kernel": false}, {"emulated": true, "version": 2, "kernel": false}]}
+
+Restrict the command to when the GIC is available. If it
+isn't we'll get:
+
+  { "execute": "query-gic-capabilities" }
+  {"error": {"class": "CommandNotFound", "desc": "The command query-gic-capabilities has not been found"}}
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2484
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/intc/arm_gic_qmp.c     | 59 +++++++++++++++++++++++++++++++++++++++
- target/arm/arm-qmp-cmds.c | 52 +---------------------------------
- hw/intc/meson.build       |  1 +
- 3 files changed, 61 insertions(+), 51 deletions(-)
- create mode 100644 hw/intc/arm_gic_qmp.c
+ qapi/misc-target.json | 4 ++--
+ hw/intc/arm_gic_qmp.c | 2 ++
+ hw/intc/meson.build   | 2 +-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
+diff --git a/qapi/misc-target.json b/qapi/misc-target.json
+index 8d70bd24d8..b857e44c2e 100644
+--- a/qapi/misc-target.json
++++ b/qapi/misc-target.json
+@@ -316,7 +316,7 @@
+   'data': { 'version': 'int',
+             'emulated': 'bool',
+             'kernel': 'bool' },
+-  'if': 'TARGET_ARM' }
++  'if': 'CONFIG_ARM_GIC' }
+ 
+ ##
+ # @query-gic-capabilities:
+@@ -335,7 +335,7 @@
+ #                     { "version": 3, "emulated": false, "kernel": true } ] }
+ ##
+ { 'command': 'query-gic-capabilities', 'returns': ['GICCapability'],
+-  'if': 'TARGET_ARM' }
++  'if': 'CONFIG_ARM_GIC' }
+ 
+ ##
+ # @SGXEPCSection:
 diff --git a/hw/intc/arm_gic_qmp.c b/hw/intc/arm_gic_qmp.c
-new file mode 100644
-index 0000000000..71056a0c10
---- /dev/null
+index 71056a0c10..1fc79c775b 100644
+--- a/hw/intc/arm_gic_qmp.c
 +++ b/hw/intc/arm_gic_qmp.c
-@@ -0,0 +1,59 @@
-+/*
-+ * QEMU ARM GIC QMP command
-+ *
-+ * SPDX-License-Identifier: MIT
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/util.h"
-+#include "qapi/qapi-commands-misc-target.h"
-+#include "kvm_arm.h"
-+
-+static GICCapability *gic_cap_new(int version)
-+{
-+    GICCapability *cap = g_new0(GICCapability, 1);
-+    cap->version = version;
-+    /* by default, support none */
-+    cap->emulated = false;
-+    cap->kernel = false;
-+    return cap;
-+}
-+
-+static inline void gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3)
-+{
-+#ifdef CONFIG_KVM
-+    int fdarray[3];
-+
-+    if (!kvm_arm_create_scratch_host_vcpu(NULL, fdarray, NULL)) {
-+        return;
-+    }
-+
-+    /* Test KVM GICv2 */
-+    if (kvm_device_supported(fdarray[1], KVM_DEV_TYPE_ARM_VGIC_V2)) {
-+        v2->kernel = true;
-+    }
-+
-+    /* Test KVM GICv3 */
-+    if (kvm_device_supported(fdarray[1], KVM_DEV_TYPE_ARM_VGIC_V3)) {
-+        v3->kernel = true;
-+    }
-+
-+    kvm_arm_destroy_scratch_host_vcpu(fdarray);
-+#endif
-+}
-+
-+GICCapabilityList *qmp_query_gic_capabilities(Error **errp)
-+{
-+    GICCapabilityList *head = NULL;
-+    GICCapability *v2 = gic_cap_new(2), *v3 = gic_cap_new(3);
-+
-+    v2->emulated = true;
-+    v3->emulated = true;
-+
-+    gic_cap_kvm_probe(v2, v3);
-+
-+    QAPI_LIST_PREPEND(head, v2);
-+    QAPI_LIST_PREPEND(head, v3);
-+
-+    return head;
-+}
-diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
-index 3cc8cc738b..3303c71b21 100644
---- a/target/arm/arm-qmp-cmds.c
-+++ b/target/arm/arm-qmp-cmds.c
-@@ -22,64 +22,14 @@
+@@ -6,6 +6,8 @@
  
  #include "qemu/osdep.h"
- #include "hw/boards.h"
--#include "kvm_arm.h"
-+#include "sysemu/kvm.h"
- #include "qapi/error.h"
- #include "qapi/visitor.h"
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/qapi-commands-machine-target.h"
--#include "qapi/qapi-commands-misc-target.h"
- #include "qapi/qmp/qdict.h"
- #include "qom/qom-qobject.h"
+ #include "qapi/util.h"
++
++#include CONFIG_DEVICES
+ #include "qapi/qapi-commands-misc-target.h"
+ #include "kvm_arm.h"
  
--static GICCapability *gic_cap_new(int version)
--{
--    GICCapability *cap = g_new0(GICCapability, 1);
--    cap->version = version;
--    /* by default, support none */
--    cap->emulated = false;
--    cap->kernel = false;
--    return cap;
--}
--
--static inline void gic_cap_kvm_probe(GICCapability *v2, GICCapability *v3)
--{
--#ifdef CONFIG_KVM
--    int fdarray[3];
--
--    if (!kvm_arm_create_scratch_host_vcpu(NULL, fdarray, NULL)) {
--        return;
--    }
--
--    /* Test KVM GICv2 */
--    if (kvm_device_supported(fdarray[1], KVM_DEV_TYPE_ARM_VGIC_V2)) {
--        v2->kernel = true;
--    }
--
--    /* Test KVM GICv3 */
--    if (kvm_device_supported(fdarray[1], KVM_DEV_TYPE_ARM_VGIC_V3)) {
--        v3->kernel = true;
--    }
--
--    kvm_arm_destroy_scratch_host_vcpu(fdarray);
--#endif
--}
--
--GICCapabilityList *qmp_query_gic_capabilities(Error **errp)
--{
--    GICCapabilityList *head = NULL;
--    GICCapability *v2 = gic_cap_new(2), *v3 = gic_cap_new(3);
--
--    v2->emulated = true;
--    v3->emulated = true;
--
--    gic_cap_kvm_probe(v2, v3);
--
--    QAPI_LIST_PREPEND(head, v2);
--    QAPI_LIST_PREPEND(head, v3);
--
--    return head;
--}
--
- QEMU_BUILD_BUG_ON(ARM_MAX_VQ > 16);
- 
- /*
 diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index afd1aa51ee..45d3503d49 100644
+index 45d3503d49..b9550967e2 100644
 --- a/hw/intc/meson.build
 +++ b/hw/intc/meson.build
-@@ -39,6 +39,7 @@ if config_all_devices.has_key('CONFIG_APIC') or \
+@@ -39,7 +39,7 @@ if config_all_devices.has_key('CONFIG_APIC') or \
  endif
  
  specific_ss.add(when: 'CONFIG_APIC', if_true: files('apic.c', 'apic_common.c'))
-+specific_ss.add(when: 'CONFIG_ARM', if_true: files('arm_gic_qmp.c'))
+-specific_ss.add(when: 'CONFIG_ARM', if_true: files('arm_gic_qmp.c'))
++specific_ss.add(when: 'CONFIG_ARM_GIC', if_true: files('arm_gic_qmp.c'))
  specific_ss.add(when: 'CONFIG_ARM_GIC', if_true: files('arm_gicv3_cpuif_common.c'))
  specific_ss.add(when: 'CONFIG_ARM_GICV3_TCG', if_true: files('arm_gicv3_cpuif.c'))
  specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: files('arm_gic_kvm.c'))
