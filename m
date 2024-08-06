@@ -4,82 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 261A3C49EA1
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70C8BC49EA1
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:30:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbK0Q-0002ys-6H; Tue, 06 Aug 2024 09:13:38 -0400
+	id 1sbKGI-0002aW-Rz; Tue, 06 Aug 2024 09:30:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sbK0O-0002qr-4v; Tue, 06 Aug 2024 09:13:36 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1sbK0M-0003UO-4T; Tue, 06 Aug 2024 09:13:35 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-70d25b5b6b0so435476b3a.2; 
- Tue, 06 Aug 2024 06:13:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1722950012; x=1723554812; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4PqO+DYgcTMKO0xB3vRM0Tk2cvFGgi0Ib7F149Q/avM=;
- b=MdItoTWo+dFsTRmFh982apISat2VHEmy7di8hkF96GNZKAldtqErLhzl3iwfHWZ2jJ
- Z/dHZh8wzkEAwYE9LaD/jHY9v80gKTfGgABGTnpaMT0/gzDoH455fDBsdfGT3cLsUx7F
- /pZOsEW1c0go35XFojlyrXdJ2InvuvqO13yHFvJm9IBR+WW+eL1lhySoFilRO+Zhz/tG
- p0qqo/T0VnvYcP7DGhvJpczwldU9AdpfF+fQnAcHenmcDEBomQSflcebHMpEuUpA1Pfy
- G7capfrSULaJC+9Qo2txg66Jii8bq+WUoQMTpS31zu7kRZJ6DTkdoJsipq1JwjVFbG2P
- XqTg==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sbKGB-00029P-A2
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 09:29:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sbKG9-0005pr-9s
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 09:29:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722950991;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cQTn1f324B+2iDzw8vvDbOyeB4ZOqhLUl3h8ZE/2v7c=;
+ b=GCMr84cSXMtKyG36KJhTAq3ZzNKkyxru1CxWxGZhf/dQs4zmKDRU5Hms9We2anoxIbyklM
+ n2twoeD1RjrGDhjk5u8pXWX/1Q0y6y1iI4kCIaOqEU4yIBasSZuR5Mkr2+jo4FB9nlOW2g
+ 1m/iqII7RS1E3S9os2EkZnKS4Ac6rKc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-539-CMAXBBRzN_KtkI2T-9VDSg-1; Tue, 06 Aug 2024 09:29:50 -0400
+X-MC-Unique: CMAXBBRzN_KtkI2T-9VDSg-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-428207daff2so4839675e9.0
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 06:29:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722950012; x=1723554812;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=4PqO+DYgcTMKO0xB3vRM0Tk2cvFGgi0Ib7F149Q/avM=;
- b=bbc7NRQU52cElRJBzUKRIK8J2XNaMwqD1DyKjweWLlcbeHuqRe9MQ6tgAXVclWvb6s
- nYFjG8Few5eTV3wuH62kL+IdHjv4SY55CIYvmtsTfsjeW4Hu9kZeKSDKmRjLMrlBtFxk
- rIDpH0XqsBKoV0FAQUDxaa+EPHgtMT3pZKuPTTvLyhAgp6CGOsgxjS1GiT+wEfJc5OV3
- J06s3ZR8RF6yTabMzkCTOXYvVVFxX0RtDGhmqcMVAoCzaFNgF8fJom9Cm5yBvvlrgXCh
- HB+TGNuFHstnQJuzG0JqViw294aCVPB4ShET2OF7p4m+2FVg9Rg4U5YydfjV/tjdItYi
- 7VDA==
+ d=1e100.net; s=20230601; t=1722950989; x=1723555789;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cQTn1f324B+2iDzw8vvDbOyeB4ZOqhLUl3h8ZE/2v7c=;
+ b=DGBd/6CKUYWfgYntNNVEpHBqqat+zKCRiv47tyoCIMsj+530t3axcv5UWZSLNDnu3m
+ 2B1qE/E0KDXlmLNTm6g4Z/igfzcIHMtCxvpGNEh0Y9kTOq1FAzgFkdphsmzavs5nurmN
+ Y3lKw1pa2mHTLpNTogoZJPFuq1smNKaC4HK37ZEePlpmWUxqtlUVaFhTtrtRlYxcZCYo
+ rDNDE9icCM2hacyrwPd5Ba2f5cecpe/XuJOnprhKUrskBkUgN6nJfFvZfDBv67DonMHa
+ ElGqsN5Rl1ZYX1VpdIeYmksXRQ890aBs4RcYSF6VqIVTSOhOZLcoOPCkzlwesPt+UTnS
+ k4pA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW85hD+EmQZe+dbIXmYD6qVZ58bM9m5qw3b/AqClrMIr3VienfRxOBQnzHP7aWwEqbSJ2kaupqmkjv5IXUb+pWNyd7+Nxk=
-X-Gm-Message-State: AOJu0Yzgme2zyNE+pI3hivMAMMChIHlg4mm/5LNNFBagMJIEAHh5eVaz
- e+ykT9mkidumSOGH5bkmrEwjJY3/+AQZK3QN1rTPv2n82vGvvH3nspnOwdiA
-X-Google-Smtp-Source: AGHT+IFsQW/iPHB3uw4u00GlHe8SeLFDoGaKDsVCT9IyjeLOoS4tpkCEIbQC4k4KZb7fzVak9tDFzw==
-X-Received: by 2002:a17:902:e749:b0:1fb:cffb:cfc1 with SMTP id
- d9443c01a7336-1ff5727c5bbmr165610895ad.4.1722950011794; 
- Tue, 06 Aug 2024 06:13:31 -0700 (PDT)
-Received: from wheely.local0.net ([1.145.149.136])
+ AJvYcCUEJQAx7uaE/JRNXQU9bUOzgUoIyL4avNAuWtze6mnvdmBXr5GaBRdH+eLbUDC1vhe7Udca2G+LBnba/nI7rphrg5rgQe8=
+X-Gm-Message-State: AOJu0YycspjNAFmYLmfVLVT0BKdPQ8A6+FibSFvFF69nT092z7sM2PHg
+ Mp6yFFJsNlG6VH1VSusVE8xbpDRbAW7dCGTq+14c/xR43HX7HwvkcDjdqcK2vtGvdTur+VKglP2
+ Q7pDAb/LSAQnmLETzPPRKC6+3IP/Ztkils7qQ3fhUbuFUiYZjabWj
+X-Received: by 2002:a5d:5d82:0:b0:36b:bd75:ed72 with SMTP id
+ ffacd0b85a97d-36bbd75ef49mr8885998f8f.2.1722950988739; 
+ Tue, 06 Aug 2024 06:29:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEWXJM42MC0J/hUUWcFhB2cl9HUrET++0xlmrXQPvNwLgSoKXMjjFsuZMLgbElZQhSELK1PpA==
+X-Received: by 2002:a5d:5d82:0:b0:36b:bd75:ed72 with SMTP id
+ ffacd0b85a97d-36bbd75ef49mr8885939f8f.2.1722950987806; 
+ Tue, 06 Aug 2024 06:29:47 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:175:c9eb:d9d4:606a:87dc:59c7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff5905b4ddsm87403425ad.173.2024.08.06.06.13.28
+ ffacd0b85a97d-36bbcf0dcefsm13304870f8f.11.2024.08.06.06.29.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Aug 2024 06:13:31 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH 1/7] ppc/pnv: Fix LPC serirq routing calculation
-Date: Tue,  6 Aug 2024 23:13:11 +1000
-Message-ID: <20240806131318.275109-2-npiggin@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240806131318.275109-1-npiggin@gmail.com>
-References: <20240806131318.275109-1-npiggin@gmail.com>
+ Tue, 06 Aug 2024 06:29:47 -0700 (PDT)
+Date: Tue, 6 Aug 2024 09:29:41 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Peter Xu <peterx@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
+ jasowang@redhat.com, sriram.yagnaraman@est.tech, sw@weilnetz.de,
+ qemu-devel@nongnu.org, yan@daynix.com,
+ Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
+Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
+Message-ID: <20240806092822-mutt-send-email-mst@kernel.org>
+References: <Zqz1vvYqRuIAPnod@x1n>
+ <c5ea7a57-fc52-4bb7-bc4c-f3aca8da0574@daynix.com>
+ <Zq0IrhV-DgStpJtk@x1n>
+ <8ad96f43-83ae-49ae-abc1-1e17ee15f24d@daynix.com>
+ <20240805032937-mutt-send-email-mst@kernel.org>
+ <cb71a6de-eb7a-402b-a58a-89198b4343f5@daynix.com>
+ <20240805041650-mutt-send-email-mst@kernel.org>
+ <c7447c6c-0562-4e0f-bc1b-61a1430c9852@daynix.com>
+ <20240805060544-mutt-send-email-mst@kernel.org>
+ <2b62780c-a6cb-4262-beb5-81d54c14f545@daynix.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2b62780c-a6cb-4262-beb5-81d54c14f545@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,64 +117,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The serirq routing table is split over two registers, the calculation
-for the high irqs in the second register did not subtract the irq
-offset. This was spotted by Coverity as a shift-by-negative. Fix this
-and change the open-coded shifting and masking to use extract32()
-function so it's less error-prone.
+On Tue, Aug 06, 2024 at 04:35:44PM +0900, Akihiko Odaki wrote:
+> On 2024/08/05 19:08, Michael S. Tsirkin wrote:
+> > On Mon, Aug 05, 2024 at 06:37:58PM +0900, Akihiko Odaki wrote:
+> > > If cross-migrate=off, QEMU can still migrate on the same host (checkpoint
+> > > and restart). QEMU can also migrate across hosts if the user ensures they
+> > > are on the same platform.
+> > 
+> > What is so special about checkpoint/restart? I guess we hope that
+> > downgrades are uncommon, but they are possible...
+> 
+> Downgrades will not work with cross-migrate=off. Users who want downgrades
+> should use cross-migrate=on.
 
-This went unnoticed because irqs >= 14 are not used in a standard
-QEMU/OPAL boot, changing the first QEMU serial-isa irq to 14 to test
-does demonstrate serial irqs aren't received, and that this change
-fixes that.
+We also don't know that upgrades do not disable a feature:
+can happen if e.g. there's a serious bug in the feature.
+Basically, this makes the feature too fragile, in my opinion.
 
-Reported-by: Cédric Le Goater <clg@redhat.com>
-Resolves: Coverity CID 1558829 (partially)
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- target/ppc/cpu.h |  1 +
- hw/ppc/pnv_lpc.c | 10 ++++++++--
- 2 files changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index 321ed2da75..bd32a1a5f8 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -40,6 +40,7 @@
- 
- #define PPC_BIT_NR(bit)         (63 - (bit))
- #define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
-+#define PPC_BIT32_NR(bit)       (31 - (bit))
- #define PPC_BIT32(bit)          (0x80000000 >> (bit))
- #define PPC_BIT8(bit)           (0x80 >> (bit))
- #define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
-diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
-index f8aad955b5..80b79dfbbc 100644
---- a/hw/ppc/pnv_lpc.c
-+++ b/hw/ppc/pnv_lpc.c
-@@ -435,13 +435,19 @@ static void pnv_lpc_eval_serirq_routes(PnvLpcController *lpc)
-         return;
-     }
- 
-+    /*
-+     * Each of the ISA irqs is routed to one of the 4 SERIRQ irqs with 2
-+     * bits, split across 2 OPB registers.
-+     */
-     for (irq = 0; irq <= 13; irq++) {
--        int serirq = (lpc->opb_irq_route1 >> (31 - 5 - (irq * 2))) & 0x3;
-+        int serirq = extract32(lpc->opb_irq_route1,
-+                                    PPC_BIT32_NR(5 + irq * 2), 2);
-         lpc->irq_to_serirq_route[irq] = serirq;
-     }
- 
-     for (irq = 14; irq < ISA_NUM_IRQS; irq++) {
--        int serirq = (lpc->opb_irq_route0 >> (31 - 9 - (irq * 2))) & 0x3;
-+        int serirq = extract32(lpc->opb_irq_route0,
-+                               PPC_BIT32_NR(9 + (irq - 14) * 2), 2);
-         lpc->irq_to_serirq_route[irq] = serirq;
-     }
- }
 -- 
-2.45.2
+MST
 
 
