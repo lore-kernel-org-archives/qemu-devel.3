@@ -4,75 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D758CC3DA64
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:00:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20C98C52D70
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:00:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbJiH-0001pI-Di; Tue, 06 Aug 2024 08:54:54 -0400
+	id 1sbJfd-0004rz-4P; Tue, 06 Aug 2024 08:52:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJho-0000nB-Mp
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:54:29 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJfb-0004px-2v
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:52:07 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJhn-0000Nw-0p
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:54:24 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a7a83a968ddso68694666b.0
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 05:54:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJfW-0008Ev-Pg
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:52:06 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-a7ac449a0e6so44334066b.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 05:52:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722948861; x=1723553661; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0GHmHGgb11iYqcqPSgHHl5+4znvZdtn/oYi94we9BmQ=;
- b=F8p8PwSPMjqiDf1fjeafK20HfvSm7LyuWBdJZ8gbuaJGz+jcgfKlzRNYtpki3l8gSQ
- 6Uu/jb90k/quNvwTvT6RVv1xTvbF+4tpKSLgRHW9BoZkqPLLCUtER2Vn+ECT/DNf6aq7
- BNNdcsrPBMIfNO5SlitGn6HV1C+PtHM1LqmvsZ0NEFODUfh1RsKIAx6UAu4EW/8UGDc2
- mKHN1+30IdZNRjTJGVGWSP//CJcQ3Wwwrp8PL9WU90S27Uhx9MTliMo6+RYRjhqnpXCg
- Jtk4fAcFYXrb4jcNtNQszsChBlA4nkXTYDOy72YZ9denSKz3kqFX35e+R/HAuOMgRl7N
- lVcQ==
+ d=linaro.org; s=google; t=1722948720; x=1723553520; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=oafBUJnJPxdfDSlslFuAdeciTJMbfPmoSpGpf+p1T6Q=;
+ b=gpX8nwz7I5FwwrCAXGPqZL9vYIml1IivWX4xD4UC/NqgjtYA5z5PNxDtnVDs7Ph0us
+ CJTfYiEcpdz17DOAaCXNHkB7inmBJDsqkKPq/5T0UBpKcZ9qZAyX1grY1LZCQ20JlIJ8
+ rCuZUUc81BC4KkTPImra0Zcji1bAfzZzAhQMywSyrfH/kAFLKIHj1teuK88AiXvFDzZ9
+ 08OsTKSRHV5nHPVsAhRr43IBU4KJNz5xLQ3e3gkJKPrOtOHMuD8ca68wvitHhcsjxYmO
+ jVaUgJAqz5xiUo6b3iJOvFXLFsbsCLp1cyQM7/7T+NY/MD92l7Kfefrr2LPQ4ynup+3d
+ fbgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722948861; x=1723553661;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0GHmHGgb11iYqcqPSgHHl5+4znvZdtn/oYi94we9BmQ=;
- b=pq6ZFaKsa7r1S3rQWfCSFiPa5lynIMK1t6NRGxFD648SIxG7tX9cM4RqcZNM0fq0az
- 0hk3hDb8dUn8aFSmDhRFTMzVUKlTsK1pgywqTukL3msZtO4sbd62H8HocxlGjTMP+HwG
- oFB4HwpKlyCtFLnCbVdi65XbvPEP6H7pXFq27x5/SBxQTuTdynggwuL3kOw7YwHs0IV9
- 21F8XdNpgW4b6BG8Sl0FGpG8MBAHLyZdJTrACEJoocrNnwQrJHNPuNAc0wYKRMCovdQ8
- 9zb0xXui9msscmWrod+as5LQP9L90oZelyqWVFV0bgH+ebMXu/N5oAuIVkAdyqsAM2ua
- nXFw==
-X-Gm-Message-State: AOJu0Yyf0+dHWLfnN97NBnuBMRJTZqjeLStM3wgf+qbrl+vbbIyoIuBj
- AXyX3PG0rk0JBp4uUFFJqSEjEXVVPYQfVznP5FzmgpJooAWO5uRsSdMEZLpp7h2kO4jqL8uJzmb
- M
-X-Google-Smtp-Source: AGHT+IEAf1tc9+rVm04xWKxc+tXJ/ZBu8kXaFWJuaACS5HoEF/5xW6tCR12NB/1uYawe4HF32jWj9w==
-X-Received: by 2002:a17:906:7312:b0:a7d:a680:23b5 with SMTP id
- a640c23a62f3a-a7dc50007bamr1077254966b.33.1722948861023; 
- Tue, 06 Aug 2024 05:54:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1722948720; x=1723553520;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=oafBUJnJPxdfDSlslFuAdeciTJMbfPmoSpGpf+p1T6Q=;
+ b=MKWlizbn9HEdl7+Sbqo8tFhxd70/Nx1nAQxk+55CfJFSHhJZmGrBi5xHOAu8cl2Zvo
+ B6UsBQkAOZ49/zmnwGUMJVSzSB7uRY4yg2unlT80BFvO1ag4tR+O1beOofvb+xB/aI6Y
+ 9A2BkZkaawMiiDEjyllmtCqbEzGrC1D7mmHI22DhGh9lCxtdFnXXwyYOELE/05X6YRLa
+ 6tR7ty7GV55JYJ+3jSRAmHXridQa1LyXod3czNOtO3qUZOrdn2O2N3eTjG8Zc8HJVAkv
+ po/gF5IPQs47R0uIleIi2v60HLLQDbyQWc794wBcgJt0hd6ALJgC2kAm7AwqC0irqsWp
+ z/UQ==
+X-Gm-Message-State: AOJu0YxrpGANo+PnucoHQT7qkulxSj9t388bTkOtlonpC1JttNvNFqFs
+ 9O7P4D14MOKA19H2z/NbNHZs4066FCWwZeKJNINbxKAfCs7ZZo1i22yvrfQWKUlMw2ji9I1DLYR
+ G
+X-Google-Smtp-Source: AGHT+IFxW1F9PzjFJ0RanJWBK1zqpylYdIT5t6YWw+D4638F76rbTgDIlT+fRVHYGm+/1sKJ3Evm1w==
+X-Received: by 2002:a17:907:a0c:b0:a77:b054:ba7d with SMTP id
+ a640c23a62f3a-a7dc509bc76mr1081440066b.46.1722948719825; 
+ Tue, 06 Aug 2024 05:51:59 -0700 (PDT)
 Received: from m1x-phil.lan (cor91-h02-176-184-30-206.dsl.sta.abo.bbox.fr.
  [176.184.30.206]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7dc9bc9d7dsm547291966b.9.2024.08.06.05.54.19
+ a640c23a62f3a-a7dc9bc3ce6sm546184066b.4.2024.08.06.05.51.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 Aug 2024 05:54:20 -0700 (PDT)
+ Tue, 06 Aug 2024 05:51:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 23/28] system/vl.c: Expand OpenGL related errors
-Date: Tue,  6 Aug 2024 14:51:51 +0200
-Message-ID: <20240806125157.91185-24-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 00/28] Misc HW & UI patches for 2024-08-06
+Date: Tue,  6 Aug 2024 14:51:28 +0200
+Message-ID: <20240806125157.91185-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240806125157.91185-1-philmd@linaro.org>
-References: <20240806125157.91185-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,44 +90,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+Hi,
 
-Expand the OpenGL related error messages we produce for various
-"OpenGL not present/not supported" cases, to hopefully guide the
-user towards how to fix things.
+Bigger PR than I expected for RC2, but unfortunately
+the LoongArch Virt is broken so requires these patches
+(it took me long to figure all the issues with them).
 
-Now if the user tries to enable GL on a backend that doesn't
-support it the error message is a bit more precise:
+The following changes since commit e7207a9971dd41618b407030902b0b2256deb664:
 
-$ qemu-system-aarch64 -M virt -device virtio-gpu-gl -display curses,gl=on
-qemu-system-aarch64: OpenGL is not supported by display backend 'curses'
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2024-08-06 08:02:34 +1000)
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20240731154136.3494621-3-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- system/vl.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+are available in the Git repository at:
 
-diff --git a/system/vl.c b/system/vl.c
-index 9e8f16f155..213ee6a6a9 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -1973,9 +1973,10 @@ static void qemu_create_early_backends(void)
- 
-     if (dpy.has_gl && dpy.gl != DISPLAYGL_MODE_OFF && display_opengl == 0) {
- #if defined(CONFIG_OPENGL)
--        error_report("OpenGL is not supported by the display");
-+        error_report("OpenGL is not supported by display backend '%s'",
-+                     DisplayType_str(dpy.type));
- #else
--        error_report("OpenGL support is disabled");
-+        error_report("OpenGL support was disabled when QEMU was compiled");
- #endif
-         exit(1);
-     }
+  https://github.com/philmd/qemu.git tags/hw-misc-20240806
+
+for you to fetch changes up to e006f0186bff4c66d3dd7a34e08fdae81d606480:
+
+  docs/specs/pci-ids: Fix markup (2024-08-06 10:22:52 +0200)
+
+----------------------------------------------------------------
+Misc HW & UI patches
+
+- Replace Loongson IPI with LoongArch IPI on LoongArch Virt machine (Bibo)
+- SD card: Do not abort when reading DAT lines on invalid cmd state (Phil)
+- SDHCI: Reset @data_count index on invalid ADMA transfers (Phil)
+- Don't decrement PFlash counter below 0 (Peter)
+- Explicit a 8bit truncate on IDE ATAPI (Peter)
+- Silent Coverity warning in ISA FDC (Peter)
+- Remove dead code in PCI IDE bmdma_prepare_buf (Peter)
+- Improve OpenGL and related display error messages (Peter)
+- Set PCI base address register write mask on GC64120 host bridge (Phil)
+- List PCIe Root Port and PCIe-to-PCI bridge in QEMU PCI IDs list (George)
+
+----------------------------------------------------------------
+
+Bibo Mao (14):
+  hw/intc/loongson_ipi: Rename LoongsonIPI -> LoongsonIPIState
+  hw/intc/loongson_ipi: Extract loongson_ipi_common_realize()
+  hw/intc/loongson_ipi: Add TYPE_LOONGSON_IPI_COMMON stub
+  hw/intc/loongson_ipi: Move common definitions to loongson_ipi_common.h
+  hw/intc/loongson_ipi: Move IPICore::mmio_mem to LoongsonIPIState
+  hw/intc/loongson_ipi: Move IPICore structure to loongson_ipi_common.h
+  hw/intc/loongson_ipi: Pass LoongsonIPICommonState to send_ipi_data()
+  hw/intc/loongson_ipi: Add LoongsonIPICommonClass::get_iocsr_as handler
+  hw/intc/loongson_ipi: Add LoongsonIPICommonClass::cpu_by_arch_id
+    handler
+  hw/intc/loongson_ipi: Expose loongson_ipi_core_read/write helpers
+  hw/intc/loongson_ipi: Move common code to loongson_ipi_common.c
+  hw/intc/loongarch_ipi: Add loongarch IPI support
+  hw/loongarch/virt: Replace Loongson IPI with LoongArch IPI
+  hw/intc/loongson_ipi: Restrict to MIPS
+
+George Matsumura (2):
+  docs/specs/pci-ids: Add missing devices
+  docs/specs/pci-ids: Fix markup
+
+Peter Maydell (7):
+  hw/block/pflash_cfi01: Don't decrement pfl->counter below 0
+  hw/ide/atapi: Be explicit that assigning to s->lcyl truncates
+  hw/block/fdc-isa: Assert that isa_fdc_get_drive_max_chs() found
+    something
+  hw/ide/pci: Remove dead code from bmdma_prepare_buf()
+  hw/display/virtio-gpu: Improve "opengl is not available" error message
+  system/vl.c: Expand OpenGL related errors
+  ui/console: Note in '-display help' that some backends support
+    suboptions
+
+Philippe Mathieu-Daudé (5):
+  hw/sd/sdcard: Explicit dummy byte value
+  hw/sd/sdcard: Do not abort when reading DAT lines on invalid cmd state
+  hw/sd/sdhci: Reset @data_count index on invalid ADMA transfers
+  hw/pci-host/gt64120: Set PCI base address register write mask
+  hw/pci-host/gt64120: Reset config registers during RESET phase
+
+ MAINTAINERS                           |   6 +-
+ docs/specs/pci-ids.rst                |   8 +-
+ include/hw/intc/loongarch_ipi.h       |  25 ++
+ include/hw/intc/loongson_ipi.h        |  51 +---
+ include/hw/intc/loongson_ipi_common.h |  74 ++++++
+ include/hw/loongarch/virt.h           |   1 -
+ hw/block/fdc-isa.c                    |   2 +
+ hw/block/pflash_cfi01.c               |   1 +
+ hw/display/virtio-gpu-gl.c            |   8 +-
+ hw/ide/atapi.c                        |   2 +-
+ hw/ide/pci.c                          |   7 +-
+ hw/intc/loongarch_ipi.c               |  68 +++++
+ hw/intc/loongson_ipi.c                | 338 +++----------------------
+ hw/intc/loongson_ipi_common.c         | 347 ++++++++++++++++++++++++++
+ hw/loongarch/virt.c                   |   4 +-
+ hw/pci-host/gt64120.c                 |  23 +-
+ hw/sd/sd.c                            |  16 +-
+ hw/sd/sdhci.c                         |   1 +
+ system/vl.c                           |   5 +-
+ ui/console.c                          |   5 +
+ hw/intc/Kconfig                       |   8 +
+ hw/intc/meson.build                   |   2 +
+ hw/loongarch/Kconfig                  |   2 +-
+ 23 files changed, 634 insertions(+), 370 deletions(-)
+ create mode 100644 include/hw/intc/loongarch_ipi.h
+ create mode 100644 include/hw/intc/loongson_ipi_common.h
+ create mode 100644 hw/intc/loongarch_ipi.c
+ create mode 100644 hw/intc/loongson_ipi_common.c
+
 -- 
 2.45.2
 
