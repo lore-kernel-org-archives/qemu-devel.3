@@ -4,70 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1868EC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 02:37:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 661E0C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 02:58:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbA42-0003tr-Fu; Mon, 05 Aug 2024 22:36:42 -0400
+	id 1sbANl-00034r-5R; Mon, 05 Aug 2024 22:57:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sbA40-0003rb-V8
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 22:36:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sbA3y-00005i-Id
- for qemu-devel@nongnu.org; Mon, 05 Aug 2024 22:36:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722911795;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=r8EbDQMP3P6EMxsDYf9Z0UhySmjFrrx2bCPgzFxwoo0=;
- b=C37skLoqfCIIq/Tko6gwr3Lc/ArVrB9hokYxoO1LxTCZeK3If3e+Tks6sbUhQGzJFK+h0N
- R0GZXPxqqzgRT5AppBra7m+SgjFSiGG4XI97dAahMboJGQb7fU9w6NTGyob8o9RkswESe2
- jpMyXFArgX9VQuY4jFTiIcCUIcz89yY=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-286-O5W77DkEM2uQ8C1Dw0TgUQ-1; Mon,
- 05 Aug 2024 22:36:32 -0400
-X-MC-Unique: O5W77DkEM2uQ8C1Dw0TgUQ-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E86951955F0D; Tue,  6 Aug 2024 02:36:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.20])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C7ADD1955D42; Tue,  6 Aug 2024 02:36:26 +0000 (UTC)
-Date: Mon, 5 Aug 2024 21:36:24 -0500
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com, 
- qemu-block@nongnu.org, den@virtuozzo.com, andrey.drobyshev@virtuozzo.com, 
- alexander.ivanov@virtuozzo.com, vsementsov@yandex-team.ru
-Subject: Re: [PATCH v3 2/2] nbd: Clean up clients more efficiently
-Message-ID: <vqpv7wvvqixlonioyzjijcvjmzrpbmp3w5eup4uhxe5tbwp7d7@dpmk56ef6jwb>
-References: <20240806022542.381883-4-eblake@redhat.com>
- <20240806022542.381883-6-eblake@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240806022542.381883-6-eblake@redhat.com>
-User-Agent: NeoMutt/20240425
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.143,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1sbANi-00030X-Hq
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 22:57:02 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luchangqi.123@bytedance.com>)
+ id 1sbANg-0002fX-3e
+ for qemu-devel@nongnu.org; Mon, 05 Aug 2024 22:57:02 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2ef2cb7d562so972051fa.3
+ for <qemu-devel@nongnu.org>; Mon, 05 Aug 2024 19:56:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1722913012; x=1723517812; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:in-reply-to:user-agent:from
+ :references:mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=JAq8I2sCkcX9cChWGPw8eAGXe99pddgncfo1O4lMiyw=;
+ b=UxWqtNiuAxtN71Fl9W7vtNxvbwfANyND30FxeCpCHK6HpmFbJHfyzDjZFDhgXhf8WM
+ qTRLLDc247WatZIxfuHvVOIf30O4qMCJkWktYo0t16A6ACrRaYrD0xe2npys9b+L33jT
+ A3GrBRsXHjvKndZ8gV1wTeI8ywOKoqUIr6kh9WBoOf+uF49Ud/XKF2AMgZZAoTYcgapN
+ O7Si8uC4c6noNsPGtFp4UBe27VCYrjDTmUzBxD+92gyzHPN5/RhmLyRNp2w8nkwRXRMb
+ 7xKsfG5FcapyLY39YHF1qWuia0pfIyzJha/Nl+4PWZ5K18cktUT5NaNsn6W5rKvCxOL3
+ s78g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722913012; x=1723517812;
+ h=cc:to:subject:message-id:date:in-reply-to:user-agent:from
+ :references:mime-version:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JAq8I2sCkcX9cChWGPw8eAGXe99pddgncfo1O4lMiyw=;
+ b=hTX8DIrGcXoWNF/IIlMyIljoebJglD4n0t4GlRoNyvzi81gqdNO6D4gOoUBjpvkeEu
+ K9K9z4+SGtbDtHEszsdtJAlb7JNMQ96LuHMoJS5QI5Jdyp9tcrbO9sGd3+JL6LaVSF+x
+ 52S9Q7ofVvrSrWulTkrIsfMRFAJ3K12g3ljhyiqp/af7OuwxfCKXmkLlrD6XqJsEwXLG
+ rO8gj6EudC1gTxZOI61flZy2pMJP17vWAGpcNAe5uXqN26YPA2E/wTkhazVH90Ih4Z9q
+ aJTNVvCR6i+E4eeS7aeAcSzbTix92aWLl+R3hVVdmRLgdK9Aa7qugjJ9gb5fyte02vtg
+ WMJg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUrSWhVshjst0qaGCG/rYpFEtCFZgeOInMCUyON8PhQcGCj5PvRDlhgyPdqCSPRNmiG3dQZNZEWD05AQdiVAaYUa+u+aSU=
+X-Gm-Message-State: AOJu0YxiPCKctFNJnEol+T3C2z2sw7Tm/lICDbCEinxyR6C9N/to8C+i
+ 4g0Q8xxvUIQkwrR5erEiPW8Um3jBfHpTHozn2rWbe/FA50A+rB/iSOxkRGheKClmJWu58Mxrr+h
+ zbB3yrrm87lnToTkZWoimGeaOGEWqA1oidmHj8g==
+X-Google-Smtp-Source: AGHT+IH6fhUZTGHRp/KRo5+tNE91gkR9cGdwkA95XM/gWJXQ7p44XI7db1uybv0jpZJovOWCZVVlb+RQ2/0l+6MyAYc=
+X-Received: by 2002:a2e:9893:0:b0:2f1:563d:ec8a with SMTP id
+ 38308e7fff4ca-2f15ab24d9emr96683911fa.41.1722913012114; Mon, 05 Aug 2024
+ 19:56:52 -0700 (PDT)
+Received: from 44278815321 named unknown by gmailapi.google.com with HTTPREST; 
+ Tue, 6 Aug 2024 04:56:51 +0200
+Mime-Version: 1.0
+References: <20240712023650.45626-1-luchangqi.123@bytedance.com>
+ <20240712023650.45626-10-luchangqi.123@bytedance.com>
+ <ZpT1ZnOjx48_6q0j@cormorant.local>
+ <58383d65-83df-4527-81e4-b4d12c409b22@bytedance.com>
+ <CAO5cSZDc9_o4=VZRDFA-CXAkF12r=v95zhNQ0gBM0NHExgkbMw@mail.gmail.com>
+ <ZqNBSGmVTg-xkTs3@cormorant.local>
+ <3a799eb6-3350-4b35-8e75-68d9020443cb@bytedance.com>
+From: =?UTF-8?B?5Y2i6ZW/5aWH?= <luchangqi.123@bytedance.com>
+X-Original-From: =?UTF-8?B?5Y2i6ZW/5aWHIDxsdWNoYW5ncWkuMTIzQGJ5dGVkYW5jZS5jb20+?=
+User-Agent: Mozilla Thunderbird
+In-Reply-To: <3a799eb6-3350-4b35-8e75-68d9020443cb@bytedance.com>
+Date: Tue, 6 Aug 2024 04:56:51 +0200
+Message-ID: <CAO5cSZDgv0V=bJx2Bj6p-Bx+1_2E4QcMrq2fSSdgoU_BtPLkrg@mail.gmail.com>
+Subject: Ping: Re: [PATCH v9 09/10] hw/nvme: add reservation protocal command
+To: Klaus Jensen <its@irrelevant.dk>, Klaus Jensen <k.jensen@samsung.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com, 
+ hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net, 
+ ronniesahlberg@gmail.com, pbonzini@redhat.com, pl@dlhnet.de, 
+ kbusch@kernel.org, foss@defmacro.it, philmd@linaro.org, 
+ pizhenwei@bytedance.com
+Content-Type: multipart/alternative; boundary="000000000000114d3d061efaf27c"
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=luchangqi.123@bytedance.com; helo=mail-lj1-x22f.google.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_MUA_MOZILLA=2.309,
+ HTML_MESSAGE=0.001, NUMERIC_HTTP_ADDR=1.242, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ WEIRD_PORT=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,207 +104,236 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 05, 2024 at 09:21:36PM GMT, Eric Blake wrote:
-> Since an NBD server may be long-living, serving clients that
-> repeatedly connect and disconnect, it can be more efficient to clean
-> up after each client disconnects, rather than storing a list of
-> resources to clean up when the server exits.  Rewrite the list of
-> known clients to be double-linked so that we can get O(1) deletion to
-> keep the list pruned to size as clients exit.  This in turn requires
-> each client to track an opaque pointer of owner information (although
-> qemu-nbd doesn't need to refer to it).
-> 
-> Signed-off-by: Eric Blake <eblake@redhat.com>
-> ---
->  include/block/nbd.h |  4 +++-
->  blockdev-nbd.c      | 27 ++++++++++++++++-----------
->  nbd/server.c        | 15 ++++++++++++---
->  qemu-nbd.c          |  2 +-
->  4 files changed, 32 insertions(+), 16 deletions(-)
-> 
-> diff --git a/include/block/nbd.h b/include/block/nbd.h
-> index 4e7bd6342f9..7dce9b9c35b 100644
-> --- a/include/block/nbd.h
-> +++ b/include/block/nbd.h
-> @@ -405,7 +405,9 @@ NBDExport *nbd_export_find(const char *name);
->  void nbd_client_new(QIOChannelSocket *sioc,
->                      QCryptoTLSCreds *tlscreds,
->                      const char *tlsauthz,
-> -                    void (*close_fn)(NBDClient *, bool));
-> +                    void (*close_fn)(NBDClient *, bool),
-> +                    void *owner);
-> +void *nbd_client_owner(NBDClient *client);
->  void nbd_client_get(NBDClient *client);
->  void nbd_client_put(NBDClient *client);
-> 
-> diff --git a/blockdev-nbd.c b/blockdev-nbd.c
-> index b8f00f402c6..660f89d881e 100644
-> --- a/blockdev-nbd.c
-> +++ b/blockdev-nbd.c
-> @@ -23,7 +23,7 @@
-> 
->  typedef struct NBDConn {
->      QIOChannelSocket *cioc;
-> -    QSLIST_ENTRY(NBDConn) next;
-> +    QLIST_ENTRY(NBDConn) next;
->  } NBDConn;
-> 
->  typedef struct NBDServerData {
-> @@ -32,10 +32,11 @@ typedef struct NBDServerData {
->      char *tlsauthz;
->      uint32_t max_connections;
->      uint32_t connections;
-> -    QSLIST_HEAD(, NBDConn) conns;
-> +    QLIST_HEAD(, NBDConn) conns;
->  } NBDServerData;
-> 
->  static NBDServerData *nbd_server;
-> +static uint32_t nbd_cookie; /* Generation count of nbd_server */
+--000000000000114d3d061efaf27c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Dead line leftover from v2; gone in my tree now.
+Hi;
 
->  static int qemu_nbd_connections = -1; /* Non-negative if this is qemu-nbd */
-> 
->  static void nbd_update_server_watch(NBDServerData *s);
-> @@ -57,10 +58,16 @@ int nbd_server_max_connections(void)
-> 
->  static void nbd_blockdev_client_closed(NBDClient *client, bool ignored)
->  {
-> +    NBDConn *conn = nbd_client_owner(client);
-> +
->      assert(qemu_in_main_thread() && nbd_server);
-> 
-> +    object_unref(OBJECT(conn->cioc));
-> +    QLIST_REMOVE(conn, next);
-> +    g_free(conn);
-> +
->      nbd_client_put(client);
-> -    assert(nbd_server->connections > 0);
-> +    assert(nbd_server && nbd_server->connections > 0);
+Klaus, Does the test method in the above email work properly?
 
-The 'nbd_server && ' in this hunk is redundant with a couple lines above.
+On 2024/7/26 17:53, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
+> Hi;
+>
+> You can test it in spdk.
+> First start spdk and execute the following command.
+>
+> ```
+> dd if=3D/dev/zero of=3Dtest.img bs=3D1G count=3D10
+> RPC=3D/root/source/spdk/spdk/scripts/rpc.py
+> FILE=3D/root/test.img
+>
+> $RPC bdev_aio_create $FILE aio0 512
+> $RPC iscsi_create_portal_group 1 127.0.0.1:3260
+> $RPC iscsi_create_initiator_group 2 ANY ANY
+> $RPC iscsi_create_target_node target0 target0_alias aio0:0 1:2 64 -d
+> ```
+>
+> Then start qemu and mount an nvme disk.
+> Execute the following test command.
+> ```
+> #reporter
+> nvme resv-report /dev/nvme0n1
+> #register
+> nvme resv-register /dev/nvme0n1 --nrkey 3 --rrega 0
+> #unregister
+> nvme resv-register /dev/nvme0n1 --crkey 3 --rrega 1
+> # register replace
+> nvme resv-register /dev/nvme0n1 --crkey 3 --nrkey 5 --rrega 2
+> #release
+> nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 0
+> #clear
+> nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 1
+> #reserve
+> nvme resv-acquire /dev/nvme0n1 --crkey 3 --rtype 1 --racqa 0
+> #premmpt
+> nvme resv-acquire /dev/nvme0n1 --crkey 6 --prkey 3 --rtype 1 --racqa 1
+> ```
+>
+>
+>
+> On 2024/7/26 14:25, Klaus Jensen wrote:
+>> On Jul 25 19:42, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
+>>> Hi,
+>>>
+>>> ```
+>>> 2685 nvme_status->regctl_ds[i].cntlid =3D nvme_ctrl(req)->cntlid;
+>>> 2686 nvme_status->regctl_ds[i].rkey =3D keys_info->keys[i];
+>>> 2687 nvme_status->regctl_ds[i].rcsts =3D keys_info->keys[i] =3D=3D
+>>> 2688 reservation->key ? 1 : 0;
+>>> 2689 /* hostid is not supported currently */
+>>> 2670 memset(&nvme_status->regctl_ds[i].hostid, 0, 8);
+>>> ```
+>>>
+>>> Klaus, I think hostid(2685) is stored locally like cntlid, i
+>>> can get cntlid by nvme_ctrl(req)->cntlid, but I can't
+>>> find a good way to get the host ID(2670). So I add a comment
+>>> "/* hostid is not supported currently */". Could you give me
+>>> some advices?
+>>>
+>>
+>> The Host Identifier is just a 64 or 128 bit value that the host can set
+>> with Set Feature. So, it is fine (and normal) that the value is
+>> initially zero, but the host should be able to set it on controllers
+>> with Set Feature to indicate if a controller belongs to the same host or
+>> not.
+>>
+>>> And using spdk as target will not fail, but it will show 0 at hostid
+>>> at present.
+>>
+>> Host Identifier 0 is a valid value when used with reservations; 0
+>> indicates that the host associated with the controller is not associated
+>> with any other controllers in the subsystem. So if two controllers have
+>> Host Identifier set to 0, that implicitly mean they are associated with
+>> two different hosts.
+>>
+>>> The relevant tests in qemu are as follows=EF=BC=8C
+>>>
+>>> ```
+>>> root@node1:~# nvme resv-report /dev/nvme0n1
+>>> NVME Reservation Report success
+>>>
+>>> NVME Reservation status:
+>>>
+>>> gen : 1
+>>> regctl : 1
+>>> rtype : 0
+>>> ptpls : 0
+>>> regctl[0] :
+>>> cntlid : 0
+>>> rcsts : 0
+>>> hostid : 0
+>>> rkey : 6
+>>> ```
+>>
+>> I was hoping for an example on how to setup some simple iscsi stuff so I
+>> could test the feature.
 
->      nbd_server->connections--;
->      nbd_update_server_watch(nbd_server);
->  }
-> @@ -74,12 +81,12 @@ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
->      nbd_server->connections++;
->      object_ref(OBJECT(cioc));
->      conn->cioc = cioc;
-> -    QSLIST_INSERT_HEAD(&nbd_server->conns, conn, next);
-> +    QLIST_INSERT_HEAD(&nbd_server->conns, conn, next);
->      nbd_update_server_watch(nbd_server);
-> 
->      qio_channel_set_name(QIO_CHANNEL(cioc), "nbd-server");
->      nbd_client_new(cioc, nbd_server->tlscreds, nbd_server->tlsauthz,
-> -                   nbd_blockdev_client_closed);
-> +                   nbd_blockdev_client_closed, conn);
->  }
-> 
->  static void nbd_update_server_watch(NBDServerData *s)
-> @@ -93,6 +100,8 @@ static void nbd_update_server_watch(NBDServerData *s)
-> 
->  static void nbd_server_free(NBDServerData *server)
->  {
-> +    NBDConn *conn, *tmp;
-> +
->      if (!server) {
->          return;
->      }
-> @@ -103,14 +112,9 @@ static void nbd_server_free(NBDServerData *server)
->       */
->      qio_net_listener_disconnect(server->listener);
->      object_unref(OBJECT(server->listener));
-> -    while (!QSLIST_EMPTY(&server->conns)) {
-> -        NBDConn *conn = QSLIST_FIRST(&server->conns);
-> -
-> +    QLIST_FOREACH_SAFE(conn, &server->conns, next, tmp) {
->          qio_channel_shutdown(QIO_CHANNEL(conn->cioc), QIO_CHANNEL_SHUTDOWN_BOTH,
->                               NULL);
-> -        object_unref(OBJECT(conn->cioc));
-> -        QSLIST_REMOVE_HEAD(&server->conns, next);
-> -        g_free(conn);
->      }
-> 
->      AIO_WAIT_WHILE_UNLOCKED(NULL, server->connections > 0);
-> @@ -119,6 +123,7 @@ static void nbd_server_free(NBDServerData *server)
->          object_unref(OBJECT(server->tlscreds));
->      }
->      g_free(server->tlsauthz);
-> +    nbd_cookie++;
+--000000000000114d3d061efaf27c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-One more dead line.
+<p>Hi;
+<br>
+<br>Klaus, Does the test method in the above email work properly?
+<br>
+<br>On 2024/7/26 17:53, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
+<br>&gt; Hi;
+<br>&gt;=20
+<br>&gt; You can test it in spdk.
+<br>&gt; First start spdk and execute the following command.
+<br>&gt;=20
+<br>&gt; ```
+<br>&gt; dd if=3D/dev/zero of=3Dtest.img bs=3D1G count=3D10
+<br>&gt; RPC=3D/root/source/spdk/spdk/scripts/rpc.py
+<br>&gt; FILE=3D/root/test.img
+<br>&gt;=20
+<br>&gt; $RPC bdev_aio_create $FILE aio0 512
+<br>&gt; $RPC iscsi_create_portal_group 1 <a href=3D"http://127.0.0.1:3260"=
+>127.0.0.1:3260</a>
+<br>&gt; $RPC iscsi_create_initiator_group 2 ANY ANY
+<br>&gt; $RPC iscsi_create_target_node target0 target0_alias aio0:0 1:2 64 =
+-d
+<br>&gt; ```
+<br>&gt;=20
+<br>&gt; Then start qemu and mount an nvme disk.
+<br>&gt; Execute the following test command.
+<br>&gt; ```
+<br>&gt; #reporter
+<br>&gt; nvme resv-report /dev/nvme0n1
+<br>&gt; #register
+<br>&gt; nvme resv-register /dev/nvme0n1 --nrkey 3  --rrega 0
+<br>&gt; #unregister
+<br>&gt; nvme resv-register /dev/nvme0n1 --crkey 3  --rrega 1
+<br>&gt; # register replace
+<br>&gt; nvme resv-register /dev/nvme0n1 --crkey 3 --nrkey 5 --rrega 2
+<br>&gt; #release
+<br>&gt; nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 0
+<br>&gt; #clear
+<br>&gt; nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 1
+<br>&gt; #reserve
+<br>&gt; nvme resv-acquire /dev/nvme0n1 --crkey 3 --rtype 1 --racqa 0
+<br>&gt; #premmpt
+<br>&gt; nvme resv-acquire /dev/nvme0n1 --crkey 6 --prkey 3 --rtype 1 --rac=
+qa 1
+<br>&gt; ```
+<br>&gt;=20
+<br>&gt;=20
+<br>&gt;=20
+<br>&gt; On 2024/7/26 14:25, Klaus Jensen wrote:
+<br>&gt;&gt; On Jul 25 19:42, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
+<br>&gt;&gt;&gt; Hi,
+<br>&gt;&gt;&gt;
+<br>&gt;&gt;&gt; ```
+<br>&gt;&gt;&gt; 2685 nvme_status-&gt;regctl_ds[i].cntlid =3D nvme_ctrl(req=
+)-&gt;cntlid;
+<br>&gt;&gt;&gt; 2686 nvme_status-&gt;regctl_ds[i].rkey =3D keys_info-&gt;k=
+eys[i];
+<br>&gt;&gt;&gt; 2687 nvme_status-&gt;regctl_ds[i].rcsts =3D keys_info-&gt;=
+keys[i] =3D=3D
+<br>&gt;&gt;&gt; 2688 reservation-&gt;key ? 1 : 0;
+<br>&gt;&gt;&gt; 2689 /* hostid is not supported currently */
+<br>&gt;&gt;&gt; 2670 memset(&amp;nvme_status-&gt;regctl_ds[i].hostid, 0, 8=
+);
+<br>&gt;&gt;&gt; ```
+<br>&gt;&gt;&gt;
+<br>&gt;&gt;&gt; Klaus, I think hostid(2685) is stored locally like cntlid,=
+ i
+<br>&gt;&gt;&gt; can get cntlid by nvme_ctrl(req)-&gt;cntlid, but I can&#39=
+;t
+<br>&gt;&gt;&gt; find a good way to get the host ID(2670). So I add a comme=
+nt
+<br>&gt;&gt;&gt; &quot;/* hostid is not supported currently */&quot;. Could=
+ you give me
+<br>&gt;&gt;&gt; some advices?
+<br>&gt;&gt;&gt;
+<br>&gt;&gt;
+<br>&gt;&gt; The Host Identifier is just a 64 or 128 bit value that the hos=
+t can set
+<br>&gt;&gt; with Set Feature. So, it is fine (and normal) that the value i=
+s
+<br>&gt;&gt; initially zero, but the host should be able to set it on contr=
+ollers
+<br>&gt;&gt; with Set Feature to indicate if a controller belongs to the sa=
+me host or
+<br>&gt;&gt; not.
+<br>&gt;&gt;
+<br>&gt;&gt;&gt; And using spdk as target will not fail, but it will show 0=
+ at hostid
+<br>&gt;&gt;&gt; at present.
+<br>&gt;&gt;
+<br>&gt;&gt; Host Identifier 0 is a valid value when used with reservations=
+; 0
+<br>&gt;&gt; indicates that the host associated with the controller is not =
+associated
+<br>&gt;&gt; with any other controllers in the subsystem. So if two control=
+lers have
+<br>&gt;&gt; Host Identifier set to 0, that implicitly mean they are associ=
+ated with
+<br>&gt;&gt; two different hosts.
+<br>&gt;&gt;
+<br>&gt;&gt;&gt; The relevant tests in qemu are as follows=EF=BC=8C
+<br>&gt;&gt;&gt;
+<br>&gt;&gt;&gt; ```
+<br>&gt;&gt;&gt; root@node1:~# nvme resv-report /dev/nvme0n1
+<br>&gt;&gt;&gt; NVME Reservation Report success
+<br>&gt;&gt;&gt;
+<br>&gt;&gt;&gt; NVME Reservation status:
+<br>&gt;&gt;&gt;
+<br>&gt;&gt;&gt; gen : 1
+<br>&gt;&gt;&gt; regctl : 1
+<br>&gt;&gt;&gt; rtype : 0
+<br>&gt;&gt;&gt; ptpls : 0
+<br>&gt;&gt;&gt; regctl[0] :
+<br>&gt;&gt;&gt; cntlid : 0
+<br>&gt;&gt;&gt; rcsts : 0
+<br>&gt;&gt;&gt; hostid : 0
+<br>&gt;&gt;&gt; rkey : 6
+<br>&gt;&gt;&gt; ```
+<br>&gt;&gt;
+<br>&gt;&gt; I was hoping for an example on how to setup some simple iscsi =
+stuff so I
+<br>&gt;&gt; could test the feature.</p>
 
-> 
->      g_free(server);
->  }
-> diff --git a/nbd/server.c b/nbd/server.c
-> index 892797bb111..90f48b42a47 100644
-> --- a/nbd/server.c
-> +++ b/nbd/server.c
-> @@ -124,6 +124,7 @@ struct NBDMetaContexts {
->  struct NBDClient {
->      int refcount; /* atomic */
->      void (*close_fn)(NBDClient *client, bool negotiated);
-> +    void *owner;
-> 
->      QemuMutex lock;
-> 
-> @@ -3205,14 +3206,15 @@ static coroutine_fn void nbd_co_client_start(void *opaque)
->  }
-> 
->  /*
-> - * Create a new client listener using the given channel @sioc.
-> + * Create a new client listener using the given channel @sioc and @owner.
->   * Begin servicing it in a coroutine.  When the connection closes, call
-> - * @close_fn with an indication of whether the client completed negotiation.
-> + * @close_fn and an indication of whether the client completed negotiation.
->   */
->  void nbd_client_new(QIOChannelSocket *sioc,
->                      QCryptoTLSCreds *tlscreds,
->                      const char *tlsauthz,
-> -                    void (*close_fn)(NBDClient *, bool))
-> +                    void (*close_fn)(NBDClient *, bool),
-> +                    void *owner)
->  {
->      NBDClient *client;
->      Coroutine *co;
-> @@ -3231,7 +3233,14 @@ void nbd_client_new(QIOChannelSocket *sioc,
->      client->ioc = QIO_CHANNEL(sioc);
->      object_ref(OBJECT(client->ioc));
->      client->close_fn = close_fn;
-> +    client->owner = owner;
-> 
->      co = qemu_coroutine_create(nbd_co_client_start, client);
->      qemu_coroutine_enter(co);
->  }
-> +
-> +void *
-> +nbd_client_owner(NBDClient *client)
-> +{
-> +    return client->owner;
-> +}
-> diff --git a/qemu-nbd.c b/qemu-nbd.c
-> index d7b3ccab21c..da6e36a2a34 100644
-> --- a/qemu-nbd.c
-> +++ b/qemu-nbd.c
-> @@ -390,7 +390,7 @@ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
-> 
->      nb_fds++;
->      nbd_update_server_watch();
-> -    nbd_client_new(cioc, tlscreds, tlsauthz, nbd_client_closed);
-> +    nbd_client_new(cioc, tlscreds, tlsauthz, nbd_client_closed, NULL);
->  }
-> 
->  static void nbd_update_server_watch(void)
-> -- 
-> 2.45.2
-> 
-> 
-
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
-
+--000000000000114d3d061efaf27c--
 
