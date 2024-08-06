@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CD44C52D70
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 17:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A35C52D76
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 17:33:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbO2V-0007Dz-Qo; Tue, 06 Aug 2024 13:32:03 -0400
+	id 1sbO3a-00015Q-2t; Tue, 06 Aug 2024 13:33:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sbO2P-0007D8-Vy
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 13:31:58 -0400
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sbO3V-0000k3-L9
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 13:33:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sbO2N-0006LO-NE
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 13:31:57 -0400
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1sbO3T-0006SO-Gs
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 13:33:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722965512;
+ s=mimecast20190719; t=1722965582;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=nXinTE9rFIYefn8SSsxp/18DtX97VEd5BEq82ma5RtM=;
- b=aFWPIwePeW+qtaOjk/HY5EQJwpHjCjm3WKvLxToDUvs1LQhZXBtwerbd+9n9VAgWo1RBcD
- G0fV8lSbE2gfvhu3olTJ9c3OY/z7QG5vLlmdjQX3e6ucsEjSjQgc6QgZYsWKBaGyMrZvPo
- BBy+T/tAoPRu5hZzcKNA7lwyEBrFzMs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/43rvxiHluDKPSD2ULvPBKTQ4qhQty2OCaQvduh/gz8=;
+ b=BkiH922eGaWFwZ4kTYO2cLw556lHlTuQw0Rm9HposltInCgsBLAv+NbZ0gAra8QsqPto7I
+ SBsceTOWIUUEQMVAiA4hkj8m4RP4BxDAiFTBFKJ5dgWTD12RX4JOMgOqiAuWR/NnHpW4Br
+ F/WyowjiCGds30jrnyTvog7DifQ96uI=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-359-KsaEGWMPNgyDiFOpDM_1WQ-1; Tue,
- 06 Aug 2024 13:31:50 -0400
-X-MC-Unique: KsaEGWMPNgyDiFOpDM_1WQ-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-PKl5JxhrOmm8bMkomHdUyg-1; Tue,
+ 06 Aug 2024 13:32:59 -0400
+X-MC-Unique: PKl5JxhrOmm8bMkomHdUyg-1
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 467151955BFA; Tue,  6 Aug 2024 17:31:38 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0E0DA1955F0D; Tue,  6 Aug 2024 17:32:56 +0000 (UTC)
 Received: from p1.localdomain.com (unknown [10.39.192.15])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DB8421955F65; Tue,  6 Aug 2024 17:31:23 +0000 (UTC)
+ id C7EB91956046; Tue,  6 Aug 2024 17:32:46 +0000 (UTC)
 From: Cleber Rosa <crosa@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
@@ -67,11 +68,12 @@ Cc: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
  Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Leif Lindholm <quic_llindhol@quicinc.com>
-Subject: [PATCH v2 0/9] Bump Avocado to 103.0 LTS and update tests for
- compatibility and new features
-Date: Tue,  6 Aug 2024 13:31:10 -0400
-Message-ID: <20240806173119.582857-1-crosa@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH v2 7/9] tests/avocado/tuxrun_baselines.py: use Avocado's zstd
+ support
+Date: Tue,  6 Aug 2024 13:31:17 -0400
+Message-ID: <20240806173119.582857-8-crosa@redhat.com>
+In-Reply-To: <20240806173119.582857-1-crosa@redhat.com>
+References: <20240806173119.582857-1-crosa@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
@@ -100,93 +102,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a *long* overdue update of the Avocado version used in QEMU.
-It comes a time where the role of the runner and the libraries are
-being discussed and questioned.
+This makes use of the avocado.utils.archive support for zstd.
 
-These exact commits have been staging on my side for over 30 days now,
-and I was exceeding what I should in terms of testing before posting.
-I apologize for the miscalculation.
+In order to not duplicate code, the skip condition uses a private
+utility from the module which is going to become public in Avocado
+versions 103.1 LTS (and also in versions >= 107.0).
 
-Nevertheless, as pointed out, on the ML, these changes are needed NOW.
+Reference: https://github.com/avocado-framework/avocado/pull/5996
+Reference: https://github.com/avocado-framework/avocado/pull/5953
+Signed-off-by: Cleber Rosa <crosa@redhat.com>
+---
+ tests/avocado/tuxrun_baselines.py | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-Some examples of runs in the CI can be seen below:
-
-* Serial with 103.0 LTS (https://gitlab.com/cleber.gnu/qemu/-/jobs/7074346143#L220):
-   RESULTS    : PASS 46 | ERROR 0 | FAIL 0 | SKIP 2 | WARN 0 | INTERRUPT 0 | CANCEL 0
-   JOB TIME   : 432.63 s
-
-* Parallel with 103.0 LTS (https://gitlab.com/cleber.gnu/qemu/-/jobs/7085879478#L222)
-   RESULTS    : PASS 46 | ERROR 0 | FAIL 0 | SKIP 2 | WARN 0 | INTERRUPT 0 | CANCEL 0
-   JOB TIME   : 148.99 s
-
-Changes from v1 (references are from v1):
-
-This version first applies the Avocado version bump (now PATCH 1),
-adding to that patch the serial execution behavior.  Avocado 103.0 LTS
-can run all existing tests in QEMU without any changes, so it's safe
-to pick PATCH 1 *only* from this series if needed.  A GitLab CI job that
-does only that can be seen here:
-
- https://gitlab.com/cleber.gnu/qemu/-/pipelines/1402633650
-
-Details on changes:
-
- * Moved "Bump avocado to 103.0" to first patch
-
- * Patches already applied:
-    - [PATCH 1/13] tests/avocado: mips: fallback to HTTP given certificate expiration
-    - [PATCH 2/13] tests/avocado: mips: add hint for fetchasset plugin
-    - [PATCH 8/13] testa/avocado: test_arm_emcraft_sf2: handle RW requirements for asset
-
-  * Dropped patches:
-    - [PATCH 3/13] tests/avocado/intel_iommu.py: increase timeout
-    - [PATCH 6/13] tests/avocado: use more distinct names for assets
-      - Replaced with "tests/avocado: simplify parameters on fetch_asset with name only"
-    - [PATCH 7/13] tests/avocado/kvm_xen_guest.py: cope with asset RW requirements
-
-  * [PATCH 5/13] tests/avocado: machine aarch64: standardize location and RO access:
-    - Fixed rebase mistake
-
-  * [PATCH 11/13] tests/avocado/machine_aarch64_sbsaref.py: allow for rw usage of image
-    - Use "snapshot=on" instead of new copy of file
-
-  * New patches:
-    - tests/avocado: apply proper skipUnless decorator
-    - tests/avocado: simplify parameters on fetch_asset with name only
-
-Cleber Rosa (9):
-  Bump avocado to 103.0
-  tests/avocado: apply proper skipUnless decorator
-  tests/avocado: add cdrom permission related tests
-  tests/avocado: machine aarch64: standardize location and RO access
-  tests/avocado: simplify parameters on fetch_asset with name only
-  tests/avocado/boot_xen.py: fetch kernel during test setUp()
-  tests/avocado/tuxrun_baselines.py: use Avocado's zstd support
-  tests/avocado/machine_aarch64_sbsaref.py: allow for rw usage of image
-  Avocado tests: allow for parallel execution of tests
-
- docs/devel/testing.rst                   | 12 +++++++
- pythondeps.toml                          |  2 +-
- tests/Makefile.include                   |  6 +++-
- tests/avocado/boot_linux_console.py      |  1 -
- tests/avocado/boot_xen.py                | 13 ++++----
- tests/avocado/cdrom.py                   | 41 ++++++++++++++++++++++++
- tests/avocado/intel_iommu.py             |  1 -
- tests/avocado/kvm_xen_guest.py           |  2 +-
- tests/avocado/linux_initrd.py            |  1 -
- tests/avocado/machine_aarch64_sbsaref.py |  4 +--
- tests/avocado/machine_aarch64_virt.py    | 14 ++++----
- tests/avocado/machine_aspeed.py          |  2 --
- tests/avocado/machine_mips_malta.py      |  2 --
- tests/avocado/machine_rx_gdbsim.py       |  2 --
- tests/avocado/netdev-ethtool.py          |  2 +-
- tests/avocado/reverse_debugging.py       |  4 ---
- tests/avocado/smmu.py                    |  1 -
- tests/avocado/tuxrun_baselines.py        | 16 ++++-----
- 18 files changed, 82 insertions(+), 44 deletions(-)
- create mode 100644 tests/avocado/cdrom.py
-
+diff --git a/tests/avocado/tuxrun_baselines.py b/tests/avocado/tuxrun_baselines.py
+index 736e4aa289..bd02e88ed6 100644
+--- a/tests/avocado/tuxrun_baselines.py
++++ b/tests/avocado/tuxrun_baselines.py
+@@ -17,6 +17,7 @@
+ from avocado_qemu import QemuSystemTest
+ from avocado_qemu import exec_command, exec_command_and_wait_for_pattern
+ from avocado_qemu import wait_for_console_pattern
++from avocado.utils import archive
+ from avocado.utils import process
+ from avocado.utils.path import find_command
+ 
+@@ -40,17 +41,12 @@ def get_tag(self, tagname, default=None):
+ 
+         return default
+ 
++    @skipUnless(archive._probe_zstd_cmd(),
++                'Could not find "zstd", or it is not able to properly '
++                'decompress decompress the rootfs')
+     def setUp(self):
+         super().setUp()
+ 
+-        # We need zstd for all the tuxrun tests
+-        # See https://github.com/avocado-framework/avocado/issues/5609
+-        zstd = find_command('zstd', False)
+-        if zstd is False:
+-            self.cancel('Could not find "zstd", which is required to '
+-                        'decompress rootfs')
+-        self.zstd = zstd
+-
+         # Process the TuxRun specific tags, most machines work with
+         # reasonable defaults but we sometimes need to tweak the
+         # config. To avoid open coding everything we store all these
+@@ -99,8 +95,8 @@ def fetch_tuxrun_assets(self, csums=None, dt=None):
+                                          asset_hash = isum,
+                                          algorithm = "sha256")
+ 
+-        cmd = f"{self.zstd} -d {disk_image_zst} -o {self.workdir}/rootfs.ext4"
+-        process.run(cmd)
++        archive.extract(disk_image_zst, os.path.join(self.workdir,
++                                                     "rootfs.ext4"))
+ 
+         if dt:
+             dsum = csums.get(dt, None)
 -- 
 2.45.2
 
