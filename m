@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 653B2C3DA64
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 12:57:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A757C52D70
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 12:57:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbJhT-0007KG-NU; Tue, 06 Aug 2024 08:54:03 -0400
+	id 1sbJjU-000759-Gx; Tue, 06 Aug 2024 08:56:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJhN-0006t0-NO
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:53:57 -0400
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJiD-0002RH-5w
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:54:53 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJhL-0000Jp-Vl
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:53:57 -0400
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-a7aac70e30dso58972166b.1
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 05:53:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJiB-0000Qw-Cm
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:54:48 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-a7b2dbd81e3so81830966b.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 05:54:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722948832; x=1723553632; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722948884; x=1723553684; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QOLg5Vi3ZKfkY84yToih/WZzzIJIKq2Y34KfZXOpYeQ=;
- b=no95ZLQvcosJocWsWEj/XtQfQt5OhX5b12WmRhZDr2TQi/p5Eyh94yXljaFqM/SMVs
- upFhbVVwfK+Pj02lYbLGR3IDWzdHB/NKKLITYa6mDZCpBLhwhQP7gBfQnfiW9e4l79F+
- 4wERMAefTaPLv2OSSkbY0X+tCyAxIGNkebVBX77O9Srwnmqlxu6jJeoOqb1OH6Ry53o9
- OVi15bmJuHQ42fGRHQG0m2ZXIN9XgXBXLJha+l9mkFGJE8UU4+f0WDYk2PTl2sbfFpMj
- JbaJOnXKtsBPMexIDO0+IbDxl6vZf/8a70L/SbLU+YKQ+FbCJf1R5BHyqB3hlKjYnIS2
- 2W3w==
+ bh=mHh1GCcnST+B2sXjSnUGRo9NlbeZggGy0/xN/r51vXs=;
+ b=Fy3VdGmRjdUPQX1AMXn7wnG2RMQvhxW0p0DTLLQ/bCrlEi53dXJrE+2Qq7vxKLE2l6
+ 4mnvJC/+9GMB83VGC46T/Z8cFNdEX3CvogTn0mezbZ8bjLYJf9fEB4ZZKoc95+QIsNxD
+ Ja3feSDRbTWWz2yNEkWtpKBnul0vr0EtngIYUYOCyqJkVnelBK9ympQQv0+Sp5Q+RFT/
+ P68LIiVkbJT6i9FLYfkZAO9gBRXMnCtN0PY5WwDneoTzlY5Jgi1dEgH6qaJXVvvPJZ77
+ L6AB3MZR/zBNG/0dmritFpN1E9H7jGjjh63SbfI9u/x/LA+j21UrR5RYF2jNDBAuEo15
+ pTPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722948832; x=1723553632;
+ d=1e100.net; s=20230601; t=1722948884; x=1723553684;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QOLg5Vi3ZKfkY84yToih/WZzzIJIKq2Y34KfZXOpYeQ=;
- b=bx3JDFQ8FzvKpgiXlYc9Mc1cHATT2ZT1vMSSmS06R6Pa3cFPXGFsEw2MgmtWiRqq2m
- t4J9uq8A1EvtIE1UgKNqgxIGHTbLsREjMb4CwV9+gYDZFIt6u9WvLokldTMC0etLesvF
- zdvl3BKpWdVkF5luUbvw4rwmYi9JErQa/uEUbZBI5dTrrplZflc3pTKa8FekMJfzZWaq
- Mme+FeRpns9LYlrcojLHwFX2plrwnKoeLmG5w9aRMmsfoKlnKhy/V6BhRX7WCvKe4Q9F
- rEZorkcyv2nUqYzt43UBUAmWEbvm6H9nKkHL2zBeZjoxrwKmTdz2gUuD2Yxab2cQA1tM
- g0Hg==
-X-Gm-Message-State: AOJu0Yy20wbC31CQh4y1I3UwQHy22aBh8u3iBu+7/xiq9n0z8w6qa6O1
- h6kWiJZubhAVdzFgDgWVELzxpuUEsblPowskT2aSjmVRqavbCjTlmIsmAYKKRF8JlUVsniINkjR
- k
-X-Google-Smtp-Source: AGHT+IGRaM4WMc9qgogB5AShB+bzTSo/cHkQ3V4A+4cH5o1QooY7YebFilHRAhzKUkqJtd4l6SCNXg==
-X-Received: by 2002:a17:906:d262:b0:a7a:9f78:fef with SMTP id
- a640c23a62f3a-a7dc5179f86mr1164585766b.45.1722948831676; 
- Tue, 06 Aug 2024 05:53:51 -0700 (PDT)
+ bh=mHh1GCcnST+B2sXjSnUGRo9NlbeZggGy0/xN/r51vXs=;
+ b=GhuvFiz4zHBBppAbXZd91bbp1w6rqRGgZ4bhjMoN5eiDg/x15MZ4nzBeiIq6owJ5A2
+ DHlVM8/Xw2DSIaYNDLXRCGfqj9kMPaRqGW1YWNK+8r3YlMUusaMEl6I5345A+yVXGoGs
+ t7x6MKeeN34qAR4jEHVD3AQEVtOP0Kpoz8tF6DiemQSikTJkQHJmaizELmuSIMJkkXdo
+ u8SdP33xWnOILMCPaOJ7Xk1YsKGzOn+uVDeyHLBPBrRBv5SksYXgFIKGzIYShlhliJDn
+ Fi11xfbAogv4ulHIILMXLIfIwA4UmEFnFYXet2TAOcPtYUS/tsbCELaOoVuupIvHt8o1
+ 1OVg==
+X-Gm-Message-State: AOJu0YyO+u9Lp4ub3pjC6kSuAxbqbF0TAEGq7nU5FU9K7ja7bZ1xruo+
+ nF080L4YSJcxnRJJDm1ZAJjXCp2EOTl6mpkMpPbkQM3hT/cLToQfHM3wfcSqbU9jRFyMPRPmOLh
+ i
+X-Google-Smtp-Source: AGHT+IE3lpmer7jwcaxfjWPfCrJ3cJok33zbvdGdK5O9H8+NFgrpYp9KVyjvnBdtMkUOB2ZHHkvZOg==
+X-Received: by 2002:a17:907:9721:b0:a77:c26c:a571 with SMTP id
+ a640c23a62f3a-a7dc509f309mr1087709166b.54.1722948883815; 
+ Tue, 06 Aug 2024 05:54:43 -0700 (PDT)
 Received: from m1x-phil.lan (cor91-h02-176-184-30-206.dsl.sta.abo.bbox.fr.
  [176.184.30.206]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7dc9c0ca00sm545543866b.68.2024.08.06.05.53.50
+ a640c23a62f3a-a7dc9e80e77sm541169966b.169.2024.08.06.05.54.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 Aug 2024 05:53:51 -0700 (PDT)
+ Tue, 06 Aug 2024 05:54:43 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
+Cc: George Matsumura <gorg@gorgnet.net>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 18/28] hw/block/pflash_cfi01: Don't decrement pfl->counter
- below 0
-Date: Tue,  6 Aug 2024 14:51:46 +0200
-Message-ID: <20240806125157.91185-19-philmd@linaro.org>
+Subject: [PULL 27/28] docs/specs/pci-ids: Add missing devices
+Date: Tue,  6 Aug 2024 14:51:55 +0200
+Message-ID: <20240806125157.91185-28-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240806125157.91185-1-philmd@linaro.org>
 References: <20240806125157.91185-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::635;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x635.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,38 +94,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: George Matsumura <gorg@gorgnet.net>
 
-In pflash_write() Coverity points out that we can decrement the
-unsigned pfl->counter below zero, which makes it wrap around.  In
-fact this is harmless, because if pfl->counter is 0 at this point we
-also increment pfl->wcycle to 3, and the wcycle == 3 handling doesn't
-look at counter; the only way back into code which looks at the
-counter value is via wcycle == 1, which will reinitialize the counter.
-But it's arguably a little clearer to break early in the "counter ==
-0" if(), to avoid the decrement-below-zero.
+Add the missing devices 1b36:000c (PCIe root port) and 1b36:000e
+(PCIe-to-PCI bridge).
 
-Resolves: Coverity CID 1547611
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20240731143617.3391947-4-peter.maydell@linaro.org>
+Signed-off-by: George Matsumura <gorg@gorgnet.net>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240805031012.16547-2-gorg@gorgnet.net>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/block/pflash_cfi01.c | 1 +
- 1 file changed, 1 insertion(+)
+ docs/specs/pci-ids.rst | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/block/pflash_cfi01.c b/hw/block/pflash_cfi01.c
-index c8f1cf5a87..2f3d1dd509 100644
---- a/hw/block/pflash_cfi01.c
-+++ b/hw/block/pflash_cfi01.c
-@@ -614,6 +614,7 @@ static void pflash_write(PFlashCFI01 *pfl, hwaddr offset,
-             if (!pfl->counter) {
-                 trace_pflash_write(pfl->name, "block write finished");
-                 pfl->wcycle++;
-+                break;
-             }
- 
-             pfl->counter--;
+diff --git a/docs/specs/pci-ids.rst b/docs/specs/pci-ids.rst
+index c0a3dec2e7..0de13de1e4 100644
+--- a/docs/specs/pci-ids.rst
++++ b/docs/specs/pci-ids.rst
+@@ -82,8 +82,12 @@ PCI devices (other than virtio):
+   PCI-PCI bridge (multiseat)
+ 1b36:000b
+   PCIe Expander Bridge (-device pxb-pcie)
++1b36:000c
++  PCIe Root Port (``-device pcie-root-port``)
+ 1b36:000d
+   PCI xhci usb host adapter
++1b36:000e
++  PCIe-to-PCI bridge (``-device pcie-pci-bridge``)
+ 1b36:000f
+   mdpy (mdev sample device), ``linux/samples/vfio-mdev/mdpy.c``
+ 1b36:0010
 -- 
 2.45.2
 
