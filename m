@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4C5DC49EA1
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 12:55:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04771C52D73
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 12:56:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbJiM-0002rV-Tc; Tue, 06 Aug 2024 08:55:02 -0400
+	id 1sbJhI-0006CN-V0; Tue, 06 Aug 2024 08:53:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJhu-0001Be-8P
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:54:31 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJhF-0005n8-WA
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:53:50 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJhs-0000OS-EL
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:54:29 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a7a9a7af0d0so56649466b.3
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 05:54:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJhD-0000H5-SW
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:53:49 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5a156557026so601245a12.2
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 05:53:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722948866; x=1723553666; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722948826; x=1723553626; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lTDAhFeBz9GijM5OI6/yGi13UeAA7K13kn7Zuxhnv+U=;
- b=NPNVgoVsqnWR2wGTYEo/+XHOwqUPR3N8M418/RJfFh5xb6Oa+gJa5OQol9pg3IfO+t
- 2DSpRtTdGFKTdEJW8lxAb9D74M9RzcSRllFM0SE+Pre68K3nUNhi23N+WQ+CkF/tjIMv
- tUtpkgySAQNa07F8ha9/4bTLSW/vnYPQUvUQZnUIuW1XSfjWyvBdb+Gk8VL0WnUVzcsP
- XbERr7kiJdmQIySGXINcFhFMCv3mI5yfrVkpuUjeytx8IjC9IxbkZvPEUCCIdjl+qAHZ
- Ck7zlrnF/tb5Lv9oR0sQVZZ8vQfH7w31iD1eF8Uy9+BxVMOO7zJ1QG5B8y+qrn14iSp/
- upFg==
+ bh=qVol/losEhIcWq2r2tAtbopJaOl9RLGh9SWaxvA4wzc=;
+ b=J6JVPJ0XQ5uN+ZsELFsdsiDAMrbd0+7F3iDFAT9V+44ciHkgpMAJP7da0u/T36UzlR
+ VHwt+Bd5OAaeXElOsqeYmSClSlihXrkuJlsM+FUY2TAcDUzy1/WcTuv8RRi/GZRl8av3
+ w3UtEha3VI+eUwXGDY7ndswrP7zUBkhIg2gwStPirONjIedMjWqKYGZ0MPFlSkJ9sMoW
+ 93mpwB1W8uv8QT44exYTH2o8yGgWWnQxwuP2BNltmfyCseL1tWHs/+fHlgxYO2nYJOTo
+ GkDEFK/VyJRfn8oXYSKDwQynxIkfEIkiI+wMWdj7GN9iSVbHR8ODU6a4mymu86j2zSZQ
+ sm3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722948866; x=1723553666;
+ d=1e100.net; s=20230601; t=1722948826; x=1723553626;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lTDAhFeBz9GijM5OI6/yGi13UeAA7K13kn7Zuxhnv+U=;
- b=Tm5bjljQq/O+hDD0zvyXKBf9Ygr6u8/j23INt+3pCDVCfB25Ft+PcOvjTl6X1xWaur
- RwOOBwuIXw0auVglmo7/nUZ9LNKw7uedXfOv0UxY9cFrBLXVp+SZvPAbjZdKDiGDquAp
- 4MuGoQs6jhubYslLoaGAs0/chfrSOy8Fg/y0bSfFjrz1Km5alfsPwRHiZDEOShu0YPyD
- Gamj//18+x5RkEKMpBgS+uZFHuQ4hKcHbPrmPjYvt+peYTs/RYCTOE+78bydAicCdczR
- M4S/VxbPOfXDhCSgKR2KOyVGRCkbz55h8Bp9UgKfN+mQN7haKU+3R8orpcCQWdGYFNo8
- NpZg==
-X-Gm-Message-State: AOJu0Yw5u6D7fsnpbFIeo/HMASJNJH1bQjGwTpqFfJOE55Yh8MmnT21d
- Vdeo03krPuRpIcDxbJUqJmGvWZyPR7Stb3tHebmJmMPtYHKEpi3U3hey+QG6Kz+5iMTA6v+Fh7L
- M
-X-Google-Smtp-Source: AGHT+IGomE15Wo24DJ7lRF9r2AdwMtkLdlxkaxrrJGCGSbJvrkwY5lYMVoVzNmiweJgvYZedJRXyAg==
-X-Received: by 2002:a17:907:7ea4:b0:a7a:a06b:eebf with SMTP id
- a640c23a62f3a-a7dc4e86892mr989659866b.22.1722948866623; 
- Tue, 06 Aug 2024 05:54:26 -0700 (PDT)
+ bh=qVol/losEhIcWq2r2tAtbopJaOl9RLGh9SWaxvA4wzc=;
+ b=vgFb6tvu+AYeFzIt1pCFCWByxfUN3F3+5qgvEgjvl2e3t/tk93el2y+5gd6nX7ciWj
+ LYRC9AOG/cKRearmVEzRaZExHhFM5VtE+ctuigQikeIfi9k3kzn59xqx0tV2q4LOnkpx
+ /y71Ijx+sQ/wt2MgebIu0X411otemLAw4YadIC9RUxNRZaynBGJ+qFdbGRfmQesHOfWc
+ Tti1edglQ4rTAHt5ogR//HfUGL9qkdbbTBRYo+o9NBMAW7NkXuhcOSlxmW+TjfaT6BLO
+ w/8u8VwxUJzffSBRL8dTH8LPd4yR+JuKg0ImZlYJnXLr6jmUh89FW407ccKQKcA1bHPW
+ ALOg==
+X-Gm-Message-State: AOJu0YwrdvfdAL1n3JPq+W749GowUsHHoyEmhq8qujy509EVqg0QC5TP
+ EYVg8UjVzwDTlIgdeysVd2b+pXuATxm/5r6h3nlQp+u74taAgqF5GZDy4FCjFZ+FdyfmqKVS8bH
+ z
+X-Google-Smtp-Source: AGHT+IGHHerP54nv4N2NYCyun0uQwMPHkgF8j7yp/Tgw8ZIHbU1PZuDcHpxJviX7jlEOJ1HcZnjnPw==
+X-Received: by 2002:a05:6402:31a3:b0:5ba:83d:3294 with SMTP id
+ 4fb4d7f45d1cf-5ba083d343cmr6726452a12.2.1722948825908; 
+ Tue, 06 Aug 2024 05:53:45 -0700 (PDT)
 Received: from m1x-phil.lan (cor91-h02-176-184-30-206.dsl.sta.abo.bbox.fr.
  [176.184.30.206]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7de2d923ccsm423738866b.79.2024.08.06.05.54.25
+ 4fb4d7f45d1cf-5baa6b916b8sm3653114a12.22.2024.08.06.05.53.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 06 Aug 2024 05:54:26 -0700 (PDT)
+ Tue, 06 Aug 2024 05:53:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 24/28] ui/console: Note in '-display help' that some backends
- support suboptions
-Date: Tue,  6 Aug 2024 14:51:52 +0200
-Message-ID: <20240806125157.91185-25-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable@nongnu.org, Zheyu Ma <zheyuma97@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 17/28] hw/sd/sdhci: Reset @data_count index on invalid ADMA
+ transfers
+Date: Tue,  6 Aug 2024 14:51:45 +0200
+Message-ID: <20240806125157.91185-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240806125157.91185-1-philmd@linaro.org>
 References: <20240806125157.91185-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,51 +96,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+We neglected to clear the @data_count index on ADMA error,
+allowing to trigger assertion in sdhci_read_dataport() or
+sdhci_write_dataport().
 
-Currently '-display help' only prints the available backends. Some
-of those backends support suboptions (e.g. '-display gtk,gl=on').
-Mention that in the help output, and point the user to where they
-might be able to find more information about the suboptions.
-The new output looks like this:
-
-  $ qemu-system-aarch64 -display help
-  Available display backend types:
-  none
-  gtk
-  sdl
-  egl-headless
-  curses
-  spice-app
-  dbus
-
-  Some display backends support suboptions, which can be set with
-     -display backend,option=value,option=value...
-  For a short list of the suboptions for each display, see the top-level -help output; more detail is in the documentation.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20240731154136.3494621-4-peter.maydell@linaro.org>
+Cc: qemu-stable@nongnu.org
+Fixes: d7dfca0807 ("hw/sdhci: introduce standard SD host controller")
+Reported-by: Zheyu Ma <zheyuma97@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2455
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240730092138.32443-4-philmd@linaro.org>
 ---
- ui/console.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/sd/sdhci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/ui/console.c b/ui/console.c
-index e8f0083af7..105a0e2c70 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -1632,4 +1632,9 @@ void qemu_display_help(void)
-             printf("%s\n",  DisplayType_str(dpys[idx]->type));
-         }
-     }
-+    printf("\n"
-+           "Some display backends support suboptions, which can be set with\n"
-+           "   -display backend,option=value,option=value...\n"
-+           "For a short list of the suboptions for each display, see the "
-+           "top-level -help output; more detail is in the documentation.\n");
- }
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index d02c3e3963..8293d83556 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -846,6 +846,7 @@ static void sdhci_do_adma(SDHCIState *s)
+                 }
+             }
+             if (res != MEMTX_OK) {
++                s->data_count = 0;
+                 if (s->errintstsen & SDHC_EISEN_ADMAERR) {
+                     trace_sdhci_error("Set ADMA error flag");
+                     s->errintsts |= SDHC_EIS_ADMAERR;
 -- 
 2.45.2
 
