@@ -4,84 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E59D9C49EA1
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:42:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37059C3DA64
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:50:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbKRt-0000Oj-Sk; Tue, 06 Aug 2024 09:42:01 -0400
+	id 1sbKYi-0006vK-M4; Tue, 06 Aug 2024 09:49:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sbKRn-0008To-Cy
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 09:41:56 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sbKRj-0007Ri-OZ
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 09:41:54 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-36844375001so456314f8f.0
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 06:41:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722951693; x=1723556493; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=msZtnSmF3dWc09JBpAtd+cbSztTV+IpRRcfZ2D2fbPA=;
- b=CGXxG6qir1WgJUVeBZkboYYtYlis39IqDGRrJ/zLrxmlxhSMjgPI9fPjLX3YWxOG0Z
- 33uvwNTy3UPD1wG6x/YonmcxABhSoClpE4mIEnDv6Dz39AIG+yEaMedLONQNf3GJhxHx
- NPTiP6WXmZ3+CDbDprhj9qK4mFmuxz0rJnivyca8NtjS4YqaYMC4ApD75TeiVQEqJFOM
- c5nQsakdXK2LTqN3w1XvnMLCm/AXB5YmiQT3dRAfXefTolB8NpQixUyMimoiJP+qYt0v
- 7jZ3wvSZnKV5GG54kWm3QPwy3Wqp6TsNWv0mxF/jDNSQSCHe7N0Ms8JywcaKZ07gVevl
- DAnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722951693; x=1723556493;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=msZtnSmF3dWc09JBpAtd+cbSztTV+IpRRcfZ2D2fbPA=;
- b=fs/3vSrz6wlat090Aq2bRsHLiESMnjQ3MYJ3cg0sCsmGAvevYvuIJf0OMb2PovOst4
- K2o88XkEORYYR/rpYfjd5o/jOsjyA23N+F2NcoZ+5T4eky7PQIgBLhXyvuiiPihAZb7R
- u/as25p4Nkfm5wBw17AlxyclFfbuW1ie8r8YMJJinX3gJiC9wCkTB8Sg+qCx/b/M1Xmn
- LaS/2S+QAngt0WXajKhfA4PJ/hIQW/EHd9lJCEbs+2imQ0Ohwsbb0d/FTRxeieTgTfJW
- /8L+RJ5A9yz3AMI3/VNBbfgveOssRtK4kJKsQ8+nkNQmADCqHJFh70MDqT0paM78UD8i
- Gw2A==
-X-Gm-Message-State: AOJu0Yy6jR1KGsXd71SoXOqSy6v9DvpuZjcMXI91IcvFCBTziMsAt8DN
- ur/FqhEy66ezV/bZfYZqgju9RUDihDSe1cEGqAog4+MxinHPxsLmrcQosTBR73s=
-X-Google-Smtp-Source: AGHT+IGNZSDQqFwzp1/MNvGYPNvBVnCNYWhyMn5keuTR5PV8UtmrDOK8rgO5ogBHBOKLxNLZ8ymx5Q==
-X-Received: by 2002:a5d:6d8a:0:b0:368:7943:146f with SMTP id
- ffacd0b85a97d-36bbc0e6aecmr13158774f8f.26.1722951692986; 
- Tue, 06 Aug 2024 06:41:32 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36bbd06d314sm13054207f8f.95.2024.08.06.06.41.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Aug 2024 06:41:32 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7C2425F77B;
- Tue,  6 Aug 2024 14:41:31 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  "Michael S. Tsirkin" <mst@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 2/3] system/vl.c: Expand OpenGL related errors
-In-Reply-To: <20240731154136.3494621-3-peter.maydell@linaro.org> (Peter
- Maydell's message of "Wed, 31 Jul 2024 16:41:35 +0100")
-References: <20240731154136.3494621-1-peter.maydell@linaro.org>
- <20240731154136.3494621-3-peter.maydell@linaro.org>
-Date: Tue, 06 Aug 2024 14:41:31 +0100
-Message-ID: <871q31sr90.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
+ id 1sbKYf-0006rm-Tx; Tue, 06 Aug 2024 09:49:01 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chalapathi.v@linux.ibm.com>)
+ id 1sbKYd-0008WI-Vi; Tue, 06 Aug 2024 09:49:01 -0400
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 476DLR1C000773;
+ Tue, 6 Aug 2024 13:48:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
+ :to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding; s=pp1; bh=wb2lG84tHOjE2n49+/aEmST15T
+ 01qAYzC+/KuUUG/NY=; b=qB8ItfSOEp0AZhv4KMRyi303gzLdyGq6imUtVqGxP9
+ vP0RZ8JkZvzIqIM/gc60+gqtodoc5mgnPDgQp4RzFzaRaEydasKed9dMuDkJzKjf
+ rrErkQ1uawU+hZduRDPyuOUiZjpc4cr+6y6fiNwk2bpFO1EmdkI6vDh4IiuswAE9
+ h0aPYQZxPMQcxuZ3bG3RQQFeVJC6c7sIwTzZ34cX/KGG2aMaqZYz00A7aEjq9Dr+
+ nlAY2pqJyi9cpXJwez/+f5zBoKkLuxn2n9IOL/sMZw++pC8xFeHdUHllHKBM+qhP
+ A5HQsa3GwwjgfvqS55Zy1Ta5paUW1SMFUTV87AMK7Xag==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40u5t3svwn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 Aug 2024 13:48:48 +0000 (GMT)
+Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 476DiHgt009813;
+ Tue, 6 Aug 2024 13:48:48 GMT
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40u5t3svwk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 Aug 2024 13:48:48 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 476AaTXt018618; Tue, 6 Aug 2024 13:48:47 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 40sxvu45nx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 06 Aug 2024 13:48:47 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 476DmgFJ27984578
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 6 Aug 2024 13:48:44 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E34642004D;
+ Tue,  6 Aug 2024 13:48:41 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3D9A420040;
+ Tue,  6 Aug 2024 13:48:39 +0000 (GMT)
+Received: from LAPTOP-UGTOAIPD.ibm.com (unknown [9.43.9.228])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  6 Aug 2024 13:48:39 +0000 (GMT)
+From: Chalapathi V <chalapathi.v@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
+ clg@kaod.org, calebs@linux.ibm.com, chalapathi.v@ibm.com,
+ chalapathi.v@linux.ibm.com, saif.abrar@linux.ibm.com,
+ dantan@us.ibm.com, milesg@linux.ibm.com
+Subject: [PATCH v1 0/2] hw/ppc: SPI model - coverity fixes
+Date: Tue,  6 Aug 2024 19:18:27 +0530
+Message-Id: <20240806134829.351703-1-chalapathi.v@linux.ibm.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: -D5MbXrZkdlCLu4eWnjsnItXc3fFMyNW
+X-Proofpoint-ORIG-GUID: y71-h39IYs8e4aopZwOEegonevvzhf2C
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-06_11,2024-08-06_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ lowpriorityscore=0 mlxscore=0 suspectscore=0 mlxlogscore=737
+ impostorscore=0 clxscore=1015 adultscore=0 malwarescore=0 phishscore=0
+ bulkscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408060093
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=chalapathi.v@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,54 +113,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+Hello,
 
-> Expand the OpenGL related error messages we produce for various
-> "OpenGL not present/not supported" cases, to hopefully guide the
-> user towards how to fix things.
->
-> Now if the user tries to enable GL on a backend that doesn't
-> support it the error message is a bit more precise:
->
-> $ qemu-system-aarch64 -M virt -device virtio-gpu-gl -display curses,gl=3D=
-on
-> qemu-system-aarch64: OpenGL is not supported by display backend 'curses'
->
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  system/vl.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/system/vl.c b/system/vl.c
-> index 9e8f16f1551..213ee6a6a92 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -1973,9 +1973,10 @@ static void qemu_create_early_backends(void)
->=20=20
->      if (dpy.has_gl && dpy.gl !=3D DISPLAYGL_MODE_OFF && display_opengl =
-=3D=3D 0) {
->  #if defined(CONFIG_OPENGL)
-> -        error_report("OpenGL is not supported by the display");
-> +        error_report("OpenGL is not supported by display backend '%s'",
-> +                     DisplayType_str(dpy.type));
->  #else
-> -        error_report("OpenGL support is disabled");
-> +        error_report("OpenGL support was disabled when QEMU was
->      compiled");
+In this patchset below defects detected during coverity scan for latest
+spi model changes were fixed.
 
-Maybe "OpenGL support was not enabled in this build of QEMU"?
+- CID 1558831:  Resource leaks  (RESOURCE_LEAK)
+  Variable "rsp_payload" going out of scope leaks the storage it points to.
+- CID 1558827:    (OVERRUN)
+  Overrunning array "s->seq_op" of 8 bytes at byte offset 16 using index
+  "get_seq_index(s) + 1" (which evaluates to 16).
 
-Anyway:
+Tested:
+passed make check and make check-avocado
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Chalapathi V (2):
+  Fixes: Coverity CID 1558827
+  Fixes: Coverity CID 1558831
 
+ hw/ssi/pnv_spi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
+-- 
+2.34.1
 
->  #endif
->          exit(1);
->      }
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
