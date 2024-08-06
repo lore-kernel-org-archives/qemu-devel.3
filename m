@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4836C3DA64
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C29C49EA1
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:38:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbKNL-0006lM-W3; Tue, 06 Aug 2024 09:37:20 -0400
+	id 1sbKO1-00016l-Dj; Tue, 06 Aug 2024 09:38:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sbKNH-0006V8-M0
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 09:37:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sbKNC-0006pv-BG
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 09:37:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722951428;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=s0Azy5IqZ41TCP/WCbxsy2VM9SX9V8d+xsx3W+hTjbY=;
- b=Yf9HDhrETMGAVyBjPGnQGOCPWp953D21dfbAvsxu7PkP5gVGA7kgWHoFe8kDeGASw1JOs8
- X8PirO9tw5cLewukYTQY7o4JkLFnpoYRN/gOrI6+VsWEaXn7QEMTBGbzrOD2qBZqNxD4V3
- LotFO7g50dAXEoU1j7+MQOA3vxSWqYU=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-480-vgThdpK0OsCMUbymB6Vj1Q-1; Tue, 06 Aug 2024 09:37:05 -0400
-X-MC-Unique: vgThdpK0OsCMUbymB6Vj1Q-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2f18429ce00so5935371fa.0
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 06:37:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sbKNy-0000vO-A8
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 09:37:58 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sbKNw-0006tk-62
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 09:37:58 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-428243f928cso4621255e9.3
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 06:37:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722951474; x=1723556274; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=YE8yTeyPqFC5byBHVK4aIwCUqnqjwdXQAVSnebz3dhk=;
+ b=SFTPO53e/sfXKse4ry0u8PROW5i1/xh03TN6iEXUWOP/nTybGV68yg+R5nNZecHn7E
+ 7js4tOFwj5Cyh93hdxiItXfktRDbUKRwMe+V7KpPZ8RAUhvd7gJJuF+kMJ6YalBNio4H
+ haVjWBasDwnJKPKf1Co4vUgc1TwvfiRf07bsOZ/rsomjRQFNnk6NT+sY0VJ76n8JQTJk
+ QlqQbkcBODzUO2zVxzU0hf6KUHwqYWF+bv9bKQoRQWtZeHnHTggtWC/0oiZgwRDbqbLs
+ UPjg1/+lZASPLtR32effmxSUb4fOTLAoOkmdiTjGMVBwxXQk/6bbVXOy+SZrvIZh3azP
+ IvcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722951424; x=1723556224;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=s0Azy5IqZ41TCP/WCbxsy2VM9SX9V8d+xsx3W+hTjbY=;
- b=mzuKJLDD3sx6pPU/Cr6JE2ssUItsGd+PGgHkFK/5+Gw6pJ9nzM3ChzEt2hBZ5R1MJ0
- CFBnkzsiRcUeeQRhYhBAAS/RshKR/lxW8K5qRZKjlDxPLjv0g3gfytmCfauNkR7pxSZp
- ETeDe//OJxyOPrHbH03ew4uAHvEnRlQ9qZ7/5A3Lly5QEqLw87qplmecqzon5Z+XSf2s
- a8vtC12v+gAIG283nQK2kNnGxJgQxIqqNJhRhj3StlPhW9yTDn0ug2lcxZxPH0UlQSSO
- UOte8LIZja4b/Q5s0rkQK5nGvIbYG6uYdK0tlKVSpGnxeXh7YEmxdKcq1O3hxgFzJXAx
- O5GQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV04JuC9tgJkGWAASxdIOVd5UMLO2t1kI808IPuJDH50tMlsQcyIXJVPc4ge6Z3jUcbbORxs/bOrqn9@nongnu.org
-X-Gm-Message-State: AOJu0YwrQGiKIl1N5L09XptC2t+tcsYZNl+1XIwo+90AT2A/NdaHObmH
- ICXqb0gd8FPPAC5l6yF7AOo9h7W3EFMQG6F3EMZt2PWb0IY573Jir6teFLcVDKnPhQctgNQa2FI
- UQcWZBx3mNOTnEg5uh6/G6w8k91tQEc6grr3NykkrQu3jG5LLHDMs
-X-Received: by 2002:a05:6000:156e:b0:360:8c88:ab82 with SMTP id
- ffacd0b85a97d-36bbbeefe27mr16409177f8f.30.1722951035939; 
- Tue, 06 Aug 2024 06:30:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFqvw0eH3+3qQ9AF5AQ6WDIO6ESB2IvDxX/qux9Igzn9we9Z73ZJVj/YF24ncuuYR73NS485A==
-X-Received: by 2002:a05:6000:156e:b0:360:8c88:ab82 with SMTP id
- ffacd0b85a97d-36bbbeefe27mr16408981f8f.30.1722951033086; 
- Tue, 06 Aug 2024 06:30:33 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:175:c9eb:d9d4:606a:87dc:59c7])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36bbcf0ccc5sm13123697f8f.23.2024.08.06.06.30.31
+ d=1e100.net; s=20230601; t=1722951474; x=1723556274;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YE8yTeyPqFC5byBHVK4aIwCUqnqjwdXQAVSnebz3dhk=;
+ b=LnjvzCGXFXdYdG9s87b7B+2NKnijIDzPyAiZGio2ykkfWJvAUFTwrDTz6e36a0E2Uz
+ 0Oj9GxYwvtGQPH5gkyUf11mm9hDiSrffcbIYrw5hPTHuMcdAafyb6tKGSqWUBP8fgl1e
+ tu3Tr81zmjcg2gpiwHp/+McUauANVu7XnfhyfvC4W6y1NUGTRdw5EiKzRXVLz/PkD5jG
+ q3tLsMol9dKxVjh6otk2yVD3U7BJ0acOOpqw7qt/9UgjdbqL44WHZ1cOnhc6rxN2xuVS
+ WkarUi9T+9588EhSPtZg1ZBj/+88pEK6SeO8meBLLLYKfX6X2/sC63GBOeO401BtgLox
+ C9RQ==
+X-Gm-Message-State: AOJu0YyoZlT+JCfgD37eGUVVnxUU8kLtsMALfByykeOIQeB7GZK031eh
+ akJmar6ajdMaaheZ6GdlerDihXzodiT7KOWfaB5EEsk0fKS6OGz9MnC65ACbmos=
+X-Google-Smtp-Source: AGHT+IEYYFAvJcV/3y3QlpV1cv5pZ+ucTs0ELOxE5qT5nLlwGzFRfonx5qEN7JHeOPZvIvR5v1iINg==
+X-Received: by 2002:a5d:4e91:0:b0:367:958e:9821 with SMTP id
+ ffacd0b85a97d-36bbc12d79emr10173718f8f.29.1722951473601; 
+ Tue, 06 Aug 2024 06:37:53 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36bbd074583sm13041389f8f.108.2024.08.06.06.37.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Aug 2024 06:30:32 -0700 (PDT)
-Date: Tue, 6 Aug 2024 09:30:30 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Cindy Lu <lulu@redhat.com>
-Cc: jasowang@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/3] virtio_net: Add the check for vdpa's mac address
-Message-ID: <20240806093013-mutt-send-email-mst@kernel.org>
-References: <20240806005814.51651-1-lulu@redhat.com>
+ Tue, 06 Aug 2024 06:37:52 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9EFA65F77B;
+ Tue,  6 Aug 2024 14:37:51 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,  "Michael S. Tsirkin" <mst@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 1/3] hw/display/virtio-gpu: Improve "opengl is not
+ available" error message
+In-Reply-To: <20240731154136.3494621-2-peter.maydell@linaro.org> (Peter
+ Maydell's message of "Wed, 31 Jul 2024 16:41:34 +0100")
+References: <20240731154136.3494621-1-peter.maydell@linaro.org>
+ <20240731154136.3494621-2-peter.maydell@linaro.org>
+Date: Tue, 06 Aug 2024 14:37:51 +0100
+Message-ID: <875xsdsrf4.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240806005814.51651-1-lulu@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,85 +99,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 06, 2024 at 08:58:01AM +0800, Cindy Lu wrote:
-> When using a VDPA device, it is important to ensure that
-> the MAC address in the hardware matches the MAC address
-> from the QEMU command line.
-> This will allow the device to boot.
-> 
-> Signed-off-by: Cindy Lu <lulu@redhat.com>
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Always post threads with a cover letter please.
+> If the user tries to use the virtio-gpu-gl device but the display
+> backend doesn't have OpenGL support enabled, we currently print a
+> rather uninformative error message:
+>
+> $ qemu-system-aarch64 -M virt -device virtio-gpu-gl
+> qemu-system-aarch64: -device virtio-gpu-gl: opengl is not available
+>
+> Since OpenGL is not enabled on display frontends by default, users
+> are quite likely to run into this. Improve the error message to
+> be more specific and to suggest to the user a path forward.
+>
+> Note that the case of "user tried to enable OpenGL but the display
+> backend doesn't handle it" is caught elsewhere first, so we can
+> assume that isn't the problem:
+>
+> $ qemu-system-aarch64 -M virt -device virtio-gpu-gl -display curses,gl=3D=
+on
+> qemu-system-aarch64: OpenGL is not supported by the display
+>
+> (Use of error_append_hint() requires us to add an ERRP_GUARD() to
+> the function, as noted in include/qapi/error.h.)
+>
+> With this commit we now produce the hopefully more helpful error:
+> $ ./build/x86/qemu-system-aarch64 -M virt -device virtio-gpu-gl
+> qemu-system-aarch64: -device virtio-gpu-gl: The display backend does not =
+have OpenGL support enabled
+> It can be enabled with '-display BACKEND,gl=3Don' where BACKEND is the na=
+me of the display backend to use.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2443
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-> ---
->  hw/net/virtio-net.c | 33 +++++++++++++++++++++++++++++----
->  1 file changed, 29 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 9c7e85caea..7f51bd0dd3 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -3579,12 +3579,36 @@ static bool failover_hide_primary_device(DeviceListener *listener,
->      /* failover_primary_hidden is set during feature negotiation */
->      return qatomic_read(&n->failover_primary_hidden);
->  }
-> +static bool virtio_net_check_vdpa_mac(NetClientState *nc, VirtIONet *n, MACAddr *cmdline_mac,
-> +				      Error **errp)
-> +{
-> +	struct virtio_net_config hwcfg = {};
-> +	static const MACAddr zero = { .a = { 0, 0, 0, 0, 0, 0 } };
-> +
-> +	vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *)&hwcfg, ETH_ALEN);
-> +
-> +    /*
-> +     * For VDPA device: Only two situations are acceptable:
-> +     * 1.The hardware MAC address is the same as the QEMU command line MAC
-> +     *   address, and both of them are not 0.
-> +     */
-> +
-> +	if (memcmp(&hwcfg.mac, &zero, sizeof(MACAddr)) != 0) {
-> +		if ((memcmp(&hwcfg.mac, cmdline_mac, sizeof(MACAddr)) == 0)) {
-> +			return true;
-> +		}
-> +	}
-> +	error_setg(errp, "vDPA device's mac != the mac address from qemu cmdline"
-> +			 "Please check the the vdpa device's setting.");
->  
-> +	return false;
-> +}
->  static void virtio_net_device_realize(DeviceState *dev, Error **errp)
->  {
->      VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->      VirtIONet *n = VIRTIO_NET(dev);
->      NetClientState *nc;
-> +    MACAddr macaddr_cmdline;
->      int i;
->  
->      if (n->net_conf.mtu) {
-> @@ -3692,6 +3716,7 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
->      virtio_net_add_queue(n, 0);
->  
->      n->ctrl_vq = virtio_add_queue(vdev, 64, virtio_net_handle_ctrl);
-> +    memcpy(&macaddr_cmdline, &n->nic_conf.macaddr, sizeof(n->mac));
->      qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
->      memcpy(&n->mac[0], &n->nic_conf.macaddr, sizeof(n->mac));
->      n->status = VIRTIO_NET_S_LINK_UP;
-> @@ -3739,10 +3764,10 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
->      nc->rxfilter_notify_enabled = 1;
->  
->     if (nc->peer && nc->peer->info->type == NET_CLIENT_DRIVER_VHOST_VDPA) {
-> -        struct virtio_net_config netcfg = {};
-> -        memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
-> -        vhost_net_set_config(get_vhost_net(nc->peer),
-> -            (uint8_t *)&netcfg, 0, ETH_ALEN, VHOST_SET_CONFIG_TYPE_FRONTEND);
-> +	   if (!virtio_net_check_vdpa_mac(nc, n, &macaddr_cmdline, errp)) {
-> +		   virtio_cleanup(vdev);
-> +		   return;
-> +	   }
->      }
->      QTAILQ_INIT(&n->rsc_chains);
->      n->qdev = dev;
-> -- 
-> 2.45.0
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
