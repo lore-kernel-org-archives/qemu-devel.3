@@ -4,89 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86D27C3DA64
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 09:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5895C3DA64
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 09:28:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbGKl-0004Wt-AY; Tue, 06 Aug 2024 05:18:23 -0400
+	id 1sbGTh-000289-1c; Tue, 06 Aug 2024 05:27:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sbGKj-0004O4-2H
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 05:18:21 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sbGTe-00026O-1k
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 05:27:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sbGKh-0001A1-2m
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 05:18:20 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sbGTc-0002QX-4Z
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 05:27:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722935897;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1722936448;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=y59hN2s/MNY6Pe91xmrj92ENgow4G095yCJtbOBOOcs=;
- b=RHPVGvE7azHwxSXxKi2b4KSBp0KO2mTjLznSz4CzMtLyFjYrQYCRrjR1XhvCA1Q9kblHLb
- eNhrqPOdJC+1ujeU+LO3u6b/7BRdGyHq3qBv8lxnHIoanoUz2BSaQqJsfKp59zpdZHEHjq
- B3wF59ADO1ZgRcbBCa+XyMZCrwmwjaE=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-31-ICtApOKcM8uVsxlnd2CBSA-1; Tue, 06 Aug 2024 05:18:14 -0400
-X-MC-Unique: ICtApOKcM8uVsxlnd2CBSA-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-428e0d30911so3709665e9.2
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 02:18:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722935893; x=1723540693;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=y59hN2s/MNY6Pe91xmrj92ENgow4G095yCJtbOBOOcs=;
- b=BucM8JDJ4HUXG3w13ZZMG/Iei9szD/8EKSn5QhIL3YDn3uMpNmOguOa7DG82nN9Qer
- zibRbtIe2fd7Bhh7oc2kMPcPpTWAB6gfpTrwQBf2X/2KCfKnjWmofB4GRPzczLqyd0xe
- ceillVnEq6dN+/ClYPIWqI4Tl6y15W1WX8kFOYGVjwH1VHrfvaCA9BC5yo/llNPK98pj
- zxOrhb1cY9K5A6GbV21aWgSkQP8xLO9gUFSyJXzBMB9B+B4YkERjSYj9kpWt5LhmwJRg
- tBoK7iTfY6tlN5VYP8keBcYxBB4iHve9AbPqJiDbOaISZFf3DYDhg6gGiqL2VoN4rsKg
- fqXw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWDQvKD8rRrzAQLJICQ2m8WFxXQN4yIgNCoTAyZyhODIa1sGdTNQ5rpCPuXXvi1yQt0AVWWbjwwIkKsekJbX4Mdv6JMyzk=
-X-Gm-Message-State: AOJu0Yx1lYpL8ucZvnFfUjv2Wv0znui9kqP97OBUT3/slcZt8gdDn1Kz
- 4q4QV3WiCEqWnUTJ1dXCCs+2rPkyVGdYzH3Tn8K97iu7os8xqYxB1EnRCQCNsvW0V5Vt8CJxBYl
- Jp1pigbJndGEJP9aOi/u7R6sqIV2X+oIWMt11YTRZu0vhnCL7Pv0Y
-X-Received: by 2002:a05:600c:3caa:b0:426:622d:9e6b with SMTP id
- 5b1f17b1804b1-428e6b7e5ddmr108736185e9.23.1722935893258; 
- Tue, 06 Aug 2024 02:18:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFvysX2vltXK8sXDEyjf8yRaX+R57uey5E5z7HEyphW/MiuBtAMi/U71enPWHJ9RzN/4Bfl5A==
-X-Received: by 2002:a05:600c:3caa:b0:426:622d:9e6b with SMTP id
- 5b1f17b1804b1-428e6b7e5ddmr108735955e9.23.1722935892704; 
- Tue, 06 Aug 2024 02:18:12 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4282bb64b84sm231279505e9.32.2024.08.06.02.18.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Aug 2024 02:18:11 -0700 (PDT)
-Date: Tue, 6 Aug 2024 11:18:09 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@Huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- <linux-kernel@vger.kernel.org>, <qemu-arm@nongnu.org>,
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v5 4/7] acpi/ghes: Support GPIO error source
-Message-ID: <20240806111809.10bc2406@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240806080928.5a04c550@foz.lan>
-References: <cover.1722634602.git.mchehab+huawei@kernel.org>
- <5d53042ebc5bc73bbc71f600e1ec1dea41f346b9.1722634602.git.mchehab+huawei@kernel.org>
- <20240805175617.000036ce@Huawei.com>
- <20240806080928.5a04c550@foz.lan>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ bh=u6KUktOqAR7o5UgRH5OgOaBvW94h6ziIa85YMP20k0Q=;
+ b=KZIJROZuMr/FKjaSJjAW+TwEl1wuFWWpn5Mg8YuEoaGSQCU6EFTG6ujpcM8AH3o/svNaQg
+ gA4UQ7EL8hAWtBrBRuoHhtrXLGvqCI4XOcMeAz9eXIVJ0D20CCW1UlBAer65Z9NXDdjTL5
+ iKCjv4Gvnv5N6J4VM7vRuiyLAfvPCxQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-vgt5SrozO5mDmSj4jYGFwg-1; Tue,
+ 06 Aug 2024 05:27:24 -0400
+X-MC-Unique: vgt5SrozO5mDmSj4jYGFwg-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1A5CE19560BF; Tue,  6 Aug 2024 09:27:23 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.106])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C83981955D4A; Tue,  6 Aug 2024 09:27:19 +0000 (UTC)
+Date: Tue, 6 Aug 2024 10:27:16 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Eric Blake <eblake@redhat.com>
+Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
+ qemu-block@nongnu.org, den@virtuozzo.com,
+ andrey.drobyshev@virtuozzo.com, alexander.ivanov@virtuozzo.com,
+ vsementsov@yandex-team.ru
+Subject: Re: [PATCH v3 1/2] nbd: CVE-2024-7409: Close stray client sockets at
+ server shutdown
+Message-ID: <ZrHsdA15hsFaaq1t@redhat.com>
+References: <20240806022542.381883-4-eblake@redhat.com>
+ <20240806022542.381883-5-eblake@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240806022542.381883-5-eblake@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -107,59 +87,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 6 Aug 2024 08:09:28 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+On Mon, Aug 05, 2024 at 09:21:35PM -0500, Eric Blake wrote:
+> A malicious client can attempt to connect to an NBD server, and then
+> intentionally delay progress in the handshake, including if it does
+> not know the TLS secrets.  Although this behavior can be bounded by
+> the max-connections parameter, the QMP nbd-server-start currently
+> defaults to unlimited incoming client connections.  Worse, if the
+> client waits to close the socket until after the QMP nbd-server-stop
+> command is executed, qemu will then SEGV when trying to dereference
+> the NULL nbd_server global whish is no longer present, which amounts
+> to a denial of service attack.  If another NBD server is started
+> before the malicious client disconnects, I cannot rule out additional
+> adverse effects when the old client interferes with the connection
+> count of the new server.
+> 
+> For environments without this patch, the CVE can be mitigated by
+> ensuring (such as via a firewall) that only trusted clients can
+> connect to an NBD server.  Note that using frameworks like libvirt
+> that ensure that TLS is used and that nbd-server-stop is not executed
+> while any trusted clients are still connected will only help if there
+> is also no possibility for an untrusted client to open a connection
+> but then stall on the NBD handshake.
+> 
+> This patch fixes the problem by tracking all client sockets opened
+> while the server is running, and forcefully closing any such sockets
+> remaining without a completed handshake at the time of
+> nbd-server-stop, then waiting until the coroutines servicing those
+> sockets notice the state change.  nbd-server-stop may now take
+> slightly longer to execute, but the extra time is independent of
+> client response behaviors, and is generally no worse than the time
+> already taken by the blk_exp_close_all_type() that disconnects all
+> clients that completed handshakes (since that code also has an
+> AIO_WAIT_WHILE_UNLOCKED).  For a long-running server with lots of
+> clients rapidly connecting and disconnecting, the memory used to track
+> all client sockets can result in some memory overhead, but it is not a
+> leak; the next patch will further optimize that by cleaning up memory
+> as clients go away.  At any rate, this patch in isolation is
+> sufficient to fix the CVE.
+> 
+> This patch relies heavily on the fact that nbd/server.c guarantees
+> that it only calls nbd_blockdev_client_closed() from the main loop
+> (see the assertion in nbd_client_put() and the hoops used in
+> nbd_client_put_nonzero() to achieve that); if we did not have that
+> guarantee, we would also need a mutex protecting our accesses of the
+> list of connections to survive re-entrancy from independent iothreads.
+> 
+> Although I did not actually try to test old builds, it looks like this
+> problem has existed since at least commit 862172f45c (v2.12.0, 2017) -
+> even back in that patch to start using a QIONetListener to handle
+> listening on multiple sockets, nbd_server_free() was already unaware
+> that the nbd_blockdev_client_closed callback can be reached later by a
+> client thread that has not completed handshakes (and therefore the
+> client's socket never got added to the list closed in
+> nbd_export_close_all), despite that patch intentionally tearing down
+> the QIONetListener to prevent new clients.
+> 
+> Reported-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+> Fixes: CVE-2024-7409
+> Signed-off-by: Eric Blake <eblake@redhat.com>
+> ---
+>  blockdev-nbd.c | 30 ++++++++++++++++++++++++++++++
+>  1 file changed, 30 insertions(+)
 
-> Em Mon, 5 Aug 2024 17:56:17 +0100
-> Jonathan Cameron <Jonathan.Cameron@Huawei.com> escreveu:
-> 
-> > On Fri,  2 Aug 2024 23:43:59 +0200
-> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> >   
-> > > From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > 
-> > > Add error notification to GHES v2 using the GPIO source.    
-> > 
-> > The gpio / external interrupt follows through.  
-> 
-> True. As session 18.3.2.7 of the spec says:
-> 
-> 	The OSPM evaluates the control method associated with this event 
-> 	as indicated in The Event Method for Handling GPIO Signaled Events 
-> 	and The Event Method for Handling Interrupt Signaled Events.
-> 
-> E. g. defining two methods:
-> 	- GED GPIO;
-> 	- GED interrupt
-> 
-> I'm doing this rename:
-> 
-> 	ACPI_HEST_SRC_ID_GPIO -> ACPI_HEST_SRC_ID_GED_INT
-> 
-> To clearly state what it is implemented there.
-> 
-> I'm also changing patch description to:
-> 
->     acpi/ghes: Add support for General Purpose Event
->     
->     As a GED error device is now defined, add another type
->     of notification.
->     
->     Add error notification to GHES v2 using the GPIO source.
-                                                  ^^^^
-did you mean: GED?
->     
->     [mchehab: do some cleanups at ACPI_HEST_SRC_ID_* checks and
->      rename HEST event to better identify GED interrupt OSPM]
-> 
->     Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
->     Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> 
-> Regards,
-> Mauro
-> 
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
