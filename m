@@ -4,83 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2739C52D73
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 15:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 068A8C52D70
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 15:46:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbM5U-0006gh-3l; Tue, 06 Aug 2024 11:27:00 -0400
+	id 1sbMNp-00086P-Px; Tue, 06 Aug 2024 11:45:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sbM4m-0006Bk-Bd
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 11:26:16 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1sbM4h-0005QW-Bq
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 11:26:14 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-7b8b1743a01so291547a12.0
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 08:24:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1722957850; x=1723562650;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dGXPceVfjGUXduFfW7fbunNiffjwGB6schfMiKemxFk=;
- b=Mn9VCpGvkQwVnWFYiUhFFQbsS/Lb7PGwzfU/cmvpCc6oflN0TUuzPEJ6BunPDyYFqn
- EHlcf1dlIBBtcDl8HJVrPIGr8K38nml0UpFfROz5Ldseec6n6Fvv4eu9Z74qpPAdki6k
- 68Qa7Zv7DLntq5QCZKvuioPP6EK+n7kquJR+lj2ORLM7VR0GtGp8BnyBZGnmDSKi/zOv
- L/RFd40TV6ybeNSkYW5wXtGiJfNf6TuyMT3M+v/t9cLgU4Kv9fvq5TCLNtSopsTAC8JP
- G/C/2eHgsJkP67vb3TiynXWPlhogY1s/l/Nhplr3112Qq83/fy/eST/B7f1YfYAvzjoi
- K3Mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722957850; x=1723562650;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dGXPceVfjGUXduFfW7fbunNiffjwGB6schfMiKemxFk=;
- b=J5BAAkc89WW6bsNQ0PiNhhssKiWklwFH5S77mzr6eg0Mf/S92s5H6BtQzwRa2TZCJi
- 2okovfDGVFDpr+Hh/0X4avw8pXeNzmKQgsDR/vDpweUcpYD8tqkmKIqa8inSjRAXwblC
- fM/8X818gykObi7TPw7BYnt5/44H3HzieklSPSIo3Oz+J1+lr10/dsbFy2jAImgx4B5w
- jNqnTnjoAjSa0mge3AmU9RLFxjh7JwzS4Q6QrR2G3pq+3jkePT+ggdQA/6DdaiYtNYTL
- 6x9xGncOJ4xvt1ZXpDrtntTtNoyonnJ7l5hN9yWedx/T0p9BTY6IVX5aoJc4pLLHSZIa
- UPKg==
-X-Gm-Message-State: AOJu0YzpjDL8NLeTu3wza7cl7iOFVmUqQJ98eCac1CNsssIEJhbiE+Ns
- bLJh4xkLAdE8YgTN8oArJMHspP+dsGwUryOtl1nLa9kEwA8gFGPc3CGCT2DHgI7Nhhh/S5PoAnY
- 0NuGmiy5X
-X-Google-Smtp-Source: AGHT+IFkbqxr+m4IfWGV+88BRe/k/Y+53IWbeFs7y0ikGays+3ieQ+F0zsE2Sc4tiPND93Za0+ibJw==
-X-Received: by 2002:a05:6a21:6b0a:b0:1c2:94ad:1c67 with SMTP id
- adf61e73a8af0-1c699563513mr15395351637.30.1722957849285; 
- Tue, 06 Aug 2024 08:24:09 -0700 (PDT)
-Received: from Hyman-Dev-Euler.zelin.local ([85.208.104.155])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7106ed2d04bsm7059727b3a.201.2024.08.06.08.24.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Aug 2024 08:24:09 -0700 (PDT)
-From: yong.huang@smartx.com
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- yong.huang@smartx.com
-Subject: [PATCH 2/2] tests/migration: Introduce multifd compression into
- guestperf
-Date: Tue,  6 Aug 2024 23:23:42 +0800
-Message-Id: <8af3ae48cd4c3116b9f0f478bd5cf6df64198d66.1722957352.git.yong.huang@smartx.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <cover.1722957352.git.yong.huang@smartx.com>
-References: <cover.1722957352.git.yong.huang@smartx.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sbMNm-00085B-O7
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 11:45:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sbMNh-000096-Lt
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 11:45:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722959148;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=mIO7xqBTaoyEN7ZsSFP9XMCE92/9T1bjuY1ONexFQ20=;
+ b=Vrg35GiaVhwqPYu67nJn2i7j+XWIh+DqGZAeTvvY5Zw2g530RP7BoyS79QYKgq3W5l7HfC
+ TjpsnVnA2Yr5IeOszRUloNTszWBttQ968EXZe0dM35b6iDKN6VMhv+zEGN26U7UppGB4hM
+ ZBjEzTxUQxY6J4bcXvKBTrmmce5D0ok=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-470-ScSH8WPaPpKv3wNt1igfbQ-1; Tue,
+ 06 Aug 2024 11:45:45 -0400
+X-MC-Unique: ScSH8WPaPpKv3wNt1igfbQ-1
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 678481955D5C; Tue,  6 Aug 2024 15:45:43 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.106])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5CB821955D42; Tue,  6 Aug 2024 15:45:39 +0000 (UTC)
+Date: Tue, 6 Aug 2024 16:45:35 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alejandro Zeise <alejandro.zeise@seagate.com>
+Cc: qemu-arm@nongnu.org, kris.conklin@seagate.com,
+ jonathan.henze@seagate.com, evan.burgess@seagate.com, clg@kaod.org,
+ peter.maydell@linaro.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 01/12] crypto: accumulative hashing API
+Message-ID: <ZrJFH3GjBRAsQpI9@redhat.com>
+References: <20240805155047.3151540-1-alejandro.zeise@seagate.com>
+ <20240805155047.3151540-2-alejandro.zeise@seagate.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::532;
- envelope-from=yong.huang@smartx.com; helo=mail-pg1-x532.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240805155047.3151540-2-alejandro.zeise@seagate.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,149 +83,279 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hyman Huang <yong.huang@smartx.com>
+On Mon, Aug 05, 2024 at 03:50:36PM +0000, Alejandro Zeise wrote:
+> Changes the hash API to support accumulative hashing.
+> Hash objects are created with "qcrypto_hash_new",
+> updated with data with "qcrypto_hash_update", and
+> the hash obtained with "qcrypto_hash_finalize".
+> 
+> These changes bring the hashing API more in line with the
+> hmac API.
+> 
+> Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
+> ---
+>  crypto/hash.c         | 136 +++++++++++++++++++++++++++++++-----------
+>  crypto/hashpriv.h     |  19 ++++--
+>  include/crypto/hash.h | 106 ++++++++++++++++++++++++++++++++
+>  3 files changed, 220 insertions(+), 41 deletions(-)
+> 
+> diff --git a/crypto/hash.c b/crypto/hash.c
+> index b0f8228bdc..5c60973bde 100644
+> --- a/crypto/hash.c
+> +++ b/crypto/hash.c
+> @@ -1,6 +1,7 @@
+>  /*
+>   * QEMU Crypto hash algorithms
+>   *
+> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
+>   * Copyright (c) 2015 Red Hat, Inc.
+>   *
+>   * This library is free software; you can redistribute it and/or
+> @@ -45,23 +46,20 @@ int qcrypto_hash_bytesv(QCryptoHashAlgorithm alg,
+>                          size_t *resultlen,
+>                          Error **errp)
+>  {
+> -#ifdef CONFIG_AF_ALG
+> -    int ret;
+> -    /*
+> -     * TODO:
+> -     * Maybe we should treat some afalg errors as fatal
+> -     */
+> -    ret = qcrypto_hash_afalg_driver.hash_bytesv(alg, iov, niov,
+> -                                                result, resultlen,
+> -                                                NULL);
+> -    if (ret == 0) {
+> -        return ret;
+> +    int fail;
+> +    QCryptoHash *ctx = qcrypto_hash_new(alg, errp);
+> +
+> +    if (ctx) {
+> +        fail = qcrypto_hash_update(ctx, iov, niov, errp) ||
+> +               qcrypto_hash_finalize_bytes(ctx, result, resultlen, errp);
+> +
+> +        /* Ensure context is always freed regardless of error */
+> +        fail = qcrypto_hash_free(ctx) || fail;
+> +    } else {
+> +        fail = -1;
+>      }
+> -#endif
+>  
+> -    return qcrypto_hash_lib_driver.hash_bytesv(alg, iov, niov,
+> -                                               result, resultlen,
+> -                                               errp);
+> +    return fail;
+>  }
 
-Guestperf tool does not cover the multifd compression option
-currently, it is worth supporting so that developers can
-analysis the migration performance with different
-compression algorithms.
+You can't do this conversion in this patch, because all the hash impls
+are still using the old driver API, and haven't implemented the new
+API yet.
 
-Multifd support 4 compression algorithms currently:
-zlib, zstd, qpl, uadk
+QEMU requires "make check" succeed for *every* individual patch in
+a series, so that 'git bisect' can be used in future.
 
-To request that multifd with the specified compression
-algorithm such as zlib:
-$ ./tests/migration/guestperf.py \
-    --multifd --multifd-channels 4 --multifd-compression zlib \
-    --output output.json
+> diff --git a/crypto/hashpriv.h b/crypto/hashpriv.h
+> index cee26ccb47..8a7d80619e 100644
+> --- a/crypto/hashpriv.h
+> +++ b/crypto/hashpriv.h
+> @@ -1,6 +1,7 @@
+>  /*
+>   * QEMU Crypto hash driver supports
+>   *
+> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
+>   * Copyright (c) 2017 HUAWEI TECHNOLOGIES CO., LTD.
+>   *
+>   * Authors:
+> @@ -15,15 +16,21 @@
+>  #ifndef QCRYPTO_HASHPRIV_H
+>  #define QCRYPTO_HASHPRIV_H
+>  
+> +#include "crypto/hash.h"
+> +
+>  typedef struct QCryptoHashDriver QCryptoHashDriver;
+>  
+>  struct QCryptoHashDriver {
+> -    int (*hash_bytesv)(QCryptoHashAlgorithm alg,
+> -                       const struct iovec *iov,
+> -                       size_t niov,
+> -                       uint8_t **result,
+> -                       size_t *resultlen,
+> -                       Error **errp);
 
-To run the entire standardized set of multifd compression
-comparisons, with unix migration:
-$ ./tests/migration/guestperf-batch.py \
-    --dst-host localhost --transport unix \
-    --filter compr-multifd-compression* --output outputdir
+Keep this present. It can only be removed at the very end of the
+series once all the drivers are converted.
 
-Signed-off-by: Hyman Huang <yong.huang@smartx.com>
----
- tests/migration/guestperf/comparison.py | 13 +++++++++++++
- tests/migration/guestperf/engine.py     | 12 ++++++++++++
- tests/migration/guestperf/scenario.py   |  7 +++++--
- tests/migration/guestperf/shell.py      |  3 +++
- 4 files changed, 33 insertions(+), 2 deletions(-)
+> +   QCryptoHash *(*hash_new)(QCryptoHashAlgorithm alg, Error **errp);
+> +   int (*hash_update)(QCryptoHash *hash,
+> +                      const struct iovec *iov,
+> +                      size_t niov,
+> +                      Error **errp);
+> +   int (*hash_finalize)(QCryptoHash *hash,
+> +                        uint8_t **result,
+> +                        size_t *resultlen,
+> +                        Error **errp);
+> +   int (*hash_free)(QCryptoHash *hash);
 
-diff --git a/tests/migration/guestperf/comparison.py b/tests/migration/guestperf/comparison.py
-index 40e9d2eb1d..71208e8540 100644
---- a/tests/migration/guestperf/comparison.py
-+++ b/tests/migration/guestperf/comparison.py
-@@ -158,4 +158,17 @@ def __init__(self, name, scenarios):
-         Scenario("compr-dirty-limit-50MB",
-                  dirty_limit=True, vcpu_dirty_limit=50),
-     ]),
-+
-+    # Looking at effect of multifd with
-+    # different compression algorithm
-+    Comparison("compr-multifd-compression", scenarios = [
-+        Scenario("compr-multifd-compression-zlib",
-+                 multifd=True, multifd_channels=4, multifd_compression="zlib"),
-+        Scenario("compr-multifd-compression-zstd",
-+                 multifd=True, multifd_channels=4, multifd_compression="zstd"),
-+        Scenario("compr-multifd-compression-qpl",
-+                 multifd=True, multifd_channels=4, multifd_compression="qpl"),
-+        Scenario("compr-multifd-compression-uadk",
-+                 multifd=True, multifd_channels=4, multifd_compression="uadk"),
-+    ]),
- ]
-diff --git a/tests/migration/guestperf/engine.py b/tests/migration/guestperf/engine.py
-index 608d7270f6..883a7b8ab6 100644
---- a/tests/migration/guestperf/engine.py
-+++ b/tests/migration/guestperf/engine.py
-@@ -31,6 +31,8 @@
-                              '..', '..', '..', 'python'))
- from qemu.machine import QEMUMachine
- 
-+# multifd supported compressoin algorithms
-+MULTIFD_CMP_ALGS = ("zlib", "zstd", "qpl", "uadk")
- 
- class Engine(object):
- 
-@@ -205,6 +207,16 @@ def _migrate(self, hardware, scenario, src, dst, connect_uri):
-             resp = dst.cmd("migrate-set-parameters",
-                            multifd_channels=scenario._multifd_channels)
- 
-+            if scenario._multifd_compression:
-+                if scenario._multifd_compression not in MULTIFD_CMP_ALGS:
-+                    raise Exception("unsupported multifd compression "
-+                                    "algorithm: %s" %
-+                                    scenario._multifd_compression)
-+                resp = src.command("migrate-set-parameters",
-+                    multifd_compression=scenario._multifd_compression)
-+                resp = dst.command("migrate-set-parameters",
-+                    multifd_compression=scenario._multifd_compression)
-+
-         if scenario._dirty_limit:
-             if not hardware._dirty_ring_size:
-                 raise Exception("dirty ring size must be configured when "
-diff --git a/tests/migration/guestperf/scenario.py b/tests/migration/guestperf/scenario.py
-index 154c4f5d5f..4be7fafebf 100644
---- a/tests/migration/guestperf/scenario.py
-+++ b/tests/migration/guestperf/scenario.py
-@@ -30,7 +30,7 @@ def __init__(self, name,
-                  auto_converge=False, auto_converge_step=10,
-                  compression_mt=False, compression_mt_threads=1,
-                  compression_xbzrle=False, compression_xbzrle_cache=10,
--                 multifd=False, multifd_channels=2,
-+                 multifd=False, multifd_channels=2, multifd_compression="",
-                  dirty_limit=False, x_vcpu_dirty_limit_period=500,
-                  vcpu_dirty_limit=1):
- 
-@@ -61,6 +61,7 @@ def __init__(self, name,
- 
-         self._multifd = multifd
-         self._multifd_channels = multifd_channels
-+        self._multifd_compression = multifd_compression
- 
-         self._dirty_limit = dirty_limit
-         self._x_vcpu_dirty_limit_period = x_vcpu_dirty_limit_period
-@@ -85,6 +86,7 @@ def serialize(self):
-             "compression_xbzrle_cache": self._compression_xbzrle_cache,
-             "multifd": self._multifd,
-             "multifd_channels": self._multifd_channels,
-+            "multifd_compression": self._multifd_compression,
-             "dirty_limit": self._dirty_limit,
-             "x_vcpu_dirty_limit_period": self._x_vcpu_dirty_limit_period,
-             "vcpu_dirty_limit": self._vcpu_dirty_limit,
-@@ -109,4 +111,5 @@ def deserialize(cls, data):
-             data["compression_xbzrle"],
-             data["compression_xbzrle_cache"],
-             data["multifd"],
--            data["multifd_channels"])
-+            data["multifd_channels"],
-+            data["multifd_compression"])
-diff --git a/tests/migration/guestperf/shell.py b/tests/migration/guestperf/shell.py
-index c85d89efec..1452eb8a33 100644
---- a/tests/migration/guestperf/shell.py
-+++ b/tests/migration/guestperf/shell.py
-@@ -130,6 +130,8 @@ def __init__(self):
-                             action="store_true")
-         parser.add_argument("--multifd-channels", dest="multifd_channels",
-                             default=2, type=int)
-+        parser.add_argument("--multifd-compression", dest="multifd_compression",
-+                            default="")
- 
-         parser.add_argument("--dirty-limit", dest="dirty_limit", default=False,
-                             action="store_true")
-@@ -166,6 +168,7 @@ def get_scenario(self, args):
- 
-                         multifd=args.multifd,
-                         multifd_channels=args.multifd_channels,
-+                        multifd_compression=args.multifd_compression,
- 
-                         dirty_limit=args.dirty_limit,
-                         x_vcpu_dirty_limit_period=\
+I'd expect 'free' functions to always be 'void'
+
+> diff --git a/include/crypto/hash.h b/include/crypto/hash.h
+> index 54d87aa2a1..96d080eeb5 100644
+> --- a/include/crypto/hash.h
+> +++ b/include/crypto/hash.h
+> @@ -1,6 +1,7 @@
+>  /*
+>   * QEMU Crypto hash algorithms
+>   *
+> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
+>   * Copyright (c) 2015 Red Hat, Inc.
+>   *
+>   * This library is free software; you can redistribute it and/or
+> @@ -25,6 +26,13 @@
+>  
+>  /* See also "QCryptoHashAlgorithm" defined in qapi/crypto.json */
+>  
+> +typedef struct QCryptoHash QCryptoHash;
+> +struct QCryptoHash {
+> +    QCryptoHashAlgorithm alg;
+> +    void *opaque;
+> +    void *driver;
+> +};
+> +
+>  /**
+>   * qcrypto_hash_supports:
+>   * @alg: the hash algorithm
+> @@ -120,6 +128,102 @@ int qcrypto_hash_digestv(QCryptoHashAlgorithm alg,
+>                           char **digest,
+>                           Error **errp);
+>  
+> +/**
+> + * qcrypto_hash_update:
+> + * @hash: hash object from qcrypto_hash_new
+> + * @iov: the array of memory regions to hash
+> + * @niov: the length of @iov
+> + * @errp: pointer to a NULL-initialized error object
+> + *
+> + * Updates the given hash object with all the memory regions
+> + * present in @iov.
+> + *
+> + * Returns: 0 on success, -1 on error
+> + */
+> +int qcrypto_hash_update(QCryptoHash *hash,
+> +                        const struct iovec *iov,
+> +                        size_t niov,
+> +                        Error **errp);
+
+This should be renamed 'qcrypto_hash_updatev', and we should have a
+separate non-iovec variant
+
+ int qcrypto_hash_update(QCryptoHash *hash,
+                         const char *data,
+                         size_t len,
+                         Error **errp);
+
+This can simply pack data+len into an iovec, and then call
+qcrypto_hash_updatev.
+
+
+> +
+> +/**
+> + * qcrypto_hash_finalize_digest:
+> + * @hash: the hash object to finalize
+> + * @digest: pointer to hold output hash
+> + * @errp: pointer to a NULL-initialized error object
+> + *
+> + * Computes the hash from the given hash object. Hash object
+> + * is expected to have its data updated from the qcrypto_hash_update function.
+> + * The @digest pointer will be filled with the printable hex digest of the
+> + * computed hash, which will be terminated by '\0'. The memory pointer
+> + * in @digest must be released with a call to g_free() when
+> + * no longer required.
+> + *
+> + * Returns: 0 on success, -1 on error
+> + */
+> +int qcrypto_hash_finalize_digest(QCryptoHash *hash,
+> +                                 char **digest,
+> +                                 Error **errp);
+> +
+> +/**
+> + * qcrypto_hash_finalize_base64:
+> + * @hash_ctx: hash object to finalize
+
+s/hash_ctx/hash/
+
+> + * @base64: pointer to store the hash result in
+> + * @errp: pointer to a NULL-initialized error object
+> + *
+> + * Computes the hash from the given hash object. Hash object
+> + * is expected to have it's data updated from the qcrypto_hash_update function.
+> + * The @base64 pointer will be filled with the base64 encoding of the computed
+> + * hash, which will be terminated by '\0'. The memory pointer in @base64
+> + * must be released with a call to g_free() when no longer required.
+> + *
+> + * Returns: 0 on success, -1 on error
+> + */
+> +int qcrypto_hash_finalize_base64(QCryptoHash *hash,
+> +                                 char **base64,
+> +                                 Error **errp);
+> +
+> +/**
+> + * qcrypto_hash_finalize_bytes:
+> + * @hash_ctx: hash object to finalize
+> + * @result: pointer to store the hash result in
+> + * @result_len: Pointer to store the length of the result in
+> + * @errp: pointer to a NULL-initialized error object
+> + *
+> + * Computes the hash from the given hash object. Hash object
+> + * is expected to have it's data updated from the qcrypto_hash_update function.
+> + * The memory pointer in @result must be released with a call to g_free()
+> + * when no longer required.
+> + *
+> + * Returns: 0 on success, -1 on error
+> + */
+> +int qcrypto_hash_finalize_bytes(QCryptoHash *hash,
+> +                                uint8_t **result,
+> +                                size_t *result_len,
+> +                                Error **errp);
+> +
+> +/**
+> + * qcrypto_hash_new:
+> + * @alg: the hash algorithm
+> + * @errp: pointer to a NULL-initialized error object
+> + *
+> + * Creates a new hashing context for the chosen algorithm for
+> + * usage with qcrypto_hash_update.
+> + *
+> + * Returns: New hash object with the given algorithm
+
+....  ", or NULL on error"
+
+> + */
+> +QCryptoHash *qcrypto_hash_new(QCryptoHashAlgorithm alg,
+> +                              Error **errp);
+> +
+> +/**
+> + * qcrypto_hash_free:
+> + * @hash: hash object to free
+> + *
+> + * Frees a hashing context for the chosen algorithm.
+> + *
+> + * Returns: 0 on success, -1 on error
+> + */
+> +int qcrypto_hash_free(QCryptoHash *hash);
+
+Again I'd expect this to be 'void' and have a g_autoptr support
+added using:
+
+  G_DEFINE_AUTOPTR_CLEANUP_FUNC(QCryptoHash, qcrypto_hash_free)
+
+With regards,
+Daniel
 -- 
-2.27.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
