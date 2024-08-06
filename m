@@ -4,74 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CED39C3DA64
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:02:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2EDDC3DA64
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 13:02:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbJmL-0003u8-Hh; Tue, 06 Aug 2024 08:59:06 -0400
+	id 1sbJi2-0001Ym-2g; Tue, 06 Aug 2024 08:54:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sbJlf-0000lY-AW
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:58:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sbJlc-0000zw-So
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:58:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722949099;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2Jp4GYq0Q+y0lAIVBGLkBXkXlpXH90EQAb39NujUIDQ=;
- b=FZvqVjdDCL7BfjEtOjzEAHeiZK7pDWrjrbPkJbcV98oXT1roeacLQAuW5ukgRhbVZCUSAw
- /8dRyZb1TO/ObTYiWYpl2erJYug4o/jCtfhMihvvMQExIWYyNXX9UmKh4N1LYvok2XGYiP
- eCPBIrTBP4szJOzENsEtZ8X7DMtWjr8=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-MR1GhnxoP726GbPPC6h8Aw-1; Tue,
- 06 Aug 2024 08:58:17 -0400
-X-MC-Unique: MR1GhnxoP726GbPPC6h8Aw-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E38F11955D53; Tue,  6 Aug 2024 12:58:14 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.20])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A8576300019B; Tue,  6 Aug 2024 12:58:10 +0000 (UTC)
-Date: Tue, 6 Aug 2024 07:58:07 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com, 
- qemu-block@nongnu.org, den@virtuozzo.com, andrey.drobyshev@virtuozzo.com, 
- alexander.ivanov@virtuozzo.com, vsementsov@yandex-team.ru
-Subject: Re: [PATCH v3 2/2] nbd: Clean up clients more efficiently
-Message-ID: <sx5es6bzgepmx3bsnjrtprb35iwkyzqadtf46shfcl7lkdsuxc@gjcvjopdmpzo>
-References: <20240806022542.381883-4-eblake@redhat.com>
- <20240806022542.381883-6-eblake@redhat.com>
- <ZrHtxrb5dyh3eKJu@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJhg-0000F4-Oa
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:54:24 -0400
+Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbJhb-0000MA-TZ
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 08:54:13 -0400
+Received: by mail-lj1-x231.google.com with SMTP id
+ 38308e7fff4ca-2ef32fea28dso6962461fa.2
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 05:54:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1722948849; x=1723553649; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gv+R0AOxTRNRr/YYta1DbILbzN2/ozjvln37VG+akqw=;
+ b=pMqQlNuhvjAjZ/LZtahOeUPMpwtwcsQFzPfPSHOwHYr8IkA18U5kfNmpnN2Hs9I2Ef
+ fr/v13JgebmIAV/bw843V47ESuhVkL12S4hxqUwtWbAssE0ywieUrlHQaq6HCzf5el2e
+ cRXzgVkOoOwhbP916+veJqzy+OU1gSZWeDyoZfBGrbCGFy58R33bIFDghUpbiwX63SkC
+ 9Y6jgtdUOLDF7ySuw8RCpx/BfO8pwNKfEo9hFExBAomWwQA7foD8s+W1ZhgaqOMQTgYV
+ 37Z+hoDKoxyl1s9V1cuhAmQQdWa+crysZ5qP0NaKYYBNsDNrGDPxgz4hOHXlZ0xAdseU
+ H4Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1722948849; x=1723553649;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=gv+R0AOxTRNRr/YYta1DbILbzN2/ozjvln37VG+akqw=;
+ b=n01DbxhFfyrmFQpo/prEma1sy7EMVZvkRNcrqOHXPq1WOdEHomwIg+gZzy+anNeSLp
+ qA5AZsIeE97j0GQeIyWWcJLgtJA1kNlYkYfxnq8llA16OLlCdHulvDnWvqAeZDWTFB7w
+ 9unmV2kubi2nX/i3T7zWEe8URs6QxDA7sqj+WJbVNeQOCzbgH5Imdy+rhN0Ub1DAaA+E
+ qAU89IQAGPdhp2ybRzdYsY3GHmwPePek2gmwC+sZeR5ZQI4WTpocgRJe/X1drpDjurev
+ IbTsw7DIBOeSo/IOMdZGszDAfMke/GBC1Xy2gxvuRF8IBrpkqEZVOB+ItxfhNht36Jjy
+ 5MHQ==
+X-Gm-Message-State: AOJu0Yydo86uBHraLbzIH4r7b1wbciCrtXTOLMorZ+JDTO5sitOsIefq
+ sx3p0XdzhF7S/GgvTdEMx6Kx9yCONDV74N8MHMpIIXOP1vMMYh8czuWQ0UmAtP6S5QqLSY+4rVR
+ S
+X-Google-Smtp-Source: AGHT+IEjUA7XHVQZQ9IKvGvDk1ZhAIr83KVOzxwR2ijFBWm9ba6PraKB14zqi/sY1NsIg+m0hfzMvA==
+X-Received: by 2002:a2e:98c3:0:b0:2ef:2b06:e554 with SMTP id
+ 38308e7fff4ca-2f15aa87375mr99364231fa.15.1722948849227; 
+ Tue, 06 Aug 2024 05:54:09 -0700 (PDT)
+Received: from m1x-phil.lan (cor91-h02-176-184-30-206.dsl.sta.abo.bbox.fr.
+ [176.184.30.206]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5bb88d1d9a3sm2558061a12.26.2024.08.06.05.54.08
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 06 Aug 2024 05:54:08 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 21/28] hw/ide/pci: Remove dead code from bmdma_prepare_buf()
+Date: Tue,  6 Aug 2024 14:51:49 +0200
+Message-ID: <20240806125157.91185-22-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240806125157.91185-1-philmd@linaro.org>
+References: <20240806125157.91185-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZrHtxrb5dyh3eKJu@redhat.com>
-User-Agent: NeoMutt/20240425
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::231;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,57 +95,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 06, 2024 at 10:32:54AM GMT, Daniel P. Berrangé wrote:
-> On Mon, Aug 05, 2024 at 09:21:36PM -0500, Eric Blake wrote:
-> > Since an NBD server may be long-living, serving clients that
-> > repeatedly connect and disconnect, it can be more efficient to clean
-> > up after each client disconnects, rather than storing a list of
-> > resources to clean up when the server exits.  Rewrite the list of
-> > known clients to be double-linked so that we can get O(1) deletion to
-> > keep the list pruned to size as clients exit.  This in turn requires
-> > each client to track an opaque pointer of owner information (although
-> > qemu-nbd doesn't need to refer to it).
-> 
-> I tend to feel that this needs to be squashed into the previous
-> patch.  The previous patch effectively creates unbounded memory
-> usage in the NBD server. ie consider a client that connects and
-> immediately disconnects, not sending any data, in a tight loop.
-> It will "leak" NBDConn & QIOChanelSocket pointers for each
-> iteration of the loop, only to be cleaned up when the NBD Server
-> is shutdown.
-> 
-> Especially given that we tagged the previous commit with a CVE
-> and not this commit,  people could be misled into backporting
-> only the former commit leaving them open to the leak.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Makes sense.  Will respin v4 along those lines; although I plan to
-refactor slightly: have patch 1 pick up the part of this patch that
-allows server.c to track a client's owner, then patch 2 be the CVE fix
-creating the doubly-linked list of QIOSocketChannel wrappers as
-owners.  Also, I realized that nbd_server->connections == 0 is now
-effectively redundant with QLIST_EMPTY(&nbd_server->conns), so that's
-another cleanup to squash in.
+Coverity notes that the code at the end of the loop in
+bmdma_prepare_buf() is unreachable.  This is because in commit
+9fbf0fa81fca8f527 ("ide: remove hardcoded 2GiB transactional limit")
+we removed the only codepath in the loop which could "break" out of
+it, but didn't notice that this meant we should also remove the code
+at the end of the loop.
 
-> > @@ -103,14 +112,9 @@ static void nbd_server_free(NBDServerData *server)
-> >       */
-> >      qio_net_listener_disconnect(server->listener);
-> >      object_unref(OBJECT(server->listener));
-> > -    while (!QSLIST_EMPTY(&server->conns)) {
-> > -        NBDConn *conn = QSLIST_FIRST(&server->conns);
-> > -
-> > +    QLIST_FOREACH_SAFE(conn, &server->conns, next, tmp) {
-> >          qio_channel_shutdown(QIO_CHANNEL(conn->cioc), QIO_CHANNEL_SHUTDOWN_BOTH,
-> >                               NULL);
-> > -        object_unref(OBJECT(conn->cioc));
-> > -        QSLIST_REMOVE_HEAD(&server->conns, next);
-> > -        g_free(conn);
-> >      }
-> > 
-> >      AIO_WAIT_WHILE_UNLOCKED(NULL, server->connections > 0);
+Remove the dead code.
 
+Resolves: Coverity CID 1547772
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+[PMD: Break and return once at EOF]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20240805182419.22239-1-philmd@linaro.org>
+---
+ hw/ide/pci.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/hw/ide/pci.c b/hw/ide/pci.c
+index 4675d079a1..a008fe7316 100644
+--- a/hw/ide/pci.c
++++ b/hw/ide/pci.c
+@@ -237,7 +237,7 @@ static int32_t bmdma_prepare_buf(const IDEDMA *dma, int32_t limit)
+             /* end of table (with a fail safe of one page) */
+             if (bm->cur_prd_last ||
+                 (bm->cur_addr - bm->addr) >= BMDMA_PAGE_SIZE) {
+-                return s->sg.size;
++                break;
+             }
+             pci_dma_read(pci_dev, bm->cur_addr, &prd, 8);
+             bm->cur_addr += 8;
+@@ -266,10 +266,7 @@ static int32_t bmdma_prepare_buf(const IDEDMA *dma, int32_t limit)
+             s->io_buffer_size += l;
+         }
+     }
+-
+-    qemu_sglist_destroy(&s->sg);
+-    s->io_buffer_size = 0;
+-    return -1;
++    return s->sg.size;
+ }
+ 
+ /* return 0 if buffer completed */
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.45.2
 
 
