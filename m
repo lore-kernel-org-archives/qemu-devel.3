@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D4A7C52D70
-	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 16:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E4DCC52D71
+	for <qemu-devel@archiver.kernel.org>; Tue,  6 Aug 2024 16:41:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbNEQ-000454-Jv; Tue, 06 Aug 2024 12:40:18 -0400
+	id 1sbNFr-0008GC-Ll; Tue, 06 Aug 2024 12:41:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sbNEH-0003zM-Ch
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 12:40:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sbNFo-00084r-NT
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 12:41:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sbNEF-0007nx-1n
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 12:40:09 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sbNFn-00086P-3O
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 12:41:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1722962402;
+ s=mimecast20190719; t=1722962502;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1Jl/wmdif6aFGOyhppRJD2D5MbqV4PONHXdSrt1eiR4=;
- b=YUB9Ry3ymAQVXQNuqqPgbk6BooEQ14n0xUWJpqbodw4aTiK/cgCw+jOWtwMyPuLfsae4QC
- X0tSbaUNHC1/R/wW69/s0OWItzbHEH1nwdB8EVdpBfdIeyoYnDUloRX9klqI7G2Ym93LSh
- iJ61LL/zuW1yCU/Pq9WEm2rA2OkNBPE=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0iuQZNPW8ck5a+j6YbvNF8m0zNRaEtmMueeXznvAAiA=;
+ b=Lg5n6FeZi9nD7Ox5Yho+0brFTE0fZnBnT0cOft9oKFugtsgIPCO00fvCwKZo0e1tRgjBC8
+ ygopjXEU5d9E/H3fs5HeKMlMIIDoFEZSUcxGeQ8RW3/IA96l7vtZPeVAnb2AIY1qNB72ds
+ 4e+JxIGKdGZYQZvmcto5rszKY5b9ezI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-264-BUjHnOhnMiKxFutMFa7uPw-1; Tue, 06 Aug 2024 12:40:01 -0400
-X-MC-Unique: BUjHnOhnMiKxFutMFa7uPw-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-36878581685so559803f8f.2
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 09:40:00 -0700 (PDT)
+ us-mta-427-ioA_WH6dOe-nO49JEWF0_g-1; Tue, 06 Aug 2024 12:41:40 -0400
+X-MC-Unique: ioA_WH6dOe-nO49JEWF0_g-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-42816aacabcso6686155e9.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 09:41:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722962400; x=1723567200;
+ d=1e100.net; s=20230601; t=1722962500; x=1723567300;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=1Jl/wmdif6aFGOyhppRJD2D5MbqV4PONHXdSrt1eiR4=;
- b=czEmF45eWUaU6ojW77LXyzTwCOmpwOifS5HbodTzsAs3srvHMitaFtR/JMIzjj8lZk
- 9YOdlwvsQmmn6HFEf2VEgKeOQ3aO1YKyjdfDlxFWMUhKma31pZX3JvZq8ueUpZ3FQ8UG
- 23qRwDVGmH4WdVgxwTmQNqmFQFBNbB8omDZlyGy0okynVkNhCl7SMN1tFuknp1YlUZgO
- AvurjrGcMpsUrctZze/IcKdhSELl6wX4/XPTqjGOw0YSI1PmxEnCMWYQ66V2aF2/q/GI
- 1A1Z9tg4T7Oij3kTG2zILLt2jhwzmc5h/CUq3LuWvjCowrRmkdxIEDr8RyydTOj0IGaw
- 28rQ==
+ bh=0iuQZNPW8ck5a+j6YbvNF8m0zNRaEtmMueeXznvAAiA=;
+ b=dGjxYJ1pnR8cbhS9Ui8sQfytEqRCQY023rza3/haK76DhVYVaW+0QhzPYKGAFRoBND
+ olH58T7EdG1Qj/o7NDMtV13E+Hj+Mm6EMt9h2D8BQzi5wWKPVQYVRPuN03Oqa+xfxlIP
+ eh8mEHeEFG7tR2Xh92jjZIY7PSkchZRxOFKbD9HY94P+FiArbsWZRTLGYCE7iKjwb9pd
+ rncP/uFaH+u3TseXg8TMfpIrbv6K6xKh6/+Jp16qgO3VdBVohCEa8YtyPWxWdv2PxZey
+ ekIRkNN9GlQPl+8j8EdP8ALhsXVWQoNT4cRPEfGsDLBiWNOMZa/3SyuHy44TSt5BzsYt
+ H5Aw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWUJYi+RClgLMfABaARPwF5NEB5v28e20iwEn0dAGGUMkQDot2BCdli8e/nBk5DyuJp1lIdbeYICeh7zd+zOLeJRI+fzTI=
-X-Gm-Message-State: AOJu0Yxsx+CzFYqWloj/EKA4d1qMRq0p/HYyNOpJaaPQtR5o8IRzZxI9
- W0OCBkSx7BRwJjm94lq/qDd/OUshMcguL9gX+yvAJLjXNZpiSR8MktOjpxZA8ucNpWBXCScPpUa
- Etzpr1bOqtAvpMnTRVEyR0yLZujJjN5yZLRfMpfCL8x82jQ1QYY64
-X-Received: by 2002:a05:6000:1faf:b0:367:8f81:f9fc with SMTP id
- ffacd0b85a97d-36bbc1c1b09mr11605946f8f.50.1722962399790; 
- Tue, 06 Aug 2024 09:39:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJYUkQVU816/gDbqek7kHm96br6XE2bwQvIubFF0ih9n0aF+ktzYNcv0qRO29qjO98Jnl2Sg==
-X-Received: by 2002:a05:6000:1faf:b0:367:8f81:f9fc with SMTP id
- ffacd0b85a97d-36bbc1c1b09mr11605930f8f.50.1722962399317; 
- Tue, 06 Aug 2024 09:39:59 -0700 (PDT)
+ AJvYcCVgu9FfnOWu/UIIj7jbfzawoQwBlNEbffU3Rc2UzE9voH6lmIm7nhlW2YGwc1iIIrEABgiaSp6JA47y7tRgPVjEkEGZ0Go=
+X-Gm-Message-State: AOJu0Ywdhokz6513C9wP/Snn99SJxzGAhqmzIWYsVORA45XBblMJC0j9
+ co3YhSJEEYhQ5m5AAggivowhtEovd7/+DT4gloRyWVoB2FxLq9hgb3fwQIapefZ370RjQZ35/yf
+ 4dQngNrOKoSWv4LZeiDtCFtcnKimhLYRW1yKCzTSwOywhsGPPTB9a
+X-Received: by 2002:a05:600c:198f:b0:426:5c34:b19b with SMTP id
+ 5b1f17b1804b1-428e6b00c7dmr113827015e9.20.1722962499684; 
+ Tue, 06 Aug 2024 09:41:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEq7ZGshu4Cqrnm7hDFd6QWsTphm4cAeifrH3fFs4sC4QNgSRNuWkGc9j5Bo1lxSZUkmEEb/w==
+X-Received: by 2002:a05:600c:198f:b0:426:5c34:b19b with SMTP id
+ 5b1f17b1804b1-428e6b00c7dmr113826835e9.20.1722962499168; 
+ Tue, 06 Aug 2024 09:41:39 -0700 (PDT)
 Received: from ?IPV6:2003:cb:c73f:8500:f83c:3602:5300:88af?
  (p200300cbc73f8500f83c3602530088af.dip0.t-ipconnect.de.
  [2003:cb:c73f:8500:f83c:3602:5300:88af])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36be1daa030sm5080648f8f.114.2024.08.06.09.39.58
+ 5b1f17b1804b1-428e6e01d0asm184047925e9.16.2024.08.06.09.41.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Aug 2024 09:39:58 -0700 (PDT)
-Message-ID: <39475af7-9090-4304-80c1-fb08c7360e83@redhat.com>
-Date: Tue, 6 Aug 2024 18:39:57 +0200
+ Tue, 06 Aug 2024 09:41:38 -0700 (PDT)
+Message-ID: <852c8a3b-f2bf-405f-bdab-4df4a910a619@redhat.com>
+Date: Tue, 6 Aug 2024 18:41:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] reset: Use ResetType for qemu_devices_reset() and
- MachineClass->reset()
+Subject: Re: [PATCH 2/4] reset: Add RESET_TYPE_WAKEUP
 To: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>
 References: <20240806160756.182524-1-jmarcin@redhat.com>
- <20240806160756.182524-2-jmarcin@redhat.com>
+ <20240806160756.182524-3-jmarcin@redhat.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -125,17 +124,17 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20240806160756.182524-2-jmarcin@redhat.com>
+In-Reply-To: <20240806160756.182524-3-jmarcin@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -154,40 +153,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 06.08.24 18:07, Juraj Marcin wrote:
-> Currently, both qemu_devices_reset() and MachineClass->reset() use
-> ShutdownCause for the reason of the reset. However, the Resettable
-> interface uses ResetState, so ShutdownCause needs to be translated to
-> ResetType somewhere. Translating it qemu_devices_reset() makes adding
-> new reset types harder, as they cannot always be matched to a single
-> ShutdownCause here, and devices may need to check the ResetType to
-> determine what to reset and if to reset at all.
-> 
-> This patch moves this translation up in the call stack to
-> qemu_system_reset() and updates all MachineClass children to use the
-> ResetType instead.
+> Some devices need to distinguish cold start reset from waking up from a
+> suspended state. This patch adds new value to the enum, and updates the
+> i386 wakeup method to use this new reset type.
 > 
 > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
 > ---
-
-[...]
-
+>   docs/devel/reset.rst    | 7 +++++++
+>   hw/i386/pc.c            | 2 +-
+>   include/hw/resettable.h | 2 ++
+>   3 files changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/docs/devel/reset.rst b/docs/devel/reset.rst
+> index 9746a4e8a0..30c9a0cc2b 100644
+> --- a/docs/devel/reset.rst
+> +++ b/docs/devel/reset.rst
+> @@ -44,6 +44,13 @@ The Resettable interface handles reset types with an enum ``ResetType``:
+>     value on each cold reset, such as RNG seed information, and which they
+>     must not reinitialize on a snapshot-load reset.
 >   
->   static void mps2tz_class_init(ObjectClass *oc, void *data)
-> diff --git a/hw/core/reset.c b/hw/core/reset.c
-> index 58dfc8db3d..60c9c66d81 100644
-> --- a/hw/core/reset.c
-> +++ b/hw/core/reset.c
-> @@ -25,8 +25,8 @@
->   
->   #include "qemu/osdep.h"
->   #include "sysemu/reset.h"
-> -#include "hw/resettable.h"
->   #include "hw/core/resetcontainer.h"
-> +#include "hw/resettable.h"
+> +``RESET_TYPE_WAKEUP``
+> +  This type is used when the machine is woken up from a suspended state (deep
+> +  sleep, suspend-to-ram). Devices that must not be reset to their initial state
+> +  after wake-up (for example virtio-mem) can use this state to differentiate
+> +  cold start from wake-up can use this state to differentiate cold start from
+> +  wake-up.
+> +
+>   Devices which implement reset methods must treat any unknown ``ResetType``
+>   as equivalent to ``RESET_TYPE_COLD``; this will reduce the amount of
+>   existing code we need to change if we add more types in future.
 
-Curious, is that change really required?
-
-Apart from that LGTM!
+^ That sounds like using this for x86 below should just work.
 
 Reviewed-by: David Hildenbrand <david@redhat.com>
 
