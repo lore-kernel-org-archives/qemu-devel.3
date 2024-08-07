@@ -4,92 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE1CAC49EA1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 02:13:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD34AC49EA1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 02:37:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbWBR-0001aj-95; Tue, 06 Aug 2024 22:13:49 -0400
+	id 1sbWXO-0003iX-LB; Tue, 06 Aug 2024 22:36:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sbWBQ-0001Vl-1h
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 22:13:48 -0400
-Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sbWBO-0000RT-JO
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 22:13:47 -0400
-Received: by mail-ot1-x335.google.com with SMTP id
- 46e09a7af769-70936061d0dso875644a34.2
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 19:13:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722996825; x=1723601625; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lyHZ8QyMRXYtATudGdNQyXw9EsOe/vp7iSFzfhAImlM=;
- b=Z15GqNJ/U55CCMLUaML+bJQEHHJS2xabUFPCH3FDXudkXXuqVduUGVBJQCvE0q+N7y
- eKXFlCgI1Z2mG/1v1iQQJCzPDac7pkUJVZlgww+OJVs80XYKnCGKxddzqaQfp+bUxL3m
- ggxeC/yQt/q2r0ZtLipk1SoYKVAB3GC32DR73ZTDzccxFYUmuPngOa2A2qt7HauvpiQe
- dkBYTCI45RUZbT16Pz5x6UTdeHDPq8tH1GyD3nNS8Mc040jKupckxrLRJ9yuxonbokgg
- JWMb8QTdzbbDCvnIi7hXrFaaBwHHm+3SibB7OR5tvBEDa1vAMpjuNhQd+jbmGg8sa2xx
- iIJg==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1sbWXN-0003hE-2q
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 22:36:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1sbWXK-0003L9-Pc
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 22:36:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1722998185;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cQpRHf+2h7L5kvI42jU5Ge0NPjQwzESG7wv4H5cH2ZE=;
+ b=GZViLbA3eEh4gWIMmvYFX37IaCcUYfCo04tx3zF1ktHpy1jw633lvLuk1NrshwUH9LroFn
+ 4guKgETJDB7yIfBu13m+j6urMtKC/Ylh6kIqG5fG6ehSaoeg9YZoUU6aQ+FY1PHAUldmeZ
+ jFXZGSnEpzSYXx2OH4u8HIjQofoDhEw=
+Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
+ [209.85.222.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-674-tb6_eHm5NuKZ1u_kpYI9yQ-1; Tue, 06 Aug 2024 22:36:23 -0400
+X-MC-Unique: tb6_eHm5NuKZ1u_kpYI9yQ-1
+Received: by mail-ua1-f69.google.com with SMTP id
+ a1e0cc1a2514c-82c772e70c7so347373241.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 19:36:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722996825; x=1723601625;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lyHZ8QyMRXYtATudGdNQyXw9EsOe/vp7iSFzfhAImlM=;
- b=mvpvu1uI4v7KTJh5F8ZhByPqb0vDshW9jwITKyWQsA5n3cAmJ0LOTUMSU2OMcaYxPU
- WFe3CGrOivu5o7dMbitlMv2hQxlq3IXCrUiQksnsP3kBdHiucxw8zTcZ4GQ/oRNRLHNh
- wZJH23Tpbpjgvb/toY9EnFND3AW2XvP/rHPx/5o50YposgY00B4Yt+P0hFheJ5Qju1YV
- 8pdXBBMFFgpUqaOOUAgW4/MHOhjhtDGTcoSZZV85g7veTgv1HCutx16mBpgp7OBOhnb/
- bqbPCN6YCCdOPO6Yjdp4QhW8JmzZtpQcd39RNuQdDm0/a4+ESpvvRmtTKipZXNSiooq+
- 6N6g==
+ d=1e100.net; s=20230601; t=1722998183; x=1723602983;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cQpRHf+2h7L5kvI42jU5Ge0NPjQwzESG7wv4H5cH2ZE=;
+ b=N7ACdlpA+n48TpezZQejeEFZTnBB+rgVpzUn7p6iJMSMoffatBEJ8+AADnv8uJpsak
+ BCaCL0W7G+TjoiEzAaH3zrb78IASUvHY7267HjtyQjz7ky1cnJ5bJsn7RD3Y6gEuMAsf
+ Xr6iYWU1l+7ThxH7r/Z/mrMNAnGh6lwfSycw5LMJjK5SyOjP8kRZ4wBcrmeXdPnMINyZ
+ aqmdPdbeu1VKoPXsuhwjBy3lVZ49bpEilpP7Ch2Wnj1bNqueOLpOwn+9P0qbSlFQT16q
+ /yK0cj0mWc/Gj94OQZfaVoF4TZdwXvrjNrdefv+xT4RCz1Tz4ZPYXg9YvpNvt3tIKF01
+ 9naw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUu6QDM64lR8uft6DQVHamODt0FeovZ9Ijcb7jhBEQekTjXziKd5dcuUB6eZc4LX9btLp+Gg8Q/9GtAAs9DIayPGPuMunc=
-X-Gm-Message-State: AOJu0YyPnY+5gbjJhiU1zCK6FzhJxgYO5LHD1TiZuWYjx0FaRjL2ujpw
- /1gVheGScnMjtvFNnlLVdxscVim2W6ZIodaB2P7/cSiCP/XpDfsaTLeXXrA1ntU=
-X-Google-Smtp-Source: AGHT+IFYQ3eSsf5AV2g/LGzqXOsvXwXIDPNuIzJHWtl6XzL9lHzNZzYv0FrLUZPG5YPoZY/vDPMarg==
-X-Received: by 2002:a05:6830:3808:b0:709:33ee:f578 with SMTP id
- 46e09a7af769-709b32177d7mr20502184a34.14.1722996825295; 
- Tue, 06 Aug 2024 19:13:45 -0700 (PDT)
-Received: from ?IPV6:2403:580a:f89b:0:e01b:92e5:d779:1bc0?
- (2403-580a-f89b-0-e01b-92e5-d779-1bc0.ip6.aussiebb.net.
- [2403:580a:f89b:0:e01b:92e5:d779:1bc0])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7b76346a9absm6380299a12.29.2024.08.06.19.13.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Aug 2024 19:13:44 -0700 (PDT)
-Message-ID: <d9764ed2-b898-445c-83c2-7b21fe3f4663@linaro.org>
-Date: Wed, 7 Aug 2024 12:13:36 +1000
+ AJvYcCXVzHpqWIavU7tMhUco1ARQDHqQfDfPZuzxsgeYRJCUk9xvUPUA6BTJR/m3MOEwqJmGwdrE0rogatFtZlSK27rIk+GkSm8=
+X-Gm-Message-State: AOJu0YymhVmbiVhNQbc1R1JGoxaa35nT+lLa+DTS8RIeuw90NLZuyrW8
+ t2RS4HkZQnb39IuVzJemXNR5KDf8QPjzDSzGHZ2dmJwwybYyjmZlaEgoWW3muYuGt4KdzJXaC89
+ JIFNJi+t339nZL1Xw1rT/hS+VVGary53xK5tykewJqwWG1lK8U5Skzf+/9MkeODtC0diPT8iFPI
+ weV5Gr+RtO7avAs9wefH+JI1Jhv1E=
+X-Received: by 2002:a05:6102:441b:b0:493:8695:b194 with SMTP id
+ ada2fe7eead31-495b82d24acmr363152137.11.1722998182919; 
+ Tue, 06 Aug 2024 19:36:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE2r1g9ewYBABtbfnus27SQPUDvnbExPGXFrbkFAID9eCwgpZBhK0RxoAyyAr7IyBzVuxJm4zjzH2Q2RtH8H3M=
+X-Received: by 2002:a05:6102:441b:b0:493:8695:b194 with SMTP id
+ ada2fe7eead31-495b82d24acmr363145137.11.1722998182484; Tue, 06 Aug 2024
+ 19:36:22 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 11/20] target/riscv: tb flag for shadow stack
- instructions
-To: Deepak Gupta <debug@rivosinc.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: pbonzini@redhat.com, palmer@dabbelt.com, Alistair.Francis@wdc.com,
- laurent@vivier.eu, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- Jim Shu <jim.shu@sifive.com>, Andy Chiu <andy.chiu@sifive.com>
-References: <20240807000652.1417776-1-debug@rivosinc.com>
- <20240807000652.1417776-12-debug@rivosinc.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240807000652.1417776-12-debug@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240806005814.51651-1-lulu@redhat.com>
+ <CACGkMEuCJT8KYsDgJaXzvy1Fhm6+tJinowdTtoAngsnvYjB54Q@mail.gmail.com>
+ <CACLfguU47TPw5=GpS93AMWEYcy95JJ6+uG-PYpdmeD=hrKGa1Q@mail.gmail.com>
+In-Reply-To: <CACLfguU47TPw5=GpS93AMWEYcy95JJ6+uG-PYpdmeD=hrKGa1Q@mail.gmail.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Wed, 7 Aug 2024 10:35:52 +0800
+Message-ID: <CACGkMEvCSKfahpBQLAMmSzdFN-QPhg5Zx+UQVrFX0HsWybZZNA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] virtio_net: Add the check for vdpa's mac address
+To: Cindy Lu <lulu@redhat.com>
+Cc: mst@redhat.com, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,28 +101,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/7/24 10:06, Deepak Gupta wrote:
-> Shadow stack instructions can be decoded as zimop / zcmop or shadow stack
-> instructions depending on whether shadow stack are enabled at current
-> privilege. This requires a TB flag so that correct TB generation and correct
-> TB lookup happens. `DisasContext` gets a field indicating whether bcfi is
-> enabled or not.
-> 
-> This patch also implements helper bcfi function which determines if bcfi
-> is enabled at current privilege or not. qemu-user also gets field
-> `ubcfien` indicating whether qemu user has shadow stack enabled or not.
-> 
-> Signed-off-by: Deepak Gupta<debug@rivosinc.com>
-> Co-developed-by: Jim Shu<jim.shu@sifive.com>
-> Co-developed-by: Andy Chiu<andy.chiu@sifive.com>
-> ---
->   target/riscv/cpu.c        |  2 ++
->   target/riscv/cpu.h        |  4 ++++
->   target/riscv/cpu_helper.c | 30 ++++++++++++++++++++++++++++++
->   target/riscv/translate.c  |  4 ++++
->   4 files changed, 40 insertions(+)
+On Tue, Aug 6, 2024 at 5:44=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
+>
+> On Tue, 6 Aug 2024 at 11:07, Jason Wang <jasowang@redhat.com> wrote:
+> >
+> > On Tue, Aug 6, 2024 at 8:58=E2=80=AFAM Cindy Lu <lulu@redhat.com> wrote=
+:
+> > >
+> > > When using a VDPA device, it is important to ensure that
+> > > the MAC address in the hardware matches the MAC address
+> > > from the QEMU command line.
+> > > This will allow the device to boot.
+> > >
+> > > Signed-off-by: Cindy Lu <lulu@redhat.com>
+> > > ---
+> > >  hw/net/virtio-net.c | 33 +++++++++++++++++++++++++++++----
+> > >  1 file changed, 29 insertions(+), 4 deletions(-)
+> > >
+> > > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> > > index 9c7e85caea..7f51bd0dd3 100644
+> > > --- a/hw/net/virtio-net.c
+> > > +++ b/hw/net/virtio-net.c
+> > > @@ -3579,12 +3579,36 @@ static bool failover_hide_primary_device(Devi=
+ceListener *listener,
+> > >      /* failover_primary_hidden is set during feature negotiation */
+> > >      return qatomic_read(&n->failover_primary_hidden);
+> > >  }
+> > > +static bool virtio_net_check_vdpa_mac(NetClientState *nc, VirtIONet =
+*n, MACAddr *cmdline_mac,
+> > > +                                     Error **errp)
+> > > +{
+> > > +       struct virtio_net_config hwcfg =3D {};
+> > > +       static const MACAddr zero =3D { .a =3D { 0, 0, 0, 0, 0, 0 } }=
+;
+> > > +
+> > > +       vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t *)&hwc=
+fg, ETH_ALEN);
+> > > +
+> > > +    /*
+> > > +     * For VDPA device: Only two situations are acceptable:
+> > > +     * 1.The hardware MAC address is the same as the QEMU command li=
+ne MAC
+> > > +     *   address, and both of them are not 0.
+> >
+> > I guess there should be a bullet 2?
+> >
+> yes, there is a section 2, will change this code here
+> Thanks
+> cindy
+> > > +     */
+> > > +
+> > > +       if (memcmp(&hwcfg.mac, &zero, sizeof(MACAddr)) !=3D 0) {
+> > > +               if ((memcmp(&hwcfg.mac, cmdline_mac, sizeof(MACAddr))=
+ =3D=3D 0)) {
+> > > +                       return true;
+> > > +               }
+> > > +       }
+> > > +       error_setg(errp, "vDPA device's mac !=3D the mac address from=
+ qemu cmdline"
+> > > +                        "Please check the the vdpa device's setting.=
+");
+> >
+> > For error messages I think it's better to use english instead of "!=3D"
+> > to describe the issue.
+> >
+> > >
+> > > +       return false;
+> > > +}
+> > >  static void virtio_net_device_realize(DeviceState *dev, Error **errp=
+)
+> > >  {
+> > >      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
+> > >      VirtIONet *n =3D VIRTIO_NET(dev);
+> > >      NetClientState *nc;
+> > > +    MACAddr macaddr_cmdline;
+> > >      int i;
+> > >
+> > >      if (n->net_conf.mtu) {
+> > > @@ -3692,6 +3716,7 @@ static void virtio_net_device_realize(DeviceSta=
+te *dev, Error **errp)
+> > >      virtio_net_add_queue(n, 0);
+> > >
+> > >      n->ctrl_vq =3D virtio_add_queue(vdev, 64, virtio_net_handle_ctrl=
+);
+> > > +    memcpy(&macaddr_cmdline, &n->nic_conf.macaddr, sizeof(n->mac));
+> > >      qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
+> > >      memcpy(&n->mac[0], &n->nic_conf.macaddr, sizeof(n->mac));
+> > >      n->status =3D VIRTIO_NET_S_LINK_UP;
+> > > @@ -3739,10 +3764,10 @@ static void virtio_net_device_realize(DeviceS=
+tate *dev, Error **errp)
+> > >      nc->rxfilter_notify_enabled =3D 1;
+> > >
+> > >     if (nc->peer && nc->peer->info->type =3D=3D NET_CLIENT_DRIVER_VHO=
+ST_VDPA) {
+> > > -        struct virtio_net_config netcfg =3D {};
+> > > -        memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
+> > > -        vhost_net_set_config(get_vhost_net(nc->peer),
+> > > -            (uint8_t *)&netcfg, 0, ETH_ALEN, VHOST_SET_CONFIG_TYPE_F=
+RONTEND);
+> > > +          if (!virtio_net_check_vdpa_mac(nc, n, &macaddr_cmdline, er=
+rp)) {
+> > > +                  virtio_cleanup(vdev);
+> > > +                  return;
+> > > +          }
+> >
+> > Any reason we remove vhost_net_set_config() here? It is not described
+> > in the commit or does it belong to another patch?
+> >
+> > Thanks
+> >
+> as we discussed before=EF=BC=8C the MAC address in hardware should have a
+> "higher priority"
+> than the MAC address in qemu cmdline. So I remove the set_config there,
+> the MAC address from the hardware will overwrite the MAC in qemu
+> cmdline. so don't need to set_config to hardware now
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Probably, but I meant it needs to be a separate patch.
 
-r~
+For example the title said "add ...." but here it's a removal of something.
+
+Thanks
+
+> Thanks,
+> cindy
+> > >      }
+> > >      QTAILQ_INIT(&n->rsc_chains);
+> > >      n->qdev =3D dev;
+> > > --
+> > > 2.45.0
+> > >
+> >
+>
+
 
