@@ -4,88 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25C80C52D6F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 21:26:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D6F1C52D6F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 21:30:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sboAN-0007Mi-CM; Wed, 07 Aug 2024 17:25:55 -0400
+	id 1sboEh-0000Wa-7m; Wed, 07 Aug 2024 17:30:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sboAL-0007FM-5S
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 17:25:53 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sboAJ-0006Gs-Mz
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 17:25:52 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2cf98ba0559so269951a91.2
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 14:25:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1723065950; x=1723670750;
- darn=nongnu.org; 
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=+NtiK39PRKu5TV3cugoLOjFunL6Il1sVYisbMr+D3PI=;
- b=ZxpIuJ4TELs7c+jj1QXsflnUd9Gwl7ficCqDZFKOrbOXBsoP5chOTeJJrb4v4E/ojK
- rDVPcDkFY+nNW26UaWPHj+AIsDX+HHkK+DYG++hQwDZpVc9M5dJOvi8xuqmXQhiUtsik
- uf+ytUiHpZRy+LoqcPSIi4mu+3vTsKioeM3xSS5tQUc/006GXNy9COpSGiXiXGFGDrhG
- rOLZ/jMD8/5dSZJETW+XrF1hGbfq40vk2mBIOhgdg5cxiJUGBHdYTA5cW340L+tyPeR7
- FcSNCM3JzLpYO1zVLaDIQ6fqhZp6qBds+LYiQ8NBwu9uLVG8yULZV2HlNykR6uRMoNIW
- WGpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723065950; x=1723670750;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+NtiK39PRKu5TV3cugoLOjFunL6Il1sVYisbMr+D3PI=;
- b=fCOTmIVeZQcHOp+xlMYSshdiNxmEiIVlIBqcgk5woGa0+ZZr8FW2pflfHEzwAIC6Xn
- lbbeXfLnwcaqKWxiNrFDsbQO88xWVPTZe4FF85+Ver5QBmgkEXMlIr5xfyc5DXQo3aTh
- hEGiBDFor8rLywMtZsUwOlR2yuCevCUwcw69VMY+1Ni3PUFXLsKcO+SirT8bDiEQz2aG
- TxCCuYwpoaBs3vwor7B6j/dkLSYgJlEKRT6BGvDRnaGdWkOH8smuhhPTmA5Isi4sbLr4
- tv5JOSpVEQw5syx4BFjMnduf8ysLoQDee+DLqQo8KsdjjPbnnxQJaQn05JX2EeJlQgs2
- yAZg==
-X-Gm-Message-State: AOJu0YyHonR0lfYAb5IVtCSqnjZDVGkQs/gD4SGLRK10VyFJdrEcheJT
- SVh67/K4e/2QxU+QR5TW+VBHGVkPGQID4JXhSPEyTOeVRVgCGnYlc//lAerW9Ic=
-X-Google-Smtp-Source: AGHT+IG4VBMMMkHVCIsDHgj3vFh1zNGK25ly+a0ECrLxZRa4JWijhVstTHJme7lxWcPyQyVPZQFJkQ==
-X-Received: by 2002:a17:90a:e00a:b0:2d1:bf4b:4a6d with SMTP id
- 98e67ed59e1d1-2d1bf4b4b7dmr309289a91.1.1723065950007; 
- Wed, 07 Aug 2024 14:25:50 -0700 (PDT)
-Received: from debug.ba.rivosinc.com ([64.71.180.162])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d1b36dd55csm2068242a91.29.2024.08.07.14.25.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Aug 2024 14:25:49 -0700 (PDT)
-Date: Wed, 7 Aug 2024 14:25:47 -0700
-From: Deepak Gupta <debug@rivosinc.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com,
- palmer@dabbelt.com, Alistair.Francis@wdc.com, laurent@vivier.eu,
- bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, Jim Shu <jim.shu@sifive.com>,
- Andy Chiu <andy.chiu@sifive.com>
-Subject: Re: [PATCH v3 12/20] target/riscv: implement zicfiss instructions
-Message-ID: <ZrPmW3VvOiRObRfk@debug.ba.rivosinc.com>
-References: <20240807000652.1417776-1-debug@rivosinc.com>
- <20240807000652.1417776-13-debug@rivosinc.com>
- <199f7ee2-411c-48ec-bf69-34fceab8f48a@linaro.org>
- <26d1f8a7-9131-40f2-8d3a-e1daabad149b@linaro.org>
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sboEf-0000Uz-AJ
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 17:30:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sboEd-0006sz-G5
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 17:30:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723066217;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=25QnZEl54KxSQKXCqOFIfHhFacsI5RS3kxL4mu7w9ZM=;
+ b=dU2V5ejbe3UPX5QQFvRyCo8am6ez5jtMDeFv8VI2YFuKSBZUWdtemj1V9zXw4jxPyGSXF4
+ 4nz+LGYTRnT5KY0KI9Y8z8aksNlMmbcVG1srLyOm1jYH8radrEdnjl2jGXn+u3ozZcSGeV
+ H4a4S/q/kSSfTXwq+2fgr1s8Igv7M7Y=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-94-i0yh4ipSPnaMYJXx7oMd_Q-1; Wed,
+ 07 Aug 2024 17:30:16 -0400
+X-MC-Unique: i0yh4ipSPnaMYJXx7oMd_Q-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0C6731955F42; Wed,  7 Aug 2024 21:30:15 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.114])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 30A0E3000197; Wed,  7 Aug 2024 21:30:12 +0000 (UTC)
+Date: Wed, 7 Aug 2024 16:30:09 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com, 
+ qemu-block@nongnu.org, den@virtuozzo.com, andrey.drobyshev@virtuozzo.com, 
+ alexander.ivanov@virtuozzo.com, vsementsov@yandex-team.ru
+Subject: Re: [PATCH v4 5/7] nbd/server: CVE-2024-7409: Close stray client
+ sockets at shutdown
+Message-ID: <qszghymm32cxjlr26ktwlcsus3zgyt2ztjdsal7rjlwox5vxsw@35yrkrpjkyi3>
+References: <20240807174943.771624-9-eblake@redhat.com>
+ <20240807174943.771624-14-eblake@redhat.com>
+ <ZrO9BeplRulpFbVP@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <26d1f8a7-9131-40f2-8d3a-e1daabad149b@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=debug@rivosinc.com; helo=mail-pj1-x102b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <ZrO9BeplRulpFbVP@redhat.com>
+User-Agent: NeoMutt/20240425
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,25 +87,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 07, 2024 at 12:56:46PM +1000, Richard Henderson wrote:
->On 8/7/24 12:39, Richard Henderson wrote:
->>>+static bool trans_sspopchk(DisasContext *ctx, arg_sspopchk *a)
->>>+{
->>>+††† /* default for qemu-user, use regular RW memory and thus mmu_idx=0 */
->>>+††† int ss_mmu_idx = 0;
->>
->>This can't be right, since 0 is M_MODE.
->
->I'm wrong about m-mode here, but "0" is certainly not right.
+On Wed, Aug 07, 2024 at 07:29:25PM GMT, Daniel P. Berrang√© wrote:
+> On Wed, Aug 07, 2024 at 12:43:31PM -0500, Eric Blake wrote:
+> > A malicious client can attempt to connect to an NBD server, and then
+> > intentionally delay progress in the handshake, including if it does
+> > not know the TLS secrets.  Although this behavior can be bounded by
+> > the max-connections parameter, the QMP nbd-server-start currently
+> > defaults to unlimited incoming client connections.  Worse, if the
 
-I followed `riscv_env_mmu_index` here. If CONFIG_USER_ONLY, it returns 0.
-For qemu-user, I didn't bother to protect shadow stack from normal stores.
-And simply used index 0.
+I need to touch that sentence up to match the earlier patches.  (The
+curse of rebasing late at night...)
 
->
->I strongly suspect you want "ctx->mem_idx | MMU_IDX_SS_ACCESS",
->once you add that bit in a few patches.
->
->
->r~
+> > client waits to close the socket until after the QMP nbd-server-stop
+> > command is executed, qemu will then SEGV when trying to dereference
+> > the NULL nbd_server global which is no longer present, which amounts
+> > to a denial of service attack.  If another NBD server is started
+> > before the malicious client disconnects, I cannot rule out additional
+> > adverse effects when the old client interferes with the connection
+> > count of the new server.
+
+I _think_ the effect is most likely to be an assertion failure
+(nbd_server->connections > 0), since we recommend compiling qemu with
+assertions enabled.  But "most likely" is not the same as "certainty".
+
+> > 
+> > For environments without this patch, the CVE can be mitigated by
+> > ensuring (such as via a firewall) that only trusted clients can
+> > connect to an NBD server.  Note that using frameworks like libvirt
+> > that ensure that TLS is used and that nbd-server-stop is not executed
+> > while any trusted clients are still connected will only help if there
+> > is also no possibility for an untrusted client to open a connection
+> > but then stall on the NBD handshake.
+> > 
+> > Given the previous patches, it would be possible to guarantee that no
+> > clients remain connected by having nbd-server-stop sleep for longer
+> > than the default handshake deadline before finally freeing the global
+> > nbd_server object, but that could make QMP non-responsive for a long
+> > time.  So intead, this patch fixes the problem by tracking all client
+> > sockets opened while the server is running, and forcefully closing any
+> > such sockets remaining without a completed handshake at the time of
+> > nbd-server-stop, then waiting until the coroutines servicing those
+> > sockets notice the state change.  nbd-server-stop now has a second
+> > AIO_WAIT_WHILE_UNLOCKED (the first is indirectly through the
+> > blk_exp_close_all_type() that disconnects all clients that completed
+> > handshakes), but forced socket shutdown is enough to progress the
+> > coroutines and quickly tear down all clients before the server is
+> > freed, thus finally fixing the CVE.
+> > 
+> > This patch relies heavily on the fact that nbd/server.c guarantees
+> > that it only calls nbd_blockdev_client_closed() from the main loop
+> > (see the assertion in nbd_client_put() and the hoops used in
+> > nbd_client_put_nonzero() to achieve that); if we did not have that
+> > guarantee, we would also need a mutex protecting our accesses of the
+> > list of connections to survive re-entrancy from independent iothreads.
+> > 
+> > Although I did not actually try to test old builds, it looks like this
+> > problem has existed since at least commit 862172f45c (v2.12.0, 2017) -
+> > even back when that patch started using a QIONetListener to handle
+> > listening on multiple sockets, nbd_server_free() was already unaware
+> > that the nbd_blockdev_client_closed callback can be reached later by a
+> > client thread that has not completed handshakes (and therefore the
+> > client's socket never got added to the list closed in
+> > nbd_export_close_all), despite that patch intentionally tearing down
+> > the QIONetListener to prevent new clients.
+> > 
+> > Reported-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+> > Fixes: CVE-2024-7409
+> > Signed-off-by: Eric Blake <eblake@redhat.com>
+> > ---
+> >  blockdev-nbd.c | 35 ++++++++++++++++++++++++++++++++++-
+> >  1 file changed, 34 insertions(+), 1 deletion(-)
+> 
+> Reviewed-by: Daniel P. Berrang√© <berrange@redhat.com>
+
+Thanks for a speedy review.
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
+
 
