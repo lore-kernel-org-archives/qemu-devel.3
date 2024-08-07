@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30BAAC52D6F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 20:29:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D7EC52D7B
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 20:29:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbnGq-0001Wy-5y; Wed, 07 Aug 2024 16:28:32 -0400
+	id 1sbnGr-0001dl-JN; Wed, 07 Aug 2024 16:28:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbnGi-0001Oo-Rs
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 16:28:24 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbnGp-0001YD-W2
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 16:28:32 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbnGh-0006tO-7n
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 16:28:24 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3686b554cfcso123729f8f.1
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 13:28:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbnGo-0006tz-2L
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 16:28:31 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-368663d7f80so98112f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 13:28:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723062501; x=1723667301; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723062508; x=1723667308; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8TvYvkgtExP5sUQjhWB+PYXRtHHu4raSI4RPFwJP3Ws=;
- b=cQOFieRsWo3zFPryncg6Yzt2bYMHK3Fc2VarD4w8lkw/vBDA9E30FGvhsDpNk0z3lZ
- WEZd3jEqo+ZihC2+yWZolEY8vriE8AKzmqtyWR160PP/l0mVp2lvCnQ2DhT9RUGRLgrE
- 4pdCQwWgHCAWp1YB33DoD8wae8q8qhG2zwYsyOJ9JkEZccm807u3wLRbzJFt8dWN6Igj
- dAdlxSCq3pPykHVw/q/Ib/C9M+TYS5uQqH7YsiQItL19gpiENCp4sT122+3TkMG/rGco
- VXhmVgpY3NQwDJxnVUFrwSnsDZ6SCcZ6iTQVu8TgOrHIOZNv06lEd/aePJ14B3oJNZtw
- r24g==
+ bh=64V2wCrrYmQb5TKOeGR5XbQEWlSQEIaOZkBcAH6L56E=;
+ b=qYOa2xoCjjcofywzBJvPEsG4kUCgPi6vTeyxn4vDQmXCn6Q1wlfCuLZEjuEM31VdT1
+ A+4xkja2avrRw7mxVCgY+N/WcjpYi8NWLE8zQNwlEpPmlYtcogQoGMLL2e9umSLN7KrM
+ g7Hj0NXTY5FTVV58932/xfjXqXJRLir8Yb6Bm3S33u9xdlgEymjY2AeQQksrSE7NZu8d
+ XSxgHKE4jYbgkTlc5z218aw1Plk1UnUCazvBgX3G1Eh4y2WL80OVaCzHHphJF1o5Z/3D
+ qYCMiHFHoVqoKeuuAOXIGMbSfrZAy91P4pVDlsVBPpMOzDIF8+AMDCpybfoBa8B7R4q4
+ GQOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723062501; x=1723667301;
+ d=1e100.net; s=20230601; t=1723062508; x=1723667308;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8TvYvkgtExP5sUQjhWB+PYXRtHHu4raSI4RPFwJP3Ws=;
- b=aAdJ7qdlfB39k5Y2eOR1L1YBuTVO/BamF2P+I2hFID7yVpIvcD+JclMuvHe/iNo7cv
- 3B0l61fr3pVotsv9LagsixcjF/Ktnhj5Gd2NpjBqzt3pRDfsA6zN4qv3Tox+2SZtBLNO
- Qj+I+3hVleJSTUfuME0RpJ/5tS3cgfWrb3cJeJ///SBiuy2P32mDgG12Oyc05A4pcEj9
- x9qPIJyTcjPPQIX6TskRyzyaWXc33kBz41SaduxY5Uk2PK8Spl58ldUlbIBEjPpuVsdp
- jFszJoeMt9bqzRbRkCrnJB004Tom70O5V2pKme5Ums7OmoTenSF9ScNgPentZcdWMcWO
- Lotg==
-X-Gm-Message-State: AOJu0YwCEchnN3dGOBNbEAWmUMPLg9+WRyh/Tvx5jvuSZ8+CWnIia1lr
- qrg70PBPKkTlICfrV58k2fIMLKdSDX2SGAbkGoDb1ilzKI1ijk/KIo0Pb3NVt0IuGNXJFnz22N6
- W
-X-Google-Smtp-Source: AGHT+IHOyjy+7uKf5bPFYEQkCrY89yhGTbPxF6nC3jMe2anh6X3XRwl2576WDTJXCadyYi9NijXH2A==
-X-Received: by 2002:a5d:5e11:0:b0:36b:cc42:29f9 with SMTP id
- ffacd0b85a97d-36bcc422dbcmr9853284f8f.51.1723062501267; 
- Wed, 07 Aug 2024 13:28:21 -0700 (PDT)
+ bh=64V2wCrrYmQb5TKOeGR5XbQEWlSQEIaOZkBcAH6L56E=;
+ b=riLhreh0bdCKUHk3Mw4gRtSVZXDk0NwOZZWGlXFF58zIWl83kUKrXP/liHQ2dKq+c3
+ n2DMoAB1DSDMU+vIWoLa5yozwmW508mCAd2uxkxr2MLM9VFEa4VPgRNZVJh4UXqqnw/T
+ in8t9fDPPXtUgDS6kadRg65oW95awb5xVyXgeBqjjpp0tWTgl8M5rdKLeP2PvEdDgwsh
+ dXQtNN2rdHCZgzKauBX9ChFp3hUzFWKNglyvf/Bro9XKnyFvqAu3J5TCHwb0BZrPw21o
+ vdLy6AdFIQT0NswXPjSLN06QKjaljrRpGXnI6P1CB0x67+Zz61k1BGdMkS4czXFc2t5M
+ T3KQ==
+X-Gm-Message-State: AOJu0YwXAzZQ2dxaUkurGmm7jWHNmwQ674s1Wm9NrRt7OsOBxMTurOYY
+ 9eK2XD9l/7X6f85vZ9S3Rh/MqsBKFIEx/5ybYyArLSzC+WQlPrNXaA1ZeKkdsA9xRxmE7x9PXNL
+ U
+X-Google-Smtp-Source: AGHT+IF6EVqFQ62pSG19zvVCjx6YsEtR7MuubzLMXC/MVgAuhBvZKH0S9QdDlNTK2rJnUhwDglEiEw==
+X-Received: by 2002:a05:6000:d2:b0:368:71fa:7532 with SMTP id
+ ffacd0b85a97d-36bbc0e7225mr11786735f8f.31.1723062507881; 
+ Wed, 07 Aug 2024 13:28:27 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.120])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36bbcf0cc8esm16889501f8f.19.2024.08.07.13.28.19
+ ffacd0b85a97d-36bbcf1e0bcsm16946687f8f.30.2024.08.07.13.28.25
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 07 Aug 2024 13:28:20 -0700 (PDT)
+ Wed, 07 Aug 2024 13:28:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Glenn Miles <milesg@linux.ibm.com>,
@@ -65,18 +65,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Glenn Miles <milesg@linux.ibm.com>,
  Alistair Francis <alistair@alistair23.me>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 v2 2/4] hw/ssi/pnv_spi: Match _xfer_buffer_free() with
- _xfer_buffer_new()
-Date: Wed,  7 Aug 2024 22:28:02 +0200
-Message-ID: <20240807202804.56038-3-philmd@linaro.org>
+Subject: [PATCH-for-9.1 v2 3/4] hw/ssi/pnv_spi: Return early in transfer()
+Date: Wed,  7 Aug 2024 22:28:03 +0200
+Message-ID: <20240807202804.56038-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240807202804.56038-1-philmd@linaro.org>
 References: <20240807202804.56038-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,31 +98,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-pnv_spi_xfer_buffer_new() allocates %payload using g_malloc0(),
-and pnv_spi_xfer_buffer_write_ptr() allocates %payload->data
-using g_realloc(). Use the API equivalent g_free() to release
-the buffers.
+Return early to simplify next commit.
+No logical change intended.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ssi/pnv_spi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/ssi/pnv_spi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
-index c1297ab733..13a47f07e7 100644
+index 13a47f07e7..05e6afc11e 100644
 --- a/hw/ssi/pnv_spi.c
 +++ b/hw/ssi/pnv_spi.c
-@@ -53,8 +53,8 @@ static PnvXferBuffer *pnv_spi_xfer_buffer_new(void)
+@@ -217,6 +217,9 @@ static void transfer(PnvSpi *s, PnvXferBuffer *payload)
+     PnvXferBuffer *rsp_payload = NULL;
  
- static void pnv_spi_xfer_buffer_free(PnvXferBuffer *payload)
- {
--    free(payload->data);
--    free(payload);
-+    g_free(payload->data);
-+    g_free(payload);
+     rsp_payload = pnv_spi_xfer_buffer_new();
++    if (!rsp_payload) {
++        return;
++    }
+     for (int offset = 0; offset < payload->len; offset += s->transfer_len) {
+         tx = 0;
+         for (int i = 0; i < s->transfer_len; i++) {
+@@ -235,9 +238,7 @@ static void transfer(PnvSpi *s, PnvXferBuffer *payload)
+                     (rx >> (8 * (s->transfer_len - 1) - i * 8)) & 0xFF;
+         }
+     }
+-    if (rsp_payload != NULL) {
+-        spi_response(s, s->N1_bits, rsp_payload);
+-    }
++    spi_response(s, s->N1_bits, rsp_payload);
  }
  
- static uint8_t *pnv_spi_xfer_buffer_write_ptr(PnvXferBuffer *payload,
+ static inline uint8_t get_seq_index(PnvSpi *s)
 -- 
 2.45.2
 
