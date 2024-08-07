@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4727DC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 17:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F34C52D73
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 17:51:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbkna-0007a1-7f; Wed, 07 Aug 2024 13:50:10 -0400
+	id 1sbknf-0007sJ-Cv; Wed, 07 Aug 2024 13:50:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sbknX-0007Po-4k
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 13:50:07 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sbknd-0007l2-OU
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 13:50:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sbknT-0000Sf-TV
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 13:50:06 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sbknb-0000ex-PQ
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 13:50:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723053002;
+ s=mimecast20190719; t=1723053008;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WQK01Bifiek87mMyVcAtTTYs9fgskkmzBNhnR63Cn9w=;
- b=FQrnnV5I6c/wjQID06won+f3GUvkUBCKlAUuscfIIup39YMTTb1M+6eyhxpYKb8qhL/B4B
- h/e6g/a6yRo3bLsKsTYfSOCwIcYhuKp6avrNRIt0UdwBN+26sRLlDBJL/JfnvBm+fkE5zv
- 3xhPb4XanVFxtkBcEi00bShXg69JKc4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=TpEGtHu3K56nxX32v7quHRWHOdQOFyRF1XKS4TQ5TIQ=;
+ b=EqI4lIPcNNlJfDNlNdX0H86KgSwfBtux8aejtVesf79+Eq/OS0FpUcmMoQHoEGHf+BGF+7
+ 7DXOB3EvWyxuxlgBtgLxIpBcR3RVB2iT7Y8t5DOAV5Z/DRinHbajJaYSEqEkBabId9l2jY
+ U+RRQ8hPC2333TWQNsBTHnIlELxiBeE=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-475-XX7cXEvIOci2zXH9V0i9Nw-1; Wed,
- 07 Aug 2024 13:49:58 -0400
-X-MC-Unique: XX7cXEvIOci2zXH9V0i9Nw-1
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-77-jzofFtsFOBG97PaRYCzlrA-1; Wed,
+ 07 Aug 2024 13:50:04 -0400
+X-MC-Unique: jzofFtsFOBG97PaRYCzlrA-1
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 82AAE19560A3; Wed,  7 Aug 2024 17:49:57 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71E451955F33; Wed,  7 Aug 2024 17:50:03 +0000 (UTC)
 Received: from green.redhat.com (unknown [10.2.16.114])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3E7E4300018D; Wed,  7 Aug 2024 17:49:55 +0000 (UTC)
+ id 8AEED300018D; Wed,  7 Aug 2024 17:50:01 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com,
  qemu-block@nongnu.org, den@virtuozzo.com, andrey.drobyshev@virtuozzo.com,
- alexander.ivanov@virtuozzo.com, vsementsov@yandex-team.ru,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v4 3/7] nbd/server: CVE-2024-7409: Change default
- max-connections to 100
-Date: Wed,  7 Aug 2024 12:43:29 -0500
-Message-ID: <20240807174943.771624-12-eblake@redhat.com>
+ alexander.ivanov@virtuozzo.com, vsementsov@yandex-team.ru
+Subject: [PATCH v4 5/7] nbd/server: CVE-2024-7409: Close stray client sockets
+ at shutdown
+Date: Wed,  7 Aug 2024 12:43:31 -0500
+Message-ID: <20240807174943.771624-14-eblake@redhat.com>
 In-Reply-To: <20240807174943.771624-9-eblake@redhat.com>
 References: <20240807174943.771624-9-eblake@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
@@ -84,129 +83,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allowing an unlimited number of clients to any web service is a recipe
-for a rudimentary denial of service attack: the client merely needs to
-open lots of sockets without closing them, until qemu no longer has
-any more fds available to allocate.
+A malicious client can attempt to connect to an NBD server, and then
+intentionally delay progress in the handshake, including if it does
+not know the TLS secrets.  Although this behavior can be bounded by
+the max-connections parameter, the QMP nbd-server-start currently
+defaults to unlimited incoming client connections.  Worse, if the
+client waits to close the socket until after the QMP nbd-server-stop
+command is executed, qemu will then SEGV when trying to dereference
+the NULL nbd_server global which is no longer present, which amounts
+to a denial of service attack.  If another NBD server is started
+before the malicious client disconnects, I cannot rule out additional
+adverse effects when the old client interferes with the connection
+count of the new server.
 
-For qemu-nbd, we default to allowing only 1 connection unless more are
-explicitly asked for (-e or --shared); this was historically picked as
-a nice default (without an explicit -t, a non-persistent qemu-nbd goes
-away after a client disconnects, without needing any additional
-follow-up commands), and we are not going to change that interface now
-(besides, someday we want to point people towards qemu-storage-daemon
-instead of qemu-nbd).
+For environments without this patch, the CVE can be mitigated by
+ensuring (such as via a firewall) that only trusted clients can
+connect to an NBD server.  Note that using frameworks like libvirt
+that ensure that TLS is used and that nbd-server-stop is not executed
+while any trusted clients are still connected will only help if there
+is also no possibility for an untrusted client to open a connection
+but then stall on the NBD handshake.
 
-But for qemu proper, the QMP nbd-server-start command has historically
-had a default of unlimited number of connections, in part because
-unlike qemu-nbd it is inherently persistent.  Allowing multiple client
-sockets is particularly useful for clients that can take advantage of
-MULTI_CONN (creating parallel sockets to increase throughput),
-although known clients that do so (such as libnbd's nbdcopy) typically
-use only 8 or 16 connections (the benefits of scaling diminish once
-more sockets are competing for kernel attention).  Picking a number
-large enough for typical use cases, but not unlimited, makes it
-slightly harder for a malicious client to perform a denial of service
-merely by opening lots of connections withot progressing through the
-handshake.
+Given the previous patches, it would be possible to guarantee that no
+clients remain connected by having nbd-server-stop sleep for longer
+than the default handshake deadline before finally freeing the global
+nbd_server object, but that could make QMP non-responsive for a long
+time.  So intead, this patch fixes the problem by tracking all client
+sockets opened while the server is running, and forcefully closing any
+such sockets remaining without a completed handshake at the time of
+nbd-server-stop, then waiting until the coroutines servicing those
+sockets notice the state change.  nbd-server-stop now has a second
+AIO_WAIT_WHILE_UNLOCKED (the first is indirectly through the
+blk_exp_close_all_type() that disconnects all clients that completed
+handshakes), but forced socket shutdown is enough to progress the
+coroutines and quickly tear down all clients before the server is
+freed, thus finally fixing the CVE.
 
-This change does not eliminate CVE-2024-7409 on its own, but reduces
-the chance for fd exhaustion or unlimited memory usage as an attack
-surface.  On the other hand, by itself, it makes it more obvious that
-with a finite limit, we have the problem of an unauthenticated client
-holding 100 fds opened as a way to block out a legitimate client from
-being able to connect; thus, later patches will further add timeouts
-to reject clients that are not making progress.
+This patch relies heavily on the fact that nbd/server.c guarantees
+that it only calls nbd_blockdev_client_closed() from the main loop
+(see the assertion in nbd_client_put() and the hoops used in
+nbd_client_put_nonzero() to achieve that); if we did not have that
+guarantee, we would also need a mutex protecting our accesses of the
+list of connections to survive re-entrancy from independent iothreads.
 
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Although I did not actually try to test old builds, it looks like this
+problem has existed since at least commit 862172f45c (v2.12.0, 2017) -
+even back when that patch started using a QIONetListener to handle
+listening on multiple sockets, nbd_server_free() was already unaware
+that the nbd_blockdev_client_closed callback can be reached later by a
+client thread that has not completed handshakes (and therefore the
+client's socket never got added to the list closed in
+nbd_export_close_all), despite that patch intentionally tearing down
+the QIONetListener to prevent new clients.
+
+Reported-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
+Fixes: CVE-2024-7409
 Signed-off-by: Eric Blake <eblake@redhat.com>
 ---
- qapi/block-export.json         | 4 ++--
- include/block/nbd.h            | 7 +++++++
- block/monitor/block-hmp-cmds.c | 3 ++-
- blockdev-nbd.c                 | 8 ++++++++
- 4 files changed, 19 insertions(+), 3 deletions(-)
+ blockdev-nbd.c | 35 ++++++++++++++++++++++++++++++++++-
+ 1 file changed, 34 insertions(+), 1 deletion(-)
 
-diff --git a/qapi/block-export.json b/qapi/block-export.json
-index 665d5fd0262..ce33fe378df 100644
---- a/qapi/block-export.json
-+++ b/qapi/block-export.json
-@@ -28,7 +28,7 @@
- # @max-connections: The maximum number of connections to allow at the
- #     same time, 0 for unlimited.  Setting this to 1 also stops the
- #     server from advertising multiple client support (since 5.2;
--#     default: 0)
-+#     default: 100)
- #
- # Since: 4.2
- ##
-@@ -63,7 +63,7 @@
- # @max-connections: The maximum number of connections to allow at the
- #     same time, 0 for unlimited.  Setting this to 1 also stops the
- #     server from advertising multiple client support (since 5.2;
--#     default: 0).
-+#     default: 100).
- #
- # Errors:
- #     - if the server is already running
-diff --git a/include/block/nbd.h b/include/block/nbd.h
-index 5fe14786414..fd5044359dc 100644
---- a/include/block/nbd.h
-+++ b/include/block/nbd.h
-@@ -39,6 +39,13 @@ extern const BlockExportDriver blk_exp_nbd;
-  */
- #define NBD_DEFAULT_HANDSHAKE_LIMIT 10
-
-+/*
-+ * NBD_DEFAULT_MAX_CONNECTIONS: Number of client sockets to allow at
-+ * once; must be large enough to allow a MULTI_CONN-aware client like
-+ * nbdcopy to create its typical number of 8-16 sockets.
-+ */
-+#define NBD_DEFAULT_MAX_CONNECTIONS 100
-+
- /* Handshake phase structs - this struct is passed on the wire */
-
- typedef struct NBDOption {
-diff --git a/block/monitor/block-hmp-cmds.c b/block/monitor/block-hmp-cmds.c
-index d954bec6f1e..bdf2eb50b68 100644
---- a/block/monitor/block-hmp-cmds.c
-+++ b/block/monitor/block-hmp-cmds.c
-@@ -402,7 +402,8 @@ void hmp_nbd_server_start(Monitor *mon, const QDict *qdict)
-         goto exit;
-     }
-
--    nbd_server_start(addr, NULL, NULL, 0, &local_err);
-+    nbd_server_start(addr, NULL, NULL, NBD_DEFAULT_MAX_CONNECTIONS,
-+                     &local_err);
-     qapi_free_SocketAddress(addr);
-     if (local_err != NULL) {
-         goto exit;
 diff --git a/blockdev-nbd.c b/blockdev-nbd.c
-index 11f878b6db3..19c57897819 100644
+index 19c57897819..4e38ff46747 100644
 --- a/blockdev-nbd.c
 +++ b/blockdev-nbd.c
-@@ -170,6 +170,10 @@ void nbd_server_start(SocketAddress *addr, const char *tls_creds,
+@@ -21,12 +21,18 @@
+ #include "io/channel-socket.h"
+ #include "io/net-listener.h"
 
- void nbd_server_start_options(NbdServerOptions *arg, Error **errp)
++typedef struct NBDConn {
++    QIOChannelSocket *cioc;
++    QLIST_ENTRY(NBDConn) next;
++} NBDConn;
++
+ typedef struct NBDServerData {
+     QIONetListener *listener;
+     QCryptoTLSCreds *tlscreds;
+     char *tlsauthz;
+     uint32_t max_connections;
+     uint32_t connections;
++    QLIST_HEAD(, NBDConn) conns;
+ } NBDServerData;
+
+ static NBDServerData *nbd_server;
+@@ -51,6 +57,14 @@ int nbd_server_max_connections(void)
+
+ static void nbd_blockdev_client_closed(NBDClient *client, bool ignored)
  {
-+    if (!arg->has_max_connections) {
-+        arg->max_connections = NBD_DEFAULT_MAX_CONNECTIONS;
++    NBDConn *conn = nbd_client_owner(client);
++
++    assert(qemu_in_main_thread() && nbd_server);
++
++    object_unref(OBJECT(conn->cioc));
++    QLIST_REMOVE(conn, next);
++    g_free(conn);
++
+     nbd_client_put(client);
+     assert(nbd_server->connections > 0);
+     nbd_server->connections--;
+@@ -60,14 +74,20 @@ static void nbd_blockdev_client_closed(NBDClient *client, bool ignored)
+ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
+                        gpointer opaque)
+ {
++    NBDConn *conn = g_new0(NBDConn, 1);
++
++    assert(qemu_in_main_thread() && nbd_server);
+     nbd_server->connections++;
++    object_ref(OBJECT(cioc));
++    conn->cioc = cioc;
++    QLIST_INSERT_HEAD(&nbd_server->conns, conn, next);
+     nbd_update_server_watch(nbd_server);
+
+     qio_channel_set_name(QIO_CHANNEL(cioc), "nbd-server");
+     /* TODO - expose handshake limit as QMP option */
+     nbd_client_new(cioc, NBD_DEFAULT_HANDSHAKE_LIMIT,
+                    nbd_server->tlscreds, nbd_server->tlsauthz,
+-                   nbd_blockdev_client_closed, NULL);
++                   nbd_blockdev_client_closed, conn);
+ }
+
+ static void nbd_update_server_watch(NBDServerData *s)
+@@ -81,12 +101,25 @@ static void nbd_update_server_watch(NBDServerData *s)
+
+ static void nbd_server_free(NBDServerData *server)
+ {
++    NBDConn *conn, *tmp;
++
+     if (!server) {
+         return;
+     }
+
++    /*
++     * Forcefully close the listener socket, and any clients that have
++     * not yet disconnected on their own.
++     */
+     qio_net_listener_disconnect(server->listener);
+     object_unref(OBJECT(server->listener));
++    QLIST_FOREACH_SAFE(conn, &server->conns, next, tmp) {
++        qio_channel_shutdown(QIO_CHANNEL(conn->cioc), QIO_CHANNEL_SHUTDOWN_BOTH,
++                             NULL);
 +    }
 +
-     nbd_server_start(arg->addr, arg->tls_creds, arg->tls_authz,
-                      arg->max_connections, errp);
- }
-@@ -182,6 +186,10 @@ void qmp_nbd_server_start(SocketAddressLegacy *addr,
- {
-     SocketAddress *addr_flat = socket_address_flatten(addr);
-
-+    if (!has_max_connections) {
-+        max_connections = NBD_DEFAULT_MAX_CONNECTIONS;
-+    }
++    AIO_WAIT_WHILE_UNLOCKED(NULL, server->connections > 0);
 +
-     nbd_server_start(addr_flat, tls_creds, tls_authz, max_connections, errp);
-     qapi_free_SocketAddress(addr_flat);
- }
+     if (server->tlscreds) {
+         object_unref(OBJECT(server->tlscreds));
+     }
 -- 
 2.45.2
 
