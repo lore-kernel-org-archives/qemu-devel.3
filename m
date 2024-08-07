@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B80D4C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 07:40:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FEACC52D6F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 07:44:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbbHL-0004GC-80; Wed, 07 Aug 2024 03:40:15 -0400
+	id 1sbbL4-0008G7-3W; Wed, 07 Aug 2024 03:44:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbbHH-0004D6-2w
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 03:40:13 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1sbbL2-0008F2-P8
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 03:44:04 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbbHA-00016Q-LV
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 03:40:10 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2f01e9f53e3so22701681fa.1
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 00:40:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1sbbL0-0001aL-Ef
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 03:44:04 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-52efaae7edfso1067758e87.2
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 00:44:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723016400; x=1723621200; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=i4D+MtlrEuqCWaykr9f9cIXM8/yvDCiWntfzyog8lLU=;
- b=d3Zb5e8Y+087Z+dN4D/q1GyFQozl7DI0uX+obuzARD0rjT8BEYp3SZH7wF9ZsUtODI
- ANqMrEoQq8g9ayPptJCcaMwAeDiytIWkcaafqAFYcRlqOon7zBxHiyKdEciPRxqS+WAF
- 7sf5r5/bOD0hIJxFa1DDYrUbrZHrIqRl2j/mo3vE9R3yIpp6fcIrSlMR6diqiEAyGg9N
- aXkXbqkT/1VgsDcRx1E86DyFVKhp0y2rXApz3rIZX6mdwAEHU4PHqagkEsOc0h+rPkoT
- Z63By974mdk0Yr8IlI5XQENfYFshp+AGSGf3s1T8ppC8PwmmBlfbFcye/RztqLAHVCpf
- 4CXw==
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1723016640; x=1723621440;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=s6PZf4AmC0JVvgN57YArSD/aWPIgGOkn6zPh+i54Mkk=;
+ b=07zUf68fPb/wL6Q5+tsSb4ABHeHwc66LxbRVZiYMK2X8bhHFnf8mJvp/sD6itgp9k2
+ xV4Ni209nSXvmVV+1KtDOVM5lngwMTscIEhwagFjJJUjpeoTH6iNeMK8rCYi6uP4bkr8
+ 4SqSbPjB9tu64dOnh9ZvuGddBxvEXQlVnKN0qcaMf3P4yfU63kcEsG3JAdE7+ZxD1N8Y
+ 6kIDKoRGI73S8MauE2H6rYxbpESfztamtX4n4TZdsIo7DgSBCbjG8K6PYHxLtAiugO0F
+ EkloFHPFuIaJhrOLeTErpfr1+YPO5ijgOeE5DT0IQvNUiK47CQhO0h48+IT94Ag7bpYM
+ 9xEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723016400; x=1723621200;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=i4D+MtlrEuqCWaykr9f9cIXM8/yvDCiWntfzyog8lLU=;
- b=Azd2S/NPGS4iRT4RO59+T1vnaMbVziICzuyhUs2vZiact/G7TJs8I1qNK2++g4NP3Z
- phlmJqRt+skwv+idzOheoxv6IFTp7fo7ZxCX/ygxwdJDT+9zGC0uV6oRZlaUONAJlMFa
- LjZwuLH2/8ogeIF8Zxb5zkpgpnK8ZD3SGNtJ6yxkvhjJcHQX4IpVgJH1j6Hd5FfrpoL8
- viZoEtHW7frUPrc27EWmzchkvBsRIyWq+rmAd3k6zOrDWLAsLY5dScs4EZ8ovOxoqBMQ
- IfmnXRfn26pn+9a5HcFkYU699Ea7TBMRq1kcaa1L+fDlkWO4WKU45qUoF1babzSDpU2L
- 9gMg==
-X-Gm-Message-State: AOJu0YxnGIgaCO/unTauvXy3Xs1qdupdNiZ8TZFRbbYcFT0v8Pc+3/BT
- k80VxXgzF+C3TGfMsbhhD4Gq0TcFJQdueFceipKmd5Ed3nsjEbgZUMKBAa7bmr4=
-X-Google-Smtp-Source: AGHT+IHuW5TsLmJKtJYhA4abb749J9DKy2kL7K0HUS8bAejXzIq5dth9TZ+rBWZkLWgvjRBv4iHrsg==
-X-Received: by 2002:a05:651c:22a:b0:2f0:1a95:7106 with SMTP id
- 38308e7fff4ca-2f15ab2a514mr142725521fa.39.1723016399646; 
- Wed, 07 Aug 2024 00:39:59 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.212.120])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7dc9c0b8e7sm619013066b.72.2024.08.07.00.39.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Aug 2024 00:39:59 -0700 (PDT)
-Message-ID: <2bdecfe2-d727-469e-97d1-4c011774e2e8@linaro.org>
-Date: Wed, 7 Aug 2024 09:39:57 +0200
+ d=1e100.net; s=20230601; t=1723016640; x=1723621440;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=s6PZf4AmC0JVvgN57YArSD/aWPIgGOkn6zPh+i54Mkk=;
+ b=huCseJUx/uFcXIfestdNK7qr8BYINUB8O2xubV1bb5nFclrk89v81toCg7GisvSAGr
+ 3PXWz4peULvH9sz/yRUi6OB0vYstDkqmbyE8ysoIN2YvNa4LcEUjO7kqZ+hlsOAP7D4/
+ jdTqueHN89y2UDDMI1NUZ095KA3sITeCSVue4v4KsgI0ffoTZbyrDxMJ3ZkqcvjQi6w8
+ SJhX7X+GYMThkHvK7dnDx9W9vmmTSp8KY71v2K/i8osY0tl87u8gBFTbXPs1oQHG3iR7
+ QK1LrNx3SQD3xAxZOAuA7me5AxOkLo0uwkYTud6vXfYH0MrLtrDSbNRgRswr4BwbG3la
+ uDJw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUChVEHBJaErWBoXG7qG0Vq5AZPYIJ/Fqbdcl8zy+CBAxzjbsjwX8jyd0PuSAZlz69sQfNU0/wGmLTA3XJGtZkvKS0PKMs=
+X-Gm-Message-State: AOJu0YxJzO/WcMf5EcM/ubTOw/V7at+z6oW7crfwKhYK/CC+PqZDj83m
+ w5AcewQNZl99HmcuYD72itbBmBNocW+n5PKNjcNaj72LqY/sXQB0t5rzzp/PNxhBs2TicfWw9RA
+ 3F5uDIg9FBhCWVnS0uE5D01xu+S95DLP52aq3NQ==
+X-Google-Smtp-Source: AGHT+IGTACICxSgR+6mG2LfvXShvTQ0j0Qp86iu03xKuRgb+s+0rDyvkiHX8zKcSQrALrmMRX6WSPHhug0+Ll+eotcw=
+X-Received: by 2002:a05:6512:31c6:b0:52c:e402:4dc1 with SMTP id
+ 2adb3069b0e04-530bb6c7f9cmr12753838e87.55.1723016640070; Wed, 07 Aug 2024
+ 00:44:00 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] ebpf: add formal error reporting to all APIs
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Andrew Melnychenko
- <andrew@daynix.com>, Stefan Hajnoczi <stefanha@redhat.com>
-References: <20240806145653.1632478-1-berrange@redhat.com>
- <20240806145653.1632478-4-berrange@redhat.com>
- <208ede45-0866-4dce-b6ef-e8390c1c56c1@linaro.org>
- <ZrI_IsxXceEJewFO@redhat.com>
- <5403fa28-bc81-4208-9b16-7912a3b190c5@linaro.org>
-Content-Language: en-US
-In-Reply-To: <5403fa28-bc81-4208-9b16-7912a3b190c5@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <20240723-counter_delegation-v2-0-c4170a5348ca@rivosinc.com>
+ <20240723-counter_delegation-v2-13-c4170a5348ca@rivosinc.com>
+ <20240806-9fdad33468ec103d83a85e77@orel>
+ <3c09bbbe-857b-4566-963a-790497232bbf@ventanamicro.com>
+ <CAKmqyKNgJKBFw7OnwbgbqxA65PR4GSjdUEKdKVw-nYv+e0P58w@mail.gmail.com>
+In-Reply-To: <CAKmqyKNgJKBFw7OnwbgbqxA65PR4GSjdUEKdKVw-nYv+e0P58w@mail.gmail.com>
+From: Atish Kumar Patra <atishp@rivosinc.com>
+Date: Wed, 7 Aug 2024 00:43:49 -0700
+Message-ID: <CAHBxVyFFa7mQaS4jPkT=aK4gTF3AshpQZNeRhBiZOHX7bhQQsg@mail.gmail.com>
+Subject: Re: [PATCH v2 13/13] target/riscv: Enable PMU related extensions to
+ preferred rule
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
+ alistair.francis@wdc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=atishp@rivosinc.com; helo=mail-lf1-x12d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,95 +100,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/24 09:37, Philippe Mathieu-Daudé wrote:
-> On 6/8/24 17:20, Daniel P. Berrangé wrote:
->> On Tue, Aug 06, 2024 at 05:11:55PM +0200, Philippe Mathieu-Daudé wrote:
->>> On 6/8/24 16:56, Daniel P. Berrangé wrote:
->>>> The eBPF code is currently reporting error messages through trace
->>>> events. Trace events are fine for debugging, but they are not to be
->>>> considered the primary error reporting mechanism, as their output
->>>> is inaccessible to callers.
->>>>
->>>> This adds an "Error **errp" parameter to all methods which have
->>>> important error scenarios to report to the caller.
->>>>
->>>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->>>> ---
->>>>    ebpf/ebpf_rss.c     | 59 
->>>> ++++++++++++++++++++++++++++++++++++---------
->>>>    ebpf/ebpf_rss.h     | 10 +++++---
->>>>    hw/net/virtio-net.c |  7 +++---
->>>>    3 files changed, 59 insertions(+), 17 deletions(-)
->>>>
->>>> diff --git a/ebpf/ebpf_rss.c b/ebpf/ebpf_rss.c
->>>> index aa7170d997..59854c8b51 100644
->>>> --- a/ebpf/ebpf_rss.c
->>>> +++ b/ebpf/ebpf_rss.c
->>>> @@ -47,13 +47,14 @@ bool ebpf_rss_is_loaded(struct EBPFRSSContext *ctx)
->>>>        return ctx != NULL && (ctx->obj != NULL || ctx->program_fd != 
->>>> -1);
->>>>    }
->>>> -static bool ebpf_rss_mmap(struct EBPFRSSContext *ctx)
->>>> +static bool ebpf_rss_mmap(struct EBPFRSSContext *ctx, Error **errp)
->>>>    {
->>>>        ctx->mmap_configuration = mmap(NULL, qemu_real_host_page_size(),
->>>>                                       PROT_READ | PROT_WRITE, 
->>>> MAP_SHARED,
->>>>                                       ctx->map_configuration, 0);
->>>>        if (ctx->mmap_configuration == MAP_FAILED) {
->>>>            trace_ebpf_error("eBPF RSS", "can not mmap eBPF 
->>>> configuration array");
->>>> +        error_setg(errp, "Unable to map eBPF configuration array");
->>>>            return false;
->>>>        }
->>>>        ctx->mmap_toeplitz_key = mmap(NULL, qemu_real_host_page_size(),
->>>> @@ -61,6 +62,7 @@ static bool ebpf_rss_mmap(struct EBPFRSSContext *ctx)
->>>>                                       ctx->map_toeplitz_key, 0);
->>>>        if (ctx->mmap_toeplitz_key == MAP_FAILED) {
->>>>            trace_ebpf_error("eBPF RSS", "can not mmap eBPF toeplitz 
->>>> key");
->>>> +        error_setg(errp, "Unable to map eBPF toeplitz array");
->>>>            goto toeplitz_fail;
->>>>        }
->>>>        ctx->mmap_indirections_table = mmap(NULL, 
->>>> qemu_real_host_page_size(),
->>>> @@ -68,6 +70,7 @@ static bool ebpf_rss_mmap(struct EBPFRSSContext *ctx)
->>>>                                       ctx->map_indirections_table, 0);
->>>>        if (ctx->mmap_indirections_table == MAP_FAILED) {
->>>>            trace_ebpf_error("eBPF RSS", "can not mmap eBPF 
->>>> indirection table");
->>>> +        error_setg(errp, "Unable to map eBPF indirection array");
->>>
->>> Aren't these trace_ebpf_error() calls redundant now?
->>
->> Yes & no. Errors propagated up the call stack don't get included in
->> any trace output, and so if a caller doesn't log them anywhere they
->> can thus be invisible to someone just looking at trace output.
->>
->> I could remove them all from the eBPF code though, and put a single
->> trace event in the hw/net/virtio-net.c file instead ? Bit of a bike
->> shed colouring exercise to decide which is best though.
-> 
-> No problem, I'm fine with this patch.
-> 
-> Note from experience (although pre-existing in this patch), trace
-> events can be very verbose, and a what makes them powerful is we
-> can filter particular ones. The following pattern isn't practical
-> to filter:
-> 
->    trace_foo_error(const char *error_msg);
+On Tue, Aug 6, 2024 at 7:01=E2=80=AFPM Alistair Francis <alistair23@gmail.c=
+om> wrote:
+>
+> On Wed, Aug 7, 2024 at 2:06=E2=80=AFAM Daniel Henrique Barboza
+> <dbarboza@ventanamicro.com> wrote:
+> >
+> >
+> >
+> > On 8/6/24 5:46 AM, Andrew Jones wrote:
+> > > On Tue, Jul 23, 2024 at 04:30:10PM GMT, Atish Patra wrote:
+> > >> Counter delegation/configuration extension requires the following
+> > >> extensions to be enabled.
+> > >>
+> > >> 1. Smcdeleg - To enable counter delegation from M to S
+> > >> 2. S[m|s]csrind - To enable indirect access CSRs
+> > >> 3. Smstateen - Indirect CSR extensions depend on it.
+> > >> 4. Sscofpmf - To enable counter overflow feature
+> > >> 5. S[m|s]aia - To enable counter overflow feature in virtualization
+> > >> 6. Smcntrpmf - To enable privilege mode filtering for cycle/instret
+> > >>
+> > >> While first 3 are mandatory to enable the counter delegation,
+> > >> next 3 set of extension are preferred to enable all the PMU related
+> > >> features.
+> > >
+> > > Just my 2 cents, but I think for the first three we can apply the con=
+cept
+> > > of extension bundles, which we need for other extensions as well. In =
+those
+> > > cases we just auto enable all the dependencies. For the three preferr=
+ed
+> > > extensions I think we can just leave them off for 'base', but we shou=
+ld
+> > > enable them by default for 'max' along with Ssccfg.
+>
 
-I guess I meant:
+Max cpu will have everything enabled by default. The problem with max
+cpu is that you
+may not want to run all the available ISA extensions while testing perf.
 
-     trace_foo_error(const char *const error_msg);
+> Agreed
+>
+> >
+> > I like this idea. I would throw in all these 6 extensions in a 'pmu_adv=
+anced_ops'
+> > (or any other better fitting name for the bundle) flag and then 'pmu_ad=
+vanced_ops=3Dtrue'
+> > would enable all of those. 'pmu_advanced_ops=3Dtrue,smcntrpmf=3Dfalse' =
+enables all but
+> > 'smcntrpmf' and so on.
+> >
 
-(where the string is known at build time).
+I thought distinguishing preferred vs implied would be useful because
+it would allow the user
+to clearly understand which is mandated by ISA vs which would be good to ha=
+ve.
 
-> While a bit tedious to add, having a single trace event per error
-> is way more useful.
-> 
-> Regards,
-> 
-> Phil.
+The good to have extensions can be disabled similar to above but not
+the mandatory ones.
 
+> > As long as we document what the flag is enabling I don't see any proble=
+ms with it.
+> > This is how profiles are implemented after all.
+>
+> I only worry that we end up with a huge collection of flags that users
+> need to decipher.
+>
+
+My initial idea was a separate flag as well. But I was not sure if
+that was good for the
+above reason. This additional custom pmu related option would be lost
+in that huge collection.
+
+> I guess with some good documentation this wouldn't be too confusing thoug=
+h.
+>
+
+Sure. It won't be confusing but most users may not even know about it
+without digging.
+That's why I chose to use a standard extension which covers the basic
+PMU access directly in S-mode.
+
+The future extensions such as CTR or Sampling events would also
+benefit by just adding the Ssccfg in the preferred rule
+which in turn will enable other preferred/mandatory extensions.
+
+> Alistair
+>
+> >
+> > With this bundle we can also use implied rule only if an extension real=
+ly needs
+> > (i.e. it breaks without) a dependency being enabled, instead of overloa=
+ding it
+> > with extensions that 'would be nice to have together' like it seems to =
+be the
+> > case for the last 3 extensions in that list.
+> >
+> > I believe users would benefit more from a single flag to enable everyth=
+ing and
+> > be done with it.
+> >
+> >
+> > Thanks,
+> >
+> > Daniel
+> >
+> >
+> >
+> > >
+> > > Thanks,
+> > > drew
+> > >
+> > >> That's why, enable all of these if Ssccfg extension is
+> > >> enabled from the commandline.
+> > >>
+> > >> Signed-off-by: Atish Patra <atishp@rivosinc.com>
+> > >> ---
+> > >>   target/riscv/cpu.c | 14 +++++++++++++-
+> > >>   1 file changed, 13 insertions(+), 1 deletion(-)
+> > >>
+> > >> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> > >> index 22ba43c7ff2a..abebfcc46dea 100644
+> > >> --- a/target/riscv/cpu.c
+> > >> +++ b/target/riscv/cpu.c
+> > >> @@ -2665,8 +2665,20 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_impl=
+ied_rules[] =3D {
+> > >>       NULL
+> > >>   };
+> > >>
+> > >> +static RISCVCPUPreferredExtsRule SSCCFG_PREFERRED =3D {
+> > >> +    .ext =3D CPU_CFG_OFFSET(ext_ssccfg),
+> > >> +    .preferred_multi_exts =3D {
+> > >> +        CPU_CFG_OFFSET(ext_smcsrind), CPU_CFG_OFFSET(ext_sscsrind),
+> > >> +        CPU_CFG_OFFSET(ext_ssaia), CPU_CFG_OFFSET(ext_smaia),
+> > >> +        CPU_CFG_OFFSET(ext_smstateen), CPU_CFG_OFFSET(ext_sscofpmf)=
+,
+> > >> +        CPU_CFG_OFFSET(ext_smcntrpmf), CPU_CFG_OFFSET(ext_smcdeleg)=
+,
+> > >> +
+> > >> +        RISCV_PREFRRED_EXTS_RULE_END
+> > >> +    },
+> > >> +};
+> > >> +
+> > >>   RISCVCPUPreferredExtsRule *riscv_multi_ext_preferred_rules[] =3D {
+> > >> -    NULL
+> > >> +    &SSCCFG_PREFERRED, NULL
+> > >>   };
+> > >>
+> > >>   static Property riscv_cpu_properties[] =3D {
+> > >>
+> > >> --
+> > >> 2.34.1
+> > >>
+> > >>
+> >
 
