@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F0C6C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 16:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD664C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 16:51:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbjoK-0002BW-FG; Wed, 07 Aug 2024 12:46:52 -0400
+	id 1sbjrT-0007yt-Lo; Wed, 07 Aug 2024 12:50:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbjoD-00029s-0t
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 12:46:45 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbjrP-0007sv-4v
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 12:50:04 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbjo7-0006oG-6l
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 12:46:42 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2f16767830dso281141fa.0
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 09:46:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbjrL-0007fN-MX
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 12:50:02 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3684e8220f9so24944f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 09:49:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723049197; x=1723653997; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723049398; x=1723654198; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MptXPEUbxo0SiBnOhDSOAF/gMJykpLxFXw+RPbjYJNE=;
- b=aZ1fQbm92AOpFfg0D5iXOxt4Hr5Gpkz5jLxm1ZWxodTnvZVuvwVznQyNWJeIvsU3uq
- G2IlyCmqLMOk6LrCVcR0aTpb3MbDetNz+/oBpESD6ZjVO5oi3Q//TolStw6WI1cALfDA
- lvd+7NH4Z+RnjVPvUY5ST4xddnw+stV2Jaj94C/DVPDlI1Qb72Af2LFu/bmFgZeUG5lL
- TcPeTFydNasCxTXdPAc/01z+PZGEpPhw+cPzk6ZnhjiKimHxxGVebPMd/NyBT3vZIEAW
- e8AEHvOhaolhg0W6X3P2uXHuSKELrCTsmNd02XYpOsQsQrSs4cJfu06kSE+T/Bz3vOWS
- 9oWA==
+ bh=33U7p2LnLsKhMpp4P6MDD4QNvPZUeLSexOn71JZcms4=;
+ b=KzxDLTPOmsypzsx8f1WykQGRRY4sG6b8UxrthFUvCvWWz4sgu6aUmsTrHrkQG0t2sG
+ t2lKZ8Irr3QrNgCNj6S6Q9+DAGBhbdZSRh9ifLgw1+lCtqMpRxWSDqJ8p380xddoGOL5
+ pN1zkiUY121N207Yu8x/BYUBpY3AeYiHU/OLMR5/94UxjjrSmxuXBlKFKn89wKFXT85h
+ UiDTkWy7jhb2ezpYwKTr7+DGxVSe/Y8x7NioDUPH/Sod87/dzB5kRf1Q5sJzwKpAPI0f
+ UKM0n/iuHVpZ2z2PmIJFFY6U++9vWh9wsOIdTTEL66W4ZiXGsApk4dM+NV1WGiFtVIY/
+ v+5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723049197; x=1723653997;
+ d=1e100.net; s=20230601; t=1723049398; x=1723654198;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MptXPEUbxo0SiBnOhDSOAF/gMJykpLxFXw+RPbjYJNE=;
- b=PKjQmF4D35k/vYaiXIMN99eJIK+kyfLOPxcZN9ih5heiM9Nf6MgakYFvEA05KFSdI6
- htCpCcC8rVeZMIAexJ4tOaLtKO21sk5m8NHnkOYra9KAPIziIs8InKlETWxdFVyiFOG3
- lU2eNUW3oWhjNMAMeYwrGiqMhBRODUn1VLDkj6bpDXC/i4caNxkzRCRSsw0JYSAiMT01
- 82Jq3vbxb8J8u7y7DgtqFMWQH89bxlD+F6V6gBTCVTvZ0wK2N/E4XM1067Qtz+87j6JA
- Z3lQun3UV1AqOT1LGg2dZ5YdXfS4b7v+G8j4/8iY7eWvqdRUOrqOHtCVx5+niwxv51fD
- ty0g==
+ bh=33U7p2LnLsKhMpp4P6MDD4QNvPZUeLSexOn71JZcms4=;
+ b=eZry6ZPfY9vuWYQUe/1kR3mRjTTg9DNaJahhxdSeBdnWvUW8+jv40vm/RtvPsHUJxs
+ abaMq9a6alkeMjM9k4SIkhmXIxDKyeUe8X0GAjlyR+BDQW64KhUiHERBPTMGqkELYVr6
+ BVPmKIeSlfOp0dg8L3c2IKdUqWVv2kFPUL9HPQFRzaraGCzmbfL3ucc9fG3pIavPFc0X
+ nCcRM24KMcEibmiDX0fvRtn2IM9iBm1Nh/A75b7dtBf1Oaxvw9G8iB35RkvGLMVm0OZo
+ nrAgOkJO/EGwES2ugICOoczW0U9ChwgZ5gLQWf+Hh2qg4davNJZ8VWCjh+eSXLKggeB/
+ EczQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMQMNRLU9Xk+PlNc6JDy6nTBXjGwn5Yo7GePpm0szXj1r8YXKCQLX7bPIy8VidGHKGZu+h3mN1vK2F6nJxfGPdYvp/sZE=
-X-Gm-Message-State: AOJu0Yxezygnsf014sczwiYX9n0tEb+jA1C78Tm5y83JzJGq2+ACDxuK
- vDN7vfCBhbQCN515GZrrfb5vza+A2xqc/fLpf/1SRzy1+bXJZao+th+by6nZSpM=
-X-Google-Smtp-Source: AGHT+IFMcL38s6QzG+/rqPJHgP7F+uUVG+K35RBOqKRIoPebYqKZu15cuD3naGR+orwxMtX7lv9gmQ==
-X-Received: by 2002:a2e:9606:0:b0:2f0:3cff:30ce with SMTP id
- 38308e7fff4ca-2f15a9f0284mr126860591fa.0.1723049196414; 
- Wed, 07 Aug 2024 09:46:36 -0700 (PDT)
+ AJvYcCV/YgBcnvHc0hn119WLhVWAhVKM/OA5XkpT7Q/14wB0IjyUJo+Wgvj+Y0LcKi5pn7JvDLeKs+uaFOeYycbyRhEQtQZlUmA=
+X-Gm-Message-State: AOJu0YwQ7tFQ7oMzhZr19oE9Pv9iC6ZdvY6JC9NVq2FtXtYbCu129VuM
+ RDsop9FvmHj+n1qu65Ck5UVy/9die93uhR2Jao/luSgPlhMvmnlTOP7phfovN9I=
+X-Google-Smtp-Source: AGHT+IEdE1tzgba9TGizBuvNLeovvPi17J5ZNkLTn4SdTzlBs8XfOucJB/7owXecxUAAltAM6VesGg==
+X-Received: by 2002:a5d:6949:0:b0:366:e9f7:4e73 with SMTP id
+ ffacd0b85a97d-36bf0d91f99mr2296582f8f.5.1723049397733; 
+ Wed, 07 Aug 2024 09:49:57 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.212.120])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4290598e5adsm37925515e9.25.2024.08.07.09.46.35
+ ffacd0b85a97d-36bbd169697sm16542634f8f.107.2024.08.07.09.49.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Aug 2024 09:46:35 -0700 (PDT)
-Message-ID: <44328324-af73-4439-9d2b-d414e0e13dd7@linaro.org>
-Date: Wed, 7 Aug 2024 18:46:33 +0200
+ Wed, 07 Aug 2024 09:49:57 -0700 (PDT)
+Message-ID: <609994d0-9102-4bb5-9bd3-32cce5d8f276@linaro.org>
+Date: Wed, 7 Aug 2024 18:49:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1] tcg/ppc: Sync tcg_out_test and constraints
+Subject: Re: [PATCH 0/2] target/i386: Fix carry flag for BLSI
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, qemu-ppc <qemu-ppc@nongnu.org>
-References: <20240807040843.7882-1-richard.henderson@linaro.org>
+Cc: pbonzini@redhat.com
+References: <20240801075845.573075-1-richard.henderson@linaro.org>
+ <c119648c-179d-4332-a658-8ce5153e1dea@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240807040843.7882-1-richard.henderson@linaro.org>
+In-Reply-To: <c119648c-179d-4332-a658-8ce5153e1dea@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,68 +96,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/24 06:08, Richard Henderson wrote:
-> Ensure the code structure is the same for matching constraints
-> and emitting code, lest we allow constants that cannot be
-> trivially tested.
+On 7/8/24 07:41, Richard Henderson wrote:
+> On 8/1/24 17:58, Richard Henderson wrote:
+>> Fix #2175.
+>>
+>> r~
+>>
+>> Richard Henderson (2):
+>>    target/i386: Split out gen_prepare_val_nz
+>>    target/i386: Fix carry flag for BLSI
+>>
+>>   target/i386/cpu.h                        |  5 +++++
+>>   target/i386/tcg/cc_helper.c              | 18 ++++++++++++++++
+>>   target/i386/tcg/translate.c              | 27 +++++++++++++++++-------
+>>   tests/tcg/x86_64/test-2175.c             | 24 +++++++++++++++++++++
+>>   target/i386/tcg/cc_helper_template.h.inc | 18 ++++++++++++++++
+>>   target/i386/tcg/emit.c.inc               |  2 +-
+>>   tests/tcg/x86_64/Makefile.target         |  1 +
+>>   7 files changed, 86 insertions(+), 9 deletions(-)
+>>   create mode 100644 tests/tcg/x86_64/test-2175.c
+>>
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: ad788aebbab ("tcg/ppc: Support TCG_COND_TST{EQ,NE}")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2487
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   tcg/ppc/tcg-target.c.inc | 21 ++++++++++-----------
->   1 file changed, 10 insertions(+), 11 deletions(-)
-> 
-> diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
-> index 7f3829beeb..3553a47ba9 100644
-> --- a/tcg/ppc/tcg-target.c.inc
-> +++ b/tcg/ppc/tcg-target.c.inc
-> @@ -325,9 +325,11 @@ static bool tcg_target_const_match(int64_t sval, int ct,
->               if ((uval & ~0xffff) == 0 || (uval & ~0xffff0000ull) == 0) {
->                   return 1;
->               }
-> -            if (TCG_TARGET_REG_BITS == 32 || type == TCG_TYPE_I32
-> -                ? mask_operand(uval, &mb, &me)
-> -                : mask64_operand(uval << clz64(uval), &mb, &me)) {
-> +            if (uval == (uint32_t)uval && mask_operand(uval, &mb, &me)) {
-> +                return 1;
-> +            }
-> +            if (TCG_TARGET_REG_BITS == 64 &&
-> +                mask64_operand(uval << clz64(uval), &mb, &me)) {
->                   return 1;
->               }
->               return 0;
-> @@ -1749,8 +1751,6 @@ static void tcg_out_test(TCGContext *s, TCGReg dest, TCGReg arg1, TCGArg arg2,
->   
->       if (type == TCG_TYPE_I32) {
->           arg2 = (uint32_t)arg2;
-> -    } else if (arg2 == (uint32_t)arg2) {
-> -        type = TCG_TYPE_I32;
->       }
->   
->       if ((arg2 & ~0xffff) == 0) {
-> @@ -1761,12 +1761,11 @@ static void tcg_out_test(TCGContext *s, TCGReg dest, TCGReg arg1, TCGArg arg2,
->           tcg_out32(s, ANDIS | SAI(arg1, dest, arg2 >> 16));
->           return;
->       }
-> -    if (TCG_TARGET_REG_BITS == 32 || type == TCG_TYPE_I32) {
-> -        if (mask_operand(arg2, &mb, &me)) {
-> -            tcg_out_rlw_rc(s, RLWINM, dest, arg1, 0, mb, me, rc);
-> -            return;
-> -        }
-> -    } else {
-> +    if (arg2 == (uint32_t)arg2 && mask_operand(arg2, &mb, &me)) {
-> +        tcg_out_rlw_rc(s, RLWINM, dest, arg1, 0, mb, me, rc);
-> +        return;
-> +    }
-> +    if (TCG_TARGET_REG_BITS == 64) {
->           int sh = clz64(arg2);
->           if (mask64_operand(arg2 << sh, &mb, &me)) {
->               tcg_out_rld_rc(s, RLDICR, dest, arg1, sh, me, rc);
+> Ping.
 
-Preferably having someone from PPC also reviewing this,
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Too x86 specific so I'll pass for now, sorry :(
 
 
