@@ -4,85 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2F63C52D6F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 13:09:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C115C52D6F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 13:09:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbgPg-0001a1-3A; Wed, 07 Aug 2024 09:09:12 -0400
+	id 1sbgPg-0001a0-Js; Wed, 07 Aug 2024 09:09:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yaozhenguo1@gmail.com>)
- id 1sbdOC-000766-5g
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 05:55:28 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yaozhenguo1@gmail.com>)
- id 1sbdOA-0004D2-EA
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 05:55:27 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-7105043330aso1437396b3a.0
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 02:55:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723024525; x=1723629325; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Uviacm/uMbm2emfL4M26wkPAMIKsc8+30xZJBnQdb0I=;
- b=H1ItiyK6eB++yyaDiXd6TaCn4l/p5Hd/EOPI3DNTUnyCsxkntL/CPcPcpMPPrxBHF9
- aOilttMIrZZRnLHYm8dOcCjxNZwnyJzy2RJvXJVUNFEviFC1HTh63dTKbB8Me2Z5WtOl
- ndYHyHVR+deUFKJJa7XEYQL/UfF13ueGG6IlX4IG2x3OFdKCT7DrcnnpD39gI8s66XXZ
- 7HvqAuUFWIQbiHX6ukC3y3UdP10804CSBj1Ujrp0n6Kepdmf7Btm4RLra+S7PdMwmXAa
- YW9bMpbLhm2y+c6LVKJk8+/65pfwHtb85ozWmNw9Lly06Fzq8tvWSVxLIuBGkeDRHhlM
- y+YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723024525; x=1723629325;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Uviacm/uMbm2emfL4M26wkPAMIKsc8+30xZJBnQdb0I=;
- b=d7iHwxFlZJr6ezDeIGg2cl24Ixm0TLRIWtZ++bwZa5BSHyoFvXgMOrLeLylgiMhyEj
- HtTonFtG95F86T0ltxhg5iWnHWNeQ3S/1jsMfzLe+ivqRGV430gAZtoxbFAmJzlCqSS/
- jpf660PRkmjzHJWOGrjQ4BkrgFBkJuqOH5U6BK4QfEj0WwsVoSph7ynyIZSGUf5BQYB/
- oqAZLHCMkwR9b2lTRSE5q1HJ/D7F8+xAbqsQwyc0a/HOAugLhUGH9Bpr4Eu2bb0GpwoH
- 4VFvXuMHEvCyrq5/ujxxF5iSnafjsdjJNUEocHkJVfdDnuCF9QOy8/5DIyJE+lsW1umh
- W+cA==
-X-Gm-Message-State: AOJu0YyQ/YhmLSQsHnqMw9JT35Sl338MnalN/bpviRmjIsf3T2SHTi+j
- DcTQk2DxE5f9RllqAD/5FsOyP1cPuYn1X9Giyv3bRR36/07m7JW2X9HRvg==
-X-Google-Smtp-Source: AGHT+IEcCSXz7WB7mKn3x6RxbzU1KtqyvlAsxlnb6mq/IXN+Ruky0V3E2UewjSvOLKEaE+IPQab9Og==
-X-Received: by 2002:a05:6a00:17a0:b0:706:6af8:e088 with SMTP id
- d2e1a72fcca58-7106cfa1e92mr19953089b3a.3.1723024524487; 
- Wed, 07 Aug 2024 02:55:24 -0700 (PDT)
-Received: from localhost.localdomain ([119.28.83.92])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7106ec73d8csm8353474b3a.92.2024.08.07.02.55.22
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 07 Aug 2024 02:55:24 -0700 (PDT)
-From: yaozhenguo <yaozhenguo1@gmail.com>
-X-Google-Original-From: yaozhenguo <yaozhenguo@jd.com>
-To: alex.bennee@linaro.org,
-	mst@redhat.com,
-	sgarzare@redhat.com
-Cc: qemu-devel@nongnu.org,
-	yaozhenguo@jd.com
-Subject: [PATCH] virtio/vhost-user: fix qemu crash when hotunplug
- vhost-user-net device
-Date: Wed,  7 Aug 2024 17:55:08 +0800
-Message-Id: <20240807095508.54750-1-yaozhenguo@jd.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+ (Exim 4.90_1) (envelope-from <JianZhou.Yue@verisilicon.com>)
+ id 1sbcvq-00046B-Os
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 05:26:12 -0400
+Received: from shasxm06.verisilicon.com ([101.89.135.45]
+ helo=shasxm03.verisilicon.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <JianZhou.Yue@verisilicon.com>)
+ id 1sbcvh-0007uE-Lg
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 05:26:09 -0400
+Content-Language: zh-CN
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+DKIM-Signature: v=1; a=rsa-sha256; d=Verisilicon.com; s=default;
+ c=simple/simple; t=1723022002; h=from:subject:to:date:message-id;
+ bh=3bsNm+7j5zL5P0y+DNmnlJVwBC1tVVTjL7t83RK74Sg=;
+ b=QBy5TXycLkpvOBiMF527GLOx2kzCDISKr1JIu2BjDW1yylU+ewn6KLeVw1NjNOUIEHaxpJHmSww
+ 7JiSGF37FnFcAO7t01n627Rrf3CTFUvgnTOJxJPu+zxODwLtnuLQL9ctiPpxlsuUPZkSNZKFQsqsX
+ deLlfgmUQZtw0fhA7yc=
+Received: from SHASXM03.verisilicon.com ([fe80::938:4dda:a2f9:38aa]) by
+ SHASXM06.verisilicon.com ([::1]) with mapi id 14.03.0408.000; Wed, 7 Aug 2024
+ 17:13:22 +0800
+To: "peter.maydell@linaro.org" <peter.maydell@linaro.org>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Subject: [PATCH] hw/core/ptimer: fix timer zero period condition
+Thread-Topic: [PATCH] hw/core/ptimer: fix timer zero period condition
+Thread-Index: AdroqgyJa7tdFWP3R9WlCLKb3WaZeA==
+Date: Wed, 7 Aug 2024 09:13:21 +0000
+Message-ID: <3DA024AEA8B57545AF1B3CAA37077D0FB75E82C8@SHASXM03.verisilicon.com>
+Accept-Language: zh-CN, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.10.166.198]
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=yaozhenguo1@gmail.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=101.89.135.45;
+ envelope-from=JianZhou.Yue@verisilicon.com; helo=shasxm03.verisilicon.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 07 Aug 2024 09:09:09 -0400
+X-Mailman-Approved-At: Wed, 07 Aug 2024 09:09:10 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,140 +67,103 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jianzhou Yue <JianZhou.Yue@verisilicon.com>
+From:  Jianzhou Yue via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When hotplug and hotunplug vhost-user-net device quickly.
-qemu will crash. BT is as below:
+The real period is zero when both period and period_frac are zero.
+Check the method ptimer_set_freq, if freq is larger than 1000 MHz,
+the period is zero, but the period_frac is not, in this case, the
+ptimer will work but the current code incorrectly recognizes that
+the ptimer is disabled.
 
-0  __pthread_kill_implementation () at /usr/lib64/libc.so.6
-1  raise () at /usr/lib64/libc.so.6
-2  abort () at /usr/lib64/libc.so.6
-3  try_dequeue () at ../util/rcu.c:235
-4  call_rcu_thread (opaque=opaque@entry=0x0) at ../util/rcu.c:288
-5  qemu_thread_start (args=0x55b10d9ceaa0) at ../util/qemu-thread-posix.c:541
-6  start_thread () at /usr/lib64/libc.so.6
-7  clone3 () at /usr/lib64/libc.so.6
-
-1. device_del qmp process
-
-virtio_set_status
-  vhost_dev_stop
-    vhost_user_get_vring_base
-      vhost_user_host_notifier_remove
-
-vhost_user_slave_handle_vring_host_notifier maybe called asynchronous after
-vhost_user_host_notifier_remove. vhost_user_host_notifier_remove will not
-all call_rcu because of notifier->addr is NULL at this time.
-
-2. netdev_del qmp process
-
-vhost_user_cleanup
-       vhost_user_host_notifier_remove
-       g_free_rcu
-
-vhost_user_host_notifier_remove and g_free_rcu will sumbit same rcu_head
-to rcu node list. rcu_call_count add twice but only one node is added.
-rcu thread will abort when calling try_dequeue with node list is empty.
-Fix this by moving g_free(n) to vhost_user_host_notifier_free.
-
-Fixes: 503e355465 ("virtio/vhost-user: dynamically assign VhostUserHostNotifiers")
-Signed-off-by: yaozhenguo <yaozhenguo@jd.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2306
+Signed-off-by: JianZhou Yue <JianZhou.Yue@verisilicon.com>
 ---
- hw/virtio/vhost-user.c         | 23 +++++++++++------------
- include/hw/virtio/vhost-user.h |  1 +
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ hw/core/ptimer.c         |  4 ++--
+ tests/unit/ptimer-test.c | 33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+), 2 deletions(-)
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 00561daa06..7ab37c0da2 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -1188,6 +1188,12 @@ static void vhost_user_host_notifier_free(VhostUserHostNotifier *n)
-     assert(n && n->unmap_addr);
-     munmap(n->unmap_addr, qemu_real_host_page_size());
-     n->unmap_addr = NULL;
-+    if (n->need_free) {
-+        memory_region_transaction_begin();
-+        object_unparent(OBJECT(&n->mr));
-+        memory_region_transaction_commit();
-+        g_free(n);
-+    }
+diff --git a/hw/core/ptimer.c b/hw/core/ptimer.c
+index b1517592c6..1d8964d804 100644
+--- a/hw/core/ptimer.c
++++ b/hw/core/ptimer.c
+@@ -83,7 +83,7 @@ static void ptimer_reload(ptimer_state *s, int delta_adju=
+st)
+         delta =3D s->delta =3D s->limit;
+     }
+=20
+-    if (s->period =3D=3D 0) {
++    if (s->period =3D=3D 0 && s->period_frac =3D=3D 0) {
+         if (!qtest_enabled()) {
+             fprintf(stderr, "Timer with period zero, disabling\n");
+         }
+@@ -309,7 +309,7 @@ void ptimer_run(ptimer_state *s, int oneshot)
+=20
+     assert(s->in_transaction);
+=20
+-    if (was_disabled && s->period =3D=3D 0) {
++    if (was_disabled && s->period =3D=3D 0 && s->period_frac =3D=3D 0) {
+         if (!qtest_enabled()) {
+             fprintf(stderr, "Timer with period zero, disabling\n");
+         }
+diff --git a/tests/unit/ptimer-test.c b/tests/unit/ptimer-test.c
+index 04b5f4e3d0..08240594bb 100644
+--- a/tests/unit/ptimer-test.c
++++ b/tests/unit/ptimer-test.c
+@@ -763,6 +763,33 @@ static void check_oneshot_with_load_0(gconstpointer ar=
+g)
+     ptimer_free(ptimer);
  }
- 
- /*
-@@ -1195,7 +1201,7 @@ static void vhost_user_host_notifier_free(VhostUserHostNotifier *n)
-  * under rcu.
-  */
- static void vhost_user_host_notifier_remove(VhostUserHostNotifier *n,
--                                            VirtIODevice *vdev)
-+                                            VirtIODevice *vdev, bool free)
+=20
++static void check_freq_more_than_1000M(gconstpointer arg)
++{
++    const uint8_t *policy =3D arg;
++    ptimer_state *ptimer =3D ptimer_init(ptimer_trigger, NULL, *policy);
++    bool no_round_down =3D (*policy & PTIMER_POLICY_NO_COUNTER_ROUND_DOWN)=
+;
++
++    triggered =3D false;
++
++    ptimer_transaction_begin(ptimer);
++    ptimer_set_freq(ptimer, 2000000000);
++    ptimer_set_limit(ptimer, 8, 1);
++    ptimer_run(ptimer, 1);
++    ptimer_transaction_commit(ptimer);
++
++    qemu_clock_step(3);
++
++    g_assert_cmpuint(ptimer_get_count(ptimer), =3D=3D, no_round_down ? 3 :=
+ 2);
++    g_assert_false(triggered);
++
++    qemu_clock_step(1);
++
++    g_assert_cmpuint(ptimer_get_count(ptimer), =3D=3D, 0);
++    g_assert_true(triggered);
++
++    ptimer_free(ptimer);
++}
++
+ static void add_ptimer_tests(uint8_t policy)
  {
-     if (n->addr) {
-         if (vdev) {
-@@ -1204,6 +1210,7 @@ static void vhost_user_host_notifier_remove(VhostUserHostNotifier *n,
-         assert(!n->unmap_addr);
-         n->unmap_addr = n->addr;
-         n->addr = NULL;
-+        n->need_free = free;
-         call_rcu(n, vhost_user_host_notifier_free, rcu);
-     }
+     char policy_name[256] =3D "";
+@@ -857,6 +884,12 @@ static void add_ptimer_tests(uint8_t policy)
+                               policy_name),
+         g_memdup2(&policy, 1), check_oneshot_with_load_0, g_free);
+     g_free(tmp);
++
++    g_test_add_data_func_full(
++        tmp =3D g_strdup_printf("/ptimer/freq_more_than_1000M policy=3D%s"=
+,
++                              policy_name),
++        g_memdup2(&policy, 1), check_freq_more_than_1000M, g_free);
++    g_free(tmp);
  }
-@@ -1280,7 +1287,7 @@ static int vhost_user_get_vring_base(struct vhost_dev *dev,
- 
-     VhostUserHostNotifier *n = fetch_notifier(u->user, ring->index);
-     if (n) {
--        vhost_user_host_notifier_remove(n, dev->vdev);
-+        vhost_user_host_notifier_remove(n, dev->vdev, false);
-     }
- 
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-@@ -1562,7 +1569,7 @@ static int vhost_user_backend_handle_vring_host_notifier(struct vhost_dev *dev,
-      * new mapped address.
-      */
-     n = fetch_or_create_notifier(user, queue_idx);
--    vhost_user_host_notifier_remove(n, vdev);
-+    vhost_user_host_notifier_remove(n, vdev, false);
- 
-     if (area->u64 & VHOST_USER_VRING_NOFD_MASK) {
-         return 0;
-@@ -2737,13 +2744,7 @@ static void vhost_user_state_destroy(gpointer data)
- {
-     VhostUserHostNotifier *n = (VhostUserHostNotifier *) data;
-     if (n) {
--        vhost_user_host_notifier_remove(n, NULL);
--        object_unparent(OBJECT(&n->mr));
--        /*
--         * We can't free until vhost_user_host_notifier_remove has
--         * done it's thing so schedule the free with RCU.
--         */
--        g_free_rcu(n, rcu);
-+        vhost_user_host_notifier_remove(n, NULL, true);
-     }
- }
- 
-@@ -2765,9 +2766,7 @@ void vhost_user_cleanup(VhostUserState *user)
-     if (!user->chr) {
-         return;
-     }
--    memory_region_transaction_begin();
-     user->notifiers = (GPtrArray *) g_ptr_array_free(user->notifiers, true);
--    memory_region_transaction_commit();
-     user->chr = NULL;
- }
- 
-diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-index 324cd8663a..a171f29e0b 100644
---- a/include/hw/virtio/vhost-user.h
-+++ b/include/hw/virtio/vhost-user.h
-@@ -54,6 +54,7 @@ typedef struct VhostUserHostNotifier {
-     void *addr;
-     void *unmap_addr;
-     int idx;
-+    bool need_free;
- } VhostUserHostNotifier;
- 
- /**
--- 
-2.43.0
+=20
+ static void add_all_ptimer_policies_comb_tests(void)
+--=20
+2.17.1
 
 
