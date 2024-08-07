@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B812C52D7B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D9B3C52D7C
 	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 22:17:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbox8-0002KK-AA; Wed, 07 Aug 2024 18:16:18 -0400
+	id 1sbox6-0002FV-Tz; Wed, 07 Aug 2024 18:16:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1sbox6-0002F7-7c
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 18:16:16 -0400
-Received: from mail-bn8nam11on20624.outbound.protection.outlook.com
- ([2a01:111:f403:2414::624]
- helo=NAM11-BN8-obe.outbound.protection.outlook.com)
+ id 1sbox3-0002Ct-I4
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 18:16:14 -0400
+Received: from mail-co1nam11on20601.outbound.protection.outlook.com
+ ([2a01:111:f403:2416::601]
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1sbox3-0004Xk-KY
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 18:16:15 -0400
+ id 1sbowx-0004X0-MS
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 18:16:12 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Vosl6LaGuTADqC7UPmJKUj8G+RJlN9KgrV9W/0oZy1s6V0LcVGE72Y39VoxApoxsNwi0wPy6FRUOXAAEPaoU9Gyw0CywN80XvUy8Mq7o+soCn+xBG7tq+YCwURVv2TC+WhAml2XmfKw0YL9tASzPzqhVlhhY2nMgIJIxmSe7VuH+CNGSauLjfXPbV2Q4Mnfr53FILAllIFwnyhGbjW0Jtj7MUb6zJYG0T+il9dgGKQsHhmjA4fcDGgmqFYxdFCq3BBX1kVpnzSYS49xaGQgitJmu8uim/8PcD37F9pmsdfYRwKz6w3kiTzTs7lhL4hnkT1ZVk4vjwZUPDb1zb00GOw==
+ b=U0j2tHiDvINEiohPhutPgb86Uyeiug1QDC03QdARRwHe2mb6NVwyeSI3oj2NDZnNqA2cRwPU4uCI6edU4suZ1ETseeMLIlctMygSlXbshq4pz/6AU00FtGFCSWvKEQueNinkPnE6dAmGC/NEV/L07AWAg9CvmhvYBlHdQM7AqO863t9s5pY0MxzDUd4aixfbNPfxka/uHB7YiQUWzTbXDXT1rLlfnDfaN8dvwyshV5+SGaFFWy07Q0RLmIcmZm5iv2mZu+t3Z5v7UKG3ma5frYBURSd6P8cQD46bDg/jWV0v8nmtsuBsou/lGkyU52/7Lc0y2AB4igaKOAPy0J+qgg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1ePnhXCPGnJUi8223DO5frcKSnnRoAqEOp1j/CiZYRM=;
- b=kYIx80+yEEGvftToZCgZebhlWlMQhmAjQSNNR7os/pn+3H0eEP0gjXew3az2UADsMaHHLP06Qe3f1vDp5w4XZK1CA6lr1M5RhWHkE/0kHLk+vkaNPXCS7f3Xjvw94EL2d5ckR2yYteKI8dmlviXCNZ4DWKWO/8+otaUYZjuMBnDCsuON0N7ZUvpmQSS85G9vWImMaJ/WIzZELDCMORs5oisd1uU2vcgEwYSGfAIV6HMzq03a++kZeh9YYzdOqGkHj9zHYsiHzR+eGeyV50N9u7B40hBtb14LItVezlsA6HA0WCuOJKXCCyqPf9FSrwOPJrzW/9qVryQGBE9bXSYfvQ==
+ bh=CofFptYar05/0RJpMgT1JgL9kX2pQSgZbcGMFlvVhWo=;
+ b=vp8sN1zFkUDLJsStu7h+P0dcb798uu2DUC3M2rvvyKPNNBCiGZx8dN1sIps+zTl8W3pRA/UoYlwbNHi2Z0MH2HEJZMddHeH65UMXjaIcp33BGk1HIJcJ/loIvjc9eRY8Jlgv9e3/056HXdFRQWYjHdJdBqOg7P7lcN05ZB1JFfcOZEZcJGADE/JTDQbEJ38w8pf5SvEIU4GHzf7p6EtJzd8mxXyxTazb+13p0Myfjn2lw6KzUWTuydBAL9TTYUP6KygVH4gym8Mcq0IofHj23B5lVTr54Z+cm99E/N/UocWNgSXcEFmlS0s8YlErCBcln797300CkDj6Tzw2BQ4Ohg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1ePnhXCPGnJUi8223DO5frcKSnnRoAqEOp1j/CiZYRM=;
- b=sE3PIJuLWssir6CW+M0CzFgOACWLoPHVVMTgQz7PjWjTbJ/m34J5AHQvJsPdrNZWsv2aDFYbVS0Z2vPlFnJcv1MbB77O2j8tkn2Shtixkm+AqDwspcDJ6aiutPpy5AWf1pxz46FJZBkQno8ARPdJzeYtXNIl9urtdx5v/lWBcNw=
-Received: from CH0PR03CA0374.namprd03.prod.outlook.com (2603:10b6:610:119::34)
- by CH3PR12MB9080.namprd12.prod.outlook.com (2603:10b6:610:1a7::12)
+ bh=CofFptYar05/0RJpMgT1JgL9kX2pQSgZbcGMFlvVhWo=;
+ b=K6ImRLwZ0WU3NNa3ZakdGokBuZoUQWm8Qib/otE9v5Nmekd9QVG+Ba8P/eqEOtKo8D49+RqAARwo5xypge8hS+zAhlpHSbSb+rY1vWGaGhFpU3MEiJThaKqrCEx6CDceXzdA1hr0SCP6A2X/oTu8wjkB/KYfv3p7uZhOkANsbjA=
+Received: from CH0PR03CA0230.namprd03.prod.outlook.com (2603:10b6:610:e7::25)
+ by MN2PR12MB4374.namprd12.prod.outlook.com (2603:10b6:208:266::9)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.22; Wed, 7 Aug
- 2024 22:16:06 +0000
-Received: from CH2PEPF00000149.namprd02.prod.outlook.com
- (2603:10b6:610:119:cafe::3d) by CH0PR03CA0374.outlook.office365.com
- (2603:10b6:610:119::34) with Microsoft SMTP Server (version=TLS1_2,
+ 2024 22:15:59 +0000
+Received: from CH2PEPF00000148.namprd02.prod.outlook.com
+ (2603:10b6:610:e7:cafe::91) by CH0PR03CA0230.outlook.office365.com
+ (2603:10b6:610:e7::25) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.29 via Frontend
- Transport; Wed, 7 Aug 2024 22:16:06 +0000
+ Transport; Wed, 7 Aug 2024 22:15:59 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -54,19 +54,19 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- CH2PEPF00000149.mail.protection.outlook.com (10.167.244.106) with Microsoft
+ CH2PEPF00000148.mail.protection.outlook.com (10.167.244.105) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7849.8 via Frontend Transport; Wed, 7 Aug 2024 22:16:06 +0000
+ 15.20.7849.8 via Frontend Transport; Wed, 7 Aug 2024 22:15:59 +0000
 Received: from bmoger-ubuntu.amd.com (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 7 Aug
- 2024 17:16:05 -0500
+ 2024 17:15:58 -0500
 From: Babu Moger <babu.moger@amd.com>
 To: <pbonzini@redhat.com>
 CC: <babu.moger@amd.com>, <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>
-Subject: [PATCH v2 2/4] i386/cpu: Add PerfMonV2 feature bit
-Date: Wed, 7 Aug 2024 17:15:44 -0500
-Message-ID: <69905b486218f8287b9703d1a9001175d04c2f02.1723068946.git.babu.moger@amd.com>
+Subject: [PATCH v2 1/4] i386/cpu: Add RAS feature bits on EPYC CPU models
+Date: Wed, 7 Aug 2024 17:15:43 -0500
+Message-ID: <244f99ea203d026c5e41aea10614465e6daf5e87.1723068946.git.babu.moger@amd.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <cover.1723068946.git.babu.moger@amd.com>
 References: <cover.1723068946.git.babu.moger@amd.com>
@@ -78,54 +78,54 @@ X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
  (10.181.40.145)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF00000149:EE_|CH3PR12MB9080:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8d3cb444-3ad3-4b01-0ced-08dcb72e8887
+X-MS-TrafficTypeDiagnostic: CH2PEPF00000148:EE_|MN2PR12MB4374:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0452ad31-5bb9-45bd-cc63-08dcb72e8462
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|36860700013|1800799024|376014|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?AWfha3bqVm0P2h3z7UxjyZZUqaCLlQRuYhkNT4GQ3BK5YmWH70l66qYeNadt?=
- =?us-ascii?Q?P6w5zsGoCxnDz/+lBhsGwrFhfw7iijoydnmzkHk9N1Rbde78orNtR4K5MwMV?=
- =?us-ascii?Q?W1hduqp4mHTuGgNTqpRYAceGY9MTyk+Y5fOgshXAnJlc4Vs69NqpiRRfZkqb?=
- =?us-ascii?Q?Ere51GKHhqI1PVCscjOK00gbV3rjMqnozBsGkMOkEdLPh6Qv2RTnMRFA4wxm?=
- =?us-ascii?Q?KDaslISEO0F5eNPZBMyNzhTkHO4aYBiolQ9cOEbxphdLuW5wIIdd4b2BkdoL?=
- =?us-ascii?Q?S8c5TDuqzETLA0zAxmMPgwJCa7krrvBxR3DsroxnBZwUsl8UogY6elLRZ3fe?=
- =?us-ascii?Q?xoC9LFGXY19w1dZMcIGjbCoGfn+6aMhn1JFPFPn/VYlkPXVoQPzbUjPa8Kfv?=
- =?us-ascii?Q?0QXTnehQbdZcKrlYdIr93ZTAuDU9F9GKLJHmyw80FL9nsXp4yWc+Hpl53E8H?=
- =?us-ascii?Q?/zrhUMmct3yl5golpFAg2C/BA+pV5k0cTc4NvyYiXFFSwYOFTjJgx7QPWiZ3?=
- =?us-ascii?Q?yEBfHrZDOSj8EedNWEWVToF3iiMI93QxOivhWAA0gbBWD6N1SdhYAuf1iBXB?=
- =?us-ascii?Q?TgmGrvFDEwjI9YBYv5dzxB+2PRyoTm2KxV/nayNaeROJylBSrgF0iA6gIjzs?=
- =?us-ascii?Q?POm269sjFc+GfvPFeM1FlL/OTDfX9eLyT4lnB08mBcEeL6XiV/i10QlPCKqp?=
- =?us-ascii?Q?hVZLobPHO7AKIQofI7YLUisJ1ONwkZjEO+H99pMs1FOAT8EmpLZ/JbpTCZhj?=
- =?us-ascii?Q?4JAEcxHRz37smIwX+O8HhZPBRuS0sCSa13LKdlE8ldtrx8m4fsg63Jx0wMFf?=
- =?us-ascii?Q?hVvx76bHhO8RKXI+RS1nQKml5HfLAFGtEz/HCOc5h0x/FMdm5fdotXJAD8Fj?=
- =?us-ascii?Q?77+p2FGxHupckC6QDdOxRl2EHaFqpxpwzBO34Okh/UmFbFHMHUa+lbTIIAU4?=
- =?us-ascii?Q?15bbNrD1lNiP0TYlhIS7JxW86DA+MuTlyncRcBU/Xd2UOBSNxy1TGr4OxZ/r?=
- =?us-ascii?Q?QeofqAGCT8C3DE9MOCM1hS2dsHyxi+gErRdExH2Yhc9rY+vRaA7n2kbd5s24?=
- =?us-ascii?Q?PnFMLqMIfyA2ZApwPtIZCvDYaVz+7Vv/WicUwahTd2iNLqDwjZQ5lU+SVyP+?=
- =?us-ascii?Q?V6vYqWxbUQHluR+ttpmTr/cAh2D1yUN3NjZKIeiQzc9059a0L++93/Te7GNB?=
- =?us-ascii?Q?SCZrQOWL2vStx7eogJlSO9DmOqIzqyRI1yDgeJh9+pAqkitmjjiyhlSoEIqe?=
- =?us-ascii?Q?d3Zyeo0VQxwSywgPTsPAY5KlctpmXADlz9gNuffB1tZcYdtsXb4fRb3kLKSp?=
- =?us-ascii?Q?mo8HvUsASGW3iHqvNbqESbZK1dN4j1jIuv0LDM7NJSgPczorbB+OgfwtLmsP?=
- =?us-ascii?Q?LsKF/bf0CDKzvvgWoI9/VFsPI33JlZSEXdfzVAbbIBkqm1DBpCmJy6WcAvyr?=
- =?us-ascii?Q?jY+OR1ClAPmMFiaE1h9UoQo7fi5bC+lm?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?NyuHSVRHqL3Y5uBXB8GfWH1rZx7/klKq9QUQgj/zspsyLYPk37Z3rzoHYxDD?=
+ =?us-ascii?Q?7Ua48CPj4avd02t8oa3LxgDRVam+HyQxThM2jzpFNakB/bj9t3cms3J50Xkp?=
+ =?us-ascii?Q?9pFj7Z8SJaFwMBA2R46d87JsafCJPMZO0lNXcUtpJL6NP9DnTOgJSHIg16bm?=
+ =?us-ascii?Q?nYAq+kQDi0OiC8jN0R8kr94/YGafI+LdoNydKlZr7oYXqYqp9kBPE5RyaIpG?=
+ =?us-ascii?Q?7K2sFPx4F0fO4rjupKvXijQ0cYUSoFtxvSDb6o8TEQDV3Yncto1qOQnBbF71?=
+ =?us-ascii?Q?VevrxoBWpz+RXvEEJ3uOED9IWzfG7Ub/8xMXlXOrc8aM/3z3cuwB2RUSfS00?=
+ =?us-ascii?Q?dWS6tf4EmTO/98YMOygnRpDjNFVgsQAeYNLjbL6WoJrsVs1mbSnXcPq2GZ8S?=
+ =?us-ascii?Q?mEVv4tVr5vIkl7rMO4RI1mRMh7ToabHd2tw5NGO8XCrTdiFbt+sJmk2FY/mb?=
+ =?us-ascii?Q?+6AXZRMG+X21yV/jHxb6rzP/JytnAmJ1ZA8zTcEwRl0ZXBQpAbBGym/oUHvU?=
+ =?us-ascii?Q?pINE+yJZ79dK14gkQbtaQQQxng55YPxTCzu1BMgzi0CdurVFprtAIEAXExVQ?=
+ =?us-ascii?Q?2mEoj/MZA+UauMNOZt/6RjwZm31rWdi7kSkRq4zlQx2NoxvO3Y7uoMfR7w3p?=
+ =?us-ascii?Q?i+zKsQhZQqbphX5SKm1MVSGVTaOYOjVS8hmUm64GEPD3WfAwdzHQWiwmbZyh?=
+ =?us-ascii?Q?K9CU9TSDbvcXQ4AhjLxyRwktam7p79jcER7VKLxVntyWtJIMGDstZBJXpaHu?=
+ =?us-ascii?Q?pK9T8OzyomMeTpgZSW+F8ZTBOwWM4HR9qSF/Nyv/EfnKc73CEatV1UGPN0E1?=
+ =?us-ascii?Q?v3a5XAK2fzo9z93K48P0wDdkMPYn1Jp+/Q8c5wRi5BhO0NmQ0PzPpORL/Rj2?=
+ =?us-ascii?Q?6A8keMT/r3hwq+pPvW548RUoa2bC07wHHx01bblfKUGj6jZoxkyk3eVenu7h?=
+ =?us-ascii?Q?HLjsT19Let5du2fwWZA8qba9tX8v8wgTMaUeit28OCxJ4/Rx73qghfn/9dFT?=
+ =?us-ascii?Q?+TLMKaK2iYE9FgOixomSxILn1sIGCZOhzySIZEkeBd6wDznvKVJc8E3ja0X3?=
+ =?us-ascii?Q?ZR/YsgupSqkDZNCWktz4CHU9vsIvFjxXXQXP8plv3rpwIn9RpZb/lu5xqh7/?=
+ =?us-ascii?Q?Zg662DTvEhbUJieJUcADo23b9obWQutMlex62kP+DpdeLNYoZPLBYrW682FK?=
+ =?us-ascii?Q?IYFIiqx5j5dD7FQMlbLjqXSB9uam+A0q6lKeyKuImm1R3rOJ0LDvhY7+IzDE?=
+ =?us-ascii?Q?7983BjQ9tH8qK0gjWoALuexnPUM97m0mvh0BLfhEtAyOVzWEC8ccTqv/XwUk?=
+ =?us-ascii?Q?h3+t/u2wuXCu35uiT/FvrgMHbMe/78WPgR5xlO8jIu0JG1l/8B+g3H5yFQpT?=
+ =?us-ascii?Q?P+oZ/rKgTkQR5t7RKXxPkTxcEwKpwzxQP35mhmnyVHslqi7XCRnCXeryfasM?=
+ =?us-ascii?Q?1kL6DK6A08UaHID9nH4edgRU2IG6MVSm?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
  SFS:(13230040)(36860700013)(1800799024)(376014)(82310400026); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Aug 2024 22:16:06.4979 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8d3cb444-3ad3-4b01-0ced-08dcb72e8887
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Aug 2024 22:15:59.6432 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0452ad31-5bb9-45bd-cc63-08dcb72e8462
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF00000149.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF00000148.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9080
-Received-SPF: permerror client-ip=2a01:111:f403:2414::624;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4374
+Received-SPF: permerror client-ip=2a01:111:f403:2416::601;
  envelope-from=Babu.Moger@amd.com;
- helo=NAM11-BN8-obe.outbound.protection.outlook.com
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -147,95 +147,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sandipan Das <sandipan.das@amd.com>
+Add the support for following RAS features bits on AMD guests.
 
-CPUID leaf 0x80000022, i.e. ExtPerfMonAndDbg, advertises new performance
-monitoring features for AMD processors. Bit 0 of EAX indicates support
-for Performance Monitoring Version 2 (PerfMonV2) features. If found to
-be set during PMU initialization, the EBX bits can be used to determine
-the number of available counters for different PMUs. It also denotes the
-availability of global control and status registers.
+SUCCOR: Software uncorrectable error containment and recovery capability.
+	The processor supports software containment of uncorrectable errors
+	through context synchronizing data poisoning and deferred error
+	interrupts.
 
-Add the required CPUID feature word and feature bit to allow guests to
-make use of the PerfMonV2 features.
+McaOverflowRecov: MCA overflow recovery support.
 
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
 Signed-off-by: Babu Moger <babu.moger@amd.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-v2: Used OR instead of overwrite for eax and ebx.
-    Added Zhao's Reviewed-by.
+v2: Just added reviewed by from Zhao.
 ---
- target/i386/cpu.c | 26 ++++++++++++++++++++++++++
- target/i386/cpu.h |  4 ++++
- 2 files changed, 30 insertions(+)
+ target/i386/cpu.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 19ea14c1ff..44cac5fdc9 100644
+index 85ef7452c0..19ea14c1ff 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -1228,6 +1228,22 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-         .tcg_features = 0,
-         .unmigratable_flags = 0,
-     },
-+    [FEAT_8000_0022_EAX] = {
-+        .type = CPUID_FEATURE_WORD,
-+        .feat_names = {
-+            "perfmon-v2", NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+            NULL, NULL, NULL, NULL,
-+        },
-+        .cpuid = { .eax = 0x80000022, .reg = R_EAX, },
-+        .tcg_features = 0,
-+        .unmigratable_flags = 0,
-+    },
-     [FEAT_XSAVE] = {
-         .type = CPUID_FEATURE_WORD,
-         .feat_names = {
-@@ -7038,6 +7054,16 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-             *edx = 0;
+@@ -4968,6 +4968,16 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+                 },
+                 .cache_info = &epyc_v4_cache_info
+             },
++            {
++                .version = 5,
++                .props = (PropValue[]) {
++                    { "overflow-recov", "on" },
++                    { "succor", "on" },
++                    { "model-id",
++                      "AMD EPYC-v5 Processor" },
++                    { /* end of list */ }
++                },
++            },
+             { /* end of list */ }
          }
-         break;
-+    case 0x80000022:
-+        *eax = *ebx = *ecx = *edx = 0;
-+        /* AMD Extended Performance Monitoring and Debug */
-+        if (kvm_enabled() && cpu->enable_pmu &&
-+            (env->features[FEAT_8000_0022_EAX] & CPUID_8000_0022_EAX_PERFMON_V2)) {
-+            *eax |= CPUID_8000_0022_EAX_PERFMON_V2;
-+            *ebx |= kvm_arch_get_supported_cpuid(cs->kvm_state, index, count,
-+                                                 R_EBX) & 0xf;
-+        }
-+        break;
-     case 0xC0000000:
-         *eax = env->cpuid_xlevel2;
-         *ebx = 0;
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index c6cc035df3..549752575e 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -638,6 +638,7 @@ typedef enum FeatureWord {
-     FEAT_8000_0007_EDX, /* CPUID[8000_0007].EDX */
-     FEAT_8000_0008_EBX, /* CPUID[8000_0008].EBX */
-     FEAT_8000_0021_EAX, /* CPUID[8000_0021].EAX */
-+    FEAT_8000_0022_EAX, /* CPUID[8000_0022].EAX */
-     FEAT_C000_0001_EDX, /* CPUID[C000_0001].EDX */
-     FEAT_KVM,           /* CPUID[4000_0001].EAX (KVM_CPUID_FEATURES) */
-     FEAT_KVM_HINTS,     /* CPUID[4000_0001].EDX */
-@@ -1022,6 +1023,9 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- /* Automatic IBRS */
- #define CPUID_8000_0021_EAX_AUTO_IBRS   (1U << 8)
- 
-+/* Performance Monitoring Version 2 */
-+#define CPUID_8000_0022_EAX_PERFMON_V2  (1U << 0)
-+
- #define CPUID_XSAVE_XSAVEOPT   (1U << 0)
- #define CPUID_XSAVE_XSAVEC     (1U << 1)
- #define CPUID_XSAVE_XGETBV1    (1U << 2)
+     },
+@@ -5106,6 +5116,16 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+                     { /* end of list */ }
+                 },
+             },
++            {
++                .version = 5,
++                .props = (PropValue[]) {
++                    { "overflow-recov", "on" },
++                    { "succor", "on" },
++                    { "model-id",
++                      "AMD EPYC-Rome-v5 Processor" },
++                    { /* end of list */ }
++                },
++            },
+             { /* end of list */ }
+         }
+     },
+@@ -5181,6 +5201,16 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+                 },
+                 .cache_info = &epyc_milan_v2_cache_info
+             },
++            {
++                .version = 3,
++                .props = (PropValue[]) {
++                    { "overflow-recov", "on" },
++                    { "succor", "on" },
++                    { "model-id",
++                      "AMD EPYC-Milan-v3 Processor" },
++                    { /* end of list */ }
++                },
++            },
+             { /* end of list */ }
+         }
+     },
 -- 
 2.34.1
 
