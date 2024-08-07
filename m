@@ -4,91 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18E27C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 13:28:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D292C52D71
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 13:44:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbgiR-0005Zr-LY; Wed, 07 Aug 2024 09:28:35 -0400
+	id 1sbgxE-0005Eh-US; Wed, 07 Aug 2024 09:43:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sbgiP-0005Pb-0E
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 09:28:33 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1sbgxB-0005B0-1i
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 09:43:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sbgiN-00038F-8l
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 09:28:32 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1sbgx8-0005Fm-Ra
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 09:43:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723037309;
+ s=mimecast20190719; t=1723038226;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MuOMS6Luo6DRqz2cR8tGU25H7DLY1HtTPW8DCbYrHtY=;
- b=dyUomfSAuwLZs+LYiWryfy4sWaqEqJpcOZxOH4+qCemt1JfEtrpC8R4qas2rp6xLVHYzql
- eOu6OfNYMtwkJdSFSB2we9gqQDD++e7nUP4LM469uaXbrZUvVGS9X3yyg62qlAmL4J1Y6X
- xip1GIyXpvHW0hmSpwEmaTKxTDl+v+8=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-664-PcWeJnS_PxKBNnlyGIp37w-1; Wed, 07 Aug 2024 09:28:26 -0400
-X-MC-Unique: PcWeJnS_PxKBNnlyGIp37w-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-42817980766so12548545e9.3
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 06:28:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723037305; x=1723642105;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MuOMS6Luo6DRqz2cR8tGU25H7DLY1HtTPW8DCbYrHtY=;
- b=VccNvP6cSRu3cZv8KEjBfP0L1kQazTEltQX2fxvBDdK1XiXSXnopSleG6l84R7F5or
- 7fkCue6hmaLjW/a0yPR8U3F9cRxN+lUOSdW150iiO0cfIfS6vRTbN0oyvNrbDRocWL2G
- XTz4gUVm4V5d5cA6IBfxOb5Hw8JADqB+jGpNhipip/YorpzMSVNRMyiiiigsicRRNBUx
- t++47OnnNlh/d4McbIu3EdyJ1K/Nb/JhAjW22lzjcFhdiwmBGtQ2xW3fJAOKwVugWmAA
- qbEPE9aiIgFlUDEy2jBoa93e6ceSluUNZDMU03C13F2jKJc2gQYoeM7HzvfJBGhtoJQv
- aszQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXSW2q5eXHNYdZ/0Jmmo3kwZ8INkgAO5rg/EEE0ivoGv4EBxqOhNOPMd5HzjzJvu9i1LlEN0n3+CGfjDAb1zcXlMcb8/wg=
-X-Gm-Message-State: AOJu0YwDx10gE6++B/l2pX5JgZkF9sZlVwEAm87bIR3IoLvu+8bDa1aY
- ET5Fla4Bv/QwMAg5kGqj/Lhy5YehVIIlOWRMQc4SCDDBTOt3NTbDF+U9kyqNqxXaT+4aHgVI+rl
- 8v17f8351Tnonf2LIrv3jeXGceJds9cqHOs0zlS01MCy74NJ5NX4m
-X-Received: by 2002:a05:600c:458c:b0:426:62c6:4341 with SMTP id
- 5b1f17b1804b1-428e6b30e41mr133299785e9.20.1723037305387; 
- Wed, 07 Aug 2024 06:28:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGLj+isQ7nmBF9hW30nn+vT8bfESNT5x6lh77Gwp7uo/AL4KwM+k2TyKmw7SZMV+5PNlKfGIg==
-X-Received: by 2002:a05:600c:458c:b0:426:62c6:4341 with SMTP id
- 5b1f17b1804b1-428e6b30e41mr133299525e9.20.1723037304859; 
- Wed, 07 Aug 2024 06:28:24 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42905801c42sm30509085e9.34.2024.08.07.06.28.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Aug 2024 06:28:24 -0700 (PDT)
-Date: Wed, 7 Aug 2024 15:28:23 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- <linux-kernel@vger.kernel.org>, <qemu-arm@nongnu.org>,
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v5 6/7] acpi/ghes: add support for generic error
- injection via QAPI
-Message-ID: <20240807152823.0d9117bc@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240807103436.000013fc@Huawei.com>
-References: <cover.1722634602.git.mchehab+huawei@kernel.org>
- <20c491e357340e0062b6ff09867c1661ed4d2479.1722634602.git.mchehab+huawei@kernel.org>
- <20240806163113.3bdc260a@imammedo.users.ipa.redhat.com>
- <20240807094750.6414fb2f@foz.lan>
- <20240807103436.000013fc@Huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ bh=kFLHuBTceLZdkp9LrWzZltOOiHtJfnR4o1vCph6qHUk=;
+ b=O3ulOYoIfvt46GA+asUggGd/7+Nv5esXywH6oXztQrselc4AS94aMP9pWnWCnASj+y7yR7
+ iE13uCmZDS7D1J8+JDNfXM3lXHzF6pFWakvtIuotpa8Wkkt/UxpZSR3UjPn00OgJ8+FC+b
+ xuYwLoVMSWPt1og2KsMnFY40I7XI6IA=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-164-64YDBk6vNoOfla6hoSeHFA-1; Wed,
+ 07 Aug 2024 09:43:42 -0400
+X-MC-Unique: 64YDBk6vNoOfla6hoSeHFA-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71CF919560B3; Wed,  7 Aug 2024 13:43:41 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.129])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 55E9E300018D; Wed,  7 Aug 2024 13:43:40 +0000 (UTC)
+Date: Wed, 7 Aug 2024 09:43:39 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, rjones@redhat.com,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Subject: Re: [PATCH 2/2] qemu-img: CVE-XXX Sanitize untrusted output from NBD
+ server
+Message-ID: <20240807134339.GC131475@fedora.redhat.com>
+References: <20240802194156.2131519-4-eblake@redhat.com>
+ <20240802194156.2131519-6-eblake@redhat.com>
+ <ac870295-4fe0-4c46-a5f1-36eb2945a5dd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="PYMA5bPjvqDOfO8A"
+Content-Disposition: inline
+In-Reply-To: <ac870295-4fe0-4c46-a5f1-36eb2945a5dd@linaro.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -112,72 +87,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 7 Aug 2024 10:34:36 +0100
-Jonathan Cameron <Jonathan.Cameron@Huawei.com> wrote:
 
-> On Wed, 7 Aug 2024 09:47:50 +0200
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> 
-> > Em Tue, 6 Aug 2024 16:31:13 +0200
-> > Igor Mammedov <imammedo@redhat.com> escreveu:
-> >   
-> > > PS:
-> > > looking at the code, ACPI_GHES_MAX_RAW_DATA_LENGTH is 1K
-> > > and it is the total size of a error block for a error source.
-> > > 
-> > > However acpi_hest_ghes.rst (3) says it should be 4K,
-> > > am I mistaken?    
-> > 
-> > Maybe Jonathan knows better, but I guess the 1K was just some
-> > arbitrary limit to prevent a too big CPER. The 4K limit described
-> > at acpi_hest_ghes.rst could be just some limit to cope with
-> > the current bios implementation, but I didn't check myself how
-> > this is implemented there. 
-> > 
-> > I was unable to find any limit at the specs. Yet, if you look at:
-> > 
-> > https://uefi.org/specs/UEFI/2.10/Apx_N_Common_Platform_Error_Record.html#arm-processor-error-section  
-> 
-> I think both limits are just made up.  You can in theory log huge
-> error records.  Just not one does.
+--PYMA5bPjvqDOfO8A
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-What I care about is what we actually allocate vs what we promised
-in docs. Given that it's harder to change actual size (we would need
-a compat handling here not to break old machine types), I  would vote
-for syncing docs to match code.
+On Fri, Aug 02, 2024 at 11:41:35PM +0200, Philippe Mathieu-Daud=E9 wrote:
+> On 2/8/24 21:26, Eric Blake wrote:
+> > Error messages from an NBD server must be treated as untrusted; a
+> > malicious server can inject escape sequences to try and trigger RCE
+> > flaws via escape sequences to whatever terminal happens to be running
+> > qemu-img.  The easiest solution is to sanitize the output with the
+> > same code we use to produce sanitized (pseudo-)JSON over QMP.
+> >=20
+> > Rich Jones originally pointed this flaw out at:
+> > https://lists.libguestfs.org/archives/list/guestfs@lists.libguestfs.org=
+/thread/2NXA23G2V3HPWJYAO726PLNBEAAEUJAU/
+> >=20
+> > With this patch, and a malicious server run with nbdkit 1.40 as:
+> >=20
+> > $ nbdkit --log=3Dnull eval open=3D' printf \
+> >    "EPERM x\\r mess up the output \e[31mmess up the output\e[m mess up"=
+ >&2; \
+> >    exit 1 ' get_size=3D' echo 0 ' --run 'qemu-img info "$uri"'
+> >=20
+> > we now get:
+> >=20
+> > qemu-img: Could not open 'nbd://localhost': Requested export not availa=
+ble
+> > server reported: /tmp/nbdkitOZHOKB/open: x\r mess up the output \u001B[=
+31mmess up the output\u001B[m mess up
+> >=20
+> > instead of an attempt to hide the name of the Unix socket and forcing
+> > the terminal to render part of the text red.
+> >=20
+> > Note that I did _not_ sanitize the string being sent through
+> > trace-events in trace_nbd_server_error_msg; this is because I assume
+> > that our trace engines already treat all string strings as untrusted
+> > input and apply their own escaping as needed.
+> >=20
+> > Reported-by: "Richard W.M. Jones" <rjones@redhat.com>
+> > Signed-off-by: Eric Blake <eblake@redhat.com>
+> >=20
+> > ---
+> >=20
+> > If my assumption about allowing raw escape bytes through to trace_
+> > calls is wrong (such as when tracing to stderr), let me know.  That's
+> > a much bigger audit to determine which trace points, if any, should
+> > sanitize data before tracing, and/or change the trace engines to
+> > sanitize all strings (with possible knock-on effects if trace output
+> > changes unexpectedly for a tool expecting something unsanitized).
+>=20
+> I doubt the trace core layer sanitizes, but it feels it is the
+> trace backend responsibility, since core layer might just pass
+> pointer to the backends.
 
-A separate stand-alone patch for fixing it would do,
-or it could be a part of series.
+Yes, strings are not escaped by the core tracing code. They probably
+should not be escaped by QEMU since the trace backend may wish to
+process the strings and it expects to operate on raw strings.
 
-Also I'd like another pair of eyes to look at it to confirm actual
-size we allocate, in case I'm not seeing it right.
+>=20
+> > ---
+> >   nbd/client.c | 5 ++++-
+> >   1 file changed, 4 insertions(+), 1 deletion(-)
+>=20
+> Reviewed-by: Philippe Mathieu-Daud=E9 <philmd@linaro.org>
+>=20
 
-> > The processor Error Information Structure, starting at offset
-> > 40, can go up to 255*32, meaning an offset of 8200, which is
-> > bigger than 4K.
-> > 
-> > Going further, processor context can have up to 65535 (spec
-> > actually says 65536, but that sounds a typo, as the size is
-> > stored on an uint16_t), containing multiple register values
-> > there (the spec calls its length as "P").
-> > 
-> > So, the CPER record could, in theory, have:
-> > 	8200 + (65535 * P) + sizeof(vendor-specicific-info)
-> > 
-> > The CPER length is stored in Section Length record, which is
-> > uint32_t.
-> > 
-> > So, I'd say that the GHES record can theoretically be a lot
-> > bigger than 4K.	  
-> Agreed - but I don't think we care for testing as long as it's
-> big enough for plausible records.   Unless you really want
-> to fuzz the limits?
-> 
-> Jonathan
-> 
-> > 
-> > Thanks,
-> > Mauro  
-> 
+--PYMA5bPjvqDOfO8A
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmazegsACgkQnKSrs4Gr
+c8iGEgf/R7G+JRdXlYdVTpK/fyjTDZ+t/ZGrdIPdkr+MOe79XhSJE05/i9Z7mTEs
+PviHx3zY5GYu8hh9QdBOQyD5i4APel7U/zKh6r0MC47BghiFkFXFQipi+pIhNd8r
+dk69mowBqkx4ATDJM8CVFNUzTFQyVhdR+gU6KJLDhPuwxm08YNwZJgsOx4/uy7nI
+PlSOv09DYsfEg9QkH6++9GPGg71dSt4e7ASDZSB1OcVOKJM+c7Zus1yLB6whg1gN
+g+0efS/gtQAbLZjogwfFYveFDdTnAyXCx1b1k+lfgsnNb8HmTAobMqy36mA5IWAN
+2s4apGVyy8mQxci0YJHdIKOWyeFp7A==
+=SCQh
+-----END PGP SIGNATURE-----
+
+--PYMA5bPjvqDOfO8A--
 
 
