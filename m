@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09CBBC52D6F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 03:42:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00D7DC52D6F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 03:47:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbXYd-0001k8-GJ; Tue, 06 Aug 2024 23:41:51 -0400
+	id 1sbXdK-0006hm-I3; Tue, 06 Aug 2024 23:46:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sbXYc-0001i6-7y
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 23:41:50 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1sbXdJ-0006fj-3x
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 23:46:41 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sbXYa-0002uB-CR
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 23:41:50 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1ff1cd07f56so11164685ad.2
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 20:41:47 -0700 (PDT)
+ id 1sbXdH-0003N3-Kn
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 23:46:40 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-7106e2d0ec1so1080484b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 20:46:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723002106; x=1723606906; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723002397; x=1723607197; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=ixn5VJ+kJLx+H4k8QwB1NoIOhTMwvrVH+7y5sWqgSDI=;
- b=Ogyix730LuBvv7XcOt00YR7ZnTpsgEM+cEJq0a+99ZSuV3/WdC3IuLFrGhcjLgmt0W
- TA7UoPMmxm1GZZS4mbh1dDXFc28Q/xk6vWeQp25ZtWOfaUaWOhyGqz07DRLIe5SNyge3
- vqGtWFZA9o+Lr6QqX803Cf/ws2uf0OoM+zxS2U711EDcVI4zLPfdOm29XB/LUkjQWPew
- dwUss+lbOozOBmjPiZLU4UKoapUE7pgfwIHMVt5P4HBTFgOGnLIMwDHxTtAPGyJT23VH
- d/x/7Cl+fFihEb1bc2Nrk3kEmjCsjzdrXS/CSHDAi0io8u9xeNQyOq+/EXv4XzVwAJps
- Dzkg==
+ bh=8DU9Z0oz7hUaX+wBucwe27ucxf+vT1gzmbJasnsJcjc=;
+ b=A4XqNtRdsO8EimokQgssS1P3cdRLOCjzOO1WB17xtiwvPUuRhnIEMx5cbDXqymZZuz
+ k9Feqi58PrP6Tqk88b5BcAqzCybzGKqo6s/xrI88D3kB1Pt81G0NAWgQxnDF7AdMs/o4
+ BzR5JRl4VxQExEDv4Vp80Y7F6/Wi0+N7hL6EaxOSXu3kL+CT+2lSInLDdTxDN0VMTtWe
+ Am9yO1avw4/Nto/Qdmk84CmFHS+a8hhEo5LcV7XruyHp7UdLYrRICJJkQWZDyi7pO+/Y
+ lWNYwcZm8js+CT3ltzPCCNAOHb+B6UtIbMTbO7t1p69RLaiOxJ5HAN9QkhoujIFwmhPE
+ gb8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723002106; x=1723606906;
+ d=1e100.net; s=20230601; t=1723002397; x=1723607197;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ixn5VJ+kJLx+H4k8QwB1NoIOhTMwvrVH+7y5sWqgSDI=;
- b=elPKF69H+rkvFaa8SyATqnbWZEDAuXemZQgE6e494Fju/m0+mXNScXbEqedvXqKGJ1
- r7N9AId2E9HSwrEB+Gs8VshXSUgzj3QEM7CHVXHPGcehPhGgFsusVGDtZHjHj7RU3CrA
- HeiLk40OaETHC3XoO6LJnlA1t7Mv2MnZYId8rWzoaZrWHqP8v6D07rqJlnu/fRMiunO1
- 1np8EXQg1hIcdgwVCsy7W1emYbbCPu9it8L1100BCm7wsA+f869IFoTBHSEAG8bHUFSv
- GadfwUEEIunl9r8vaSjZEnYT3fOY9F3N1NYqSAbaLQ8+qZoxMLUlPLDJPiFRyAHZVbil
- tF6A==
+ bh=8DU9Z0oz7hUaX+wBucwe27ucxf+vT1gzmbJasnsJcjc=;
+ b=Yo+yU+jIKlJO3M+EitRG8vZ929OatYFowisY7dALIaxU3MmfpfEgYNZ0MNxaGSyoDH
+ b/uMEUTvu6kMSD8uliuP/oRPoYhyLISw27ho0dSQAk4Zh+KBJf3usr54PDlJpwj42h5C
+ 8LvaUEWw3D1eUBlvqu3kxQ3kkL+ie9mDcA6eGkHq5OuMwH3/02cZ8LgrdxY9lFVrlC5m
+ fcTN0YJvswTa1ti4lyplwGh/1Te8/kVcgRtzWAoKqeE3Lu2f7F3gkLBSwaMrY58mqa17
+ L0pWV35GaXNBiwGBLcLz5g5RpDbfp9q7cG2GiX6ENtA/iNTc6upwUTxrXDHngkZYJnQs
+ ZH2Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWLqlYc2Gn+LFVtSfw2wkQof5Io8jecJNmmtrLBcQWuPSE6s5k5QDoNgUNFE5yQdRXc6IHv2ZGQPPbgXCLzMpTU1aWlJWw=
-X-Gm-Message-State: AOJu0YxHVwOYaL2ymLjbbN/35lhHhksxvCazr9LsQ+u+FfWLyrn3Xco4
- D1LMR50XL0z4EuHEcpaklYpyMgLvOPpjyXjjjQ1/j81kF+qSKJ5Q1vfDQFlJGqw=
-X-Google-Smtp-Source: AGHT+IFpp/h/OhIxozXEVO/bsGHBoymvUOVxoH8ytFnwfQX6n1nBWeYw6VNQfTIhao5ADQnKfTRhsg==
-X-Received: by 2002:a17:903:2306:b0:1ff:3c45:48dd with SMTP id
- d9443c01a7336-1ff57298462mr208354495ad.30.1723002106239; 
- Tue, 06 Aug 2024 20:41:46 -0700 (PDT)
+ AJvYcCUpW8gVOw8QytPGIN+FC2eb1bcxeeLxqsXtJc9pEKVgY3I6G0m/uwQkU0Njl0NyFpgyEl7gVBe3gSmYM2eyTI2pkRHZHcU=
+X-Gm-Message-State: AOJu0Yy++As3+UsseGqKpi70IlJ4OUj6Fjj1P5S/ouGJVWUj8YYLsn7k
+ ajlrAyQg6d9vj8mmJJU171UbM0hPx+St4K+ZJ3bwVIRvsWVlYtzRBPVNvAHII6M=
+X-Google-Smtp-Source: AGHT+IHld8l/1nod9XedHnjsXQfeXPj+wBf1Qvmgp7FsXm6yk2DLhWywyUeXA7ngBPWog1DGXOEN9w==
+X-Received: by 2002:a05:6a20:12d2:b0:1c0:e1a5:9583 with SMTP id
+ adf61e73a8af0-1c69955f54emr17210544637.17.1723002397013; 
+ Tue, 06 Aug 2024 20:46:37 -0700 (PDT)
 Received: from ?IPV6:2403:580a:f89b:0:e01b:92e5:d779:1bc0?
  (2403-580a-f89b-0-e01b-92e5-d779-1bc0.ip6.aussiebb.net.
  [2403:580a:f89b:0:e01b:92e5:d779:1bc0])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff591786b3sm95289775ad.214.2024.08.06.20.41.41
+ 98e67ed59e1d1-2d1b3a9cc47sm298202a91.11.2024.08.06.20.46.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Aug 2024 20:41:45 -0700 (PDT)
-Message-ID: <e210c317-bad1-4d29-ab11-cd2e16246398@linaro.org>
-Date: Wed, 7 Aug 2024 13:41:37 +1000
+ Tue, 06 Aug 2024 20:46:36 -0700 (PDT)
+Message-ID: <f82397e9-3be4-49be-b291-5598acdaf39b@linaro.org>
+Date: Wed, 7 Aug 2024 13:46:30 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 20/20] linux-user: Add RISC-V zicfilp support in VDSO
-To: Deepak Gupta <debug@rivosinc.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: pbonzini@redhat.com, palmer@dabbelt.com, Alistair.Francis@wdc.com,
- laurent@vivier.eu, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- Jim Shu <jim.shu@sifive.com>
-References: <20240807000652.1417776-1-debug@rivosinc.com>
- <20240807000652.1417776-21-debug@rivosinc.com>
+Subject: Re: [RFC PATCH-for-9.1? 1/2] target/arm: Move
+ qmp_query_gic_capabilities() to hw/intc/
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+References: <20240806141940.22095-1-philmd@linaro.org>
+ <20240806141940.22095-2-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240807000652.1417776-21-debug@rivosinc.com>
+In-Reply-To: <20240806141940.22095-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,54 +104,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/7/24 10:06, Deepak Gupta wrote:
-> Add zicfilp support in VDSO. VDSO functions need lpad instruction
-> so that userspace could call this function when landing pad extension is
-> enabled. This solution only works when toolchain always use landing pad
-> label 1.
+On 8/7/24 00:19, Philippe Mathieu-Daudé wrote:
+> qmp_query_gic_capabilities() is not specific to the ARM
+> architecture but to the GIC device which is modelled in
+> hw/intc/, so move the code there for clarity.
 
-Well, no, the lpad insns *could* use imm=0.
-Why would the toolchain always use label 1?
+But the GIC is certainly arm architecture specific.
+It's built into the CPU, and shares state.
 
-Much more explanation is required here.
+The fact that it's modeled in hw/intc/ and not in target/arm/ has always been a needle in 
+the side, though it seems there are no good options.
 
-> +/* GNU_PROPERTY_RISCV64_* macros from elf.h for use in asm code.  */
-> +#define FEATURE_1_AND 0xc0000000
-> +
-> +#define GNU_PROPERTY(type, value)	\
-> +  .section .note.gnu.property, "a";	\
-> +  .p2align 3;                       \
-> +  .word 4;                          \
-> +  .word 16;                         \
-> +  .word 5;                          \
-> +  .asciz "GNU";                     \
-> +  .word type;                       \
-> +  .word 4;                          \
-> +  .word value;                      \
-> +  .word 0;                          \
-> +  .text
-> +
-> +/* Add GNU property note with the supported features to all asm code
-> +   where sysdep.h is included.  */
-> +#undef __VALUE_FOR_FEATURE_1_AND
-> +#if defined (__riscv_zicfilp) || defined (__riscv_zicfiss)
-> +#  if defined (__riscv_zicfilp)
-> +#    if defined (__riscv_zicfiss)
+> @@ -39,6 +39,7 @@ if config_all_devices.has_key('CONFIG_APIC') or \
+>   endif
+>   
+>   specific_ss.add(when: 'CONFIG_APIC', if_true: files('apic.c', 'apic_common.c'))
+> +specific_ss.add(when: 'CONFIG_ARM', if_true: files('arm_gic_qmp.c'))
+>   specific_ss.add(when: 'CONFIG_ARM_GIC', if_true: files('arm_gicv3_cpuif_common.c'))
 
-Why are you checking __riscv_* symbols, for when the toolchain
-has these features enabled on the command-line?
-
-This is the kind of feature you want enabled always.
-
-> +#ifdef __riscv_zicfilp
-> +# define LPAD       lpad 1
-> +#else
-> +# define LPAD
-> +#endif
-
-Here, especially, you should be using ".insn", not omitting the lpad insn.
+Is it more or less confusing that you're not using CONFIG_ARM_GIC, for something that is 
+GIC related?
 
 
 r~
-
 
