@@ -4,66 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B41FFC52D73
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 16:12:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11552C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 16:18:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbjH8-0000HO-H2; Wed, 07 Aug 2024 12:12:34 -0400
+	id 1sbjLj-0004qS-Kx; Wed, 07 Aug 2024 12:17:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <erdnaxe@crans.org>) id 1sbjH7-0000Gn-15
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 12:12:33 -0400
-Received: from redisdead.crans.org ([185.230.79.39])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <erdnaxe@crans.org>) id 1sbjH4-0001uV-Bw
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 12:12:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crans.org; s=mail;
- t=1723047138; bh=pD2Do4pvajSm9PgFF/FiyU8b48sg/O3AfuLK4cZo/VU=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=tCOmnLB95M3wYCfoooC95SEfjg8qHy21DwukWAd7EaF8KU6hIMT6jeljEI4DBaD0J
- 1/H/UVdQJjBte0M8IPrFiNrbO1/dfAcoUO6ZoOIKgheNUe/rHU6fkUUebBZoQYbYB9
- YYPgjKN54x98e6Qehe+maTbv+fLkgrsasjtVPTsC4EFV0NqJBp0wrlCe21ffocr0iY
- GrCtXKg8RkTMK6pJpMjBhTsY4wHVsVeLTSMBv88lbpkKgWEDikiNp0k+rHQNjSZ2dm
- gWFlk6AcdOWt/2vkqrZcRFx6WqAKU0Tsvp2Xg6kYw3r1bnbfi0rcxwKmW1aXejPwb7
- aJwCmY5e050cxV63AMxwjQn9TcKHnsxNaOVvo6Oq+mDTdPMRVEYbI2r5lQB4Og1hAS
- GAWqqH23ytZFvR8JjvtOhacYweADdX3adAc4N51ZhWsAOPhds8viptiuTPHox+No+e
- Gcaaniwkud+i8jRvOBGDuUy9sXkTUWrDLDXwROgl9IsML/dr//VOjHOiJxDvlO8neq
- QoIdORirRuHI8/ZJAreZuWnUjifILJNCu9CTUo8CrcE+3MGEpO6EwG+BaRULXFZ+Kt
- wGYNNMh3bftu5Q/K3ePzXaE4Hb9g+Wr4cWGhYtY61dTzB/eFcmaYtstBbfB/xHJKOE
- UKWWfbT9TGjlPwFPCdCWQ1Ko=
-Received: from [IPV6:2001:861:3dc2:30f0:5f74:ee2d:c8ab:cd69] (unknown
- [IPv6:2001:861:3dc2:30f0:5f74:ee2d:c8ab:cd69])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by redisdead.crans.org (Postfix) with ESMTPSA id 9CA1728C;
- Wed,  7 Aug 2024 18:12:17 +0200 (CEST)
-Message-ID: <e7dfd816-2d76-419e-a29c-dc38f72bcb54@crans.org>
-Date: Wed, 7 Aug 2024 18:12:16 +0200
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sbjLh-0004p3-JC
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 12:17:17 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sbjLf-0002ge-Kp
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 12:17:17 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5af6a1afa7bso2490454a12.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 09:17:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723047433; x=1723652233; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MGB7lsf0ZQyPy4LluEQ3IekLkGnIH4iLXtYJ/dh0y5k=;
+ b=Lyw9BDmuO4a6eODbihBqJwPAC9q23uqx+dX8+zSUVM25qtRvGHCCGPvEYCtXLBIjFV
+ 6w75SwVE3es/LX++DtUCWfvgElg8gKh32rm/IrPfZDvQTZ+CNoKJ/jU7ij5/TWSiehE5
+ 0p4boB0w/+cfaPD3/1QCq5xGG70PRWWqnAn2g73QmXNXgnwDio+C2n3PwNwJkHaM5qB8
+ Ex9DYVtiNY7s/EppYj6qkrcdcxdBRR+UKrnH9dZGGrsYUivA/t7Yz8Rbhniut+7NC2AP
+ aLNHZoQkv0N21CQe1WatV/4Xjl5ngkOs+Mj5o7aXhbsdaJmcfPBEgbY1Hy2TlhtWRQ8l
+ KCzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723047433; x=1723652233;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MGB7lsf0ZQyPy4LluEQ3IekLkGnIH4iLXtYJ/dh0y5k=;
+ b=r16YaTVjJ6wGzNeG4k3dXV8U95OSK+3FMA0Bt6efQWEzcD2reIJSj1qha+YrqkWWSd
+ WowPDGt5aFpg1QG6EkjCIwS6syUL6pteSMFhylpBJ/qJbUrbeoILvWlu6LcPKBCl8cgo
+ TOz/mOrMY8e1H8jCTIpEB4M/0eD1FY36dJZJ2Lm9pnA6f+ZXJWwqsTIXce+GJUuTvROm
+ JDrKAW4q3EY2HoC+BOmi/od2ZwuD2qL/ZSOChYgk1iauSrBCrymBsETEHV4/AvTXeBZL
+ 5PTZ2FjXzGprQPLN503c2EDOHgPm7eZws8wkQ3tLv+1pK/8idHkOU7olM0vk5wPlKylG
+ Rwxg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVHBzy1vI1QdNkDs4ZOzyUO5SfpxYMbFv34zNQa4IbVQuADLDz9S2BxIKBU4Rh7Bh1L7MCJBtdnqTBU@nongnu.org
+X-Gm-Message-State: AOJu0YwC31R0ynjS787bDvNLMCMOUEGb9LeNXCaAssohdzm2w3cluE4z
+ 11GhSy2n60b7wqfDM68kaD3U6fDu6tFuSB80PZyK5WQ+vDoJCvwJISnW+m9R5coxDoq0d+jPm1c
+ Sy2QPzPaFCMmB3oM2vF2z2WWSHQz1MesPzl68yg==
+X-Google-Smtp-Source: AGHT+IGNYkll1AZ+eliCrBAnJfO5mv/cCCoutsHpU2vS2icXYe6kpooh/qcJvwlnJmm5ya4huGsU/2Xycc5fgrZ7cFk=
+X-Received: by 2002:a50:eac1:0:b0:5a4:2c8:abda with SMTP id
+ 4fb4d7f45d1cf-5b7f36f58e2mr13728476a12.3.1723047433030; Wed, 07 Aug 2024
+ 09:17:13 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] target/i386: allow access_ptr to force slow path on
- failed probe
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20240807160236.2478459-1-alex.bennee@linaro.org>
-Content-Language: en-US
-From: Alexandre IOOSS <erdnaxe@crans.org>
-Organization: Crans
-In-Reply-To: <20240807160236.2478459-1-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.230.79.39; envelope-from=erdnaxe@crans.org;
- helo=redisdead.crans.org
+References: <20240806141940.22095-1-philmd@linaro.org>
+ <20240806141940.22095-2-philmd@linaro.org>
+ <f82397e9-3be4-49be-b291-5598acdaf39b@linaro.org>
+In-Reply-To: <f82397e9-3be4-49be-b291-5598acdaf39b@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 7 Aug 2024 17:17:01 +0100
+Message-ID: <CAFEAcA9emwsK07+itUzMxReOLG8gHaxNdDE8ymuwyuBfsoY2Pg@mail.gmail.com>
+Subject: Re: [RFC PATCH-for-9.1? 1/2] target/arm: Move
+ qmp_query_gic_capabilities() to hw/intc/
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Eric Blake <eblake@redhat.com>, 
+ qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,44 +97,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/7/24 18:02, Alex Bennée wrote:
-> When we are using TCG plugin memory callbacks probe_access_internal
-> will return TLB_MMIO to force the slow path for memory access. This
-> results in probe_access returning NULL but the x86 access_ptr function
-> happily accepts an empty haddr resulting in segfault hilarity.
-> 
-> Check for an empty haddr to prevent the segfault and enable plugins to
-> track all the memory operations for the x86 save/restore helpers.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2489
-> Fixes: 6d03226b42 (plugins: force slow path when plugins instrument memory ops)
-> ---
->   target/i386/tcg/access.c | 4 ++++
->   1 file changed, 4 insertions(+)
-> 
-> diff --git a/target/i386/tcg/access.c b/target/i386/tcg/access.c
-> index 56a1181ea5..8ea5c453a0 100644
-> --- a/target/i386/tcg/access.c
-> +++ b/target/i386/tcg/access.c
-> @@ -58,6 +58,10 @@ static void *access_ptr(X86Access *ac, vaddr addr, unsigned len)
->   
->       assert(addr >= ac->vaddr);
->   
-> +    if (!ac->haddr1) {
-> +        return NULL;
-> +    }
-> +
->   #ifdef CONFIG_USER_ONLY
->       assert(offset <= ac->size1 - len);
->       return ac->haddr1 + offset;
+On Wed, 7 Aug 2024 at 04:46, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 8/7/24 00:19, Philippe Mathieu-Daud=C3=A9 wrote:
+> > qmp_query_gic_capabilities() is not specific to the ARM
+> > architecture but to the GIC device which is modelled in
+> > hw/intc/, so move the code there for clarity.
+>
+> But the GIC is certainly arm architecture specific.
+> It's built into the CPU, and shares state.
+>
+> The fact that it's modeled in hw/intc/ and not in target/arm/ has always =
+been a needle in
+> the side, though it seems there are no good options.
 
-I confirm that this patch fixes the crash I reported here: 
-https://gitlab.com/qemu-project/qemu/-/issues/2489
+In retrospect I wonder if we should have modelled the
+"GIC stream protocol" described in the GIC architecture
+spec, which formalises the communication between the
+CPU (including the GIC CPU interface) and the rest of
+the GIC (redistributors, distributor). It would probably
+have been more work and perhaps less efficient but it
+would have been a cleaner way to split the hw/intc
+code from the target/arm code. But regardless I don't
+think it would really be very feasible to move to that
+design at this point.
 
-Reviewed-by: Alexandre Iooss <erdnaxe@crans.org>
+WRT the commit message, the GIC is definitely
+Arm architecture specific. There might be boards
+with both Arm cores and non-Arm cores and a GIC,
+but the GIC will be connected to the Arm cores, and
+there won't be boards with a GIC but no Arm cores.
 
-Thanks,
--- 
-Alexandre
+The QAPI command which this code is implementing is
+also (a) target-specific and (b) unfortunately
+designed so that it doesn't get passed a particular
+CPU or particular device to query, it's just assumed
+to be a part of the whole simulation.
+
+-- PMM
 
