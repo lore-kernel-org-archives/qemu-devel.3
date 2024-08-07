@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E794C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 12:10:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ACDAC52D6F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 12:19:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbfTx-00066Y-PJ; Wed, 07 Aug 2024 08:09:33 -0400
+	id 1sbfd0-0003oe-OM; Wed, 07 Aug 2024 08:18:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbfTm-0005yi-BM
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 08:09:26 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbfcz-0003ni-GX
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 08:18:53 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbfTg-0008DI-F3
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 08:09:20 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3684e8220f9so461338f8f.1
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 05:09:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbfcx-0001XE-K4
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 08:18:53 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4280ee5f1e3so11813585e9.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 05:18:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723032554; x=1723637354; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723033127; x=1723637927; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=BzYjHKM8QWm29bOPoyExYoIAdgoIo8pXShLve8RotKo=;
- b=OwM9aLirNLI3qdRghKg70E/Je0R8mlkw6ufPJ4ldZ/YY1X22Qgyed/FVPVeba9T2nw
- 505i9likWjnYOjptYw1zKQzhfI3QGP9bOpFedduAkio1S+D2DphvCGBePZFXeBfzriK5
- zZ+CqVJN42rl0v92/VW8QgXSyNSvAi/Io5W5di5wXoL4Hd2IXe5iQBla7BY+NdYWbqnx
- NsbdpYGHbxQk44UxbDE8Fw3LnpM55BrM2Rpt4qgIAlTGG2ajsjsbq5gyNKOqTCxTQeKc
- TLK+oinRhUdB3gASu3S4by4hoD3EAHPCokgGHPWypqE4f5Z2xg8in1TlBUnMMWEXXWnM
- fhKA==
+ bh=tbWHhjdyT144xVaMzu60IOjDzNxtdVb+itnanPAVE2U=;
+ b=qArnI9qojXBs8FVtKEQJMjoxf1rCp2QPH/pRjIDzN0kOJA4GhNCZQJxxD8zeRN4pjW
+ Srd5GHUftgXLgJK+aqAgjFCLT7hwFiCuZUB8gRL+tAZdPNyio7yziRXExAk853vp3kVi
+ yO1dwutghy9N1iWzA/2sLmirfnwU+fSu4ewDz6qNRhWEU5mVRGAJCJW7cjhx6eXbSz7J
+ MU7kVQsTYAhGZW3tHJy9uqke3vUKVLvyCATF1AUaR+NPlaUsNgpP9Q+SLnsE7GQbXB2O
+ /iWeG5kvCmMZYM2cGxEYSaBAbLAJ5YI4Zciz+Urbo4LbWJ6bF6OxovRvUBIAy2w4hBoZ
+ bpLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723032554; x=1723637354;
+ d=1e100.net; s=20230601; t=1723033127; x=1723637927;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=BzYjHKM8QWm29bOPoyExYoIAdgoIo8pXShLve8RotKo=;
- b=cqOFyjI6S9jln3hLusGS0bDHr2rG0unXyUHJguuMB49bTpKOdMgMWcKpEOi4jwe1mk
- QROEXZL1QE59Pmm/ypVPlD3HFewglZoa2bZ/tMq/NtvFmJMZ2qeoGuZufiYW/KINaSyY
- atkBynlpSDhY0oKXOUNoJDM8x0wajth++oEJs7zoN86FGeLj3ESZceH/sPx0W4e1oUgC
- 2OvNJIMlyGERWsJQPFAn5XXAo2QgP4TA7D5YIatGwnFONQWOzF2jAN8UDJWZunc1ALTA
- fwfQeXAqTyJvjkojLTZ7qc/icMp53OuLWX4UGN6ZMC4Nszhc3OraicOzpP68UFIQsksx
- 5x+g==
-X-Gm-Message-State: AOJu0YzvhH0flfH7LopJIdAqA6xvtn8t4aKIgvUe9sp5Smf8pOM6cmc0
- osScc/yVMVygANddvFLpF7ye0NZq9hvfSPiHO/EEK8kyNZooARt8ZNOEsoFXNlQ=
-X-Google-Smtp-Source: AGHT+IEexye4bTd5GUjoXpcrXInlT7xJIWsZz+MgVf0XYtY7myKgZXP/OTB5nYoAwB/pb07EXpD07Q==
-X-Received: by 2002:adf:b197:0:b0:36b:a9e8:6b5 with SMTP id
- ffacd0b85a97d-36bf0db1e40mr1574498f8f.10.1723032553621; 
- Wed, 07 Aug 2024 05:09:13 -0700 (PDT)
+ bh=tbWHhjdyT144xVaMzu60IOjDzNxtdVb+itnanPAVE2U=;
+ b=TJsy8xVoDMVDmv8wOAwK3EqtG42SReRn6ZCbATZuUk5n2G5ocTu08qu58j3iZikf2q
+ GkH17sqfaywhzwxMxbj/XpI8FzJAORMQExmujv5Cced3VrqNXGrmkgPgnBJslHlQtUk4
+ JhmCT+sIZaak4oGWHWuKQnrvFfOHi5pQit9+IfApojX0tAOgqy7otUu4uY0Lufj2viqN
+ f1vU1a7MfKYKaUgyxZ8ONQ3g3xHKv3uMhXxhgNrWPDFGnKyu6PaiaxfgpsOG7uctZbqr
+ HCHVbuV/Ghxra9o7cIOfvEF+a0YJoqfTQBCjNQB7XUTolyqrt1lYbTrHDgckFte6GuD2
+ rrLQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWBgWg6ueIIYExFc6EYA0liNvbZRszw91qvCJPxdB4qbd3BDrLqEX0b704iZfyHXoch6QrqWRBdhyD1ZEsXGjrBR3FSnu8=
+X-Gm-Message-State: AOJu0YyJsl3bER4Ft7zhbT0qqE9UPoj2XqjEN7ujrEWos2BjJyPMlGLP
+ I7rGSAf3LAMVxYvjs1ehZdGRu2CBWuOBDMlkgb+UVBA3ot1hi+wt/zsDQ2FzNJlarw9Sps0oixv
+ Z
+X-Google-Smtp-Source: AGHT+IH6Bl+rdG8DLPdfqllerC6E9JvR0twh0pxie31Nq9J9CvO14NUu8KD8aPZ1hqVqc5vVkvA2eA==
+X-Received: by 2002:a5d:6488:0:b0:367:8a72:b8b4 with SMTP id
+ ffacd0b85a97d-36bbc0ece70mr17369705f8f.33.1723033127509; 
+ Wed, 07 Aug 2024 05:18:47 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.212.120])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36bbd01efe5sm15832435f8f.46.2024.08.07.05.09.12
+ ffacd0b85a97d-36bbd02a451sm16022585f8f.63.2024.08.07.05.18.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Aug 2024 05:09:13 -0700 (PDT)
-Message-ID: <f2491b8e-595f-456e-8dd4-92a11207e092@linaro.org>
-Date: Wed, 7 Aug 2024 14:09:11 +0200
+ Wed, 07 Aug 2024 05:18:47 -0700 (PDT)
+Message-ID: <79abbd4a-e1c8-4539-a29e-f0ec76becf20@linaro.org>
+Date: Wed, 7 Aug 2024 14:18:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] qapi: Generate QAPI files using qapi/ for generated
- header paths
-To: Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240807093406.40360-1-philmd@linaro.org>
- <ZrNB5C7Ta-Qg-9HT@redhat.com> <87ttfwwqrx.fsf@pond.sub.org>
- <ZrNTxb8go0xqfE3R@redhat.com> <8734ngwpca.fsf@pond.sub.org>
- <ZrNZmFL_HjuKrque@redhat.com> <87ed70v8x0.fsf@pond.sub.org>
+Subject: Re: [PATCH 2/3] linux-user: Add strace for sendto()
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <laurent@vivier.eu>, Zach van Rijn <me@zv.io>
+References: <20240807083508.28134-1-philmd@linaro.org>
+ <20240807083508.28134-3-philmd@linaro.org>
+ <47d9b786-870c-4a0b-bc8c-1fa09d3c2113@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87ed70v8x0.fsf@pond.sub.org>
+In-Reply-To: <47d9b786-870c-4a0b-bc8c-1fa09d3c2113@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,156 +98,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/24 14:01, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+On 7/8/24 12:55, Richard Henderson wrote:
+> On 8/7/24 18:35, Philippe Mathieu-Daudé wrote:
+>> +#ifdef TARGET_NR_sendto
+>> +static void
+>> +print_sendto(CPUArchState *cpu_env, const struct syscallname *name,
+>> +             abi_long arg0, abi_long arg1, abi_long arg2,
+>> +             abi_long arg3, abi_long arg4, abi_long arg5)
+>> +{
+>> +    print_syscall_prologue(name);
+>> +    print_sockfd(arg0, 0);
+>> +    print_buf(arg1, arg2, 0);
 > 
->> On Wed, Aug 07, 2024 at 01:21:25PM +0200, Markus Armbruster wrote:
->>> Daniel P. Berrangé <berrange@redhat.com> writes:
->>>
->>>> On Wed, Aug 07, 2024 at 12:50:26PM +0200, Markus Armbruster wrote:
->>>>> Daniel P. Berrangé <berrange@redhat.com> writes:
->>>
->>> [...]
->>>
->>>>>> It is confusing that we have both shared stuff and QMP schema
->>>>>> only stuff under the same location.
->>>>>
->>>>> Which stuff in which location?
->>>>
->>>> There are multiple directories with 'qapi' in their name
->>>>
->>>>   - $SRC/include/qapi - all generic stuff for any consumer of QAPI
->>>>   - $SRC/qapi - impl of generic stuff from $SRC/include/qapi, but
->>>>                 also the QMP schema for machine emulator
->>>>   - $BUILD/qapi - generated code for QMP schema for machine emulator
->>>
->>>     - scripts/qapi - the generator code
->>>
->>>>
->>>> I find it confusing that we have both generic QAPI code and the main
->>>> machine emulator QMP schema in directories sharing the same 'qapi'
->>>> name.
->>>
->>> Got it.
->>>
->>> Lack of separation between generic C infrastructure and specific schema
->>> hasn't really annoyed me.  Possibly because the two are, for better or
->>> worse, joined at the hip.  Except for the use of "qapi:" in commit
->>> message titles; there I've at times felt a slight urge to distinguish
->>> between schema work, C infrastructure work, and generator work.
->>>
->>> Of course, other people's confusion trumps my non-annoyance.
->>
->> When we first introduced the QAPI/QMP schema for system emulator of
->> course it was fine, since we didn't have QGA usage.
-> 
-> Actually, qga's QAPI schema (commit e3d4d25206a) predates the main QAPI
-> schema (commit e3193601c84) by a few weeks.
-> 
->>                                                      Now days we have
->> a dedicate $SRCDIR/system directory for the system emulators, so I
->> wonder if its worth putting the system emulator schemas in there
->> instead ? Caveat is that the QSD also uses some of this schema.
-> 
-> Another caveat is that much QAPI code, both infrastructure and
-> generated, has bled into programs other than qemu-system-FOO.
+> You still need to log arg2.
 
-qapi/qapi-types-foo.h is OK since we to share libcommon.a.
+Oops.
 
-I'm not sure about qapi/qapi-visit-foo.h, maybe due to qtests?
-There was also some code pulled by QOM properties, althougth not used.
-
-> $ gdb -batch -ex "info sources" bld/qemu-i386 | tr ',' '\012' | sed -n '/qapi/s,^.*/qemu/,,p'
-> bld/qapi/qapi-types-machine-common.h
-> bld/qapi/qapi-types-machine.h
-> include/qapi/util.h
-> bld/qapi/qapi-builtin-types.h
-> bld/qapi/qapi-types-error.h
-> bld/qapi/qapi-types-common.h
-> bld/qapi/qapi-types-run-state.h
-> include/qapi/error.h
-> bld/qapi/qapi-visit-machine.h
-> include/qapi/visitor.h
-> bld/qapi/qapi-builtin-visit.h
-> bld/qapi/qapi-types-replay.h
-> include/qapi/qmp/qobject.h
-> include/qapi/qmp/qlist.h
-> include/qapi/qmp/qdict.h
-> bld/qapi/qapi-events-qdev.h
-> include/qapi/qmp/qbool.h
-> include/qapi/qmp/qnum.h
-> include/qapi/qmp/qstring.h
-> include/qapi/forward-visitor.h
-> include/qapi/string-output-visitor.h
-> include/qapi/string-input-visitor.h
-> include/qapi/qobject-input-visitor.h
-> bld/qapi/qapi-types-authz.h
-> bld/qapi/qapi-types-crypto.h
-> bld/qapi/qapi-types-sockets.h
-> bld/qapi/qapi-types-block-core.h
-> bld/qapi/qapi-types-qom.h
-> include/qapi/qmp/qjson.h
-> bld/qapi/qapi-visit-qom.h
-> include/qapi/qobject-output-visitor.h
-> bld/qapi/qapi-builtin-visit.c
-> bld/qapi/qapi-types-common.c
-> bld/qapi/qapi-visit-common.h
-> include/qapi/dealloc-visitor.h
-> bld/qapi/qapi-visit-common.c
-> bld/qapi/qapi-visit-machine.c
-> bld/qapi/qapi-visit-machine-common.h
-> bld/qapi/qapi-types-qom.c
-> bld/qapi/qapi-visit-qom.c
-> bld/qapi/qapi-visit-crypto.h
-> bld/qapi/qapi-visit-block-core.h
-> bld/qapi/qapi-visit-authz.h
-> bld/qapi/qapi-visit-sockets.h
-> bld/qapi/qapi-visit-sockets.c
-> bld/qapi/qapi-events-qdev.c
-> bld/qapi/qapi-emit-events.h
-> bld/qapi/qapi-types-qdev.h
-> bld/qapi/qapi-visit-qdev.h
-> include/qapi/compat-policy.h
-> include/qapi/qmp-event.h
-> qapi/qapi-dealloc-visitor.c
-> include/qapi/qmp/qnull.h
-> include/qapi/visitor-impl.h
-> bld/qapi/qapi-types-compat.h
-> qapi/qapi-forward-visitor.c
-> qapi/qapi-util.c
-> qapi/qapi-visit-core.c
-> bld/trace/trace-qapi.h
-> qapi/trace-events
-> bld/trace/trace-dtrace-qapi.h
-> qapi/qobject-input-visitor.c
-> qapi/qobject-output-visitor.c
-> qapi/string-input-visitor.c
-> qapi/string-output-visitor.c
-> qapi/qmp-dispatch.c
-> include/qapi/qmp/dispatch.h
-> qapi/qmp-event.c
-> qapi/qmp-registry.c
-> include/qapi/qmp/json-parser.h
-> include/qapi/qmp/json-writer.h
-> bld/qapi/qapi-builtin-types.c
-> bld/qapi/qapi-visit-authz.c
-> bld/qapi/qapi-visit-block-core.c
-> bld/qapi/qapi-types-job.h
-> bld/qapi/qapi-visit-job.h
-> bld/qapi/qapi-visit-crypto.c
-> bld/qapi/qapi-types-error.c
-> bld/qapi/qapi-visit-job.c
-> bld/qapi/qapi-visit-machine-common.c
-> bld/qapi/qapi-types-machine.c
-> bld/qapi/qapi-types-sockets.c
-> bld/qapi/qapi-visit-qdev.c
-> bld/trace/trace-qapi.c
-> bld/qapi/qapi-types-authz.c
-> bld/qapi/qapi-types-block-core.c
-> bld/qapi/qapi-types-crypto.c
-> bld/qapi/qapi-types-job.c
-> bld/qapi/qapi-types-machine-common.c
-> 
-
-At least there are no qapi/qapi-commands-foo.[ch]!
 
