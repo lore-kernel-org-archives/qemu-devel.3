@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C843C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 20:02:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CEA2C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 20:12:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbmr1-000383-3Z; Wed, 07 Aug 2024 16:01:51 -0400
+	id 1sbn0I-0006cQ-0A; Wed, 07 Aug 2024 16:11:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbmqy-0002yt-5I
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 16:01:48 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1sbn07-0005xq-ER
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 16:11:16 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbmqw-0003RF-4x
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 16:01:47 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2f189a2a841so1673911fa.3
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 13:01:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1sbn05-0004lQ-BW
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 16:11:15 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1fd65aaac27so9446355ad.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 13:11:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723060903; x=1723665703; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tQfe7b24ytV5b+TihytdQ0daRUhuQDyctLSVEw58RDM=;
- b=MNjPz+hrb7b7wgngOOHPahjv6ZOujLRkAzhqz9BpmcB/n8ImVvzne0WduZ6YQfeJYr
- j5IvcZKHlB4jqKoPzOksvTYY5WDa5174r2tRzb7WwWhQ1ABHVlsJnIO1b2bzbxs300nO
- 1t7YIRMsiEpn/+tuP7Ibomy0v75iQrstND4+ok5tpq3dN4d5tLOw55VbVrhFtZSUvwHT
- R3y8ZK7/CFJ2Ofyev0pst8+0+SeS2Y9fVY5r+94y7ue6PwvXh0w0UMG+H5OMObnoKypn
- T0TkDir2sTacZR+RtXBc7DewWHF4JrZWEmhiInmAfG6EPfaCTs4rA7Fso7RjVn9+wZC/
- 7zPQ==
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1723061471; x=1723666271;
+ darn=nongnu.org; 
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=QLZ4lqFvU7reyKI+X8vObsnSzIH8RciqwfuuOFHsOr4=;
+ b=AEeZpaHX+dcn+st6gFL45gdKsoakmJpVvfehmC+1/9NWdvRqeD5UuNgS9piOhCJrLn
+ nwHpqpDrJw9gVx7aJqBFaSm1TN9F16bmK+4TDzxxE/Gof3JYns52Fh0daWfb4BY1iEgV
+ BaDwoVdGsGSIiTjNw+bE03UV3uG9Xj+vVPYo/4E7sf+2eRHx31X8+KH41H72Nzz/LyqI
+ nRmImQ9u+zP4qe+cHPrzStzzVMXlBN/3JZr9mGV+/lOT/6ULba25inKtB5s6Vzn40hXW
+ nraCzPMjdPmNmWkQVfDuvGUjurL2cGmaKkMc94BQ5cV7hJRsv8uobofKO3Y0F4//F1uT
+ btvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723060903; x=1723665703;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tQfe7b24ytV5b+TihytdQ0daRUhuQDyctLSVEw58RDM=;
- b=AWuIZyaJkVWsuIgfrkCFkfunREEYK/ssHEzJDPcmU1ro9qbKUDF1uq9DjT0py21UdS
- WMwG/29FFgSpYiugfB2CvDICqvBSSj89s2A5JFGiPisYJp1CKBg1QpXv9tCItCfqwp2V
- 7FFPudON6YMlmX7scB9G/T7XUIO8sHxsHLVWEsGtGodhsa8rxMJ9T/ZHSLC+LuS7M6S9
- 4uNzzVsX5njmBVjiiUB2/SHWCxruVRCsLpgLQJXsh6EdUjsiQNZkxicSdo/uDym7xRok
- c/kKr1c1iNuWU0dc1eq4IePGBNZdCU4j3ebDSvsAOw/2nFD/0lbQReDHxjiWYD8r+v8F
- x9fQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVLjwHVXxUytlItV9LV0ZVaEswyHX3drh+vVNIVqWXLEt5wM7h93Gnp8eqmDQ5GZMmRx1yx+XbQjzfh@nongnu.org
-X-Gm-Message-State: AOJu0Yy+QzKFtw/88xXU0tJy4biowuqqODtQ4w//NPdE+DJtf8rsXC3j
- 45MlRFpFd4jX3j0jg6tMWshjr1+VH6+KXFwoWjtxRvB8Buln4br0IlybBlhb8+c=
-X-Google-Smtp-Source: AGHT+IGTKRKjxezjbRbA91FGCUoztmRY0eiFQ9IZN9mD7GRxB1QMcp36VZERTEf2nC3shTu1fpkVxg==
-X-Received: by 2002:a05:651c:90:b0:2ef:29fd:8e65 with SMTP id
- 38308e7fff4ca-2f15ab0bfb9mr119360651fa.39.1723060903260; 
- Wed, 07 Aug 2024 13:01:43 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.212.120])
+ d=1e100.net; s=20230601; t=1723061471; x=1723666271;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QLZ4lqFvU7reyKI+X8vObsnSzIH8RciqwfuuOFHsOr4=;
+ b=aUkX5MOXzT33hRlN9N1TD6DjnmDKFssCzAoUB5FsoiybB0w9YwAnFxEX+VlGwgnxdP
+ nn01TFBoXYQ+8zMtKzIwHhGpTURGl554lRuk1lWGLeaZPohwbslu3eH4qavIDMm3+m2/
+ vToq+N1S7cWCJCvuE0Wy4leS1WidJq+t2mBRP29JkZSJjGLhY3d4xQibk7XFJyTdiM36
+ 1xRVFktJdHxla1hNxLK4i7K9pFU1FHCiROt3VQNuFdkrRC0k0c8oENPgf5MZ1wEUD5No
+ 3J7XYgGMEnY4av9+z7TNgQeXFbyBzf+ojpj4WH9oScg0URcZJgCHSKHWVZchtx9adXSr
+ oBCQ==
+X-Gm-Message-State: AOJu0YzANUZT8hAzpEnDNRDAD/qSTdM4hOIq0LReH3PFuDUDZmyIPQzo
+ eso9gXRWMDD6CimfQQ+o7K5Jgd/XdZQOv6ez4HQdLzywSnRLlcRsz+veFciIPlM=
+X-Google-Smtp-Source: AGHT+IGcfzcVo/XmFCBzf9lssLxruTN5ELIW7HXg6MPk9QrBX65dUuMKEzhQLMV2xOMHg1IIhCscvw==
+X-Received: by 2002:a17:902:e752:b0:1f9:e2c0:d962 with SMTP id
+ d9443c01a7336-2008556d389mr45155155ad.31.1723061471367; 
+ Wed, 07 Aug 2024 13:11:11 -0700 (PDT)
+Received: from debug.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36bbcf0c2f3sm16877832f8f.10.2024.08.07.13.01.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Aug 2024 13:01:42 -0700 (PDT)
-Message-ID: <ad028c76-dd83-4795-85a4-cbd6b528a9b5@linaro.org>
-Date: Wed, 7 Aug 2024 22:01:40 +0200
+ d9443c01a7336-1ff592ad853sm110444645ad.280.2024.08.07.13.11.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 07 Aug 2024 13:11:11 -0700 (PDT)
+Date: Wed, 7 Aug 2024 13:11:09 -0700
+From: Deepak Gupta <debug@rivosinc.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com,
+ palmer@dabbelt.com, Alistair.Francis@wdc.com, laurent@vivier.eu,
+ bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
+ zhiwei_liu@linux.alibaba.com, Jim Shu <jim.shu@sifive.com>,
+ Andy Chiu <andy.chiu@sifive.com>
+Subject: Re: [PATCH v3 04/20] target/riscv: save and restore elp state on
+ priv transitions
+Message-ID: <ZrPU3fwHGV8l0gDT@debug.ba.rivosinc.com>
+References: <20240807000652.1417776-1-debug@rivosinc.com>
+ <20240807000652.1417776-5-debug@rivosinc.com>
+ <e2d6dfe2-0c99-4caa-bba9-ce9b1225d0c4@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/15] hw/misc/aspeed_hace: Fix SG Accumulative Hash
- Calculations
-To: Alejandro Zeise <alejandro.zeise@seagate.com>, qemu-arm@nongnu.org
-Cc: kris.conklin@seagate.com, jonathan.henze@seagate.com,
- evan.burgess@seagate.com, clg@kaod.org, peter.maydell@linaro.org,
- berrange@redhat.com, qemu-devel@nongnu.org
-References: <20240807195122.2827364-1-alejandro.zeise@seagate.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240807195122.2827364-1-alejandro.zeise@seagate.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <e2d6dfe2-0c99-4caa-bba9-ce9b1225d0c4@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=debug@rivosinc.com; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,40 +99,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alejandro,
+On Wed, Aug 07, 2024 at 11:06:49AM +1000, Richard Henderson wrote:
+>On 8/7/24 10:06, Deepak Gupta wrote:
+>>elp state is recorded in *status on trap entry (less privilege to higher
+>>privilege) and restored in elp from *status on trap exit (higher to less
+>>privilege).
+>>
+>>Additionally this patch introduces a forward cfi helper function to
+>>determine if current privilege has forward cfi is enabled or not based on
+>>*envcfg (for U, VU, S, VU, HS) or mseccfg csr (for M). For qemu-user, a
+>>new field `ufcfien` is introduced which is by default set to false and
+>>helper function returns value deposited in `ufcfien` for qemu-user.
+>>
+>>Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+>>Co-developed-by: Jim Shu <jim.shu@sifive.com>
+>>Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
+>>---
+>>  target/riscv/cpu.c        |  5 ++++
+>>  target/riscv/cpu.h        |  2 ++
+>>  target/riscv/cpu_helper.c | 58 +++++++++++++++++++++++++++++++++++++++
+>>  target/riscv/op_helper.c  | 18 ++++++++++++
+>>  4 files changed, 83 insertions(+)
+>>
+>>diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>>index 82fa85a8d6..e1526c7ab5 100644
+>>--- a/target/riscv/cpu.c
+>>+++ b/target/riscv/cpu.c
+>>@@ -1022,6 +1022,11 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+>>      env->load_res = -1;
+>>      set_default_nan_mode(1, &env->fp_status);
+>>+#ifdef CONFIG_USER_ONLY
+>>+    /* qemu-user for riscv, fcfi is off by default */
+>>+    env->ufcfien = false;
+>>+#endif
+>>+
+>>  #ifndef CONFIG_USER_ONLY
+>>      if (cpu->cfg.debug) {
+>>          riscv_trigger_reset_hold(env);
+>>diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+>>index ae436a3179..8c7841fc08 100644
+>>--- a/target/riscv/cpu.h
+>>+++ b/target/riscv/cpu.h
+>>@@ -226,6 +226,7 @@ struct CPUArchState {
+>>      cfi_elp      elp;
+>>  #ifdef CONFIG_USER_ONLY
+>>      uint32_t elf_flags;
+>>+    bool ufcfien;
+>>  #endif
+>>  #ifndef CONFIG_USER_ONLY
+>>@@ -530,6 +531,7 @@ void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen);
+>>  bool riscv_cpu_vector_enabled(CPURISCVState *env);
+>>  void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
+>>  int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
+>>+bool cpu_get_fcfien(CPURISCVState *env);
+>>  G_NORETURN void  riscv_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
+>>                                                 MMUAccessType access_type,
+>>                                                 int mmu_idx, uintptr_t retaddr);
+>>diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+>>index 6709622dd3..8c69c55576 100644
+>>--- a/target/riscv/cpu_helper.c
+>>+++ b/target/riscv/cpu_helper.c
+>>@@ -33,6 +33,7 @@
+>>  #include "cpu_bits.h"
+>>  #include "debug.h"
+>>  #include "tcg/oversized-guest.h"
+>>+#include "pmp.h"
+>>  int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
+>>  {
+>>@@ -63,6 +64,35 @@ int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
+>>  #endif
+>>  }
+>>+bool cpu_get_fcfien(CPURISCVState *env)
+>>+{
+>>+#ifdef CONFIG_USER_ONLY
+>>+    return env->ufcfien;
+>>+#else
+>>+    /* no cfi extension, return false */
+>>+    if (!env_archcpu(env)->cfg.ext_zicfilp) {
+>>+        return false;
+>>+    }
+>
+>Keep extension check common between user/system.
+>Recall that you can choose -cpu from user as well.
 
-On 7/8/24 21:51, Alejandro Zeise wrote:
-> The goal of this patch series is to fix accumulative hashing support in the
-> Aspeed HACE module. The issue that stemmed this patch was a failure to boot an
-> OpenBMC image using the "ast2600-evb" machine. The U-boot
-> 2019.04 loader failed to verify image hashes.
+Ack. will put a check (for both extensions)
 
+Side note: ufcfien (or ubcfien) will get set only via syscall prctls which does
+check for extension.
 
-> Alejandro Zeise (15):
->    crypto: accumulative hashing API
->    crypto/hash-glib: Implement new hash API
->    crypto/hash-gcrypt: Implement new hash API
->    crypto/hash-gnutls: Implement new hash API
->    crypto/hash-nettle: Implement new hash API
->    crypto/hash-afalg: Implement new hash API
->    crypto/hash: Implement and use new hash API
->    tests/unit/test-crypto-hash: accumulative hashing
->    crypto/hash-glib: Remove old hash API functions
->    crypto/hash-gcrypt: Remove old hash API functions
->    crypto/hash-gnutls: Remove old hash API functions
->    crypto/hash-nettle: Remove old hash API functions
->    crypto/hash-afalg: Remove old hash API functions
->    crypto/hashpriv: Remove old hash API function
->    hw/misc/aspeed_hace: Fix SG Accumulative hashing
+>
+>>+    /*
+>>+     * Interrupt/exception/trap delivery is asynchronous event and as per
+>>+     * Zisslpcfi spec CPU should clear up the ELP state. If cfi extension is
+>>+     * available, clear ELP state.
+>>+     */
+>>+
+>>+    if (cpu->cfg.ext_zicfilp) {
+>>+        env->elp = NO_LP_EXPECTED;
+>>+    }
+>
+>If extension is not available, elp isn't a thing.
+>You can just as easily make the store unconditional and save the test.
 
->   13 files changed, 753 insertions(+), 283 deletions(-)
+Yes noted. make sense.
 
-Even without the unit test this is still more than 700 LoC,
-which seems a huge patchset to merge while we are in freeze
-period. Do you expect this to be in the next v9.1.0 release?
+>
+>>
+>>+    /*
+>>+     * If forward cfi enabled for new priv, restore elp status
+>>+     * and clear spelp in mstatus
+>>+     */
+>>+    if (cpu_get_fcfien(env)) {
+>>+        env->elp = get_field(env->mstatus, MSTATUS_SPELP);
+>>+        env->mstatus = set_field(env->mstatus, MSTATUS_SPELP, 0);
+>>+    }
+>
+>The spec is perhaps poorly written here.  I read
+>
+>  ... if xPP holds the value y, then ELP is set to the value of xPELP if yLPE is 1;
+>  otherwise, it is set to NO_LP_EXPECTED; xPELP is set to NO_LP_EXPECTED.
+>
+>as xPELP always being cleared, regardless of yLPE.
 
-Regards,
+Yes that's what code above is also doing. restore elp status from SPELP field and clear
+it at SPELP.
 
-Phil.
+On `mret` same logic but for MPELP bitposition.
 
+>
+>
+>r~
 
