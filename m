@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 321B4C49EA1
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 01:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB2D9C52D6F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 01:24:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbVDS-0004mB-Pu; Tue, 06 Aug 2024 21:11:51 -0400
+	id 1sbVOT-0001xK-R2; Tue, 06 Aug 2024 21:23:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sbVDO-0004kt-W4
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 21:11:47 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1sbVOR-0001wD-Se
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 21:23:11 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sbVDN-0001MT-2r
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 21:11:46 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-1fc5296e214so12211525ad.0
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 18:11:44 -0700 (PDT)
+ id 1sbVOQ-0002Zv-1y
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 21:23:11 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1fc5549788eso11595915ad.1
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 18:23:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1722993103; x=1723597903; darn=nongnu.org;
+ d=linaro.org; s=google; t=1722993788; x=1723598588; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zXFDfcTZ0kga2DOLVA+DXpbkfDgIv5TS2piXSwWfv5s=;
- b=vuAdj+oLNI5qlA9qZNW73kZQTo/OyIHuCXjOl4hpvHXAdqJrOH7KHLAdCcKQvmmrKx
- T6KoNszOpU05/zUaPts8YEwRfTZm5CzJFzOeajqFkhr+8cqFquGsqybvfSmub3zH4u3F
- 3Scyxadq9ZkL9Nuq8P3Q47n9OlO1iChDehL/RS93tKaza6baf6sl+2kV0XKmoigf071/
- /OPqoXXm70HAwdzdtGDdMx47X/pKUuFufw0O72SMfvBD0ZVwmn6D/qjyOCWV9I6fhzbU
- TPIQq7ynMCkuyUW4fWkMwueI394gCUSINVjceVCQb+xBsEEOYAA7gJoo4sWx1KbCmSWt
- PsCQ==
+ bh=B/lBeFEOl9qH+KdjTskeCT3cNlx1qFQ4ypmHfUer1yA=;
+ b=Js6Sr79dRBR8hotnI2t9b2JLSaJ6MifaYDwhN5w/qlKCfQdcXlMW5VOLmRR6wXIBiZ
+ etvozZtnpKeQ4OV2wyQxe+OhMzMK2VLVjJ06ZWvLv246lDomoxX0v5A9rwiy3SGRmxCz
+ GpKiB3XSNBHrAtpzy9/TDaZRiGNd2iiXhxt4qvK9h66/YoN4zfCdLrDhgw9Ao3RTZ9f3
+ Hi/bZxcaMQgyK35hPnLt239dnsndGgr6KvjUo+czAShZifx4j7ydpmf/trA0HaeFDZfl
+ vxOc7NRDy1CSWTyNTZ6HVY5AUBYlwNrKhdvONU1YVqEipWwvXRTUav8Mbt6M4tzV/+J6
+ HD+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722993103; x=1723597903;
+ d=1e100.net; s=20230601; t=1722993788; x=1723598588;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zXFDfcTZ0kga2DOLVA+DXpbkfDgIv5TS2piXSwWfv5s=;
- b=n0YRjZt1LCVFz9GVaspwOx6kVcBzqIJADCoCVQfeA99sZ5kMP5kHaX3POHVEbZMVQh
- emufcncaJJeq75AO/Twh/RuKMbuc/P724w3ixF+2dmO/RdWu7F75BJW9drdUbwBQGFln
- DTBINatgkLXhLt0l0iNQfdiNu0IRTHQONiqW0MEqTLyxLpmcm069P4Gaq4I/pq6emXnz
- ZFEzf1bvds3cqqTGYxZU8ii0p3mIvrr9VUgKsN5bFdw5vf0lya3ywldwAlhlj3ZipxQR
- fa2+oswF0QxTk9lnX0rjByZm0xXGVZ9iWeDYpTjmfoV+MdncJh0UKLm3C04ZaZZw4V4i
- VbAg==
+ bh=B/lBeFEOl9qH+KdjTskeCT3cNlx1qFQ4ypmHfUer1yA=;
+ b=Hwpf9UCBV+xInOo+t23GBPGZ//9+jJUyTynM8V8ZYl9kYyZIx0Hm69+mdpiDcRTaYz
+ Lh5mZs1TBXRmMQrVr4zuuKJuluCRew+zcpXeTVLH50kHXRcNLe+Fb0Pcg/ABRtRugvwA
+ S8upeMUN/M8cX/O9pMa7ofU7+qDbINWlnLbCFN/jFvCp4P2YE2bndLf0twpA2Gn4ZNBy
+ jzKwY5JJMXaVGKKLarQH1Op6R1fo6R0Dp6Ho6JhgmdE9QqaHIfMi+my2YZJ2Dj+oUh5o
+ 9mHymAAqvxbq5+jLk5uj5XLVmDsHaIzuWFb+5vxcrHo6Z5vA+1hq4sDo7/XiSMQlYmOd
+ KWqA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVuQnt/NRzYkMiv3sLsfUChGfTD/iEety4jCY9ulvkYQrHxs5d/DWN/6u1mRn8v01MMXdQZa4Y5c4i7E9Of5ifOBPdp2P0=
-X-Gm-Message-State: AOJu0Yz2qRkbq1aTGSOW7Ln8VDIoCr/hehadt24YjYpGR+wMHwDc6JQ2
- 5gkLFjRqhukY6ueBwhlz+ukjkaIv2p8RVLVJvr7xKC7b0ZKGaI3dKWliP1ucKno=
-X-Google-Smtp-Source: AGHT+IFqnwcGMnLy3q+8gI8doB8+mBVqA12Z3UynTSfmeaR5oYbvEZ8POL9IYqbDLKoivtprMkJRvQ==
-X-Received: by 2002:a17:902:ec8d:b0:1f7:123e:2c6f with SMTP id
- d9443c01a7336-1ff57323889mr230059795ad.37.1722993102835; 
- Tue, 06 Aug 2024 18:11:42 -0700 (PDT)
+ AJvYcCWfmuWVfX/jjdp+4rM9P7h14PCOFGZ/SPlWEzWCN7z+48HaHPhzRV28nQ71DX5QyflHLAl0bAWSGJ6vfOL/04+jvOq6oSc=
+X-Gm-Message-State: AOJu0Yx5r7nJDC6AI7PU1NGuJTjT4GdU75yCEFdxfSUcq2/xJ1rkDlgF
+ CEw+Oktaum5qRbAF4fIu6WK51J++YdrolkxK58gRbmrwNO/mIDD/qcbCemCeOHE=
+X-Google-Smtp-Source: AGHT+IGtmgYJsJmJb7Bb6F7haBt5pAEiI07Aub1LabyCRRydG6g73NRBJyvrNWboqAa8DZYNfc7pkA==
+X-Received: by 2002:a17:903:2441:b0:1fd:a360:447b with SMTP id
+ d9443c01a7336-1ff57457585mr233118005ad.52.1722993788091; 
+ Tue, 06 Aug 2024 18:23:08 -0700 (PDT)
 Received: from ?IPV6:2403:580a:f89b:0:e01b:92e5:d779:1bc0?
  (2403-580a-f89b-0-e01b-92e5-d779-1bc0.ip6.aussiebb.net.
  [2403:580a:f89b:0:e01b:92e5:d779:1bc0])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff5905b4ddsm94097655ad.173.2024.08.06.18.11.37
+ d9443c01a7336-200668fc398sm49663655ad.207.2024.08.06.18.23.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 06 Aug 2024 18:11:42 -0700 (PDT)
-Message-ID: <2a2ee90a-dc31-47e9-884b-665253979064@linaro.org>
-Date: Wed, 7 Aug 2024 11:11:35 +1000
+ Tue, 06 Aug 2024 18:23:07 -0700 (PDT)
+Message-ID: <89e5857e-fc00-46c1-b797-1fadcf463a1e@linaro.org>
+Date: Wed, 7 Aug 2024 11:23:00 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/20] target/riscv: additional code information for sw
- check
+Subject: Re: [PATCH v3 06/20] target/riscv: tracking indirect branches (fcfi)
+ for zicfilp
 To: Deepak Gupta <debug@rivosinc.com>, qemu-devel@nongnu.org,
  qemu-riscv@nongnu.org
 Cc: pbonzini@redhat.com, palmer@dabbelt.com, Alistair.Francis@wdc.com,
  laurent@vivier.eu, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ Jim Shu <jim.shu@sifive.com>, Andy Chiu <andy.chiu@sifive.com>
 References: <20240807000652.1417776-1-debug@rivosinc.com>
- <20240807000652.1417776-6-debug@rivosinc.com>
+ <20240807000652.1417776-7-debug@rivosinc.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240807000652.1417776-6-debug@rivosinc.com>
+In-Reply-To: <20240807000652.1417776-7-debug@rivosinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,35 +106,65 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/7/24 10:06, Deepak Gupta wrote:
-> sw check exception support was recently added. This patch further augments
-> sw check exception by providing support for additional code which is
-> provided in *tval. Adds `sw_check_code` field in cpuarchstate. Whenever
-> sw check exception is raised *tval gets the value deposited in
-> `sw_check_code`.
-> 
-> Signed-off-by: Deepak Gupta <debug@rivosinc.com>
-> ---
->   target/riscv/cpu.h        | 2 ++
->   target/riscv/cpu_helper.c | 2 ++
->   target/riscv/csr.c        | 1 +
->   3 files changed, 5 insertions(+)
-> 
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 8c7841fc08..12334f9540 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -224,6 +224,8 @@ struct CPUArchState {
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index 364f3ee212..c7af430f38 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -134,6 +134,19 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+>           flags = FIELD_DP32(flags, TB_FLAGS, VILL, 1);
+>       }
 >   
->       /* elp state for zicfilp extension */
->       cfi_elp      elp;
-> +    /* sw check code for sw check exception */
-> +    target_ulong sw_check_code;
+> +    if (cpu_get_fcfien(env)) {
+> +        /*
+> +         * For Forward CFI, only the expectation of a lpcll at
+> +         * the start of the block is tracked (which can only happen
+> +         * when FCFI is enabled for the current processor mode). A jump
+> +         * or call at the end of the previous TB will have updated
+> +         * env->elp to indicate the expectation.
+> +         */
+> +        flags = FIELD_DP32(flags, TB_FLAGS, FCFI_LP_EXPECTED,
+> +                           env->elp != NO_LP_EXPECTED);
 
-There's probably room for consolidating the different fields
-that feed into tval, to be set when raising the exception.
+A good example why it's better to store this as bool in the first place.
 
-But anyway,
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>   static void riscv_tr_tb_start(DisasContextBase *db, CPUState *cpu)
+>   {
+> +    DisasContext *ctx = container_of(db, DisasContext, base);
+> +
+> +    if (ctx->fcfi_lp_expected) {
+> +        /*
+> +         * Since we can't look ahead to confirm that the first
+> +         * instruction is a legal landing pad instruction, emit
+> +         * compare-and-branch sequence that will be fixed-up in
+> +         * riscv_tr_tb_stop() to either statically hit or skip an
+> +         * illegal instruction exception depending on whether the
+> +         * flag was lowered by translation of a CJLP or JLP as
+> +         * the first instruction in the block.
+> +         */
+> +        TCGv_i32 immediate;
+> +        TCGLabel *l;
+> +        l = gen_new_label();
+> +        immediate = tcg_temp_new_i32();
+> +        tcg_gen_movi_i32(immediate, 0);
+> +        cfi_lp_check = tcg_last_op();
+> +        tcg_gen_brcondi_i32(TCG_COND_EQ, immediate, 0, l);
+> +        gen_helper_raise_sw_check_excep(tcg_env,
+> +            tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL),
+> +            tcg_constant_tl(MISSING_LPAD), tcg_constant_tl(0));
+> +        gen_set_label(l);
+> +        /*
+> +         * Despite the use of gen_exception_illegal(), the rest of
+> +         * the TB needs to be generated. The TCG optimizer will
+> +         * clean things up depending on which path ends up being
+> +         * active.
+> +         */
+> +        ctx->base.is_jmp = DISAS_NEXT;
+> +    }
+>   }
+
+Again, don't do this here.
+There is a reason why only DISAS_NEXT is legal: plugins.
+You *must* do this in riscv_tr_translate_insn, like ARM.
 
 
 r~
