@@ -4,73 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2AC1C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 09:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F3D0C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 09:46:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbdEM-00006T-Nd; Wed, 07 Aug 2024 05:45:18 -0400
+	id 1sbdFf-0005Uk-7g; Wed, 07 Aug 2024 05:46:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sbdEK-0008P5-Ds
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 05:45:16 -0400
-Received: from mgamail.intel.com ([192.198.163.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sbdEG-0002hn-Mi
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 05:45:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723023913; x=1754559913;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=52qBbsPBw1CW9TaWGnYB9fhKWhRZ0gzJVUln8IvbArI=;
- b=FUdLxClooGU7eIk7tpDNlEnd80euBj1lOKLB9D7H29sFoaQUxV4sGDtf
- jpftontrr+9dvrHSleorKx00nqGkriQQwTKwQY7p5Vw7zSB4JNV4/FyFM
- bNKMFC7H+oEASI1BSQvMjfeaHO9o1SFXkqpgh6OlpSNuwym+GyDbe2Ryv
- UTkV9SFSjdK2JjTpEcwILDoBYpVI4sQ67VGfY1yUVxY8DpeXqoHdfF6k3
- SLN0LlGrj96DGUGHFzj6m+mJrWcGqygVn9IedNROMaNMXBb4tq5NBteWn
- q7q4hUsYfaxLIFGUXxjekKu7mjNgkrtVpwzVY0pbwZ3PgKtfSzl+WEUc0 A==;
-X-CSE-ConnectionGUID: 25e/JwK2TjOMkHF6rwfEzA==
-X-CSE-MsgGUID: 0ic44X0NR9KU3ylfTLsY6w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11156"; a="32486475"
-X-IronPort-AV: E=Sophos;i="6.09,269,1716274800"; d="scan'208";a="32486475"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Aug 2024 02:45:09 -0700
-X-CSE-ConnectionGUID: JNzXxyT0QwWPJHLXE0WANw==
-X-CSE-MsgGUID: YjK0r+O/TcaC1t4EM2x6kg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,269,1716274800"; d="scan'208";a="56482022"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa007.fm.intel.com with ESMTP; 07 Aug 2024 02:45:07 -0700
-Date: Wed, 7 Aug 2024 18:00:57 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache object
-Message-ID: <ZrNF2Q0YxseXCJGA@intel.com>
-References: <20240704031603.1744546-1-zhao1.liu@intel.com>
- <20240704031603.1744546-9-zhao1.liu@intel.com>
- <87r0bl35ug.fsf@pond.sub.org> <Zp5vxtXWDeHAdPok@intel.com>
- <87bk2nnev2.fsf@pond.sub.org> <ZqEN1kZaQcuY4UPG@intel.com>
- <87le1psuv3.fsf@pond.sub.org> <ZqtXP9MViOlyhEsu@intel.com>
- <87mslweb38.fsf@pond.sub.org> <ZqyRik4UHHz3xaKl@intel.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sbdFd-0005MH-3D
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 05:46:37 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sbdFa-0002uG-NE
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 05:46:36 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2cb7cd6f5f2so1219315a91.2
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 02:46:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1723023993; x=1723628793; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1AVB994S6wq7qsb2iXuG97I7XsPOLeMXxwdjd2d7eWU=;
+ b=McPPNAAhXWSekoiyG6oK2qNvrOes749AxacwLTzd+mf452/blQPzE5RtrPMLi9bjrF
+ kPAotP/1YlwtxZT5XMBrYyekN1WyOfWMdL5nKC5zcl6c/+GhGCYJYiRmDfwrZa2Mysf8
+ cBQUfItO1kq8BhPqLVTyP/vWbbfXK1zZWA+z0x7NtDb0EecK/5CZSBR9NkKd8ZJ2DCZl
+ NuzSllcOaRiHsXlscoU0QL3GCwfnCBvcsSlM5Z7DvniTBkUcZ+qnWO+twKFfEPaCH6t5
+ N1WxZKPzYn9t+xxEnFKbAGS7tjQcglGLlLt4vgpZFcpvfihogLc1p8jvux/t0rwfihCQ
+ lT1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723023993; x=1723628793;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1AVB994S6wq7qsb2iXuG97I7XsPOLeMXxwdjd2d7eWU=;
+ b=qh4DRNcGAazfQetWEZpRCODrL6jwpJa3VaOMKOPodHyuiJ2sDDLj7eX62yp74855tb
+ MpKJ45BgS9njyTRp4XUAxO68zDjthj3h2MjYK+cyVeF1IqLFmglD+f98EArNWrOqUp6g
+ JQt9sIc96xvIPNjSJJ1NQMXqD0A2iGyWRJFyy32hBrSiOzBy09g+HcM4mbCGtzfflyIu
+ 7si48Enrn7Sx7MmTQmOS/wZWecbYJv5y+3IVAOWnJoWdKiixDqdBqsScIIlQtNfFh3xO
+ RzQR6TpjVFtjPeCrtUZ0ZSzXVopJWdDEmGMX4Ar6klpe1qf0ah3HrCjHJZ5tyAyPajYn
+ A2lw==
+X-Gm-Message-State: AOJu0Yw3bgtEZWIZXUKRe01qU/Rl9sdv2tFhNSNgyKvPnlbxpZNofRBO
+ VAMrNdoKj7IpxSHsQq1BZKgk9/6xw5bWbXxoNjeVJZQa4luBRz4EE7mcncD/q3U=
+X-Google-Smtp-Source: AGHT+IFReYia2C0UIlPYrdAu/GwI7f9q0xzsCe8JYhSz2Uc3T+R7yonGEAAnV+xlwAH3YjKaMOs4fg==
+X-Received: by 2002:a17:90a:c70f:b0:2c8:bf72:5389 with SMTP id
+ 98e67ed59e1d1-2cff93c61a1mr20625700a91.9.1723023993329; 
+ Wed, 07 Aug 2024 02:46:33 -0700 (PDT)
+Received: from [192.168.68.110] ([177.18.66.246])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2d1b5d75668sm878552a91.11.2024.08.07.02.46.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Aug 2024 02:46:32 -0700 (PDT)
+Message-ID: <82bfdc2e-317b-4379-b16b-c3abd0a6fdbf@ventanamicro.com>
+Date: Wed, 7 Aug 2024 06:46:29 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZqyRik4UHHz3xaKl@intel.com>
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] qom/object, accel-system: add support to Accel
+ globals
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, richard.henderson@linaro.org, 
+ berrange@redhat.com, eduardo@habkost.net,
+ Andrew Jones <ajones@ventanamicro.com>
+References: <20240703204149.1957136-1-dbarboza@ventanamicro.com>
+ <20240703204149.1957136-3-dbarboza@ventanamicro.com>
+ <87bk2ekr8p.fsf@pond.sub.org>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <87bk2ekr8p.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,227 +100,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Markus,
 
-Just a kindly ping. Hopefully we can continue this discussion when
-you're free.
 
-Regards,
-Zhao
+On 7/31/24 3:30 AM, Markus Armbruster wrote:
+> I apologize for the delay.
+> 
+> Daniel Henrique Barboza <dbarboza@ventanamicro.com> writes:
+> 
+>> We're not honouring KVM options that are provided by any -accel option
+>> aside from the first. In this example:
+>>
+>> qemu-system-riscv64 -accel kvm,riscv-aia=emul (...) \
+>>      -accel kvm,riscv-aia=hwaccel
+>>
+>> 'riscv-aia' will be set to 'emul', ignoring the last occurrence of the
+>> option that set 'riscv-aia' to 'hwaccel'.
+> 
+> The way you phrase this, it sounds like a bug.  But as far as I know,
+> -accel is meant to have fallback semantics: we use the first one that
+> works.
+> 
+> Perhaps:
+> 
+>    -accel has fallback semantics, i.e. we try accelerators in order until
+>    we find one that works.  Any remainder is ignored.
+> 
+>    Because of that, you can't override properties like this:
+> 
+>        qemu-system-riscv64 -accel kvm,riscv-aia=emul (...) \
+>            -accel kvm,riscv-aia=hwaccel
+> 
+>    When KVM is available, 'riscv-aia' will be set to 'emul', and the
+>    second -accel is ignored.  When KVM is not available, neither option
+>    works, and the command fails.
+> 
+> Why would you want to override accelerator properties?
+> 
+> Aside: not diagnosing obvious errors in fallback options we don't use is
+> not nice.  Not this patch's problem.
+> 
+>> A failed attempt to solve this issue by setting 'merge_lists' can be
+>> found in [1].
+> 
+> I guess this failed because it destroyed the fallback semantics.
+> Correct?
 
-On Fri, Aug 02, 2024 at 03:58:02PM +0800, Zhao Liu wrote:
-> Date: Fri, 2 Aug 2024 15:58:02 +0800
-> From: Zhao Liu <zhao1.liu@intel.com>
-> Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache
->  object
+If by 'fallback' you mean the idea where we would use -accel kvm -accel tcg, where
+we try to use KVM and then, if not available or failed, we use TCG, yes. That was
+the reason.
+
+To make that work I needed to homogenize all -accel options, i.e. it wouldn't be
+able to have both TCG and KVM as -accel options in the command line, otherwise
+something setting 'merge_lists' in a command line like this:
+
+-accel tcg -accel kvm,propA=true -accel kvm,propB=false
+
+would yield
+
+-accel tcg,propA=true,propB=false
+
+
+
 > 
-> On Thu, Aug 01, 2024 at 01:28:27PM +0200, Markus Armbruster wrote:
-> > Date: Thu, 01 Aug 2024 13:28:27 +0200
-> > From: Markus Armbruster <armbru@redhat.com>
-> > Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache
-> >  object
-> > 
-> > Zhao Liu <zhao1.liu@intel.com> writes:
-> > 
-> > > On Thu, Jul 25, 2024 at 11:07:12AM +0200, Markus Armbruster wrote:
-> > >> Date: Thu, 25 Jul 2024 11:07:12 +0200
-> > >> From: Markus Armbruster <armbru@redhat.com>
-> > >> Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache
-> > >>  object
-> > >> 
-> > >> Zhao Liu <zhao1.liu@intel.com> writes:
-> > >> 
-> > >> > Hi Markus and Daniel,
-> > >> >
-> > >> > I have the questions about the -object per cache implementation:
-> > >> >
-> > >> > On Wed, Jul 24, 2024 at 02:39:29PM +0200, Markus Armbruster wrote:
-> > >> >> Date: Wed, 24 Jul 2024 14:39:29 +0200
-> > >> >> From: Markus Armbruster <armbru@redhat.com>
-> > >> >> Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache
-> > >> >>  object
-> > >> >> 
-> > >> >> Zhao Liu <zhao1.liu@intel.com> writes:
-> > >> >> 
-> > >> >> > Hi Markus,
-> > >> >> >
-> > >> >> > On Mon, Jul 22, 2024 at 03:37:43PM +0200, Markus Armbruster wrote:
-> > >> >> >> Date: Mon, 22 Jul 2024 15:37:43 +0200
-> > >> >> >> From: Markus Armbruster <armbru@redhat.com>
-> > >> >> >> Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache
-> > >> >> >>  object
-> > >> >> >> 
-> > >> >> >> Zhao Liu <zhao1.liu@intel.com> writes:
-> > >> >> >> 
-> > >> >> >> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> > >> >> >> 
-> > >> >> >> This patch is just documentation.  The code got added in some previous
-> > >> >> >> patch.  Would it make sense to squash this patch into that previous
-> > >> >> >> patch?
-> > >> >> >
-> > >> >> > OK, I'll merge them.
-> > >> >> >
-> > >> >> >> > ---
-> > >> >> >> > Changes since RFC v2:
-> > >> >> >> >  * Rewrote the document of smp-cache object.
-> > >> >> >> >
-> > >> >> >> > Changes since RFC v1:
-> > >> >> >> >  * Use "*_cache=topo_level" as -smp example as the original "level"
-> > >> >> >> >    term for a cache has a totally different meaning. (Jonathan)
-> > >> >> >> > ---
-> > >> >> >> >  qemu-options.hx | 58 +++++++++++++++++++++++++++++++++++++++++++++++++
-> > >> >> >> >  1 file changed, 58 insertions(+)
-> > >> >> >> >
-> > >> >> >> > diff --git a/qemu-options.hx b/qemu-options.hx
-> > >> >> >> > index 8ca7f34ef0c8..4b84f4508a6e 100644
-> > >> >> >> > --- a/qemu-options.hx
-> > >> >> >> > +++ b/qemu-options.hx
-> > >> >> >> > @@ -159,6 +159,15 @@ SRST
-> > >> >> >> >          ::
-> > >> >> >> >  
-> > >> >> >> >              -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=128G,cxl-fmw.0.interleave-granularity=512
-> > >> >> >> > +
-> > >> >> >> > +    ``smp-cache='id'``
-> > >> >> >> > +        Allows to configure cache property (now only the cache topology level).
-> > >> >> >> > +
-> > >> >> >> > +        For example:
-> > >> >> >> > +        ::
-> > >> >> >> > +
-> > >> >> >> > +            -object '{"qom-type":"smp-cache","id":"cache","caches":[{"name":"l1d","topo":"core"},{"name":"l1i","topo":"core"},{"name":"l2","topo":"module"},{"name":"l3","topo":"die"}]}'
-> > >> >> >> > +            -machine smp-cache=cache
-> > >> >> >> >  ERST
-> > >> >> >> >  
-> > >> >> >> >  DEF("M", HAS_ARG, QEMU_OPTION_M,
-> > >> >> >> > @@ -5871,6 +5880,55 @@ SRST
-> > >> >> >> >          ::
-> > >> >> >> >  
-> > >> >> >> >              (qemu) qom-set /objects/iothread1 poll-max-ns 100000
-> > >> >> >> > +
-> > >> >> >> > +    ``-object '{"qom-type":"smp-cache","id":id,"caches":[{"name":cache_name,"topo":cache_topo}]}'``
-> > >> >> >> > +        Create an smp-cache object that configures machine's cache
-> > >> >> >> > +        property. Currently, cache property only include cache topology
-> > >> >> >> > +        level.
-> > >> >> >> > +
-> > >> >> >> > +        This option must be written in JSON format to support JSON list.
-> > >> >> >> 
-> > >> >> >> Why?
-> > >> >> >
-> > >> >> > I'm not familiar with this, so I hope you could educate me if I'm wrong.
-> > >> >> >
-> > >> >> > All I know so far is for -object that defining a list can only be done in
-> > >> >> > JSON format and not with a numeric index like a keyval based option, like:
-> > >> >> >
-> > >> >> > -object smp-cache,id=cache0,caches.0.name=l1i,caches.0.topo=core: Parameter 'caches' is missing
-> > >> >> >
-> > >> >> > the above doesn't work.
-> > >> >> >
-> > >> >> > Is there any other way to specify a list in command line?
-> > >> >> 
-> > >> >> The command line is a big, sprawling mess :)
-> > >> >> 
-> > >> >> -object supports either a JSON or a QemuOpts argument.  *Not* keyval!
-> > >> >> 
-> > >> >> Both QemuOpts and keyval parse something like KEY=VALUE,...  Keyval
-> > >> >> supports arrays and objects via dotted keys.  QemuOpts doesn't natively
-> > >> >> support arrays and objects, but its users can hack around that
-> > >> >> limitation in various ways.  -object doesn't.  So you're right, it's
-> > >> >> JSON or bust here.
-> > >> >> 
-> > >> >> However, if we used one object per cache instead, we could get something
-> > >> >> like
-> > >> >> 
-> > >> >>     -object smp-cache,name=l1d,...
-> > >> >>     -object smp-cache,name=l1u,...
-> > >> >>     -object smp-cache,name=l2,...
-> > >> >>     ...
-> > >> >
-> > >> > Current, I use -object to create a smp_cache object, and link it to
-> > >> > MachineState by -machine,smp-cache=obj_id.
-> > >> >
-> > >> > Then for the objects per cache, how could I link them to machine?
-> > >> >
-> > >> > Is it possible that I create something static in smp_cache.c and expose
-> > >> > all the cache information to machine through some interface?
-> > >> 
-> > >> Good questions.  However, before we head deeper into the weeds here, I
-> > >> feel we should discuss the things below.  And before we do that, I need
-> > >> a clear understanding of the use case.  Elsewhere in this thread, I just
-> > >> described the use case as I understand it.  Please reply there.  I'll
-> > >> then come back to this message.
-> > >> 
-> > >> [...]
-> > >
-> > > Jonathan and I provided different use cases for x86 and Arm. Could we
-> > > come back here to continue the discussion? :)
-> > 
-> > Can you provide a brief summary of the design alternatives that have
-> > been proposed so far?  Because I've lost track.
+>>                A different approach was suggested in [2]: enable global
+>> properties for accelerators. This allows an user to override any accel
+>> setting by using '-global' and we won't need to change how '-accel' opts
+>> are handled.
+>>
+>> This is done by calling object_prop_set_globals() in
+>> accel_init_machine(). As done in device_post_init(), user's global
+>> props take precedence over compat props so object_prop_set_globals() is
+>> called after object_set_accelerator_compat_props().
+>>
+>> object_prop_check_globals() is then changed to recognize TYPE_ACCEL
+>> globals as valid.
 > 
-> No problem!
+> Would it make sense to enable -global for user-creatable objects
+> (-object), too?
+
+
+To be honest, I'm not sure. I can't talk on the motivations to have -globals
+for devices, but if the same reasoning applies to all other objects, I think
+it's ok.
+
+As far as -accel goes I really thing that the elephant in the room is that
+-accel is an oddball. "-accel kvm -accel tcg" being a thing is weird. Why not
+-accel kvm,fallback=true if we want a fallback mechanic for KVM? Do we have
+a strong use case (i.e. libvirt) to keep this mixed accel options around?
+
+Note that this patch doesn't make things particularly better: I'm using globals
+to emulate what should be regular command line behavior for -accel. It's kind
+of a cope out for a more complex issue.
+
 > 
-> Currently, we have the following options:
+>> Re-using the fore-mentioned example we'll be able to set
+>> riscv-aia=hwaccel by doing the following:
+>>
+>> qemu-system-riscv64 -accel kvm,riscv-aia=emul (...) \
+>>      -global kvm-accel.riscv-aia=hwaccel
 > 
-> * 1st: The first one is just to configure cache topology with several
->   options in -smp:
+> I'm confused.
 > 
->   -smp l1i-cache-topo=core,l1d-cache-topo-core
+> -accel kvm,riscv-aia=emul creates accelerator kvm (which is an instance
+> of class "kvm-accel") and sets its property "riscv-aia" to "emul".
 > 
->   This one lacks scalability to support the cache size that ARM will
->   need in the future.
+> -global kvm-accel,riscv-aia=hwaccel changes the (global) default value
+> of class "kvm-accel" property "riscv-aia".
 > 
+> Are you *sure* your example sets "riscv-aia" to "hwaccel"?
+
+It does. Verified with printfs and debugs. I copied what's done for -devices and
+applied to -accel, which means that the global value is applied after the command
+line options, doing an overwrite on whatever was set before. You can see that
+happening in accel_init_machine() in this patch.
+
+
+Thanks,
+
+Daniel
+
 > 
-> * 2nd: The cache list object in -smp.
-> 
->   The idea was to use JSON to configure the cache list. However, the
->   underlying implementation of -smp at the moment is keyval parsing,
->   which is not compatible with JSON.
-> 
->   If we can not insist on JSON format, then cache lists can also be
->   implemented in the following way:
->   
->   -smp caches.0.name=l1i,caches.0.topo=core,\
->        caches.1.name=l1d,caches.1.topo=core
-> 
-> 
-> * 3rd: The cache list object linked in -machine.
-> 
->   Considering that -object is JSON-compatible so that defining lists via
->   JSON is more friendly, I implemented the caches list via -object and
->   linked it to MachineState:
-> 
->   -object '{"qom-type":"smp-cache","id":"obj","caches":[{"name":"l1d","topo":"core"},{"name":"l1i","topo":"core"}]}'
->   -machine smp-caches=obj
-> 
-> 
-> * 4th: The per cache object without any list:
-> 
->   -object smp-cache,id=cache0,name=l1i,topo=core \
->   -object smp-cache,id=cache1,name=l1d,topo=core
-> 
->   This proposal is clearer, but there are a few opens:
->   - I plan to push qom-topo forward, which would abstract CPU related
->     topology levels and cache to "device" instead of object. Is there a
->     conflict here?
-> 
->   - Multiple cache objects can't be linked to the machine on the command
->     line, so I maintain a static cache list in smp_cache.c and expose
->     the cache information to the machine through some interface. is this
->     way acceptable?
-> 
-> 
-> In summary, the 4th proposal was the most up in the air, as it looked to
-> be conflict with the hybrid topology I wanted to do (and while hybrid
-> topology may not be accepted by the community either, I thought it would
-> be best for the two work to be in the same direction).
-> 
-> The difference between 2nd and 3rd is about the JSON requirement, if JSON
-> is mandatory for now then it's 3rd, if it's not mandatory (or accept to
-> make -machine/-smp support JSON in the future), 2nd looks cleaner, which
-> puts the caches list in -smp.
-> 
-> Regards,
-> Zhao
-> 
-> 
+>> [1] https://lore.kernel.org/qemu-devel/20240701133038.1489043-1-dbarboza@ventanamicro.com/
+>> [2] https://lore.kernel.org/qemu-devel/CABgObfbVJkCdpHV2uA7LGTbYEaoaizrbeG0vNo_T1ua5b=jq7Q@mail.gmail.com/
+>>
+>> Reported-by: Andrew Jones <ajones@ventanamicro.com>
+>> Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > 
 
