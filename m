@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1257C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 12:59:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2F63C52D6F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 13:09:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbgG3-0003A4-Dr; Wed, 07 Aug 2024 08:59:15 -0400
+	id 1sbgPg-0001a1-3A; Wed, 07 Aug 2024 09:09:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sbgFz-00037l-H6
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 08:59:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sbgFx-0007V9-EH
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 08:59:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723035547;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=bDWLD1uoFm7FU5a42zOehUthTej1cJGlhkJadGWn0/A=;
- b=ccnAtm2mukip9su2zRU0RNsrxklUCOuTMO5WOygseJpyah8/UVADuXZraTxkNhs94jzc4b
- KUO4Gt++lWkb+N/CVmR/FUjdYHd7LD96TgrKjic+LqteoS0cKqOKWl+rF8G6N7VyITJH8U
- N2jQXtp9HASivu/gROtiRAQVbUtRbJk=
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
- [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-688-oTXE60xINp2m61wvWFiAtg-1; Wed, 07 Aug 2024 08:59:06 -0400
-X-MC-Unique: oTXE60xINp2m61wvWFiAtg-1
-Received: by mail-ot1-f69.google.com with SMTP id
- 46e09a7af769-709376e8668so348002a34.2
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 05:59:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yaozhenguo1@gmail.com>)
+ id 1sbdOC-000766-5g
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 05:55:28 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yaozhenguo1@gmail.com>)
+ id 1sbdOA-0004D2-EA
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 05:55:27 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-7105043330aso1437396b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 02:55:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1723024525; x=1723629325; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Uviacm/uMbm2emfL4M26wkPAMIKsc8+30xZJBnQdb0I=;
+ b=H1ItiyK6eB++yyaDiXd6TaCn4l/p5Hd/EOPI3DNTUnyCsxkntL/CPcPcpMPPrxBHF9
+ aOilttMIrZZRnLHYm8dOcCjxNZwnyJzy2RJvXJVUNFEviFC1HTh63dTKbB8Me2Z5WtOl
+ ndYHyHVR+deUFKJJa7XEYQL/UfF13ueGG6IlX4IG2x3OFdKCT7DrcnnpD39gI8s66XXZ
+ 7HvqAuUFWIQbiHX6ukC3y3UdP10804CSBj1Ujrp0n6Kepdmf7Btm4RLra+S7PdMwmXAa
+ YW9bMpbLhm2y+c6LVKJk8+/65pfwHtb85ozWmNw9Lly06Fzq8tvWSVxLIuBGkeDRHhlM
+ y+YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723035545; x=1723640345;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bDWLD1uoFm7FU5a42zOehUthTej1cJGlhkJadGWn0/A=;
- b=W43hHrzzlgkBha32Jf3pKlQ41kqLrf67GNP+Iq+p+zTmI6ZcJex9OQ7/cVq8Yl1J2Y
- Wfl8CsCgaaDx0KrmcZWD0BbFvyjWGnJm/Jvo5j1366APy0D82atIKVSlQBPPF5IWdr3I
- PK/Kk0Arkp2+xG0XUZJlGctd/suHm1czoJEUhLRUUjvPbsYXRo8/CfrEoq32Pu8glXqM
- io2BIaXl5XQAf69reNaJbBlkEAUGJL4JKAkFmXLnuhq+wZ7SI/hztOB8OCFDmljSlmSm
- BiQL7P9mfoN7buJBeWbpgIwmHCilggE40IRHOxQDjAxtx3t4iT6q8KeOye7Kh/jUK8jD
- qx2w==
-X-Gm-Message-State: AOJu0Yw4eoSR93R3R5gRBmx8ZfERXbcoWVoe6QU1AabU/PDJ3JM9qqzp
- kSLv6nxSfBsSMab1mVN+gqzIvLao+s8bnBs5/VvlCYr+zSBNKwfESKx/uUQ8ZEvNpUXgcS8EoGX
- qN2qilsl+No2fsDxeKXHC4oT8drjpZepptDmlMX86BkiS9NU0h22w
-X-Received: by 2002:a05:6830:f81:b0:704:4987:2342 with SMTP id
- 46e09a7af769-709b995bb2cmr12614786a34.3.1723035545456; 
- Wed, 07 Aug 2024 05:59:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHPkYBRrcm2vNjDLIsSVEeRueSKKdHKny09yM832oRTYEBVUqlVjh4DvrCcJnJTBbcxqUN/6g==
-X-Received: by 2002:a05:6830:f81:b0:704:4987:2342 with SMTP id
- 46e09a7af769-709b995bb2cmr12614773a34.3.1723035545073; 
- Wed, 07 Aug 2024 05:59:05 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6bb9c86b6f8sm56435056d6.123.2024.08.07.05.59.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Aug 2024 05:59:04 -0700 (PDT)
-Date: Wed, 7 Aug 2024 08:59:02 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yong Huang <yong.huang@smartx.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH] migration: Refine the convergence detection
-Message-ID: <ZrNvltexbLK8yxTm@x1n>
-References: <89555383887355d848c1005bfde1641bcddff024.1721821071.git.yong.huang@smartx.com>
- <ZqlGjaleFHdnJUZy@x1n>
- <CAK9dgmbkKPDTYv0i1jpASgTR5iN+_4+DrZUxo5VxQF3NdZewaQ@mail.gmail.com>
- <ZrJTDhyRdjEL9VTV@x1n>
- <CAK9dgmYcW7C9i+KGMH1pN_QRWy_A1ZGXixi49Unt6VhaP6DVzw@mail.gmail.com>
+ d=1e100.net; s=20230601; t=1723024525; x=1723629325;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Uviacm/uMbm2emfL4M26wkPAMIKsc8+30xZJBnQdb0I=;
+ b=d7iHwxFlZJr6ezDeIGg2cl24Ixm0TLRIWtZ++bwZa5BSHyoFvXgMOrLeLylgiMhyEj
+ HtTonFtG95F86T0ltxhg5iWnHWNeQ3S/1jsMfzLe+ivqRGV430gAZtoxbFAmJzlCqSS/
+ jpf660PRkmjzHJWOGrjQ4BkrgFBkJuqOH5U6BK4QfEj0WwsVoSph7ynyIZSGUf5BQYB/
+ oqAZLHCMkwR9b2lTRSE5q1HJ/D7F8+xAbqsQwyc0a/HOAugLhUGH9Bpr4Eu2bb0GpwoH
+ 4VFvXuMHEvCyrq5/ujxxF5iSnafjsdjJNUEocHkJVfdDnuCF9QOy8/5DIyJE+lsW1umh
+ W+cA==
+X-Gm-Message-State: AOJu0YyQ/YhmLSQsHnqMw9JT35Sl338MnalN/bpviRmjIsf3T2SHTi+j
+ DcTQk2DxE5f9RllqAD/5FsOyP1cPuYn1X9Giyv3bRR36/07m7JW2X9HRvg==
+X-Google-Smtp-Source: AGHT+IEcCSXz7WB7mKn3x6RxbzU1KtqyvlAsxlnb6mq/IXN+Ruky0V3E2UewjSvOLKEaE+IPQab9Og==
+X-Received: by 2002:a05:6a00:17a0:b0:706:6af8:e088 with SMTP id
+ d2e1a72fcca58-7106cfa1e92mr19953089b3a.3.1723024524487; 
+ Wed, 07 Aug 2024 02:55:24 -0700 (PDT)
+Received: from localhost.localdomain ([119.28.83.92])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7106ec73d8csm8353474b3a.92.2024.08.07.02.55.22
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 07 Aug 2024 02:55:24 -0700 (PDT)
+From: yaozhenguo <yaozhenguo1@gmail.com>
+X-Google-Original-From: yaozhenguo <yaozhenguo@jd.com>
+To: alex.bennee@linaro.org,
+	mst@redhat.com,
+	sgarzare@redhat.com
+Cc: qemu-devel@nongnu.org,
+	yaozhenguo@jd.com
+Subject: [PATCH] virtio/vhost-user: fix qemu crash when hotunplug
+ vhost-user-net device
+Date: Wed,  7 Aug 2024 17:55:08 +0800
+Message-Id: <20240807095508.54750-1-yaozhenguo@jd.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAK9dgmYcW7C9i+KGMH1pN_QRWy_A1ZGXixi49Unt6VhaP6DVzw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=yaozhenguo1@gmail.com; helo=mail-pf1-x42f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 07 Aug 2024 09:09:09 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,18 +97,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 07, 2024 at 02:46:29PM +0800, Yong Huang wrote:
-> I still think dropping the dirty_rate_high_cnt is a refinement. If migration
-> has a precise detection of convergence, what do you think of it?
+When hotplug and hotunplug vhost-user-net device quickly.
+qemu will crash. BT is as below:
 
-Maybe; I don't think I thought through those yet..  If so that'll make
-sense to be based on the sync change first, then we can have a parameter
-(doesn't sound like a cap on its own) for keeping the old auto-converge,
-and pile new logics there.
+0  __pthread_kill_implementation () at /usr/lib64/libc.so.6
+1  raise () at /usr/lib64/libc.so.6
+2  abort () at /usr/lib64/libc.so.6
+3  try_dequeue () at ../util/rcu.c:235
+4  call_rcu_thread (opaque=opaque@entry=0x0) at ../util/rcu.c:288
+5  qemu_thread_start (args=0x55b10d9ceaa0) at ../util/qemu-thread-posix.c:541
+6  start_thread () at /usr/lib64/libc.so.6
+7  clone3 () at /usr/lib64/libc.so.6
 
-Thanks,
+1. device_del qmp process
 
+virtio_set_status
+  vhost_dev_stop
+    vhost_user_get_vring_base
+      vhost_user_host_notifier_remove
+
+vhost_user_slave_handle_vring_host_notifier maybe called asynchronous after
+vhost_user_host_notifier_remove. vhost_user_host_notifier_remove will not
+all call_rcu because of notifier->addr is NULL at this time.
+
+2. netdev_del qmp process
+
+vhost_user_cleanup
+       vhost_user_host_notifier_remove
+       g_free_rcu
+
+vhost_user_host_notifier_remove and g_free_rcu will sumbit same rcu_head
+to rcu node list. rcu_call_count add twice but only one node is added.
+rcu thread will abort when calling try_dequeue with node list is empty.
+Fix this by moving g_free(n) to vhost_user_host_notifier_free.
+
+Fixes: 503e355465 ("virtio/vhost-user: dynamically assign VhostUserHostNotifiers")
+Signed-off-by: yaozhenguo <yaozhenguo@jd.com>
+---
+ hw/virtio/vhost-user.c         | 23 +++++++++++------------
+ include/hw/virtio/vhost-user.h |  1 +
+ 2 files changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 00561daa06..7ab37c0da2 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -1188,6 +1188,12 @@ static void vhost_user_host_notifier_free(VhostUserHostNotifier *n)
+     assert(n && n->unmap_addr);
+     munmap(n->unmap_addr, qemu_real_host_page_size());
+     n->unmap_addr = NULL;
++    if (n->need_free) {
++        memory_region_transaction_begin();
++        object_unparent(OBJECT(&n->mr));
++        memory_region_transaction_commit();
++        g_free(n);
++    }
+ }
+ 
+ /*
+@@ -1195,7 +1201,7 @@ static void vhost_user_host_notifier_free(VhostUserHostNotifier *n)
+  * under rcu.
+  */
+ static void vhost_user_host_notifier_remove(VhostUserHostNotifier *n,
+-                                            VirtIODevice *vdev)
++                                            VirtIODevice *vdev, bool free)
+ {
+     if (n->addr) {
+         if (vdev) {
+@@ -1204,6 +1210,7 @@ static void vhost_user_host_notifier_remove(VhostUserHostNotifier *n,
+         assert(!n->unmap_addr);
+         n->unmap_addr = n->addr;
+         n->addr = NULL;
++        n->need_free = free;
+         call_rcu(n, vhost_user_host_notifier_free, rcu);
+     }
+ }
+@@ -1280,7 +1287,7 @@ static int vhost_user_get_vring_base(struct vhost_dev *dev,
+ 
+     VhostUserHostNotifier *n = fetch_notifier(u->user, ring->index);
+     if (n) {
+-        vhost_user_host_notifier_remove(n, dev->vdev);
++        vhost_user_host_notifier_remove(n, dev->vdev, false);
+     }
+ 
+     ret = vhost_user_write(dev, &msg, NULL, 0);
+@@ -1562,7 +1569,7 @@ static int vhost_user_backend_handle_vring_host_notifier(struct vhost_dev *dev,
+      * new mapped address.
+      */
+     n = fetch_or_create_notifier(user, queue_idx);
+-    vhost_user_host_notifier_remove(n, vdev);
++    vhost_user_host_notifier_remove(n, vdev, false);
+ 
+     if (area->u64 & VHOST_USER_VRING_NOFD_MASK) {
+         return 0;
+@@ -2737,13 +2744,7 @@ static void vhost_user_state_destroy(gpointer data)
+ {
+     VhostUserHostNotifier *n = (VhostUserHostNotifier *) data;
+     if (n) {
+-        vhost_user_host_notifier_remove(n, NULL);
+-        object_unparent(OBJECT(&n->mr));
+-        /*
+-         * We can't free until vhost_user_host_notifier_remove has
+-         * done it's thing so schedule the free with RCU.
+-         */
+-        g_free_rcu(n, rcu);
++        vhost_user_host_notifier_remove(n, NULL, true);
+     }
+ }
+ 
+@@ -2765,9 +2766,7 @@ void vhost_user_cleanup(VhostUserState *user)
+     if (!user->chr) {
+         return;
+     }
+-    memory_region_transaction_begin();
+     user->notifiers = (GPtrArray *) g_ptr_array_free(user->notifiers, true);
+-    memory_region_transaction_commit();
+     user->chr = NULL;
+ }
+ 
+diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
+index 324cd8663a..a171f29e0b 100644
+--- a/include/hw/virtio/vhost-user.h
++++ b/include/hw/virtio/vhost-user.h
+@@ -54,6 +54,7 @@ typedef struct VhostUserHostNotifier {
+     void *addr;
+     void *unmap_addr;
+     int idx;
++    bool need_free;
+ } VhostUserHostNotifier;
+ 
+ /**
 -- 
-Peter Xu
+2.43.0
 
 
