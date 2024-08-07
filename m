@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF031C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 16:43:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F0C6C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 16:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbjkE-0003YU-BD; Wed, 07 Aug 2024 12:42:38 -0400
+	id 1sbjoK-0002BW-FG; Wed, 07 Aug 2024 12:46:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sbjkC-0003Pu-Bh
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 12:42:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1sbjkA-0006LJ-5z
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 12:42:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723048951;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yGiB+E3DRpmN1IjdRxWjcF8QrKtTv7J7kN2rGddoucQ=;
- b=CL5APFrs+8CvEN6HyxxjWiCp8es0AFdSS+nNhvPrnJ74aKdU+EneA6Op4zw5qWFzgD4WFT
- 71jCgNRfvvuSxoqtPwiV70fX5oaOGjXH2FM+b0px0gZmE6P5C+L6xkRw4QhSMeP2Fp9tmB
- odYKRcIe1qO9yaYmgRK9WGUrhe8X9Gk=
-Received: from mail-yw1-f199.google.com (mail-yw1-f199.google.com
- [209.85.128.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-529-RBPslv-DP_2yE7jMiNrNEQ-1; Wed, 07 Aug 2024 12:42:29 -0400
-X-MC-Unique: RBPslv-DP_2yE7jMiNrNEQ-1
-Received: by mail-yw1-f199.google.com with SMTP id
- 00721157ae682-6643016423fso742957b3.3
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 09:42:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbjoD-00029s-0t
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 12:46:45 -0400
+Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbjo7-0006oG-6l
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 12:46:42 -0400
+Received: by mail-lj1-x22e.google.com with SMTP id
+ 38308e7fff4ca-2f16767830dso281141fa.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 09:46:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723049197; x=1723653997; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MptXPEUbxo0SiBnOhDSOAF/gMJykpLxFXw+RPbjYJNE=;
+ b=aZ1fQbm92AOpFfg0D5iXOxt4Hr5Gpkz5jLxm1ZWxodTnvZVuvwVznQyNWJeIvsU3uq
+ G2IlyCmqLMOk6LrCVcR0aTpb3MbDetNz+/oBpESD6ZjVO5oi3Q//TolStw6WI1cALfDA
+ lvd+7NH4Z+RnjVPvUY5ST4xddnw+stV2Jaj94C/DVPDlI1Qb72Af2LFu/bmFgZeUG5lL
+ TcPeTFydNasCxTXdPAc/01z+PZGEpPhw+cPzk6ZnhjiKimHxxGVebPMd/NyBT3vZIEAW
+ e8AEHvOhaolhg0W6X3P2uXHuSKELrCTsmNd02XYpOsQsQrSs4cJfu06kSE+T/Bz3vOWS
+ 9oWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723048949; x=1723653749;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yGiB+E3DRpmN1IjdRxWjcF8QrKtTv7J7kN2rGddoucQ=;
- b=dykYOPwHqPraxfEZKJOta020agj9LA4IRs0GI8wuArXgGSeTnq9lRF4vVzHnJVuxgL
- C4K8Q92Z1xBFK9YtkCbNwL4k2/5xevBS6ySHDxY1W2q5y0Fzlc2baul9J/yaC1ZLEN1L
- r650Xl1WezZzjVu+9tbDBzoYS/L1iWFWxcwJToPVvU8HnD4UPncPq+yOpxlYeF87CckR
- eilbDc3gIDFpeeNqnabt3koYCAdFhu5e3x73aeuAN1NZXuPnuVL6DnRbvyGi45vDgI9H
- sEq3wnUk4NC+LqF4B6eSOvxq5aYktL2K394xgi/SNTkxoJRFA1eQkcuCbXSEroob+Zl1
- 1Gpw==
+ d=1e100.net; s=20230601; t=1723049197; x=1723653997;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MptXPEUbxo0SiBnOhDSOAF/gMJykpLxFXw+RPbjYJNE=;
+ b=PKjQmF4D35k/vYaiXIMN99eJIK+kyfLOPxcZN9ih5heiM9Nf6MgakYFvEA05KFSdI6
+ htCpCcC8rVeZMIAexJ4tOaLtKO21sk5m8NHnkOYra9KAPIziIs8InKlETWxdFVyiFOG3
+ lU2eNUW3oWhjNMAMeYwrGiqMhBRODUn1VLDkj6bpDXC/i4caNxkzRCRSsw0JYSAiMT01
+ 82Jq3vbxb8J8u7y7DgtqFMWQH89bxlD+F6V6gBTCVTvZ0wK2N/E4XM1067Qtz+87j6JA
+ Z3lQun3UV1AqOT1LGg2dZ5YdXfS4b7v+G8j4/8iY7eWvqdRUOrqOHtCVx5+niwxv51fD
+ ty0g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVLR2fYkgvMYVdd6tXlEmIknahXvGbsA8w3qujZNIAFOElO7NMnycSs8rYVxLWRhPlOUn13ltb9x2wdR3SMF6K9wczkeWk=
-X-Gm-Message-State: AOJu0Yybk8BHomoqqLzskTnuqnmDompP8AzEKeMPZLplQ6WT3xUscLhO
- otjJFV5LvZJhEET+ewEPu20tuPm2WZTxtuY2Zaup6ftwXVonjQkZYIDMrFF75u7lDJVZ04Kdr9j
- 89Wtr/gCjoRejkrb4Hu73HfdneXKlDCPS0LdomXpmAlp+YmvrFtEpUkYbBxmP7FaTLY0FDI/jCR
- C5XKN4sj+CCT9BQkt8w+zX/wgl8Vw=
-X-Received: by 2002:a81:b407:0:b0:615:1ad2:1102 with SMTP id
- 00721157ae682-689601abbfdmr202963177b3.11.1723048949358; 
- Wed, 07 Aug 2024 09:42:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHV1k68qFEQAlwrimexFRZB7X0BN7JrlrtGXk7M4uBoaSbybObn+V1slWFkpFMMUI/o/va145VhJuoKAZiGRKA=
-X-Received: by 2002:a81:b407:0:b0:615:1ad2:1102 with SMTP id
- 00721157ae682-689601abbfdmr202962497b3.11.1723048948085; Wed, 07 Aug 2024
- 09:42:28 -0700 (PDT)
+ AJvYcCVMQMNRLU9Xk+PlNc6JDy6nTBXjGwn5Yo7GePpm0szXj1r8YXKCQLX7bPIy8VidGHKGZu+h3mN1vK2F6nJxfGPdYvp/sZE=
+X-Gm-Message-State: AOJu0Yxezygnsf014sczwiYX9n0tEb+jA1C78Tm5y83JzJGq2+ACDxuK
+ vDN7vfCBhbQCN515GZrrfb5vza+A2xqc/fLpf/1SRzy1+bXJZao+th+by6nZSpM=
+X-Google-Smtp-Source: AGHT+IFMcL38s6QzG+/rqPJHgP7F+uUVG+K35RBOqKRIoPebYqKZu15cuD3naGR+orwxMtX7lv9gmQ==
+X-Received: by 2002:a2e:9606:0:b0:2f0:3cff:30ce with SMTP id
+ 38308e7fff4ca-2f15a9f0284mr126860591fa.0.1723049196414; 
+ Wed, 07 Aug 2024 09:46:36 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.212.120])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4290598e5adsm37925515e9.25.2024.08.07.09.46.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Aug 2024 09:46:35 -0700 (PDT)
+Message-ID: <44328324-af73-4439-9d2b-d414e0e13dd7@linaro.org>
+Date: Wed, 7 Aug 2024 18:46:33 +0200
 MIME-Version: 1.0
-References: <20240802112138.46831-1-sahilcdq@proton.me>
-In-Reply-To: <20240802112138.46831-1-sahilcdq@proton.me>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Wed, 7 Aug 2024 18:41:52 +0200
-Message-ID: <CAJaqyWfZ=Q-+Yvv2Vb7jAGcoDvoEBFFyAdh3omTUqbVn=DKyDg@mail.gmail.com>
-Subject: Re: [RFC v3 0/3] Add packed virtqueue to shadow virtqueue
-To: Sahil Siddiq <icegambit91@gmail.com>
-Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
- Sahil Siddiq <sahilcdq@proton.me>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.1] tcg/ppc: Sync tcg_out_test and constraints
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, qemu-ppc <qemu-ppc@nongnu.org>
+References: <20240807040843.7882-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240807040843.7882-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,73 +95,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 2, 2024 at 1:22=E2=80=AFPM Sahil Siddiq <icegambit91@gmail.com>=
- wrote:
->
-> Hi,
->
-> Here's a new patch series that incorporates all
-> the suggested changes from v2.
->
-> I have tried my best to deduplicate the implementation.
-> Please let me know if I have missed something.
->
+On 7/8/24 06:08, Richard Henderson wrote:
+> Ensure the code structure is the same for matching constraints
+> and emitting code, lest we allow constants that cannot be
+> trivially tested.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: ad788aebbab ("tcg/ppc: Support TCG_COND_TST{EQ,NE}")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2487
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/ppc/tcg-target.c.inc | 21 ++++++++++-----------
+>   1 file changed, 10 insertions(+), 11 deletions(-)
+> 
+> diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
+> index 7f3829beeb..3553a47ba9 100644
+> --- a/tcg/ppc/tcg-target.c.inc
+> +++ b/tcg/ppc/tcg-target.c.inc
+> @@ -325,9 +325,11 @@ static bool tcg_target_const_match(int64_t sval, int ct,
+>               if ((uval & ~0xffff) == 0 || (uval & ~0xffff0000ull) == 0) {
+>                   return 1;
+>               }
+> -            if (TCG_TARGET_REG_BITS == 32 || type == TCG_TYPE_I32
+> -                ? mask_operand(uval, &mb, &me)
+> -                : mask64_operand(uval << clz64(uval), &mb, &me)) {
+> +            if (uval == (uint32_t)uval && mask_operand(uval, &mb, &me)) {
+> +                return 1;
+> +            }
+> +            if (TCG_TARGET_REG_BITS == 64 &&
+> +                mask64_operand(uval << clz64(uval), &mb, &me)) {
+>                   return 1;
+>               }
+>               return 0;
+> @@ -1749,8 +1751,6 @@ static void tcg_out_test(TCGContext *s, TCGReg dest, TCGReg arg1, TCGArg arg2,
+>   
+>       if (type == TCG_TYPE_I32) {
+>           arg2 = (uint32_t)arg2;
+> -    } else if (arg2 == (uint32_t)arg2) {
+> -        type = TCG_TYPE_I32;
+>       }
+>   
+>       if ((arg2 & ~0xffff) == 0) {
+> @@ -1761,12 +1761,11 @@ static void tcg_out_test(TCGContext *s, TCGReg dest, TCGReg arg1, TCGArg arg2,
+>           tcg_out32(s, ANDIS | SAI(arg1, dest, arg2 >> 16));
+>           return;
+>       }
+> -    if (TCG_TARGET_REG_BITS == 32 || type == TCG_TYPE_I32) {
+> -        if (mask_operand(arg2, &mb, &me)) {
+> -            tcg_out_rlw_rc(s, RLWINM, dest, arg1, 0, mb, me, rc);
+> -            return;
+> -        }
+> -    } else {
+> +    if (arg2 == (uint32_t)arg2 && mask_operand(arg2, &mb, &me)) {
+> +        tcg_out_rlw_rc(s, RLWINM, dest, arg1, 0, mb, me, rc);
+> +        return;
+> +    }
+> +    if (TCG_TARGET_REG_BITS == 64) {
+>           int sh = clz64(arg2);
+>           if (mask64_operand(arg2 << sh, &mb, &me)) {
+>               tcg_out_rld_rc(s, RLDICR, dest, arg1, sh, me, rc);
 
-I think they are in good shape :).
+Preferably having someone from PPC also reviewing this,
 
-> I'll also test these changes out by following the
-> suggestions given in response to v1. I'll have more
-> confidence once I know these changes work.
->
-
-Please let me know if you need help with the testing!
-
-> Thanks,
-> Sahil
->
-> v1: https://lists.nongnu.org/archive/html/qemu-devel/2024-06/msg03417.htm=
-l
-> v2: https://lists.nongnu.org/archive/html/qemu-devel/2024-07/msg06196.htm=
-l
->
-> Changes v2 -> v3:
-> * vhost-shadow-virtqueue.c
->   - Move parts common to "vhost_svq_add_split" and
->     "vhost_svq_add_packed" to "vhost_svq_add".
->   (vhost_svq_add_packed):
->   - Refactor to minimize duplicate code between
->     this and "vhost_svq_add_split"
->   - Fix code style issues.
->   (vhost_svq_add_split):
->   - Merge with "vhost_svq_vring_write_descs()"
->   - Refactor to minimize duplicate code between
->     this and "vhost_svq_add_packed"
->   (vhost_svq_add):
->   - Refactor to minimize duplicate code between
->     split and packed version of "vhost_svq_add"
->   (vhost_svq_memory_packed): New function
->   (vhost_svq_start):
->   - Remove common variables out of if-else branch.
->   (vhost_svq_stop):
->   - Add support for packed vq.
->   (vhost_svq_get_vring_addr): Revert changes
->   (vhost_svq_get_vring_addr_packed): Likwise.
-> * vhost-shadow-virtqueue.h
->   - Revert changes made to "vhost_svq_get_vring_addr*"
->     functions.
-> * vhost-vdpa.c: Revert changes.
->
-> Sahil Siddiq (3):
->   vhost: Introduce packed vq and add buffer elements
->   vhost: Data structure changes to support packed vqs
->   vhost: Allocate memory for packed vring
->
->  hw/virtio/vhost-shadow-virtqueue.c | 230 ++++++++++++++++++++---------
->  hw/virtio/vhost-shadow-virtqueue.h |  70 ++++++---
->  2 files changed, 206 insertions(+), 94 deletions(-)
->
-> --
-> 2.45.2
->
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
