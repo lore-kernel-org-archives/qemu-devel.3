@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 527E8C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 11:42:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11793C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 11:43:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbf2a-0006Fl-TM; Wed, 07 Aug 2024 07:41:17 -0400
+	id 1sbf2Z-00068b-Ay; Wed, 07 Aug 2024 07:41:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sbf2Z-0006C3-Mr
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 07:41:15 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1sbf2W-00062o-O9
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 07:41:13 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sbf2W-0003BQ-Pn
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 07:41:15 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-a7aac70e30dso189166966b.1
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 04:41:11 -0700 (PDT)
+ id 1sbf2T-0003B4-IH
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 07:41:11 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-52f04150796so2583995e87.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 04:41:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723030870; x=1723635670; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723030868; x=1723635668; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ecJtrwPM/qaJJXagybzVYA5cneRACpB/XSuc2I/vBc0=;
- b=V+W5F/9hVajkrA/nEMLRqzQE2kI/H/eie01kPLhyjAHuZTOedthNp81od2RA05nk6K
- 8QvOby55XhD/7j7PHWpXl367wtvCuqbW/BDZVwO1xAxyLAhFjxs3coYVvtEp6G83YZCr
- /dAdpM+V7ymJGblMOY70gDR4/fIfK2aAYD6Ua9SZoe2Y0M4NQcvRdXRfj5qaNuLLyxZt
- HeTdh0A2FgcUEkoS5+qH0cY57mWLL89VaaQdsBwclblojHdgLPcXA4kbuFYyIfZUbUcK
- 1ivMIVZHwykxhfI/wKi8TMI9tdrUNQuQpOLoDRg86CWlKKJvWf16cW8EdVYD1cUZcDdh
- 42aQ==
+ bh=pTfCk64r8q3pxcxN1PtSEYt96mHUVpiaIdaNgLQ6haU=;
+ b=Ryj5yRA5w3eApM83TRw2Jo1I7tyqKMLoshIFyUoA0XyJjlrFgJSCWwvUqAc7VF9wcG
+ kg6Igraogta1fNDYzIq7hjbvsjsMuPJd1H5HmsuRtpQVArvWIg+xFx90o7CT6nCeb7i5
+ UIwbBB7rExRiptCxTiU747/ga2MV/kOkCHf12QCYRvqwvIVQiTOEy64pTRMPHr/MN6No
+ oY7ghscLsljCU1SglW2vWm3j1xnjCd9pKq56Vy5qTPkB9iYoVV0dut8RDs3uxNMc/j14
+ 0MPP79jxtEbstKsND9cPTZjOfT3bXE/aF254FVKBrdgXkFlRXsbc5SkB0ZZ9iAwS3Kyn
+ HOGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723030870; x=1723635670;
+ d=1e100.net; s=20230601; t=1723030868; x=1723635668;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ecJtrwPM/qaJJXagybzVYA5cneRACpB/XSuc2I/vBc0=;
- b=l3Q5s8vhuomucYgSp626fie/fMJJqYf9h34g1xwFM1NqRd9lLSvy10AFMoCWyEUwiK
- Dmh+2ex23k9lP7sRHbtQPjqCUwLKeZPV1xFJ2q0cGlPuycf8e7+yWFPO1BYPFBQ9mTT2
- 0jXad0cN8BgBgxiOp+NM4+m6zvQMT3xSarrmgIkmXG4l4QXYgDrBELyQVLXRYvb3uriO
- 0ccx7g6BvGfQMeeapIMdzK8yS2BbptEDNolm1bIqmFpp3TcNhMZ1Ew65stOUCZre4C00
- RkK032u11eLOSzhnirXclS0kR5X4ZX10xZA+oJkBgvaZmysxMG6EIrEWPJMrdoZKZNz9
- Kpbg==
-X-Gm-Message-State: AOJu0YyAFHL5VQKCz4hmvdChRD7hUlkrvk6RamwDmhrULbJ1BGhYjW7c
- iyfJaNiLTxpCsR4xRcysTf/atUGWXJnxYPRzdKTLaPcpZz7pxOckjFKnF1e0BaY=
-X-Google-Smtp-Source: AGHT+IEOYt7VVIUjvhLC8vzpDPBu0VfAGQ5siInhvEP4PzoOnY2VFTTgnyQh87leEedzB/JDgqk4HQ==
-X-Received: by 2002:a17:907:98b:b0:a77:b01b:f949 with SMTP id
- a640c23a62f3a-a7dc507f325mr1308774066b.35.1723030869989; 
- Wed, 07 Aug 2024 04:41:09 -0700 (PDT)
+ bh=pTfCk64r8q3pxcxN1PtSEYt96mHUVpiaIdaNgLQ6haU=;
+ b=AxoBrGkJZaiYL4X4glRtCPGcdHuv/DTtcmeCYX8Hg9xJHV6FLGQ4/6H0hlZRs6vkO2
+ Qwa+AQ2b0EF9LRgdTCLu/GtwtGNRNMZpsPQOGdGlsC4OObEluEFv101lchiekoVl9GKk
+ adJMRZ0/0rn2SYLO61MVNkGglnH5wFLVLBIPclUGLIa11HKo5SXNTbOyah6l4RBvK9oq
+ fbUI1SvKfZpBQtC0ERGGJQva8TB4yEDB+eQVXpaip/Rxq+UgQMAH3/XyskUBGBgCznLf
+ zlzHNJ5b3wRPWjrDuZFXlu/JnwkH/ufheojD3Qt+vHOlJ/7ZsLcfy8qmvhDYWzWHDHG0
+ aBvg==
+X-Gm-Message-State: AOJu0YyTwPAVWEhtcAnYgsAKIEmuIPgJugMJTFZNzRtEckxBfa7oA1UF
+ /9wcOZuu9CD+2O02dVCXHF0eOR4uG4rmAIC9pbad5uaSSr/d3wGCLq0roGfZ8WE=
+X-Google-Smtp-Source: AGHT+IECak3W7ZhApmMH6jRsCuYSU3oEitW7MAeF+7eSMLpbzH8qePAkgso1AIK8NYf6uG1Y39UYKg==
+X-Received: by 2002:a05:6512:3f0d:b0:52c:e040:7d9 with SMTP id
+ 2adb3069b0e04-530bb3b4a15mr11695346e87.59.1723030867011; 
+ Wed, 07 Aug 2024 04:41:07 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7dc9d4dd45sm632426266b.104.2024.08.07.04.41.03
+ a640c23a62f3a-a7dc9d88650sm627436166b.152.2024.08.07.04.41.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 07 Aug 2024 04:41:06 -0700 (PDT)
+ Wed, 07 Aug 2024 04:41:01 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 6EF755FA0A;
+ by draig.lan (Postfix) with ESMTP id 2CD175F935;
  Wed,  7 Aug 2024 12:41:00 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -68,21 +68,18 @@ Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Yoshinori Sato <ysato@users.sourceforge.jp>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 6/6] scripts/checkpatch: more checks on files imported from
- Linux
-Date: Wed,  7 Aug 2024 12:40:59 +0100
-Message-Id: <20240807114059.2339021-7-alex.bennee@linaro.org>
+ Gustavo Romero <gustavo.romero@linaro.org>
+Subject: [PATCH 3/6] configure: Fix arch detection for GDB_HAS_MTE
+Date: Wed,  7 Aug 2024 12:40:56 +0100
+Message-Id: <20240807114059.2339021-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240807114059.2339021-1-alex.bennee@linaro.org>
 References: <20240807114059.2339021-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,64 +102,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Gustavo Romero <gustavo.romero@linaro.org>
 
-If a file imported from Linux is touched, emit a warning and suggest
-using scripts/update-linux-headers.sh.
+GDB_HAS_MTE must only be set if GDB supports the aarch64 arch, so the
+test if "aarch64" string is present must be against GDB-related
+'$gdb_arches' variable and not against '$arch' variable.
 
-Also check that updating imported files from Linux are not mixed with
-other changes, in which case emit an error.
-
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-Id: <20240718072050.9503-1-sgarzare@redhat.com>
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Message-Id: <20240804161850.2646299-2-gustavo.romero@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- scripts/checkpatch.pl | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ configure | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
-index ff373a7083..65b6f46f90 100755
---- a/scripts/checkpatch.pl
-+++ b/scripts/checkpatch.pl
-@@ -1374,6 +1374,9 @@ sub process {
- 	my $in_header_lines = $file ? 0 : 1;
- 	my $in_commit_log = 0;		#Scanning lines before patch
- 	my $reported_maintainer_file = 0;
-+	my $reported_mixing_imported_file = 0;
-+	my $in_imported_file = 0;
-+	my $in_no_imported_file = 0;
- 	my $non_utf8_charset = 0;
+diff --git a/configure b/configure
+index 019fcbd0ef..a3aa257fd3 100755
+--- a/configure
++++ b/configure
+@@ -1673,7 +1673,7 @@ for target in $target_list; do
+           echo "GDB=$gdb_bin" >> $config_target_mak
+       fi
  
- 	our @report = ();
-@@ -1673,6 +1676,27 @@ sub process {
- # ignore non-hunk lines and lines being removed
- 		next if (!$hunk_line || $line =~ /^-/);
- 
-+# Check that updating imported files from Linux are not mixed with other changes
-+		if ($realfile =~ /^(linux-headers|include\/standard-headers)\//) {
-+			if (!$in_imported_file) {
-+				WARN("added, moved or deleted file(s) " .
-+				     "imported from Linux, are you using " .
-+				     "scripts/update-linux-headers.sh?\n" .
-+				     $herecurr);
-+			}
-+			$in_imported_file = 1;
-+		} else {
-+			$in_no_imported_file = 1;
-+		}
-+
-+		if (!$reported_mixing_imported_file &&
-+		    $in_imported_file && $in_no_imported_file) {
-+			ERROR("headers imported from Linux should be self-" .
-+			      "contained in a patch with no other changes\n" .
-+			      $herecurr);
-+			$reported_mixing_imported_file = 1;
-+		}
-+
- # ignore files that are being periodically imported from Linux
- 		next if ($realfile =~ /^(linux-headers|include\/standard-headers)\//);
+-      if test "${arch}" = "aarch64" && version_ge ${gdb_version##* } 15.0; then
++      if test "${gdb_arches#*aarch64}" != "$gdb_arches" && version_ge ${gdb_version##* } 15.0; then
+           echo "GDB_HAS_MTE=y" >> $config_target_mak
+       fi
  
 -- 
 2.39.2
