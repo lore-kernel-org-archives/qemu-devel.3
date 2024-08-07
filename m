@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7D7EC52D7B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB18AC3DA7F
 	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 20:29:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbnGr-0001dl-JN; Wed, 07 Aug 2024 16:28:33 -0400
+	id 1sbnGh-0001Ii-C9; Wed, 07 Aug 2024 16:28:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbnGp-0001YD-W2
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 16:28:32 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbnGe-0001GJ-K9
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 16:28:21 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbnGo-0006tz-2L
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 16:28:31 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-368663d7f80so98112f8f.3
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 13:28:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbnGc-0006sw-AA
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 16:28:20 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2f1798eaee6so2246591fa.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 13:28:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723062508; x=1723667308; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723062495; x=1723667295; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=64V2wCrrYmQb5TKOeGR5XbQEWlSQEIaOZkBcAH6L56E=;
- b=qYOa2xoCjjcofywzBJvPEsG4kUCgPi6vTeyxn4vDQmXCn6Q1wlfCuLZEjuEM31VdT1
- A+4xkja2avrRw7mxVCgY+N/WcjpYi8NWLE8zQNwlEpPmlYtcogQoGMLL2e9umSLN7KrM
- g7Hj0NXTY5FTVV58932/xfjXqXJRLir8Yb6Bm3S33u9xdlgEymjY2AeQQksrSE7NZu8d
- XSxgHKE4jYbgkTlc5z218aw1Plk1UnUCazvBgX3G1Eh4y2WL80OVaCzHHphJF1o5Z/3D
- qYCMiHFHoVqoKeuuAOXIGMbSfrZAy91P4pVDlsVBPpMOzDIF8+AMDCpybfoBa8B7R4q4
- GQOw==
+ bh=iIi2lHvDdEsZKrUItMJRcgJ0QP34OToUQAWwLAh7heE=;
+ b=fMM8OGjpsm4XcmXoZCocQnq7ACgb3PZBlzFpDB6RhHe0MElC5qtTCa53i7rEuBoR3l
+ obN8lontnvqoIYMo6SCqorCF/gQNjcIXjX096bzVci1QYKEV3BUvWBfdNtWMD5fpyZiw
+ LANqMV4SsutJK6v4vzfBZFpDS7z1LhpDNW+qsAJ0uc4saFrbPQWWeSFe9WAg4ZpCrRma
+ EE6MBdqHMH/8zCRQIV66bQ2a1a+wXZP5rFYI/hsLaki+CxfYtyHA/1ipkt/kQxTHSCxN
+ 12huhFwVU2INnaxMj00qlIi7ZWzqSbgsH3AF5zxUODYV1gB07FfdjDwOJbFxYzbu+eiZ
+ is5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723062508; x=1723667308;
+ d=1e100.net; s=20230601; t=1723062495; x=1723667295;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=64V2wCrrYmQb5TKOeGR5XbQEWlSQEIaOZkBcAH6L56E=;
- b=riLhreh0bdCKUHk3Mw4gRtSVZXDk0NwOZZWGlXFF58zIWl83kUKrXP/liHQ2dKq+c3
- n2DMoAB1DSDMU+vIWoLa5yozwmW508mCAd2uxkxr2MLM9VFEa4VPgRNZVJh4UXqqnw/T
- in8t9fDPPXtUgDS6kadRg65oW95awb5xVyXgeBqjjpp0tWTgl8M5rdKLeP2PvEdDgwsh
- dXQtNN2rdHCZgzKauBX9ChFp3hUzFWKNglyvf/Bro9XKnyFvqAu3J5TCHwb0BZrPw21o
- vdLy6AdFIQT0NswXPjSLN06QKjaljrRpGXnI6P1CB0x67+Zz61k1BGdMkS4czXFc2t5M
- T3KQ==
-X-Gm-Message-State: AOJu0YwXAzZQ2dxaUkurGmm7jWHNmwQ674s1Wm9NrRt7OsOBxMTurOYY
- 9eK2XD9l/7X6f85vZ9S3Rh/MqsBKFIEx/5ybYyArLSzC+WQlPrNXaA1ZeKkdsA9xRxmE7x9PXNL
- U
-X-Google-Smtp-Source: AGHT+IF6EVqFQ62pSG19zvVCjx6YsEtR7MuubzLMXC/MVgAuhBvZKH0S9QdDlNTK2rJnUhwDglEiEw==
-X-Received: by 2002:a05:6000:d2:b0:368:71fa:7532 with SMTP id
- ffacd0b85a97d-36bbc0e7225mr11786735f8f.31.1723062507881; 
- Wed, 07 Aug 2024 13:28:27 -0700 (PDT)
+ bh=iIi2lHvDdEsZKrUItMJRcgJ0QP34OToUQAWwLAh7heE=;
+ b=cEilcZBKT1ABgtOwzu4gaagapUz1wluWmPsqNjDxtcrbjLaFRBklbDpVDovE05uA3O
+ KPHh0EPl/aX7GX3sGqoYqq6yBuK8Vb6avhMfj2qlP+z1+2UAQPzK2qXZ9qwmk47mVidc
+ AsqYhQ0qRVP3nwI5FLIIkxol1ajaluIXrVKmLA0EP5cjBGVaXgI+0a4dOnptxQtv3FqU
+ jragTeIJ4X+QS0hKTi4EXVFGae9CLA2VV3L5cm7q4MsSqJIZGsBhfzMXA1O5z9OdsaBY
+ 1fmG9d4pIHwPzxdUWJzZYlKwpgnmBCrFMWbDvqRIcJdKgDVleGmkiROwE2O3w58cq78p
+ nYBw==
+X-Gm-Message-State: AOJu0YyQxgMUkZ32cg5GBlIrl7A/SZjPpoCOT6Peoo2Lw34QSFu3zq1U
+ 1YDx7oWkELRMcsSWlH8VtpYJQwE76ivOxRy0JUlXq0e5hTEAxMx2FexKz9uyuEDoIB9Sj/H4De4
+ I
+X-Google-Smtp-Source: AGHT+IG8mxjT3+WiO8rxjUomEIUQ0tcfydWJYxdop68T+WHyY/YaKAB2SipzgMCevNgDbSDPP5oFow==
+X-Received: by 2002:a2e:a0c9:0:b0:2ee:8720:b4c3 with SMTP id
+ 38308e7fff4ca-2f15ab1c1a2mr125847111fa.43.1723062494955; 
+ Wed, 07 Aug 2024 13:28:14 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.120])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36bbcf1e0bcsm16946687f8f.30.2024.08.07.13.28.25
+ 5b1f17b1804b1-4290580cf79sm43019145e9.48.2024.08.07.13.28.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 07 Aug 2024 13:28:27 -0700 (PDT)
+ Wed, 07 Aug 2024 13:28:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Glenn Miles <milesg@linux.ibm.com>,
@@ -65,17 +65,18 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Glenn Miles <milesg@linux.ibm.com>,
  Alistair Francis <alistair@alistair23.me>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 v2 3/4] hw/ssi/pnv_spi: Return early in transfer()
-Date: Wed,  7 Aug 2024 22:28:03 +0200
-Message-ID: <20240807202804.56038-4-philmd@linaro.org>
+Subject: [PATCH-for-9.1 v2 1/4] MAINTAINERS: Cover PowerPC SPI model in
+ PowerNV section
+Date: Wed,  7 Aug 2024 22:28:01 +0200
+Message-ID: <20240807202804.56038-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240807202804.56038-1-philmd@linaro.org>
 References: <20240807202804.56038-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,39 +99,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Return early to simplify next commit.
-No logical change intended.
+It is unfair to let the PowerNV SPI model to the SSI
+maintainers. Also include the PowerNV ones.
 
+Fixes: 29318db133 ("hw/ssi: Add SPI model")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ssi/pnv_spi.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ MAINTAINERS | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
-index 13a47f07e7..05e6afc11e 100644
---- a/hw/ssi/pnv_spi.c
-+++ b/hw/ssi/pnv_spi.c
-@@ -217,6 +217,9 @@ static void transfer(PnvSpi *s, PnvXferBuffer *payload)
-     PnvXferBuffer *rsp_payload = NULL;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 74a85360fd..52843876ab 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1542,8 +1542,10 @@ F: hw/ppc/pnv*
+ F: hw/intc/pnv*
+ F: hw/intc/xics_pnv.c
+ F: hw/pci-host/pnv*
++F: hw/ssi/pnv_spi.c
+ F: include/hw/ppc/pnv*
+ F: include/hw/pci-host/pnv*
++F: hw/ssi/pnv_spi*
+ F: pc-bios/skiboot.lid
+ F: tests/qtest/pnv*
  
-     rsp_payload = pnv_spi_xfer_buffer_new();
-+    if (!rsp_payload) {
-+        return;
-+    }
-     for (int offset = 0; offset < payload->len; offset += s->transfer_len) {
-         tx = 0;
-         for (int i = 0; i < s->transfer_len; i++) {
-@@ -235,9 +238,7 @@ static void transfer(PnvSpi *s, PnvXferBuffer *payload)
-                     (rx >> (8 * (s->transfer_len - 1) - i * 8)) & 0xFF;
-         }
-     }
--    if (rsp_payload != NULL) {
--        spi_response(s, s->N1_bits, rsp_payload);
--    }
-+    spi_response(s, s->N1_bits, rsp_payload);
- }
- 
- static inline uint8_t get_seq_index(PnvSpi *s)
 -- 
 2.45.2
 
