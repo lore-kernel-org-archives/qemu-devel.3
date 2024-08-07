@@ -4,61 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53E0EC52D7B
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 09:35:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B21C52D6F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 09:35:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbd4H-0005fO-7t; Wed, 07 Aug 2024 05:34:53 -0400
+	id 1sbd3g-0005PO-Hd; Wed, 07 Aug 2024 05:34:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sbd4F-0005dq-4R; Wed, 07 Aug 2024 05:34:51 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sbd4B-0000b9-Sa; Wed, 07 Aug 2024 05:34:50 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Wf4hM1YxKz6K9Hq;
- Wed,  7 Aug 2024 17:32:19 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id C8B8E140A87;
- Wed,  7 Aug 2024 17:34:37 +0800 (CST)
-Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 7 Aug
- 2024 10:34:37 +0100
-Date: Wed, 7 Aug 2024 10:34:36 +0100
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-CC: Igor Mammedov <imammedo@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, <linux-kernel@vger.kernel.org>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v5 6/7] acpi/ghes: add support for generic error
- injection via QAPI
-Message-ID: <20240807103436.000013fc@Huawei.com>
-In-Reply-To: <20240807094750.6414fb2f@foz.lan>
-References: <cover.1722634602.git.mchehab+huawei@kernel.org>
- <20c491e357340e0062b6ff09867c1661ed4d2479.1722634602.git.mchehab+huawei@kernel.org>
- <20240806163113.3bdc260a@imammedo.users.ipa.redhat.com>
- <20240807094750.6414fb2f@foz.lan>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbd3e-0005Os-Vj
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 05:34:15 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbd3c-0000Y8-RS
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 05:34:14 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5b3fff87e6bso1940938a12.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 02:34:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723023249; x=1723628049; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=zRNRhLaRdR9xHIJalWIpxS96jcroaoR0FxmZ5ndovgY=;
+ b=pSsgpZDLE6g9ikfNDclW8iHYQcU/WblnplcnLs8tVruTxov1Uj9IyfyRUik6CsguKP
+ t0MAf2cSyYaQ0kBVmWIkwJTRev5Z2cQP46fJG68uNzZ44ONAjntAmRB3tvvpVqPaeuXI
+ BKQRjgC8/uJWd2cAOgcqY1Ps+PodwK7/g86HKVLmDZin1UANrQYmiQHWu45dZal8M8h8
+ VOfPCauhy+ERXfC3UqLWfV+UKIQbztxxrRL4mWxkn3MZL8OWQyTZnIhO+72gq0rDv1Jt
+ VlUCPhekHVnx89kM4gmgVnosjf+SHYW/Q+U/kgv5hi0XJ6fWxxwDXcFgO10sbacN2tV1
+ 4fDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723023249; x=1723628049;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zRNRhLaRdR9xHIJalWIpxS96jcroaoR0FxmZ5ndovgY=;
+ b=FeV/TtrocfvPLzLgRJvBH2KTeMMQ9GsQu5F+JMZ51qk+4xWc3XPc8AoAZhjE4/xVL6
+ 3+Zj9bYpZnr2VsU+FUB5IOtirWHILxTzWT3g5VaDjEeu2TE2MGa4iKQ1A2QlpXPNfDD2
+ UmaU+8Io90XtE7q2YP3PYVSroqVuxjJLfk+X2owCBgNzFHUfYmA42UpoM4yvBB69ahUJ
+ ibaUb0GA2xOJXANePAvBdvDn7Wd6xy1dHcmrzzahgMKjFrddXjgOqa6HvYCgYWG/xCNX
+ TV3CwjsO1JNbBVz4qYqjA9hG6ihPevONp23l7baOsMbUdqh9/U2sr3pwYu8JrnzhtGHy
+ Ih1Q==
+X-Gm-Message-State: AOJu0YyrnZ184zlNZ68z3jYt+/6Rcp8UbJVFC8JSkyWqQLA1l4WIxyqe
+ QUV7dKa+Ua9ixyJg2BJkOuC36Bw4n/5sDDUI9hf553RsVmfcTqs8DfKvP9x+yS8M6D08j27raOh
+ l
+X-Google-Smtp-Source: AGHT+IGo9pemnwZy8Lp7mASB43K7L73NOb2UycOFP/3Y2TmIEvR6TbgiSpGbGhA43+vaTCVDE4uprw==
+X-Received: by 2002:a05:6402:457:b0:59e:686b:1874 with SMTP id
+ 4fb4d7f45d1cf-5b7f36f5040mr13032880a12.6.1723023249461; 
+ Wed, 07 Aug 2024 02:34:09 -0700 (PDT)
+Received: from m1x-phil.lan ([176.187.212.120])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5b839708c56sm6873934a12.2.2024.08.07.02.34.08
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 07 Aug 2024 02:34:08 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Michael Roth <michael.roth@amd.com>,
+ "Daniel P . Berrange" <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH] qapi: Generate QAPI files using qapi/ for generated
+ header paths
+Date: Wed,  7 Aug 2024 11:34:06 +0200
+Message-ID: <20240807093406.40360-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,63 +91,156 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 7 Aug 2024 09:47:50 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+QAPI script generates headers under the qapi/ directory,
+so use this prefix in generated header paths, keeping
+all QAPI under the qapi/ namespace.
 
-> Em Tue, 6 Aug 2024 16:31:13 +0200
-> Igor Mammedov <imammedo@redhat.com> escreveu:
-> 
-> > PS:
-> > looking at the code, ACPI_GHES_MAX_RAW_DATA_LENGTH is 1K
-> > and it is the total size of a error block for a error source.
-> > 
-> > However acpi_hest_ghes.rst (3) says it should be 4K,
-> > am I mistaken?  
-> 
-> Maybe Jonathan knows better, but I guess the 1K was just some
-> arbitrary limit to prevent a too big CPER. The 4K limit described
-> at acpi_hest_ghes.rst could be just some limit to cope with
-> the current bios implementation, but I didn't check myself how
-> this is implemented there. 
-> 
-> I was unable to find any limit at the specs. Yet, if you look at:
-> 
-> https://uefi.org/specs/UEFI/2.10/Apx_N_Common_Platform_Error_Record.html#arm-processor-error-section
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+Ideally I'd also remove "CPPFLAGS+=-I qapi" in this patch
+but I couldn't figure out where meson adds it...
+---
+ scripts/qapi/commands.py   | 10 +++++-----
+ scripts/qapi/events.py     | 10 +++++-----
+ scripts/qapi/gen.py        |  2 +-
+ scripts/qapi/introspect.py |  2 +-
+ scripts/qapi/types.py      |  4 ++--
+ scripts/qapi/visit.py      |  4 ++--
+ 6 files changed, 16 insertions(+), 16 deletions(-)
 
-I think both limits are just made up.  You can in theory log huge
-error records.  Just not one does.
-
-> 
-> The processor Error Information Structure, starting at offset
-> 40, can go up to 255*32, meaning an offset of 8200, which is
-> bigger than 4K.
-> 
-> Going further, processor context can have up to 65535 (spec
-> actually says 65536, but that sounds a typo, as the size is
-> stored on an uint16_t), containing multiple register values
-> there (the spec calls its length as "P").
-> 
-> So, the CPER record could, in theory, have:
-> 	8200 + (65535 * P) + sizeof(vendor-specicific-info)
-> 
-> The CPER length is stored in Section Length record, which is
-> uint32_t.
-> 
-> So, I'd say that the GHES record can theoretically be a lot
-> bigger than 4K.	
-Agreed - but I don't think we care for testing as long as it's
-big enough for plausible records.   Unless you really want
-to fuzz the limits?
-
-Jonathan
-
-> 
-> Thanks,
-> Mauro
+diff --git a/scripts/qapi/commands.py b/scripts/qapi/commands.py
+index 79951a841f..07fbd21334 100644
+--- a/scripts/qapi/commands.py
++++ b/scripts/qapi/commands.py
+@@ -323,8 +323,8 @@ def _begin_user_module(self, name: str) -> None:
+ #include "qapi/qmp/qdict.h"
+ #include "qapi/dealloc-visitor.h"
+ #include "qapi/error.h"
+-#include "%(visit)s.h"
+-#include "%(commands)s.h"
++#include "qapi/%(visit)s.h"
++#include "qapi/%(commands)s.h"
+ ''',
+                              commands=commands, visit=visit))
+ 
+@@ -338,7 +338,7 @@ def _begin_user_module(self, name: str) -> None:
+             # match .underscorify() in trace/meson.build
+ 
+         self._genh.add(mcgen('''
+-#include "%(types)s.h"
++#include "qapi/%(types)s.h"
+ 
+ ''',
+                              types=types))
+@@ -353,8 +353,8 @@ def visit_begin(self, schema: QAPISchema) -> None:
+                              c_prefix=c_name(self._prefix, protect=False)))
+         self._genc.add(mcgen('''
+ #include "qemu/osdep.h"
+-#include "%(prefix)sqapi-commands.h"
+-#include "%(prefix)sqapi-init-commands.h"
++#include "qapi/%(prefix)sqapi-commands.h"
++#include "qapi/%(prefix)sqapi-init-commands.h"
+ 
+ void %(c_prefix)sqmp_init_marshal(QmpCommandList *cmds)
+ {
+diff --git a/scripts/qapi/events.py b/scripts/qapi/events.py
+index d1f639981a..f3803c8afe 100644
+--- a/scripts/qapi/events.py
++++ b/scripts/qapi/events.py
+@@ -189,9 +189,9 @@ def _begin_user_module(self, name: str) -> None:
+         visit = self._module_basename('qapi-visit', name)
+         self._genc.add(mcgen('''
+ #include "qemu/osdep.h"
+-#include "%(prefix)sqapi-emit-events.h"
+-#include "%(events)s.h"
+-#include "%(visit)s.h"
++#include "qapi/%(prefix)sqapi-emit-events.h"
++#include "qapi/%(events)s.h"
++#include "qapi/%(visit)s.h"
+ #include "qapi/compat-policy.h"
+ #include "qapi/error.h"
+ #include "qapi/qmp/qdict.h"
+@@ -201,7 +201,7 @@ def _begin_user_module(self, name: str) -> None:
+                              prefix=self._prefix))
+         self._genh.add(mcgen('''
+ #include "qapi/util.h"
+-#include "%(types)s.h"
++#include "qapi/%(types)s.h"
+ ''',
+                              types=types))
+ 
+@@ -209,7 +209,7 @@ def visit_end(self) -> None:
+         self._add_module('./emit', ' * QAPI Events emission')
+         self._genc.preamble_add(mcgen('''
+ #include "qemu/osdep.h"
+-#include "%(prefix)sqapi-emit-events.h"
++#include "qapi/%(prefix)sqapi-emit-events.h"
+ ''',
+                                       prefix=self._prefix))
+         self._genh.preamble_add(mcgen('''
+diff --git a/scripts/qapi/gen.py b/scripts/qapi/gen.py
+index 6a8abe0041..d24bd7ba08 100644
+--- a/scripts/qapi/gen.py
++++ b/scripts/qapi/gen.py
+@@ -363,6 +363,6 @@ def visit_include(self, name: str, info: Optional[QAPISourceInfo]) -> None:
+         relname = os.path.relpath(self._module_filename(self._what, name),
+                                   os.path.dirname(self._genh.fname))
+         self._genh.preamble_add(mcgen('''
+-#include "%(relname)s.h"
++#include "qapi/%(relname)s.h"
+ ''',
+                                       relname=relname))
+diff --git a/scripts/qapi/introspect.py b/scripts/qapi/introspect.py
+index ac14b20f30..7b74db11ed 100644
+--- a/scripts/qapi/introspect.py
++++ b/scripts/qapi/introspect.py
+@@ -182,7 +182,7 @@ def __init__(self, prefix: str, unmask: bool):
+         self._name_map: Dict[str, str] = {}
+         self._genc.add(mcgen('''
+ #include "qemu/osdep.h"
+-#include "%(prefix)sqapi-introspect.h"
++#include "qapi/%(prefix)sqapi-introspect.h"
+ 
+ ''',
+                              prefix=prefix))
+diff --git a/scripts/qapi/types.py b/scripts/qapi/types.py
+index 0dd0b00ada..19c8c9c18c 100644
+--- a/scripts/qapi/types.py
++++ b/scripts/qapi/types.py
+@@ -306,8 +306,8 @@ def _begin_user_module(self, name: str) -> None:
+         self._genc.preamble_add(mcgen('''
+ #include "qemu/osdep.h"
+ #include "qapi/dealloc-visitor.h"
+-#include "%(types)s.h"
+-#include "%(visit)s.h"
++#include "qapi/%(types)s.h"
++#include "qapi/%(visit)s.h"
+ ''',
+                                       types=types, visit=visit))
+         self._genh.preamble_add(mcgen('''
+diff --git a/scripts/qapi/visit.py b/scripts/qapi/visit.py
+index 12f92e429f..06d89504ce 100644
+--- a/scripts/qapi/visit.py
++++ b/scripts/qapi/visit.py
+@@ -359,12 +359,12 @@ def _begin_user_module(self, name: str) -> None:
+         self._genc.preamble_add(mcgen('''
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+-#include "%(visit)s.h"
++#include "qapi/%(visit)s.h"
+ ''',
+                                       visit=visit))
+         self._genh.preamble_add(mcgen('''
+ #include "qapi/qapi-builtin-visit.h"
+-#include "%(types)s.h"
++#include "qapi/%(types)s.h"
+ 
+ ''',
+                                       types=types))
+-- 
+2.45.2
 
 
