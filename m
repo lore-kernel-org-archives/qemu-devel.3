@@ -4,69 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA906C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 17:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1679CC52D73
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 17:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbkpJ-0007hA-Hp; Wed, 07 Aug 2024 13:51:57 -0400
+	id 1sbknd-0007iP-3X; Wed, 07 Aug 2024 13:50:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sbkpH-0007Fv-Bc
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 13:51:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sbknb-0007cb-Ev
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 13:50:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sbkpF-0000rA-88
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 13:51:54 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sbknY-0000ec-W6
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 13:50:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723053112;
+ s=mimecast20190719; t=1723053006;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tjtJZnsCwKGBU7+faKgvEX9QKCYE3Q/W8aTyuLEQb9I=;
- b=NLF32rB6lMLgJDRDHU8jgBZKLNcFYd5Wg4mhrwr3C3KT4YGN3eQ3eE5G3nlqOjhPzF8oyy
- MFTOtwViEO5Q53yR5sffK/AbSXVr0Bxvz7jTpAw9KL4FwAwLY1RtTyr7IAMnj0k722qXNE
- ytLNB0HiZ15KolSQYQtWo1TxYGBqzU0=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=mSsShYzPlJI57BAyKKLWDzA6RZk1TkPdg3ohuGwM5oU=;
+ b=hiAzxwtT2bnubVoCa3CqkerokrGwFVRmFhMWs9jYvecqHG8tf3X8gyqP2eRC3CpjwNYsXP
+ oEzA9DuWaoFww2NkyXawi1d5K91jgm9L33FP+qYyHcK1E5W5ooghO/2tw30lQNlAlt8+kt
+ 76gzthz87+PSoXoEuvriEzlq5RA5/pg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-443-c7-hAANYPMaZaqE5QqlZNw-1; Wed,
- 07 Aug 2024 13:51:50 -0400
-X-MC-Unique: c7-hAANYPMaZaqE5QqlZNw-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-624-ynPJrK0RPsiEhxrKOeFMcw-1; Wed,
+ 07 Aug 2024 13:50:02 -0400
+X-MC-Unique: ynPJrK0RPsiEhxrKOeFMcw-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 026A41956095; Wed,  7 Aug 2024 17:51:50 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.114])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 047DA19560A3; Wed,  7 Aug 2024 17:51:48 +0000 (UTC)
-Date: Wed, 7 Aug 2024 12:51:46 -0500
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6781E19560B6; Wed,  7 Aug 2024 17:50:01 +0000 (UTC)
+Received: from green.redhat.com (unknown [10.2.16.114])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4F0A7300018D; Wed,  7 Aug 2024 17:49:58 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
-To: "Richard W.M. Jones" <rjones@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, kwolf@redhat.com
-Subject: Re: [PATCH for-9.1 0/2] NBD: don't print raw server error text to
- terminal
-Message-ID: <zdteerkybfw4edllrhniov5myf6lwsrjvsze5mcudm2wqtvwlc@42arzwa6mz6s>
-References: <20240802194156.2131519-4-eblake@redhat.com>
- <dkp3je5pohqlrxqrbzwd7maxgljr4gknhlmorae6ihi3vx2t4u@z3vvc5ml7vwj>
- <20240805191131.GE1450@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com,
+ qemu-block@nongnu.org, den@virtuozzo.com, andrey.drobyshev@virtuozzo.com,
+ alexander.ivanov@virtuozzo.com, vsementsov@yandex-team.ru
+Subject: [PATCH v4 4/7] nbd/server: CVE-2024-7409: Drop non-negotiating clients
+Date: Wed,  7 Aug 2024 12:43:30 -0500
+Message-ID: <20240807174943.771624-13-eblake@redhat.com>
+In-Reply-To: <20240807174943.771624-9-eblake@redhat.com>
+References: <20240807174943.771624-9-eblake@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240805191131.GE1450@redhat.com>
-User-Agent: NeoMutt/20240425
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,65 +82,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 05, 2024 at 08:11:31PM GMT, Richard W.M. Jones wrote:
-> On Mon, Aug 05, 2024 at 01:48:12PM -0500, Eric Blake wrote:
-> > On Fri, Aug 02, 2024 at 02:26:04PM GMT, Eric Blake wrote:
-> > > I've requested a CVE from Red Hat, and hope to have an assigned number
-> > > soon.  Meanwhile, we can get review started, to make sure this is
-> > > ready to include in 9.1.  'qemu-img info' should never print untrusted
-> > > data in a way that might take over a user's terminal.
-> > > 
-> > > There are probably other spots where qemu-img info is printing
-> > > untrusted data (such as filenames), where we probably ought to use the
-> > > same sanitization tactics as shown here.  Identifying those spots
-> > > would be a useful part of this review, and may mean a v2 that is even
-> > > more extensive in the number of patches.
-> > 
-> > In fact, should we insist that 'qemu-img info XXX' refuse to accept
-> > any control characters on any command-line filename, and that it
-> > reject any backing file name with control characters as a malformed
-> > qcow2 file?  For reference, we JUST fixed qemu-img info to change
-> > qcow2 files with a claimed backing file of json:... to favor the local
-> > file ./json:... over the potentially dangerous user-controlled
-> > format/protocol description, so we are _already_ changing how strict
-> > qemu-img is for 9.1, and adding one more restriction to avoid
-> > escape-sequence madness makes sense.
-> > 
-> > Note that with:
-> > 
-> > touch $'\e[m' && qemu-img info --output=json $'\e[m'
-> > 
-> > we already escape our output, but without --output=json, we are
-> > vulnerable to user-controlled ESC leaking through to stdout for more
-> > than just the NBD server errors that I addressed in v1 of this patch
-> > series.  Hence my question on whether v2 of the series should touch
-> > more places in the code, and whether doing something like flat-out
-> > refusing users stupid enough to embed control characters in their
-> > filenames is a safe change this close to release.
-> 
-> You could say if someone gives you a "malicious" text file which you
-> cat to stdout, it could change your terminal settings.  I don't think
-> therefore any of this is very serious.  We should probably fix any
-> obvious things, but it doesn't need to happen right before 9.1 is
-> released, we can take our time.
+A client that opens a socket but does not negotiate is merely hogging
+qemu's resources (an open fd and a small amount of memory); and a
+malicious client that can access the port where NBD is listening can
+attempt a denial of service attack by intentionally opening and
+abandoning lots of unfinished connections.  The previous patch put a
+default bound on the number of such ongoing connections, but once that
+limit is hit, no more clients can connect (including legitimate ones).
+The solution is to insist that clients complete handshake within a
+reasonable time limit, defaulting to 10 seconds.  A client that has
+not successfully completed NBD_OPT_GO by then (including the case of
+where the client didn't know TLS credentials to even reach the point
+of NBD_OPT_GO) is wasting our time and does not deserve to stay
+connected.  Later patches will allow fine-tuning the limit away from
+the default value (including disabling it for doing integration
+testing of the handshake process itself).
 
-After consulting with Red Hat security, they agree: their decision at
-this time is that any CVE related to escape sequences taking over a
-terminal would best be filed against the terminal and/or shell that
-allowed the escape, rather than against every single app that can
-produce such pass-through output.  So at this time they were unwilling
-to issue a CVE against qemu for this particular issue, and I will
-clean up the subject line for v2.
+Note that this patch in isolation actually makes it more likely to see
+qemu SEGV after nbd-server-stop, as any client socket still connected
+when the server shuts down will now be closed after 10 seconds rather
+than at the client's whims.  That will be addressed in the next patch.
 
-So I agree that cleaning up low-hanging fruit is still worth it, but
-no longer a reason to rush this series into 9.1.  If it still gets a
-timely positive review, I can include it alongside the other NBD
-patches (we are fixing a CVE with qemu hitting SEGV on
-nbd-server-stop).
+For a demo of this patch in action:
+$ qemu-nbd -f raw -r -t -e 10 file &
+$ nbdsh --opt-mode -c '
+H = list()
+for i in range(20):
+  print(i)
+  H.insert(i, nbd.NBD())
+  H[i].set_opt_mode(True)
+  H[i].connect_uri("nbd://localhost")
+'
 
+where later connections get to start progressing once earlier ones are
+forcefully dropped for taking too long, rather than hanging.
+
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Eric Blake <eblake@redhat.com>
+---
+ nbd/server.c     | 31 ++++++++++++++++++++++++++++++-
+ nbd/trace-events |  1 +
+ 2 files changed, 31 insertions(+), 1 deletion(-)
+
+diff --git a/nbd/server.c b/nbd/server.c
+index 31b77bf0d4f..a470052d957 100644
+--- a/nbd/server.c
++++ b/nbd/server.c
+@@ -132,6 +132,7 @@ struct NBDClient {
+     QCryptoTLSCreds *tlscreds;
+     char *tlsauthz;
+     uint32_t handshake_limit;
++    QEMUTimer *handshake_timer;
+     QIOChannelSocket *sioc; /* The underlying data channel */
+     QIOChannel *ioc; /* The current I/O channel which may differ (eg TLS) */
+
+@@ -3186,6 +3187,14 @@ static void nbd_client_receive_next_request(NBDClient *client)
+     }
+ }
+
++static void nbd_handshake_timer_cb(void *opaque)
++{
++    QIOChannel *ioc = opaque;
++
++    trace_nbd_handshake_timer_cb();
++    qio_channel_shutdown(ioc, QIO_CHANNEL_SHUTDOWN_BOTH, NULL);
++}
++
+ static coroutine_fn void nbd_co_client_start(void *opaque)
+ {
+     NBDClient *client = opaque;
+@@ -3193,15 +3202,35 @@ static coroutine_fn void nbd_co_client_start(void *opaque)
+
+     qemu_co_mutex_init(&client->send_lock);
+
+-    /* TODO - utilize client->handshake_limit */
++    /*
++     * Create a timer to bound the time spent in negotiation. If the
++     * timer expires, it is likely nbd_negotiate will fail because the
++     * socket was shutdown.
++     */
++    client->handshake_timer = aio_timer_new(qemu_get_aio_context(),
++                                            QEMU_CLOCK_REALTIME,
++                                            SCALE_NS,
++                                            nbd_handshake_timer_cb,
++                                            client->sioc);
++    if (client->handshake_limit > 0) {
++        timer_mod(client->handshake_timer,
++                  qemu_clock_get_ns(QEMU_CLOCK_REALTIME) +
++                  client->handshake_limit * NANOSECONDS_PER_SECOND);
++    }
++
+     if (nbd_negotiate(client, &local_err)) {
+         if (local_err) {
+             error_report_err(local_err);
+         }
++        timer_free(client->handshake_timer);
++        client->handshake_timer = NULL;
+         client_close(client, false);
+         return;
+     }
+
++    timer_free(client->handshake_timer);
++    client->handshake_timer = NULL;
++
+     WITH_QEMU_LOCK_GUARD(&client->lock) {
+         nbd_client_receive_next_request(client);
+     }
+diff --git a/nbd/trace-events b/nbd/trace-events
+index 00ae3216a11..cbd0a4ab7e4 100644
+--- a/nbd/trace-events
++++ b/nbd/trace-events
+@@ -76,6 +76,7 @@ nbd_co_receive_request_payload_received(uint64_t cookie, uint64_t len) "Payload
+ nbd_co_receive_ext_payload_compliance(uint64_t from, uint64_t len) "client sent non-compliant write without payload flag: from=0x%" PRIx64 ", len=0x%" PRIx64
+ nbd_co_receive_align_compliance(const char *op, uint64_t from, uint64_t len, uint32_t align) "client sent non-compliant unaligned %s request: from=0x%" PRIx64 ", len=0x%" PRIx64 ", align=0x%" PRIx32
+ nbd_trip(void) "Reading request"
++nbd_handshake_timer_cb(void) "client took too long to negotiate"
+
+ # client-connection.c
+ nbd_connect_thread_sleep(uint64_t timeout) "timeout %" PRIu64
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.45.2
 
 
