@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC741C52D7B
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 00:08:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 832BDC49EA1
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 00:08:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbUCl-0002Uv-N2; Tue, 06 Aug 2024 20:07:03 -0400
+	id 1sbUDD-0003U5-S1; Tue, 06 Aug 2024 20:07:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sbUCj-0002TQ-QG
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 20:07:01 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1sbUD2-0002wB-Dz
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 20:07:21 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sbUCh-00017J-Cm
- for qemu-devel@nongnu.org; Tue, 06 Aug 2024 20:07:01 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1fc5296e214so11805415ad.0
- for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 17:06:58 -0700 (PDT)
+ id 1sbUCx-0001Cd-B2
+ for qemu-devel@nongnu.org; Tue, 06 Aug 2024 20:07:18 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1fc611a0f8cso10680505ad.2
+ for <qemu-devel@nongnu.org>; Tue, 06 Aug 2024 17:07:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722989218; x=1723594018;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1722989232; x=1723594032;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VJOhnSghwUlcGLtcqpB8a6GrX3vCsWVBjHp5kS9dbdk=;
- b=hoyPcePyiQYvgEykv7/QetK15hlDY1icg1GkSNxQa8HxEkQRvbYwqGVQRdqnV+2+MO
- wkJc496VXG78VfGFp1ImsNOxRK4RgSExhVTO7MSI/h3bVJMVemS8TgN4OTCGD1nClweT
- qlujvCLoUS2evjA0Z9cJyGXX7VByfg8ZSM0MKXVhj+xWr7HitfVBX74A7c8pfRiQINPu
- EX0EJeLey+UHkWeFglrQUAcPn6TEmtCQWQejTBH0kdRSZHIOEZWaf3o8oOen1S7OH9fo
- ULbTJzCZQZbxnm40Fut/f5SsGXnIK6lw2e/sWZ083GZlriJM5ByutGO7Wutz6hbvcTLj
- rLog==
+ bh=uj9qOhBpCT9W/nbC5avAHQrsYFSH2V3flkgQB5x2ClI=;
+ b=02g6eg1+/CTSSkUJCaTG5JH/MCdDrXvsX2fI7MbhlG/FUmgEZqpEKR2nVZYvR7JXYk
+ 6oefauza1pxndNln/BSaO8J/4IpnOJ8DSxiMihJrksWccM30UL0wWeMnrW59BNXWa6jJ
+ vO9dFCwP8b6ufRokd6w4kw1OCIehQ6CW21ikV4K2rFCtN6vZ2ZO9SBSTZjvz8WcnXjfG
+ N1Us83A9L08+xvnmL6KyuLA81HEJETXSGxEOVWa+dm3qdYDRH9mHLX+TwK/HrahQY3Qb
+ btBu7Bey9m4g+2hZB9LB+x8nD7mMSTmU6TLocong9dFcbQKO1tpSo+CqwfU7fmlkebHB
+ 8AZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1722989218; x=1723594018;
+ d=1e100.net; s=20230601; t=1722989232; x=1723594032;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VJOhnSghwUlcGLtcqpB8a6GrX3vCsWVBjHp5kS9dbdk=;
- b=O5Cc2PCqElVr83hy0DXE+4Ht87SWga+zvP+Jol3OA6/zlWk+45G/WXBajnN2Rot/tR
- OISW7La1wDoAtqUNkeUHrp37X2GuLc6XcYsZjU8N1Uqy5aKM6jeIzDRetxbcxgUV1teE
- YJ7hRTAB8iqHkTYpb0Xl+d4jwSNsfhuJeKAyt47/pI2QmjTqKwhSxlM9ia4gZ5qgyG8k
- kCl8UIafAASyuT+0Fn6k/DM0aoh9CGTWt8Q7nkMIx+GIwSRexng37LLGGEGoVfdce6i3
- Us+nrFKj6btScs3QgyCFMP9I4ux2s0ztYj+WLwrBJlwrHfFs6JWm3CNrdb6tAbJTjZtm
- rrQA==
-X-Gm-Message-State: AOJu0YxINn4LsA4SYVbG72yEdvcKBpGD/M/k6XGsvoHVZkx+w6syoIBn
- rFfLBa/AJiHwF0eHrSWexy/iph35cn6cQKKJVadWnahAOvkj6Va8prQNe7dUEJm7otinR0Dr0G+
- U
-X-Google-Smtp-Source: AGHT+IHJlLbITAB4l/G2YSjELLMT8UcI2cKdNyRpE2Y6OwSM/+uuC2XMdFqdLfMhjCPrX9zstQqJSQ==
-X-Received: by 2002:a17:902:f9c4:b0:1fd:6c5b:afd4 with SMTP id
- d9443c01a7336-1ff574e222amr176216145ad.64.1722989217732; 
- Tue, 06 Aug 2024 17:06:57 -0700 (PDT)
+ bh=uj9qOhBpCT9W/nbC5avAHQrsYFSH2V3flkgQB5x2ClI=;
+ b=J+YQtsIoC0WVgVQydRtjGkFbajoWR0AIvbsF52R9hv4zL0vKEH0uYaszs2jYauPcDh
+ Q6XeQSmDFRkWsIrlIcb1bdwy0FSzQyzlDtqWHJItwpeWEKfh2zLmJYmxPkbhx5K4mgZT
+ lKR/A8/6MwzQInEXrjrnTnQ8ECAW4vyBy2STU+vee461JchEQnzcArtF4p6zi5+4wclG
+ nEeW2CHljsITjuMIBfLWDbkuZUuDcn45VR67ZkLhaPIxq54MiM3FWf6EDFj+c+/A0BWt
+ m/6sYaZSnS8ZkbPGDc4ev2bv213tihS+XTLA+iZpxXRjKj6sIrdwXG/CHOokFwtotLqH
+ v52A==
+X-Gm-Message-State: AOJu0YxPy6EfHO+Bc1al2rjyxg/oKw/KjJb7zdNXYE3l1OL2MWxrigyK
+ BOTxHmPUyYtgcqeQy0YnOTbAQsX5H1lInNPmVifWEiO9OXysGi9E3qmP50SXNyKuuX5uRl4ai8i
+ Q
+X-Google-Smtp-Source: AGHT+IG0S6K7Re+FGinsFaYDN0gkrxNlCeNS/oEXXga0S7b1YEvHU99FnDlbAFgN4FUcK+ezq/Eujw==
+X-Received: by 2002:a17:902:ea03:b0:1fb:83c5:cf93 with SMTP id
+ d9443c01a7336-1ff572a81bcmr181473415ad.27.1722989232182; 
+ Tue, 06 Aug 2024 17:07:12 -0700 (PDT)
 Received: from debug.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff58f59cc2sm93381845ad.92.2024.08.06.17.06.56
+ d9443c01a7336-1ff58f59cc2sm93381845ad.92.2024.08.06.17.07.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 06 Aug 2024 17:06:57 -0700 (PDT)
+ Tue, 06 Aug 2024 17:07:11 -0700 (PDT)
 From: Deepak Gupta <debug@rivosinc.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
 Cc: richard.henderson@linaro.org, pbonzini@redhat.com, palmer@dabbelt.com,
  Alistair.Francis@wdc.com, laurent@vivier.eu, bmeng.cn@gmail.com,
  liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, Deepak Gupta <debug@rivosinc.com>
-Subject: [PATCH v3 01/20] accel/tcg: restrict assert on icount_enabled to
- qemu-system
-Date: Tue,  6 Aug 2024 17:06:32 -0700
-Message-ID: <20240807000652.1417776-2-debug@rivosinc.com>
+ zhiwei_liu@linux.alibaba.com, Deepak Gupta <debug@rivosinc.com>,
+ Jim Shu <jim.shu@sifive.com>, Andy Chiu <andy.chiu@sifive.com>
+Subject: [PATCH v3 13/20] target/riscv: compressed encodings for sspush and
+ sspopchk
+Date: Tue,  6 Aug 2024 17:06:44 -0700
+Message-ID: <20240807000652.1417776-14-debug@rivosinc.com>
 X-Mailer: git-send-email 2.45.0
 In-Reply-To: <20240807000652.1417776-1-debug@rivosinc.com>
 References: <20240807000652.1417776-1-debug@rivosinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=debug@rivosinc.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=debug@rivosinc.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,33 +100,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-commit 16ad9788 [1] restricted icount to qemu-system only. Although
-assert in `cpu_loop_exec_tb` is on `icount_enabled()` which is 0 when
-its qemu-user and debug build starts asserting.
-Move assert for qemu-system.
+sspush/sspopchk have compressed encodings carved out of zcmops.
+compressed sspush is designated as c.mop.1 while compressed sspopchk
+is designated as c.mop.5.
 
-[1] - https://lists.gnu.org/archive/html/qemu-riscv/2024-01/msg00608.html
+Note that c.sspush x1 exists while c.sspush x5 doesn't. Similarly
+c.sspopchk x5 exists while c.sspopchk x1 doesn't.
 
 Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+Co-developed-by: Jim Shu <jim.shu@sifive.com>
+Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
 ---
- accel/tcg/cpu-exec.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/riscv/insn16.decode | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 245fd6327d..8cc2a6104f 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -927,9 +927,9 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
-         return;
-     }
- 
-+#ifndef CONFIG_USER_ONLY
-     /* Instruction counter expired.  */
-     assert(icount_enabled());
--#ifndef CONFIG_USER_ONLY
-     /* Ensure global icount has gone forward */
-     icount_update(cpu);
-     /* Refill decrementer and continue execution.  */
+diff --git a/target/riscv/insn16.decode b/target/riscv/insn16.decode
+index 3953bcf82d..d9fb74fef6 100644
+--- a/target/riscv/insn16.decode
++++ b/target/riscv/insn16.decode
+@@ -69,10 +69,12 @@
+ # Formats 16:
+ @cr        ....  ..... .....  .. &r      rs2=%rs2_5       rs1=%rd     %rd
+ @ci        ... . ..... .....  .. &i      imm=%imm_ci      rs1=%rd     %rd
++@c_sspop   ... . ..... .....  .. &i      imm=0      rs1=5     rd=0
+ @cl_q      ... . .....  ..... .. &i      imm=%uimm_cl_q   rs1=%rs1_3  rd=%rs2_3
+ @cl_d      ... ... ... .. ... .. &i      imm=%uimm_cl_d   rs1=%rs1_3  rd=%rs2_3
+ @cl_w      ... ... ... .. ... .. &i      imm=%uimm_cl_w   rs1=%rs1_3  rd=%rs2_3
+ @cs_2      ... ... ... .. ... .. &r      rs2=%rs2_3       rs1=%rs1_3  rd=%rs1_3
++@c_sspush  ... ... ... .. ... .. &s      imm=0 rs1=0 rs2=1
+ @cs_q      ... ... ... .. ... .. &s      imm=%uimm_cl_q   rs1=%rs1_3  rs2=%rs2_3
+ @cs_d      ... ... ... .. ... .. &s      imm=%uimm_cl_d   rs1=%rs1_3  rs2=%rs2_3
+ @cs_w      ... ... ... .. ... .. &s      imm=%uimm_cl_w   rs1=%rs1_3  rs2=%rs2_3
+@@ -140,6 +142,8 @@ sw                110  ... ... .. ... 00 @cs_w
+ addi              000 .  .....  ..... 01 @ci
+ addi              010 .  .....  ..... 01 @c_li
+ {
++  sspush          011 0  00001  00000 01 @c_sspush # c.sspush x1 carving out of zcmops
++  sspopchk        011 0  00101  00000 01 @c_sspop # c.sspopchk x5 carving out of zcmops
+   c_mop_n         011 0 0 n:3 1 00000 01
+   illegal         011 0  -----  00000 01 # c.addi16sp and c.lui, RES nzimm=0
+   addi            011 .  00010  ..... 01 @c_addi16sp
 -- 
 2.44.0
 
