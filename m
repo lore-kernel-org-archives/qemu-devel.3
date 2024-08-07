@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 720F1C52D6F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 12:38:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11F7DC52D6F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 12:39:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbfvQ-0003Ei-Be; Wed, 07 Aug 2024 08:37:56 -0400
+	id 1sbfvK-00034c-3f; Wed, 07 Aug 2024 08:37:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbfvM-0003E8-PK
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 08:37:53 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbfvH-0002zT-6n
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 08:37:47 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbfvL-0004io-5H
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 08:37:52 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-42812945633so12825895e9.0
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 05:37:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbfvF-0004ic-MC
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 08:37:46 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-368584f9e36so919001f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 05:37:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723034269; x=1723639069; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723034264; x=1723639064; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rnPHm5qmilosKgT5p/Ig2S4/TLxu+gWuPX7v2WagT94=;
- b=DU5H6yUbh64Q27BuJS467eFTyzdveZYHJxdTsuFs3Sw2h7BHaqU/I2F1f+zO38T9q6
- mmrmytwVXklWhJnrOQCV12vOUaiWzpdC1Yr7WhON1PXMA0TAHjtcJFGRSzyVr26FVeUo
- xVgo0HXvAzNLc1r9IFQJ0W0UaSSzFRgQeaGNEaNGS7LD7WHWkzUckK/4i+4wk7YrBaVh
- rK4as6h+aF2NawaoQUQhmmuP3BUnGclqR+7brVM1sgDcySJhn9bAZGob17MYzw40xG2T
- bxXT6Q+J5eqaA52xnGG5HebHmsOuLTqWOA0kN4cTl0m+ypMPU6H8KyeiAXONYVUgc3ji
- g2Sw==
+ bh=LV7ui2s92iWKf/QhDHe8ag1xXqJV4XRcoiSJcQR2FJ4=;
+ b=cJRl/lVUHSUnSSTm3RCCU75/dxNNeI9w2S3WL2JsFO0Owya1ctHXBbvbtgpx5r++V7
+ TZ8Y76qSvYkw1yes03E9X6BbwAbXgpcZmeGFDPI7iHzicC8RS7GeVBisLMjK2WpxJJge
+ bF3OzQ84OEj4ZGbjsPleS/CSNGSEYUKSM3dUwFhtsV/0UlyBeC72+nl8tnXg8V+vjOPN
+ J70aObZMxAPYoZyZgHrj89Ikvqken2L2V6hmfKMHI/lKns6enGA/YAZuw56yFf1YbO6n
+ YggfZHBXLLBlQeN1/LGQFRq9W/4eRqQ+e2MYz/OL3dNHw3IpPrIH5fCTiN14ln/Uml7j
+ Bnqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723034269; x=1723639069;
+ d=1e100.net; s=20230601; t=1723034264; x=1723639064;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rnPHm5qmilosKgT5p/Ig2S4/TLxu+gWuPX7v2WagT94=;
- b=kQryK3uSMGs07rfpYc+5jcTZnqZTP5bTDOljFuzgjo9G56LQUYJoHVDAkosQiCnbzb
- gm39R1i/uAPVzHkl4Za1Uoeyci0fO/3wV4HP9zESzREx80ygAQwSft5YyIt612z/ltgp
- de8hTLqMlSFn/SQZ8sMFfA+3ZQtulQYsSxgyhS2QBuPYKtt4Qg1DXSR+sqzXuqsl74IK
- vYyO4+pwIULrV84kJumMbiWxl4IQPo0CwnNf8fKUoYpkRCVxGoltOUZXlG2N/HBYrr3P
- KRe3sgCqI0RpsQlKyx+B74jezUnlfaTb9/bx7HRwOGrRazFZeGHW8M9N2Sr0l8k6jIAK
- ljfg==
-X-Gm-Message-State: AOJu0YxhJSS0zS2Yk8+h1jQp420XjQWTQnAI8NhxpVf6G3ay+AYESBTn
- AnfVHyhVGYiZWp6I4rKtJGAou6qKcWBtCI7dVTEi7QjoglvYfXlqJ4i3AIsI5gtKJQfwFyqZVFs
- j
-X-Google-Smtp-Source: AGHT+IGPL0xrhYbmEkA7VxG6RR4T9wovYudrUBlEKXROkuTIaODRl3twy95iA1OVxshAEidO2Js0VA==
-X-Received: by 2002:a05:6000:1fa2:b0:368:7ee2:b7c8 with SMTP id
- ffacd0b85a97d-36bbc0e6721mr14969362f8f.1.1723034269357; 
- Wed, 07 Aug 2024 05:37:49 -0700 (PDT)
+ bh=LV7ui2s92iWKf/QhDHe8ag1xXqJV4XRcoiSJcQR2FJ4=;
+ b=A7EoiXkwTEyaUrzfHUspD6kBmi0yTKqZJfRE/zXYhaQ072i3+HlRrpzhVkCyJjyGdo
+ pJSQKLw/am2R8bPY4iry9bgqHsaPq+lxe4CtajHXPxagYCtDutT6SaADQe53aG0EI6yg
+ unub5lIOkB3kza9osp7MagTEqQR/lBX6rHYplbeufWHPXbcsOtueEloEZD70iLQckEgE
+ aIc7LhV0dLcdZ0cDon4ft1/NljKKOAN3IQUcI/Jw2JwIILjj5/EDkr71Xu4UsBr03j8c
+ I15GZdWXfzOW7oheUxkHNce5ANH945Hhysw8R21QbcTz/RHXkDISKC5n8UV3/VVFoYHy
+ 9iFA==
+X-Gm-Message-State: AOJu0YznoHHnciAcqtxlU+Lc2w6n2SoN1EVwIChdGBx8ArzRZFwIQIN1
+ c6jaxlwZBeb24qXuigBaZuVAq12TgA8UnKssiP7c6Tnl/gfK+gZQgWKVBm3sd8UjrCrYM5k6Pah
+ O
+X-Google-Smtp-Source: AGHT+IEy0cz40CYXDlX7Ts4ZbeotYcR3pKnJpBxkdqMc5BpcCpU2QtSnXGIhF1VTVF0eCb6UnujW4g==
+X-Received: by 2002:adf:f792:0:b0:360:9bf5:1eab with SMTP id
+ ffacd0b85a97d-36bbc0ecfeamr11358681f8f.36.1723034263586; 
+ Wed, 07 Aug 2024 05:37:43 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.212.120])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36bbcf0c314sm15660585f8f.12.2024.08.07.05.37.48
+ ffacd0b85a97d-36bbcf1e0bcsm15820183f8f.30.2024.08.07.05.37.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 07 Aug 2024 05:37:48 -0700 (PDT)
+ Wed, 07 Aug 2024 05:37:43 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Zach van Rijn <me@zv.io>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/4] linux-user: Factor print_buf_len() out
-Date: Wed,  7 Aug 2024 14:37:32 +0200
-Message-ID: <20240807123734.52501-3-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v2 1/4] linux-user: Display sockaddr buffer as pointer
+Date: Wed,  7 Aug 2024 14:37:31 +0200
+Message-ID: <20240807123734.52501-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240807123734.52501-1-philmd@linaro.org>
 References: <20240807123734.52501-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,49 +95,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Rather than 'raw param', display as pointer to get
+"NULL" instead of "0x00000000". Remove spurious space.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/strace.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ linux-user/strace.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 80f64ff40c..210ff86afc 100644
+index b4d1098170..80f64ff40c 100644
 --- a/linux-user/strace.c
 +++ b/linux-user/strace.c
-@@ -1655,6 +1655,13 @@ print_buf(abi_long addr, abi_long len, int last)
+@@ -434,9 +434,9 @@ print_sockaddr(abi_ulong addr, abi_long addrlen, int last)
+         }
+         unlock_user(sa, addr, 0);
+     } else {
+-        print_raw_param("0x"TARGET_ABI_FMT_lx, addr, 0);
++        print_pointer(addr, 1);
      }
+-    qemu_log(", "TARGET_ABI_FMT_ld"%s", addrlen, get_comma(last));
++    qemu_log(","TARGET_ABI_FMT_ld"%s", addrlen, get_comma(last));
  }
  
-+static void
-+print_buf_len(abi_long addr, abi_long len, int last)
-+{
-+    print_buf(addr, len, 0);
-+    print_raw_param(TARGET_ABI_FMT_ld, len, last);
-+}
-+
- /*
-  * Prints out raw parameter using given format.  Caller needs
-  * to do byte swapping if needed.
-@@ -2742,8 +2749,7 @@ static void do_print_sendrecv(const char *name, abi_long arg1)
- 
-     qemu_log("%s(", name);
-     print_sockfd(sockfd, 0);
--    print_buf(msg, len, 0);
--    print_raw_param(TARGET_ABI_FMT_ld, len, 0);
-+    print_buf_len(msg, len, 0);
-     print_flags(msg_flags, flags, 1);
-     qemu_log(")");
- }
-@@ -2761,8 +2767,7 @@ static void do_print_msgaddr(const char *name, abi_long arg1)
- 
-     qemu_log("%s(", name);
-     print_sockfd(sockfd, 0);
--    print_buf(msg, len, 0);
--    print_raw_param(TARGET_ABI_FMT_ld, len, 0);
-+    print_buf_len(msg, len, 0);
-     print_flags(msg_flags, flags, 0);
-     print_sockaddr(addr, addrlen, 0);
-     qemu_log(")");
+ static void
 -- 
 2.45.2
 
