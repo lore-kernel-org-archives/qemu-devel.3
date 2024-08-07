@@ -4,63 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A19EC52D6F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 13:25:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 403BFC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 13:28:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbgeI-0003jP-Fh; Wed, 07 Aug 2024 09:24:20 -0400
+	id 1sbghK-0001QV-33; Wed, 07 Aug 2024 09:27:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sbgeF-0003hT-68; Wed, 07 Aug 2024 09:24:15 -0400
-Received: from sin.source.kernel.org ([145.40.73.55])
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sbghF-0001N5-90; Wed, 07 Aug 2024 09:27:23 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sbgeB-0002aE-GL; Wed, 07 Aug 2024 09:24:13 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 5E0A4CE112C;
- Wed,  7 Aug 2024 13:24:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AAA8C32782;
- Wed,  7 Aug 2024 13:24:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1723037042;
- bh=IJWsnY/NFxnESGFOLGzPavd3GqiqGQL1qkUbbESjJaQ=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=SF+ZF/7T0ixwlBKAQctHdY+NLgJLFBBrgwBjoyzZuVq2OMWttiwJX2pCvZF+wGFiW
- PT730MaCfbYhUqasVtP4WvtEt13DvxcBgZkegjJo8tX/xa0WgcifvuRPIdKS2ycnIE
- J+zty3zM7tuZudJ9DFoG9PpkG5K9vHlCBKnWsX5RdXxJczvWXe8l494Yt8u7pj213E
- 1wgfDf11xXhd11ccvMsgbYrzxQHSwztTOOseWMa1krTfFjot31EiqJMF+gXSQ0GHei
- s7h+6mXScDFikvSN7HPkTwZf22bfanSbL6m1FyYvtTvAGBAOByXbAKMmIxWnAu4rWD
- ra8rfKYHo86kw==
-Date: Wed, 7 Aug 2024 15:23:57 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-Cc: Igor Mammedov <imammedo@redhat.com>, Shiju Jose <shiju.jose@huawei.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, <linux-kernel@vger.kernel.org>,
- <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v5 6/7] acpi/ghes: add support for generic error
- injection via QAPI
-Message-ID: <20240807152357.0d2dc466@foz.lan>
-In-Reply-To: <20240807103436.000013fc@Huawei.com>
-References: <cover.1722634602.git.mchehab+huawei@kernel.org>
- <20c491e357340e0062b6ff09867c1661ed4d2479.1722634602.git.mchehab+huawei@kernel.org>
- <20240806163113.3bdc260a@imammedo.users.ipa.redhat.com>
- <20240807094750.6414fb2f@foz.lan>
- <20240807103436.000013fc@Huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sbghA-0002yB-N0; Wed, 07 Aug 2024 09:27:20 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Wf9qs3Db4z6K71N;
+ Wed,  7 Aug 2024 21:24:09 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 5FF8C1400D9;
+ Wed,  7 Aug 2024 21:27:03 +0800 (CST)
+Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
+ lhrpeml500005.china.huawei.com (7.191.163.240) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 7 Aug 2024 14:27:02 +0100
+Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
+ lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
+ Wed, 7 Aug 2024 14:27:02 +0100
+To: Gavin Shan <gshan@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "mst@redhat.com" <mst@redhat.com>
+CC: "maz@kernel.org" <maz@kernel.org>, "jean-philippe@linaro.org"
+ <jean-philippe@linaro.org>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "lpieralisi@kernel.org" <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "imammedo@redhat.com" <imammedo@redhat.com>,
+ "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
+ <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "will@kernel.org"
+ <will@kernel.org>, "ardb@kernel.org" <ardb@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, "rafael@kernel.org" <rafael@kernel.org>,
+ "borntraeger@linux.ibm.com" <borntraeger@linux.ibm.com>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "npiggin@gmail.com"
+ <npiggin@gmail.com>, "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>,
+ "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
+ "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
+ "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
+ "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
+ "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>, "miguel.luis@oracle.com"
+ <miguel.luis@oracle.com>, "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
+ zhukeqian <zhukeqian1@huawei.com>, "wangxiongfeng (C)"
+ <wangxiongfeng2@huawei.com>, "wangyanan (Y)" <wangyanan55@huawei.com>,
+ "jiakernel2@gmail.com" <jiakernel2@gmail.com>, "maobibo@loongson.cn"
+ <maobibo@loongson.cn>, "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
+ "shahuang@redhat.com" <shahuang@redhat.com>, "zhao1.liu@intel.com"
+ <zhao1.liu@intel.com>, Linuxarm <linuxarm@huawei.com>
+Subject: RE: [PATCH RFC V3 00/29] Support of Virtual CPU Hotplug for ARMv8 Arch
+Thread-Topic: [PATCH RFC V3 00/29] Support of Virtual CPU Hotplug for ARMv8
+ Arch
+Thread-Index: AQHaveq2F6TAeAWelEWGVYAetyN5RLIb0soAgABLdWA=
+Date: Wed, 7 Aug 2024 13:27:02 +0000
+Message-ID: <ed0a5631e0674c2aa4679f2388f40127@huawei.com>
+References: <20240613233639.202896-1-salil.mehta@huawei.com>
+ <41fbfa5a-a10f-4ca0-8a52-e447043ff306@redhat.com>
+In-Reply-To: <41fbfa5a-a10f-4ca0-8a52-e447043ff306@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.195.245.88]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.40.73.55;
- envelope-from=mchehab+huawei@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
 X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -74,88 +97,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Wed, 7 Aug 2024 10:34:36 +0100
-Jonathan Cameron <Jonathan.Cameron@Huawei.com> escreveu:
-
-> On Wed, 7 Aug 2024 09:47:50 +0200
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> 
-> > Em Tue, 6 Aug 2024 16:31:13 +0200
-> > Igor Mammedov <imammedo@redhat.com> escreveu:
-> >   
-> > > PS:
-> > > looking at the code, ACPI_GHES_MAX_RAW_DATA_LENGTH is 1K
-> > > and it is the total size of a error block for a error source.
-> > > 
-> > > However acpi_hest_ghes.rst (3) says it should be 4K,
-> > > am I mistaken?    
-> > 
-> > Maybe Jonathan knows better, but I guess the 1K was just some
-> > arbitrary limit to prevent a too big CPER. The 4K limit described
-> > at acpi_hest_ghes.rst could be just some limit to cope with
-> > the current bios implementation, but I didn't check myself how
-> > this is implemented there. 
-> > 
-> > I was unable to find any limit at the specs. Yet, if you look at:
-> > 
-> > https://uefi.org/specs/UEFI/2.10/Apx_N_Common_Platform_Error_Record.html#arm-processor-error-section  
-> 
-> I think both limits are just made up.  You can in theory log huge
-> error records.  Just not one does.
-
-If both are made up, I would sync them, either patching the
-documentation or the ghes driver.
-
-> 
-> > 
-> > The processor Error Information Structure, starting at offset
-> > 40, can go up to 255*32, meaning an offset of 8200, which is
-> > bigger than 4K.
-> > 
-> > Going further, processor context can have up to 65535 (spec
-> > actually says 65536, but that sounds a typo, as the size is
-> > stored on an uint16_t), containing multiple register values
-> > there (the spec calls its length as "P").
-> > 
-> > So, the CPER record could, in theory, have:
-> > 	8200 + (65535 * P) + sizeof(vendor-specicific-info)
-> > 
-> > The CPER length is stored in Section Length record, which is
-> > uint32_t.
-> > 
-> > So, I'd say that the GHES record can theoretically be a lot
-> > bigger than 4K.	  
-> Agreed - but I don't think we care for testing as long as it's
-> big enough for plausible records.   Unless you really want
-> to fuzz the limits?
-
-Fuzz the limits could be interesting, but it is not on my
-current plans.
-
-Yet, 1K could be a little bit short for ARM CPER.
-
-See: N.26 ARMv8 AArch64 GPRs (Type 4) has 256 bytes for
-registers, plus 8 bytes for the header. So, a total size of
-264 bytes, for a single context register dump. I would expect
-that, in real life, type 4 to always be reported on aarch64,
-on BIOS with context register support. Maybe other types could
-also be dumped altogether (like context registers for EL1, 
-EL2 and/or EL3).
-
-If just one type 4 context is encoded, it means that, 1K has 
-space for 23 errors (of a max limit of 255).
-
-Just looking at the maximum number, my feeling is that 1K
-might be too short to simulate some real life reports,
-but that depends on how firmware is actually grouping
-such events.
-
-So, maybe this could be expanded to, let's say, 4K, thus
-aligning with the ReST documentation.
-
-Regards,
-Mauro
+SGkgR2F2aW4sDQoNCkxldCBtZSBmaWd1cmUgb3V0IHRoaXMuIEhhdmUgeW91IGFsc28gaW5jbHVk
+ZWQgdGhlIGJlbG93IHBhdGNoIGFsb25nIHdpdGggdGhlDQphcmNoaXRlY3R1cmUgYWdub3N0aWMg
+cGF0Y2gtc2V0IGFjY2VwdGVkIGluIHRoaXMgUWVtdSBjeWNsZT8NCg0KaHR0cHM6Ly9sb3JlLmtl
+cm5lbC5vcmcvYWxsLzIwMjQwODAxMTQyMzIyLjM5NDg4NjYtMy1wZXRlci5tYXlkZWxsQGxpbmFy
+by5vcmcvDQoNCg0KVGhhbmtzDQpTYWxpbC4NCg0KPiAgRnJvbTogR2F2aW4gU2hhbiA8Z3NoYW5A
+cmVkaGF0LmNvbT4NCj4gIFNlbnQ6IFdlZG5lc2RheSwgQXVndXN0IDcsIDIwMjQgMTA6NTQgQU0N
+Cj4gIFRvOiBTYWxpbCBNZWh0YSA8c2FsaWwubWVodGFAaHVhd2VpLmNvbT47IHFlbXUtZGV2ZWxA
+bm9uZ251Lm9yZzsNCj4gIHFlbXUtYXJtQG5vbmdudS5vcmc7IG1zdEByZWRoYXQuY29tDQo+ICAN
+Cj4gIEhpIFNhbGlsLA0KPiAgDQo+ICBXaXRoIHRoaXMgc2VyaWVzIGFuZCBsYXRlc3QgdXBzdHJl
+YW0gTGludXgga2VybmVsIChob3N0KSwgSSByYW4gaW50byBjb3JlDQo+ICBkdW1wIGFzIGJlbG93
+Lg0KPiAgSSdtIG5vdCBzdXJlIGlmIGl0J3MgYSBrbm93biBpc3N1ZSBvciBub3QuDQo+ICANCj4g
+ICMgdW5hbWUgLXINCj4gIDYuMTEuMC1yYzItZ2F2aW4rDQo+ICAjIC9ob21lL2dhdmluL3NhbmRi
+b3gvcWVtdS5tYWluL2J1aWxkL3FlbXUtc3lzdGVtLWFhcmNoNjQgLWFjY2VsDQo+ICBrdm0gXA0K
+PiAgICAgLW1hY2hpbmUgdmlydCxnaWMtdmVyc2lvbj1ob3N0LG52ZGltbT1vbiAtY3B1IGhvc3Qg
+ICAgICAgICAgICAgICAgIFwNCj4gICAgIC1zbXAgbWF4Y3B1cz0yLGNwdXM9MSxzb2NrZXRzPTIs
+Y2x1c3RlcnM9MSxjb3Jlcz0xLHRocmVhZHM9MSAgICAgICBcDQo+ICAgICAtbSA0MDk2TSxzbG90
+cz0xNixtYXhtZW09MTI4RyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgXA0K
+PiAgICAgLW9iamVjdCBtZW1vcnktYmFja2VuZC1yYW0saWQ9bWVtMCxzaXplPTIwNDhNICAgICAg
+ICAgICAgICAgICAgICAgIFwNCj4gICAgIC1vYmplY3QgbWVtb3J5LWJhY2tlbmQtcmFtLGlkPW1l
+bTEsc2l6ZT0yMDQ4TSAgICAgICAgICAgICAgICAgICAgICBcDQo+ICAgICAtbnVtYSBub2RlLG5v
+ZGVpZD0wLG1lbWRldj1tZW0wLGNwdXM9MC0wICAgICAgICAgICAgICAgICAgICAgICAgICAgXA0K
+PiAgICAgLW51bWEgbm9kZSxub2RlaWQ9MSxtZW1kZXY9bWVtMSxjcHVzPTEtMSAgICAgICAgICAg
+ICAgICAgICAgICAgICAgIFwNCj4gICAgICAgOg0KPiAgcWVtdS1zeXN0ZW0tYWFyY2g2NDogRmFp
+bGVkIHRvIGluaXRpYWxpemUgaG9zdCB2Y3B1IDEgQWJvcnRlZCAoY29yZQ0KPiAgZHVtcGVkKQ0K
+PiAgDQo+ICAjIGdkYiAvdmFyL2xpYi9zeXN0ZW1kL2NvcmVkdW1wL2NvcmUuMA0KPiAgL2hvbWUv
+Z2F2aW4vc2FuZGJveC9xZW11Lm1haW4vYnVpbGQvcWVtdS1zeXN0ZW0tYWFyY2g2NA0KPiAgKGdk
+YikgYnQNCj4gICMwICAweDAwMDBmZmZmOWVlYzQyZTggaW4gX19wdGhyZWFkX2tpbGxfaW1wbGVt
+ZW50YXRpb24gKCkgYXQNCj4gIC9saWI2NC9saWJjLnNvLjYNCj4gICMxICAweDAwMDBmZmZmOWVl
+N2M3M2MgaW4gcmFpc2UgKCkgYXQgL2xpYjY0L2xpYmMuc28uNg0KPiAgIzIgIDB4MDAwMGZmZmY5
+ZWU2OTAzNCBpbiBhYm9ydCAoKSBhdCAvbGliNjQvbGliYy5zby42DQo+ICAjMyAgMHgwMDAwYWFh
+YWM3MTE1MmMwIGluIGt2bV9hcm1fY3JlYXRlX2hvc3RfdmNwdQ0KPiAgKGNwdT0weGFhYWFlNGMw
+Y2I4MCkNCj4gICAgICAgYXQgLi4vdGFyZ2V0L2FybS9rdm0uYzoxMDkzDQo+ICAjNCAgMHgwMDAw
+YWFhYWM3MDU3NTIwIGluIG1hY2h2aXJ0X2luaXQgKG1hY2hpbmU9MHhhYWFhZTQ4MTk4YzApIGF0
+DQo+ICAuLi9ody9hcm0vdmlydC5jOjI1MzQNCj4gICM1ICAweDAwMDBhYWFhYzZiMGQzMWMgaW4g
+bWFjaGluZV9ydW5fYm9hcmRfaW5pdA0KPiAgICAgICAobWFjaGluZT0weGFhYWFlNDgxOThjMCwg
+bWVtX3BhdGg9MHgwLCBlcnJwPTB4ZmZmZmY3NTRlZTM4KSBhdA0KPiAgLi4vaHcvY29yZS9tYWNo
+aW5lLmM6MTU3Ng0KPiAgIzYgIDB4MDAwMGFhYWFjNmY1OGQ3MCBpbiBxZW11X2luaXRfYm9hcmQg
+KCkgYXQgLi4vc3lzdGVtL3ZsLmM6MjYyMA0KPiAgIzcgIDB4MDAwMGFhYWFjNmY1OTBkYyBpbiBx
+bXBfeF9leGl0X3ByZWNvbmZpZyAoZXJycD0weGFhYWFjODkxMTEyMA0KPiAgPGVycm9yX2ZhdGFs
+PikNCj4gICAgICAgYXQgLi4vc3lzdGVtL3ZsLmM6MjcxMg0KPiAgIzggIDB4MDAwMGFhYWFjNmY1
+YjcyOCBpbiBxZW11X2luaXQgKGFyZ2M9ODIsIGFyZ3Y9MHhmZmZmZjc1NGYxZDgpIGF0DQo+ICAu
+Li9zeXN0ZW0vdmwuYzozNzU4DQo+ICAjOSAgMHgwMDAwYWFhYWM2YTUzMTVjIGluIG1haW4gKGFy
+Z2M9ODIsIGFyZ3Y9MHhmZmZmZjc1NGYxZDgpIGF0DQo+ICAuLi9zeXN0ZW0vbWFpbi5jOjQ3DQo+
+ICANCj4gIFRoYW5rcywNCj4gIEdhdmluDQo+ICANCg0K
 
