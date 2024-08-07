@@ -4,59 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2F40C52D6F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 12:44:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1257C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 12:59:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbg1L-0002C6-86; Wed, 07 Aug 2024 08:44:03 -0400
+	id 1sbgG3-0003A4-Dr; Wed, 07 Aug 2024 08:59:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1sbg11-0000gR-9V
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 08:43:46 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sbgFz-00037l-H6
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 08:59:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aharivel@redhat.com>)
- id 1sbg0y-0005Pw-Ng
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 08:43:42 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sbgFx-0007V9-EH
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 08:59:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723034618;
+ s=mimecast20190719; t=1723035547;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Dp0XFDIpbGIxHakA9AT+4XWxwf1e1D4AxBZVRNIjJRc=;
- b=CbsE7wVINIcAKILhA4GbxPqJN3xlYQ3plmrByzriCWw3N7ni+EVvGLTn4gDV8FWpH/0Uyt
- DgA+9uOam7oYFdGNsvQa4tVZW4pSwGj5sQ434SFpZlGf3QJlxBah0r0Jr219fXP0EG8WLX
- JxcUZQNUdNldtiT9zcCVb6puPOUmf5c=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-144-f7ppGtyYOCGykC_W2vyTyg-1; Wed,
- 07 Aug 2024 08:43:37 -0400
-X-MC-Unique: f7ppGtyYOCGykC_W2vyTyg-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3D15E1944B3B
- for <qemu-devel@nongnu.org>; Wed,  7 Aug 2024 12:43:36 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.39.208.25])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DA9D6300018D; Wed,  7 Aug 2024 12:43:34 +0000 (UTC)
-From: Anthony Harivel <aharivel@redhat.com>
-To: pbonzini@redhat.com
-Cc: qemu-devel@nongnu.org,
-	Anthony Harivel <aharivel@redhat.com>
-Subject: [PATCH 0/1] Fix energy calcultation in RAPL MSR
-Date: Wed,  7 Aug 2024 14:43:19 +0200
-Message-ID: <20240807124320.1741124-1-aharivel@redhat.com>
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bDWLD1uoFm7FU5a42zOehUthTej1cJGlhkJadGWn0/A=;
+ b=ccnAtm2mukip9su2zRU0RNsrxklUCOuTMO5WOygseJpyah8/UVADuXZraTxkNhs94jzc4b
+ KUO4Gt++lWkb+N/CVmR/FUjdYHd7LD96TgrKjic+LqteoS0cKqOKWl+rF8G6N7VyITJH8U
+ N2jQXtp9HASivu/gROtiRAQVbUtRbJk=
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
+ [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-688-oTXE60xINp2m61wvWFiAtg-1; Wed, 07 Aug 2024 08:59:06 -0400
+X-MC-Unique: oTXE60xINp2m61wvWFiAtg-1
+Received: by mail-ot1-f69.google.com with SMTP id
+ 46e09a7af769-709376e8668so348002a34.2
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 05:59:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723035545; x=1723640345;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bDWLD1uoFm7FU5a42zOehUthTej1cJGlhkJadGWn0/A=;
+ b=W43hHrzzlgkBha32Jf3pKlQ41kqLrf67GNP+Iq+p+zTmI6ZcJex9OQ7/cVq8Yl1J2Y
+ Wfl8CsCgaaDx0KrmcZWD0BbFvyjWGnJm/Jvo5j1366APy0D82atIKVSlQBPPF5IWdr3I
+ PK/Kk0Arkp2+xG0XUZJlGctd/suHm1czoJEUhLRUUjvPbsYXRo8/CfrEoq32Pu8glXqM
+ io2BIaXl5XQAf69reNaJbBlkEAUGJL4JKAkFmXLnuhq+wZ7SI/hztOB8OCFDmljSlmSm
+ BiQL7P9mfoN7buJBeWbpgIwmHCilggE40IRHOxQDjAxtx3t4iT6q8KeOye7Kh/jUK8jD
+ qx2w==
+X-Gm-Message-State: AOJu0Yw4eoSR93R3R5gRBmx8ZfERXbcoWVoe6QU1AabU/PDJ3JM9qqzp
+ kSLv6nxSfBsSMab1mVN+gqzIvLao+s8bnBs5/VvlCYr+zSBNKwfESKx/uUQ8ZEvNpUXgcS8EoGX
+ qN2qilsl+No2fsDxeKXHC4oT8drjpZepptDmlMX86BkiS9NU0h22w
+X-Received: by 2002:a05:6830:f81:b0:704:4987:2342 with SMTP id
+ 46e09a7af769-709b995bb2cmr12614786a34.3.1723035545456; 
+ Wed, 07 Aug 2024 05:59:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHPkYBRrcm2vNjDLIsSVEeRueSKKdHKny09yM832oRTYEBVUqlVjh4DvrCcJnJTBbcxqUN/6g==
+X-Received: by 2002:a05:6830:f81:b0:704:4987:2342 with SMTP id
+ 46e09a7af769-709b995bb2cmr12614773a34.3.1723035545073; 
+ Wed, 07 Aug 2024 05:59:05 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6bb9c86b6f8sm56435056d6.123.2024.08.07.05.59.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 07 Aug 2024 05:59:04 -0700 (PDT)
+Date: Wed, 7 Aug 2024 08:59:02 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Yong Huang <yong.huang@smartx.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH] migration: Refine the convergence detection
+Message-ID: <ZrNvltexbLK8yxTm@x1n>
+References: <89555383887355d848c1005bfde1641bcddff024.1721821071.git.yong.huang@smartx.com>
+ <ZqlGjaleFHdnJUZy@x1n>
+ <CAK9dgmbkKPDTYv0i1jpASgTR5iN+_4+DrZUxo5VxQF3NdZewaQ@mail.gmail.com>
+ <ZrJTDhyRdjEL9VTV@x1n>
+ <CAK9dgmYcW7C9i+KGMH1pN_QRWy_A1ZGXixi49Unt6VhaP6DVzw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=aharivel@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAK9dgmYcW7C9i+KGMH1pN_QRWy_A1ZGXixi49Unt6VhaP6DVzw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -80,50 +101,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Paolo,
+On Wed, Aug 07, 2024 at 02:46:29PM +0800, Yong Huang wrote:
+> I still think dropping the dirty_rate_high_cnt is a refinement. If migration
+> has a precise detection of convergence, what do you think of it?
 
-The value reported by the calculation was looking very wrong to me.
+Maybe; I don't think I thought through those yet..  If so that'll make
+sense to be based on the sync change first, then we can have a parameter
+(doesn't sound like a cap on its own) for keeping the old auto-converge,
+and pile new logics there.
 
-This should fix it for good.
-
-Calculated value appears now way more accurate from what is expected 
-from the feature:
-
-with "-smp 4":
-
-[...]
-# modprobe intel_rapl_msr.ko
-intel_rapl_common: Found RAPL domain package
-intel_rapl_common: found 1 domains on package-0
-intel_rapl_common: Core CPU package-0:package energy=61035pJ, time=976us, power=125000uW
-intel_rapl_common: update package-0 domain package data
-# 
-# 
-# 
-# cat /sys/class/powercap/intel-rapl:0/energy_uj 
-303160
-# cat /sys/class/powercap/intel-rapl:0/energy_uj 
-325621
-# cat /sys/class/powercap/intel-rapl:0/energy_uj 
-325621
-# cat /sys/class/powercap/intel-rapl:0/energy_uj 
-357237
-# cat /sys/class/powercap/intel-rapl:0/energy_uj 
-357237
-# cat /sys/class/powercap/intel-rapl:0/energy_uj 
-388792
-[...]
-
-Tested with several SMP architecture.
-(i.e -smp 4 / -smp 8,sockets=2,dies=1 / -smp 8,sockets=4,dies=2 )
-
-Anthony Harivel (1):
-  target/i386: Fix arguments for vmsr_read_thread_stat()
-
- target/i386/kvm/kvm.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Thanks,
 
 -- 
-2.45.2
+Peter Xu
 
 
