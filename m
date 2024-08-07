@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 486D6C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 07:32:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C182EC52D6F
+	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 07:37:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbb9Y-00035D-OD; Wed, 07 Aug 2024 03:32:14 -0400
+	id 1sbbEO-0008I7-7H; Wed, 07 Aug 2024 03:37:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbb9U-00033N-3U
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 03:32:09 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbbEJ-0008H7-RI
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 03:37:08 -0400
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbb9Q-0000Mf-Q4
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 03:32:06 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3684407b2deso748702f8f.1
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 00:32:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sbbEH-0000t2-Nj
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 03:37:07 -0400
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-530e062217eso206949e87.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 00:37:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723015922; x=1723620722; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723016224; x=1723621024; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9U8WkO1kK/7k7XuzE7kO1kaVhMx9sxV/6/7scjLh188=;
- b=eDbRhMIydLGogr2C7ba8qcCfcL8NKokrLaRnzuRqTdbLpR+Hny1fmfI27nxwZUXd5l
- 9eHZdbqi9KzLQgiH0cbt62Kb6Cy1YcL1iwfc6FJ7kcKYNMjznzBMpgBvo2ONIoO/utaN
- br5hyiJUw54I6c9NltxWUEusUFYD2Jrt/AUQPgk6e508QcD4ogC3GovRAViM7VVY4b/j
- dvtGM2ySEP8bkcXXGTUyxJ5UeaBLVU+Zb0kQOqEpH3Cdf7Ws4PLUei3iI3XmrlOcJhPF
- d4WyCo0Oadgw+vhHZt/jchmpEeZIWWZ0u0UPV/oUfE+cpYiCJzh5ew3AE+NLFAnNmQ9k
- kJbw==
+ bh=Icy4KpnuB1CQp5vKGnB98q3O2cFWJ51ElJJ16nHXQIg=;
+ b=ff6G/42I9fyKxkFR68wViZywgBXlfOd/PGbIdyKUbw26WtmeoqYzCBEIQ7Ccgaj17M
+ RBHZ5PH9bPjBaFvS0XlUqkeaQz3pT/5FbfjKNU3O6GniVtF+aVKdJ2PxiKt8oX1GDR9B
+ 8Ld4BOvb2UZtQZS248R9/S0oK224VRubi/ju/5qAkvOgLgMovDxhlapLrVSmJcio+v+M
+ dnH+cNJnY+elp1HuvnXX3mvE6GDlUn/dCwFtC5vcHncSeqhQIUlXSw1FGprHMjS6F0FJ
+ ZMVpE+08RplV81cwBlYLIOIW4JQiyt+OYvRqek0QvgZPHaF4hE30Kla9yAEoOiCJ1eut
+ z+kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723015922; x=1723620722;
+ d=1e100.net; s=20230601; t=1723016224; x=1723621024;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9U8WkO1kK/7k7XuzE7kO1kaVhMx9sxV/6/7scjLh188=;
- b=VmCiB6By8X3UUTsQWUPmrf2/PwOwkQj0r61rzPbzIZiu27yG8qcb3xlHRhdsbgzUI2
- NKnWkgM2hcuwHyGqTFLMWhHto7fuuVkXM3sqNGYU24Xo7ybnSD2Q+AghObv6KXgzAhgd
- M3ULVSQJqsXKel1WaNFQcIzkHhS7SNaBKtcGNDTSg6ity0F1A7VJQb1Qawn3KHglJtVH
- qZp499oWkJ2/UxNYYmTUxZOsAE/0teUc/MS5fTeLrYi5ctNp+fBP5jciadmR/nqALrxQ
- Bi0Vjj+dS6vwAvi7RSZOAbHnIGpcQr1+Ttx8aDhnq5dSqbByYUEiNz9mAg6ZKlgPK+NB
- RR0Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVMF9VuIAAKmuYMjrpMOe6AQiXQO4yn2dwA6YpfjNjoBeq4CHGtQQTSK0007Z6mGcAZi6xjlgOuQtp7IdxD8a0GkoGG4tU=
-X-Gm-Message-State: AOJu0Yz5J0yiIarc4oXqjWbUqHw7kiPKcgpU20pk50ccg1cns4BynDkq
- 89gxtqtL2n9CVkkmuOaa0p7aKcIlz26gYDTre6tHclyYub5P4PF5GETmnpOQJJE=
-X-Google-Smtp-Source: AGHT+IFbgMtzhQELWl3Ro43IG33irM5ohuE+10OClIuFBR8E3t1w75tVt3p1G+Sn+YALDHfKTetSCQ==
-X-Received: by 2002:adf:e7c5:0:b0:368:12ef:92cf with SMTP id
- ffacd0b85a97d-36bbc153c80mr13269772f8f.48.1723015922209; 
- Wed, 07 Aug 2024 00:32:02 -0700 (PDT)
+ bh=Icy4KpnuB1CQp5vKGnB98q3O2cFWJ51ElJJ16nHXQIg=;
+ b=rWXJDZe32ct55qyXOuOx48rgTlJMHqUTGM9v6ODq8Ssu55/9tO4rskhZq6aR+Jo914
+ goLcoO7ZPdwCJsKbmImlnlVDb+GvIRD3zDnT3Ww/5cDrgXXU95t2Slc1THIcZnm2k5Rl
+ JzGvFeHTy1mykBBF8zVV2DpEsR22BCsUOld411Bc2WuYC8qzoK/mVk9QiK2pq+g7WgbW
+ iXWctA876q2P1874cZqO38gctYYQTOruB/cRgKuiQJASAxHLb525dDkOedKdpLjFd4jf
+ 2aJjlqitOFZ720wuJYkbh+a9CkL4EgKfMQAdlk9bSLjEyEXsXbeyT5xZoZcPkfUA4NM/
+ MULg==
+X-Gm-Message-State: AOJu0Yw7WqZBIULEl1JC+PoYJG0Bd49BosxYEherI7Kv4E7cx+U6AXkA
+ 38foguc9IT/3UtnnOgFohWR5KjwqyZh7mpopNex9+yAJnaz9G4ZTHx1I3ILbJIE=
+X-Google-Smtp-Source: AGHT+IFx8/Zng1M7Y+ly/JNASxOa1bL7XvyiqHQSKZH835+Vw+AlYeCB0/qY4FLwEY+3wbDWGriiZA==
+X-Received: by 2002:ac2:4c50:0:b0:530:abec:9a23 with SMTP id
+ 2adb3069b0e04-530bb36f1b0mr11862208e87.17.1723016223704; 
+ Wed, 07 Aug 2024 00:37:03 -0700 (PDT)
 Received: from [192.168.69.100] ([176.187.212.120])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36bbd06d314sm15086266f8f.95.2024.08.07.00.32.00
+ 4fb4d7f45d1cf-5b83b92b970sm6776381a12.72.2024.08.07.00.37.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Aug 2024 00:32:01 -0700 (PDT)
-Message-ID: <86393cd8-a34e-4b28-8f89-dc965f04b1b6@linaro.org>
-Date: Wed, 7 Aug 2024 09:31:59 +0200
+ Wed, 07 Aug 2024 00:37:03 -0700 (PDT)
+Message-ID: <5403fa28-bc81-4208-9b16-7912a3b190c5@linaro.org>
+Date: Wed, 7 Aug 2024 09:37:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH-for-9.1? 1/2] target/arm: Move
- qmp_query_gic_capabilities() to hw/intc/
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-References: <20240806141940.22095-1-philmd@linaro.org>
- <20240806141940.22095-2-philmd@linaro.org>
- <f82397e9-3be4-49be-b291-5598acdaf39b@linaro.org>
+Subject: Re: [PATCH 3/5] ebpf: add formal error reporting to all APIs
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Andrew Melnychenko
+ <andrew@daynix.com>, Stefan Hajnoczi <stefanha@redhat.com>
+References: <20240806145653.1632478-1-berrange@redhat.com>
+ <20240806145653.1632478-4-berrange@redhat.com>
+ <208ede45-0866-4dce-b6ef-e8390c1c56c1@linaro.org>
+ <ZrI_IsxXceEJewFO@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <f82397e9-3be4-49be-b291-5598acdaf39b@linaro.org>
+In-Reply-To: <ZrI_IsxXceEJewFO@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,33 +99,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/8/24 05:46, Richard Henderson wrote:
-> On 8/7/24 00:19, Philippe Mathieu-Daudé wrote:
->> qmp_query_gic_capabilities() is not specific to the ARM
->> architecture but to the GIC device which is modelled in
->> hw/intc/, so move the code there for clarity.
+On 6/8/24 17:20, Daniel P. Berrangé wrote:
+> On Tue, Aug 06, 2024 at 05:11:55PM +0200, Philippe Mathieu-Daudé wrote:
+>> On 6/8/24 16:56, Daniel P. Berrangé wrote:
+>>> The eBPF code is currently reporting error messages through trace
+>>> events. Trace events are fine for debugging, but they are not to be
+>>> considered the primary error reporting mechanism, as their output
+>>> is inaccessible to callers.
+>>>
+>>> This adds an "Error **errp" parameter to all methods which have
+>>> important error scenarios to report to the caller.
+>>>
+>>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+>>> ---
+>>>    ebpf/ebpf_rss.c     | 59 ++++++++++++++++++++++++++++++++++++---------
+>>>    ebpf/ebpf_rss.h     | 10 +++++---
+>>>    hw/net/virtio-net.c |  7 +++---
+>>>    3 files changed, 59 insertions(+), 17 deletions(-)
+>>>
+>>> diff --git a/ebpf/ebpf_rss.c b/ebpf/ebpf_rss.c
+>>> index aa7170d997..59854c8b51 100644
+>>> --- a/ebpf/ebpf_rss.c
+>>> +++ b/ebpf/ebpf_rss.c
+>>> @@ -47,13 +47,14 @@ bool ebpf_rss_is_loaded(struct EBPFRSSContext *ctx)
+>>>        return ctx != NULL && (ctx->obj != NULL || ctx->program_fd != -1);
+>>>    }
+>>> -static bool ebpf_rss_mmap(struct EBPFRSSContext *ctx)
+>>> +static bool ebpf_rss_mmap(struct EBPFRSSContext *ctx, Error **errp)
+>>>    {
+>>>        ctx->mmap_configuration = mmap(NULL, qemu_real_host_page_size(),
+>>>                                       PROT_READ | PROT_WRITE, MAP_SHARED,
+>>>                                       ctx->map_configuration, 0);
+>>>        if (ctx->mmap_configuration == MAP_FAILED) {
+>>>            trace_ebpf_error("eBPF RSS", "can not mmap eBPF configuration array");
+>>> +        error_setg(errp, "Unable to map eBPF configuration array");
+>>>            return false;
+>>>        }
+>>>        ctx->mmap_toeplitz_key = mmap(NULL, qemu_real_host_page_size(),
+>>> @@ -61,6 +62,7 @@ static bool ebpf_rss_mmap(struct EBPFRSSContext *ctx)
+>>>                                       ctx->map_toeplitz_key, 0);
+>>>        if (ctx->mmap_toeplitz_key == MAP_FAILED) {
+>>>            trace_ebpf_error("eBPF RSS", "can not mmap eBPF toeplitz key");
+>>> +        error_setg(errp, "Unable to map eBPF toeplitz array");
+>>>            goto toeplitz_fail;
+>>>        }
+>>>        ctx->mmap_indirections_table = mmap(NULL, qemu_real_host_page_size(),
+>>> @@ -68,6 +70,7 @@ static bool ebpf_rss_mmap(struct EBPFRSSContext *ctx)
+>>>                                       ctx->map_indirections_table, 0);
+>>>        if (ctx->mmap_indirections_table == MAP_FAILED) {
+>>>            trace_ebpf_error("eBPF RSS", "can not mmap eBPF indirection table");
+>>> +        error_setg(errp, "Unable to map eBPF indirection array");
+>>
+>> Aren't these trace_ebpf_error() calls redundant now?
 > 
-> But the GIC is certainly arm architecture specific.
-> It's built into the CPU, and shares state.
-
-Yes... but there are also SoC with ARM cores, GIC and non-ARM cores ;)
-Example: ZynqMP with MicroBlaze cores.
-
-> The fact that it's modeled in hw/intc/ and not in target/arm/ has always 
-> been a needle in the side, though it seems there are no good options.
+> Yes & no. Errors propagated up the call stack don't get included in
+> any trace output, and so if a caller doesn't log them anywhere they
+> can thus be invisible to someone just looking at trace output.
 > 
->> @@ -39,6 +39,7 @@ if config_all_devices.has_key('CONFIG_APIC') or \
->>   endif
->>   specific_ss.add(when: 'CONFIG_APIC', if_true: files('apic.c', 
->> 'apic_common.c'))
->> +specific_ss.add(when: 'CONFIG_ARM', if_true: files('arm_gic_qmp.c'))
->>   specific_ss.add(when: 'CONFIG_ARM_GIC', if_true: 
->> files('arm_gicv3_cpuif_common.c'))
-> 
-> Is it more or less confusing that you're not using CONFIG_ARM_GIC, for 
-> something that is GIC related?
+> I could remove them all from the eBPF code though, and put a single
+> trace event in the hw/net/virtio-net.c file instead ? Bit of a bike
+> shed colouring exercise to decide which is best though.
 
-(You figured in the next patch) this commit aims to be "no logical
-change" to indeed use CONFIG_ARM_GIC in the next (simpler) patch.
+No problem, I'm fine with this patch.
 
+Note from experience (although pre-existing in this patch), trace
+events can be very verbose, and a what makes them powerful is we
+can filter particular ones. The following pattern isn't practical
+to filter:
+
+   trace_foo_error(const char *error_msg);
+
+While a bit tedious to add, having a single trace event per error
+is way more useful.
+
+Regards,
+
+Phil.
 
