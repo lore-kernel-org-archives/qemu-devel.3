@@ -4,69 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3265FC52D71
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 09:53:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FDD4C52D71
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 09:53:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbzoq-0000ve-4S; Thu, 08 Aug 2024 05:52:28 -0400
+	id 1sbzpv-0004Qo-TZ; Thu, 08 Aug 2024 05:53:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sbzop-0000vB-25
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 05:52:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sbzpk-0003dR-86
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 05:53:24 -0400
+Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sbzom-0007pd-94
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 05:52:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723110740;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=uH29/S8mR+PpZwpwy3SWKz6YGmPSQ9hkt0hGAjVklx8=;
- b=hnCiSZdPnb3DMg29eiR2VemjVDjOG84nfE59WTatEL/Qv0H3Q8C9wYXa1GLA3+KFHl9Yo+
- Js7Wt/tFv8QrW0ppAUbLP9zaLT7oekPM5TOTY4JNCl7x3O+WmMYAFwzkL5sTA/YIG2jp0V
- umSClTetVyFHgQFf65ySTyozWL8o9bA=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-395-Yyba2bwDMV6K_PGqQh3x3w-1; Thu,
- 08 Aug 2024 05:52:19 -0400
-X-MC-Unique: Yyba2bwDMV6K_PGqQh3x3w-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 11CCE1954233; Thu,  8 Aug 2024 09:52:18 +0000 (UTC)
-Received: from kaapi.redhat.com (unknown [10.74.17.66])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9054B19560A3; Thu,  8 Aug 2024 09:52:11 +0000 (UTC)
-From: Prasad Pandit <ppandit@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: farosas@suse.de, jasowang@redhat.com, mcoqueli@redhat.com, mst@redhat.com,
- peterx@redhat.com, pjp@fedoraproject.org
-Subject: [RFC-PATCH v1 2/2] vhost-user: add a request-reply lock
-Date: Thu,  8 Aug 2024 15:21:47 +0530
-Message-ID: <20240808095147.291626-3-ppandit@redhat.com>
-In-Reply-To: <20240808095147.291626-1-ppandit@redhat.com>
-References: <20240808095147.291626-1-ppandit@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sbzpi-0007tm-Ln
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 05:53:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1723110803; x=1754646803;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=SQ3snLs1rMNACamIDOtNuTEg5+7GVw7FXY0RnSzfJKw=;
+ b=ZtxVPtf+45ukkaO906ZjhJMh0EDlFa5nqzYHiCFI7ycVNdWTGsRVnaVG
+ yNNAKqG9pofMuy+3dNUfqDHIpRcNOwTtnBmMo6f6B7Ekhzp+fiup2NSEn
+ hjjliXjI8EXe8VaYDav3EfwjEl5dlJBDgnqyjKLhOL/8B5MFWEqF421/R
+ KqwhyKGSDt/uxqAquCEbD8eCyUXHsELR9HU2mD8GXsU53IJUlCtYRmkii
+ KzpAbmXqsZtoVQAiLJINRli6bg3rUjHDYS3U7bo1zDJrzJZlGpsbaX+hy
+ 1liwXZ9RVDSRkipkeuw8p9jQ+ju+p28Ul64U6LGTvNBY4np16oEAk8Rsa g==;
+X-CSE-ConnectionGUID: OWeUjLB/QKmvN6uQPeW3fA==
+X-CSE-MsgGUID: U+Ifj3LkT4morzlB64HNPQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11157"; a="21345066"
+X-IronPort-AV: E=Sophos;i="6.09,272,1716274800"; d="scan'208";a="21345066"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Aug 2024 02:53:17 -0700
+X-CSE-ConnectionGUID: SB3wIC6KSxSI7xZOv/Vxmw==
+X-CSE-MsgGUID: NPgGoP74Rw2W+vTPSmUOqA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,272,1716274800"; d="scan'208";a="61265078"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa003.fm.intel.com with ESMTP; 08 Aug 2024 02:53:14 -0700
+Date: Thu, 8 Aug 2024 18:09:04 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Manish <manish.mishra@nutanix.com>, John Levon <john.levon@nutanix.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] i386/cpu: Introduce enable_cpuid_0x1f to force exposing
+ CPUID 0x1f
+Message-ID: <ZrSZQN/AQa6BiIUu@intel.com>
+References: <20240802072426.4016194-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240802072426.4016194-1-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,323 +86,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
+Hi Xiaoyao,
 
-QEMU threads use vhost_user_write/read calls to send
-and receive request/reply messages from a vhost-user
-device. When multiple threads communicate with the
-same vhost-user device, they can receive each other's
-messages, resulting in an erroneous state.
+Patch is generally fine for me. Just a few nits:
 
-When fault_thread exits upon completion of Postcopy
-migration, it sends a 'postcopy_end' message to the
-vhost-user device. But sometimes 'postcopy_end' message
-is sent while vhost device is being setup via
-vhost_dev_start().
+On Fri, Aug 02, 2024 at 03:24:26AM -0400, Xiaoyao Li wrote:
+> diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
+> index dff49fce1154..b63bce2f4c82 100644
+> --- a/include/hw/i386/topology.h
+> +++ b/include/hw/i386/topology.h
+> @@ -207,13 +207,4 @@ static inline apic_id_t x86_apicid_from_cpu_idx(X86CPUTopoInfo *topo_info,
+>      return x86_apicid_from_topo_ids(topo_info, &topo_ids);
+>  }
+>  
+> -/*
+> - * Check whether there's extended topology level (module or die)?
+> - */
+> -static inline bool x86_has_extended_topo(unsigned long *topo_bitmap)
+> -{
+> -    return test_bit(CPU_TOPO_LEVEL_MODULE, topo_bitmap) ||
+> -           test_bit(CPU_TOPO_LEVEL_DIE, topo_bitmap);
+> -}
+> -
 
-     Thread-1                           Thread-2
+[snip]
 
- vhost_dev_start                    postcopy_ram_incoming_cleanup
- vhost_device_iotlb_miss            postcopy_notify
- vhost_backend_update_device_iotlb  vhost_user_postcopy_notifier
- vhost_user_send_device_iotlb_msg   vhost_user_postcopy_end
- process_message_reply              process_message_reply
- vhost_user_read                    vhost_user_read
- vhost_user_read_header             vhost_user_read_header
- "Fail to update device iotlb"      "Failed to receive reply to postcopy_end"
+> +/*
+> + * Check whether there's v2 extended topology level (module or die)?
+> + */
+> +bool x86_has_v2_extended_topo(X86CPU *cpu)
+> +{
+> +    if (cpu->enable_cpuid_0x1f) {
+> +        return true;
+> +    }
+> +
+> +    return test_bit(CPU_TOPO_LEVEL_MODULE, cpu->env.avail_cpu_topo) ||
+> +           test_bit(CPU_TOPO_LEVEL_DIE, cpu->env.avail_cpu_topo);
+> +}
+> +
 
-This creates confusion when vhost-user device receives
-'postcopy_end' message while it is trying to update
-IOTLB entries.
+I suggest to decouple 0x1f enablement and extended topo check, since as
+the comment of CPUTopoLevel said:
 
- vhost_user_read_header:
-  700871,700871: Failed to read msg header. Flags 0x0 instead of 0x5.
- vhost_device_iotlb_miss:
-  700871,700871: Fail to update device iotlb
- vhost_user_postcopy_end:
-  700871,700900: Failed to receive reply to postcopy_end
- vhost_user_read_header:
-  700871,700871: Failed to read msg header. Flags 0x0 instead of 0x5.
+/*
+ * CPUTopoLevel is the general i386 topology hierarchical representation,
+ * ordered by increasing hierarchical relationship.
+ * Its enumeration value is not bound to the type value of Intel (CPUID[0x1F])
+ * or AMD (CPUID[0x80000026]).
+ */
 
-Here fault thread seems to end the postcopy migration
-while another thread is starting the vhost-user device.
+The topology enumeration is generic and is not bound to the vendor.
 
-Add a mutex lock to hold for one request-reply cycle
-and avoid such race condition.
+[snip]
 
-Fixes: 46343570c06e ("vhost+postcopy: Wire up POSTCOPY_END notify")
-Suggested-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
----
- hw/virtio/vhost-user.c         | 74 ++++++++++++++++++++++++++++++++++
- include/hw/virtio/vhost-user.h |  3 ++
- 2 files changed, 77 insertions(+)
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index c6cc035df3d8..211a42ffbfa6 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2110,6 +2110,9 @@ struct ArchCPU {
+>      /* Compatibility bits for old machine types: */
+>      bool enable_cpuid_0xb;
+>  
+> +    /* Force to expose cpuid 0x1f */
 
-v0: Use QEMU_LOCK_GUARD(), rename lock variable
-  -> https://lore.kernel.org/all/Zo_9OlX0pV0paFj7@x1n/
-  -> https://lore.kernel.org/all/20240720153808-mutt-send-email-mst@kernel.org/
+Maybe "Force to enable cpuid 0x1f"?
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 00561daa06..2818aacbc3 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -24,6 +24,7 @@
- #include "qemu/main-loop.h"
- #include "qemu/uuid.h"
- #include "qemu/sockets.h"
-+#include "qemu/lockable.h"
- #include "sysemu/runstate.h"
- #include "sysemu/cryptodev.h"
- #include "migration/postcopy-ram.h"
-@@ -446,6 +447,10 @@ static int vhost_user_set_log_base(struct vhost_dev *dev, uint64_t base,
-         .hdr.size = sizeof(msg.payload.log),
-     };
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     /* Send only once with first queue pair */
-     if (dev->vq_index != 0) {
-         return 0;
-@@ -669,6 +674,9 @@ static int send_remove_regions(struct vhost_dev *dev,
-     ram_addr_t offset;
-     VhostUserMemoryRegion region_buffer;
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     /*
-      * The regions in remove_reg appear in the same order they do in the
-      * shadow table. Therefore we can minimize memory copies by iterating
-@@ -725,6 +733,9 @@ static int send_add_regions(struct vhost_dev *dev,
-     VhostUserMsg msg_reply;
-     VhostUserMemoryRegion region_buffer;
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     for (i = 0; i < nr_add_reg; i++) {
-         reg = add_reg[i].region;
-         reg_idx = add_reg[i].reg_idx;
-@@ -903,6 +914,9 @@ static int vhost_user_set_mem_table_postcopy(struct vhost_dev *dev,
-         .hdr.flags = VHOST_USER_VERSION,
-     };
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     if (u->region_rb_len < dev->mem->nregions) {
-         u->region_rb = g_renew(RAMBlock*, u->region_rb, dev->mem->nregions);
-         u->region_rb_offset = g_renew(ram_addr_t, u->region_rb_offset,
-@@ -1028,6 +1042,9 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
-         .hdr.flags = VHOST_USER_VERSION,
-     };
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     if (reply_supported) {
-         msg.hdr.flags |= VHOST_USER_NEED_REPLY_MASK;
-     }
-@@ -1089,6 +1106,10 @@ static int vhost_user_get_u64(struct vhost_dev *dev, int request, uint64_t *u64)
-         return 0;
-     }
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         return ret;
-@@ -1138,6 +1159,10 @@ static int vhost_user_write_sync(struct vhost_dev *dev, VhostUserMsg *msg,
-         }
-     }
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, msg, NULL, 0);
-     if (ret < 0) {
-         return ret;
-@@ -1277,6 +1302,8 @@ static int vhost_user_get_vring_base(struct vhost_dev *dev,
-         .hdr.size = sizeof(msg.payload.state),
-     };
-     struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
- 
-     VhostUserHostNotifier *n = fetch_notifier(u->user, ring->index);
-     if (n) {
-@@ -1669,6 +1696,9 @@ int vhost_user_get_shared_object(struct vhost_dev *dev, unsigned char *uuid,
-     };
-     memcpy(msg.payload.object.uuid, uuid, sizeof(msg.payload.object.uuid));
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         return ret;
-@@ -1889,6 +1919,9 @@ static int vhost_setup_backend_channel(struct vhost_dev *dev)
-         msg.hdr.flags |= VHOST_USER_NEED_REPLY_MASK;
-     }
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, &sv[1], 1);
-     if (ret) {
-         goto out;
-@@ -1993,6 +2026,9 @@ static int vhost_user_postcopy_advise(struct vhost_dev *dev, Error **errp)
-         .hdr.flags = VHOST_USER_VERSION,
-     };
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         error_setg(errp, "Failed to send postcopy_advise to vhost");
-@@ -2051,6 +2087,9 @@ static int vhost_user_postcopy_listen(struct vhost_dev *dev, Error **errp)
- 
-     trace_vhost_user_postcopy_listen();
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         error_setg(errp, "Failed to send postcopy_listen to vhost");
-@@ -2080,6 +2119,9 @@ static int vhost_user_postcopy_end(struct vhost_dev *dev, Error **errp)
- 
-     trace_vhost_user_postcopy_end_entry();
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         error_setg(errp, "Failed to send postcopy_end to vhost");
-@@ -2372,6 +2414,10 @@ static int vhost_user_net_set_mtu(struct vhost_dev *dev, uint16_t mtu)
-         msg.hdr.flags |= VHOST_USER_NEED_REPLY_MASK;
-     }
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         return ret;
-@@ -2396,6 +2442,10 @@ static int vhost_user_send_device_iotlb_msg(struct vhost_dev *dev,
-         .payload.iotlb = *imsg,
-     };
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         return ret;
-@@ -2428,6 +2478,10 @@ static int vhost_user_get_config(struct vhost_dev *dev, uint8_t *config,
- 
-     assert(config_len <= VHOST_USER_MAX_CONFIG_SIZE);
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     msg.payload.config.offset = 0;
-     msg.payload.config.size = config_len;
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-@@ -2492,6 +2546,10 @@ static int vhost_user_set_config(struct vhost_dev *dev, const uint8_t *data,
-     p = msg.payload.config.region;
-     memcpy(p, data, size);
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         return ret;
-@@ -2570,6 +2628,10 @@ static int vhost_user_crypto_create_session(struct vhost_dev *dev,
-         }
-     }
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     msg.payload.session.op_code = backend_info->op_code;
-     msg.payload.session.session_id = backend_info->session_id;
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-@@ -2662,6 +2724,9 @@ static int vhost_user_get_inflight_fd(struct vhost_dev *dev,
-         return 0;
-     }
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         return ret;
-@@ -2757,6 +2822,7 @@ bool vhost_user_init(VhostUserState *user, CharBackend *chr, Error **errp)
-     user->memory_slots = 0;
-     user->notifiers = g_ptr_array_new_full(VIRTIO_QUEUE_MAX / 4,
-                                            &vhost_user_state_destroy);
-+    qemu_mutex_init(&user->vhost_user_request_reply_lock);
-     return true;
- }
- 
-@@ -2769,6 +2835,7 @@ void vhost_user_cleanup(VhostUserState *user)
-     user->notifiers = (GPtrArray *) g_ptr_array_free(user->notifiers, true);
-     memory_region_transaction_commit();
-     user->chr = NULL;
-+    qemu_mutex_destroy(&user->vhost_user_request_reply_lock);
- }
- 
- 
-@@ -2902,6 +2969,9 @@ static int vhost_user_set_device_state_fd(struct vhost_dev *dev,
-         return -ENOTSUP;
-     }
- 
-+    struct VhostUserState *us = vu->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, &fd, 1);
-     close(fd);
-     if (ret < 0) {
-@@ -2965,6 +3035,10 @@ static int vhost_user_check_device_state(struct vhost_dev *dev, Error **errp)
-         return -ENOTSUP;
-     }
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret,
-diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-index 324cd8663a..e96f12d449 100644
---- a/include/hw/virtio/vhost-user.h
-+++ b/include/hw/virtio/vhost-user.h
-@@ -67,6 +67,9 @@ typedef struct VhostUserState {
-     GPtrArray *notifiers;
-     int memory_slots;
-     bool supports_config;
-+
-+    /* Hold lock for a request-reply cycle */
-+    QemuMutex vhost_user_request_reply_lock;
- } VhostUserState;
- 
- /**
--- 
-2.46.0
+> +    bool enable_cpuid_0x1f;
+> +
+>      /* Enable auto level-increase for all CPUID leaves */
+>      bool full_cpuid_auto_level;i
+
+Regards,
+Zhao
 
 
