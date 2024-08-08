@@ -4,84 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97AE2C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 14:33:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F4AC52D6F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 14:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc4Cc-0005Nl-Ch; Thu, 08 Aug 2024 10:33:18 -0400
+	id 1sc4NR-0002M7-RY; Thu, 08 Aug 2024 10:44:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sc4Ca-0005Mf-5s
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 10:33:16 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sc4CY-0006KE-FB
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 10:33:15 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a7d638a1f27so43357866b.2
- for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 07:33:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723127593; x=1723732393; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nioHeWMXtFzyLLKsZrn0g5FDxHVTN0nVtxne61S9YDE=;
- b=jRdclCRbNSxDR82OZIJylMhnPBFaLulHmHvBAdsqCAP7ImNM5f09ucXDhfZUXet5Fe
- MObWyk2UMQLlJ3YfOOz6KDYSyBv8IClhP44ewDeJL49sTp3XDl473Oowsd9l1Tkht+P6
- e18AFVoICv7jRuOEYpXPlUqIgYuf/7qWXZ9pfi9aah04k9+ZmXTwRPEbnurujN0qhq9N
- Ikyx/6hWOEF294AGwTzbNIf888MjDV0N3+jklruLC1tY/bDJjyjHDSKGRQCHdqWPILh5
- Yypr+g2ggF9x+o50mziqRNvxQ4teU/Db9mYLyYRTVvqBZtjRjOgACkh61inHztXh8OaC
- sFpw==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sc4NM-0002Kq-5b
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 10:44:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sc4NK-0007nx-IY
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 10:44:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723128261;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=2yHWhOGhXoiaID94xq0Obn8IF6l9bmHYEIpGRlWg4Yk=;
+ b=ZjllRycLy/clzm5sIkB3BuG7Ccj4KlFMyNtcRj32QPOlNX1lXyfjYlZr12+Q1MF9dy1i8D
+ roMt6BRsnOQaQAfT5oYkLUgiuWM0pMLuYA99mtos7tPsDpskkpIDxZgrCQvFaCMsKGPqwC
+ moy/Csu1TlpGXd6SE+ndSqRddq736f0=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-144--ShGKu2KOLGvUaEJjPSf-g-1; Thu, 08 Aug 2024 10:44:19 -0400
+X-MC-Unique: -ShGKu2KOLGvUaEJjPSf-g-1
+Received: by mail-lf1-f69.google.com with SMTP id
+ 2adb3069b0e04-52eff5a4faaso1243366e87.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 07:44:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723127593; x=1723732393;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nioHeWMXtFzyLLKsZrn0g5FDxHVTN0nVtxne61S9YDE=;
- b=X8sdVx2LSn6G7PyS4IUhvwROpfHlg16WsOWONmZwqKY+v7s79CKwtTmheTJTSMSzk2
- Z4BpgTbyL1/UAecpSdJh6MlRIUtd8O1p5jE1PvGLamnLbwTZLEAte++4+oxinSMZAZsU
- mwil2q1cs0YYXVxDlzRCqS3ilZFvV9Anhb2VHWnq5QFfPXgodTpLwIdpI4q8ZYJHfW7o
- KCP5f+sL6xsI8Z9sy1Ec3sTK5v6KDxwNbRd0tRdzS+9VjMPy2OzDLEZlPxYDQQ30GZgF
- jfopxts7NP4lIWeq7k6hYuaBcUeXm4lY2cMav2Izq8epcxygXZdmcxBEoufMhij0FAFD
- bDnw==
+ d=1e100.net; s=20230601; t=1723128258; x=1723733058;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2yHWhOGhXoiaID94xq0Obn8IF6l9bmHYEIpGRlWg4Yk=;
+ b=t7QI3uqRpKEnA1zchXLuf/SrqjP3kHFzA7TYdkJCRy6n9qhw3bKHx9EMRHbC1yfV3D
+ ywDq/EQOq1Y8b0rHh4a50yAicKDTL/9ywRKBvI6SWOj/N6EiHmQ/vyJXq9VcfCAUu3XV
+ E19juQr20geRMD2D9OTPKBteWFJXTe2+75EF0ayCJEWN+l6bOEdlABnd+Rq1zMKuSWga
+ gQPG71JZU4d4SRPb4Ooly5DOq+3rToV/gbQO300eKptlH2FUbi32qNSVMI+CIB4gNUvT
+ CfpeoYHRow2F5wC2WOC1Ok73/tJkakZHYoHvFJRHkMS9FaohkUv4m3F+f0IzVaDyFajn
+ OKPA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1lcTOyle7iJdKQCPQeA829UP9VgUiCY4r51gE7/aEkVuqMBajT9nYwqgpDV9p941ZUV/TAupxhqWAI5bhkKRl1F+6uy0=
-X-Gm-Message-State: AOJu0YzPKVYdNBX5tyiFVxYRuMcsRXnVYPUyZ3bk0fdwoj+iSFVSCM/Q
- XeTc882wAGBXDObKpa3PEwjsNsDqrUF/A/VfJI4Om/3MaI75jvKXHxp7scMC4Ia6P06sh1tzZNw
- 4GMNhf21Q6kWCjnLhnGp0yTokjxnX+736dhuoLg==
-X-Google-Smtp-Source: AGHT+IEYLXVxPzJLiyPO/q6WShUZe3dHASsvfU5IepBNjQ59+nhWBnbsAh8hqiingbqxdNmrAvKSpSWg4/eYfTsBl8k=
-X-Received: by 2002:a05:6402:3484:b0:57a:3046:1cd8 with SMTP id
- 4fb4d7f45d1cf-5bbb22399e9mr2377198a12.7.1723127592553; Thu, 08 Aug 2024
- 07:33:12 -0700 (PDT)
+ AJvYcCXIxruNlE4ezG5Vsp+CZ0pYC8u+K+Do89E5LSXXkmW1C6MIYywqUClqBWIndQ/5VvnlyPzDMr+onvJbJ9dv9W9KAMUlf3s=
+X-Gm-Message-State: AOJu0YxM6qVEkLtib59lNWTyly/EX8giUM3ir5iG6dSj/9t0LLhGBxJx
+ wtoq4d+BVqlQO4oy/AaUVakeWWNhI4mEHNU6tiLjwCGlVK9v5q25l8Mw0sYnliBVDuOwVY48Gm8
+ sTg3CLwOFYzs7ONFslMot/A66pPSWBUK3R7xgbYA2CrQoOidSxE5N
+X-Received: by 2002:a05:6512:3f2a:b0:52c:deba:7e6e with SMTP id
+ 2adb3069b0e04-530e583dbd1mr1838868e87.29.1723128257877; 
+ Thu, 08 Aug 2024 07:44:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFyh0BU4hkdxFulosZVyBK7BJraF3bjcMfeyi8ouHjXm8HPCLcpB/V7MWfZ+ttDa5YmHQVeiw==
+X-Received: by 2002:a05:6512:3f2a:b0:52c:deba:7e6e with SMTP id
+ 2adb3069b0e04-530e583dbd1mr1838822e87.29.1723128256896; 
+ Thu, 08 Aug 2024 07:44:16 -0700 (PDT)
+Received: from redhat.com ([2.55.34.111]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a7dc9e8676fsm742332666b.164.2024.08.08.07.44.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Aug 2024 07:44:16 -0700 (PDT)
+Date: Thu, 8 Aug 2024 10:43:58 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>, Ani Sinha <anisinha@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>,
+ linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH] arm/virt: place power button pin number on a define
+Message-ID: <20240808104308-mutt-send-email-mst@kernel.org>
+References: <ef0e7f5fca6cd94eda415ecee670c3028c671b74.1723121692.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-References: <20240806134829.351703-1-chalapathi.v@linux.ibm.com>
- <20240806134829.351703-3-chalapathi.v@linux.ibm.com>
- <e3e60776-3f63-4024-a595-2989a59e15ed@linaro.org>
-In-Reply-To: <e3e60776-3f63-4024-a595-2989a59e15ed@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 8 Aug 2024 15:33:01 +0100
-Message-ID: <CAFEAcA_H+KtpBUKx4CcwKnNjL_4iOX-weLBXcrt+JzYBAgwJag@mail.gmail.com>
-Subject: Re: [PATCH v1 2/2] Fixes: Coverity CID 1558831
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Chalapathi V <chalapathi.v@linux.ibm.com>, qemu-devel@nongnu.org, 
- Glenn Miles <milesg@linux.ibm.com>, Caleb Schlossin <calebs@linux.vnet.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org, fbarrat@linux.ibm.com,
- clg@kaod.org, chalapathi.v@ibm.com, saif.abrar@linux.ibm.com, 
- dantan@us.ibm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ef0e7f5fca6cd94eda415ecee670c3028c671b74.1723121692.git.mchehab+huawei@kernel.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,135 +103,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 7 Aug 2024 at 21:13, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
->
-> Back at this patch since C=C3=A9dric asked me to look at it.
->
-> On 6/8/24 15:48, Chalapathi V wrote:
-> > In this commit the following coverity scan defect has been fixed
-> > CID 1558831:  Resource leaks  (RESOURCE_LEAK)
-> >    Variable "rsp_payload" going out of scope leaks the storage it
-> >    points to.
-> >
-> > Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
-> > ---
-> >   hw/ssi/pnv_spi.c | 1 +
-> >   1 file changed, 1 insertion(+)
-> >
-> > diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
-> > index a33f682897..dbe06df224 100644
-> > --- a/hw/ssi/pnv_spi.c
-> > +++ b/hw/ssi/pnv_spi.c
-> > @@ -237,6 +237,7 @@ static void transfer(PnvSpi *s, PnvXferBuffer *payl=
-oad)
-> >       }
-> >       if (rsp_payload !=3D NULL) {
-> >           spi_response(s, s->N1_bits, rsp_payload);
-> > +        pnv_spi_xfer_buffer_free(rsp_payload);
-> >       }
-> >   }
-> >
->
-> Or bigger patch but simpler logic:
->
-> -- >8 --
-> diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
-> index c1297ab733..aaedba84af 100644
-> --- a/hw/ssi/pnv_spi.c
-> +++ b/hw/ssi/pnv_spi.c
-> @@ -217,6 +217,9 @@ static void transfer(PnvSpi *s, PnvXferBuffer *payloa=
-d)
->       PnvXferBuffer *rsp_payload =3D NULL;
->
->       rsp_payload =3D pnv_spi_xfer_buffer_new();
-> +    if (!rsp_payload) {
-> +        return;
-> +    }
+On Thu, Aug 08, 2024 at 02:54:52PM +0200, Mauro Carvalho Chehab wrote:
+> Having magic numbers inside the code is not a good idea, as it
+> is error-prone. So, instead, create a macro with the number
+> definition.
+> 
+> Link: https://lore.kernel.org/qemu-devel/CAFEAcA-PYnZ-32MRX+PgvzhnoAV80zBKMYg61j2f=oHaGfwSsg@mail.gmail.com/
+> 
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-pnv_spi_xfer_buffer_new() cannot fail (it calls
-g_malloc0, which aborts on not having enough memory)
-so we don't need to check it for NULL.
+ack, but note we do things like that only if something
+is repeated.
 
->       for (int offset =3D 0; offset < payload->len; offset +=3D
-> s->transfer_len) {
->           tx =3D 0;
->           for (int i =3D 0; i < s->transfer_len; i++) {
-> @@ -235,9 +238,8 @@ static void transfer(PnvSpi *s, PnvXferBuffer *payloa=
-d)
->                       (rx >> (8 * (s->transfer_len - 1) - i * 8)) & 0xFF;
->           }
->       }
-> -    if (rsp_payload !=3D NULL) {
-> -        spi_response(s, s->N1_bits, rsp_payload);
-> -    }
-
-(So this NULL check was unnecessary in the old code.)
-
-> +    spi_response(s, s->N1_bits, rsp_payload);
-> +    pnv_spi_xfer_buffer_free(rsp_payload);
->   }
->
 > ---
->
-> I note few things is odd here:
->
-> 1/ pnv_spi_xfer_buffer_new() uses the GLib g_malloc0() call
->     while pnv_spi_xfer_buffer_free() uses plan free().
+>  hw/arm/virt-acpi-build.c | 6 +++---
+>  hw/arm/virt.c            | 7 ++++---
+>  include/hw/arm/virt.h    | 3 +++
+>  3 files changed, 10 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index e10cad86dd73..f76fb117adff 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -154,10 +154,10 @@ static void acpi_dsdt_add_gpio(Aml *scope, const MemMapEntry *gpio_memmap,
+>      aml_append(dev, aml_name_decl("_CRS", crs));
+>  
+>      Aml *aei = aml_resource_template();
+> -    /* Pin 3 for power button */
+> -    const uint32_t pin_list[1] = {3};
+> +
+> +    const uint32_t pin = GPIO_PIN_POWER_BUTTON;
+>      aml_append(aei, aml_gpio_int(AML_CONSUMER, AML_EDGE, AML_ACTIVE_HIGH,
+> -                                 AML_EXCLUSIVE, AML_PULL_UP, 0, pin_list, 1,
+> +                                 AML_EXCLUSIVE, AML_PULL_UP, 0, &pin, 1,
+>                                   "GPO0", NULL, 0));
+>      aml_append(dev, aml_name_decl("_AEI", aei));
+>  
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 719e83e6a1e7..687fe0bb8bc9 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -1004,7 +1004,7 @@ static void virt_powerdown_req(Notifier *n, void *opaque)
+>      if (s->acpi_dev) {
+>          acpi_send_event(s->acpi_dev, ACPI_POWER_DOWN_STATUS);
+>      } else {
+> -        /* use gpio Pin 3 for power button event */
+> +        /* use gpio Pin for power button event */
+>          qemu_set_irq(qdev_get_gpio_in(gpio_key_dev, 0), 1);
+>      }
+>  }
+> @@ -1013,7 +1013,8 @@ static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
+>                               uint32_t phandle)
+>  {
+>      gpio_key_dev = sysbus_create_simple("gpio-key", -1,
+> -                                        qdev_get_gpio_in(pl061_dev, 3));
+> +                                        qdev_get_gpio_in(pl061_dev,
+> +                                                         GPIO_PIN_POWER_BUTTON));
+>  
+>      qemu_fdt_add_subnode(fdt, "/gpio-keys");
+>      qemu_fdt_setprop_string(fdt, "/gpio-keys", "compatible", "gpio-keys");
+> @@ -1024,7 +1025,7 @@ static void create_gpio_keys(char *fdt, DeviceState *pl061_dev,
+>      qemu_fdt_setprop_cell(fdt, "/gpio-keys/poweroff", "linux,code",
+>                            KEY_POWER);
+>      qemu_fdt_setprop_cells(fdt, "/gpio-keys/poweroff",
+> -                           "gpios", phandle, 3, 0);
+> +                           "gpios", phandle, GPIO_PIN_POWER_BUTTON, 0);
+>  }
+>  
+>  #define SECURE_GPIO_POWEROFF 0
+> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+> index ab961bb6a9b8..a4d937ed45ac 100644
+> --- a/include/hw/arm/virt.h
+> +++ b/include/hw/arm/virt.h
+> @@ -47,6 +47,9 @@
+>  /* See Linux kernel arch/arm64/include/asm/pvclock-abi.h */
+>  #define PVTIME_SIZE_PER_CPU 64
+>  
+> +/* GPIO pins */
+> +#define GPIO_PIN_POWER_BUTTON  3
+> +
+>  enum {
+>      VIRT_FLASH,
+>      VIRT_MEM,
+> -- 
+> 2.45.2
 
-This does work (glib guarantees now that g_malloc and friends
-can be paired with free), but it is not great style.
-
-> 2/ pnv_spi_xfer_buffer_free() frees payload->data so doesn't
->     match pnv_spi_xfer_buffer_new().
-
-This part I think is OK -- the payload->data buffer is
-allocated with g_realloc(), so pnv_spi_xfer_buffer_new()
-creates a valid initial state (payload->data =3D NULL and
-payload->len =3D 0), pnv_spi_xfer_buffer_write_ptr() may
-allocate or extend the buffer (using g_realloc and
-updating the payload->len to match), and
-pnv_spi_xfer_buffer_free() will free the buffer
-(including handling the "buffer never allocated so
-payload->data =3D NULL" case, because free(NULL) is OK).
-
-What it doesn't get right I think is that when
-pnv_spi_xfer_buffer_write_ptr() extends the payload->data
-buffer it doesn't zero the newly added memory, so I think
-we might end up giving the guest back the contents of
-uninitialized memory.
-
-Another style issue is:
-    PnvXferBuffer *payload =3D g_malloc0(sizeof(*payload));
-g_new0(PnvXferBuffer, 1) is the better way to say
-"allocate me a zeroed out PnvXferBuffer", rather than
-manual use of sizeof.
-
-The various places which do
-    if (*payload =3D=3D NULL) {
-        *payload =3D pnv_spi_xfer_buffer_new();
-    }
-also look odd to me -- I'm pretty sure that
-in operation_shiftn1() and operation_shiftn2() it
-is impossible for them to be called with a NULL payload.
-
-The PnvXferBuffer struct is only 12 bytes large
-(a length and a pointer), so it seems rather overkill
-to be allocating and freeing it -- is it possible to
-have it be a local variable instead?
-
-My other question here is whether we need to be doing
-dynamic memory allocation, extension and freeing of the
-payload->data at all. This is quite an unusual thing to
-need to do in a hardware device model, because usually
-the real hardware we're modelling doesn't have infinite
-resources, it has some fixed amount of memory that it
-has to work with. If the guest can effectively ask
-us to allocate arbitrary amounts of memory, do we
-have appropriate guards in place to forbid that?
-
-Is there a datasheet for this device?
-
-thanks
--- PMM
 
