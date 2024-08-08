@@ -4,98 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47EC8C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 08:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B44C52D73
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 08:13:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbyF0-0000dm-05; Thu, 08 Aug 2024 04:11:22 -0400
+	id 1sbyGG-0005TF-DI; Thu, 08 Aug 2024 04:12:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sbyEy-0000ZK-Sj
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 04:11:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sbyEu-0001sj-7P
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 04:11:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723104673;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SNHI/L4vlvGksF8p9K8eTN2Ci20cAuoEW6eGCMZ9ao4=;
- b=DNUCfgqvVOt2ZhPV+4xa4wvQ6M6TQV717Yt+7ODKD5p1bSkla8NSZlB6zZtvrVsyMpFuG5
- cqIwa+4kx1sCEC+BC33u6vLZGoWpqrHggAn4E32TthPMYSVrJnHVVrdmh7HeFHiKhmg8Zz
- zdB88wxg88LIEKl5Bvv7c8lKubZnGfU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-64-ap2zL0_UMAu7QC9vlB5YRQ-1; Thu, 08 Aug 2024 04:11:12 -0400
-X-MC-Unique: ap2zL0_UMAu7QC9vlB5YRQ-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42820c29a76so5109465e9.2
- for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 01:11:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1sbyGF-0005Lr-5M
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 04:12:39 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1sbyGC-00021Y-5Z
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 04:12:38 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2f040733086so6607831fa.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 01:12:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1723104753; x=1723709553;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Bt4nxGBb55vV904sNvNT6wthx+qvXCFcjwq9x/M1oB0=;
+ b=Ld9t8PlZfmXrs3/2T1nsjj7MGQXIUR5nJgx4baBokZ22dy2n3UA2EIV3butTX+L7iV
+ hn8Z4b8tBbPuY0PrC0nfqENFgvL2xO44JXti2gZDWXJWh9VflDn0Mj9Siy/LRnsZZOrG
+ OWc2A1dinCVczDj2EumG1N7PAh4qTBm5CPPkpteMb5s97FapUTBFqn3ucgVn0VMZfuf7
+ qP6tBzim5+/GejgTZTt2WKWHv9suk2woT8Eg8br32RaA/UFBiisYZptkgfYdHhUOLg/o
+ AAhTMvmejmCtjjQgm15X05czOwJzErGBMhlkzbpJ/TvrKBg9Rmpwkt/QnawojmNGi4Hn
+ uirA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723104671; x=1723709471;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1723104753; x=1723709553;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SNHI/L4vlvGksF8p9K8eTN2Ci20cAuoEW6eGCMZ9ao4=;
- b=laIFUYel/xWrKZfejvUZPamqb44FQRSu56rLz9Kmhi5ECoDPLODzI0C9QnKGHfd4TB
- mMjrcTOgEZ3D/EUKTKrD3O4IX7wm2GM3RANha4M8jRTJNJsWhdPK/HgMp8/ZBZl3TZ0w
- l8joii2CtlqukAz8qDa2we6CPD/XDRaw64wjmis1dZYSxoYs+ShDu6HSMTlmOS12ac86
- VOsC3k7V+40+M4wisGKOWRjUkyJXy/b5/TenF3N7VgUDQKhfBwPvI9rhaakks9FRpvz1
- kX5EsKcu6q7WkI5d1KmzSYEAvVE3Z0au5lfvkHTIdxfPuxUTPUW5/cYsLSV9xmq06ZU3
- 6gLQ==
+ bh=Bt4nxGBb55vV904sNvNT6wthx+qvXCFcjwq9x/M1oB0=;
+ b=wGQNKHkp37z9Fe1W6dMIy3965lbMEW+uEpwHK6g/xof51wzuMiS204bU59L2hjqOjE
+ PImDKmthu1hkNoAEGF1PZCQ16dIqvMUDw3i8KZaqCJBt3QHDOZ0HcBAkyqqqzZQiwJ6r
+ 7Z6idNLrIGoWN9LUCA35IEPAIWK07sMgHz08vFWy5vcwG/4lbF8P6a/MN9pJMkZymqBS
+ vHuSB8SJc8m9rsYQ489hO33BCtT1vmqzyoj+X6qaFyDjpA/EhFj+tIn8dmQLDFqvhbfb
+ QRV4zzy4/P1AqXDVTM4XJxJrdR9OqaN2z/3w+sARJa+QWr/h+6xp/l1TLMODRoanoQ7C
+ pIvw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWF2unwNPQJiR/Oo/OECA8B82EwIg7lTWgmZeZI2vWq1EXa5bktbrJMRsTg44FDOJa6sUl2WypcwyaO//Y/r4dbdin4ad8=
-X-Gm-Message-State: AOJu0YxiNcK7dFC105q77knu15ss2Wo53wjeYSoEW18IA1B59NJ6PGyj
- uFmeeW6G7KRugNXtciFYPBC7NRTeF+7vtkibTLBPvimDzMxF/4tCHLA1GlxTSHsAHmmRBiTpE0I
- OFhpurKq01XxyGsZeoB8cJTOtOHXbu/Ui/mmhjANTfJ2Dg2GhDXT+
-X-Received: by 2002:a05:600c:4689:b0:426:647b:1bfc with SMTP id
- 5b1f17b1804b1-4290af0ff08mr7220035e9.30.1723104670896; 
- Thu, 08 Aug 2024 01:11:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFOeNai7tCrc/Ff3wEyME20VmRZuQbs+TYp64T/yY6ucAE9oqlwBRMxH7c7oo//sgO5I2OXrQ==
-X-Received: by 2002:a05:600c:4689:b0:426:647b:1bfc with SMTP id
- 5b1f17b1804b1-4290af0ff08mr7219785e9.30.1723104670279; 
- Thu, 08 Aug 2024 01:11:10 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36d2724c72asm1047259f8f.113.2024.08.08.01.11.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Aug 2024 01:11:09 -0700 (PDT)
-Date: Thu, 8 Aug 2024 10:11:07 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- <linux-kernel@vger.kernel.org>, <qemu-arm@nongnu.org>,
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v5 6/7] acpi/ghes: add support for generic error
- injection via QAPI
-Message-ID: <20240808101107.105a124f@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20240807152547.000058fd@Huawei.com>
-References: <cover.1722634602.git.mchehab+huawei@kernel.org>
- <20c491e357340e0062b6ff09867c1661ed4d2479.1722634602.git.mchehab+huawei@kernel.org>
- <20240806163113.3bdc260a@imammedo.users.ipa.redhat.com>
- <20240807152547.000058fd@Huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ AJvYcCUWDCYpyXjbN4xKdmvgKAbzzpijAdbgQ/BhWiDKByHarx1WCLrCBaB3iY/aydnFoXc9dAbiIm0e6T0+c/od4yQXS6sq/Zo=
+X-Gm-Message-State: AOJu0YxZUnQvAE/uPOVEf93ouBSj2rP2O7Ca6PXSnVklSnK73IIe4V1+
+ 9+TWTGUcTkYfhWP2wrUK7vuCjyx113uBap6JbvEucmJIVdtWbTtE1taQGIxPrW9MUj4oKLSevBZ
+ kV4qYdWkW/DTInZvLf4D+sDGTro2uI8PyIDmlsg==
+X-Google-Smtp-Source: AGHT+IEuFFUB2eZl7L6E8WGYsRYU8wgfbvZzj9tuNS2eCTyPTkdHErw8OvX+9gWRiosFpoMKLb4mHwHPrPve2iM63Zk=
+X-Received: by 2002:a05:6512:1289:b0:52e:fa5f:b6b1 with SMTP id
+ 2adb3069b0e04-530e58a33f9mr564746e87.60.1723104753241; Thu, 08 Aug 2024
+ 01:12:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240723-counter_delegation-v2-0-c4170a5348ca@rivosinc.com>
+ <20240723-counter_delegation-v2-13-c4170a5348ca@rivosinc.com>
+ <20240806-9fdad33468ec103d83a85e77@orel>
+ <3c09bbbe-857b-4566-963a-790497232bbf@ventanamicro.com>
+ <CAKmqyKNgJKBFw7OnwbgbqxA65PR4GSjdUEKdKVw-nYv+e0P58w@mail.gmail.com>
+ <CAHBxVyFFa7mQaS4jPkT=aK4gTF3AshpQZNeRhBiZOHX7bhQQsg@mail.gmail.com>
+ <CAKmqyKOX883p+sgFs6s649pkH0BA9aKcrTr7=XOT=Xy8mNLzng@mail.gmail.com>
+In-Reply-To: <CAKmqyKOX883p+sgFs6s649pkH0BA9aKcrTr7=XOT=Xy8mNLzng@mail.gmail.com>
+From: Atish Kumar Patra <atishp@rivosinc.com>
+Date: Thu, 8 Aug 2024 01:12:22 -0700
+Message-ID: <CAHBxVyHvypXN0PtxtWwZPoB3i3JRRSqn218nnURy+sD8gmqyjQ@mail.gmail.com>
+Subject: Re: [PATCH v2 13/13] target/riscv: Enable PMU related extensions to
+ preferred rule
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
+ alistair.francis@wdc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=atishp@rivosinc.com; helo=mail-lj1-x22a.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,198 +102,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 7 Aug 2024 15:25:47 +0100
-Jonathan Cameron <Jonathan.Cameron@Huawei.com> wrote:
+On Wed, Aug 7, 2024 at 5:27=E2=80=AFPM Alistair Francis <alistair23@gmail.c=
+om> wrote:
+>
+> On Wed, Aug 7, 2024 at 5:44=E2=80=AFPM Atish Kumar Patra <atishp@rivosinc=
+.com> wrote:
+> >
+> > On Tue, Aug 6, 2024 at 7:01=E2=80=AFPM Alistair Francis <alistair23@gma=
+il.com> wrote:
+> > >
+> > > On Wed, Aug 7, 2024 at 2:06=E2=80=AFAM Daniel Henrique Barboza
+> > > <dbarboza@ventanamicro.com> wrote:
+> > > >
+> > > >
+> > > >
+> > > > On 8/6/24 5:46 AM, Andrew Jones wrote:
+> > > > > On Tue, Jul 23, 2024 at 04:30:10PM GMT, Atish Patra wrote:
+> > > > >> Counter delegation/configuration extension requires the followin=
+g
+> > > > >> extensions to be enabled.
+> > > > >>
+> > > > >> 1. Smcdeleg - To enable counter delegation from M to S
+> > > > >> 2. S[m|s]csrind - To enable indirect access CSRs
+> > > > >> 3. Smstateen - Indirect CSR extensions depend on it.
+> > > > >> 4. Sscofpmf - To enable counter overflow feature
+> > > > >> 5. S[m|s]aia - To enable counter overflow feature in virtualizat=
+ion
+> > > > >> 6. Smcntrpmf - To enable privilege mode filtering for cycle/inst=
+ret
+> > > > >>
+> > > > >> While first 3 are mandatory to enable the counter delegation,
+> > > > >> next 3 set of extension are preferred to enable all the PMU rela=
+ted
+> > > > >> features.
+> > > > >
+> > > > > Just my 2 cents, but I think for the first three we can apply the=
+ concept
+> > > > > of extension bundles, which we need for other extensions as well.=
+ In those
+> > > > > cases we just auto enable all the dependencies. For the three pre=
+ferred
+> > > > > extensions I think we can just leave them off for 'base', but we =
+should
+> > > > > enable them by default for 'max' along with Ssccfg.
+> > >
+> >
+> > Max cpu will have everything enabled by default. The problem with max
+> > cpu is that you
+> > may not want to run all the available ISA extensions while testing perf=
+.
+> >
+> > > Agreed
+> > >
+> > > >
+> > > > I like this idea. I would throw in all these 6 extensions in a 'pmu=
+_advanced_ops'
+> > > > (or any other better fitting name for the bundle) flag and then 'pm=
+u_advanced_ops=3Dtrue'
+> > > > would enable all of those. 'pmu_advanced_ops=3Dtrue,smcntrpmf=3Dfal=
+se' enables all but
+> > > > 'smcntrpmf' and so on.
+> > > >
+> >
+> > I thought distinguishing preferred vs implied would be useful because
+> > it would allow the user
+> > to clearly understand which is mandated by ISA vs which would be good t=
+o have.
+>
+> It's not really clear though what extensions are good to have. Other
+> people might think differently about the extensions. It also then
+> means we end up with complex combinations of extensions to manage.
+>
+> >
+> > The good to have extensions can be disabled similar to above but not
+> > the mandatory ones.
+> >
+> > > > As long as we document what the flag is enabling I don't see any pr=
+oblems with it.
+> > > > This is how profiles are implemented after all.
+> > >
+> > > I only worry that we end up with a huge collection of flags that user=
+s
+> > > need to decipher.
+> > >
+> >
+> > My initial idea was a separate flag as well. But I was not sure if
+> > that was good for the
+> > above reason. This additional custom pmu related option would be lost
+> > in that huge collection.
+>
+> I do feel a separate flag is better than trying to guess what extra
+> extensions the user wants enabled.
+>
 
-> On Tue, 6 Aug 2024 16:31:13 +0200
-> Igor Mammedov <imammedo@redhat.com> wrote:
-> 
-> > On Fri,  2 Aug 2024 23:44:01 +0200
-> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> >   
-> > > Provide a generic interface for error injection via GHESv2.
-> > > 
-> > > This patch is co-authored:
-> > >     - original ghes logic to inject a simple ARM record by Shiju Jose;
-> > >     - generic logic to handle block addresses by Jonathan Cameron;
-> > >     - generic GHESv2 error inject by Mauro Carvalho Chehab;
-> > > 
-> > > Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > Co-authored-by: Shiju Jose <shiju.jose@huawei.com>
-> > > Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > Cc: Shiju Jose <shiju.jose@huawei.com>
-> > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > ---
-> > >  hw/acpi/ghes.c         | 159 ++++++++++++++++++++++++++++++++++++++---
-> > >  hw/acpi/ghes_cper.c    |   2 +-
-> > >  include/hw/acpi/ghes.h |   3 +
-> > >  3 files changed, 152 insertions(+), 12 deletions(-)
-> > > 
-> > > diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> > > index a745dcc7be5e..e125c9475773 100644
-> > > --- a/hw/acpi/ghes.c
-> > > +++ b/hw/acpi/ghes.c
-> > > @@ -395,23 +395,22 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-> > >      ags->present = true;
-> > >  }
-> > >  
-> > > +static uint64_t ghes_get_state_start_address(void)    
-> > 
-> > ghes_get_hardware_errors_address() might better reflect what address it will return
-> >   
-> > > +{
-> > > +    AcpiGedState *acpi_ged_state =
-> > > +        ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED, NULL));
-> > > +    AcpiGhesState *ags = &acpi_ged_state->ghes_state;
-> > > +
-> > > +    return le64_to_cpu(ags->ghes_addr_le);
-> > > +}
-> > > +
-> > >  int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
-> > >  {
-> > >      uint64_t error_block_addr, read_ack_register_addr, read_ack_register = 0;
-> > > -    uint64_t start_addr;
-> > > +    uint64_t start_addr = ghes_get_state_start_address();
-> > >      bool ret = -1;
-> > > -    AcpiGedState *acpi_ged_state;
-> > > -    AcpiGhesState *ags;
-> > > -
-> > >      assert(source_id < ACPI_HEST_SRC_ID_RESERVED);
-> > >  
-> > > -    acpi_ged_state = ACPI_GED(object_resolve_path_type("", TYPE_ACPI_GED,
-> > > -                                                       NULL));
-> > > -    g_assert(acpi_ged_state);
-> > > -    ags = &acpi_ged_state->ghes_state;
-> > > -
-> > > -    start_addr = le64_to_cpu(ags->ghes_addr_le);
-> > > -
-> > >      if (physical_address) {
-> > >          start_addr += source_id * sizeof(uint64_t);    
-> > 
-> > above should be a separate patch
-> >   
-> > >  
-> > > @@ -448,9 +447,147 @@ int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
-> > >      return ret;
-> > >  }
-> > >  
-> > > +/*
-> > > + * Error register block data layout
-> > > + *
-> > > + * | +---------------------+ ges.ghes_addr_le
-> > > + * | |error_block_address0 |
-> > > + * | +---------------------+
-> > > + * | |error_block_address1 |
-> > > + * | +---------------------+ --+--
-> > > + * | |    .............    | GHES_ADDRESS_SIZE
-> > > + * | +---------------------+ --+--
-> > > + * | |error_block_addressN |
-> > > + * | +---------------------+
-> > > + * | | read_ack0           |
-> > > + * | +---------------------+ --+--
-> > > + * | | read_ack1           | GHES_ADDRESS_SIZE
-> > > + * | +---------------------+ --+--
-> > > + * | |   .............     |
-> > > + * | +---------------------+
-> > > + * | | read_ackN           |
-> > > + * | +---------------------+ --+--
-> > > + * | |      CPER           |   |
-> > > + * | |      ....           | GHES_MAX_RAW_DATA_LENGT
-> > > + * | |      CPER           |   |
-> > > + * | +---------------------+ --+--
-> > > + * | |    ..........       |
-> > > + * | +---------------------+
-> > > + * | |      CPER           |
-> > > + * | |      ....           |
-> > > + * | |      CPER           |
-> > > + * | +---------------------+
-> > > + */    
-> > 
-> > no need to duplicate docs/specs/acpi_hest_ghes.rst,
-> > I'd just reffer to it and maybe add short comment as to why it's mentioned.
-> >   
-> > > +/* Map from uint32_t notify to entry offset in GHES */
-> > > +static const uint8_t error_source_to_index[] = { 0xff, 0xff, 0xff, 0xff,
-> > > +                                                 0xff, 0xff, 0xff, 1, 0};
-> > > +
-> > > +static bool ghes_get_addr(uint32_t notify, uint64_t *error_block_addr,
-> > > +                          uint64_t *read_ack_addr)
-> > > +{
-> > > +    uint64_t base;
-> > > +
-> > > +    if (notify >= ACPI_GHES_NOTIFY_RESERVED) {
-> > > +        return false;
-> > > +    }
-> > > +
-> > > +    /* Find and check the source id for this new CPER */
-> > > +    if (error_source_to_index[notify] == 0xff) {
-> > > +        return false;
-> > > +    }
-> > > +
-> > > +    base = ghes_get_state_start_address();
-> > > +
-> > > +    *read_ack_addr = base +
-> > > +        ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t) +
-> > > +        error_source_to_index[notify] * sizeof(uint64_t);
-> > > +
-> > > +    /* Could also be read back from the error_block_address register */
-> > > +    *error_block_addr = base +
-> > > +        ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t) +
-> > > +        ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t) +
-> > > +        error_source_to_index[notify] * ACPI_GHES_MAX_RAW_DATA_LENGTH;
-> > > +
-> > > +    return true;
-> > > +}    
-> > 
-> > I don't like all this pointer math, which is basically a reverse engineered
-> > QEMU actions on startup + guest provided etc/hardware_errors address.
-> > 
-> > For once, it assumes error_source_to_index[] matches order in which HEST
-> > error sources were described, which is fragile.
-> > 
-> > 2nd: migration-wive it's disaster, since old/new HEST/hardware_errors tables
-> > in RAM migrated from older version might not match above assumptions
-> > of target QEMU. 
-> > 
-> > I see 2 ways to rectify it:
-> >   1st: preferred/cleanest would be to tell QEMU (via fw_cfg) address of HEST table
-> >        in guest RAM, like we do with etc/hardware_errors, see
-> >             build_ghes_error_table()
-> >                ...
-> >                tell firmware to write hardware_errors GPA into
-> >        and then fetch from HEST table in RAM, the guest patched error/ack addresses
-> >        for given source_id
-> > 
-> >        code-wise: relatively simple once one wraps their own head over
-> >                  how this whole APEI thing works in QEMU
-> >                  workflow  is described in docs/specs/acpi_hest_ghes.rst
-> >                  look to me as sufficient to grasp it.
-> >                  (but my view is very biased given my prior knowledge,
-> >                   aka: docs/comments/examples wrt acpi patching are good enough)
-> >                  (if it's not clear how to do it, ask me for pointers)  
-> 
-> Hi Igor, I think I follow what you mean but maybe this question will reveal
-> otherwise.  HEST is currently in ACPI_BUILD_TABLE_FILE.
-> Would you suggest splitting it to it's own file, or using table_offsets
-> to get the offset in ACPI_BUILD_TABLE_FILE GPA?
-yep, offset taken right before HEST is to be created
-doc comment for bios_linker_loader_write_pointer() explains how it works
-
-we need something like:
-       bios_linker_loader_write_pointer(linker,
-           ACPI_HEST_TABLE_ADDR_FW_CFG_FILE, 0, sizeof(uint64_t),
-           ACPI_BUILD_TABLE_FILE, hest_offset_within_ACPI_BUILD_TABLE_FILE); 
-
-to register new file see:
-   a08a64627 ACPI: Record the Generic Error Status Block address
-   and to avoid copy past error maybe
-   136fc6aa2 ACPI: Avoid infinite recursion when dump-vmstat
-for this needs to be limited to new machine types and keep
-old ones without this new feature. (I'd use hw_compat_ machinery for that)
-
-while at it we should rename
-  ACPI_GHES_DATA_ADDR_FW_CFG_FILE -> ACPI_GHES_ERRORS_ADDR_FW_CFG_FILE
+Sure. A separate pmu flag that enables all available pmu related
+extensions - Correct ?
+Do you prefer to have those enabled via a separate preferred rule or
+just reuse the implied
+rule ? I can drop the preferred rule patches for the later case.
 
 
+> I don't love either though, isn't this what profiles is supposed to fix!
+>
+
+Yeah. But given the optionality in profiles, I am sure if it will fix
+the ever growing
+extension dependency graph problem ;)
+
+> >
+> > > I guess with some good documentation this wouldn't be too confusing t=
+hough.
+> > >
+> >
+> > Sure. It won't be confusing but most users may not even know about it
+> > without digging.
+>
+> At that point they can use the max CPU or just manually enable the
+> extensions though.
+>
+
+If everybody thinks max CPU is going to be used more frequently in the
+future, I am okay with
+that as well. Implied rule will only specify mandatory extensions
+defined by ISA.
+
+It's up to the user to figure out the extensions names and enable them
+individually if max CPU
+is not used.
+FYI: There are at least 6 more PMU related extensions that this series
+did not specify.
+~4 are being discussed in the RVI TG(precise event sampling, events)
+and 2 are frozen (Smctr/Ssctr)
+
+> Alistair
+>
+> > That's why I chose to use a standard extension which covers the basic
+> > PMU access directly in S-mode.
+> >
+> > The future extensions such as CTR or Sampling events would also
+> > benefit by just adding the Ssccfg in the preferred rule
+> > which in turn will enable other preferred/mandatory extensions.
+> >
+> > > Alistair
+> > >
+> > > >
+> > > > With this bundle we can also use implied rule only if an extension =
+really needs
+> > > > (i.e. it breaks without) a dependency being enabled, instead of ove=
+rloading it
+> > > > with extensions that 'would be nice to have together' like it seems=
+ to be the
+> > > > case for the last 3 extensions in that list.
+> > > >
+> > > > I believe users would benefit more from a single flag to enable eve=
+rything and
+> > > > be done with it.
+> > > >
+> > > >
+> > > > Thanks,
+> > > >
+> > > > Daniel
 
