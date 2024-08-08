@@ -4,138 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BADF0C52D73
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 08:13:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF534C52D73
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 08:20:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbyHC-0001Fp-Bz; Thu, 08 Aug 2024 04:13:38 -0400
+	id 1sbyNL-0008Vv-M9; Thu, 08 Aug 2024 04:19:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sbyHA-00019T-4q
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 04:13:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sbyH8-0002DQ-Fb
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 04:13:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723104812;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=J2+NsmVim3wK/ciEY/L/fZvVJH9Y3K6P0EwD9FXx3Rc=;
- b=T0u6LN6fqlS/jNPXQz1hwbg4AynvC4gT34kIU+J3zfsIT6pFUR9WNb9PPpENnjrUZbQTAz
- ukuNteoJlirSqzDr3UMWKhuCc+S3kgnreBZaF4+WnEFFNQrU+koo7MbODNNuhSOre9NGsO
- OxnSVoimem0z2x3KoRGPuGEUbZzLaao=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-67-L0fScBLcPcSMzcNg4pehPg-1; Thu, 08 Aug 2024 04:13:31 -0400
-X-MC-Unique: L0fScBLcPcSMzcNg4pehPg-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a7aa56d8b14so51764166b.1
- for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 01:13:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
+ id 1sbyNJ-0008Ui-3y
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 04:19:57 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
+ id 1sbyNH-0003A2-BW
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 04:19:56 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-1fee6435a34so6759075ad.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 01:19:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1723105193; x=1723709993; darn=nongnu.org;
+ h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=s4IVICnKBDGToZiRNkgCrHpEgHxCfbvAO2rD8MJGZ60=;
+ b=b6TiViIy2KNT1T6WR+rJhI3+JGFT/cDxmBlYgBeERt4oe76oTl51uKDt47eiAoA5vn
+ cskcvEsUyIqE6Qh0hKfBZfWNb5qxSgUOcWZXFyVlww1ApRDSDaE70J1U286al95nqvSz
+ Yywf0iYbLuyYb9VgRMKswjaqACgsf+Ga5wyP/fKu5ngnrRmdggKVrcJmUSIk2pYOlt93
+ Curt6Q6dhkkJCnR8zmEL/UhKi03o7JoBwq2C0BBfAjLxBlh1AuWw8Dm8pdHuTnOO/t8Y
+ 97VWcUlWjo5P4ei2mzcMQiFhfMBiD/U9Wc5gbTvZpM7CR9auXBqZ2ZCYVGfzbAmaNNRW
+ lX+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723104810; x=1723709610;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=J2+NsmVim3wK/ciEY/L/fZvVJH9Y3K6P0EwD9FXx3Rc=;
- b=NL+q3z8B9mAbFsE7A1627bOXW1bN79oaN9lWwwee9oy8lqmVyQFid6Jw0nfw6HD9q3
- lvxlEDiMnN4cm8/8/W2C9+CWmG576FiHqYUPKWOXGzs5SSOZAKgwvQrWJM+8K+5d07MW
- muL3oXGrZ0hmKPyOUAdkcKoX4MaYPtsr56szdq4Ukws4aELUE2LsmpdMv5a4pHnp99nx
- V7VTBVxGtMOwrQexNcS5rDYVaGg9e2Mv9ayFDPS2ev1qMlGjZSdFyHS0UZDnxC4KrNTB
- ylmkApDdLdw0Z5y5QFYdKYO7/M/X4Yh6njy/5nUgsYM6bn48jG8Gh7T4KW7YMFjDIl+p
- N2fQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVp99SLYtC71+bEu02gli5TnTNLUOcXi++jgp88u68nhiG83SxVl8o81pkVYi6VNLhGAlVveaycPTI6KIfz6zuYK9z01u8=
-X-Gm-Message-State: AOJu0YzqQNj4Uc5pTC/DUFrxII+4W993rMqRhZhVgTeznwab5AA9PyvT
- LClSIuHdvZKnwNjfy7vIUs4wA8NyqjnMp3bXAhoMkID1uvQiCWxhe68chpacpbkZvgHNOIn2/za
- FqoF8NmV16nJfbN3IXabH4pveU+wrRIcPOng6OIjEL63RvXZlCpwN
-X-Received: by 2002:a17:907:7f88:b0:a7a:a3f7:389e with SMTP id
- a640c23a62f3a-a8090c23970mr83132666b.6.1723104810015; 
- Thu, 08 Aug 2024 01:13:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFFQxtDzCTg5UODZTJNYM+4fmFrlL90pmaAePCibZ4UCT3uPxPZNQ0OuqAkX5ZvbHqeKUzbqg==
-X-Received: by 2002:a17:907:7f88:b0:a7a:a3f7:389e with SMTP id
- a640c23a62f3a-a8090c23970mr83129566b.6.1723104809533; 
- Thu, 08 Aug 2024 01:13:29 -0700 (PDT)
-Received: from [10.168.67.37] ([131.175.147.29])
- by smtp.googlemail.com with ESMTPSA id
- a640c23a62f3a-a7dc9d547f7sm730246866b.140.2024.08.08.01.13.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Aug 2024 01:13:29 -0700 (PDT)
-Message-ID: <dd482f9d-006c-4c32-9fcc-93a8006c9f60@redhat.com>
-Date: Thu, 8 Aug 2024 10:13:24 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v6 4/5] rust: add crate to expose bindings and
- interfaces
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
- Richard Henderson <richard.henderson@linaro.org>
-References: <rust-pl011-rfc-v6.git.manos.pitsidianakis@linaro.org>
- <rust-pl011-rfc-v6-4.git.manos.pitsidianakis@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <rust-pl011-rfc-v6-4.git.manos.pitsidianakis@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+ d=1e100.net; s=20230601; t=1723105193; x=1723709993;
+ h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=s4IVICnKBDGToZiRNkgCrHpEgHxCfbvAO2rD8MJGZ60=;
+ b=DjdZPD7f0FWbGdOc+JsxVjftk2wJ4YAEHpjjVlAIG7T4zG/sgqFgCp43+IJmDquCwi
+ w9RKuqGe/Q6AZqrhKyVya418w0ZZ+EYFtWJAD4N9V8L1qncX50BQDyW4mLtUvdsyrx9M
+ EZY2ZsshK6az+uTZNsALmMikW0D1Nv4IrbcR0BFrLdhzCaxql3g62p+OCIsPIObd6spN
+ p0z1K1hyy/2EXG31VW+8w3XpV6h7vUNkykJcVCgXyr1VwiO2oLnBve/VaK16q7fLpTRF
+ /lBPUdOVeCGZUwmKMN8RIMDDciykW5kjKbwSCn2KYpEhn20yoG5QzTLvQ38RN5F19Dxo
+ cHIQ==
+X-Gm-Message-State: AOJu0Yw5zj7b0B3Gn/O02aStdxQ+5KsgZ7g0oIFUxLtR6/xQxf2He4Xr
+ NFzZaBc0ezjqwoBRhD4pK0BuIgEH6kYPKLbSQ96nq1o86u/rP4rLiZrk74BWSu+fFoBKEqQ0FE/
+ EAAirogPPK0VbLur3a+zm1YYGUbnF3U8ABLrgcLUa7TgDEwtb+sVTMz9aNc4XOAty0oIngiVVYA
+ OH4oTlqWoXn5RkCwiMAcOh1P0lbuMEJ9XLdEvBkapqpqp4
+X-Google-Smtp-Source: AGHT+IGjTqID8R0BzWgp5kb/LmJIs986yOGx1DkSGBR+LogGpuwWuqk8MmnulaCOhc4ss0s//nul8Q==
+X-Received: by 2002:a17:903:22c5:b0:1fb:67e0:2e0a with SMTP id
+ d9443c01a7336-200952bf772mr13092795ad.48.1723105193066; 
+ Thu, 08 Aug 2024 01:19:53 -0700 (PDT)
+Received: from hsinchu26.internal.sifive.com
+ (59-124-168-89.hinet-ip.hinet.net. [59.124.168.89])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2007728d837sm47281655ad.84.2024.08.08.01.19.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Aug 2024 01:19:52 -0700 (PDT)
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: greentime.hu@sifive.com, vincent.chen@sifive.com, frank.chang@sifive.com,
+ jim.shu@sifive.com, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH 1/1] hw/intc/riscv_aplic: Check and update pending when write
+ sourcecfg
+Date: Thu,  8 Aug 2024 16:19:47 +0800
+Message-Id: <20240808081948.25837-1-yongxuan.wang@sifive.com>
+X-Mailer: git-send-email 2.17.1
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=yongxuan.wang@sifive.com; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,17 +98,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/4/24 23:04, Manos Pitsidianakis wrote:
-> diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-> new file mode 100644
-> index 0000000000..7992dc64ce
-> --- /dev/null
-> +++ b/rust/qemu-api/meson.build
-> @@ -0,0 +1,19 @@
-> +add_languages('rust', required: true)
+The section 4.5.2 of the RISC-V AIA specification says that any write
+to a sourcecfg register of an APLIC might (or might not) cause the
+corresponding interrupt-pending bit to be set to one if the rectified
+input value is high (= 1) under the new source mode.
 
-Not needed.
+If an interrupt is asserted before the driver configs its interrupt
+type to APLIC, it's pending bit will not be set except a relevant
+write to a setip or setipnum register. When we write the interrupt
+type to sourcecfg register, if the APLIC device doesn't check
+rectified input value and update the pending bit, this interrupt
+might never becomes pending.
 
-Paolo
+For APLIC.m, we can manully set pending by setip or setipnum
+registers in driver. But for APLIC.w, the pending status totally
+depends on the rectified input value, we can't control the pending
+status via mmio registers. In this case, hw should check and update
+pending status for us when writing sourcecfg registers.
+
+Update QEMU emulation to handle "pre-existing" interrupts.
+
+Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+---
+ hw/intc/riscv_aplic.c | 49 +++++++++++++++++++++++++++----------------
+ 1 file changed, 31 insertions(+), 18 deletions(-)
+
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index 32edd6d07bb3..2a9ac76ce92e 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -159,31 +159,41 @@ static bool is_kvm_aia(bool msimode)
+     return kvm_irqchip_in_kernel() && msimode;
+ }
+ 
++static bool riscv_aplic_irq_rectified_val(RISCVAPLICState *aplic,
++                                          uint32_t irq)
++{
++    uint32_t sourcecfg, sm, raw_input, irq_inverted;
++
++    if (!irq || aplic->num_irqs <= irq) {
++        return false;
++    }
++
++    sourcecfg = aplic->sourcecfg[irq];
++    if (sourcecfg & APLIC_SOURCECFG_D) {
++        return false;
++    }
++
++    sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
++    if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
++        return false;
++    }
++
++    raw_input = (aplic->state[irq] & APLIC_ISTATE_INPUT) ? 1 : 0;
++    irq_inverted = (sm == APLIC_SOURCECFG_SM_LEVEL_LOW ||
++                    sm == APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
++    return !!(raw_input ^ irq_inverted);
++}
++
+ static uint32_t riscv_aplic_read_input_word(RISCVAPLICState *aplic,
+                                             uint32_t word)
+ {
+-    uint32_t i, irq, sourcecfg, sm, raw_input, irq_inverted, ret = 0;
++    uint32_t i, irq, rectified_val, ret = 0;
+ 
+     for (i = 0; i < 32; i++) {
+         irq = word * 32 + i;
+-        if (!irq || aplic->num_irqs <= irq) {
+-            continue;
+-        }
+-
+-        sourcecfg = aplic->sourcecfg[irq];
+-        if (sourcecfg & APLIC_SOURCECFG_D) {
+-            continue;
+-        }
+-
+-        sm = sourcecfg & APLIC_SOURCECFG_SM_MASK;
+-        if (sm == APLIC_SOURCECFG_SM_INACTIVE) {
+-            continue;
+-        }
+ 
+-        raw_input = (aplic->state[irq] & APLIC_ISTATE_INPUT) ? 1 : 0;
+-        irq_inverted = (sm == APLIC_SOURCECFG_SM_LEVEL_LOW ||
+-                        sm == APLIC_SOURCECFG_SM_EDGE_FALL) ? 1 : 0;
+-        ret |= (raw_input ^ irq_inverted) << i;
++        rectified_val = riscv_aplic_irq_rectified_val(aplic, irq);
++        ret |= rectified_val << i;
+     }
+ 
+     return ret;
+@@ -702,6 +712,9 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
+             (aplic->sourcecfg[irq] == 0)) {
+             riscv_aplic_set_pending_raw(aplic, irq, false);
+             riscv_aplic_set_enabled_raw(aplic, irq, false);
++        } else {
++            if (riscv_aplic_irq_rectified_val(aplic, irq))
++                riscv_aplic_set_pending_raw(aplic, irq, true);
+         }
+     } else if (aplic->mmode && aplic->msimode &&
+                (addr == APLIC_MMSICFGADDR)) {
+-- 
+2.17.1
 
 
