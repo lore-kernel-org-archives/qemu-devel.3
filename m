@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A80EC52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 15:14:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C5EBC52D7B
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 15:14:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc4pl-0007Up-M5; Thu, 08 Aug 2024 11:13:45 -0400
+	id 1sc4pm-0007Wu-Ei; Thu, 08 Aug 2024 11:13:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
- id 1sc4ph-0007Rr-8f
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 11:13:41 -0400
-Received: from esa8.hc1455-7.c3s2.iphmx.com ([139.138.61.253])
+ id 1sc4pj-0007SA-Fy
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 11:13:44 -0400
+Received: from esa7.hc1455-7.c3s2.iphmx.com ([139.138.61.252])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruansy.fnst@fujitsu.com>)
- id 1sc4pe-0003aE-SV
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 11:13:41 -0400
+ id 1sc4ph-0003aC-Ec
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 11:13:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
  d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1723130018; x=1754666018;
+ t=1723130021; x=1754666021;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=KgIqmjD+KlW1kjDaEXej5x0fZ6oZID/cY1gsTrU8Dv4=;
- b=QqhsuvQdaFcqxKbI1PIXAaSOIEjr1nw2VbY0INvDmxRF5+aC0cTxGd4W
- jLXUPfLFy7mAeY4+wvR6AkY+HMdNq6iOvcL40S+U2RcrTLnEpOx1K8hjh
- aGGFr2U26X7+H1FdgE3tFswtOvMraUWhBBcmJwD9Q1k9S6SlFIHz25oEy
- 4iFMH5vNOG60DKQlNc1DiBzw9Oi9qQvgDx7duYQSU1nQWzO8a4V4lE+05
- vDEjoOF9RowQYaOZixrLul9JMSUeCk9qwbSaTUNFbdCPiLNl2joWbRgcB
- KlSV9LgkLrNDLzmn8PlNK4IORvX88XbnvvCIKaoJSq8WXqRXtP7PGwMq5 Q==;
-X-CSE-ConnectionGUID: PT6NJYJVSF6qGHp4sEnH4Q==
-X-CSE-MsgGUID: Ktoe5StSRgS7qdKTpskvUA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11158"; a="158186002"
-X-IronPort-AV: E=Sophos;i="6.09,273,1716217200"; d="scan'208";a="158186002"
+ bh=V+txiutig01/lSTX5GU2xXQ/Ecok4xMPvtbSdLTFmbo=;
+ b=VX6cGIvwEM+/7r3I4woMezNTdLGCLlr956v/q0fYgXB6Tw0yOaRgZEdg
+ keywRUx7OwhsqfrV93eL1Xk1X3JXXbWkqJriIHWvUEqEYpgZ2QJuvRXpl
+ DWzRwQuL7vpCORN6xpQmN9f5gtfjvIrq2n+rc5+lcIccz3CRUf7NhX3B0
+ CAs1O/USddcqNUCYzkkVfpn7bMtopWIdfUy0SGnZECQzp49Z8rZtuWxhD
+ HPt0PmLr/KMrhoZPF7w9rbz27ErnNtSj6ZnR2U6dT0qmqz/S+E/QSSQ+o
+ jelotvRPXS2mKbnDKqxv4adwTMxKVUTk8aFv29hDXcWrUl0cXUfftzbDm A==;
+X-CSE-ConnectionGUID: ilYVxy5FRACsZ9iQlYsFbg==
+X-CSE-MsgGUID: im06xqi4SACZSi97ETaLnQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11158"; a="149069156"
+X-IronPort-AV: E=Sophos;i="6.09,273,1716217200"; d="scan'208";a="149069156"
 Received: from unknown (HELO yto-r1.gw.nic.fujitsu.com) ([218.44.52.217])
- by esa8.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Aug 2024 00:13:34 +0900
+ by esa7.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Aug 2024 00:13:35 +0900
 Received: from yto-m4.gw.nic.fujitsu.com (yto-nat-yto-m4.gw.nic.fujitsu.com
  [192.168.83.67])
- by yto-r1.gw.nic.fujitsu.com (Postfix) with ESMTP id B5DB2D5A46
- for <qemu-devel@nongnu.org>; Fri,  9 Aug 2024 00:13:32 +0900 (JST)
+ by yto-r1.gw.nic.fujitsu.com (Postfix) with ESMTP id 79834D9041
+ for <qemu-devel@nongnu.org>; Fri,  9 Aug 2024 00:13:33 +0900 (JST)
 Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
  [192.51.206.22])
- by yto-m4.gw.nic.fujitsu.com (Postfix) with ESMTP id F3394D3F20
- for <qemu-devel@nongnu.org>; Fri,  9 Aug 2024 00:13:31 +0900 (JST)
+ by yto-m4.gw.nic.fujitsu.com (Postfix) with ESMTP id BA6F3D3F20
+ for <qemu-devel@nongnu.org>; Fri,  9 Aug 2024 00:13:32 +0900 (JST)
 Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 6F33C2289DA
- for <qemu-devel@nongnu.org>; Fri,  9 Aug 2024 00:13:31 +0900 (JST)
+ by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 2C81F229368
+ for <qemu-devel@nongnu.org>; Fri,  9 Aug 2024 00:13:32 +0900 (JST)
 Received: from irides.g08.fujitsu.local (unknown [10.167.226.114])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id 8C5951A000C;
- Thu,  8 Aug 2024 23:13:30 +0800 (CST)
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id 4D8B81A000A;
+ Thu,  8 Aug 2024 23:13:31 +0800 (CST)
 To: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
  linux-edac@vger.kernel.org, linux-mm@kvack.org, dan.j.williams@intel.com,
  vishal.l.verma@intel.com, Jonathan.Cameron@huawei.com,
@@ -61,9 +61,9 @@ Cc: bp@alien8.de, dave.jiang@intel.com, dave@stgolabs.net, ira.weiny@intel.com,
  james.morse@arm.com, linmiaohe@huawei.com, mchehab@kernel.org,
  nao.horiguchi@gmail.com, rric@kernel.org, tony.luck@intel.com,
  ruansy.fnst@fujitsu.com
-Subject: [PATCH v4 1/2] cxl/core: introduce device reporting poison hanlding
-Date: Thu,  8 Aug 2024 23:13:27 +0800
-Message-Id: <20240808151328.707869-2-ruansy.fnst@fujitsu.com>
+Subject: [PATCH v4 2/2] cxl: avoid duplicated report from MCE & device
+Date: Thu,  8 Aug 2024 23:13:28 +0800
+Message-Id: <20240808151328.707869-3-ruansy.fnst@fujitsu.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240808151328.707869-1-ruansy.fnst@fujitsu.com>
 References: <20240808151328.707869-1-ruansy.fnst@fujitsu.com>
@@ -73,18 +73,17 @@ X-TM-AS-GCONF: 00
 X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28584.000
 X-TM-AS-User-Approved-Sender: Yes
 X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28584.000
-X-TMASE-Result: 10--14.315400-10.000000
-X-TMASE-MatchedRID: xXA8JSLb31sZHQl0dvECsQ0QY5VnQyAN9LMB0hXFSeinw6VQ+/MY/aJf
- gPmvd/XOfBnw4TEwb3JFUO4Lwe1qd/mi+iQw41eA/sUSFaCjTLw7x+Tuf7McDOjMOEZ5AL0SmRD
- Sh3pCEkOqbnUbIrDbhZdYXl3VkvoTqUUaBCb+VbHEOJqSsn5KmRYHLuVbwKXA33Nl3elSfsqyEH
- XzDCqxQcYS7GmsALUGD+giDHW5zvvQ9t8zINQJxDe9MF4SNA1+eF6MevMVZUDWeQtrcncLfegoS
- vaKsl/kIvrftAIhWmLy9zcRSkKatcOJmY4XRXkVyRfzRkrgkUH5UnqVnIHSzyxMw0FMkBlZLy7E
- GpbOGkod28lWFjU6v6bDnpxC0iz1mtdd6hGWj/x1e7Xbb6Im2resiCwR1MqZemnPKw9dcAo7/6w
- m+1WoGTE7bCG779IoSUJkKHLyNuXlFpsfMgM6DNyBRU/cKn690VvRkjCHhK6bKItl61J/yZ+inT
- K0bC9eKrauXd3MZDX+2MfnmxupmrdgHidVdLaElLjCcbrd1WCkN9kx8PZr3bjg6uqJ6r4l
+X-TMASE-Result: 10--16.139300-10.000000
+X-TMASE-MatchedRID: mBR/8PU27l8ZHQl0dvECsazGfgakLdjaKQNhMboqZlpqrsOvUFEKy3kY
+ O/9k4Xg2bn+bq+W8j6XQJxNDXN5QxO4rOj+PdZuMVnzlQiaE21qxXA8wqNmbVrwYtb0g7Ywtu0m
+ nSBAOWht+3E64qYVhyfoS5B31PW6f3tF9vYxzQ43wgrvJFY9E0Vvh1cEykiSGLX3qyf3ewG+qbv
+ 7m/AcFJSbOYzaQt2Phra3G1NjT5m2njNSDi/vkV02xVQmDwU6mCZa9cSpBObnAuQ0xDMaXkH4qt
+ YI9sRE/4K9FmervsqWylFSPywhifTBF72xzhJLNyRfzRkrgkUHzWEMQjooUzbs3Yh2IOCYz/svd
+ Vly7w9ldRSgb+5TWboftADTYJ316uybvDkIalGDHyCtnYFmFhoIw3bnTjwR6icvz9DxarMGk86u
+ MB98iNvBn25uFP/vzYcMGA+vBhspccQ8eam5EfRRFJJyf5BJe3QfwsVk0UbslCGssfkpInQ==
 X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-Received-SPF: pass client-ip=139.138.61.253;
- envelope-from=ruansy.fnst@fujitsu.com; helo=esa8.hc1455-7.c3s2.iphmx.com
+Received-SPF: pass client-ip=139.138.61.252;
+ envelope-from=ruansy.fnst@fujitsu.com; helo=esa7.hc1455-7.c3s2.iphmx.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -109,229 +108,257 @@ From:  Shiyang Ruan via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CXL device can find&report memory problems, even before MCE is detected
-by CPU.  AFAIK, the current kernel only traces POISON error event
-from FW-First/OS-First path, but it doesn't handle them, neither
-notify processes who are using the POISON page like MCE does.
-
-Thus, user have to read logs from trace and find out which device
-reported the error and which applications are affected.  That is not
-an easy work and cannot be handled in time.  Thus, it is needed to add
-the feature to make the work done automatically and quickly.  Once CXL
-device reports the POISON error (via FW-First/OS-First), kernel
-handles it immediately, similar to the flow when a MCE is triggered.
-
-The current call trace of error reporting&handling looks like this:
+Since CXL device is a memory device, while CPU is consuming a poison
+page of CXL device, it always triggers a MCE (via interrupt #18) and
+calls memory_failure() to handle POISON page, no matter which-First path
+is configured.  CXL device could also find and report the POISON, kernel
+now not only traces but also calls memory_failure() to handle it, which
+is marked as "NEW" in the figure blow.
 ```
 1.  MCE (interrupt #18, while CPU consuming POISON)
      -> do_machine_check()
        -> mce_log()
          -> notify chain (x86_mce_decoder_chain)
-           -> memory_failure()
-
+           -> memory_failure() <---------------------------- EXISTS
 2.a FW-First (optional, CXL device proactively find&report)
      -> CXL device -> Firmware
        -> OS: ACPI->APEI->GHES->CPER -> CXL driver -> trace
                                                   \-> memory_failure()
-                                                      ^----- ADD
+                                                      ^----- NEW
 2.b OS-First (optional, CXL device proactively find&report)
      -> CXL device -> MSI
        -> OS: CXL driver -> trace
                         \-> memory_failure()
-                            ^------------------------------- ADD
+                            ^------------------------------- NEW
 ```
-This patch adds calling memory_failure() while CXL device reporting
-error is received, marked as "ADD" in figure above.
+
+But in this way, the memory_failure() could be called twice or even at
+same time, as is shown in the figure above: (1.) and (2.a or 2.b),
+before the POISON page is cleared.  memory_failure() has it own mutex
+lock so it actually won't be called at same time and the later call
+could be avoided because HWPoison bit has been set.  However, assume
+such a scenario, "CXL device reports POISON error" triggers 1st call,
+user see it from log and want to clear the poison by executing `cxl
+clear-poison` command, and at the same time, a process tries to access
+this POISON page, which triggers MCE (it's the 2nd call).  Since there
+is no lock between the 2nd call with clearing poison operation, race
+condition may happen, which may cause HWPoison bit of the page in an
+unknown state.
+
+Thus, we have to avoid the 2nd call. This patch[2] introduces a new
+notifier_block into `x86_mce_decoder_chain` and a POISON cache list, to
+stop the 2nd call of memory_failure(). It checks whether the current
+poison page has been reported (if yes, stop the notifier chain, don't
+call the following memory_failure() to report again).
 
 Signed-off-by: Shiyang Ruan <ruansy.fnst@fujitsu.com>
 ---
- drivers/cxl/core/mbox.c   | 75 ++++++++++++++++++++++++++++++++-------
- drivers/cxl/cxlmem.h      |  8 ++---
- drivers/cxl/pci.c         |  4 +--
- include/linux/cxl-event.h | 16 ++++++++-
- 4 files changed, 83 insertions(+), 20 deletions(-)
+ arch/x86/include/asm/mce.h |   1 +
+ drivers/cxl/core/mbox.c    | 115 +++++++++++++++++++++++++++++++++++++
+ drivers/cxl/core/memdev.c  |   6 +-
+ drivers/cxl/cxlmem.h       |   3 +
+ 4 files changed, 124 insertions(+), 1 deletion(-)
 
+diff --git a/arch/x86/include/asm/mce.h b/arch/x86/include/asm/mce.h
+index 3ad29b128943..5da45e870858 100644
+--- a/arch/x86/include/asm/mce.h
++++ b/arch/x86/include/asm/mce.h
+@@ -182,6 +182,7 @@ enum mce_notifier_prios {
+ 	MCE_PRIO_NFIT,
+ 	MCE_PRIO_EXTLOG,
+ 	MCE_PRIO_UC,
++	MCE_PRIO_CXL,
+ 	MCE_PRIO_EARLY,
+ 	MCE_PRIO_CEC,
+ 	MCE_PRIO_HIGHEST = MCE_PRIO_CEC
 diff --git a/drivers/cxl/core/mbox.c b/drivers/cxl/core/mbox.c
-index e5cdeafdf76e..0cb6ef2e6600 100644
+index 0cb6ef2e6600..b21700428c35 100644
 --- a/drivers/cxl/core/mbox.c
 +++ b/drivers/cxl/core/mbox.c
-@@ -849,10 +849,55 @@ int cxl_enumerate_cmds(struct cxl_memdev_state *mds)
- }
- EXPORT_SYMBOL_NS_GPL(cxl_enumerate_cmds, CXL);
- 
--void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
--			    enum cxl_event_log_type type,
--			    enum cxl_event_type event_type,
--			    const uuid_t *uuid, union cxl_event *evt)
-+static void cxl_report_poison(struct cxl_memdev *cxlmd, u64 hpa)
-+{
-+	unsigned long pfn = PHYS_PFN(hpa);
-+
-+	memory_failure_queue(pfn, 0);
-+}
-+
-+static void cxl_event_handle_general_media(struct cxl_memdev *cxlmd,
-+					   enum cxl_event_log_type type,
-+					   u64 hpa,
-+					   struct cxl_event_gen_media *rec)
-+{
-+	if (type == CXL_EVENT_TYPE_FAIL) {
-+		switch (rec->media_hdr.transaction_type) {
-+		case CXL_EVENT_TRANSACTION_READ:
-+		case CXL_EVENT_TRANSACTION_WRITE:
-+		case CXL_EVENT_TRANSACTION_SCAN_MEDIA:
-+		case CXL_EVENT_TRANSACTION_INJECT_POISON:
-+			cxl_report_poison(cxlmd, hpa);
-+			break;
-+		default:
-+			break;
-+		}
-+	}
-+}
-+
-+static void cxl_event_handle_dram(struct cxl_memdev *cxlmd,
-+				  enum cxl_event_log_type type,
-+				  u64 hpa,
-+				  struct cxl_event_dram *rec)
-+{
-+	if (type == CXL_EVENT_TYPE_FAIL) {
-+		switch (rec->media_hdr.transaction_type) {
-+		case CXL_EVENT_TRANSACTION_READ:
-+		case CXL_EVENT_TRANSACTION_WRITE:
-+		case CXL_EVENT_TRANSACTION_SCAN_MEDIA:
-+		case CXL_EVENT_TRANSACTION_INJECT_POISON:
-+			cxl_report_poison(cxlmd, hpa);
-+			break;
-+		default:
-+			break;
-+		}
-+	}
-+}
-+
-+void cxl_event_handle_record(struct cxl_memdev *cxlmd,
-+			     enum cxl_event_log_type type,
-+			     enum cxl_event_type event_type,
-+			     const uuid_t *uuid, union cxl_event *evt)
- {
- 	if (event_type == CXL_CPER_EVENT_MEM_MODULE) {
- 		trace_cxl_memory_module(cxlmd, type, &evt->mem_module);
-@@ -880,18 +925,22 @@ void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
+@@ -4,6 +4,8 @@
+ #include <linux/debugfs.h>
+ #include <linux/ktime.h>
+ #include <linux/mutex.h>
++#include <linux/notifier.h>
++#include <asm/mce.h>
+ #include <asm/unaligned.h>
+ #include <cxlpci.h>
+ #include <cxlmem.h>
+@@ -925,6 +927,9 @@ void cxl_event_handle_record(struct cxl_memdev *cxlmd,
  		if (cxlr)
  			hpa = cxl_dpa_to_hpa(cxlr, cxlmd, dpa);
  
--		if (event_type == CXL_CPER_EVENT_GEN_MEDIA)
-+		if (event_type == CXL_CPER_EVENT_GEN_MEDIA) {
++		if (hpa != ULLONG_MAX && cxl_mce_recorded(hpa))
++			return;
++
+ 		if (event_type == CXL_CPER_EVENT_GEN_MEDIA) {
  			trace_cxl_general_media(cxlmd, type, cxlr, hpa,
  						&evt->gen_media);
--		else if (event_type == CXL_CPER_EVENT_DRAM)
-+			cxl_event_handle_general_media(cxlmd, type, hpa,
-+						&evt->gen_media);
-+		} else if (event_type == CXL_CPER_EVENT_DRAM) {
- 			trace_cxl_dram(cxlmd, type, cxlr, hpa, &evt->dram);
-+			cxl_event_handle_dram(cxlmd, type, hpa, &evt->dram);
-+		}
- 	}
+@@ -1457,6 +1462,112 @@ int cxl_poison_state_init(struct cxl_memdev_state *mds)
  }
--EXPORT_SYMBOL_NS_GPL(cxl_event_trace_record, CXL);
-+EXPORT_SYMBOL_NS_GPL(cxl_event_handle_record, CXL);
+ EXPORT_SYMBOL_NS_GPL(cxl_poison_state_init, CXL);
  
--static void __cxl_event_trace_record(const struct cxl_memdev *cxlmd,
--				     enum cxl_event_log_type type,
--				     struct cxl_event_record_raw *record)
-+static void __cxl_event_handle_record(struct cxl_memdev *cxlmd,
-+				      enum cxl_event_log_type type,
-+				      struct cxl_event_record_raw *record)
- {
- 	enum cxl_event_type ev_type = CXL_CPER_EVENT_GENERIC;
- 	const uuid_t *uuid = &record->id;
-@@ -903,7 +952,7 @@ static void __cxl_event_trace_record(const struct cxl_memdev *cxlmd,
- 	else if (uuid_equal(uuid, &CXL_EVENT_MEM_MODULE_UUID))
- 		ev_type = CXL_CPER_EVENT_MEM_MODULE;
- 
--	cxl_event_trace_record(cxlmd, type, ev_type, uuid, &record->event);
-+	cxl_event_handle_record(cxlmd, type, ev_type, uuid, &record->event);
- }
- 
- static int cxl_clear_event_record(struct cxl_memdev_state *mds,
-@@ -1012,8 +1061,8 @@ static void cxl_mem_get_records_log(struct cxl_memdev_state *mds,
- 			break;
- 
- 		for (i = 0; i < nr_rec; i++)
--			__cxl_event_trace_record(cxlmd, type,
--						 &payload->records[i]);
-+			__cxl_event_handle_record(cxlmd, type,
-+						  &payload->records[i]);
- 
- 		if (payload->flags & CXL_GET_EVENT_FLAG_OVERFLOW)
- 			trace_cxl_overflow(cxlmd, type, payload);
-diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
-index afb53d058d62..5c4810dcbdeb 100644
---- a/drivers/cxl/cxlmem.h
-+++ b/drivers/cxl/cxlmem.h
-@@ -826,10 +826,10 @@ void set_exclusive_cxl_commands(struct cxl_memdev_state *mds,
- void clear_exclusive_cxl_commands(struct cxl_memdev_state *mds,
- 				  unsigned long *cmds);
- void cxl_mem_get_event_records(struct cxl_memdev_state *mds, u32 status);
--void cxl_event_trace_record(const struct cxl_memdev *cxlmd,
--			    enum cxl_event_log_type type,
--			    enum cxl_event_type event_type,
--			    const uuid_t *uuid, union cxl_event *evt);
-+void cxl_event_handle_record(struct cxl_memdev *cxlmd,
-+			     enum cxl_event_log_type type,
-+			     enum cxl_event_type event_type,
-+			     const uuid_t *uuid, union cxl_event *evt);
- int cxl_set_timestamp(struct cxl_memdev_state *mds);
- int cxl_poison_state_init(struct cxl_memdev_state *mds);
- int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
-diff --git a/drivers/cxl/pci.c b/drivers/cxl/pci.c
-index 4be35dc22202..6e65ca89f666 100644
---- a/drivers/cxl/pci.c
-+++ b/drivers/cxl/pci.c
-@@ -1029,8 +1029,8 @@ static void cxl_handle_cper_event(enum cxl_event_type ev_type,
- 	hdr_flags = get_unaligned_le24(rec->event.generic.hdr.flags);
- 	log_type = FIELD_GET(CXL_EVENT_HDR_FLAGS_REC_SEVERITY, hdr_flags);
- 
--	cxl_event_trace_record(cxlds->cxlmd, log_type, ev_type,
--			       &uuid_null, &rec->event);
-+	cxl_event_handle_record(cxlds->cxlmd, log_type, ev_type,
-+				&uuid_null, &rec->event);
- }
- 
- static void cxl_cper_work_fn(struct work_struct *work)
-diff --git a/include/linux/cxl-event.h b/include/linux/cxl-event.h
-index 0bea1afbd747..be4342a2b597 100644
---- a/include/linux/cxl-event.h
-+++ b/include/linux/cxl-event.h
-@@ -7,6 +7,20 @@
- #include <linux/uuid.h>
- #include <linux/workqueue_types.h>
- 
-+/*
-+ * Event transaction type
-+ * CXL rev 3.0 Section 8.2.9.2.1.1; Table 8-43
-+ */
-+enum cxl_event_transaction_type {
-+	CXL_EVENT_TRANSACTION_UNKNOWN = 0X00,
-+	CXL_EVENT_TRANSACTION_READ,
-+	CXL_EVENT_TRANSACTION_WRITE,
-+	CXL_EVENT_TRANSACTION_SCAN_MEDIA,
-+	CXL_EVENT_TRANSACTION_INJECT_POISON,
-+	CXL_EVENT_TRANSACTION_MEDIA_SCRUB,
-+	CXL_EVENT_TRANSACTION_MEDIA_MANAGEMENT,
++DEFINE_XARRAY(cxl_mce_records);
++
++bool cxl_mce_recorded(u64 hpa)
++{
++	XA_STATE(xas, &cxl_mce_records, hpa);
++	void *entry;
++
++	xas_lock_irq(&xas);
++	entry = xas_load(&xas);
++	if (entry) {
++		xas_unlock_irq(&xas);
++		return true;
++	}
++	entry = xa_mk_value(hpa);
++	xas_store(&xas, entry);
++	xas_unlock_irq(&xas);
++
++	return false;
++}
++EXPORT_SYMBOL_NS_GPL(cxl_mce_recorded, CXL);
++
++void cxl_mce_clear(u64 hpa)
++{
++	XA_STATE(xas, &cxl_mce_records, hpa);
++	void *entry;
++
++	xas_lock_irq(&xas);
++	entry = xas_load(&xas);
++	if (entry) {
++		xas_store(&xas, NULL);
++	}
++	xas_unlock_irq(&xas);
++}
++EXPORT_SYMBOL_NS_GPL(cxl_mce_clear, CXL);
++
++struct cxl_contains_hpa_context {
++	bool contains;
++	u64 hpa;
 +};
 +
- /*
-  * Common Event Record Format
-  * CXL rev 3.0 section 8.2.9.2.1; Table 8-42
-@@ -26,7 +40,7 @@ struct cxl_event_media_hdr {
- 	__le64 phys_addr;
- 	u8 descriptor;
- 	u8 type;
--	u8 transaction_type;
-+	u8 transaction_type;	/* enum cxl_event_transaction_type */
- 	/*
- 	 * The meaning of Validity Flags from bit 2 is
- 	 * different across DRAM and General Media records
++static int __cxl_contains_hpa(struct device *dev, void *arg)
++{
++	struct cxl_contains_hpa_context *ctx = arg;
++	struct cxl_endpoint_decoder *cxled;
++	struct range *range;
++	u64 hpa = ctx->hpa;
++
++	if (!is_endpoint_decoder(dev))
++		return 0;
++
++	cxled = to_cxl_endpoint_decoder(dev);
++	range = &cxled->cxld.hpa_range;
++
++	if (range->start <= hpa && hpa <= range->end) {
++		ctx->contains = true;
++		return 1;
++	}
++
++	return 0;
++}
++
++static bool cxl_contains_hpa(const struct cxl_memdev *cxlmd, u64 hpa)
++{
++	struct cxl_contains_hpa_context ctx = {
++		.contains = false,
++		.hpa = hpa,
++	};
++	struct cxl_port *port;
++
++	port = cxlmd->endpoint;
++	guard(rwsem_write)(&cxl_region_rwsem);
++	if (port && cxl_num_decoders_committed(port))
++		device_for_each_child(&port->dev, &ctx, __cxl_contains_hpa);
++
++	return ctx.contains;
++}
++
++static int cxl_handle_mce(struct notifier_block *nb, unsigned long val,
++			  void *data)
++{
++	struct mce *mce = (struct mce *)data;
++	struct cxl_memdev_state *mds = container_of(nb, struct cxl_memdev_state,
++						    mce_notifier);
++	u64 hpa;
++
++	if (!mce || !mce_usable_address(mce))
++		return NOTIFY_DONE;
++
++	hpa = mce->addr & MCI_ADDR_PHYSADDR;
++
++	/* Check if the PFN is located on this CXL device */
++	if (!pfn_valid(hpa >> PAGE_SHIFT) &&
++	    !cxl_contains_hpa(mds->cxlds.cxlmd, hpa))
++		return NOTIFY_DONE;
++
++	/*
++	 * Search PFN in the cxl_mce_records, if already exists, don't continue
++	 * to do memory_failure() to avoid a poison address being reported
++	 * more than once.
++	 */
++	if (cxl_mce_recorded(hpa))
++		return NOTIFY_STOP;
++	else
++		return NOTIFY_OK;
++}
++
+ struct cxl_memdev_state *cxl_memdev_state_create(struct device *dev)
+ {
+ 	struct cxl_memdev_state *mds;
+@@ -1476,6 +1587,10 @@ struct cxl_memdev_state *cxl_memdev_state_create(struct device *dev)
+ 	mds->ram_perf.qos_class = CXL_QOS_CLASS_INVALID;
+ 	mds->pmem_perf.qos_class = CXL_QOS_CLASS_INVALID;
+ 
++	mds->mce_notifier.notifier_call = cxl_handle_mce;
++	mds->mce_notifier.priority = MCE_PRIO_CXL;
++	mce_register_decode_chain(&mds->mce_notifier);
++
+ 	return mds;
+ }
+ EXPORT_SYMBOL_NS_GPL(cxl_memdev_state_create, CXL);
+diff --git a/drivers/cxl/core/memdev.c b/drivers/cxl/core/memdev.c
+index 0277726afd04..9d4ed4dc4d51 100644
+--- a/drivers/cxl/core/memdev.c
++++ b/drivers/cxl/core/memdev.c
+@@ -376,10 +376,14 @@ int cxl_clear_poison(struct cxl_memdev *cxlmd, u64 dpa)
+ 		goto out;
+ 
+ 	cxlr = cxl_dpa_to_region(cxlmd, dpa);
+-	if (cxlr)
++	if (cxlr) {
++		u64 hpa = cxl_dpa_to_hpa(cxlr, cxlmd, dpa);
++
++		cxl_mce_clear(hpa);
+ 		dev_warn_once(mds->cxlds.dev,
+ 			      "poison clear dpa:%#llx region: %s\n", dpa,
+ 			      dev_name(&cxlr->dev));
++	}
+ 
+ 	record = (struct cxl_poison_record) {
+ 		.address = cpu_to_le64(dpa),
+diff --git a/drivers/cxl/cxlmem.h b/drivers/cxl/cxlmem.h
+index 5c4810dcbdeb..d2d906c26755 100644
+--- a/drivers/cxl/cxlmem.h
++++ b/drivers/cxl/cxlmem.h
+@@ -502,6 +502,7 @@ struct cxl_memdev_state {
+ 	struct cxl_fw_state fw;
+ 
+ 	struct rcuwait mbox_wait;
++	struct notifier_block mce_notifier;
+ 	int (*mbox_send)(struct cxl_memdev_state *mds,
+ 			 struct cxl_mbox_cmd *cmd);
+ };
+@@ -837,6 +838,8 @@ int cxl_mem_get_poison(struct cxl_memdev *cxlmd, u64 offset, u64 len,
+ int cxl_trigger_poison_list(struct cxl_memdev *cxlmd);
+ int cxl_inject_poison(struct cxl_memdev *cxlmd, u64 dpa);
+ int cxl_clear_poison(struct cxl_memdev *cxlmd, u64 dpa);
++bool cxl_mce_recorded(u64 pfn);
++void cxl_mce_clear(u64 pfn);
+ 
+ #ifdef CONFIG_CXL_SUSPEND
+ void cxl_mem_active_inc(void);
 -- 
 2.34.1
 
