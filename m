@@ -4,70 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B485C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 10:53:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D180C52D71
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 10:55:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc0lR-0003D3-88; Thu, 08 Aug 2024 06:53:01 -0400
+	id 1sc0nO-0001r9-Tc; Thu, 08 Aug 2024 06:55:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sc0lP-0003CZ-2A
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 06:52:59 -0400
-Received: from mgamail.intel.com ([198.175.65.15])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sc0nM-0001jV-Pe
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 06:55:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sc0lM-00083Y-JK
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 06:52:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723114377; x=1754650377;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=fL59EHgiBY/EiXLyPpY+nJV47MsHmte/G3P7ivTH8yQ=;
- b=YS+z7aCJuRm+94D57CGiw5oHK6KDYjcFQwmyqX3Fp5d9y8CH9WH0eIJs
- jYAl7Y3/NU19vYHBH5PDtn12dN0Wsf06/B5kVWuIjVPwXoz+TWd3cYCbU
- q0p3WfLngWB0oUJrYFbhW8dPg1yA1r1SSHkSB2ZIwmjpzpMgU5vCEA7my
- mrhAufzuKfdPEHQiLNYxQxi4mFp7YMiW8taSuhaGzc+/Ck3ZkqF/l0WpW
- mQwkwcS0dzKqIwZXP15iEfllRpS5Zmb8RlQGdOgV02DOV8WvDGMGKmsz6
- NcUDHcFL41L4j1c1N/LoR0L2lIgE76+x+N57qt8LCmrzvRqxykKC9KRVY Q==;
-X-CSE-ConnectionGUID: CvDSyfKpRKuxX1VuA0nStw==
-X-CSE-MsgGUID: 5NLOq0H4Span4zri+meRXQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11157"; a="24992635"
-X-IronPort-AV: E=Sophos;i="6.09,272,1716274800"; d="scan'208";a="24992635"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Aug 2024 03:52:53 -0700
-X-CSE-ConnectionGUID: Ek273q0UR1WiHaYx5ZhjcQ==
-X-CSE-MsgGUID: agGMBeypTqWrzNbX3LvoZA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,272,1716274800"; d="scan'208";a="57882279"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa008.jf.intel.com with ESMTP; 08 Aug 2024 03:52:52 -0700
-Date: Thu, 8 Aug 2024 19:08:41 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] kvm: refactor core virtual machine creation into its own
- function
-Message-ID: <ZrSnOS0irW4vTMX/@intel.com>
-References: <20240808103336.1675148-1-anisinha@redhat.com>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sc0nK-0008Ak-Uk
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 06:55:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723114496;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zjyDMI9ogR47NxvfhuQjhsZ9/6yxTvf3cZ+Uw8+lVl0=;
+ b=KjceCyIN6oxDRVX/uuha2wivuBHDDJfIQocubPdwZqNRpbxgzBUQySWpttn0Q/rhW9HXcg
+ VPE4prTMqDSPtwkwB3ZI2E/XYYEgoFn8lXbgx5sn100yFY7sXNvd5WjSBaP7eHzPZcaL9j
+ 0bb/VGNoinYtnL67PjHoKF4jcNNVkZk=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-641-Tq2EsGtANxSjkRKK9c8dvQ-1; Thu, 08 Aug 2024 06:54:55 -0400
+X-MC-Unique: Tq2EsGtANxSjkRKK9c8dvQ-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a7a9447efcbso24986666b.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 03:54:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723114494; x=1723719294;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zjyDMI9ogR47NxvfhuQjhsZ9/6yxTvf3cZ+Uw8+lVl0=;
+ b=OMUSw2eZbjMguOEudnazNYEVpbAnNhu7oUfcwOv/jP4Sre28/EbzKAgBMyi66U1/kO
+ ZBLD6pBuwsy/Jzhgw+RSiF8lhX/oNywXnJw727TuYGEZ6gikGn3BJHZ5TZt+bnD3s1OD
+ LypVcozn6ckJALcKwlAV6I0KDw9Mgc0jey3R4oGIicfRQ4OdkqguES0QOd52MZLAcHNw
+ SxJm0an7wkQdWVQ2cMXVJoqOQffmu5sRRf7puwXkPQPAbQQ+ZMXNLBblPrsHMB8pcEb3
+ XFwpWcSsY66pgwHlbm5VXICZ0/BMEs5QK0qhRH3vBq1+iY6AtUMFT4x1QmX50d5FpgvB
+ Y5fQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV5j3l/72Oq6T3O41oHdqA67DDpTm6Qv6gknd2m2fFx8saNFhCb/upZFrdRmPQxnE2rBod/YI7SrhuDqr1+OQqVTledNR8=
+X-Gm-Message-State: AOJu0Ywiyu7EW25mMHBw0NjxbWHCpt+mOAb62Zoi8J+8pX0cYiIF+Ycj
+ i3TtpGBQglr6DkdlEhIsWLPCh+HMTb5SDMOmKITEa82YNIFHw0w3sDy3fZ0ROiVp0MdO9DtEU86
+ aJJRHhChooLekBQaJ9CC/Woa++gIlCedXBikAGxjsATtRl3pd2ngo
+X-Received: by 2002:a05:6402:5191:b0:5b9:462d:c53c with SMTP id
+ 4fb4d7f45d1cf-5bbb2239773mr1606699a12.6.1723114493943; 
+ Thu, 08 Aug 2024 03:54:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEX3R3jJSuExDIf/RpYZgZUuW1OzX+jfFk2nzcI4GmlYsCufcKKaakhbukRmJ48j8LYPjDsxw==
+X-Received: by 2002:a05:6402:5191:b0:5b9:462d:c53c with SMTP id
+ 4fb4d7f45d1cf-5bbb2239773mr1606645a12.6.1723114493127; 
+ Thu, 08 Aug 2024 03:54:53 -0700 (PDT)
+Received: from redhat.com ([2.55.34.111]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5bbb2d34ccfsm531729a12.77.2024.08.08.03.54.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Aug 2024 03:54:51 -0700 (PDT)
+Date: Thu, 8 Aug 2024 06:54:46 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Peter Xu <peterx@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
+ jasowang@redhat.com, sriram.yagnaraman@est.tech, sw@weilnetz.de,
+ qemu-devel@nongnu.org, yan@daynix.com,
+ Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
+Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
+Message-ID: <20240808065339-mutt-send-email-mst@kernel.org>
+References: <Zq0IrhV-DgStpJtk@x1n>
+ <8ad96f43-83ae-49ae-abc1-1e17ee15f24d@daynix.com>
+ <20240805032937-mutt-send-email-mst@kernel.org>
+ <cb71a6de-eb7a-402b-a58a-89198b4343f5@daynix.com>
+ <20240805041650-mutt-send-email-mst@kernel.org>
+ <c7447c6c-0562-4e0f-bc1b-61a1430c9852@daynix.com>
+ <20240805060544-mutt-send-email-mst@kernel.org>
+ <2b62780c-a6cb-4262-beb5-81d54c14f545@daynix.com>
+ <20240806092822-mutt-send-email-mst@kernel.org>
+ <890f9d0a-3ded-488d-b274-8be9c38b5df3@daynix.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240808103336.1675148-1-anisinha@redhat.com>
-Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+In-Reply-To: <890f9d0a-3ded-488d-b274-8be9c38b5df3@daynix.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,156 +115,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Ani,
+On Thu, Aug 08, 2024 at 07:52:37PM +0900, Akihiko Odaki wrote:
+> On 2024/08/06 22:29, Michael S. Tsirkin wrote:
+> > On Tue, Aug 06, 2024 at 04:35:44PM +0900, Akihiko Odaki wrote:
+> > > On 2024/08/05 19:08, Michael S. Tsirkin wrote:
+> > > > On Mon, Aug 05, 2024 at 06:37:58PM +0900, Akihiko Odaki wrote:
+> > > > > If cross-migrate=off, QEMU can still migrate on the same host (checkpoint
+> > > > > and restart). QEMU can also migrate across hosts if the user ensures they
+> > > > > are on the same platform.
+> > > > 
+> > > > What is so special about checkpoint/restart? I guess we hope that
+> > > > downgrades are uncommon, but they are possible...
+> > > 
+> > > Downgrades will not work with cross-migrate=off. Users who want downgrades
+> > > should use cross-migrate=on.
+> > 
+> > We also don't know that upgrades do not disable a feature:
+> > can happen if e.g. there's a serious bug in the feature.
+> > Basically, this makes the feature too fragile, in my opinion.
+> 
+> We can do nothing in such a case. Whether it is on a single host or multiple
+> hosts, we cannot support migration if features once enabled disappear.
+> 
+> Regards,
+> Akihiko Odaki
 
-On Thu, Aug 08, 2024 at 04:03:36PM +0530, Ani Sinha wrote:
-> Date: Thu,  8 Aug 2024 16:03:36 +0530
-> From: Ani Sinha <anisinha@redhat.com>
-> Subject: [PATCH] kvm: refactor core virtual machine creation into its own
->  function
-> X-Mailer: git-send-email 2.45.2
-> 
-> Refactoring the core logic around KVM_CREATE_VM into its own separate function
-> so that it can be called from other functions in subsequent patches. There is
-> no functional change in this patch.
-> 
-> CC: pbonzini@redhat.com
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
-> ---
->  accel/kvm/kvm-all.c | 97 ++++++++++++++++++++++++++++-----------------
->  1 file changed, 60 insertions(+), 37 deletions(-)
-> 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 75d11a07b2..2bcd00126a 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -2385,6 +2385,64 @@ uint32_t kvm_dirty_ring_size(void)
->      return kvm_state->kvm_dirty_ring_size;
->  }
->  
-> +static int do_create_vm(MachineState *ms, int type)
-> +{
-> +    KVMState *s;
-> +    int ret;
-> +
-> +    s = KVM_STATE(ms->accelerator);
-> +
-> +    do {
-> +        ret = kvm_ioctl(s, KVM_CREATE_VM, type);
-> +    } while (ret == -EINTR);
-> +
-> +    if (ret < 0) {
-> +        fprintf(stderr, "ioctl(KVM_CREATE_VM) failed: %d %s\n", -ret,
-> +                strerror(-ret));
-> +
-> +#ifdef TARGET_S390X
-> +        if (ret == -EINVAL) {
-> +            fprintf(stderr,
-> +                    "Host kernel setup problem detected. Please verify:\n");
-> +            fprintf(stderr, "- for kernels supporting the switch_amode or"
-> +                    " user_mode parameters, whether\n");
-> +            fprintf(stderr,
-> +                    "  user space is running in primary address space\n");
-> +            fprintf(stderr,
-> +                    "- for kernels supporting the vm.allocate_pgste sysctl, "
-> +                    "whether it is enabled\n");
+It does not follow that we have to do something, and this is something,
+therefore that we have to do this.
 
-Is it possible to convert fprintf to error_report()? Just like the
-commit d0e16850eed3 ("hw/xen: convert stderr prints to error/warn
-reports").
+This is just a reason not to handle checkpoint/restart any different
+than any other migration.
 
-Regards,
-Zhao
+-- 
+MST
 
-> +        }
-> +#elif defined(TARGET_PPC)
-> +        if (ret == -EINVAL) {
-> +            fprintf(stderr,
-> +                    "PPC KVM module is not loaded. Try modprobe kvm_%s.\n",
-> +                    (type == 2) ? "pr" : "hv");
-> +        }
-> +#endif
-> +    }
-> +
-> +    return ret;
-> +}
-> +
-> +static int find_kvm_machine_type(MachineState *ms)
-> +{
-> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
-> +    int type;
-> +
-> +    if (object_property_find(OBJECT(current_machine), "kvm-type")) {
-> +        g_autofree char *kvm_type;
-> +        kvm_type = object_property_get_str(OBJECT(current_machine),
-> +                                           "kvm-type",
-> +                                           &error_abort);
-> +        type = mc->kvm_type(ms, kvm_type);
-> +    } else if (mc->kvm_type) {
-> +        type = mc->kvm_type(ms, NULL);
-> +    } else {
-> +        type = kvm_arch_get_default_type(ms);
-> +    }
-> +    return type;
-> +}
-> +
->  static int kvm_init(MachineState *ms)
->  {
->      MachineClass *mc = MACHINE_GET_CLASS(ms);
-> @@ -2467,49 +2525,14 @@ static int kvm_init(MachineState *ms)
->      }
->      s->as = g_new0(struct KVMAs, s->nr_as);
->  
-> -    if (object_property_find(OBJECT(current_machine), "kvm-type")) {
-> -        g_autofree char *kvm_type = object_property_get_str(OBJECT(current_machine),
-> -                                                            "kvm-type",
-> -                                                            &error_abort);
-> -        type = mc->kvm_type(ms, kvm_type);
-> -    } else if (mc->kvm_type) {
-> -        type = mc->kvm_type(ms, NULL);
-> -    } else {
-> -        type = kvm_arch_get_default_type(ms);
-> -    }
-> -
-> +    type = find_kvm_machine_type(ms);
->      if (type < 0) {
->          ret = -EINVAL;
->          goto err;
->      }
->  
-> -    do {
-> -        ret = kvm_ioctl(s, KVM_CREATE_VM, type);
-> -    } while (ret == -EINTR);
-> -
-> +    ret = do_create_vm(ms, type);
->      if (ret < 0) {
-> -        fprintf(stderr, "ioctl(KVM_CREATE_VM) failed: %d %s\n", -ret,
-> -                strerror(-ret));
-> -
-> -#ifdef TARGET_S390X
-> -        if (ret == -EINVAL) {
-> -            fprintf(stderr,
-> -                    "Host kernel setup problem detected. Please verify:\n");
-> -            fprintf(stderr, "- for kernels supporting the switch_amode or"
-> -                    " user_mode parameters, whether\n");
-> -            fprintf(stderr,
-> -                    "  user space is running in primary address space\n");
-> -            fprintf(stderr,
-> -                    "- for kernels supporting the vm.allocate_pgste sysctl, "
-> -                    "whether it is enabled\n");
-> -        }
-> -#elif defined(TARGET_PPC)
-> -        if (ret == -EINVAL) {
-> -            fprintf(stderr,
-> -                    "PPC KVM module is not loaded. Try modprobe kvm_%s.\n",
-> -                    (type == 2) ? "pr" : "hv");
-> -        }
-> -#endif
->          goto err;
->      }
->  
-> -- 
-> 2.45.2
-> 
-> 
 
