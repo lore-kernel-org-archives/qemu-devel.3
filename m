@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81860C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 05:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E2DC52D73
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 05:08:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbvMy-0005x5-35; Thu, 08 Aug 2024 01:07:24 -0400
+	id 1sbvNL-0006FJ-61; Thu, 08 Aug 2024 01:07:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sbvMu-0005wT-A4
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 01:07:20 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1sbvNJ-0006Cu-Ne
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 01:07:45 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sbvMr-0001Wk-He
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 01:07:19 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2cb64529a36so492463a91.0
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 22:07:16 -0700 (PDT)
+ id 1sbvNI-0001Xf-1m
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 01:07:45 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-1ff67158052so4811525ad.0
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 22:07:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723093635; x=1723698435; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723093662; x=1723698462; darn=nongnu.org;
  h=content-transfer-encoding:content-language:in-reply-to:mime-version
  :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
  :subject:date:message-id:reply-to;
- bh=enT2cpHQjyzy5nslTvcUmDkNDASMls0lzplufQTs2sI=;
- b=yMdHhg4dtnNxwiI1hO0UjhCplTkfABBsT/R+PvhSMWX7N1j8V4zHbVUsjdktt0kzZg
- NEprCB69SszMid0U4Bn0cUuOz2DsLx5XTAkIb+k1zllw1IpyO2WlEsu2+7pMqoAK2XNY
- B8NAdqPmautlDgbl+8D0P8sIgCLQlig4wReDsDRRv3v6KNYilymxXpoBl7+qcH/iPPUT
- UZLMJuKSJi8qOwY6sLD3wA4OPvU/HrJFZ347n26P849nRYQfx6hqPbt8H6BgslM0se/c
- L3tVI/uQW/qRxd4RrHLmyk0sz79aZUae2Fq911gwznvD3R2kXBPtXuk07kRhLjduae6v
- tioQ==
+ bh=JqHhc5kG1t+EAEGN0cO4xdif80gU2DAe8cOdIcoHGUQ=;
+ b=NKOttQ93alK4K/0e4wrK8nNE7l5L1ER9fp9n+1HtjfoYcuqbHkQnT7L1Q97tghLuZy
+ OEQuQ9f3ohTqVCnGIvKQIabhkPbl2LWzwlI3dHUenoArQB9Gnengyy6Dc5G5Pz5yqinD
+ DMoidGcPbOrx/15vGzxpDlxjpVkHeSDoKU4vaVcj/VE1fgSfjaSaD+1Br9THU1tpvIOk
+ kBYKCs+ifIlmbt3AtnTe2g4dHl6+9R9EqcQPiqk4wnI/I4h+lkRn5II0BVV/se1Fcl8D
+ C4kesqXG9n5MN0+mzsL17TVRhNrVyvcRXKdfx24FOCZKix0IsdegANmn8QVLpeH0sKES
+ h3kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723093635; x=1723698435;
+ d=1e100.net; s=20230601; t=1723093662; x=1723698462;
  h=content-transfer-encoding:content-language:in-reply-to:mime-version
  :user-agent:date:message-id:from:references:cc:to:subject
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=enT2cpHQjyzy5nslTvcUmDkNDASMls0lzplufQTs2sI=;
- b=cm7b1h8CjEvqTmPDa2WxDaOUnF9iJEbneFLSoKWkmkcPTOpxLHvYHb6lIqEuDkYk49
- mrXwllJUAknLWWUvmV2OscOP6SHNFU1sH4oNUM76QfHy/TgHGtm4lQa0oJ+1fRJGAgUj
- qPYWuSHbmvV7tcpYgzyrwmDjxFw+POMHKDZ3TvSRefcQyALSiYnAnjv0Jg+TWz5qpfI7
- 5QAwwseC/qBQm4KUjp+2rIIRy9O3Hjexu1iNv0BGLsrHyO/ytUQJPRp8yB3kY8XvBqlN
- /sAMFIJ1ANy4oL07xM44vEnji8UmOPKie769rg0MDezCSF3E+xqjViNpwx0pzAmuMbqY
- Nn9A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV2viwr3th4vdrj4JFOHa4sRJJGuJY25ug1aqAvhjEJoPPkgWnfbjJ9drql52HeBa1dnzoAd753ODIHyqu3kJd3Sgn8YQM=
-X-Gm-Message-State: AOJu0YxBv5FVP/tCTaUA0p84X/1W17DoLZZMi6iyXAQ1l0ENmxnE9PtE
- c2toq29jp9Vkrk5Tyse1B3JnWMxgkH04fbU4ZvdPHg7RDIbddq16FopD3I7sFk+LvdpGqAFNLDb
- G
-X-Google-Smtp-Source: AGHT+IFbkdJY3g7pjTmfSj4FFBGLpNjm1lxOHbbmTpwCwEgokFzQ10pks2VhzYUmkAprKcm8PGFR1g==
-X-Received: by 2002:a17:90b:38ca:b0:2c9:a3d4:f044 with SMTP id
- 98e67ed59e1d1-2d1c33b5ce2mr817538a91.11.1723093635452; 
- Wed, 07 Aug 2024 22:07:15 -0700 (PDT)
+ bh=JqHhc5kG1t+EAEGN0cO4xdif80gU2DAe8cOdIcoHGUQ=;
+ b=wisl08jLeA0b6n59lYJjD7MkGkKZ2IyBpEQI7Cd2e1gve1Gy5e9aEzqW2MVDeop2xm
+ cODaFoscPycvDreGe/BzT/OwRIZkrFJC1R+BnqsJpQNiHYIozUObvuHs/b4zns5fGBBN
+ r2gYDrlHxU1Fx/exi1hOEDiFhB1ybjMsOFvz0axQOuP0fgBWaTb2MSGEPtLUBQ1JX+Hu
+ lrTocuFA1lS5V8tEm2Pw+LSICIZQ3sHSIbT3NIVWff+fsiw8eEAo4fxjjjhvRKuMklVr
+ Kbn1W6Ckp/QWnV0rbD5yD5BG5++V8xLVokSlDuZvnuxijv1JQpVkn31zOsHs5DxDrSx0
+ KBLQ==
+X-Gm-Message-State: AOJu0YwQDRPCFYffq0K4lGUqfToTPewr7J7COoD0Pp+e4gmYwrzu+l3B
+ Kl7J5bDYl57Dqwita7D8oQZgD8gMMNLKmCqz9xkhdzXGI+jPnCibp5KpZN7W0a5JQ2mxP46YxWt
+ 9
+X-Google-Smtp-Source: AGHT+IFJnW9BjBiEF3WPDPY7Ru2Khmnwr52VZlamyzXGqglsWBhQOL55qGrno+9gfp0AYeK/FHdtDA==
+X-Received: by 2002:a17:902:e5c3:b0:1fd:6b87:2147 with SMTP id
+ d9443c01a7336-20095228bc5mr10861535ad.6.1723093662525; 
+ Wed, 07 Aug 2024 22:07:42 -0700 (PDT)
 Received: from [192.168.0.103] ([187.75.36.187])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d1b3ab894asm2529485a91.21.2024.08.07.22.07.13
+ d9443c01a7336-1ff58f62e7asm115448115ad.115.2024.08.07.22.07.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Aug 2024 22:07:14 -0700 (PDT)
-Subject: Re: [PATCH 1/4] gdbstub: Use specific MMU index when probing MTE
- addresses
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- philmd@linaro.org, alex.bennee@linaro.org
-Cc: peter.maydell@linaro.org
+ Wed, 07 Aug 2024 22:07:42 -0700 (PDT)
+Subject: Re: [PATCH 3/4] tests/guest-debug: Support passing arguments to the
+ GDB test script
+To: =?UTF-8?Q?Alex_Benn=c3=a9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, richard.henderson@linaro.org,
+ peter.maydell@linaro.org
 References: <20240722160709.1677430-1-gustavo.romero@linaro.org>
- <20240722160709.1677430-2-gustavo.romero@linaro.org>
- <707d1076-4f29-4089-b7ae-0bdd3e1305ee@linaro.org>
+ <20240722160709.1677430-4-gustavo.romero@linaro.org>
+ <87jzh9mcly.fsf@draig.linaro.org>
 From: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <b2c8c005-44d3-08d7-0a54-97647aa0ad0a@linaro.org>
-Date: Thu, 8 Aug 2024 02:07:11 -0300
+Message-ID: <e7a68dce-4dc3-b052-c44f-9b729bf298a8@linaro.org>
+Date: Thu, 8 Aug 2024 02:07:39 -0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.6.0
 MIME-Version: 1.0
-In-Reply-To: <707d1076-4f29-4089-b7ae-0bdd3e1305ee@linaro.org>
+In-Reply-To: <87jzh9mcly.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pj1-x1029.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -47
 X-Spam_score: -4.8
 X-Spam_bar: ----
@@ -103,19 +101,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+Hi Alex,
 
-On 7/24/24 7:14 AM, Richard Henderson wrote:
-> On 7/23/24 02:07, Gustavo Romero wrote:
->> +    /* Find out the current translation regime for probe. */
->> +    mmu_index = arm_mmu_idx(env) & ARM_MMU_IDX_COREIDX_MASK;
+On 7/25/24 5:38 PM, Alex Bennée wrote:
+> Gustavo Romero <gustavo.romero@linaro.org> writes:
 > 
-> The official interface is cpu_mmu_index().
+>> This commit adds a new option to run-test.py, --test-args, which can
+>> be used to pass arguments to the GDB test script specified by the --test
+>> option. The arguments passed are in the key=value form, and multiple
+>> pairs can be passed, separated by a space. For example:
+>>
+>> run-test.py [...] --test <GDB_TEST_SCRIPT> --test-args v0="string" v1=10
+>>
+>> The 'v0' and 'v1' variables will then be available in the GDB test
+>> script, like this:
+>>
+>> print(v0)
+>> print(v1)
+>>
+>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>> ---
+>>   tests/guest-debug/run-test.py | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
+>> index 368ff8a890..63b55fb8bd 100755
+>> --- a/tests/guest-debug/run-test.py
+>> +++ b/tests/guest-debug/run-test.py
+>> @@ -27,6 +27,7 @@ def get_args():
+>>       parser.add_argument("--binary", help="Binary to debug",
+>>                           required=True)
+>>       parser.add_argument("--test", help="GDB test script")
+>> +    parser.add_argument("--test-args", help="Arguments to GDB test script")
+>>       parser.add_argument("--gdb", help="The gdb binary to use",
+>>                           default=None)
+>>       parser.add_argument("--gdb-args", help="Additional gdb
+>> arguments")
 > 
-> Otherwise,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> I might be easier to do:
+> 
+>      parser.add_argument('test_args', nargs='*',
+>                          help="Additional args for test. "
+>                          "You should precede with -- "
+>                          "to avoid confusion with flags for runner script")
+> 
+> 
+>> @@ -91,6 +92,9 @@ def log(output, msg):
+>>       gdb_cmd += " -ex 'target remote %s'" % (socket_name)
+>>       # finally the test script itself
+>>       if args.test:
+>> +        if args.test_args:
+>> +            test_args = args.test_args.replace(" ",";")
+>> +            gdb_cmd += f" -ex 'py {test_args}'"
+>>           gdb_cmd += " -x %s" % (args.test)
+As we discussed, -ex 'py [...]' just allow setting variables in Python,
+so it won't understand plain argparse'd arguments. For instance, if we
+do 'run-test.py [...] -- --mode=system' this will fail because
+"--mode-system" not a valid Python syntax. Moreover, there isn't another
+way to pass args to the GDB Python scripts afaict.
 
-s/arm_mmu_idx/cpu_mmu_index/ done in v2. Thanks.
+But since that's a nice idea (to be able to parse args in the GDB Python
+scripts) I found a workaround. It's possible to set the sys.argv in the
+script env. So -ex "py sys.argv=['--mode=user', '--arg1=1', '--arg2=2', ...]",
+for instance, correctly sets the argv and make argparse work normally in
+the script. Thus I used that approach to address your suggestion. Please
+see v2.
 
 
 Cheers,
