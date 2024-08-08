@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03BD0C52D71
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 20:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23A25C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 21:22:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scADt-0000se-TK; Thu, 08 Aug 2024 16:59:01 -0400
+	id 1scAa9-0008K6-Mh; Thu, 08 Aug 2024 17:22:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1scADs-0000rw-EC
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 16:59:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1scAa7-0008JW-8A
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 17:21:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1scADo-0005pk-66
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 16:59:00 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1scAa0-0000LP-A9
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 17:21:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723150735;
+ s=mimecast20190719; t=1723152110;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NmikgxZ0r/jpfCIgtMXecttpHXFuIGiJf7KQUHBaISo=;
- b=AZkCtgSStY1RQKwtLyCgmA73Lz3Tcjaxh7Acmzo5f6XZXQP8nXgkWMh01wAdR77vGrEMmT
- 0vYk+wVHiiMhbb3J3/YDZkPH6aoo5z7VrJFPpfQRdg8zeCmKkf5THr7eH4FJQEtNYOzvwq
- 1Z6nOy9QFI72t3ctNTLMEZWU/deYRIY=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WLPtZPUKddDNP87L93XTR/IIJcKRJZUGbYYpeZaDdUg=;
+ b=N+W9Q9shhkpEfH2ok2mIYtvTZ3QYjrTQuln7KV+5pFHxUjg2WYdL3enbnO1rA1uK+2vpVw
+ rBSD1NB5ZgYXGGSgZt5XMS2xS5JB6YaZsssr0wq/+jbnnEmUwneeZpWKcP3RiwTBcT5qjz
+ 2fRKJK1I3TpUw9SHUvJ4wDrOc22q7Ew=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-590-HCgfcErPNEeSGa6Ks6s17A-1; Thu, 08 Aug 2024 16:58:53 -0400
-X-MC-Unique: HCgfcErPNEeSGa6Ks6s17A-1
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3687e6d7a3aso686103f8f.2
- for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 13:58:52 -0700 (PDT)
+ us-mta-679-kTHobRgsN7-OJAGJ-LiKMA-1; Thu, 08 Aug 2024 17:21:49 -0400
+X-MC-Unique: kTHobRgsN7-OJAGJ-LiKMA-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3685a5a765fso757334f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 14:21:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723150732; x=1723755532;
+ d=1e100.net; s=20230601; t=1723152108; x=1723756908;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NmikgxZ0r/jpfCIgtMXecttpHXFuIGiJf7KQUHBaISo=;
- b=ZgeKVjltA63ecGUMo76HTJF/BhaaGzjoqK+/LDrVTFYRnDDQ9UVxltMfYa2WBq646P
- sCsshV1cb9Pjh3aKXSkfw1JK/tp6LW05Z+KsH7p5NrEZLwUexCGAY1JxjWO8vw9LVk03
- d4wNMP8quO3uAoMffoU9FZ1ZKNQ04XMdmlqXt27IUgLzu6srwWzn/JuhBwnJB43Mpjl4
- i/RGeVe3Ou2tOGZOJX6RIWmVVwAM40xDnCCjPuMgiSLjcyyWUgudshQojCxydgn/H0A8
- BABxKmHre33534/du8+U1k/tuJZL404sLVj8xMFjp/h1TGZT4GCwDR0H8MrYbiOONu5c
- GjBg==
+ bh=WLPtZPUKddDNP87L93XTR/IIJcKRJZUGbYYpeZaDdUg=;
+ b=KJdlcHrEr9UJRRan1E8YwYhmBJbWXqSMq/KEzsRjwiC39Ivdc9NFUoDLqxytrBRwGQ
+ /qaL7QiFIdhexWoyMVXc9DQRG1z1inFosGTxMg6KhS+WFMOgZ9lrIIhncWAFoOQw2ulP
+ wpbkQTdb78W85htIkq9qg4CtQPxXBzN2QHboui+Y2IXDgqNzJ6wt4ZpM02BaQH1B5MCN
+ g6LIPP8+lxU+3CmemP+12uaD4GnluodTNXQwPll4OIxQf2rkSGOOKEjUbGmYiItUk8PY
+ TNnw0axckM6bjTYC8rCjKFGIR+Tr5UcQ7OcpUwGAwFgvw7LWKHL/OY6VwfF8DcyNx0uM
+ tYlA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVtFNRLY7azKLLs9HzyloS7SaDO8f4gFNT7JE1H9Mg3QWYz4tttPaP2lEWbp6SP4Na5zADkzsuEgTvRCE1p5t0oiJwGGHE=
-X-Gm-Message-State: AOJu0Yxj6m4UyuugdOQItCPdLEngIwM707KbQoS1pN5ri/54XD9UWowO
- kk1FucUOMhe9UH4+qWtKSNttCJmtZrsKm2nOQnJUUkmnLROq+R7sIeYdNu0gggb/5q+GCkMBH70
- VnZfDSRtT/xsqMVyf8gyOBXoBPgODwQl0tuxAQl4eCx7HJQyDoUIJwv4EBOJawxqyi6fX6zlykh
- 2CPFkajOWDvXEmBNF0sYH3/g88mYM=
-X-Received: by 2002:adf:cd0f:0:b0:368:7e8a:a8b4 with SMTP id
- ffacd0b85a97d-36d274dd030mr2283405f8f.23.1723150731477; 
- Thu, 08 Aug 2024 13:58:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGGf4wSpZe5UAEHm3WwgBPL9JtRr6jpdwswXGh9OtoWNSRiav80N9mws/pkoqMFnuUS9WCp5cEkL+dUwyKSarQ=
-X-Received: by 2002:adf:cd0f:0:b0:368:7e8a:a8b4 with SMTP id
- ffacd0b85a97d-36d274dd030mr2283399f8f.23.1723150730848; Thu, 08 Aug 2024
- 13:58:50 -0700 (PDT)
+ AJvYcCUpuQskDjoyld50BzJWDcaNEy19+R2lPRg50ZPOT9QodDSy3DwXLMl1Ky12+kxg8y03d7R0tco0CFSirKe3OKzuRjZw7PM=
+X-Gm-Message-State: AOJu0YxlKeHkrf3JW6BX+Qap2KE0PCLWoLz/whzXNu1DMCh6cMF+6mPc
+ a70kemosyxFHg7vpUJ+SQZ5sG47EjNQ88KUI+73UiKssj+loBExZCUAo1h9rneE2iwr9pqbu9qo
+ HcuVMSH51bqtqLXdMn/MgCZ+Zc4WlZ5HYA150xLqAABdCao/4HV+gPdeG9u6emg/i029F0/S6fL
+ LYLhFgjSy+Ln/P30TUHEnDX7oOeKA=
+X-Received: by 2002:a05:6000:1cf:b0:367:9988:7300 with SMTP id
+ ffacd0b85a97d-36d2756618dmr2070472f8f.45.1723152107659; 
+ Thu, 08 Aug 2024 14:21:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFPmYHKhri53tZxH5NWUbU870LS2qKDyA3fOEeqCZIEJOHz5hBIeZU0xrI8L2Qr0J/x/Kj1Znv8CIhujiU3VgM=
+X-Received: by 2002:a05:6000:1cf:b0:367:9988:7300 with SMTP id
+ ffacd0b85a97d-36d2756618dmr2070461f8f.45.1723152107048; Thu, 08 Aug 2024
+ 14:21:47 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1722634602.git.mchehab+huawei@kernel.org>
  <0654a89fe24f4343016b9cecc0752594ad1cd49f.1722634602.git.mchehab+huawei@kernel.org>
 In-Reply-To: <0654a89fe24f4343016b9cecc0752594ad1cd49f.1722634602.git.mchehab+huawei@kernel.org>
 From: John Snow <jsnow@redhat.com>
-Date: Thu, 8 Aug 2024 16:58:38 -0400
-Message-ID: <CAFn=p-bM3oECXtPt5zVZSh53dJx+TDciU_N+vCW4Xp-Jd0MaHw@mail.gmail.com>
+Date: Thu, 8 Aug 2024 17:21:33 -0400
+Message-ID: <CAFn=p-Y27zap1P5G3NibdZS26iGwCqh8U0vgW0Vw31f53+oU1w@mail.gmail.com>
 Subject: Re: [PATCH v5 7/7] scripts/ghes_inject: add a script to generate GHES
  error inject
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
@@ -74,15 +74,15 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>, 
  Cleber Rosa <crosa@redhat.com>, linux-kernel@vger.kernel.org,
  qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000351093061f324b8f"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Content-Type: multipart/alternative; boundary="0000000000003c2407061f329d17"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
  RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -100,7 +100,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000351093061f324b8f
+--0000000000003c2407061f329d17
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -149,19 +149,6 @@ mchehab+huawei@kernel.org> wrote:
 > +#!/usr/bin/env python3
 > +#
 > +# pylint: disable=3DC0301, C0114, R0912, R0913, R0914, R0915, W0511
->
-
-Out of curiosity, what tools are you using to delint your files and how are
-you invoking them?
-
-I don't really maintain any strict regime for python files under
-qemu.git/scripts (yet), so I am mostly curious as to what regimes others
-are using currently. I don't see most QEMU contributors checking in pylint
-ignores etc directly into the files, so it caught my eye.
-
-~js
-
-
 > +# SPDX-License-Identifier: GPL-2.0
 > +#
 > +# Copyright (C) 2024 Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
@@ -607,6 +594,16 @@ e)
 > index 000000000000..13fae7a7af0e
 > --- /dev/null
 > +++ b/scripts/qmp_helper.py
+>
+
+I'm going to admit I only glanced at this very briefly, but -- is there a
+chance you could use qemu.git/python/qemu/qmp instead of writing your own
+helpers here?
+
+If *NOT*, is there something that I need to add to our QMP library to
+facilitate your script?
+
+
 > @@ -0,0 +1,249 @@
 > +#!/usr/bin/env python3
 > +#
@@ -652,6 +649,22 @@ e)
 > +        s.connect((host, port))
 > +    except ConnectionRefusedError:
 > +        sys.exit(f"Can't connect to QMP host {host}:{port}")
+>
+
+You should be able to use e.g.
+
+legacy.py's QEMUMonitorProtocol class for synchronous connections, e.g.
+
+from qemu.qmp.legacy import QEMUMonitorProtocol
+
+qmp =3D QEMUMonitorProtocol((host, port))
+qmp.connect(negotiate=3DTrue)
+
+If you want to run the script w/o setting up a virtual environment or
+installing the package, take a look at the hacks in scripts/qmp/ for how I
+support e.g. qom-get directly from the source tree.
+
+
 > +
 > +    data =3D s.recv(1024)
 > +    try:
@@ -667,7 +680,22 @@ e)
 > +        return
 > +
 > +    for i, command in enumerate(commands):
-> +        s.sendall(command.encode("utf-8"))
+>
+
+Then here you'd use qmp.cmd (raises exception on QMPError) or qmp.cmd_raw
+or qmp.cmd_obj (returns the QMP response as the return value even if it was
+an error.)
+
+More details:
+https://qemu.readthedocs.io/projects/python-qemu-qmp/en/latest/qemu.qmp.leg=
+acy.html
+
+There's also an async version, but it doesn't look like you require that
+complexity, so you can ignore it.
+
+~~js
+
++        s.sendall(command.encode("utf-8"))
 > +        data =3D s.recv(1024)
 > +        try:
 > +            obj =3D json.loads(data.decode("utf-8"))
@@ -863,7 +891,7 @@ e):
 >
 >
 
---000000000000351093061f324b8f
+--0000000000003c2407061f329d17
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -920,16 +948,7 @@ index 000000000000..df4efa508790<br>
 @@ -0,0 +1,352 @@<br>
 +#!/usr/bin/env python3<br>
 +#<br>
-+# pylint: disable=3DC0301, C0114, R0912, R0913, R0914, R0915, W0511<br></b=
-lockquote><div><br></div><div>Out of curiosity, what tools are you using to=
- delint your files and how are you invoking them?</div><div><br></div><div>=
-I don&#39;t really maintain any strict regime for python files under qemu.g=
-it/scripts (yet), so I am mostly curious as to what regimes others are usin=
-g currently. I don&#39;t see most QEMU contributors checking in pylint igno=
-res etc directly into the files, so it caught my eye.<br></div><div><br></d=
-iv><div>~js<br></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" sty=
-le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
-ng-left:1ex">
++# pylint: disable=3DC0301, C0114, R0912, R0913, R0914, R0915, W0511<br>
 +# SPDX-License-Identifier: GPL-2.0<br>
 +#<br>
 +# Copyright (C) 2024 Mauro Carvalho Chehab &lt;<a href=3D"mailto:mchehab%2=
@@ -1544,7 +1563,13 @@ diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py<br>
 new file mode 100644<br>
 index 000000000000..13fae7a7af0e<br>
 --- /dev/null<br>
-+++ b/scripts/qmp_helper.py<br>
++++ b/scripts/qmp_helper.py<br></blockquote><div><br></div><div>I&#39;m goi=
+ng to admit I only glanced at this very briefly, but -- is there a chance y=
+ou could use qemu.git/python/qemu/qmp instead of writing your own helpers h=
+ere?</div><div><br></div><div>If *NOT*, is there something that I need to a=
+dd to our QMP library to facilitate your script?<br></div><div>=C2=A0</div>=
+<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
+left:1px solid rgb(204,204,204);padding-left:1ex">
 @@ -0,0 +1,249 @@<br>
 +#!/usr/bin/env python3<br>
 +#<br>
@@ -1599,7 +1624,16 @@ cmd_arg) + &quot; }&quot;<br>
 +=C2=A0 =C2=A0 =C2=A0 =C2=A0 s.connect((host, port))<br>
 +=C2=A0 =C2=A0 except ConnectionRefusedError:<br>
 +=C2=A0 =C2=A0 =C2=A0 =C2=A0 sys.exit(f&quot;Can&#39;t connect to QMP host =
-{host}:{port}&quot;)<br>
+{host}:{port}&quot;)<br></blockquote><div><br></div><div>You should be able=
+ to use e.g.</div><div><br></div><div>legacy.py&#39;s QEMUMonitorProtocol c=
+lass for synchronous connections, e.g.</div><div><br></div><div>from qemu.q=
+mp.legacy import QEMUMonitorProtocol</div><div><br></div><div>qmp =3D QEMUM=
+onitorProtocol((host, port))</div><div>qmp.connect(negotiate=3DTrue)</div><=
+div><br></div><div>If you want to run the script w/o setting up a virtual e=
+nvironment or installing the package, take a look at the hacks in scripts/q=
+mp/ for how I support e.g. qom-get directly from the source tree.<br></div>=
+<div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
 +<br>
 +=C2=A0 =C2=A0 data =3D s.recv(1024)<br>
 +=C2=A0 =C2=A0 try:<br>
@@ -1617,7 +1651,17 @@ t;))<br>
 +=C2=A0 =C2=A0 =C2=A0 =C2=A0 s.close()<br>
 +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return<br>
 +<br>
-+=C2=A0 =C2=A0 for i, command in enumerate(commands):<br>
++=C2=A0 =C2=A0 for i, command in enumerate(commands):<br></blockquote><div>=
+<br></div><div>Then here you&#39;d use qmp.cmd (raises exception on QMPErro=
+r) or qmp.cmd_raw or qmp.cmd_obj (returns the QMP response as the return va=
+lue even if it was an error.)</div><div><br></div><div>More details: <a hre=
+f=3D"https://qemu.readthedocs.io/projects/python-qemu-qmp/en/latest/qemu.qm=
+p.legacy.html">https://qemu.readthedocs.io/projects/python-qemu-qmp/en/late=
+st/qemu.qmp.legacy.html</a></div><div><br></div><div>There&#39;s also an as=
+ync version, but it doesn&#39;t look like you require that complexity, so y=
+ou can ignore it.<br></div><div><br></div><div>~~js<br></div><div><br></div=
+><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
+-left:1px solid rgb(204,204,204);padding-left:1ex">
 +=C2=A0 =C2=A0 =C2=A0 =C2=A0 s.sendall(command.encode(&quot;utf-8&quot;))<b=
 r>
 +=C2=A0 =C2=A0 =C2=A0 =C2=A0 data =3D s.recv(1024)<br>
@@ -1851,6 +1895,6 @@ br>
 <br>
 </blockquote></div></div>
 
---000000000000351093061f324b8f--
+--0000000000003c2407061f329d17--
 
 
