@@ -4,80 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 144CEC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 01:24:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13502C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 01:43:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbrsK-0001To-BA; Wed, 07 Aug 2024 21:23:32 -0400
+	id 1sbsBM-0000iN-0S; Wed, 07 Aug 2024 21:43:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sbrsJ-0001Sr-86; Wed, 07 Aug 2024 21:23:31 -0400
-Received: from mail-vs1-xe33.google.com ([2607:f8b0:4864:20::e33])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sbsBK-0000hn-7z
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 21:43:10 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sbrsH-0005N0-N9; Wed, 07 Aug 2024 21:23:31 -0400
-Received: by mail-vs1-xe33.google.com with SMTP id
- ada2fe7eead31-493d748ba72so147870137.3; 
- Wed, 07 Aug 2024 18:23:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sbsBI-00082W-Cg
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 21:43:10 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-1fd9e6189d5so4927935ad.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 18:43:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723080208; x=1723685008; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Vg7okiYsNqaUBQTojGB2GxEZhpyZbjMU+czVbHdw7sI=;
- b=IUxiOJZuS0K2Us+DKOu/N8uH49FtrYI6q6KiH8fHi6ztJd8m8bHX2fCgybWd/gMXsF
- MKad0aEhSNj+M1ZiScnZHSKJ2pxWU0mWlZmO86KpWhnJAXoKEs2/eKzXOdShD82Jyiuj
- w0/+80gYi3eudAQynlERvoHXJ2KR8qmy8HSppzy8cfcT0DJ4oCEcFAYGNQGJ+81/uGLv
- QaT9XmuEmYx2PGin1z9sUAtfrgg8R7BXcpDt/JFkNjqXJK3BptEQd8ZDqBgLLwhacHl7
- p12PdGWYHwIkfjboMgUALpnwAUiyE+V4Wg7hbX7/3Uwvgqgu3GJNhjk5rKiMvrcOgjr8
- 7x5A==
+ d=linaro.org; s=google; t=1723081386; x=1723686186; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=PPmca8GZOh2DRlKRsEt2B1Y76Ks/t/nrpX+Hn8Stafk=;
+ b=QrRDrzWJyBiJ6j168gxosxhDfB4crRmF74WQilAiITkLOkwBxcDprF/IsrYTgphFnE
+ dkCfszMUURqGa0H0ulYlCLWKUEOi+TYJU8DeDD+jK2t85ASanoYBONiWQpub4bKtnROR
+ WENzY1Zy2PPI4o38H0eVFWhikTNY9SEEW5mIC7b4UkgtIq4beTUSD38lqeRyauX+Q5lg
+ eaxQrlWgNfv1QYcRf2F+BJVibaPV87wBl5QXSfKS24Yb6qSyBdIJIHqOkpw6Rhd65WI8
+ slKK/Jab/ZtNZ6/+EEgzt0PYkLZ8U5JWGtlytGxjc71ee0ux5XXj8oMpzOnVcNLm8A82
+ VbTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723080208; x=1723685008;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Vg7okiYsNqaUBQTojGB2GxEZhpyZbjMU+czVbHdw7sI=;
- b=hO17uo0E+dlZmbP4lEqaj7rj8EGuBDhfQak9ovSc8yO2BDh60CK7EJxsOrRg1ZcYY2
- 0Kx0QjJGAxBnx4rWeDO8dHAETXVDuFHGq/yI7BGCnUVoXpu0LdBkdKnDhlHnEcaqNA+7
- PnxXCjwbRe/4++H36XIBjYWw17hb/GcGxgpM+Ol0klEoyoVt+SrnVJvXWgxykothTFvn
- rIHqr7kaNj9yVWCfkfthQDB3BxZT6hY6bKN5qj7Wf86nAcOyRfu8nc50+O+8DzJkx7sR
- aNZYF9grzOpnIYQHEx/QeYwQjRJCm8/E+tBRjtn7h1nch5sfJ4m2Rg/uEn6OAdWmHYB3
- SMSA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhKGr8n2Xj6yf0/p5OUEcSjYZk/YH8c3pTig6nTwdtYkmZznaU5UOt/u7Qcf+xJEER6eHUZa/plSKf@nongnu.org
-X-Gm-Message-State: AOJu0Yx6Zd1AoixTT/uxgzJi2XJg/rAR2lXj7u3QR1cYZe2XNR6C562W
- HdzI90loOE4Bek5UzHnWsFynHXGR0PT1khUNQs1WLt4gN7vtk3eUlfju/nb0Lsn8mtWJm2UQi95
- xstJAhcTykbHckhnpNsh9N1Kx34k=
-X-Google-Smtp-Source: AGHT+IHFGTnRc6DIJ20XiiYpiVTeDJ7CfvOB913fygVWfz8SJC/oIhwDSndG12DJ41f58TBkBDdFiMTmjLiHiIGfU+8=
-X-Received: by 2002:a05:6102:3052:b0:493:b719:efaf with SMTP id
- ada2fe7eead31-495c5c33af9mr595748137.20.1723080208100; Wed, 07 Aug 2024
- 18:23:28 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723081386; x=1723686186;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=PPmca8GZOh2DRlKRsEt2B1Y76Ks/t/nrpX+Hn8Stafk=;
+ b=F9KEgR4zfTdYxjLRt0bKW1CTqZ49JpwhlTHdMAprrThAD2TsDecdFsJrDOI/YFokww
+ bed30XY9hoUa23WVEojKQvknKVRDoW1ViTVkjpDNzKtwrNkOGyMSJ7gj+NgrA3p5fsKA
+ Czd0zf9b0w1kQRYb231W0Pw1ZABIsdt1mp0QmIuJgDOUa8BKy8tniWUvdJjTJCwmJDG6
+ T3/z2al3eclfS89Vb3hJ9S3sgTwCfuY1OkD+XHyCsYUU3cUQ6AfBXgnRbIUUdwQwWAM3
+ MsICdwQAhBOu/lp1vBRXAA8nqRkNRtamGunM+SxW5HSA3io3Zf/eaC6Lb6mb7EEJ8pDB
+ vdRw==
+X-Gm-Message-State: AOJu0YzdaO35mH+k65t6OiHVFikMQb0K9yDy3kszfQ/tm/g2G8JgQ4hO
+ hB9pzXSj1SZeqLIl/J2ac9A1hNtUhoDzZwkvm9CYeY/niIxuMgOql9gF2o4a5F+PRP3yHTGrSUk
+ MB9I=
+X-Google-Smtp-Source: AGHT+IEx+xzRXLlEM9oIwBUGXP/mzjveIkwjD75SwcxLbq6EEVoRp+zwKa2pl1u3133WO3urywXGVw==
+X-Received: by 2002:a17:903:2287:b0:1fd:6677:69b4 with SMTP id
+ d9443c01a7336-200952bf93dmr5919535ad.49.1723081386355; 
+ Wed, 07 Aug 2024 18:43:06 -0700 (PDT)
+Received: from stoup.. ([203.30.4.111]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1ff5929abd1sm112724035ad.271.2024.08.07.18.43.04
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 07 Aug 2024 18:43:05 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 0/1] tcg patch queue
+Date: Thu,  8 Aug 2024 11:42:59 +1000
+Message-ID: <20240808014300.65269-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20240722175004.23666-1-jason.chien@sifive.com>
-In-Reply-To: <20240722175004.23666-1-jason.chien@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 8 Aug 2024 11:23:01 +1000
-Message-ID: <CAKmqyKOTNuW6UFqedmtkwM+sQGWUr+9z2huZ9AaMMUiTKSW9DA@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Add a property to set vl to ceil(AVL/2)
-To: Jason Chien <jason.chien@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e33;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe33.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,71 +90,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jul 23, 2024 at 3:51=E2=80=AFAM Jason Chien <jason.chien@sifive.com=
-> wrote:
->
-> RVV spec allows implementations to set vl with values within
-> [ceil(AVL/2),VLMAX] when VLMAX < AVL < 2*VLMAX. This commit adds a
-> property "rvv_vl_half_avl" to enable setting vl =3D ceil(AVL/2). This
-> behavior helps identify compiler issues and bugs.
->
-> Signed-off-by: Jason Chien <jason.chien@sifive.com>
+The following changes since commit 6d00c6f982562222adbd0613966285792125abe5:
 
-Thanks!
+  Merge tag 'for-upstream' of https://repo.or.cz/qemu/kevin into staging (2024-08-07 07:09:37 +1000)
 
-Applied to riscv-to-apply.next
+are available in the Git repository at:
 
-Alistair
+  https://gitlab.com/rth7680/qemu.git tags/pull-tcg-20240808
 
-> ---
->  target/riscv/cpu.c           | 1 +
->  target/riscv/cpu_cfg.h       | 1 +
->  target/riscv/vector_helper.c | 2 ++
->  3 files changed, 4 insertions(+)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index a90808a3ba..8f21171ffa 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2687,6 +2687,7 @@ static Property riscv_cpu_properties[] =3D {
->
->      DEFINE_PROP_BOOL("rvv_ta_all_1s", RISCVCPU, cfg.rvv_ta_all_1s, false=
-),
->      DEFINE_PROP_BOOL("rvv_ma_all_1s", RISCVCPU, cfg.rvv_ma_all_1s, false=
-),
-> +    DEFINE_PROP_BOOL("rvv_vl_half_avl", RISCVCPU, cfg.rvv_vl_half_avl, f=
-alse),
->
->      /*
->       * write_misa() is marked as experimental for now so mark
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index 8b272fb826..96fe26d4ea 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -127,6 +127,7 @@ struct RISCVCPUConfig {
->      bool ext_smepmp;
->      bool rvv_ta_all_1s;
->      bool rvv_ma_all_1s;
-> +    bool rvv_vl_half_avl;
->
->      uint32_t mvendorid;
->      uint64_t marchid;
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 1b4d5a8e37..825312552b 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -75,6 +75,8 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_=
-ulong s1,
->      vlmax =3D vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
->      if (s1 <=3D vlmax) {
->          vl =3D s1;
-> +    } else if (s1 < 2 * vlmax && cpu->cfg.rvv_vl_half_avl) {
-> +        vl =3D (s1 + 1) >> 1;
->      } else {
->          vl =3D vlmax;
->      }
-> --
-> 2.43.2
->
->
+for you to fetch changes up to 682a05280504d2fab32e16096b58d7ea068435c2:
+
+  tcg/ppc: Sync tcg_out_test and constraints (2024-08-08 09:03:35 +1000)
+
+----------------------------------------------------------------
+tcg/ppc: Sync tcg_out_test and constraints
+
+----------------------------------------------------------------
+Richard Henderson (1):
+      tcg/ppc: Sync tcg_out_test and constraints
+
+ tcg/ppc/tcg-target.c.inc | 21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
