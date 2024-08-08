@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C96BC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 11:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9534EC52D73
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 11:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc1FI-0000Do-C8; Thu, 08 Aug 2024 07:23:52 -0400
+	id 1sc1O2-00060s-K2; Thu, 08 Aug 2024 07:32:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sc1FA-0000Bi-72
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 07:23:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sc1F8-0004CX-86
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 07:23:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723116219;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=ktQgG7j4gPl1x9yeyA1FOm/APy/ixeU6Pdcr3oq6LAA=;
- b=AYMUcYbsXzNaiXDlUtJB4yTVzyI018oXtkf1kF0fFnu2yIoxL4eYb3PVbm/Wd2MZSd9Kcg
- S4EJpLhUtHBiuXUFu2LQ2ZuBqL7K7SU6J1ytEA3duTBVGsBOryqWl4KlM+u0xEuHolEV5b
- Rqxh/or9AZAExN363Z8WdaPkA1HQQB4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-368-vKCvuRX6MAGYT_-gLsW_AQ-1; Thu,
- 08 Aug 2024 07:23:36 -0400
-X-MC-Unique: vKCvuRX6MAGYT_-gLsW_AQ-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D4AE195419F; Thu,  8 Aug 2024 11:23:35 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.163])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 38596300018D; Thu,  8 Aug 2024 11:23:31 +0000 (UTC)
-Date: Thu, 8 Aug 2024 12:23:28 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Markus Armbruster <armbru@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>,
- qemu-arm@nongnu.org, Thomas Huth <thuth@redhat.com>
-Subject: Re: [RFC PATCH-for-9.1? 1/2] target/arm: Move
- qmp_query_gic_capabilities() to hw/intc/
-Message-ID: <ZrSqsEedC3rmVbD9@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sc1O1-0005zp-Ld
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 07:32:53 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sc1Ny-0005Tn-Jt
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 07:32:53 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5a108354819so1116587a12.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 04:32:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723116767; x=1723721567; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YIWu3C/JDdG6r3+leXuVMQr5m0dQJuoBGnIJzNv643I=;
+ b=xs9BHrTcYB1td4Ouyhbr0kHmjC6DZVZmcMaVZDClY+u9sXvKQCSXkWJiH4OTtgZfA/
+ evWa6kgYTEgARDsqqCVY01j2rV3grEFJHNPalE+nhYPPOz29qPi+6A4Txv64xoDcRzlw
+ UcUjvBq87UVNVG5eP99zjdiW00pXHvLqufpviEe9OQOjQ7e+GBB3RU00feOEki0Dgzlj
+ YeLntk0y803Bz7h8u0ROO0swy7m98eiGX5WNXh2flWLgESBsqrggfBFJ0SgfvZHIEMV9
+ RdNG7K7bEMeuu39NLXsQCaJmJ4/61yf6u/cCchieyDHZEIidFTGuHoeE6QXbVSkwBAXj
+ b0JA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723116767; x=1723721567;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YIWu3C/JDdG6r3+leXuVMQr5m0dQJuoBGnIJzNv643I=;
+ b=iIEp/N8WFmgl2r1Zl1zXDodRKrTPqgix+CS1cxtP8b7U7655qLEodYZyy+oQHhIGB0
+ 3KHEberzagxRpJTr2n9kHQ7jnWb3NmOXfxp/kINhXzJ71+A9f1KcO/40KF8w2vvVnmuE
+ kZXTV2ISCDTSaOQCuLin6nxdGLh3M6sCIvh//boxeHZWyzU3Q4yFakk9lPL6tC8STIe0
+ M6LlvBKurOxDOgXUCTeFdiNpPr/geJ6yOhSKUL9nB+cUbtGiNtLEM5iAbYXMArCqGcm+
+ jRO2+LX/TZd5WSjEL8XVm8K57W2Mrz//laFldLdPdHw9QEXupB5fjiT+vIbY7D2ax5/l
+ 7j1w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU4pP5P4nGuu+Qtq6AMJ1zGDOQXb34a7978GPK5STxmSSgBElcizWX5geg60EGElmwPKuePI4m0yMmDhB66rHzyD+z2loQ=
+X-Gm-Message-State: AOJu0YxNvyj1EvSwG2dNVRqoX4R8pldWwMP/F2mAf1/h9oqolL+5J1J5
+ 2UFKdqhZpYIiYrV2FBJwKr17rXP0tAsXwKfcGTV1HCtLxFyXabgwUlGGhIsCzbFKp3K2DMFoGsL
+ pqFK/73N2AD0Wh33XA5qyfg4g+XLh6RUcURM79A==
+X-Google-Smtp-Source: AGHT+IEyZVhUCWzHf68tbOd/01ZWFZuhV4ubOhG3Kqn2sSGQbfoJ2RMIJ88kP3K56mW7nEXdnitwSOjG028fV1sSOBU=
+X-Received: by 2002:a05:6402:1ed5:b0:5a7:464a:abd with SMTP id
+ 4fb4d7f45d1cf-5bbb23f6708mr1258451a12.30.1723116766879; Thu, 08 Aug 2024
+ 04:32:46 -0700 (PDT)
+MIME-Version: 1.0
 References: <20240806141940.22095-1-philmd@linaro.org>
  <20240806141940.22095-2-philmd@linaro.org>
  <f82397e9-3be4-49be-b291-5598acdaf39b@linaro.org>
@@ -64,21 +65,30 @@ References: <20240806141940.22095-1-philmd@linaro.org>
  <CAFEAcA8J4i-81rOEHBpqbV=c4F26o6qd3Lg9dZV+BuNyZPGg7Q@mail.gmail.com>
  <87ed6z1j77.fsf@pond.sub.org>
  <CAFEAcA_=GYBGpbvfKMGsYrUKWgcTLrriBKd37jOVFV1YMfy8Mw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA_=GYBGpbvfKMGsYrUKWgcTLrriBKd37jOVFV1YMfy8Mw@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+ <ZrSqsEedC3rmVbD9@redhat.com>
+In-Reply-To: <ZrSqsEedC3rmVbD9@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 8 Aug 2024 12:32:35 +0100
+Message-ID: <CAFEAcA-c7bYaWdOp0ShzUE83kKaYmqoH5DpW+EnU_sVzJgdu4A@mail.gmail.com>
+Subject: Re: [RFC PATCH-for-9.1? 1/2] target/arm: Move
+ qmp_query_gic_capabilities() to hw/intc/
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>, qemu-arm@nongnu.org, 
+ Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,69 +101,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 08, 2024 at 11:15:17AM +0100, Peter Maydell wrote:
-> On Thu, 8 Aug 2024 at 10:02, Markus Armbruster <armbru@redhat.com> wrote:
-> >
-> > Peter Maydell <peter.maydell@linaro.org> writes:
-> >
-> > > On Thu, 8 Aug 2024 at 05:32, Markus Armbruster <armbru@redhat.com> wrote:
-> > >>
-> > >> Peter Maydell <peter.maydell@linaro.org> writes:
-> > >>
-> > >> [...]
-> > >>
-> > >> > The QAPI command which this code is implementing is
-> > >> > also (a) target-specific and (b) unfortunately
-> > >> > designed so that it doesn't get passed a particular
-> > >> > CPU or particular device to query, it's just assumed
-> > >> > to be a part of the whole simulation.
-> > >>
-> > >> We can fix (b) if we care: add a suitable optional argument, default to
-> > >> the sole GIC in the system, fail if there's more than one.  I assume we
-> > >> have no machines with more than one now.
-> > >
-> > > The exynos4210 SoC (board types 'nuri', 'smdkc210') has
-> > > two GICs. (It's a rather odd design -- there's the
-> > > interrupt controller that's part of the main CPU
-> > > cluster, and then they used a second "external" GIC
-> > > that feeds into that one.)
-> >
-> > Then "fail if there's more than one" would be an incompatible change for
-> > this machine.
-> >
-> > If the two GICs have identical capabilities, it doesn't matter to which
-> > of the two query-gic-capabilities technically applies.
-> >
-> > Else, it matters, and we have an interface issue.  Do we?
-> 
-> It's not possible to use KVM with that machine type, so the
-> question is a bit moot. (This also indicates that the
-> interface is not very helpful -- it purports to tell the
-> management layer whether it can use an accelerated in-kernel
-> GIC, but because it doesn't specifiy the board type there's
-> no way to provide an accurate answer. It would be useful
-> to know exactly what libvirt/etc actually use this for...)
+On Thu, 8 Aug 2024 at 12:23, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
+wrote:
+> On Thu, Aug 08, 2024 at 11:15:17AM +0100, Peter Maydell wrote:
+> > It's not possible to use KVM with that machine type, so the
+> > question is a bit moot. (This also indicates that the
+> > interface is not very helpful -- it purports to tell the
+> > management layer whether it can use an accelerated in-kernel
+> > GIC, but because it doesn't specifiy the board type there's
+> > no way to provide an accurate answer. It would be useful
+> > to know exactly what libvirt/etc actually use this for...)
+>
+> Libvirt uses this exclusively with the arm 'virt' machine type.
+>
+> If the user didn't express any GIC preference, then if KVM is in use,
+> we'll pick the highest GIC version QEMU reports as supported.
 
-Libvirt uses this exclusively with the arm 'virt' machine type.
+You can get that without querying QEMU by asking for 'gic-version=3Dmax'
+if you like.
 
-If the user didn't express any GIC preference, then if KVM is in use,
-we'll pick the highest GIC version QEMU reports as supported. If TGCG
-is in use we'll always pick v2, even if QEMU reports v3 is emulatable
-due to the v3 impl lacking MSI controller which we need for PCI-e
+> If TCG
+> is in use we'll always pick v2, even if QEMU reports v3 is emulatable
+> due to the v3 impl lacking MSI controller which we need for PCI-e
 
-  https://gitlab.com/libvirt/libvirt/-/blob/master/src/qemu/qemu_domain.c#L4456
+Our emulated GICv3 supports the ITS which has MSI support, so I'm not
+sure what forcing GICv2 is getting you here. Looking at the linked
+RHEL bugzilla bug, I suspect this is an out-of-date policy from before
+we added the ITS emulation in 2021 (it's present by default
+in virt-2.8 and later machine types). So that is something that
+libvirt should update I think.
 
-We'll also report to mgmt apps what GIC versions are available.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+thanks
+-- PMM
 
