@@ -4,62 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5EADC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 22:42:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBA31C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 23:00:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scBpQ-0006fT-Pq; Thu, 08 Aug 2024 18:41:52 -0400
+	id 1scC6h-0003pN-GX; Thu, 08 Aug 2024 18:59:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1scBpO-0006ex-U3
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 18:41:51 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1scC6g-0003ot-3d
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 18:59:42 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1scBpL-0002Dd-9g
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 18:41:50 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 4AFA5CE1037;
- Thu,  8 Aug 2024 22:41:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAA8C32782;
- Thu,  8 Aug 2024 22:41:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1723156902;
- bh=Z9NhZiXiygl+fXMUeW+48aSDSda1CR5oQvoBUfV+O6s=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=dG8N9ntDuCt3daKtFqY8qdKCSGa90NdFDgMZqg6RLGQOVQghLcWwbkh7Z/nftw5LI
- A3lnNxKLafkD8s1hvgga3m5Gx1far4Df3TQlmDa6im83UHDMpM8EZIgE6kyAczMfb+
- MjSi4d+FagJX88B1tp9GrtCajPvAYfUDLByNBv99/zAjY5vbslV28C4i4+5T8j2xxO
- Lrtj6L71k5SUhsefA2P6fTHniQj8FDftM4moszW8ZuEyrgG3Kl/+EY6FfmnG8rgjIE
- x2Hax+AQO4VPTkH1vKKamMED+vAS3ogJ4P5mERl1q5QGIk0qhc3bKhh3cbRKUQqB2r
- mX89pmbDJRw2w==
-Date: Fri, 9 Aug 2024 00:41:37 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: John Snow <jsnow@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, Cleber Rosa <crosa@redhat.com>,
- linux-kernel@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 7/7] scripts/ghes_inject: add a script to generate
- GHES error inject
-Message-ID: <20240809004137.01f97da2@foz.lan>
-In-Reply-To: <CAFn=p-Y27zap1P5G3NibdZS26iGwCqh8U0vgW0Vw31f53+oU1w@mail.gmail.com>
-References: <cover.1722634602.git.mchehab+huawei@kernel.org>
- <0654a89fe24f4343016b9cecc0752594ad1cd49f.1722634602.git.mchehab+huawei@kernel.org>
- <CAFn=p-Y27zap1P5G3NibdZS26iGwCqh8U0vgW0Vw31f53+oU1w@mail.gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1scC6e-0004Np-Fh
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 18:59:41 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 478Dr6g4010954;
+ Thu, 8 Aug 2024 22:59:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ KFfevHN5bqJNj6JRznE9VCd4M3C/I7R45G4CHNgkWt4=; b=JRKbJww0eYGeGQrx
+ qcYilLHWz5RDAjqA7CyHjqfaIHySua1DKTToJ9I7ahKlh2NQLQT/mIBCuLqgyHj8
+ 8/RpwX3UNCSFkvc2wULUXwxGBEivHXOzO+2MytyCuqEJiikXHT4NAZLnCmIYVV/r
+ MF7+vW7NABpJyxIXzWaVPlwHBd4Ub+0wVH3KVyjL8mmewhCRCJ86RT+zTvjoEGmz
+ EGC7owSiQY0w/JrhN3Rmrtv0Pf5e3kjD010av60p3GhA9ZGZD9kpY7BBXCs/QU8B
+ EmNKTSbtHG1Q/QE3Iuq8XOPLgZFWJCY3t58P4rUr/fjS7NkT2OO0LSz7MYeSDvJp
+ T1xoOQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 40vpuvjpe4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 08 Aug 2024 22:59:35 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
+ [10.47.97.35])
+ by NALASPPMTA01.qualcomm.com (8.17.1.19/8.17.1.19) with ESMTPS id
+ 478MxYPv003328
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 8 Aug 2024 22:59:34 GMT
+Received: from [10.110.10.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 8 Aug 2024
+ 15:59:33 -0700
+Message-ID: <d31caba7-5f52-4655-accf-c6ee7f3d22ff@quicinc.com>
+Date: Thu, 8 Aug 2024 17:59:32 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=mchehab+huawei@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/6] hex queue
+To: Richard Henderson <richard.henderson@linaro.org>, Brian Cain
+ <bcain@quicinc.com>, <qemu-devel@nongnu.org>
+CC: <philmd@linaro.org>, <peter.maydell@linaro.org>,
+ <quic_mathbern@quicinc.com>, <ale@rev.ng>, <anjo@rev.ng>,
+ <quic_mliebel@quicinc.com>, <ltaylorsimpson@gmail.com>
+References: <20240808034244.4139757-1-bcain@quicinc.com>
+ <ed7c7a20-7d32-456d-9cf7-0b706bb07955@linaro.org>
+Content-Language: en-US
+From: Brian Cain <quic_bcain@quicinc.com>
+In-Reply-To: <ed7c7a20-7d32-456d-9cf7-0b706bb07955@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-ORIG-GUID: S008GpAezvh_6xzWAfhsMHdyLh6bogi5
+X-Proofpoint-GUID: S008GpAezvh_6xzWAfhsMHdyLh6bogi5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-08_23,2024-08-07_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 adultscore=0
+ spamscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501
+ clxscore=1015 bulkscore=0 mlxscore=0 phishscore=0 mlxlogscore=999
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408080164
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=quic_bcain@quicinc.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,117 +105,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Thu, 8 Aug 2024 17:21:33 -0400
-John Snow <jsnow@redhat.com> escreveu:
 
-> On Fri, Aug 2, 2024 at 5:44=E2=80=AFPM Mauro Carvalho Chehab <
-> mchehab+huawei@kernel.org> wrote: =20
->=20
+On 8/8/2024 5:39 PM, Richard Henderson wrote:
+> On 8/8/24 13:42, Brian Cain wrote:
+>> The following changes since commit 
+>> 4c395ac42e55ff8e9fd4c992e351a04b10785503:
+>>
+>>    Merge tag 'pull-tcg-20240808' of https://gitlab.com/rth7680/qemu 
+>> into staging (2024-08-08 09:07:00 +1000)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://github.com/quic/qemu tags/pull-hex-20240807
+>>
+>> for you to fetch changes up to 47f3361a3af9d709218038a23b8907525310d2c3:
+>>
+>>    target/hexagon: switch to dc set_props() list (2024-08-07 20:37:21 
+>> -0700)
+>>
+>> ----------------------------------------------------------------
+>> Hexagon updates: lldb preds, v66 CPU, F2_conv* fix
+>
+>
+> Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as 
+> appropriate.
+>
+I don't believe I have an account here - can you refer me to more info 
+on how to get one?
 
-> > diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
-> > new file mode 100644
-> > index 000000000000..13fae7a7af0e
-> > --- /dev/null
-> > +++ b/scripts/qmp_helper.py
-> > =20
->=20
-> I'm going to admit I only glanced at this very briefly, but -- is there a
-> chance you could use qemu.git/python/qemu/qmp instead of writing your own
-> helpers here?
->=20
-> If *NOT*, is there something that I need to add to our QMP library to
-> facilitate your script?
 
-I started writing this script to be hosted outside qemu tree, when
-we had a very different API.
-
-I noticed later about the QMP, and even tried to write a patch for it,
-but I gave up due to asyncio complexity...
-
-Please notice that, on this file, I actually placed three classes:
-
-- qmp
-- util
-- cper_guid
-
-I could probably make the first one to be an override of QEMUMonitorProtoco=
-l=20
-(besides normal open/close/cmd communication, it also contains some
-methods that are specific to error inject use case:
-
-- to generate a CPER record;
-- to search for data via qom-get.
-
-The other two classes are just common code used by ghes_inject commands.
-My idea is to have multiple commands to do different kinds of GHES
-error injection, each command on a different file/class.
-
-> > +    s =3D socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-> > +    try:
-> > +        s.connect((host, port))
-> > +    except ConnectionRefusedError:
-> > +        sys.exit(f"Can't connect to QMP host {host}:{port}")
-> > =20
->=20
-> You should be able to use e.g.
->=20
-> legacy.py's QEMUMonitorProtocol class for synchronous connections, e.g.
->=20
-> from qemu.qmp.legacy import QEMUMonitorProtocol
->=20
-> qmp =3D QEMUMonitorProtocol((host, port))
-> qmp.connect(negotiate=3DTrue)
-
-That sounds interesting! I give it a try.
-
-> If you want to run the script w/o setting up a virtual environment or
-> installing the package, take a look at the hacks in scripts/qmp/ for how I
-> support e.g. qom-get directly from the source tree.
-
-Yeah, I saw that already. Doing:=20
-
-	sys.path.append(path.join(qemu_dir, 'python'))
-
-the same way qom-get does should do the trick.
-
-> > +
-> > +    data =3D s.recv(1024)
-> > +    try:
-> > +        obj =3D json.loads(data.decode("utf-8"))
-> > +    except json.JSONDecodeError as e:
-> > +        print(f"Invalid QMP answer: {e}")
-> > +        s.close()
-> > +        return
-> > +
-> > +    if "QMP" not in obj:
-> > +        print(f"Invalid QMP answer: {data.decode("utf-8")}")
-> > +        s.close()
-> > +        return
-> > +
-> > +    for i, command in enumerate(commands):
-> > =20
->=20
-> Then here you'd use qmp.cmd (raises exception on QMPError) or qmp.cmd_raw
-> or qmp.cmd_obj (returns the QMP response as the return value even if it w=
-as
-> an error.)
-
-Good to know, I'll try and see what fits best.
-
-> More details:
-> https://qemu.readthedocs.io/projects/python-qemu-qmp/en/latest/qemu.qmp.l=
-egacy.html
-
-I'll take a look. The name "legacy" is a little scary, as it might
-imply that this has been deprecated. If there's no plans to deprecate,
-then it would be great to use it and simplify the code a little bit.
-
-> There's also an async version, but it doesn't look like you require that
-> complexity, so you can ignore it.
-
-Yes, that's the case: a serialized sync send/response logic works perfectly
-for this script. No need to be burden with asyncio complexity.
-
-Thanks,
-Mauro
+> r~
+>
 
