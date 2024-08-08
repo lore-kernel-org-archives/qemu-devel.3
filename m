@@ -4,61 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D98DC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 12:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 601F3C52D6F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 12:19:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc1zd-0001HM-LD; Thu, 08 Aug 2024 08:11:45 -0400
+	id 1sc26H-00026l-2K; Thu, 08 Aug 2024 08:18:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sc1zX-0001Bn-FJ; Thu, 08 Aug 2024 08:11:40 -0400
-Received: from sin.source.kernel.org ([145.40.73.55])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sc1zU-0003S3-Qo; Thu, 08 Aug 2024 08:11:39 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 85D2ECE13B5;
- Thu,  8 Aug 2024 12:11:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B0DC4AF10;
- Thu,  8 Aug 2024 12:11:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1723119080;
- bh=okDt0GF8kFCoft7LCpimb0DlLgYHkqdTo2/807i2Izk=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=eY5IkJARG4aA/YFX2VkVMgRviMYbTYcnncqt4Al0e87J3bJPWSZCs+elDKgmYOAIC
- cdUXuDTislz46dDFhM4mOzRm74/CWxkVsuMLrTX9v1gTKXTDgMOonjjPaETlrooKK+
- E7Did2Cxy4wAQa9MaGwCujgwPVc8OugUizkFvZ8j3pRGF388GDiPGsiY0nk2a7vib5
- 1H8DL2+zY1Iajvup3N+uT0GyQDDoASreEpRit4UrQt1l6QuDRbU046SXyg4D8oPC0k
- krIP9LyhZZu5PwpUcl9ECVpbieBU+iJZltj6ilOoSY0nbT+3CBRTNuLcXI6KSKhC66
- aYup7vo7S0EeA==
-Date: Thu, 8 Aug 2024 14:11:14 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 6/7] acpi/ghes: add support for generic error
- injection via QAPI
-Message-ID: <20240808141114.3b021f80@foz.lan>
-In-Reply-To: <20240806163113.3bdc260a@imammedo.users.ipa.redhat.com>
-References: <cover.1722634602.git.mchehab+huawei@kernel.org>
- <20c491e357340e0062b6ff09867c1661ed4d2479.1722634602.git.mchehab+huawei@kernel.org>
- <20240806163113.3bdc260a@imammedo.users.ipa.redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sc264-000225-Mz
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 08:18:24 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sc260-0004Kk-UZ
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 08:18:23 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5b8c2a6135eso1333781a12.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 05:18:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723119499; x=1723724299; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=zi9sX+DTI3feKYd7o6wdPYkpWEi0A/NxHg7OEi7mzRY=;
+ b=wS0jIYQ2GuQ5BCNvovQKtLtvNWqblOOtR5K019cERgR7aW2WOvPqDWYdJct5SOCs7U
+ Y8HGX7YMMBnZ6RXZDe6VYoS+cP4g6RtJjI2TZe9mhOg6utYsIiNX3KSIHfDbiW27R6kM
+ QbvPJwlbT3wYW7EkmRrNupdDdMaBHx1yoeQsJ4gl8qUNYIEI9om/GzloatmTtXd7wtIm
+ 0+RpISaRFB2dnmc18IBcAYs4Lr+HIuQGYM3cIHE0XKtx5gQlNanLAbVQNGg54miLJSXn
+ NGoAOpmunQGI4rWNKTPFRqVfnIryxeNYCqmMAH5/1MbGo7/tv6LrrBQ1JfbN1fzEDcoN
+ sLkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723119499; x=1723724299;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zi9sX+DTI3feKYd7o6wdPYkpWEi0A/NxHg7OEi7mzRY=;
+ b=INza7+AblmyhcdrAL9K+DvWajuJLlGyAej+G0nx3UJX6kJuRj91IKtLCR2tjGDGDdq
+ jsWH7ZHpcfQmlOXfr2K0Cl0ryPHj/cz5PZQVxTNmzBoJqGxaKMoI8bqXP+UEuNZgGv4C
+ ADuey7UVG/e20faX0aOSf+RuqZqGZ83XivMS5pXmeg9fF/aVjsDGvfHGjom6Ar5l1i4Z
+ T5kIkluw8D6KOp6CRVLrQTinGmLZBfeIdEiJ02UQ5SNg/eSP4FM1UdYtcY4vQWVyUOCH
+ aBHr+/3cqh3s60d7R8BH9fvlCSEWFw1Sbf60r38gGSeyxXYFak1XItgGlvXqlo4YMoS2
+ bb1A==
+X-Gm-Message-State: AOJu0YxssVRRGh+PaDbbBf3EGlK9AwokZjsmTRUa5O5AgS95vfbmgGCA
+ NVwCKBez8y0lkQAfExObdQDTD7Z3ajSmZanL9fGuNx0WdYgFhksfjQicjhDp1RAehsi0kk7X/ff
+ KKO8Ft7/F68dn9ltmDt81oJgWtE1BnZdbi+IvkdRZkTkNXtYi
+X-Google-Smtp-Source: AGHT+IHOX2t/07T0DhI+AGpEKa2FqUAw1zJcEnjC3vjvbrLJRWuO+yVe55+hdss78lB7w3ApTiRMt6sAMHQdy49vY9k=
+X-Received: by 2002:a05:6402:5206:b0:57d:455:d395 with SMTP id
+ 4fb4d7f45d1cf-5bbb3c054bamr1375018a12.7.1723119498601; Thu, 08 Aug 2024
+ 05:18:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.40.73.55;
- envelope-from=mchehab+huawei@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+References: <20240806160756.182524-1-jmarcin@redhat.com>
+ <20240806160756.182524-3-jmarcin@redhat.com>
+In-Reply-To: <20240806160756.182524-3-jmarcin@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 8 Aug 2024 13:18:07 +0100
+Message-ID: <CAFEAcA9iCcmwkN2m9unjZskFHPg=DSDjC-SeNyskmjtkFJvFMQ@mail.gmail.com>
+Subject: Re: [PATCH 2/4] reset: Add RESET_TYPE_WAKEUP
+To: Juraj Marcin <jmarcin@redhat.com>
+Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,148 +88,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Tue, 6 Aug 2024 16:31:13 +0200
-Igor Mammedov <imammedo@redhat.com> escreveu:
+On Tue, 6 Aug 2024 at 17:08, Juraj Marcin <jmarcin@redhat.com> wrote:
+>
+> Some devices need to distinguish cold start reset from waking up from a
+> suspended state. This patch adds new value to the enum, and updates the
+> i386 wakeup method to use this new reset type.
+>
+> Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+> ---
+>  docs/devel/reset.rst    | 7 +++++++
+>  hw/i386/pc.c            | 2 +-
+>  include/hw/resettable.h | 2 ++
+>  3 files changed, 10 insertions(+), 1 deletion(-)
+>
+> diff --git a/docs/devel/reset.rst b/docs/devel/reset.rst
+> index 9746a4e8a0..30c9a0cc2b 100644
+> --- a/docs/devel/reset.rst
+> +++ b/docs/devel/reset.rst
+> @@ -44,6 +44,13 @@ The Resettable interface handles reset types with an enum ``ResetType``:
+>    value on each cold reset, such as RNG seed information, and which they
+>    must not reinitialize on a snapshot-load reset.
+>
+> +``RESET_TYPE_WAKEUP``
+> +  This type is used when the machine is woken up from a suspended state (deep
+> +  sleep, suspend-to-ram). Devices that must not be reset to their initial state
+> +  after wake-up (for example virtio-mem) can use this state to differentiate
+> +  cold start from wake-up can use this state to differentiate cold start from
+> +  wake-up.
 
-> > +    /* Could also be read back from the error_block_address register */
-> > +    *error_block_addr = base +
-> > +        ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t) +
-> > +        ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t) +
-> > +        error_source_to_index[notify] * ACPI_GHES_MAX_RAW_DATA_LENGTH;
-> > +
-> > +    return true;
-> > +}  
-> 
-> I don't like all this pointer math, which is basically a reverse engineered
-> QEMU actions on startup + guest provided etc/hardware_errors address.
-> 
-> For once, it assumes error_source_to_index[] matches order in which HEST
-> error sources were described, which is fragile.
-> 
-> 2nd: migration-wive it's disaster, since old/new HEST/hardware_errors tables
-> in RAM migrated from older version might not match above assumptions
-> of target QEMU. 
-> 
-> I see 2 ways to rectify it:
->   1st: preferred/cleanest would be to tell QEMU (via fw_cfg) address of HEST table
->        in guest RAM, like we do with etc/hardware_errors, see
->             build_ghes_error_table()
->                ...
->                tell firmware to write hardware_errors GPA into
->        and then fetch from HEST table in RAM, the guest patched error/ack addresses
->        for given source_id
-> 
->        code-wise: relatively simple once one wraps their own head over
->                  how this whole APEI thing works in QEMU
->                  workflow  is described in docs/specs/acpi_hest_ghes.rst
->                  look to me as sufficient to grasp it.
->                  (but my view is very biased given my prior knowledge,
->                   aka: docs/comments/examples wrt acpi patching are good enough)
->                  (if it's not clear how to do it, ask me for pointers)
+I feel like this needs more clarity about what this is, since
+as a reset type it's a general behaviour, not a machine
+specific one. What exactly is "wakeup" and when does it happen?
+How does it differ from what you might call a "warm" reset,
+where the user pressed the front-panel reset button?
+Why is virtio-mem in particular interesting here?
 
-That sounds a better approach, however...
-
->   2nd:  sort of hack based on build_ghes_v2() Error Status Address/Read Ack Register
->         patching instructions
->                bios_linker_loader_add_pointer(linker, ACPI_BUILD_TABLE_FILE,                
->                    address_offset + GAS_ADDR_OFFSET, sizeof(uint64_t),                      
->                    ACPI_GHES_ERRORS_FW_CFG_FILE, source_id * sizeof(uint64_t));
->                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^
->         during build_ghes_v2() also store on a side mapping
->              source_id -> error address offset : read ack address
-> 
->         so when you are injecting error, you'd at least use offsets
->         used at start time, to get rid of risk where injection code
->         diverge from HEST:etc/hardware_errors layout at start time.
-> 
->         However to make migration safe, one would need to add a fat
->         comment not to change order ghest error sources in HEST _and_
->         a dedicated unit test to make sure we catch it when that happens.
->         bios_tables_test should be able to catch the change, but it won't
->         say what's wrong, hence a test case that explicitly checks order
->         and loudly & clear complains when we will break order assumptions.
-> 
->         downside:
->            * we are are limiting ways HEST could be composed/reshuffled in future
->            * consumption of extra CI resources
->            * and well, it relies on above duct tape holding all pieces together
-
-I ended opting to do approach (2) on this changeset, as the current code
-is already using bios_linker_loader_add_pointer() for ghes, being deeply 
-relying on the block address/ack and cper calculus.
-
-To avoid troubles on this duct tape, I opted to move all offset math
-to a single function at ghes.c:
-
-	/*
-	 * ID numbers used to fill HEST source ID field
-	 */
-	enum AcpiHestSourceId {
-	    ACPI_HEST_SRC_ID_SEA,
-	    ACPI_HEST_SRC_ID_GED,
-	
-	    /* Shall be the last one */
-	    ACPI_HEST_SRC_ID_COUNT
-	} AcpiHestSourceId;
-
-	...
-
-	static bool acpi_hest_address_offset(enum AcpiGhesNotifyType notify,
-        	                             uint64_t *error_block_offset,
-                	                     uint64_t *ack_offset,
-                        	             uint64_t *cper_offset,
-                                	     enum AcpiHestSourceId *source_id)
-	{
-	    enum AcpiHestSourceId source;
-	    uint64_t offset;
-
-	    switch (notify) {
-	    case ACPI_GHES_NOTIFY_SEA:      /* Only on ARMv8 */
-	        source = ACPI_HEST_SRC_ID_SEA;
-	        break;
-	    case ACPI_GHES_NOTIFY_GPIO:
-	        source = ACPI_HEST_SRC_ID_GED;
-	        break;
-	    default:
-	        return true;
-	    }
-
-	    if (source_id) {
-	        *source_id = source;
-	    }
-
-	    /*
-	     * Please see docs/specs/acpi_hest_ghes.rst for the memory layout.
-	     * In summary, memory starts with error addresses, then acks and
-	     * finally CPER blocks.
-	     */
-
-	    offset = source * sizeof(uint64_t);
-
-	    if (error_block_offset) {
-	        *error_block_offset = offset;
-	    }
-	    if (ack_offset) {
-	        *ack_offset = offset + ACPI_HEST_SRC_ID_COUNT * sizeof(uint64_t);
-	    }
-	    if (cper_offset) {
-	        *cper_offset = 2 * ACPI_HEST_SRC_ID_COUNT * sizeof(uint64_t) +
-	                       source * ACPI_GHES_MAX_RAW_DATA_LENGTH;
-	    }
-
-	    return false;
-	}
-
-I also removed the anonymous enum with SEA/GPIO source IDs, using
-only the ACPI notify type as arguments at the function calls.
-
-As there's now a single point where the offsets from
-docs/specs/acpi_hest_ghes.rst are enforced, this should be error
-prone.
-
-The code could later be changed to use approach (2), on a separate
-cleanup.
-
-Thanks,
-Mauro
+thanks
+-- PMM
 
