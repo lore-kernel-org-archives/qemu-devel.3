@@ -4,75 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7A93C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 14:32:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97AE2C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 14:33:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc4AT-0000tv-HO; Thu, 08 Aug 2024 10:31:05 -0400
+	id 1sc4Cc-0005Nl-Ch; Thu, 08 Aug 2024 10:33:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sc4AQ-0000tH-JS
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 10:31:02 -0400
-Received: from mgamail.intel.com ([192.198.163.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sc4AO-000675-7m
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 10:31:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723127460; x=1754663460;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=+aF6CMtCk/FJR9JQ5ElsXUpRqhzOnaMp2vyHsyl2GCM=;
- b=LdI17IIRqSnXfKaw28mGX2lIPYQBChViU0x6mjVdeMmotbZZNezasV5n
- vJ1Wgpkr7r4/UyYjks0bgzB2pwWz21A8AdF9nnkzXceFUQ/+OZ+NfPQ74
- ciztami+ttXUDMmkNvNZuje53kXWPLG64qRGCJv/pJApzr+XwHvEoi6+G
- 33B/sF+8NZITKdEF5mwbX+HRAQ4gjrkH+YEaX8dvKRi6ZATFRnv2Zz6hN
- i64a0qrj0xORhBkysXMtd+dVB3CNLy9Zt82FsaVQhJRPQzZ9Ven/g83P+
- 7D+mON7d//uDSxV9c+48SkqfGgPMKZ95PxQN5VzvCrqWW/naj8F9moGMS A==;
-X-CSE-ConnectionGUID: guPzOfacR7yi43l/y+OHZA==
-X-CSE-MsgGUID: RqRJwTALRgWGO+WiDyN2Vg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11158"; a="21137966"
-X-IronPort-AV: E=Sophos;i="6.09,273,1716274800"; d="scan'208";a="21137966"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Aug 2024 07:30:57 -0700
-X-CSE-ConnectionGUID: 5G8oAFLyREiyePe7mrb/vA==
-X-CSE-MsgGUID: x/Ya5AFiRdezsZdHJDj3rA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,273,1716274800"; d="scan'208";a="80466509"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa002.fm.intel.com with ESMTP; 08 Aug 2024 07:30:56 -0700
-Date: Thu, 8 Aug 2024 22:46:45 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Manish <manish.mishra@nutanix.com>, John Levon <john.levon@nutanix.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] i386/cpu: Introduce enable_cpuid_0x1f to force exposing
- CPUID 0x1f
-Message-ID: <ZrTaVfziPc61OYlI@intel.com>
-References: <20240802072426.4016194-1-xiaoyao.li@intel.com>
- <ZrSZQN/AQa6BiIUu@intel.com>
- <26064315-6730-48fa-9f04-cb86a2dcfdf0@intel.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sc4Ca-0005Mf-5s
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 10:33:16 -0400
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sc4CY-0006KE-FB
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 10:33:15 -0400
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-a7d638a1f27so43357866b.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 07:33:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723127593; x=1723732393; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nioHeWMXtFzyLLKsZrn0g5FDxHVTN0nVtxne61S9YDE=;
+ b=jRdclCRbNSxDR82OZIJylMhnPBFaLulHmHvBAdsqCAP7ImNM5f09ucXDhfZUXet5Fe
+ MObWyk2UMQLlJ3YfOOz6KDYSyBv8IClhP44ewDeJL49sTp3XDl473Oowsd9l1Tkht+P6
+ e18AFVoICv7jRuOEYpXPlUqIgYuf/7qWXZ9pfi9aah04k9+ZmXTwRPEbnurujN0qhq9N
+ Ikyx/6hWOEF294AGwTzbNIf888MjDV0N3+jklruLC1tY/bDJjyjHDSKGRQCHdqWPILh5
+ Yypr+g2ggF9x+o50mziqRNvxQ4teU/Db9mYLyYRTVvqBZtjRjOgACkh61inHztXh8OaC
+ sFpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723127593; x=1723732393;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=nioHeWMXtFzyLLKsZrn0g5FDxHVTN0nVtxne61S9YDE=;
+ b=X8sdVx2LSn6G7PyS4IUhvwROpfHlg16WsOWONmZwqKY+v7s79CKwtTmheTJTSMSzk2
+ Z4BpgTbyL1/UAecpSdJh6MlRIUtd8O1p5jE1PvGLamnLbwTZLEAte++4+oxinSMZAZsU
+ mwil2q1cs0YYXVxDlzRCqS3ilZFvV9Anhb2VHWnq5QFfPXgodTpLwIdpI4q8ZYJHfW7o
+ KCP5f+sL6xsI8Z9sy1Ec3sTK5v6KDxwNbRd0tRdzS+9VjMPy2OzDLEZlPxYDQQ30GZgF
+ jfopxts7NP4lIWeq7k6hYuaBcUeXm4lY2cMav2Izq8epcxygXZdmcxBEoufMhij0FAFD
+ bDnw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX1lcTOyle7iJdKQCPQeA829UP9VgUiCY4r51gE7/aEkVuqMBajT9nYwqgpDV9p941ZUV/TAupxhqWAI5bhkKRl1F+6uy0=
+X-Gm-Message-State: AOJu0YzPKVYdNBX5tyiFVxYRuMcsRXnVYPUyZ3bk0fdwoj+iSFVSCM/Q
+ XeTc882wAGBXDObKpa3PEwjsNsDqrUF/A/VfJI4Om/3MaI75jvKXHxp7scMC4Ia6P06sh1tzZNw
+ 4GMNhf21Q6kWCjnLhnGp0yTokjxnX+736dhuoLg==
+X-Google-Smtp-Source: AGHT+IEYLXVxPzJLiyPO/q6WShUZe3dHASsvfU5IepBNjQ59+nhWBnbsAh8hqiingbqxdNmrAvKSpSWg4/eYfTsBl8k=
+X-Received: by 2002:a05:6402:3484:b0:57a:3046:1cd8 with SMTP id
+ 4fb4d7f45d1cf-5bbb22399e9mr2377198a12.7.1723127592553; Thu, 08 Aug 2024
+ 07:33:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <26064315-6730-48fa-9f04-cb86a2dcfdf0@intel.com>
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20240806134829.351703-1-chalapathi.v@linux.ibm.com>
+ <20240806134829.351703-3-chalapathi.v@linux.ibm.com>
+ <e3e60776-3f63-4024-a595-2989a59e15ed@linaro.org>
+In-Reply-To: <e3e60776-3f63-4024-a595-2989a59e15ed@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 8 Aug 2024 15:33:01 +0100
+Message-ID: <CAFEAcA_H+KtpBUKx4CcwKnNjL_4iOX-weLBXcrt+JzYBAgwJag@mail.gmail.com>
+Subject: Re: [PATCH v1 2/2] Fixes: Coverity CID 1558831
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Chalapathi V <chalapathi.v@linux.ibm.com>, qemu-devel@nongnu.org, 
+ Glenn Miles <milesg@linux.ibm.com>, Caleb Schlossin <calebs@linux.vnet.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org, fbarrat@linux.ibm.com,
+ clg@kaod.org, chalapathi.v@ibm.com, saif.abrar@linux.ibm.com, 
+ dantan@us.ibm.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,109 +97,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 08, 2024 at 09:59:07PM +0800, Xiaoyao Li wrote:
-> Date: Thu, 8 Aug 2024 21:59:07 +0800
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: Re: [PATCH] i386/cpu: Introduce enable_cpuid_0x1f to force
->  exposing CPUID 0x1f
-> 
-> On 8/8/2024 6:09 PM, Zhao Liu wrote:
-> > Hi Xiaoyao,
-> > 
-> > Patch is generally fine for me. Just a few nits:
-> > 
-> > On Fri, Aug 02, 2024 at 03:24:26AM -0400, Xiaoyao Li wrote:
-> > > diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
-> > > index dff49fce1154..b63bce2f4c82 100644
-> > > --- a/include/hw/i386/topology.h
-> > > +++ b/include/hw/i386/topology.h
-> > > @@ -207,13 +207,4 @@ static inline apic_id_t x86_apicid_from_cpu_idx(X86CPUTopoInfo *topo_info,
-> > >       return x86_apicid_from_topo_ids(topo_info, &topo_ids);
-> > >   }
-> > > -/*
-> > > - * Check whether there's extended topology level (module or die)?
-> > > - */
-> > > -static inline bool x86_has_extended_topo(unsigned long *topo_bitmap)
-> > > -{
-> > > -    return test_bit(CPU_TOPO_LEVEL_MODULE, topo_bitmap) ||
-> > > -           test_bit(CPU_TOPO_LEVEL_DIE, topo_bitmap);
-> > > -}
-> > > -
-> > 
-> > [snip]
-> > 
-> > > +/*
-> > > + * Check whether there's v2 extended topology level (module or die)?
-> > > + */
-> > > +bool x86_has_v2_extended_topo(X86CPU *cpu)
-> > > +{
-> > > +    if (cpu->enable_cpuid_0x1f) {
-> > > +        return true;
-> > > +    }
-> > > +
-> > > +    return test_bit(CPU_TOPO_LEVEL_MODULE, cpu->env.avail_cpu_topo) ||
-> > > +           test_bit(CPU_TOPO_LEVEL_DIE, cpu->env.avail_cpu_topo);
-> > > +}
-> > > +
-> > 
-> > I suggest to decouple 0x1f enablement and extended topo check, since as
-> > the comment of CPUTopoLevel said:
-> > 
-> > /*
-> >   * CPUTopoLevel is the general i386 topology hierarchical representation,
-> >   * ordered by increasing hierarchical relationship.
-> >   * Its enumeration value is not bound to the type value of Intel (CPUID[0x1F])
-> >   * or AMD (CPUID[0x80000026]).
-> >   */
-> > 
-> > The topology enumeration is generic and is not bound to the vendor.
-> 
-> I don't quit get your point. All the current usages of
-> x86_has_extended_topo() are for CPUID leaf 0x1f, which is an Intel specific
-> leaf.
-
-0x1f is just a user of that helper, and AMD's leaf would be another
-potential user, even if it is not implemented yet.
-
-What this helper does is check the topology hierarchy set by -smp for
-x86 CPUs, and has nothing to do with enabling 0x1f or not. You cannot
-falsely report the presence of module/die if -smp doesn't configure such
-levels but 0x1f is forcibly enabled.
-
-> Are you saying x86_has_extended_topo() will be used for leaf 0x80000026 for
-> AMD as well?
-> 
-> or maybe I misunderstand the meaning "extend_topo". The extend_topo just
-> means the topo level of module and die, and the topo level of smt and core
-> are non-extended? 
-
-Any levels that 0xb doesn't cover.
-
-> If so, this is new to me, could I ask where the
-> definitions come from? or just QEMU defines them itself?
+On Wed, 7 Aug 2024 at 21:13, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
 >
-> > [snip]
-> > 
-> > > diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> > > index c6cc035df3d8..211a42ffbfa6 100644
-> > > --- a/target/i386/cpu.h
-> > > +++ b/target/i386/cpu.h
-> > > @@ -2110,6 +2110,9 @@ struct ArchCPU {
-> > >       /* Compatibility bits for old machine types: */
-> > >       bool enable_cpuid_0xb;
-> > > +    /* Force to expose cpuid 0x1f */
-> > 
-> > Maybe "Force to enable cpuid 0x1f"?
-> 
-> I can change to it.
-> 
-> > > +    bool enable_cpuid_0x1f;
-> > > +
-> > >       /* Enable auto level-increase for all CPUID leaves */
-> > >       bool full_cpuid_auto_level;i
-> > 
-> > Regards,
-> > Zhao
-> > 
-> 
+> Back at this patch since C=C3=A9dric asked me to look at it.
+>
+> On 6/8/24 15:48, Chalapathi V wrote:
+> > In this commit the following coverity scan defect has been fixed
+> > CID 1558831:  Resource leaks  (RESOURCE_LEAK)
+> >    Variable "rsp_payload" going out of scope leaks the storage it
+> >    points to.
+> >
+> > Signed-off-by: Chalapathi V <chalapathi.v@linux.ibm.com>
+> > ---
+> >   hw/ssi/pnv_spi.c | 1 +
+> >   1 file changed, 1 insertion(+)
+> >
+> > diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
+> > index a33f682897..dbe06df224 100644
+> > --- a/hw/ssi/pnv_spi.c
+> > +++ b/hw/ssi/pnv_spi.c
+> > @@ -237,6 +237,7 @@ static void transfer(PnvSpi *s, PnvXferBuffer *payl=
+oad)
+> >       }
+> >       if (rsp_payload !=3D NULL) {
+> >           spi_response(s, s->N1_bits, rsp_payload);
+> > +        pnv_spi_xfer_buffer_free(rsp_payload);
+> >       }
+> >   }
+> >
+>
+> Or bigger patch but simpler logic:
+>
+> -- >8 --
+> diff --git a/hw/ssi/pnv_spi.c b/hw/ssi/pnv_spi.c
+> index c1297ab733..aaedba84af 100644
+> --- a/hw/ssi/pnv_spi.c
+> +++ b/hw/ssi/pnv_spi.c
+> @@ -217,6 +217,9 @@ static void transfer(PnvSpi *s, PnvXferBuffer *payloa=
+d)
+>       PnvXferBuffer *rsp_payload =3D NULL;
+>
+>       rsp_payload =3D pnv_spi_xfer_buffer_new();
+> +    if (!rsp_payload) {
+> +        return;
+> +    }
+
+pnv_spi_xfer_buffer_new() cannot fail (it calls
+g_malloc0, which aborts on not having enough memory)
+so we don't need to check it for NULL.
+
+>       for (int offset =3D 0; offset < payload->len; offset +=3D
+> s->transfer_len) {
+>           tx =3D 0;
+>           for (int i =3D 0; i < s->transfer_len; i++) {
+> @@ -235,9 +238,8 @@ static void transfer(PnvSpi *s, PnvXferBuffer *payloa=
+d)
+>                       (rx >> (8 * (s->transfer_len - 1) - i * 8)) & 0xFF;
+>           }
+>       }
+> -    if (rsp_payload !=3D NULL) {
+> -        spi_response(s, s->N1_bits, rsp_payload);
+> -    }
+
+(So this NULL check was unnecessary in the old code.)
+
+> +    spi_response(s, s->N1_bits, rsp_payload);
+> +    pnv_spi_xfer_buffer_free(rsp_payload);
+>   }
+>
+> ---
+>
+> I note few things is odd here:
+>
+> 1/ pnv_spi_xfer_buffer_new() uses the GLib g_malloc0() call
+>     while pnv_spi_xfer_buffer_free() uses plan free().
+
+This does work (glib guarantees now that g_malloc and friends
+can be paired with free), but it is not great style.
+
+> 2/ pnv_spi_xfer_buffer_free() frees payload->data so doesn't
+>     match pnv_spi_xfer_buffer_new().
+
+This part I think is OK -- the payload->data buffer is
+allocated with g_realloc(), so pnv_spi_xfer_buffer_new()
+creates a valid initial state (payload->data =3D NULL and
+payload->len =3D 0), pnv_spi_xfer_buffer_write_ptr() may
+allocate or extend the buffer (using g_realloc and
+updating the payload->len to match), and
+pnv_spi_xfer_buffer_free() will free the buffer
+(including handling the "buffer never allocated so
+payload->data =3D NULL" case, because free(NULL) is OK).
+
+What it doesn't get right I think is that when
+pnv_spi_xfer_buffer_write_ptr() extends the payload->data
+buffer it doesn't zero the newly added memory, so I think
+we might end up giving the guest back the contents of
+uninitialized memory.
+
+Another style issue is:
+    PnvXferBuffer *payload =3D g_malloc0(sizeof(*payload));
+g_new0(PnvXferBuffer, 1) is the better way to say
+"allocate me a zeroed out PnvXferBuffer", rather than
+manual use of sizeof.
+
+The various places which do
+    if (*payload =3D=3D NULL) {
+        *payload =3D pnv_spi_xfer_buffer_new();
+    }
+also look odd to me -- I'm pretty sure that
+in operation_shiftn1() and operation_shiftn2() it
+is impossible for them to be called with a NULL payload.
+
+The PnvXferBuffer struct is only 12 bytes large
+(a length and a pointer), so it seems rather overkill
+to be allocating and freeing it -- is it possible to
+have it be a local variable instead?
+
+My other question here is whether we need to be doing
+dynamic memory allocation, extension and freeing of the
+payload->data at all. This is quite an unusual thing to
+need to do in a hardware device model, because usually
+the real hardware we're modelling doesn't have infinite
+resources, it has some fixed amount of memory that it
+has to work with. If the guest can effectively ask
+us to allocate arbitrary amounts of memory, do we
+have appropriate guards in place to forbid that?
+
+Is there a datasheet for this device?
+
+thanks
+-- PMM
 
