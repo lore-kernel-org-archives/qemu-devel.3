@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38048C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 16:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E26BC52D7C
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 16:59:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc6Tf-0001Pi-EY; Thu, 08 Aug 2024 12:59:05 -0400
+	id 1sc6Tu-0001Sz-VD; Thu, 08 Aug 2024 12:59:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yusuf.colak3406@gmail.com>)
- id 1sc5H9-0002CS-B2
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 11:42:03 -0400
-Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yusuf.colak3406@gmail.com>)
- id 1sc5H6-0007Th-9w
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 11:42:03 -0400
-Received: by mail-yw1-x1134.google.com with SMTP id
- 00721157ae682-66526e430e0so10370357b3.2
- for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 08:41:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723131718; x=1723736518; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=jNNOFGUMabz5LcMMn5A0iat/PWcGnDNzNL3t3iaTSSI=;
- b=kvoE6tQqQfpvtISM2NZSSUrXDReGlwxVMBTzTAE8ZxrAzIeZ3ypEy7UbpRsCT6+De9
- qp3bIRZdz5i6l9sd49+61BmJwnCUYB55KbjPN8qKkFCj6jU729sdrC1ZVXMU7qr1qE06
- YE7NWFCmjspm9TkjWP58gfMEwh2bk2K/y4a39gMkZROrKV1D9xqrXh20DeQVfgtjIadc
- cAfd9bV75SmTUUHGPXMU1K/G3dhXYIYpuO4kApboPJY7xzhYdNw9LoYYFua6FdjM8dFb
- eyXj9BTHeXLditMIcnM7giHT5+AAb9MKPMlKRSYbf6XS7r3v8GPo/mp46iW+icN7zi0r
- QgAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723131718; x=1723736518;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jNNOFGUMabz5LcMMn5A0iat/PWcGnDNzNL3t3iaTSSI=;
- b=sWDgl2h3TZ2SLYVIRRTEI1juQMwgQvbZ6K1FSZ4ooOa6pSJM7RjBVoqn7nwZH1zNRY
- NOc4GD5ucNhUvi35C0eWM99S+MVQhgCuT6AOkCQaILAU4vLDQMnLMo2lkvuzSo7xTMAA
- FDu4taaltRPbmh+ZmoxzvS7Yg2p1HGcwz+JSaTFtq9f2OrPIN3BABnat3bfkYJKQuuIe
- 4d2HaS5iPTdDUo9qlZu6FOmr4edaRPgDLAMWgLHHZMOBLGe8GZolheAIwx/AhS8GHj/G
- M8eEDWKyyJAHHQ2OX8ym1PQKfjYe1O2EEqSa8785ujXNJZ47/jP3LKCfhvH4q1VCiyau
- LEdg==
-X-Gm-Message-State: AOJu0YyTajI5zvL6MYBNFDaTbHSFZBMta2F1bh5xVbaR1DwRajS04LPy
- Q1iMQcl7DZE/ecFUKCBJa7Mwy8BS1RNdkWVVhKgHFApupdlKBh9TJDP8LXTRyIzPAQcrpgFGFbX
- iPx/V7IZFzXGbE3NPBUJ55QgNwNLMSuoi
-X-Google-Smtp-Source: AGHT+IEECZXQVuy5TRmRNFbpP3D7Ov19oL0Bn8VQ5NH/p2kX1a096boADy5elfx9EB54UtiDK2dy1Ge35gSznoXxW30=
-X-Received: by 2002:a05:690c:4784:b0:64a:90fe:911e with SMTP id
- 00721157ae682-69bfb7e5474mr21819677b3.31.1723131717626; Thu, 08 Aug 2024
- 08:41:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sc6Tb-0001P0-BZ
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 12:59:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sc6TZ-00036A-Ke
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 12:58:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723136336;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=86BwQotMW+4xsWckG+Z8aKQsw9F9jcj5IED0Q+iVpMk=;
+ b=Jl1YRBvnHXig2jE08SMj2Kgz8cmIEjgYYAihFobkOSj1wPLLFk++vliEYB0/PBtxlcGXFd
+ d2DbrzSTYGb0+tisxQNH7kf/J/vjVfYjoblt7jWUuDnZ1Cp7DhcchEumga0lJ5ZZEJtqvI
+ pYwo8iIXFoLN5cqfCdWKWUBBKuN5sJI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-197-a9meFE-MOiyqyDkJ22e25A-1; Thu,
+ 08 Aug 2024 12:58:51 -0400
+X-MC-Unique: a9meFE-MOiyqyDkJ22e25A-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3F3D219775FE; Thu,  8 Aug 2024 16:58:49 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.163])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 28EDD1955E99; Thu,  8 Aug 2024 16:58:44 +0000 (UTC)
+Date: Thu, 8 Aug 2024 17:58:41 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alejandro Zeise <alejandro.zeise@seagate.com>
+Cc: qemu-arm@nongnu.org, kris.conklin@seagate.com,
+ jonathan.henze@seagate.com, evan.burgess@seagate.com, clg@kaod.org,
+ peter.maydell@linaro.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 02/15] crypto/hash-glib: Implement new hash API
+Message-ID: <ZrT5QTOWFxv5gD1Z@redhat.com>
+References: <20240807195122.2827364-1-alejandro.zeise@seagate.com>
+ <20240807195122.2827364-3-alejandro.zeise@seagate.com>
 MIME-Version: 1.0
-From: =?UTF-8?Q?Yusuf_said_=C3=87olak?= <yusuf.colak3406@gmail.com>
-Date: Thu, 8 Aug 2024 15:41:46 +0000
-Message-ID: <CANwC2_Tph=P2Ho-nm-x5C8wkbz5NX=PXDA5GvuP9cf08Gscrxw@mail.gmail.com>
-Subject: bug?
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000ee37b9061f2ddd94"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
- envelope-from=yusuf.colak3406@gmail.com; helo=mail-yw1-x1134.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240807195122.2827364-3-alejandro.zeise@seagate.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 08 Aug 2024 12:58:57 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,51 +82,136 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ee37b9061f2ddd94
-Content-Type: text/plain; charset="UTF-8"
+On Wed, Aug 07, 2024 at 07:51:09PM +0000, Alejandro Zeise wrote:
+> Implements the new hashing API in the GLib hash driver.
+> Supports creating/destroying a context, updating the context
+> with input data and obtaining an output hash.
+> 
+> Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
+> ---
+>  crypto/hash-glib.c | 77 ++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 77 insertions(+)
+> 
+> diff --git a/crypto/hash-glib.c b/crypto/hash-glib.c
+> index 82de9db705..9f4490762a 100644
+> --- a/crypto/hash-glib.c
+> +++ b/crypto/hash-glib.c
+> @@ -1,6 +1,7 @@
+>  /*
+>   * QEMU Crypto hash algorithms
+>   *
+> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
+>   * Copyright (c) 2016 Red Hat, Inc.
+>   *
+>   * This library is free software; you can redistribute it and/or
+> @@ -95,6 +96,81 @@ qcrypto_glib_hash_bytesv(QCryptoHashAlgorithm alg,
+>  }
+>  
+>  
+> +static
+> +QCryptoHash *qcrypto_glib_hash_new(QCryptoHashAlgorithm alg,
+> +                                   Error **errp)
+> +{
+> +    QCryptoHash *hash = NULL;
+> +
+> +    if (!qcrypto_hash_supports(alg)) {
+> +        error_setg(errp,
+> +                   "Unknown hash algorithm %d",
+> +                   alg);
 
-I installed qemu successfully and downloaded emulator you published on
-github, i runned
+This check should be removed from all the drivers, since we
+can do it once in qcrypto_hash_new.
 
-mkdir buildcd build
+> +    } else {
+> +        hash = g_new(QCryptoHash, 1);
+> +        hash->alg = alg;
+> +        hash->opaque = g_checksum_new(qcrypto_hash_alg_map[alg]);
+> +    }
+> +
+> +    return hash;
+> +}
+> +
+> +static
+> +void qcrypto_glib_hash_free(QCryptoHash *hash)
+> +{
+> +    if (hash->opaque) {
+> +        g_checksum_free((GChecksum *) hash->opaque);
 
-but if i run ../configure it gives ;
+The cast to "(GChecksum *)" is not required since 'opaque' is 'void *'
+which auto-casts to anything in C, and we don't need to support C++
+compilers.
 
+> +    }
+> +
+> +    g_free(hash);
+> +}
+> +
+> +
+> +static
+> +int qcrypto_glib_hash_update(QCryptoHash *hash,
+> +                             const struct iovec *iov,
+> +                             size_t niov,
+> +                             Error **errp)
+> +{
+> +    GChecksum *ctx = hash->opaque;
+> +
+> +    for (int i = 0; i < niov; i++) {
+> +        g_checksum_update(ctx, iov[i].iov_base, iov[i].iov_len);
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+> +static
+> +int qcrypto_glib_hash_finalize(QCryptoHash *hash,
+> +                               uint8_t **result,
+> +                               size_t *result_len,
+> +                               Error **errp)
+> +{
+> +    int ret;
+> +    GChecksum *ctx = hash->opaque;
+> +
+> +    ret = g_checksum_type_get_length(qcrypto_hash_alg_map[hash->alg]);
+> +    if (ret < 0) {
+> +        error_setg(errp, "%s",
+> +                   "Unable to get hash length");
+> +        *result_len = 0;
+> +        ret = -1;
 
+Just do an immediate 'return -1' here, and avoid the
+'} else {' clause.
 
+> +    } else {
+> +        *result_len = ret;
+> +        *result = g_new(uint8_t, *result_len);
+> +
+> +        g_checksum_get_digest(ctx, *result, result_len);
+> +        ret = 0;
+> +    }
+> +
+> +    return ret;
+> +}
+> +
+>  QCryptoHashDriver qcrypto_hash_lib_driver = {
+>      .hash_bytesv = qcrypto_glib_hash_bytesv,
+> +    .hash_new      = qcrypto_glib_hash_new,
+> +    .hash_update   = qcrypto_glib_hash_update,
+> +    .hash_finalize = qcrypto_glib_hash_finalize,
+> +    .hash_free     = qcrypto_glib_hash_free,
+>  };
+> -- 
+> 2.34.1
+> 
 
-ERROR: missing GIT submodules
-This is not a GIT checkout but module content appears to
-be missing. Do not use 'git archive' or GitHub download links
-to acquire QEMU source archives. Non-GIT builds are only
-supported with source archives linked from:
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
-  https://www.qemu.org/download/#source
-
-Developers working with GIT can use scripts/archive-source.sh
-if they need to create valid source archives.
-
-can you help me with this?
-
---000000000000ee37b9061f2ddd94
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">I installed qemu successfully and downloaded emulator you =
-published on github, i runned <br><pre>mkdir build
-<span class=3D"gmail-pl-c1">cd</span> build<br><br></pre><pre>but if i run =
-../configure it gives ;<br></pre><pre><br><br><br>ERROR: missing GIT submod=
-ules<br>This is not a GIT checkout but module content appears to<br>be miss=
-ing. Do not use &#39;git archive&#39; or GitHub download links<br>to acquir=
-e QEMU source archives. Non-GIT builds are only<br>supported with source ar=
-chives linked from:<br><br>=C2=A0 <a href=3D"https://www.qemu.org/download/=
-#source">https://www.qemu.org/download/#source</a><br><br>Developers workin=
-g with GIT can use scripts/archive-source.sh<br>if they need to create vali=
-d source archives.<br><br></pre><pre>can you help me with this?<br></pre></=
-div>
-
---000000000000ee37b9061f2ddd94--
 
