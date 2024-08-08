@@ -4,73 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FDD4C52D71
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 09:53:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4E03C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 10:10:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbzpv-0004Qo-TZ; Thu, 08 Aug 2024 05:53:37 -0400
+	id 1sc05d-0002hb-KZ; Thu, 08 Aug 2024 06:09:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sbzpk-0003dR-86
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 05:53:24 -0400
-Received: from mgamail.intel.com ([198.175.65.17])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sc05c-0002h7-1T
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 06:09:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sbzpi-0007tm-Ln
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 05:53:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723110803; x=1754646803;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=SQ3snLs1rMNACamIDOtNuTEg5+7GVw7FXY0RnSzfJKw=;
- b=ZtxVPtf+45ukkaO906ZjhJMh0EDlFa5nqzYHiCFI7ycVNdWTGsRVnaVG
- yNNAKqG9pofMuy+3dNUfqDHIpRcNOwTtnBmMo6f6B7Ekhzp+fiup2NSEn
- hjjliXjI8EXe8VaYDav3EfwjEl5dlJBDgnqyjKLhOL/8B5MFWEqF421/R
- KqwhyKGSDt/uxqAquCEbD8eCyUXHsELR9HU2mD8GXsU53IJUlCtYRmkii
- KzpAbmXqsZtoVQAiLJINRli6bg3rUjHDYS3U7bo1zDJrzJZlGpsbaX+hy
- 1liwXZ9RVDSRkipkeuw8p9jQ+ju+p28Ul64U6LGTvNBY4np16oEAk8Rsa g==;
-X-CSE-ConnectionGUID: OWeUjLB/QKmvN6uQPeW3fA==
-X-CSE-MsgGUID: U+Ifj3LkT4morzlB64HNPQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11157"; a="21345066"
-X-IronPort-AV: E=Sophos;i="6.09,272,1716274800"; d="scan'208";a="21345066"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Aug 2024 02:53:17 -0700
-X-CSE-ConnectionGUID: SB3wIC6KSxSI7xZOv/Vxmw==
-X-CSE-MsgGUID: NPgGoP74Rw2W+vTPSmUOqA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,272,1716274800"; d="scan'208";a="61265078"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa003.fm.intel.com with ESMTP; 08 Aug 2024 02:53:14 -0700
-Date: Thu, 8 Aug 2024 18:09:04 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Manish <manish.mishra@nutanix.com>, John Levon <john.levon@nutanix.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] i386/cpu: Introduce enable_cpuid_0x1f to force exposing
- CPUID 0x1f
-Message-ID: <ZrSZQN/AQa6BiIUu@intel.com>
-References: <20240802072426.4016194-1-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sc05W-0001r3-IF
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 06:09:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723111780;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=U0x5a3xy4i1LCTUj+etGBLc9ML2yg6A3Oq0y6AgwAno=;
+ b=i90n0ZMlx6ig5ThlymRvvcX9oKyVeUY78vNXjRC7JrFyd1F7qfB+Y897rm/PCEX6nqGGNC
+ wZUITjaZjTghIvWqulw4fOUrCkcRFkp2+u5Wiu85GTXAPpZofNOqV2cvWkifh+SZ/CiLeU
+ ZBAHWAETTRm1yLUwtxyePm+0j6cXaZs=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-351-pIvTg2MRNvOLbSwk_hs8Yw-1; Thu, 08 Aug 2024 06:09:35 -0400
+X-MC-Unique: pIvTg2MRNvOLbSwk_hs8Yw-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4281f8994adso6381625e9.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 03:09:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723111774; x=1723716574;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=U0x5a3xy4i1LCTUj+etGBLc9ML2yg6A3Oq0y6AgwAno=;
+ b=S2tUDBXL1+8E0YvTd3MkkrqItti0bT+DXKdBjJcAgyJjZjV2PVfjMfd0bsG+CtjLBs
+ lUh9f2bjOO1GDpI5x+7YzslRnKhWtiuKJzg057XFsuw+EVQ579MLwxywKtM0WzFcyFR6
+ BU2xiDzp3IFBOZFYPUwF3Ko6EWoa06cfyNtSPsJVMiI9J9QRqgexBzaNffAbS0N2YTIj
+ +aAe+D9G3qrGeO6/tGXFwg96cZhO55OHqD+x1pgZuPLL8HmZvWG1zElMqHbsxs5ibqKG
+ VP+VTKr1mZidMXWPabbixXqEQ+maX4QeSIsp9Icbf1gIlPs5Tk+PiJ/tiOEKp2crcGJa
+ PJSQ==
+X-Gm-Message-State: AOJu0YyD3pGCcy4LFumO6PGoHpGVJh18DQ31zwp7NCMFOnIdN0MBvqjV
+ BImJiA0KpcgyHdXbA5ZhPIuNN3mUU9zDGdIIaU05sErsm9RlYZRjbZFIrxqSk018plHFpDC+vx4
+ R+R5ktQdu1OSPN76H2aJ0noDfXAAmr6lrNJm0h+8IOYS4b1o2yEWsdT7gIQHs8ItyyBY2UKHbwK
+ URurVpW+pYXxAz7ZU9+goj4EcQGi8=
+X-Received: by 2002:a5d:640b:0:b0:368:4b3a:2022 with SMTP id
+ ffacd0b85a97d-36d273cfe4emr1298154f8f.6.1723111773788; 
+ Thu, 08 Aug 2024 03:09:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH2ZOYWiCGR/ZTX4H9+iq0s0hvB620PBaEnFw99Op1wgzHO8NJgwXLcuHqe9J3RyUOd5cbT7RoNykCNQVAK4Bo=
+X-Received: by 2002:a5d:640b:0:b0:368:4b3a:2022 with SMTP id
+ ffacd0b85a97d-36d273cfe4emr1298122f8f.6.1723111773246; Thu, 08 Aug 2024
+ 03:09:33 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240802072426.4016194-1-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+References: <rust-pl011-rfc-v6.git.manos.pitsidianakis@linaro.org>
+ <f989d834-706a-4708-be81-f6447237425e@redhat.com>
+ <hw3gw.4cxgt9epvs2@linaro.org>
+In-Reply-To: <hw3gw.4cxgt9epvs2@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 8 Aug 2024 12:09:18 +0200
+Message-ID: <CABgObfbMdqCGU4Xhkv=tuo=wR_Pqo3e7zxYs6_5LLSv_e7haQg@mail.gmail.com>
+Subject: Re: [RFC PATCH v6 0/5] rust-pl011-rfc-v6
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Mads Ynddal <mads@ynddal.dk>, Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?Q?Alex_Benn=C3=A9_e?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,77 +107,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Xiaoyao,
+On Thu, Aug 8, 2024 at 9:58=E2=80=AFAM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
+>
+> On Thu, 08 Aug 2024 09:10, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> >On 8/4/24 23:04, Manos Pitsidianakis wrote:
+> >> Changes
+> >> =3D=3D=3D=3D=3D=3D=3D
+> >>
+> >> - Setting MSRV to 1.77.0:
+> >>    * cstr crate MSRV is 1.64, which is more recent than Debian bookwor=
+m
+> >>      (1.63.0) <https://github.com/upsuper/cstr/blob/master/Cargo.toml>
+> >>
+> >>    * pl011's dependencies (mostly proc-macro2) don't support 1.63.0
+> >
+> >proc-macro2 is listed as supporting 1.56.0, and in general I don't see
+> >particularly high MSRVs for any of your dependencies.
+>
+> The issue was with transitive deps, proc-macro-error crates etc stopped
+> compiling when lowering the version, which means we'd have to patch the
+> dependency's dependency to see if that'd work; otherwise, yes!
 
-Patch is generally fine for me. Just a few nits:
+Ah, I see now - you have to set the right cfg for proc-macro2 to
+compile with 1.63.0. Normally (including with "method =3D cargo") they
+are detected by build.rs:
 
-On Fri, Aug 02, 2024 at 03:24:26AM -0400, Xiaoyao Li wrote:
-> diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
-> index dff49fce1154..b63bce2f4c82 100644
-> --- a/include/hw/i386/topology.h
-> +++ b/include/hw/i386/topology.h
-> @@ -207,13 +207,4 @@ static inline apic_id_t x86_apicid_from_cpu_idx(X86CPUTopoInfo *topo_info,
->      return x86_apicid_from_topo_ids(topo_info, &topo_ids);
->  }
->  
-> -/*
-> - * Check whether there's extended topology level (module or die)?
-> - */
-> -static inline bool x86_has_extended_topo(unsigned long *topo_bitmap)
-> -{
-> -    return test_bit(CPU_TOPO_LEVEL_MODULE, topo_bitmap) ||
-> -           test_bit(CPU_TOPO_LEVEL_DIE, topo_bitmap);
-> -}
-> -
+    if rustc < 66 {
+        println!("cargo:rustc-cfg=3Dno_source_text");
+    }
 
-[snip]
+    if rustc < 79 {
+        println!("cargo:rustc-cfg=3Dno_literal_byte_character");
+        println!("cargo:rustc-cfg=3Dno_literal_c_string");
+    }
 
-> +/*
-> + * Check whether there's v2 extended topology level (module or die)?
-> + */
-> +bool x86_has_v2_extended_topo(X86CPU *cpu)
-> +{
-> +    if (cpu->enable_cpuid_0x1f) {
-> +        return true;
-> +    }
-> +
-> +    return test_bit(CPU_TOPO_LEVEL_MODULE, cpu->env.avail_cpu_topo) ||
-> +           test_bit(CPU_TOPO_LEVEL_DIE, cpu->env.avail_cpu_topo);
-> +}
-> +
+(Meson's support for build.rs is very limited, but it does handle some
+simple cases and parses rustc-cfg from the output).
 
-I suggest to decouple 0x1f enablement and extended topo check, since as
-the comment of CPUTopoLevel said:
+And bilge-impl uses let...else; we can patch it locally via the .wrap
+file's "diff_files" entry. Not great, but it's good that we can do it
+and that we have an example for similar issues in the future.
 
-/*
- * CPUTopoLevel is the general i386 topology hierarchical representation,
- * ordered by increasing hierarchical relationship.
- * Its enumeration value is not bound to the type value of Intel (CPUID[0x1F])
- * or AMD (CPUID[0x80000026]).
- */
+I updated my rust-for-manos branch with these discoveries. Of course
+it doesn't compile with 1.63.0 but it does at least configure
+successfully with
 
-The topology enumeration is generic and is not bound to the vendor.
+../configure --rustc=3D$(rustup +1.63.0 which rustc) --enable-rust
 
-[snip]
+and build the subprojects' rlibs.
 
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index c6cc035df3d8..211a42ffbfa6 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -2110,6 +2110,9 @@ struct ArchCPU {
->      /* Compatibility bits for old machine types: */
->      bool enable_cpuid_0xb;
->  
-> +    /* Force to expose cpuid 0x1f */
+> >The automatic Cargo.toml support in Meson is promising [...]
+> >My suggestion is to name our manually-managed subprojects with
+> >the same convention that is used by "method =3D cargo" in Meson 1.5.0+,
+> >i.e. name-APIVER-rs:
+>
+> Yes that makes sense!
 
-Maybe "Force to enable cpuid 0x1f"?
+Good!
 
-> +    bool enable_cpuid_0x1f;
-> +
->      /* Enable auto level-increase for all CPUID leaves */
->      bool full_cpuid_auto_level;i
+> >- for patch 2, the only issue is that you are specifying
+> >--no-include-path-detection and that breaks for me on Fedora.  I have
+> >not finished testing but it seems that it's enough to remove that line.
+>
+> I had added that when trying to debug bindgen failing to find headers
+> when dependencies were added (e.g. linux io_uring) or when compiling on
+> macos, let's test again to see if it's indeed unnecessary!
 
-Regards,
-Zhao
+Ok, crossing fingers.
+
+Paolo
 
 
