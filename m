@@ -4,69 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F443C52D73
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 21:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C45CC52D73
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 22:06:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scB6y-0004BA-HV; Thu, 08 Aug 2024 17:55:56 -0400
+	id 1scBG0-0004k8-Pa; Thu, 08 Aug 2024 18:05:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1scB6s-0003xF-W6
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 17:55:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1scB6r-0004bK-IR
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 17:55:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723154149;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=F2ZgsHnuLZ3fUW5pA+0JehB0U5OYkV06erXk0AGwWwQ=;
- b=QSBvxpvlGzge1ZZVdc1eYkGGCASBULjHeZMJbkypAWysOh0R+3+hMRH6wueVzYxu7DELCj
- LqF/oajrE3rJ44KQS08f0Rjo8xLYxNUgCEZ1KtYrbt8wZMF4qjbQPKtZwx1yRSP0m3UTcO
- sd/JvX/I1uok1mDQMQfySwhuY0Ne4aU=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-XLAkhspgPzCK2vKokMHiJg-1; Thu,
- 08 Aug 2024 17:55:44 -0400
-X-MC-Unique: XLAkhspgPzCK2vKokMHiJg-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A16491944A8E; Thu,  8 Aug 2024 21:55:41 +0000 (UTC)
-Received: from green.redhat.com (unknown [10.2.16.114])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5215519560A3; Thu,  8 Aug 2024 21:55:39 +0000 (UTC)
-From: Eric Blake <eblake@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-block@nongnu.org (open list:Network Block Dev...)
-Subject: [PULL 1/5] nbd: Minor style and typo fixes
-Date: Thu,  8 Aug 2024 16:53:39 -0500
-Message-ID: <20240808215529.1065336-8-eblake@redhat.com>
-In-Reply-To: <20240808215529.1065336-7-eblake@redhat.com>
-References: <20240808215529.1065336-7-eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1scBFu-0004gi-Uk; Thu, 08 Aug 2024 18:05:11 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1scBFq-0005qM-Fo; Thu, 08 Aug 2024 18:05:08 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-70d2b921c48so1208808b3a.1; 
+ Thu, 08 Aug 2024 15:05:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1723154704; x=1723759504; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:sender
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=IuI3haD4GuP1dlrjC8vm09YImosvZpa6Yg989u7C/QA=;
+ b=TwPMNNkLr6TuP9kh5FK44trWFR/g8+sEVGEIyukrllWa50I9hfviSjlngUKnHPb052
+ HaZE9YfaQEDDKwPlfKavJspLZwQ6RM9oEgt62TjsOxo0ew8pChim88jvHr45AnRVt2zU
+ Lq6PzgQg6JurLRmMUJ1HArhyA8kGImobQuCWzzAnl8nzKWIGGukQnpPCMpquzYlTZqiO
+ HEgA2NgXGTD4XPS9x1rYiG9LhJJ7j7DXwzUwIEdOLU5fQ4ZXq0VnazZFG6hzwqtY2XFF
+ 14HxoEuZ305WvuYvwH9E940e9hbwl0OqHZzH89J9Bi2cL0b1XpuyxLgO20mvITvjL1AK
+ KQOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723154704; x=1723759504;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:sender
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IuI3haD4GuP1dlrjC8vm09YImosvZpa6Yg989u7C/QA=;
+ b=Jg7zDGdiwrf5pJIULLjLJmHUmIwJ0v1Z1yfRtALZJwswXozRlqigfunap4rM2q2W0D
+ 9UWZiPR83xRkKfLtZ6KFOz5RZVRGahGfasUVnecdOA/9yqba4OCcBEMY/o7uBaaaMz73
+ 8wqyMLVxhl3frO7T0HZ/iUjJvx0u8etGUJh1inv6t0YglbqiwuQRSPPK6jtAjsqKFEvC
+ Lvhl7DPxsH3q3M9f5hw7RWvyNjHForWu4yJFRWF09f5Mgkh9j3NLkfz9AOS1nPWyEEAd
+ GuIDghRAK2q0X3stfXmPfxSdZahEWk306zl6FCmcsi8BQMfhe94/xYDq+aAo5ygPfyEm
+ gN+Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV9xe+MSheFaHA0V316fZLKW1YIlCbwqy+/8jE9LgR5I0N6DHjwruIGBxkB3wfplIsymfzhrRoYRB090nGnZjtMYpToWhI=
+X-Gm-Message-State: AOJu0YwTHIjU4z3yINSaCOtbzs4YCUeeq6WghBFEY/J7C67fi5evGFG2
+ PneiypPTg+Har0qgEcRRwmSAwjtCiaTrIgk2O3gD6QGUE8kUYv41
+X-Google-Smtp-Source: AGHT+IGHqS/Be9SabpaavkjTkmGAp+mX0wX70JM2qkp3nMdiYdDxrhgN4HO7qSl00UUT+uc6IeHa3w==
+X-Received: by 2002:a05:6a00:3a2a:b0:70a:efd7:ada1 with SMTP id
+ d2e1a72fcca58-710cadf80dbmr4207713b3a.17.1723154703757; 
+ Thu, 08 Aug 2024 15:05:03 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7b76394418esm8763270a12.45.2024.08.08.15.05.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Aug 2024 15:05:02 -0700 (PDT)
+Date: Thu, 8 Aug 2024 15:05:01 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2] aspeed: Deprecate the tacoma-bmc machine
+Message-ID: <4e04f930-e7af-4084-99a8-2a3139e2bf43@roeck-us.net>
+References: <20240625070830.492251-1-clg@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <20240625070830.492251-1-clg@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=groeck7@gmail.com; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,45 +98,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Touch up a comment with the wrong type name, and an over-long line,
-both noticed while working on upcoming patches.
+Hi,
 
-Signed-off-by: Eric Blake <eblake@redhat.com>
-Message-ID: <20240807174943.771624-10-eblake@redhat.com>
-Reviewed-by: Daniel P. Berrang√© <berrange@redhat.com>
----
- nbd/server.c | 2 +-
- qemu-nbd.c   | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+On Tue, Jun 25, 2024 at 09:08:30AM +0200, CÈdric Le Goater wrote:
+> The tacoma-bmc machine was a board including an AST2600 SoC based BMC
+> and a witherspoon like OpenPOWER system. It was used for bring up of
+> the AST2600 SoC in labs. It can be easily replaced by the rainier-bmc
+> machine which is part of a real product offering.
+> 
+> Signed-off-by: CÈdric Le Goater <clg@redhat.com>
 
-diff --git a/nbd/server.c b/nbd/server.c
-index 892797bb111..ecd9366ba64 100644
---- a/nbd/server.c
-+++ b/nbd/server.c
-@@ -1972,7 +1972,7 @@ static void nbd_export_request_shutdown(BlockExport *blk_exp)
+I have been using tacoma-bmc to test tcg,tpm-tis-i2c functionality
+on arm. rainier-bmc doesn't support that, and other IBM BMCs which
+do support it (bonnell, everest, system1) are not supported in qemu.
 
-     blk_exp_ref(&exp->common);
-     /*
--     * TODO: Should we expand QMP NbdServerRemoveNode enum to allow a
-+     * TODO: Should we expand QMP BlockExportRemoveMode enum to allow a
-      * close mode that stops advertising the export to new clients but
-      * still permits existing clients to run to completion? Because of
-      * that possibility, nbd_export_close() can be called more than
-diff --git a/qemu-nbd.c b/qemu-nbd.c
-index d7b3ccab21c..8e104ef22c3 100644
---- a/qemu-nbd.c
-+++ b/qemu-nbd.c
-@@ -588,7 +588,8 @@ int main(int argc, char **argv)
-     pthread_t client_thread;
-     const char *fmt = NULL;
-     Error *local_err = NULL;
--    BlockdevDetectZeroesOptions detect_zeroes = BLOCKDEV_DETECT_ZEROES_OPTIONS_OFF;
-+    BlockdevDetectZeroesOptions detect_zeroes =
-+        BLOCKDEV_DETECT_ZEROES_OPTIONS_OFF;
-     QDict *options = NULL;
-     const char *export_name = NULL; /* defaults to "" later for server mode */
-     const char *export_description = NULL;
--- 
-2.46.0
+Do you have a suggested alternative ?
 
+Thanks,
+Guenter
 
