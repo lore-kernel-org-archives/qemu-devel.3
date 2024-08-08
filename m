@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 317C8C52D6F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 04:14:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B4C7C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 04:14:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbuWe-0001LP-Eg; Thu, 08 Aug 2024 00:13:20 -0400
+	id 1sbuXM-0001k5-NQ; Thu, 08 Aug 2024 00:14:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sbuWb-0001KC-QU; Thu, 08 Aug 2024 00:13:17 -0400
-Received: from mail-ua1-x92d.google.com ([2607:f8b0:4864:20::92d])
+ id 1sbuXD-0001fm-Uw; Thu, 08 Aug 2024 00:13:57 -0400
+Received: from mail-ua1-x929.google.com ([2607:f8b0:4864:20::929])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sbuWa-0002hO-9s; Thu, 08 Aug 2024 00:13:17 -0400
-Received: by mail-ua1-x92d.google.com with SMTP id
- a1e0cc1a2514c-81ff6a80cb2so161194241.3; 
- Wed, 07 Aug 2024 21:13:15 -0700 (PDT)
+ id 1sbuXC-0002kr-CI; Thu, 08 Aug 2024 00:13:55 -0400
+Received: by mail-ua1-x929.google.com with SMTP id
+ a1e0cc1a2514c-821eab936d6so190074241.3; 
+ Wed, 07 Aug 2024 21:13:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723090395; x=1723695195; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1723090425; x=1723695225; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HR0Iw3L4vpDwP5slj8vBhEkrjKstVb8uWou6Rkd8/O4=;
- b=QScWTR6G3lExFR0e4+FIV0Qqo8kzAYA+ju6+QWrE0T9RTgvSOI/yApH/uxuvb6wEEv
- cE+KguzOoR2JCP0ADSWG9LHe7d/UvR1EIKACR3q/Mgse2NXW+SUgbSY0LMxQoUY5ryzQ
- crfqEkjTgKC/i/fwiSbhx3jFXWm79D79LE3cQDN8W2R6sSilhNlBtsYyJ78i0wpjfCBu
- Q+Q/CRl3zCqj8IjxNlURKtZl6Rta3Vw8d+ZmWs+t3xv2ajGh3+1o64vNLRrP8pFI9SOU
- LJAiTu7dzHhRjh2uPOtu2JaAAxn3/e0q4cXAKIvSU6vlLiwcX5vBUy7bwW5zL6JcD8aF
- eL8g==
+ bh=ip9FHotMKpSZHlbqJ+CkbR7t8RwQTcvevbZ2dO9Zeco=;
+ b=EVMCwld5SrLxg7Xebqo8SbikLz5Lx4To+Tln/rCyMcdOACFoggC+S38kc6zZMqFEIu
+ 43Rb4GAYkjidu2MQr+YiueR7DtQLAzIbLc5evXt/YLcJVFoQq75fkP6tWANPdTESL/JG
+ EFdWe4a39nWTLsUOjG+t+rE+n8QOaaz8i8dl6stlN5F71tlG2rTUYMKICLk4xL9pZUiP
+ /JK3TQR3sROtt4vSa+JnMEyF5lkJwUHfbaXiZfZ5oo2ZD2vMdlmPdQWjOSyESXxUtf4T
+ 3iDhg8I6NttShH3YxPAYrwoKUFLXEhuEVUhZtQJl0TIrW1MYLMuMcIt697DfQH3QMnKC
+ pWHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723090395; x=1723695195;
+ d=1e100.net; s=20230601; t=1723090425; x=1723695225;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HR0Iw3L4vpDwP5slj8vBhEkrjKstVb8uWou6Rkd8/O4=;
- b=C24iNKyLlqIa6nfDAM8XDLDd987xRrAk2QS5I7TOylkJW8Louz0P0+RU32R+cz9+Pl
- 1pG4EZ1rIFmjwYqK6zE0NG+dUZpfbVid1QqTGkdvUbswh2n0ATGkyCyaGKpQjg1nak9o
- QahlRwX9oj8O6WbF3q2qQi176aszwPk1VghGzbeL5Nay7ig1fqUcEcnGAHnzY8fL79fI
- XmDUARlbUumf7R8LjTcS19LJlw/TJyrtlIglmXQMHTQ2I4DpjFUwViNQYFDCyLTnZ34H
- CR+u+1Eelrd1baN51lwn6e1f8LJE0rTfbs2FpIKi1wLF3BuCCDRnyRb/CdBwt+qkyv3l
- tLFw==
+ bh=ip9FHotMKpSZHlbqJ+CkbR7t8RwQTcvevbZ2dO9Zeco=;
+ b=Yjtfdnibc/efd8wm59iMy5DepTUhegK2af9tZKzDlISbPbf8r6jDHhSSaTeQIEpvYb
+ 30jLhNlDZ5ma19V3P5cUl0EVvSjTgN37NF7OqopOL8s3KMZE+r6oxVdoNgNyOMrMaSLc
+ NBeeydfVbbefdE2Gv5iq+nNnFo/qKv7MkutBupGNekvdGHnz3JCJLAfVEqqI3P3btMR/
+ dCKtIvNl4Sz71a/q/9pXOvQAvAZobS6KhaSTasTkYWLAqoER7yLrLb2VeXHfD5Qr9u8G
+ OaD9APfMDqH+NR//s7K/r8p+3yrkUtnKJk0P5PgWPuahyqGSB/SaE0ustRMItM6XtjbT
+ jI2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVTtHXbPI1+fJhKhEm5Gk/BKgp3uHfVqAFHdtNeGHQS0ugvBc8WDrq0mVjwat64NowaRG3aaITDzl/dJuvtTf6+cCfho5o=
-X-Gm-Message-State: AOJu0Yzsm460OgialEOkXRR5wuzGGxgbSI3wYuMQIbCStd8mvNP0xJ0o
- idrc8XRhV7mqDIMta7UeiQy2i/8jOJfoz3DjtsagmXVl2wKxjzFrroUiq/4JqgykwkP34bQyd/u
- d4pRLtUGLpIUSTzNFzVDtQy+bL3k=
-X-Google-Smtp-Source: AGHT+IHYdeLhAPTKGshn8FVGeasYnhws2BduN7KhF4mM1ItR/hNra+az72n3QY6OrJ61cnfTtbCRR2GjQY6u/C4kDho=
-X-Received: by 2002:a05:6102:cd0:b0:493:b06d:eea2 with SMTP id
- ada2fe7eead31-495c5ce7ef0mr822397137.31.1723090394695; Wed, 07 Aug 2024
- 21:13:14 -0700 (PDT)
+ AJvYcCWdOYN5x+Vca7KC8g+Rfd3GE0SIzn4/We1iOQ3Eot4l3Cof/t05bvfG9owKSbrI9sqaNaPeqE3ZsdiZoitH5HvxRUdkjX0=
+X-Gm-Message-State: AOJu0Yz41mKg6JUVA2d7DQUQp5PrrYtIorFBNmra+IXrHgHIxEyNVz6f
+ AouuPrxoa8n0FS9Fh5mygAwRl6Gl9khm6WQ2dyQmqV/BDJsp7vsSU1uded3ex0bNQJmioJOgjZ4
+ BOw+d4ERJ0TlROT9iBKafG/O7xRklMTAe8Ig=
+X-Google-Smtp-Source: AGHT+IGCkLFubkQNe6fL2tksXrhQYDjP8dQHLBTXOSVKC57mwXytaBnm5h/4aZlM1PP/Xt2Z+hnIBp8XlgjXKxeB6Y8=
+X-Received: by 2002:a05:6102:370a:b0:48f:966c:eee3 with SMTP id
+ ada2fe7eead31-495c5b92d2fmr937288137.24.1723090425489; Wed, 07 Aug 2024
+ 21:13:45 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240715095702.1222213-1-ethan84@andestech.com>
- <20240715095702.1222213-4-ethan84@andestech.com>
-In-Reply-To: <20240715095702.1222213-4-ethan84@andestech.com>
+ <20240715095702.1222213-3-ethan84@andestech.com>
+In-Reply-To: <20240715095702.1222213-3-ethan84@andestech.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 8 Aug 2024 14:13:00 +1000
-Message-ID: <CAKmqyKPdAKu6McnsjGXd0KSf_rV_ESk+t_z7H9DiFjR01msVHg@mail.gmail.com>
-Subject: Re: [PATCH v8 3/8] target/riscv: Add support for IOPMP
+Date: Thu, 8 Aug 2024 14:12:00 +1000
+Message-ID: <CAKmqyKNn04_BgeEPXHViR5jmKEjANmN60tniW7e9zU4MLbHXow@mail.gmail.com>
+Subject: Re: [PATCH v8 2/8] system/physmem: Support IOMMU granularity smaller
+ than TARGET_PAGE size
 To: Ethan Chen <ethan84@andestech.com>
 Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
  peterx@redhat.com, david@redhat.com, philmd@linaro.org, palmer@dabbelt.com,
@@ -70,8 +71,8 @@ Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com,
  qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92d;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::929;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x929.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -95,67 +96,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 15, 2024 at 7:58=E2=80=AFPM Ethan Chen via <qemu-devel@nongnu.o=
+On Mon, Jul 15, 2024 at 7:59=E2=80=AFPM Ethan Chen via <qemu-devel@nongnu.o=
 rg> wrote:
+>
+> If the IOMMU granularity is smaller than the TARGET_PAGE size, there may =
+be
+>  multiple entries within the same page. To obtain the correct result, pas=
+s
+> the original address to the IOMMU.
+>
+> Similar to the RISC-V PMP solution, the TLB_INVALID_MASK will be set when
+> there are multiple entries in the same page, ensuring that the IOMMU is
+> checked on every access.
 >
 > Signed-off-by: Ethan Chen <ethan84@andestech.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/cpu_cfg.h    |  2 ++
->  target/riscv/cpu_helper.c | 18 +++++++++++++++---
->  2 files changed, 17 insertions(+), 3 deletions(-)
+>  accel/tcg/cputlb.c | 20 ++++++++++++++++----
+>  system/physmem.c   |  4 ++++
+>  2 files changed, 20 insertions(+), 4 deletions(-)
 >
-> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-> index fb7eebde52..2946fec20c 100644
-> --- a/target/riscv/cpu_cfg.h
-> +++ b/target/riscv/cpu_cfg.h
-> @@ -164,6 +164,8 @@ struct RISCVCPUConfig {
->      bool pmp;
->      bool debug;
->      bool misa_w;
-> +    bool iopmp;
-> +    uint32_t iopmp_rrid;
+> diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> index edb3715017..7df106fea3 100644
+> --- a/accel/tcg/cputlb.c
+> +++ b/accel/tcg/cputlb.c
+> @@ -1062,8 +1062,23 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
 >
->      bool short_isa_string;
+>      prot =3D full->prot;
+>      asidx =3D cpu_asidx_from_attrs(cpu, full->attrs);
+> -    section =3D address_space_translate_for_iotlb(cpu, asidx, paddr_page=
+,
+> +    section =3D address_space_translate_for_iotlb(cpu, asidx, full->phys=
+_addr,
+>                                                  &xlat, &sz, full->attrs,=
+ &prot);
+> +    /* Update page size */
+> +    full->lg_page_size =3D ctz64(sz);
+> +    if (full->lg_page_size > TARGET_PAGE_BITS) {
+> +        full->lg_page_size =3D TARGET_PAGE_BITS;
+> +    } else {
+> +        sz =3D TARGET_PAGE_SIZE;
+> +    }
+> +
+> +    is_ram =3D memory_region_is_ram(section->mr);
+> +    is_romd =3D memory_region_is_romd(section->mr);
+> +    /* If the translated mr is ram/rom, make xlat align the TARGET_PAGE =
+*/
+> +    if (is_ram || is_romd) {
+> +        xlat &=3D TARGET_PAGE_MASK;
+> +    }
+> +
+>      assert(sz >=3D TARGET_PAGE_SIZE);
 >
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 6709622dd3..c2d6a874da 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1418,9 +1418,21 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr addres=
-s, int size,
+>      tlb_debug("vaddr=3D%016" VADDR_PRIx " paddr=3D0x" HWADDR_FMT_plx
+> @@ -1076,9 +1091,6 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+>          read_flags |=3D TLB_INVALID_MASK;
 >      }
 >
->      if (ret =3D=3D TRANSLATE_SUCCESS) {
-> -        tlb_set_page(cs, address & ~(tlb_size - 1), pa & ~(tlb_size - 1)=
-,
-> -                     prot, mmu_idx, tlb_size);
-> -        return true;
-> +        if (cpu->cfg.iopmp) {
-> +            /*
-> +             * Do not align address on early stage because IOPMP needs o=
-rigin
-> +             * address for permission check.
-> +             */
-> +            tlb_set_page_with_attrs(cs, address, pa,
-> +                                    (MemTxAttrs)
-> +                                        {
-> +                                          .requester_id =3D cpu->cfg.iop=
-mp_rrid,
-> +                                        },
-> +                                    prot, mmu_idx, tlb_size);
-> +        } else {
-> +            tlb_set_page(cs, address & ~(tlb_size - 1), pa & ~(tlb_size =
-- 1),
-> +                         prot, mmu_idx, tlb_size);
+> -    is_ram =3D memory_region_is_ram(section->mr);
+> -    is_romd =3D memory_region_is_romd(section->mr);
+> -
+>      if (is_ram || is_romd) {
+>          /* RAM and ROMD both have associated host memory. */
+>          addend =3D (uintptr_t)memory_region_get_ram_ptr(section->mr) + x=
+lat;
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 2154432cb6..346b015447 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -702,6 +702,10 @@ address_space_translate_for_iotlb(CPUState *cpu, int=
+ asidx, hwaddr orig_addr,
+>          iotlb =3D imrc->translate(iommu_mr, addr, IOMMU_NONE, iommu_idx)=
+;
+>          addr =3D ((iotlb.translated_addr & ~iotlb.addr_mask)
+>                  | (addr & iotlb.addr_mask));
+> +        /* Update size */
+> +        if (iotlb.addr_mask !=3D -1 && *plen > iotlb.addr_mask + 1) {
+> +            *plen =3D iotlb.addr_mask + 1;
 > +        }
->      } else if (probe) {
->          return false;
->      } else {
+>          /* Update the caller's prot bits to remove permissions the IOMMU
+>           * is giving us a failure response for. If we get down to no
+>           * permissions left at all we can give up now.
 > --
 > 2.34.1
 >
