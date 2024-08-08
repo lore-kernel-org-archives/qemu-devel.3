@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D74E9C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 02:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B4F4C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 02:51:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbtDX-0006gw-Ig; Wed, 07 Aug 2024 22:49:31 -0400
+	id 1sbtDw-0008Kl-4Z; Wed, 07 Aug 2024 22:49:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sbtDV-0006dx-Qd; Wed, 07 Aug 2024 22:49:29 -0400
+ id 1sbtDu-0008DF-9B; Wed, 07 Aug 2024 22:49:54 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sbtDT-0008AE-9y; Wed, 07 Aug 2024 22:49:29 -0400
+ id 1sbtDs-0008AE-R1; Wed, 07 Aug 2024 22:49:54 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 8 Aug
- 2024 10:49:16 +0800
+ 2024 10:49:19 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 8 Aug 2024 10:49:16 +0800
+ Transport; Thu, 8 Aug 2024 10:49:19 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -34,11 +34,14 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC
  here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
- <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v2 00/11] support I2C for AST2700
-Date: Thu, 8 Aug 2024 10:49:05 +0800
-Message-ID: <20240808024916.1262715-1-jamin_lin@aspeedtech.com>
+ <yunlin.tang@aspeedtech.com>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>
+Subject: [PATCH v2 10/11] aspeed: add tmp105 in i2c bus 0 for AST2700
+Date: Thu, 8 Aug 2024 10:49:15 +0800
+Message-ID: <20240808024916.1262715-11-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20240808024916.1262715-1-jamin_lin@aspeedtech.com>
+References: <20240808024916.1262715-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
@@ -66,41 +69,46 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1:
-- support I2C for AST2700
+ASPEED SDK add lm75 in i2c bus 0 for AST2700.
+LM75 is compatible with TMP105 driver.
 
-v2:
-- fix review issues and add reviewer suggestion
-- update avocado test case for AST2700 I2C
-- support i2c bus pool
+Introduce a new i2c init function and
+add tmp105 device model in i2c bus 0.
 
-A. pool_gap_size and reg_gap_size need to be discussion.
-B. aspeed_soc_ast2700_get_irq, aspeed_soc_ast2700_get_intc_orgate
- and sc->get_irq function pointer need to be discussion.
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+ hw/arm/aspeed.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Jamin Lin (11):
-  hw/i2c/aspeed: support discontinuous register memory region of I2C bus
-  hw/i2c/aspeed: introduce a new bus pool buffer attribute in
-    AspeedI2Cbus
-  hw/i2c/aspeed: support discontinuous poll buffer memory region of I2C
-    bus
-  hw/i2c/aspeed: introduce a new dma_dram_offset attribute in
-    AspeedI2Cbus
-  hw/i2c/aspeed: Add AST2700 support
-  hw/i2c/aspeed: support Tx/Rx buffer 64 bits address
-  hw/i2c/aspeed: support high part dram offset for DMA 64 bits
-  aspeed/soc: introduce a new API to get the INTC orgate information
-  aspeed/soc: support I2C for AST2700
-  aspeed: add tmp105 in i2c bus 0 for AST2700
-  machine_aspeed.py: update to test I2C for AST2700
-
- hw/arm/aspeed.c                 |  10 ++
- hw/arm/aspeed_ast27x0.c         |  53 ++++++
- hw/i2c/aspeed_i2c.c             | 310 ++++++++++++++++++++++++++++----
- include/hw/i2c/aspeed_i2c.h     |  28 ++-
- tests/avocado/machine_aspeed.py |  16 ++
- 5 files changed, 370 insertions(+), 47 deletions(-)
-
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index fd5603f7aa..3d13b16768 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1650,6 +1650,15 @@ static void aspeed_minibmc_machine_ast1030_evb_class_init(ObjectClass *oc,
+ }
+ 
+ #ifdef TARGET_AARCH64
++static void ast2700_evb_i2c_init(AspeedMachineState *bmc)
++{
++    AspeedSoCState *soc = bmc->soc;
++
++    /* LM75 is compatible with TMP105 driver */
++    i2c_slave_create_simple(aspeed_i2c_get_bus(&soc->i2c, 0),
++                            TYPE_TMP105, 0x4d);
++}
++
+ static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -1664,6 +1673,7 @@ static void aspeed_machine_ast2700_evb_class_init(ObjectClass *oc, void *data)
+     amc->num_cs    = 2;
+     amc->macs_mask = ASPEED_MAC0_ON | ASPEED_MAC1_ON | ASPEED_MAC2_ON;
+     amc->uart_default = ASPEED_DEV_UART12;
++    amc->i2c_init  = ast2700_evb_i2c_init;
+     mc->default_ram_size = 1 * GiB;
+     aspeed_machine_class_init_cpus_defaults(mc);
+ }
 -- 
 2.34.1
 
