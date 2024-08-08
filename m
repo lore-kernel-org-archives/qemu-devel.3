@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5742C52D6F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 12:28:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D217C52D6F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 12:28:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc2EN-0000yU-GN; Thu, 08 Aug 2024 08:26:59 -0400
+	id 1sc2EK-0000fL-58; Thu, 08 Aug 2024 08:26:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sc2EE-0000Be-Qt
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 08:26:52 -0400
+ id 1sc2EG-0000NH-Sg; Thu, 08 Aug 2024 08:26:52 -0400
 Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sc2EB-0005xr-6g
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 08:26:49 -0400
+ id 1sc2EC-0005xv-5g; Thu, 08 Aug 2024 08:26:51 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 46B87CE12FF;
+ by sin.source.kernel.org (Postfix) with ESMTP id AD510CE13D9;
  Thu,  8 Aug 2024 12:26:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93DFC4AF09;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB505C4AF0F;
  Thu,  8 Aug 2024 12:26:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1723120002;
- bh=+COdGK7bRLdFc3Xci68sxDJkHe3wEhoAcFT7ySCk4ZQ=;
+ bh=G3S5Uq8J+Zs2KHvbamvYQa8xBiv68WPUdS5cQZJ/394=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=gWu9vQjEcTRVFLLmZpxD2QYzEkZJrbkYr9Ky9/wKv6R4cp5t1CBxkT4C5ZsCfhB6K
- ZRyg+e8xqQKlkKXJVc+xZaoIh3jCd8BrkE/5Cr6H0sPzclPIEtbriVMZ74R8ENbWWz
- eGhOwCJQlG9wohWC7GObp/87bFfRXSBPiNYJDPRs1+ieZjVSKn0OtNEUWVd+U0fI8X
- y0QGQB/wMuy1HPqAFEr7krrs+RO6oQkDVtRXD12B44X10unsWB92AA/1yvx75tXyzW
- fGchbqaVvOKX2fz+skrIn4BA74oV1p+R0E90Ysu2e0H9sg5oBLOIdqTVrqnQMRCjf2
- iAY5eFiVQvSgA==
+ b=B9YT2YkUBu7IUCNpBw5ds7lHhHwlhbQHWqqXup9dbAFPg8bR/OOx7aK+iLB+rli/y
+ GRa3LIpmMt4kF+zf8Ta0O3xT/2i4rVryRFy8eXFNj5qGkdMSJbTKzuZP4Mx4R/0DsG
+ yoTLoi00aOFXjxbGOVrx2Audtz8Dg6pQALa00GesKeRDWBKakO4nryvIfaGQMcqvcw
+ xv9lWbIw4+q8Gl3iMRWkMmp0HeF9/dVp56WR8phKDXFF/mfnfBqItudPjUL2BYBx8l
+ qqm2CuvqaOOpf/Xb0MnpAJ2o8zpTD8FurXg0k8CRJIeBHjSiTr+wqvoMM59OzD/1kw
+ 1XUvQDf450kpg==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1sc2E4-00000000oDC-3VKA; Thu, 08 Aug 2024 14:26:40 +0200
+ id 1sc2E5-00000000oDi-0Bvl; Thu, 08 Aug 2024 14:26:41 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: 
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, linux-kernel@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v6 01/10] acpi/generic_event_device: add an APEI error device
-Date: Thu,  8 Aug 2024 14:26:27 +0200
-Message-ID: <f43b43fa2e80cbbecf6e47986d768029d531d29f.1723119423.git.mchehab+huawei@kernel.org>
+ Peter Maydell <peter.maydell@linaro.org>, linux-kernel@vger.kernel.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v6 09/10] target/arm: add an experimental mpidr arm cpu
+ property object
+Date: Thu,  8 Aug 2024 14:26:35 +0200
+Message-ID: <a60316927a84748517209a741bf904a802827b8e.1723119423.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <cover.1723119423.git.mchehab+huawei@kernel.org>
 References: <cover.1723119423.git.mchehab+huawei@kernel.org>
@@ -78,121 +76,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds a generic error device to handle generic hardware error
-events as specified at ACPI 6.5 specification at 18.3.2.7.2:
-https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#event-notification-for-generic-error-sources
-using HID PNP0C33.
+Accurately injecting an ARM Processor error ACPI/APEI GHES
+error record requires the value of the ARM Multiprocessor
+Affinity Register (mpidr).
 
-The PNP0C33 device is used to report hardware errors to
-the guest via ACPI APEI Generic Hardware Error Source (GHES).
+While ARM implements it, this is currently not visible.
 
-Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Add a field at CPU storing it, and place it at arm_cpu_properties
+as experimental, thus allowing it to be queried via QMP using
+qom-get function.
+
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- hw/acpi/aml-build.c                    | 10 ++++++++++
- hw/acpi/generic_event_device.c         |  8 ++++++++
- include/hw/acpi/acpi_dev_interface.h   |  1 +
- include/hw/acpi/aml-build.h            |  2 ++
- include/hw/acpi/generic_event_device.h |  1 +
- 5 files changed, 22 insertions(+)
+ target/arm/cpu.c    |  1 +
+ target/arm/cpu.h    |  1 +
+ target/arm/helper.c | 10 ++++++++--
+ 3 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index 6d4517cfbe3d..cb167523859f 100644
---- a/hw/acpi/aml-build.c
-+++ b/hw/acpi/aml-build.c
-@@ -2520,3 +2520,13 @@ Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source)
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 19191c239181..30fcf0a10f46 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2619,6 +2619,7 @@ static ObjectClass *arm_cpu_class_by_name(const char *cpu_model)
  
-     return var;
+ static Property arm_cpu_properties[] = {
+     DEFINE_PROP_UINT64("midr", ARMCPU, midr, 0),
++    DEFINE_PROP_UINT64("x-mpidr", ARMCPU, mpidr, 0),
+     DEFINE_PROP_UINT64("mp-affinity", ARMCPU,
+                         mp_affinity, ARM64_AFFINITY_INVALID),
+     DEFINE_PROP_INT32("node-id", ARMCPU, node_id, CPU_UNSET_NUMA_NODE_ID),
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index a12859fc5335..d2e86f0877cc 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1033,6 +1033,7 @@ struct ArchCPU {
+         uint64_t reset_pmcr_el0;
+     } isar;
+     uint64_t midr;
++    uint64_t mpidr;
+     uint32_t revidr;
+     uint32_t reset_fpsid;
+     uint64_t ctr;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 8fb4b474e83f..16e75b7c5ed9 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -4692,7 +4692,7 @@ static uint64_t mpidr_read_val(CPUARMState *env)
+     return mpidr;
  }
-+
-+/* ACPI 5.0: 18.3.2.6.2 Event Notification For Generic Error Sources */
-+Aml *aml_error_device(void)
+ 
+-static uint64_t mpidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
++static uint64_t mpidr_read(CPUARMState *env)
+ {
+     unsigned int cur_el = arm_current_el(env);
+ 
+@@ -4702,6 +4702,11 @@ static uint64_t mpidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     return mpidr_read_val(env);
+ }
+ 
++static uint64_t mpidr_read_ri(CPUARMState *env, const ARMCPRegInfo *ri)
 +{
-+    Aml *dev = aml_device(ACPI_APEI_ERROR_DEVICE);
-+    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0C33")));
-+    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
-+
-+    return dev;
++    return mpidr_read(env);
 +}
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index 15b4c3ebbf24..1673e9695be3 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -26,6 +26,7 @@ static const uint32_t ged_supported_events[] = {
-     ACPI_GED_PWR_DOWN_EVT,
-     ACPI_GED_NVDIMM_HOTPLUG_EVT,
-     ACPI_GED_CPU_HOTPLUG_EVT,
-+    ACPI_GED_ERROR_EVT
- };
++
+ static const ARMCPRegInfo lpae_cp_reginfo[] = {
+     /* NOP AMAIR0/1 */
+     { .name = "AMAIR0", .state = ARM_CP_STATE_BOTH,
+@@ -9723,7 +9728,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+             { .name = "MPIDR_EL1", .state = ARM_CP_STATE_BOTH,
+               .opc0 = 3, .crn = 0, .crm = 0, .opc1 = 0, .opc2 = 5,
+               .fgt = FGT_MPIDR_EL1,
+-              .access = PL1_R, .readfn = mpidr_read, .type = ARM_CP_NO_RAW },
++              .access = PL1_R, .readfn = mpidr_read_ri, .type = ARM_CP_NO_RAW },
+         };
+ #ifdef CONFIG_USER_ONLY
+         static const ARMCPRegUserSpaceInfo mpidr_user_cp_reginfo[] = {
+@@ -9733,6 +9738,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+         modify_arm_cp_regs(mpidr_cp_reginfo, mpidr_user_cp_reginfo);
+ #endif
+         define_arm_cp_regs(cpu, mpidr_cp_reginfo);
++        cpu->mpidr = mpidr_read(env);
+     }
  
- /*
-@@ -116,6 +117,11 @@ void build_ged_aml(Aml *table, const char *name, HotplugHandler *hotplug_dev,
-                            aml_notify(aml_name(ACPI_POWER_BUTTON_DEVICE),
-                                       aml_int(0x80)));
-                 break;
-+            case ACPI_GED_ERROR_EVT:
-+                aml_append(if_ctx,
-+                           aml_notify(aml_name(ACPI_APEI_ERROR_DEVICE),
-+                                      aml_int(0x80)));
-+                break;
-             case ACPI_GED_NVDIMM_HOTPLUG_EVT:
-                 aml_append(if_ctx,
-                            aml_notify(aml_name("\\_SB.NVDR"),
-@@ -295,6 +301,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
-         sel = ACPI_GED_MEM_HOTPLUG_EVT;
-     } else if (ev & ACPI_POWER_DOWN_STATUS) {
-         sel = ACPI_GED_PWR_DOWN_EVT;
-+    } else if (ev & ACPI_GENERIC_ERROR) {
-+        sel = ACPI_GED_ERROR_EVT;
-     } else if (ev & ACPI_NVDIMM_HOTPLUG_STATUS) {
-         sel = ACPI_GED_NVDIMM_HOTPLUG_EVT;
-     } else if (ev & ACPI_CPU_HOTPLUG_STATUS) {
-diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_dev_interface.h
-index 68d9d15f50aa..8294f8f0ccca 100644
---- a/include/hw/acpi/acpi_dev_interface.h
-+++ b/include/hw/acpi/acpi_dev_interface.h
-@@ -13,6 +13,7 @@ typedef enum {
-     ACPI_NVDIMM_HOTPLUG_STATUS = 16,
-     ACPI_VMGENID_CHANGE_STATUS = 32,
-     ACPI_POWER_DOWN_STATUS = 64,
-+    ACPI_GENERIC_ERROR = 128,
- } AcpiEventStatusBits;
- 
- #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
-diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
-index a3784155cb33..44d1a6af0c69 100644
---- a/include/hw/acpi/aml-build.h
-+++ b/include/hw/acpi/aml-build.h
-@@ -252,6 +252,7 @@ struct CrsRangeSet {
- /* Consumer/Producer */
- #define AML_SERIAL_BUS_FLAG_CONSUME_ONLY        (1 << 1)
- 
-+#define ACPI_APEI_ERROR_DEVICE   "GEDD"
- /**
-  * init_aml_allocator:
-  *
-@@ -382,6 +383,7 @@ Aml *aml_dma(AmlDmaType typ, AmlDmaBusMaster bm, AmlTransferSize sz,
-              uint8_t channel);
- Aml *aml_sleep(uint64_t msec);
- Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source);
-+Aml *aml_error_device(void);
- 
- /* Block AML object primitives */
- Aml *aml_scope(const char *name_format, ...) G_GNUC_PRINTF(1, 2);
-diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
-index 40af3550b56d..9ace8fe70328 100644
---- a/include/hw/acpi/generic_event_device.h
-+++ b/include/hw/acpi/generic_event_device.h
-@@ -98,6 +98,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
- #define ACPI_GED_PWR_DOWN_EVT      0x2
- #define ACPI_GED_NVDIMM_HOTPLUG_EVT 0x4
- #define ACPI_GED_CPU_HOTPLUG_EVT    0x8
-+#define ACPI_GED_ERROR_EVT          0x10
- 
- typedef struct GEDState {
-     MemoryRegion evt;
+     if (arm_feature(env, ARM_FEATURE_AUXCR)) {
 -- 
 2.45.2
 
