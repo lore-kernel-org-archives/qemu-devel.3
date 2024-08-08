@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A302C52D6F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 04:24:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 644A0C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 04:25:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbuhP-0007pX-VU; Thu, 08 Aug 2024 00:24:28 -0400
+	id 1sbuiU-0001WV-Pn; Thu, 08 Aug 2024 00:25:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sbuhN-0007oB-TX; Thu, 08 Aug 2024 00:24:25 -0400
-Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
+ id 1sbuiT-0001Pj-Mk; Thu, 08 Aug 2024 00:25:33 -0400
+Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sbuhM-0003zS-0s; Thu, 08 Aug 2024 00:24:25 -0400
-Received: by mail-ua1-x930.google.com with SMTP id
- a1e0cc1a2514c-822cf222888so187329241.1; 
- Wed, 07 Aug 2024 21:24:23 -0700 (PDT)
+ id 1sbuiS-0004HV-79; Thu, 08 Aug 2024 00:25:33 -0400
+Received: by mail-ua1-x935.google.com with SMTP id
+ a1e0cc1a2514c-825a23c5e4cso145189241.3; 
+ Wed, 07 Aug 2024 21:25:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723091062; x=1723695862; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1723091130; x=1723695930; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QrPJ7QlujYMdhrP3Kck1+Af5WNq2BzMkv8y9lDONoxg=;
- b=mdXMT98joPbT5wLICWofrO5pZMz83s1nUICyMa4aGJ77Tg9ZRUzTZ16C2SlX9xrTAK
- RxBDKhhHP+5AM7moFLMCdPcSysfG0IuwaXiYypPJOW84P6wxsPRftwp6QGcBIEXV8TUQ
- KxBpY0y7e5stg/VwV8NuG9wh7lBJIGzooaugm+eoyLY1Bm8otugWBUf9BZDt8UUOcBv1
- 0Rmgz9la8j1sl8htxRu5c/hzRz/5O6oYJOUdXfFmddcbpEQdnc6hkeWXtyGA48Lz9mrQ
- r6ObYKYxkRC8XmbRb9XZ1mL27IL5YwdkspwiW6A/mBbMFOlgYMws0t5n3cnzpLIlHloc
- Lazg==
+ bh=fiA40MLsMtAnhRi+xNL2ixDz8ahQzn3oV+a9tx9IOb8=;
+ b=QONIaiKpVHkLBao4gk9Q/n1DVxLwLBT0+UjtzvSpUzTw9vOJJuLdjLaWXziddpILcQ
+ bHnXuwdMI2gYFL1Cpqm8YfDnZKuDAxFRcZlewxFtzFp6tSBOfKfeZhMUCVb5qSEFBWc8
+ LLcqBnDW04YwyewRSjL1OPjzOLTm70rgsU9R4etJCQ0yX7EYjoI9NA/gKAd2sxpm6a1k
+ tTTXkH2MwxT9EwHRZY58q/xc4tsRK5zajsCF/ZwDdYYl+AlbjGYy2Qxq+OawY33CrxRj
+ /DpnqSCol3ycQCYXqQCQBfPD4l1ZYZxwyNTJx7LhrFdLn7A8RPlP4WYin0ei73mCaQNG
+ 2beA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723091062; x=1723695862;
+ d=1e100.net; s=20230601; t=1723091130; x=1723695930;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QrPJ7QlujYMdhrP3Kck1+Af5WNq2BzMkv8y9lDONoxg=;
- b=Iok3sOMjFDKsdOVVVL+2DaWUWkOUmF3CDD19FQVGKaV8LBZjenUZqtiDNbk9LBT/HL
- 3GzqS42Vg4k0V/aHQ36u0HpeoS7FpaWRR9hL2CDpv4Le1Y8FkJTWno8QVUc3/43axrnH
- nOSimEQKPS92Uf/TUuefevaZyiiK9+eP6mvdPk6NpE7wR03OmogqeMm0Xoy/L6vRKls5
- VchCeYwBWxIWrTuUSpTRdJmsRcdXl04oe3PBOIq4c4XYsFR5eP7i3KIOe4EFkcufggb1
- xZJXLQA1N68q/lRJkAQxRT+rw9l/IW1L5uct9aHRu3JRH35f2mfzQkpNn5l6h9Jfdj2s
- Rlpw==
+ bh=fiA40MLsMtAnhRi+xNL2ixDz8ahQzn3oV+a9tx9IOb8=;
+ b=uc3IAWcngEYCaur3BsBu17ymsax9QvAlz21aPVDmVEZdpgCPhuuzCbXHAJoX/R9iDM
+ u3y5MU5YklO9CnprC0lbOEuXKaM+kIAykiKtHCvE7jisGOoEeLpB1nnY1qKQurPfyVK6
+ j1NsBuCGZAxiphYBtVGx3fuuy0tU9z3dnPX+klDFs0trAfduSgZiXjLjvFJhM9AT364a
+ MPerlBE05lEvPOuBM5cWvChepQcpNjNVMWw73vMGJXYbp2wY4aSFNZ1lYlm5nHIxsd59
+ ubgN0LSNXmzY+oDj1+yEQydN4zGZXpdZbbzpJmDjH6kQ1l+m7aQSFw/kL8xKdO9jlzrD
+ IcfA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUl37uhLPAogi5dOqMdhAWPkwPowVANcb9XEmQlMeVyhwouRBq8FfRQFbcL7XkkfS6bPBK3+RcP900ceE7qyka7FmgE040=
-X-Gm-Message-State: AOJu0Ywe2W+RTCwawJoQePzOBwMqqN5lbhtyzxD6Rtw94nQMOvgUoDIR
- QYFeUjH0licffYHDkLeJkRYx/TY+PE+ZNh1EtQOw3EHiY8ZX81mxxKL8Otpaa1H+yAvkHKgkneF
- xWNXXP0/s9VSi4ubJylXfUv2/o4w=
-X-Google-Smtp-Source: AGHT+IE8b+iNtkfqAhX49iHM/DsI2Pu0bnEruQyVwnLX7vMdJuaewCFwjxsgqClUwwyXE+9pNV1iAU4MDtyv060kWPU=
-X-Received: by 2002:a05:6102:1621:b0:48f:df86:dba with SMTP id
- ada2fe7eead31-495c5b38e5cmr1041851137.5.1723091062580; Wed, 07 Aug 2024
- 21:24:22 -0700 (PDT)
+ AJvYcCVT+5a/lzYf7PbwhCEnRwJKlFWtoDCrr3oZEzD4ZkmfEsfD4n4AUbgDkt70e456v6QyUNYWzZ/QCwj9PbeSehpftHht2TA=
+X-Gm-Message-State: AOJu0YyzdJzrhOSqNBBD4VTHkhpVPWEZJC/MdXfYxFPzHhLpweQhEbxG
+ 1ewM+8F7UufNP1Oj/QZ0mByU8pe+Vd4V4bddM62URHd3UvuC7wlXeINYOzhps6Dc5UQHuqjuG9w
+ tpBC/B2AZgKtviwnDC9IdKog1+KE=
+X-Google-Smtp-Source: AGHT+IE7KgIPaQSIl/x5HhvV7tDRYvnoyny6Aif+8ppNEdBTfWM5ICQBTocchp8WQnVDsiubjtNK0mX6teMeXMP0OOM=
+X-Received: by 2002:a05:6102:e0a:b0:48f:e759:94bc with SMTP id
+ ada2fe7eead31-495c5b4a2acmr815099137.16.1723091130386; Wed, 07 Aug 2024
+ 21:25:30 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240715095702.1222213-1-ethan84@andestech.com>
- <20240715101228.1247759-1-ethan84@andestech.com>
-In-Reply-To: <20240715101228.1247759-1-ethan84@andestech.com>
+ <20240715101409.1249373-1-ethan84@andestech.com>
+In-Reply-To: <20240715101409.1249373-1-ethan84@andestech.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 8 Aug 2024 14:23:56 +1000
-Message-ID: <CAKmqyKN-YavB364d4wmwBBSi7TpsE1Y5CebvUCSi=CzfjWsJDQ@mail.gmail.com>
-Subject: Re: [PATCH v8 5/8] hw/misc/riscv_iopmp: Add API to set up IOPMP
- protection for system memory
+Date: Thu, 8 Aug 2024 14:25:04 +1000
+Message-ID: <CAKmqyKOJOUvf-=qNQ90BQeFGNayH1mmtcYNd=iYVjNf53V-uMw@mail.gmail.com>
+Subject: Re: [PATCH v8 6/8] hw/misc/riscv_iopmp: Add API to configure RISCV
+ CPU IOPMP support
 To: Ethan Chen <ethan84@andestech.com>
 Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
  peterx@redhat.com, david@redhat.com, philmd@linaro.org, palmer@dabbelt.com,
@@ -71,8 +71,8 @@ Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com,
  qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -96,131 +96,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 15, 2024 at 8:13=E2=80=AFPM Ethan Chen via <qemu-devel@nongnu.o=
+On Mon, Jul 15, 2024 at 8:15=E2=80=AFPM Ethan Chen via <qemu-devel@nongnu.o=
 rg> wrote:
 >
-> To enable system memory transactions through the IOPMP, memory regions mu=
-st
-> be moved to the IOPMP downstream and then replaced with IOMMUs for IOPMP
-> translation.
->
-> The iopmp_setup_system_memory() function copies subregions of system memo=
-ry
-> to create the IOPMP downstream and then replaces the specified memory
-> regions in system memory with the IOMMU regions of the IOPMP. It also
-> adds entries to a protection map that records the relationship between
-> physical address regions and the IOPMP, which is used by the IOPMP DMA
-> API to send transaction information.
+> The iopmp_setup_cpu() function configures the RISCV CPU to support IOPMP =
+and
+> specifies the CPU's RRID.
 >
 > Signed-off-by: Ethan Chen <ethan84@andestech.com>
 > ---
->  hw/misc/riscv_iopmp.c         | 61 +++++++++++++++++++++++++++++++++++
->  include/hw/misc/riscv_iopmp.h |  3 ++
->  2 files changed, 64 insertions(+)
+>  hw/misc/riscv_iopmp.c         | 6 ++++++
+>  include/hw/misc/riscv_iopmp.h | 1 +
+>  2 files changed, 7 insertions(+)
 >
 > diff --git a/hw/misc/riscv_iopmp.c b/hw/misc/riscv_iopmp.c
-> index db43e3c73f..e62ac57437 100644
+> index e62ac57437..374bf5c610 100644
 > --- a/hw/misc/riscv_iopmp.c
 > +++ b/hw/misc/riscv_iopmp.c
-> @@ -1151,4 +1151,65 @@ iopmp_register_types(void)
->      type_register_static(&iopmp_iommu_memory_region_info);
+> @@ -1211,5 +1211,11 @@ void iopmp_setup_system_memory(DeviceState *dev, c=
+onst MemMapEntry *memmap,
+>                         "iopmp-downstream-as");
 >  }
 >
-> +/*
-> + * Copies subregions from the source memory region to the destination me=
-mory
-> + * region
-> + */
-> +static void copy_memory_subregions(MemoryRegion *src_mr, MemoryRegion *d=
-st_mr)
+> +void iopmp_setup_cpu(RISCVCPU *cpu, uint32_t rrid)
 > +{
-> +    int32_t priority;
-> +    hwaddr addr;
-> +    MemoryRegion *alias, *subregion;
-> +    QTAILQ_FOREACH(subregion, &src_mr->subregions, subregions_link) {
-> +        priority =3D subregion->priority;
-> +        addr =3D subregion->addr;
-> +        alias =3D g_malloc0(sizeof(MemoryRegion));
-> +        memory_region_init_alias(alias, NULL, subregion->name, subregion=
-, 0,
-> +                                 memory_region_size(subregion));
-> +        memory_region_add_subregion_overlap(dst_mr, addr, alias, priorit=
-y);
-> +    }
+> +    cpu->cfg.iopmp =3D true;
+> +    cpu->cfg.iopmp_rrid =3D rrid;
 > +}
 
-This seems strange. Do we really need to do this?
-
-I haven't looked at the memory_region stuff for awhile, but this seems
-clunky and prone to breakage.
-
-We already link s->iommu with the system memory
+This should just be a normal CPU property, which the machine can then
+set to true if required
 
 Alistair
 
 > +
-> +/*
-> + * Create downstream of system memory for IOPMP, and overlap memory regi=
-on
-> + * specified in memmap with IOPMP translator. Make sure subregions are a=
-dded to
-> + * system memory before call this function. It also add entry to
-> + * iopmp_protection_memmaps for recording the relationship between physi=
-cal
-> + * address regions and IOPMP.
-> + */
-> +void iopmp_setup_system_memory(DeviceState *dev, const MemMapEntry *memm=
-ap,
-> +                               uint32_t map_entry_num)
-> +{
-> +    IopmpState *s =3D IOPMP(dev);
-> +    uint32_t i;
-> +    MemoryRegion *iommu_alias;
-> +    MemoryRegion *target_mr =3D get_system_memory();
-> +    MemoryRegion *downstream =3D g_malloc0(sizeof(MemoryRegion));
-> +    memory_region_init(downstream, NULL, "iopmp_downstream",
-> +                       memory_region_size(target_mr));
-> +    /* Copy subregions of target to downstream */
-> +    copy_memory_subregions(target_mr, downstream);
-> +
-> +    iopmp_protection_memmap *map;
-> +    for (i =3D 0; i < map_entry_num; i++) {
-> +        /* Memory access to protected regions of target are through IOPM=
-P */
-> +        iommu_alias =3D g_new(MemoryRegion, 1);
-> +        memory_region_init_alias(iommu_alias, NULL, "iommu_alias",
-> +                                 MEMORY_REGION(&s->iommu), memmap[i].bas=
-e,
-> +                                 memmap[i].size);
-> +        memory_region_add_subregion_overlap(target_mr, memmap[i].base,
-> +                                            iommu_alias, 1);
-> +        /* Record which IOPMP is responsible for the region */
-> +        map =3D g_new0(iopmp_protection_memmap, 1);
-> +        map->iopmp_s =3D s;
-> +        map->entry.base =3D memmap[i].base;
-> +        map->entry.size =3D memmap[i].size;
-> +        QLIST_INSERT_HEAD(&iopmp_protection_memmaps, map, list);
-> +    }
-> +    s->downstream =3D downstream;
-> +    address_space_init(&s->downstream_as, s->downstream,
-> +                       "iopmp-downstream-as");
-> +}
-> +
-> +
+>
 >  type_init(iopmp_register_types);
 > diff --git a/include/hw/misc/riscv_iopmp.h b/include/hw/misc/riscv_iopmp.=
 h
-> index b8fe479108..ebe9c4bc4a 100644
+> index ebe9c4bc4a..7e7da56d10 100644
 > --- a/include/hw/misc/riscv_iopmp.h
 > +++ b/include/hw/misc/riscv_iopmp.h
-> @@ -165,4 +165,7 @@ typedef struct IopmpState {
->      uint32_t fabricated_v;
->  } IopmpState;
+> @@ -167,5 +167,6 @@ typedef struct IopmpState {
 >
-> +void iopmp_setup_system_memory(DeviceState *dev, const MemMapEntry *memm=
+>  void iopmp_setup_system_memory(DeviceState *dev, const MemMapEntry *memm=
 ap,
-> +                               uint32_t mapentry_num);
-> +
+>                                 uint32_t mapentry_num);
+> +void iopmp_setup_cpu(RISCVCPU *cpu, uint32_t rrid);
+>
 >  #endif
 > --
 > 2.34.1
