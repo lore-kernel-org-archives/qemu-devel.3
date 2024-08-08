@@ -4,71 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 874EFC52D6F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 12:47:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 795E0C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 12:52:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc2XS-0002nd-JT; Thu, 08 Aug 2024 08:46:42 -0400
+	id 1sc2c2-0001JF-K0; Thu, 08 Aug 2024 08:51:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sc2XN-0002U6-MG
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 08:46:39 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ id 1sc2bz-0001Hb-5U
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 08:51:23 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sc2XJ-0008Cd-HS
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 08:46:36 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5b9d48d1456so1464247a12.1
- for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 05:46:33 -0700 (PDT)
+ id 1sc2bs-0000pR-RR
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 08:51:22 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-530e2548dfdso947725e87.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 05:51:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723121192; x=1723725992; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723121474; x=1723726274; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=THtfz5smtEuXCggefzqHd8zStXmWuAPSNqlMv6P9PW4=;
- b=IDmNeIm1AXZzGi2yS0YRgbIUAcRzJYVA2/GB5RCpNiSDg6VChH8hbbuz86eEIaDWej
- zghCQD+yPJjucfw4MO9VyXQJwv7mSP47ZcIz5BEa/Qb8sVJCnDA5pL8uPPaBzgg8SLQs
- nGih6iJjUWXzGEjQ4VyASNH66/RDjvabhDrGX7qozGKOk/LgtjMq4fmq7imYHll4H/D+
- okuQs0nWR9HchrP6NL+NYFaHzwLLaCxGLBLgZuQTWnVzGL9p5gSCBFeRFjsil2mFczXh
- XRKcopBPOkI8ceiLViNBxn1TaDD73ocaXBcH9xekBfkPzDFnNk6MId/lzYbk+iGBeCwJ
- CHvQ==
+ bh=g/iWmPja43LIDv77TO9Vc4j/QAJjDM3XJTKCebu0b70=;
+ b=lskBN5KLEZTUw3mHHH7mhGTyYCyWebiVWgAEyDTJYZz0CTGaYu9dSkwUDqCi/7iOYr
+ PF9O9aEWtnxakcPWzcz62C7Hx5blq3Z0mbMUI/ZLFfxBcqUux7/6KkxN3LaUKu17MMUd
+ WKw5/1LrghOUuPGQiMkbcmMx/+qY3WTbYieisEiHDKeTuu0+rQjB0UumqfdIJUwcPksL
+ aQisIsas/OAGp3b3KY/A2SbehwqQEnNezm4XX+fMSYdgnWJb7387GU/2kNZvR4lzUpHt
+ jSSJWT0n4gEyKzX9C6V9p8BNIOVGGoDjJOtpKaCoAH+xxx9fjjC1+cjVTxvzgUB6DgVq
+ bWCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723121192; x=1723725992;
+ d=1e100.net; s=20230601; t=1723121474; x=1723726274;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=THtfz5smtEuXCggefzqHd8zStXmWuAPSNqlMv6P9PW4=;
- b=eXdkwuawRw6aCYx60RK31MBfFsPTxBukJmcGJp5GngRPGVrYJxN1Ge0lSsmPGLF5lh
- j7XF59kRTPmCQYt+rs0nqMIqt0JZntMeYw1qLaAml5UUtmpkAaMz2vQyMg/NMAHcCy5S
- AoKO+8E5dbVoNyLW6jSk3DIahonJn7N6SiS/flXtbaoOsWpZHz4POdKrgTN0vfOs1fy5
- 4swG2iCBJzEey9DVjSThWBMDc8zPhOfJNkZH3ukVO4Zd/BrYaYI4sL6oX/m73IF4ZPVM
- /Qu50lUxZxk4KKfKFFhMmueSB74qsqCcdPnhIhZeMyzrPfkS6czQFG2N//BZ0K3ZBGux
- uQjA==
-X-Gm-Message-State: AOJu0Yxh0uh0WBp+Is4INlAhEhruahrKIrpK3UB6YMX0jpjWWQI/SOwL
- C4WC6hjGh8OdsEU+YXZughkDJs7YORvytrksv5IqwN6bRPO0sN3rhg8v8rFU2Z7sTfA93+ueIV3
- C/KkZ5U7hUdiapuOtRB0DDI25zdU2FcrG0Li3TA==
-X-Google-Smtp-Source: AGHT+IGp0Jk6EENzWb7IF/Ap6EiDmNFT8SrIHCpxnR/O0+f0dmN+dXJXgytgNuYFxOxxIjLei8+BQOX5l9pmCjYUV0E=
-X-Received: by 2002:a05:6402:50c8:b0:5b9:fe2f:48e4 with SMTP id
- 4fb4d7f45d1cf-5bbb3c120aamr1558396a12.6.1723121191757; Thu, 08 Aug 2024
- 05:46:31 -0700 (PDT)
+ bh=g/iWmPja43LIDv77TO9Vc4j/QAJjDM3XJTKCebu0b70=;
+ b=bAUCttMmBFhxvDxgEeuIxXCSnA+RJIDX3+GFrs6P6H3P4c9fV/vHoNJ3y1PXH0g641
+ afROg74Gw0fgC9q9Xf9+K5Es+NOEKDHnvH+J+ouyCTsQcF4pBgPqHGYEYFv9ry+936qV
+ e+v2fwgRMvYb9NDZmaqt4wjQfNu/MknT7aBofbwO8PwBgBII05KrE49mFlMjHf/EPutk
+ lEpOyQ7NgUAAZBCNvNU5yYSvLU3qwRN1FwBvcrpqKOjIVGoAmSz7WnCh/fuPMld04xXG
+ F2knJyGWvtpGtt+LytXPCaMncB4WOss4ciIGwFLHUK+sGXwmAMJSz56c7G0Z63gSpNHp
+ R6nw==
+X-Gm-Message-State: AOJu0Yy+cnAbXe2cMlAJ8TEzhOTIfxpvsVQB3tFy/yLxHFmbu3i8VmcV
+ yq088FFXbBMczgh5YfdSYcGQNOegH5CauduIkzdU5KKWmjcVFhzFRyKo/XKVFr9a14UWoceZiyk
+ vd2hWT1/89a2adH2d8yjgMXma2TLF/b9XJ+2EnA==
+X-Google-Smtp-Source: AGHT+IHbUW6ct4afjz6F2R2nO5PpiWhAvuDN7QgCYPV8Cm2dTT9qKbyUFP9LrNVmrWO3RhMTbD6OseYHCb88tdCljC4=
+X-Received: by 2002:a05:6512:4025:b0:52e:9fe0:bee4 with SMTP id
+ 2adb3069b0e04-530e585bcb5mr1219059e87.9.1723121474248; Thu, 08 Aug 2024
+ 05:51:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240801170131.3977807-1-peter.maydell@linaro.org>
- <b09d230e-de05-4cf5-84ba-75ded34d674e@linaro.org>
-In-Reply-To: <b09d230e-de05-4cf5-84ba-75ded34d674e@linaro.org>
+References: <20240802133118.2000067-2-eblake@redhat.com>
+In-Reply-To: <20240802133118.2000067-2-eblake@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 8 Aug 2024 13:46:20 +0100
-Message-ID: <CAFEAcA_Sp82-nbVHrmFPRgz0DTGt6Rd1rQBX-x3SQBMY8dhdQw@mail.gmail.com>
-Subject: Re: [PATCH 0/5] docs: more conversions from txt to rst
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Eric Blake <eblake@redhat.com>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Stefan Hajnoczi <stefanha@redhat.com>, 
- "Denis V. Lunev" <den@openvz.org>, Jiri Pirko <jiri@resnulli.us>
+Date: Thu, 8 Aug 2024 13:51:03 +0100
+Message-ID: <CAFEAcA-uQ-tawSxxyCg+MO6wJMg92Lb1TNnQwRtrjWshFao4YA@mail.gmail.com>
+Subject: Re: [PATCH 6/5] docs: Typo fix in live disk backup
+To: Eric Blake <eblake@redhat.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,22 +87,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2 Aug 2024 at 00:25, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Fri, 2 Aug 2024 at 14:31, Eric Blake <eblake@redhat.com> wrote:
 >
-> On 8/2/24 03:01, Peter Maydell wrote:
-> > Peter Maydell (5):
-> >    docs/specs/rocker.txt: Convert to rST
-> >    docs/interop/nbd.txt: Convert to rST
-> >    docs/interop/parallels.txt: Convert to rST
-> >    docs/interop/prl-xml.txt: Convert to rST
-> >    docs/interop/prl-xml.rst: Fix minor grammar nits
+> Add in the missing space in the section header.
 >
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Fixes: 1084159b31 ("qapi: deprecate drive-backup", v6.2.0)
+> Signed-off-by: Eric Blake <eblake@redhat.com>
+>
+> ---
+>
+> Noticed while figuring out where nbd docs would appear in [1] once [2]
+> goes live:
+> [1] https://www.qemu.org/docs/master/interop/index.html
+> [2] https://lists.gnu.org/archive/html/qemu-devel/2024-08/msg00223.html
 
-Thanks. As docs changes I think these are reasonable to
-put into rc2, so I'm going to apply them to my target-arm.next
-branch, unless anybody would prefer not.
+FWIW a "6/5" patch like this tends to confuse the automated
+tooling (neither patchew nor patches liked it). They prefer
+it if this kind of "on top of that other series" patch is
+sent as a normal patch but with a "Based-on: $MSGID" tag in the
+cover letter -- then for instance patchew knows to get that
+other series and apply it first when it tries to apply the
+goes-on-top patch.
 
+Anyway, I fished the email out of the lore.kernel.org
+archive and I've applied it to target-arm.next on top of
+my rst conversion patchset.
+
+thanks
 -- PMM
 
