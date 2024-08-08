@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E2DC52D73
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 05:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42439C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 05:08:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbvNL-0006FJ-61; Thu, 08 Aug 2024 01:07:47 -0400
+	id 1sbvO8-0001Bw-46; Thu, 08 Aug 2024 01:08:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sbvNJ-0006Cu-Ne
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 01:07:45 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1sbvO4-0000wn-34
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 01:08:32 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sbvNI-0001Xf-1m
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 01:07:45 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1ff67158052so4811525ad.0
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 22:07:43 -0700 (PDT)
+ id 1sbvO2-0001bU-1F
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 01:08:31 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2cf93dc11c6so503456a91.1
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 22:08:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723093662; x=1723698462; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723093708; x=1723698508; darn=nongnu.org;
  h=content-transfer-encoding:content-language:in-reply-to:mime-version
  :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JqHhc5kG1t+EAEGN0cO4xdif80gU2DAe8cOdIcoHGUQ=;
- b=NKOttQ93alK4K/0e4wrK8nNE7l5L1ER9fp9n+1HtjfoYcuqbHkQnT7L1Q97tghLuZy
- OEQuQ9f3ohTqVCnGIvKQIabhkPbl2LWzwlI3dHUenoArQB9Gnengyy6Dc5G5Pz5yqinD
- DMoidGcPbOrx/15vGzxpDlxjpVkHeSDoKU4vaVcj/VE1fgSfjaSaD+1Br9THU1tpvIOk
- kBYKCs+ifIlmbt3AtnTe2g4dHl6+9R9EqcQPiqk4wnI/I4h+lkRn5II0BVV/se1Fcl8D
- C4kesqXG9n5MN0+mzsL17TVRhNrVyvcRXKdfx24FOCZKix0IsdegANmn8QVLpeH0sKES
- h3kw==
+ bh=qWL37pcmKKZfStzIyyB2slRnkA+/9hjkNmqqRl+6hzs=;
+ b=rXRgFPRzWU0QI/bcFqmqv37IlFvabiweqB7m291db2N4sl9Ax0GvM9m+3LB5tg+4h8
+ yfAjAt8mSWEoUHc8e3q+GjxkihPaXCfqyeqteXTBnzr8ZQ+dxAJvvehXPlIFMBEHL9aY
+ vWnWozYAGhxLQ9n2+XzOJiF8sbXrn+VM9G9hRzLXtMI7hm0p+p1o2gBQkIjcehA+86Fw
+ gSnHjClEb53h4jAGNj+/L+ojDCpkL0ZRiorShO5DMv9/l/xKkNj5hJPk86VrdIocCEEN
+ BluiFqpwb4RJS2pCoCtlfyfx4tWY1XdHFO2PS4thEpELULYp25loHomexm3JBsXN+NXm
+ gghw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723093662; x=1723698462;
+ d=1e100.net; s=20230601; t=1723093708; x=1723698508;
  h=content-transfer-encoding:content-language:in-reply-to:mime-version
  :user-agent:date:message-id:from:references:cc:to:subject
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JqHhc5kG1t+EAEGN0cO4xdif80gU2DAe8cOdIcoHGUQ=;
- b=wisl08jLeA0b6n59lYJjD7MkGkKZ2IyBpEQI7Cd2e1gve1Gy5e9aEzqW2MVDeop2xm
- cODaFoscPycvDreGe/BzT/OwRIZkrFJC1R+BnqsJpQNiHYIozUObvuHs/b4zns5fGBBN
- r2gYDrlHxU1Fx/exi1hOEDiFhB1ybjMsOFvz0axQOuP0fgBWaTb2MSGEPtLUBQ1JX+Hu
- lrTocuFA1lS5V8tEm2Pw+LSICIZQ3sHSIbT3NIVWff+fsiw8eEAo4fxjjjhvRKuMklVr
- Kbn1W6Ckp/QWnV0rbD5yD5BG5++V8xLVokSlDuZvnuxijv1JQpVkn31zOsHs5DxDrSx0
- KBLQ==
-X-Gm-Message-State: AOJu0YwQDRPCFYffq0K4lGUqfToTPewr7J7COoD0Pp+e4gmYwrzu+l3B
- Kl7J5bDYl57Dqwita7D8oQZgD8gMMNLKmCqz9xkhdzXGI+jPnCibp5KpZN7W0a5JQ2mxP46YxWt
- 9
-X-Google-Smtp-Source: AGHT+IFJnW9BjBiEF3WPDPY7Ru2Khmnwr52VZlamyzXGqglsWBhQOL55qGrno+9gfp0AYeK/FHdtDA==
-X-Received: by 2002:a17:902:e5c3:b0:1fd:6b87:2147 with SMTP id
- d9443c01a7336-20095228bc5mr10861535ad.6.1723093662525; 
- Wed, 07 Aug 2024 22:07:42 -0700 (PDT)
+ bh=qWL37pcmKKZfStzIyyB2slRnkA+/9hjkNmqqRl+6hzs=;
+ b=Q2/DUdqBSQApLljlzmC8J7hyZli0BYfW0RcTCLjpPrwpaaYy6hfpoP5Baubvn2nT3+
+ HtNq3U1jmYdobDAPVAvMEe/a0oaBGYeOxkWCmtk8zkcSwr6eTf2Ipz7teUq3GKM+aTbx
+ NXfWHa+yFXXaShNdL1L/W+HpSouyBrGJ+i65v6atPAGQq33cC5LgW89ijkcLRB2yEZEX
+ MM9E/MUEmtUM11B7Rv+O23XMPiUiZhzleZyqhXnEyAfewzzWz/xaxiztrRqVAsQOL6Ks
+ kGrgHAp+tTvqe4+s8qYE/c+5SgMNV3rGBxbDzf7Vz+xnf0XSeRIpmTtcM8IfufPyT7oq
+ iXIw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXDl1KE4x8A6vebqDvu9vYootc6kXQ5liKSMiGKCCt+ZGUArMjW1ZU/dxgbtFHyN6tX1HxGWyFYHU+gvj5oZEVW6B1EoIc=
+X-Gm-Message-State: AOJu0YzqcAVm/VNbpuYVdO71XEqHoFYid2HXUipAWSBTU24nhvE3HjQ1
+ gXHbN0HOviPHvysxQDBAIZ9HhLaH5cDmjv0gY9NanRF8UBs2Rl451hTpzi0gKo4=
+X-Google-Smtp-Source: AGHT+IEZfd4vmeoEIXhMfAFhrqZ1pF4VfJTCHkhj88pxfumShW4Vv9sRJFHcm9hPjKZMSvgh3VZhHg==
+X-Received: by 2002:a17:90b:3909:b0:2cd:7d6f:31b0 with SMTP id
+ 98e67ed59e1d1-2d1c34952c5mr886072a91.43.1723093708451; 
+ Wed, 07 Aug 2024 22:08:28 -0700 (PDT)
 Received: from [192.168.0.103] ([187.75.36.187])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff58f62e7asm115448115ad.115.2024.08.07.22.07.40
+ 98e67ed59e1d1-2d1b3b63c2bsm2497916a91.55.2024.08.07.22.08.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 07 Aug 2024 22:07:42 -0700 (PDT)
-Subject: Re: [PATCH 3/4] tests/guest-debug: Support passing arguments to the
- GDB test script
-To: =?UTF-8?Q?Alex_Benn=c3=a9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, richard.henderson@linaro.org,
- peter.maydell@linaro.org
+ Wed, 07 Aug 2024 22:08:27 -0700 (PDT)
+Subject: Re: [PATCH 4/4] tests/tcg/aarch64: Extend MTE gdbstub tests to system
+ mode
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ philmd@linaro.org, alex.bennee@linaro.org
+Cc: peter.maydell@linaro.org
 References: <20240722160709.1677430-1-gustavo.romero@linaro.org>
- <20240722160709.1677430-4-gustavo.romero@linaro.org>
- <87jzh9mcly.fsf@draig.linaro.org>
+ <20240722160709.1677430-5-gustavo.romero@linaro.org>
+ <07beb08d-c0c2-434a-bac0-5d5e461d7a6d@linaro.org>
 From: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <e7a68dce-4dc3-b052-c44f-9b729bf298a8@linaro.org>
-Date: Thu, 8 Aug 2024 02:07:39 -0300
+Message-ID: <66efea5b-c217-48b9-f11b-b2ac0a51ccc2@linaro.org>
+Date: Thu, 8 Aug 2024 02:08:25 -0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.6.0
 MIME-Version: 1.0
-In-Reply-To: <87jzh9mcly.fsf@draig.linaro.org>
+In-Reply-To: <07beb08d-c0c2-434a-bac0-5d5e461d7a6d@linaro.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -47
 X-Spam_score: -4.8
 X-Spam_bar: ----
@@ -101,71 +102,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
+Hi Richard,
 
-On 7/25/24 5:38 PM, Alex Bennée wrote:
-> Gustavo Romero <gustavo.romero@linaro.org> writes:
+On 7/25/24 8:17 PM, Richard Henderson wrote:
+> On 7/23/24 02:07, Gustavo Romero wrote:
+>>   def run_test():
+>> -    gdb.execute("break 95", False, True)
+>> +    if mode == "system":
+>> +        # Break address: where to break before performing the tests
+>> +        # Addresss is the last insn. before 'main' returns. See mte.c
+>> +        ba = "*main+52"
 > 
->> This commit adds a new option to run-test.py, --test-args, which can
->> be used to pass arguments to the GDB test script specified by the --test
->> option. The arguments passed are in the key=value form, and multiple
->> pairs can be passed, separated by a space. For example:
->>
->> run-test.py [...] --test <GDB_TEST_SCRIPT> --test-args v0="string" v1=10
->>
->> The 'v0' and 'v1' variables will then be available in the GDB test
->> script, like this:
->>
->> print(v0)
->> print(v1)
->>
->> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->> ---
->>   tests/guest-debug/run-test.py | 4 ++++
->>   1 file changed, 4 insertions(+)
->>
->> diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
->> index 368ff8a890..63b55fb8bd 100755
->> --- a/tests/guest-debug/run-test.py
->> +++ b/tests/guest-debug/run-test.py
->> @@ -27,6 +27,7 @@ def get_args():
->>       parser.add_argument("--binary", help="Binary to debug",
->>                           required=True)
->>       parser.add_argument("--test", help="GDB test script")
->> +    parser.add_argument("--test-args", help="Arguments to GDB test script")
->>       parser.add_argument("--gdb", help="The gdb binary to use",
->>                           default=None)
->>       parser.add_argument("--gdb-args", help="Additional gdb
->> arguments")
-> 
-> I might be easier to do:
-> 
->      parser.add_argument('test_args', nargs='*',
->                          help="Additional args for test. "
->                          "You should precede with -- "
->                          "to avoid confusion with flags for runner script")
-> 
-> 
->> @@ -91,6 +92,9 @@ def log(output, msg):
->>       gdb_cmd += " -ex 'target remote %s'" % (socket_name)
->>       # finally the test script itself
->>       if args.test:
->> +        if args.test_args:
->> +            test_args = args.test_args.replace(" ",";")
->> +            gdb_cmd += f" -ex 'py {test_args}'"
->>           gdb_cmd += " -x %s" % (args.test)
-As we discussed, -ex 'py [...]' just allow setting variables in Python,
-so it won't understand plain argparse'd arguments. For instance, if we
-do 'run-test.py [...] -- --mode=system' this will fail because
-"--mode-system" not a valid Python syntax. Moreover, there isn't another
-way to pass args to the GDB Python scripts afaict.
+> Ugly.  You can add labels in your inline asm block instead.
 
-But since that's a nice idea (to be able to parse args in the GDB Python
-scripts) I found a workaround. It's possible to set the sys.argv in the
-script env. So -ex "py sys.argv=['--mode=user', '--arg1=1', '--arg2=2', ...]",
-for instance, correctly sets the argv and make argparse work normally in
-the script. Thus I used that approach to address your suggestion. Please
-see v2.
+I forgot about that possibility. Thanks. This motivated me to
+convert mte.c to mte.S. I think there is no benefit in keeping
+the test in C with a bunch of inline asm blocks. Please see v2.
+
+
+>> diff --git a/tests/tcg/aarch64/system/boot.S b/tests/tcg/aarch64/system/boot.S
+>> index 501685d0ec..a12393d00b 100644
+>> --- a/tests/tcg/aarch64/system/boot.S
+>> +++ b/tests/tcg/aarch64/system/boot.S
+>> @@ -135,11 +135,22 @@ __start:
+>>       orr    x1, x1, x3
+>>       str    x1, [x2]            /* 2nd 2mb (.data & .bss)*/
+>> +        /* Third block: .mte_page */
+>> +    adrp    x1, .mte_page
+>> +    add    x1, x1, :lo12:.mte_page
+>> +    bic    x1, x1, #(1 << 21) - 1
+>> +    and     x4, x1, x5
+>> +    add    x2, x0, x4, lsr #(21 - 3)
+>> +    ldr    x3, =(3 << 53) | 0x401 | 1 << 2    /* attr(AF, NX, block, AttrIndx=Attr1) */
+>> +    orr    x1, x1, x3
+>> +    str    x1, [x2]
+>> +
+>>       /* Setup/enable the MMU.  */
+>>       /*
+>>        * TCR_EL1 - Translation Control Registers
+>>        *
+>> +     * TBI0[37] = 0b1 => Top Byte ignored and used for tagged addresses
+>>        * IPS[34:32] = 40-bit PA, 1TB
+>>        * TG0[14:15] = b00 => 4kb granuale
+>>        * ORGN0[11:10] = Outer: Normal, WB Read-Alloc No Write-Alloc Cacheable
+>> @@ -152,16 +163,22 @@ __start:
+>>        * with at least 1gb range to see RAM. So we start with a
+>>        * level 1 lookup.
+>>        */
+>> -    ldr    x0, = (2 << 32) | 25 | (3 << 10) | (3 << 8)
+>> +    ldr    x0, = (1 << 37) | (2 << 32) | 25 | (3 << 10) | (3 << 8)
+>>       msr    tcr_el1, x0
+>> -    mov    x0, #0xee            /* Inner/outer cacheable WB */
+>> +    /*
+>> +     * Attr0: Normal, Inner/outer cacheable WB
+>> +     * Attr1: Tagged Normal (MTE)
+>> +     */
+>> +    mov    x0, #0xf0ee
+> 
+> Up to here, I think we're fine, no matter the emulated cpu model.
+> 
+>>       msr    mair_el1, x0
+>>       isb
+>>       /*
+>>        * SCTLR_EL1 - System Control Register
+>>        *
+>> +     * ATA[43] = 1 = enable access to allocation tags at EL1
+>> +     * TCF[40] = 1 = Tag Check Faults cause a synchronous exception
+>>        * WXN[19] = 0 = no effect, Write does not imply XN (execute never)
+>>        * I[12] = Instruction cachability control
+>>        * SA[3] = SP alignment check
+>> @@ -169,7 +186,8 @@ __start:
+>>        * M[0] = 1, enable stage 1 address translation for EL0/1
+>>        */
+>>       mrs    x0, sctlr_el1
+>> -    ldr    x1, =0x100d            /* bits I(12) SA(3) C(2) M(0) */
+>> +    /* Bits set: ATA(43) TCF(40) I(12) SA(3) C(2) M(0) */
+>> +    ldr    x1, =(0x100d | 1 << 43 | 1 << 40)
+> 
+> But here, it's only legal to run this modified boot.S on -cpu max.
+> We should check for MTE enabled before setting those, or
+> set them elsewhere, e.g. in main of the specific MTE test.
+
+Right. I move all these bits for MTE to mte.S, under main function,
+and just left the page table setting in boot.S, since we need to
+set it before the MMU is turned on.
+
+
+>> @@ -239,3 +257,5 @@ ttb_stage2:
+>>   stack:
+>>       .space 65536, 0
+>>   stack_end:
+>> +
+>> +    .section .mte_page
+> 
+> Why?
+> 
+>> diff --git a/tests/tcg/aarch64/system/kernel.ld b/tests/tcg/aarch64/system/kernel.ld
+>> index 7b3a76dcbf..7c00c1c378 100644
+>> --- a/tests/tcg/aarch64/system/kernel.ld
+>> +++ b/tests/tcg/aarch64/system/kernel.ld
+>> @@ -18,6 +18,11 @@ SECTIONS
+>>       .bss : {
+>>           *(.bss)
+>>       }
+>> +    /* align MTE section to next (third) 2mb */
+>> +    . = ALIGN(1 << 22);
+>> +    .mte : {
+>> +        *(.mte_page)
+>> +    }
+> 
+> Why?
+> 
+>>       /DISCARD/ : {
+>>           *(.ARM.attributes)
+>>       }
+>> diff --git a/tests/tcg/aarch64/system/mte.c b/tests/tcg/aarch64/system/mte.c
+>> new file mode 100644
+>> index 0000000000..58a5ac31ff
+>> --- /dev/null
+>> +++ b/tests/tcg/aarch64/system/mte.c
+>> @@ -0,0 +1,40 @@
+>> +#include <inttypes.h>
+>> +
+>> +int main(void)
+>> +{
+>> +    uint8_t *addr;
+>> +
+>> +    /*
+>> +     * Third 2MB chunk in the second 1GB block.
+>> +     * See .mte_page section in kernel.ld.
+>> +     */
+>> +    addr = (void *)((1UL << 30) | (1UL << 22));
+> 
+> ... because you're not using .mte_page here, just computing it.
+
+.mte_page is used in boot.S for setting the page table entry, in:
+
+         /* Third block: .mte_page */
+         adrp    x1, .mte_page
+         add     x1, x1, :lo12:.mte_page
+	[...]
+
+That's why it's being computed in kernel.ld. That said, you're
+right that it's better to also tie 'addr' to it instead of having
+a hard-coded value.
+
+I'm using the .mte_page address in the new mte.S test in v2, so
+now the value for 'addr' used in the test is tied to that computed
+value.
+
+
+>> +
+>> +    asm (
+>> +        /*
+>> +         * Set GCR for randon tag generation. 0xA5 is just a random value to set
+> 
+> random
+> 
+>> +         * GCR != 0 so the tag generated by 'irg' is not zero.
+>> +         */
+>> +        "ldr x1, =0xA5;"
+>> +        "msr gcr_el1, x1;"
+> 
+> I think it might be easier to split the asm:
+> 
+>    asm volatile("msr gcr_el1, %0" : : "r"(0xA5));
+
+hmm, all the tests are built with optimizations disabled,
+so no need to use volatile? Anyways, in v2 I'm using mov
+instead of ldr, and since it's .S, no more inline asm.
+
+
+>> +
+>> +         /* Generate a logical tag and put it in 'addr' pointer. */
+>> +         "irg %[addr], %[addr];"
+> 
+>    asm("irg %0,%0" : "+r"(addr));
+> 
+>> +
+>> +         /*
+>> +          * Store the generated tag to memory region pointed to by 'addr', i.e.
+>> +          * set the allocation tag for the memory region.
+>> +          */
+>> +         "stg %[addr], [%[addr]];"
+> 
+> Storing addr into addr is a titch confusing, clearer with zero?
+> 
+>    asm("stg xzr,[%0]" : : "r"(addr))
+
+This an invalid insn. xzr reg. can't be used as operand 1 in 'stg',
+because register 31 is encoded as sp, not xzr.
+
+However, I don't want to zero the allocation tag. Actually, it's
+the opposite, I want it != 0, that's why I set gcr_el1 != 0: to
+get a non-zero tag from 'irg'.
+
+I agree it's a tad confusing, but the thing is, 'stg' expects a
+tagged address in the source operand, not a "pure" tag, hence the
+use of 'addr' in operand 1. But I think it could be:
+
+stg tagged_addr, [addr]
+
+In v2 I put a comment that stg actually extracts the tag to be
+stored in [addr] from the address in 'tagged_addr'
+
+
+>> +
+>> +         /*
+>> +          * Store a random value (0xdeadbeef) to *addr. This must not cause any
+>> +          * Tag Check Fault since logical and allocation tags are set the same.
+>> +          */
+>> +     "ldr x1, =0xdeadbeef;"
+>> +     "str x1, [x0];"
+> 
+> Where does x0 come from?  Certainly not "addr"...
+> Can you use "addr" directly in the gdb script?
+
+Yep, it should be 'addr' instead of x0 here. It's a leftover.
+Fixed in v2. Thanks.
 
 
 Cheers,
