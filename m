@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AE7FC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 17:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA849C52D71
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 17:11:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc6aA-00014Z-15; Thu, 08 Aug 2024 13:05:46 -0400
+	id 1sc6eh-0007oY-Hd; Thu, 08 Aug 2024 13:10:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sc6a8-0000xJ-9h
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 13:05:44 -0400
+ id 1sc6eg-0007nc-S7
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 13:10:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sc6a6-0004Xs-MH
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 13:05:44 -0400
+ id 1sc6ee-0005EV-Tb
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 13:10:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723136742;
+ s=mimecast20190719; t=1723137024;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Ypvl9FpVY0ygw7Z0E6YIFvox3QzLmjxUg9xzQhSB9yU=;
- b=hh9ofCz/i+5NelzzzlFqmcK687h832GOFIl53kf7lJjRONs2FeuTtVpyMjwi2EZ2d2tf/p
- mB6Xf+MSFVk6TYhEfbI4xk+yFxJCSzrVkAFb20Frtdv6YnNoJpSBE+HBbB1IV3+DmFnxN9
- yGpozTct7NLCgOBbHYHJVl1MghT2d2w=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=d/QWo6CsMP+e5XaOMkLMmP3WP0F/4YPJaDWuFx2XqkA=;
+ b=alB0cenSjnZyW9anGX/HczwnwetVxGL7S19UAxfHzutyACcC7rmntD4qd5hKM3PRlfBlEX
+ eZcZ2yIyTtfD7wJ0VzpCgtGK52HLYp8TQAzJCMZ6mw7gN8ecTlN6Us+opAcL8Mvx92WtlE
+ YIhJIQsRNOEo7sByUKFMnSS/0qnxdBE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-118-epBJdvH3O7KJyJgXe-htnw-1; Thu,
- 08 Aug 2024 13:05:38 -0400
-X-MC-Unique: epBJdvH3O7KJyJgXe-htnw-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-196-vdETzv0TNiyCpqYfz6-t8Q-1; Thu,
+ 08 Aug 2024 13:10:18 -0400
+X-MC-Unique: vdETzv0TNiyCpqYfz6-t8Q-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4201D1945104; Thu,  8 Aug 2024 17:05:36 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7495B196E09E; Thu,  8 Aug 2024 17:10:17 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.163])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1DBE41956052; Thu,  8 Aug 2024 17:05:32 +0000 (UTC)
-Date: Thu, 8 Aug 2024 18:05:29 +0100
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 294173000197; Thu,  8 Aug 2024 17:10:13 +0000 (UTC)
+Date: Thu, 8 Aug 2024 18:10:10 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Alejandro Zeise <alejandro.zeise@seagate.com>
 Cc: qemu-arm@nongnu.org, kris.conklin@seagate.com,
  jonathan.henze@seagate.com, evan.burgess@seagate.com, clg@kaod.org,
  peter.maydell@linaro.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 03/15] crypto/hash-gcrypt: Implement new hash API
-Message-ID: <ZrT62R_5HaQQxDqP@redhat.com>
+Subject: Re: [PATCH v4 04/15] crypto/hash-gnutls: Implement new hash API
+Message-ID: <ZrT78tp2D9YfnO8_@redhat.com>
 References: <20240807195122.2827364-1-alejandro.zeise@seagate.com>
- <20240807195122.2827364-4-alejandro.zeise@seagate.com>
+ <20240807195122.2827364-5-alejandro.zeise@seagate.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240807195122.2827364-4-alejandro.zeise@seagate.com>
+In-Reply-To: <20240807195122.2827364-5-alejandro.zeise@seagate.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -86,34 +86,34 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 07, 2024 at 07:51:10PM +0000, Alejandro Zeise wrote:
-> Implements the new hashing API in the gcrypt hash driver.
+On Wed, Aug 07, 2024 at 07:51:11PM +0000, Alejandro Zeise wrote:
+> Implements the new hashing API in the gnutls hash driver.
 > Supports creating/destroying a context, updating the context
 > with input data and obtaining an output hash.
 > 
 > Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
 > ---
->  crypto/hash-gcrypt.c | 79 ++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 79 insertions(+)
+>  crypto/hash-gnutls.c | 73 ++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 73 insertions(+)
 > 
-> diff --git a/crypto/hash-gcrypt.c b/crypto/hash-gcrypt.c
-> index 829e48258d..e05511cafa 100644
-> --- a/crypto/hash-gcrypt.c
-> +++ b/crypto/hash-gcrypt.c
+> diff --git a/crypto/hash-gnutls.c b/crypto/hash-gnutls.c
+> index 17911ac5d1..15fc630a11 100644
+> --- a/crypto/hash-gnutls.c
+> +++ b/crypto/hash-gnutls.c
 > @@ -1,6 +1,7 @@
 >  /*
 >   * QEMU Crypto hash algorithms
 >   *
 > + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
->   * Copyright (c) 2016 Red Hat, Inc.
+>   * Copyright (c) 2021 Red Hat, Inc.
 >   *
 >   * This library is free software; you can redistribute it and/or
-> @@ -110,7 +111,85 @@ qcrypto_gcrypt_hash_bytesv(QCryptoHashAlgorithm alg,
->      return -1;
+> @@ -98,7 +99,79 @@ qcrypto_gnutls_hash_bytesv(QCryptoHashAlgorithm alg,
+>      return 0;
 >  }
 >  
 > +static
-> +QCryptoHash *qcrypto_gcrypt_hash_new(QCryptoHashAlgorithm alg, Error **errp)
+> +QCryptoHash *qcrypto_gnutls_hash_new(QCryptoHashAlgorithm alg, Error **errp)
 > +{
 > +    QCryptoHash *hash = NULL;
 > +
@@ -124,45 +124,100 @@ On Wed, Aug 07, 2024 at 07:51:10PM +0000, Alejandro Zeise wrote:
 > +    } else {
 > +        hash = g_new(QCryptoHash, 1);
 > +        hash->alg = alg;
-> +        hash->opaque = g_new(gcry_md_hd_t, 1);
+> +        hash->opaque = g_new(gnutls_hash_hd_t, 1);
 > +
-> +        gcry_md_open((gcry_md_hd_t *) hash->opaque, qcrypto_hash_alg_map[alg], 0);
+> +        gnutls_hash_init(hash->opaque, qcrypto_hash_alg_map[alg]);
+
+  int ret = gnutls_hash_init(...)
+  if (ret < 0) {
+      error_setg(errp, ....)
+      g_free(hash->opaque);
+      g_free(hash);
+      return NULL;
+  }
+
 > +    }
 > +
 > +    return hash;
 > +}
 > +
 > +static
-> +void qcrypto_gcrypt_hash_free(QCryptoHash *hash)
+> +void qcrypto_gnutls_hash_free(QCryptoHash *hash)
 > +{
-> +    gcry_md_hd_t *ctx = hash->opaque;
+> +    gnutls_hash_hd_t *ctx = hash->opaque;
 > +
-> +    if (ctx) {
-> +        gcry_md_close(*ctx);
-> +        g_free(ctx);
-> +    }
-> +
+> +    g_free(ctx);
 > +    g_free(hash);
 > +}
 > +
 > +
 > +static
-> +int qcrypto_gcrypt_hash_update(QCryptoHash *hash,
+> +int qcrypto_gnutls_hash_update(QCryptoHash *hash,
 > +                               const struct iovec *iov,
 > +                               size_t niov,
 > +                               Error **errp)
 > +{
-> +    gcry_md_hd_t *ctx = hash->opaque;
+> +    int fail = 0;
+> +    gnutls_hash_hd_t *ctx = hash->opaque;
 > +
 > +    for (int i = 0; i < niov; i++) {
-> +        gcry_md_write(*ctx, iov[i].iov_base, iov[i].iov_len);
+> +        fail = gnutls_hash(*ctx, iov[i].iov_base, iov[i].iov_len) || fail;
 
-  int ret = gcry_md_write(*ctx, iov[i].iov_base, iov[i].iov_len);
-  if (ret != 0) {
-      error_setg(....)
-      return -1;
-  }
+Needs to report in 'errp'  when failure happens & return immediately. eg
 
+   int ret = gnutls_hash(*ctx, iov[i].iov_base, iov[i].iov_len);
+   if (ret != 0) {
+       error_setg(errp, ....)
+       return -1;
+   }
+
+> +    }
+> +
+> +    return fail;
+
+Just 'return 0'
+
+> +}
+> +
+> +static
+> +int qcrypto_gnutls_hash_finalize(QCryptoHash *hash,
+> +                                 uint8_t **result,
+> +                                 size_t *result_len,
+> +                                 Error **errp)
+> +{
+> +    int ret = 0;
+> +    gnutls_hash_hd_t *ctx = hash->opaque;
+> +
+> +    *result_len = gnutls_hash_get_len(qcrypto_hash_alg_map[hash->alg]);
+> +    if (*result_len == 0) {
+> +        error_setg(errp, "%s",
+> +                   "Unable to get hash length");
+> +        ret = -1;
+> +    } else {
+> +        *result = g_new(uint8_t, *result_len);
+> +
+> +        gnutls_hash_deinit(*ctx, *result);
+
+We should use  gnutls_hash_output() here instead, and call
+gnutls_hash_deinit() in the qcrypto_gnutls_hash_free()
+method.  That ensures all memory is freed if the user
+never calls qcrypto_hash_finalize()
+
+> +    }
+> +
+> +    return ret;
+> +}
+>  
+>  QCryptoHashDriver qcrypto_hash_lib_driver = {
+>      .hash_bytesv = qcrypto_gnutls_hash_bytesv,
+> +    .hash_new      = qcrypto_gnutls_hash_new,
+> +    .hash_update   = qcrypto_gnutls_hash_update,
+> +    .hash_finalize = qcrypto_gnutls_hash_finalize,
+> +    .hash_free     = qcrypto_gnutls_hash_free,
+>  };
+> -- 
+> 2.34.1
+> 
 
 With regards,
 Daniel
