@@ -4,85 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAEE2C52D71
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE615C52D73
 	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 09:26:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbzO7-0000d3-E2; Thu, 08 Aug 2024 05:24:51 -0400
+	id 1sbzOF-0000nl-CM; Thu, 08 Aug 2024 05:24:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1sbzO4-0000cJ-Sc
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 05:24:48 -0400
-Received: from mx2.zhaoxin.com ([203.110.167.99])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sbzOC-0000mZ-Q2
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 05:24:56 -0400
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1sbzO2-0004Bg-C4
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 05:24:48 -0400
-X-ASG-Debug-ID: 1723109069-1eb14e31a620ce0001-jgbH7p
-Received: from ZXSHMBX1.zhaoxin.com (ZXSHMBX1.zhaoxin.com [10.28.252.163]) by
- mx2.zhaoxin.com with ESMTP id Zfo5ly8gUmSXnvQH (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Thu, 08 Aug 2024 17:24:29 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
-Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX1.zhaoxin.com
- (10.28.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 8 Aug
- 2024 17:24:29 +0800
-Received: from ZXSHMBX1.zhaoxin.com ([fe80::dcd1:d46d:263:77e]) by
- ZXSHMBX1.zhaoxin.com ([fe80::dcd1:d46d:263:77e%7]) with mapi id
- 15.01.2507.039; Thu, 8 Aug 2024 17:24:29 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
-Received: from [10.28.66.62] (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 8 Aug
- 2024 17:23:01 +0800
-Message-ID: <9a5094dd-119c-406a-8d42-0290dc9ce129@zhaoxin.com>
-Date: Thu, 8 Aug 2024 05:23:01 -0400
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sbzO9-0004D7-0Q
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 05:24:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1723109093; x=1754645093;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=386A0BBaRX3jDp8fOnNYUADd2ks/RpMi/bWG9OBvsV0=;
+ b=mnIoF3pbrUebtdrmHgyG3tdFz2I+WAQLm2dPReP0Mec/W6MoUywmmo7h
+ YGV8A0ikt9OC4QMo3YL/a+ho0Qu9+yDp+VOtRsfpyNBUCHOciBA6nUlS1
+ FpbTzNYwn6fHf6LJbosIEExXnjNZng47EM2RyRbRS5U0sywqzCICu0Eay
+ w5JuYQMcr0ehMz7xhDO6HkFerCzJW9BA4NMWI+xIv+sR4EgTpTWFU/ZR0
+ I18WPWwopSrm6E0M6E4BnTmTB4zjLuMsd6lQVUaGE4sgfRO6c0BLAV8Zn
+ YgZdjWr9HeSilV7nEi8Jeu6qCKT3sp0V4+yDuMB/ob05GGwiVQT0UtaxG w==;
+X-CSE-ConnectionGUID: +V8lA+TIR4ygkVkJgNIsFQ==
+X-CSE-MsgGUID: NuUHyfdVRROTIU5yjO6SyA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11157"; a="25094055"
+X-IronPort-AV: E=Sophos;i="6.09,272,1716274800"; d="scan'208";a="25094055"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Aug 2024 02:24:49 -0700
+X-CSE-ConnectionGUID: S6gqtJEqTACjazY2lbm2Gw==
+X-CSE-MsgGUID: uGNm97kLRSa2C0OGhY+c2w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,272,1716274800"; d="scan'208";a="88064997"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa001.fm.intel.com with ESMTP; 08 Aug 2024 02:24:48 -0700
+Date: Thu, 8 Aug 2024 17:40:38 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Xin Li <xin@zytor.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v1 2/3] target/i386: Add VMX control bits for nested FRED
+ support
+Message-ID: <ZrSSlri1K5WL7XVj@intel.com>
+References: <20240807081813.735158-1-xin@zytor.com>
+ <20240807081813.735158-3-xin@zytor.com>
+ <ZrOZkYuSKhYH0ymi@intel.com>
+ <f4422fc2-d8fc-4902-80c7-0e2dda5bba59@zytor.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/4] Add support for Zhaoxin Yongfeng CPU model and
- other improvements
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-X-ASG-Orig-Subj: Re: [PATCH v2 0/4] Add support for Zhaoxin Yongfeng CPU model
- and other improvements
-To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>, <xiaoyao.li@intel.com>
-CC: <qemu-devel@nongnu.org>, <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>,
- <rockcui@zhaoxin.com>, <louisqi@zhaoxin.com>, <liamni@zhaoxin.com>,
- <frankzhu@zhaoxin.com>
-References: <20240704112511.184257-1-ewanhai-oc@zhaoxin.com>
-Content-Language: en-US
-In-Reply-To: <20240704112511.184257-1-ewanhai-oc@zhaoxin.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 8/8/2024 5:24:28 PM
-X-Barracuda-Connect: ZXSHMBX1.zhaoxin.com[10.28.252.163]
-X-Barracuda-Start-Time: 1723109069
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 1747
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.02
-X-Barracuda-Spam-Status: No,
- SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.128741
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
-Received-SPF: pass client-ip=203.110.167.99;
- envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=gb2312
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f4422fc2-d8fc-4902-80c7-0e2dda5bba59@zytor.com>
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,51 +86,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dear Maintainers,
+Hi Xin,
 
- =C2=A0=C2=A0=C2=A0 Could you please review the current patchset and let me=
- know if you=20
-have any concerns?
+On Thu, Aug 08, 2024 at 12:04:42AM -0700, Xin Li wrote:
+> Date: Thu, 8 Aug 2024 00:04:42 -0700
+> From: Xin Li <xin@zytor.com>
+> Subject: Re: [PATCH v1 2/3] target/i386: Add VMX control bits for nested
+>  FRED support
+> 
+> On 8/7/2024 8:58 AM, Zhao Liu wrote:
+> > On Wed, Aug 07, 2024 at 01:18:11AM -0700, Xin Li (Intel) wrote:
+> > > @@ -1435,7 +1435,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+> > >               "vmx-exit-save-efer", "vmx-exit-load-efer",
+> > >                   "vmx-exit-save-preemption-timer", "vmx-exit-clear-bndcfgs",
+> > >               NULL, "vmx-exit-clear-rtit-ctl", NULL, NULL,
+> > > -            NULL, "vmx-exit-load-pkrs", NULL, NULL,
+> > > +            NULL, "vmx-exit-load-pkrs", NULL, "vmx-exit-secondary-ctls",
+> > 
+> > Oh, the order of my reviews is mixed up.
+> > It's better to move VMX_VM_EXIT_ACTIVATE_SECONDARY_CONTROLS into this patch.
+> 
+> Usually a simple definition is added in a patch where it is used, not in
+> qemu?
+> 
+> > >           },
+> > >           .msr = {
+> > >               .index = MSR_IA32_VMX_TRUE_EXIT_CTLS,
+> > > @@ -1450,7 +1450,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+> > >               NULL, "vmx-entry-ia32e-mode", NULL, NULL,
+> > >               NULL, "vmx-entry-load-perf-global-ctrl", "vmx-entry-load-pat", "vmx-entry-load-efer",
+> > >               "vmx-entry-load-bndcfgs", NULL, "vmx-entry-load-rtit-ctl", NULL,
+> > > -            NULL, NULL, "vmx-entry-load-pkrs", NULL,
+> > > +            NULL, NULL, "vmx-entry-load-pkrs", "vmx-entry-load-fred",
+> > 
+> > Should we also define VMX_VM_ENTRY_LOAD_FRED? "vmx-entry-load-rtit-ctl"
+> > and "vmx-entry-load-pkrs" have their corresponding bit definitions, even
+> > if they are not used.
+> 
+> I'm not sure, but why add something that is not being used (thus not
+> tested)?
 
+Yes, the use of macros is a factor. My another consideration is the
+integrity of the feature definitions. When the such feature definitions
+were first introduced in commit 704798add83b (¡±target/i386: add VMX
+definitions¡±), I understand thay were mainly used to enumerate and
+reflect hardware support and not all defs are used directly.
 
-On 7/4/24 07:25, EwanHai wrote:
-> ### Summary of changes
->
-> EwanHai (4):
->    target/i386: Add support for Zhaoxin CPU vendor identification
->    target/i386: Add CPUID leaf 0xC000_0001 EDX definitions
->    target/i386: Introduce Zhaoxin Yongfeng CPU model
->    target/i386: Update CMPLegacy handling for Zhaoxin CPUs
->
->   target/i386/cpu.c | 128 ++++++++++++++++++++++++++++++++++++++++++++--
->   target/i386/cpu.h |  41 ++++++++++++++-
->   2 files changed, 165 insertions(+), 4 deletions(-)
->
-> ### Changes since v1
-> 1. Removed VIA-related information from the patch description to avoid
-> misunderstanding.
-> 2. Replaced CPUID_VENDOR_VIA with CPUID_VENDOR_ZHAOXIN1 because the
-> "Centaurhauls" vendor ID now belongs to Zhaoxin.The previous CPUID_VENDOR=
-_VIA
-> macro was only defined but never used in QEMU, making this change
-> straightforward.
->
-> v1 link: https://lore.kernel.org/qemu-devel/20240625091905.1325205-1-ewan=
-hai-
-> oc@zhaoxin.com/
->
-> ### Known Issues
-> 1. Issue with VMX Preemption Timer Rate on Yongfeng CPU:
->     - Description: On Yongfeng CPUs, the VMX preemption timer rate is 128=
-,
->       meaning that bits 4:0 of MSR_IA32_VMX_MISC_CTLS should be set to 7.
->       However, due to Intel's rate being 5, the Linux kernel has hardcode=
-d
->       this value as 5: `#define VMX_MISC_EMULATED_PREEMPTION_TIMER_RATE 5=
-`.
->     - Impact: This discrepancy can cause incorrect behavior in the VMX
->       preemption timer on Yongfeng CPUs.
->     - Workaround: A patch to correct this issue in the Linux kernel is
->       currently being prepared and will be submitted soon.
+The feat word name and the feature definition should essentially be
+bound, and it might be possible to generate the feature definition
+from the feat word via some script without having to add it manually,
+but right now there is no work on this, and no additional constraints,
+so we have to manually add and manually check it to make sure that the
+two correspond to each other. When a feature word is added, it means
+that Host supports the corresponding feature, and from an integrity
+perspective, so it is natural to continue adding definition (just like
+the commit 52a44ad2b92b ("target/i386: Expose VMX entry/exit load pkrs
+control bits")), right?
+
+Though I found that there are still some mismatches between the feature
+word and the corresponding definition, but ideally they should coexist.
+
+About the test, if it's just enumerated and not added to a specific CPU
+model or involved by other logic, it's harmless?
+
+Thanks,
+Zhao
 
 
