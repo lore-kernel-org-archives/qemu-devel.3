@@ -4,102 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54343C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 15:26:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7CD5C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 15:28:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc51H-0003ub-En; Thu, 08 Aug 2024 11:25:39 -0400
+	id 1sc543-0000sY-5G; Thu, 08 Aug 2024 11:28:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sc51F-0003qj-Pj
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 11:25:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1sc540-0000s2-Sw
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 11:28:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sc51E-00055L-2L
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 11:25:37 -0400
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1sc53z-0005Ft-7v
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 11:28:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723130734;
+ s=mimecast20190719; t=1723130905;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=40s7y3yjiQ3kcoKbH3z2AlAuLczFr+zYkcJIoHqFbLk=;
- b=WCBg20fBRLEO82FvJtADtQHSVXSmDVrXlBgfAk43WGaOEnmflCUn4bcIDCMkEHtqQwG/uV
- D57fG2wcoVoKf3ts3tCf+lbwWoOc2IORboRr5bB4NnkaF8JKVeU2pkSqVwug6s4GntIG2w
- 3SNUCIUkzAuwTEJQNw8/JH0qfQzzwSY=
-Received: from mail-oo1-f72.google.com (mail-oo1-f72.google.com
- [209.85.161.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=b4/s/SNPHDS2/aGlsqN4fklHjDyLla08hCb+GJlkLxQ=;
+ b=WBvWkb7GJ2Vxnsnez1AI4euc+Nvew7TDY7ASh73j7d2Q9VOgyfOAHSJ6op/dCyHRp9kPgs
+ uDjQgK4msO9PiuQoUFWKVvj/GIAkL/TqXnX4Q+woS6QBODhnyAlMuCBhoVuVfAtNbkbAuD
+ TRX5XhY2EslYRm+TvwLkHdk+1kn8VQM=
+Received: from mail-yb1-f197.google.com (mail-yb1-f197.google.com
+ [209.85.219.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-353-mrzz_CJaMp-R3Vgucgq-qA-1; Thu, 08 Aug 2024 11:25:33 -0400
-X-MC-Unique: mrzz_CJaMp-R3Vgucgq-qA-1
-Received: by mail-oo1-f72.google.com with SMTP id
- 006d021491bc7-5d5b4ffa0c8so149970eaf.1
- for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 08:25:33 -0700 (PDT)
+ us-mta-498-WJ4LKvfDM42qO2jksWnLiw-1; Thu, 08 Aug 2024 11:28:23 -0400
+X-MC-Unique: WJ4LKvfDM42qO2jksWnLiw-1
+Received: by mail-yb1-f197.google.com with SMTP id
+ 3f1490d57ef6-e0bfd36cda0so3427525276.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 08:28:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723130732; x=1723735532;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=40s7y3yjiQ3kcoKbH3z2AlAuLczFr+zYkcJIoHqFbLk=;
- b=lOivg7ewQM8hREmui+u7zSHGmB4grOyomurS5cGEXS6c6cBDcsw6hw+0Kw/ras56GM
- kF/51Suw9FBOL7XxIMj77EwcMlYYLK+Ys9Azys6BNLspe6011g+UyM60yMUX8MsORqLC
- cgLeZZmArg3F0O5nYwJlQM5WQrS+QlDwStxRsDjjxHFUvIXWolfyUF/wCZ+O/+3Pvagg
- Vw8eeVWhW6ATBUdDQ//kO8N/J3y12k8nn148lL8vq75Vz+Zyc/EPo0UhOMQZd+UxhF+F
- 1DXIpDZq4SDmbLUJ/e60V+NEtk1kdB3RqdFckq7LGfjQAi0XurXJJ9mCLIvC6Y4dyFGR
- BukA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXrjsGb21g5yAiu++bLRaxc79uYMo7o2jkI5S+MywNIZ7Sg7uxMa/ur0jQh8pOCkg9f5yXr0kWXSLlVg68a6JU0B0taMHk=
-X-Gm-Message-State: AOJu0YzOM0ueToUNczvHXRVCYR6toYbN0fVr2I+dZhgCRr16XqBZYgJZ
- 0LN87x1vcEg86kwAMy7gcfiR8g0W3Gb1C2woy5++GCNuipfLw3noO5P2PkvuV5BYOFple7EPpGh
- 9n3safZhTx7StXhwBDIa3AnJ2pTuyIVgzRzeQM1Qz5Z6yJPdC6lTe
-X-Received: by 2002:a4a:ea99:0:b0:5cd:13e0:b0d3 with SMTP id
- 006d021491bc7-5d855ba00bcmr1435749eaf.2.1723130732638; 
- Thu, 08 Aug 2024 08:25:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGHGPhZCEe+IegUokZrqMGVnnhh0mLBCfHI2VXEJbhwMqkUCEpyEJEU8GMEXbL/Up15ltHiEw==
-X-Received: by 2002:a4a:ea99:0:b0:5cd:13e0:b0d3 with SMTP id
- 006d021491bc7-5d855ba00bcmr1435728eaf.2.1723130732167; 
- Thu, 08 Aug 2024 08:25:32 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6bb9c7c0fe7sm67865246d6.71.2024.08.08.08.25.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Aug 2024 08:25:31 -0700 (PDT)
-Date: Thu, 8 Aug 2024 11:25:29 -0400
-From: Peter Xu <peterx@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
- jasowang@redhat.com, sriram.yagnaraman@est.tech, sw@weilnetz.de,
- qemu-devel@nongnu.org, yan@daynix.com,
- Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <ZrTjaZPyjDuJZK36@x1n>
-References: <c7447c6c-0562-4e0f-bc1b-61a1430c9852@daynix.com>
- <20240805060544-mutt-send-email-mst@kernel.org>
- <2b62780c-a6cb-4262-beb5-81d54c14f545@daynix.com>
- <20240806092822-mutt-send-email-mst@kernel.org>
- <890f9d0a-3ded-488d-b274-8be9c38b5df3@daynix.com>
- <20240808065339-mutt-send-email-mst@kernel.org>
- <274ccd97-a473-4937-a57b-0029a18069c9@daynix.com>
- <20240808070912-mutt-send-email-mst@kernel.org>
- <ZrTTCIpXLmW8c5Kv@x1n>
- <20240808104559-mutt-send-email-mst@kernel.org>
+ d=1e100.net; s=20230601; t=1723130903; x=1723735703;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=b4/s/SNPHDS2/aGlsqN4fklHjDyLla08hCb+GJlkLxQ=;
+ b=Sjvx4gbNvcUZRfbUDomapyqfV9SXFqWp+WH3jDouAZq2OQaWSNtYWvJP90hPX7h7+y
+ LY/v57e00LWpn3B8EVXTWzvJ7jtitxUd7azHNtvzOHpKoIiyPIyvASIiywjK+Au1eiB4
+ ecFoJ9ogN0Ea42aUU9coDR7lVFLOjnbCU0J8NPpN2BZzrxYN9W+BAPAUzCM013o7vq15
+ RyVyEk/Wfg7i9FBdfqQ35alM+W3cFUQh3MnJnlwYqekqWakvxhEX8G0v3b8s4ZwmKSbU
+ SrrTaLHbyK4FDXG9Rm9FS0qdoaqdujIqAMBAwYopQdflKyVvgJ6mUitZvZ4VG6fgD1+8
+ XS+g==
+X-Gm-Message-State: AOJu0YzVoC1ZDO3BjuhvbfhcT/pouG4LtDjlvN9ELf9JJfvzJk2P9UOe
+ amqwSLTZOzzJRifRK8vm5IdhdhLj46HbK3lfRUbEhoJZOo3VRQJbvJSoIZJ8q69i3RLOsVAx6es
+ xfBKDxzxd0Xox40kV5uEQ7ttvQ3sg0m7VXmjCZFhpBI00aX5tnFIOgaoDzQpWRxJUBI5XGyZ5rG
+ cVuf9IpBPOqpU1JVpnLpG+8ywVmnQ=
+X-Received: by 2002:a05:6902:210b:b0:e0e:8738:1a2c with SMTP id
+ 3f1490d57ef6-e0e9f944f54mr1497132276.2.1723130902798; 
+ Thu, 08 Aug 2024 08:28:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzILw8m3xAAKhdmwa3RgNn/muNAvZX13iXC5HgQMEnK634CG5CCY/Y8r6KrP9NV8WRxTK/kpwuJwG/Y+0LHyc=
+X-Received: by 2002:a05:6902:210b:b0:e0e:8738:1a2c with SMTP id
+ 3f1490d57ef6-e0e9f944f54mr1497108276.2.1723130902374; Thu, 08 Aug 2024
+ 08:28:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240808104559-mutt-send-email-mst@kernel.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+References: <20240806160756.182524-1-jmarcin@redhat.com>
+ <20240806160756.182524-3-jmarcin@redhat.com>
+ <CAFEAcA9iCcmwkN2m9unjZskFHPg=DSDjC-SeNyskmjtkFJvFMQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA9iCcmwkN2m9unjZskFHPg=DSDjC-SeNyskmjtkFJvFMQ@mail.gmail.com>
+From: Juraj Marcin <jmarcin@redhat.com>
+Date: Thu, 8 Aug 2024 17:28:11 +0200
+Message-ID: <CAC2qdxDhfon3Xe7J4jCVyqx7VdR-CMbo2r7Vat=WOA0qWLoFMg@mail.gmail.com>
+Subject: Re: [PATCH 2/4] reset: Add RESET_TYPE_WAKEUP
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,49 +98,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 08, 2024 at 10:47:28AM -0400, Michael S. Tsirkin wrote:
-> On Thu, Aug 08, 2024 at 10:15:36AM -0400, Peter Xu wrote:
-> > On Thu, Aug 08, 2024 at 07:12:14AM -0400, Michael S. Tsirkin wrote:
-> > > This is too big of a hammer. People already use what you call "cross
-> > > migrate" and have for years. We are not going to stop developing
-> > > features just because someone suddenly became aware of some such bit.
-> > > If you care, you will have to work to solve the problem properly -
-> > > nacking half baked hacks is the only tool maintainers have to make
-> > > people work on hard problems.
-> > 
-> > IMHO this is totally different thing.  It's not about proposing a new
-> > feature yet so far, it's about how we should fix a breakage first.
-> > 
-> > And that's why I think we should fix it even in the simple way first, then
-> > we consider anything more benefitial from perf side without breaking
-> > anything, which should be on top of that.
-> > 
-> > Thanks,
-> 
-> As I said, once the quick hack is merged people stop caring.
+On Thu, Aug 8, 2024 at 2:18=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
+org> wrote:
+>
+> On Tue, 6 Aug 2024 at 17:08, Juraj Marcin <jmarcin@redhat.com> wrote:
+> >
+> > Some devices need to distinguish cold start reset from waking up from a
+> > suspended state. This patch adds new value to the enum, and updates the
+> > i386 wakeup method to use this new reset type.
+> >
+> > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+> > ---
+> >  docs/devel/reset.rst    | 7 +++++++
+> >  hw/i386/pc.c            | 2 +-
+> >  include/hw/resettable.h | 2 ++
+> >  3 files changed, 10 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/docs/devel/reset.rst b/docs/devel/reset.rst
+> > index 9746a4e8a0..30c9a0cc2b 100644
+> > --- a/docs/devel/reset.rst
+> > +++ b/docs/devel/reset.rst
+> > @@ -44,6 +44,13 @@ The Resettable interface handles reset types with an=
+ enum ``ResetType``:
+> >    value on each cold reset, such as RNG seed information, and which th=
+ey
+> >    must not reinitialize on a snapshot-load reset.
+> >
+> > +``RESET_TYPE_WAKEUP``
+> > +  This type is used when the machine is woken up from a suspended stat=
+e (deep
+> > +  sleep, suspend-to-ram). Devices that must not be reset to their init=
+ial state
+> > +  after wake-up (for example virtio-mem) can use this state to differe=
+ntiate
+> > +  cold start from wake-up can use this state to differentiate cold sta=
+rt from
+> > +  wake-up.
+>
+> I feel like this needs more clarity about what this is, since
+> as a reset type it's a general behaviour, not a machine
+> specific one. What exactly is "wakeup" and when does it happen?
+> How does it differ from what you might call a "warm" reset,
+> where the user pressed the front-panel reset button?
+> Why is virtio-mem in particular interesting here?
 
-IMHO it's not a hack. It's a proper fix to me to disable it by default for
-now.
+Thank you for the feedback!
 
-OTOH, having it ON always even knowing it can break migration is a hack to
-me, when we don't have anything else to guard the migration.
+I have rewritten the paragraph:
 
-> Mixing different kernel versions in migration is esoteric enough for
-> this not to matter to most people. There's no rush I think, address
-> it properly.
+This type is called for a reset when the system is being woken up from
+a suspended state using the ``qemu_system_wakeup()`` function. If the
+machine type needs to reset in its ``MachineClass::wakeup()`` method,
+this reset type should be used so that devices can differentiate
+system wake-up from other reset types. For example, a virtio-mem
+device must not unplug its memory during wake-up, as that would clear
+the guest RAM.
 
-Exactly mixing kernel versions will be tricky to users to identify, but
-that's, AFAICT, exactly happening everywhere.  We can't urge user to always
-use the exact same kernels when we're talking about a VM cluster.  That's
-why I think allowing migration to work across those kernels matter.
+Is it clearer? Thank you!
 
-I will agree there's no rush iff RHEL9 kernel won't backport TAP at all,
-otherwise this will trigger between y-stream after people upgrades partial
-of the clusters.
+>
+> thanks
+> -- PMM
+>
 
-Thanks,
+--
 
--- 
-Peter Xu
+Juraj Marcin
 
 
