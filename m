@@ -4,65 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E20F7C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 14:12:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE40AC52D6F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 14:16:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc3ry-00024M-IK; Thu, 08 Aug 2024 10:11:58 -0400
+	id 1sc3vi-0002cc-QV; Thu, 08 Aug 2024 10:15:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sc3rx-00022k-0V; Thu, 08 Aug 2024 10:11:57 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sc3vf-0002bP-01
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 10:15:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1sc3ru-0003Ry-Q0; Thu, 08 Aug 2024 10:11:56 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 39748CE1235;
- Thu,  8 Aug 2024 14:11:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30833C32782;
- Thu,  8 Aug 2024 14:11:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1723126307;
- bh=+8KhZkMTI5fRZGMzqJiKMgxHC07OvLU1UljF56wsFDI=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=sgSsRyDFt7OAwOaW34uDzSl+7WLoS2aAgUs/xckW5EK/4cWOfyAlSYT64mTCgLcJb
- s1aexZW+xsPXBmmUNg33vx5AuKwMuALesWFRK/zxpFRo1ewo/4o2uqlaij7JIctLCz
- +5UVeyBMbJQf57ushrLmciG8wwZI0zDiDBddOs9BlQKMnjpb7u0t4V99NmUUYVt9Fr
- q7zEICRDImzWheYij9Vg3Jaa4MnvH9Xf5Z1AWHWBn2MSfb8m6zcATy0NSl5mR9LY++
- KV/zbZ0q413U4IzKvvL7Xz25IMG/FY+u9CpsCyyhFIQMJkO+70iSB1rzBm7r8m67BU
- gG8d9zKVBxbUg==
-Date: Thu, 8 Aug 2024 16:11:41 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>, Eric Blake
- <eblake@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Michael Roth
- <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 5/7] qapi/ghes-cper: add an interface to do generic
- CPER error injection
-Message-ID: <20240808161141.5ffe730e@foz.lan>
-In-Reply-To: <87v80b1jqe.fsf@pond.sub.org>
-References: <cover.1722634602.git.mchehab+huawei@kernel.org>
- <51cbdc8a53e58c69ee17b15c398feeeeeeb64f34.1722634602.git.mchehab+huawei@kernel.org>
- <87v80b1jqe.fsf@pond.sub.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sc3vd-00044q-4J
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 10:15:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723126543;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=JORsPlFcMhn9vgCv/UrVhc1Aj5vpJP+Xjno/2xfw22Q=;
+ b=Bw8kwOeg7sRZBMWjznhCImrMxaR4xor0ORfSv1UEOCGXHFrM3oPX209YQiz27ynG2tFJGV
+ VPkzZ+WLbXHDeOCg6TriG8x7hjlUqXhj0r1bex6U2s1Hv+e2yC0mwTs/ob36uEZHnNJW6C
+ nOuYPHZbvEuTj2FZPCgzYlG+nzaNP0E=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-392-wXxCKOqFN061MUqp2GTMYA-1; Thu, 08 Aug 2024 10:15:42 -0400
+X-MC-Unique: wXxCKOqFN061MUqp2GTMYA-1
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-44fe05a4b61so887991cf.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 07:15:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723126540; x=1723731340;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JORsPlFcMhn9vgCv/UrVhc1Aj5vpJP+Xjno/2xfw22Q=;
+ b=ux8iosLP7FodKZ1Szgqs0OadVzm1U2iX7rnDMWxj7rPxJqs+JMH1W3xQj8+VYal9TF
+ yqLsiZPSORE80rCmkZ5ZLdg7OwtpyPSpHMOSbzC7HIPF4j9JJuMj75KY/iRJCpld6/HQ
+ BBloMEtMoWOLb59zJGdqOVI54n+a0qrwjtlvdLqRSCl2UEQiXmtEBmEPEAN9ao/1gkXo
+ 8/kv24FuiaBG0N3ouOlvSLzOuklp87GbfRdHSoq97/yV/pMwHfuYYXQa4qGIlMwSBvor
+ F8WpaAoARAyKlWJAOUpDnHKBpJ0y7lPyP523l07tKI+7Exk3hjt3UqebwixixVQb6eYu
+ yyXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV1DjOppF/xvXfvQr72TpoShTfgqSUblSLsidPWRCcl5JIBJs2ucy+mfcgws8JDbshl2a9KW5Uv9gM1@nongnu.org
+X-Gm-Message-State: AOJu0Yw8f/E+7WceLSnKgrABcvmkj7ZtkOwAD/s8txXDCdeyZnrAFwTR
+ so2BSjU9Yj4NcduHlwSksvEWtjDQHnIXi4Ngq2WPgtYALTHl95iDIlOGG+sgVJ3Cb1n+kn2b5Wo
+ 7Wlp6YMd0o3eYobJKnRJwjrWLoyheY4ILyFgEMMmpbAPV5yUnDv6o
+X-Received: by 2002:a05:622a:1883:b0:44f:d7b5:a665 with SMTP id
+ d75a77b69052e-451d41fddd7mr11453151cf.1.1723126540388; 
+ Thu, 08 Aug 2024 07:15:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGsPl3rDj8lNcMR0YhvaUXqXW2HxEklprAxMAS/21EhyE2JXVya5OnsFFsLzXgI51pIEMU7fw==
+X-Received: by 2002:a05:622a:1883:b0:44f:d7b5:a665 with SMTP id
+ d75a77b69052e-451d41fddd7mr11452861cf.1.1723126539970; 
+ Thu, 08 Aug 2024 07:15:39 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-451c87f6fcesm13510841cf.89.2024.08.08.07.15.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Aug 2024 07:15:39 -0700 (PDT)
+Date: Thu, 8 Aug 2024 10:15:36 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org,
+ wangyanan55@huawei.com, dmitry.fleytman@gmail.com,
+ jasowang@redhat.com, sriram.yagnaraman@est.tech, sw@weilnetz.de,
+ qemu-devel@nongnu.org, yan@daynix.com,
+ Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
+Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
+Message-ID: <ZrTTCIpXLmW8c5Kv@x1n>
+References: <cb71a6de-eb7a-402b-a58a-89198b4343f5@daynix.com>
+ <20240805041650-mutt-send-email-mst@kernel.org>
+ <c7447c6c-0562-4e0f-bc1b-61a1430c9852@daynix.com>
+ <20240805060544-mutt-send-email-mst@kernel.org>
+ <2b62780c-a6cb-4262-beb5-81d54c14f545@daynix.com>
+ <20240806092822-mutt-send-email-mst@kernel.org>
+ <890f9d0a-3ded-488d-b274-8be9c38b5df3@daynix.com>
+ <20240808065339-mutt-send-email-mst@kernel.org>
+ <274ccd97-a473-4937-a57b-0029a18069c9@daynix.com>
+ <20240808070912-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=mchehab+huawei@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240808070912-mutt-send-email-mst@kernel.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,97 +116,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Thu, 08 Aug 2024 10:50:33 +0200
-Markus Armbruster <armbru@redhat.com> escreveu:
+On Thu, Aug 08, 2024 at 07:12:14AM -0400, Michael S. Tsirkin wrote:
+> This is too big of a hammer. People already use what you call "cross
+> migrate" and have for years. We are not going to stop developing
+> features just because someone suddenly became aware of some such bit.
+> If you care, you will have to work to solve the problem properly -
+> nacking half baked hacks is the only tool maintainers have to make
+> people work on hard problems.
 
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
+IMHO this is totally different thing.  It's not about proposing a new
+feature yet so far, it's about how we should fix a breakage first.
 
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index 98eddf7ae155..655edcb6688c 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -2075,6 +2075,13 @@ F: hw/acpi/ghes.c
-> >  F: include/hw/acpi/ghes.h
-> >  F: docs/specs/acpi_hest_ghes.rst
-> >  
-> > +ACPI/HEST/GHES/ARM processor CPER
-> > +R: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > +S: Maintained
-> > +F: hw/arm/ghes_cper.c
-> > +F: hw/acpi/ghes_cper_stub.c
-> > +F: qapi/ghes-cper.json
-> > +  
-> 
-> Here's the reason for creating a new QAPI module instead of adding to
-> existing module acpi.json: different maintainers.
-> 
-> Hypothetical question: if we didn't care for that, would this go into
-> qapi/acpi.json?
-
-Independently of maintainers, GHES is part of ACPI APEI HEST, meaning
-to report hardware errors. Such hardware errors are typically handled by 
-the host OS, so quest doesn't need to be aware of that[1].
-
-So, IMO the best would be to keep APEI/HEST/GHES in a separate file.
-
-[1] still, I can foresee some scenarios were passing some errors to the
-    guest could make sense.
-
-> 
-> If yes, then should we call it acpi-ghes-cper.json or acpi-ghes.json
-> instead?
-
-Naming it as acpi-ghes,acpi-hest or acpi-ghes-cper would equally work
-from my side.
-
-> 
-> >  ppc4xx
-> >  L: qemu-ppc@nongnu.org
-> >  S: Orphan  
-> 
-> [...]
-> 
-> > diff --git a/qapi/ghes-cper.json b/qapi/ghes-cper.json
-> > new file mode 100644
-> > index 000000000000..3cc4f9f2aaa9
-> > --- /dev/null
-> > +++ b/qapi/ghes-cper.json
-> > @@ -0,0 +1,55 @@
-> > +# -*- Mode: Python -*-
-> > +# vim: filetype=python
-> > +
-> > +##
-> > +# = GHESv2 CPER Error Injection
-> > +#
-> > +# These are defined at
-> > +# ACPI 6.2: 18.3.2.8 Generic Hardware Error Source version 2
-> > +# (GHESv2 - Type 10)
-> > +##  
-> 
-> Feels a bit terse.  These what?
-> 
-> The reference could be clearer: "defined in the ACPI Specification 6.2,
-> section 18.3.2.8 Generic Hardware Error Source version 2".  A link would
-> be nice, if it's stable.
-
-I can add a link, but only newer ACPI versions are hosted in html format
-(e. g. only versions 6.4 and 6.5 are available as html at uefi.org).
-
-Can I place something like:
-
-	Defined since ACPI Specification 6.2,
-	section 18.3.2.8 Generic Hardware Error Source version 2. See:
-
-	https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#generic-hardware-error-source-version-2-ghesv2-type-10
-
-e. g. having the link pointing to ACPI 6.4 or 6.5, instead of 6.2?
-
->   # @raw-data: payload of the CPER encoded in base64
-> 
-> Have you considered naming this @payload instead?
-
-Works for me.
+And that's why I think we should fix it even in the simple way first, then
+we consider anything more benefitial from perf side without breaking
+anything, which should be on top of that.
 
 Thanks,
-Mauro
+
+-- 
+Peter Xu
+
 
