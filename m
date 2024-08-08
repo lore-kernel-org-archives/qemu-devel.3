@@ -4,77 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 970A8C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 14:00:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D01EBC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 14:03:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc3ft-0002JQ-Bw; Thu, 08 Aug 2024 09:59:29 -0400
+	id 1sc3iw-0007C7-GR; Thu, 08 Aug 2024 10:02:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sc3fl-0002HV-3h
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 09:59:22 -0400
-Received: from mgamail.intel.com ([198.175.65.19])
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sc3iu-0007A0-0z
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 10:02:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sc3fi-0001cS-NE
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 09:59:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723125559; x=1754661559;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=uTncNvr+TetwbvaCUuoUwOSPkUp8fifs8Wqn7mSL614=;
- b=TvOz+wyao7YOBSIdXdS0FB3RO7E/D6ga1zn93S65nSL2ukVFPgN5gsKH
- 3G7avnbekwwL/ajwBYXURXJhPaT5Y3V0870ZBw2PZD5QRQf6dDxf78aOm
- c6ZWRyjyXVK0mhb8pDSjSlMyV3bGx7M6pc1ggoA0fYdSOb+3KHJOEN5nH
- GCLaUqQ+3yepZYrjdpAXSZZQ1snjflr8fT6RefIFFlFIRgfkUhL2slAJk
- ndd2sYz4gqkB6k3huHQoaJQaXBF+me9iZPB7NO5UGz4t1aQwp2ENnWUP8
- I6Qm25Qv4Me+EQJMCZiuHzSbim0AnWl+tjEBuqKW0qssP1qzm4ZpNr4U7 g==;
-X-CSE-ConnectionGUID: lqCQItbwRA2x/WAr4qqhJQ==
-X-CSE-MsgGUID: JtLLEwN1SxidpQuFR4iClg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11158"; a="21109763"
-X-IronPort-AV: E=Sophos;i="6.09,273,1716274800"; d="scan'208";a="21109763"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Aug 2024 06:59:14 -0700
-X-CSE-ConnectionGUID: HqyDKyk+Sw2pZE7kpEMiUw==
-X-CSE-MsgGUID: wfCrepEIRZOUzrERzQvEew==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,273,1716274800"; d="scan'208";a="62073870"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.228.22])
- ([10.124.228.22])
- by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Aug 2024 06:59:11 -0700
-Message-ID: <26064315-6730-48fa-9f04-cb86a2dcfdf0@intel.com>
-Date: Thu, 8 Aug 2024 21:59:07 +0800
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sc3is-0002NY-6C
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 10:02:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723125753;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=yYntwTUcoK7m1trKVGQMiEUkk3l/vrY8TANdkU99q9g=;
+ b=hCBJ6Pmcb8o1a/oN3tu8/7PeuENefgH8vyZtDM2Dzbqcgl5ulJNigU9KdlQ6s3zbwV7bHs
+ rZ4od99FQHdNJdDPLd1TNbc/bPyH2NzQQO0WWv1gQnRsYyHu3AnvrxviVpXGZAgKr0D1gl
+ mNSH/t4DQu79RXo4kXRpd98pRfYTyvw=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-y2U2auqtO1eE-7IMDGuo8A-1; Thu,
+ 08 Aug 2024 10:02:30 -0400
+X-MC-Unique: y2U2auqtO1eE-7IMDGuo8A-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4F9D61944A89; Thu,  8 Aug 2024 14:02:28 +0000 (UTC)
+Received: from redhat.com (unknown [10.2.16.114])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8896F300018D; Thu,  8 Aug 2024 14:02:26 +0000 (UTC)
+Date: Thu, 8 Aug 2024 09:02:23 -0500
+From: Eric Blake <eblake@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, rjones@redhat.com
+Subject: Re: [PATCH 1/2] util: Refactor json-writer's string sanitizer to be
+ public
+Message-ID: <zd7l72yiri4zb65jauswl4irv5f3yiceu4wytvtyl6lzyh4lix@fsg67m7vb5e5>
+References: <20240802194156.2131519-4-eblake@redhat.com>
+ <20240802194156.2131519-5-eblake@redhat.com>
+ <87ed6z4fgt.fsf@pond.sub.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i386/cpu: Introduce enable_cpuid_0x1f to force exposing
- CPUID 0x1f
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
- Manish <manish.mishra@nutanix.com>, John Levon <john.levon@nutanix.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org
-References: <20240802072426.4016194-1-xiaoyao.li@intel.com>
- <ZrSZQN/AQa6BiIUu@intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <ZrSZQN/AQa6BiIUu@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.19; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87ed6z4fgt.fsf@pond.sub.org>
+User-Agent: NeoMutt/20240425
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eblake@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,93 +83,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/2024 6:09 PM, Zhao Liu wrote:
-> Hi Xiaoyao,
+On Thu, Aug 08, 2024 at 09:54:26AM GMT, Markus Armbruster wrote:
+> Eric Blake <eblake@redhat.com> writes:
 > 
-> Patch is generally fine for me. Just a few nits:
+> > My next patch needs to convert text from an untrusted input into an
+> > output representation that is suitable for display on a terminal is
+> > useful to more than just the json-writer; the text should normally be
+> > UTF-8, but blindly allowing all Unicode code points (including ASCII
+> > ESC) through to a terminal risks remote-code-execution attacks on some
+> > terminals.  Extract the existing body of json-writer's quoted_strinto
+> > a new helper routine mod_utf8_sanitize, and generalize it to also work
+> > on data that is length-limited rather than NUL-terminated.
 > 
-> On Fri, Aug 02, 2024 at 03:24:26AM -0400, Xiaoyao Li wrote:
->> diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
->> index dff49fce1154..b63bce2f4c82 100644
->> --- a/include/hw/i386/topology.h
->> +++ b/include/hw/i386/topology.h
->> @@ -207,13 +207,4 @@ static inline apic_id_t x86_apicid_from_cpu_idx(X86CPUTopoInfo *topo_info,
->>       return x86_apicid_from_topo_ids(topo_info, &topo_ids);
->>   }
->>   
->> -/*
->> - * Check whether there's extended topology level (module or die)?
->> - */
->> -static inline bool x86_has_extended_topo(unsigned long *topo_bitmap)
->> -{
->> -    return test_bit(CPU_TOPO_LEVEL_MODULE, topo_bitmap) ||
->> -           test_bit(CPU_TOPO_LEVEL_DIE, topo_bitmap);
->> -}
->> -
+> This is two changes in one patch: factor out, and generalize.
 > 
-> [snip]
-> 
->> +/*
->> + * Check whether there's v2 extended topology level (module or die)?
->> + */
->> +bool x86_has_v2_extended_topo(X86CPU *cpu)
->> +{
->> +    if (cpu->enable_cpuid_0x1f) {
->> +        return true;
->> +    }
->> +
->> +    return test_bit(CPU_TOPO_LEVEL_MODULE, cpu->env.avail_cpu_topo) ||
->> +           test_bit(CPU_TOPO_LEVEL_DIE, cpu->env.avail_cpu_topo);
->> +}
->> +
-> 
-> I suggest to decouple 0x1f enablement and extended topo check, since as
-> the comment of CPUTopoLevel said:
-> 
-> /*
->   * CPUTopoLevel is the general i386 topology hierarchical representation,
->   * ordered by increasing hierarchical relationship.
->   * Its enumeration value is not bound to the type value of Intel (CPUID[0x1F])
->   * or AMD (CPUID[0x80000026]).
->   */
-> 
-> The topology enumeration is generic and is not bound to the vendor.
+> You don't actually use the generalized variant.  Please leave that for
+> later, and keep this patch simple.
 
-I don't quit get your point. All the current usages of 
-x86_has_extended_topo() are for CPUID leaf 0x1f, which is an Intel 
-specific leaf.
+Makes sense. Will simplify in v2.
 
-Are you saying x86_has_extended_topo() will be used for leaf 0x80000026 
-for AMD as well?
-
-or maybe I misunderstand the meaning "extend_topo". The extend_topo just 
-means the topo level of module and die, and the topo level of smt and 
-core are non-extended? If so, this is new to me, could I ask where the 
-definitions come from? or just QEMU defines them itself?
-
-> [snip]
 > 
->> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
->> index c6cc035df3d8..211a42ffbfa6 100644
->> --- a/target/i386/cpu.h
->> +++ b/target/i386/cpu.h
->> @@ -2110,6 +2110,9 @@ struct ArchCPU {
->>       /* Compatibility bits for old machine types: */
->>       bool enable_cpuid_0xb;
->>   
->> +    /* Force to expose cpuid 0x1f */
-> 
-> Maybe "Force to enable cpuid 0x1f"?
+> >                                                             [I was
+> > actually surprised that glib does not have such a sanitizer already -
+> > Google turns up lots of examples of rolling your own string
+> > sanitizer.]
 
-I can change to it.
+See https://gitlab.gnome.org/GNOME/glib/-/issues/3426 where I asked if
+glib should provide a more generic sanitizer.  In turn, I found glib
+does have:
 
->> +    bool enable_cpuid_0x1f;
->> +
->>       /* Enable auto level-increase for all CPUID leaves */
->>       bool full_cpuid_auto_level;i
+char*
+g_uri_escape_string (
+  const char* unescaped,
+  const char* reserved_chars_allowed,
+  gboolean allow_utf8
+)
+
+which is a bit more powerful (you have some fine-tuning on what gets
+escaped), but a different escaping mechanism (%XX instead of \uXXXX
+escapes, where % rather than \ is special).  I'm not sure whether it
+is nicer to have a malloc'd result or to append into a larger g_string
+as the base operation (and where you could write an easy wrapper to
+provide the other operation).
+
+> > +/**
+> > + * mod_utf8_sanitize:
+> > + * @buf: Destination buffer
+> > + * @str: Modified UTF-8 string to sanitize
+> > + *
+> > + * Append the contents of the NUL-terminated Modified UTF-8 string
+> > + * @str into @buf, with escape sequences used for non-printable ASCII
 > 
-> Regards,
-> Zhao
+> "Append into" or "append to"?
+
+"append to" works, will simplify.
+
 > 
+> > + * and for quote characters.  The result is therefore safe for output
+> > + * to a terminal.
+> 
+> Actually, we escape double quote, backslash, ASCII control characters,
+> and non-ASCII characters, i.e. we leave just printable ASCII characters
+> other than '"' and '\\' unescaped.  See the code quoted below.
+> 
+> Escaping '\\' is of course necessary.
+> 
+> Escaping '"' is necessary only for callers that want to enclose the
+> result in double quotes without ambiguity.  Which is what the existing
+> caller wants.  Future callers may prefer not to escape '"'.  But we can
+> worry about this when we run into such callers.
+
+If we encounter more users, I could see this morphing into a backend
+that takes a flag argument on knobs like whether to escape " or ',
+whether to preserve printing Unicode, ...; coupled with frontends with
+fewer arguments that pass the right flags intot the backend.
+
+> 
+> > + *
+> > + * Modified UTF-8 is exactly like UTF-8, except U+0000 is encoded as
+> > + * "\xC0\x80".
+> > + */
+> 
+> Missing: behavior for invalid sequences.  Each such sequence is replaced
+> by a replacement character U+FFFD.  For the definition of "invalid
+> sequence", see mod_utf8_codepoint().
+
+Indeed, more documentation here wouldn't hurt (both on \ and " being
+escaped, and on U+FFFD codepoints being placed into the output
+stream).
+
+> 
+> On the function name.  "Sanitize" could be many things.  This function
+> actually does two things: (1) replace invalid sequences, and (2) escape
+> to printable ASCII.  What about append_mod_utf8_as_printable_ascii()?
+> Admittedly a mouthful.
+
+Naming is always tough.  Your suggestion is longer, but indeed
+accurate.  Maybe a shorter compromise of append_escaped_mod_utf8()?
+
+> 
+> > +void mod_utf8_sanitize(GString *buf, const char *str)
+> > +{
+> > +    mod_utf8_sanitize_len(buf, str, -1);
+> > +}
+
+-- 
+Eric Blake, Principal Software Engineer
+Red Hat, Inc.
+Virtualization:  qemu.org | libguestfs.org
 
 
