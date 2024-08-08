@@ -4,72 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7E6EC52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 17:01:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06E08C52D7D
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 17:01:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc6Vr-00074f-V1; Thu, 08 Aug 2024 13:01:20 -0400
+	id 1sc6Vq-0006yA-Ni; Thu, 08 Aug 2024 13:01:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sc6Vk-0006ch-Jj
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sc6Vk-0006cl-KM
  for qemu-devel@nongnu.org; Thu, 08 Aug 2024 13:01:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sc6Vd-0003ql-9x
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sc6Vf-0003qo-Mu
  for qemu-devel@nongnu.org; Thu, 08 Aug 2024 13:01:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1723136455;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Ekkz8oLnoPAZJTmxwSnAYgykxi8gQuIU04A2G3BZVbE=;
- b=fbR9dN3GAOp/gTqo0V1J1oR5jpeUTAsK/BVTzAle//bnSVN9knSibikXemymuUoZ8dCkyR
- IVXRAuW7tiFeOR8q600PsgxUh4fAh3nFdaBy5152nh0d+2fG4hvsAmOSr7SG2ZaeoD0Z0j
- c/th37+jM7It1xlRXM5eeKakUohQlro=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2gWFMwKH7UVjhM4138EK3zhEWj/z5bEfJVMGYj6k/nA=;
+ b=UQtzVcQHwiFw0D2a9umkF0Czeac7o4w119DfuGIkY97Aoqb7JiAGf66pXRUp8zrZkddr1f
+ 8IhTcMfSOzJIvPK+snc/eP61yPrj1oh62DIERY8bCe+Pd7aRCNLNSVhOrZGz15iWQGuSPV
+ kKH09vz9RuP6AHTUCxlH9vElqpTTuWY=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-343-LRed6nRON5C0BXfFlzRI_w-1; Thu,
- 08 Aug 2024 13:00:50 -0400
-X-MC-Unique: LRed6nRON5C0BXfFlzRI_w-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-508-y7zNEOgTN0W9gLHRIb_KSw-1; Thu,
+ 08 Aug 2024 13:00:52 -0400
+X-MC-Unique: y7zNEOgTN0W9gLHRIb_KSw-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8AC4219772ED; Thu,  8 Aug 2024 17:00:48 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.163])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5815B1955F35; Thu,  8 Aug 2024 17:00:45 +0000 (UTC)
-Date: Thu, 8 Aug 2024 18:00:41 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Alejandro Zeise <alejandro.zeise@seagate.com>
-Cc: qemu-arm@nongnu.org, kris.conklin@seagate.com,
- jonathan.henze@seagate.com, evan.burgess@seagate.com, clg@kaod.org,
- peter.maydell@linaro.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 03/15] crypto/hash-gcrypt: Implement new hash API
-Message-ID: <ZrT5uReaBsLOAbnW@redhat.com>
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CDCE01955D5D; Thu,  8 Aug 2024 17:00:49 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.193.245])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4E30F19560A3; Thu,  8 Aug 2024 17:00:49 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 2F34221E6682; Thu,  8 Aug 2024 19:00:47 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Alejandro Zeise <alejandro.zeise@seagate.com>,  qemu-arm@nongnu.org,
+ kris.conklin@seagate.com,  jonathan.henze@seagate.com,
+ evan.burgess@seagate.com,  clg@kaod.org,  peter.maydell@linaro.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 01/15] crypto: accumulative hashing API
+In-Reply-To: <ZrTskk2UCzWbmupd@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Thu, 8 Aug 2024 17:04:34 +0100")
 References: <20240807195122.2827364-1-alejandro.zeise@seagate.com>
- <20240807195122.2827364-4-alejandro.zeise@seagate.com>
+ <20240807195122.2827364-2-alejandro.zeise@seagate.com>
+ <ZrTskk2UCzWbmupd@redhat.com>
+Date: Thu, 08 Aug 2024 19:00:47 +0200
+Message-ID: <87wmkrq79c.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240807195122.2827364-4-alejandro.zeise@seagate.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,131 +87,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 07, 2024 at 07:51:10PM +0000, Alejandro Zeise wrote:
-> Implements the new hashing API in the gcrypt hash driver.
-> Supports creating/destroying a context, updating the context
-> with input data and obtaining an output hash.
-> 
-> Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
-> ---
->  crypto/hash-gcrypt.c | 79 ++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 79 insertions(+)
-> 
-> diff --git a/crypto/hash-gcrypt.c b/crypto/hash-gcrypt.c
-> index 829e48258d..e05511cafa 100644
-> --- a/crypto/hash-gcrypt.c
-> +++ b/crypto/hash-gcrypt.c
-> @@ -1,6 +1,7 @@
->  /*
->   * QEMU Crypto hash algorithms
->   *
-> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
->   * Copyright (c) 2016 Red Hat, Inc.
->   *
->   * This library is free software; you can redistribute it and/or
-> @@ -110,7 +111,85 @@ qcrypto_gcrypt_hash_bytesv(QCryptoHashAlgorithm alg,
->      return -1;
->  }
->  
-> +static
-> +QCryptoHash *qcrypto_gcrypt_hash_new(QCryptoHashAlgorithm alg, Error **errp)
-> +{
-> +    QCryptoHash *hash = NULL;
-> +
-> +    if (!qcrypto_hash_supports(alg)) {
-> +        error_setg(errp,
-> +                   "Unknown hash algorithm %d",
-> +                   alg);
-> +    } else {
-> +        hash = g_new(QCryptoHash, 1);
-> +        hash->alg = alg;
-> +        hash->opaque = g_new(gcry_md_hd_t, 1);
-> +
-> +        gcry_md_open((gcry_md_hd_t *) hash->opaque, qcrypto_hash_alg_map[alg], 0);
-> +    }
-> +
-> +    return hash;
-> +}
-> +
-> +static
-> +void qcrypto_gcrypt_hash_free(QCryptoHash *hash)
-> +{
-> +    gcry_md_hd_t *ctx = hash->opaque;
-> +
-> +    if (ctx) {
-> +        gcry_md_close(*ctx);
-> +        g_free(ctx);
-> +    }
-> +
-> +    g_free(hash);
-> +}
-> +
-> +
-> +static
-> +int qcrypto_gcrypt_hash_update(QCryptoHash *hash,
-> +                               const struct iovec *iov,
-> +                               size_t niov,
-> +                               Error **errp)
-> +{
-> +    gcry_md_hd_t *ctx = hash->opaque;
-> +
-> +    for (int i = 0; i < niov; i++) {
-> +        gcry_md_write(*ctx, iov[i].iov_base, iov[i].iov_len);
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static
-> +int qcrypto_gcrypt_hash_finalize(QCryptoHash *hash,
-> +                                 uint8_t **result,
-> +                                 size_t *result_len,
-> +                                 Error **errp)
-> +{
-> +    unsigned char *digest;
-> +    int ret = 0;
-> +    gcry_md_hd_t *ctx = hash->opaque;
-> +
-> +    *result_len = gcry_md_get_algo_dlen(qcrypto_hash_alg_map[hash->alg]);
-> +    if (*result_len == 0) {
-> +        error_setg(errp, "%s",
-> +                   "Unable to get hash length");
-> +        ret = -1;
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Same note about doing an immediate 'return -1' in error paths,
-to avoid extra else clauses.
+> On Wed, Aug 07, 2024 at 07:51:08PM +0000, Alejandro Zeise wrote:
+>> Changes the hash API to support accumulative hashing.
+>> Hash objects are created with "qcrypto_hash_new",
+>> updated with data with "qcrypto_hash_update", and
+>> the hash obtained with "qcrypto_hash_finalize".
+>>=20
+>> These changes bring the hashing API more in line with the
+>> hmac API.
+>>=20
+>> Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
 
-> +    } else {
-> +        *result = g_new(uint8_t, *result_len);
-> +
-> +        /* Digest is freed by gcry_md_close(), copy it */
-> +        digest = gcry_md_read(*ctx, 0);
-> +        memcpy(*result, digest, *result_len);
-> +    }
-> +
-> +    return ret;
-> +}
->  
->  QCryptoHashDriver qcrypto_hash_lib_driver = {
->      .hash_bytesv = qcrypto_gcrypt_hash_bytesv,
-> +    .hash_new      = qcrypto_gcrypt_hash_new,
-> +    .hash_update   = qcrypto_gcrypt_hash_update,
-> +    .hash_finalize = qcrypto_gcrypt_hash_finalize,
-> +    .hash_free     = qcrypto_gcrypt_hash_free,
->  };
-> -- 
-> 2.34.1
-> 
+[...]
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>> diff --git a/include/crypto/hash.h b/include/crypto/hash.h
+>> index 54d87aa2a1..6d7222867e 100644
+>> --- a/include/crypto/hash.h
+>> +++ b/include/crypto/hash.h
+>> @@ -1,6 +1,7 @@
+>>  /*
+>>   * QEMU Crypto hash algorithms
+>>   *
+>> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
+>>   * Copyright (c) 2015 Red Hat, Inc.
+>>   *
+>>   * This library is free software; you can redistribute it and/or
+>> @@ -25,6 +26,13 @@
+>>=20=20
+>>  /* See also "QCryptoHashAlgorithm" defined in qapi/crypto.json */
+>>=20=20
+>> +typedef struct QCryptoHash QCryptoHash;
+>> +struct QCryptoHash {
+>> +    QCryptoHashAlgorithm alg;
+>> +    void *opaque;
+>> +    void *driver;
+>> +};
+>> +
+>>  /**
+>>   * qcrypto_hash_supports:
+>>   * @alg: the hash algorithm
+>> @@ -120,6 +128,117 @@ int qcrypto_hash_digestv(QCryptoHashAlgorithm alg,
+>>                           char **digest,
+>>                           Error **errp);
+>>=20=20
+>> +/**
+>> + * qcrypto_hash_updatev:
+>> + * @hash: hash object from qcrypto_hash_new
+>> + * @iov: the array of memory regions to hash
+>> + * @niov: the length of @iov
+>> + * @errp: pointer to a NULL-initialized error object
+>> + *
+>> + * Updates the given hash object with all the memory regions
+>> + * present in @iov.
+>> + *
+>> + * Returns: 0 on success, non-zero on error
+>
+> Minor point, this and all the other APIs should be saying
+> 'or -1 on error' to follow QEMU's error reporting standards.
+
+Specifically, qapi/error.h:
+
+ * - Whenever practical, also return a value that indicates success /
+ *   failure.  This can make the error checking more concise, and can
+ *   avoid useless error object creation and destruction.  Note that
+ *   we still have many functions returning void.  We recommend
+ *   =E2=80=A2 bool-valued functions return true on success / false on fail=
+ure,
+ *   =E2=80=A2 pointer-valued functions return non-null / null pointer, and
+ *   =E2=80=A2 integer-valued functions return non-negative / negative.
 
 
