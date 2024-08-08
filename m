@@ -4,83 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 644A0C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 04:25:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A00AC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 04:32:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbuiU-0001WV-Pn; Thu, 08 Aug 2024 00:25:34 -0400
+	id 1sbup1-0001WM-6G; Thu, 08 Aug 2024 00:32:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sbuiT-0001Pj-Mk; Thu, 08 Aug 2024 00:25:33 -0400
-Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sbuiS-0004HV-79; Thu, 08 Aug 2024 00:25:33 -0400
-Received: by mail-ua1-x935.google.com with SMTP id
- a1e0cc1a2514c-825a23c5e4cso145189241.3; 
- Wed, 07 Aug 2024 21:25:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723091130; x=1723695930; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fiA40MLsMtAnhRi+xNL2ixDz8ahQzn3oV+a9tx9IOb8=;
- b=QONIaiKpVHkLBao4gk9Q/n1DVxLwLBT0+UjtzvSpUzTw9vOJJuLdjLaWXziddpILcQ
- bHnXuwdMI2gYFL1Cpqm8YfDnZKuDAxFRcZlewxFtzFp6tSBOfKfeZhMUCVb5qSEFBWc8
- LLcqBnDW04YwyewRSjL1OPjzOLTm70rgsU9R4etJCQ0yX7EYjoI9NA/gKAd2sxpm6a1k
- tTTXkH2MwxT9EwHRZY58q/xc4tsRK5zajsCF/ZwDdYYl+AlbjGYy2Qxq+OawY33CrxRj
- /DpnqSCol3ycQCYXqQCQBfPD4l1ZYZxwyNTJx7LhrFdLn7A8RPlP4WYin0ei73mCaQNG
- 2beA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723091130; x=1723695930;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fiA40MLsMtAnhRi+xNL2ixDz8ahQzn3oV+a9tx9IOb8=;
- b=uc3IAWcngEYCaur3BsBu17ymsax9QvAlz21aPVDmVEZdpgCPhuuzCbXHAJoX/R9iDM
- u3y5MU5YklO9CnprC0lbOEuXKaM+kIAykiKtHCvE7jisGOoEeLpB1nnY1qKQurPfyVK6
- j1NsBuCGZAxiphYBtVGx3fuuy0tU9z3dnPX+klDFs0trAfduSgZiXjLjvFJhM9AT364a
- MPerlBE05lEvPOuBM5cWvChepQcpNjNVMWw73vMGJXYbp2wY4aSFNZ1lYlm5nHIxsd59
- ubgN0LSNXmzY+oDj1+yEQydN4zGZXpdZbbzpJmDjH6kQ1l+m7aQSFw/kL8xKdO9jlzrD
- IcfA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVT+5a/lzYf7PbwhCEnRwJKlFWtoDCrr3oZEzD4ZkmfEsfD4n4AUbgDkt70e456v6QyUNYWzZ/QCwj9PbeSehpftHht2TA=
-X-Gm-Message-State: AOJu0YyzdJzrhOSqNBBD4VTHkhpVPWEZJC/MdXfYxFPzHhLpweQhEbxG
- 1ewM+8F7UufNP1Oj/QZ0mByU8pe+Vd4V4bddM62URHd3UvuC7wlXeINYOzhps6Dc5UQHuqjuG9w
- tpBC/B2AZgKtviwnDC9IdKog1+KE=
-X-Google-Smtp-Source: AGHT+IE7KgIPaQSIl/x5HhvV7tDRYvnoyny6Aif+8ppNEdBTfWM5ICQBTocchp8WQnVDsiubjtNK0mX6teMeXMP0OOM=
-X-Received: by 2002:a05:6102:e0a:b0:48f:e759:94bc with SMTP id
- ada2fe7eead31-495c5b4a2acmr815099137.16.1723091130386; Wed, 07 Aug 2024
- 21:25:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sbuoz-0001U5-0r
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 00:32:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1sbuox-00052A-LQ
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 00:32:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723091534;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=THxiXrFg9fVJClNJH92HU5jwc7ph/Mhv2GNMPuRT5wk=;
+ b=VBECNllOtNo/zRprIGr4SKqYYxG4gJj9STVEIFS2RQ35fITSIh9/u1zmSgZWP7PzhY8YnX
+ 9irMx4joWz3FklpouQ0lbFooRWm+nr7BHNBFNq7TZTlkC9yENdelnHZ6YNqTuBLD/aVBO0
+ lAbuEhhQJFWwNVddyArz48zXlyKoIIw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-K5HLM5XtOliAQM01sTkM9g-1; Thu,
+ 08 Aug 2024 00:32:11 -0400
+X-MC-Unique: K5HLM5XtOliAQM01sTkM9g-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 12C8019560B6; Thu,  8 Aug 2024 04:32:10 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.193.245])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 87BC719560AA; Thu,  8 Aug 2024 04:32:03 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 57E5221E6692; Thu,  8 Aug 2024 06:32:01 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  qemu-devel@nongnu.org,
+ Eric Blake
+ <eblake@redhat.com>,  qemu-arm@nongnu.org,  Thomas Huth <thuth@redhat.com>
+Subject: Re: [RFC PATCH-for-9.1? 1/2] target/arm: Move
+ qmp_query_gic_capabilities() to hw/intc/
+In-Reply-To: <CAFEAcA9emwsK07+itUzMxReOLG8gHaxNdDE8ymuwyuBfsoY2Pg@mail.gmail.com>
+ (Peter Maydell's message of "Wed, 7 Aug 2024 17:17:01 +0100")
+References: <20240806141940.22095-1-philmd@linaro.org>
+ <20240806141940.22095-2-philmd@linaro.org>
+ <f82397e9-3be4-49be-b291-5598acdaf39b@linaro.org>
+ <CAFEAcA9emwsK07+itUzMxReOLG8gHaxNdDE8ymuwyuBfsoY2Pg@mail.gmail.com>
+Date: Thu, 08 Aug 2024 06:32:01 +0200
+Message-ID: <87bk23skhq.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20240715095702.1222213-1-ethan84@andestech.com>
- <20240715101409.1249373-1-ethan84@andestech.com>
-In-Reply-To: <20240715101409.1249373-1-ethan84@andestech.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 8 Aug 2024 14:25:04 +1000
-Message-ID: <CAKmqyKOJOUvf-=qNQ90BQeFGNayH1mmtcYNd=iYVjNf53V-uMw@mail.gmail.com>
-Subject: Re: [PATCH v8 6/8] hw/misc/riscv_iopmp: Add API to configure RISCV
- CPU IOPMP support
-To: Ethan Chen <ethan84@andestech.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
- peterx@redhat.com, david@redhat.com, philmd@linaro.org, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,57 +89,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jul 15, 2024 at 8:15=E2=80=AFPM Ethan Chen via <qemu-devel@nongnu.o=
-rg> wrote:
->
-> The iopmp_setup_cpu() function configures the RISCV CPU to support IOPMP =
-and
-> specifies the CPU's RRID.
->
-> Signed-off-by: Ethan Chen <ethan84@andestech.com>
-> ---
->  hw/misc/riscv_iopmp.c         | 6 ++++++
->  include/hw/misc/riscv_iopmp.h | 1 +
->  2 files changed, 7 insertions(+)
->
-> diff --git a/hw/misc/riscv_iopmp.c b/hw/misc/riscv_iopmp.c
-> index e62ac57437..374bf5c610 100644
-> --- a/hw/misc/riscv_iopmp.c
-> +++ b/hw/misc/riscv_iopmp.c
-> @@ -1211,5 +1211,11 @@ void iopmp_setup_system_memory(DeviceState *dev, c=
-onst MemMapEntry *memmap,
->                         "iopmp-downstream-as");
->  }
->
-> +void iopmp_setup_cpu(RISCVCPU *cpu, uint32_t rrid)
-> +{
-> +    cpu->cfg.iopmp =3D true;
-> +    cpu->cfg.iopmp_rrid =3D rrid;
-> +}
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-This should just be a normal CPU property, which the machine can then
-set to true if required
+[...]
 
-Alistair
+> The QAPI command which this code is implementing is
+> also (a) target-specific and (b) unfortunately
+> designed so that it doesn't get passed a particular
+> CPU or particular device to query, it's just assumed
+> to be a part of the whole simulation.
 
-> +
->
->  type_init(iopmp_register_types);
-> diff --git a/include/hw/misc/riscv_iopmp.h b/include/hw/misc/riscv_iopmp.=
-h
-> index ebe9c4bc4a..7e7da56d10 100644
-> --- a/include/hw/misc/riscv_iopmp.h
-> +++ b/include/hw/misc/riscv_iopmp.h
-> @@ -167,5 +167,6 @@ typedef struct IopmpState {
->
->  void iopmp_setup_system_memory(DeviceState *dev, const MemMapEntry *memm=
-ap,
->                                 uint32_t mapentry_num);
-> +void iopmp_setup_cpu(RISCVCPU *cpu, uint32_t rrid);
->
->  #endif
-> --
-> 2.34.1
->
->
+We can fix (b) if we care: add a suitable optional argument, default to
+the sole GIC in the system, fail if there's more than one.  I assume we
+have no machines with more than one now.
+
 
