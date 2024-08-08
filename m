@@ -4,80 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A35EDC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Wed,  7 Aug 2024 23:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C2E5C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 00:28:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbqX3-0005ba-3W; Wed, 07 Aug 2024 19:57:29 -0400
+	id 1sbr0F-0006YL-V8; Wed, 07 Aug 2024 20:27:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sbqX1-0005ac-NO
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 19:57:27 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sbr0D-0006UZ-3D; Wed, 07 Aug 2024 20:27:37 -0400
+Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sbqX0-0002I0-21
- for qemu-devel@nongnu.org; Wed, 07 Aug 2024 19:57:27 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-428e1915e18so2455675e9.1
- for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 16:57:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sbr0A-0006RD-AD; Wed, 07 Aug 2024 20:27:35 -0400
+Received: by mail-vk1-xa2f.google.com with SMTP id
+ 71dfb90a1353d-4f52cc4d3beso152185e0c.3; 
+ Wed, 07 Aug 2024 17:27:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1723075043; x=1723679843; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1723076852; x=1723681652; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xjmFqe72YdvfqIFt4uaBezk9cBCdMQ8uK+a6z9kJlDY=;
- b=pNenDunydkG9DxW0C7CtO/L1JOW3INVNUbUhyB4GTsSzUUGoGx2cL0nnmRNdQK+c2D
- 0SkOhQU07re/cxtT/MUNCyyngMG+GPQstC0DdjbDEGHHrhRNq0ILICtA1j8vzNIIAvFu
- ochEVnvo38mmXrdhR9dxn/K+Uf0ZEDu9XMu5D32BZnZmQlofhGXCMM0tv5b12fYkgM/y
- /raVAHdMnpvTrKRfpXzmtRqO+WU2FKzOzzeGjSfQcF72+mo4rX2GtvnxSSL60L8mwwWg
- VPMXaxdMVLDoSDueSmzUL2N6QbaUEDmBCVUqNxKcMMzRu1iHyIR1ip79yh/wVtYrzqvV
- aLBQ==
+ bh=SFn6ZBvk+7iPhdLc5yE6mp5/vDSL/nn4LQe763p1BN4=;
+ b=MVlKK6EbBoboiwjxT6thZFjUUDGKo/E1hIgUo1yaaq+9Doam3tIjhyhRQsBWO20iyt
+ cXq9LO60Iq8hFHW2px4NX8W7TdMA2FMGsWCHuSsqtTEVNEJcoU6QHl3qjuTsRsWgD9lj
+ N525SOp0jv1X8ZL8/uEkKMhjCHENtXr9ZmtZYMs1lRXuXLQyFI+JWI0qOjOwr3dTNMeK
+ LTdsjzjkxcl8unmzOeIgwV83W/YjoKn1fac/KujfQYy+8xIXkQ2wq9RVLf3DNPJKmVej
+ DA5a8vbndXRPJ0EOaLGU5fo+qf9Q3YchsIVf3BklnNDenDFuLYKFnS+ColtdVOFYh6Fl
+ spcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723075043; x=1723679843;
+ d=1e100.net; s=20230601; t=1723076852; x=1723681652;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xjmFqe72YdvfqIFt4uaBezk9cBCdMQ8uK+a6z9kJlDY=;
- b=GBC8EzTTTW5tUaiIymZtI5gaRfl1J/mZHgF8IzDP0vYqb+JUHMfrBRtfkTKwdX5gky
- rw6mDFEKir8+ywtF1bbQWDftMa3vXrCmm+OC74CaWrM9cKPyKReTEjn/JMuLSBwsvCMT
- pIK8NkRHJmH0BuJxGxtLsFKQV/lo2TyxOzm2Y9CKztkRLEh4aXPj/Y+1Jl7NpkDQAYjy
- P4HZd27SuB98w7cnjyEP8DAVnpJwSncmzAIQSOzdHU2cAcl9UQmiy65frpkgnPrLQ4Lo
- Sz1fhPZhcFP5SCiT1IevOd5NOvFIu8C672l2F2zOLoavjRvDwvz/wwYMkP33uVkTOaZq
- yFZw==
-X-Gm-Message-State: AOJu0YyOnogwQOjqZPRQ4Xr2yrKbvyqaHVysP9fpNskyAVHoln4VqmkJ
- nvNrOclp+Ydf3Uva/tQv89nSlufgJ2tLOSy9Qpr0uUQHXuv+wFTejrS5a1AEqY8Zr5X3uqlX24Z
- 9SCPZ9988mMIDNf18Q2jwhRKli8c4MgiAAmLh
-X-Google-Smtp-Source: AGHT+IFv2cxTvpXCT+49NkRd97zHBHted2CkY5x40KNi6RQ0dDUdJEnI2MaMNyE+sAvAT7rdeUDrltASTg+VIbso40I=
-X-Received: by 2002:a5d:4649:0:b0:368:557a:c64d with SMTP id
- ffacd0b85a97d-36d273c5c0emr96170f8f.9.1723075042625; Wed, 07 Aug 2024
- 16:57:22 -0700 (PDT)
+ bh=SFn6ZBvk+7iPhdLc5yE6mp5/vDSL/nn4LQe763p1BN4=;
+ b=fNgxeigxJaNWOI1Piw0scWhACKNAoPCZluBxZWo259WrFS9qKd0090P9ev+BtzKAJB
+ vMQtkTn1UwOSUZPF2zU6SluleMC10ZiH5OGta5vrh31vgNSa+m0RmEjrG6lXm7R4kjvw
+ t/0bba6v/5e2xWbnrjHK3DPKW/YdYueSGw6UQ8YN+x9m6dRtWz9W645fVMhdlr0AYj6v
+ /J29x/zmPV9w6l/Zqhn9bgw4Gzuoh2ZS56Y2LJvldaBP7AA0mi7pZQrANe38YysQs4/M
+ 3Q6aIvOk7PA2YNJ7kGaay6x8cpVdghzZR99xk7/JR7rbjVfAKztOGnDx9u1I9VGBjenm
+ O9ig==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCURMHCBe9STM93Q0x8HdTRirFb1Yk8GVT7cHCxz5PIvX41Xg/SGwHANnlJ0YBmWfZIdsXYl8pp9CrGZC1Lt/87atKZueps1tlTb86fK7ZTytvqW7g0s4Sel2NWp4g==
+X-Gm-Message-State: AOJu0YxsEE1PL7YNAEnSpOL+xt6lFd/+mZbJr24nYriT8ikTyDtiUEEe
+ 7xFT49e3pQSQuqhy+VF/SmOL7eZcjBhaky5DjaAXB6uCsNEsQvsramSSeDru+/Tj6QUTiMuMpBR
+ i1vGYHemnw3Y/yr33U7mAPh9vqbM=
+X-Google-Smtp-Source: AGHT+IHOEcuFgc/LlvqAFTY5LKTuRg1U4xmhyiBi2SjkuRH3PYrQC768O7KJgFZ5Dru8jX++Fr6iWIz2KWrfDKwpEKA=
+X-Received: by 2002:a05:6102:3584:b0:494:829:835b with SMTP id
+ ada2fe7eead31-495c5b57439mr558935137.9.1723076852148; Wed, 07 Aug 2024
+ 17:27:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240805201719.2345596-1-tavip@google.com>
- <20240805201719.2345596-23-tavip@google.com>
- <a37a5291-5917-45e6-8697-08defb97ac29@linaro.org>
-In-Reply-To: <a37a5291-5917-45e6-8697-08defb97ac29@linaro.org>
-From: Octavian Purdila <tavip@google.com>
-Date: Wed, 7 Aug 2024 16:57:11 -0700
-Message-ID: <CAGWr4cRcQhQw-5QFga3-KDbBby_3mW-p2wKSd4iy7xHzw3-boQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 22/23] hw/arm: add basic support for the RT500 SoC
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, stefanst@google.com, 
- pbonzini@redhat.com, alex.bennee@linaro.org, thuth@redhat.com, 
- peter.maydell@linaro.org, marcandre.lureau@redhat.com, alistair@alistair23.me, 
- berrange@redhat.com, jsnow@redhat.com, crosa@redhat.com, bleal@redhat.com
+References: <20240723-counter_delegation-v2-0-c4170a5348ca@rivosinc.com>
+ <20240723-counter_delegation-v2-13-c4170a5348ca@rivosinc.com>
+ <20240806-9fdad33468ec103d83a85e77@orel>
+ <3c09bbbe-857b-4566-963a-790497232bbf@ventanamicro.com>
+ <CAKmqyKNgJKBFw7OnwbgbqxA65PR4GSjdUEKdKVw-nYv+e0P58w@mail.gmail.com>
+ <CAHBxVyFFa7mQaS4jPkT=aK4gTF3AshpQZNeRhBiZOHX7bhQQsg@mail.gmail.com>
+In-Reply-To: <CAHBxVyFFa7mQaS4jPkT=aK4gTF3AshpQZNeRhBiZOHX7bhQQsg@mail.gmail.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 8 Aug 2024 10:27:05 +1000
+Message-ID: <CAKmqyKOX883p+sgFs6s649pkH0BA9aKcrTr7=XOT=Xy8mNLzng@mail.gmail.com>
+Subject: Re: [PATCH v2 13/13] target/riscv: Enable PMU related extensions to
+ preferred rule
+To: Atish Kumar Patra <atishp@rivosinc.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
+ alistair.francis@wdc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=tavip@google.com; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,19 +100,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 6, 2024 at 7:51=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd@=
-linaro.org> wrote:
+On Wed, Aug 7, 2024 at 5:44=E2=80=AFPM Atish Kumar Patra <atishp@rivosinc.c=
+om> wrote:
 >
-> Hi Octavian,
+> On Tue, Aug 6, 2024 at 7:01=E2=80=AFPM Alistair Francis <alistair23@gmail=
+.com> wrote:
+> >
+> > On Wed, Aug 7, 2024 at 2:06=E2=80=AFAM Daniel Henrique Barboza
+> > <dbarboza@ventanamicro.com> wrote:
+> > >
+> > >
+> > >
+> > > On 8/6/24 5:46 AM, Andrew Jones wrote:
+> > > > On Tue, Jul 23, 2024 at 04:30:10PM GMT, Atish Patra wrote:
+> > > >> Counter delegation/configuration extension requires the following
+> > > >> extensions to be enabled.
+> > > >>
+> > > >> 1. Smcdeleg - To enable counter delegation from M to S
+> > > >> 2. S[m|s]csrind - To enable indirect access CSRs
+> > > >> 3. Smstateen - Indirect CSR extensions depend on it.
+> > > >> 4. Sscofpmf - To enable counter overflow feature
+> > > >> 5. S[m|s]aia - To enable counter overflow feature in virtualizatio=
+n
+> > > >> 6. Smcntrpmf - To enable privilege mode filtering for cycle/instre=
+t
+> > > >>
+> > > >> While first 3 are mandatory to enable the counter delegation,
+> > > >> next 3 set of extension are preferred to enable all the PMU relate=
+d
+> > > >> features.
+> > > >
+> > > > Just my 2 cents, but I think for the first three we can apply the c=
+oncept
+> > > > of extension bundles, which we need for other extensions as well. I=
+n those
+> > > > cases we just auto enable all the dependencies. For the three prefe=
+rred
+> > > > extensions I think we can just leave them off for 'base', but we sh=
+ould
+> > > > enable them by default for 'max' along with Ssccfg.
+> >
 >
-> Few comments inlined.
+> Max cpu will have everything enabled by default. The problem with max
+> cpu is that you
+> may not want to run all the available ISA extensions while testing perf.
 >
+> > Agreed
+> >
+> > >
+> > > I like this idea. I would throw in all these 6 extensions in a 'pmu_a=
+dvanced_ops'
+> > > (or any other better fitting name for the bundle) flag and then 'pmu_=
+advanced_ops=3Dtrue'
+> > > would enable all of those. 'pmu_advanced_ops=3Dtrue,smcntrpmf=3Dfalse=
+' enables all but
+> > > 'smcntrpmf' and so on.
+> > >
+>
+> I thought distinguishing preferred vs implied would be useful because
+> it would allow the user
+> to clearly understand which is mandated by ISA vs which would be good to =
+have.
 
-Hi Philippe,
+It's not really clear though what extensions are good to have. Other
+people might think differently about the extensions. It also then
+means we end up with complex combinations of extensions to manage.
 
-Thank you for the review!
+>
+> The good to have extensions can be disabled similar to above but not
+> the mandatory ones.
+>
+> > > As long as we document what the flag is enabling I don't see any prob=
+lems with it.
+> > > This is how profiles are implemented after all.
+> >
+> > I only worry that we end up with a huge collection of flags that users
+> > need to decipher.
+> >
+>
+> My initial idea was a separate flag as well. But I was not sure if
+> that was good for the
+> above reason. This additional custom pmu related option would be lost
+> in that huge collection.
 
-I have queued fixes for all of the patches in the set where
-applicable, I'll wait for more feedback on the rest of the patches
-before sending v2.
+I do feel a separate flag is better than trying to guess what extra
+extensions the user wants enabled.
+
+I don't love either though, isn't this what profiles is supposed to fix!
+
+>
+> > I guess with some good documentation this wouldn't be too confusing tho=
+ugh.
+> >
+>
+> Sure. It won't be confusing but most users may not even know about it
+> without digging.
+
+At that point they can use the max CPU or just manually enable the
+extensions though.
+
+Alistair
+
+> That's why I chose to use a standard extension which covers the basic
+> PMU access directly in S-mode.
+>
+> The future extensions such as CTR or Sampling events would also
+> benefit by just adding the Ssccfg in the preferred rule
+> which in turn will enable other preferred/mandatory extensions.
+>
+> > Alistair
+> >
+> > >
+> > > With this bundle we can also use implied rule only if an extension re=
+ally needs
+> > > (i.e. it breaks without) a dependency being enabled, instead of overl=
+oading it
+> > > with extensions that 'would be nice to have together' like it seems t=
+o be the
+> > > case for the last 3 extensions in that list.
+> > >
+> > > I believe users would benefit more from a single flag to enable every=
+thing and
+> > > be done with it.
+> > >
+> > >
+> > > Thanks,
+> > >
+> > > Daniel
 
