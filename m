@@ -4,89 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B44C52D73
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 08:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BADF0C52D73
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 08:13:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbyGG-0005TF-DI; Thu, 08 Aug 2024 04:12:40 -0400
+	id 1sbyHC-0001Fp-Bz; Thu, 08 Aug 2024 04:13:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sbyGF-0005Lr-5M
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 04:12:39 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1sbyGC-00021Y-5Z
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 04:12:38 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2f040733086so6607831fa.1
- for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 01:12:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1723104753; x=1723709553;
- darn=nongnu.org; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Bt4nxGBb55vV904sNvNT6wthx+qvXCFcjwq9x/M1oB0=;
- b=Ld9t8PlZfmXrs3/2T1nsjj7MGQXIUR5nJgx4baBokZ22dy2n3UA2EIV3butTX+L7iV
- hn8Z4b8tBbPuY0PrC0nfqENFgvL2xO44JXti2gZDWXJWh9VflDn0Mj9Siy/LRnsZZOrG
- OWc2A1dinCVczDj2EumG1N7PAh4qTBm5CPPkpteMb5s97FapUTBFqn3ucgVn0VMZfuf7
- qP6tBzim5+/GejgTZTt2WKWHv9suk2woT8Eg8br32RaA/UFBiisYZptkgfYdHhUOLg/o
- AAhTMvmejmCtjjQgm15X05czOwJzErGBMhlkzbpJ/TvrKBg9Rmpwkt/QnawojmNGi4Hn
- uirA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sbyHA-00019T-4q
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 04:13:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sbyH8-0002DQ-Fb
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 04:13:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723104812;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=J2+NsmVim3wK/ciEY/L/fZvVJH9Y3K6P0EwD9FXx3Rc=;
+ b=T0u6LN6fqlS/jNPXQz1hwbg4AynvC4gT34kIU+J3zfsIT6pFUR9WNb9PPpENnjrUZbQTAz
+ ukuNteoJlirSqzDr3UMWKhuCc+S3kgnreBZaF4+WnEFFNQrU+koo7MbODNNuhSOre9NGsO
+ OxnSVoimem0z2x3KoRGPuGEUbZzLaao=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-67-L0fScBLcPcSMzcNg4pehPg-1; Thu, 08 Aug 2024 04:13:31 -0400
+X-MC-Unique: L0fScBLcPcSMzcNg4pehPg-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a7aa56d8b14so51764166b.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 01:13:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723104753; x=1723709553;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Bt4nxGBb55vV904sNvNT6wthx+qvXCFcjwq9x/M1oB0=;
- b=wGQNKHkp37z9Fe1W6dMIy3965lbMEW+uEpwHK6g/xof51wzuMiS204bU59L2hjqOjE
- PImDKmthu1hkNoAEGF1PZCQ16dIqvMUDw3i8KZaqCJBt3QHDOZ0HcBAkyqqqzZQiwJ6r
- 7Z6idNLrIGoWN9LUCA35IEPAIWK07sMgHz08vFWy5vcwG/4lbF8P6a/MN9pJMkZymqBS
- vHuSB8SJc8m9rsYQ489hO33BCtT1vmqzyoj+X6qaFyDjpA/EhFj+tIn8dmQLDFqvhbfb
- QRV4zzy4/P1AqXDVTM4XJxJrdR9OqaN2z/3w+sARJa+QWr/h+6xp/l1TLMODRoanoQ7C
- pIvw==
+ d=1e100.net; s=20230601; t=1723104810; x=1723709610;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=J2+NsmVim3wK/ciEY/L/fZvVJH9Y3K6P0EwD9FXx3Rc=;
+ b=NL+q3z8B9mAbFsE7A1627bOXW1bN79oaN9lWwwee9oy8lqmVyQFid6Jw0nfw6HD9q3
+ lvxlEDiMnN4cm8/8/W2C9+CWmG576FiHqYUPKWOXGzs5SSOZAKgwvQrWJM+8K+5d07MW
+ muL3oXGrZ0hmKPyOUAdkcKoX4MaYPtsr56szdq4Ukws4aELUE2LsmpdMv5a4pHnp99nx
+ V7VTBVxGtMOwrQexNcS5rDYVaGg9e2Mv9ayFDPS2ev1qMlGjZSdFyHS0UZDnxC4KrNTB
+ ylmkApDdLdw0Z5y5QFYdKYO7/M/X4Yh6njy/5nUgsYM6bn48jG8Gh7T4KW7YMFjDIl+p
+ N2fQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUWDCYpyXjbN4xKdmvgKAbzzpijAdbgQ/BhWiDKByHarx1WCLrCBaB3iY/aydnFoXc9dAbiIm0e6T0+c/od4yQXS6sq/Zo=
-X-Gm-Message-State: AOJu0YxZUnQvAE/uPOVEf93ouBSj2rP2O7Ca6PXSnVklSnK73IIe4V1+
- 9+TWTGUcTkYfhWP2wrUK7vuCjyx113uBap6JbvEucmJIVdtWbTtE1taQGIxPrW9MUj4oKLSevBZ
- kV4qYdWkW/DTInZvLf4D+sDGTro2uI8PyIDmlsg==
-X-Google-Smtp-Source: AGHT+IEuFFUB2eZl7L6E8WGYsRYU8wgfbvZzj9tuNS2eCTyPTkdHErw8OvX+9gWRiosFpoMKLb4mHwHPrPve2iM63Zk=
-X-Received: by 2002:a05:6512:1289:b0:52e:fa5f:b6b1 with SMTP id
- 2adb3069b0e04-530e58a33f9mr564746e87.60.1723104753241; Thu, 08 Aug 2024
- 01:12:33 -0700 (PDT)
+ AJvYcCVp99SLYtC71+bEu02gli5TnTNLUOcXi++jgp88u68nhiG83SxVl8o81pkVYi6VNLhGAlVveaycPTI6KIfz6zuYK9z01u8=
+X-Gm-Message-State: AOJu0YzqQNj4Uc5pTC/DUFrxII+4W993rMqRhZhVgTeznwab5AA9PyvT
+ LClSIuHdvZKnwNjfy7vIUs4wA8NyqjnMp3bXAhoMkID1uvQiCWxhe68chpacpbkZvgHNOIn2/za
+ FqoF8NmV16nJfbN3IXabH4pveU+wrRIcPOng6OIjEL63RvXZlCpwN
+X-Received: by 2002:a17:907:7f88:b0:a7a:a3f7:389e with SMTP id
+ a640c23a62f3a-a8090c23970mr83132666b.6.1723104810015; 
+ Thu, 08 Aug 2024 01:13:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFFQxtDzCTg5UODZTJNYM+4fmFrlL90pmaAePCibZ4UCT3uPxPZNQ0OuqAkX5ZvbHqeKUzbqg==
+X-Received: by 2002:a17:907:7f88:b0:a7a:a3f7:389e with SMTP id
+ a640c23a62f3a-a8090c23970mr83129566b.6.1723104809533; 
+ Thu, 08 Aug 2024 01:13:29 -0700 (PDT)
+Received: from [10.168.67.37] ([131.175.147.29])
+ by smtp.googlemail.com with ESMTPSA id
+ a640c23a62f3a-a7dc9d547f7sm730246866b.140.2024.08.08.01.13.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Aug 2024 01:13:29 -0700 (PDT)
+Message-ID: <dd482f9d-006c-4c32-9fcc-93a8006c9f60@redhat.com>
+Date: Thu, 8 Aug 2024 10:13:24 +0200
 MIME-Version: 1.0
-References: <20240723-counter_delegation-v2-0-c4170a5348ca@rivosinc.com>
- <20240723-counter_delegation-v2-13-c4170a5348ca@rivosinc.com>
- <20240806-9fdad33468ec103d83a85e77@orel>
- <3c09bbbe-857b-4566-963a-790497232bbf@ventanamicro.com>
- <CAKmqyKNgJKBFw7OnwbgbqxA65PR4GSjdUEKdKVw-nYv+e0P58w@mail.gmail.com>
- <CAHBxVyFFa7mQaS4jPkT=aK4gTF3AshpQZNeRhBiZOHX7bhQQsg@mail.gmail.com>
- <CAKmqyKOX883p+sgFs6s649pkH0BA9aKcrTr7=XOT=Xy8mNLzng@mail.gmail.com>
-In-Reply-To: <CAKmqyKOX883p+sgFs6s649pkH0BA9aKcrTr7=XOT=Xy8mNLzng@mail.gmail.com>
-From: Atish Kumar Patra <atishp@rivosinc.com>
-Date: Thu, 8 Aug 2024 01:12:22 -0700
-Message-ID: <CAHBxVyHvypXN0PtxtWwZPoB3i3JRRSqn218nnURy+sD8gmqyjQ@mail.gmail.com>
-Subject: Re: [PATCH v2 13/13] target/riscv: Enable PMU related extensions to
- preferred rule
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
- alistair.francis@wdc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=atishp@rivosinc.com; helo=mail-lj1-x22a.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v6 4/5] rust: add crate to expose bindings and
+ interfaces
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <rust-pl011-rfc-v6.git.manos.pitsidianakis@linaro.org>
+ <rust-pl011-rfc-v6-4.git.manos.pitsidianakis@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <rust-pl011-rfc-v6-4.git.manos.pitsidianakis@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,164 +151,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 7, 2024 at 5:27=E2=80=AFPM Alistair Francis <alistair23@gmail.c=
-om> wrote:
->
-> On Wed, Aug 7, 2024 at 5:44=E2=80=AFPM Atish Kumar Patra <atishp@rivosinc=
-.com> wrote:
-> >
-> > On Tue, Aug 6, 2024 at 7:01=E2=80=AFPM Alistair Francis <alistair23@gma=
-il.com> wrote:
-> > >
-> > > On Wed, Aug 7, 2024 at 2:06=E2=80=AFAM Daniel Henrique Barboza
-> > > <dbarboza@ventanamicro.com> wrote:
-> > > >
-> > > >
-> > > >
-> > > > On 8/6/24 5:46 AM, Andrew Jones wrote:
-> > > > > On Tue, Jul 23, 2024 at 04:30:10PM GMT, Atish Patra wrote:
-> > > > >> Counter delegation/configuration extension requires the followin=
-g
-> > > > >> extensions to be enabled.
-> > > > >>
-> > > > >> 1. Smcdeleg - To enable counter delegation from M to S
-> > > > >> 2. S[m|s]csrind - To enable indirect access CSRs
-> > > > >> 3. Smstateen - Indirect CSR extensions depend on it.
-> > > > >> 4. Sscofpmf - To enable counter overflow feature
-> > > > >> 5. S[m|s]aia - To enable counter overflow feature in virtualizat=
-ion
-> > > > >> 6. Smcntrpmf - To enable privilege mode filtering for cycle/inst=
-ret
-> > > > >>
-> > > > >> While first 3 are mandatory to enable the counter delegation,
-> > > > >> next 3 set of extension are preferred to enable all the PMU rela=
-ted
-> > > > >> features.
-> > > > >
-> > > > > Just my 2 cents, but I think for the first three we can apply the=
- concept
-> > > > > of extension bundles, which we need for other extensions as well.=
- In those
-> > > > > cases we just auto enable all the dependencies. For the three pre=
-ferred
-> > > > > extensions I think we can just leave them off for 'base', but we =
-should
-> > > > > enable them by default for 'max' along with Ssccfg.
-> > >
-> >
-> > Max cpu will have everything enabled by default. The problem with max
-> > cpu is that you
-> > may not want to run all the available ISA extensions while testing perf=
-.
-> >
-> > > Agreed
-> > >
-> > > >
-> > > > I like this idea. I would throw in all these 6 extensions in a 'pmu=
-_advanced_ops'
-> > > > (or any other better fitting name for the bundle) flag and then 'pm=
-u_advanced_ops=3Dtrue'
-> > > > would enable all of those. 'pmu_advanced_ops=3Dtrue,smcntrpmf=3Dfal=
-se' enables all but
-> > > > 'smcntrpmf' and so on.
-> > > >
-> >
-> > I thought distinguishing preferred vs implied would be useful because
-> > it would allow the user
-> > to clearly understand which is mandated by ISA vs which would be good t=
-o have.
->
-> It's not really clear though what extensions are good to have. Other
-> people might think differently about the extensions. It also then
-> means we end up with complex combinations of extensions to manage.
->
-> >
-> > The good to have extensions can be disabled similar to above but not
-> > the mandatory ones.
-> >
-> > > > As long as we document what the flag is enabling I don't see any pr=
-oblems with it.
-> > > > This is how profiles are implemented after all.
-> > >
-> > > I only worry that we end up with a huge collection of flags that user=
-s
-> > > need to decipher.
-> > >
-> >
-> > My initial idea was a separate flag as well. But I was not sure if
-> > that was good for the
-> > above reason. This additional custom pmu related option would be lost
-> > in that huge collection.
->
-> I do feel a separate flag is better than trying to guess what extra
-> extensions the user wants enabled.
->
+On 8/4/24 23:04, Manos Pitsidianakis wrote:
+> diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+> new file mode 100644
+> index 0000000000..7992dc64ce
+> --- /dev/null
+> +++ b/rust/qemu-api/meson.build
+> @@ -0,0 +1,19 @@
+> +add_languages('rust', required: true)
 
-Sure. A separate pmu flag that enables all available pmu related
-extensions - Correct ?
-Do you prefer to have those enabled via a separate preferred rule or
-just reuse the implied
-rule ? I can drop the preferred rule patches for the later case.
+Not needed.
 
+Paolo
 
-> I don't love either though, isn't this what profiles is supposed to fix!
->
-
-Yeah. But given the optionality in profiles, I am sure if it will fix
-the ever growing
-extension dependency graph problem ;)
-
-> >
-> > > I guess with some good documentation this wouldn't be too confusing t=
-hough.
-> > >
-> >
-> > Sure. It won't be confusing but most users may not even know about it
-> > without digging.
->
-> At that point they can use the max CPU or just manually enable the
-> extensions though.
->
-
-If everybody thinks max CPU is going to be used more frequently in the
-future, I am okay with
-that as well. Implied rule will only specify mandatory extensions
-defined by ISA.
-
-It's up to the user to figure out the extensions names and enable them
-individually if max CPU
-is not used.
-FYI: There are at least 6 more PMU related extensions that this series
-did not specify.
-~4 are being discussed in the RVI TG(precise event sampling, events)
-and 2 are frozen (Smctr/Ssctr)
-
-> Alistair
->
-> > That's why I chose to use a standard extension which covers the basic
-> > PMU access directly in S-mode.
-> >
-> > The future extensions such as CTR or Sampling events would also
-> > benefit by just adding the Ssccfg in the preferred rule
-> > which in turn will enable other preferred/mandatory extensions.
-> >
-> > > Alistair
-> > >
-> > > >
-> > > > With this bundle we can also use implied rule only if an extension =
-really needs
-> > > > (i.e. it breaks without) a dependency being enabled, instead of ove=
-rloading it
-> > > > with extensions that 'would be nice to have together' like it seems=
- to be the
-> > > > case for the last 3 extensions in that list.
-> > > >
-> > > > I believe users would benefit more from a single flag to enable eve=
-rything and
-> > > > be done with it.
-> > > >
-> > > >
-> > > > Thanks,
-> > > >
-> > > > Daniel
 
