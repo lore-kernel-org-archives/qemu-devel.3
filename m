@@ -4,134 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FE04C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 16:05:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72177C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 16:05:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc5cf-0006Wv-HL; Thu, 08 Aug 2024 12:04:17 -0400
+	id 1sc5dV-0006s1-Am; Thu, 08 Aug 2024 12:05:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sc5cd-0006WO-Cb
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 12:04:15 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sc5dC-0006mi-En
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 12:04:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sc5cb-0002as-Cd
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 12:04:14 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sc5dA-0002eh-IA
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 12:04:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723133052;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rMfdalaylN3MoSp615Hy9OKtdNsHJk2A6uEnyn6sLOM=;
- b=gLPcF3Hzi2D6dsAUYAEYNmqMn8o7fBOUnFUrgjtatNzyHuCFDNKRW7qoxccBGAfYNM23QN
- 1Vt+dj54qf+Jt8QS8+JdWAKeIDAADk3TWxbaKkKyU252EeJ4MjhFaoHXz7RmgZ3/3Uy19y
- LD6fpOJVJXRW+YJphbG76rwjCtkZIEI=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-472-R2KSOtafPZmPLB0rghr84g-1; Thu, 08 Aug 2024 12:04:10 -0400
-X-MC-Unique: R2KSOtafPZmPLB0rghr84g-1
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-369bbbdb5a1so570821f8f.1
- for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 09:04:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723133049; x=1723737849;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=rMfdalaylN3MoSp615Hy9OKtdNsHJk2A6uEnyn6sLOM=;
- b=G2pQvkW0fe9GkNoYD1D6mqPAg9qlgVsQ78sj1TGuqs/rCQs8MTSJcSSPasCRzBol3z
- akKpvRvy158eC+vCz5yzzrdHwolpQRWTabm+9aHKokpRhlej2VMSFl+0zyb7/HBGYxnQ
- /wN8Nvdy3xKqxLw+76yqo3vnDJsCG0LeKZ/IUvw/XLNif0IImtFwRi31jyr1+JCLDh7s
- rRvxb4dCuSTUhjLmLTm672ZKntem5ueI/efAhhZnEmVexQoShjLi7IHnz5rsddhBHzmX
- ci64FRcpKBnngofcmDddyGzLmbuaYV0A5kLNPi3NMGU5mtczqmy9Jv64bP9yxQslUCDg
- D6Eg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV+cz37zjObZ5Xcxq/uQ3AsIPOSeVo3/E4faW3bMe0gUC7KJlDKQt87mdY54rfWcCDbcec/1VY9282xNFx71wTHSTWjIew=
-X-Gm-Message-State: AOJu0Yz7QXB7HX5pfD/5C0p18auKjVjUAV9BqDZWHBHJIw8x/sT9RFJM
- Jk29QKA+D9lBJ6bpxbEB6SlXO351tFYlEUI4MU7B8zihInIX1r8T8mj+7P4V2Ga1k9YTTtyKujI
- q9LtCGiXHo0vZLjjmrnilI4h9s/gBkRXHh37VbK13BVWa3Dw6paXl
-X-Received: by 2002:a05:6000:1372:b0:362:69b3:8e4d with SMTP id
- ffacd0b85a97d-36d28174916mr2068130f8f.25.1723133049596; 
- Thu, 08 Aug 2024 09:04:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGPfrwtTi7Ej84jlWl0gy4uw7yFi+3U3nH0fihy/m6eThAB6RXZARYVBP5hNa3dLt+PCAXjmA==
-X-Received: by 2002:a05:6000:1372:b0:362:69b3:8e4d with SMTP id
- ffacd0b85a97d-36d28174916mr2068080f8f.25.1723133048972; 
- Thu, 08 Aug 2024 09:04:08 -0700 (PDT)
-Received: from ?IPV6:2003:cb:c713:2a00:f151:50f1:7164:32e6?
- (p200300cbc7132a00f15150f1716432e6.dip0.t-ipconnect.de.
- [2003:cb:c713:2a00:f151:50f1:7164:32e6])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36d270163dfsm2371486f8f.0.2024.08.08.09.04.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Aug 2024 09:04:08 -0700 (PDT)
-Message-ID: <bf8d2172-ddd3-499c-a164-6b358c6496a7@redhat.com>
-Date: Thu, 8 Aug 2024 18:04:07 +0200
+ s=mimecast20190719; t=1723133087;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=+9sL8w5QsojHmEMAyRA5Dd5G7XNuy64k2XrWFYyv56c=;
+ b=I+dOKbokBnw++a6ANiFUGeJHNbfXssCF0yKxissFqpih7R5q5j1axFaiRLoYssbnawyrBa
+ xHk9kn3xTE/dyM+sxDT9iCZeMM+UysiGghRwdUR842n0xlcb7V6hpAh9hEWzwYF/7V0N8M
+ sRAqhAza1d8yaXSFkgelzSbFBt+IU9Y=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-138-4k9LryapMFyJFgihj67nbQ-1; Thu,
+ 08 Aug 2024 12:04:43 -0400
+X-MC-Unique: 4k9LryapMFyJFgihj67nbQ-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AA25D196CDFE; Thu,  8 Aug 2024 16:04:41 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.163])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 99ECF19560AA; Thu,  8 Aug 2024 16:04:38 +0000 (UTC)
+Date: Thu, 8 Aug 2024 17:04:34 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alejandro Zeise <alejandro.zeise@seagate.com>
+Cc: qemu-arm@nongnu.org, kris.conklin@seagate.com,
+ jonathan.henze@seagate.com, evan.burgess@seagate.com, clg@kaod.org,
+ peter.maydell@linaro.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v4 01/15] crypto: accumulative hashing API
+Message-ID: <ZrTskk2UCzWbmupd@redhat.com>
+References: <20240807195122.2827364-1-alejandro.zeise@seagate.com>
+ <20240807195122.2827364-2-alejandro.zeise@seagate.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] reset: Add RESET_TYPE_WAKEUP
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org
-References: <20240806160756.182524-1-jmarcin@redhat.com>
- <20240806160756.182524-3-jmarcin@redhat.com>
- <CAFEAcA9iCcmwkN2m9unjZskFHPg=DSDjC-SeNyskmjtkFJvFMQ@mail.gmail.com>
- <CAC2qdxDhfon3Xe7J4jCVyqx7VdR-CMbo2r7Vat=WOA0qWLoFMg@mail.gmail.com>
- <34840c40-1a54-4aa0-a424-defd93d3b2b2@redhat.com>
- <CAFEAcA9LNj1JENcCKHU+BvKE+K5_b3jUSS_prwAC2X084xvT8A@mail.gmail.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <CAFEAcA9LNj1JENcCKHU+BvKE+K5_b3jUSS_prwAC2X084xvT8A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240807195122.2827364-2-alejandro.zeise@seagate.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -152,107 +82,114 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08.08.24 17:56, Peter Maydell wrote:
-> On Thu, 8 Aug 2024 at 16:31, David Hildenbrand <david@redhat.com> wrote:
->>
->> On 08.08.24 17:28, Juraj Marcin wrote:
->>> On Thu, Aug 8, 2024 at 2:18 PM Peter Maydell <peter.maydell@linaro.org> wrote:
->>>>
->>>> On Tue, 6 Aug 2024 at 17:08, Juraj Marcin <jmarcin@redhat.com> wrote:
->>>>> +``RESET_TYPE_WAKEUP``
->>>>> +  This type is used when the machine is woken up from a suspended state (deep
->>>>> +  sleep, suspend-to-ram). Devices that must not be reset to their initial state
->>>>> +  after wake-up (for example virtio-mem) can use this state to differentiate
->>>>> +  cold start from wake-up can use this state to differentiate cold start from
->>>>> +  wake-up.
->>>>
->>>> I feel like this needs more clarity about what this is, since
->>>> as a reset type it's a general behaviour, not a machine
->>>> specific one. What exactly is "wakeup" and when does it happen?
->>>> How does it differ from what you might call a "warm" reset,
->>>> where the user pressed the front-panel reset button?
->>>> Why is virtio-mem in particular interesting here?
->>>
->>> Thank you for the feedback!
->>>
->>> I have rewritten the paragraph:
->>>
->>> This type is called for a reset when the system is being woken up from
->>> a suspended state using the ``qemu_system_wakeup()`` function. If the
->>> machine type needs to reset in its ``MachineClass::wakeup()`` method,
->>> this reset type should be used so that devices can differentiate
->>> system wake-up from other reset types. For example, a virtio-mem
->>> device must not unplug its memory during wake-up, as that would clear
->>> the guest RAM.
->>>
->>> Is it clearer? Thank you!
->>
->> Conceptually, if we want to avoid the "WAKEUP" terminology here, maybe
->> we should consider talking about a WARM reset -- in contrast to a COLD one?
->>
->> During a WARM reset, memory content is supposed to stay untouched, which
->> is what we effectively want to achieve with virtio-mem.
+On Wed, Aug 07, 2024 at 07:51:08PM +0000, Alejandro Zeise wrote:
+> Changes the hash API to support accumulative hashing.
+> Hash objects are created with "qcrypto_hash_new",
+> updated with data with "qcrypto_hash_update", and
+> the hash obtained with "qcrypto_hash_finalize".
 > 
-> Right, I guess that's my question -- is "WAKEUP" ever any
-> different from "WARM" reset? I think the latter is a more
-> common general concept.
+> These changes bring the hashing API more in line with the
+> hmac API.
 > 
-> On the other hand it looks like we already have the
-> concept in the runstate state machine of
-> RUN_STATE_SUSPENDED versus RUN_STATE_RUNNING, and so if we
-> define "WAKEUP" as "goes from SUSPENDED to RUNNING" that's
-> quite a clearly defined condition.
-
-Right.
-
-> Whereas WARM reset would
-> be a much wider range of things and ought to include for
-> instance "guest triggers a reset by writing to port 92"
-> and all the other SHUTDOWN_CAUSE_GUEST_RESET cases.
-> (Side note: do we document all these runstates and transitions
-> anywhere?)
+> Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
+> ---
+>  crypto/hashpriv.h     |  13 +++++
+>  include/crypto/hash.h | 119 ++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 132 insertions(+)
 > 
-> For virtio-mem, on a guest-triggered reset, should it
-> (a) definitely not unplug all the hotplugged memory
-> (b) definitely unplug all the hotplugged memory
-> (c) we don't care?
+> diff --git a/crypto/hashpriv.h b/crypto/hashpriv.h
+> index cee26ccb47..02f17ee99f 100644
+> --- a/crypto/hashpriv.h
+> +++ b/crypto/hashpriv.h
+> @@ -1,6 +1,7 @@
+>  /*
+>   * QEMU Crypto hash driver supports
+>   *
+> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
+>   * Copyright (c) 2017 HUAWEI TECHNOLOGIES CO., LTD.
+>   *
+>   * Authors:
+> @@ -15,6 +16,8 @@
+>  #ifndef QCRYPTO_HASHPRIV_H
+>  #define QCRYPTO_HASHPRIV_H
+>  
+> +#include "crypto/hash.h"
+> +
+>  typedef struct QCryptoHashDriver QCryptoHashDriver;
+>  
+>  struct QCryptoHashDriver {
+> @@ -24,6 +27,16 @@ struct QCryptoHashDriver {
+>                         uint8_t **result,
+>                         size_t *resultlen,
+>                         Error **errp);
+> +    QCryptoHash *(*hash_new)(QCryptoHashAlgorithm alg, Error **errp);
+> +    int (*hash_update)(QCryptoHash *hash,
+> +                       const struct iovec *iov,
+> +                       size_t niov,
+> +                       Error **errp);
+> +    int (*hash_finalize)(QCryptoHash *hash,
+> +                         uint8_t **result,
+> +                         size_t *resultlen,
+> +                         Error **errp);
+> +    void (*hash_free)(QCryptoHash *hash);
+>  };
+>  
+>  extern QCryptoHashDriver qcrypto_hash_lib_driver;
+> diff --git a/include/crypto/hash.h b/include/crypto/hash.h
+> index 54d87aa2a1..6d7222867e 100644
+> --- a/include/crypto/hash.h
+> +++ b/include/crypto/hash.h
+> @@ -1,6 +1,7 @@
+>  /*
+>   * QEMU Crypto hash algorithms
+>   *
+> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
+>   * Copyright (c) 2015 Red Hat, Inc.
+>   *
+>   * This library is free software; you can redistribute it and/or
+> @@ -25,6 +26,13 @@
+>  
+>  /* See also "QCryptoHashAlgorithm" defined in qapi/crypto.json */
+>  
+> +typedef struct QCryptoHash QCryptoHash;
+> +struct QCryptoHash {
+> +    QCryptoHashAlgorithm alg;
+> +    void *opaque;
+> +    void *driver;
+> +};
+> +
+>  /**
+>   * qcrypto_hash_supports:
+>   * @alg: the hash algorithm
+> @@ -120,6 +128,117 @@ int qcrypto_hash_digestv(QCryptoHashAlgorithm alg,
+>                           char **digest,
+>                           Error **errp);
+>  
+> +/**
+> + * qcrypto_hash_updatev:
+> + * @hash: hash object from qcrypto_hash_new
+> + * @iov: the array of memory regions to hash
+> + * @niov: the length of @iov
+> + * @errp: pointer to a NULL-initialized error object
+> + *
+> + * Updates the given hash object with all the memory regions
+> + * present in @iov.
+> + *
+> + * Returns: 0 on success, non-zero on error
 
-During ordinary system resets (COLD) where RAM content is not guaranteed 
-to survive:
-
-Effectively (b)
-
-During special kexec-style resets (e.g., on s390x there is a difference) 
-where RAM content must survive:
-
-Effectively (a)
+Minor point, this and all the other APIs should be saying
+'or -1 on error' to follow QEMU's error reporting standards.
 
 
-On implementing architectures (x86, arm64), kexec-style resets are 
-really like warm resets. For example, when we trigger kexec->kdump we
-must not suddenly lose the RAM content.
-
-In that sense, at least virtio-mem wants to treat WARM and WAKEUP resets
-alike. But I agree that simply because virtio-mem want sot treat them 
-alike doesn't mean that we should represent in QEMU using a single reset 
-type.
-
-WARM reboots like s390x supports are rather stuff for the future (once 
-s390x actually supports virtio-mem and could end up triggering it).
-
-> 
-> If (a) then that seems to push towards calling all these
-> cases of a "warm" reset; if (b) then that would be a
-> reason to make "warm" and "wakeup" different.
-
-Likely different then.
-
+With regards,
+Daniel
 -- 
-Cheers,
-
-David / dhildenb
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
