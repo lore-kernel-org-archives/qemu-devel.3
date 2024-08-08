@@ -4,72 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 907C4C52D7B
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 16:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8640DC52D7B
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 16:30:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc5u4-0005ZA-6i; Thu, 08 Aug 2024 12:22:16 -0400
+	id 1sc61W-0005PX-Um; Thu, 08 Aug 2024 12:29:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sc5u3-0005Ye-HX
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 12:22:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sc61V-0005Oz-Aq
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 12:29:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sc5tz-0005Gd-6h
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 12:22:14 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1sc61T-0006kn-La
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 12:29:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723134129;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=7ZNi2oTApSCJG/gNtlnFTLs8ETuTCgIq/g7wjQBDvLo=;
- b=VLNBxPJUhQ+GMSVpCRh+jhwspgTPodxFfRHsWGrtIihTLq8eDx7H7Oy9bZeMmFLIecwx57
- F5xUDbLX3FrjdgjMroYsXsGt6FyWBi1OttOgEwPUAsNhBFJQJlX+Y0r09XZWCFBcdzRpGb
- O+mWdRnAfy2kHOhw85sON5UJJutx+Zs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-597-tC2tNrEfOnarrCjnxKuwSw-1; Thu,
- 08 Aug 2024 12:22:06 -0400
-X-MC-Unique: tC2tNrEfOnarrCjnxKuwSw-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6936C1944B2A; Thu,  8 Aug 2024 16:22:05 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.163])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6C74A1959166; Thu,  8 Aug 2024 16:22:02 +0000 (UTC)
-Date: Thu, 8 Aug 2024 17:21:58 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Alejandro Zeise <alejandro.zeise@seagate.com>
-Cc: qemu-arm@nongnu.org, kris.conklin@seagate.com,
- jonathan.henze@seagate.com, evan.burgess@seagate.com, clg@kaod.org,
- peter.maydell@linaro.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 07/15] crypto/hash: Implement and use new hash API
-Message-ID: <ZrTwphQDG20aGtsP@redhat.com>
-References: <20240807195122.2827364-1-alejandro.zeise@seagate.com>
- <20240807195122.2827364-8-alejandro.zeise@seagate.com>
+ s=mimecast20190719; t=1723134594;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=3HwTNqMaA6vvhyCChNvsXJU4mkTtNIBblhCF0Q6UvIg=;
+ b=fZEqLN1U+Mxnr1WeIUZovVIinNYHQ0DoDITXeYECCV4uISaWv/NR0n+IoZeF0anDN+7uMm
+ OrlxMX3zrqhvaNOIq7iQlFhyP7mzAwHDdPFrdmmCsVF8iOcykM7ssKYHYaAZDolkrQLUpy
+ 3ZwA5IaF6y8r9p4Pj80adC+6fXg/bdY=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-178-O91CuFmcP7GdwX38qaxugg-1; Thu, 08 Aug 2024 12:29:52 -0400
+X-MC-Unique: O91CuFmcP7GdwX38qaxugg-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3687eca5980so499272f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 09:29:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723134591; x=1723739391;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=3HwTNqMaA6vvhyCChNvsXJU4mkTtNIBblhCF0Q6UvIg=;
+ b=QYGnFnDJ9eGe5EYf3pfFA+/ar//hB7tRVaYOXSsX7LzlzvdTrRJvJB8hA7S7fW2ncg
+ hZd/Z0/lzzRjXvA5MzAcTSM2G16nXAqeyHgiEJAZ7mYvE7FzFLB2T7oX4Fz5IvWYihJ7
+ qTKIKN/V7DEM+qex4U/Rfdj8oCjiGLcrnT+YVYsV8Aqd2ZVLMKRPJJXmj1VUP4bZvY+J
+ 1o6/L1519Qpgsg20mRGeYomXm/OgL+bnaXk9bppHbI57ypC+EWvgh3krmB0PemXlU6vn
+ QdijBcF/kDbW3EGf0SK1D8bqxvlVlV7Ww8uahNiY6a0d4tRqMoVjS9NLVsnp9SwDvlvk
+ LWSw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUA4v7bxwzDsVVtOJyrQ7Io+XQvCpAtLkZyMj6eHhfUczSeOA09eOnzrK9pw3lM1caGvUZWm3KiCaJtJrEYUjmHkzcecRA=
+X-Gm-Message-State: AOJu0YzoQtyraXdfAYmo9gTG4mLOo9GAFNKCjqw/0EiTdoyI1y1+Dd2Y
+ gvSNdd4qleqvfbBeMgvqDx9Jm1sVJrmX97mZ3ZnCslpvZW+Ig9w3k3hqKRna95CfZtGMsxArm/x
+ coCwHcgA0qYxyXaoLElatErRGDzx9pRuVLYeQ+W7iKRtgozQuOfUTR8laps0zmQ4=
+X-Received: by 2002:a05:6000:10c3:b0:367:96c5:ae88 with SMTP id
+ ffacd0b85a97d-36d274e7b47mr1910594f8f.31.1723134591393; 
+ Thu, 08 Aug 2024 09:29:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEk4U6YiT8TqhB7xi2yf39G5E4D9QatxmgdCH0E1vPMhTnjP3MIVUGVBPQ1bYYSr8/wosDeXw==
+X-Received: by 2002:a05:6000:10c3:b0:367:96c5:ae88 with SMTP id
+ ffacd0b85a97d-36d274e7b47mr1910579f8f.31.1723134590852; 
+ Thu, 08 Aug 2024 09:29:50 -0700 (PDT)
+Received: from ?IPV6:2003:cb:c713:2a00:f151:50f1:7164:32e6?
+ (p200300cbc7132a00f15150f1716432e6.dip0.t-ipconnect.de.
+ [2003:cb:c713:2a00:f151:50f1:7164:32e6])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36d27208d75sm2384281f8f.85.2024.08.08.09.29.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 08 Aug 2024 09:29:50 -0700 (PDT)
+Message-ID: <841a1b53-7b43-4fb6-966b-1f9000292851@redhat.com>
+Date: Thu, 8 Aug 2024 18:29:48 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240807195122.2827364-8-alejandro.zeise@seagate.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/4] reset: Add RESET_TYPE_WAKEUP
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org
+References: <20240806160756.182524-1-jmarcin@redhat.com>
+ <20240806160756.182524-3-jmarcin@redhat.com>
+ <CAFEAcA9iCcmwkN2m9unjZskFHPg=DSDjC-SeNyskmjtkFJvFMQ@mail.gmail.com>
+ <CAC2qdxDhfon3Xe7J4jCVyqx7VdR-CMbo2r7Vat=WOA0qWLoFMg@mail.gmail.com>
+ <34840c40-1a54-4aa0-a424-defd93d3b2b2@redhat.com>
+ <CAFEAcA9LNj1JENcCKHU+BvKE+K5_b3jUSS_prwAC2X084xvT8A@mail.gmail.com>
+ <bf8d2172-ddd3-499c-a164-6b358c6496a7@redhat.com>
+ <CAFEAcA_Zo-WmjMZwcecwgPAp_DOfaewV_nDx3QpCzYx7h2Kckw@mail.gmail.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <CAFEAcA_Zo-WmjMZwcecwgPAp_DOfaewV_nDx3QpCzYx7h2Kckw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,295 +154,108 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 07, 2024 at 07:51:14PM +0000, Alejandro Zeise wrote:
-> Changes the public hash API implementation to support accumulative hashing.
+On 08.08.24 18:17, Peter Maydell wrote:
+> On Thu, 8 Aug 2024 at 17:04, David Hildenbrand <david@redhat.com> wrote:
+>>
+>> On 08.08.24 17:56, Peter Maydell wrote:
+>>> Right, I guess that's my question -- is "WAKEUP" ever any
+>>> different from "WARM" reset? I think the latter is a more
+>>> common general concept.
+>>>
+>>> On the other hand it looks like we already have the
+>>> concept in the runstate state machine of
+>>> RUN_STATE_SUSPENDED versus RUN_STATE_RUNNING, and so if we
+>>> define "WAKEUP" as "goes from SUSPENDED to RUNNING" that's
+>>> quite a clearly defined condition.
+>>
+>> Right.
+>>
+>>> Whereas WARM reset would
+>>> be a much wider range of things and ought to include for
+>>> instance "guest triggers a reset by writing to port 92"
+>>> and all the other SHUTDOWN_CAUSE_GUEST_RESET cases.
+>>> (Side note: do we document all these runstates and transitions
+>>> anywhere?)
+>>>
+>>> For virtio-mem, on a guest-triggered reset, should it
+>>> (a) definitely not unplug all the hotplugged memory
+>>> (b) definitely unplug all the hotplugged memory
+>>> (c) we don't care?
+>>
+>> During ordinary system resets (COLD) where RAM content is not guaranteed
+>> to survive:
 > 
-> Implementations for the public functions are added to call the new
-> driver functions that implement context creation, updating,
-> finalization, and destruction.
+> "COLD" isn't an "ordinary system reset", though -- COLD
+> reset is more like "I powered the computer off and then
+> turned it on again". A "WARM" reset is like "I pressed
+> the front panel reset button, or the watchdog device
+> fired and reset the system". We don't currently really
+> model front-panel or watchdog reset properly, we assume
+> that it's close enough to have it be the same as
+> power-off-and-on reset (and there are some kludges in
+> various places where it's not quite right).
+
+Agreed, there are many flavors of resets, even different flavors of warm 
+ones I'm afraid.
+
+To summarize, if a VM does an ordinary reset ("shutdown -r") we want to 
+unplug all hotplugged memory. Same with most external resets we 
+currently implement. In all other caes, we likely want to keep the 
+memory hotplugged and RAM content alive.
+
+I think we did something similar with DIMMs/ACPI devices with unplug 
+requests in that past, but I'm not able to locate that code easily.
+
 > 
-> Additionally changes the "shortcut" functions to use these 4 new core
-> functions.
+>> Effectively (b)
+>>
+>> During special kexec-style resets (e.g., on s390x there is a difference)
+>> where RAM content must survive:
+>>
+>> Effectively (a)
+>>
+>>
+>> On implementing architectures (x86, arm64), kexec-style resets are
+>> really like warm resets. For example, when we trigger kexec->kdump we
+>> must not suddenly lose the RAM content.
 > 
-> Signed-off-by: Alejandro Zeise <alejandro.zeise@seagate.com>
-> ---
->  crypto/hash.c | 163 +++++++++++++++++++++++++++++++++++++++-----------
->  1 file changed, 128 insertions(+), 35 deletions(-)
+> (There's an awkward conflict here with our rom blob
+> system, which currently does a "copy any guest images
+> back into RAM" on reset. Should we do that on warm
+> reset? For some usecases you want those original
+> images back again, but for "guest did a kexec" you
+> almost certainly don't...)
+
+Right, maybe on some warm resets where the ROM blobs are required and 
+might have gotten corrupted you would actually want to restore them, 
+maybe? It's difficult. At least for "guest did a kexec", I *think* x86 
+just doesn't trigger any special reset in QEMU. I know that s390x 
+triggers a special subsystem reset (s390x has various types of resets ...).
+
 > 
-> diff --git a/crypto/hash.c b/crypto/hash.c
-> index b0f8228bdc..f3c18cdd74 100644
-> --- a/crypto/hash.c
-> +++ b/crypto/hash.c
-> @@ -1,6 +1,7 @@
->  /*
->   * QEMU Crypto hash algorithms
->   *
-> + * Copyright (c) 2024 Seagate Technology LLC and/or its Affiliates
->   * Copyright (c) 2015 Red Hat, Inc.
->   *
->   * This library is free software; you can redistribute it and/or
-> @@ -45,23 +46,20 @@ int qcrypto_hash_bytesv(QCryptoHashAlgorithm alg,
->                          size_t *resultlen,
->                          Error **errp)
->  {
-> -#ifdef CONFIG_AF_ALG
-> -    int ret;
-> -    /*
-> -     * TODO:
-> -     * Maybe we should treat some afalg errors as fatal
-> -     */
-> -    ret = qcrypto_hash_afalg_driver.hash_bytesv(alg, iov, niov,
-> -                                                result, resultlen,
-> -                                                NULL);
-> -    if (ret == 0) {
-> -        return ret;
-> +    int fail;
-> +    QCryptoHash *ctx = qcrypto_hash_new(alg, errp);
-> +
-> +    if (ctx) {
-> +        fail = qcrypto_hash_updatev(ctx, iov, niov, errp) ||
-> +               qcrypto_hash_finalize_bytes(ctx, result, resultlen, errp);
-> +
-> +        /* Ensure context is always freed regardless of error */
-> +        qcrypto_hash_free(ctx);
-> +    } else {
-> +        fail = -1;
->      }
-> -#endif
-
-Generally I'd prefer immediate return on error, and you can
-use g_autoptr to free the object too. With that you'll end
-up without the extra 'fail' variable:
-
-    g_autoptr(QCryptoHash) ctx = qcrypto_hash_new(alg, errp);
-
-    if (!ctx) {
-        return -1;
-    }
-
-    if (qcrypto_hash_updatev(ctx, iov, niov, errp) < 0 ||
-        qcrypto_hash_finalize_bytes(ctx, result, resultlen, errp) < 0) {
-	return -1;
-    }
-
-    return 0;
-
-> @@ -77,30 +75,121 @@ int qcrypto_hash_bytes(QCryptoHashAlgorithm alg,
->      return qcrypto_hash_bytesv(alg, &iov, 1, result, resultlen, errp);
->  }
->  
-> -static const char hex[] = "0123456789abcdef";
-> -
-> -int qcrypto_hash_digestv(QCryptoHashAlgorithm alg,
-> +int qcrypto_hash_updatev(QCryptoHash *hash,
->                           const struct iovec *iov,
->                           size_t niov,
-> -                         char **digest,
->                           Error **errp)
->  {
-> +#ifdef CONFIG_AF_ALG
-> +    return qcrypto_hash_afalg_driver.hash_update(hash, iov, niov, errp);
-> +#else
-> +    return qcrypto_hash_lib_driver.hash_update(hash, iov, niov, errp);
-> +#endif /* CONFIG_AF_ALG */
-> +}
-
-This isn't quite the same as the old code. That would try afalg, and then
-dynamically fallback to the userspace driver.
-
-I think we need to deal with this all in the qcrypto_hash_new() method.
-Attempt to create an AF_ALG driver instance via its 'hash_new' method,
-and if that fails create the normal driver 'hash_new' method. We need
-to record which we created in QCryptoHash struct, and then in the
-update, finalize & free methods we need to call the corresponding
-driver.
-
-> +
-> +int qcrypto_hash_update(QCryptoHash *hash,
-> +                        const char *buf,
-> +                        size_t len,
-> +                        Error **errp)
-> +{
-> +    struct iovec iov = { .iov_base = (char *)buf, .iov_len = len };
-> +
-> +    return qcrypto_hash_updatev(hash, &iov, 1, errp);
-> +}
-> +
-> +QCryptoHash *qcrypto_hash_new(QCryptoHashAlgorithm alg, Error **errp)
-> +{
-
-Here we should call
-
-   if (!qcrypto_hash_supports(alg)) {
-      error_setg(errp, "Unsupported hash algorithm %s",
-                 QCryptoHashAlgorithm_lookup[alg]);
-      return NULL;
-   }
-
-That way, we avoid repeating this check in every single
-'hash_new' method impl
-
-> +#ifdef CONFIG_AF_ALG
-> +    return qcrypto_hash_afalg_driver.hash_new(alg, errp);
-> +#else
-> +    return qcrypto_hash_lib_driver.hash_new(alg, errp);
-> +#endif /* CONFIG_AF_ALG */
-> +}
-> +
-> +void qcrypto_hash_free(QCryptoHash *hash)
-> +{
-> +#ifdef CONFIG_AF_ALG
-> +    qcrypto_hash_afalg_driver.hash_free(hash);
-> +#else
-> +    qcrypto_hash_lib_driver.hash_free(hash);
-> +#endif /* CONFIG_AF_ALG */
-> +}
-> +
-> +int qcrypto_hash_finalize_bytes(QCryptoHash *hash,
-> +                                uint8_t **result,
-> +                                size_t *result_len,
-> +                                Error **errp)
-> +{
-> +#ifdef CONFIG_AF_ALG
-> +    return qcrypto_hash_afalg_driver.hash_finalize(hash, result, result_len,
-> +                                                   errp);
-> +#else
-> +    return qcrypto_hash_lib_driver.hash_finalize(hash, result, result_len, errp);
-> +#endif /* CONFIG_AF_ALG */
-> +}
-> +
-> +static const char hex[] = "0123456789abcdef";
-> +
-> +int qcrypto_hash_finalize_digest(QCryptoHash *hash,
-> +                                 char **digest,
-> +                                 Error **errp)
-> +{
-> +    int ret;
->      uint8_t *result = NULL;
-
-declare this
-
-  g_autofree uint8_t *result = NULL;
-
-then you can drop the later g_free(result)
-
->      size_t resultlen = 0;
->      size_t i;
->  
-> -    if (qcrypto_hash_bytesv(alg, iov, niov, &result, &resultlen, errp) < 0) {
-> -        return -1;
-> +    ret = qcrypto_hash_finalize_bytes(hash, &result, &resultlen, errp);
-> +    if (ret == 0) {
-> +        *digest = g_new0(char, (resultlen * 2) + 1);
-> +        for (i = 0 ; i < resultlen ; i++) {
-> +            (*digest)[(i * 2)] = hex[(result[i] >> 4) & 0xf];
-> +            (*digest)[(i * 2) + 1] = hex[result[i] & 0xf];
-> +        }
-> +        (*digest)[resultlen * 2] = '\0';
-> +        g_free(result);
-> +    }
-> +
-> +    return ret;
-> +}
-> +
-> +int qcrypto_hash_finalize_base64(QCryptoHash *hash,
-> +                                 char **base64,
-> +                                 Error **errp)
-> +{
-> +    int ret;
-> +    uint8_t *result = NULL;
-
-g_autofree for this too
-
-> +    size_t resultlen = 0;
-> +
-> +    ret = qcrypto_hash_finalize_bytes(hash, &result, &resultlen, errp);
-> +    if (ret == 0) {
-> +        *base64 = g_base64_encode(result, resultlen);
-> +        g_free(result);
->      }
->  
-> -    *digest = g_new0(char, (resultlen * 2) + 1);
-> -    for (i = 0 ; i < resultlen ; i++) {
-> -        (*digest)[(i * 2)] = hex[(result[i] >> 4) & 0xf];
-> -        (*digest)[(i * 2) + 1] = hex[result[i] & 0xf];
-> +    return ret;
-> +}
-> +
-> +int qcrypto_hash_digestv(QCryptoHashAlgorithm alg,
-> +                         const struct iovec *iov,
-> +                         size_t niov,
-> +                         char **digest,
-> +                         Error **errp)
-> +{
-> +    bool fail;
-> +    QCryptoHash *ctx = qcrypto_hash_new(alg, errp);
-> +
-> +    if (ctx) {
-> +        fail = qcrypto_hash_updatev(ctx, iov, niov, errp) ||
-> +               qcrypto_hash_finalize_digest(ctx, digest, errp);
-> +
-> +        /* Ensure context is always freed regardless of error */
-> +        qcrypto_hash_free(ctx);
-> +    } else {
-> +        fail = false;
->      }
-> -    (*digest)[resultlen * 2] = '\0';
-> -    g_free(result);
-> -    return 0;
-> +
-> +    return fail;
->  }
-
-Same comment about re-arranging the code that I mentioned higher
-up against qcrypto_hash_bytesv
-
->  
->  int qcrypto_hash_digest(QCryptoHashAlgorithm alg,
-> @@ -120,16 +209,20 @@ int qcrypto_hash_base64v(QCryptoHashAlgorithm alg,
->                           char **base64,
->                           Error **errp)
->  {
-> -    uint8_t *result = NULL;
-> -    size_t resultlen = 0;
-> +    bool fail;
-> +    QCryptoHash *ctx = qcrypto_hash_new(alg, errp);
-> +
-> +    if (ctx) {
-> +        fail = qcrypto_hash_updatev(ctx, iov, niov, errp) ||
-> +               qcrypto_hash_finalize_base64(ctx, base64, errp);
->  
-> -    if (qcrypto_hash_bytesv(alg, iov, niov, &result, &resultlen, errp) < 0) {
-> -        return -1;
-> +        /* Ensure context is always freed regardless of error */
-> +        qcrypto_hash_free(ctx);
-> +    } else {
-> +        fail = 1;
->      }
->  
-> -    *base64 = g_base64_encode(result, resultlen);
-> -    g_free(result);
-> -    return 0;
-> +    return fail;
->  }
-
-And same comment again.
-
->  
->  int qcrypto_hash_base64(QCryptoHashAlgorithm alg,
-> -- 
-> 2.34.1
+>> In that sense, at least virtio-mem wants to treat WARM and WAKEUP resets
+>> alike. But I agree that simply because virtio-mem want sot treat them
+>> alike doesn't mean that we should represent in QEMU using a single reset
+>> type.
 > 
+> On the other hand, if virtio-mem does want to treat them
+> the same we could start with only implementing WARM and
+> not add WAKEUP until we have a use-case for it.
 
-With regards,
-Daniel
+Makes sense.
+
+> 
+> By the way, I assume this patchseries is 9.2 material,
+> not trying to fix a bug for this release ?
+
+Yes, it can wait. Thanks for the guidance!
+
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Cheers,
+
+David / dhildenb
 
 
