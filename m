@@ -4,27 +4,27 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D927C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 02:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D967C52D6F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 02:51:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbtDZ-0006nX-7w; Wed, 07 Aug 2024 22:49:33 -0400
+	id 1sbtDf-0007Ds-Eh; Wed, 07 Aug 2024 22:49:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sbtDY-0006iv-2R; Wed, 07 Aug 2024 22:49:32 -0400
+ id 1sbtDd-00075A-Cj; Wed, 07 Aug 2024 22:49:37 -0400
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1sbtDW-0008AE-I3; Wed, 07 Aug 2024 22:49:31 -0400
+ id 1sbtDb-0008AE-RV; Wed, 07 Aug 2024 22:49:37 -0400
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Thu, 8 Aug
- 2024 10:49:16 +0800
+ 2024 10:49:17 +0800
 Received: from localhost.localdomain (192.168.10.10) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server id 15.2.1258.12 via Frontend
- Transport; Thu, 8 Aug 2024 10:49:16 +0800
+ Transport; Thu, 8 Aug 2024 10:49:17 +0800
 To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
  <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, "Joel
@@ -35,10 +35,10 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v2 01/11] hw/i2c/aspeed: support discontinuous register memory
- region of I2C bus
-Date: Thu, 8 Aug 2024 10:49:06 +0800
-Message-ID: <20240808024916.1262715-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 03/11] hw/i2c/aspeed: support discontinuous poll buffer
+ memory region of I2C bus
+Date: Thu, 8 Aug 2024 10:49:08 +0800
+Message-ID: <20240808024916.1262715-4-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240808024916.1262715-1-jamin_lin@aspeedtech.com>
 References: <20240808024916.1262715-1-jamin_lin@aspeedtech.com>
@@ -69,30 +69,31 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It only support continuous register memory region for all I2C bus.
-However, the register address of all I2c bus are discontinuous
+It only support continuous pool buffer memory region for all I2C bus.
+However, the pool buffer address of all I2c bus are discontinuous
 for AST2700.
 
-Ex: the register address of I2C bus for ast2700 as following.
-0x100 - 0x17F: Device 0
-0x200 - 0x27F: Device 1
-0x300 - 0x37F: Device 2
-0x400 - 0x47F: Device 3
-0x500 - 0x57F: Device 4
-0x600 - 0x67F: Device 5
-0x700 - 0x77F: Device 6
-0x800 - 0x87F: Device 7
-0x900 - 0x97F: Device 8
-0xA00 - 0xA7F: Device 9
-0xB00 - 0xB7F: Device 10
-0xC00 - 0xC7F: Device 11
-0xD00 - 0xD7F: Device 12
-0xE00 - 0xE7F: Device 13
-0xF00 – 0xF7F: Device 14
-0x1000 – 0x107F: Device 15
+Ex: the pool buffer address of I2C bus for ast2700 as following.
+0x1A0 - 0x1BF: Device 0 buffer
+0x2A0 - 0x2BF: Device 1 buffer
+0x3A0 - 0x3BF: Device 2 buffer
+0x4A0 - 0x4BF: Device 3 buffer
+0x5A0 - 0x5BF: Device 4 buffer
+0x6A0 - 0x6BF: Device 5 buffer
+0x7A0 - 0x7BF: Device 6 buffer
+0x8A0 - 0x8BF: Device 7 buffer
+0x9A0 - 0x9BF: Device 8 buffer
+0xAA0 - 0xABF: Device 9 buffer
+0xBA0 - 0xBBF: Device 10 buffer
+0xCA0 - 0xCBF: Device 11 buffer
+0xDA0 - 0xDBF: Device 12 buffer
+0xEA0 - 0xEBF: Device 13 buffer
+0xFA0 – 0xFBF: Device 14 buffer
+0x10A0 – 0x10BF: Device 15 buffer
 
-Introduce a new class attribute to make user set each I2C bus gap size.
-Update formula to create all I2C bus register memory regions.
+Introduce a new class attribute to make user set each I2C bus
+pool buffer gap size. Update formula to create all I2C bus
+pool buffer memory regions.
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
@@ -101,38 +102,38 @@ Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
  2 files changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index b52a99896c..9c222a02fe 100644
+index d3d49340ea..abcb1d5330 100644
 --- a/hw/i2c/aspeed_i2c.c
 +++ b/hw/i2c/aspeed_i2c.c
-@@ -1012,6 +1012,7 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+@@ -1098,6 +1098,7 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
      AspeedI2CState *s = ASPEED_I2C(dev);
      AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(s);
-+    uint32_t reg_offset = aic->reg_size + aic->reg_gap_size;
+     uint32_t reg_offset = aic->reg_size + aic->reg_gap_size;
++    uint32_t pool_offset = aic->pool_size + aic->pool_gap_size;
  
      sysbus_init_irq(sbd, &s->irq);
      memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_i2c_ctrl_ops, s,
-@@ -1034,7 +1035,7 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
-             return;
+@@ -1133,7 +1134,7 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
+     } else {
+         for (i = 0; i < aic->num_busses; i++) {
+             memory_region_add_subregion(&s->iomem,
+-                                        aic->pool_base + (aic->pool_size * i),
++                                        aic->pool_base + (pool_offset * i),
+                                         &s->busses[i].mr_pool);
          }
- 
--        memory_region_add_subregion(&s->iomem, aic->reg_size * (i + offset),
-+        memory_region_add_subregion(&s->iomem, reg_offset * (i + offset),
-                                     &s->busses[i].mr);
      }
- 
 diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
-index fad5e9259a..02ede85906 100644
+index 8e62ec64f8..b42c4dc584 100644
 --- a/include/hw/i2c/aspeed_i2c.h
 +++ b/include/hw/i2c/aspeed_i2c.h
-@@ -275,6 +275,7 @@ struct AspeedI2CClass {
+@@ -284,6 +284,7 @@ struct AspeedI2CClass {
  
-     uint8_t num_busses;
-     uint8_t reg_size;
-+    uint32_t reg_gap_size;
-     uint8_t gap;
-     qemu_irq (*bus_get_irq)(AspeedI2CBus *);
- 
+     uint64_t pool_size;
+     hwaddr pool_base;
++    uint32_t pool_gap_size;
+     uint8_t *(*bus_pool_base)(AspeedI2CBus *);
+     bool check_sram;
+     bool has_dma;
 -- 
 2.34.1
 
