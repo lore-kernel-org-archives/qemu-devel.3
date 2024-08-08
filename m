@@ -4,109 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B57BC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 16:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38048C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 16:59:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sc69B-0001oC-71; Thu, 08 Aug 2024 12:37:53 -0400
+	id 1sc6Tf-0001Pi-EY; Thu, 08 Aug 2024 12:59:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1sc69A-0001nh-4u
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 12:37:52 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <yusuf.colak3406@gmail.com>)
+ id 1sc5H9-0002CS-B2
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 11:42:03 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cfontana@suse.de>) id 1sc698-00087V-0a
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 12:37:51 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 20B7B21D34;
- Thu,  8 Aug 2024 16:37:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1723135067; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FT6POBvoe+yceWz2dTOKo85Viu9VOo9r/g2Kos0kDdI=;
- b=jbbSxESmx7Dph6AXufN+jgTTbBSkt5d0dMyKbXVAcx04p+vh7JX1/g5ayz2QJhtI/DsHla
- L2nBJ9FnTWTEPhhifZrednIBYgLLi9/oxIgw05kv06HrTxuXa0IxAZT6zwdJb6Uo/Om+3E
- +V0BkClbhvAgdowjI6rE/6jw8NDWTSs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1723135067;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FT6POBvoe+yceWz2dTOKo85Viu9VOo9r/g2Kos0kDdI=;
- b=EhqEGc1n9UhPT747OUq3VGiibPinN/b9RWZiJzSMj3CaK+WezjB2u52Z/rjUY+p3lta+7H
- DwGiOvHLVqoUn4AQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1723135067; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FT6POBvoe+yceWz2dTOKo85Viu9VOo9r/g2Kos0kDdI=;
- b=jbbSxESmx7Dph6AXufN+jgTTbBSkt5d0dMyKbXVAcx04p+vh7JX1/g5ayz2QJhtI/DsHla
- L2nBJ9FnTWTEPhhifZrednIBYgLLi9/oxIgw05kv06HrTxuXa0IxAZT6zwdJb6Uo/Om+3E
- +V0BkClbhvAgdowjI6rE/6jw8NDWTSs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1723135067;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FT6POBvoe+yceWz2dTOKo85Viu9VOo9r/g2Kos0kDdI=;
- b=EhqEGc1n9UhPT747OUq3VGiibPinN/b9RWZiJzSMj3CaK+WezjB2u52Z/rjUY+p3lta+7H
- DwGiOvHLVqoUn4AQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E3CA313BAF;
- Thu,  8 Aug 2024 12:58:45 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id B6yrMwXBtGZsZwAAD6G6ig
- (envelope-from <cfontana@suse.de>); Thu, 08 Aug 2024 12:58:45 +0000
-Message-ID: <34b23dba-52ef-400b-a876-47bafc8989ce@suse.de>
-Date: Thu, 8 Aug 2024 14:58:41 +0200
+ (Exim 4.90_1) (envelope-from <yusuf.colak3406@gmail.com>)
+ id 1sc5H6-0007Th-9w
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 11:42:03 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-66526e430e0so10370357b3.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 08:41:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1723131718; x=1723736518; darn=nongnu.org;
+ h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=jNNOFGUMabz5LcMMn5A0iat/PWcGnDNzNL3t3iaTSSI=;
+ b=kvoE6tQqQfpvtISM2NZSSUrXDReGlwxVMBTzTAE8ZxrAzIeZ3ypEy7UbpRsCT6+De9
+ qp3bIRZdz5i6l9sd49+61BmJwnCUYB55KbjPN8qKkFCj6jU729sdrC1ZVXMU7qr1qE06
+ YE7NWFCmjspm9TkjWP58gfMEwh2bk2K/y4a39gMkZROrKV1D9xqrXh20DeQVfgtjIadc
+ cAfd9bV75SmTUUHGPXMU1K/G3dhXYIYpuO4kApboPJY7xzhYdNw9LoYYFua6FdjM8dFb
+ eyXj9BTHeXLditMIcnM7giHT5+AAb9MKPMlKRSYbf6XS7r3v8GPo/mp46iW+icN7zi0r
+ QgAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723131718; x=1723736518;
+ h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jNNOFGUMabz5LcMMn5A0iat/PWcGnDNzNL3t3iaTSSI=;
+ b=sWDgl2h3TZ2SLYVIRRTEI1juQMwgQvbZ6K1FSZ4ooOa6pSJM7RjBVoqn7nwZH1zNRY
+ NOc4GD5ucNhUvi35C0eWM99S+MVQhgCuT6AOkCQaILAU4vLDQMnLMo2lkvuzSo7xTMAA
+ FDu4taaltRPbmh+ZmoxzvS7Yg2p1HGcwz+JSaTFtq9f2OrPIN3BABnat3bfkYJKQuuIe
+ 4d2HaS5iPTdDUo9qlZu6FOmr4edaRPgDLAMWgLHHZMOBLGe8GZolheAIwx/AhS8GHj/G
+ M8eEDWKyyJAHHQ2OX8ym1PQKfjYe1O2EEqSa8785ujXNJZ47/jP3LKCfhvH4q1VCiyau
+ LEdg==
+X-Gm-Message-State: AOJu0YyTajI5zvL6MYBNFDaTbHSFZBMta2F1bh5xVbaR1DwRajS04LPy
+ Q1iMQcl7DZE/ecFUKCBJa7Mwy8BS1RNdkWVVhKgHFApupdlKBh9TJDP8LXTRyIzPAQcrpgFGFbX
+ iPx/V7IZFzXGbE3NPBUJ55QgNwNLMSuoi
+X-Google-Smtp-Source: AGHT+IEECZXQVuy5TRmRNFbpP3D7Ov19oL0Bn8VQ5NH/p2kX1a096boADy5elfx9EB54UtiDK2dy1Ge35gSznoXxW30=
+X-Received: by 2002:a05:690c:4784:b0:64a:90fe:911e with SMTP id
+ 00721157ae682-69bfb7e5474mr21819677b3.31.1723131717626; Thu, 08 Aug 2024
+ 08:41:57 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] kvm: refactor core virtual machine creation into its
- own function
-To: Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: zhao1.liu@intel.com, kvm@vger.kernel.org, qemu-devel@nongnu.org
-References: <20240808113838.1697366-1-anisinha@redhat.com>
-Content-Language: en-US
-From: Claudio Fontana <cfontana@suse.de>
-In-Reply-To: <20240808113838.1697366-1-anisinha@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-1.29 / 50.00]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.998]; MIME_GOOD(-0.10)[text/plain];
- XM_UA_NO_VERSION(0.01)[]; FROM_HAS_DN(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- ARC_NA(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,intel.com:email];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=cfontana@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+From: =?UTF-8?Q?Yusuf_said_=C3=87olak?= <yusuf.colak3406@gmail.com>
+Date: Thu, 8 Aug 2024 15:41:46 +0000
+Message-ID: <CANwC2_Tph=P2Ho-nm-x5C8wkbz5NX=PXDA5GvuP9cf08Gscrxw@mail.gmail.com>
+Subject: bug?
+To: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000ee37b9061f2ddd94"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=yusuf.colak3406@gmail.com; helo=mail-yw1-x1134.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 08 Aug 2024 12:58:57 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -121,159 +85,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+--000000000000ee37b9061f2ddd94
+Content-Type: text/plain; charset="UTF-8"
 
-as a suggestion you could adjust the names of the functions to match the existing pattern in this module.
+I installed qemu successfully and downloaded emulator you published on
+github, i runned
 
-It is modulename_method ie kvm_* , so:
+mkdir buildcd build
 
-On 8/8/24 13:38, Ani Sinha wrote:
-> Refactoring the core logic around KVM_CREATE_VM into its own separate function
-> so that it can be called from other functions in subsequent patches. There is
-> no functional change in this patch.
-> 
-> CC: pbonzini@redhat.com
-> CC: zhao1.liu@intel.com
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
-> ---
->  accel/kvm/kvm-all.c | 93 +++++++++++++++++++++++++++------------------
->  1 file changed, 56 insertions(+), 37 deletions(-)
-> 
-> changelog:
-> v2: s/fprintf/warn_report as suggested by zhao
-> 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 75d11a07b2..c2e177c39f 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -2385,6 +2385,60 @@ uint32_t kvm_dirty_ring_size(void)
->      return kvm_state->kvm_dirty_ring_size;
->  }
->  
-> +static int do_kvm_create_vm(MachineState *ms, int type)
-
-kvm_do_create_vm()
-
-btw does the "_do_" part add anything of value? Otherwise I would do:
-
-kvm_create_vm()
+but if i run ../configure it gives ;
 
 
 
-> +{
-> +    KVMState *s;
-> +    int ret;
-> +
-> +    s = KVM_STATE(ms->accelerator);
-> +
-> +    do {
-> +        ret = kvm_ioctl(s, KVM_CREATE_VM, type);
-> +    } while (ret == -EINTR);
-> +
-> +    if (ret < 0) {
-> +        warn_report("ioctl(KVM_CREATE_VM) failed: %d %s", -ret,
-> +                    strerror(-ret));
-> +
-> +#ifdef TARGET_S390X
-> +        if (ret == -EINVAL) {
-> +            warn_report("Host kernel setup problem detected. Please verify:");
-> +            warn_report("- for kernels supporting the switch_amode or"
-> +                        " user_mode parameters, whether");
-> +            warn_report("  user space is running in primary address space");
-> +            warn_report("- for kernels supporting the vm.allocate_pgste "
-> +                        "sysctl, whether it is enabled");
-> +        }
-> +#elif defined(TARGET_PPC)
-> +        if (ret == -EINVAL) {
-> +            warn_report("PPC KVM module is not loaded. Try modprobe kvm_%s.",
-> +                        (type == 2) ? "pr" : "hv");
-> +        }
-> +#endif
-> +    }
-> +
-> +    return ret;
-> +}
-> +
-> +static int find_kvm_machine_type(MachineState *ms)
 
-kvm_find_machine_type
+ERROR: missing GIT submodules
+This is not a GIT checkout but module content appears to
+be missing. Do not use 'git archive' or GitHub download links
+to acquire QEMU source archives. Non-GIT builds are only
+supported with source archives linked from:
 
-Thanks,
+  https://www.qemu.org/download/#source
 
-C
+Developers working with GIT can use scripts/archive-source.sh
+if they need to create valid source archives.
 
-> +{
-> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
-> +    int type;
-> +
-> +    if (object_property_find(OBJECT(current_machine), "kvm-type")) {
-> +        g_autofree char *kvm_type;
-> +        kvm_type = object_property_get_str(OBJECT(current_machine),
-> +                                           "kvm-type",
-> +                                           &error_abort);
-> +        type = mc->kvm_type(ms, kvm_type);
-> +    } else if (mc->kvm_type) {
-> +        type = mc->kvm_type(ms, NULL);
-> +    } else {
-> +        type = kvm_arch_get_default_type(ms);
-> +    }
-> +    return type;
-> +}
-> +
->  static int kvm_init(MachineState *ms)
->  {
->      MachineClass *mc = MACHINE_GET_CLASS(ms);
-> @@ -2467,49 +2521,14 @@ static int kvm_init(MachineState *ms)
->      }
->      s->as = g_new0(struct KVMAs, s->nr_as);
->  
-> -    if (object_property_find(OBJECT(current_machine), "kvm-type")) {
-> -        g_autofree char *kvm_type = object_property_get_str(OBJECT(current_machine),
-> -                                                            "kvm-type",
-> -                                                            &error_abort);
-> -        type = mc->kvm_type(ms, kvm_type);
-> -    } else if (mc->kvm_type) {
-> -        type = mc->kvm_type(ms, NULL);
-> -    } else {
-> -        type = kvm_arch_get_default_type(ms);
-> -    }
-> -
-> +    type = find_kvm_machine_type(ms);
->      if (type < 0) {
->          ret = -EINVAL;
->          goto err;
->      }
->  
-> -    do {
-> -        ret = kvm_ioctl(s, KVM_CREATE_VM, type);
-> -    } while (ret == -EINTR);
-> -
-> +    ret = do_kvm_create_vm(ms, type);
->      if (ret < 0) {
-> -        fprintf(stderr, "ioctl(KVM_CREATE_VM) failed: %d %s\n", -ret,
-> -                strerror(-ret));
-> -
-> -#ifdef TARGET_S390X
-> -        if (ret == -EINVAL) {
-> -            fprintf(stderr,
-> -                    "Host kernel setup problem detected. Please verify:\n");
-> -            fprintf(stderr, "- for kernels supporting the switch_amode or"
-> -                    " user_mode parameters, whether\n");
-> -            fprintf(stderr,
-> -                    "  user space is running in primary address space\n");
-> -            fprintf(stderr,
-> -                    "- for kernels supporting the vm.allocate_pgste sysctl, "
-> -                    "whether it is enabled\n");
-> -        }
-> -#elif defined(TARGET_PPC)
-> -        if (ret == -EINVAL) {
-> -            fprintf(stderr,
-> -                    "PPC KVM module is not loaded. Try modprobe kvm_%s.\n",
-> -                    (type == 2) ? "pr" : "hv");
-> -        }
-> -#endif
->          goto err;
->      }
->  
+can you help me with this?
 
+--000000000000ee37b9061f2ddd94
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">I installed qemu successfully and downloaded emulator you =
+published on github, i runned <br><pre>mkdir build
+<span class=3D"gmail-pl-c1">cd</span> build<br><br></pre><pre>but if i run =
+../configure it gives ;<br></pre><pre><br><br><br>ERROR: missing GIT submod=
+ules<br>This is not a GIT checkout but module content appears to<br>be miss=
+ing. Do not use &#39;git archive&#39; or GitHub download links<br>to acquir=
+e QEMU source archives. Non-GIT builds are only<br>supported with source ar=
+chives linked from:<br><br>=C2=A0 <a href=3D"https://www.qemu.org/download/=
+#source">https://www.qemu.org/download/#source</a><br><br>Developers workin=
+g with GIT can use scripts/archive-source.sh<br>if they need to create vali=
+d source archives.<br><br></pre><pre>can you help me with this?<br></pre></=
+div>
+
+--000000000000ee37b9061f2ddd94--
 
