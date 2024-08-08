@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96AC6C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 07:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 675D3C52D7B
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 08:06:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sby2L-0001lM-69; Thu, 08 Aug 2024 03:58:17 -0400
+	id 1sby9q-0008Dd-Bf; Thu, 08 Aug 2024 04:06:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sby2K-0001fx-39
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 03:58:16 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1sby2H-0008Ms-AZ
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 03:58:15 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-a7aada2358fso282737966b.0
- for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 00:58:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723103890; x=1723708690; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=/jA7xNKwer5X7IcOleIJPAXaqZZOBhl5rPR2VUKiDHA=;
- b=u/Se9q5R8ZM30aRbCOrEhY16EweHxEzyI5Qf6xdN+e39uAl2KCpjsEAqnPEG8UlORB
- qMhW9pw9chIz3SpdfrZfNensdGLsG9eiVMAQd4JSBYZ/8pMXHZ4d0dkm2uFgZ1h0NL1k
- fYIt65zFh3eOTENgUqw4XIWxEatWuwXl+0fgwLMRvYsbAOQaRlwU0JFvCZa2qGzF3tjQ
- V+89RKk1eaBBhU8rp3/eshVijDNJGNhgZ1aKqtsktQTc2vR6UJygmCsBBq9/FfZa0geW
- PqmHkvOnHzAuO3CNX2GVc2AKyjwiQZNgVzkVATVG1FtJJEBAN7vtxfdzmfaznjygOYJM
- eEmQ==
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sby9p-0008Cq-1G
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 04:06:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1sby9k-0001HW-Qi
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 04:06:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723104352;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=NJQ9wEhXTtcEv+urqrf3Td9TtD9S7IBK5VxBmKau9jM=;
+ b=GBo2ZvS/dIT/wCidxXD6BIomQ8TpqC/qU4VIP9EsqXA8x7Ka+oz1pBDLfifLzU94ODfdBU
+ Qc+xPiSIfSmyHSFbZBfHDyROBdjlk3iLFvWvejic0GgGzx32xd/cxOv8iQ9uwL0veHsQhF
+ jzH1kD7EHkjfDh4Enk+HRoJwTJhOKxU=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-645-cedi-sRKPgmiUeKUr2TT2A-1; Thu, 08 Aug 2024 04:05:50 -0400
+X-MC-Unique: cedi-sRKPgmiUeKUr2TT2A-1
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-66619cb2d3eso17365807b3.2
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 01:05:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723103890; x=1723708690;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/jA7xNKwer5X7IcOleIJPAXaqZZOBhl5rPR2VUKiDHA=;
- b=gmIYz7JzJypCm0Fr6Sa6ZCM3i3m2i7Mxp4kE/Skky1iI0BtwHHwck3XuBHzDh4DqsT
- r26HzEJsqHT4eLd4Ws6Fg2UgeBpRgXU8BGnwxk+I1kLzyVSrnNyoIbCO67zw2AUmrCtG
- /NVD/yChgIDMDdGWAf/OJNgrXqx4cW9JlR6lRbfvY1SPSs5iLUS8DlZs83tEA5LnKA/l
- N4s/Lkl2DSAQrXS7x2R3DUmcGaFzSKHAX/+z1n8NRNRpC5lZlxNUzK2UVq13/ZNqGdRF
- qvIIvls4BA6qt4wYPnWjTI1RPeIep1xiPooC4MmITMc8WW9fS+tjZu307dWZZZKhFLRX
- 00uA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXikhOMUaQ6x9lXO2/wgeEgl2eu35/+aiKNU1MQr3F1H4062lRHJH+UZj4oEyzbaXLIDq0gHR45Nj5YSuLOqVft36Urk8A=
-X-Gm-Message-State: AOJu0Yx1fMooDX4qQQePMbJ/rmTujvbZOdYTua6zDOeIq2CK29q+ntd8
- gQ5k3JptVq6prk0rKvpLjQUoxQnx64YBdPYgVtYcXAjQqnc7omBymm63MT1tsi4=
-X-Google-Smtp-Source: AGHT+IG/mDEjY6+3gPwg+sL4Gz8jp4PzP6hVZ5gSB+BMXwIWJDAPKzWNDV9yc1Pt2j0ecPkolgDFtw==
-X-Received: by 2002:a17:907:c888:b0:a7d:89ac:9539 with SMTP id
- a640c23a62f3a-a8091ec7f4bmr73870666b.7.1723103890362; 
- Thu, 08 Aug 2024 00:58:10 -0700 (PDT)
-Received: from meli-email.org (adsl-122.37.6.3.tellas.gr. [37.6.3.122])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a7dc9bc3c6esm728230566b.15.2024.08.08.00.58.09
+ d=1e100.net; s=20230601; t=1723104350; x=1723709150;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NJQ9wEhXTtcEv+urqrf3Td9TtD9S7IBK5VxBmKau9jM=;
+ b=lI0rM4ccsJ6pl7d1W4hRtCxaAZTOQ0chtXTf5Qj05dINiJmUt+stFOk8iqYSG0tyeO
+ hc3BRWGER2ivfGEvpuJVFnEwY4iL5l6xmUV3UNKBxnvIRv/UxcLaXRhu2vyJdD1B58L0
+ Z+dGuFHOVxink1VrXHZkaKP7AuTGx/ZjQY833CjOdR/+MoRKOtVxLrdCGztfL2I0LaBg
+ W38ZuwINrz7llg+dQNuazzTC/fzYs9bRKq/oed/vmCpNsjrNjoJ8wpQD1m8v69xXmUGK
+ 6GjMkzIuu+dxkWj0Sj6CFx7cjOh51cdQkhpyn+vzS/ztrOZqDq9dQFgwUisC+OlUUOFP
+ OfWA==
+X-Gm-Message-State: AOJu0YxjbAmUQj1pNibCpCOEyn/dfdOxek/yCz1GllmEgsaMnJFu3nSP
+ ttXeQaR3OfADNRdKIJC16VqYdZu8zsXeBtLGwlvAUbWODuwnRRcDZ9TaGGTzLIddLOzIJ+6Kv91
+ PG47P/OYct3yF5HJrk4dqVZAPPXCwZ80J5J+QiSR9pW8jvY2K3wi1Asr1N96pUz9KBONe8VDpnB
+ Joacxf8sasMwsWOAvuNG1Ev42jdkt8pdhvoqM0
+X-Received: by 2002:a05:690c:2e87:b0:64b:44b4:e13 with SMTP id
+ 00721157ae682-69bfb5f906bmr9711727b3.28.1723104350038; 
+ Thu, 08 Aug 2024 01:05:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHOf8K+Oe4apAzhC8azNOZUJXSXkkx+Jkwc72FWMLOF2CCHkLzu6Lh+9dw0Hx2woYO8e70erQ==
+X-Received: by 2002:a05:690c:2e87:b0:64b:44b4:e13 with SMTP id
+ 00721157ae682-69bfb5f906bmr9711417b3.28.1723104349592; 
+ Thu, 08 Aug 2024 01:05:49 -0700 (PDT)
+Received: from step1.redhat.com (host-87-11-6-248.retail.telecomitalia.it.
+ [87.11.6.248]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a378690d0dsm133898785a.93.2024.08.08.01.05.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Aug 2024 00:58:10 -0700 (PDT)
-Date: Thu, 08 Aug 2024 10:49:35 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Peter Maydell <peter.maydell@linaro.org>,
- Alex Benn=?UTF-8?B?w6k=?= e <alex.bennee@linaro.org>,
- "Daniel P. Berrang=?UTF-8?B?w6k=?= " <berrange@redhat.com>,
- Marc-Andr=?UTF-8?B?w6kg?=Lureau <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Gustavo Romero <gustavo.romero@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, rowan.hart@intel.com,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [RFC PATCH v6 0/5] rust-pl011-rfc-v6
-User-Agent: meli 0.8.7
-References: <rust-pl011-rfc-v6.git.manos.pitsidianakis@linaro.org>
- <f989d834-706a-4708-be81-f6447237425e@redhat.com>
-In-Reply-To: <f989d834-706a-4708-be81-f6447237425e@redhat.com>
-Message-ID: <hw3gw.4cxgt9epvs2@linaro.org>
+ Thu, 08 Aug 2024 01:05:48 -0700 (PDT)
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Hanna Reitz <hreitz@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, qemu-stable@nongnu.org
+Subject: [PATCH] block/blkio: use FUA flag on write zeroes only if supported
+Date: Thu,  8 Aug 2024 10:05:45 +0200
+Message-ID: <20240808080545.40744-1-sgarzare@redhat.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,89 +104,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 08 Aug 2024 09:10, Paolo Bonzini <pbonzini@redhat.com> wrote:
->On 8/4/24 23:04, Manos Pitsidianakis wrote:
->> Changes
->> =======
->> 
->> - Setting MSRV to 1.77.0:
->>    * cstr crate MSRV is 1.64, which is more recent than Debian bookworm
->>      (1.63.0) <https://github.com/upsuper/cstr/blob/master/Cargo.toml>
->> 
->>    * pl011's dependencies (mostly proc-macro2) don't support 1.63.0
->
->proc-macro2 is listed as supporting 1.56.0, and in general I don't see 
->particularly high MSRVs for any of your dependencies.
+libblkio supports BLKIO_REQ_FUA with write zeros requests only since
+version 1.4.0, so let's inform the block layer that the blkio driver
+supports it only in this case. Otherwise we can have runtime errors
+as reported in https://issues.redhat.com/browse/RHEL-32878
 
-The issue was with transitive deps, proc-macro-error crates etc stopped 
-compiling when lowering the version, which means we'd have to patch the 
-dependency's dependency to see if that'd work; otherwise, yes!
+Fixes: fd66dbd424 ("blkio: add libblkio block driver")
+Cc: qemu-stable@nongnu.org
+Buglink: https://issues.redhat.com/browse/RHEL-32878
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+---
+ meson.build   | 2 ++
+ block/blkio.c | 6 ++++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
->
->cstr needs to use version 0.2.10 in order to work with Rust 1.63.0.
->
->As discussed on IRC, there are obvious advantages and disadvantages to 
->using meson.  The main disadvantage is the extra work when bumping the 
->version of the dependencies or when adding a new one.  The advantage is 
->more uniformity and less moving parts.  Overall, I think it's doable to 
->use it.  Dependencies will mostly be added in the early days of QEMU, 
->and won't be updated too often due to our MSRV constraints.
->
->The automatic Cargo.toml support in Meson is promising, but it doesn't 
->work right now when cross compiling build-time dependencies (which have 
->to use "native: true" or Meson rightly warns about mixing build-machine 
->and host-machine binaries).  So right now we'd have to write meson.build 
->by hand for those.
->
->My suggestion is however to name our manually-managed subprojects with 
->the same convention that is used by "method = cargo" in Meson 1.5.0+, 
->i.e. name-APIVER-rs:
->
->	arbitrary-int-1-rs.wrap
->	bilge-0.2-rs.wrap
->	bilge-impl-0.2-rs.wrap
->	either-1-rs.wrap
->	itertools-0.11-rs.wrap
->	proc-macro2-1-rs.wrap
->	proc-macro-error-1-rs.wrap
->	proc-macro-error-attr-1-rs.wrap
->	quote-1-rs.wrap
->	syn-2-rs.wrap
->	unicode-ident-1-rs.wrap
->
->and to access dependencies using meson.override_dependency() and 
->dependency(), instead of get_variable().  This at least reduces future 
->churn.
+diff --git a/meson.build b/meson.build
+index c2a050b844..81ecd4bae7 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2305,6 +2305,8 @@ config_host_data.set('CONFIG_BLKIO', blkio.found())
+ if blkio.found()
+   config_host_data.set('CONFIG_BLKIO_VHOST_VDPA_FD',
+                        blkio.version().version_compare('>=1.3.0'))
++  config_host_data.set('CONFIG_BLKIO_WRITE_ZEROS_FUA',
++                       blkio.version().version_compare('>=1.4.0'))
+ endif
+ config_host_data.set('CONFIG_CURL', curl.found())
+ config_host_data.set('CONFIG_CURSES', curses.found())
+diff --git a/block/blkio.c b/block/blkio.c
+index 3d9a2e764c..e0e765af63 100644
+--- a/block/blkio.c
++++ b/block/blkio.c
+@@ -899,8 +899,10 @@ static int blkio_open(BlockDriverState *bs, QDict *options, int flags,
+     }
+ 
+     bs->supported_write_flags = BDRV_REQ_FUA | BDRV_REQ_REGISTERED_BUF;
+-    bs->supported_zero_flags = BDRV_REQ_FUA | BDRV_REQ_MAY_UNMAP |
+-                               BDRV_REQ_NO_FALLBACK;
++    bs->supported_zero_flags = BDRV_REQ_MAY_UNMAP | BDRV_REQ_NO_FALLBACK;
++#ifdef CONFIG_BLKIO_WRITE_ZEROS_FUA
++    bs->supported_zero_flags |= BDRV_REQ_FUA;
++#endif
+ 
+     qemu_mutex_init(&s->blkio_lock);
+     qemu_co_mutex_init(&s->bounce_lock);
+-- 
+2.45.2
 
-Yes that makes sense!
-
->
->As to the individual patches:
->
->- for patch 1, roughly the same changes I had made for cargo can be done 
->for rustc, so that the cross file contains the right --target option. 
->I'll reply to the individual patch.
-
-That'd be great since I'm not familiar with how the cross file works.
-
->
->- for patch 2, the only issue is that you are specifying 
->--no-include-path-detection and that breaks for me on Fedora.  I have 
->not finished testing but it seems that it's enough to remove that line.
-
-I had added that when trying to debug bindgen failing to find headers 
-when dependencies were added (e.g. linux io_uring) or when compiling on 
-macos, let's test again to see if it's indeed unnecessary!
-
->
->- for patches 4 and 5, I have minimal comments on the meson.build.  For 
->patch 5, however, I have already done the above renaming as part of 
->getting cross compilation to work.  We can synchronize on IRC on the 
->best way of getting the changes to you.
->
-
-Sounds good to me.
-
-Thanks,
-Manos
 
