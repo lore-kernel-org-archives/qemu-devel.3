@@ -4,87 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C2E5C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 00:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE24EC52D6F
+	for <qemu-devel@archiver.kernel.org>; Thu,  8 Aug 2024 00:30:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sbr0F-0006YL-V8; Wed, 07 Aug 2024 20:27:39 -0400
+	id 1sbr2E-0002lG-BY; Wed, 07 Aug 2024 20:29:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sbr0D-0006UZ-3D; Wed, 07 Aug 2024 20:27:37 -0400
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sbr0A-0006RD-AD; Wed, 07 Aug 2024 20:27:35 -0400
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-4f52cc4d3beso152185e0c.3; 
- Wed, 07 Aug 2024 17:27:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723076852; x=1723681652; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SFn6ZBvk+7iPhdLc5yE6mp5/vDSL/nn4LQe763p1BN4=;
- b=MVlKK6EbBoboiwjxT6thZFjUUDGKo/E1hIgUo1yaaq+9Doam3tIjhyhRQsBWO20iyt
- cXq9LO60Iq8hFHW2px4NX8W7TdMA2FMGsWCHuSsqtTEVNEJcoU6QHl3qjuTsRsWgD9lj
- N525SOp0jv1X8ZL8/uEkKMhjCHENtXr9ZmtZYMs1lRXuXLQyFI+JWI0qOjOwr3dTNMeK
- LTdsjzjkxcl8unmzOeIgwV83W/YjoKn1fac/KujfQYy+8xIXkQ2wq9RVLf3DNPJKmVej
- DA5a8vbndXRPJ0EOaLGU5fo+qf9Q3YchsIVf3BklnNDenDFuLYKFnS+ColtdVOFYh6Fl
- spcA==
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sbr2B-0002kX-RV
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 20:29:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sbr28-0006Yt-SJ
+ for qemu-devel@nongnu.org; Wed, 07 Aug 2024 20:29:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723076974;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WrMaMzXxTXz5EkN9dkHMxGGBtGK6F8RPYjQSvmi0P7w=;
+ b=FU/uSV69jtLgHyxDt9ACmSUAOfj8YYNP3L2gM+rTj88/WmgV3vfTr1lGlegAyMweC+B6jB
+ 4tQeMPlPopWedPNrUDeTQk3UJ5V1s/vxzA2nmTD5Q/vNHGfanqxOszVz3kTo1ka0ir+Nij
+ wOqJ7bklfrJOeXcMnQpuaFa1yg06swE=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-632-025bYt-xOu6uQ2hWgT9maQ-1; Wed, 07 Aug 2024 20:29:33 -0400
+X-MC-Unique: 025bYt-xOu6uQ2hWgT9maQ-1
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-1ff3dfaa090so4380875ad.3
+ for <qemu-devel@nongnu.org>; Wed, 07 Aug 2024 17:29:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723076852; x=1723681652;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SFn6ZBvk+7iPhdLc5yE6mp5/vDSL/nn4LQe763p1BN4=;
- b=fNgxeigxJaNWOI1Piw0scWhACKNAoPCZluBxZWo259WrFS9qKd0090P9ev+BtzKAJB
- vMQtkTn1UwOSUZPF2zU6SluleMC10ZiH5OGta5vrh31vgNSa+m0RmEjrG6lXm7R4kjvw
- t/0bba6v/5e2xWbnrjHK3DPKW/YdYueSGw6UQ8YN+x9m6dRtWz9W645fVMhdlr0AYj6v
- /J29x/zmPV9w6l/Zqhn9bgw4Gzuoh2ZS56Y2LJvldaBP7AA0mi7pZQrANe38YysQs4/M
- 3Q6aIvOk7PA2YNJ7kGaay6x8cpVdghzZR99xk7/JR7rbjVfAKztOGnDx9u1I9VGBjenm
- O9ig==
+ d=1e100.net; s=20230601; t=1723076972; x=1723681772;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WrMaMzXxTXz5EkN9dkHMxGGBtGK6F8RPYjQSvmi0P7w=;
+ b=HqRCm6soyo5isdeR12IM2PIkuABL9U0ZgVka+/+sZ9oE2pQB6XyHBP98+pdOxpYyPT
+ uxC0Esgd7SKQz94Z8AU/bDirttrbK7nWgaW4viNwfy4smnky2xTcng56znbeHjp5bcMJ
+ t/HPn0Dih4C/KsZKzr0+iDweXdwWirO1bEBQxr42tRPR6rk/q/qaeYqIRekHyHN5PrG7
+ AULeZYBWLjiev+t6bSN5EzP7MG0Q35Y2muKI/cYZjmqAh5px1QAUUjOCUlRFdjHzNUTA
+ 0WjKG/larTb3zqhu2IQvuu8BYKdmlI2TFD5JRdVmgcddIlIvm0p+bdmQSxjSdJQrfOsX
+ TSfw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURMHCBe9STM93Q0x8HdTRirFb1Yk8GVT7cHCxz5PIvX41Xg/SGwHANnlJ0YBmWfZIdsXYl8pp9CrGZC1Lt/87atKZueps1tlTb86fK7ZTytvqW7g0s4Sel2NWp4g==
-X-Gm-Message-State: AOJu0YxsEE1PL7YNAEnSpOL+xt6lFd/+mZbJr24nYriT8ikTyDtiUEEe
- 7xFT49e3pQSQuqhy+VF/SmOL7eZcjBhaky5DjaAXB6uCsNEsQvsramSSeDru+/Tj6QUTiMuMpBR
- i1vGYHemnw3Y/yr33U7mAPh9vqbM=
-X-Google-Smtp-Source: AGHT+IHOEcuFgc/LlvqAFTY5LKTuRg1U4xmhyiBi2SjkuRH3PYrQC768O7KJgFZ5Dru8jX++Fr6iWIz2KWrfDKwpEKA=
-X-Received: by 2002:a05:6102:3584:b0:494:829:835b with SMTP id
- ada2fe7eead31-495c5b57439mr558935137.9.1723076852148; Wed, 07 Aug 2024
- 17:27:32 -0700 (PDT)
+ AJvYcCXk7SW/vBeePW8qr9WaTaVGtIKvZFnv6EYUJPAuOJou5bYZLWOFOE3Iy9S8YTkmMU74dGvBfj8RvYYWS54IOadpNG4gEpU=
+X-Gm-Message-State: AOJu0YwtHtdadxiwvFFOPfKiHCrkyo+QpLUe46UwtIlrqYfixqDnSfj+
+ puWrj94tmlzE2FkrUo+jmLIqDZKmBoRUvRl/pdfDgneI62Q+nJbcYklMpNGqCcg7KyCHkRZDDq5
+ z6pV09J6oN8maoUXHSx1zJBH3LG4TW4l2vkXBpQYLtiJIgkctYbQ4
+X-Received: by 2002:a17:902:e80c:b0:1fb:cffb:cfc1 with SMTP id
+ d9443c01a7336-2009521fb01mr5130205ad.4.1723076972063; 
+ Wed, 07 Aug 2024 17:29:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGBncdwxziYe7JvGTroaGSWPkSoxY8xRn0+U/VoD5PeDU1U/qRgnNhhYHydMyJudRHHscqakQ==
+X-Received: by 2002:a17:902:e80c:b0:1fb:cffb:cfc1 with SMTP id
+ d9443c01a7336-2009521fb01mr5129885ad.4.1723076971595; 
+ Wed, 07 Aug 2024 17:29:31 -0700 (PDT)
+Received: from [192.168.68.54] ([43.252.112.201])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1ff58f21718sm112426825ad.59.2024.08.07.17.29.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 07 Aug 2024 17:29:30 -0700 (PDT)
+Message-ID: <c2dce623-ee44-47d5-b9cb-73481a86b75f@redhat.com>
+Date: Thu, 8 Aug 2024 10:29:16 +1000
 MIME-Version: 1.0
-References: <20240723-counter_delegation-v2-0-c4170a5348ca@rivosinc.com>
- <20240723-counter_delegation-v2-13-c4170a5348ca@rivosinc.com>
- <20240806-9fdad33468ec103d83a85e77@orel>
- <3c09bbbe-857b-4566-963a-790497232bbf@ventanamicro.com>
- <CAKmqyKNgJKBFw7OnwbgbqxA65PR4GSjdUEKdKVw-nYv+e0P58w@mail.gmail.com>
- <CAHBxVyFFa7mQaS4jPkT=aK4gTF3AshpQZNeRhBiZOHX7bhQQsg@mail.gmail.com>
-In-Reply-To: <CAHBxVyFFa7mQaS4jPkT=aK4gTF3AshpQZNeRhBiZOHX7bhQQsg@mail.gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 8 Aug 2024 10:27:05 +1000
-Message-ID: <CAKmqyKOX883p+sgFs6s649pkH0BA9aKcrTr7=XOT=Xy8mNLzng@mail.gmail.com>
-Subject: Re: [PATCH v2 13/13] target/riscv: Enable PMU related extensions to
- preferred rule
-To: Atish Kumar Patra <atishp@rivosinc.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
- alistair.francis@wdc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC V3 00/29] Support of Virtual CPU Hotplug for ARMv8 Arch
+To: Salil Mehta <salil.mehta@huawei.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "mst@redhat.com"
+ <mst@redhat.com>
+Cc: "maz@kernel.org" <maz@kernel.org>,
+ "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "lpieralisi@kernel.org" <lpieralisi@kernel.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "imammedo@redhat.com" <imammedo@redhat.com>,
+ "andrew.jones@linux.dev" <andrew.jones@linux.dev>,
+ "david@redhat.com" <david@redhat.com>, "philmd@linaro.org"
+ <philmd@linaro.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "will@kernel.org" <will@kernel.org>, "ardb@kernel.org" <ardb@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "rafael@kernel.org" <rafael@kernel.org>,
+ "borntraeger@linux.ibm.com" <borntraeger@linux.ibm.com>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
+ "npiggin@gmail.com" <npiggin@gmail.com>,
+ "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>,
+ "linux@armlinux.org.uk" <linux@armlinux.org.uk>,
+ "darren@os.amperecomputing.com" <darren@os.amperecomputing.com>,
+ "ilkka@os.amperecomputing.com" <ilkka@os.amperecomputing.com>,
+ "vishnu@os.amperecomputing.com" <vishnu@os.amperecomputing.com>,
+ "karl.heubaum@oracle.com" <karl.heubaum@oracle.com>,
+ "miguel.luis@oracle.com" <miguel.luis@oracle.com>,
+ "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>,
+ zhukeqian <zhukeqian1@huawei.com>,
+ "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
+ "wangyanan (Y)" <wangyanan55@huawei.com>,
+ "jiakernel2@gmail.com" <jiakernel2@gmail.com>,
+ "maobibo@loongson.cn" <maobibo@loongson.cn>,
+ "lixianglai@loongson.cn" <lixianglai@loongson.cn>,
+ "shahuang@redhat.com" <shahuang@redhat.com>,
+ "zhao1.liu@intel.com" <zhao1.liu@intel.com>, Linuxarm <linuxarm@huawei.com>
+References: <20240613233639.202896-1-salil.mehta@huawei.com>
+ <41fbfa5a-a10f-4ca0-8a52-e447043ff306@redhat.com>
+ <ed0a5631e0674c2aa4679f2388f40127@huawei.com>
+ <5843f79d-c9b7-45bf-a2b1-2ae4c7babf46@redhat.com>
+ <44d06db6ec1b416d8817b7cf5043ddf8@huawei.com>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <44d06db6ec1b416d8817b7cf5043ddf8@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,131 +141,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 7, 2024 at 5:44=E2=80=AFPM Atish Kumar Patra <atishp@rivosinc.c=
-om> wrote:
->
-> On Tue, Aug 6, 2024 at 7:01=E2=80=AFPM Alistair Francis <alistair23@gmail=
-.com> wrote:
-> >
-> > On Wed, Aug 7, 2024 at 2:06=E2=80=AFAM Daniel Henrique Barboza
-> > <dbarboza@ventanamicro.com> wrote:
-> > >
-> > >
-> > >
-> > > On 8/6/24 5:46 AM, Andrew Jones wrote:
-> > > > On Tue, Jul 23, 2024 at 04:30:10PM GMT, Atish Patra wrote:
-> > > >> Counter delegation/configuration extension requires the following
-> > > >> extensions to be enabled.
-> > > >>
-> > > >> 1. Smcdeleg - To enable counter delegation from M to S
-> > > >> 2. S[m|s]csrind - To enable indirect access CSRs
-> > > >> 3. Smstateen - Indirect CSR extensions depend on it.
-> > > >> 4. Sscofpmf - To enable counter overflow feature
-> > > >> 5. S[m|s]aia - To enable counter overflow feature in virtualizatio=
-n
-> > > >> 6. Smcntrpmf - To enable privilege mode filtering for cycle/instre=
-t
-> > > >>
-> > > >> While first 3 are mandatory to enable the counter delegation,
-> > > >> next 3 set of extension are preferred to enable all the PMU relate=
-d
-> > > >> features.
-> > > >
-> > > > Just my 2 cents, but I think for the first three we can apply the c=
-oncept
-> > > > of extension bundles, which we need for other extensions as well. I=
-n those
-> > > > cases we just auto enable all the dependencies. For the three prefe=
-rred
-> > > > extensions I think we can just leave them off for 'base', but we sh=
-ould
-> > > > enable them by default for 'max' along with Ssccfg.
-> >
->
-> Max cpu will have everything enabled by default. The problem with max
-> cpu is that you
-> may not want to run all the available ISA extensions while testing perf.
->
-> > Agreed
-> >
-> > >
-> > > I like this idea. I would throw in all these 6 extensions in a 'pmu_a=
-dvanced_ops'
-> > > (or any other better fitting name for the bundle) flag and then 'pmu_=
-advanced_ops=3Dtrue'
-> > > would enable all of those. 'pmu_advanced_ops=3Dtrue,smcntrpmf=3Dfalse=
-' enables all but
-> > > 'smcntrpmf' and so on.
-> > >
->
-> I thought distinguishing preferred vs implied would be useful because
-> it would allow the user
-> to clearly understand which is mandated by ISA vs which would be good to =
-have.
+Hi Salil,
 
-It's not really clear though what extensions are good to have. Other
-people might think differently about the extensions. It also then
-means we end up with complex combinations of extensions to manage.
+On 8/8/24 9:48 AM, Salil Mehta wrote:
+>>   On 8/7/24 11:27 PM, Salil Mehta wrote:
+>>   >
+>>   > Let me figure out this. Have you also included the below patch along
+>>   > with the architecture agnostic patch-set accepted in this Qemu cycle?
+>>   >
+>>   > https://lore.kernel.org/all/20240801142322.3948866-3-peter.maydell@lin
+>>   > aro.org/
+>>   >
+>>   
+>>   There are no vCPU fd to be parked and unparked when the core dump
+>>   happenes. I tried it, but didn't help. I added more debugging messages and
+>>   the core dump is triggered in the following path. It seems 'cpu-
+>>   >sve_vq.map' isn't correct since it's populated in CPU realization path, and
+>>   those non-cold-booted CPUs aren't realized in the booting stage.
+> 
+> 
+> Ah, I've to fix the SVE support. I'm already working on it and will be part of
+> the RFC V4.
+> 
+> Have you tried booting VM by disabling the SVE support?
+> 
 
->
-> The good to have extensions can be disabled similar to above but not
-> the mandatory ones.
->
-> > > As long as we document what the flag is enabling I don't see any prob=
-lems with it.
-> > > This is how profiles are implemented after all.
-> >
-> > I only worry that we end up with a huge collection of flags that users
-> > need to decipher.
-> >
->
-> My initial idea was a separate flag as well. But I was not sure if
-> that was good for the
-> above reason. This additional custom pmu related option would be lost
-> in that huge collection.
+I'm able to boot the guest after SVE is disabled by clearing the corresponding
+bits in ID_AA64PFR0, as below.
 
-I do feel a separate flag is better than trying to guess what extra
-extensions the user wants enabled.
+static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+{
+     :
 
-I don't love either though, isn't this what profiles is supposed to fix!
+     /*
+      * SVE is explicitly disabled. Otherwise, the non-cold-booted
+      * CPUs can't be initialized in the vCPU hotplug scenario.
+      */
+     err = read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64pfr0,
+                          ARM64_SYS_REG(3, 0, 0, 4, 0));
+     ahcf->isar.id_aa64pfr0 &= ~R_ID_AA64PFR0_SVE_MASK;
+}
 
->
-> > I guess with some good documentation this wouldn't be too confusing tho=
-ugh.
-> >
->
-> Sure. It won't be confusing but most users may not even know about it
-> without digging.
+However, I'm unable to hot-add a vCPU and haven't get a chance to look
+at it closely.
 
-At that point they can use the max CPU or just manually enable the
-extensions though.
+(qemu) device_add host-arm-cpu,id=cpu,socket-id=1
+(qemu) [  258.901027] Unable to handle kernel write to read-only memory at virtual address ffff800080fa7190
+[  258.901686] Mem abort info:
+[  258.901889]   ESR = 0x000000009600004e
+[  258.902160]   EC = 0x25: DABT (current EL), IL = 32 bits
+[  258.902543]   SET = 0, FnV = 0
+[  258.902763]   EA = 0, S1PTW = 0
+[  258.902991]   FSC = 0x0e: level 2 permission fault
+[  258.903338] Data abort info:
+[  258.903547]   ISV = 0, ISS = 0x0000004e, ISS2 = 0x00000000
+[  258.903943]   CM = 0, WnR = 1, TnD = 0, TagAccess = 0
+[  258.904304]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[  258.904687] swapper pgtable: 4k pages, 48-bit VAs, pgdp=00000000b8e24000
+[  258.905258] [ffff800080fa7190] pgd=10000000b95b0003, p4d=10000000b95b0003, pud=10000000b95b1003, pmd=00600000b8c00781
+[  258.906026] Internal error: Oops: 000000009600004e [#1] PREEMPT SMP
+[  258.906474] Modules linked in:
+[  258.906705] CPU: 0 UID: 0 PID: 29 Comm: kworker/u8:1 Not tainted 6.11.0-rc2-gavin-gb446a2dae984 #7
+[  258.907338] Hardware name: QEMU KVM Virtual Machine, BIOS edk2-stable202402-prebuilt.qemu.org 02/14/2024
+[  258.908009] Workqueue: kacpi_hotplug acpi_hotplug_work_fn
+[  258.908401] pstate: 63400005 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+[  258.908899] pc : register_cpu+0x140/0x290
+[  258.909195] lr : register_cpu+0x128/0x290
+[  258.909487] sp : ffff8000817fba10
+[  258.909727] x29: ffff8000817fba10 x28: 0000000000000000 x27: ffff0000011f9098
+[  258.910246] x26: ffff80008167b1b0 x25: 0000000000000001 x24: ffff80008153dad0
+[  258.910762] x23: 0000000000000001 x22: ffff0000ff7de210 x21: ffff8000811b9a00
+[  258.911279] x20: 0000000000000000 x19: ffff800080fa7190 x18: ffffffffffffffff
+[  258.911798] x17: 0000000000000000 x16: 0000000000000000 x15: ffff000005a46a1c
+[  258.912326] x14: ffffffffffffffff x13: ffff000005a4632b x12: 0000000000000000
+[  258.912854] x11: 0000000000000040 x10: 0000000000000000 x9 : ffff8000808a6cd4
+[  258.913382] x8 : 0101010101010101 x7 : 7f7f7f7f7f7f7f7f x6 : fefefefefefefeff
+[  258.913906] x5 : ffff0000053fab40 x4 : ffff0000053fa920 x3 : ffff0000053fabb0
+[  258.914439] x2 : ffff000000de1100 x1 : ffff800080fa7190 x0 : 0000000000000002
+[  258.914968] Call trace:
+[  258.915154]  register_cpu+0x140/0x290
+[  258.915429]  arch_register_cpu+0x84/0xd8
+[  258.915726]  acpi_processor_add+0x480/0x5b0
+[  258.916042]  acpi_bus_attach+0x1c4/0x300
+[  258.916334]  acpi_dev_for_one_check+0x3c/0x50
+[  258.916689]  device_for_each_child+0x68/0xc8
+[  258.917012]  acpi_dev_for_each_child+0x48/0x80
+[  258.917344]  acpi_bus_attach+0x84/0x300
+[  258.917629]  acpi_bus_scan+0x74/0x220
+[  258.917902]  acpi_scan_rescan_bus+0x54/0x88
+[  258.918211]  acpi_device_hotplug+0x208/0x478
+[  258.918529]  acpi_hotplug_work_fn+0x2c/0x50
+[  258.918839]  process_one_work+0x15c/0x3c0
+[  258.919139]  worker_thread+0x2ec/0x400
+[  258.919417]  kthread+0x120/0x130
+[  258.919658]  ret_from_fork+0x10/0x20
+[  258.919924] Code: 91064021 9ad72000 8b130c33 d503201f (f820327f)
+[  258.920373] ---[ end trace 0000000000000000 ]---
 
-Alistair
+Thanks,
+Gavin
 
-> That's why I chose to use a standard extension which covers the basic
-> PMU access directly in S-mode.
->
-> The future extensions such as CTR or Sampling events would also
-> benefit by just adding the Ssccfg in the preferred rule
-> which in turn will enable other preferred/mandatory extensions.
->
-> > Alistair
-> >
-> > >
-> > > With this bundle we can also use implied rule only if an extension re=
-ally needs
-> > > (i.e. it breaks without) a dependency being enabled, instead of overl=
-oading it
-> > > with extensions that 'would be nice to have together' like it seems t=
-o be the
-> > > case for the last 3 extensions in that list.
-> > >
-> > > I believe users would benefit more from a single flag to enable every=
-thing and
-> > > be done with it.
-> > >
-> > >
-> > > Thanks,
-> > >
-> > > Daniel
+
 
