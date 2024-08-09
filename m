@@ -4,93 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B458C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 06:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 343F2C52D71
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 06:51:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scJGZ-0001D7-2U; Fri, 09 Aug 2024 02:38:23 -0400
+	id 1scJSq-0007Qc-0H; Fri, 09 Aug 2024 02:51:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1scJGU-0001CH-MY
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 02:38:18 -0400
-Received: from torg.zytor.com ([2607:7c80:54:3::138] helo=mail.zytor.com)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1scJSi-0007NY-HU
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 02:50:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1scJGS-000864-SG
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 02:38:18 -0400
-Received: from [192.168.7.205] ([71.202.166.45]) (authenticated bits=0)
- by mail.zytor.com (8.17.2/8.17.1) with ESMTPSA id 4796cCfI1587367
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
- Thu, 8 Aug 2024 23:38:13 -0700
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 4796cCfI1587367
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
- s=2024071601; t=1723185493;
- bh=gmy6wn7guUM68cWbSyFVbOpJAFyd806LQnbuzj5ZsAw=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=KnlW1wSlf0QlN/zZMuO0CXnolWdyxtXjVK8468a87tILla/6jI9GdksMLYT/CuDre
- jJNYN+/yDVIMeKFDH/XHbwNSPyFg7STGfpwbZA7equtqP4qo2KE475iUNZ2CpUVPC2
- oZFqWph7uzg6Jfc16+UHxPX3Ft2hvlQODLoqa3F/zlWxLo8ByEos0JNaYrj2wroISP
- /LbTgcaVBjQwKGbalNjXt/6fDl1dHw8SY6ejOQX5x8xW5sMCwNQ7x/cKTQid97Lop8
- 0W2NRek/wQWjeyRauD4eFcxgpVec4/OB8wXhQ/pD96jdy910UZwTJoihsQ2tJmFKzV
- 0RvWnt7w+IpbA==
-Message-ID: <f4ece0e8-b2b3-4178-b281-6ba9cc9cab8a@zytor.com>
-Date: Thu, 8 Aug 2024 23:38:11 -0700
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1scJSg-00025V-OE
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 02:50:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723186253;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=r7Z50sX7S2lP3FksAHizbuHlweuHnvbw/fal6Z+4SqY=;
+ b=audfpNKx3ob2z/psZ+ImdkblfVY4xvAk8WasTznH7PkFNXYNznwRUBB02m2jaIMnyOe/oR
+ 1tTjP+yIPxtuPx0+kRGFy/4njDzjEnCRzHGlDD1LRkEHnIl8lD7oAFkJQQLIU7UbqeFXex
+ ySb+jhE5SCzJqJ3XJORDKyjQEZ7BGeU=
+Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
+ [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-237-NZNcO0XtNeiYP0Bwzl6NhA-1; Fri, 09 Aug 2024 02:50:51 -0400
+X-MC-Unique: NZNcO0XtNeiYP0Bwzl6NhA-1
+Received: by mail-oi1-f198.google.com with SMTP id
+ 5614622812f47-3db174abaa0so2097151b6e.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 23:50:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723186250; x=1723791050;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=r7Z50sX7S2lP3FksAHizbuHlweuHnvbw/fal6Z+4SqY=;
+ b=HYeaw7Z8EI+iiR+9H2T/XgvJ75W9GdqAHWbG7497kVYwNUAMAg27hUc58O50wg/z8P
+ nnrU1NFk+c6VU/hrMcYaobWA4cY7HthkzTw35nLhFJ6Cdo75Iph8n3OOQknHYBxqaZXH
+ CvoHpd/DJwTMsATq41Vcwxryk8Wwa026BltI3QXxhbte0U1hyf8NOkMC2crQnTnJgNNc
+ 8Gt/nW4zNgL4ixYcSefI8Q62D6Kb8N0/Z5PAGTHCpTaxBer+6P9jAGGyBXShKSwwjTQ7
+ Hv0nVuRKZ/QCLXXAvVrAyxdRb6BZkR5gOemVdPBIJK1ZA6MkmUTq/tVEaE13mDMggtlf
+ K3DA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUWVQJaq6vn6ReJL/Ybzk2MOGRQlcCgj9JqrwssP7votXX3dohK4N1e/EeF//8x7wbsd5YQZAhqPBbeNr8dNC0udqxmH6c=
+X-Gm-Message-State: AOJu0YwIlS70qtOqiddrvvfnsc/ZkxOU5/hU8pD2BqoGw80wIum+Tleo
+ K7SsgAp5VuqpXF8UgmznYPvgiptLfbE7vxMEW3dXjatoR9kU2OcVFgBBTq0PsTNPtpegf/70tdJ
+ u8BQIM78SF5qio+Ei08GMzfN1QS07rmEPLWl+rrwcyav9V80bWal1
+X-Received: by 2002:a05:6808:1b08:b0:3da:a48b:d1e6 with SMTP id
+ 5614622812f47-3dc4167be9bmr622733b6e.16.1723186250400; 
+ Thu, 08 Aug 2024 23:50:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFHkTD65z+yldFUt1QaxBa4CrGdN0oQ16aB+/2N5VM7yzbXUvvKg2qlQyzVOkVm4Ijwc9puiw==
+X-Received: by 2002:a05:6808:1b08:b0:3da:a48b:d1e6 with SMTP id
+ 5614622812f47-3dc4167be9bmr622715b6e.16.1723186249971; 
+ Thu, 08 Aug 2024 23:50:49 -0700 (PDT)
+Received: from localhost.localdomain ([115.96.114.241])
+ by smtp.googlemail.com with ESMTPSA id
+ d2e1a72fcca58-710cb2d11besm2042982b3a.127.2024.08.08.23.50.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Aug 2024 23:50:49 -0700 (PDT)
+From: Ani Sinha <anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, qemu-trivial@nongnu.org,
+ zhao1.liu@intel.com, kvm@vger.kernel.org, qemu-devel@nongnu.org
+Subject: [PATCH v3] kvm: replace fprintf with error_report/printf() in
+ kvm_init()
+Date: Fri,  9 Aug 2024 12:19:40 +0530
+Message-ID: <20240809064940.1788169-1-anisinha@redhat.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/3] target/i386: Add VMX control bits for nested FRED
- support
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org
-References: <20240807081813.735158-1-xin@zytor.com>
- <20240807081813.735158-3-xin@zytor.com> <ZrOZkYuSKhYH0ymi@intel.com>
- <f4422fc2-d8fc-4902-80c7-0e2dda5bba59@zytor.com> <ZrSSlri1K5WL7XVj@intel.com>
-Content-Language: en-US
-From: Xin Li <xin@zytor.com>
-Autocrypt: addr=xin@zytor.com; keydata=
- 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
- l75w1xInsg==
-In-Reply-To: <ZrSSlri1K5WL7XVj@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:7c80:54:3::138; envelope-from=xin@zytor.com;
- helo=mail.zytor.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,54 +101,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->>>> @@ -1450,7 +1450,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
->>>>                NULL, "vmx-entry-ia32e-mode", NULL, NULL,
->>>>                NULL, "vmx-entry-load-perf-global-ctrl", "vmx-entry-load-pat", "vmx-entry-load-efer",
->>>>                "vmx-entry-load-bndcfgs", NULL, "vmx-entry-load-rtit-ctl", NULL,
->>>> -            NULL, NULL, "vmx-entry-load-pkrs", NULL,
->>>> +            NULL, NULL, "vmx-entry-load-pkrs", "vmx-entry-load-fred",
->>>
->>> Should we also define VMX_VM_ENTRY_LOAD_FRED? "vmx-entry-load-rtit-ctl"
->>> and "vmx-entry-load-pkrs" have their corresponding bit definitions, even
->>> if they are not used.
->>
->> I'm not sure, but why add something that is not being used (thus not
->> tested)?
-> 
-> Yes, the use of macros is a factor. My another consideration is the
-> integrity of the feature definitions. When the such feature definitions
-> were first introduced in commit 704798add83b (”target/i386: add VMX
-> definitions”), I understand thay were mainly used to enumerate and
-> reflect hardware support and not all defs are used directly.
-> 
-> The feat word name and the feature definition should essentially be
-> bound, and it might be possible to generate the feature definition
-> from the feat word via some script without having to add it manually,
-> but right now there is no work on this, and no additional constraints,
-> so we have to manually add and manually check it to make sure that the
-> two correspond to each other. When a feature word is added, it means
-> that Host supports the corresponding feature, and from an integrity
-> perspective, so it is natural to continue adding definition (just like
-> the commit 52a44ad2b92b ("target/i386: Expose VMX entry/exit load pkrs
-> control bits")), right?
-> 
-> Though I found that there are still some mismatches between the feature
-> word and the corresponding definition, but ideally they should coexist.
-> 
-> About the test, if it's just enumerated and not added to a specific CPU
-> model or involved by other logic, it's harmless?
+error_report() is more appropriate for error situations. Replace fprintf with
+error_report. Cosmetic. No functional change.
 
-Unless tests are ready, such code are literally dead code, and could get
-broken w/o being noticed for a long time.
+CC: qemu-trivial@nongnu.org
+CC: zhao1.liu@intel.com
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+---
+ accel/kvm/kvm-all.c | 40 ++++++++++++++++++----------------------
+ 1 file changed, 18 insertions(+), 22 deletions(-)
 
-I think we should add it only when tests are also added.  Otherwise we 
-added burden to maintainers, hoping test will be added soon, which often
-never happen.
+changelog:
+v2: fix a bug.
+v3: replace one instance of error_report() with error_printf(). added tags.
 
-> 
-> Thanks,
-> Zhao
-> 
-> 
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 75d11a07b2..5bc9d35b61 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2427,7 +2427,7 @@ static int kvm_init(MachineState *ms)
+     QLIST_INIT(&s->kvm_parked_vcpus);
+     s->fd = qemu_open_old(s->device ?: "/dev/kvm", O_RDWR);
+     if (s->fd == -1) {
+-        fprintf(stderr, "Could not access KVM kernel module: %m\n");
++        error_report("Could not access KVM kernel module: %m");
+         ret = -errno;
+         goto err;
+     }
+@@ -2437,13 +2437,13 @@ static int kvm_init(MachineState *ms)
+         if (ret >= 0) {
+             ret = -EINVAL;
+         }
+-        fprintf(stderr, "kvm version too old\n");
++        error_report("kvm version too old");
+         goto err;
+     }
+ 
+     if (ret > KVM_API_VERSION) {
+         ret = -EINVAL;
+-        fprintf(stderr, "kvm version not supported\n");
++        error_report("kvm version not supported");
+         goto err;
+     }
+ 
+@@ -2488,26 +2488,22 @@ static int kvm_init(MachineState *ms)
+     } while (ret == -EINTR);
+ 
+     if (ret < 0) {
+-        fprintf(stderr, "ioctl(KVM_CREATE_VM) failed: %d %s\n", -ret,
+-                strerror(-ret));
++        error_report("ioctl(KVM_CREATE_VM) failed: %d %s", -ret,
++                    strerror(-ret));
+ 
+ #ifdef TARGET_S390X
+         if (ret == -EINVAL) {
+-            fprintf(stderr,
+-                    "Host kernel setup problem detected. Please verify:\n");
+-            fprintf(stderr, "- for kernels supporting the switch_amode or"
+-                    " user_mode parameters, whether\n");
+-            fprintf(stderr,
+-                    "  user space is running in primary address space\n");
+-            fprintf(stderr,
+-                    "- for kernels supporting the vm.allocate_pgste sysctl, "
+-                    "whether it is enabled\n");
++            error_report("Host kernel setup problem detected. Please verify:");
++            error_report("- for kernels supporting the switch_amode or"
++                        " user_mode parameters, whether");
++            error_report("  user space is running in primary address space");
++            error_report("- for kernels supporting the vm.allocate_pgste "
++                        "sysctl, whether it is enabled");
+         }
+ #elif defined(TARGET_PPC)
+         if (ret == -EINVAL) {
+-            fprintf(stderr,
+-                    "PPC KVM module is not loaded. Try modprobe kvm_%s.\n",
+-                    (type == 2) ? "pr" : "hv");
++            error_report("PPC KVM module is not loaded. Try modprobe kvm_%s.",
++                        (type == 2) ? "pr" : "hv");
+         }
+ #endif
+         goto err;
+@@ -2526,9 +2522,9 @@ static int kvm_init(MachineState *ms)
+                         nc->name, nc->num, soft_vcpus_limit);
+ 
+             if (nc->num > hard_vcpus_limit) {
+-                fprintf(stderr, "Number of %s cpus requested (%d) exceeds "
+-                        "the maximum cpus supported by KVM (%d)\n",
+-                        nc->name, nc->num, hard_vcpus_limit);
++                error_report("Number of %s cpus requested (%d) exceeds "
++                             "the maximum cpus supported by KVM (%d)",
++                             nc->name, nc->num, hard_vcpus_limit);
+                 exit(1);
+             }
+         }
+@@ -2542,8 +2538,8 @@ static int kvm_init(MachineState *ms)
+     }
+     if (missing_cap) {
+         ret = -EINVAL;
+-        fprintf(stderr, "kvm does not support %s\n%s",
+-                missing_cap->name, upgrade_note);
++        error_printf("kvm does not support %s\n%s",
++                     missing_cap->name, upgrade_note);
+         goto err;
+     }
+ 
+-- 
+2.45.2
 
 
