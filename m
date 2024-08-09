@@ -4,75 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90AE6C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 04:52:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CAD7C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 04:54:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scHbb-0006pm-Gj; Fri, 09 Aug 2024 00:51:59 -0400
+	id 1scHdM-0002qS-Oc; Fri, 09 Aug 2024 00:53:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1scHbZ-0006on-Hq
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 00:51:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1scHdK-0002hg-M6
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 00:53:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1scHbX-0007yL-UF
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 00:51:57 -0400
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1scHdJ-0008HQ-2y
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 00:53:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723179114;
+ s=mimecast20190719; t=1723179224;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2C19lKZf4KOA7jbEj7sA1XL/IfJ18kwxq4MdWsCpaYA=;
- b=Y6ori0L4o2c++dFi6O9H2K6st+LwsQHANZcX8IcS6uDhPlnPfFyLQRshs1rjXkA+8ci8ZR
- SS8uiYTN4KG4RJfugOKGGmjNwXKu+vtTNo0JCYrBXxkS03HB4FVV1DbWm4a59CZHSJmyEj
- pa0TbrncKsWrfpvKr7UIOrYM/J5bTTQ=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-282-3M2MK7CQMCGYsh7RapcqWQ-1; Fri,
- 09 Aug 2024 00:51:52 -0400
-X-MC-Unique: 3M2MK7CQMCGYsh7RapcqWQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 71AAB1944A8A; Fri,  9 Aug 2024 04:51:51 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.193.245])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E2C7719560A3; Fri,  9 Aug 2024 04:51:50 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BC90B21E668F; Fri,  9 Aug 2024 06:51:48 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  eblake@redhat.com,  marcandre.lureau@redhat.com,
- pbonzini@redhat.com,  berrange@redhat.com,  mst@redhat.com,
- marcel.apfelbaum@gmail.com,  jiri@resnulli.us
-Subject: Re: [PATCH 1/6] qapi/char: Supply missing member documentation
-In-Reply-To: <CAFn=p-Yk1J2UUFDULdoF-kbpYN61NB7dDFtA5wsY9h1BSzfLvw@mail.gmail.com>
- (John Snow's message of "Thu, 8 Aug 2024 16:48:08 -0400")
-References: <20240808182636.3657537-1-armbru@redhat.com>
- <20240808182636.3657537-2-armbru@redhat.com>
- <CAFn=p-Yk1J2UUFDULdoF-kbpYN61NB7dDFtA5wsY9h1BSzfLvw@mail.gmail.com>
-Date: Fri, 09 Aug 2024 06:51:48 +0200
-Message-ID: <87bk22nvrv.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=6y/Dx9WfBuoEyBP+LUel142LcScGzpkHOUr2wWRP0X0=;
+ b=av5wUfbqQC4nVhcbRv4gRqZbgF/5L67UJOTOlGMQH+zOgWAnXK3myuGjCyGRnq2F8bImKf
+ Fho/yk6216Q3WMe0iOleT7ijs4jNwnupSGSAHsXnELlwlq+TUNeAyyd1Co2eO50xHaPjxz
+ M74trJ8SyZc+qGn3xH491P+U6yvYwbw=
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
+ [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-387-Q6uTvj7ONIir2eEnFYZWWw-1; Fri, 09 Aug 2024 00:53:42 -0400
+X-MC-Unique: Q6uTvj7ONIir2eEnFYZWWw-1
+Received: by mail-pf1-f198.google.com with SMTP id
+ d2e1a72fcca58-7104d2cac39so2048992b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 21:53:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723179221; x=1723784021;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6y/Dx9WfBuoEyBP+LUel142LcScGzpkHOUr2wWRP0X0=;
+ b=nZHcvKsqIF1W0Mu/tBiJK5TYdvucN4KjG1cyuVjRZafqiX+YjFxIJ3nL7mz4kn0N95
+ 1ea80zARwJ1XM5ycPqhNZujFGOJoqGrzFwcBBpKeHS/QZA1yKxUkKukCqkOt66RE3Fgc
+ TMoIY0t621w8FdM3Z1+afdC+0DXO/FZT9CAz22SDRazq+WG5WnKlKiViK0FBhmSQSK8z
+ Mx5d/9BromTtm/clsQGJ1Qv7Ua3nzLRDclUOkwT/sC8BIifK5cNjGvunSuHwCzJksUSA
+ Q3MESpJFf5ISZ7cuwIuY1dGfPZPTE7ST4LXdAdoomwp6iQdESM7coPX79M6gyMGOFik6
+ xfSw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXlnYS91pvATbZRpH9LgIUwOwOHA2fZ2RbSTj1zIOs9/v6yp09k38TRz44y+6TePXdb//2JN1u8wucKfDVEGmh2/D489o8=
+X-Gm-Message-State: AOJu0Yww2Davplp4dX12wzkQtlOhNMKa6/dIl05eH93lxOf8/TsJUTjP
+ QmX7WXDpMGVbFtefJP9q9I1181CpdGE3F92Vbz+t8BP0cx6UKM0RD08sY0HDTABQ+XlMuWdFUiA
+ GE1R/jrAxqtSHsqHzNoBmIR8Vhy/CYftt6wCrc2UpF46AvNFFX04e
+X-Received: by 2002:a05:6a21:458a:b0:1c4:8650:d6d7 with SMTP id
+ adf61e73a8af0-1c89fec2cd2mr507347637.16.1723179221103; 
+ Thu, 08 Aug 2024 21:53:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG7CZUoFnBycRjnM0orNNjv+/SuxPUpkqJGSE9wtp9gfcdEF73syhQeo7PZom0vG5inUvKBJQ==
+X-Received: by 2002:a05:6a21:458a:b0:1c4:8650:d6d7 with SMTP id
+ adf61e73a8af0-1c89fec2cd2mr507328637.16.1723179220671; 
+ Thu, 08 Aug 2024 21:53:40 -0700 (PDT)
+Received: from localhost.localdomain ([115.96.114.241])
+ by smtp.googlemail.com with ESMTPSA id
+ d9443c01a7336-1ff58f6a540sm133516895ad.118.2024.08.08.21.53.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Aug 2024 21:53:40 -0700 (PDT)
+From: Ani Sinha <anisinha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, zhao1.liu@intel.com, cfontana@suse.de,
+ qemu-trivial@nongnu.org, kvm@vger.kernel.org, qemu-devel@nongnu.org
+Subject: [PATCH v3 2/2] kvm: refactor core virtual machine creation into its
+ own function
+Date: Fri,  9 Aug 2024 10:21:53 +0530
+Message-ID: <20240809045153.1744397-3-anisinha@redhat.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240809045153.1744397-1-anisinha@redhat.com>
+References: <20240809045153.1744397-1-anisinha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,121 +104,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+Refactoring the core logic around KVM_CREATE_VM into its own separate function
+so that it can be called from other functions in subsequent patches. There is
+no functional change in this patch.
 
-> On Thu, Aug 8, 2024 at 2:26=E2=80=AFPM Markus Armbruster <armbru@redhat.c=
-om> wrote:
->
->> Since we neglect to document several members of ChardevBackendKind,
->> their description in the QEMU QMP Reference manual is "Not
->> documented".  Fix that, and improve the existing member documentation.
->>
->> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->> ---
->>  qapi/char.json   | 44 ++++++++++++++++++++++++++++----------------
->>  qapi/pragma.json |  1 -
->>  2 files changed, 28 insertions(+), 17 deletions(-)
->>
->> diff --git a/qapi/char.json b/qapi/char.json
->> index ef58445cee..8a4a87c95c 100644
->> --- a/qapi/char.json
->> +++ b/qapi/char.json
->> @@ -434,37 +434,49 @@
->>  ##
->>  # @ChardevBackendKind:
->>  #
->> -# @pipe: Since 1.5
->> +# @file: regular files
->>  #
->> -# @udp: Since 1.5
->> +# @serial: serial host device
->>  #
->> -# @mux: Since 1.5
->> +# @parallel: parallel host device
->>  #
->> -# @msmouse: Since 1.5
->> +# @pipe: pipes (since 1.5)
->>  #
->> -# @wctablet: Since 2.9
->> +# @socket: stream socket
->>  #
->> -# @braille: Since 1.5
->> +# @udp: datagram socket (since 1.5)
->>  #
->> -# @testdev: Since 2.2
->> +# @pty: pseudo-terminal
->>  #
->> -# @stdio: Since 1.5
->> +# @null: provides no input, throws away output
->>  #
->> -# @console: Since 1.5
->> +# @mux: (since 1.5)
->>  #
->> -# @spicevmc: Since 1.5
->> +# @msmouse: emulated Microsoft serial mouse (since 1.5)
->>  #
->> -# @spiceport: Since 1.5
->> +# @wctablet: emulated Wacom Penpartner serial tablet (since 2.9)
->>  #
->> -# @qemu-vdagent: Since 6.1
->> +# @braille: Baum Braille device (since 1.5)
->>  #
->> -# @dbus: Since 7.0
->> +# @testdev: device for test-suite control (since 2.2)
->>  #
->> -# @vc: v1.5
->> +# @stdio: standard I/O (since 1.5)
->>  #
->> -# @ringbuf: Since 1.6
->> +# @console: Windows console (since 1.5)
->>  #
->> -# @memory: Since 1.5
->> +# @spicevmc: spice vm channel (since 1.5)
->> +#
->> +# @spiceport: Spice port channel (since 1.5)
->> +#
->> +# @qemu-vdagent: Spice vdagent (since 6.1)
->> +#
->> +# @dbus: D-Bus channel (since 7.0)
->> +#
->> +# @vc: virtual console (since v1.5)
->>
->
-> Remove the "v"?
+CC: pbonzini@redhat.com
+CC: zhao1.liu@intel.com
+CC: cfontana@suse.de
+CC: qemu-trivial@nongnu.org
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+---
+ accel/kvm/kvm-all.c | 88 +++++++++++++++++++++++++++------------------
+ 1 file changed, 54 insertions(+), 34 deletions(-)
 
-Yes.  Good catch!
+changelog:
+v2: s/fprintf/warn_report as suggested by zhao
+v3: s/warn_report/error_report. function names adjusted to conform to
+other names. fprintf -> error_report() moved to its own patch.
 
->> +#
->> +# @ringbuf: memory ring buffer (since 1.6)
->> +#
->> +# @memory: synonym for @ringbuf (since 1.5)
->>  #
->>  # Features:
->>  #
->> diff --git a/qapi/pragma.json b/qapi/pragma.json
->> index 59fbe74b8c..39a424303b 100644
->> --- a/qapi/pragma.json
->> +++ b/qapi/pragma.json
->> @@ -46,7 +46,6 @@
->>          'BlockdevSnapshotSyncWrapper',
->>          'BlockdevSnapshotWrapper',
->>          'BlockdevVmdkAdapterType',
->> -        'ChardevBackendKind',
->>          'CpuS390Entitlement',
->>          'CpuS390Polarization',
->>          'CpuS390State',
->> --
->> 2.45.0
->>
->
-> It'd be nice if these included some kind of cross-reference to
-> documentation for the backends in question, but this is better than "(Not
-> documented)", so it's not time to be picky.
-
-Same for any enum that's used as union tag?
-
-> ACK
-
-Thank you!
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 899b5264e3..610b3ead32 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2385,6 +2385,57 @@ uint32_t kvm_dirty_ring_size(void)
+     return kvm_state->kvm_dirty_ring_size;
+ }
+ 
++static int kvm_create_vm(MachineState *ms, KVMState *s, int type)
++{
++    int ret;
++
++    do {
++        ret = kvm_ioctl(s, KVM_CREATE_VM, type);
++    } while (ret == -EINTR);
++
++    if (ret < 0) {
++        error_report("ioctl(KVM_CREATE_VM) failed: %d %s", -ret,
++                    strerror(-ret));
++
++#ifdef TARGET_S390X
++        if (ret == -EINVAL) {
++            error_report("Host kernel setup problem detected. Please verify:");
++            error_report("- for kernels supporting the switch_amode or"
++                        " user_mode parameters, whether");
++            error_report("  user space is running in primary address space");
++            error_report("- for kernels supporting the vm.allocate_pgste "
++                        "sysctl, whether it is enabled");
++        }
++#elif defined(TARGET_PPC)
++        if (ret == -EINVAL) {
++            error_report("PPC KVM module is not loaded. Try modprobe kvm_%s.",
++                        (type == 2) ? "pr" : "hv");
++        }
++#endif
++    }
++
++    return ret;
++}
++
++static int kvm_machine_type(MachineState *ms)
++{
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
++    int type;
++
++    if (object_property_find(OBJECT(current_machine), "kvm-type")) {
++        g_autofree char *kvm_type;
++        kvm_type = object_property_get_str(OBJECT(current_machine),
++                                           "kvm-type",
++                                           &error_abort);
++        type = mc->kvm_type(ms, kvm_type);
++    } else if (mc->kvm_type) {
++        type = mc->kvm_type(ms, NULL);
++    } else {
++        type = kvm_arch_get_default_type(ms);
++    }
++    return type;
++}
++
+ static int kvm_init(MachineState *ms)
+ {
+     MachineClass *mc = MACHINE_GET_CLASS(ms);
+@@ -2467,47 +2518,16 @@ static int kvm_init(MachineState *ms)
+     }
+     s->as = g_new0(struct KVMAs, s->nr_as);
+ 
+-    if (object_property_find(OBJECT(current_machine), "kvm-type")) {
+-        g_autofree char *kvm_type = object_property_get_str(OBJECT(current_machine),
+-                                                            "kvm-type",
+-                                                            &error_abort);
+-        type = mc->kvm_type(ms, kvm_type);
+-    } else if (mc->kvm_type) {
+-        type = mc->kvm_type(ms, NULL);
+-    } else {
+-        type = kvm_arch_get_default_type(ms);
+-    }
+-
++    type = kvm_machine_type(ms);
+     if (type < 0) {
+         ret = -EINVAL;
+         goto err;
+     }
+ 
+-    do {
+-        ret = kvm_ioctl(s, KVM_CREATE_VM, type);
+-    } while (ret == -EINTR);
+-
++    ret = kvm_create_vm(ms, s, type);
+     if (ret < 0) {
+-        error_report("ioctl(KVM_CREATE_VM) failed: %d %s", -ret,
+-                    strerror(-ret));
+-
+-#ifdef TARGET_S390X
+-        if (ret == -EINVAL) {
+-            error_report("Host kernel setup problem detected. Please verify:");
+-            error_report("- for kernels supporting the switch_amode or"
+-                        " user_mode parameters, whether");
+-            error_report("  user space is running in primary address space");
+-            error_report("- for kernels supporting the vm.allocate_pgste "
+-                        "sysctl, whether it is enabled");
+-        }
+-#elif defined(TARGET_PPC)
+-        if (ret == -EINVAL) {
+-            error_report("PPC KVM module is not loaded. Try modprobe kvm_%s.",
+-                        (type == 2) ? "pr" : "hv");
+-        }
+-#endif
+-    }
+         goto err;
++    }
+ 
+     s->vmfd = ret;
+ 
+-- 
+2.45.2
 
 
