@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1631CC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 06:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1ACC52D71
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 06:17:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scIwA-0007LN-CX; Fri, 09 Aug 2024 02:17:20 -0400
+	id 1scIwL-0008QW-Nd; Fri, 09 Aug 2024 02:17:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1scIvm-00071e-48
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 02:16:57 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1scIwJ-0008EZ-TD
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 02:17:27 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1scIvk-0003ll-5q
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 02:16:53 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-6e7e23b42c3so1318073a12.1
- for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 23:16:51 -0700 (PDT)
+ id 1scIwI-0003qo-3y
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 02:17:27 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-7105043330aso1648143b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 23:17:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1723184211; x=1723789011; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1723184244; x=1723789044; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=4TqpIFadNi5v5sQhWgTeHLQy9O7ODf95h21P3+FaHFY=;
- b=Lyu2LaTr/4b78LIttOTuz3HdVMItziNt4DDsVtrr5hdwTv9hD8WbHJ2lDPotWXqxDw
- dlfge5G86Z4CcQB7ZjQ7aFJk6SgXcCcRgPl2gHCPgs+AULKT/ziGsbV55yMZUBwmHBv+
- tBB3NK+MePtQc69balrZHQkj+rBphSrVdka8TGZNKitGmalWoz9QyYb0O7aq9FhF0PhY
- gBmn+yI8DHiG83Ku0Ap/qQk42BLLDK7LTVv8K66fBFTFyJ7dA0n3jEYdviXzx2kFs39X
- Fjv9c1VqvHQVbl9sc4Y/wsHv+ViAmRPCO8aqTJXA60MfDGbNqDfnM+GALFGoU2hhqFw/
- ICcA==
+ bh=IAQhqbYAqGQNfBCrdps2Wqozb4sMH9lUMatyiw6pZXw=;
+ b=DJAOxfNBosJ4khkKoyZCL7qFd93sS0PUc9BrZLei8Gws09sK2TLMPrx5nPApqf7wv1
+ tWmCT/027a1+1wyQnttEvX7k4lb+83uq1sc5SY6GB3LVWUGUMGBErgzaZ6H/19LBgyX6
+ tBL9PErtaeX8MMRqG0ziCHlPOeLAMG5FpjNlQwlIqOmDnJGBs6coIoGysXJo9MInOhuu
+ oq+CRrtJf3riznQELI3xT72S15nSWdrClxdeTZ5lGPU6WrzR+BgA3nzjoF6hZpTG0b3M
+ k5CvSKUrPDag3UyyJSodLSHANcbHy98+MEQ4ZrN9qcjX8e4hU6N/UR5pdMyDewq9X+Ke
+ svfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723184211; x=1723789011;
+ d=1e100.net; s=20230601; t=1723184244; x=1723789044;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4TqpIFadNi5v5sQhWgTeHLQy9O7ODf95h21P3+FaHFY=;
- b=DeEp0v8yHUn7qrBq+SwS976gt1oxkJdOQ1J/BUXXQ9VDDuveabKv/92dLh3XnYC1Ym
- 2aeHBQZNJ0cbfRFSpY7OfGQOSNO4oNqml+2s2PS/Ka7BCaf8V2TSucRuiOMxemMEBzO5
- lp+o9W4gBw7PIxM6745NJ7k/llIVFAiWaHVx2GQ/dC46jL0VP1AZh1I115C5yykrgJK3
- y0OlYHwU8p88t9g7bCvTW76YDlfZy7/kN88mX45qaWCRGEhsXZxx+WaNY9ZT67PgIyNe
- HJpDSDZzDeXobjR4cgNNl4rIN90x/V4YCfq+OBEjfiZ72aDJ0P3NR9/a9Tfba5tsS1fD
- j09w==
+ bh=IAQhqbYAqGQNfBCrdps2Wqozb4sMH9lUMatyiw6pZXw=;
+ b=j7L0LFPGkXvRSL5kRCA028QLmLQo2a5pfzncvpkCwP/CAF8Tsi4kspHZm1eGmW0GWB
+ G70FJpavee/8K7lcXH3Ms5X89M5C97BHYLFq4buzY1jQaxkS6uBVE2rpWr0X4hysyaqe
+ BWlp1qtnpDsriueMbVOaCvNBOjx9Wv0BRUVzLed/utcx0eE2jinlYRkemC4WKkEifcam
+ XjPQUfx6krJV59kiuhiklXIQ8Q+ZuteWRE3gZzDA/QCk23A27vAN/lk/62PYkl5xaL/i
+ HuIas/aItgEV5YzpA4umUHRox5G/LoRyQ83wceZudztsfZ8vNk/xf9HZ132KgbD6lUSO
+ sQZg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWlRotqBfwXd97bjGXW5zKjvc1QoDOXzuAdbTVGNAL1CjtlJB2bvD/Et0ogTMa4jMdm0I05lAEaZzJXNmmDnj263g4qkUM=
-X-Gm-Message-State: AOJu0YxV8HmzB5i04pG85kE1vxLwGTyNJgtKSvZ4hI5/WocY9n19ivVK
- MEIi3fKP39xrbVcgsAwKv0qOVEh03Hf1BnQY72sRPT6oG2rYR2dY47FSCGPILhtbBCxVPPxmxKh
- +ExDFDA==
-X-Google-Smtp-Source: AGHT+IEwIYJx6Yzme3jW7M4CvgNyuIbeBwBnU6TfxyPGaBG8VPJUrCEIL19vu5b9n0m+UywfPFw4Ag==
-X-Received: by 2002:a05:6a20:9c90:b0:1c6:fb66:cfe with SMTP id
- adf61e73a8af0-1c89ff26fcbmr861866637.21.1723184210694; 
- Thu, 08 Aug 2024 23:16:50 -0700 (PDT)
+ AJvYcCUBN8DwBkaMQQ6/erpJB8qK8CoQJ1A76sQTIsIWNFIi+UEh+foBl0N4c+wlrGjA9O9fb0b6pnXb/UvhOqENnJEF8mwB0Lw=
+X-Gm-Message-State: AOJu0YxB4q4Oc7sTaSlcdextNaKgReX+jwtuUGf992P4D5JAMkqqRPzL
+ GyywNR8eYjBXqMzg/RlsGLU4u67xX4K9GrYLFC5BNnAzidp9abW9oyS24okjkIk=
+X-Google-Smtp-Source: AGHT+IHJ9cLoe6KeTyE+oDf0hzS7FwUq7rwTEIyRiPgf1FRU0eGY99ATfWLXqB8q1SsTCDX0UC39lg==
+X-Received: by 2002:a05:6a21:458b:b0:1c6:9f28:37b7 with SMTP id
+ adf61e73a8af0-1c89feeb675mr780875637.27.1723184244298; 
+ Thu, 08 Aug 2024 23:17:24 -0700 (PDT)
 Received: from sunil-laptop ([106.51.198.16]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff5905eeb2sm134456625ad.154.2024.08.08.23.16.47
+ 98e67ed59e1d1-2d1c9db0341sm2155081a91.39.2024.08.08.23.17.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Aug 2024 23:16:50 -0700 (PDT)
-Date: Fri, 9 Aug 2024 11:46:44 +0530
+ Thu, 08 Aug 2024 23:17:23 -0700 (PDT)
+Date: Fri, 9 Aug 2024 11:47:17 +0530
 From: Sunil V L <sunilvl@ventanamicro.com>
 To: Haibo Xu <haibo1.xu@intel.com>
 Cc: alistair.francis@wdc.com, xiaobo55x@gmail.com,
  "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/3] tests/qtest/bios-tables-test.c: Enable numamem
- testing for RISC-V
-Message-ID: <ZrW0THilK3yLzoeJ@sunil-laptop>
+Subject: Re: [PATCH 3/3] tests/acpi: Add expected ACPI SRAT AML file for RISC-V
+Message-ID: <ZrW0bVs-bhIXwR1H@sunil-laptop>
 References: <0e30216273f2f59916bc651350578d8e8bc3a75f.1723172696.git.haibo1.xu@intel.com>
- <a6f7e1a4b20ff7eb199e94ca0c8aa2e6794ce5b2.1723172696.git.haibo1.xu@intel.com>
+ <a667480203b35508038176c8ce4722370294cc57.1723172696.git.haibo1.xu@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <a6f7e1a4b20ff7eb199e94ca0c8aa2e6794ce5b2.1723172696.git.haibo1.xu@intel.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=sunilvl@ventanamicro.com; helo=mail-pg1-x531.google.com
+In-Reply-To: <a667480203b35508038176c8ce4722370294cc57.1723172696.git.haibo1.xu@intel.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=sunilvl@ventanamicro.com; helo=mail-pf1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,57 +96,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 09, 2024 at 11:09:48AM +0800, Haibo Xu wrote:
-> Add ACPI SRAT table test case for RISC-V when NUMA was enabled.
+On Fri, Aug 09, 2024 at 11:09:49AM +0800, Haibo Xu wrote:
+> As per the step 5 in the process documented in bios-tables-test.c,
+> generate the expected ACPI SRAT AML data file for RISC-V using the
+> rebuild-expected-aml.sh script and update the
+> bios-tables-test-allowed-diff.h.
+> 
+> This is a new file being added for the first time. Hence, iASL diff
+> output is not added.
 > 
 > Signed-off-by: Haibo Xu <haibo1.xu@intel.com>
 > ---
->  tests/qtest/bios-tables-test.c | 28 ++++++++++++++++++++++++++++
->  1 file changed, 28 insertions(+)
+>  tests/data/acpi/riscv64/virt/SRAT.numamem   | Bin 0 -> 108 bytes
+>  tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+>  2 files changed, 1 deletion(-)
 > 
-> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-> index 36e5c0adde..e79f3a03df 100644
-> --- a/tests/qtest/bios-tables-test.c
-> +++ b/tests/qtest/bios-tables-test.c
-> @@ -1706,6 +1706,32 @@ static void test_acpi_microvm_ioapic2_tcg(void)
->      free_test_data(&data);
->  }
->  
-> +static void test_acpi_riscv64_virt_tcg_numamem(void)
-> +{
-> +    test_data data = {
-> +        .machine = "virt",
-> +        .arch = "riscv64",
-> +        .tcg_only = true,
-> +        .uefi_fl1 = "pc-bios/edk2-riscv-code.fd",
-> +        .uefi_fl2 = "pc-bios/edk2-riscv-vars.fd",
-> +        .cd = "tests/data/uefi-boot-images/bios-tables-test.riscv64.iso.qcow2",
-> +        .ram_start = 0x80000000ULL,
-> +        .scan_len = 128ULL * 1024 * 1024,
-> +    };
-> +
-> +    data.variant = ".numamem";
-> +    /*
-> +     * RHCT will have ISA string encoded. To reduce the effort
-> +     * of updating expected AML file for any new default ISA extension,
-> +     * use the profile rva22s64.
-> +     */
-> +    test_acpi_one(" -cpu rva22s64"
-> +                  " -object memory-backend-ram,id=ram0,size=128M"
-> +                  " -numa node,memdev=ram0",
-> +                  &data);
-> +    free_test_data(&data);
-> +}
-> +
->  static void test_acpi_aarch64_virt_tcg_numamem(void)
->  {
->      test_data data = {
-> @@ -2466,6 +2492,8 @@ int main(int argc, char *argv[])
->      } else if (strcmp(arch, "riscv64") == 0) {
->          if (has_tcg && qtest_has_device("virtio-blk-pci")) {
->              qtest_add_func("acpi/virt", test_acpi_riscv64_virt_tcg);
-> +            qtest_add_func("acpi/virt/numamem",
-> +                           test_acpi_riscv64_virt_tcg_numamem);
+> diff --git a/tests/data/acpi/riscv64/virt/SRAT.numamem b/tests/data/acpi/riscv64/virt/SRAT.numamem
+> index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..2b6467364b7673c366c9abf948142eaf60c9311f 100644
+> GIT binary patch
+> literal 108
+> zcmWFzatz5~U|?XDb@F%i2v%^42yj*a0!E-1hz+7a7zWryU@U|<qXt~80m|Zli6H9*
+> E0AFAS0RR91
+> 
+> literal 0
+> HcmV?d00001
+> 
+> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+> index a3e01d2eb7..dfb8523c8b 100644
+> --- a/tests/qtest/bios-tables-test-allowed-diff.h
+> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+> @@ -1,2 +1 @@
+>  /* List of comma-separated changed AML files to ignore */
+> -"tests/data/acpi/riscv64/virt/SRAT.numamem",
 
 Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
 
