@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34639C52D71
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 08:39:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E9D4C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 08:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scL9M-0000w5-50; Fri, 09 Aug 2024 04:39:04 -0400
+	id 1scL9n-0002Ri-LQ; Fri, 09 Aug 2024 04:39:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1scL9I-0000op-LY
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:39:00 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1scL9l-0002Jt-Mx
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:39:30 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1scL9G-0001g5-HG
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:39:00 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-42816ca782dso13295405e9.2
- for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 01:38:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1scL9j-0001iZ-Hf
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:39:29 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-36ba3b06186so920907f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 01:39:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723192737; x=1723797537; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723192766; x=1723797566; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=i40+FZbye/QjWVjwUsmunMSfPmyHbl9qBPxkN9Yo86E=;
- b=MgfZtdmwM1yhJfsI5ob5ODu4WcXi/Z9yWZlT5HrmqHnZjH5+XGgzLLv/gAJQLdDwFz
- pO3ostBSC1neP1m21IZOfHOBDLNo6hQviTvdhghXRGDbUjypAOM+AiZcQSQAZ6JAIG5n
- f2OoATNAlSWvQt78UZ4uVJpRjv6tmKDrrfrPyB/oclQ1+YU5nf6fW/5gorI+oylym5+T
- 3/piDfad2QSQw9ALv5F4iuz/6iDw96GIa6eiMO3+Vvq9XmqC5gXy6j6/fatlTaP4v7b9
- G38n4yEbNmCYkOJOiisyBeb2lpL7c051LqgLu6RosogC1ueJQleD+K140sdnEUsGvOdF
- 4D9g==
+ bh=68ZgyUAZPfPVWK04cLRDBl8Wb9GYVLkXD7+nNU8ACuI=;
+ b=Mlpcae/SQ1RLaruIUAu6P9JG8Uu9hKcPrjwPo3xnl8Y12z8Z4DDsNdSVc+pcnpyACH
+ sMpSrNsnGHpmnBt+rwnQwAFn0sQzuyqoQ9R0nwz/Fxf1NmwXqh1GOCjJvMF0cDw5UIvb
+ +gFjr5pAC0jz3kjSyV1rX92EwIcj8VhRSeZ/2QztfTW3bppi8uHlCFN2Xtr+rsm8t+F/
+ oVn0HQJB2P8x7h5pKJ3YSNRKb+iC9N1/BRDAzVmJqT5LL4St8r6khfTaLg+lLp5kx9Fo
+ S3eMytaoKyNyuS0b1xuTyWPXID3JB3134C1PwIr2bqbkS3HY2cOqT9iptHkxWQWSHx1F
+ +Txg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723192737; x=1723797537;
+ d=1e100.net; s=20230601; t=1723192766; x=1723797566;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=i40+FZbye/QjWVjwUsmunMSfPmyHbl9qBPxkN9Yo86E=;
- b=vnqi6TigmgH74GAAdJosukycUusw+JGVvUGNxxnPOUcydLnymczBu9KQH51l06rqt/
- mjddQ8bM2KUVisarxdNFQ8nBbm4JDgq+S9pfg2u+7TLwlpEW7yY88ZKHmvLsmIt4I0T4
- 51ZCsaxgQ4XL2TjY5ve1jvS5bq9YOlKbCqFQKbzLqvqJg7xcSZF3duC1pujI9xxRibwt
- LtrihfXEyCMopIPFL9Ltlwrav0oRNVZ5e+aPlgWEgPt9HJdPtVdFPgcDJMSOvPFRBq6E
- QV3j1c750MDkgr5qbf5Sa461kyYLJvFW2rlkYxP+QVt7B0+6Y/ZNqxYX5d0Yo0DL34a5
- PgAA==
+ bh=68ZgyUAZPfPVWK04cLRDBl8Wb9GYVLkXD7+nNU8ACuI=;
+ b=G6RG6ADyBZ2PAtsxkPRWB/ULmZU1SSgfgtb/O1LsbwfL1wIgIUb7IuK7XsGpeLTUqw
+ n5rTlVCKsFeAXwrvChvAre/2/0YlmzBsfbOOmIlU93gzMGB8rvioa/mWa1/RYkAIOb2Q
+ +PPiUTQ20sWuFX5q7Wa9zV7KV2MGTrUiI3IPj2gvi22TnMpZ0oS7PJxnFDWOYFZ7i1+Q
+ e5khBgL9GF1IKZfLDmUvRi+bYTS9HJDusjYWN61kythQkhDyHxUchb+iPvbHc81xLJ6i
+ KMgBsbziIUOYDjwMcmSmjSapLwuGfz5SQA7st35ZN+lK6+KVedty+ywB8u5kTns2Gjkg
+ D8ng==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWsBT/VNOx1qYTLQeSCQOJVcw21egSGdIqEKPHofP+1tfqLxLxJmAyZ/STL4ZluUYdOSuUCEy/aKMm1+44xok3y33njdUk=
-X-Gm-Message-State: AOJu0YyIC379mG5yRpIQDuOQfrGqCV/TiYde0ctxgktf7crS9l9aLwjO
- HlBHfbmRm9qjqd6GgjQdyIMQJ0tTwr67jy8ypCh0fZeoVDTKOAl3T4oe/PAi5dk=
-X-Google-Smtp-Source: AGHT+IFqMmK+LPpGHd6WlbRf72n1dluEyzb7IdbyyAimzjQDUHkOt/wmV0108Wmx4USpjPxl1/Gn5Q==
-X-Received: by 2002:a05:600c:5491:b0:428:2433:1a07 with SMTP id
- 5b1f17b1804b1-429c3a5b3b6mr5467705e9.34.1723192736736; 
- Fri, 09 Aug 2024 01:38:56 -0700 (PDT)
+ AJvYcCWCjRWgU5QtmQupukYcuDAcEE8HkDBWdmyVm1ufROI8cQ7Q3QdmVz908AqkjZ0Sv9jX2MbSP6IbF3HVhP79zysiwJJWNNM=
+X-Gm-Message-State: AOJu0Yy7b2FYAu9IZddr33pi9cVSFBBai0cOjtiWBInDLqCToej8AJHM
+ qRqGCWMNgM/XZpKujLypm4Q1KFMFhv8OE1+DkOKBLBqnzWUmlcnej3CcxD880d8=
+X-Google-Smtp-Source: AGHT+IGrA63awgIkKjoM2t1yLMZLu+jT2DCRe3ngcceviUlJGhxXV/A7655YAYkwFJ+2gRtxHEQLEw==
+X-Received: by 2002:a05:6000:dce:b0:367:8a2b:7354 with SMTP id
+ ffacd0b85a97d-36d5dd75e5emr638980f8f.11.1723192765780; 
+ Fri, 09 Aug 2024 01:39:25 -0700 (PDT)
 Received: from [192.168.178.175] (41.red-95-127-42.staticip.rima-tde.net.
  [95.127.42.41]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-42905971ad7sm116869355e9.17.2024.08.09.01.38.54
+ ffacd0b85a97d-36d2718a537sm4510098f8f.52.2024.08.09.01.39.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Aug 2024 01:38:56 -0700 (PDT)
-Message-ID: <a81f8168-6ee0-4a1b-8940-3822310f8fed@linaro.org>
-Date: Fri, 9 Aug 2024 10:38:52 +0200
+ Fri, 09 Aug 2024 01:39:25 -0700 (PDT)
+Message-ID: <e32c4d75-9838-4dea-bbb6-6d86cd9f3d8d@linaro.org>
+Date: Fri, 9 Aug 2024 10:39:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] qapi/common: Supply missing member documentation
+Subject: Re: [PATCH 3/6] qapi/crypto: Supply missing member documentation
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
 Cc: eblake@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
  berrange@redhat.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
  jiri@resnulli.us, jsnow@redhat.com
 References: <20240808182636.3657537-1-armbru@redhat.com>
- <20240808182636.3657537-3-armbru@redhat.com>
+ <20240808182636.3657537-4-armbru@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240808182636.3657537-3-armbru@redhat.com>
+In-Reply-To: <20240808182636.3657537-4-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,15 +99,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/8/24 20:26, Markus Armbruster wrote:
-> Since we neglect to document the members of GrabToggleKeys, their
-> description in the QEMU QMP Reference manual is "Not documented".  Fix
-> that.
+> Since we neglect to document the members of QCryptoAkCipherKeyType,
+> their description in the QEMU QMP Reference manual is "Not
+> documented".  Fix that.
 > 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->   qapi/common.json | 14 +++++++++++++-
->   qapi/pragma.json |  1 -
->   2 files changed, 13 insertions(+), 2 deletions(-)
+>   qapi/crypto.json | 4 ++++
+>   qapi/pragma.json | 1 -
+>   2 files changed, 4 insertions(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
