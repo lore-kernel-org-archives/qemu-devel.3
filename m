@@ -4,64 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A07A1C52D71
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 08:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B546EC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 08:27:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scKv6-0002SX-Vr; Fri, 09 Aug 2024 04:24:21 -0400
+	id 1scKxM-0006ik-3v; Fri, 09 Aug 2024 04:26:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1scKv5-0002S1-7Y
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:24:19 -0400
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1scKv3-0008W4-CH
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:24:18 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 450A161639;
- Fri,  9 Aug 2024 08:24:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9C8C32782;
- Fri,  9 Aug 2024 08:24:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1723191855;
- bh=eCPYO7k8einZmGW1UrDuHki8qQ6ec/+2EnDneiq2HZ0=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=DeBXzDhuqZUaRs00yRhoABN21W0kmvnS+rp31D95QzOB8JtfX8ORd1Ewl0ecdBCaj
- P6nzJD7ELL21XOecdzwwQ8j3Q+AkZDmSoLERd/NTWTMAuuX9yQUvUNVvgEgowKmhsD
- Bm0883My3nWU1pa2Tupw/vwAGwvh/D1eJ96oPUolqpMxY3JqaENs0hj431J2t1MgMS
- fy5L3c9y1R4rDye21rUYqrfeh0ZTvgachzwetEhskgNxTLx1Zezda10e8PG+RiT+yn
- KlSmiPrJA+W6PFvxGun2mpKc8YTh12EJZi75NLAzQEzAYY3cWZRU1huPCoDgh4Xix9
- 1+K58H5Wj0UuQ==
-Date: Fri, 9 Aug 2024 10:24:09 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: John Snow <jsnow@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, Cleber Rosa <crosa@redhat.com>,
- linux-kernel@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 7/7] scripts/ghes_inject: add a script to generate
- GHES error inject
-Message-ID: <20240809102409.136837ec@foz.lan>
-In-Reply-To: <CAFn=p-ZM8cgKvUx+5v7YU6TaPZySJL1QnHqjmN5rQpF=D_V=8Q@mail.gmail.com>
-References: <cover.1722634602.git.mchehab+huawei@kernel.org>
- <0654a89fe24f4343016b9cecc0752594ad1cd49f.1722634602.git.mchehab+huawei@kernel.org>
- <CAFn=p-Y27zap1P5G3NibdZS26iGwCqh8U0vgW0Vw31f53+oU1w@mail.gmail.com>
- <20240809004137.01f97da2@foz.lan>
- <CAFn=p-ZM8cgKvUx+5v7YU6TaPZySJL1QnHqjmN5rQpF=D_V=8Q@mail.gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1scKxI-0006fk-OI
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:26:37 -0400
+Received: from mail-lj1-x22f.google.com ([2a00:1450:4864:20::22f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1scKxG-0000Vz-N5
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:26:36 -0400
+Received: by mail-lj1-x22f.google.com with SMTP id
+ 38308e7fff4ca-2ef2fccca2cso19160921fa.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 01:26:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723191992; x=1723796792; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ul4TWM1O/eViSsCqCENRg2xewmTO9UWHWns+1ydAHqo=;
+ b=UySZyRFrPR5Tukzo0iRDUro0hIij6LFJN9YECvyGyfoyQZVRzvYLbEVkLNn8lIE4ES
+ DEurFGNPL4hcjQpYsR9oMVIzNpYcoh83dng3rc00v9Xte2CmBg2wkCO576iv7/GMYUkv
+ hHXlgApnDQBN5+47chdRcWcKUjj3J4k0guBFm7cb1zUfeWbdxftEkNiDzVdaLl1qnW8S
+ mcoQHXiQL39qKM4UGaALveCU7zdO+bjjit6Q8eRfMJgH59t6EGUltcufwTIvQwkZgHKo
+ DdbiaV0HgdBWCe2WJcTnI9JHGFMu8AhyZIIqa/eWzv30vlOvPIpBLLrIsneeOieDuKjD
+ 2DRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723191992; x=1723796792;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ul4TWM1O/eViSsCqCENRg2xewmTO9UWHWns+1ydAHqo=;
+ b=H1XSFhz7F5nRDqRL6ZUzn57Kp2hSglbGlyzk9xFkP0OMwkS19s6+W8vZiHr7qONxfC
+ k3PnqDUXvGKpDVNuBds/eRHbB4I31LiSWPVLttdrwuF7r3VgjXZmG6xCesXcQn2lrF5p
+ SKaJhzygqKcT/8YmT1qeSXqJa6HLgZOLZVZs3aGtd+4ijb8sWInMstoeqNdY90TZ45YF
+ JmEOjQP53ZzMpChEHoQFMqlavHoEhulRLUdQ/ekrH7ZinsngjVEEa2/Bee24ytqo77vq
+ vmDCcKEwqtmpK0ltQYJ7P1tHbPm6UP12E52vdHwc528DLhDV+49q6hN+A9KVsZPLobv8
+ shog==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXPRVsPJwjixZxsd09VTsPIqyFFfjPb5aHLoKtb7NPEjd4XnF/o+zkTk4AFRzXDA4YU29mA6gS8QPLAjhprm7hR7+Ngenk=
+X-Gm-Message-State: AOJu0Yz69BWBqSj7C3QlS3ZJXK3Aj82UN7j8rpQ9rFKn7vK8/5Ts8o26
+ zMi6EPExuh3m0pRRqEE9ayv/ntvqYrFM0IbzattNuXDByRBPk6k1+tQJTe7hI4s=
+X-Google-Smtp-Source: AGHT+IFT6jkQ2NaUxtrclzehttIAcn9YlhsxrRt/q0Id+Psj4Us/29loSdhNfpwgOnYSD19ky+Areg==
+X-Received: by 2002:a2e:b88b:0:b0:2ef:2c27:6680 with SMTP id
+ 38308e7fff4ca-2f1a6ce8d4amr6057121fa.12.1723191991864; 
+ Fri, 09 Aug 2024 01:26:31 -0700 (PDT)
+Received: from [192.168.178.175] (41.red-95-127-42.staticip.rima-tde.net.
+ [95.127.42.41]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-429059bdd72sm112997535e9.39.2024.08.09.01.26.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 09 Aug 2024 01:26:31 -0700 (PDT)
+Message-ID: <e1fcd91b-643d-4a5e-956c-0642d001aec1@linaro.org>
+Date: Fri, 9 Aug 2024 10:26:26 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] accel/tcg: clear all TBs from a page when it is
+ written to
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Brian Cain <bcain@quicinc.com>,
+ Mark Burton <mburton@qti.qualcomm.com>, Anton Johansson <anjo@rev.ng>,
+ Emilio Cota <cota@braap.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20240809074725.320801-1-npiggin@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240809074725.320801-1-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::22f;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,45 +101,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Thu, 8 Aug 2024 19:33:32 -0400
-John Snow <jsnow@redhat.com> escreveu:
+(Widening Cc list)
 
-> > > Then here you'd use qmp.cmd (raises exception on QMPError) or qmp.cmd_raw
-> > > or qmp.cmd_obj (returns the QMP response as the return value even if it  
-> > was  
-> > > an error.)  
-> >
-> > Good to know, I'll try and see what fits best.
-> >  
+On 9/8/24 09:47, Nicholas Piggin wrote:
+> This is not a clean patch, but does fix a problem I hit with TB
+> invalidation due to the target software writing to memory with TBs.
 > 
-> I might *suggest* you try to use the exception-raising interface and catch
-> exceptions to interrogate expected errors as it aligns better with the
-> "idiomatic python API" - I have no plans to support an external API that
-> *returns* error objects except via the exception class. This approach will
-> be easier to port when I drop the legacy interface in the future, see below.
+> Lockup messages are triggering in Linux due to page clearing taking a
+> long time when a code page has been freed, because it takes a lot of
+> notdirty notifiers, which massively slows things down. Linux might
+> possibly have a bug here too because it seems to hang indefinitely in
+> some cases, but even if it didn't, the latency of clearing these pages
+> is very high.
 > 
-> But, that said, whichever is easiest. We use all three interfaces in many
-> places in the QEMU tree. I have no grounds to require you to use a specific
-> one ;)
+> This showed when running KVM on the emulated machine, starting and
+> stopping guests. That causes lots of instruction pages to be freed.
+> Usually if you're just running Linux, executable pages remain in
+> pagecache so you get fewer of these bombs in the kernel memory
+> allocator. But page reclaim, JITs, deleting executable files, etc.,
+> could trigger it too.
+> 
+> Invalidating all TBs from the page on any hit seems to avoid the problem
+> and generally speeds things up.
+> 
+> How important is the precise invalidation? These days I assume the
+> tricky kind of SMC that frequently writes code close to where it's
+> executing is pretty rare and might not be something we really care about
+> for performance. Could we remove sub-page TB invalidation entirely?
+> 
+> Thanks,
+> Nick
+> ---
+>   accel/tcg/tb-maint.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+> index cc0f5afd47..d9a76b1665 100644
+> --- a/accel/tcg/tb-maint.c
+> +++ b/accel/tcg/tb-maint.c
+> @@ -1107,6 +1107,9 @@ tb_invalidate_phys_page_range__locked(struct page_collection *pages,
+>       TranslationBlock *current_tb = retaddr ? tcg_tb_lookup(retaddr) : NULL;
+>   #endif /* TARGET_HAS_PRECISE_SMC */
+>   
+> +    start &= TARGET_PAGE_MASK;
+> +    last |= ~TARGET_PAGE_MASK;
+> +
+>       /* Range may not cross a page. */
+>       tcg_debug_assert(((start ^ last) & TARGET_PAGE_MASK) == 0);
+>   
 
-While a python-style exception handling is cool, I ended opting to use 
-cmd_obj(), as the script needs to catch the end of /machine/unattached/device[]
-array, and using cmd_obj() made the conversion easier.
-
-One of the things I missed at the documentation is a description of the
-possible exceptions that cmd() could raise.
-
-It is probably worth documenting it and placing them on a QMP-specific
-error class, but a change like that would probably be incompatible with
-the existing applications. Probably something to be considered on your
-TODO list to move this from legacy ;-)
-
-Anyway, I already folded the changes at the branch I'll be using as basis
-for the next submission (be careful to use it, as I'm always rebasing it):
-
-	https://gitlab.com/mchehab_kernel/qemu/-/commit/62feb8f6037ab762a9848eb601a041fbbbe2a77a#b665bcbc1e5ae3a488f1c0f20f8c29ae640bfa63_0_17
-
-
-Thanks,
-Mauro
 
