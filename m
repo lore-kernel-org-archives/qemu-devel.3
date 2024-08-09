@@ -4,70 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D324C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 16:19:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 303A6C52D7C
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 18:09:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scSKH-0000ey-Kv; Fri, 09 Aug 2024 12:18:49 -0400
+	id 1scU2f-00016W-Gl; Fri, 09 Aug 2024 14:08:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1scSKF-0000WJ-Ib
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 12:18:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1scSKD-0007kx-Rm
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 12:18:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723220324;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wfJnvQzA7K7Hjq6ba+sjeG29RsAYaqKyfvV7/13p93Q=;
- b=NNhT6TfeHIZlTf1xEjtqB19VcuTc/AyHKUV7dDJvUu5g7SfsM31tiGRWV12HYV+898k6bc
- DqeCpA1jcmrTkI+p7s48eG0eGJNtFp5e7yGZkVbttCnvrGL3rG5kOGdTabLMRslC/2ZP1c
- HLQcoHkgdgQG1z7wjVvUR7AFWmr9M+E=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-HBjdvYBpMIWJSkTzWtS6dQ-1; Fri,
- 09 Aug 2024 12:18:40 -0400
-X-MC-Unique: HBjdvYBpMIWJSkTzWtS6dQ-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 77A2E196CDC4; Fri,  9 Aug 2024 16:18:37 +0000 (UTC)
-Received: from green.redhat.com (unknown [10.2.16.114])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 721871955F40; Fri,  9 Aug 2024 16:18:35 +0000 (UTC)
-From: Eric Blake <eblake@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1scU2d-0000xy-5e
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 14:08:43 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1scU2a-0007C5-Tt
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 14:08:42 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3684407b2deso1263620f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 11:08:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723226919; x=1723831719; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=9H8W0O0b1Ww323Eya3NUzzCuyPiKzt+1Rqu3lq0GOBs=;
+ b=Z2YPnO3BEUFXgX0OUNHn4jXBqVYCdz/hk4bdotPv8j76VDRxtP+bLAbjO6QF5x+TeT
+ TZVidLI+h8cBUbDQyJGPnb4aAnZLstG6yRINDZ3pwP3DvCLuWUpqJ94Uamji125tr46p
+ Qv8OA0LBD+oExy/8wDbg9VvLFz14ZOOPTM96YHRZhFAHDyN59AHiCagmwPDlH8vw3tJK
+ B65kRsY7yt8Mz4Q3Umr+B6tvwLoPy4LHJRBVxzIIhbSqoS7kGnuOGQ5RSmy73rTWorI3
+ WHb5fCVMzWhpytMqyPl88WoLXrEGzDfcxKjibvIOjgnKumGXwGqzOS5zVYAffy5q3MCl
+ pQ6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723226919; x=1723831719;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9H8W0O0b1Ww323Eya3NUzzCuyPiKzt+1Rqu3lq0GOBs=;
+ b=PO5GZRQbfmPx2TRZIb16QxfmBH6UTZz4QsRn8OKte2vxbRcmlLMJxCTVz2ZqRgvYgb
+ bITe9looHr1xmzk1PxYtoYpm/Mbuk+a7SXD6FHO4Uju/aeAWjGHYBvqi+2JVJ38wxB0H
+ 6YrWemgvWyEi0xx+kqgtkdI7GY33KqAoImTQBNW8ohVUZPmaCtpAKXDj6fW8q0kBkiBc
+ PvQBlF3abecQP6MevFjAsDsooyR9p/N9e458LfkqCbb8/Trk7GzWHGZzUfBOVH7tunsr
+ uVLQPUtF50fh5GCiOh+ynLVvgajvZk+9+9WWyYSu0CXyJqylC/zoNRx/6mOGuRvlts7f
+ mjgQ==
+X-Gm-Message-State: AOJu0YyEcL9vP9pkXkJw33xS7OT22F+GF6XQXVVI5kQi+R89LDHVoXXo
+ bdXi7leACp2cGTZ696JqMPEC3/I+Xq13dowNTfBrQK3UdQkY9UhE1YJiI5bAwu+lzepBy0wErjJ
+ j
+X-Google-Smtp-Source: AGHT+IGyIqLACViZKl7GbGD+tUL/2MFBIOkiBElfrunkUJCM0KzRQSFKZ2fl2FhPy2YBzcKdVJdLRg==
+X-Received: by 2002:adf:fb46:0:b0:367:96d6:4c2d with SMTP id
+ ffacd0b85a97d-36d5e4d2ad4mr1756404f8f.25.1723226918692; 
+ Fri, 09 Aug 2024 11:08:38 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36e4c937b6esm132262f8f.32.2024.08.09.11.08.38
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 09 Aug 2024 11:08:38 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, berrange@redhat.com,
- qemu-block@nongnu.org, den@virtuozzo.com, andrey.drobyshev@virtuozzo.com,
- alexander.ivanov@virtuozzo.com, vsementsov@yandex-team.ru
-Subject: [PATCH 1/2] qemu-nbd: Allow users to adjust handshake limit
-Date: Fri,  9 Aug 2024 11:14:25 -0500
-Message-ID: <20240809161828.1342831-5-eblake@redhat.com>
-In-Reply-To: <20240809161828.1342831-4-eblake@redhat.com>
-References: <20240809161828.1342831-4-eblake@redhat.com>
+Subject: [PULL 02/11] include: Fix typo in name of MAKE_IDENTFIER macro
+Date: Fri,  9 Aug 2024 19:08:26 +0100
+Message-Id: <20240809180835.1243269-3-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240809180835.1243269-1-peter.maydell@linaro.org>
+References: <20240809180835.1243269-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,129 +94,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Although defaulting the handshake limit to 10 seconds was a nice QoI
-change to weed out intentionally slow clients, it can interfere with
-integration testing done with manual NBD_OPT commands over 'nbdsh
---opt-mode'.  Expose a command line option to allow the user to alter
-the timeout away from the default.  This option is unlikely to be used
-in enough scenarios to warrant a short option letter.
+In commit bb71846325e23 we added some macro magic to avoid
+variable-shadowing when using some of our more complicated
+macros. One of the internal components of this is a macro
+named MAKE_IDENTFIER. Fix the typo in its name: it should
+be MAKE_IDENTIFIER.
 
-The option --handshake-limit intentionally differs from the name of
-the constant added in commit fb1c2aaa98 (limit instead of max_secs)
-and the QMP name to be added in the next commit; this is because
-typing a longer command-line name is undesirable and there is
-sufficient --help text to document the units.
+Commit created with
+ sed -i -e 's/MAKE_IDENTFIER/MAKE_IDENTIFIER/g' include/qemu/*.h include/qapi/qmp/qobject.h
 
-Signed-off-by: Eric Blake <eblake@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20240801102516.3843780-1-peter.maydell@linaro.org
 ---
- docs/tools/qemu-nbd.rst |  5 +++++
- qemu-nbd.c              | 41 ++++++++++++++++++++++++++---------------
- 2 files changed, 31 insertions(+), 15 deletions(-)
+ include/qapi/qmp/qobject.h | 2 +-
+ include/qemu/atomic.h      | 2 +-
+ include/qemu/compiler.h    | 2 +-
+ include/qemu/osdep.h       | 6 +++---
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/docs/tools/qemu-nbd.rst b/docs/tools/qemu-nbd.rst
-index 329f44d9895..f55c10eb39c 100644
---- a/docs/tools/qemu-nbd.rst
-+++ b/docs/tools/qemu-nbd.rst
-@@ -154,6 +154,11 @@ driver options if :option:`--image-opts` is specified.
-   Set the NBD volume export description, as a human-readable
-   string.
-
-+.. option:: --handshake-limit=N
-+
-+  Set the timeout for a client to successfully complete its handshake
-+  to N seconds (default 10), or 0 for no limit.
-+
- .. option:: -L, --list
-
-   Connect as a client and list all details about the exports exposed by
-diff --git a/qemu-nbd.c b/qemu-nbd.c
-index a186d2e1190..4a611b4a4ed 100644
---- a/qemu-nbd.c
-+++ b/qemu-nbd.c
-@@ -57,19 +57,20 @@
- #define HAVE_NBD_DEVICE 0
+diff --git a/include/qapi/qmp/qobject.h b/include/qapi/qmp/qobject.h
+index 89b97d88bca..256d782688c 100644
+--- a/include/qapi/qmp/qobject.h
++++ b/include/qapi/qmp/qobject.h
+@@ -54,7 +54,7 @@ struct QObject {
+     typeof(obj) _obj = (obj);                                   \
+     _obj ? container_of(&_obj->base, QObject, base) : NULL;     \
+ })
+-#define QOBJECT(obj) QOBJECT_INTERNAL((obj), MAKE_IDENTFIER(_obj))
++#define QOBJECT(obj) QOBJECT_INTERNAL((obj), MAKE_IDENTIFIER(_obj))
+ 
+ /* Required for qobject_to() */
+ #define QTYPE_CAST_TO_QNull     QTYPE_QNULL
+diff --git a/include/qemu/atomic.h b/include/qemu/atomic.h
+index dc4118ddd9e..7a3f2e6576b 100644
+--- a/include/qemu/atomic.h
++++ b/include/qemu/atomic.h
+@@ -128,7 +128,7 @@
+     _val;                                               \
+     })
+ #define qatomic_rcu_read(ptr) \
+-    qatomic_rcu_read_internal((ptr), MAKE_IDENTFIER(_val))
++    qatomic_rcu_read_internal((ptr), MAKE_IDENTIFIER(_val))
+ 
+ #define qatomic_rcu_set(ptr, i) do {                   \
+     qemu_build_assert(sizeof(*ptr) <= ATOMIC_REG_SIZE); \
+diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
+index 554c5ce7df7..c06954ccb41 100644
+--- a/include/qemu/compiler.h
++++ b/include/qemu/compiler.h
+@@ -38,7 +38,7 @@
  #endif
-
--#define SOCKET_PATH                "/var/lock/qemu-nbd-%s"
--#define QEMU_NBD_OPT_CACHE         256
--#define QEMU_NBD_OPT_AIO           257
--#define QEMU_NBD_OPT_DISCARD       258
--#define QEMU_NBD_OPT_DETECT_ZEROES 259
--#define QEMU_NBD_OPT_OBJECT        260
--#define QEMU_NBD_OPT_TLSCREDS      261
--#define QEMU_NBD_OPT_IMAGE_OPTS    262
--#define QEMU_NBD_OPT_FORK          263
--#define QEMU_NBD_OPT_TLSAUTHZ      264
--#define QEMU_NBD_OPT_PID_FILE      265
--#define QEMU_NBD_OPT_SELINUX_LABEL 266
--#define QEMU_NBD_OPT_TLSHOSTNAME   267
-+#define SOCKET_PATH                  "/var/lock/qemu-nbd-%s"
-+#define QEMU_NBD_OPT_CACHE           256
-+#define QEMU_NBD_OPT_AIO             257
-+#define QEMU_NBD_OPT_DISCARD         258
-+#define QEMU_NBD_OPT_DETECT_ZEROES   259
-+#define QEMU_NBD_OPT_OBJECT          260
-+#define QEMU_NBD_OPT_TLSCREDS        261
-+#define QEMU_NBD_OPT_IMAGE_OPTS      262
-+#define QEMU_NBD_OPT_FORK            263
-+#define QEMU_NBD_OPT_TLSAUTHZ        264
-+#define QEMU_NBD_OPT_PID_FILE        265
-+#define QEMU_NBD_OPT_SELINUX_LABEL   266
-+#define QEMU_NBD_OPT_TLSHOSTNAME     267
-+#define QEMU_NBD_OPT_HANDSHAKE_LIMIT 268
-
- #define MBR_SIZE 512
-
-@@ -80,6 +81,7 @@ static int nb_fds;
- static QIONetListener *server;
- static QCryptoTLSCreds *tlscreds;
- static const char *tlsauthz;
-+static int handshake_limit = NBD_DEFAULT_HANDSHAKE_MAX_SECS;
-
- static void usage(const char *name)
- {
-@@ -101,6 +103,7 @@ static void usage(const char *name)
- "  -v, --verbose             display extra debugging information\n"
- "  -x, --export-name=NAME    expose export by name (default is empty string)\n"
- "  -D, --description=TEXT    export a human-readable description\n"
-+"      --handshake-limit=N   limit client's handshake to N seconds (default 10)\n"
- "\n"
- "Exposing part of the image:\n"
- "  -o, --offset=OFFSET       offset into the image\n"
-@@ -390,8 +393,7 @@ static void nbd_accept(QIONetListener *listener, QIOChannelSocket *cioc,
-
-     nb_fds++;
-     nbd_update_server_watch();
--    /* TODO - expose handshake timeout as command line option */
--    nbd_client_new(cioc, NBD_DEFAULT_HANDSHAKE_MAX_SECS,
-+    nbd_client_new(cioc, handshake_limit,
-                    tlscreds, tlsauthz, nbd_client_closed, NULL);
- }
-
-@@ -569,6 +571,8 @@ int main(int argc, char **argv)
-         { "object", required_argument, NULL, QEMU_NBD_OPT_OBJECT },
-         { "export-name", required_argument, NULL, 'x' },
-         { "description", required_argument, NULL, 'D' },
-+        { "handshake-limit", required_argument, NULL,
-+          QEMU_NBD_OPT_HANDSHAKE_LIMIT },
-         { "tls-creds", required_argument, NULL, QEMU_NBD_OPT_TLSCREDS },
-         { "tls-hostname", required_argument, NULL, QEMU_NBD_OPT_TLSHOSTNAME },
-         { "tls-authz", required_argument, NULL, QEMU_NBD_OPT_TLSAUTHZ },
-@@ -815,6 +819,13 @@ int main(int argc, char **argv)
-         case QEMU_NBD_OPT_SELINUX_LABEL:
-             selinux_label = optarg;
-             break;
-+        case QEMU_NBD_OPT_HANDSHAKE_LIMIT:
-+            if (qemu_strtoi(optarg, NULL, 0, &handshake_limit) < 0 ||
-+                handshake_limit < 0) {
-+                error_report("Invalid handshake limit '%s'", optarg);
-+                exit(EXIT_FAILURE);
-+            }
-+            break;
-         }
-     }
-
+ 
+ /* Expands into an identifier stemN, where N is another number each time */
+-#define MAKE_IDENTFIER(stem) glue(stem, __COUNTER__)
++#define MAKE_IDENTIFIER(stem) glue(stem, __COUNTER__)
+ 
+ #ifndef likely
+ #define likely(x)   __builtin_expect(!!(x), 1)
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index 4cc4c32b144..fe7c3c5f673 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -399,7 +399,7 @@ void QEMU_ERROR("code path is reachable")
+     })
+ #undef MIN
+ #define MIN(a, b) \
+-    MIN_INTERNAL((a), (b), MAKE_IDENTFIER(_a), MAKE_IDENTFIER(_b))
++    MIN_INTERNAL((a), (b), MAKE_IDENTIFIER(_a), MAKE_IDENTIFIER(_b))
+ 
+ #define MAX_INTERNAL(a, b, _a, _b)                      \
+     ({                                                  \
+@@ -408,7 +408,7 @@ void QEMU_ERROR("code path is reachable")
+     })
+ #undef MAX
+ #define MAX(a, b) \
+-    MAX_INTERNAL((a), (b), MAKE_IDENTFIER(_a), MAKE_IDENTFIER(_b))
++    MAX_INTERNAL((a), (b), MAKE_IDENTIFIER(_a), MAKE_IDENTIFIER(_b))
+ 
+ #ifdef __COVERITY__
+ # define MIN_CONST(a, b) ((a) < (b) ? (a) : (b))
+@@ -440,7 +440,7 @@ void QEMU_ERROR("code path is reachable")
+         _a == 0 ? _b : (_b == 0 || _b > _a) ? _a : _b;  \
+     })
+ #define MIN_NON_ZERO(a, b) \
+-    MIN_NON_ZERO_INTERNAL((a), (b), MAKE_IDENTFIER(_a), MAKE_IDENTFIER(_b))
++    MIN_NON_ZERO_INTERNAL((a), (b), MAKE_IDENTIFIER(_a), MAKE_IDENTIFIER(_b))
+ 
+ /*
+  * Round number down to multiple. Safe when m is not a power of 2 (see
 -- 
-2.46.0
+2.34.1
 
 
