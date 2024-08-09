@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14E54C531DA
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 10:33:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51CF8C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 11:49:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scMvq-0007v3-GS; Fri, 09 Aug 2024 06:33:14 -0400
+	id 1scO6y-00007b-2m; Fri, 09 Aug 2024 07:48:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yaozhenguo1@gmail.com>)
- id 1scMvp-0007uZ-6e
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 06:33:13 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yaozhenguo1@gmail.com>)
- id 1scMvn-0000Ky-BX
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 06:33:12 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-67682149265so17500667b3.2
- for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 03:33:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723199589; x=1723804389; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SaTmdmrsiy/0qGg9dy6659gMUCXSwzMlRF5F9PlimJ4=;
- b=V084oDKKJBb/y33YsDBJh88gHAj1MrH5jcRK8RGgkUzyfM4E+P0H1QoE6S5Edknfqy
- kqou2TyB2crOZdDjfO71WT69FHvbFZJfwe585tTB50WYo1bAs7I0htpaHs4AQQEI6jo/
- 9CrSQINrI25J7jUu3dKWbNmthKuBTmi8EseIwktw8D14zNgX09tM5CRpi7oKbcYeflxd
- haZ/0G3zwOuBp+ONJpmDHMfXm+Y4gzpXAK6wfhDEBmKbRi52dj0JraWc+Kwf6jgNFSui
- XcVaokfRH5yvEcdbhVxp9yo3SyUozHiL8E4PXbnHb1pA0RHhDAZqw/pIeR+uxW8254nJ
- G+ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723199589; x=1723804389;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SaTmdmrsiy/0qGg9dy6659gMUCXSwzMlRF5F9PlimJ4=;
- b=gfqE1z3seroZfajeTt8/NGauggO+z2lukqOupNiVYDojmyY3zDqaxG7uRfLPFr8Qmu
- 1E5L6ABg7vAD3wGqp2d+WQSQp5npsB+9TI8or7ubfEpnzeRviKZFe8AYgjPHOxudP5oX
- uwbjCsWSaPIDNXQvrIAIWGoD44iUr+g0aJHp9Qj19MUTkuUIgIGVOqKDPoc781v7jyoN
- R+lsoPO8I1afCzs0TN/pgjFzrCc9+1TlK1ZN76wMUZAGWaoULRCND1Ikt36fsAtj/3q/
- 4tP38FExiAjm+9qw3AI+1R5T1+PlvjffnRbr8sCmtPe30iAdN8VtpnTiojN4JNdeOnth
- +33Q==
-X-Gm-Message-State: AOJu0YzhwV6IHef7/eutp76ngHBcfXOaYLkImknRVne1cFnS/W9/ObLe
- G80SGaMakmiROhYE3b9EcBia/ZZBjAeXQU3rW84Jr99BdjbWtKzJzxS+le0A52duzKV56t0+OX9
- H8RK+5s7aRWGWJgXkH4+4DDQ0XW4=
-X-Google-Smtp-Source: AGHT+IF+HKavGxdvHmmccy3CBeoC9Z/Q+OwrcFiR+b+7y3C10BhG+KPXMvILRz7LEqXO4X9/6DU2DWGHQMHCiyB2Nn0=
-X-Received: by 2002:a05:690c:2706:b0:650:1ee7:7689 with SMTP id
- 00721157ae682-69ec84d42e8mr11054377b3.35.1723199588828; Fri, 09 Aug 2024
- 03:33:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lkp@intel.com>) id 1scO6v-0008WT-9q
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 07:48:45 -0400
+Received: from mgamail.intel.com ([192.198.163.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lkp@intel.com>) id 1scO6o-0003Ci-1F
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 07:48:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1723204118; x=1754740118;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=xzbTSU7hvjS4ZqdqP09hBUAYcDwniEeE/J0sXofj5Hs=;
+ b=cWsQ/f+QHd/IG2xxYpOT6hpY8NGEiG6retpTOKPV9PBO4NJ2+kQ3UQGK
+ wEB0zKTo7goSSl2Woz02T1OCmwV+CTmeDU0CJnXT1ki8x6TUpPoEGnEjj
+ Z1+pgDKWNOhTCpstXXjaOnS5Z5v5NxXkxFo/rhPgicf57rJkBhD21yPIY
+ jLNL0qYRIDxXFuE2i9DuCgXyFxseY30GUMyr1j5S4fchq3bGu+ZDFUic/
+ gR7LL56nz3nscsdGgu4BKiQhowGlT8YcrjtW21pEb7vd1R4gNo++hfXkm
+ aXUE+ex31RLcmcIyW9uDq40EAMf/erXEddlq04FWlPgrKTDbBrk5IV5cS A==;
+X-CSE-ConnectionGUID: +1SZl31MQT6wumtJTF+FAA==
+X-CSE-MsgGUID: ugY9y998S8+r/qIY0guW+g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11158"; a="21548730"
+X-IronPort-AV: E=Sophos;i="6.09,276,1716274800"; d="scan'208";a="21548730"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Aug 2024 04:48:35 -0700
+X-CSE-ConnectionGUID: GmvAt9TMShyFFtIoHfNpOg==
+X-CSE-MsgGUID: 9XXBcAUVSH6fAeMx6zhw7Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,276,1716274800"; d="scan'208";a="62500435"
+Received: from unknown (HELO b6bf6c95bbab) ([10.239.97.151])
+ by orviesa004.jf.intel.com with ESMTP; 09 Aug 2024 04:48:30 -0700
+Received: from kbuild by b6bf6c95bbab with local (Exim 4.96)
+ (envelope-from <lkp@intel.com>) id 1scO6d-0007u6-2v;
+ Fri, 09 Aug 2024 11:48:28 +0000
+Date: Fri, 9 Aug 2024 19:48:11 +0800
+From: kernel test robot <lkp@intel.com>
+To: Shiyang Ruan <ruansy.fnst@fujitsu.com>, qemu-devel@nongnu.org,
+ linux-cxl@vger.kernel.org, linux-edac@vger.kernel.org,
+ linux-mm@kvack.org, dan.j.williams@intel.com,
+ vishal.l.verma@intel.com, Jonathan.Cameron@huawei.com,
+ alison.schofield@intel.com
+Cc: oe-kbuild-all@lists.linux.dev, bp@alien8.de, dave.jiang@intel.com,
+ dave@stgolabs.net, ira.weiny@intel.com, james.morse@arm.com,
+ linmiaohe@huawei.com, mchehab@kernel.org, nao.horiguchi@gmail.com,
+ rric@kernel.org, tony.luck@intel.com, ruansy.fnst@fujitsu.com
+Subject: Re: [PATCH v4 2/2] cxl: avoid duplicated report from MCE & device
+Message-ID: <202408091914.TFbjPuNQ-lkp@intel.com>
+References: <20240808151328.707869-3-ruansy.fnst@fujitsu.com>
 MIME-Version: 1.0
-References: <20240808030411.76990-1-yaozhenguo@jd.com>
- <ZrSGwy0H7nhIwMZz@redhat.com>
-In-Reply-To: <ZrSGwy0H7nhIwMZz@redhat.com>
-From: Zhenguo Yao <yaozhenguo1@gmail.com>
-Date: Fri, 9 Aug 2024 18:32:57 +0800
-Message-ID: <CA+WzARkXrqPv9mP1afadfKgzf_ifgEfy1mHBV78KukjBOKhNxQ@mail.gmail.com>
-Subject: Re: [PATCH] qio: fix qemu crash when live migration
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, yaozhenguo@jd.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=yaozhenguo1@gmail.com; helo=mail-yw1-x1133.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240808151328.707869-3-ruansy.fnst@fujitsu.com>
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=lkp@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,119 +89,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel. Sorry,  I don't notice that this is a fixed issue by
-b8a7f51f59e28d5a8e0c07ed3919cc9695560ed2(chardev/char-socket: set
-s->listener =3D NULL in char_socket_finalize).
-the following process can lead this issue=EF=BC=9A
+Hi Shiyang,
 
-char_socket_finalize->object_unref(OBJECT(s->listener)); // free
-io_source, free s->listener. but s->listener is not clear.
-char_socket_finalize->qemu_chr_be_event(chr, CHR_EVENT_CLOSED)->
-qio_net_listener_set_client_func_full //
-g_source_destroy(listener->io_source[i]); memory fault
+kernel test robot noticed the following build warnings:
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> =E4=BA=8E2024=E5=B9=B48=E6=9C=
-=888=E6=97=A5=E5=91=A8=E5=9B=9B 16:50=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Thu, Aug 08, 2024 at 11:04:11AM +0800, yaozhenguo wrote:
-> > qemu will crash in live migration cleanup process at source host.
-> > BT is as below:
-> >
-> > 0  0x00007f740fc9e165 in g_source_destroy () at /usr/lib64/libglib-2.0.=
-so.0
-> > 1  0x000055a2982a0f6e in qio_net_listener_set_client_func_full
-> > 2  0x000055a298345130 in tcp_chr_update_read_handler
-> > 3  0x000055a298341598 in qemu_chr_fe_set_handlers_full
-> > 4  0x000055a298341655 in qemu_chr_fe_set_handlers
-> > 5  0x000055a298191e75 in vhost_user_blk_event
-> > 6  0x000055a298292b79 in object_deinit
-> > 7  object_finalize
-> > 8  object_unref
-> > 9  0x000055a298292b3c in object_property_del_all
-> > 10 object_finalize
-> > 11 object_unref
-> > 12 0x000055a298291d7d in object_property_del_child
-> > 13 object_unparent
-> > 14 0x000055a29834a3c4 in qemu_chr_cleanup
-> > 15 0x000055a298160d87 in qemu_cleanup
-> > 16 0x000055a297e6bff1 in main
-> >
-> > Crash reason is that qio_net_listener_finalize is called before
-> > qio_net_listener_set_client_func_full. so, listener->io_source
-> > is used after free. fix this by adding more checks.
->
-> If finalize() has been called, then not only has listener->io_source
-> been freed, but 'listener' itself has also been freed, thus....
->
-> >
-> > Signed-off-by: yaozhenguo <yaozhenguo@jd.com>
-> > ---
-> >  io/net-listener.c | 13 +++++++++++++
-> >  1 file changed, 13 insertions(+)
-> >
-> > diff --git a/io/net-listener.c b/io/net-listener.c
-> > index 47405965a6..c02965f919 100644
-> > --- a/io/net-listener.c
-> > +++ b/io/net-listener.c
-> > @@ -143,6 +143,11 @@ void qio_net_listener_set_client_func_full(QIONetL=
-istener *listener,
-> >  {
-> >      size_t i;
-> >
-> > +
-> > +    if (!listener->nsioc || !listener->io_source || !listener->name) {
-> > +        return;
-> > +    }
->
-> ....this is still accessing freed memory for 'listener'.
->
->
-> What is the call path of the stack triggering qio_net_listener_finalize ?
->
-> Whatever callpath has done that needs to be setting SocketChardev->listen=
-er
-> field to NULL, because tcp_chr_update_read_handler will check for NULL
-> before calling qio_net_listener_set_client_func_full.
->
-> > +
-> >      if (listener->io_notify) {
-> >          listener->io_notify(listener->io_data);
-> >      }
-> > @@ -264,6 +269,10 @@ void qio_net_listener_disconnect(QIONetListener *l=
-istener)
-> >  {
-> >      size_t i;
-> >
-> > +    if (!listener->nsioc || !listener->io_source || !listener->name) {
-> > +        return;
-> > +    }
-> > +
-> >      if (!listener->connected) {
-> >          return;
-> >      }
-> > @@ -301,6 +310,10 @@ static void qio_net_listener_finalize(Object *obj)
-> >      g_free(listener->io_source);
-> >      g_free(listener->sioc);
-> >      g_free(listener->name);
-> > +
-> > +    listener->io_source =3D NULL;
-> > +    listener->sioc =3D NULL;
-> > +    listener->name =3D NULL;
-> >  }
-> >
-> >  static const TypeInfo qio_net_listener_info =3D {
-> > --
-> > 2.43.0
-> >
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
-ge :|
-> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
-om :|
-> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
-ge :|
->
+[auto build test WARNING on tip/x86/core]
+[also build test WARNING on cxl/next linus/master v6.11-rc2 next-20240809]
+[cannot apply to cxl/pending]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Shiyang-Ruan/cxl-core-introduce-device-reporting-poison-hanlding/20240809-013658
+base:   tip/x86/core
+patch link:    https://lore.kernel.org/r/20240808151328.707869-3-ruansy.fnst%40fujitsu.com
+patch subject: [PATCH v4 2/2] cxl: avoid duplicated report from MCE & device
+config: x86_64-randconfig-121-20240809 (https://download.01.org/0day-ci/archive/20240809/202408091914.TFbjPuNQ-lkp@intel.com/config)
+compiler: clang version 18.1.5 (https://github.com/llvm/llvm-project 617a15a9eac96088ae5e9134248d8236e34b91b1)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240809/202408091914.TFbjPuNQ-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202408091914.TFbjPuNQ-lkp@intel.com/
+
+sparse warnings: (new ones prefixed by >>)
+>> drivers/cxl/core/mbox.c:1465:1: sparse: sparse: symbol 'cxl_mce_records' was not declared. Should it be static?
+   drivers/cxl/core/mbox.c: note: in included file (through include/linux/gfp.h, include/linux/xarray.h, include/linux/list_lru.h, ...):
+   include/linux/mmzone.h:2018:40: sparse: sparse: self-comparison always evaluates to false
+
+vim +/cxl_mce_records +1465 drivers/cxl/core/mbox.c
+
+  1464	
+> 1465	DEFINE_XARRAY(cxl_mce_records);
+  1466	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
