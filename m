@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44C2BC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 18:10:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6750EC52D7C
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 18:10:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scU2d-000109-Q5; Fri, 09 Aug 2024 14:08:43 -0400
+	id 1scU30-0002Cb-Ee; Fri, 09 Aug 2024 14:09:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1scU2c-0000wx-3m
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 14:08:42 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1scU2y-00025s-NV
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 14:09:04 -0400
+Received: from mail-lj1-x229.google.com ([2a00:1450:4864:20::229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1scU2Z-0007Bs-Pl
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 14:08:41 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-428e0d184b4so15733955e9.2
- for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 11:08:38 -0700 (PDT)
+ id 1scU2w-0007EF-OI
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 14:09:04 -0400
+Received: by mail-lj1-x229.google.com with SMTP id
+ 38308e7fff4ca-2f0271b0ae9so23785321fa.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 11:09:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723226917; x=1723831717; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=tc0AyMsLxgF/Y4POZoK/SeaYpPE9EiBv0EtvcvxDBFQ=;
- b=gE/F4sZYlB1h5W0C4viPYLT9jvN2GHf6DKE0Bmz+nj9zu7WISjzu/pyTlICYAJez6b
- eRoRlyQZ0vvLhpcNOT1MWyjtya8IciT4cq11PdH3PfEu/aUiDsCDyQY8TcVu0cw6rxEc
- q+NCznojDCNHQuwehYpsMvStXgcXLlLCKXWQFzUUu12IXLxZLq1KEwiUAgUiawnP1i8E
- aA2mPTQdWYV5LPBUNcyRdxFc5U+6SwiRsSRpFoNH1BLjUBDybXf+sfalmE7RUAbmE+Fe
- vNDjWRQdGIryVcn3wkvRi14O7aM3ewy6F+H1kfNdCkP+dV/RkmvKqi7KR2QweGFTQrTk
- +D3A==
+ d=linaro.org; s=google; t=1723226941; x=1723831741; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=OTKwxuPziiy0+9qyVmM4AyVNPdnxPukHZnKDv7thDS0=;
+ b=jegS4DYaDY0hCVV+NeObu9yuZEO/d6owZgQEwiAD7xMd0pbmj0bgSeYk0rQnV4VwB+
+ de0oMGsEGw2nF2pdvEgAyfFpqPSKos4BLvf6i1FG0I87kAZDEfPwJjzwbccy3SkURde+
+ n733lB3OY2HLVWD3zNHsFES+6TcrdVDMkPxKuCN8gY4H/Jc2vYgeE8iNFozApG8RkUuh
+ aZ6ivFq5GKc7wbn19vw/efmm3rwkYb1uqPmMprBTw5gPZzPzPNrOFqD6workj3DbDyWl
+ vo+V2+Zb30/P4T31jTVXygNJX0iqA+4WD5SjkVo0N6zMcYR3SQsfVrR5JW3rli2TOEyo
+ GH0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723226917; x=1723831717;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tc0AyMsLxgF/Y4POZoK/SeaYpPE9EiBv0EtvcvxDBFQ=;
- b=SHvg7Kn1pwO48FfgRdnzaD/0Lww6KmYuHYq1kip+E6CMEqmb7RXYe6RkL95O+YHbLs
- 5Hl80EzbhzgrBiQJAt/VbvK4ByvT+BuzwZggwFhq3mctrHphPiQodKIVKCr3timHfdPo
- 0yU+bH1VghqVd37umpg6N6U8TTXAsS2PW1GrO0ow6XmzIByn9yNKXarSjOt5MrwxFWCH
- +V9e0oRHDlIDL1p8DLIpz6CnrLKTkY9n0rhUqLo03zXqfnosVgd6TyTR1o0Zb7cEL1wD
- iuB07nzb2yHtVhEgyLvogOyifp5nxjqFTfwxCeYnQd5hapGQocVRima1LjBrDlkjhEev
- wXdw==
-X-Gm-Message-State: AOJu0YybkgNh+7FMvjm28hBBW6WoOSiXUTOGSY9yfDK505xSRRzk8kNq
- lXW5YajxsrLFVr2bVdYXKsG4Pyg2QpPSSjLUuMzMLMK5dfUXE1lJy/b+gTwwKV9pT1rXlsWBL+u
- h
-X-Google-Smtp-Source: AGHT+IG0qazA9rwe5m2u0fWCLBAGV91OpI8Fjtip95kBcPskQCY/AQ/BFzEuqBRxemxjMkbgSySvvg==
-X-Received: by 2002:a05:6000:b0d:b0:36c:b5a1:f108 with SMTP id
- ffacd0b85a97d-36d616e9d55mr1628457f8f.39.1723226917357; 
- Fri, 09 Aug 2024 11:08:37 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723226941; x=1723831741;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OTKwxuPziiy0+9qyVmM4AyVNPdnxPukHZnKDv7thDS0=;
+ b=bJCJtRQqSEUDBxx1UQ5d5KAVykx/RLWNucZlTmq39tuoigTf5qlnGsqhvILJKq4n5/
+ g0VrsAT2kKWvtOPCDuYW+hQNIX9jSQ4IBq0oojGkjqzt4ZIGfGkb6GJxjkks66v4L4WO
+ LLNqMR499yEkdBF6Kzw/k862FFMlUPGO1xobsam+rnRTADrFU//grdqXU+KzIh8q6csC
+ v+Tkk3dTvHD890Ru4u70PtRotAJ1k2rIEyQw1n1HM9GAiNj2lqgyqhAKwrNftn1V0WZB
+ NGtw3BbvadjNupbWWJhS91w63X8s6R6Z/SSAH6xjI3kEXQn19si0yrHPQyWWS0zugALl
+ 6e4g==
+X-Gm-Message-State: AOJu0Yx6Vtq6GSda2ZF43YUD94eFxEaKqGDB+Ynwrg+ysAhV0mHfotAg
+ X7WuU4gNk7VE/IacCtN1GRIx31W3spML35PizINl/oOYkNNz/Jm6YIb7fxBwAMirbf6X4Rpe9/f
+ e
+X-Google-Smtp-Source: AGHT+IGmz4CoUcJ5S5EgVqzAUXDlT0bafavuNsRmNwNytbLIxpdtTvSR+YvA7E+rdJFiLDGVr1YdyQ==
+X-Received: by 2002:a05:651c:b29:b0:2ee:5ed4:792f with SMTP id
+ 38308e7fff4ca-2f1a6d0034amr18342261fa.2.1723226940590; 
+ Fri, 09 Aug 2024 11:09:00 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36e4c937b6esm132262f8f.32.2024.08.09.11.08.36
+ ffacd0b85a97d-36e4c937b6esm132262f8f.32.2024.08.09.11.09.00
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Aug 2024 11:08:36 -0700 (PDT)
+ Fri, 09 Aug 2024 11:09:00 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/11] target-arm queue
-Date: Fri,  9 Aug 2024 19:08:24 +0100
-Message-Id: <20240809180835.1243269-1-peter.maydell@linaro.org>
+Subject: [PULL 09/11] target/arm: add support for PMUv3 64-bit PMCCNTR in
+ AArch32 mode
+Date: Fri,  9 Aug 2024 19:08:33 +0100
+Message-Id: <20240809180835.1243269-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240809180835.1243269-1-peter.maydell@linaro.org>
+References: <20240809180835.1243269-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::229;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x229.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,88 +94,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; this pullreq contains some minor bug fixes, and also
-the txt-to-rST document conversions I did. The latter are not
-strictly speaking bugfixes but I think for rc2 they're OK. Let
-me know if you'd rather I respin this without them.
+From: Alex Richardson <alexrichardson@google.com>
 
-thanks
--- PMM
+In the PMUv3, a new AArch32 64-bit (MCRR/MRRC) accessor for the
+PMCCNTR was added. In QEMU we forgot to implement this, so only
+provide the 32-bit accessor. Since we have a 64-bit PMCCNTR
+sysreg for AArch64, adding the 64-bit AArch32 version is easy.
 
-The following changes since commit 0f397dcfecc9211d12c2c720c01eb32f0eaa7d23:
+We add the PMCCNTR to the v8_cp_reginfo because PMUv3 was added
+in the ARMv8 architecture. This is consistent with how we
+handle the existing PMCCNTR support, where we always implement
+it for all v7 CPUs. This is arguably something we should
+clean up so it is gated on ARM_FEATURE_PMU and/or an ID
+register check for the relevant PMU version, but we should
+do that as its own tidyup rather than being inconsistent between
+this PMCCNTR accessor and the others.
 
-  Merge tag 'pull-nbd-2024-08-08' of https://repo.or.cz/qemu/ericb into staging (2024-08-09 08:40:37 +1000)
+See https://developer.arm.com/documentation/ddi0601/2024-06/AArch32-Registers/PMCCNTR--Performance-Monitors-Cycle-Count-Register?lang=en
 
-are available in the Git repository at:
+Signed-off-by: Alex Richardson <alexrichardson@google.com>
+Message-id: 20240801220328.941866-1-alexrichardson@google.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/helper.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240809
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 8fb4b474e83..94900667c33 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -5952,6 +5952,12 @@ static const ARMCPRegInfo v8_cp_reginfo[] = {
+       .access = PL1_RW, .accessfn = access_trap_aa32s_el1,
+       .writefn = sdcr_write,
+       .fieldoffset = offsetoflow32(CPUARMState, cp15.mdcr_el3) },
++    { .name = "PMCCNTR", .state = ARM_CP_STATE_AA32,
++      .type = ARM_CP_ALIAS | ARM_CP_IO | ARM_CP_64BIT,
++      .cp = 15, .crm = 9, .opc1 = 0,
++      .access = PL0_RW, .resetvalue = 0, .fgt = FGT_PMCCNTR_EL0,
++      .readfn = pmccntr_read, .writefn = pmccntr_write,
++      .accessfn = pmreg_access_ccntr },
+ };
+ 
+ /* These are present only when EL1 supports AArch32 */
+-- 
+2.34.1
 
-for you to fetch changes up to 77100e100d76a568800e19ee20c7e9255053b84a:
-
-  arm/virt: place power button pin number on a define (2024-08-09 17:37:56 +0100)
-
-----------------------------------------------------------------
-target-arm queue:
- * Fix BTI versus CF_PCREL
- * include: Fix typo in name of MAKE_IDENTFIER macro
- * docs: Various txt-to-rST conversions
- * add support for PMUv3 64-bit PMCCNTR in AArch32 mode
- * hw/core/ptimer: fix timer zero period condition for freq > 1GHz
- * arm/virt: place power button pin number on a define
-
-----------------------------------------------------------------
-Alex Richardson (1):
-      target/arm: add support for PMUv3 64-bit PMCCNTR in AArch32 mode
-
-Eric Blake (1):
-      docs: Typo fix in live disk backup
-
-Jianzhou Yue (1):
-      hw/core/ptimer: fix timer zero period condition for freq > 1GHz
-
-Mauro Carvalho Chehab (1):
-      arm/virt: place power button pin number on a define
-
-Peter Maydell (6):
-      include: Fix typo in name of MAKE_IDENTFIER macro
-      docs/specs/rocker.txt: Convert to rST
-      docs/interop/nbd.txt: Convert to rST
-      docs/interop/parallels.txt: Convert to rST
-      docs/interop/prl-xml.txt: Convert to rST
-      docs/interop/prl-xml.rst: Fix minor grammar nits
-
-Richard Henderson (1):
-      target/arm: Fix BTI versus CF_PCREL
-
- MAINTAINERS                                   |   7 +-
- docs/interop/index.rst                        |   3 +
- docs/interop/live-block-operations.rst        |   4 +-
- docs/interop/nbd.rst                          |  89 ++++++++++++
- docs/interop/nbd.txt                          |  72 ----------
- docs/interop/{parallels.txt => parallels.rst} | 108 ++++++++-------
- docs/interop/prl-xml.rst                      | 192 ++++++++++++++++++++++++++
- docs/interop/prl-xml.txt                      | 158 ---------------------
- docs/specs/index.rst                          |   1 +
- docs/specs/{rocker.txt => rocker.rst}         | 181 ++++++++++++------------
- include/hw/arm/virt.h                         |   3 +
- include/qapi/qmp/qobject.h                    |   2 +-
- include/qemu/atomic.h                         |   2 +-
- include/qemu/compiler.h                       |   2 +-
- include/qemu/osdep.h                          |   6 +-
- target/arm/tcg/helper-a64.h                   |   3 +
- target/arm/tcg/translate.h                    |   2 -
- hw/arm/virt-acpi-build.c                      |   6 +-
- hw/arm/virt.c                                 |   7 +-
- hw/core/ptimer.c                              |   4 +-
- target/arm/helper.c                           |   6 +
- target/arm/tcg/helper-a64.c                   |  39 ++++++
- target/arm/tcg/translate-a64.c                |  64 ++-------
- tests/unit/ptimer-test.c                      |  33 +++++
- 24 files changed, 553 insertions(+), 441 deletions(-)
- create mode 100644 docs/interop/nbd.rst
- delete mode 100644 docs/interop/nbd.txt
- rename docs/interop/{parallels.txt => parallels.rst} (72%)
- create mode 100644 docs/interop/prl-xml.rst
- delete mode 100644 docs/interop/prl-xml.txt
- rename docs/specs/{rocker.txt => rocker.rst} (91%)
 
