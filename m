@@ -4,80 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 103B3C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 08:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62737C52D71
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 09:01:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scLOn-0001zK-2e; Fri, 09 Aug 2024 04:55:01 -0400
+	id 1scLUC-000812-7p; Fri, 09 Aug 2024 05:00:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1scLOm-0001xZ-02
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:55:00 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1scLUA-0007zs-1b
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 05:00:34 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1scLOj-0003rr-Rd
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:54:59 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-2ef2c56d9dcso19642681fa.2
- for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 01:54:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1scLU7-0004s6-AS
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 05:00:33 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3687fd09251so947562f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 02:00:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723193695; x=1723798495; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rWcoeLFLhB6eHvwZe6tvRg6JNrJnc0vscCQEZ14clkQ=;
- b=zAdOUO6KrVmKEtLUaoaTI3kKoRMQP218ZU3ulm2CyuFkMmxWULj2qz2Ft63BkPVdwf
- XviuBUicx7mOfJqZjYSma5ENOaY6h2PVjgGzjRe+fUHNB0JkRQJXlpVPVCdcLBjYyodg
- bTDi8PF4vjwKGjchAvpjJEJ4QaS0QRGEhm6K63wHDM+YPAw/9Hf/nmZ6aW+c7ReZG7Bf
- VsbXutTyhxCUHTsrS4aT8GKjsC45RcxBZUeJQHkrpvH4MHyfv0IopKa1NihhKAZJuSyS
- W29XKxDV5oyXQW1ydb7F0+iYftYoOH0bcbQmMfST2QkokyuyY9Pqwr49Zakoc1Vlsbee
- Jvww==
+ d=linaro.org; s=google; t=1723194027; x=1723798827; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=NmYyzHtVTcDjPEdEVArsEoK0VXoPUGExEsdo4wzUW1I=;
+ b=iJj0nN9ILoM4E15+rR+QD6kmnyzoGrFq/rSLLQDO+ffquvH/qbwtxsXP+vxPv4Dq1w
+ QpR7VOGoirtssSqs1GipagOKLXno5DeICPhY5mq5w//PHflMd8hS3OlM9usPsrgcIOBE
+ aPAXOpVQBm4aJCgPfsJTfCyNpV4uOUyB5nIoTZCIPLQp8N0oQ+SeJehnSu0nxbRWC+5h
+ mX00/1kbk6NycAOzj7pU9UdHFd0ip1r6noRsLQgpV1Tz+v7btuOaaKdFTUFfP+EtH9+2
+ GQY07ye4szuZzPgC+xT06+mz4anZQkqa4BztinT5SKiO8AwII6tU7Mwcxj3OK1RCr2vB
+ 5xMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723193695; x=1723798495;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rWcoeLFLhB6eHvwZe6tvRg6JNrJnc0vscCQEZ14clkQ=;
- b=P2r+OZ1LypJm89PcWwzZp8FUPknXzr8IUFI2Fj8PTtGC9sU2NRqR+hVHdjCwVWdE2B
- /w+wfyI17UB7jOfpljB3RTmsWYZaT/zRsemfNxTh2m5HaQ2pojQj+/gdZcqCcoL+Ej6k
- cflqdDxnZzcvrv/1Kv/h7Sb0WDQrZ2TuNokqsFw9x05gR3mv1VpmT/NkLxfvIn0YHVbV
- 7I4LUjjNT3yiGGT1+zFmBcDCjzT37EjmSjFB/ZeysNADfGYelPGBW5YQXlUG/4dt635e
- VJX2k21IxLv6UCR11HEGNVNHdU/69gCHYqmpj8l2CpLMkV+KX1Re7wACado3JHPORdjM
- abvg==
-X-Gm-Message-State: AOJu0YylWQ0q7NBaoQIW9mlY8nElQ9k/HVY3Vnn3V4q9YSThJZHdOQOY
- /6erv/mLHZG5zawnjWtsjo8wD7F2A6348NThDHYsNNCmjOJEKlRa/EKdOvOzjyw=
-X-Google-Smtp-Source: AGHT+IEmNjKwYO1ar3A6LE3vIkL5B8s6n8rEIJ8g5EDK3RcvuVR7tzAxGxkEPCvA3ck/Ig7ROQVqAA==
-X-Received: by 2002:a05:651c:2124:b0:2ef:2281:2158 with SMTP id
- 38308e7fff4ca-2f1a6c4bdbdmr8444651fa.1.1723193695346; 
- Fri, 09 Aug 2024 01:54:55 -0700 (PDT)
-Received: from [192.168.178.175] (41.red-95-127-42.staticip.rima-tde.net.
- [95.127.42.41]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4290c77f078sm67322895e9.37.2024.08.09.01.54.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Aug 2024 01:54:54 -0700 (PDT)
-Message-ID: <fc198ec6-d1d2-408f-b69e-d976d9576f03@linaro.org>
-Date: Fri, 9 Aug 2024 10:54:51 +0200
+ d=1e100.net; s=20230601; t=1723194027; x=1723798827;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NmYyzHtVTcDjPEdEVArsEoK0VXoPUGExEsdo4wzUW1I=;
+ b=uWwIL3XMuG2uVjEIBYS/uHlX43pmakJ9T4U/a53k/IQtmszjYkrqiqEWLX1MY7WhLU
+ oTaYh3WhZ7x/8iHeOZFK/+qc2G9s+92TP9TVlQP88qWus//GE+7KDz2O9Ic9q1DxifSu
+ wNZwe88+hOrhdNndL36Yki91eP7ERw7kG5XLI64oSkDN8yGnQ/VSd/uZ+YhLi5Anl2Lf
+ y2diCgWnypnmdT2jEDYPaJIcZYXngc/sM2semleIxlrwhHPBRW6FQqIt8tApCjyCvG5L
+ JxRu96QUyi9fSQFfgM8hN4NPzUPvwrQUaJFRggbKDjakH6ERt7FjiAnKHSSF21ow+lv6
+ nKiw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWKp/ova53A+OtmElfms7RDUZlUrG64c4Nb6kYqJ3pkVpcbjzfW56aBmKLdKYIb4Jpx59+Y5CK4BdoU2ub26XGC4yQ34zU=
+X-Gm-Message-State: AOJu0YzR3Jzy7Rm2lcG07KYE+PNGuOpKuDLQ5GQCW9PklySJqOE7LDPb
+ 19B4p90FhPbTykiLeHcb5M2EJx/EdbiDUFoklBNeMDHkp31+OGES+WW6tKNYWfYPB6FiqQdpuTq
+ r+9ncMJ018sf26ALol2Sn0l+5+NXuHA1OjL4VCw==
+X-Google-Smtp-Source: AGHT+IHASa5CI/8VmF2a8okXHufY3PkBARhBp95qEtdhDbCsWAHqeSitT533Wpul/4/9NgM/SMffObYY+EtStWUPA0Q=
+X-Received: by 2002:adf:cc88:0:b0:368:4edc:611e with SMTP id
+ ffacd0b85a97d-36d5e7fd9e1mr676747f8f.14.1723194027412; Fri, 09 Aug 2024
+ 02:00:27 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 20/23] hw/ssi: add support for flexspi
-To: Octavian Purdila <tavip@google.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, stefanst@google.com,
- pbonzini@redhat.com, alex.bennee@linaro.org, thuth@redhat.com,
- peter.maydell@linaro.org, marcandre.lureau@redhat.com,
- alistair@alistair23.me, berrange@redhat.com, jsnow@redhat.com,
- crosa@redhat.com, bleal@redhat.com
-References: <20240805201719.2345596-1-tavip@google.com>
- <20240805201719.2345596-21-tavip@google.com>
- <d31e1020-ce8d-40d9-ac8c-1dd8a0294073@linaro.org>
- <CAGWr4cQ0rv=83srF4NdJQ3ppP8mUu4qoCxU+nPtrBEL+TbgwqQ@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAGWr4cQ0rv=83srF4NdJQ3ppP8mUu4qoCxU+nPtrBEL+TbgwqQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22e.google.com
+References: <20240809035134.699830-1-gshan@redhat.com>
+ <20240809035134.699830-4-gshan@redhat.com>
+In-Reply-To: <20240809035134.699830-4-gshan@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 9 Aug 2024 09:59:52 +0100
+Message-ID: <CAFEAcA_bfBNFBeJ-cMS+KACaC6Sw2VAAdg_gb5xn6-TE5C-7nA@mail.gmail.com>
+Subject: Re: [PATCH 3/4] hw/arm/virt: Use kvm_arch_get_default_type()
+To: Gavin Shan <gshan@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, pbonzini@redhat.com, 
+ philmd@linaro.org, richard.henderson@linaro.org, shan.gavin@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,50 +91,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/24 23:31, Octavian Purdila wrote:
+On Fri, 9 Aug 2024 at 04:52, Gavin Shan <gshan@redhat.com> wrote:
+>
+> kvm_arch_get_default_type() and kvm_arm_get_max_vm_ipa_size() are
+> interchangeable since the type is equivalent to IPA size (bits)
+> with one exception that IPA size (bits) is 40 when the type is zero.
 
->>> +static Property flexspi_properties[] = {
->>> +    DEFINE_PROP_UINT32("mmap_base", FlexSpiState, mmap_base, 0),
->>> +    DEFINE_PROP_UINT32("mmap_size", FlexSpiState, mmap_size, 0),
+Well, sort of, but they're conceptually different.
 
-Preferably simply 'size'.
+kvm_arch_get_default_type() is the API for "give me the value
+I need to pass to kvm_ioctl(s, KVM_CREATE_VM, type)"; it's
+architecture independent and different architectures do
+different things. In the future Arm might need to do something
+other than "just pass in the IPA size".
 
->>> +    DEFINE_PROP_END_OF_LIST(),
->>> +};
->>> +
->>> +static void flexspi_init(Object *obj)
->>> +{
->>> +    FlexSpiState *s = FLEXSPI(obj);
->>> +
->>> +    memory_region_init_io(&s->mmio, obj, &flexspi_ops, s, TYPE_FLEXSPI,
->>> +                          sizeof(FLEXSPI_Type));
->>> +    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
->>> +}
->>> +
->>> +static void flexspi_realize(DeviceState *dev, Error **errp)
->>> +{
->>> +    FlexSpiState *s = FLEXSPI(dev);
->>> +
->>> +    if (s->mmap_size) {
->>> +        memory_region_init_ram(&s->mem, OBJECT(s), DEVICE(s)->id, s->mmap_size,
->>> +                               NULL);
->>> +        memory_region_add_subregion(get_system_memory(), s->mmap_base, &s->mem);
->>
->> Where is this region used?
->>
-> 
-> These regions are enabled in rt500.c when instantiating the flexspi
-> peripherals. As implemented now they are backed by RAM, the full
-> implementation should translate accesses to spi commands to FLASH or
-> PSRAM devices.
-> 
-> We need the memory regions because even the simplest NXP SDK examples
-> are using the memory mapped flexspi0 region.
+kvm_arm_get_max_vm_ipa_size() does exactly what it says on the
+tin: it is an Arm specific function that returns the maximum
+supported IPA size.
 
-Devices shouldn't access get_system_memory() directly (it is
-documented as kind of deprecated =) ). Since you implement a
-sysbus device, you need to export the region with sysbus_init_mmio()
-then the upper layer (SoC) instantiating it gets the regions calling
-sysbus_mmio_get_region() and maps it. Then you don't need the
-'mmap_base' property.
+I would prefer not to conflate the two.
+
+thanks
+-- PMM
 
