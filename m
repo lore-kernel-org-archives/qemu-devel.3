@@ -4,163 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1B1AC52D7C
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 12:20:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 612E6C52D7C
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 12:25:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scOay-0001GO-J2; Fri, 09 Aug 2024 08:19:48 -0400
+	id 1scOg5-0008Ro-NS; Fri, 09 Aug 2024 08:25:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1scOar-0000sQ-Tn
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 08:19:42 -0400
-Received: from mail-vi1eur05on2117.outbound.protection.outlook.com
- ([40.107.21.117] helo=EUR05-VI1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1scOg4-0008QO-Rz
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 08:25:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>) id 1scOap-0008W2-P7
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 08:19:41 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=LPTBGIjtSCLF9pB00wng/oYoOhTN1FCS16a2E3Py508EoQfsvbwSry5XFXKV3umcTyX4gHJ54TrvD1QwBWp908mAnuSXy1kf5LL/rOl6Xzizv4rQwFgBl44rjVcbpnfm+Nmw1b34cZ5oDbuhh1RFjy4GDIUx3jeyhc5On2X49bu24jMm82qkIClqaPRxlzP1KsOT/BZ5cB1A17UKg/ykePqtg8PVpIx9XJ7rByNbKGtt4vUBNTzrTrs84Cfgh+sDXZBninZ2JimGiQcYJ5w0/t3YPogOY6so6z/Dmeahj+zSOnK1wc5Q4u5jZTrEZfWAl9ufTrEh/0EX4eJBaa1V/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uSgsCPhKemxyvT1cfJia6nAcc5KDqpfuJbEwDWxNrKw=;
- b=IIPWyRiDJLJsfSl8t7/Ir+A1MG94WQFXVgqnr/2eFTeWFsi66Pb3QtP4m9tRYQ4gPe7zwAIoiuo9SWsFArfPsKqZfVY6Ou0aXKOPpGGdO+LEfh/HU7vt8C4LxYBz6oZlN/qFQaVZlOSWX7EU/kIzRUpi8+RGpAR7wyJPf2Ojc/auwymA61pSOxFyZVSLNqxs2InyiyRlikbvmC9dGjDJPfiSWAhQgzO0B0Sh2X8eybI71MohVYASScXlLMxMtS7Y+NYOhIF3eH3BUIht6mybdrcBZifTH+mz106CN2OYu+CbgcLna1SO9Znpiy6oARWxXGIxNYwGMTM+exyFHvfNFA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uSgsCPhKemxyvT1cfJia6nAcc5KDqpfuJbEwDWxNrKw=;
- b=sVPKrrDXbUJwTWimqovBOwmYNHIY0wuYSrPtPxlBNGW1AE1TCfWxSP3Pngh47et+TOgt7qUe7UE3v5MdBudU4zhjIm8Y0rR4APx+vwhA4jEgQIUXSPS8nuDnhCV6ADaEpvQq+QqgfcNHjNg/D8iObOaK5aQrttxu6ZXuejb+Hg3edUMAvgZQvn2V8zc4fLUinyEJoBytYBjIs/R0GKm0QQ9ZPDjEQ9CDFvo7rxodzWyY4BgSh+AW9pVylMnzh0X/6ZgulE1KKc2ZbCt9SOgsy7LEDG/OdOvROYjG6npVksPlHTAQHLQq8XRdgFUXDmHrTUQU3tNv8816JZLWb3VbOA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from PAXPR08MB6956.eurprd08.prod.outlook.com (2603:10a6:102:1db::9)
- by DU2PR08MB9990.eurprd08.prod.outlook.com (2603:10a6:10:492::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7875.8; Fri, 9 Aug
- 2024 12:14:33 +0000
-Received: from PAXPR08MB6956.eurprd08.prod.outlook.com
- ([fe80::59be:830c:8078:65d1]) by PAXPR08MB6956.eurprd08.prod.outlook.com
- ([fe80::59be:830c:8078:65d1%4]) with mapi id 15.20.7875.007; Fri, 9 Aug 2024
- 12:14:33 +0000
-Message-ID: <c889b1e6-22e8-4086-b7f1-8fbacd91fae2@virtuozzo.com>
-Date: Fri, 9 Aug 2024 14:14:31 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] module: Prevent crash by resetting local_err in
- module_load_qom_all()
-To: Alexander Ivanov <alexander.ivanov@virtuozzo.com>, qemu-devel@nongnu.org
-Cc: andrey.drobyshev@virtuozzo.com, cfontana@suse.de, kraxel@redhat.com,
- laurent@vivier.eu, mjt@tls.msk.ru
-References: <20240809121340.992049-1-alexander.ivanov@virtuozzo.com>
- <20240809121340.992049-2-alexander.ivanov@virtuozzo.com>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <20240809121340.992049-2-alexander.ivanov@virtuozzo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: VI1PR08CA0250.eurprd08.prod.outlook.com
- (2603:10a6:803:dc::23) To PAXPR08MB6956.eurprd08.prod.outlook.com
- (2603:10a6:102:1db::9)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1scOg1-00013J-Qn
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 08:25:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723206299;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UOwA4QbVkDmvqf7etn9t7Ds166wZBQN7pf+VdSr6FkM=;
+ b=RpkMOJiqvMmyWYgbk9jyTh2NbVlJAmJ0GAXNLv+I4sPJ9qNJ1Golgndxj8+4sktE9xLllV
+ 9K1/RNFXpI7gLTeG+xA3P50HZQOfFWO0nqk+DkqfrzYul4xZ6MU1gNJ/MrMwsiljuxxR1Q
+ Dqo7YZZmeLiUaD15mxf6M216ib1AKkk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-33--7dfJdlSNg-Vn4YmIjJ4nw-1; Fri,
+ 09 Aug 2024 08:24:56 -0400
+X-MC-Unique: -7dfJdlSNg-Vn4YmIjJ4nw-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0AEC91956058; Fri,  9 Aug 2024 12:24:53 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.193.245])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DAA9019560AE; Fri,  9 Aug 2024 12:24:50 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id AFCA821E668B; Fri,  9 Aug 2024 14:24:48 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Daniel P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eduardo
+ Habkost
+ <eduardo@habkost.net>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Yanan Wang
+ <wangyanan55@huawei.com>,  "Michael S . Tsirkin" <mst@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Eric Blake <eblake@redhat.com>,  Marcelo
+ Tosatti <mtosatti@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,  Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>,  Sia Jee Heng
+ <jeeheng.sia@starfivetech.com>,  qemu-devel@nongnu.org,
+ kvm@vger.kernel.org,  qemu-riscv@nongnu.org,  qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,  Dapeng Mi
+ <dapeng1.mi@linux.intel.com>,  Yongwei Ma <yongwei.ma@intel.com>
+Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache object
+In-Reply-To: <ZqyRik4UHHz3xaKl@intel.com> (Zhao Liu's message of "Fri, 2 Aug
+ 2024 15:58:02 +0800")
+References: <20240704031603.1744546-1-zhao1.liu@intel.com>
+ <20240704031603.1744546-9-zhao1.liu@intel.com>
+ <87r0bl35ug.fsf@pond.sub.org> <Zp5vxtXWDeHAdPok@intel.com>
+ <87bk2nnev2.fsf@pond.sub.org> <ZqEN1kZaQcuY4UPG@intel.com>
+ <87le1psuv3.fsf@pond.sub.org> <ZqtXP9MViOlyhEsu@intel.com>
+ <87mslweb38.fsf@pond.sub.org> <ZqyRik4UHHz3xaKl@intel.com>
+Date: Fri, 09 Aug 2024 14:24:48 +0200
+Message-ID: <8734ndj33j.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PAXPR08MB6956:EE_|DU2PR08MB9990:EE_
-X-MS-Office365-Filtering-Correlation-Id: 82163319-989d-4e75-b9f9-08dcb86cd418
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?NndFMFR0NHNVMjZVSHAxSHYzTWZuQmhVZTByOUZPNDdGekl4UlUvbEhGRzcx?=
- =?utf-8?B?a214aXEyeURiK1l5T2lrNHVZY1pxbmZtZy9hZmpSeUZSU1N4NHpBNFJwNk9O?=
- =?utf-8?B?aUMrTEpRK0V4YlRQMjBLZjB1ZTlKczdVcVQ0Zm9hZklGTlVVUE1jTndhd2FT?=
- =?utf-8?B?NzRmWjhudysyaW9ZQU0vbkw4ZzJsL2pZcnFTaGZEOVZwVUlEU1pxKzVrM04v?=
- =?utf-8?B?bk04Qy9RL0xiUDg1VlBMQS9TSXI3d20ybi90dmt6MWNDakNkTEhHNXdWVXJ0?=
- =?utf-8?B?d2lFdjNKNG5SUDZuU2I3VEp3VWlFV0xwajRQVVkzeTdDeEgzZEhVMElwcHpN?=
- =?utf-8?B?UWdMRVVlYUZ0YnB5SEhYenR2Uk15U3BJa3prdy9jaVc2SlFGdi9IQXVIVy9i?=
- =?utf-8?B?cXZFQzR2ZTh2dEo4bklncG8zdHdhU3FBdmd5ek5ybVNIbzdrY2hxWVRBd0Ur?=
- =?utf-8?B?ZFpIYXdaREc0cmk0Z3FsQmxVUjRpbVZEK0lXQjRLUU02Vml1VmlONkZrdGNv?=
- =?utf-8?B?eFhOTERMa2ZqREJTM3k2RlArNVNsSkRHaE9UNmpIL1BkZWxWd0RxSlJ0MzVF?=
- =?utf-8?B?WkhTcEZXL1FyazIvRzhpbW9qaWxIcEJPWkFkN1J1ZFRvMVNJeXNvUyszTVVP?=
- =?utf-8?B?cEpLZkVDOG9WVTRsSTFSUUsyV0tTYjNhT3NWOXpRZ2FZY2FpdXNRWlRjYW5Y?=
- =?utf-8?B?WWF5NStSbytabnlKeFkzaGR3ZlI1Nm4vMld3T2ZheWpXT25sTDJEQUw5THZt?=
- =?utf-8?B?ZXFOaUozNFZHM0w1cm9zdm16RmR0bzlZVm5LdEFuTVlqRldqM0F1Q3o1azBU?=
- =?utf-8?B?a3ZLaERGZFFOcWtKR3hubTJBbFNRTjhTL3ZDb2g2SWszR0VETXc5THJBSHVT?=
- =?utf-8?B?Zmt0Ym40K0lRK056SDVmRW8rMlhKaVNNQ2FRcUN6MkhZUWQ2RGRFWjdBYzhF?=
- =?utf-8?B?eGYvb0dVWWo3c2M1V0hLemxNVTRFVDFHNTcxWEMweDFqQzdHYXp2T2N6TUd5?=
- =?utf-8?B?aG10NW5zd2FyY2RoMFl5T3d5Skw5eVhFQTlMb0xxaDhWZktiZ0RlbzV5eXRO?=
- =?utf-8?B?NTV6K0V4Z0JYNFNSeTNmWWFpVThjamVQRlFPOVNPTFhGcDFLZFkzTVdwQlFO?=
- =?utf-8?B?Z1ppVHJUS2oxaWxIdFdGQXFTQ3IzVkc3dUdkR0dQSTdreWpoWmVqZWZLM1l5?=
- =?utf-8?B?Vi9zeVVwREFtRzROYkltNlZqZU4reG82YWt5dURuRkEyTWZOcXZwN0RoZnNh?=
- =?utf-8?B?S1dVaWQzTjlmV05TZ2JuYmQzTVVYZHVyNGNRd1BZQTh4TmVTOFJmUk1BZ2ht?=
- =?utf-8?B?Q3FGRkVFblpIRFdsdHBCVmRFRUpKYThjcjVxT3VtVFVTK0kyTXFRRjBTb3hD?=
- =?utf-8?B?bzdNSW1vOVR0cHVYOHBENXNrMEZBUitlSGtVREJGaWxWaUdnQXVJOUhRRlFO?=
- =?utf-8?B?UHJWR05DTVlrNFhKUGptZnpleksrcVlnalVPdWJ0MExOZ2VTcGtZWmJMTDVO?=
- =?utf-8?B?aUdWL29jTHJJSUcrZTVPdzFoN2ZnbXg0a3oxYldMeHA4dExyVG9HQ2lTUUQw?=
- =?utf-8?B?bmtqcjlLKzJMQ1dpL01aS2ZWenMxZU5LWGlMY3h0WVh3SWVhQzh1K3B0YXJS?=
- =?utf-8?B?dUpyTVBBUmM0aGd6c3U3bjFTOXpKb3RLekExWHBJdk4xVDJZMkp4OHBMQmFL?=
- =?utf-8?B?N2NTZUEyeURUWHFlbGdIbEFRekhacWs5YUJmUEROTTRmUE9ubFNNS3NiK1Rs?=
- =?utf-8?B?QXVrVE00NVBzMExnSVUvNjNWUFcvdGN1QlRMVUxSa0d3YzFERE5IWG56R0Zo?=
- =?utf-8?B?QU1SVnFVRWpiejh2UW1BZz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PAXPR08MB6956.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VjNZNitTTEhYdC8wb3M4U2hndU5kVlMrZmFZRVd6ZXVFRGtuWElFMjdTcHBK?=
- =?utf-8?B?bmpQUlBoZW03MkZyZWYxZ0dJdlR2UTliTUQwS09Ud1B5UDhMRW9yYWNvNS9J?=
- =?utf-8?B?aDJlM2tMa1ZkM1ZqaGdFVlZlSk9YUHpIaHg2Q282RzdUSkVtUnNaU3lYSXE0?=
- =?utf-8?B?V0lYVFV2WUYwVngwMkJPQmFzRU5uV2EvMFJrZUZuREI5N1B2dGRWcm9kL21k?=
- =?utf-8?B?WVhUMUwxUVdDbnFaZ05ua2ZKK25NcjAyc3dBWFdhcmtzSk82Um9KZWF6MEF3?=
- =?utf-8?B?OE9ZQ0RhU2NCZjg0c0VNeVZWNUdIUXJQVzNDeUNhY3R0SC9ydjlhMzJvRzBo?=
- =?utf-8?B?aDYwQXNLamZJZ0tLMzhnbTgvbnlFU0JWN2czRDcyamQ3YzdOVjVVTzBJTEJz?=
- =?utf-8?B?NUJXQ0RBdkh2cGJ4U1c5Rk13R3Z4MklnRW1pYmZNVkFMQ1hTbUNCaFBGeWNX?=
- =?utf-8?B?V0FBQ3ZQeVdrU1pTa0ZNb2toUkllUlYzWGc4S21PQkdUNEFNNkdoc21EQWM3?=
- =?utf-8?B?eXo2ODBGaTdnSy9yYTU2VnZ3THpKY3ZPV3JOMko4SWJwcm1YVE1lV3REdkxX?=
- =?utf-8?B?cEd5NlpLeVJaazVCSVhiYUhPbVBsZW9mVkRZc0pIR1JjaEdNdmllU3Q0ekFT?=
- =?utf-8?B?T0FYZnNRYzlSVDh1NEI2bjNtQ09zaWpwQWhhYjhWdWJtTUtNYjhkQi9rd3la?=
- =?utf-8?B?OGU0RkNZQzlnd0NjYmVUS1c2NGlVNHA0VGszbmcwQmJzYkZxTXRhZ1l2eG14?=
- =?utf-8?B?dXZ4RVhmNHZtZk85ZWdqOVllMmhna21Ib2d2Z0gzUk1OYXQrR3FpVVV6Z0hV?=
- =?utf-8?B?RVh4ZkxucUpORFRBa3MyTWZueEwzaDVCN2liU1E1eCtpQ016VXRsYXBUSm43?=
- =?utf-8?B?b1RwdFhrTklhTmFaVVRTdmZ1QjhBSjBINDFCSGc4NXJ4d3UyMm9zdG1BSHZt?=
- =?utf-8?B?am5hSmFqSkpXT1ZPRTczVU82bXoxQnE4aFJGNXM2RFlQRW11MWo0WHh5S2RI?=
- =?utf-8?B?MjJnZG54QlJIYjV1Nit5dXk5NWxNckdoTTB0ajdiSFRqTGhNUm1vWFljZzZ1?=
- =?utf-8?B?dm84ZDk2Mmtrd3VvQTVXVmordVgycTlHTGlaQW5SYnVwcUROamVvUmV6eUE1?=
- =?utf-8?B?Z0JsT0N2WW1zWnpFeE5mdDhTaUsybXA0azF2dVhweXNnemZGUkdwVy9ieTVU?=
- =?utf-8?B?QXlxMG5CSjdmcG5CZTV3bnNPNUk5bTZzWGg5ZWFwTzR6dnpXV3FTRTFPUXF4?=
- =?utf-8?B?ZXQ0YzR3bHFSTlVndzBJMVJOOWtIRHNpUlVyVlJqaGRpQjQrTXhLempTaXNS?=
- =?utf-8?B?SEwwenR6blE4QnZVd29US3JXY2tOK2hLU2pFcFZCOVRLNDhHNldzNWRFbkUz?=
- =?utf-8?B?Zm1hYmJoQXZvVWJhRkUreDViVGJFbmxnNUtseURLRVJQblZrVVloMDV2eWxC?=
- =?utf-8?B?RmR3YWpTR01IMWZhWWJHTmRBUHc2dlZYNWlEQ1JMcnAvOWdBcUsxUWJqSDRp?=
- =?utf-8?B?azNPQTRqNEZSRDR0MkQ1RkY5VGxjWHhPK3pBN04vS2puS2JkQ0E2LzlBT3Vm?=
- =?utf-8?B?Wm5XaVFMRXlaVGF1ekU1Sjh3QzhpL2ZwVUY3dGR5SGNkOHNZZUJJNTdmUzBC?=
- =?utf-8?B?MlNmUGdwamN4d3k5ZXpiUFgyZHhuejFsN2hTODdSbGRXc2htR3dTMmZFcVRV?=
- =?utf-8?B?ZVE2NE9OOW5WRG5nTFZ5MTZ3TFRMU3c2cFYxVnBwbHRHTkUvNjBJYUpmeUtB?=
- =?utf-8?B?c0dVLzBHQ2hQQzgxRzN5eVQxRzIvOXFabEFHb2R6Vlc1SHFORmtqOVIxRFdB?=
- =?utf-8?B?aWEvajNkQ3RwOUppVEZnUXVvc3BQSm1QWkd0OS9KWU9DMUZldDh1Nm9jVDZr?=
- =?utf-8?B?TUgzNEVpbkk0V3EzclFsYnF6TVQ4TnJkZU1iWHpMU20yUkwyOGxYNWhvUTVX?=
- =?utf-8?B?NlhEZDUzUFV4WnZFZG1Fa1lCQ3A5L2c5NDd3SU9WczhaMlR2eTFwSk5nNVVX?=
- =?utf-8?B?OVEvdHpGRUxpakZ2WTZEV1YzN1V1UXBmREtGbkhCL2l2bUU0a204VnU3Wmtv?=
- =?utf-8?B?YUc1RW9QOVFaQmE2K25UcGdwdnVDaVR3UkZRUmxJc0t6TkcxQXZ1K3JYMGVZ?=
- =?utf-8?Q?gNFB+xOOn5l8VvoslZk9S1f/r?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 82163319-989d-4e75-b9f9-08dcb86cd418
-X-MS-Exchange-CrossTenant-AuthSource: PAXPR08MB6956.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Aug 2024 12:14:33.5178 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Vd1gpoyZnBNPe1rLcv+d240cim5xIk4Wf9akmpJPxX4YwgY9TNQtvrtv1f9kYgzHlj0IWO6sZlCrJTrXUZ8HqA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU2PR08MB9990
-Received-SPF: pass client-ip=40.107.21.117; envelope-from=den@virtuozzo.com;
- helo=EUR05-VI1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -176,27 +102,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/9/24 14:13, Alexander Ivanov wrote:
-> Set local_err to NULL after it has been freed in error_report_err(). This
-> avoids triggering assert(*errp == NULL) failure in error_setv() when
-> local_err is reused in the loop.
+I apologize for the delay.
+
+Zhao Liu <zhao1.liu@intel.com> writes:
+
+> On Thu, Aug 01, 2024 at 01:28:27PM +0200, Markus Armbruster wrote:
+
+[...]
+
+>> Can you provide a brief summary of the design alternatives that have
+>> been proposed so far?  Because I've lost track.
 >
-> Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-> ---
->   util/module.c | 1 +
->   1 file changed, 1 insertion(+)
+> No problem!
 >
-> diff --git a/util/module.c b/util/module.c
-> index 32e263163c..3ff4aee2ca 100644
-> --- a/util/module.c
-> +++ b/util/module.c
-> @@ -369,6 +369,7 @@ void module_load_qom_all(void)
->           }
->           if (module_load("", modinfo->name, &local_err) < 0) {
->               error_report_err(local_err);
-> +            local_err = NULL;
->           }
->       }
->       module_loaded_qom_all = true;
-Reviewed-by: Denis V. Lunev <den@openvz.org>
+> Currently, we have the following options:
+>
+> * 1st: The first one is just to configure cache topology with several
+>   options in -smp:
+>
+>   -smp l1i-cache-topo=core,l1d-cache-topo-core
+>
+>   This one lacks scalability to support the cache size that ARM will
+>   need in the future.
+
+-smp sets machine property "smp" of QAPI type SMPConfiguration.
+
+So this one adds members l1i-cache-topo, l1d-cache-topo, ... to
+SMPConfiguration.
+
+> * 2nd: The cache list object in -smp.
+>
+>   The idea was to use JSON to configure the cache list. However, the
+>   underlying implementation of -smp at the moment is keyval parsing,
+>   which is not compatible with JSON.
+
+Keyval is a variation of the QEMU's traditional KEY=VALUE,... syntax
+that can serve as an alternative to JSON, with certain restrictions.
+Ideally, we provide both JSON and keyval syntax on the command line.
+
+Example: -blockdev supports both JSON and keyval.
+    JSON:   -blockdev '{"driver": "null-co", "node-name": "node0"}'
+    keyval: -blockdev null-co,node-name=node0
+
+Unfortunately, we have many old interfaces that still lack JSON support.
+
+>   If we can not insist on JSON format, then cache lists can also be
+>   implemented in the following way:
+>   
+>   -smp caches.0.name=l1i,caches.0.topo=core,\
+>        caches.1.name=l1d,caches.1.topo=core
+
+This one adds a single member caches to SMPConfiguration.  It is an
+array of objects.
+
+> * 3rd: The cache list object linked in -machine.
+>
+>   Considering that -object is JSON-compatible so that defining lists via
+>   JSON is more friendly, I implemented the caches list via -object and
+>   linked it to MachineState:
+>
+>   -object '{"qom-type":"smp-cache","id":"obj","caches":[{"name":"l1d","topo":"core"},{"name":"l1i","topo":"core"}]}'
+>   -machine smp-caches=obj
+
+This one wraps the same array of objects in a new user-creatable object,
+then sets machine property "smp-caches" to that object.
+
+We can set machine properties directly with -machine.  But -machine
+doesn't support JSON, yet.
+
+Wrapping in an object moves the configuration to -object, which does
+support JSON.
+
+Half way between 2nd and 3rd:
+
+  * Cache list object in machine
+
+    -machine caches.0.name=l1i,caches.0.topo=core,\
+             caches.1.name=l1d,caches.1.topo=core
+
+> * 4th: The per cache object without any list:
+>
+>   -object smp-cache,id=cache0,name=l1i,topo=core \
+>   -object smp-cache,id=cache1,name=l1d,topo=core
+>
+>   This proposal is clearer, but there are a few opens:
+>   - I plan to push qom-topo forward, which would abstract CPU related
+>     topology levels and cache to "device" instead of object. Is there a
+>     conflict here?
+
+Can't say, since I don't understand where you want to go.
+
+Looks like your trying to design an interface for what you want to do
+now, and are wondering whether it could evolve to accomodate what you
+want to do later.
+
+It's often better to design the interface for everything you already
+know you want to do, then take out the parts you want to do later.
+
+>   - Multiple cache objects can't be linked to the machine on the command
+>     line, so I maintain a static cache list in smp_cache.c and expose
+>     the cache information to the machine through some interface. is this
+>     way acceptable?
+>
+>
+> In summary, the 4th proposal was the most up in the air, as it looked to
+> be conflict with the hybrid topology I wanted to do (and while hybrid
+> topology may not be accepted by the community either, I thought it would
+> be best for the two work to be in the same direction).
+>
+> The difference between 2nd and 3rd is about the JSON requirement, if JSON
+> is mandatory for now then it's 3rd, if it's not mandatory (or accept to
+> make -machine/-smp support JSON in the future), 2nd looks cleaner, which
+> puts the caches list in -smp.
+
+I'd rather not let syntactic limitations of our CLI dictate the
+structure of our configuration data.  Design the structure *first*.
+Only then start to think about CLI.  Our CLI is an unholy mess, and
+thinking about it too early risks getting lost in the weeds.  I fear
+this is what happened to you.
+
+If I forcibly ignore all the considerations related to concrete syntax
+in your message, a structure seems to emerge: there's a set of caches
+identified by name (l1i, l1d, ...), and for each cache, we have a number
+of configurable properties (topology level, ...).  Makes sense?
+
+What else will you need to configure in the future?
+
+By the way, extending -machine to support JSON looks feasible to me at a
+glance.
+
 
