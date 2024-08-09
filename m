@@ -4,63 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B98BFC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 07:38:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DF7FC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 07:38:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scKBl-0006Eb-Va; Fri, 09 Aug 2024 03:37:29 -0400
+	id 1scKCV-0007lH-VU; Fri, 09 Aug 2024 03:38:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1scKBj-0006DC-NI
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:37:27 -0400
-Received: from dfw.source.kernel.org ([139.178.84.217])
+ (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1scKCU-0007hR-8Z
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:38:14 -0400
+Received: from torg.zytor.com ([2607:7c80:54:3::138] helo=mail.zytor.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1scKBh-0001q0-GC
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:37:27 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id D4DA2615C4;
- Fri,  9 Aug 2024 07:37:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE7DC32782;
- Fri,  9 Aug 2024 07:37:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1723189043;
- bh=eWcGvlv/zibhmLxKJncnRTRJYnTbYygyTC6z/TtIal8=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=mC3lc+glPyGSi3HB7RSpFOh8VkgX1YsbNvUjAC2D38HzzBd9o5wGXZO7bs06Ae1u7
- 6UhnGrE4PX42nG4WkUrIMqmOdrVREu7vVlIwxfrH7endbd2vEupxQpQyQswZQXe1o9
- gpQPu1zqZjkyk1gce8ycKI5SSRSUKPgHemX3kX6ZxxQwOCZJgNioPMiPxgDLbr8R66
- coZYVhrSm1c3CGd3SPp6hcmgCg6kgbswQXj9g7T22wzvTWMrYHNd9TSqkoWsXQUHGT
- PIB9VcvViHAl93jsPOW6gtXd1tGEmJLADC0Z5CCWo/kfoH3yFuvhqsHR8Gi5Ty6Fs5
- hxVkTN+kl5FHQ==
-Date: Fri, 9 Aug 2024 09:37:18 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: John Snow <jsnow@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, Cleber Rosa <crosa@redhat.com>,
- linux-kernel@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 7/7] scripts/ghes_inject: add a script to generate
- GHES error inject
-Message-ID: <20240809093718.095d0a34@foz.lan>
-In-Reply-To: <20240809082609.1864eabe@foz.lan>
-References: <cover.1722634602.git.mchehab+huawei@kernel.org>
- <0654a89fe24f4343016b9cecc0752594ad1cd49f.1722634602.git.mchehab+huawei@kernel.org>
- <CAFn=p-Y27zap1P5G3NibdZS26iGwCqh8U0vgW0Vw31f53+oU1w@mail.gmail.com>
- <20240809004137.01f97da2@foz.lan> <20240809082609.1864eabe@foz.lan>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1scKCR-0001xW-LE
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:38:13 -0400
+Received: from [192.168.7.205] ([71.202.166.45]) (authenticated bits=0)
+ by mail.zytor.com (8.17.2/8.17.1) with ESMTPSA id 4797c3Eh1605331
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
+ Fri, 9 Aug 2024 00:38:03 -0700
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 4797c3Eh1605331
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
+ s=2024071601; t=1723189084;
+ bh=HT8i/Hyg8K/T+xa/eDvVgRWAw46fMCwJ8zAtpQmBP04=;
+ h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+ b=CoROhledydg9ZifPsnv2S/+hgQRtIF0gjj7CS7HTsAm0pw8RnSl7fdXgv2TTam/Rd
+ oy552CqesgpIhSisE2F8y4m9OlSy/iEztpEbk9KacFCPTXLHS5Ds3evUzghFGm82E0
+ a+YQYWhh7YGAdXKIPE5Mb7DLHNwzpvDF3qMYtHV6Wj5q2alpvZxZ4hkxKzHRIklHzG
+ 2fzlAajvuA3/ALWrPbAa1p2AMKKQdm+0MRfmy0Oezjyy6cw1rrn+sh4HjIQiJHAIFc
+ Y/Q9spWIPrvrrpBDOIe5iqspm/s+ZulK14ZP3zrWtZgjIqRhYSM4nrw1WewmYUWrkm
+ FiYIcMw0xNEbA==
+Message-ID: <e2b97f46-0913-4cc7-ac28-635170bea1f5@zytor.com>
+Date: Fri, 9 Aug 2024 00:38:02 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=139.178.84.217;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -71
-X-Spam_score: -7.2
-X-Spam_bar: -------
-X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 3/3] target/i386: Raise the highest index value used
+ for any VMCS encoding
+From: Xin Li <xin@zytor.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mtosatti@redhat.com,
+ lei4.wang@intel.com, xin3.li@intel.com
+References: <20240807081813.735158-1-xin@zytor.com>
+ <20240807081813.735158-4-xin@zytor.com> <ZrOVSXX2uvezT3J1@intel.com>
+ <235c9a61-fe2c-4124-acbb-e7ab287164fc@zytor.com>
+Content-Language: en-US
+Autocrypt: addr=xin@zytor.com; keydata=
+ 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
+ l75w1xInsg==
+In-Reply-To: <235c9a61-fe2c-4124-acbb-e7ab287164fc@zytor.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:7c80:54:3::138; envelope-from=xin@zytor.com;
+ helo=mail.zytor.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,298 +107,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Fri, 9 Aug 2024 08:26:09 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> escreveu:
+On 8/8/2024 11:27 PM, Xin Li wrote:
+>>> +    if (f[FEAT_7_1_EAX] & CPUID_7_1_EAX_FRED) {
+>>> +        /* FRED injected-event data (0x2052).  */
+>>> +        kvm_msr_entry_add(cpu, MSR_IA32_VMX_VMCS_ENUM, 0x52);
+>>
+>> HMM, I have the questions when I check the FRED spec.
+>>
+>> Section 9.3.4 said, (for injected-event data) "This field has uses the
+>> encoding pair 2052H/2053H."
+>>
+>> So why adjust the highest index to 0x52 other than 0x53?
 
-> Em Fri, 9 Aug 2024 00:41:37 +0200
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> escreveu:
-> 
-> > > You should be able to use e.g.
-> > > 
-> > > legacy.py's QEMUMonitorProtocol class for synchronous connections, e.g.
-> > > 
-> > > from qemu.qmp.legacy import QEMUMonitorProtocol
-> > > 
-> > > qmp = QEMUMonitorProtocol((host, port))
-> > > qmp.connect(negotiate=True)  
-> > 
-> > That sounds interesting! I give it a try.
-> 
-> I applied the enclosed patch at the end of my patch series, but
-> somehow it is not working. For whatever reason, connect() is
-> raising a StateError apparently due to Runstate.CONNECTING.
-> 
-> I tried both as declaring (see enclosed patch):
-> 
-> 	class qmp(QEMUMonitorProtocol)
-> 
-> and using:
-> 
-> -        super().__init__(self.host, self.port)
-> +        self.qmp_monitor = QEMUMonitorProtocol(self.host, self.port)
-> 
-> On both cases, it keeps waiting forever for a connection.
+Okay, found it in the Intel SDM:
 
-Nevermind, placing host/post on a tuple made it work.
+Index. Bits 9:1 distinguish components with the same field width and type.
 
-The enclosed patch converts the script to use QEMUMonitorProtocol.
-
-I'll fold it with the script for the next spin of this series.
-
-Regards,
-Mauro
-
----
-
-[PATCH] scripts/qmp_helper.py: use QEMUMonitorProtocol class
-
-Instead of reinventing the wheel, let's use QEMUMonitorProtocol.
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-
-diff --git a/scripts/arm_processor_error.py b/scripts/arm_processor_error.py
-index 756935a2263c..f869f07860b8 100644
---- a/scripts/arm_processor_error.py
-+++ b/scripts/arm_processor_error.py
-@@ -169,14 +169,11 @@ def send_cper(self, args):
-         if args.mpidr:
-             cper["mpidr-el1"] = arg["mpidr"]
-         elif cpus:
--            get_mpidr = {
--                "execute": "qom-get",
--                "arguments": {
--                    'path': cpus[0],
--                    'property': "x-mpidr"
--                }
-+            cmd_arg = {
-+                'path': cpus[0],
-+                'property': "x-mpidr"
-             }
--            ret = qmp_cmd.send_cmd(get_mpidr, may_open=True)
-+            ret = qmp_cmd.send_cmd("qom-get", cmd_arg, may_open=True)
-             if isinstance(ret, int):
-                 cper["mpidr-el1"] = ret
-             else:
-@@ -291,8 +288,7 @@ def send_cper(self, args):
-         context_info_num = 0
- 
-         if ctx:
--            ret = qmp_cmd.send_cmd('{ "execute": "query-target" }',
--                                   may_open=True)
-+            ret = qmp_cmd.send_cmd("query-target", may_open=True)
- 
-             default_ctx = self.CONTEXT_MISC_REG
- 
-@@ -363,14 +359,11 @@ def send_cper(self, args):
- 
-         if "midr-el1" not in arg:
-             if cpus:
--                get_mpidr = {
--                    "execute": "qom-get",
--                    "arguments": {
--                        'path': cpus[0],
--                        'property': "midr"
--                    }
-+                cmd_arg = {
-+                    'path': cpus[0],
-+                    'property': "midr"
-                 }
--                ret = qmp_cmd.send_cmd(get_mpidr, may_open=True)
-+                ret = qmp_cmd.send_cmd("qom-get", cmd_arg, may_open=True)
-                 if isinstance(ret, int):
-                     arg["midr-el1"] = ret
- 
-diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
-index 7214c15c6718..e2e0a881f6c1 100644
---- a/scripts/qmp_helper.py
-+++ b/scripts/qmp_helper.py
-@@ -9,6 +9,19 @@
- import socket
- import sys
- 
-+from os import path
-+
-+try:
-+    qemu_dir = path.abspath(path.dirname(path.dirname(__file__)))
-+    sys.path.append(path.join(qemu_dir, 'python'))
-+
-+    from qemu.qmp.legacy import QEMUMonitorProtocol
-+
-+except ModuleNotFoundError as exc:
-+    print(f"Module '{exc.name}' not found.")
-+    print("Try export PYTHONPATH=top-qemu-dir/python or run from top-qemu-dir")
-+    sys.exit(1)
-+
- from base64 import b64encode
- 
- class qmp:
-@@ -16,26 +29,23 @@ class qmp:
-     Opens a connection and send/receive QMP commands.
-     """
- 
--    def send_cmd(self, command, may_open=False, return_error=True):
-+    def send_cmd(self, command, args=None, may_open=False, return_error=True):
-         """Send a command to QMP, optinally opening a connection"""
- 
-         if may_open:
-             self._connect()
--        elif not self.socket:
--            return None
-+        elif not self.connected:
-+            return False
- 
--        if isinstance(command, dict):
--            data = json.dumps(command).encode("utf-8")
--        else:
--            data = command.encode("utf-8")
-+        msg = { 'execute': command }
-+        if args:
-+            msg['arguments'] = args
- 
--        self.socket.sendall(data)
--        data = self.socket.recv(1024)
-         try:
--            obj = json.loads(data.decode("utf-8"))
--        except json.JSONDecodeError as e:
--            print(f"Invalid QMP answer: {e}")
--            self._close()
-+            obj = self.qmp_monitor.cmd_obj(msg)
-+        except Exception as e:
-+            print(f"Command: {command}")
-+            print(f"Failed to inject error: {e}.")
-             return None
- 
-         if "return" in obj:
-@@ -49,6 +59,7 @@ def send_cmd(self, command, may_open=False, return_error=True):
-         elif isinstance(obj.get("error"), dict):
-             error = obj["error"]
-             if return_error:
-+                print(f"Command: {msg}")
-                 print(f'{error["class"]}: {error["desc"]}')
-         else:
-             print(json.dumps(obj))
-@@ -57,75 +68,37 @@ def send_cmd(self, command, may_open=False, return_error=True):
- 
-     def _close(self):
-         """Shutdown and close the socket, if opened"""
--        if not self.socket:
-+        if not self.connected:
-             return
- 
--        self.socket.shutdown(socket.SHUT_WR)
--        while 1:
--            data = self.socket.recv(1024)
--            if data == b"":
--                break
--            try:
--                obj = json.loads(data.decode("utf-8"))
--            except json.JSONDecodeError as e:
--                print(f"Invalid QMP answer: {e}")
--                self.socket.close()
--                self.socket = None
--                return
--
--            if isinstance(obj.get("return"), dict):
--                print(json.dumps(obj["return"]))
--            if isinstance(obj.get("error"), dict):
--                error = obj["error"]
--                print(f'{error["class"]}: {error["desc"]}')
--            else:
--                print(json.dumps(obj))
--
--        self.socket.close()
--        self.socket = None
-+        self.qmp_monitor.close()
-+        self.connected = False
- 
-     def _connect(self):
-         """Connect to a QMP TCP/IP port, if not connected yet"""
- 
--        if self.socket:
-+        if self.connected:
-             return True
- 
--        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-         try:
--            self.socket.connect((self.host, self.port))
--        except ConnectionRefusedError:
-+            ret = self.qmp_monitor.connect(negotiate=True)
-+        except ConnectionError:
-             sys.exit(f"Can't connect to QMP host {self.host}:{self.port}")
--
--        data = self.socket.recv(1024)
--        try:
--            obj = json.loads(data.decode("utf-8"))
--        except json.JSONDecodeError as e:
--            print(f"Invalid QMP answer: {e}")
--            self._close()
-             return False
- 
--        if "QMP" not in obj:
--            print(f"Invalid QMP answer: {data.decode('utf-8')}")
--            self._close()
--            return False
--
--        result = self.send_cmd('{ "execute": "qmp_capabilities" }')
--        if not result:
--            self._close()
--            return False
-+        self.connected = True
- 
-         return True
- 
-     def __init__(self, host, port, debug=False):
-         """Initialize variables used by the QMP send logic"""
- 
--        self.socket = None
-+        self.connected = False
-         self.host = host
-         self.port = port
-         self.debug = debug
- 
--    def __del__(self):
--        self._close()
-+        self.qmp_monitor = QEMUMonitorProtocol(address=(self.host, self.port))
- 
-     #
-     # Socket QMP send command
-@@ -142,9 +115,6 @@ def send_cper(self, guid, data):
-             }
-         }
- 
--        command = '{ "execute": "ghes-cper", '
--        command += '"arguments": ' + json.dumps(cmd_arg) + " }"
--
-         if self.debug:
-             print(f"GUID: {guid}")
-             print("CPER:")
-@@ -168,7 +138,7 @@ def send_cper(self, guid, data):
- 
-         self._connect()
- 
--        if self.send_cmd(command):
-+        if self.send_cmd("ghes-cper", cmd_arg):
-             print("Error injected.")
- 
-     def search_qom(self, path, prop, regex):
-@@ -185,14 +155,11 @@ def search_qom(self, path, prop, regex):
-         i = 0
-         while 1:
-             dev = f"{path}[{i}]"
--            cmd =  {
--                "execute": "qom-get",
--                "arguments": {
--                    'path': dev,
--                    'property': prop
--                }
-+            args = {
-+                'path': dev,
-+                'property': prop
-             }
--            ret = self.send_cmd(cmd, may_open=True, return_error=False)
-+            ret = self.send_cmd("qom-get", args, may_open=True, return_error=False)
-             if not ret:
-                 break
- 
+Bit 0 is not included in the index field.
 
 
