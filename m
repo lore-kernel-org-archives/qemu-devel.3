@@ -4,66 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1EB4C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 08:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F36DC52D71
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 08:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scLCm-0005Mh-M2; Fri, 09 Aug 2024 04:42:36 -0400
+	id 1scLEi-0005Eo-Kb; Fri, 09 Aug 2024 04:44:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1scLCl-0005Gg-6R; Fri, 09 Aug 2024 04:42:35 -0400
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1scLCj-0002CW-7x; Fri, 09 Aug 2024 04:42:34 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 453AB61652;
- Fri,  9 Aug 2024 08:42:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 017D0C32782;
- Fri,  9 Aug 2024 08:42:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1723192951;
- bh=1tsZLQjJ+/fNUeon+ajhVtnb6LzjfZ7DnmB0JqRBQpU=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=pjt10ljtMIzBL7WTMVTf2vq2wQt+XFouPEJhyGzCaGZmvMTgvNLlCwP++mF4jzniH
- m3r7rrfDwwFAY2tZfHktrdq4ITz94BPcNtZi9woWL0wTF7L4HPeb88ZYuIDt7vbEyr
- kQYd52ZSS5vqP6CN8PXovowChsiX5a12HbI7aoL5RaYH8M5xwIXYJKEcrvqxVhqw9X
- 42bYb1HU58IFS2UXtTcauaIkVEXrvoi/zChzPKa+CX74809NmkkCTiEce0KnxDWeHo
- tw6RXc+3hKmKdOuRulvhXkt59tj4jkxNM+X9Le1pG5N0wjEUHEp3MkPc6O5ZFg4mHP
- /a/x7T038y7GQ==
-Date: Fri, 9 Aug 2024 10:42:22 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Igor Mammedov <imammedo@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>, "Michael
- S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>, Dongjiu Geng
- <gengdongjiu1@gmail.com>, Eric Blake <eblake@redhat.com>, Michael Roth
- <michael.roth@amd.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v5 5/7] qapi/ghes-cper: add an interface to do generic
- CPER error injection
-Message-ID: <20240809104222.08d197cb@foz.lan>
-In-Reply-To: <87ikwbrs2o.fsf@pond.sub.org>
-References: <cover.1722634602.git.mchehab+huawei@kernel.org>
- <51cbdc8a53e58c69ee17b15c398feeeeeeb64f34.1722634602.git.mchehab+huawei@kernel.org>
- <87v80b1jqe.fsf@pond.sub.org> <20240808161141.5ffe730e@foz.lan>
- <20240808162205.3a85efb6@imammedo.users.ipa.redhat.com>
- <87ikwbrs2o.fsf@pond.sub.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1scLEe-0004zg-JJ
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:44:32 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1scLEc-0002Z3-Sy
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:44:32 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2f189a2a841so17310081fa.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 01:44:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723193069; x=1723797869; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=HiC/1EA/ClSWubVj9AV07PKC8IDM8nXHlFdnvitTf1g=;
+ b=NJLmhI8hyCM8NMGEWFPwWT0XEaN9gt2E1e40lFS8fgDvxHrRmL/qk/CP9dFyCqWTo+
+ MiVVM3gMA1NzOSDIhY9gOfTH0J/XtaduecMuCKpUunhaN1RSZ4IrGHVg8d1PgVKssCzk
+ bpAuxv0Xc0kQ496taEiQa0k/pED5b7586PTOGfwxUjtW9P1A866KkDwGx6HE2VsVx+aH
+ LNyS/XLdbnTbzpXhakamsjNjPIatWIHlQ8s8bizFDc36YtrLgTIXAdAewToEwmnoI7V6
+ Nc55C9aU1vfM5zmYOpXoldDQFMItAQQUFLCKzL0ePaHA2YCJB02A4eN4HpvhvaLYwU5t
+ k/FQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723193069; x=1723797869;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HiC/1EA/ClSWubVj9AV07PKC8IDM8nXHlFdnvitTf1g=;
+ b=sscvr8ZlKZqGJzcLd4I3rEtUfCfcs8dqxY1uw7e5mW8m/qecPBigHukopaDll09HWX
+ ZP0VB9MU1ngh6mkxClPAKS138Y5JVZ+jaQi+UtGAKMh5b+fN9rpSvPYGja8b+z9IN1y3
+ CVSDf4PkLp3X9ECIq0xxkltreJPSUbkwPf9V9JnTelF8hCJ3osh2PAe9oZJFn4/qx+mK
+ rVifkQmFiJRI9Jq4z8HVVnmfiOsAankgOYNqTBfHiNnsqAeGkS3IOrQV5yvNlnNZ31cI
+ LofwN2fV18niu2tvhRSnEytYkdd3IEry8sLswlZjyW9aFPXUu6uazyRnNP4jTD/GsfS/
+ hfrw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXpsr0D32vk4O3GTa/C9jyGYN24oHxrA8IPJBEK0Qmd0f01VGDaWuVHViysctvzJYXzQQPZeD7JJ6MHiTzDVhB8wSm+vio=
+X-Gm-Message-State: AOJu0YxBXbTp/IUnXnTAbfFr0FRmQcR3CFd+DPm0z/g6mjhQxIwlwxX0
+ VipyOnSNqjvCNu997pIyG5uyNJWN9Y/8z1uUS4idwS/qu9Pv5MpMwnzMyoV+VYo=
+X-Google-Smtp-Source: AGHT+IFa8prN4ruLf/wggElzHk81wbvMYlk31ZnQ4JSB9Y7Roocvm4MvxtEqRmrfO1xVebM8Ficv+A==
+X-Received: by 2002:a2e:958f:0:b0:2ef:2b53:c785 with SMTP id
+ 38308e7fff4ca-2f1a6d0463cmr5882201fa.41.1723193068417; 
+ Fri, 09 Aug 2024 01:44:28 -0700 (PDT)
+Received: from [192.168.178.175] (41.red-95-127-42.staticip.rima-tde.net.
+ [95.127.42.41]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-429058bec60sm112072115e9.0.2024.08.09.01.44.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 09 Aug 2024 01:44:27 -0700 (PDT)
+Message-ID: <ec33abcb-409f-4609-9007-3337f3f647ab@linaro.org>
+Date: Fri, 9 Aug 2024 10:44:24 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/6] qapi/char: Supply missing member documentation
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: eblake@redhat.com, marcandre.lureau@redhat.com, pbonzini@redhat.com,
+ berrange@redhat.com, mst@redhat.com, marcel.apfelbaum@gmail.com,
+ jiri@resnulli.us, jsnow@redhat.com
+References: <20240808182636.3657537-1-armbru@redhat.com>
+ <20240808182636.3657537-2-armbru@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240808182636.3657537-2-armbru@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x22a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,121 +98,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Thu, 08 Aug 2024 16:45:51 +0200
-Markus Armbruster <armbru@redhat.com> escreveu:
+Hi Markus,
 
-> Igor Mammedov <imammedo@redhat.com> writes:
+On 8/8/24 20:26, Markus Armbruster wrote:
+> Since we neglect to document several members of ChardevBackendKind,
+> their description in the QEMU QMP Reference manual is "Not
+> documented".  Fix that, and improve the existing member documentation.
 > 
-> > On Thu, 8 Aug 2024 16:11:41 +0200
-> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> >  
-> >> Em Thu, 08 Aug 2024 10:50:33 +0200
-> >> Markus Armbruster <armbru@redhat.com> escreveu:
-> >>   
-> >> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:    
-> >>   
-> >> > > diff --git a/MAINTAINERS b/MAINTAINERS
-> >> > > index 98eddf7ae155..655edcb6688c 100644
-> >> > > --- a/MAINTAINERS
-> >> > > +++ b/MAINTAINERS
-> >> > > @@ -2075,6 +2075,13 @@ F: hw/acpi/ghes.c
-> >> > >  F: include/hw/acpi/ghes.h
-> >> > >  F: docs/specs/acpi_hest_ghes.rst
-> >> > >  
-> >> > > +ACPI/HEST/GHES/ARM processor CPER
-> >> > > +R: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> >> > > +S: Maintained
-> >> > > +F: hw/arm/ghes_cper.c
-> >> > > +F: hw/acpi/ghes_cper_stub.c
-> >> > > +F: qapi/ghes-cper.json
-> >> > > +      
-> >> > 
-> >> > Here's the reason for creating a new QAPI module instead of adding to
-> >> > existing module acpi.json: different maintainers.
-> >> > 
-> >> > Hypothetical question: if we didn't care for that, would this go into
-> >> > qapi/acpi.json?    
-> >> 
-> >> Independently of maintainers, GHES is part of ACPI APEI HEST, meaning
-> >> to report hardware errors. Such hardware errors are typically handled by 
-> >> the host OS, so quest doesn't need to be aware of that[1].
-> >> 
-> >> So, IMO the best would be to keep APEI/HEST/GHES in a separate file.
-> >> 
-> >> [1] still, I can foresee some scenarios were passing some errors to the
-> >>     guest could make sense.
-> >>   
-> >> > 
-> >> > If yes, then should we call it acpi-ghes-cper.json or acpi-ghes.json
-> >> > instead?    
-> >> 
-> >> Naming it as acpi-ghes,acpi-hest or acpi-ghes-cper would equally work
-> >> from my side.  
-> >
-> > if we going to keep it generic, acpi-hest would do  
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>   qapi/char.json   | 44 ++++++++++++++++++++++++++++----------------
+>   qapi/pragma.json |  1 -
+>   2 files changed, 28 insertions(+), 17 deletions(-)
 > 
-> Works for me.
+> diff --git a/qapi/char.json b/qapi/char.json
+> index ef58445cee..8a4a87c95c 100644
+> --- a/qapi/char.json
+> +++ b/qapi/char.json
+> @@ -434,37 +434,49 @@
+>   ##
+>   # @ChardevBackendKind:
+>   #
+> -# @pipe: Since 1.5
+> +# @file: regular files
+>   #
+> -# @udp: Since 1.5
+> +# @serial: serial host device
+>   #
+> -# @mux: Since 1.5
+> +# @parallel: parallel host device
+>   #
+> -# @msmouse: Since 1.5
+> +# @pipe: pipes (since 1.5)
+>   #
+> -# @wctablet: Since 2.9
+> +# @socket: stream socket
+>   #
+> -# @braille: Since 1.5
+> +# @udp: datagram socket (since 1.5)
+>   #
+> -# @testdev: Since 2.2
+> +# @pty: pseudo-terminal
+>   #
+> -# @stdio: Since 1.5
+> +# @null: provides no input, throws away output
+>   #
+> -# @console: Since 1.5
+> +# @mux: (since 1.5)
+>   #
+> -# @spicevmc: Since 1.5
+> +# @msmouse: emulated Microsoft serial mouse (since 1.5)
+>   #
+> -# @spiceport: Since 1.5
+> +# @wctablet: emulated Wacom Penpartner serial tablet (since 2.9)
+>   #
+> -# @qemu-vdagent: Since 6.1
+> +# @braille: Baum Braille device (since 1.5)
+>   #
+> -# @dbus: Since 7.0
+> +# @testdev: device for test-suite control (since 2.2)
+>   #
+> -# @vc: v1.5
+> +# @stdio: standard I/O (since 1.5)
+>   #
+> -# @ringbuf: Since 1.6
+> +# @console: Windows console (since 1.5)
+>   #
+> -# @memory: Since 1.5
+> +# @spicevmc: spice vm channel (since 1.5)
+> +#
+> +# @spiceport: Spice port channel (since 1.5)
+> +#
+> +# @qemu-vdagent: Spice vdagent (since 6.1)
+> +#
+> +# @dbus: D-Bus channel (since 7.0)
+> +#
+> +# @vc: virtual console (since v1.5)
+> +#
+> +# @ringbuf: memory ring buffer (since 1.6)
+> +#
+> +# @memory: synonym for @ringbuf (since 1.5)
 
-Ok, I'll do the rename. With regards to the files implementing
-support for it: 
-
-	hw/acpi/ghes_cper.c
-	hw/acpi/ghes_cper_stub.c
-
-I guess there's no need to rename them, right? IMO such names
-are better than acpi/hest.c, specially since the actual implementation
-for HEST is inside acpi/ghes.c.
-
-> 
-> >> > >  ppc4xx
-> >> > >  L: qemu-ppc@nongnu.org
-> >> > >  S: Orphan      
-> >> > 
-> >> > [...]
-> >> >     
-> >> > > diff --git a/qapi/ghes-cper.json b/qapi/ghes-cper.json
-> >> > > new file mode 100644
-> >> > > index 000000000000..3cc4f9f2aaa9
-> >> > > --- /dev/null
-> >> > > +++ b/qapi/ghes-cper.json
-> >> > > @@ -0,0 +1,55 @@
-> >> > > +# -*- Mode: Python -*-
-> >> > > +# vim: filetype=python
-> >> > > +
-> >> > > +##
-> >> > > +# = GHESv2 CPER Error Injection
-> >> > > +#
-> >> > > +# These are defined at
-> >> > > +# ACPI 6.2: 18.3.2.8 Generic Hardware Error Source version 2
-> >> > > +# (GHESv2 - Type 10)
-> >> > > +##      
-> >> > 
-> >> > Feels a bit terse.  These what?
-> >> > 
-> >> > The reference could be clearer: "defined in the ACPI Specification 6.2,
-> >> > section 18.3.2.8 Generic Hardware Error Source version 2".  A link would
-> >> > be nice, if it's stable.    
-> >> 
-> >> I can add a link, but only newer ACPI versions are hosted in html format
-> >> (e. g. only versions 6.4 and 6.5 are available as html at uefi.org).  
-> >
-> > some years earlier it could be said 'stable link' about acpi spec hosted
-> > elsewhere. Not the case anymore after umbrella change.
-> >
-> > spec name, rev, chapter worked fine for acpi code (it's easy to find wherever spec is hosted).
-> > Probably the same would work for QAPI, I'm not QAPI maintainer though,
-> > so preffered approach here is absolutely up to you.  
-> 
-> A link is strictly optional.  Stable links are nice, stale links are
-> annoying.  Mauro, you decide :)
-
-Well, I guess I'll add a link then, keeping it in text mode as well.
-
-Changing umbrella is something that doesn't happen too often. Hopefully 
-those will stay for a long time, if not forever, under uefi.org. 
-
-If not, we can always drop the link.
-
-Thanks,
-Mauro
+What is the rule to sort the members?
 
