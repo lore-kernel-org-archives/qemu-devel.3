@@ -4,70 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF5FCC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 07:44:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76240C52D71
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 07:46:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scKIF-0006yP-Gf; Fri, 09 Aug 2024 03:44:11 -0400
+	id 1scKKE-00034I-E5; Fri, 09 Aug 2024 03:46:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1scKID-0006xq-1G
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:44:09 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1scKKC-0002x4-LM
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:46:12 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1scKIA-0002im-Dx
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:44:08 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-7a0b2924e52so1045342a12.2
- for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 00:42:03 -0700 (PDT)
+ id 1scKKB-0002wM-1T
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:46:12 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7105043330aso1698169b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 00:44:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1723189322; x=1723794122;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1723189449; x=1723794249;
  darn=nongnu.org; 
- h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/waCfZIpwHr1OgYBTlJkVrmnPH0POYFcg1/H/+p2zcM=;
- b=1SqfJQm1/cqvdviFTQICFlJQYJnGADgbOMtv0UmXcwHMxY07mzd9SdgC+gBy1e4vXm
- 6QRmaBn3HVwwqoL17DnLH23rseetyL4ZFZa+c717455tqBAn0CAHsqp79Rm90qMX5GqP
- wgLBQHVvuyp4VlmLMTCdXPfERmh2ZlKULT1AvUGmtXMnAwK+812dv4qNvm0GxtkDtS3h
- d8r/c55q2wtet8hCjl131MVU2f0hgFWVsz7RbfwpaORW2RxTdxgKV13Dvifhbg5BWRDG
- mxv1GSIkCVSnaDmNsUM7HgE1ml8jweWj8gyPxpSFfzWtd3A2MyyxAOloA8l6RyMhyMoI
- Nmiw==
+ bh=gO+KhUBLk4wxXd1Tah7t9BkUwm0u320fvMR+lJzhsXQ=;
+ b=A+yrxqrxkhyoKZqGSLq+tUOg1MEuALIpORUgRXjoFc5nYXsScrzM+d3JdlMk/ViTuv
+ zOz6WJ5fo6uo1UHmWtgnWdkfRzBbzsT1l7nfRZH2VAx4Oi9RVobVDg9p84DAlTXblS1p
+ wO+R+P2zPrS8cq0LcQd0WELMeageomX1bf9hv+l32LeoErDRIhOvcQORPLO3VXdkjjaU
+ 7JEHNImlFh2V8A8LAKrHZPSMSwfMHzXHz6JEoPW4TZ6LVSz8aaIK12I1rGe14b6y+GuK
+ 48FCxWVJ+oWCX0djD93/Vbvr5paXHfclbL9Xq2H5ggz75pVrrbSX+ycPCxz8FZg2W/Vb
+ HiBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723189322; x=1723794122;
- h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1723189449; x=1723794249;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/waCfZIpwHr1OgYBTlJkVrmnPH0POYFcg1/H/+p2zcM=;
- b=TWuEvdEgNj9S5/SkaBkD0aclcNayQAI0jK1dE2XvNaXiJrAvHCqg8GnAknfg+FOMuM
- poQl4WLRFj6EO/egKc8Cn8ke5vzTTnHHcAqUyOr7FJb7EkBMmm68dF8BQPV6zidLnoFq
- 8R2TDJdADHfUjFMdUHoDEjvMurlCtbWz4TKwvUvPwJsLtXCOlV4bCx6ihDYtav2CIMaN
- JOIEz3ZJfTGyRLFPvflHi4fRmvsJLhuYsWbdIo7FiXN2iplQNUmhqmJczfksbRIPCL9q
- xJDbKqGQw2zZL9Qgf2g5OXM8KiORejLDUsmQGVmyO4oArk3KDn4UCE+ENif5F01pCFqd
- UfkQ==
-X-Gm-Message-State: AOJu0YwysZXyzB+AIffYaUNBhgpgFjIalcWCtph7zBjebpYVcepuuxzl
- SPkTxxcCsgmlpkx2u654Q8D7ur57oabmvRIt4Si87ILQflVZAvyeZJagJrKzlgFv7pWggQ4WkAA
- KUkabAA==
-X-Google-Smtp-Source: AGHT+IFf7iRq3fmjiElJbsNDlbaW3Ida2C1MyBko4/j2Vw9twiyS2oJUjvv9+bUb8dQxzSEPuW7KjA==
-X-Received: by 2002:a05:6a20:cfa2:b0:1c6:a777:4cfa with SMTP id
- adf61e73a8af0-1c89fe97a70mr952184637.13.1723189320941; 
- Fri, 09 Aug 2024 00:42:00 -0700 (PDT)
-Received: from c74-1708-dev.zelin.local ([85.208.104.155])
+ bh=gO+KhUBLk4wxXd1Tah7t9BkUwm0u320fvMR+lJzhsXQ=;
+ b=uzXwlQbibqDnBs1EVLvG5tWRkg/Qateqn72jIjn9bzP31cB3fo7t0dZNQNj55SpvXN
+ D9UWruwcuM0Ae9XjyF2+7dBpwY+Gp/TF8NIUj+u/QSX1TCLrL0+2PtOp5ZbPJ+xblUIV
+ uAFYNToffCRKYC29Rx2Xv6kMKWsSrVBxgQZqiLKNcgWydg5AuFYbE9PxzFqyO8DLqvKg
+ eWJxVNXgFx7Hz3IImFVRKxQKS8Y9vUH51plEOh4Ngc7up2KEeYrYEsl5c7iVGDr7eRg9
+ qTII16qUS3ZUs3/qsVqP/puZdsLsbJXXKQQwRWCdhy6T+sGXLxUxtnP0wdHgUrmPdjYb
+ gMEg==
+X-Gm-Message-State: AOJu0YzZFXUst3HxoPT/iaCC0fm7UymgTcdR7HtBATi9k8UKRjfag+2x
+ pIb7BugrinrvssMTiC4wo0I4Mq53INnFr2q1UYC9lhOhYDd7eVMIqNtgGlugu9i2F+Td64KadAO
+ IY74+vg==
+X-Google-Smtp-Source: AGHT+IE/fKsn1nD93Liffef6KqbCCq5WRgvGrJ3sDVey11mYINioOPA5OLCdQBoCfTMDCk32xH29yw==
+X-Received: by 2002:a05:6a21:4610:b0:1c3:ff33:24b9 with SMTP id
+ adf61e73a8af0-1c89fe6ab90mr1067098637.3.1723189448593; 
+ Fri, 09 Aug 2024 00:44:08 -0700 (PDT)
+Received: from Hyman-Dev-Euler.zelin.local ([85.208.104.155])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d1b3addc29sm4655642a91.29.2024.08.09.00.41.59
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 09 Aug 2024 00:42:00 -0700 (PDT)
+ d2e1a72fcca58-710cb22a455sm2123212b3a.71.2024.08.09.00.44.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 09 Aug 2024 00:44:08 -0700 (PDT)
 From: yong.huang@smartx.com
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
  yong.huang@smartx.com
-Subject: [PATCH v1 0/5] Guestperf: miscellaneous refinement and enrichment 
-Date: Fri,  9 Aug 2024 15:41:50 +0800
-Message-Id: <cover.1723189080.git.yong.huang@smartx.com>
-X-Mailer: git-send-email 2.11.0
-Received-SPF: none client-ip=2607:f8b0:4864:20::534;
- envelope-from=yong.huang@smartx.com; helo=mail-pg1-x534.google.com
+Subject: [PATCH v1 3/5] guestperf: Support deferred migration for multifd
+Date: Fri,  9 Aug 2024 15:43:34 +0800
+Message-Id: <5de50254b726a51c456f9a3a1f1947f28f28646c.1723189080.git.yong.huang@smartx.com>
+X-Mailer: git-send-email 2.27.0
+In-Reply-To: <cover.1723189080.git.yong.huang@smartx.com>
+References: <cover.1723189080.git.yong.huang@smartx.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: none client-ip=2607:f8b0:4864:20::432;
+ envelope-from=yong.huang@smartx.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -91,60 +97,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Hyman Huang <yong.huang@smartx.com>
 
-The previous patchset:
-https://lore.kernel.org/qemu-devel/cover.1722957352.git.yong.huang@smartx.com/
-does not made the necessary changes and tests for the upstream version.
+The way to enable multifd migration has been changed by commit,
+82137e6c8c (migration: enforce multifd and postcopy preempt to
+be set before incoming), and guestperf has not made the
+necessary changes. If multifd migration had been enabled in the
+previous manner, the following error would have occurred:
+Multifd must be set before incoming starts
 
-This patchset works for that:
-1. Move the guestperf to scripts directory suggested by Fabiano Rosas
-2. Make initrd-stress.img built by default suggested by Fabiano Rosas
-3. Make the necessary changes to adapt the latest multifd behavior
-4. A nitpick for multifd migration
-5. Support multifd compression option
+Supporting deferred migration will fix it.
 
-Please review,
+Signed-off-by: Hyman Huang <yong.huang@smartx.com>
+---
+ scripts/migration/guestperf/engine.py | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-Thanks
-
-Yong
-
-Hyman Huang (5):
-  tests/migration: Move the guestperf tool to scripts directory
-  tests/migration: Make initrd-stress.img built by default
-  guestperf: Support deferred migration for multifd
-  guestperf: Nitpick the inconsistent parameters
-  guestperf: Introduce multifd compression option
-
- MAINTAINERS                                        |  5 ++++
- {tests => scripts}/migration/guestperf-batch.py    |  0
- {tests => scripts}/migration/guestperf-plot.py     |  0
- {tests => scripts}/migration/guestperf.py          |  0
- {tests => scripts}/migration/guestperf/__init__.py |  0
- .../migration/guestperf/comparison.py              | 15 +++++++++-
- {tests => scripts}/migration/guestperf/engine.py   | 32 +++++++++++++++++++---
- {tests => scripts}/migration/guestperf/hardware.py |  0
- {tests => scripts}/migration/guestperf/plot.py     |  0
- {tests => scripts}/migration/guestperf/progress.py |  0
- {tests => scripts}/migration/guestperf/report.py   |  0
- {tests => scripts}/migration/guestperf/scenario.py |  7 +++--
- {tests => scripts}/migration/guestperf/shell.py    |  3 ++
- {tests => scripts}/migration/guestperf/timings.py  |  0
- tests/migration/meson.build                        |  5 ++--
- 15 files changed, 58 insertions(+), 9 deletions(-)
- rename {tests => scripts}/migration/guestperf-batch.py (100%)
- rename {tests => scripts}/migration/guestperf-plot.py (100%)
- rename {tests => scripts}/migration/guestperf.py (100%)
- rename {tests => scripts}/migration/guestperf/__init__.py (100%)
- rename {tests => scripts}/migration/guestperf/comparison.py (89%)
- rename {tests => scripts}/migration/guestperf/engine.py (93%)
- rename {tests => scripts}/migration/guestperf/hardware.py (100%)
- rename {tests => scripts}/migration/guestperf/plot.py (100%)
- rename {tests => scripts}/migration/guestperf/progress.py (100%)
- rename {tests => scripts}/migration/guestperf/report.py (100%)
- rename {tests => scripts}/migration/guestperf/scenario.py (93%)
- rename {tests => scripts}/migration/guestperf/shell.py (98%)
- rename {tests => scripts}/migration/guestperf/timings.py (100%)
-
+diff --git a/scripts/migration/guestperf/engine.py b/scripts/migration/guestperf/engine.py
+index 608d7270f6..4cddd05a9d 100644
+--- a/scripts/migration/guestperf/engine.py
++++ b/scripts/migration/guestperf/engine.py
+@@ -106,7 +106,8 @@ def _migrate_progress(self, vm):
+             info.get("dirty-limit-ring-full-time", 0),
+         )
+ 
+-    def _migrate(self, hardware, scenario, src, dst, connect_uri):
++    def _migrate(self, hardware, scenario, src,
++                 dst, connect_uri, defer_migrate):
+         src_qemu_time = []
+         src_vcpu_time = []
+         src_pid = src.get_pid()
+@@ -220,6 +221,8 @@ def _migrate(self, hardware, scenario, src, dst, connect_uri):
+             resp = src.cmd("migrate-set-parameters",
+                            vcpu_dirty_limit=scenario._vcpu_dirty_limit)
+ 
++        if defer_migrate:
++            resp = dst.cmd("migrate-incoming", uri=connect_uri)
+         resp = src.cmd("migrate", uri=connect_uri)
+ 
+         post_copy = False
+@@ -373,11 +376,14 @@ def _get_common_args(self, hardware, tunnelled=False):
+     def _get_src_args(self, hardware):
+         return self._get_common_args(hardware)
+ 
+-    def _get_dst_args(self, hardware, uri):
++    def _get_dst_args(self, hardware, uri, defer_migrate):
+         tunnelled = False
+         if self._dst_host != "localhost":
+             tunnelled = True
+         argv = self._get_common_args(hardware, tunnelled)
++
++        if defer_migrate:
++            return argv + ["-incoming", "defer"]
+         return argv + ["-incoming", uri]
+ 
+     @staticmethod
+@@ -439,6 +445,9 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+             except:
+                 pass
+ 
++        if scenario._multifd:
++            defer_migrate = True
++
+         if self._dst_host != "localhost":
+             dstmonaddr = ("localhost", 9001)
+         else:
+@@ -452,7 +461,7 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+                           monitor_address=srcmonaddr)
+ 
+         dst = QEMUMachine(self._binary,
+-                          args=self._get_dst_args(hardware, uri),
++                          args=self._get_dst_args(hardware, uri, defer_migrate),
+                           wrapper=self._get_dst_wrapper(hardware),
+                           name="qemu-dst-%d" % os.getpid(),
+                           monitor_address=dstmonaddr)
+@@ -461,7 +470,8 @@ def run(self, hardware, scenario, result_dir=os.getcwd()):
+             src.launch()
+             dst.launch()
+ 
+-            ret = self._migrate(hardware, scenario, src, dst, uri)
++            ret = self._migrate(hardware, scenario, src,
++                                dst, uri, defer_migrate)
+             progress_history = ret[0]
+             qemu_timings = ret[1]
+             vcpu_timings = ret[2]
 -- 
 2.11.0
 
