@@ -4,92 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC963C52D7C
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 19:28:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11705C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 19:29:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scVGQ-0002fG-K4; Fri, 09 Aug 2024 15:27:02 -0400
+	id 1scVII-00070l-3f; Fri, 09 Aug 2024 15:28:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1scVGP-0002ek-Tp
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 15:27:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1scVGN-0000qD-Cw
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 15:27:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723231617;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=FOhpNu8illGrk/nr5gQdx9CKgvOvNo7RRuSN8ezsyBo=;
- b=bs4l7xg619H1R56d+RNScpUjIX0OOtbVLdfWFR6pAbCLtTANo3nWCrSq4Q1W+EFLx5JrG1
- Jca1lFbv4eC4SVWLbPkgDvav6bs0EZxKO7ktwW8ISOW88llq426i23EMcLS2yoznz0jaQe
- 6RjuRxQbF3p1bCnMBn3+IM0VkqETrTY=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-619-bVEuLl7EOKi77hmlufVWZQ-1; Fri, 09 Aug 2024 15:26:56 -0400
-X-MC-Unique: bVEuLl7EOKi77hmlufVWZQ-1
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-2cb6c5f9810so2865323a91.2
- for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 12:26:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1scVIG-0006xI-KW
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 15:28:56 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1scVID-00011Z-Va
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 15:28:56 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-368712acb8dso1390423f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 12:28:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1723231731; x=1723836531; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CfqI07Mq5XGJm324B949qGeZKcnG6wqL+yz7+BuRvb0=;
+ b=K9/Am/fChBYtjpicF9QwAQMnEIhzTAPCv+5B1HoBbhQA4ffKfvFgqF79klSGonRQbx
+ vxSpsT6wwVb1NEo1oBn+KJknw2aZF/A0hwDyN9C4xIsqdbvSFvIfD1QJpnWcJTpGDEUN
+ L6BsDMdyzTdz4OLvKBwC9Z/r92ZSAHwZoLXUpDezhmUSAJzrOkGwQCVq4tmpbdO6UmdZ
+ 6yISK07K2IO66hm1wcdzxsUqR5XTNy3vsFeGFuWF6vlVZ+Uytc5Dh1MRZOywijhJCFdr
+ HiFYHVIEkdPLPT6mTCRIdVv8lhOUWw1x9L73JeCqSIMOcp1tjVkEDuiNNInM4aKHTq5a
+ mr+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723231615; x=1723836415;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FOhpNu8illGrk/nr5gQdx9CKgvOvNo7RRuSN8ezsyBo=;
- b=RYIjnLd+LmUcSTgIKE6fryF4MLwqy55NBfL8YrHgTC853FDDvaAtpRBAGPuM/vvAZh
- AL1T+dw0tf4H2rkucEYKrG9KU5N/30+IuhzgldQn3zUrqYJeHR05EXfJkxjYD5+L0JZq
- +LDk5KA4qol3a6FNu5M/vRjj0sqwTqaqnNZM6HeD+vGPCYepC6dTz+Qa1J/MM9EJ6nF8
- nVzoVfC9PZswrK5hkVtKP0zpcFwZ48q0Kc9IcFS//k3Hfe1WiQcEjF4vE4McJ9Vic0CL
- lsrBfQmhx6j4VHuhfWt8YBVAS5UprMY1L00LsB0nGRQv5NPxixu2r/AIyJtSBuqWzU3b
- mtrg==
+ d=1e100.net; s=20230601; t=1723231731; x=1723836531;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CfqI07Mq5XGJm324B949qGeZKcnG6wqL+yz7+BuRvb0=;
+ b=fwHvg5pKnwMZu5+V/7V1kHVCxNxPdIy6Pc2kWFPs8gSStcEe6qPI5oPHV5PlHMTex6
+ 8bOPlJyCwlR/qejwnIgZ0+V9wD9gxvnO/6WYPc2Yu/OPv5pt/clsLTg6E7KA11g2RkkF
+ 7TRwG51OS9L6ErFbNuMp5nk72LiGK2TfhFkrEHPBpsukjDZyHiilP5SEdQO5K1tJ3yZ7
+ NIudExXAekDT2oSx/egZgtpvRMYU9tZlr7JlL2pzY8JwhGZjeVpJaYqoTXEhJ8LO25JE
+ PeFU8URoOzikOVE7ZkY1rEtyS862mTapKyA+3i/Cc1wlFdljGKlE/VWJoG55EczM+7V/
+ E+vg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXlWWZK25g0UKw8ZMA5RWWqTDqxhupb3KVeMeS/KQn+jOE0rZ52S6HLgqeBYN/3Ijvl2nlV4YKf2qVcWK+RJftW23AZi9w=
-X-Gm-Message-State: AOJu0Yx4tuu1c7oA53QosBMWsBVMRiCFVv00y9jWMtszaKOjo2DBbvNf
- blLx2RUbC+36Dl44wA/EhECdb0DDmwDh6vttNWp02QxkgtpHhkMnL+2/lCWJVBxfNTJeSXYrz5G
- TjDmY08NYWKf11dche3C+cM4l2y8Y+ze6rcRl5/1DOR4eldoGraHkLwbmHJoWeWBYu5b5PmIP07
- sfQ+T2ptPGQEu2uCrBROhUDuReZnA=
-X-Received: by 2002:a17:90a:1697:b0:2cd:4b37:a96a with SMTP id
- 98e67ed59e1d1-2d1e7fc46c8mr2987068a91.14.1723231614776; 
- Fri, 09 Aug 2024 12:26:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFOStyZYXFXsFo9yZ+rSIB6TlL0Awbbttt31hAX+ziO9zURr4oK/85AZJsgtGnmXMkr4z1dvpqVEzybwXhjzF8=
-X-Received: by 2002:a17:90a:1697:b0:2cd:4b37:a96a with SMTP id
- 98e67ed59e1d1-2d1e7fc46c8mr2987031a91.14.1723231614239; Fri, 09 Aug 2024
- 12:26:54 -0700 (PDT)
+ AJvYcCV4KIGOXF14n3S227yIQQ8WpW4oeckKUFxGGBLTp3cO9OhG/0XVFOtQNAmo9h5Isdyt+BvC2GZoJMvVFpe+3mvbw9ur0z4=
+X-Gm-Message-State: AOJu0YzTTgTOLfBkXJoWFkFrmxT2kRTPVBCCxn6p8cMVCqGmjdUfTxhA
+ uZ8cSKRK8Q/SWcwRIh1VKfxKptCfvzjFHoJKJBBKwV1pV6G/ERg40seOEy2cnvfNHLv/v6aj/by
+ WErC9KzfhCUrnPVNQ1y/0I4tthC4vT1duhYk3
+X-Google-Smtp-Source: AGHT+IGw6E/Puw/l6sN8kmtdImn36GWYnoUi1j8CyNpJvJwjGTwHh6vnHHHz5g0qbwsHnfNDui5LAE3BSjkFNBnZ11s=
+X-Received: by 2002:a05:6000:b02:b0:367:89b0:f58a with SMTP id
+ ffacd0b85a97d-36d6053e7e8mr1629737f8f.58.1723231730731; Fri, 09 Aug 2024
+ 12:28:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <cover.1722634602.git.mchehab+huawei@kernel.org>
- <0654a89fe24f4343016b9cecc0752594ad1cd49f.1722634602.git.mchehab+huawei@kernel.org>
- <CAFn=p-Y27zap1P5G3NibdZS26iGwCqh8U0vgW0Vw31f53+oU1w@mail.gmail.com>
- <20240809004137.01f97da2@foz.lan>
- <CAFn=p-ZM8cgKvUx+5v7YU6TaPZySJL1QnHqjmN5rQpF=D_V=8Q@mail.gmail.com>
- <20240809102409.136837ec@foz.lan>
-In-Reply-To: <20240809102409.136837ec@foz.lan>
-From: John Snow <jsnow@redhat.com>
-Date: Fri, 9 Aug 2024 15:26:41 -0400
-Message-ID: <CAFn=p-as6hvPsYp+c7bDROHWeM096uP=+yBBAbrLu_MgNZ2WNw@mail.gmail.com>
-Subject: Re: [PATCH v5 7/7] scripts/ghes_inject: add a script to generate GHES
- error inject
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Shiju Jose <shiju.jose@huawei.com>, 
- Cleber Rosa <crosa@redhat.com>, linux-kernel@vger.kernel.org, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="0000000000003b99c5061f4520e4"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.144,
+References: <20240805201719.2345596-1-tavip@google.com>
+ <20240805201719.2345596-4-tavip@google.com>
+ <CAFn=p-abeXP+dUtp_gwH3dcD5DT-sTAFg=udVugrzcU1r8fXpA@mail.gmail.com>
+ <96cc6b27-751c-4420-b661-871a09aaf316@redhat.com>
+In-Reply-To: <96cc6b27-751c-4420-b661-871a09aaf316@redhat.com>
+From: Octavian Purdila <tavip@google.com>
+Date: Fri, 9 Aug 2024 12:28:39 -0700
+Message-ID: <CAGWr4cThLpkCA-hC2gf_cViX5dRGe7F-KFcFGepHsYZf0QVuOg@mail.gmail.com>
+Subject: Re: [RFC PATCH 03/23] scripts: add script to generate C header files
+ from SVD XML files
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ stefanst@google.com, alex.bennee@linaro.org, thuth@redhat.com, 
+ peter.maydell@linaro.org, marcandre.lureau@redhat.com, alistair@alistair23.me, 
+ berrange@redhat.com, philmd@linaro.org, crosa@redhat.com, bleal@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=tavip@google.com; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,187 +97,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003b99c5061f4520e4
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Aug 9, 2024, 4:24=E2=80=AFAM Mauro Carvalho Chehab <
-mchehab+huawei@kernel.org> wrote:
-
-> Em Thu, 8 Aug 2024 19:33:32 -0400
-> John Snow <jsnow@redhat.com> escreveu:
+On Thu, Aug 8, 2024 at 11:34=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
+ wrote:
 >
-> > > > Then here you'd use qmp.cmd (raises exception on QMPError) or
-> qmp.cmd_raw
-> > > > or qmp.cmd_obj (returns the QMP response as the return value even i=
-f
-> it
-> > > was
-> > > > an error.)
-> > >
-> > > Good to know, I'll try and see what fits best.
-> > >
+> On 8/8/24 23:56, John Snow wrote:
+> > I haven't read the rest of this series; I'm chiming in solely from the
+> > build/python maintainer angle. Do we *always* need pysvd, no matter how
+> > QEMU was configured? Adding it to the meson line here is a very big ham=
+mer.
+>
+> In general I'd agree, though for a 7.5 kB package with no other
+> dependencies I'm willing to make an exception.
+>
+> The alternative would be pretty complex:
+>
+> - check if pysvd is installed in the host
+>
+> - check if a machine type that needs pysvd is enabled, defaulting to y
+> or n depending on the previous step and --enable-download
+>
+> - use that to decide between doing nothing, installing pysvd or erroring =
+out
+>
+> - pass the availability of pysvd to Kconfig
+>
+> - use that to make the final determination on whether to enable those
+> machine types that use pysvd
+>
+> This is quite obviously overengineered compared to the alternative.
+>
+> Another possibility is to ship the generated file, skip regeneration if
+> pysvd is not installed (on the host), and not touch pythondeps.toml at
+> all.  Whether shipping a generated file is acceptable should be decided
+> by Peter as ARM maintainer, personally I would go the way that Octavian
+> is going already and I'm mentioning the rest only for completeness and
+> education.
+>
+> However...
+>
+> > We also need to provide a way for pysvd to be available offline; some
+> > packages are available via distro libs and if this package is available
+> > for every distro we officially support, that's sufficient (but requires
+> > updates to our various docker and VM test configuration files to add th=
+e
+> > new dependency). Otherwise, like we do for meson, we need to vendor the
+> > wheel in the tree so offline tarball builds will continue to work.
 > >
-> > I might *suggest* you try to use the exception-raising interface and
-> catch
-> > exceptions to interrogate expected errors as it aligns better with the
-> > "idiomatic python API" - I have no plans to support an external API tha=
+> > It looks like pysvd is a pure python package with no dependencies, so i=
 t
-> > *returns* error objects except via the exception class. This approach
-> will
-> > be easier to port when I drop the legacy interface in the future, see
-> below.
-> >
-> > But, that said, whichever is easiest. We use all three interfaces in ma=
-ny
-> > places in the QEMU tree. I have no grounds to require you to use a
-> specific
-> > one ;)
+> > should be OK to vendor it in qemu.git/python/wheels/ - look at
+> > qemu.git/python/scripts/vendor.py and consider updating and running thi=
+s
+> > script.
 >
-> While a python-style exception handling is cool, I ended opting to use
-> cmd_obj(), as the script needs to catch the end of
-> /machine/unattached/device[]
-> array, and using cmd_obj() made the conversion easier.
+> ... this is indeed correct.  It's not hard and it helps building on
+> older distros.  Future versions of Debian or Fedora might package pysvd,
+> but right now it's not included anywhere
+> (https://repology.org/project/python:pysvd/history).
 >
-> One of the things I missed at the documentation is a description of the
-> possible exceptions that cmd() could raise.
+> > That said, you might be the first person I've seen outside of Paolo and
+> > I to brave mucking around with the python build venv. You deserve a
+> > bravery sticker :)
 >
-> It is probably worth documenting it and placing them on a QMP-specific
-> error class, but a change like that would probably be incompatible with
-> the existing applications. Probably something to be considered on your
-> TODO list to move this from legacy ;-)
+> It's not that bad, come on. :)  But yeah, I'm positively surprised by
+> the effort to include pysvd in the virtual environment, and any
+> suggestions to improve the documentation and discoverability of the venv
+> setup are welcome.  I'm curious whether you figured it out yourself or
+> found https://www.qemu.org/docs/master/devel/build-system.html.
 >
 
-Good feedback, thanks! I definitely didn't spend much time polishing the
-"legacy" interface. I clearly thought it'd be more temporary than it became
-;)
+A combination of reading the docs above and looking at how things are
+done for other packages (meson, sphinx). It really was
+straightforward.
 
-I owe the package some updates for 3.13, I'll improve the documentation and
-also consider adding some "you forgot to make the address a tuple"
-protection so that part is less of a trap. (Without the tuple, I think it
-likely used the address as a socket path and the port as a bool to enter
-server mode. mypy would catch this, but it's a design goal to not require
-or expect script writers to need such things.)
-
-Thank you! :)
-
-
-> Anyway, I already folded the changes at the branch I'll be using as basis
-> for the next submission (be careful to use it, as I'm always rebasing it)=
-:
+> One thing I heard from others is that pythondeps.toml looks "too much
+> like" a fringe standard Python feature that no one has heard about.  In
+> some sense that's a great compliment, but I can see how it can be a bit
+> disconcerting.
 >
 
-Great, I'll review the entire script more thoroughly on v2, if that's OK
-with you.
-
-Just got back from a long PTO and an illness and I'm still ramping back up
-and handling backlog.
-
-
->
-> https://gitlab.com/mchehab_kernel/qemu/-/commit/62feb8f6037ab762a9848eb60=
-1a041fbbbe2a77a#b665bcbc1e5ae3a488f1c0f20f8c29ae640bfa63_0_17
->
->
-> Thanks,
-> Mauro
->
-
-~~js
-
->
-
---0000000000003b99c5061f4520e4
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Fri, Aug 9, 2024, 4:24=E2=80=AFAM Mauro Carvalho Ch=
-ehab &lt;<a href=3D"mailto:mchehab%2Bhuawei@kernel.org">mchehab+huawei@kern=
-el.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"m=
-argin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Em Thu, 8 Aug=
- 2024 19:33:32 -0400<br>
-John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" target=3D"_blank" rel=3D"=
-noreferrer">jsnow@redhat.com</a>&gt; escreveu:<br>
-<br>
-&gt; &gt; &gt; Then here you&#39;d use qmp.cmd (raises exception on QMPErro=
-r) or qmp.cmd_raw<br>
-&gt; &gt; &gt; or qmp.cmd_obj (returns the QMP response as the return value=
- even if it=C2=A0 <br>
-&gt; &gt; was=C2=A0 <br>
-&gt; &gt; &gt; an error.)=C2=A0 <br>
-&gt; &gt;<br>
-&gt; &gt; Good to know, I&#39;ll try and see what fits best.<br>
-&gt; &gt;=C2=A0 <br>
-&gt; <br>
-&gt; I might *suggest* you try to use the exception-raising interface and c=
-atch<br>
-&gt; exceptions to interrogate expected errors as it aligns better with the=
-<br>
-&gt; &quot;idiomatic python API&quot; - I have no plans to support an exter=
-nal API that<br>
-&gt; *returns* error objects except via the exception class. This approach =
-will<br>
-&gt; be easier to port when I drop the legacy interface in the future, see =
-below.<br>
-&gt; <br>
-&gt; But, that said, whichever is easiest. We use all three interfaces in m=
-any<br>
-&gt; places in the QEMU tree. I have no grounds to require you to use a spe=
-cific<br>
-&gt; one ;)<br>
-<br>
-While a python-style exception handling is cool, I ended opting to use <br>
-cmd_obj(), as the script needs to catch the end of /machine/unattached/devi=
-ce[]<br>
-array, and using cmd_obj() made the conversion easier.<br>
-<br>
-One of the things I missed at the documentation is a description of the<br>
-possible exceptions that cmd() could raise.<br>
-<br>
-It is probably worth documenting it and placing them on a QMP-specific<br>
-error class, but a change like that would probably be incompatible with<br>
-the existing applications. Probably something to be considered on your<br>
-TODO list to move this from legacy ;-)<br></blockquote></div></div><div dir=
-=3D"auto"><br></div><div dir=3D"auto">Good feedback, thanks! I definitely d=
-idn&#39;t spend much time polishing the &quot;legacy&quot; interface. I cle=
-arly thought it&#39;d be more temporary than it became ;)</div><div dir=3D"=
-auto"><br></div><div dir=3D"auto">I owe the package some updates for 3.13, =
-I&#39;ll improve the documentation and also consider adding some &quot;you =
-forgot to make the address a tuple&quot; protection so that part is less of=
- a trap. (Without the tuple, I think it likely used the address as a socket=
- path and the port as a bool to enter server mode. mypy would catch this, b=
-ut it&#39;s a design goal to not require or expect script writers to need s=
-uch things.)=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D"auto">Thank=
- you! :)</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"g=
-mail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bo=
-rder-left:1px #ccc solid;padding-left:1ex">
-<br>
-Anyway, I already folded the changes at the branch I&#39;ll be using as bas=
-is<br>
-for the next submission (be careful to use it, as I&#39;m always rebasing i=
-t):<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"aut=
-o">Great, I&#39;ll review the entire script more thoroughly on v2, if that&=
-#39;s OK with you.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Just =
-got back from a long PTO and an illness and I&#39;m still ramping back up a=
-nd handling backlog.</div><div dir=3D"auto"><br></div><div dir=3D"auto"><di=
-v class=3D"gmail_quote"><blockquote class=3D"gmail_quote" style=3D"margin:0=
- 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://gitlab.com/mchehab_kernel/qe=
-mu/-/commit/62feb8f6037ab762a9848eb601a041fbbbe2a77a#b665bcbc1e5ae3a488f1c0=
-f20f8c29ae640bfa63_0_17" rel=3D"noreferrer noreferrer" target=3D"_blank">ht=
-tps://gitlab.com/mchehab_kernel/qemu/-/commit/62feb8f6037ab762a9848eb601a04=
-1fbbbe2a77a#b665bcbc1e5ae3a488f1c0f20f8c29ae640bfa63_0_17</a><br>
-<br>
-<br>
-Thanks,<br>
-Mauro<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"a=
-uto">~~js</div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;pa=
-dding-left:1ex">
-</blockquote></div></div></div>
-
---0000000000003b99c5061f4520e4--
-
+Now that you mentioned it I can see how people might think that :) But
+the build system docs are pretty clear IMO.
 
