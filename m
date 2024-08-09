@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3975EC52D71
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 09:15:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE872C52D71
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 09:16:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scLir-0002hO-Ag; Fri, 09 Aug 2024 05:15:45 -0400
+	id 1scLjP-00053I-8E; Fri, 09 Aug 2024 05:16:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1scLip-0002WC-7J
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 05:15:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lulu@redhat.com>) id 1scLim-0006hB-SH
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 05:15:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723194938;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=w7HyUaJw6zmVkp7QMPkzx6nfDj+6akudOTv7XadMX4Q=;
- b=ZGnW+pALJRbjO0qbZmnEzJpbe4e++/5pG8UyOijCc9TgOA833J8m/iIBaBCzSAYFbr/c0D
- rhjSgdgMsXSDTke8FhLlTmTp6lQm4RfZdnbYTvTPuVVMjJT9GKoaorwyMXIJYcrrJlIPoC
- dJaRxLVHcq5G6FHUm06HLXwN6TiLqzU=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-14-qwzqK94qN9q9M4GVsHBRTQ-1; Fri, 09 Aug 2024 05:15:36 -0400
-X-MC-Unique: qwzqK94qN9q9M4GVsHBRTQ-1
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-a7ac41d26e7so260593066b.0
- for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 02:15:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1scLjM-0004oa-Gf
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 05:16:17 -0400
+Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1scLjJ-0006i5-BY
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 05:16:15 -0400
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-2f01e9f53e3so30004871fa.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 02:16:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723194971; x=1723799771; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kqlCEH87/NeUA8Q2MvkoHSXaVgPPuUPGNbx4rpR5vdo=;
+ b=lcvzrzxT2HV5gGI1vVVQZpmbLueLuPzDfWygOWV0rcl9RGSS94MIULnOhTVPFLthXk
+ qi7/B6ly5GWQq1ALkPbz1eHwX0GB8F1kltNyeXSKN8OQpOT4erQiTxMZcCvPEd5CYKwQ
+ w0A955a9KUN/YhAN+lbCwZTn1oHpV2DQdKDdsRjMXqu99g63WEektHFvnouKXZlungmD
+ vJZMtS4O5QuLCDMjiDtunTv2CNSwygqgmjNjnhMJJBjrEKPkBLrIDMub4lnDYhLA0BW0
+ XMu1WxJF2Rnf1zhNd+VIsaX/QjzdIg1vhaeZOiCPIUqeMjaT6VQPJTEFZTh7QRnMHQ1k
+ dQuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723194935; x=1723799735;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=w7HyUaJw6zmVkp7QMPkzx6nfDj+6akudOTv7XadMX4Q=;
- b=tKEC3sYSGz5X/Ldf8Wd94UdulJBmwYRagEOuN5GMpFNBv/vvVGFog5I+oXEvvQgrJM
- 7A2SB6qf+ZLy2YiLo+LDi5Xk0EfKZ5zKtAbN9VyJ8pVy7d++B97eqgool5yqSMtpZpch
- vwBTs0FwFbcTYnrX4e6wEdQyz8lPGD8DhtE8RdUvGcPY0H5Vy3xqOuomc8i8o2RccBg2
- pg6/p/25e+ChtfgeLzMGdnXPdWLiCez4MeN6d8d6YkyD4auFTfIUajrVJhKDG8TvT2+H
- KMYUjKsp77AXVEANka5INQyOXK3W8RaR8kbJA2LNYbtDMBrh5SURVPQnJVHZEygN+WEz
- St4A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW5FdEHrCXI+ANFBGyoyr++YtkYtH6ocDxwUp3AOlPDRp8bl5+FtXnlCPWW5asoD3++5EbwtoWkJo9n33CN0hPauF0MmOQ=
-X-Gm-Message-State: AOJu0YwEeuH1eSrTWehuNNls/nIU/20A9XZELR9JSYRZ1b02jZ2IqJhw
- EIq8EYuqZIjJ4PydCcyPK/jBly/+P8Fl4hnMqgG8750EJOL5a0PCjYD5LSTIcAhzGRG3Ua6ieAn
- n32WcWTPO3PMbe31dA3+vNID2w2ILY+gmLCMthDD7Gi+JK3iiRN0BjxpnlMBjMNvV50ceGlV+aJ
- kxJnMgkMh/Tl7SDiDpDdDm4Q+gZxDdQc3NFmY=
-X-Received: by 2002:a17:907:a47:b0:a7a:ac5f:bbef with SMTP id
- a640c23a62f3a-a809207db16mr354373266b.31.1723194934951; 
- Fri, 09 Aug 2024 02:15:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGDQB1NfqK8JR/jMWgMfpauTz3suOypUgmtw8/ptrsb2uyZs3ZNnZH/B6CApugYnR49CZW/TYF2ylrO1iP9kWA=
-X-Received: by 2002:a17:907:a47:b0:a7a:ac5f:bbef with SMTP id
- a640c23a62f3a-a809207db16mr354370666b.31.1723194934443; Fri, 09 Aug 2024
- 02:15:34 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723194971; x=1723799771;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=kqlCEH87/NeUA8Q2MvkoHSXaVgPPuUPGNbx4rpR5vdo=;
+ b=dcLuExYwV7RncZPgtTNArkLP25i3RmANaiW+rCZR0HqPl6qG0YQfjND/QWefNBWtOK
+ 4/k0J4aymrsrZwru6pZIdKWNLYC/IVtbx6nhahWFWZfsxR/I5mh4vVS3XZBbmkW20dHb
+ R2nci/mx+YUkMciyG0vIopYZkzq5h0fRCeajNeYOVdS3fCAhk2HOnyc+lipbQKovSwk2
+ w4GCCI2I9XVDRjHiajr5v4GMHWbDoEpSJIA9CpW3fH6sfis9efusYphvFiaxLn10YRz3
+ sEUGAuzyVFJPIUOELddUjPMKys5zC1uj/5kLMtCjZEyjMbAQOq47KsHI6dsrl6q+NQLi
+ 6G7A==
+X-Gm-Message-State: AOJu0YylT7UbCLwNpRXZ4aB/kb3KXVB1pfpjh/LBKA6nmfNYY+9R+3w1
+ bbeBF3ftRn3js80F61cuV4x20ZFX1KTxtNRXr3URsrpk2f++BtmOXm1dMIRPNTo=
+X-Google-Smtp-Source: AGHT+IEfH2eovvRFU5CfEkRKTHh4N0jgDr3YFgxddGpeI8aunBdmUJLML3WlDzh6RlRlORh87etDGA==
+X-Received: by 2002:a2e:be90:0:b0:2ef:2ba5:d214 with SMTP id
+ 38308e7fff4ca-2f1a6c4d1cemr9983341fa.4.1723194970510; 
+ Fri, 09 Aug 2024 02:16:10 -0700 (PDT)
+Received: from [192.168.178.175] (41.red-95-127-42.staticip.rima-tde.net.
+ [95.127.42.41]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4290598e970sm116998785e9.24.2024.08.09.02.16.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 09 Aug 2024 02:16:10 -0700 (PDT)
+Message-ID: <e7c65f33-2438-4c9b-89f9-b1749868e11e@linaro.org>
+Date: Fri, 9 Aug 2024 11:16:06 +0200
 MIME-Version: 1.0
-References: <20240806005814.51651-1-lulu@redhat.com>
- <CACGkMEuCJT8KYsDgJaXzvy1Fhm6+tJinowdTtoAngsnvYjB54Q@mail.gmail.com>
- <CACLfguU47TPw5=GpS93AMWEYcy95JJ6+uG-PYpdmeD=hrKGa1Q@mail.gmail.com>
- <CACGkMEvCSKfahpBQLAMmSzdFN-QPhg5Zx+UQVrFX0HsWybZZNA@mail.gmail.com>
-In-Reply-To: <CACGkMEvCSKfahpBQLAMmSzdFN-QPhg5Zx+UQVrFX0HsWybZZNA@mail.gmail.com>
-From: Cindy Lu <lulu@redhat.com>
-Date: Fri, 9 Aug 2024 17:14:57 +0800
-Message-ID: <CACLfguU49R3qH0BVK1h1FWRkxn+-R5Vs=UdL90=SNfxy1i+9Sg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] virtio_net: Add the check for vdpa's mac address
-To: Jason Wang <jasowang@redhat.com>
-Cc: mst@redhat.com, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000f25c13061f3c955c"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lulu@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] virtio-gpu: Correct virgl_renderer_resource_get_info()
+ error check
+To: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Helge Konetzka <hk@zapateado.de>,
+ Ganapathi Kamath <hgkamath@hotmail.com>
+References: <20240129073921.446869-1-dmitry.osipenko@collabora.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240129073921.446869-1-dmitry.osipenko@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::230;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,333 +97,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f25c13061f3c955c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Dmitry,
 
-On Wed, 7 Aug 2024 at 10:36, Jason Wang <jasowang@redhat.com> wrote:
+On 29/1/24 08:39, Dmitry Osipenko wrote:
+> virgl_renderer_resource_get_info() returns errno and not -1 on error.
 
-> On Tue, Aug 6, 2024 at 5:44=E2=80=AFPM Cindy Lu <lulu@redhat.com> wrote:
-> >
-> > On Tue, 6 Aug 2024 at 11:07, Jason Wang <jasowang@redhat.com> wrote:
-> > >
-> > > On Tue, Aug 6, 2024 at 8:58=E2=80=AFAM Cindy Lu <lulu@redhat.com> wro=
-te:
-> > > >
-> > > > When using a VDPA device, it is important to ensure that
-> > > > the MAC address in the hardware matches the MAC address
-> > > > from the QEMU command line.
-> > > > This will allow the device to boot.
-> > > >
-> > > > Signed-off-by: Cindy Lu <lulu@redhat.com>
-> > > > ---
-> > > >  hw/net/virtio-net.c | 33 +++++++++++++++++++++++++++++----
-> > > >  1 file changed, 29 insertions(+), 4 deletions(-)
-> > > >
-> > > > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> > > > index 9c7e85caea..7f51bd0dd3 100644
-> > > > --- a/hw/net/virtio-net.c
-> > > > +++ b/hw/net/virtio-net.c
-> > > > @@ -3579,12 +3579,36 @@ static bool
-> failover_hide_primary_device(DeviceListener *listener,
-> > > >      /* failover_primary_hidden is set during feature negotiation *=
-/
-> > > >      return qatomic_read(&n->failover_primary_hidden);
-> > > >  }
-> > > > +static bool virtio_net_check_vdpa_mac(NetClientState *nc, VirtIONe=
-t
-> *n, MACAddr *cmdline_mac,
-> > > > +                                     Error **errp)
-> > > > +{
-> > > > +       struct virtio_net_config hwcfg =3D {};
-> > > > +       static const MACAddr zero =3D { .a =3D { 0, 0, 0, 0, 0, 0 }=
- };
-> > > > +
-> > > > +       vhost_net_get_config(get_vhost_net(nc->peer), (uint8_t
-> *)&hwcfg, ETH_ALEN);
-> > > > +
-> > > > +    /*
-> > > > +     * For VDPA device: Only two situations are acceptable:
-> > > > +     * 1.The hardware MAC address is the same as the QEMU command
-> line MAC
-> > > > +     *   address, and both of them are not 0.
-> > >
-> > > I guess there should be a bullet 2?
-> > >
-> > yes, there is a section 2, will change this code here
-> > Thanks
-> > cindy
-> > > > +     */
-> > > > +
-> > > > +       if (memcmp(&hwcfg.mac, &zero, sizeof(MACAddr)) !=3D 0) {
-> > > > +               if ((memcmp(&hwcfg.mac, cmdline_mac,
-> sizeof(MACAddr)) =3D=3D 0)) {
-> > > > +                       return true;
-> > > > +               }
-> > > > +       }
-> > > > +       error_setg(errp, "vDPA device's mac !=3D the mac address fr=
-om
-> qemu cmdline"
-> > > > +                        "Please check the the vdpa device's
-> setting.");
-> > >
-> > > For error messages I think it's better to use english instead of "!=
-=3D"
-> > > to describe the issue.
-> > >
-> > > >
-> > > > +       return false;
-> > > > +}
-> > > >  static void virtio_net_device_realize(DeviceState *dev, Error
-> **errp)
-> > > >  {
-> > > >      VirtIODevice *vdev =3D VIRTIO_DEVICE(dev);
-> > > >      VirtIONet *n =3D VIRTIO_NET(dev);
-> > > >      NetClientState *nc;
-> > > > +    MACAddr macaddr_cmdline;
-> > > >      int i;
-> > > >
-> > > >      if (n->net_conf.mtu) {
-> > > > @@ -3692,6 +3716,7 @@ static void
-> virtio_net_device_realize(DeviceState *dev, Error **errp)
-> > > >      virtio_net_add_queue(n, 0);
-> > > >
-> > > >      n->ctrl_vq =3D virtio_add_queue(vdev, 64, virtio_net_handle_ct=
-rl);
-> > > > +    memcpy(&macaddr_cmdline, &n->nic_conf.macaddr, sizeof(n->mac))=
-;
-> > > >      qemu_macaddr_default_if_unset(&n->nic_conf.macaddr);
-> > > >      memcpy(&n->mac[0], &n->nic_conf.macaddr, sizeof(n->mac));
-> > > >      n->status =3D VIRTIO_NET_S_LINK_UP;
-> > > > @@ -3739,10 +3764,10 @@ static void
-> virtio_net_device_realize(DeviceState *dev, Error **errp)
-> > > >      nc->rxfilter_notify_enabled =3D 1;
-> > > >
-> > > >     if (nc->peer && nc->peer->info->type =3D=3D
-> NET_CLIENT_DRIVER_VHOST_VDPA) {
-> > > > -        struct virtio_net_config netcfg =3D {};
-> > > > -        memcpy(&netcfg.mac, &n->nic_conf.macaddr, ETH_ALEN);
-> > > > -        vhost_net_set_config(get_vhost_net(nc->peer),
-> > > > -            (uint8_t *)&netcfg, 0, ETH_ALEN,
-> VHOST_SET_CONFIG_TYPE_FRONTEND);
-> > > > +          if (!virtio_net_check_vdpa_mac(nc, n, &macaddr_cmdline,
-> errp)) {
-> > > > +                  virtio_cleanup(vdev);
-> > > > +                  return;
-> > > > +          }
-> > >
-> > > Any reason we remove vhost_net_set_config() here? It is not described
-> > > in the commit or does it belong to another patch?
-> > >
-> > > Thanks
-> > >
-> > as we discussed before=EF=BC=8C the MAC address in hardware should have=
- a
-> > "higher priority"
-> > than the MAC address in qemu cmdline. So I remove the set_config there,
-> > the MAC address from the hardware will overwrite the MAC in qemu
-> > cmdline. so don't need to set_config to hardware now
->
-> Probably, but I meant it needs to be a separate patch.
->
-> For example the title said "add ...." but here it's a removal of somethin=
-g.
->
-> Thanks
->
-> sure will fix this
-Thanks
-cindy
+So basically we were ignoring all errors...
 
-> > Thanks,
-> > cindy
-> > > >      }
-> > > >      QTAILQ_INIT(&n->rsc_chains);
-> > > >      n->qdev =3D dev;
-> > > > --
-> > > > 2.45.0
-> > > >
-> > >
-> >
->
->
+Could some errors just be safely ignored? Because apparently
+this patch now gives troubles, see:
+https://gitlab.com/qemu-project/qemu/-/issues/2490
+Can you help us there?
 
---000000000000f25c13061f3c955c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Regards,
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Wed, 7 Aug 2024 at 10:36, Jason Wa=
-ng &lt;<a href=3D"mailto:jasowang@redhat.com">jasowang@redhat.com</a>&gt; w=
-rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
-x 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Tue, Au=
-g 6, 2024 at 5:44=E2=80=AFPM Cindy Lu &lt;<a href=3D"mailto:lulu@redhat.com=
-" target=3D"_blank">lulu@redhat.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; On Tue, 6 Aug 2024 at 11:07, Jason Wang &lt;<a href=3D"mailto:jasowang=
-@redhat.com" target=3D"_blank">jasowang@redhat.com</a>&gt; wrote:<br>
-&gt; &gt;<br>
-&gt; &gt; On Tue, Aug 6, 2024 at 8:58=E2=80=AFAM Cindy Lu &lt;<a href=3D"ma=
-ilto:lulu@redhat.com" target=3D"_blank">lulu@redhat.com</a>&gt; wrote:<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; When using a VDPA device, it is important to ensure that<br>
-&gt; &gt; &gt; the MAC address in the hardware matches the MAC address<br>
-&gt; &gt; &gt; from the QEMU command line.<br>
-&gt; &gt; &gt; This will allow the device to boot.<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; Signed-off-by: Cindy Lu &lt;<a href=3D"mailto:lulu@redhat.co=
-m" target=3D"_blank">lulu@redhat.com</a>&gt;<br>
-&gt; &gt; &gt; ---<br>
-&gt; &gt; &gt;=C2=A0 hw/net/virtio-net.c | 33 +++++++++++++++++++++++++++++=
-----<br>
-&gt; &gt; &gt;=C2=A0 1 file changed, 29 insertions(+), 4 deletions(-)<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c<br>
-&gt; &gt; &gt; index 9c7e85caea..7f51bd0dd3 100644<br>
-&gt; &gt; &gt; --- a/hw/net/virtio-net.c<br>
-&gt; &gt; &gt; +++ b/hw/net/virtio-net.c<br>
-&gt; &gt; &gt; @@ -3579,12 +3579,36 @@ static bool failover_hide_primary_de=
-vice(DeviceListener *listener,<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 /* failover_primary_hidden is set during=
- feature negotiation */<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 return qatomic_read(&amp;n-&gt;failover_=
-primary_hidden);<br>
-&gt; &gt; &gt;=C2=A0 }<br>
-&gt; &gt; &gt; +static bool virtio_net_check_vdpa_mac(NetClientState *nc, V=
-irtIONet *n, MACAddr *cmdline_mac,<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Er=
-ror **errp)<br>
-&gt; &gt; &gt; +{<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0struct virtio_net_config hwcfg =
-=3D {};<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0static const MACAddr zero =3D { =
-.a =3D { 0, 0, 0, 0, 0, 0 } };<br>
-&gt; &gt; &gt; +<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0vhost_net_get_config(get_vhost_n=
-et(nc-&gt;peer), (uint8_t *)&amp;hwcfg, ETH_ALEN);<br>
-&gt; &gt; &gt; +<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 /*<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0* For VDPA device: Only two situations =
-are acceptable:<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0* 1.The hardware MAC address is the sam=
-e as the QEMU command line MAC<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0*=C2=A0 =C2=A0address, and both of them=
- are not 0.<br>
-&gt; &gt;<br>
-&gt; &gt; I guess there should be a bullet 2?<br>
-&gt; &gt;<br>
-&gt; yes, there is a section 2, will change this code here<br>
-&gt; Thanks<br>
-&gt; cindy<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; &gt; &gt; +<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0if (memcmp(&amp;hwcfg.mac, &amp;=
-zero, sizeof(MACAddr)) !=3D 0) {<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (=
-(memcmp(&amp;hwcfg.mac, cmdline_mac, sizeof(MACAddr)) =3D=3D 0)) {<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0return true;<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br=
->
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0error_setg(errp, &quot;vDPA devi=
-ce&#39;s mac !=3D the mac address from qemu cmdline&quot;<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 &quot;Please check the the vdpa device&#39;s setti=
-ng.&quot;);<br>
-&gt; &gt;<br>
-&gt; &gt; For error messages I think it&#39;s better to use english instead=
- of &quot;!=3D&quot;<br>
-&gt; &gt; to describe the issue.<br>
-&gt; &gt;<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0return false;<br>
-&gt; &gt; &gt; +}<br>
-&gt; &gt; &gt;=C2=A0 static void virtio_net_device_realize(DeviceState *dev=
-, Error **errp)<br>
-&gt; &gt; &gt;=C2=A0 {<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 VirtIODevice *vdev =3D VIRTIO_DEVICE(dev=
-);<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 VirtIONet *n =3D VIRTIO_NET(dev);<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 NetClientState *nc;<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 MACAddr macaddr_cmdline;<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 int i;<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 if (n-&gt;net_conf.mtu) {<br>
-&gt; &gt; &gt; @@ -3692,6 +3716,7 @@ static void virtio_net_device_realize(=
-DeviceState *dev, Error **errp)<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 virtio_net_add_queue(n, 0);<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 n-&gt;ctrl_vq =3D virtio_add_queue(vdev,=
- 64, virtio_net_handle_ctrl);<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 memcpy(&amp;macaddr_cmdline, &amp;n-&gt;nic_c=
-onf.macaddr, sizeof(n-&gt;mac));<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 qemu_macaddr_default_if_unset(&amp;n-&gt=
-;nic_conf.macaddr);<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 memcpy(&amp;n-&gt;mac[0], &amp;n-&gt;nic=
-_conf.macaddr, sizeof(n-&gt;mac));<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 n-&gt;status =3D VIRTIO_NET_S_LINK_UP;<b=
-r>
-&gt; &gt; &gt; @@ -3739,10 +3764,10 @@ static void virtio_net_device_realiz=
-e(DeviceState *dev, Error **errp)<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 nc-&gt;rxfilter_notify_enabled =3D 1;<br=
->
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0if (nc-&gt;peer &amp;&amp; nc-&gt;peer-&g=
-t;info-&gt;type =3D=3D NET_CLIENT_DRIVER_VHOST_VDPA) {<br>
-&gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 struct virtio_net_config netcfg=
- =3D {};<br>
-&gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 memcpy(&amp;netcfg.mac, &amp;n-=
-&gt;nic_conf.macaddr, ETH_ALEN);<br>
-&gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 vhost_net_set_config(get_vhost_=
-net(nc-&gt;peer),<br>
-&gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (uint8_t *)&amp;n=
-etcfg, 0, ETH_ALEN, VHOST_SET_CONFIG_TYPE_FRONTEND);<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!virtio_net_check_vd=
-pa_mac(nc, n, &amp;macaddr_cmdline, errp)) {<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 virtio_cleanup(vdev);<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 return;<br>
-&gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt;<br>
-&gt; &gt; Any reason we remove vhost_net_set_config() here? It is not descr=
-ibed<br>
-&gt; &gt; in the commit or does it belong to another patch?<br>
-&gt; &gt;<br>
-&gt; &gt; Thanks<br>
-&gt; &gt;<br>
-&gt; as we discussed before=EF=BC=8C the MAC address in hardware should hav=
-e a<br>
-&gt; &quot;higher priority&quot;<br>
-&gt; than the MAC address in qemu cmdline. So I remove the set_config there=
-,<br>
-&gt; the MAC address from the hardware will overwrite the MAC in qemu<br>
-&gt; cmdline. so don&#39;t need to set_config to hardware now<br>
-<br>
-Probably, but I meant it needs to be a separate patch.<br>
-<br>
-For example the title said &quot;add ....&quot; but here it&#39;s a removal=
- of something.<br>
-<br>
-Thanks<br>
-<br></blockquote><div>sure will fix this</div><div>Thanks</div><div>cindy=
-=C2=A0=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
- 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt; Thanks,<br>
-&gt; cindy<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 QTAILQ_INIT(&amp;n-&gt;rsc_chains);<br>
-&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 n-&gt;qdev =3D dev;<br>
-&gt; &gt; &gt; --<br>
-&gt; &gt; &gt; 2.45.0<br>
-&gt; &gt; &gt;<br>
-&gt; &gt;<br>
-&gt;<br>
-<br>
-</blockquote></div></div>
+Phil.
 
---000000000000f25c13061f3c955c--
+> Correct the return-value check.
+> 
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> ---
+> 
+> v2: - Fixed similar incorrect error-checking in vhost-user-gpu
+>      - Added r-b from Marc
+> 
+>   contrib/vhost-user-gpu/virgl.c | 6 +++---
+>   hw/display/virtio-gpu-virgl.c  | 2 +-
+>   2 files changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/contrib/vhost-user-gpu/virgl.c b/contrib/vhost-user-gpu/virgl.c
+> index d1ccdf7d0668..51da0e3667f9 100644
+> --- a/contrib/vhost-user-gpu/virgl.c
+> +++ b/contrib/vhost-user-gpu/virgl.c
+> @@ -327,7 +327,7 @@ virgl_get_resource_info_modifiers(uint32_t resource_id,
+>   #ifdef VIRGL_RENDERER_RESOURCE_INFO_EXT_VERSION
+>       struct virgl_renderer_resource_info_ext info_ext;
+>       ret = virgl_renderer_resource_get_info_ext(resource_id, &info_ext);
+> -    if (ret < 0) {
+> +    if (ret) {
+>           return ret;
+>       }
+>   
+> @@ -335,7 +335,7 @@ virgl_get_resource_info_modifiers(uint32_t resource_id,
+>       *modifiers = info_ext.modifiers;
+>   #else
+>       ret = virgl_renderer_resource_get_info(resource_id, info);
+> -    if (ret < 0) {
+> +    if (ret) {
+>           return ret;
+>       }
+>   
+> @@ -372,7 +372,7 @@ virgl_cmd_set_scanout(VuGpu *g,
+>           uint64_t modifiers = 0;
+>           ret = virgl_get_resource_info_modifiers(ss.resource_id, &info,
+>                                                   &modifiers);
+> -        if (ret == -1) {
+> +        if (ret) {
+>               g_critical("%s: illegal resource specified %d\n",
+>                          __func__, ss.resource_id);
+>               cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_RESOURCE_ID;
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index 8bb7a2c21fe7..9f34d0e6619c 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -181,7 +181,7 @@ static void virgl_cmd_set_scanout(VirtIOGPU *g,
+>           memset(&info, 0, sizeof(info));
+>           ret = virgl_renderer_resource_get_info(ss.resource_id, &info);
+>   #endif
+> -        if (ret == -1) {
+> +        if (ret) {
+>               qemu_log_mask(LOG_GUEST_ERROR,
+>                             "%s: illegal resource specified %d\n",
+>                             __func__, ss.resource_id);
 
 
