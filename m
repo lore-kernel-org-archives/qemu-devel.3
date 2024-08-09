@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7278CC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 08:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8492C52D71
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 08:47:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scLFe-0000Np-QZ; Fri, 09 Aug 2024 04:45:35 -0400
+	id 1scLGs-0005WP-2O; Fri, 09 Aug 2024 04:46:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1scLFV-0008W8-3d
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:45:25 -0400
+ id 1scLGq-0005P8-5L
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:46:48 -0400
 Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1scLFS-0002mE-0b
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:45:24 -0400
+ id 1scLGo-0002r6-Da
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 04:46:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723193122; x=1754729122;
+ t=1723193206; x=1754729206;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=hkvsZS0fdROU6ScnxB4WAjsIm1MnTN09BDHI1xYG6L8=;
- b=CqCWWJUivs6sTdbHXB691DZCZ1r4HaTBcQibDEDzS1Q5poxKm3V0ZV8f
- jG8zHuxArnaTMjYqu4spVVCH7BVrtNQNcHihhh1fU8y0wUArsPw5mH3gM
- ZN14bYSYjS76oQsarrZ1gn1q16IYnUHNMAu5RHhK5+ztzXRRb3ylM4SH8
- QYUqNpvMKtnM8XTgB5qIZt79b2BgP0nRpDcBvVLx8ERvbFeMyoVSKJe7s
- 4Bmrz1NlABASrdOE/MV3+D7r0U5UlsTCAFiEuMFRKGVj3+Ji3kPj6bRPr
- Tay/nr5LnLmq/IRo6G5qrHjvV8dZ7auVs11nLXcaI0RR+9hw8stEczm+G g==;
-X-CSE-ConnectionGUID: t1M5UwV5RG6Fz0iY0k/9bw==
-X-CSE-MsgGUID: M8yOot77QyunJeQZjmoKRQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11158"; a="12931495"
-X-IronPort-AV: E=Sophos;i="6.09,275,1716274800"; d="scan'208";a="12931495"
+ bh=EBo2CWUAyKTI796A9q51D37P+w1g57rmuunWJ4L3Npc=;
+ b=FEFsSTkOr0nRQCAirAlNk735uzTM7sNncGigEKGYW+XB8VGtOjFywGwW
+ U2oanxoZ0UCXM74hupozBXB6C1scE9xgfI0tOy6zZNW9Fw+iYkOqBcvT6
+ Wf5H3y5zToVGuUKN/mz2x673PhLr9Vqo0NQA5y4WbiFU2DG/etZEbvKBv
+ 24ESc2goVqMwlqQB65STi4m3n2ayO6shGzab7IYGF8MOssAaTe/kwzTgz
+ uxu9ZdpvcRXA5hhKMQwqsMlN5ks7tw3WCZs96Diea9ivoiTzVmlm3Mwci
+ qYXp4NE+euof0JpglYnYlEyke9oL1GX7+K/S4KvWO/td76RHVyVonqYUU A==;
+X-CSE-ConnectionGUID: zBLI1kbpTqaVaCjpYyiXkA==
+X-CSE-MsgGUID: A4l46IoXTkeZ8lBazpRPrQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11158"; a="12931522"
+X-IronPort-AV: E=Sophos;i="6.09,275,1716274800"; d="scan'208";a="12931522"
 Received: from fmviesa004.fm.intel.com ([10.60.135.144])
  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Aug 2024 01:45:18 -0700
-X-CSE-ConnectionGUID: 6TCl3s8VQO+LFCPgalAXgw==
-X-CSE-MsgGUID: WckzEW+fSpa2THOAo14/dw==
+ 09 Aug 2024 01:46:45 -0700
+X-CSE-ConnectionGUID: wTo8X4XgRECBki1wmPN7lg==
+X-CSE-MsgGUID: j1G/6JsES9iaVM13kWvcOA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,275,1716274800"; d="scan'208";a="62144995"
+X-IronPort-AV: E=Sophos;i="6.09,275,1716274800"; d="scan'208";a="62145138"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by fmviesa004.fm.intel.com with ESMTP; 09 Aug 2024 01:45:16 -0700
-Date: Fri, 9 Aug 2024 17:01:07 +0800
+ by fmviesa004.fm.intel.com with ESMTP; 09 Aug 2024 01:46:44 -0700
+Date: Fri, 9 Aug 2024 17:02:34 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Xin Li <xin@zytor.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mtosatti@redhat.com,
- lei4.wang@intel.com, xin3.li@intel.com
-Subject: Re: [PATCH v1 3/3] target/i386: Raise the highest index value used
- for any VMCS encoding
-Message-ID: <ZrXa0zdri8cXnt1a@intel.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v1 2/3] target/i386: Add VMX control bits for nested FRED
+ support
+Message-ID: <ZrXbKsfe0LnZdA9V@intel.com>
 References: <20240807081813.735158-1-xin@zytor.com>
- <20240807081813.735158-4-xin@zytor.com>
- <ZrOVSXX2uvezT3J1@intel.com>
- <235c9a61-fe2c-4124-acbb-e7ab287164fc@zytor.com>
- <e2b97f46-0913-4cc7-ac28-635170bea1f5@zytor.com>
+ <20240807081813.735158-3-xin@zytor.com>
+ <ZrOZkYuSKhYH0ymi@intel.com>
+ <f4422fc2-d8fc-4902-80c7-0e2dda5bba59@zytor.com>
+ <ZrSSlri1K5WL7XVj@intel.com>
+ <f4ece0e8-b2b3-4178-b281-6ba9cc9cab8a@zytor.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=gb2312
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <e2b97f46-0913-4cc7-ac28-635170bea1f5@zytor.com>
+In-Reply-To: <f4ece0e8-b2b3-4178-b281-6ba9cc9cab8a@zytor.com>
 Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -44
@@ -88,34 +88,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 09, 2024 at 12:38:02AM -0700, Xin Li wrote:
-> Date: Fri, 9 Aug 2024 00:38:02 -0700
+On Thu, Aug 08, 2024 at 11:38:11PM -0700, Xin Li wrote:
+> Date: Thu, 8 Aug 2024 23:38:11 -0700
 > From: Xin Li <xin@zytor.com>
-> Subject: Re: [PATCH v1 3/3] target/i386: Raise the highest index value used
->  for any VMCS encoding
+> Subject: Re: [PATCH v1 2/3] target/i386: Add VMX control bits for nested
+>  FRED support
 > 
-> On 8/8/2024 11:27 PM, Xin Li wrote:
-> > > > +    if (f[FEAT_7_1_EAX] & CPUID_7_1_EAX_FRED) {
-> > > > +        /* FRED injected-event data (0x2052).  */
-> > > > +        kvm_msr_entry_add(cpu, MSR_IA32_VMX_VMCS_ENUM, 0x52);
+> > > > > @@ -1450,7 +1450,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+> > > > >                NULL, "vmx-entry-ia32e-mode", NULL, NULL,
+> > > > >                NULL, "vmx-entry-load-perf-global-ctrl", "vmx-entry-load-pat", "vmx-entry-load-efer",
+> > > > >                "vmx-entry-load-bndcfgs", NULL, "vmx-entry-load-rtit-ctl", NULL,
+> > > > > -            NULL, NULL, "vmx-entry-load-pkrs", NULL,
+> > > > > +            NULL, NULL, "vmx-entry-load-pkrs", "vmx-entry-load-fred",
+> > > > 
+> > > > Should we also define VMX_VM_ENTRY_LOAD_FRED? "vmx-entry-load-rtit-ctl"
+> > > > and "vmx-entry-load-pkrs" have their corresponding bit definitions, even
+> > > > if they are not used.
 > > > 
-> > > HMM, I have the questions when I check the FRED spec.
-> > > 
-> > > Section 9.3.4 said, (for injected-event data) "This field has uses the
-> > > encoding pair 2052H/2053H."
-> > > 
-> > > So why adjust the highest index to 0x52 other than 0x53?
+> > > I'm not sure, but why add something that is not being used (thus not
+> > > tested)?
+> > 
+> > Yes, the use of macros is a factor. My another consideration is the
+> > integrity of the feature definitions. When the such feature definitions
+> > were first introduced in commit 704798add83b (¡±target/i386: add VMX
+> > definitions¡±), I understand thay were mainly used to enumerate and
+> > reflect hardware support and not all defs are used directly.
+> > 
+> > The feat word name and the feature definition should essentially be
+> > bound, and it might be possible to generate the feature definition
+> > from the feat word via some script without having to add it manually,
+> > but right now there is no work on this, and no additional constraints,
+> > so we have to manually add and manually check it to make sure that the
+> > two correspond to each other. When a feature word is added, it means
+> > that Host supports the corresponding feature, and from an integrity
+> > perspective, so it is natural to continue adding definition (just like
+> > the commit 52a44ad2b92b ("target/i386: Expose VMX entry/exit load pkrs
+> > control bits")), right?
+> > 
+> > Though I found that there are still some mismatches between the feature
+> > word and the corresponding definition, but ideally they should coexist.
+> > 
+> > About the test, if it's just enumerated and not added to a specific CPU
+> > model or involved by other logic, it's harmless?
 > 
-> Okay, found it in the Intel SDM:
+> Unless tests are ready, such code are literally dead code, and could get
+> broken w/o being noticed for a long time.
 > 
-> Index. Bits 9:1 distinguish components with the same field width and type.
-> 
-> Bit 0 is not included in the index field.
+> I think we should add it only when tests are also added.  Otherwise we added
+> burden to maintainers, hoping test will be added soon, which often
+> never happen.
 
-Thanks for your education and explanation! I see, for
-IA32_VMX_VMCS_ENUM, bit 0 is reserved and only index field is enough.
+It makes sense and can reduce the burden on maintainers. Now I totally
+agree with you.
 
-Regards,
+Thanks,
 Zhao
 
 
