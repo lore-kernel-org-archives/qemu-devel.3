@@ -4,69 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E3E7C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 09:55:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC5E8C52D71
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 09:57:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scML2-0001uJ-Jv; Fri, 09 Aug 2024 05:55:12 -0400
+	id 1scMNC-0006u8-GB; Fri, 09 Aug 2024 05:57:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1scMKu-0001tX-Sz
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 05:55:05 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1scMNA-0006qs-0r; Fri, 09 Aug 2024 05:57:24 -0400
+Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
+ helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1scMKs-0003Gq-5I
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 05:55:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723197302; x=1754733302;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=p8g+9B5tMORtQKh2R9PgceAD87B+S1OHWDx0BeOlyr0=;
- b=Yl15ZGvAzM42eDyyk3ziuNB/0J0oQ8440prwz5a2xQufc6WSksz8RW/i
- H3AYrtwcQffQOcJRqKCb00OckKPQDxxiqKfB1r/L4gPwFuES6oyNxtl9Q
- ejuhn8FhYVDNTSia3WZcK7ESYKMDP3tVK5Jztolx08u9Gu9lLYfTTaJ4J
- EsPGjcSHHrKyW1J2J3x8WVS9zOWavGBA11NqWTBuH/OkTcLE7mCcJ6dxK
- w9tVaOG59TcFOvO2fosTLdVowwq358rZPOfLV6l90wvYiNnoGHp2XUTTI
- JMbvMdx4/JDknkbUZscF8GSi2UxAGlpco+vb2VK00uuwSqUQ4GS6mLK6y Q==;
-X-CSE-ConnectionGUID: mLgn3t3+T4u+nukyzTDUHw==
-X-CSE-MsgGUID: tcIWMJAyTteZbIJ4V9QP+w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11158"; a="25235336"
-X-IronPort-AV: E=Sophos;i="6.09,275,1716274800"; d="scan'208";a="25235336"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Aug 2024 02:54:51 -0700
-X-CSE-ConnectionGUID: /YYhKRwjTtev612rYsp60A==
-X-CSE-MsgGUID: E+YXEPWmQNKwd9tp2SdAhw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,275,1716274800"; d="scan'208";a="88153015"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa002.jf.intel.com with ESMTP; 09 Aug 2024 02:54:50 -0700
-Date: Fri, 9 Aug 2024 18:10:40 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Anthony Harivel <aharivel@redhat.com>
-Cc: pbonzini@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/1] target/i386: Fix arguments for vmsr_read_thread_stat()
-Message-ID: <ZrXrIPHgJCiaandh@intel.com>
-References: <20240807124320.1741124-1-aharivel@redhat.com>
- <20240807124320.1741124-2-aharivel@redhat.com>
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1scMN5-0003dQ-Iw; Fri, 09 Aug 2024 05:57:23 -0400
+Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
+ by Atcsqr.andestech.com with ESMTPS id 4799uwE5025566
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 9 Aug 2024 17:56:58 +0800 (+08)
+ (envelope-from ethan84@andestech.com)
+Received: from ethan84-VirtualBox (10.0.12.12) by ATCPCS31.andestech.com
+ (10.0.1.89) with Microsoft SMTP Server (TLS) id 14.3.498.0; Fri, 9 Aug 2024
+ 17:56:59 +0800
+Date: Fri, 9 Aug 2024 17:56:58 +0800
+To: Alistair Francis <alistair23@gmail.com>
+CC: <qemu-devel@nongnu.org>, <richard.henderson@linaro.org>,
+ <pbonzini@redhat.com>, <peterx@redhat.com>, <david@redhat.com>,
+ <philmd@linaro.org>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>,
+ <bmeng.cn@gmail.com>, <liwei1518@gmail.com>,
+ <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>,
+ <qemu-riscv@nongnu.org>
+Subject: Re: [PATCH v8 6/8] hw/misc/riscv_iopmp: Add API to configure RISCV
+ CPU IOPMP support
+Message-ID: <ZrXn6hhuoykwALPv@ethan84-VirtualBox>
+References: <20240715095702.1222213-1-ethan84@andestech.com>
+ <20240715101409.1249373-1-ethan84@andestech.com>
+ <CAKmqyKOJOUvf-=qNQ90BQeFGNayH1mmtcYNd=iYVjNf53V-uMw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="utf-8"
 Content-Disposition: inline
-In-Reply-To: <20240807124320.1741124-2-aharivel@redhat.com>
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKmqyKOJOUvf-=qNQ90BQeFGNayH1mmtcYNd=iYVjNf53V-uMw@mail.gmail.com>
+User-Agent: Mutt/2.1.4 (2021-12-11)
+X-Originating-IP: [10.0.12.12]
+X-DNSRBL: 
+X-MAIL: Atcsqr.andestech.com 4799uwE5025566
+Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
+ helo=Atcsqr.andestech.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RDNS_DYNAMIC=0.982,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,22 +70,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Ethan Chen <ethan84@andestech.com>
+From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 07, 2024 at 02:43:20PM +0200, Anthony Harivel wrote:
-> Date: Wed,  7 Aug 2024 14:43:20 +0200
-> From: Anthony Harivel <aharivel@redhat.com>
-> Subject: [PATCH 1/1] target/i386: Fix arguments for vmsr_read_thread_stat()
+On Thu, Aug 08, 2024 at 02:25:04PM +1000, Alistair Francis wrote:
 > 
-> Snapshot of the stat utime and stime for each thread, taken before and
-> after the pause, must be stored in separate locations
+> On Mon, Jul 15, 2024 at 8:15 PM Ethan Chen via <qemu-devel@nongnu.org> wrote:
+> >
+> > The iopmp_setup_cpu() function configures the RISCV CPU to support IOPMP and
+> > specifies the CPU's RRID.
+> >
+> > Signed-off-by: Ethan Chen <ethan84@andestech.com>
+> > ---
+> >  hw/misc/riscv_iopmp.c         | 6 ++++++
+> >  include/hw/misc/riscv_iopmp.h | 1 +
+> >  2 files changed, 7 insertions(+)
+> >
+> > diff --git a/hw/misc/riscv_iopmp.c b/hw/misc/riscv_iopmp.c
+> > index e62ac57437..374bf5c610 100644
+> > --- a/hw/misc/riscv_iopmp.c
+> > +++ b/hw/misc/riscv_iopmp.c
+> > @@ -1211,5 +1211,11 @@ void iopmp_setup_system_memory(DeviceState *dev, const MemMapEntry *memmap,
+> >                         "iopmp-downstream-as");
+> >  }
+> >
+> > +void iopmp_setup_cpu(RISCVCPU *cpu, uint32_t rrid)
+> > +{
+> > +    cpu->cfg.iopmp = true;
+> > +    cpu->cfg.iopmp_rrid = rrid;
+> > +}
 > 
-> Signed-off-by: Anthony Harivel <aharivel@redhat.com>
-> ---
->  target/i386/kvm/kvm.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+> This should just be a normal CPU property, which the machine can then
+> set to true if required
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+I will add CPU properties for IOPMP config.
 
+Thanks,
+Ethan Chen
+
+> 
+> Alistair
+> 
+> > +
+> >
+> >  type_init(iopmp_register_types);
+> > diff --git a/include/hw/misc/riscv_iopmp.h b/include/hw/misc/riscv_iopmp.h
+> > index ebe9c4bc4a..7e7da56d10 100644
+> > --- a/include/hw/misc/riscv_iopmp.h
+> > +++ b/include/hw/misc/riscv_iopmp.h
+> > @@ -167,5 +167,6 @@ typedef struct IopmpState {
+> >
+> >  void iopmp_setup_system_memory(DeviceState *dev, const MemMapEntry *memmap,
+> >                                 uint32_t mapentry_num);
+> > +void iopmp_setup_cpu(RISCVCPU *cpu, uint32_t rrid);
+> >
+> >  #endif
+> > --
+> > 2.34.1
+> >
+> >
 
