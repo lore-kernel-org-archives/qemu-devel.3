@@ -4,95 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF39C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 10:29:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14E54C531DA
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 10:33:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scMrT-0003Dp-Fd; Fri, 09 Aug 2024 06:28:43 -0400
+	id 1scMvq-0007v3-GS; Fri, 09 Aug 2024 06:33:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1scMrQ-0003Co-WB
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 06:28:41 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <yaozhenguo1@gmail.com>)
+ id 1scMvp-0007uZ-6e
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 06:33:13 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1scMrN-0008KM-Ei
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 06:28:40 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1fc60c3ead4so15869535ad.0
- for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 03:28:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <yaozhenguo1@gmail.com>)
+ id 1scMvn-0000Ky-BX
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 06:33:12 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-67682149265so17500667b3.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 03:33:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1723199316; x=1723804116;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZiCTyhyOBF2ClKBX22VFDlLE95cVdhGPduTYb53dq8Y=;
- b=lh3o6GZCfCG/FJTbKTaIDuVP87gKtgZ3ygpX2H07/GQXvJSZndTAVuNaJZyy11mnPO
- Sc601CrpOGenlT0+EK4L23SjLK0WCVjwN8BTNVuHy08c4JDgKayN0Mp5V09VQoXpZO+Y
- 8TTQUTUNDG/TTi7DW7qq07yv+4QRai0aS5adT5T19CSFJ7OGkQYi79b0cWE6yo0IqhaQ
- LEqGK+o9x1FDbUyOuMMpsKlqGtgsqiGI5du3efTt4XdVjBqSHDWaSjrjByHGFeRJ8gqQ
- ynykwBkfaaPunc3NIGiwUIH6qeLziDrrsSeVRL793RUdDC9Q9btxH1gqWTpmWztp3cAQ
- 6DaQ==
+ d=gmail.com; s=20230601; t=1723199589; x=1723804389; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SaTmdmrsiy/0qGg9dy6659gMUCXSwzMlRF5F9PlimJ4=;
+ b=V084oDKKJBb/y33YsDBJh88gHAj1MrH5jcRK8RGgkUzyfM4E+P0H1QoE6S5Edknfqy
+ kqou2TyB2crOZdDjfO71WT69FHvbFZJfwe585tTB50WYo1bAs7I0htpaHs4AQQEI6jo/
+ 9CrSQINrI25J7jUu3dKWbNmthKuBTmi8EseIwktw8D14zNgX09tM5CRpi7oKbcYeflxd
+ haZ/0G3zwOuBp+ONJpmDHMfXm+Y4gzpXAK6wfhDEBmKbRi52dj0JraWc+Kwf6jgNFSui
+ XcVaokfRH5yvEcdbhVxp9yo3SyUozHiL8E4PXbnHb1pA0RHhDAZqw/pIeR+uxW8254nJ
+ G+ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723199316; x=1723804116;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ZiCTyhyOBF2ClKBX22VFDlLE95cVdhGPduTYb53dq8Y=;
- b=ZP5Qlvwb9PNx5FMg4VI4ZLN8eD9C62hL9wzONLgD69eqkQJ4+2BmT8RSa8bD6vUDpl
- 8zeuh6l0Ganz0WMT9znAADzOjjiRi5EnlPyQtsh5Gggjcyu6k/j3kN4wYIBmNWD5g7eM
- SUiPaB9OMbWcu5V7AK1/yamVY6zFS8v7griV985YNR7h1y0L0oYPfhTqcOYsLG3d9m3j
- 57ZxDNkLj5tkypVWV6DUOFEfxmjJk23gjbeprSGlKMGAvdPZuOlnqD6kpAgycYbJq9aO
- +vIIZkdpTCbyhPw1Pong9bzObWXaeOrIih5noBRnkajepB6raEiP/9Uyz8H95XiZv1bh
- rZww==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU31chRLqcXTo6lBL7i3xrNlvMQtJbwjlkixrL9Wzd28MQs+nAWaSKxxOKijkhaMg8xbEWw1k84lSS3AEkHwBl8gOGF2eU=
-X-Gm-Message-State: AOJu0YwAdp5EZ0d9bh3S3vMkjGQnd0mrJ7ttLVkoKGh5Cy/943pAF2kQ
- wRIkFvFtKHU4mYeSOwWWhks7cTSPjjjhiIpEnZfMu9LaH0DtMw7s6J8bsi8M1vA=
-X-Google-Smtp-Source: AGHT+IGBWpQZ6mrMjuFB+1wXji8kz17AIkgyp3KQE6xoYb61pujLPlyOZye+CgQzmYyTAHw0iakX5w==
-X-Received: by 2002:a17:902:ef51:b0:1fa:fc74:4c04 with SMTP id
- d9443c01a7336-200ae5a414emr10238095ad.35.1723199315720; 
- Fri, 09 Aug 2024 03:28:35 -0700 (PDT)
-Received: from [157.82.207.214] ([157.82.207.214])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff58f6d80csm139194455ad.119.2024.08.09.03.28.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 09 Aug 2024 03:28:35 -0700 (PDT)
-Message-ID: <807be9a6-7d71-4f3e-9f77-f8befff4aae0@daynix.com>
-Date: Fri, 9 Aug 2024 19:28:30 +0900
+ d=1e100.net; s=20230601; t=1723199589; x=1723804389;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SaTmdmrsiy/0qGg9dy6659gMUCXSwzMlRF5F9PlimJ4=;
+ b=gfqE1z3seroZfajeTt8/NGauggO+z2lukqOupNiVYDojmyY3zDqaxG7uRfLPFr8Qmu
+ 1E5L6ABg7vAD3wGqp2d+WQSQp5npsB+9TI8or7ubfEpnzeRviKZFe8AYgjPHOxudP5oX
+ uwbjCsWSaPIDNXQvrIAIWGoD44iUr+g0aJHp9Qj19MUTkuUIgIGVOqKDPoc781v7jyoN
+ R+lsoPO8I1afCzs0TN/pgjFzrCc9+1TlK1ZN76wMUZAGWaoULRCND1Ikt36fsAtj/3q/
+ 4tP38FExiAjm+9qw3AI+1R5T1+PlvjffnRbr8sCmtPe30iAdN8VtpnTiojN4JNdeOnth
+ +33Q==
+X-Gm-Message-State: AOJu0YzhwV6IHef7/eutp76ngHBcfXOaYLkImknRVne1cFnS/W9/ObLe
+ G80SGaMakmiROhYE3b9EcBia/ZZBjAeXQU3rW84Jr99BdjbWtKzJzxS+le0A52duzKV56t0+OX9
+ H8RK+5s7aRWGWJgXkH4+4DDQ0XW4=
+X-Google-Smtp-Source: AGHT+IF+HKavGxdvHmmccy3CBeoC9Z/Q+OwrcFiR+b+7y3C10BhG+KPXMvILRz7LEqXO4X9/6DU2DWGHQMHCiyB2Nn0=
+X-Received: by 2002:a05:690c:2706:b0:650:1ee7:7689 with SMTP id
+ 00721157ae682-69ec84d42e8mr11054377b3.35.1723199588828; Fri, 09 Aug 2024
+ 03:33:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-To: Peter Xu <peterx@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org, wangyanan55@huawei.com,
- dmitry.fleytman@gmail.com, jasowang@redhat.com, sriram.yagnaraman@est.tech,
- sw@weilnetz.de, qemu-devel@nongnu.org, yan@daynix.com,
- Fabiano Rosas <farosas@suse.de>, devel@lists.libvirt.org
-References: <ZqumIZcs1tCNTpRE@x1n>
- <b70d09a5-554a-456b-904e-59cec5836ae8@daynix.com> <Zqz1vvYqRuIAPnod@x1n>
- <c5ea7a57-fc52-4bb7-bc4c-f3aca8da0574@daynix.com> <Zq0IrhV-DgStpJtk@x1n>
- <8ad96f43-83ae-49ae-abc1-1e17ee15f24d@daynix.com> <Zq99NcMkDMkDKBLv@x1n>
- <d94e8fda-23bb-4905-b656-3e1cb247079d@daynix.com> <ZrKKl2uxzGfl6SEA@x1n>
- <830e10d4-594b-40ec-a405-0f04988b7d4d@daynix.com> <ZrTOZbYisrcljFU4@x1n>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <ZrTOZbYisrcljFU4@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::636;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20240808030411.76990-1-yaozhenguo@jd.com>
+ <ZrSGwy0H7nhIwMZz@redhat.com>
+In-Reply-To: <ZrSGwy0H7nhIwMZz@redhat.com>
+From: Zhenguo Yao <yaozhenguo1@gmail.com>
+Date: Fri, 9 Aug 2024 18:32:57 +0800
+Message-ID: <CA+WzARkXrqPv9mP1afadfKgzf_ifgEfy1mHBV78KukjBOKhNxQ@mail.gmail.com>
+Subject: Re: [PATCH] qio: fix qemu crash when live migration
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, yaozhenguo@jd.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=yaozhenguo1@gmail.com; helo=mail-yw1-x1133.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,175 +91,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/08/08 22:55, Peter Xu wrote:
-> On Thu, Aug 08, 2024 at 08:43:22PM +0900, Akihiko Odaki wrote:
->> On 2024/08/07 5:41, Peter Xu wrote:
->>> On Mon, Aug 05, 2024 at 04:27:43PM +0900, Akihiko Odaki wrote:
->>>> On 2024/08/04 22:08, Peter Xu wrote:
->>>>> On Sun, Aug 04, 2024 at 03:49:45PM +0900, Akihiko Odaki wrote:
->>>>>> On 2024/08/03 1:26, Peter Xu wrote:
->>>>>>> On Sat, Aug 03, 2024 at 12:54:51AM +0900, Akihiko Odaki wrote:
->>>>>>>>>>> I'm not sure if I read it right.  Perhaps you meant something more generic
->>>>>>>>>>> than -platform but similar?
->>>>>>>>>>>
->>>>>>>>>>> For example, "-profile [PROFILE]" qemu cmdline, where PROFILE can be either
->>>>>>>>>>> "perf" or "compat", while by default to "compat"?
->>>>>>>>>>
->>>>>>>>>> "perf" would cover 4) and "compat" will cover 1). However neither of them
->>>>>>>>>> will cover 2) because an enum is not enough to know about all hosts. I
->>>>>>>>>> presented a design that will cover 2) in:
->>>>>>>>>> https://lore.kernel.org/r/2da4ebcd-2058-49c3-a4ec-8e60536e5cbb@daynix.com
->>>>>>>>>
->>>>>>>>> "-merge-platform" shouldn't be a QEMU parameter, but should be something
->>>>>>>>> separate.
->>>>>>>>
->>>>>>>> Do you mean merging platform dumps should be done with another command? I
->>>>>>>> think we will want to know the QOM tree is in use when implementing
->>>>>>>> -merge-platform. For example, you cannot define a "platform" when e.g., you
->>>>>>>> don't know what netdev backend (e.g., user, vhost-net, vhost-vdpa) is
->>>>>>>> connected to virtio-net devices. Of course we can include those information
->>>>>>>> in dumps, but we don't do so for VMState.
->>>>>>>
->>>>>>> What I was thinking is the generated platform dump shouldn't care about
->>>>>>> what is used as backend: it should try to probe whatever is specified in
->>>>>>> the qemu cmdline, and it's the user's job to make sure the exact same qemu
->>>>>>> cmdline is used in other hosts to dump this information.
->>>>>>>
->>>>>>> IOW, the dump will only contain the information that was based on the qemu
->>>>>>> cmdline.  E.g., if it doesn't include virtio device at all, and if we only
->>>>>>> support such dump for virtio, it should dump nothing.
->>>>>>>
->>>>>>> Then the -merge-platform will expect all dumps to look the same too,
->>>>>>> merging them with AND on each field.
->>>>>>
->>>>>> I think we will still need the QOM tree in that case. I think the platform
->>>>>> information will look somewhat similar to VMState, which requires the QOM
->>>>>> tree to interpret.
->>>>>
->>>>> Ah yes, I assume you meant when multiple devices can report different thing
->>>>> even if with the same frontend / device type.  QOM should work, or anything
->>>>> that can identify a device, e.g. with id / instance_id attached along with
->>>>> the device class.
->>>>>
->>>>> One thing that I still don't know how it works is how it interacts with new
->>>>> hosts being added.
->>>>>
->>>>> This idea is based on the fact that the cluster is known before starting
->>>>> any VM.  However in reality I think it can happen when VMs started with a
->>>>> small cluster but then cluster extended, when the -merge-platform has been
->>>>> done on the smaller set.
->>>>>
->>>>>>
->>>>>>>
->>>>>>> Said that, I actually am still not clear on how / whether it should work at
->>>>>>> last.  At least my previous concern (1) didn't has a good answer yet, on
->>>>>>> what we do when profile collisions with qemu cmdlines.  So far I actually
->>>>>>> still think it more straightforward that in migration we handshake on these
->>>>>>> capabilities if possible.
->>>>>>>
->>>>>>> And that's why I was thinking (where I totally agree with you on this) that
->>>>>>> whether we should settle a short term plan first to be on the safe side
->>>>>>> that we start with migration always being compatible, then we figure the
->>>>>>> other approach.  That seems easier to me, and it's also a matter of whether
->>>>>>> we want to do something for 9.1, or leaving that for 9.2 for USO*.
->>>>>>
->>>>>> I suggest disabling all offload features of virtio-net with 9.2.
->>>>>>
->>>>>> I want to keep things consistent so I want to disable all at once. This
->>>>>> change will be very uncomfortable for us, who are implementing offload
->>>>>> features, but I hope it will motivate us to implement a proper solution.
->>>>>>
->>>>>> That said, it will be surely a breaking change so we should wait for 9.1
->>>>>> before making such a change.
->>>>>
->>>>> Personally I don't worry too much on other offload bits besides USO* so far
->>>>> if we have them ON for longer time.  My wish was that they're old good
->>>>> kernel features mostly supported everywhere who runs QEMU, then we're good.
->>>>
->>>> Unfortunately, we cannot expect everyone runs Linux, and the offload
->>>> features are provided by Linux. However, QEMU can run on other platforms,
->>>> and offload features may be provided by vhost-user or vhost-vdpa.
->>>
->>> I see.  I am not familiar with the status quo there, so I'll leave that to
->>> you and other experts that know better on this..
->>>
->>> Personally I do care more on Linux, as that's what we ship within RH..
->>>
->>>>
->>>>>
->>>>> And I definitely worry about future offload features, or any feature that
->>>>> may probe host like this and auto-OFF: I hope we can do them on the safe
->>>>> side starting from day1.
->>>>>
->>>>> So I don't know whether we should do that to USO* only or all.  But I agree
->>>>> with you that'll definitely be cleaner.
->>>>>
->>>>> On the details of how to turn them off properly..  Taking an example if we
->>>>> want to turn off all the offload features by default (or simply we replace
->>>>> that with USO-only)..
->>>>>
->>>>> Upstream machine type is flexible to all kinds of kernels, so we may not
->>>>> want to regress anyone using an existing machine type even on perf,
->>>>> especially if we want to turn off all.
->>>>>
->>>>> In that case we may need one more knob (I'm assuming this is virtio-net
->>>>> specific issue, but maybe not; using it as an example) to make sure the old
->>>>> machine types perfs as well, with:
->>>>>
->>>>>      - x-virtio-net-offload-enforce
->>>>>
->>>>>        When set, the offload features with value ON are enforced, so when
->>>>>        the host doesn't support a offload feature it will fail to boot,
->>>>>        showing the error that specific offload feature is not supported by the
->>>>>        virtio backend.
->>>>>
->>>>>        When clear, the offload features with value ON are not enforced, so
->>>>>        these features can be automatically turned OFF when it's detected the
->>>>>        backend doesn't support them.  This may bring best perf but has the
->>>>>        risk of breaking migration.
->>>>
->>>> "[PATCH v3 0/5] virtio-net: Convert feature properties to OnOffAuto" adds
->>>> "x-force-features-auto" compatibility property to virtio-net for this
->>>> purpose:
->>>> https://lore.kernel.org/r/20240714-auto-v3-0-e27401aabab3@daynix.com
->>>
->>> Ah ok.  But note that there's still a slight difference: we need to avoid
->>> AUTO being an option, at all, IMHO.
->>>
->>> It's about making qemu cmdline the ABI: when with AUTO it's still possible
->>> the user uses AUTO on both sides, then ABI may not be guaranteed.
->>>
->>> AUTO would be fine if: (1) the property doesn't affect guest ABI, or (2)
->>> the AUTO bit will always generate the same thing on both hosts.  However
->>> USO* isn't such case.. so the AUTO option is IMHO not wanted.
->>>
->>> What I mentioned above "x-virtio-net-offload-enforce" shouldn't add
->>> anything new to "uso"; it still can only be ON/OFF.  However it should
->>> affect "flip that to OFF automatically" or "fail the boot" behavior on
->>> missing features.
->>
->> My rationale for the OnOffAuto change is that "flipping ON to OFF
->> automatically" is more confusing than making users specify AUTO to allow
->> QEMU making the feature OFF. "ON" will always make the boot fail.
->>
->> The ABI guarantee will be gone anyway if x-virtio-net-offload-enforce=off.
->> AUTO is no different in that sense.
-> 
-> Hmm yes; I wished we can have device properties that user can never
-> specify, but only set from internals.  It's just that applying a compat
-> property so far require a generic device property.  Or say, it'll be nice
-> that compat property can tweak a class variable too then no property to
-> introduce.
-> 
-> We could even add a migration blocker for x-virtio-net-offload-enforce=ON,
-> but again it could be too aggresive.  I think it might be better we bet
-> nobody will even know there's the parameter, so it won't be used in manual
-> setup.  OTOH, "guest_uso4" can be too easiy to find there's the AUTO
-> option: I normally use ",guest_uso4=?" to just dump the possible values.
+Hi Daniel. Sorry,  I don't notice that this is a fixed issue by
+b8a7f51f59e28d5a8e0c07ed3919cc9695560ed2(chardev/char-socket: set
+s->listener =3D NULL in char_socket_finalize).
+the following process can lead this issue=EF=BC=9A
 
-We can detect and reject AUTO when cross-migrate=on if desired, but I'm 
-not sure it's worthwhile.
+char_socket_finalize->object_unref(OBJECT(s->listener)); // free
+io_source, free s->listener. but s->listener is not clear.
+char_socket_finalize->qemu_chr_be_event(chr, CHR_EVENT_CLOSED)->
+qio_net_listener_set_client_func_full //
+g_source_destroy(listener->io_source[i]); memory fault
 
-Regards,
-Akihiko Odaki
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> =E4=BA=8E2024=E5=B9=B48=E6=9C=
+=888=E6=97=A5=E5=91=A8=E5=9B=9B 16:50=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Thu, Aug 08, 2024 at 11:04:11AM +0800, yaozhenguo wrote:
+> > qemu will crash in live migration cleanup process at source host.
+> > BT is as below:
+> >
+> > 0  0x00007f740fc9e165 in g_source_destroy () at /usr/lib64/libglib-2.0.=
+so.0
+> > 1  0x000055a2982a0f6e in qio_net_listener_set_client_func_full
+> > 2  0x000055a298345130 in tcp_chr_update_read_handler
+> > 3  0x000055a298341598 in qemu_chr_fe_set_handlers_full
+> > 4  0x000055a298341655 in qemu_chr_fe_set_handlers
+> > 5  0x000055a298191e75 in vhost_user_blk_event
+> > 6  0x000055a298292b79 in object_deinit
+> > 7  object_finalize
+> > 8  object_unref
+> > 9  0x000055a298292b3c in object_property_del_all
+> > 10 object_finalize
+> > 11 object_unref
+> > 12 0x000055a298291d7d in object_property_del_child
+> > 13 object_unparent
+> > 14 0x000055a29834a3c4 in qemu_chr_cleanup
+> > 15 0x000055a298160d87 in qemu_cleanup
+> > 16 0x000055a297e6bff1 in main
+> >
+> > Crash reason is that qio_net_listener_finalize is called before
+> > qio_net_listener_set_client_func_full. so, listener->io_source
+> > is used after free. fix this by adding more checks.
+>
+> If finalize() has been called, then not only has listener->io_source
+> been freed, but 'listener' itself has also been freed, thus....
+>
+> >
+> > Signed-off-by: yaozhenguo <yaozhenguo@jd.com>
+> > ---
+> >  io/net-listener.c | 13 +++++++++++++
+> >  1 file changed, 13 insertions(+)
+> >
+> > diff --git a/io/net-listener.c b/io/net-listener.c
+> > index 47405965a6..c02965f919 100644
+> > --- a/io/net-listener.c
+> > +++ b/io/net-listener.c
+> > @@ -143,6 +143,11 @@ void qio_net_listener_set_client_func_full(QIONetL=
+istener *listener,
+> >  {
+> >      size_t i;
+> >
+> > +
+> > +    if (!listener->nsioc || !listener->io_source || !listener->name) {
+> > +        return;
+> > +    }
+>
+> ....this is still accessing freed memory for 'listener'.
+>
+>
+> What is the call path of the stack triggering qio_net_listener_finalize ?
+>
+> Whatever callpath has done that needs to be setting SocketChardev->listen=
+er
+> field to NULL, because tcp_chr_update_read_handler will check for NULL
+> before calling qio_net_listener_set_client_func_full.
+>
+> > +
+> >      if (listener->io_notify) {
+> >          listener->io_notify(listener->io_data);
+> >      }
+> > @@ -264,6 +269,10 @@ void qio_net_listener_disconnect(QIONetListener *l=
+istener)
+> >  {
+> >      size_t i;
+> >
+> > +    if (!listener->nsioc || !listener->io_source || !listener->name) {
+> > +        return;
+> > +    }
+> > +
+> >      if (!listener->connected) {
+> >          return;
+> >      }
+> > @@ -301,6 +310,10 @@ static void qio_net_listener_finalize(Object *obj)
+> >      g_free(listener->io_source);
+> >      g_free(listener->sioc);
+> >      g_free(listener->name);
+> > +
+> > +    listener->io_source =3D NULL;
+> > +    listener->sioc =3D NULL;
+> > +    listener->name =3D NULL;
+> >  }
+> >
+> >  static const TypeInfo qio_net_listener_info =3D {
+> > --
+> > 2.43.0
+> >
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+>
 
