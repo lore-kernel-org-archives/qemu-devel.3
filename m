@@ -4,51 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 785F0C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 12:47:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 875C1C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 12:47:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scP0z-00057f-97; Fri, 09 Aug 2024 08:46:41 -0400
+	id 1scP0q-0004aA-Hf; Fri, 09 Aug 2024 08:46:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1scP0y-00053q-8M
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 08:46:40 -0400
-Received: from mx2.zhaoxin.com ([203.110.167.99])
+ id 1scP0T-0004Tv-CR
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 08:46:19 -0400
+Received: from mx1.zhaoxin.com ([210.0.225.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1scP0w-0003p0-J7
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 08:46:40 -0400
-X-ASG-Debug-ID: 1723207547-1eb14e31a727fa0001-jgbH7p
-Received: from ZXSHMBX1.zhaoxin.com (ZXSHMBX1.zhaoxin.com [10.28.252.163]) by
- mx2.zhaoxin.com with ESMTP id UQEC2XwxCEZjK8uG (version=TLSv1.2
+ id 1scP0P-0003l9-4y
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 08:46:08 -0400
+X-ASG-Debug-ID: 1723207544-086e23761130e30001-jgbH7p
+Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
+ mx1.zhaoxin.com with ESMTP id fdrNosLiC7t3BUFa (version=TLSv1.2
  cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Fri, 09 Aug 2024 20:45:47 +0800 (CST)
+ Fri, 09 Aug 2024 20:45:44 +0800 (CST)
 X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
-Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX1.zhaoxin.com
- (10.28.252.163) with Microsoft SMTP Server (version=TLS1_2,
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX3.zhaoxin.com
+ (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 9 Aug
- 2024 20:45:47 +0800
+ 2024 20:45:44 +0800
 Received: from ZXSHMBX1.zhaoxin.com ([fe80::dcd1:d46d:263:77e]) by
  ZXSHMBX1.zhaoxin.com ([fe80::dcd1:d46d:263:77e%7]) with mapi id
- 15.01.2507.039; Fri, 9 Aug 2024 20:45:47 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.163
+ 15.01.2507.039; Fri, 9 Aug 2024 20:45:44 +0800
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
 Received: from ewan-server.zhaoxin.com (10.28.66.62) by zxbjmbx1.zhaoxin.com
  (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 9 Aug
- 2024 17:43:01 +0800
+ 2024 17:43:00 +0800
 From: EwanHai <ewanhai-oc@zhaoxin.com>
 To: <pbonzini@redhat.com>, <zhao1.liu@intel.com>, <xiaoyao.li@intel.com>
 CC: <qemu-devel@nongnu.org>, <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>,
  <rockcui@zhaoxin.com>, <louisqi@zhaoxin.com>, <liamni@zhaoxin.com>,
  <frankzhu@zhaoxin.com>
-Subject: [PATCH v3 2/4] target/i386: Add CPUID leaf 0xC000_0001 EDX definitions
-Date: Fri, 9 Aug 2024 05:42:57 -0400
-X-ASG-Orig-Subj: [PATCH v3 2/4] target/i386: Add CPUID leaf 0xC000_0001 EDX
- definitions
-Message-ID: <20240809094259.119221-3-ewanhai-oc@zhaoxin.com>
+Subject: [PATCH v3 1/4] target/i386: Add support for Zhaoxin CPU vendor
+ identification
+Date: Fri, 9 Aug 2024 05:42:56 -0400
+X-ASG-Orig-Subj: [PATCH v3 1/4] target/i386: Add support for Zhaoxin CPU
+ vendor identification
+Message-ID: <20240809094259.119221-2-ewanhai-oc@zhaoxin.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240809094259.119221-1-ewanhai-oc@zhaoxin.com>
 References: <20240809094259.119221-1-ewanhai-oc@zhaoxin.com>
@@ -58,13 +59,13 @@ Content-Type: text/plain
 X-Originating-IP: [10.28.66.62]
 X-ClientProxiedBy: zxbjmbx1.zhaoxin.com (10.29.252.163) To
  zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 8/9/2024 8:45:46 PM
-X-Barracuda-Connect: ZXSHMBX1.zhaoxin.com[10.28.252.163]
-X-Barracuda-Start-Time: 1723207547
+X-Moderation-Data: 8/9/2024 8:45:43 PM
+X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
+X-Barracuda-Start-Time: 1723207544
 X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
+X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
 X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 1642
+X-Barracuda-Scan-Msg-Size: 2488
 X-Barracuda-BRTS-Status: 1
 X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
 X-Barracuda-Spam-Score: -2.02
@@ -75,8 +76,8 @@ X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.128793
  Rule breakdown below
  pts rule name              description
  ---- ---------------------- --------------------------------------------------
-Received-SPF: pass client-ip=203.110.167.99;
- envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
+Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
+ helo=mx1.zhaoxin.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -98,48 +99,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add new CPUID feature flags for various Zhaoxin PadLock extensions.
-These definitions will be used for Zhaoxin CPU models.
+Zhaoxin currently uses two vendors: "Shanghai" and "Centaurhauls".
+It is important to note that the latter now belongs to Zhaoxin. Therefore,
+this patch replaces CPUID_VENDOR_VIA with CPUID_VENDOR_ZHAOXIN1.
+
+The previous CPUID_VENDOR_VIA macro was only defined but never used in
+QEMU, making this change straightforward.
+
+Additionally, the IS_ZHAOXIN_CPU macro has been added to simplify the
+checks for Zhaoxin CPUs.
 
 Signed-off-by: EwanHai <ewanhai-oc@zhaoxin.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.h | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ target/i386/cpu.h | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
 diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 29d554766f..ff5551297d 100644
+index c6cc035df3..29d554766f 100644
 --- a/target/i386/cpu.h
 +++ b/target/i386/cpu.h
-@@ -1032,6 +1032,27 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *=
+@@ -1044,7 +1044,16 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *=
 cpu, FeatureWord w);
- /* CPUID[0x80000007].EDX flags: */
- #define CPUID_APM_INVTSC       (1U << 8)
+ #define CPUID_VENDOR_AMD_3   0x444d4163 /* "cAMD" */
+ #define CPUID_VENDOR_AMD   "AuthenticAMD"
 =20
-+/* "rng" RNG present (xstore) */
-+#define CPUID_C000_0001_EDX_XSTORE             (1U << 2)
-+/* "rng_en" RNG enabled */
-+#define CPUID_C000_0001_EDX_XSTORE_EN          (1U << 3)
-+/* "ace" on-CPU crypto (xcrypt) */
-+#define CPUID_C000_0001_EDX_XCRYPT             (1U << 6)
-+/* "ace_en" on-CPU crypto enabled */
-+#define CPUID_C000_0001_EDX_XCRYPT_EN          (1U << 7)
-+/* Advanced Cryptography Engine v2 */
-+#define CPUID_C000_0001_EDX_ACE2               (1U << 8)
-+/* ACE v2 enabled */
-+#define CPUID_C000_0001_EDX_ACE2_EN            (1U << 9)
-+/* PadLock Hash Engine */
-+#define CPUID_C000_0001_EDX_PHE                (1U << 10)
-+/* PHE enabled */
-+#define CPUID_C000_0001_EDX_PHE_EN             (1U << 11)
-+/* PadLock Montgomery Multiplier */
-+#define CPUID_C000_0001_EDX_PMM                (1U << 12)
-+/* PMM enabled */
-+#define CPUID_C000_0001_EDX_PMM_EN             (1U << 13)
+-#define CPUID_VENDOR_VIA   "CentaurHauls"
++#define CPUID_VENDOR_ZHAOXIN1_1 0x746E6543 /* "Cent" */
++#define CPUID_VENDOR_ZHAOXIN1_2 0x48727561 /* "aurH" */
++#define CPUID_VENDOR_ZHAOXIN1_3 0x736C7561 /* "auls" */
 +
- #define CPUID_VENDOR_SZ      12
++#define CPUID_VENDOR_ZHAOXIN2_1 0x68532020 /* "  Sh" */
++#define CPUID_VENDOR_ZHAOXIN2_2 0x68676E61 /* "angh" */
++#define CPUID_VENDOR_ZHAOXIN2_3 0x20206961 /* "ai  " */
++
++#define CPUID_VENDOR_ZHAOXIN1   "CentaurHauls"
++#define CPUID_VENDOR_ZHAOXIN2   "  Shanghai  "
 =20
- #define CPUID_VENDOR_INTEL_1 0x756e6547 /* "Genu" */
+ #define CPUID_VENDOR_HYGON    "HygonGenuine"
+=20
+@@ -1054,6 +1063,15 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *=
+cpu, FeatureWord w);
+ #define IS_AMD_CPU(env) ((env)->cpuid_vendor1 =3D=3D CPUID_VENDOR_AMD_1 &&=
+ \
+                          (env)->cpuid_vendor2 =3D=3D CPUID_VENDOR_AMD_2 &&=
+ \
+                          (env)->cpuid_vendor3 =3D=3D CPUID_VENDOR_AMD_3)
++#define IS_ZHAOXIN1_CPU(env) \
++    ((env)->cpuid_vendor1 =3D=3D CPUID_VENDOR_ZHAOXIN1_1 && \
++     (env)->cpuid_vendor2 =3D=3D CPUID_VENDOR_ZHAOXIN1_2 && \
++     (env)->cpuid_vendor3 =3D=3D CPUID_VENDOR_ZHAOXIN1_3)
++#define IS_ZHAOXIN2_CPU(env) \
++    ((env)->cpuid_vendor1 =3D=3D CPUID_VENDOR_ZHAOXIN2_1 && \
++     (env)->cpuid_vendor2 =3D=3D CPUID_VENDOR_ZHAOXIN2_2 && \
++     (env)->cpuid_vendor3 =3D=3D CPUID_VENDOR_ZHAOXIN2_3)
++#define IS_ZHAOXIN_CPU(env) (IS_ZHAOXIN1_CPU(env) || IS_ZHAOXIN2_CPU(env))
+=20
+ #define CPUID_MWAIT_IBE     (1U << 1) /* Interrupts can exit capability */
+ #define CPUID_MWAIT_EMX     (1U << 0) /* enumeration supported */
 --=20
 2.34.1
 
