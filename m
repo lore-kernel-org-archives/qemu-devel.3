@@ -4,74 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18513C52D73
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 07:33:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B98BFC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 07:38:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scK7P-0004Co-CC; Fri, 09 Aug 2024 03:32:59 -0400
+	id 1scKBl-0006Eb-Va; Fri, 09 Aug 2024 03:37:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lkp@intel.com>) id 1scK7N-0004Ba-MC
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:32:57 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1scKBj-0006DC-NI
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:37:27 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lkp@intel.com>) id 1scK7J-0001Ju-AV
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:32:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723188773; x=1754724773;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=q16F2qKsOS0dAho75gsyC/MFvUgBI5EVWzyJK9e+9vU=;
- b=TjxGWYTTvVB/h6/h1kMmhxe5bZNFqSFA52c3Rz9yXbExAwbRyOHSQxwg
- APO/B1Rv3WfaydxPZTc6MqrrN9o993vq/F9tdZIuhXohjwTjBX5S2UQ0U
- dW0rzryc/9BnCW9iiarPAC41LF7ZdWNELFXMKVtvJ6seyvlk7gYf5/boR
- Dt36Xqiyv6IEM+U40fhRAspulwZuDsE+jMnLHu1iKYUznoOssxrdd2Xg5
- ypciLRX8/JNMqWSjyBFBUe3OrM7SOOsLCy473xrMYNxynFUXlsssBXpjt
- YSlDe/XDotlf5SoEYNuksjK5ZLGc4FVGBlij1sUsgOqTWc27xnlDYK5Z7 w==;
-X-CSE-ConnectionGUID: gvOQ4CrPTb+agT02YojWgQ==
-X-CSE-MsgGUID: VZzkK+2kQyqqEI/YnpAHPA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11158"; a="21525834"
-X-IronPort-AV: E=Sophos;i="6.09,275,1716274800"; d="scan'208";a="21525834"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Aug 2024 00:32:48 -0700
-X-CSE-ConnectionGUID: CeylR7OiT+uTHe0gWTttbg==
-X-CSE-MsgGUID: XxnakVIFRlyPYLBcRJahJA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,275,1716274800"; d="scan'208";a="57444327"
-Received: from unknown (HELO b6bf6c95bbab) ([10.239.97.151])
- by fmviesa008.fm.intel.com with ESMTP; 09 Aug 2024 00:32:43 -0700
-Received: from kbuild by b6bf6c95bbab with local (Exim 4.96)
- (envelope-from <lkp@intel.com>) id 1scK72-0007H4-1p;
- Fri, 09 Aug 2024 07:32:38 +0000
-Date: Fri, 9 Aug 2024 15:31:43 +0800
-From: kernel test robot <lkp@intel.com>
-To: Shiyang Ruan <ruansy.fnst@fujitsu.com>, qemu-devel@nongnu.org,
- linux-cxl@vger.kernel.org, linux-edac@vger.kernel.org,
- linux-mm@kvack.org, dan.j.williams@intel.com,
- vishal.l.verma@intel.com, Jonathan.Cameron@huawei.com,
- alison.schofield@intel.com
-Cc: oe-kbuild-all@lists.linux.dev, bp@alien8.de, dave.jiang@intel.com,
- dave@stgolabs.net, ira.weiny@intel.com, james.morse@arm.com,
- linmiaohe@huawei.com, mchehab@kernel.org, nao.horiguchi@gmail.com,
- rric@kernel.org, tony.luck@intel.com, ruansy.fnst@fujitsu.com
-Subject: Re: [PATCH v4 2/2] cxl: avoid duplicated report from MCE & device
-Message-ID: <202408091537.p9RKx1R2-lkp@intel.com>
-References: <20240808151328.707869-3-ruansy.fnst@fujitsu.com>
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1scKBh-0001q0-GC
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:37:27 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id D4DA2615C4;
+ Fri,  9 Aug 2024 07:37:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE7DC32782;
+ Fri,  9 Aug 2024 07:37:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1723189043;
+ bh=eWcGvlv/zibhmLxKJncnRTRJYnTbYygyTC6z/TtIal8=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=mC3lc+glPyGSi3HB7RSpFOh8VkgX1YsbNvUjAC2D38HzzBd9o5wGXZO7bs06Ae1u7
+ 6UhnGrE4PX42nG4WkUrIMqmOdrVREu7vVlIwxfrH7endbd2vEupxQpQyQswZQXe1o9
+ gpQPu1zqZjkyk1gce8ycKI5SSRSUKPgHemX3kX6ZxxQwOCZJgNioPMiPxgDLbr8R66
+ coZYVhrSm1c3CGd3SPp6hcmgCg6kgbswQXj9g7T22wzvTWMrYHNd9TSqkoWsXQUHGT
+ PIB9VcvViHAl93jsPOW6gtXd1tGEmJLADC0Z5CCWo/kfoH3yFuvhqsHR8Gi5Ty6Fs5
+ hxVkTN+kl5FHQ==
+Date: Fri, 9 Aug 2024 09:37:18 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: John Snow <jsnow@redhat.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
+ <shiju.jose@huawei.com>, Cleber Rosa <crosa@redhat.com>,
+ linux-kernel@vger.kernel.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v5 7/7] scripts/ghes_inject: add a script to generate
+ GHES error inject
+Message-ID: <20240809093718.095d0a34@foz.lan>
+In-Reply-To: <20240809082609.1864eabe@foz.lan>
+References: <cover.1722634602.git.mchehab+huawei@kernel.org>
+ <0654a89fe24f4343016b9cecc0752594ad1cd49f.1722634602.git.mchehab+huawei@kernel.org>
+ <CAFn=p-Y27zap1P5G3NibdZS26iGwCqh8U0vgW0Vw31f53+oU1w@mail.gmail.com>
+ <20240809004137.01f97da2@foz.lan> <20240809082609.1864eabe@foz.lan>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240808151328.707869-3-ruansy.fnst@fujitsu.com>
-Received-SPF: pass client-ip=192.198.163.14; envelope-from=lkp@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -71
+X-Spam_score: -7.2
+X-Spam_bar: -------
+X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,314 +77,298 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shiyang,
+Em Fri, 9 Aug 2024 08:26:09 +0200
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> escreveu:
 
-kernel test robot noticed the following build errors:
+> Em Fri, 9 Aug 2024 00:41:37 +0200
+> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> escreveu:
+> 
+> > > You should be able to use e.g.
+> > > 
+> > > legacy.py's QEMUMonitorProtocol class for synchronous connections, e.g.
+> > > 
+> > > from qemu.qmp.legacy import QEMUMonitorProtocol
+> > > 
+> > > qmp = QEMUMonitorProtocol((host, port))
+> > > qmp.connect(negotiate=True)  
+> > 
+> > That sounds interesting! I give it a try.
+> 
+> I applied the enclosed patch at the end of my patch series, but
+> somehow it is not working. For whatever reason, connect() is
+> raising a StateError apparently due to Runstate.CONNECTING.
+> 
+> I tried both as declaring (see enclosed patch):
+> 
+> 	class qmp(QEMUMonitorProtocol)
+> 
+> and using:
+> 
+> -        super().__init__(self.host, self.port)
+> +        self.qmp_monitor = QEMUMonitorProtocol(self.host, self.port)
+> 
+> On both cases, it keeps waiting forever for a connection.
 
-[auto build test ERROR on tip/x86/core]
-[also build test ERROR on cxl/next linus/master v6.11-rc2 next-20240809]
-[cannot apply to cxl/pending]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Nevermind, placing host/post on a tuple made it work.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Shiyang-Ruan/cxl-core-introduce-device-reporting-poison-hanlding/20240809-013658
-base:   tip/x86/core
-patch link:    https://lore.kernel.org/r/20240808151328.707869-3-ruansy.fnst%40fujitsu.com
-patch subject: [PATCH v4 2/2] cxl: avoid duplicated report from MCE & device
-config: um-allyesconfig (https://download.01.org/0day-ci/archive/20240809/202408091537.p9RKx1R2-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240809/202408091537.p9RKx1R2-lkp@intel.com/reproduce)
+The enclosed patch converts the script to use QEMUMonitorProtocol.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202408091537.p9RKx1R2-lkp@intel.com/
+I'll fold it with the script for the next spin of this series.
 
-All error/warnings (new ones prefixed by >>):
+Regards,
+Mauro
 
-   In file included from drivers/cxl/core/mbox.c:8:
->> arch/x86/include/asm/mce.h:219:43: warning: 'struct cpuinfo_x86' declared inside parameter list will not be visible outside of this definition or declaration
-     219 | static inline void mcheck_cpu_init(struct cpuinfo_x86 *c) {}
-         |                                           ^~~~~~~~~~~
-   arch/x86/include/asm/mce.h:220:44: warning: 'struct cpuinfo_x86' declared inside parameter list will not be visible outside of this definition or declaration
-     220 | static inline void mcheck_cpu_clear(struct cpuinfo_x86 *c) {}
-         |                                            ^~~~~~~~~~~
-   arch/x86/include/asm/mce.h:240:50: warning: 'struct cpuinfo_x86' declared inside parameter list will not be visible outside of this definition or declaration
-     240 | static inline void mce_intel_feature_init(struct cpuinfo_x86 *c) { }
-         |                                                  ^~~~~~~~~~~
-   arch/x86/include/asm/mce.h:241:51: warning: 'struct cpuinfo_x86' declared inside parameter list will not be visible outside of this definition or declaration
-     241 | static inline void mce_intel_feature_clear(struct cpuinfo_x86 *c) { }
-         |                                                   ^~~~~~~~~~~
-   arch/x86/include/asm/mce.h:248:26: warning: 'struct cpuinfo_x86' declared inside parameter list will not be visible outside of this definition or declaration
-     248 | int mce_available(struct cpuinfo_x86 *c);
-         |                          ^~~~~~~~~~~
-   arch/x86/include/asm/mce.h:355:48: warning: 'struct cpuinfo_x86' declared inside parameter list will not be visible outside of this definition or declaration
-     355 | static inline void mce_amd_feature_init(struct cpuinfo_x86 *c)          { }
-         |                                                ^~~~~~~~~~~
-   arch/x86/include/asm/mce.h:358:50: warning: 'struct cpuinfo_x86' declared inside parameter list will not be visible outside of this definition or declaration
-     358 | static inline void mce_hygon_feature_init(struct cpuinfo_x86 *c)        { return mce_amd_feature_init(c); }
-         |                                                  ^~~~~~~~~~~
-   arch/x86/include/asm/mce.h: In function 'mce_hygon_feature_init':
->> arch/x86/include/asm/mce.h:358:103: error: passing argument 1 of 'mce_amd_feature_init' from incompatible pointer type [-Werror=incompatible-pointer-types]
-     358 | static inline void mce_hygon_feature_init(struct cpuinfo_x86 *c)        { return mce_amd_feature_init(c); }
-         |                                                                                                       ^
-         |                                                                                                       |
-         |                                                                                                       struct cpuinfo_x86 *
-   arch/x86/include/asm/mce.h:355:61: note: expected 'struct cpuinfo_x86 *' but argument is of type 'struct cpuinfo_x86 *'
-     355 | static inline void mce_amd_feature_init(struct cpuinfo_x86 *c)          { }
-         |                                         ~~~~~~~~~~~~~~~~~~~~^
-   In file included from include/linux/container_of.h:5,
-                    from include/linux/list.h:5,
-                    from include/linux/key.h:14,
-                    from include/linux/security.h:27,
-                    from drivers/cxl/core/mbox.c:3:
-   drivers/cxl/core/mbox.c: In function 'cxl_handle_mce':
->> arch/x86/include/asm/mce.h:94:58: error: 'struct cpuinfo_um' has no member named 'x86_phys_bits'
-      94 | #define MCI_ADDR_PHYSADDR       GENMASK_ULL(boot_cpu_data.x86_phys_bits - 1, 0)
-         |                                                          ^
-   include/linux/build_bug.h:16:62: note: in definition of macro 'BUILD_BUG_ON_ZERO'
-      16 | #define BUILD_BUG_ON_ZERO(e) ((int)(sizeof(struct { int:(-!!(e)); })))
-         |                                                              ^
-   include/linux/bits.h:25:17: note: in expansion of macro '__is_constexpr'
-      25 |                 __is_constexpr((l) > (h)), (l) > (h), 0)))
-         |                 ^~~~~~~~~~~~~~
-   include/linux/bits.h:37:10: note: in expansion of macro 'GENMASK_INPUT_CHECK'
-      37 |         (GENMASK_INPUT_CHECK(h, l) + __GENMASK_ULL(h, l))
-         |          ^~~~~~~~~~~~~~~~~~~
-   arch/x86/include/asm/mce.h:94:33: note: in expansion of macro 'GENMASK_ULL'
-      94 | #define MCI_ADDR_PHYSADDR       GENMASK_ULL(boot_cpu_data.x86_phys_bits - 1, 0)
-         |                                 ^~~~~~~~~~~
-   drivers/cxl/core/mbox.c:1553:27: note: in expansion of macro 'MCI_ADDR_PHYSADDR'
-    1553 |         hpa = mce->addr & MCI_ADDR_PHYSADDR;
-         |                           ^~~~~~~~~~~~~~~~~
->> arch/x86/include/asm/mce.h:94:58: error: 'struct cpuinfo_um' has no member named 'x86_phys_bits'
-      94 | #define MCI_ADDR_PHYSADDR       GENMASK_ULL(boot_cpu_data.x86_phys_bits - 1, 0)
-         |                                                          ^
-   include/linux/build_bug.h:16:62: note: in definition of macro 'BUILD_BUG_ON_ZERO'
-      16 | #define BUILD_BUG_ON_ZERO(e) ((int)(sizeof(struct { int:(-!!(e)); })))
-         |                                                              ^
-   include/linux/bits.h:37:10: note: in expansion of macro 'GENMASK_INPUT_CHECK'
-      37 |         (GENMASK_INPUT_CHECK(h, l) + __GENMASK_ULL(h, l))
-         |          ^~~~~~~~~~~~~~~~~~~
-   arch/x86/include/asm/mce.h:94:33: note: in expansion of macro 'GENMASK_ULL'
-      94 | #define MCI_ADDR_PHYSADDR       GENMASK_ULL(boot_cpu_data.x86_phys_bits - 1, 0)
-         |                                 ^~~~~~~~~~~
-   drivers/cxl/core/mbox.c:1553:27: note: in expansion of macro 'MCI_ADDR_PHYSADDR'
-    1553 |         hpa = mce->addr & MCI_ADDR_PHYSADDR;
-         |                           ^~~~~~~~~~~~~~~~~
-   include/linux/bits.h:24:28: error: first argument to '__builtin_choose_expr' not a constant
-      24 |         (BUILD_BUG_ON_ZERO(__builtin_choose_expr( \
-         |                            ^~~~~~~~~~~~~~~~~~~~~
-   include/linux/build_bug.h:16:62: note: in definition of macro 'BUILD_BUG_ON_ZERO'
-      16 | #define BUILD_BUG_ON_ZERO(e) ((int)(sizeof(struct { int:(-!!(e)); })))
-         |                                                              ^
-   include/linux/bits.h:37:10: note: in expansion of macro 'GENMASK_INPUT_CHECK'
-      37 |         (GENMASK_INPUT_CHECK(h, l) + __GENMASK_ULL(h, l))
-         |          ^~~~~~~~~~~~~~~~~~~
-   arch/x86/include/asm/mce.h:94:33: note: in expansion of macro 'GENMASK_ULL'
-      94 | #define MCI_ADDR_PHYSADDR       GENMASK_ULL(boot_cpu_data.x86_phys_bits - 1, 0)
-         |                                 ^~~~~~~~~~~
-   drivers/cxl/core/mbox.c:1553:27: note: in expansion of macro 'MCI_ADDR_PHYSADDR'
-    1553 |         hpa = mce->addr & MCI_ADDR_PHYSADDR;
-         |                           ^~~~~~~~~~~~~~~~~
-   include/linux/build_bug.h:16:51: error: bit-field '<anonymous>' width not an integer constant
-      16 | #define BUILD_BUG_ON_ZERO(e) ((int)(sizeof(struct { int:(-!!(e)); })))
-         |                                                   ^
-   include/linux/bits.h:24:10: note: in expansion of macro 'BUILD_BUG_ON_ZERO'
-      24 |         (BUILD_BUG_ON_ZERO(__builtin_choose_expr( \
-         |          ^~~~~~~~~~~~~~~~~
-   include/linux/bits.h:37:10: note: in expansion of macro 'GENMASK_INPUT_CHECK'
-      37 |         (GENMASK_INPUT_CHECK(h, l) + __GENMASK_ULL(h, l))
-         |          ^~~~~~~~~~~~~~~~~~~
-   arch/x86/include/asm/mce.h:94:33: note: in expansion of macro 'GENMASK_ULL'
-      94 | #define MCI_ADDR_PHYSADDR       GENMASK_ULL(boot_cpu_data.x86_phys_bits - 1, 0)
-         |                                 ^~~~~~~~~~~
-   drivers/cxl/core/mbox.c:1553:27: note: in expansion of macro 'MCI_ADDR_PHYSADDR'
-    1553 |         hpa = mce->addr & MCI_ADDR_PHYSADDR;
-         |                           ^~~~~~~~~~~~~~~~~
-   In file included from include/linux/bits.h:7,
-                    from include/linux/ratelimit_types.h:5,
-                    from include/linux/printk.h:9,
-                    from include/asm-generic/bug.h:22,
-                    from ./arch/um/include/generated/asm/bug.h:1,
-                    from include/linux/bug.h:5,
-                    from include/linux/thread_info.h:13,
-                    from include/asm-generic/preempt.h:5,
-                    from ./arch/um/include/generated/asm/preempt.h:1,
-                    from include/linux/preempt.h:79,
-                    from include/linux/rcupdate.h:27,
-                    from include/linux/rbtree.h:24,
-                    from include/linux/key.h:15:
->> arch/x86/include/asm/mce.h:94:58: error: 'struct cpuinfo_um' has no member named 'x86_phys_bits'
-      94 | #define MCI_ADDR_PHYSADDR       GENMASK_ULL(boot_cpu_data.x86_phys_bits - 1, 0)
-         |                                                          ^
-   include/uapi/linux/bits.h:13:52: note: in definition of macro '__GENMASK_ULL'
-      13 |          (~_ULL(0) >> (__BITS_PER_LONG_LONG - 1 - (h))))
-         |                                                    ^
-   arch/x86/include/asm/mce.h:94:33: note: in expansion of macro 'GENMASK_ULL'
-      94 | #define MCI_ADDR_PHYSADDR       GENMASK_ULL(boot_cpu_data.x86_phys_bits - 1, 0)
-         |                                 ^~~~~~~~~~~
-   drivers/cxl/core/mbox.c:1553:27: note: in expansion of macro 'MCI_ADDR_PHYSADDR'
-    1553 |         hpa = mce->addr & MCI_ADDR_PHYSADDR;
-         |                           ^~~~~~~~~~~~~~~~~
-   cc1: some warnings being treated as errors
+---
 
+[PATCH] scripts/qmp_helper.py: use QEMUMonitorProtocol class
 
-vim +/mce_amd_feature_init +358 arch/x86/include/asm/mce.h
+Instead of reinventing the wheel, let's use QEMUMonitorProtocol.
 
-4a24d80b8c3e9f arch/x86/include/asm/mce.h Smita Koralahalli         2020-11-19  210  
-58995d2d58e8e5 arch/x86/include/asm/mce.h Hidetoshi Seto            2009-06-15  211  #ifdef CONFIG_X86_MCE
-a2202aa29289db arch/x86/include/asm/mce.h Yong Wang                 2009-11-10  212  int mcheck_init(void);
-5e09954a9acc3b arch/x86/include/asm/mce.h Borislav Petkov           2009-10-16  213  void mcheck_cpu_init(struct cpuinfo_x86 *c);
-8838eb6c0bf3b6 arch/x86/include/asm/mce.h Ashok Raj                 2015-08-12  214  void mcheck_cpu_clear(struct cpuinfo_x86 *c);
-4a24d80b8c3e9f arch/x86/include/asm/mce.h Smita Koralahalli         2020-11-19  215  int apei_smca_report_x86_error(struct cper_ia_proc_ctx *ctx_info,
-4a24d80b8c3e9f arch/x86/include/asm/mce.h Smita Koralahalli         2020-11-19  216  			       u64 lapic_id);
-58995d2d58e8e5 arch/x86/include/asm/mce.h Hidetoshi Seto            2009-06-15  217  #else
-a2202aa29289db arch/x86/include/asm/mce.h Yong Wang                 2009-11-10  218  static inline int mcheck_init(void) { return 0; }
-5e09954a9acc3b arch/x86/include/asm/mce.h Borislav Petkov           2009-10-16 @219  static inline void mcheck_cpu_init(struct cpuinfo_x86 *c) {}
-8838eb6c0bf3b6 arch/x86/include/asm/mce.h Ashok Raj                 2015-08-12  220  static inline void mcheck_cpu_clear(struct cpuinfo_x86 *c) {}
-4a24d80b8c3e9f arch/x86/include/asm/mce.h Smita Koralahalli         2020-11-19  221  static inline int apei_smca_report_x86_error(struct cper_ia_proc_ctx *ctx_info,
-4a24d80b8c3e9f arch/x86/include/asm/mce.h Smita Koralahalli         2020-11-19  222  					     u64 lapic_id) { return -EINVAL; }
-58995d2d58e8e5 arch/x86/include/asm/mce.h Hidetoshi Seto            2009-06-15  223  #endif
-58995d2d58e8e5 arch/x86/include/asm/mce.h Hidetoshi Seto            2009-06-15  224  
-b5f2fa4ea00a17 arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  225  void mce_setup(struct mce *m);
-e2f430291fe23a include/asm-x86/mce.h      Thomas Gleixner           2007-10-17  226  void mce_log(struct mce *m);
-d6126ef5f31ca5 arch/x86/include/asm/mce.h Greg Kroah-Hartman        2012-01-26  227  DECLARE_PER_CPU(struct device *, mce_device);
-e2f430291fe23a include/asm-x86/mce.h      Thomas Gleixner           2007-10-17  228  
-a0bc32b3cacf19 arch/x86/include/asm/mce.h Akshay Gupta              2020-08-28  229  /* Maximum number of MCA banks per CPU. */
-a0bc32b3cacf19 arch/x86/include/asm/mce.h Akshay Gupta              2020-08-28  230  #define MAX_NR_BANKS 64
-41fdff322e26c4 arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  231  
-e2f430291fe23a include/asm-x86/mce.h      Thomas Gleixner           2007-10-17  232  #ifdef CONFIG_X86_MCE_INTEL
-e2f430291fe23a include/asm-x86/mce.h      Thomas Gleixner           2007-10-17  233  void mce_intel_feature_init(struct cpuinfo_x86 *c);
-8838eb6c0bf3b6 arch/x86/include/asm/mce.h Ashok Raj                 2015-08-12  234  void mce_intel_feature_clear(struct cpuinfo_x86 *c);
-88ccbedd9ca85d arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  235  void cmci_clear(void);
-88ccbedd9ca85d arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  236  void cmci_reenable(void);
-7a0c819d28f5c9 arch/x86/include/asm/mce.h Srivatsa S. Bhat          2013-03-20  237  void cmci_rediscover(void);
-88ccbedd9ca85d arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  238  void cmci_recheck(void);
-e2f430291fe23a include/asm-x86/mce.h      Thomas Gleixner           2007-10-17  239  #else
-e2f430291fe23a include/asm-x86/mce.h      Thomas Gleixner           2007-10-17  240  static inline void mce_intel_feature_init(struct cpuinfo_x86 *c) { }
-8838eb6c0bf3b6 arch/x86/include/asm/mce.h Ashok Raj                 2015-08-12  241  static inline void mce_intel_feature_clear(struct cpuinfo_x86 *c) { }
-88ccbedd9ca85d arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  242  static inline void cmci_clear(void) {}
-88ccbedd9ca85d arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  243  static inline void cmci_reenable(void) {}
-7a0c819d28f5c9 arch/x86/include/asm/mce.h Srivatsa S. Bhat          2013-03-20  244  static inline void cmci_rediscover(void) {}
-88ccbedd9ca85d arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  245  static inline void cmci_recheck(void) {}
-e2f430291fe23a include/asm-x86/mce.h      Thomas Gleixner           2007-10-17  246  #endif
-e2f430291fe23a include/asm-x86/mce.h      Thomas Gleixner           2007-10-17  247  
-38736072d45488 arch/x86/include/asm/mce.h H. Peter Anvin            2009-05-28  248  int mce_available(struct cpuinfo_x86 *c);
-2d1f406139ec20 arch/x86/include/asm/mce.h Borislav Petkov           2017-05-19  249  bool mce_is_memory_error(struct mce *m);
-5d96c9342c23ee arch/x86/include/asm/mce.h Vishal Verma              2018-10-25  250  bool mce_is_correctable(struct mce *m);
-1bae0cfe4a171c arch/x86/include/asm/mce.h Yazen Ghannam             2023-06-13  251  bool mce_usable_address(struct mce *m);
-88ccbedd9ca85d arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  252  
-01ca79f1411eae arch/x86/include/asm/mce.h Andi Kleen                2009-05-27  253  DECLARE_PER_CPU(unsigned, mce_exception_count);
-ca84f69697da0f arch/x86/include/asm/mce.h Andi Kleen                2009-05-27  254  DECLARE_PER_CPU(unsigned, mce_poll_count);
-01ca79f1411eae arch/x86/include/asm/mce.h Andi Kleen                2009-05-27  255  
-ee031c31d6381d arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  256  typedef DECLARE_BITMAP(mce_banks_t, MAX_NR_BANKS);
-ee031c31d6381d arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  257  DECLARE_PER_CPU(mce_banks_t, mce_poll_banks);
-ee031c31d6381d arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  258  
-b79109c3bbcf52 arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  259  enum mcp_flags {
-3f2f0680d1161d arch/x86/include/asm/mce.h Borislav Petkov           2015-01-13  260  	MCP_TIMESTAMP	= BIT(0),	/* log time stamp */
-3f2f0680d1161d arch/x86/include/asm/mce.h Borislav Petkov           2015-01-13  261  	MCP_UC		= BIT(1),	/* log uncorrected errors */
-3f2f0680d1161d arch/x86/include/asm/mce.h Borislav Petkov           2015-01-13  262  	MCP_DONTLOG	= BIT(2),	/* only clear, don't log */
-3bff147b187d5d arch/x86/include/asm/mce.h Borislav Petkov           2021-08-23  263  	MCP_QUEUE_LOG	= BIT(3),	/* only queue to genpool */
-b79109c3bbcf52 arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  264  };
-5b9d292ea87c83 arch/x86/include/asm/mce.h Yazen Ghannam             2024-05-23  265  
-5b9d292ea87c83 arch/x86/include/asm/mce.h Yazen Ghannam             2024-05-23  266  void machine_check_poll(enum mcp_flags flags, mce_banks_t *b);
-b79109c3bbcf52 arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  267  
-9ff36ee9668ff4 arch/x86/include/asm/mce.h Andi Kleen                2009-05-27  268  int mce_notify_irq(void);
-e2f430291fe23a include/asm-x86/mce.h      Thomas Gleixner           2007-10-17  269  
-ea149b36c7f511 arch/x86/include/asm/mce.h Andi Kleen                2009-04-29  270  DECLARE_PER_CPU(struct mce, injectm);
-66f5ddf30a59f8 arch/x86/include/asm/mce.h Tony Luck                 2011-11-03  271  
-c3d1fb567a634d arch/x86/include/asm/mce.h Naveen N Rao              2013-07-01  272  /* Disable CMCI/polling for MCA bank claimed by firmware */
-c3d1fb567a634d arch/x86/include/asm/mce.h Naveen N Rao              2013-07-01  273  extern void mce_disable_bank(int bank);
-c3d1fb567a634d arch/x86/include/asm/mce.h Naveen N Rao              2013-07-01  274  
-58995d2d58e8e5 arch/x86/include/asm/mce.h Hidetoshi Seto            2009-06-15  275  /*
-58995d2d58e8e5 arch/x86/include/asm/mce.h Hidetoshi Seto            2009-06-15  276   * Exception handler
-58995d2d58e8e5 arch/x86/include/asm/mce.h Hidetoshi Seto            2009-06-15  277   */
-8cd501c1facc15 arch/x86/include/asm/mce.h Thomas Gleixner           2020-02-25  278  void do_machine_check(struct pt_regs *pt_regs);
-58995d2d58e8e5 arch/x86/include/asm/mce.h Hidetoshi Seto            2009-06-15  279  
-58995d2d58e8e5 arch/x86/include/asm/mce.h Hidetoshi Seto            2009-06-15  280  /*
-58995d2d58e8e5 arch/x86/include/asm/mce.h Hidetoshi Seto            2009-06-15  281   * Threshold handler
-58995d2d58e8e5 arch/x86/include/asm/mce.h Hidetoshi Seto            2009-06-15  282   */
-b276268631af3a arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  283  extern void (*mce_threshold_vector)(void);
-b276268631af3a arch/x86/include/asm/mce.h Andi Kleen                2009-02-12  284  
-24fd78a81f6d3f arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2015-05-06  285  /* Deferred error interrupt handler */
-24fd78a81f6d3f arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2015-05-06  286  extern void (*deferred_error_int_vector)(void);
-24fd78a81f6d3f arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2015-05-06  287  
-d334a49113a4a3 arch/x86/include/asm/mce.h Huang Ying                2010-05-18  288  /*
-d334a49113a4a3 arch/x86/include/asm/mce.h Huang Ying                2010-05-18  289   * Used by APEI to report memory error via /dev/mcelog
-d334a49113a4a3 arch/x86/include/asm/mce.h Huang Ying                2010-05-18  290   */
-d334a49113a4a3 arch/x86/include/asm/mce.h Huang Ying                2010-05-18  291  
-d334a49113a4a3 arch/x86/include/asm/mce.h Huang Ying                2010-05-18  292  struct cper_sec_mem_err;
-d334a49113a4a3 arch/x86/include/asm/mce.h Huang Ying                2010-05-18  293  extern void apei_mce_report_mem_error(int corrected,
-d334a49113a4a3 arch/x86/include/asm/mce.h Huang Ying                2010-05-18  294  				      struct cper_sec_mem_err *mem_err);
-d334a49113a4a3 arch/x86/include/asm/mce.h Huang Ying                2010-05-18  295  
-be0aec23bf4624 arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2016-03-07  296  /*
-be0aec23bf4624 arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2016-03-07  297   * Enumerate new IP types and HWID values in AMD processors which support
-be0aec23bf4624 arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2016-03-07  298   * Scalable MCA.
-be0aec23bf4624 arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2016-03-07  299   */
-be0aec23bf4624 arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2016-03-07  300  #ifdef CONFIG_X86_MCE_AMD
-5896820e0aa325 arch/x86/include/asm/mce.h Yazen Ghannam             2016-09-12  301  
-5896820e0aa325 arch/x86/include/asm/mce.h Yazen Ghannam             2016-09-12  302  /* These may be used by multiple smca_hwid_mcatypes */
-5896820e0aa325 arch/x86/include/asm/mce.h Yazen Ghannam             2016-09-12  303  enum smca_bank_types {
-5896820e0aa325 arch/x86/include/asm/mce.h Yazen Ghannam             2016-09-12  304  	SMCA_LS = 0,	/* Load Store */
-94a311ce248e0b arch/x86/include/asm/mce.h Muralidhara M K           2021-05-26  305  	SMCA_LS_V2,
-5896820e0aa325 arch/x86/include/asm/mce.h Yazen Ghannam             2016-09-12  306  	SMCA_IF,	/* Instruction Fetch */
-5896820e0aa325 arch/x86/include/asm/mce.h Yazen Ghannam             2016-09-12  307  	SMCA_L2_CACHE,	/* L2 Cache */
-5896820e0aa325 arch/x86/include/asm/mce.h Yazen Ghannam             2016-09-12  308  	SMCA_DE,	/* Decoder Unit */
-68627a697c1959 arch/x86/include/asm/mce.h Yazen Ghannam             2018-02-21  309  	SMCA_RESERVED,	/* Reserved */
-5896820e0aa325 arch/x86/include/asm/mce.h Yazen Ghannam             2016-09-12  310  	SMCA_EX,	/* Execution Unit */
-5896820e0aa325 arch/x86/include/asm/mce.h Yazen Ghannam             2016-09-12  311  	SMCA_FP,	/* Floating Point */
-5896820e0aa325 arch/x86/include/asm/mce.h Yazen Ghannam             2016-09-12  312  	SMCA_L3_CACHE,	/* L3 Cache */
-5896820e0aa325 arch/x86/include/asm/mce.h Yazen Ghannam             2016-09-12  313  	SMCA_CS,	/* Coherent Slave */
-94a311ce248e0b arch/x86/include/asm/mce.h Muralidhara M K           2021-05-26  314  	SMCA_CS_V2,
-5896820e0aa325 arch/x86/include/asm/mce.h Yazen Ghannam             2016-09-12  315  	SMCA_PIE,	/* Power, Interrupts, etc. */
-be0aec23bf4624 arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2016-03-07  316  	SMCA_UMC,	/* Unified Memory Controller */
-94a311ce248e0b arch/x86/include/asm/mce.h Muralidhara M K           2021-05-26  317  	SMCA_UMC_V2,
-47b744ea5e3cf8 arch/x86/include/asm/mce.h Muralidhara M K           2023-11-02  318  	SMCA_MA_LLC,	/* Memory Attached Last Level Cache */
-be0aec23bf4624 arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2016-03-07  319  	SMCA_PB,	/* Parameter Block */
-be0aec23bf4624 arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2016-03-07  320  	SMCA_PSP,	/* Platform Security Processor */
-94a311ce248e0b arch/x86/include/asm/mce.h Muralidhara M K           2021-05-26  321  	SMCA_PSP_V2,
-be0aec23bf4624 arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2016-03-07  322  	SMCA_SMU,	/* System Management Unit */
-94a311ce248e0b arch/x86/include/asm/mce.h Muralidhara M K           2021-05-26  323  	SMCA_SMU_V2,
-cbfa447edd6a38 arch/x86/include/asm/mce.h Yazen Ghannam             2019-02-01  324  	SMCA_MP5,	/* Microprocessor 5 Unit */
-5176a93ab27aef arch/x86/include/asm/mce.h Yazen Ghannam             2021-12-16  325  	SMCA_MPDMA,	/* MPDMA Unit */
-cbfa447edd6a38 arch/x86/include/asm/mce.h Yazen Ghannam             2019-02-01  326  	SMCA_NBIO,	/* Northbridge IO Unit */
-cbfa447edd6a38 arch/x86/include/asm/mce.h Yazen Ghannam             2019-02-01  327  	SMCA_PCIE,	/* PCI Express Unit */
-94a311ce248e0b arch/x86/include/asm/mce.h Muralidhara M K           2021-05-26  328  	SMCA_PCIE_V2,
-94a311ce248e0b arch/x86/include/asm/mce.h Muralidhara M K           2021-05-26  329  	SMCA_XGMI_PCS,	/* xGMI PCS Unit */
-5176a93ab27aef arch/x86/include/asm/mce.h Yazen Ghannam             2021-12-16  330  	SMCA_NBIF,	/* NBIF Unit */
-5176a93ab27aef arch/x86/include/asm/mce.h Yazen Ghannam             2021-12-16  331  	SMCA_SHUB,	/* System HUB Unit */
-5176a93ab27aef arch/x86/include/asm/mce.h Yazen Ghannam             2021-12-16  332  	SMCA_SATA,	/* SATA Unit */
-5176a93ab27aef arch/x86/include/asm/mce.h Yazen Ghannam             2021-12-16  333  	SMCA_USB,	/* USB Unit */
-47b744ea5e3cf8 arch/x86/include/asm/mce.h Muralidhara M K           2023-11-02  334  	SMCA_USR_DP,	/* Ultra Short Reach Data Plane Controller */
-47b744ea5e3cf8 arch/x86/include/asm/mce.h Muralidhara M K           2023-11-02  335  	SMCA_USR_CP,	/* Ultra Short Reach Control Plane Controller */
-5176a93ab27aef arch/x86/include/asm/mce.h Yazen Ghannam             2021-12-16  336  	SMCA_GMI_PCS,	/* GMI PCS Unit */
-94a311ce248e0b arch/x86/include/asm/mce.h Muralidhara M K           2021-05-26  337  	SMCA_XGMI_PHY,	/* xGMI PHY Unit */
-94a311ce248e0b arch/x86/include/asm/mce.h Muralidhara M K           2021-05-26  338  	SMCA_WAFL_PHY,	/* WAFL PHY Unit */
-5176a93ab27aef arch/x86/include/asm/mce.h Yazen Ghannam             2021-12-16  339  	SMCA_GMI_PHY,	/* GMI PHY Unit */
-5896820e0aa325 arch/x86/include/asm/mce.h Yazen Ghannam             2016-09-12  340  	N_SMCA_BANK_TYPES
-be0aec23bf4624 arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2016-03-07  341  };
-be0aec23bf4624 arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2016-03-07  342  
-c6708d50f166be arch/x86/include/asm/mce.h Yazen Ghannam             2017-12-18  343  extern bool amd_mce_is_memory_error(struct mce *m);
-e71c3978d6f976 arch/x86/include/asm/mce.h Linus Torvalds            2016-12-12  344  
-4d7b02d58c4000 arch/x86/include/asm/mce.h Sebastian Andrzej Siewior 2016-11-10  345  extern int mce_threshold_create_device(unsigned int cpu);
-4d7b02d58c4000 arch/x86/include/asm/mce.h Sebastian Andrzej Siewior 2016-11-10  346  extern int mce_threshold_remove_device(unsigned int cpu);
-e71c3978d6f976 arch/x86/include/asm/mce.h Linus Torvalds            2016-12-12  347  
-9308fd4074551f arch/x86/include/asm/mce.h Yazen Ghannam             2019-03-22  348  void mce_amd_feature_init(struct cpuinfo_x86 *c);
-91f75eb481cfae arch/x86/include/asm/mce.h Yazen Ghannam             2021-12-16  349  enum smca_bank_types smca_get_bank_type(unsigned int cpu, unsigned int bank);
-4d7b02d58c4000 arch/x86/include/asm/mce.h Sebastian Andrzej Siewior 2016-11-10  350  #else
-5896820e0aa325 arch/x86/include/asm/mce.h Yazen Ghannam             2016-09-12  351  
-4d7b02d58c4000 arch/x86/include/asm/mce.h Sebastian Andrzej Siewior 2016-11-10  352  static inline int mce_threshold_create_device(unsigned int cpu)		{ return 0; };
-4d7b02d58c4000 arch/x86/include/asm/mce.h Sebastian Andrzej Siewior 2016-11-10  353  static inline int mce_threshold_remove_device(unsigned int cpu)		{ return 0; };
-c6708d50f166be arch/x86/include/asm/mce.h Yazen Ghannam             2017-12-18  354  static inline bool amd_mce_is_memory_error(struct mce *m)		{ return false; };
-9308fd4074551f arch/x86/include/asm/mce.h Yazen Ghannam             2019-03-22  355  static inline void mce_amd_feature_init(struct cpuinfo_x86 *c)		{ }
-be0aec23bf4624 arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2016-03-07  356  #endif
-be0aec23bf4624 arch/x86/include/asm/mce.h Aravind Gopalakrishnan    2016-03-07  357  
-9308fd4074551f arch/x86/include/asm/mce.h Yazen Ghannam             2019-03-22 @358  static inline void mce_hygon_feature_init(struct cpuinfo_x86 *c)	{ return mce_amd_feature_init(c); }
-e9c2a283e7d9d4 arch/x86/include/asm/mce.h Arnd Bergmann             2023-05-16  359  
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+diff --git a/scripts/arm_processor_error.py b/scripts/arm_processor_error.py
+index 756935a2263c..f869f07860b8 100644
+--- a/scripts/arm_processor_error.py
++++ b/scripts/arm_processor_error.py
+@@ -169,14 +169,11 @@ def send_cper(self, args):
+         if args.mpidr:
+             cper["mpidr-el1"] = arg["mpidr"]
+         elif cpus:
+-            get_mpidr = {
+-                "execute": "qom-get",
+-                "arguments": {
+-                    'path': cpus[0],
+-                    'property': "x-mpidr"
+-                }
++            cmd_arg = {
++                'path': cpus[0],
++                'property': "x-mpidr"
+             }
+-            ret = qmp_cmd.send_cmd(get_mpidr, may_open=True)
++            ret = qmp_cmd.send_cmd("qom-get", cmd_arg, may_open=True)
+             if isinstance(ret, int):
+                 cper["mpidr-el1"] = ret
+             else:
+@@ -291,8 +288,7 @@ def send_cper(self, args):
+         context_info_num = 0
+ 
+         if ctx:
+-            ret = qmp_cmd.send_cmd('{ "execute": "query-target" }',
+-                                   may_open=True)
++            ret = qmp_cmd.send_cmd("query-target", may_open=True)
+ 
+             default_ctx = self.CONTEXT_MISC_REG
+ 
+@@ -363,14 +359,11 @@ def send_cper(self, args):
+ 
+         if "midr-el1" not in arg:
+             if cpus:
+-                get_mpidr = {
+-                    "execute": "qom-get",
+-                    "arguments": {
+-                        'path': cpus[0],
+-                        'property': "midr"
+-                    }
++                cmd_arg = {
++                    'path': cpus[0],
++                    'property': "midr"
+                 }
+-                ret = qmp_cmd.send_cmd(get_mpidr, may_open=True)
++                ret = qmp_cmd.send_cmd("qom-get", cmd_arg, may_open=True)
+                 if isinstance(ret, int):
+                     arg["midr-el1"] = ret
+ 
+diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
+index 7214c15c6718..e2e0a881f6c1 100644
+--- a/scripts/qmp_helper.py
++++ b/scripts/qmp_helper.py
+@@ -9,6 +9,19 @@
+ import socket
+ import sys
+ 
++from os import path
++
++try:
++    qemu_dir = path.abspath(path.dirname(path.dirname(__file__)))
++    sys.path.append(path.join(qemu_dir, 'python'))
++
++    from qemu.qmp.legacy import QEMUMonitorProtocol
++
++except ModuleNotFoundError as exc:
++    print(f"Module '{exc.name}' not found.")
++    print("Try export PYTHONPATH=top-qemu-dir/python or run from top-qemu-dir")
++    sys.exit(1)
++
+ from base64 import b64encode
+ 
+ class qmp:
+@@ -16,26 +29,23 @@ class qmp:
+     Opens a connection and send/receive QMP commands.
+     """
+ 
+-    def send_cmd(self, command, may_open=False, return_error=True):
++    def send_cmd(self, command, args=None, may_open=False, return_error=True):
+         """Send a command to QMP, optinally opening a connection"""
+ 
+         if may_open:
+             self._connect()
+-        elif not self.socket:
+-            return None
++        elif not self.connected:
++            return False
+ 
+-        if isinstance(command, dict):
+-            data = json.dumps(command).encode("utf-8")
+-        else:
+-            data = command.encode("utf-8")
++        msg = { 'execute': command }
++        if args:
++            msg['arguments'] = args
+ 
+-        self.socket.sendall(data)
+-        data = self.socket.recv(1024)
+         try:
+-            obj = json.loads(data.decode("utf-8"))
+-        except json.JSONDecodeError as e:
+-            print(f"Invalid QMP answer: {e}")
+-            self._close()
++            obj = self.qmp_monitor.cmd_obj(msg)
++        except Exception as e:
++            print(f"Command: {command}")
++            print(f"Failed to inject error: {e}.")
+             return None
+ 
+         if "return" in obj:
+@@ -49,6 +59,7 @@ def send_cmd(self, command, may_open=False, return_error=True):
+         elif isinstance(obj.get("error"), dict):
+             error = obj["error"]
+             if return_error:
++                print(f"Command: {msg}")
+                 print(f'{error["class"]}: {error["desc"]}')
+         else:
+             print(json.dumps(obj))
+@@ -57,75 +68,37 @@ def send_cmd(self, command, may_open=False, return_error=True):
+ 
+     def _close(self):
+         """Shutdown and close the socket, if opened"""
+-        if not self.socket:
++        if not self.connected:
+             return
+ 
+-        self.socket.shutdown(socket.SHUT_WR)
+-        while 1:
+-            data = self.socket.recv(1024)
+-            if data == b"":
+-                break
+-            try:
+-                obj = json.loads(data.decode("utf-8"))
+-            except json.JSONDecodeError as e:
+-                print(f"Invalid QMP answer: {e}")
+-                self.socket.close()
+-                self.socket = None
+-                return
+-
+-            if isinstance(obj.get("return"), dict):
+-                print(json.dumps(obj["return"]))
+-            if isinstance(obj.get("error"), dict):
+-                error = obj["error"]
+-                print(f'{error["class"]}: {error["desc"]}')
+-            else:
+-                print(json.dumps(obj))
+-
+-        self.socket.close()
+-        self.socket = None
++        self.qmp_monitor.close()
++        self.connected = False
+ 
+     def _connect(self):
+         """Connect to a QMP TCP/IP port, if not connected yet"""
+ 
+-        if self.socket:
++        if self.connected:
+             return True
+ 
+-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+         try:
+-            self.socket.connect((self.host, self.port))
+-        except ConnectionRefusedError:
++            ret = self.qmp_monitor.connect(negotiate=True)
++        except ConnectionError:
+             sys.exit(f"Can't connect to QMP host {self.host}:{self.port}")
+-
+-        data = self.socket.recv(1024)
+-        try:
+-            obj = json.loads(data.decode("utf-8"))
+-        except json.JSONDecodeError as e:
+-            print(f"Invalid QMP answer: {e}")
+-            self._close()
+             return False
+ 
+-        if "QMP" not in obj:
+-            print(f"Invalid QMP answer: {data.decode('utf-8')}")
+-            self._close()
+-            return False
+-
+-        result = self.send_cmd('{ "execute": "qmp_capabilities" }')
+-        if not result:
+-            self._close()
+-            return False
++        self.connected = True
+ 
+         return True
+ 
+     def __init__(self, host, port, debug=False):
+         """Initialize variables used by the QMP send logic"""
+ 
+-        self.socket = None
++        self.connected = False
+         self.host = host
+         self.port = port
+         self.debug = debug
+ 
+-    def __del__(self):
+-        self._close()
++        self.qmp_monitor = QEMUMonitorProtocol(address=(self.host, self.port))
+ 
+     #
+     # Socket QMP send command
+@@ -142,9 +115,6 @@ def send_cper(self, guid, data):
+             }
+         }
+ 
+-        command = '{ "execute": "ghes-cper", '
+-        command += '"arguments": ' + json.dumps(cmd_arg) + " }"
+-
+         if self.debug:
+             print(f"GUID: {guid}")
+             print("CPER:")
+@@ -168,7 +138,7 @@ def send_cper(self, guid, data):
+ 
+         self._connect()
+ 
+-        if self.send_cmd(command):
++        if self.send_cmd("ghes-cper", cmd_arg):
+             print("Error injected.")
+ 
+     def search_qom(self, path, prop, regex):
+@@ -185,14 +155,11 @@ def search_qom(self, path, prop, regex):
+         i = 0
+         while 1:
+             dev = f"{path}[{i}]"
+-            cmd =  {
+-                "execute": "qom-get",
+-                "arguments": {
+-                    'path': dev,
+-                    'property': prop
+-                }
++            args = {
++                'path': dev,
++                'property': prop
+             }
+-            ret = self.send_cmd(cmd, may_open=True, return_error=False)
++            ret = self.send_cmd("qom-get", args, may_open=True, return_error=False)
+             if not ret:
+                 break
+ 
+
 
