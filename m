@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81E82C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 06:12:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A30EC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 06:15:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scIqn-0006H7-Vr; Fri, 09 Aug 2024 02:11:46 -0400
+	id 1scIuF-00042o-NX; Fri, 09 Aug 2024 02:15:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1scIqm-0006Fo-EU; Fri, 09 Aug 2024 02:11:44 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1scItu-0003z2-Tq
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 02:15:00 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1scIqk-0002jk-Mf; Fri, 09 Aug 2024 02:11:44 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-1fc66fc35f2so20155195ad.0; 
- Thu, 08 Aug 2024 23:11:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
+ id 1scItt-0003Ck-29
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 02:14:58 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1ff4fa918afso11775985ad.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 23:14:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723183900; x=1723788700; darn=nongnu.org;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=s7l1SCg+yug/pMLEagw5dz6FCwiLq9b/ZseW7gW8YQM=;
- b=R625562H2UqAk0Um/rz2RdCW9Oh8eKgHEFddbhpuo72Hwt59y/ryHG9wXiU4kEoLvn
- cbFvCt7REC1gyXGwPiKYjG8HkoJDDPC0LjF4CUmmG1oxPmn/JaIciVTgD30FEG5KKA30
- 1RCFhNzuPZqqwo5GTdOE2I9kDw4emCx2eEC+xa2qFkXbmmQHmOJZiz/zCiKBxqZoy6t6
- a0iARhZ35IDDmX4d/yLgB3cNpshjAJttp6XhO1mOxayHa+C1GiD4bON/yNYdssnl2F9L
- l/d0Dly87b0HeYzN0kyfR+E2kp6kI/bvjcbrO/RCKskdyYG3xACyv/VkX4zr50ch4C0u
- 8srg==
+ d=ventanamicro.com; s=google; t=1723184094; x=1723788894; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=k5qy/5prhvgTOwQHTkUZHocecIV6jjH4fWe50Mu90BQ=;
+ b=fUYq7XXbpO7p2Jk5om9PI27k9+uPcQw1gghr52TSAw2FpcK5Cw4sN8bkuZwoiefrKI
+ kf7FPNSSO+2NianTjLU0cum079WcFmT+3E4oYTdyipkuBnwn3I1EaZTDqIrp7JAhCBq+
+ UZb9BJk8yuv8veOx6mc0jNO6RPv0Y6L7/ufKNxzTnsCeuNys+W/rPlB2EPqWJQAVGSs3
+ nqVXGKGCfz68tBQNNLsWrHQGQFyyRjSD5k9zwwJ2KFLBNSaD7ViA55T1u0l4AB+/PqAv
+ RP5z2jFhwz/Sml/5nC04mF3lAmKOMeNkDnyzQZVR8YWQ7v9brC/nNlD6xj/ChdbRDbp+
+ QhCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723183900; x=1723788700;
- h=in-reply-to:references:cc:to:from:subject:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=s7l1SCg+yug/pMLEagw5dz6FCwiLq9b/ZseW7gW8YQM=;
- b=xS8uunGG2Uzv4+gIGy+buJ/HYfI9r+LXBguwdDWDFO38Hor/h2xytni0G801f4oRCE
- DgIeeGUckGTXfMWwy3itv9Qd3VEa7b3ThPk47vp4BdhdxHQITXoFc4zicZlQWGhJBYhT
- BdTZRJuf7dUeavIKu36E9p5QwdiPsYn36htonymrIYyy+1W2XBhpD5Eyo4S06Emlcyxt
- MoJDNQUU173/D6RV0IHQ191lXYAK7F6FxsbUPtA41Sq4nk6WMGEStgIQS83j5fk5+g5d
- IA3Zkh9e0oSw8lM1LQCRSRgkbqDVNuILsBi8CADdKjMfCLaWHVPa+dkeGrfkVV14csbr
- m/Hg==
+ d=1e100.net; s=20230601; t=1723184094; x=1723788894;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=k5qy/5prhvgTOwQHTkUZHocecIV6jjH4fWe50Mu90BQ=;
+ b=jrtQW/YpetdPsBR/0HgoUXf26S9r2ZRk0FrUSjuSmG9dMf3bAj4tmgpDGRWNIURTPh
+ VkhbnIjuAh+XPfymshovd8kgeI/VVh/H3oOf+RbVHgd7c4soeFH7K3Ywl1CbgJS9DFSH
+ +wQ85vZA8PIBebOeS0oyc0FJxn+8sxPkN2NYgdklhIiQS8bTnmtKFvq8rlgcEdYFxJcu
+ jvUYCe9HSCCmNgU8Et6JF0UtN42co1ENzAXVcKFDVIddMxOzQ6fOI+1Lpi+niiaoM+uT
+ Zsb3lT+ug1JjI5ajfVBgDu1uBki0u19jUXUWCvhkrhL1tL1lgnwowIYuDJANZtUG8eJK
+ rWYQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVzQ+wLFAzLCbmEG2YX6W0UArpxL80Q3M1BENJY4oV0wYgiflgshaXVq/EyfENuifDPV0UGydtf5gAJBTPJJ6d0zJxBSPGKmO0ilWwXo6j6YwWZN4hCJzOTFCk=
-X-Gm-Message-State: AOJu0YzOMLgPlTZS8oOjMT81Q+14/7nntRrXT0izigjttFOCDb4qZiZy
- Bw8GxMAzEZd98u2zLcFhbpcfzFgZZkzYMvKitGA85eLWaenh8fnY
-X-Google-Smtp-Source: AGHT+IFMy7Y1w48RHOSQuoFCkDH74ILBrB+jDMF4I6MtrCJurZqQ8u3LKuzCBpwvIigA/8Y1RK4lrQ==
-X-Received: by 2002:a17:903:2450:b0:1fb:2ebc:d16b with SMTP id
- d9443c01a7336-200967f7884mr60229725ad.7.1723183899982; 
- Thu, 08 Aug 2024 23:11:39 -0700 (PDT)
-Received: from localhost ([146.112.118.69]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-1ff592b7d3bsm134167045ad.302.2024.08.08.23.11.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 08 Aug 2024 23:11:39 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 09 Aug 2024 16:11:35 +1000
-Message-Id: <D3B5PKXVIPUN.2JSO6MPU9DPW1@gmail.com>
-Subject: Re: [PATCH for-9.1] tcg/ppc: Sync tcg_out_test and constraints
-From: "Nicholas Piggin" <npiggin@gmail.com>
-To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Richard
- Henderson" <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>
-Cc: <qemu-stable@nongnu.org>, "qemu-ppc" <qemu-ppc@nongnu.org>
-X-Mailer: aerc 0.18.2
-References: <20240807040843.7882-1-richard.henderson@linaro.org>
- <44328324-af73-4439-9d2b-d414e0e13dd7@linaro.org>
-In-Reply-To: <44328324-af73-4439-9d2b-d414e0e13dd7@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x631.google.com
+ AJvYcCVmvZvZbGmzSPqTgxJpSkXjOmJy0f/esehIzpsXDonFTRXQ7dxSsWhDiBwUmHl49F5vHo+q2g6bToKKJrxMsSeYSETl1eY=
+X-Gm-Message-State: AOJu0YxOa5YXKuIaQoAV6eTrout/ou/B6iZUm6h5smpHWAisVHGkdWPc
+ F5FJjTYy6bDyilH9oXsDcomBl/UpYokc3moeLJ+Ly6LF9nbMegi2WRTgxriJg8Q=
+X-Google-Smtp-Source: AGHT+IHvAr7Y9cdJkn0CFlslQkzs+hC7wWtanb++9wwhHiiZBTSW1xuO62qXyLpeg5re2VsCi543vw==
+X-Received: by 2002:a17:902:ced2:b0:1f6:f0fe:6cc9 with SMTP id
+ d9443c01a7336-200ae5f1fd6mr4553375ad.54.1723184094009; 
+ Thu, 08 Aug 2024 23:14:54 -0700 (PDT)
+Received: from sunil-laptop ([106.51.198.16]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1ff592aa11csm134322995ad.272.2024.08.08.23.14.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 08 Aug 2024 23:14:53 -0700 (PDT)
+Date: Fri, 9 Aug 2024 11:44:47 +0530
+From: Sunil V L <sunilvl@ventanamicro.com>
+To: Haibo Xu <haibo1.xu@intel.com>
+Cc: alistair.francis@wdc.com, xiaobo55x@gmail.com,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 1/3] tests/acpi: Add empty ACPI SRAT data file for RISC-V
+Message-ID: <ZrWz15zqkTX3sYl_@sunil-laptop>
+References: <0e30216273f2f59916bc651350578d8e8bc3a75f.1723172696.git.haibo1.xu@intel.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0e30216273f2f59916bc651350578d8e8bc3a75f.1723172696.git.haibo1.xu@intel.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=sunilvl@ventanamicro.com; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,86 +95,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu Aug 8, 2024 at 2:46 AM AEST, Philippe Mathieu-Daud=C3=A9 wrote:
-> On 7/8/24 06:08, Richard Henderson wrote:
-> > Ensure the code structure is the same for matching constraints
-> > and emitting code, lest we allow constants that cannot be
-> > trivially tested.
-> >=20
-> > Cc: qemu-stable@nongnu.org
-> > Fixes: ad788aebbab ("tcg/ppc: Support TCG_COND_TST{EQ,NE}")
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2487
-> > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> > ---
-> >   tcg/ppc/tcg-target.c.inc | 21 ++++++++++-----------
-> >   1 file changed, 10 insertions(+), 11 deletions(-)
-> >=20
-> > diff --git a/tcg/ppc/tcg-target.c.inc b/tcg/ppc/tcg-target.c.inc
-> > index 7f3829beeb..3553a47ba9 100644
-> > --- a/tcg/ppc/tcg-target.c.inc
-> > +++ b/tcg/ppc/tcg-target.c.inc
-> > @@ -325,9 +325,11 @@ static bool tcg_target_const_match(int64_t sval, i=
-nt ct,
-> >               if ((uval & ~0xffff) =3D=3D 0 || (uval & ~0xffff0000ull) =
-=3D=3D 0) {
-> >                   return 1;
-> >               }
-> > -            if (TCG_TARGET_REG_BITS =3D=3D 32 || type =3D=3D TCG_TYPE_=
-I32
-> > -                ? mask_operand(uval, &mb, &me)
-> > -                : mask64_operand(uval << clz64(uval), &mb, &me)) {
-> > +            if (uval =3D=3D (uint32_t)uval && mask_operand(uval, &mb, =
-&me)) {
-> > +                return 1;
-> > +            }
-> > +            if (TCG_TARGET_REG_BITS =3D=3D 64 &&
-> > +                mask64_operand(uval << clz64(uval), &mb, &me)) {
-> >                   return 1;
-> >               }
-> >               return 0;
-> > @@ -1749,8 +1751,6 @@ static void tcg_out_test(TCGContext *s, TCGReg de=
-st, TCGReg arg1, TCGArg arg2,
-> >  =20
-> >       if (type =3D=3D TCG_TYPE_I32) {
-> >           arg2 =3D (uint32_t)arg2;
-> > -    } else if (arg2 =3D=3D (uint32_t)arg2) {
-> > -        type =3D TCG_TYPE_I32;
-> >       }
-> >  =20
-> >       if ((arg2 & ~0xffff) =3D=3D 0) {
-> > @@ -1761,12 +1761,11 @@ static void tcg_out_test(TCGContext *s, TCGReg =
-dest, TCGReg arg1, TCGArg arg2,
-> >           tcg_out32(s, ANDIS | SAI(arg1, dest, arg2 >> 16));
-> >           return;
-> >       }
-> > -    if (TCG_TARGET_REG_BITS =3D=3D 32 || type =3D=3D TCG_TYPE_I32) {
-> > -        if (mask_operand(arg2, &mb, &me)) {
-> > -            tcg_out_rlw_rc(s, RLWINM, dest, arg1, 0, mb, me, rc);
-> > -            return;
-> > -        }
-> > -    } else {
-> > +    if (arg2 =3D=3D (uint32_t)arg2 && mask_operand(arg2, &mb, &me)) {
-> > +        tcg_out_rlw_rc(s, RLWINM, dest, arg1, 0, mb, me, rc);
-> > +        return;
-> > +    }
-> > +    if (TCG_TARGET_REG_BITS =3D=3D 64) {
-> >           int sh =3D clz64(arg2);
-> >           if (mask64_operand(arg2 << sh, &mb, &me)) {
-> >               tcg_out_rld_rc(s, RLDICR, dest, arg1, sh, me, rc);
->
-> Preferably having someone from PPC also reviewing this,
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+On Fri, Aug 09, 2024 at 11:09:47AM +0800, Haibo Xu wrote:
+> As per process documented (steps 1-3) in bios-tables-test.c, add
+> empty AML data file for RISC-V ACPI SRAT table and add the entry
+> in bios-tables-test-allowed-diff.h.
+> 
+> Signed-off-by: Haibo Xu <haibo1.xu@intel.com>
+> ---
+>  tests/data/acpi/riscv64/virt/SRAT.numamem   | 0
+>  tests/qtest/bios-tables-test-allowed-diff.h | 1 +
+>  2 files changed, 1 insertion(+)
+>  create mode 100644 tests/data/acpi/riscv64/virt/SRAT.numamem
+> 
+> diff --git a/tests/data/acpi/riscv64/virt/SRAT.numamem b/tests/data/acpi/riscv64/virt/SRAT.numamem
+> new file mode 100644
+> index 0000000000..e69de29bb2
+> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+> index dfb8523c8b..a3e01d2eb7 100644
+> --- a/tests/qtest/bios-tables-test-allowed-diff.h
+> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+> @@ -1 +1,2 @@
+>  /* List of comma-separated changed AML files to ignore */
+> +"tests/data/acpi/riscv64/virt/SRAT.numamem",
 
-I don't know much of the back end, but I think I follow where the
-match was letting through a constant that could not be emitted.
-Thanks for the fix and review.
-
-Bigger problem seems to be I'm not testing x86 on ppc so I'll have
-to rectify that. Also IIRC we were supposed to be adding a ppc
-runner to gitlab CI, I'll have to check what's happening with that,
-I think it got stalled on IT security rigmarole :(
+Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
 
 Thanks,
-Nick
+Sunil
 
