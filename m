@@ -4,82 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1ACC52D71
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 06:17:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D16C3C52D71
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 06:27:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scIwL-0008QW-Nd; Fri, 09 Aug 2024 02:17:29 -0400
+	id 1scJ4w-0004Iq-Uf; Fri, 09 Aug 2024 02:26:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1scIwJ-0008EZ-TD
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 02:17:27 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1scIwI-0003qo-3y
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 02:17:27 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-7105043330aso1648143b3a.0
- for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 23:17:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1723184244; x=1723789044; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=IAQhqbYAqGQNfBCrdps2Wqozb4sMH9lUMatyiw6pZXw=;
- b=DJAOxfNBosJ4khkKoyZCL7qFd93sS0PUc9BrZLei8Gws09sK2TLMPrx5nPApqf7wv1
- tWmCT/027a1+1wyQnttEvX7k4lb+83uq1sc5SY6GB3LVWUGUMGBErgzaZ6H/19LBgyX6
- tBL9PErtaeX8MMRqG0ziCHlPOeLAMG5FpjNlQwlIqOmDnJGBs6coIoGysXJo9MInOhuu
- oq+CRrtJf3riznQELI3xT72S15nSWdrClxdeTZ5lGPU6WrzR+BgA3nzjoF6hZpTG0b3M
- k5CvSKUrPDag3UyyJSodLSHANcbHy98+MEQ4ZrN9qcjX8e4hU6N/UR5pdMyDewq9X+Ke
- svfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723184244; x=1723789044;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IAQhqbYAqGQNfBCrdps2Wqozb4sMH9lUMatyiw6pZXw=;
- b=j7L0LFPGkXvRSL5kRCA028QLmLQo2a5pfzncvpkCwP/CAF8Tsi4kspHZm1eGmW0GWB
- G70FJpavee/8K7lcXH3Ms5X89M5C97BHYLFq4buzY1jQaxkS6uBVE2rpWr0X4hysyaqe
- BWlp1qtnpDsriueMbVOaCvNBOjx9Wv0BRUVzLed/utcx0eE2jinlYRkemC4WKkEifcam
- XjPQUfx6krJV59kiuhiklXIQ8Q+ZuteWRE3gZzDA/QCk23A27vAN/lk/62PYkl5xaL/i
- HuIas/aItgEV5YzpA4umUHRox5G/LoRyQ83wceZudztsfZ8vNk/xf9HZ132KgbD6lUSO
- sQZg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUBN8DwBkaMQQ6/erpJB8qK8CoQJ1A76sQTIsIWNFIi+UEh+foBl0N4c+wlrGjA9O9fb0b6pnXb/UvhOqENnJEF8mwB0Lw=
-X-Gm-Message-State: AOJu0YxB4q4Oc7sTaSlcdextNaKgReX+jwtuUGf992P4D5JAMkqqRPzL
- GyywNR8eYjBXqMzg/RlsGLU4u67xX4K9GrYLFC5BNnAzidp9abW9oyS24okjkIk=
-X-Google-Smtp-Source: AGHT+IHJ9cLoe6KeTyE+oDf0hzS7FwUq7rwTEIyRiPgf1FRU0eGY99ATfWLXqB8q1SsTCDX0UC39lg==
-X-Received: by 2002:a05:6a21:458b:b0:1c6:9f28:37b7 with SMTP id
- adf61e73a8af0-1c89feeb675mr780875637.27.1723184244298; 
- Thu, 08 Aug 2024 23:17:24 -0700 (PDT)
-Received: from sunil-laptop ([106.51.198.16]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d1c9db0341sm2155081a91.39.2024.08.08.23.17.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Aug 2024 23:17:23 -0700 (PDT)
-Date: Fri, 9 Aug 2024 11:47:17 +0530
-From: Sunil V L <sunilvl@ventanamicro.com>
-To: Haibo Xu <haibo1.xu@intel.com>
-Cc: alistair.francis@wdc.com, xiaobo55x@gmail.com,
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/3] tests/acpi: Add expected ACPI SRAT AML file for RISC-V
-Message-ID: <ZrW0bVs-bhIXwR1H@sunil-laptop>
-References: <0e30216273f2f59916bc651350578d8e8bc3a75f.1723172696.git.haibo1.xu@intel.com>
- <a667480203b35508038176c8ce4722370294cc57.1723172696.git.haibo1.xu@intel.com>
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1scJ4u-0004Gl-0i
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 02:26:20 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1scJ4r-0005P4-5Z
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 02:26:18 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 05D0A615C4;
+ Fri,  9 Aug 2024 06:26:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43071C32782;
+ Fri,  9 Aug 2024 06:26:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1723184774;
+ bh=r44vZJSWAK7TBXA7rJhj67/0NCf3mLf0LL0VYzZoYYU=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=taoMr7mHUWcNZRehXcclF+8KzDooeolrpF7q4WZHLyIOTexR5mqD37vkO91mYMCUH
+ XV2zR/ktUEWxpzwSEUHmhpzf9ZkQ6EWlUeeK/eh+XvXaVeGiBh5D3/korAAkbeONHk
+ YKHG4rs8Fme5EulrE0wgH2xScyqwT+zOEIz7a2lFgbZDaTFQKRHrQHblBj9X6NV0F5
+ 1SScEGrsOQ5nC2O7ZJrfQK6uuZy8AIvJ6pMOusbWDn07XGG7ZbCEPqDqAL0WXALlpa
+ 7P+CbUdzCy9iwEL7xerMRvdFlPENNiD1XJTGIWUI5e7YlpzInp0YR11EO6ic988A9E
+ Q8vKmiKbynNNw==
+Date: Fri, 9 Aug 2024 08:26:09 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: John Snow <jsnow@redhat.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
+ <shiju.jose@huawei.com>, Cleber Rosa <crosa@redhat.com>,
+ linux-kernel@vger.kernel.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v5 7/7] scripts/ghes_inject: add a script to generate
+ GHES error inject
+Message-ID: <20240809082609.1864eabe@foz.lan>
+In-Reply-To: <20240809004137.01f97da2@foz.lan>
+References: <cover.1722634602.git.mchehab+huawei@kernel.org>
+ <0654a89fe24f4343016b9cecc0752594ad1cd49f.1722634602.git.mchehab+huawei@kernel.org>
+ <CAFn=p-Y27zap1P5G3NibdZS26iGwCqh8U0vgW0Vw31f53+oU1w@mail.gmail.com>
+ <20240809004137.01f97da2@foz.lan>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a667480203b35508038176c8ce4722370294cc57.1723172696.git.haibo1.xu@intel.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=sunilvl@ventanamicro.com; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -71
+X-Spam_score: -7.2
+X-Spam_bar: -------
+X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,41 +77,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 09, 2024 at 11:09:49AM +0800, Haibo Xu wrote:
-> As per the step 5 in the process documented in bios-tables-test.c,
-> generate the expected ACPI SRAT AML data file for RISC-V using the
-> rebuild-expected-aml.sh script and update the
-> bios-tables-test-allowed-diff.h.
-> 
-> This is a new file being added for the first time. Hence, iASL diff
-> output is not added.
-> 
-> Signed-off-by: Haibo Xu <haibo1.xu@intel.com>
-> ---
->  tests/data/acpi/riscv64/virt/SRAT.numamem   | Bin 0 -> 108 bytes
->  tests/qtest/bios-tables-test-allowed-diff.h |   1 -
->  2 files changed, 1 deletion(-)
-> 
-> diff --git a/tests/data/acpi/riscv64/virt/SRAT.numamem b/tests/data/acpi/riscv64/virt/SRAT.numamem
-> index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..2b6467364b7673c366c9abf948142eaf60c9311f 100644
-> GIT binary patch
-> literal 108
-> zcmWFzatz5~U|?XDb@F%i2v%^42yj*a0!E-1hz+7a7zWryU@U|<qXt~80m|Zli6H9*
-> E0AFAS0RR91
-> 
-> literal 0
-> HcmV?d00001
-> 
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> index a3e01d2eb7..dfb8523c8b 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1,2 +1 @@
->  /* List of comma-separated changed AML files to ignore */
-> -"tests/data/acpi/riscv64/virt/SRAT.numamem",
+Em Fri, 9 Aug 2024 00:41:37 +0200
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> escreveu:
 
-Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+> > You should be able to use e.g.
+> > 
+> > legacy.py's QEMUMonitorProtocol class for synchronous connections, e.g.
+> > 
+> > from qemu.qmp.legacy import QEMUMonitorProtocol
+> > 
+> > qmp = QEMUMonitorProtocol((host, port))
+> > qmp.connect(negotiate=True)  
+> 
+> That sounds interesting! I give it a try.
+
+I applied the enclosed patch at the end of my patch series, but
+somehow it is not working. For whatever reason, connect() is
+raising a StateError apparently due to Runstate.CONNECTING.
+
+I tried both as declaring (see enclosed patch):
+
+	class qmp(QEMUMonitorProtocol)
+
+and using:
+
+-        super().__init__(self.host, self.port)
++        self.qmp_monitor = QEMUMonitorProtocol(self.host, self.port)
+
+On both cases, it keeps waiting forever for a connection.
+
+Regards,
+Mauro
+
+---
+
+diff --git a/scripts/qmp_helper.py b/scripts/qmp_helper.py
+index e9e9388bcb8b..62ca267cdc87 100644
+--- a/scripts/qmp_helper.py
++++ b/scripts/qmp_helper.py
+@@ -9,9 +9,23 @@
+ import socket
+ import sys
+ 
++from os import path
++
++try:
++    qemu_dir = path.abspath(path.dirname(path.dirname(__file__)))
++    sys.path.append(path.join(qemu_dir, 'python'))
++
++    from qemu.qmp.legacy import QEMUMonitorProtocol
++    from qemu.qmp.protocol import StateError
++
++except ModuleNotFoundError as exc:
++    print(f"Module '{exc.name}' not found.")
++    print("Try export PYTHONPATH=top-qemu-dir/python or run from top-qemu-dir")
++    sys.exit(1)
++
+ from base64 import b64encode
+ 
+-class qmp:
++class qmp(QEMUMonitorProtocol):
+     """
+     Opens a connection and send/receive QMP commands.
+     """
+@@ -21,22 +35,20 @@ def send_cmd(self, command, may_open=False,return_error=True):
+ 
+         if may_open:
+             self._connect()
+-        elif not self.socket:
+-            return None
++        elif not self.connected:
++            return False
+ 
+         if isinstance(command, dict):
+             data = json.dumps(command).encode("utf-8")
+         else:
+             data = command.encode("utf-8")
+ 
+-        self.socket.sendall(data)
+-        data = self.socket.recv(1024)
+         try:
+-            obj = json.loads(data.decode("utf-8"))
+-        except json.JSONDecodeError as e:
+-            print(f"Invalid QMP answer: {e}")
+-            self._close()
+-            return None
++            obj = self.cmd_obj(command)
++        except Exception as e:
++            print("Failed to inject error: {e}.")
++
++        print(obj)
+ 
+         if "return" in obj:
+             if isinstance(obj.get("return"), dict):
+@@ -46,86 +58,47 @@ def send_cmd(self, command, may_open=False,return_error=True):
+             else:
+                 return obj["return"]
+ 
+-        elif isinstance(obj.get("error"), dict):
+-            error = obj["error"]
+-            if return_error:
+-                print(f'{error["class"]}: {error["desc"]}')
+-        else:
+-            print(json.dumps(obj))
+-
+         return None
+ 
+     def _close(self):
+         """Shutdown and close the socket, if opened"""
+-        if not self.socket:
++        if not self.connected:
+             return
+ 
+-        self.socket.shutdown(socket.SHUT_WR)
+-        while 1:
+-            data = self.socket.recv(1024)
+-            if data == b"":
+-                break
+-            try:
+-                obj = json.loads(data.decode("utf-8"))
+-            except json.JSONDecodeError as e:
+-                print(f"Invalid QMP answer: {e}")
+-                self.socket.close()
+-                self.socket = None
+-                return
+-
+-            if isinstance(obj.get("return"), dict):
+-                print(json.dumps(obj["return"]))
+-            if isinstance(obj.get("error"), dict):
+-                error = obj["error"]
+-                print(f'{error["class"]}: {error["desc"]}')
+-            else:
+-                print(json.dumps(obj))
+-
+-        self.socket.close()
+-        self.socket = None
++        self.close()
++        self.connected = False
+ 
+     def _connect(self):
+         """Connect to a QMP TCP/IP port, if not connected yet"""
+ 
+-        if self.socket:
++        if self.connected:
+             return True
+ 
+-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+-        try:
+-            self.socket.connect((self.host, self.port))
+-        except ConnectionRefusedError:
+-            sys.exit(f"Can't connect to QMP host {self.host}:{self.port}")
+-
+-        data = self.socket.recv(1024)
+-        try:
+-            obj = json.loads(data.decode("utf-8"))
+-        except json.JSONDecodeError as e:
+-            print(f"Invalid QMP answer: {e}")
+-            self._close()
+-            return False
+-
+-        if "QMP" not in obj:
+-            print(f"Invalid QMP answer: {data.decode('utf-8')}")
+-            self._close()
+-            return False
++        is_connecting = True
++        while is_connecting:
++            try:
++                ret = self.connect(negotiate=True)
++                self.accept()
++                is_connecting = False
++            except ConnectionError:
++                sys.exit(f"Can't connect to QMP host {self.host}:{self.port}")
++                return False
++            except StateError as e:
++                print(f"StateError: {e}")
+ 
+-        result = self.send_cmd('{ "execute": "qmp_capabilities" }')
+-        if not result:
+-            self._close()
+-            return False
++        self.connected = True
+ 
+         return True
+ 
+     def __init__(self, host, port, debug=False):
+         """Initialize variables used by the QMP send logic"""
+ 
+-        self.socket = None
++        self.connected = False
+         self.host = host
+         self.port = port
+         self.debug = debug
+ 
+-    def __del__(self):
+-        self._close()
++        super().__init__(self.host, self.port)
+ 
+     #
+     # Socket QMP send command
+@@ -168,8 +141,12 @@ def send_cper(self, guid, data):
+ 
+         self._connect()
+ 
+-        if self.send_cmd(command):
+-            print("Error injected.")
++        try:
++            self.cmd_obj(command)
++        except Exception as e:
++            print("Failed to inject error: {e}.")
++
++        print("Error injected.")
+ 
+     def search_qom(self, path, prop, regex):
+         """
+@@ -180,8 +157,9 @@ def search_qom(self, path, prop, regex):
+             ...
+         """
+ 
+-        found = []
++        self._connect()
+ 
++        found = []
+         i = 0
+         while 1:
+             dev = f"{path}[{i}]"
+@@ -192,7 +170,11 @@ def search_qom(self, path, prop, regex):
+                     'property': prop
+                 }
+             }
+-            ret = self.send_cmd(cmd, may_open=True, return_error=False)
++            try:
++                ret = self.cmd_obj(cmd)
++            except Exception as e:
++                print("Failed to inject error: {e}.")
++
+             if not ret:
+                 break
+ 
+
+
 
 Thanks,
-Sunil
+Mauro
 
