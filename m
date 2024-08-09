@@ -4,102 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9A23C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 12:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37661C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 12:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scPBn-0006qA-UM; Fri, 09 Aug 2024 08:57:51 -0400
+	id 1scPDY-00030f-Td; Fri, 09 Aug 2024 08:59:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1scPBd-0006pY-Kn
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 08:57:41 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1scPDX-000302-6e
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 08:59:39 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1scPBb-0005Nb-Fs
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 08:57:41 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1scPDV-0005Xe-3Y
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 08:59:38 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 6FCFE1FF62;
- Fri,  9 Aug 2024 12:57:35 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 87CE921E5F;
+ Fri,  9 Aug 2024 12:59:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1723208256; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1723208375; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=OUa+7cddpkmIsARzZi5G0iPbiA8w0Q8d3dlNdFuJaNQ=;
- b=phS0GxOp5dT60PvkuuoJl335T5hWajoIxa30H0XbZ3rWJ+V88T6IkX2tJI2Iip9QJeROBt
- XLlsDX65Bp/q3ybbRn7Q6CVUjVQeD1zo/K8vsh0Ttk1ywkTiEQiWGrdjpnt9wnxBkFYQYI
- zht4zXz8LRMjcjYzjxavWxQjjhrhrMM=
+ bh=7Hjj5nSkbaBm6fAGNCv4sjrweL5iY6nY2i6ix5tWBUs=;
+ b=jdqHuf/tBqH0/5UPbtAV20DqKnz4yosYhYS+73R9cst3y0J1pG9bMgMkHIEnFBj7A90lin
+ JC3EBgyifIoGVHYRCf8auGZlGnfmq3kH7VEGEy+/GEHvocPWXAi71Ks52Wvc+EWk8PBqIU
+ bP/tXFcXuAeTIrDVHfgrE8DN5zXYSn0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1723208256;
+ s=susede2_ed25519; t=1723208375;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=OUa+7cddpkmIsARzZi5G0iPbiA8w0Q8d3dlNdFuJaNQ=;
- b=lGlZ33dqjzXHI4u9zHjtrOThPkJl4f7CiEB6oF/GSu2JOp21M8xipoxNpNGavi4Ziw7A+8
- KkfHtnH3xsZyvGCw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="NSQjZY/O";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=jW6ibhoV
+ bh=7Hjj5nSkbaBm6fAGNCv4sjrweL5iY6nY2i6ix5tWBUs=;
+ b=4vMW260dZgrwzzHgVJ80Ofi07253mpRYzRIYYzz79rgIoQGUHiJbvPp01swnCNjjkE9AJx
+ kEWRdxG7taLo3WCA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="jdqHuf/t";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=4vMW260d
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1723208255; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1723208375; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=OUa+7cddpkmIsARzZi5G0iPbiA8w0Q8d3dlNdFuJaNQ=;
- b=NSQjZY/O3yyvb06a07yfSdDOi93lOHopK8H6Ys3IRG7y5oech94VVSIG54yY79+ipTrwcg
- zg/RObIzkByBSZ7kc5AeggHvsXxutQcWkhKGXLPiosR4jICFx+eHjNwpAHywX9Z1deaJbR
- wG2uNKH+fup4bD3dG0suaroKosTRwFM=
+ bh=7Hjj5nSkbaBm6fAGNCv4sjrweL5iY6nY2i6ix5tWBUs=;
+ b=jdqHuf/tBqH0/5UPbtAV20DqKnz4yosYhYS+73R9cst3y0J1pG9bMgMkHIEnFBj7A90lin
+ JC3EBgyifIoGVHYRCf8auGZlGnfmq3kH7VEGEy+/GEHvocPWXAi71Ks52Wvc+EWk8PBqIU
+ bP/tXFcXuAeTIrDVHfgrE8DN5zXYSn0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1723208255;
+ s=susede2_ed25519; t=1723208375;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=OUa+7cddpkmIsARzZi5G0iPbiA8w0Q8d3dlNdFuJaNQ=;
- b=jW6ibhoVHatRTNV7Tfv+0PSih4OFcoZpfw4b+5ckqUs/beGZfs4QQ7Ip3lSG6dsecv5w7B
- c/HqmQUowLyoblBg==
+ bh=7Hjj5nSkbaBm6fAGNCv4sjrweL5iY6nY2i6ix5tWBUs=;
+ b=4vMW260dZgrwzzHgVJ80Ofi07253mpRYzRIYYzz79rgIoQGUHiJbvPp01swnCNjjkE9AJx
+ kEWRdxG7taLo3WCA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E2F7F1379A;
- Fri,  9 Aug 2024 12:57:34 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1331A1379A;
+ Fri,  9 Aug 2024 12:59:34 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id aVT9KT4Stmb8dgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 09 Aug 2024 12:57:34 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id tGnKMrYStmavdwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 09 Aug 2024 12:59:34 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: yong.huang@smartx.com, qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, yong.huang@smartx.com
-Subject: Re: [PATCH v1 1/5] tests/migration: Move the guestperf tool to
- scripts directory
-In-Reply-To: <38f6c0a2385f75f437d2b8b7b5fa82adacc2879c.1723189080.git.yong.huang@smartx.com>
+Subject: Re: [PATCH v1 2/5] tests/migration: Make initrd-stress.img built by
+ default
+In-Reply-To: <7134ee3f7632b0454ef287301bda6c4faeb1d473.1723189080.git.yong.huang@smartx.com>
 References: <cover.1723189080.git.yong.huang@smartx.com>
- <38f6c0a2385f75f437d2b8b7b5fa82adacc2879c.1723189080.git.yong.huang@smartx.com>
-Date: Fri, 09 Aug 2024 09:57:32 -0300
-Message-ID: <87y155g8g3.fsf@suse.de>
+ <7134ee3f7632b0454ef287301bda6c4faeb1d473.1723189080.git.yong.huang@smartx.com>
+Date: Fri, 09 Aug 2024 09:59:32 -0300
+Message-ID: <87v809g8cr.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Rspamd-Queue-Id: 6FCFE1FF62
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.48 / 50.00]; BAYES_HAM(-1.97)[94.88%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[]; TO_DN_SOME(0.00)[];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- FROM_HAS_DN(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim]
+ DKIM_TRACE(0.00)[suse.de:+]
 X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+X-Rspamd-Queue-Id: 87CE921E5F
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -127,116 +128,14 @@ yong.huang@smartx.com writes:
 
 > From: Hyman Huang <yong.huang@smartx.com>
 >
-> Guestperf was designed to test the performance of migration,
-> with a loose connection to the fundamental test cases of QEMU.
->
-> To improve the repository's structure, move it to the scripts
-> directory.
+> The initrd-stress.img was compiled by specifying the
+> target, to make it easier for developers to play the
+> guestperf tool, make it built by default.
 >
 > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 > ---
->  MAINTAINERS                                          | 5 +++++
->  {tests => scripts}/migration/guestperf-batch.py      | 0
->  {tests => scripts}/migration/guestperf-plot.py       | 0
->  {tests => scripts}/migration/guestperf.py            | 0
->  {tests => scripts}/migration/guestperf/__init__.py   | 0
->  {tests => scripts}/migration/guestperf/comparison.py | 0
->  {tests => scripts}/migration/guestperf/engine.py     | 0
->  {tests => scripts}/migration/guestperf/hardware.py   | 0
->  {tests => scripts}/migration/guestperf/plot.py       | 0
->  {tests => scripts}/migration/guestperf/progress.py   | 0
->  {tests => scripts}/migration/guestperf/report.py     | 0
->  {tests => scripts}/migration/guestperf/scenario.py   | 0
->  {tests => scripts}/migration/guestperf/shell.py      | 0
->  {tests => scripts}/migration/guestperf/timings.py    | 0
->  14 files changed, 5 insertions(+)
->  rename {tests => scripts}/migration/guestperf-batch.py (100%)
->  rename {tests => scripts}/migration/guestperf-plot.py (100%)
->  rename {tests => scripts}/migration/guestperf.py (100%)
->  rename {tests => scripts}/migration/guestperf/__init__.py (100%)
->  rename {tests => scripts}/migration/guestperf/comparison.py (100%)
->  rename {tests => scripts}/migration/guestperf/engine.py (100%)
->  rename {tests => scripts}/migration/guestperf/hardware.py (100%)
->  rename {tests => scripts}/migration/guestperf/plot.py (100%)
->  rename {tests => scripts}/migration/guestperf/progress.py (100%)
->  rename {tests => scripts}/migration/guestperf/report.py (100%)
->  rename {tests => scripts}/migration/guestperf/scenario.py (100%)
->  rename {tests => scripts}/migration/guestperf/shell.py (100%)
->  rename {tests => scripts}/migration/guestperf/timings.py (100%)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 10af212632..dae1535dae 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3449,6 +3449,11 @@ F: migration/dirtyrate.h
->  F: include/sysemu/dirtyrate.h
->  F: docs/devel/migration/dirty-limit.rst
->  
-> +Migration performance test tool
-> +M: Hyman Huang <yong.huang@smartx.com>
-> +S: Maintained
-> +F: scripts/migration/
+>  tests/migration/meson.build | 5 +++--
 
-This probably needs to be scripts/migration/guestperf* unless of course
-you intend to maintain all scripts that show up under
-scripts/migration/. We have analyze-migration.py and
-vmstate-static-checker.py which are candidates to be put in that same
-directory.
-
-> +
->  Detached LUKS header
->  M: Hyman Huang <yong.huang@smartx.com>
->  S: Maintained
-> diff --git a/tests/migration/guestperf-batch.py b/scripts/migration/guestperf-batch.py
-> similarity index 100%
-> rename from tests/migration/guestperf-batch.py
-> rename to scripts/migration/guestperf-batch.py
-> diff --git a/tests/migration/guestperf-plot.py b/scripts/migration/guestperf-plot.py
-> similarity index 100%
-> rename from tests/migration/guestperf-plot.py
-> rename to scripts/migration/guestperf-plot.py
-> diff --git a/tests/migration/guestperf.py b/scripts/migration/guestperf.py
-> similarity index 100%
-> rename from tests/migration/guestperf.py
-> rename to scripts/migration/guestperf.py
-> diff --git a/tests/migration/guestperf/__init__.py b/scripts/migration/guestperf/__init__.py
-> similarity index 100%
-> rename from tests/migration/guestperf/__init__.py
-> rename to scripts/migration/guestperf/__init__.py
-> diff --git a/tests/migration/guestperf/comparison.py b/scripts/migration/guestperf/comparison.py
-> similarity index 100%
-> rename from tests/migration/guestperf/comparison.py
-> rename to scripts/migration/guestperf/comparison.py
-> diff --git a/tests/migration/guestperf/engine.py b/scripts/migration/guestperf/engine.py
-> similarity index 100%
-> rename from tests/migration/guestperf/engine.py
-> rename to scripts/migration/guestperf/engine.py
-> diff --git a/tests/migration/guestperf/hardware.py b/scripts/migration/guestperf/hardware.py
-> similarity index 100%
-> rename from tests/migration/guestperf/hardware.py
-> rename to scripts/migration/guestperf/hardware.py
-> diff --git a/tests/migration/guestperf/plot.py b/scripts/migration/guestperf/plot.py
-> similarity index 100%
-> rename from tests/migration/guestperf/plot.py
-> rename to scripts/migration/guestperf/plot.py
-> diff --git a/tests/migration/guestperf/progress.py b/scripts/migration/guestperf/progress.py
-> similarity index 100%
-> rename from tests/migration/guestperf/progress.py
-> rename to scripts/migration/guestperf/progress.py
-> diff --git a/tests/migration/guestperf/report.py b/scripts/migration/guestperf/report.py
-> similarity index 100%
-> rename from tests/migration/guestperf/report.py
-> rename to scripts/migration/guestperf/report.py
-> diff --git a/tests/migration/guestperf/scenario.py b/scripts/migration/guestperf/scenario.py
-> similarity index 100%
-> rename from tests/migration/guestperf/scenario.py
-> rename to scripts/migration/guestperf/scenario.py
-> diff --git a/tests/migration/guestperf/shell.py b/scripts/migration/guestperf/shell.py
-> similarity index 100%
-> rename from tests/migration/guestperf/shell.py
-> rename to scripts/migration/guestperf/shell.py
-> diff --git a/tests/migration/guestperf/timings.py b/scripts/migration/guestperf/timings.py
-> similarity index 100%
-> rename from tests/migration/guestperf/timings.py
-> rename to scripts/migration/guestperf/timings.py
+This could have moved along with the rest of guestperf. There's already
+a scripts/meson.build where these could go.
 
