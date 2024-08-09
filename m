@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CAD7C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 04:54:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BAFEC49EA1
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 04:54:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scHdM-0002qS-Oc; Fri, 09 Aug 2024 00:53:48 -0400
+	id 1scHdK-0002f5-3B; Fri, 09 Aug 2024 00:53:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1scHdK-0002hg-M6
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 00:53:46 -0400
+ id 1scHdI-0002bx-Ak
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 00:53:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1scHdJ-0008HQ-2y
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 00:53:46 -0400
+ id 1scHdG-0008Gn-QJ
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 00:53:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723179224;
+ s=mimecast20190719; t=1723179222;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6y/Dx9WfBuoEyBP+LUel142LcScGzpkHOUr2wWRP0X0=;
- b=av5wUfbqQC4nVhcbRv4gRqZbgF/5L67UJOTOlGMQH+zOgWAnXK3myuGjCyGRnq2F8bImKf
- Fho/yk6216Q3WMe0iOleT7ijs4jNwnupSGSAHsXnELlwlq+TUNeAyyd1Co2eO50xHaPjxz
- M74trJ8SyZc+qGn3xH491P+U6yvYwbw=
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
- [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FfU6XyO2Jk8i4FOiwyJKt1ccqOlc2vNSvzjRNpOVJfs=;
+ b=NLmQe+UvrERLM/olQxjfCk9SNG0BgutOvF1Fj4zW0LhhNuBDeXhhmN/yUeUNQMZy53BUgz
+ 9We4C38/bAl98U5IQq11DoTW19qGIx2iBNQAnLwmjxU3BGO6yxzTSc1Mkqpu1pwMRHvUxj
+ OzQkf4hCnzO+JGBykRXnzJbkb4wam5A=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-387-Q6uTvj7ONIir2eEnFYZWWw-1; Fri, 09 Aug 2024 00:53:42 -0400
-X-MC-Unique: Q6uTvj7ONIir2eEnFYZWWw-1
-Received: by mail-pf1-f198.google.com with SMTP id
- d2e1a72fcca58-7104d2cac39so2048992b3a.1
- for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 21:53:42 -0700 (PDT)
+ us-mta-563-jNOXuUqSMq-ztbiLeiVgTA-1; Fri, 09 Aug 2024 00:53:39 -0400
+X-MC-Unique: jNOXuUqSMq-ztbiLeiVgTA-1
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-7a28f78c67aso1810896a12.1
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 21:53:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723179221; x=1723784021;
+ d=1e100.net; s=20230601; t=1723179218; x=1723784018;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6y/Dx9WfBuoEyBP+LUel142LcScGzpkHOUr2wWRP0X0=;
- b=nZHcvKsqIF1W0Mu/tBiJK5TYdvucN4KjG1cyuVjRZafqiX+YjFxIJ3nL7mz4kn0N95
- 1ea80zARwJ1XM5ycPqhNZujFGOJoqGrzFwcBBpKeHS/QZA1yKxUkKukCqkOt66RE3Fgc
- TMoIY0t621w8FdM3Z1+afdC+0DXO/FZT9CAz22SDRazq+WG5WnKlKiViK0FBhmSQSK8z
- Mx5d/9BromTtm/clsQGJ1Qv7Ua3nzLRDclUOkwT/sC8BIifK5cNjGvunSuHwCzJksUSA
- Q3MESpJFf5ISZ7cuwIuY1dGfPZPTE7ST4LXdAdoomwp6iQdESM7coPX79M6gyMGOFik6
- xfSw==
+ bh=FfU6XyO2Jk8i4FOiwyJKt1ccqOlc2vNSvzjRNpOVJfs=;
+ b=EymjMVNPHjW9Il4FM8JUJpSgjox7TZwaD9f/XietT74XhgAZdgl7ZRoJPWr6JQQpss
+ UJic53z59nzhquuT2BIeaz1oSgKKnhdxtGJtfNHnJfqSm0KE6unrATdpWnP6FxKOcVmX
+ kE4xe0hCvAOzDIHc/Sj4rl1i53CuzMElCuCrBS+jSmPpRs0col8apeQTXvc5aMWABPJF
+ v/Ax8ZfgVs3EX/zNuQULxnXQqet5+F08pkt9leVH0FN9tpuTDEiWkSom1NyiVmyENEd7
+ fd3SNp/0pP6PvZvNanKxkkiDqeQNS/7v7dyJgEaarsZouy9PfgUSaylncIisXRkvmK3A
+ 3+Ow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXlnYS91pvATbZRpH9LgIUwOwOHA2fZ2RbSTj1zIOs9/v6yp09k38TRz44y+6TePXdb//2JN1u8wucKfDVEGmh2/D489o8=
-X-Gm-Message-State: AOJu0Yww2Davplp4dX12wzkQtlOhNMKa6/dIl05eH93lxOf8/TsJUTjP
- QmX7WXDpMGVbFtefJP9q9I1181CpdGE3F92Vbz+t8BP0cx6UKM0RD08sY0HDTABQ+XlMuWdFUiA
- GE1R/jrAxqtSHsqHzNoBmIR8Vhy/CYftt6wCrc2UpF46AvNFFX04e
-X-Received: by 2002:a05:6a21:458a:b0:1c4:8650:d6d7 with SMTP id
- adf61e73a8af0-1c89fec2cd2mr507347637.16.1723179221103; 
- Thu, 08 Aug 2024 21:53:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG7CZUoFnBycRjnM0orNNjv+/SuxPUpkqJGSE9wtp9gfcdEF73syhQeo7PZom0vG5inUvKBJQ==
-X-Received: by 2002:a05:6a21:458a:b0:1c4:8650:d6d7 with SMTP id
- adf61e73a8af0-1c89fec2cd2mr507328637.16.1723179220671; 
- Thu, 08 Aug 2024 21:53:40 -0700 (PDT)
+ AJvYcCXvfNs3lZ5Atrm90sJ08ojNRhbVsW0Lmq6Lv88ktuIfMc7MJtYH04PPobaaqg6+MEa3df2wWhBtYZzR8YYdBpNVLxhQZaI=
+X-Gm-Message-State: AOJu0YySNIQUKSoKtqtBI+evj9jLx4fBXunNgfwyBeDpSIh1pK9Xa0Lw
+ 0dKDUdPd1Z7/EBsoAueJb210PeizSOJDhHAZI2ft4zsE62aUo2bjP26xyRsmFEipv84Ldgt1IJq
+ xMaCb+Jep4lIMsO17hlM8+SEXpCICdv59TzqmNJwu3VvZxDBoJD0mRGBZENAa
+X-Received: by 2002:a05:6a21:3993:b0:1c0:f5fa:d1e9 with SMTP id
+ adf61e73a8af0-1c89fce5652mr592198637.15.1723179217723; 
+ Thu, 08 Aug 2024 21:53:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFXIKuqH70u2Lx+GwuqOZ8MGvHc3rF9cXAtufWKuQhkfNhxF7aPPB1+YhD3cDXDoG1FQCrEFQ==
+X-Received: by 2002:a05:6a21:3993:b0:1c0:f5fa:d1e9 with SMTP id
+ adf61e73a8af0-1c89fce5652mr592182637.15.1723179217298; 
+ Thu, 08 Aug 2024 21:53:37 -0700 (PDT)
 Received: from localhost.localdomain ([115.96.114.241])
  by smtp.googlemail.com with ESMTPSA id
- d9443c01a7336-1ff58f6a540sm133516895ad.118.2024.08.08.21.53.37
+ d9443c01a7336-1ff58f6a540sm133516895ad.118.2024.08.08.21.53.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 08 Aug 2024 21:53:40 -0700 (PDT)
+ Thu, 08 Aug 2024 21:53:36 -0700 (PDT)
 From: Ani Sinha <anisinha@redhat.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>, zhao1.liu@intel.com, cfontana@suse.de,
- qemu-trivial@nongnu.org, kvm@vger.kernel.org, qemu-devel@nongnu.org
-Subject: [PATCH v3 2/2] kvm: refactor core virtual machine creation into its
- own function
-Date: Fri,  9 Aug 2024 10:21:53 +0530
-Message-ID: <20240809045153.1744397-3-anisinha@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>, qemu-trivial@nongnu.org,
+ zhao1.liu@intel.com, kvm@vger.kernel.org, qemu-devel@nongnu.org
+Subject: [PATCH 1/2] kvm: replace fprintf with error_report() in kvm_init()
+ for error conditions
+Date: Fri,  9 Aug 2024 10:21:52 +0530
+Message-ID: <20240809045153.1744397-2-anisinha@redhat.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240809045153.1744397-1-anisinha@redhat.com>
 References: <20240809045153.1744397-1-anisinha@redhat.com>
@@ -104,136 +104,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refactoring the core logic around KVM_CREATE_VM into its own separate function
-so that it can be called from other functions in subsequent patches. There is
-no functional change in this patch.
+error_report() is more appropriate for error situations. Replace fprintf with
+error_report. Cosmetic. No functional change.
 
-CC: pbonzini@redhat.com
-CC: zhao1.liu@intel.com
-CC: cfontana@suse.de
 CC: qemu-trivial@nongnu.org
+CC: zhao1.liu@intel.com
 Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- accel/kvm/kvm-all.c | 88 +++++++++++++++++++++++++++------------------
- 1 file changed, 54 insertions(+), 34 deletions(-)
-
-changelog:
-v2: s/fprintf/warn_report as suggested by zhao
-v3: s/warn_report/error_report. function names adjusted to conform to
-other names. fprintf -> error_report() moved to its own patch.
+ accel/kvm/kvm-all.c | 42 +++++++++++++++++++-----------------------
+ 1 file changed, 19 insertions(+), 23 deletions(-)
 
 diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 899b5264e3..610b3ead32 100644
+index 75d11a07b2..899b5264e3 100644
 --- a/accel/kvm/kvm-all.c
 +++ b/accel/kvm/kvm-all.c
-@@ -2385,6 +2385,57 @@ uint32_t kvm_dirty_ring_size(void)
-     return kvm_state->kvm_dirty_ring_size;
- }
+@@ -2427,7 +2427,7 @@ static int kvm_init(MachineState *ms)
+     QLIST_INIT(&s->kvm_parked_vcpus);
+     s->fd = qemu_open_old(s->device ?: "/dev/kvm", O_RDWR);
+     if (s->fd == -1) {
+-        fprintf(stderr, "Could not access KVM kernel module: %m\n");
++        error_report("Could not access KVM kernel module: %m");
+         ret = -errno;
+         goto err;
+     }
+@@ -2437,13 +2437,13 @@ static int kvm_init(MachineState *ms)
+         if (ret >= 0) {
+             ret = -EINVAL;
+         }
+-        fprintf(stderr, "kvm version too old\n");
++        error_report("kvm version too old");
+         goto err;
+     }
  
-+static int kvm_create_vm(MachineState *ms, KVMState *s, int type)
-+{
-+    int ret;
-+
-+    do {
-+        ret = kvm_ioctl(s, KVM_CREATE_VM, type);
-+    } while (ret == -EINTR);
-+
-+    if (ret < 0) {
+     if (ret > KVM_API_VERSION) {
+         ret = -EINVAL;
+-        fprintf(stderr, "kvm version not supported\n");
++        error_report("kvm version not supported");
+         goto err;
+     }
+ 
+@@ -2488,30 +2488,26 @@ static int kvm_init(MachineState *ms)
+     } while (ret == -EINTR);
+ 
+     if (ret < 0) {
+-        fprintf(stderr, "ioctl(KVM_CREATE_VM) failed: %d %s\n", -ret,
+-                strerror(-ret));
 +        error_report("ioctl(KVM_CREATE_VM) failed: %d %s", -ret,
 +                    strerror(-ret));
-+
-+#ifdef TARGET_S390X
-+        if (ret == -EINVAL) {
+ 
+ #ifdef TARGET_S390X
+         if (ret == -EINVAL) {
+-            fprintf(stderr,
+-                    "Host kernel setup problem detected. Please verify:\n");
+-            fprintf(stderr, "- for kernels supporting the switch_amode or"
+-                    " user_mode parameters, whether\n");
+-            fprintf(stderr,
+-                    "  user space is running in primary address space\n");
+-            fprintf(stderr,
+-                    "- for kernels supporting the vm.allocate_pgste sysctl, "
+-                    "whether it is enabled\n");
 +            error_report("Host kernel setup problem detected. Please verify:");
 +            error_report("- for kernels supporting the switch_amode or"
 +                        " user_mode parameters, whether");
 +            error_report("  user space is running in primary address space");
 +            error_report("- for kernels supporting the vm.allocate_pgste "
 +                        "sysctl, whether it is enabled");
-+        }
-+#elif defined(TARGET_PPC)
-+        if (ret == -EINVAL) {
+         }
+ #elif defined(TARGET_PPC)
+         if (ret == -EINVAL) {
+-            fprintf(stderr,
+-                    "PPC KVM module is not loaded. Try modprobe kvm_%s.\n",
+-                    (type == 2) ? "pr" : "hv");
 +            error_report("PPC KVM module is not loaded. Try modprobe kvm_%s.",
 +                        (type == 2) ? "pr" : "hv");
-+        }
-+#endif
-+    }
-+
-+    return ret;
-+}
-+
-+static int kvm_machine_type(MachineState *ms)
-+{
-+    MachineClass *mc = MACHINE_GET_CLASS(ms);
-+    int type;
-+
-+    if (object_property_find(OBJECT(current_machine), "kvm-type")) {
-+        g_autofree char *kvm_type;
-+        kvm_type = object_property_get_str(OBJECT(current_machine),
-+                                           "kvm-type",
-+                                           &error_abort);
-+        type = mc->kvm_type(ms, kvm_type);
-+    } else if (mc->kvm_type) {
-+        type = mc->kvm_type(ms, NULL);
-+    } else {
-+        type = kvm_arch_get_default_type(ms);
-+    }
-+    return type;
-+}
-+
- static int kvm_init(MachineState *ms)
- {
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
-@@ -2467,47 +2518,16 @@ static int kvm_init(MachineState *ms)
+         }
+ #endif
+-        goto err;
      }
-     s->as = g_new0(struct KVMAs, s->nr_as);
- 
--    if (object_property_find(OBJECT(current_machine), "kvm-type")) {
--        g_autofree char *kvm_type = object_property_get_str(OBJECT(current_machine),
--                                                            "kvm-type",
--                                                            &error_abort);
--        type = mc->kvm_type(ms, kvm_type);
--    } else if (mc->kvm_type) {
--        type = mc->kvm_type(ms, NULL);
--    } else {
--        type = kvm_arch_get_default_type(ms);
--    }
--
-+    type = kvm_machine_type(ms);
-     if (type < 0) {
-         ret = -EINVAL;
-         goto err;
-     }
- 
--    do {
--        ret = kvm_ioctl(s, KVM_CREATE_VM, type);
--    } while (ret == -EINTR);
--
-+    ret = kvm_create_vm(ms, s, type);
-     if (ret < 0) {
--        error_report("ioctl(KVM_CREATE_VM) failed: %d %s", -ret,
--                    strerror(-ret));
--
--#ifdef TARGET_S390X
--        if (ret == -EINVAL) {
--            error_report("Host kernel setup problem detected. Please verify:");
--            error_report("- for kernels supporting the switch_amode or"
--                        " user_mode parameters, whether");
--            error_report("  user space is running in primary address space");
--            error_report("- for kernels supporting the vm.allocate_pgste "
--                        "sysctl, whether it is enabled");
--        }
--#elif defined(TARGET_PPC)
--        if (ret == -EINVAL) {
--            error_report("PPC KVM module is not loaded. Try modprobe kvm_%s.",
--                        (type == 2) ? "pr" : "hv");
--        }
--#endif
--    }
-         goto err;
-+    }
++        goto err;
  
      s->vmfd = ret;
+ 
+@@ -2526,9 +2522,9 @@ static int kvm_init(MachineState *ms)
+                         nc->name, nc->num, soft_vcpus_limit);
+ 
+             if (nc->num > hard_vcpus_limit) {
+-                fprintf(stderr, "Number of %s cpus requested (%d) exceeds "
+-                        "the maximum cpus supported by KVM (%d)\n",
+-                        nc->name, nc->num, hard_vcpus_limit);
++                error_report("Number of %s cpus requested (%d) exceeds "
++                             "the maximum cpus supported by KVM (%d)",
++                             nc->name, nc->num, hard_vcpus_limit);
+                 exit(1);
+             }
+         }
+@@ -2542,8 +2538,8 @@ static int kvm_init(MachineState *ms)
+     }
+     if (missing_cap) {
+         ret = -EINVAL;
+-        fprintf(stderr, "kvm does not support %s\n%s",
+-                missing_cap->name, upgrade_note);
++        error_report("kvm does not support %s", missing_cap->name);
++        error_report("%s", upgrade_note);
+         goto err;
+     }
  
 -- 
 2.45.2
