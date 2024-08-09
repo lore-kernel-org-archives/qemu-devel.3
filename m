@@ -4,69 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7FC8C49EA1
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 03:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5125AC49EA1
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 04:34:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scGfp-00005s-1g; Thu, 08 Aug 2024 23:52:17 -0400
+	id 1scHJm-0003FN-G1; Fri, 09 Aug 2024 00:33:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1scGfn-0008R8-Eo
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 23:52:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1scHJi-0003Dz-KM
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 00:33:30 -0400
+Received: from mx1.zhaoxin.com ([210.0.225.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1scGfm-0008N9-1S
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 23:52:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723175532;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/c6EqP/YoqNulAdFCGy0hvA3w3OnVqkAzw2ekzsC/HA=;
- b=hAKiwNaklBDFJC3Iy4ZBmrzNt0P29RlS5LLxoUVd7x0zXaF/6ei/LrC2ritBaQoODrf6ZI
- GXppKmTUmM89OVMOrpb/k30STQKnih6Gzl/L6UoW0SFUlqjVkcgjJXg0EuhXgn6tc7myMW
- vTtZ1akqC74deqfm/UY7GJp5Rl9n8n4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-571-zm1sdnNlM-6PbUX1ItSeAA-1; Thu,
- 08 Aug 2024 23:52:08 -0400
-X-MC-Unique: zm1sdnNlM-6PbUX1ItSeAA-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BF44D1955D8E; Fri,  9 Aug 2024 03:52:07 +0000 (UTC)
-Received: from gshan-thinkpadx1nanogen2.remote.csb (unknown [10.64.136.133])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6D621195917D; Fri,  9 Aug 2024 03:52:04 +0000 (UTC)
-From: Gavin Shan <gshan@redhat.com>
-To: qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, pbonzini@redhat.com,
- philmd@linaro.org, richard.henderson@linaro.org, shan.gavin@gmail.com
-Subject: [PATCH 2/4] hw/arm/virt: Avoid multiple lines of comments in
- virt_kvm_type()
-Date: Fri,  9 Aug 2024 13:51:31 +1000
-Message-ID: <20240809035134.699830-3-gshan@redhat.com>
-In-Reply-To: <20240809035134.699830-1-gshan@redhat.com>
-References: <20240809035134.699830-1-gshan@redhat.com>
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1scHJe-0004pg-C5
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 00:33:28 -0400
+X-ASG-Debug-ID: 1723177992-086e2376122e750001-jgbH7p
+Received: from ZXSHMBX2.zhaoxin.com (ZXSHMBX2.zhaoxin.com [10.28.252.164]) by
+ mx1.zhaoxin.com with ESMTP id ZfvLCfGfrzjbziFP (version=TLSv1.2
+ cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+ Fri, 09 Aug 2024 12:33:12 +0800 (CST)
+X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
+Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX2.zhaoxin.com
+ (10.28.252.164) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 9 Aug
+ 2024 12:33:11 +0800
+Received: from ZXSHMBX1.zhaoxin.com ([fe80::dcd1:d46d:263:77e]) by
+ ZXSHMBX1.zhaoxin.com ([fe80::dcd1:d46d:263:77e%7]) with mapi id
+ 15.01.2507.039; Fri, 9 Aug 2024 12:33:11 +0800
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
+Received: from [10.28.66.62] (10.28.66.62) by zxbjmbx1.zhaoxin.com
+ (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 9 Aug
+ 2024 11:37:40 +0800
+Message-ID: <7a37a787-aa17-43ed-8cfc-ea735e862e20@zhaoxin.com>
+Date: Thu, 8 Aug 2024 23:37:40 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/4] target/i386: Update CMPLegacy handling for Zhaoxin
+ CPUs
+To: Zhao Liu <zhao1.liu@intel.com>
+X-ASG-Orig-Subj: Re: [PATCH v2 4/4] target/i386: Update CMPLegacy handling for
+ Zhaoxin CPUs
+CC: <pbonzini@redhat.com>, <xiaoyao.li@intel.com>, <qemu-devel@nongnu.org>,
+ <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>, <rockcui@zhaoxin.com>,
+ <louisqi@zhaoxin.com>, <liamni@zhaoxin.com>, <frankzhu@zhaoxin.com>
+References: <20240704112511.184257-1-ewanhai-oc@zhaoxin.com>
+ <20240704112511.184257-5-ewanhai-oc@zhaoxin.com> <ZrSeMfpBm8NrXRWK@intel.com>
+ <236c8032-6e17-4002-86e1-4483b55977f7@zhaoxin.com>
+ <ZrWLgN1L280h75QF@intel.com>
+ <d37a0bb1-23c3-4226-87c9-da73f4b59d72@zhaoxin.com>
+ <ZrWRSXIPYwEkpXK/@intel.com>
+Content-Language: en-US
+From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+In-Reply-To: <ZrWRSXIPYwEkpXK/@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.28.66.62]
+X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
+ zxbjmbx1.zhaoxin.com (10.29.252.163)
+X-Moderation-Data: 8/9/2024 12:33:10 PM
+X-Barracuda-Connect: ZXSHMBX2.zhaoxin.com[10.28.252.164]
+X-Barracuda-Start-Time: 1723177992
+X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
+X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at zhaoxin.com
+X-Barracuda-Scan-Msg-Size: 656
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
+X-Barracuda-Spam-Score: -2.02
+X-Barracuda-Spam-Status: No,
+ SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.128778
+ Rule breakdown below
+ pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
+ helo=mx1.zhaoxin.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,30 +104,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The comment needn't to span multiple lines and can be merged to
-one line perfectly.
-
-Signed-off-by: Gavin Shan <gshan@redhat.com>
----
- hw/arm/virt.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
-
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 83be57db37..09b7a158a9 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3005,9 +3005,7 @@ static int virt_kvm_type(MachineState *ms, const char *type_str)
- 
-     requested_pa_size = 64 - clz64(vms->highest_gpa);
- 
--    /*
--     * KVM requires the IPA size to be at least 32 bits.
--     */
-+    /* KVM requires the IPA size to be at least 32 bits */
-     if (requested_pa_size < 32) {
-         requested_pa_size = 32;
-     }
--- 
-2.45.2
+On 8/8/24 23:47, Zhao Liu wrote:
+> On Thu, Aug 08, 2024 at 11:25:45PM -0400, Ewan Hai wrote:
+>
+> [snip]
+>
+>> Thank you for your suggestion; the changes will indeed make it clearer.
+>> I have a question: since you=E2=80=99ve already added your reviewed-by t=
+ag to
+>> the first three patches, if I want to modify these descriptions, should
+>> I submit a v3 patchset containing all four patches, or should I only sen=
+d a
+>> new patch titled "target/i386: Mask CMPLegacy bit in CPUID[0x80000001].e=
+cx
+>> for Zhaoxin/Centaur CPUs"?
+> The v3 should contain all 4 patches, and you can add my R/b tag in the
+> first three patches.
+>
+Thanks! See you in v3!
 
 
