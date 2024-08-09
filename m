@@ -4,69 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1A96C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 03:26:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37377C49EA1
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 03:26:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scGFp-0004zs-Hm; Thu, 08 Aug 2024 23:25:25 -0400
+	id 1scGH1-0007ry-VX; Thu, 08 Aug 2024 23:26:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1scGFm-0004xg-Tw
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 23:25:22 -0400
-Received: from mgamail.intel.com ([198.175.65.11])
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1scGGz-0007mA-UZ
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 23:26:37 -0400
+Received: from mx2.zhaoxin.com ([203.110.167.99])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1scGFk-0005F2-6w
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 23:25:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723173921; x=1754709921;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=Tw+oP3IUd1a2tjFWuBay+BRp/YDXjyJCFYsMxwsCFAA=;
- b=cUPweliK8Hfr4ejjoGnjfdeWdiAIc8i1+QZb49UWtwDOtWqW/IbQGqdN
- fhnL4nEE8+gX9aIgPkuUgd6yMI9+Bm7SrQu9sRQCXocCYvE5m1aRpiy8k
- Y4YcyGNH9NNC9VCcDtY5N9GFMKsx8o+4Jzpb9CRQQK43aKhT02neS0FEg
- KbJrRo7jw9IEfm7aPgobk0xKzf7Tt3RDW4OqZDZM/OMoYzNevDXMBUQy8
- VswqbG/Yiy+v9Kh1ebg7O+/9sSZEpm8K/Dpfv0Dop/y22dUe5+f2b6GbA
- 5m0Q/EvlZcIjRy9uQaoXgJrM6rNsMMqZDCuIjRDWZtvOiiQysrBwGbtP9 g==;
-X-CSE-ConnectionGUID: k0t38VKoQWKEfZBK5O2qXA==
-X-CSE-MsgGUID: rcfnYlp6QeeL2KHp0CYFxA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11158"; a="31909003"
-X-IronPort-AV: E=Sophos;i="6.09,275,1716274800"; d="scan'208";a="31909003"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Aug 2024 20:25:17 -0700
-X-CSE-ConnectionGUID: TUDafeUTQROSXWiRTIUWbg==
-X-CSE-MsgGUID: Z1EXJPldT+Sok75tUmhTgw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,275,1716274800"; d="scan'208";a="57306512"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa010.jf.intel.com with ESMTP; 08 Aug 2024 20:25:15 -0700
-Date: Fri, 9 Aug 2024 11:41:05 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] kvm: refactor core virtual machine creation into its
- own function
-Message-ID: <ZrWP0fWPNzeAvjja@intel.com>
-References: <20240808113838.1697366-1-anisinha@redhat.com>
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1scGGx-0005Kh-E9
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 23:26:37 -0400
+X-ASG-Debug-ID: 1723173985-1eb14e31a725620001-jgbH7p
+Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
+ mx2.zhaoxin.com with ESMTP id fBCq7Ofi1RFudthE (version=TLSv1.2
+ cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+ Fri, 09 Aug 2024 11:26:25 +0800 (CST)
+X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX3.zhaoxin.com
+ (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 9 Aug
+ 2024 11:26:24 +0800
+Received: from ZXSHMBX1.zhaoxin.com ([fe80::dcd1:d46d:263:77e]) by
+ ZXSHMBX1.zhaoxin.com ([fe80::dcd1:d46d:263:77e%7]) with mapi id
+ 15.01.2507.039; Fri, 9 Aug 2024 11:26:24 +0800
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+Received: from [10.28.66.62] (10.28.66.62) by zxbjmbx1.zhaoxin.com
+ (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 9 Aug
+ 2024 11:25:46 +0800
+Message-ID: <d37a0bb1-23c3-4226-87c9-da73f4b59d72@zhaoxin.com>
+Date: Thu, 8 Aug 2024 23:25:45 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240808113838.1697366-1-anisinha@redhat.com>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.141,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/4] target/i386: Update CMPLegacy handling for Zhaoxin
+ CPUs
+To: Zhao Liu <zhao1.liu@intel.com>
+X-ASG-Orig-Subj: Re: [PATCH v2 4/4] target/i386: Update CMPLegacy handling for
+ Zhaoxin CPUs
+CC: <pbonzini@redhat.com>, <xiaoyao.li@intel.com>, <qemu-devel@nongnu.org>,
+ <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>, <rockcui@zhaoxin.com>,
+ <louisqi@zhaoxin.com>, <liamni@zhaoxin.com>, <frankzhu@zhaoxin.com>
+References: <20240704112511.184257-1-ewanhai-oc@zhaoxin.com>
+ <20240704112511.184257-5-ewanhai-oc@zhaoxin.com> <ZrSeMfpBm8NrXRWK@intel.com>
+ <236c8032-6e17-4002-86e1-4483b55977f7@zhaoxin.com>
+ <ZrWLgN1L280h75QF@intel.com>
+Content-Language: en-US
+From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+In-Reply-To: <ZrWLgN1L280h75QF@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.28.66.62]
+X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
+ zxbjmbx1.zhaoxin.com (10.29.252.163)
+X-Moderation-Data: 8/9/2024 11:26:23 AM
+X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
+X-Barracuda-Start-Time: 1723173985
+X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
+X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at zhaoxin.com
+X-Barracuda-Scan-Msg-Size: 3799
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
+X-Barracuda-Spam-Score: -2.02
+X-Barracuda-Spam-Status: No,
+ SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.128775
+ Rule breakdown below
+ pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+Received-SPF: pass client-ip=203.110.167.99;
+ envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,184 +102,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Ani,
 
-On Thu, Aug 08, 2024 at 05:08:38PM +0530, Ani Sinha wrote:
-> Date: Thu,  8 Aug 2024 17:08:38 +0530
-> From: Ani Sinha <anisinha@redhat.com>
-> Subject: [PATCH v2] kvm: refactor core virtual machine creation into its
->  own function
-> X-Mailer: git-send-email 2.45.2
-> 
-> Refactoring the core logic around KVM_CREATE_VM into its own separate function
-> so that it can be called from other functions in subsequent patches. There is
-> no functional change in this patch.
-> 
-> CC: pbonzini@redhat.com
-> CC: zhao1.liu@intel.com
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
-> ---
->  accel/kvm/kvm-all.c | 93 +++++++++++++++++++++++++++------------------
->  1 file changed, 56 insertions(+), 37 deletions(-)
-> 
-> changelog:
-> v2: s/fprintf/warn_report as suggested by zhao
 
-Thanks for your change!
+On 8/8/24 23:22, Zhao Liu wrote:
+>>> Hi EwanHai,
+>>>
+>>> On Thu, Jul 04, 2024 at 07:25:11AM -0400, EwanHai wrote:
+>>>> Date: Thu, 4 Jul 2024 07:25:11 -0400
+>>>> From: EwanHai <ewanhai-oc@zhaoxin.com>
+>>>> Subject: [PATCH v2 4/4] target/i386: Update CMPLegacy handling for Zha=
+oxin
+>>>>    CPUs
+>>>> X-Mailer: git-send-email 2.34.1
+>>>>
+>>>> Zhaoxin CPUs handle the CMPLegacy bit in the same way
+>>>> as Intel CPUs.
+> Here it could be clearer to say "Don't set up CMPLegacy bit in
+> CPUID[0x80000001].ecx for VIA/Zhaoxin CPUs".
+Ok, I will change this statement.
+>> This patch simplifies the existing logic by
+>>>> using the IS_XXX_CPU macro and includes checks for Zhaoxin
+>>>> vendor to align their behavior with Intel.
+>>>>
+>>>> Signed-off-by: EwanHai <ewanhai-oc@zhaoxin.com>
+>>>> ---
+>>>>    target/i386/cpu.c | 4 +---
+>>>>    1 file changed, 1 insertion(+), 3 deletions(-)
+>>>>
+>>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+>>>> index a3747fc487..c52a4cf3ba 100644
+>>>> --- a/target/i386/cpu.c
+>>>> +++ b/target/i386/cpu.c
+>>>> @@ -6945,9 +6945,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t in=
+dex, uint32_t count,
+>>>>             * So don't set it here for Intel to make Linux guests happ=
+y.
+>>>>             */
+>>>>            if (threads_per_pkg > 1) {
+>>>> -            if (env->cpuid_vendor1 !=3D CPUID_VENDOR_INTEL_1 ||
+>>>> -                env->cpuid_vendor2 !=3D CPUID_VENDOR_INTEL_2 ||
+>>>> -                env->cpuid_vendor3 !=3D CPUID_VENDOR_INTEL_3) {
+>>>> +            if (!IS_INTEL_CPU(env) && !IS_ZHAOXIN_CPU(env)) {
+>>> This change implicitly changes the behavior of existing VIA CPU.
+>>>
+>>> Is this a bug for the original VIA? If so, I suggest a separate patch t=
+o
+>>> fix it and explain the effect on the VIA (Zhaoxin1) CPU.
+>>>
+>>> Regards,
+>>> Zhao
+>> The reason for this change is not due to a discovered bug, but rather
+>> because both Centaurhauls and Shanghai CPUs follow Intel=E2=80=99s behav=
+ior
+>> regarding the CMPLegacy bit. Specifically, AMD CPUs enumerate the
+>> threads per package information in the CPUID leaf 0x80000001 output
+>> ECX register, while Intel (and **other processors following Intel=E2=80=
+=99s
+>> behavior**) do not. Therefore, this modification is simply intended to
+>> logically supplement the existing code.
+> I see, thanks.
+>
+>> Given this, do you think it would be appropriate for me to submit
+>> a separate patch to explain this behavior and its effect on
+>> VIA (Zhaoxin1) CPUs? If so, I will submmit this change in a separate
+>> patch.
+> I think there's no need to split this.
+>
+> However, I think it's necessary to state the effect of the change in
+> the changelog/commit message. It's also worth stating if it won't have
+> any effect on the OS/software. Afterall, the comment of this bit said
+> it affects Linux kernel.
+>
+> Also, changes to the old VIA behavior are worth stating in the commit
+> message, i.e., this patch's changes to Zhaoxin CPUs include the previous
+> VIA CPUs.
+>
+> Additionally, considering this change is to fix the CPUID which doesn't
+> match the bare metal, then what about changing the subject to
+>
+> "target/i386: Mask CMPLegacy bit in CPUID[0x80000001].ecx for Zhaoxin/VIA
+> CPUs"?
+>
+> Thanks,
+> Zhao
+Thank you for your suggestion; the changes will indeed make it clearer.
+I have a question: since you=E2=80=99ve already added your reviewed-by tag =
+to
+the first three patches, if I want to modify these descriptions, should
+I submit a v3 patchset containing all four patches, or should I only send a
+new patch titled "target/i386: Mask CMPLegacy bit in CPUID[0x80000001].ecx
+for Zhaoxin/Centaur CPUs"?
+>>>>                    *ecx |=3D 1 << 1;    /* CmpLegacy bit */
+>>>>                }
+>>>>            }
+>>>> --
+>>>> 2.34.1
+>>>>
 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 75d11a07b2..c2e177c39f 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -2385,6 +2385,60 @@ uint32_t kvm_dirty_ring_size(void)
->      return kvm_state->kvm_dirty_ring_size;
->  }
->  
-> +static int do_kvm_create_vm(MachineState *ms, int type)
-> +{
-> +    KVMState *s;
-> +    int ret;
-> +
-> +    s = KVM_STATE(ms->accelerator);
-> +
-> +    do {
-> +        ret = kvm_ioctl(s, KVM_CREATE_VM, type);
-> +    } while (ret == -EINTR);
-> +
-> +    if (ret < 0) {
-> +        warn_report("ioctl(KVM_CREATE_VM) failed: %d %s", -ret,
-> +                    strerror(-ret));
-> +
-> +#ifdef TARGET_S390X
-> +        if (ret == -EINVAL) {
-> +            warn_report("Host kernel setup problem detected. Please verify:");
-> +            warn_report("- for kernels supporting the switch_amode or"
-> +                        " user_mode parameters, whether");
-> +            warn_report("  user space is running in primary address space");
-> +            warn_report("- for kernels supporting the vm.allocate_pgste "
-> +                        "sysctl, whether it is enabled");
-> +        }
-> +#elif defined(TARGET_PPC)
-> +        if (ret == -EINVAL) {
-> +            warn_report("PPC KVM module is not loaded. Try modprobe kvm_%s.",
-> +                        (type == 2) ? "pr" : "hv");
-> +        }
-> +#endif
-
-I think error level message is more appropriate than warn because after
-the print QEMU handles error and terminates the Guest startup.
-
-What about the following change?
-
-#ifdef TARGET_S390X
-        if (ret == -EINVAL) {
-            error_report("Host kernel setup problem detected");
-            error_printf("Please verify:\n");
-            error_printf("- for kernels supporting the switch_amode or"
-                         " user_mode parameters, whether\n");
-            error_printf("  user space is running in primary address space\n");
-            error_printf("- for kernels supporting the vm.allocate_pgste "
-                         "sysctl, whether it is enabled\n");
-        }
-#elif defined(TARGET_PPC)
-        if (ret == -EINVAL) {
-            error_report("PPC KVM module is not loaded");
-            error_printf("Try modprobe kvm_%s.\n",
-                         (type == 2) ? "pr" : "hv");
-	}
-#endif
-
-The above uses error_report() to just print error reason/error code
-since for error_report, "The resulting message should be a single
-phrase, with no newline or trailing punctuation."
-
-Other specific hints or information are printed by error_printf()
-because style.rst suggests "Use error_printf() & friends to print
-additional information."
-
-Thanks,
-Zhao
-
-> +    }
-> +
-> +    return ret;
-> +}
-> +
-> +static int find_kvm_machine_type(MachineState *ms)
-> +{
-> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
-> +    int type;
-> +
-> +    if (object_property_find(OBJECT(current_machine), "kvm-type")) {
-> +        g_autofree char *kvm_type;
-> +        kvm_type = object_property_get_str(OBJECT(current_machine),
-> +                                           "kvm-type",
-> +                                           &error_abort);
-> +        type = mc->kvm_type(ms, kvm_type);
-> +    } else if (mc->kvm_type) {
-> +        type = mc->kvm_type(ms, NULL);
-> +    } else {
-> +        type = kvm_arch_get_default_type(ms);
-> +    }
-> +    return type;
-> +}
-> +
->  static int kvm_init(MachineState *ms)
->  {
->      MachineClass *mc = MACHINE_GET_CLASS(ms);
-> @@ -2467,49 +2521,14 @@ static int kvm_init(MachineState *ms)
->      }
->      s->as = g_new0(struct KVMAs, s->nr_as);
->  
-> -    if (object_property_find(OBJECT(current_machine), "kvm-type")) {
-> -        g_autofree char *kvm_type = object_property_get_str(OBJECT(current_machine),
-> -                                                            "kvm-type",
-> -                                                            &error_abort);
-> -        type = mc->kvm_type(ms, kvm_type);
-> -    } else if (mc->kvm_type) {
-> -        type = mc->kvm_type(ms, NULL);
-> -    } else {
-> -        type = kvm_arch_get_default_type(ms);
-> -    }
-> -
-> +    type = find_kvm_machine_type(ms);
->      if (type < 0) {
->          ret = -EINVAL;
->          goto err;
->      }
->  
-> -    do {
-> -        ret = kvm_ioctl(s, KVM_CREATE_VM, type);
-> -    } while (ret == -EINTR);
-> -
-> +    ret = do_kvm_create_vm(ms, type);
->      if (ret < 0) {
-> -        fprintf(stderr, "ioctl(KVM_CREATE_VM) failed: %d %s\n", -ret,
-> -                strerror(-ret));
-> -
-> -#ifdef TARGET_S390X
-> -        if (ret == -EINVAL) {
-> -            fprintf(stderr,
-> -                    "Host kernel setup problem detected. Please verify:\n");
-> -            fprintf(stderr, "- for kernels supporting the switch_amode or"
-> -                    " user_mode parameters, whether\n");
-> -            fprintf(stderr,
-> -                    "  user space is running in primary address space\n");
-> -            fprintf(stderr,
-> -                    "- for kernels supporting the vm.allocate_pgste sysctl, "
-> -                    "whether it is enabled\n");
-> -        }
-> -#elif defined(TARGET_PPC)
-> -        if (ret == -EINVAL) {
-> -            fprintf(stderr,
-> -                    "PPC KVM module is not loaded. Try modprobe kvm_%s.\n",
-> -                    (type == 2) ? "pr" : "hv");
-> -        }
-> -#endif
->          goto err;
->      }
->  
-> -- 
-> 2.45.2
-> 
 
