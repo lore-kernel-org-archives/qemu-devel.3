@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDE52C531DB
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 18:10:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1C84C531DD
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 18:10:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scU2d-0000xx-6Y; Fri, 09 Aug 2024 14:08:43 -0400
+	id 1scU2o-0001dH-4q; Fri, 09 Aug 2024 14:08:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1scU2c-0000ww-0w
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 14:08:42 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1scU2m-0001Y3-HW
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 14:08:52 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1scU2Z-0007C1-Q0
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 14:08:41 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3686b554cfcso1208533f8f.1
- for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 11:08:39 -0700 (PDT)
+ id 1scU2k-0007DC-Aa
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 14:08:52 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-367940c57ddso1296820f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 11:08:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723226918; x=1723831718; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723226929; x=1723831729; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jhQP03+tlFIXCNvACIpxrmWqMTiMtqMMEpE7GGG91S4=;
- b=BAOg1q2xhDlp3QLZNTMmk66nLK1SPBTUQAD5lWrPsnsBA0A8sBpqXQf5X4j3pi+Ujt
- tBaqGDST2n/0y668bv5uy6mu7ZkEvMLqRqTbQYorZFzyWLGK4xMkwpd9GSf83Uiy6ku7
- yD5QtpL1GWYuk+/xMhnpM7IO3z7MLE4G66xBLKKsJkZ5jdcR9jHhIE0XKrZPn0gHFc5g
- ojbDxUDL8+fsd58TuvklQMLzNwIUcYBOlHb3XCxw/rUsEs6JWv7RgpfUozbr2MFhriob
- dDkCQcPB2X9DLBzblCRspdyajF39ASS6HxSOXuLg5ohv7y8EMdD83A+bgMkYTUyi6zaJ
- GXcg==
+ :reply-to; bh=agG5AiF1eAhZlwXMsZvTErllzGZ75Y15g9KkwWX0cZI=;
+ b=K93YX/9noKVt/to1LE+MCGGsgfcInbSprDYIf7qSkEXAZcMvdiaAkm17qslVdsuNja
+ UiVQOuky5P+1LAlL8tLY9zdcBOpSnxnqf4gL+6703QdXOez44A7Dxc7qvy/ouDQhRiLh
+ cSocJLalqTwCLUtwcKql1YiV7vFck2B+Gr4aWWc3oYLIUed5+zn3+oPJb21jLQ62cgnl
+ b1AdTl697X+hEOT+NMqQyIHdy2EbXc0FMLm+BKlg2NZicNWfVNKJbUPT4K5jc8GiEqCd
+ Hx/S3ViX3ZhbCiO/bzTzw5iuHQT7hRG6tFHTCtrNv4D/OsHpg8QDPGkHi8iQqFsgWZBk
+ OyOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723226918; x=1723831718;
+ d=1e100.net; s=20230601; t=1723226929; x=1723831729;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jhQP03+tlFIXCNvACIpxrmWqMTiMtqMMEpE7GGG91S4=;
- b=UbYCr7f/LoENJJWfnpa9SkIVEff3zm273hSJnrLW0IMKX0C98W9jtp7UBF8I0a+vCv
- ZeVnpOThWcTJFov4xQpXp6SVwhznEfZrF/4cBHwHKRl9dS69+h9o1cn9Vl5IK9EcnH0d
- E6D/Y3oJWhkFs6LCtcFzGKtPGntUoQrC3DgEUUEUqM9Sf41tkjv8/rc2XX3bEvnzwrhJ
- cHTkpH9muzKDWWr5/ySVyLF+RzJXvUCoQmVM7sCWQLXR7SqctT0Zkec/bBvLP3N4/XXX
- dDwr1RR7HnsEQUvj7u6Dw2z/esukr/CrQFrJWiNsNd0+Ft3mFoawLQIR0MyUD4u2ztmR
- oa5w==
-X-Gm-Message-State: AOJu0YwEx7FR5QbEGp/QeNAAP+T1NfXwXs8BHWoGC3cWFLHhwmc3Rhfl
- S3CjuEjVOFnGO91VhAQT5/6lYqGARmCODBZzCeD9ZX+VjjmXdJaJA0+ntvrG3bhhBOWLrW3Uf+y
- B
-X-Google-Smtp-Source: AGHT+IGx4kc0F+g6sGvC5+OVlRvFJ8cteY/oNBFuxVigFm1/udHUhbHZtKHuuzZcVaRP0PvpnErESA==
-X-Received: by 2002:a5d:6552:0:b0:368:3198:5ac4 with SMTP id
- ffacd0b85a97d-36d60346adbmr1685448f8f.39.1723226918077; 
- Fri, 09 Aug 2024 11:08:38 -0700 (PDT)
+ bh=agG5AiF1eAhZlwXMsZvTErllzGZ75Y15g9KkwWX0cZI=;
+ b=N+MrpGl49QTNuthD3LU1/5rWNSIWyOZvYYJ44nMb6nxZ+Cc4BFHnr9bvSNn1QT/NSZ
+ /MYhoSHJF8tx9o+8Xyb2kYHjte3zvn7yr/Se+WJk0zV5FKwbfb2bmCQfz+XIDUYptHWt
+ 60nitpLEK4UnqV8RQIlFJWImxcf8Hl0XEOGAloeTBUAoqrOPwYs+bLfx2Rza1i9++1nk
+ m7buwvgSkZsi6wvevK8GC5/j1PeMaz2s+nZ9TR5hkUhvuGHcz1VdF9gyKUUe3tnJOFs8
+ 4XQgSfsMatHdSX40ckQFh5svZC5f86/m34lMkVywuHX8iG7Q/ILkfYuEFTM/1y3xhdLY
+ HLhA==
+X-Gm-Message-State: AOJu0YzHXJ+JPbwHO9XxZa2SZvCHts44dEk/oxYodtByQ0hFERI/Xjqt
+ R8otbshvHqZfREQYAH0c7JZnzaDdqQfsXMLlTICZRSZ24HaPmYSq9tGcnDN4ggEPXHpTYnaiK1F
+ d
+X-Google-Smtp-Source: AGHT+IFj8NX652LCVHS/Sr3a4C5UGz4yBLHzOqUx9KNUw7b6DgdZg3rccmcbHhl3bDMEUwWB4j+Viw==
+X-Received: by 2002:a5d:5488:0:b0:367:9903:a79 with SMTP id
+ ffacd0b85a97d-36d5fd7fb14mr1413557f8f.48.1723226928625; 
+ Fri, 09 Aug 2024 11:08:48 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36e4c937b6esm132262f8f.32.2024.08.09.11.08.37
+ ffacd0b85a97d-36e4c937b6esm132262f8f.32.2024.08.09.11.08.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Aug 2024 11:08:37 -0700 (PDT)
+ Fri, 09 Aug 2024 11:08:48 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/11] target/arm: Fix BTI versus CF_PCREL
-Date: Fri,  9 Aug 2024 19:08:25 +0100
-Message-Id: <20240809180835.1243269-2-peter.maydell@linaro.org>
+Subject: [PULL 05/11] docs/interop/parallels.txt: Convert to rST
+Date: Fri,  9 Aug 2024 19:08:29 +0100
+Message-Id: <20240809180835.1243269-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240809180835.1243269-1-peter.maydell@linaro.org>
 References: <20240809180835.1243269-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,219 +93,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Convert parallels.txt to rST format.
 
-With pcrel, we cannot check the guarded page bit at translation
-time, as different mappings of the same physical page may or may
-not have the GP bit set.
-
-Instead, add a couple of helpers to check the page at runtime,
-after all other filters that might obviate the need for the check.
-
-The set_btype_for_br call must be moved after the gen_a64_set_pc
-call to ensure the current pc can still be computed.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20240802003028.795476-1-richard.henderson@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Eric Blake <eblake@redhat.com>
+Message-id: 20240801170131.3977807-4-peter.maydell@linaro.org
 ---
- target/arm/tcg/helper-a64.h    |  3 ++
- target/arm/tcg/translate.h     |  2 --
- target/arm/tcg/helper-a64.c    | 39 +++++++++++++++++++++
- target/arm/tcg/translate-a64.c | 64 ++++++++--------------------------
- 4 files changed, 56 insertions(+), 52 deletions(-)
+ MAINTAINERS                                   |   2 +-
+ docs/interop/index.rst                        |   1 +
+ docs/interop/{parallels.txt => parallels.rst} | 108 ++++++++++--------
+ 3 files changed, 60 insertions(+), 51 deletions(-)
+ rename docs/interop/{parallels.txt => parallels.rst} (72%)
 
-diff --git a/target/arm/tcg/helper-a64.h b/target/arm/tcg/helper-a64.h
-index 371388f61b5..481007bf397 100644
---- a/target/arm/tcg/helper-a64.h
-+++ b/target/arm/tcg/helper-a64.h
-@@ -133,6 +133,9 @@ DEF_HELPER_4(cpyfp, void, env, i32, i32, i32)
- DEF_HELPER_4(cpyfm, void, env, i32, i32, i32)
- DEF_HELPER_4(cpyfe, void, env, i32, i32, i32)
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 04a1fd08503..ae8bed8c757 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3964,7 +3964,7 @@ L: qemu-block@nongnu.org
+ S: Supported
+ F: block/parallels.c
+ F: block/parallels-ext.c
+-F: docs/interop/parallels.txt
++F: docs/interop/parallels.rst
+ T: git https://src.openvz.org/scm/~den/qemu.git parallels
  
-+DEF_HELPER_FLAGS_1(guarded_page_check, TCG_CALL_NO_WG, void, env)
-+DEF_HELPER_FLAGS_2(guarded_page_br, TCG_CALL_NO_RWG, void, env, tl)
-+
- DEF_HELPER_FLAGS_5(gvec_fdiv_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_5(gvec_fdiv_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_5(gvec_fdiv_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index a8672c857c1..01c217f4a45 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -163,8 +163,6 @@ typedef struct DisasContext {
-     uint8_t dcz_blocksize;
-     /* A copy of cpu->gm_blocksize. */
-     uint8_t gm_blocksize;
--    /* True if this page is guarded.  */
--    bool guarded_page;
-     /* True if the current insn_start has been updated. */
-     bool insn_start_updated;
-     /* Bottom two bits of XScale c15_cpar coprocessor access control reg */
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index c60d2a7ec96..21a9abd90a6 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -1877,3 +1877,42 @@ void HELPER(cpyfe)(CPUARMState *env, uint32_t syndrome, uint32_t wdesc,
- {
-     do_cpye(env, syndrome, wdesc, rdesc, false, GETPC());
- }
-+
-+static bool is_guarded_page(CPUARMState *env, target_ulong addr, uintptr_t ra)
-+{
-+#ifdef CONFIG_USER_ONLY
-+    return page_get_flags(addr) & PAGE_BTI;
-+#else
-+    CPUTLBEntryFull *full;
-+    void *host;
-+    int mmu_idx = cpu_mmu_index(env_cpu(env), true);
-+    int flags = probe_access_full(env, addr, 0, MMU_INST_FETCH, mmu_idx,
-+                                  false, &host, &full, ra);
-+
-+    assert(!(flags & TLB_INVALID_MASK));
-+    return full->extra.arm.guarded;
-+#endif
-+}
-+
-+void HELPER(guarded_page_check)(CPUARMState *env)
-+{
-+    /*
-+     * We have already verified that bti is enabled, and that the
-+     * instruction at PC is not ok for BTYPE.  This is always at
-+     * the beginning of a block, so PC is always up-to-date and
-+     * no unwind is required.
-+     */
-+    if (is_guarded_page(env, env->pc, 0)) {
-+        raise_exception(env, EXCP_UDEF, syn_btitrap(env->btype),
-+                        exception_target_el(env));
-+    }
-+}
-+
-+void HELPER(guarded_page_br)(CPUARMState *env, target_ulong pc)
-+{
-+    /*
-+     * We have already checked for branch via x16 and x17.
-+     * What remains for choosing BTYPE is checking for a guarded page.
-+     */
-+    env->btype = is_guarded_page(env, pc, GETPC()) ? 3 : 1;
-+}
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 148be2826ec..28a10135032 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -1507,7 +1507,14 @@ static void set_btype_for_br(DisasContext *s, int rn)
- {
-     if (dc_isar_feature(aa64_bti, s)) {
-         /* BR to {x16,x17} or !guard -> 1, else 3.  */
--        set_btype(s, rn == 16 || rn == 17 || !s->guarded_page ? 1 : 3);
-+        if (rn == 16 || rn == 17) {
-+            set_btype(s, 1);
-+        } else {
-+            TCGv_i64 pc = tcg_temp_new_i64();
-+            gen_pc_plus_diff(s, pc, 0);
-+            gen_helper_guarded_page_br(tcg_env, pc);
-+            s->btype = -1;
-+        }
-     }
- }
+ qed
+diff --git a/docs/interop/index.rst b/docs/interop/index.rst
+index b9ceaabc648..70bba62d907 100644
+--- a/docs/interop/index.rst
++++ b/docs/interop/index.rst
+@@ -15,6 +15,7 @@ are useful for making QEMU interoperate with other software.
+    dbus-display
+    live-block-operations
+    nbd
++   parallels
+    pr-helper
+    qmp-spec
+    qemu-ga
+diff --git a/docs/interop/parallels.txt b/docs/interop/parallels.rst
+similarity index 72%
+rename from docs/interop/parallels.txt
+rename to docs/interop/parallels.rst
+index bb3fadf3692..7b328a40c80 100644
+--- a/docs/interop/parallels.txt
++++ b/docs/interop/parallels.rst
+@@ -1,41 +1,46 @@
+-= License =
++Parallels Expandable Image File Format
++======================================
  
-@@ -1521,8 +1528,8 @@ static void set_btype_for_blr(DisasContext *s)
+-Copyright (c) 2015 Denis Lunev
+-Copyright (c) 2015 Vladimir Sementsov-Ogievskiy
++..
++   Copyright (c) 2015 Denis Lunev
++   Copyright (c) 2015 Vladimir Sementsov-Ogievskiy
  
- static bool trans_BR(DisasContext *s, arg_r *a)
- {
--    gen_a64_set_pc(s, cpu_reg(s, a->rn));
-     set_btype_for_br(s, a->rn);
-+    gen_a64_set_pc(s, cpu_reg(s, a->rn));
-     s->base.is_jmp = DISAS_JUMP;
-     return true;
- }
-@@ -1581,8 +1588,8 @@ static bool trans_BRAZ(DisasContext *s, arg_braz *a)
-     }
+-This work is licensed under the terms of the GNU GPL, version 2 or later.
+-See the COPYING file in the top-level directory.
++   This work is licensed under the terms of the GNU GPL, version 2 or later.
++   See the COPYING file in the top-level directory.
  
-     dst = auth_branch_target(s, cpu_reg(s, a->rn), tcg_constant_i64(0), !a->m);
--    gen_a64_set_pc(s, dst);
-     set_btype_for_br(s, a->rn);
-+    gen_a64_set_pc(s, dst);
-     s->base.is_jmp = DISAS_JUMP;
-     return true;
- }
-@@ -11878,37 +11885,6 @@ static bool trans_FAIL(DisasContext *s, arg_OK *a)
-     return true;
- }
+-= Parallels Expandable Image File Format =
  
--/**
-- * is_guarded_page:
-- * @env: The cpu environment
-- * @s: The DisasContext
-- *
-- * Return true if the page is guarded.
-- */
--static bool is_guarded_page(CPUARMState *env, DisasContext *s)
--{
--    uint64_t addr = s->base.pc_first;
--#ifdef CONFIG_USER_ONLY
--    return page_get_flags(addr) & PAGE_BTI;
--#else
--    CPUTLBEntryFull *full;
--    void *host;
--    int mmu_idx = arm_to_core_mmu_idx(s->mmu_idx);
--    int flags;
+ A Parallels expandable image file consists of three consecutive parts:
+-    * header
+-    * BAT
+-    * data area
++
++* header
++* BAT
++* data area
+ 
+ All numbers in a Parallels expandable image are stored in little-endian byte
+ order.
+ 
+ 
+-== Definitions ==
++Definitions
++-----------
+ 
+-    Sector    A 512-byte data chunk.
++Sector
++  A 512-byte data chunk.
+ 
+-    Cluster   A data chunk of the size specified in the image header.
+-              Currently, the default size is 1MiB (2048 sectors). In previous
+-              versions, cluster sizes of 63 sectors, 256 and 252 kilobytes were
+-              used.
++Cluster
++  A data chunk of the size specified in the image header.
++  Currently, the default size is 1MiB (2048 sectors). In previous
++  versions, cluster sizes of 63 sectors, 256 and 252 kilobytes were used.
+ 
+-    BAT       Block Allocation Table, an entity that contains information for
+-              guest-to-host I/O data address translation.
++BAT
++  Block Allocation Table, an entity that contains information for
++  guest-to-host I/O data address translation.
+ 
 -
--    /*
--     * We test this immediately after reading an insn, which means
--     * that the TLB entry must be present and valid, and thus this
--     * access will never raise an exception.
--     */
--    flags = probe_access_full(env, addr, 0, MMU_INST_FETCH, mmu_idx,
--                              false, &host, &full, 0);
--    assert(!(flags & TLB_INVALID_MASK));
--
--    return full->extra.arm.guarded;
--#endif
--}
--
- /**
-  * btype_destination_ok:
-  * @insn: The instruction at the branch destination
-@@ -12151,19 +12127,6 @@ static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
+-== Header ==
++Header
++------
  
-     if (dc_isar_feature(aa64_bti, s)) {
-         if (s->base.num_insns == 1) {
--            /*
--             * At the first insn of the TB, compute s->guarded_page.
--             * We delayed computing this until successfully reading
--             * the first insn of the TB, above.  This (mostly) ensures
--             * that the softmmu tlb entry has been populated, and the
--             * page table GP bit is available.
--             *
--             * Note that we need to compute this even if btype == 0,
--             * because this value is used for BR instructions later
--             * where ENV is not available.
--             */
--            s->guarded_page = is_guarded_page(env, s);
--
-             /* First insn can have btype set to non-zero.  */
-             tcg_debug_assert(s->btype >= 0);
+ The header is placed at the start of an image and contains the following
+-fields:
++fields::
  
-@@ -12172,12 +12135,13 @@ static void aarch64_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-              * priority -- below debugging exceptions but above most
-              * everything else.  This allows us to handle this now
-              * instead of waiting until the insn is otherwise decoded.
-+             *
-+             * We can check all but the guarded page check here;
-+             * defer the latter to a helper.
-              */
-             if (s->btype != 0
--                && s->guarded_page
-                 && !btype_destination_ok(insn, s->bt, s->btype)) {
--                gen_exception_insn(s, 0, EXCP_UDEF, syn_btitrap(s->btype));
--                return;
-+                gen_helper_guarded_page_check(tcg_env);
-             }
-         } else {
-             /* Not the first insn: btype must be 0.  */
+-Bytes:
++ Bytes:
+    0 - 15:    magic
+               Must contain "WithoutFreeSpace" or "WithouFreSpacExt".
+ 
+@@ -103,44 +108,46 @@ Bytes:
+               ext_off must meet the same requirements as cluster offsets
+               defined by BAT entries (see below).
+ 
+-
+-== BAT ==
++BAT
++---
+ 
+ BAT is placed immediately after the image header. In the file, BAT is a
+ contiguous array of 32-bit unsigned little-endian integers with
+-(bat_entries * 4) bytes size.
++``(bat_entries * 4)`` bytes size.
+ 
+ Each BAT entry contains an offset from the start of the file to the
+-corresponding cluster. The offset set in clusters for "WithouFreSpacExt" images
+-and in sectors for "WithoutFreeSpace" images.
++corresponding cluster. The offset set in clusters for ``WithouFreSpacExt``
++images and in sectors for ``WithoutFreeSpace`` images.
+ 
+ If a BAT entry is zero, the corresponding cluster is not allocated and should
+ be considered as filled with zeroes.
+ 
+ Cluster offsets specified by BAT entries must meet the following requirements:
+-    - the value must not be lower than data offset (provided by header.data_off
+-      or calculated as specified above),
+-    - the value must be lower than the desired file size,
+-    - the value must be unique among all BAT entries,
+-    - the result of (cluster offset - data offset) must be aligned to cluster
+-      size.
+ 
++- the value must not be lower than data offset (provided by ``header.data_off``
++  or calculated as specified above)
++- the value must be lower than the desired file size
++- the value must be unique among all BAT entries
++- the result of ``(cluster offset - data offset)`` must be aligned to
++  cluster size
+ 
+-== Data Area ==
++Data Area
++---------
+ 
+-The data area is an area from the data offset (provided by header.data_off or
+-calculated as specified above) to the end of the file. It represents a
++The data area is an area from the data offset (provided by ``header.data_off``
++or calculated as specified above) to the end of the file. It represents a
+ contiguous array of clusters. Most of them are allocated by the BAT, some may
+-be allocated by the ext_off field in the header while other may be allocated by
+-extensions. All clusters allocated by ext_off and extensions should meet the
+-same requirements as clusters specified by BAT entries.
++be allocated by the ``ext_off`` field in the header while other may be
++allocated by extensions. All clusters allocated by ``ext_off`` and extensions
++should meet the same requirements as clusters specified by BAT entries.
+ 
+ 
+-== Format Extension ==
++Format Extension
++----------------
+ 
+ The Format Extension is an area 1 cluster in size that provides additional
+ format features. This cluster is addressed by the ext_off field in the header.
+-The format of the Format Extension area is the following:
++The format of the Format Extension area is the following::
+ 
+    0 -  7:    magic
+               Must be 0xAB234CEF23DCEA87
+@@ -149,10 +156,10 @@ The format of the Format Extension area is the following:
+               The MD5 checksum of the entire Header Extension cluster except
+               the first 24 bytes.
+ 
+-    The above are followed by feature sections or "extensions". The last
+-    extension must be "End of features" (see below).
++The above are followed by feature sections or "extensions". The last
++extension must be "End of features" (see below).
+ 
+-Each feature section has the following format:
++Each feature section has the following format::
+ 
+    0 -  7:    magic
+               The identifier of the feature:
+@@ -183,16 +190,17 @@ Each feature section has the following format:
+ 
+   variable:   data (data_size bytes)
+ 
+-    The above is followed by padding to the next 8 bytes boundary, then the
+-    next extension starts.
++The above is followed by padding to the next 8 bytes boundary, then the
++next extension starts.
+ 
+-    The last extension must be "End of features" with all the fields set to 0.
++The last extension must be "End of features" with all the fields set to 0.
+ 
+ 
+-=== Dirty bitmaps feature ===
++Dirty bitmaps feature
++---------------------
+ 
+ This feature provides a way of storing dirty bitmaps in the image. The fields
+-of its data area are:
++of its data area are::
+ 
+    0 -  7:    size
+               The bitmap size, should be equal to disk size in sectors.
+@@ -215,7 +223,7 @@ clusters inside the Parallels image file. The offsets of these clusters are
+ saved in the L1 offset table specified by the feature extension. Each L1 table
+ entry is a 64 bit integer as described below:
+ 
+-Given an offset in bytes into the bitmap data, corresponding L1 entry is
++Given an offset in bytes into the bitmap data, corresponding L1 entry is::
+ 
+     l1_table[offset / cluster_size]
+ 
+@@ -227,6 +235,6 @@ are assumed to be 1.
+ 
+ If an L1 table entry is not 0 or 1, it contains the corresponding cluster
+ offset (in 512b sectors). Given an offset in bytes into the bitmap data the
+-offset in bytes into the image file can be obtained as follows:
++offset in bytes into the image file can be obtained as follows::
+ 
+     offset = l1_table[offset / cluster_size] * 512 + (offset % cluster_size)
 -- 
 2.34.1
 
