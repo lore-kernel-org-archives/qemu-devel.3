@@ -4,94 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DF7FC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 07:38:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF5FCC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 07:44:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scKCV-0007lH-VU; Fri, 09 Aug 2024 03:38:16 -0400
+	id 1scKIF-0006yP-Gf; Fri, 09 Aug 2024 03:44:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1scKCU-0007hR-8Z
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:38:14 -0400
-Received: from torg.zytor.com ([2607:7c80:54:3::138] helo=mail.zytor.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xin@zytor.com>) id 1scKCR-0001xW-LE
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:38:13 -0400
-Received: from [192.168.7.205] ([71.202.166.45]) (authenticated bits=0)
- by mail.zytor.com (8.17.2/8.17.1) with ESMTPSA id 4797c3Eh1605331
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NO);
- Fri, 9 Aug 2024 00:38:03 -0700
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.zytor.com 4797c3Eh1605331
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zytor.com;
- s=2024071601; t=1723189084;
- bh=HT8i/Hyg8K/T+xa/eDvVgRWAw46fMCwJ8zAtpQmBP04=;
- h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
- b=CoROhledydg9ZifPsnv2S/+hgQRtIF0gjj7CS7HTsAm0pw8RnSl7fdXgv2TTam/Rd
- oy552CqesgpIhSisE2F8y4m9OlSy/iEztpEbk9KacFCPTXLHS5Ds3evUzghFGm82E0
- a+YQYWhh7YGAdXKIPE5Mb7DLHNwzpvDF3qMYtHV6Wj5q2alpvZxZ4hkxKzHRIklHzG
- 2fzlAajvuA3/ALWrPbAa1p2AMKKQdm+0MRfmy0Oezjyy6cw1rrn+sh4HjIQiJHAIFc
- Y/Q9spWIPrvrrpBDOIe5iqspm/s+ZulK14ZP3zrWtZgjIqRhYSM4nrw1WewmYUWrkm
- FiYIcMw0xNEbA==
-Message-ID: <e2b97f46-0913-4cc7-ac28-635170bea1f5@zytor.com>
-Date: Fri, 9 Aug 2024 00:38:02 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] target/i386: Raise the highest index value used
- for any VMCS encoding
-From: Xin Li <xin@zytor.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mtosatti@redhat.com,
- lei4.wang@intel.com, xin3.li@intel.com
-References: <20240807081813.735158-1-xin@zytor.com>
- <20240807081813.735158-4-xin@zytor.com> <ZrOVSXX2uvezT3J1@intel.com>
- <235c9a61-fe2c-4124-acbb-e7ab287164fc@zytor.com>
-Content-Language: en-US
-Autocrypt: addr=xin@zytor.com; keydata=
- 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
- l75w1xInsg==
-In-Reply-To: <235c9a61-fe2c-4124-acbb-e7ab287164fc@zytor.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:7c80:54:3::138; envelope-from=xin@zytor.com;
- helo=mail.zytor.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1scKID-0006xq-1G
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:44:09 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1scKIA-0002im-Dx
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 03:44:08 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-7a0b2924e52so1045342a12.2
+ for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 00:42:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1723189322; x=1723794122;
+ darn=nongnu.org; 
+ h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/waCfZIpwHr1OgYBTlJkVrmnPH0POYFcg1/H/+p2zcM=;
+ b=1SqfJQm1/cqvdviFTQICFlJQYJnGADgbOMtv0UmXcwHMxY07mzd9SdgC+gBy1e4vXm
+ 6QRmaBn3HVwwqoL17DnLH23rseetyL4ZFZa+c717455tqBAn0CAHsqp79Rm90qMX5GqP
+ wgLBQHVvuyp4VlmLMTCdXPfERmh2ZlKULT1AvUGmtXMnAwK+812dv4qNvm0GxtkDtS3h
+ d8r/c55q2wtet8hCjl131MVU2f0hgFWVsz7RbfwpaORW2RxTdxgKV13Dvifhbg5BWRDG
+ mxv1GSIkCVSnaDmNsUM7HgE1ml8jweWj8gyPxpSFfzWtd3A2MyyxAOloA8l6RyMhyMoI
+ Nmiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723189322; x=1723794122;
+ h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/waCfZIpwHr1OgYBTlJkVrmnPH0POYFcg1/H/+p2zcM=;
+ b=TWuEvdEgNj9S5/SkaBkD0aclcNayQAI0jK1dE2XvNaXiJrAvHCqg8GnAknfg+FOMuM
+ poQl4WLRFj6EO/egKc8Cn8ke5vzTTnHHcAqUyOr7FJb7EkBMmm68dF8BQPV6zidLnoFq
+ 8R2TDJdADHfUjFMdUHoDEjvMurlCtbWz4TKwvUvPwJsLtXCOlV4bCx6ihDYtav2CIMaN
+ JOIEz3ZJfTGyRLFPvflHi4fRmvsJLhuYsWbdIo7FiXN2iplQNUmhqmJczfksbRIPCL9q
+ xJDbKqGQw2zZL9Qgf2g5OXM8KiORejLDUsmQGVmyO4oArk3KDn4UCE+ENif5F01pCFqd
+ UfkQ==
+X-Gm-Message-State: AOJu0YwysZXyzB+AIffYaUNBhgpgFjIalcWCtph7zBjebpYVcepuuxzl
+ SPkTxxcCsgmlpkx2u654Q8D7ur57oabmvRIt4Si87ILQflVZAvyeZJagJrKzlgFv7pWggQ4WkAA
+ KUkabAA==
+X-Google-Smtp-Source: AGHT+IFf7iRq3fmjiElJbsNDlbaW3Ida2C1MyBko4/j2Vw9twiyS2oJUjvv9+bUb8dQxzSEPuW7KjA==
+X-Received: by 2002:a05:6a20:cfa2:b0:1c6:a777:4cfa with SMTP id
+ adf61e73a8af0-1c89fe97a70mr952184637.13.1723189320941; 
+ Fri, 09 Aug 2024 00:42:00 -0700 (PDT)
+Received: from c74-1708-dev.zelin.local ([85.208.104.155])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2d1b3addc29sm4655642a91.29.2024.08.09.00.41.59
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 09 Aug 2024 00:42:00 -0700 (PDT)
+From: yong.huang@smartx.com
+To: qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
+ yong.huang@smartx.com
+Subject: [PATCH v1 0/5] Guestperf: miscellaneous refinement and enrichment 
+Date: Fri,  9 Aug 2024 15:41:50 +0800
+Message-Id: <cover.1723189080.git.yong.huang@smartx.com>
+X-Mailer: git-send-email 2.11.0
+Received-SPF: none client-ip=2607:f8b0:4864:20::534;
+ envelope-from=yong.huang@smartx.com; helo=mail-pg1-x534.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,22 +89,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/2024 11:27 PM, Xin Li wrote:
->>> +    if (f[FEAT_7_1_EAX] & CPUID_7_1_EAX_FRED) {
->>> +        /* FRED injected-event data (0x2052).  */
->>> +        kvm_msr_entry_add(cpu, MSR_IA32_VMX_VMCS_ENUM, 0x52);
->>
->> HMM, I have the questions when I check the FRED spec.
->>
->> Section 9.3.4 said, (for injected-event data) "This field has uses the
->> encoding pair 2052H/2053H."
->>
->> So why adjust the highest index to 0x52 other than 0x53?
+From: Hyman Huang <yong.huang@smartx.com>
 
-Okay, found it in the Intel SDM:
+The previous patchset:
+https://lore.kernel.org/qemu-devel/cover.1722957352.git.yong.huang@smartx.com/
+does not made the necessary changes and tests for the upstream version.
 
-Index. Bits 9:1 distinguish components with the same field width and type.
+This patchset works for that:
+1. Move the guestperf to scripts directory suggested by Fabiano Rosas
+2. Make initrd-stress.img built by default suggested by Fabiano Rosas
+3. Make the necessary changes to adapt the latest multifd behavior
+4. A nitpick for multifd migration
+5. Support multifd compression option
 
-Bit 0 is not included in the index field.
+Please review,
+
+Thanks
+
+Yong
+
+Hyman Huang (5):
+  tests/migration: Move the guestperf tool to scripts directory
+  tests/migration: Make initrd-stress.img built by default
+  guestperf: Support deferred migration for multifd
+  guestperf: Nitpick the inconsistent parameters
+  guestperf: Introduce multifd compression option
+
+ MAINTAINERS                                        |  5 ++++
+ {tests => scripts}/migration/guestperf-batch.py    |  0
+ {tests => scripts}/migration/guestperf-plot.py     |  0
+ {tests => scripts}/migration/guestperf.py          |  0
+ {tests => scripts}/migration/guestperf/__init__.py |  0
+ .../migration/guestperf/comparison.py              | 15 +++++++++-
+ {tests => scripts}/migration/guestperf/engine.py   | 32 +++++++++++++++++++---
+ {tests => scripts}/migration/guestperf/hardware.py |  0
+ {tests => scripts}/migration/guestperf/plot.py     |  0
+ {tests => scripts}/migration/guestperf/progress.py |  0
+ {tests => scripts}/migration/guestperf/report.py   |  0
+ {tests => scripts}/migration/guestperf/scenario.py |  7 +++--
+ {tests => scripts}/migration/guestperf/shell.py    |  3 ++
+ {tests => scripts}/migration/guestperf/timings.py  |  0
+ tests/migration/meson.build                        |  5 ++--
+ 15 files changed, 58 insertions(+), 9 deletions(-)
+ rename {tests => scripts}/migration/guestperf-batch.py (100%)
+ rename {tests => scripts}/migration/guestperf-plot.py (100%)
+ rename {tests => scripts}/migration/guestperf.py (100%)
+ rename {tests => scripts}/migration/guestperf/__init__.py (100%)
+ rename {tests => scripts}/migration/guestperf/comparison.py (89%)
+ rename {tests => scripts}/migration/guestperf/engine.py (93%)
+ rename {tests => scripts}/migration/guestperf/hardware.py (100%)
+ rename {tests => scripts}/migration/guestperf/plot.py (100%)
+ rename {tests => scripts}/migration/guestperf/progress.py (100%)
+ rename {tests => scripts}/migration/guestperf/report.py (100%)
+ rename {tests => scripts}/migration/guestperf/scenario.py (93%)
+ rename {tests => scripts}/migration/guestperf/shell.py (98%)
+ rename {tests => scripts}/migration/guestperf/timings.py (100%)
+
+-- 
+2.11.0
 
 
