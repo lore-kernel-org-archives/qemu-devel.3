@@ -4,91 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2BA9C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 21:41:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF064C52D7D
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 22:41:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scXLq-0002jd-RO; Fri, 09 Aug 2024 17:40:46 -0400
+	id 1scYIM-0007iz-MJ; Fri, 09 Aug 2024 18:41:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1scXLo-0002g0-DM
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 17:40:44 -0400
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1scYIL-0007i4-CW
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 18:41:13 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
- id 1scXLl-0000Go-Vu
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 17:40:44 -0400
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-2ef2fbf1d14so34618881fa.1
- for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 14:40:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1scYIJ-0007wt-5U
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 18:41:13 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-368440b073bso1517526f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 15:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1723239639; x=1723844439;
- darn=nongnu.org; 
+ d=google.com; s=20230601; t=1723243268; x=1723848068; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BISKw5vPA7++YI3+ds/HjOiUZyN7fPOPFYE3F8POIzA=;
- b=TsK326hiO6l7D31RTRdoR31i6YqTCUl89VB+fVy6A3YHZy10Zj3JCq5HzkU1c4WUAl
- OnAApJzI0VofrWbnDhX8sjg2WDIx+LqK9tUOksRUwcctDquvCmdiAn3KsPAwHhU8aCTS
- e/ooRxVrokgsJpm1pbmdvpYZq4LC4UXo0luCn5A2J9DWxbKVHR+XnHelaeM5G05JTxzw
- RqTFacXzXQrKboxbZHOMp1yywqfV0Ch6AqGaZaQsb3gADHCE5mL0lNC9BM+duT1mbvP6
- 8cm/KzgBXw3JdeMvxIkuZgTmMM6WuOpjVBEWKEUDtvRS0MExvEOzFrYRc4DortRPd+ZU
- rOqg==
+ bh=bUgArTUxkUr/gdGActB6xpXbU7KtEufqpylBuW/nwaQ=;
+ b=21BGy3WElfnk7rYy79Y8JL2Y26KFrvSapFiCzNMLerVli+yd5NKyGUFanZknoa/sE9
+ NwbiCEkKPCQb/pBj1Cl2JGOCoocYBmkYccjG1lyt5fT44vEAi7TlQZ4u0z5NpAGpA+C6
+ AkxgjiD1MFd+c+neHdyzpuLD2zY4xxxZ1bfgOUc8E0uPe5SrizTdXB6wsJWwe8KJ+xnx
+ oh/wS1luFFVKHOe9RYYZcm/7RiVDCFv84WAjb2zpKCm3l8g9S+YFMPPjCS/adaekxuni
+ 6vpPLVBhh3ZBtbJ/LJCrHuueZJDyD8/OtQymYvhQF7mx4/xZMOw6nq1YOvhXBoDQtHpY
+ Okqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723239639; x=1723844439;
+ d=1e100.net; s=20230601; t=1723243268; x=1723848068;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=BISKw5vPA7++YI3+ds/HjOiUZyN7fPOPFYE3F8POIzA=;
- b=Ht+LncGmfvydQdCu8ylPCtV9kpq7L/9LaNj/pNpj3UGlal2OZAuGBviNe/eM4Fb9NI
- D4Mek7i3TuI3gCOYR3Gb6pqtw1X/JwxyT9RNuzi65vzXwCY49YDvhIcCY+h2iP/9pEXt
- 4qW8oT3eNJzsCHawDJgfi0Dl0Gn70oMjqqlJryZXLLHxZwGdlcde01m5iz97e5qeR/0z
- zqPoE0VUu1u0d8WHrxRbYxd8zeu9G/Nme6z5WjSNFnVjFrIZiY7ZiJbJPCfbSfNNG+UH
- 6C5bYcKUIRcf9o+61Bo+P/HMfVAFr4jakkH89qQVULWsMh+HchavdUbmZaCOa/j2HvMr
- 5tyw==
+ bh=bUgArTUxkUr/gdGActB6xpXbU7KtEufqpylBuW/nwaQ=;
+ b=Ys5lkVK1JsmW6pWjTFhc/qt6v/AjKGS9r2HP/yhwGSKvqXgSjKES5AXGr4yQNz0uvr
+ 6un4j6DiGeGdsDKOG7U9RZqvxPT4K/lau0uEoHLoMSDxRAqBYcYVevlUsE+Gfe+9gd8k
+ 5ux3JaDNixZWhvooeO7ojH9VeQErelSwAMocHCLdzjqDPMt8qAbeeygqEaqmO8g3U2uO
+ AlEyuN4zJS/daaa79ioTjMYRaEs8vrcYafZGZo4wqdpGg101ux7L1qLmuW7zgW1/T4Vj
+ IQdxSzBEdRdAEByYN/z/Y0TsoJrExLKNzb11OxJ6DL9UPGSowGAAXTAWa5O8T/Q+0Qe6
+ RptA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUPT9muSx1tntZKVAjujRWw45G6CX5dJfrsXlAr+b5CligrzE6vltomXHGjXBYjTdz3UTYbQfGJH3/oY7Dxt0Rgh//Nx2g=
-X-Gm-Message-State: AOJu0YwS19YTkprTRIj0xMWW+Z/LT9UTF2Ila8X07K4UWaYak3ChHafT
- um0sYEolzowrWbdXGYE0ghNGyTLt6eYWp/nJGZ+HBH8rxFiR96Pf/pzla1cyblePNv5bh4UxFTK
- HbOFc1O72IkrGJ5xbtiXLjDXcO/kzMoO7eq7o8w==
-X-Google-Smtp-Source: AGHT+IFGCRWNlUOMfvVQUPUkxSmp4XpCemNxf0jyQMHcxsmPrBkQQp9RBGQPfVBaBI68pXBnOFUTHwVjFN7ZHHmgFeI=
-X-Received: by 2002:a05:651c:154a:b0:2f0:2026:3f71 with SMTP id
- 38308e7fff4ca-2f19e362cf3mr20218321fa.8.1723239639018; Fri, 09 Aug 2024
- 14:40:39 -0700 (PDT)
+ AJvYcCUj/1r8B8SfU+3luLk1EC/sNavZ+/bRHOHOe2qGTOG3WDhAaTI2JsNGfz8mdjcLCr32s/KlqihXa85sQ47Cvw6/tH+uZn0=
+X-Gm-Message-State: AOJu0YyqaCszulfogDgPnosy8QfBjdH28lQQfIbjWaG1SY90xoQ6Qein
+ AoecBh9F8fIyMb6RFqFHd6BttPFQcS8o19m7OLWNt05TUBynDDs0XXniRaKAWnabII9AZ5oB5b/
+ Z+BsSMFD/s7xk2xVNpw9SCKnCZiiFyvlvTmWs
+X-Google-Smtp-Source: AGHT+IF5oEe3RjKF12yqz6+lvsGPXAuFpNInmch4ARUIyceiSNT9zLtiGPOfixPsb8rHZhyspY3R5lT3sfMDHNcps4o=
+X-Received: by 2002:adf:eeca:0:b0:366:f455:e7c1 with SMTP id
+ ffacd0b85a97d-36d6a226689mr2265059f8f.27.1723243268124; Fri, 09 Aug 2024
+ 15:41:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240723-counter_delegation-v2-0-c4170a5348ca@rivosinc.com>
- <20240723-counter_delegation-v2-13-c4170a5348ca@rivosinc.com>
- <20240806-9fdad33468ec103d83a85e77@orel>
- <3c09bbbe-857b-4566-963a-790497232bbf@ventanamicro.com>
- <CAKmqyKNgJKBFw7OnwbgbqxA65PR4GSjdUEKdKVw-nYv+e0P58w@mail.gmail.com>
- <CAHBxVyFFa7mQaS4jPkT=aK4gTF3AshpQZNeRhBiZOHX7bhQQsg@mail.gmail.com>
- <CAKmqyKOX883p+sgFs6s649pkH0BA9aKcrTr7=XOT=Xy8mNLzng@mail.gmail.com>
- <CAHBxVyHvypXN0PtxtWwZPoB3i3JRRSqn218nnURy+sD8gmqyjQ@mail.gmail.com>
- <CAKmqyKPt68Sb19rvzX-ugieRja+NYz_ZjLT9R9yBA5KX=i_wZQ@mail.gmail.com>
-In-Reply-To: <CAKmqyKPt68Sb19rvzX-ugieRja+NYz_ZjLT9R9yBA5KX=i_wZQ@mail.gmail.com>
-From: Atish Kumar Patra <atishp@rivosinc.com>
-Date: Fri, 9 Aug 2024 14:40:27 -0700
-Message-ID: <CAHBxVyF6V0Na5zPTcJ24_yvjYjQPrbXR8hspLOr1rM16XbQs2Q@mail.gmail.com>
-Subject: Re: [PATCH v2 13/13] target/riscv: Enable PMU related extensions to
- preferred rule
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
- alistair.francis@wdc.com
+References: <20240805201719.2345596-1-tavip@google.com>
+ <20240805201719.2345596-5-tavip@google.com>
+ <87sevhrbjm.fsf@draig.linaro.org>
+ <CAGWr4cTPqtzEvbd5s7xfMOzid90Gje6NSTGw1qR7r=Ao0xeAcw@mail.gmail.com>
+ <ZrXdyEIFLulMN-gE@redhat.com>
+In-Reply-To: <ZrXdyEIFLulMN-gE@redhat.com>
+From: Octavian Purdila <tavip@google.com>
+Date: Fri, 9 Aug 2024 15:40:57 -0700
+Message-ID: <CAGWr4cTj2uZakF9bkjGFR1PMvyPirvNz-vwWo+oD72YwkDXA2g@mail.gmail.com>
+Subject: Re: [RFC PATCH 04/23] hw/arm: add SVD file for NXP i.MX RT595
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ peter.maydell@linaro.org
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, stefanst@google.com, 
+ pbonzini@redhat.com, thuth@redhat.com, marcandre.lureau@redhat.com, 
+ alistair@alistair23.me, philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, 
+ bleal@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=atishp@rivosinc.com; helo=mail-lj1-x22b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=tavip@google.com; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,174 +99,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 8, 2024 at 1:24=E2=80=AFAM Alistair Francis <alistair23@gmail.c=
-om> wrote:
+On Fri, Aug 9, 2024 at 2:13=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@re=
+dhat.com> wrote:
 >
-> On Thu, Aug 8, 2024 at 6:12=E2=80=AFPM Atish Kumar Patra <atishp@rivosinc=
-.com> wrote:
-> >
-> > On Wed, Aug 7, 2024 at 5:27=E2=80=AFPM Alistair Francis <alistair23@gma=
-il.com> wrote:
+> On Tue, Aug 06, 2024 at 01:31:51PM -0700, Octavian Purdila wrote:
+> > On Tue, Aug 6, 2024 at 7:06=E2=80=AFAM Alex Benn=C3=A9e <alex.bennee@li=
+naro.org> wrote:
 > > >
-> > > On Wed, Aug 7, 2024 at 5:44=E2=80=AFPM Atish Kumar Patra <atishp@rivo=
-sinc.com> wrote:
+> > > Octavian Purdila <tavip@google.com> writes:
+> > >
+> > > > Picked from:
 > > > >
-> > > > On Tue, Aug 6, 2024 at 7:01=E2=80=AFPM Alistair Francis <alistair23=
-@gmail.com> wrote:
-> > > > >
-> > > > > On Wed, Aug 7, 2024 at 2:06=E2=80=AFAM Daniel Henrique Barboza
-> > > > > <dbarboza@ventanamicro.com> wrote:
-> > > > > >
-> > > > > >
-> > > > > >
-> > > > > > On 8/6/24 5:46 AM, Andrew Jones wrote:
-> > > > > > > On Tue, Jul 23, 2024 at 04:30:10PM GMT, Atish Patra wrote:
-> > > > > > >> Counter delegation/configuration extension requires the foll=
-owing
-> > > > > > >> extensions to be enabled.
-> > > > > > >>
-> > > > > > >> 1. Smcdeleg - To enable counter delegation from M to S
-> > > > > > >> 2. S[m|s]csrind - To enable indirect access CSRs
-> > > > > > >> 3. Smstateen - Indirect CSR extensions depend on it.
-> > > > > > >> 4. Sscofpmf - To enable counter overflow feature
-> > > > > > >> 5. S[m|s]aia - To enable counter overflow feature in virtual=
-ization
-> > > > > > >> 6. Smcntrpmf - To enable privilege mode filtering for cycle/=
-instret
-> > > > > > >>
-> > > > > > >> While first 3 are mandatory to enable the counter delegation=
-,
-> > > > > > >> next 3 set of extension are preferred to enable all the PMU =
-related
-> > > > > > >> features.
-> > > > > > >
-> > > > > > > Just my 2 cents, but I think for the first three we can apply=
- the concept
-> > > > > > > of extension bundles, which we need for other extensions as w=
-ell. In those
-> > > > > > > cases we just auto enable all the dependencies. For the three=
- preferred
-> > > > > > > extensions I think we can just leave them off for 'base', but=
- we should
-> > > > > > > enable them by default for 'max' along with Ssccfg.
-> > > > >
+> > > > https://github.com/nxp-mcuxpresso/mcux-soc-svd/blob/main/MIMXRT595S=
+/MIMXRT595S_cm33.xml
 > > > >
-> > > > Max cpu will have everything enabled by default. The problem with m=
-ax
-> > > > cpu is that you
-> > > > may not want to run all the available ISA extensions while testing =
-perf.
-> > > >
-> > > > > Agreed
-> > > > >
-> > > > > >
-> > > > > > I like this idea. I would throw in all these 6 extensions in a =
-'pmu_advanced_ops'
-> > > > > > (or any other better fitting name for the bundle) flag and then=
- 'pmu_advanced_ops=3Dtrue'
-> > > > > > would enable all of those. 'pmu_advanced_ops=3Dtrue,smcntrpmf=
-=3Dfalse' enables all but
-> > > > > > 'smcntrpmf' and so on.
-> > > > > >
-> > > >
-> > > > I thought distinguishing preferred vs implied would be useful becau=
+> > > > NOTE: the file is truncated to keep the email size reasonable. Plea=
 se
-> > > > it would allow the user
-> > > > to clearly understand which is mandated by ISA vs which would be go=
-od to have.
-> > >
-> > > It's not really clear though what extensions are good to have. Other
-> > > people might think differently about the extensions. It also then
-> > > means we end up with complex combinations of extensions to manage.
-> > >
-> > > >
-> > > > The good to have extensions can be disabled similar to above but no=
+> > > > use the link above and download the full file if you want to try ou=
 t
-> > > > the mandatory ones.
+> > > > the patch.
+>
+> "the file is truncated" wins understatement of the week.
+>
+> The full XML file that would need to be in QEMU git for this is 8.6 MB in
+> size.
+>
+> The overall generated headers that we get from it are ~16k lines,
+> or ~0.5 MB
+>
+> $ wc -l build/hw/arm/svd/*.h
+>    135 build/hw/arm/svd/flexcomm.h
+>   1227 build/hw/arm/svd/flexcomm_i2c.h
+>   1161 build/hw/arm/svd/flexcomm_spi.h
+>   1231 build/hw/arm/svd/flexcomm_usart.h
+>   2243 build/hw/arm/svd/flexspi.h
+>   3100 build/hw/arm/svd/rt500_clkctl0.h
+>   4022 build/hw/arm/svd/rt500_clkctl1.h
+>     64 build/hw/arm/svd/rt500.h
+>   1073 build/hw/arm/svd/rt500_rstctl0.h
+>   1697 build/hw/arm/svd/rt500_rstctl1.h
+>  15953 total
+>
+> $ wc -c build/hw/arm/svd/*.h
+>   4349 build/hw/arm/svd/flexcomm.h
+>  51135 build/hw/arm/svd/flexcomm_i2c.h
+>  43822 build/hw/arm/svd/flexcomm_spi.h
+>  46331 build/hw/arm/svd/flexcomm_usart.h
+>  89224 build/hw/arm/svd/flexspi.h
+> 113952 build/hw/arm/svd/rt500_clkctl0.h
+> 141885 build/hw/arm/svd/rt500_clkctl1.h
+>   1881 build/hw/arm/svd/rt500.h
+>  38881 build/hw/arm/svd/rt500_rstctl0.h
+>  61449 build/hw/arm/svd/rt500_rstctl1.h
+> 592909 total
+>
+>
+>
 > > > >
-> > > > > > As long as we document what the flag is enabling I don't see an=
-y problems with it.
-> > > > > > This is how profiles are implemented after all.
-> > > > >
-> > > > > I only worry that we end up with a huge collection of flags that =
-users
-> > > > > need to decipher.
-> > > > >
-> > > >
-> > > > My initial idea was a separate flag as well. But I was not sure if
-> > > > that was good for the
-> > > > above reason. This additional custom pmu related option would be lo=
-st
-> > > > in that huge collection.
+> > > > Signed-off-by: Octavian Purdila <tavip@google.com>
+> > > > ---
+> > > >  hw/arm/svd/MIMXRT595S_cm33.xml | 224052
+> > > > ++++++++++++++++++++++++++++++
 > > >
-> > > I do feel a separate flag is better than trying to guess what extra
-> > > extensions the user wants enabled.
+> > > I guess one thing we need to decide is if the source XML should live =
+in
+> > > the repository as the preferred method of making changes or just the
+> > > translations generated by the tool.
 > > >
 > >
-> > Sure. A separate pmu flag that enables all available pmu related
-> > extensions - Correct ?
->
-> That seems like the best option. Although just using the max CPU is
-> even better :)
->
-> > Do you prefer to have those enabled via a separate preferred rule or
-> > just reuse the implied
-> > rule ? I can drop the preferred rule patches for the later case.
->
-> As this is now a custom flag a separate rule is probably the way to
-> go. Something similar to the existing `RISCVCPUImpliedExtsRule` is
-> probably the way to go. Keep an implied rule for what is required by
-> the spec, but maybe a "helper" rule for the special flag?
->
+> > I think we might want to store the XML in the qemu repo, even if we
+> > don't use it to generate the header files at compile time. This avoids
+> > issues with the original XML moving, going away, changed in
+> > incompatible ways, etc.
 > >
-> >
-> > > I don't love either though, isn't this what profiles is supposed to f=
-ix!
-> > >
-> >
-> > Yeah. But given the optionality in profiles, I am sure if it will fix
-> > the ever growing
-> > extension dependency graph problem ;)
-> >
-> > > >
-> > > > > I guess with some good documentation this wouldn't be too confusi=
-ng though.
-> > > > >
-> > > >
-> > > > Sure. It won't be confusing but most users may not even know about =
-it
-> > > > without digging.
-> > >
-> > > At that point they can use the max CPU or just manually enable the
-> > > extensions though.
-> > >
-> >
-> > If everybody thinks max CPU is going to be used more frequently in the
-> > future, I am okay with
-> > that as well. Implied rule will only specify mandatory extensions
-> > defined by ISA.
-> >
-> > It's up to the user to figure out the extensions names and enable them
-> > individually if max CPU
-> > is not used.
+> > As for generating the headers at compile time, I don't have a strong
+> > preference. I like it because there is slightly less work to do and it
+> > avoids dealing with resolving changes on both the SVD and the
+> > generated headers. For example, the initial headers are committed,
+> > then some changes are done directly to the headers and then we want to
+> > pick up a new SVD from the vendor to support a new hardware revision.
 >
-> A user can just specify max. It's just as much work as specifying this ne=
-w flag.
->
-> Is the issue just the defaults? We can think about max CPU being the defa=
-ult.
+> IIUC the structs/enums/etc are defining guest ABI. So if we want to
+> preserve guest ABI for these devices across QEMU releases, we don't
+> want the generated output to be arbitrarily changing. If there are
+> different revisions of a device, we might need separate structs for
+> each maintained in parallel.
 >
 
-Yes. That would be great. I will drop the Preferred rule and use the implie=
-d
-rule for the extensions mandated by the ISA for now in v3.
+I think we can review changes to prevent ABI breakages both for XML
+and generated headers - unless we use meson git-wrap submodules.
 
-> > FYI: There are at least 6 more PMU related extensions that this series
-> > did not specify.
-> > ~4 are being discussed in the RVI TG(precise event sampling, events)
-> > and 2 are frozen (Smctr/Ssctr)
 >
-> Urgh!
 >
-> Alistair
+> >
+> > There are disadvantages as well: pysvd dependency for building qemu,
+> > hard to review if the vendor dumps a new version with lots of changes
+> > and we want to update to it for a new hardware revision, slight
+> > increase in build time.
+> >
+> > > >  1 file changed, 224052 insertions(+)
+> > > >  create mode 100644 hw/arm/svd/MIMXRT595S_cm33.xml
+> > > >
+> > > > diff --git a/hw/arm/svd/MIMXRT595S_cm33.xml b/hw/arm/svd/MIMXRT595S=
+_cm33.xml
+> > > > new file mode 100644
+> > > > index 0000000000..8943aa3555
+> > > > --- /dev/null
+> > > > +++ b/hw/arm/svd/MIMXRT595S_cm33.xml
+> > > > @@ -0,0 +1,1725 @@
+> > > > +<?xml version=3D"1.0" encoding=3D"UTF-8"?>
+> > > > +<device schemaVersion=3D"1.3" xmlns:xs=3D"http://www.w3.org/2001/X=
+MLSchema-instance" xs:noNamespaceSchemaLocation=3D"CMSIS-SVD.xsd">
+> > > > +  <vendor>nxp.com</vendor>
+> > > > +  <name>MIMXRT595S_cm33</name>
+> > > > +  <version>1.0</version>
+> > > > +  <description>MIMXRT595SFAWC,MIMXRT595SFFOC</description>
+> > > > +  <licenseText>
+> > > > +Copyright 2016-2023 NXP
+> > > > +SPDX-License-Identifier: BSD-3-Clause
+> > > > +  </licenseText>
+> > >
+> > > This certainly seems compatible. XML is not the medium I personally
+> > > would have chosen as a register specification language but I guess th=
+ere
+> > > are no other alternatives?
+> > >
+> >
+> > I agree that the choice of XML is unfortunate but I am not aware of
+> > alternatives, this is what vendors will provide.
+>
+> Given the size of the XML I'm inclined to say that we should just be
+> committing the generated header files to qemu.git
+>
+
+Fine with me. I think we can also reconsider later with minimal effort
+if this gets widely used and there is lots of churn.
+
+Peter, what do you think?
+
+> Then add https://github.com/nxp-mcuxpresso/mcux-soc-svd as a git
+> submodule, and provide some meson rules for triggering re-generation
+> that are off-by-default.
+>
+
+Sounds good. I was thinking of adding mcux-soc-svd as a meson
+subproject via git-wrap as suggested by Philippe.
+
+
+
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com      -o-    https://www.flickr.com/photos/dberran=
+ge :|
+> |: https://libvirt.org         -o-            https://fstop138.berrange.c=
+om :|
+> |: https://entangle-photo.org    -o-    https://www.instagram.com/dberran=
+ge :|
+>
 
