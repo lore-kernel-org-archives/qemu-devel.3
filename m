@@ -4,84 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11705C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 19:29:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2BA9C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 21:41:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scVII-00070l-3f; Fri, 09 Aug 2024 15:28:58 -0400
+	id 1scXLq-0002jd-RO; Fri, 09 Aug 2024 17:40:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1scVIG-0006xI-KW
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 15:28:56 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1scXLo-0002g0-DM
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 17:40:44 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1scVID-00011Z-Va
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 15:28:56 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-368712acb8dso1390423f8f.2
- for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 12:28:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <atishp@rivosinc.com>)
+ id 1scXLl-0000Go-Vu
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 17:40:44 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-2ef2fbf1d14so34618881fa.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 14:40:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1723231731; x=1723836531; darn=nongnu.org;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1723239639; x=1723844439;
+ darn=nongnu.org; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CfqI07Mq5XGJm324B949qGeZKcnG6wqL+yz7+BuRvb0=;
- b=K9/Am/fChBYtjpicF9QwAQMnEIhzTAPCv+5B1HoBbhQA4ffKfvFgqF79klSGonRQbx
- vxSpsT6wwVb1NEo1oBn+KJknw2aZF/A0hwDyN9C4xIsqdbvSFvIfD1QJpnWcJTpGDEUN
- L6BsDMdyzTdz4OLvKBwC9Z/r92ZSAHwZoLXUpDezhmUSAJzrOkGwQCVq4tmpbdO6UmdZ
- 6yISK07K2IO66hm1wcdzxsUqR5XTNy3vsFeGFuWF6vlVZ+Uytc5Dh1MRZOywijhJCFdr
- HiFYHVIEkdPLPT6mTCRIdVv8lhOUWw1x9L73JeCqSIMOcp1tjVkEDuiNNInM4aKHTq5a
- mr+w==
+ bh=BISKw5vPA7++YI3+ds/HjOiUZyN7fPOPFYE3F8POIzA=;
+ b=TsK326hiO6l7D31RTRdoR31i6YqTCUl89VB+fVy6A3YHZy10Zj3JCq5HzkU1c4WUAl
+ OnAApJzI0VofrWbnDhX8sjg2WDIx+LqK9tUOksRUwcctDquvCmdiAn3KsPAwHhU8aCTS
+ e/ooRxVrokgsJpm1pbmdvpYZq4LC4UXo0luCn5A2J9DWxbKVHR+XnHelaeM5G05JTxzw
+ RqTFacXzXQrKboxbZHOMp1yywqfV0Ch6AqGaZaQsb3gADHCE5mL0lNC9BM+duT1mbvP6
+ 8cm/KzgBXw3JdeMvxIkuZgTmMM6WuOpjVBEWKEUDtvRS0MExvEOzFrYRc4DortRPd+ZU
+ rOqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723231731; x=1723836531;
+ d=1e100.net; s=20230601; t=1723239639; x=1723844439;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CfqI07Mq5XGJm324B949qGeZKcnG6wqL+yz7+BuRvb0=;
- b=fwHvg5pKnwMZu5+V/7V1kHVCxNxPdIy6Pc2kWFPs8gSStcEe6qPI5oPHV5PlHMTex6
- 8bOPlJyCwlR/qejwnIgZ0+V9wD9gxvnO/6WYPc2Yu/OPv5pt/clsLTg6E7KA11g2RkkF
- 7TRwG51OS9L6ErFbNuMp5nk72LiGK2TfhFkrEHPBpsukjDZyHiilP5SEdQO5K1tJ3yZ7
- NIudExXAekDT2oSx/egZgtpvRMYU9tZlr7JlL2pzY8JwhGZjeVpJaYqoTXEhJ8LO25JE
- PeFU8URoOzikOVE7ZkY1rEtyS862mTapKyA+3i/Cc1wlFdljGKlE/VWJoG55EczM+7V/
- E+vg==
+ bh=BISKw5vPA7++YI3+ds/HjOiUZyN7fPOPFYE3F8POIzA=;
+ b=Ht+LncGmfvydQdCu8ylPCtV9kpq7L/9LaNj/pNpj3UGlal2OZAuGBviNe/eM4Fb9NI
+ D4Mek7i3TuI3gCOYR3Gb6pqtw1X/JwxyT9RNuzi65vzXwCY49YDvhIcCY+h2iP/9pEXt
+ 4qW8oT3eNJzsCHawDJgfi0Dl0Gn70oMjqqlJryZXLLHxZwGdlcde01m5iz97e5qeR/0z
+ zqPoE0VUu1u0d8WHrxRbYxd8zeu9G/Nme6z5WjSNFnVjFrIZiY7ZiJbJPCfbSfNNG+UH
+ 6C5bYcKUIRcf9o+61Bo+P/HMfVAFr4jakkH89qQVULWsMh+HchavdUbmZaCOa/j2HvMr
+ 5tyw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV4KIGOXF14n3S227yIQQ8WpW4oeckKUFxGGBLTp3cO9OhG/0XVFOtQNAmo9h5Isdyt+BvC2GZoJMvVFpe+3mvbw9ur0z4=
-X-Gm-Message-State: AOJu0YzTTgTOLfBkXJoWFkFrmxT2kRTPVBCCxn6p8cMVCqGmjdUfTxhA
- uZ8cSKRK8Q/SWcwRIh1VKfxKptCfvzjFHoJKJBBKwV1pV6G/ERg40seOEy2cnvfNHLv/v6aj/by
- WErC9KzfhCUrnPVNQ1y/0I4tthC4vT1duhYk3
-X-Google-Smtp-Source: AGHT+IGw6E/Puw/l6sN8kmtdImn36GWYnoUi1j8CyNpJvJwjGTwHh6vnHHHz5g0qbwsHnfNDui5LAE3BSjkFNBnZ11s=
-X-Received: by 2002:a05:6000:b02:b0:367:89b0:f58a with SMTP id
- ffacd0b85a97d-36d6053e7e8mr1629737f8f.58.1723231730731; Fri, 09 Aug 2024
- 12:28:50 -0700 (PDT)
+ AJvYcCUPT9muSx1tntZKVAjujRWw45G6CX5dJfrsXlAr+b5CligrzE6vltomXHGjXBYjTdz3UTYbQfGJH3/oY7Dxt0Rgh//Nx2g=
+X-Gm-Message-State: AOJu0YwS19YTkprTRIj0xMWW+Z/LT9UTF2Ila8X07K4UWaYak3ChHafT
+ um0sYEolzowrWbdXGYE0ghNGyTLt6eYWp/nJGZ+HBH8rxFiR96Pf/pzla1cyblePNv5bh4UxFTK
+ HbOFc1O72IkrGJ5xbtiXLjDXcO/kzMoO7eq7o8w==
+X-Google-Smtp-Source: AGHT+IFGCRWNlUOMfvVQUPUkxSmp4XpCemNxf0jyQMHcxsmPrBkQQp9RBGQPfVBaBI68pXBnOFUTHwVjFN7ZHHmgFeI=
+X-Received: by 2002:a05:651c:154a:b0:2f0:2026:3f71 with SMTP id
+ 38308e7fff4ca-2f19e362cf3mr20218321fa.8.1723239639018; Fri, 09 Aug 2024
+ 14:40:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240805201719.2345596-1-tavip@google.com>
- <20240805201719.2345596-4-tavip@google.com>
- <CAFn=p-abeXP+dUtp_gwH3dcD5DT-sTAFg=udVugrzcU1r8fXpA@mail.gmail.com>
- <96cc6b27-751c-4420-b661-871a09aaf316@redhat.com>
-In-Reply-To: <96cc6b27-751c-4420-b661-871a09aaf316@redhat.com>
-From: Octavian Purdila <tavip@google.com>
-Date: Fri, 9 Aug 2024 12:28:39 -0700
-Message-ID: <CAGWr4cThLpkCA-hC2gf_cViX5dRGe7F-KFcFGepHsYZf0QVuOg@mail.gmail.com>
-Subject: Re: [RFC PATCH 03/23] scripts: add script to generate C header files
- from SVD XML files
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- stefanst@google.com, alex.bennee@linaro.org, thuth@redhat.com, 
- peter.maydell@linaro.org, marcandre.lureau@redhat.com, alistair@alistair23.me, 
- berrange@redhat.com, philmd@linaro.org, crosa@redhat.com, bleal@redhat.com
+References: <20240723-counter_delegation-v2-0-c4170a5348ca@rivosinc.com>
+ <20240723-counter_delegation-v2-13-c4170a5348ca@rivosinc.com>
+ <20240806-9fdad33468ec103d83a85e77@orel>
+ <3c09bbbe-857b-4566-963a-790497232bbf@ventanamicro.com>
+ <CAKmqyKNgJKBFw7OnwbgbqxA65PR4GSjdUEKdKVw-nYv+e0P58w@mail.gmail.com>
+ <CAHBxVyFFa7mQaS4jPkT=aK4gTF3AshpQZNeRhBiZOHX7bhQQsg@mail.gmail.com>
+ <CAKmqyKOX883p+sgFs6s649pkH0BA9aKcrTr7=XOT=Xy8mNLzng@mail.gmail.com>
+ <CAHBxVyHvypXN0PtxtWwZPoB3i3JRRSqn218nnURy+sD8gmqyjQ@mail.gmail.com>
+ <CAKmqyKPt68Sb19rvzX-ugieRja+NYz_ZjLT9R9yBA5KX=i_wZQ@mail.gmail.com>
+In-Reply-To: <CAKmqyKPt68Sb19rvzX-ugieRja+NYz_ZjLT9R9yBA5KX=i_wZQ@mail.gmail.com>
+From: Atish Kumar Patra <atishp@rivosinc.com>
+Date: Fri, 9 Aug 2024 14:40:27 -0700
+Message-ID: <CAHBxVyF6V0Na5zPTcJ24_yvjYjQPrbXR8hspLOr1rM16XbQs2Q@mail.gmail.com>
+Subject: Re: [PATCH v2 13/13] target/riscv: Enable PMU related extensions to
+ preferred rule
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Andrew Jones <ajones@ventanamicro.com>, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, bin.meng@windriver.com, 
+ alistair.francis@wdc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=tavip@google.com; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=atishp@rivosinc.com; helo=mail-lj1-x22b.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,85 +104,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 8, 2024 at 11:34=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com>=
- wrote:
+On Thu, Aug 8, 2024 at 1:24=E2=80=AFAM Alistair Francis <alistair23@gmail.c=
+om> wrote:
 >
-> On 8/8/24 23:56, John Snow wrote:
-> > I haven't read the rest of this series; I'm chiming in solely from the
-> > build/python maintainer angle. Do we *always* need pysvd, no matter how
-> > QEMU was configured? Adding it to the meson line here is a very big ham=
-mer.
->
-> In general I'd agree, though for a 7.5 kB package with no other
-> dependencies I'm willing to make an exception.
->
-> The alternative would be pretty complex:
->
-> - check if pysvd is installed in the host
->
-> - check if a machine type that needs pysvd is enabled, defaulting to y
-> or n depending on the previous step and --enable-download
->
-> - use that to decide between doing nothing, installing pysvd or erroring =
-out
->
-> - pass the availability of pysvd to Kconfig
->
-> - use that to make the final determination on whether to enable those
-> machine types that use pysvd
->
-> This is quite obviously overengineered compared to the alternative.
->
-> Another possibility is to ship the generated file, skip regeneration if
-> pysvd is not installed (on the host), and not touch pythondeps.toml at
-> all.  Whether shipping a generated file is acceptable should be decided
-> by Peter as ARM maintainer, personally I would go the way that Octavian
-> is going already and I'm mentioning the rest only for completeness and
-> education.
->
-> However...
->
-> > We also need to provide a way for pysvd to be available offline; some
-> > packages are available via distro libs and if this package is available
-> > for every distro we officially support, that's sufficient (but requires
-> > updates to our various docker and VM test configuration files to add th=
-e
-> > new dependency). Otherwise, like we do for meson, we need to vendor the
-> > wheel in the tree so offline tarball builds will continue to work.
+> On Thu, Aug 8, 2024 at 6:12=E2=80=AFPM Atish Kumar Patra <atishp@rivosinc=
+.com> wrote:
 > >
-> > It looks like pysvd is a pure python package with no dependencies, so i=
+> > On Wed, Aug 7, 2024 at 5:27=E2=80=AFPM Alistair Francis <alistair23@gma=
+il.com> wrote:
+> > >
+> > > On Wed, Aug 7, 2024 at 5:44=E2=80=AFPM Atish Kumar Patra <atishp@rivo=
+sinc.com> wrote:
+> > > >
+> > > > On Tue, Aug 6, 2024 at 7:01=E2=80=AFPM Alistair Francis <alistair23=
+@gmail.com> wrote:
+> > > > >
+> > > > > On Wed, Aug 7, 2024 at 2:06=E2=80=AFAM Daniel Henrique Barboza
+> > > > > <dbarboza@ventanamicro.com> wrote:
+> > > > > >
+> > > > > >
+> > > > > >
+> > > > > > On 8/6/24 5:46 AM, Andrew Jones wrote:
+> > > > > > > On Tue, Jul 23, 2024 at 04:30:10PM GMT, Atish Patra wrote:
+> > > > > > >> Counter delegation/configuration extension requires the foll=
+owing
+> > > > > > >> extensions to be enabled.
+> > > > > > >>
+> > > > > > >> 1. Smcdeleg - To enable counter delegation from M to S
+> > > > > > >> 2. S[m|s]csrind - To enable indirect access CSRs
+> > > > > > >> 3. Smstateen - Indirect CSR extensions depend on it.
+> > > > > > >> 4. Sscofpmf - To enable counter overflow feature
+> > > > > > >> 5. S[m|s]aia - To enable counter overflow feature in virtual=
+ization
+> > > > > > >> 6. Smcntrpmf - To enable privilege mode filtering for cycle/=
+instret
+> > > > > > >>
+> > > > > > >> While first 3 are mandatory to enable the counter delegation=
+,
+> > > > > > >> next 3 set of extension are preferred to enable all the PMU =
+related
+> > > > > > >> features.
+> > > > > > >
+> > > > > > > Just my 2 cents, but I think for the first three we can apply=
+ the concept
+> > > > > > > of extension bundles, which we need for other extensions as w=
+ell. In those
+> > > > > > > cases we just auto enable all the dependencies. For the three=
+ preferred
+> > > > > > > extensions I think we can just leave them off for 'base', but=
+ we should
+> > > > > > > enable them by default for 'max' along with Ssccfg.
+> > > > >
+> > > >
+> > > > Max cpu will have everything enabled by default. The problem with m=
+ax
+> > > > cpu is that you
+> > > > may not want to run all the available ISA extensions while testing =
+perf.
+> > > >
+> > > > > Agreed
+> > > > >
+> > > > > >
+> > > > > > I like this idea. I would throw in all these 6 extensions in a =
+'pmu_advanced_ops'
+> > > > > > (or any other better fitting name for the bundle) flag and then=
+ 'pmu_advanced_ops=3Dtrue'
+> > > > > > would enable all of those. 'pmu_advanced_ops=3Dtrue,smcntrpmf=
+=3Dfalse' enables all but
+> > > > > > 'smcntrpmf' and so on.
+> > > > > >
+> > > >
+> > > > I thought distinguishing preferred vs implied would be useful becau=
+se
+> > > > it would allow the user
+> > > > to clearly understand which is mandated by ISA vs which would be go=
+od to have.
+> > >
+> > > It's not really clear though what extensions are good to have. Other
+> > > people might think differently about the extensions. It also then
+> > > means we end up with complex combinations of extensions to manage.
+> > >
+> > > >
+> > > > The good to have extensions can be disabled similar to above but no=
 t
-> > should be OK to vendor it in qemu.git/python/wheels/ - look at
-> > qemu.git/python/scripts/vendor.py and consider updating and running thi=
-s
-> > script.
+> > > > the mandatory ones.
+> > > >
+> > > > > > As long as we document what the flag is enabling I don't see an=
+y problems with it.
+> > > > > > This is how profiles are implemented after all.
+> > > > >
+> > > > > I only worry that we end up with a huge collection of flags that =
+users
+> > > > > need to decipher.
+> > > > >
+> > > >
+> > > > My initial idea was a separate flag as well. But I was not sure if
+> > > > that was good for the
+> > > > above reason. This additional custom pmu related option would be lo=
+st
+> > > > in that huge collection.
+> > >
+> > > I do feel a separate flag is better than trying to guess what extra
+> > > extensions the user wants enabled.
+> > >
+> >
+> > Sure. A separate pmu flag that enables all available pmu related
+> > extensions - Correct ?
 >
-> ... this is indeed correct.  It's not hard and it helps building on
-> older distros.  Future versions of Debian or Fedora might package pysvd,
-> but right now it's not included anywhere
-> (https://repology.org/project/python:pysvd/history).
+> That seems like the best option. Although just using the max CPU is
+> even better :)
 >
-> > That said, you might be the first person I've seen outside of Paolo and
-> > I to brave mucking around with the python build venv. You deserve a
-> > bravery sticker :)
+> > Do you prefer to have those enabled via a separate preferred rule or
+> > just reuse the implied
+> > rule ? I can drop the preferred rule patches for the later case.
 >
-> It's not that bad, come on. :)  But yeah, I'm positively surprised by
-> the effort to include pysvd in the virtual environment, and any
-> suggestions to improve the documentation and discoverability of the venv
-> setup are welcome.  I'm curious whether you figured it out yourself or
-> found https://www.qemu.org/docs/master/devel/build-system.html.
+> As this is now a custom flag a separate rule is probably the way to
+> go. Something similar to the existing `RISCVCPUImpliedExtsRule` is
+> probably the way to go. Keep an implied rule for what is required by
+> the spec, but maybe a "helper" rule for the special flag?
+>
+> >
+> >
+> > > I don't love either though, isn't this what profiles is supposed to f=
+ix!
+> > >
+> >
+> > Yeah. But given the optionality in profiles, I am sure if it will fix
+> > the ever growing
+> > extension dependency graph problem ;)
+> >
+> > > >
+> > > > > I guess with some good documentation this wouldn't be too confusi=
+ng though.
+> > > > >
+> > > >
+> > > > Sure. It won't be confusing but most users may not even know about =
+it
+> > > > without digging.
+> > >
+> > > At that point they can use the max CPU or just manually enable the
+> > > extensions though.
+> > >
+> >
+> > If everybody thinks max CPU is going to be used more frequently in the
+> > future, I am okay with
+> > that as well. Implied rule will only specify mandatory extensions
+> > defined by ISA.
+> >
+> > It's up to the user to figure out the extensions names and enable them
+> > individually if max CPU
+> > is not used.
+>
+> A user can just specify max. It's just as much work as specifying this ne=
+w flag.
+>
+> Is the issue just the defaults? We can think about max CPU being the defa=
+ult.
 >
 
-A combination of reading the docs above and looking at how things are
-done for other packages (meson, sphinx). It really was
-straightforward.
+Yes. That would be great. I will drop the Preferred rule and use the implie=
+d
+rule for the extensions mandated by the ISA for now in v3.
 
-> One thing I heard from others is that pythondeps.toml looks "too much
-> like" a fringe standard Python feature that no one has heard about.  In
-> some sense that's a great compliment, but I can see how it can be a bit
-> disconcerting.
+> > FYI: There are at least 6 more PMU related extensions that this series
+> > did not specify.
+> > ~4 are being discussed in the RVI TG(precise event sampling, events)
+> > and 2 are frozen (Smctr/Ssctr)
 >
-
-Now that you mentioned it I can see how people might think that :) But
-the build system docs are pretty clear IMO.
+> Urgh!
+>
+> Alistair
 
