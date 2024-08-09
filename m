@@ -4,74 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48985C52D7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66D3FC3DA4A
 	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 16:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scS71-0004KF-Tm; Fri, 09 Aug 2024 12:05:09 -0400
+	id 1scS7B-0004VE-3p; Fri, 09 Aug 2024 12:05:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1scS6i-0004Hz-Jg
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 12:04:48 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ id 1scS6p-0004JE-9L
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 12:04:56 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1scS6W-0005va-41
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 12:04:40 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2f025b94e07so25270571fa.0
- for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 09:04:34 -0700 (PDT)
+ id 1scS6e-0005wM-HQ
+ for qemu-devel@nongnu.org; Fri, 09 Aug 2024 12:04:51 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-42803bbf842so21454455e9.1
+ for <qemu-devel@nongnu.org>; Fri, 09 Aug 2024 09:04:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723219473; x=1723824273; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=6V3dVlNNQOB+bbjpB/NlZwsZDkGp55ceS7gvHvrMkjg=;
- b=rhOT1uXFFuNf0x0LP5z/ErJGHsGWJ1/L0wwHMEDr1lx/sMSv7+bCSWYsIMOZCQAlIb
- wVQqKWEfxoe2g3JTgpf21QCZZinKMwlI/s1uLgY4PdiEG818LgrGykYpJaBVF6QTCV4O
- 3mphMjZCihVPROVxbLrg2SVDI2XWFVG8HDttmxK1LquIV4nlPWJ6QYW83YY+ywZFe80N
- SdTTOrg7ws3ERnpJThgnKbgBA5HOUR+YEomWROAVhyvE1o+Vp0YyWaPrGxGw31Rb2uig
- 5eKX/ZH0+3U5m3NHLRI8sOI/loN2gCgoASsUggXih4eZ2JGkUR3SkT8TqaiLRa5i6T+d
- y5ww==
+ d=linaro.org; s=google; t=1723219477; x=1723824277; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ICJBhRzXeSHxiQ/p/CxRsyTFTBxBWWvxj76zvD9iTsA=;
+ b=b5Abe9i1vt616+EgPJfr4bTfwx8KG3TRTHTadQp6ljSdXsis+pPhd1Fe6kJ/sEzQIP
+ QUT0EXsvuh99U7+S/kQT6gBdsXrRIc37jKRMQPlqToBB+hmQLRcvb5eH1RLbkdYqD7TO
+ 0861UWTULG64oy8KBGI1jHByUqmi3J0Ku+iAphQuUrU3ZOctcbWhiATw0jtQqWvc7AXE
+ 5RgYiikbnc+oKG3lMaF8FxvuyMXbhx8iOnWfhloaCxRdq3qcMB+Dht6jS6IVOmwDAE85
+ lu1if1B8vB6JzKr3uz8Ym45QZGL7p0nVgiWTpT6ZzLtvzYA7G6lwJ0RfN24GYuPrZdgf
+ htwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723219473; x=1723824273;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6V3dVlNNQOB+bbjpB/NlZwsZDkGp55ceS7gvHvrMkjg=;
- b=NRI0gtXXlsyXFL175k9paJCq7stKZ4zW7K+w7mBnTL9zr4Q/HI4whNSEkpNgbbk50w
- c4LS+WMjJxiYc5CxO2uDhblyjzdG5GHaTk7CX7rIVOiDTnAG+nBQB82WxxkyBz0T3LNU
- xa2mfa5E+7cpKGbYm1pN/xeTVGbWUORd7+Dj97Xg/RWSr3XSirk/cP7V3grBuxJxqosS
- bRhG94309umrpyJzYuTesR9XJab+Z0+zccUqbshUu+rbQzfj2u1xszRfWreHCaPtAYmt
- 6O2LyYCJbe+7x+++qcXmuxOwyzN6u/8uAs5dQx/emZoOkSHK/4gqKZf3WXmux0qHnB7H
- olqw==
+ d=1e100.net; s=20230601; t=1723219477; x=1723824277;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ICJBhRzXeSHxiQ/p/CxRsyTFTBxBWWvxj76zvD9iTsA=;
+ b=L9fjRV+suR/Qab7mWf87Ym+HE1pX+xBxwbI7E3Mym93POo/wdh1WrSJ1+EWkxgHfbp
+ TyFeIkpUX6HwsfxTlfH2jM4A9ejFu2sfYaEcF7gq9AISbmFRanAMxbgfGBdsAgDLpOgM
+ SfBxoT8234VM2pezFyyGKF7jvKF23SLQ816o1pPqyFdHxP7/h0n/gPWpdxrP+wtoFSAy
+ is1xf4SUYipmxhdAYqLNYQFH9zALgr5zwmHbUCbf31Ik8nezY0X5r7j/EB3xH2CGreLo
+ MRvqu2FMRDeNr2za/e0gz++Rn+LEiydw44NCY13z+d9RCOYiWWQWZg9DS7D4b9hILp1+
+ nZLw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVVkpWsU48e6VmNXolWAwyZRtX3amzkGcPWZ0eMuOe1xnnl7lDElWXKpF10kdumbIiMvbKhuoYXoohocRVRxl6u9mOkN6A=
-X-Gm-Message-State: AOJu0YxZZlQhUiJuRQqXrCZp5oRvpbcTuK/8K1dm7wvGDcFpOgGLV7CO
- lEaBNP8rpgElG+VNBpsk9LIJpxJSsgVaYua4STfhitP2Sg8aRA6Pc/iUAiFX0wU=
-X-Google-Smtp-Source: AGHT+IHPUDHP9e+MjgQLPtymj0FTQ5dY3jmPB3Rvt35FAz0SvOwVQ1CMkrnR7Mpqj7bjDC758z7v5w==
-X-Received: by 2002:a2e:a549:0:b0:2ef:24a0:c176 with SMTP id
- 38308e7fff4ca-2f1a6c6cc9bmr19680931fa.28.1723219472227; 
- Fri, 09 Aug 2024 09:04:32 -0700 (PDT)
+ AJvYcCUYVDoRoHfG9qvIGhgQsQfYzKm1Wk/fR1tUL1QZpu3NqBEXzxIp685b00pvrx4Os3WV4IWYdKkkRmRfiTopwwJQvZf8Lrs=
+X-Gm-Message-State: AOJu0Yy8miNa4pKxzzViGsCU5tY3TFKlQipEeB1MkCZgIZ8p48JLQLat
+ d25AiQ5Wtd5W1w7OkMyvzYepxE8hKc/b7h9tQXhfBiUIl5Agz44MOKYiu63yFGQ=
+X-Google-Smtp-Source: AGHT+IGH/XkF6c7YliELRAZ3C+w64+vKTfsT7ki7NvPurtzZwDlBBQtzSBblkJnK83C7QQy3uV09AQ==
+X-Received: by 2002:a05:6000:b89:b0:368:3b5c:7a5d with SMTP id
+ ffacd0b85a97d-36d5e1c7656mr2289108f8f.20.1723219477084; 
+ Fri, 09 Aug 2024 09:04:37 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429059714d5sm135171295e9.13.2024.08.09.09.04.31
+ 5b1f17b1804b1-429059714d5sm135171295e9.13.2024.08.09.09.04.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 09 Aug 2024 09:04:31 -0700 (PDT)
+ Fri, 09 Aug 2024 09:04:32 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
 	Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH 0/2] target/arm: Fix EL3-is-AArch32 mmu indexes
-Date: Fri,  9 Aug 2024 17:04:28 +0100
-Message-Id: <20240809160430.1144805-1-peter.maydell@linaro.org>
+Subject: [PATCH 1/2] target/arm: Update translation regime comment for new
+ features
+Date: Fri,  9 Aug 2024 17:04:29 +0100
+Message-Id: <20240809160430.1144805-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240809160430.1144805-1-peter.maydell@linaro.org>
+References: <20240809160430.1144805-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x234.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,77 +98,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Our current usage of MMU indexes when EL3 is AArch32 is confused.
-Architecturally, when EL3 is AArch32, all Secure code runs under the
-Secure PL1&0 translation regime:
- * code at EL3, which might be Mon, or SVC, or any of the
-   other privileged modes (PL1)
- * code at EL0 (Secure PL0)
+We have a long comment describing the Arm architectural translation
+regimes and how we map them to QEMU MMU indexes.  This comment has
+got a bit out of date:
 
-This is different from when EL3 is AArch64, in which case EL3 is its
-own translation regime, and EL1 and EL0 (whether AArch32 or AArch64)
-have their own regime.
+ * FEAT_SEL2 allows Secure EL2 and corresponding new regimes
+ * FEAT_RME introduces Realm state and its translation regimes
+ * We now model the Cortex-R52 so that is no longer a hypothetical
+ * We separated Secure Stage 2 and NonSecure Stage 2 MMU indexes
+ * We have an MMU index per physical address spacea
 
-We claimed to be mapping Secure PL1 to our ARMMMUIdx_EL3, but didn't
-do anything special about Secure PL0, which meant it used the same
-ARMMMUIdx_EL10_0 that NonSecure PL0 does.  This resulted in a bug
-where arm_sctlr() incorrectly picked the NonSecure SCTLR as the
-controlling register when in Secure PL0, which meant we were
-spuriously generating alignment faults because we were looking at the
-wrong SCTLR control bits.
+Add the missing pieces so that the list of architectural translation
+regimes matches the Arm ARM, and the list and count of QEMU MMU
+indexes in the comment matches the enum.
 
-The use of ARMMMUIdx_EL3 for Secure PL1 also resulted in the bug that
-we wouldn't honour the PAN bit for Secure PL1, because there's no
-equivalent _PAN mmu index for it.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/cpu.h | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-We could fix this in one of two ways:
- * The most straightforward is to add new MMU indexes EL30_0,
-   EL30_3, EL30_3_PAN to correspond to "Secure PL1&0 at PL0",
-   "Secure PL1&0 at PL1", and "Secure PL1&0 at PL1 with PAN".
-   This matches how we use indexes for the AArch64 regimes, and
-   preserves propirties like being able to determine the privilege
-   level from an MMU index without any other information. However
-   it would add two MMU indexes (we can share one with ARMMMUIdx_EL3),
-   and we are already using 14 of the 16 the core TLB code permits.
-
- * The more complicated approach is the one we take here. We use
-   the same MMU indexes (E10_0, E10_1, E10_1_PAN) for Secure PL1&0
-   than we do for NonSecure PL1&0. This saves on MMU indexes, but
-   means we need to check in some places whether we're in the
-   Secure PL1&0 regime or not before we interpret an MMU index.
-
-Patch 1 cleans up an out of date comment about MMU index
-usage; patch 2 is the actual bug fix.
-
-This fixes the bug with the repro case in the bug report, and it
-also passes "make check", but I don't have a huge range of
-Secure AArch32 test images to test with. I guess it ought to go
-into 9.1 as a bugfix, but the nature of the patch means it's
-not very easy to be confident it doesn't introduce any new bugs...
-
-Bernhard: I suspect this is the same bug you reported a few months
-back in this thread:
-https://lore.kernel.org/qemu-devel/C875173E-4B5B-4F71-8CF4-4325F7AB7629@gmail.com/
- -- if you're able to test that this patchset fixes your test
-case as well, that would be great.
-
-thanks
--- PMM
-
-Peter Maydell (2):
-  target/arm: Update translation regime comment for new features
-  target/arm: Fix usage of MMU indexes when EL3 is AArch32
-
- target/arm/cpu.h               | 50 ++++++++++++++++++++++------------
- target/arm/internals.h         | 27 +++++++++++++++---
- target/arm/tcg/translate.h     |  2 ++
- target/arm/helper.c            | 34 +++++++++++++++--------
- target/arm/ptw.c               |  6 +++-
- target/arm/tcg/hflags.c        |  4 +++
- target/arm/tcg/translate-a64.c |  2 +-
- target/arm/tcg/translate.c     |  9 +++---
- 8 files changed, 95 insertions(+), 39 deletions(-)
-
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index a12859fc533..216774f5d3a 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -2772,8 +2772,14 @@ bool write_cpustate_to_list(ARMCPU *cpu, bool kvm_sync);
+  *  + NonSecure EL1 & 0 stage 2
+  *  + NonSecure EL2
+  *  + NonSecure EL2 & 0   (ARMv8.1-VHE)
+- *  + Secure EL1 & 0
+- *  + Secure EL3
++ *  + Secure EL1 & 0 stage 1
++ *  + Secure EL1 & 0 stage 2 (FEAT_SEL2)
++ *  + Secure EL2 (FEAT_SEL2)
++ *  + Secure EL2 & 0 (FEAT_SEL2)
++ *  + Realm EL1 & 0 stage 1 (FEAT_RME)
++ *  + Realm EL1 & 0 stage 2 (FEAT_RME)
++ *  + Realm EL2 (FEAT_RME)
++ *  + EL3
+  * If EL3 is 32-bit:
+  *  + NonSecure PL1 & 0 stage 1
+  *  + NonSecure PL1 & 0 stage 2
+@@ -2805,10 +2811,12 @@ bool write_cpustate_to_list(ARMCPU *cpu, bool kvm_sync);
+  *     table over and over.
+  *  6. we need separate EL1/EL2 mmu_idx for handling the Privileged Access
+  *     Never (PAN) bit within PSTATE.
+- *  7. we fold together the secure and non-secure regimes for A-profile,
++ *  7. we fold together most secure and non-secure regimes for A-profile,
+  *     because there are no banked system registers for aarch64, so the
+  *     process of switching between secure and non-secure is
+  *     already heavyweight.
++ *  8. we cannot fold together Stage 2 Secure and Stage 2 NonSecure,
++ *     because both are in use simultaneously for Secure EL2.
+  *
+  * This gives us the following list of cases:
+  *
+@@ -2820,14 +2828,15 @@ bool write_cpustate_to_list(ARMCPU *cpu, bool kvm_sync);
+  * EL2 EL2&0 +PAN
+  * EL2 (aka NS PL2)
+  * EL3 (aka S PL1)
+- * Physical (NS & S)
+- * Stage2 (NS & S)
++ * Stage2 Secure
++ * Stage2 NonSecure
++ * plus one TLB per Physical address space: S, NS, Realm, Root
+  *
+- * for a total of 12 different mmu_idx.
++ * for a total of 14 different mmu_idx.
+  *
+  * R profile CPUs have an MPU, but can use the same set of MMU indexes
+  * as A profile. They only need to distinguish EL0 and EL1 (and
+- * EL2 if we ever model a Cortex-R52).
++ * EL2 for cores like the Cortex-R52).
+  *
+  * M profile CPUs are rather different as they do not have a true MMU.
+  * They have the following different MMU indexes:
 -- 
 2.34.1
 
