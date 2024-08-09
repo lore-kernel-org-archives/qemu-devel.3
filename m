@@ -4,88 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37377C49EA1
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 03:26:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04CB7C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 03:29:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scGH1-0007ry-VX; Thu, 08 Aug 2024 23:26:39 -0400
+	id 1scGJ0-0005To-DF; Thu, 08 Aug 2024 23:28:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1scGGz-0007mA-UZ
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 23:26:37 -0400
-Received: from mx2.zhaoxin.com ([203.110.167.99])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1scGGx-0005Kh-E9
- for qemu-devel@nongnu.org; Thu, 08 Aug 2024 23:26:37 -0400
-X-ASG-Debug-ID: 1723173985-1eb14e31a725620001-jgbH7p
-Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
- mx2.zhaoxin.com with ESMTP id fBCq7Ofi1RFudthE (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Fri, 09 Aug 2024 11:26:25 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX3.zhaoxin.com
- (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 9 Aug
- 2024 11:26:24 +0800
-Received: from ZXSHMBX1.zhaoxin.com ([fe80::dcd1:d46d:263:77e]) by
- ZXSHMBX1.zhaoxin.com ([fe80::dcd1:d46d:263:77e%7]) with mapi id
- 15.01.2507.039; Fri, 9 Aug 2024 11:26:24 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Received: from [10.28.66.62] (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 9 Aug
- 2024 11:25:46 +0800
-Message-ID: <d37a0bb1-23c3-4226-87c9-da73f4b59d72@zhaoxin.com>
-Date: Thu, 8 Aug 2024 23:25:45 -0400
+ (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
+ id 1scGIx-0005Rz-5U
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 23:28:39 -0400
+Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yongxuan.wang@sifive.com>)
+ id 1scGIv-0005S7-Ih
+ for qemu-devel@nongnu.org; Thu, 08 Aug 2024 23:28:38 -0400
+Received: by mail-oa1-x33.google.com with SMTP id
+ 586e51a60fabf-26b5173e861so721956fac.3
+ for <qemu-devel@nongnu.org>; Thu, 08 Aug 2024 20:28:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1723174116; x=1723778916; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dF1Th3mxnkasppLjmRi/GC8aJHarOPFDvn5z8aJZCOg=;
+ b=PloT4velnIcoLRmIdcbuSCOdHYDCUD9pz58qqN6zesU4o/Pt1G7cpwE64lMhbMlTto
+ Oq2YvaGzJ7GmWLqmfJ7lggrSsQjXrvJN6EWzpFZtTL9yabG08M1bKjWOGAgQWnp8b0uJ
+ HHGGEKk7jFrOx4XvzI4+prY67Z4B/77vLTnez0F2+N3hF7xeSowgYuUn46Z6LGXvuXoj
+ jGx3h3y8ctO9/rBgQM1Pd9sSy1dRmYfbish3PECTU2Zkg4vQBUGic8N0MTbVBne1T2A6
+ NaAmHkemy8pXCz5SsUzYZrzY/x8AWn9NegW6mlPxWVEYCxvXg08ABqlY6C1ZkMJlU8vG
+ PlFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723174116; x=1723778916;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=dF1Th3mxnkasppLjmRi/GC8aJHarOPFDvn5z8aJZCOg=;
+ b=QGtvhB5jcnJABGEf4Va4cWH5NSx+dx3mne1E9Qv5PksxBrSoFWMQOBULi3YO/MhcMx
+ lQPj9MkN0hI8viYlGjNWKWy5LQljzyEpY07cD1d//1fzpT5ifq/tyi6j16XMIuTHAaul
+ /VJSVaMKMhiPpsVs3eEY73hdlgBOo6OeX4O5evBQz/XTYNixZlNEh5FKrEFzi6ykjw6f
+ /rMeWfCXOK2EKZgkjRnTC/9wVPP9J536RUW3zNcAEzjfF29wX1FlWVF8jMz5BGfvmm6G
+ rL4Mab9mtfSRR7izwGAlFzoxl5SHC5+ySQa2e2ihNEPxSV8gx9NnPLw34cgdmnWvbPlN
+ YtGg==
+X-Gm-Message-State: AOJu0Yytj9ZDv1eDY6hSITkIebi/EuKBzLFB66bnTzr/C0ClBwOanO97
+ Lj56RLuzJy0wAhAB+3TLZ1ZpsTCwCKBs0DP7uI4vXbFnHGV9+8lQ5svfzcnrewkMbKCNM4sUQGL
+ cZGFIDvcPb4jUQXuSjkU/quwnEzYbV3e6Jvdutg==
+X-Google-Smtp-Source: AGHT+IEusv3yAaHfX3hGBlzegdNIeWCp+xiKRlsZ89tsugccQEzW9rou7sH3aUFAIV43BFPtd0p1PtDvBouCTO6exz0=
+X-Received: by 2002:a05:6870:d8d2:b0:260:e678:b660 with SMTP id
+ 586e51a60fabf-26c63043149mr283914fac.51.1723174116021; Thu, 08 Aug 2024
+ 20:28:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] target/i386: Update CMPLegacy handling for Zhaoxin
- CPUs
-To: Zhao Liu <zhao1.liu@intel.com>
-X-ASG-Orig-Subj: Re: [PATCH v2 4/4] target/i386: Update CMPLegacy handling for
- Zhaoxin CPUs
-CC: <pbonzini@redhat.com>, <xiaoyao.li@intel.com>, <qemu-devel@nongnu.org>,
- <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>, <rockcui@zhaoxin.com>,
- <louisqi@zhaoxin.com>, <liamni@zhaoxin.com>, <frankzhu@zhaoxin.com>
-References: <20240704112511.184257-1-ewanhai-oc@zhaoxin.com>
- <20240704112511.184257-5-ewanhai-oc@zhaoxin.com> <ZrSeMfpBm8NrXRWK@intel.com>
- <236c8032-6e17-4002-86e1-4483b55977f7@zhaoxin.com>
- <ZrWLgN1L280h75QF@intel.com>
-Content-Language: en-US
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-In-Reply-To: <ZrWLgN1L280h75QF@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+References: <20240808082030.25940-1-yongxuan.wang@sifive.com>
+ <aad11c6d-8c5d-40bd-8b0d-3dae10b80d4d@ventanamicro.com>
+In-Reply-To: <aad11c6d-8c5d-40bd-8b0d-3dae10b80d4d@ventanamicro.com>
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Date: Fri, 9 Aug 2024 11:28:23 +0800
+Message-ID: <CAMWQL2h6=MO1YFW2tUONM_yDnmdtG-CfGyk+RCPZo3u2s6o4Uw@mail.gmail.com>
+Subject: Re: [PATCH 1/1] hw/intc/riscv_aplic: Fix APLIC in clrip and clripnum
+ write emulation
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, greentime.hu@sifive.com, 
+ vincent.chen@sifive.com, frank.chang@sifive.com, jim.shu@sifive.com, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Anup Patel <apatel@ventanamicro.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 8/9/2024 11:26:23 AM
-X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
-X-Barracuda-Start-Time: 1723173985
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 3799
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.02
-X-Barracuda-Spam-Status: No,
- SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.128775
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
-Received-SPF: pass client-ip=203.110.167.99;
- envelope-from=EwanHai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2001:4860:4864:20::33;
+ envelope-from=yongxuan.wang@sifive.com; helo=mail-oa1-x33.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,101 +96,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Daniel,
 
+On Fri, Aug 9, 2024 at 5:40=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> Ccing Anup
+>
+> On 8/8/24 5:20 AM, Yong-Xuan Wang wrote:
+> > In the section "4.7 Precise effects on interrupt-pending bits"
+> > of the RISC-V AIA specification defines that:
+> >
+> > If the source mode is Level1 or Level0 and the interrupt domain
+> > is configured in MSI delivery mode (domaincfg.DM =3D 1):
+> > The pending bit is cleared whenever the rectified input value is
+> > low, when the interrupt is forwarded by MSI, or by a relevant
+> > write to an in clrip register or to clripnum.
+> >
+> > Update the riscv_aplic_set_pending() to match the spec.
+> >
+>
+> This would need a
+>
+> Fixes: bf31cf06eb ("hw/intc/riscv_aplic: Fix setipnum_le write emulation =
+for APLIC MSI-mode")
+>
 
-On 8/8/24 23:22, Zhao Liu wrote:
->>> Hi EwanHai,
->>>
->>> On Thu, Jul 04, 2024 at 07:25:11AM -0400, EwanHai wrote:
->>>> Date: Thu, 4 Jul 2024 07:25:11 -0400
->>>> From: EwanHai <ewanhai-oc@zhaoxin.com>
->>>> Subject: [PATCH v2 4/4] target/i386: Update CMPLegacy handling for Zha=
-oxin
->>>>    CPUs
->>>> X-Mailer: git-send-email 2.34.1
->>>>
->>>> Zhaoxin CPUs handle the CMPLegacy bit in the same way
->>>> as Intel CPUs.
-> Here it could be clearer to say "Don't set up CMPLegacy bit in
-> CPUID[0x80000001].ecx for VIA/Zhaoxin CPUs".
-Ok, I will change this statement.
->> This patch simplifies the existing logic by
->>>> using the IS_XXX_CPU macro and includes checks for Zhaoxin
->>>> vendor to align their behavior with Intel.
->>>>
->>>> Signed-off-by: EwanHai <ewanhai-oc@zhaoxin.com>
->>>> ---
->>>>    target/i386/cpu.c | 4 +---
->>>>    1 file changed, 1 insertion(+), 3 deletions(-)
->>>>
->>>> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
->>>> index a3747fc487..c52a4cf3ba 100644
->>>> --- a/target/i386/cpu.c
->>>> +++ b/target/i386/cpu.c
->>>> @@ -6945,9 +6945,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t in=
-dex, uint32_t count,
->>>>             * So don't set it here for Intel to make Linux guests happ=
-y.
->>>>             */
->>>>            if (threads_per_pkg > 1) {
->>>> -            if (env->cpuid_vendor1 !=3D CPUID_VENDOR_INTEL_1 ||
->>>> -                env->cpuid_vendor2 !=3D CPUID_VENDOR_INTEL_2 ||
->>>> -                env->cpuid_vendor3 !=3D CPUID_VENDOR_INTEL_3) {
->>>> +            if (!IS_INTEL_CPU(env) && !IS_ZHAOXIN_CPU(env)) {
->>> This change implicitly changes the behavior of existing VIA CPU.
->>>
->>> Is this a bug for the original VIA? If so, I suggest a separate patch t=
-o
->>> fix it and explain the effect on the VIA (Zhaoxin1) CPU.
->>>
->>> Regards,
->>> Zhao
->> The reason for this change is not due to a discovered bug, but rather
->> because both Centaurhauls and Shanghai CPUs follow Intel=E2=80=99s behav=
-ior
->> regarding the CMPLegacy bit. Specifically, AMD CPUs enumerate the
->> threads per package information in the CPUID leaf 0x80000001 output
->> ECX register, while Intel (and **other processors following Intel=E2=80=
-=99s
->> behavior**) do not. Therefore, this modification is simply intended to
->> logically supplement the existing code.
-> I see, thanks.
+I will add it into next version. Thank you!
+
+> > Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+> > ---
+> >   hw/intc/riscv_aplic.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+> > index c1748c2d17d1..45d8b4089229 100644
+> > --- a/hw/intc/riscv_aplic.c
+> > +++ b/hw/intc/riscv_aplic.c
+> > @@ -247,7 +247,7 @@ static void riscv_aplic_set_pending(RISCVAPLICState=
+ *aplic,
+> >
+> >       if ((sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_HIGH) ||
+> >           (sm =3D=3D APLIC_SOURCECFG_SM_LEVEL_LOW)) {
+> > -        if (!aplic->msimode || (aplic->msimode && !pending)) {
+> > +        if (!aplic->msimode) {
 >
->> Given this, do you think it would be appropriate for me to submit
->> a separate patch to explain this behavior and its effect on
->> VIA (Zhaoxin1) CPUs? If so, I will submmit this change in a separate
->> patch.
-> I think there's no need to split this.
+> The change you're doing here seems sensible to me but I'd rather have Anu=
+p take
+> a look to see if this somehow undo what was made here in commit bf31cf06.
 >
-> However, I think it's necessary to state the effect of the change in
-> the changelog/commit message. It's also worth stating if it won't have
-> any effect on the OS/software. Afterall, the comment of this bit said
-> it affects Linux kernel.
+> In particular w.r.t this paragraph from section 4.9.2 of AIA:
 >
-> Also, changes to the old VIA behavior are worth stating in the commit
-> message, i.e., this patch's changes to Zhaoxin CPUs include the previous
-> VIA CPUs.
+> "A second option is for the interrupt service routine to write the
+> APLIC=E2=80=99s source identity number for the interrupt to the domain=E2=
+=80=99s
+> setipnum register just before exiting. This will cause the interrupt=E2=
+=80=99s
+> pending bit to be set to one again if the source is still asserting
+> an interrupt, but not if the source is not asserting an interrupt."
 >
-> Additionally, considering this change is to fix the CPUID which doesn't
-> match the bare metal, then what about changing the subject to
->
-> "target/i386: Mask CMPLegacy bit in CPUID[0x80000001].ecx for Zhaoxin/VIA
-> CPUs"?
+
+I think that this patch won't affect setipnum. For the setipnum case,
+the pending value would
+be true. And it is handled by the 2 if conditions below.
+
+Regards,
+Yong-Xuan
+
 >
 > Thanks,
-> Zhao
-Thank you for your suggestion; the changes will indeed make it clearer.
-I have a question: since you=E2=80=99ve already added your reviewed-by tag =
-to
-the first three patches, if I want to modify these descriptions, should
-I submit a v3 patchset containing all four patches, or should I only send a
-new patch titled "target/i386: Mask CMPLegacy bit in CPUID[0x80000001].ecx
-for Zhaoxin/Centaur CPUs"?
->>>>                    *ecx |=3D 1 << 1;    /* CmpLegacy bit */
->>>>                }
->>>>            }
->>>> --
->>>> 2.34.1
->>>>
-
+>
+> Daniel
+>
+>
+> >               return;
+> >           }
+> >           if ((aplic->state[irq] & APLIC_ISTATE_INPUT) &&
 
