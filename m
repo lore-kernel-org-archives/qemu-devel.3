@@ -4,90 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5125AC49EA1
-	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 04:34:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E01CCC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri,  9 Aug 2024 04:35:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scHJm-0003FN-G1; Fri, 09 Aug 2024 00:33:34 -0400
+	id 1scHLV-00086E-RH; Fri, 09 Aug 2024 00:35:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1scHJi-0003Dz-KM
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 00:33:30 -0400
-Received: from mx1.zhaoxin.com ([210.0.225.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1scHJe-0004pg-C5
- for qemu-devel@nongnu.org; Fri, 09 Aug 2024 00:33:28 -0400
-X-ASG-Debug-ID: 1723177992-086e2376122e750001-jgbH7p
-Received: from ZXSHMBX2.zhaoxin.com (ZXSHMBX2.zhaoxin.com [10.28.252.164]) by
- mx1.zhaoxin.com with ESMTP id ZfvLCfGfrzjbziFP (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Fri, 09 Aug 2024 12:33:12 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
-Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX2.zhaoxin.com
- (10.28.252.164) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 9 Aug
- 2024 12:33:11 +0800
-Received: from ZXSHMBX1.zhaoxin.com ([fe80::dcd1:d46d:263:77e]) by
- ZXSHMBX1.zhaoxin.com ([fe80::dcd1:d46d:263:77e%7]) with mapi id
- 15.01.2507.039; Fri, 9 Aug 2024 12:33:11 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.164
-Received: from [10.28.66.62] (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 9 Aug
- 2024 11:37:40 +0800
-Message-ID: <7a37a787-aa17-43ed-8cfc-ea735e862e20@zhaoxin.com>
-Date: Thu, 8 Aug 2024 23:37:40 -0400
+ (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
+ id 1scHLT-0007y9-P6; Fri, 09 Aug 2024 00:35:20 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
+ id 1scHLS-00057D-33; Fri, 09 Aug 2024 00:35:19 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-70d2b921c48so1395993b3a.1; 
+ Thu, 08 Aug 2024 21:35:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1723178116; x=1723782916; darn=nongnu.org;
+ h=content-disposition:content-transfer-encoding:mime-version:subject
+ :references:in-reply-to:message-id:cc:to:from:date:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=u7+4eLiWAAn14YgZ1Gl6AE7pfREKF/ytxZyOaRYYe2g=;
+ b=f5Xq0/uekIwajLkAV+J5sCL7/uO9v89RoAADkNJ5Yk6i1c63+gMeEOZ+i2LfABsSZD
+ X/K1g6KL+QCFHh/KjIcNz21AYj+yUSETSjkbdAevmzABpTC0NQQtKNcngiEorlm5CAAr
+ rcEn2BNEOBzotU9b75w4vIsjjtvLk6T9WZX0XDP1OCuwU/2aZt7qT3QsU8q358WpS6s1
+ MyYs1Qx+JMFWr+2lL2qziJnKH2vXtgP3rwyW7XldzclzwchdneyMJ11KWDqXuD6Yrl7i
+ Z1yc7a6Om5TYNev0a7m7c+nDSMZQGg5gWk+UChNs4fLmSBxFVRq0ymy1L9TDLGLObKn2
+ e6jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723178116; x=1723782916;
+ h=content-disposition:content-transfer-encoding:mime-version:subject
+ :references:in-reply-to:message-id:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=u7+4eLiWAAn14YgZ1Gl6AE7pfREKF/ytxZyOaRYYe2g=;
+ b=RZn9l6xzVeqmgxtJ4ocdKMa3I1hKlH5BQN4HIcjdiR6xBZgLozFMJ+RXwOxnANztfb
+ z7GczjJCcDLyI1E7GSkpP1GDufq2fdx1E3tsf6S1jS3yFmxRfnZzECWn9KNyxxklYOJV
+ QUNV0/kcNvRqpTutT8RqdDtxAFxgCiX3CI7+W4ccVwwZ6eXpkjRelk2u9KxWIShbv89g
+ t9bUpFpnGyaLIG7konLzlfZSFgOv/sz97m21yZj/gnlIJzRCiC6FQwjjjjIJxJbhQjE8
+ +Pb+arGv/uvGSuwAhTvI8i2NNdNrgUM+OTUFuCDDx2u/Tg2l1asM8rQ23/O4xN0CQ2dE
+ MQZA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWtITpZUMPwL4Hy0F4kmupXBzO5tVqzxevB+idfXALxfscDSUiQriRzn0+nEShgLvjHj7LnaKiMCoC6YXOQU9Tl62wGjTo=
+X-Gm-Message-State: AOJu0YwKwAlU8Jc+vkwsc18W+lh1pm8zHHyinJQAeen/DwSjBt8KIdLB
+ 3jKyEms4+P/nYgSzG3NjY/fxzbrgvZXjHSRAxQ46InZVUSTZQ3WolfE61Ts3IDE=
+X-Google-Smtp-Source: AGHT+IHG4IEboBh8Iq7niEJPBY+6h4Cn4hd7qXp4gQ8CBkVvgFi7ugICVZBYacjsf8Z6/Kw050t6mw==
+X-Received: by 2002:a05:6a21:6704:b0:1c4:985a:acc4 with SMTP id
+ adf61e73a8af0-1c8a00e322emr567417637.46.1723178115494; 
+ Thu, 08 Aug 2024 21:35:15 -0700 (PDT)
+Received: from amjad-pc ([192.228.221.130]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-1ff592b3fb1sm132392875ad.288.2024.08.08.21.35.13
+ (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+ Thu, 08 Aug 2024 21:35:15 -0700 (PDT)
+Date: Fri, 9 Aug 2024 12:35:12 +0800
+From: Amjad Alsharafi <amjadsharafi10@gmail.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: "=?utf-8?Q?qemu-devel=40nongnu.org?=" <qemu-devel@nongnu.org>, Hanna
+ Reitz <hreitz@redhat.com>, =?utf-8?Q?open_list=3Avvfat?=
+ <qemu-block@nongnu.org>
+Message-ID: <C49DCC19-6844-4398-A934-9FE5C6DCE1FB@getmailspring.com>
+In-Reply-To: <ZrCn1Sn64slzK4-m@redhat.com>
+References: <ZrCn1Sn64slzK4-m@redhat.com>
+Subject: Re: [PATCH v6 4/5] vvfat: Fix reading files with non-continuous
+ clusters
+X-Mailer: Mailspring
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] target/i386: Update CMPLegacy handling for Zhaoxin
- CPUs
-To: Zhao Liu <zhao1.liu@intel.com>
-X-ASG-Orig-Subj: Re: [PATCH v2 4/4] target/i386: Update CMPLegacy handling for
- Zhaoxin CPUs
-CC: <pbonzini@redhat.com>, <xiaoyao.li@intel.com>, <qemu-devel@nongnu.org>,
- <ewanhai@zhaoxin.com>, <cobechen@zhaoxin.com>, <rockcui@zhaoxin.com>,
- <louisqi@zhaoxin.com>, <liamni@zhaoxin.com>, <frankzhu@zhaoxin.com>
-References: <20240704112511.184257-1-ewanhai-oc@zhaoxin.com>
- <20240704112511.184257-5-ewanhai-oc@zhaoxin.com> <ZrSeMfpBm8NrXRWK@intel.com>
- <236c8032-6e17-4002-86e1-4483b55977f7@zhaoxin.com>
- <ZrWLgN1L280h75QF@intel.com>
- <d37a0bb1-23c3-4226-87c9-da73f4b59d72@zhaoxin.com>
- <ZrWRSXIPYwEkpXK/@intel.com>
-Content-Language: en-US
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-In-Reply-To: <ZrWRSXIPYwEkpXK/@intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: ZXSHCAS1.zhaoxin.com (10.28.252.161) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 8/9/2024 12:33:10 PM
-X-Barracuda-Connect: ZXSHMBX2.zhaoxin.com[10.28.252.164]
-X-Barracuda-Start-Time: 1723177992
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 656
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.02
-X-Barracuda-Spam-Status: No,
- SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.128778
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
-Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
- helo=mx1.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=amjadsharafi10@gmail.com; helo=mail-pf1-x435.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,23 +98,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/8/24 23:47, Zhao Liu wrote:
-> On Thu, Aug 08, 2024 at 11:25:45PM -0400, Ewan Hai wrote:
->
-> [snip]
->
->> Thank you for your suggestion; the changes will indeed make it clearer.
->> I have a question: since you=E2=80=99ve already added your reviewed-by t=
-ag to
->> the first three patches, if I want to modify these descriptions, should
->> I submit a v3 patchset containing all four patches, or should I only sen=
-d a
->> new patch titled "target/i386: Mask CMPLegacy bit in CPUID[0x80000001].e=
-cx
->> for Zhaoxin/Centaur CPUs"?
-> The v3 should contain all 4 patches, and you can add my R/b tag in the
-> first three patches.
->
-Thanks! See you in v3!
 
+
+On Aug 5 2024, at 6:22 pm, Kevin Wolf <kwolf@redhat.com> wrote:
+
+> Am 20.07.2024 um 12:13 hat Amjad Alsharafi geschrieben:
+>> When reading with `read_cluster` we get the `mapping` with
+>> `find_mapping_for_cluster` and then we call `open_file` for this
+>> mapping.
+>> The issue appear when its the same file, but a second cluster that is
+>> not immediately after it, imagine clusters `500 -> 503`, this will give
+>> us 2 mappings one has the range `500..501` and another `503..504`, both
+>> point to the same file, but different offsets.
+>> 
+>> When we don't open the file since the path is the same, we won't assign
+>> `s->current_mapping` and thus accessing way out of bound of the file.
+>> 
+>> From our example above, after `open_file` (that didn't open anything) we
+>> will get the offset into the file with
+>> `s->cluster_size*(cluster_num-s->current_mapping->begin)`, which will
+>> give us `0x2000 * (504-500)`, which is out of bound for this mapping and
+>> will produce some issues.
+>> 
+>> Signed-off-by: Amjad Alsharafi <amjadsharafi10@gmail.com>
+>> ---
+>>  block/vvfat.c | 10 ++++++----
+>>  1 file changed, 6 insertions(+), 4 deletions(-)
+>> 
+>> diff --git a/block/vvfat.c b/block/vvfat.c
+>> index b63ac5d045..d2b879705e 100644
+>> --- a/block/vvfat.c
+>> +++ b/block/vvfat.c
+>> @@ -1360,15 +1360,17 @@ static int open_file(BDRVVVFATState*
+>> s,mapping_t* mapping)
+>>  {
+>>      if(!mapping)
+>>          return -1;
+>> -    if(!s->current_mapping ||
+>> -            strcmp(s->current_mapping->path,mapping->path)) {
+>> +    if (s->current_mapping != mapping) {
+>>          /* open file */
+>>          int fd = qemu_open_old(mapping->path,
+>> -                               O_RDONLY | O_BINARY | O_LARGEFILE);
+>> -        if(fd<0)
+>> +                            O_RDONLY | O_BINARY | O_LARGEFILE);
+>> +        if (fd < 0) {
+>>              return -1;
+>> +        }
+>>          vvfat_close_current_file(s);
+>> +
+>>          s->current_fd = fd;
+>> +        assert(s->current_fd);
+>>          s->current_mapping = mapping;
+>>      }
+>>      return 0;
+> 
+> Now we're reopening the file even if the mapping is actually referring
+> to the same file that was already open. So the result should be correct,
+> but wasteful in what is probably a common case.
+> 
+> However, this version of the patch simplified things enough that I think
+> I finally see what we really want:
+> 
+> diff --git a/block/vvfat.c b/block/vvfat.c
+> index e3a83fbc88..8ffe8b3b9b 100644
+> --- a/block/vvfat.c
+> +++ b/block/vvfat.c
+> @@ -1369,8 +1369,9 @@ static int open_file(BDRVVVFATState*
+> s,mapping_t* mapping)
+>             return -1;
+>         vvfat_close_current_file(s);
+>         s->current_fd = fd;
+> -        s->current_mapping = mapping;
+>     }
+> +
+> +    s->current_mapping = mapping;
+>     return 0;
+> }
+
+Ah, that indeed fixes it with such a simple change haha.
+
+> 
+> That should be all that is needed, and it passes your test case.
+> 
+> I don't usually do this, but since time is running out for QEMU 9.1,
+> I'll just replace the code of this patch with the above and go ahead
+> with that. If you think it's wrong, let me know and we'll fix it on top
+> of this series.
+> 
+> Kevin
+> 
+> 
+
+Thanks for that, and for publishing this. Looks good.
+
+Amjad
 
