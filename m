@@ -4,76 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A209FC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sat, 10 Aug 2024 11:39:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEAF4C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Sat, 10 Aug 2024 11:47:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sckRT-00048j-F4; Sat, 10 Aug 2024 07:39:27 -0400
+	id 1sckZF-0004XL-3f; Sat, 10 Aug 2024 07:47:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sckRP-0003xp-8t
- for qemu-devel@nongnu.org; Sat, 10 Aug 2024 07:39:23 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1sckZ9-0004WS-PE
+ for qemu-devel@nongnu.org; Sat, 10 Aug 2024 07:47:25 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sckRN-0006Lu-GY
- for qemu-devel@nongnu.org; Sat, 10 Aug 2024 07:39:22 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-1fc4fcbb131so22157415ad.3
- for <qemu-devel@nongnu.org>; Sat, 10 Aug 2024 04:39:21 -0700 (PDT)
+ id 1sckZ7-0007P1-M0
+ for qemu-devel@nongnu.org; Sat, 10 Aug 2024 07:47:23 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1fec34f94abso26944335ad.2
+ for <qemu-devel@nongnu.org>; Sat, 10 Aug 2024 04:47:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723289960; x=1723894760; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723290439; x=1723895239; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=97gdUpKL57nW9OdBVqnM5Q8FJLj7PRyyq0Kl78FnOSc=;
- b=TFGh08+MYSlQU1yrf9vBbbgNQgrIwY1oscV0FHJGKGO4BOdydOg4FCMojAlzmhEY7F
- Tz/zUVPRS7T6Askjv671a/hqssl3qxbhxUdVC9l911wvzr/JSAljWJHTn79Mja++ZA4b
- /uU6M3UeGPZWqENkg0DUn1vdcCsGTZ/lAnlDKHNZkKF0cZgh9wolCvtmn5aXmPz9g7Ip
- 6EEf6vk0o5OpHoQoPEIktz/WAMD4dVpgYhcAQzGRS38ry1/kUN9RFt+Fx1mibXmlB4mB
- KiwBnE2GAxF96SYtE2EWzE7ljaIMj4iivPduelSfX5oB9MZHdYCzFK5C1TJTI2veXQzF
- UUEw==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1vKleXDpVbY0mF+npajestsBdmngztylqnlLsJWqYZA=;
+ b=tH9SySPsXLQ+FlJk/J65FWTXLW+OndfFqQKH9Fb7wBh6kp62smqKKZKTwaPkNL/qXH
+ eHpEJoV1PuJD+IKG7Ok5luR/VZfiih4bh6b7gfCrk25tEB+4qD7jopCo9xvgd5rQtror
+ 9KFE8SXE7zBBQx1d2CVZs4sxyEEmK19/t7v8PVioJ7CDHNmscY9D7t6Ylz6OTZv0gsnh
+ o6Voup7o33rrdnJuldpghAoywo7KK/XQASH2pZ4ATXG92tiAxrfakjaT7//lPCebc/TF
+ NQtCh01LnyIVc6tGcwyFdXH2/M1rkIoPWMTaj3Y4ipJ3Dm9IiJVaHgquhUTPDg76IsH6
+ LWww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723289960; x=1723894760;
+ d=1e100.net; s=20230601; t=1723290439; x=1723895239;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=97gdUpKL57nW9OdBVqnM5Q8FJLj7PRyyq0Kl78FnOSc=;
- b=MKC1Ymw+/DvRU5W0MMfbew//gVB2hFqN/Av6nNI7FsCt9thOfRHDzlcImL2ttBY2ZY
- QGY3Y0MJ7qCBP/qqgasDud3VTBrOQpq0n9wrRLB8TUK7E4NxptYtsm+fOO3YL6dCZ+XO
- /Thx1OP6vAkz/B5GiSHWdrj7/hTXcEWyHzNDPtzBt5q+fdnapN9Lm/NssV+LIr9qesAn
- zB2UOOdhmJzxgD1wRJja+wgl4f3FHDdfArQ7xXt9oFvV0yCaf9kvDFH/4f4+U5DD4SLZ
- 36dhmuakoyOYKXgOFDxN4J7owifeEfxycEuSr2CwiVWtuOYtmYnhlfPerosBQN+AsaMg
- DZOg==
-X-Gm-Message-State: AOJu0YzYp1JlYYq8WaGCtM1SlJdB3HHmvQWU9XopXBYU2pM34bzpZ6zw
- nA0GaXgKNPX9IiUeMXdSWJ0vYyQS5vUSi84qrxwFR1VLvCYaXVTo9Kkc3sSAem7sWf0rWNOZbIa
- bVWc=
-X-Google-Smtp-Source: AGHT+IGeyoDHwnPOnQXZ+Rwf1lhPMGOso2dSkUjKGexwRwfwlAVanYUEA4cFbAZBEoz6Cqi70VwTCQ==
-X-Received: by 2002:a17:902:ec85:b0:1fb:715d:df83 with SMTP id
- d9443c01a7336-200ae4b1983mr59898595ad.13.1723289959823; 
- Sat, 10 Aug 2024 04:39:19 -0700 (PDT)
+ bh=1vKleXDpVbY0mF+npajestsBdmngztylqnlLsJWqYZA=;
+ b=aRjMSyF+oTJMCQ5wXezdhdeRj/4rtvHGhHMlgoJJITxCaGvsmtC6gJW09VxebYoWhu
+ XMkj7Ep992Zl+dqioReD8R0SvTCne4DvAOARtT4ZHh+XXjOeVQq6Ed5qJ+VDv07qEykp
+ JGA7P6VbG6AEkUUiKqNXaJhd6Owo2p3zIpRMltL0walQON4R8moM4jI/Um0ikYtfo+WJ
+ zhZO9XNPAB3jDLyrR9tjQzGalXZc/JkzQGkqfurxp59Up44BF34MdsOPXm43mTPQhVRf
+ 2HzWeNTF01Vm3QKmvVcUUjdFPmXlSj1F32/4gaeIFk0UkRlchGyeqlEKyvCTNCte1fmo
+ mtpA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWEq7HeRX9BpSKIV3kR9r8n6pv/EkGahlUxK0nTB/GrY+DTmcifsKlkHpg3OYWX2YiKueMHXkRHyGcA3g3NXoFU0k3iDgQ=
+X-Gm-Message-State: AOJu0YzzI54EBzs2vNJbwPi4nq8+fG/JL+ERjOBE/p9x5BDZpKXw6kMM
+ Ceiom+HKBh4j4rSLKY/S6fJL3tFSc8X1qKSSNwXHtSK/1+JrSwgS1glP06U2FiEqBCcRMcWsMLe
+ sK88=
+X-Google-Smtp-Source: AGHT+IHK5wpNAMxY2sUNv26IeFwozqsyQFVHVQkXQ2JLmmxrEjXMlIfESRmJY7uib6Y4FkUSUfwn8Q==
+X-Received: by 2002:a17:902:d485:b0:1fd:6529:7436 with SMTP id
+ d9443c01a7336-200ae4bb0f3mr51449975ad.8.1723290439383; 
+ Sat, 10 Aug 2024 04:47:19 -0700 (PDT)
 Received: from [192.168.1.113] ([203.30.4.111])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-200bbb3ba29sm10378805ad.250.2024.08.10.04.39.17
- for <qemu-devel@nongnu.org>
+ d9443c01a7336-200bba0a994sm10554615ad.237.2024.08.10.04.47.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 10 Aug 2024 04:39:18 -0700 (PDT)
-Message-ID: <a25d9b40-78c2-4936-9203-1137a48bb63a@linaro.org>
-Date: Sat, 10 Aug 2024 21:39:14 +1000
+ Sat, 10 Aug 2024 04:47:18 -0700 (PDT)
+Message-ID: <7fc05b05-2b98-41c5-a486-c49c99b51af5@linaro.org>
+Date: Sat, 10 Aug 2024 21:47:14 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/5] NBD: fix CVE-2024-7409 for 9.1
-To: qemu-devel@nongnu.org
-References: <20240808215529.1065336-7-eblake@redhat.com>
+Subject: Re: [PULL 15/57] target/mips: Pass ptw_mmu_idx down from
+ mips_cpu_tlb_fill
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+References: <20240202055036.684176-1-richard.henderson@linaro.org>
+ <20240202055036.684176-17-richard.henderson@linaro.org>
+ <1c84a15e-5083-4199-a0f3-59fb3c71e421@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240808215529.1065336-7-eblake@redhat.com>
+In-Reply-To: <1c84a15e-5083-4199-a0f3-59fb3c71e421@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,25 +102,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/9/24 07:53, Eric Blake wrote:
-> The following changes since commit 75c7f574035622798e9361a942bdfbb0af930f0e:
+On 8/10/24 04:11, Philippe Mathieu-Daudé wrote:
+> Hi Richard,
 > 
->    Merge tag 'pull-hex-20240807' ofhttps://github.com/quic/qemu into staging (2024-08-08 16:08:18 +1000)
+> On 2/2/24 06:49, Richard Henderson wrote:
+>> Rather than adjust env->hflags so that the value computed
+>> by cpu_mmu_index() changes, compute the mmu_idx that we
+>> want directly and pass it down.
+>>
+>> Introduce symbolic constants for MMU_{KERNEL,ERL}_IDX.
+>>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   target/mips/cpu.h                   |  4 +++-
+>>   target/mips/tcg/sysemu/tlb_helper.c | 32 ++++++++++++-----------------
+>>   2 files changed, 16 insertions(+), 20 deletions(-)
 > 
-> are available in the Git repository at:
 > 
->    https://repo.or.cz/qemu/ericb.git tags/pull-nbd-2024-08-08
+>> @@ -944,12 +940,10 @@ bool mips_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>>            * Memory reads during hardware page table walking are performed
+>>            * as if they were kernel-mode load instructions.
+>>            */
+>> -        int mode = (env->hflags & MIPS_HFLAG_KSU);
+>> -        bool ret_walker;
+>> -        env->hflags &= ~MIPS_HFLAG_KSU;
+>> -        ret_walker = page_table_walk_refill(env, address, mmu_idx);
+>> -        env->hflags |= mode;
+>> -        if (ret_walker) {
+>> +        int ptw_mmu_idx = (env->hflags & MIPS_HFLAG_ERL ?
+>> +                           MMU_ERL_IDX : MMU_KERNEL_IDX);
 > 
-> for you to fetch changes up to 3e7ef738c8462c45043a1d39f702a0990406a3b3:
+> Checking https://gitlab.com/qemu-project/qemu/-/issues/2470.
 > 
->    nbd/server: CVE-2024-7409: Close stray clients at server-stop (2024-08-08 16:34:04 -0500)
+> Parenthesis are mis-placed.
 > 
-> ----------------------------------------------------------------
-> NBD patches for 2024-08-08
-> 
-> - plug CVE-2024-7409, a DoS attack exploiting nbd-server-stop
+>            int ptw_mmu_idx = (env->hflags & MIPS_HFLAG_ERL) ?
+>                               MMU_ERL_IDX : MMU_KERNEL_IDX;
 
-Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
+This makes no difference to the evaluation of this expression.
+
+> 
+> Revisiting, we loose possible MMU_USER_IDX value but
+> - we don't use it
+> - this is sysemu code so we only expect MMU_KERNEL_IDX
+> 
+> Is that right?
+
+The comment above is correct that ptw reads are performed in kernel mode.
+
+The code previously saved the current mode, cleared the user bit, performed the operation, 
+and then restored the previous mode.  There was no possible MMU_USER_IDX during that interval.
+
+The code currently skips the save/restore and simply selects MMU_KERNEL_IDX.
+
 
 r~
 
