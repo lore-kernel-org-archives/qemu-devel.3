@@ -4,73 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFAA9C3DA7F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCACAC531DD
 	for <qemu-devel@archiver.kernel.org>; Sat, 10 Aug 2024 16:46:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1scpDU-0004Lz-Lj; Sat, 10 Aug 2024 12:45:20 -0400
+	id 1scpDd-0004ia-OJ; Sat, 10 Aug 2024 12:45:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1scpDT-0004LT-3l
- for qemu-devel@nongnu.org; Sat, 10 Aug 2024 12:45:19 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1scpDb-0004aT-9G
+ for qemu-devel@nongnu.org; Sat, 10 Aug 2024 12:45:27 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1scpDR-0003lC-0h
- for qemu-devel@nongnu.org; Sat, 10 Aug 2024 12:45:18 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-70d18112b60so1958396b3a.1
- for <qemu-devel@nongnu.org>; Sat, 10 Aug 2024 09:45:16 -0700 (PDT)
+ id 1scpDZ-0003le-0P
+ for qemu-devel@nongnu.org; Sat, 10 Aug 2024 12:45:26 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-710dc3015bfso1008033b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 10 Aug 2024 09:45:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723308315; x=1723913115; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=8fvBmOJX3zHZSI4slS1PNXb/71vC+lzPSxCGI+ROXjo=;
- b=ZPjeueIR+lSklJhUZhHp0Svf9N7yPvUMY9NuGfEREKKucdtZCyjTm/m2mKRxKudYWa
- 9Q3c0mRQ7YFjidrvU9e0IuWxifQvRBePUiKTOi2tNmvpD77DEUAKQBufoEPf/f91Jw7s
- Cmx6kQCm729FeHHRfVWk/SY70S0rjEPWW07WRttZ2KPJ7lVPvnk/jQ6jLnhss3vqmSC8
- FhOrnPcWU7v8aG6vEPlYfzgr29OM9TswwScx2Rw6i0hkp7X3z5jngr746gDxPtZczcf8
- BwGwvYSZY60CMuSPgcklyeRDw6avn+9fKJKhFUr+RlrgmZwxdT27rxoyhpE1L/Xt6eRM
- 0QIw==
+ d=gmail.com; s=20230601; t=1723308323; x=1723913123; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NGRuJEu3JMWECje7NdV/UCTaQgL32q6jpJ2wJZ12l5U=;
+ b=JI6hLTxLpVRVfsPJL9aGBCSWsnQDbmfhmVfOH5TLuK1bY6InznII157uOxDVVs8pix
+ arFY2v74XHVcq1FrKfDK4gL58OX09znts/aS4vg35megqiucxBazZK3oRfp27xsj+ptL
+ GfncJ0ywz4k9UimQ07BKv2fu8m8I0026xRblYz+K6azPZZDM4VUNZDIh12T7N8a9+RKu
+ oEQg9MNEYgas+CJwf023X9ZQpbErqjLkR/BgMaS7NZ9IwVNiumOXkvi8BOVXY8rUxx+J
+ T6lQyDvS0/+X2mYDltsQ1uWJPkL7+vnAcra5AY1a5rNEg+ixF56xmvnUF+hqBN3nub+P
+ AmyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723308315; x=1723913115;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8fvBmOJX3zHZSI4slS1PNXb/71vC+lzPSxCGI+ROXjo=;
- b=qalLzJ//8OPKYwett5cpbFAAHd/KLG30WQ+ilUYbP0yYxMELz82FmUgD0I2xfZFU47
- vAXTwxJP0Bfn0VjaQ2VIhJD2I2D8Y3PkSE30higiQUfuJiLS6oHTNTZiwIkdy5GYCI8F
- CtO/dEwnfY7RZCCf2qvjHEnIVf7dVGCYn6d71Bs9OCgOEXhsPwsfpUh6goThupOgBI8N
- 1XgqhEyXWkd9JLBop3pdRavFIqqd/PN/Rvem+eaTeUgNtBbHGtFLMIaZ65IXQoBr/ChB
- jHDoCiwnH0j08BGqC/8xrP/mNFjcqhlUx7xzSMOLMan7btBvIWUbVubL5KxEeytACjFb
- j0Iw==
-X-Gm-Message-State: AOJu0YxORT7E83xl/4JQAK3F2mjLyvmbzz23FmrWhSf0GUmr16LJlov0
- r2saGKyPyd5MCFLgZbbHdatGJGVZTrkMqbEoRG1G1nkxHJ+WCyNOqo3vYHrc
-X-Google-Smtp-Source: AGHT+IEyZVRVLJ5bhUAYw+tRRr7+3BEeWZPi7JahRFzIS6f98OmBC6eywcN5ZRNMxZBSLSpg3WPHZQ==
-X-Received: by 2002:a05:6a00:8201:b0:706:1bb3:fb1d with SMTP id
- d2e1a72fcca58-710cc81f609mr11883449b3a.7.1723308314904; 
- Sat, 10 Aug 2024 09:45:14 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723308323; x=1723913123;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NGRuJEu3JMWECje7NdV/UCTaQgL32q6jpJ2wJZ12l5U=;
+ b=ado9UNQcOfDDjRNA2O5VFX+fW+GyLmMdRpbXJZUyBFKAeUtG3YV9pNWV/IrhkEIAJd
+ /HErewVzoGxaInHdtHxxkZUibYgh+MhDaTXfihvp/rJA7DHP5Jsgl18y1xXrOcFMtzud
+ JkS+GRVR6+KmxvAz93u701vmWEHaoJsyetp7XhIc50nXO1c9NRGyFUH7ThmFoRvT2uAe
+ OZ5slEk+pzYMr1WAIcB/qyjxgAlmtAu7Ae4i+5x7xhPToT4Mx5MUgG9qaZbuHmoY7d99
+ vnbXwvPkapfQLCA+8qgoCQSm6U7Hv1D+LIAaNeS1bHMhqy4xVswVKehA+2YTjp7l2YSg
+ 0BMg==
+X-Gm-Message-State: AOJu0Yx+zHKvdrcA4zohPT+7fjc5TM9VNZd3soXf+DVWi28o4zuZHKt7
+ MGZgzOgZ7L11uF5M+AOB4d5Jk23+WBxOzvbaue+5jEQhY45m99/Tiew/1VaP
+X-Google-Smtp-Source: AGHT+IHWDJnHPVC7pxIGVIqnltF9gPoNB+lGOdWGHPMu7sSmJ4N/81gXIiru8twbmG0yNxpFg5CfeA==
+X-Received: by 2002:a05:6a00:3c95:b0:70d:32bf:aa45 with SMTP id
+ d2e1a72fcca58-710dce5da43mr6298303b3a.14.1723308322731; 
+ Sat, 10 Aug 2024 09:45:22 -0700 (PDT)
 Received: from localhost.localdomain ([103.103.35.89])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-710e58735e2sm1424397b3a.30.2024.08.10.09.45.11
+ d2e1a72fcca58-710e58735e2sm1424397b3a.30.2024.08.10.09.45.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 10 Aug 2024 09:45:14 -0700 (PDT)
+ Sat, 10 Aug 2024 09:45:22 -0700 (PDT)
 From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: graf@amazon.com, agraf@csgraf.de, stefanha@redhat.com, pbonzini@redhat.com,
  slp@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
  mst@redhat.com, marcel.apfelbaum@gmail.com, berrange@redhat.com,
  philmd@linaro.org
-Subject: [PATCH v3 0/5] AWS Nitro Enclave emulation support
-Date: Sat, 10 Aug 2024 22:44:57 +0600
-Message-Id: <20240810164502.19693-1-dorjoychy111@gmail.com>
+Subject: [PATCH v3 2/5] machine/nitro-enclave: Add vhost-user-vsock device
+Date: Sat, 10 Aug 2024 22:44:59 +0600
+Message-Id: <20240810164502.19693-3-dorjoychy111@gmail.com>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240810164502.19693-1-dorjoychy111@gmail.com>
+References: <20240810164502.19693-1-dorjoychy111@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=dorjoychy111@gmail.com; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: 15
 X-Spam_score: 1.5
 X-Spam_bar: +
@@ -93,127 +96,375 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is v3 submission for AWS Nitro Enclave emulation in QEMU. From the QEMU side
-the implementation for nitro enclaves is complete. A lot of changes from v2 so all
-the patches need to be reviewed. v2 is at:
-https://mail.gnu.org/archive/html/qemu-devel/2024-06/msg00012.html
+AWS Nitro Enclaves have built-in vhost-vsock device support which
+enables applications in enclave VMs to communicate with the parent
+EC2 VM over vsock. The enclave VMs have dynamic CID while the parent
+always has CID 3. In QEMU, the vsock emulation for nitro enclave is
+added using vhost-user-vsock as opposed to vhost-vsock. vhost-vsock
+doesn't support sibling VM communication which is needed for nitro
+enclaves.
 
-Changes in v3:
-    - Support for virtio-nsm device
-    - The EIF related logic has been removed from microvm.c i.e., the logic is
-contained in enclave related code
-    - For vsock emulation in nitro-enclave, now vhost-user-vsock is being used
-instead of vhost-vsock (more details in the cover-letter below)
-    - updated documentation accordingly
+In QEMU's nitro-enclave emulation, for the vsock communication to CID
+3 to work, another process that does the vsock emulation in  userspace
+must be run, for example, vhost-device-vsock[1] from rust-vmm, with
+necessary vsock communication support in another guest VM with CID 3.
+A new mandatory nitro-enclave machine option 'vsock' has been added.
+The value for this option should be the chardev id from the '-chardev'
+option for the vhost-user-vsock device to work.
 
-Changes in v2:
-    - moved eif.c and eif.h files from hw/i386 to hw/core
+Using vhost-user-vsock also enables the possibility to implement some
+proxying support in the vhost-user-vsock daemon that will forward all
+the packets to the host machine instead of CID 3 so that users of
+nitro-enclave can run the necessary applications in their host machine
+instead of running another whole VM with CID 3.
 
-Hi,
+[1] https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock
 
-Hope everyone is doing well. This is a patch series adding AWS Nitro Enclave[1]
-emulation support in QEMU. Alexander Graf is mentoring me on this work. I have
-a gitlab branch where you can view the patches in the gitlab web UI for each commit:
-https://gitlab.com/dorjoy03/qemu/-/tree/nitro-enclave-emulation
+Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+---
+ backends/hostmem-memfd.c        |   2 -
+ hw/core/machine.c               |  71 +++++++++---------
+ hw/i386/Kconfig                 |   1 +
+ hw/i386/nitro_enclave.c         | 123 ++++++++++++++++++++++++++++++++
+ include/hw/boards.h             |   2 +
+ include/hw/i386/nitro_enclave.h |   8 +++
+ include/sysemu/hostmem.h        |   2 +
+ 7 files changed, 174 insertions(+), 35 deletions(-)
 
-AWS nitro enclaves is an Amazon EC2[2] feature that allows creating isolated
-execution environments, called enclaves, from Amazon EC2 instances, which are
-used for processing highly sensitive data. Enclaves have no persistent storage
-and no external networking. The enclave VMs are based on Firecracker microvm
-and have a vhost-vsock device for communication with the parent EC2 instance
-that spawned it and a Nitro Secure Module (NSM) device for cryptographic
-attestation. The parent instance VM always has CID 3 while the enclave VM gets
-a dynamic CID. The enclave VMs can communicate with the parent instance over
-various ports to CID 3, for example, the init process inside an enclave sends a
-heartbeat to port 9000 upon boot, expecting a heartbeat reply, letting the
-parent instance know that the enclave VM has successfully booted.
-
-From inside an EC2 instance, nitro-cli[3] is used to spawn an enclave VM using
-an EIF (Enclave Image Format)[4] file. EIF files can be built using nitro-cli
-as well. The EIF specification can be found in the README of the github
-aws-nitro-enclaves-image-format repository[4]. An EIF file contains the kernel,
-cmdline and ramdisk(s) in different sections which are used to boot the enclave
-VM.
-
-Adding nitro enclave emulation support in QEMU will make the life of AWS Nitro
-Enclave users easier as they will be able to test their EIF images locally
-without having to run real nitro enclaves which can be difficult for debugging
-due to its roots in security. This will also make quick prototyping easier.
-
-In QEMU, the new nitro-enclave machine type is implemented based on the microvm
-machine type similar to how AWS Nitro Enclaves are based on Firecracker microvm.
-
-The vsock emulation support is added using vhost-user-vsock device. This is
-needed as nitro VMs always talk to parent VM (CID 3) but there is no support for
-sibling VM communication in vhost-vsock. So to run nitro-enclave, a process that
-does vsock emulation in user-space like vhost-device-vsock[5] from rust-vmm must
-be run. I am working on adding proxying using vsock (right now it uses unix
-domain socket) to the host machine in vhost-device-vsock which I will be posting
-a PR to the rust-vmm repo. This will allow users to run the necessary parent VM
-applications in the host machine instead of a separate VM with CID 3. Once that
-work is done, I will update the documentation in docs/system/i386/nitro-enclave.rst
-accordingly.
-
-A new device virtio-nsm support has been added to QEMU. This device is built-into
-the nitro-enclave VM. The virtio-nsm spec can be found here[6].
-
-For local testing you need to generate a hello.eif image by first building
-nitro-cli locally[7]. Then you can use nitro-cli to build a hello.eif image[8].
-More details about testing can be found in the docs/system/i386/nitro-enclave.rst
-file.
-
-Thanks.
-
-Regards,
-Dorjoy
-
-[1] https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
-[2] https://aws.amazon.com/ec2/
-[3] https://docs.aws.amazon.com/enclaves/latest/user/getting-started.html
-[4] https://github.com/aws/aws-nitro-enclaves-image-format?tab=readme-ov-file#enclave-image-file-eif-specification
-[5] https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock
-[6] https://lists.oasis-open.org/archives/virtio-comment/202310/msg00387.html
-[7] https://github.com/aws/aws-nitro-enclaves-cli/blob/main/docs/ubuntu_20.04_how_to_install_nitro_cli_from_github_sources.md
-[8] https://github.com/aws/aws-nitro-enclaves-cli/blob/main/examples/x86_64/hello/README.md
-
-Dorjoy Chowdhury (5):
-  machine/nitro-enclave: New machine type for AWS Nitro Enclaves
-  machine/nitro-enclave: Add vhost-user-vsock device
-  device/virtio-nsm: Support for Nitro Secure Module device
-  machine/nitro-enclave: Add built-in Nitro Secure Module device
-  docs/nitro-enclave: Documentation for nitro-enclave machine type
-
- MAINTAINERS                              |   17 +
- backends/hostmem-memfd.c                 |    2 -
- configs/devices/i386-softmmu/default.mak |    1 +
- docs/system/i386/nitro-enclave.rst       |   80 +
- hw/core/eif.c                            |  707 ++++++++
- hw/core/eif.h                            |   22 +
- hw/core/machine.c                        |   71 +-
- hw/core/meson.build                      |    3 +
- hw/i386/Kconfig                          |    6 +
- hw/i386/meson.build                      |    1 +
- hw/i386/microvm.c                        |    6 +-
- hw/i386/nitro_enclave.c                  |  299 ++++
- hw/virtio/Kconfig                        |    5 +
- hw/virtio/meson.build                    |    4 +
- hw/virtio/virtio-nsm-pci.c               |   73 +
- hw/virtio/virtio-nsm.c                   | 1929 ++++++++++++++++++++++
- include/hw/boards.h                      |    2 +
- include/hw/i386/microvm.h                |    2 +
- include/hw/i386/nitro_enclave.h          |   56 +
- include/hw/virtio/virtio-nsm.h           |   59 +
- include/sysemu/hostmem.h                 |    2 +
- 21 files changed, 3311 insertions(+), 36 deletions(-)
- create mode 100644 docs/system/i386/nitro-enclave.rst
- create mode 100644 hw/core/eif.c
- create mode 100644 hw/core/eif.h
- create mode 100644 hw/i386/nitro_enclave.c
- create mode 100644 hw/virtio/virtio-nsm-pci.c
- create mode 100644 hw/virtio/virtio-nsm.c
- create mode 100644 include/hw/i386/nitro_enclave.h
- create mode 100644 include/hw/virtio/virtio-nsm.h
-
+diff --git a/backends/hostmem-memfd.c b/backends/hostmem-memfd.c
+index 6a3c89a12b..9f890a813e 100644
+--- a/backends/hostmem-memfd.c
++++ b/backends/hostmem-memfd.c
+@@ -18,8 +18,6 @@
+ #include "qapi/error.h"
+ #include "qom/object.h"
+ 
+-#define TYPE_MEMORY_BACKEND_MEMFD "memory-backend-memfd"
+-
+ OBJECT_DECLARE_SIMPLE_TYPE(HostMemoryBackendMemfd, MEMORY_BACKEND_MEMFD)
+ 
+ 
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 27dcda0248..b4662b2795 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -998,6 +998,39 @@ void machine_add_audiodev_property(MachineClass *mc)
+                                           "Audiodev to use for default machine devices");
+ }
+ 
++static bool create_default_memdev(MachineState *ms, const char *path,
++                                  Error **errp)
++{
++    Object *obj;
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
++    bool r = false;
++
++    obj = object_new(path ? TYPE_MEMORY_BACKEND_FILE : TYPE_MEMORY_BACKEND_RAM);
++    if (path) {
++        if (!object_property_set_str(obj, "mem-path", path, errp)) {
++            goto out;
++        }
++    }
++    if (!object_property_set_int(obj, "size", ms->ram_size, errp)) {
++        goto out;
++    }
++    object_property_add_child(object_get_objects_root(), mc->default_ram_id,
++                              obj);
++    /* Ensure backend's memory region name is equal to mc->default_ram_id */
++    if (!object_property_set_bool(obj, "x-use-canonical-path-for-ramblock-id",
++                             false, errp)) {
++        goto out;
++    }
++    if (!user_creatable_complete(USER_CREATABLE(obj), errp)) {
++        goto out;
++    }
++    r = object_property_set_link(OBJECT(ms), "memory-backend", obj, errp);
++
++out:
++    object_unref(obj);
++    return r;
++}
++
+ static void machine_class_init(ObjectClass *oc, void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+@@ -1017,6 +1050,8 @@ static void machine_class_init(ObjectClass *oc, void *data)
+      */
+     mc->numa_mem_align_shift = 23;
+ 
++    mc->create_default_memdev = create_default_memdev;
++
+     object_class_property_add_str(oc, "kernel",
+         machine_get_kernel, machine_set_kernel);
+     object_class_property_set_description(oc, "kernel",
+@@ -1410,38 +1445,6 @@ MemoryRegion *machine_consume_memdev(MachineState *machine,
+     return ret;
+ }
+ 
+-static bool create_default_memdev(MachineState *ms, const char *path, Error **errp)
+-{
+-    Object *obj;
+-    MachineClass *mc = MACHINE_GET_CLASS(ms);
+-    bool r = false;
+-
+-    obj = object_new(path ? TYPE_MEMORY_BACKEND_FILE : TYPE_MEMORY_BACKEND_RAM);
+-    if (path) {
+-        if (!object_property_set_str(obj, "mem-path", path, errp)) {
+-            goto out;
+-        }
+-    }
+-    if (!object_property_set_int(obj, "size", ms->ram_size, errp)) {
+-        goto out;
+-    }
+-    object_property_add_child(object_get_objects_root(), mc->default_ram_id,
+-                              obj);
+-    /* Ensure backend's memory region name is equal to mc->default_ram_id */
+-    if (!object_property_set_bool(obj, "x-use-canonical-path-for-ramblock-id",
+-                             false, errp)) {
+-        goto out;
+-    }
+-    if (!user_creatable_complete(USER_CREATABLE(obj), errp)) {
+-        goto out;
+-    }
+-    r = object_property_set_link(OBJECT(ms), "memory-backend", obj, errp);
+-
+-out:
+-    object_unref(obj);
+-    return r;
+-}
+-
+ const char *machine_class_default_cpu_type(MachineClass *mc)
+ {
+     if (mc->valid_cpu_types && !mc->valid_cpu_types[1]) {
+@@ -1545,7 +1548,9 @@ void machine_run_board_init(MachineState *machine, const char *mem_path, Error *
+                 machine_class->default_ram_id);
+             return;
+         }
+-        if (!create_default_memdev(current_machine, mem_path, errp)) {
++
++        if (!machine_class->create_default_memdev(current_machine, mem_path,
++                                                  errp)) {
+             return;
+         }
+     }
+diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+index eba8eaa960..821532c4c8 100644
+--- a/hw/i386/Kconfig
++++ b/hw/i386/Kconfig
+@@ -132,6 +132,7 @@ config MICROVM
+ config NITRO_ENCLAVE
+     default y
+     depends on MICROVM
++    select VHOST_USER_VSOCK
+ 
+ config X86_IOMMU
+     bool
+diff --git a/hw/i386/nitro_enclave.c b/hw/i386/nitro_enclave.c
+index 98690c6373..280ab4cc9b 100644
+--- a/hw/i386/nitro_enclave.c
++++ b/hw/i386/nitro_enclave.c
+@@ -11,11 +11,81 @@
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
++#include "qom/object_interfaces.h"
+ 
++#include "chardev/char.h"
++#include "hw/sysbus.h"
+ #include "hw/core/eif.h"
+ #include "hw/i386/x86.h"
+ #include "hw/i386/microvm.h"
+ #include "hw/i386/nitro_enclave.h"
++#include "hw/virtio/virtio-mmio.h"
++#include "hw/virtio/vhost-user-vsock.h"
++#include "sysemu/hostmem.h"
++
++static BusState *find_free_virtio_mmio_bus(void)
++{
++    BusChild *kid;
++    BusState *bus = sysbus_get_default();
++
++    QTAILQ_FOREACH(kid, &bus->children, sibling) {
++        DeviceState *dev = kid->child;
++        if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MMIO)) {
++            VirtIOMMIOProxy *mmio = VIRTIO_MMIO(OBJECT(dev));
++            VirtioBusState *mmio_virtio_bus = &mmio->bus;
++            BusState *mmio_bus = &mmio_virtio_bus->parent_obj;
++            if (QTAILQ_EMPTY(&mmio_bus->children)) {
++                return mmio_bus;
++            }
++        }
++    }
++
++    return NULL;
++}
++
++static void vhost_user_vsock_init(NitroEnclaveMachineState *nems)
++{
++    DeviceState *dev = qdev_new(TYPE_VHOST_USER_VSOCK);
++    VHostUserVSock *vsock = VHOST_USER_VSOCK(dev);
++    BusState *bus;
++
++    if (!nems->vsock) {
++        error_report("A valid chardev id for vhost-user-vsock device must be "
++                     "provided using the 'vsock' machine option");
++        exit(1);
++    }
++
++    bus = find_free_virtio_mmio_bus();
++    if (!bus) {
++        error_report("Failed to find bus for vhost-user-vsock device");
++        exit(1);
++    }
++
++    Chardev *chardev = qemu_chr_find(nems->vsock);
++    if (!chardev) {
++        error_report("Failed to find chardev with id %s", nems->vsock);
++        exit(1);
++    }
++
++    vsock->conf.chardev.chr = chardev;
++
++    qdev_realize_and_unref(dev, bus, &error_fatal);
++}
++
++static void nitro_enclave_devices_init(NitroEnclaveMachineState *nems)
++{
++    vhost_user_vsock_init(nems);
++}
++
++static void nitro_enclave_machine_state_init(MachineState *machine)
++{
++    NitroEnclaveMachineClass *ne_class =
++        NITRO_ENCLAVE_MACHINE_GET_CLASS(machine);
++    NitroEnclaveMachineState *ne_state = NITRO_ENCLAVE_MACHINE(machine);
++
++    ne_class->parent_init(machine);
++    nitro_enclave_devices_init(ne_state);
++}
+ 
+ static void nitro_enclave_machine_initfn(Object *obj)
+ {
+@@ -66,15 +136,68 @@ static void x86_load_eif(X86MachineState *x86ms, FWCfgState *fw_cfg,
+     return;
+ }
+ 
++static bool create_memfd_backend(MachineState *ms, const char *path,
++                                 Error **errp)
++{
++    Object *obj;
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
++    bool r = false;
++
++    obj = object_new(TYPE_MEMORY_BACKEND_MEMFD);
++    if (!object_property_set_int(obj, "size", ms->ram_size, errp)) {
++        goto out;
++    }
++    object_property_add_child(object_get_objects_root(), mc->default_ram_id,
++                              obj);
++
++    if (!user_creatable_complete(USER_CREATABLE(obj), errp)) {
++        goto out;
++    }
++    r = object_property_set_link(OBJECT(ms), "memory-backend", obj, errp);
++
++out:
++    object_unref(obj);
++    return r;
++}
++
++static char *nitro_enclave_get_vsock_chardev_id(Object *obj, Error **errp)
++{
++    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
++
++    return g_strdup(nems->vsock);
++}
++
++static void nitro_enclave_set_vsock_chardev_id(Object *obj, const char *value,
++                                               Error **errp)
++{
++    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
++
++    g_free(nems->vsock);
++    nems->vsock = g_strdup(value);
++}
++
+ static void nitro_enclave_class_init(ObjectClass *oc, void *data)
+ {
+     MachineClass *mc = MACHINE_CLASS(oc);
+     MicrovmMachineClass *mmc = MICROVM_MACHINE_CLASS(oc);
++    NitroEnclaveMachineClass *nemc = NITRO_ENCLAVE_MACHINE_CLASS(oc);
+ 
+     mmc->x86_load_linux = x86_load_eif;
+ 
+     mc->family = "nitro_enclave_i386";
+     mc->desc = "AWS Nitro Enclave";
++
++    nemc->parent_init = mc->init;
++    mc->init = nitro_enclave_machine_state_init;
++
++    mc->create_default_memdev = create_memfd_backend;
++
++    object_class_property_add_str(oc, NITRO_ENCLAVE_VSOCK_CHARDEV_ID,
++                                  nitro_enclave_get_vsock_chardev_id,
++                                  nitro_enclave_set_vsock_chardev_id);
++    object_class_property_set_description(oc, NITRO_ENCLAVE_VSOCK_CHARDEV_ID,
++                                          "Set chardev id for vhost-user-vsock "
++                                          "device");
+ }
+ 
+ static const TypeInfo nitro_enclave_machine_info = {
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 48ff6d8b93..c268e7f005 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -308,6 +308,8 @@ struct MachineClass {
+     int64_t (*get_default_cpu_node_id)(const MachineState *ms, int idx);
+     ram_addr_t (*fixup_ram_size)(ram_addr_t size);
+     uint64_t smbios_memory_device_size;
++    bool (*create_default_memdev)(MachineState *ms, const char *path,
++                                  Error **errp);
+ };
+ 
+ /**
+diff --git a/include/hw/i386/nitro_enclave.h b/include/hw/i386/nitro_enclave.h
+index a1dada9371..3e302de851 100644
+--- a/include/hw/i386/nitro_enclave.h
++++ b/include/hw/i386/nitro_enclave.h
+@@ -14,12 +14,20 @@
+ #include "hw/i386/microvm.h"
+ #include "qom/object.h"
+ 
++/* Machine type options */
++#define NITRO_ENCLAVE_VSOCK_CHARDEV_ID "vsock"
++
+ struct NitroEnclaveMachineClass {
+     MicrovmMachineClass parent;
++
++    void (*parent_init)(MachineState *state);
+ };
+ 
+ struct NitroEnclaveMachineState {
+     MicrovmMachineState parent;
++
++    /* Machine type options */
++    char *vsock;
+ };
+ 
+ #define TYPE_NITRO_ENCLAVE_MACHINE MACHINE_TYPE_NAME("nitro-enclave")
+diff --git a/include/sysemu/hostmem.h b/include/sysemu/hostmem.h
+index de47ae59e4..67f45abe39 100644
+--- a/include/sysemu/hostmem.h
++++ b/include/sysemu/hostmem.h
+@@ -39,6 +39,8 @@ OBJECT_DECLARE_TYPE(HostMemoryBackend, HostMemoryBackendClass,
+  */
+ #define TYPE_MEMORY_BACKEND_FILE "memory-backend-file"
+ 
++#define TYPE_MEMORY_BACKEND_MEMFD "memory-backend-memfd"
++
+ 
+ /**
+  * HostMemoryBackendClass:
 -- 
 2.39.2
 
