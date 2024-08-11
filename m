@@ -4,35 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82CE2C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Aug 2024 17:44:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2328DC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Aug 2024 17:46:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdCbs-000462-AG; Sun, 11 Aug 2024 13:44:04 -0400
+	id 1sdCdh-0001kS-Bz; Sun, 11 Aug 2024 13:45:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sdCbq-0003zc-KY; Sun, 11 Aug 2024 13:44:02 -0400
+ id 1sdCde-0001iZ-V9; Sun, 11 Aug 2024 13:45:54 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sdCbo-0000QF-Jc; Sun, 11 Aug 2024 13:44:02 -0400
+ id 1sdCdd-0000na-4s; Sun, 11 Aug 2024 13:45:54 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DE28783D10;
- Sun, 11 Aug 2024 20:43:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9368483D13;
+ Sun, 11 Aug 2024 20:45:12 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9B50712399A;
- Sun, 11 Aug 2024 20:43:57 +0300 (MSK)
-Message-ID: <4f6741dd-35ae-45ac-8a83-2f4c3246c76e@tls.msk.ru>
-Date: Sun, 11 Aug 2024 20:43:57 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6474512399F;
+ Sun, 11 Aug 2024 20:45:51 +0300 (MSK)
+Message-ID: <5f9f2bb0-7446-46cf-8cf2-fb14b09838d4@tls.msk.ru>
+Date: Sun, 11 Aug 2024 20:45:51 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/loongarch64: Fix tcg_out_movi tcg_debug_assert() error
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, git@xen0n.name, maobibo@loongson.cn,
- yijun@loongson.cn, qemu-stable@nongnu.org
-References: <20240618125044.687443-1-gaosong@loongson.cn>
+Subject: Re: [PATCH v2] Update event idx if guest has made extra buffers
+ during double check
+To: thomas <east.moutain.yang@gmail.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, jasowang@redhat.com, qemu-stable@nongnu.org
+References: <20240617054551.20524-1-east.moutain.yang@gmail.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -59,9 +59,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240618125044.687443-1-gaosong@loongson.cn>
+In-Reply-To: <20240617054551.20524-1-east.moutain.yang@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -85,29 +85,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-18.06.2024 15:50, Song Gao wrote:
-> On Loongnix 20.5 systems, QEMU configure with option '--enable-debug'
-> or '--enable-debug-tcg ', booting the Loongnix 20.5 VM in tcg mode
-> will get an assertion error.
-> 
->      "...
->      [   31.484992] [drm] Initialized virtio_gpu 0.0.1 0 for virtio1 on minor 0
->      qemu-system-loongarch64: /home1/gaosong/code/github/clean/qemu/tcg/loongarch64/tcg-target.c.inc:394：tcg_out_movi: 假设 ‘offset_hi == sextreg(offset_hi, 0, 20)’ 失败。
->      ./start.sh: 行 14: 2433006 已放弃               (核心已转储)./build/qemu-system-loongarch64 --accel tcg -m 8G -cpu la464 -machine virt -smp 8 -serial stdio -bios ./QEMU_EFI.fd -monitor telnet:localhost:4498,server,nowait -device virtio-gpu-pci -net nic, -net user -device nec-usb-xhci,id=xhci,addr=0x1b -device usb-tablet,id=tablet,bus=xhci.0,port=1 -device usb-kbd,id=keyboard,bus=xhci.0,port=2 -device virtio-blk-pci,drive=test -drive if=none,id=test,file=./Loongnix-20.5.cartoon.mini.loongarch64.cn.qcow2 "
-> 
-> The values of offset_hi and sextreg(offset_hi, 0, 20) are:
-> 
->      "[   29.975240] virtio_gpu virtio1: fb0: virtiodrmfb frame buffer device
->      offset_hi is 80000
->      sextreg(offset_hi, 0, 20) is fffffffffff80000
->      offset_hi is 80000
->      sextreg(offset_hi, 0, 20) is fffffffffff80000
->      offset_hi is 80000
->      sextreg(offset_hi, 0, 20) is fffffffffff80000
->      ..."
-> 
-> When pcalau12i + ori is not satisfied, we should use other methods instead,
-> instead of generating an assertion error.
+17.06.2024 08:45, thomas wrote:
+> If guest has made some buffers available during double check,
+> but the total buffer size available is lower than @bufsize,
+> notify the guest with the latest available idx(event idx)
+> seen by the host.
 
 Hi!
 
@@ -116,6 +98,25 @@ Has this change been forgotten, or is it not needed anymore?
 Thanks,
 
 /mjt
+
+> Fixes: 06b12970174 ("virtio-net: fix network stall under load")
+> Signed-off-by: wencheng Yang <east.moutain.yang@gmail.com>
+> ---
+>   hw/net/virtio-net.c | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 9c7e85caea..23c6c8c898 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -1654,6 +1654,7 @@ static int virtio_net_has_buffers(VirtIONetQueue *q, int bufsize)
+>           if (virtio_queue_empty(q->rx_vq) ||
+>               (n->mergeable_rx_bufs &&
+>                !virtqueue_avail_bytes(q->rx_vq, bufsize, 0))) {
+> +            virtio_queue_set_notification(q->rx_vq, 1);
+>               return 0;
+>           }
+>       }
 
 -- 
 GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
