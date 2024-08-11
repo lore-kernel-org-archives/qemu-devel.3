@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51A52C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Aug 2024 07:40:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3824BC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Aug 2024 07:42:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sd3BX-0004rH-6S; Sun, 11 Aug 2024 03:40:15 -0400
+	id 1sd3DG-000195-BG; Sun, 11 Aug 2024 03:42:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sd3BP-0004qH-Rw; Sun, 11 Aug 2024 03:40:07 -0400
+ id 1sd3DF-000187-3M; Sun, 11 Aug 2024 03:42:01 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sd3BN-0006ty-Lu; Sun, 11 Aug 2024 03:40:07 -0400
+ id 1sd3DC-0007E5-94; Sun, 11 Aug 2024 03:41:59 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A3B0E83C90;
- Sun, 11 Aug 2024 10:39:13 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7404A83C95;
+ Sun, 11 Aug 2024 10:41:18 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id CDA99123721;
- Sun, 11 Aug 2024 10:39:51 +0300 (MSK)
-Message-ID: <5d9e1e69-159e-4570-b7d9-6db21e960d2e@tls.msk.ru>
-Date: Sun, 11 Aug 2024 10:39:51 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id A1E9A123726;
+ Sun, 11 Aug 2024 10:41:56 +0300 (MSK)
+Message-ID: <b9c8f003-b339-4ef8-90c7-15f501acb7bd@tls.msk.ru>
+Date: Sun, 11 Aug 2024 10:41:56 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] net: Fix '-net nic,model=' for non-help arguments
-To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, qemu-stable <qemu-stable@nongnu.org>,
- Hans <sungdgdhtryrt@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <c5f7438e2e0c40b0f89030de1096335f5704d3a5.camel@infradead.org>
+Subject: Re: [PULL 16/28] hw/sd/sdcard: Do not abort when reading DAT lines on
+ invalid cmd state
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Zheyu Ma <zheyuma97@gmail.com>
+References: <20240806125157.91185-1-philmd@linaro.org>
+ <20240806125157.91185-17-philmd@linaro.org>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -60,9 +61,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <c5f7438e2e0c40b0f89030de1096335f5704d3a5.camel@infradead.org>
+In-Reply-To: <20240806125157.91185-17-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -86,45 +87,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-06.08.2024 20:21, David Woodhouse wrote:
-> From: David Woodhouse <dwmw@amazon.co.uk>
+06.08.2024 15:51, Philippe Mathieu-Daudé wrote:
+> Guest should not try to read the DAT lines from invalid
+> command state. If it still insists to do so, return a
+> dummy value.
 > 
-> Oops, don't *delete* the model option when checking for 'help'.
-> 
-> Fixes: 64f75f57f9d2 ("net: Reinstate '-net nic, model=help' output as documented in man page")
-> Reported-by: Hans <sungdgdhtryrt@gmail.com>
-> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
 > Cc: qemu-stable@nongnu.org
+> Fixes: e2dec2eab0 ("hw/sd/sdcard: Remove default case in read/write on DAT lines")
 
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+This commit isn't in any released version, so the fix for it does not
+apply, - so I'm not picking this up for stable.
 
-Please pick this one up to master as a bugfix (Cc'ing rth), or send a pullreq soon :)
+JFYI.
 
 Thanks,
 
 /mjt
-
-> ---
-> This whole mess of alternative command line options could really do
-> with some self tests. And maybe removing half of them. Three ways of
-> doing the same thing ought to suffice.
-> 
->   net/net.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/net/net.c b/net/net.c
-> index 2eb8bc9c0b..fc1125111c 100644
-> --- a/net/net.c
-> +++ b/net/net.c
-> @@ -1737,7 +1737,7 @@ void net_check_clients(void)
->   
->   static int net_init_client(void *dummy, QemuOpts *opts, Error **errp)
->   {
-> -    const char *model = qemu_opt_get_del(opts, "model");
-> +    const char *model = qemu_opt_get(opts, "model");
->   
->       if (is_nic_model_help_option(model)) {
->           return 0;
 
 -- 
 GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
