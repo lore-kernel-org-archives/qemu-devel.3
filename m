@@ -4,34 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAA64C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Aug 2024 17:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A29DC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Aug 2024 17:43:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdCYs-0003MC-0X; Sun, 11 Aug 2024 13:40:58 -0400
+	id 1sdCaz-0000rF-N7; Sun, 11 Aug 2024 13:43:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sdCYe-0003K5-DA; Sun, 11 Aug 2024 13:40:46 -0400
+ id 1sdCay-0000pl-5j; Sun, 11 Aug 2024 13:43:08 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sdCYb-0008Tt-SG; Sun, 11 Aug 2024 13:40:43 -0400
+ id 1sdCaw-0000N4-9r; Sun, 11 Aug 2024 13:43:07 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5930983D0B;
- Sun, 11 Aug 2024 20:39:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CD60F83D0D;
+ Sun, 11 Aug 2024 20:42:25 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2ADB4123998;
- Sun, 11 Aug 2024 20:40:35 +0300 (MSK)
-Message-ID: <51b8f685-2ffc-4021-9d7c-bdabdc4ba177@tls.msk.ru>
-Date: Sun, 11 Aug 2024 20:40:35 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 97E88123999;
+ Sun, 11 Aug 2024 20:43:04 +0300 (MSK)
+Message-ID: <bd395931-0883-45b0-89fc-8766ffcda9cf@tls.msk.ru>
+Date: Sun, 11 Aug 2024 20:43:04 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/17] target/arm: AdvSIMD decodetree conversion, part 4
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20240717060903.205098-1-richard.henderson@linaro.org>
+Subject: Re: [PATCH v3 5/5] accel/tcg: Always call tcg_flush_jmp_cache() on
+ reset
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Kyle Evans <kevans@freebsd.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>
+References: <20240503123456.28866-1-philmd@linaro.org>
+ <20240503123456.28866-6-philmd@linaro.org>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -58,9 +65,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240717060903.205098-1-richard.henderson@linaro.org>
+In-Reply-To: <20240503123456.28866-6-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -84,48 +91,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-17.07.2024 09:08, Richard Henderson wrote:
-> Flush before the queue gets too big.
-> Also, there's a bug fix in patch 14.
+03.05.2024 15:34, Philippe Mathieu-Daudé wrote:
+> In commit bb6cf6f016 ("accel/tcg: Factor tcg_cpu_reset_hold() out")
+> we unfortunately restricted the tcg_flush_jmp_cache() to system
+> emulation. Move it to the common tcg_exec_cpu_reset_hold() handler
+> so user emulation gets the jmp_cache initialized when threads
+> are created.
+> 
+> Remove the NULL check in tcg_flush_jmp_cache() from commit 4e4fa6c12d
+> ("accel/tcg: Complete cpu initialization before registration") which
+> was a band-aid fix for incorrect commit bb6cf6f016.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: bb6cf6f016 ("accel/tcg: Factor tcg_cpu_reset_hold() out")
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 Hi!
 
-Has this patchset (together with the bugfix) been forgotten?
-Maybe we should include at least the bug fix for 9.1?
+Has this change been forgotten, or is it not appropriate anymore?
 
 Thanks,
 
 /mjt
-
-> r~
-> 
-> Richard Henderson (17):
->    target/arm: Use tcg_gen_extract2_i64 for EXT
->    target/arm: Convert EXT to decodetree
->    target/arm: Convert TBL, TBX to decodetree
->    target/arm: Convert UZP, TRN, ZIP to decodetree
->    target/arm: Simplify do_reduction_op
->    target/arm: Convert ADDV, *ADDLV, *MAXV, *MINV to decodetree
->    target/arm: Convert FMAXNMV, FMINNMV, FMAXV, FMINV to decodetree
->    target/arm: Convert FMOVI (scalar, immediate) to decodetree
->    target/arm: Convert MOVI, FMOV, ORR, BIC (vector immediate) to
->      decodetree
->    target/arm: Introduce gen_gvec_sshr, gen_gvec_ushr
->    target/arm: Fix whitespace near gen_srshr64_i64
->    target/arm: Convert handle_vec_simd_shri to decodetree
->    target/arm: Convet handle_vec_simd_shli to decodetree
->    target/arm: Clear high SVE elements in handle_vec_simd_wshli
->    target/arm: Use {,s}extract in handle_vec_simd_wshli
->    target/arm: Convert SSHLL, USHLL to decodetree
->    target/arm: Push tcg_rnd into handle_shri_with_rndacc
-> 
->   target/arm/tcg/translate.h      |    5 +
->   target/arm/tcg/gengvec.c        |   21 +-
->   target/arm/tcg/translate-a64.c  | 1123 +++++++++++--------------------
->   target/arm/tcg/translate-neon.c |   25 +-
->   target/arm/tcg/a64.decode       |   87 +++
->   5 files changed, 520 insertions(+), 741 deletions(-)
-> 
 
 -- 
 GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
