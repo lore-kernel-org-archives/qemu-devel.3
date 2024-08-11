@@ -4,41 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96436C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Aug 2024 08:03:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D766C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Aug 2024 08:06:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sd3Xb-0001ss-47; Sun, 11 Aug 2024 04:03:03 -0400
+	id 1sd3as-0007hj-4O; Sun, 11 Aug 2024 04:06:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sd3XY-0001p1-32; Sun, 11 Aug 2024 04:03:00 -0400
+ id 1sd3ag-0007fq-7i; Sun, 11 Aug 2024 04:06:15 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sd3XV-0001iH-E6; Sun, 11 Aug 2024 04:02:59 -0400
+ id 1sd3ae-00027a-69; Sun, 11 Aug 2024 04:06:14 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C543383CA1;
- Sun, 11 Aug 2024 11:02:14 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A75E083CA5;
+ Sun, 11 Aug 2024 11:05:31 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id D510F123755;
- Sun, 11 Aug 2024 11:02:52 +0300 (MSK)
-Message-ID: <27a348fb-830d-47ec-b2db-0c354711f6f6@tls.msk.ru>
-Date: Sun, 11 Aug 2024 11:02:52 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id D688512375C;
+ Sun, 11 Aug 2024 11:06:09 +0300 (MSK)
+Message-ID: <e9848924-65ef-45ca-985d-c420f0baacec@tls.msk.ru>
+Date: Sun, 11 Aug 2024 11:06:09 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 5/5] nbd/server: CVE-2024-7409: Close stray clients at
- server-stop
-To: Eric Blake <eblake@redhat.com>, qemu-devel@nongnu.org
-Cc: Alexander Ivanov <alexander.ivanov@virtuozzo.com>,
- qemu-stable@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- "open list:Network Block Dev..." <qemu-block@nongnu.org>
-References: <20240808215529.1065336-7-eblake@redhat.com>
- <20240808215529.1065336-12-eblake@redhat.com>
+Subject: Re: [PATCH v6] virtio-pci: Fix the use of an uninitialized irqfd
+To: Jason Wang <jasowang@redhat.com>, Cindy Lu <lulu@redhat.com>
+Cc: mst@redhat.com, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+References: <20240806093715.65105-1-lulu@redhat.com>
+ <CACGkMEs8T4z1+dMxJ2AotTX6X-Y6POtNX4WLxJxCbe6xes70Ow@mail.gmail.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -65,7 +59,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <20240808215529.1065336-12-eblake@redhat.com>
+In-Reply-To: <CACGkMEs8T4z1+dMxJ2AotTX6X-Y6POtNX4WLxJxCbe6xes70Ow@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -91,67 +85,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-09.08.2024 00:53, Eric Blake wrote:
-> A malicious client can attempt to connect to an NBD server, and then
-> intentionally delay progress in the handshake, including if it does
-> not know the TLS secrets.  Although the previous two patches reduce
-> this behavior by capping the default max-connections parameter and
-> killing slow clients, they did not eliminate the possibility of a
-> client waiting to close the socket until after the QMP nbd-server-stop
-> command is executed, at which point qemu would SEGV when trying to
-> dereference the NULL nbd_server global which is no longer present.
-> This amounts to a denial of service attack.  Worse, if another NBD
-> server is started before the malicious client disconnects, I cannot
-> rule out additional adverse effects when the old client interferes
-> with the connection count of the new server (although the most likely
-> is a crash due to an assertion failure when checking
-> nbd_server->connections > 0).
-> 
-> For environments without this patch, the CVE can be mitigated by
-> ensuring (such as via a firewall) that only trusted clients can
-> connect to an NBD server.  Note that using frameworks like libvirt
-> that ensure that TLS is used and that nbd-server-stop is not executed
-> while any trusted clients are still connected will only help if there
-> is also no possibility for an untrusted client to open a connection
-> but then stall on the NBD handshake.
-> 
-> Given the previous patches, it would be possible to guarantee that no
-> clients remain connected by having nbd-server-stop sleep for longer
-> than the default handshake deadline before finally freeing the global
-> nbd_server object, but that could make QMP non-responsive for a long
-> time.  So intead, this patch fixes the problem by tracking all client
-> sockets opened while the server is running, and forcefully closing any
-> such sockets remaining without a completed handshake at the time of
-> nbd-server-stop, then waiting until the coroutines servicing those
-> sockets notice the state change.  nbd-server-stop now has a second
-> AIO_WAIT_WHILE_UNLOCKED (the first is indirectly through the
-> blk_exp_close_all_type() that disconnects all clients that completed
-> handshakes), but forced socket shutdown is enough to progress the
-> coroutines and quickly tear down all clients before the server is
-> freed, thus finally fixing the CVE.
-> 
-> This patch relies heavily on the fact that nbd/server.c guarantees
-> that it only calls nbd_blockdev_client_closed() from the main loop
-> (see the assertion in nbd_client_put() and the hoops used in
-> nbd_client_put_nonzero() to achieve that); if we did not have that
-> guarantee, we would also need a mutex protecting our accesses of the
-> list of connections to survive re-entrancy from independent iothreads.
-> 
-> Although I did not actually try to test old builds, it looks like this
-> problem has existed since at least commit 862172f45c (v2.12.0, 2017) -
-> even back when that patch started using a QIONetListener to handle
-> listening on multiple sockets, nbd_server_free() was already unaware
-> that the nbd_blockdev_client_closed callback can be reached later by a
-> client thread that has not completed handshakes (and therefore the
-> client's socket never got added to the list closed in
-> nbd_export_close_all), despite that patch intentionally tearing down
-> the QIONetListener to prevent new clients.
+07.08.2024 07:02, Jason Wang wrote:
 
-Eric, from the 5-patch series, only this last patch is Cc'd for stable,
-but it obviously does not work without all 4 previous patches.  Do you
-mean whole series should be applied to -stable?
+> Acked-by: Jason Wang <jasowang@redhat.com>
 
-I picked up patches 2-5 for 7.2 and 9.0.
+Jason, would you mind picking this up together with -net help bugfix
+and sending a pull request?
+
+This particular change has been (re)tried multiple times by Cindy Lu
+already, and the bug is still not fixed and affects users.  Both
+this and -net help fix are a must for 9.1 and for stable series.
 
 Thanks,
 
