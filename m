@@ -4,45 +4,35 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7868CC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Aug 2024 17:49:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EA3BC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Aug 2024 17:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdCgQ-000201-Dk; Sun, 11 Aug 2024 13:48:46 -0400
+	id 1sdCmy-0000Po-Nt; Sun, 11 Aug 2024 13:55:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sdCgO-0001tf-6y; Sun, 11 Aug 2024 13:48:44 -0400
+ id 1sdCmv-0000Li-U5; Sun, 11 Aug 2024 13:55:29 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sdCgM-0000xP-9a; Sun, 11 Aug 2024 13:48:43 -0400
+ id 1sdCmt-00022r-N7; Sun, 11 Aug 2024 13:55:29 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 78EB083D1A;
- Sun, 11 Aug 2024 20:48:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E7E4C83D1E;
+ Sun, 11 Aug 2024 20:54:43 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 42A441239A1;
- Sun, 11 Aug 2024 20:48:40 +0300 (MSK)
-Message-ID: <518c457b-1f02-4d19-a3cc-a1fc6ec81170@tls.msk.ru>
-Date: Sun, 11 Aug 2024 20:48:40 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id B6DA61239AA;
+ Sun, 11 Aug 2024 20:55:22 +0300 (MSK)
+Message-ID: <fb94e606-73be-4af9-8cb3-52c661fe320e@tls.msk.ru>
+Date: Sun, 11 Aug 2024 20:55:22 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Use get_address() to get address with
- Zicbom extensions
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Bin Meng <bin.meng@windriver.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Christoph Muellner <cmuellner@linux.com>,
- Philipp Tomsich <philipp.tomsich@vrull.eu>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Weiwei Li <liwei1518@gmail.com>,
- Palmer Dabbelt <palmer@rivosinc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Zhiwei Jiang <jiangzw@tecorigin.com>
-References: <20240419110514.69697-1-philmd@linaro.org>
- <e70bbb7d-7048-493e-b359-88472e73c199@linaro.org>
+Subject: Re: [PATCH v2] block/reqlist: allow adding overlapping requests
+To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org, hreitz@redhat.com,
+ kwolf@redhat.com, vsementsov@yandex-team.ru, jsnow@redhat.com
+References: <20240712140716.517911-1-f.ebner@proxmox.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -69,9 +59,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <e70bbb7d-7048-493e-b359-88472e73c199@linaro.org>
+In-Reply-To: <20240712140716.517911-1-f.ebner@proxmox.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -95,31 +85,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-19.04.2024 14:37, Philippe Mathieu-Daudé wrpte:
-> On 19/4/24 13:05, Philippe Mathieu-Daudé wrote:
->> We need to use get_address() to get an address from cpu_gpr[],
->> since $zero is "special" (NULL).
+12.07.2024 17:07, Fiona Ebner wrote:
+> Allow overlapping request by removing the assert that made it
+> impossible. There are only two callers:
+> 
+> 1. block_copy_task_create()
+> 
+> It already asserts the very same condition before calling
+> reqlist_init_req().
+> 
+> 2. cbw_snapshot_read_lock()
+> 
+> There is no need to have read requests be non-overlapping in
+> copy-before-write when used for snapshot-access. In fact, there was no
+> protection against two callers of cbw_snapshot_read_lock() calling
+> reqlist_init_req() with overlapping ranges and this could lead to an
+> assertion failure [1].
+> 
+> In particular, with the reproducer script below [0], two
+> cbw_co_snapshot_block_status() callers could race, with the second
+> calling reqlist_init_req() before the first one finishes and removes
+> its conflicting request.
+> 
+> [0]:
+> 
+>> #!/bin/bash -e
+>> dd if=/dev/urandom of=/tmp/disk.raw bs=1M count=1024
+>> ./qemu-img create /tmp/fleecing.raw -f raw 1G
+>> (
+>> ./qemu-system-x86_64 --qmp stdio \
+>> --blockdev raw,node-name=node0,file.driver=file,file.filename=/tmp/disk.raw \
+>> --blockdev raw,node-name=node1,file.driver=file,file.filename=/tmp/fleecing.raw \
+>> <<EOF
+>> {"execute": "qmp_capabilities"}
+>> {"execute": "blockdev-add", "arguments": { "driver": "copy-before-write", "file": "node0", "target": "node1", "node-name": "node3" } }
+>> {"execute": "blockdev-add", "arguments": { "driver": "snapshot-access", "file": "node3", "node-name": "snap0" } }
+>> {"execute": "nbd-server-start", "arguments": {"addr": { "type": "unix", "data": { "path": "/tmp/nbd.socket" } } } }
+>> {"execute": "block-export-add", "arguments": {"id": "exp0", "node-name": "snap0", "type": "nbd", "name": "exp0"}}
+>> EOF
+>> ) &
+>> sleep 5
+>> while true; do
+>> ./qemu-nbd -d /dev/nbd0
+>> ./qemu-nbd -c /dev/nbd0 nbd:unix:/tmp/nbd.socket:exportname=exp0 -f raw -r
+>> nbdinfo --map 'nbd+unix:///exp0?socket=/tmp/nbd.socket'
+>> done
+> 
+> [1]:
+> 
+>> #5  0x000071e5f0088eb2 in __GI___assert_fail (...) at ./assert/assert.c:101
+>> #6  0x0000615285438017 in reqlist_init_req (...) at ../block/reqlist.c:23
+>> #7  0x00006152853e2d98 in cbw_snapshot_read_lock (...) at ../block/copy-before-write.c:237
+>> #8  0x00006152853e3068 in cbw_co_snapshot_block_status (...) at ../block/copy-before-write.c:304
+>> #9  0x00006152853f4d22 in bdrv_co_snapshot_block_status (...) at ../block/io.c:3726
+>> #10 0x000061528543a63e in snapshot_access_co_block_status (...) at ../block/snapshot-access.c:48
+>> #11 0x00006152853f1a0a in bdrv_co_do_block_status (...) at ../block/io.c:2474
+>> #12 0x00006152853f2016 in bdrv_co_common_block_status_above (...) at ../block/io.c:2652
+>> #13 0x00006152853f22cf in bdrv_co_block_status_above (...) at ../block/io.c:2732
+>> #14 0x00006152853d9a86 in blk_co_block_status_above (...) at ../block/block-backend.c:1473
+>> #15 0x000061528538da6c in blockstatus_to_extents (...) at ../nbd/server.c:2374
+>> #16 0x000061528538deb1 in nbd_co_send_block_status (...) at ../nbd/server.c:2481
+>> #17 0x000061528538f424 in nbd_handle_request (...) at ../nbd/server.c:2978
+>> #18 0x000061528538f906 in nbd_trip (...) at ../nbd/server.c:3121
+>> #19 0x00006152855a7caf in coroutine_trampoline (...) at ../util/coroutine-ucontext.c:175
+> 
+> Cc: qemu-stable@nongnu.org
+> Suggested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 
 Hi!
 
-Has this change been forgotten, or is it not needed anymore?
-It's been quite some time since Apr-19..
+Has this been forgotten or is it not needed for 9.1?
 
 Thanks,
 
 /mjt
 
 > 
-> Cc: qemu-stable@nongnu.org
+> Changes in v2:
+> * different approach, allowing overlapping requests for
+>    copy-before-write rather than waiting for them. block-copy already
+>    asserts there are no conflicts before adding a request.
 > 
->> Fixes: e05da09b7c ("target/riscv: implement Zicbom extension")
->> Reported-by: Zhiwei Jiang (姜智伟) <jiangzw@tecorigin.com>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   target/riscv/insn_trans/trans_rvzicbo.c.inc | 8 ++++----
->>   1 file changed, 4 insertions(+), 4 deletions(-)
+>   block/copy-before-write.c | 3 ++-
+>   block/reqlist.c           | 2 --
+>   2 files changed, 2 insertions(+), 3 deletions(-)
 > 
-> 
+> diff --git a/block/copy-before-write.c b/block/copy-before-write.c
+> index 853e01a1eb..28f6a096cd 100644
+> --- a/block/copy-before-write.c
+> +++ b/block/copy-before-write.c
+> @@ -66,7 +66,8 @@ typedef struct BDRVCopyBeforeWriteState {
+>   
+>       /*
+>        * @frozen_read_reqs: current read requests for fleecing user in bs->file
+> -     * node. These areas must not be rewritten by guest.
+> +     * node. These areas must not be rewritten by guest. There can be multiple
+> +     * overlapping read requests.
+>        */
+>       BlockReqList frozen_read_reqs;
+>   
+> diff --git a/block/reqlist.c b/block/reqlist.c
+> index 08cb57cfa4..098e807378 100644
+> --- a/block/reqlist.c
+> +++ b/block/reqlist.c
+> @@ -20,8 +20,6 @@
+>   void reqlist_init_req(BlockReqList *reqs, BlockReq *req, int64_t offset,
+>                         int64_t bytes)
+>   {
+> -    assert(!reqlist_find_conflict(reqs, offset, bytes));
+> -
+>       *req = (BlockReq) {
+>           .offset = offset,
+>           .bytes = bytes,
 
 -- 
 GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
