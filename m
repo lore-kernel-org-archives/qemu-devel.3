@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 168EFC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Aug 2024 07:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56F14C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Sun, 11 Aug 2024 07:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sd3JP-0007Jh-Gh; Sun, 11 Aug 2024 03:48:23 -0400
+	id 1sd3ME-0003wl-1Y; Sun, 11 Aug 2024 03:51:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sd3JK-0007G2-IJ; Sun, 11 Aug 2024 03:48:18 -0400
+ id 1sd3MC-0003u9-79; Sun, 11 Aug 2024 03:51:16 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1sd3JH-0007tj-RX; Sun, 11 Aug 2024 03:48:17 -0400
+ id 1sd3M9-0000FC-V7; Sun, 11 Aug 2024 03:51:15 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3B27B83C99;
- Sun, 11 Aug 2024 10:47:33 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CEF3183C9D;
+ Sun, 11 Aug 2024 10:50:32 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 66DB212372B;
- Sun, 11 Aug 2024 10:48:11 +0300 (MSK)
-Message-ID: <dcd08784-3244-4450-9741-0c23a74c4580@tls.msk.ru>
-Date: Sun, 11 Aug 2024 10:48:11 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id EEB08123730;
+ Sun, 11 Aug 2024 10:51:10 +0300 (MSK)
+Message-ID: <44aaeed5-95d3-46dc-b04c-ae4cfab5b029@tls.msk.ru>
+Date: Sun, 11 Aug 2024 10:51:10 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/5] vvfat: Fix bug in writing to middle of file
+Subject: Re: [PATCH v5 0/5] vvfat: Fix write bugs for large files and add
+ iotests
 To: Amjad Alsharafi <amjadsharafi10@gmail.com>, qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  "open list:vvfat" <qemu-block@nongnu.org>,
  qemu-stable <qemu-stable@nongnu.org>
 References: <cover.1718195956.git.amjadsharafi10@gmail.com>
- <4100134ef391cc33487ded6568bdf1a2abd1e8e7.1718195956.git.amjadsharafi10@gmail.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -61,7 +61,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
  rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
  Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
-In-Reply-To: <4100134ef391cc33487ded6568bdf1a2abd1e8e7.1718195956.git.amjadsharafi10@gmail.com>
+In-Reply-To: <cover.1718195956.git.amjadsharafi10@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -88,16 +88,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 12.06.2024 15:43, Amjad Alsharafi wrote:
-> Before this commit, the behavior when calling `commit_one_file` for
-> example with `offset=0x2000` (second cluster), what will happen is that
-> we won't fetch the next cluster from the fat, and instead use the first
-> cluster for the read operation.
+> These patches fix some bugs found when modifying files in vvfat.
+> First, there was a bug when writing to the cluster 2 or above of a file, it
+> will copy the cluster before it instead, so, when writing to cluster=2, the
+> content of cluster=1 will be copied into disk instead in its place.
 > 
-> This is due to off-by-one error here, where `i=0x2000 !< offset=0x2000`,
-> thus not fetching the next cluster.
+> Another issue was modifying the clusters of a file and adding new
+> clusters, this showed 2 issues:
+> - If the new cluster is not immediately after the last cluster, it will
+> cause issues when reading from this file in the future.
+> - Generally, the usage of info.file.offset was incorrect, and the
+> system would crash on abort() when the file is modified and a new
+> cluster was added.
+> 
+> Also, added some iotests for vvfat, covering the this fix and also
+> general behavior such as reading, writing, and creating files on the filesystem.
+> Including tests for reading/writing the first cluster which
+> would pass even before this patch.
+...
+> Amjad Alsharafi (5):
+>    vvfat: Fix bug in writing to middle of file
+>    vvfat: Fix usage of `info.file.offset`
+>    vvfat: Fix wrong checks for cluster mappings invariant
+>    vvfat: Fix reading files with non-continuous clusters
+>    iotests: Add `vvfat` tests
 
-This smells like a -stable material, despite the fact vvfat is generally
-unreliable.  I'm picking this up for 7.2.x and 9.0.x.
+Actually, maybe the whole series is a good candidate for -stable, not just the
+first fix.  What do you think?
 
 Thanks,
 
