@@ -4,68 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1085C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 14:16:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5071C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 14:25:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdVq8-0007iH-In; Mon, 12 Aug 2024 10:16:04 -0400
+	id 1sdVyX-0004Xo-0z; Mon, 12 Aug 2024 10:24:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sdVq6-0007hf-52
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 10:16:02 -0400
+ id 1sdVyU-0004X9-JI
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 10:24:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sdVq2-0005wS-34
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 10:16:01 -0400
+ id 1sdVyQ-0006sR-Ge
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 10:24:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723472156;
+ s=mimecast20190719; t=1723472675;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UH8ydXm9bz2h2parXFjgTUBwcqKkC0z4G1MTvG5w+SE=;
- b=PASRREhdkE6OWdD5xoVAZmxIiQ4tPWHH00Dp9OXu3i6gazs7zE5m1PdkbsgL0eHwBcD0qB
- k1aWc9yICb1Eng91q7+Nwymmf5O4kNvDNFU1ihxR7MXmwuU/vz264qGIPFshaPPK4AeacC
- SMAkOLRnid+Rx28CjdBUSQMhPTXtmKY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=K+DyPM375l9fLLJ8HmdkzMKiy3UwlRwCWi1WGNQtEAo=;
+ b=EGArTzLJDSS9sY3OBBQgaECwnAlO3ynqw1lHF8qlVtT7aif0T6a+5gpLY2w4q1pCWHMYfJ
+ lQDbgVh17mWkLOELe3CZaj8VL73iejb7Ua2ShuGBXLmUkyvYFFeOCTke/zBA72LDqvEBFI
+ UnM9DsOQ/Off164UZJde5so+U+wazvU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-330-20M8SQ7eOMy770C-8H0AUA-1; Mon,
- 12 Aug 2024 10:15:52 -0400
-X-MC-Unique: 20M8SQ7eOMy770C-8H0AUA-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-mWj_Xq15Pi-Cw-q4DGNuUw-1; Mon,
+ 12 Aug 2024 10:24:31 -0400
+X-MC-Unique: mWj_Xq15Pi-Cw-q4DGNuUw-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2290019541A9; Mon, 12 Aug 2024 14:15:50 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ACC9E1944EB3; Mon, 12 Aug 2024 14:24:29 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.211])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CE61F1955D71; Mon, 12 Aug 2024 14:15:44 +0000 (UTC)
-Date: Mon, 12 Aug 2024 15:15:41 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8FD5219560AE; Mon, 12 Aug 2024 14:24:23 +0000 (UTC)
+Date: Mon, 12 Aug 2024 15:24:20 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 Cc: qemu-devel@nongnu.org, graf@amazon.com, agraf@csgraf.de,
  stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com,
  richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com,
  marcel.apfelbaum@gmail.com, philmd@linaro.org
-Subject: Re: [PATCH v3 3/5] device/virtio-nsm: Support for Nitro Secure
- Module device
-Message-ID: <ZroZDegFxUbLC2KH@redhat.com>
+Subject: Re: [PATCH v3 2/5] machine/nitro-enclave: Add vhost-user-vsock device
+Message-ID: <ZrobFFVV4tN6dueh@redhat.com>
 References: <20240810164502.19693-1-dorjoychy111@gmail.com>
- <20240810164502.19693-4-dorjoychy111@gmail.com>
+ <20240810164502.19693-3-dorjoychy111@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240810164502.19693-4-dorjoychy111@gmail.com>
+In-Reply-To: <20240810164502.19693-3-dorjoychy111@gmail.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -93,255 +89,259 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Aug 10, 2024 at 10:45:00PM +0600, Dorjoy Chowdhury wrote:
-> Nitro Secure Module (NSM)[1] device is used in AWS Nitro Enclaves for
-> stripped down TPM functionality like cryptographic attestation. The
-> requests to and responses from NSM device are CBOR[2] encoded.
+On Sat, Aug 10, 2024 at 10:44:59PM +0600, Dorjoy Chowdhury wrote:
+> AWS Nitro Enclaves have built-in vhost-vsock device support which
+> enables applications in enclave VMs to communicate with the parent
+> EC2 VM over vsock. The enclave VMs have dynamic CID while the parent
+> always has CID 3. In QEMU, the vsock emulation for nitro enclave is
+> added using vhost-user-vsock as opposed to vhost-vsock. vhost-vsock
+> doesn't support sibling VM communication which is needed for nitro
+> enclaves.
 > 
-> This commit adds support for NSM device in QEMU. Although related to
-> AWS Nitro Enclaves, the virito-nsm device is independent and can be
-> used in other machine types as well. The libcbor[3] library has been
-> used for the CBOR encoding and decoding functionalities.
+> In QEMU's nitro-enclave emulation, for the vsock communication to CID
+> 3 to work, another process that does the vsock emulation in  userspace
+> must be run, for example, vhost-device-vsock[1] from rust-vmm, with
+> necessary vsock communication support in another guest VM with CID 3.
+> A new mandatory nitro-enclave machine option 'vsock' has been added.
+> The value for this option should be the chardev id from the '-chardev'
+> option for the vhost-user-vsock device to work.
 > 
-> [1] https://lists.oasis-open.org/archives/virtio-comment/202310/msg00387.html
-> [2] http://cbor.io/
-> [3] https://libcbor.readthedocs.io/en/latest/
+> Using vhost-user-vsock also enables the possibility to implement some
+> proxying support in the vhost-user-vsock daemon that will forward all
+> the packets to the host machine instead of CID 3 so that users of
+> nitro-enclave can run the necessary applications in their host machine
+> instead of running another whole VM with CID 3.
+> 
+> [1] https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock
 > 
 > Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 > ---
->  MAINTAINERS                    |    8 +
->  hw/virtio/Kconfig              |    5 +
->  hw/virtio/meson.build          |    4 +
->  hw/virtio/virtio-nsm-pci.c     |   73 ++
->  hw/virtio/virtio-nsm.c         | 1929 ++++++++++++++++++++++++++++++++
->  include/hw/virtio/virtio-nsm.h |   59 +
->  6 files changed, 2078 insertions(+)
->  create mode 100644 hw/virtio/virtio-nsm-pci.c
->  create mode 100644 hw/virtio/virtio-nsm.c
->  create mode 100644 include/hw/virtio/virtio-nsm.h
+>  backends/hostmem-memfd.c        |   2 -
+>  hw/core/machine.c               |  71 +++++++++---------
+>  hw/i386/Kconfig                 |   1 +
+>  hw/i386/nitro_enclave.c         | 123 ++++++++++++++++++++++++++++++++
+>  include/hw/boards.h             |   2 +
+>  include/hw/i386/nitro_enclave.h |   8 +++
+>  include/sysemu/hostmem.h        |   2 +
+>  7 files changed, 174 insertions(+), 35 deletions(-)
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index f8d63031f0..05b66a7f93 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2349,6 +2349,14 @@ F: include/sysemu/rng*.h
->  F: backends/rng*.c
->  F: tests/qtest/virtio-rng-test.c
+
+> diff --git a/hw/i386/nitro_enclave.c b/hw/i386/nitro_enclave.c
+> index 98690c6373..280ab4cc9b 100644
+> --- a/hw/i386/nitro_enclave.c
+> +++ b/hw/i386/nitro_enclave.c
+> @@ -11,11 +11,81 @@
+>  #include "qemu/osdep.h"
+>  #include "qemu/error-report.h"
+>  #include "qapi/error.h"
+> +#include "qom/object_interfaces.h"
 >  
-> +virtio-nsm
-> +M: Alexander Graf <graf@amazon.com>
-> +M: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> +S: Maintained
-> +F: hw/virtio/virtio-nsm.c
-> +F: hw/virtio/virtio-nsm-pci.c
-> +F: include/hw/virtio/virtio-nsm.h
+> +#include "chardev/char.h"
+> +#include "hw/sysbus.h"
+>  #include "hw/core/eif.h"
+>  #include "hw/i386/x86.h"
+>  #include "hw/i386/microvm.h"
+>  #include "hw/i386/nitro_enclave.h"
+> +#include "hw/virtio/virtio-mmio.h"
+> +#include "hw/virtio/vhost-user-vsock.h"
+> +#include "sysemu/hostmem.h"
 > +
->  vhost-user-stubs
->  M: Alex Bennée <alex.bennee@linaro.org>
->  S: Maintained
-> diff --git a/hw/virtio/Kconfig b/hw/virtio/Kconfig
-> index aa63ff7fd4..29fee32035 100644
-> --- a/hw/virtio/Kconfig
-> +++ b/hw/virtio/Kconfig
-> @@ -6,6 +6,11 @@ config VIRTIO_RNG
->      default y
->      depends on VIRTIO
->  
-> +config VIRTIO_NSM
-> +   bool
-> +   default y
-> +   depends on VIRTIO
-> +
->  config VIRTIO_IOMMU
->      bool
->      default y
-> diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-> index 621fc65454..831819eefb 100644
-> --- a/hw/virtio/meson.build
-> +++ b/hw/virtio/meson.build
-> @@ -48,12 +48,15 @@ else
->    system_virtio_ss.add(files('vhost-stub.c'))
->  endif
->  
-> +libcbor = dependency('libcbor', version: '>=0.8.0')
-> +
->  specific_virtio_ss.add(when: 'CONFIG_VIRTIO_BALLOON', if_true: files('virtio-balloon.c'))
->  specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_FS', if_true: files('vhost-user-fs.c'))
->  specific_virtio_ss.add(when: 'CONFIG_VIRTIO_PMEM', if_true: files('virtio-pmem.c'))
->  specific_virtio_ss.add(when: 'CONFIG_VHOST_VSOCK', if_true: files('vhost-vsock.c'))
->  specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_VSOCK', if_true: files('vhost-user-vsock.c'))
->  specific_virtio_ss.add(when: 'CONFIG_VIRTIO_RNG', if_true: files('virtio-rng.c'))
-> +specific_virtio_ss.add(when: 'CONFIG_VIRTIO_NSM', if_true: [files('virtio-nsm.c'), libcbor])
->  specific_virtio_ss.add(when: 'CONFIG_VIRTIO_MEM', if_true: files('virtio-mem.c'))
->  specific_virtio_ss.add(when: 'CONFIG_VHOST_USER_SCMI', if_true: files('vhost-user-scmi.c'))
->  specific_virtio_ss.add(when: ['CONFIG_VIRTIO_PCI', 'CONFIG_VHOST_USER_SCMI'], if_true: files('vhost-user-scmi-pci.c'))
-> @@ -70,6 +73,7 @@ virtio_pci_ss.add(when: 'CONFIG_VIRTIO_CRYPTO', if_true: files('virtio-crypto-pc
->  virtio_pci_ss.add(when: 'CONFIG_VIRTIO_INPUT_HOST', if_true: files('virtio-input-host-pci.c'))
->  virtio_pci_ss.add(when: 'CONFIG_VIRTIO_INPUT', if_true: files('virtio-input-pci.c'))
->  virtio_pci_ss.add(when: 'CONFIG_VIRTIO_RNG', if_true: files('virtio-rng-pci.c'))
-> +virtio_pci_ss.add(when: 'CONFIG_VIRTIO_NSM', if_true: [files('virtio-nsm-pci.c'), libcbor])
->  virtio_pci_ss.add(when: 'CONFIG_VIRTIO_BALLOON', if_true: files('virtio-balloon-pci.c'))
->  virtio_pci_ss.add(when: 'CONFIG_VIRTIO_9P', if_true: files('virtio-9p-pci.c'))
->  virtio_pci_ss.add(when: 'CONFIG_VIRTIO_SCSI', if_true: files('virtio-scsi-pci.c'))
-> diff --git a/hw/virtio/virtio-nsm-pci.c b/hw/virtio/virtio-nsm-pci.c
-> new file mode 100644
-> index 0000000000..dca797315a
-> --- /dev/null
-> +++ b/hw/virtio/virtio-nsm-pci.c
-> @@ -0,0 +1,73 @@
-> +/*
-> + * AWS Nitro Secure Module (NSM) device
-> + *
-> + * Copyright (c) 2024 Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or
-> + * (at your option) any later version.  See the COPYING file in the
-> + * top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +
-> +#include "hw/virtio/virtio-pci.h"
-> +#include "hw/virtio/virtio-nsm.h"
-> +#include "hw/qdev-properties.h"
-> +#include "qapi/error.h"
-> +#include "qemu/module.h"
-> +#include "qom/object.h"
-> +
-> +typedef struct VirtIONsmPCI VirtIONsmPCI;
-> +
-> +#define TYPE_VIRTIO_NSM_PCI "virtio-nsm-pci-base"
-> +DECLARE_INSTANCE_CHECKER(VirtIONsmPCI, VIRTIO_NSM_PCI,
-> +                         TYPE_VIRTIO_NSM_PCI)
-> +
-> +struct VirtIONsmPCI {
-> +    VirtIOPCIProxy parent_obj;
-> +    VirtIONSM vdev;
-> +};
-> +
-> +static void virtio_nsm_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
+> +static BusState *find_free_virtio_mmio_bus(void)
 > +{
-> +    VirtIONsmPCI *vnsm = VIRTIO_NSM_PCI(vpci_dev);
-> +    DeviceState *vdev = DEVICE(&vnsm->vdev);
+> +    BusChild *kid;
+> +    BusState *bus = sysbus_get_default();
 > +
-> +    virtio_pci_force_virtio_1(vpci_dev);
-> +
-> +    if (!qdev_realize(vdev, BUS(&vpci_dev->bus), errp)) {
-> +        return;
-> +    }
-> +}
-> +
-> +static void virtio_nsm_pci_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    VirtioPCIClass *k = VIRTIO_PCI_CLASS(klass);
-> +
-> +    k->realize = virtio_nsm_pci_realize;
-> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-> +}
-> +
-> +static void virtio_nsm_initfn(Object *obj)
-> +{
-> +    VirtIONsmPCI *dev = VIRTIO_NSM_PCI(obj);
-> +
-> +    virtio_instance_init_common(obj, &dev->vdev, sizeof(dev->vdev),
-> +                                TYPE_VIRTIO_NSM);
-> +}
-> +
-> +static const VirtioPCIDeviceTypeInfo virtio_nsm_pci_info = {
-> +    .base_name             = TYPE_VIRTIO_NSM_PCI,
-> +    .generic_name          = "virtio-nsm-pci",
-> +    .instance_size = sizeof(VirtIONsmPCI),
-> +    .instance_init = virtio_nsm_initfn,
-> +    .class_init    = virtio_nsm_pci_class_init,
-> +};
-> +
-> +static void virtio_nsm_pci_register(void)
-> +{
-> +    virtio_pci_types_register(&virtio_nsm_pci_info);
-> +}
-> +
-> +type_init(virtio_nsm_pci_register)
-> diff --git a/hw/virtio/virtio-nsm.c b/hw/virtio/virtio-nsm.c
-> new file mode 100644
-> index 0000000000..1610bcedc6
-> --- /dev/null
-> +++ b/hw/virtio/virtio-nsm.c
-> @@ -0,0 +1,1929 @@
-> +/*
-> + * AWS Nitro Secure Module (NSM) device
-> + *
-> + * Copyright (c) 2024 Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or
-> + * (at your option) any later version.  See the COPYING file in the
-> + * top-level directory.
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/guest-random.h"
-> +#include "qapi/error.h"
-> +#include <cbor.h>
-> +
-> +#include "hw/virtio/virtio.h"
-> +#include "hw/virtio/virtio-nsm.h"
-> +#include "standard-headers/linux/virtio_ids.h"
-> +
-> +#define NSM_PCR_DATA_REQ_MAX_SIZE 512
-> +
-> +enum NSMResponseTypes {
-> +    NSM_SUCCESS = 0,
-> +    NSM_INVALID_ARGUMENT = 1,
-> +    NSM_INVALID_INDEX = 2,
-> +    NSM_READONLY_INDEX = 3,
-> +    NSM_INVALID_OPERATION = 4,
-> +    NSM_BUFFER_TOO_SMALL = 5,
-> +    NSM_INPUT_TOO_LARGE = 6,
-> +    NSM_INTERNAL_ERROR = 7,
-> +};
-> +
-> +static bool qemu_cbor_map_add(cbor_item_t *map, cbor_item_t *key,
-> +                              cbor_item_t *value)
-> +{
-> +    bool success = false;
-> +    struct cbor_pair pair = (struct cbor_pair) {
-> +        .key = cbor_move(key),
-> +        .value = cbor_move(value)
-> +    };
-> +
-> +    success = cbor_map_add(map, pair);
-> +    if (!success) {
-> +        cbor_incref(pair.key);
-> +        cbor_incref(pair.value);
+> +    QTAILQ_FOREACH(kid, &bus->children, sibling) {
+> +        DeviceState *dev = kid->child;
+> +        if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MMIO)) {
+> +            VirtIOMMIOProxy *mmio = VIRTIO_MMIO(OBJECT(dev));
+> +            VirtioBusState *mmio_virtio_bus = &mmio->bus;
+> +            BusState *mmio_bus = &mmio_virtio_bus->parent_obj;
+> +            if (QTAILQ_EMPTY(&mmio_bus->children)) {
+> +                return mmio_bus;
+> +            }
+> +        }
 > +    }
 > +
-> +    return success;
+> +    return NULL;
 > +}
-
-I'd suggest all these 'qemu_cbor_' helper methods could be split off into a
-separate file, since this virtio-nsm.c is pretty large with all these helpers
-inlines.
-
-> +static bool extend_pcr(VirtIONSM *vnsm, int ind, uint8_t *data, uint16_t len)
+> +
+> +static void vhost_user_vsock_init(NitroEnclaveMachineState *nems)
 > +{
-> +    GChecksum *hasher = g_checksum_new(G_CHECKSUM_SHA384);
-> +    struct PCRInfo *pcr = &(vnsm->pcrs[ind]);
-> +    size_t digest_len = SHA384_BYTE_LEN;
-> +    if (!hasher) {
-> +        return false;
+> +    DeviceState *dev = qdev_new(TYPE_VHOST_USER_VSOCK);
+> +    VHostUserVSock *vsock = VHOST_USER_VSOCK(dev);
+> +    BusState *bus;
+> +
+> +    if (!nems->vsock) {
+> +        error_report("A valid chardev id for vhost-user-vsock device must be "
+> +                     "provided using the 'vsock' machine option");
+> +        exit(1);
 > +    }
 > +
-> +    g_checksum_update(hasher, pcr->data, SHA384_BYTE_LEN);
-> +    g_checksum_update(hasher, data, len);
+> +    bus = find_free_virtio_mmio_bus();
+> +    if (!bus) {
+> +        error_report("Failed to find bus for vhost-user-vsock device");
+> +        exit(1);
+> +    }
 > +
-> +    g_checksum_get_digest(hasher, pcr->data, &digest_len);
+> +    Chardev *chardev = qemu_chr_find(nems->vsock);
+> +    if (!chardev) {
+> +        error_report("Failed to find chardev with id %s", nems->vsock);
+> +        exit(1);
+> +    }
 > +
-> +    g_checksum_free(hasher);
-> +    return true;
+> +    vsock->conf.chardev.chr = chardev;
+> +
+> +    qdev_realize_and_unref(dev, bus, &error_fatal);
 > +}
 
-Use the qcrypto hash APIs instead of GChecksum please.
+Why does this machine need to create the vhost-user-vsock device itself ?
+Doing it this way prevents the mgmt app from changing any of the other
+vsock device settings beyond 'chardev'. The entity creating QEMU can use
+-device to create the vsock device.
 
+
+> +
+> +static void nitro_enclave_devices_init(NitroEnclaveMachineState *nems)
+> +{
+> +    vhost_user_vsock_init(nems);
+> +}
+> +
+> +static void nitro_enclave_machine_state_init(MachineState *machine)
+> +{
+> +    NitroEnclaveMachineClass *ne_class =
+> +        NITRO_ENCLAVE_MACHINE_GET_CLASS(machine);
+> +    NitroEnclaveMachineState *ne_state = NITRO_ENCLAVE_MACHINE(machine);
+> +
+> +    ne_class->parent_init(machine);
+> +    nitro_enclave_devices_init(ne_state);
+> +}
+>  
+>  static void nitro_enclave_machine_initfn(Object *obj)
+>  {
+> @@ -66,15 +136,68 @@ static void x86_load_eif(X86MachineState *x86ms, FWCfgState *fw_cfg,
+>      return;
+>  }
+>  
+> +static bool create_memfd_backend(MachineState *ms, const char *path,
+> +                                 Error **errp)
+> +{
+> +    Object *obj;
+> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
+> +    bool r = false;
+> +
+> +    obj = object_new(TYPE_MEMORY_BACKEND_MEMFD);
+> +    if (!object_property_set_int(obj, "size", ms->ram_size, errp)) {
+> +        goto out;
+> +    }
+> +    object_property_add_child(object_get_objects_root(), mc->default_ram_id,
+> +                              obj);
+> +
+> +    if (!user_creatable_complete(USER_CREATABLE(obj), errp)) {
+> +        goto out;
+> +    }
+> +    r = object_property_set_link(OBJECT(ms), "memory-backend", obj, errp);
+> +
+> +out:
+> +    object_unref(obj);
+> +    return r;
+> +}
+> +
+> +static char *nitro_enclave_get_vsock_chardev_id(Object *obj, Error **errp)
+> +{
+> +    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
+> +
+> +    return g_strdup(nems->vsock);
+> +}
+> +
+> +static void nitro_enclave_set_vsock_chardev_id(Object *obj, const char *value,
+> +                                               Error **errp)
+> +{
+> +    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
+> +
+> +    g_free(nems->vsock);
+> +    nems->vsock = g_strdup(value);
+> +}
+> +
+>  static void nitro_enclave_class_init(ObjectClass *oc, void *data)
+>  {
+>      MachineClass *mc = MACHINE_CLASS(oc);
+>      MicrovmMachineClass *mmc = MICROVM_MACHINE_CLASS(oc);
+> +    NitroEnclaveMachineClass *nemc = NITRO_ENCLAVE_MACHINE_CLASS(oc);
+>  
+>      mmc->x86_load_linux = x86_load_eif;
+>  
+>      mc->family = "nitro_enclave_i386";
+>      mc->desc = "AWS Nitro Enclave";
+> +
+> +    nemc->parent_init = mc->init;
+> +    mc->init = nitro_enclave_machine_state_init;
+> +
+> +    mc->create_default_memdev = create_memfd_backend;
+> +
+> +    object_class_property_add_str(oc, NITRO_ENCLAVE_VSOCK_CHARDEV_ID,
+> +                                  nitro_enclave_get_vsock_chardev_id,
+> +                                  nitro_enclave_set_vsock_chardev_id);
+> +    object_class_property_set_description(oc, NITRO_ENCLAVE_VSOCK_CHARDEV_ID,
+> +                                          "Set chardev id for vhost-user-vsock "
+> +                                          "device");
+>  }
+>  
+>  static const TypeInfo nitro_enclave_machine_info = {
+> diff --git a/include/hw/boards.h b/include/hw/boards.h
+> index 48ff6d8b93..c268e7f005 100644
+> --- a/include/hw/boards.h
+> +++ b/include/hw/boards.h
+> @@ -308,6 +308,8 @@ struct MachineClass {
+>      int64_t (*get_default_cpu_node_id)(const MachineState *ms, int idx);
+>      ram_addr_t (*fixup_ram_size)(ram_addr_t size);
+>      uint64_t smbios_memory_device_size;
+> +    bool (*create_default_memdev)(MachineState *ms, const char *path,
+> +                                  Error **errp);
+>  };
+>  
+>  /**
+> diff --git a/include/hw/i386/nitro_enclave.h b/include/hw/i386/nitro_enclave.h
+> index a1dada9371..3e302de851 100644
+> --- a/include/hw/i386/nitro_enclave.h
+> +++ b/include/hw/i386/nitro_enclave.h
+> @@ -14,12 +14,20 @@
+>  #include "hw/i386/microvm.h"
+>  #include "qom/object.h"
+>  
+> +/* Machine type options */
+> +#define NITRO_ENCLAVE_VSOCK_CHARDEV_ID "vsock"
+> +
+>  struct NitroEnclaveMachineClass {
+>      MicrovmMachineClass parent;
+> +
+> +    void (*parent_init)(MachineState *state);
+>  };
+>  
+>  struct NitroEnclaveMachineState {
+>      MicrovmMachineState parent;
+> +
+> +    /* Machine type options */
+> +    char *vsock;
+>  };
+>  
+>  #define TYPE_NITRO_ENCLAVE_MACHINE MACHINE_TYPE_NAME("nitro-enclave")
+> diff --git a/include/sysemu/hostmem.h b/include/sysemu/hostmem.h
+> index de47ae59e4..67f45abe39 100644
+> --- a/include/sysemu/hostmem.h
+> +++ b/include/sysemu/hostmem.h
+> @@ -39,6 +39,8 @@ OBJECT_DECLARE_TYPE(HostMemoryBackend, HostMemoryBackendClass,
+>   */
+>  #define TYPE_MEMORY_BACKEND_FILE "memory-backend-file"
+>  
+> +#define TYPE_MEMORY_BACKEND_MEMFD "memory-backend-memfd"
+> +
+>  
+>  /**
+>   * HostMemoryBackendClass:
+> -- 
+> 2.39.2
+> 
 
 With regards,
 Daniel
