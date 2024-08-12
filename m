@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF400C52D7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 22:44:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7287C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 23:19:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sddlX-0000z5-5v; Mon, 12 Aug 2024 18:43:51 -0400
+	id 1sdeJK-0000Ey-1v; Mon, 12 Aug 2024 19:18:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sddlV-0000xg-0i
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 18:43:49 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sdeJI-0000DX-La
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 19:18:44 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sddlR-0007Xt-8e
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 18:43:48 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-7106cf5771bso3744417b3a.2
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 15:43:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1sdeJ9-0003tt-VH
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 19:18:38 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-1ff67158052so31040845ad.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 16:18:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723502623; x=1724107423; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nUBF1RDA6I+rlXnJDzrClDIca2uMvK1AXwLTq3Be6BA=;
- b=FAIIY9m1v7RHAajE2qARxCn6EfJ6BLNdAaVXTB5zsio7jrFJYOtNxVPsUBGgQluCR9
- T68WqmWrFsTtZDetWL1RrsKCgKvBo/nDhwMy/S/t2HUVSH0P39ryxRAn37shu7t3lSx5
- UtlBKfa/BatcsQo3d6nQv98+wid9MUZTPuGf0FGjZq2NtT4hkvZiKsDZh1dCHgMbMfSh
- A9icajJNv6L1qNZxaH8BSCL5Zdvjmp+s6rqVCfri2jX4jaKF7bxbk8Cla8uHt0TXQ5Ef
- Ej+0PTupgIGknwK8t1JcutztQMrBzBrlsilh66+RX6SGiK/WbpGJ+IrphfHcJvCCwsjw
- FTMg==
+ d=linaro.org; s=google; t=1723504714; x=1724109514; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=XveoTt72Ig0J1NMgFKGkqnotzijPfu5WMeFb68HnIUc=;
+ b=ACE8AwRZr6fAxl01Qjsq2Nfnv+gg8820jFAFvqJM+CRbtrGwoGPZoTKCrGD/l1b2EB
+ IwoNe+PPdp6Rjt57z5fyivEtbam292SexnlpqbrvQgW5vH9e71s7ABCzbCqjBl7A+xVp
+ VZdvhH2H3YqMLxdetx09RxaZU2VeKsElPxAJ0WRqXnhdxApmYciPsdm+cHtc1QVjKCus
+ PwqsTEhjJ6neBXKLfPMH+S/VamTOVvPvxMvVpIwFzJEow/s582czDXmP0Gn/THXVsj+p
+ f5czEO4sgdY5YnRz+SPxrO5wT+ZUUS7E/bvJRBv1L++Ye6Ty0u86YBKnS1k9aA2ua65X
+ LYVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723502623; x=1724107423;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nUBF1RDA6I+rlXnJDzrClDIca2uMvK1AXwLTq3Be6BA=;
- b=wa1czdKn+HE2fivuhsd2rrZEODonGhvg7sHoCQrAjf8ClzxLo9ZR2DR+np84WAffL4
- Nq85Bmxg10sb5TjnEhl4Tb/e1nTwnwMoq6eIvqCExJEhhsXHmiSM1aMtfeaXnxlY4IgE
- d0/BGv+djM5JWa28tRe0VlZbXdUCixsu/jJm1kvTVdfkypwJWw/OQAyafzGp4nX5rWWK
- yiRuiBOuIHUKySDfOM7+MZKI7zFUIZwNa3haUXabfd7cVq629S+nGDb1mbDwWr0J1Qpq
- ex38yEnnEBnks4ZvW0DRDGh8F8yFD3ke3c+2t5j52fSAcvUX8ReoaOZc2bCmTjA/hLqm
- gEzQ==
-X-Gm-Message-State: AOJu0YxrYsy6KzcQNa7Jo54zfDuhJ3et6deopOfhubtpPVqLBmTDBiA0
- GXTob8UjZVdeSr0fM2kKqoI1+a4zmM7BE1WmKJzeTgc7SUWoAS/slBEIsTFcmd4qFQDOQZ3ThWw
- 1ebc=
-X-Google-Smtp-Source: AGHT+IG2xAfbk3jcK9dTlkLpyAGgeCyUFXgtR/lNjhKLzaTC9C30JeYrBlwjhbEzBNHkVyXHT413cQ==
-X-Received: by 2002:a05:6a00:22c4:b0:710:d745:6f3c with SMTP id
- d2e1a72fcca58-71255114c85mr2096045b3a.8.1723502623354; 
- Mon, 12 Aug 2024 15:43:43 -0700 (PDT)
-Received: from [192.168.1.113] ([203.30.4.111])
+ d=1e100.net; s=20230601; t=1723504714; x=1724109514;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XveoTt72Ig0J1NMgFKGkqnotzijPfu5WMeFb68HnIUc=;
+ b=R1p1iq3V9dujRzMAe2zWLhAYjrSuMMF4URb7sf4OcYcxoTW3zbSajVf0aMI4NmPe2p
+ iCfVwLa3LHuw7LgzKK7/skzgfvvQCIweWZomSW9RK+4UDBzwqs7BKKhmN4PIkRHxbgmN
+ tk1Oz0yfmFqVNYTKeoJ6xsdbq8veMOr0sPQnfhtQ1fvnhwrl6/H4oHkc/VwUGyy/nkub
+ wIrcXnAHDIMPdrHllvwGfA6YHpgZsH0DN69jmbWpZmmFj6MQ0gxfu/7nhzbMzEBB2Z0e
+ nJ+6j5wovfbX2CwqJwCTtodLkvh42iXs5SV/UzdS4elU/N76uY0WHxl5blGZnOpqVup6
+ 3gWA==
+X-Gm-Message-State: AOJu0YzPE99Q4olNWJqIouLLC+7Lz4jFA4O6+XAwivpGNt3Cm+YRvYUe
+ f7p/BWXSFvmOttlibvswRf/TMRsF1Z4tuwLYfc43baTgW+JP0nGhe5OOnM+xOy1OEtd+4/jzvIn
+ 3NFg=
+X-Google-Smtp-Source: AGHT+IEN+F0DTvFJKpujiF3InFCV85vQFfiJB/23reDFUHrBf3TrF3Tsh3DJyQvojGM5C2rslYxFXw==
+X-Received: by 2002:a17:902:ccc7:b0:1fa:d1df:d41e with SMTP id
+ d9443c01a7336-201ca1d4959mr23977945ad.58.1723504713931; 
+ Mon, 12 Aug 2024 16:18:33 -0700 (PDT)
+Received: from linaro.vn.shawcable.net
+ ([2604:3d08:9384:1d00:5b09:8db7:b002:cf61])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-710e58a46a5sm4502323b3a.63.2024.08.12.15.43.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Aug 2024 15:43:42 -0700 (PDT)
-Message-ID: <f73d3122-28f1-42dc-afaa-453cd2cfb6b7@linaro.org>
-Date: Tue, 13 Aug 2024 08:43:37 +1000
+ d9443c01a7336-201cd1bd3d6sm1979005ad.236.2024.08.12.16.18.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 12 Aug 2024 16:18:33 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v2] Reflect recent changes on API (inline ops) and new plugins.
+Date: Mon, 12 Aug 2024 16:18:22 -0700
+Message-Id: <20240812231822.168034-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 03/23] scripts: add script to generate C header files
- from SVD XML files
-To: Octavian Purdila <tavip@google.com>
-Cc: qemu-devel@nongnu.org
-References: <20240805201719.2345596-1-tavip@google.com>
- <20240805201719.2345596-4-tavip@google.com>
- <CAFEAcA82c_RZ6512dB1OxpAtinRctkZK7ZyjpxX16Wk7DYZDPg@mail.gmail.com>
- <CAGWr4cSiNOm1mL6ZC+Dr8bFHz9Dx2R78_we9wL=W6f3FExb-kQ@mail.gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAGWr4cSiNOm1mL6ZC+Dr8bFHz9Dx2R78_we9wL=W6f3FExb-kQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,47 +97,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/13/24 03:56, Octavian Purdila wrote:
->>>    typedef struct {
->>>      ...
->>>      union {
->>>        uint32_t PSELID;              /* 0x00000FF8 Peripheral Select and
->>>                                       * Flexcomm module ID */
->>>        struct {
->>>          uint32_t PERSEL : 3;        /* [2..0] Peripheral Select */
->>>          uint32_t LOCK : 1;          /* [3..3] Lock the peripheral select */
->>>          uint32_t USARTPRESENT : 1;  /* [4..4] USART present indicator */
->>>          uint32_t SPIPRESENT : 1;    /* [5..5] SPI present indicator */
->>>          uint32_t I2CPRESENT : 1;    /* [6..6] I2C present indicator */
->>>          uint32_t I2SPRESENT : 1;    /* [7..7] I2S Present */
->>>          uint32_t : 4;
->>>          uint32_t ID : 20;           /* [31..12] Flexcomm ID */
->>>        } PSELID_b;
->>>      };
->>
->> Bitfield layout in C isn't portable, so don't generate this kind
->> of union-of-a-integer-and-some-bitfields, please. You can
->> generate FIELD() macro invocations (see include/hw/registerfields.h)
->> which define shift/mask/length macros that can be used with
->> FIELD_EX*/FIELD_DP* to do extract/deposit operations.
->>
-> 
-> I see that C bitfields are already used in a few places in qemu. Could
-> you please elaborate on the portability issue?
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ docs/about/emulation.rst   | 49 ++++++++++++++++++++++++++++++++------
+ docs/devel/tcg-plugins.rst | 13 ++++++----
+ 2 files changed, 50 insertions(+), 12 deletions(-)
 
-Bitfields are fine, so long as you're only using them for storage compression and do not 
-care about the underlying layout.
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index c03033e4e95..eea1261baac 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -207,8 +207,8 @@ Once built a program can be run with multiple plugins loaded each with
+ their own arguments::
+ 
+   $QEMU $OTHER_QEMU_ARGS \
+-      -plugin contrib/plugin/libhowvec.so,inline=on,count=hint \
+-      -plugin contrib/plugin/libhotblocks.so
++      -plugin contrib/plugins/libhowvec.so,inline=on,count=hint \
++      -plugin contrib/plugins/libhotblocks.so
+ 
+ Arguments are plugin specific and can be used to modify their
+ behaviour. In this case the howvec plugin is being asked to use inline
+@@ -219,6 +219,14 @@ Linux user-mode emulation also evaluates the environment variable
+ 
+   QEMU_PLUGIN="file=contrib/plugins/libhowvec.so,inline=on,count=hint" $QEMU
+ 
++QEMU plugins avoid to write directly to stdin/stderr, and use the log provided
++by the API (see function ``qemu_plugin_outs``).
++To show output, you may use this additional parameter::
++
++  $QEMU $OTHER_QEMU_ARGS \
++    -d plugin \
++    -plugin contrib/plugins/libhowvec.so,inline=on,count=hint
++
+ Example Plugins
+ ~~~~~~~~~~~~~~~
+ 
+@@ -260,8 +268,7 @@ Behaviour can be tweaked with the following arguments:
+   * - Option
+     - Description
+   * - inline=true|false
+-    - Use faster inline addition of a single counter. Not per-cpu and not
+-      thread safe.
++    - Use faster inline addition of a single counter.
+   * - idle=true|false
+     - Dump the current execution stats whenever the guest vCPU idles
+ 
+@@ -381,6 +388,15 @@ run::
+   160          1      0
+   135          1      0
+ 
++Test inline operations
++......................
++
++``tests/plugins/inline.c``
++
++This plugin is used for testing all inline operations, conditional callbacks and
++scoreboard. It prints a per-cpu summary of all events.
++
++
+ Hot Blocks
+ ..........
+ 
+@@ -394,9 +410,6 @@ with linux-user execution as system emulation tends to generate
+ re-translations as blocks from different programs get swapped in and
+ out of system memory.
+ 
+-If your program is single-threaded you can use the ``inline`` option for
+-slightly faster (but not thread safe) counters.
+-
+ Example::
+ 
+   $ qemu-aarch64 \
+@@ -736,6 +749,28 @@ The plugin will log the reason of exit, for example::
+ 
+   0xd4 reached, exiting
+ 
++Limit instructions per second
++.............................
++
++This plugin can limit the number of Instructions Per Second that are executed::
++
++    # get number of instructions
++    $ num_insn=$(./build/qemu-x86_64 -plugin ./build/tests/plugin/libinsn.so -d plugin /bin/true |& grep total | sed -e 's/.*: //')
++    # limit speed to execute in 10 seconds
++    $ time ./build/qemu-x86_64 -plugin ./build/contrib/plugins/libips.so,ips=$(($num_insn/10)) /bin/true
++    real 10.000s
++
++
++.. list-table:: IPS arguments
++  :widths: 20 80
++  :header-rows: 1
++
++  * - Option
++    - Description
++  * - ips=N
++    - Maximum number of instructions per cpu that can be executed in one second.
++      The plugin will sleep when the given number of instructions is reached.
++
+ Other emulation features
+ ------------------------
+ 
+diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
+index d8725c2854a..9463692c411 100644
+--- a/docs/devel/tcg-plugins.rst
++++ b/docs/devel/tcg-plugins.rst
+@@ -61,11 +61,14 @@ translation event the plugin has an option to enumerate the
+ instructions in a block of instructions and optionally register
+ callbacks to some or all instructions when they are executed.
+ 
+-There is also a facility to add an inline event where code to
+-increment a counter can be directly inlined with the translation.
+-Currently only a simple increment is supported. This is not atomic so
+-can miss counts. If you want absolute precision you should use a
+-callback which can then ensure atomicity itself.
++There is also a facility to add inline instructions doing various operations,
++like adding or storing an immediate value. It is also possible to execute a
++callback conditionally, with condition being evaluated inline. All those inline
++operations are associated to a ``scoreboard``, which is a thread-local storage
++automatically expanded when new cores/threads are created and that can be
++accessed/modified in a thread-safe way without any lock needed. Combining inline
++operations and conditional callbacks offer a more efficient way to instrument
++binaries, compared to classic callbacks.
+ 
+ Finally when QEMU exits all the registered *atexit* callbacks are
+ invoked.
+-- 
+2.39.2
 
-The moment you put them into a union with an integer, clearly you are expecting the 
-bitfields to be in some particular order with respect to the integer, and that is the 
-portability issue.
-
-In particular, big-endian hosts will generally flip the order, layout starting at the most 
-signifiacnt bit and work down.  Other compilers will pad bits for alignment in ways that 
-you do not expect.
-
-Just Don't Do It.
-
-
-r~
 
