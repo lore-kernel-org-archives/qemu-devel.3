@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 728ECC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 10:05:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B267AC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 10:10:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdRuc-0004SQ-D0; Mon, 12 Aug 2024 06:04:26 -0400
+	id 1sdRzz-0001wV-V3; Mon, 12 Aug 2024 06:09:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sdRua-0004Nc-E0
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 06:04:24 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sdRzy-0001vV-9I
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 06:09:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sdRuY-0008KD-4H
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 06:04:24 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sdRzw-0000aI-R1
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 06:09:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723457061;
+ s=mimecast20190719; t=1723457395;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=WH+34UDAHX79Po2Yq7ExNVjTPxlkArwIEowUs+SryDk=;
- b=BoE4kdFH25+YB0/dnnzG1h8Q2VtiDNwOHfwVIyKVQ/LcwUNAGhhOVZfyuYWbhg+XscyMPg
- iIHCh++liHNgNGcLIKUH69O4OOSAxnM9Q9WW4Q9HWeDCCeD8R2N369H7enywtDvxFlsxoS
- D4OkdWYYDsZk8AKCMta8d6d7Mt2Bklg=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hcxDp9vgKIuFFaU8kQG0ynaI4kr+dfXA6004gRSj6ZI=;
+ b=DQlkzKosCJUL77d6osQDi0SI4NITyF7RBk/OXQ9XlEyvd59VnBwzMr8d1aa93LHHzBwTm4
+ jT1mWiqlXaH+W8vXQA/uBObF/h0LecfVTczs6vzrIRrNOffAtesjKAAzgW9BZi1/YqsZ57
+ urR0irsGaqpXnjMkryD01JitvnlSjCs=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-453--kEbpWt1Mlug3wNn_-SYug-1; Mon, 12 Aug 2024 06:04:20 -0400
-X-MC-Unique: -kEbpWt1Mlug3wNn_-SYug-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-52efd4afebeso4855871e87.2
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 03:04:19 -0700 (PDT)
+ us-mta-389-bm89YiqkMGinNPctuDHQhA-1; Mon, 12 Aug 2024 06:09:54 -0400
+X-MC-Unique: bm89YiqkMGinNPctuDHQhA-1
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4282164fcbcso32578665e9.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 03:09:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723457058; x=1724061858;
+ d=1e100.net; s=20230601; t=1723457393; x=1724062193;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=WH+34UDAHX79Po2Yq7ExNVjTPxlkArwIEowUs+SryDk=;
- b=Yk1ctsrHUqdmUjecr1bq3Cp3sBtB06RDIHXiKBSH6TdjEHLfRCQ97cEyftML4mlgz+
- B2iPmDbs5oMF1lWiiBfpeEUVWP+EVP5B7iXVPMSZcwaDRXfxkUUvZuGF71+QPUyJUsdS
- ZkdDQHfN0rgxCypYVkuKaxvXBwC/p6qjqIJJeFab2ZeuJbecayziCOuPNDQBIUeS4taJ
- 6S7b5lhOeI+P+3/f4JK1+eWy/d59lFfQhnVUcQnJWI9uDbvGrB6qaQKAegQ+GVka2cpO
- D8AC2RqNm6GfN6PtBUnHzHfiP7MWg/IybLqrbNpUKidKdQBnMclJSHyiHYJmUio28cmT
- Mu/Q==
+ bh=hcxDp9vgKIuFFaU8kQG0ynaI4kr+dfXA6004gRSj6ZI=;
+ b=LvJxu9nDv6DRg74HwQ2I7UMAvhuDaQgd09MX5ENdJRzN3ty23ivpMFaZGToMnc2Psp
+ 19eXnzFQwJWfeONBMpas8OHUZDfeod31kubmQF53Q2nArisgVNo8byvqAwZIBnzL8BzV
+ yAcr2vVWRMHf+MCLWVQGENSAttNerMKUYeQRPA+AWxw9ni8PrWeC+A3vwnxP2XbuKF2c
+ n+LKFwjXyeCBSMuUg467RXqSE64LDDrWFQbB18W5p6cP68TWUr/uRvQtLHmXMViQLEuk
+ OZFSBG9MpXgRgSYFxxmpMTcwyAGAsjArUe9433N6y3dEXVAPtFq/T9W/m2a5YjSiIMKd
+ 4ehA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV1c4Rv+eKYcXFZMEZVrHLh7qxN5cpIz7sfrVXAY7ncQsn6EdHofC8QdChpq7Lph5SEfYSm+mHurI22SpHDfmFZy24mYHM=
-X-Gm-Message-State: AOJu0Yz80G0iebKh7mQea4/TLgVlK62NSdoKJjISYbXqpecfTyDWSmH1
- XS4JEcWEXJSEN7WXG9+T3UIL0SVAmdnpDhhrTp3e+6sYd3b/mEjng8Yvti5VBpJV+O/UlGHzQgJ
- TCvX5Pp0Il2sYjnOmbmH4rY47xAen/HrLhhjo0GbWA3ByljLmpaz3
-X-Received: by 2002:a05:6512:31c3:b0:52e:9ebe:7325 with SMTP id
- 2adb3069b0e04-530ee9958f5mr6282359e87.31.1723457057827; 
- Mon, 12 Aug 2024 03:04:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFK+STVX8B0xyGRx+La+5znM6BFUq1kpM5Ysu0IPnW/eI+XUkLxbNRlUYjVBqeS0udHBDKzRQ==
-X-Received: by 2002:a05:6512:31c3:b0:52e:9ebe:7325 with SMTP id
- 2adb3069b0e04-530ee9958f5mr6282294e87.31.1723457057213; 
- Mon, 12 Aug 2024 03:04:17 -0700 (PDT)
+ AJvYcCV/n8uxhfR42FVdX7NVuDlWq5FvtqUjsewyzEosU49m3207E0PJDQUQjFolmmgBj2ZUrFJZcJcUrUUawy5/XbCKE6gWWCk=
+X-Gm-Message-State: AOJu0Yxwbjga38ZjaV6EGTLdv5JEQF1l3mru3Kvrf7d5FkDtSrpOhKh2
+ 8WHPamk6hGdJoou7eZYFDLgya8JlgsWs9Aml3tQs/1Bd9NNeANsG6X6HDDgLsLDtEYJJ7gwWp/9
+ IfMyDecnpi+s3wKKs8cJwZBUtZkMaILqfBwjn+tQVLorIQcTxjr26
+X-Received: by 2002:a05:600c:4e92:b0:428:17b6:bcf1 with SMTP id
+ 5b1f17b1804b1-429c3a291f9mr64468835e9.22.1723457392849; 
+ Mon, 12 Aug 2024 03:09:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEaTD6nhVMrg3gKFXsOP7qta/EdXczIP4jrbnLLETIxWP72oWheyyPG1Ued8Ij6qudqA6LFeQ==
+X-Received: by 2002:a05:600c:4e92:b0:428:17b6:bcf1 with SMTP id
+ 5b1f17b1804b1-429c3a291f9mr64468225e9.22.1723457392384; 
+ Mon, 12 Aug 2024 03:09:52 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-178-125.web.vodafone.de.
  [109.43.178.125]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bd187f5671sm2009223a12.3.2024.08.12.03.04.14
+ 5b1f17b1804b1-429c75042e9sm95625855e9.8.2024.08.12.03.09.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Aug 2024 03:04:16 -0700 (PDT)
-Message-ID: <ae5f3a65-4cee-466b-aac4-ddd83c8fd1e5@redhat.com>
-Date: Mon, 12 Aug 2024 12:04:13 +0200
+ Mon, 12 Aug 2024 03:09:51 -0700 (PDT)
+Message-ID: <e01dc474-905a-4096-ad76-3bc4d04b23ed@redhat.com>
+Date: Mon, 12 Aug 2024 12:09:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/18] tests/qapi-schema: Drop temporary 'prefix'
+Subject: Re: [PATCH 09/18] qapi/machine: Rename CpuS390* to S390Cpu, and drop
+ 'prefix'
 To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au,
  andrew@daynix.com, arei.gonglei@huawei.com, berrange@redhat.com,
@@ -89,7 +90,7 @@ Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au,
  qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
  kvm@vger.kernel.org
 References: <20240730081032.1246748-1-armbru@redhat.com>
- <20240730081032.1246748-3-armbru@redhat.com>
+ <20240730081032.1246748-10-armbru@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -134,7 +135,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240730081032.1246748-3-armbru@redhat.com>
+In-Reply-To: <20240730081032.1246748-10-armbru@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -163,22 +164,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 30/07/2024 10.10, Markus Armbruster wrote:
-> Recent commit "qapi: Smarter camel_to_upper() to reduce need for
-> 'prefix'" added a temporary 'prefix' to delay changing the generated
-> code.
+> QAPI's 'prefix' feature can make the connection between enumeration
+> type and its constants less than obvious.  It's best used with
+> restraint.
 > 
-> Revert it.  This changes TestUnionEnumA's generated enumeration
-> constant prefix from TEST_UNION_ENUMA to TEST_UNION_ENUM_A.
+> CpuS390Entitlement has a 'prefix' to change the generated enumeration
+> constants' prefix from CPU_S390_POLARIZATION to S390_CPU_POLARIZATION.
+> Rename the type to S390CpuEntitlement, so that 'prefix' is not needed.
+> 
+> Likewise change CpuS390Polarization to S390CpuPolarization, and
+> CpuS390State to S390CpuState.
 > 
 > Signed-off-by: Markus Armbruster <armbru@redhat.com>
 > ---
->   tests/unit/test-qobject-input-visitor.c  | 4 ++--
->   tests/unit/test-qobject-output-visitor.c | 4 ++--
->   tests/qapi-schema/qapi-schema-test.json  | 1 -
->   tests/qapi-schema/qapi-schema-test.out   | 1 -
->   4 files changed, 4 insertions(+), 6 deletions(-)
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 
+Acked-by: Thomas Huth <thuth@redhat.com>
 
 
