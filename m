@@ -4,88 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9409DC52D7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 11:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E4A7C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 11:21:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdSwH-000299-SA; Mon, 12 Aug 2024 07:10:13 -0400
+	id 1sdT6O-0007kQ-TF; Mon, 12 Aug 2024 07:20:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sdSwF-00028e-RR
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 07:10:12 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sdSwA-0001ah-MA
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 07:10:11 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5bb8e62570fso5016930a12.1
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 04:10:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723461003; x=1724065803; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=kuy0zVw59ylEJiKLlPgMZYx9O5PtG1zojvealrxjgh0=;
- b=Z8hEKLUMQbeH45hifvsk0OIwfvlru7A0uCQFM1yZueqTYiZpEXqPwsi/LY652//w7c
- oqsH46bQl71swzqmcwX/qzCeYQ9RLvdRf/B74dGMixswNEm9b3d5qv15xxaa3mPKiY6n
- 5mBl69v17ymqOe8KCzDS1prwnua3Wa9GDtvBpD/TcxRWs8sJYfikJeyZM0X76ZgkcbHY
- qAWqBXtOq38FoDd4sGTsfYQPcSAZrKinohopr5X3hgCb4szWUbyupj1+FUFUvztPfdoz
- 2fyfsB85+luvqQWgd50La8OSzS1xGR6uGOhX1oSYEHWH1QIZqPbR76N6O3g42D9ZpdDW
- MTqA==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sdT6N-0007jm-7K
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 07:20:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1sdT6K-0003aX-5H
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 07:20:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723461634;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YK31eZ1U+YHw979zZFpN2xtWNeUWb3G4j6qPN6U37KY=;
+ b=Wew9wRYAeUMCz0QvrJ9/MFxmZArbo4v+mc7x6sPA8wfbFZyAVRu/HYWI+Wv0uUkCdP6xZg
+ 4wk7m0z0RGVP3ElpBKhuXTL8va0kvTREE6d1sg6b1/JBPtb3GhtZChMZ/7GYLxnSt58XvB
+ O4zFvV7QIHEe9URG9Rj9yaTT6qeFqtg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-659-rPK8sDSGOpuZInJlucHLVw-1; Mon, 12 Aug 2024 07:20:33 -0400
+X-MC-Unique: rPK8sDSGOpuZInJlucHLVw-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4280cf2be19so30270285e9.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 04:20:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723461003; x=1724065803;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1723461632; x=1724066432;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=kuy0zVw59ylEJiKLlPgMZYx9O5PtG1zojvealrxjgh0=;
- b=h33++eBnmEGiCkypejAxyTgQLABgapUHQOQvt2tLbvaIsNXt2CBMuuS3Pb2nge/dXQ
- +nJcrNaoEH+yTm8FBMj4j+OkeAZ4XwKmtGWUGojK/EuK0GT5b9SueBpO1YB+IKZJ38Y8
- Q8KYQ136Jfc/GGl+MolxvHtvbtZX8ciIO0vXqHL2ZC9NuOO4Zg3wgEyBGuqWjTvx73hs
- /5WHv6I/Vg0cJOdbeqV/m8szp7gLyIWw3Cb1DAKlszlNPohQrp++VDwdL49KEOrswsHd
- NavvPvmRix311hpeRf9TooT77iJ2V4j/2WwuA+hgUbWp5818Oz9mkFjShB+6m/NlSQSL
- 4PuA==
+ bh=YK31eZ1U+YHw979zZFpN2xtWNeUWb3G4j6qPN6U37KY=;
+ b=NiHMYfnBFn7x42SMvBtHyNs7Mthi8RBm7QI2cU9A4uerXgtUwVrV7lxt1EvkgCIUCI
+ txjq5OnSvfpYCcbGs4lAWB69C/JhjCZllY0DiEeH3tcqOkvXNBFw0gvFrB/1T2XFUv3s
+ tEcDyVigW2CCqRqToXLhZyCtvD+E1/y0nb80VT1i2FuB16Z4SifJcp1WKomTeBtsFNp0
+ hqcFWYecjzK5NWSJd+GoW0hBI/CvKdpB+Wfa1qc2iu6wpJdP3K4h1Vh8PSUCfn4rf327
+ oMbLsg5oabjwE5UmWTxc+YUi/u75eFGHt8dko5UvFCUAsev0a8b5qH+t7/jPCH/MKA8g
+ shEQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX8J4iiRlgdCjishDlZgdtKYReiKYU1d1+1J0sCdlfHkk9zWrhrmNXTCX2yeDGlKH7B3ergAJKaxs4rJnc/jJePkbYqiTc=
-X-Gm-Message-State: AOJu0Ywhq32nrVQM43S/M6a4S6JVt3/GPIHcjRrCn7liZxLJehTaCfv8
- Iq6e0tAwIIbpXpR543qFmx98uIIm9UXR5GYBH7ohcw+FD/fo5BoNfzKJd7LPrqzzWCRRn3yH0xg
- K
-X-Google-Smtp-Source: AGHT+IExw6RiioFLNCFLzHCG8gVr8QfqoB6I0S1ejrjpeF+4gl9aajbHuAlSqiFO8GKIu2PYuqhOfA==
-X-Received: by 2002:a05:6402:5112:b0:5a1:a469:4d9b with SMTP id
- 4fb4d7f45d1cf-5bd0a58d40emr6127386a12.13.1723461002360; 
- Mon, 12 Aug 2024 04:10:02 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bd1a602d18sm2012684a12.89.2024.08.12.04.10.01
+ AJvYcCUIyXehwIVxqD0S+cjmc9lD6Uzt3u47yi852dKojushyZNlVIsw38Io9spzpudP+7XzGYxdKEzxXXY8prZAWbCtTqrxQlw=
+X-Gm-Message-State: AOJu0YxjMAALfZS2mpDcYbvCK94uvn1EwPhUjG4bd7PlpwdZDcpxWdFy
+ VHb2Zzhz+eNUOB4l7J2FndZDRfYwjP9GAUhEezbvopGRCo0ygOG7EF74YBwRzKoqr5lo2RgZ5SL
+ kAvALlR3ex+eYA9AFWZsXaExT6LrP/zuOS6koJDsgrOjSqSl+cBpF
+X-Received: by 2002:adf:f603:0:b0:362:4ce:2171 with SMTP id
+ ffacd0b85a97d-36d6063ca8amr5406874f8f.52.1723461632359; 
+ Mon, 12 Aug 2024 04:20:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGiAaIu4Q2H0iXujS6p9cq55HiarpVXpQdxX6kMRsDf4PElItOG62eJZFw+roB1VvCD8SuqxQ==
+X-Received: by 2002:adf:f603:0:b0:362:4ce:2171 with SMTP id
+ ffacd0b85a97d-36d6063ca8amr5406849f8f.52.1723461631706; 
+ Mon, 12 Aug 2024 04:20:31 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36e4e51eb3csm7201327f8f.69.2024.08.12.04.20.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Aug 2024 04:10:01 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E903A5F8FE;
- Mon, 12 Aug 2024 12:10:00 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,  qemu-devel@nongnu.org
-Subject: Re: [PULL 09/11] target/arm: add support for PMUv3 64-bit PMCCNTR
- in AArch32 mode
-In-Reply-To: <CAFEAcA9nnzwm-OSpiAWTOtf2On27B1Hi2Fr3h=5jSKRPdnnQDQ@mail.gmail.com>
- (Peter Maydell's message of "Mon, 12 Aug 2024 10:39:36 +0100")
-References: <20240809180835.1243269-1-peter.maydell@linaro.org>
- <20240809180835.1243269-10-peter.maydell@linaro.org>
- <945e5e14-9a15-4dfc-856f-f3a7d401a5bc@linaro.org>
- <CAFEAcA9nnzwm-OSpiAWTOtf2On27B1Hi2Fr3h=5jSKRPdnnQDQ@mail.gmail.com>
-Date: Mon, 12 Aug 2024 12:10:00 +0100
-Message-ID: <875xs6atfb.fsf@draig.linaro.org>
+ Mon, 12 Aug 2024 04:20:31 -0700 (PDT)
+Date: Mon, 12 Aug 2024 13:20:30 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
+ <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
+ <anisinha@redhat.com>, linux-kernel@vger.kernel.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6 01/10] acpi/generic_event_device: add an APEI error
+ device
+Message-ID: <20240812132030.40dfb62d@imammedo.users.ipa.redhat.com>
+In-Reply-To: <f43b43fa2e80cbbecf6e47986d768029d531d29f.1723119423.git.mchehab+huawei@kernel.org>
+References: <cover.1723119423.git.mchehab+huawei@kernel.org>
+ <f43b43fa2e80cbbecf6e47986d768029d531d29f.1723119423.git.mchehab+huawei@kernel.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,56 +109,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+On Thu,  8 Aug 2024 14:26:27 +0200
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> On Sun, 11 Aug 2024 at 22:36, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> On 8/10/24 04:08, Peter Maydell wrote:
->> > From: Alex Richardson <alexrichardson@google.com>
->> > diff --git a/target/arm/helper.c b/target/arm/helper.c
->> > index 8fb4b474e83..94900667c33 100644
->> > --- a/target/arm/helper.c
->> > +++ b/target/arm/helper.c
->> > @@ -5952,6 +5952,12 @@ static const ARMCPRegInfo v8_cp_reginfo[] =3D {
->> >         .access =3D PL1_RW, .accessfn =3D access_trap_aa32s_el1,
->> >         .writefn =3D sdcr_write,
->> >         .fieldoffset =3D offsetoflow32(CPUARMState, cp15.mdcr_el3) },
->> > +    { .name =3D "PMCCNTR", .state =3D ARM_CP_STATE_AA32,
->> > +      .type =3D ARM_CP_ALIAS | ARM_CP_IO | ARM_CP_64BIT,
->> > +      .cp =3D 15, .crm =3D 9, .opc1 =3D 0,
->> > +      .access =3D PL0_RW, .resetvalue =3D 0, .fgt =3D FGT_PMCCNTR_EL0,
->> > +      .readfn =3D pmccntr_read, .writefn =3D pmccntr_write,
->> > +      .accessfn =3D pmreg_access_ccntr },
->> >   };
->> >
->> >   /* These are present only when EL1 supports AArch32 */
->>
->> This fails testing:
->>
->> https://gitlab.com/qemu-project/qemu/-/jobs/7551982466
->>
->> FAIL: duplicate register {'name': 'PMCCNTR', 'regnum': 96} vs {'name': '=
-PMCCNTR',
->> 'regnum': 79}
->> FAIL: counted all 219 registers in XML
->> FAIL: PMCCNTR 96 =3D=3D 79 (xml)
->
-> Hmm, not sure why that didn't get caught by my local testing
-> or by my gitlab run -- does it only get run on an aarch64 host?
+> Adds a generic error device to handle generic hardware error
+> events as specified at ACPI 6.5 specification at 18.3.2.7.2:
+> https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#event-notification-for-generic-error-sources
+> using HID PNP0C33.
+> 
+> The PNP0C33 device is used to report hardware errors to
+> the guest via ACPI APEI Generic Hardware Error Source (GHES).
+> 
+> Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-It will depend what your local GDB is like - a modern gdb-multiarch
-should be fine but we do test for a minimum version to be able to probe
-the supported architectures.
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-> Anyway, the registers do architecturally have the same name
-> (they're the same register, just accessible via different
-> pathways). What is our practice for this? Do we just give
-> one of them a non-standard name?
->
-> -- PMM
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> ---
+>  hw/acpi/aml-build.c                    | 10 ++++++++++
+>  hw/acpi/generic_event_device.c         |  8 ++++++++
+>  include/hw/acpi/acpi_dev_interface.h   |  1 +
+>  include/hw/acpi/aml-build.h            |  2 ++
+>  include/hw/acpi/generic_event_device.h |  1 +
+>  5 files changed, 22 insertions(+)
+> 
+> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> index 6d4517cfbe3d..cb167523859f 100644
+> --- a/hw/acpi/aml-build.c
+> +++ b/hw/acpi/aml-build.c
+> @@ -2520,3 +2520,13 @@ Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source)
+>  
+>      return var;
+>  }
+> +
+> +/* ACPI 5.0: 18.3.2.6.2 Event Notification For Generic Error Sources */
+> +Aml *aml_error_device(void)
+> +{
+> +    Aml *dev = aml_device(ACPI_APEI_ERROR_DEVICE);
+> +    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0C33")));
+> +    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
+> +
+> +    return dev;
+> +}
+> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+> index 15b4c3ebbf24..1673e9695be3 100644
+> --- a/hw/acpi/generic_event_device.c
+> +++ b/hw/acpi/generic_event_device.c
+> @@ -26,6 +26,7 @@ static const uint32_t ged_supported_events[] = {
+>      ACPI_GED_PWR_DOWN_EVT,
+>      ACPI_GED_NVDIMM_HOTPLUG_EVT,
+>      ACPI_GED_CPU_HOTPLUG_EVT,
+> +    ACPI_GED_ERROR_EVT
+>  };
+>  
+>  /*
+> @@ -116,6 +117,11 @@ void build_ged_aml(Aml *table, const char *name, HotplugHandler *hotplug_dev,
+>                             aml_notify(aml_name(ACPI_POWER_BUTTON_DEVICE),
+>                                        aml_int(0x80)));
+>                  break;
+> +            case ACPI_GED_ERROR_EVT:
+> +                aml_append(if_ctx,
+> +                           aml_notify(aml_name(ACPI_APEI_ERROR_DEVICE),
+> +                                      aml_int(0x80)));
+> +                break;
+>              case ACPI_GED_NVDIMM_HOTPLUG_EVT:
+>                  aml_append(if_ctx,
+>                             aml_notify(aml_name("\\_SB.NVDR"),
+> @@ -295,6 +301,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
+>          sel = ACPI_GED_MEM_HOTPLUG_EVT;
+>      } else if (ev & ACPI_POWER_DOWN_STATUS) {
+>          sel = ACPI_GED_PWR_DOWN_EVT;
+> +    } else if (ev & ACPI_GENERIC_ERROR) {
+> +        sel = ACPI_GED_ERROR_EVT;
+>      } else if (ev & ACPI_NVDIMM_HOTPLUG_STATUS) {
+>          sel = ACPI_GED_NVDIMM_HOTPLUG_EVT;
+>      } else if (ev & ACPI_CPU_HOTPLUG_STATUS) {
+> diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_dev_interface.h
+> index 68d9d15f50aa..8294f8f0ccca 100644
+> --- a/include/hw/acpi/acpi_dev_interface.h
+> +++ b/include/hw/acpi/acpi_dev_interface.h
+> @@ -13,6 +13,7 @@ typedef enum {
+>      ACPI_NVDIMM_HOTPLUG_STATUS = 16,
+>      ACPI_VMGENID_CHANGE_STATUS = 32,
+>      ACPI_POWER_DOWN_STATUS = 64,
+> +    ACPI_GENERIC_ERROR = 128,
+>  } AcpiEventStatusBits;
+>  
+>  #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
+> diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
+> index a3784155cb33..44d1a6af0c69 100644
+> --- a/include/hw/acpi/aml-build.h
+> +++ b/include/hw/acpi/aml-build.h
+> @@ -252,6 +252,7 @@ struct CrsRangeSet {
+>  /* Consumer/Producer */
+>  #define AML_SERIAL_BUS_FLAG_CONSUME_ONLY        (1 << 1)
+>  
+> +#define ACPI_APEI_ERROR_DEVICE   "GEDD"
+>  /**
+>   * init_aml_allocator:
+>   *
+> @@ -382,6 +383,7 @@ Aml *aml_dma(AmlDmaType typ, AmlDmaBusMaster bm, AmlTransferSize sz,
+>               uint8_t channel);
+>  Aml *aml_sleep(uint64_t msec);
+>  Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source);
+> +Aml *aml_error_device(void);
+>  
+>  /* Block AML object primitives */
+>  Aml *aml_scope(const char *name_format, ...) G_GNUC_PRINTF(1, 2);
+> diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
+> index 40af3550b56d..9ace8fe70328 100644
+> --- a/include/hw/acpi/generic_event_device.h
+> +++ b/include/hw/acpi/generic_event_device.h
+> @@ -98,6 +98,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
+>  #define ACPI_GED_PWR_DOWN_EVT      0x2
+>  #define ACPI_GED_NVDIMM_HOTPLUG_EVT 0x4
+>  #define ACPI_GED_CPU_HOTPLUG_EVT    0x8
+> +#define ACPI_GED_ERROR_EVT          0x10
+>  
+>  typedef struct GEDState {
+>      MemoryRegion evt;
+
 
