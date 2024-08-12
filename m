@@ -4,103 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90609C52D7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 08:59:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31AC9C52D7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 09:09:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdQtG-0001Cv-BV; Mon, 12 Aug 2024 04:58:58 -0400
+	id 1sdR37-0003jZ-Fb; Mon, 12 Aug 2024 05:09:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1sdQtE-00014J-4O; Mon, 12 Aug 2024 04:58:56 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sdR34-0003iI-Mr; Mon, 12 Aug 2024 05:09:06 -0400
+Received: from mgamail.intel.com ([192.198.163.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1sdQtB-0007lE-OM; Mon, 12 Aug 2024 04:58:55 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47C40VKs021722;
- Mon, 12 Aug 2024 08:58:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from
- :to:cc:subject:date:message-id:in-reply-to:references
- :mime-version:content-type:content-transfer-encoding; s=pp1; bh=
- Gp3pp2LGJjLPchwoCjr6VnHpfNCNzIRZm2qo5aLGOqQ=; b=Brkx6ahEkFRdu/7F
- o6puJVgYJlGKex/5seSThbhmxzY2OMwvmWMGrzt0pfv+XxoDwWxfR7N1M7eeyyhm
- nlm2rSWbxYX+IhbF/M/Uown8RvXDNRWVZvweHjy+M/jvjYM+g1Yssf4MMTRfkaww
- wo5HR7M5ULZDtQ9zXo3RiaHKpm7hOzLwQYy6AvYKPtGwlm802+1DTSOcTsTiyMot
- FzDIyyEJOz8BcrvDCiY91ezK4PLKyTuqVtCkzukLTeyt/09YlnTAHeQV3gS4pqgj
- x81R6o/ttH8t0BSnks9BLl63dUIeROKKetxYsTCC3ZJCY4mI9Lsm2Q/l6qIdN+AX
- +rKs9A==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40wwmpmddf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 12 Aug 2024 08:58:49 +0000 (GMT)
-Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 47C8wni5001897;
- Mon, 12 Aug 2024 08:58:49 GMT
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 40wwmpmddc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 12 Aug 2024 08:58:49 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 47C6xqQM016228; Mon, 12 Aug 2024 08:58:48 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40xkhpdmqc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 12 Aug 2024 08:58:48 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 47C8wioi54395150
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 12 Aug 2024 08:58:46 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 554942005A;
- Mon, 12 Aug 2024 08:58:44 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E81AE20040;
- Mon, 12 Aug 2024 08:58:43 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.171.70.115])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 12 Aug 2024 08:58:43 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org,
- Ilya Leoshkevich <iii@linux.ibm.com>, qemu-stable@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/2] target/ppc: Set ctx->opcode for decode_insn32()
-Date: Mon, 12 Aug 2024 10:53:08 +0200
-Message-ID: <20240812085841.1583-2-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240812085841.1583-1-iii@linux.ibm.com>
-References: <20240812085841.1583-1-iii@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sdR31-0000ej-DT; Mon, 12 Aug 2024 05:09:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1723453744; x=1754989744;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=9upHtUme4hJXCWHnm4fE6plmVolSyA9aoEU22vIwsLA=;
+ b=bhg01RRTH/3Sd/CSE2biBfysXG3HfHw+jceMVUA/aKezTMbXb0DrOTXW
+ SelpwI/zKLlR+h1/rKXfXapvGGZ6HVyNNvD9J0iO4oLz5Wmo6HvbUL+VK
+ IUQb8NA/UNI9KQEzjEOF8DQu9Qop/XnHOMV5qyvg91rK51mRZKYjL/lxJ
+ Kp02GZSpSB5Zqrq2SH2aIFgTF1ylZvM+rXOqVoDxTzeHEuvlvAStkR31s
+ YX5uAvmgREeFK5ShTBSeSBuIOLTBM/j6tsi8cy4wKZPQtLxyJiiTMQq12
+ JdNCT0dK13RZx9imytK/tXEL3+qbc+bln1yla13wNeg56BYCzqpMK39Ny w==;
+X-CSE-ConnectionGUID: 3syRZDzXQhSFB+Y1zoOdrQ==
+X-CSE-MsgGUID: YVnssIF5THeYz4aptBe1SQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11161"; a="12961293"
+X-IronPort-AV: E=Sophos;i="6.09,282,1716274800"; d="scan'208";a="12961293"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Aug 2024 02:08:58 -0700
+X-CSE-ConnectionGUID: WVglJYQSR/u4QsfjIWt7qA==
+X-CSE-MsgGUID: z5WsMxXFRmm+3kttHZfn7A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,282,1716274800"; d="scan'208";a="88855982"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa002.jf.intel.com with ESMTP; 12 Aug 2024 02:08:53 -0700
+Date: Mon, 12 Aug 2024 17:24:43 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>,
+ Dapeng Mi <dapeng1.mi@linux.intel.com>, Yongwei Ma <yongwei.ma@intel.com>
+Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache object
+Message-ID: <ZrnU25wxuqgST7x1@intel.com>
+References: <20240704031603.1744546-9-zhao1.liu@intel.com>
+ <87r0bl35ug.fsf@pond.sub.org> <Zp5vxtXWDeHAdPok@intel.com>
+ <87bk2nnev2.fsf@pond.sub.org> <ZqEN1kZaQcuY4UPG@intel.com>
+ <87le1psuv3.fsf@pond.sub.org> <ZqtXP9MViOlyhEsu@intel.com>
+ <87mslweb38.fsf@pond.sub.org> <ZqyRik4UHHz3xaKl@intel.com>
+ <8734ndj33j.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 5Do39T0k_Al7iEM8hiI2kk6CI0EFHXlK
-X-Proofpoint-GUID: iSO4FVt-Kk-E8LLF0uPjbaUWS_hrRBbJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-11_25,2024-08-07_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0
- impostorscore=0 suspectscore=0 spamscore=0 phishscore=0 mlxlogscore=950
- lowpriorityscore=0 bulkscore=0 mlxscore=0 clxscore=1015 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2408120064
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=-0.01,
- RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8734ndj33j.fsf@pond.sub.org>
+Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,49 +99,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-divdu (without a dot) sometimes updates cr0, even though it shouldn't.
-The reason is that gen_op_arith_divd() checks Rc(ctx->opcode), which is
-not initialized. This field is initialized only for instructions that
-go through decode_legacy(), and not decodetree.
+Hi Markus,
 
-There already was a similar issue fixed in commit 86e6202a57b1
-("target/ppc: Make divw[u] handler method decodetree compatible.").
+On Fri, Aug 09, 2024 at 02:24:48PM +0200, Markus Armbruster wrote:
+> Date: Fri, 09 Aug 2024 14:24:48 +0200
+> From: Markus Armbruster <armbru@redhat.com>
+> Subject: Re: [PATCH 8/8] qemu-options: Add the description of smp-cache
+>  object
+> 
+> I apologize for the delay.
 
-It's not immediately clear what else may access the uninitialized
-ctx->opcode, so instead of playing whack-a-mole and changing the check
-to compute_rc0, simply initialize ctx->opcode.
+You're welcome! I appreciate your time, guidance and feedback.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 99082815f17f ("target/ppc: Add infrastructure for prefixed insns")
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
- target/ppc/translate.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+> Zhao Liu <zhao1.liu@intel.com> writes:
+> 
+> > On Thu, Aug 01, 2024 at 01:28:27PM +0200, Markus Armbruster wrote:
+> 
+> [...]
+> 
+> >> Can you provide a brief summary of the design alternatives that have
+> >> been proposed so far?  Because I've lost track.
+> >
+> > No problem!
+> >
+> > Currently, we have the following options:
+> >
+> > * 1st: The first one is just to configure cache topology with several
+> >   options in -smp:
+> >
+> >   -smp l1i-cache-topo=core,l1d-cache-topo-core
+> >
+> >   This one lacks scalability to support the cache size that ARM will
+> >   need in the future.
+> 
+> -smp sets machine property "smp" of QAPI type SMPConfiguration.
+> 
+> So this one adds members l1i-cache-topo, l1d-cache-topo, ... to
+> SMPConfiguration.
 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 71513ba9646..02c810e8848 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -6426,8 +6426,6 @@ static bool decode_legacy(PowerPCCPU *cpu, DisasContext *ctx, uint32_t insn)
-     opc_handler_t **table, *handler;
-     uint32_t inval;
+Yes.
+
+> > * 2nd: The cache list object in -smp.
+> >
+> >   The idea was to use JSON to configure the cache list. However, the
+> >   underlying implementation of -smp at the moment is keyval parsing,
+> >   which is not compatible with JSON.
+> 
+> Keyval is a variation of the QEMU's traditional KEY=VALUE,... syntax
+> that can serve as an alternative to JSON, with certain restrictions.
+> Ideally, we provide both JSON and keyval syntax on the command line.
+
+I see. It's the ideal state of the CLI, and -machine and -smp haven't
+arrived here yet.
+
+> Example: -blockdev supports both JSON and keyval.
+>     JSON:   -blockdev '{"driver": "null-co", "node-name": "node0"}'
+>     keyval: -blockdev null-co,node-name=node0
+> 
+> Unfortunately, we have many old interfaces that still lack JSON support.
+> 
+> >   If we can not insist on JSON format, then cache lists can also be
+> >   implemented in the following way:
+> >   
+> >   -smp caches.0.name=l1i,caches.0.topo=core,\
+> >        caches.1.name=l1d,caches.1.topo=core
+> 
+> This one adds a single member caches to SMPConfiguration.  It is an
+> array of objects.
+
+Yes.
+
+> > * 3rd: The cache list object linked in -machine.
+> >
+> >   Considering that -object is JSON-compatible so that defining lists via
+> >   JSON is more friendly, I implemented the caches list via -object and
+> >   linked it to MachineState:
+> >
+> >   -object '{"qom-type":"smp-cache","id":"obj","caches":[{"name":"l1d","topo":"core"},{"name":"l1i","topo":"core"}]}'
+> >   -machine smp-caches=obj
+> 
+> This one wraps the same array of objects in a new user-creatable object,
+> then sets machine property "smp-caches" to that object.
+> 
+> We can set machine properties directly with -machine.  But -machine
+> doesn't support JSON, yet.
+> 
+> Wrapping in an object moves the configuration to -object, which does
+> support JSON.
+> 
+> Half way between 2nd and 3rd:
+> 
+>   * Cache list object in machine
+> 
+>     -machine caches.0.name=l1i,caches.0.topo=core,\
+>              caches.1.name=l1d,caches.1.topo=core
+
+I got your point, and putting the array in -machine does align with the
+design of the other machine options nowadays.
+
+> > * 4th: The per cache object without any list:
+> >
+> >   -object smp-cache,id=cache0,name=l1i,topo=core \
+> >   -object smp-cache,id=cache1,name=l1d,topo=core
+> >
+> >   This proposal is clearer, but there are a few opens:
+> >   - I plan to push qom-topo forward, which would abstract CPU related
+> >     topology levels and cache to "device" instead of object. Is there a
+> >     conflict here?
+> 
+> Can't say, since I don't understand where you want to go.
+> 
+> Looks like your trying to design an interface for what you want to do
+> now, and are wondering whether it could evolve to accomodate what you
+> want to do later.
+> 
+> It's often better to design the interface for everything you already
+> know you want to do, then take out the parts you want to do later.
+
+Thanks! From this point of view, then per cache of objects does not meet
+my needs.
+
+> >   - Multiple cache objects can't be linked to the machine on the command
+> >     line, so I maintain a static cache list in smp_cache.c and expose
+> >     the cache information to the machine through some interface. is this
+> >     way acceptable?
+> >
+> >
+> > In summary, the 4th proposal was the most up in the air, as it looked to
+> > be conflict with the hybrid topology I wanted to do (and while hybrid
+> > topology may not be accepted by the community either, I thought it would
+> > be best for the two work to be in the same direction).
+> >
+> > The difference between 2nd and 3rd is about the JSON requirement, if JSON
+> > is mandatory for now then it's 3rd, if it's not mandatory (or accept to
+> > make -machine/-smp support JSON in the future), 2nd looks cleaner, which
+> > puts the caches list in -smp.
+> 
+> I'd rather not let syntactic limitations of our CLI dictate the
+> structure of our configuration data.  Design the structure *first*.
+> Only then start to think about CLI.  Our CLI is an unholy mess, and
+> thinking about it too early risks getting lost in the weeds.  I fear
+> this is what happened to you.
+
+Indeed, that's my dilemma, lost in the world of CLIs.
+
+> If I forcibly ignore all the considerations related to concrete syntax
+> in your message, a structure seems to emerge: there's a set of caches
+> identified by name (l1i, l1d, ...), and for each cache, we have a number
+> of configurable properties (topology level, ...).  Makes sense?
+
+Yes, you're right!
+
+> What else will you need to configure in the future?
+
+Maybe cache size, as Jonathan mentioned for Arm side.
+
+> By the way, extending -machine to support JSON looks feasible to me at a
+> glance.
  
--    ctx->opcode = insn;
--
-     LOG_DISAS("translate opcode %08x (%02x %02x %02x %02x) (%s)\n",
-               insn, opc1(insn), opc2(insn), opc3(insn), opc4(insn),
-               ctx->le_mode ? "little" : "big");
-@@ -6561,6 +6559,7 @@ static void ppc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
-     ctx->base.pc_next = pc += 4;
- 
-     if (!is_prefix_insn(ctx, insn)) {
-+        ctx->opcode = insn;
-         ok = (decode_insn32(ctx, insn) ||
-               decode_legacy(cpu, ctx, insn));
-     } else if ((pc & 63) == 0) {
--- 
-2.45.2
+Thanks again! Then I made it clear that it would be most appropriate to
+place the cache array in -machine, i.e., it's extensible and consistent
+with the design of the rest of the machine's properties, as well as
+consistent with my long-term needs.
+
+Later on, if -machine is able to support JSON, it will also benefit from
+it. If I have time, I will also think about how -machine can support
+JSON.
+
+Regards,
+Zhao
 
 
