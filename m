@@ -4,77 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E57F0C52D7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 09:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A670DC531DC
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 09:40:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdRWt-00010y-Nv; Mon, 12 Aug 2024 05:39:55 -0400
+	id 1sdRXX-000459-VQ; Mon, 12 Aug 2024 05:40:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sdRWq-0000rn-GG
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 05:39:52 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sdRWo-0004j4-Ny
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 05:39:52 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5a1f9bc80e3so1818776a12.2
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 02:39:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723455588; x=1724060388; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=pfK5sTi8yI/IkOfN0bSMTnvpTluWZj3mNnXrj8Wk8ps=;
- b=BE9binvresMmPHzZZ72x9wqbAA5m2pXJ7H4w03MkJ+17j5KgvzvnSJCyu+O48YKTVX
- MRuQnN446dPHqzPLJppV3gHESsD0WW+KF+P+EEgGhGfYcjYZBQ+4mTZiFrdNVMoHVBS7
- m2JW793lr90IMboNiAEauhvN5h2pX3d8lHTFKWWZmMqun4ijxeb+elTsImk/hsvQEvNL
- xtBHXhOKpQ5y335Dq2n756YD+I5VdkA81+X+mYMOEHn4Uy9gl5fqzSUOmJJJJq3Rn2r3
- EHYcowkjDJorhsfYOtgB3IJIEd7fGnc5W9NpEdYTHFiEg1lIwYfWsWmtDEGIO3IAY8Wr
- q6qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723455588; x=1724060388;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pfK5sTi8yI/IkOfN0bSMTnvpTluWZj3mNnXrj8Wk8ps=;
- b=m6oH8mKp2SNZYDJczzxKzlOdpaINnTePFhNAH/Ss9d5sdOYOIfcJ3qB/3evEzQdw7B
- 6l+SmgNxRR6elIIpQiWHuD+B+DJYQVAB1KcREtXvrPjXQqwfZji3KAdkB3p+UmlYFGRH
- VPwll65EpAxBDxamYCeLfQaKbvJZK/2LenbT9ASO5+e+tbTsXF796vVPGF5IwWuMqYlZ
- 1TSfb8tCJPS3B6b8mY0trQjO5M1IWhdYa/StE+FCBvQ8Qk/L9cM4+GOB784gy+CBwGz8
- ZiIrTYpgNe6uKn6ChRd2ghJSAusZ5Bz7yuJYrwaD56POersrchSNMZWaTmjwVSfdpsKK
- 8WOA==
-X-Gm-Message-State: AOJu0YwkyYZZHLilKctxbtyaDTRYbeFaC0HEShh4G+DRL1sLqfJVJRdI
- WsCv+EoETFIqQAvSoq8ZnLjkjgL2YQ3wMWVCBcX3BDHlp5nmusL1hM7kTBhuIgSnQpgMo2lG0tf
- +wijh3o86kuE+Rhs5Wqml9dmVumd+dW/vgSrjTw==
-X-Google-Smtp-Source: AGHT+IEzK8AO4DiIkeFtYggxTAFTc/X75XTyCF88mIvuj7YsKr5tsA1N/lZ5iR6ffu25zq3ojfiyA1pSmoOy34x2p4k=
-X-Received: by 2002:a05:6402:d08:b0:5a1:5692:b5f9 with SMTP id
- 4fb4d7f45d1cf-5bd0a681fefmr8012817a12.38.1723455588233; Mon, 12 Aug 2024
- 02:39:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sdRXU-0003sn-LZ
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 05:40:32 -0400
+Received: from fout4-smtp.messagingengine.com ([103.168.172.147])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jiaxun.yang@flygoat.com>)
+ id 1sdRXS-0004xk-Jf
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 05:40:32 -0400
+Received: from phl-compute-04.internal (phl-compute-04.nyi.internal
+ [10.202.2.44])
+ by mailfout.nyi.internal (Postfix) with ESMTP id E2A0C138FDD4;
+ Mon, 12 Aug 2024 05:40:26 -0400 (EDT)
+Received: from wimap26 ([10.202.2.86])
+ by phl-compute-04.internal (MEProxy); Mon, 12 Aug 2024 05:40:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=flygoat.com; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm1; t=1723455626;
+ x=1723542026; bh=sJeydjNcU8vl+opa87K9WeMbOK+ymacO6tLDmScqFHc=; b=
+ PsRya9tL8/3913RKPH1LN6jGNMTxqornSR/Td851VdTy23tAbt9pfTantI2PIpgh
+ 4Rv3OnG+kuP3NuJwjsCROWkQfsEau8BT6jqYSBO/O9TQVNKjuKY8Hoj2hxLX4DYx
+ KWjnyMeBzRYTbfskLtfHkXqiT6xo7c0T1rQTUT7z9KayJV98QOdQLTDtH61X0VdF
+ F5VwuH5Egu4WYTSlcu6/fFZmW4m1dEGyjnev9mteQsgKU7QDZb5cDiTsCQfDbEdY
+ p4oJmkQcvJlJheTXrT4mZZs+ox2wOgYfbc5Iqaw2BpYqr4mALIFrcSFshXc98esN
+ yu90RA1z7qkk88TYPRsYXQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1723455626; x=
+ 1723542026; bh=sJeydjNcU8vl+opa87K9WeMbOK+ymacO6tLDmScqFHc=; b=U
+ y/YuNYmK61xd/rShYnBYOmVvOAIBpQi1FHNBSxdFOwN1uJ06EkS3vYmXVQ0gvnRh
+ dEUO3rN+T+BQShm5JpbaRQeOyrxDHn+NhENHN4ay3ORAHw+bpWUWw2SYSIdpI9dl
+ wjyRLmtoP30iEqkUM8hbIOgtzLKbu3MggRSC5W9mit/1OlJFRcHWrEWNtxFOXyYj
+ Pm5YLe5dMN4yB+TO0xr4R3t6zkbia0UB/DPLPLxEFeG0xuVHD0HaMar0hcyFnyPs
+ 8si2UEWIlpVPjmPLiEXxwXJsgPSYMKGNuHUyVueajouhu0+XzoTQ5bnVHxwqB8CV
+ aHjKGA9l1g9YNt3Izws+Q==
+X-ME-Sender: <xms:iti5ZnVh2XCOqxfcjesTpHWs0ljl-BOq1gN8Qq6fF8IHPXn09_Y72A>
+ <xme:iti5Zvm47--NFp3nYZ1PanRYVvEkPnVKS_bIIBU6FuqxzgIu9kU_ExOSLzN9xR_ls
+ TX3IgpEiZSBETv_Nc4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddruddttddgudekucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+ htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
+ necuhfhrohhmpedflfhirgiguhhnucgjrghnghdfuceojhhirgiguhhnrdihrghnghesfh
+ hlhihgohgrthdrtghomheqnecuggftrfgrthhtvghrnhepudffvdelhedvleejtddvveei
+ jeeiledujeefudefteetffffleeukefftefhkeejnecuffhomhgrihhnpehgihhtlhgrsg
+ drtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
+ pehjihgrgihunhdrhigrnhhgsehflhihghhorghtrdgtohhmpdhnsggprhgtphhtthhope
+ ejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegruhhrvghlihgvnhesrghurhgv
+ lhefvddrnhgvthdprhgtphhtthhopehthhhomhgrshdrphgvthgriiiiohhnihessghooh
+ htlhhinhdrtghomhdprhgtphhtthhopegrrhhikhgrlhhosehgmhgrihhlrdgtohhmpdhr
+ tghpthhtohepphhhihhlmhgusehlihhnrghrohdrohhrghdprhgtphhtthhopehrihgthh
+ grrhgurdhhvghnuggvrhhsohhnsehlihhnrghrohdrohhrghdprhgtphhtthhopehqvghm
+ uhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepfigsgiesuhgtlhhisg
+ gtqdhnghdrohhrgh
+X-ME-Proxy: <xmx:iti5ZjbQLfTW2DVAwTcN_3cn5ccOM8oCVIHITbkfmYIYEm5XXp7Mlg>
+ <xmx:iti5ZiWXPSuQ4BTjaUq5vvIa302dYZ1q3HnXOS11GFf1a6FVEX6KUg>
+ <xmx:iti5ZhldZGfGpxmTA1-uKvLjTwZpvGvDzv1JuUUHaguMHMJRfkr8VQ>
+ <xmx:iti5Zve1UjM4MkeVdBVG36_MjXwYmDkpanlTzSfad_Se_4a53nqWoQ>
+ <xmx:iti5ZvYNZg6oeETE4rF62Pks59zUs4Z7q_WfTyjjLht2mqMo78v8OQcz>
+Feedback-ID: ifd894703:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 5006F19C0089; Mon, 12 Aug 2024 05:40:26 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 MIME-Version: 1.0
-References: <20240809180835.1243269-1-peter.maydell@linaro.org>
- <20240809180835.1243269-10-peter.maydell@linaro.org>
- <945e5e14-9a15-4dfc-856f-f3a7d401a5bc@linaro.org>
-In-Reply-To: <945e5e14-9a15-4dfc-856f-f3a7d401a5bc@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 12 Aug 2024 10:39:36 +0100
-Message-ID: <CAFEAcA9nnzwm-OSpiAWTOtf2On27B1Hi2Fr3h=5jSKRPdnnQDQ@mail.gmail.com>
-Subject: Re: [PULL 09/11] target/arm: add support for PMUv3 64-bit PMCCNTR in
- AArch32 mode
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Date: Mon, 12 Aug 2024 10:40:06 +0100
+From: "Jiaxun Yang" <jiaxun.yang@flygoat.com>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "QEMU devel" <qemu-devel@nongnu.org>
+Cc: "Richard Henderson" <richard.henderson@linaro.org>,
+ "Aurelien Jarno" <aurelien@aurel32.net>,
+ "Aleksandar Rikalo" <arikalo@gmail.com>,
+ "Thomas Petazzoni" <thomas.petazzoni@bootlin.com>,
+ "Waldemar Brodkorb" <wbx@uclibc-ng.org>
+Message-Id: <6ca024d7-27f8-4037-b93f-429fe16da0ca@app.fastmail.com>
+In-Reply-To: <20240811165407.26312-1-philmd@linaro.org>
+References: <20240811165407.26312-1-philmd@linaro.org>
+Subject: Re: [PATCH-for-9.1] target/mips: Fix execution mode in
+ page_table_walk_refill()
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=103.168.172.147;
+ envelope-from=jiaxun.yang@flygoat.com; helo=fout4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,45 +119,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 11 Aug 2024 at 22:36, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 8/10/24 04:08, Peter Maydell wrote:
-> > From: Alex Richardson <alexrichardson@google.com>
-> > diff --git a/target/arm/helper.c b/target/arm/helper.c
-> > index 8fb4b474e83..94900667c33 100644
-> > --- a/target/arm/helper.c
-> > +++ b/target/arm/helper.c
-> > @@ -5952,6 +5952,12 @@ static const ARMCPRegInfo v8_cp_reginfo[] = {
-> >         .access = PL1_RW, .accessfn = access_trap_aa32s_el1,
-> >         .writefn = sdcr_write,
-> >         .fieldoffset = offsetoflow32(CPUARMState, cp15.mdcr_el3) },
-> > +    { .name = "PMCCNTR", .state = ARM_CP_STATE_AA32,
-> > +      .type = ARM_CP_ALIAS | ARM_CP_IO | ARM_CP_64BIT,
-> > +      .cp = 15, .crm = 9, .opc1 = 0,
-> > +      .access = PL0_RW, .resetvalue = 0, .fgt = FGT_PMCCNTR_EL0,
-> > +      .readfn = pmccntr_read, .writefn = pmccntr_write,
-> > +      .accessfn = pmreg_access_ccntr },
-> >   };
-> >
-> >   /* These are present only when EL1 supports AArch32 */
->
-> This fails testing:
->
-> https://gitlab.com/qemu-project/qemu/-/jobs/7551982466
->
-> FAIL: duplicate register {'name': 'PMCCNTR', 'regnum': 96} vs {'name': 'PMCCNTR',
-> 'regnum': 79}
-> FAIL: counted all 219 registers in XML
-> FAIL: PMCCNTR 96 == 79 (xml)
 
-Hmm, not sure why that didn't get caught by my local testing
-or by my gitlab run -- does it only get run on an aarch64 host?
 
-Anyway, the registers do architecturally have the same name
-(they're the same register, just accessible via different
-pathways). What is our practice for this? Do we just give
-one of them a non-standard name?
+=E5=9C=A82024=E5=B9=B48=E6=9C=8811=E6=97=A5=E5=85=AB=E6=9C=88 =E4=B8=8B=E5=
+=8D=885:54=EF=BC=8CPhilippe Mathieu-Daud=C3=A9=E5=86=99=E9=81=93=EF=BC=9A
+> When refactoring page_table_walk_refill() in commit 4e999bf419
+> we replaced the execution mode and forced it to kernel mode.
+> Restore the previous behavior to also get supervisor / user modes.
+>
+> Reported-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+> Reported-by: Waldemar Brodkorb <wbx@uclibc-ng.org>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2470
+> Fixes: 4e999bf419 ("target/mips: Pass ptw_mmu_idx down from mips_cpu_t=
+lb_fill")
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
--- PMM
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+
+Thanks!
+
+> ---
+>  target/mips/tcg/sysemu/tlb_helper.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/mips/tcg/sysemu/tlb_helper.c=20
+> b/target/mips/tcg/sysemu/tlb_helper.c
+> index 3ba6d369a6..e7ae4f0bef 100644
+> --- a/target/mips/tcg/sysemu/tlb_helper.c
+> +++ b/target/mips/tcg/sysemu/tlb_helper.c
+> @@ -940,8 +940,9 @@ bool mips_cpu_tlb_fill(CPUState *cs, vaddr address=
+,=20
+> int size,
+>           * Memory reads during hardware page table walking are=20
+> performed
+>           * as if they were kernel-mode load instructions.
+>           */
+> -        int ptw_mmu_idx =3D (env->hflags & MIPS_HFLAG_ERL ?
+> -                           MMU_ERL_IDX : MMU_KERNEL_IDX);
+> +        int ptw_mmu_idx =3D (env->hflags & MIPS_HFLAG_ERL)
+> +                          ? MMU_ERL_IDX
+> +                          : (env->hflags & MIPS_HFLAG_KSU);
+>=20
+>          if (page_table_walk_refill(env, address, ptw_mmu_idx)) {
+>              ret =3D get_physical_address(env, &physical, &prot, addre=
+ss,
+> --=20
+> 2.45.2
+
+--=20
+- Jiaxun
 
