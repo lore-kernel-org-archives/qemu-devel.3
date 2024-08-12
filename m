@@ -4,86 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64D71C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 19:33:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E363C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 21:15:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdamN-0008R0-TH; Mon, 12 Aug 2024 15:32:32 -0400
+	id 1sdcNL-0001Ip-VZ; Mon, 12 Aug 2024 17:14:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1sdamG-0008Q7-Is
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 15:32:24 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sdcNJ-0001EJ-PA
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 17:14:45 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1sdamD-0007al-Cc
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 15:32:24 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1ff4fa918afso27121595ad.1
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 12:32:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sdcNH-0004Hu-AX
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 17:14:45 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-369f68f63b1so2762556f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 14:14:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723491138; x=1724095938; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=google.com; s=20230601; t=1723497276; x=1724102076; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rO5DAn40x9+Gw5raErTPti8A6K/CyQe1rvqRIGSx9QU=;
- b=bbdpZc9bDEgMrYleLwTzms0+PgEWXVslfNY0X4aWRz2nCIFQ5OjuuouUBTN4WgG7r6
- CsLVa61ncasW0385Gt7JGoihNgOO82tuRsM0lfclYexn24DP4khlm+ClLl7FWGbMipkM
- 3T6iQ7hilgo/1HpyTVNOmQpAgulBKJ6Rzl6dpskEwcinH6rLtOMsfRQ2c9c31sSCNff/
- 0A4l3g7fh2Sn1Fd/wrsIbfG+L1+UBtsDv3+gZbeQcEGtSdk77qsxVw/DB/VYKw0GXQ5D
- WMM4mdMdESDPbgF/IYnElVqQCQoZlumSRocOXNBIy7yYh3GmAO4tff/Bwzv1KXGnY33l
- pqCw==
+ bh=mMvb+UqDsd/Tku1WIghTxYcMI1Pxj9JCY1dloGvUNN4=;
+ b=nYNhGN9/Z7xxn2cAXJ7i0VO4NmDdrFKaSwTvFyElgU9hp50iBm/42UXSRTbYZpIYtg
+ FewQpiet+JvjLe12iMfdj8Gbb5JLD7uyEh7ewv29JdJxo/a1WktsbFp8YjKFUG6sNdef
+ wHs/dtA5zy2XuSE8PgfczBzcA0DJDHtn+KNSMYMEmlTnJe5qtN/UIL7mfVhRg2yfR0F4
+ jNri+lKK3wvUXTL1rtrjSkV0HBQR2mBke1RMfh7rtfzCTZKXazL1Yb9CbCWJmB3+oTNj
+ qPQC9L8xwUYZsb7K5V20D5aw6BzwMzAMXRq4YyItsyJHgPg5uXf71C9kondbSkEepsKN
+ B4Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723491138; x=1724095938;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1723497276; x=1724102076;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rO5DAn40x9+Gw5raErTPti8A6K/CyQe1rvqRIGSx9QU=;
- b=Nl0wYa3JZXFdGN0h2JvHTBRLLvj/4DKWNYY+m+l2mGA3m1e3IvMbjp8VNjMb1M05ux
- Cit1H5FJC3/5zWvT8EK4Ay+s2eJNbJ7/YbZ29+H2kfjmMVGtm6YURHGJSCcY6hl+uNAs
- hsMWh0EZtl/KPAzJ4L0YreQfs2pTjuj5AjD52S9J79685YPeN3YDLLuHtfmYVnGqj7TY
- PdQdgBKXd2+cCjT7OohFSnuM1aTzQrjIakWc2ZqX08L1LDM3JwcM15CWRxxm1J11P8kS
- GqX2zagMEAP39VQ/w1LRzcfjXP8XlaiGSl3R2m8BgG5mXyij8c2ywtsNhUjcL5+V6OlQ
- K1Ng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUaFhaQQ05LTNozsTAjTKmUXMV+TroMynQGLexqXNnzDFnjEBYaB2vXcW8Q1J5H7lqCQepaUjkxSBTyBlqH/yx5auS+Ua4=
-X-Gm-Message-State: AOJu0YytzomGT13bAiIUeWMGaLgSB8JJyx4ph13gLAbOzyiBMmLTOK2b
- FXdS7KkXHTKbNBgbnHCeDsUiLyJnEjl7H2GsGbW47VE5wYnE29bt
-X-Google-Smtp-Source: AGHT+IGcLfO2jlIpSdHGXlyEu7dNpZBi+zxZiTR07MoJay4Tm3QHoy53bNXA9AYK3YEVu46K7z++pg==
-X-Received: by 2002:a17:903:41c3:b0:1fb:34ef:4467 with SMTP id
- d9443c01a7336-201ca1bff21mr15222095ad.43.1723491137673; 
- Mon, 12 Aug 2024 12:32:17 -0700 (PDT)
-Received: from valdaarhun.localnet ([223.233.81.106])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201cd1b452asm437795ad.184.2024.08.12.12.32.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Aug 2024 12:32:17 -0700 (PDT)
-From: Sahil <icegambit91@gmail.com>
-To: Eugenio Perez Martin <eperezma@redhat.com>
-Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org,
- Sahil Siddiq <sahilcdq@proton.me>
-Subject: Re: [RFC v3 3/3] vhost: Allocate memory for packed vring
-Date: Tue, 13 Aug 2024 01:02:03 +0530
-Message-ID: <8454459.NyiUUSuA9g@valdaarhun>
-In-Reply-To: <CAJaqyWcrcEJimGqF3_K7YWCobPw00Yx+rcYQH1JXGcKesb5M2w@mail.gmail.com>
-References: <20240802112138.46831-1-sahilcdq@proton.me>
- <20240802112138.46831-4-sahilcdq@proton.me>
- <CAJaqyWcrcEJimGqF3_K7YWCobPw00Yx+rcYQH1JXGcKesb5M2w@mail.gmail.com>
+ bh=mMvb+UqDsd/Tku1WIghTxYcMI1Pxj9JCY1dloGvUNN4=;
+ b=kJL+ua7LNnmtbG6yMqQOgKIXLE5JY5AB9RsbKEI+gnfq4ePUJJZpYgwuxekPEQCP30
+ IauxKlSiYYuDjFkwFBmzCm2EbySTQjLG6fNjhL8CbtXVy4KUg+NOgcrSzyRPbqNZZbvA
+ 7QGghkn3+dvZz7DdPwX3luU6ygZyfnjf3+G3kfFY+pk8jbhhfkSoqhWK2NxscdjOSrwA
+ moVp9LaDYeH6APxzGAhY30nvFtLgs04w3GlbTtPuLrgjDGdSDuYrBkw1+n0NrLfbjL7Y
+ 2laDCAs9tvKb5BGYw1QUn3N00nLyAS+CDCYZu+ClCT1F66jAABHC+ORVJtwI1HeJsFzE
+ Z3LA==
+X-Gm-Message-State: AOJu0YxuC4kygKng4ANO+fPBYR4TsHatlTE16HOJsroCBgB6vkSBfjY6
+ nf7rNDSeuLhd0kavwAB5aYYAMayibtXTdoNhMkg/0xvN94oquMCqo28FlR4ongk5AXtpZ9jy/8D
+ 9urVasVjdIfDrIGWzupYlYs0plAIrzouCx2E+
+X-Google-Smtp-Source: AGHT+IEI/lb3441nKg8VrlmQXZ7GlntoNFJyPGTMbczV9Khc1nhlnD+RGCJQxF9Ns6orFxbnzfY1Y37Ki02HqQmRNBE=
+X-Received: by 2002:a05:6000:1803:b0:368:6620:20ec with SMTP id
+ ffacd0b85a97d-3716cd23cc6mr1128697f8f.43.1723497276284; Mon, 12 Aug 2024
+ 14:14:36 -0700 (PDT)
 MIME-Version: 1.0
+References: <20240805201719.2345596-1-tavip@google.com>
+ <20240805201719.2345596-6-tavip@google.com>
+ <CAFEAcA8w47gZYV8GBQa3fNf1cBWNtm_k4DAdnOVt4RWBdSrghg@mail.gmail.com>
+In-Reply-To: <CAFEAcA8w47gZYV8GBQa3fNf1cBWNtm_k4DAdnOVt4RWBdSrghg@mail.gmail.com>
+From: Octavian Purdila <tavip@google.com>
+Date: Mon, 12 Aug 2024 14:14:24 -0700
+Message-ID: <CAGWr4cSwJPMngzA7DAHRHu7eJkWGhzxuAMB2fbGRnNAx-7AR7g@mail.gmail.com>
+Subject: Re: [RFC PATCH 05/23] hw: add register access utility functions
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, stefanst@google.com, 
+ pbonzini@redhat.com, alex.bennee@linaro.org, thuth@redhat.com, 
+ marcandre.lureau@redhat.com, alistair@alistair23.me, berrange@redhat.com, 
+ philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, bleal@redhat.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=icegambit91@gmail.com; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=tavip@google.com; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,221 +93,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-On Monday, August 12, 2024 12:01:00=E2=80=AFPM GMT+5:30 you wrote:
-> On Sun, Aug 11, 2024 at 7:20=E2=80=AFPM Sahil <icegambit91@gmail.com> wro=
-te:
-> > On Wednesday, August 7, 2024 9:52:10=E2=80=AFPM GMT+5:30 Eugenio Perez =
-Martin wrote:
-> > > On Fri, Aug 2, 2024 at 1:22=E2=80=AFPM Sahil Siddiq <icegambit91@gmai=
-l.com> wrote:
-> > > > [...]
-> > > > @@ -726,17 +738,30 @@ void vhost_svq_start(VhostShadowVirtqueue *sv=
-q, VirtIODevice *vdev,
-> > > >      svq->vring.num =3D virtio_queue_get_num(vdev,
-> > > >      virtio_get_queue_index(vq));
-> > > >      svq->num_free =3D svq->vring.num;
-> > > >
-> > > > -    svq->vring.desc =3D mmap(NULL, vhost_svq_driver_area_size(svq),
-> > > > -                           PROT_READ | PROT_WRITE, MAP_SHARED | MA=
-P_ANONYMOUS,
-> > > > -                           -1, 0);
-> > > > -    desc_size =3D sizeof(vring_desc_t) * svq->vring.num;
-> > > > -    svq->vring.avail =3D (void *)((char *)svq->vring.desc + desc_s=
-ize);
-> > > > -    svq->vring.used =3D mmap(NULL, vhost_svq_device_area_size(svq),
-> > > > -                           PROT_READ | PROT_WRITE, MAP_SHARED | MA=
-P_ANONYMOUS,
-> > > > -                           -1, 0);
-> > > > -    svq->desc_state =3D g_new0(SVQDescState, svq->vring.num);
-> > > > -    svq->desc_next =3D g_new0(uint16_t, svq->vring.num);
-> > > > -    for (unsigned i =3D 0; i < svq->vring.num - 1; i++) {
-> > > > +    svq->is_packed =3D virtio_vdev_has_feature(svq->vdev, VIRTIO_F=
-_RING_PACKED);
-> > > > +
-> > > > +    if (virtio_vdev_has_feature(svq->vdev, VIRTIO_F_RING_PACKED)) {
-> > > > +        svq->vring_packed.vring.desc =3D mmap(NULL, vhost_svq_memo=
-ry_packed(svq),
-> > > > +                                          PROT_READ | PROT_WRITE, =
-MAP_SHARED | MAP_ANONYMOUS,
-> > > > +                                          -1, 0);
-> > > > +        desc_size =3D sizeof(struct vring_packed_desc) * svq->vrin=
-g.num;
-> > > > +        svq->vring_packed.vring.driver =3D (void *)((char *)svq->v=
-ring_packed.vring.desc + desc_size);
-> > > > +        svq->vring_packed.vring.device =3D (void *)((char *)svq->v=
-ring_packed.vring.driver +
-> > > > +                                     sizeof(struct vring_packed_de=
-sc_event));
-> > >
-> > > This is a great start but it will be problematic when you start
-> > > mapping the areas to the vdpa device. The driver area should be read
-> > > only for the device, but it is placed in the same page as a RW one.
-> > >
-> > > More on this later.
-> > >
-> > > > +    } else {
-> > > > +        svq->vring.desc =3D mmap(NULL, vhost_svq_driver_area_size(=
-svq),
-> > > > +                               PROT_READ | PROT_WRITE, MAP_SHARED =
-|MAP_ANONYMOUS,
-> > > > +                               -1, 0);
-> > > > +        desc_size =3D sizeof(vring_desc_t) * svq->vring.num;
-> > > > +        svq->vring.avail =3D (void *)((char *)svq->vring.desc + de=
-sc_size);
-> > > > +        svq->vring.used =3D mmap(NULL, vhost_svq_device_area_size(=
-svq),
-> > > > +                               PROT_READ | PROT_WRITE, MAP_SHARED =
-|MAP_ANONYMOUS,
-> > > > +                               -1, 0);
-> > > > +    }
-> > >
-> > > I think it will be beneficial to avoid "if (packed)" conditionals on
-> > > the exposed functions that give information about the memory maps.
-> > > These need to be replicated at
-> > > hw/virtio/vhost-vdpa.c:vhost_vdpa_svq_map_rings.
-> > >
-> > > However, the current one depends on the driver area to live in the
-> > > same page as the descriptor area, so it is not suitable for this.
+On Mon, Aug 12, 2024 at 8:33=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
+>
+> On Mon, 5 Aug 2024 at 21:17, Octavian Purdila <tavip@google.com> wrote:
 > >
-> > I haven't really understood this.
+> > Add register access utility functions for device models, like checking
+> > aligned access and reading and writing to a register backstore.
+>
+>
+> > Signed-off-by: Octavian Purdila <tavip@google.com>
+> > ---
+> >  include/hw/regs.h | 89 +++++++++++++++++++++++++++++++++++++++++++++++
+> >  1 file changed, 89 insertions(+)
+> >  create mode 100644 include/hw/regs.h
 > >
-> > In split vqs the descriptor, driver and device areas are mapped to RW p=
-ages.
-> > In vhost_vdpa.c:vhost_vdpa_svq_map_rings, the regions are mapped with
-> > the appropriate "perm" field that sets the R/W permissions in the DMAMap
-> > object. Is this problematic for the split vq format because the avail r=
-ing is
-> > anyway mapped to a RW page in "vhost_svq_start"?
-> >
->=20
-> Ok so maybe the map word is misleading here. The pages needs to be
-> allocated for the QEMU process with both PROT_READ | PROT_WRITE, as
-> QEMU needs to write into it.
->=20
-> They are mapped to the device with vhost_vdpa_dma_map, and the last
-> bool parameter indicates if the device needs write permissions or not.
-> You can see how hw/virtio/vhost-vdpa.c:vhost_vdpa_svq_map_ring checks
-> the needle permission for this, and the needle permissions are stored
-> at hw/virtio/vhost-vdpa.c:vhost_vdpa_svq_map_rings. This is the
-> function that needs to check for the maps permissions.
+> > diff --git a/include/hw/regs.h b/include/hw/regs.h
+> > new file mode 100644
+> > index 0000000000..8d0da0629d
+> > --- /dev/null
+> > +++ b/include/hw/regs.h
+> > @@ -0,0 +1,89 @@
+> > +/*
+> > + * Useful macros/functions for register handling.
+> > + *
+> > + * Copyright (c) 2021 Google LLC
+> > + *
+> > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > + *
+> > + * This work is licensed under the terms of the GNU GPL, version 2 or =
+later.
+> > + * See the COPYING file in the top-level directory.
+> > + */
+> > +
+> > +#ifndef HW_REGS_H
+> > +#define HW_REGS_H
+> > +
+> > +#include "exec/hwaddr.h"
+> > +#include "exec/memattrs.h"
+> > +
+> > +#define BITS(hi, lo)       (BIT(hi + 1) - BIT(lo))
+> > +#define BIT_IS_SET(v, b)   (((v) & BIT(b)) !=3D 0)
+>
+> To the extent we need these we should be putting them in
+> bits.h with the other bit-related operations. (But
+> prefer the existing MAKE_64BIT_MASK over adding a
+> second macro that evaluates to a mask with a given
+> run of bits set).
 >
 
-I think I have understood what's going on in "vhost_vdpa_svq_map_rings",
-"vhost_vdpa_svq_map_ring" and "vhost_vdpa_dma_map". But based on
-what I have understood it looks like the driver area is getting mapped to
-an iova which is read-only for vhost_vdpa. Please let me know where I am
-going wrong.
+BITS is useful when defining masks from datasheets. Specifically, in
+this patch set they are used to define writable bits. While it is
+possible to use MAKE_64BIT_MASK, I find it less error prone to use
+BITS.
 
-Consider the following implementation in hw/virtio/vhost_vdpa.c:
+However, it just occurred to me that we might be able to use the SVD
+information to derive this. If possible I'll just remove it in v2
+(otherwise I will move it to include/qemu/bitops.h).
 
-> size_t device_size =3D vhost_svq_device_area_size(svq);
-> size_t driver_size =3D vhost_svq_driver_area_size(svq);
+> > +
+> > +/*
+> > + * reg32_aligned_access
+> > + * @addr: address to check
+> > + * @size: size of access
+> > + *
+> > + * Check if access to a hardware address is 32bit aligned.
+> > + *
+> > + * Returns: true if access is 32bit aligned, false otherwise
+> > + */
+> > +static inline bool reg32_aligned_access(hwaddr addr, unsigned size)
+> > +{
+> > +    if (size !=3D 4 || addr % 4 !=3D 0) {
+> > +        return false;
+> > +    }
+> > +    return true;
+> > +}
+> > +
+> > +/*
+> > + * reg32_write
+> > + * @base: base address
+> > + * @addr: register offset in bytes
+> > + * @val: value to write
+> > + * @wr_bits_array: RW bitmask array
+> > + *
+> > + * Update the RW/WO bits of a 32bit register backstore with a given va=
+lue
+> > + * (discarding updats to the RO bits). The RW/WO bits are encoded in t=
+he
+> > + * @wr_bits_array with bits set being RW and bits unset being RO.
+> > + *
+> > + * Usage example:
+> > + *
+> > + * wr_bits_array[] =3D {
+> > + *    [REG1_ADDR/4] =3D 0xFF000000, // MSB byte writable
+> > + *    [REG2_ADDR/4] =3D 0xFF,       // LSB byte writable
+> > + *    // all other registers are read-only
+> > + * };
+> > + *
+> > + * // backstore is updated to 0x12000000
+> > + * reg32_write(&backstore, REG1_ADDR, 0x12345678, wr_bits_array);
+> > + * // backstore is updated to 0x78
+> > + * reg32_write(&backstore, REG2_ADDR, 0x12345678, wr_bits_array);
+> > + */
+>
+> This seems like it's reimplementing include/hw/register.h
+> functionality. I'm not personally a super-fan of that API,
+> but I definitely would prefer it if we didn't have more than
+> one way to do this.
+>
 
-The driver size includes the descriptor area and the driver area. For
-packed vq, the driver area is the "driver event suppression" structure
-which should be read-only for the device according to the virtio spec
-(section 2.8.10) [1].
+Interesting, I was not aware of this thanks for pointing it out!
 
-> size_t avail_offset;
-> bool ok;
->=20
-> vhost_svq_get_vring_addr(svq, &svq_addr);
+It seems a bit heavy to be used just for the write masking part, but
+I'll take a closer look at it.
 
-Over here "svq_addr.desc_user_addr" will point to the descriptor area
-while "svq_addr.avail_user_addr" will point to the driver area/driver
-event suppression structure.
+> > +static inline uint32_t reg32_write(void *base, uint32_t off, uint32_t =
+val,
+> > +                                   const uint32_t *rw_bits_array)
+> > +{
+> > +    uint32_t *ptr =3D base + addr;
+> > +    uint32_t old_value =3D *ptr;
+> > +    uint32_t mask =3D rw_bits_array ? rw_bits_array[addr / 4] : 0xFFFF=
+FFFF;
+> > +
+> > +    /* set WO/RW bits */
+> > +    *ptr |=3D val & mask;
+> > +    /* clear RO bits */
+> > +    *ptr &=3D val | ~mask;
+> > +
+> > +    return old_value;
+> > +}
+> > +
+> > +/*
+> > + * reg32_read
+> > + * @base: base address
+> > + * @addr: register offset in bytes
+> > + *
+> > + * Returns: 32bit value from register backstore
+> > + */
+> > +static inline uint32_t reg32_read(void *base, uint32_t addr)
+> > +{
+> > +    return *(uint32_t *)(base + addr);
+> > +}
+>
+> Pointer type handling looks suspicious here -- if
+> the thing we're accessing is really a uint32_t* then
+> we should take that; if it isn't then casting it to
+> one and dereferencing might be reading unaligned memory.
+>
 
-> driver_region =3D (DMAMap) {
->     .translated_addr =3D svq_addr.desc_user_addr,
->     .size =3D driver_size - 1,
->     .perm =3D IOMMU_RO,
-> };
+It is used for performing generic accesses to generated structs (patch
+3/23) which should be aligned in the way that are used in the patch
+set. If we decide to keep it, I'll add a note regarding alignment.
 
-This region points to the descriptor area and its size encompasses the
-driver area as well with RO permission.
-
-> ok =3D vhost_vdpa_svq_map_ring(v, &driver_region, errp);
-
-The above function checks the value of needle->perm and sees that it is RO.
-It then calls "vhost_vdpa_dma_map" with the following arguments:
-
-> r =3D vhost_vdpa_dma_map(v->shared, v->address_space_id, needle->iova,
->                                                needle->size + 1,
->                                                (void *)(uintptr_t)needle-=
->translated_addr,
->                                                needle->perm =3D=3D IOMMU_=
-RO);
-
-Since needle->size includes the driver area as well, the driver area will be
-mapped to a RO page in the device's address space, right?
-
-> if (unlikely(!ok)) {
->     error_prepend(errp, "Cannot create vq driver region: ");
->     return false;
-> }
-> addr->desc_user_addr =3D driver_region.iova;
-> avail_offset =3D svq_addr.avail_user_addr - svq_addr.desc_user_addr;
-> addr->avail_user_addr =3D driver_region.iova + avail_offset;
-
-I think "addr->desc_user_addr" and "addr->avail_user_addr" will both be
-mapped to a RO page in the device's address space.
-
-> device_region =3D (DMAMap) {
->     .translated_addr =3D svq_addr.used_user_addr,
->     .size =3D device_size - 1,
->     .perm =3D IOMMU_RW,
-> };
-
-The device area/device event suppression structure on the other hand will
-be mapped to a RW page.
-
-I also think there are other issues with the current state of the patch. Ac=
-cording
-to the virtio spec (section 2.8.10) [1], the "device event suppression" str=
-ucture
-needs to be write-only for the device but is mapped to a RW page.
-
-Another concern I have is regarding the driver area size for packed vq. In
-"hw/virtio/vhost-shadow-virtqueue.c" of the current patch:
-> size_t vhost_svq_driver_area_size(const VhostShadowVirtqueue *svq)
-> {
->     size_t desc_size =3D sizeof(vring_desc_t) * svq->vring.num;
->     size_t avail_size =3D offsetof(vring_avail_t, ring[svq->vring.num]) +
->                                                               sizeof(uint=
-16_t);
->=20
->     return ROUND_UP(desc_size + avail_size, qemu_real_host_page_size());
-> }
->=20
-> [...]
->=20
-> size_t vhost_svq_memory_packed(const VhostShadowVirtqueue *svq)
-> {
->     size_t desc_size =3D sizeof(struct vring_packed_desc) * svq->num_free;
->     size_t driver_event_suppression =3D sizeof(struct vring_packed_desc_e=
-vent);
->     size_t device_event_suppression =3D sizeof(struct vring_packed_desc_e=
-vent);
->=20
->     return ROUND_UP(desc_size + driver_event_suppression + device_event_s=
-uppression,
->                     qemu_real_host_page_size());
-> }
-
-The size returned by "vhost_svq_driver_area_size" might not be the actual d=
-river
-size which is given by desc_size + driver_event_suppression, right? Will th=
-is have to
-be changed too?
-
-Thanks,
-Sahil
-
-[1] https://docs.oasis-open.org/virtio/virtio/v1.3/csd01/virtio-v1.3-csd01.=
-html#x1-720008
-
-
-
+> thanks
+> -- PMM
 
