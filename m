@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D28CC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 12:55:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBA68C52D7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 13:07:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdUYt-00004w-VY; Mon, 12 Aug 2024 08:54:13 -0400
+	id 1sdUkj-0003rU-9B; Mon, 12 Aug 2024 09:06:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1sdUYf-0008Rj-P9
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 08:54:01 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sdUkg-0003py-JV
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 09:06:22 -0400
+Received: from mail-lj1-x236.google.com ([2a00:1450:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1sdUYY-0001xT-Mu
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 08:53:56 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-530e062217eso5179663e87.1
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 05:53:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sdUke-00045r-TZ
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 09:06:22 -0400
+Received: by mail-lj1-x236.google.com with SMTP id
+ 38308e7fff4ca-2f035ae0fd1so46982211fa.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 06:06:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1723467228; x=1724072028; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1723467978; x=1724072778; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=o5HJOYo3TXG8WGJEUY2mo3Js+BDMfHZ2yadzBsCtmwA=;
- b=PRHAbWBmyV+TgR4mHVdBQ23DR6ynsvW77mxI/1Iz5AzxGq4ZIcaUvZkB3nCdZDLJET
- RBkaWYZgCbrXVS55OCDTW7VCxFA92QcJC6mZVxT05A11Mpt9b2vNuTiqpR+OTqL/PJEf
- D0KnwSg4abU3FJA6WqatXWhZ6MgirAtPBZ0WOm4vdXjo9b2dJQgLw1sd9eTBznuIlQSp
- Duuqad4kTgBJUlbJ5R57sAU5/bqJmEC/360aLqo+Vv/bQ86y6X36uGLEpN8ZTV2UBGh+
- YJigLXkm8KGXk/WIxQk60eDDxqPq8mEacmWkem2DVyAi/Aq6pt5qArU4uHatb0OtWWHq
- 5DNA==
+ bh=FnvsVFgAwwQYqvVPxF+lYxfpYXdBbERxwoGEJpJUJUI=;
+ b=E3ZkjDrq2BqsR83/DJJcwnb85eiv7xKGN6xN5OicuK3nKNrSK/MRUpShpZng40BwO1
+ 1SG73c9c+1VMuzCfIx8MerlCVLv5Ci8SW9AVF8USeFhNiB8FcAyZNRv22C+YLCQnqa4k
+ Z+1WI5Fhkiauc2io4nVoKDF/Kdpst2Wq9iT1PVPGuqWfXMxj0QqnL53StE+5WnMrWelq
+ v/7gnSKeBmAty92sCgh11C550UIwEtiJPgQR4vGyYHDgw67BJaCUc/38FTgd0dPFOCtJ
+ oCYQiV3jcyqslkLd6T/0YJVcxL+ga1D2dPrBnL6K1WFbpa831gu6VrJE6hPqGE3HYyX5
+ ru1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723467228; x=1724072028;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1723467978; x=1724072778;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=o5HJOYo3TXG8WGJEUY2mo3Js+BDMfHZ2yadzBsCtmwA=;
- b=q73Lqj+8YZx7BX4Wgv9fMyLx/4VVkmioFvz9WFB4UOiDOBSTPmkPXLWEp2T27k25yC
- BbjXrc56CTIU/1vjnK262J3OVGE4BomCBUj6haeWD7kj1IWf62TUAEsgr+booNF5TEin
- Hu20NeXPQYoP6roNOY2FZn0ira2EwOMvfZqQlFg/nnImJmv1jGTIpW3KSDY6qOAJSsh3
- T6gHCtXz6isL+ZUoIG1IyiWXmKJ4ZIR24JORUcOzHTQIp1PbRfF9521Ddp9Qt5311hIC
- uDUP2MQiMYnbcL4z+93H8yhZ5CBPBXcKpmjp3iY+FFnN/L/tJL5U9I5i+zWt7WFg516H
- Z45A==
-X-Gm-Message-State: AOJu0YyiJrIalM2Hy/dc4w8yFy6jSsS7E+PF1XqOWaAeGkVE0PmWXXLx
- YAohYtMlyiiQjnR2CuRLzrcdZ6d9TYJqarPT2c8dXwEL7QTqkoL06ulptPwGSEXPw24oiW9SO83
- 68pau1C/Oqwn5EuEUgX1sAlKcqx2wjLTQG7NGRA==
-X-Google-Smtp-Source: AGHT+IFuSPwa+vkxBABlMSfbiJDTyXgCGqzxL4WXGME+qyCeq5tLogPXTk6deSm3xb48nj/z11QXQx14DiDc+6csC9E=
-X-Received: by 2002:a05:6512:3e0e:b0:52c:e1cd:39b7 with SMTP id
- 2adb3069b0e04-532136482ffmr24808e87.5.1723467228224; Mon, 12 Aug 2024
- 05:53:48 -0700 (PDT)
+ bh=FnvsVFgAwwQYqvVPxF+lYxfpYXdBbERxwoGEJpJUJUI=;
+ b=bnExakmswpuAiIyxOW//WYPbv4zFh9H8RQXuFxrWHmIiipwKIrR8xLp+59/3FQYMJR
+ 7YmA0z5EqG7bC+GxnmF7PyzmM9TdCh8Rj41DT2vBxj8MglxITm5+JvnJqTqpRNMA4Bd1
+ RnG5iCg+HXHXYFfu79a/1OYUt171gBoKHopT9ofpG3d6o3QcWdae7RStD0ygs7DFbi24
+ lGeMV39gbc58k/Gr/bJUkq2/QMW3/kuTf+MzGFZpkr8NzLdvDCW9gJkMv1ooY18iWIa+
+ O65GM6QUxhLx4nibEKGRcLZ5gIOWKbjNT735jP3GCTl0f8go0akjgZXqzW+9XZcKbbNp
+ CEhA==
+X-Gm-Message-State: AOJu0Yyt1Tmb5vG2rb4Rn8uCfioNBTmWm8jSLqR6WUzf6HStTcvp0rxk
+ nZFV6G6CWFvYXeucWWdRZ0Zi5dO9+/pMtLjEs/4kpqS33y3XR2ieJ2KAxf+c
+X-Google-Smtp-Source: AGHT+IEH+rt8R3wDG+QKY36k4z1epabtE0qsH5Q2v+VF3qRP2OiK5eGbpOcoKlfiNpSaMtmPoTatVw==
+X-Received: by 2002:a2e:721a:0:b0:2ef:1d79:cae7 with SMTP id
+ 38308e7fff4ca-2f2b714cfddmr1523661fa.14.1723467977110; 
+ Mon, 12 Aug 2024 06:06:17 -0700 (PDT)
+Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-2f29203d817sm8573481fa.99.2024.08.12.06.06.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 12 Aug 2024 06:06:16 -0700 (PDT)
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
+ peter.maydell@linaro.org, alex.bennee@linaro.org, xenia.ragiadakou@amd.com,
+ jason.andryuk@amd.com, edgar.iglesias@amd.com,
+ xen-devel@lists.xenproject.org
+Subject: [PATCH v1 01/10] MAINTAINERS: Add docs/system/arm/xenpvh.rst
+Date: Mon, 12 Aug 2024 15:05:56 +0200
+Message-ID: <20240812130606.90410-2-edgar.iglesias@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240812130606.90410-1-edgar.iglesias@gmail.com>
+References: <20240812130606.90410-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
-References: <20240801140609.26922-1-jim.shu@sifive.com>
- <20240801140609.26922-3-jim.shu@sifive.com>
- <CAFEAcA9aOGichd7qL914QvS841gpTnwQjvR+ujv+91Qu12VJ=Q@mail.gmail.com>
-In-Reply-To: <CAFEAcA9aOGichd7qL914QvS841gpTnwQjvR+ujv+91Qu12VJ=Q@mail.gmail.com>
-From: Jim Shu <jim.shu@sifive.com>
-Date: Mon, 12 Aug 2024 20:53:36 +0800
-Message-ID: <CALw707pXXaWZqaPi9Xt8ONT94pGZw5XA5RKQzWFf_g6Y_Oopog@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] hw/dma: xilinx_axidma: Send DMA error IRQ if any
- memory access is failed
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=jim.shu@sifive.com; helo=mail-lf1-x134.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::236;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,239 +96,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 8, 2024 at 9:34=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
-org> wrote:
->
-> On Thu, 1 Aug 2024 at 15:08, Jim Shu <jim.shu@sifive.com> wrote:
-> >
-> > The memory transactions from DMA could have bus-error in some cases. If
-> > it is failed, DMA device should send error IRQs.
-> >
-> > Signed-off-by: Jim Shu <jim.shu@sifive.com>
-> > ---
-> >  hw/dma/trace-events    |  1 +
-> >  hw/dma/xilinx_axidma.c | 69 ++++++++++++++++++++++++++++++------------
-> >  2 files changed, 50 insertions(+), 20 deletions(-)
-> >
-> > diff --git a/hw/dma/trace-events b/hw/dma/trace-events
-> > index 4c09790f9a..7db38e0e93 100644
-> > --- a/hw/dma/trace-events
-> > +++ b/hw/dma/trace-events
-> > @@ -47,3 +47,4 @@ pl330_iomem_read(uint32_t addr, uint32_t data) "addr:=
- 0x%08"PRIx32" data: 0x%08"
-> >
-> >  # xilinx_axidma.c
-> >  xilinx_axidma_loading_desc_fail(uint32_t res) "error:%u"
-> > +xilinx_axidma_storing_desc_fail(uint32_t res) "error:%u"
-> > diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
-> > index 6aa8c9272c..728246f925 100644
-> > --- a/hw/dma/xilinx_axidma.c
-> > +++ b/hw/dma/xilinx_axidma.c
-> > @@ -194,6 +194,20 @@ static inline int streamid_from_addr(hwaddr addr)
-> >      return sid;
-> >  }
-> >
-> > +/* When DMA is error, fill in the register of this Stream. */
-> > +static void stream_dma_error(struct Stream *s, MemTxResult result)
-> > +{
-> > +    if (result =3D=3D MEMTX_DECODE_ERROR) {
-> > +        s->regs[R_DMASR] |=3D DMASR_DECERR;
-> > +    } else {
-> > +        s->regs[R_DMASR] |=3D DMASR_SLVERR;
-> > +    }
->
-> The MM2S_DMASR described in this doc:
-> https://docs.amd.com/r/en-US/pg021_axi_dma/MM2S_DMASR-MM2S-DMA-Status-Reg=
-ister-Offset-04h
-> has both DMASlvErr/DMADecErr bits and also
-> SGSlvErr/SGDecErr bits. Is that the wrong documentation
-> for the version of the device we model, or is there
-> a situation where we should be setting the other
-> SlvErr/DecErr bits when we get an error from our
-> memory accesses? Similarly there's a separate
-> S2MM_DMASR in those docs which we don't model at all
-> (so maybe it is the wrong datasheet...)
+From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-I also use this spec (PG021, AXI DMA v7.1). I think it is the right one.
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+---
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-1. For DMASlvErr/DMADecErr & SGSlvErr/SGDecErr
-Spec has Scatter/Gather mode & Direct Register mode. It looks like a
-HW config instead of SW config.
-The SG mode uses MM2S_CURDESC (0x08) / TAIL_DESC (0x10) and direct
-mode uses MM2S_SA (0x18) / MM2S_LENGTH (0x28) to transfer.
-I think the QEMU model only implements SG mode now (S2MM also).
-stream_dma_error() should set SGSlvErr/SGDecErr instead of DMA ones.
-I will fix it in v3.
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 10af212632..a24c2e14d9 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -559,6 +559,7 @@ F: include/hw/xen/
+ F: include/sysemu/xen.h
+ F: include/sysemu/xen-mapcache.h
+ F: stubs/xen-hw-stub.c
++F: docs/system/arm/xenpvh.rst
+ 
+ Guest CPU Cores (NVMM)
+ ----------------------
+-- 
+2.43.0
 
-2. For MM2S & S2MM
-QEMU has implemented 2 Streams. Stream[0] is MM2S and Stream[1] is S2MM.
-The register read/write function will redirect to Stream[0] if addr <
-0x30 and Stream[1] if 0x30 <=3D addr < 0x60.
-stream_dma_error() is based on Stream* so it could support both MM2S & S2MM=
-.
-
->
-> > +
-> > +    s->regs[R_DMACR] &=3D ~DMACR_RUNSTOP;
-> > +    s->regs[R_DMASR] |=3D DMASR_HALTED;
-> > +    s->regs[R_DMASR] |=3D DMASR_ERR_IRQ;
-> > +}
->
->
->
-> > +
-> >  static MemTxResult stream_desc_load(struct Stream *s, hwaddr addr)
-> >  {
-> >      struct SDesc *d =3D &s->desc;
-> > @@ -203,16 +217,7 @@ static MemTxResult stream_desc_load(struct Stream =
-*s, hwaddr addr)
-> >                                              d, sizeof *d);
-> >      if (result !=3D MEMTX_OK) {
-> >          trace_xilinx_axidma_loading_desc_fail(result);
-> > -
-> > -        if (result =3D=3D MEMTX_DECODE_ERROR) {
-> > -            s->regs[R_DMASR] |=3D DMASR_DECERR;
-> > -        } else {
-> > -            s->regs[R_DMASR] |=3D DMASR_SLVERR;
-> > -        }
-> > -
-> > -        s->regs[R_DMACR] &=3D ~DMACR_RUNSTOP;
-> > -        s->regs[R_DMASR] |=3D DMASR_HALTED;
-> > -        s->regs[R_DMASR] |=3D DMASR_ERR_IRQ;
-> > +        stream_dma_error(s, result);
-> >          return result;
-> >      }
-> >
-> > @@ -224,17 +229,24 @@ static MemTxResult stream_desc_load(struct Stream=
- *s, hwaddr addr)
-> >      return result;
-> >  }
-> >
-> > -static void stream_desc_store(struct Stream *s, hwaddr addr)
-> > +static MemTxResult stream_desc_store(struct Stream *s, hwaddr addr)
-> >  {
-> >      struct SDesc *d =3D &s->desc;
-> > +    MemTxResult result;
-> >
-> >      /* Convert from host endianness into LE.  */
-> >      d->buffer_address =3D cpu_to_le64(d->buffer_address);
-> >      d->nxtdesc =3D cpu_to_le64(d->nxtdesc);
-> >      d->control =3D cpu_to_le32(d->control);
-> >      d->status =3D cpu_to_le32(d->status);
-> > -    address_space_write(&s->dma->as, addr, MEMTXATTRS_UNSPECIFIED,
-> > -                        d, sizeof *d);
-> > +    result =3D address_space_write(&s->dma->as, addr, MEMTXATTRS_UNSPE=
-CIFIED,
-> > +                                 d, sizeof *d);
-> > +
-> > +    if (result !=3D MEMTX_OK) {
-> > +        trace_xilinx_axidma_storing_desc_fail(result);
-> > +        stream_dma_error(s, result);
-> > +    }
-> > +    return result;
-> >  }
-> >
-> >  static void stream_update_irq(struct Stream *s)
-> > @@ -294,6 +306,7 @@ static void stream_process_mem2s(struct Stream *s, =
-StreamSink *tx_data_dev,
-> >      uint32_t txlen, origin_txlen;
-> >      uint64_t addr;
-> >      bool eop;
-> > +    MemTxResult result;
-> >
-> >      if (!stream_running(s) || stream_idle(s) || stream_halted(s)) {
-> >          return;
-> > @@ -322,9 +335,14 @@ static void stream_process_mem2s(struct Stream *s,=
- StreamSink *tx_data_dev,
-> >              unsigned int len;
-> >
-> >              len =3D txlen > sizeof s->txbuf ? sizeof s->txbuf : txlen;
-> > -            address_space_read(&s->dma->as, addr,
-> > -                               MEMTXATTRS_UNSPECIFIED,
-> > -                               s->txbuf, len);
-> > +            result =3D address_space_read(&s->dma->as, addr,
-> > +                                        MEMTXATTRS_UNSPECIFIED,
-> > +                                        s->txbuf, len);
-> > +            if (result !=3D MEMTX_OK) {
-> > +                stream_dma_error(s, result);
-> > +                return;
-> > +            }
->
-> In this function we only use result in the immediately following
-> if(), so I think it would be slightly clearer to write them as
->       if (stream_desc_store(...) !=3D MEMTX_OK) {
->           break;
->       }
->
-> without the use of the variable.
-Thanks for the suggestion. I will fix it in v3.
-
->
-> > +
-> >              stream_push(tx_data_dev, s->txbuf, len, eop && len =3D=3D =
-txlen);
-> >              txlen -=3D len;
-> >              addr +=3D len;
-> > @@ -336,7 +354,9 @@ static void stream_process_mem2s(struct Stream *s, =
-StreamSink *tx_data_dev,
-> >
-> >          /* Update the descriptor.  */
-> >          s->desc.status =3D origin_txlen | SDESC_STATUS_COMPLETE;
-> > -        stream_desc_store(s, s->regs[R_CURDESC]);
-> > +        if (stream_desc_store(s, s->regs[R_CURDESC]) !=3D MEMTX_OK) {
-> > +            break;
-> > +        }
-> >
-> >          /* Advance.  */
-> >          prev_d =3D s->regs[R_CURDESC];
-> > @@ -354,6 +374,7 @@ static size_t stream_process_s2mem(struct Stream *s=
-, unsigned char *buf,
-> >      uint32_t prev_d;
-> >      unsigned int rxlen;
-> >      size_t pos =3D 0;
-> > +    MemTxResult result;
-> >
-> >      if (!stream_running(s) || stream_idle(s) || stream_halted(s)) {
-> >          return 0;
-> > @@ -375,8 +396,13 @@ static size_t stream_process_s2mem(struct Stream *=
-s, unsigned char *buf,
-> >              rxlen =3D len;
-> >          }
-> >
-> > -        address_space_write(&s->dma->as, s->desc.buffer_address,
-> > -                            MEMTXATTRS_UNSPECIFIED, buf + pos, rxlen);
-> > +        result =3D address_space_write(&s->dma->as, s->desc.buffer_add=
-ress,
-> > +                                     MEMTXATTRS_UNSPECIFIED, buf + pos=
-, rxlen);
-> > +        if (result !=3D MEMTX_OK) {
-> > +            stream_dma_error(s, result);
-> > +            break;
-> > +        }
-> > +
-> >          len -=3D rxlen;
-> >          pos +=3D rxlen;
-> >
-> > @@ -389,7 +415,10 @@ static size_t stream_process_s2mem(struct Stream *=
-s, unsigned char *buf,
-> >
-> >          s->desc.status |=3D s->sof << SDESC_STATUS_SOF_BIT;
-> >          s->desc.status |=3D SDESC_STATUS_COMPLETE;
-> > -        stream_desc_store(s, s->regs[R_CURDESC]);
-> > +        result =3D stream_desc_store(s, s->regs[R_CURDESC]);
-> > +        if (result !=3D MEMTX_OK) {
-> > +            break;
-> > +        }
->
-> In these two places also we don't need the variable.
-Thanks for the suggestion. I will fix it in v3.
-
->
-> >          s->sof =3D eop;
-> >
-> >          /* Advance.  */
-> > --
->
-> thanks
-> -- PMM
 
