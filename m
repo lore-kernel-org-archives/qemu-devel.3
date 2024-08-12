@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19815C52D7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 17:43:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50F8CC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 17:57:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdZ3M-0002nG-MT; Mon, 12 Aug 2024 13:41:56 -0400
+	id 1sdZHP-0003qm-Qv; Mon, 12 Aug 2024 13:56:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sdZ3K-0002lE-Ac
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 13:41:54 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sdZHN-0003l2-Qg
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 13:56:25 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1sdZ3I-0006Qp-1r
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 13:41:53 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2cb55ff1007so3306574a91.0
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 10:41:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sdZHL-0000nm-T4
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 13:56:25 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3687f8fcab5so2409112f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 10:56:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1723484510; x=1724089310;
- darn=nongnu.org; 
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=UyfrC6TVBoSvo347EZwXiALcTgGA11Jejacv8YIRml0=;
- b=nlsSJbvXp20l0Oi+wLdTDsPyNrlojdncSYK+0hElnJNHtKfDPV7RiKBPBO5l5GBY+c
- qxeAK7TSpHMQGtUDxxp0eSAQpsYaiVE/RzayY+b6rpOnaNzsZJavB2U9rXfWiIRlcoEO
- VrRnPU6e1I/CHiuKOinKGPkgZJo7hawKeuTV4tjZsSNXhmx7DzlW3biI4WoXVvuFyBCm
- 5+3PItkEhpE2YPB59PcE1BREikyhdXxzZTPdmsbTyG7QOrYVgJpWuAUVTmQjHmLE23r0
- CZIiGv0dT7SvXf5KFlvocGUfk0hgrjdpVVgBYcuJbZ2vxlmlmzGmjalDgmc9S4fQvalj
- Krwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723484510; x=1724089310;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=google.com; s=20230601; t=1723485381; x=1724090181; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UyfrC6TVBoSvo347EZwXiALcTgGA11Jejacv8YIRml0=;
- b=vkz26zbAPSA9H7Yd8traR+VaEWsUsT4i0+SzU5qw+qaa3+sa4lRLROQqtSMqN8cGrX
- N+sVx1rG8KT2O9SkQXbCFj7GYIKTC1bq8u0+IsAF0m5JLDeY9r/nIVWIeohTh0TFJp9m
- rAEPYHmac3A5E5qKDij3E8+/BKVzLt0t2HDcBa6EfEFnKaaMiNOUF7JjRmAr1m2YT0EJ
- c486VuhgEHL4+SZkXdpLkeL5Ms67Kvi2tsoZjAieMQH+hpmhUtHnUWs6+ZYElxEPI+y7
- MJ9nqEQh4dQQ7EXFUwJHjEMgpgiB4XFlXSy25vQ3yDklC1p3dmlSvocqtk/NjUpFf2cN
- lESg==
-X-Gm-Message-State: AOJu0YwUxRZrKqQpxODDpl/sEUO8+ZgOeKzpYa1fPdZeiaoHlWWBIYH5
- VyMFyLn0GFzXPQqtyiDnuSi8H+66KtaC6l3cnNMXDnyQwF3JcfjlWQTMFPV/i6s=
-X-Google-Smtp-Source: AGHT+IEUUdMWhGsl/q/z/wSZoE9xn+uALzz2OUNVV+zxQmpzdlaMNFeAiGFg5N3/NFY2u0Cq6nVjDg==
-X-Received: by 2002:a17:90a:f18d:b0:2cf:cc13:471a with SMTP id
- 98e67ed59e1d1-2d3926b8937mr919719a91.43.1723484510003; 
- Mon, 12 Aug 2024 10:41:50 -0700 (PDT)
-Received: from debug.ba.rivosinc.com ([64.71.180.162])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d1fcfe487esm5405683a91.42.2024.08.12.10.41.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Aug 2024 10:41:49 -0700 (PDT)
-Date: Mon, 12 Aug 2024 10:41:47 -0700
-From: Deepak Gupta <debug@rivosinc.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com,
- palmer@dabbelt.com, Alistair.Francis@wdc.com, laurent@vivier.eu,
- bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com
-Subject: Re: [PATCH v3 01/20] accel/tcg: restrict assert on icount_enabled to
- qemu-system
-Message-ID: <ZrpJW0ONiAy+lMCV@debug.ba.rivosinc.com>
-References: <20240807000652.1417776-1-debug@rivosinc.com>
- <20240807000652.1417776-2-debug@rivosinc.com>
- <9c987cbf-f702-4e1f-88d8-82a149c98007@linaro.org>
+ bh=9ucpR89SN6ep8advprvDEEg8bvmnOO1GXRGaE0X67Mo=;
+ b=nfj7ktvX2r1nhi9U2qpPvJNy680cuaPKhUTZdUyAOFk5SDZt1rY2rUYLMoN5b6atC9
+ 6B268v9SHrUyMH7TTv34qcVHfZx+eLk4RvrgZ9f3mLyXQ/qgxsmLVswiqZ9gT1BLsdpA
+ 2pMS6Lgbp4eetGSwaq2S3F8jKND/i1Uw2hZkOlOZTV4LFBJ15Bi5FywaDmFMkbHT8qrH
+ sQ7cr56OIG9Aby05aEiyq+luIPM6FQeyI/3qC0Vj0GOKSOasNGoGuthjRVuG1NCRfZ4Z
+ mmFUTK8roUqs44fR+babdPWBxpYshgbTAFFNEWGnfiX4UT+7FYBr597Q94geUuTBYC7k
+ bSkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723485381; x=1724090181;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9ucpR89SN6ep8advprvDEEg8bvmnOO1GXRGaE0X67Mo=;
+ b=FQH59j7eW8kp336egc5v+4potBMKBi9B5Qc2/7mVFJCj2bZnFh66+7URMJaRz25zil
+ H+YsHbZvwUlBuz9fb18+F5GMCwxXZWl05ULICg3kkAMrxKDFXu8GOzjouXBnS6IfBmyy
+ fnaIeFX3zwEEPmz5F1vdrngvZvtXkzWcp2hMg+gc0uwg46/QMJ0mT/EF1EOy69V60laf
+ k1v29nZPlckBj0PrpkGnNNmbzToMSPvgm6ZjQHI8EJVPAmjemeyRkTi/Ad+ZXt6i/vhL
+ 9ZrKu0ujKVmJb665+b1T4j4jdY/Zp2tx6BiSPf03vZ6TBRUgTLGlQEoR6ECSaz8DSp/q
+ 3yog==
+X-Gm-Message-State: AOJu0Ywq0gYBAJtsDFGFGMyBBcQaOsdqYAQj8FTKmBNuVRRZ2vEESFkX
+ oUroQOHvqEPYTMeL+E5+b0EFEPwgcOHYnmr6pNGfZ99kK1GiUNqbk3WOjvP//Kmts6oomzb7hoU
+ xuBPNcq7jIrKdZKpgwoDnZMge/FML99yHUVGo
+X-Google-Smtp-Source: AGHT+IGy5gO53UM0oJAlohh+4At+0i0l/Vi8pIR52RUwf7WZ6I/jyEACa11eGpb3JDTApRUeJH2/9xzeV7TAt+hsG4U=
+X-Received: by 2002:a05:6000:1bc1:b0:367:926a:7413 with SMTP id
+ ffacd0b85a97d-3716cd2c07bmr713273f8f.63.1723485381094; Mon, 12 Aug 2024
+ 10:56:21 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <9c987cbf-f702-4e1f-88d8-82a149c98007@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=debug@rivosinc.com; helo=mail-pj1-x1036.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <20240805201719.2345596-1-tavip@google.com>
+ <20240805201719.2345596-4-tavip@google.com>
+ <CAFEAcA82c_RZ6512dB1OxpAtinRctkZK7ZyjpxX16Wk7DYZDPg@mail.gmail.com>
+In-Reply-To: <CAFEAcA82c_RZ6512dB1OxpAtinRctkZK7ZyjpxX16Wk7DYZDPg@mail.gmail.com>
+From: Octavian Purdila <tavip@google.com>
+Date: Mon, 12 Aug 2024 10:56:09 -0700
+Message-ID: <CAGWr4cSiNOm1mL6ZC+Dr8bFHz9Dx2R78_we9wL=W6f3FExb-kQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 03/23] scripts: add script to generate C header files
+ from SVD XML files
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, stefanst@google.com, 
+ pbonzini@redhat.com, alex.bennee@linaro.org, thuth@redhat.com, 
+ marcandre.lureau@redhat.com, alistair@alistair23.me, berrange@redhat.com, 
+ philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, bleal@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=tavip@google.com; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,58 +94,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 07, 2024 at 10:48:56AM +1000, Richard Henderson wrote:
->On 8/7/24 10:06, Deepak Gupta wrote:
->>commit 16ad9788 [1] restricted icount to qemu-system only. Although
->>assert in `cpu_loop_exec_tb` is on `icount_enabled()` which is 0 when
->>its qemu-user and debug build starts asserting.
->>Move assert for qemu-system.
->>
->>[1] - https://lists.gnu.org/archive/html/qemu-riscv/2024-01/msg00608.html
->>
->>Signed-off-by: Deepak Gupta <debug@rivosinc.com>
->>---
->>  accel/tcg/cpu-exec.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->>diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
->>index 245fd6327d..8cc2a6104f 100644
->>--- a/accel/tcg/cpu-exec.c
->>+++ b/accel/tcg/cpu-exec.c
->>@@ -927,9 +927,9 @@ static inline void cpu_loop_exec_tb(CPUState *cpu, TranslationBlock *tb,
->>          return;
->>      }
->>+#ifndef CONFIG_USER_ONLY
->>      /* Instruction counter expired.  */
->>      assert(icount_enabled());
->>-#ifndef CONFIG_USER_ONLY
->>      /* Ensure global icount has gone forward */
->>      icount_update(cpu);
->>      /* Refill decrementer and continue execution.  */
+On Mon, Aug 12, 2024 at 8:27=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
+.org> wrote:
 >
->No, this is a real bug.
->
->Just above we handled
->
->  (1) exit for tcg (non-)chaining (!= TB_EXIT_REQUESTED),
->  (2) exit for exception/interrupt (cpu_loop_exit_requested).
->
->The only thing that is left is exit for icount expired.
->And for that we *must* have icount enabled.
->
->How did you encounter this?
 
-I spent last week incorporating your suggestions. And during the flux of it, I started
-seeing this issue again. As soon as I switch to branch from where I sent the patches out,
-this icount assert issue disappears. So something definitley is triggering the issue.
-It happens only when zicfilp and zicfiss are enabled.
+Hi Peter,
 
-I am still trying to root cause and in a fog right now. Although I am not very well versed
-with tcg internals. So any pointer here which could help me debug it faster would be well
-appreciated. Thanks.
+Thanks for the review!
 
 
+> On Mon, 5 Aug 2024 at 21:17, Octavian Purdila <tavip@google.com> wrote:
+> >
+> > From: Stefan Stanacar <stefanst@google.com>
+> >
+> > From: Stefan Stanacar <stefanst@google.com>
+> >
+> > The CMSIS System View Description format(CMSIS-SVD) is an XML based
+> > description of Arm Cortex-M microcontrollers provided and maintained
+> > by sillicon vendors. It includes details such as peripherals registers
+> > (down to bitfields), peripheral register block addresses, reset
+> > values, etc.
+> >
+> > This script uses this information to create header files that makes it
+> > easier to emulate peripherals.
+> >
+> > The script can be used to create either peripheral specific headers or
+> > board / system specific information. The script generated headers are
+> > similar to the SVDConv utility.
+> >
+> > Peripheral specific headers contains information such as register
+> > layout, register names and reset values for registers:
+> >
+> >   typedef struct {
+> >     ...
+> >     union {
+> >       uint32_t PSELID;              /* 0x00000FF8 Peripheral Select and
+> >                                      * Flexcomm module ID */
+> >       struct {
+> >         uint32_t PERSEL : 3;        /* [2..0] Peripheral Select */
+> >         uint32_t LOCK : 1;          /* [3..3] Lock the peripheral selec=
+t */
+> >         uint32_t USARTPRESENT : 1;  /* [4..4] USART present indicator *=
+/
+> >         uint32_t SPIPRESENT : 1;    /* [5..5] SPI present indicator */
+> >         uint32_t I2CPRESENT : 1;    /* [6..6] I2C present indicator */
+> >         uint32_t I2SPRESENT : 1;    /* [7..7] I2S Present */
+> >         uint32_t : 4;
+> >         uint32_t ID : 20;           /* [31..12] Flexcomm ID */
+> >       } PSELID_b;
+> >     };
 >
+> Bitfield layout in C isn't portable, so don't generate this kind
+> of union-of-a-integer-and-some-bitfields, please. You can
+> generate FIELD() macro invocations (see include/hw/registerfields.h)
+> which define shift/mask/length macros that can be used with
+> FIELD_EX*/FIELD_DP* to do extract/deposit operations.
 >
->r~
+
+I see that C bitfields are already used in a few places in qemu. Could
+you please elaborate on the portability issue?
+
+> >     ...
+> >   } FLEXCOMM_Type;                  /* Size =3D 4096 (0x1000) */
+> >
+> >   #define FLEXCOMM_PSELID_PERSEL_Pos (0UL)
+> >   #define FLEXCOMM_PSELID_PERSEL_Msk (0x7UL)
+> >   #define FLEXCOMM_PSELID_LOCK_Pos (3UL)
+> >   #define FLEXCOMM_PSELID_LOCK_Msk (0x8UL)
+> >   ...
+> >
+> >   typedef enum {                /* FLEXCOMM_PSELID_LOCK */
+> >     /* Peripheral select can be changed by software. */
+> >     FLEXCOMM_PSELID_LOCK_UNLOCKED =3D 0,
+> >     /* Peripheral select is locked and cannot be changed until this
+> >      * Flexcomm module or the entire device is reset. */
+> >     FLEXCOMM_PSELID_LOCK_LOCKED =3D 1,
+> >   } FLEXCOMM_PSELID_LOCK_Enum;
+> >   ...
+> >
+> >   #define FLEXCOMM_REGISTER_NAMES_ARRAY(_name) \
+> >     const char *_name[sizeof(FLEXCOMM_Type)] =3D { \
+> >         [4088 ... 4091] =3D "PSELID", \
+> >         [4092 ... 4095] =3D "PID", \
+> >     }
+> >
+> > Board specific headers contains information about peripheral base
+> > register addresses.
+>
+> thanks
+> -- PMM
 
