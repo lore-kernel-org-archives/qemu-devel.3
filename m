@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E038C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 01:27:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 759A6C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 01:37:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdJp7-0007fQ-AU; Sun, 11 Aug 2024 21:26:13 -0400
+	id 1sdJzF-0005t2-Vl; Sun, 11 Aug 2024 21:36:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdJp5-0007eQ-2d
- for qemu-devel@nongnu.org; Sun, 11 Aug 2024 21:26:11 -0400
-Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
+ id 1sdJzE-0005r8-IF; Sun, 11 Aug 2024 21:36:40 -0400
+Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdJp0-0000mw-9u
- for qemu-devel@nongnu.org; Sun, 11 Aug 2024 21:26:10 -0400
-Received: by mail-oi1-x22e.google.com with SMTP id
- 5614622812f47-3db13410adfso2682388b6e.2
- for <qemu-devel@nongnu.org>; Sun, 11 Aug 2024 18:26:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
+ id 1sdJzD-0002DA-5F; Sun, 11 Aug 2024 21:36:40 -0400
+Received: by mail-pg1-x530.google.com with SMTP id
+ 41be03b00d2f7-7a1be7b7bb5so2773103a12.0; 
+ Sun, 11 Aug 2024 18:36:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723425965; x=1724030765; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=z6xT2THnXZqj93xFd52KDjea4XxaO7e57BkQcBd06AY=;
- b=t4hK/Zi5iIR+uLBSTvv4t52ZbvcZEzr+yLiSicLj8L/3Rw4cnKFoL8G3KtzGecfIon
- /5/yOYGKUtMefgEaQ6sfyOUHNkd23jd3fPmW8btH5j1uTvXq9o2WvFnPGt2oRQOM8ous
- CELOH8GyPFoNY5S+H/zxsKvuujpBFnB5VysSDxP8JzkHWMVMjOWJDF0MVP5UKYnF5ddK
- rLbUB+N4h2375nZ/uDYV18HBQ6jmK1EkcrGe7W9ha0MMGhetImRVZHVG4JKkZLjAvqDV
- Y/pH8PK1Zwiq4FAnzLTQgdTQJBWVZ7xd45sTQg+uzaTCW4IGVobbI0UKKYzZW5j+w12d
- E1AA==
+ d=gmail.com; s=20230601; t=1723426596; x=1724031396; darn=nongnu.org;
+ h=content-disposition:content-transfer-encoding:mime-version:subject
+ :references:in-reply-to:message-id:cc:to:from:date:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ifcR1ka3vOqg6/0AbJi89a+iRNbKWhS9OIR/CPFP8IA=;
+ b=L+bHKwyHkYmUaq8U0Ki41wvbn+7qDWBaPzjUrPooD81lbBlsZESCQ/3BAkab+qYsA7
+ RZcDs8yWKp6SErPMGcP69GKgt0pNUP/h5oWwTbJ5QNYSmjQ4P/47ctqCQPbJC97gAtfx
+ rbtZFBitdSBkceb0sXurgoUYIdZeXiG+zc+TLGEVI22I5EFInsEP1UM66K5toxt52fhZ
+ C4O5K8F1FFg7zxAnLIHKuLVQdzpq+uLxjRx8agaDUKXHG01Cbqffg6b68e+YfMQmvrLi
+ 8/CMwXWALesyMLGjU7E/d8jbNg2UNI4sSEyYcMKBZWZAkiHUF1u4cOD3tVX11ET5J9IU
+ xgpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723425965; x=1724030765;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1723426596; x=1724031396;
+ h=content-disposition:content-transfer-encoding:mime-version:subject
+ :references:in-reply-to:message-id:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=z6xT2THnXZqj93xFd52KDjea4XxaO7e57BkQcBd06AY=;
- b=byP9aOih2ub/402FakbnzevAFryvsBjp6PFKkTHmU6pfnr2ss/c+c8Q6SIOPVnTSuG
- ntNVGVVyy1icYhgBTRnfmlqo0e8B25qwMDF8THCYHdptCLR1F9h5QigImMhtdo0q4hez
- THl7pbfYHxZklsdDh+QHS49YgjAXsLLytplS57lgYtfHiGavO1orvNc7FJYNrY8mPaRh
- siEtgUAGO6bJe7jOUwQsq90HoDp6L9di2aDZNdbvlQHVm/PYK+kb5CCwwyOAEBK/+fRB
- Hf9Uo6MLG7rOUcX6NhoxMe+vp14LwYE0oi6SSJ9XAmLOKTYHe93VjgJuSJmu8YEdCzqU
- J+ew==
+ bh=ifcR1ka3vOqg6/0AbJi89a+iRNbKWhS9OIR/CPFP8IA=;
+ b=LxQdTfN3SChVUJIfl5CvCcXq3GffT5b20rQdYxHD/DxTMUExn83EXuzZOHUkgTWu/i
+ naCnok/46QgO3jYh5+iuBfeEevFT+xun04Fu254VLfBQtJuhfZlnj2Mi14FGJngNK/Gb
+ DXi1hFP8FHv+BT9kq+S9/edUm2BaqiFB4YkS8xCUhjk8CIG1G/iEQigTdpWlphbvWmSa
+ S2+fGW3y62gU6pL/0zdfYF2OqG6ow5oCH9p0FTyTkjoYB63j/REKrFY/FAPpO4WUZ1HL
+ In41QAKiXJXctzMlbj3ZvceXtwT+YTTI8VMpP4tnj6ejx7xZx6wkYGFZF4v40E+nnBF6
+ E0Fw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWuLqCsEGfrZXLsQ8YsU4B0378OkGXR0GdjPAAsN2bYNG7ZX3jiKvE3jGVYtmsGC9BjU4xXivMgWeNXl/KmWum6KhjLnvg=
-X-Gm-Message-State: AOJu0Yzn4Nmp9xseYFjkM95SjRtb7U+C4/ClsilG+YQw3WI6UxhHWdZH
- 1sAosq3bdrvTd5gz9K7Ri9C2dZtTCjEh6+/F/mFr3Ji7ocUHVxF5rdjJz/9/DZc=
-X-Google-Smtp-Source: AGHT+IHWU7C9wV+RRYuQwBMdDwpEQM0LmvViyQBNQ72oskn/Dn8blFtDckXRngV8n1pNfs3I78tRXQ==
-X-Received: by 2002:a05:6808:210b:b0:3d6:32d2:2c10 with SMTP id
- 5614622812f47-3dc416dca7emr12352830b6e.31.1723425964546; 
- Sun, 11 Aug 2024 18:26:04 -0700 (PDT)
-Received: from [192.168.1.113] ([203.30.4.111])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7c3dbea1f8fsm3164675a12.78.2024.08.11.18.26.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 11 Aug 2024 18:26:03 -0700 (PDT)
-Message-ID: <c098afe9-d09d-400d-8f2b-9278744a4ad4@linaro.org>
-Date: Mon, 12 Aug 2024 11:25:56 +1000
+ AJvYcCWDtVoXqIF4iVcht7sjqvPylx7UWi1rcpmB/Yrr58iEPcgjMXdWLpGsPBN5QZDnUUDmFFjrT7iRGzXzQTiCu0vTVb6nCYcXyZ+i8jcr56amcP3BnFW1+X94CX9Vl5Q=
+X-Gm-Message-State: AOJu0YwoQ86MYoxzWhuDoGplKM7DDoaQnQINiBwIuS8f55OutxdZIdaN
+ 6rtkESsWdD2D3zrIl2mgMztEdyRLiAWfnz5217K6+5JIqP/LNeoExwbr1Hzv462tT4sb
+X-Google-Smtp-Source: AGHT+IEU2f38eAVUDSlYokOLc7xP7w/VEnxSXpcfJqCG5747auGfc8chsM5odpaupduDkMjk/fdnnA==
+X-Received: by 2002:a17:90a:348f:b0:2c9:8650:404 with SMTP id
+ 98e67ed59e1d1-2d1e80565f6mr9061355a91.30.1723426596275; 
+ Sun, 11 Aug 2024 18:36:36 -0700 (PDT)
+Received: from amjad-pc ([192.228.221.130]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2d1fce30aa3sm3686409a91.9.2024.08.11.18.36.34
+ (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+ Sun, 11 Aug 2024 18:36:35 -0700 (PDT)
+Date: Mon, 12 Aug 2024 09:36:32 +0800
+From: Amjad Alsharafi <amjadsharafi10@gmail.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: "=?utf-8?Q?qemu-devel=40nongnu.org?=" <qemu-devel@nongnu.org>, Hanna
+ Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
+ =?utf-8?Q?open_list=3Avvfat?= <qemu-block@nongnu.org>, qemu-stable
+ <qemu-stable@nongnu.org>
+Message-ID: <090A3ED9-F3F3-4DF3-AC49-F43A3DDC1EC6@getmailspring.com>
+In-Reply-To: <d5b1de9e-2e70-448b-9f8d-57af6f643bf3@tls.msk.ru>
+References: <d5b1de9e-2e70-448b-9f8d-57af6f643bf3@tls.msk.ru>
+Subject: Re: [PATCH v5 0/5] vvfat: Fix write bugs for large files and
+ add iotests
+X-Mailer: Mailspring
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] accel/tcg: clear all TBs from a page when it is
- written to
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-References: <20240809074725.320801-1-npiggin@gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240809074725.320801-1-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Disposition: inline
+Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
+ envelope-from=amjadsharafi10@gmail.com; helo=mail-pg1-x530.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,58 +99,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/9/24 17:47, Nicholas Piggin wrote:
-> This is not a clean patch, but does fix a problem I hit with TB
-> invalidation due to the target software writing to memory with TBs.
-> 
-> Lockup messages are triggering in Linux due to page clearing taking a
-> long time when a code page has been freed, because it takes a lot of
-> notdirty notifiers, which massively slows things down. Linux might
-> possibly have a bug here too because it seems to hang indefinitely in
-> some cases, but even if it didn't, the latency of clearing these pages
-> is very high.
-> 
-> This showed when running KVM on the emulated machine, starting and
-> stopping guests. That causes lots of instruction pages to be freed.
-> Usually if you're just running Linux, executable pages remain in
-> pagecache so you get fewer of these bombs in the kernel memory
-> allocator. But page reclaim, JITs, deleting executable files, etc.,
-> could trigger it too.
-> 
-> Invalidating all TBs from the page on any hit seems to avoid the problem
-> and generally speeds things up.
-> 
-> How important is the precise invalidation? These days I assume the
-> tricky kind of SMC that frequently writes code close to where it's
-> executing is pretty rare and might not be something we really care about
-> for performance. Could we remove sub-page TB invalidation entirely?
-
-Happens on x86 and s390 regularly enough, so we can't remove it.
-
-> @@ -1107,6 +1107,9 @@ tb_invalidate_phys_page_range__locked(struct page_collection *pages,
->       TranslationBlock *current_tb = retaddr ? tcg_tb_lookup(retaddr) : NULL;
->   #endif /* TARGET_HAS_PRECISE_SMC */
->   
-> +    start &= TARGET_PAGE_MASK;
-> +    last |= ~TARGET_PAGE_MASK;
-> +
->       /* Range may not cross a page. */
->       tcg_debug_assert(((start ^ last) & TARGET_PAGE_MASK) == 0);
-
-This would definitely break SMC.
-
-However, there's a better solution.  We're already iterating over all of the TBs on the 
-current page only.  Move *everything* except the tb_phys_invalidate__locked call into the 
-SMC ifdef, and unconditionally invalidate every TB selected in the loop.
-
-We experimented with something like this for aarch64, which used to spend a lot of the 
-kernel startup time invalidating code pages from the (somewhat bloated) EDK2 bios.  But it 
-turned out the bigger problem was address space randomization, and with CF_PCREL the 
-problem appeared to go away.
-
-I don't think we've done any kvm-under-tcg performance testing, but lockup messages would 
-certainly be something to look for...
 
 
-r~
+On Aug 11 2024, at 10:45 pm, Michael Tokarev <mjt@tls.msk.ru> wrote:
+
+> The question here is whenever I should include whole series
+> (5 patches) or just one?  I picked up all 5 for now.
+
+Yeah, we should include all of them (at least the first 4 are required
+for the actual fixes), the last one is unit test for these fixes.
+
+Thanks,
+Amjad
 
