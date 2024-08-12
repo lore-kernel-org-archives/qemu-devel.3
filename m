@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA90C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 01:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D10A0C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 01:48:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdK5V-0002nD-Lg; Sun, 11 Aug 2024 21:43:09 -0400
+	id 1sdKA9-0007MM-OG; Sun, 11 Aug 2024 21:47:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
- id 1sdK5T-0002mi-Gv
- for qemu-devel@nongnu.org; Sun, 11 Aug 2024 21:43:07 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1sdKA7-0007HQ-NN
+ for qemu-devel@nongnu.org; Sun, 11 Aug 2024 21:47:55 -0400
+Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
- id 1sdK5R-0002qR-1m
- for qemu-devel@nongnu.org; Sun, 11 Aug 2024 21:43:07 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-1fc6ee64512so26661735ad.0
- for <qemu-devel@nongnu.org>; Sun, 11 Aug 2024 18:43:01 -0700 (PDT)
+ id 1sdKA6-0003RC-76
+ for qemu-devel@nongnu.org; Sun, 11 Aug 2024 21:47:55 -0400
+Received: by mail-qt1-x82f.google.com with SMTP id
+ d75a77b69052e-44febbc323fso22515901cf.1
+ for <qemu-devel@nongnu.org>; Sun, 11 Aug 2024 18:47:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1723426980; x=1724031780; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=avEVceMifpipUBT6ldxMcEq7G2/EptaN2U+ICKQ1hzo=;
- b=QJMMOiPD22c/hVHLePkr9XUiU3AgvswENdkhNoVLx1b/5RgrcbOAHPOORjsIXKg0mG
- oKC8k5X/b2hv5kjym/PCkxG/v71BSj0dwoh6zFtyy3qZY4EBAS0wkdUWBwhBbLvM0v3M
- 2lw1VFZCBFDZ5ZWWOGYY4B8rDwM1tcGAcFN6PfwUHLUgCkqWCaH1LsbYkTfuwkLQ1dhH
- SW5iUsZOHzyuFo5aO1ywuwsQ9IjndCFswO4XCScDyrENNB4Xk/g0qBVROPMPrqzwIM2J
- ugh1jDBuGjDDctLTG87sg9T2/Bn7WvfZe0QSZ/5FkN4CpJY5ttEE1YLH2/4ahl10dhNf
- yGNw==
+ d=bytedance.com; s=google; t=1723427270; x=1724032070; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:mime-version:from:user-agent
+ :references:in-reply-to:from:to:cc:subject:date:message-id:reply-to;
+ bh=FOgH6pgz2fxZJYKX4Z2eZxcjmBPCUkK7yb9qccCT0r8=;
+ b=bDjwvcV8UOiC9t5yApwqR9w9C0Mm+d4hKn8cXzFCJ8PbGnEDoihxNcKazuRDgFL3GU
+ uiaLAyEyX23tjua0qBu4UmdAsM70vghTQKjRU5ALLm7/KzMGd/hN39+VbRgtZVBvIffw
+ ZBtDQ/D4CTHwF67+bl5D3lW7nzjF3BH/IWuc8ulPuGQQZBlCgsRhZwIrY/UUWlLtfeSo
+ i6NfTP/PTzcoHHh/HdUaA4jSyLmb//02Dv1ose7F5LPsZ8e9QRjGymdcT5UCgVI9OCvv
+ dZkUKmWQtkQWexwRb6fAI5cTLqOdGuggVv5Wt1Qgq7ZcbZvFQG1XOUMx/ozU6N/psGGr
+ hbBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723426980; x=1724031780;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=avEVceMifpipUBT6ldxMcEq7G2/EptaN2U+ICKQ1hzo=;
- b=Qx0gkIpMFS6YYbJFFQW7UbahLj9UVIsMaWX8FcbX6t6Y2TR+5sjFKR9P6OmlZwKEfa
- QT47dMIYE4Zg8MGc2BmrSu0X8gIN1pbpcoznuXfS796xeJZyG7A5T1OyDvs6CmNOFgss
- Df9L3/+nOWs+42VzCsk8taQi6nLWyM/Y10LthhtKlMsN6hvHCbkASdspj3Y4nUYT5icq
- 5NWVcaGl6TxqJgapGtQ2ei4WvHFE+GTSSBCuq03owo5uaE3lKx8/XBAf02atZzSgsA4a
- /jr5g8VadSsYBzvNU9vYtQDMCkcyr+osc2O+VgeJ20Xkc9JBpqn2DFUwRHqNF8UMD/Ra
- pMFg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVdcB2tzR3GXuoCS5wFFP7fyg7HZ6ca3bRpMziMm8+CtjuH5n/9vTiBixKTkZYGBouCTu07jrL11R0XFBfHt/if1CLRgN8=
-X-Gm-Message-State: AOJu0YzSIllEUJhB5PsQfQd9aUUS9buLKhUFw0ndxicajO+YasHjCwvK
- GwltORcrgxc30d0IbkA9Msy5thLDIOkKt5H4a43hXL/N+nVCfKIbTGh/uD/2MCI=
-X-Google-Smtp-Source: AGHT+IH9aXsboGcVo+nQd0vTpKxuJtvE29Ps+J9DQ4bk9MVZPpdMTDbLvA0TMIBA8Sa8jAxKTel4UA==
-X-Received: by 2002:a17:902:d4cf:b0:200:9539:ee8 with SMTP id
- d9443c01a7336-200ae4dbc4emr57948265ad.7.1723426980319; 
- Sun, 11 Aug 2024 18:43:00 -0700 (PDT)
-Received: from always-zbook.bytedance.net ([61.213.176.11])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-200bb7eab09sm27627405ad.41.2024.08.11.18.42.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 11 Aug 2024 18:42:59 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723427270; x=1724032070;
+ h=cc:to:subject:message-id:date:mime-version:from:user-agent
+ :references:in-reply-to:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FOgH6pgz2fxZJYKX4Z2eZxcjmBPCUkK7yb9qccCT0r8=;
+ b=uwtaF7gP2MEQ7mWI/EAfTT+icxg4m3mVcUnkmZSzsH2yw/nUfCc3XDW4zGwlKOknCR
+ SPfo9m5sCIUEVJ305/RS8AiUcs6P717kOM3FSZ0sXF7LzTSs7fZFF/piIXwd2lBX6pMt
+ Ht2GuphFCNoHrbtdegAXM77OsnZegOLpySovJRewd7wryIB3fmZ6W4AOFP4fE2j9YbtT
+ w5PxsZJENg+FFDbpJ/ByZ/PqF0bGzVAUL6a8oDL7Xwt7hUF8jPCUgP7xv48CgoRKTGPX
+ iO51e650nia2CVLiBJ/L7XK684jmVbuW8kxEJkDbmFd4UZyWzWjQZigD5sdz1x4rJo7T
+ tjmA==
+X-Gm-Message-State: AOJu0YzyRJ1gFXRTJqWjDegkmabAq2W1pE+OpHXlFTAeJeSTiWGAuSeA
+ L0sK2VHgrhTKQ2zDL4x6LqU563oUxFypQc6KyxGSH2NybSiALc2mP/MJ7pndLtmCICoYjzOZfzr
+ z1l6AsBtOYz739iM6GEO5Mtt957/0VjpsbBHiBQ==
+X-Google-Smtp-Source: AGHT+IEdTI6SxL3FJvfngH9l2eILCskFt03DoOKYqECfseU2TdQWuf4stXwskJROzLuJMWIhnz4Y8BJmE8qvhZqN06o=
+X-Received: by 2002:a05:622a:1dcc:b0:451:d4ba:5a3e with SMTP id
+ d75a77b69052e-4531254a78dmr72583021cf.1.1723427270275; Sun, 11 Aug 2024
+ 18:47:50 -0700 (PDT)
+Received: from 44278815321 named unknown by gmailapi.google.com with HTTPREST; 
+ Sun, 11 Aug 2024 18:47:49 -0700
+In-Reply-To: <87cymirinn.fsf@pond.sub.org>
+References: <87cymirinn.fsf@pond.sub.org>
+X-Original-From: zhenwei pi <pizhenwei@bytedance.com>
+User-Agent: Mozilla Thunderbird
 From: zhenwei pi <pizhenwei@bytedance.com>
-To: armbru@redhat.com
-Cc: eblake@redhat.com, qemu-devel@nongnu.org, arei.gonglei@huawei.com,
- zhenwei pi <pizhenwei@bytedance.com>
-Subject: [PATCH] qapi: Document QCryptodevBackendServiceType
-Date: Mon, 12 Aug 2024 09:42:52 +0800
-Message-ID: <20240812014252.1398754-1-pizhenwei@bytedance.com>
-X-Mailer: git-send-email 2.43.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=pizhenwei@bytedance.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Mime-Version: 1.0
+Date: Sun, 11 Aug 2024 18:47:49 -0700
+Message-ID: <CABoGon+MhGknWsTx20_2bSLGAz2o7Z80kLFV-7dmryDcJK4fJA@mail.gmail.com>
+Subject: Re: The members of QCryptodevBackendServiceType are undocumented
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000003dcb2d061f72ae62"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
+ envelope-from=pizhenwei@bytedance.com; helo=mail-qt1-x82f.google.com
+X-Spam_score_int: 2
+X-Spam_score: 0.2
+X-Spam_bar: /
+X-Spam_report: (0.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_MUA_MOZILLA=2.309,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,38 +91,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QCryptodevBackendServiceType was introduced by
-bc304a6442e (cryptodev: Introduce server type in QAPI). However there
-is a lack of member description. Thanks to Markus for pointing out
-this.
+--0000000000003dcb2d061f72ae62
+Content-Type: text/plain; charset="UTF-8"
 
-Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
----
- qapi/cryptodev.json | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Hi Markus,
 
-diff --git a/qapi/cryptodev.json b/qapi/cryptodev.json
-index 68289f4984..9622c6d92b 100644
---- a/qapi/cryptodev.json
-+++ b/qapi/cryptodev.json
-@@ -28,6 +28,16 @@
- #
- # The supported service types of a crypto device.
- #
-+# @cipher: Symmetric Key Cipher service
-+#
-+# @hash: Hash service
-+#
-+# @mac: Message Authentication Codes service
-+#
-+# @aead: Authenticated Encryption with Associated Data service
-+#
-+# @akcipher: Asymmetric Key Cipher service
-+#
- # Since: 8.0
- ##
- { 'enum': 'QCryptodevBackendServiceType',
+Sorry for the lack of necessary description. I sent a patch, please
+review it.
+
+On 8/9/24 02:09, Markus Armbruster wrote:
+> Hi Zhenwei Pi,
+>
+> You added the type in commit bc304a6442e (cryptodev: Introduce server
+> type in QAPI). The doc comment describes none of the members. Can you
+> supply me brief descriptions? I'm happy to do the actual patch.
+>
+
 -- 
-2.43.0
+zhenwei pi
 
+--0000000000003dcb2d061f72ae62
+Content-Type: text/html; charset="UTF-8"
+
+<p>Hi Markus,
+<br>
+<br>Sorry for the lack of necessary description. I sent a patch, please
+<br>review it.
+<br>
+<br>On 8/9/24 02:09, Markus Armbruster wrote:
+<br>&gt; Hi Zhenwei Pi,
+<br>&gt; 
+<br>&gt; You added the type in commit bc304a6442e (cryptodev: Introduce server
+<br>&gt; type in QAPI).  The doc comment describes none of the members.  Can you
+<br>&gt; supply me brief descriptions?  I&#39;m happy to do the actual patch.
+<br>&gt; 
+<br>
+<br>-- 
+<br>zhenwei pi</p>
+
+--0000000000003dcb2d061f72ae62--
 
