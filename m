@@ -4,95 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF6A7C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 12:03:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07833C52D7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 12:11:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdTks-0003Oc-MV; Mon, 12 Aug 2024 08:02:30 -0400
+	id 1sdTsn-0002S6-4Q; Mon, 12 Aug 2024 08:10:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sdTkq-0003Kh-T4
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 08:02:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sdTki-0001rq-E0
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 08:02:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723464139;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=R+65iu01NPIv7uWIeGGoac4SWkRO5zqtd9iaInoLAGw=;
- b=e37clh4jh9vVkAXUgbI4vvkBa14ivqF+tvBkxls2JSzKk6/3Gys/bI+xE6bIxyjyJobWYD
- B4hhJraiCmSLyciQ2GnTT4YvBXfxg2BNbuCMihUyMPCCPiS1MX8krs+6KBoJH5voManmmB
- 6im32hVU942pPmPzkwB9LF9z2NWjlYE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-269-pbf17qSMO4KIDatyhO88OQ-1; Mon, 12 Aug 2024 08:02:17 -0400
-X-MC-Unique: pbf17qSMO4KIDatyhO88OQ-1
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4281ca9f4dbso35277035e9.0
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 05:02:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sdTsg-0002Ph-Qi
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 08:10:35 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sdTsX-0003jU-I4
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 08:10:27 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-428e0d184b4so29217315e9.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 05:10:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723464623; x=1724069423; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=xIbgZX1GHg1Z13uZKqim3VCtutqFmMYk6z/bW+QcsX8=;
+ b=NA3DpOOf74qYsbjzedg8DQBKSN9T9vIZ+FTmlmTIE8ssfw0yLy02FjXHnoBe9OQabd
+ RFM82ApHZBwV6/HThUZF4mr2qVjBBdwYfnHW6M3dozGjwc/GvdoeSAvTduW2I/37++AK
+ 3vkb24w+BlUfMiolm4o+xKykKfkgt/N4VCCGqGnbkz7u94Xp0htS5zvgWjqT12VvH+tH
+ BWs+NcuMoOF4ttxRG48C73OO9QcJb2gcR1egU4FmvJ5nJ8JPwkPq6M4NlwbsrBEbtxqy
+ Kty6DDgCB3Jg9KrrDpPj07YdJLaBniNTGVTufFL/A01zZHh/uWohc2YZHAVWUi2SbihW
+ WjPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723464136; x=1724068936;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=R+65iu01NPIv7uWIeGGoac4SWkRO5zqtd9iaInoLAGw=;
- b=kfiHcf1c9Sm06Z1F9OqfYzDs1DTvAE/ArJ2Lgzq8QHkhp3CzrRDI8+NxIz+9a7zJsY
- 6MphoNFmt/Hh8c/XSvTG7N7vxedTj9DZPlohBk+AhC/VGN/IFP3bvB7dUs1qKJEXwF+H
- mqfY/fo56mgqJ9vdGRy2ALi1cPB8Sh1vHsfSelkORNr3NFqFWX7h4NYI+IoUejcyVrWZ
- bZVJ+r0TmU6/9dsj0OjcsVF3fHRv8dnUrCj9wMnMJt+yxCLsDrhkDN7oaD5oJmnhseBB
- SX8P+TZ0tWv3kd0nSBpHpY4EszVnRGAC40QUV+Pq9o20NR7nPXsAnpPmCLjYKp0A/1RL
- Fl5g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXp/XEOhtgWECnHSumh+ITfwTtKFd8AB+4Ni4iT0TJRIb8ltKNyByLDaXRSHuY0XHD8wHMX6cUcvLnz@nongnu.org
-X-Gm-Message-State: AOJu0Yx5JEZ1MHU/BaxsXiwMkUgfaBcFsnXT8MOlHvkcUMoTxZGn3fhO
- WmvDhq4Rbsq10Z7uebHgJEsuy6lUAzQNizjn1Vcav9LzhPq5zwpYglYeVgSVvaRudPSZxhmNtOl
- 3xKe2sQyfOQ+CK4IKgNsEYKBmD361SoD/5CT+eb/8q1LZwY9DxtrU
-X-Received: by 2002:a05:600c:354b:b0:426:6eb9:db07 with SMTP id
- 5b1f17b1804b1-429d4806c91mr1293475e9.13.1723464136503; 
- Mon, 12 Aug 2024 05:02:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHPKds0KQDqWQo7B86uduTnRYkpzEfbrS1jfTZcY8d0bGzXJK/SZcSeNZ7Myq5znt6/xAnuTA==
-X-Received: by 2002:a05:600c:354b:b0:426:6eb9:db07 with SMTP id
- 5b1f17b1804b1-429d4806c91mr1293155e9.13.1723464135879; 
- Mon, 12 Aug 2024 05:02:15 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429c750e57fsm99660975e9.12.2024.08.12.05.02.15
+ d=1e100.net; s=20230601; t=1723464623; x=1724069423;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xIbgZX1GHg1Z13uZKqim3VCtutqFmMYk6z/bW+QcsX8=;
+ b=RkNdFEE4dB/1VE/f4HWsOYR1d7w51VV8kIa9/bgp9rdQD2kE7sc+i5c4/mkLbXS4Sy
+ p+NaS9yRBYofP6xqO+Vab/QoHC6IvnqMChrTWUpPFtd2gGMWI/U8ath3jEQsEwhjWC0u
+ 7XP2P1f1YHzRF5/38eWGy044tf459cLURdlI+jRwzUNwvLX29Vi/mAdY1eeNerrYzdPe
+ OO0sy5rhATYWHLXfGIq5h6STu0x5mzG6fzghYYKiA+/Y/l/U6XkcRQRj/Qk1qb5AIx2g
+ O56BWl9VDkIGLaZ3CHTCWUrR/2qez975uh65UyKqBgnWgpmmDbMlPo8QwIGEJfNKj6PH
+ rZXA==
+X-Gm-Message-State: AOJu0YxH0lDjJRW+pyeRW0lY+eVl2BqHKNKWtvD5PwtwF+R5dSa/QlIn
+ dU+HG3B4TBoe6Pv+MZuxXIjZibZRP4V2UkdjeVD6eOQVxFVOaGgIdnv7fJJe0uSQ2zXKBIepwEl
+ u
+X-Google-Smtp-Source: AGHT+IFiypq1QMZjMGu/TqyduftyJRYD10cYfDAmAs5qnW3c6/vprjxbM/Q4YYF82NkxTtIKlGPNJg==
+X-Received: by 2002:a05:600c:1d81:b0:428:10e3:a000 with SMTP id
+ 5b1f17b1804b1-429d48a576dmr1454795e9.37.1723464623158; 
+ Mon, 12 Aug 2024 05:10:23 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36e4f0a5382sm7268096f8f.112.2024.08.12.05.10.22
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Aug 2024 05:02:15 -0700 (PDT)
-Date: Mon, 12 Aug 2024 14:02:14 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, Peter Maydell <peter.maydell@linaro.org>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 09/10] target/arm: add an experimental mpidr arm cpu
- property object
-Message-ID: <20240812140214.408158b9@imammedo.users.ipa.redhat.com>
-In-Reply-To: <a60316927a84748517209a741bf904a802827b8e.1723119423.git.mchehab+huawei@kernel.org>
-References: <cover.1723119423.git.mchehab+huawei@kernel.org>
- <a60316927a84748517209a741bf904a802827b8e.1723119423.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ Mon, 12 Aug 2024 05:10:22 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL v2 00/10] target-arm queue
+Date: Mon, 12 Aug 2024 13:10:21 +0100
+Message-Id: <20240812121021.1667713-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,93 +91,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu,  8 Aug 2024 14:26:35 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+v2: dropped PMCCNTR patch
 
-> Accurately injecting an ARM Processor error ACPI/APEI GHES
-> error record requires the value of the ARM Multiprocessor
-> Affinity Register (mpidr).
-> 
-> While ARM implements it, this is currently not visible.
-> 
-> Add a field at CPU storing it, and place it at arm_cpu_properties
-> as experimental, thus allowing it to be queried via QMP using
-> qom-get function.
+The following changes since commit 0f397dcfecc9211d12c2c720c01eb32f0eaa7d23:
 
-looks fine to me, but it's upto ARM folk to ack this
+  Merge tag 'pull-nbd-2024-08-08' of https://repo.or.cz/qemu/ericb into staging (2024-08-09 08:40:37 +1000)
 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> ---
->  target/arm/cpu.c    |  1 +
->  target/arm/cpu.h    |  1 +
->  target/arm/helper.c | 10 ++++++++--
->  3 files changed, 10 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index 19191c239181..30fcf0a10f46 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -2619,6 +2619,7 @@ static ObjectClass *arm_cpu_class_by_name(const char *cpu_model)
->  
->  static Property arm_cpu_properties[] = {
->      DEFINE_PROP_UINT64("midr", ARMCPU, midr, 0),
-> +    DEFINE_PROP_UINT64("x-mpidr", ARMCPU, mpidr, 0),
->      DEFINE_PROP_UINT64("mp-affinity", ARMCPU,
->                          mp_affinity, ARM64_AFFINITY_INVALID),
->      DEFINE_PROP_INT32("node-id", ARMCPU, node_id, CPU_UNSET_NUMA_NODE_ID),
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index a12859fc5335..d2e86f0877cc 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -1033,6 +1033,7 @@ struct ArchCPU {
->          uint64_t reset_pmcr_el0;
->      } isar;
->      uint64_t midr;
-> +    uint64_t mpidr;
->      uint32_t revidr;
->      uint32_t reset_fpsid;
->      uint64_t ctr;
-> diff --git a/target/arm/helper.c b/target/arm/helper.c
-> index 8fb4b474e83f..16e75b7c5ed9 100644
-> --- a/target/arm/helper.c
-> +++ b/target/arm/helper.c
-> @@ -4692,7 +4692,7 @@ static uint64_t mpidr_read_val(CPUARMState *env)
->      return mpidr;
->  }
->  
-> -static uint64_t mpidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
-> +static uint64_t mpidr_read(CPUARMState *env)
->  {
->      unsigned int cur_el = arm_current_el(env);
->  
-> @@ -4702,6 +4702,11 @@ static uint64_t mpidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
->      return mpidr_read_val(env);
->  }
->  
-> +static uint64_t mpidr_read_ri(CPUARMState *env, const ARMCPRegInfo *ri)
-> +{
-> +    return mpidr_read(env);
-> +}
-> +
->  static const ARMCPRegInfo lpae_cp_reginfo[] = {
->      /* NOP AMAIR0/1 */
->      { .name = "AMAIR0", .state = ARM_CP_STATE_BOTH,
-> @@ -9723,7 +9728,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
->              { .name = "MPIDR_EL1", .state = ARM_CP_STATE_BOTH,
->                .opc0 = 3, .crn = 0, .crm = 0, .opc1 = 0, .opc2 = 5,
->                .fgt = FGT_MPIDR_EL1,
-> -              .access = PL1_R, .readfn = mpidr_read, .type = ARM_CP_NO_RAW },
-> +              .access = PL1_R, .readfn = mpidr_read_ri, .type = ARM_CP_NO_RAW },
->          };
->  #ifdef CONFIG_USER_ONLY
->          static const ARMCPRegUserSpaceInfo mpidr_user_cp_reginfo[] = {
-> @@ -9733,6 +9738,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
->          modify_arm_cp_regs(mpidr_cp_reginfo, mpidr_user_cp_reginfo);
->  #endif
->          define_arm_cp_regs(cpu, mpidr_cp_reginfo);
-> +        cpu->mpidr = mpidr_read(env);
->      }
->  
->      if (arm_feature(env, ARM_FEATURE_AUXCR)) {
+are available in the Git repository at:
 
+  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240812
+
+for you to fetch changes up to ed5031ad5d4c4c3b6eee6ab21aa95ccfc9dffdd4:
+
+  arm/virt: place power button pin number on a define (2024-08-12 11:40:16 +0100)
+
+----------------------------------------------------------------
+ * Fix BTI versus CF_PCREL
+ * include: Fix typo in name of MAKE_IDENTFIER macro
+ * docs: Various txt-to-rST conversions
+ * hw/core/ptimer: fix timer zero period condition for freq > 1GHz
+ * arm/virt: place power button pin number on a define
+
+----------------------------------------------------------------
+Eric Blake (1):
+      docs: Typo fix in live disk backup
+
+Jianzhou Yue (1):
+      hw/core/ptimer: fix timer zero period condition for freq > 1GHz
+
+Mauro Carvalho Chehab (1):
+      arm/virt: place power button pin number on a define
+
+Peter Maydell (6):
+      include: Fix typo in name of MAKE_IDENTFIER macro
+      docs/specs/rocker.txt: Convert to rST
+      docs/interop/nbd.txt: Convert to rST
+      docs/interop/parallels.txt: Convert to rST
+      docs/interop/prl-xml.txt: Convert to rST
+      docs/interop/prl-xml.rst: Fix minor grammar nits
+
+Richard Henderson (1):
+      target/arm: Fix BTI versus CF_PCREL
+
+ MAINTAINERS                                   |   7 +-
+ docs/interop/index.rst                        |   3 +
+ docs/interop/live-block-operations.rst        |   4 +-
+ docs/interop/nbd.rst                          |  89 ++++++++++++
+ docs/interop/nbd.txt                          |  72 ----------
+ docs/interop/{parallels.txt => parallels.rst} | 108 ++++++++-------
+ docs/interop/prl-xml.rst                      | 192 ++++++++++++++++++++++++++
+ docs/interop/prl-xml.txt                      | 158 ---------------------
+ docs/specs/index.rst                          |   1 +
+ docs/specs/{rocker.txt => rocker.rst}         | 181 ++++++++++++------------
+ include/hw/arm/virt.h                         |   3 +
+ include/qapi/qmp/qobject.h                    |   2 +-
+ include/qemu/atomic.h                         |   2 +-
+ include/qemu/compiler.h                       |   2 +-
+ include/qemu/osdep.h                          |   6 +-
+ target/arm/tcg/helper-a64.h                   |   3 +
+ target/arm/tcg/translate.h                    |   2 -
+ hw/arm/virt-acpi-build.c                      |   6 +-
+ hw/arm/virt.c                                 |   7 +-
+ hw/core/ptimer.c                              |   4 +-
+ target/arm/tcg/helper-a64.c                   |  39 ++++++
+ target/arm/tcg/translate-a64.c                |  64 ++-------
+ tests/unit/ptimer-test.c                      |  33 +++++
+ 23 files changed, 547 insertions(+), 441 deletions(-)
+ create mode 100644 docs/interop/nbd.rst
+ delete mode 100644 docs/interop/nbd.txt
+ rename docs/interop/{parallels.txt => parallels.rst} (72%)
+ create mode 100644 docs/interop/prl-xml.rst
+ delete mode 100644 docs/interop/prl-xml.txt
+ rename docs/specs/{rocker.txt => rocker.rst} (91%)
 
