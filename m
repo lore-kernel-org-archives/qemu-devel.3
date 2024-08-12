@@ -4,72 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2A28C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 14:44:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C7ABC52D7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 14:44:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdWGk-0004bV-1t; Mon, 12 Aug 2024 10:43:35 -0400
+	id 1sdWGl-0004gN-Rb; Mon, 12 Aug 2024 10:43:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sdWGi-0004Zb-K4; Mon, 12 Aug 2024 10:43:32 -0400
-Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ id 1sdWGj-0004az-L1; Mon, 12 Aug 2024 10:43:33 -0400
+Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sdWGg-0001Nx-P9; Mon, 12 Aug 2024 10:43:32 -0400
-Received: by mail-lj1-x234.google.com with SMTP id
- 38308e7fff4ca-2ef2fccca2cso46253041fa.1; 
- Mon, 12 Aug 2024 07:43:29 -0700 (PDT)
+ id 1sdWGi-0001O4-0U; Mon, 12 Aug 2024 10:43:33 -0400
+Received: by mail-lf1-x130.google.com with SMTP id
+ 2adb3069b0e04-52f024f468bso5171889e87.1; 
+ Mon, 12 Aug 2024 07:43:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723473807; x=1724078607; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wGyo4Ota7IN9p3OAlFvfW6UPVbQjlVeiFu4N+jDzYsA=;
- b=McN0BS/SRrJcTJ0MOUDloIouoV4sEd+UCaMbkjnYe5gQMr34QuepckZR25LqSUcl4e
- BgH4pf1aQdK+VX2f591HnUALthXl+DLMhUI51M23Kb4UWS3wM4o8kA+EXgC9P6lzfMak
- t/1auDs5G2rPoJwZo7YpaQQSgzR2nLVGYZuAZpzv9blrrzyo9KZ2CLgC6cDXSeIOCemS
- ttDM78ljAVZcPArQYjEsiqX8ao4hd+NQ51f/Ot+MZ/IKXM1lWSWsV3+1R8Pnw2UWsxed
- 8tGvduxV8d1WqMNCkKLNqRvZ3WXc4TyXESotrEcacOkAbvhnBEN02BPrYRNsNm1jxyMf
- cJFw==
+ d=gmail.com; s=20230601; t=1723473808; x=1724078608; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aE4+bm/WlAJwN7K37bybt8OEBMbcZEQbXCjQ/C6PfO0=;
+ b=BMJveVTqpZFMc7tFghYHam8BGs1ELKrTOn5XDrWx+Zqy5k1hw+TaQkEHcpmzVMrFlc
+ CiAY3YyZdRt4m56BT8a2O+oxI6M6/nKsLndQ+S0bJiLoKlWBxQ1QE81ASSfvrsAVercF
+ Wr3KaoXzkjtkESsxssJZBx8pbiDQIcc6nPEhWJhXH47wSpMd7QM5AEDoqVldTOkE8G0l
+ GnR2YZlyLCyARr+fKq5l1YnKkRkYnQ5I960nzb3BT7cxkAS5YP/OnxqJjSjuvgmaMRd4
+ BJHvkyy6BqYh9UKNegHkNswVEmRQyHhRvgpY1UuqscPFBLPdVJQc745hVvy9OFyiJXps
+ oO5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723473807; x=1724078607;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wGyo4Ota7IN9p3OAlFvfW6UPVbQjlVeiFu4N+jDzYsA=;
- b=whscoAXE8eyGKkNseRPnFLEYP0u3AnDwLnh0/VaNbX5yduz4QDGVeKIQgyLX2aDl4v
- WxDpAiw/w6A1RYG2oACraCprXCjFW8fSKiLOgheEsDsG0bC+PYnxvvxFuv96bVldUiP5
- cQpwB+9u7/TiMc5uElapV4fHy3OjKVDSaCuwOKMbuK/fqDvWooEEWYK7LmmxGCrpc1Yz
- qRwass2LxsNbel4u1XnF3SWixOqJuJ/TJw/eN69SJD6tUyweYzC1gJ5f2i6nj1AXALOn
- hr676obAkzjQHye81VOcS5p8syNdaTISWWXoRz4ROq51OnxxqKBykYF6VIAZ/PAP5GM3
- 5PBQ==
+ d=1e100.net; s=20230601; t=1723473808; x=1724078608;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=aE4+bm/WlAJwN7K37bybt8OEBMbcZEQbXCjQ/C6PfO0=;
+ b=aa51mtEdEJfemyn6ZtTrBlHzkK8iDm1fqSXUczEZHepvlTQqi1geKCMk757msvpwYz
+ XO884/X/RBKCh2ijRut0tGFNRXfoR2Ofrg2WAFSCwctH8YIpwtAUhS6ZJ2vhhgE/5hyQ
+ ovIWqQVkWjUEuATIlRU90w3FOZw71/gLDX1uQh7okGD5YkOM0dEaK9fhAbROJmdNj3Id
+ bMlktfrPDfVojaZ9gTsjoQzsfSijBjHr7rWsOjZ0FZHT6wdFWVwgug3oWY2sv1vuGIth
+ CnV6Pfh/qBpcir2KNytNlRcHmCymAoJ3AmtNDMo6DhnkF3DePsmWUOI5X8QwzJ8MYU0E
+ 0Leg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU0NOq8aaV7E7Zo9SkQjhLUKlCRIbFdZF9T39zHnqLjJ6ynTlsQbCI8F3RMt57xawocQVzRp72Xa6UQ5+qvxPiGKMgzK/M=
-X-Gm-Message-State: AOJu0YxplpxIoAR0N7rAtje2S5tCcZUiRk4ZyJFUodB+GYlwUif/n+rs
- FKUa1zH0gQM2cJbuTmDyWFFfgigYVFnreWptx27fgmVp+gXn6VJINKYY0BT0
-X-Google-Smtp-Source: AGHT+IHf+GrcNeCgfTASMEzpaI+gz8P1yuoD2MuDnfhR6ptYtAz+9LKwVOD0MRrD2jHO9uREr+DluA==
-X-Received: by 2002:a2e:97c6:0:b0:2f2:9048:f55 with SMTP id
- 38308e7fff4ca-2f2b7154333mr2776361fa.25.1723473806744; 
- Mon, 12 Aug 2024 07:43:26 -0700 (PDT)
+ AJvYcCX7Nj2pO304fySKK12MzD39lMqr5KpOz1h9a0xvcfTz0ymteHjG+RY/8ZVf2ck77XDlLFJcQsDawkyYXZf33+mxtPZQznU=
+X-Gm-Message-State: AOJu0YxhW7HkvABl/jSaCnqEZdeVJZtayMGL+ZP0O0WrgBxyls7UfD9F
+ 6ga+tyhoTPOOY+EOhYamQLwJ3uAwYyWJt8z/9xK1+NyTZgpA5Kp1nQz3o0QH
+X-Google-Smtp-Source: AGHT+IFBVXPG5a3J8X9bFIba0ol4U7iEe+ReKmQ8hWkrIlU48DzNPL4um1hq5nWbnv27hylKhDab3A==
+X-Received: by 2002:a05:6512:3e1e:b0:530:aa82:a4fc with SMTP id
+ 2adb3069b0e04-53213692694mr281510e87.37.1723473807986; 
+ Mon, 12 Aug 2024 07:43:27 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2f291df3be5sm8649931fa.29.2024.08.12.07.43.26
+ 2adb3069b0e04-53200f1b2c0sm754299e87.212.2024.08.12.07.43.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Aug 2024 07:43:26 -0700 (PDT)
+ Mon, 12 Aug 2024 07:43:27 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, edgar.iglesias@amd.com,
  qemu-block@nongnu.org
-Subject: [PATCH v1 0/1] block/file-posix: Avoid maybe-uninitialized warning
-Date: Mon, 12 Aug 2024 16:43:22 +0200
-Message-ID: <20240812144324.116343-1-edgar.iglesias@gmail.com>
+Subject: [PATCH v1 1/1] block/file-posix: Avoid maybe-uninitialized warning
+Date: Mon, 12 Aug 2024 16:43:23 +0200
+Message-ID: <20240812144324.116343-2-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240812144324.116343-1-edgar.iglesias@gmail.com>
+References: <20240812144324.116343-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::234;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x234.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::130;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,59 +97,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-Hi,
+Avoid a maybe-uninitialized warning in raw_refresh_zoned_limits()
+by initializing zoned.
 
-I ran into the following build-warning when building QEMU
-with GCC 14.1.0:
-[925/1857] Compiling C object libblock.a.p/block_file-posix.c.o
-FAILED: libblock.a.p/block_file-posix.c.o=20
-aarch64-poky-linux-gcc -mcpu=3Dcortex-a57+crc -mbranch-protection=3Dstandar=
-d -fstack-protector-strong -O2 -D_FORTIFY_SOURCE=3D2 -Wformat -Wformat-secu=
-rity -Werror=3Dformat-security --sysroot=3D/opt/yoxen/arm64/sysroots/cortex=
-a57-poky-linux -Ilibblock.a.p -I. -I../qemu -Iqapi -Itrace -Iui -Iui/shader=
- -Iblock -I/opt/yoxen/arm64/sysroots/cortexa57-poky-linux/usr/include/glib-=
-2.0 -I/opt/yoxen/arm64/sysroots/cortexa57-poky-linux/usr/lib/glib-2.0/inclu=
-de -fdiagnostics-color=3Dauto -Wall -Winvalid-pch -Werror -std=3Dgnu11 -O2 =
--g -fstack-protector-strong -Wempty-body -Wendif-labels -Wexpansion-to-defi=
-ned -Wformat-security -Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthro=
-ugh=3D2 -Winit-self -Wmissing-format-attribute -Wmissing-prototypes -Wneste=
-d-externs -Wold-style-declaration -Wold-style-definition -Wredundant-decls =
--Wshadow=3Dlocal -Wstrict-prototypes -Wtype-limits -Wundef -Wvla -Wwrite-st=
-rings -Wno-missing-include-dirs -Wno-psabi -Wno-shift-negative-value -isyst=
-em /home/edgar/src/c/qemu/qemu/linux-headers -isystem linux-headers -iquote=
- . -iquote /home/edgar/src/c/qemu/qemu -iquote /home/edgar/src/c/qemu/qemu/=
-include -iquote /home/edgar/src/c/qemu/qemu/host/include/aarch64 -iquote /h=
-ome/edgar/src/c/qemu/qemu/host/include/generic -D_GNU_SOURCE -D_FILE_OFFSET=
-_BITS=3D64 -D_LARGEFILE_SOURCE -fno-strict-aliasing -fno-common -fwrapv -ft=
-rivial-auto-var-init=3Dzero -fzero-call-used-regs=3Dused-gpr -O2 -pipe -g -=
-feliminate-unused-debug-types -Os -fPIE -MD -MQ libblock.a.p/block_file-pos=
-ix.c.o -MF libblock.a.p/block_file-posix.c.o.d -o libblock.a.p/block_file-p=
-osix.c.o -c ../qemu/block/file-posix.c
-In function =E2=80=98raw_refresh_zoned_limits=E2=80=99,
-    inlined from =E2=80=98raw_refresh_limits=E2=80=99 at ../qemu/block/file=
--posix.c:1522:5:
-../qemu/block/file-posix.c:1405:17: error: =E2=80=98zoned=E2=80=99 may be u=
-sed uninitialized [-Werror=3Dmaybe-uninitialized]
- 1405 |     if (ret < 0 || zoned =3D=3D BLK_Z_NONE) {
+With GCC 14.1.0:
+In function ‘raw_refresh_zoned_limits’,
+    inlined from ‘raw_refresh_limits’ at ../qemu/block/file-posix.c:1522:5:
+../qemu/block/file-posix.c:1405:17: error: ‘zoned’ may be used uninitialized [-Werror=maybe-uninitialized]
+ 1405 |     if (ret < 0 || zoned == BLK_Z_NONE) {
       |         ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
-../qemu/block/file-posix.c:1401:20: note: =E2=80=98zoned=E2=80=99 was decla=
-red here
+../qemu/block/file-posix.c:1401:20: note: ‘zoned’ was declared here
  1401 |     BlockZoneModel zoned;
       |                    ^~~~~
 cc1: all warnings being treated as errors
 
-It looks like a false positive and this fix avoids the warning.
-
-Cheers,
-Edgar
-
-Edgar E. Iglesias (1):
-  block/file-posix: Avoid maybe-uninitialized warning
-
+Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+---
  block/file-posix.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---=20
+diff --git a/block/file-posix.c b/block/file-posix.c
+index ff928b5e85..90fa54352c 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -1398,7 +1398,7 @@ static void raw_refresh_zoned_limits(BlockDriverState *bs, struct stat *st,
+                                      Error **errp)
+ {
+     BDRVRawState *s = bs->opaque;
+-    BlockZoneModel zoned;
++    BlockZoneModel zoned = BLK_Z_NONE;
+     int ret;
+ 
+     ret = get_sysfs_zoned_model(st, &zoned);
+-- 
 2.43.0
 
 
