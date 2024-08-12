@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D14E2C52D7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 00:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61D33C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 00:50:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdJFH-0006fX-If; Sun, 11 Aug 2024 20:49:11 -0400
+	id 1sdJFi-0000Vi-Dk; Sun, 11 Aug 2024 20:49:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sdJFF-0006Xf-KJ; Sun, 11 Aug 2024 20:49:09 -0400
-Received: from mail-ua1-x92b.google.com ([2607:f8b0:4864:20::92b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sdJFh-0000RV-EX
+ for qemu-devel@nongnu.org; Sun, 11 Aug 2024 20:49:37 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sdJFE-000274-1q; Sun, 11 Aug 2024 20:49:09 -0400
-Received: by mail-ua1-x92b.google.com with SMTP id
- a1e0cc1a2514c-84118fa2af4so1201318241.1; 
- Sun, 11 Aug 2024 17:49:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sdJFf-00029f-Pz
+ for qemu-devel@nongnu.org; Sun, 11 Aug 2024 20:49:37 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-7a263f6439eso2320296a12.3
+ for <qemu-devel@nongnu.org>; Sun, 11 Aug 2024 17:49:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723423746; x=1724028546; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xPNkrFJPCoRIIum9aNz21BUcZj0+lt1ejbtPX4ZRjGg=;
- b=CQ49tUwMP0nZ3Kxq15tg3yt6em10hmaUDMrkK1bHf65qwNWAodWLldx9Rhelh8Cuzi
- SOCEMhztIvrpCHfT9idktk5KcYtm2ibUvLbCd+A/96yD/ZWjMfwiiMrAvCA2Xykyi9Mb
- Ah1JZNHabf7XskNTBH6K9oG4RWXeuLTm2+Nc3iNZGRs8Ou3c/oR2Eh1/qbcdQSyFx2oC
- jZfhHRtQdYKN1QxjCoYuJYkey1JNoU7swk+taVAAP0Eo/wj4fmLG6A7bltfaM9boDM7c
- 0QXf1yyQ0G4c5Vw4pnEJ5EuRjsZRxzPdZmtRoiIZ3hx913TyeaGvfbLjLeaZYR68GHxe
- kYtA==
+ d=linaro.org; s=google; t=1723423774; x=1724028574; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zHTax/FkRkPPuizBy457CfLinJ6lRsDxMFgWMKhBR1M=;
+ b=P7ASzGGvab4qbX+tdC1/rzWvgBtwHXeDg49JpWSWfMkV9KPSRIhBD5mojPP79vTmrN
+ LX/aqDuIVxOxWlybvAiFwv5x+yw7ntV1GCtR5SEFisRre7km9MEIY/d+kq4+2os9yjNE
+ WN2W5TjX9ODbWZeROJ++6ZXVOnwipHon+rS1GfWkwZmIsMfTLWflvWqFpnbf0zwg3R9p
+ z2mZYeqwluCkP8igGHj80vdXGL0jKbaol5t9W/5Q48M8lDbXqRnzOP2MpEL8/b79b8A7
+ /pIVlQTINpQGmz96i20uxkgpWb7TSIEi8CchYyFh5gWLi49Uq57mfNbQRT5JD6mKir2q
+ zPlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723423746; x=1724028546;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xPNkrFJPCoRIIum9aNz21BUcZj0+lt1ejbtPX4ZRjGg=;
- b=xHrdU7v3vluKTGeSLy8M8Z0J8wuK9S9fdaJzw179hoT5KmKLbQ55fYUCgN3bhsoWBe
- L506OwTvr+GwFLFxpz3qjmXyzKPY1QTFWo+BldzfbsYaipvOo7UTZdal6TfG+/wRvkQr
- Jts6EsMiuh/zpRmskHT5iGozIRZPYsfRnCwq6yIE+5RHq3WtJzkm40a1WcaNfUPNgB7N
- bzaq41Of0gsfnp75DF22BqNKTt57NLqQPh36ptdn6WV1ppgq4neJBpN5nKuxGKZ8JAt1
- loJwJ4yh8elI5PiHPcd1+MsGrFzQM1fcu3tuTOVKdz/GYxaS6XmjeNg1QtHuVqJeNcMu
- f90A==
+ d=1e100.net; s=20230601; t=1723423774; x=1724028574;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zHTax/FkRkPPuizBy457CfLinJ6lRsDxMFgWMKhBR1M=;
+ b=bIgxGSDFklpdSDOOoT6yXwz8W5L8Je+GDXXdUaSM19Vvs/8Vn6dT5p0NXWvDTK6Flk
+ 3ENsi2fCa1veeNiMLWfXXiPJmRokz0jYmOBj7od0KK9hFzcRaUE+Sz8GR+s/0qgc/jQ9
+ u8xwuNdXioT6CNkMLghIm7vX3jVLPZk8VZ+UM71fBh6RtR5YSJSOYPZeVjoxq8heZdn4
+ gSF1J7RiiDIPh7/cHd8f7ybJHzsR96SRpKBpzFedNl2nOgnBYc87u2Jg+/UU5mwOY0sa
+ 012QYcq+Lkq8gf7OL/4F4LcBIZZpa2s94d+sLsOrhGqQTs1KUECRy1KmKLCRdf4PSGS+
+ tIWg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV4tj1x6l3xkdrsCBPV4ZXmQSw1FHOtLRmAw2sX1jhdQ1mVcQtLYMAdK1IwLN45ba9bL/I/cwFl4OtMsMOUGRmQVqk0Vl4=
-X-Gm-Message-State: AOJu0Yzi6kOSexj6YWk9iA41B/hDP5HjQ24y7mPlGGlD6yy22BtEja/N
- AFQj7bha7DqzyqcWuJPudglINC+fTz7tsHkRsj49h6Yj7K2140vEgnRj6L2CW9thnobJQtEBe6C
- M08wK3doGK4n+NJCVNKNWtNMRdFg=
-X-Google-Smtp-Source: AGHT+IENk+nLmV90bSQSpuLU6SUz5Wl26wC9iWg8GjSVgfgHrKWidEXY2X32Iqw+TnwHYPd9NNeh+t0RkJqoPECtPjw=
-X-Received: by 2002:a05:6102:32ce:b0:495:6aeb:a0ed with SMTP id
- ada2fe7eead31-495d83f39b9mr10026256137.3.1723423746531; Sun, 11 Aug 2024
- 17:49:06 -0700 (PDT)
+ AJvYcCWEPRBwyIdrPtX5xnnzeXO2IgSjQabMFkslUYqzjIeppEvYKd/gJQ5c97vzUh1WGkwuW1sP53qcJ1cS@nongnu.org
+X-Gm-Message-State: AOJu0YyugcgyhZiESlHg1M45lJwhsT1Yt5u3DiSgeB74Wt1vJW7K2nfG
+ eUbN9HHjlEjQGeltcUX0vyWFGatNcnCKR/9bkYXmBQ2cdBQZirZBpEB4FCHhB3g=
+X-Google-Smtp-Source: AGHT+IEe10W3+rzITnd1SeQMz2uc8H1/SDjbC7Lv7iYeUIMMzfwoVFfvquVGrkoGLVznirtYXPAb4A==
+X-Received: by 2002:a05:6a20:e687:b0:1c4:c3a1:efbc with SMTP id
+ adf61e73a8af0-1c8a0103750mr5486817637.39.1723423774156; 
+ Sun, 11 Aug 2024 17:49:34 -0700 (PDT)
+Received: from [192.168.1.113] ([203.30.4.111])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-200bb7eed50sm27326635ad.10.2024.08.11.17.49.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 11 Aug 2024 17:49:33 -0700 (PDT)
+Message-ID: <9870b2f3-56d8-4d14-8548-26c8a12b412c@linaro.org>
+Date: Mon, 12 Aug 2024 10:49:26 +1000
 MIME-Version: 1.0
-References: <20240715095702.1222213-1-ethan84@andestech.com>
- <20240715101434.1249621-1-ethan84@andestech.com>
- <CAKmqyKPgqNaT1A0+pk6srrtPQqs6=SUX_etg55hU3rxPbuFVsA@mail.gmail.com>
- <ZrXsFaBndB0zTONi@ethan84-VirtualBox>
-In-Reply-To: <ZrXsFaBndB0zTONi@ethan84-VirtualBox>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 12 Aug 2024 10:48:40 +1000
-Message-ID: <CAKmqyKMAr9oXz99ndNkPFaXvCSaVcr0pskKW=HbrYoBh2qmezg@mail.gmail.com>
-Subject: Re: [PATCH v8 8/8] hw/riscv/virt: Add IOPMP support
-To: Ethan Chen <ethan84@andestech.com>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
- peterx@redhat.com, david@redhat.com, philmd@linaro.org, palmer@dabbelt.com,
- alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com, 
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
- qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92b;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92b.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tcg/loongarch64: Fix tcg_out_movi tcg_debug_assert() error
+To: Michael Tokarev <mjt@tls.msk.ru>, Song Gao <gaosong@loongson.cn>,
+ qemu-devel@nongnu.org
+Cc: git@xen0n.name, maobibo@loongson.cn, yijun@loongson.cn,
+ qemu-stable@nongnu.org
+References: <20240618125044.687443-1-gaosong@loongson.cn>
+ <4f6741dd-35ae-45ac-8a83-2f4c3246c76e@tls.msk.ru>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <4f6741dd-35ae-45ac-8a83-2f4c3246c76e@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,61 +100,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 9, 2024 at 8:14=E2=80=AFPM Ethan Chen <ethan84@andestech.com> w=
-rote:
->
-> On Thu, Aug 08, 2024 at 02:01:13PM +1000, Alistair Francis wrote:
-> >
-> > On Mon, Jul 15, 2024 at 8:15=E2=80=AFPM Ethan Chen via <qemu-devel@nong=
-nu.org> wrote:
-> > >
-> > > - Add 'iopmp=3Don' option to enable IOPMP. It adds an iopmp device vi=
-rt machine
-> > >   to protect all regions of system memory, and configures RRID of CPU=
-.
-> > >
-> > > Signed-off-by: Ethan Chen <ethan84@andestech.com>
-> > > ---
-> > >  docs/system/riscv/virt.rst |  5 +++
-> > >  hw/riscv/Kconfig           |  1 +
-> > >  hw/riscv/virt.c            | 63 ++++++++++++++++++++++++++++++++++++=
-++
-> > >  include/hw/riscv/virt.h    |  5 ++-
-> > >  4 files changed, 73 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
-> > > index 9a06f95a34..9fd006ccc2 100644
-> > > --- a/docs/system/riscv/virt.rst
-> > > +++ b/docs/system/riscv/virt.rst
-> > > @@ -116,6 +116,11 @@ The following machine-specific options are suppo=
-rted:
-> > >    having AIA IMSIC (i.e. "aia=3Daplic-imsic" selected). When not spe=
-cified,
-> > >    the default number of per-HART VS-level AIA IMSIC pages is 0.
-> > >
-> > > +- iopmp=3D[on|off]
-> > > +
-> > > +  When this option is "on", an IOPMP device is added to machine. IOP=
-MP checks
-> > > +  memory transcations in system memory. This option is assumed to be=
- "off".
-> >
-> > We probably should have a a little more here. You don't even mention
-> > that this is the rapid-k model.
->
-> I'll provide more details.
->
-> >
-> > It might be worth adding a `model` field, to make it easier to add
-> > other models in the future. Thoughts?
-> >
->
-> I think the IOPMP model should be a device property and not
-> configured here.
+On 8/12/24 03:43, Michael Tokarev wrote:
+> 18.06.2024 15:50, Song Gao wrote:
+>> On Loongnix 20.5 systems, QEMU configure with option '--enable-debug'
+>> or '--enable-debug-tcg ', booting the Loongnix 20.5 VM in tcg mode
+>> will get an assertion error.
+>>
+>>      "...
+>>      [   31.484992] [drm] Initialized virtio_gpu 0.0.1 0 for virtio1 on minor 0
+>>      qemu-system-loongarch64: /home1/gaosong/code/github/clean/qemu/tcg/loongarch64/tcg- 
+>> target.c.inc:394：tcg_out_movi: 假设 ‘offset_hi == sextreg(offset_hi, 0, 20)’ 失败。
+>>      ./start.sh: 行 14: 2433006 已放弃               (核心已转储)./build/qemu-system- 
+>> loongarch64 --accel tcg -m 8G -cpu la464 -machine virt -smp 8 -serial stdio -bios ./ 
+>> QEMU_EFI.fd -monitor telnet:localhost:4498,server,nowait -device virtio-gpu-pci -net 
+>> nic, -net user -device nec-usb-xhci,id=xhci,addr=0x1b -device usb- 
+>> tablet,id=tablet,bus=xhci.0,port=1 -device usb-kbd,id=keyboard,bus=xhci.0,port=2 -device 
+>> virtio-blk-pci,drive=test -drive if=none,id=test,file=./ 
+>> Loongnix-20.5.cartoon.mini.loongarch64.cn.qcow2 "
+>>
+>> The values of offset_hi and sextreg(offset_hi, 0, 20) are:
+>>
+>>      "[   29.975240] virtio_gpu virtio1: fb0: virtiodrmfb frame buffer device
+>>      offset_hi is 80000
+>>      sextreg(offset_hi, 0, 20) is fffffffffff80000
+>>      offset_hi is 80000
+>>      sextreg(offset_hi, 0, 20) is fffffffffff80000
+>>      offset_hi is 80000
+>>      sextreg(offset_hi, 0, 20) is fffffffffff80000
+>>      ..."
+>>
+>> When pcalau12i + ori is not satisfied, we should use other methods instead,
+>> instead of generating an assertion error.
+> 
+> Hi!
+> 
+> Has this change been forgotten, or is it not needed anymore?
 
-It should be a device property, but then how does a user configure
-that? I guess users can globally set device props, but it's a bit
-clunky
+Fixed with 521d7fb3ebdf88112ed13556a93e3037742b9eb8.
 
-Alistair
+
+r~
 
