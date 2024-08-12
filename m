@@ -4,74 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5071C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 14:25:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2A28C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 14:44:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdVyX-0004Xo-0z; Mon, 12 Aug 2024 10:24:45 -0400
+	id 1sdWGk-0004bV-1t; Mon, 12 Aug 2024 10:43:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sdVyU-0004X9-JI
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 10:24:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sdVyQ-0006sR-Ge
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 10:24:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723472675;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=K+DyPM375l9fLLJ8HmdkzMKiy3UwlRwCWi1WGNQtEAo=;
- b=EGArTzLJDSS9sY3OBBQgaECwnAlO3ynqw1lHF8qlVtT7aif0T6a+5gpLY2w4q1pCWHMYfJ
- lQDbgVh17mWkLOELe3CZaj8VL73iejb7Ua2ShuGBXLmUkyvYFFeOCTke/zBA72LDqvEBFI
- UnM9DsOQ/Off164UZJde5so+U+wazvU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-mWj_Xq15Pi-Cw-q4DGNuUw-1; Mon,
- 12 Aug 2024 10:24:31 -0400
-X-MC-Unique: mWj_Xq15Pi-Cw-q4DGNuUw-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ACC9E1944EB3; Mon, 12 Aug 2024 14:24:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.211])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8FD5219560AE; Mon, 12 Aug 2024 14:24:23 +0000 (UTC)
-Date: Mon, 12 Aug 2024 15:24:20 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Cc: qemu-devel@nongnu.org, graf@amazon.com, agraf@csgraf.de,
- stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com,
- marcel.apfelbaum@gmail.com, philmd@linaro.org
-Subject: Re: [PATCH v3 2/5] machine/nitro-enclave: Add vhost-user-vsock device
-Message-ID: <ZrobFFVV4tN6dueh@redhat.com>
-References: <20240810164502.19693-1-dorjoychy111@gmail.com>
- <20240810164502.19693-3-dorjoychy111@gmail.com>
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sdWGi-0004Zb-K4; Mon, 12 Aug 2024 10:43:32 -0400
+Received: from mail-lj1-x234.google.com ([2a00:1450:4864:20::234])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1sdWGg-0001Nx-P9; Mon, 12 Aug 2024 10:43:32 -0400
+Received: by mail-lj1-x234.google.com with SMTP id
+ 38308e7fff4ca-2ef2fccca2cso46253041fa.1; 
+ Mon, 12 Aug 2024 07:43:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1723473807; x=1724078607; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=wGyo4Ota7IN9p3OAlFvfW6UPVbQjlVeiFu4N+jDzYsA=;
+ b=McN0BS/SRrJcTJ0MOUDloIouoV4sEd+UCaMbkjnYe5gQMr34QuepckZR25LqSUcl4e
+ BgH4pf1aQdK+VX2f591HnUALthXl+DLMhUI51M23Kb4UWS3wM4o8kA+EXgC9P6lzfMak
+ t/1auDs5G2rPoJwZo7YpaQQSgzR2nLVGYZuAZpzv9blrrzyo9KZ2CLgC6cDXSeIOCemS
+ ttDM78ljAVZcPArQYjEsiqX8ao4hd+NQ51f/Ot+MZ/IKXM1lWSWsV3+1R8Pnw2UWsxed
+ 8tGvduxV8d1WqMNCkKLNqRvZ3WXc4TyXESotrEcacOkAbvhnBEN02BPrYRNsNm1jxyMf
+ cJFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723473807; x=1724078607;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wGyo4Ota7IN9p3OAlFvfW6UPVbQjlVeiFu4N+jDzYsA=;
+ b=whscoAXE8eyGKkNseRPnFLEYP0u3AnDwLnh0/VaNbX5yduz4QDGVeKIQgyLX2aDl4v
+ WxDpAiw/w6A1RYG2oACraCprXCjFW8fSKiLOgheEsDsG0bC+PYnxvvxFuv96bVldUiP5
+ cQpwB+9u7/TiMc5uElapV4fHy3OjKVDSaCuwOKMbuK/fqDvWooEEWYK7LmmxGCrpc1Yz
+ qRwass2LxsNbel4u1XnF3SWixOqJuJ/TJw/eN69SJD6tUyweYzC1gJ5f2i6nj1AXALOn
+ hr676obAkzjQHye81VOcS5p8syNdaTISWWXoRz4ROq51OnxxqKBykYF6VIAZ/PAP5GM3
+ 5PBQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU0NOq8aaV7E7Zo9SkQjhLUKlCRIbFdZF9T39zHnqLjJ6ynTlsQbCI8F3RMt57xawocQVzRp72Xa6UQ5+qvxPiGKMgzK/M=
+X-Gm-Message-State: AOJu0YxplpxIoAR0N7rAtje2S5tCcZUiRk4ZyJFUodB+GYlwUif/n+rs
+ FKUa1zH0gQM2cJbuTmDyWFFfgigYVFnreWptx27fgmVp+gXn6VJINKYY0BT0
+X-Google-Smtp-Source: AGHT+IHf+GrcNeCgfTASMEzpaI+gz8P1yuoD2MuDnfhR6ptYtAz+9LKwVOD0MRrD2jHO9uREr+DluA==
+X-Received: by 2002:a2e:97c6:0:b0:2f2:9048:f55 with SMTP id
+ 38308e7fff4ca-2f2b7154333mr2776361fa.25.1723473806744; 
+ Mon, 12 Aug 2024 07:43:26 -0700 (PDT)
+Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-2f291df3be5sm8649931fa.29.2024.08.12.07.43.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 12 Aug 2024 07:43:26 -0700 (PDT)
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: kwolf@redhat.com, hreitz@redhat.com, edgar.iglesias@amd.com,
+ qemu-block@nongnu.org
+Subject: [PATCH v1 0/1] block/file-posix: Avoid maybe-uninitialized warning
+Date: Mon, 12 Aug 2024 16:43:22 +0200
+Message-ID: <20240812144324.116343-1-edgar.iglesias@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240810164502.19693-3-dorjoychy111@gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::234;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x234.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,269 +89,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Aug 10, 2024 at 10:44:59PM +0600, Dorjoy Chowdhury wrote:
-> AWS Nitro Enclaves have built-in vhost-vsock device support which
-> enables applications in enclave VMs to communicate with the parent
-> EC2 VM over vsock. The enclave VMs have dynamic CID while the parent
-> always has CID 3. In QEMU, the vsock emulation for nitro enclave is
-> added using vhost-user-vsock as opposed to vhost-vsock. vhost-vsock
-> doesn't support sibling VM communication which is needed for nitro
-> enclaves.
-> 
-> In QEMU's nitro-enclave emulation, for the vsock communication to CID
-> 3 to work, another process that does the vsock emulation in  userspace
-> must be run, for example, vhost-device-vsock[1] from rust-vmm, with
-> necessary vsock communication support in another guest VM with CID 3.
-> A new mandatory nitro-enclave machine option 'vsock' has been added.
-> The value for this option should be the chardev id from the '-chardev'
-> option for the vhost-user-vsock device to work.
-> 
-> Using vhost-user-vsock also enables the possibility to implement some
-> proxying support in the vhost-user-vsock daemon that will forward all
-> the packets to the host machine instead of CID 3 so that users of
-> nitro-enclave can run the necessary applications in their host machine
-> instead of running another whole VM with CID 3.
-> 
-> [1] https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock
-> 
-> Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> ---
->  backends/hostmem-memfd.c        |   2 -
->  hw/core/machine.c               |  71 +++++++++---------
->  hw/i386/Kconfig                 |   1 +
->  hw/i386/nitro_enclave.c         | 123 ++++++++++++++++++++++++++++++++
->  include/hw/boards.h             |   2 +
->  include/hw/i386/nitro_enclave.h |   8 +++
->  include/sysemu/hostmem.h        |   2 +
->  7 files changed, 174 insertions(+), 35 deletions(-)
-> 
+From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-> diff --git a/hw/i386/nitro_enclave.c b/hw/i386/nitro_enclave.c
-> index 98690c6373..280ab4cc9b 100644
-> --- a/hw/i386/nitro_enclave.c
-> +++ b/hw/i386/nitro_enclave.c
-> @@ -11,11 +11,81 @@
->  #include "qemu/osdep.h"
->  #include "qemu/error-report.h"
->  #include "qapi/error.h"
-> +#include "qom/object_interfaces.h"
->  
-> +#include "chardev/char.h"
-> +#include "hw/sysbus.h"
->  #include "hw/core/eif.h"
->  #include "hw/i386/x86.h"
->  #include "hw/i386/microvm.h"
->  #include "hw/i386/nitro_enclave.h"
-> +#include "hw/virtio/virtio-mmio.h"
-> +#include "hw/virtio/vhost-user-vsock.h"
-> +#include "sysemu/hostmem.h"
-> +
-> +static BusState *find_free_virtio_mmio_bus(void)
-> +{
-> +    BusChild *kid;
-> +    BusState *bus = sysbus_get_default();
-> +
-> +    QTAILQ_FOREACH(kid, &bus->children, sibling) {
-> +        DeviceState *dev = kid->child;
-> +        if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MMIO)) {
-> +            VirtIOMMIOProxy *mmio = VIRTIO_MMIO(OBJECT(dev));
-> +            VirtioBusState *mmio_virtio_bus = &mmio->bus;
-> +            BusState *mmio_bus = &mmio_virtio_bus->parent_obj;
-> +            if (QTAILQ_EMPTY(&mmio_bus->children)) {
-> +                return mmio_bus;
-> +            }
-> +        }
-> +    }
-> +
-> +    return NULL;
-> +}
-> +
-> +static void vhost_user_vsock_init(NitroEnclaveMachineState *nems)
-> +{
-> +    DeviceState *dev = qdev_new(TYPE_VHOST_USER_VSOCK);
-> +    VHostUserVSock *vsock = VHOST_USER_VSOCK(dev);
-> +    BusState *bus;
-> +
-> +    if (!nems->vsock) {
-> +        error_report("A valid chardev id for vhost-user-vsock device must be "
-> +                     "provided using the 'vsock' machine option");
-> +        exit(1);
-> +    }
-> +
-> +    bus = find_free_virtio_mmio_bus();
-> +    if (!bus) {
-> +        error_report("Failed to find bus for vhost-user-vsock device");
-> +        exit(1);
-> +    }
-> +
-> +    Chardev *chardev = qemu_chr_find(nems->vsock);
-> +    if (!chardev) {
-> +        error_report("Failed to find chardev with id %s", nems->vsock);
-> +        exit(1);
-> +    }
-> +
-> +    vsock->conf.chardev.chr = chardev;
-> +
-> +    qdev_realize_and_unref(dev, bus, &error_fatal);
-> +}
+Hi,
 
-Why does this machine need to create the vhost-user-vsock device itself ?
-Doing it this way prevents the mgmt app from changing any of the other
-vsock device settings beyond 'chardev'. The entity creating QEMU can use
--device to create the vsock device.
+I ran into the following build-warning when building QEMU
+with GCC 14.1.0:
+[925/1857] Compiling C object libblock.a.p/block_file-posix.c.o
+FAILED: libblock.a.p/block_file-posix.c.o=20
+aarch64-poky-linux-gcc -mcpu=3Dcortex-a57+crc -mbranch-protection=3Dstandar=
+d -fstack-protector-strong -O2 -D_FORTIFY_SOURCE=3D2 -Wformat -Wformat-secu=
+rity -Werror=3Dformat-security --sysroot=3D/opt/yoxen/arm64/sysroots/cortex=
+a57-poky-linux -Ilibblock.a.p -I. -I../qemu -Iqapi -Itrace -Iui -Iui/shader=
+ -Iblock -I/opt/yoxen/arm64/sysroots/cortexa57-poky-linux/usr/include/glib-=
+2.0 -I/opt/yoxen/arm64/sysroots/cortexa57-poky-linux/usr/lib/glib-2.0/inclu=
+de -fdiagnostics-color=3Dauto -Wall -Winvalid-pch -Werror -std=3Dgnu11 -O2 =
+-g -fstack-protector-strong -Wempty-body -Wendif-labels -Wexpansion-to-defi=
+ned -Wformat-security -Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthro=
+ugh=3D2 -Winit-self -Wmissing-format-attribute -Wmissing-prototypes -Wneste=
+d-externs -Wold-style-declaration -Wold-style-definition -Wredundant-decls =
+-Wshadow=3Dlocal -Wstrict-prototypes -Wtype-limits -Wundef -Wvla -Wwrite-st=
+rings -Wno-missing-include-dirs -Wno-psabi -Wno-shift-negative-value -isyst=
+em /home/edgar/src/c/qemu/qemu/linux-headers -isystem linux-headers -iquote=
+ . -iquote /home/edgar/src/c/qemu/qemu -iquote /home/edgar/src/c/qemu/qemu/=
+include -iquote /home/edgar/src/c/qemu/qemu/host/include/aarch64 -iquote /h=
+ome/edgar/src/c/qemu/qemu/host/include/generic -D_GNU_SOURCE -D_FILE_OFFSET=
+_BITS=3D64 -D_LARGEFILE_SOURCE -fno-strict-aliasing -fno-common -fwrapv -ft=
+rivial-auto-var-init=3Dzero -fzero-call-used-regs=3Dused-gpr -O2 -pipe -g -=
+feliminate-unused-debug-types -Os -fPIE -MD -MQ libblock.a.p/block_file-pos=
+ix.c.o -MF libblock.a.p/block_file-posix.c.o.d -o libblock.a.p/block_file-p=
+osix.c.o -c ../qemu/block/file-posix.c
+In function =E2=80=98raw_refresh_zoned_limits=E2=80=99,
+    inlined from =E2=80=98raw_refresh_limits=E2=80=99 at ../qemu/block/file=
+-posix.c:1522:5:
+../qemu/block/file-posix.c:1405:17: error: =E2=80=98zoned=E2=80=99 may be u=
+sed uninitialized [-Werror=3Dmaybe-uninitialized]
+ 1405 |     if (ret < 0 || zoned =3D=3D BLK_Z_NONE) {
+      |         ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
+../qemu/block/file-posix.c:1401:20: note: =E2=80=98zoned=E2=80=99 was decla=
+red here
+ 1401 |     BlockZoneModel zoned;
+      |                    ^~~~~
+cc1: all warnings being treated as errors
 
+It looks like a false positive and this fix avoids the warning.
 
-> +
-> +static void nitro_enclave_devices_init(NitroEnclaveMachineState *nems)
-> +{
-> +    vhost_user_vsock_init(nems);
-> +}
-> +
-> +static void nitro_enclave_machine_state_init(MachineState *machine)
-> +{
-> +    NitroEnclaveMachineClass *ne_class =
-> +        NITRO_ENCLAVE_MACHINE_GET_CLASS(machine);
-> +    NitroEnclaveMachineState *ne_state = NITRO_ENCLAVE_MACHINE(machine);
-> +
-> +    ne_class->parent_init(machine);
-> +    nitro_enclave_devices_init(ne_state);
-> +}
->  
->  static void nitro_enclave_machine_initfn(Object *obj)
->  {
-> @@ -66,15 +136,68 @@ static void x86_load_eif(X86MachineState *x86ms, FWCfgState *fw_cfg,
->      return;
->  }
->  
-> +static bool create_memfd_backend(MachineState *ms, const char *path,
-> +                                 Error **errp)
-> +{
-> +    Object *obj;
-> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
-> +    bool r = false;
-> +
-> +    obj = object_new(TYPE_MEMORY_BACKEND_MEMFD);
-> +    if (!object_property_set_int(obj, "size", ms->ram_size, errp)) {
-> +        goto out;
-> +    }
-> +    object_property_add_child(object_get_objects_root(), mc->default_ram_id,
-> +                              obj);
-> +
-> +    if (!user_creatable_complete(USER_CREATABLE(obj), errp)) {
-> +        goto out;
-> +    }
-> +    r = object_property_set_link(OBJECT(ms), "memory-backend", obj, errp);
-> +
-> +out:
-> +    object_unref(obj);
-> +    return r;
-> +}
-> +
-> +static char *nitro_enclave_get_vsock_chardev_id(Object *obj, Error **errp)
-> +{
-> +    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
-> +
-> +    return g_strdup(nems->vsock);
-> +}
-> +
-> +static void nitro_enclave_set_vsock_chardev_id(Object *obj, const char *value,
-> +                                               Error **errp)
-> +{
-> +    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
-> +
-> +    g_free(nems->vsock);
-> +    nems->vsock = g_strdup(value);
-> +}
-> +
->  static void nitro_enclave_class_init(ObjectClass *oc, void *data)
->  {
->      MachineClass *mc = MACHINE_CLASS(oc);
->      MicrovmMachineClass *mmc = MICROVM_MACHINE_CLASS(oc);
-> +    NitroEnclaveMachineClass *nemc = NITRO_ENCLAVE_MACHINE_CLASS(oc);
->  
->      mmc->x86_load_linux = x86_load_eif;
->  
->      mc->family = "nitro_enclave_i386";
->      mc->desc = "AWS Nitro Enclave";
-> +
-> +    nemc->parent_init = mc->init;
-> +    mc->init = nitro_enclave_machine_state_init;
-> +
-> +    mc->create_default_memdev = create_memfd_backend;
-> +
-> +    object_class_property_add_str(oc, NITRO_ENCLAVE_VSOCK_CHARDEV_ID,
-> +                                  nitro_enclave_get_vsock_chardev_id,
-> +                                  nitro_enclave_set_vsock_chardev_id);
-> +    object_class_property_set_description(oc, NITRO_ENCLAVE_VSOCK_CHARDEV_ID,
-> +                                          "Set chardev id for vhost-user-vsock "
-> +                                          "device");
->  }
->  
->  static const TypeInfo nitro_enclave_machine_info = {
-> diff --git a/include/hw/boards.h b/include/hw/boards.h
-> index 48ff6d8b93..c268e7f005 100644
-> --- a/include/hw/boards.h
-> +++ b/include/hw/boards.h
-> @@ -308,6 +308,8 @@ struct MachineClass {
->      int64_t (*get_default_cpu_node_id)(const MachineState *ms, int idx);
->      ram_addr_t (*fixup_ram_size)(ram_addr_t size);
->      uint64_t smbios_memory_device_size;
-> +    bool (*create_default_memdev)(MachineState *ms, const char *path,
-> +                                  Error **errp);
->  };
->  
->  /**
-> diff --git a/include/hw/i386/nitro_enclave.h b/include/hw/i386/nitro_enclave.h
-> index a1dada9371..3e302de851 100644
-> --- a/include/hw/i386/nitro_enclave.h
-> +++ b/include/hw/i386/nitro_enclave.h
-> @@ -14,12 +14,20 @@
->  #include "hw/i386/microvm.h"
->  #include "qom/object.h"
->  
-> +/* Machine type options */
-> +#define NITRO_ENCLAVE_VSOCK_CHARDEV_ID "vsock"
-> +
->  struct NitroEnclaveMachineClass {
->      MicrovmMachineClass parent;
-> +
-> +    void (*parent_init)(MachineState *state);
->  };
->  
->  struct NitroEnclaveMachineState {
->      MicrovmMachineState parent;
-> +
-> +    /* Machine type options */
-> +    char *vsock;
->  };
->  
->  #define TYPE_NITRO_ENCLAVE_MACHINE MACHINE_TYPE_NAME("nitro-enclave")
-> diff --git a/include/sysemu/hostmem.h b/include/sysemu/hostmem.h
-> index de47ae59e4..67f45abe39 100644
-> --- a/include/sysemu/hostmem.h
-> +++ b/include/sysemu/hostmem.h
-> @@ -39,6 +39,8 @@ OBJECT_DECLARE_TYPE(HostMemoryBackend, HostMemoryBackendClass,
->   */
->  #define TYPE_MEMORY_BACKEND_FILE "memory-backend-file"
->  
-> +#define TYPE_MEMORY_BACKEND_MEMFD "memory-backend-memfd"
-> +
->  
->  /**
->   * HostMemoryBackendClass:
-> -- 
-> 2.39.2
-> 
+Cheers,
+Edgar
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Edgar E. Iglesias (1):
+  block/file-posix: Avoid maybe-uninitialized warning
+
+ block/file-posix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--=20
+2.43.0
 
 
