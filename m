@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7287C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 23:19:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF164C52D7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 23:20:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdeJK-0000Ey-1v; Mon, 12 Aug 2024 19:18:46 -0400
+	id 1sdeKU-0002Sb-5s; Mon, 12 Aug 2024 19:19:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sdeJI-0000DX-La
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 19:18:44 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1sdeKS-00026v-2T
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 19:19:56 -0400
+Received: from mail-io1-xd35.google.com ([2607:f8b0:4864:20::d35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sdeJ9-0003tt-VH
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 19:18:38 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1ff67158052so31040845ad.0
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 16:18:35 -0700 (PDT)
+ id 1sdeKN-0004Az-HI
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 19:19:53 -0400
+Received: by mail-io1-xd35.google.com with SMTP id
+ ca18e2360f4ac-81f9339e534so172141339f.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 16:19:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723504714; x=1724109514; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723504790; x=1724109590; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=XveoTt72Ig0J1NMgFKGkqnotzijPfu5WMeFb68HnIUc=;
- b=ACE8AwRZr6fAxl01Qjsq2Nfnv+gg8820jFAFvqJM+CRbtrGwoGPZoTKCrGD/l1b2EB
- IwoNe+PPdp6Rjt57z5fyivEtbam292SexnlpqbrvQgW5vH9e71s7ABCzbCqjBl7A+xVp
- VZdvhH2H3YqMLxdetx09RxaZU2VeKsElPxAJ0WRqXnhdxApmYciPsdm+cHtc1QVjKCus
- PwqsTEhjJ6neBXKLfPMH+S/VamTOVvPvxMvVpIwFzJEow/s582czDXmP0Gn/THXVsj+p
- f5czEO4sgdY5YnRz+SPxrO5wT+ZUUS7E/bvJRBv1L++Ye6Ty0u86YBKnS1k9aA2ua65X
- LYVw==
+ bh=fWNG+XA3Vbs0Wl+EDgmMhIYTmY0dH2RTT1Kk3LSn9mQ=;
+ b=CHdqZbeEwE3W3R3TemNFNQz9hZiBXuaw6wVodJCz/Ouf0WaZivq+5/xyIFNX5JaHig
+ nYD8vyxOqZYbUDU2UOoe+P4+x9VI6TwUy9wpyPTVsNTg7FDs89V8a9XhOCxDIDg4ndMS
+ Z35xiMddmrqRRLRrkDpl+uQBGx1wmk0Y8U9388kznt5RXWXZ2sFbEO3BnzeAtEne+vxO
+ WEf/nMyL9XWMACB6IhX77q0cYajUihXZd+pOQbNR89J7RnbNQNBfL4tK6Aoq4rYZcfrc
+ 51My0p1bSfE0iyPqtoXGtgxFnKrplRaICRdKR0xs98FDBuAMsQTkqAFadFabsc8UyB25
+ 4CoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723504714; x=1724109514;
+ d=1e100.net; s=20230601; t=1723504790; x=1724109590;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=XveoTt72Ig0J1NMgFKGkqnotzijPfu5WMeFb68HnIUc=;
- b=R1p1iq3V9dujRzMAe2zWLhAYjrSuMMF4URb7sf4OcYcxoTW3zbSajVf0aMI4NmPe2p
- iCfVwLa3LHuw7LgzKK7/skzgfvvQCIweWZomSW9RK+4UDBzwqs7BKKhmN4PIkRHxbgmN
- tk1Oz0yfmFqVNYTKeoJ6xsdbq8veMOr0sPQnfhtQ1fvnhwrl6/H4oHkc/VwUGyy/nkub
- wIrcXnAHDIMPdrHllvwGfA6YHpgZsH0DN69jmbWpZmmFj6MQ0gxfu/7nhzbMzEBB2Z0e
- nJ+6j5wovfbX2CwqJwCTtodLkvh42iXs5SV/UzdS4elU/N76uY0WHxl5blGZnOpqVup6
- 3gWA==
-X-Gm-Message-State: AOJu0YzPE99Q4olNWJqIouLLC+7Lz4jFA4O6+XAwivpGNt3Cm+YRvYUe
- f7p/BWXSFvmOttlibvswRf/TMRsF1Z4tuwLYfc43baTgW+JP0nGhe5OOnM+xOy1OEtd+4/jzvIn
- 3NFg=
-X-Google-Smtp-Source: AGHT+IEN+F0DTvFJKpujiF3InFCV85vQFfiJB/23reDFUHrBf3TrF3Tsh3DJyQvojGM5C2rslYxFXw==
-X-Received: by 2002:a17:902:ccc7:b0:1fa:d1df:d41e with SMTP id
- d9443c01a7336-201ca1d4959mr23977945ad.58.1723504713931; 
- Mon, 12 Aug 2024 16:18:33 -0700 (PDT)
+ bh=fWNG+XA3Vbs0Wl+EDgmMhIYTmY0dH2RTT1Kk3LSn9mQ=;
+ b=gRtg3+pvBv8eW6ZNuyYi3SnxX/pcMFAvT7PcaVGDoV35tod73/Fl2E6d68nuTv81Km
+ UiGlzDaYpcO06TJWXDZ+GnRS1eSjFxG+6RelzryQwbFNwqpN4XjFW+IZA8Gw8QTfoLTW
+ PljrJjEUbSkBiblKIYwCu7Y/8cUxQNiVBac0b7axOgF3QwNcDDrpugWTbpciTQFUf33G
+ Hts6e34iwbeRfI1TUWcb03kj7zN1HtRxkXLtVByGdREEntPdp7Bge9xJkyODlWyn+rOy
+ aguEI7yDvrjERu2AyVFf4HKXId+76c7fEx3K0R2XR5z+3KtIbPIGziapunQKX+6xCVM0
+ 8OmQ==
+X-Gm-Message-State: AOJu0Yw4daW73HLUdYU0xHjOqLjosGlX32alvfFu5qBGrRQMY9iZH5uq
+ HyW4KVGQGbLQAzht6EwB4awGJngy6d9raXoqjBnBTeS/hahPcCfZ/us7359XlmzMzFg6nkaoA7n
+ M2vE=
+X-Google-Smtp-Source: AGHT+IHPIHVgDYSapFVsS+kONqtg0HuFLedSe8QCIYPHIzIkF8TGzPvOKIli2wAmXZWzAnpYTCTPbg==
+X-Received: by 2002:a05:6e02:1e09:b0:39b:3c0c:c3a6 with SMTP id
+ e9e14a558f8ab-39c478dacb8mr18848265ab.22.1723504789917; 
+ Mon, 12 Aug 2024 16:19:49 -0700 (PDT)
 Received: from linaro.vn.shawcable.net
  ([2604:3d08:9384:1d00:5b09:8db7:b002:cf61])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201cd1bd3d6sm1979005ad.236.2024.08.12.16.18.33
+ d2e1a72fcca58-710e5874e64sm4660650b3a.13.2024.08.12.16.19.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Aug 2024 16:18:33 -0700 (PDT)
+ Mon, 12 Aug 2024 16:19:49 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
+Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2] Reflect recent changes on API (inline ops) and new plugins.
-Date: Mon, 12 Aug 2024 16:18:22 -0700
-Message-Id: <20240812231822.168034-1-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3] docs/devel: update tcg-plugins page
+Date: Mon, 12 Aug 2024 16:19:45 -0700
+Message-Id: <20240812231945.169310-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d35;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-io1-xd35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,6 +95,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
+
+Reflect recent changes on API (inline ops) and new plugins.
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
