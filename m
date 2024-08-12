@@ -4,89 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3376AC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sun, 11 Aug 2024 22:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DF09C52D7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 00:36:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdGyi-00013C-UL; Sun, 11 Aug 2024 18:23:56 -0400
+	id 1sdJ2V-0001ac-AB; Sun, 11 Aug 2024 20:35:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdGyf-00012E-Vy
- for qemu-devel@nongnu.org; Sun, 11 Aug 2024 18:23:54 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sdJ2R-0001YR-8z; Sun, 11 Aug 2024 20:35:55 -0400
+Received: from mail-vk1-xa36.google.com ([2607:f8b0:4864:20::a36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdGyc-00017j-2s
- for qemu-devel@nongnu.org; Sun, 11 Aug 2024 18:23:52 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1fc65329979so34703585ad.0
- for <qemu-devel@nongnu.org>; Sun, 11 Aug 2024 15:23:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sdJ2O-0000ll-PV; Sun, 11 Aug 2024 20:35:55 -0400
+Received: by mail-vk1-xa36.google.com with SMTP id
+ 71dfb90a1353d-4f6d35d59ccso1190126e0c.1; 
+ Sun, 11 Aug 2024 17:35:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723415027; x=1724019827; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=200woV0Waq5KPyQXnG1armcVi5NgaKFdPO/3NpLgxp8=;
- b=qKxXX/7RztlQllOwFGhkkaO4ds7kyXL+6Rg84P6I6CuMh1VNCOSPDupL8BSHB7CiT+
- SgDy+HpPQbIneXa6w7E4PJNfrFF/KEw/G18kq5KySpQp6PqUlDh0zRECOZEk+RjzOfa0
- iGef+w+gFCz7kOpSkqDhCUrC37Kw3G0DVP01uE6j2DpHOdldPi+TZqdtwvJxcs5ZP57u
- 7fc92cu3f6o0wsPH58f+Po3M7jl47L+kMhV7q4w3fzV1IyKzI3SX85WlU+0dGwPE752V
- HRhy1iCNkzu0y0Xql7/MiU8x+K0l0iBh+ZL+LzI3WCDtMfha7T0gehfNwFFL2ZCANYPC
- M16A==
+ d=gmail.com; s=20230601; t=1723422948; x=1724027748; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EzrYYabttT4T0ztN/LBhOT/UhSAY0dsl54ZCAE6alZQ=;
+ b=WB3lHVnxAXkTHogc0gx0VDBhMEfb4TR/3IVbAGbGUJeKQheTPL0nSOrs3Vjtz/KjqD
+ oAamgxG56yffvMqG+nH5RjD/ZMFgK6yLTcpW8ZslbohijuPWqMGuzmGhy4qacaigkebs
+ sqSE0B8+vXqgVx9tb8v+rSGPz7NEe3I05lerbFrl9LY+iINL/znnOEOiqKC0P6inlIB0
+ Gmbkjf0tuPLnbLg1kjyGFesBULGqCQ7A3TeZ+wuMWnjNnTkpSstD1536sI+ULFMA0+DX
+ ZSPV+eJqZfJ2ErrGz8925VbV38lFYmDFntZeErqnO4Xws8TCSP3J4A2ZoyDJTOvEvF7q
+ s1gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723415027; x=1724019827;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=200woV0Waq5KPyQXnG1armcVi5NgaKFdPO/3NpLgxp8=;
- b=TLbl6Tk2e+LrdF1FmnxOfTVWCCU8a8YxgN1Y4McshR+RX1SBIdImGBGIQavSrV5Opw
- /52peuWbRayXHnye5fi5gnLJjYxGtqjMjyHzB1hqnTVTuXjrerXc9Zx2GvP82HPsGDTM
- +Z81zeIZckbOl83gWPmXfwr6KPM3yh20cULIyK4Gz4spZPDcrfpwUVYov8JTR7M2qa8i
- xmfy18b6RzqMz8LhTV1G5bOSR5P/8BAWiODDnLo1W8c90llNnKQyForVMgN7Z1zOahP1
- eVqFTKbC1LYWzZpcUreZAxdRUVmKkYeOrp01M+WpX/ORB4WChv/9bmkYYrEDP5idusM9
- kA+g==
-X-Gm-Message-State: AOJu0YwamO2r3bopwiQvX4IrNYqHC/leHOEd05p+FkIIgUST12i3jGTi
- fG3EoUTTcxC6bIh6MYy56L9sveaDjzsaamv+gTquiWO6pN+1axFCZpP39B/3LCA=
-X-Google-Smtp-Source: AGHT+IGaymqK8zVtfDLYM7UtR+kKdB9K+VbAIc4ifMF1m2D0zX6NOpj2+7mIGXVP/Fb7R/SPz917Fg==
-X-Received: by 2002:a17:902:ccc7:b0:1fd:9e44:e5e9 with SMTP id
- d9443c01a7336-200ae5d3c99mr116261685ad.53.1723415027165; 
- Sun, 11 Aug 2024 15:23:47 -0700 (PDT)
-Received: from [192.168.1.113] ([203.30.4.111])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d1c9dc8988sm6824183a91.48.2024.08.11.15.23.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 11 Aug 2024 15:23:46 -0700 (PDT)
-Message-ID: <cd70d975-2a72-4899-a16a-430b398d19ca@linaro.org>
-Date: Mon, 12 Aug 2024 08:23:38 +1000
+ d=1e100.net; s=20230601; t=1723422948; x=1724027748;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EzrYYabttT4T0ztN/LBhOT/UhSAY0dsl54ZCAE6alZQ=;
+ b=gBYHk9At+BMn9IGT5D/2V/pYOEq8B7eaYKoUZkBVq4CFRbEPuVAap/6o/HxSDZuuuy
+ uGnHCI6rcpAYsdFEVrbGA/ylX5vqQshT25zc9iQpshOT4g3N8njTZv5zfbL8gZPHJ3Bn
+ nCfnaLtcCpbC66E2uOioGk42E0woZzQqrRHBV/Gi3yIdR8Ahh87pLhvK4Brx6+xERNld
+ y1aYhdj9MlZsxATvXmsia87EZb/wl5U1zzqFryMxdzGcClRmofnDPpqvraqUbec8qhwu
+ FKtCIfrdTmYNqcPycbhMIcwcIKDR4QUg5v350KF0HlinoLwUT5bas49SAaWRV0EqTkhe
+ ExzA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXflo+bzJO1WwEPzB6DQWNEF8jCuVTE41BvCOWbLPhjoKrxQvJC0Sdazp/A4pkrTPMkfAEwu3XQU+KD04fi61rfeHGbSMyR4OwTvcQdpgIvG7W9oHhPlCgpOSuuDIHQxLDP8PtTITX5CxU39K1VRKty7CfH6w==
+X-Gm-Message-State: AOJu0YzT4PS7Ex1WyncWa7QjFCtbTpBVHyj9ynV/eJe08w5DBUcEig4e
+ 3zibjVhAp3B95wzx7uEgA/m+lSsTdptqSfASpWtxr2oUn132F2aQZMSIUi7t+DFmJusAUa7/D2l
+ FLGp+bbEki4KMnp+pC9fCrSqu9wI=
+X-Google-Smtp-Source: AGHT+IHm0GTgC3wMt8A1F0buXlD4g3XacumzoPqkK6O3iagTTl2Ygs4dwp6bwklEN7joGxTFOuFtuX8TkUYFxsHUy1E=
+X-Received: by 2002:a05:6122:46a4:b0:4f5:3048:ee20 with SMTP id
+ 71dfb90a1353d-4f912bfb3a5mr5482158e0c.5.1723422948293; Sun, 11 Aug 2024
+ 17:35:48 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 14/20] target/riscv: mmu changes for zicfiss shadow
- stack protection
-To: Deepak Gupta <debug@rivosinc.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pbonzini@redhat.com,
- palmer@dabbelt.com, Alistair.Francis@wdc.com, laurent@vivier.eu,
- bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com
-References: <20240807000652.1417776-1-debug@rivosinc.com>
- <20240807000652.1417776-15-debug@rivosinc.com>
- <bea52a58-12a7-45d1-b610-d577a7540887@linaro.org>
- <ZrZmBhUnTQY1eaC3@debug.ba.rivosinc.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <ZrZmBhUnTQY1eaC3@debug.ba.rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240419110514.69697-1-philmd@linaro.org>
+ <e70bbb7d-7048-493e-b359-88472e73c199@linaro.org>
+ <518c457b-1f02-4d19-a3cc-a1fc6ec81170@tls.msk.ru>
+In-Reply-To: <518c457b-1f02-4d19-a3cc-a1fc6ec81170@tls.msk.ru>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 12 Aug 2024 10:35:22 +1000
+Message-ID: <CAKmqyKM8Y_TWL9568i6qRJ5df3_Muuv-1U+5i0VHKzp9Xa06XQ@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Use get_address() to get address with
+ Zicbom extensions
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>,
+ qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bin.meng@windriver.com>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Christoph Muellner <cmuellner@linux.com>, 
+ Philipp Tomsich <philipp.tomsich@vrull.eu>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Weiwei Li <liwei1518@gmail.com>, Palmer Dabbelt <palmer@rivosinc.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Zhiwei Jiang <jiangzw@tecorigin.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a36;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa36.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,47 +103,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/10/24 04:55, Deepak Gupta wrote:
-> On Wed, Aug 07, 2024 at 01:19:55PM +1000, Richard Henderson wrote:
->> On 8/7/24 10:06, Deepak Gupta wrote:
->>>      int prot = 0;
->>> -    if (pte & PTE_R) {
->>> +    /*
->>> +     * If PTE has read bit in it or it's shadow stack page,
->>> +     * then reads allowed
->>> +     */
->>> +    if ((pte & PTE_R) || sstack_page) {
->>>          prot |= PAGE_READ;
->>>      }
->>
->> I feel like this logic could be simplified somehow.
->> I'll think about it.
-> 
-> Ok let me know.
-> 
->>
->>> @@ -1409,6 +1461,11 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->>>      qemu_log_mask(CPU_LOG_MMU, "%s ad %" VADDR_PRIx " rw %d mmu_idx %d\n",
->>>                    __func__, address, access_type, mmu_idx);
->>> +    /* If shadow stack instruction initiated this access, treat it as store */
->>> +    if (mmu_idx & MMU_IDX_SS_ACCESS) {
->>> +        access_type = MMU_DATA_STORE;
->>> +    }
->>
->> I know you're trying to massage the fault type, but I think this is the wrong place.
-> 
-> Is it okay if I add `mmu_idx` argument to `raise_mmu_exception` ?
-> Inside `raise_mmu_exception`, then based on `mmu_idx == shadow stack index`, I can convert
-> a fault due to access_type=MMU_DATA_LOAD into store page fault.
+On Mon, Aug 12, 2024 at 3:49=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wr=
+ote:
+>
+> 19.04.2024 14:37, Philippe Mathieu-Daud=C3=A9 wrpte:
+> > On 19/4/24 13:05, Philippe Mathieu-Daud=C3=A9 wrote:
+> >> We need to use get_address() to get an address from cpu_gpr[],
+> >> since $zero is "special" (NULL).
+>
+> Hi!
+>
+> Has this change been forgotten, or is it not needed anymore?
+> It's been quite some time since Apr-19..
 
-We have other places where we miss-categorize amo instructions and raise the wrong fault, 
-I think particularly without smp, when we implement amo without host atomic operations. 
-We should perhaps come up with a general purpose solution.
+It's not needed anymore,
+https://patchew.org/QEMU/20240514023910.301766-1-alistair.francis@wdc.com/
+was merged instead
 
-For instance, set TARGET_INSN_START_EXTRA_WORDS to 2.  In the second extra unwind word, 
-set bit 0 to 1 if the instruction should raise STORE_AMO on a read fault.  Handle this in 
-raise_mmu_exception, which would then need to perform the restore and exit itself.
-
-
-r~
+Alistair
 
