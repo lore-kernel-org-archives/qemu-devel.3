@@ -4,93 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B267AC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 10:10:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15089C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 10:18:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdRzz-0001wV-V3; Mon, 12 Aug 2024 06:09:59 -0400
+	id 1sdS7R-0000Eu-7C; Mon, 12 Aug 2024 06:17:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sdRzy-0001vV-9I
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 06:09:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sdS7N-0000CW-1x
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 06:17:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sdRzw-0000aI-R1
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 06:09:58 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sdS7K-0001o1-EL
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 06:17:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723457395;
+ s=mimecast20190719; t=1723457853;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=hcxDp9vgKIuFFaU8kQG0ynaI4kr+dfXA6004gRSj6ZI=;
- b=DQlkzKosCJUL77d6osQDi0SI4NITyF7RBk/OXQ9XlEyvd59VnBwzMr8d1aa93LHHzBwTm4
- jT1mWiqlXaH+W8vXQA/uBObF/h0LecfVTczs6vzrIRrNOffAtesjKAAzgW9BZi1/YqsZ57
- urR0irsGaqpXnjMkryD01JitvnlSjCs=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lVcqCYPpo9W+fFj+K5rl8msH5Np6HFRkYMqj7Uwzb6g=;
+ b=N8DiEVnw7Or0R/HB6v9wSshmcW+c6/0W++bqCDjrD+O9MIrL2l1bUrocc9nIMlGZTQ8sE3
+ tOyndWVEnPMZLfVUAMNpjcgA8wFAKeOnURh7yZADOy4QkMYP/wgKN/e5Tvlw0cxhbZvxGT
+ eSbhArBGNtap+QYNWJaMWJJyJ//bcq8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-389-bm89YiqkMGinNPctuDHQhA-1; Mon, 12 Aug 2024 06:09:54 -0400
-X-MC-Unique: bm89YiqkMGinNPctuDHQhA-1
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4282164fcbcso32578665e9.2
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 03:09:53 -0700 (PDT)
+ us-mta-682-yO1SNTulPr-boAPhC-w5dg-1; Mon, 12 Aug 2024 06:17:31 -0400
+X-MC-Unique: yO1SNTulPr-boAPhC-w5dg-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-428e48612acso49395085e9.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 03:17:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723457393; x=1724062193;
+ d=1e100.net; s=20230601; t=1723457850; x=1724062650;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=hcxDp9vgKIuFFaU8kQG0ynaI4kr+dfXA6004gRSj6ZI=;
- b=LvJxu9nDv6DRg74HwQ2I7UMAvhuDaQgd09MX5ENdJRzN3ty23ivpMFaZGToMnc2Psp
- 19eXnzFQwJWfeONBMpas8OHUZDfeod31kubmQF53Q2nArisgVNo8byvqAwZIBnzL8BzV
- yAcr2vVWRMHf+MCLWVQGENSAttNerMKUYeQRPA+AWxw9ni8PrWeC+A3vwnxP2XbuKF2c
- n+LKFwjXyeCBSMuUg467RXqSE64LDDrWFQbB18W5p6cP68TWUr/uRvQtLHmXMViQLEuk
- OZFSBG9MpXgRgSYFxxmpMTcwyAGAsjArUe9433N6y3dEXVAPtFq/T9W/m2a5YjSiIMKd
- 4ehA==
+ bh=lVcqCYPpo9W+fFj+K5rl8msH5Np6HFRkYMqj7Uwzb6g=;
+ b=njy6sDh5ZpZm3iQh5j9saI56h5tWsIWt5ndLnTDoKUKAyPG5p06zY3KicIKJv4CQWO
+ G/k80qpupmOpFYjwNWAZXJ1mFSiHGu9iRPBYiU4QGVUML6pNtMu5KP0VOyMb6RnTovqJ
+ 6xKJNGKm1C+84cmrvO7SYP6klInPjCEP1nxh87nWdHCsQyw+3VlJzrGKtENgQIILXmJb
+ mmB0QXf5q9AuIJZ3JesTzAnJ6X31+ouxDMfwBxZPfESbUg54yTFLOlbsMik1vzengYJi
+ FgqC84B4NPf/pNxX1j8tzfzz4fCGzN8JmShcKhrGudj9PR5ofY8OmvCfA3zFRyGMTx/F
+ 1HUw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV/n8uxhfR42FVdX7NVuDlWq5FvtqUjsewyzEosU49m3207E0PJDQUQjFolmmgBj2ZUrFJZcJcUrUUawy5/XbCKE6gWWCk=
-X-Gm-Message-State: AOJu0Yxwbjga38ZjaV6EGTLdv5JEQF1l3mru3Kvrf7d5FkDtSrpOhKh2
- 8WHPamk6hGdJoou7eZYFDLgya8JlgsWs9Aml3tQs/1Bd9NNeANsG6X6HDDgLsLDtEYJJ7gwWp/9
- IfMyDecnpi+s3wKKs8cJwZBUtZkMaILqfBwjn+tQVLorIQcTxjr26
-X-Received: by 2002:a05:600c:4e92:b0:428:17b6:bcf1 with SMTP id
- 5b1f17b1804b1-429c3a291f9mr64468835e9.22.1723457392849; 
- Mon, 12 Aug 2024 03:09:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEaTD6nhVMrg3gKFXsOP7qta/EdXczIP4jrbnLLETIxWP72oWheyyPG1Ued8Ij6qudqA6LFeQ==
-X-Received: by 2002:a05:600c:4e92:b0:428:17b6:bcf1 with SMTP id
- 5b1f17b1804b1-429c3a291f9mr64468225e9.22.1723457392384; 
- Mon, 12 Aug 2024 03:09:52 -0700 (PDT)
+ AJvYcCXBY7koiJzANjPXxJhn76T4osACuXz3LQHRprtzSHFj+v2vPOHcNWiYbqQEw3VXxz8NG7Q9dPWtPYjcZgCPLH7jOmGo2sc=
+X-Gm-Message-State: AOJu0Yyqylfpn0piLav3OdfBqg8iXei4iMX+A+xBAebhkkpEndiqwLxv
+ dOTzXW8utZbBrUwRjou+t1Wy8CDqFEAAFV0edmgA6o5aFKlelFBXGV9I+jz2CYXIo++GzQjClbU
+ +FdvOKvGFNh+lwX52qZ/x60m44FI21Js8iym0dzJIPcJUE+fm2VOj
+X-Received: by 2002:a05:600c:a48:b0:428:fcb:962 with SMTP id
+ 5b1f17b1804b1-429c3a5c30fmr69153575e9.36.1723457850102; 
+ Mon, 12 Aug 2024 03:17:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH9KaVH/YQWzNv+camNIPrJrOZ2kXGpngJmHnV3vUr3/NqX5jpx3SkoLO+uMuWYwLmMrltXnQ==
+X-Received: by 2002:a05:600c:a48:b0:428:fcb:962 with SMTP id
+ 5b1f17b1804b1-429c3a5c30fmr69153255e9.36.1723457849535; 
+ Mon, 12 Aug 2024 03:17:29 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-178-125.web.vodafone.de.
  [109.43.178.125]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429c75042e9sm95625855e9.8.2024.08.12.03.09.49
+ 5b1f17b1804b1-429c751b021sm97414005e9.21.2024.08.12.03.17.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Aug 2024 03:09:51 -0700 (PDT)
-Message-ID: <e01dc474-905a-4096-ad76-3bc4d04b23ed@redhat.com>
-Date: Mon, 12 Aug 2024 12:09:48 +0200
+ Mon, 12 Aug 2024 03:17:29 -0700 (PDT)
+Message-ID: <1f645137-c621-4fa3-ace0-415087267a7b@redhat.com>
+Date: Mon, 12 Aug 2024 12:17:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/18] qapi/machine: Rename CpuS390* to S390Cpu, and drop
- 'prefix'
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, andrew@codeconstruct.com.au,
- andrew@daynix.com, arei.gonglei@huawei.com, berrange@redhat.com,
- berto@igalia.com, borntraeger@linux.ibm.com, clg@kaod.org, david@redhat.com,
- den@openvz.org, eblake@redhat.com, eduardo@habkost.net,
- farman@linux.ibm.com, farosas@suse.de, hreitz@redhat.com,
- idryomov@gmail.com, iii@linux.ibm.com, jamin_lin@aspeedtech.com,
- jasowang@redhat.com, joel@jms.id.au, jsnow@redhat.com, kwolf@redhat.com,
- leetroy@gmail.com, marcandre.lureau@redhat.com, marcel.apfelbaum@gmail.com,
- michael.roth@amd.com, mst@redhat.com, mtosatti@redhat.com,
- nsg@linux.ibm.com, pasic@linux.ibm.com, pbonzini@redhat.com,
- peter.maydell@linaro.org, peterx@redhat.com, philmd@linaro.org,
- pizhenwei@bytedance.com, pl@dlhnet.de, richard.henderson@linaro.org,
- stefanha@redhat.com, steven_lee@aspeedtech.com, vsementsov@yandex-team.ru,
- wangyanan55@huawei.com, yuri.benditovich@daynix.com, zhao1.liu@intel.com,
- qemu-block@nongnu.org, qemu-arm@nongnu.org, qemu-s390x@nongnu.org,
- kvm@vger.kernel.org
-References: <20240730081032.1246748-1-armbru@redhat.com>
- <20240730081032.1246748-10-armbru@redhat.com>
+Subject: Re: [PATCH v2 9/9] Avocado tests: allow for parallel execution of
+ tests
+To: Cleber Rosa <crosa@redhat.com>, qemu-devel@nongnu.org
+Cc: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Radoslaw Biernacki <rad@semihalf.com>, Troy Lee <leetroy@gmail.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Beraldo Leal <bleal@redhat.com>,
+ kvm@vger.kernel.org, Joel Stanley <joel@jms.id.au>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, Paul Durrant
+ <paul@xen.org>, Eric Auger <eric.auger@redhat.com>,
+ David Woodhouse <dwmw2@infradead.org>, qemu-arm@nongnu.org,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Steven Lee
+ <steven_lee@aspeedtech.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Leif Lindholm <quic_llindhol@quicinc.com>
+References: <20240806173119.582857-1-crosa@redhat.com>
+ <20240806173119.582857-10-crosa@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -135,19 +138,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240730081032.1246748-10-armbru@redhat.com>
+In-Reply-To: <20240806173119.582857-10-crosa@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -22
 X-Spam_score: -2.3
 X-Spam_bar: --
 X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,22 +166,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/07/2024 10.10, Markus Armbruster wrote:
-> QAPI's 'prefix' feature can make the connection between enumeration
-> type and its constants less than obvious.  It's best used with
-> restraint.
+On 06/08/2024 19.31, Cleber Rosa wrote:
+> The updated Avocado version allows for the execution of tests in
+> parallel.
 > 
-> CpuS390Entitlement has a 'prefix' to change the generated enumeration
-> constants' prefix from CPU_S390_POLARIZATION to S390_CPU_POLARIZATION.
-> Rename the type to S390CpuEntitlement, so that 'prefix' is not needed.
+> While on a CI environment it may not be a good idea to increase the
+> parallelization level in a single runner, developers may leverage that
+> on specific CI runners or on their development environments.
 > 
-> Likewise change CpuS390Polarization to S390CpuPolarization, and
-> CpuS390State to S390CpuState.
+> This also multiplies the timeout for each test accordingly.  The
+> reason is that more concurrency can lead to less resources, and less
+> resources can lead to some specific tests taking longer to complete
+> and then time out.  The timeout factor being used here is very
+> conservative (being equal to the amount of parallel tasks).  The worst
+> this possibly oversized timeout value can do is making users wait a
+> bit longer for the job to finish if a test hangs.
 > 
-> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> Overall, users can expect a much quicker turnaround on most systems
+> with a value such as 8 on a 12 core machine.
+> 
+> Signed-off-by: Cleber Rosa <crosa@redhat.com>
 > ---
+...
+> diff --git a/tests/Makefile.include b/tests/Makefile.include
+> index 537804d101..545b5155f9 100644
+> --- a/tests/Makefile.include
+> +++ b/tests/Makefile.include
+> @@ -94,6 +94,9 @@ TESTS_RESULTS_DIR=$(BUILD_DIR)/tests/results
+>   ifndef AVOCADO_TESTS
+>   	AVOCADO_TESTS=tests/avocado
+>   endif
+> +ifndef AVOCADO_PARALLEL
+> +	AVOCADO_PARALLEL=1
+> +endif
+>   # Controls the output generated by Avocado when running tests.
+>   # Any number of command separated loggers are accepted.  For more
+>   # information please refer to "avocado --help".
+> @@ -141,7 +144,8 @@ check-avocado: check-venv $(TESTS_RESULTS_DIR) get-vm-images
+>               --show=$(AVOCADO_SHOW) run --job-results-dir=$(TESTS_RESULTS_DIR) \
+>               $(if $(AVOCADO_TAGS),, --filter-by-tags-include-empty \
+>   			--filter-by-tags-include-empty-key) \
+> -            $(AVOCADO_CMDLINE_TAGS) --max-parallel-tasks=1 \
+> +            $(AVOCADO_CMDLINE_TAGS) --max-parallel-tasks=$(AVOCADO_PARALLEL) \
+> +			-p timeout_factor=$(AVOCADO_PARALLEL) \
+>               $(if $(GITLAB_CI),,--failfast) $(AVOCADO_TESTS), \
+>               "AVOCADO", "tests/avocado")
 
+I think it was nicer in the previous attempt to bump the avocado version:
 
-Acked-by: Thomas Huth <thuth@redhat.com>
+https://gitlab.com/qemu-project/qemu/-/commit/ec5ffa0056389c3c10ea2de1e783
+
+This re-used the "-j" option from "make", so you could do "make -j$(nproc) 
+check-avocado" just like with the other "check" targets.
+
+  Thomas
 
 
