@@ -4,67 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19DAEC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 15:15:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7239EC52D7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 15:29:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdWkq-0006mo-QP; Mon, 12 Aug 2024 11:14:40 -0400
+	id 1sdWx7-0007bW-7O; Mon, 12 Aug 2024 11:27:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sdWko-0006lf-Iy
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 11:14:38 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1sdWx5-0007ab-Qu
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 11:27:20 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sdWkm-0006a9-Um
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 11:14:38 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5a108354819so5808125a12.0
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 08:14:34 -0700 (PDT)
+ id 1sdWx4-0000OZ-0G
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 11:27:19 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-5a10bb7bcd0so5567958a12.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 08:27:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723475673; x=1724080473; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723476436; x=1724081236; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Nn9J60puewudqRteyMm2kWG4TdMdGZoLctn107c2Iqg=;
- b=bYtdmhqhxOttTuesY7+jhQYhTF8EVxc7sWRFt5OGl/OklG1PzUsZcQP9oCifTgqnwX
- zO2bP51lQ+BRs8lncBKPLiE2+fvoHhEJoNuOMCoGgQftFa1oyMjpEscZn9kpLsLq/ZuG
- zAzV7VX26ke7BVHxwz0pS0SpyJTpqGyuoeZfA7XMHnxfok8GskkCDA/sfg34VuSjCsDO
- kGYZLAVnj9uh1PFIADBGD8f+HYVNqKwR+L1qqgePve1PMPFI1Tz5kbsW+tiQapXjmwMm
- queiLiVuxQyreoi0fgKT8KVAjSlPgWwm9BZM8k4M+diw7qlKkoLFu5Bf7U+VLsRQqQO4
- QMzQ==
+ bh=rXybKHARfQDWEWFNdraxZRcs71tPfZSQTZtSXdxb60Y=;
+ b=gFugrjX4RpWwSv275/graoTzpPnIgpj6NG0T+Lxrvh/OZA2j6hQlxPbTWmGsfifmhB
+ pVhtnQlxP/s05Y4c+x0Jcz8BmB1OIZr9lw3MsC4/55rs5VGqJdAR2Ty/HerjwVbL4h3+
+ eBKLHZ+Lfby/lz8ecb3mS/5LQWlpQ9bPqmGmZ/kqw1Ys7n+PRq1nkbqMmJ5qdYpfwWDx
+ kRU00OBVSGDBX75ax/gEjtX9+gCg7860Xx6gpRiOu893yIelY2i40GENdnOoCfToPqf6
+ BGIjrSJtdtkuTFJVk0ex2sT+T8imMs/hVqNEFhyCR6P7j6Na01HSOvT10jaxrEqDPktH
+ 2JFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723475673; x=1724080473;
+ d=1e100.net; s=20230601; t=1723476436; x=1724081236;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Nn9J60puewudqRteyMm2kWG4TdMdGZoLctn107c2Iqg=;
- b=Bo2t3ReHEuBk2rdXYu/xzQ52Xk3LgbacaFM36wY19zrHIbNowfbhOwpb8gltFGiT/b
- uPXoPqhVxyrEHORTi33F2AyfS8FBuqJuG42pZJsU/NEOY2/vlCGyd8bfndhoA8gxgQjT
- R1zqtBk5USfyUpn8q2XdOepPYJPnIYSn1waMIxVdkSVvMDAhTKrFsfBKC6EYXcnSuBCN
- L98xQdP7Po/meA6ZXT8FUNTWvvalLhLLVUR2JOCFIsUkKEpY+0Jh/KHqUrZBPnI/xKEC
- hZmRMNKVmkyKd0NSJ8f8OHwH75+DBB6xPTlDxbtxkAqoW3YWXmYsJCKAggRPI9EtXrU6
- CVgw==
-X-Gm-Message-State: AOJu0YwYG6dvojMGGr/NhKkZMvx4EuJwp1nQbx7/pVyUyiRCWrGADVOb
- Q4vBMc/3FepFML+STO6FXFp2fSnSi0zIi5MzM2DeJf3Ghhmwhkr+pOK8St7xVccZftmM7TVl4ne
- 8G2YvEhGdgZB917zo6muOf+xmovKBGNctKQkHBg==
-X-Google-Smtp-Source: AGHT+IGkKMeK/yeOxgxDhipMi7wV7HsiFZrSeswobOEApEYYO2dkX3oqlxpwEKSq3z5UD5wbBqFVsaQZF/iRm6SweXQ=
-X-Received: by 2002:a05:6402:354a:b0:5a3:b866:eae0 with SMTP id
- 4fb4d7f45d1cf-5bd44c7c314mr487154a12.32.1723475673220; Mon, 12 Aug 2024
- 08:14:33 -0700 (PDT)
+ bh=rXybKHARfQDWEWFNdraxZRcs71tPfZSQTZtSXdxb60Y=;
+ b=sQ2ETJGVzocPpA9o7sUBzMH/B/1SW+KpNr8l2KrdsPBUOX9i6oR8rkrvVmzIlrjft/
+ AVhpMm7hFlYu/VPfJNqLxgDGmQOHgek6WUqW8zQHL8KimZTIN6JtfTEPHbBpxbp53f/Q
+ LNtA6T7Pc/M41Q7LdrCLF/xS33t3nuLynQBsPUptSGfwRaUQi3uGJ/SGDsnfbprGLr8f
+ bSPUghCrne++1P1YKwAcC9HOsRwV6yp2ZjnGVeN5iqYIRSf+sP2FXqDTwxS1xqMrxFcN
+ P+LiHj4RDxlwuEnkxtVv87CdjfS45YncFFFFWWFi9nvOayRPh59SEehUmcgCEUquKPI1
+ WSbQ==
+X-Gm-Message-State: AOJu0YwXGZlaRHbxBbDEHOwdi9GLyzuWj6sW0FRFCGd6cjuVI4o7ou0K
+ bwjQKJbLbAXN3VB+xlPC1pot4NrTrp76vSbIne1U20xgBkCIeDSi7lNlx6Eb41W6FcjU0vUQ4RY
+ ibkJ2PEjkZxLGEZTFF0PDYU1LJOR8AbGSXxHP4g==
+X-Google-Smtp-Source: AGHT+IEeVe5yhkoJJz3nU3VAeKWOdOhMHqBxuZRyy5yobEKnlXsreTjzSBYW80uQd548cXGqNogyUAGIe3FuaGJTldg=
+X-Received: by 2002:a05:6402:26c7:b0:5a3:3062:36c7 with SMTP id
+ 4fb4d7f45d1cf-5bd44c0e442mr559593a12.7.1723476435835; Mon, 12 Aug 2024
+ 08:27:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240717060903.205098-1-richard.henderson@linaro.org>
-In-Reply-To: <20240717060903.205098-1-richard.henderson@linaro.org>
+References: <20240805201719.2345596-1-tavip@google.com>
+ <20240805201719.2345596-4-tavip@google.com>
+In-Reply-To: <20240805201719.2345596-4-tavip@google.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 12 Aug 2024 16:14:21 +0100
-Message-ID: <CAFEAcA8vJxUUHWA_nUF-810fDhYyPggtc=HGFdp0QUa5segB=A@mail.gmail.com>
-Subject: Re: [PATCH 00/17] target/arm: AdvSIMD decodetree conversion, part 4
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Date: Mon, 12 Aug 2024 16:27:04 +0100
+Message-ID: <CAFEAcA82c_RZ6512dB1OxpAtinRctkZK7ZyjpxX16Wk7DYZDPg@mail.gmail.com>
+Subject: Re: [RFC PATCH 03/23] scripts: add script to generate C header files
+ from SVD XML files
+To: Octavian Purdila <tavip@google.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, stefanst@google.com, 
+ pbonzini@redhat.com, alex.bennee@linaro.org, thuth@redhat.com, 
+ marcandre.lureau@redhat.com, alistair@alistair23.me, berrange@redhat.com, 
+ philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, bleal@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,38 +92,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 17 Jul 2024 at 07:09, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Mon, 5 Aug 2024 at 21:17, Octavian Purdila <tavip@google.com> wrote:
 >
-> Flush before the queue gets too big.
-> Also, there's a bug fix in patch 14.
+> From: Stefan Stanacar <stefanst@google.com>
 >
-> r~
+> From: Stefan Stanacar <stefanst@google.com>
 >
-> Richard Henderson (17):
->   target/arm: Use tcg_gen_extract2_i64 for EXT
->   target/arm: Convert EXT to decodetree
->   target/arm: Convert TBL, TBX to decodetree
->   target/arm: Convert UZP, TRN, ZIP to decodetree
->   target/arm: Simplify do_reduction_op
->   target/arm: Convert ADDV, *ADDLV, *MAXV, *MINV to decodetree
->   target/arm: Convert FMAXNMV, FMINNMV, FMAXV, FMINV to decodetree
->   target/arm: Convert FMOVI (scalar, immediate) to decodetree
->   target/arm: Convert MOVI, FMOV, ORR, BIC (vector immediate) to
->     decodetree
->   target/arm: Introduce gen_gvec_sshr, gen_gvec_ushr
->   target/arm: Fix whitespace near gen_srshr64_i64
->   target/arm: Convert handle_vec_simd_shri to decodetree
->   target/arm: Convet handle_vec_simd_shli to decodetree
->   target/arm: Clear high SVE elements in handle_vec_simd_wshli
->   target/arm: Use {,s}extract in handle_vec_simd_wshli
->   target/arm: Convert SSHLL, USHLL to decodetree
->   target/arm: Push tcg_rnd into handle_shri_with_rndacc
+> The CMSIS System View Description format(CMSIS-SVD) is an XML based
+> description of Arm Cortex-M microcontrollers provided and maintained
+> by sillicon vendors. It includes details such as peripherals registers
+> (down to bitfields), peripheral register block addresses, reset
+> values, etc.
+>
+> This script uses this information to create header files that makes it
+> easier to emulate peripherals.
+>
+> The script can be used to create either peripheral specific headers or
+> board / system specific information. The script generated headers are
+> similar to the SVDConv utility.
+>
+> Peripheral specific headers contains information such as register
+> layout, register names and reset values for registers:
+>
+>   typedef struct {
+>     ...
+>     union {
+>       uint32_t PSELID;              /* 0x00000FF8 Peripheral Select and
+>                                      * Flexcomm module ID */
+>       struct {
+>         uint32_t PERSEL : 3;        /* [2..0] Peripheral Select */
+>         uint32_t LOCK : 1;          /* [3..3] Lock the peripheral select */
+>         uint32_t USARTPRESENT : 1;  /* [4..4] USART present indicator */
+>         uint32_t SPIPRESENT : 1;    /* [5..5] SPI present indicator */
+>         uint32_t I2CPRESENT : 1;    /* [6..6] I2C present indicator */
+>         uint32_t I2SPRESENT : 1;    /* [7..7] I2S Present */
+>         uint32_t : 4;
+>         uint32_t ID : 20;           /* [31..12] Flexcomm ID */
+>       } PSELID_b;
+>     };
 
-Other than the need-to-avoid-shift-by-negative nits in
-patches 12 and 13, whole series
+Bitfield layout in C isn't portable, so don't generate this kind
+of union-of-a-integer-and-some-bitfields, please. You can
+generate FIELD() macro invocations (see include/hw/registerfields.h)
+which define shift/mask/length macros that can be used with
+FIELD_EX*/FIELD_DP* to do extract/deposit operations.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>     ...
+>   } FLEXCOMM_Type;                  /* Size = 4096 (0x1000) */
+>
+>   #define FLEXCOMM_PSELID_PERSEL_Pos (0UL)
+>   #define FLEXCOMM_PSELID_PERSEL_Msk (0x7UL)
+>   #define FLEXCOMM_PSELID_LOCK_Pos (3UL)
+>   #define FLEXCOMM_PSELID_LOCK_Msk (0x8UL)
+>   ...
+>
+>   typedef enum {                /* FLEXCOMM_PSELID_LOCK */
+>     /* Peripheral select can be changed by software. */
+>     FLEXCOMM_PSELID_LOCK_UNLOCKED = 0,
+>     /* Peripheral select is locked and cannot be changed until this
+>      * Flexcomm module or the entire device is reset. */
+>     FLEXCOMM_PSELID_LOCK_LOCKED = 1,
+>   } FLEXCOMM_PSELID_LOCK_Enum;
+>   ...
+>
+>   #define FLEXCOMM_REGISTER_NAMES_ARRAY(_name) \
+>     const char *_name[sizeof(FLEXCOMM_Type)] = { \
+>         [4088 ... 4091] = "PSELID", \
+>         [4092 ... 4095] = "PID", \
+>     }
+>
+> Board specific headers contains information about peripheral base
+> register addresses.
 
 thanks
 -- PMM
