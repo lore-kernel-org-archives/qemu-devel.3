@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61D33C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 00:50:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E038C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 01:27:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdJFi-0000Vi-Dk; Sun, 11 Aug 2024 20:49:38 -0400
+	id 1sdJp7-0007fQ-AU; Sun, 11 Aug 2024 21:26:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdJFh-0000RV-EX
- for qemu-devel@nongnu.org; Sun, 11 Aug 2024 20:49:37 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ id 1sdJp5-0007eQ-2d
+ for qemu-devel@nongnu.org; Sun, 11 Aug 2024 21:26:11 -0400
+Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdJFf-00029f-Pz
- for qemu-devel@nongnu.org; Sun, 11 Aug 2024 20:49:37 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-7a263f6439eso2320296a12.3
- for <qemu-devel@nongnu.org>; Sun, 11 Aug 2024 17:49:35 -0700 (PDT)
+ id 1sdJp0-0000mw-9u
+ for qemu-devel@nongnu.org; Sun, 11 Aug 2024 21:26:10 -0400
+Received: by mail-oi1-x22e.google.com with SMTP id
+ 5614622812f47-3db13410adfso2682388b6e.2
+ for <qemu-devel@nongnu.org>; Sun, 11 Aug 2024 18:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723423774; x=1724028574; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723425965; x=1724030765; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zHTax/FkRkPPuizBy457CfLinJ6lRsDxMFgWMKhBR1M=;
- b=P7ASzGGvab4qbX+tdC1/rzWvgBtwHXeDg49JpWSWfMkV9KPSRIhBD5mojPP79vTmrN
- LX/aqDuIVxOxWlybvAiFwv5x+yw7ntV1GCtR5SEFisRre7km9MEIY/d+kq4+2os9yjNE
- WN2W5TjX9ODbWZeROJ++6ZXVOnwipHon+rS1GfWkwZmIsMfTLWflvWqFpnbf0zwg3R9p
- z2mZYeqwluCkP8igGHj80vdXGL0jKbaol5t9W/5Q48M8lDbXqRnzOP2MpEL8/b79b8A7
- /pIVlQTINpQGmz96i20uxkgpWb7TSIEi8CchYyFh5gWLi49Uq57mfNbQRT5JD6mKir2q
- zPlA==
+ bh=z6xT2THnXZqj93xFd52KDjea4XxaO7e57BkQcBd06AY=;
+ b=t4hK/Zi5iIR+uLBSTvv4t52ZbvcZEzr+yLiSicLj8L/3Rw4cnKFoL8G3KtzGecfIon
+ /5/yOYGKUtMefgEaQ6sfyOUHNkd23jd3fPmW8btH5j1uTvXq9o2WvFnPGt2oRQOM8ous
+ CELOH8GyPFoNY5S+H/zxsKvuujpBFnB5VysSDxP8JzkHWMVMjOWJDF0MVP5UKYnF5ddK
+ rLbUB+N4h2375nZ/uDYV18HBQ6jmK1EkcrGe7W9ha0MMGhetImRVZHVG4JKkZLjAvqDV
+ Y/pH8PK1Zwiq4FAnzLTQgdTQJBWVZ7xd45sTQg+uzaTCW4IGVobbI0UKKYzZW5j+w12d
+ E1AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723423774; x=1724028574;
+ d=1e100.net; s=20230601; t=1723425965; x=1724030765;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zHTax/FkRkPPuizBy457CfLinJ6lRsDxMFgWMKhBR1M=;
- b=bIgxGSDFklpdSDOOoT6yXwz8W5L8Je+GDXXdUaSM19Vvs/8Vn6dT5p0NXWvDTK6Flk
- 3ENsi2fCa1veeNiMLWfXXiPJmRokz0jYmOBj7od0KK9hFzcRaUE+Sz8GR+s/0qgc/jQ9
- u8xwuNdXioT6CNkMLghIm7vX3jVLPZk8VZ+UM71fBh6RtR5YSJSOYPZeVjoxq8heZdn4
- gSF1J7RiiDIPh7/cHd8f7ybJHzsR96SRpKBpzFedNl2nOgnBYc87u2Jg+/UU5mwOY0sa
- 012QYcq+Lkq8gf7OL/4F4LcBIZZpa2s94d+sLsOrhGqQTs1KUECRy1KmKLCRdf4PSGS+
- tIWg==
+ bh=z6xT2THnXZqj93xFd52KDjea4XxaO7e57BkQcBd06AY=;
+ b=byP9aOih2ub/402FakbnzevAFryvsBjp6PFKkTHmU6pfnr2ss/c+c8Q6SIOPVnTSuG
+ ntNVGVVyy1icYhgBTRnfmlqo0e8B25qwMDF8THCYHdptCLR1F9h5QigImMhtdo0q4hez
+ THl7pbfYHxZklsdDh+QHS49YgjAXsLLytplS57lgYtfHiGavO1orvNc7FJYNrY8mPaRh
+ siEtgUAGO6bJe7jOUwQsq90HoDp6L9di2aDZNdbvlQHVm/PYK+kb5CCwwyOAEBK/+fRB
+ Hf9Uo6MLG7rOUcX6NhoxMe+vp14LwYE0oi6SSJ9XAmLOKTYHe93VjgJuSJmu8YEdCzqU
+ J+ew==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWEPRBwyIdrPtX5xnnzeXO2IgSjQabMFkslUYqzjIeppEvYKd/gJQ5c97vzUh1WGkwuW1sP53qcJ1cS@nongnu.org
-X-Gm-Message-State: AOJu0YyugcgyhZiESlHg1M45lJwhsT1Yt5u3DiSgeB74Wt1vJW7K2nfG
- eUbN9HHjlEjQGeltcUX0vyWFGatNcnCKR/9bkYXmBQ2cdBQZirZBpEB4FCHhB3g=
-X-Google-Smtp-Source: AGHT+IEe10W3+rzITnd1SeQMz2uc8H1/SDjbC7Lv7iYeUIMMzfwoVFfvquVGrkoGLVznirtYXPAb4A==
-X-Received: by 2002:a05:6a20:e687:b0:1c4:c3a1:efbc with SMTP id
- adf61e73a8af0-1c8a0103750mr5486817637.39.1723423774156; 
- Sun, 11 Aug 2024 17:49:34 -0700 (PDT)
+ AJvYcCWuLqCsEGfrZXLsQ8YsU4B0378OkGXR0GdjPAAsN2bYNG7ZX3jiKvE3jGVYtmsGC9BjU4xXivMgWeNXl/KmWum6KhjLnvg=
+X-Gm-Message-State: AOJu0Yzn4Nmp9xseYFjkM95SjRtb7U+C4/ClsilG+YQw3WI6UxhHWdZH
+ 1sAosq3bdrvTd5gz9K7Ri9C2dZtTCjEh6+/F/mFr3Ji7ocUHVxF5rdjJz/9/DZc=
+X-Google-Smtp-Source: AGHT+IHWU7C9wV+RRYuQwBMdDwpEQM0LmvViyQBNQ72oskn/Dn8blFtDckXRngV8n1pNfs3I78tRXQ==
+X-Received: by 2002:a05:6808:210b:b0:3d6:32d2:2c10 with SMTP id
+ 5614622812f47-3dc416dca7emr12352830b6e.31.1723425964546; 
+ Sun, 11 Aug 2024 18:26:04 -0700 (PDT)
 Received: from [192.168.1.113] ([203.30.4.111])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-200bb7eed50sm27326635ad.10.2024.08.11.17.49.30
+ 41be03b00d2f7-7c3dbea1f8fsm3164675a12.78.2024.08.11.18.26.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 11 Aug 2024 17:49:33 -0700 (PDT)
-Message-ID: <9870b2f3-56d8-4d14-8548-26c8a12b412c@linaro.org>
-Date: Mon, 12 Aug 2024 10:49:26 +1000
+ Sun, 11 Aug 2024 18:26:03 -0700 (PDT)
+Message-ID: <c098afe9-d09d-400d-8f2b-9278744a4ad4@linaro.org>
+Date: Mon, 12 Aug 2024 11:25:56 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/loongarch64: Fix tcg_out_movi tcg_debug_assert() error
-To: Michael Tokarev <mjt@tls.msk.ru>, Song Gao <gaosong@loongson.cn>,
- qemu-devel@nongnu.org
-Cc: git@xen0n.name, maobibo@loongson.cn, yijun@loongson.cn,
- qemu-stable@nongnu.org
-References: <20240618125044.687443-1-gaosong@loongson.cn>
- <4f6741dd-35ae-45ac-8a83-2f4c3246c76e@tls.msk.ru>
+Subject: Re: [RFC PATCH] accel/tcg: clear all TBs from a page when it is
+ written to
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+References: <20240809074725.320801-1-npiggin@gmail.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <4f6741dd-35ae-45ac-8a83-2f4c3246c76e@tls.msk.ru>
+In-Reply-To: <20240809074725.320801-1-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,43 +99,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/12/24 03:43, Michael Tokarev wrote:
-> 18.06.2024 15:50, Song Gao wrote:
->> On Loongnix 20.5 systems, QEMU configure with option '--enable-debug'
->> or '--enable-debug-tcg ', booting the Loongnix 20.5 VM in tcg mode
->> will get an assertion error.
->>
->>      "...
->>      [   31.484992] [drm] Initialized virtio_gpu 0.0.1 0 for virtio1 on minor 0
->>      qemu-system-loongarch64: /home1/gaosong/code/github/clean/qemu/tcg/loongarch64/tcg- 
->> target.c.inc:394：tcg_out_movi: 假设 ‘offset_hi == sextreg(offset_hi, 0, 20)’ 失败。
->>      ./start.sh: 行 14: 2433006 已放弃               (核心已转储)./build/qemu-system- 
->> loongarch64 --accel tcg -m 8G -cpu la464 -machine virt -smp 8 -serial stdio -bios ./ 
->> QEMU_EFI.fd -monitor telnet:localhost:4498,server,nowait -device virtio-gpu-pci -net 
->> nic, -net user -device nec-usb-xhci,id=xhci,addr=0x1b -device usb- 
->> tablet,id=tablet,bus=xhci.0,port=1 -device usb-kbd,id=keyboard,bus=xhci.0,port=2 -device 
->> virtio-blk-pci,drive=test -drive if=none,id=test,file=./ 
->> Loongnix-20.5.cartoon.mini.loongarch64.cn.qcow2 "
->>
->> The values of offset_hi and sextreg(offset_hi, 0, 20) are:
->>
->>      "[   29.975240] virtio_gpu virtio1: fb0: virtiodrmfb frame buffer device
->>      offset_hi is 80000
->>      sextreg(offset_hi, 0, 20) is fffffffffff80000
->>      offset_hi is 80000
->>      sextreg(offset_hi, 0, 20) is fffffffffff80000
->>      offset_hi is 80000
->>      sextreg(offset_hi, 0, 20) is fffffffffff80000
->>      ..."
->>
->> When pcalau12i + ori is not satisfied, we should use other methods instead,
->> instead of generating an assertion error.
+On 8/9/24 17:47, Nicholas Piggin wrote:
+> This is not a clean patch, but does fix a problem I hit with TB
+> invalidation due to the target software writing to memory with TBs.
 > 
-> Hi!
+> Lockup messages are triggering in Linux due to page clearing taking a
+> long time when a code page has been freed, because it takes a lot of
+> notdirty notifiers, which massively slows things down. Linux might
+> possibly have a bug here too because it seems to hang indefinitely in
+> some cases, but even if it didn't, the latency of clearing these pages
+> is very high.
 > 
-> Has this change been forgotten, or is it not needed anymore?
+> This showed when running KVM on the emulated machine, starting and
+> stopping guests. That causes lots of instruction pages to be freed.
+> Usually if you're just running Linux, executable pages remain in
+> pagecache so you get fewer of these bombs in the kernel memory
+> allocator. But page reclaim, JITs, deleting executable files, etc.,
+> could trigger it too.
+> 
+> Invalidating all TBs from the page on any hit seems to avoid the problem
+> and generally speeds things up.
+> 
+> How important is the precise invalidation? These days I assume the
+> tricky kind of SMC that frequently writes code close to where it's
+> executing is pretty rare and might not be something we really care about
+> for performance. Could we remove sub-page TB invalidation entirely?
 
-Fixed with 521d7fb3ebdf88112ed13556a93e3037742b9eb8.
+Happens on x86 and s390 regularly enough, so we can't remove it.
+
+> @@ -1107,6 +1107,9 @@ tb_invalidate_phys_page_range__locked(struct page_collection *pages,
+>       TranslationBlock *current_tb = retaddr ? tcg_tb_lookup(retaddr) : NULL;
+>   #endif /* TARGET_HAS_PRECISE_SMC */
+>   
+> +    start &= TARGET_PAGE_MASK;
+> +    last |= ~TARGET_PAGE_MASK;
+> +
+>       /* Range may not cross a page. */
+>       tcg_debug_assert(((start ^ last) & TARGET_PAGE_MASK) == 0);
+
+This would definitely break SMC.
+
+However, there's a better solution.  We're already iterating over all of the TBs on the 
+current page only.  Move *everything* except the tb_phys_invalidate__locked call into the 
+SMC ifdef, and unconditionally invalidate every TB selected in the loop.
+
+We experimented with something like this for aarch64, which used to spend a lot of the 
+kernel startup time invalidating code pages from the (somewhat bloated) EDK2 bios.  But it 
+turned out the bigger problem was address space randomization, and with CF_PCREL the 
+problem appeared to go away.
+
+I don't think we've done any kvm-under-tcg performance testing, but lockup messages would 
+certainly be something to look for...
 
 
 r~
