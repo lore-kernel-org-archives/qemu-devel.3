@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9A85C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 13:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B45FC52D7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 13:07:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdUks-0004GS-T5; Mon, 12 Aug 2024 09:06:34 -0400
+	id 1sdUkq-0003w9-90; Mon, 12 Aug 2024 09:06:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sdUkk-0003sE-KG; Mon, 12 Aug 2024 09:06:26 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ id 1sdUki-0003qU-5D
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 09:06:24 -0400
+Received: from mail-lf1-x136.google.com ([2a00:1450:4864:20::136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sdUki-00046J-Np; Mon, 12 Aug 2024 09:06:26 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-52f01613acbso5890016e87.1; 
- Mon, 12 Aug 2024 06:06:23 -0700 (PDT)
+ id 1sdUkd-00045k-T8
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 09:06:23 -0400
+Received: by mail-lf1-x136.google.com with SMTP id
+ 2adb3069b0e04-52f00ad303aso5836882e87.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 06:06:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723467981; x=1724072781; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kOLz6jSGUU8Xiq4wmRd5lgikGGH6JiIyvQ0oMaht6JA=;
- b=WX1kArF3QfH+VhbBB9xwWiXRVJCoTWxVJK8LOYG+9v57f1WqKxSFiR7FESGQbqoYC+
- bGy2QtwgW+NJgCD2zlSU4wwHJecWVjtB3VNBPgu9q1JVgwFLJLpNR5szdqbDfx6dgm0P
- obutMNrncGZmoa54zg3o5gw/qZ0NN1wSfl5Zb60xWy1yJ3uoMp69akydCuuSQcuyaYLS
- bHxV6awYILWSk5mmTpw9jiH9ktOSqaK3sxeACG29/08QZmD1lhnp49QXJvK5sENv2T2H
- DYGO1mrOUBYmEXy9dSzmtpD+xmKigudg7CohRs8qgtzHaxHHtOEE0mR4ue+WJFMzSI4Y
- 0OdA==
+ d=gmail.com; s=20230601; t=1723467977; x=1724072777; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CShc+/eJ/eiKg8FqCgbRmAZvWuQTxo7AG/GfIA6PJS0=;
+ b=F0GofdzWb/y2QLZ9uYOqQ88JqDO3SHt95lXGHVTbHRszbwq8YK7oZjbiFg8Ha9S120
+ AZhcSEl9WfIPdYffpsk626//kSf+3mQ78Y3OhFxQrWVBIG3kYKyrK97Os1B5KNEEBc5O
+ DIe4OBmGF3y1zck9DVsFNoccW4X19ivT9oLYWaoh5EJ88gjmNGsFovL8FfrgHmFrehwt
+ YFgh7D1/3stlzfyH/SRI1sbNfIpFx/k8q/Krz1VA6zYPsi81nq2YjELGfQ4SRiqNFu+v
+ Enl/BN97DYDUXk7dcl1tr/FUC62d8466/BVLSHUk6TOT71W383yLp3U/mkInXHeyfm/T
+ 0l5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723467981; x=1724072781;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kOLz6jSGUU8Xiq4wmRd5lgikGGH6JiIyvQ0oMaht6JA=;
- b=rDRRMnMy5rFYO/KFoN/Q9knSrSdd8WFiA5Y8Rtt1cyZc8IX3qkbCPRmYxZvDxELWsB
- 0GxjQinkEOtujKFXVXj0AB5j6qxQqqZqw2hhp3zgSmkoueURIelRXru6jriGfUXYxNp3
- LsfQjRUFspGUm8YQmQ24Q/W5Stc15Dvg7sMYBE040wf8rmQ2aYaV+PuJlj/ofEacgWSh
- oJEW1r0pyIL8LtLKgskRVMdllbPMEuxySofjn3O6DVa5HGZRLlnjIWrNb4BNP494udO1
- cuXPuWdIM4xHR+hatpN0Hn2dmM4H2EuwPdUgOdYPbJD8GIjLv58ooFTbzVna5hUBULsT
- GyPQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVYYDWii4OvoKgSs7Zt/DmIAv/hnKEVuhO1SZVjJf1X437V0BssBbLTWjvPt6/v6KLhrMV0ljKNtA==@nongnu.org
-X-Gm-Message-State: AOJu0Yx65yjNRXOfvLSIZ5zlybvWky+Y4p4aI2QPhWZME+a8Of2lGCpZ
- gUKYV0mEFRZxZm2bAKS6SdvK0pcEJaY0su3hmRhv8CVkKrZTScQ2fhQ/AXOl
-X-Google-Smtp-Source: AGHT+IFVFpgUsSJvoRktx9P5RahE3NL+hK1oSSRb0VxLTivi6mQbcvmAYVxkizJenzqOQTjrR9idAw==
-X-Received: by 2002:a05:6512:4020:b0:531:5b03:b1f7 with SMTP id
- 2adb3069b0e04-5321367c4ecmr11696e87.10.1723467980688; 
- Mon, 12 Aug 2024 06:06:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723467977; x=1724072777;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CShc+/eJ/eiKg8FqCgbRmAZvWuQTxo7AG/GfIA6PJS0=;
+ b=nlTaeQK2l0rUywDajsndC2gTE2dPzMiRktEQoCaSQGYGrApmhdsTlMDiRdvABQWmZU
+ Fwg8tMmOcULIfXpK+nooZIfiQbQILttBSienvD41eHfT9vS0P4MeQZP7Ac9UTVXasOAD
+ ie37nDpDspXp/29REUn3XX+9+zBK0g5sSUC/ROIzI84O8cDAz2/fVY90SQQ5HUpaav36
+ dGny0caNIENaWerrTHnh8N4TwH/g/MeLfaPp7wBRwc4ieGs94Hs05QZ5S9N40JfDsHf2
+ KRGeXNj5gQF5rT36T+9q19R7C3Z5zLzUEfrsTGgDFBHA12cTruX6ZmPobwugiWPmySJs
+ C86Q==
+X-Gm-Message-State: AOJu0Yxojcc5qhRKN3Jo3VjsAXDt4xAnJawqL/v0sKAXEZ5B+SBjw4ms
+ uqN4Nx2yA0t9zQG+HCHgbZGLV+KbykqOKx96mIf+NNOZvxnFgl421OBs3lgh
+X-Google-Smtp-Source: AGHT+IGyAfAGEwHpXN3mXDKP16d0LaryN/gTiqmKRJmEMkapDIMD5759JSxXq0T/pSPMTWqkAaeRxA==
+X-Received: by 2002:a05:6512:696:b0:52c:d6d7:9dd0 with SMTP id
+ 2adb3069b0e04-53213658bdamr53118e87.20.1723467976051; 
+ Mon, 12 Aug 2024 06:06:16 -0700 (PDT)
 Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-53200f4227csm730447e87.279.2024.08.12.06.06.19
+ 2adb3069b0e04-53200f3f7cbsm733690e87.246.2024.08.12.06.06.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Aug 2024 06:06:19 -0700 (PDT)
+ Mon, 12 Aug 2024 06:06:15 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: sstabellini@kernel.org, anthony@xenproject.org, paul@xen.org,
  peter.maydell@linaro.org, alex.bennee@linaro.org, xenia.ragiadakou@amd.com,
  jason.andryuk@amd.com, edgar.iglesias@amd.com,
- xen-devel@lists.xenproject.org, qemu-arm@nongnu.org
-Subject: [PATCH v1 03/10] hw/arm: xenpvh: Tweak machine description
-Date: Mon, 12 Aug 2024 15:05:58 +0200
-Message-ID: <20240812130606.90410-4-edgar.iglesias@gmail.com>
+ xen-devel@lists.xenproject.org
+Subject: [PATCH v1 00/10] xen: pvh: Partial QOM:fication with new x86 PVH
+ machine
+Date: Mon, 12 Aug 2024 15:05:55 +0200
+Message-ID: <20240812130606.90410-1-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240812130606.90410-1-edgar.iglesias@gmail.com>
-References: <20240812130606.90410-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::136;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,27 +96,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-Tweak machine description to better express that this is
-a Xen PVH machine for ARM.
+This series breaks-out parts of the ARM PVH support into a reusable
+QOM module. There's a bit of refactoring and some bug-fixes along
+the way.
 
-Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
----
- hw/arm/xen_arm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Finally we add a new x86 xen-pvh machine using the new xen-pvh-common
+module.
 
-diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
-index 766a194fa1..5f75cc3779 100644
---- a/hw/arm/xen_arm.c
-+++ b/hw/arm/xen_arm.c
-@@ -216,7 +216,7 @@ static void xen_arm_machine_class_init(ObjectClass *oc, void *data)
- {
- 
-     MachineClass *mc = MACHINE_CLASS(oc);
--    mc->desc = "Xen Para-virtualized PC";
-+    mc->desc = "Xen PVH ARM machine";
-     mc->init = xen_arm_init;
-     mc->max_cpus = 1;
-     mc->default_machine_opts = "accel=xen";
+The corresponding changes Xen for PVH x86 are work in progress
+(by Xenia Ragiadakou). You can find a current version here:
+https://github.com/edgarigl/xen/tree/edgar/virtio-pvh-upstream 
+
+I've briefly described the steps to run Xen PVH x86 guests here
+(including example guest kernel config, xl.cfg and xl command-lines):
+https://github.com/edgarigl/docs/blob/master/xen/pvh/xenpvh-x86.md
+
+Cheers,
+Edgar
+
+Edgar E. Iglesias (10):
+  MAINTAINERS: Add docs/system/arm/xenpvh.rst
+  hw/arm: xenpvh: Update file header to use SPDX
+  hw/arm: xenpvh: Tweak machine description
+  hw/arm: xenpvh: Add support for SMP guests
+  hw/arm: xenpvh: Break out a common PVH module
+  hw/arm: xenpvh: Rename xen_arm.c -> xen-pvh.c
+  hw/arm: xenpvh: Reverse virtio-mmio creation order
+  hw/xen: pvh-common: Add support for creating PCIe/GPEX
+  hw/i386/xen: Add a Xen PVH x86 machine
+  docs/system/i386: xenpvh: Add a basic description
+
+ MAINTAINERS                     |   2 +
+ docs/system/i386/xenpvh.rst     |  49 ++++++
+ docs/system/target-i386.rst     |   1 +
+ hw/arm/meson.build              |   2 +-
+ hw/arm/trace-events             |   5 -
+ hw/arm/xen-pvh.c                | 165 ++++++++++++++++++++
+ hw/arm/xen_arm.c                | 267 --------------------------------
+ hw/i386/xen/meson.build         |   1 +
+ hw/i386/xen/xen-pvh.c           | 196 +++++++++++++++++++++++
+ hw/xen/meson.build              |   1 +
+ hw/xen/trace-events             |   4 +
+ hw/xen/xen-pvh-common.c         | 262 +++++++++++++++++++++++++++++++
+ include/hw/xen/xen-pvh-common.h |  53 +++++++
+ 13 files changed, 735 insertions(+), 273 deletions(-)
+ create mode 100644 docs/system/i386/xenpvh.rst
+ create mode 100644 hw/arm/xen-pvh.c
+ delete mode 100644 hw/arm/xen_arm.c
+ create mode 100644 hw/i386/xen/xen-pvh.c
+ create mode 100644 hw/xen/xen-pvh-common.c
+ create mode 100644 include/hw/xen/xen-pvh-common.h
+
 -- 
 2.43.0
 
