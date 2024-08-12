@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7239EC52D7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 15:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D193C52D7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 15:33:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdWx7-0007bW-7O; Mon, 12 Aug 2024 11:27:21 -0400
+	id 1sdX2k-0005cU-SB; Mon, 12 Aug 2024 11:33:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sdWx5-0007ab-Qu
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 11:27:20 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1sdX2j-0005bc-Iq
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 11:33:09 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sdWx4-0000OZ-0G
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 11:27:19 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5a10bb7bcd0so5567958a12.3
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 08:27:17 -0700 (PDT)
+ id 1sdX2a-0001AX-T7
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 11:33:09 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5b8c2a6135eso598146a12.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 08:32:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723476436; x=1724081236; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723476778; x=1724081578; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rXybKHARfQDWEWFNdraxZRcs71tPfZSQTZtSXdxb60Y=;
- b=gFugrjX4RpWwSv275/graoTzpPnIgpj6NG0T+Lxrvh/OZA2j6hQlxPbTWmGsfifmhB
- pVhtnQlxP/s05Y4c+x0Jcz8BmB1OIZr9lw3MsC4/55rs5VGqJdAR2Ty/HerjwVbL4h3+
- eBKLHZ+Lfby/lz8ecb3mS/5LQWlpQ9bPqmGmZ/kqw1Ys7n+PRq1nkbqMmJ5qdYpfwWDx
- kRU00OBVSGDBX75ax/gEjtX9+gCg7860Xx6gpRiOu893yIelY2i40GENdnOoCfToPqf6
- BGIjrSJtdtkuTFJVk0ex2sT+T8imMs/hVqNEFhyCR6P7j6Na01HSOvT10jaxrEqDPktH
- 2JFw==
+ bh=zh+tcHdNJStvkyZi7SCX0p4WIPRkVyIGm6MjrcYoKk0=;
+ b=jjUeNOJUVHzdeRRa7IDLnKxDBcIcttvWkIFKV8DOa8Vbu7LegOMLoI88eJQEv8KtQX
+ wM5sFcdc0SB1GuRo0SuNTR8uOV0PaRJ+py86P7Ls+BZ3dalA2grQl5tzskunejjFyXQ5
+ jBBdzqgEctNmG/61QOgOoQkz5qQoxHaUc3zd+tsbgxw+5DqRQ0cSIzjLl9FPJaAkQFig
+ FLF+G1vFqX9rUe1kXtUoSg91prBfcqptL5+mnJHvr0MhNbk5/H+/J8pOht82ygmtHDzZ
+ /sfvV89eW9jluNBjk6BrkMq1BZ/7UNYl7N8yFiaCHna8U1PmmAZmKuN9KRbComiJTKjv
+ tG5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723476436; x=1724081236;
+ d=1e100.net; s=20230601; t=1723476778; x=1724081578;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=rXybKHARfQDWEWFNdraxZRcs71tPfZSQTZtSXdxb60Y=;
- b=sQ2ETJGVzocPpA9o7sUBzMH/B/1SW+KpNr8l2KrdsPBUOX9i6oR8rkrvVmzIlrjft/
- AVhpMm7hFlYu/VPfJNqLxgDGmQOHgek6WUqW8zQHL8KimZTIN6JtfTEPHbBpxbp53f/Q
- LNtA6T7Pc/M41Q7LdrCLF/xS33t3nuLynQBsPUptSGfwRaUQi3uGJ/SGDsnfbprGLr8f
- bSPUghCrne++1P1YKwAcC9HOsRwV6yp2ZjnGVeN5iqYIRSf+sP2FXqDTwxS1xqMrxFcN
- P+LiHj4RDxlwuEnkxtVv87CdjfS45YncFFFFWWFi9nvOayRPh59SEehUmcgCEUquKPI1
- WSbQ==
-X-Gm-Message-State: AOJu0YwXGZlaRHbxBbDEHOwdi9GLyzuWj6sW0FRFCGd6cjuVI4o7ou0K
- bwjQKJbLbAXN3VB+xlPC1pot4NrTrp76vSbIne1U20xgBkCIeDSi7lNlx6Eb41W6FcjU0vUQ4RY
- ibkJ2PEjkZxLGEZTFF0PDYU1LJOR8AbGSXxHP4g==
-X-Google-Smtp-Source: AGHT+IEeVe5yhkoJJz3nU3VAeKWOdOhMHqBxuZRyy5yobEKnlXsreTjzSBYW80uQd548cXGqNogyUAGIe3FuaGJTldg=
-X-Received: by 2002:a05:6402:26c7:b0:5a3:3062:36c7 with SMTP id
- 4fb4d7f45d1cf-5bd44c0e442mr559593a12.7.1723476435835; Mon, 12 Aug 2024
- 08:27:15 -0700 (PDT)
+ bh=zh+tcHdNJStvkyZi7SCX0p4WIPRkVyIGm6MjrcYoKk0=;
+ b=ZOyMRcGgJbzeZDDjrUvRoiiIjoUGJZH6VkuAGygK2sPEMQAhGQjYSbi8qhO3iEUbY9
+ y9vMf3KnHn1FjBQiiuNfe2VBFGN1/ppl/OsNJmj/R7/A2Rw4hYJvSDCi0qUf6yOLLC0i
+ JVQN0N+6A/rMH5KUtr0G+9nrbaSLl8fee04EY8/PJSm/XkjnVsTpVlGJ7JlB3C+CZTjf
+ cbWSTLUeHJuwDLY1AjgB/q92AqqAqInmX6ZTsUj2tkffEv4ueL8z96w2+81MiPmksrIB
+ IZ1H7NzS/5fG1vbPIjpHviLNxkVRj6qH7zPaIMn5WdWvT/8ffvhijrD+sq+fxeA9gDgU
+ YRww==
+X-Gm-Message-State: AOJu0YxwNnBhk9DshlLtEDYsQkZhCndByqmGedUZ3EB8s0t3mHGKikWh
+ PqFlKR7V18h2i+hq2qCjgezrg04/dRO8NntxrnIvolUI/SQ/QruKeVVzuc0hQeIQvSyW/FM91Pr
+ O8P5t++srF6EQavORUU3PezrNyfreHi/pIGXACqwwcJygJJoJ
+X-Google-Smtp-Source: AGHT+IEdX+pzzAuuzCSkxd4huzXwbL3Jd14+XATfxnuAQOBhZagp/wcphaR16mQ9LmjE/yEzIelzvsilJCnN5ehsGX0=
+X-Received: by 2002:a05:6402:5246:b0:5b8:4a95:2fe7 with SMTP id
+ 4fb4d7f45d1cf-5bd46176b0bmr34501a12.1.1723476777666; Mon, 12 Aug 2024
+ 08:32:57 -0700 (PDT)
 MIME-Version: 1.0
 References: <20240805201719.2345596-1-tavip@google.com>
- <20240805201719.2345596-4-tavip@google.com>
-In-Reply-To: <20240805201719.2345596-4-tavip@google.com>
+ <20240805201719.2345596-6-tavip@google.com>
+In-Reply-To: <20240805201719.2345596-6-tavip@google.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 12 Aug 2024 16:27:04 +0100
-Message-ID: <CAFEAcA82c_RZ6512dB1OxpAtinRctkZK7ZyjpxX16Wk7DYZDPg@mail.gmail.com>
-Subject: Re: [RFC PATCH 03/23] scripts: add script to generate C header files
- from SVD XML files
+Date: Mon, 12 Aug 2024 16:32:46 +0100
+Message-ID: <CAFEAcA8w47gZYV8GBQa3fNf1cBWNtm_k4DAdnOVt4RWBdSrghg@mail.gmail.com>
+Subject: Re: [RFC PATCH 05/23] hw: add register access utility functions
 To: Octavian Purdila <tavip@google.com>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, stefanst@google.com, 
  pbonzini@redhat.com, alex.bennee@linaro.org, thuth@redhat.com, 
  marcandre.lureau@redhat.com, alistair@alistair23.me, berrange@redhat.com, 
  philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, bleal@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,75 +93,127 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, 5 Aug 2024 at 21:17, Octavian Purdila <tavip@google.com> wrote:
 >
-> From: Stefan Stanacar <stefanst@google.com>
->
-> From: Stefan Stanacar <stefanst@google.com>
->
-> The CMSIS System View Description format(CMSIS-SVD) is an XML based
-> description of Arm Cortex-M microcontrollers provided and maintained
-> by sillicon vendors. It includes details such as peripherals registers
-> (down to bitfields), peripheral register block addresses, reset
-> values, etc.
->
-> This script uses this information to create header files that makes it
-> easier to emulate peripherals.
->
-> The script can be used to create either peripheral specific headers or
-> board / system specific information. The script generated headers are
-> similar to the SVDConv utility.
->
-> Peripheral specific headers contains information such as register
-> layout, register names and reset values for registers:
->
->   typedef struct {
->     ...
->     union {
->       uint32_t PSELID;              /* 0x00000FF8 Peripheral Select and
->                                      * Flexcomm module ID */
->       struct {
->         uint32_t PERSEL : 3;        /* [2..0] Peripheral Select */
->         uint32_t LOCK : 1;          /* [3..3] Lock the peripheral select */
->         uint32_t USARTPRESENT : 1;  /* [4..4] USART present indicator */
->         uint32_t SPIPRESENT : 1;    /* [5..5] SPI present indicator */
->         uint32_t I2CPRESENT : 1;    /* [6..6] I2C present indicator */
->         uint32_t I2SPRESENT : 1;    /* [7..7] I2S Present */
->         uint32_t : 4;
->         uint32_t ID : 20;           /* [31..12] Flexcomm ID */
->       } PSELID_b;
->     };
+> Add register access utility functions for device models, like checking
+> aligned access and reading and writing to a register backstore.
 
-Bitfield layout in C isn't portable, so don't generate this kind
-of union-of-a-integer-and-some-bitfields, please. You can
-generate FIELD() macro invocations (see include/hw/registerfields.h)
-which define shift/mask/length macros that can be used with
-FIELD_EX*/FIELD_DP* to do extract/deposit operations.
 
->     ...
->   } FLEXCOMM_Type;                  /* Size = 4096 (0x1000) */
+> Signed-off-by: Octavian Purdila <tavip@google.com>
+> ---
+>  include/hw/regs.h | 89 +++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 89 insertions(+)
+>  create mode 100644 include/hw/regs.h
 >
->   #define FLEXCOMM_PSELID_PERSEL_Pos (0UL)
->   #define FLEXCOMM_PSELID_PERSEL_Msk (0x7UL)
->   #define FLEXCOMM_PSELID_LOCK_Pos (3UL)
->   #define FLEXCOMM_PSELID_LOCK_Msk (0x8UL)
->   ...
->
->   typedef enum {                /* FLEXCOMM_PSELID_LOCK */
->     /* Peripheral select can be changed by software. */
->     FLEXCOMM_PSELID_LOCK_UNLOCKED = 0,
->     /* Peripheral select is locked and cannot be changed until this
->      * Flexcomm module or the entire device is reset. */
->     FLEXCOMM_PSELID_LOCK_LOCKED = 1,
->   } FLEXCOMM_PSELID_LOCK_Enum;
->   ...
->
->   #define FLEXCOMM_REGISTER_NAMES_ARRAY(_name) \
->     const char *_name[sizeof(FLEXCOMM_Type)] = { \
->         [4088 ... 4091] = "PSELID", \
->         [4092 ... 4095] = "PID", \
->     }
->
-> Board specific headers contains information about peripheral base
-> register addresses.
+> diff --git a/include/hw/regs.h b/include/hw/regs.h
+> new file mode 100644
+> index 0000000000..8d0da0629d
+> --- /dev/null
+> +++ b/include/hw/regs.h
+> @@ -0,0 +1,89 @@
+> +/*
+> + * Useful macros/functions for register handling.
+> + *
+> + * Copyright (c) 2021 Google LLC
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + */
+> +
+> +#ifndef HW_REGS_H
+> +#define HW_REGS_H
+> +
+> +#include "exec/hwaddr.h"
+> +#include "exec/memattrs.h"
+> +
+> +#define BITS(hi, lo)       (BIT(hi + 1) - BIT(lo))
+> +#define BIT_IS_SET(v, b)   (((v) & BIT(b)) != 0)
+
+To the extent we need these we should be putting them in
+bits.h with the other bit-related operations. (But
+prefer the existing MAKE_64BIT_MASK over adding a
+second macro that evaluates to a mask with a given
+run of bits set).
+
+> +
+> +/*
+> + * reg32_aligned_access
+> + * @addr: address to check
+> + * @size: size of access
+> + *
+> + * Check if access to a hardware address is 32bit aligned.
+> + *
+> + * Returns: true if access is 32bit aligned, false otherwise
+> + */
+> +static inline bool reg32_aligned_access(hwaddr addr, unsigned size)
+> +{
+> +    if (size != 4 || addr % 4 != 0) {
+> +        return false;
+> +    }
+> +    return true;
+> +}
+> +
+> +/*
+> + * reg32_write
+> + * @base: base address
+> + * @addr: register offset in bytes
+> + * @val: value to write
+> + * @wr_bits_array: RW bitmask array
+> + *
+> + * Update the RW/WO bits of a 32bit register backstore with a given value
+> + * (discarding updats to the RO bits). The RW/WO bits are encoded in the
+> + * @wr_bits_array with bits set being RW and bits unset being RO.
+> + *
+> + * Usage example:
+> + *
+> + * wr_bits_array[] = {
+> + *    [REG1_ADDR/4] = 0xFF000000, // MSB byte writable
+> + *    [REG2_ADDR/4] = 0xFF,       // LSB byte writable
+> + *    // all other registers are read-only
+> + * };
+> + *
+> + * // backstore is updated to 0x12000000
+> + * reg32_write(&backstore, REG1_ADDR, 0x12345678, wr_bits_array);
+> + * // backstore is updated to 0x78
+> + * reg32_write(&backstore, REG2_ADDR, 0x12345678, wr_bits_array);
+> + */
+
+This seems like it's reimplementing include/hw/register.h
+functionality. I'm not personally a super-fan of that API,
+but I definitely would prefer it if we didn't have more than
+one way to do this.
+
+> +static inline uint32_t reg32_write(void *base, uint32_t off, uint32_t val,
+> +                                   const uint32_t *rw_bits_array)
+> +{
+> +    uint32_t *ptr = base + addr;
+> +    uint32_t old_value = *ptr;
+> +    uint32_t mask = rw_bits_array ? rw_bits_array[addr / 4] : 0xFFFFFFFF;
+> +
+> +    /* set WO/RW bits */
+> +    *ptr |= val & mask;
+> +    /* clear RO bits */
+> +    *ptr &= val | ~mask;
+> +
+> +    return old_value;
+> +}
+> +
+> +/*
+> + * reg32_read
+> + * @base: base address
+> + * @addr: register offset in bytes
+> + *
+> + * Returns: 32bit value from register backstore
+> + */
+> +static inline uint32_t reg32_read(void *base, uint32_t addr)
+> +{
+> +    return *(uint32_t *)(base + addr);
+> +}
+
+Pointer type handling looks suspicious here -- if
+the thing we're accessing is really a uint32_t* then
+we should take that; if it isn't then casting it to
+one and dereferencing might be reading unaligned memory.
 
 thanks
 -- PMM
