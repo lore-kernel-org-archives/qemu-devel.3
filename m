@@ -4,103 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27851C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 18:58:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A9E1C52D7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 19:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdaED-0002cl-6F; Mon, 12 Aug 2024 14:57:13 -0400
+	id 1sdaRW-0000Qg-0H; Mon, 12 Aug 2024 15:11:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sdaEA-0002bY-Vz
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 14:57:11 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sdaE8-0002Jw-EA
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 14:57:10 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 608E41FB9C;
- Mon, 12 Aug 2024 18:57:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1723489023; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Bq9fDkFV3A62pYLn1ThkJh0886bFE2n4HE9TogpVi6c=;
- b=nZUTVy+LgygNtnlQj0IXdAXFpgxWX98YXzKT2l1LYuEoQhYZClHXYLkLFtTB2eD7WPdfgm
- X5G3ctwtAttsnLepF4SkmCtch3c4mN2uIPZNaXA8dzSLTgcJrYsfJEJI3jrGdUlop2/spj
- znl871Va8pure5A0R9BzTLClPXGXLto=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1723489023;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Bq9fDkFV3A62pYLn1ThkJh0886bFE2n4HE9TogpVi6c=;
- b=sqRtwP3ph+3o6i2SFmaFKnZ9VwAcuA71PvNZQLehuCgyHTEHWItFoYV8lu6wQZmcmalHt/
- Zlq3B+Qk6t5mwRCQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1723489023; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Bq9fDkFV3A62pYLn1ThkJh0886bFE2n4HE9TogpVi6c=;
- b=nZUTVy+LgygNtnlQj0IXdAXFpgxWX98YXzKT2l1LYuEoQhYZClHXYLkLFtTB2eD7WPdfgm
- X5G3ctwtAttsnLepF4SkmCtch3c4mN2uIPZNaXA8dzSLTgcJrYsfJEJI3jrGdUlop2/spj
- znl871Va8pure5A0R9BzTLClPXGXLto=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1723489023;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Bq9fDkFV3A62pYLn1ThkJh0886bFE2n4HE9TogpVi6c=;
- b=sqRtwP3ph+3o6i2SFmaFKnZ9VwAcuA71PvNZQLehuCgyHTEHWItFoYV8lu6wQZmcmalHt/
- Zlq3B+Qk6t5mwRCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DDAD113983;
- Mon, 12 Aug 2024 18:57:02 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id GlimKP5aumZDYgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 12 Aug 2024 18:57:02 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Philippe Mathieu-Daude <philmd@linaro.org>, Eugenio Perez Martin
- <eperezma@redhat.com>, Peter Xu <peterx@redhat.com>, Si-Wei Liu
- <si-wei.liu@oracle.com>, Steve Sistare <steven.sistare@oracle.com>
-Subject: Re: [RFC V1 2/7] migration: skip dirty memory tracking for cpr
-In-Reply-To: <1720792931-456433-3-git-send-email-steven.sistare@oracle.com>
-References: <1720792931-456433-1-git-send-email-steven.sistare@oracle.com>
- <1720792931-456433-3-git-send-email-steven.sistare@oracle.com>
-Date: Mon, 12 Aug 2024 15:57:00 -0300
-Message-ID: <87mslhfu2r.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sdaRM-0000PR-9B; Mon, 12 Aug 2024 15:10:49 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1sdaRI-0004K7-Fy; Mon, 12 Aug 2024 15:10:47 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id B0DBD84240;
+ Mon, 12 Aug 2024 22:09:47 +0300 (MSK)
+Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 147F5124239;
+ Mon, 12 Aug 2024 22:10:28 +0300 (MSK)
+Message-ID: <953ac1bc-4375-466d-bfc3-db77b2d922ab@tls.msk.ru>
+Date: Mon, 12 Aug 2024 22:10:28 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.29 / 50.00]; BAYES_HAM(-2.99)[99.97%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[9]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/1] module: Move local_err initialization to the loop
+ in module_load_qom_all()
+To: Alexander Ivanov <alexander.ivanov@virtuozzo.com>, qemu-devel@nongnu.org
+Cc: den@virtuozzo.com, andrey.drobyshev@virtuozzo.com, cfontana@suse.de,
+ kraxel@redhat.com, laurent@vivier.eu, QEMU Trivial <qemu-trivial@nongnu.org>
+References: <20240812085725.1093540-1-alexander.ivanov@virtuozzo.com>
+ <20240812085725.1093540-2-alexander.ivanov@virtuozzo.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsBLBETIiwkBCADh3cFB56BQYPjtMZCfK6PSLR8lw8EB20rsrPeJtd91IoNZlnCjSoxd9Th1
+ bLUR8YlpRJ2rjc6O1Bc04VghqUOHgS/tYt8vLjcGWixzdhSLJgPDK3QQZPAvBjMbCt1B6euC
+ WuD87Pv5Udlpnzf4aMwxkgfTusx+ynae/o+T5r7tXD+isccbC3SiGhmAPxFyY3zGcFk4+Rxc
+ 0tP8YY2FWE/baHu+lBDTUN79efWAkHhex1XzVZsV7ZD16rzDbXFK5m6ApvGJWlr5YDEEydTF
+ WwmvwBfr4OINVxzEG/ujNiG4fpMf2NsnFGyB9aSbFjXZevB4qWkduYYW+xpK1EryszHtAAYp
+ zSBNaWNoYWVsIFRva2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLAlgQTAQoAQAIbAwYLCQgHAwIE
+ FQIIAwQWAgMBAh4BAheAAhkBFiEEbuGV0Yhuj/uBDUMkRXzgoIBEZcUFAmBbcjwFCS5e6jMA
+ CgkQRXzgoIBEZcUTIQgA1hPsOF82pXxbcJXBMc4zB9OQu4AlnZvERoGyw7I2222QzaN3RFuj
+ Fia//mapXzpIQNF08l/AA6cx+CKPeGnXwyZfF9fLa4RfifmdNKME8C00XlqnoJDZBGzq8yMy
+ LAKDxl9OQWFcDwDxV+irg5U3fbtNVhvV0kLbS2TyQ0aU5w60ERS2NcyDWplOo7AOzZWChcA4
+ UFf78oVdZdCW8YDtU0uQFhA9moNnrePy1HSFqduxnlFHEI+fDj/TiOm2ci48b8SBBJOIJFjl
+ SBgH8+SfT9ZqkzhN9vh3YJ49831NwASVm0x1rDHcIwWD32VFZViZ3NjehogRNH9br0PSUYOC
+ 3s7ATQRX2BjLAQgAnak3m0imYOkv2tO/olULFa686tlwuvl5kL0NWCdGQeXv2uMxy36szcrh
+ K1uYhpiQv4r2qNd8BJtYlnYIK16N8GBdkplaDIHcBMbU4t+6bQzEIJIaWoq1hzakmHHngE2a
+ pNMnUf/01GFvCRPlv3imkujE/5ILbagjtdyJaHF0wGOSlTnNT4W8j+zPJ/XK0I5EVQwtbmoc
+ GY62LKxxz2pID6sPZV4zQVY4JdUQaFvOz1emnBxakkt0cq3Qnnqso1tjiy7vyH9CAwPR/48W
+ fpK6dew4Fk+STYtBeixOTfSUS8qRS/wfpUeNa5RnEdTtFQ9IcjpQ/nPrvJJsu9FqwlpjMwAR
+ AQABwsBlBBgBCAAPBQJX2BjLAhsMBQkSzAMAAAoJEEV84KCARGXFUKcH/jqKETECkbyPktdP
+ cWVqw2ZIsmGxMkIdnZTbPwhORseGXMHadQODayhU9GWfCDdSPkWDWzMamD+qStfl9MhlVT60
+ HTbo6wu1W/ogUS70qQPTY9IfsvAj6f8TlSlK0eLMa3s2UxL2oe5FkNs2CnVeRlr4Yqvp/ZQV
+ 6LXtew4GPRrmplUT/Cre9QIUqR4pxYCQaMoOXQQw3Y0csBwoDYUQujn3slbDJRIweHoppBzT
+ rM6ZG5ldWQN3n3d71pVuv80guylX8+TSB8Mvkqwb5I36/NAFKl0CbGbTuQli7SmNiTAKilXc
+ Y5Uh9PIrmixt0JrmGVRzke6+11mTjVlio/J5dCM=
+In-Reply-To: <20240812085725.1093540-2-alexander.ivanov@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,63 +88,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Steve Sistare <steven.sistare@oracle.com> writes:
+12.08.2024 11:57, Alexander Ivanov wrote:
+> Move local_err initialization inside the loop in the module_load_qom_all()
+> function. This change ensures that the error variable is reset to NULL for
+> each iteration of the loop. This prevents triggering assert(*errp == NULL)
+> failure in error_setv() when local_err is reused in the loop.
+> 
+> Note: The local_err variable is freed in error_report_err() so there is no
+> any leak.
+> 
+> Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
 
-> CPR preserves memory in place, so there is no need to track dirty memory.
-> By skipping it, CPR can support devices that do not support tracking.
->
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->  system/memory.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/system/memory.c b/system/memory.c
-> index b7548bf112..aef584e638 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -27,6 +27,7 @@
->  
->  #include "exec/memory-internal.h"
->  #include "exec/ram_addr.h"
-> +#include "migration/misc.h"
->  #include "sysemu/kvm.h"
->  #include "sysemu/runstate.h"
->  #include "sysemu/tcg.h"
-> @@ -2947,6 +2948,11 @@ bool memory_global_dirty_log_start(unsigned int flags, Error **errp)
->  
->      assert(flags && !(flags & (~GLOBAL_DIRTY_MASK)));
->  
-> +    /* CPR preserves memory in place, so no need to track dirty memory */
-> +    if (migrate_mode() != MIG_MODE_NORMAL) {
-> +        return true;
-> +    }
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
 
-How this interacts with DIRTY_RATE and DIRTY_LIMIT? The former at least
-seems to never overlap with CPR, right? I'm wondering whether this check
-would be more appropriate up in ram.c along with the similar
-migrate_background_snapshot() check.
+This can be applied through the trivial tree (Cc'd).
 
-(I wish we had made the global_dirty_log_change() function a bit more
-flexible. It would have been a nice place to put this and the snapshot
-check. Not worth the risk of changing it now...)
+Thanks,
 
-Also, not tracking dirty memory implies also not doing the bitmap sync?
-We skip it for bg_snapshot, but not for CPR.
+/mjt
 
-> +
->      if (vmstate_change) {
->          /* If there is postponed stop(), operate on it first */
->          postponed_stop_flags &= ~flags;
-> @@ -3021,6 +3027,11 @@ static void memory_vm_change_state_handler(void *opaque, bool running,
->  
->  void memory_global_dirty_log_stop(unsigned int flags)
->  {
-> +    /* CPR preserves memory in place, so no need to track dirty memory */
-> +    if (migrate_mode() != MIG_MODE_NORMAL) {
-> +        return;
-> +    }
-> +
->      if (!runstate_is_running()) {
->          /* Postpone the dirty log stop, e.g., to when VM starts again */
->          if (vmstate_change) {
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+
 
