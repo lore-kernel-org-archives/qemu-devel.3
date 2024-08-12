@@ -4,81 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50F8CC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 17:57:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C7CC52D7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 18:08:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdZHP-0003qm-Qv; Mon, 12 Aug 2024 13:56:27 -0400
+	id 1sdZRx-0002I7-1Y; Mon, 12 Aug 2024 14:07:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sdZHN-0003l2-Qg
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 13:56:25 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tavip@google.com>) id 1sdZHL-0000nm-T4
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 13:56:25 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3687f8fcab5so2409112f8f.3
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 10:56:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1723485381; x=1724090181; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9ucpR89SN6ep8advprvDEEg8bvmnOO1GXRGaE0X67Mo=;
- b=nfj7ktvX2r1nhi9U2qpPvJNy680cuaPKhUTZdUyAOFk5SDZt1rY2rUYLMoN5b6atC9
- 6B268v9SHrUyMH7TTv34qcVHfZx+eLk4RvrgZ9f3mLyXQ/qgxsmLVswiqZ9gT1BLsdpA
- 2pMS6Lgbp4eetGSwaq2S3F8jKND/i1Uw2hZkOlOZTV4LFBJ15Bi5FywaDmFMkbHT8qrH
- sQ7cr56OIG9Aby05aEiyq+luIPM6FQeyI/3qC0Vj0GOKSOasNGoGuthjRVuG1NCRfZ4Z
- mmFUTK8roUqs44fR+babdPWBxpYshgbTAFFNEWGnfiX4UT+7FYBr597Q94geUuTBYC7k
- bSkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723485381; x=1724090181;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9ucpR89SN6ep8advprvDEEg8bvmnOO1GXRGaE0X67Mo=;
- b=FQH59j7eW8kp336egc5v+4potBMKBi9B5Qc2/7mVFJCj2bZnFh66+7URMJaRz25zil
- H+YsHbZvwUlBuz9fb18+F5GMCwxXZWl05ULICg3kkAMrxKDFXu8GOzjouXBnS6IfBmyy
- fnaIeFX3zwEEPmz5F1vdrngvZvtXkzWcp2hMg+gc0uwg46/QMJ0mT/EF1EOy69V60laf
- k1v29nZPlckBj0PrpkGnNNmbzToMSPvgm6ZjQHI8EJVPAmjemeyRkTi/Ad+ZXt6i/vhL
- 9ZrKu0ujKVmJb665+b1T4j4jdY/Zp2tx6BiSPf03vZ6TBRUgTLGlQEoR6ECSaz8DSp/q
- 3yog==
-X-Gm-Message-State: AOJu0Ywq0gYBAJtsDFGFGMyBBcQaOsdqYAQj8FTKmBNuVRRZ2vEESFkX
- oUroQOHvqEPYTMeL+E5+b0EFEPwgcOHYnmr6pNGfZ99kK1GiUNqbk3WOjvP//Kmts6oomzb7hoU
- xuBPNcq7jIrKdZKpgwoDnZMge/FML99yHUVGo
-X-Google-Smtp-Source: AGHT+IGy5gO53UM0oJAlohh+4At+0i0l/Vi8pIR52RUwf7WZ6I/jyEACa11eGpb3JDTApRUeJH2/9xzeV7TAt+hsG4U=
-X-Received: by 2002:a05:6000:1bc1:b0:367:926a:7413 with SMTP id
- ffacd0b85a97d-3716cd2c07bmr713273f8f.63.1723485381094; Mon, 12 Aug 2024
- 10:56:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1sdZRv-0002Gt-A1
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 14:07:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1sdZRs-0003PN-AM
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 14:07:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723486034;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QD0HNZ6kq9AKfGA5CsRRcaN5eG1tb8p00PVRDFiXyCQ=;
+ b=fjULiN5wuKCYAqZ8ws9jhDKOYM/HMcezdBdLBq6UnGq7u0NQ+gNM/iPrMnE3wp0rZSkHs0
+ 9QEWcOow813vXDOkdQIuo7LzLh6gJJrHVrAyaUJKn7CdpQwaz7Zr8KM+x4ebk+JJS/HkEo
+ qTo3u6qx6Dd6Lxdi/IKk0wYhzZi+BoE=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-599-Ag0t2VxrMhWzoW-wc-0H1A-1; Mon,
+ 12 Aug 2024 14:07:09 -0400
+X-MC-Unique: Ag0t2VxrMhWzoW-wc-0H1A-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A754518EB226; Mon, 12 Aug 2024 18:07:08 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.252])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B615E1955F66; Mon, 12 Aug 2024 18:07:07 +0000 (UTC)
+Date: Mon, 12 Aug 2024 14:07:06 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, pkrempa@redhat.com,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Subject: Re: [PATCH v2 1/2] qdev-monitor: avoid QemuOpts in QMP device_add
+Message-ID: <20240812180706.GB69160@fedora.redhat.com>
+References: <20240801140552.1021693-1-stefanha@redhat.com>
+ <20240801140552.1021693-2-stefanha@redhat.com>
+ <875xsj73qn.fsf@pond.sub.org>
 MIME-Version: 1.0
-References: <20240805201719.2345596-1-tavip@google.com>
- <20240805201719.2345596-4-tavip@google.com>
- <CAFEAcA82c_RZ6512dB1OxpAtinRctkZK7ZyjpxX16Wk7DYZDPg@mail.gmail.com>
-In-Reply-To: <CAFEAcA82c_RZ6512dB1OxpAtinRctkZK7ZyjpxX16Wk7DYZDPg@mail.gmail.com>
-From: Octavian Purdila <tavip@google.com>
-Date: Mon, 12 Aug 2024 10:56:09 -0700
-Message-ID: <CAGWr4cSiNOm1mL6ZC+Dr8bFHz9Dx2R78_we9wL=W6f3FExb-kQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 03/23] scripts: add script to generate C header files
- from SVD XML files
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, stefanst@google.com, 
- pbonzini@redhat.com, alex.bennee@linaro.org, thuth@redhat.com, 
- marcandre.lureau@redhat.com, alistair@alistair23.me, berrange@redhat.com, 
- philmd@linaro.org, jsnow@redhat.com, crosa@redhat.com, bleal@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=tavip@google.com; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="zq57n4DBoUh452BA"
+Content-Disposition: inline
+In-Reply-To: <875xsj73qn.fsf@pond.sub.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,93 +88,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 12, 2024 at 8:27=E2=80=AFAM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
 
-Hi Peter,
+--zq57n4DBoUh452BA
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for the review!
+On Fri, Aug 02, 2024 at 10:01:20AM +0200, Markus Armbruster wrote:
+> Stefan Hajnoczi <stefanha@redhat.com> writes:
+>=20
+> > The QMP device_add monitor command converts the QDict arguments to
+> > QemuOpts and then back again to QDict. This process only supports scalar
+> > types. Device properties like virtio-blk-pci's iothread-vq-mapping (an
+> > array of objects) are silently dropped by qemu_opts_from_qdict() during
+> > the QemuOpts conversion even though QAPI is capable of validating them.
+> > As a result, hotplugging virtio-blk-pci devices with the
+> > iothread-vq-mapping property does not work as expected (the property is
+> > ignored).
+> >
+> > Get rid of the QemuOpts conversion in qmp_device_add() and call
+> > qdev_device_add_from_qdict() with from_json=3Dtrue. Using the QMP
+> > command's QDict arguments directly allows non-scalar properties.
+> >
+> > The HMP is also adjusted since qmp_device_add()'s now expects properly
+> > typed JSON arguments and cannot be used from HMP anymore. Move the code
+> > that was previously in qmp_device_add() (with QemuOpts conversion and
+> > from_json=3Dfalse) into hmp_device_add() so that its behavior is
+> > unchanged.
+> >
+> > This patch changes the behavior of QMP device_add but not HMP
+> > device_add. QMP clients that sent incorrectly typed device_add QMP
+> > commands no longer work. This is a breaking change but clients should be
+> > using the correct types already. See the netdev_add QAPIfication in
+> > commit db2a380c8457 for similar reasoning and object-add in commit
+> > 9151e59a8b6e. Unlike those commits, we continue to rely on 'gen': false
+> > for the time being.
+> >
+> > Move the drain_call_rcu() invocation into qdev_device_add_from_qdict()
+> > so all callers benefit from it automatically. This avoids code
+> > duplication.
+> >
+> > Markus helped me figure this out and even provided a draft patch. The
+> > code ended up very close to what he suggested.
+> >
+> > Suggested-by: Markus Armbruster <armbru@redhat.com>
+> > Cc: Daniel P. Berrang=E9 <berrange@redhat.com>
+> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > ---
+> >  system/qdev-monitor.c | 56 ++++++++++++++++++++++---------------------
+> >  1 file changed, 29 insertions(+), 27 deletions(-)
+> >
+> > diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+> > index 6af6ef7d66..8a756b1a91 100644
+> > --- a/system/qdev-monitor.c
+> > +++ b/system/qdev-monitor.c
+> > @@ -725,6 +725,17 @@ err_del_dev:
+> >      if (dev) {
+> >          object_unparent(OBJECT(dev));
+> >          object_unref(OBJECT(dev));
+> > +
+> > +        /*
+> > +         * Drain all pending RCU callbacks. This is done because
+> > +         * some bus related operations can delay a device removal
+> > +         * (in this case this can happen if device is added and then
+> > +         * removed due to a configuration error)
+> > +         * to a RCU callback, but user might expect that this interface
+> > +         * will finish its job completely once qmp command returns res=
+ult
+> > +         * to the user
+> > +         */
+> > +        drain_call_rcu();
+> >      }
+> >      return NULL;
+> >  }
+>=20
+> Moving this from qmp_device_add() adds RCU draining to call chains not
+> going through qmp_device_add().
+>=20
+> Can adding it hurt?  I guess it can't.
+>=20
+> Can it fix bugs?  I don't know.
+>=20
+> Let's review the callers of qdev_device_add_from_qdict():
+>=20
+> * qdev_device_add()
+>=20
+>   - called from qmp_device_add()
+>=20
+>     No change.
+>=20
+>   - called from device_init_func() called from qemu_create_cli_devices()
+>=20
+>     See below.
+>=20
+>   - called from usbback_portid_add() called from usbback_process_port()
+>     called from usbback_backend_changed()
+>=20
+>     =B7 called from usbback_init()
+>=20
+>     =B7 called as XenDevOps method backend_changed()
+>=20
+>     This is Xen.  We now drain pending RCU callbacks.  Impact?  Beats
+>     me.
+>=20
+> * qemu_create_cli_devices() called from qmp_x_exit_preconfig()
+>=20
+>   - as QMP command with -preconfig, phase must be
+>     PHASE_MACHINE_INITIALIZED
+>=20
+>   - called from qemu_init() without -preconfig
+>=20
+>   We now drain pending RCU callbacks.  Can any be pending at this
+>   early point?  If not, the change is a no-op.
+>=20
+> * failover_add_primary() called from virtio_net_set_features() called as
+>   VirtioDeviceClass method set_features()
+>=20
+>   This is virtio-net failover.  We now drain pending RCU callbacks.
+>   Impact?  Beats me.
+>=20
+> My gut feeling is "improvement, possibly even a bug fix".  It deserves
+> its own commit, doesn't it?
 
+I thought I'd checked it, but now that I have reviewed the functions you
+looked at, I no longer think it's safe to move drain_call_rcu() into
+qdev_device_add_from_qdict(). drain_call_rcu() drops the BQL and must
+not be called from non-reentrant multi-threaded code paths.
 
-> On Mon, 5 Aug 2024 at 21:17, Octavian Purdila <tavip@google.com> wrote:
-> >
-> > From: Stefan Stanacar <stefanst@google.com>
-> >
-> > From: Stefan Stanacar <stefanst@google.com>
-> >
-> > The CMSIS System View Description format(CMSIS-SVD) is an XML based
-> > description of Arm Cortex-M microcontrollers provided and maintained
-> > by sillicon vendors. It includes details such as peripherals registers
-> > (down to bitfields), peripheral register block addresses, reset
-> > values, etc.
-> >
-> > This script uses this information to create header files that makes it
-> > easier to emulate peripherals.
-> >
-> > The script can be used to create either peripheral specific headers or
-> > board / system specific information. The script generated headers are
-> > similar to the SVDConv utility.
-> >
-> > Peripheral specific headers contains information such as register
-> > layout, register names and reset values for registers:
-> >
-> >   typedef struct {
-> >     ...
-> >     union {
-> >       uint32_t PSELID;              /* 0x00000FF8 Peripheral Select and
-> >                                      * Flexcomm module ID */
-> >       struct {
-> >         uint32_t PERSEL : 3;        /* [2..0] Peripheral Select */
-> >         uint32_t LOCK : 1;          /* [3..3] Lock the peripheral selec=
-t */
-> >         uint32_t USARTPRESENT : 1;  /* [4..4] USART present indicator *=
-/
-> >         uint32_t SPIPRESENT : 1;    /* [5..5] SPI present indicator */
-> >         uint32_t I2CPRESENT : 1;    /* [6..6] I2C present indicator */
-> >         uint32_t I2SPRESENT : 1;    /* [7..7] I2S Present */
-> >         uint32_t : 4;
-> >         uint32_t ID : 20;           /* [31..12] Flexcomm ID */
-> >       } PSELID_b;
-> >     };
->
-> Bitfield layout in C isn't portable, so don't generate this kind
-> of union-of-a-integer-and-some-bitfields, please. You can
-> generate FIELD() macro invocations (see include/hw/registerfields.h)
-> which define shift/mask/length macros that can be used with
-> FIELD_EX*/FIELD_DP* to do extract/deposit operations.
->
+For example, if drain_call_rcu() is called from device emulation code
+then another vCPU thread could execute that same device's emulation code
+while the BQL is dropped. That's usually unsafe because most device
+emulation code only expects to run in one thread at any given time
+thanks to the BQL.
 
-I see that C bitfields are already used in a few places in qemu. Could
-you please elaborate on the portability issue?
+Here are the cases:
+- qemu_create_cli_devices: safe because this happens before device
+  emulation runs in vCPU threads
+- Xen: safe because there are no vCPU threads when QEMU just provides
+  device emulation in a normal Xen system. But I'm not sure if usbback
+  can also be used in a QEMU's Xen HVM guest mode where KVM handles
+  vCPUs, it might be a problem there.
+- virtio_net_set_features() -> failover_add_primary() is unsafe. Another
+  vCPU thread could enter virtio-net emulation code while the thread
+  running virtio_net_set_features() drops the lock.
 
-> >     ...
-> >   } FLEXCOMM_Type;                  /* Size =3D 4096 (0x1000) */
-> >
-> >   #define FLEXCOMM_PSELID_PERSEL_Pos (0UL)
-> >   #define FLEXCOMM_PSELID_PERSEL_Msk (0x7UL)
-> >   #define FLEXCOMM_PSELID_LOCK_Pos (3UL)
-> >   #define FLEXCOMM_PSELID_LOCK_Msk (0x8UL)
-> >   ...
-> >
-> >   typedef enum {                /* FLEXCOMM_PSELID_LOCK */
-> >     /* Peripheral select can be changed by software. */
-> >     FLEXCOMM_PSELID_LOCK_UNLOCKED =3D 0,
-> >     /* Peripheral select is locked and cannot be changed until this
-> >      * Flexcomm module or the entire device is reset. */
-> >     FLEXCOMM_PSELID_LOCK_LOCKED =3D 1,
-> >   } FLEXCOMM_PSELID_LOCK_Enum;
-> >   ...
-> >
-> >   #define FLEXCOMM_REGISTER_NAMES_ARRAY(_name) \
-> >     const char *_name[sizeof(FLEXCOMM_Type)] =3D { \
-> >         [4088 ... 4091] =3D "PSELID", \
-> >         [4092 ... 4095] =3D "PID", \
-> >     }
-> >
-> > Board specific headers contains information about peripheral base
-> > register addresses.
->
-> thanks
-> -- PMM
+I think it's better to duplicate drain_call_rcu() into hmp_device_add()
+than to risk breaking the other code paths.
+
+Stefan
+
+--zq57n4DBoUh452BA
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAma6T0oACgkQnKSrs4Gr
+c8gWbggAhCA0FnL70uvtDj6/uPNgOogyjbKBbr5D/rkWsFv94mX27ayIujkFr/p6
+SxLx/odR/F9jT95GNbDZOcXqK8f279KjBRpEyEYIQe20w8i5ZLWsdREv180EfmdQ
+rh3U1ux91ZzcG6p30EwUyAbSbRj6LugotDANcwIB59pKJHMmh6uTK1qRNdR/vROu
+AKEPEayuQcghmJhruspj63RMbtuWIVMFs/6PruoOHskprha439c0oTU/yna3HeMU
+nISoLFMkQEu+GGZ2KLfm+8cww6bKIF4Tt8IS1UmaEeiweP4HCS6ddAEiVklvyc1j
+NHX6Tp8/hsB3YHb16tvlg1kL5nDRXw==
+=jqWs
+-----END PGP SIGNATURE-----
+
+--zq57n4DBoUh452BA--
+
 
