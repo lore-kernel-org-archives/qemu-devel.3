@@ -4,84 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 759A6C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 01:37:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA90C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 01:43:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdJzF-0005t2-Vl; Sun, 11 Aug 2024 21:36:42 -0400
+	id 1sdK5V-0002nD-Lg; Sun, 11 Aug 2024 21:43:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
- id 1sdJzE-0005r8-IF; Sun, 11 Aug 2024 21:36:40 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
+ id 1sdK5T-0002mi-Gv
+ for qemu-devel@nongnu.org; Sun, 11 Aug 2024 21:43:07 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <amjadsharafi10@gmail.com>)
- id 1sdJzD-0002DA-5F; Sun, 11 Aug 2024 21:36:40 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-7a1be7b7bb5so2773103a12.0; 
- Sun, 11 Aug 2024 18:36:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pizhenwei@bytedance.com>)
+ id 1sdK5R-0002qR-1m
+ for qemu-devel@nongnu.org; Sun, 11 Aug 2024 21:43:07 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-1fc6ee64512so26661735ad.0
+ for <qemu-devel@nongnu.org>; Sun, 11 Aug 2024 18:43:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723426596; x=1724031396; darn=nongnu.org;
- h=content-disposition:content-transfer-encoding:mime-version:subject
- :references:in-reply-to:message-id:cc:to:from:date:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ifcR1ka3vOqg6/0AbJi89a+iRNbKWhS9OIR/CPFP8IA=;
- b=L+bHKwyHkYmUaq8U0Ki41wvbn+7qDWBaPzjUrPooD81lbBlsZESCQ/3BAkab+qYsA7
- RZcDs8yWKp6SErPMGcP69GKgt0pNUP/h5oWwTbJ5QNYSmjQ4P/47ctqCQPbJC97gAtfx
- rbtZFBitdSBkceb0sXurgoUYIdZeXiG+zc+TLGEVI22I5EFInsEP1UM66K5toxt52fhZ
- C4O5K8F1FFg7zxAnLIHKuLVQdzpq+uLxjRx8agaDUKXHG01Cbqffg6b68e+YfMQmvrLi
- 8/CMwXWALesyMLGjU7E/d8jbNg2UNI4sSEyYcMKBZWZAkiHUF1u4cOD3tVX11ET5J9IU
- xgpg==
+ d=bytedance.com; s=google; t=1723426980; x=1724031780; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=avEVceMifpipUBT6ldxMcEq7G2/EptaN2U+ICKQ1hzo=;
+ b=QJMMOiPD22c/hVHLePkr9XUiU3AgvswENdkhNoVLx1b/5RgrcbOAHPOORjsIXKg0mG
+ oKC8k5X/b2hv5kjym/PCkxG/v71BSj0dwoh6zFtyy3qZY4EBAS0wkdUWBwhBbLvM0v3M
+ 2lw1VFZCBFDZ5ZWWOGYY4B8rDwM1tcGAcFN6PfwUHLUgCkqWCaH1LsbYkTfuwkLQ1dhH
+ SW5iUsZOHzyuFo5aO1ywuwsQ9IjndCFswO4XCScDyrENNB4Xk/g0qBVROPMPrqzwIM2J
+ ugh1jDBuGjDDctLTG87sg9T2/Bn7WvfZe0QSZ/5FkN4CpJY5ttEE1YLH2/4ahl10dhNf
+ yGNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723426596; x=1724031396;
- h=content-disposition:content-transfer-encoding:mime-version:subject
- :references:in-reply-to:message-id:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ifcR1ka3vOqg6/0AbJi89a+iRNbKWhS9OIR/CPFP8IA=;
- b=LxQdTfN3SChVUJIfl5CvCcXq3GffT5b20rQdYxHD/DxTMUExn83EXuzZOHUkgTWu/i
- naCnok/46QgO3jYh5+iuBfeEevFT+xun04Fu254VLfBQtJuhfZlnj2Mi14FGJngNK/Gb
- DXi1hFP8FHv+BT9kq+S9/edUm2BaqiFB4YkS8xCUhjk8CIG1G/iEQigTdpWlphbvWmSa
- S2+fGW3y62gU6pL/0zdfYF2OqG6ow5oCH9p0FTyTkjoYB63j/REKrFY/FAPpO4WUZ1HL
- In41QAKiXJXctzMlbj3ZvceXtwT+YTTI8VMpP4tnj6ejx7xZx6wkYGFZF4v40E+nnBF6
- E0Fw==
+ d=1e100.net; s=20230601; t=1723426980; x=1724031780;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=avEVceMifpipUBT6ldxMcEq7G2/EptaN2U+ICKQ1hzo=;
+ b=Qx0gkIpMFS6YYbJFFQW7UbahLj9UVIsMaWX8FcbX6t6Y2TR+5sjFKR9P6OmlZwKEfa
+ QT47dMIYE4Zg8MGc2BmrSu0X8gIN1pbpcoznuXfS796xeJZyG7A5T1OyDvs6CmNOFgss
+ Df9L3/+nOWs+42VzCsk8taQi6nLWyM/Y10LthhtKlMsN6hvHCbkASdspj3Y4nUYT5icq
+ 5NWVcaGl6TxqJgapGtQ2ei4WvHFE+GTSSBCuq03owo5uaE3lKx8/XBAf02atZzSgsA4a
+ /jr5g8VadSsYBzvNU9vYtQDMCkcyr+osc2O+VgeJ20Xkc9JBpqn2DFUwRHqNF8UMD/Ra
+ pMFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWDtVoXqIF4iVcht7sjqvPylx7UWi1rcpmB/Yrr58iEPcgjMXdWLpGsPBN5QZDnUUDmFFjrT7iRGzXzQTiCu0vTVb6nCYcXyZ+i8jcr56amcP3BnFW1+X94CX9Vl5Q=
-X-Gm-Message-State: AOJu0YwoQ86MYoxzWhuDoGplKM7DDoaQnQINiBwIuS8f55OutxdZIdaN
- 6rtkESsWdD2D3zrIl2mgMztEdyRLiAWfnz5217K6+5JIqP/LNeoExwbr1Hzv462tT4sb
-X-Google-Smtp-Source: AGHT+IEU2f38eAVUDSlYokOLc7xP7w/VEnxSXpcfJqCG5747auGfc8chsM5odpaupduDkMjk/fdnnA==
-X-Received: by 2002:a17:90a:348f:b0:2c9:8650:404 with SMTP id
- 98e67ed59e1d1-2d1e80565f6mr9061355a91.30.1723426596275; 
- Sun, 11 Aug 2024 18:36:36 -0700 (PDT)
-Received: from amjad-pc ([192.228.221.130]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d1fce30aa3sm3686409a91.9.2024.08.11.18.36.34
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Sun, 11 Aug 2024 18:36:35 -0700 (PDT)
-Date: Mon, 12 Aug 2024 09:36:32 +0800
-From: Amjad Alsharafi <amjadsharafi10@gmail.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: "=?utf-8?Q?qemu-devel=40nongnu.org?=" <qemu-devel@nongnu.org>, Hanna
- Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- =?utf-8?Q?open_list=3Avvfat?= <qemu-block@nongnu.org>, qemu-stable
- <qemu-stable@nongnu.org>
-Message-ID: <090A3ED9-F3F3-4DF3-AC49-F43A3DDC1EC6@getmailspring.com>
-In-Reply-To: <d5b1de9e-2e70-448b-9f8d-57af6f643bf3@tls.msk.ru>
-References: <d5b1de9e-2e70-448b-9f8d-57af6f643bf3@tls.msk.ru>
-Subject: Re: [PATCH v5 0/5] vvfat: Fix write bugs for large files and
- add iotests
-X-Mailer: Mailspring
+ AJvYcCVdcB2tzR3GXuoCS5wFFP7fyg7HZ6ca3bRpMziMm8+CtjuH5n/9vTiBixKTkZYGBouCTu07jrL11R0XFBfHt/if1CLRgN8=
+X-Gm-Message-State: AOJu0YzSIllEUJhB5PsQfQd9aUUS9buLKhUFw0ndxicajO+YasHjCwvK
+ GwltORcrgxc30d0IbkA9Msy5thLDIOkKt5H4a43hXL/N+nVCfKIbTGh/uD/2MCI=
+X-Google-Smtp-Source: AGHT+IH9aXsboGcVo+nQd0vTpKxuJtvE29Ps+J9DQ4bk9MVZPpdMTDbLvA0TMIBA8Sa8jAxKTel4UA==
+X-Received: by 2002:a17:902:d4cf:b0:200:9539:ee8 with SMTP id
+ d9443c01a7336-200ae4dbc4emr57948265ad.7.1723426980319; 
+ Sun, 11 Aug 2024 18:43:00 -0700 (PDT)
+Received: from always-zbook.bytedance.net ([61.213.176.11])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-200bb7eab09sm27627405ad.41.2024.08.11.18.42.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 11 Aug 2024 18:42:59 -0700 (PDT)
+From: zhenwei pi <pizhenwei@bytedance.com>
+To: armbru@redhat.com
+Cc: eblake@redhat.com, qemu-devel@nongnu.org, arei.gonglei@huawei.com,
+ zhenwei pi <pizhenwei@bytedance.com>
+Subject: [PATCH] qapi: Document QCryptodevBackendServiceType
+Date: Mon, 12 Aug 2024 09:42:52 +0800
+Message-ID: <20240812014252.1398754-1-pizhenwei@bytedance.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=amjadsharafi10@gmail.com; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=pizhenwei@bytedance.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,16 +93,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+QCryptodevBackendServiceType was introduced by
+bc304a6442e (cryptodev: Introduce server type in QAPI). However there
+is a lack of member description. Thanks to Markus for pointing out
+this.
 
+Signed-off-by: zhenwei pi <pizhenwei@bytedance.com>
+---
+ qapi/cryptodev.json | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-On Aug 11 2024, at 10:45 pm, Michael Tokarev <mjt@tls.msk.ru> wrote:
+diff --git a/qapi/cryptodev.json b/qapi/cryptodev.json
+index 68289f4984..9622c6d92b 100644
+--- a/qapi/cryptodev.json
++++ b/qapi/cryptodev.json
+@@ -28,6 +28,16 @@
+ #
+ # The supported service types of a crypto device.
+ #
++# @cipher: Symmetric Key Cipher service
++#
++# @hash: Hash service
++#
++# @mac: Message Authentication Codes service
++#
++# @aead: Authenticated Encryption with Associated Data service
++#
++# @akcipher: Asymmetric Key Cipher service
++#
+ # Since: 8.0
+ ##
+ { 'enum': 'QCryptodevBackendServiceType',
+-- 
+2.43.0
 
-> The question here is whenever I should include whole series
-> (5 patches) or just one?  I picked up all 5 for now.
-
-Yeah, we should include all of them (at least the first 4 are required
-for the actual fixes), the last one is unit test for these fixes.
-
-Thanks,
-Amjad
 
