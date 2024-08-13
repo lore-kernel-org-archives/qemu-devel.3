@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C22A4C52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 06:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EA59C52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 06:47:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdlAQ-0000Jk-AW; Tue, 13 Aug 2024 02:38:02 -0400
+	id 1sdlJ9-00066P-JS; Tue, 13 Aug 2024 02:47:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sdlAO-0000CL-W9
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 02:38:01 -0400
-Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
+ id 1sdlJ8-00061l-Ay
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 02:47:02 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sdlAH-0006VS-Pd
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 02:38:00 -0400
-Received: by mail-oi1-x22d.google.com with SMTP id
- 5614622812f47-3db1e4219f8so2902319b6e.3
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 23:37:52 -0700 (PDT)
+ id 1sdlJ6-0007rf-9S
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 02:47:02 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2cb4b7fef4aso4013274a91.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 23:46:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1723531072; x=1724135872;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1723531618; x=1724136418;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XP4TPVtZh3pRSWD5lDzkymaK3OFz5YOgTXNbBmvp+To=;
- b=SquWLOAVdVSVDtPjCXwE3Nfry/UpqOjGe4ZUvGICQIT1DAAlEpoWN89WQv2fN2f9pK
- pnUU/bkN9X4rFhpIga7VlhBNAcWMyUGOProoNrMt9M7Lt7YlRLPEoQbmqZF1rW/W6mxC
- CT1b0Ao+cw6xldqn1zQaUinPc9MNU2PQ+OX++zeAyupV0sF9Oqtv4uRsxZ53+3jhjS7D
- xTByDa9A3OnOxGP0TrVBlftrh2Zi4ZafnY6PkrugUlebBAd3AEUXmjaM40hK5wAtYa+Y
- PX55RXSYKNdOOurnBtfgrsHoZZ5p5UOFdwACLqLORcyo8ew4iSMTVRsgZhX9AKGFFz8W
- wfMQ==
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=bzIAcgqKzO04aMMGR0TLXMYoHzPXpE5sSEkC9JZnbBE=;
+ b=bFX+ws6yCVIOLYdvf7hAP5tj4v2FTGIlG8ptspWkfkbt0tFkcqJcSAc5h/0d2mMrCr
+ F54kk4n1Ur+yiqrTSHvLAWBW6Pp223TB9et49OteBMPCn3U7kNV1OA1urxAnnfMYWx05
+ aBzUXu3JNrdKiES/12yXMyRPiH8+rm1DCb853W7KBRghxU/ZOxnr5pfjkedXXqCdS9MP
+ hHcXaN/Nw0gh20yAtdAnYSXBlee1yEKM+42tT0y4wcF0k63Z4cXxIHK29RGDmw2BpEtc
+ E+AsUKglOwvm+zUEuSIYBLFPokpyyRYFe6HKpX+xlrSaG1sVSUFqTEI+Mbvj59Brlodz
+ tLfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723531072; x=1724135872;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XP4TPVtZh3pRSWD5lDzkymaK3OFz5YOgTXNbBmvp+To=;
- b=Hz89pOLsHjhK0nHO5chW8q+5saZZ5xumWf5SzqGBy+kSL02JYiVu67tT729uH72Rqy
- ozNY7H7wAv1Tk8HeC40UbF5dbRifIHxl3Dv+NpIcsf0mrPu79YRnd9uDcyQ6fEaGkKQ0
- Hs7q57HyBMFw457O7/aYNpGz7Bwk7lzXPjMVOIVvu5k7Q7GsKKbM4r/QEqi2bP8PnTDD
- pODp/kZTn9YYuMHHaPNweGp9nGWCz4REPTGJZyhuvUatFIACN+pjvQnohdE4bIeQhu/b
- ZIe4nPdMjWDQP1Lj7AckGs112AkrHs0bd6uBL/HQeoCJzrl3CJFs4QgJPUjZzT56644G
- YD2g==
-X-Gm-Message-State: AOJu0YwHz6VzPz4k+Mj5zKd82vQH8lTRadvsQWGS0e9OYeK7/gMydp0t
- e22UG/fn4fqiiuQrUnecTbTL45RHsA4Cr1cK6b9tQuelmPcRyZr6BMjYIJ6NmZA=
-X-Google-Smtp-Source: AGHT+IF1UakvDc9WUU1KqM1Htx5gUWRlW5rOFVbF3rQspx02BvyWdKP4qDhCh4KJruxWiSebBTF2LQ==
-X-Received: by 2002:a05:6808:398e:b0:3dc:1b09:55c9 with SMTP id
- 5614622812f47-3dd1ee32eaamr3551684b6e.12.1723531071891; 
- Mon, 12 Aug 2024 23:37:51 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723531618; x=1724136418;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bzIAcgqKzO04aMMGR0TLXMYoHzPXpE5sSEkC9JZnbBE=;
+ b=DiRnXeaVXFNT6JhfPt8KI5y6gdSZaO10NgOa8YXzezWZnRMai1c2HQx8zYfpsrYQ+/
+ jptqPD8zfLg4TmeXjRnNqrH94O3Icfy9p1wmBAG/QJ1UbsvnQAWLLQWM65kiAeB3wsO8
+ eZMSTXb250v85KPVcGbSRn7uzO3oXZxgMI95x7RVKyO6LtEI1TELqM0x/LRsp3Svwqi3
+ gABiV+InhBZCDI2hFz8N3mP249JgTKUk0LTHaqt2ZKBR2mg1mz/0kKTsD3pn6Gzbdss4
+ T1QZ2qbIcpuf13BDTQ0/T0Xf0vQVZPN59c5gv5+HLVpc+TxYVy8DnRf2OKuPDiKHdWlW
+ cWhA==
+X-Gm-Message-State: AOJu0YyDgM1fedlyg54QrHx7FK6nQ6iGaC87/7d4qQhN35wNk/OT8MGt
+ lWzIUoIDLR51h6idHPI4o5UFgO0JyTpS0GgBz3wdMuxe53S5Bz4fK+nQluCdWsw=
+X-Google-Smtp-Source: AGHT+IGc46IyiYANFDkyfpZkpg/wT1CN6aYcxRuR3ZfNOJBtsNyTwrqB42PwmPzVYMvOj88oQBpu4Q==
+X-Received: by 2002:a17:90a:b30c:b0:2c9:5a8b:ff7e with SMTP id
+ 98e67ed59e1d1-2d39254e9f0mr3133225a91.25.1723531618488; 
+ Mon, 12 Aug 2024 23:46:58 -0700 (PDT)
 Received: from localhost ([157.82.202.230])
  by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-710e58ca645sm5141237b3a.94.2024.08.12.23.37.48
+ 98e67ed59e1d1-2d1c9db74absm9557342a91.42.2024.08.12.23.46.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Aug 2024 23:37:51 -0700 (PDT)
+ Mon, 12 Aug 2024 23:46:58 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Tue, 13 Aug 2024 15:37:08 +0900
-Subject: [PATCH for-9.2 v7 9/9] pcie_sriov: Make a PCI device with
- user-created VF ARI-capable
+Date: Tue, 13 Aug 2024 15:46:33 +0900
+Subject: [PATCH] contrib/plugins: Add a plugin to generate basic block vectors
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240813-sriov-v7-9-8515e3774df7@daynix.com>
-References: <20240813-sriov-v7-0-8515e3774df7@daynix.com>
-In-Reply-To: <20240813-sriov-v7-0-8515e3774df7@daynix.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+Message-Id: <20240813-bb-v1-1-effbb77daebf@daynix.com>
+X-B4-Tracking: v=1; b=H4sIAEgBu2YC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDM0ML3aQkXUtjYwvzlJQ0czPTJCWgwoKi1LTMCrAh0bG1tQA3yjmOVAA
+ AAA==
+To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Alexandre Iooss <erdnaxe@crans.org>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Eduardo Habkost <eduardo@habkost.net>, Jason Wang <jasowang@redhat.com>, 
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, 
- Yui Washizu <yui.washidu@gmail.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Thomas Huth <thuth@redhat.com>, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, 
+ Beraldo Leal <bleal@redhat.com>
+Cc: qemu-devel@nongnu.org, Yotaro Nada <yotaro.nada@gmail.com>, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::22d;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-oi1-x22d.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -104,112 +104,240 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+SimPoint is a widely used tool to find the ideal microarchitecture
+simulation points so Valgrind[2] and Pin[3] support generating basic
+block vectors for use with them. Let's add a corresponding plugin to
+QEMU too.
+
+Note that this plugin has a different goal with tests/plugin/bb.c.
+
+This plugin creates a vector for each constant interval instead of
+counting the execution of basic blocks for the entire run and able to
+describe the change of execution behavior. Its output is also
+syntactically simple and better suited for parsing, while the output of
+tests/plugin/bb.c is more human-readable.
+
+[1] https://cseweb.ucsd.edu/~calder/simpoint/
+[2] https://valgrind.org/docs/manual/bbv-manual.html
+[3] https://www.intel.com/content/www/us/en/developer/articles/tool/pin-a-dynamic-binary-instrumentation-tool.html
+
+Signed-off-by: Yotaro Nada <yotaro.nada@gmail.com>
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- docs/system/sriov.rst       |  3 ++-
- include/hw/pci/pcie_sriov.h |  7 +++++--
- hw/pci/pcie_sriov.c         |  8 +++++++-
- hw/virtio/virtio-pci.c      | 16 ++++++++++------
- 4 files changed, 24 insertions(+), 10 deletions(-)
+ docs/devel/tcg-plugins.rst |  20 ++++++
+ contrib/plugins/bb.c       | 153 +++++++++++++++++++++++++++++++++++++++++++++
+ contrib/plugins/Makefile   |   1 +
+ 3 files changed, 174 insertions(+)
 
-diff --git a/docs/system/sriov.rst b/docs/system/sriov.rst
-index a851a66a4b8b..d12178f3c319 100644
---- a/docs/system/sriov.rst
-+++ b/docs/system/sriov.rst
-@@ -28,7 +28,8 @@ virtio-net-pci functions to a bus. Below is a command line example:
- The VFs specify the paired PF with ``sriov-pf`` property. The PF must be
- added after all VFs. It is the user's responsibility to ensure that VFs have
- function numbers larger than one of the PF, and that the function numbers
--have a consistent stride.
-+have a consistent stride. Both the PF and VFs are ARI-capable so you can have
-+255 VFs at maximum.
+diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
+index 9cc09d8c3da1..2859eecc13b9 100644
+--- a/docs/devel/tcg-plugins.rst
++++ b/docs/devel/tcg-plugins.rst
+@@ -332,6 +332,26 @@ run::
+   160          1      0
+   135          1      0
  
- You may also need to perform additional steps to activate the SR-IOV feature on
- your guest. For Linux, refer to [1]_.
-diff --git a/include/hw/pci/pcie_sriov.h b/include/hw/pci/pcie_sriov.h
-index f75b8f22ee92..aeaa38cf3456 100644
---- a/include/hw/pci/pcie_sriov.h
-+++ b/include/hw/pci/pcie_sriov.h
-@@ -43,12 +43,15 @@ void pcie_sriov_vf_register_bar(PCIDevice *dev, int region_num,
++- contrib/plugins/bb.c
++
++The bb plugin allows you to generates basic block vectors for use with the
++`SimPoint <https://cseweb.ucsd.edu/~calder/simpoint/>`__ analysis tool.
++
++It has two options, ``interval`` and ``outfile``. ``interval`` specifies the
++interval to generate a basic block vector by the number of instructions. It is
++optional, and its default value is 100000000. ``outfile`` is the path to
++output files, and it will be suffixed with ``.N.bb`` where ``N`` is a vCPU
++index.
++
++Example::
++
++  $ qemu-aarch64 \
++    -plugin contrib/plugins/libb.so,interval=100,outfile=sha1 \
++    tests/tcg/aarch64-linux-user/sha1
++  SHA1=15dd99a1991e0b3826fede3deffc1feba42278e6
++  $ du sha1.0.bb
++  23128   sha1.0.bb
++
+ - contrib/plugins/hotblocks.c
  
- /**
-  * pcie_sriov_pf_init_from_user_created_vfs() - Initialize PF with user-created
-- *                                              VFs.
-+ *                                              VFs, adding ARI to PF
-  * @dev: A PCIe device being realized.
-  * @offset: The offset of the SR-IOV capability.
-  * @errp: pointer to Error*, to store an error if it happens.
-  *
-- * Return: The size of added capability. 0 if the user did not create VFs.
-+ * Initializes a PF with user-created VFs, adding the ARI extended capability to
-+ * the PF. The VFs should call pcie_ari_init() to form an ARI device.
-+ *
-+ * Return: The size of added capabilities. 0 if the user did not create VFs.
-  *         -1 if failed.
-  */
- int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
-diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
-index f5b83a92a00c..94ab92d8c80d 100644
---- a/hw/pci/pcie_sriov.c
-+++ b/hw/pci/pcie_sriov.c
-@@ -238,6 +238,7 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
-     PCIDevice **vfs;
-     BusState *bus = qdev_get_parent_bus(DEVICE(dev));
-     uint16_t ven_id = pci_get_word(dev->config + PCI_VENDOR_ID);
-+    uint16_t size = PCI_EXT_CAP_SRIOV_SIZEOF;
-     uint16_t vf_dev_id;
-     uint16_t vf_offset;
-     uint16_t vf_stride;
-@@ -304,6 +305,11 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
-         return -1;
-     }
- 
-+    if (!pcie_find_capability(dev, PCI_EXT_CAP_ID_ARI)) {
-+        pcie_ari_init(dev, offset + size);
-+        size += PCI_ARI_SIZEOF;
+ The hotblocks plugin allows you to examine the where hot paths of
+diff --git a/contrib/plugins/bb.c b/contrib/plugins/bb.c
+new file mode 100644
+index 000000000000..4f1266d07ff5
+--- /dev/null
++++ b/contrib/plugins/bb.c
+@@ -0,0 +1,153 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++
++#include <stdio.h>
++#include <glib.h>
++
++#include <qemu-plugin.h>
++
++typedef struct Bb {
++    struct qemu_plugin_scoreboard *count;
++    unsigned int index;
++} Bb;
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
++static GHashTable *bbs;
++static GPtrArray *files;
++static char *filename;
++static struct qemu_plugin_scoreboard *count;
++static uint64_t interval = 100000000;
++
++static void plugin_exit(qemu_plugin_id_t id, void *p)
++{
++    g_hash_table_unref(bbs);
++    g_ptr_array_unref(files);
++    g_free(filename);
++    qemu_plugin_scoreboard_free(count);
++}
++
++static void free_bb(void *data)
++{
++    qemu_plugin_scoreboard_free(((Bb *)data)->count);
++    g_free(data);
++}
++
++static void free_file(void *data)
++{
++    fclose(data);
++}
++
++static qemu_plugin_u64 count_u64(void)
++{
++    return qemu_plugin_scoreboard_u64(count);
++}
++
++static qemu_plugin_u64 bb_count_u64(Bb *bb)
++{
++    return qemu_plugin_scoreboard_u64(bb->count);
++}
++
++static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
++{
++    g_autofree gchar *vcpu_filename = NULL;
++
++    if (vcpu_index >= files->len) {
++        g_ptr_array_set_size(files, vcpu_index + 1);
++    } else if (g_ptr_array_index(files, vcpu_index)) {
++        return;
 +    }
 +
-     for (i = 0; i < pf->len; i++) {
-         vfs[i]->exp.sriov_vf.pf = dev;
-         vfs[i]->exp.sriov_vf.vf_number = i;
-@@ -324,7 +330,7 @@ int16_t pcie_sriov_pf_init_from_user_created_vfs(PCIDevice *dev,
-         }
-     }
- 
--    return PCI_EXT_CAP_SRIOV_SIZEOF;
-+    return size;
- }
- 
- bool pcie_sriov_register_device(PCIDevice *dev, Error **errp)
-diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-index 0c8fcc5627d5..b19e2983ee22 100644
---- a/hw/virtio/virtio-pci.c
-+++ b/hw/virtio/virtio-pci.c
-@@ -2102,12 +2102,16 @@ static void virtio_pci_device_plugged(DeviceState *d, Error **errp)
-                          PCI_BASE_ADDRESS_SPACE_IO, &proxy->bar);
-     }
- 
--    res = pcie_sriov_pf_init_from_user_created_vfs(&proxy->pci_dev,
--                                                   proxy->last_pcie_cap_offset,
--                                                   errp);
--    if (res > 0) {
--        proxy->last_pcie_cap_offset += res;
--        virtio_add_feature(&vdev->host_features, VIRTIO_F_SR_IOV);
-+    if (pci_is_vf(&proxy->pci_dev)) {
-+        pcie_ari_init(&proxy->pci_dev, proxy->last_pcie_cap_offset);
-+        proxy->last_pcie_cap_offset += PCI_ARI_SIZEOF;
-+    } else {
-+        res = pcie_sriov_pf_init_from_user_created_vfs(
-+            &proxy->pci_dev, proxy->last_pcie_cap_offset, errp);
-+        if (res > 0) {
-+            proxy->last_pcie_cap_offset += res;
-+            virtio_add_feature(&vdev->host_features, VIRTIO_F_SR_IOV);
++    vcpu_filename = g_strdup_printf("%s.%u.bb", filename, vcpu_index);
++    g_ptr_array_index(files, vcpu_index) = fopen(vcpu_filename, "w");
++}
++
++static void vcpu_tb_exec(unsigned int vcpu_index, void *udata)
++{
++    FILE *file = g_ptr_array_index(files, vcpu_index);
++    uint64_t count = qemu_plugin_u64_get(count_u64(), vcpu_index) - interval;
++    GHashTableIter iter;
++    void *value;
++
++    if (!file) {
++        return;
++    }
++
++    qemu_plugin_u64_set(count_u64(), vcpu_index, count);
++
++    fputc('T', file);
++
++    g_hash_table_iter_init(&iter, bbs);
++
++    while (g_hash_table_iter_next(&iter, NULL, &value)) {
++        Bb *bb = value;
++        uint64_t bb_count = qemu_plugin_u64_get(bb_count_u64(bb), vcpu_index);
++
++        if (!bb_count) {
++            continue;
 +        }
-     }
- }
++
++        fprintf(file, ":%u:%" PRIu64 " ", bb->index, bb_count);
++        qemu_plugin_u64_set(bb_count_u64(bb), vcpu_index, 0);
++    }
++
++    fputc('\n', file);
++}
++
++static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
++{
++    uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
++    uint64_t vaddr = qemu_plugin_tb_vaddr(tb);
++    Bb *bb = g_hash_table_lookup(bbs, &vaddr);
++
++    if (!bb) {
++        uint64_t *key = g_new(uint64_t, 1);
++
++        *key = vaddr;
++        bb = g_new(Bb, 1);
++        g_hash_table_insert(bbs, key, bb);
++        bb->count = qemu_plugin_scoreboard_new(sizeof(uint64_t));
++        bb->index = g_hash_table_size(bbs);
++    }
++
++    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
++        tb, QEMU_PLUGIN_INLINE_ADD_U64, count_u64(), n_insns);
++
++    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
++        tb, QEMU_PLUGIN_INLINE_ADD_U64, bb_count_u64(bb), n_insns);
++
++    qemu_plugin_register_vcpu_tb_exec_cond_cb(
++        tb, vcpu_tb_exec, QEMU_PLUGIN_CB_NO_REGS,
++        QEMU_PLUGIN_COND_GE, count_u64(), interval, NULL);
++}
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
++                                           const qemu_info_t *info,
++                                           int argc, char **argv)
++{
++    for (int i = 0; i < argc; i++) {
++        char *opt = argv[i];
++        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
++        if (g_strcmp0(tokens[0], "interval") == 0) {
++            interval = g_ascii_strtoull(tokens[1], NULL, 10);
++        } else if (g_strcmp0(tokens[0], "outfile") == 0) {
++            filename = tokens[1];
++            tokens[1] = NULL;
++        } else {
++            fprintf(stderr, "option parsing failed: %s\n", opt);
++            return -1;
++        }
++    }
++
++    if (!filename) {
++        fputs("outfile unspecified\n", stderr);
++        return -1;
++    }
++
++    bbs = g_hash_table_new_full(g_int64_hash, g_int64_equal, g_free, free_bb);
++    files = g_ptr_array_new_with_free_func(free_file);
++    count = qemu_plugin_scoreboard_new(sizeof(uint64_t));
++    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
++    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
++    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
++
++    return 0;
++}
+diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
+index 0b64d2c1e3a9..14bc88bb4f86 100644
+--- a/contrib/plugins/Makefile
++++ b/contrib/plugins/Makefile
+@@ -13,6 +13,7 @@ TOP_SRC_PATH = $(SRC_PATH)/../..
+ VPATH += $(SRC_PATH)
  
+ NAMES :=
++NAMES += bb
+ NAMES += execlog
+ NAMES += hotblocks
+ NAMES += hotpages
 
+---
+base-commit: 74abb45dac6979e7ff76172b7f0a24e869405184
+change-id: 20240618-bb-93387ddf765b
+
+Best regards,
 -- 
-2.46.0
+Akihiko Odaki <akihiko.odaki@daynix.com>
 
 
