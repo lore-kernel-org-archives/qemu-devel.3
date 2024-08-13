@@ -4,68 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CEF3C52D7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 14:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1F79C52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 14:13:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sds7h-0000r7-HP; Tue, 13 Aug 2024 10:03:41 -0400
+	id 1sdsGP-0000lI-3h; Tue, 13 Aug 2024 10:12:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sds7f-0000pB-I9
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 10:03:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1sds7d-0000wa-Sj
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 10:03:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723557816;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=J6j+LUWomIxEI6R4Yn4ks4Gnz4VF37g4JDVVk/F303Q=;
- b=Ipw84hQcHty9p6656RCSbhr4NDqJuPlTyvnFzXRdhr1a7XbRBTOHF8ivF12Vv3r8fA0sK+
- z6UQbCG9HreROMrvJBfzRx9dlymWy6G1d/CmWxavjHQ5xVZAGN1d69f1FOH28poHhoR3vQ
- 0r7WiEmr2s8KhbXjmX0qUTAZc+JfoBw=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-571-AuLerkaWPJqlH4DTx_0cig-1; Tue,
- 13 Aug 2024 10:03:32 -0400
-X-MC-Unique: AuLerkaWPJqlH4DTx_0cig-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2FC9E18EA818; Tue, 13 Aug 2024 14:03:27 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.27])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 25707300019C; Tue, 13 Aug 2024 14:03:24 +0000 (UTC)
-Date: Tue, 13 Aug 2024 09:03:22 -0500
-From: Eric Blake <eblake@redhat.com>
-To: Wouter Verhelst <w@uter.be>
-Cc: nbd@other.debian.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH] docs: Tweak location of qemu nbd extensions
-Message-ID: <y6zzatumbgufg4kqei7xg2oqyn67x56qic4qxtxiolnrewptwa@4uyfygi5rhme>
-References: <20240802133811.2001029-1-eblake@redhat.com>
- <Zq4uK9Z6GX7Ga-qY@pc220518.home.grep.be>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sdsGM-0000ia-Mm
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 10:12:38 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sdsGL-0002Q7-2t
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 10:12:38 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4281c164408so41296085e9.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 07:12:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723558355; x=1724163155; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=xdqKYFqOXFkRx66mqhKBp+swgypS1ubJBEF5ZqTzKvQ=;
+ b=l5b56ZE30LVXe4+sZyphvmwa6M4Gci9a9bCXZ43iAeGA/+7wRRn7N3L9b4n8qwgFW7
+ B09iiYqwwCNo1UQv4MgYSq5SVNM5h+r3AZtze67XD7/A8CgeNo2uq2aJKgYaYFH7rKse
+ hLA0krWqL/1G7UOQ3TblLPnjHh9e7vFHNWY5Hpfykw9jCtGA8ziEuVmVX5IpRlgYprgF
+ visUuUOd+6roERTBP8D6+9gv5D3FDMk04QmH3UWLScqWf8kUeronjxsVFozRpX78BBAS
+ nxz8xveTS01UsHM0Pi8vWL479qutzye7yZCENWPuKi1gqt6EYfOd+o7I8Ed+t9FNvtM4
+ fhuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723558355; x=1724163155;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xdqKYFqOXFkRx66mqhKBp+swgypS1ubJBEF5ZqTzKvQ=;
+ b=H2pPhwwFtm/HZfikRNf6R8aSkaIDu0pzpqBUpsg25XkYUHuBzKCx2coyGF+4iBqEQL
+ a8hDVZ5dXpDVzs40n3CyUWve6HE/wWM4ktx1ipXnFbXlPwGybcmeK2M9oiRG4GSBE9t+
+ 2dQduR5urqTnRhKUd1VPSAm5iPd2yMTQu9IqlreSKu0ISkzNYQXnfsXnzGI1/TZOTOaN
+ esJ9gKPivqr1AsQTdSlTkeH6LoDAsXokhg4cay88fNP31+/LHnNQ+4jAz+dlbQbkryGG
+ tQMpOButgiVhHIeFpKt1QsTIfjC6LX0woxM93+8Ea2TEKve3+C8InHbjNBvKmXZ0mM29
+ VhnA==
+X-Gm-Message-State: AOJu0YwIevCBHC8XrdNeZHyiPOUTGZtpKgi+BCBdN/xRzvg1vCKUsfiY
+ Td6oE8BX7whHwHbfSNUv1t9OwV7bBVPI2Nhr8Jts8HHybYOzrTdFkdOoNqcYIoY=
+X-Google-Smtp-Source: AGHT+IHbWa+lqBftyESeJoFTjexfM9VpejBP0LaGTWu+xiY+AyRDtjdcoCVWqAGW3vLi9bv2/xfxew==
+X-Received: by 2002:a05:600c:4f4e:b0:425:7974:2266 with SMTP id
+ 5b1f17b1804b1-429d486fec8mr27483415e9.24.1723558354977; 
+ Tue, 13 Aug 2024 07:12:34 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4290c7b1505sm226572455e9.46.2024.08.13.07.12.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Aug 2024 07:12:34 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id ADA3D5F792;
+ Tue, 13 Aug 2024 15:12:33 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org,  Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Richard
+ Henderson
+ <richard.henderson@linaro.org>,  Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Wainer
+ dos Santos Moschetta <wainersm@redhat.com>,  Beraldo Leal
+ <bleal@redhat.com>,  Michael Tokarev <mjt@tls.msk.ru>
+Subject: Re: [PATCH v6 00/10] replay: fixes and new test cases
+In-Reply-To: <20240813050638.446172-1-npiggin@gmail.com> (Nicholas Piggin's
+ message of "Tue, 13 Aug 2024 15:06:27 +1000")
+References: <20240813050638.446172-1-npiggin@gmail.com>
+Date: Tue, 13 Aug 2024 15:12:33 +0100
+Message-ID: <87jzgka4vi.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zq4uK9Z6GX7Ga-qY@pc220518.home.grep.be>
-User-Agent: NeoMutt/20240425
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,20 +101,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Aug 03, 2024 at 03:18:35PM GMT, Wouter Verhelst wrote:
-> On Fri, Aug 02, 2024 at 08:36:43AM -0500, Eric Blake wrote:
-> > Upstream QEMU is moving the location of its NBD docs, as of its commit
-> > XXXX[1].  Instead of pointing to the raw git source file, point to the
-> > rendered html version built from rST.
-> 
-> ACK. Please push as soon as that lands.
+Nicholas Piggin <npiggin@gmail.com> writes:
 
-The qemu patch has landed and the web page is now live, so I pushed
-this as commit 29171ec.
+> Since v5, I cut down the series significantly to just the better
+> reviewed parts, without adding new CI testing, since there are
+> still be a few hiccups. aarch64 had some hangs Alex noticed, and
+> x86_64 doesn't seem to be working anymore for me (with the big
+> replay_linux.py test). But with this series, things are much closer,
+> ppc64 does get through replay_linux.py (but requires some ppc
+> specific fixes and the new test to be added, so I leave that out
+> for now).
+>
+> Hopefully we can get this minimal series in and in the next
+> release I'll try to get something stable enough for CI so it
+> doesn't keep breaking.
 
--- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+I'm happy to take this through maintainer/for-9.1 unless there are any
+major objections from other maintainers.
 
+>
+> Thanks,
+> Nick
+>
+> Nicholas Piggin (10):
+>   scripts/replay-dump.py: Update to current rr record format
+>   scripts/replay-dump.py: rejig decoders in event number order
+>   tests/avocado: excercise scripts/replay-dump.py in replay tests
+>   replay: allow runstate shutdown->running when replaying trace
+>   Revert "replay: stop us hanging in rr_wait_io_event"
+>   tests/avocado: replay_kernel.py add x86-64 q35 machine test
+>   chardev: set record/replay on the base device of a muxed device
+>   virtio-net: Use replay_schedule_bh_event for bhs that affect machine
+>     state
+>   virtio-net: Use virtual time for RSC timers
+>   savevm: Fix load_snapshot error path crash
+>
+>  include/sysemu/replay.h        |   5 -
+>  include/sysemu/runstate.h      |   1 +
+>  accel/tcg/tcg-accel-ops-rr.c   |   2 +-
+>  chardev/char.c                 |  71 +++++++++-----
+>  hw/net/virtio-net.c            |  17 ++--
+>  migration/savevm.c             |   1 +
+>  replay/replay.c                |  23 +----
+>  system/runstate.c              |  31 +++++-
+>  scripts/replay-dump.py         | 167 ++++++++++++++++++++++-----------
+>  tests/avocado/replay_kernel.py |  31 +++++-
+>  tests/avocado/replay_linux.py  |  10 ++
+>  11 files changed, 245 insertions(+), 114 deletions(-)
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
