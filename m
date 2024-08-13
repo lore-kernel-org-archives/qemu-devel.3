@@ -4,71 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56D78C52D7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 15:40:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 940C0C52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 15:47:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdtcv-0002hP-Kf; Tue, 13 Aug 2024 11:40:01 -0400
+	id 1sdtk4-0006Te-2w; Tue, 13 Aug 2024 11:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1sdtcu-0002gi-B5
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:40:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1sdtcr-0007PT-LO
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:40:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723563596;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RBfTLrt0IJ3bIc4wcoVt1ra0+tOl5RxGmL3k9Bo2YpY=;
- b=Ghi+EeVa4G27rXUGy+GoBUFg86VmeAtaMFzQqhIXmKn9tfGfCMei474UthM641m6uRjRi9
- ijEdtQZcSkuJ8ABbYYFiPbQZqDtJyCntTMOMTeriMXLxO7SOyRAQ4NQVt2iBuVEAkV09Oi
- njKdIn8DVBMRIlrbVTT3uh423v5pI9c=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-81-IOzfPOHcMcmxF8CQaVaYSA-1; Tue,
- 13 Aug 2024 11:39:53 -0400
-X-MC-Unique: IOzfPOHcMcmxF8CQaVaYSA-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 319201954207; Tue, 13 Aug 2024 15:39:52 +0000 (UTC)
-Received: from rh-jmarcin.redhat.com (unknown [10.45.226.69])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1F5DD300019C; Tue, 13 Aug 2024 15:39:49 +0000 (UTC)
-From: Juraj Marcin <jmarcin@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Juraj Marcin <jmarcin@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- David Hildenbrand <david@redhat.com>
-Subject: [PATCH v2 4/4] virtio-mem: Add support for suspend+wake-up with
- plugged memory
-Date: Tue, 13 Aug 2024 17:39:20 +0200
-Message-ID: <20240813153922.311788-5-jmarcin@redhat.com>
-In-Reply-To: <20240813153922.311788-1-jmarcin@redhat.com>
-References: <20240813153922.311788-1-jmarcin@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sdtk0-0006Sz-59
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:47:20 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sdtjy-0008Gp-3U
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:47:19 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5a1337cfbb5so7402776a12.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 08:47:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723564036; x=1724168836; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=LkrkS0J1FXoijWPQPF/2pKx2498EQMIu/XKyV4dQRkg=;
+ b=lYDxZTNFZYIwhEPqkQmYzxPYSZWZZTvk/+FXCH9OlVjskUtrvrKbrZZSB26muCqjMa
+ GXPF+NHNDDJ9kVaWVBnv4p+j5LgqzFOCHwpysEJBbF7mxkvIZdK+kWHdANdiRg/iO+fJ
+ Cn+RCdfa+dQEAZq7M9DKOupVP3woOAuwQPQoTlcKAdWks2G1aB5DsTRNFCP1OO7PowGi
+ yzXbtdUaLRulmLJxXmYuJATpSgqwL+oQaCPxIOTniruE3+B7AjAVaBoka2M203LC6/aL
+ wZqQ5Dx4W7fDbQAwoRwAIhwrTX76MIoRIQSYeZqnxtwwp4psh9Bkoi2MnrPMyLsTXm2r
+ uhYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723564036; x=1724168836;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LkrkS0J1FXoijWPQPF/2pKx2498EQMIu/XKyV4dQRkg=;
+ b=S2Br8/YPwfoY11ZiVIezNJWCRAFSkZNBrJ1pa5SkTGB/ZvcUkpWnHpBnOhNhB9yWXT
+ MK3JUqsDHHhs2m8Wig/iDhopHgWOj3zxMuGa7puN2Xy+QzxgtMSuC7x6I0E9bI9UQVlE
+ zW6+l0jg7Mlqy7dNPQ9sf5h0CTuGSQxlAKhO5ok/caEwRQKD5jkmeNJW4cYb3BhWV3NE
+ QVvlHMGcs3YazolXZrAJ5Yb/cE5EoPZ4ewyUNCKRwOK79p/uMkpqUJ1E4H2OxablBiZ6
+ tgjlYBDFga5zCMcre1N3yivcB8Sq+1YWxB+08xL02EWZthhOxbZzseNLm2lnJ0dYBbqn
+ rTbw==
+X-Gm-Message-State: AOJu0YwhxWB7hBoC4U4pUBjfe1tmwVdaAYskc9iVIJfn4O4VR4AZtF9A
+ MPrsNeqAt+C3bcNbd6HE0n2R5tccU+jItAmN8EiO981aMUuXr7YF51G7sL/Oa9Y=
+X-Google-Smtp-Source: AGHT+IHN4mhDzDd/7/WEUnQAB/Ty6sF1qyoggi8CwK2yWzBao/ysV0Jcf5qO5LT/mF7HCwVPQWlduA==
+X-Received: by 2002:a17:907:9448:b0:a7a:a46e:dc3f with SMTP id
+ a640c23a62f3a-a80ed2c51ccmr289766166b.45.1723564035382; 
+ Tue, 13 Aug 2024 08:47:15 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a80f3fb155asm78425866b.81.2024.08.13.08.47.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Aug 2024 08:47:14 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E7C6E5F7A3;
+ Tue, 13 Aug 2024 16:47:13 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,  Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>
+Subject: Re: [PATCH v2 1/1] plugins: fix race condition with scoreboards
+In-Reply-To: <20240812220748.95167-2-pierrick.bouvier@linaro.org> (Pierrick
+ Bouvier's message of "Mon, 12 Aug 2024 15:07:48 -0700")
+References: <20240812220748.95167-1-pierrick.bouvier@linaro.org>
+ <20240812220748.95167-2-pierrick.bouvier@linaro.org>
+Date: Tue, 13 Aug 2024 16:47:13 +0100
+Message-ID: <877ccka0hq.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,66 +97,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before, the virtio-mem device would unplug all the memory with any reset
-of the device, including during the wake-up of the guest from a
-suspended state. Due to this, the virtio-mem driver in the Linux kernel
-disallowed suspend-to-ram requests in the guest when the
-VIRTIO_MEM_F_PERSISTENT_SUSPEND feature is not exposed by QEMU.
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-This patch adds the code to skip the reset on wake-up and exposes
-theVIRTIO_MEM_F_PERSISTENT_SUSPEND feature to the guest kernel driver
-when suspending is possible in QEMU (currently only x86).
+> A deadlock can be created if a new vcpu (a) triggers a scoreboard
+> reallocation, and another vcpu (b) wants to create a new scoreboard at
+> the same time.
+>
+> In this case, (a) holds the plugin lock, and starts an exclusive
+> section, waiting for (b). But at the same time, (b) is waiting for
+> plugin lock.
+>
+> The solution is to drop the lock before entering the exclusive section.
+>
+> This bug can be easily reproduced by creating a callback for any tb
+> exec, that allocates a new scoreboard. In this case, as soon as we reach
+> more than 16 vcpus, the deadlock occurs.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2344
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
----
- hw/virtio/virtio-mem.c | 10 ++++++++++
- hw/virtio/virtio-qmp.c |  3 +++
- 2 files changed, 13 insertions(+)
+Queued to maintainer/for-9.1, thanks.
 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index aeee381eb2..ce228da369 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -883,6 +883,9 @@ static uint64_t virtio_mem_get_features(VirtIODevice *vdev, uint64_t features,
-     if (vmem->unplugged_inaccessible == ON_OFF_AUTO_ON) {
-         virtio_add_feature(&features, VIRTIO_MEM_F_UNPLUGGED_INACCESSIBLE);
-     }
-+    if (qemu_wakeup_suspend_enabled()) {
-+        virtio_add_feature(&features, VIRTIO_MEM_F_PERSISTENT_SUSPEND);
-+    }
-     return features;
- }
- 
-@@ -1841,6 +1844,13 @@ static void virtio_mem_system_reset_hold(Object *obj, ResetType type)
- {
-     VirtIOMEM *vmem = VIRTIO_MEM(obj);
- 
-+    /*
-+     * When waking up from standby/suspend-to-ram, do not unplug any memory.
-+     */
-+    if (type == RESET_TYPE_WAKEUP) {
-+        return;
-+    }
-+
-     /*
-      * During usual resets, we will unplug all memory and shrink the usable
-      * region size. This is, however, not possible in all scenarios. Then,
-diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-index 1dd96ed20f..cccc6fe761 100644
---- a/hw/virtio/virtio-qmp.c
-+++ b/hw/virtio/virtio-qmp.c
-@@ -450,6 +450,9 @@ static const qmp_virtio_feature_map_t virtio_mem_feature_map[] = {
-     FEATURE_ENTRY(VIRTIO_MEM_F_UNPLUGGED_INACCESSIBLE, \
-             "VIRTIO_MEM_F_UNPLUGGED_INACCESSIBLE: Unplugged memory cannot be "
-             "accessed"),
-+    FEATURE_ENTRY(VIRTIO_MEM_F_PERSISTENT_SUSPEND, \
-+            "VIRTIO_MEM_F_PERSISTENT_SUSPND: Plugged memory will remain "
-+            "plugged when suspending+resuming"),
-     { -1, "" }
- };
- #endif
--- 
-2.46.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
