@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C88C0C52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 15:04:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 113BAC52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 15:04:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdt1u-0003iW-0H; Tue, 13 Aug 2024 11:01:46 -0400
+	id 1sdt1t-0003fV-Ad; Tue, 13 Aug 2024 11:01:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1sdt1s-0003ch-Il
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:01:45 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ id 1sdt1r-0003WP-0i
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:01:43 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1sdt1p-0002EE-Gu
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:01:44 -0400
+ id 1sdt1m-0002Bw-9g
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:01:42 -0400
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 50917203D1;
- Tue, 13 Aug 2024 15:01:40 +0000 (UTC)
-Authentication-Results: smtp-out2.suse.de;
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 1F33E2282F;
+ Tue, 13 Aug 2024 15:01:36 +0000 (UTC)
+Authentication-Results: smtp-out1.suse.de;
 	none
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8AFBC13983;
- Tue, 13 Aug 2024 15:01:39 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 48C3B13ADB;
+ Tue, 13 Aug 2024 15:01:35 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iPTWH1N1u2Z/NAAAD6G6ig
- (envelope-from <roy.hopkins@suse.com>); Tue, 13 Aug 2024 15:01:39 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id GBWHD091u2Z/NAAAD6G6ig
+ (envelope-from <roy.hopkins@suse.com>); Tue, 13 Aug 2024 15:01:35 +0000
 To: qemu-devel@nongnu.org
 Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -51,10 +51,9 @@ Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Tom Lendacky <thomas.lendacky@amd.com>,
  Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
-Subject: [PATCH v5 08/16] i386/sev: Refactor setting of reset vector and
- initial CPU state
-Date: Tue, 13 Aug 2024 16:01:10 +0100
-Message-ID: <bc8de17252760c91f4f434b09f14dd819d3115ac.1723560001.git.roy.hopkins@suse.com>
+Subject: [PATCH v5 03/16] backends/igvm: Add IGVM loader and configuration
+Date: Tue, 13 Aug 2024 16:01:05 +0100
+Message-ID: <f8e43e90b81377050294799357fbf80a91a07581.1723560001.git.roy.hopkins@suse.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1723560001.git.roy.hopkins@suse.com>
 References: <cover.1723560001.git.roy.hopkins@suse.com>
@@ -64,13 +63,13 @@ X-Rspamd-Pre-Result: action=no action; module=replies;
  Message is reply to one we originated
 X-Spamd-Result: default: False [-4.00 / 50.00]; REPLY(-4.00)[];
  TAGGED_RCPT(0.00)[]
-X-Rspamd-Queue-Id: 50917203D1
+X-Rspamd-Queue-Id: 1F33E2282F
 X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
 X-Rspamd-Pre-Result: action=no action; module=replies;
  Message is reply to one we originated
 X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=roy.hopkins@suse.com; helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=roy.hopkins@suse.com; helo=smtp-out1.suse.de
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -93,536 +92,1040 @@ From:  Roy Hopkins via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When an SEV guest is started, the reset vector and state are
-extracted from metadata that is contained in the firmware volume.
+Adds an IGVM loader to QEMU which processes a given IGVM file and
+applies the directives within the file to the current guest
+configuration.
 
-In preparation for using IGVM to setup the initial CPU state,
-the code has been refactored to populate vmcb_save_area for each
-CPU which is then applied during guest startup and CPU reset.
+The IGVM loader can be used to configure both confidential and
+non-confidential guests. For confidential guests, the
+ConfidentialGuestSupport object for the system is used to encrypt
+memory, apply the initial CPU state and perform other confidential guest
+operations.
+
+The loader is configured via a new IgvmCfg QOM object which allows the
+user to provide a path to the IGVM file to process.
 
 Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
 Acked-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- target/i386/sev.c | 323 +++++++++++++++++++++++++++++++++++++++++-----
- target/i386/sev.h | 110 ++++++++++++++++
- 2 files changed, 400 insertions(+), 33 deletions(-)
+ backends/igvm-cfg.c       |  52 +++
+ backends/igvm.c           | 805 ++++++++++++++++++++++++++++++++++++++
+ backends/igvm.h           |  23 ++
+ backends/meson.build      |   2 +
+ include/sysemu/igvm-cfg.h |  47 +++
+ qapi/qom.json             |  17 +
+ 6 files changed, 946 insertions(+)
+ create mode 100644 backends/igvm-cfg.c
+ create mode 100644 backends/igvm.c
+ create mode 100644 backends/igvm.h
+ create mode 100644 include/sysemu/igvm-cfg.h
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index fab6d1bfb4..65c0509210 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -49,6 +49,12 @@ OBJECT_DECLARE_TYPE(SevSnpGuestState, SevCommonStateClass, SEV_SNP_GUEST)
- /* hard code sha256 digest size */
- #define HASH_SIZE 32
- 
-+/* Convert between SEV-ES VMSA and SegmentCache flags/attributes */
-+#define FLAGS_VMSA_TO_SEGCACHE(flags) \
-+    ((((flags) & 0xff00) << 12) | (((flags) & 0xff) << 8))
-+#define FLAGS_SEGCACHE_TO_VMSA(flags) \
-+    ((((flags) & 0xff00) >> 8) | (((flags) & 0xf00000) >> 12))
+diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
+new file mode 100644
+index 0000000000..63f8856c7b
+--- /dev/null
++++ b/backends/igvm-cfg.c
+@@ -0,0 +1,52 @@
++/*
++ * QEMU IGVM interface
++ *
++ * Copyright (C) 2023-2024 SUSE
++ *
++ * Authors:
++ *  Roy Hopkins <roy.hopkins@suse.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
 +
- typedef struct QEMU_PACKED SevHashTableEntry {
-     QemuUUID guid;
-     uint16_t len;
-@@ -88,6 +94,14 @@ typedef struct QEMU_PACKED SevHashTableDescriptor {
-     uint32_t size;
- } SevHashTableDescriptor;
- 
-+typedef struct SevLaunchVmsa {
-+    QTAILQ_ENTRY(SevLaunchVmsa) next;
++#include "qemu/osdep.h"
 +
-+    uint16_t cpu_index;
-+    uint64_t gpa;
-+    struct sev_es_save_area vmsa;
-+} SevLaunchVmsa;
++#include "sysemu/igvm-cfg.h"
++#include "igvm.h"
++#include "qom/object_interfaces.h"
 +
- struct SevCommonState {
-     X86ConfidentialGuest parent_obj;
- 
-@@ -106,9 +120,7 @@ struct SevCommonState {
-     int sev_fd;
-     SevState state;
- 
--    uint32_t reset_cs;
--    uint32_t reset_ip;
--    bool reset_data_valid;
-+    QTAILQ_HEAD(, SevLaunchVmsa) launch_vmsa;
- };
- 
- struct SevCommonStateClass {
-@@ -371,6 +383,172 @@ static struct RAMBlockNotifier sev_ram_notifier = {
-     .ram_block_removed = sev_ram_block_removed,
- };
- 
-+static void sev_apply_cpu_context(CPUState *cpu)
++static char *get_igvm(Object *obj, Error **errp)
 +{
-+    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-+    X86CPU *x86;
-+    CPUX86State *env;
-+    struct SevLaunchVmsa *launch_vmsa;
++    IgvmCfg *igvm = IGVM_CFG(obj);
++    return g_strdup(igvm->filename);
++}
 +
-+    /* See if an initial VMSA has been provided for this CPU */
-+    QTAILQ_FOREACH(launch_vmsa, &sev_common->launch_vmsa, next)
-+    {
-+        if (cpu->cpu_index == launch_vmsa->cpu_index) {
-+            x86 = X86_CPU(cpu);
-+            env = &x86->env;
++static void set_igvm(Object *obj, const char *value, Error **errp)
++{
++    IgvmCfg *igvm = IGVM_CFG(obj);
++    g_free(igvm->filename);
++    igvm->filename = g_strdup(value);
++}
 +
-+            /*
-+             * Ideally we would provide the VMSA directly to kvm which would
-+             * ensure that the resulting initial VMSA measurement which is
-+             * calculated during KVM_SEV_LAUNCH_UPDATE_VMSA is calculated from
-+             * exactly what we provide here. Currently this is not possible so
-+             * we need to copy the parts of the VMSA structure that we currently
-+             * support into the CPU state.
-+             */
-+            cpu_load_efer(env, launch_vmsa->vmsa.efer);
-+            cpu_x86_update_cr4(env, launch_vmsa->vmsa.cr4);
-+            cpu_x86_update_cr0(env, launch_vmsa->vmsa.cr0);
-+            cpu_x86_update_cr3(env, launch_vmsa->vmsa.cr3);
-+            env->xcr0 = launch_vmsa->vmsa.xcr0;
-+            env->pat = launch_vmsa->vmsa.g_pat;
++OBJECT_DEFINE_TYPE_WITH_INTERFACES(IgvmCfg, igvm_cfg, IGVM_CFG, OBJECT,
++                                   { TYPE_USER_CREATABLE }, { NULL })
 +
-+            cpu_x86_load_seg_cache(
-+                env, R_CS, launch_vmsa->vmsa.cs.selector,
-+                launch_vmsa->vmsa.cs.base, launch_vmsa->vmsa.cs.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.cs.attrib));
-+            cpu_x86_load_seg_cache(
-+                env, R_DS, launch_vmsa->vmsa.ds.selector,
-+                launch_vmsa->vmsa.ds.base, launch_vmsa->vmsa.ds.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ds.attrib));
-+            cpu_x86_load_seg_cache(
-+                env, R_ES, launch_vmsa->vmsa.es.selector,
-+                launch_vmsa->vmsa.es.base, launch_vmsa->vmsa.es.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.es.attrib));
-+            cpu_x86_load_seg_cache(
-+                env, R_FS, launch_vmsa->vmsa.fs.selector,
-+                launch_vmsa->vmsa.fs.base, launch_vmsa->vmsa.fs.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.fs.attrib));
-+            cpu_x86_load_seg_cache(
-+                env, R_GS, launch_vmsa->vmsa.gs.selector,
-+                launch_vmsa->vmsa.gs.base, launch_vmsa->vmsa.gs.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.gs.attrib));
-+            cpu_x86_load_seg_cache(
-+                env, R_SS, launch_vmsa->vmsa.ss.selector,
-+                launch_vmsa->vmsa.ss.base, launch_vmsa->vmsa.ss.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ss.attrib));
++static void igvm_cfg_class_init(ObjectClass *oc, void *data)
++{
++    IgvmCfgClass *igvmc = IGVM_CFG_CLASS(oc);
 +
-+            env->gdt.base = launch_vmsa->vmsa.gdtr.base;
-+            env->gdt.limit = launch_vmsa->vmsa.gdtr.limit;
-+            env->gdt.flags =
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.gdtr.attrib);
-+            env->idt.base = launch_vmsa->vmsa.idtr.base;
-+            env->idt.limit = launch_vmsa->vmsa.idtr.limit;
-+            env->idt.flags =
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.idtr.attrib);
++    object_class_property_add_str(oc, "file", get_igvm, set_igvm);
++    object_class_property_set_description(oc, "file",
++                                          "Set the IGVM filename to use");
 +
-+            cpu_x86_load_seg_cache(
-+                env, R_LDTR, launch_vmsa->vmsa.ldtr.selector,
-+                launch_vmsa->vmsa.ldtr.base, launch_vmsa->vmsa.ldtr.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ldtr.attrib));
-+            cpu_x86_load_seg_cache(
-+                env, R_TR, launch_vmsa->vmsa.tr.selector,
-+                launch_vmsa->vmsa.ldtr.base, launch_vmsa->vmsa.tr.limit,
-+                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.tr.attrib));
++    igvmc->process = qigvm_process_file;
++}
 +
-+            env->dr[6] = launch_vmsa->vmsa.dr6;
-+            env->dr[7] = launch_vmsa->vmsa.dr7;
++static void igvm_cfg_init(Object *obj)
++{
++}
 +
-+            env->regs[R_EAX] = launch_vmsa->vmsa.rax;
-+            env->regs[R_ECX] = launch_vmsa->vmsa.rcx;
-+            env->regs[R_EDX] = launch_vmsa->vmsa.rdx;
-+            env->regs[R_EBX] = launch_vmsa->vmsa.rbx;
-+            env->regs[R_ESP] = launch_vmsa->vmsa.rsp;
-+            env->regs[R_EBP] = launch_vmsa->vmsa.rbp;
-+            env->regs[R_ESI] = launch_vmsa->vmsa.rsi;
-+            env->regs[R_EDI] = launch_vmsa->vmsa.rdi;
-+#ifdef TARGET_X86_64
-+            env->regs[R_R8] = launch_vmsa->vmsa.r8;
-+            env->regs[R_R9] = launch_vmsa->vmsa.r9;
-+            env->regs[R_R10] = launch_vmsa->vmsa.r10;
-+            env->regs[R_R11] = launch_vmsa->vmsa.r11;
-+            env->regs[R_R12] = launch_vmsa->vmsa.r12;
-+            env->regs[R_R13] = launch_vmsa->vmsa.r13;
-+            env->regs[R_R14] = launch_vmsa->vmsa.r14;
-+            env->regs[R_R15] = launch_vmsa->vmsa.r15;
-+#endif
-+            env->eip = launch_vmsa->vmsa.rip;
-+            env->eflags = launch_vmsa->vmsa.rflags;
++static void igvm_cfg_finalize(Object *obj)
++{
++}
+diff --git a/backends/igvm.c b/backends/igvm.c
+new file mode 100644
+index 0000000000..7a3fedcc76
+--- /dev/null
++++ b/backends/igvm.c
+@@ -0,0 +1,805 @@
++/*
++ * QEMU IGVM configuration backend for guests
++ *
++ * Copyright (C) 2023-2024 SUSE
++ *
++ * Authors:
++ *  Roy Hopkins <roy.hopkins@suse.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
 +
-+            cpu_set_fpuc(env, launch_vmsa->vmsa.x87_fcw);
-+            env->mxcsr = launch_vmsa->vmsa.mxcsr;
++#include "qemu/osdep.h"
 +
-+            break;
++#include "igvm.h"
++#include "qapi/error.h"
++#include "exec/memory.h"
++#include "exec/address-spaces.h"
++#include "hw/core/cpu.h"
++
++#include <igvm/igvm.h>
++#include <igvm/igvm_defs.h>
++
++typedef struct QIgvmParameterData {
++    QTAILQ_ENTRY(QIgvmParameterData) next;
++    uint8_t *data;
++    uint32_t size;
++    uint32_t index;
++} QIgvmParameterData;
++
++/*
++ * QIgvm contains the information required during processing
++ * of a single IGVM file.
++ */
++typedef struct QIgvm {
++    IgvmHandle file;
++    ConfidentialGuestSupport *cgs;
++    ConfidentialGuestSupportClass *cgsc;
++    uint32_t compatibility_mask;
++    unsigned current_header_index;
++    QTAILQ_HEAD(, QIgvmParameterData) parameter_data;
++
++    /* These variables keep track of contiguous page regions */
++    IGVM_VHS_PAGE_DATA region_prev_page_data;
++    uint64_t region_start;
++    unsigned region_start_index;
++    unsigned region_last_index;
++    unsigned region_page_count;
++} QIgvm;
++
++static int qigvm_directive_page_data(QIgvm *ctx, const uint8_t *header_data,
++                                     Error **errp);
++static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
++                                      Error **errp);
++static int qigvm_directive_parameter_area(QIgvm *ctx,
++                                          const uint8_t *header_data,
++                                          Error **errp);
++static int qigvm_directive_parameter_insert(QIgvm *ctx,
++                                            const uint8_t *header_data,
++                                            Error **errp);
++static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
++                                      Error **errp);
++static int qigvm_directive_vp_count(QIgvm *ctx, const uint8_t *header_data,
++                                    Error **errp);
++static int qigvm_directive_environment_info(QIgvm *ctx,
++                                            const uint8_t *header_data,
++                                            Error **errp);
++static int qigvm_directive_required_memory(QIgvm *ctx,
++                                           const uint8_t *header_data,
++                                           Error **errp);
++
++struct QIGVMHandler {
++    uint32_t type;
++    uint32_t section;
++    int (*handler)(QIgvm *ctx, const uint8_t *header_data, Error **errp);
++};
++
++static struct QIGVMHandler handlers[] = {
++    { IGVM_VHT_PAGE_DATA, IGVM_HEADER_SECTION_DIRECTIVE,
++      qigvm_directive_page_data },
++    { IGVM_VHT_VP_CONTEXT, IGVM_HEADER_SECTION_DIRECTIVE,
++      qigvm_directive_vp_context },
++    { IGVM_VHT_PARAMETER_AREA, IGVM_HEADER_SECTION_DIRECTIVE,
++      qigvm_directive_parameter_area },
++    { IGVM_VHT_PARAMETER_INSERT, IGVM_HEADER_SECTION_DIRECTIVE,
++      qigvm_directive_parameter_insert },
++    { IGVM_VHT_MEMORY_MAP, IGVM_HEADER_SECTION_DIRECTIVE,
++      qigvm_directive_memory_map },
++    { IGVM_VHT_VP_COUNT_PARAMETER, IGVM_HEADER_SECTION_DIRECTIVE,
++      qigvm_directive_vp_count },
++    { IGVM_VHT_ENVIRONMENT_INFO_PARAMETER, IGVM_HEADER_SECTION_DIRECTIVE,
++      qigvm_directive_environment_info },
++    { IGVM_VHT_REQUIRED_MEMORY, IGVM_HEADER_SECTION_DIRECTIVE,
++      qigvm_directive_required_memory },
++};
++
++static int qigvm_handler(QIgvm *ctx, uint32_t type, Error **errp)
++{
++    size_t handler;
++    IgvmHandle header_handle;
++    const uint8_t *header_data;
++    int result;
++
++    for (handler = 0; handler < G_N_ELEMENTS(handlers); handler++) {
++        if (handlers[handler].type != type) {
++            continue;
 +        }
++        header_handle = igvm_get_header(ctx->file, handlers[handler].section,
++                                        ctx->current_header_index);
++        if (header_handle < 0) {
++            error_setg(
++                errp,
++                "IGVM file is invalid: Failed to read directive header (code: %d)",
++                (int)header_handle);
++            return -1;
++        }
++        header_data = igvm_get_buffer(ctx->file, header_handle) +
++                      sizeof(IGVM_VHS_VARIABLE_HEADER);
++        result = handlers[handler].handler(ctx, header_data, errp);
++        igvm_free_buffer(ctx->file, header_handle);
++        return result;
++    }
++    error_setg(errp,
++               "IGVM: Unknown header type encountered when processing file: "
++               "(type 0x%X)",
++               type);
++    return -1;
++}
++
++static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
++                                  int region_identifier, Error **errp)
++{
++    ERRP_GUARD();
++    MemoryRegion *igvm_pages = NULL;
++    Int128 gpa_region_size;
++    MemoryRegionSection mrs =
++        memory_region_find(get_system_memory(), addr, size);
++    if (mrs.mr) {
++        if (!memory_region_is_ram(mrs.mr)) {
++            memory_region_unref(mrs.mr);
++            error_setg(
++                errp,
++                "Processing of IGVM file failed: Could not prepare memory "
++                "at address 0x%lX due to existing non-RAM region",
++                addr);
++            return NULL;
++        }
++
++        gpa_region_size = int128_make64(size);
++        if (int128_lt(mrs.size, gpa_region_size)) {
++            memory_region_unref(mrs.mr);
++            error_setg(
++                errp,
++                "Processing of IGVM file failed: Could not prepare memory "
++                "at address 0x%lX: region size exceeded",
++                addr);
++            return NULL;
++        }
++        return qemu_map_ram_ptr(mrs.mr->ram_block, mrs.offset_within_region);
++    } else {
++        /*
++         * The region_identifier is the is the index of the IGVM directive that
++         * contains the page with the lowest GPA in the region. This will
++         * generate a unique region name.
++         */
++        g_autofree char *region_name =
++            g_strdup_printf("igvm.%X", region_identifier);
++        igvm_pages = g_new0(MemoryRegion, 1);
++        if (ctx->cgs && ctx->cgs->require_guest_memfd) {
++            if (!memory_region_init_ram_guest_memfd(igvm_pages, NULL,
++                                                    region_name, size, errp)) {
++                return NULL;
++            }
++        } else {
++            if (!memory_region_init_ram(igvm_pages, NULL, region_name, size,
++                                        errp)) {
++                return NULL;
++            }
++        }
++        memory_region_add_subregion(get_system_memory(), addr, igvm_pages);
++        return memory_region_get_ram_ptr(igvm_pages);
 +    }
 +}
 +
-+static int sev_set_cpu_context(uint16_t cpu_index, const void *ctx,
-+                               uint32_t ctx_len, hwaddr gpa, Error **errp)
++static int qigvm_type_to_cgs_type(IgvmPageDataType memory_type, bool unmeasured,
++                                  bool zero)
 +{
-+    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-+    SevLaunchVmsa *launch_vmsa;
-+    CPUState *cpu;
-+    bool exists = false;
++    switch (memory_type) {
++    case IGVM_PAGE_DATA_TYPE_NORMAL: {
++        if (unmeasured) {
++            return CGS_PAGE_TYPE_UNMEASURED;
++        } else {
++            return zero ? CGS_PAGE_TYPE_ZERO : CGS_PAGE_TYPE_NORMAL;
++        }
++    }
++    case IGVM_PAGE_DATA_TYPE_SECRETS:
++        return CGS_PAGE_TYPE_SECRETS;
++    case IGVM_PAGE_DATA_TYPE_CPUID_DATA:
++        return CGS_PAGE_TYPE_CPUID;
++    case IGVM_PAGE_DATA_TYPE_CPUID_XF:
++        return CGS_PAGE_TYPE_CPUID;
++    default:
++        return -1;
++    }
++}
++
++static bool qigvm_page_attrs_equal(IgvmHandle igvm, unsigned header_index,
++                                   const IGVM_VHS_PAGE_DATA *page_1,
++                                   const IGVM_VHS_PAGE_DATA *page_2)
++{
++    IgvmHandle data_handle1, data_handle2;
 +
 +    /*
-+     * Setting the CPU context is only supported for SEV-ES and SEV-SNP. The
-+     * context buffer will contain a sev_es_save_area from the Linux kernel
-+     * which is defined by "Table B-4. VMSA Layout, State Save Area for SEV-ES"
-+     * in the AMD64 APM, Volume 2.
++     * If one page has data and the other doesn't then this results in different
++     * page types: NORMAL vs ZERO.
 +     */
++    data_handle1 = igvm_get_header_data(igvm, IGVM_HEADER_SECTION_DIRECTIVE,
++                                        header_index - 1);
++    data_handle2 =
++        igvm_get_header_data(igvm, IGVM_HEADER_SECTION_DIRECTIVE, header_index);
++    if ((data_handle1 == IGVMAPI_NO_DATA ||
++         data_handle2 == IGVMAPI_NO_DATA) &&
++         data_handle1 != data_handle2) {
++        return false;
++    }
++    return ((*(const uint32_t *)&page_1->flags ==
++             *(const uint32_t *)&page_2->flags) &&
++            (page_1->data_type == page_2->data_type) &&
++            (page_1->compatibility_mask == page_2->compatibility_mask));
++}
 +
-+    if (!sev_es_enabled()) {
-+        error_setg(errp, "SEV: unable to set CPU context: Not supported");
++static int qigvm_process_mem_region(QIgvm *ctx, unsigned start_index,
++                                    uint64_t gpa_start, unsigned page_count,
++                                    const IgvmPageDataFlags *flags,
++                                    const IgvmPageDataType page_type,
++                                    Error **errp)
++{
++    uint8_t *region;
++    IgvmHandle data_handle;
++    const void *data;
++    uint32_t data_size;
++    unsigned page_index;
++    bool zero = true;
++    const uint64_t page_size = flags->is_2mb_page ? 0x200000 : 0x1000;
++    int result;
++    int cgs_page_type;
++
++    region = qigvm_prepare_memory(ctx, gpa_start, page_count * page_size,
++                                  start_index, errp);
++    if (!region) {
 +        return -1;
 +    }
 +
-+    if (ctx_len < sizeof(struct sev_es_save_area)) {
-+        error_setg(errp, "SEV: unable to set CPU context: "
-+                     "Invalid context provided");
-+        return -1;
-+    }
-+
-+    cpu = qemu_get_cpu(cpu_index);
-+    if (!cpu) {
-+        error_setg(errp, "SEV: unable to set CPU context for out of bounds "
-+                     "CPU index %d", cpu_index);
-+        return -1;
-+    }
-+
-+    /*
-+     * If the context of this VP has already been set then replace it with the
-+     * new context.
-+     */
-+    QTAILQ_FOREACH(launch_vmsa, &sev_common->launch_vmsa, next)
-+    {
-+        if (cpu_index == launch_vmsa->cpu_index) {
-+            launch_vmsa->gpa = gpa;
-+            memcpy(&launch_vmsa->vmsa, ctx, sizeof(launch_vmsa->vmsa));
-+            exists = true;
-+            break;
++    for (page_index = 0; page_index < page_count; page_index++) {
++        data_handle = igvm_get_header_data(
++            ctx->file, IGVM_HEADER_SECTION_DIRECTIVE, page_index + start_index);
++        if (data_handle == IGVMAPI_NO_DATA) {
++            /* No data indicates a zero page */
++            memset(&region[page_index * page_size], 0, page_size);
++        } else if (data_handle < 0) {
++            error_setg(
++                errp,
++                "IGVM file contains invalid page data for directive with "
++                "index %d",
++                page_index + start_index);
++            return -1;
++        } else {
++            zero = false;
++            data_size = igvm_get_buffer_size(ctx->file, data_handle);
++            if (data_size < page_size) {
++                memset(&region[page_index * page_size], 0, page_size);
++            } else if (data_size > page_size) {
++                error_setg(errp,
++                           "IGVM file contains page data with invalid size for "
++                           "directive with index %d",
++                           page_index + start_index);
++                return -1;
++            }
++            data = igvm_get_buffer(ctx->file, data_handle);
++            memcpy(&region[page_index * page_size], data, data_size);
++            igvm_free_buffer(ctx->file, data_handle);
 +        }
 +    }
 +
-+    if (!exists) {
-+        /* New VP context */
-+        launch_vmsa = g_new0(SevLaunchVmsa, 1);
-+        memcpy(&launch_vmsa->vmsa, ctx, sizeof(launch_vmsa->vmsa));
-+        launch_vmsa->cpu_index = cpu_index;
-+        launch_vmsa->gpa = gpa;
-+        QTAILQ_INSERT_TAIL(&sev_common->launch_vmsa, launch_vmsa, next);
++    /*
++     * If a confidential guest support object is provided then use it to set the
++     * guest state.
++     */
++    if (ctx->cgs) {
++        cgs_page_type =
++            qigvm_type_to_cgs_type(page_type, flags->unmeasured, zero);
++        if (cgs_page_type < 0) {
++            error_setg(errp,
++                       "Invalid page type in IGVM file. Directives: %d to %d, "
++                       "page type: %d",
++                       start_index, start_index + page_count, page_type);
++            return -1;
++        }
++
++        result = ctx->cgsc->set_guest_state(
++            gpa_start, region, page_size * page_count, cgs_page_type, 0, errp);
++        if (result < 0) {
++            return result;
++        }
 +    }
-+
-+    /* Synchronise the VMSA with the current CPU state */
-+    sev_apply_cpu_context(cpu);
-+
 +    return 0;
 +}
 +
- bool
- sev_enabled(void)
- {
-@@ -1005,6 +1183,16 @@ static int
- sev_launch_update_vmsa(SevGuestState *sev_guest)
- {
-     int ret, fw_error;
-+    CPUState *cpu;
-+
-+    /*
-+     * The initial CPU state is measured as part of KVM_SEV_LAUNCH_UPDATE_VMSA.
-+     * Synchronise the CPU state to any provided launch VMSA structures.
-+     */
-+    CPU_FOREACH(cpu) {
-+        sev_apply_cpu_context(cpu);
-+    }
-+
- 
-     ret = sev_ioctl(SEV_COMMON(sev_guest)->sev_fd, KVM_SEV_LAUNCH_UPDATE_VMSA,
-                     NULL, &fw_error);
-@@ -1787,40 +1975,110 @@ sev_es_find_reset_vector(void *flash_ptr, uint64_t flash_size,
-     return sev_es_parse_reset_block(info, addr);
- }
- 
--void sev_es_set_reset_vector(CPUState *cpu)
-+
-+static void seg_to_vmsa(const SegmentCache *cpu_seg, struct vmcb_seg *vmsa_seg)
- {
--    X86CPU *x86;
--    CPUX86State *env;
--    ConfidentialGuestSupport *cgs = MACHINE(qdev_get_machine())->cgs;
--    SevCommonState *sev_common = SEV_COMMON(
--        object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON));
-+    vmsa_seg->selector = cpu_seg->selector;
-+    vmsa_seg->base = cpu_seg->base;
-+    vmsa_seg->limit = cpu_seg->limit;
-+    vmsa_seg->attrib = FLAGS_SEGCACHE_TO_VMSA(cpu_seg->flags);
-+}
- 
--    /* Only update if we have valid reset information */
--    if (!sev_common || !sev_common->reset_data_valid) {
--        return;
--    }
-+static void initialize_vmsa(const CPUState *cpu, struct sev_es_save_area *vmsa)
++static int qigvm_process_mem_page(QIgvm *ctx,
++                                  const IGVM_VHS_PAGE_DATA *page_data,
++                                  Error **errp)
 +{
-+    const X86CPU *x86 = X86_CPU(cpu);
-+    const CPUX86State *env = &x86->env;
- 
--    /* Do not update the BSP reset state */
--    if (cpu->cpu_index == 0) {
--        return;
-+    /*
-+     * Initialize the SEV-ES save area from the current state of
-+     * the CPU. The entire state does not need to be copied, only the state
-+     * that is copied back to the CPUState in sev_apply_cpu_context.
-+     */
-+    memset(vmsa, 0, sizeof(struct sev_es_save_area));
-+    vmsa->efer = env->efer;
-+    vmsa->cr0 = env->cr[0];
-+    vmsa->cr3 = env->cr[3];
-+    vmsa->cr4 = env->cr[4];
-+    vmsa->xcr0 = env->xcr0;
-+    vmsa->g_pat = env->pat;
-+
-+    seg_to_vmsa(&env->segs[R_CS], &vmsa->cs);
-+    seg_to_vmsa(&env->segs[R_DS], &vmsa->ds);
-+    seg_to_vmsa(&env->segs[R_ES], &vmsa->es);
-+    seg_to_vmsa(&env->segs[R_FS], &vmsa->fs);
-+    seg_to_vmsa(&env->segs[R_GS], &vmsa->gs);
-+    seg_to_vmsa(&env->segs[R_SS], &vmsa->ss);
-+
-+    seg_to_vmsa(&env->gdt, &vmsa->gdtr);
-+    seg_to_vmsa(&env->idt, &vmsa->idtr);
-+    seg_to_vmsa(&env->ldt, &vmsa->ldtr);
-+    seg_to_vmsa(&env->tr, &vmsa->tr);
-+
-+    vmsa->dr6 = env->dr[6];
-+    vmsa->dr7 = env->dr[7];
-+
-+    vmsa->rax = env->regs[R_EAX];
-+    vmsa->rcx = env->regs[R_ECX];
-+    vmsa->rdx = env->regs[R_EDX];
-+    vmsa->rbx = env->regs[R_EBX];
-+    vmsa->rsp = env->regs[R_ESP];
-+    vmsa->rbp = env->regs[R_EBP];
-+    vmsa->rsi = env->regs[R_ESI];
-+    vmsa->rdi = env->regs[R_EDI];
-+
-+#ifdef TARGET_X86_64
-+    vmsa->r8 = env->regs[R_R8];
-+    vmsa->r9 = env->regs[R_R9];
-+    vmsa->r10 = env->regs[R_R10];
-+    vmsa->r11 = env->regs[R_R11];
-+    vmsa->r12 = env->regs[R_R12];
-+    vmsa->r13 = env->regs[R_R13];
-+    vmsa->r14 = env->regs[R_R14];
-+    vmsa->r15 = env->regs[R_R15];
-+#endif
-+
-+    vmsa->rip = env->eip;
-+    vmsa->rflags = env->eflags;
-+}
-+
-+static void sev_es_set_ap_context(uint32_t reset_addr)
-+{
-+    CPUState *cpu;
-+    struct sev_es_save_area vmsa;
-+    SegmentCache cs;
-+
-+    cs.selector = 0xf000;
-+    cs.base = reset_addr & 0xffff0000;
-+    cs.limit = 0xffff;
-+    cs.flags = DESC_P_MASK | DESC_S_MASK | DESC_CS_MASK | DESC_R_MASK |
-+               DESC_A_MASK;
-+
-+    CPU_FOREACH(cpu) {
-+        if (cpu->cpu_index == 0) {
-+            /* Do not update the BSP reset state */
-+            continue;
++    if (page_data) {
++        if (ctx->region_page_count == 0) {
++            ctx->region_start = page_data->gpa;
++            ctx->region_start_index = ctx->current_header_index;
++        } else {
++            if (!qigvm_page_attrs_equal(ctx->file, ctx->current_header_index,
++                                        page_data,
++                                        &ctx->region_prev_page_data) ||
++                ((ctx->region_prev_page_data.gpa +
++                  (ctx->region_prev_page_data.flags.is_2mb_page ? 0x200000 :
++                                                                  0x1000)) !=
++                 page_data->gpa) ||
++                (ctx->region_last_index != (ctx->current_header_index - 1))) {
++                /* End of current region */
++                if (qigvm_process_mem_region(
++                        ctx, ctx->region_start_index, ctx->region_start,
++                        ctx->region_page_count,
++                        &ctx->region_prev_page_data.flags,
++                        ctx->region_prev_page_data.data_type, errp) < 0) {
++                    return -1;
++                }
++                ctx->region_page_count = 0;
++                ctx->region_start = page_data->gpa;
++                ctx->region_start_index = ctx->current_header_index;
++            }
 +        }
-+        initialize_vmsa(cpu, &vmsa);
-+        seg_to_vmsa(&cs, &vmsa.cs);
-+        vmsa.rip = reset_addr & 0x0000ffff;
-+        sev_set_cpu_context(cpu->cpu_index, &vmsa,
-+                            sizeof(struct sev_es_save_area),
-+                            0, &error_fatal);
-+        sev_apply_cpu_context(cpu);
-     }
-+}
- 
--    x86 = X86_CPU(cpu);
--    env = &x86->env;
--
--    cpu_x86_load_seg_cache(env, R_CS, 0xf000, sev_common->reset_cs, 0xffff,
--                           DESC_P_MASK | DESC_S_MASK | DESC_CS_MASK |
--                           DESC_R_MASK | DESC_A_MASK);
--
--    env->eip = sev_common->reset_ip;
-+void sev_es_set_reset_vector(CPUState *cpu)
-+{
-+    if (sev_enabled()) {
-+        sev_apply_cpu_context(cpu);
++        memcpy(&ctx->region_prev_page_data, page_data,
++               sizeof(ctx->region_prev_page_data));
++        ctx->region_last_index = ctx->current_header_index;
++        ctx->region_page_count++;
++    } else {
++        if (ctx->region_page_count > 0) {
++            if (qigvm_process_mem_region(
++                    ctx, ctx->region_start_index, ctx->region_start,
++                    ctx->region_page_count, &ctx->region_prev_page_data.flags,
++                    ctx->region_prev_page_data.data_type, errp) < 0) {
++                return -1;
++            }
++            ctx->region_page_count = 0;
++        }
 +    }
- }
- 
- int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
- {
--    CPUState *cpu;
-     uint32_t addr;
-     int ret;
--    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
- 
-     if (!sev_es_enabled()) {
-         return 0;
-@@ -1833,14 +2091,12 @@ int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
-         return ret;
-     }
- 
++    return 0;
++}
++
++static int qigvm_directive_page_data(QIgvm *ctx, const uint8_t *header_data,
++                                     Error **errp)
++{
++    const IGVM_VHS_PAGE_DATA *page_data =
++        (const IGVM_VHS_PAGE_DATA *)header_data;
++    if (page_data->compatibility_mask & ctx->compatibility_mask) {
++        return qigvm_process_mem_page(ctx, page_data, errp);
++    }
++    return 0;
++}
++
++static int qigvm_directive_vp_context(QIgvm *ctx, const uint8_t *header_data,
++                                      Error **errp)
++{
++    const IGVM_VHS_VP_CONTEXT *vp_context =
++        (const IGVM_VHS_VP_CONTEXT *)header_data;
++    IgvmHandle data_handle;
++    uint8_t *data;
++    int result;
++
++    if (!(vp_context->compatibility_mask & ctx->compatibility_mask)) {
++        return 0;
++    }
++
 +    /*
-+     * The reset vector is saved into a CPU context for each AP but not for
-+     * the BSP. This is applied during guest startup or when the CPU is reset.
++     * A confidential guest support object must be provided for setting
++     * a VP context.
 +     */
-     if (addr) {
--        sev_common->reset_cs = addr & 0xffff0000;
--        sev_common->reset_ip = addr & 0x0000ffff;
--        sev_common->reset_data_valid = true;
--
--        CPU_FOREACH(cpu) {
--            sev_es_set_reset_vector(cpu);
--        }
-+        sev_es_set_ap_context(addr);
-     }
- 
-     return 0;
-@@ -2075,6 +2331,7 @@ sev_common_instance_init(Object *obj)
-     object_property_add_uint32_ptr(obj, "reduced-phys-bits",
-                                    &sev_common->reduced_phys_bits,
-                                    OBJ_PROP_FLAG_READWRITE);
-+    QTAILQ_INIT(&sev_common->launch_vmsa);
- }
- 
- /* sev guest info common to sev/sev-es/sev-snp */
-diff --git a/target/i386/sev.h b/target/i386/sev.h
-index 858005a119..167dd154d6 100644
---- a/target/i386/sev.h
-+++ b/target/i386/sev.h
-@@ -45,6 +45,116 @@ typedef struct SevKernelLoaderContext {
-     size_t cmdline_size;
- } SevKernelLoaderContext;
- 
-+/* Save area definition for SEV-ES and SEV-SNP guests */
-+struct QEMU_PACKED sev_es_save_area {
-+    struct vmcb_seg es;
-+    struct vmcb_seg cs;
-+    struct vmcb_seg ss;
-+    struct vmcb_seg ds;
-+    struct vmcb_seg fs;
-+    struct vmcb_seg gs;
-+    struct vmcb_seg gdtr;
-+    struct vmcb_seg ldtr;
-+    struct vmcb_seg idtr;
-+    struct vmcb_seg tr;
-+    uint64_t vmpl0_ssp;
-+    uint64_t vmpl1_ssp;
-+    uint64_t vmpl2_ssp;
-+    uint64_t vmpl3_ssp;
-+    uint64_t u_cet;
-+    uint8_t reserved_0xc8[2];
-+    uint8_t vmpl;
-+    uint8_t cpl;
-+    uint8_t reserved_0xcc[4];
-+    uint64_t efer;
-+    uint8_t reserved_0xd8[104];
-+    uint64_t xss;
-+    uint64_t cr4;
-+    uint64_t cr3;
-+    uint64_t cr0;
-+    uint64_t dr7;
-+    uint64_t dr6;
-+    uint64_t rflags;
-+    uint64_t rip;
-+    uint64_t dr0;
-+    uint64_t dr1;
-+    uint64_t dr2;
-+    uint64_t dr3;
-+    uint64_t dr0_addr_mask;
-+    uint64_t dr1_addr_mask;
-+    uint64_t dr2_addr_mask;
-+    uint64_t dr3_addr_mask;
-+    uint8_t reserved_0x1c0[24];
-+    uint64_t rsp;
-+    uint64_t s_cet;
-+    uint64_t ssp;
-+    uint64_t isst_addr;
-+    uint64_t rax;
-+    uint64_t star;
-+    uint64_t lstar;
-+    uint64_t cstar;
-+    uint64_t sfmask;
-+    uint64_t kernel_gs_base;
-+    uint64_t sysenter_cs;
-+    uint64_t sysenter_esp;
-+    uint64_t sysenter_eip;
-+    uint64_t cr2;
-+    uint8_t reserved_0x248[32];
-+    uint64_t g_pat;
-+    uint64_t dbgctl;
-+    uint64_t br_from;
-+    uint64_t br_to;
-+    uint64_t last_excp_from;
-+    uint64_t last_excp_to;
-+    uint8_t reserved_0x298[80];
-+    uint32_t pkru;
-+    uint32_t tsc_aux;
-+    uint8_t reserved_0x2f0[24];
-+    uint64_t rcx;
-+    uint64_t rdx;
-+    uint64_t rbx;
-+    uint64_t reserved_0x320; /* rsp already available at 0x01d8 */
-+    uint64_t rbp;
-+    uint64_t rsi;
-+    uint64_t rdi;
-+    uint64_t r8;
-+    uint64_t r9;
-+    uint64_t r10;
-+    uint64_t r11;
-+    uint64_t r12;
-+    uint64_t r13;
-+    uint64_t r14;
-+    uint64_t r15;
-+    uint8_t reserved_0x380[16];
-+    uint64_t guest_exit_info_1;
-+    uint64_t guest_exit_info_2;
-+    uint64_t guest_exit_int_info;
-+    uint64_t guest_nrip;
-+    uint64_t sev_features;
-+    uint64_t vintr_ctrl;
-+    uint64_t guest_exit_code;
-+    uint64_t virtual_tom;
-+    uint64_t tlb_id;
-+    uint64_t pcpu_id;
-+    uint64_t event_inj;
-+    uint64_t xcr0;
-+    uint8_t reserved_0x3f0[16];
++    if (!ctx->cgs) {
++        error_setg(
++            errp,
++            "A VP context is present in the IGVM file but is not supported "
++            "by the current system.");
++        return -1;
++    }
 +
-+    /* Floating point area */
-+    uint64_t x87_dp;
-+    uint32_t mxcsr;
-+    uint16_t x87_ftw;
-+    uint16_t x87_fsw;
-+    uint16_t x87_fcw;
-+    uint16_t x87_fop;
-+    uint16_t x87_ds;
-+    uint16_t x87_cs;
-+    uint64_t x87_rip;
-+    uint8_t fpreg_x87[80];
-+    uint8_t fpreg_xmm[256];
-+    uint8_t fpreg_ymm[256];
-+};
++    data_handle = igvm_get_header_data(ctx->file, IGVM_HEADER_SECTION_DIRECTIVE,
++                                       ctx->current_header_index);
++    if (data_handle < 0) {
++        error_setg(errp, "Invalid VP context in IGVM file. Error code: %X",
++                   data_handle);
++        return -1;
++    }
 +
- #ifdef CONFIG_SEV
- bool sev_enabled(void);
- bool sev_es_enabled(void);
++    data = (uint8_t *)igvm_get_buffer(ctx->file, data_handle);
++    result = ctx->cgsc->set_guest_state(
++        vp_context->gpa, data, igvm_get_buffer_size(ctx->file, data_handle),
++        CGS_PAGE_TYPE_VMSA, vp_context->vp_index, errp);
++    igvm_free_buffer(ctx->file, data_handle);
++    if (result < 0) {
++        return result;
++    }
++    return 0;
++}
++
++static int qigvm_directive_parameter_area(QIgvm *ctx,
++                                          const uint8_t *header_data,
++                                          Error **errp)
++{
++    const IGVM_VHS_PARAMETER_AREA *param_area =
++        (const IGVM_VHS_PARAMETER_AREA *)header_data;
++    QIgvmParameterData *param_entry;
++
++    param_entry = g_new0(QIgvmParameterData, 1);
++    param_entry->size = param_area->number_of_bytes;
++    param_entry->index = param_area->parameter_area_index;
++    param_entry->data = g_malloc0(param_entry->size);
++
++    QTAILQ_INSERT_TAIL(&ctx->parameter_data, param_entry, next);
++    return 0;
++}
++
++static int qigvm_directive_parameter_insert(QIgvm *ctx,
++                                            const uint8_t *header_data,
++                                            Error **errp)
++{
++    const IGVM_VHS_PARAMETER_INSERT *param =
++        (const IGVM_VHS_PARAMETER_INSERT *)header_data;
++    QIgvmParameterData *param_entry;
++    int result;
++    void *region;
++
++    if (!(param->compatibility_mask & ctx->compatibility_mask)) {
++        return 0;
++    }
++
++    QTAILQ_FOREACH(param_entry, &ctx->parameter_data, next)
++    {
++        if (param_entry->index == param->parameter_area_index) {
++            region = qigvm_prepare_memory(ctx, param->gpa, param_entry->size,
++                                          ctx->current_header_index, errp);
++            if (!region) {
++                return -1;
++            }
++            memcpy(region, param_entry->data, param_entry->size);
++            g_free(param_entry->data);
++            param_entry->data = NULL;
++
++            /*
++             * If a confidential guest support object is provided then use it to
++             * set the guest state.
++             */
++            if (ctx->cgs) {
++                result = ctx->cgsc->set_guest_state(param->gpa, region,
++                                                    param_entry->size,
++                                                    CGS_PAGE_TYPE_UNMEASURED, 0,
++                                                    errp);
++                if (result < 0) {
++                    return -1;
++                }
++            }
++        }
++    }
++    return 0;
++}
++
++static int qigvm_cmp_mm_entry(const void *a, const void *b)
++{
++    const IGVM_VHS_MEMORY_MAP_ENTRY *entry_a =
++        (const IGVM_VHS_MEMORY_MAP_ENTRY *)a;
++    const IGVM_VHS_MEMORY_MAP_ENTRY *entry_b =
++        (const IGVM_VHS_MEMORY_MAP_ENTRY *)b;
++    if (entry_a->starting_gpa_page_number < entry_b->starting_gpa_page_number) {
++        return -1;
++    } else if (entry_a->starting_gpa_page_number >
++               entry_b->starting_gpa_page_number) {
++        return 1;
++    } else {
++        return 0;
++    }
++}
++
++static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
++                                      Error **errp)
++{
++    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
++    QIgvmParameterData *param_entry;
++    int max_entry_count;
++    int entry = 0;
++    IGVM_VHS_MEMORY_MAP_ENTRY *mm_entry;
++    ConfidentialGuestMemoryMapEntry cgmm_entry;
++    int retval = 0;
++
++    if (!ctx->cgs) {
++        error_setg(errp,
++                   "IGVM file contains a memory map but this is not supported "
++                   "by the current system.");
++        return -1;
++    }
++
++    /* Find the parameter area that should hold the memory map */
++    QTAILQ_FOREACH(param_entry, &ctx->parameter_data, next)
++    {
++        if (param_entry->index == param->parameter_area_index) {
++            max_entry_count =
++                param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
++            mm_entry = (IGVM_VHS_MEMORY_MAP_ENTRY *)param_entry->data;
++
++            retval = ctx->cgsc->get_mem_map_entry(entry, &cgmm_entry, errp);
++            while (retval == 0) {
++                if (entry > max_entry_count) {
++                    error_setg(
++                        errp,
++                        "IGVM: guest memory map size exceeds parameter area defined in IGVM file");
++                    return -1;
++                }
++                mm_entry[entry].starting_gpa_page_number = cgmm_entry.gpa >> 12;
++                mm_entry[entry].number_of_pages = cgmm_entry.size >> 12;
++
++                switch (cgmm_entry.type) {
++                case CGS_MEM_RAM:
++                    mm_entry[entry].entry_type =
++                        IGVM_MEMORY_MAP_ENTRY_TYPE_MEMORY;
++                    break;
++                case CGS_MEM_RESERVED:
++                    mm_entry[entry].entry_type =
++                        IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
++                    break;
++                case CGS_MEM_ACPI:
++                    mm_entry[entry].entry_type =
++                        IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
++                    break;
++                case CGS_MEM_NVS:
++                    mm_entry[entry].entry_type =
++                        IGVM_MEMORY_MAP_ENTRY_TYPE_PERSISTENT;
++                    break;
++                case CGS_MEM_UNUSABLE:
++                    mm_entry[entry].entry_type =
++                        IGVM_MEMORY_MAP_ENTRY_TYPE_PLATFORM_RESERVED;
++                    break;
++                }
++                retval =
++                    ctx->cgsc->get_mem_map_entry(++entry, &cgmm_entry, errp);
++            }
++            if (retval < 0) {
++                return retval;
++            }
++            /* The entries need to be sorted */
++            qsort(mm_entry, entry, sizeof(IGVM_VHS_MEMORY_MAP_ENTRY),
++                  qigvm_cmp_mm_entry);
++
++            break;
++        }
++    }
++    return 0;
++}
++
++static int qigvm_directive_vp_count(QIgvm *ctx, const uint8_t *header_data,
++                                    Error **errp)
++{
++    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
++    QIgvmParameterData *param_entry;
++    uint32_t *vp_count;
++    CPUState *cpu;
++
++    QTAILQ_FOREACH(param_entry, &ctx->parameter_data, next)
++    {
++        if (param_entry->index == param->parameter_area_index) {
++            vp_count = (uint32_t *)(param_entry->data + param->byte_offset);
++            *vp_count = 0;
++            CPU_FOREACH(cpu)
++            {
++                (*vp_count)++;
++            }
++            break;
++        }
++    }
++    return 0;
++}
++
++static int qigvm_directive_environment_info(QIgvm *ctx,
++                                            const uint8_t *header_data,
++                                            Error **errp)
++{
++    const IGVM_VHS_PARAMETER *param = (const IGVM_VHS_PARAMETER *)header_data;
++    QIgvmParameterData *param_entry;
++    IgvmEnvironmentInfo *environmental_state;
++
++    QTAILQ_FOREACH(param_entry, &ctx->parameter_data, next)
++    {
++        if (param_entry->index == param->parameter_area_index) {
++            environmental_state =
++                (IgvmEnvironmentInfo *)(param_entry->data + param->byte_offset);
++            environmental_state->memory_is_shared = 1;
++            break;
++        }
++    }
++    return 0;
++}
++
++static int qigvm_directive_required_memory(QIgvm *ctx,
++                                           const uint8_t *header_data,
++                                           Error **errp)
++{
++    const IGVM_VHS_REQUIRED_MEMORY *mem =
++        (const IGVM_VHS_REQUIRED_MEMORY *)header_data;
++    uint8_t *region;
++    int result;
++
++    if (!(mem->compatibility_mask & ctx->compatibility_mask)) {
++        return 0;
++    }
++
++    region = qigvm_prepare_memory(ctx, mem->gpa, mem->number_of_bytes,
++                                  ctx->current_header_index, errp);
++    if (!region) {
++        return -1;
++    }
++    if (ctx->cgs) {
++        result =
++            ctx->cgsc->set_guest_state(mem->gpa, region, mem->number_of_bytes,
++                                       CGS_PAGE_TYPE_REQUIRED_MEMORY, 0, errp);
++        if (result < 0) {
++            return result;
++        }
++    }
++    return 0;
++}
++
++static int qigvm_supported_platform_compat_mask(QIgvm *ctx, Error **errp)
++{
++    int32_t header_count;
++    unsigned header_index;
++    IgvmHandle header_handle;
++    IGVM_VHS_SUPPORTED_PLATFORM *platform;
++    uint32_t compatibility_mask_sev = 0;
++    uint32_t compatibility_mask_sev_es = 0;
++    uint32_t compatibility_mask_sev_snp = 0;
++    uint32_t compatibility_mask = 0;
++
++    header_count = igvm_header_count(ctx->file, IGVM_HEADER_SECTION_PLATFORM);
++    if (header_count < 0) {
++        error_setg(errp,
++                   "Invalid platform header count in IGVM file. Error code: %X",
++                   header_count);
++        return -1;
++    }
++
++    for (header_index = 0; header_index < (unsigned)header_count;
++         header_index++) {
++        IgvmVariableHeaderType typ = igvm_get_header_type(
++            ctx->file, IGVM_HEADER_SECTION_PLATFORM, header_index);
++        if (typ == IGVM_VHT_SUPPORTED_PLATFORM) {
++            header_handle = igvm_get_header(
++                ctx->file, IGVM_HEADER_SECTION_PLATFORM, header_index);
++            if (header_handle < 0) {
++                error_setg(errp,
++                           "Invalid platform header in IGVM file. "
++                           "Index: %d, Error code: %X",
++                           header_index, header_handle);
++                return -1;
++            }
++            platform =
++                (IGVM_VHS_SUPPORTED_PLATFORM *)(igvm_get_buffer(ctx->file,
++                                                                header_handle) +
++                                                sizeof(
++                                                    IGVM_VHS_VARIABLE_HEADER));
++            if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV_ES) &&
++                ctx->cgs) {
++                if (ctx->cgsc->check_support(
++                        CGS_PLATFORM_SEV_ES, platform->platform_version,
++                        platform->highest_vtl, platform->shared_gpa_boundary)) {
++                    compatibility_mask_sev_es = platform->compatibility_mask;
++                }
++            } else if ((platform->platform_type == IGVM_PLATFORM_TYPE_SEV) &&
++                       ctx->cgs) {
++                if (ctx->cgsc->check_support(
++                        CGS_PLATFORM_SEV, platform->platform_version,
++                        platform->highest_vtl, platform->shared_gpa_boundary)) {
++                    compatibility_mask_sev = platform->compatibility_mask;
++                }
++            } else if ((platform->platform_type ==
++                        IGVM_PLATFORM_TYPE_SEV_SNP) &&
++                       ctx->cgs) {
++                if (ctx->cgsc->check_support(
++                        CGS_PLATFORM_SEV_SNP, platform->platform_version,
++                        platform->highest_vtl, platform->shared_gpa_boundary)) {
++                    compatibility_mask_sev_snp = platform->compatibility_mask;
++                }
++            } else if (platform->platform_type == IGVM_PLATFORM_TYPE_NATIVE) {
++                compatibility_mask = platform->compatibility_mask;
++            }
++            igvm_free_buffer(ctx->file, header_handle);
++        }
++    }
++    /* Choose the strongest supported isolation technology */
++    if (compatibility_mask_sev_snp != 0) {
++        ctx->compatibility_mask = compatibility_mask_sev_snp;
++    } else if (compatibility_mask_sev_es != 0) {
++        ctx->compatibility_mask = compatibility_mask_sev_es;
++    } else if (compatibility_mask_sev != 0) {
++        ctx->compatibility_mask = compatibility_mask_sev;
++    } else if (compatibility_mask != 0) {
++        ctx->compatibility_mask = compatibility_mask;
++    } else {
++        error_setg(
++            errp,
++            "IGVM file does not describe a compatible supported platform");
++        return -1;
++    }
++    return 0;
++}
++
++static IgvmHandle qigvm_file_init(char *filename, Error **errp)
++{
++    IgvmHandle igvm;
++    g_autofree uint8_t *buf = NULL;
++    unsigned long len;
++    g_autoptr(GError) gerr = NULL;
++
++    if (!g_file_get_contents(filename, (gchar **)&buf, &len, &gerr)) {
++        error_setg(errp, "Unable to load %s: %s", filename, gerr->message);
++        return -1;
++    }
++
++    igvm = igvm_new_from_binary(buf, len);
++    if (igvm < 0) {
++        error_setg(errp, "Unable to parse IGVM file %s: %d", filename, igvm);
++        return -1;
++    }
++    return igvm;
++}
++
++int qigvm_process_file(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
++                       Error **errp)
++{
++    int32_t header_count;
++    QIgvmParameterData *parameter;
++    int retval = -1;
++    QIgvm ctx;
++
++    memset(&ctx, 0, sizeof(ctx));
++    ctx.file = qigvm_file_init(cfg->filename, errp);
++    if (ctx.file < 0) {
++        return -1;
++    }
++
++    /*
++     * The ConfidentialGuestSupport object is optional and allows a confidential
++     * guest platform to perform extra processing, such as page measurement, on
++     * IGVM directives.
++     */
++    ctx.cgs = cgs;
++    ctx.cgsc = cgs ? CONFIDENTIAL_GUEST_SUPPORT_GET_CLASS(cgs) : NULL;
++
++    /*
++     * Check that the IGVM file provides configuration for the current
++     * platform
++     */
++    if (qigvm_supported_platform_compat_mask(&ctx, errp) < 0) {
++        return -1;
++    }
++
++    header_count = igvm_header_count(ctx.file, IGVM_HEADER_SECTION_DIRECTIVE);
++    if (header_count <= 0) {
++        error_setg(
++            errp, "Invalid directive header count in IGVM file. Error code: %X",
++            header_count);
++        return -1;
++    }
++
++    QTAILQ_INIT(&ctx.parameter_data);
++
++    for (ctx.current_header_index = 0;
++         ctx.current_header_index < (unsigned)header_count;
++         ctx.current_header_index++) {
++        IgvmVariableHeaderType type = igvm_get_header_type(
++            ctx.file, IGVM_HEADER_SECTION_DIRECTIVE, ctx.current_header_index);
++        if (qigvm_handler(&ctx, type, errp) < 0) {
++            goto cleanup;
++        }
++    }
++
++    /*
++     * Contiguous pages of data with compatible flags are grouped together in
++     * order to reduce the number of memory regions we create. Make sure the
++     * last group is processed with this call.
++     */
++    retval = qigvm_process_mem_page(&ctx, NULL, errp);
++
++cleanup:
++    QTAILQ_FOREACH(parameter, &ctx.parameter_data, next)
++    {
++        g_free(parameter->data);
++        parameter->data = NULL;
++    }
++
++    return retval;
++}
+diff --git a/backends/igvm.h b/backends/igvm.h
+new file mode 100644
+index 0000000000..436408c539
+--- /dev/null
++++ b/backends/igvm.h
+@@ -0,0 +1,23 @@
++/*
++ * QEMU IGVM configuration backend for Confidential Guests
++ *
++ * Copyright (C) 2023-2024 SUSE
++ *
++ * Authors:
++ *  Roy Hopkins <roy.hopkins@suse.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#ifndef BACKENDS_IGVM_H
++#define BACKENDS_IGVM_H
++
++#include "exec/confidential-guest-support.h"
++#include "sysemu/igvm-cfg.h"
++#include "qapi/error.h"
++
++int qigvm_process_file(IgvmCfg *igvm, ConfidentialGuestSupport *cgs,
++                      Error **errp);
++
++#endif
+diff --git a/backends/meson.build b/backends/meson.build
+index b092a19efc..3b07471993 100644
+--- a/backends/meson.build
++++ b/backends/meson.build
+@@ -34,6 +34,8 @@ system_ss.add(when: gio, if_true: files('dbus-vmstate.c'))
+ system_ss.add(when: 'CONFIG_SGX', if_true: files('hostmem-epc.c'))
+ if igvm.found()
+   system_ss.add(igvm)
++  system_ss.add(files('igvm-cfg.c'), igvm)
++  system_ss.add(files('igvm.c'), igvm)
+ endif
+ 
+ system_ss.add(when: 'CONFIG_SPDM_SOCKET', if_true: files('spdm-socket.c'))
+diff --git a/include/sysemu/igvm-cfg.h b/include/sysemu/igvm-cfg.h
+new file mode 100644
+index 0000000000..21fadfe5b7
+--- /dev/null
++++ b/include/sysemu/igvm-cfg.h
+@@ -0,0 +1,47 @@
++/*
++ * QEMU IGVM interface
++ *
++ * Copyright (C) 2024 SUSE
++ *
++ * Authors:
++ *  Roy Hopkins <roy.hopkins@suse.com>
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
++
++#ifndef QEMU_IGVM_CFG_H
++#define QEMU_IGVM_CFG_H
++
++#include "qom/object.h"
++
++typedef struct IgvmCfg {
++    ObjectClass parent_class;
++
++    /*
++     * filename: Filename that specifies a file that contains the configuration
++     *           of the guest in Independent Guest Virtual Machine (IGVM)
++     *           format.
++     */
++    char *filename;
++} IgvmCfg;
++
++typedef struct IgvmCfgClass {
++    ObjectClass parent_class;
++
++    /*
++     * If an IGVM filename has been specified then process the IGVM file.
++     * Performs a no-op if no filename has been specified.
++     *
++     * Returns 0 for ok and -1 on error.
++     */
++    int (*process)(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
++                   Error **errp);
++
++} IgvmCfgClass;
++
++#define TYPE_IGVM_CFG "igvm-cfg"
++
++OBJECT_DECLARE_TYPE(IgvmCfg, IgvmCfgClass, IGVM_CFG)
++
++#endif
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 321ccd708a..e148f3d005 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -893,6 +893,19 @@
+   'data': { '*filename': 'str' },
+   'if': 'CONFIG_POSIX' }
+ 
++##
++# @IgvmCfgProperties:
++#
++# Properties common to objects that handle IGVM files.
++#
++# @file: IGVM file to use to configure guest
++#
++# Since: 9.1
++##
++{ 'struct': 'IgvmCfgProperties',
++  'if': 'CONFIG_IGVM',
++  'data': { 'file': 'str' } }
++
+ ##
+ # @SevCommonProperties:
+ #
+@@ -1063,6 +1076,8 @@
+     'filter-redirector',
+     'filter-replay',
+     'filter-rewriter',
++    { 'name': 'igvm-cfg',
++      'if': 'CONFIG_IGVM' },
+     'input-barrier',
+     { 'name': 'input-linux',
+       'if': 'CONFIG_LINUX' },
+@@ -1137,6 +1152,8 @@
+       'filter-redirector':          'FilterRedirectorProperties',
+       'filter-replay':              'NetfilterProperties',
+       'filter-rewriter':            'FilterRewriterProperties',
++      'igvm-cfg':                   { 'type': 'IgvmCfgProperties',
++                                      'if': 'CONFIG_IGVM' },
+       'input-barrier':              'InputBarrierProperties',
+       'input-linux':                { 'type': 'InputLinuxProperties',
+                                       'if': 'CONFIG_LINUX' },
 -- 
 2.43.0
 
