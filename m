@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5464CC52D7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 15:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ED6CC52D7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 15:15:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdtAA-0003pX-Ce; Tue, 13 Aug 2024 11:10:18 -0400
+	id 1sdtEb-0005m4-Lg; Tue, 13 Aug 2024 11:14:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdtA8-0003iN-9o
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:10:16 -0400
-Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdtEa-0005iN-MB
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:14:52 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdtA6-0003My-Bg
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:10:16 -0400
-Received: by mail-lf1-x129.google.com with SMTP id
- 2adb3069b0e04-530e2548dfdso5883981e87.1
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 08:10:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdtEZ-0003q5-1k
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:14:52 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-42816ca797fso41565465e9.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 08:14:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723561812; x=1724166612; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723562089; x=1724166889; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9uGg9TRC34UZ8OSYhe/mEgEPovRZz33hPOpKc1RqbvQ=;
- b=u+63QR8z6tWf2pM/UUAQidTQxme+O7fDHp+lBhOYx3YKySHmW9laYZDr6SReYanNIL
- acpLzFWbSzAxPyzM6EOKiJH9jDufrdOauq29lzwQ/kZWFtroGNuxDcNThpnbqcbLSPHN
- 3AkwW16tj2VYnIJgSlVpG7c/LY2hb8vU3aEr3q4rSAEdZVi3WXB5JXnXBRjd0h0+rLHF
- xFZHjH/JKIUBDj60LtK689AfaTC66Qwymt1t84NcG+d2Cp41GFyfmFr36VAjHEKXNYGK
- W8kSF62Lyephr9HBzdQTVmCtK4+83Os5OBkV0wso4fpkOhz6ULPUG7wmn/F1i1yimMkO
- UsBA==
+ bh=lo6LVl9048dCRbf34Uz7ZrLtE5qX/YOrOn2Y11Gf99s=;
+ b=VK86lm51CG9RqakWYMy1mEZGv/gpRmSrZ7JsmOCgN+M0r9nGSPrSjISpC6afu2cgid
+ tLkBZHuVFWCr8qDxlue0W4OPaq1K4Hwcm/Ek/29RR6+SZv1q8++Mr4uMHBsL2tlL6U5G
+ D8C3kSeeeyFdQY4ItGoJKNXIhaztay71tmZO3k/I/G2t8MR26MhPxAGZihz5Ns8GdZDQ
+ 8LsZGsZzAzwB2dp9olJXx02HxfBdHS/llaOykonSGFeNbgoK0rc/dR/MxpklNdLUo1ev
+ qa1ho9gCy9N/UaK0ihRBpp61nfGbs3t1ES6j6WohK1eQNVSmKGWSFQPDdGX4vdcjPb+t
+ Iqlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723561812; x=1724166612;
+ d=1e100.net; s=20230601; t=1723562089; x=1724166889;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9uGg9TRC34UZ8OSYhe/mEgEPovRZz33hPOpKc1RqbvQ=;
- b=R5xapYMKGw4W9HtsP5jeFuSbuJ5658k0gPyFjtEPM5IV9///yJZDc2Vr4Lm8WL+Ky3
- pc51Fr2FoPhh9S8r7KA06QXSShK5nnH05ahZUokdywyd+LGVPHxC/V4Qq8LkUrdxbc8c
- pUf6HAip40wIXOpl7qN3+JYfOVLhBqOKk27t00ciHmOi6hCeert6wvQgFMuL9d3O95jw
- 2uyLcs3gI/btcJtYcx+ZmpMd/SQO6ox0XnAwfwpyRgE3Z9qxQdCE/E7Nh5Nwfouuof3a
- +tYGMq3ozDDRveDgsh/pIocDpWehgYQhPW8MXAt9/wQZ+ge0DDscWAt9uzIiD58kbhtM
- fi2A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVZ/qRajoWqpY4SNdHXsqWVu5QKyITI2kvp3sOJ1/K9zKq3HXn/EPVtkzI+Tc/QduBlqKXUdDFVsvqIJRF8Iv8qjJ5PfD0=
-X-Gm-Message-State: AOJu0YxV5IfU82vrkK4JTbO8xmoPcslUxj1hy6w7w9lSEXV9floIRjwZ
- SMzHovLMXsM9qAS4gT6YgMB4o9hTUflr7nZfF9+zOYsZ/r1z2UIsCxn13Kyyhok=
-X-Google-Smtp-Source: AGHT+IEiHM1g9HDzXRTCxYlp+8D1s3fb8cs5xWW15miAIv7zmpCHdAHB2DjcjFs5kXcc/DgXeKd4gw==
-X-Received: by 2002:a05:6512:1292:b0:52f:c0ee:3b5f with SMTP id
- 2adb3069b0e04-5321364b9bcmr2879945e87.10.1723561811534; 
- Tue, 13 Aug 2024 08:10:11 -0700 (PDT)
+ bh=lo6LVl9048dCRbf34Uz7ZrLtE5qX/YOrOn2Y11Gf99s=;
+ b=unOq+xHVqwTKxEUUqT24EHiDe9M/PW8AiMld7Z/wRERynZH0Cu93aXrIqt+/1skyfE
+ HeItnfOHJKJUkGojVjFeLEfpxcKV+SCPVXBv5pu68UzBtsf1m/tumWE0uHMmx3XiB5sl
+ 24AoMx3hMf8xD1xY42ezzS/mvDv3ifcWXk0MWGn3Y2boQa3CREfsfv//zvzXp8fHOK/6
+ D4/DlD8NkLinPKNNRFoprzzDg5d/frM3EWaBqBq469XSKiRFlx72p4JUR3/07JKJqgY0
+ qF76tPH5/JYN0Y2LtQppGlVLvz/uol28WjRk98/nyGTuqGBhsAFMAUSteQQED8kengLg
+ NTVg==
+X-Gm-Message-State: AOJu0YzwsfSpVwhCxdQebD4pvDOLkLUIi8Ls3S62IMLMWpiCeElM9pct
+ IfPmmhRHuHQvc2G3Rk266EJTBgBapdsiB4+rAmv/k7kb37cNp1Gn/wpMa+qewqw=
+X-Google-Smtp-Source: AGHT+IF9fYkhNRm87Viv8jg4CoU9UcnnKZRbwQLXyaxgpUx1JE5Tzehorapg+xoEZ9f+1C+c7CYU0A==
+X-Received: by 2002:a05:6000:1050:b0:367:434f:ca9a with SMTP id
+ ffacd0b85a97d-3716cc5474emr2552382f8f.0.1723562088927; 
+ Tue, 13 Aug 2024 08:14:48 -0700 (PDT)
 Received: from [192.168.5.175] (80.red-88-28-4.dynamicip.rima-tde.net.
  [88.28.4.80]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4290c7619e7sm232731815e9.31.2024.08.13.08.10.09
+ ffacd0b85a97d-36e4cfeeb09sm10657887f8f.51.2024.08.13.08.14.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Aug 2024 08:10:11 -0700 (PDT)
-Message-ID: <1bdbdcbc-29be-424d-9215-fc711b11a1bc@linaro.org>
-Date: Tue, 13 Aug 2024 17:10:05 +0200
+ Tue, 13 Aug 2024 08:14:48 -0700 (PDT)
+Message-ID: <c23a6547-fc94-48e2-aaa0-af4febca1e20@linaro.org>
+Date: Tue, 13 Aug 2024 17:14:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] accel/tcg: Always call tcg_flush_jmp_cache() on
- reset
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Warner Losh <imp@bsdimp.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Kyle Evans <kevans@freebsd.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>
-References: <20240503123456.28866-1-philmd@linaro.org>
- <20240503123456.28866-6-philmd@linaro.org>
- <bd395931-0883-45b0-89fc-8766ffcda9cf@tls.msk.ru>
+Subject: Re: [PATCH-for-9.1] buildsys: Fix building without plugins on Darwin
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Helge Konetzka <hk@zapateado.de>, Thomas Huth <thuth@redhat.com>
+References: <20240813112457.92560-1-philmd@linaro.org>
+ <87o75wa5kq.fsf@draig.linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <bd395931-0883-45b0-89fc-8766ffcda9cf@tls.msk.ru>
+In-Reply-To: <87o75wa5kq.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::129;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x129.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,36 +97,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
-
-On 11/8/24 19:43, Michael Tokarev wrote:
-> 03.05.2024 15:34, Philippe Mathieu-Daudé wrote:
->> In commit bb6cf6f016 ("accel/tcg: Factor tcg_cpu_reset_hold() out")
->> we unfortunately restricted the tcg_flush_jmp_cache() to system
->> emulation. Move it to the common tcg_exec_cpu_reset_hold() handler
->> so user emulation gets the jmp_cache initialized when threads
->> are created.
+On 13/8/24 15:57, Alex Bennée wrote:
+> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
+> 
+>> Since commit 0082475e26 the plugin symbol list is unconditionally
+>> added to the linker flags, leading to a build failure:
 >>
->> Remove the NULL check in tcg_flush_jmp_cache() from commit 4e4fa6c12d
->> ("accel/tcg: Complete cpu initialization before registration") which
->> was a band-aid fix for incorrect commit bb6cf6f016.
+>>    Undefined symbols for architecture arm64:
+>>      "_qemu_plugin_entry_code", referenced from:
+>>          <initial-undefines>
+>>    ...
+>>    ld: symbol(s) not found for architecture arm64
+>>    clang: error: linker command failed with exit code 1 (use -v to see invocation)
+>>    ninja: build stopped: subcommand failed.
 >>
->> Cc: qemu-stable@nongnu.org
->> Fixes: bb6cf6f016 ("accel/tcg: Factor tcg_cpu_reset_hold() out")
+>> Fix by restricting the whole meson file to the --enable-plugins
+>> configure argument.
+>>
+>> Fixes: 0082475e26 ("meson: merge plugin_ldflags into emulator_link_args")
 >> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
-> Hi!
-> 
-> Has this change been forgotten, or is it not appropriate anymore?
+> Queued to maintainer/for-9.1, thanks.
 
-Not forgotten and still need to be fixed, however unfortunately
-this exposed a bug in user-mode SYS_exit_group when using plugins
-(see qemu_plugin_disable_mem_helpers call in qemu_plugin_user_exit).
+Thanks, possibly also:
 
-Pierrick is working on it, and I'll rebase this series once his
-work gets merged. Next release :/
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2476
 
-Regards,
-
-Phil.
+(Cc'ing Helge to confirm)
 
