@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A1D5C52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 13:20:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEB44C52D7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 13:40:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdrRC-0000mj-Eb; Tue, 13 Aug 2024 09:19:46 -0400
+	id 1sdrkl-0003Co-Mz; Tue, 13 Aug 2024 09:40:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tiago.pasqualini@canonical.com>)
- id 1sdrR7-0000lT-Hk
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 09:19:42 -0400
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tiago.pasqualini@canonical.com>)
- id 1sdrR3-0002RE-IL
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 09:19:40 -0400
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id C3A84402BF
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 13:19:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1723555174;
- bh=mBM+Tsxy29VlzXQX6//MA7mjOxtPqNxXlctklGtGshs=;
- h=From:To:Cc:Subject:Date:Message-ID:MIME-Version;
- b=XUasOQ2H9sc9gZ7eAHWDd1Xq5j2+AiW5w1pPArT3s+w/2/Li8XU8XztOeJhMesLK/
- EBpYOlOxhNkSdZJiqU2spWAQFaW/Wk4zeZLgDD/B4KCq6vZuJ3hWhZRWSIdk4DJ3A8
- x+PVNQeEtJyKEjg64Qo2ZFJhzZVv2dRtjUTtDJALAvD343b1L65E72EbIv39QLXVxh
- Ix0P80/3j+7wGy7NFV+faNZ7Eu0Ol4E1ZGZqv32sqjyjLJi9Ki4zKVVSqT49H2tjek
- TAfWTB39rKhGts5+exPlkvJMD7fXkHQnX1TSuNmPBk6OZmTovXPSgG47EaPbK0YIKq
- cpnEFxiQagz6w==
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2cb639aa911so5831888a91.3
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 06:19:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
+ id 1sdrkj-0003Bp-9e
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 09:39:57 -0400
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
+ id 1sdrkh-0005IL-NQ
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 09:39:57 -0400
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-44ff7bdb5a6so29289421cf.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 06:39:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=chromium.org; s=google; t=1723556393; x=1724161193; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XS/4eu0i7qnpPSrFXWbFUJUfVGkHkmY+q/9pM4o5Aow=;
+ b=DscEG02CT8C7EdOVPUKLnxJUpLr4erSduWapWXDu41Dkak6FnESTFSEM5rwNGrNnCT
+ T4ADT1TU8y6WJDrsM9eAGHRpEVh/njLRWe71Y/MnlBHoohaVi+mVJ+5/gucCCU50K7io
+ BGVpFr/ptGJQmzc38g4KVp4L/2pWnaYUOkyLE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723555173; x=1724159973;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mBM+Tsxy29VlzXQX6//MA7mjOxtPqNxXlctklGtGshs=;
- b=RyFguGPYDxiFEAMUFLpLLC4Khc/ALGM2f+Nx6VCI/614hvaszJISbctjN9YnBINPHu
- 8KTPi7fcYgxeFtuU1HoBpcaq0q527KCC5QIHBvmjtbSaxt+qUfjsAVJcMpxzoySo9PEv
- iUr3b6d8BxvabodLqF14B16Lp687UQriwt6cjQzNfckcUpgdaJEtU/1XvjvOn+NhZPCB
- w22Cn56j8o7Rzqxc8lOTgFlqFWEB/b3D7z6YSjSjemcndRJyuBqOP0AKElB0nkAnYqxI
- yNo57liqmloD9I+4hd+GN2vq7AwxzXgXbKs41lXg3ucUwyNxIthJydl3Yv7C2oryYeTB
- MPmA==
-X-Gm-Message-State: AOJu0Yxp85g1z9R7P9NZRk0irEgtibqGAufp/s1Wwk9V01wDghZQ7qEQ
- vvCshyZJoM2s51v/52W8En12uMJLu/cWqIHPmRXnkq5CAgEcAbqdX91GsYU5mKpnPD0k8bPVX4c
- QxOUaoj3z1EF7tz22GdbQlZ2+glkT9pKX/g1BzH3GjhNX5kDGGe9KVYWRRROCvd7A0ORsXaNJsC
- 25
-X-Received: by 2002:a17:90b:4b0a:b0:2c9:984d:958d with SMTP id
- 98e67ed59e1d1-2d392539a18mr4093168a91.22.1723555173108; 
- Tue, 13 Aug 2024 06:19:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH0c9uJifaFp8hNo4C3wSaxswEymIHCDyxotm9VaTchq3f+85aRKmtruF1S5NdS49B3qVVsQA==
-X-Received: by 2002:a17:90b:4b0a:b0:2c9:984d:958d with SMTP id
- 98e67ed59e1d1-2d392539a18mr4093150a91.22.1723555172698; 
- Tue, 13 Aug 2024 06:19:32 -0700 (PDT)
-Received: from gram.. ([189.5.22.75]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d1fcea97d7sm7343011a91.18.2024.08.13.06.19.31
+ d=1e100.net; s=20230601; t=1723556393; x=1724161193;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XS/4eu0i7qnpPSrFXWbFUJUfVGkHkmY+q/9pM4o5Aow=;
+ b=IUmNbx7kUKd7wwRoCTiJyej1hjstBj1M5V2DXPmL+wznovrzYwhBeOHpPEBXSBQRbV
+ lxc/YQyKRFdReJ6tg+NI976lbX85mkNrIy/GlmfwuAEHGYWhhO7F6HxoxHFRrCb5+lJU
+ 1h3DcDIGzOGRFg2qatftaI3bIl0z3+VieyEQs/F06EGgaxb/u8ClC0Tw5WBBs6P+tjlB
+ ikxei7SIt5KQM85WmXW1SrO6bvCaxKYlxfeANGO0zlN3YGPr2/OCwZTdmLv7CgoScBSN
+ rIxnVLUhrvScnel0nLM0LYrMHJ94FjJsyxN4tSJXDnX76DKhBLyHWW+3zYW0BXvLIn6V
+ 0XsA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVlaQwhXYuKg/n13iFeI7q+gs9xzfhvVCYiPgsvqJfCUY/WnJ64z//frDRrMtWbicpdbPCLA1QTPzoxZOg8DHNgadTqdbQ=
+X-Gm-Message-State: AOJu0YxbYMGPJwg8MTy/7MbM2mN64ljHKe24FrWkRvsh6An6a9gd7nYD
+ 93Euc6yXRSiOXFnAli7dzywynDwJGA60gFPcoxLvDfHNYFlyl0ZEKXZ0nREIrQ==
+X-Google-Smtp-Source: AGHT+IFUW3UAmPoG960SZ5N7VJNAUHo+tLL1rC1lovhhg3esGnMq2tjCYJKIq3pQqg1dlwUZSzxiHg==
+X-Received: by 2002:a05:622a:1f07:b0:447:e3a5:27a7 with SMTP id
+ d75a77b69052e-45349b17a9dmr45800341cf.49.1723556392819; 
+ Tue, 13 Aug 2024 06:39:52 -0700 (PDT)
+Received: from denia.c.googlers.com.com
+ (123.178.145.34.bc.googleusercontent.com. [34.145.178.123])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4531c28fdcfsm32182061cf.90.2024.08.13.06.39.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Aug 2024 06:19:32 -0700 (PDT)
-From: Tiago Pasqualini <tiago.pasqualini@canonical.com>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com
-Subject: [PATCH] crypto: run qcrypto_pbkdf2_count_iters in a new thread
-Date: Tue, 13 Aug 2024 10:19:28 -0300
-Message-ID: <20240813131928.842265-1-tiago.pasqualini@canonical.com>
-X-Mailer: git-send-email 2.43.0
+ Tue, 13 Aug 2024 06:39:52 -0700 (PDT)
+From: Ricardo Ribalda <ribalda@chromium.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
+ Andrea Righi <andrea.righi@canonical.com>
+Cc: Ricardo Ribalda <ribalda@chromium.org>
+Subject: [PATCH v4 1/3] tests/acpi: pc: allow DSDT acpi table changes
+Date: Tue, 13 Aug 2024 13:39:12 +0000
+Message-ID: <20240813133936.1175467-2-ribalda@chromium.org>
+X-Mailer: git-send-email 2.46.0.76.ge559c4bf1a-goog
+In-Reply-To: <20240813133936.1175467-1-ribalda@chromium.org>
+References: <20240813133936.1175467-1-ribalda@chromium.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.125.188.123;
- envelope-from=tiago.pasqualini@canonical.com;
- helo=smtp-relay-internal-1.canonical.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=ribalda@chromium.org; helo=mail-qt1-x832.google.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,119 +99,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CPU time accounting in the kernel has been demonstrated to have a
-sawtooth pattern[1][2]. This can cause the getrusage system call to
-not be as accurate as we are expecting, which can cause this calculation
-to stall.
-
-The kernel discussions shows that this inaccuracy happens when CPU time
-gets big enough, so this patch changes qcrypto_pbkdf2_count_iters to run
-in a fresh thread to avoid this inaccuracy. It also adds a sanity check
-to fail the process if CPU time is not accounted.
-
-[1] https://lore.kernel.org/lkml/159231011694.16989.16351419333851309713.tip-bot2@tip-bot2/
-[2] https://lore.kernel.org/lkml/20221226031010.4079885-1-maxing.lan@bytedance.com/t/#m1c7f2fdc0ea742776a70fd1aa2a2e414c437f534
-
-Resolves: #2398
-Signed-off-by: Tiago Pasqualini <tiago.pasqualini@canonical.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 ---
- crypto/pbkdf.c         | 42 +++++++++++++++++++++++++++++++++++-------
- include/crypto/pbkdf.h | 10 ++++++++++
- 2 files changed, 45 insertions(+), 7 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/crypto/pbkdf.c b/crypto/pbkdf.c
-index 8d198c152c..4c4e1e3cd3 100644
---- a/crypto/pbkdf.c
-+++ b/crypto/pbkdf.c
-@@ -19,6 +19,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/thread.h"
- #include "qapi/error.h"
- #include "crypto/pbkdf.h"
- #ifndef _WIN32
-@@ -85,12 +86,17 @@ static int qcrypto_pbkdf2_get_thread_cpu(unsigned long long *val_ms,
- #endif
- }
- 
--uint64_t qcrypto_pbkdf2_count_iters(QCryptoHashAlgorithm hash,
--                                    const uint8_t *key, size_t nkey,
--                                    const uint8_t *salt, size_t nsalt,
--                                    size_t nout,
--                                    Error **errp)
-+static void *threaded_qcrypto_pbkdf2_count_iters(void *data)
- {
-+    CountItersData *iters_data = (CountItersData *) data;
-+    QCryptoHashAlgorithm hash = iters_data->hash;
-+    const uint8_t *key = iters_data->key;
-+    size_t nkey = iters_data->nkey;
-+    const uint8_t *salt = iters_data->salt;
-+    size_t nsalt = iters_data->nsalt;
-+    size_t nout = iters_data->nout;
-+    Error **errp = iters_data->errp;
-+
-     uint64_t ret = -1;
-     g_autofree uint8_t *out = g_new(uint8_t, nout);
-     uint64_t iterations = (1 << 15);
-@@ -114,7 +120,10 @@ uint64_t qcrypto_pbkdf2_count_iters(QCryptoHashAlgorithm hash,
- 
-         delta_ms = end_ms - start_ms;
- 
--        if (delta_ms > 500) {
-+        if (delta_ms == 0) { /* sanity check */
-+            error_setg(errp, "Unable to get accurate CPU usage");
-+            goto cleanup;
-+        } else if (delta_ms > 500) {
-             break;
-         } else if (delta_ms < 100) {
-             iterations = iterations * 10;
-@@ -129,5 +138,24 @@ uint64_t qcrypto_pbkdf2_count_iters(QCryptoHashAlgorithm hash,
- 
-  cleanup:
-     memset(out, 0, nout);
--    return ret;
-+    iters_data->iterations = ret;
-+    return NULL;
-+}
-+
-+uint64_t qcrypto_pbkdf2_count_iters(QCryptoHashAlgorithm hash,
-+                                    const uint8_t *key, size_t nkey,
-+                                    const uint8_t *salt, size_t nsalt,
-+                                    size_t nout,
-+                                    Error **errp)
-+{
-+    CountItersData data = {
-+        hash, key, nkey, salt, nsalt, nout, errp
-+    };
-+    QemuThread thread;
-+
-+    qemu_thread_create(&thread, "pbkdf2", threaded_qcrypto_pbkdf2_count_iters,
-+                       &data, QEMU_THREAD_JOINABLE);
-+    qemu_thread_join(&thread);
-+
-+    return data.iterations;
- }
-diff --git a/include/crypto/pbkdf.h b/include/crypto/pbkdf.h
-index 2c31a44a27..b3757003e4 100644
---- a/include/crypto/pbkdf.h
-+++ b/include/crypto/pbkdf.h
-@@ -153,4 +153,14 @@ uint64_t qcrypto_pbkdf2_count_iters(QCryptoHashAlgorithm hash,
-                                     size_t nout,
-                                     Error **errp);
- 
-+typedef struct CountItersData {
-+    QCryptoHashAlgorithm hash;
-+    const uint8_t *key;
-+    size_t nkey;
-+    const uint8_t *salt;
-+    size_t nsalt;
-+    size_t nout;
-+    Error **errp;
-+    uint64_t iterations;
-+} CountItersData;
- #endif /* QCRYPTO_PBKDF_H */
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..f81f4e2469 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,16 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/x86/pc/DSDT",
++"tests/data/acpi/x86/pc/DSDT.acpierst",
++"tests/data/acpi/x86/pc/DSDT.acpihmat",
++"tests/data/acpi/x86/pc/DSDT.bridge",
++"tests/data/acpi/x86/pc/DSDT.cphp",
++"tests/data/acpi/x86/pc/DSDT.dimmpxm",
++"tests/data/acpi/x86/pc/DSDT.hpbridge",
++"tests/data/acpi/x86/pc/DSDT.hpbrroot",
++"tests/data/acpi/x86/pc/DSDT.ipmikcs",
++"tests/data/acpi/x86/pc/DSDT.memhp",
++"tests/data/acpi/x86/pc/DSDT.nohpet",
++"tests/data/acpi/x86/pc/DSDT.numamem",
++"tests/data/acpi/x86/pc/DSDT.roothp",
++"tests/data/acpi/x86/q35/DSDT.cxl",
++"tests/data/acpi/x86/q35/DSDT.viot",
 -- 
-2.43.0
+2.46.0.76.ge559c4bf1a-goog
 
 
