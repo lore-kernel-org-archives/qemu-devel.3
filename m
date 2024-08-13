@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32D1DC52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 05:08:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CAC4C52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 05:08:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdjl1-0001zr-H1; Tue, 13 Aug 2024 01:07:44 -0400
+	id 1sdjlB-0002uo-DC; Tue, 13 Aug 2024 01:07:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sdjkr-0001Vo-8T
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 01:07:33 -0400
-Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sdjl5-0002ZO-O3
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 01:07:48 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sdjkm-0007p1-Sm
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 01:07:30 -0400
-Received: by mail-oi1-x22b.google.com with SMTP id
- 5614622812f47-3db504ab5f3so3053908b6e.0
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 22:07:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sdjl3-0007sU-83
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 01:07:46 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-70d2b921cdfso4562263b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 22:07:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723525647; x=1724130447; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1723525663; x=1724130463; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hJJumfrXrjJ8ux4qFP7Y/fSmMeJLiaM2sfhvI2RTUVI=;
- b=T2JjSWTGmlrS8uxUJ5v3Nw0KATzKuGriBoiB7IMH2olIZV1EWkE+TOtGI/lEyLkOQA
- 9hb3KbM24HSbpCQ9Bd7PUcm45/CU6/XDzEWDvfqJkzaGwSwDT8+28cfp4NMVHhnn0gS2
- T1fjlMKJXN4gRwawHk2bXjZvBLCnt8ARpd1ZYjSUOVH7+1Ewsfkko0sbGoqtilkp1aWv
- Keh/r6/yy5X+7bJcAhVk3TvREVVqexcAV2YjnYtLlRD26pkn517ReedgwOUBQKSXhnsm
- anYW1JhfWYmp2eypZRwjrDocLGGHLg/KJ3OTxyCZ2N/tmxg4/VrAVq0ZIB851Qml778M
- 8OFg==
+ bh=hyZ3BgC3wzWJ/AN2QtdtJKt6aJY0U1HtqG5d5wV9Xns=;
+ b=XSJ0uotr3pvBu2djGMYIDhe4BySxO6uRGv+vtCNHy5MBSsKBmvJ8sRumhC6T0PbJfE
+ lc1LxIfjSFG5GwFEKGUs4KD3pIFTII0lJFYwIxFKYqUxwPsaoqpM3i4toN9owDec0SZK
+ xYfBkq9tpJrS5ALXZkQIBiebqlmp0lB0HlAisf6jVuKmF2/Bw0V8ldMHA7hLoV6eLoKO
+ Y81MmmYQRR763KOqNyIL93YN7aDIM9etTGdRWk7g8lmsGELL7Zze6A3oKtvClvmjQD2A
+ Jrnxd/1qA0a1Uwv5ZQ4BDXsi4s4n9ey6eLX60Gi0jlsogMN98VXRXx9frEJ2CoFBnleT
+ BLoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723525647; x=1724130447;
+ d=1e100.net; s=20230601; t=1723525663; x=1724130463;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hJJumfrXrjJ8ux4qFP7Y/fSmMeJLiaM2sfhvI2RTUVI=;
- b=cYA39cndexLfKHNPPMdxhhZbWEQIqXVQbyndoDdl7A109fZaexQzF1K17wJGcqxtHN
- /iLxLfVmfmvmlUaACgBgdvCIzI+nU4bmpFKMkjyAAe/zAXRySCvzCpEec0UIBX/fejjo
- aggOZr66rVd9vidh5nlplvUSwF/4QxZ+4WoEakkXuea0Hiw2YZyvQ91izjQ02Gmwr0gV
- tqKPpMyWNJGdCkVJGzOSYe5t9ctK8MBXvxnJ6aVinxidLQpe0zlriRLgkUOTqMQWd1jF
- 22x3ZK22ZbkYOGVc+n2SvlLL20q1PtM8NxHI4aRjej91/mNgYTDw/S1nkz1D0QAK/MKz
- EvgQ==
-X-Gm-Message-State: AOJu0YwQBOM5tNuE92W+ugmkhDJ6eciZe5fh3KDaaDI6XoUnDZ49HTUG
- dPBe8BaLZZzayaQUDcqi3PlblpqrQ4bfRKJBy8biUHIrC2Na40ZkFZiaH21O
-X-Google-Smtp-Source: AGHT+IHJ/ilX8G/V8Ne/PTkJsAUljcaFSo11Hlds6WXW2uE8ekMAGsLe9MOAzLuPoDmp7NfaeU3wZg==
-X-Received: by 2002:a05:6830:7182:b0:703:68d0:a267 with SMTP id
- 46e09a7af769-70c93863fd8mr2695935a34.3.1723525646710; 
- Mon, 12 Aug 2024 22:07:26 -0700 (PDT)
+ bh=hyZ3BgC3wzWJ/AN2QtdtJKt6aJY0U1HtqG5d5wV9Xns=;
+ b=lHvS8elkKnzwOeu8WXaMlFo+BxXtCWUUcMA4XhCD5U5495A77zoLfdYS/BLunjYzF6
+ 2T4eo9IqY+erB3c6Jn7FkqlSPzkk60vJVdi3yBmg1TPRIr3TP99nFxHlwEfCDoQ9cMsR
+ xGia02tVWb5jSj/0+60uSNWqaXnRr/u0MddXK7DyfBSB20YZzM9jDeYbrfopUZZ9TnOZ
+ ANggNGzPHBrIeDdOF3cr2lW8AHug99ypHs23DWZutqUzZlLUfp+8SUFMLDIyICFRUELm
+ gSSnpk0VsfyD0Njn/+XjANFH0RArkuHStQMcZVKBvyBzty4dZ9ffwuMHVdoew96eK3ez
+ UkcQ==
+X-Gm-Message-State: AOJu0Yx5wL6aUaC0h6gvUxZZdAkX26At0+UOmxkUMIgNYkJjPB0Yme4m
+ U/SEjgO2Uggp7Asob/6nluSEm2sOk+MmJvTtzQEnqFMJiFZUGNgCphBPKhok
+X-Google-Smtp-Source: AGHT+IGUZJaX0+DfIM9GvJLMLQzHuaBwg3cbj32p6CMxk6uEVNpKXo2/zCgCvRCqY59PF1D9iSmACw==
+X-Received: by 2002:a05:6a00:3d04:b0:705:ac9e:1740 with SMTP id
+ d2e1a72fcca58-71255144fd0mr2838701b3a.10.1723525663094; 
+ Mon, 12 Aug 2024 22:07:43 -0700 (PDT)
 Received: from wheely.local0.net ([1.145.66.74])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-710e5874ddcsm4846449b3a.28.2024.08.12.22.07.21
+ d2e1a72fcca58-710e5874ddcsm4846449b3a.28.2024.08.12.22.07.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Aug 2024 22:07:26 -0700 (PDT)
+ Mon, 12 Aug 2024 22:07:42 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -67,18 +67,17 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Cleber Rosa <crosa@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v6 07/10] chardev: set record/replay on the base device of a
- muxed device
-Date: Tue, 13 Aug 2024 15:06:34 +1000
-Message-ID: <20240813050638.446172-8-npiggin@gmail.com>
+Subject: [PATCH v6 10/10] savevm: Fix load_snapshot error path crash
+Date: Tue, 13 Aug 2024 15:06:37 +1000
+Message-ID: <20240813050638.446172-11-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240813050638.446172-1-npiggin@gmail.com>
 References: <20240813050638.446172-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
- envelope-from=npiggin@gmail.com; helo=mail-oi1-x22b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,151 +100,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-chardev events to a muxed device don't get recorded because e.g.,
-qemu_chr_be_write() checks whether the base device has the record flag
-set.
-
-This can be seen when replaying a trace that has characters typed into
-the console, an examination of the log shows they are not recorded.
-
-Setting QEMU_CHAR_FEATURE_REPLAY on the base chardev fixes the problem.
+An error path missed setting *errp, which can cause a NULL deref.
 
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- chardev/char.c | 71 +++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 50 insertions(+), 21 deletions(-)
+ migration/savevm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/chardev/char.c b/chardev/char.c
-index 3c43fb1278..ba847b6e9e 100644
---- a/chardev/char.c
-+++ b/chardev/char.c
-@@ -615,11 +615,24 @@ ChardevBackend *qemu_chr_parse_opts(QemuOpts *opts, Error **errp)
-     return backend;
- }
- 
--Chardev *qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
--                                Error **errp)
-+static void qemu_chardev_set_replay(Chardev *chr, Error **errp)
-+{
-+    if (replay_mode != REPLAY_MODE_NONE) {
-+        if (CHARDEV_GET_CLASS(chr)->chr_ioctl) {
-+            error_setg(errp, "Replay: ioctl is not supported "
-+                             "for serial devices yet");
-+            return;
-+        }
-+        qemu_chr_set_feature(chr, QEMU_CHAR_FEATURE_REPLAY);
-+        replay_register_char_driver(chr);
-+    }
-+}
-+
-+static Chardev *__qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
-+                                         bool replay, Error **errp)
- {
-     const ChardevClass *cc;
--    Chardev *chr = NULL;
-+    Chardev *base = NULL, *chr = NULL;
-     ChardevBackend *backend = NULL;
-     const char *name = qemu_opt_get(opts, "backend");
-     const char *id = qemu_opts_id(opts);
-@@ -657,11 +670,11 @@ Chardev *qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
-     chr = qemu_chardev_new(bid ? bid : id,
-                            object_class_get_name(OBJECT_CLASS(cc)),
-                            backend, context, errp);
--
-     if (chr == NULL) {
-         goto out;
-     }
- 
-+    base = chr;
-     if (bid) {
-         Chardev *mux;
-         qapi_free_ChardevBackend(backend);
-@@ -681,11 +694,25 @@ Chardev *qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
- out:
-     qapi_free_ChardevBackend(backend);
-     g_free(bid);
-+
-+    if (replay && base) {
-+        /* RR should be set on the base device, not the mux */
-+        qemu_chardev_set_replay(base, errp);
-+    }
-+
-     return chr;
- }
- 
--Chardev *qemu_chr_new_noreplay(const char *label, const char *filename,
--                               bool permit_mux_mon, GMainContext *context)
-+Chardev *qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
-+                                Error **errp)
-+{
-+    /* XXX: should this really not record/replay? */
-+    return __qemu_chr_new_from_opts(opts, context, false, errp);
-+}
-+
-+static Chardev *__qemu_chr_new(const char *label, const char *filename,
-+                               bool permit_mux_mon, GMainContext *context,
-+                               bool replay)
- {
-     const char *p;
-     Chardev *chr;
-@@ -693,14 +720,22 @@ Chardev *qemu_chr_new_noreplay(const char *label, const char *filename,
-     Error *err = NULL;
- 
-     if (strstart(filename, "chardev:", &p)) {
--        return qemu_chr_find(p);
-+        chr = qemu_chr_find(p);
-+        if (replay) {
-+            qemu_chardev_set_replay(chr, &err);
-+            if (err) {
-+                error_report_err(err);
-+                return NULL;
-+            }
-+        }
-+        return chr;
-     }
- 
-     opts = qemu_chr_parse_compat(label, filename, permit_mux_mon);
-     if (!opts)
-         return NULL;
- 
--    chr = qemu_chr_new_from_opts(opts, context, &err);
-+    chr = __qemu_chr_new_from_opts(opts, context, replay, &err);
-     if (!chr) {
-         error_report_err(err);
-         goto out;
-@@ -722,24 +757,18 @@ out:
-     return chr;
- }
- 
-+Chardev *qemu_chr_new_noreplay(const char *label, const char *filename,
-+                               bool permit_mux_mon, GMainContext *context)
-+{
-+    return __qemu_chr_new(label, filename, permit_mux_mon, context, false);
-+}
-+
- static Chardev *qemu_chr_new_permit_mux_mon(const char *label,
-                                           const char *filename,
-                                           bool permit_mux_mon,
-                                           GMainContext *context)
- {
--    Chardev *chr;
--    chr = qemu_chr_new_noreplay(label, filename, permit_mux_mon, context);
--    if (chr) {
--        if (replay_mode != REPLAY_MODE_NONE) {
--            qemu_chr_set_feature(chr, QEMU_CHAR_FEATURE_REPLAY);
--        }
--        if (qemu_chr_replay(chr) && CHARDEV_GET_CLASS(chr)->chr_ioctl) {
--            error_report("Replay: ioctl is not supported "
--                         "for serial devices yet");
--        }
--        replay_register_char_driver(chr);
--    }
--    return chr;
-+    return __qemu_chr_new(label, filename, permit_mux_mon, context, true);
- }
- 
- Chardev *qemu_chr_new(const char *label, const char *filename,
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 85958d7b09..6bb404b9c8 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -3288,6 +3288,7 @@ bool load_snapshot(const char *name, const char *vmstate,
+     /* Don't even try to load empty VM states */
+     ret = bdrv_snapshot_find(bs_vm_state, &sn, name);
+     if (ret < 0) {
++        error_setg(errp, "Snapshot can not be found");
+         return false;
+     } else if (sn.vm_state_size == 0) {
+         error_setg(errp, "This is a disk-only snapshot. Revert to it "
 -- 
 2.45.2
 
