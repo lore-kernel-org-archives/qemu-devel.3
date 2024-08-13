@@ -4,62 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F32CC52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 23:30:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94171C52D7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 23:38:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1se0xS-0002Dm-Ie; Tue, 13 Aug 2024 19:29:43 -0400
+	id 1se150-0006Sf-Ir; Tue, 13 Aug 2024 19:37:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1se0xQ-00024Q-AE; Tue, 13 Aug 2024 19:29:40 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1se0xO-0007PO-EQ; Tue, 13 Aug 2024 19:29:40 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id 5E5F5CE17E3;
- Tue, 13 Aug 2024 23:29:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A2CC32782;
- Tue, 13 Aug 2024 23:29:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1723591774;
- bh=MztplHyL+pZPuymFc0voh9Nuxrk0Y/b6mJ5Y2Bu27Yw=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=QK8pV5uG5mQGpTMH923Q+lMDVTUXeDOO2zAvfJKsTknDnQMY5cy/7c/JR+7FXbwrc
- a/FAYGX1FaCNFg++4zaQeCSC8HrsHF44Imteaij/+XrvwSjfy3QFLIBjEX0c4qB8Dj
- jFQAfEKxGbuNwp5u4VfjnWuXKWdCrsg5pDZuJBy0y1a+CRNBZ73dQshzLQ2XKVge8B
- sDouCSanm+BRGcSjDWjtmguHtMSzqu4+Uo8+PJ1Hn2sRhIfqyOMI9DijSRNTO5k52m
- AD8VyjSJMKTIFxMu6QhaEQf0JE6k7wQC0jeF9BJ40zi9LHKo059FvKgf8PO9tkB9cQ
- lXW/NL1TXG6ng==
-Date: Wed, 14 Aug 2024 01:29:29 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, Ani Sinha <anisinha@redhat.com>, Dongjiu Geng
- <gengdongjiu1@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
- Maydell <peter.maydell@linaro.org>, Shannon Zhao
- <shannon.zhaosl@gmail.com>, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 00/10] Add ACPI CPER firmware first error injection
- on ARM emulation
-Message-ID: <20240814012929.59be7ef0@foz.lan>
-In-Reply-To: <20240812141835.50749f0e@imammedo.users.ipa.redhat.com>
-References: <cover.1723119423.git.mchehab+huawei@kernel.org>
- <20240808145735.70f81f76@foz.lan>
- <20240812141835.50749f0e@imammedo.users.ipa.redhat.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <jgg@ziepe.ca>) id 1se14z-0006S3-2y
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 19:37:29 -0400
+Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jgg@ziepe.ca>) id 1se14x-0008Om-9J
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 19:37:28 -0400
+Received: by mail-qt1-x82b.google.com with SMTP id
+ d75a77b69052e-447d6edc6b1so32233521cf.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 16:37:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ziepe.ca; s=google; t=1723592246; x=1724197046; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=5VO2vOXTYUzHNGoqXkty4CZXSIWZNXE+mZa+Oe/5P5M=;
+ b=CYjylfHycl064uyMn3Ho0APuZZwxEwvai/lFVtCDuGaS0l9DuVVCK+Ka3x7tOz9+vD
+ 9F8p6tQ2BkQQ7z4/BHKbsj4n7vMmxt8mPxW/3Iu5/jcm720MoRyD7fOV/VitQ09HIZrC
+ ylUu/dW3J1Ls6xxV3/HySuK07/FTP56lxoVyZLXoqOvVx6IPeC6B/HR13HuQMPxHoQHO
+ vt4Faxl4zS9kt16Gq0lZbSBHq21axC1Xdd+XEcgcxdctv2nmu4absbQp3izn8NUq6nzu
+ UNXPRbIk5+inwRSh2T6AWVIEN6i2LQuPFX/LQ4gFaTjJGOdwzhAf6RiaQfxu3xIMdTor
+ Ctyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723592246; x=1724197046;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5VO2vOXTYUzHNGoqXkty4CZXSIWZNXE+mZa+Oe/5P5M=;
+ b=JU/Z7RvrbQugXsCTpUhx9+8qe7Ppqkbvyd3IEEEamqDMlKw7dkpnxgqqsuBXJQc8J4
+ akvQ6q1SKd1T59kDYUCixFhBqsOeIy05z1KpvycEjlqMlX43B5TcYz/AR8lJ4h9ocGcu
+ EKcN/Z68c/l3Ef8MTuxGs1UyjFYAzhCzEjnWJt92DPKE02BIMXiKwqBtis8q8zDw1OxS
+ 5IBEB5zQU5/CRRH/1xV18jGnGThGA/9kiyK+MPkwla6FfG5HJRvDFOtOjJHXkNFN8ufd
+ bqOa83YvtUemPc7hkJkZQBABVn2GAqEWLgETGYfJnMBDbA8ia2TIlmSdAmg3dQ8r+kze
+ XGRA==
+X-Gm-Message-State: AOJu0YyiqsN25+3QS3uApC2fALG3BNSdyxyU2YvPOb1od5S7TwFEu8L2
+ wwIT2SwRCclcbUyuQz1hZbcVJSCKv0qHxVEpYDeG+ItH2sYItopxMuTAGyOeQZA=
+X-Google-Smtp-Source: AGHT+IFbm4qDYxgXzWa97F1Ax4tIokMkCTO/HLZVYUI3NA9l3rLq2ilxoJLGeZFzAszYUnI+b4y72g==
+X-Received: by 2002:a05:622a:5c17:b0:446:5c31:f268 with SMTP id
+ d75a77b69052e-4535bb0821dmr11613701cf.30.1723592245902; 
+ Tue, 13 Aug 2024 16:37:25 -0700 (PDT)
+Received: from ziepe.ca
+ (hlfxns017vw-142-68-80-239.dhcp-dynamic.fibreop.ns.bellaliant.net.
+ [142.68.80.239]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4531c26d30esm36041161cf.64.2024.08.13.16.37.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Aug 2024 16:37:25 -0700 (PDT)
+Received: from jgg by wakko with local (Exim 4.95)
+ (envelope-from <jgg@ziepe.ca>) id 1se14u-00AOBJ-NG;
+ Tue, 13 Aug 2024 20:37:24 -0300
+Date: Tue, 13 Aug 2024 20:37:24 -0300
+From: Jason Gunthorpe <jgg@ziepe.ca>
+To: Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, quic_bqiang@quicinc.com,
+ kvalo@kernel.org, prestwoj@gmail.com,
+ linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
+ dwmw2@infradead.org, iommu@lists.linux.dev, kernel@quicinc.com,
+ johannes@sipsolutions.net, jtornosm@redhat.com
+Subject: Re: [PATCH RFC/RFT] vfio/pci-quirks: Quirk for ath wireless
+Message-ID: <20240813233724.GS1985367@ziepe.ca>
+References: <adcb785e-4dc7-4c4a-b341-d53b72e13467@gmail.com>
+ <20240812170045.1584000-1-alex.williamson@redhat.com>
+ <20240813164341.GL1985367@ziepe.ca>
+ <20240813150320.73df43d7.alex.williamson@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=mchehab+huawei@kernel.org; helo=sin.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240813150320.73df43d7.alex.williamson@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82b; envelope-from=jgg@ziepe.ca;
+ helo=mail-qt1-x82b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,42 +101,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Mon, 12 Aug 2024 14:18:35 +0200
-Igor Mammedov <imammedo@redhat.com> escreveu:
+On Tue, Aug 13, 2024 at 03:03:20PM -0600, Alex Williamson wrote:
 
-> On Thu, 8 Aug 2024 14:57:35 +0200
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> 
-> > Em Thu,  8 Aug 2024 14:26:26 +0200
-> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> escreveu:
-> >   
-> > > v6:
-> > > - PNP0C33 device creation moved to aml-build.c;
-> > > - acpi_ghes record functions now use ACPI notify parameter,
-> > >   instead of source ID;
-> > > - the number of source IDs is now automatically calculated;
-> > > - some code cleanups and function/var renames;
-> > > - some fixes and cleanups at the error injection script;
-> > > - ghes cper stub now produces an error if cper JSON is not compiled;
-> > > - Offset calculation logic for GHES was refactored;
-> > > - Updated documentation to reflect the GHES allocated size;
-> > > - Added a x-mpidr object for QOM usage;
-> > > - Added a patch making usage of x-mpidr field at ARM injection
-> > >   script;  
-> 
-> stopping review at 5/10 and expecting a version with
-> GHES source to error status block mapping fetched from
-> HEST in guest RAM, instead of pre-calculated offsets
-> in source code  (as in this series) to avoid migration
-> issues and keeping compat plumbing manageable down the road.
+> How does the guest know to write a remappable vector format?  How does
+> the guest know the host interrupt architecture?  For example why would
+> an aarch64 guest program an MSI vector of 0xfee... if the host is x86?
 
-Done. Sent a version 7 addressing it, and the other received
-feedbacks. On this version, there are just two offsets used
-during error injection:
+All excellent questions.
 
-1) the ack offset: represented relative to HEST table;
-2) the CPER data offset: relative to /etc/hardware_errors table.
+Emulating real interrupt controllers in the VM is probably impossible
+in every scenario. But certainly x86 emulating x86 and ARM emulating
+ARM would be usefully achievable.
 
-Thanks,
-Mauro
+hyperv did a neat thing where their remapping driver seems to make VMM
+traps and looks kind of like the VMM gives it the platform specific
+addr/data pair.
+
+It is a big ugly problem for sure, and we definately have painted
+ourselves into a corner where the OS has no idea if IMS techniques
+work properly or it is broken. :( :(
+
+But I think there may not be a terribly impossible path where at least
+the guest could be offered a, say, virtio-irq in addition to the
+existing platform controllers that would process IMS for it.
+
+> The idea of guest owning the physical MSI address space sounds great,
+> but is it practical?  
+
+In many cases yes, it is, but more importantly it is the only sane way
+to support these IMS like techniques broadly since IMS is by
+definition not generally trappable.
+
+> Is it something that would be accomplished while
+> this device is still relevant?
+
+I don't know, I fear not. But it keeps coming up. Too many things
+don't work right with the trapping approach, including this.
+
+> The Windows driver is just programming the MSI capability to use 16
+> vectors.  We configure those vectors on the host at the time the
+> capability is written.  Whereas the Linux driver is only using a single
+> vector and therefore writing the same MSI address and data at the
+> locations noted in the trace, the Windows driver is writing different
+> data values at different locations to make use of those vectors.  This
+> note is simply describing that we can't directly write the physical
+> data value into the device, we need to determine which vector offset
+> the guest is using and provide the same offset from the host data
+> register value.
+
+I see, it seems to be assuming also that these extra interrupt sources
+are generating the same MSI message as the main MSI, not something
+else. That is more a SW quirk of Windows, I expect. I don't think
+Linux would do that..
+
+This is probably the only way to approach this, trap and emulate the
+places in the device that program additional interrupt sources and do
+a full MSI-like flow to set them up in the kernel.
+
+Jason
 
