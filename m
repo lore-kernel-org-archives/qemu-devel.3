@@ -4,94 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7625EC52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 09:07:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00A34C52D7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 09:17:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdnUX-0007u1-0F; Tue, 13 Aug 2024 05:06:57 -0400
+	id 1sdneF-0006Js-4j; Tue, 13 Aug 2024 05:16:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sdnUO-0007ih-Qe
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 05:06:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sdne7-0006IY-UH; Tue, 13 Aug 2024 05:16:53 -0400
+Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1sdnUL-0003D3-RY
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 05:06:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723540002;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Kyrnuwm3scw1wk3jemcCC2FVr3wKBo0KrzdBI3MdMdM=;
- b=JRX0EIlNXvGYJaTmrbVnSIJC9mvW1AbHHoKeNFJ+UqSnkscufj+LBU/mo4UO0M31VYOl1+
- GRN+zFL+uM2GViIZv3/U6A3GDOr5e/yxtELjYb5RL9R4t0LA818Q+oS6Arj7+gtQCpIpb8
- ONx/WQrcSo1p4mnDEh6Z0OCR66vX9qE=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-zNrco3aTM0GnGFF7QfLFpA-1; Tue, 13 Aug 2024 05:06:40 -0400
-X-MC-Unique: zNrco3aTM0GnGFF7QfLFpA-1
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-2cb6c5f9810so5401313a91.2
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 02:06:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723539999; x=1724144799;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Kyrnuwm3scw1wk3jemcCC2FVr3wKBo0KrzdBI3MdMdM=;
- b=j5PQ9D05o+C7R2D6TkOfPwnq0a6/+hc7k0+mUyFAYLC9Nira7eA98y1dzWFCDg5z8Z
- wxeVKpONVrVWUaY5bk8pdOHlX8wxfC9iwqQ5H2ozhol0XRNqMCjDUs3sadN12o1n9T9d
- EaW+BwpQhLvX042kF8Xg4KJNum8u4gB4DCu/dL02nLsk8F9gWUaE2fCptIujBvLKLLq/
- xoggABfppBI0dDj0ogyE9THVLy/KMm6CwGhjwgsYobrMMCyadzoXy7OcyrNOGf7gdamu
- H7PMfG0jysOiYwdvIwezXc1ZQSXd0ag3S34WsZogbVuYgo9M4Kczmvvp8jwPDFFhBuJx
- OJ7Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWU+PDJi9GA4OnXaZfkPJr73Ops/6rYikEdm5IMbYLzrWXxpDzFpkgk0WRTYB4wnbilmG4NVzxJwvYqFNLYwFUkzRkgFP0=
-X-Gm-Message-State: AOJu0Yzy3v1+ZMbyOIHGdXvfFCipuxOI7gMfjN4KlEpzHSvn/Ak6dFCk
- RJ71HeIhDi/btno9XEInZhl30Cdn9Sv0SqF61fDGrsmLRAmRrE/YgtQ/2R/PnjD2cDJSnoCm40p
- rvdLv3KwYg1Ny4g6sP3gHxsONlY2Ez6mJliMGQngZ6AyhM1EL9W12UuEQyfBQQ2wnaOBok4j6e5
- fhjhJkiaiqhQFdvEDDPv1Ke5ZJIk9TPrIXjvfv1g==
-X-Received: by 2002:a17:90a:5106:b0:2c1:9892:8fb with SMTP id
- 98e67ed59e1d1-2d3924e033fmr3057212a91.5.1723539999009; 
- Tue, 13 Aug 2024 02:06:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFvAkU7xRu0JtzSi4eQ+tkdSR0fITCshGKJnQ7XEMwd+GKp30+9dU88c8tzgrn1MpgHXi74I54pjciixHF4KOI=
-X-Received: by 2002:a17:90a:5106:b0:2c1:9892:8fb with SMTP id
- 98e67ed59e1d1-2d3924e033fmr3057180a91.5.1723539998450; Tue, 13 Aug 2024
- 02:06:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1sdne3-00057j-Lj; Tue, 13 Aug 2024 05:16:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1723540608; x=1755076608;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=8NtQ+m2aKB6iYToa6t7dybTia62yHNGP3KJBraXxCpU=;
+ b=fmpxhrHGhIEbm0zhozQMFg32psDfrhg1+0B0LQpXX8nmYCvE3QS5QB3S
+ pkAn6yOE+Ln92cOa98i9z43j7UE9Ja1Fbx+ujsdg1FyqwMhbnnWfb/WY9
+ K/pt5tGjhmDqbgK6Kj3zfvfodLnvHoWnOKj9KW4aQlvVZAK7aMqA67Jfv
+ q/LUq8LU4P2z0R6GuP+Z3sBPj5AhHJGrD9Jol4dWn8lkwFMJ5oB04lQ6m
+ St2/mldpsmBYSWjzbBkN+EHdJ3wnpZw922O6rgv/0k+iuIXvGxuJue1wU
+ rZyqrsPJWh0pDurV/r4+sXbDBfq+qUrMRYb42iQw/OppXtUP65toxXQdD w==;
+X-CSE-ConnectionGUID: a1VfiEX6T/ChsYq/tDhlXQ==
+X-CSE-MsgGUID: 8HcbFrRNTIyqloRgfTFiZA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11162"; a="21824693"
+X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; d="scan'208";a="21824693"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Aug 2024 02:16:38 -0700
+X-CSE-ConnectionGUID: ok7MbNc3QYiteuVonTEdAA==
+X-CSE-MsgGUID: ryPaxXe7SMOiwPdyXLvAvA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; d="scan'208";a="62994836"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa005.fm.intel.com with ESMTP; 13 Aug 2024 02:16:36 -0700
+Date: Tue, 13 Aug 2024 17:32:27 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Kamil =?utf-8?Q?Szcz=C4=99k?= <kamil@szczek.dev>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
+Subject: Re: [PATCH] hw/i386/pc: Add a description for the i8042 property
+Message-ID: <ZrsoK2XdWIUgd5zN@intel.com>
+References: <15fhXFY6x78KW8P5gw0eKTW8kc17zejrJFxqnOyoBy6vw4W9rCmgDhoxssWosWFs_dbFtfsyjn9wpPrV3x8Nlzhy8mTJSEnXCr4qyHAhXSw=@szczek.dev>
 MIME-Version: 1.0
-References: <20240813074410.2571369-1-zhenzhong.duan@intel.com>
- <20240813074410.2571369-3-zhenzhong.duan@intel.com>
- <5889eca7-7f2e-4a15-bce0-84af981044e3@intel.com>
-In-Reply-To: <5889eca7-7f2e-4a15-bce0-84af981044e3@intel.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Tue, 13 Aug 2024 17:06:27 +0800
-Message-ID: <CACGkMEvK4P=4qUSFkkWZAAHhR37CMBWkR7BtKLWArC_1G6hEdg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] intel_iommu: Make PASID-cache and PIOTLB type
- invalid in legacy mode
-To: Yi Liu <yi.l.liu@intel.com>
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org,
- chao.p.peng@intel.com, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Eduardo Habkost <eduardo@habkost.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <15fhXFY6x78KW8P5gw0eKTW8kc17zejrJFxqnOyoBy6vw4W9rCmgDhoxssWosWFs_dbFtfsyjn9wpPrV3x8Nlzhy8mTJSEnXCr4qyHAhXSw=@szczek.dev>
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,25 +82,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 13, 2024 at 4:31=E2=80=AFPM Yi Liu <yi.l.liu@intel.com> wrote:
->
-> On 2024/8/13 15:44, Zhenzhong Duan wrote:
-> > In vtd_process_inv_desc(), VTD_INV_DESC_PC and VTD_INV_DESC_PIOTLB are
-> > bypassed without scalable mode check. These two types are not valid
-> > in legacy mode and we should report error.
-> >
-> > Suggested-by: Yi Liu <yi.l.liu@intel.com>
-> > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> > ---
-> >   hw/i386/intel_iommu.c | 22 +++++++++++-----------
-> >   1 file changed, 11 insertions(+), 11 deletions(-)
->
-> Reviewed-by: Yi Liu <yi.l.liu@intel.com>
->
-> Do you think a fix tag is needed or not? @Jason
+On Mon, Aug 12, 2024 at 05:23:31PM +0000, Kamil Szczęk wrote:
+> Date: Mon, 12 Aug 2024 17:23:31 +0000
+> From: Kamil Szczęk <kamil@szczek.dev>
+> Subject: [PATCH] hw/i386/pc: Add a description for the i8042 property
+> 
+> While working on exposing the i8042 property in libvirt I noticed that
+> the property is missing a description. This adds a simple description
+> so that QEMU users don't have to dig in the source code to figure out
+> what this option does.
+> 
+> Signed-off-by: Kamil Szczęk <kamil@szczek.dev>
+> ---
+>  hw/i386/pc.c | 2 ++
+>  1 file changed, 2 insertions(+)
 
-I think so (as it might have a guest triggerable issue).
-
-Thanks
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
