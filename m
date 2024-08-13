@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26682C52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 12:18:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60361C52D7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 12:20:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdqT4-0001cM-Uj; Tue, 13 Aug 2024 08:17:40 -0400
+	id 1sdqVO-0004nJ-2C; Tue, 13 Aug 2024 08:20:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdqSa-0001ZC-PL
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 08:17:12 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sdqVJ-0004Vp-RF
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 08:19:58 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdqSV-0000MX-Rx
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 08:17:06 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5b8c2a6117aso2107101a12.0
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 05:17:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sdqVI-0000jR-4E
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 08:19:57 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-1fec34f94abso45794355ad.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 05:19:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723551422; x=1724156222; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723551594; x=1724156394; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ge6Dz3VoP6ViJAtrM5PUdz68g+9xNL4aUTYuDgLTzwc=;
- b=hveFwtZe3uU35AZ9P4Uf56GbGhLXifC6ZvmE9IlINhOKLh07bjtHW1bolvvj01VEvn
- nxUlJ9YDNLUTqAKBaa5a21vdX+s2sYkdIdEAgXu9v+6mqy/ntpBF8PwTfVCF0HkN7bh/
- zLlFivW616HeTnGSXewr0egCpYGfXvU1rGAu1XE7shFOI8fS5jD4DVN2RxYBdXTgak9w
- 7Hw55xEZz8pFp4KKAt9cj5wUWhV2Bxv2f2WZ//hmL8hoOGdIBk86tUEBvztw3mAP32n8
- +fTfhMyYRJmgNPSWuRu2jSUo9pRZD5ah3oDXorGBDkEwMGPidyDuQnh9MOECcwDGX5F2
- q5MQ==
+ bh=VTim0M8aAiudnjVU9beQplJDA4XOjxjzx0QnStTEJaM=;
+ b=lx4M8FoCwKCOHZ/1djbunl0TQNgm9EbY7kI6FOA/1kdFs3cLfqbD8NtSIwjBzJ+rgt
+ xlXsbahQby/Moj1tQ4A9BlWFc+Yf7PndjpePYQmvwv0TdPmlBKy9F8IdDu31kWt36gzg
+ Oe9kT2EmKX2LsmJBGbw7WgGM3coWe+6DuvUEGPzCkwEk2E/doZrqhIySqHyoPBftZzw5
+ W0LWM0bKjaHCHPrgYoqReKWho0W3SO181Y4EKiSkU/0E1tImR/o/d9xtGVj6rNEb6w0g
+ H1MQqwOjne64YRDzXM+vbPlROfQFGSS6ERh33LabSSLd+qrCP03CmLpr5gqQ2H5ipt5M
+ O0Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723551422; x=1724156222;
+ d=1e100.net; s=20230601; t=1723551594; x=1724156394;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ge6Dz3VoP6ViJAtrM5PUdz68g+9xNL4aUTYuDgLTzwc=;
- b=vPb+aI+Y0WlKHQrNGXAIgmalrnAvqfMktEe1l6rtfSdJ+wZUyl5j/7lNUZ5Cll7g/v
- hW6tAFz7Onvt5daIA1zGIJlSrK/sXaCGG5/8JDSRbvHGcXAVKzL779V/vyx7IF95gVbZ
- iIgPOrsErPPmNTv/GOWETTDM1TdozFRc0q1N3WaIaWZkkot3enkgRpHjf8U/HS51U1qT
- FF7nFE0Sue5kCnt/v2X2x8b6HAOmMnFjoIx5Gvsv9vvqjxk8RTGRjmekFKC2jgD3cP7N
- AhvONUcxVQA415vqnvuB/ImKzylfT0lef3pvJSrIlT4AnqQeCY7bqVAtH5PTijJ6a8oW
- uLMA==
+ bh=VTim0M8aAiudnjVU9beQplJDA4XOjxjzx0QnStTEJaM=;
+ b=Day+3bNz8D9y1RtME8RkokwQkFmgMvGvggdtJNYqfwGRLb0tNJDiDpTk/WkTbSWBBA
+ Hd0hGmIDGUU1DcPPUX5EfX8ZXVHG+jm+DhdOzpju5ttBmBMOuX6DY1sVdEEVLzJYsif2
+ I7Jm4pjXJsD3OJ8NmVzsEpcXo595OJRhCfrtj2oH0B3sz/jAIkI1tHFbomS5uUqZIzS2
+ a0sPtvXvNF232mH2Tad9ri+UWkoavF900J9+PVLrWvPxDLSgJC18zm5ujgzVLwRahIz7
+ NjKFZqNP+mHP73uh1QDKO5WOlTwGhC1EP1LEDfEaXVk98VWzHr5vjuuOrp2k8dmm806r
+ AjNA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUKQQKuqDB602DnJdn3MhH+Rgvm9iNH0ylGEen92m9Yebw353W4FvKl3ZViAO2/kiWqEoOQolmAltjFJvPIARJO4zGQCc4=
-X-Gm-Message-State: AOJu0YyMdZ5aUB4tWSfrmQQgiG9eEptiH1eopCkMPMh1fhQKnhBSOwSG
- MGOsg/iyqaBrTF/wE5Vg76gTb0AQb9ngJ4yxBUF4iLYFRbSaL51MwDrMvGDA6u8=
-X-Google-Smtp-Source: AGHT+IGmGai6NUsmVEh8NypheFo3hp13h5qEYC4P72Hko+cz8f0+kSUbAZNKGcWrryBiJpwNADWC+g==
-X-Received: by 2002:a05:6402:26ce:b0:57a:3046:1cd8 with SMTP id
- 4fb4d7f45d1cf-5bd44c0cd89mr3223431a12.7.1723551421929; 
- Tue, 13 Aug 2024 05:17:01 -0700 (PDT)
-Received: from [192.168.69.100] ([176.176.129.17])
+ AJvYcCXuyCia421oYzey1Gd93KzT8k44UaOqCNAWdnVTWJtfoVCr1zcXmtaxsAUCBTif7CZtNZOzT2YCwpPl35boY2JNS8RvFhY=
+X-Gm-Message-State: AOJu0YxFBr7gz63GMaHZxomS55gWSPLdNW7G2oxSX/OJpAhCrrq9HsDJ
+ CfkJ0Hu9R1RViLAsSmD7FsWLJHajgPW5nj3a6dSOZet6yFwTjeOomwovmiaIHrY=
+X-Google-Smtp-Source: AGHT+IF4LGFu/aDKFxvb8qzfRXexhCffHOKqHA7ynILPSbQQXPTQ/wL4vMu4TnTp4PzIsOxIgGfVpw==
+X-Received: by 2002:a17:902:bf4b:b0:1fd:96e1:802a with SMTP id
+ d9443c01a7336-201ca1ced56mr37075565ad.59.1723551594235; 
+ Tue, 13 Aug 2024 05:19:54 -0700 (PDT)
+Received: from [192.168.1.113] ([203.30.4.111])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bd196a59ebsm2850932a12.48.2024.08.13.05.16.59
+ d9443c01a7336-201cd14b1bcsm12331455ad.114.2024.08.13.05.19.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Aug 2024 05:17:01 -0700 (PDT)
-Message-ID: <2bde5edc-5508-4c9d-be68-1825353d3a82@linaro.org>
-Date: Tue, 13 Aug 2024 14:16:53 +0200
+ Tue, 13 Aug 2024 05:19:53 -0700 (PDT)
+Message-ID: <b21e2ebb-6eb9-44ef-bbd3-c532f3d1f80b@linaro.org>
+Date: Tue, 13 Aug 2024 22:19:44 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 v2 1/2] target/mips: Pass page table entry size in
- bytes to get_pte()
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Aurelien Jarno <aurelien@aurel32.net>,
- Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Waldemar Brodkorb <wbx@uclibc-ng.org>
-References: <20240813101856.49469-1-philmd@linaro.org>
- <20240813101856.49469-2-philmd@linaro.org>
- <28dd1808-8a10-49a3-b324-be1496cd0aa4@linaro.org>
+Subject: Re: [PATCH v1 04/15] tcg/riscv: Add basic support for vector
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ Swung0x48 <swung0x48@outlook.com>,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240813113436.831-1-zhiwei_liu@linux.alibaba.com>
+ <20240813113436.831-5-zhiwei_liu@linux.alibaba.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <28dd1808-8a10-49a3-b324-be1496cd0aa4@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240813113436.831-5-zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x536.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,43 +101,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/8/24 13:02, Richard Henderson wrote:
-> On 8/13/24 20:18, Philippe Mathieu-Daudé wrote:
->> In order to simplify a bit, pass the PTE size in
->> bytes rather than bits.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   target/mips/tcg/sysemu/tlb_helper.c | 16 ++++++++--------
->>   1 file changed, 8 insertions(+), 8 deletions(-)
->>
->> diff --git a/target/mips/tcg/sysemu/tlb_helper.c 
->> b/target/mips/tcg/sysemu/tlb_helper.c
->> index 3ba6d369a6..a8caf3ade8 100644
->> --- a/target/mips/tcg/sysemu/tlb_helper.c
->> +++ b/target/mips/tcg/sysemu/tlb_helper.c
->> @@ -592,13 +592,13 @@ static void raise_mmu_exception(CPUMIPSState 
->> *env, target_ulong address,
->>    * resulting in a TLB or XTLB Refill exception.
->>    */
->> -static bool get_pte(CPUMIPSState *env, uint64_t vaddr, int entry_size,
->> +static bool get_pte(CPUMIPSState *env, uint64_t vaddr, unsigned 
->> entry_bytes,
->>           uint64_t *pte)
->>   {
->> -    if ((vaddr & ((entry_size >> 3) - 1)) != 0) {
->> +    if ((vaddr & (entry_bytes - 1)) != 0) {
->>           return false;
->>       }
->> -    if (entry_size == 64) {
->> +    if (entry_bytes == 8) {
->>           *pte = cpu_ldq_code(env, vaddr);
->>       } else {
->>           *pte = cpu_ldl_code(env, vaddr);
-> 
-> Considering the next patch, where you need to make the MemOpIdx,
-> why not pass in the size as MemOp?
+On 8/13/24 21:34, LIU Zhiwei wrote:
+> +    if (cpuinfo & CPUINFO_ZVE64X) {
+> +        /* We need to get vlenb for vector's extension */
+> +        riscv_get_vlenb();
+> +        tcg_debug_assert(riscv_vlen >= 64 && is_power_of_2(riscv_vlen));
+> +
+> +        if (riscv_vlen >= 256) {
+> +            tcg_target_available_regs[TCG_TYPE_V64] = ALL_VECTOR_REGS;
+> +            tcg_target_available_regs[TCG_TYPE_V128] = ALL_VECTOR_REGS;
+> +            tcg_target_available_regs[TCG_TYPE_V256] = ALL_VECTOR_REGS;
+> +        } else if (riscv_vlen == 128) {
+> +            tcg_target_available_regs[TCG_TYPE_V64] = ALL_VECTOR_REGS;
+> +            tcg_target_available_regs[TCG_TYPE_V128] = ALL_VECTOR_REGS;
+> +            tcg_target_available_regs[TCG_TYPE_V256] = ALL_DVECTOR_REG_GROUPS;
+> +        } else if (riscv_vlen == 64) {
+> +            tcg_target_available_regs[TCG_TYPE_V64] = ALL_VECTOR_REGS;
+> +            tcg_target_available_regs[TCG_TYPE_V128] = ALL_DVECTOR_REG_GROUPS;
+> +            tcg_target_available_regs[TCG_TYPE_V256] = ALL_QVECTOR_REG_GROUPS;
+> +        } else {
+> +            g_assert_not_reached();
+> +        }
+> +    }
 
-Clever.
+I think this is over-complicated, and perhaps the reason for patch 3.
 
+What I believe you're missing with patch 3 is the fact that when you change the lmul, 
+adjacent vector registers get clobbered, and the tcg register allocator does not expect 
+that.  This will result in incorrect register allocation.
+
+You need to pick one size at startup, and expose *only* those registers.
+
+This won't affect code generation much, because we never have heavy vector register 
+pressure.  Mostly values go out of scope at the end of every guest instruction.  So having 
+only 8 or 16 visible host registers instead of 32 isn't a big deal.
+
+
+r~
 
