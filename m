@@ -4,105 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A1D6C52D7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 20:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A39FEC52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 21:04:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdySc-0000pL-Gd; Tue, 13 Aug 2024 16:49:42 -0400
+	id 1sdyg2-0006x9-P9; Tue, 13 Aug 2024 17:03:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sdySa-0000fb-Eb
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:49:40 -0400
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1sdyg1-0006w3-Cz
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 17:03:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sdySY-0001fh-Uv
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:49:40 -0400
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1sdyfz-0004F9-LJ
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 17:03:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723582178;
+ s=mimecast20190719; t=1723583008;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2jyXx+wKOQOxU2ecyqA2iwoYFri7dVNuVaZYwSPMvZE=;
- b=HtE+sUdzlq+GAErZhfM0hi8LWBKHR+s1Bh1KafdewgCYAs6/+M/qAxIAVbdCZkPznSnUUK
- p9dRYnPVPVyTkHWvyFwLU68ttIijtVZ5sXK2hqhZubC81Xn7A27Sbap/YuvUnYhM+72iY7
- 7Jo3AybT17NMgmRp7mr8vFk+JCT3skk=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1UOf/e3HcQ+l94OWXrCwdSK3TbHtvFPHwqfrVahjAnI=;
+ b=SJ7NNWGg9r61R9FrHICQCRxiywHL5iF6bsL3ISE6YmGZOR1UwVKsd9l2K+PuabKc+p0ldM
+ qonZGyXx9qYu4NQAWuzaXs+VIVB1IFyDfG6ea0RKlM4U9eC/2OHktOUqTb/BT+Xk+z+TMS
+ xzQ/M1VUtS1qMiZ4/qZt5DrlnwlkuVk=
+Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
+ [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-346-SXSc05suP72mVWyES-HmiQ-1; Tue, 13 Aug 2024 16:49:36 -0400
-X-MC-Unique: SXSc05suP72mVWyES-HmiQ-1
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-5a534faa028so4189580a12.0
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 13:49:36 -0700 (PDT)
+ us-mta-640-YNr-UckqNCiM6l3rzqK1FQ-1; Tue, 13 Aug 2024 17:03:24 -0400
+X-MC-Unique: YNr-UckqNCiM6l3rzqK1FQ-1
+Received: by mail-io1-f72.google.com with SMTP id
+ ca18e2360f4ac-81f87635cc1so738340839f.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 14:03:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723582176; x=1724186976;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2jyXx+wKOQOxU2ecyqA2iwoYFri7dVNuVaZYwSPMvZE=;
- b=gMTksiBU7gyjWUd1+lJymTbI4KBWoU/nsUq/PL0xR9L1dSmXyyrx8m55O/m+7M8PVv
- 8TLgsfRRJROcm/UUUpsHLyLDRuaWmIH1ilSMPL2Jipa2urzzNplGyLbUBx7kVORSDnmN
- diVFOSQ2t2gcKRQUjZ7vKVD22TVIAGLecCvBFYJgLR44rd/+dS/5SMX+WWfBFmM2K0z/
- j7vtkF5AfnKtrfKg3ArSoAO2zjGeTZiPsrUgSIyqNMevpnVsQxIJynQB/KBX50LZQXam
- pPAsgsEfsaIxmotJamA+Y2oXFoLgSNnC9ZZ6czJaRirBAFVg2knAhbzSHfWF50+4j+ML
- lDSw==
-X-Gm-Message-State: AOJu0YyW/UdZe8FuobPCxnZ44aCAH0N39VBcQrVmMSnGjFwpClNaw6++
- SbDMAEpdWLBfSqKlNkKW22ZFN70E1wg193L0mpDpWegTagyFtnAAinTCCsJ9SLirDjQ3lPb0Pkq
- N87uMo9jSyAtIZtuSr4+1yVnSGFfbzqycTX1Ia529QE7nIy/1/lLH
-X-Received: by 2002:a05:6402:354d:b0:5a2:eeeb:9470 with SMTP id
- 4fb4d7f45d1cf-5bea1c7d55cmr495880a12.18.1723582175640; 
- Tue, 13 Aug 2024 13:49:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFOThsCAJZvMWhFXkmvc33CnN7/gHIhcFcd6plNLIQ7t1uElLb+9qnrCat3ar5DTPcCAzlaCA==
-X-Received: by 2002:a05:6402:354d:b0:5a2:eeeb:9470 with SMTP id
- 4fb4d7f45d1cf-5bea1c7d55cmr495846a12.18.1723582174803; 
- Tue, 13 Aug 2024 13:49:34 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:346:dcde:9c09:aa95:551d:d374])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bd1a602115sm3148299a12.96.2024.08.13.13.49.27
+ d=1e100.net; s=20230601; t=1723583004; x=1724187804;
+ h=content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=1UOf/e3HcQ+l94OWXrCwdSK3TbHtvFPHwqfrVahjAnI=;
+ b=DIu8iEvWUsgWUzXppPDMFI93HFKU8BpYs7PYRKXVNYYUuBL8t/86kU+fO9Txfnh2RQ
+ ozawbwQFeS5pD5UDuk3LYVDNCu0MSLkmyEfhuPEzvFf6HhEbEbjSH2DYj+8BHhn+dLf8
+ PBxHfmENbKzcBLie1mSxhNvFNHPua/l1h5NdyeWf+mUzmBjvq9q30YeqmMAa0tjhSajN
+ 59mlksSHmXxrgxn/xLvVbfGwc/DdrRexIShRatCNVbCAsESMh8Gm7Nh4gNezbFxvilKh
+ P01/SlzhbUHpHrQgThsyD75Zp/FYxzcGx96NLEVY6PnA8xrerpoDTirUHQiuUCAOTDNJ
+ StUw==
+X-Gm-Message-State: AOJu0YyHfg4Z2satueb1G2W9yZ2KrH04fgtI0K7MNMaeP1zGq86iuDVo
+ uRfiTUCXRX3ucj5/LKSLYTIcfi+JF4PbTmFcyBikSSbb92ZQU5bjlNnDNqrX/vjw4U4vnW1FYgv
+ FzsEUs0rInVijrcOOolIccZcy8QFQFzm2j4SgXmR/u0haNDhzUxqW
+X-Received: by 2002:a05:6602:14d2:b0:804:9972:2f8c with SMTP id
+ ca18e2360f4ac-824dad04265mr122543339f.8.1723583003652; 
+ Tue, 13 Aug 2024 14:03:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGUG+Ra/4MLDKrpbcdWTsiFMgCKM25UlSCbFVfALG5nTggblaB3Mjb05rv1rYcf1nGj/+3LVA==
+X-Received: by 2002:a05:6602:14d2:b0:804:9972:2f8c with SMTP id
+ ca18e2360f4ac-824dad04265mr122539339f.8.1723583003274; 
+ Tue, 13 Aug 2024 14:03:23 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4ca76910393sm2733107173.7.2024.08.13.14.03.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Aug 2024 13:49:34 -0700 (PDT)
-Date: Tue, 13 Aug 2024 16:49:24 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Michael Roth <michael.roth@amd.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Weiwei Li <liwei1518@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- David Hildenbrand <david@redhat.com>, Beraldo Leal <bleal@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Eric Auger <eric.auger@redhat.com>, Song Gao <gaosong@loongson.cn>,
- qemu-arm@nongnu.org, Peter Xu <peterx@redhat.com>,
- Jiri Pirko <jiri@resnulli.us>, Eric Blake <eblake@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, qemu-s390x@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- John Snow <jsnow@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Cleber Rosa <crosa@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, qemu-riscv@nongnu.org,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Jason Wang <jasowang@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [PATCH v2 17/21] virtio-net: Use virtual time for RSC timers
-Message-ID: <20240813164916-mutt-send-email-mst@kernel.org>
-References: <20240813202329.1237572-1-alex.bennee@linaro.org>
- <20240813202329.1237572-18-alex.bennee@linaro.org>
+ Tue, 13 Aug 2024 14:03:22 -0700 (PDT)
+Date: Tue, 13 Aug 2024 15:03:20 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Jason Gunthorpe <jgg@ziepe.ca>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, quic_bqiang@quicinc.com,
+ kvalo@kernel.org, prestwoj@gmail.com, linux-wireless@vger.kernel.org,
+ ath11k@lists.infradead.org, dwmw2@infradead.org, iommu@lists.linux.dev,
+ kernel@quicinc.com, johannes@sipsolutions.net, jtornosm@redhat.com
+Subject: Re: [PATCH RFC/RFT] vfio/pci-quirks: Quirk for ath wireless
+Message-ID: <20240813150320.73df43d7.alex.williamson@redhat.com>
+In-Reply-To: <20240813164341.GL1985367@ziepe.ca>
+References: <adcb785e-4dc7-4c4a-b341-d53b72e13467@gmail.com>
+ <20240812170045.1584000-1-alex.williamson@redhat.com>
+ <20240813164341.GL1985367@ziepe.ca>
+Organization: Red Hat
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240813202329.1237572-18-alex.bennee@linaro.org>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=alex.williamson@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -127,55 +107,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 13, 2024 at 09:23:25PM +0100, Alex Bennée wrote:
-> From: Nicholas Piggin <npiggin@gmail.com>
-> 
-> Receive coalescing is visible to the target machine, so its timers
-> should use virtual time like other timers in virtio-net, to be
-> compatible with record-replay.
-> 
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> Message-Id: <20240813050638.446172-10-npiggin@gmail.com>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+On Tue, 13 Aug 2024 13:43:41 -0300
+Jason Gunthorpe <jgg@ziepe.ca> wrote:
 
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-
-> ---
->  hw/net/virtio-net.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+> On Mon, Aug 12, 2024 at 11:00:40AM -0600, Alex Williamson wrote:
+> > These devices have an embedded interrupt controller which is programmed
+> > with guest physical MSI address/data, which doesn't work.  We need
+> > vfio-pci kernel support to provide a device feature which disables
+> > virtualization of the MSI capability registers.  Then we can do brute
+> > force testing for writes matching the MSI address, from which we can
+> > infer writes of the MSI data, replacing each with host physical values.
+> > 
+> > This has only been tested on ath11k (0x1103), ath12k support is
+> > speculative and requires testing.  Note that Windows guest drivers make
+> > use of multi-vector MSI which requires interrupt remapping support in
+> > the host.  
 > 
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 10ebaae5e2..ed33a32877 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -2124,7 +2124,7 @@ static void virtio_net_rsc_purge(void *opq)
->      chain->stat.timer++;
->      if (!QTAILQ_EMPTY(&chain->buffers)) {
->          timer_mod(chain->drain_timer,
-> -              qemu_clock_get_ns(QEMU_CLOCK_HOST) + chain->n->rsc_timeout);
-> +              qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + chain->n->rsc_timeout);
->      }
->  }
->  
-> @@ -2360,7 +2360,7 @@ static size_t virtio_net_rsc_do_coalesce(VirtioNetRscChain *chain,
->          chain->stat.empty_cache++;
->          virtio_net_rsc_cache_buf(chain, nc, buf, size);
->          timer_mod(chain->drain_timer,
-> -              qemu_clock_get_ns(QEMU_CLOCK_HOST) + chain->n->rsc_timeout);
-> +              qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + chain->n->rsc_timeout);
->          return size;
->      }
->  
-> @@ -2598,7 +2598,7 @@ static VirtioNetRscChain *virtio_net_rsc_lookup_chain(VirtIONet *n,
->          chain->max_payload = VIRTIO_NET_MAX_IP6_PAYLOAD;
->          chain->gso_type = VIRTIO_NET_HDR_GSO_TCPV6;
->      }
-> -    chain->drain_timer = timer_new_ns(QEMU_CLOCK_HOST,
-> +    chain->drain_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
->                                        virtio_net_rsc_purge, chain);
->      memset(&chain->stat, 0, sizeof(chain->stat));
->  
-> -- 
-> 2.39.2
+> The way it is really supposed to work, is that the guest itself
+> controls/knows the MSI addr/data pairs and the interrupt remapping HW
+> makes that delegation safe since all the interrupt processing will be
+> qualified by the RID.
+> 
+> Then the guest can make up the unique interrupts for MSI and any
+> internal "IMS" sources and we just let the guest directly write the
+> MSI/MSI-X and any IMS values however it wants.
+> 
+> This hackery to capture and substitute the IMS programming is neat and
+> will solve this one device, but there are more IMS style devices in
+> the pipeline than will really need a full solution.
+
+How does the guest know to write a remappable vector format?  How does
+the guest know the host interrupt architecture?  For example why would
+an aarch64 guest program an MSI vector of 0xfee... if the host is x86?
+
+The idea of guest owning the physical MSI address space sounds great,
+but is it practical?  Is it something that would be accomplished while
+this device is still relevant?
+
+> > + * The Windows driver makes use of multi-vector MSI, where our sanity test
+> > + * of the MSI data value must then mask off the vector offset for comparison
+> > + * and add it back to the host base data value on write.  
+> 
+> But is that really enough? If the vector offset is newly created then
+> that means the VM built a new interrupt that needs setup to be routed
+> into the VM?? Is that why you say it "requires interrupt remapping
+> support" because that setup is happening implicitly on x86?
+> 
+> It looks like Windows is acting as I said Linux should, with a
+> "irq_chip" and so on to get the unique interrupt source a proper
+> unique addr/data pair...
+
+The Windows driver is just programming the MSI capability to use 16
+vectors.  We configure those vectors on the host at the time the
+capability is written.  Whereas the Linux driver is only using a single
+vector and therefore writing the same MSI address and data at the
+locations noted in the trace, the Windows driver is writing different
+data values at different locations to make use of those vectors.  This
+note is simply describing that we can't directly write the physical
+data value into the device, we need to determine which vector offset
+the guest is using and provide the same offset from the host data
+register value.
+
+I don't know that interrupt remapping is specifically required, but the
+MSI domain needs to support MSI_FLAG_MULTI_PCI_MSI and AFAIK that's
+only available with interrupt remapping on x86, ie.
+pci_alloc_irq_vectors() with max_vecs >1 and PCI_IRQ_MSI flags needs to
+work on the host to mirror the guest MSI configuration.  Thanks,
+
+Alex
 
 
