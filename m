@@ -4,83 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18C74C52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 13:11:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CE81C52D7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 13:13:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdrIj-00080K-Sh; Tue, 13 Aug 2024 09:11:01 -0400
+	id 1sdrKS-0004LT-22; Tue, 13 Aug 2024 09:12:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sdrIg-0007zg-W5
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 09:10:59 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ id 1sdrKP-0004Jb-VU
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 09:12:46 -0400
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sdrIf-00016T-3R
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 09:10:58 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a7ad02501c3so657227266b.2
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 06:10:56 -0700 (PDT)
+ id 1sdrKN-0001Mu-Tt
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 09:12:45 -0400
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-52f04b4abdcso7548458e87.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 06:12:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723554655; x=1724159455; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723554760; x=1724159560; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Du+q+VgFapTsA6jU4HynJ1A8RRGo5uoaTSShJmb/uaY=;
- b=xZnv5JrZ4GvT46aunSyJMSReH+ekSy6mtSn05q/IeO4YkzEK5gJnigYhZ5kw7nh2Bu
- FGCL6YDmyWe7lX9U05Lq1Dh9XmvtOesLxWl1at3Kpt5Pjp3MeHdHbKgdgqTDbESEJzGh
- Z4AwWmqT/PhBZ7M8l4xRDam+OGrceDKC4Bm04NcjCqBCCqTFvMu68S4Vv8xIhX7qlygg
- HaAeoudSuhWDrgigrXgRcsyl0DgMoFm7ftUDa00kRs2Cyt+HJVxfUzLSe/s6jzWFBpH2
- hjqxlkWax9v/lIFNqvRPJX7rkxMcX8qNrN0P3vKkV026iVnvNtVgUmi3Zjm1eN3zuHHj
- C/vQ==
+ :reply-to; bh=0Rxgp76S6WgbPZSowGwbDkPUGyA3wMXIrA7HO/gfH0E=;
+ b=kE354UI7FmNld8EQrL1dyWn8chaHXnjJenMrjknrOsEnKFXr0uSog4VrsH7Z9+J35T
+ PyCXZ+WKzHzAR+wzZYcGDiMC/1ZBcnwB22GuQ/lJa+0L3QzYV1kXsVWdGq4NPRCwqm9W
+ YbivZJA8EUdxXSAk0oc+AoSTu7Bgkx4LVTdieIEdXivpcf98QpfmAFGwTOwhy85YwRdZ
+ XyzBVd1lV4b+NRnNG2LTp47w5kdaIv4/4VvF09C9Bh4nurD3iamtpZNe0OQvCPI57484
+ SmD823Gf7DlwTB/1i3lG+9e9C+dSdu6QV1tUjJGo60ARAVREQiP+fAPN7mfRcYBbRPAp
+ AmSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723554655; x=1724159455;
+ d=1e100.net; s=20230601; t=1723554760; x=1724159560;
  h=content-transfer-encoding:mime-version:message-id:date:references
  :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Du+q+VgFapTsA6jU4HynJ1A8RRGo5uoaTSShJmb/uaY=;
- b=ct+8uClgLHORqTg6fWdVd4inCWDcnuyhG+RttNVjffj/iZZeU3oofTA07r/ZiBMZhD
- ikWN92VeOud1gM1oPzyYT88Wj8aflrfVtEW4b4noYadStJj0Yyglzmei4WHFpTHDnmd9
- 1gsiMAvU9wDbWwjDgBc79yTT9V33nwLiUhU/ld58Eik6DefEcwC5AZ4KdY931H39I4lU
- 5rizXMnOPm/gxdMj+0H305EkmJ+CDhh6tEQ2ZHHoMa1X9izqMjZtEWa6nmNfKDHZYyve
- vt7RSbzpQwM0gz8Qr7p9INYsMrJ0U0Bx5k4k2B7h6LWmOZDmW+XPPYXM8ARPr6lwPjvG
- UTFw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXw71tYwBW6dgtq6AjVqbNMhO4Xwh7qc1lAcVrVV21/2hV7usrypXZR7jVhypel3LWzeda4suXLvKOZBmt4G5h23rUrGc4=
-X-Gm-Message-State: AOJu0YzYbwq3d2bPPgvmIWxLjOcRIuvhP+lgMmETxgWBWo2wZnrK8rNI
- bn+2DdYFUYspYCFuM++GfnCvBa4hyXYbNXouhqMb/EkvUeNbyrdzV74csZw7bO0=
-X-Google-Smtp-Source: AGHT+IGy1vglVVhsSAoaaJhuw9l6nNgJlpr8nILstLqsiuqTZjG0Rav14IfowCAVoMzGbRCRcNOLiQ==
-X-Received: by 2002:a17:906:f59c:b0:a7d:9f92:9107 with SMTP id
- a640c23a62f3a-a80ed2dad5bmr201589666b.58.1723554654569; 
- Tue, 13 Aug 2024 06:10:54 -0700 (PDT)
+ bh=0Rxgp76S6WgbPZSowGwbDkPUGyA3wMXIrA7HO/gfH0E=;
+ b=iZYi8FjLG6ph0ypd5yNtWOVaklus72OaHc7QvXGfd+I2iuibAd+sZOBKO19IghZS8i
+ AdR09+Tg/R2ke44NLJ4Az4ZIbLaMI5rbIb1jqbUYVJlti3xrXm64wTohBENg2xYzyqcZ
+ LMxS8q8nYkVr+XWzXL0f66TBapC7rMG4WY35wQSrkwPAGeOfUU2rI2w3Xy0yHezvoaiA
+ rrHXNFhqJFZe+rKzGMxXzSzW68gQSFtGNFz/zls0P9pXKlQifjNGpYeRpXijZFIhX9kS
+ E8Pr+3euXEJSGe420JP7+9FSwDyJOLhGnY18YBUygo2gY1S1pQH5cxvACra1BZtstQxX
+ /HaA==
+X-Gm-Message-State: AOJu0YxcsQw6JHzJnY4fDl/ZQiUcHykpmmP61kenmXhJfRiorgsvtWf1
+ Oeypwj5HScDXqcpI7KH/QKJSSovvqz+rXtaaHcLLzk9ySfp84/dHLacLud0C5PI=
+X-Google-Smtp-Source: AGHT+IGV/YGVIvygAX9dEKfhPPzd422FCyBABAC25Lka1t+4UW/yZ6woijiZySVMTCeO03FFG64eFg==
+X-Received: by 2002:a05:6512:239e:b0:52b:c27c:ea1f with SMTP id
+ 2adb3069b0e04-532136a47b2mr2776695e87.55.1723554759889; 
+ Tue, 13 Aug 2024 06:12:39 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a80f411aecesm67807266b.124.2024.08.13.06.10.53
+ a640c23a62f3a-a80f411bd72sm68932466b.140.2024.08.13.06.12.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Aug 2024 06:10:53 -0700 (PDT)
+ Tue, 13 Aug 2024 06:12:39 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 238745F792;
- Tue, 13 Aug 2024 14:10:53 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 879755F792;
+ Tue, 13 Aug 2024 14:12:38 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,  qemu-devel@nongnu.org
-Subject: Re: [PULL 09/11] target/arm: add support for PMUv3 64-bit PMCCNTR
- in AArch32 mode
-In-Reply-To: <CAFEAcA_-aBuXDK9e4X0ULXWZtXOnxjRuowc67hDBKOZC6+Bu=w@mail.gmail.com>
- (Peter Maydell's message of "Mon, 12 Aug 2024 12:40:45 +0100")
-References: <20240809180835.1243269-1-peter.maydell@linaro.org>
- <20240809180835.1243269-10-peter.maydell@linaro.org>
- <945e5e14-9a15-4dfc-856f-f3a7d401a5bc@linaro.org>
- <CAFEAcA9nnzwm-OSpiAWTOtf2On27B1Hi2Fr3h=5jSKRPdnnQDQ@mail.gmail.com>
- <875xs6atfb.fsf@draig.linaro.org>
- <CAFEAcA_-aBuXDK9e4X0ULXWZtXOnxjRuowc67hDBKOZC6+Bu=w@mail.gmail.com>
-Date: Tue, 13 Aug 2024 14:10:53 +0100
-Message-ID: <87wmkka7qa.fsf@draig.linaro.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Eduardo
+ Habkost <eduardo@habkost.net>
+Subject: Re: [RFC PATCH] target/i386: allow access_ptr to force slow path on
+ failed probe
+In-Reply-To: <3fb9f760-4eaa-4a81-a500-89d340fc1376@linaro.org> (Richard
+ Henderson's message of "Thu, 8 Aug 2024 09:10:09 +1000")
+References: <20240807160236.2478459-1-alex.bennee@linaro.org>
+ <3fb9f760-4eaa-4a81-a500-89d340fc1376@linaro.org>
+Date: Tue, 13 Aug 2024 14:12:38 +0100
+Message-ID: <87sev8a7nd.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,49 +98,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+Richard Henderson <richard.henderson@linaro.org> writes:
 
-> On Mon, 12 Aug 2024 at 12:10, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
-rote:
->>
->> Peter Maydell <peter.maydell@linaro.org> writes:
->>
-<snip>
->> >>
->> >> This fails testing:
->> >>
->> >> https://gitlab.com/qemu-project/qemu/-/jobs/7551982466
->> >>
->> >> FAIL: duplicate register {'name': 'PMCCNTR', 'regnum': 96} vs {'name'=
-: 'PMCCNTR',
->> >> 'regnum': 79}
->> >> FAIL: counted all 219 registers in XML
->> >> FAIL: PMCCNTR 96 =3D=3D 79 (xml)
->> >
->> > Hmm, not sure why that didn't get caught by my local testing
->> > or by my gitlab run -- does it only get run on an aarch64 host?
->>
->> It will depend what your local GDB is like - a modern gdb-multiarch
->> should be fine but we do test for a minimum version to be able to probe
->> the supported architectures.
+> On 8/8/24 02:02, Alex Benn=C3=A9e wrote:
+>> When we are using TCG plugin memory callbacks probe_access_internal
+>> will return TLB_MMIO to force the slow path for memory access. This
+>> results in probe_access returning NULL but the x86 access_ptr function
+>> happily accepts an empty haddr resulting in segfault hilarity.
+>> Check for an empty haddr to prevent the segfault and enable plugins
+>> to
+>> track all the memory operations for the x86 save/restore helpers.
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2489
+>> Fixes: 6d03226b42 (plugins: force slow path when plugins instrument memo=
+ry ops)
+>> ---
+>>   target/i386/tcg/access.c | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>> diff --git a/target/i386/tcg/access.c b/target/i386/tcg/access.c
+>> index 56a1181ea5..8ea5c453a0 100644
+>> --- a/target/i386/tcg/access.c
+>> +++ b/target/i386/tcg/access.c
+>> @@ -58,6 +58,10 @@ static void *access_ptr(X86Access *ac, vaddr addr, un=
+signed len)
+>>         assert(addr >=3D ac->vaddr);
+>>   +    if (!ac->haddr1) {
+>> +        return NULL;
+>> +    }
+>> +
+>>   #ifdef CONFIG_USER_ONLY
+>>       assert(offset <=3D ac->size1 - len);
+>>       return ac->haddr1 + offset;
 >
-> Mmm, I found that a local "make check-tcg" does catch this for me,
-> so I guess the answer is "the gdb on the non aarch64 host CI jobs
-> is too old and/or we missed the coverage, and I forgot to run
-> this in my local checkout".
->
-> Why doesn't "make check" run "check-tcg" as a sub-test ?
-> Having it be separate is asking for people to forget to
-> run it, I think.
+> You need to remove the test_ptr macro below as well.
 
-I think historically because not everyone cared about TCG testing and
-you need to either setup docker or have cross compilers on your system.
-Obviously we know this is the case when we run check-tcg in the CI.
-
-We could certainly include it in the main "check" set if you want.
-
->
-> -- PMM
+So we fall-back to the slow path for linux-user as well?
 
 --=20
 Alex Benn=C3=A9e
