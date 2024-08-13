@@ -4,40 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4C2AC531DD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E50ADC531DE
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 15:02:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdt1z-00046c-Q1; Tue, 13 Aug 2024 11:01:51 -0400
+	id 1sdt1s-0003aY-30; Tue, 13 Aug 2024 11:01:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1sdt1y-00041G-FG
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:01:50 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ id 1sdt1q-0003VX-QO
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:01:42 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
- id 1sdt1w-0002Fd-Dg
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:01:50 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ id 1sdt1n-0002CG-WE
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:01:42 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 2B21922831;
- Tue, 13 Aug 2024 15:01:47 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id A3ADC22833;
+ Tue, 13 Aug 2024 15:01:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+ t=1723561298; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rRNvygkaE4flmv1giNYzzIilwskVtXEK/Rl6VXHv3gU=;
+ b=tB+HU5ImPnMurl2nrT3DYwzSM2U0Qp1Z/LHz/VnrJ/PMraHjSEDOjmze4kEX9tcZ+GQLCv
+ ntGmjBatIB0srtE8Pg/VJS9NuyJQoLC05JteW8tQCf6cfUD/E/0Q7YthRnls/IEeaNfdRA
+ m8bPrPEIZZv8xLSKo6sFul0R8NMp+Ng=
 Authentication-Results: smtp-out1.suse.de;
 	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+ t=1723561298; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rRNvygkaE4flmv1giNYzzIilwskVtXEK/Rl6VXHv3gU=;
+ b=tB+HU5ImPnMurl2nrT3DYwzSM2U0Qp1Z/LHz/VnrJ/PMraHjSEDOjmze4kEX9tcZ+GQLCv
+ ntGmjBatIB0srtE8Pg/VJS9NuyJQoLC05JteW8tQCf6cfUD/E/0Q7YthRnls/IEeaNfdRA
+ m8bPrPEIZZv8xLSKo6sFul0R8NMp+Ng=
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5BCE413ADB;
- Tue, 13 Aug 2024 15:01:46 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D6CC413ADB;
+ Tue, 13 Aug 2024 15:01:37 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iJlCFFp1u2Z/NAAAD6G6ig
- (envelope-from <roy.hopkins@suse.com>); Tue, 13 Aug 2024 15:01:46 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id wMhOMlF1u2Z/NAAAD6G6ig
+ (envelope-from <roy.hopkins@suse.com>); Tue, 13 Aug 2024 15:01:37 +0000
+From: Roy Hopkins <roy.hopkins@suse.com>
 To: qemu-devel@nongnu.org
 Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -51,32 +69,40 @@ Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Tom Lendacky <thomas.lendacky@amd.com>,
  Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
-Subject: [PATCH v5 16/16] sev: Provide sev_features flags from IGVM VMSA to
- KVM_SEV_INIT2
-Date: Tue, 13 Aug 2024 16:01:18 +0100
-Message-ID: <1e7ce4cc6112d888206290155e30dca5a7ef382b.1723560001.git.roy.hopkins@suse.com>
+Subject: [PATCH v5 06/16] sev: Update launch_update_data functions to use
+ Error handling
+Date: Tue, 13 Aug 2024 16:01:08 +0100
+Message-ID: <afc57824b0ea3b8f83e1c850ba976e37989ae9d0.1723560001.git.roy.hopkins@suse.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1723560001.git.roy.hopkins@suse.com>
 References: <cover.1723560001.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Pre-Result: action=no action; module=replies;
- Message is reply to one we originated
-X-Spamd-Result: default: False [-4.00 / 50.00]; REPLY(-4.00)[];
- TAGGED_RCPT(0.00)[]
-X-Rspamd-Queue-Id: 2B21922831
-X-Rspamd-Pre-Result: action=no action; module=replies;
- Message is reply to one we originated
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130;
+X-Spamd-Result: default: False [-5.30 / 50.00]; REPLY(-4.00)[];
+ BAYES_HAM(-3.00)[100.00%]; SUSPICIOUS_RECIPS(1.50)[];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; TAGGED_RCPT(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCPT_COUNT_TWELVE(0.00)[19];
+ MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[];
+ FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
+ FROM_HAS_DN(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email,imap1.dmz-prg2.suse.org:helo];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.com:s=susede1];
+ R_RATELIMIT(0.00)[to_ip_from(RLm8d31jk6dhzwhww9bgqrb1jt)];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
  envelope-from=roy.hopkins@suse.com; helo=smtp-out1.suse.de
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,268 +115,187 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Roy Hopkins <roy.hopkins@suse.com>
-From:  Roy Hopkins via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-IGVM files can contain an initial VMSA that should be applied to each
-vcpu as part of the initial guest state. The sev_features flags are
-provided as part of the VMSA structure. However, KVM only allows
-sev_features to be set during initialization and not as the guest is
-being prepared for launch.
+The class function and implementations for updating launch data return
+a code in case of error. In some cases an error message is generated and
+in other cases, just the error return value is used.
 
-This patch queries KVM for the supported set of sev_features flags and
-processes the IGVM file during kvm_init to determine any sev_features
-flags set in the IGVM file. These are then provided in the call to
-KVM_SEV_INIT2 to ensure the guest state matches that specified in the
-IGVM file.
-
-This does cause the IGVM file to be processed twice. Firstly to extract
-the sev_features then secondly to actually configure the guest. However,
-the first pass is largely ignored meaning the overhead is minimal.
+This small refactor adds an 'Error **errp' parameter to all functions
+which consistently set an error condition if a non-zero value is
+returned.
 
 Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
 Acked-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- target/i386/sev.c | 160 ++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 141 insertions(+), 19 deletions(-)
+ target/i386/sev.c | 68 +++++++++++++++++++++++------------------------
+ 1 file changed, 33 insertions(+), 35 deletions(-)
 
 diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 8af3c785d3..578c4c5ea8 100644
+index a0d271f898..fab6d1bfb4 100644
 --- a/target/i386/sev.c
 +++ b/target/i386/sev.c
-@@ -117,6 +117,8 @@ struct SevCommonState {
-     uint32_t cbitpos;
-     uint32_t reduced_phys_bits;
-     bool kernel_hashes;
-+    uint64_t sev_features;
-+    uint64_t supported_sev_features;
+@@ -121,7 +121,8 @@ struct SevCommonStateClass {
+                                        Error **errp);
+     int (*launch_start)(SevCommonState *sev_common);
+     void (*launch_finish)(SevCommonState *sev_common);
+-    int (*launch_update_data)(SevCommonState *sev_common, hwaddr gpa, uint8_t *ptr, size_t len);
++    int (*launch_update_data)(SevCommonState *sev_common, hwaddr gpa,
++                              uint8_t *ptr, size_t len, Error **errp);
+     int (*kvm_init)(ConfidentialGuestSupport *cgs, Error **errp);
+ };
  
-     /* runtime state */
-     uint8_t api_major;
-@@ -492,7 +494,40 @@ static void sev_apply_cpu_context(CPUState *cpu)
-     }
+@@ -977,9 +978,8 @@ sev_snp_mask_cpuid_features(X86ConfidentialGuest *cg, uint32_t feature, uint32_t
+     return value;
  }
  
--static int check_vmsa_supported(hwaddr gpa, const struct sev_es_save_area *vmsa,
-+static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
-+                              Error **errp)
-+{
-+    /*
-+     * Ensure SEV_FEATURES is configured for correct SEV hardware and that
-+     * the requested features are supported. If SEV-SNP is enabled then
-+     * that feature must be enabled, otherwise it must be cleared.
-+     */
-+    if (sev_snp_enabled() && !(sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
-+        error_setg(
-+            errp,
-+            "%s: SEV_SNP is enabled but is not enabled in VMSA sev_features",
-+            __func__);
-+        return -1;
-+    } else if (!sev_snp_enabled() &&
-+               (sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
-+        error_setg(
-+            errp,
-+            "%s: SEV_SNP is not enabled but is enabled in VMSA sev_features",
-+            __func__);
-+        return -1;
-+    }
-+    if (sev_features & ~sev_common->supported_sev_features) {
-+        error_setg(errp,
-+                   "%s: VMSA contains unsupported sev_features: %lX, "
-+                   "supported features: %lX",
-+                   __func__, sev_features, sev_common->supported_sev_features);
-+        return -1;
-+    }
-+    return 0;
-+}
-+
-+static int check_vmsa_supported(SevCommonState *sev_common, hwaddr gpa,
-+                                const struct sev_es_save_area *vmsa,
-                                 Error **errp)
+-static int
+-sev_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
+-                       uint8_t *addr, size_t len)
++static int sev_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
++                                  uint8_t *addr, size_t len, Error **errp)
  {
-     struct sev_es_save_area vmsa_check;
-@@ -558,24 +593,10 @@ static int check_vmsa_supported(hwaddr gpa, const struct sev_es_save_area *vmsa,
-     vmsa_check.x87_fcw = 0;
-     vmsa_check.mxcsr = 0;
- 
--    if (sev_snp_enabled()) {
--        if (vmsa_check.sev_features != SVM_SEV_FEAT_SNP_ACTIVE) {
--            error_setg(errp,
--                       "%s: sev_features in the VMSA contains an unsupported "
--                       "value. For SEV-SNP, sev_features must be set to %x.",
--                       __func__, SVM_SEV_FEAT_SNP_ACTIVE);
--            return -1;
--        }
--        vmsa_check.sev_features = 0;
--    } else {
--        if (vmsa_check.sev_features != 0) {
--            error_setg(errp,
--                       "%s: sev_features in the VMSA contains an unsupported "
--                       "value. For SEV-ES and SEV, sev_features must be "
--                       "set to 0.", __func__);
--            return -1;
--        }
-+    if (check_sev_features(sev_common, vmsa_check.sev_features, errp) < 0) {
-+        return -1;
+     int ret, fw_error;
+     struct kvm_sev_launch_update_data update;
+@@ -994,8 +994,8 @@ sev_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
+     ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_LAUNCH_UPDATE_DATA,
+                     &update, &fw_error);
+     if (ret) {
+-        error_report("%s: LAUNCH_UPDATE ret=%d fw_error=%d '%s'",
+-                __func__, ret, fw_error, fw_error_to_str(fw_error));
++        error_setg(errp, "%s: LAUNCH_UPDATE ret=%d fw_error=%d '%s'", __func__,
++                   ret, fw_error, fw_error_to_str(fw_error));
      }
-+    vmsa_check.sev_features = 0;
  
-     if (!buffer_is_zero(&vmsa_check, sizeof(vmsa_check))) {
-         error_setg(errp,
-@@ -1729,6 +1750,39 @@ static int sev_snp_kvm_type(X86ConfidentialGuest *cg)
-     return KVM_X86_SNP_VM;
+     return ret;
+@@ -1123,8 +1123,8 @@ sev_launch_finish(SevCommonState *sev_common)
+     migrate_add_blocker(&sev_mig_blocker, &error_fatal);
  }
  
-+static int sev_init_supported_features(ConfidentialGuestSupport *cgs,
-+                                       SevCommonState *sev_common, Error **errp)
-+{
-+    X86ConfidentialGuestClass *x86_klass =
-+                               X86_CONFIDENTIAL_GUEST_GET_CLASS(cgs);
-+    /*
-+     * Older kernels do not support query or setting of sev_features. In this
-+     * case the set of supported features must be zero to match the settings
-+     * in the kernel.
-+     */
-+    if (x86_klass->kvm_type(X86_CONFIDENTIAL_GUEST(sev_common)) ==
-+        KVM_X86_DEFAULT_VM) {
-+        sev_common->supported_sev_features = 0;
-+        return 0;
-+    }
-+
-+    /* Query KVM for the supported set of sev_features */
-+    struct kvm_device_attr attr = {
-+        .group = KVM_X86_GRP_SEV,
-+        .attr = KVM_X86_SEV_VMSA_FEATURES,
-+        .addr = (unsigned long)&sev_common->supported_sev_features,
-+    };
-+    if (kvm_ioctl(kvm_state, KVM_GET_DEVICE_ATTR, &attr) < 0) {
-+        error_setg(errp, "%s: failed to query supported sev_features",
-+                   __func__);
-+        return -1;
-+    }
-+    if (sev_snp_enabled()) {
-+        sev_common->supported_sev_features |= SVM_SEV_FEAT_SNP_ACTIVE;
-+    }
-+    return 0;
-+}
-+
- static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
+-static int
+-snp_launch_update_data(uint64_t gpa, void *hva, size_t len, int type)
++static int snp_launch_update_data(uint64_t gpa, void *hva, size_t len,
++                                  int type, Error **errp)
  {
-     char *devname;
-@@ -1809,6 +1863,10 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-         }
+     SevLaunchUpdateData *data;
+ 
+@@ -1139,23 +1139,21 @@ snp_launch_update_data(uint64_t gpa, void *hva, size_t len, int type)
+     return 0;
+ }
+ 
+-static int
+-sev_snp_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
+-                           uint8_t *ptr, size_t len)
++static int sev_snp_launch_update_data(SevCommonState *sev_common, hwaddr gpa,
++                                      uint8_t *ptr, size_t len, Error **errp)
+ {
+-       int ret = snp_launch_update_data(gpa, ptr, len,
+-                                         KVM_SEV_SNP_PAGE_TYPE_NORMAL);
+-       return ret;
++    return snp_launch_update_data(gpa, ptr, len,
++                                     KVM_SEV_SNP_PAGE_TYPE_NORMAL, errp);
+ }
+ 
+ static int
+ sev_snp_cpuid_info_fill(SnpCpuidInfo *snp_cpuid_info,
+-                        const KvmCpuidInfo *kvm_cpuid_info)
++                        const KvmCpuidInfo *kvm_cpuid_info, Error **errp)
+ {
+     size_t i;
+ 
+     if (kvm_cpuid_info->cpuid.nent > SNP_CPUID_FUNCTION_MAXCOUNT) {
+-        error_report("SEV-SNP: CPUID entry count (%d) exceeds max (%d)",
++        error_setg(errp, "SEV-SNP: CPUID entry count (%d) exceeds max (%d)",
+                      kvm_cpuid_info->cpuid.nent, SNP_CPUID_FUNCTION_MAXCOUNT);
+         return -1;
+     }
+@@ -1197,8 +1195,8 @@ sev_snp_cpuid_info_fill(SnpCpuidInfo *snp_cpuid_info,
+     return 0;
+ }
+ 
+-static int
+-snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva, size_t cpuid_len)
++static int snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva,
++                                   size_t cpuid_len, Error **errp)
+ {
+     KvmCpuidInfo kvm_cpuid_info = {0};
+     SnpCpuidInfo snp_cpuid_info;
+@@ -1215,26 +1213,25 @@ snp_launch_update_cpuid(uint32_t cpuid_addr, void *hva, size_t cpuid_len)
+     } while (ret == -E2BIG);
+ 
+     if (ret) {
+-        error_report("SEV-SNP: unable to query CPUID values for CPU: '%s'",
+-                     strerror(-ret));
+-        return 1;
++        error_setg(errp, "SEV-SNP: unable to query CPUID values for CPU: '%s'",
++                   strerror(-ret));
++        return -1;
      }
  
-+    if (sev_init_supported_features(cgs, sev_common, errp) < 0) {
+-    ret = sev_snp_cpuid_info_fill(&snp_cpuid_info, &kvm_cpuid_info);
+-    if (ret) {
+-        error_report("SEV-SNP: failed to generate CPUID table information");
+-        return 1;
++    ret = sev_snp_cpuid_info_fill(&snp_cpuid_info, &kvm_cpuid_info, errp);
++    if (ret < 0) {
 +        return -1;
-+    }
-+
-     trace_kvm_sev_init();
-     switch (x86_klass->kvm_type(X86_CONFIDENTIAL_GUEST(sev_common))) {
-     case KVM_X86_DEFAULT_VM:
-@@ -1820,6 +1878,39 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-     case KVM_X86_SEV_ES_VM:
-     case KVM_X86_SNP_VM: {
-         struct kvm_sev_init args = { 0 };
-+        MachineState *machine = MACHINE(qdev_get_machine());
-+        X86MachineState *x86machine = X86_MACHINE(qdev_get_machine());
-+
-+        /*
-+         * If configuration is provided via an IGVM file then the IGVM file
-+         * might contain configuration of the initial vcpu context. For SEV
-+         * the vcpu context includes the sev_features which should be applied
-+         * to the vcpu.
-+         *
-+         * KVM does not synchronize sev_features from CPU state. Instead it
-+         * requires sev_features to be provided as part of this initialization
-+         * call which is subsequently automatically applied to the VMSA of
-+         * each vcpu.
-+         *
-+         * The IGVM file is normally processed after initialization. Therefore
-+         * we need to pre-process it here to extract sev_features in order to
-+         * provide it to KVM_SEV_INIT2. Each cgs_* function that is called by
-+         * the IGVM processor detects this pre-process by observing the state
-+         * as SEV_STATE_UNINIT.
-+         */
-+        if (x86machine->igvm) {
-+            if (IGVM_CFG_GET_CLASS(x86machine->igvm)
-+                    ->process(x86machine->igvm, machine->cgs, errp) == -1) {
-+                return -1;
-+            }
-+            /*
-+             * KVM maintains a bitmask of allowed sev_features. This does not
-+             * include SVM_SEV_FEAT_SNP_ACTIVE which is set accordingly by KVM
-+             * itself. Therefore we need to clear this flag.
-+             */
-+            args.vmsa_features = sev_common->sev_features &
-+                                 ~SVM_SEV_FEAT_SNP_ACTIVE;
-+        }
+     }
  
-         ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_INIT2, &args, &fw_error);
-         break;
-@@ -2424,6 +2515,24 @@ static int cgs_set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
-     SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-     SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(sev_common);
+     memcpy(hva, &snp_cpuid_info, sizeof(snp_cpuid_info));
  
-+    if (sev_common->state == SEV_STATE_UNINIT) {
-+        /* Pre-processing of IGVM file called from sev_common_kvm_init() */
-+        if ((cpu_index == 0) && (memory_type == CGS_PAGE_TYPE_VMSA)) {
-+            const struct sev_es_save_area *sa =
-+                (const struct sev_es_save_area *)ptr;
-+            if (len < sizeof(*sa)) {
-+                error_setg(errp, "%s: invalid VMSA length encountered",
-+                           __func__);
-+                return -1;
-+            }
-+            if (check_sev_features(sev_common, sa->sev_features, errp) < 0) {
-+                return -1;
-+            }
-+            sev_common->sev_features = sa->sev_features;
-+        }
-+        return 0;
-+    }
-+
-     if (!sev_enabled()) {
-         error_setg(errp, "%s: attempt to configure guest memory, but SEV "
-                      "is not enabled", __func__);
-@@ -2443,7 +2552,8 @@ static int cgs_set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
-                        __func__);
-             return -1;
-         }
--        if (check_vmsa_supported(gpa, (const struct sev_es_save_area *)ptr,
-+        if (check_vmsa_supported(sev_common, gpa,
-+                                 (const struct sev_es_save_area *)ptr,
-                                  errp) < 0) {
-             return -1;
-         }
-@@ -2500,6 +2610,12 @@ static int cgs_get_mem_map_entry(int index,
-     struct e820_entry *table;
-     int num_entries;
+     return snp_launch_update_data(cpuid_addr, hva, cpuid_len,
+-                                  KVM_SEV_SNP_PAGE_TYPE_CPUID);
++                                  KVM_SEV_SNP_PAGE_TYPE_CPUID, errp);
+ }
  
-+    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-+    if (sev_common->state == SEV_STATE_UNINIT) {
-+        /* Pre-processing of IGVM file called from sev_common_kvm_init() */
-+        return 1;
-+    }
-+
-     num_entries = e820_get_table(&table);
-     if ((index < 0) || (index >= num_entries)) {
-         return 1;
-@@ -2531,6 +2647,12 @@ static int cgs_set_guest_policy(ConfidentialGuestPolicyType policy_type,
-                                 uint32_t policy_data1_size, void *policy_data2,
-                                 uint32_t policy_data2_size, Error **errp)
+-static int
+-snp_launch_update_kernel_hashes(SevSnpGuestState *sev_snp, uint32_t addr,
+-                                void *hva, uint32_t len)
++static int snp_launch_update_kernel_hashes(SevSnpGuestState *sev_snp,
++                                           uint32_t addr, void *hva,
++                                           uint32_t len, Error **errp)
  {
-+    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-+    if (sev_common->state == SEV_STATE_UNINIT) {
-+        /* Pre-processing of IGVM file called from sev_common_kvm_init() */
-+        return 0;
-+    }
-+
-     if (policy_type != GUEST_POLICY_SEV) {
-         error_setg(errp, "%s: Invalid guest policy type provided for SEV: %d",
-         __func__, policy_type);
+     int type = KVM_SEV_SNP_PAGE_TYPE_ZERO;
+     if (sev_snp->parent_obj.kernel_hashes) {
+@@ -1246,7 +1243,7 @@ snp_launch_update_kernel_hashes(SevSnpGuestState *sev_snp, uint32_t addr,
+                sizeof(*sev_snp->kernel_hashes_data));
+         type = KVM_SEV_SNP_PAGE_TYPE_NORMAL;
+     }
+-    return snp_launch_update_data(addr, hva, len, type);
++    return snp_launch_update_data(addr, hva, len, type, errp);
+ }
+ 
+ static int
+@@ -1284,12 +1281,14 @@ snp_populate_metadata_pages(SevSnpGuestState *sev_snp,
+         }
+ 
+         if (type == KVM_SEV_SNP_PAGE_TYPE_CPUID) {
+-            ret = snp_launch_update_cpuid(desc->base, hva, desc->len);
++            ret = snp_launch_update_cpuid(desc->base, hva, desc->len,
++                                          &error_fatal);
+         } else if (desc->type == SEV_DESC_TYPE_SNP_KERNEL_HASHES) {
+             ret = snp_launch_update_kernel_hashes(sev_snp, desc->base, hva,
+-                                                  desc->len);
++                                                  desc->len, &error_fatal);
+         } else {
+-            ret = snp_launch_update_data(desc->base, hva, desc->len, type);
++            ret = snp_launch_update_data(desc->base, hva, desc->len, type,
++                                         &error_fatal);
+         }
+ 
+         if (ret) {
+@@ -1622,9 +1621,8 @@ sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp)
+     if (sev_check_state(sev_common, SEV_STATE_LAUNCH_UPDATE)) {
+         int ret;
+ 
+-        ret = klass->launch_update_data(sev_common, gpa, ptr, len);
++        ret = klass->launch_update_data(sev_common, gpa, ptr, len, errp);
+         if (ret < 0) {
+-            error_setg(errp, "SEV: Failed to encrypt pflash rom");
+             return ret;
+         }
+     }
 -- 
 2.43.0
 
