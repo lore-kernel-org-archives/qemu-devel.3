@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30422C52D7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 18:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45650C52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 18:56:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdwb2-00009u-Km; Tue, 13 Aug 2024 14:50:16 -0400
+	id 1sdwh1-0005RV-9W; Tue, 13 Aug 2024 14:56:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sdwaz-000053-KD
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 14:50:13 -0400
+ id 1sdwgz-0005Qy-5K
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 14:56:25 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sdwav-0001EJ-3K
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 14:50:11 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47DGBUNB007407;
- Tue, 13 Aug 2024 18:50:04 GMT
+ id 1sdwgu-0001th-5Q
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 14:56:24 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47DGBTYY022125;
+ Tue, 13 Aug 2024 18:56:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- message-id:date:subject:from:to:cc:references:in-reply-to
+ message-id:date:subject:to:cc:references:from:in-reply-to
  :content-type:content-transfer-encoding:mime-version; s=
- corp-2023-11-20; bh=3BK6p7T36cnVRVytnIWDzp5oxGyVVDamOGDUszMi1cM=; b=
- kF2UaiSz+IsgwnNrCwT6WHeVGEJK4sEgDvbAPBRtXEVCXCDNqL0iHd5ZAIrYZcHP
- 7fDU1ZnK+okjEBLknURXoQytsZ/Enz2cMAYo35V4Jb7mu/QtDbHBF1eY1rcQ/Zel
- wKNr8BxypNLCqBuQzCl1HMwQHaenNvpg5pS3vds21/d12WnN5utyvaG/nJbYPosF
- UpnUKwJiKFacVv32cQruFEgbw5v4/xADNBheCsO/zSNG09vMGsptLJqZpHmcPf2D
- O9fySeKxxL7hTBpR/h/yGUccyCapceUWy8q04hW9WOsk/mYk0Sx8d/HPGeo7tbWL
- Yp0HjSy3sq2WcoUPa4A83w==
+ corp-2023-11-20; bh=QIPZip4WBihlnsB4VyYS1YOB4zHWnvRpfdHzVbE8EKQ=; b=
+ jsBAOWJMmTsJQ2BVjWDLJyh2c+7J9pA4JbLCGLPXBJx6H+n8OHSlu73AYKu/1o7F
+ MPCyuVAvVbV3SZwKfoJE5R9rSrg+R2ssuOP2Ag4wNS6mY429p3QDUQowMd8MP8ZW
+ MtwkcWk3QEz9BSKkzdE+9QgXbnPq6O9Sjv4fAgoT8tdx/v8V1xvGbj6BpIuSCP70
+ HN4pWy7bnUUj1SkwVsMvKHYiSMFhtgUywTfhtco1u4YA0/QErCI/mM1Ix02gUVUq
+ NLz/uwRHAC+0f9+rTapX1Zonuw/0pNvB47qF57tOiWlgJvutHEMzq8gAWp8veSGN
+ Gv79fzEduDl7II4Q2N3CHA==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40wxt0xrms-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40x0396kqe-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 13 Aug 2024 18:50:04 +0000 (GMT)
+ Tue, 13 Aug 2024 18:56:14 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 47DHTlP5017681; Tue, 13 Aug 2024 18:50:03 GMT
-Received: from nam04-bn8-obe.outbound.protection.outlook.com
- (mail-bn8nam04lp2041.outbound.protection.outlook.com [104.47.74.41])
+ with ESMTP id 47DHR1Yx017649; Tue, 13 Aug 2024 18:56:13 GMT
+Received: from nam12-mw2-obe.outbound.protection.outlook.com
+ (mail-mw2nam12lp2042.outbound.protection.outlook.com [104.47.66.42])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 40wxn9up19-1
+ 40wxn9uvff-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 13 Aug 2024 18:50:03 +0000
+ Tue, 13 Aug 2024 18:56:13 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=AZKVpPSxYDIJSVraX872uDoJew3xhlVcI1qZQAWojgtIgE+mkzxsa9J16juFVsVRFFfV23XhZiDDDhE6uYGm1aWtBCs7gp/gj/iZFd5d8VMUu5hvWLnRM+kLRekGgFEc9S6YDH9034njR8sy6nxcMGf7bCOllQPs5M03W58Zv/Dgl/nc4FQZIq6KA6UPY7QCNHaDtt+CQhnZSWY+5IUdT70eCi87ppXJG2Xcp1U6vDXW2XkAH1aqp64Tph8UdqDoS1fNJtKHALzrWDJj1xKkeVoZdW/20A0d+hICS2/uzvOrq/UaIozSZh888OCHgkBmW6qh5KEeW+7gDLkLPYjhBQ==
+ b=msholw00nc66iVWkfnMx1gLU0F52Enuy0ySEnMpHo6B8gKJGe6JDFZ6Ih6S/N+qwmIe/yM6SDTDgf21JBUY879VAP6aHaxzl51C4xy9p75OlL/xF+sYmlrT1bnFHL3E9ZI/CJ0WDoaY8h3tSnpfzR/1vHRd9RHDvOF90XOBvzgrGukGO9JHnt/QlQdiEJPb2luAhlFwOuVNGkneNfahL/H7Zhiw4D1M1xTtQgJhk4EAeuEpU42rhfqiBzMuBjoPRRSGiEc9VNAPO6W1TBY6m+gJnh0Emcv7cdkQrcGUoprXTSiGvUPoo7fAloAsfPJrKMtvTU9t2X5bEFInXvsPxpA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3BK6p7T36cnVRVytnIWDzp5oxGyVVDamOGDUszMi1cM=;
- b=IbepcVwBEonBC/WGWQIcOOaeTqirr+GxTnNr6vEyGMX+bSk9vkbdW4HqVu6GInJVXMjJLY0FzvhFHqGNj1erOe9cU6YMjwQRt56lkC0H6I/xUeQYtoA9OUG88jD9lmLimwOosJgbRQ5ImY9QpVy3aqabsZ36IwdFTp8P2x4Bc5M34AYY7G2fk170dj+SZU0ql6Opz9HvRbDdsG7gQsxvGRSJVq54FFxg+nKfpBLSztq/v++RxHlvbQP5mSfkgd89bmHbYTxGjLYnrdGcIBYPBqUl9p466Ty7uHMUdzPhUnenFA21ficUEvCXP7W60KWS5mBiLTuAZy0P5ymhLtvqQA==
+ bh=QIPZip4WBihlnsB4VyYS1YOB4zHWnvRpfdHzVbE8EKQ=;
+ b=D/+si0nsFuoAfwEZ+bxEW73Zfsl2Xwqz/9S5XmYzCvY6AjlILD8R+ejqiooVywPRxlq67ltH5SEUFBMCLKUlSdT1o+eGSsUR/TyuKY/8tXywHbVf2/k+ggR8TCDQ3fxiorYdzvIv+UxWZAgPhZCubLKApZwuCdZEYgT9Ctrhc2dmU19ICMOoHyaUyfJPF15kl1tVmE/2FeuK7uz1K8rOTY2rReoyirrY8kLnp5Chf4rhQxv9ly08j85+NpexdN22bhXUpgpzBJcy6gcRld5SO7ksL/8xzgjZjHiPit4yj6EdxCkt29y1obmJN+w+9M5p0l0dcbVgEMNludupJ1rDKw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3BK6p7T36cnVRVytnIWDzp5oxGyVVDamOGDUszMi1cM=;
- b=l+P+8ROe3TA7YR/f2rsU0OCpeVSUR/ORQZxzz9FzFzggPQEOkKtRwANHzTrUmHU1/Ur2FkacR1joq2YToG32wnBlcj+656V5bn1sF6cj/nZFlYcMTymmOeSQIRVpJQivFModcNmjsZEdlb53pNezjT3R7PWW1kN2zrz6q7uFdKo=
+ bh=QIPZip4WBihlnsB4VyYS1YOB4zHWnvRpfdHzVbE8EKQ=;
+ b=ppyloQUUMe7ciowPgKbvUem/AsNJGnmleqvWURIRo3N8EVeQtmF8iQy/MMZFNAdGPkdy5qEdNWpuu9vMDBrRpEdISRp+4JrjPOfxS39DqKehhehbVstOOIQjt5VdYRILmg3yTPXcPrtZLznKg9xdc15RrIIQU1iUYYm5AME/UQk=
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by CYXPR10MB7975.namprd10.prod.outlook.com (2603:10b6:930:d7::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7875.16; Tue, 13 Aug
- 2024 18:49:59 +0000
+ by MN6PR10MB7542.namprd10.prod.outlook.com (2603:10b6:208:46d::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7875.15; Tue, 13 Aug
+ 2024 18:56:11 +0000
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572%7]) with mapi id 15.20.7875.016; Tue, 13 Aug 2024
- 18:49:59 +0000
-Message-ID: <1f4338e3-595d-4fbf-81ea-56c109fe3c90@oracle.com>
-Date: Tue, 13 Aug 2024 14:49:53 -0400
+ 18:56:11 +0000
+Message-ID: <e3c8a5e9-cc78-4c65-b2c9-56291a1ca7bb@oracle.com>
+Date: Tue, 13 Aug 2024 14:56:05 -0400
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH V2 01/11] machine: alloc-anon option
-From: Steven Sistare <steven.sistare@oracle.com>
-To: Alex Williamson <alex.williamson@redhat.com>, Peter Xu <peterx@redhat.com>
+To: Peter Xu <peterx@redhat.com>, Alex Williamson <alex.williamson@redhat.com>
 Cc: Igor Mammedov <imammedo@redhat.com>,
  "Daniel P. Berrange" <berrange@redhat.com>, qemu-devel@nongnu.org,
  Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
@@ -92,106 +91,107 @@ References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
  <20240729142932.6667c5b5@imammedo.users.ipa.redhat.com>
  <369f6786-1146-4d5e-a9a5-c0b0b5f45bf7@oracle.com>
  <64b8934e-2655-4224-aaf1-e125e6469f87@oracle.com> <Zrt9M00rDk3EUdNM@x1n>
- <20240813110037.6f04ffe9.alex.williamson@redhat.com>
- <8083e11a-365c-418e-9d5d-de4529c48c71@oracle.com>
+ <20240813110037.6f04ffe9.alex.williamson@redhat.com> <Zrup3sYW7XgsnThy@x1n>
 Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
 Organization: Oracle Corporation
-In-Reply-To: <8083e11a-365c-418e-9d5d-de4529c48c71@oracle.com>
+In-Reply-To: <Zrup3sYW7XgsnThy@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SJ0PR03CA0130.namprd03.prod.outlook.com
- (2603:10b6:a03:33c::15) To IA1PR10MB7447.namprd10.prod.outlook.com
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: BY3PR04CA0005.namprd04.prod.outlook.com
+ (2603:10b6:a03:217::10) To IA1PR10MB7447.namprd10.prod.outlook.com
  (2603:10b6:208:44c::10)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|CYXPR10MB7975:EE_
-X-MS-Office365-Filtering-Correlation-Id: 48f7fb8a-9e3a-4c71-36c0-08dcbbc8bba7
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|MN6PR10MB7542:EE_
+X-MS-Office365-Filtering-Correlation-Id: ba3dca13-79d6-45a8-8da2-08dcbbc998f4
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?N1pkK1gvdlowdFd6R3ZDWWczWE5NaTJBbGM0QmxGNzdvQ3lBZHRkUTZSdHJC?=
- =?utf-8?B?OW9mbnc0dXhuS1dicnd4eHpaSkVnbDZaRkdieFlmQlBwRklEM2twdVAyajVD?=
- =?utf-8?B?ZyttM3JiQ2ovWTFldXM5V2N3dkd6VXJCYXFtV2IyOWxmYnpkUTNBazhJMTZR?=
- =?utf-8?B?cFcrb0ZGSFU5Zy83aTB3UFpXM0FLVVFwK3pHTjBFamIvVHUxa0JBUEl3d2tF?=
- =?utf-8?B?MWFYTXZiNnNGdituUXNFZWl1VkhMQWE3VzVQSHRQVkl1ZHJOUVRHQXJLMzIr?=
- =?utf-8?B?WXNyMmcwa0NlWXE3bktKM212M1VUVWdNUUJXVXRrMHZBYVR5TEhkam5ERVFt?=
- =?utf-8?B?NHRTN3JTbkNhODFxT0hCNHBrWVU1ZW1Nd2FMeUJyb3BuZHhLVUM0eHVuR2Ru?=
- =?utf-8?B?OStPZllEWWUvdUNsUDY4Ym10Tm5LZWUzWFNENTUyck5sVmlQSm03SVRFS3Zz?=
- =?utf-8?B?MGtaVGdoWm9TK2p6TGMxakRPQ1U1OXIyd3ZZMmc4K1NVb0VSUDRaemdwOHJq?=
- =?utf-8?B?MXVBekJWTmRCbmdyMUN6dis2b1NWMnE1VTRBc05qS0R4Z2RrSW9ZUTdXYUVS?=
- =?utf-8?B?Mk11NkJSTzZGUDg2R1RyQVluUVdMSmxiR0hZYnI1VmpkMldrc1BHRCt4L2lL?=
- =?utf-8?B?bHQzMWYzL3U1YkN6dTF6SGdhdmFuMEhYck85MXI4WWFucWRNcTlhSnk5dW9n?=
- =?utf-8?B?MTBQWjBOVGZUWjRQRGlKcVFJVXpRYUdjdmcrb3NkK3JSbjk4cWhkRUhpUFVj?=
- =?utf-8?B?SGU1ZUNWNWJTUkEvMnIxME5UMnZ3SHVCR2xnY2hWUnVUTk9zWXV2MVB6WjRD?=
- =?utf-8?B?U1NOS3RhcFlsTUpZdEdSTnlCdEp4MVpGbHNwc3pDcFRaOUhVYnh0RWlzc2hz?=
- =?utf-8?B?OC9LblE4SVFZUnVJdWV1enMvZGJTS3RBVndhRTNzM3Z2L3pRaG9QZnhkdU01?=
- =?utf-8?B?YlhOY3lhVmdaUnVFK0hEcWxhRW9hUHRyZVNkNGhwY0dYa3pHWXlEZkxoMkUy?=
- =?utf-8?B?TzZzTitTblNaYS9sVVFjbGJ0K1BMbVNlQ1NIK0JDSjNHKzRESHplcE1GN09t?=
- =?utf-8?B?WnM5RUYrN1dteW0vVnNZU3dHeTVORnZhbjhOM2p5ZVllemVDZTJ3aXc0bnhS?=
- =?utf-8?B?ZXlSOTF3NE5hMzc4eHRrVFdxcUF0dmJjcW84cUdKRlp3aDhWM3FSWWtwVVpi?=
- =?utf-8?B?WkIzYk5kMExNYnVCOXRNUVcrUnNRSkw5ajhmeUZGdjNJRUJvdmRCSGxYYVY3?=
- =?utf-8?B?V256WmVRSGZQMHBnVGpUbG9TTTZLRk1RVWhvb0FxOGdhY2ZGMzdTcnBxd1JK?=
- =?utf-8?B?NFFHNEd1b1FwQUo4OVZvVnpERjVOSmlHWHpqUjZQaU5DbjBUZzg1UFVSdElG?=
- =?utf-8?B?VmpZZDUxd3pRVXpEMmYvYkVQdEhkMXFscHgyeXowaDRHU0JsL0FFTkt2ekJP?=
- =?utf-8?B?NXhsbnBiSW8rOUF0ajRGTU9EaDRyNUZ6TUt0c05mcStOeGIxV3ErWDFFRjlX?=
- =?utf-8?B?eS8vV0lwMkI3UFk4a2t2WGt6R3BDWG95M3RkTlM0V0MwNW5lVlRKV2MrK09Z?=
- =?utf-8?B?Q01zaFVlbXp5ejErZ1ZCd3VHSGpuL0twelBHS0N2ejlvVUQ5RDhGZnFmRDl0?=
- =?utf-8?B?WHdmRG5mVGYwblUzektjRFp4VERWR1Rpc1ZDcWNjUExGRXorRDk3QXEwdnEz?=
- =?utf-8?B?Tk5ER0YrY0Y4WXlDMndRVDlsQUZYNXRzR2hQQ0k0WllXQjZIZCtQWDk3Vmgv?=
- =?utf-8?Q?LK5MAWRd+vwAZrYhpg=3D?=
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?cVpkeFRiNDdUWkVFRmh0d3ovTStwNHgwZys0WjlSUmliVDZZdnNMT2k1Vklw?=
+ =?utf-8?B?RnhYZ216Y254Y1B4dWV2VENaN0ZLd0JBTlg5RUNlNVlaTWZxM2JFbkNTMndm?=
+ =?utf-8?B?VW1qeUY3aXhaR2MrSWNkNHRrRUFBSzlLclZFdVo1OVYySWU3SEZhcXQzZjNr?=
+ =?utf-8?B?MitHY0dnRVVsSFVQY0JsZUY0KzdieGMxZWQ5MUJ0RVNsbmt5bldyQTQyQVNt?=
+ =?utf-8?B?MmtTcDBHT1hvWmlWODRyVi85NEpsTGd2ZTVQWnF1TlVWWFhIcERtRXR6YzZL?=
+ =?utf-8?B?bjJ2UVpiZWJCa0tsRldZb2xXb2lBeUljdXN5YXltdnVST0FTNnpWY3RzcVR6?=
+ =?utf-8?B?Mi9kcWE1WE13UXp4MTRmTHBISUJsNGEyZXh2cmNXcHZ0Q3lhMGt2OWVYYzM1?=
+ =?utf-8?B?cnAzd3JLUmRRNVgzdWtaSHc3Zlc4ZER4cHZXeWJVa3M5bngyNSt5Z1ZqMnh6?=
+ =?utf-8?B?QUFiMU0zM0Q1NmtaTWR1YkdITkxjYTRIeVFlYWxkaDlla1lXTVpyQmdWNUpM?=
+ =?utf-8?B?dFhTWGcxQXVjK3UyM3p4UVRleHQ4MWpXOW9HaTRySFVhQ3NrZVdBK2xOTTcx?=
+ =?utf-8?B?ZGwwOWJxTVR0RlFFRmNKU3JVU0NPc3RxT3FEakoxSm1SY2p5QTFmZ1FVY2Js?=
+ =?utf-8?B?dURrZE1zckE1NFhpNExQMmlFbXh4ZFlZSmNlWk1sTkpOeU54UERQN0NvaVAv?=
+ =?utf-8?B?bE1oL3dWa3ZUUnpjS3ZSTm1XNVNYZ0RyOHF1MlUvY0lMU1Y0UW13Y3lJM3hp?=
+ =?utf-8?B?VnhydE9Ob3hROHNVSlF1Z0I0L2JTMTBPK2lmR2ZZZEw1bGZ1UmxzUm4zc0s5?=
+ =?utf-8?B?S0xOZTNOaDFGdWVnYWIyZjRMV0RraEpHNGRPYzI2RDVVeUJTRnV4UXppSkpJ?=
+ =?utf-8?B?SjQ1NWRiTndXLysxam05TnBMV0N2RUhpL2xrc1RwQzdXSVhlUFExbTBBTzdr?=
+ =?utf-8?B?NHlETjg1ZS9mNmx0RzR2YzJWaEU3ZkFHbHFreWk0Qk5uZUg3VHhuYWdvRDdo?=
+ =?utf-8?B?Y0ZjOXI1RnE2Y0U5QVY2ZmpMYzdXN1J0dnI4SlEwdDNFZVdCRE4vbU55ekxJ?=
+ =?utf-8?B?SC8vVWk4SHNZcnRmWXl2WFdpZEdwN2poR2lDSlhLMEgrMXkwWmUvcGVUT0tM?=
+ =?utf-8?B?bmM5Q2N2ZnZVaEhYTmV0ak5kZjBnRmdURkJmbHBPUHBmaGVyOGVnZFpNNnBy?=
+ =?utf-8?B?SDBGZzl3S2pLUzhhVVY4dFJBYkJyWHJVc3crSTN3K1p4K0NadGJsV2xuUDJU?=
+ =?utf-8?B?RzY4OWJTUTc0SE14Tk9scyt1aUJJdUNQVWVCK3E1QnpTblR3cldTcFhsc1B3?=
+ =?utf-8?B?QzE2L0N3Yi9KM3YxMU1CaktSSWZ4K0ZoMnJXb0J1bDYwa3FrT29aKzN1RitO?=
+ =?utf-8?B?WXBUalJGKzR4RWh5YlpTbTNrYXNlSUtCdmt6bFFjZ3YxYlNaSTZrYS9OdGRH?=
+ =?utf-8?B?K2FoVXpxZjZPL1ZQNkJqT05HWnUra3RMUEpPRjIvL0VpSlltSnlhQzhQeVpS?=
+ =?utf-8?B?VWdpM3F2bnpWWTcwTVNtdzZIN1RXMFZmOWxTUmpKeTIrTkdpZk1HZVg1bVNu?=
+ =?utf-8?B?TGVaQzNtcUJRNlVERXBZUU5TU01wMXdOZERObG1qMFFRV2ZrT2lmakRtRmFH?=
+ =?utf-8?B?NzZWRjREL28zcC9ZTkJwWEQ4bENQWlRZd3NpbUcyRkNuVW9kTTBiV2dxZUdM?=
+ =?utf-8?B?QWI0MEUrMklHZ0oxS28vaXpQVkxEUFExQ0VDNWZBWnV4RjhuNm9OOEdUcnFC?=
+ =?utf-8?B?MFNtS05yZVJxOWNnbHFVTGJJdDQ1SktTSFdiMllhWi91djkxUnhQWTlzVGhj?=
+ =?utf-8?B?ejRkS1MzWUtnS3RPT3RIdz09?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
+ SFS:(13230040)(366016)(376014)(7416014)(1800799024); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QzVqcTk2MnExTUVvOFg5Q1F2R2E5QmNWUkl6L1NQVm9haHUzNHBvWXRWUVJD?=
- =?utf-8?B?VysraXZUdnFzWS9NdFB5U0pBQzhSUFRncGNJb2gydzQxWVEwbWtyaERkRFNn?=
- =?utf-8?B?UHdhajEzeWlZVGk0azBQK3lIdUFNM3ladHhXNTYxdVlIVk9KT3ZBL1J4eDZv?=
- =?utf-8?B?SWhRNVJsVTExb0k5NUxpK3ZYTS9LbElxT0hDSTV0TEJKZnVDdzdPbjZ0UjRr?=
- =?utf-8?B?d0ZmWGNXa1Y3aEVEWFZaNnZVa3FZVmtCb0VwM25QSllrelk3ZUFIdnZ6eEw0?=
- =?utf-8?B?aTNYbDMxQ2ordFRUS1lramo0KytwRCs5T3lreHJKeUFIWkZRb2wzOHZianQ1?=
- =?utf-8?B?RUw1KzdhUiswZ0JFQ2Z1NUZUaVlFMlpYblJZVU1ZUlRIUmFld3diY25UZHVK?=
- =?utf-8?B?YURDdFdXdXhQVTkyMzdEc09YNVZuK01YeUUzSzY0TW8rQ0ROK0xYdnhTdTN0?=
- =?utf-8?B?aExmSjYwaHhkRmM3MkxtWHdENG1EV2FaczhBUUl0eHBheXZmM3NzbHFFc1E1?=
- =?utf-8?B?S21aN0tXWXhNcmpEUzNXeGtuaEVaWThOR2wwL0Uxc1p3d2NFdU9lWWt3TGdk?=
- =?utf-8?B?VHFZRHZoK0xHeU5CTW9KLzBreFhPSjEyVWpuNFBCdWcrRlRYWjRwZmZLR3Y2?=
- =?utf-8?B?Z3V0OE5JZEVac01uY0pzVXNMMS9mRDhJNUV5Y21GYnRyODdVSVZsRVZ0cGU5?=
- =?utf-8?B?d2VycFo5dkxLSU4xMWlkUy9IbGdBbkNKd0tWZVdxWEJxWjRlTXFUQVZYbE5G?=
- =?utf-8?B?aXV6SWtmU1NHSGpibWswTklIY0d1WmpQb2hIZTRXczBhSyt2c015OEtkb3I5?=
- =?utf-8?B?am9LNlkvbG1nOFE3NkV6QVhuZmVDazZrUWJDOUtJelprVElFU1dWYk54SVRu?=
- =?utf-8?B?QnlYT3FETHFSVE1kY0pYNElWM1oycHBrS2tvbnRrM3JUVjg4ZUVEY0hkdkM3?=
- =?utf-8?B?djIwZVFjaGdqcElMZGl1Qk1JYi8wODRiOVVTNnJ1bW8xOElESmNza0kzTlVU?=
- =?utf-8?B?ZnBEQzRlcUxkQ3IrZVZhcjduaEMwOEtubk1CT0hZMVl0V2V2a3pzSVdXOTQv?=
- =?utf-8?B?Q2Y5V0gwY25Ea0xOUmJIcDBQYUFnenRkeWREdU00TE5FakxLVnUyaC82SGpT?=
- =?utf-8?B?MklzNEZwN3hXZWdqMC9XSzlHVWJ3cWRGb0NXUWpCSlZ6bTJHbnRKMzVqemls?=
- =?utf-8?B?VHpwRU9xWFpRUktwRFlxeld3K3VGUVBuNmV3aEV5aXlXQlBNc0UvR1hVZjVv?=
- =?utf-8?B?YzlNY2ZUYXFkRlNQU2NQSEMvai9hSXFhYjA0c2kxWCtNZUtCUEQrbFBMTUk3?=
- =?utf-8?B?WGU1KzdBbVk1UERhTDBWYWVyZkJEY3hKNTQ5QUNIRDczN2tlYVV2Y2RDUlRo?=
- =?utf-8?B?dDVYZlczRURQZk1YbDZCTlNUS25hZTNnOWhZQ1BZeTdxc3lZSDFKYkVFT21W?=
- =?utf-8?B?czNvanE1dlFxTUFFUkpJL2hFMDJnbnhuNVB6ZjVVb3dVZ08vd3pzVGVXNnlB?=
- =?utf-8?B?V3BJdVBSVWJhYzM1cmZscElwcFJTTEY5Q05IamU3WU94a0FBMHUzQUhWK1ZC?=
- =?utf-8?B?SVoxUDhTdytVWDV3YTYyaVN6eUlyRm9rbkZWU1ZnM3hpSGRycHJCeU9QcDdE?=
- =?utf-8?B?UFJ5YjJFY2VhdmJ6dE5ramV6b293ZHNTWGkwL0FrQUNzQUVlMDE5dHExNkpK?=
- =?utf-8?B?MXNicmN5QjRCaXdBak93ajV0UWxWUWMvY3dPa0kybXVJMVpvUGh1VHRKNk9m?=
- =?utf-8?B?MEpSTnFQVGtTYUhXL1QwTklLaGwrM3Y1NkhFWVR0TGhMNU9rdWFsN0l2SkEr?=
- =?utf-8?B?ZkpudzBIc1VERWxSbUFKd1JjQ0tIdS8reWhvVGo5U2VDQ29YWmhsMHpXeFZX?=
- =?utf-8?B?U0V2NStLbjhIRFFqTWVLcFNGQzZkcWNITUFmeHA3bzdvUjEvWHJKWVBQR2ZB?=
- =?utf-8?B?WS9sdENVVXVuak5yeWhCUE1xTndva1RrUm92cVRnY1kyVXZtdjBHOEQ4Undp?=
- =?utf-8?B?V29zLy9rd0MrR3NWUkVkOXBLZDlTOWxFUDdRRlI2WFBmTytVbFJPTHNUS1p0?=
- =?utf-8?B?Rmx5TitXN1dheEFGTHE3Rkd3c0lKY29BN1dnaVNzY2U0eVE2SXdZY0dYNGR0?=
- =?utf-8?B?aTBWaHBKdWwwdEU3bkR6aFhxQk5QSmpoZ24wL1RRMzN5ZENLemoyZXp6dklN?=
- =?utf-8?B?V1E9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VktRQTBhK1BUVFRmcXdCRTZYRUZhS05hZ25DTHF4dTN1SkR5eXFYMFYwSVph?=
+ =?utf-8?B?MkNIWHJkdjJFdm00amxGSzViSitSVjNLTm1SbURNaTR1UW1zekdIVnVaNWRE?=
+ =?utf-8?B?elZtK3pIQndCeTRIaGNVZ2J3RXJwL0NJVURvMVBWYVM3VXlqWWNZajVrbG91?=
+ =?utf-8?B?aWlmdFJBZ1pGc3RWWEtNY0RuYXNKR3ducGdXR0o2NWRjMkYyOHdSWVdiVllG?=
+ =?utf-8?B?bnhJWDcvR2VGcGpsd0l0aEFlUHhTTWhwa25NaGJZaHUxQndGOFlwK2gxUVhr?=
+ =?utf-8?B?cmNzK0pjRmJXRkhRTnhYeCs3N2lVK0xMRlhiK2I2cjA2MDRuRStsbXl1bmhC?=
+ =?utf-8?B?Si8wbk1oS0JobGVJbVU3VTJ2RGg0VGlpVWJoR0pkWVF2S01JdjlNT0xOMTMz?=
+ =?utf-8?B?Y0h3a3NwdFI1Vjh0MjBLdE5PeXkyOHN4UXlTcmRYQngzRXJ5c1NmMWJMSkZp?=
+ =?utf-8?B?cUpzb3VyRWxPWmpUZjBxU3crVnU0MVF4SmZtbUVsdnhjcUt5L2JuKzZEb0tt?=
+ =?utf-8?B?RitROFFIWGlBRElBcGNHMVIzRzE1bVBVZVNtbmdJSDhka1g5cDVzdVJVWldI?=
+ =?utf-8?B?c0NPY2xqSWJuT1d6amNlSVpkcHZOUzRjeUNkYkovd0NvWTlxMUFESklxU1lE?=
+ =?utf-8?B?NENiMXJqWUNjZUJzZ01lVlh4WmlxcVV5THcwR3RTM043SThhZStVd0xtNXpm?=
+ =?utf-8?B?TkdGUGNRZFBTMWJMWjFUNjEwT0xLVkJkM1R6NlJoa3F0Ri8zV3BnU1FkUCtE?=
+ =?utf-8?B?MU5scTA4QWp2QTE3K244K2g0ck9GVVM2QTN2MzUxMGo4alJ4c3J4MHl5ais2?=
+ =?utf-8?B?R2hTVER3SnFBN2RaRmdSSWZLbENwYVVQNzVraG9KcWRaQjVNRDRHSmhoU0lJ?=
+ =?utf-8?B?RXdNY05ha3R0cTZ3Yk1Meng0cmlEWWcvTEVtLytaMFk2NzFrRVQvTTAyUmtw?=
+ =?utf-8?B?cFdsNEllVm9WYld5ZE1YRW1rL0ZYU2F3TittaTBLSzhxWHBzSDBnN3MySXcz?=
+ =?utf-8?B?ODIzZGtsUzZOU0lFTVdQOXQyUjNtRVFOQ1RlL2tteHhzOVVmb0hkdmVDdDBE?=
+ =?utf-8?B?YVp4S2xYYmk0RXNJVTZpcDh5UXdVeURkb1RaREdsOTBmMytSYXJIVmFjU0RE?=
+ =?utf-8?B?SU9rdml4L1c5dCsyb2hQMUloeHA3T0FaTytKWktNVm00KzJsOWluSUNUckZw?=
+ =?utf-8?B?VXMvSllrRHBZTHpjOHpGWnRMa3d3WEtvOFRyNjVlUWpTdUpKSFp5Vi9oMStr?=
+ =?utf-8?B?SzB0amhIVzRsTG1XaU1PNXI5QnFHTlpSVmttQnNNL0tQMjVIL3FmZFhDanpl?=
+ =?utf-8?B?b0JzQ0pQUjh6NCt3Y3NCbFhFOU4wdmE0dHN1dndqUys0YlZDMkhDVGVXZHdP?=
+ =?utf-8?B?cUZjV1BZWXkvVEN4cmI0UU9SZ0twTm9DY1FaNjRvdHFuWFdNd29TS1UzYU5k?=
+ =?utf-8?B?eEFZVkxmeXRNLy9ZZG5HOUQ0SmE0SisyRk4rRktPc3c3dURkMEk2VkdXa2FR?=
+ =?utf-8?B?NlBVVWo3MzNBeUV4eC9DZ0VMbCtRUThTNklVS05aZmY1K0ZSb0JvcWZaWnQ2?=
+ =?utf-8?B?ZlVDc0o3SXVHb3U5eXVrMWRmVTk3aUpFcldxbWkvODcwOXVrT2wyUElKUFpi?=
+ =?utf-8?B?NHFJTEZubS9KSG5ZRHRua0NmUDZmT0M5TlJTRTBsTDgvZlhod2gvRWhVK3JH?=
+ =?utf-8?B?OXZJa29WandWdlV0R1JVa1JJZXBvVTZPZDZ1OS80WWdVcURLdHNvWnk0TkJl?=
+ =?utf-8?B?TThFTlF5dnFLWHFyTjUweTR5ZGR3UWlVbHN2SzdqTEdpbGdoV2VnQjZ1Z2FV?=
+ =?utf-8?B?T3cyaDRrR3BnYS84RTd6YmtUbGk4eG1HZjBLRkowNmlYT2NSZDFZWU05eWs0?=
+ =?utf-8?B?N0xyK0lmY3p4ZUZvNG1xT1M0b21qNkRVTWt2eTVNejFUWnJKT0QvQjRaZGJv?=
+ =?utf-8?B?K2d6WVhqTGxGc3FHTTd6WTE2dTJFMkJtc2dDOTByT2ViakJOVEcwUTFncktM?=
+ =?utf-8?B?OUx4dVBZclZhZTVHSmg0VlJqZm9WdUM0endyRGtuMlFuSk9oN1BTNHdURTQ2?=
+ =?utf-8?B?ckNyVmdZQTNWZTQ5MERPWFZFSHlCaGZEalhBbEIzeWkxdGkvdGNOUmxRVUJo?=
+ =?utf-8?B?WnpqaGtMcGd0b1JQZkNZZFFtdTAvTlJYdjlxWUJtWTBzWVFuKzRkNUVEMGl6?=
+ =?utf-8?B?QVE9PQ==?=
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: nRM3nPaPaxEiYSoaWlaDaqWQpQ4WT2lXKFz97MTSiwn64DjkCiP/vOphEgT5J7WYr4xPuFbXjhkUVnWJtqKUi0k0up7TKHUfzlNH5xJZrMhVE7Q31xnioQLNOi+wJrsKxwYoNSQgCRk2Qi0LPJowiE+IAowKMT2XlNieEQGEHpbiGqbGJOGVasHGJNFPF9Q9P75rXLZueNE9/ANpOzK3/bBmEpOHEz3cEk72HXe8X8wPTAHv+0hzVeRil+Rt/j8/E1sHm4s4tI3pqK0zwX8o8lscnLZ5BhZZ57mFb9XeYcLNhAk+6sOP7nKP4jkkaHBytRz1/5a41hReSdAu3fyfeZOiMifUEZGp/5Q1tJhC4/HnNQtv5+aDzFXmRmS6KqjaSxLSW5wO2tZ7rqzaz13Bz+CfVLBSFUfkGWqo4qxoIr4BAHyJPJLH15aWxj4WLpEW/94oO7SbhRAV201fmwrxmGar4xElpuy5pKcwfiAax1CAHWdZc1bAuutjJqmgvNJwuy+V12mXLFvxJ880plOur+35+aMPILjIkLSX+gPb2El+cH3dr75BrqqJo2GMhRKMlTTZgjIN/vsruqRwX5DF6vD1Wgv8kWMGb0zF4238PEk=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: QxRxsCOWNnZ2JwFOEV220zzLpdJdB+mzfaKxh50+piVYzOap/FQPv0eFkzUGjNwrh/jUloABCduBLlNE0VIMYEwZX2ujyPjjCO3Kt4XzRgEuVWQ/IB+PxHK/XcUCPerRc6WxxR+aPoZZDBppcHdKjoJ7a/99bvDgys5mPlotqkITFzeZ8r/5SA3P53SbU2r6+DRktr6gOOXh1fxjPGFPx49aQ0XgmizBqF6j9qvuBn4kpgSXpjGBmvjaA6fz5bzOO5Yl7lS8b7Tkof73YADiRWttYb8mVLfuPUlzfbWqU9qdh4tflAjTPhnYLD8G6kcrSE/yUu4aYS1WcKL3sfmfRFYiLW9alcH3BO7Qe+sYfgVvLtiyZOGORvhVhWu1hS5J9+SSTQLHmYi81HyBZgYOOvfR5mLXfEA1Qp9F8gqqx8OXgViThXnhJBxvhGmMIR9219GixQW6hK0zZD9s2II29ZdrlxbxriftgN4c63HbBCZQnRRb78fB/K4+h4XIdLMioY3V0uemDGAsRbONEiizAzlKMCnq0oLDrTkgAflHgoepQDyRWCmSxSS2lkhzIes+NdUo9vZ1LGaLbol7GOjaVMFjYPf8h0KnmsFDCNnbIhc=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 48f7fb8a-9e3a-4c71-36c0-08dcbbc8bba7
+X-MS-Exchange-CrossTenant-Network-Message-Id: ba3dca13-79d6-45a8-8da2-08dcbbc998f4
 X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2024 18:49:59.7247 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2024 18:56:11.0349 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: eHcdjBBBRfhcYgUxJMBTZslav0f61HcGYnI14IWm34VNQB2CYmDl52klkHq85L70+XLCwbGkLzwgZrIIg8a9aiN62Vb4cfiRSoANGZI+gQk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYXPR10MB7975
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9DAKgVMl+n6HdXOV8CxZ/eT5QwB9Lh4wcH2MKsSr67wU7yNR/l7o0Sh860p6qXRCQHVEjlY1qYvW4q1vpKNPYm3QZzWVM548v1O/aED/baI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR10MB7542
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-13_09,2024-08-13_02,2024-05-17_01
@@ -200,8 +200,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
  phishscore=0 malwarescore=0 suspectscore=0 bulkscore=0 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2407110000
  definitions=main-2408130136
-X-Proofpoint-GUID: sH_kuEIjKc55zD_ygPkjo5q6KMYkxmRx
-X-Proofpoint-ORIG-GUID: sH_kuEIjKc55zD_ygPkjo5q6KMYkxmRx
+X-Proofpoint-ORIG-GUID: M8QmUiWZpAcKOOm_N4FNsNrTE9sH7a1x
+X-Proofpoint-GUID: M8QmUiWZpAcKOOm_N4FNsNrTE9sH7a1x
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -20
@@ -226,182 +226,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/13/2024 2:46 PM, Steven Sistare wrote:
-> On 8/13/2024 1:00 PM, Alex Williamson wrote:
->> On Tue, 13 Aug 2024 11:35:15 -0400
->> Peter Xu <peterx@redhat.com> wrote:
->>
->>> On Mon, Aug 12, 2024 at 02:37:59PM -0400, Steven Sistare wrote:
->>>> On 8/8/2024 2:32 PM, Steven Sistare wrote:
->>>>> On 7/29/2024 8:29 AM, Igor Mammedov wrote:
->>>>>> On Sat, 20 Jul 2024 16:28:25 -0400
->>>>>> Steven Sistare <steven.sistare@oracle.com> wrote:
->>>>>>> On 7/16/2024 5:19 AM, Igor Mammedov wrote:
->>>>>>>> On Sun, 30 Jun 2024 12:40:24 -0700
->>>>>>>> Steve Sistare <steven.sistare@oracle.com> wrote:
->>>>>>>>> Allocate anonymous memory using mmap MAP_ANON or memfd_create depending
->>>>>>>>> on the value of the anon-alloc machine property.  This affects
->>>>>>>>> memory-backend-ram objects, guest RAM created with the global -m option
->>>>>>>>> but without an associated memory-backend object and without the -mem-path
->>>>>>>>> option
->>>>>>>> nowadays, all machines were converted to use memory backend for VM RAM.
->>>>>>>> so -m option implicitly creates memory-backend object,
->>>>>>>> which will be either MEMORY_BACKEND_FILE if -mem-path present
->>>>>>>> or MEMORY_BACKEND_RAM otherwise.
->>>>>>>
->>>>>>> Yes.  I dropped an an important adjective, "implicit".
->>>>>>>
->>>>>>>      "guest RAM created with the global -m option but without an explicit associated
->>>>>>>      memory-backend object and without the -mem-path option"
->>>>>>>>> To access the same memory in the old and new QEMU processes, the memory
->>>>>>>>> must be mapped shared.  Therefore, the implementation always sets
->>>>>>>>> RAM_SHARED if alloc-anon=memfd, except for memory-backend-ram, where the
->>>>>>>>> user must explicitly specify the share option.  In lieu of defining a new
->>>>>>>> so statement at the top that memory-backend-ram is affected is not
->>>>>>>> really valid?
->>>>>>>
->>>>>>> memory-backend-ram is affected by alloc-anon.  But in addition, the user must
->>>>>>> explicitly add the "share" option.  I don't implicitly set share in this case,
->>>>>>> because I would be overriding the user's specification of the memory object's property,
->>>>>>> which would be private if omitted.
->>>>>>
->>>>>> instead of touching implicit RAM (-m), it would be better to error out
->>>>>> and ask user to provide properly configured memory-backend explicitly.
->>>>>>>>> RAM flag, at the lowest level the implementation uses RAM_SHARED with fd=-1
->>>>>>>>> as the condition for calling memfd_create.
->>>>>>>>
->>>>>>>> In general I do dislike adding yet another option that will affect
->>>>>>>> guest RAM allocation (memory-backends  should be sufficient).
->>>>>>>>
->>>>>>>> However I do see that you need memfd for device memory (vram, roms, ...).
->>>>>>>> Can we just use memfd/shared unconditionally for those and
->>>>>>>> avoid introducing a new confusing option?
->>>>>>>
->>>>>>> The Linux kernel has different tunables for backing memfd's with huge pages, so we
->>>>>>> could hurt performance if we unconditionally change to memfd.  The user should have
->>>>>>> a choice for any segment that is large enough for huge pages to improve performance,
->>>>>>> which potentially is any memory-backend-object.  The non memory-backend objects are
->>>>>>> small, and it would be OK to use memfd unconditionally for them.
->>>>>
->>>>> Thanks everyone for your feedback.  The common theme is that you dislike that the
->>>>> new option modifies the allocation of memory-backend-objects.  OK, accepted.  I propose
->>>>> to remove that interaction, and document in the QAPI which backends work for CPR.
->>>>> Specifically, memory-backend-memfd or memory-backend-file object is required,
->>>>> with share=on (which is the default for memory-backend-memfd).  CPR will be blocked
->>>>> otherwise.  The legacy -m option without an explicit memory-backend-object will not
->>>>> support CPR.
->>>>>
->>>>> Non memory-backend-objects (ramblocks not described on the qemu command line) will always
->>>>> be allocated using memfd_create (on Linux only).  The alloc-anon option is deleted.
->>>>> The logic in ram_block_add becomes:
->>>>>
->>>>>       if (!new_block->host) {
->>>>>           if (xen_enabled()) {
->>>>>               ...
->>>>>           } else if (!object_dynamic_cast(new_block->mr->parent_obj.parent,
->>>>>                                           TYPE_MEMORY_BACKEND)) {
->>>>>               qemu_memfd_create()
->>>>>           } else {
->>>>>               qemu_anon_ram_alloc()
->>>>>           }
->>>>>
->>>>> Is that acceptable to everyone?  Igor, Peter, Daniel?
->>>
->>> Sorry for a late reply.
->>>
->>> I think this may not work as David pointed out? Where AFAIU it will switch
->>> many old anon use cases to use memfd, aka, shmem, and it might be
->>> problematic when share=off: we have double memory consumption issue with
->>> shmem with private mapping.
->>>
->>> I assume that includes things like "-m", "memory-backend-ram", and maybe
->>> more.  IIUC memory consumption of the VM will double with them.
->>>
->>>>
->>>> In a simple test here are the NON-memory-backend-object ramblocks which
->>>> are allocated with memfd_create in my new proposal:
->>>>
->>>>    memfd_create system.flash0 3653632 @ 0x7fffe1000000 2 rw
->>>>    memfd_create system.flash1 540672 @ 0x7fffe0c00000 2 rw
->>>>    memfd_create pc.rom 131072 @ 0x7fffe0800000 2 rw
->>>>    memfd_create vga.vram 16777216 @ 0x7fffcac00000 2 rw
->>>>    memfd_create vga.rom 65536 @ 0x7fffe0400000 2 rw
->>>>    memfd_create /rom@etc/acpi/tables 2097152 @ 0x7fffca400000 6 rw
->>>>    memfd_create /rom@etc/table-loader 65536 @ 0x7fffca000000 6 rw
->>>>    memfd_create /rom@etc/acpi/rsdp 4096 @ 0x7fffc9c00000 6 rw
->>>>
->>>> Of those, only a subset are mapped for DMA, per the existing QEMU logic,
->>>> no changes from me:
->>>>
->>>>    dma_map: pc.rom 131072 @ 0x7fffe0800000 ro
->>>>    dma_map: vga.vram 16777216 @ 0x7fffcac00000 rw
->>>>    dma_map: vga.rom 65536 @ 0x7fffe0400000 ro
->>>
->>> I wonder whether there's any case that the "rom"s can be DMA target at
->>> all..  I understand it's logically possible to be READ from as ROMs, but I
->>> am curious what happens if we don't map them at all when they're ROMs, or
->>> whether there's any device that can (in real life) DMA from device ROMs,
->>> and for what use.
->>>
->>>>    dma_map: 0000:3a:10.0 BAR 0 mmaps[0] 16384 @ 0x7ffff7fef000 rw
->>>>    dma_map: 0000:3a:10.0 BAR 3 mmaps[0] 12288 @ 0x7ffff7fec000 rw
->>>>
->>>> system.flash0 is excluded by the vfio listener because it is a rom_device.
->>>> The rom@etc blocks are excluded because their MemoryRegions are not added to
->>>> any container region, so the flatmem traversal of the AS used by the listener
->>>> does not see them.
->>>>
->>>> The BARs should not be mapped IMO, and I propose excluding them in the
->>>> iommufd series:
->>>>    https://lore.kernel.org/qemu-devel/1721502937-87102-3-git-send-email-steven.sistare@oracle.com/
->>>
->>> Looks like this is clear now that they should be there.
->>>
->>>>
+On 8/13/2024 2:45 PM, Peter Xu wrote:
+> On Tue, Aug 13, 2024 at 11:00:37AM -0600, Alex Williamson wrote:
 >>>> Note that the old-QEMU contents of all ramblocks must be preserved, just like
->>>> in live migration.  Live migration copies the contents in the stream.  Live update
->>>> preserves the contents in place by preserving the memfd.  Thus memfd serves
+>>>> in live migration.  Live migration copies the contents in the stream.  Live update
+>>>> preserves the contents in place by preserving the memfd.  Thus memfd serves
 >>>> two purposes: preserving old contents, and preserving DMA mapped pinned pages.
 >>>
->>> IMHO the 1st purpose is a fake one.  IOW:
+>>> IMHO the 1st purpose is a fake one.  IOW:
 >>>
->>>    - Preserving content will be important on large RAM/ROM regions.  When
->>>      it's small, it shouldn't matter a huge deal, IMHO, because this is
->>>      about "how fast we can migrate / live upgrade'.  IOW, this is not a
->>>      functional requirement.
+>>>    - Preserving content will be important on large RAM/ROM regions.  When
+>>>      it's small, it shouldn't matter a huge deal, IMHO, because this is
+>>>      about "how fast we can migrate / live upgrade'.  IOW, this is not a
+>>>      functional requirement.
 >>
 >> Regardless of the size of a ROM region, how would it ever be faster to
 >> migrate ROMs rather that reload them from stable media on the target?
 >> Furthermore, what mechanism other than migrating the ROM do we have to
 >> guarantee the contents of the ROM are identical?
->>
->> I have a hard time accepting that ROMs are only migrated for
->> performance and there isn't some aspect of migrating them to ensure the
->> contents remain identical, and by that token CPR would also need to
->> preserve the contents to provide the same guarantee.  Thanks,
 > 
-> I agree.  Any ramblock may change if the contents are read from a file in
-> the QEMU distribution, or if the contents are composed by QEMU code.  Live
-> migration guards against this by sending the old ramblock contents in the
-> migration stream.
+> IIRC we need to migrate ROMs in some form because they can be different on
+> src/dst, e.g., ROM files can upgrade after QEMU upgrades.  Here either
+> putting them onto migration stream, or making that fd-based should work.
 
-Our emails just crossed.  I will repost this to your new reply so keep a single
-conversation thread.
+Agreed.
+
+> Frankly I don't solidly know the details on why they can't be different.
+
+Any ramblock may change if the contents are read from a file in
+the QEMU distribution, or if the contents are composed by QEMU code.
+
+> My current understanding was that if one device boots with one version of
+> ROM/firmware, then it's possible the device keep interacting with the ROM
+> region in some way (in the form of referring addresses in this specific
+> version of ROM?), so that it may stop working if the ROM content changed.
+
+Yes, the guest may continue to read data or execute code from the block.
+
+> IOW, if my understanding is correct, new ROM files won't get used after
+> migration automatically, but it requires one system reset.  When a system
+> reset triggered after VM migrated to destination host, it'll reload device
+> ROMs with the files specified (which will start to point to the upgraded
+> version of ROM files), and IIUC that's where the devices will boostrap with
+> the new ROM / BIOS files.
+
+Agreed.
+
+>> I have a hard time accepting that ROMs are only migrated for
+>> performance
+> 
+> AFAICT, it's never about performance or making it faster when putting ROM
+> data on wire.  Even in this context where Steve wanted to use fd backing
+> the ROMs, then putting that on wire is still slower than sharing fds.
+> 
+> Here my previous comment / point was that this should be a small region, so
+> it shouldn't matter a huge deal for ROMs to migrate either through the wire
+> or via the fd page cache.  I wanted to remove one more dependency that we
+> may even need the new -alloc-anon parameter as it doesn't sound required
+> for ROM migrations.
+
+Agreed that performance is not the issue.  I use memfd for correctness.
+
+Also note that my new proposal deletes the alloc-anon parameter.  I allocate
+non-command-line ramblocks unconditionally using memfd_create.
 
 - Steve
 
+>> and there isn't some aspect of migrating them to ensure the
+>> contents remain identical, and by that token CPR would also need to
+>> preserve the contents to provide the same guarantee.  Thanks,
 > 
->>>    - DMA mapped pinned pages: instead this is a hard requirement that we
->>>      must make sure these pages are fd-based, because only a fd-based
->>>      mapping can persist the pages (via page cache).
->>>
->>> IMHO we shouldn't mangle them, and we should start with sticking with the
->>> 2nd goal here.  To be explicit, if we can find a good replacement for
->>> -alloc-anon, IMHO we could still migrate the ramblocks only fall into the
->>> 1st purpose category, e.g. device ROMs, hopefully even if they're pinned,
->>> they should never be DMAed to/from.
->>>
->>> Thanks,
->>>
->>
+> Thanks,
+> 
 
