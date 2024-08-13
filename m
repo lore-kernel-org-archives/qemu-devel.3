@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 296E6C52D7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 20:25:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69715C52D7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 20:25:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdy3u-00069G-OH; Tue, 13 Aug 2024 16:24:11 -0400
+	id 1sdy4B-0007Yw-Ga; Tue, 13 Aug 2024 16:24:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sdy3g-00057m-IW
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:23:56 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1sdy41-0006hd-V4
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:24:18 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sdy3O-0006Bt-HR
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:23:56 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-428e3129851so43533155e9.3
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 13:23:37 -0700 (PDT)
+ id 1sdy3Y-0006Je-Fs
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:24:17 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3685a5e7d3cso3639570f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 13:23:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723580616; x=1724185416; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723580625; x=1724185425; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0y9bR77UvCt8TQIygcd82Fr7RaUqdwHl6O1d6ILZIVc=;
- b=x9q5OvIhDUo3yhlEZS6ytgPKeMZKNcpdTsZr7ueRF5xVnavnPCY1RU/n7FT3Lx8Xv9
- RPckbAuuxZtl0PNbLD4f6MRLRUgUjEy6qkJ5KbEzO9bTHTsBzvtPx0iWBZs0pveKOruX
- bylQIX6Tx/sVP1fb8YqcJTbsa+lqRJ9s3sVVGwANSrUuJzJnYU97u0z4oKLys2XMeXDl
- bQ/hIf1Vpf5odfLjBiDiNV5n1L9EnrumiWu1rntWo+PsvS/wj3dQTO324eGwanPJXJOs
- ZnN3CRQAb+wxudCBLTYn/RG4u+AbIp3UcEHsQLavfHhJt/Otck1Ldji4S2ANiOWLTZDy
- D8uA==
+ bh=/5zKsXaXwrEo4pGBpcSfU84L/65BuquefdOBBeKcqhg=;
+ b=cPVvYHJafNG4aZYnutbCAah1kyFesnq+5VNbyTNqI9+4zBDHyDb+t93UUtiE6KltBI
+ 9c7GUQUTaUzcsu5i/XsltPEMgMhVCFbI8GCPK/2x9sk425z49NQ6OB2EOGNFCPL+d7q6
+ JnioTUeERV6+sL1WCfj+Iqv1c2QO3QIyaLWGXddvrrJOuSkmOzt4zLspMmOH46/lYHVj
+ rzWbqpuax1My7/8zPZo6CKeAYv/ZKEjQRTrasjhzbEMu0et8UOpNE0D0lBhBcHTXpjwr
+ k8zjuJZN8v6BtaEAGMC+mT36Do/X4SP7mOeMOoO1us/hbiIOgBzjfh9z4FKs+RKS9WEN
+ cXhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723580616; x=1724185416;
+ d=1e100.net; s=20230601; t=1723580625; x=1724185425;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0y9bR77UvCt8TQIygcd82Fr7RaUqdwHl6O1d6ILZIVc=;
- b=fxC+wBgc190IrOqEf33MNmFIxZPsgLBok1I2lcHvQv8nZV/8uzqt9H55DixRroi0SF
- N+L+4e+iq7LKme1dbYYarUDXxOgs385EGxfF6faRhCtNeZLiNi0ai+fXx+j3rkr67ORg
- 9GlLInLKQUwPNcxQ6JJvEyuonYCcQDrdgviMF9r9o2VwT+Wso5uPMlqttEAqJiG7ajU7
- l3cEBX+NRvaUU2dPNQ6CcxVbLCndLiJ1YE6DUELmTTiNqy326Ao5tcnlNT5Z8scz+te/
- vAvwS4YSz3iJ/bqoP0ijYPtjBV7AwqOyg6xGduAClV/78pu6AIZLwV8j4qlpgn/sVCMo
- ykNw==
-X-Gm-Message-State: AOJu0YzDSOI7aPb74h2bFeoz9JnWNEXoj+pDc7/lJQgP0/MdWP0D584i
- fkUWZpJrK2w9+Xv6Kpttt6j2mkfU5DVASSWeKlwWIXhsE+RMJinHfgvtcXLDp6o=
-X-Google-Smtp-Source: AGHT+IFM1gkXM9ToYjXxX7j0j/MfHmTCqLYgDpYtQrLkDfO297zIxetFiBO5Uq30pO6Vp4TTwfObwQ==
-X-Received: by 2002:a05:600c:524b:b0:426:6320:7ddf with SMTP id
- 5b1f17b1804b1-429dd26c229mr3693735e9.35.1723580615541; 
- Tue, 13 Aug 2024 13:23:35 -0700 (PDT)
+ bh=/5zKsXaXwrEo4pGBpcSfU84L/65BuquefdOBBeKcqhg=;
+ b=PPLNY8dAgRQsiCXHeJKP9QPq7WLzsykqP2BGopuFputj1AtNOzfL7BMC8oJ38FGxyQ
+ rhgJid5b4i1K21EDd+CFSS/7gFK0pqm9JPuyQLOwLP2vIM3wA/SLuxxsGP9O4wNQX1+J
+ TN1rZgLXvkKsKQifDS69RWKDbpOzxYgzp7rUNYVGPqfBNxL+OXkGVDLMHwMmHuLMAyBX
+ tEW1TAKPoLcP0lh9Upna7ulo/4iYANMDqFy+eZgQDE3wDUPSuZxaN/bi2uwjc/XvDN6r
+ dzHcp11Ui2siCRMoo4Yhn33YPCSzDUHxVRsesSW8HFijNlAyLBBICRI6xHXSy3ls/goR
+ OfKg==
+X-Gm-Message-State: AOJu0Ywpf7dlEsRagrz5AriZ9bcHBNNSOrTM/d3dQrWJtOvz4HTUTNDd
+ ZuP1L1TIxpHHYJcs+Zn2I6lPTyoEZWlTb0ZiOuE2yeom3tVI4r2TSlC7AoKUYTc=
+X-Google-Smtp-Source: AGHT+IGArDWsoEcwOvzn8dC0t4xiaFUC9edLbCVkwWxOqo9exwED/2QoMwGKBxVP8u16sG+Z1jDXRg==
+X-Received: by 2002:a5d:4985:0:b0:367:9769:35b0 with SMTP id
+ ffacd0b85a97d-37177756b87mr471286f8f.4.1723580625112; 
+ Tue, 13 Aug 2024 13:23:45 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429c750ec0bsm151656175e9.15.2024.08.13.13.23.31
+ ffacd0b85a97d-36e4c36ba5csm11299186f8f.2.2024.08.13.13.23.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Aug 2024 13:23:34 -0700 (PDT)
+ Tue, 13 Aug 2024 13:23:40 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D18D85F959;
- Tue, 13 Aug 2024 21:23:29 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 7859860773;
+ Tue, 13 Aug 2024 21:23:31 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alistair Francis <alistair.francis@wdc.com>,
@@ -89,19 +89,18 @@ Cc: Alistair Francis <alistair.francis@wdc.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Jason Wang <jasowang@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Gustavo Romero <gustavo.romero@linaro.org>
-Subject: [PATCH v2 05/21] configure: Fix GDB version detection for GDB_HAS_MTE
-Date: Tue, 13 Aug 2024 21:23:13 +0100
-Message-Id: <20240813202329.1237572-6-alex.bennee@linaro.org>
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Subject: [PATCH v2 21/21] plugins: fix race condition with scoreboards
+Date: Tue, 13 Aug 2024 21:23:29 +0100
+Message-Id: <20240813202329.1237572-22-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240813202329.1237572-1-alex.bennee@linaro.org>
 References: <20240813202329.1237572-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,36 +123,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gustavo Romero <gustavo.romero@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-The test gdbstub/test-mte.py requires a GDB version that supports the
-qIsAddressTagged packet. According to GDB NEWS [0], this packet was
-first made available in the GDB 15.1 release, not in 15.0, so this
-commit fixes it in configure.
+A deadlock can be created if a new vcpu (a) triggers a scoreboard
+reallocation, and another vcpu (b) wants to create a new scoreboard at
+the same time.
 
-[0] https://www.sourceware.org/gdb/news/
+In this case, (a) holds the plugin lock, and starts an exclusive
+section, waiting for (b). But at the same time, (b) is waiting for
+plugin lock.
 
-Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2477
-Message-Id: <20240804161850.2646299-4-gustavo.romero@linaro.org>
+The solution is to drop the lock before entering the exclusive section.
+
+This bug can be easily reproduced by creating a callback for any tb
+exec, that allocates a new scoreboard. In this case, as soon as we reach
+more than 16 vcpus, the deadlock occurs.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2344
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20240812220748.95167-2-pierrick.bouvier@linaro.org>
+[AJB: tweak var position to meet coding style]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240807114059.2339021-6-alex.bennee@linaro.org>
 ---
- configure | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ plugins/core.c | 43 +++++++++++++++++++++++++++++++------------
+ 1 file changed, 31 insertions(+), 12 deletions(-)
 
-diff --git a/configure b/configure
-index 97de85d710..d08b71f14b 100755
---- a/configure
-+++ b/configure
-@@ -1675,7 +1675,7 @@ for target in $target_list; do
-           echo "GDB=$gdb_bin" >> $config_target_mak
-       fi
+diff --git a/plugins/core.c b/plugins/core.c
+index 12c67b4b4e..2897453cac 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -214,30 +214,49 @@ CPUPluginState *qemu_plugin_create_vcpu_state(void)
  
--      if test "${gdb_arches#*aarch64}" != "$gdb_arches" && version_ge $gdb_version 15.0; then
-+      if test "${gdb_arches#*aarch64}" != "$gdb_arches" && version_ge $gdb_version 15.1; then
-           echo "GDB_HAS_MTE=y" >> $config_target_mak
-       fi
+ static void plugin_grow_scoreboards__locked(CPUState *cpu)
+ {
+-    if (cpu->cpu_index < plugin.scoreboard_alloc_size) {
++    size_t scoreboard_size = plugin.scoreboard_alloc_size;
++    bool need_realloc = false;
++
++    if (cpu->cpu_index < scoreboard_size) {
+         return;
+     }
+ 
+-    bool need_realloc = FALSE;
+-    while (cpu->cpu_index >= plugin.scoreboard_alloc_size) {
+-        plugin.scoreboard_alloc_size *= 2;
+-        need_realloc = TRUE;
++    while (cpu->cpu_index >= scoreboard_size) {
++        scoreboard_size *= 2;
++        need_realloc = true;
+     }
+ 
++    if (!need_realloc) {
++        return;
++    }
+ 
+-    if (!need_realloc || QLIST_EMPTY(&plugin.scoreboards)) {
+-        /* nothing to do, we just updated sizes for future scoreboards */
++    if (QLIST_EMPTY(&plugin.scoreboards)) {
++        /* just update size for future scoreboards */
++        plugin.scoreboard_alloc_size = scoreboard_size;
+         return;
+     }
+ 
++    /*
++     * A scoreboard creation/deletion might be in progress. If a new vcpu is
++     * initialized at the same time, we are safe, as the new
++     * plugin.scoreboard_alloc_size was not yet written.
++     */
++    qemu_rec_mutex_unlock(&plugin.lock);
++
+     /* cpus must be stopped, as tb might still use an existing scoreboard. */
+     start_exclusive();
+-    struct qemu_plugin_scoreboard *score;
+-    QLIST_FOREACH(score, &plugin.scoreboards, entry) {
+-        g_array_set_size(score->data, plugin.scoreboard_alloc_size);
++    /* re-acquire lock */
++    qemu_rec_mutex_lock(&plugin.lock);
++    /* in case another vcpu is created between unlock and exclusive section. */
++    if (scoreboard_size > plugin.scoreboard_alloc_size) {
++        struct qemu_plugin_scoreboard *score;
++        QLIST_FOREACH(score, &plugin.scoreboards, entry) {
++            g_array_set_size(score->data, scoreboard_size);
++        }
++        plugin.scoreboard_alloc_size = scoreboard_size;
++        /* force all tb to be flushed, as scoreboard pointers were changed. */
++        tb_flush(cpu);
+     }
+-    /* force all tb to be flushed, as scoreboard pointers were changed. */
+-    tb_flush(cpu);
+     end_exclusive();
+ }
  
 -- 
 2.39.2
