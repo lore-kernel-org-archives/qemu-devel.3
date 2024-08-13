@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B40D6C52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 16:54:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3171C52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 16:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdulY-0004lq-K5; Tue, 13 Aug 2024 12:53:00 -0400
+	id 1sdulj-0005Uu-Ju; Tue, 13 Aug 2024 12:53:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sdulW-0004ex-K4
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 12:52:58 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1sdulg-0005Ik-BD
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 12:53:08 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sdulT-000191-7o
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 12:52:58 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4280c55e488so507245e9.0
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 09:52:53 -0700 (PDT)
+ id 1sdulT-00019W-IC
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 12:53:08 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-428e1915e18so39860335e9.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 09:52:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723567972; x=1724172772; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wczG768tMwJetPgc7ickx8Sw3AesqFj+1jfdYXgjTyQ=;
- b=el9RDp9nXzaYFpgFwHOItacfTj9Pr190toS9c+6uvlUc7Xtm1cMphqDOF8h65nFOjU
- L1x0EbRDAqBKyFn8mmxhq6LibwhXP3EteLt6xuLibtpMdNngaqrOhrcPBujVafNQVLLh
- evy3+yZFwLlkEhXbzFlqNwgKmCzG9to+SOt/9XnjJJn7qTS+jlCiuLFFb7ngef7RdOjD
- WcGJtFkEuSAK9gz5/7zM1ywKQmc5TBSp+7fTx90I6zmaeItyloDxsoUvWxpnB83mMh5m
- dceUzGQy8XPCfnOVf3H05GM3dhx3F9KBPVA7eVvxdbB4v/Nh1/QFL/iLRNGfyeobQjN9
- MdIQ==
+ d=linaro.org; s=google; t=1723567974; x=1724172774; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Y6mdvqGapAT8l5astMkQBnS/stJvWmHqNyjlZgMMHLw=;
+ b=SiZperWCRy7n1DH3aF5j3MYI7S3kaUsVuHk1Ax6Wg9yX0H42qFnJfJs8EOhxNxTZT3
+ D1ClNf/Dp7jAUr9meFCddQZ+MC5PBXwQgfG9qeqfXyeoXiSDKaMGg9vhGuSRzjOKSI0e
+ XABI2ZK+W5Pu8bVAG7h+aZG0fpn2va0xInpPAeROG0EzgWkazRaHgtbaXij/7JxyiPv4
+ lWdc42gYcwJ0pbZ4t89cghpPAXmFOlNQuztrSLzHc/K44mghbWAFn+BiVFs/Sby17xju
+ k3+7WLSW3WQ6+T1iIIKGtMIOeJ4nRIRE1jbfWPOGWdj2Onhh7xH2ZfOo21dx7s8Jstdx
+ xbJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723567972; x=1724172772;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wczG768tMwJetPgc7ickx8Sw3AesqFj+1jfdYXgjTyQ=;
- b=Ov4cgNY3EioknlCi50TIYfiPASYZmBRmEpG3B3aAGNu9DU9H4l1MIQFnmuBRqMOYc/
- OgSpzuXA9SC3iSyXRCoG0atrJJq0HSbmSofc1YvK1gPV5pcB5UVYs7LYKpziPZPsFys5
- EZB94HLBTTAekFpsUsfeJ/jSbIadZ3j6p2ADtSljyD320QYOoduBvDY3akNybl3RSwLO
- ih3u3o6hbpsk2YeI5HCLFnG4z1CQVQsBZ3M5I9qqGYEUAdw3uqCz5md5h7dwIaY4XtT0
- 6z+pnQ0ufO1Y5jej4GCHKiZRonWhFuyQ0KJ+LJoBzcHNaJH7reWX2jRTkzPMv9IkuRCs
- xoDw==
-X-Gm-Message-State: AOJu0Yw0TppvY75kOJ0Y5dEdb9AE49dLFLC+Xj9xli7FarSApaohAJSv
- ObJw6EMa7R0cMM4uCyrqT8BP0S5zVR3muyM3siQAXRrhZzWxXFKfrkfTEvYfH+tJ7aG4jw7Teg7
- 4
-X-Google-Smtp-Source: AGHT+IHv11gPl9hfp/skgAutmGCTrHMsS/VB4PwyW8vrRKmiHuKNzGSVIh00fiQ62nLmQc0NhSdWhw==
-X-Received: by 2002:a05:600c:450a:b0:426:676a:c4d1 with SMTP id
- 5b1f17b1804b1-429dd0688c5mr2836805e9.8.1723567972111; 
- Tue, 13 Aug 2024 09:52:52 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723567974; x=1724172774;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Y6mdvqGapAT8l5astMkQBnS/stJvWmHqNyjlZgMMHLw=;
+ b=iBHBsraaiijsMyWRdqvuz4Sf4ibo/p+4zy3TYvvBkILhtW4lCDUnGKxZEUhYxqus5v
+ TyFtmZ2HcD/MYNGGUeZVeUaRsghISMUQBH9Oct4A0ZoCLkYc3XTPqQKEY1BID7VK49lx
+ G+08oTcKv1aa/nOTiiom4xt+psa8CNTDNV7YQN4VkuZRoBXpjRyUA09JGw5kMQ0jorUR
+ sO51D8/8RSXk5F8lujgl6LVY4ejVRZKkvlr8X92W7iA9QocniBDD0zWCC4Obulez6MNo
+ tGl0xDW9rOe4Hds6/NK/Nwqv5g0g8DLmMaaIGO5OOCIshsjifxWDwwYiNoqLxW02hXR5
+ HZNg==
+X-Gm-Message-State: AOJu0YxE4kU3e9TZ+9OnK1nXmjs3EtS3CoQya/SVPVcwZ4S+sp04+1k2
+ 0cf6QUT0hz8OOyCTzsTKud7kPEvsAkr/DQ/i3cVNE745rcCFMwNRWAks2bTAghipdGLj2tzYJPw
+ B
+X-Google-Smtp-Source: AGHT+IHRwOMlEIkQgoDUHLkrCCNpL5EJ1vpsBbnzFY9e+BEJswjiu+DDUnL/x3pU4kTnoLgVHwtOvQ==
+X-Received: by 2002:a5d:490f:0:b0:362:5816:f134 with SMTP id
+ ffacd0b85a97d-371777696edmr162735f8f.13.1723567973727; 
+ Tue, 13 Aug 2024 09:52:53 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429c77374a5sm147347015e9.30.2024.08.13.09.52.51
+ 5b1f17b1804b1-429c77374a5sm147347015e9.30.2024.08.13.09.52.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Aug 2024 09:52:51 -0700 (PDT)
+ Tue, 13 Aug 2024 09:52:53 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
@@ -67,21 +68,22 @@ Cc: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
  Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>
-Subject: [PATCH for-9.2 00/10] s390: Convert virtio-ccw,
- cpu to three-phase reset, and followup cleanup
-Date: Tue, 13 Aug 2024 17:52:40 +0100
-Message-Id: <20240813165250.2717650-1-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 02/10] target/s390: Convert CPU to Resettable interface
+Date: Tue, 13 Aug 2024 17:52:42 +0100
+Message-Id: <20240813165250.2717650-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240813165250.2717650-1-peter.maydell@linaro.org>
+References: <20240813165250.2717650-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,528 +100,274 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The main aim of this patchseries is to remove the two remaining uses
-of device_class_set_parent_reset() in the tree, which are virtio-ccw
-and the s390 CPU class. Doing that lets us do some followup cleanup.
-(The diffstat looks alarming but is almost all coccinelle automated
-changes.)
+Convert the s390 CPU to the Resettable interface.  This is slightly
+more involved than the other CPU types were (see commits
+9130cade5fc22..d66e64dd006df) because S390 has its own set of
+different kinds of reset with different behaviours that it needs to
+trigger.
 
-virtio-ccw is a simple conversion, because it's a leaf class and no
-other code interacts with the reset function. So we convert to
-three-phase and resettable_class_set_parent_phases().
-
-The s390 CPU is trickier, because s390 has its own set of different
-kinds of reset (the S390_CPU_RESET_* enum values). At the moment we
-have a single function implementing the reset, which always chains to
-the parent DeviceClass::reset, and which can be called both from the
-CPU object's own DeviceClass::reset method and also from other s390
-code.
-
-I opted to handle this by adding two new S390-CPU-specific reset types
-to the Resettable ResetType enum.  Now instead of having an underlying
-implementation of reset that is s390-specific and which might be
-called either directly or via the DeviceClass::reset method, we can
-implement only the Resettable hold phase method, and have the places
-that need to trigger an s390-specific reset type do so by calling
+We handle this by adding these reset types to the Resettable
+ResetType enum.  Now instead of having an underlying implementation
+of reset that is s390-specific and which might be called either
+directly or via the DeviceClass::reset method, we can implement only
+the Resettable hold phase method, and have the places that need to
+trigger an s390-specific reset type do so by calling
 resettable_reset().
-                            
-The other option would have been to smuggle in the s390 reset type
-via, for instance, a field in the CPU state that we set in
-s390_do_cpu_initial_reset() etc and then examined in the reset method,
-but doing it this way seems cleaner.
 
-The rest of the series is largely cleanup. Some small stuff:
- * remove the now-unused device_class_set_parent_reset() function
- * remove some CPU state struct fields in alpha and hppa that
-   were simply unused
- * fix an accidental comma in xilinx_axidma that confused a
-   Coccinelle script
- * hw/remote/message.c should not be directly invoking the
-   DeviceClass::reset method
+The other option would have been to smuggle in the s390 reset
+type via, for instance, a field in the CPU state that we set
+in s390_do_cpu_initial_reset() etc and then examined in the
+reset method, but doing it this way seems cleaner.
 
-There are also patches here which convert devices from directly
-setting:
-   dc->reset = my_reset_function;
-to using a function call:
-   device_class_set_legacy_reset(dc, my_reset_function);
+The motivation for this change is that this is the last caller
+of the legacy device_class_set_parent_reset() function, and
+removing that will let us clean up some glue code that we added
+for the transition to three-phase reset.
 
-The conversion is entirely scripted using a coccinelle patch, and it
-is responsible for the large diffstat here.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+Tested with 'make check' and 'make check-avocado' only. The
+descriptions of the reset types are borrowed from the commit
+message of f5ae2a4fd8d573cfeba; please check them as I haven't
+got a clue what s390 does ;-)
+---
+ docs/devel/reset.rst    | 10 ++++++++++
+ include/hw/resettable.h |  2 ++
+ target/s390x/cpu.h      | 21 ++++-----------------
+ target/s390x/cpu.c      | 38 +++++++++++++++++---------------------
+ target/s390x/sigp.c     |  8 ++------
+ 5 files changed, 35 insertions(+), 44 deletions(-)
 
-If people feel this is unnecessary churn I'm open to that argument,
-but my motivation here is:
- * it means that people writing device code see the "legacy" word
-   and get a hint that a new QEMU device probably should be using
-   something else (i.e. Resettable)
- * it makes it easier to find the places in the code that are
-   still using legacy-reset with a simple grep
-
-In particular, having done that makes it easier to rename the
-DeviceState::reset field to DeviceState::legacy_reset, and that in
-turn is how I found that hw/remote/ was still directly invoking it.
-
-The last patch removes device_phases_reset(), which was the part of
-the reset transition glue that supported "device is reset via the
-legacy reset method but it is a three-phase device".  Now we know
-there is no way to directly invoke legacy-reset any more, we can drop
-that bit of glue. (The opposite direction, "device is reset via a
-three-phase-aware method but only implements the legacy reset method",
-is still supported.)
-
-I am pondering the idea of a further Coccinelle-driven conversion
-of device_class_set_legacy_reset() calls into three-phase setting
-of the Resettable hold phase method. This would be a zero behaviour
-change, but the difficult part will be where we have devices
-which make direct function calls to their reset function as well
-as registering it as the reset method; I'm not sure if Coccinelle
-can do "match functions which are not referenced elsewhere in the
-file" checks.
-
-Note that my testing here has only been "make check" and
-"make check-avocado", which I know doesn't really exercise reset
-very heavily.
-
-thanks
--- PMM
-
-Peter Maydell (10):
-  hw/s390/virtio-ccw: Convert to three-phase reset
-  target/s390: Convert CPU to Resettable interface
-  hw: Remove device_class_set_parent_reset()
-  target/alpha, hppa: Remove unused parent_reset fields
-  hw/dma/xilinx_axidma: Use semicolon at end of statement, not comma
-  hw/remote/message.c: Don't directly invoke DeviceClass:reset
-  hw: Define new device_class_set_legacy_reset()
-  hw: Use device_class_set_legacy_reset() instead of opencoding
-  hw: Rename DeviceClass::reset field to legacy_reset
-  hw: Remove device_phases_reset()
-
- docs/devel/reset.rst                  | 10 +++++
- scripts/coccinelle/device-reset.cocci | 30 ++++++++++++++
- hw/s390x/virtio-ccw.h                 |  2 +-
- include/hw/qdev-core.h                | 33 +++++++--------
- include/hw/resettable.h               |  2 +
- target/alpha/cpu.h                    |  2 -
- target/hppa/cpu.h                     |  2 -
- target/s390x/cpu.h                    | 21 ++--------
- hw/acpi/erst.c                        |  2 +-
- hw/acpi/piix4.c                       |  2 +-
- hw/adc/aspeed_adc.c                   |  2 +-
- hw/adc/max111x.c                      |  2 +-
- hw/adc/stm32f2xx_adc.c                |  2 +-
- hw/adc/zynq-xadc.c                    |  2 +-
- hw/arm/armsse.c                       |  2 +-
- hw/arm/highbank.c                     |  2 +-
- hw/arm/musicpal.c                     |  6 +--
- hw/arm/pxa2xx.c                       |  4 +-
- hw/arm/strongarm.c                    |  4 +-
- hw/audio/ac97.c                       |  2 +-
- hw/audio/cs4231.c                     |  2 +-
- hw/audio/cs4231a.c                    |  2 +-
- hw/audio/es1370.c                     |  2 +-
- hw/audio/hda-codec.c                  |  2 +-
- hw/audio/intel-hda.c                  |  2 +-
- hw/audio/marvell_88w8618.c            |  2 +-
- hw/audio/pl041.c                      |  2 +-
- hw/audio/via-ac97.c                   |  2 +-
- hw/block/fdc-isa.c                    |  2 +-
- hw/block/fdc-sysbus.c                 |  2 +-
- hw/block/m25p80.c                     |  2 +-
- hw/block/nand.c                       |  2 +-
- hw/block/onenand.c                    |  2 +-
- hw/block/pflash_cfi01.c               |  2 +-
- hw/block/pflash_cfi02.c               |  2 +-
- hw/block/swim.c                       |  2 +-
- hw/char/avr_usart.c                   |  2 +-
- hw/char/cmsdk-apb-uart.c              |  2 +-
- hw/char/digic-uart.c                  |  2 +-
- hw/char/escc.c                        |  2 +-
- hw/char/etraxfs_ser.c                 |  2 +-
- hw/char/exynos4210_uart.c             |  2 +-
- hw/char/goldfish_tty.c                |  2 +-
- hw/char/grlib_apbuart.c               |  2 +-
- hw/char/ibex_uart.c                   |  2 +-
- hw/char/imx_serial.c                  |  2 +-
- hw/char/mcf_uart.c                    |  2 +-
- hw/char/mchp_pfsoc_mmuart.c           |  2 +-
- hw/char/nrf51_uart.c                  |  2 +-
- hw/char/pl011.c                       |  2 +-
- hw/char/renesas_sci.c                 |  2 +-
- hw/char/sclpconsole-lm.c              |  2 +-
- hw/char/sclpconsole.c                 |  2 +-
- hw/char/sh_serial.c                   |  2 +-
- hw/char/shakti_uart.c                 |  2 +-
- hw/char/stm32f2xx_usart.c             |  2 +-
- hw/char/xilinx_uartlite.c             |  2 +-
- hw/core/or-irq.c                      |  2 +-
- hw/core/qdev.c                        | 58 +++++++--------------------
- hw/cxl/switch-mailbox-cci.c           |  2 +-
- hw/display/artist.c                   |  2 +-
- hw/display/ati.c                      |  2 +-
- hw/display/bcm2835_fb.c               |  2 +-
- hw/display/cg3.c                      |  2 +-
- hw/display/dpcd.c                     |  2 +-
- hw/display/exynos4210_fimd.c          |  2 +-
- hw/display/g364fb.c                   |  2 +-
- hw/display/i2c-ddc.c                  |  2 +-
- hw/display/jazz_led.c                 |  2 +-
- hw/display/macfb.c                    |  4 +-
- hw/display/qxl.c                      |  2 +-
- hw/display/sii9022.c                  |  2 +-
- hw/display/sm501.c                    |  4 +-
- hw/display/tcx.c                      |  2 +-
- hw/display/vga-isa.c                  |  2 +-
- hw/display/vga-mmio.c                 |  2 +-
- hw/display/vga-pci.c                  |  2 +-
- hw/display/vmware_vga.c               |  2 +-
- hw/display/xlnx_dp.c                  |  2 +-
- hw/dma/bcm2835_dma.c                  |  2 +-
- hw/dma/i8257.c                        |  2 +-
- hw/dma/pl080.c                        |  2 +-
- hw/dma/pl330.c                        |  2 +-
- hw/dma/rc4030.c                       |  2 +-
- hw/dma/sparc32_dma.c                  |  2 +-
- hw/dma/xilinx_axidma.c                |  4 +-
- hw/dma/xlnx-zdma.c                    |  2 +-
- hw/dma/xlnx-zynq-devcfg.c             |  2 +-
- hw/dma/xlnx_csu_dma.c                 |  2 +-
- hw/dma/xlnx_dpdma.c                   |  2 +-
- hw/fsi/aspeed_apb2opb.c               |  2 +-
- hw/fsi/fsi-master.c                   |  2 +-
- hw/fsi/fsi.c                          |  2 +-
- hw/fsi/lbus.c                         |  2 +-
- hw/gpio/aspeed_gpio.c                 |  2 +-
- hw/gpio/bcm2835_gpio.c                |  2 +-
- hw/gpio/bcm2838_gpio.c                |  2 +-
- hw/gpio/gpio_key.c                    |  2 +-
- hw/gpio/imx_gpio.c                    |  2 +-
- hw/gpio/max7310.c                     |  2 +-
- hw/gpio/mpc8xxx.c                     |  2 +-
- hw/gpio/nrf51_gpio.c                  |  2 +-
- hw/gpio/omap_gpio.c                   |  4 +-
- hw/gpio/pca9552.c                     |  2 +-
- hw/gpio/pca9554.c                     |  2 +-
- hw/gpio/pcf8574.c                     |  2 +-
- hw/gpio/sifive_gpio.c                 |  2 +-
- hw/hyperv/hyperv.c                    |  2 +-
- hw/hyperv/vmbus.c                     |  2 +-
- hw/i2c/aspeed_i2c.c                   |  4 +-
- hw/i2c/bcm2835_i2c.c                  |  2 +-
- hw/i2c/exynos4210_i2c.c               |  2 +-
- hw/i2c/imx_i2c.c                      |  2 +-
- hw/i2c/microbit_i2c.c                 |  2 +-
- hw/i2c/mpc_i2c.c                      |  2 +-
- hw/i2c/omap_i2c.c                     |  2 +-
- hw/i2c/ppc4xx_i2c.c                   |  2 +-
- hw/i2c/smbus_eeprom.c                 |  2 +-
- hw/i386/amd_iommu.c                   |  2 +-
- hw/i386/intel_iommu.c                 |  2 +-
- hw/i386/kvm/i8254.c                   |  2 +-
- hw/i386/kvm/i8259.c                   |  2 +-
- hw/i386/kvm/ioapic.c                  |  2 +-
- hw/i386/kvm/xen_overlay.c             |  2 +-
- hw/i386/port92.c                      |  2 +-
- hw/i386/vapic.c                       |  2 +-
- hw/i386/vmmouse.c                     |  2 +-
- hw/i386/xen/xen_platform.c            |  2 +-
- hw/ide/ahci.c                         |  2 +-
- hw/ide/cmd646.c                       |  2 +-
- hw/ide/ich.c                          |  2 +-
- hw/ide/isa.c                          |  2 +-
- hw/ide/macio.c                        |  2 +-
- hw/ide/microdrive.c                   |  2 +-
- hw/ide/mmio.c                         |  2 +-
- hw/ide/piix.c                         |  4 +-
- hw/ide/sii3112.c                      |  2 +-
- hw/ide/via.c                          |  2 +-
- hw/input/adb-kbd.c                    |  2 +-
- hw/input/adb-mouse.c                  |  2 +-
- hw/input/lm832x.c                     |  2 +-
- hw/input/pckbd.c                      |  4 +-
- hw/intc/allwinner-a10-pic.c           |  2 +-
- hw/intc/apic_common.c                 |  2 +-
- hw/intc/armv7m_nvic.c                 |  2 +-
- hw/intc/aspeed_intc.c                 |  2 +-
- hw/intc/aspeed_vic.c                  |  2 +-
- hw/intc/bcm2835_ic.c                  |  2 +-
- hw/intc/bcm2836_control.c             |  2 +-
- hw/intc/exynos4210_combiner.c         |  2 +-
- hw/intc/goldfish_pic.c                |  2 +-
- hw/intc/grlib_irqmp.c                 |  2 +-
- hw/intc/heathrow_pic.c                |  2 +-
- hw/intc/i8259.c                       |  2 +-
- hw/intc/imx_avic.c                    |  2 +-
- hw/intc/imx_gpcv2.c                   |  2 +-
- hw/intc/ioapic.c                      |  2 +-
- hw/intc/loongarch_extioi.c            |  2 +-
- hw/intc/loongarch_pch_pic.c           |  2 +-
- hw/intc/m68k_irqc.c                   |  2 +-
- hw/intc/omap_intc.c                   |  4 +-
- hw/intc/openpic.c                     |  2 +-
- hw/intc/openpic_kvm.c                 |  2 +-
- hw/intc/pl190.c                       |  2 +-
- hw/intc/ppc-uic.c                     |  2 +-
- hw/intc/s390_flic.c                   |  2 +-
- hw/intc/s390_flic_kvm.c               |  2 +-
- hw/intc/sifive_plic.c                 |  2 +-
- hw/intc/slavio_intctl.c               |  2 +-
- hw/intc/xlnx-pmu-iomod-intc.c         |  2 +-
- hw/intc/xlnx-zynqmp-ipi.c             |  2 +-
- hw/isa/lpc_ich9.c                     |  2 +-
- hw/isa/pc87312.c                      |  2 +-
- hw/isa/piix.c                         |  2 +-
- hw/isa/vt82c686.c                     | 10 ++---
- hw/m68k/mcf5206.c                     |  2 +-
- hw/m68k/mcf_intc.c                    |  2 +-
- hw/m68k/next-cube.c                   |  2 +-
- hw/m68k/next-kbd.c                    |  2 +-
- hw/mem/cxl_type3.c                    |  2 +-
- hw/misc/a9scu.c                       |  2 +-
- hw/misc/allwinner-cpucfg.c            |  2 +-
- hw/misc/allwinner-h3-ccu.c            |  2 +-
- hw/misc/allwinner-h3-dramc.c          |  2 +-
- hw/misc/allwinner-h3-sysctrl.c        |  2 +-
- hw/misc/allwinner-r40-ccu.c           |  2 +-
- hw/misc/allwinner-r40-dramc.c         |  2 +-
- hw/misc/allwinner-sid.c               |  2 +-
- hw/misc/allwinner-sramc.c             |  2 +-
- hw/misc/applesmc.c                    |  2 +-
- hw/misc/arm_l2x0.c                    |  2 +-
- hw/misc/arm_sysctl.c                  |  2 +-
- hw/misc/armsse-cpu-pwrctrl.c          |  2 +-
- hw/misc/armsse-mhu.c                  |  2 +-
- hw/misc/aspeed_hace.c                 |  2 +-
- hw/misc/aspeed_i3c.c                  |  4 +-
- hw/misc/aspeed_lpc.c                  |  2 +-
- hw/misc/aspeed_peci.c                 |  2 +-
- hw/misc/aspeed_sbc.c                  |  2 +-
- hw/misc/aspeed_scu.c                  | 10 ++---
- hw/misc/aspeed_sdmc.c                 |  4 +-
- hw/misc/aspeed_xdma.c                 |  2 +-
- hw/misc/avr_power.c                   |  2 +-
- hw/misc/bcm2835_cprman.c              |  8 ++--
- hw/misc/bcm2835_mbox.c                |  2 +-
- hw/misc/bcm2835_mphi.c                |  2 +-
- hw/misc/bcm2835_powermgt.c            |  2 +-
- hw/misc/bcm2835_rng.c                 |  2 +-
- hw/misc/bcm2835_thermal.c             |  2 +-
- hw/misc/eccmemctl.c                   |  2 +-
- hw/misc/exynos4210_clk.c              |  2 +-
- hw/misc/exynos4210_pmu.c              |  2 +-
- hw/misc/exynos4210_rng.c              |  2 +-
- hw/misc/imx25_ccm.c                   |  2 +-
- hw/misc/imx31_ccm.c                   |  2 +-
- hw/misc/imx6_ccm.c                    |  2 +-
- hw/misc/imx6_src.c                    |  2 +-
- hw/misc/imx6ul_ccm.c                  |  2 +-
- hw/misc/imx7_ccm.c                    |  4 +-
- hw/misc/imx7_snvs.c                   |  2 +-
- hw/misc/imx7_src.c                    |  2 +-
- hw/misc/imx_rngc.c                    |  2 +-
- hw/misc/iotkit-secctl.c               |  2 +-
- hw/misc/iotkit-sysctl.c               |  2 +-
- hw/misc/ivshmem.c                     |  2 +-
- hw/misc/lasi.c                        |  2 +-
- hw/misc/led.c                         |  2 +-
- hw/misc/macio/cuda.c                  |  2 +-
- hw/misc/macio/gpio.c                  |  2 +-
- hw/misc/macio/mac_dbdma.c             |  2 +-
- hw/misc/macio/pmu.c                   |  2 +-
- hw/misc/mips_cmgcr.c                  |  2 +-
- hw/misc/mips_cpc.c                    |  2 +-
- hw/misc/mips_itu.c                    |  2 +-
- hw/misc/mps2-fpgaio.c                 |  2 +-
- hw/misc/mps2-scc.c                    |  2 +-
- hw/misc/msf2-sysreg.c                 |  2 +-
- hw/misc/nrf51_rng.c                   |  2 +-
- hw/misc/pci-testdev.c                 |  2 +-
- hw/misc/sifive_e_aon.c                |  2 +-
- hw/misc/sifive_u_prci.c               |  2 +-
- hw/misc/slavio_misc.c                 |  2 +-
- hw/misc/stm32f2xx_syscfg.c            |  2 +-
- hw/misc/stm32f4xx_exti.c              |  2 +-
- hw/misc/stm32f4xx_syscfg.c            |  2 +-
- hw/misc/tz-mpc.c                      |  2 +-
- hw/misc/tz-msc.c                      |  2 +-
- hw/misc/tz-ppc.c                      |  2 +-
- hw/misc/virt_ctrl.c                   |  2 +-
- hw/misc/xlnx-versal-cfu.c             |  2 +-
- hw/net/allwinner-sun8i-emac.c         |  2 +-
- hw/net/allwinner_emac.c               |  2 +-
- hw/net/cadence_gem.c                  |  2 +-
- hw/net/can/can_kvaser_pci.c           |  2 +-
- hw/net/can/can_mioe3680_pci.c         |  2 +-
- hw/net/can/can_pcm3680_pci.c          |  2 +-
- hw/net/can/ctucan_pci.c               |  2 +-
- hw/net/can/xlnx-versal-canfd.c        |  2 +-
- hw/net/dp8393x.c                      |  2 +-
- hw/net/etraxfs_eth.c                  |  2 +-
- hw/net/fsl_etsec/etsec.c              |  2 +-
- hw/net/ftgmac100.c                    |  4 +-
- hw/net/imx_fec.c                      |  2 +-
- hw/net/lan9118.c                      |  2 +-
- hw/net/lance.c                        |  2 +-
- hw/net/lasi_i82596.c                  |  2 +-
- hw/net/mcf_fec.c                      |  2 +-
- hw/net/mipsnet.c                      |  2 +-
- hw/net/msf2-emac.c                    |  2 +-
- hw/net/npcm7xx_emc.c                  |  2 +-
- hw/net/npcm_gmac.c                    |  2 +-
- hw/net/opencores_eth.c                |  2 +-
- hw/net/pcnet-pci.c                    |  2 +-
- hw/net/rocker/rocker.c                |  2 +-
- hw/net/rtl8139.c                      |  2 +-
- hw/net/smc91c111.c                    |  2 +-
- hw/net/stellaris_enet.c               |  2 +-
- hw/net/sungem.c                       |  2 +-
- hw/net/sunhme.c                       |  2 +-
- hw/net/tulip.c                        |  2 +-
- hw/net/vmxnet3.c                      |  2 +-
- hw/net/xilinx_axienet.c               |  2 +-
- hw/net/xilinx_ethlite.c               |  2 +-
- hw/nvme/ctrl.c                        |  2 +-
- hw/nvram/eeprom_at24c.c               |  2 +-
- hw/nvram/fw_cfg.c                     |  2 +-
- hw/nvram/mac_nvram.c                  |  2 +-
- hw/nvram/nrf51_nvm.c                  |  2 +-
- hw/pci-bridge/cxl_downstream.c        |  2 +-
- hw/pci-bridge/cxl_upstream.c          |  2 +-
- hw/pci-bridge/i82801b11.c             |  2 +-
- hw/pci-bridge/pci_bridge_dev.c        |  2 +-
- hw/pci-bridge/pci_expander_bridge.c   |  2 +-
- hw/pci-bridge/pcie_pci_bridge.c       |  2 +-
- hw/pci-bridge/simba.c                 |  2 +-
- hw/pci-bridge/xio3130_downstream.c    |  2 +-
- hw/pci-bridge/xio3130_upstream.c      |  2 +-
- hw/pci-host/astro.c                   |  4 +-
- hw/pci-host/designware.c              |  2 +-
- hw/pci-host/dino.c                    |  2 +-
- hw/pci-host/gt64120.c                 |  2 +-
- hw/pci-host/mv64361.c                 |  2 +-
- hw/pci-host/ppc440_pcix.c             |  2 +-
- hw/pci-host/q35.c                     |  2 +-
- hw/pci-host/sabre.c                   |  2 +-
- hw/pci-host/versatile.c               |  2 +-
- hw/pci-host/xilinx-pcie.c             |  2 +-
- hw/ppc/pnv_psi.c                      |  4 +-
- hw/ppc/ppc405_boards.c                |  2 +-
- hw/ppc/ppc405_uc.c                    | 12 +++---
- hw/ppc/ppc4xx_devs.c                  |  6 +--
- hw/ppc/ppc4xx_sdram.c                 |  4 +-
- hw/ppc/ppce500_spin.c                 |  2 +-
- hw/ppc/spapr_cpu_core.c               |  2 +-
- hw/ppc/spapr_iommu.c                  |  2 +-
- hw/ppc/spapr_pci.c                    |  2 +-
- hw/ppc/spapr_vio.c                    |  2 +-
- hw/remote/message.c                   |  5 +--
- hw/remote/proxy.c                     |  2 +-
- hw/rtc/allwinner-rtc.c                |  2 +-
- hw/rtc/aspeed_rtc.c                   |  2 +-
- hw/rtc/ds1338.c                       |  2 +-
- hw/rtc/exynos4210_rtc.c               |  2 +-
- hw/rtc/goldfish_rtc.c                 |  2 +-
- hw/rtc/ls7a_rtc.c                     |  2 +-
- hw/rtc/m48t59-isa.c                   |  2 +-
- hw/rtc/m48t59.c                       |  2 +-
- hw/rtc/xlnx-zynqmp-rtc.c              |  2 +-
- hw/s390x/ccw-device.c                 |  2 +-
- hw/s390x/event-facility.c             |  2 +-
- hw/s390x/ipl.c                        |  2 +-
- hw/s390x/s390-pci-bus.c               |  4 +-
- hw/s390x/sclpquiesce.c                |  2 +-
- hw/s390x/virtio-ccw.c                 | 13 +++---
- hw/scsi/esp-pci.c                     |  2 +-
- hw/scsi/esp.c                         |  2 +-
- hw/scsi/lsi53c895a.c                  |  2 +-
- hw/scsi/megasas.c                     |  2 +-
- hw/scsi/mptsas.c                      |  2 +-
- hw/scsi/scsi-disk.c                   |  2 +-
- hw/scsi/scsi-generic.c                |  2 +-
- hw/scsi/vmw_pvscsi.c                  |  2 +-
- hw/sd/allwinner-sdhost.c              |  2 +-
- hw/sd/aspeed_sdhci.c                  |  2 +-
- hw/sd/bcm2835_sdhost.c                |  2 +-
- hw/sd/cadence_sdhci.c                 |  2 +-
- hw/sd/npcm7xx_sdhci.c                 |  2 +-
- hw/sd/pl181.c                         |  2 +-
- hw/sd/pxa2xx_mmci.c                   |  2 +-
- hw/sd/sd.c                            |  2 +-
- hw/sd/sdhci.c                         |  2 +-
- hw/sd/ssi-sd.c                        |  2 +-
- hw/sensor/dps310.c                    |  2 +-
- hw/sensor/emc141x.c                   |  2 +-
- hw/sensor/lsm303dlhc_mag.c            |  2 +-
- hw/sparc/sun4m_iommu.c                |  2 +-
- hw/sparc64/sun4u_iommu.c              |  2 +-
- hw/ssi/aspeed_smc.c                   |  2 +-
- hw/ssi/bcm2835_spi.c                  |  2 +-
- hw/ssi/ibex_spi_host.c                |  2 +-
- hw/ssi/imx_spi.c                      |  2 +-
- hw/ssi/mss-spi.c                      |  2 +-
- hw/ssi/pl022.c                        |  2 +-
- hw/ssi/pnv_spi.c                      |  2 +-
- hw/ssi/sifive_spi.c                   |  2 +-
- hw/ssi/stm32f2xx_spi.c                |  2 +-
- hw/ssi/xilinx_spi.c                   |  2 +-
- hw/ssi/xilinx_spips.c                 |  4 +-
- hw/ssi/xlnx-versal-ospi.c             |  2 +-
- hw/timer/a9gtimer.c                   |  2 +-
- hw/timer/allwinner-a10-pit.c          |  2 +-
- hw/timer/arm_mptimer.c                |  2 +-
- hw/timer/armv7m_systick.c             |  2 +-
- hw/timer/aspeed_timer.c               |  2 +-
- hw/timer/avr_timer16.c                |  2 +-
- hw/timer/bcm2835_systmr.c             |  2 +-
- hw/timer/cmsdk-apb-dualtimer.c        |  2 +-
- hw/timer/cmsdk-apb-timer.c            |  2 +-
- hw/timer/digic-timer.c                |  2 +-
- hw/timer/exynos4210_mct.c             |  2 +-
- hw/timer/exynos4210_pwm.c             |  2 +-
- hw/timer/grlib_gptimer.c              |  2 +-
- hw/timer/hpet.c                       |  2 +-
- hw/timer/i8254.c                      |  2 +-
- hw/timer/ibex_timer.c                 |  2 +-
- hw/timer/imx_epit.c                   |  2 +-
- hw/timer/imx_gpt.c                    |  2 +-
- hw/timer/nrf51_timer.c                |  2 +-
- hw/timer/renesas_cmt.c                |  2 +-
- hw/timer/renesas_tmr.c                |  2 +-
- hw/timer/sifive_pwm.c                 |  2 +-
- hw/timer/slavio_timer.c               |  2 +-
- hw/timer/sse-counter.c                |  2 +-
- hw/timer/sse-timer.c                  |  2 +-
- hw/timer/stm32f2xx_timer.c            |  2 +-
- hw/tpm/tpm_tis_i2c.c                  |  2 +-
- hw/tpm/tpm_tis_isa.c                  |  2 +-
- hw/tpm/tpm_tis_sysbus.c               |  2 +-
- hw/tricore/tricore_testdevice.c       |  2 +-
- hw/usb/hcd-dwc3.c                     |  2 +-
- hw/usb/hcd-ehci-pci.c                 |  2 +-
- hw/usb/hcd-ehci-sysbus.c              |  2 +-
- hw/usb/hcd-ohci-pci.c                 |  2 +-
- hw/usb/hcd-ohci-sysbus.c              |  2 +-
- hw/usb/hcd-uhci.c                     |  2 +-
- hw/usb/hcd-xhci-pci.c                 |  2 +-
- hw/usb/hcd-xhci-sysbus.c              |  2 +-
- hw/usb/hcd-xhci.c                     |  2 +-
- hw/usb/imx-usb-phy.c                  |  2 +-
- hw/usb/tusb6010.c                     |  2 +-
- hw/vfio/ap.c                          |  2 +-
- hw/vfio/ccw.c                         |  2 +-
- hw/vfio/pci.c                         |  2 +-
- hw/virtio/virtio-mmio.c               |  2 +-
- hw/watchdog/cmsdk-apb-watchdog.c      |  2 +-
- hw/watchdog/sbsa_gwdt.c               |  2 +-
- hw/watchdog/wdt_aspeed.c              |  2 +-
- hw/watchdog/wdt_diag288.c             |  2 +-
- hw/watchdog/wdt_i6300esb.c            |  2 +-
- hw/watchdog/wdt_ib700.c               |  2 +-
- hw/watchdog/wdt_imx2.c                |  2 +-
- target/s390x/cpu.c                    | 38 ++++++++----------
- target/s390x/sigp.c                   |  8 +---
- 423 files changed, 553 insertions(+), 569 deletions(-)
- create mode 100644 scripts/coccinelle/device-reset.cocci
-
+diff --git a/docs/devel/reset.rst b/docs/devel/reset.rst
+index 9746a4e8a0b..ed41e09f16d 100644
+--- a/docs/devel/reset.rst
++++ b/docs/devel/reset.rst
+@@ -44,6 +44,16 @@ The Resettable interface handles reset types with an enum ``ResetType``:
+   value on each cold reset, such as RNG seed information, and which they
+   must not reinitialize on a snapshot-load reset.
+ 
++``RESET_TYPE_S390_CPU_NORMAL``
++  This is only used for S390 CPU objects; it clears interrupts, stops
++  processing, and clears the TLB, but does not touch register contents.
++
++``RESET_TYPE_S390_CPU_INITIAL``
++  This is only used for S390 CPU objects; it does everything
++  ``RESET_TYPE_S390_CPU_NORMAL`` does and also clears the PSW, prefix,
++  FPC, timer and control registers. It does not touch gprs, fprs or acrs.
++
++
+ Devices which implement reset methods must treat any unknown ``ResetType``
+ as equivalent to ``RESET_TYPE_COLD``; this will reduce the amount of
+ existing code we need to change if we add more types in future.
+diff --git a/include/hw/resettable.h b/include/hw/resettable.h
+index 7e249deb8b5..83b561fc830 100644
+--- a/include/hw/resettable.h
++++ b/include/hw/resettable.h
+@@ -36,6 +36,8 @@ typedef struct ResettableState ResettableState;
+ typedef enum ResetType {
+     RESET_TYPE_COLD,
+     RESET_TYPE_SNAPSHOT_LOAD,
++    RESET_TYPE_S390_CPU_INITIAL,
++    RESET_TYPE_S390_CPU_NORMAL,
+ } ResetType;
+ 
+ /*
+diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
+index d6b75ad0e08..6a644724038 100644
+--- a/target/s390x/cpu.h
++++ b/target/s390x/cpu.h
+@@ -177,19 +177,11 @@ struct ArchCPU {
+     uint32_t irqstate_saved_size;
+ };
+ 
+-typedef enum cpu_reset_type {
+-    S390_CPU_RESET_NORMAL,
+-    S390_CPU_RESET_INITIAL,
+-    S390_CPU_RESET_CLEAR,
+-} cpu_reset_type;
+-
+ /**
+  * S390CPUClass:
+  * @parent_realize: The parent class' realize handler.
+- * @parent_reset: The parent class' reset handler.
++ * @parent_phases: The parent class' reset phase handlers.
+  * @load_normal: Performs a load normal.
+- * @cpu_reset: Performs a CPU reset.
+- * @initial_cpu_reset: Performs an initial CPU reset.
+  *
+  * An S/390 CPU model.
+  */
+@@ -203,9 +195,8 @@ struct S390CPUClass {
+     const char *desc;
+ 
+     DeviceRealize parent_realize;
+-    DeviceReset parent_reset;
++    ResettablePhases parent_phases;
+     void (*load_normal)(CPUState *cpu);
+-    void (*reset)(CPUState *cpu, cpu_reset_type type);
+ };
+ 
+ #ifndef CONFIG_USER_ONLY
+@@ -872,16 +863,12 @@ static inline void s390_do_cpu_full_reset(CPUState *cs, run_on_cpu_data arg)
+ 
+ static inline void s390_do_cpu_reset(CPUState *cs, run_on_cpu_data arg)
+ {
+-    S390CPUClass *scc = S390_CPU_GET_CLASS(cs);
+-
+-    scc->reset(cs, S390_CPU_RESET_NORMAL);
++    resettable_reset(OBJECT(cs), RESET_TYPE_S390_CPU_NORMAL);
+ }
+ 
+ static inline void s390_do_cpu_initial_reset(CPUState *cs, run_on_cpu_data arg)
+ {
+-    S390CPUClass *scc = S390_CPU_GET_CLASS(cs);
+-
+-    scc->reset(cs, S390_CPU_RESET_INITIAL);
++    resettable_reset(OBJECT(cs), RESET_TYPE_S390_CPU_INITIAL);
+ }
+ 
+ static inline void s390_do_cpu_load_normal(CPUState *cs, run_on_cpu_data arg)
+diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+index 0fbfcd35d83..4e41a3dff59 100644
+--- a/target/s390x/cpu.c
++++ b/target/s390x/cpu.c
+@@ -32,6 +32,7 @@
+ #include "sysemu/hw_accel.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/qdev-properties-system.h"
++#include "hw/resettable.h"
+ #include "fpu/softfloat-helpers.h"
+ #include "disas/capstone.h"
+ #include "sysemu/tcg.h"
+@@ -162,23 +163,25 @@ static void s390_query_cpu_fast(CPUState *cpu, CpuInfoFast *value)
+ #endif
+ }
+ 
+-/* S390CPUClass::reset() */
+-static void s390_cpu_reset(CPUState *s, cpu_reset_type type)
++/* S390CPUClass Resettable reset_hold phase method */
++static void s390_cpu_reset_hold(Object *obj, ResetType type)
+ {
+-    S390CPU *cpu = S390_CPU(s);
++    S390CPU *cpu = S390_CPU(obj);
+     S390CPUClass *scc = S390_CPU_GET_CLASS(cpu);
+     CPUS390XState *env = &cpu->env;
+-    DeviceState *dev = DEVICE(s);
+ 
+-    scc->parent_reset(dev);
++    if (scc->parent_phases.hold) {
++        scc->parent_phases.hold(obj, type);
++    }
+     cpu->env.sigp_order = 0;
+     s390_cpu_set_state(S390_CPU_STATE_STOPPED, cpu);
+ 
+     switch (type) {
+-    case S390_CPU_RESET_CLEAR:
++    default:
++        /* RESET_TYPE_COLD: power on or "clear" reset */
+         memset(env, 0, offsetof(CPUS390XState, start_initial_reset_fields));
+         /* fall through */
+-    case S390_CPU_RESET_INITIAL:
++    case RESET_TYPE_S390_CPU_INITIAL:
+         /* initial reset does not clear everything! */
+         memset(&env->start_initial_reset_fields, 0,
+                offsetof(CPUS390XState, start_normal_reset_fields) -
+@@ -203,7 +206,7 @@ static void s390_cpu_reset(CPUState *s, cpu_reset_type type)
+         set_float_detect_tininess(float_tininess_before_rounding,
+                                   &env->fpu_status);
+        /* fall through */
+-    case S390_CPU_RESET_NORMAL:
++    case RESET_TYPE_S390_CPU_NORMAL:
+         env->psw.mask &= ~PSW_MASK_RI;
+         memset(&env->start_normal_reset_fields, 0,
+                offsetof(CPUS390XState, end_reset_fields) -
+@@ -212,20 +215,18 @@ static void s390_cpu_reset(CPUState *s, cpu_reset_type type)
+         env->pfault_token = -1UL;
+         env->bpbc = false;
+         break;
+-    default:
+-        g_assert_not_reached();
+     }
+ 
+     /* Reset state inside the kernel that we cannot access yet from QEMU. */
+     if (kvm_enabled()) {
+         switch (type) {
+-        case S390_CPU_RESET_CLEAR:
++        default:
+             kvm_s390_reset_vcpu_clear(cpu);
+             break;
+-        case S390_CPU_RESET_INITIAL:
++        case RESET_TYPE_S390_CPU_INITIAL:
+             kvm_s390_reset_vcpu_initial(cpu);
+             break;
+-        case S390_CPU_RESET_NORMAL:
++        case RESET_TYPE_S390_CPU_NORMAL:
+             kvm_s390_reset_vcpu_normal(cpu);
+             break;
+         }
+@@ -315,12 +316,6 @@ static Property s390x_cpu_properties[] = {
+     DEFINE_PROP_END_OF_LIST()
+ };
+ 
+-static void s390_cpu_reset_full(DeviceState *dev)
+-{
+-    CPUState *s = CPU(dev);
+-    return s390_cpu_reset(s, S390_CPU_RESET_CLEAR);
+-}
+-
+ #ifdef CONFIG_TCG
+ #include "hw/core/tcg-cpu-ops.h"
+ 
+@@ -383,15 +378,16 @@ static void s390_cpu_class_init(ObjectClass *oc, void *data)
+     S390CPUClass *scc = S390_CPU_CLASS(oc);
+     CPUClass *cc = CPU_CLASS(scc);
+     DeviceClass *dc = DEVICE_CLASS(oc);
++    ResettableClass *rc = RESETTABLE_CLASS(oc);
+ 
+     device_class_set_parent_realize(dc, s390_cpu_realizefn,
+                                     &scc->parent_realize);
+     device_class_set_props(dc, s390x_cpu_properties);
+     dc->user_creatable = true;
+ 
+-    device_class_set_parent_reset(dc, s390_cpu_reset_full, &scc->parent_reset);
++    resettable_class_set_parent_phases(rc, NULL, s390_cpu_reset_hold, NULL,
++                                       &scc->parent_phases);
+ 
+-    scc->reset = s390_cpu_reset;
+     cc->class_by_name = s390_cpu_class_by_name,
+     cc->has_work = s390_cpu_has_work;
+     cc->mmu_index = s390x_cpu_mmu_index;
+diff --git a/target/s390x/sigp.c b/target/s390x/sigp.c
+index ad0ad61177d..1c99ec88009 100644
+--- a/target/s390x/sigp.c
++++ b/target/s390x/sigp.c
+@@ -251,24 +251,20 @@ static void sigp_restart(CPUState *cs, run_on_cpu_data arg)
+ 
+ static void sigp_initial_cpu_reset(CPUState *cs, run_on_cpu_data arg)
+ {
+-    S390CPU *cpu = S390_CPU(cs);
+-    S390CPUClass *scc = S390_CPU_GET_CLASS(cpu);
+     SigpInfo *si = arg.host_ptr;
+ 
+     cpu_synchronize_state(cs);
+-    scc->reset(cs, S390_CPU_RESET_INITIAL);
++    resettable_reset(OBJECT(cs), RESET_TYPE_S390_CPU_INITIAL);
+     cpu_synchronize_post_reset(cs);
+     si->cc = SIGP_CC_ORDER_CODE_ACCEPTED;
+ }
+ 
+ static void sigp_cpu_reset(CPUState *cs, run_on_cpu_data arg)
+ {
+-    S390CPU *cpu = S390_CPU(cs);
+-    S390CPUClass *scc = S390_CPU_GET_CLASS(cpu);
+     SigpInfo *si = arg.host_ptr;
+ 
+     cpu_synchronize_state(cs);
+-    scc->reset(cs, S390_CPU_RESET_NORMAL);
++    resettable_reset(OBJECT(cs), RESET_TYPE_COLD);
+     cpu_synchronize_post_reset(cs);
+     si->cc = SIGP_CC_ORDER_CODE_ACCEPTED;
+ }
 -- 
 2.34.1
 
