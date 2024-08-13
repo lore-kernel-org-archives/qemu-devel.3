@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F335EC52D7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 20:25:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 899EDC52D7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 20:25:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdy41-0006fM-F6; Tue, 13 Aug 2024 16:24:17 -0400
+	id 1sdy44-0006xs-Sr; Tue, 13 Aug 2024 16:24:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sdy3i-0005Ec-65
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:23:58 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1sdy3u-0006AI-NJ
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:24:10 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sdy3Q-0006Cm-V6
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:23:57 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-369c609d0c7so4092783f8f.3
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 13:23:39 -0700 (PDT)
+ id 1sdy3T-0006Ho-Lo
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:24:09 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-429d2d7be1eso1435125e9.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 13:23:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723580618; x=1724185418; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723580622; x=1724185422; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vQP4Lzk083fG8NuJjpSlR+Yr0hOmETRemBesxY0PRmM=;
- b=CzjgfNnbYHCIOpoA/Ftz4i9TGBf1cfgKz54loszxSewxjiqPeRQucXty21leKYBVZK
- lxWORObsi19p71RfcC0LW9vLeigigqQ4lajmQ+rTf8NlDe285Mkgro08DylaQgzbgeoI
- hi64YuzxJorVj0njqh2BEyLf4aNDkpLjnaco4AwAzIO36gzKyib+7c59sbv2wxLr+PDs
- F7gmjlGij6TBLSJ0bPvBd95hkfQ53Lk7tuJHmdyX5OB5x+KBp7ioW559dDaCoyDdWxOb
- MCiEtSsYW+fNfDufeOZf+hPtEzuEi+7+GmWIEfoGCZEJmFUSh4zgw8v+xelTFJhAQXbt
- z7tg==
+ bh=9jT/o7Fq8lZPjdt1o7XFYsUh6vWp3xGW473B+uKXLYg=;
+ b=ItYhHMNgyc4ZPBZx4a1aL5GvVcXkh8HBoFJ9leBFoTymoK+hmYEVAlvrToaTkCuxOm
+ e2NPBW62GK5MdazcahKkEyQ1zpCl+p6ZvfJR2t91JJuq8uGwGiC7Oke4XNplyCGVt6r+
+ EbnBggsbNgN+HvGsSX5NO4Xrdbuh479zqH1xVMBwaFIIBBqmf9AGvEU1BBN6HpGu6tAu
+ 3hcY/+J2AeMowABxlzYcN+encjfbQ3b+PIf0+KPrmba2Tr/dwIKiKmk16djYP6DmKwdM
+ vvnvAraZmowZUFBesS8sXC41+z26i/n9qy945Cix018nC8J1kkjDEZf+Nl7uBbFKgBB7
+ +ozQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723580618; x=1724185418;
+ d=1e100.net; s=20230601; t=1723580622; x=1724185422;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vQP4Lzk083fG8NuJjpSlR+Yr0hOmETRemBesxY0PRmM=;
- b=YSVCb/HZuhf7CF8D3DwlZxnsH0f8QCqqOwzwOVjClNa0SErcC6+S8Supc+RJ6HQorx
- EX4nrOYiXadOXOgu2tymtmgKIG50ParrqKZkWUsuTFqu5dKPZ2sr4io7G3caUc9DyCTb
- VixxUMuuDWyd0XQ20REk5OhVdsl0LJcTghaOXUNeG/Nj4rK44/B1j/cEU6WknHv/hWQ8
- 8dLYaycXi2tmApgZkNiZtyTZJaMUkrG3nA2JtE5sgj4qFFku0C4etETw0GyxfKflJ1V4
- Ot5LKAQ3FP2LHLhD0HqHluBrWt+ctHCeMcwCLmWO2aRRkToVom1GeyhCr3+3pEilswqb
- BdFg==
-X-Gm-Message-State: AOJu0Yzf3BhC/Pf9H55Q3mZGi0JOxcKQWXpuOO6uYdcYRmkZGAJNy/HE
- oNS6ad/bvnWhjOjpeHS4JHYT5ziZYMol9Bad+Pr1sQJ6EwFF77LS5YWkv8OlYSI=
-X-Google-Smtp-Source: AGHT+IHzSVZu+eoV4IOl+Tvr1lbYuHvjj8m1fFN5cAonIC+bSJbWWIMBMcpgf+Pbo9r5SqehpOJ7BA==
-X-Received: by 2002:a05:6000:e04:b0:36b:3563:15f4 with SMTP id
- ffacd0b85a97d-371777fefe0mr508243f8f.56.1723580617457; 
- Tue, 13 Aug 2024 13:23:37 -0700 (PDT)
+ bh=9jT/o7Fq8lZPjdt1o7XFYsUh6vWp3xGW473B+uKXLYg=;
+ b=SNnU8AzileNHgSA+QiAvARbgMEaoL+Z1DMvkyskaq0pUmlwxbdbTFOljq0zbLE28GD
+ 2NeoXQ+pjDBkl0vh+6kyBIMo23HGdykD9sWPsA1xw3AZkc/tFh6s9qtdp3FfS6t4EjW7
+ hhZOMMEPqxguK8NdudXzJN9b5t+UWIyxh1mZrDhczjWaDnfKgthEqAcqM4F/EgLnhh8I
+ 8Cum5OHwh8V7Dr5axDIQFXo5kVkOqDxA/0k9MiOfx2qAk0ghp3CBopW+WKCIAnlwn2LS
+ GRUh4DX4a6Gf4sRRvRaN3+DzB8jMZXHrFStgfv9mxKJzFhOquYWKahCGFngdoySo1fHz
+ 7yOg==
+X-Gm-Message-State: AOJu0Yya39y19iDdKDzmIpvzjhLXATp85yG7Q39TSSosJ4mbL3x00rxJ
+ G1hFnlrbZurwKzkwMMtTBp6GibDl60/uOz7pP7zfR0+lof7u87aI/bU8BWzjQ3E=
+X-Google-Smtp-Source: AGHT+IFh9WpnsQXKqfTkD/SNN/9bnil5c9EFEmprDaSC1+n1Y4K+gggOSupWRHpgSXbMjKT3Mw2XNQ==
+X-Received: by 2002:a05:600c:4689:b0:426:5b19:d2b3 with SMTP id
+ 5b1f17b1804b1-429d62f6d77mr33720805e9.14.1723580621586; 
+ Tue, 13 Aug 2024 13:23:41 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36e4e51ed16sm11208371f8f.66.2024.08.13.13.23.31
+ 5b1f17b1804b1-429c750ef58sm151364125e9.16.2024.08.13.13.23.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Aug 2024 13:23:34 -0700 (PDT)
+ Tue, 13 Aug 2024 13:23:38 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0CFC95F9DA;
+ by draig.lan (Postfix) with ESMTP id 707085FCE1;
  Tue, 13 Aug 2024 21:23:30 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -89,19 +89,21 @@ Cc: Alistair Francis <alistair.francis@wdc.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Jason Wang <jasowang@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH v2 07/21] target/i386: allow access_ptr to force slow path on
- failed probe
-Date: Tue, 13 Aug 2024 21:23:15 +0100
-Message-Id: <20240813202329.1237572-8-alex.bennee@linaro.org>
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+Subject: [PATCH v2 11/21] tests/avocado: excercise scripts/replay-dump.py in
+ replay tests
+Date: Tue, 13 Aug 2024 21:23:19 +0100
+Message-Id: <20240813202329.1237572-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240813202329.1237572-1-alex.bennee@linaro.org>
 References: <20240813202329.1237572-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -124,128 +126,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we are using TCG plugin memory callbacks probe_access_internal
-will return TLB_MMIO to force the slow path for memory access. This
-results in probe_access returning NULL but the x86 access_ptr function
-happily accepts an empty haddr resulting in segfault hilarity.
+From: Nicholas Piggin <npiggin@gmail.com>
 
-Check for an empty haddr to prevent the segfault and enable plugins to
-track all the memory operations for the x86 save/restore helpers. As
-we also want to run the slow path when instrumenting *-user we should
-also not have the short cutting test_ptr macro.
+This runs replay-dump.py after recording a trace, and fails the test if
+the script fails.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2489
-Fixes: 6d03226b42 (plugins: force slow path when plugins instrument memory ops)
-Reviewed-by: Alexandre Iooss <erdnaxe@crans.org>
+replay-dump.py is modified to exit with non-zero if an error is
+encountered while parsing, to support this.
+
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+
+gitlab with this change
+
+v5: Update timeout to 180s because x86 was just exceeding 120s in
+Message-Id: <20240813050638.446172-4-npiggin@gmail.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240807160236.2478459-1-alex.bennee@linaro.org>
-
 ---
-v2
-  - add comment around haddr1 test
-  - drop test_ptr macro
----
- target/i386/tcg/access.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ scripts/replay-dump.py         |  6 ++++--
+ tests/avocado/replay_kernel.py | 13 ++++++++++++-
+ tests/avocado/replay_linux.py  | 10 ++++++++++
+ 3 files changed, 26 insertions(+), 3 deletions(-)
 
-diff --git a/target/i386/tcg/access.c b/target/i386/tcg/access.c
-index 56a1181ea5..e68b73a24b 100644
---- a/target/i386/tcg/access.c
-+++ b/target/i386/tcg/access.c
-@@ -58,6 +58,11 @@ static void *access_ptr(X86Access *ac, vaddr addr, unsigned len)
+diff --git a/scripts/replay-dump.py b/scripts/replay-dump.py
+index b82659cfb6..4ce7ff51cc 100755
+--- a/scripts/replay-dump.py
++++ b/scripts/replay-dump.py
+@@ -21,6 +21,7 @@
+ import argparse
+ import struct
+ import os
++import sys
+ from collections import namedtuple
+ from os import path
  
-     assert(addr >= ac->vaddr);
+@@ -100,7 +101,7 @@ def call_decode(table, index, dumpfile):
+         print("Could not decode index: %d" % (index))
+         print("Entry is: %s" % (decoder))
+         print("Decode Table is:\n%s" % (table))
+-        return False
++        raise(Exception("unknown event"))
+     else:
+         return decoder.fn(decoder.eid, decoder.name, dumpfile)
  
-+    /* No haddr means probe_access wants to force slow path */
-+    if (!ac->haddr1) {
-+        return NULL;
-+    }
+@@ -121,7 +122,7 @@ def print_event(eid, name, string=None, event_count=None):
+ def decode_unimp(eid, name, _unused_dumpfile):
+     "Unimplemented decoder, will trigger exit"
+     print("%s not handled - will now stop" % (name))
+-    return False
++    raise(Exception("unhandled event"))
+ 
+ def decode_plain(eid, name, _unused_dumpfile):
+     "Plain events without additional data"
+@@ -434,6 +435,7 @@ def decode_file(filename):
+                                     dumpfile)
+     except Exception as inst:
+         print(f"error {inst}")
++        sys.exit(1)
+ 
+     finally:
+         print(f"Reached {dumpfile.tell()} of {dumpsize} bytes")
+diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kernel.py
+index 232d287c27..a668af9d36 100644
+--- a/tests/avocado/replay_kernel.py
++++ b/tests/avocado/replay_kernel.py
+@@ -13,6 +13,7 @@
+ import shutil
+ import logging
+ import time
++import subprocess
+ 
+ from avocado import skip
+ from avocado import skipUnless
+@@ -31,7 +32,7 @@ class ReplayKernelBase(LinuxKernelTest):
+     terminates.
+     """
+ 
+-    timeout = 120
++    timeout = 180
+     KERNEL_COMMON_COMMAND_LINE = 'printk.time=1 panic=-1 '
+ 
+     def run_vm(self, kernel_path, kernel_command_line, console_pattern,
+@@ -63,6 +64,8 @@ def run_vm(self, kernel_path, kernel_command_line, console_pattern,
+             vm.shutdown()
+             logger.info('finished the recording with log size %s bytes'
+                         % os.path.getsize(replay_path))
++            self.run_replay_dump(replay_path)
++            logger.info('successfully tested replay-dump.py')
+         else:
+             vm.wait()
+             logger.info('successfully finished the replay')
+@@ -70,6 +73,14 @@ def run_vm(self, kernel_path, kernel_command_line, console_pattern,
+         logger.info('elapsed time %.2f sec' % elapsed)
+         return elapsed
+ 
++    def run_replay_dump(self, replay_path):
++        try:
++            subprocess.check_call(["./scripts/replay-dump.py",
++                                   "-f", replay_path],
++                                  stdout=subprocess.DEVNULL)
++        except subprocess.CalledProcessError:
++            self.fail('replay-dump.py failed')
 +
- #ifdef CONFIG_USER_ONLY
-     assert(offset <= ac->size1 - len);
-     return ac->haddr1 + offset;
-@@ -78,17 +83,11 @@ static void *access_ptr(X86Access *ac, vaddr addr, unsigned len)
- #endif
- }
+     def run_rr(self, kernel_path, kernel_command_line, console_pattern,
+                shift=7, args=None):
+         replay_path = os.path.join(self.workdir, 'replay.bin')
+diff --git a/tests/avocado/replay_linux.py b/tests/avocado/replay_linux.py
+index b4673261ce..5916922435 100644
+--- a/tests/avocado/replay_linux.py
++++ b/tests/avocado/replay_linux.py
+@@ -94,6 +94,8 @@ def launch_and_wait(self, record, args, shift):
+             vm.shutdown()
+             logger.info('finished the recording with log size %s bytes'
+                 % os.path.getsize(replay_path))
++            self.run_replay_dump(replay_path)
++            logger.info('successfully tested replay-dump.py')
+         else:
+             vm.event_wait('SHUTDOWN', self.timeout)
+             vm.wait()
+@@ -108,6 +110,14 @@ def run_rr(self, args=None, shift=7):
+         logger = logging.getLogger('replay')
+         logger.info('replay overhead {:.2%}'.format(t2 / t1 - 1))
  
--#ifdef CONFIG_USER_ONLY
--# define test_ptr(p)  true
--#else
--# define test_ptr(p)  likely(p)
--#endif
--
- uint8_t access_ldb(X86Access *ac, vaddr addr)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint8_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         return ldub_p(p);
-     }
-     return cpu_ldub_mmuidx_ra(ac->env, addr, ac->mmu_idx, ac->ra);
-@@ -98,7 +97,7 @@ uint16_t access_ldw(X86Access *ac, vaddr addr)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint16_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         return lduw_le_p(p);
-     }
-     return cpu_lduw_le_mmuidx_ra(ac->env, addr, ac->mmu_idx, ac->ra);
-@@ -108,7 +107,7 @@ uint32_t access_ldl(X86Access *ac, vaddr addr)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint32_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         return ldl_le_p(p);
-     }
-     return cpu_ldl_le_mmuidx_ra(ac->env, addr, ac->mmu_idx, ac->ra);
-@@ -118,7 +117,7 @@ uint64_t access_ldq(X86Access *ac, vaddr addr)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint64_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         return ldq_le_p(p);
-     }
-     return cpu_ldq_le_mmuidx_ra(ac->env, addr, ac->mmu_idx, ac->ra);
-@@ -128,7 +127,7 @@ void access_stb(X86Access *ac, vaddr addr, uint8_t val)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint8_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         stb_p(p, val);
-     } else {
-         cpu_stb_mmuidx_ra(ac->env, addr, val, ac->mmu_idx, ac->ra);
-@@ -139,7 +138,7 @@ void access_stw(X86Access *ac, vaddr addr, uint16_t val)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint16_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         stw_le_p(p, val);
-     } else {
-         cpu_stw_le_mmuidx_ra(ac->env, addr, val, ac->mmu_idx, ac->ra);
-@@ -150,7 +149,7 @@ void access_stl(X86Access *ac, vaddr addr, uint32_t val)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint32_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         stl_le_p(p, val);
-     } else {
-         cpu_stl_le_mmuidx_ra(ac->env, addr, val, ac->mmu_idx, ac->ra);
-@@ -161,7 +160,7 @@ void access_stq(X86Access *ac, vaddr addr, uint64_t val)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint64_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         stq_le_p(p, val);
-     } else {
-         cpu_stq_le_mmuidx_ra(ac->env, addr, val, ac->mmu_idx, ac->ra);
++    def run_replay_dump(self, replay_path):
++        try:
++            subprocess.check_call(["./scripts/replay-dump.py",
++                                   "-f", replay_path],
++                                  stdout=subprocess.DEVNULL)
++        except subprocess.CalledProcessError:
++            self.fail('replay-dump.py failed')
++
+ @skipUnless(os.getenv('AVOCADO_TIMEOUT_EXPECTED'), 'Test might timeout')
+ class ReplayLinuxX8664(ReplayLinux):
+     """
 -- 
 2.39.2
 
