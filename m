@@ -4,83 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CB55C52D7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 10:24:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25B69C52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 10:39:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdogx-0007yQ-Ip; Tue, 13 Aug 2024 06:23:51 -0400
+	id 1sdovQ-00008Q-0d; Tue, 13 Aug 2024 06:38:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1sdogt-0007bp-8j
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:23:48 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdovN-00006c-EX
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:38:45 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
- id 1sdogr-0006UV-L6
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:23:47 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5a2a90243c9so4816457a12.0
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 03:23:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdovL-0000WG-FC
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:38:45 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5a10bb7bcd0so6578234a12.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 03:38:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1723544624; x=1724149424; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=KCTQopeDa50VboYWAaOeZFagQj228o0sJa12bfyGY44=;
- b=lXXNdUogdx3R7JXIv9Cie23ivpAFI2swfsS7ytBT5qE0F2quAGhf4GQFUlZ9s5FleV
- BQ7d0095lOfkyZ6EGJCdbhXmAq2c+em+BsgZDptxgjtVqkIeIgc7PFCWEFAaTRgdQz7q
- kmynKaSTf3XDoUp9mhQX9dvVGOmbUwZLdG4mBh1ZrKv9dV/aEOx0XuEmN2kJ0HO+Bzao
- wTi1kIvTYvT90fvRk7exg29ML4ewzopSEpDltmvOazFe7LrD8qwp+GhpqY6MtWQMDJrv
- Gvv2HfI5zjsttkmGv9m9Acs2i62YVAPa8z3LHQBMaYME2IQNEfGwf5+65b2DkHXzKvKD
- Zu4w==
+ d=linaro.org; s=google; t=1723545521; x=1724150321; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mgAZcOQAThAzJJCq+i0mkaB1CcwP3mbj+b4EqeZ7Smg=;
+ b=ispn1MjhdtRNc3PFO/noBaedN/haHF11rJzqPaUinZMourTCkKCNnbKeVzZOmiuN2O
+ qnvcNmoDcJEeQ3Vf+O32pHZFmC9XOqsNGiMidkkuW0ZzE9/Ew0v3DR5BY+/frM3ij/TI
+ kUWiqy4bjz4dPZACglJ44eRkZHY3aYebmF78og03cy+akePHNTuk3YB7iWtfNSvX6IJQ
+ vVnbweWzyOF9ICBHdvm9DBPrqLK3dv17x8ZLmacf/KmE3v+TVU2m/YWO1SCslx0lRQt3
+ 3dI1V4ZCUwlDo71EdkUQzXM4oOy93CkmQLL4zCz1H2eOScrh15xl72/8TndHW0e+4q5R
+ XYlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723544624; x=1724149424;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1723545521; x=1724150321;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KCTQopeDa50VboYWAaOeZFagQj228o0sJa12bfyGY44=;
- b=jTOhp5ULe4bazWoJCzfo0kla1fcCrJF0r/FShezgTOV54MiDJDSwSZt7qDSBJTJnja
- WWoP5et7kPZASnFQWyiFC9RR7XsMH6nl0gPWJcZ2AiBaPD6MAqtkGqnwot4heEDK0QDq
- zohUGRBxTAep6r31deenW4C/CX0c1ei9GneDyoi2E00Q8ORgeWYbw1vHWcaptPNGW5Rt
- X1s1w9ElHLA2W7+2vlbyM3VEhCviAKXOIn8hcLCxcXZdLN3v38nnPmVefs0FOyYpTOx1
- 60R6bieJpyaBMYT/tZneILXw2mNSYFJiZXYCJ6c4wTh+z1eVchQkp8iRTop2yNtDflfR
- y8Dg==
+ bh=mgAZcOQAThAzJJCq+i0mkaB1CcwP3mbj+b4EqeZ7Smg=;
+ b=pNMb0RuHq5lcSQLGai+NzPT7BdPIijyZKgd4ZmY2HjFQCCen3oLQM7WAaEZay7sG0A
+ 6/VsVRwBb6Mc1q1O+9H0tNh04UO4WTAgMovBHZNaV7Vs66Iydwqy792Qqud9va/drNDy
+ 9zOE2utC1mkqxnln0pDgT3HAq7YLpLmCT3DrqTB6Ta2EWCX+pECTBS8SWOC7WewlEBnM
+ gp23l4v59qb7jzKScHRma7ynjBJ54n/IgaQCaoHRQryuKBLyM3IeOyjxrj8psDBX/lvy
+ TbS/xk8CAsZDKoEZdBGojIf53j2MY84rS88wFOA9RlWPQLJPVr2uQhM4N/AjyXLRmX+n
+ 8gFg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWp0HIvdu26F3NWZOslX5ImW34ar09NqPF1v0cMw+ycaR3xFVo91kLU/ofintCySUFfqVph9H/egKm/m8W+q/ZrZwu6MDQ=
-X-Gm-Message-State: AOJu0YzQiHSA7PkMZunDd795wmfnXfMgqpf5P2oJxhOAPLfjg5DZT2C/
- ++abkyG5Cl4cPR5AhVtmW5ggwYOT4mN2soX47nAE71j6CqCWXjAt8/zDJIMc+2I=
-X-Google-Smtp-Source: AGHT+IHo1ntf3RmSyynlUUTq9OkWGRrP2kW+Sj4WGnG9YecAddNE6bEp+0pTF36o6zrCIVdzclVIpA==
-X-Received: by 2002:a05:6402:4150:b0:5a1:40d9:6a46 with SMTP id
- 4fb4d7f45d1cf-5bd44c79e76mr2397272a12.36.1723544623341; 
- Tue, 13 Aug 2024 03:23:43 -0700 (PDT)
-Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
- [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ AJvYcCWwaycb7IaE/V7rTOu0PwmjxoNkz/uz0yhIbuu0rGuo3vOs6qDblQr+tm81W7IyiOfqJD4DVFyyqHEiPOYWlypzWbd54Lc=
+X-Gm-Message-State: AOJu0YyQpRD45v+2qQ0Io2M6bYro/dsm1DvyNCwpeU0nFcvfK9n9UQnw
+ l2LEMzoKDjevKjm8Yfl7Vkp1DVZYNl3B34V2hLHYEVBW9pqI1CMnJA0Q6cgda80=
+X-Google-Smtp-Source: AGHT+IH+k/jeWUlpPzP2vNHKVoYiipwI4vtuwY58Wcmz1bUdadoB7V6Of1ghjm3CuViEhC0+Wkdvlg==
+X-Received: by 2002:a05:6402:35ce:b0:5b9:3846:8bb3 with SMTP id
+ 4fb4d7f45d1cf-5bd44c2854amr2532733a12.12.1723545521125; 
+ Tue, 13 Aug 2024 03:38:41 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.129.17])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bd196a7ae8sm2871494a12.54.2024.08.13.03.23.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Aug 2024 03:23:42 -0700 (PDT)
-Date: Tue, 13 Aug 2024 12:23:41 +0200
-From: Andrew Jones <ajones@ventanamicro.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
- alistair.francis@wdc.com, bmeng.cn@gmail.com, zong.li@sifive.com,
- liwei1518@gmail.com, cwshu@andestech.com, dbarboza@ventanamicro.com
-Subject: Re: [PATCH] target/riscv32: Fix masking of physical address
-Message-ID: <20240813-94c16c9efc943fe891ba7724@orel>
-References: <20240813071355.310710-2-ajones@ventanamicro.com>
- <aa7facef-acda-4846-98d5-2f7584515035@linaro.org>
- <20240813-e2c6dc0e68f76be576c72996@orel>
- <3f1accd0-33b8-4656-944f-f6637ee315b9@linaro.org>
+ 4fb4d7f45d1cf-5bd190ad256sm2809513a12.33.2024.08.13.03.38.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Aug 2024 03:38:40 -0700 (PDT)
+Message-ID: <6d425bd0-efd0-42ee-af3e-d7b5c3379d55@linaro.org>
+Date: Tue, 13 Aug 2024 12:38:29 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.1] linux-user: Preserve NULL hit in target_mmap
+ subroutines
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20240813094654.306430-1-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240813094654.306430-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <3f1accd0-33b8-4656-944f-f6637ee315b9@linaro.org>
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,56 +96,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 13, 2024 at 10:21:13AM GMT, Philippe Mathieu-DaudÈ wrote:
-> On 13/8/24 10:00, Andrew Jones wrote:
-> > On Tue, Aug 13, 2024 at 05:43:07PM GMT, Richard Henderson wrote:
-> > > On 8/13/24 17:13, Andrew Jones wrote:
-> > > > C doesn't extend the sign bit for unsigned types since there isn't a
-> > > > sign bit to extend. This means a promotion of a u32 to a u64 results
-> > > > in the upper 32 bits of the u64 being zero. If that result is then
-> > > > used as a mask on another u64 the upper 32 bits will be cleared. rv32
-> > > > physical addresses may be up to 34 bits wide, so we don't want to
-> > > > clear the high bits while page aligning the address. The fix is to
-> > > > revert to using target_long, since a signed type will get extended.
-> > > > 
-> > > > Fixes: af3fc195e3c8 ("target/riscv: Change the TLB page size depends on PMP entries.")
-> > > > Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-> > > > ---
-> > > >    target/riscv/cpu_helper.c | 2 +-
-> > > >    1 file changed, 1 insertion(+), 1 deletion(-)
-> > > > 
-> > > > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> > > > index 395a1d914061..dfef1b20d1e8 100644
-> > > > --- a/target/riscv/cpu_helper.c
-> > > > +++ b/target/riscv/cpu_helper.c
-> > > > @@ -1323,7 +1323,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-> > > >        int ret = TRANSLATE_FAIL;
-> > > >        int mode = mmuidx_priv(mmu_idx);
-> > > >        /* default TLB page size */
-> > > > -    target_ulong tlb_size = TARGET_PAGE_SIZE;
-> > > > +    target_long tlb_size = TARGET_PAGE_SIZE;
-> > > 
-> > > If rv32 physical addresses are 34 bits, then you probably didn't want target_*long at all.
-> > 
-> > Yes, just using hwaddr for everything that only touches physical addresses
-> > would probably be best, but, ifaict, it's pretty common to use target_long
-> > for masks used on both virtual and physical addresses (TARGET_PAGE_MASK,
-> > for example). This 'tlb_size' variable is used on both as well.
+On 13/8/24 11:46, Richard Henderson wrote:
+> Do not pass guest_base to the host mmap instead of zero hint.
 > 
-> Then maybe you want vaddr ("exec/vaddr.h"):
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2353
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   linux-user/mmap.c | 18 +++++++++++++++---
+>   1 file changed, 15 insertions(+), 3 deletions(-)
 > 
-> /**
->  * vaddr:
->  * Type wide enough to contain any #target_ulong virtual address.
->  */
->
+> diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+> index 4d09a72fad..6418e811f6 100644
+> --- a/linux-user/mmap.c
+> +++ b/linux-user/mmap.c
+> @@ -560,9 +560,13 @@ static abi_long mmap_h_eq_g(abi_ulong start, abi_ulong len,
+>                               int host_prot, int flags, int page_flags,
+>                               int fd, off_t offset)
+>   {
+> -    void *p, *want_p = g2h_untagged(start);
+> +    void *p, *want_p = NULL;
+>       abi_ulong last;
+>   
+> +    if (start || (flags & (MAP_FIXED | MAP_FIXED_NOREPLACE))) {
+> +        want_p = g2h_untagged(start);
+> +    }
+> +
+>       p = mmap(want_p, len, host_prot, flags, fd, offset);
+>       if (p == MAP_FAILED) {
+>           return -1;
+> @@ -610,11 +614,15 @@ static abi_long mmap_h_lt_g(abi_ulong start, abi_ulong len, int host_prot,
+>                               int mmap_flags, int page_flags, int fd,
+>                               off_t offset, int host_page_size)
+>   {
+> -    void *p, *want_p = g2h_untagged(start);
+ > +    void *p, *want_p = NULL;
 
-I think hwaddr would fit better in this case since riscv32 virtual
-addresses are 32-bit, but I see vaddr is a u64, so it would work too. I
-personally don't mind changing the type of tlb_size to hwaddr, but I went
-with target_long in this patch since that's what it was originally and
-masking with a signed long mask appears to be a common pattern in QEMU.
+Maybe extract as static helper?
 
-Thanks,
-drew
+       void *p, *want_p = g2h_untagged_FOO(start, flags);
+
+>       off_t fileend_adj = 0;
+>       int flags = mmap_flags;
+>       abi_ulong last, pass_last;
+>   
+> +    if (start || (flags & (MAP_FIXED | MAP_FIXED_NOREPLACE))) {
+> +        want_p = g2h_untagged(start);
+> +    }
+
+Reviewed-by: Philippe Mathieu-Daud√© <philmd@linaro.org>
+
+
 
