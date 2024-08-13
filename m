@@ -4,70 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3607AC52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 03:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EFFCC52D7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 05:01:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdiO4-0001yQ-2Q; Mon, 12 Aug 2024 23:39:56 -0400
+	id 1sdjeM-0007Ny-IJ; Tue, 13 Aug 2024 01:00:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sdiO0-0001xl-4A
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 23:39:53 -0400
-Received: from mgamail.intel.com ([192.198.163.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sdiNw-0000ZH-Qr
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 23:39:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723520389; x=1755056389;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=OBAONuNqvQYhCaOXbw/iLBnNxa9cMzajvRwKBdHrc9M=;
- b=N94uu9yaK4+oCBAjcXN8pNPeVKHmw7568JtzM2/La2wt1UOQhriXyUA/
- tkIOKwORlmAZuga79fbWqBPi9upMk4YQSD/3ma8yHDUoNC2UOQRDg9lvR
- SBnlqk/13TIWjt9Q1Ykh+mUXxxc8y+B17VlJ9EMCMJCvDTBWnSPON0vb1
- PMu1LYlrD4Msv/J2uWNuobY0Zn2ZPXluHl97/Jfx3evXddlKjtMgeYQPl
- CDVGQdFnd/3ICAArI0Z5NgAzj0N3AMsF+wmJHJUiHqRNbjJAzKQ/pFKeG
- zYc6pamVCFC6TNiAeoypE+UzFmEYz9tcvvcZxrD8TJZ4cBZkA+HtuqPwM w==;
-X-CSE-ConnectionGUID: d8dV3IGrRtqDjl1uaFiO+w==
-X-CSE-MsgGUID: pJiab5+SQB+dh0WLW5+p5w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11162"; a="25524078"
-X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; d="scan'208";a="25524078"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Aug 2024 20:39:44 -0700
-X-CSE-ConnectionGUID: 0kN57fCGSlaWqo6bXkV+MQ==
-X-CSE-MsgGUID: fBGhjv7EQ9GnAODwV3LbxQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; d="scan'208";a="89185400"
-Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by orviesa002.jf.intel.com with ESMTP; 12 Aug 2024 20:39:42 -0700
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>
-Cc: qemu-devel@nongnu.org, zhao1.liu@intel.com,
- John Levon <john.levon@nutanix.com>, Manish <manish.mishra@nutanix.com>,
- xiaoyao.li@intel.com
-Subject: [PATCH v2] i386/cpu: Introduce enable_cpuid_0x1f to force exposing
- CPUID 0x1f
-Date: Mon, 12 Aug 2024 23:31:45 -0400
-Message-Id: <20240813033145.279307-1-xiaoyao.li@intel.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sdje3-0007E1-Kc
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 01:00:32 -0400
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sdjdz-0006bg-NZ
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 01:00:30 -0400
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-2689f749702so2811866fac.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 22:00:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723525224; x=1724130024; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=vxcTuB//eg0sBxa1utyJ6QZN+FWm7fFvJCs8viJvgeU=;
+ b=MpZ21KQYUcmREsOfwsRXLcTUeoxEIGXc1lmoL/GEhuVqbnM8zO+lEYJ4NWCpsm0qn/
+ jS5DuAChphSOIY/cJXOYEyT6/GKVYoyqeDfhrZONeTNJb3DvHTt5Ld1Nu4cSIy0XaICN
+ fuYuzV+MitKgmq4xiiZgDwNkwXoh0Gcw7nVbclEtJODkjOrCAwd3R1p3659AVcXy9p8l
+ 2oQRRWTziTkeGDJm20HrO+yfkrdUofhyoBgzWYFhtEePSwtEvRgqy8TQMk2ekm5aKJ5i
+ YDYyvg10zU3hQ9nUuN80S7Jh/WBBt+igmt59ZRlQhpankzdkGdUoAnuMJTCY6cNQriIm
+ dSkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723525224; x=1724130024;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vxcTuB//eg0sBxa1utyJ6QZN+FWm7fFvJCs8viJvgeU=;
+ b=Cl6Rtvjm76mmbCGZPbm1DD8qP3HUPrvSkD61ltZVgt47QQo3QUvXhR24ZVRVWNOq6g
+ mufLOOztc9Y1Fol5bmyb+ucs4qq6IcLIcFZXJzby9wcPkQ/evhtzL/DSRWmfCDsE05Mw
+ L+abU8RPHwBIEZXZQvlyyRqOhGMG3JF53KoT8whRSq2jHm9kvrZbb66GQoOFlWbaHcyb
+ hYWv6RIkE7PWRtSq5/GHGHNf+IhR4UrDnqSHRsvtw6yAIfZ7gXq/sa6kToRW4IMgPbXo
+ LQOAxNLhbErvrLM5hxUpF5V2t+6Uls4XMqFC7/AVsy50OBzhTYKA5AAQuV5md2plB/ei
+ G9Fw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWkHUSvPc6m8MdIiDMQrKMT7scpsC+zKkn/mdFmMy88EnExXXQhkZu18HzlG6Kzl7nmonMRvOL9rX6azKs+0/YXiOr+pao=
+X-Gm-Message-State: AOJu0YyxV9wQkNw4SAYVmfL1td4hWHfTmFmcX1eCW3F9EF8FJgziUXRm
+ mS7LBm0dR2txSrproLaXpWAZ43451iTSN2EvTnejI6xmmYuFSstcG+wED5+uqkU=
+X-Google-Smtp-Source: AGHT+IHweCra3vISDCBRIe+Jp2yYZ32oJicYUD3W86jgR+b2TAZfKyOnB1PkLPvIWlJ7XRRbG+UpbA==
+X-Received: by 2002:a05:6871:5827:b0:25e:b999:d24 with SMTP id
+ 586e51a60fabf-26fcb398fbbmr2874137fac.0.1723525224426; 
+ Mon, 12 Aug 2024 22:00:24 -0700 (PDT)
+Received: from [192.168.1.113] ([203.30.4.111])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-710e5ab56f0sm4831179b3a.197.2024.08.12.22.00.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 12 Aug 2024 22:00:23 -0700 (PDT)
+Message-ID: <6b1dbb73-386f-46b8-85fb-9f97c3fcd469@linaro.org>
+Date: Tue, 13 Aug 2024 15:00:17 +1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.12; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 00/10] target-arm queue
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+References: <20240812121021.1667713-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240812121021.1667713-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,110 +96,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, QEMU exposes CPUID 0x1f to guest only when necessary, i.e.,
-when topology level that cannot be enumerated by leaf 0xB, e.g., die or
-module level, are configured for the guest, e.g., -smp xx,dies=2.
+On 8/12/24 22:10, Peter Maydell wrote:
+> v2: dropped PMCCNTR patch
+> 
+> The following changes since commit 0f397dcfecc9211d12c2c720c01eb32f0eaa7d23:
+> 
+>    Merge tag 'pull-nbd-2024-08-08' ofhttps://repo.or.cz/qemu/ericb into staging (2024-08-09 08:40:37 +1000)
+> 
+> are available in the Git repository at:
+> 
+>    https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20240812
+> 
+> for you to fetch changes up to ed5031ad5d4c4c3b6eee6ab21aa95ccfc9dffdd4:
+> 
+>    arm/virt: place power button pin number on a define (2024-08-12 11:40:16 +0100)
+> 
+> ----------------------------------------------------------------
+>   * Fix BTI versus CF_PCREL
+>   * include: Fix typo in name of MAKE_IDENTFIER macro
+>   * docs: Various txt-to-rST conversions
+>   * hw/core/ptimer: fix timer zero period condition for freq > 1GHz
+>   * arm/virt: place power button pin number on a define
 
-However, 1) TDX architecture forces to require CPUID 0x1f to configure CPU
-topology. and 2) There is a bug in Windows that Windows 10/11 expects valid
-0x1f leafs when the maximum basic leaf > 0x1f[1].
 
-Introduce a bool flag, enable_cpuid_0x1f, in CPU for the cases that
-require CPUID leaf 0x1f to be exposed to guest. For case 2), introduce
-a user settable property, "x-cpuid-0x1f" ,as well, which provides an opt-in
-interface for people to run the buggy Windows as a workaround. The default
-value of the property is set to false, thus making no effect on existing
-setup.
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-Introduce a new function x86_has_cpuid_0x1f(), which is the warpper of
-cpu->enable_cpuid_0x1f and x86_has_extended_topo() to check if it needs
-to enable cpuid leaf 0x1f for the guest.
-
-[1] https://lore.kernel.org/qemu-devel/20240724075226.212882-1-manish.mishra@nutanix.com/
-
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
----
-changes in v2:
- - Add more details in commit message;
- - introduce a separate function x86_has_cpuid_0x1f() instead of
-   modifying x86_has_extended_topo();
----
- target/i386/cpu.c     | 5 +++--
- target/i386/cpu.h     | 9 +++++++++
- target/i386/kvm/kvm.c | 2 +-
- 3 files changed, 13 insertions(+), 3 deletions(-)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 85ef7452c04e..1e8653c6b051 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6649,7 +6649,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         break;
-     case 0x1F:
-         /* V2 Extended Topology Enumeration Leaf */
--        if (!x86_has_extended_topo(env->avail_cpu_topo)) {
-+        if (!x86_has_cpuid_0x1f(cpu)) {
-             *eax = *ebx = *ecx = *edx = 0;
-             break;
-         }
-@@ -7462,7 +7462,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-          * cpu->vendor_cpuid_only has been unset for compatibility with older
-          * machine types.
-          */
--        if (x86_has_extended_topo(env->avail_cpu_topo) &&
-+        if (x86_has_cpuid_0x1f(cpu) &&
-             (IS_INTEL_CPU(env) || !cpu->vendor_cpuid_only)) {
-             x86_cpu_adjust_level(cpu, &env->cpuid_min_level, 0x1F);
-         }
-@@ -8328,6 +8328,7 @@ static Property x86_cpu_properties[] = {
-     DEFINE_PROP_BOOL("full-cpuid-auto-level", X86CPU, full_cpuid_auto_level, true),
-     DEFINE_PROP_STRING("hv-vendor-id", X86CPU, hyperv_vendor),
-     DEFINE_PROP_BOOL("cpuid-0xb", X86CPU, enable_cpuid_0xb, true),
-+    DEFINE_PROP_BOOL("x-cpuid-0x1f", X86CPU, enable_cpuid_0x1f, false),
-     DEFINE_PROP_BOOL("x-vendor-cpuid-only", X86CPU, vendor_cpuid_only, true),
-     DEFINE_PROP_BOOL("x-amd-topoext-features-only", X86CPU, amd_topoext_features_only, true),
-     DEFINE_PROP_BOOL("lmce", X86CPU, enable_lmce, false),
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index c6cc035df3d8..085272d4c74a 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2110,6 +2110,9 @@ struct ArchCPU {
-     /* Compatibility bits for old machine types: */
-     bool enable_cpuid_0xb;
- 
-+    /* Force to enable cpuid 0x1f */
-+    bool enable_cpuid_0x1f;
-+
-     /* Enable auto level-increase for all CPUID leaves */
-     bool full_cpuid_auto_level;
- 
-@@ -2369,6 +2372,12 @@ void host_cpuid(uint32_t function, uint32_t count,
-                 uint32_t *eax, uint32_t *ebx, uint32_t *ecx, uint32_t *edx);
- bool cpu_has_x2apic_feature(CPUX86State *env);
- 
-+static inline bool x86_has_cpuid_0x1f(X86CPU *cpu)
-+{
-+    return cpu->enable_cpuid_0x1f ||
-+           x86_has_extended_topo(cpu->env.avail_cpu_topo);
-+}
-+
- /* helper.c */
- void x86_cpu_set_a20(X86CPU *cpu, int a20_state);
- void cpu_sync_avx_hflag(CPUX86State *env);
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 31f149c9902c..8af43cb48101 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -1835,7 +1835,7 @@ static uint32_t kvm_x86_build_cpuid(CPUX86State *env,
-             break;
-         }
-         case 0x1f:
--            if (!x86_has_extended_topo(env->avail_cpu_topo)) {
-+            if (!x86_has_cpuid_0x1f(env_archcpu(env))) {
-                 cpuid_i--;
-                 break;
-             }
--- 
-2.34.1
-
+r~
 
