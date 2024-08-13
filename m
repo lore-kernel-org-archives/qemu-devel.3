@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABF78C52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 06:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62980C52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 06:39:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdlAE-0007WM-JQ; Tue, 13 Aug 2024 02:37:50 -0400
+	id 1sdl9y-0006e1-JK; Tue, 13 Aug 2024 02:37:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sdlAA-0007Jc-Md
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 02:37:47 -0400
-Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
+ id 1sdl9w-0006Ts-2d
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 02:37:32 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sdlA9-0006UL-7B
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 02:37:46 -0400
-Received: by mail-pj1-x1029.google.com with SMTP id
- 98e67ed59e1d1-2cb64529a36so3440522a91.0
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 23:37:43 -0700 (PDT)
+ id 1sdl9t-0006Qh-Fv
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 02:37:30 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1ff67158052so32851905ad.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 23:37:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1723531063; x=1724135863;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1723531048; x=1724135848;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=K5bDA3kbj4aI3tc5UHvikrRJGrmEJbDMhb9LbvuEW9c=;
- b=jr8pjMyD3Vj0Jkn311TfKWayGumdk+E4PigLJy+lXdpEhQoMxhHh9wJ2ABCkeXnsqq
- GOaQgwPGaroxr9moLNFqmhkAwRDCub+rpucLOpGlF1PIOsg+9cnaj+4NsBx3mPDmh48s
- XnB4eHHS3q+n1vwMOOOxneGZbDphQaRGbMKp+DXEfSgfl2d97jLauw8ZI36WUXELx23I
- 2s6A5HXGh9+UqTfbSpDI2bZmFb33Nnh0rc9fFxbUZOyVCtssximk/aWvObkl/ePu9vQo
- w/I9eBkEGV3aHQ6q6LKEpnO60kz9Fk8+wH5jdlYDCchSSlN19lI5faadpX76FSkuexbY
- ZcYw==
+ :reply-to; bh=vA26nEU65dtwvWJQIJNPD+i6nbzwt/Hl37bWV6eE0XI=;
+ b=O/Nd1IcrHMkzaYNfjMjaqsSps+7yBjK+7igfeNnCQwl8IbzisIhQgcRYRYuj6cp2el
+ ETjXD7mbox1JDgTqRpsg93VYSV6UbVDQcBRp1yERKDKXaZYes536NdoSoygVfFnow9H8
+ TwGiP50fD0EI9Xwbu+HhkFu+ZU5kB8fJWoidZ+C2dpACUabvpmfZSZO9Dw4i04953RHn
+ 5aRGb7bOCc6AgT9OR6ZZA5CT5eAI1c8wfgqQj8kiVgnoxO68jcTKZvPj4cm7RuU0FRLt
+ gEosAgG1bn2gqaoBLa8bNJpCLmcyw+5Y1ZYlR6oUT55tOnAH2cRlXuoD3bmvoaIhXr1Z
+ 9LDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723531063; x=1724135863;
+ d=1e100.net; s=20230601; t=1723531048; x=1724135848;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=K5bDA3kbj4aI3tc5UHvikrRJGrmEJbDMhb9LbvuEW9c=;
- b=G8xIEnMG/kKeHbQ8ZR3gMg5foIEqSCbY/ojpsLpuNZeg9JMMovhUwoSc/QY6hMg2/G
- NvfQ91waNgRuUNxOKX154QPCm3aoTobEwAmexcvrdPyNIrJAAlKCscyR9I9BNpOSGV39
- 9fyhhoGoyIX3Q9nOF8Xc+W9PRdxaC9JMNU8/ysngHsdHAbVvbnIjY5OgX1KSHAWZyor3
- EIjxK48G+laBONBNq8uikuli7j/QGW7T7nRULtDptrjgTleqeZXdNoOnPMH1DgKFO1KM
- DVUnuWnAvFtXd7nJZiEkYWI/CB1X1vTTV0ccsZAfVFLJasNGDPFYRHevrWKwKphrcLuI
- r9IQ==
-X-Gm-Message-State: AOJu0YyAQM6gy46F7T9sAUv1uC6yLokl9dxyEJbJ8qzKlMFGGhnKU9/p
- nP1ZOKObpaqmvfEQRpc5p85N04KpobAYi7jFsq0MqbyOmfAIqNTggoJt24sotmg=
-X-Google-Smtp-Source: AGHT+IGIR+HsQ/34qPixsQzlLTmVMPhJg/+aX+bdh8S0OqdiasWISKkxO58UIeI0GJV0zikat+1HYA==
-X-Received: by 2002:a17:90a:dd82:b0:2c9:8a4b:b4d3 with SMTP id
- 98e67ed59e1d1-2d39265f681mr2449417a91.43.1723531062587; 
- Mon, 12 Aug 2024 23:37:42 -0700 (PDT)
+ bh=vA26nEU65dtwvWJQIJNPD+i6nbzwt/Hl37bWV6eE0XI=;
+ b=Ow+jkNkwPX1PyKZHguziaq4OzX4Zke1w/K935gtbXHux8gADQj7N17DcUOsyNWzy7A
+ oQQGGTsso269PvZ2OrTjLme2Xr5pRa444qwr3qxhh/EXFOTqG4KQVU+HKCYyScmWaYFw
+ Gd+3BIPHHLWee9u88UzYY5PbGorzZpQqsV3Bs8/PBdKMz9NhOgl8VhTvFEktTf/hvmFF
+ GwG9sDE1YY0U3sTyuVpVLVPUPPHE4tFYdQtVIRHwrTQVP2X+9ZKNG8/1ZJ6RGQOObst/
+ NDwHu0zEXnV3cttgtsUBn1BJ4OmEhyOEkN4/ig2BblFSxjW7Eiok3Fz1X69rV847jMvR
+ 3M5g==
+X-Gm-Message-State: AOJu0Yz3s16Om3MJ2BjFn/0MA0M7X14+NwHxXbPbWZJVk23TG2/CjqzX
+ OOP44Fl9YlVgMCSbXmy4sG1sV7+tj608wkaC/jDC1WIBkiDL0K97KmR5fcvc0yM=
+X-Google-Smtp-Source: AGHT+IF3zbsteBl/roY0i9ig54NZa83VT030hPoJA9+VEYyaQhCYX8aLn34bWM95k6bRMMAxt3QTdw==
+X-Received: by 2002:a17:902:f651:b0:1fc:4763:445c with SMTP id
+ d9443c01a7336-201ca175c46mr29679955ad.32.1723531048182; 
+ Mon, 12 Aug 2024 23:37:28 -0700 (PDT)
 Received: from localhost ([157.82.202.230])
  by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2d39882bc89sm343126a91.1.2024.08.12.23.37.39
+ d9443c01a7336-201cd1a9215sm6609885ad.153.2024.08.12.23.37.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Aug 2024 23:37:42 -0700 (PDT)
+ Mon, 12 Aug 2024 23:37:27 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Tue, 13 Aug 2024 15:37:06 +0900
-Subject: [PATCH for-9.2 v7 7/9] virtio-net: Implement SR-IOV VF
+Date: Tue, 13 Aug 2024 15:37:03 +0900
+Subject: [PATCH for-9.2 v7 4/9] pcie_sriov: Check PCI Express for SR-IOV PF
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240813-sriov-v7-7-8515e3774df7@daynix.com>
+Message-Id: <20240813-sriov-v7-4-8515e3774df7@daynix.com>
 References: <20240813-sriov-v7-0-8515e3774df7@daynix.com>
 In-Reply-To: <20240813-sriov-v7-0-8515e3774df7@daynix.com>
 To: "Michael S. Tsirkin" <mst@redhat.com>, 
@@ -80,8 +80,8 @@ Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
  Yui Washizu <yui.washidu@gmail.com>, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::1029;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x1029.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::632;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,26 +103,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A virtio-net device can be added as a SR-IOV VF to another virtio-pci
-device that will be the PF.
+SR-IOV requires PCI Express.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- hw/virtio/virtio-net-pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/pci/pcie_sriov.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/virtio/virtio-net-pci.c b/hw/virtio/virtio-net-pci.c
-index e03543a70a75..dba4987d6e04 100644
---- a/hw/virtio/virtio-net-pci.c
-+++ b/hw/virtio/virtio-net-pci.c
-@@ -75,6 +75,7 @@ static void virtio_net_pci_class_init(ObjectClass *klass, void *data)
-     k->device_id = PCI_DEVICE_ID_VIRTIO_NET;
-     k->revision = VIRTIO_PCI_ABI_VERSION;
-     k->class_id = PCI_CLASS_NETWORK_ETHERNET;
-+    k->sriov_vf_user_creatable = true;
-     set_bit(DEVICE_CATEGORY_NETWORK, dc->categories);
-     device_class_set_props(dc, virtio_net_properties);
-     vpciklass->realize = virtio_net_pci_realize;
+diff --git a/hw/pci/pcie_sriov.c b/hw/pci/pcie_sriov.c
+index e1b4ecf79ff9..2daea6ecdb6a 100644
+--- a/hw/pci/pcie_sriov.c
++++ b/hw/pci/pcie_sriov.c
+@@ -42,6 +42,11 @@ bool pcie_sriov_pf_init(PCIDevice *dev, uint16_t offset,
+     uint8_t *cfg = dev->config + offset;
+     uint8_t *wmask;
+ 
++    if (!pci_is_express(dev)) {
++        error_setg(errp, "PCI Express is required for SR-IOV PF");
++        return false;
++    }
++
+     if (pci_is_vf(dev)) {
+         error_setg(errp, "a device cannot be a SR-IOV PF and a VF at the same time");
+         return false;
 
 -- 
 2.46.0
