@@ -4,87 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 288F8C52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 07:44:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02FC6C52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 07:47:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdmBf-0005a1-6t; Tue, 13 Aug 2024 03:43:23 -0400
+	id 1sdmF9-00029F-QL; Tue, 13 Aug 2024 03:46:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdmBd-0005Yf-V3
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 03:43:21 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdmBb-0007ve-Dq
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 03:43:21 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-70d2ae44790so3641317b3a.2
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 00:43:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723534997; x=1724139797; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=KBSwiNqa049bJ062w81vEeg7cRT0njdTw2Mnb0cEUns=;
- b=bDVG3A5qnP+mRukh24WMnz7inA0stRmD2a/Zh4mePMoUmKOVijCtZkyZF5suVIWk/I
- OrTHmeHLL5b5vd/Wg3eaqjIGFzUqS9rNn5KjMyq/zC60s2YqO48rIyp4q8gtnsXzkaHX
- O9/GxYyqD3mgPfbxNvjnHKRWYagLwsHZFgjos6gmbUqAbZ0xylOaFqDJhmXwBjTm4Dh1
- wTRlGHvBnt1SuAh/dLwmnL1Xe8tT2lYP36gMVsn/rL5v5mNoqgDKhcEfpqjyfWG+PB65
- /m63lXQH6lPngwe0M3CQF59hfDBJi9Nag2/zjgfTELMXCA6EuVjQ3FHGdltEepqxEVpd
- DsAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723534997; x=1724139797;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KBSwiNqa049bJ062w81vEeg7cRT0njdTw2Mnb0cEUns=;
- b=bjC5OhS8VqKOZroisFzpV+rlyeA89QA52S6j9gAsiBvmMIvMGRdjAGXH0oqzxVhYMK
- jT0KDh96uWx4kqpt9i+GklQ/yQcw7HDqI25meMcRBsGbRJ3TupbiUn5KxIsWp/CHbjXX
- IFuRfiNAU5/UrSGHKrkfdkHTRlmOHxFiADl3s5E1BB5W/tkaXjLNJHZQQT+anKvcDP6f
- 9jOkyUtx7fXkQ4vRUCNsXIta423y2XWinbh2g9r/WGHgdmYfbXmjwzx898xg1ZI6GSYc
- Hw0qG7PPPH7tgr3tNtsiY04A2gg205pUkslkn77FI6urLBq040EzPtaKxX2NrVp//C9o
- E6xg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXoH0MKmbFzNOszrTFkByjx30tl+G7NopQaECyfF8pZQhKfNchhbw0gQAt5pwdx29sVNbRuQvqlQ+h1g6a3WI9Q6OgXB1k=
-X-Gm-Message-State: AOJu0YwrHny7G6xIiVvE15pTQ7qQZjAsr03/D+q5+gYbYAqlWZV3jrnx
- G5H9EmkYHI7drzunJ+xrpJtdv9F2alDT3hxBtcJeOd1R6j7m4AdYoSF1JVkaOIw=
-X-Google-Smtp-Source: AGHT+IFYZ+r57K3J4+uxAIUAAphOygIurLmP5x4FhBADzZviVBu+DQepn+S6wJfVUrmMHkmmIcv/WQ==
-X-Received: by 2002:a05:6a00:1a8c:b0:70d:244b:cad9 with SMTP id
- d2e1a72fcca58-712552273camr3231565b3a.28.1723534997064; 
- Tue, 13 Aug 2024 00:43:17 -0700 (PDT)
-Received: from [192.168.1.113] ([203.30.4.111])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-710e5a43e48sm5247584b3a.98.2024.08.13.00.43.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Aug 2024 00:43:16 -0700 (PDT)
-Message-ID: <aa7facef-acda-4846-98d5-2f7584515035@linaro.org>
-Date: Tue, 13 Aug 2024 17:43:07 +1000
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sdmF7-00028A-Ly
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 03:46:57 -0400
+Received: from mgamail.intel.com ([192.198.163.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1sdmF5-0008Jo-TH
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 03:46:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1723535216; x=1755071216;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=IbOawFK9+LygvYERH9KQtidNUO1NdPUtZtJ8NRMQ4SU=;
+ b=a+mcT+KioRH7ejOL/OB4QRdSjBdMw+A3n/G6oURfetV0JVDqevbWtOHW
+ wU4FasspcqPo+UAeIAnGDRfFahxAUqS268FonyBw3XKu/QpYH7ZDGbIdo
+ FLK434zuE3Hb34vDjcq8cpOnfJFjpO41CYFIAwL1vlEpOgRsQu7xKn26T
+ lIvWiTRjUMzckBIn2uC/BgfjXtKsznnxRvsE6sdh4XbcaD7J9Hs4QpE6u
+ x37CkPSkF5gLONKprdJWep4MGn0JpZiPSHtS6jSsTXU8jHU1FM1MICkP5
+ iTXH7yJrLIlxx280Npd0qVE9v9PC7mktz2PwtiB6Rr4yO7cXRyX4HO0QD g==;
+X-CSE-ConnectionGUID: P8h93cPzR8Ci0YHa1mWDdQ==
+X-CSE-MsgGUID: 0iFYjeBjRhyyaakqNTcRYg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11162"; a="12980982"
+X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; d="scan'208";a="12980982"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Aug 2024 00:46:54 -0700
+X-CSE-ConnectionGUID: us9jUICLTvWerIX09L5qqQ==
+X-CSE-MsgGUID: EedKB2PcQOerPYBpnGebBw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; d="scan'208";a="59146265"
+Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
+ by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 13 Aug 2024 00:46:52 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v2 1/2] intel_iommu: Fix invalidation descriptor type field
+Date: Tue, 13 Aug 2024 15:44:09 +0800
+Message-Id: <20240813074410.2571369-2-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240813074410.2571369-1-zhenzhong.duan@intel.com>
+References: <20240813074410.2571369-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv32: Fix masking of physical address
-To: Andrew Jones <ajones@ventanamicro.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com,
- zong.li@sifive.com, liwei1518@gmail.com, cwshu@andestech.com,
- dbarboza@ventanamicro.com
-References: <20240813071355.310710-2-ajones@ventanamicro.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240813071355.310710-2-ajones@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.16;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,34 +90,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/13/24 17:13, Andrew Jones wrote:
-> C doesn't extend the sign bit for unsigned types since there isn't a
-> sign bit to extend. This means a promotion of a u32 to a u64 results
-> in the upper 32 bits of the u64 being zero. If that result is then
-> used as a mask on another u64 the upper 32 bits will be cleared. rv32
-> physical addresses may be up to 34 bits wide, so we don't want to
-> clear the high bits while page aligning the address. The fix is to
-> revert to using target_long, since a signed type will get extended.
-> 
-> Fixes: af3fc195e3c8 ("target/riscv: Change the TLB page size depends on PMP entries.")
-> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
-> ---
->   target/riscv/cpu_helper.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 395a1d914061..dfef1b20d1e8 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1323,7 +1323,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
->       int ret = TRANSLATE_FAIL;
->       int mode = mmuidx_priv(mmu_idx);
->       /* default TLB page size */
-> -    target_ulong tlb_size = TARGET_PAGE_SIZE;
-> +    target_long tlb_size = TARGET_PAGE_SIZE;
+According to spec, invalidation descriptor type is 7bits which is
+concatenation of bits[11:9] and bits[3:0] of invalidation descriptor.
 
-If rv32 physical addresses are 34 bits, then you probably didn't want target_*long at all.
+Currently we only pick bits[3:0] as the invalidation type and treat
+bits[11:9] as reserved zero. This is not a problem for now as bits[11:9]
+is zero for all current invalidation types. But it will break if newer
+type occupies bits[11:9].
 
+Fix it by taking bits[11:9] into type and make reserved bits check accurate.
 
-r~
+Suggested-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
+---
+ hw/i386/intel_iommu_internal.h | 11 ++++++-----
+ hw/i386/intel_iommu.c          |  2 +-
+ 2 files changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 5f32c36943..13d5d129ae 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -356,7 +356,8 @@ union VTDInvDesc {
+ typedef union VTDInvDesc VTDInvDesc;
+ 
+ /* Masks for struct VTDInvDesc */
+-#define VTD_INV_DESC_TYPE               0xf
++#define VTD_INV_DESC_TYPE(val)          ((((val) >> 5) & 0x70ULL) | \
++                                         ((val) & 0xfULL))
+ #define VTD_INV_DESC_CC                 0x1 /* Context-cache Invalidate Desc */
+ #define VTD_INV_DESC_IOTLB              0x2
+ #define VTD_INV_DESC_DEVICE             0x3
+@@ -372,7 +373,7 @@ typedef union VTDInvDesc VTDInvDesc;
+ #define VTD_INV_DESC_WAIT_IF            (1ULL << 4)
+ #define VTD_INV_DESC_WAIT_FN            (1ULL << 6)
+ #define VTD_INV_DESC_WAIT_DATA_SHIFT    32
+-#define VTD_INV_DESC_WAIT_RSVD_LO       0Xffffff80ULL
++#define VTD_INV_DESC_WAIT_RSVD_LO       0Xfffff180ULL
+ #define VTD_INV_DESC_WAIT_RSVD_HI       3ULL
+ 
+ /* Masks for Context-cache Invalidation Descriptor */
+@@ -383,7 +384,7 @@ typedef union VTDInvDesc VTDInvDesc;
+ #define VTD_INV_DESC_CC_DID(val)        (((val) >> 16) & VTD_DOMAIN_ID_MASK)
+ #define VTD_INV_DESC_CC_SID(val)        (((val) >> 32) & 0xffffUL)
+ #define VTD_INV_DESC_CC_FM(val)         (((val) >> 48) & 3UL)
+-#define VTD_INV_DESC_CC_RSVD            0xfffc00000000ffc0ULL
++#define VTD_INV_DESC_CC_RSVD            0xfffc00000000f1c0ULL
+ 
+ /* Masks for IOTLB Invalidate Descriptor */
+ #define VTD_INV_DESC_IOTLB_G            (3ULL << 4)
+@@ -393,7 +394,7 @@ typedef union VTDInvDesc VTDInvDesc;
+ #define VTD_INV_DESC_IOTLB_DID(val)     (((val) >> 16) & VTD_DOMAIN_ID_MASK)
+ #define VTD_INV_DESC_IOTLB_ADDR(val)    ((val) & ~0xfffULL)
+ #define VTD_INV_DESC_IOTLB_AM(val)      ((val) & 0x3fULL)
+-#define VTD_INV_DESC_IOTLB_RSVD_LO      0xffffffff0000ff00ULL
++#define VTD_INV_DESC_IOTLB_RSVD_LO      0xffffffff0000f100ULL
+ #define VTD_INV_DESC_IOTLB_RSVD_HI      0xf80ULL
+ #define VTD_INV_DESC_IOTLB_PASID_PASID  (2ULL << 4)
+ #define VTD_INV_DESC_IOTLB_PASID_PAGE   (3ULL << 4)
+@@ -406,7 +407,7 @@ typedef union VTDInvDesc VTDInvDesc;
+ #define VTD_INV_DESC_DEVICE_IOTLB_SIZE(val) ((val) & 0x1)
+ #define VTD_INV_DESC_DEVICE_IOTLB_SID(val) (((val) >> 32) & 0xFFFFULL)
+ #define VTD_INV_DESC_DEVICE_IOTLB_RSVD_HI 0xffeULL
+-#define VTD_INV_DESC_DEVICE_IOTLB_RSVD_LO 0xffff0000ffe0fff8
++#define VTD_INV_DESC_DEVICE_IOTLB_RSVD_LO 0xffff0000ffe0f1f0
+ 
+ /* Rsvd field masks for spte */
+ #define VTD_SPTE_SNP 0x800ULL
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 16d2885fcc..68cb72a481 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -2744,7 +2744,7 @@ static bool vtd_process_inv_desc(IntelIOMMUState *s)
+         return false;
+     }
+ 
+-    desc_type = inv_desc.lo & VTD_INV_DESC_TYPE;
++    desc_type = VTD_INV_DESC_TYPE(inv_desc.lo);
+     /* FIXME: should update at first or at last? */
+     s->iq_last_desc_type = desc_type;
+ 
+-- 
+2.34.1
+
 
