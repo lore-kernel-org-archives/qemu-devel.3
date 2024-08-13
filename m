@@ -4,72 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3906C52D7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7623C52D7D
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 09:53:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdoCg-0005Km-OX; Tue, 13 Aug 2024 05:52:34 -0400
+	id 1sdoCb-00053x-O5; Tue, 13 Aug 2024 05:52:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdoCe-0005CZ-0G
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 05:52:32 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1sdoCZ-00052f-MZ
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 05:52:27 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdoCc-0001zP-29
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 05:52:31 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1fc47abc040so34485195ad.0
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 02:52:29 -0700 (PDT)
+ id 1sdoCX-0001yA-Ua
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 05:52:27 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-7a1be7b5d70so3751111a12.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 02:52:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723542748; x=1724147548; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=o1DR36HIvFu76vDBuU+Z8chsrK+BUROUUvsk8uqfEyc=;
- b=pGPo9EzCrkyaBaDcM1z0BjHOwjx8bmt5MR0nH4okc64f4A+99gLG3LhS9wdOuleni+
- HOnKH8/hk0BSEMk68n4jEGLtVdtxb7y/xfW44RKU1oA9cJ7LJUMWj3x73d8KCA0M2FDP
- i08bOraICmmxwLTqhOZg/WCiii+Kj1j2/gMHKmgcQMj0YTiA9/nEBwEN3zJ7gNK/eu2c
- eEKsFr84IH2sJ6CpUFST4NngZXTK80wGiMy7OWTKCTpCHHKYIfHErn9t0IhLlD8ruByb
- PlIqNODtTrFZcLZLtfPtLXwHsNFCK7nkIGO+EndZWuBJSIu0nSHY+vGzuqKgJwrL5AZf
- RPQA==
+ d=linaro.org; s=google; t=1723542744; x=1724147544; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=HKddCzONxp6Ew5E7TLBEDVzECHDPn4E2wda03pMwp0U=;
+ b=GhL0UL69wUXPYddPiigHiDDi0VM9okO52Ms3cg0H/5hidwdvSvyjESTsFFUp5DerVc
+ CB9tPAtxRSYWzxWOslCLnMf4W7zvXCLqHng6M41++g9s65FvKW/Ub+1WXAhGRYV+DCID
+ NWZWLj64YGPGXbnpJzVXG7zRcijigQfjLlqTAaiMJZ9SmcLGIdDjBH0JI28O8aWYQLyy
+ ysVKD1I2DBuUmTmRlnwOuPnQvPsjVm94wXwllA8Z+XjtAmFryomLyaQAPQ5ECSy+Znw0
+ AH3iOJS9HNAaZZVDBSCpgcUFOiHjw2dOehSUQ4y+Ae83T7eZgVtNbOkIr4QWnIeOAmmy
+ d5Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723542748; x=1724147548;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=o1DR36HIvFu76vDBuU+Z8chsrK+BUROUUvsk8uqfEyc=;
- b=t14bK1O3lwzyQAyBuROqtI3f/5jSzJ2egZbPOQ0hJYnNcvI9JTfnLdbrNu0N2pZaPL
- IIzJxUhvFOcl1oeQYlEg4y6LVr4kgL/mDjW/cVfJ47N6BUMH4C9+OQkpKsvVLkQTAvC2
- 4c9mmvDvKipHuTHA6LyhdWC2WDY7TX7ZQH9CSDiFmp6YhlJaMw/Ieeq8Tt/hwdIctu/4
- h84KFEFr7jS+758ZRCytpjIqj9BHxBYC9r4RdrNst6kbiQjmv2vSuwmbwobt4lzPlole
- kfeVyLCeQCv835/PYRgTdbu/IKAODznY+erw9OHdWe+o5ElMR0t+d2gBPhgWLlS8gwW/
- fpAw==
-X-Gm-Message-State: AOJu0YwCNd2Gh/d7XVJPcl3sFdkZ3Uoj+GxDh1jgApfLas8AG7I1BTv0
- J7aOmrc3hwU+N3Z2F4UflziN1a5+NP+ICVXAOgv16u3yzdDoKwIZ5436bYEP+K/w9Ns7s9cxEYU
- LkZo=
-X-Google-Smtp-Source: AGHT+IEZG0DUpBxXyzQionAqYXLKyqixoxJOSPvTMDhKZOkYIm/3ZytC0/zn4uJYXMiGXAt5JCgDVw==
-X-Received: by 2002:a17:90a:ba92:b0:2c9:7cb6:38b0 with SMTP id
- 98e67ed59e1d1-2d39254ebd9mr3233051a91.19.1723542748266; 
- Tue, 13 Aug 2024 02:52:28 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723542744; x=1724147544;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=HKddCzONxp6Ew5E7TLBEDVzECHDPn4E2wda03pMwp0U=;
+ b=iObO938sksQQXAWdxBKSg6sWcNLyBYFLqNtyXJwKb/hf0rwlf/aHfdzHwrCIyGBrFW
+ qVgc4UAevDRSsZkmAeBExknMUQsoXZMM8euvTLJR9eykv+bTrOCb9rqlYMCiR9mS7SYX
+ AZ1BeRUsl7dAcmS1uMYeHsPjtcfPNfOoXOK7TmfhK7/gsG4CieXXq0wuOY0Z6wwBlFCb
+ K5SLRTBkHbbOCGO1bSnx/ilX+4zkcV4ktDRRm+gTzMS9s97pO63suoM3a6dGkmadZhRV
+ 87jT5aQHLy1y5cggCuOCjncfDgC7EUjvkyrybwyHvgj4T58JS2QJ2xxAPRnAD3Jbp+h5
+ pFAw==
+X-Gm-Message-State: AOJu0YwcZsqR8GY9Jv7NnTyVAJuiG9OEbRhW7yx+S76KOv7A2CWY234G
+ qGdYLW9zlYRRulldFQ3X6j7IZo+tpidL+1JwpHdgzU75/8BFnxL/D3HU8m9aUwkr9Gxaj4NJvyK
+ ov3g=
+X-Google-Smtp-Source: AGHT+IEOW5IY//lmG/RwuUEZ/CPA5arsE1E7SBUKajbe1+4SPOoW5WQ2gwMVVXwMZ6QghaHu2Yj/3A==
+X-Received: by 2002:a17:90a:1b8a:b0:2cb:58e1:abc8 with SMTP id
+ 98e67ed59e1d1-2d3942cdf1fmr3443920a91.21.1723542743971; 
+ Tue, 13 Aug 2024 02:52:23 -0700 (PDT)
 Received: from stoup.. ([203.30.4.111]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d1c9ca796fsm10851876a91.30.2024.08.13.02.52.26
+ 98e67ed59e1d1-2d1c9ca796fsm10851876a91.30.2024.08.13.02.52.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Aug 2024 02:52:27 -0700 (PDT)
+ Tue, 13 Aug 2024 02:52:23 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 2/2] meson: Move -fsanitize=undefined into normal configuraton
-Date: Tue, 13 Aug 2024 19:52:16 +1000
-Message-ID: <20240813095216.306555-3-richard.henderson@linaro.org>
+Subject: [PATCH for-9.2? 0/2] meson: Rationalize sanitizer configuration
+Date: Tue, 13 Aug 2024 19:52:14 +1000
+Message-ID: <20240813095216.306555-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240813095216.306555-1-richard.henderson@linaro.org>
-References: <20240813095216.306555-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,71 +89,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With 8e466dd09246 and 23ef50ae2d0c, we disable function pointer
-sanitization in CI because the qemu code base does not support it.
-We must disable this for normal usage of --enable-ubsan as well,
-so move it there.
+In the CI that we actually run (x86) we don't want to use ASan,
+only UBSan, we jump through --extra-cflags hoops to make that
+happen, and we fail to disable function sanitizer during normal
+configuration.
 
-Append options rather than prepend, since all of this requires
-proper ordering of options.
+In the CI that we don't run, we enable ASan and fail to disable
+function sanitizer.  So its a bit lucky that don't run it.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- .gitlab-ci.d/buildtest.yml | 10 ++++------
- meson.build                | 11 +++++++++--
- 2 files changed, 13 insertions(+), 8 deletions(-)
+Split the --enable-santizers config option, and move stuff back
+to meson.build from .gitlab-ci.d.
 
-diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
-index aa32782405..fc5d516557 100644
---- a/.gitlab-ci.d/buildtest.yml
-+++ b/.gitlab-ci.d/buildtest.yml
-@@ -428,9 +428,8 @@ clang-system:
-     job: amd64-fedora-container
-   variables:
-     IMAGE: fedora
--    CONFIGURE_ARGS: --cc=clang --cxx=clang++
--      --extra-cflags=-fsanitize=undefined --extra-cflags=-fno-sanitize-recover=undefined
--      --extra-cflags=-fno-sanitize=function
-+    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-ubsan
-+      --extra-cflags=-fno-sanitize-recover=undefined
-     TARGETS: alpha-softmmu arm-softmmu m68k-softmmu mips64-softmmu s390x-softmmu
-     MAKE_CHECK_ARGS: check-qtest check-tcg
- 
-@@ -441,10 +440,9 @@ clang-user:
-   timeout: 70m
-   variables:
-     IMAGE: debian-all-test-cross
--    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --disable-system
-+    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --disable-system --enable-ubsan
-       --target-list-exclude=alpha-linux-user,microblazeel-linux-user,aarch64_be-linux-user,i386-linux-user,m68k-linux-user,mipsn32el-linux-user,xtensaeb-linux-user
--      --extra-cflags=-fsanitize=undefined --extra-cflags=-fno-sanitize-recover=undefined
--      --extra-cflags=-fno-sanitize=function
-+      --extra-cflags=-fno-sanitize-recover=undefined
-     MAKE_CHECK_ARGS: check-unit check-tcg
- 
- # Set LD_JOBS=1 because this requires LTO and ld consumes a large amount of memory.
-diff --git a/meson.build b/meson.build
-index 19b18b4a8a..5b9ac6c6c5 100644
---- a/meson.build
-+++ b/meson.build
-@@ -488,8 +488,15 @@ if get_option('ubsan')
-   # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=84285
-   if cc.links('int main(int argc, char **argv) { return argc + 1; }',
-               args: [qemu_ldflags, '-fsanitize=undefined'])
--    qemu_cflags = ['-fsanitize=undefined'] + qemu_cflags
--    qemu_ldflags = ['-fsanitize=undefined'] + qemu_ldflags
-+    qemu_cflags += ['-fsanitize=undefined']
-+    qemu_ldflags += ['-fsanitize=undefined']
-+
-+    # Suppress undefined behaviour from function call to mismatched type.
-+    # In addition, tcg prologue does not emit function type prefix
-+    # required by function call sanitizer.
-+    if cc.has_argument('-fno-sanitize=function')
-+      qemu_cflags += ['-fno-sanitize=function']
-+    endif
-   else
-     error('Your compiler does not support -fsanitize=undefined')
-   endif
+
+r~
+
+
+Richard Henderson (2):
+  meson: Split --enable-sanitizers to --enable-{asan,ubsan}
+  meson: Move -fsanitize=undefined into normal configuraton
+
+ tests/qtest/fdc-test.c                        |  2 +-
+ .gitlab-ci.d/buildtest.yml                    | 10 +++----
+ .../custom-runners/ubuntu-22.04-aarch64.yml   |  2 +-
+ .../custom-runners/ubuntu-22.04-s390x.yml     |  2 +-
+ docs/devel/fuzzing.rst                        |  4 +--
+ meson.build                                   | 26 ++++++++++++++-----
+ meson_options.txt                             |  6 +++--
+ scripts/meson-buildoptions.sh                 |  9 ++++---
+ tests/docker/test-debug                       |  4 +--
+ 9 files changed, 41 insertions(+), 24 deletions(-)
+
 -- 
 2.43.0
 
