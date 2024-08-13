@@ -4,100 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED60DC52D7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 10:22:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CB55C52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 10:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdof0-00086y-7t; Tue, 13 Aug 2024 06:21:50 -0400
+	id 1sdogx-0007yQ-Ip; Tue, 13 Aug 2024 06:23:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sdoey-0007zx-8j
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:21:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sdoev-0006Dd-OX
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:21:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723544503;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bbshnt6YM4vxz2y0yn7F3Hoq+Ulrbak4XdKn0SKRHHY=;
- b=EeLdbqIImDhR0v1jfJ8c9q0t6dVrqRuelXdRxBvUnzy8guc56D67eCvdr8GVQJuhAKgdjH
- Ys3ZDD1f4u5doxlAwe+oPGWI3SZRlxq/Qvjem2WsDQDSRl1P4OoXZPR9jvOjM+FbapZT9X
- tABD47ViG/p0HLSDh0SlzZFSFqFrnKA=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-686-EjMwKTT-PjSC2QyRqjdBXg-1; Tue, 13 Aug 2024 06:21:42 -0400
-X-MC-Unique: EjMwKTT-PjSC2QyRqjdBXg-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a77e044ff17so344615466b.3
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 03:21:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sdogt-0007bp-8j
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:23:48 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sdogr-0006UV-L6
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:23:47 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5a2a90243c9so4816457a12.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 03:23:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1723544624; x=1724149424; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=KCTQopeDa50VboYWAaOeZFagQj228o0sJa12bfyGY44=;
+ b=lXXNdUogdx3R7JXIv9Cie23ivpAFI2swfsS7ytBT5qE0F2quAGhf4GQFUlZ9s5FleV
+ BQ7d0095lOfkyZ6EGJCdbhXmAq2c+em+BsgZDptxgjtVqkIeIgc7PFCWEFAaTRgdQz7q
+ kmynKaSTf3XDoUp9mhQX9dvVGOmbUwZLdG4mBh1ZrKv9dV/aEOx0XuEmN2kJ0HO+Bzao
+ wTi1kIvTYvT90fvRk7exg29ML4ewzopSEpDltmvOazFe7LrD8qwp+GhpqY6MtWQMDJrv
+ Gvv2HfI5zjsttkmGv9m9Acs2i62YVAPa8z3LHQBMaYME2IQNEfGwf5+65b2DkHXzKvKD
+ Zu4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723544501; x=1724149301;
+ d=1e100.net; s=20230601; t=1723544624; x=1724149424;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bbshnt6YM4vxz2y0yn7F3Hoq+Ulrbak4XdKn0SKRHHY=;
- b=oaYo2SXVgC7PhQqidKMIgQYx57ha+nyOwDTXxazfx00t28D1rjZ4G947qWuqv2/6Ey
- CbWJhocOFjAHVqwSupfEyQkQLcFCQPEKh45c5ArPI0QMFy92r7ZMR0kBu7opLIu8PRUS
- 96jduuP8+rRqZ8kyCHCuZJxypqV2zZkCw8lcIkdr/abD6zZIagyJDZqBZ/L5GYqp2h7+
- Mletaky09XWxFljaBXtS1+WLg0vl/OhFy/9F8uIFr+zxSQliE3QjEGneTEyLnMTfOxW0
- W2c9Hh+MbVd2QEYHAbr1TBfxmycUaTRir15SoETwHBENruKLMAQEuvTlZeiDQXuXTJZK
- 4Z8g==
-X-Gm-Message-State: AOJu0YxsridT8mmgZ01jf1aGlbtBrbQtn5lL3UhEgc470/lAYomgFcO4
- ENilIsVcfoFPJvRXJfm2lvvXbqYwlCPzHbWgjDj7rSesgNFEB/z3wXJGrRQivbwaEarKtOo9K16
- bcO6Y6HeY58bew80+2Le5kMwgLeG9VnYhUco+OaDuWJpMqbL7maxL
-X-Received: by 2002:a17:906:6a0b:b0:a7d:3de1:4abd with SMTP id
- a640c23a62f3a-a80ed24cb2cmr191870466b.39.1723544500826; 
- Tue, 13 Aug 2024 03:21:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF9AthSI6gYvygZdsb77DFi7ZCi3FmgsMnTjcISjlltr0Ydc7XvhZxH3Mp/5zhjvtQ15SbEZw==
-X-Received: by 2002:a17:906:6a0b:b0:a7d:3de1:4abd with SMTP id
- a640c23a62f3a-a80ed24cb2cmr191867066b.39.1723544500024; 
- Tue, 13 Aug 2024 03:21:40 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc7:346:dcde:9c09:aa95:551d:d374])
+ bh=KCTQopeDa50VboYWAaOeZFagQj228o0sJa12bfyGY44=;
+ b=jTOhp5ULe4bazWoJCzfo0kla1fcCrJF0r/FShezgTOV54MiDJDSwSZt7qDSBJTJnja
+ WWoP5et7kPZASnFQWyiFC9RR7XsMH6nl0gPWJcZ2AiBaPD6MAqtkGqnwot4heEDK0QDq
+ zohUGRBxTAep6r31deenW4C/CX0c1ei9GneDyoi2E00Q8ORgeWYbw1vHWcaptPNGW5Rt
+ X1s1w9ElHLA2W7+2vlbyM3VEhCviAKXOIn8hcLCxcXZdLN3v38nnPmVefs0FOyYpTOx1
+ 60R6bieJpyaBMYT/tZneILXw2mNSYFJiZXYCJ6c4wTh+z1eVchQkp8iRTop2yNtDflfR
+ y8Dg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWp0HIvdu26F3NWZOslX5ImW34ar09NqPF1v0cMw+ycaR3xFVo91kLU/ofintCySUFfqVph9H/egKm/m8W+q/ZrZwu6MDQ=
+X-Gm-Message-State: AOJu0YzQiHSA7PkMZunDd795wmfnXfMgqpf5P2oJxhOAPLfjg5DZT2C/
+ ++abkyG5Cl4cPR5AhVtmW5ggwYOT4mN2soX47nAE71j6CqCWXjAt8/zDJIMc+2I=
+X-Google-Smtp-Source: AGHT+IHo1ntf3RmSyynlUUTq9OkWGRrP2kW+Sj4WGnG9YecAddNE6bEp+0pTF36o6zrCIVdzclVIpA==
+X-Received: by 2002:a05:6402:4150:b0:5a1:40d9:6a46 with SMTP id
+ 4fb4d7f45d1cf-5bd44c79e76mr2397272a12.36.1723544623341; 
+ Tue, 13 Aug 2024 03:23:43 -0700 (PDT)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a80f3fa69c3sm57736966b.55.2024.08.13.03.21.35
+ 4fb4d7f45d1cf-5bd196a7ae8sm2871494a12.54.2024.08.13.03.23.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Aug 2024 03:21:39 -0700 (PDT)
-Date: Tue, 13 Aug 2024 06:21:32 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Roy Hopkins <roy.hopkins@suse.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
- =?iso-8859-1?Q?J=F6rg?= Roedel <jroedel@suse.com>
-Subject: Re: [PATCH v4 00/17] Introduce support for IGVM files
-Message-ID: <20240813062034-mutt-send-email-mst@kernel.org>
-References: <cover.1720004383.git.roy.hopkins@suse.com>
- <20240720142552-mutt-send-email-mst@kernel.org>
- <1498c181139068d2297abd61dbee39cd82ab4e26.camel@suse.com>
+ Tue, 13 Aug 2024 03:23:42 -0700 (PDT)
+Date: Tue, 13 Aug 2024 12:23:41 +0200
+From: Andrew Jones <ajones@ventanamicro.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, zong.li@sifive.com,
+ liwei1518@gmail.com, cwshu@andestech.com, dbarboza@ventanamicro.com
+Subject: Re: [PATCH] target/riscv32: Fix masking of physical address
+Message-ID: <20240813-94c16c9efc943fe891ba7724@orel>
+References: <20240813071355.310710-2-ajones@ventanamicro.com>
+ <aa7facef-acda-4846-98d5-2f7584515035@linaro.org>
+ <20240813-e2c6dc0e68f76be576c72996@orel>
+ <3f1accd0-33b8-4656-944f-f6637ee315b9@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1498c181139068d2297abd61dbee39cd82ab4e26.camel@suse.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+In-Reply-To: <3f1accd0-33b8-4656-944f-f6637ee315b9@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,141 +103,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 13, 2024 at 10:53:58AM +0100, Roy Hopkins wrote:
-> On Sat, 2024-07-20 at 14:26 -0400, Michael S. Tsirkin wrote:
-> > On Wed, Jul 03, 2024 at 12:05:38PM +0100, Roy Hopkins wrote:
-> > > Here is v4 of the set of patches to add support for IGVM files to QEMU. This
-> > > is
-> > > based on commit 1a2d52c7fc of qemu.
+On Tue, Aug 13, 2024 at 10:21:13AM GMT, Philippe Mathieu-Daudé wrote:
+> On 13/8/24 10:00, Andrew Jones wrote:
+> > On Tue, Aug 13, 2024 at 05:43:07PM GMT, Richard Henderson wrote:
+> > > On 8/13/24 17:13, Andrew Jones wrote:
+> > > > C doesn't extend the sign bit for unsigned types since there isn't a
+> > > > sign bit to extend. This means a promotion of a u32 to a u64 results
+> > > > in the upper 32 bits of the u64 being zero. If that result is then
+> > > > used as a mask on another u64 the upper 32 bits will be cleared. rv32
+> > > > physical addresses may be up to 34 bits wide, so we don't want to
+> > > > clear the high bits while page aligning the address. The fix is to
+> > > > revert to using target_long, since a signed type will get extended.
+> > > > 
+> > > > Fixes: af3fc195e3c8 ("target/riscv: Change the TLB page size depends on PMP entries.")
+> > > > Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
+> > > > ---
+> > > >    target/riscv/cpu_helper.c | 2 +-
+> > > >    1 file changed, 1 insertion(+), 1 deletion(-)
+> > > > 
+> > > > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> > > > index 395a1d914061..dfef1b20d1e8 100644
+> > > > --- a/target/riscv/cpu_helper.c
+> > > > +++ b/target/riscv/cpu_helper.c
+> > > > @@ -1323,7 +1323,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+> > > >        int ret = TRANSLATE_FAIL;
+> > > >        int mode = mmuidx_priv(mmu_idx);
+> > > >        /* default TLB page size */
+> > > > -    target_ulong tlb_size = TARGET_PAGE_SIZE;
+> > > > +    target_long tlb_size = TARGET_PAGE_SIZE;
 > > > 
-> > > This version addresses all of the review comments from v3 along with a
-> > > couple of
-> > > small bug fixes. This is a much smaller increment than in the previous
-> > > version
-> > > of the series [1]. Thanks once again to the reviewers that have been looking
-> > > at
-> > > this series. This v4 patch series is also available on github: [2]
-> > > 
-> > > The previous version had a build issue when building without debug enabled.
-> > > Patch 8/17 has been added to fix this and I've updated my own process to
-> > > test
-> > > both debug and release builds of QEMU.
-> > > 
-> > > For testing IGVM support in QEMU you need to generate an IGVM file that is
-> > > configured for the platform you want to launch. You can use the `buildigvm`
-> > > test tool [3] to allow generation of IGVM files for all currently supported
-> > > platforms. Patch 11/17 contains information on how to generate an IGVM file
-> > > using this tool.
+> > > If rv32 physical addresses are 34 bits, then you probably didn't want target_*long at all.
 > > 
-> > PC things:
-> > 
-> > Acked-by: Michael S. Tsirkin <mst@redhat.com>
-> > 
-> > 
+> > Yes, just using hwaddr for everything that only touches physical addresses
+> > would probably be best, but, ifaict, it's pretty common to use target_long
+> > for masks used on both virtual and physical addresses (TARGET_PAGE_MASK,
+> > for example). This 'tlb_size' variable is used on both as well.
 > 
-> Hi Michael,
+> Then maybe you want vaddr ("exec/vaddr.h"):
 > 
-> Thanks for this. Can I add your ack to all commits, or just the PC specific
-> ones?
-> 
-> Regards,
-> Roy
+> /**
+>  * vaddr:
+>  * Type wide enough to contain any #target_ulong virtual address.
+>  */
+>
 
+I think hwaddr would fit better in this case since riscv32 virtual
+addresses are 32-bit, but I see vaddr is a u64, so it would work too. I
+personally don't mind changing the type of tlb_size to hwaddr, but I went
+with target_long in this patch since that's what it was originally and
+masking with a signed long mask appears to be a common pattern in QEMU.
 
-I reviewed the pc things and skimmed the rest. So reviewed-by
-for pc things and Ack for the rest.
-
-> > > Changes in v4:
-> > > 
-> > > * Remove unused '#ifdef CONFIG_IGVM' sections
-> > > * Add "'if': 'CONFIG_IGVM'" for IgvmCfgProperties in qom.json
-> > > * Use error_fatal instead of error_abort in suggested locations
-> > > * Prevent addition of bios code when an IGVM file is provided and
-> > > pci_enabled is false
-> > > * Add patch 6/17 to fix error handling from sev_encrypt_flash()
-> > > * Revert unrequired changes to return values in sev/*_launch_update()
-> > > functions
-> > > * Add documentation to igvm.rst to describe how to use 'buildigvm'
-> > > * Various convention and code style changes as suggested in reviews
-> > > * Fix handling of sev_features for kernels that do not support KVM_SEV_INIT2
-> > > * Move igvm-cfg from MachineState to X86MachineState
-> > > 
-> > > Patch summary:
-> > > 
-> > > 1-12: Add support and documentation for processing IGVM files for SEV, SEV-
-> > > ES,
-> > > SEV-SNP and native platforms. 
-> > > 
-> > > 13-16: Processing of policy and SEV-SNP ID_BLOCK from IGVM file. 
-> > > 
-> > > 17: Add pre-processing of IGVM file to support synchronization of
-> > > 'SEV_FEATURES'
-> > > from IGVM VMSA to KVM.
-> > > 
-> > > [1] Link to v3:
-> > > https://lore.kernel.org/qemu-devel/cover.1718979106.git.roy.hopkins@suse.com/
-> > > 
-> > > [2] v4 patches also available here:
-> > > https://github.com/roy-hopkins/qemu/tree/igvm_master_v4
-> > > 
-> > > [3] `buildigvm` tool v0.2.0
-> > > https://github.com/roy-hopkins/buildigvm/releases/tag/v0.2.0
-> > > 
-> > > Roy Hopkins (17):
-> > >   meson: Add optional dependency on IGVM library
-> > >   backends/confidential-guest-support: Add functions to support IGVM
-> > >   backends/igvm: Add IGVM loader and configuration
-> > >   hw/i386: Add igvm-cfg object and processing for IGVM files
-> > >   i386/pc_sysfw: Ensure sysfw flash configuration does not conflict with
-> > >     IGVM
-> > >   sev: Fix error handling in sev_encrypt_flash()
-> > >   sev: Update launch_update_data functions to use Error handling
-> > >   target/i386: Allow setting of R_LDTR and R_TR with
-> > >     cpu_x86_load_seg_cache()
-> > >   i386/sev: Refactor setting of reset vector and initial CPU state
-> > >   i386/sev: Implement ConfidentialGuestSupport functions for SEV
-> > >   docs/system: Add documentation on support for IGVM
-> > >   docs/interop/firmware.json: Add igvm to FirmwareDevice
-> > >   backends/confidential-guest-support: Add set_guest_policy() function
-> > >   backends/igvm: Process initialization sections in IGVM file
-> > >   backends/igvm: Handle policy for SEV guests
-> > >   i386/sev: Add implementation of CGS set_guest_policy()
-> > >   sev: Provide sev_features flags from IGVM VMSA to KVM_SEV_INIT2
-> > > 
-> > >  docs/interop/firmware.json                 |   9 +-
-> > >  docs/system/i386/amd-memory-encryption.rst |   2 +
-> > >  docs/system/igvm.rst                       | 173 ++++
-> > >  docs/system/index.rst                      |   1 +
-> > >  meson.build                                |   8 +
-> > >  qapi/qom.json                              |  17 +
-> > >  backends/igvm.h                            |  23 +
-> > >  include/exec/confidential-guest-support.h  |  96 +++
-> > >  include/hw/i386/x86.h                      |   3 +
-> > >  include/sysemu/igvm-cfg.h                  |  54 ++
-> > >  target/i386/cpu.h                          |   9 +-
-> > >  target/i386/sev.h                          | 124 +++
-> > >  backends/confidential-guest-support.c      |  43 +
-> > >  backends/igvm-cfg.c                        |  66 ++
-> > >  backends/igvm.c                            | 958 +++++++++++++++++++++
-> > >  hw/i386/pc.c                               |  12 +
-> > >  hw/i386/pc_piix.c                          |  10 +
-> > >  hw/i386/pc_q35.c                           |  10 +
-> > >  hw/i386/pc_sysfw.c                         |  31 +-
-> > >  target/i386/sev.c                          | 844 ++++++++++++++++--
-> > >  backends/meson.build                       |   5 +
-> > >  meson_options.txt                          |   2 +
-> > >  qemu-options.hx                            |  25 +
-> > >  scripts/meson-buildoptions.sh              |   3 +
-> > >  24 files changed, 2447 insertions(+), 81 deletions(-)
-> > >  create mode 100644 docs/system/igvm.rst
-> > >  create mode 100644 backends/igvm.h
-> > >  create mode 100644 include/sysemu/igvm-cfg.h
-> > >  create mode 100644 backends/igvm-cfg.c
-> > >  create mode 100644 backends/igvm.c
-> > > 
-> > > -- 
-> > > 2.43.0
-> > 
-> 
-
+Thanks,
+drew
 
