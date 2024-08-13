@@ -4,91 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14725C52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 23:15:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BAC1C52D7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 23:24:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1se0jZ-00028j-2J; Tue, 13 Aug 2024 19:15:21 -0400
+	id 1se0sD-0008Jf-Ba; Tue, 13 Aug 2024 19:24:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1se0jX-00022x-Kg
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 19:15:19 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1se0jS-0005Gf-1K
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 19:15:19 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-1fd640a6454so46663835ad.3
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 16:15:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723590912; x=1724195712; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4NWfPsrwSsLRxXJXsWvF+4JuVroDP4Yn/u9U1cX/tvo=;
- b=HewjQmqV6z/VysmUcvlhib5Exw0QLLZIowvk6NmyguSlv57QRzTWX0ehmkyGZBtVnz
- 98bQgKRfgQAZq9oxp8jLmn6uABb0LRw36Oarfmrq4gpYB2YEym96gD460lJaNModhmrE
- 9R7/BYHGJ/Hzr3/e0ZBNghqgadE14xH7d2KL/Qd3KEtHfZkRF0DevYCxTHa2s1sOCKrX
- 91CnroOGP4QEXPbl4ctiWQoYcNzQqm4KVwzteIO+2vsOlCoCJMF34/s3WsqnFLU+7FRL
- FFqlfj6aA6cbVCLdraAALXwcwC3On2kZyc26UwVFy4m3hCI6JK0OnMjOUHmDesP2WxhE
- Jj0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723590912; x=1724195712;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4NWfPsrwSsLRxXJXsWvF+4JuVroDP4Yn/u9U1cX/tvo=;
- b=LagghSdQgreH6RLv5n8VX4lTr5JTxzaAHBbYvADgAy8bYtdVBBbVUCICEqQJtMc3eT
- n+lnaudvT4a+V6Z7RMnizPPuMimG8rPtSWmNHbk5UG0PEA/7qz/xLrgEGxZKabQM5ETx
- PRvPHfdcO6BvBWoTQ4IWNcauLURyuK7/25mz4EbWu8FVkEPtI+DSz4GukvLwk79WDHDK
- XqulY55us4vseodQmNje6fkBVY7UwevhzTy24gzkJfpKG3FuyHyKGrBUYw+3DcmzTMW7
- qaD2rV20NxkW6JgrmLCSPxDX+K6/fDp+2S49m/4KX24G/iOhjY/tb/o6x3R4Tg24AMgW
- 8J4A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXREq3q0UY/I22rqY4b22TvVpptYlx1Cw9iyvOdTzpkhlFvngxnCx6pEZ4yi5nGS4jSc9DPvksnQ8Sw0rMkn8+YD6+y+IQ=
-X-Gm-Message-State: AOJu0Ywqo1pOEvyCP5q9aSYDKmTy7cJ9Lo5SBzapoPdBsoMu+M7o1x2U
- ZAbAg8KMNFgmNXO1uEbYWqp9sBidfuoE4eyTySHxkyMFvXryPbfbzPZ8+BVBAQ0=
-X-Google-Smtp-Source: AGHT+IGA/Hw8qYpWyieWP4VPoC4tyCvHHBJfzNZhSm+CKj+WWZa1ewTo5ZtuY7AcWukFx55Y3Er6eg==
-X-Received: by 2002:a17:903:1108:b0:1fb:7435:c2cc with SMTP id
- d9443c01a7336-201d648ce04mr14897085ad.45.1723590912344; 
- Tue, 13 Aug 2024 16:15:12 -0700 (PDT)
-Received: from [192.168.1.113] ([203.30.4.111])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201cd1bd7dfsm18645055ad.232.2024.08.13.16.15.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Aug 2024 16:15:11 -0700 (PDT)
-Message-ID: <72fd781e-c8c7-4086-8667-1f70b53822ad@linaro.org>
-Date: Wed, 14 Aug 2024 09:15:04 +1000
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1se0sB-0008Iv-5l
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 19:24:16 -0400
+Received: from dfw.source.kernel.org ([139.178.84.217])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1se0s9-0006q5-DH
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 19:24:14 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 21E006191C;
+ Tue, 13 Aug 2024 23:24:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EAEC4AF13;
+ Tue, 13 Aug 2024 23:24:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1723591451;
+ bh=j486ons4LyU7EE4gQ8GJy4aORh/7MBRYapAi7rAlR+o=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=Yx9MluHJQmDwLQG3DJapFOoAdn5xMLfX5NVv0dsyrsYubiIW+gEv9OsMna87IYz/h
+ akhdJFXIwELLRJ1nYSLqJrpDqGs3UADWfrRqUulCrex73TfTNW7H0GgyP/VcIDLAMP
+ XmLOm6zd8VRmalAtkp1DhALF+ppVDCvl4169EWsyhPXWLsUASzwV9Kz5jfmZbhUj7R
+ 7xRIBTlAZ6sdeNk9Vhq5n/qvuu6IQX94GAvavM87c9BlF4I0E90EkZlJhNytA5D0Rn
+ TTNTnfJVpdrjHlR74fIFAL8B+AFC3jE3CfQUJpBNZHBYHQCYE00nw89EFnbnH2k/fP
+ jqpVgEMwcednw==
+Received: from mchehab by mail.kernel.org with local (Exim 4.98)
+ (envelope-from <mchehab+huawei@kernel.org>)
+ id 1se0s5-00000002ask-2DMl; Wed, 14 Aug 2024 01:24:09 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: 
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
+ linux-kernel@vger.kernel.org, qemu-devel@nongnu.org
+Subject: [PATCH v7 10/10] scripts/arm_processor_error.py: retrieve mpidr if
+ not filled
+Date: Wed, 14 Aug 2024 01:23:32 +0200
+Message-ID: <01a655b405ab098aed7396fe87f8fd406e966141.1723591201.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <cover.1723591201.git.mchehab+huawei@kernel.org>
+References: <cover.1723591201.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 09/10] hw: Rename DeviceClass::reset field to
- legacy_reset
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>
-References: <20240813165250.2717650-1-peter.maydell@linaro.org>
- <20240813165250.2717650-10-peter.maydell@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240813165250.2717650-10-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=139.178.84.217;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -71
+X-Spam_score: -7.2
+X-Spam_bar: -------
+X-Spam_report: (-7.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_HI=-5, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,18 +78,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/14/24 02:52, Peter Maydell wrote:
-> Rename theDeviceClass::reset field to legacy_reset; this is helpful
-> both in flagging up that it's best not used in new code and in
-> making it easy to search for where it's being used still.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   include/hw/qdev-core.h | 4 ++--
->   hw/core/qdev.c         | 8 ++++----
->   2 files changed, 6 insertions(+), 6 deletions(-)
+Add support to retrieve mpidr value via qom-get.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+---
+ scripts/arm_processor_error.py | 27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-r~
+diff --git a/scripts/arm_processor_error.py b/scripts/arm_processor_error.py
+index 2643e4ddc5f3..f869f07860b8 100644
+--- a/scripts/arm_processor_error.py
++++ b/scripts/arm_processor_error.py
+@@ -5,12 +5,10 @@
+ #
+ # Copyright (C) 2024 Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+ 
+-# TODO: current implementation has dummy defaults.
+-#
+-# For a better implementation, a QMP addition/call is needed to
+-# retrieve some data for ARM Processor Error injection:
+-#
+-#   - ARM registers: power_state, mpidr.
++# Note: currently it lacks a method to fill the ARM Processor Error CPER
++# psci field from emulation. On a real hardware, this is filled only
++# when a CPU is not running. Implementing support for it to simulate a
++# real hardware is not trivial.
+ 
+ import argparse
+ import re
+@@ -168,11 +166,24 @@ def send_cper(self, args):
+         else:
+             cper["running-state"] = 0
+ 
++        if args.mpidr:
++            cper["mpidr-el1"] = arg["mpidr"]
++        elif cpus:
++            cmd_arg = {
++                'path': cpus[0],
++                'property': "x-mpidr"
++            }
++            ret = qmp_cmd.send_cmd("qom-get", cmd_arg, may_open=True)
++            if isinstance(ret, int):
++                cper["mpidr-el1"] = ret
++            else:
++                cper["mpidr-el1"] = 0
++
+         if arm_valid_init:
+             if args.affinity:
+                 cper["valid"] |= self.arm_valid_bits["affinity"]
+ 
+-            if args.mpidr:
++            if "mpidr-el1" in cper:
+                 cper["valid"] |= self.arm_valid_bits["mpidr"]
+ 
+             if "running-state" in cper:
+@@ -356,7 +367,7 @@ def send_cper(self, args):
+                 if isinstance(ret, int):
+                     arg["midr-el1"] = ret
+ 
+-        util.data_add(data, arg.get("mpidr-el1", 0), 8)
++        util.data_add(data, cper["mpidr-el1"], 8)
+         util.data_add(data, arg.get("midr-el1", 0), 8)
+         util.data_add(data, cper["running-state"], 4)
+         util.data_add(data, arg.get("psci-state", 0), 4)
+-- 
+2.46.0
+
 
