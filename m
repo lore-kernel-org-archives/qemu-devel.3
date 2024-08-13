@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FE38C52D7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 10:19:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE02BC52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 10:20:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdoch-0006Uf-6y; Tue, 13 Aug 2024 06:19:27 -0400
+	id 1sdodF-0008G7-4N; Tue, 13 Aug 2024 06:20:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdocf-0006U7-IP
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:19:25 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdodB-0007mq-DL
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:19:58 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdocd-0005oJ-N5
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:19:25 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2f0dfdc9e16so63370511fa.2
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 03:19:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdod8-0005qL-CB
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:19:56 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5a156557029so6027215a12.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 03:19:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723544362; x=1724149162; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723544392; x=1724149192; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lA8uJXpJ/5fYFYlheHCIQUkasDjz5vKdapmYLx+X7e0=;
- b=U0TmQD0zaW4fVqXRZtYi+r/oabh2OV+nGnpxGZaoDP+2zUcqlyEIRG3lPNL9MKHteM
- mL0QhEypGsvlxENdwvTJlJmM9lG7IxORnoyBAaqJ0Dw3AjLp/zfyhSsWzfQgcXzc6pDD
- cWjf1IvM+FOR0d5l2SiJyar6PvlqkLBdZgC0kq5RG/WkFvvhSSOsamu6fglVCcYBUFz1
- Z9rdtr7skUr0KDmmHtKJ/+H9KhKAbBxa9ksMinlQLmNLa7MMek2t5hj9jsSDWM83X8fL
- zJMRXDHtyJoyuBgcuZgFEyVrDqNflP8Ms2BkgT54GKM/7ZfG6ogT/Oma98HmeBz4YRgZ
- APTQ==
+ bh=FQjGZK3beew7IwbGeEw9H3Yr18ElnIBqbghrqrG+68k=;
+ b=NOBymis3qSyv5eBA4i1pixFJfjxpm/fV6/eCzuJccvOFECsmPZUQ6Jt9Fl2QVANMap
+ lat76to18POYabB4lGlm8RjVCS6rIEeSSZDIlr3QcO6TZJkdE7iFK2oK+96mkO7O30jP
+ kUbwriwEN2iIH6HkRlUHci6T4vFhGZW5gpTVszhcEVOkQ06XtPWiVa3sGvuCnmsuYv9D
+ ACP2TL1ZLtP9vl/xwfGtb4Maw89u1DtJvYAkvQu2E/Hw+HxiyH/Raa0olMsqtvbNk7f5
+ uHquqCLc7pIiMNuxkfB4YYN0ryOeORGGNe0eUDlHwsWCT66vA37p0L8tdrWWMcLqfI/7
+ XKOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723544362; x=1724149162;
+ d=1e100.net; s=20230601; t=1723544392; x=1724149192;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lA8uJXpJ/5fYFYlheHCIQUkasDjz5vKdapmYLx+X7e0=;
- b=AkVnJvE+gHIL6ZdsF7Ykh9BqFaeZUo2KBA0fP2uF5oB2PA2tcOUClifySQwV3JJsV7
- JJXqGXbj+lBW408j6Eu3pDT0ET4Z0Ob3dwi2GBsBmD9QMDlFB50fbzuxmC8DHi3wZPKP
- yQCrTNZL+neuLSkX4iSypNiYJox8Xnp67Y5IMXzueotXJRNVUi/QFGy5MEurYmfT83HR
- lS3SmizsVyjtGu48fOppnVS/goa0ibgW3zlhp25Qnbib5TFlgbCHgcI2lSivNyLXkpc9
- jmkFindTN03QVhyzQ//IU1Mv9N25Fb9vdB7Eu+jprDd+ZXBJDS380VIVBOoCSA4SwYHe
- 8OVQ==
-X-Gm-Message-State: AOJu0YwmNAcw03QrBxfS1ZeQSLnVeEn5yfJ1k5H0bUs80nJePHFGFm/H
- AnflZaC6mgLUfa5jNYwXQOUU0qemBJPpuS3hs8OrIZOO9nZp6uvzbTFhgANMrrEeIPa0pGJ80/S
- XecE=
-X-Google-Smtp-Source: AGHT+IEyqflq6Pl8VxJ9lZUmgtGAU7kpLCARNI0gu+c/YaqILxA7QXlA36JJ8daHTGMD1FW/fB2qVQ==
-X-Received: by 2002:a2e:a7ca:0:b0:2ee:8453:5164 with SMTP id
- 38308e7fff4ca-2f2b70cb3c9mr24176611fa.0.1723544361515; 
- Tue, 13 Aug 2024 03:19:21 -0700 (PDT)
+ bh=FQjGZK3beew7IwbGeEw9H3Yr18ElnIBqbghrqrG+68k=;
+ b=aHhes0SavJlWUBRJn4VmfRq81j6rX15vQ4zJ57tQZB5Wab/vWSedVywwTucTNgEhfA
+ aYxAFp7UMGogo9Psk9ObAljIp8RzKRmxLqcFyHoPTMOR/eZlOW/x2TEq1QAVbxQujRp5
+ ZG5SWMYkYOQwx/Ncn8GeaKUJ8AMowFVq5/RDqAWx25ZNuKV1pAeS6gODQCH8F159z9IV
+ oFyRxJ4nzZwz19FUG6O1VMEozY0aY3C+RBKNhHk5/UZFNeJjsP6Woj3zwXr56HbFZ5+V
+ QmCd6YRk5MLic+mPgPU5XNlxd2CcGVVPrYnnxxrpZyhQltH+GPLmhxLnmDoggad0Z0Uz
+ WhjQ==
+X-Gm-Message-State: AOJu0YxM0D7CBEd4JRZvCFX+FRk7E8VzPax6H+EgIVsZMs8ZkBbrQiOB
+ zmDw9Yjlka011aHQxEba1lDegYRqQit46DEOiDKZNlR3d7O/zNqKGsax+2mjon5/cPKpzBvE9mO
+ ZEaw=
+X-Google-Smtp-Source: AGHT+IHJWHUD2GY612FzWR781LwV5aDhobIPV8/dkIBHA25bpJ5lxAMKnmITDXDMyo+Jp62bXZaG+A==
+X-Received: by 2002:a05:6402:270b:b0:5a2:8802:8e10 with SMTP id
+ 4fb4d7f45d1cf-5bd44c0feb3mr2279145a12.8.1723544392161; 
+ Tue, 13 Aug 2024 03:19:52 -0700 (PDT)
 Received: from m1x-phil.lan ([176.176.129.17])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bd196a7a11sm2852621a12.53.2024.08.13.03.19.15
+ 4fb4d7f45d1cf-5bd191a20fcsm3046548a12.36.2024.08.13.03.19.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 13 Aug 2024 03:19:21 -0700 (PDT)
+ Tue, 13 Aug 2024 03:19:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Aurelien Jarno <aurelien@aurel32.net>,
@@ -66,18 +66,17 @@ Cc: Aurelien Jarno <aurelien@aurel32.net>,
  Aleksandar Rikalo <arikalo@gmail.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Waldemar Brodkorb <wbx@uclibc-ng.org>
-Subject: [PATCH-for-9.1 v2 1/2] target/mips: Pass page table entry size in
- bytes to get_pte()
-Date: Tue, 13 Aug 2024 12:18:55 +0200
-Message-ID: <20240813101856.49469-2-philmd@linaro.org>
+Subject: [PATCH-for-9.1 v2 2/2] target/mips: Use correct MMU index in get_pte()
+Date: Tue, 13 Aug 2024 12:18:56 +0200
+Message-ID: <20240813101856.49469-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240813101856.49469-1-philmd@linaro.org>
 References: <20240813101856.49469-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,69 +99,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to simplify a bit, pass the PTE size in
-bytes rather than bits.
+When refactoring page_table_walk_refill() in commit 4e999bf419
+we missed the indirect call to cpu_mmu_index() in get_pte():
 
+  page_table_walk_refill()
+  -> get_pte()
+     -> cpu_ld[lq]_code()
+        -> cpu_mmu_index()
+
+Since we don't mask anymore the modes in hflags, cpu_mmu_index()
+can return UM or SM, while we only expect KM or ERL.
+
+Fix by propagating ptw_mmu_idx to get_pte(), and use the
+cpu_ld/st_code_mmu() API with the correct MemOpIdx.
+
+Reported-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+Reported-by: Waldemar Brodkorb <wbx@uclibc-ng.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2470
+Fixes: 4e999bf419 ("target/mips: Pass ptw_mmu_idx down from mips_cpu_tlb_fill")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/mips/tcg/sysemu/tlb_helper.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ target/mips/tcg/sysemu/tlb_helper.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
 diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu/tlb_helper.c
-index 3ba6d369a6..a8caf3ade8 100644
+index a8caf3ade8..4e64c226a5 100644
 --- a/target/mips/tcg/sysemu/tlb_helper.c
 +++ b/target/mips/tcg/sysemu/tlb_helper.c
-@@ -592,13 +592,13 @@ static void raise_mmu_exception(CPUMIPSState *env, target_ulong address,
-  * resulting in a TLB or XTLB Refill exception.
+@@ -593,16 +593,21 @@ static void raise_mmu_exception(CPUMIPSState *env, target_ulong address,
   */
  
--static bool get_pte(CPUMIPSState *env, uint64_t vaddr, int entry_size,
-+static bool get_pte(CPUMIPSState *env, uint64_t vaddr, unsigned entry_bytes,
-         uint64_t *pte)
+ static bool get_pte(CPUMIPSState *env, uint64_t vaddr, unsigned entry_bytes,
+-        uint64_t *pte)
++                    uint64_t *pte, unsigned ptw_mmu_idx)
  {
--    if ((vaddr & ((entry_size >> 3) - 1)) != 0) {
-+    if ((vaddr & (entry_bytes - 1)) != 0) {
++    MemOpIdx oi;
++
+     if ((vaddr & (entry_bytes - 1)) != 0) {
          return false;
      }
--    if (entry_size == 64) {
-+    if (entry_bytes == 8) {
-         *pte = cpu_ldq_code(env, vaddr);
++
++    oi = make_memop_idx(size_memop(entry_bytes) | MO_TE, ptw_mmu_idx);
+     if (entry_bytes == 8) {
+-        *pte = cpu_ldq_code(env, vaddr);
++        *pte = cpu_ldq_code_mmu(env, vaddr, oi, 0);
      } else {
-         *pte = cpu_ldl_code(env, vaddr);
-@@ -607,11 +607,11 @@ static bool get_pte(CPUMIPSState *env, uint64_t vaddr, int entry_size,
+-        *pte = cpu_ldl_code(env, vaddr);
++        *pte = cpu_ldl_code_mmu(env, vaddr, oi, 0);
+     }
++
+     return true;
  }
  
- static uint64_t get_tlb_entry_layout(CPUMIPSState *env, uint64_t entry,
--        int entry_size, int ptei)
-+                                     unsigned entry_bytes, int ptei)
- {
-     uint64_t result = entry;
-     uint64_t rixi;
--    if (ptei > entry_size) {
-+    if (ptei > entry_bytes >> 3) {
-         ptei -= 32;
+@@ -643,7 +648,7 @@ static int walk_directory(CPUMIPSState *env, uint64_t *vaddr,
+         /* wrong base address */
+         return 0;
      }
-     result >>= (ptei - 2);
-@@ -630,8 +630,8 @@ static int walk_directory(CPUMIPSState *env, uint64_t *vaddr,
-     int psn = (env->CP0_PWCtl >> CP0PC_PSN) & 0x3F;
-     int hugepg = (env->CP0_PWCtl >> CP0PC_HUGEPG) & 0x1;
-     int pf_ptew = (env->CP0_PWField >> CP0PF_PTEW) & 0x3F;
--    uint32_t direntry_size = 1 << (directory_shift + 3);
--    uint32_t leafentry_size = 1 << (leaf_shift + 3);
-+    uint32_t direntry_size = 1 << directory_shift;
-+    uint32_t leafentry_size = 1 << leaf_shift;
-     uint64_t entry;
-     uint64_t paddr;
-     int prot;
-@@ -768,7 +768,7 @@ static bool page_table_walk_refill(CPUMIPSState *env, vaddr address,
-     ptoffset0 = (ptindex >> 1) << (leaf_shift + 1);
-     ptoffset1 = ptoffset0 | (1 << (leaf_shift));
+-    if (!get_pte(env, *vaddr, direntry_size, &entry)) {
++    if (!get_pte(env, *vaddr, direntry_size, &entry, ptw_mmu_idx)) {
+         return 0;
+     }
  
--    leafentry_size = 1 << (leaf_shift + 3);
-+    leafentry_size = 1 << leaf_shift;
- 
-     /* Global Directory */
-     if (gdw > 0) {
+@@ -669,7 +674,7 @@ static int walk_directory(CPUMIPSState *env, uint64_t *vaddr,
+                                      ptw_mmu_idx) != TLBRET_MATCH) {
+                 return 0;
+             }
+-            if (!get_pte(env, vaddr2, leafentry_size, &entry)) {
++            if (!get_pte(env, vaddr2, leafentry_size, &entry, ptw_mmu_idx)) {
+                 return 0;
+             }
+             entry = get_tlb_entry_layout(env, entry, leafentry_size, pf_ptew);
+@@ -827,7 +832,7 @@ static bool page_table_walk_refill(CPUMIPSState *env, vaddr address,
+                              ptw_mmu_idx) != TLBRET_MATCH) {
+         return false;
+     }
+-    if (!get_pte(env, vaddr, leafentry_size, &dir_entry)) {
++    if (!get_pte(env, vaddr, leafentry_size, &dir_entry, ptw_mmu_idx)) {
+         return false;
+     }
+     dir_entry = get_tlb_entry_layout(env, dir_entry, leafentry_size, pf_ptew);
+@@ -839,7 +844,7 @@ static bool page_table_walk_refill(CPUMIPSState *env, vaddr address,
+                              ptw_mmu_idx) != TLBRET_MATCH) {
+         return false;
+     }
+-    if (!get_pte(env, vaddr, leafentry_size, &dir_entry)) {
++    if (!get_pte(env, vaddr, leafentry_size, &dir_entry, ptw_mmu_idx)) {
+         return false;
+     }
+     dir_entry = get_tlb_entry_layout(env, dir_entry, leafentry_size, pf_ptew);
 -- 
 2.45.2
 
