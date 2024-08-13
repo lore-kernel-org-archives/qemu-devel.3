@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8274BC52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 05:07:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D852C52D7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 05:07:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdjkt-0001Va-6B; Tue, 13 Aug 2024 01:07:37 -0400
+	id 1sdjkL-00006Q-PT; Tue, 13 Aug 2024 01:07:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sdjkk-0001Jq-1q
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 01:07:27 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sdjkD-00005j-KZ
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 01:06:54 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sdjkh-0007oX-Be
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 01:07:24 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-70eaf5874ddso3809215b3a.3
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 22:07:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1sdjkB-0007ew-Sv
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 01:06:53 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-70d18d4b94cso3761780b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 22:06:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723525642; x=1724130442; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZBpaQ/HJd3PJasOjuDlscyEiUWvNzOoBl6dVc+TjWMw=;
- b=h0N2Fr1NhD4vBppY1Gei6aXhvfF7lZONpp+LnYf5yT775XDOC6NQqy20Ko3AENDlfK
- fHx3oz9cp+6K/Kmi5AfeamkZiCLMATkIbGHJ8bxHZZexKTEy7JgauGPh/rrT8S5bOcDj
- LcUtJvwi0SkhakyDcwV2Lji4I6b2LqEB2xV1DzAA81UOXsj8HgJIghA78j7lOlW1xc+j
- TZb3tCZcf9arncCKuxVd41y4JSU87/lUk3KCsH8LqVzVXUYa0fb9flBREsMnxW84d1VQ
- ExjndVAWNmZ952HyGOMw13q+r3P0t9/gAYYVV742uwsFCsjy7Sae8lJiZyU+BCrMtqmO
- bzNA==
+ d=gmail.com; s=20230601; t=1723525608; x=1724130408; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=lNYFeOuj85AE3awp13lR8/SoEsR70saTNGG/oaEQdwE=;
+ b=UZ66AyOADprc88wG0UZsBiAxWl3Q/BgFQXhV0zfxPXKMM6HJImMEvGLAzQYgZlTF59
+ X2vJoQ2G5ajBzCVqJlhR+NFq5oi2nIK/MRQV/yWP+XaF32hBJAQc0pMyHQWfpHyX7Ceg
+ d6uvpqo9IRuVvYgBu+DxwisLTh+4UVpYOR6vjmAFYF68GiOvDK1SHVyCpKFMsVKY+/Ra
+ QxIOCBm81ylP5mlPiknIo0uhJm60k6oIpDrSZGf9jXvzoHfHWD1zhP/aXYrhpH/18WcV
+ jO9pkol/sh83t9sOGNBrPO1ZHn9RgOPfAmJxF82UMPqFI5sVie5mFAdectnPXSsXgKnV
+ AjFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723525642; x=1724130442;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZBpaQ/HJd3PJasOjuDlscyEiUWvNzOoBl6dVc+TjWMw=;
- b=C0NHyOB6utC1pELKdEDQgEFxbPN3VpWM4u0/uExBIRY1LTY/Liz4r9KpiBxsZUlLBn
- P5nnthA59i40i5RLxVYtvChqAWjMNSsoiWvnN96VNHTEdtfnuNEnPCuksWyvHEl3qihX
- N9WlZ7plBPTTXA0suYRGxS6ikHad0a6NWYmCeW+/H7M44a8qC7b810O0X0dc32gTx1Zi
- +Udd7vAJt/Aix4HuU8V0oajBPoUZLwi4KkMqGPs3gUvrSK4DPuDThjfdDFvDyvglNtXo
- 0WHj0rv/h/xLvHEM4g/w7PwyDjjYWt9lP45RDLM/PVTNpSiMZdjynQqf7Wb4FXqyrJ99
- bzqg==
-X-Gm-Message-State: AOJu0YzcurIImipcfyLyYIb6s4bCXcztftwcjC1phT49yqHZgiEFUGw1
- FUe8TO3VLjajx3/E6dorWf7VvjFX7k/4N2n8lTtG5BZ5ZHmtR9WFxy13eGAd
-X-Google-Smtp-Source: AGHT+IHczjedj/NKx5ny7tRO+uGGdl/xImvM54mVuXb1OEyzIO+O2Blidmj7I7vLOZBRJyuZZZDc4A==
-X-Received: by 2002:a05:6a00:3904:b0:70d:3354:a190 with SMTP id
- d2e1a72fcca58-71255226e24mr3286473b3a.27.1723525641453; 
- Mon, 12 Aug 2024 22:07:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723525608; x=1724130408;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=lNYFeOuj85AE3awp13lR8/SoEsR70saTNGG/oaEQdwE=;
+ b=uH89HyDp0AYgnGcc7KBvFOBWWMl5zH47ujIpzd9z8MCa/s/OHmz4yIHaJcV9+LMz0K
+ joOuPakjLM6Y+M+Z3JlA0czXJh2q1j96CmdWhuhE3jMaPOdMqGxJBVCqNgvYSHB8SoQ+
+ C4zXbP8NSg2IC0sBzSlhiBPNmc21m1xV6FFK04JZ7FhDGUEIWHSNr/SHIXNquKlH38dW
+ rqMNTOqWAx8tvv4vaMN/uAJ+fn+uIEcgyfyDs0VYBzu3tiDi9TSSW6q86zHpd1Vix5Ai
+ QqPOM14iddRUAVoUUUTi0qPGtHTSDF+fkxyYYj/q+DlKmfJOPR5NE0UbUDCD08xUMFT3
+ 3W5Q==
+X-Gm-Message-State: AOJu0YzLK3ujiqBg77huv7kedr9CMBds2fjCSnlbc4iRXN+dppbY8qMh
+ wrLpAOLr/l+p5uVj+l5XvuHBCGDHS5EHcw+27AiqmGZiDqJnRYEAZ8JaSFCf
+X-Google-Smtp-Source: AGHT+IHP97dS9zsUo2t3kah6akFT94qGGadxT6VT/jxNBf3KNOFZeY5Wi1LBYo2mWb9TdY+MOZ51LQ==
+X-Received: by 2002:a05:6a00:2d93:b0:705:a450:a993 with SMTP id
+ d2e1a72fcca58-712551a124fmr3123222b3a.17.1723525608463; 
+ Mon, 12 Aug 2024 22:06:48 -0700 (PDT)
 Received: from wheely.local0.net ([1.145.66.74])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-710e5874ddcsm4846449b3a.28.2024.08.12.22.07.16
+ d2e1a72fcca58-710e5874ddcsm4846449b3a.28.2024.08.12.22.06.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 12 Aug 2024 22:07:21 -0700 (PDT)
+ Mon, 12 Aug 2024 22:06:48 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
@@ -67,18 +66,15 @@ Cc: Nicholas Piggin <npiggin@gmail.com>,
  Cleber Rosa <crosa@redhat.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH v6 06/10] tests/avocado: replay_kernel.py add x86-64 q35
- machine test
-Date: Tue, 13 Aug 2024 15:06:33 +1000
-Message-ID: <20240813050638.446172-7-npiggin@gmail.com>
+Subject: [PATCH v6 00/10] replay: fixes and new test cases
+Date: Tue, 13 Aug 2024 15:06:27 +1000
+Message-ID: <20240813050638.446172-1-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240813050638.446172-1-npiggin@gmail.com>
-References: <20240813050638.446172-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,52 +97,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The x86-64 pc machine is flaky with record/replay, but q35 is more
-stable. Add a q35 test to replay_kernel.py.
+Since v5, I cut down the series significantly to just the better
+reviewed parts, without adding new CI testing, since there are
+still be a few hiccups. aarch64 had some hangs Alex noticed, and
+x86_64 doesn't seem to be working anymore for me (with the big
+replay_linux.py test). But with this series, things are much closer,
+ppc64 does get through replay_linux.py (but requires some ppc
+specific fixes and the new test to be added, so I leave that out
+for now).
 
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- tests/avocado/replay_kernel.py | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+Hopefully we can get this minimal series in and in the next
+release I'll try to get something stable enough for CI so it
+doesn't keep breaking.
 
-diff --git a/tests/avocado/replay_kernel.py b/tests/avocado/replay_kernel.py
-index a668af9d36..e22c200a36 100644
---- a/tests/avocado/replay_kernel.py
-+++ b/tests/avocado/replay_kernel.py
-@@ -110,7 +110,7 @@ def test_i386_pc(self):
-         self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
- 
-     # See https://gitlab.com/qemu-project/qemu/-/issues/2094
--    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test sometimes gets stuck')
-+    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'pc machine is unstable with replay')
-     def test_x86_64_pc(self):
-         """
-         :avocado: tags=arch:x86_64
-@@ -128,6 +128,22 @@ def test_x86_64_pc(self):
- 
-         self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
- 
-+    def test_x86_64_q35(self):
-+        """
-+        :avocado: tags=arch:x86_64
-+        :avocado: tags=machine:q35
-+        """
-+        kernel_url = ('https://archives.fedoraproject.org/pub/archive/fedora'
-+                      '/linux/releases/29/Everything/x86_64/os/images/pxeboot'
-+                      '/vmlinuz')
-+        kernel_hash = '23bebd2680757891cf7adedb033532163a792495'
-+        kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
-+
-+        kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
-+        console_pattern = 'VFS: Cannot open root device'
-+
-+        self.run_rr(kernel_path, kernel_command_line, console_pattern, shift=5)
-+
-     def test_mips_malta(self):
-         """
-         :avocado: tags=arch:mips
+Thanks,
+Nick
+
+Nicholas Piggin (10):
+  scripts/replay-dump.py: Update to current rr record format
+  scripts/replay-dump.py: rejig decoders in event number order
+  tests/avocado: excercise scripts/replay-dump.py in replay tests
+  replay: allow runstate shutdown->running when replaying trace
+  Revert "replay: stop us hanging in rr_wait_io_event"
+  tests/avocado: replay_kernel.py add x86-64 q35 machine test
+  chardev: set record/replay on the base device of a muxed device
+  virtio-net: Use replay_schedule_bh_event for bhs that affect machine
+    state
+  virtio-net: Use virtual time for RSC timers
+  savevm: Fix load_snapshot error path crash
+
+ include/sysemu/replay.h        |   5 -
+ include/sysemu/runstate.h      |   1 +
+ accel/tcg/tcg-accel-ops-rr.c   |   2 +-
+ chardev/char.c                 |  71 +++++++++-----
+ hw/net/virtio-net.c            |  17 ++--
+ migration/savevm.c             |   1 +
+ replay/replay.c                |  23 +----
+ system/runstate.c              |  31 +++++-
+ scripts/replay-dump.py         | 167 ++++++++++++++++++++++-----------
+ tests/avocado/replay_kernel.py |  31 +++++-
+ tests/avocado/replay_linux.py  |  10 ++
+ 11 files changed, 245 insertions(+), 114 deletions(-)
+
 -- 
 2.45.2
 
