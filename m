@@ -4,72 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFF7DC52D7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 09:53:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65A37C52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 09:54:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdoCd-00059c-G7; Tue, 13 Aug 2024 05:52:31 -0400
+	id 1sdoEG-0002cD-HA; Tue, 13 Aug 2024 05:54:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdoCc-00055V-6r
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 05:52:30 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1sdoED-0002PY-E2
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 05:54:09 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdoCZ-0001yh-Sd
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 05:52:29 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-7ab09739287so3179407a12.3
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 02:52:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1sdoE7-0002F4-C2
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 05:54:06 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-a7a8caef11fso597499166b.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 02:54:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723542746; x=1724147546; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=t3GHj8EPvor+Hu1Z8PFA3Hw+wfUvycfDcgvw4x5Z+6E=;
- b=IvDHGUELaT5EevBLKAdcymN9GXF4G6lepGcSNyHOJgnKAQthizxBPLTsv1MEfGfUEL
- bHwajQGdb06LNuVlwWLbKcOjOS8aW/pvC5WMlPHMGBEpV908l/kQ9HsKRUTryN8Cbz52
- ldz1GWHMIs2AAIWzNVPUQf+dTElBAX7o+05QCzYhifenAEiumBpMexllkSqYs/DsquMP
- yym0HL5sV2f/Lt4FVJ+VlGZQjc5dnSmdT/3lVZZlyfHN4EepJoBzLKLd+F3JaO6uSbWP
- QPFvU6sEthJ6xoD5s8zWlZfhoEQf0TCmhZIRvl1yGkC8e8LXIdtaNhk9mIZGrOd7tg/B
- enow==
+ d=suse.com; s=google; t=1723542840; x=1724147640; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:autocrypt
+ :references:in-reply-to:date:cc:to:from:subject:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=hHhjsCtJRSsIOojba4WUctj17JxJyYeRRZXHTvVwDbA=;
+ b=QunRxCiDlLzBS100nADjIOrbcS4/OK/WJtGbqKKzhWIr3h/EvS1MmMgpa7ghxzgjc2
+ PrljGyzhN6XhiFTC0IPG+L84HauIDrIOOJ75CUBrVu88h2XNXMHrR5oARimRnUbIyE5t
+ /8e+QCZvc/92nH/GHfgFstyr1Ad2p4mD1p3OcZOeClSD589ri89pIUEVXjIrrPJqvva3
+ rqFb7IFZfBOhWvSlHqaghrtbduQy9HrAoQfN6VqQGfvq2mmnjNsnEoWM5CdErmCYMjCN
+ DjOsuV7epwDYqGloMyMc3giHXQElZVT8lVWUoShTQ454SZET5nnclpkPxsgVMrCsDtbG
+ DvIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723542746; x=1724147546;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=t3GHj8EPvor+Hu1Z8PFA3Hw+wfUvycfDcgvw4x5Z+6E=;
- b=Oxs5sGoW8IyawluNcHIEGGpBYwDODzF1PJjvDGzqc0vk6bzzKW6dPSF2f6gyEYk54D
- 3OMAOIMgWikyI7Dsu1n+UC97gLjWSk8M1tPAHeU7kIspyiybHmh9xMwg9vCNNK8Qk8z5
- 9d4318mJ14bOQNX7rLpfgg7C0J+ldbWh02i1S4FVThluynt8NuLV+JCTPZX4oSTNpF4l
- YmeHLOwZrPPSNkYWho1iUnJ7z657DvHFmUNf/UPVPVR+sGNN+2FII78Fa/D5nR/PHXzQ
- xsCI7Sce/6y5re6b4Lbd2KJ4J3Q7jhXIUK9hKR/A8cO/LCcrcM6bdrEkJ3cdQPqwEigx
- j+Uw==
-X-Gm-Message-State: AOJu0Yy68F3B+JTNRDRwZPG6Ojfi2IcUYxodlue7iPktAq4TmN/O4vcI
- hhyHp2NK1eCYAFuMtnkJiRT5sIlqpnsiXrWYPJeuNMQ4OCmqVm4cUJM2N+9IexIoqVVvRqRy1mw
- Mpvk=
-X-Google-Smtp-Source: AGHT+IHlOMIylfQSmzc6+4c2fPryiqoAMCLADASktQxAtxU9QbLicx8Qck5AXFfBNMQMtHfay+KuMQ==
-X-Received: by 2002:a05:6a21:1191:b0:1c0:e9f7:29da with SMTP id
- adf61e73a8af0-1c8d74fbdd7mr4030874637.24.1723542746124; 
- Tue, 13 Aug 2024 02:52:26 -0700 (PDT)
-Received: from stoup.. ([203.30.4.111]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d1c9ca796fsm10851876a91.30.2024.08.13.02.52.24
- for <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1723542840; x=1724147640;
+ h=mime-version:user-agent:content-transfer-encoding:autocrypt
+ :references:in-reply-to:date:cc:to:from:subject:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hHhjsCtJRSsIOojba4WUctj17JxJyYeRRZXHTvVwDbA=;
+ b=wDirY7wjb22R+R7mr9/c84pDsqpvse4vV0DvVMzRtr+5f5j4EjtDTD7MaAmgN5m0xj
+ +Wo/apoFnq9iWWqSsJOOWM3IVcHfOEbzohQ/kvW/j0DsXc/qwtWhpFxAJUB0MD3UZEC0
+ 6C+wRTzjhZDjyjv1v+QgfSyYn9/hVddlTeeFPgt7abycfPdhIY9HvWGeRiW16KmEd+42
+ d8fEk8ZaQxFnLoVIT8T7RyBq4FvFE2vT2O2k1jATv+ZDsn4pNMT/k6lEIc8flzr2GvWz
+ PygwddImRyt9p19JAfxJDqm5qu6X2+c73hW9Hj+V32QTkXTIjoCFIkjFkbNsz1RUmt+Q
+ /fuA==
+X-Gm-Message-State: AOJu0YwuWhhJAWSU8VZWn/l0CSTwDanAIFlnRP1l2E+R8rNV/Jlw8OlE
+ KJAGMyvoPJAO4woQ1pRbXNstWDozDHsA0FqPliE6TWyd3/caQv+V9YO5+FvQuVc=
+X-Google-Smtp-Source: AGHT+IEigZu3kQiNadr5zLjrNGETtck5vA2HbIWK/puaZCl+nEmrBL3VhxYvH5iqz3uPqb6+zNF0ig==
+X-Received: by 2002:a17:907:7f8c:b0:a77:d773:54ec with SMTP id
+ a640c23a62f3a-a80ed1ab132mr245949566b.8.1723542839884; 
+ Tue, 13 Aug 2024 02:53:59 -0700 (PDT)
+Received: from [192.168.7.249] ([145.40.191.116])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a80f411af30sm55119366b.131.2024.08.13.02.53.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Aug 2024 02:52:25 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH 1/2] meson: Split --enable-sanitizers to --enable-{asan, ubsan}
-Date: Tue, 13 Aug 2024 19:52:15 +1000
-Message-ID: <20240813095216.306555-2-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240813095216.306555-1-richard.henderson@linaro.org>
-References: <20240813095216.306555-1-richard.henderson@linaro.org>
+ Tue, 13 Aug 2024 02:53:59 -0700 (PDT)
+Message-ID: <1498c181139068d2297abd61dbee39cd82ab4e26.camel@suse.com>
+Subject: Re: [PATCH v4 00/17] Introduce support for IGVM files
+From: Roy Hopkins <roy.hopkins@suse.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, "Daniel P ."
+ =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>, Stefano Garzarella
+ <sgarzare@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, Cornelia Huck
+ <cohuck@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Sergio
+ Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Alistair
+ Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>, David
+ Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Tom
+ Lendacky <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>,
+ Ani Sinha <anisinha@redhat.com>,  =?ISO-8859-1?Q?J=F6rg?= Roedel
+ <jroedel@suse.com>
+Date: Tue, 13 Aug 2024 10:53:58 +0100
+In-Reply-To: <20240720142552-mutt-send-email-mst@kernel.org>
+References: <cover.1720004383.git.roy.hopkins@suse.com>
+ <20240720142552-mutt-send-email-mst@kernel.org>
+Autocrypt: addr=roy.hopkins@suse.com; prefer-encrypt=mutual;
+ keydata=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
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.50.2 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=roy.hopkins@suse.com; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,221 +112,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We do not always want both address and undefined behavior
-sanitizers running at the same time.
-
-For the gitlab custom-runners, drop to only --enable-ubsan.
-These jobs are not run by default, but as will be obvious in the
-next patch, we don't run ASan on x86 either, and it seems wrong
-to hold aarch64 and s390x to a different standard.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tests/qtest/fdc-test.c                            |  2 +-
- .../custom-runners/ubuntu-22.04-aarch64.yml       |  2 +-
- .../custom-runners/ubuntu-22.04-s390x.yml         |  2 +-
- docs/devel/fuzzing.rst                            |  4 ++--
- meson.build                                       | 15 +++++++++++----
- meson_options.txt                                 |  6 ++++--
- scripts/meson-buildoptions.sh                     |  9 ++++++---
- tests/docker/test-debug                           |  4 ++--
- 8 files changed, 28 insertions(+), 16 deletions(-)
-
-diff --git a/tests/qtest/fdc-test.c b/tests/qtest/fdc-test.c
-index 5e8fbda9df..8645b080f7 100644
---- a/tests/qtest/fdc-test.c
-+++ b/tests/qtest/fdc-test.c
-@@ -552,7 +552,7 @@ static bool qtest_check_clang_sanitizer(void)
- #ifdef QEMU_SANITIZE_ADDRESS
-     return true;
- #else
--    g_test_skip("QEMU not configured using --enable-sanitizers");
-+    g_test_skip("QEMU not configured using --enable-asan");
-     return false;
- #endif
- }
-diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml b/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml
-index 263a3c2140..ca2f140471 100644
---- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml
-+++ b/.gitlab-ci.d/custom-runners/ubuntu-22.04-aarch64.yml
-@@ -103,7 +103,7 @@ ubuntu-22.04-aarch64-clang:
-  script:
-  - mkdir build
-  - cd build
-- - ../configure --disable-libssh --cc=clang --cxx=clang++ --enable-sanitizers
-+ - ../configure --disable-libssh --cc=clang --cxx=clang++ --enable-ubsan
-    || { cat config.log meson-logs/meson-log.txt; exit 1; }
-  - make --output-sync -j`nproc --ignore=40`
-  - make --output-sync -j`nproc --ignore=40` check
-diff --git a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-index 69ddd3e7d5..ca374acb8c 100644
---- a/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-+++ b/.gitlab-ci.d/custom-runners/ubuntu-22.04-s390x.yml
-@@ -80,7 +80,7 @@ ubuntu-22.04-s390x-clang:
-  script:
-  - mkdir build
-  - cd build
-- - ../configure --cc=clang --cxx=clang++ --enable-sanitizers
-+ - ../configure --cc=clang --cxx=clang++ --enable-ubsan
-    || { cat config.log meson-logs/meson-log.txt; exit 1; }
-  - make --output-sync -j`nproc`
-  - make --output-sync -j`nproc` check
-diff --git a/docs/devel/fuzzing.rst b/docs/devel/fuzzing.rst
-index 3bfcb33fc4..dfe1973cf8 100644
---- a/docs/devel/fuzzing.rst
-+++ b/docs/devel/fuzzing.rst
-@@ -24,8 +24,8 @@ Configure with (substitute the clang binaries with the version you installed).
- Here, enable-sanitizers, is optional but it allows us to reliably detect bugs
- such as out-of-bounds accesses, use-after-frees, double-frees etc.::
- 
--    CC=clang-8 CXX=clang++-8 /path/to/configure --enable-fuzzing \
--                                                --enable-sanitizers
-+    CC=clang-8 CXX=clang++-8 /path/to/configure \
-+        --enable-fuzzing --enable-asan --enable-ubsan
- 
- Fuzz targets are built similarly to system targets::
- 
-diff --git a/meson.build b/meson.build
-index 81ecd4bae7..19b18b4a8a 100644
---- a/meson.build
-+++ b/meson.build
-@@ -474,24 +474,31 @@ if get_option('safe_stack') and coroutine_backend != 'ucontext'
-   error('SafeStack is only supported with the ucontext coroutine backend')
- endif
- 
--if get_option('sanitizers')
-+if get_option('asan')
-   if cc.has_argument('-fsanitize=address')
-     qemu_cflags = ['-fsanitize=address'] + qemu_cflags
-     qemu_ldflags = ['-fsanitize=address'] + qemu_ldflags
-+  else
-+    error('Your compiler does not support -fsanitize=address')
-   endif
-+endif
- 
--  # Detect static linking issue with ubsan - https://gcc.gnu.org/bugzilla/show_bug.cgi?id=84285
-+if get_option('ubsan')
-+  # Detect static linking issue with ubsan:
-+  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=84285
-   if cc.links('int main(int argc, char **argv) { return argc + 1; }',
-               args: [qemu_ldflags, '-fsanitize=undefined'])
-     qemu_cflags = ['-fsanitize=undefined'] + qemu_cflags
-     qemu_ldflags = ['-fsanitize=undefined'] + qemu_ldflags
-+  else
-+    error('Your compiler does not support -fsanitize=undefined')
-   endif
- endif
- 
- # Thread sanitizer is, for now, much noisier than the other sanitizers;
- # keep it separate until that is not the case.
- if get_option('tsan')
--  if get_option('sanitizers')
-+  if get_option('asan') or get_option('ubsan')
-     error('TSAN is not supported with other sanitizers')
-   endif
-   if not cc.has_function('__tsan_create_fiber',
-@@ -2511,7 +2518,7 @@ if rdma.found()
- endif
- 
- have_asan_fiber = false
--if get_option('sanitizers') and \
-+if get_option('asan') and \
-    not cc.has_function('__sanitizer_start_switch_fiber',
-                          args: '-fsanitize=address',
-                          prefix: '#include <sanitizer/asan_interface.h>')
-diff --git a/meson_options.txt b/meson_options.txt
-index 0269fa0f16..98615c3c4e 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -91,8 +91,10 @@ option('tcg_interpreter', type: 'boolean', value: false,
-        description: 'TCG with bytecode interpreter (slow)')
- option('safe_stack', type: 'boolean', value: false,
-        description: 'SafeStack Stack Smash Protection (requires clang/llvm and coroutine backend ucontext)')
--option('sanitizers', type: 'boolean', value: false,
--       description: 'enable default sanitizers')
-+option('asan', type: 'boolean', value: false,
-+       description: 'enable address sanitizer')
-+option('ubsan', type: 'boolean', value: false,
-+       description: 'enable undefined behaviour sanitizer')
- option('tsan', type: 'boolean', value: false,
-        description: 'enable thread sanitizer')
- option('stack_protector', type: 'feature', value: 'auto',
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index c97079a38c..a6ee2d9c01 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -21,6 +21,7 @@ meson_options_help() {
-   printf "%s\n" '  --disable-relocatable    toggle relocatable install'
-   printf "%s\n" '  --docdir=VALUE           Base directory for documentation installation'
-   printf "%s\n" '                           (can be empty) [share/doc]'
-+  printf "%s\n" '  --enable-asan            enable address sanitizer'
-   printf "%s\n" '  --enable-block-drv-whitelist-in-tools'
-   printf "%s\n" '                           use block whitelist also in tools instead of only'
-   printf "%s\n" '                           QEMU'
-@@ -46,13 +47,13 @@ meson_options_help() {
-   printf "%s\n" '                           getrandom()'
-   printf "%s\n" '  --enable-safe-stack      SafeStack Stack Smash Protection (requires'
-   printf "%s\n" '                           clang/llvm and coroutine backend ucontext)'
--  printf "%s\n" '  --enable-sanitizers      enable default sanitizers'
-   printf "%s\n" '  --enable-strip           Strip targets on install'
-   printf "%s\n" '  --enable-tcg-interpreter TCG with bytecode interpreter (slow)'
-   printf "%s\n" '  --enable-trace-backends=CHOICES'
-   printf "%s\n" '                           Set available tracing backends [log] (choices:'
-   printf "%s\n" '                           dtrace/ftrace/log/nop/simple/syslog/ust)'
-   printf "%s\n" '  --enable-tsan            enable thread sanitizer'
-+  printf "%s\n" '  --enable-ubsan           enable undefined behaviour sanitizer'
-   printf "%s\n" '  --firmwarepath=VALUES    search PATH for firmware files [share/qemu-'
-   printf "%s\n" '                           firmware]'
-   printf "%s\n" '  --iasl=VALUE             Path to ACPI disassembler'
-@@ -230,6 +231,8 @@ _meson_option_parse() {
-     --disable-af-xdp) printf "%s" -Daf_xdp=disabled ;;
-     --enable-alsa) printf "%s" -Dalsa=enabled ;;
-     --disable-alsa) printf "%s" -Dalsa=disabled ;;
-+    --enable-asan) printf "%s" -Dasan=true ;;
-+    --disable-asan) printf "%s" -Dasan=false ;;
-     --enable-attr) printf "%s" -Dattr=enabled ;;
-     --disable-attr) printf "%s" -Dattr=disabled ;;
-     --audio-drv-list=*) quote_sh "-Daudio_drv_list=$2" ;;
-@@ -456,8 +459,6 @@ _meson_option_parse() {
-     --disable-rutabaga-gfx) printf "%s" -Drutabaga_gfx=disabled ;;
-     --enable-safe-stack) printf "%s" -Dsafe_stack=true ;;
-     --disable-safe-stack) printf "%s" -Dsafe_stack=false ;;
--    --enable-sanitizers) printf "%s" -Dsanitizers=true ;;
--    --disable-sanitizers) printf "%s" -Dsanitizers=false ;;
-     --enable-sdl) printf "%s" -Dsdl=enabled ;;
-     --disable-sdl) printf "%s" -Dsdl=disabled ;;
-     --enable-sdl-image) printf "%s" -Dsdl_image=enabled ;;
-@@ -505,6 +506,8 @@ _meson_option_parse() {
-     --disable-u2f) printf "%s" -Du2f=disabled ;;
-     --enable-uadk) printf "%s" -Duadk=enabled ;;
-     --disable-uadk) printf "%s" -Duadk=disabled ;;
-+    --enable-ubsan) printf "%s" -Dubsan=true ;;
-+    --disable-ubsan) printf "%s" -Dubsan=false ;;
-     --enable-usb-redir) printf "%s" -Dusb_redir=enabled ;;
-     --disable-usb-redir) printf "%s" -Dusb_redir=disabled ;;
-     --enable-vde) printf "%s" -Dvde=enabled ;;
-diff --git a/tests/docker/test-debug b/tests/docker/test-debug
-index f52f16328c..678ceccc27 100755
---- a/tests/docker/test-debug
-+++ b/tests/docker/test-debug
-@@ -1,6 +1,6 @@
- #!/bin/bash -e
- #
--# Compile and check with clang & --enable-debug --enable-sanitizers.
-+# Compile and check with clang & debug & sanitizers
- #
- # Copyright (c) 2016-2018 Red Hat Inc.
- #
-@@ -19,7 +19,7 @@ requires_binary clang
- cd "$BUILD_DIR"
- 
- OPTS="--cxx=clang++ --cc=clang --host-cc=clang"
--OPTS="--enable-debug --enable-sanitizers $OPTS"
-+OPTS="--enable-debug --enable-asan --enable-ubsan $OPTS"
- 
- export ASAN_OPTIONS=detect_leaks=0
- build_qemu $OPTS
--- 
-2.43.0
+T24gU2F0LCAyMDI0LTA3LTIwIGF0IDE0OjI2IC0wNDAwLCBNaWNoYWVsIFMuIFRzaXJraW4gd3Jv
+dGU6Cj4gT24gV2VkLCBKdWwgMDMsIDIwMjQgYXQgMTI6MDU6MzhQTSArMDEwMCwgUm95IEhvcGtp
+bnMgd3JvdGU6Cj4gPiBIZXJlIGlzIHY0IG9mIHRoZSBzZXQgb2YgcGF0Y2hlcyB0byBhZGQgc3Vw
+cG9ydCBmb3IgSUdWTSBmaWxlcyB0byBRRU1VLiBUaGlzCj4gPiBpcwo+ID4gYmFzZWQgb24gY29t
+bWl0IDFhMmQ1MmM3ZmMgb2YgcWVtdS4KPiA+IAo+ID4gVGhpcyB2ZXJzaW9uIGFkZHJlc3NlcyBh
+bGwgb2YgdGhlIHJldmlldyBjb21tZW50cyBmcm9tIHYzIGFsb25nIHdpdGggYQo+ID4gY291cGxl
+IG9mCj4gPiBzbWFsbCBidWcgZml4ZXMuIFRoaXMgaXMgYSBtdWNoIHNtYWxsZXIgaW5jcmVtZW50
+IHRoYW4gaW4gdGhlIHByZXZpb3VzCj4gPiB2ZXJzaW9uCj4gPiBvZiB0aGUgc2VyaWVzIFsxXS4g
+VGhhbmtzIG9uY2UgYWdhaW4gdG8gdGhlIHJldmlld2VycyB0aGF0IGhhdmUgYmVlbiBsb29raW5n
+Cj4gPiBhdAo+ID4gdGhpcyBzZXJpZXMuIFRoaXMgdjQgcGF0Y2ggc2VyaWVzIGlzIGFsc28gYXZh
+aWxhYmxlIG9uIGdpdGh1YjogWzJdCj4gPiAKPiA+IFRoZSBwcmV2aW91cyB2ZXJzaW9uIGhhZCBh
+IGJ1aWxkIGlzc3VlIHdoZW4gYnVpbGRpbmcgd2l0aG91dCBkZWJ1ZyBlbmFibGVkLgo+ID4gUGF0
+Y2ggOC8xNyBoYXMgYmVlbiBhZGRlZCB0byBmaXggdGhpcyBhbmQgSSd2ZSB1cGRhdGVkIG15IG93
+biBwcm9jZXNzIHRvCj4gPiB0ZXN0Cj4gPiBib3RoIGRlYnVnIGFuZCByZWxlYXNlIGJ1aWxkcyBv
+ZiBRRU1VLgo+ID4gCj4gPiBGb3IgdGVzdGluZyBJR1ZNIHN1cHBvcnQgaW4gUUVNVSB5b3UgbmVl
+ZCB0byBnZW5lcmF0ZSBhbiBJR1ZNIGZpbGUgdGhhdCBpcwo+ID4gY29uZmlndXJlZCBmb3IgdGhl
+IHBsYXRmb3JtIHlvdSB3YW50IHRvIGxhdW5jaC4gWW91IGNhbiB1c2UgdGhlIGBidWlsZGlndm1g
+Cj4gPiB0ZXN0IHRvb2wgWzNdIHRvIGFsbG93IGdlbmVyYXRpb24gb2YgSUdWTSBmaWxlcyBmb3Ig
+YWxsIGN1cnJlbnRseSBzdXBwb3J0ZWQKPiA+IHBsYXRmb3Jtcy4gUGF0Y2ggMTEvMTcgY29udGFp
+bnMgaW5mb3JtYXRpb24gb24gaG93IHRvIGdlbmVyYXRlIGFuIElHVk0gZmlsZQo+ID4gdXNpbmcg
+dGhpcyB0b29sLgo+IAo+IFBDIHRoaW5nczoKPiAKPiBBY2tlZC1ieTogTWljaGFlbCBTLiBUc2ly
+a2luIDxtc3RAcmVkaGF0LmNvbT4KPiAKPiAKCkhpIE1pY2hhZWwsCgpUaGFua3MgZm9yIHRoaXMu
+IENhbiBJIGFkZCB5b3VyIGFjayB0byBhbGwgY29tbWl0cywgb3IganVzdCB0aGUgUEMgc3BlY2lm
+aWMKb25lcz8KClJlZ2FyZHMsClJveQoKPiA+IENoYW5nZXMgaW4gdjQ6Cj4gPiAKPiA+ICogUmVt
+b3ZlIHVudXNlZCAnI2lmZGVmIENPTkZJR19JR1ZNJyBzZWN0aW9ucwo+ID4gKiBBZGQgIidpZic6
+ICdDT05GSUdfSUdWTSciIGZvciBJZ3ZtQ2ZnUHJvcGVydGllcyBpbiBxb20uanNvbgo+ID4gKiBV
+c2UgZXJyb3JfZmF0YWwgaW5zdGVhZCBvZiBlcnJvcl9hYm9ydCBpbiBzdWdnZXN0ZWQgbG9jYXRp
+b25zCj4gPiAqIFByZXZlbnQgYWRkaXRpb24gb2YgYmlvcyBjb2RlIHdoZW4gYW4gSUdWTSBmaWxl
+IGlzIHByb3ZpZGVkIGFuZAo+ID4gcGNpX2VuYWJsZWQgaXMgZmFsc2UKPiA+ICogQWRkIHBhdGNo
+IDYvMTcgdG8gZml4IGVycm9yIGhhbmRsaW5nIGZyb20gc2V2X2VuY3J5cHRfZmxhc2goKQo+ID4g
+KiBSZXZlcnQgdW5yZXF1aXJlZCBjaGFuZ2VzIHRvIHJldHVybiB2YWx1ZXMgaW4gc2V2LypfbGF1
+bmNoX3VwZGF0ZSgpCj4gPiBmdW5jdGlvbnMKPiA+ICogQWRkIGRvY3VtZW50YXRpb24gdG8gaWd2
+bS5yc3QgdG8gZGVzY3JpYmUgaG93IHRvIHVzZSAnYnVpbGRpZ3ZtJwo+ID4gKiBWYXJpb3VzIGNv
+bnZlbnRpb24gYW5kIGNvZGUgc3R5bGUgY2hhbmdlcyBhcyBzdWdnZXN0ZWQgaW4gcmV2aWV3cwo+
+ID4gKiBGaXggaGFuZGxpbmcgb2Ygc2V2X2ZlYXR1cmVzIGZvciBrZXJuZWxzIHRoYXQgZG8gbm90
+IHN1cHBvcnQgS1ZNX1NFVl9JTklUMgo+ID4gKiBNb3ZlIGlndm0tY2ZnIGZyb20gTWFjaGluZVN0
+YXRlIHRvIFg4Nk1hY2hpbmVTdGF0ZQo+ID4gCj4gPiBQYXRjaCBzdW1tYXJ5Ogo+ID4gCj4gPiAx
+LTEyOiBBZGQgc3VwcG9ydCBhbmQgZG9jdW1lbnRhdGlvbiBmb3IgcHJvY2Vzc2luZyBJR1ZNIGZp
+bGVzIGZvciBTRVYsIFNFVi0KPiA+IEVTLAo+ID4gU0VWLVNOUCBhbmQgbmF0aXZlIHBsYXRmb3Jt
+cy4gCj4gPiAKPiA+IDEzLTE2OiBQcm9jZXNzaW5nIG9mIHBvbGljeSBhbmQgU0VWLVNOUCBJRF9C
+TE9DSyBmcm9tIElHVk0gZmlsZS4gCj4gPiAKPiA+IDE3OiBBZGQgcHJlLXByb2Nlc3Npbmcgb2Yg
+SUdWTSBmaWxlIHRvIHN1cHBvcnQgc3luY2hyb25pemF0aW9uIG9mCj4gPiAnU0VWX0ZFQVRVUkVT
+Jwo+ID4gZnJvbSBJR1ZNIFZNU0EgdG8gS1ZNLgo+ID4gCj4gPiBbMV0gTGluayB0byB2MzoKPiA+
+IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2ZWwvY292ZXIuMTcxODk3OTEwNi5naXQu
+cm95LmhvcGtpbnNAc3VzZS5jb20vCj4gPiAKPiA+IFsyXSB2NCBwYXRjaGVzIGFsc28gYXZhaWxh
+YmxlIGhlcmU6Cj4gPiBodHRwczovL2dpdGh1Yi5jb20vcm95LWhvcGtpbnMvcWVtdS90cmVlL2ln
+dm1fbWFzdGVyX3Y0Cj4gPiAKPiA+IFszXSBgYnVpbGRpZ3ZtYCB0b29sIHYwLjIuMAo+ID4gaHR0
+cHM6Ly9naXRodWIuY29tL3JveS1ob3BraW5zL2J1aWxkaWd2bS9yZWxlYXNlcy90YWcvdjAuMi4w
+Cj4gPiAKPiA+IFJveSBIb3BraW5zICgxNyk6Cj4gPiDCoCBtZXNvbjogQWRkIG9wdGlvbmFsIGRl
+cGVuZGVuY3kgb24gSUdWTSBsaWJyYXJ5Cj4gPiDCoCBiYWNrZW5kcy9jb25maWRlbnRpYWwtZ3Vl
+c3Qtc3VwcG9ydDogQWRkIGZ1bmN0aW9ucyB0byBzdXBwb3J0IElHVk0KPiA+IMKgIGJhY2tlbmRz
+L2lndm06IEFkZCBJR1ZNIGxvYWRlciBhbmQgY29uZmlndXJhdGlvbgo+ID4gwqAgaHcvaTM4Njog
+QWRkIGlndm0tY2ZnIG9iamVjdCBhbmQgcHJvY2Vzc2luZyBmb3IgSUdWTSBmaWxlcwo+ID4gwqAg
+aTM4Ni9wY19zeXNmdzogRW5zdXJlIHN5c2Z3IGZsYXNoIGNvbmZpZ3VyYXRpb24gZG9lcyBub3Qg
+Y29uZmxpY3Qgd2l0aAo+ID4gwqDCoMKgIElHVk0KPiA+IMKgIHNldjogRml4IGVycm9yIGhhbmRs
+aW5nIGluIHNldl9lbmNyeXB0X2ZsYXNoKCkKPiA+IMKgIHNldjogVXBkYXRlIGxhdW5jaF91cGRh
+dGVfZGF0YSBmdW5jdGlvbnMgdG8gdXNlIEVycm9yIGhhbmRsaW5nCj4gPiDCoCB0YXJnZXQvaTM4
+NjogQWxsb3cgc2V0dGluZyBvZiBSX0xEVFIgYW5kIFJfVFIgd2l0aAo+ID4gwqDCoMKgIGNwdV94
+ODZfbG9hZF9zZWdfY2FjaGUoKQo+ID4gwqAgaTM4Ni9zZXY6IFJlZmFjdG9yIHNldHRpbmcgb2Yg
+cmVzZXQgdmVjdG9yIGFuZCBpbml0aWFsIENQVSBzdGF0ZQo+ID4gwqAgaTM4Ni9zZXY6IEltcGxl
+bWVudCBDb25maWRlbnRpYWxHdWVzdFN1cHBvcnQgZnVuY3Rpb25zIGZvciBTRVYKPiA+IMKgIGRv
+Y3Mvc3lzdGVtOiBBZGQgZG9jdW1lbnRhdGlvbiBvbiBzdXBwb3J0IGZvciBJR1ZNCj4gPiDCoCBk
+b2NzL2ludGVyb3AvZmlybXdhcmUuanNvbjogQWRkIGlndm0gdG8gRmlybXdhcmVEZXZpY2UKPiA+
+IMKgIGJhY2tlbmRzL2NvbmZpZGVudGlhbC1ndWVzdC1zdXBwb3J0OiBBZGQgc2V0X2d1ZXN0X3Bv
+bGljeSgpIGZ1bmN0aW9uCj4gPiDCoCBiYWNrZW5kcy9pZ3ZtOiBQcm9jZXNzIGluaXRpYWxpemF0
+aW9uIHNlY3Rpb25zIGluIElHVk0gZmlsZQo+ID4gwqAgYmFja2VuZHMvaWd2bTogSGFuZGxlIHBv
+bGljeSBmb3IgU0VWIGd1ZXN0cwo+ID4gwqAgaTM4Ni9zZXY6IEFkZCBpbXBsZW1lbnRhdGlvbiBv
+ZiBDR1Mgc2V0X2d1ZXN0X3BvbGljeSgpCj4gPiDCoCBzZXY6IFByb3ZpZGUgc2V2X2ZlYXR1cmVz
+IGZsYWdzIGZyb20gSUdWTSBWTVNBIHRvIEtWTV9TRVZfSU5JVDIKPiA+IAo+ID4gwqBkb2NzL2lu
+dGVyb3AvZmlybXdhcmUuanNvbsKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKg
+IDkgKy0KPiA+IMKgZG9jcy9zeXN0ZW0vaTM4Ni9hbWQtbWVtb3J5LWVuY3J5cHRpb24ucnN0IHzC
+oMKgIDIgKwo+ID4gwqBkb2NzL3N5c3RlbS9pZ3ZtLnJzdMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHwgMTczICsrKysKPiA+IMKgZG9jcy9zeXN0ZW0vaW5kZXgu
+cnN0wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgIDEgKwo+
+ID4gwqBtZXNvbi5idWlsZMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgIDggKwo+ID4gwqBxYXBpL3FvbS5qc29uwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAg
+MTcgKwo+ID4gwqBiYWNrZW5kcy9pZ3ZtLmjCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDIzICsKPiA+IMKgaW5jbHVkZS9leGVjL2NvbmZp
+ZGVudGlhbC1ndWVzdC1zdXBwb3J0LmjCoCB8wqAgOTYgKysrCj4gPiDCoGluY2x1ZGUvaHcvaTM4
+Ni94ODYuaMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqDCoCAz
+ICsKPiA+IMKgaW5jbHVkZS9zeXNlbXUvaWd2bS1jZmcuaMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqAgfMKgIDU0ICsrCj4gPiDCoHRhcmdldC9pMzg2L2NwdS5owqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqAgOSArLQo+ID4gwqB0
+YXJnZXQvaTM4Ni9zZXYuaMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIHwgMTI0ICsrKwo+ID4gwqBiYWNrZW5kcy9jb25maWRlbnRpYWwtZ3Vlc3Qtc3Vw
+cG9ydC5jwqDCoMKgwqDCoCB8wqAgNDMgKwo+ID4gwqBiYWNrZW5kcy9pZ3ZtLWNmZy5jwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgNjYgKysKPiA+IMKg
+YmFja2VuZHMvaWd2bS5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgIHwgOTU4ICsrKysrKysrKysrKysrKysrKysrKwo+ID4gwqBody9pMzg2L3Bj
+LmPCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgfMKgIDEyICsKPiA+IMKgaHcvaTM4Ni9wY19waWl4LmPCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgMTAgKwo+ID4gwqBody9pMzg2L3Bj
+X3EzNS5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCB8wqAgMTAgKwo+ID4gwqBody9pMzg2L3BjX3N5c2Z3LmPCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgIDMxICstCj4gPiDCoHRhcmdldC9pMzg2L3Nl
+di5jwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfCA4
+NDQgKysrKysrKysrKysrKysrKy0tCj4gPiDCoGJhY2tlbmRzL21lc29uLmJ1aWxkwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfMKgwqAgNSArCj4gPiDCoG1lc29u
+X29wdGlvbnMudHh0wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgfMKgwqAgMiArCj4gPiDCoHFlbXUtb3B0aW9ucy5oeMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB8wqAgMjUgKwo+ID4gwqBzY3JpcHRz
+L21lc29uLWJ1aWxkb3B0aW9ucy5zaMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoMKgIDMg
+Kwo+ID4gwqAyNCBmaWxlcyBjaGFuZ2VkLCAyNDQ3IGluc2VydGlvbnMoKyksIDgxIGRlbGV0aW9u
+cygtKQo+ID4gwqBjcmVhdGUgbW9kZSAxMDA2NDQgZG9jcy9zeXN0ZW0vaWd2bS5yc3QKPiA+IMKg
+Y3JlYXRlIG1vZGUgMTAwNjQ0IGJhY2tlbmRzL2lndm0uaAo+ID4gwqBjcmVhdGUgbW9kZSAxMDA2
+NDQgaW5jbHVkZS9zeXNlbXUvaWd2bS1jZmcuaAo+ID4gwqBjcmVhdGUgbW9kZSAxMDA2NDQgYmFj
+a2VuZHMvaWd2bS1jZmcuYwo+ID4gwqBjcmVhdGUgbW9kZSAxMDA2NDQgYmFja2VuZHMvaWd2bS5j
+Cj4gPiAKPiA+IC0tIAo+ID4gMi40My4wCj4gCgo=
 
 
