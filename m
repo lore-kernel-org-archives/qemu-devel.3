@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D14EC52D7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 17:07:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C67E1C52D7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 17:07:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sduyc-0006jU-NB; Tue, 13 Aug 2024 13:06:30 -0400
+	id 1sduyL-0005ds-Ht; Tue, 13 Aug 2024 13:06:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sduyX-0006SF-EX
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 13:06:25 -0400
+ id 1sduyJ-0005TV-6R
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 13:06:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sduyV-00039G-Rs
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 13:06:25 -0400
+ id 1sduyH-00037U-IG
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 13:06:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723568783;
+ s=mimecast20190719; t=1723568769;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/JEbOJkwY4yqdkYnOaF1sKBNaU2b+I2B2V004N9EQqg=;
- b=P/ZyoYIF0f0qTnhLEp/bsWKWoNlRAscDt7Shk9btFvuB0Cm1KuK+7ZWalr1nssZeDD7nXx
- 5Gz+sTALMoLythwNXSei3k9ao2+kpzSanYkLKZ+NK/4g4TZ3XCV+viGyeGNiOt+7zP0+yU
- Ggsh7yqK5b3Y6GPHTmXaW500ux0ZfcQ=
-Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
- [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pZXlzV39Bim9cmuseTRKv20dsdOW1fHZ/3mxSLQ2cMk=;
+ b=REKM8EGoH7nPwn/8cVfy8/tGRh0hWh6E0HXSqKJMPj8XyHcGBnEqHVroOlAeCsETe1ubb3
+ BkwqytkoXMYJhph9RASW9xb0IDuoY9JlOWuhVtPruii2k1IONSFrntB7ea8zOKAgPVf3Tw
+ 3Om889GCZdmZdWL6K0N60MRnfHBLLWs=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-6-QC1UtPEqPNmN_KYOl4PMjg-1; Tue, 13 Aug 2024 13:06:21 -0400
-X-MC-Unique: QC1UtPEqPNmN_KYOl4PMjg-1
-Received: by mail-lj1-f199.google.com with SMTP id
- 38308e7fff4ca-2ef3157ae4cso63360911fa.2
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 10:06:21 -0700 (PDT)
+ us-mta-642-YraP02siNiqVeUZJZFXBEw-1; Tue, 13 Aug 2024 13:06:07 -0400
+X-MC-Unique: YraP02siNiqVeUZJZFXBEw-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a7aa56d8b14so408128566b.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 10:06:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723568780; x=1724173580;
+ d=1e100.net; s=20230601; t=1723568766; x=1724173566;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/JEbOJkwY4yqdkYnOaF1sKBNaU2b+I2B2V004N9EQqg=;
- b=DGZzLsqj279QzaScmqcMEQzBZG3q0+Zg6KJMQE3g9ybVLqvbrLkI2ldzpCa9YvS46C
- RIbemc84sL87QVT6s7DnE+lF3i6Rc1HzImFc1i4xTBQ0bD9C8TKcFBFm1yb5/aYuYWdf
- vep7XH/AWfrelCSwEuw+BqC0hjrsEy0ZBTDd2ViGREp+vFsfEaITVukVN+vVcxw5wYAz
- f2cJNrabvjjP8s7OhPw8z3vjO64GfGPsKDOCpTRa74L2A5r+xdhTUkBN263eRi2+UgNz
- mQ4dnDqtSCbyHxcLn4B6FSpbBgzeVNiTOwk6D9KhL4TGbQrqWrZLI4TiU46fUc+ikFmF
- E+XQ==
-X-Gm-Message-State: AOJu0YxOkJMUesQkg+2+knwz3H4nkEeI33sq7uc7a5O+AEN4QEhFlyGI
- qZKfu0ukoxqilM+9XCSUD0SNNMBIwpISvDYVkVn4Lzamek2qS5+kBVDIg79fMa2hYbpj+wxsK2s
- A9PSnaZjqN8yYivtwGV9Q16cz/v087e6Fl/OXqPU9isL3GovV9Es/i+0Z/yItg1yKB0/E3ztFpT
- H+SIvwYxvUS37Npt6H8+qYQth70feKZnY/ix9Q
-X-Received: by 2002:a05:651c:11d1:b0:2ef:23af:f202 with SMTP id
- 38308e7fff4ca-2f3aa3014d8mr93721fa.46.1723568779880; 
- Tue, 13 Aug 2024 10:06:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQAFehb92Po3sTasJDsUkCvOWxmJMfRoc0itBsiOHITjOISKaOgfB86PrU5W0jHZEsND2EJw==
-X-Received: by 2002:a05:651c:11d1:b0:2ef:23af:f202 with SMTP id
- 38308e7fff4ca-2f3aa3014d8mr93331fa.46.1723568779307; 
- Tue, 13 Aug 2024 10:06:19 -0700 (PDT)
+ bh=pZXlzV39Bim9cmuseTRKv20dsdOW1fHZ/3mxSLQ2cMk=;
+ b=TwZVaXh/2Ltp64m+GyZo+K8Iu2vrx3ByXDojqdEVTp6zEksdGvyg31vpkUyMB1EeBM
+ UFefW26q75MCqCarwxQWhobnGBOOO/O6GA/+JQ7lyYTLx68UiuT/4KQbx7nMFpRC0Uy8
+ XnxU3CcBfyKxGtLn1bB0ZIsiEL24PPzAS2nP5IHLimfA2iP+YzTsUR/3hem0FojXp6+M
+ t4WN+DaDuBdBHB2ieuVyfoVVCTd8iXynBqAHCG/CdbGMa7//cARpg4obka1O9+1vgWPT
+ rfPMq7+G6T42XSedLO5BgtUbw7BfRcnIjoz0W2Z32mrKDj22j/Lbawi4cxfklc8F/r7O
+ vQJA==
+X-Gm-Message-State: AOJu0YxqXTxCAAQbujPXzaTbKvUh9eBXWzH/FvVoSTValBUdqzte2LlV
+ e0Ykz8KfxZJ4CHoX8feylTCUmLxLlm9tfHcRT4Cnfday6bz6LNMAZXkxET6TvIbcqCXgcgVBnXx
+ v8/jB2r8BpnyzVUWAeY6uKilbsozR3QGBiv/laKe5MmtCPwy64WXrq4977/xdHr5rd38QPJB+3R
+ 6GvdD+L60HGEGNd/0JtI5A9KngxL1lfxMtcP1M
+X-Received: by 2002:a17:906:d7e7:b0:a7a:a30b:7b95 with SMTP id
+ a640c23a62f3a-a8366c26253mr2075566b.2.1723568765648; 
+ Tue, 13 Aug 2024 10:06:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHFJVHGFkd4orfaHBg8BfzfVJxoPcxESAT8xVw5ZnHb10zCowPxZJzQdayqmuf+e+sfZI4whQ==
+X-Received: by 2002:a17:906:d7e7:b0:a7a:a30b:7b95 with SMTP id
+ a640c23a62f3a-a8366c26253mr2071566b.2.1723568765084; 
+ Tue, 13 Aug 2024 10:06:05 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a80f411bb19sm82352666b.122.2024.08.13.10.06.18
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-a80f3f48ed5sm84047766b.29.2024.08.13.10.06.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Aug 2024 10:06:18 -0700 (PDT)
+ Tue, 13 Aug 2024 10:06:03 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 6/6] po: update Italian translation
-Date: Tue, 13 Aug 2024 19:05:55 +0200
-Message-ID: <20240813170556.104193-7-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+	qemu-stable@nongnu.org
+Subject: [PULL 2/6] target/i386: Do not apply REX to MMX operands
+Date: Tue, 13 Aug 2024 19:05:51 +0200
+Message-ID: <20240813170556.104193-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240813170556.104193-1-pbonzini@redhat.com>
 References: <20240813170556.104193-1-pbonzini@redhat.com>
@@ -87,7 +88,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,26 +104,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reported-by: bovirus <https://gitlab.com/bovirus>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2451
+From: Richard Henderson <richard.henderson@linaro.org>
+
+Cc: qemu-stable@nongnu.org
+Fixes: b3e22b2318a ("target/i386: add core of new i386 decoder")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2495
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20240812025844.58956-2-richard.henderson@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- po/it.po | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/tcg/decode-new.c.inc | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/po/it.po b/po/it.po
-index c6d95172070..363b9bddf2f 100644
---- a/po/it.po
-+++ b/po/it.po
-@@ -65,7 +65,7 @@ msgid "Detach Tab"
- msgstr "_Sposta in una nuova finestra"
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index b22210f45d9..03138b3876d 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1979,7 +1979,10 @@ static bool decode_op(DisasContext *s, CPUX86State *env, X86DecodedInsn *decode,
+             op->unit = X86_OP_SSE;
+         }
+     get_reg:
+-        op->n = ((get_modrm(s, env) >> 3) & 7) | REX_R(s);
++        op->n = ((get_modrm(s, env) >> 3) & 7);
++        if (op->unit != X86_OP_MMX) {
++            op->n |= REX_R(s);
++        }
+         break;
  
- msgid "Show Menubar"
--msgstr ""
-+msgstr "Mostra _barra dei menu"
- 
- msgid "_Machine"
- msgstr "_Macchina virtuale"
+     case X86_TYPE_E:  /* ALU modrm operand */
 -- 
 2.46.0
 
