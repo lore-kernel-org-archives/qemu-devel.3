@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD9B6C52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 11:47:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7451C52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 11:53:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdpzs-0004X8-SL; Tue, 13 Aug 2024 07:47:30 -0400
+	id 1sdq4x-0000hQ-CI; Tue, 13 Aug 2024 07:52:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdpzo-0004SF-Et
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 07:47:24 -0400
-Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
+ id 1sdq4v-0000bW-SJ
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 07:52:41 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdpzm-0004BH-Aa
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 07:47:23 -0400
-Received: by mail-oi1-x22c.google.com with SMTP id
- 5614622812f47-3db1eb76702so3976298b6e.0
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 04:47:21 -0700 (PDT)
+ id 1sdq4t-0005CB-EI
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 07:52:41 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-1ff4568676eso51447515ad.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 04:52:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723549640; x=1724154440; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723549957; x=1724154757; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Amw2WQykDTl9X0eWkdz4Yrc8U1P+hKWtArbAtUoA5GA=;
- b=Mo+A+E8ZWgFNt/3lfs7f1Afss0HSFkdfbuTr02qHi51SOCAH/4TS3hB4vyP1M0DU8m
- ypsmx9exkwPGgg8lQiuAn6wxKFvwGKojocmMPeFoGUM2uAy3+WUoKH2O5HyxSikammd4
- br+nUvuVfuMzsDpK6UHr9EKkt5rr8VsQxc2gEBpGBKo3SCDMDU4FizfvXNN2qM0vfU7p
- 6ZXeSX/1gIiTJIWSTyvO1bmgvyuILQ/Vg2gEOGiS4tj5fq9g7njRBDIJ6QQp6niDiLm6
- jHphwCMxMrioEWUXVrytUq2/uCA7270BhrcIHnj3U265aj3N43D5FjToRVPnMwoiyPws
- dHJg==
+ bh=woDy5XoMnO/3tyDi7eiYP4/5In+k43tYrb/BO40O4HM=;
+ b=FgPA2oTe2QLg84VrNSyPqHCIIQjeYnYdd5Dfs4FV6sBuoBC1tHmyoQu/yIV3e5prMX
+ wcjE6ztw/ikMJzKvyXzPiDxizmlc0x34Yy+XRlLQ8WuhRvD4FZC6MVVNOE3KQUus4t9D
+ pVgqAkbTO2G9fanrTKGj1t+yVSydZ+29p2Wg0ztpQ/boJdM2He0uLH9HbWDThAXZVZ30
+ 5KB6ddHpHPeWeVw0A07s+VIEzDSISt9XOzghRtoP1TwcMQ+KZotPRp6pcB1O0AOJPJMQ
+ PjREDYU44/tPG5lxSFOw+XCKRqJ2NwwFsssI1Xi6ieEyFgdICVPqYqhshj2NZ+m66b/4
+ QGqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723549640; x=1724154440;
+ d=1e100.net; s=20230601; t=1723549957; x=1724154757;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Amw2WQykDTl9X0eWkdz4Yrc8U1P+hKWtArbAtUoA5GA=;
- b=HGKAr4ExYysCl2b1YYIWTiNg1G9ZxhFciTTSrrKbnT3QZckqnUcpZCs1l8idQFa3of
- B4yOlratNAyv6oOwZUt5L26/VtHVHJp80splUwa/pYvVLpnse53PIS7pGQ9ix5PeBV30
- SeJENqbos/wHwqWn5L766f/AqK9Ts2mhTNwtfJByikFtULj4dqaXluF727kCf9QY9MsB
- SedhPqhMELZ8AoVFmfhuaWvSDEpSHmTxp8Mjh5zEQL9gHnmb4oecjAQT/flCIuYjMrVi
- A5297p4a5b4dsb71WGTxV8PaB7v3xdPXJ8JoEn4Ozd1JV/Dp8PuK5bLux4pUCZa2cUbK
- +24g==
+ bh=woDy5XoMnO/3tyDi7eiYP4/5In+k43tYrb/BO40O4HM=;
+ b=f6Y6Xu6lsrtDhnoMU8MyA46Jm1dBrnYpVhCwmEws6fAY/YsQTem5J/FVFOCHKtFIEJ
+ t/jvD4RoYTFAsKBZ0CkHpf2G/X3Plh9iDkkQk3NSbE7Di0L7tXs/pZ9aPpyoOtPMwYxL
+ ksYXKhgpnn+0EYt7jiZ+UNNGdGcU9Mzpv8EaDncJ/FDl+hvehO6BFfzdHMkFm5aCGsFS
+ 60t+eClOWlL0H2ThKq25ip4n0KucetwaJBFHWDW11/pE9sXmhgalywx3C5ugQI/pdJbU
+ GQ27t31TtskgtlQT3QmLzOe7voTaKhi6tzI1YB4X/y9wWyBdEjdSlisjo+b7uvBsXjS9
+ 6aFQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWdyR/BdN6oLD/PbIA1XmGLQzgofgdvjFNCCauIH5A8cL2gha7FjAvSpGigTDhmtLdAQ0C4fDgFuCnmT7gd0KdSlcC1LkA=
-X-Gm-Message-State: AOJu0Yw+HqkAQHCNRfJPaVzy0EU7/TPN5acTHIwetxELsgA6yM3AgVbI
- GT1aDqAlE4rxX6E3Rf/WvhM0zTxUHFo/CDC7+kUFB9upBBl5Wp8fTup+qMdujoM=
-X-Google-Smtp-Source: AGHT+IFE7mISOPlnt2P/82IRfOe5XmADcyVzVQA62gkBIC6rBoq6VlyG3JD2NSbNAYpQ17SptFkPHA==
-X-Received: by 2002:a05:6808:179b:b0:3dc:39e9:e04 with SMTP id
- 5614622812f47-3dd1ee2c00cmr4186814b6e.20.1723549640464; 
- Tue, 13 Aug 2024 04:47:20 -0700 (PDT)
+ AJvYcCXednEdbuJpQDeYFTIKXWDGA/lxNlAhb4tq7tpEa0tEbuOeKPHY1ivZx3zpbIVSeCEf7ALtUl0/ZbaRIgUS0+fyyZ6jD24=
+X-Gm-Message-State: AOJu0Yw/HY1QJKi59A4HmdCpg7nnPrgAjEf+9tT2bD+uFbvJeyWFZqw6
+ RnIrhQ3OXtNnqCqMi3oFgLYtM6lHGOy0xaSCpM7L5dRc+lr4HmrizV9vUJB0KWQ=
+X-Google-Smtp-Source: AGHT+IGfc0pzdDaX+aev7fOgxT5jY53Dm0FGKEoYbqPBU7xIOTCk0ocPVl5mzQ7l5gFbQoftDP2wbQ==
+X-Received: by 2002:a17:902:da8e:b0:1fb:44e1:b5d6 with SMTP id
+ d9443c01a7336-201ca13de37mr39340945ad.23.1723549957060; 
+ Tue, 13 Aug 2024 04:52:37 -0700 (PDT)
 Received: from [192.168.1.113] ([203.30.4.111])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7c6979eb64asm1298403a12.34.2024.08.13.04.47.17
+ d9443c01a7336-201cd14e084sm11898925ad.110.2024.08.13.04.52.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Aug 2024 04:47:20 -0700 (PDT)
-Message-ID: <0a241265-e7d9-45f8-8724-fec38f43626a@linaro.org>
-Date: Tue, 13 Aug 2024 21:47:11 +1000
+ Tue, 13 Aug 2024 04:52:35 -0700 (PDT)
+Message-ID: <2efe353a-4700-4632-b919-e43cb039c2c0@linaro.org>
+Date: Tue, 13 Aug 2024 21:52:27 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1] buildsys: Fix building without plugins on Darwin
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20240813112457.92560-1-philmd@linaro.org>
+Subject: Re: [PATCH v1 03/15] tcg: Fix register allocation constraints
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240813113436.831-1-zhiwei_liu@linux.alibaba.com>
+ <20240813113436.831-4-zhiwei_liu@linux.alibaba.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240813112457.92560-1-philmd@linaro.org>
+In-Reply-To: <20240813113436.831-4-zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22c.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,26 +100,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/13/24 21:24, Philippe Mathieu-Daudé wrote:
-> Since commit 0082475e26 the plugin symbol list is unconditionally
-> added to the linker flags, leading to a build failure:
+On 8/13/24 21:34, LIU Zhiwei wrote:
+> From: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
 > 
->    Undefined symbols for architecture arm64:
->      "_qemu_plugin_entry_code", referenced from:
->          <initial-undefines>
->    ...
->    ld: symbol(s) not found for architecture arm64
->    clang: error: linker command failed with exit code 1 (use -v to see invocation)
->    ninja: build stopped: subcommand failed.
+> When allocating registers for input and output, ensure they match
+> the available registers to avoid allocating illeagal registers.
 > 
-> Fix by restricting the whole meson file to the --enable-plugins
-> configure argument.
+> We should respect RISC-V vector extension's variable-length registers
+> and LMUL-based register grouping. Coordinate with tcg_target_available_regs
+> initialization tcg_target_init (behind this commit) to ensure proper
+> handling of vector register constraints.
 > 
-> Fixes: 0082475e26 ("meson: merge plugin_ldflags into emulator_link_args")
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> Note: While mov_vec doesn't have constraints, dup_vec and other IRs do.
+> We need to strengthen constraints for all IRs except mov_vec, and this
+> is sufficient.
+> 
+> Signed-off-by: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
+> Fixes: 29f5e92502 (tcg: Introduce paired register allocation)
+> Reviewed-by: Liu Zhiwei<zhiwei_liu@linux.alibaba.com>
 > ---
->   plugins/meson.build | 50 +++++++++++++++++++++++----------------------
->   1 file changed, 26 insertions(+), 24 deletions(-)
+>   tcg/tcg.c | 20 +++++++++++++-------
+>   1 file changed, 13 insertions(+), 7 deletions(-)
+> 
+> diff --git a/tcg/tcg.c b/tcg/tcg.c
+> index 34e3056380..d26b42534d 100644
+> --- a/tcg/tcg.c
+> +++ b/tcg/tcg.c
+> @@ -4722,8 +4722,10 @@ static void tcg_reg_alloc_dup(TCGContext *s, const TCGOp *op)
+>           return;
+>       }
+>   
+> -    dup_out_regs = tcg_op_defs[INDEX_op_dup_vec].args_ct[0].regs;
+> -    dup_in_regs = tcg_op_defs[INDEX_op_dup_vec].args_ct[1].regs;
+> +    dup_out_regs = tcg_op_defs[INDEX_op_dup_vec].args_ct[0].regs &
+> +                                    tcg_target_available_regs[ots->type];
+> +    dup_in_regs = tcg_op_defs[INDEX_op_dup_vec].args_ct[1].regs &
+> +                                    tcg_target_available_regs[its->type];
+>   
 
-Acked-by: Richard Henderson <richard.henderson@linaro.org>
+Why would you ever have constraints that resolve to unavailable registers?
+
+If you don't want to fix this in the backend, then the next best place is in 
+process_op_defs(), so that we take care of this once at startup, and never have to think 
+about it again.
+
+
+r~
 
