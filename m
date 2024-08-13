@@ -4,80 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 266A0C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 12 Aug 2024 23:21:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83567C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 00:08:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdeLI-0006C9-JK; Mon, 12 Aug 2024 19:20:48 -0400
+	id 1sdf4q-00028K-KH; Mon, 12 Aug 2024 20:07:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sdeLH-00069c-UJ
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 19:20:47 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sdf4m-00027e-Cl
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 20:07:48 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sdeLF-0004Rq-BI
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 19:20:47 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-710ece280b6so1567092b3a.2
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 16:20:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sdf4j-0002zb-DB
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 20:07:48 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2cd5e3c27c5so3214418a91.3
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 17:07:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723504843; x=1724109643; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0Ng77J3dV7QN+WUnlnE9QUZVEglA+jjS8yTW/cFqjRU=;
- b=DqzRRv6FCxCWjefKZlQkQ5uiPwiwdNp86i3EBiDwdNg7ls2yqVnc3JVy5edNhBq33p
- fCF9YUtJ1R5UmMERLxyyIjySBRfSyLE8TLz1xFKAey18h41QkDSIJjQUBYoAjOmg8rk7
- 711Etzx5its/X3ZOBXOHUcJwA6xcwkxS9uOccVxkO2mYV7fNTFUJu+gTjeH/33joHJII
- tH1Gi4q1xb81hXomopBU+NSYiGa9hFbTQyvtIU0DzKxD9E69sBS/2WlO+6CPE09g1Ujs
- kBwPKFV76AaLJtAJb8k/eD/V7De1eQN7Rggvmxs1GR8Xr1ksHAZlAbeZQwcxV78Q8qql
- TWtg==
+ d=linaro.org; s=google; t=1723507663; x=1724112463; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=157xaMoQ1wBHg5AP7mTAiNkrbkrM8xUbKEuFo0jGCag=;
+ b=yqwYrGosr2rDd4kKFvOUmtM2btTIFbyLSm8mbvpQYnEuOPQss0hbtFoAN/o7iuSdCe
+ 6cpUAWz9xSRqkC5mMqpkK9EJH2bZ25+2kNx0fAyMmwXepueX0sCxgrIzGRbRovln6xl3
+ 0sYhhF8AF5HXgDWjTU/JhHTyVzjxnYHqczFgsiiOM2EfGwQGHcx05hgYrzT+5awMjh3q
+ LhL9DLeLU5SYdWP762FAMBH9K6rUSKjevmFTA/45ISRkDw5IGr3crcNVbfJb+YsV3g8d
+ OtRt8HiOAleHElR7tAbcqrJ1iJMl3eCUqmGUZ9mGE3dfy7i2xjvCQIektJx++jP3G3bV
+ yp4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723504843; x=1724109643;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0Ng77J3dV7QN+WUnlnE9QUZVEglA+jjS8yTW/cFqjRU=;
- b=flkasBkyjvVsBDgOWAiMp8TForZhmdOrPLvC0f8Ra+HlES857vgEtGfy2L1YR7Z9Vd
- hqx0WPKEveGDgCEZWj2/+tydSDTtkgOeqYLePWkWvNT1/CGq7EswIJlUb0BhuUZJqxc4
- tcv+OVCLQWZot/J5X4h04ENSJ3Wkq7xirp0wMgiivATxKLNMs8yvW1QazOqQwKqIyzVN
- qjy4N6G/Lq+d6Z1Mmy4Q2GJdDJAONDs8nhYiJeD1V0KbWo4cObN4k3155fFvxk7grXRx
- 3V8JCUZCpSqDicUvG6ZBYhdL3mK0cuEl9EQXsZLpQV4PS/oC4OqL+v0KtaIKpTy8IWHS
- s2ww==
-X-Gm-Message-State: AOJu0YyXOLQ1QJesYV3CALSd+v09oBdsdyIvyZtYFxGcEZBcR/o1ErZL
- QZfc3R69OxljiBz5zL1f+7aIvHvezA5gi9x2XpAfyFaaMvM5ncu6vYwZ+NF+DigsAxMBY7SznN0
- JufE=
-X-Google-Smtp-Source: AGHT+IENzAPm6I+et594RMOeDmTOg6HfQ+g6gd9Ls5lBIyDx+kMWO62R49pkRE9+OPwN+7ZhstuReg==
-X-Received: by 2002:a05:6a21:164e:b0:1c4:c1cd:a29d with SMTP id
- adf61e73a8af0-1c8d754d599mr2194252637.28.1723504843435; 
- Mon, 12 Aug 2024 16:20:43 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00:5b09:8db7:b002:cf61?
- ([2604:3d08:9384:1d00:5b09:8db7:b002:cf61])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d1c9db8047sm8975126a91.41.2024.08.12.16.20.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Aug 2024 16:20:43 -0700 (PDT)
-Message-ID: <934e9276-adfe-4929-bcad-43d1405cda9d@linaro.org>
-Date: Mon, 12 Aug 2024 16:20:41 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] docs/devel: update tcg-plugins page
-Content-Language: en-US
+ d=1e100.net; s=20230601; t=1723507663; x=1724112463;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=157xaMoQ1wBHg5AP7mTAiNkrbkrM8xUbKEuFo0jGCag=;
+ b=m/dOa/p44Z63yWoufNg3nIrQnzUGQzT+DebyTM9fp9goyfViInInw0xoKiIxSs+4wU
+ TQwlqiEvvUG13gtv+o4usqH5y6/GmoMdK9pT55t7XoLK8tfYhk8/f0nqutSUR4HW+9nA
+ 5N0mP1SLQW4soJ7JBJvmOZmuew7ULR2Q5IkrDUAmXZyNNW2SGrSOQxtsTla8boPfKgHc
+ qT4n6PzgZqqBJLcmqdVZZ2d3JeG10wPhFlO/wbtS9jnbWK/esS6I11mKphuzLAyjrzcU
+ F6ygr+S1QYPaaPQJC7MqHVYHI6Z+E3jw4jFAyZVekwG40BEaWFBSHgLUOcM0syDiHhNy
+ GWAw==
+X-Gm-Message-State: AOJu0YwH2sNWZ8G9XjEkAey/eFLqtV1S0Vskby0v/SeCeaFRe09kLcBJ
+ vbDNFliJnlmKjrWbQnyXa7yu2dZCktwmWxHwkq+hYUiBv8hGQxSn5ReOuMrp3lJvKEOPrmsnq3W
+ FxOw=
+X-Google-Smtp-Source: AGHT+IEJBeQWkPKgXtzYFcHBOh1H38mMvLf9uwjK4c8Fc4YzlxUyBiaHLgxUmYHn8zqbitg5D2Knlg==
+X-Received: by 2002:a17:90a:4b0c:b0:2cd:b938:770b with SMTP id
+ 98e67ed59e1d1-2d3924e0bdemr2033227a91.5.1723507663297; 
+ Mon, 12 Aug 2024 17:07:43 -0700 (PDT)
+Received: from stoup.. ([203.30.4.111]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2d1c9c7ad59sm9055186a91.13.2024.08.12.17.07.41
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 12 Aug 2024 17:07:42 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Mahmoud Mandour <ma.mandourr@gmail.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20240812231945.169310-1-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240812231945.169310-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+Subject: [PATCH for-9.1] target/m68k: Always return a temporary from
+ gen_lea_mode
+Date: Tue, 13 Aug 2024 10:07:37 +1000
+Message-ID: <20240813000737.228470-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,142 +90,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v2
---
+Returning a raw areg does not preserve the value if the areg
+is subsequently modified.  Fixes, e.g. "jsr (sp)", where the
+return address is pushed before the branch.
 
-rebased on top of master (plugins doc was split between several files)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2483
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/m68k/translate.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-v3
---
+diff --git a/target/m68k/translate.c b/target/m68k/translate.c
+index fb5ecce0c3..5e2be846b7 100644
+--- a/target/m68k/translate.c
++++ b/target/m68k/translate.c
+@@ -723,7 +723,9 @@ static TCGv gen_lea_mode(CPUM68KState *env, DisasContext *s,
+         }
+         /* fallthru */
+     case 2: /* Indirect register */
+-        return get_areg(s, reg0);
++        tmp = tcg_temp_new();
++        tcg_gen_mov_i32(tmp, get_areg(s, reg0));
++        return tmp;
+     case 4: /* Indirect predecrememnt.  */
+         if (opsize == OS_UNSIZED) {
+             return NULL_QREG;
+-- 
+2.43.0
 
-fix bad commit message
-
-On 8/12/24 16:19, Pierrick Bouvier wrote:
-> Reflect recent changes on API (inline ops) and new plugins.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   docs/about/emulation.rst   | 49 ++++++++++++++++++++++++++++++++------
->   docs/devel/tcg-plugins.rst | 13 ++++++----
->   2 files changed, 50 insertions(+), 12 deletions(-)
-> 
-> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-> index c03033e4e95..eea1261baac 100644
-> --- a/docs/about/emulation.rst
-> +++ b/docs/about/emulation.rst
-> @@ -207,8 +207,8 @@ Once built a program can be run with multiple plugins loaded each with
->   their own arguments::
->   
->     $QEMU $OTHER_QEMU_ARGS \
-> -      -plugin contrib/plugin/libhowvec.so,inline=on,count=hint \
-> -      -plugin contrib/plugin/libhotblocks.so
-> +      -plugin contrib/plugins/libhowvec.so,inline=on,count=hint \
-> +      -plugin contrib/plugins/libhotblocks.so
->   
->   Arguments are plugin specific and can be used to modify their
->   behaviour. In this case the howvec plugin is being asked to use inline
-> @@ -219,6 +219,14 @@ Linux user-mode emulation also evaluates the environment variable
->   
->     QEMU_PLUGIN="file=contrib/plugins/libhowvec.so,inline=on,count=hint" $QEMU
->   
-> +QEMU plugins avoid to write directly to stdin/stderr, and use the log provided
-> +by the API (see function ``qemu_plugin_outs``).
-> +To show output, you may use this additional parameter::
-> +
-> +  $QEMU $OTHER_QEMU_ARGS \
-> +    -d plugin \
-> +    -plugin contrib/plugins/libhowvec.so,inline=on,count=hint
-> +
->   Example Plugins
->   ~~~~~~~~~~~~~~~
->   
-> @@ -260,8 +268,7 @@ Behaviour can be tweaked with the following arguments:
->     * - Option
->       - Description
->     * - inline=true|false
-> -    - Use faster inline addition of a single counter. Not per-cpu and not
-> -      thread safe.
-> +    - Use faster inline addition of a single counter.
->     * - idle=true|false
->       - Dump the current execution stats whenever the guest vCPU idles
->   
-> @@ -381,6 +388,15 @@ run::
->     160          1      0
->     135          1      0
->   
-> +Test inline operations
-> +......................
-> +
-> +``tests/plugins/inline.c``
-> +
-> +This plugin is used for testing all inline operations, conditional callbacks and
-> +scoreboard. It prints a per-cpu summary of all events.
-> +
-> +
->   Hot Blocks
->   ..........
->   
-> @@ -394,9 +410,6 @@ with linux-user execution as system emulation tends to generate
->   re-translations as blocks from different programs get swapped in and
->   out of system memory.
->   
-> -If your program is single-threaded you can use the ``inline`` option for
-> -slightly faster (but not thread safe) counters.
-> -
->   Example::
->   
->     $ qemu-aarch64 \
-> @@ -736,6 +749,28 @@ The plugin will log the reason of exit, for example::
->   
->     0xd4 reached, exiting
->   
-> +Limit instructions per second
-> +.............................
-> +
-> +This plugin can limit the number of Instructions Per Second that are executed::
-> +
-> +    # get number of instructions
-> +    $ num_insn=$(./build/qemu-x86_64 -plugin ./build/tests/plugin/libinsn.so -d plugin /bin/true |& grep total | sed -e 's/.*: //')
-> +    # limit speed to execute in 10 seconds
-> +    $ time ./build/qemu-x86_64 -plugin ./build/contrib/plugins/libips.so,ips=$(($num_insn/10)) /bin/true
-> +    real 10.000s
-> +
-> +
-> +.. list-table:: IPS arguments
-> +  :widths: 20 80
-> +  :header-rows: 1
-> +
-> +  * - Option
-> +    - Description
-> +  * - ips=N
-> +    - Maximum number of instructions per cpu that can be executed in one second.
-> +      The plugin will sleep when the given number of instructions is reached.
-> +
->   Other emulation features
->   ------------------------
->   
-> diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
-> index d8725c2854a..9463692c411 100644
-> --- a/docs/devel/tcg-plugins.rst
-> +++ b/docs/devel/tcg-plugins.rst
-> @@ -61,11 +61,14 @@ translation event the plugin has an option to enumerate the
->   instructions in a block of instructions and optionally register
->   callbacks to some or all instructions when they are executed.
->   
-> -There is also a facility to add an inline event where code to
-> -increment a counter can be directly inlined with the translation.
-> -Currently only a simple increment is supported. This is not atomic so
-> -can miss counts. If you want absolute precision you should use a
-> -callback which can then ensure atomicity itself.
-> +There is also a facility to add inline instructions doing various operations,
-> +like adding or storing an immediate value. It is also possible to execute a
-> +callback conditionally, with condition being evaluated inline. All those inline
-> +operations are associated to a ``scoreboard``, which is a thread-local storage
-> +automatically expanded when new cores/threads are created and that can be
-> +accessed/modified in a thread-safe way without any lock needed. Combining inline
-> +operations and conditional callbacks offer a more efficient way to instrument
-> +binaries, compared to classic callbacks.
->   
->   Finally when QEMU exits all the registered *atexit* callbacks are
->   invoked.
 
