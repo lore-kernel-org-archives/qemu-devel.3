@@ -4,76 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B6AAC52D7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E5A8C52D7D
 	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 10:19:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdocV-0006Ha-Uh; Tue, 13 Aug 2024 06:19:15 -0400
+	id 1sdocH-00065H-UD; Tue, 13 Aug 2024 06:19:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdocS-0006F5-9H
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:19:14 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdoc8-00064b-8L
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:18:53 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdocP-0005ni-EN
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:19:11 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-5bd1a9bdce4so3423603a12.3
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 03:19:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sdoc5-0005mj-T9
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 06:18:52 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2ef248ab2aeso82727911fa.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 03:18:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723544347; x=1724149147; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=S4gqtzN0g+Peu+kfHBMaU05Kz8NthaJxJJdcasZ0kms=;
- b=Ll2HOfUyihIZrfJrenDM5hMDtvNl5WG6pQG54T1h/G/xtVS4vwD/2ft2S0vmNNEdNd
- 8lvKtE8PYUwet10NeYpKHa0JJROOt/GqIGBociN0lxUuy6SaFrfIvV9mFuWubbGFZExi
- Nrlkb5XFD0p6vriRegOf+GtCS66dSPIDSLT8MF3X0xkOJUGREb5XWHiy3+LBq7bIEK2X
- EyTlZ5P11fVlWNQlEORwptmRMvC18faORfMC0wk/8qoWT2q3nvrFnvUxdeJFNVfmpjUF
- hShGGOYRli1962PlK7I78AdIvxzBKzunkFHoyLJaFmM2rjnLBtNYbhdo1sqsITLmDFvw
- 3LHg==
+ d=linaro.org; s=google; t=1723544328; x=1724149128; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=b9YcO4AI7o/2a0qs5pZn+ZudhM2lTnDG405tnwjcgeQ=;
+ b=ObS0/mBCCAEIysZs6YGJUFOytwrU3wlJMZCXOunnwvnsHfvRzGTU2SkGInYK84yNmd
+ MhzPw3GhlgWA9n4DyGYtAsyvEX3xB0L7ykCo9gGcg02aRwViaSnMFWL07XZzec2maMeN
+ hA7pKe19AkbyNQ7B4R+H2RIFnXlBr1cm2bD0oBKWNF7OQ7E/0G2Hd6vU3KkQGDhsMsga
+ UIvdymQxu5EAVbynmtcMoEJJ+styJ3hgjo37hP1xv6EML/SGpcA0/1EY9tUfq5xqLSRG
+ Mof+AQQWrSOZYC6nDPwOBJt0ELriJOazrlXQMRdTb93cyUw1PUhLFA81uE12Sqi8B2eJ
+ tT9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723544347; x=1724149147;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=S4gqtzN0g+Peu+kfHBMaU05Kz8NthaJxJJdcasZ0kms=;
- b=MNjPglAlh5D0bXSH7RFdcxegiCq5rVgqFW7KAV5OiTFQrmGF+Gli+IwFUa5nXr1Djz
- 2kf6/+TYAF+o0dff5z4RwdYGrHANeLIjwy4Xs2SzYa7JAHKSXv4uqIAg9kTOHvtm9GLl
- vG/CdXJ0EIDprAnINW3vg0BDIQbmIayErkEx4VpGVb/QjrvQdrik/LQ1ZsuugR2Kdoqw
- WlfBJTQ56Zz7PqKr/mxEwaeQ4FRnZAeUArPuPc832kGh8IYaf7Tub04+NaywIPj9Ptg0
- pwqHYakKcTPwA9+EVhEqDLughLmaJ8V1KUM+Sm76NMXp/5ARBLNQM0kthfWmp4B3dVg1
- o96Q==
-X-Gm-Message-State: AOJu0YwK4QH213BcZN9F1IRwDxpgcO+UZrNRIc94Yn3GweFxevfgYdjt
- mV4VAAqMEvJu/EIFTI5n7yitjkrXLod/vPiFNEYM2dTcPUIMdNNA8FqcDtgMd/ca3ATVbnciwn7
- YGmY=
-X-Google-Smtp-Source: AGHT+IGd0Ng921ehikKq7GI5wea7c+yxEc9jSRNxH0fXsXHHKXDVKfQ5ec6fhtBT4WONre0Q7sXfvQ==
-X-Received: by 2002:a05:6402:2791:b0:572:9962:7f0 with SMTP id
- 4fb4d7f45d1cf-5bd44c7c7b2mr2321922a12.34.1723544347115; 
- Tue, 13 Aug 2024 03:19:07 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.129.17])
+ d=1e100.net; s=20230601; t=1723544328; x=1724149128;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=b9YcO4AI7o/2a0qs5pZn+ZudhM2lTnDG405tnwjcgeQ=;
+ b=REO6wLzeFWZN9JXu4+k22bev2iw2AAkcr/b39o5NtU7ZJXqqe2OxLK/2AQOS7WjODM
+ EJeaAykCCRlTN28vHIndFTDM9NAAV+JBFbS6oQIeJDo5niu6c41S6adKSAc7fDtWT0zh
+ aNJalG69Wdl1rxbdRiuTwSFhmUH4+JuplS5XZFF0R+ZQh71fNDZn1x+wMIMbIKZxJ1FX
+ uWoNhOzPchLzPuq14yLFe1rrDCmQIijwHzy+eH819s4COaY8r2/5y4sVXGhU+Wc0fOxY
+ /JMAbv+UJMJZR6aKtbB1XWtt72cz3Iu0EudGJyp0biJqWnjb4Betysx/Ghv2t4rlFAfI
+ Mbhg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXOCNU7vJsXxV1mr7xncXJXxoSXLfDN3XeMFbjwU9fpS+rJK5yYtsSPoH3gQvppY5SA29ac+G+repybopSeCzcBEZ6Yu9M=
+X-Gm-Message-State: AOJu0YymDA0GzxbaOMDurpYxqJWVFaY4JIckOUlQ48twAvV635JOAQjn
+ vCSkTBX841CtQu5ql+tFfQ8Ob0lObMVH85pkyE3WeH6dxsLIL3d4V3zFNL4s194=
+X-Google-Smtp-Source: AGHT+IFXwNgEApVZARyOTMQm4Ss7HJk+/qY/eJ6tRXpiJGFLyVqDlnZ4TibxEO5IDGIlW43e80mMPw==
+X-Received: by 2002:a2e:a584:0:b0:2ef:2677:7b74 with SMTP id
+ 38308e7fff4ca-2f2b727ee71mr26182091fa.41.1723544327524; 
+ Tue, 13 Aug 2024 03:18:47 -0700 (PDT)
+Received: from [192.168.69.100] ([176.176.129.17])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bd196a61e2sm2845362a12.51.2024.08.13.03.19.03
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 13 Aug 2024 03:19:06 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Aurelien Jarno <aurelien@aurel32.net>,
- Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Aleksandar Rikalo <arikalo@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Waldemar Brodkorb <wbx@uclibc-ng.org>
-Subject: [PATCH-for-9.1 v2 0/2] target/mips: Use correct MMU index in get_pte()
-Date: Tue, 13 Aug 2024 12:18:54 +0200
-Message-ID: <20240813101856.49469-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
+ a640c23a62f3a-a80f414e041sm56091366b.168.2024.08.13.03.18.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Aug 2024 03:18:46 -0700 (PDT)
+Message-ID: <c747ff96-53fc-44be-9ca0-59edcd380fdc@linaro.org>
+Date: Tue, 13 Aug 2024 12:18:36 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-9.1] target/mips: Fix execution mode in
+ page_table_walk_refill()
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo
+ <arikalo@gmail.com>, Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+ Waldemar Brodkorb <wbx@uclibc-ng.org>
+References: <20240811165407.26312-1-philmd@linaro.org>
+ <be719b7b-9096-4d15-9947-8e4003de302d@linaro.org>
+ <2506e429-b5ca-4ff1-99a0-2df157321c4d@linaro.org>
+ <62e4979d-bf44-4555-996c-c51bdf6e2441@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <62e4979d-bf44-4555-996c-c51bdf6e2441@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=philmd@linaro.org; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=philmd@linaro.org; helo=mail-lj1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,17 +102,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Propage ptw_mmu_idx to get_pte() and use it via
-the cpu_ld/st_code_mmu() API.
+On 12/8/24 09:02, Richard Henderson wrote:
+> On 8/12/24 15:35, Philippe Mathieu-Daudé wrote:
+>> On 12/8/24 02:48, Richard Henderson wrote:
+>>> On 8/12/24 02:54, Philippe Mathieu-Daudé wrote:
+>>>> When refactoring page_table_walk_refill() in commit 4e999bf419
+>>>> we replaced the execution mode and forced it to kernel mode.
+>>>> Restore the previous behavior to also get supervisor / user modes.
+>>>>
+>>>> Reported-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+>>>> Reported-by: Waldemar Brodkorb <wbx@uclibc-ng.org>
+>>>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2470
+>>>> Fixes: 4e999bf419 ("target/mips: Pass ptw_mmu_idx down from 
+>>>> mips_cpu_tlb_fill")
+>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> ---
+>>>>   target/mips/tcg/sysemu/tlb_helper.c | 5 +++--
+>>>>   1 file changed, 3 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/target/mips/tcg/sysemu/tlb_helper.c 
+>>>> b/target/mips/tcg/sysemu/tlb_helper.c
+>>>> index 3ba6d369a6..e7ae4f0bef 100644
+>>>> --- a/target/mips/tcg/sysemu/tlb_helper.c
+>>>> +++ b/target/mips/tcg/sysemu/tlb_helper.c
+>>>> @@ -940,8 +940,9 @@ bool mips_cpu_tlb_fill(CPUState *cs, vaddr 
+>>>> address, int size,
+>>>>            * Memory reads during hardware page table walking are 
+>>>> performed
+>>>>            * as if they were kernel-mode load instructions.
+>>>>            */
+>>>> -        int ptw_mmu_idx = (env->hflags & MIPS_HFLAG_ERL ?
+>>>> -                           MMU_ERL_IDX : MMU_KERNEL_IDX);
+>>>> +        int ptw_mmu_idx = (env->hflags & MIPS_HFLAG_ERL)
+>>>> +                          ? MMU_ERL_IDX
+>>>> +                          : (env->hflags & MIPS_HFLAG_KSU);
+>>>
+>>> This contradicts the comment above.
+>>> If this code change is correct, then the comment isn't.
+>>
+>> OK.
+>>
+>>> But the comment certainly makes sense -- page tables are never 
+>>> accessible to user mode.
+>>
+>> But we are still dropping the supervisor mode, so OK if I
+>> reword as:
+>>
+>> "Restore the previous behavior to also get supervisor modes."
+> 
+> The old code
+> 
+> -        env->hflags &= ~MIPS_HFLAG_KSU;
+> 
+> drops both supervisor and user bits, so my comment still stands.
 
-Philippe Mathieu-Daudé (2):
-  target/mips: Pass page table entry size in bytes to get_pte()
-  target/mips: Use correct MMU index in get_pte()
+Right, I missed that.
 
- target/mips/tcg/sysemu/tlb_helper.c | 35 ++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 15 deletions(-)
+The issue is in get_pte(), we have:
 
--- 
-2.45.2
+   page_table_walk_refill()
+   -> get_pte()
+      -> cpu_ld[lq]_code()
+         -> cpu_mmu_index()
 
+Since we don't mask anymore the modes in hflags, cpu_mmu_index() can
+return UM or SM.
+
+I'll respin the fix.
+
+Phil.
 
