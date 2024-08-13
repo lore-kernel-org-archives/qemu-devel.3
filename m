@@ -4,48 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65610C52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 12:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18C74C52D7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 13:11:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdr5r-0006KC-OC; Tue, 13 Aug 2024 08:57:43 -0400
+	id 1sdrIj-00080K-Sh; Tue, 13 Aug 2024 09:11:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
- id 1sdr5p-0006Fz-Bo; Tue, 13 Aug 2024 08:57:41 -0400
-Received: from mail.weilnetz.de ([37.120.169.71]
- helo=mail.v2201612906741603.powersrv.de)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sdrIg-0007zg-W5
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 09:10:59 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
- id 1sdr5n-0007Ql-7z; Tue, 13 Aug 2024 08:57:41 -0400
-Received: from qemu.weilnetz.de (qemu.weilnetz.de [188.68.58.204])
- by mail.v2201612906741603.powersrv.de (Postfix) with ESMTP id BE812DA092B;
- Tue, 13 Aug 2024 14:57:34 +0200 (CEST)
-Received: by qemu.weilnetz.de (Postfix, from userid 1000)
- id 311D3460020; Tue, 13 Aug 2024 14:57:34 +0200 (CEST)
-To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Michael Roth <michael.roth@amd.com>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,
- Eric Auger <eric.auger@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Jiri Pirko <jiri@resnulli.us>,
- Eric Blake <eblake@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, Stefan Weil <sw@weilnetz.de>
-Subject: [PATCH-for-9.1] docs: Fix some typos (found by typos) and grammar
- issues
-Date: Tue, 13 Aug 2024 14:56:38 +0200
-Message-Id: <20240813125638.395461-1-sw@weilnetz.de>
-X-Mailer: git-send-email 2.39.2
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sdrIf-00016T-3R
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 09:10:58 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-a7ad02501c3so657227266b.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 06:10:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723554655; x=1724159455; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=Du+q+VgFapTsA6jU4HynJ1A8RRGo5uoaTSShJmb/uaY=;
+ b=xZnv5JrZ4GvT46aunSyJMSReH+ekSy6mtSn05q/IeO4YkzEK5gJnigYhZ5kw7nh2Bu
+ FGCL6YDmyWe7lX9U05Lq1Dh9XmvtOesLxWl1at3Kpt5Pjp3MeHdHbKgdgqTDbESEJzGh
+ Z4AwWmqT/PhBZ7M8l4xRDam+OGrceDKC4Bm04NcjCqBCCqTFvMu68S4Vv8xIhX7qlygg
+ HaAeoudSuhWDrgigrXgRcsyl0DgMoFm7ftUDa00kRs2Cyt+HJVxfUzLSe/s6jzWFBpH2
+ hjqxlkWax9v/lIFNqvRPJX7rkxMcX8qNrN0P3vKkV026iVnvNtVgUmi3Zjm1eN3zuHHj
+ C/vQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723554655; x=1724159455;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Du+q+VgFapTsA6jU4HynJ1A8RRGo5uoaTSShJmb/uaY=;
+ b=ct+8uClgLHORqTg6fWdVd4inCWDcnuyhG+RttNVjffj/iZZeU3oofTA07r/ZiBMZhD
+ ikWN92VeOud1gM1oPzyYT88Wj8aflrfVtEW4b4noYadStJj0Yyglzmei4WHFpTHDnmd9
+ 1gsiMAvU9wDbWwjDgBc79yTT9V33nwLiUhU/ld58Eik6DefEcwC5AZ4KdY931H39I4lU
+ 5rizXMnOPm/gxdMj+0H305EkmJ+CDhh6tEQ2ZHHoMa1X9izqMjZtEWa6nmNfKDHZYyve
+ vt7RSbzpQwM0gz8Qr7p9INYsMrJ0U0Bx5k4k2B7h6LWmOZDmW+XPPYXM8ARPr6lwPjvG
+ UTFw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXw71tYwBW6dgtq6AjVqbNMhO4Xwh7qc1lAcVrVV21/2hV7usrypXZR7jVhypel3LWzeda4suXLvKOZBmt4G5h23rUrGc4=
+X-Gm-Message-State: AOJu0YzYbwq3d2bPPgvmIWxLjOcRIuvhP+lgMmETxgWBWo2wZnrK8rNI
+ bn+2DdYFUYspYCFuM++GfnCvBa4hyXYbNXouhqMb/EkvUeNbyrdzV74csZw7bO0=
+X-Google-Smtp-Source: AGHT+IGy1vglVVhsSAoaaJhuw9l6nNgJlpr8nILstLqsiuqTZjG0Rav14IfowCAVoMzGbRCRcNOLiQ==
+X-Received: by 2002:a17:906:f59c:b0:a7d:9f92:9107 with SMTP id
+ a640c23a62f3a-a80ed2dad5bmr201589666b.58.1723554654569; 
+ Tue, 13 Aug 2024 06:10:54 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a80f411aecesm67807266b.124.2024.08.13.06.10.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Aug 2024 06:10:53 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 238745F792;
+ Tue, 13 Aug 2024 14:10:53 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,  qemu-devel@nongnu.org
+Subject: Re: [PULL 09/11] target/arm: add support for PMUv3 64-bit PMCCNTR
+ in AArch32 mode
+In-Reply-To: <CAFEAcA_-aBuXDK9e4X0ULXWZtXOnxjRuowc67hDBKOZC6+Bu=w@mail.gmail.com>
+ (Peter Maydell's message of "Mon, 12 Aug 2024 12:40:45 +0100")
+References: <20240809180835.1243269-1-peter.maydell@linaro.org>
+ <20240809180835.1243269-10-peter.maydell@linaro.org>
+ <945e5e14-9a15-4dfc-856f-f3a7d401a5bc@linaro.org>
+ <CAFEAcA9nnzwm-OSpiAWTOtf2On27B1Hi2Fr3h=5jSKRPdnnQDQ@mail.gmail.com>
+ <875xs6atfb.fsf@draig.linaro.org>
+ <CAFEAcA_-aBuXDK9e4X0ULXWZtXOnxjRuowc67hDBKOZC6+Bu=w@mail.gmail.com>
+Date: Tue, 13 Aug 2024 14:10:53 +0100
+Message-ID: <87wmkka7qa.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=37.120.169.71; envelope-from=stefan@weilnetz.de;
- helo=mail.v2201612906741603.powersrv.de
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,136 +100,54 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Weil <sw@weilnetz.de>
-From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix the misspellings of "overriden" also in code comments.
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Signed-off-by: Stefan Weil <sw@weilnetz.de>
----
- docs/devel/migration/uadk-compression.rst | 4 ++--
- docs/interop/qemu-ga.rst                  | 2 +-
- docs/tools/qemu-vmsr-helper.rst           | 4 ++--
- hw/arm/smmu-common.c                      | 2 +-
- include/exec/memory.h                     | 2 +-
- qapi/rocker.json                          | 4 ++--
- qga/main.c                                | 2 +-
- 7 files changed, 10 insertions(+), 10 deletions(-)
+> On Mon, 12 Aug 2024 at 12:10, Alex Benn=C3=A9e <alex.bennee@linaro.org> w=
+rote:
+>>
+>> Peter Maydell <peter.maydell@linaro.org> writes:
+>>
+<snip>
+>> >>
+>> >> This fails testing:
+>> >>
+>> >> https://gitlab.com/qemu-project/qemu/-/jobs/7551982466
+>> >>
+>> >> FAIL: duplicate register {'name': 'PMCCNTR', 'regnum': 96} vs {'name'=
+: 'PMCCNTR',
+>> >> 'regnum': 79}
+>> >> FAIL: counted all 219 registers in XML
+>> >> FAIL: PMCCNTR 96 =3D=3D 79 (xml)
+>> >
+>> > Hmm, not sure why that didn't get caught by my local testing
+>> > or by my gitlab run -- does it only get run on an aarch64 host?
+>>
+>> It will depend what your local GDB is like - a modern gdb-multiarch
+>> should be fine but we do test for a minimum version to be able to probe
+>> the supported architectures.
+>
+> Mmm, I found that a local "make check-tcg" does catch this for me,
+> so I guess the answer is "the gdb on the non aarch64 host CI jobs
+> is too old and/or we missed the coverage, and I forgot to run
+> this in my local checkout".
+>
+> Why doesn't "make check" run "check-tcg" as a sub-test ?
+> Having it be separate is asking for people to forget to
+> run it, I think.
 
-diff --git a/docs/devel/migration/uadk-compression.rst b/docs/devel/migration/uadk-compression.rst
-index 3f73345dd5..64cadebd21 100644
---- a/docs/devel/migration/uadk-compression.rst
-+++ b/docs/devel/migration/uadk-compression.rst
-@@ -114,7 +114,7 @@ Make sure all these above kernel configurations are selected.
- 
- Accelerator dev node permissions
- --------------------------------
--Harware accelerators(eg: HiSilicon Kunpeng Zip accelerator) gets registered to
-+Hardware accelerators (eg: HiSilicon Kunpeng Zip accelerator) gets registered to
- UADK and char devices are created in dev directory. In order to access resources
- on hardware accelerator devices, write permission should be provided to user.
- 
-@@ -134,7 +134,7 @@ How To Use UADK Compression In QEMU Migration
-   Set ``migrate_set_parameter multifd-compression uadk``
- 
- Since UADK uses Shared Virtual Addressing(SVA) and device access virtual memory
--directly it is possible that SMMUv3 may enounter page faults while walking the
-+directly it is possible that SMMUv3 may encounter page faults while walking the
- IO page tables. This may impact the performance. In order to mitigate this,
- please make sure to specify ``-mem-prealloc`` parameter to the destination VM
- boot parameters.
-diff --git a/docs/interop/qemu-ga.rst b/docs/interop/qemu-ga.rst
-index 9c7380896a..11f7bae460 100644
---- a/docs/interop/qemu-ga.rst
-+++ b/docs/interop/qemu-ga.rst
-@@ -50,7 +50,7 @@ Options
- .. option:: -c, --config=PATH
- 
-   Configuration file path (the default is |CONFDIR|\ ``/qemu-ga.conf``,
--  unless overriden by the QGA_CONF environment variable)
-+  unless overridden by the QGA_CONF environment variable)
- 
- .. option:: -m, --method=METHOD
- 
-diff --git a/docs/tools/qemu-vmsr-helper.rst b/docs/tools/qemu-vmsr-helper.rst
-index 6ec87b49d9..9ce10b9af9 100644
---- a/docs/tools/qemu-vmsr-helper.rst
-+++ b/docs/tools/qemu-vmsr-helper.rst
-@@ -17,8 +17,8 @@ driver to advertise and monitor the power consumption or accumulated energy
- consumption of different power domains, such as CPU packages, DRAM, and other
- components when available.
- 
--However those register are accesible under priviliged access (CAP_SYS_RAWIO).
--QEMU can use an external helper to access those priviliged register.
-+However those registers are accessible under privileged access (CAP_SYS_RAWIO).
-+QEMU can use an external helper to access those privileged registers.
- 
- :program:`qemu-vmsr-helper` is that external helper; it creates a listener
- socket which will accept incoming connections for communication with QEMU.
-diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-index d73ad62211..3f82728758 100644
---- a/hw/arm/smmu-common.c
-+++ b/hw/arm/smmu-common.c
-@@ -674,7 +674,7 @@ error:
- 
- /*
-  * combine S1 and S2 TLB entries into a single entry.
-- * As a result the S1 entry is overriden with combined data.
-+ * As a result the S1 entry is overridden with combined data.
-  */
- static void combine_tlb(SMMUTLBEntry *tlbe, SMMUTLBEntry *tlbe_s2,
-                         dma_addr_t iova, SMMUTransCfg *cfg)
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 02f7528ec0..296fd068c0 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -1852,7 +1852,7 @@ void memory_region_iommu_replay(IOMMUMemoryRegion *iommu_mr, IOMMUNotifier *n);
-  * memory_region_unregister_iommu_notifier: unregister a notifier for
-  * changes to IOMMU translation entries.
-  *
-- * @mr: the memory region which was observed and for which notity_stopped()
-+ * @mr: the memory region which was observed and for which notify_stopped()
-  *      needs to be called
-  * @n: the notifier to be removed.
-  */
-diff --git a/qapi/rocker.json b/qapi/rocker.json
-index 6950ca9602..73c7363b16 100644
---- a/qapi/rocker.json
-+++ b/qapi/rocker.json
-@@ -42,7 +42,7 @@
- ##
- # @RockerPortDuplex:
- #
--# An eumeration of port duplex states.
-+# An enumeration of port duplex states.
- #
- # @half: half duplex
- #
-@@ -55,7 +55,7 @@
- ##
- # @RockerPortAutoneg:
- #
--# An eumeration of port autoneg states.
-+# An enumeration of port autoneg states.
- #
- # @off: autoneg is off
- #
-diff --git a/qga/main.c b/qga/main.c
-index b8f7b1e4a3..50186760bf 100644
---- a/qga/main.c
-+++ b/qga/main.c
-@@ -257,7 +257,7 @@ QEMU_COPYRIGHT "\n"
- "\n"
- "  -c, --config=PATH configuration file path (default is\n"
- "                    %s/qemu-ga.conf\n"
--"                    unless overriden by the QGA_CONF environment variable)\n"
-+"                    unless overridden by the QGA_CONF environment variable)\n"
- "  -m, --method      transport method: one of unix-listen, virtio-serial,\n"
- "                    isa-serial, or vsock-listen (virtio-serial is the default)\n"
- "  -p, --path        device/socket path (the default for virtio-serial is:\n"
--- 
-2.39.2
+I think historically because not everyone cared about TCG testing and
+you need to either setup docker or have cross compilers on your system.
+Obviously we know this is the case when we run check-tcg in the CI.
 
+We could certainly include it in the main "check" set if you want.
+
+>
+> -- PMM
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
