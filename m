@@ -4,208 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3741EC52D7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 14:54:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C288DC52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 15:02:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdsud-0006Js-9C; Tue, 13 Aug 2024 10:54:15 -0400
+	id 1sdt1v-0003ou-Pu; Tue, 13 Aug 2024 11:01:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sdsuc-0006JD-0w
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 10:54:14 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1sdsuZ-0000u5-T1
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 10:54:13 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47D7tXKa006131;
- Tue, 13 Aug 2024 14:54:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
- message-id:date:subject:to:cc:references:from:in-reply-to
- :content-type:content-transfer-encoding:mime-version; s=
- corp-2023-11-20; bh=xkshsH1uoST7L05JSDMSfIbe0zOWahBxY3ZCB3qdgjg=; b=
- aPNhThmxvCn/Y63s4QNj7ShvIIhltVa0eO2yBs31feSGBX5p5QKU2I3f+Z7VVHhQ
- oKroTKt/xzzXUh1kTNLAETFGmwkpHyaJSuteYxL/J+52P+YU2nlsPfKAEA2/oj7M
- o4vctJeyrhDEbzUl7ySkG5DUY0flzF/Gelj7DJTxYM2Zf7H335MTYRX7RPoCAdoF
- iVXwLGOj9v7vy7yrFeA6Yd3j+0ZWvo0sTYN8yNVv6XXFcjKzkHwjNsGTyoFeFXoF
- sgN4TV0peGoy+gJYKyyGieh4Nt4hTivRnIT7OxD4lrdOpLWXbU8QZiFHwJ5RJUQp
- lsJutUucGS07F5eHkXMBpg==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 40x0rtp60s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 13 Aug 2024 14:54:07 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
- with ESMTP id 47DELl8L010840; Tue, 13 Aug 2024 14:54:06 GMT
-Received: from nam11-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam11lp2168.outbound.protection.outlook.com [104.47.57.168])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 40wxn8mfkj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 13 Aug 2024 14:54:06 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Bier0BCDnvxo8Mt/AtT1bQebV6IU1PdERbQvQhd+MuKxPju0wldB50MSD/pGl+VPXvukSAKgYTsjADQOgbJ6itd7m9YZoJ74pH5gqrfRgxvi3Me+CmhZZ8v4xpT50q7c9Y5LtiIYV5cQm5rtLbfgBlg+TcbIjB8mekb4+EGm1c+X8GR78KxYMrq0H1+4flNOXL4vlTd0HLpni8Z+hqS9gROu58KAmdcRAsyKlbAw1/qDziO+sEYDnfEdUlsdGnymyYoiPn2C9Kal+zIpUgYPVHoDnz/+aYz960nqgSJKiRmWG11aAwW6SIsfpaoVr+oc+/owJkVklk1RbETaeWjmOg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xkshsH1uoST7L05JSDMSfIbe0zOWahBxY3ZCB3qdgjg=;
- b=O3X5L3hN6AhvlsQkrutPILAAEZiDyhUHk+fAGDKcqO7vbeZctCSAbwDnCJkAWFDOVfyyayWE3ERUcpIgmF/M0NSfMR5qSFy1im/NBwGX/mrMu7JIBLJx+0hXM3ywcVCw8dUGXMxxh4TVH3Uz8k4zxNjXjxj73hk2PMLV5uE3FCoyprJTrhFdv3Uzm5IXLPUwOOxP44nlN3bVnskFOUejZpSMjsYcvHrdfaOmjrkI3VIRlFakabnXFt0sC3gBpbRnfMuIBQESFjAhSxoiMRLqnRLXzFWIzftDvIf85yQNqikhdWwtU39jz0V1jN8AXcVfHlLJGUxDYIp06loVJwN2JA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xkshsH1uoST7L05JSDMSfIbe0zOWahBxY3ZCB3qdgjg=;
- b=WreTBaFamM7y5hrWmU/LR0I09fH0KdUHGrVIrP7NWmy7kPdUWib8gI7gMgefuabtatA1goe66c/R+DaJb1DJ27YJDrTeigox3So9hbTdOb4kgsGdkly2HatSqVFjtaxeSfUPrl6o9ZEDprafGPSmggXRIRHQ+5ABDj6QtqS4jlY=
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by SA1PR10MB5734.namprd10.prod.outlook.com (2603:10b6:806:23f::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7875.13; Tue, 13 Aug
- 2024 14:54:03 +0000
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572%7]) with mapi id 15.20.7875.016; Tue, 13 Aug 2024
- 14:54:01 +0000
-Message-ID: <09e41cf4-78fb-4d31-9ada-8493247fec61@oracle.com>
-Date: Tue, 13 Aug 2024 10:53:53 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC V1 02/12] iommufd: no DMA to BARs
-To: Yi Liu <yi.l.liu@intel.com>, qemu-devel@nongnu.org
-Cc: Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>
-References: <1721502937-87102-1-git-send-email-steven.sistare@oracle.com>
- <1721502937-87102-3-git-send-email-steven.sistare@oracle.com>
- <ff0fe127-bdca-41a4-86a7-c72e9fcbcf3a@intel.com>
-Content-Language: en-US
-From: Steven Sistare <steven.sistare@oracle.com>
-Organization: Oracle Corporation
-In-Reply-To: <ff0fe127-bdca-41a4-86a7-c72e9fcbcf3a@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SJ2PR07CA0023.namprd07.prod.outlook.com
- (2603:10b6:a03:505::9) To IA1PR10MB7447.namprd10.prod.outlook.com
- (2603:10b6:208:44c::10)
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1sdt1u-0003ko-IG
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:01:46 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <roy.hopkins@suse.com>)
+ id 1sdt1r-0002EN-4R
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 11:01:46 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 2B535203D2;
+ Tue, 13 Aug 2024 15:01:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+ t=1723561301; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2AvkDEprLC9cNTXtEtNra8gCEFZmf7vn90/oqjPDXFY=;
+ b=KE6L/V3MeIDVfDE6y8qaSNXaqSQHD1j0krFhrqF/0BRH6g1lFP/iBEIlVMCxUYqsdTZus8
+ XcDlVaq6PUILTbiTa6Oc9B25xn0NrgZiKIY8U4RofeP4LeAyqzr/i3b5RvKspmcoOoY87x
+ ZJDiU9cPzJ8Gv9WlUy90tpIL0csCkJM=
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+ t=1723561301; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2AvkDEprLC9cNTXtEtNra8gCEFZmf7vn90/oqjPDXFY=;
+ b=KE6L/V3MeIDVfDE6y8qaSNXaqSQHD1j0krFhrqF/0BRH6g1lFP/iBEIlVMCxUYqsdTZus8
+ XcDlVaq6PUILTbiTa6Oc9B25xn0NrgZiKIY8U4RofeP4LeAyqzr/i3b5RvKspmcoOoY87x
+ ZJDiU9cPzJ8Gv9WlUy90tpIL0csCkJM=
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6178413ADB;
+ Tue, 13 Aug 2024 15:01:40 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id qDaYFVR1u2Z/NAAAD6G6ig
+ (envelope-from <roy.hopkins@suse.com>); Tue, 13 Aug 2024 15:01:40 +0000
+From: Roy Hopkins <roy.hopkins@suse.com>
+To: qemu-devel@nongnu.org
+Cc: Roy Hopkins <roy.hopkins@suse.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?J=C3=B6rg=20Roedel?= <jroedel@suse.com>
+Subject: [PATCH v5 09/16] i386/sev: Implement ConfidentialGuestSupport
+ functions for SEV
+Date: Tue, 13 Aug 2024 16:01:11 +0100
+Message-ID: <48b0893981b1d0ab71583210b2165871a4b9e644.1723560001.git.roy.hopkins@suse.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1723560001.git.roy.hopkins@suse.com>
+References: <cover.1723560001.git.roy.hopkins@suse.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|SA1PR10MB5734:EE_
-X-MS-Office365-Filtering-Correlation-Id: fe5a1bd1-0282-4808-36a5-08dcbba7c46a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|7416014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?L1FCbk1XS0p2ejZ2NUJscFBnL29neVk3Y1NhakQ2SXlZdEtrUTRUVDArWjM4?=
- =?utf-8?B?eEp4L0JWZkVOV0pWNnYyNXB6OUZ0bDBxOTJVOStTeUd3RXllVzR0ODlOM09o?=
- =?utf-8?B?WDVEcnNzandDMUwwTHNaUk5ZOHZNZENHYzZWbjU1SkREMmIreE1HRmpBTk5y?=
- =?utf-8?B?Y2tyWTJRV0hDS1pFWE1iWUE4NGdaWFlpalk4dy9xZlBNcFNtdTVyLy9RYjUx?=
- =?utf-8?B?c2J3K1E4TjJISVBOVlpsNFo2RGpGekw4NkxZSG9EN2I0K1pSTEgyYU1MaWM0?=
- =?utf-8?B?TWtCNHcrY3RtR0U1dllLZktja01UaElkZ1BuOTJnYzZUSnJYT0RzMzlMaU5J?=
- =?utf-8?B?WVBkcnV3eUExSDFDbUVMU21KckM2L0RmN09SNDNJOVh0MWFmTHcwVTVoYjUr?=
- =?utf-8?B?UUROMkgvOVBPU1hGM0ZPODF4VWNaY3pvL1BpWFZSdUZSa2FVdDVmT2k5TTRa?=
- =?utf-8?B?TGhmeGZwZVJKelpNQnArWnZtdWRkR09vSGhtSFg2dGcrWlN1TmlWL0JLbkI4?=
- =?utf-8?B?YmFaVCs4dGk3cWE5bU1BNE4yNjNYby9xU21XaDgwaG16TjJldmZwYWt2K1dm?=
- =?utf-8?B?N1V4bXVlS1FMMEs5Z1dUa3BEY2crMHZPUzBrZElNTCtjNDBVNW5NSS9ldXd1?=
- =?utf-8?B?amtlUS9ZU0d3ZFkyK0I2ZHQrMDJ0REVqN1J1azc3dHptTWxxZDBMUXBRVkVN?=
- =?utf-8?B?MWFKVzA5NkZLYithZHNnZ2NaZmw4K21BdWVxRjB5ZUh0ZkVHZnBINVVteEM2?=
- =?utf-8?B?cHYyZlUrclVkNWdJR003ZlRpaEdLRWZCRVdXYlUxMXpOUDFNNWx0V21xWW5k?=
- =?utf-8?B?MVhCKzdidXFEMnIvRHI4bkk0OWhqOElNcjBVbytubkFHVitTWnJ2alkvNHla?=
- =?utf-8?B?cWgvQ0VlR3B0cEtDeTVYbGtWSERXYVlML2l6SzZsT083aEVOcGN2SVR5OTkz?=
- =?utf-8?B?ZHFSRFdrUkYwTlM5aVpmclV2cmxyS1h2NG1WSjRTVnE5WGxUSm5pUWFoOCtu?=
- =?utf-8?B?LzU1WnFiY3JVSmZ2THF3S3FsaitpMUYyYzh4aGpMTXdEWWR0U24xdVNkaXl1?=
- =?utf-8?B?WjIwYys4RkMzMFc1QVRvUzk3eGhNMkFiNmpER2ZnNEI4WDhkajlJejNwZlV5?=
- =?utf-8?B?YVlMc2RRdUkvSG5ZMGs4N1NNcFB2MHFoblNSKzladktFME5pMXU0TkdKbEVM?=
- =?utf-8?B?WFZIUExQcCsvR2VFb0o0aFVXMXFrajNqc1o3WStRVkM3VnRVVU1xa0tyZzhh?=
- =?utf-8?B?Mlp6dXk5UUxNT3hSQkhHVTRyZnNVRW9QQ1IzcWNvL283WjVvVGJ2Qk5mQSt3?=
- =?utf-8?B?SG1rcUVzVm43RjhSa3NRV1FRMlhJUGtVR1ZHZHJQa2FhMzV4R0YzQzE2R3pK?=
- =?utf-8?B?VDdNUVNMbDZOQyt0aUR1YXZia2NsUWFoVE1nZXRpbVhacUtZNk1SZTRtYkwr?=
- =?utf-8?B?Q1VsOXFSRFZZYlRuVW53cmltZ0Rzdm9DYnlGNFM3c3hodng3TE8wdkZiclBZ?=
- =?utf-8?B?azc2WTUybkZITWkxa2JESFdwNVY3dTlQWVNGalBjL1ZJNStSUnEzaDdDdGFa?=
- =?utf-8?B?eUlEQTNMWlpyWWxhZHJkVUtJNTlIeFV3dk1GYTNZWjNUak5OSllVM2h3eE9K?=
- =?utf-8?B?WmVhYXhJWlRjQjdXQkRKTmtrbUVGYVBxN1c5SWplT1dvZi9BY0pidjFuaERI?=
- =?utf-8?B?Qzh6aFhKOWpIeG1lK0tvaEU3NlI0V2FpNmV4K0R4RmI5cjBFK3RqOFhKeTRR?=
- =?utf-8?Q?CAmLytYWzU16o1kcPc=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(7416014)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TVZkYWwyOWpiU0I1NFJzblJTdHh4WHFSMVpVaFNiZVZRZG9pMG5QbkdrU1Jp?=
- =?utf-8?B?SEFJOExZTUY1Y2pZeG9XYXNNUTlWVHNDek9naEp4RTlSSWt4Qit6RW9GYUw4?=
- =?utf-8?B?ZDZyZjFKOEV3amZjbEJBR3hHd3ZoeE8ra2JZVDg5N1RlUmoyWFdkeTJGVStl?=
- =?utf-8?B?aEtTRVpURklhekFiaEtTekQvMUFZVjlENkdudzlDb2RhdEpxSlEvUXQrS0xv?=
- =?utf-8?B?Zng1QzRvRXhrWjdRdDRzTWdkM2RaNUVHbXN5SE9UaitIaEJSSlBZOGJzczh2?=
- =?utf-8?B?Qml1bGNEM2M3bUx0SjJoQ01hRVZoZFBvUHFnL0lmNWJiYXdJQjQ0S1RZM1Zh?=
- =?utf-8?B?UUFTYkl6ck5QSHRmb0RPUHR5eW9ZMmN5dWxrYlYyVWRDcVlEY25kUkgzTzFo?=
- =?utf-8?B?b093Y1I1eGY4MG4rYWtjc1I1K3lLajFhYmh2cG5kWVBZOGVFbWIyR1pHYlBY?=
- =?utf-8?B?R3JNNjdVQUlVS0llU0lpTU5wNENwWFR1TnJDcXpuQzBXM2gxTTZWYVJaY2Ix?=
- =?utf-8?B?Z1JWOW5TMXlCMjRwZ1BhSlNPMEdldXFHTlZ4SlRUQ0xxbTZETE9wYXNMVExR?=
- =?utf-8?B?dy8vRXMxWXpsSkpaUFRaVUtCMjVjaHpRb3krZlB5SWk2cFhVQ2dGUXRGNmFG?=
- =?utf-8?B?Y2JTSXNNYS9nSnFDZFM3NXlnNW1CMFRtSXB0QWw4cnpTRnByRXZoK09nMkVS?=
- =?utf-8?B?MzF3eFZic2pRTHBnVk9sdzNybnFlbFJQdGlNWVBDSFFjd1VYT0xMWnp3TW0r?=
- =?utf-8?B?bU9vNWpXdnU4U2RBc09pdDBjV0lnU3N1R0lkd2RkWmVBN2FGU2RrUHp4Rytn?=
- =?utf-8?B?Yll3d2JXMmNKa2V6NzJSdFFydzczdGRnUnplWElyaWRsRU12MkQ4K2NWc3N1?=
- =?utf-8?B?MDg3V0lDbElGQVE4RHFrMUt3bS9iL2dMdjRnTWFtVXBBeHlENmVqaGJFOXFj?=
- =?utf-8?B?Ukh6ZzJoTUVtZ2pROUJvTGo0VXB5YWV0U1VjT0pOV1pXdUVYbXAxZjZtLzlC?=
- =?utf-8?B?Qmk5TFArdWNJWXlhK3dRQ0JKRTViVUpHd3k3RW45UDJkM2JpZlVOU3dyNnFS?=
- =?utf-8?B?Mk9pbUJya1B1ZTJEczRFQlhlMTh5MGV0U25zUE9jaUVWNTREMi9NcS9YMi80?=
- =?utf-8?B?eWtuSzc5L2xpL0JzSjhwWEU2RTRhZGt0RHkrU2VGTkRMMkV1NE5EeU1SYzJS?=
- =?utf-8?B?SHFYNHdWNXBKNk5GQ29zNFlHdU5ucVc5Vkc3bWx4emJOZCthNUw0OEJMRVBr?=
- =?utf-8?B?QldsTE5sS25EMFFTMmRWc0F2Z09jdFVTdjgwT1FaRUpYVDBrU2dwemdQYkVs?=
- =?utf-8?B?ZmVoY0dkYkJPdXlZUUhyRkhySnNRdTArcjV4MXI4dkxSVWtCR0l0NHFUWGhn?=
- =?utf-8?B?U1c4VTFVQWxMNHhxeStEcWJEMzdaWFl4T0lCMlBTblJZUklCVTJnY0hHL2Zk?=
- =?utf-8?B?RnlkUjB1S0JwbnlBYUNpd2RQMksrL3daTTMwYUVWVjI3NEdEdldnNytxTjhy?=
- =?utf-8?B?NXMxbUlPYnlNY1pPODNEYkR0TUVyWGN6a1o4YXhHNWo1SThWRWFxMWN4UXY3?=
- =?utf-8?B?UXR4UWVoMTlZU0RWOEpuNFhsWXdkSU4ySnF5SkE3VUdOandyY29ZdjhSUzFI?=
- =?utf-8?B?VXZveVBtSmxyZDVxRy9pV3RSSkYrZnZ4QzF3clJJekE4S004a0FzRy9WbDlJ?=
- =?utf-8?B?MG9xa1ZuTmp4NEZDWEorNERjdGc1Uit0QW5CUTdVTGdDcjJyZTAvWWVWZDJM?=
- =?utf-8?B?NXRraWcvYzFXOXhVczhTcUpybVRvOWVORzkvM25kRXBCYU9ZaHl2Z2F0di9I?=
- =?utf-8?B?Q3RrRkdKUEtNL3RIdjRPaDVQajBQNWFTZHVLeTc1T0ZRN2hGSkVGTlhjOTBv?=
- =?utf-8?B?SjV0cWVMcnBqQ2k5KzdzOWx1djByZG1TdFN5VkVCSkxnbkVsQzZWanZlc01Q?=
- =?utf-8?B?RktrQlRLQkN1NzRIMTlkelNaamNnWlluQjFxYWdlSHJ2TWRXREc2VzBYekxm?=
- =?utf-8?B?NCtqQythaGhnZE9Kem9TbFBoemJUY0RFNmZKWTFWaTZUa2xjU1dHSWcvY2dX?=
- =?utf-8?B?L3FaS0xCYWkvOENBQWNBNWpRNTJZZUt5NVI3SktMeDRlZXFUQlViMXY0ZzEw?=
- =?utf-8?B?Q2dLcUhRMjkxRWhMaWFpVHdGM1F3Q3BCT1d4SEE5STlDUFdjNm03cWFQOHdi?=
- =?utf-8?B?dUE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 0EVG/r8PaQRwxvNTYnMdfvOxRkNoGg53yCmcOeR5jRLO6N3zxGWPYyS9MKDOyh4q5wLI+g8NCrYlNaRbXfu0aHFM1MbYW+Zhf3uziIM7jgfhmUqX6XYaYpRmTt8gCHjWI8ryDSQRx+PtZNt+DFsXla01mbEBkWDPK8QEWu2nthLRfojYKGOBkd9lzjkQ+E8i69H7KLo5rxfLE8s30Mo0xh/xvscwtKDNCV9IaRolYihKkHtwM4cCrkQryMl+tCeEHDG/reynkbKLCvrwz2BAO09ct/zWumjfmhs3r8kw0MvROt7tcR/ts3ZxZYmObr5SymFFLLYmOWBob+K6T94Ia7e9AHtFlAOvxEfdSH0x8pDkS0bW5C0gsoDFPE4lk+MFBaKiwQ5b8oCX3BPI2z3HzQP5A63dt6HD5nauO53IKMhxU7NynbL1WgwWQkUlE2T2RtWOIwc2eQr4n9U4Wqv3Y9i9Ge8S1LYMyPXlYRIhUUsNGxoicoSeKUag/+ite+SxGGSck9m5jJkQMpqF0lVobkNwTwQmppbap8JfMf42IvpT0uPSGPHHgbxD8/7fmTtlS5OGpsl4fhGqL3TWKr/+EA9fVZnKOBxoXYzQgYZkqNI=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fe5a1bd1-0282-4808-36a5-08dcbba7c46a
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2024 14:54:01.3858 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: D3eouzFHm0G7oSq58JOhpsDEtt1XsdWVfqbXWlUBdo3vVJSj+BfO6P0bkr6SbYtos3Np/lCjIPAExqpeNY71LECGJHpI/Ova8A5YXKZaqrE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB5734
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-13_06,2024-08-13_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- malwarescore=0 bulkscore=0
- adultscore=0 suspectscore=0 mlxlogscore=999 phishscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2407110000
- definitions=main-2408130107
-X-Proofpoint-ORIG-GUID: RmXAB-YsfNm8M9404X_8pjvdGm3xUdAF
-X-Proofpoint-GUID: RmXAB-YsfNm8M9404X_8pjvdGm3xUdAF
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-5.30 / 50.00]; REPLY(-4.00)[];
+ BAYES_HAM(-3.00)[100.00%]; SUSPICIOUS_RECIPS(1.50)[];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ FREEMAIL_CC(0.00)[suse.com,redhat.com,gmail.com,habkost.net,alistair23.me,amd.com];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCPT_COUNT_TWELVE(0.00)[19];
+ MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; TAGGED_RCPT(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.com:email];
+ FROM_HAS_DN(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.com:s=susede1];
+ R_RATELIMIT(0.00)[to_ip_from(RLm8d31jk6dhzwhww9bgqrb1jt)];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]
+Received-SPF: pass client-ip=195.135.223.131;
+ envelope-from=roy.hopkins@suse.com; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -221,69 +119,347 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/12/2024 9:39 PM, Yi Liu wrote:
-> On 2024/7/21 03:15, Steve Sistare wrote:
->> Do not map VFIO PCI BARs for DMA.  This stops a raft of warnings of the
->> following form at QEMU start time when using -object iommufd:
->>
->> qemu-kvm: warning: IOMMU_IOAS_MAP failed: Bad address, PCI BAR?
->> qemu-kvm: vfio_container_dma_map(0x555558282db0, 0x8800010000, 0x4000, 0x7ffff7ff0000) = -14 (Bad address)
-> 
-> It is required as Alex pointed, so no need to pay further attempt to hide
-> this message. And there were efforts to make it. But not done yet. Below
-> links may be helpful if you are interested about the history.
-> 
-> [1] https://lore.kernel.org/kvm/14-v4-0de2f6c78ed0+9d1-iommufd_jgg@nvidia.com/
-> [2] https://lore.kernel.org/kvm/20240624141139.GH29266@unreal/
-> [3] https://lore.kernel.org/kvm/0-v1-9e6e1739ed95+5fa-vfio_dma_buf_jgg@nvidia.com/
+The ConfidentialGuestSupport object defines a number of virtual
+functions that are called during processing of IGVM directives to query
+or configure initial guest state. In order to support processing of IGVM
+files, these functions need to be implemented by relevant isolation
+hardware support code such as SEV.
 
-Thanks for the pointers.  Good to here the problem is being worked.
+This commit implements the required functions for SEV-ES and adds
+support for processing IGVM files for configuring the guest.
 
-- Steve
+Signed-off-by: Roy Hopkins <roy.hopkins@suse.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+---
+ target/i386/sev.c | 254 ++++++++++++++++++++++++++++++++++++++++++++--
+ target/i386/sev.h |   2 +
+ 2 files changed, 246 insertions(+), 10 deletions(-)
 
->> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->> ---
->>   hw/vfio/common.c      | 3 ++-
->>   hw/vfio/helpers.c     | 1 +
->>   include/exec/memory.h | 1 +
->>   3 files changed, 4 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
->> index da2e0ec..403d45a 100644
->> --- a/hw/vfio/common.c
->> +++ b/hw/vfio/common.c
->> @@ -248,7 +248,8 @@ static bool vfio_listener_skipped_section(MemoryRegionSection *section)
->>               * are never accessed by the CPU and beyond the address width of
->>               * some IOMMU hardware.  TODO: VFIO should tell us the IOMMU width.
->>               */
->> -           section->offset_within_address_space & (1ULL << 63);
->> +           section->offset_within_address_space & (1ULL << 63) ||
->> +           section->mr->no_dma;
->>   }
->>   /* Called with rcu_read_lock held.  */
->> diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
->> index b14edd4..e4cfdd2 100644
->> --- a/hw/vfio/helpers.c
->> +++ b/hw/vfio/helpers.c
->> @@ -435,6 +435,7 @@ int vfio_region_mmap(VFIORegion *region)
->>                                             memory_region_owner(region->mem),
->>                                             name, region->mmaps[i].size,
->>                                             region->mmaps[i].mmap);
->> +        region->mmaps[i].mem.no_dma = true;
->>           g_free(name);
->>           memory_region_add_subregion(region->mem, region->mmaps[i].offset,
->>                                       &region->mmaps[i].mem);
->> diff --git a/include/exec/memory.h b/include/exec/memory.h
->> index ea03ef2..850cc8c 100644
->> --- a/include/exec/memory.h
->> +++ b/include/exec/memory.h
->> @@ -794,6 +794,7 @@ struct MemoryRegion {
->>       bool unmergeable;
->>       uint8_t dirty_log_mask;
->>       bool is_iommu;
->> +    bool no_dma;
->>       RAMBlock *ram_block;
->>       Object *owner;
->>       /* owner as TYPE_DEVICE. Used for re-entrancy checks in MR access hotpath */
-> 
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 65c0509210..6db76b0c94 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -39,8 +39,10 @@
+ #include "qapi/qapi-commands-misc-target.h"
+ #include "confidential-guest.h"
+ #include "hw/i386/pc.h"
++#include "hw/i386/e820_memory_layout.h"
+ #include "exec/address-spaces.h"
+ #include "qemu/queue.h"
++#include "qemu/cutils.h"
+ 
+ OBJECT_DECLARE_TYPE(SevCommonState, SevCommonStateClass, SEV_COMMON)
+ OBJECT_DECLARE_TYPE(SevGuestState, SevCommonStateClass, SEV_GUEST)
+@@ -49,6 +51,9 @@ OBJECT_DECLARE_TYPE(SevSnpGuestState, SevCommonStateClass, SEV_SNP_GUEST)
+ /* hard code sha256 digest size */
+ #define HASH_SIZE 32
+ 
++/* Hard coded GPA that KVM uses for the VMSA */
++#define KVM_VMSA_GPA 0xFFFFFFFFF000
++
+ /* Convert between SEV-ES VMSA and SegmentCache flags/attributes */
+ #define FLAGS_VMSA_TO_SEGCACHE(flags) \
+     ((((flags) & 0xff00) << 12) | (((flags) & 0xff) << 8))
+@@ -487,6 +492,103 @@ static void sev_apply_cpu_context(CPUState *cpu)
+     }
+ }
+ 
++static int check_vmsa_supported(hwaddr gpa, const struct sev_es_save_area *vmsa,
++                                Error **errp)
++{
++    struct sev_es_save_area vmsa_check;
++
++    /*
++     * KVM always populates the VMSA at a fixed GPA which cannot be modified
++     * from userspace. Specifying a different GPA will not prevent the guest
++     * from starting but will cause the launch measurement to be different
++     * from expected. Therefore check that the provided GPA matches the KVM
++     * hardcoded value.
++     */
++    if (gpa != KVM_VMSA_GPA) {
++        error_setg(errp,
++                "%s: The VMSA GPA must be %lX but is specified as %lX",
++                __func__, KVM_VMSA_GPA, gpa);
++        return -1;
++    }
++
++    /*
++     * Clear all supported fields so we can then check the entire structure
++     * is zero.
++     */
++    memcpy(&vmsa_check, vmsa, sizeof(struct sev_es_save_area));
++    memset(&vmsa_check.es, 0, sizeof(vmsa_check.es));
++    memset(&vmsa_check.cs, 0, sizeof(vmsa_check.cs));
++    memset(&vmsa_check.ss, 0, sizeof(vmsa_check.ss));
++    memset(&vmsa_check.ds, 0, sizeof(vmsa_check.ds));
++    memset(&vmsa_check.fs, 0, sizeof(vmsa_check.fs));
++    memset(&vmsa_check.gs, 0, sizeof(vmsa_check.gs));
++    memset(&vmsa_check.gdtr, 0, sizeof(vmsa_check.gdtr));
++    memset(&vmsa_check.idtr, 0, sizeof(vmsa_check.idtr));
++    memset(&vmsa_check.ldtr, 0, sizeof(vmsa_check.ldtr));
++    memset(&vmsa_check.tr, 0, sizeof(vmsa_check.tr));
++    vmsa_check.efer = 0;
++    vmsa_check.cr0 = 0;
++    vmsa_check.cr3 = 0;
++    vmsa_check.cr4 = 0;
++    vmsa_check.xcr0 = 0;
++    vmsa_check.dr6 = 0;
++    vmsa_check.dr7 = 0;
++    vmsa_check.rax = 0;
++    vmsa_check.rcx = 0;
++    vmsa_check.rdx = 0;
++    vmsa_check.rbx = 0;
++    vmsa_check.rsp = 0;
++    vmsa_check.rbp = 0;
++    vmsa_check.rsi = 0;
++    vmsa_check.rdi = 0;
++    vmsa_check.r8 = 0;
++    vmsa_check.r9 = 0;
++    vmsa_check.r10 = 0;
++    vmsa_check.r11 = 0;
++    vmsa_check.r12 = 0;
++    vmsa_check.r13 = 0;
++    vmsa_check.r14 = 0;
++    vmsa_check.r15 = 0;
++    vmsa_check.rip = 0;
++    vmsa_check.rflags = 0;
++
++    vmsa_check.g_pat = 0;
++    vmsa_check.xcr0 = 0;
++
++    vmsa_check.x87_fcw = 0;
++    vmsa_check.mxcsr = 0;
++
++    if (sev_snp_enabled()) {
++        if (vmsa_check.sev_features != SVM_SEV_FEAT_SNP_ACTIVE) {
++            error_setg(errp,
++                       "%s: sev_features in the VMSA contains an unsupported "
++                       "value. For SEV-SNP, sev_features must be set to %x.",
++                       __func__, SVM_SEV_FEAT_SNP_ACTIVE);
++            return -1;
++        }
++        vmsa_check.sev_features = 0;
++    } else {
++        if (vmsa_check.sev_features != 0) {
++            error_setg(errp,
++                       "%s: sev_features in the VMSA contains an unsupported "
++                       "value. For SEV-ES and SEV, sev_features must be "
++                       "set to 0.", __func__);
++            return -1;
++        }
++    }
++
++    if (!buffer_is_zero(&vmsa_check, sizeof(vmsa_check))) {
++        error_setg(errp,
++                "%s: The VMSA contains fields that are not "
++                "synchronized with KVM. Continuing would result in "
++                "either unpredictable guest behavior, or a "
++                "mismatched launch measurement.",
++                __func__);
++        return -1;
++    }
++    return 0;
++}
++
+ static int sev_set_cpu_context(uint16_t cpu_index, const void *ctx,
+                                uint32_t ctx_len, hwaddr gpa, Error **errp)
+ {
+@@ -1498,18 +1600,26 @@ sev_snp_launch_finish(SevCommonState *sev_common)
+     struct kvm_sev_snp_launch_finish *finish = &sev_snp->kvm_finish_conf;
+ 
+     /*
+-     * To boot the SNP guest, the hypervisor is required to populate the CPUID
+-     * and Secrets page before finalizing the launch flow. The location of
+-     * the secrets and CPUID page is available through the OVMF metadata GUID.
++     * Populate all the metadata pages if not using an IGVM file. In the case
++     * where an IGVM file is provided it will be used to configure the metadata
++     * pages directly.
+      */
+-    metadata = pc_system_get_ovmf_sev_metadata_ptr();
+-    if (metadata == NULL) {
+-        error_report("%s: Failed to locate SEV metadata header", __func__);
+-        exit(1);
+-    }
++    if (!X86_MACHINE(qdev_get_machine())->igvm) {
++        /*
++         * To boot the SNP guest, the hypervisor is required to populate the
++         * CPUID and Secrets page before finalizing the launch flow. The
++         * location of the secrets and CPUID page is available through the
++         * OVMF metadata GUID.
++         */
++        metadata = pc_system_get_ovmf_sev_metadata_ptr();
++        if (metadata == NULL) {
++            error_report("%s: Failed to locate SEV metadata header", __func__);
++            exit(1);
++        }
+ 
+-    /* Populate all the metadata pages */
+-    snp_populate_metadata_pages(sev_snp, metadata);
++        /* Populate all the metadata pages */
++        snp_populate_metadata_pages(sev_snp, metadata);
++    }
+ 
+     QTAILQ_FOREACH(data, &launch_update, next) {
+         ret = sev_snp_launch_update(sev_snp, data);
+@@ -2298,6 +2408,124 @@ static void sev_common_set_kernel_hashes(Object *obj, bool value, Error **errp)
+     SEV_COMMON(obj)->kernel_hashes = value;
+ }
+ 
++static int cgs_check_support(ConfidentialGuestPlatformType platform,
++                             uint16_t platform_version, uint8_t highest_vtl,
++                             uint64_t shared_gpa_boundary)
++{
++    return (((platform == CGS_PLATFORM_SEV_SNP) && sev_snp_enabled()) ||
++            ((platform == CGS_PLATFORM_SEV_ES) && sev_es_enabled()) ||
++            ((platform == CGS_PLATFORM_SEV) && sev_enabled())) ? 1 : 0;
++}
++
++static int cgs_set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
++                               ConfidentialGuestPageType memory_type,
++                               uint16_t cpu_index, Error **errp)
++{
++    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
++    SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(sev_common);
++
++    if (!sev_enabled()) {
++        error_setg(errp, "%s: attempt to configure guest memory, but SEV "
++                     "is not enabled", __func__);
++        return -1;
++    }
++
++    switch (memory_type) {
++    case CGS_PAGE_TYPE_NORMAL:
++    case CGS_PAGE_TYPE_ZERO:
++        return klass->launch_update_data(sev_common, gpa, ptr, len, errp);
++
++    case CGS_PAGE_TYPE_VMSA:
++        if (!sev_es_enabled()) {
++            error_setg(errp,
++                       "%s: attempt to configure initial VMSA, but SEV-ES "
++                       "is not supported",
++                       __func__);
++            return -1;
++        }
++        if (check_vmsa_supported(gpa, (const struct sev_es_save_area *)ptr,
++                                 errp) < 0) {
++            return -1;
++        }
++        return sev_set_cpu_context(cpu_index, ptr, len, gpa, errp);
++
++    case CGS_PAGE_TYPE_UNMEASURED:
++        if (sev_snp_enabled()) {
++            return snp_launch_update_data(
++                gpa, ptr, len, KVM_SEV_SNP_PAGE_TYPE_UNMEASURED, errp);
++        }
++        /* No action required if not SEV-SNP */
++        return 0;
++
++    case CGS_PAGE_TYPE_SECRETS:
++        if (!sev_snp_enabled()) {
++            error_setg(errp,
++                       "%s: attempt to configure secrets page, but SEV-SNP "
++                       "is not supported",
++                       __func__);
++            return -1;
++        }
++        return snp_launch_update_data(gpa, ptr, len,
++                                      KVM_SEV_SNP_PAGE_TYPE_SECRETS, errp);
++
++    case CGS_PAGE_TYPE_REQUIRED_MEMORY:
++        if (kvm_convert_memory(gpa, len, true) < 0) {
++            error_setg(
++                errp,
++                "%s: failed to configure required memory. gpa: %lX, type: %d",
++                __func__, gpa, memory_type);
++            return -1;
++        }
++        return 0;
++
++    case CGS_PAGE_TYPE_CPUID:
++        if (!sev_snp_enabled()) {
++            error_setg(errp,
++                       "%s: attempt to configure CPUID page, but SEV-SNP "
++                       "is not supported",
++                       __func__);
++            return -1;
++        }
++        return snp_launch_update_cpuid(gpa, ptr, len, errp);
++    }
++    error_setg(errp, "%s: failed to update guest. gpa: %lX, type: %d", __func__,
++               gpa, memory_type);
++    return -1;
++}
++
++static int cgs_get_mem_map_entry(int index,
++                                 ConfidentialGuestMemoryMapEntry *entry,
++                                 Error **errp)
++{
++    struct e820_entry *table;
++    int num_entries;
++
++    num_entries = e820_get_table(&table);
++    if ((index < 0) || (index >= num_entries)) {
++        return 1;
++    }
++    entry->gpa = table[index].address;
++    entry->size = table[index].length;
++    switch (table[index].type) {
++    case E820_RAM:
++        entry->type = CGS_MEM_RAM;
++        break;
++    case E820_RESERVED:
++        entry->type = CGS_MEM_RESERVED;
++        break;
++    case E820_ACPI:
++        entry->type = CGS_MEM_ACPI;
++        break;
++    case E820_NVS:
++        entry->type = CGS_MEM_NVS;
++        break;
++    case E820_UNUSABLE:
++        entry->type = CGS_MEM_UNUSABLE;
++        break;
++    }
++    return 0;
++}
++
+ static void
+ sev_common_class_init(ObjectClass *oc, void *data)
+ {
+@@ -2321,6 +2549,8 @@ static void
+ sev_common_instance_init(Object *obj)
+ {
+     SevCommonState *sev_common = SEV_COMMON(obj);
++    ConfidentialGuestSupportClass *cgs =
++        CONFIDENTIAL_GUEST_SUPPORT_GET_CLASS(obj);
+ 
+     sev_common->kvm_type = -1;
+ 
+@@ -2331,6 +2561,10 @@ sev_common_instance_init(Object *obj)
+     object_property_add_uint32_ptr(obj, "reduced-phys-bits",
+                                    &sev_common->reduced_phys_bits,
+                                    OBJ_PROP_FLAG_READWRITE);
++    cgs->check_support = cgs_check_support;
++    cgs->set_guest_state = cgs_set_guest_state;
++    cgs->get_mem_map_entry = cgs_get_mem_map_entry;
++
+     QTAILQ_INIT(&sev_common->launch_vmsa);
+ }
+ 
+diff --git a/target/i386/sev.h b/target/i386/sev.h
+index 167dd154d6..2ccd6fe1e8 100644
+--- a/target/i386/sev.h
++++ b/target/i386/sev.h
+@@ -34,6 +34,8 @@
+ #define SEV_SNP_POLICY_SMT      0x10000
+ #define SEV_SNP_POLICY_DBG      0x80000
+ 
++#define SVM_SEV_FEAT_SNP_ACTIVE 1
++
+ typedef struct SevKernelLoaderContext {
+     char *setup_data;
+     size_t setup_size;
+-- 
+2.43.0
+
 
