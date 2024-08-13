@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B60C52D7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 12:01:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C531DC52D7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 12:06:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdqD5-0007nK-I1; Tue, 13 Aug 2024 08:01:07 -0400
+	id 1sdqHM-0004r8-BO; Tue, 13 Aug 2024 08:05:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sdqCG-0007Ob-Cz
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 08:00:16 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sdqGr-0004oj-Jt
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 08:05:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sdqCB-00066v-V9
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 08:00:16 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sdqGp-0006Z5-Uu
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 08:05:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723550409;
+ s=mimecast20190719; t=1723550697;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=n3G0WNx12VyRoJ/Eu3Pzw8SRfrAraPIsHeIz6Dh8yAc=;
- b=ShdTNPzEP/kUjTHpcowc0YL0vJ9GBOJJFjitGhMwEPCZEYREfOy8HwKEsiijs1sUvVRLsM
- wBnJjXsGdmpfAE+Mba/6Uy/dbqj8its4FfQd2CBekfCOf2kFvYI/NaD+lsLdtbaP4RJ9Ru
- YU2ymH8Fswlmw5CqC86foLMTfLis2IY=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Hm76Ih3Z8sXGuCo0700NTk2e+j4pd96/pDpyBLORIss=;
+ b=ZbrrgJtfkUO5Dkkbvcag0DPJJ+Nd5lGeWUSy5uAIJrzcAgk9VRl6PykCNCJV05IZ1gOXmJ
+ lB76BrRDesC7lNLkJlxePUUGPv8TvTCrFxxBpBXQ4BQKEBoUXIhn7+QOhUYvQAyWptVwrN
+ /Lanb7Q3MZh6vGkhJHtj03kNSefcMzA=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-459-0tpMPR_jPyem4fcWPW_Nzw-1; Tue, 13 Aug 2024 08:00:06 -0400
-X-MC-Unique: 0tpMPR_jPyem4fcWPW_Nzw-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-36863648335so2881255f8f.0
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 05:00:06 -0700 (PDT)
+ us-mta-605-KuzpkudMMFia1twKuSIyOQ-1; Tue, 13 Aug 2024 08:04:55 -0400
+X-MC-Unique: KuzpkudMMFia1twKuSIyOQ-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-428207daff2so37086045e9.0
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 05:04:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723550405; x=1724155205;
+ d=1e100.net; s=20230601; t=1723550694; x=1724155494;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n3G0WNx12VyRoJ/Eu3Pzw8SRfrAraPIsHeIz6Dh8yAc=;
- b=DcEgUjzzhGlElOUQgl4AFUXe4CtmXeLOY1sFsuZgGJlvexCLgDrtV+R880ksh/78qN
- B1SrP0Cd/KKGcLcsJvdOTupmuHV15YqQf8U6ZFAwXzFcP3iDopJZm8ZmRihKzfCcGshf
- d9b9n3XN0TDmdMADGdLwE0Hi645UkAN7UsrwuGUxwtXkfms2Xz2kjnakNk1ekBb5xUPa
- sW7ZnFjdyzkYzLkBEuU22PMX3Lc0U0s3vS2yHsXiNHdGCwadkh5mF3jk9UFpleKGy4gc
- SApWwSb/voaO4XRva3hTO7QVeruzMHJypXUmkqO+hrWHSlUMl5maPMifJbWLMnMZTj7q
- NuJA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUhHqzjV/p7FdcMir4pU5OOSsdL1AEXHmUzmyAfJ0pjU1KsJboneZo8bGRm1oPRfc2morFYC9ZNzOqdKUCvzQxInYtzCYk=
-X-Gm-Message-State: AOJu0YzlQtDw63W9LK6S7RrmO92PNbN5DMg4utixIAbvcp/5twMg1asA
- uwh5sbDgBb7j8RTMEVjmmYtAO0X9X4iIUfPuUcEabFxzXZFlrysTpGoSBMuUjVyw8ic23Z7zrEN
- ChfnV7Sy2fJPNi28ttRkY+1MvTlKe5IEsimfYRlmH/2ENAY/2zDJX
-X-Received: by 2002:a5d:5284:0:b0:366:ec2c:8646 with SMTP id
- ffacd0b85a97d-3716cd24ddemr2200554f8f.43.1723550405183; 
- Tue, 13 Aug 2024 05:00:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJDFNhKYLwR5+eBBL8aNIlY2F7kWPyg1eHddSHQwJGfOKnlDigGRn63MinpagHpurTjeHtIg==
-X-Received: by 2002:a5d:5284:0:b0:366:ec2c:8646 with SMTP id
- ffacd0b85a97d-3716cd24ddemr2200526f8f.43.1723550404596; 
- Tue, 13 Aug 2024 05:00:04 -0700 (PDT)
+ bh=Hm76Ih3Z8sXGuCo0700NTk2e+j4pd96/pDpyBLORIss=;
+ b=oRmTy4K7To/KefssQ6uE8rT9Dz4xUMMLTtfDJK+zzTlPxejOUNeWtFb0N8UhN3yHHi
+ F+dFiRf1vlMnebLlKoPwVNMpOG2/UgE1NRHDQynf/95XpKOYx365cyjjWMwBWRRBifmT
+ UEeWa9A0e3Si08qV7Ks+pyRoXrWmvfJZs6WhXrS+eFohpM1zUjTu5Z4yCKgdQhD+274N
+ HPdQkVIO7Ktqi+vKWxMTjxXpch/yYFMq8Juu8ohcgJXhgwFaP0kXYd3LD63nRplhnzjd
+ H3pyIOVHseTOfNpigwJjZEaZ5JHzNxJD+nigN21qB/Ge2AP4WbnhqwJyt6TzmcD5z0RN
+ o+ew==
+X-Gm-Message-State: AOJu0YwXeH1fQ1wc3HrwLB733jx5CupVuNOOT6n4mbMADvL7rJqcT3G0
+ FCJxbqemCTUW3FOiwHRMDVxrilcdcz+D8MiDsdYZ9tbFs7AoHegpPlN0aATveGwnxde0EUisMLZ
+ G2GCHU9oTOMvQP82PM2SAodRpBkPbT5nDxzeY9y9u1pRObjL/xnqY
+X-Received: by 2002:a05:600c:4f0d:b0:426:5cdf:2674 with SMTP id
+ 5b1f17b1804b1-429d47f5c0dmr26740715e9.4.1723550693949; 
+ Tue, 13 Aug 2024 05:04:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEbajtwQ2ChoOYWGvnTPktdwhjCqnPtsOshKJSxoerQSh7xvqxGctxUqRikgRa4r3Y5dBT9tA==
+X-Received: by 2002:a05:600c:4f0d:b0:426:5cdf:2674 with SMTP id
+ 5b1f17b1804b1-429d47f5c0dmr26740375e9.4.1723550693351; 
+ Tue, 13 Aug 2024 05:04:53 -0700 (PDT)
 Received: from [10.33.192.191] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36e4ecc7a52sm10014329f8f.103.2024.08.13.05.00.03
+ 5b1f17b1804b1-429c750e510sm136608945e9.13.2024.08.13.05.04.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Aug 2024 05:00:04 -0700 (PDT)
-Message-ID: <1f3d8742-05c2-424a-98e8-db9835e4a3e2@redhat.com>
-Date: Tue, 13 Aug 2024 14:00:03 +0200
+ Tue, 13 Aug 2024 05:04:52 -0700 (PDT)
+Message-ID: <ccbfe942-7a44-4f52-a100-73a852b81cfb@redhat.com>
+Date: Tue, 13 Aug 2024 14:04:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/24] tests/functional: Prepare the meson build system
- for the functional tests
+Subject: Re: [PATCH v3 13/24] tests/functional: Convert the s390x avocado
+ tests into standalone tests
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, John Snow <jsnow@redhat.com>,
- qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x <qemu-s390x@nongnu.org>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ John Snow <jsnow@redhat.com>, qemu-ppc@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
  Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>
 References: <20240730170347.4103919-1-berrange@redhat.com>
- <20240730170347.4103919-6-berrange@redhat.com>
- <e393dbb5-dcc4-43d8-82dd-7d32e692eb91@linaro.org>
+ <20240730170347.4103919-14-berrange@redhat.com>
+ <0f30e83a-2048-4dcb-ba41-47920c62e1e1@linaro.org>
+ <ZqvIHb15uzWZw6Qt@redhat.com>
+ <8756361d-fc46-4a04-bcba-9200d739c404@linaro.org>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -126,7 +128,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <e393dbb5-dcc4-43d8-82dd-7d32e692eb91@linaro.org>
+In-Reply-To: <8756361d-fc46-4a04-bcba-9200d739c404@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -138,7 +140,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,96 +156,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01/08/2024 18.12, Philippe Mathieu-Daudé wrote:
-> Hi,
-> 
-> On 30/7/24 19:03, Daniel P. Berrangé wrote:
->> From: Thomas Huth <thuth@redhat.com>
+On 02/08/2024 15.25, Philippe Mathieu-Daudé wrote:
+> On 1/8/24 19:38, Daniel P. Berrangé wrote:
+>> On Thu, Aug 01, 2024 at 07:11:01PM +0200, Philippe Mathieu-Daudé wrote:
+>>> On 30/7/24 19:03, Daniel P. Berrangé wrote:
+>>>> From: Thomas Huth <thuth@redhat.com>
+>>>>
+>>>> These tests use archive.lzma_uncompress() from the Avocado utils,
+>>>> so provide a small helper function for this, based on the
+>>>> standard lzma module from Python instead.
+>>>>
+>>>> And while we're at it, replace the MD5 hashes in the topology test
+>>>> with proper SHA256 hashes, since MD5 should not be used anymore
+>>>> nowadays.
+>>>>
+>>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>>> ---
+>>>>    MAINTAINERS                                   |  4 +-
+>>>>    tests/functional/meson.build                  |  6 ++
+>>>>    tests/functional/qemu_test/utils.py           | 14 +++
+>>>>    .../test_s390x_ccw_virtio.py}                 | 79 ++++++++---------
+>>>>    .../test_s390x_topology.py}                   | 86 ++++++++-----------
+>>>>    5 files changed, 94 insertions(+), 95 deletions(-)
+>>>>    rename tests/{avocado/machine_s390_ccw_virtio.py => 
+>>>> functional/test_s390x_ccw_virtio.py} (85%)
+>>>>    mode change 100644 => 100755
+>>>>    rename tests/{avocado/s390_topology.py => 
+>>>> functional/test_s390x_topology.py} (88%)
+>>>>    mode change 100644 => 100755
+>>>
+>>> Conversion LGTM, so:
+>>>
+>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>
+>>> Now while testing I'm getting errors, but maybe pre-existing...
 >>
->> Provide a meson.build file for the upcoming python-based functional
->> tests, and add some wrapper glue targets to the tests/Makefile.include
->> file. We are going to use two "speed" modes for the functional tests:
->> The "quick" tests can be run at any time (i.e. also during "make check"),
->> while the "thorough" tests should only be run when running a
->> "make check-functional" test run (since these tests might download
->> additional assets from the internet).
+>> What host arch / OS are you running tests from ?
 >>
->> The changes to the meson.build files are partly based on an earlier
->> patch by Ani Sinha.
->>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
->> ---
->>   tests/Makefile.include       | 11 ++++++
->>   tests/functional/meson.build | 66 ++++++++++++++++++++++++++++++++++++
->>   tests/meson.build            |  1 +
->>   3 files changed, 78 insertions(+)
->>   create mode 100644 tests/functional/meson.build
+>> I got through the full set of testing on Fedora x86_64, so
+>> wondering if something differs.
 > 
-> 
->> +foreach speed : ['quick', 'thorough']
->> +  foreach dir : target_dirs
->> +    if not dir.endswith('-softmmu')
->> +      continue
->> +    endif
->> +
->> +    target_base = dir.split('-')[0]
->> +    test_emulator = emulators['qemu-system-' + target_base]
->> +
->> +    if speed == 'quick'
->> +      suites = ['func-quick', 'func-' + target_base]
->> +      target_tests = get_variable('tests_' + target_base + '_quick', []) 
->> + tests_generic
->> +    else
->> +      suites = ['func-' + speed, 'func-' + target_base + '-' + speed, speed]
->> +      target_tests = get_variable('tests_' + target_base + '_' + speed, [])
->> +    endif
->> +
->> +    test_deps = roms
->> +    test_env = environment()
->> +    if have_tools
->> +      test_env.set('QEMU_TEST_QEMU_IMG', meson.global_build_root() / 
->> 'qemu-img')
->> +      test_deps += [qemu_img]
->> +    endif
->> +    test_env.set('QEMU_TEST_QEMU_BINARY',
->> +                 meson.global_build_root() / 'qemu-system-' + target_base)
->> +    test_env.set('QEMU_BUILD_ROOT', meson.project_build_root())
->> +    test_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
->> +                               meson.current_source_dir())
->> +
->> +    foreach test : target_tests
->> +      test('func-@0@/@1@'.format(target_base, test),
->> +           python,
->> +           depends: [test_deps, test_emulator, emulator_modules],
->> +           env: test_env,
->> +           args: [meson.current_source_dir() / 'test_' + test + '.py'],
->> +           protocol: 'tap',
->> +           timeout: test_timeouts.get(test, 60),
->> +           priority: test_timeouts.get(test, 60),
->> +           suite: suites)
->> +    endforeach
->> +  endforeach
->> +endforeach
-> 
-> Can we have meson report why a test is skipped? All Python
-> unittest @skip* decorators provide a 'reason' argument, so
-> we already have that information.
+> Linux s390x but I'm not in the KVM group, I need to find
+> another place to run these (or ask Alex :P).
 
-I guess you'd need to extend the meson test runner for this...
-
-> Not much help on meson doc:
-> https://mesonbuild.com/Unit-tests.html#skipped-tests-and-hard-errors
-> 
-> If I run a test manually I see the reason in the tap output:
-> 
-> $ FOO=bar tests/functional/test_mips64el_loongson3v.py
-> TAP version 13
-> ok 1 test_mips64el_loongson3v.MipsLoongson3v.test_pmon_serial_console # SKIP 
-> untrusted code
-> 1..1
-
-You can also see this information in the txt file in the meson-logs folder, 
-so it is certainly not completely lost.
+Sounds like a pre-existing problem ... I guess the test should check whether 
+it can access /dev/kvm before trying to use it...?
 
   Thomas
 
