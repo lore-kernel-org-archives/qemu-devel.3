@@ -4,77 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 197AEC52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 16:40:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06C29C52D7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 16:44:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sduZD-0001Fo-Tj; Tue, 13 Aug 2024 12:40:15 -0400
+	id 1sducu-0005k1-1D; Tue, 13 Aug 2024 12:44:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sduZ5-0001EP-LH
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 12:40:13 -0400
-Received: from mgamail.intel.com ([198.175.65.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1sduZ3-0007qG-LL
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 12:40:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723567206; x=1755103206;
- h=message-id:date:mime-version:subject:from:to:cc:
- references:in-reply-to:content-transfer-encoding;
- bh=Lnxq35VvZsWfmZi7iauTP0H4EyqOn3yOccL8mcgkVmM=;
- b=TtOY9i2//bwrbWXza82ie20qCC1nWHWwumNWgFv8CrvT+OyY6s961Su3
- 5zh7Z6Sv7oAfsNuJskoEUPVEkqjFix+xdbmEumxqvWetU+qUs2Mfavvr3
- 11aE85toQFJPECGwWXqvyVrJd0+W50XF9FBkZnMksXFdr5idGfTOPY0dm
- om8M5MqBcb5wd7RgwyZMRtdOADgYMwCLfESDtf/LU+RXobywlwjOGohby
- m4bFD7FcqgujOlC/2mOzLehtr01fPWtkwQmX6Uo+a+Zd8+6iqCNPIupdJ
- Bi9H50Y9Nh/+tIyYl7AIIiTPXOZj03mIjOL770Wk2edzVf/3KDRvuCQJK g==;
-X-CSE-ConnectionGUID: lkpC9G+JTTWdfLO5S9AYog==
-X-CSE-MsgGUID: eeCCRFVkQJ+/4mrIAkvJfA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11163"; a="21714573"
-X-IronPort-AV: E=Sophos;i="6.09,286,1716274800"; d="scan'208";a="21714573"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Aug 2024 09:40:03 -0700
-X-CSE-ConnectionGUID: gZzRXnkNQ8mSVXBmgADFOA==
-X-CSE-MsgGUID: EuJiIVnbQ6m9p59U8qPgzg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,286,1716274800"; d="scan'208";a="62871955"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.228.22])
- ([10.124.228.22])
- by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Aug 2024 09:40:00 -0700
-Message-ID: <985da2cc-5281-4986-b1bb-0334179ece6d@intel.com>
-Date: Wed, 14 Aug 2024 00:39:57 +0800
+ (Exim 4.90_1) (envelope-from <jgg@ziepe.ca>) id 1sducs-0005jU-4X
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 12:44:02 -0400
+Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jgg@ziepe.ca>) id 1sducb-0008EH-O8
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 12:44:01 -0400
+Received: by mail-oo1-xc2f.google.com with SMTP id
+ 006d021491bc7-5d80752933bso3905045eaf.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 09:43:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ziepe.ca; s=google; t=1723567423; x=1724172223; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=ROqRYY1dqCAC6kog/NOEL1zLkAqrmdMPMSau7oyZjtU=;
+ b=XnI8KZGKAB7PBO69qgoTVvRcexZv8fnOk+pItzdmaaR5W6MH+TKLgB0bqzQEq7pxbo
+ 27TwCVE78Jhb0X7j+Jjy9cRYZZiCEOC8k1wGYlHCMLVTXS9EmRPPqk0orEdl+avNXRqm
+ 5CF0pQIVtnwKL2xeav6Sfh/29K/2i0Js2VOOOKFV0+3uC61fpwgly+nGWa2umuayw5IF
+ oz6gpUzMKtkWYItTxzxfadzaQaHVkzlDus522Rzz455mxYMgSJiIyHDtGosbC6rVr+B9
+ APwTs5ej4AeLIMJdNFnyF1AiRZxLW3LS/NMNIckEGmuIisnOS6cusICjJa5p9l5y3USe
+ zjrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723567423; x=1724172223;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ROqRYY1dqCAC6kog/NOEL1zLkAqrmdMPMSau7oyZjtU=;
+ b=ZjTZ0p9bCFY58XUxqI1wXYIZIqHJOwUZNW6nrLFrw0Kw+C2Upp04e1fNeDTWR6KQUg
+ wNsu7BGBJDpqQmhBASqqIjjZKeTnrE2kF0yLH78+UwcqtUKasRXcx4G1+3IDHPgyeO9B
+ AJFgqovFIU13sZP+ysBrGp6b1NovWOZGUponITtMW1xTxo3nwcEiiAt+W1p8GSfBa8Qv
+ 8AtmHcah0rImL7jWSifXWA7E4J7v1xFWO8zRSh10YmhmjQtTl4XQYs7sGQC/FBdxgZht
+ SSoig7OniNh2Rlni6tLFrKmG5ANCz+Xjvfau3d/cPJfh3msOTPztfZU0BjIsutY/gUiu
+ dJTA==
+X-Gm-Message-State: AOJu0YzfwQg/84mtrIcy5+kd0AXhBLmX1wDf4WekYibXOjiVpNzJkuCB
+ IxQ+x9SVFCy2u11m8bAK0ui03s170pwrulmtLkKD01SVI7e153a2rabkr1LBOk8=
+X-Google-Smtp-Source: AGHT+IEvmSCVnjpjqrFJiGnBKOZvxrmuCp6UnsBlqoXz0YHrq61kKl9NZyVY0sS6gN/GBZB3kKmjIg==
+X-Received: by 2002:a05:6359:410d:b0:19e:fa9c:5ec9 with SMTP id
+ e5c5f4694b2df-1b1aab4ccf6mr3925955d.9.1723567423216; 
+ Tue, 13 Aug 2024 09:43:43 -0700 (PDT)
+Received: from ziepe.ca ([128.77.69.90]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6bd82e2f405sm35400856d6.79.2024.08.13.09.43.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 13 Aug 2024 09:43:42 -0700 (PDT)
+Received: from jgg by wakko with local (Exim 4.95)
+ (envelope-from <jgg@ziepe.ca>) id 1sducX-008U9H-Jt;
+ Tue, 13 Aug 2024 13:43:41 -0300
+Date: Tue, 13 Aug 2024 13:43:41 -0300
+From: Jason Gunthorpe <jgg@ziepe.ca>
+To: Alex Williamson <alex.williamson@redhat.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, quic_bqiang@quicinc.com,
+ kvalo@kernel.org, prestwoj@gmail.com,
+ linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
+ dwmw2@infradead.org, iommu@lists.linux.dev, kernel@quicinc.com,
+ johannes@sipsolutions.net, jtornosm@redhat.com
+Subject: Re: [PATCH RFC/RFT] vfio/pci-quirks: Quirk for ath wireless
+Message-ID: <20240813164341.GL1985367@ziepe.ca>
+References: <adcb785e-4dc7-4c4a-b341-d53b72e13467@gmail.com>
+ <20240812170045.1584000-1-alex.williamson@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] i386/cpu: Introduce enable_cpuid_0x1f to force
- exposing CPUID 0x1f
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, qemu-devel@nongnu.org, zhao1.liu@intel.com,
- John Levon <john.levon@nutanix.com>, Manish <manish.mishra@nutanix.com>
-References: <20240813033145.279307-1-xiaoyao.li@intel.com>
- <20240813112734.6b2394b9@imammedo.users.ipa.redhat.com>
- <13ab0652-8223-4c04-be63-09a7a81467af@intel.com>
-Content-Language: en-US
-In-Reply-To: <13ab0652-8223-4c04-be63-09a7a81467af@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.001, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240812170045.1584000-1-alex.williamson@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f; envelope-from=jgg@ziepe.ca;
+ helo=mail-oo1-xc2f.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,38 +96,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/13/2024 10:51 PM, Xiaoyao Li wrote:
-> On 8/13/2024 5:27 PM, Igor Mammedov wrote:
->> On Mon, 12 Aug 2024 23:31:45 -0400
->> Xiaoyao Li <xiaoyao.li@intel.com> wrote:
->>
->>> Currently, QEMU exposes CPUID 0x1f to guest only when necessary, i.e.,
->>> when topology level that cannot be enumerated by leaf 0xB, e.g., die or
->>> module level, are configured for the guest, e.g., -smp xx,dies=2.
->>>
->>> However, 1) TDX architecture forces to require CPUID 0x1f to 
->>> configure CPU
->>> topology. and 2) There is a bug in Windows that Windows 10/11 expects 
->>> valid
->>> 0x1f leafs when the maximum basic leaf > 0x1f[1].
->>   1. will it boot if you use older cpu model?
+On Mon, Aug 12, 2024 at 11:00:40AM -0600, Alex Williamson wrote:
+> These devices have an embedded interrupt controller which is programmed
+> with guest physical MSI address/data, which doesn't work.  We need
+> vfio-pci kernel support to provide a device feature which disables
+> virtualization of the MSI capability registers.  Then we can do brute
+> force testing for writes matching the MSI address, from which we can
+> infer writes of the MSI data, replacing each with host physical values.
 > 
-> It can boot with any cpu model that has .level < 0x1f.
+> This has only been tested on ath11k (0x1103), ath12k support is
+> speculative and requires testing.  Note that Windows guest drivers make
+> use of multi-vector MSI which requires interrupt remapping support in
+> the host.
 
-I realize just now that we don't need to introduce "x-cpuid-1f" as the 
-workaround for buggy windows. We can always workaround it by limiting 
-the maximum basic CPUID leaf to less than 0x1f, i.e., -cpu xxx,level=0x1e
+The way it is really supposed to work, is that the guest itself
+controls/knows the MSI addr/data pairs and the interrupt remapping HW
+makes that delegation safe since all the interrupt processing will be
+qualified by the RID.
 
-I think we can ignore this patch for now. I will re-submit it with TDX 
-enabling series, and with "x-cpuid-1f" interface removed.
+Then the guest can make up the unique interrupts for MSI and any
+internal "IMS" sources and we just let the guest directly write the
+MSI/MSI-X and any IMS values however it wants.
 
->>   2. how user would know that this option would be needed?
-> 
-> Honestly, I don't have an answer for it.
-> 
-> I'm not sure if it is the duty of QEMU to identify this case and print 
-> some hint to user. It's the bug of Windows, maybe Mircosoft should put 
-> something in their known bugs list for users?
-> 
+This hackery to capture and substitute the IMS programming is neat and
+will solve this one device, but there are more IMS style devices in
+the pipeline than will really need a full solution.
 
+> + * The Windows driver makes use of multi-vector MSI, where our sanity test
+> + * of the MSI data value must then mask off the vector offset for comparison
+> + * and add it back to the host base data value on write.
+
+But is that really enough? If the vector offset is newly created then
+that means the VM built a new interrupt that needs setup to be routed
+into the VM?? Is that why you say it "requires interrupt remapping
+support" because that setup is happening implicitly on x86?
+
+It looks like Windows is acting as I said Linux should, with a
+"irq_chip" and so on to get the unique interrupt source a proper
+unique addr/data pair...
+
+Jason
 
