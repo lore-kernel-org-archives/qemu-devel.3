@@ -4,83 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AEE7C52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 17:03:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC8C7C52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 17:06:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sduum-00079P-2J; Tue, 13 Aug 2024 13:02:32 -0400
+	id 1sduyK-0005b4-V7; Tue, 13 Aug 2024 13:06:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sduuh-0006rD-Lo; Tue, 13 Aug 2024 13:02:28 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1sduuf-0002hG-Ug; Tue, 13 Aug 2024 13:02:27 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-52efd8807aaso7623889e87.3; 
- Tue, 13 Aug 2024 10:02:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723568542; x=1724173342; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=JGJpkmzwhAHPEBfWQMTLg/zF6IPgm68M3yUmp2d77TM=;
- b=c6pDxC0W4QcigvorQAKUZIVfU88yQU0BhuoyCjOjii2tu5jxQO5CL+GYL/apd83vE8
- MU7BLxk9SHHEn2kT9UMgwllh0Y75LNtv8BllkO7KFEVnz0Tb7YQjOnQFC2GxIAXzWs1E
- WvQBgYQGHhB0wLXy9HQBgcbyMeNSpaHOcsxH/XZk8K9aC6C/JE90FBO251d4SeJRV29L
- SdNYryS9CwPN7R7n71++jAFkGb+2MN36v1COZlV1INTR6v9v/55y6ltlUZ4QiphjUBZE
- hChiFYwJoTBlOR2RppAnd3pZ5MSDo5pLVwlrWq19vh4TPGaNEiapDDX/yk8nJIkY6fq1
- MPZQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sduyG-0005K6-RR
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 13:06:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sduyF-00037C-5p
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 13:06:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723568766;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=e5IupmQd5DA2WBQItPa15ZG/dQuCisWLsaX6Mj1XqWk=;
+ b=iPWGfHs1xalyCKngNe6Jjyctrt/wGGZH7UwFncNX2W/cUWsvUw16Bk6KfuKbiw30ELPyRV
+ VVLgjbri/6Atgvx7De6xWTg0Rh+TQBGISeuoXz2UdIUpHdmiDuHn/ure4xbMZgFND0Mfp5
+ dkAk0k/mIIaBcbUFjbJaUqPZHsXSudg=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-631-ocsJMI25Mg64RbkLHE5ZDQ-1; Tue, 13 Aug 2024 13:06:04 -0400
+X-MC-Unique: ocsJMI25Mg64RbkLHE5ZDQ-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2f0276170f9so52537091fa.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 10:06:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723568542; x=1724173342;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JGJpkmzwhAHPEBfWQMTLg/zF6IPgm68M3yUmp2d77TM=;
- b=TO1jQ9fjeueiCAj/LiqdYAxW6qEFhVwmIdy00CgvaRhNM1HiNbjz5wHb98vj4lj9N6
- CUlBLmEcv2uaqA7CpU4lVTnEyazfC1fckQImsoVIoSo6GFhaMMb9OxH17UqyyQdfd0kE
- OjwLrOTz7yfKcB+url9Sy/XT2juFKn0MeoEvi/Jgj0kMF9erJ8/FGZxsPnrUaE9dd06j
- ukP9E5ELBWorzW/CBwNukX9fyxJX1OBC136j1zBVfWvOOYs4/kH1KH3XDu2gtZ+H7Mco
- Kf3Ga4Le1IkLMLqFjne5cc+776hoF5+gHt6u0TIsWFdMk9VaGyFx3QZZIBxYVQDXaEo3
- Z2tg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUzNftJtCp47Uv3DcjdYW4RHPNbtiJHIWvVNkt3YzB33yYMbilcGwJkRzU+tzQuQZaWXZsedRTVv6C6olycXpjszL1e
-X-Gm-Message-State: AOJu0YxcDEB3yAUZCxRAGY2bH3wJTTdPiF1+zO3zTTWCqYVqOWj2C67E
- 9L9x++bwV7PjuI0EMF3yL2SZpt+CGHFw4dSL4pb+j7gXaqq8bP7U
-X-Google-Smtp-Source: AGHT+IHZuurj1sUG8YFtdeInfXPdWplweffYruWCp+QQjqA/XiC02As6mGM3q9lJSfLX6jrUtjaRPw==
-X-Received: by 2002:a2e:90cd:0:b0:2f1:585b:f326 with SMTP id
- 38308e7fff4ca-2f3aa1fe856mr50841fa.45.1723568541128; 
- Tue, 13 Aug 2024 10:02:21 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
+ d=1e100.net; s=20230601; t=1723568762; x=1724173562;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=e5IupmQd5DA2WBQItPa15ZG/dQuCisWLsaX6Mj1XqWk=;
+ b=AKMcWJ/ta6oEUtOWMmVvQt1DdBkL6wmmSZYTUzssaoRNyuyu4VW+vglDpE/xVqbuae
+ PZBXXfpYXuzei4H3tFnfHp7U6uGudpsbq4BHtZUkVw/ckjzKwc+UFwyr/6Iq9ZHk7At4
+ EiHwnEWeAOeveTa9GmqJpCWIvlqZGKdyFr91Oes7SEFuldhL6zNfgZabgjXv2E9jIhp8
+ 73TlcRP3ttdSjj172LCAAizwG1HxjSsWGwslpjc61QRCd0LKkICxZPhqHz5bHAQ5CUlr
+ IfSFXGnRUtpsV9o3d1WhIXj9g9lgn0diYxBJcXF9NlZda9xom0lzD8awF7uslXuD7q5U
+ JmDw==
+X-Gm-Message-State: AOJu0YwM6RfU45f8UlksTT1Z1LkmLm0ZEPN+x2tn+mpXB0EBp3pqLsE1
+ D0/AmQTm8ESYJhTOekIG8u7iRlV+cLEYn6RwYiO+KPYn1CFcFZOphPZqhqjjv4bKAYH4Hj6ZJ1M
+ NudSfiW20Bo8dNeVApq/Vu7PaP6hRi+DWvSplaQLfIOzgA6ooDS/1NCg7jxFnDJMhxAFuYAuWBw
+ vJS9VaMWQtu24LUhIakSgpouvO9siltAVQtvdS
+X-Received: by 2002:a05:651c:154a:b0:2ef:2b05:2ab3 with SMTP id
+ 38308e7fff4ca-2f3aa1b3775mr338911fa.10.1723568762495; 
+ Tue, 13 Aug 2024 10:06:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHH6Ro6X0imBx16c8+0bX9MVI0UyhzZv0KOmNjhbCtmXS9h2LM7UppiCMZ7/VcCfr+H11eUHg==
+X-Received: by 2002:a05:651c:154a:b0:2ef:2b05:2ab3 with SMTP id
+ 38308e7fff4ca-2f3aa1b3775mr338661fa.10.1723568761759; 
+ Tue, 13 Aug 2024 10:06:01 -0700 (PDT)
+Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2f29203d817sm11755511fa.99.2024.08.13.10.02.19
+ 4fb4d7f45d1cf-5be9feb7528sm147091a12.82.2024.08.13.10.06.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Aug 2024 10:02:20 -0700 (PDT)
-Date: Tue, 13 Aug 2024 19:02:19 +0200
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: Stefano Stabellini <sstabellini@kernel.org>
-Cc: qemu-devel@nongnu.org, anthony@xenproject.org, paul@xen.org,
- peter.maydell@linaro.org, alex.bennee@linaro.org,
- xenia.ragiadakou@amd.com, jason.andryuk@amd.com,
- edgar.iglesias@amd.com, xen-devel@lists.xenproject.org, qemu-arm@nongnu.org
-Subject: Re: [PATCH v1 04/10] hw/arm: xenpvh: Add support for SMP guests
-Message-ID: <ZruRm34zIMtUm7oH@zapote>
-References: <20240812130606.90410-1-edgar.iglesias@gmail.com>
- <20240812130606.90410-5-edgar.iglesias@gmail.com>
- <alpine.DEB.2.22.394.2408121650590.298534@ubuntu-linux-20-04-desktop>
+ Tue, 13 Aug 2024 10:06:01 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alyssa Ross <hi@alyssa.is>
+Subject: [PULL 1/6] target/hexagon: don't look for static glib
+Date: Tue, 13 Aug 2024 19:05:50 +0200
+Message-ID: <20240813170556.104193-2-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240813170556.104193-1-pbonzini@redhat.com>
+References: <20240813170556.104193-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.22.394.2408121650590.298534@ubuntu-linux-20-04-desktop>
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lf1-x12c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,59 +103,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 12, 2024 at 06:47:17PM -0700, Stefano Stabellini wrote:
-> On Mon, 12 Aug 2024, Edgar E. Iglesias wrote:
-> > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> > 
-> > Add SMP support for Xen PVH ARM guests. Create max_cpus ioreq
-> > servers to handle hotplug.
-> > 
-> > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> > ---
-> >  hw/arm/xen_arm.c | 5 +++--
-> >  1 file changed, 3 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
-> > index 5f75cc3779..ef8315969c 100644
-> > --- a/hw/arm/xen_arm.c
-> > +++ b/hw/arm/xen_arm.c
-> > @@ -173,7 +173,7 @@ static void xen_arm_init(MachineState *machine)
-> >  
-> >      xen_init_ram(machine);
-> >  
-> > -    xen_register_ioreq(xam->state, machine->smp.cpus, &xen_memory_listener);
-> > +    xen_register_ioreq(xam->state, machine->smp.max_cpus, &xen_memory_listener);
-> >  
-> >      xen_create_virtio_mmio_devices(xam);
-> >  
-> > @@ -218,7 +218,8 @@ static void xen_arm_machine_class_init(ObjectClass *oc, void *data)
-> >      MachineClass *mc = MACHINE_CLASS(oc);
-> >      mc->desc = "Xen PVH ARM machine";
-> >      mc->init = xen_arm_init;
-> > -    mc->max_cpus = 1;
-> > +    /* MAX number of vcpus supported by Xen.  */
-> > +    mc->max_cpus = GUEST_MAX_VCPUS;
-> 
-> Will this cause allocations of data structures with 128 elements?
-> Looking at hw/xen/xen-hvm-common.c:xen_do_ioreq_register it seems
-> possible? Or hw/xen/xen-hvm-common.c:xen_do_ioreq_register is called
+From: Alyssa Ross <hi@alyssa.is>
 
-Yes, in theory there's probably overhead with this but as you correctly
-noted below, a PVH aware xl will set the max_cpus option to a lower value.
+When cross compiling QEMU configured with --static, I've been getting
+configure errors like the following:
 
-With a non-pvh aware xl, I was a little worried about the overhead
-but I couldn't see any visible slow-down on ARM neither in boot or in network
-performance (I didn't run very sophisticated benchmarks).
+    Build-time dependency glib-2.0 found: NO
 
+    ../target/hexagon/meson.build:303:15: ERROR: Dependency lookup for glib-2.0 with method 'pkgconfig' failed: Could not generate libs for glib-2.0:
+    Package libpcre2-8 was not found in the pkg-config search path.
+    Perhaps you should add the directory containing `libpcre2-8.pc'
+    to the PKG_CONFIG_PATH environment variable
+    Package 'libpcre2-8', required by 'glib-2.0', not found
 
-> later on with the precise vCPU value which should be provided to QEMU
-> via the -smp command line option
-> (tools/libs/light/libxl_dm.c:libxl__build_device_model_args_new)?
+This happens because --static sets the prefer_static Meson option, but
+my build machine doesn't have a static libpcre2.  I don't think it
+makes sense to insist that native dependencies are static, just
+because I want the non-native QEMU binaries to be static.
 
-Yes, a pvh aware xl will for example pass -smp 2,maxcpus=4 based on
-values from the xl.cfg. If the user doesn't set maxvcpus in xl.cfg, xl
-will set maxvcpus to the same value as vcpus.
+Signed-off-by: Alyssa Ross <hi@alyssa.is>
+Link: https://lore.kernel.org/r/20240805104921.4035256-1-hi@alyssa.is
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/hexagon/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Best regards,
-Edgar
+diff --git a/target/hexagon/meson.build b/target/hexagon/meson.build
+index b0b253aa6bf..9ea1f4fc594 100644
+--- a/target/hexagon/meson.build
++++ b/target/hexagon/meson.build
+@@ -300,7 +300,7 @@ if idef_parser_enabled and 'hexagon-linux-user' in target_dirs
+         arguments: ['@INPUT@', '--defines=@OUTPUT1@', '--output=@OUTPUT0@']
+     )
+ 
+-    glib_dep = dependency('glib-2.0', native: true)
++    glib_dep = dependency('glib-2.0', native: true, static: false)
+ 
+     idef_parser = executable(
+         'idef-parser',
+-- 
+2.46.0
+
 
