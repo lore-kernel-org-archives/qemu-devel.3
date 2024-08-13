@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04F17C52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 17:07:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D14EC52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 17:07:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sduyX-0006RY-Db; Tue, 13 Aug 2024 13:06:25 -0400
+	id 1sduyc-0006jU-NB; Tue, 13 Aug 2024 13:06:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sduyV-0006FA-8w
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 13:06:23 -0400
+ id 1sduyX-0006SF-EX
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 13:06:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1sduyR-00038N-Ih
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 13:06:23 -0400
+ id 1sduyV-00039G-Rs
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 13:06:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723568779;
+ s=mimecast20190719; t=1723568783;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=83GI1fDfDMGezYy05oq4L94LxUNct25QLDIJmFGGzPE=;
- b=E0+/QDUPRXG7s1BRegkDiLooxO91XWq5iI4RMmd30Fj/EnxuPlGk00aq4hoEh+6bzJpv/e
- dNnvxllqY9/eAGa1q2t3cCqIKab+n2fqShvh1D5ow7dBDQDBDFxZwEyvESYlvLZLh/wBSo
- 8NEHb7rGXVUTWjwf6udryJriRwPauS0=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/JEbOJkwY4yqdkYnOaF1sKBNaU2b+I2B2V004N9EQqg=;
+ b=P/ZyoYIF0f0qTnhLEp/bsWKWoNlRAscDt7Shk9btFvuB0Cm1KuK+7ZWalr1nssZeDD7nXx
+ 5Gz+sTALMoLythwNXSei3k9ao2+kpzSanYkLKZ+NK/4g4TZ3XCV+viGyeGNiOt+7zP0+yU
+ Ggsh7yqK5b3Y6GPHTmXaW500ux0ZfcQ=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-78-YDsk1ZeDNxOZ1ays2ZKOEg-1; Tue, 13 Aug 2024 13:06:17 -0400
-X-MC-Unique: YDsk1ZeDNxOZ1ays2ZKOEg-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5bb8fc3df4aso4310808a12.0
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 10:06:17 -0700 (PDT)
+ us-mta-6-QC1UtPEqPNmN_KYOl4PMjg-1; Tue, 13 Aug 2024 13:06:21 -0400
+X-MC-Unique: QC1UtPEqPNmN_KYOl4PMjg-1
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-2ef3157ae4cso63360911fa.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 10:06:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723568776; x=1724173576;
+ d=1e100.net; s=20230601; t=1723568780; x=1724173580;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=83GI1fDfDMGezYy05oq4L94LxUNct25QLDIJmFGGzPE=;
- b=qUXqImvyEnHCAgugzPX4I5NGvXbtypmnIcSymNkBbABtp5HhETDGUL1yyuMxbebVbn
- lsjuix2fX4TswoMNe68wCPTsGAICKY7cZ93N2NeFtSDHF1yjYNC/GlaMN7X7ed0Oygd3
- 4JwG9B1xO4FXWyySL6OWFuj0GM9YZAL1nxzCwv43jCdigU0UmGQMOCauvxDD/Pvlqy/C
- 37oBcmHUN+I5/dOrYcAQCB8SNoA0rQGIQRhUYdXqo9ktYHnd+NkY0ZFp2f/XQxWx3wKd
- tpw2UvY1Xtu+Y3IC3JvrnFtKGQ+KuqK0RcTsNTm/C+SSGCiLmZ62TUQAQa7e0HpgkLUq
- tUOQ==
-X-Gm-Message-State: AOJu0YyuIwS62AfRvADe4YaPbzSGNVOOd88ko94Huygj5gFrFamT3drN
- GpheusZXEg8K6ntsYmc9UlLHSwKK7CMjch1Ja7QLDG+DlXMqe5qBLK7cJatqZjkztOpsDspHmMg
- 5qDHtDM3Hj0jLkg2BlfufMLCekBBotkcjGSCbx3YTvYyqTMSZYBaxlfO6/xNfTq2W74qG7b0YxK
- F9jkIqL9HR+Vp/nlChyoat2hQJPU/tQJbH7O0E
-X-Received: by 2002:a05:6402:2354:b0:5a2:a0d9:c1a2 with SMTP id
- 4fb4d7f45d1cf-5bea1cad0damr102262a12.26.1723568776191; 
- Tue, 13 Aug 2024 10:06:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFzsM50zCb89/RGNNWmZqNRMHD0zqp5+0Wk7Sa/qvkIIWqFubrprvfAZomrRgjuwBQlsXB67g==
-X-Received: by 2002:a05:6402:2354:b0:5a2:a0d9:c1a2 with SMTP id
- 4fb4d7f45d1cf-5bea1cad0damr102238a12.26.1723568775739; 
- Tue, 13 Aug 2024 10:06:15 -0700 (PDT)
+ bh=/JEbOJkwY4yqdkYnOaF1sKBNaU2b+I2B2V004N9EQqg=;
+ b=DGZzLsqj279QzaScmqcMEQzBZG3q0+Zg6KJMQE3g9ybVLqvbrLkI2ldzpCa9YvS46C
+ RIbemc84sL87QVT6s7DnE+lF3i6Rc1HzImFc1i4xTBQ0bD9C8TKcFBFm1yb5/aYuYWdf
+ vep7XH/AWfrelCSwEuw+BqC0hjrsEy0ZBTDd2ViGREp+vFsfEaITVukVN+vVcxw5wYAz
+ f2cJNrabvjjP8s7OhPw8z3vjO64GfGPsKDOCpTRa74L2A5r+xdhTUkBN263eRi2+UgNz
+ mQ4dnDqtSCbyHxcLn4B6FSpbBgzeVNiTOwk6D9KhL4TGbQrqWrZLI4TiU46fUc+ikFmF
+ E+XQ==
+X-Gm-Message-State: AOJu0YxOkJMUesQkg+2+knwz3H4nkEeI33sq7uc7a5O+AEN4QEhFlyGI
+ qZKfu0ukoxqilM+9XCSUD0SNNMBIwpISvDYVkVn4Lzamek2qS5+kBVDIg79fMa2hYbpj+wxsK2s
+ A9PSnaZjqN8yYivtwGV9Q16cz/v087e6Fl/OXqPU9isL3GovV9Es/i+0Z/yItg1yKB0/E3ztFpT
+ H+SIvwYxvUS37Npt6H8+qYQth70feKZnY/ix9Q
+X-Received: by 2002:a05:651c:11d1:b0:2ef:23af:f202 with SMTP id
+ 38308e7fff4ca-2f3aa3014d8mr93721fa.46.1723568779880; 
+ Tue, 13 Aug 2024 10:06:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFQAFehb92Po3sTasJDsUkCvOWxmJMfRoc0itBsiOHITjOISKaOgfB86PrU5W0jHZEsND2EJw==
+X-Received: by 2002:a05:651c:11d1:b0:2ef:23af:f202 with SMTP id
+ 38308e7fff4ca-2f3aa3014d8mr93331fa.46.1723568779307; 
+ Tue, 13 Aug 2024 10:06:19 -0700 (PDT)
 Received: from avogadro.local ([151.95.101.29])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bd190ad1bcsm3114523a12.30.2024.08.13.10.06.13
+ a640c23a62f3a-a80f411bb19sm82352666b.122.2024.08.13.10.06.18
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Aug 2024 10:06:13 -0700 (PDT)
+ Tue, 13 Aug 2024 10:06:18 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Alexander Ivanov <alexander.ivanov@virtuozzo.com>,
- Claudio Fontana <cfontana@suse.de>, "Denis V. Lunev" <den@openvz.org>,
- qemu-stable@nongnu.org
-Subject: [PULL 5/6] module: Prevent crash by resetting local_err in
- module_load_qom_all()
-Date: Tue, 13 Aug 2024 19:05:54 +0200
-Message-ID: <20240813170556.104193-6-pbonzini@redhat.com>
+Subject: [PULL 6/6] po: update Italian translation
+Date: Tue, 13 Aug 2024 19:05:55 +0200
+Message-ID: <20240813170556.104193-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240813170556.104193-1-pbonzini@redhat.com>
 References: <20240813170556.104193-1-pbonzini@redhat.com>
@@ -106,42 +103,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-
-Set local_err to NULL after it has been freed in error_report_err(). This
-avoids triggering assert(*errp == NULL) failure in error_setv() when
-local_err is reused in the loop.
-
-Signed-off-by: Alexander Ivanov <alexander.ivanov@virtuozzo.com>
-Reviewed-by: Claudio Fontana <cfontana@suse.de>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Link: https://lore.kernel.org/r/20240809121340.992049-2-alexander.ivanov@virtuozzo.com
-[Do the same by moving the declaration instead. - Paolo]
-Cc: qemu-stable@nongnu.org
+Reported-by: bovirus <https://gitlab.com/bovirus>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2451
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- util/module.c | 2 +-
+ po/it.po | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/util/module.c b/util/module.c
-index 32e263163c7..3eb0f06df16 100644
---- a/util/module.c
-+++ b/util/module.c
-@@ -354,13 +354,13 @@ int module_load_qom(const char *type, Error **errp)
- void module_load_qom_all(void)
- {
-     const QemuModinfo *modinfo;
--    Error *local_err = NULL;
+diff --git a/po/it.po b/po/it.po
+index c6d95172070..363b9bddf2f 100644
+--- a/po/it.po
++++ b/po/it.po
+@@ -65,7 +65,7 @@ msgid "Detach Tab"
+ msgstr "_Sposta in una nuova finestra"
  
-     if (module_loaded_qom_all) {
-         return;
-     }
+ msgid "Show Menubar"
+-msgstr ""
++msgstr "Mostra _barra dei menu"
  
-     for (modinfo = module_info; modinfo->name != NULL; modinfo++) {
-+        Error *local_err = NULL;
-         if (!modinfo->objs) {
-             continue;
-         }
+ msgid "_Machine"
+ msgstr "_Macchina virtuale"
 -- 
 2.46.0
 
