@@ -4,61 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04112C52D7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 20:26:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 028D7C52D7D
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 20:26:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdy3h-0005Bn-K3; Tue, 13 Aug 2024 16:23:57 -0400
+	id 1sdy3h-0005BE-Fs; Tue, 13 Aug 2024 16:23:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sdy3d-00051h-9U
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:23:54 -0400
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ id 1sdy3b-0004vs-57
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:23:52 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sdy3N-0006BO-EE
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:23:53 -0400
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-52fc4388a64so8199453e87.1
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 13:23:36 -0700 (PDT)
+ id 1sdy3M-0006An-Lb
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:23:50 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-428141be2ddso44008985e9.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 13:23:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723580615; x=1724185415; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yKD7jTj6Nf0+e/1hZyzKkWpKuU283fm5mnyf6o/tDJg=;
- b=FIjgdpfIez5HdkW9Kg+ECabF4IWJ56stoQlCOLD7Gbch8BAjb8pwGw/W2shi0FvOw5
- j4kJW1EgUAR91p43/z83OmQncjeWdodnvGAEXPPM9j1gbnGGp4dgEqlwlHatkoyrY0yC
- mP0RQ7VsE3pFHXcdd8gs3iaFclLPJvqeZ0mds2Xq+jXx/nHUkOj1PFZugIH5e6l+ECy7
- dCa3eF70iduVf0IYeUuey4bBIYvRxe6K0MBoQDJV+1+pJzTVnvcdI9xM/2gcNlzEvqez
- Skt63o5zYw/r+iwJdqqrXu7wRKGl95UY3cqTa/7kibYfxAT79whJe4a+QNrZyvqkSKbI
- hXEw==
+ d=linaro.org; s=google; t=1723580613; x=1724185413; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ri3Nj6KnAAwYce4sttu64DfuUubHB313LE/IKlWaOgg=;
+ b=aeEU176dq4nhJKQTyjoAkDam/7Ylawm+ubG5pALrrGqOqvo7D+SfVes27PEJvSghsm
+ /DdnJj0wITFC+TsRbSq293g3hCzg8qpTD8P+yhvbUyypiAIh6f9XGC2M6fP2+TewpUj8
+ DGi6AGaPoMHbEIIc5S4XmNbXnDKtHFZSmRJpPrc8UjepXcnkEIyDQgvTux3P5gwO2inM
+ avzlETjIQUok5CsFWY5u0/7eUwptxTn4rvLFdESMWsnZ/eXOE75Jr0H1c4SZKhxCl7Wp
+ 09xHIvBuupvdodwOS72T2VtOPPygxK9FOeb6TZVc05T4jDTshk4m25SJ7vryjpTnPaVi
+ mKMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723580615; x=1724185415;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yKD7jTj6Nf0+e/1hZyzKkWpKuU283fm5mnyf6o/tDJg=;
- b=dnZBzhyVHs5WBwlJCyLAmLI99oEVwewBxVHYlUMCoqLhbH2do+9Ko0u0AarL8r3RKU
- vhLWleSBH6ZcHzF8W7aeIs6ohed5jaSazLa62eFn/SeMTEiJZOGTDEQrd2iVCyuBQWou
- dSGcoW+bJcx+IH+gfUsPZjI5shRYeF7ej5CrMoTlL39jMnt/OqxUXAlew/wNgZRV0KJE
- aOvgKO8bvsD+KkBmx25EXxIRth6lFnZG8pWNK2U7TItg4fuWfSvQ5cJ4kCWOkHEsoJ5+
- Fvzk6KrRT+7EEo1nIaj0QyMSrFH2RrvFtseUESj2ssXoZsXc/HvFyIq9MwZVtTA0acgF
- iNtg==
-X-Gm-Message-State: AOJu0Yykiuz/LgilbPxMHnBvQLXeGdSXu6YcgTkCvMyHxbMEurf6LHWv
- 0T+gjPpvxU9OOZkA3G1EaJnviYbUCvjbK6HXwY3zGvcRANSI6gWjCYSGuHi8MZI=
-X-Google-Smtp-Source: AGHT+IFYzyLoE270W+WofOCfgUcyOUdrs+aYXrTSO0xXscbAltL5AOxMO0ddGDb3dLKASsg0cgJSog==
-X-Received: by 2002:a05:6512:39cc:b0:52e:ff2a:217 with SMTP id
- 2adb3069b0e04-532edbbee55mr307421e87.50.1723580614179; 
- Tue, 13 Aug 2024 13:23:34 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723580613; x=1724185413;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ri3Nj6KnAAwYce4sttu64DfuUubHB313LE/IKlWaOgg=;
+ b=fhjhrtAcm2K5FEUWJcMqV9HleEP76s7HKT1ZjnthHAbfMF3c9GnkyGDot43waFworY
+ shx149qwBQVrxDhXj9cTiNcIITeKWT2VYTo90NRmS4kr0UIYJEJb9thVpHJ6On1Yo7qf
+ YM+jA96mKc1UUvhpZRMdoxMuW3eA+FATzogyyGbpWa8W84+EYkd2xaLEU3nj94BL/UcV
+ Hw01lH65Xg/xDa2WqQcAobtXstCPCOtmCFQOROH09XkRldgOVryFIcEvo+hEt8MkCTGp
+ mmeJ+horA2jtEDjHrUCOQ7esk4NVHcjoRqIKSB7GD3+hwveS66i4JCHa9pm3AuB0HWpz
+ P/Rg==
+X-Gm-Message-State: AOJu0YyePKVtbRk38nnfxWFrxMhJmfG4f4ZA1N5qosxGsNb6z4oL7Brs
+ BGN+B8/SLPn4/SL5U5e9u7f2fqNwFYlMtZ5gQAVx+SvQzAb/0/FQ5Qgsnz4OxQU=
+X-Google-Smtp-Source: AGHT+IFD8ANyBvg4OSR2ZhYQmfVP1TQ7DO4yNZiDq9xDn7AZHbSFs0ZxBh7mRmBN4sy1ikDi4bR0Aw==
+X-Received: by 2002:adf:a21a:0:b0:360:9cf4:58ce with SMTP id
+ ffacd0b85a97d-371778095eamr386414f8f.46.1723580612100; 
+ Tue, 13 Aug 2024 13:23:32 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36e4c9385d3sm11271592f8f.42.2024.08.13.13.23.30
+ ffacd0b85a97d-36e4cfee676sm11229207f8f.49.2024.08.13.13.23.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 13 Aug 2024 13:23:30 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8CE945F8C5;
+ by draig.lan (Postfix) with ESMTP id 5F5195F7A3;
  Tue, 13 Aug 2024 21:23:29 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -90,23 +89,21 @@ Cc: Alistair Francis <alistair.francis@wdc.com>,
  Jason Wang <jasowang@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH v2 02/21] Makefile: trigger re-configure on updated pythondeps
-Date: Tue, 13 Aug 2024 21:23:10 +0100
-Message-Id: <20240813202329.1237572-3-alex.bennee@linaro.org>
+Subject: [PATCH v2 00/21] Various fixes and tweaks for 9.1-rc2/3
+Date: Tue, 13 Aug 2024 21:23:08 +0100
+Message-Id: <20240813202329.1237572-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240813202329.1237572-1-alex.bennee@linaro.org>
-References: <20240813202329.1237572-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x134.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,32 +120,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If we add additional deps for meson we need to ensure we trigger a
-reconfigure to make sure everything is set up.
+As usual during soft freeze I switch to cleaning up the various
+niggles and bugs which have accumulated over the years.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240731140232.22193-1-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240807114059.2339021-3-alex.bennee@linaro.org>
----
- Makefile | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+New for this iteration are some late breaking plugin updates, fixes
+for record/replay and a few documentation updates. Everything is
+reviewed so I will roll a pull request later this week.
 
-diff --git a/Makefile b/Makefile
-index 02a257584b..917c9a34d1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -78,7 +78,8 @@ x := $(shell rm -rf meson-private meson-info meson-logs)
- endif
- 
- # 1. ensure config-host.mak is up-to-date
--config-host.mak: $(SRC_PATH)/configure $(SRC_PATH)/scripts/meson-buildoptions.sh $(SRC_PATH)/VERSION
-+config-host.mak: $(SRC_PATH)/configure $(SRC_PATH)/scripts/meson-buildoptions.sh \
-+		$(SRC_PATH)/pythondeps.toml $(SRC_PATH)/VERSION
- 	@echo config-host.mak is out-of-date, running configure
- 	@if test -f meson-private/coredata.dat; then \
- 	  ./config.status --skip-meson; \
+Alex Bennée (2):
+  Makefile: trigger re-configure on updated pythondeps
+  target/i386: allow access_ptr to force slow path on failed probe
+
+Gustavo Romero (3):
+  configure: Fix arch detection for GDB_HAS_MTE
+  configure: Avoid use of param. expansion when using gdb_version
+  configure: Fix GDB version detection for GDB_HAS_MTE
+
+Nicholas Piggin (10):
+  scripts/replay-dump.py: Update to current rr record format
+  scripts/replay-dump.py: rejig decoders in event number order
+  tests/avocado: excercise scripts/replay-dump.py in replay tests
+  replay: allow runstate shutdown->running when replaying trace
+  Revert "replay: stop us hanging in rr_wait_io_event"
+  tests/avocado: replay_kernel.py add x86-64 q35 machine test
+  chardev: set record/replay on the base device of a muxed device
+  virtio-net: Use replay_schedule_bh_event for bhs that affect machine
+    state
+  virtio-net: Use virtual time for RSC timers
+  savevm: Fix load_snapshot error path crash
+
+Philippe Mathieu-Daudé (2):
+  tests/avocado: Re-enable gdbsim-r5f562n8 testing U-Boot
+  buildsys: Fix building without plugins on Darwin
+
+Pierrick Bouvier (2):
+  docs/devel: update tcg-plugins page
+  plugins: fix race condition with scoreboards
+
+Stefan Weil (1):
+  docs: Fix some typos (found by typos) and grammar issues
+
+Stefano Garzarella (1):
+  scripts/checkpatch: more checks on files imported from Linux
+
+ docs/about/emulation.rst                  |  49 ++++++-
+ docs/devel/migration/uadk-compression.rst |   4 +-
+ docs/devel/tcg-plugins.rst                |  13 +-
+ docs/interop/qemu-ga.rst                  |   2 +-
+ docs/tools/qemu-vmsr-helper.rst           |   4 +-
+ configure                                 |   8 +-
+ Makefile                                  |   3 +-
+ qapi/rocker.json                          |   4 +-
+ include/exec/memory.h                     |   2 +-
+ include/sysemu/replay.h                   |   5 -
+ include/sysemu/runstate.h                 |   1 +
+ accel/tcg/tcg-accel-ops-rr.c              |   2 +-
+ chardev/char.c                            |  71 ++++++---
+ hw/arm/smmu-common.c                      |   2 +-
+ hw/net/virtio-net.c                       |  17 +--
+ migration/savevm.c                        |   1 +
+ plugins/core.c                            |  43 ++++--
+ qga/main.c                                |   2 +-
+ replay/replay.c                           |  23 +--
+ system/runstate.c                         |  31 +++-
+ target/i386/tcg/access.c                  |  27 ++--
+ plugins/meson.build                       |  50 +++----
+ scripts/checkpatch.pl                     |  24 ++++
+ scripts/replay-dump.py                    | 167 +++++++++++++++-------
+ tests/avocado/machine_rx_gdbsim.py        |   2 -
+ tests/avocado/replay_kernel.py            |  31 +++-
+ tests/avocado/replay_linux.py             |  10 ++
+ 27 files changed, 406 insertions(+), 192 deletions(-)
+
 -- 
 2.39.2
 
