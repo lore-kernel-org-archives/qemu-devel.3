@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 028D7C52D7D
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 20:26:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF81FC52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 20:26:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdy3h-0005BE-Fs; Tue, 13 Aug 2024 16:23:57 -0400
+	id 1sdy41-0006ex-D3; Tue, 13 Aug 2024 16:24:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sdy3b-0004vs-57
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:23:52 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1sdy3s-0005zN-Da
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:24:08 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sdy3M-0006An-Lb
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:23:50 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-428141be2ddso44008985e9.2
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 13:23:35 -0700 (PDT)
+ id 1sdy3R-0006DK-0p
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 16:24:05 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3685a564bafso2694599f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 13:23:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723580613; x=1724185413; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ri3Nj6KnAAwYce4sttu64DfuUubHB313LE/IKlWaOgg=;
- b=aeEU176dq4nhJKQTyjoAkDam/7Ylawm+ubG5pALrrGqOqvo7D+SfVes27PEJvSghsm
- /DdnJj0wITFC+TsRbSq293g3hCzg8qpTD8P+yhvbUyypiAIh6f9XGC2M6fP2+TewpUj8
- DGi6AGaPoMHbEIIc5S4XmNbXnDKtHFZSmRJpPrc8UjepXcnkEIyDQgvTux3P5gwO2inM
- avzlETjIQUok5CsFWY5u0/7eUwptxTn4rvLFdESMWsnZ/eXOE75Jr0H1c4SZKhxCl7Wp
- 09xHIvBuupvdodwOS72T2VtOPPygxK9FOeb6TZVc05T4jDTshk4m25SJ7vryjpTnPaVi
- mKMw==
+ d=linaro.org; s=google; t=1723580619; x=1724185419; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UIGt432MKZ8L2aq8hRDGJlqVxXSIZygXwHEjBgcA/QQ=;
+ b=JqTB9nPyD1tctq9zRAmOIlinYD4zAEyF4hJVHVSMc7IKTYskPzMRbJ4Ay8phGntMqe
+ s3ro55GSuyrLLeBjHrtdc6hdm4ohztrpS+hYndzxkY71M1Z0ZEW5Ag/phrg6Ok8Lp/TR
+ ihbqAWAJ+qQZo7SajZLSnGALl3AT/IBDeJBAqYzTERrv9CkSyKzFM32xd3E0Vg2ezS8H
+ R4ZDOxm/FLm9gXU2dpj+mh4dtuJWtwIZgXYTfxK4gJng6C92CPCVyAEGSFPju5eqlboI
+ K41imi5vn94cEeC7ov3hreSAQQsqzhyE7MHoqi3RkuLiWeULP3rfzUC3vC6OO79nFOVu
+ ZacQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723580613; x=1724185413;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ri3Nj6KnAAwYce4sttu64DfuUubHB313LE/IKlWaOgg=;
- b=fhjhrtAcm2K5FEUWJcMqV9HleEP76s7HKT1ZjnthHAbfMF3c9GnkyGDot43waFworY
- shx149qwBQVrxDhXj9cTiNcIITeKWT2VYTo90NRmS4kr0UIYJEJb9thVpHJ6On1Yo7qf
- YM+jA96mKc1UUvhpZRMdoxMuW3eA+FATzogyyGbpWa8W84+EYkd2xaLEU3nj94BL/UcV
- Hw01lH65Xg/xDa2WqQcAobtXstCPCOtmCFQOROH09XkRldgOVryFIcEvo+hEt8MkCTGp
- mmeJ+horA2jtEDjHrUCOQ7esk4NVHcjoRqIKSB7GD3+hwveS66i4JCHa9pm3AuB0HWpz
- P/Rg==
-X-Gm-Message-State: AOJu0YyePKVtbRk38nnfxWFrxMhJmfG4f4ZA1N5qosxGsNb6z4oL7Brs
- BGN+B8/SLPn4/SL5U5e9u7f2fqNwFYlMtZ5gQAVx+SvQzAb/0/FQ5Qgsnz4OxQU=
-X-Google-Smtp-Source: AGHT+IFD8ANyBvg4OSR2ZhYQmfVP1TQ7DO4yNZiDq9xDn7AZHbSFs0ZxBh7mRmBN4sy1ikDi4bR0Aw==
-X-Received: by 2002:adf:a21a:0:b0:360:9cf4:58ce with SMTP id
- ffacd0b85a97d-371778095eamr386414f8f.46.1723580612100; 
- Tue, 13 Aug 2024 13:23:32 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723580619; x=1724185419;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UIGt432MKZ8L2aq8hRDGJlqVxXSIZygXwHEjBgcA/QQ=;
+ b=BjhRAR/IZs0d6iTq5QHZGn9ksrxrgZ7N6HK4qjeth+QMzuMv/XivsJ7Ot2TFdovudN
+ hPfrcFyZ9V/+Ofr+NIVDrjuMbV5wVscTklq+nXh7HJ7s71yYNc5/K0tBIkxaDlSo5xGZ
+ sZtO18ZnvXPP4tLTtthoUMUSSbqKlBcxkzzY2sTpfov9EDyZfLfFZW9P8DnM3hpkiTtD
+ DAuJ1ZxeEnmtztRaTeNawqTiuolefAavBIOmUGWNJRm4fQXDBaGcSJRUb8HsIf0KQYjS
+ M0qbGCFZOS3v66Mos8UkeQqk7AlYVre6eH5I6nngtLQVqwZQelw30qfHxuh9vrm2vV1w
+ kvZQ==
+X-Gm-Message-State: AOJu0YyOHHUxGyhToGZVL/nhS/mfMZMTdoLSFH9X3tdln3reAPSVOd8k
+ BUgEfPpfFSu6spJ2snCQcAYKqsE7DdZemDofPag3h7s8zqlz3NbZ6TdHsAifPvI=
+X-Google-Smtp-Source: AGHT+IEpz2xU3t1ZaX7PZ7NZrvnlD88bcAC7XlkHNEaQkoIM0lnkLpk8dvBny9HpZ1MozYPXLO3Rdw==
+X-Received: by 2002:adf:a30a:0:b0:367:f104:d9e8 with SMTP id
+ ffacd0b85a97d-371778095c7mr380324f8f.47.1723580618434; 
+ Tue, 13 Aug 2024 13:23:38 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36e4cfee676sm11229207f8f.49.2024.08.13.13.23.30
+ ffacd0b85a97d-36e4c93833asm11309309f8f.41.2024.08.13.13.23.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 13 Aug 2024 13:23:30 -0700 (PDT)
+ Tue, 13 Aug 2024 13:23:34 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5F5195F7A3;
- Tue, 13 Aug 2024 21:23:29 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 3FA935FA30;
+ Tue, 13 Aug 2024 21:23:30 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alistair Francis <alistair.francis@wdc.com>,
@@ -88,23 +89,27 @@ Cc: Alistair Francis <alistair.francis@wdc.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Jason Wang <jasowang@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH v2 00/21] Various fixes and tweaks for 9.1-rc2/3
-Date: Tue, 13 Aug 2024 21:23:08 +0100
-Message-Id: <20240813202329.1237572-1-alex.bennee@linaro.org>
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>
+Subject: [PATCH v2 09/21] scripts/replay-dump.py: Update to current rr record
+ format
+Date: Tue, 13 Aug 2024 21:23:17 +0100
+Message-Id: <20240813202329.1237572-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240813202329.1237572-1-alex.bennee@linaro.org>
+References: <20240813202329.1237572-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,78 +125,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As usual during soft freeze I switch to cleaning up the various
-niggles and bugs which have accumulated over the years.
+From: Nicholas Piggin <npiggin@gmail.com>
 
-New for this iteration are some late breaking plugin updates, fixes
-for record/replay and a few documentation updates. Everything is
-reviewed so I will roll a pull request later this week.
+The v12 format support for replay-dump has a few issues still. This
+fixes async decoding; adds event, shutdown, and end decoding; fixes
+audio in / out events, fixes checkpoint checking of following async
+events.
 
-Alex Bennée (2):
-  Makefile: trigger re-configure on updated pythondeps
-  target/i386: allow access_ptr to force slow path on failed probe
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Message-Id: <20240813050638.446172-2-npiggin@gmail.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ scripts/replay-dump.py | 127 ++++++++++++++++++++++++++++++-----------
+ 1 file changed, 93 insertions(+), 34 deletions(-)
 
-Gustavo Romero (3):
-  configure: Fix arch detection for GDB_HAS_MTE
-  configure: Avoid use of param. expansion when using gdb_version
-  configure: Fix GDB version detection for GDB_HAS_MTE
-
-Nicholas Piggin (10):
-  scripts/replay-dump.py: Update to current rr record format
-  scripts/replay-dump.py: rejig decoders in event number order
-  tests/avocado: excercise scripts/replay-dump.py in replay tests
-  replay: allow runstate shutdown->running when replaying trace
-  Revert "replay: stop us hanging in rr_wait_io_event"
-  tests/avocado: replay_kernel.py add x86-64 q35 machine test
-  chardev: set record/replay on the base device of a muxed device
-  virtio-net: Use replay_schedule_bh_event for bhs that affect machine
-    state
-  virtio-net: Use virtual time for RSC timers
-  savevm: Fix load_snapshot error path crash
-
-Philippe Mathieu-Daudé (2):
-  tests/avocado: Re-enable gdbsim-r5f562n8 testing U-Boot
-  buildsys: Fix building without plugins on Darwin
-
-Pierrick Bouvier (2):
-  docs/devel: update tcg-plugins page
-  plugins: fix race condition with scoreboards
-
-Stefan Weil (1):
-  docs: Fix some typos (found by typos) and grammar issues
-
-Stefano Garzarella (1):
-  scripts/checkpatch: more checks on files imported from Linux
-
- docs/about/emulation.rst                  |  49 ++++++-
- docs/devel/migration/uadk-compression.rst |   4 +-
- docs/devel/tcg-plugins.rst                |  13 +-
- docs/interop/qemu-ga.rst                  |   2 +-
- docs/tools/qemu-vmsr-helper.rst           |   4 +-
- configure                                 |   8 +-
- Makefile                                  |   3 +-
- qapi/rocker.json                          |   4 +-
- include/exec/memory.h                     |   2 +-
- include/sysemu/replay.h                   |   5 -
- include/sysemu/runstate.h                 |   1 +
- accel/tcg/tcg-accel-ops-rr.c              |   2 +-
- chardev/char.c                            |  71 ++++++---
- hw/arm/smmu-common.c                      |   2 +-
- hw/net/virtio-net.c                       |  17 +--
- migration/savevm.c                        |   1 +
- plugins/core.c                            |  43 ++++--
- qga/main.c                                |   2 +-
- replay/replay.c                           |  23 +--
- system/runstate.c                         |  31 +++-
- target/i386/tcg/access.c                  |  27 ++--
- plugins/meson.build                       |  50 +++----
- scripts/checkpatch.pl                     |  24 ++++
- scripts/replay-dump.py                    | 167 +++++++++++++++-------
- tests/avocado/machine_rx_gdbsim.py        |   2 -
- tests/avocado/replay_kernel.py            |  31 +++-
- tests/avocado/replay_linux.py             |  10 ++
- 27 files changed, 406 insertions(+), 192 deletions(-)
-
+diff --git a/scripts/replay-dump.py b/scripts/replay-dump.py
+index d668193e79..419ee3257b 100755
+--- a/scripts/replay-dump.py
++++ b/scripts/replay-dump.py
+@@ -20,6 +20,7 @@
+ 
+ import argparse
+ import struct
++import os
+ from collections import namedtuple
+ from os import path
+ 
+@@ -134,6 +135,17 @@ def swallow_async_qword(eid, name, dumpfile):
+     print("  %s(%d) @ %d" % (name, eid, step_id))
+     return True
+ 
++def swallow_bytes(eid, name, dumpfile, nr):
++    """Swallow nr bytes of data without looking at it"""
++    dumpfile.seek(nr, os.SEEK_CUR)
++
++def decode_exception(eid, name, dumpfile):
++    print_event(eid, name)
++    return True
++
++# v12 does away with the additional event byte and encodes it in the main type
++# Between v8 and v9, REPLAY_ASYNC_BH_ONESHOT was added, but we don't decode
++# those versions so leave it out.
+ async_decode_table = [ Decoder(0, "REPLAY_ASYNC_EVENT_BH", swallow_async_qword),
+                        Decoder(1, "REPLAY_ASYNC_INPUT", decode_unimp),
+                        Decoder(2, "REPLAY_ASYNC_INPUT_SYNC", decode_unimp),
+@@ -142,8 +154,8 @@ def swallow_async_qword(eid, name, dumpfile):
+                        Decoder(5, "REPLAY_ASYNC_EVENT_NET", decode_unimp),
+ ]
+ # See replay_read_events/replay_read_event
+-def decode_async(eid, name, dumpfile):
+-    """Decode an ASYNC event"""
++def decode_async_old(eid, name, dumpfile):
++    """Decode an ASYNC event (pre-v8)"""
+ 
+     print_event(eid, name)
+ 
+@@ -157,6 +169,35 @@ def decode_async(eid, name, dumpfile):
+ 
+     return call_decode(async_decode_table, async_event_kind, dumpfile)
+ 
++def decode_async_bh(eid, name, dumpfile):
++    op_id = read_qword(dumpfile)
++    print_event(eid, name)
++    return True
++
++def decode_async_bh_oneshot(eid, name, dumpfile):
++    op_id = read_qword(dumpfile)
++    print_event(eid, name)
++    return True
++
++def decode_async_char_read(eid, name, dumpfile):
++    char_id = read_byte(dumpfile)
++    size = read_dword(dumpfile)
++    print_event(eid, name, "device:%x chars:%s" % (char_id, dumpfile.read(size)))
++    return True
++
++def decode_async_block(eid, name, dumpfile):
++    op_id = read_qword(dumpfile)
++    print_event(eid, name)
++    return True
++
++def decode_async_net(eid, name, dumpfile):
++    net_id = read_byte(dumpfile)
++    flags = read_dword(dumpfile)
++    size = read_dword(dumpfile)
++    swallow_bytes(eid, name, dumpfile, size)
++    print_event(eid, name, "net:%x flags:%x bytes:%d" % (net_id, flags, size))
++    return True
++
+ total_insns = 0
+ 
+ def decode_instruction(eid, name, dumpfile):
+@@ -166,6 +207,10 @@ def decode_instruction(eid, name, dumpfile):
+     print_event(eid, name, "+ %d -> %d" % (ins_diff, total_insns))
+     return True
+ 
++def decode_shutdown(eid, name, dumpfile):
++    print_event(eid, name)
++    return True
++
+ def decode_char_write(eid, name, dumpfile):
+     res = read_dword(dumpfile)
+     offset = read_dword(dumpfile)
+@@ -177,7 +222,7 @@ def decode_audio_out(eid, name, dumpfile):
+     print_event(eid, name, "%d" % (audio_data))
+     return True
+ 
+-def decode_checkpoint(eid, name, dumpfile):
++def __decode_checkpoint(eid, name, dumpfile, old):
+     """Decode a checkpoint.
+ 
+     Checkpoints contain a series of async events with their own specific data.
+@@ -189,14 +234,20 @@ def decode_checkpoint(eid, name, dumpfile):
+ 
+     # if the next event is EVENT_ASYNC there are a bunch of
+     # async events to read, otherwise we are done
+-    if next_event != 3:
+-        print_event(eid, name, "no additional data", event_number)
+-    else:
++    if (old and next_event == 3) or (not old and next_event >= 3 and next_event <= 9):
+         print_event(eid, name, "more data follows", event_number)
++    else:
++        print_event(eid, name, "no additional data", event_number)
+ 
+     replay_state.reuse_event(next_event)
+     return True
+ 
++def decode_checkpoint_old(eid, name, dumpfile):
++    return __decode_checkpoint(eid, name, dumpfile, False)
++
++def decode_checkpoint(eid, name, dumpfile):
++    return __decode_checkpoint(eid, name, dumpfile, True)
++
+ def decode_checkpoint_init(eid, name, dumpfile):
+     print_event(eid, name)
+     return True
+@@ -212,15 +263,23 @@ def decode_clock(eid, name, dumpfile):
+ 
+ def decode_random(eid, name, dumpfile):
+     ret = read_dword(dumpfile)
+-    data = read_array(dumpfile)
+-    print_event(eid, "%d bytes of random data" % len(data))
++    size = read_dword(dumpfile)
++    swallow_bytes(eid, name, dumpfile, size)
++    if (ret):
++        print_event(eid, name, "%d bytes (getrandom failed)" % (size))
++    else:
++        print_event(eid, name, "%d bytes" % (size))
+     return True
+ 
++def decode_end(eid, name, dumpfile):
++    print_event(eid, name)
++    return False
++
+ # pre-MTTCG merge
+ v5_event_table = [Decoder(0, "EVENT_INSTRUCTION", decode_instruction),
+                   Decoder(1, "EVENT_INTERRUPT", decode_interrupt),
+                   Decoder(2, "EVENT_EXCEPTION", decode_plain),
+-                  Decoder(3, "EVENT_ASYNC", decode_async),
++                  Decoder(3, "EVENT_ASYNC", decode_async_old),
+                   Decoder(4, "EVENT_SHUTDOWN", decode_unimp),
+                   Decoder(5, "EVENT_CHAR_WRITE", decode_char_write),
+                   Decoder(6, "EVENT_CHAR_READ_ALL", decode_unimp),
+@@ -242,7 +301,7 @@ def decode_random(eid, name, dumpfile):
+ v6_event_table = [Decoder(0, "EVENT_INSTRUCTION", decode_instruction),
+                   Decoder(1, "EVENT_INTERRUPT", decode_interrupt),
+                   Decoder(2, "EVENT_EXCEPTION", decode_plain),
+-                  Decoder(3, "EVENT_ASYNC", decode_async),
++                  Decoder(3, "EVENT_ASYNC", decode_async_old),
+                   Decoder(4, "EVENT_SHUTDOWN", decode_unimp),
+                   Decoder(5, "EVENT_CHAR_WRITE", decode_char_write),
+                   Decoder(6, "EVENT_CHAR_READ_ALL", decode_unimp),
+@@ -266,7 +325,7 @@ def decode_random(eid, name, dumpfile):
+ v7_event_table = [Decoder(0, "EVENT_INSTRUCTION", decode_instruction),
+                   Decoder(1, "EVENT_INTERRUPT", decode_interrupt),
+                   Decoder(2, "EVENT_EXCEPTION", decode_unimp),
+-                  Decoder(3, "EVENT_ASYNC", decode_async),
++                  Decoder(3, "EVENT_ASYNC", decode_async_old),
+                   Decoder(4, "EVENT_SHUTDOWN", decode_unimp),
+                   Decoder(5, "EVENT_SHUTDOWN_HOST_ERR", decode_unimp),
+                   Decoder(6, "EVENT_SHUTDOWN_HOST_QMP", decode_unimp),
+@@ -296,32 +355,31 @@ def decode_random(eid, name, dumpfile):
+ 
+ v12_event_table = [Decoder(0, "EVENT_INSTRUCTION", decode_instruction),
+                   Decoder(1, "EVENT_INTERRUPT", decode_interrupt),
+-                  Decoder(2, "EVENT_EXCEPTION", decode_plain),
+-                  Decoder(3, "EVENT_ASYNC", decode_async),
+-                  Decoder(4, "EVENT_ASYNC", decode_async),
+-                  Decoder(5, "EVENT_ASYNC", decode_async),
+-                  Decoder(6, "EVENT_ASYNC", decode_async),
+-                  Decoder(6, "EVENT_ASYNC", decode_async),
+-                  Decoder(8, "EVENT_ASYNC", decode_async),
+-                  Decoder(9, "EVENT_ASYNC", decode_async),
+-                  Decoder(10, "EVENT_ASYNC", decode_async),
+-                  Decoder(11, "EVENT_SHUTDOWN", decode_unimp),
+-                  Decoder(12, "EVENT_SHUTDOWN_HOST_ERR", decode_unimp),
+-                  Decoder(13, "EVENT_SHUTDOWN_HOST_QMP_QUIT", decode_unimp),
+-                  Decoder(14, "EVENT_SHUTDOWN_HOST_QMP_RESET", decode_unimp),
+-                  Decoder(14, "EVENT_SHUTDOWN_HOST_SIGNAL", decode_unimp),
+-                  Decoder(15, "EVENT_SHUTDOWN_HOST_UI", decode_unimp),
+-                  Decoder(16, "EVENT_SHUTDOWN_GUEST_SHUTDOWN", decode_unimp),
+-                  Decoder(17, "EVENT_SHUTDOWN_GUEST_RESET", decode_unimp),
+-                  Decoder(18, "EVENT_SHUTDOWN_GUEST_PANIC", decode_unimp),
+-                  Decoder(19, "EVENT_SHUTDOWN_GUEST_SUBSYSTEM_RESET", decode_unimp),
+-                  Decoder(20, "EVENT_SHUTDOWN_GUEST_SNAPSHOT_LOAD", decode_unimp),
+-                  Decoder(21, "EVENT_SHUTDOWN___MAX", decode_unimp),
++                  Decoder(2, "EVENT_EXCEPTION", decode_exception),
++                  Decoder(3, "EVENT_ASYNC_BH", decode_async_bh),
++                  Decoder(4, "EVENT_ASYNC_BH_ONESHOT", decode_async_bh_oneshot),
++                  Decoder(5, "EVENT_ASYNC_INPUT", decode_unimp),
++                  Decoder(6, "EVENT_ASYNC_INPUT_SYNC", decode_unimp),
++                  Decoder(7, "EVENT_ASYNC_CHAR_READ", decode_async_char_read),
++                  Decoder(8, "EVENT_ASYNC_BLOCK", decode_async_block),
++                  Decoder(9, "EVENT_ASYNC_NET", decode_async_net),
++                  Decoder(10, "EVENT_SHUTDOWN", decode_shutdown),
++                  Decoder(11, "EVENT_SHUTDOWN_HOST_ERR", decode_shutdown),
++                  Decoder(12, "EVENT_SHUTDOWN_HOST_QMP_QUIT", decode_shutdown),
++                  Decoder(13, "EVENT_SHUTDOWN_HOST_QMP_RESET", decode_shutdown),
++                  Decoder(14, "EVENT_SHUTDOWN_HOST_SIGNAL", decode_shutdown),
++                  Decoder(15, "EVENT_SHUTDOWN_HOST_UI", decode_shutdown),
++                  Decoder(16, "EVENT_SHUTDOWN_GUEST_SHUTDOWN", decode_shutdown),
++                  Decoder(17, "EVENT_SHUTDOWN_GUEST_RESET", decode_shutdown),
++                  Decoder(18, "EVENT_SHUTDOWN_GUEST_PANIC", decode_shutdown),
++                  Decoder(19, "EVENT_SHUTDOWN_SUBSYS_RESET", decode_shutdown),
++                  Decoder(20, "EVENT_SHUTDOWN_SNAPSHOT_LOAD", decode_shutdown),
++                  Decoder(21, "EVENT_SHUTDOWN___MAX", decode_shutdown),
+                   Decoder(22, "EVENT_CHAR_WRITE", decode_char_write),
+                   Decoder(23, "EVENT_CHAR_READ_ALL", decode_unimp),
+                   Decoder(24, "EVENT_CHAR_READ_ALL_ERROR", decode_unimp),
+-                  Decoder(25, "EVENT_AUDIO_IN", decode_unimp),
+-                  Decoder(26, "EVENT_AUDIO_OUT", decode_audio_out),
++                  Decoder(25, "EVENT_AUDIO_OUT", decode_audio_out),
++                  Decoder(26, "EVENT_AUDIO_IN", decode_unimp),
+                   Decoder(27, "EVENT_RANDOM", decode_random),
+                   Decoder(28, "EVENT_CLOCK_HOST", decode_clock),
+                   Decoder(29, "EVENT_CLOCK_VIRTUAL_RT", decode_clock),
+@@ -334,6 +392,7 @@ def decode_random(eid, name, dumpfile):
+                   Decoder(36, "EVENT_CP_CLOCK_VIRTUAL_RT", decode_checkpoint),
+                   Decoder(37, "EVENT_CP_INIT", decode_checkpoint_init),
+                   Decoder(38, "EVENT_CP_RESET", decode_checkpoint),
++                  Decoder(39, "EVENT_END", decode_end),
+ ]
+ 
+ def parse_arguments():
 -- 
 2.39.2
 
