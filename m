@@ -4,53 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83285C52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 01:48:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FB60C52D7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 01:48:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdgdu-0005Yw-3v; Mon, 12 Aug 2024 21:48:10 -0400
+	id 1sdgea-00010r-8c; Mon, 12 Aug 2024 21:48:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1sdgds-0005Qj-85; Mon, 12 Aug 2024 21:48:08 -0400
-Received: from sin.source.kernel.org ([2604:1380:40e1:4800::1])
+ id 1sdgeR-0000Rx-JV
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 21:48:44 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1sdgdq-0000Rl-Gn; Mon, 12 Aug 2024 21:48:08 -0400
+ id 1sdgeP-0000UX-4M
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 21:48:42 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id A5F60CE1153;
- Tue, 13 Aug 2024 01:48:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42CACC4AF09;
- Tue, 13 Aug 2024 01:48:01 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 5DB7561524;
+ Tue, 13 Aug 2024 01:48:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C015EC4AF0E;
+ Tue, 13 Aug 2024 01:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1723513682;
- bh=VkK9y3PftMujevNgRvLFeHhq9QPvuE6tdab0J9rfRrQ=;
+ s=k20201202; t=1723513720;
+ bh=G6inMSvY1KniC+SCcLnpUK0HXdFGeYhyTMLJYR3qE7w=;
  h=Date:From:To:cc:Subject:In-Reply-To:References:From;
- b=uEeLSfLHcLEgcCu0BjrGZDwg1HpxlafoArMgDFX7h2PUDazcstMjFJVFo9gArJXH9
- AwU66a/gXHvf4ey3lfyNuynXq8IXsgRRihLrK4FBpZ/lm3STkUy8W8DU1Hzu2lAq/8
- KCzrRWXk9eS+WizWjlNg6bnW7O4gw9tpWKt6zp6F5OmKS/VK2psZ+01bv2B0d/wo4S
- ZUQ8sKnhyMGvK2hxoH1JvbHT4OxtEmrs7lCqljTelHTep9nEHkPbweg53AlXcl855i
- S3xYjYgQ8qXps0jq+zd8DblXZ7Ashp+HJxnlos8sg+t0l5SBqzys3gtlKKEs5w0tyg
- BEvEv7QJ5tLFw==
-Date: Mon, 12 Aug 2024 18:48:00 -0700 (PDT)
+ b=VjyXlIeV4kQ2WzOXxbxlCYIi6UptcMnZdLkoF3e8r9kG9Ydz9kfLxBg0T+sUZjXsp
+ +gFY6p8zEleJAxF4daY4Thi9wrUbvtKoB1i4cpy+yGyGtS71GK2Xc4v5UjlWfAhdbe
+ IZgsZHbTVJbIwe4ZLarKn+gz6MXKmItENYqdNHeaCNcx/0Bu2JGQY3izVXAsQ0mxde
+ UiChJOKpQ3J5uoYOTID4Co8tygjuhxjYGEyHodpHPFPEEKFqnJaOgVJTBiMLZoMr5T
+ YyFvzWDroSIVEPuoaR/TQrTorGLZK6chHtgsHS119qk8DXjgGyMYzWNX7UAsBCG0j+
+ iqM1M7sYw+VkQ==
+Date: Mon, 12 Aug 2024 18:48:37 -0700 (PDT)
 From: Stefano Stabellini <sstabellini@kernel.org>
 X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
 To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
 cc: qemu-devel@nongnu.org, sstabellini@kernel.org, anthony@xenproject.org, 
  paul@xen.org, peter.maydell@linaro.org, alex.bennee@linaro.org, 
  xenia.ragiadakou@amd.com, jason.andryuk@amd.com, edgar.iglesias@amd.com, 
- xen-devel@lists.xenproject.org, qemu-arm@nongnu.org
-Subject: Re: [PATCH v1 06/10] hw/arm: xenpvh: Rename xen_arm.c -> xen-pvh.c
-In-Reply-To: <20240812130606.90410-7-edgar.iglesias@gmail.com>
-Message-ID: <alpine.DEB.2.22.394.2408121812210.298534@ubuntu-linux-20-04-desktop>
+ xen-devel@lists.xenproject.org
+Subject: Re: [PATCH v1 08/10] hw/xen: pvh-common: Add support for creating
+ PCIe/GPEX
+In-Reply-To: <20240812130606.90410-9-edgar.iglesias@gmail.com>
+Message-ID: <alpine.DEB.2.22.394.2408121822370.298534@ubuntu-linux-20-04-desktop>
 References: <20240812130606.90410-1-edgar.iglesias@gmail.com>
- <20240812130606.90410-7-edgar.iglesias@gmail.com>
+ <20240812130606.90410-9-edgar.iglesias@gmail.com>
 User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=2604:1380:40e1:4800::1;
- envelope-from=sstabellini@kernel.org; helo=sin.source.kernel.org
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=sstabellini@kernel.org; helo=dfw.source.kernel.org
 X-Spam_score_int: -44
 X-Spam_score: -4.5
 X-Spam_bar: ----
@@ -76,42 +79,167 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon, 12 Aug 2024, Edgar E. Iglesias wrote:
 > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 > 
-> Rename xen_arm.c -> xen-pvh.c to better express that this
-> is a PVH machine and to align with x86 HVM and future PVH
-> machine filenames:
-> hw/i386/xen/xen-hvm.c
-> hw/i386/xen/xen-pvh.c (in preparation)
-> 
-> No functional changes.
+> Add support for optionally creating a PCIe/GPEX controller.
 > 
 > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-
-
 > ---
->  hw/arm/meson.build              | 2 +-
->  hw/arm/{xen_arm.c => xen-pvh.c} | 0
->  2 files changed, 1 insertion(+), 1 deletion(-)
->  rename hw/arm/{xen_arm.c => xen-pvh.c} (100%)
+>  hw/xen/xen-pvh-common.c         | 66 +++++++++++++++++++++++++++++++++
+>  include/hw/xen/xen-pvh-common.h | 10 ++++-
+>  2 files changed, 75 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-> index 0c07ab522f..769fe9ec1a 100644
-> --- a/hw/arm/meson.build
-> +++ b/hw/arm/meson.build
-> @@ -59,7 +59,7 @@ arm_ss.add(when: 'CONFIG_FSL_IMX7', if_true: files('fsl-imx7.c', 'mcimx7d-sabre.
->  arm_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
->  arm_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
->  arm_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
-> -arm_ss.add(when: 'CONFIG_XEN', if_true: files('xen_arm.c'))
-> +arm_ss.add(when: 'CONFIG_XEN', if_true: files('xen-pvh.c'))
+> diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
+> index 69a2dbdb6d..b1432e4bd9 100644
+> --- a/hw/xen/xen-pvh-common.c
+> +++ b/hw/xen/xen-pvh-common.c
+> @@ -120,6 +120,59 @@ static void xen_enable_tpm(XenPVHCommonState *s)
+>  }
+>  #endif
 >  
->  system_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmu-common.c'))
->  system_ss.add(when: 'CONFIG_CHEETAH', if_true: files('palm.c'))
-> diff --git a/hw/arm/xen_arm.c b/hw/arm/xen-pvh.c
-> similarity index 100%
-> rename from hw/arm/xen_arm.c
-> rename to hw/arm/xen-pvh.c
+> +static void xen_set_pci_intx_irq(void *opaque, int irq, int level)
+> +{
+> +    if (xen_set_pci_intx_level(xen_domid, 0, 0, 0, irq, level)) {
+
+Looking at the implementation of XEN_DMOP_set_pci_intx_level in
+xen/arch/x86/hvm/dm.c, it looks like the device parameter of
+xen_set_pci_intx_level is required?
+
+
+> +        error_report("xendevicemodel_set_pci_intx_level failed");
+> +    }
+> +}
+> +
+> +static inline void xenpvh_gpex_init(XenPVHCommonState *s,
+> +                                    MemoryRegion *sysmem,
+> +                                    hwaddr ecam_base, hwaddr ecam_size,
+> +                                    hwaddr mmio_base, hwaddr mmio_size,
+> +                                    hwaddr mmio_high_base,
+> +                                    hwaddr mmio_high_size,
+> +                                    int intx_irq_base)
+> +{
+> +    MemoryRegion *ecam_reg;
+> +    MemoryRegion *mmio_reg;
+> +    DeviceState *dev;
+> +    int i;
+> +
+> +    object_initialize_child(OBJECT(s), "gpex", &s->pci.gpex,
+> +                            TYPE_GPEX_HOST);
+> +    dev = DEVICE(&s->pci.gpex);
+> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> +
+> +    ecam_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
+> +    memory_region_add_subregion(sysmem, ecam_base, ecam_reg);
+
+I notice we don't use ecam_size anywhere? Is that because the size is
+standard?
+
+
+> +    mmio_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
+> +
+> +    if (mmio_size) {
+> +        memory_region_init_alias(&s->pci.mmio_alias, OBJECT(dev), "pcie-mmio",
+> +                                 mmio_reg, mmio_base, mmio_size);
+> +        memory_region_add_subregion(sysmem, mmio_base, &s->pci.mmio_alias);
+> +    }
+> +
+> +    if (mmio_high_size) {
+> +        memory_region_init_alias(&s->pci.mmio_high_alias, OBJECT(dev),
+> +                "pcie-mmio-high",
+> +                mmio_reg, mmio_high_base, mmio_high_size);
+> +        memory_region_add_subregion(sysmem, mmio_high_base,
+> +                &s->pci.mmio_high_alias);
+> +    }
+> +
+> +    for (i = 0; i < GPEX_NUM_IRQS; i++) {
+> +        qemu_irq irq = qemu_allocate_irq(xen_set_pci_intx_irq, s, i);
+> +
+> +        sysbus_connect_irq(SYS_BUS_DEVICE(dev), i, irq);
+> +        gpex_set_irq_num(GPEX_HOST(dev), i, intx_irq_base + i);
+> +        xen_set_pci_link_route(i, intx_irq_base + i);
+
+xen_set_pci_link_route is not currently implemented on ARM?
+
+Looking at hw/i386/pc_piix.c:piix_intx_routing_notifier_xen it seems
+that the routing is much more complex over there. But looking at other
+machines that use GPEX such as hw/arm/virt.c it looks like the routing
+is straightforward the same way as in this patch.
+
+I thought that PCI interrupt pin swizzling was required, but maybe not ?
+
+It is totally fine if we do something different, simpler, than
+hw/i386/pc_piix.c:piix_intx_routing_notifier_xen. I just want to make
+sure that things remain consistent between ARM and x86, and also between
+Xen and QEMU view of virtual PCI interrupt routing.
+
+
+
+> +    }
+> +}
+> +
+>  static void xen_pvh_realize(DeviceState *dev, Error **errp)
+>  {
+>      XenPVHCommonState *s = XEN_PVH_COMMON(dev);
+> @@ -152,6 +205,14 @@ static void xen_pvh_realize(DeviceState *dev, Error **errp)
+>          warn_report("tpm-base-addr is not provided. TPM will not be enabled");
+>      }
+>  #endif
+> +
+> +    if (s->cfg.ecam.size) {
+> +        xenpvh_gpex_init(s, sysmem,
+> +                         s->cfg.ecam.base, s->cfg.ecam.size,
+> +                         s->cfg.mmio.base, s->cfg.mmio.size,
+> +                         s->cfg.mmio_high.base, s->cfg.mmio_high.size,
+> +                         s->cfg.pci_intx_irq_base);
+> +    }
+>  }
+>  
+>  #define DEFINE_PROP_MEMMAP(n, f) \
+> @@ -165,10 +226,15 @@ static Property xen_pvh_properties[] = {
+>      DEFINE_PROP_MEMMAP("ram-high", ram_high),
+>      DEFINE_PROP_MEMMAP("virtio-mmio", virtio_mmio),
+>      DEFINE_PROP_MEMMAP("tpm", tpm),
+> +    DEFINE_PROP_MEMMAP("pci-ecam", ecam),
+> +    DEFINE_PROP_MEMMAP("pci-mmio", mmio),
+> +    DEFINE_PROP_MEMMAP("pci-mmio-high", mmio_high),
+>      DEFINE_PROP_UINT32("virtio-mmio-num", XenPVHCommonState,
+>                         cfg.virtio_mmio_num, 0),
+>      DEFINE_PROP_UINT32("virtio-mmio-irq-base", XenPVHCommonState,
+>                         cfg.virtio_mmio_irq_base, 0),
+> +    DEFINE_PROP_UINT32("pci-intx-irq-base", XenPVHCommonState,
+> +                       cfg.pci_intx_irq_base, 0),
+>      DEFINE_PROP_END_OF_LIST()
+>  };
+>  
+> diff --git a/include/hw/xen/xen-pvh-common.h b/include/hw/xen/xen-pvh-common.h
+> index e958b441fd..faacfca70e 100644
+> --- a/include/hw/xen/xen-pvh-common.h
+> +++ b/include/hw/xen/xen-pvh-common.h
+> @@ -29,17 +29,25 @@ typedef struct XenPVHCommonState {
+>          MemoryRegion high;
+>      } ram;
+>  
+> +    struct {
+> +        GPEXHost gpex;
+> +        MemoryRegion mmio_alias;
+> +        MemoryRegion mmio_high_alias;
+> +    } pci;
+> +
+>      struct {
+>          uint64_t ram_size;
+>          uint32_t max_cpus;
+>          uint32_t virtio_mmio_num;
+>          uint32_t virtio_mmio_irq_base;
+> +        uint32_t pci_intx_irq_base;
+>          struct {
+>              uint64_t base;
+>              uint64_t size;
+>          } ram_low, ram_high,
+>            virtio_mmio,
+> -          tpm;
+> +          tpm,
+> +          ecam, mmio, mmio_high;
+>      } cfg;
+>  } XenPVHCommonState;
+>  #endif
 > -- 
 > 2.43.0
 > 
