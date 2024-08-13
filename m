@@ -4,68 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E53ABC52D7C
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 07:21:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 790E1C52D7B
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 07:24:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdlq2-0003V6-8l; Tue, 13 Aug 2024 03:21:02 -0400
+	id 1sdlt3-0007pw-UZ; Tue, 13 Aug 2024 03:24:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sdlpw-0003UA-Cc
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 03:20:58 -0400
+ id 1sdlt2-0007p1-54
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 03:24:08 -0400
 Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1sdlpr-0004uF-Op
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 03:20:54 -0400
+ id 1sdlsy-0005DL-IJ
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 03:24:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723533652; x=1755069652;
+ t=1723533845; x=1755069845;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=7KqRcn7KpL/eTs6HG3k5HECcrx7NZSaP+OnI2VSl9kk=;
- b=Ikbkk4HUg7AezFIxHMaPRe2/mosNgywev/OgcVkaIEhOjs0Kz9Q3XyyB
- +7wClvlk+81gJXVVzNknYlMhB0Iy2w30Zd9/tOUCiPMxYbiVw9rR4DZDf
- ulMcaMhqeND7C6objKqEb8KXmlUAFhoVEmQMwKJR57TSC8elIrxnhOGsA
- /v8PCFbHOjn2oPbJYIaveUmbUZKRbxAmT8u1ak3jFjG3vBj1soTa2zUS+
- Vjcy/hRvUPIx971N0ks3KzpU61JoOLc8OpTOMGaN1BdUd7tKxJsiu6f72
- LSKSwm8aijZq9sgtdfZOeln48tPMvtIyz3HFZnvNV+EpjuMKWikwgpgtL A==;
-X-CSE-ConnectionGUID: lIZfZhtGTECdaCtqsrTXNw==
-X-CSE-MsgGUID: 5SidkvKxTOabFFkC4n1bxQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11162"; a="32355456"
-X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; d="scan'208";a="32355456"
+ bh=7siAXfH4vGMl9r7bsM+nUcgReCSpYam1MbKp9VHaf3Y=;
+ b=YZ0FDzGHUdx5mDRD+M08hPBKB8YEh6NVu3QnqPFWapb5KBR7ghAtxhU5
+ K8beu3Vm6FxAEN2u3klcZ3kFKL/zdPaF2nndLt+HgGStl4cigNdItkWul
+ zkeOMK85qDlPTtEA66JcyLJui+39Ru2ccW+aWt0qmR4GPSwzFILM/1ZXC
+ 0LDCSktRk4fXer/iW8tG3ufFWvb004BkZe8hSRvakOC7u6sxcoxJFKHZN
+ IDo/YVNcngYDk1/9VLCd00Ks8XGoycLUq0unEgrB0jQtqupxfwad6uSuT
+ XM7NSm99W/tHmzFVEFHoPJtGWb5wY9tHbWLaHNV3CaDxOIXXg7KTPpaF7 Q==;
+X-CSE-ConnectionGUID: 3yJHQS6iSTiasxYT6bd2FQ==
+X-CSE-MsgGUID: Umo9T3D6T9COsW3kNL1EfQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11162"; a="32355914"
+X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; d="scan'208";a="32355914"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Aug 2024 00:20:25 -0700
-X-CSE-ConnectionGUID: THeOCwrvRQuhuZARiTMuQw==
-X-CSE-MsgGUID: WdyiKhpeTvWHB3s+zbmUGQ==
+ 13 Aug 2024 00:23:56 -0700
+X-CSE-ConnectionGUID: Ko+71QNHTqWUFj2+plLDzg==
+X-CSE-MsgGUID: PJdHNFfdT9mMJu7tLaf7hw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; d="scan'208";a="59141200"
+X-IronPort-AV: E=Sophos;i="6.09,285,1716274800"; d="scan'208";a="59141910"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by orviesa007.jf.intel.com with ESMTP; 13 Aug 2024 00:20:22 -0700
-Date: Tue, 13 Aug 2024 15:36:14 +0800
+ by orviesa007.jf.intel.com with ESMTP; 13 Aug 2024 00:23:54 -0700
+Date: Tue, 13 Aug 2024 15:39:45 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Manish <manish.mishra@nutanix.com>, John Levon <john.levon@nutanix.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] i386/cpu: Introduce enable_cpuid_0x1f to force exposing
- CPUID 0x1f
-Message-ID: <ZrsM7rf5C65CJDMJ@intel.com>
-References: <20240802072426.4016194-1-xiaoyao.li@intel.com>
- <ZrSZQN/AQa6BiIUu@intel.com>
- <26064315-6730-48fa-9f04-cb86a2dcfdf0@intel.com>
- <ZrTaVfziPc61OYlI@intel.com>
- <ec35b71a-15af-4547-8989-ed4368fa9c58@intel.com>
+Cc: Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
+ John Levon <john.levon@nutanix.com>, Manish <manish.mishra@nutanix.com>
+Subject: Re: [PATCH v2] i386/cpu: Introduce enable_cpuid_0x1f to force
+ exposing CPUID 0x1f
+Message-ID: <ZrsNwS+OEZaKrlcX@intel.com>
+References: <20240813033145.279307-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ec35b71a-15af-4547-8989-ed4368fa9c58@intel.com>
+In-Reply-To: <20240813033145.279307-1-xiaoyao.li@intel.com>
 Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -44
@@ -91,24 +85,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 13, 2024 at 10:52:27AM +0800, Xiaoyao Li wrote:
-
-[snip]
-
-> > Any levels that 0xb doesn't cover.
+On Mon, Aug 12, 2024 at 11:31:45PM -0400, Xiaoyao Li wrote:
+> Date: Mon, 12 Aug 2024 23:31:45 -0400
+> From: Xiaoyao Li <xiaoyao.li@intel.com>
+> Subject: [PATCH v2] i386/cpu: Introduce enable_cpuid_0x1f to force exposing
+>  CPUID 0x1f
+> X-Mailer: git-send-email 2.34.1
 > 
-> The name of extended_topo is so misleading. At least, it misleads me.
+> Currently, QEMU exposes CPUID 0x1f to guest only when necessary, i.e.,
+> when topology level that cannot be enumerated by leaf 0xB, e.g., die or
+> module level, are configured for the guest, e.g., -smp xx,dies=2.
 > 
-> Both Intel and AMD support leaf 0xb and the name of leaf 0xb is "Extended
-> topology enumeration". And here, x86_has_extended_topo() is used for topo
-> levels that cannot be covered by 0xb.
+> However, 1) TDX architecture forces to require CPUID 0x1f to configure CPU
+> topology. and 2) There is a bug in Windows that Windows 10/11 expects valid
+> 0x1f leafs when the maximum basic leaf > 0x1f[1].
 > 
+> Introduce a bool flag, enable_cpuid_0x1f, in CPU for the cases that
+> require CPUID leaf 0x1f to be exposed to guest. For case 2), introduce
+> a user settable property, "x-cpuid-0x1f" ,as well, which provides an opt-in
+> interface for people to run the buggy Windows as a workaround. The default
+> value of the property is set to false, thus making no effect on existing
+> setup.
+> 
+> Introduce a new function x86_has_cpuid_0x1f(), which is the warpper of
+> cpu->enable_cpuid_0x1f and x86_has_extended_topo() to check if it needs
+> to enable cpuid leaf 0x1f for the guest.
+> 
+> [1] https://lore.kernel.org/qemu-devel/20240724075226.212882-1-manish.mishra@nutanix.com/
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+> changes in v2:
+>  - Add more details in commit message;
+>  - introduce a separate function x86_has_cpuid_0x1f() instead of
+>    modifying x86_has_extended_topo();
+> ---
+>  target/i386/cpu.c     | 5 +++--
+>  target/i386/cpu.h     | 9 +++++++++
+>  target/i386/kvm/kvm.c | 2 +-
+>  3 files changed, 13 insertions(+), 3 deletions(-)
 
-Yes, names are really hard, Intel and AMD have different naming for
-topology leafs (the ones 0xb doesn't cover)... This helper has a
-comment, which is also a clear expression of what it is doing.
+This wrapper x86_has_cpuid_0x1f() looks good for me.
 
-Thanks,
-Zhao
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
