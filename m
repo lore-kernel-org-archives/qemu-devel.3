@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4972DC52D7B
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 21:45:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7F3EC52D7C
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 21:46:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdzJg-0002NR-6Y; Tue, 13 Aug 2024 17:44:32 -0400
+	id 1sdzL0-0005oq-Ke; Tue, 13 Aug 2024 17:45:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdzJf-0002MN-85
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 17:44:31 -0400
-Received: from mail-oa1-x2b.google.com ([2001:4860:4864:20::2b])
+ id 1sdzKz-0005hV-7Q
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 17:45:53 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sdzJd-000144-9f
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 17:44:30 -0400
-Received: by mail-oa1-x2b.google.com with SMTP id
- 586e51a60fabf-260f1664fdfso3421239fac.1
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 14:44:28 -0700 (PDT)
+ id 1sdzKv-0001N7-QA
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 17:45:52 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-70d2b921cd1so5520620b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 14:45:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723585467; x=1724190267; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723585547; x=1724190347; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=fG12zZMPmWxfuy8J4cWFnf+n0JVkewxIf09wcjDTPBk=;
- b=WdyWUxSqxLuPVWv56N8ng/V8JpECcDdG7tfFXQx77AoBkKo8D8jO4Qbosf4z3hRLvx
- nesSHa6ngxQBtCNi0/SLLDU7/7e/lxkVcZYOHU3eHum7BBzBaSJ7NujLtIWGcApLdMXh
- rXno5Ru1AiVExcPXkIpINtr3Ow96kOCD9/Ci9AAvkCBx8wZo9smC3rDQzpAz2lrxqgHm
- ONgviUNYq+c2lEvxE9pCRUVzaXJnE2HA3bAISZVNs0W10wLl6j0CALm3uziJulikc/HC
- ZZcSA3oazKmjma64QACIVdZGOy+VPwX1nm7sXqUNEQHTfYidkjmpYMqeqbaQvGG/aEL5
- rMsA==
+ bh=VLRktQdpnlkc02rbZlZj6cYSOO09Y6a2Pf6IMLPs7tg=;
+ b=EB6giyWc02xXT0+hiGCp2tEWJu2TuDhWDTm45HFEV86TSUTIAlnuRnNkucM9NQPO10
+ O+8VTkUV5YfjUXqqJiAhKLbByZovve6PZAzjSmvWtX85VFYJFFTVxmxeea/XjZduWm2F
+ JERJ5yc+abEbd0/WARzigg/SITW+Kfm0yRPw6O9SY9zyNuf5XqGS+HbSdSNHYEA2R70W
+ Lc/ZuCW/lDtgzw5sMJlDBszcnNBzOwXgu5wH+hirq2u5WvoTnzwiU5Z4Mvv88NBEv4Cs
+ uLAvqZPtD1LwytLsyz2gTqoPCAeEeI2sMTtgXvBllHmj6zEIXlNhLAwBa2kZ74pHMUa2
+ iSjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723585467; x=1724190267;
+ d=1e100.net; s=20230601; t=1723585547; x=1724190347;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fG12zZMPmWxfuy8J4cWFnf+n0JVkewxIf09wcjDTPBk=;
- b=tbdWKIsYNn0l2iep0LBdRAv1Bxud8uuUs7Gdq9QaeN0oRCgS6f17DB7iIeuNevLHkg
- e98s8FE+vUdWYUtkyX9j/CJSs48tyh1+mffl7LYTnjzsCRelmrAKsJ9Hj+Kpg6lpu7sB
- 4xBbAo3T9vWtJcLd2EFoVQmNC+LtJLjtbG/yH7o35QjQPQqpvtoP1lLu3go1F15shdhf
- uFnsPwT+NAC5JVLgRQ3HpAzn6pfZnkVChMZexS6PX5k1PIxHnsrffkz+jidWoC2WHNxI
- jsHaxegbOKLN85gQSq0CKNg/vgehr0tw53e+OpSMHTnQOlcH5zAqC5KDqJm1ysTyjrcy
- 4XYw==
+ bh=VLRktQdpnlkc02rbZlZj6cYSOO09Y6a2Pf6IMLPs7tg=;
+ b=sBPR1zH2zzfpFJ4kWz3AnwBayCWTxZL4oqOk+dhp6Cvsax89+zLVs+VKpXbpGp71ro
+ 1tlg217k4wherpX6lOSxxlxJxvUc66dVimhtL8qp2hL3dFZpd0J2gY3iDcHqK64YpAoO
+ tqw2wvINgqYWG751IOEn5FfdaokZSgF1N3EQFYw5enW+hZ/7Cjzen93+g9KTeKNkeiEI
+ p5L6fyCKZCGtjluchNOk1Hpa1ekIni1avpG6FIM7PESS0AQad41ZAnffoiBYDI1Qdr1y
+ BUyQ9lX+GQV6AwBZOShBQJ+SLYKzAa4abe1nDUbH6NW3sehIc9078aOIJ6k8RH2E/LOh
+ lCuw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUBBXQNfl3JobcyG8p7auBxRHZJRN2FkuYvEn2k3MRMFVjh+TKUbU0gg2kALUaFiBumrkEsHOYUEgYvBXX3rraPiL1KXX0=
-X-Gm-Message-State: AOJu0YyoOv0ddFFaHwSiNu3e/jZUAa9WUa/pxfCJ5qYlBVJHiZ59aswE
- huh1cXGRGOUa3jpn+Fzb199GNhyPy8gfg7Ilv/YSUlbVFa1cJHrRQ0d+XoS4XNs=
-X-Google-Smtp-Source: AGHT+IE/TxQHekrAuvVjqh108gDIDJ2PqYY6Oe4P1uY9mNYAKedmZGB3hUZDQ5Ik5N2XY5G/w5RUjw==
-X-Received: by 2002:a05:6870:f681:b0:260:df8a:52bf with SMTP id
- 586e51a60fabf-26fe59d7e1emr1274686fac.2.1723585467119; 
- Tue, 13 Aug 2024 14:44:27 -0700 (PDT)
+ AJvYcCXl2ogwPyt/VZEx0ouO8Q3gkjC4YfzQ30jojo8q9cyFmO4djbugF1JoLNVY/msIfmcKg6/UCJgSFEF7KZIXf2YEmifh6oA=
+X-Gm-Message-State: AOJu0YyOxdXZDVu1L+DTIxelKiJzlIXhEp9UJUUwopm+zlN4cTaMw9xA
+ tL1y9KFJKwm/6gqsJeUT6EMfuRqLLOZ0Q2KKQhWM0zMVTmgSAA0GwJkAxXaIuTk=
+X-Google-Smtp-Source: AGHT+IHMcCEmdVS2QV2N/KigBEhPUikv/S9Dz9msuzg1n14AHl+L7tt+i23cgMDv2yqhvHLwRGyhVA==
+X-Received: by 2002:a05:6a00:4f89:b0:70b:2233:f43b with SMTP id
+ d2e1a72fcca58-71267113c64mr1400912b3a.13.1723585547378; 
+ Tue, 13 Aug 2024 14:45:47 -0700 (PDT)
 Received: from [192.168.1.113] ([203.30.4.111])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7c69790a278sm1722939a12.0.2024.08.13.14.44.23
+ d2e1a72fcca58-710e58a80dfsm6162051b3a.52.2024.08.13.14.45.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Aug 2024 14:44:26 -0700 (PDT)
-Message-ID: <2580a087-809e-478a-b1e8-3aae9bf1c488@linaro.org>
-Date: Wed, 14 Aug 2024 07:44:19 +1000
+ Tue, 13 Aug 2024 14:45:47 -0700 (PDT)
+Message-ID: <e1cc5fdc-bee1-4e7c-bda8-4fbf563a50c9@linaro.org>
+Date: Wed, 14 Aug 2024 07:45:42 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 v3 1/2] target/mips: Pass page table entry size as
- MemOp to get_pte()
+Subject: Re: [PATCH-for-9.1?] target/mips: Load PTE as DATA
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Waldemar Brodkorb
- <wbx@uclibc-ng.org>, Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20240813135313.96519-1-philmd@linaro.org>
- <20240813135313.96519-2-philmd@linaro.org>
+Cc: Aleksandar Rikalo <arikalo@gmail.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20240813152610.97883-1-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240813135313.96519-2-philmd@linaro.org>
+In-Reply-To: <20240813152610.97883-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2b;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,25 +99,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/13/24 23:53, Philippe Mathieu-Daudé wrote:
-> @@ -607,11 +607,11 @@ static bool get_pte(CPUMIPSState *env, uint64_t vaddr, int entry_size,
->   }
->   
->   static uint64_t get_tlb_entry_layout(CPUMIPSState *env, uint64_t entry,
-> -        int entry_size, int ptei)
-> +                                     MemOp op, int ptei)
->   {
->       uint64_t result = entry;
->       uint64_t rixi;
-> -    if (ptei > entry_size) {
-> +    if (ptei > memop_size(op)) {
+On 8/14/24 01:26, Philippe Mathieu-Daudé wrote:
+> PTE is not CODE so load it as normal DATA access.
+> 
+> Fixes: 074cfcb4da ("Implement hardware page table walker for MIPS32")
+> Suggested-by: Richard Henderson<richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> ---
+> Based-on:<20240813135313.96519-1-philmd@linaro.org>
+> ---
+>   target/mips/tcg/sysemu/tlb_helper.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-entry_size had been 32/64, now you're comparing against 4/8.
-
-
-Otherwise,
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
