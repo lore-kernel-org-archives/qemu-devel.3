@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8D63C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 01:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1B05C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Tue, 13 Aug 2024 01:22:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sdgAD-000513-KG; Mon, 12 Aug 2024 21:17:29 -0400
+	id 1sdgEM-0001lk-Ev; Mon, 12 Aug 2024 21:21:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sdgAC-0004zx-4U
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 21:17:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sdgEJ-0001ku-L1
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 21:21:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sdgA8-0004UA-Fk
- for qemu-devel@nongnu.org; Mon, 12 Aug 2024 21:17:26 -0400
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sdgEH-00054y-6u
+ for qemu-devel@nongnu.org; Mon, 12 Aug 2024 21:21:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723511840;
+ s=mimecast20190719; t=1723512100;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=R/NzavlB9aam14kH4Hp/v1TfseVW/xmMR2ba+MwAhng=;
- b=VtzyCJPfPXlMblTyx+7MyWGgKDJ1rKpRAWTakouv+vyWExzKOhfmMmqa1kao3dhGuZzDri
- drXkQq9uxbbnhHWr71czm5FN3uNqVKEEBTF2kjPVLKpQMtC90O5evaZAH3nEukppwPnOYj
- O3HAeAhIcylrQ6gaaD+IJm950msQ6RI=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9ZTWsWk/SecPpff2uduq6vVjrbcNYRORm6NKSWu5gkw=;
+ b=bkG9xjQiZTkRCTgbNqbdIXKUkyloMx3IqnSPJMUk/SopnpOJQP4I4Ofyc+3KODfUwbIIfq
+ Rb0YjqepYD70sI8OPnQqM/3DbxI3DriDp8bZiL6BpRigpqK4T39/1XPh0acPTZO3v7Da7y
+ pmJiiaIljO/VHc55v477AgwbGJx4SAg=
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
+ [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-5-uecf3N8-NEGFKKEsNQ7LQg-1; Mon, 12 Aug 2024 21:17:18 -0400
-X-MC-Unique: uecf3N8-NEGFKKEsNQ7LQg-1
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-1fc6db23c74so51149275ad.0
- for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 18:17:18 -0700 (PDT)
+ us-mta-654-fbdVt4UDN7Gi9U5RqHd6Tw-1; Mon, 12 Aug 2024 21:21:38 -0400
+X-MC-Unique: fbdVt4UDN7Gi9U5RqHd6Tw-1
+Received: by mail-pj1-f69.google.com with SMTP id
+ 98e67ed59e1d1-2cb63abe6f7so6197453a91.0
+ for <qemu-devel@nongnu.org>; Mon, 12 Aug 2024 18:21:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723511837; x=1724116637;
+ d=1e100.net; s=20230601; t=1723512097; x=1724116897;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R/NzavlB9aam14kH4Hp/v1TfseVW/xmMR2ba+MwAhng=;
- b=I9zlAVt1NyMO2NZztVMgyk6pKVobfnJjaxkROnHz9EoWAGzbCoHnTIFOyuT30k/AoS
- Xql6Z2nwyVg7/5j8CCqahF4NTFHPuroZaGcd365TBDP6saQPd1NbSK0DfoH9B+xGYelR
- hPUaTX2PReuCoVJgYcD65aN2QdECq4VtS1vna30YdWZb3MBnK+aCfIssx/T1w+W1tisa
- ootiqY0haxNOXTgBtvOikjz2Eyap5UU9yWlUNwtcPFEsLzmcc5ZT/cpqdf1cwwEPKENW
- hmwiJOLjyZaFIE1F2UHFSH6e8WYK46gBsP8QVP/2KWT4q/oUVr1DLUqS4LOnGpdpft9z
- cZvA==
+ bh=9ZTWsWk/SecPpff2uduq6vVjrbcNYRORm6NKSWu5gkw=;
+ b=skPW1/sVP2DzhPqv6evB0uXuwhmMVye8kXyOoXMW3gwFUVBrzHZuhZV5C0uiH80Pbu
+ 4faVrpv5F6lJAcvJt7XVjG5Q7Q9mF3NBXXAGaQT3zR6zxwl/hn8h4YDFbzsAruOvENbr
+ rBSY0PFY4vSjuGX3oKd0bFik0CXc9BChMWxf+stXGqD95Dygnouhy1VGWJ6f6UjsnUmC
+ mqvj6Hgwqh6vEsd+OZ41z7RexyySLxkTJBYOOL9yttYaOknN1Sz8QyraC9R0sOQpoRzh
+ ejaM84JXpsmDMsD200HLmul9ac/98wzM5JjsxgJCUqoe4yCc9pEfLyA8+5/WN3UZ7VM5
+ 7Ocw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVFspLXHZzLVwhjWShJbMPGpYhO+XIPc1gLKMDKIepDNM1AY46Uws9YwTaL3xXqsidhlFOX/CBF9Ew+eEUGWdnnb9wPLhM=
-X-Gm-Message-State: AOJu0Yx/tAWe8pP56QPdT0DTDgiLAyxeqRkQr0SNhlX/6h4Q1Sc0GIrs
- Vs3zXkvbAq8KKjzFqI2hH+XQQbyyjySuYrhU5vHC7zBQC3HQfebS4JhMhvIGXS6/adKK2Gjcjev
- GTm3Y5y57VwlXYnw8mX9bqUJPRW//grNf/zrCCn1eQXg8iyXE+L96
-X-Received: by 2002:a17:903:24f:b0:1fc:2ee3:d460 with SMTP id
- d9443c01a7336-201ca18316bmr24914045ad.35.1723511837375; 
- Mon, 12 Aug 2024 18:17:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEH+8NoaTm5Gx4x/n+o9SzHBmQDPYS6llOsAEijV8IuKeeV3nQuWiFyFBfnuTb+3gX3ciObsw==
-X-Received: by 2002:a17:903:24f:b0:1fc:2ee3:d460 with SMTP id
- d9443c01a7336-201ca18316bmr24913655ad.35.1723511836900; 
- Mon, 12 Aug 2024 18:17:16 -0700 (PDT)
+ AJvYcCXeGUlSE557i5JjIvM0ZA8vE9BRSdQ81vHsUHQ1Qfl1mdWojE+i9SN95/ZHdgypNYWILJYzg/1UhsbvDqze8boJVsRvc/g=
+X-Gm-Message-State: AOJu0YwRbWTUSDWWFTyP8P9ghNGUvWKAyn8/tp4HNLaaI0aJeGwISaPl
+ h2bYxLW6zAMBTGLodcz4zjj1gG2/tHQv8a+95ml/pPaBIH/pjrvIztgDY7o8T11JKaPOx5BxVPF
+ JZyg+8xOWUC9MHUXjwzbSxx/YCAclahe7pZfjKEt/0LaNpHqS2HTB
+X-Received: by 2002:a17:90a:4e08:b0:2cf:7cce:cc19 with SMTP id
+ 98e67ed59e1d1-2d3924d6b93mr2290866a91.6.1723512097402; 
+ Mon, 12 Aug 2024 18:21:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHtXxxjZoHrPw5NirZUB3XYNPtAwQbQNW6k5Y1zvcvFkt0QUXE9jDYOC7qgq66nILP8VWHmQw==
+X-Received: by 2002:a17:90a:4e08:b0:2cf:7cce:cc19 with SMTP id
+ 98e67ed59e1d1-2d3924d6b93mr2290817a91.6.1723512096931; 
+ Mon, 12 Aug 2024 18:21:36 -0700 (PDT)
 Received: from [192.168.68.54] ([103.210.27.48])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201cd1ba02bsm2779345ad.229.2024.08.12.18.17.03
+ 98e67ed59e1d1-2d1c9c64b1fsm10010729a91.7.2024.08.12.18.21.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 12 Aug 2024 18:17:16 -0700 (PDT)
-Message-ID: <51dc0813-7dc9-4927-a24b-bd718be54e46@redhat.com>
-Date: Tue, 13 Aug 2024 11:17:02 +1000
+ Mon, 12 Aug 2024 18:21:36 -0700 (PDT)
+Message-ID: <64e9feaa-8df2-4108-9e73-c72517fb074a@redhat.com>
+Date: Tue, 13 Aug 2024 11:21:22 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC V3 17/29] arm/virt: Release objects for *disabled*
- possible vCPUs after init
+Subject: Re: [PATCH RFC V3 18/29] arm/virt: Add/update basic hot-(un)plug
+ framework
 To: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, mst@redhat.com
 Cc: maz@kernel.org, jean-philippe@linaro.org, jonathan.cameron@huawei.com,
@@ -87,23 +87,23 @@ Cc: maz@kernel.org, jean-philippe@linaro.org, jonathan.cameron@huawei.com,
  maobibo@loongson.cn, lixianglai@loongson.cn, shahuang@redhat.com,
  zhao1.liu@intel.com, linuxarm@huawei.com
 References: <20240613233639.202896-1-salil.mehta@huawei.com>
- <20240613233639.202896-18-salil.mehta@huawei.com>
+ <20240613233639.202896-19-salil.mehta@huawei.com>
 Content-Language: en-US
 From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20240613233639.202896-18-salil.mehta@huawei.com>
+In-Reply-To: <20240613233639.202896-19-salil.mehta@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,93 +120,205 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/14/24 9:36 AM, Salil Mehta wrote:
-> During `machvirt_init()`, QOM ARMCPU objects are pre-created along with the
-> corresponding KVM vCPUs in the host for all possible vCPUs. This is necessary
-> due to the architectural constraint that KVM restricts the deferred creation of
-> KVM vCPUs and VGIC initialization/sizing after VM initialization. Hence, VGIC is
-> pre-sized with possible vCPUs.
+> Add CPU hot-unplug hooks and update hotplug hooks with additional sanity checks
+> for use in hotplug paths.
 > 
-> After the initialization of the machine is complete, the disabled possible KVM
-> vCPUs are parked in the per-virt-machine list "kvm_parked_vcpus," and we release
-> the QOM ARMCPU objects for the disabled vCPUs. These will be re-created when the
-> vCPU is hotplugged again. The QOM ARMCPU object is then re-attached to the
-> corresponding parked KVM vCPU.
+> Note: The functional contents of the hooks (currently left with TODO comments)
+> will be gradually filled in subsequent patches in an incremental approach to
+> patch and logic building, which would roughly include the following:
 > 
-> Alternatively, we could have chosen not to release the QOM CPU objects and kept
-> reusing them. This approach might require some modifications to the
-> `qdevice_add()` interface to retrieve the old ARMCPU object instead of creating
-> a new one for the hotplug request.
-> 
-> Each of these approaches has its own pros and cons. This prototype uses the
-> first approach (suggestions are welcome!).
+> 1. (Un)wiring of interrupts between vCPU<->GIC.
+> 2. Sending events to the guest for hot-(un)plug so that the guest can take
+>     appropriate actions.
+> 3. Notifying the GIC about the hot-(un)plug action so that the vCPU can be
+>     (un)stitched to the GIC CPU interface.
+> 4. Updating the guest with next boot information for this vCPU in the firmware.
 > 
 > Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
 > Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
 > Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
 > ---
->   hw/arm/virt.c | 32 ++++++++++++++++++++++++++++++++
->   1 file changed, 32 insertions(+)
+>   hw/arm/virt.c | 105 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 105 insertions(+)
 > 
 > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 9d33f30a6a..a72cd3b20d 100644
+> index a72cd3b20d..f6b8c21f26 100644
 > --- a/hw/arm/virt.c
 > +++ b/hw/arm/virt.c
-> @@ -2050,6 +2050,7 @@ static void virt_cpu_post_init(VirtMachineState *vms, MemoryRegion *sysmem)
+> @@ -85,6 +85,7 @@
+>   #include "hw/virtio/virtio-iommu.h"
+>   #include "hw/char/pl011.h"
+>   #include "qemu/guest-random.h"
+> +#include "qapi/qmp/qdict.h"
+>   
+>   static GlobalProperty arm_virt_compat[] = {
+>       { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
+> @@ -3002,11 +3003,23 @@ static void virt_memory_plug(HotplugHandler *hotplug_dev,
+>   static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+>                                 Error **errp)
 >   {
->       CPUArchIdList *possible_cpus = vms->parent.possible_cpus;
->       int max_cpus = MACHINE(vms)->smp.max_cpus;
-> +    MachineState *ms = MACHINE(vms);
->       bool aarch64, steal_time;
->       CPUState *cpu;
->       int n;
-> @@ -2111,6 +2112,37 @@ static void virt_cpu_post_init(VirtMachineState *vms, MemoryRegion *sysmem)
->               }
->           }
->       }
-> +
-> +    if (kvm_enabled() || tcg_enabled()) {
-> +        for (n = 0; n < possible_cpus->len; n++) {
-> +            cpu = qemu_get_possible_cpu(n);
-> +
-> +            /*
-> +             * Now, GIC has been sized with possible CPUs and we dont require
-> +             * disabled vCPU objects to be represented in the QOM. Release the
-> +             * disabled ARMCPU objects earlier used during init for pre-sizing.
-> +             *
-> +             * We fake to the guest through ACPI about the presence(_STA.PRES=1)
-> +             * of these non-existent vCPUs at VMM/qemu and present these as
-> +             * disabled vCPUs(_STA.ENA=0) so that they cant be used. These vCPUs
-> +             * can be later added to the guest through hotplug exchanges when
-> +             * ARMCPU objects are created back again using 'device_add' QMP
-> +             * command.
-> +             */
-> +            /*
-> +             * RFC: Question: Other approach could've been to keep them forever
-> +             * and release it only once when qemu exits as part of finalize or
-> +             * when new vCPU is hotplugged. In the later old could be released
-> +             * for the newly created object for the same vCPU?
-> +             */
-> +            if (!qemu_enabled_cpu(cpu)) {
-> +                CPUArchId *cpu_slot;
-> +                cpu_slot = virt_find_cpu_slot(ms, cpu->cpu_index);
-> +                cpu_slot->cpu = NULL;
-> +                object_unref(OBJECT(cpu));
-> +            }
-> +        }
+> +    VirtMachineState *vms = VIRT_MACHINE(hotplug_dev);
+>       MachineState *ms = MACHINE(hotplug_dev);
+> +    MachineClass *mc = MACHINE_GET_CLASS(ms);
+>       ARMCPU *cpu = ARM_CPU(dev);
+>       CPUState *cs = CPU(dev);
+>       CPUArchId *cpu_slot;
+>   
+> +    if (dev->hotplugged && !vms->acpi_dev) {
+> +        error_setg(errp, "GED acpi device does not exists");
+> +        return;
 > +    }
+> +
+> +    if (dev->hotplugged && !mc->has_hotpluggable_cpus) {
+> +        error_setg(errp, "CPU hotplug not supported on this machine");
+> +        return;
+> +    }
+> +
+>       /* sanity check the cpu */
+>       if (!object_dynamic_cast(OBJECT(cpu), ms->cpu_type)) {
+>           error_setg(errp, "Invalid CPU type, expected cpu type: '%s'",
+> @@ -3049,6 +3062,22 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+>       }
+>       virt_cpu_set_properties(OBJECT(cs), cpu_slot, errp);
+>   
+> +    /*
+> +     * Fix the GIC for this new vCPU being plugged. The QOM CPU object for the
+> +     * new vCPU need to be updated in the corresponding QOM GICv3CPUState object
+> +     * We also need to re-wire the IRQs for this new CPU object. This update
+> +     * is limited to the QOM only and does not affects the KVM. Later has
+> +     * already been pre-sized with possible CPU at VM init time. This is a
+> +     * workaround to the constraints posed by ARM architecture w.r.t supporting
+> +     * CPU Hotplug. Specification does not exist for the later.
+> +     * This patch-up is required both for {cold,hot}-plugged vCPUs. Cold-inited
+> +     * vCPUs have their GIC state initialized during machvit_init().
+> +     */
+> +    if (vms->acpi_dev) {
+> +        /* TODO: update GIC about this hotplug change here */
+> +        /* TODO: wire the GIC<->CPU irqs */
+> +    }
+> +
+>       /*
+>        * To give persistent presence view of vCPUs to the guest, ACPI might need
+>        * to fake the presence of the vCPUs to the guest but keep them disabled.
+> @@ -3060,6 +3089,7 @@ static void virt_cpu_pre_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+>   static void virt_cpu_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+>                             Error **errp)
+>   {
+> +    VirtMachineState *vms = VIRT_MACHINE(hotplug_dev);
+>       MachineState *ms = MACHINE(hotplug_dev);
+>       CPUState *cs = CPU(dev);
+>       CPUArchId *cpu_slot;
+> @@ -3068,10 +3098,81 @@ static void virt_cpu_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+>       cpu_slot = virt_find_cpu_slot(ms, cs->cpu_index);
+>       cpu_slot->cpu = CPU(dev);
+>   
+> +    /*
+> +     * Update the ACPI Hotplug state both for vCPUs being {hot,cold}-plugged.
+> +     * vCPUs can be cold-plugged using '-device' option. For vCPUs being hot
+> +     * plugged, guest is also notified.
+> +     */
+> +    if (vms->acpi_dev) {
+> +        /* TODO: update acpi hotplug state. Send cpu hotplug event to guest */
+> +        /* TODO: register cpu for reset & update F/W info for the next boot */
+> +    }
+> +
+>       cs->disabled = false;
+>       return;
 >   }
+>   
+> +static void virt_cpu_unplug_request(HotplugHandler *hotplug_dev,
+> +                                    DeviceState *dev, Error **errp)
+> +{
+> +    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
+> +    VirtMachineState *vms = VIRT_MACHINE(hotplug_dev);
+> +    ARMCPU *cpu = ARM_CPU(dev);
+> +    CPUState *cs = CPU(dev);
+> +
+> +    if (!vms->acpi_dev || !dev->realized) {
+> +        error_setg(errp, "GED does not exists or device is not realized!");
+> +        return;
+> +    }
+> +
 
-It's probably hard to keep those ARMCPU objects forever. First of all, one vCPU
-can be hot-added first and then hot-removed afterwards. With those ARMCPU objects
-kept forever, the syntax of 'device_add' and 'device_del' become broken at least.
-The ideal mechanism would be to avoid instanciating those ARMCPU objects and
-destroying them soon. I don't know if ms->possible_cpus->cpus[] can fit and how
-much efforts needed.
+How can a vCPU be unplugged even when it hasn't been realized? :)
+
+> +    if (!mc->has_hotpluggable_cpus) {
+> +        error_setg(errp, "CPU hot(un)plug not supported on this machine");
+> +        return;
+> +    }
+> +
+> +    if (cs->cpu_index == first_cpu->cpu_index) {
+> +        error_setg(errp, "Boot CPU(id%d=%d:%d:%d:%d) hot-unplug not supported",
+> +                   first_cpu->cpu_index, cpu->socket_id, cpu->cluster_id,
+> +                   cpu->core_id, cpu->thread_id);
+> +        return;
+> +    }
+> +
+> +    /* TODO: request cpu hotplug from guest */
+> +
+> +    return;
+> +}
+> +
+> +static void virt_cpu_unplug(HotplugHandler *hotplug_dev, DeviceState *dev,
+> +                            Error **errp)
+> +{
+> +    VirtMachineState *vms = VIRT_MACHINE(hotplug_dev);
+> +    MachineState *ms = MACHINE(hotplug_dev);
+> +    CPUState *cs = CPU(dev);
+> +    CPUArchId *cpu_slot;
+> +
+> +    if (!vms->acpi_dev || !dev->realized) {
+> +        error_setg(errp, "GED does not exists or device is not realized!");
+> +        return;
+> +    }
+> +
+
+Same question as above.
+
+> +    cpu_slot = virt_find_cpu_slot(ms, cs->cpu_index);
+> +
+> +    /* TODO: update the acpi cpu hotplug state for cpu hot-unplug */
+> +
+> +    /* TODO: unwire the gic-cpu irqs here */
+> +    /* TODO: update the GIC about this hot unplug change */
+> +
+> +    /* TODO: unregister cpu for reset & update F/W info for the next boot */
+> +
+> +    qobject_unref(dev->opts);
+> +    dev->opts = NULL;
+> +
+> +    cpu_slot->cpu = NULL;
+> +    cs->disabled = true;
+> +
+> +    return;
+> +}
+> +
+
+The 'return' isn't needed.
+
+>   static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+>                                               DeviceState *dev, Error **errp)
+>   {
+> @@ -3196,6 +3297,8 @@ static void virt_machine_device_unplug_request_cb(HotplugHandler *hotplug_dev,
+>       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+>           virtio_md_pci_unplug_request(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev),
+>                                        errp);
+> +    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+> +        virt_cpu_unplug_request(hotplug_dev, dev, errp);
+>       } else {
+>           error_setg(errp, "device unplug request for unsupported device"
+>                      " type: %s", object_get_typename(OBJECT(dev)));
+> @@ -3209,6 +3312,8 @@ static void virt_machine_device_unplug_cb(HotplugHandler *hotplug_dev,
+>           virt_dimm_unplug(hotplug_dev, dev, errp);
+>       } else if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_MD_PCI)) {
+>           virtio_md_pci_unplug(VIRTIO_MD_PCI(dev), MACHINE(hotplug_dev), errp);
+> +    } else if (object_dynamic_cast(OBJECT(dev), TYPE_CPU)) {
+> +        virt_cpu_unplug(hotplug_dev, dev, errp);
+>       } else {
+>           error_setg(errp, "virt: device unplug for unsupported device"
+>                      " type: %s", object_get_typename(OBJECT(dev)));
 
 Thanks,
 Gavin
-
->   
->   static void virt_cpu_set_properties(Object *cpuobj, const CPUArchId *cpu_slot,
 
 
