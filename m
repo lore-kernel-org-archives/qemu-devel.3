@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08E67C52D7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 08:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A32DC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 09:02:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1se9pf-00010Z-2N; Wed, 14 Aug 2024 04:58:15 -0400
+	id 1se9t8-0005w3-IL; Wed, 14 Aug 2024 05:01:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1se9pd-0000yc-AC
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 04:58:13 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1se9t3-0005qX-Js
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 05:01:46 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1se9pb-00080D-Jy
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 04:58:13 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2f15dd0b489so82948611fa.3
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 01:58:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1se9t2-0008TN-0g
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 05:01:45 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1fd66cddd4dso61506395ad.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 02:01:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723625890; x=1724230690; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723626100; x=1724230900; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=IxhpxIVKoc52ymfHFV+fmAj+WvCVuqmBol66ibL352A=;
- b=UiqPKuF3rRdQ5cCN4ZCmump7UenRODEQM+vQR/FYBQT7hD5qrhhwJXCkNoU76zk0xY
- /D96hX3VoPFOIxV3SA8p7vZtYstXsE7hXp0onD9fBUqG6Dthq2DdWXEcFNcETtxkQgNG
- l3w8Y1tGplywu3zDvrlS6c6Th6VBOF/zOjHNSsQNDak61kIrAQ09pfSHsRCb9kqIUlMn
- O0ogB3oymwx2h2UD8er4E++JDvhtGBxDtjSbIOYhUeN1LVa6A5hIHucdfC3rD/gSmMJP
- mXbHMbK3n1veMDNvKcmcx8A76K4nDkj5qjdEEP5WZBJHs7XDVzmtmnWwRI1iZL0E+ZRP
- Is/g==
+ bh=RPy2JHM1tbG6p1gt/0qA1Cv/ek4s+eznM+OJu+Bdyzk=;
+ b=TBWvzCDs+Z0UY7BwYUMkgowv6AA+b2nDXR/tmjg7qATQXIBwYx0WY2TcnFAAGkaobZ
+ VqtTV8/etOw2NwXL1HoUt9PiNIkJlhRcWQyKCjqpqxAHjvD1LnSUjfx+pLhgwKD6euyh
+ TzYYJeDCV27praVYK3x/gwoMFEaCjBqflyiB7NkPXSROgYP2WGnjJogSBYXr3wXhmSn4
+ GPVIjBaSMR3UxvFS6zZ6qiX3wOZYPnEXEpTp6lUh9mkKfXXIBw6TWLdFIVfAPTXS9fDO
+ XCoVmdYiwb2ay3OGfJ3Y36WtXpBV17Ev5vDwZe6G2ukxjwe0QKo7VM/WdMLAQ2sr4E7H
+ XDAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723625890; x=1724230690;
+ d=1e100.net; s=20230601; t=1723626100; x=1724230900;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=IxhpxIVKoc52ymfHFV+fmAj+WvCVuqmBol66ibL352A=;
- b=NDNXOmSSWshnz4pS3BPfHHzLxVnRtyou9qNCfoM863psVns2yblkN2RMJUXcVF9LJS
- lIA/cGrUBqwrwa9RhxSjrK79Jff/a0HmAkai6SKy46HC9ui/97ZYeALXls7oYp8GuOL1
- 9eWY4RsU7upytLXdZFOhncRsl/HiTN190rSswX6W6xVruveGqk+eC0TuaNl35pm/A1CA
- unA0DC6VfKaXCzsZvxgBgFjRq98Az//OjDowCvxP3Gl7CnKsGwT+dOmLvaua3QuO+j2h
- l3+RcIMEnKj+uepStfVxVs8BKeAgDHvvPPVbwR1h9HZKj7VZawvKYEVDNvk7XjSgoDNw
- 3T2Q==
+ bh=RPy2JHM1tbG6p1gt/0qA1Cv/ek4s+eznM+OJu+Bdyzk=;
+ b=u5KkiFR9JT393xeJ3ZoRH2DSg3I5qa21iJ5vMhVb9KN5bniu6VamMla8NKvn+6cZiw
+ VxTTTi0+cQkU3l3BImmexpVHk46Rwka8wJuHk8GWc9o4zOV4WcA1mLz1jnTXwcAO/Hz7
+ 5fTyNtXy3pObuf6KtN9ThLhas8x6J4aw9vh6osqMDH0QFSj3cLzYB3S9iAQgHPhoXW9X
+ 1SK+A1irCHsc5H7YNIGclDMHj3tuCWx65fT2SA6KTr4D1GtWvYGD+locUL5HXvRMnFnM
+ YUuZ6QynvFrCaxnaTHpctjCYC3n0JrfV4gOrXYBwjEjjYz1FmeDNx+f6ldQXqquAGm1R
+ WdWQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXPvbyPThztLF0IB4qat7HbDigeuvSUKx86WaogJJuW9obtHvMqZftxKkanHfkkl6DZ8BUWB6XY8h7apQPGmib8jBzJZV0=
-X-Gm-Message-State: AOJu0YxSCdHZnoY13vlNb1juR/zANknq96Vf42l3+GIxWJD7u160XlhV
- G8ip3rY7ze6POL5ipL+y2JL52ka/R78M6CitHuZXj2321GAzmDVqpXhFJhUO5uY=
-X-Google-Smtp-Source: AGHT+IE7x7ADt2vN28Rn8u/TTvW5ElvxBggcQO3i/awJDW2zbaWBBgqQK918i3L1nB1nP57f+p5K7g==
-X-Received: by 2002:a2e:602:0:b0:2ef:2f60:1950 with SMTP id
- 38308e7fff4ca-2f3aa64d93amr10148731fa.30.1723625889449; 
- Wed, 14 Aug 2024 01:58:09 -0700 (PDT)
-Received: from [192.168.178.175] (186.170.88.92.rev.sfr.net. [92.88.170.186])
+ AJvYcCVb266DjYhJFMXXEFLbIUdBIpKfO28ejcPNgcf4qJDbbFNuInlgw2cjLC1xksyAEuRk+VNOyab6R/MV6qwMrhAjMwsCcm8=
+X-Gm-Message-State: AOJu0Yw24xWGbI+LE3oimrAk3UuxB2QLSeqM+54G+tWS6zH7mJO9B2Qi
+ PyvSrEk8dRXZ/HrBP963lx1auZ0spwaW7px+dJw8gC333KEo1S9GwNdP4QXtHfc=
+X-Google-Smtp-Source: AGHT+IH+XFjX1rLMlMnJwG3ECMmLjtHIQViEquRc8j98h4NmIiLwUIWhIvLm4DNibdFszEos+b2eJw==
+X-Received: by 2002:a17:902:cf0b:b0:1fd:664b:224 with SMTP id
+ d9443c01a7336-201d64d0260mr23480555ad.56.1723626100370; 
+ Wed, 14 Aug 2024 02:01:40 -0700 (PDT)
+Received: from [192.168.1.113] ([203.30.4.111])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a80f411b552sm145896666b.129.2024.08.14.01.58.07
+ d9443c01a7336-201e64ffb2dsm16915ad.29.2024.08.14.02.01.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Aug 2024 01:58:08 -0700 (PDT)
-Message-ID: <cb42acd6-4176-401f-b442-432f50ec5e24@linaro.org>
-Date: Wed, 14 Aug 2024 10:58:06 +0200
+ Wed, 14 Aug 2024 02:01:39 -0700 (PDT)
+Message-ID: <2ecd1ccc-ce2b-4432-a2a1-9af2dc70f037@linaro.org>
+Date: Wed, 14 Aug 2024 19:01:30 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 v3 1/2] target/mips: Pass page table entry size as
- MemOp to get_pte()
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
- Aleksandar Rikalo <arikalo@gmail.com>, Waldemar Brodkorb
- <wbx@uclibc-ng.org>, Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-References: <20240813135313.96519-1-philmd@linaro.org>
- <20240813135313.96519-2-philmd@linaro.org>
- <2580a087-809e-478a-b1e8-3aae9bf1c488@linaro.org>
+Subject: Re: [PATCH v1 06/15] tcg/riscv: Implement vector load/store
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240813113436.831-1-zhiwei_liu@linux.alibaba.com>
+ <20240813113436.831-7-zhiwei_liu@linux.alibaba.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <2580a087-809e-478a-b1e8-3aae9bf1c488@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240813113436.831-7-zhiwei_liu@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x230.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,64 +100,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/8/24 23:44, Richard Henderson wrote:
-> On 8/13/24 23:53, Philippe Mathieu-Daudé wrote:
->> @@ -607,11 +607,11 @@ static bool get_pte(CPUMIPSState *env, uint64_t 
->> vaddr, int entry_size,
->>   }
->>   static uint64_t get_tlb_entry_layout(CPUMIPSState *env, uint64_t entry,
->> -        int entry_size, int ptei)
->> +                                     MemOp op, int ptei)
->>   {
->>       uint64_t result = entry;
->>       uint64_t rixi;
->> -    if (ptei > entry_size) {
->> +    if (ptei > memop_size(op)) {
-> 
-> entry_size had been 32/64, now you're comparing against 4/8.
+On 8/13/24 21:34, LIU Zhiwei wrote:
+> @@ -827,14 +850,59 @@ static void tcg_out_ldst(TCGContext *s, RISCVInsn opc, TCGReg data,
+>   static void tcg_out_ld(TCGContext *s, TCGType type, TCGReg arg,
+>                          TCGReg arg1, intptr_t arg2)
+>   {
+> -    RISCVInsn insn = type == TCG_TYPE_I32 ? OPC_LW : OPC_LD;
+> +    RISCVInsn insn;
+> +
+> +    if (type < TCG_TYPE_V64) {
+> +        insn = type == TCG_TYPE_I32 ? OPC_LW : OPC_LD;
+> +    } else {
+> +        tcg_debug_assert(arg >= TCG_REG_V1);
+> +        switch (prev_vece) {
+> +        case MO_8:
+> +            insn = OPC_VLE8_V;
+> +            break;
+> +        case MO_16:
+> +            insn = OPC_VLE16_V;
+> +            break;
+> +        case MO_32:
+> +            insn = OPC_VLE32_V;
+> +            break;
+> +        case MO_64:
+> +            insn = OPC_VLE64_V;
+> +            break;
+> +        default:
+> +            g_assert_not_reached();
+> +        }
+> +    }
+>       tcg_out_ldst(s, insn, arg, arg1, arg2);
 
-Doh good catch, thanks! I'm squashing:
+tcg_out_ld/st are called directly from register allocation spill/fill.
+You'll need to set vtype here, and cannot rely on this having been done in tcg_out_vec_op.
 
--- >8 --
-diff --git a/target/mips/tcg/sysemu/tlb_helper.c 
-b/target/mips/tcg/sysemu/tlb_helper.c
-index 7050ea78df..3836137750 100644
---- a/target/mips/tcg/sysemu/tlb_helper.c
-+++ b/target/mips/tcg/sysemu/tlb_helper.c
-@@ -614,9 +614,10 @@ static bool get_pte(CPUMIPSState *env, uint64_t 
-vaddr, MemOp op,
-  static uint64_t get_tlb_entry_layout(CPUMIPSState *env, uint64_t entry,
-                                       MemOp op, int ptei)
-  {
-+    unsigned entry_size = memop_size(op) << 3;
-      uint64_t result = entry;
-      uint64_t rixi;
--    if (ptei > memop_size(op)) {
-+    if (ptei > entry_size) {
-          ptei -= 32;
-      }
-      result >>= (ptei - 2);
----
+That said, with a little-endian host, the selected element size doesn't matter *too* much. 
+  A write of 8 uint16_t or a write of 2 uint64_t produces the same bits in memory.
 
-so this hunk becomes:
+Therefore you can examine prev_vtype and adjust only if the vector length changes.  But we 
+do that -- e.g. load V256, store V256, store V128 to perform a 384-bit store for AArch64 
+SVE when VQ=3.
 
--- >8 --
-@@ -607,8 +607,9 @@ static bool get_pte(CPUMIPSState *env, uint64_t 
-vaddr, int entry_size,
-  }
+Is there an advantage to using the vector load/store whole register insns, if the 
+requested length is not too small?  IIRC the NF field can be used to store multiples, but 
+we can't store half of a register with these.
 
-  static uint64_t get_tlb_entry_layout(CPUMIPSState *env, uint64_t entry,
--        int entry_size, int ptei)
-+                                     MemOp op, int ptei)
-  {
-+    unsigned entry_size = memop_size(op) << 3;
-      uint64_t result = entry;
-      uint64_t rixi;
-      if (ptei > entry_size) {
----
 
-> Otherwise,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-Thanks!
+r~
 
