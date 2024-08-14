@@ -4,89 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18920C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 13:50:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CD2CC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 13:51:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seENX-0003AH-W7; Wed, 14 Aug 2024 09:49:32 -0400
+	id 1seEOt-0005up-DL; Wed, 14 Aug 2024 09:50:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seENW-00039F-Ln
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:49:30 -0400
-Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seENV-0005wp-10
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:49:30 -0400
-Received: by mail-lf1-x132.google.com with SMTP id
- 2adb3069b0e04-52efbb55d24so11879327e87.1
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 06:49:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723643367; x=1724248167; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MvmdxaeKXNXybhr4dzq5qE4MfB4QIdk7RoqfISfO1ns=;
- b=uMbc914yRjG0VHthcArU229cH5ZOm6abcJCWhoC9Bm48dYOwzR8sj9kRc4o7A8N0j6
- UG/IltzoDF0gZUjvWdWm7is964xe36mexMZfmh9VddUVBUzrom8IvJlwIJs3zuovmGWJ
- k/Q22OIw1SVSey5ItNo7rDhSwENyzLsm4hHe3U9sIaApBrYJLlzfN9i9PRVmlMaXoiHj
- SSDEjypt9mRSDccmwtyNDH4m5MChJTK5CFZAlLol539yIyzzYSjcEyH+4yoX42iskoms
- Oa62oa79hw+OxnGRniXsT4kRKVdqWCrTeLt557cNSrVmTVFDrvnslet1jSoxV+p5owHA
- atWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723643367; x=1724248167;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MvmdxaeKXNXybhr4dzq5qE4MfB4QIdk7RoqfISfO1ns=;
- b=EhhC7QKtsEudGawItpyVogSWtbND3AY7O08WYQdaw8mh1HhrpWni+zLjgNkmb6wjhp
- PdBSrnje2bevM//kZKe3/2p+PTTX1pXzNmB6lSkZ3s4ak61DGTMBDUympokONfikDcAy
- XOMeSc6+uVoyMyutxkt0UX3pCeY0Obpj9ZHk2y+s3hW7z6BdJbNP7c3q+WSdpfy2owdm
- QkMA3VsHBOSJvx8c+JEwAWwF3ZQ4KmPbInrh+YzWi95JOrNqnOD63j0oV3SmNJp5F+Eo
- JLueIGiz2vfVUGn9Uxk2c0i38+l+7/EyaHGXMA1uctvW+dJupABphHjmMtc7PtgmpKuZ
- qfEQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX/UMZwnDhB02pE9Wnwnb5rntcI0TTH+jk7R4uwzbO0caSCVEBtY3INj3i+2u/GE5mEe0W+jeqQ1qOLGrW3lkAEsm4uTYE=
-X-Gm-Message-State: AOJu0Yy3OoEatZTyfiEAk7nEQycRhyUhHie5Ai03ali8+aAFp7f1OqpW
- CzRD+RespLfGXHndtR9fYmuCyJ6OhHR7jRXiwkzawsHgM3m9B1CWD6mAFAkVwqI=
-X-Google-Smtp-Source: AGHT+IFojsUY/FvvM3/tL2ToNji4/sH6NFuQvXR+pvINpMqEZOgyGG9Q8MIHgffxBO2Bc32lT9WgeA==
-X-Received: by 2002:a05:6512:318a:b0:52e:9cc7:4462 with SMTP id
- 2adb3069b0e04-532eda67246mr2277692e87.11.1723643366499; 
- Wed, 14 Aug 2024 06:49:26 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.208.57])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-53200ec3a85sm1270514e87.98.2024.08.14.06.49.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Aug 2024 06:49:26 -0700 (PDT)
-Message-ID: <bf66bee5-1a52-4add-a6f5-56cb03c3a24f@linaro.org>
-Date: Wed, 14 Aug 2024 15:48:52 +0200
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1seEOr-0005iN-2V; Wed, 14 Aug 2024 09:50:53 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1seEOo-0006GD-I6; Wed, 14 Aug 2024 09:50:52 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WkV1Z3c6Fz67hQc;
+ Wed, 14 Aug 2024 21:47:30 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id AE049140119;
+ Wed, 14 Aug 2024 21:50:46 +0800 (CST)
+Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 14 Aug
+ 2024 14:50:46 +0100
+Date: Wed, 14 Aug 2024 14:50:44 +0100
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+CC: Shiju Jose <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, <linux-kernel@vger.kernel.org>,
+ <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v7 03/10] acpi/ghes: Add support for GED error device
+Message-ID: <20240814145044.00004d59@Huawei.com>
+In-Reply-To: <f813113e8e7645c2fb654747ecd0726f330af29f.1723591201.git.mchehab+huawei@kernel.org>
+References: <cover.1723591201.git.mchehab+huawei@kernel.org>
+ <f813113e8e7645c2fb654747ecd0726f330af29f.1723591201.git.mchehab+huawei@kernel.org>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 06/10] hw/remote/message.c: Don't directly invoke
- DeviceClass:reset
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>
-References: <20240813165250.2717650-1-peter.maydell@linaro.org>
- <20240813165250.2717650-7-peter.maydell@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240813165250.2717650-7-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::132;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100001.china.huawei.com (7.191.160.183) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,25 +67,106 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/8/24 18:52, Peter Maydell wrote:
-> Directly invoking the DeviceClass::reset method is a bad idea,
-> because if the device is using three-phase reset then it relies on
-> transitional reset machinery which is likely to disappear at some
-> point.
+On Wed, 14 Aug 2024 01:23:25 +0200
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-This seems like fix-for-9.1 material.
-
-> Reset the device in the standard way, by calling device_cold_reset().
+> From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> As a GED error device is now defined, add another type
+> of notification.
+> 
+> Add error notification to GHES v2 using a GED error device GED
+> triggered via interrupt.
+> 
+> [mchehab: do some cleanups at ACPI_HEST_SRC_ID_* checks and
+>  rename HEST event to better identify GED interrupt OSPM]
+> 
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+One trivial thing inline (probably my mistake ;)
+
+Jonathan
+
 > ---
->   hw/remote/message.c | 5 +----
->   1 file changed, 1 insertion(+), 4 deletions(-)
+>  hw/acpi/ghes.c         | 12 +++++++++---
+>  include/hw/acpi/ghes.h |  3 ++-
+>  2 files changed, 11 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+> index 13b105c5d02d..280674452a60 100644
+> --- a/hw/acpi/ghes.c
+> +++ b/hw/acpi/ghes.c
+> @@ -34,8 +34,8 @@
+>  /* The max size in bytes for one error block */
+>  #define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
+>  
+> -/* Now only support ARMv8 SEA notification type error source */
+> -#define ACPI_GHES_ERROR_SOURCE_COUNT        1
+> +/* Support ARMv8 SEA notification type error source and GPIO interrupt. */
+> +#define ACPI_GHES_ERROR_SOURCE_COUNT        2
+>  
+>  /* Generic Hardware Error Source version 2 */
+>  #define ACPI_GHES_SOURCE_GENERIC_ERROR_V2   10
+> @@ -290,6 +290,9 @@ void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
+>  static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
+>  {
+>      uint64_t address_offset;
+> +
+> +    assert(source_id < ACPI_HEST_SRC_ID_RESERVED);
+> +
+>      /*
+>       * Type:
+>       * Generic Hardware Error Source version 2(GHESv2 - Type 10)
+> @@ -327,6 +330,9 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
+>           */
+>          build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_SEA);
+>          break;
+> +    case ACPI_HEST_SRC_ID_GED:
+> +        build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_GPIO);
+> +        break;
+>      default:
+>          error_report("Not support this error source");
+>          abort();
+> @@ -370,6 +376,7 @@ void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
+>      /* Error Source Count */
+>      build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
+>      build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
+> +    build_ghes_v2(table_data, ACPI_HEST_SRC_ID_GED, linker);
+>  
+>      acpi_table_end(linker, &table);
+>  }
+> @@ -406,7 +413,6 @@ int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
+>      start_addr = le64_to_cpu(ags->ghes_addr_le);
+>  
+>      if (physical_address) {
+> -
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Clean this accidental change out.
 
+>          if (source_id < ACPI_HEST_SRC_ID_RESERVED) {
+>              start_addr += source_id * sizeof(uint64_t);
+>          }
+> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+> index fb80897e7eac..419a97d5cbd9 100644
+> --- a/include/hw/acpi/ghes.h
+> +++ b/include/hw/acpi/ghes.h
+> @@ -59,9 +59,10 @@ enum AcpiGhesNotifyType {
+>      ACPI_GHES_NOTIFY_RESERVED = 12
+>  };
+>  
+> +/* Those are used as table indexes when building GHES tables */
+>  enum {
+>      ACPI_HEST_SRC_ID_SEA = 0,
+> -    /* future ids go here */
+> +    ACPI_HEST_SRC_ID_GED,
+>      ACPI_HEST_SRC_ID_RESERVED,
+>  };
+>  
 
 
