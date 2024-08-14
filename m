@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 381B5C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 11:49:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EA9FC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 11:55:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seCVR-00018A-4O; Wed, 14 Aug 2024 07:49:33 -0400
+	id 1seCaN-0006yd-Ix; Wed, 14 Aug 2024 07:54:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1seCVP-0000zT-90; Wed, 14 Aug 2024 07:49:31 -0400
-Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1seCVJ-0002Ad-AU; Wed, 14 Aug 2024 07:49:31 -0400
-Received: by mail-lj1-x230.google.com with SMTP id
- 38308e7fff4ca-2f029e9c9cfso100071961fa.2; 
- Wed, 14 Aug 2024 04:49:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723636163; x=1724240963; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=dp0L+GamiTI78LaNXUI0L+8bA2ZqatuVzlZrQCRiNiI=;
- b=Wt9DScROpp0FtGNvwGkwa+SuxNaulhE4far2y1uIEb4cP8LR734CfM7AOqky5wh1vc
- jz0aT+hXpttshRjTXvZhS9p7rofXTCaAyFmdIgbdPKOpuZmhPaLYfTI5UrnDhUxoFU9c
- ksa8LYCHeMFUz34aEL6iuiqCXRMhj0iOue5jnLgYW+fOEXc8ehWZALLehhppJ39HGmgB
- 5y18TTvyyw6kMpBwL68BgvaXBDnc569u8u64sXVsvfh4jyrZjDfIzeNs3ipHUMH841rX
- RKBclmPgqPArXobCObh4MCBGyvFNsehwprFciA+ZvG7Gs8n3wQu/PZCUm7c+binyIVRd
- ZWeA==
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1seCaL-0006y7-UU
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 07:54:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1seCaJ-00030z-Ir
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 07:54:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723636473;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=x+PAFk7vUGr4hK6CLgZFb4PyqJIqsXhixW2vNZQBtmk=;
+ b=Z68F2FRTIKLaIRyC6o7/9upOqtM3Zr68lYuV/nqKfIdpL9Bl7cSK1mCGRQXHPskeZjXzNy
+ rt+4JrBvVbNCy2ccNxhIfiLsNdbG0qd4mWND8xg4KlULK0bbDi/ozQRrRwnLNg7/U1tm9f
+ GIEmUlGxqVF1Z2eZt97kgkwndHoFs8A=
+Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
+ [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-68-PEGruH0dNAWZLqWP-LJKPQ-1; Wed, 14 Aug 2024 07:54:31 -0400
+X-MC-Unique: PEGruH0dNAWZLqWP-LJKPQ-1
+Received: by mail-yw1-f198.google.com with SMTP id
+ 00721157ae682-66628e9ec89so139872627b3.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 04:54:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723636163; x=1724240963;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dp0L+GamiTI78LaNXUI0L+8bA2ZqatuVzlZrQCRiNiI=;
- b=vKcFI+XACUDK2mBKFCreXVJ6h2D0z+Pe6qdLBjr9JekkaeX0LfrPOLsHGtJCZsR4uK
- 4CGawxgI1B64/Tryl7WHUSwRQvxG9ZZmU2qiIB1P7yDqCcqe24/axL2fO84jLixyJTOM
- ACggQ4Wr/21sqHsVq0mqxNmAavt9TgIdMty/ScXoo8+sqNaOOQ5uMhAFBsMQOJ3bfsby
- 1DKt920vvmfNrYoRjb+m62nzHBclRvrPvzpX4gh2RxQ+1NWqRr9W2cRUlLIB0/rJTASi
- scY+nxBwX0JPcqJxBEzfJvtdJJYHlTk9ne2LN1X2u6/v/l0iQZXi2egggqrPzswsppWb
- VmUw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXrDgFg6ci7PcRNzBLd15CHZDeOPVAHf09xyPesK1a2NwiJMAiT9ci2jGK3ojnFbzexjhTxKn+ltw==@nongnu.org
-X-Gm-Message-State: AOJu0YzIYQBR+BgQGcvegDlsJkLGQ9FzvczA3lxLpwzJcjvNXsIQY/vd
- 2A4c/BQ9RuDST79SQtpzSUvxkkhjO7II/ghaAVHIBq9FmKTkdHMCSUxGBEmr
-X-Google-Smtp-Source: AGHT+IFMKxXSID3krkFoZ71TRri2uuaWjn55H1yF6EWyj543s/obDY84Jsw9e73Y36BCyYIts5LDiQ==
-X-Received: by 2002:a05:651c:1079:b0:2ef:26f2:d3ec with SMTP id
- 38308e7fff4ca-2f3aa1df0e5mr17466981fa.12.1723636161891; 
- Wed, 14 Aug 2024 04:49:21 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
- by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2f291ddbaedsm14068641fa.18.2024.08.14.04.49.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Aug 2024 04:49:21 -0700 (PDT)
-Date: Wed, 14 Aug 2024 13:49:20 +0200
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: Stefano Stabellini <sstabellini@kernel.org>
-Cc: qemu-devel@nongnu.org, anthony@xenproject.org, paul@xen.org,
- peter.maydell@linaro.org, alex.bennee@linaro.org,
- xenia.ragiadakou@amd.com, jason.andryuk@amd.com,
- edgar.iglesias@amd.com, xen-devel@lists.xenproject.org,
- qemu-arm@nongnu.org, andrew.cooper3@citrix.com
-Subject: Re: [PATCH v1 04/10] hw/arm: xenpvh: Add support for SMP guests
-Message-ID: <ZryZwOoadeb1UWK8@zapote>
-References: <20240812130606.90410-1-edgar.iglesias@gmail.com>
- <20240812130606.90410-5-edgar.iglesias@gmail.com>
- <alpine.DEB.2.22.394.2408121650590.298534@ubuntu-linux-20-04-desktop>
- <ZruRm34zIMtUm7oH@zapote>
- <alpine.DEB.2.22.394.2408131550080.298534@ubuntu-linux-20-04-desktop>
+ d=1e100.net; s=20230601; t=1723636471; x=1724241271;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=x+PAFk7vUGr4hK6CLgZFb4PyqJIqsXhixW2vNZQBtmk=;
+ b=rxRkjEnfjEhnXkU42F+leqmUZhHaqZwF6QadPt9rKB05Gf94neF4KhFR6ZgGlBGLmW
+ a7mZny6Xoo483qX7cV0zqyeuTyVklM5SjSsIX1rHD/SeYBMXKGZWW6jFU2QwM/jPFPc2
+ ZFL5/VYlojMVnY1Svu2SFxTlRa7+f90DdpQNU1QAcbduBWQ+N94L7YqVeed8GE+pN+Dt
+ HQ6RgiEbiYFZ8s6olpbmBSLY1heRldwE8/65f7FKbHopwSxkRalNvEKkrRsfxji0YJr/
+ DaPQkCym/vpfIXIktwWfQqouXLm2Bc1ppfQekxFFqSuK4Hu28RYp4DrDUfQea3YlAo5c
+ ulYg==
+X-Gm-Message-State: AOJu0YyAbRvlKGB4+vzlJYmn57LrUum0os5B9pLnonLTLrJpcAdA6mUZ
+ 7lKfNWxiXKYR9/mmNYtLyOTgv2KEGFGtmADnjAEfjODpQqilY0Ug+RM5iy8M3FeGUHDN6zhfoZc
+ e1LnSN+prrZglT2KG9mYt8DnXkAtIcbNX7LO+T2mobLFz/HJU3xxT4Zaa1j3W2FRP/AdGMfgbYR
+ jHW626PYKmH94sIS+wemJkXr2hThw=
+X-Received: by 2002:a05:6902:2186:b0:e0e:89f8:4f8a with SMTP id
+ 3f1490d57ef6-e1155ab12ffmr2562178276.23.1723636471159; 
+ Wed, 14 Aug 2024 04:54:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHOwxr8jljjDDrOrhvfn2iyXZOiOhRXTv9ksCzFnYTth+ldM4rJNfa7F79/csGpehPKqV7ALEq39nXHhy6kbmY=
+X-Received: by 2002:a05:6902:2186:b0:e0e:89f8:4f8a with SMTP id
+ 3f1490d57ef6-e1155ab12ffmr2562170276.23.1723636470856; Wed, 14 Aug 2024
+ 04:54:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.22.394.2408131550080.298534@ubuntu-linux-20-04-desktop>
-Received-SPF: pass client-ip=2a00:1450:4864:20::230;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x230.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240813031115.129000-1-demeng@redhat.com>
+In-Reply-To: <20240813031115.129000-1-demeng@redhat.com>
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+Date: Wed, 14 Aug 2024 14:54:19 +0300
+Message-ID: <CAPMcbCpcQ76EeLxDkAwn6jRQjPEbHzz9QMNDNiX54r+kqxo5Vg@mail.gmail.com>
+Subject: Re: [PATCH] qemu-guest-agent: Update the logfile path of
+ qga-fsfreeze-hook.log
+To: Dehan Meng <demeng@redhat.com>
+Cc: qemu-devel@nongnu.org, mrezanin@redhat.com
+Content-Type: multipart/alternative; boundary="000000000000915ef3061fa363eb"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.135,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,100 +96,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 13, 2024 at 03:52:32PM -0700, Stefano Stabellini wrote:
-> On Tue, 13 Aug 2024, Edgar E. Iglesias wrote:
-> > On Mon, Aug 12, 2024 at 06:47:17PM -0700, Stefano Stabellini wrote:
-> > > On Mon, 12 Aug 2024, Edgar E. Iglesias wrote:
-> > > > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> > > > 
-> > > > Add SMP support for Xen PVH ARM guests. Create max_cpus ioreq
-> > > > servers to handle hotplug.
-> > > > 
-> > > > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> > > > ---
-> > > >  hw/arm/xen_arm.c | 5 +++--
-> > > >  1 file changed, 3 insertions(+), 2 deletions(-)
-> > > > 
-> > > > diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
-> > > > index 5f75cc3779..ef8315969c 100644
-> > > > --- a/hw/arm/xen_arm.c
-> > > > +++ b/hw/arm/xen_arm.c
-> > > > @@ -173,7 +173,7 @@ static void xen_arm_init(MachineState *machine)
-> > > >  
-> > > >      xen_init_ram(machine);
-> > > >  
-> > > > -    xen_register_ioreq(xam->state, machine->smp.cpus, &xen_memory_listener);
-> > > > +    xen_register_ioreq(xam->state, machine->smp.max_cpus, &xen_memory_listener);
-> > > >  
-> > > >      xen_create_virtio_mmio_devices(xam);
-> > > >  
-> > > > @@ -218,7 +218,8 @@ static void xen_arm_machine_class_init(ObjectClass *oc, void *data)
-> > > >      MachineClass *mc = MACHINE_CLASS(oc);
-> > > >      mc->desc = "Xen PVH ARM machine";
-> > > >      mc->init = xen_arm_init;
-> > > > -    mc->max_cpus = 1;
-> > > > +    /* MAX number of vcpus supported by Xen.  */
-> > > > +    mc->max_cpus = GUEST_MAX_VCPUS;
-> > > 
-> > > Will this cause allocations of data structures with 128 elements?
-> > > Looking at hw/xen/xen-hvm-common.c:xen_do_ioreq_register it seems
-> > > possible? Or hw/xen/xen-hvm-common.c:xen_do_ioreq_register is called
-> > 
-> > Yes, in theory there's probably overhead with this but as you correctly
-> > noted below, a PVH aware xl will set the max_cpus option to a lower value.
-> > 
-> > With a non-pvh aware xl, I was a little worried about the overhead
-> > but I couldn't see any visible slow-down on ARM neither in boot or in network
-> > performance (I didn't run very sophisticated benchmarks).
->  
-> What do you mean by "non-pvh aware xl"? All useful versions of xl
-> support pvh?
+--000000000000915ef3061fa363eb
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+This bug looks specific to the RedHat SELinux configuration.
+Is this any reason to move LOGFILE except this?
+
+Best Regards,
+Konstantin Kostiuk.
 
 
-I mean an xl without our PVH patches merged.
-xl in upstream doesn't know much about PVH yet.
-Even for ARM, we're still carrying significant patches in our tree.
+On Tue, Aug 13, 2024 at 6:11=E2=80=AFAM Dehan Meng <demeng@redhat.com> wrot=
+e:
 
+> Since '/var/log/qga-fsfreeze-hook.log' is not included to proper
+> selinux context 'system_u:object_r:virt_qemu_ga_log_t:s0', it
+> should be changed to '/var/log/qemu-ga/qga-fsfreeze-hook.log'
+>
+> Jira: https://issues.redhat.com/browse/RHEL-52250
+> Signed-off-by: Dehan Meng <demeng@redhat.com>
+> ---
+>  scripts/qemu-guest-agent/fsfreeze-hook | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/scripts/qemu-guest-agent/fsfreeze-hook
+> b/scripts/qemu-guest-agent/fsfreeze-hook
+> index 13aafd4845..98aad5e18b 100755
+> --- a/scripts/qemu-guest-agent/fsfreeze-hook
+> +++ b/scripts/qemu-guest-agent/fsfreeze-hook
+> @@ -7,7 +7,7 @@
+>  # "freeze" argument before the filesystem is frozen. And for fsfreeze-th=
+aw
+>  # request, it is issued with "thaw" argument after filesystem is thawed.
+>
+> -LOGFILE=3D/var/log/qga-fsfreeze-hook.log
+> +LOGFILE=3D/var/log/qemu-ga/qga-fsfreeze-hook.log
+>  FSFREEZE_D=3D$(dirname -- "$0")/fsfreeze-hook.d
+>
+>  # Check whether file $1 is a backup or rpm-generated file and should be
+> ignored
+> --
+> 2.40.1
+>
+>
 
-> > > later on with the precise vCPU value which should be provided to QEMU
-> > > via the -smp command line option
-> > > (tools/libs/light/libxl_dm.c:libxl__build_device_model_args_new)?
-> > 
-> > Yes, a pvh aware xl will for example pass -smp 2,maxcpus=4 based on
-> > values from the xl.cfg. If the user doesn't set maxvcpus in xl.cfg, xl
-> > will set maxvcpus to the same value as vcpus.
-> 
-> OK good. In that case if this is just an initial value meant to be
-> overwritten, I think it is best to keep it as 1.
+--000000000000915ef3061fa363eb
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Sorry but that won't work. I think the confusion here may be that
-it's easy to mix up mc->max_cpus and machine->smp.max_cpus, these are
-not the same. They have different purposes.
+<div dir=3D"ltr"><div>This bug looks specific to the RedHat SELinux configu=
+ration.</div><div>Is this any reason to move LOGFILE except this?<br></div>=
+<div><br></div><div><div><div dir=3D"ltr" class=3D"gmail_signature" data-sm=
+artmail=3D"gmail_signature"><div dir=3D"ltr"><div>Best Regards,</div><div>K=
+onstantin Kostiuk.</div></div></div></div><br></div></div><br><div class=3D=
+"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Aug 13, 2024 at=
+ 6:11=E2=80=AFAM Dehan Meng &lt;<a href=3D"mailto:demeng@redhat.com">demeng=
+@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">Since &#39;/var/log/qga-fsfreeze-hook.log&#39; is not included t=
+o proper<br>
+selinux context &#39;system_u:object_r:virt_qemu_ga_log_t:s0&#39;, it<br>
+should be changed to &#39;/var/log/qemu-ga/qga-fsfreeze-hook.log&#39;<br>
+<br>
+Jira: <a href=3D"https://issues.redhat.com/browse/RHEL-52250" rel=3D"norefe=
+rrer" target=3D"_blank">https://issues.redhat.com/browse/RHEL-52250</a><br>
+Signed-off-by: Dehan Meng &lt;<a href=3D"mailto:demeng@redhat.com" target=
+=3D"_blank">demeng@redhat.com</a>&gt;<br>
+---<br>
+=C2=A0scripts/qemu-guest-agent/fsfreeze-hook | 2 +-<br>
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+<br>
+diff --git a/scripts/qemu-guest-agent/fsfreeze-hook b/scripts/qemu-guest-ag=
+ent/fsfreeze-hook<br>
+index 13aafd4845..98aad5e18b 100755<br>
+--- a/scripts/qemu-guest-agent/fsfreeze-hook<br>
++++ b/scripts/qemu-guest-agent/fsfreeze-hook<br>
+@@ -7,7 +7,7 @@<br>
+=C2=A0# &quot;freeze&quot; argument before the filesystem is frozen. And fo=
+r fsfreeze-thaw<br>
+=C2=A0# request, it is issued with &quot;thaw&quot; argument after filesyst=
+em is thawed.<br>
+<br>
+-LOGFILE=3D/var/log/qga-fsfreeze-hook.log<br>
++LOGFILE=3D/var/log/qemu-ga/qga-fsfreeze-hook.log<br>
+=C2=A0FSFREEZE_D=3D$(dirname -- &quot;$0&quot;)/fsfreeze-hook.d<br>
+<br>
+=C2=A0# Check whether file $1 is a backup or rpm-generated file and should =
+be ignored<br>
+-- <br>
+2.40.1<br>
+<br>
+</blockquote></div>
 
-I'll try to clarify the 3 values in play.
+--000000000000915ef3061fa363eb--
 
-machine-smp.cpus:
-Number of guest vcpus active at boot.
-Passed to QEMU via the -smp command-line option.
-We don't use this value in QEMU's ARM PVH machines.
-
-machine->smp.max_cpus:
-Max number of vcpus that the guest can use (equal or larger than machine-smp.cpus).
-Will be set by xl via the "-smp X,maxcpus=Y" command-line option to QEMU.
-Taken from maxvcpus from xl.cfg, same as XEN_DMOP_nr_vcpus.
-This is what we use for xen_register_ioreq().
-
-mc->max_cpus:
-Absolute MAX in QEMU used to cap the -smp command-line options.
-If xl tries to set -smp (machine->smp.max_cpus) larger than this, QEMU will bail out.
-Used to setup xen_register_ioreq() ONLY if -smp maxcpus was NOT set (i.e by a non PVH aware xl).
-Cannot be 1 because that would limit QEMU to MAX 1 vcpu.
-
-I guess we could set mc->max_cpus to what XEN_DMOP_nr_vcpus returns but I'll
-have to check if we can even issue that hypercall this early in QEMU since
-mc->max_cpus is setup before we even parse the machine options. We may
-not yet know what domid we're attaching to yet.
-
-Cheers,
-Edgar
 
