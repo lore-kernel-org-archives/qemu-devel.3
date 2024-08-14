@@ -4,76 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB5A7C52D7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 07:17:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 568E7C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 07:40:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1se8Ev-0005xy-Lx; Wed, 14 Aug 2024 03:16:13 -0400
+	id 1se8ay-0005tl-I5; Wed, 14 Aug 2024 03:39:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1se8Eu-0005uO-JB
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 03:16:12 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1se8aw-0005rv-Na
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 03:38:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1se8Er-0001Ca-Q4
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 03:16:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723619770; x=1755155770;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=Wko75MRX3IHdnDzyADvbJ/ahhC9dRD+bEy03LAGV6q8=;
- b=ZLpna5a1MKX6K7HYwKbf+G2ZapETgFkjbWty5DddL7lK7WL8/e7nISlD
- ADJVQRngStCFgESNrt/RDMaOy2GnEOrGghmNWOnouXlmeUGNp+lb/Aona
- 7920eGiPga1RFIGofyJ6AtO37es+1KyxmgIfBSpZL/pTZHmf+0HLVab3N
- KXCRespjzbETSRIN3LM3u9SHekaJp/lTkeyMR9db5HeyppZcSxywWuUvj
- d5ekyZxc4eLY345c3rviJrIIi9vnE7dISM9p2UVmn2A6w/z3H02BdCPQe
- DjB8OqJVaA+Zp5sV9QL6/Vmb8ldwFYFXw0pfEijyNfWt8WHPVUBon0lHP w==;
-X-CSE-ConnectionGUID: ny2cChBUTkSjFocUORWQiw==
-X-CSE-MsgGUID: Uwfyb1OuTMygnee3nUvZNA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11163"; a="32443651"
-X-IronPort-AV: E=Sophos;i="6.09,288,1716274800"; d="scan'208";a="32443651"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Aug 2024 00:16:08 -0700
-X-CSE-ConnectionGUID: uL7zcx0+Rm2LOv9AhuePhw==
-X-CSE-MsgGUID: 6wYhvqK9SH63Wjx3edNCGw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,288,1716274800"; d="scan'208";a="63326664"
-Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
- by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Aug 2024 00:16:06 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, jasowang@redhat.com, yi.l.liu@intel.com,
- clement.mathieu--drif@eviden.com, chao.p.peng@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v4 2/2] intel_iommu: Make PASID-cache and PIOTLB type invalid
- in legacy mode
-Date: Wed, 14 Aug 2024 15:13:20 +0800
-Message-Id: <20240814071321.2621384-3-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240814071321.2621384-1-zhenzhong.duan@intel.com>
-References: <20240814071321.2621384-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1se8ar-00047m-J8
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 03:38:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723621131;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Oc3aTjU8HWXyxmTz6UJCCM/6umGObf5/rb0G6OpUxpc=;
+ b=YkVQG6EH4q8Eq+kRSJftXxmsgPK+AmlElztPR/qg+Ob40d56CZ9khwk+w2CiuX5noX+UsP
+ DV79Kbd/CssUbXLras2AB1RywOdJtz2/+o+MyUe+M5mtsYbGr4gPS64/3ZkLG1fRoAblSC
+ USTdO+UrHPQMgsZN150Al70vqJNkzUI=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-486-xWjCGcaqNVC8yYl3dtOeIA-1; Wed, 14 Aug 2024 03:38:49 -0400
+X-MC-Unique: xWjCGcaqNVC8yYl3dtOeIA-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a7a8281dba5so529615966b.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 00:38:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723621128; x=1724225928;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Oc3aTjU8HWXyxmTz6UJCCM/6umGObf5/rb0G6OpUxpc=;
+ b=FafIF8f7yIJRRnty8cgZy/vxaQBlPqmtUJDhUG3eGj4JPrf/Pr1+E+0vnGjfYlkjR8
+ B1SxpggfRXxhGkVYUBEztl91c+hSksOqZLa9nHU7PDJVyWg3OrDoS0rCsANAlXGfjhTj
+ xPa8RXRXcNVnCTShyRvqWNql9fIbSC8s4+dEMwmqd1sbAFXg7Hlc8BMcDsAoeK/odAWE
+ IijTe0rbPJbrabnoZBk5ZFlA3k5Rtayd0gw9vLSL9ESyjHOh9TtHS7i8emRFqNFTo/pY
+ JQ/biZwFL+OLxC+DqsfF3Xf/HyEt/eM4uO1XaoXrcx+6lHNcYeV/lRNCR48dBDahSvBY
+ +JJg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUPUcXKl7YuOx9FWg4XU6TkfpCgPcEMEkv9PwNpgP65eGXglf/yIDuVC94egw+iHbRaNCEg3yBIWB+R@nongnu.org
+X-Gm-Message-State: AOJu0YwzZSOn0kQE4pm7KWDyR2Q4lqLzdHp6gyml14L3Yajv3jaD3lMp
+ v7AqDB9uTW9k91OG0a3/PXLRqyrWpAMnwYUn84b8W4llIjQ7MtE3wvER5K46KdtA2Ij9WbvaAqr
+ CF9e3AeHQLKKvqZ1M/HMaxdaxgIycUXnmfx2RX7YvtMj9gKq8zt9J
+X-Received: by 2002:a17:907:3f25:b0:a7d:4dc4:3d8 with SMTP id
+ a640c23a62f3a-a836701bb07mr115513666b.54.1723621128524; 
+ Wed, 14 Aug 2024 00:38:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHm5GukSx2TiVJhZWRQjxQ16ZMf8mxEx8QfTVbYYaWnyu9LQfARUK6lvCulUuhRsLEWBneSNg==
+X-Received: by 2002:a17:907:3f25:b0:a7d:4dc4:3d8 with SMTP id
+ a640c23a62f3a-a836701bb07mr115510566b.54.1723621127668; 
+ Wed, 14 Aug 2024 00:38:47 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc7:346:dcde:9c09:aa95:551d:d374])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a80f3fa13desm137152066b.48.2024.08.14.00.38.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Aug 2024 00:38:47 -0700 (PDT)
+Date: Wed, 14 Aug 2024 03:38:43 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>, Ani Sinha <anisinha@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, linux-kernel@vger.kernel.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v7 01/10] acpi/generic_event_device: add an APEI error
+ device
+Message-ID: <20240814033158-mutt-send-email-mst@kernel.org>
+References: <cover.1723591201.git.mchehab+huawei@kernel.org>
+ <0be6db8d06b3abab551f24dcc645d46d72d3f668.1723591201.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.11;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0be6db8d06b3abab551f24dcc645d46d72d3f668.1723591201.git.mchehab+huawei@kernel.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,60 +105,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In vtd_process_inv_desc(), VTD_INV_DESC_PC and VTD_INV_DESC_PIOTLB are
-bypassed without scalable mode check. These two types are not valid
-in legacy mode and we should report error.
+On Wed, Aug 14, 2024 at 01:23:23AM +0200, Mauro Carvalho Chehab wrote:
+> Adds a generic error device to handle generic hardware error
+> events as specified at ACPI 6.5 specification at 18.3.2.7.2:
+> https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#event-notification-for-generic-error-sources
+> using HID PNP0C33.
+> 
+> The PNP0C33 device is used to report hardware errors to
+> the guest via ACPI APEI Generic Hardware Error Source (GHES).
+> 
+> Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+> ---
+>  hw/acpi/aml-build.c                    | 10 ++++++++++
+>  hw/acpi/generic_event_device.c         |  8 ++++++++
+>  include/hw/acpi/acpi_dev_interface.h   |  1 +
+>  include/hw/acpi/aml-build.h            |  2 ++
+>  include/hw/acpi/generic_event_device.h |  1 +
+>  5 files changed, 22 insertions(+)
+> 
+> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> index 6d4517cfbe3d..cb167523859f 100644
+> --- a/hw/acpi/aml-build.c
+> +++ b/hw/acpi/aml-build.c
+> @@ -2520,3 +2520,13 @@ Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source)
+>  
+>      return var;
+>  }
+> +
+> +/* ACPI 5.0: 18.3.2.6.2 Event Notification For Generic Error Sources */
 
-Fixes: 4a4f219e8a10 ("intel_iommu: add scalable-mode option to make scalable mode work")
-Suggested-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
----
- hw/i386/intel_iommu.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 68cb72a481..90cd4e5044 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -2763,17 +2763,6 @@ static bool vtd_process_inv_desc(IntelIOMMUState *s)
-         }
-         break;
- 
--    /*
--     * TODO: the entity of below two cases will be implemented in future series.
--     * To make guest (which integrates scalable mode support patch set in
--     * iommu driver) work, just return true is enough so far.
--     */
--    case VTD_INV_DESC_PC:
--        break;
--
--    case VTD_INV_DESC_PIOTLB:
--        break;
--
-     case VTD_INV_DESC_WAIT:
-         trace_vtd_inv_desc("wait", inv_desc.hi, inv_desc.lo);
-         if (!vtd_process_wait_desc(s, &inv_desc)) {
-@@ -2795,6 +2784,17 @@ static bool vtd_process_inv_desc(IntelIOMMUState *s)
-         }
-         break;
- 
-+    /*
-+     * TODO: the entity of below two cases will be implemented in future series.
-+     * To make guest (which integrates scalable mode support patch set in
-+     * iommu driver) work, just return true is enough so far.
-+     */
-+    case VTD_INV_DESC_PC:
-+    case VTD_INV_DESC_PIOTLB:
-+        if (s->scalable_mode) {
-+            break;
-+        }
-+    /* fallthrough */
-     default:
-         error_report_once("%s: invalid inv desc: hi=%"PRIx64", lo=%"PRIx64
-                           " (unknown type)", __func__, inv_desc.hi,
--- 
-2.34.1
+
+I could not find Event Notification For Generic Error Sources in ACPI
+5.0.
+
+
+
+Instead, I see
+18.3.2.6.2 SCI Notification For Generic Error Sources
+
+What did I miss?
+
+
+> +Aml *aml_error_device(void)
+> +{
+> +    Aml *dev = aml_device(ACPI_APEI_ERROR_DEVICE);
+> +    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0C33")));
+
+
+
+
+> +    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
+> +
+
+comment on why is this here?
+
+> +    return dev;
+> +}
+> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+> index 15b4c3ebbf24..1673e9695be3 100644
+> --- a/hw/acpi/generic_event_device.c
+> +++ b/hw/acpi/generic_event_device.c
+> @@ -26,6 +26,7 @@ static const uint32_t ged_supported_events[] = {
+>      ACPI_GED_PWR_DOWN_EVT,
+>      ACPI_GED_NVDIMM_HOTPLUG_EVT,
+>      ACPI_GED_CPU_HOTPLUG_EVT,
+> +    ACPI_GED_ERROR_EVT
+>  };
+>  
+>  /*
+> @@ -116,6 +117,11 @@ void build_ged_aml(Aml *table, const char *name, HotplugHandler *hotplug_dev,
+>                             aml_notify(aml_name(ACPI_POWER_BUTTON_DEVICE),
+>                                        aml_int(0x80)));
+>                  break;
+> +            case ACPI_GED_ERROR_EVT:
+> +                aml_append(if_ctx,
+> +                           aml_notify(aml_name(ACPI_APEI_ERROR_DEVICE),
+> +                                      aml_int(0x80)));
+> +                break;
+>              case ACPI_GED_NVDIMM_HOTPLUG_EVT:
+>                  aml_append(if_ctx,
+>                             aml_notify(aml_name("\\_SB.NVDR"),
+> @@ -295,6 +301,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
+>          sel = ACPI_GED_MEM_HOTPLUG_EVT;
+>      } else if (ev & ACPI_POWER_DOWN_STATUS) {
+>          sel = ACPI_GED_PWR_DOWN_EVT;
+> +    } else if (ev & ACPI_GENERIC_ERROR) {
+> +        sel = ACPI_GED_ERROR_EVT;
+>      } else if (ev & ACPI_NVDIMM_HOTPLUG_STATUS) {
+>          sel = ACPI_GED_NVDIMM_HOTPLUG_EVT;
+>      } else if (ev & ACPI_CPU_HOTPLUG_STATUS) {
+> diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_dev_interface.h
+> index 68d9d15f50aa..8294f8f0ccca 100644
+> --- a/include/hw/acpi/acpi_dev_interface.h
+> +++ b/include/hw/acpi/acpi_dev_interface.h
+> @@ -13,6 +13,7 @@ typedef enum {
+>      ACPI_NVDIMM_HOTPLUG_STATUS = 16,
+>      ACPI_VMGENID_CHANGE_STATUS = 32,
+>      ACPI_POWER_DOWN_STATUS = 64,
+> +    ACPI_GENERIC_ERROR = 128,
+>  } AcpiEventStatusBits;
+>  
+>  #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
+> diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
+> index a3784155cb33..44d1a6af0c69 100644
+> --- a/include/hw/acpi/aml-build.h
+> +++ b/include/hw/acpi/aml-build.h
+> @@ -252,6 +252,7 @@ struct CrsRangeSet {
+>  /* Consumer/Producer */
+>  #define AML_SERIAL_BUS_FLAG_CONSUME_ONLY        (1 << 1)
+>  
+> +#define ACPI_APEI_ERROR_DEVICE   "GEDD"
+>  /**
+>   * init_aml_allocator:
+>   *
+> @@ -382,6 +383,7 @@ Aml *aml_dma(AmlDmaType typ, AmlDmaBusMaster bm, AmlTransferSize sz,
+>               uint8_t channel);
+>  Aml *aml_sleep(uint64_t msec);
+>  Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source);
+> +Aml *aml_error_device(void);
+>  
+>  /* Block AML object primitives */
+>  Aml *aml_scope(const char *name_format, ...) G_GNUC_PRINTF(1, 2);
+> diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
+> index 40af3550b56d..9ace8fe70328 100644
+> --- a/include/hw/acpi/generic_event_device.h
+> +++ b/include/hw/acpi/generic_event_device.h
+> @@ -98,6 +98,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(AcpiGedState, ACPI_GED)
+>  #define ACPI_GED_PWR_DOWN_EVT      0x2
+>  #define ACPI_GED_NVDIMM_HOTPLUG_EVT 0x4
+>  #define ACPI_GED_CPU_HOTPLUG_EVT    0x8
+> +#define ACPI_GED_ERROR_EVT          0x10
+>  
+>  typedef struct GEDState {
+>      MemoryRegion evt;
+> -- 
+> 2.46.0
 
 
