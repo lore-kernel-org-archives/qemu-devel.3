@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B06FBC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 13:40:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E80AC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 13:40:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seEEn-0007KA-BW; Wed, 14 Aug 2024 09:40:29 -0400
+	id 1seEEp-0007kO-4S; Wed, 14 Aug 2024 09:40:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seEEZ-0007Gd-Ar
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:40:15 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seEEk-0007QX-Ls
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:40:29 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seEEX-0004eM-Td
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:40:15 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-428243f928fso65717475e9.0
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 06:40:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seEEi-0004fU-Gx
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:40:26 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-36bcc168cdaso4498152f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 06:40:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723642812; x=1724247612; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723642823; x=1724247623; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oX+ZJO9GlIxEvNmltPXVnl0FgCfTKQ9x41AhOi1yyeY=;
- b=c8y28m64glR/xWisZBrroEi0aygK92ge4j8pZq4qRANGS/sG0EXwFE7cmdOWE7XJWW
- 5rWqUk8tA6Fhrfl+VCXuF8RzVEr4OeziZKh/p8Pr6wL/gauC2nFpGnlihXuNhY3EG8dw
- wbWth5gGY9gRFThwdwvoZK0UWS6NHWnZdySvUUKiO9NzcmZUjaOuafjqJghJ1DHNIJCL
- NSLLeOicCK2WwPDiErmwCtGAvosDEww0HSl3cpnHFsmSkKFv0z7catBpDUa4SRqX2R6I
- dzm485ydRjWEDYOssvdh5w1gi1or6M7jnp3gZPdFJ5BaaX2YvQTlsglmYa0TzZaacqEc
- 6pAg==
+ bh=cmqvLXpHsMm1BHP4snAIAmxsuND6y2HmjOEmCpPOzSI=;
+ b=tddrXg450q937Wo+qbCfEsSWctKgwVA0LDrjH1FQV0Ph9/VOQwVAc1dhWc5GttZNe1
+ XPeugubb7bNfhA3NhmhGXDKlZf8mpYGxWngDWIt9bZ3XNMdmF04AWwgCzIGFvz4ZBewp
+ OfN59YfjAONwTdYLrGSwNwhsc8KPS+3mIICXxhUrmw8LkRPw7Axm0ruLYJauKaLDFrPa
+ p8nCZ3epwXk7aJoJNjO4NdSEcCodcb+So/WiAU3ohz+ky1RM8svEJelTM3G9wsobFmIc
+ 2IwMvh28pXn71+yoq3STGDCchKaSCR00fnhhFCmp/dXp0Qt2zkZu5YuDjodC6ECJtJKo
+ 5nQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723642812; x=1724247612;
+ d=1e100.net; s=20230601; t=1723642823; x=1724247623;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oX+ZJO9GlIxEvNmltPXVnl0FgCfTKQ9x41AhOi1yyeY=;
- b=EaGIiJ9f5dYfMKMbF1dYFzSO1JYuhasQo3sxZHhp7LC3Bj87CFIQrD4NNTEW6MGGUE
- tQ0eIOuDWqvXfxE+fB0lP+AZd+nO+JCCIAro4YkxRNYDDSomCtHYhiISZZRQ+n0vSNha
- JqR6ftShyrVZ+T2E396e7urM9hQSG4e6r5oimJK3PeBxaIRuCwjgxOvs7m9/oT+aB4Iv
- glVk4bp3Ce6qKnhgaDaaYdWzAXj3juieG84+4DplTu8DmWYpTfXec5Vq2RCyGm6wLsZ8
- yI9h+CWQgYd4Omm4VxYTEV+SyCwzhtPwnHzxpNuPxF09LoAg8U3m/GfNNb7hjcY7jP/Z
- MBjg==
-X-Gm-Message-State: AOJu0YyM48xrrEaCu8wERU2jOjmp1jJEmNrY82EkWHg9L9Xdx9Rak604
- rvmwSDVRW02814PW0jOfKJh+j1fcYzIS9uHdSXRYgMevjMedAHBHZKAib9JoxVbfklrVLUKsrQD
- +6CM=
-X-Google-Smtp-Source: AGHT+IHFgKMELNwMktbIzke0PrxEUnWIUrbvmw4ZRiuRAMS9atc/udYMxrJMiXKVbDa9DSLzpIcoiQ==
-X-Received: by 2002:adf:ca86:0:b0:368:3384:e9da with SMTP id
- ffacd0b85a97d-371778209cfmr2403059f8f.62.1723642811832; 
- Wed, 14 Aug 2024 06:40:11 -0700 (PDT)
+ bh=cmqvLXpHsMm1BHP4snAIAmxsuND6y2HmjOEmCpPOzSI=;
+ b=b/OShccNOjzkaentqMQ+EtzlsQADfs499xz0nbZQVbXtJikV50ImVEY0spzX7HDntZ
+ Wtf6G0mzqbGhsb+Hlp+YJGsTC6xzrHxp165LvF4HLswYBr7ZiLNU36T4T1YHnxgwYMLe
+ lKUAGddLkxsGt0ZByzVD7PkPxJ8Li0I5wWu0Ciyzv7/hjaMEwjBd2+t2/mipu4CJcBfL
+ B9xAZiuyVNZFC9FCJsI3wQB2FtDElPNXsZ4IyLh6nU86yZZgCgKG06UcIztOrfzorCN1
+ 1spOhw1/1IQw2poGLXGtgc6p8l96LP9Tc9bLr8BY0z/KajZaqmGWgWnruTtF9q1bwFXH
+ HzoQ==
+X-Gm-Message-State: AOJu0YwrhG5Vt+fLP5nLtk6XHoz76LBzcSjM1sj91b+m/1I0Minm0Pha
+ iMPFw8RyljZukFZerIfry0tss2cDRzh1O39yMgqTBD2KLdRXXRV+e4Xc6PgTFI/aj/h1YrAFsyZ
+ Gf80=
+X-Google-Smtp-Source: AGHT+IFvhODmAfAuwVZxgCpoYf8NdEklFCc4gWVOb35d4limDWjg0Cf675n3PiH0H7fDqyUPChE1Vw==
+X-Received: by 2002:a5d:5e0f:0:b0:371:8283:94c1 with SMTP id
+ ffacd0b85a97d-371828395eamr379163f8f.0.1723642822653; 
+ Wed, 14 Aug 2024 06:40:22 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.208.57])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36e4d1dac3fsm12787520f8f.63.2024.08.14.06.40.09
+ ffacd0b85a97d-36e4c937b5fsm12803551f8f.31.2024.08.14.06.40.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 14 Aug 2024 06:40:11 -0700 (PDT)
+ Wed, 14 Aug 2024 06:40:22 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Laurent Vivier <laurent@vivier.eu>,
  Richard Henderson <richard.henderson@linaro.org>,
  YunQiang Su <syq@debian.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1 3/4] linux-user/mips: Select MIPS64R2-generic for Rel2
- binaries
-Date: Wed, 14 Aug 2024 15:39:27 +0200
-Message-ID: <20240814133928.6746-4-philmd@linaro.org>
+Subject: [PATCH-for-9.1? 4/4] linux-user/mips: Select Loongson CPU for
+ Loongson binaries
+Date: Wed, 14 Aug 2024 15:39:28 +0200
+Message-ID: <20240814133928.6746-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240814133928.6746-1-philmd@linaro.org>
 References: <20240814133928.6746-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,32 +97,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc: YunQiang Su <syq@debian.org>
-Reported-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- linux-user/mips64/target_elf.h | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ linux-user/mips64/target_elf.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/linux-user/mips64/target_elf.h b/linux-user/mips64/target_elf.h
-index ce6fb6541e..a3a8b2e385 100644
+index a3a8b2e385..502af9d278 100644
 --- a/linux-user/mips64/target_elf.h
 +++ b/linux-user/mips64/target_elf.h
-@@ -17,8 +17,13 @@ static inline const char *cpu_get_model(uint32_t eflags)
+@@ -14,6 +14,12 @@ static inline const char *cpu_get_model(uint32_t eflags)
+     case EF_MIPS_MACH_OCTEON2:
+     case EF_MIPS_MACH_OCTEON3:
+         return "Octeon68XX";
++    case EF_MIPS_MACH_LS2E:
++        return "Loongson-2E";
++    case EF_MIPS_MACH_LS2F:
++        return "Loongson-2F";
++    case EF_MIPS_MACH_LS3A:
++        return "Loongson-3A1000";
      default:
          break;
      }
--    if ((eflags & EF_MIPS_ARCH) == EF_MIPS_ARCH_64R6) {
-+    switch (eflags & EF_MIPS_ARCH) {
-+    case EF_MIPS_ARCH_64R6:
-         return "I6400";
-+    case EF_MIPS_ARCH_64R2:
-+        return "MIPS64R2-generic";
-+    default:
-+        break;
-     }
-     return "5KEf";
- }
 -- 
 2.45.2
 
