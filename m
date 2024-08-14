@@ -4,73 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5C4CC531DD
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 00:33:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F38DAC52D7B
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 00:54:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1se1w6-0004H3-8w; Tue, 13 Aug 2024 20:32:22 -0400
+	id 1se2GI-0003Aa-FB; Tue, 13 Aug 2024 20:53:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.mao@intel.com>)
- id 1se1w4-0004AX-Ij
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 20:32:20 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.mao@intel.com>)
- id 1se1w2-0000Vg-OX
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 20:32:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723595539; x=1755131539;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=tnoGK4zKgNlqRyvEJd6ur7OOGmPN9kW2wVQiLIDtklo=;
- b=KJ5E89EGpWQPGmf6Nr4JosmOpWkgYnclwggtNtcLOfJ+fpUzHQ9Jsm1E
- 0O2zNDsKO9F6+1zNPYRLnJq14YCTNdw33qaipS4+lcjkSpXmlreTzCQ/U
- B4roWEGpKfg5KV8YjRfpQ8PRyWc4FbqDRRy/Xey6OYcpgVWeUaXAUn2XZ
- yCsflRyzwHqPvGWtMJXygsbVbYOshxhXBSbzx4r++o0zLII3f284zG0DP
- PC1ml8RX1kgVmDDa9oYcY/y1CgPRS7W3dhdYV4Ldu8ivICSSXQN0i94VT
- IafXqAgqQ8neu9LvFofta3+ecMWatysatgNzPeMV0uJJ3X6v4m+1d+bYe Q==;
-X-CSE-ConnectionGUID: 8Dq7ztlWQfKXHhlTho3MjQ==
-X-CSE-MsgGUID: TqrDEs0FSAWvUirbrFRPqw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11163"; a="21346405"
-X-IronPort-AV: E=Sophos;i="6.09,287,1716274800"; d="scan'208";a="21346405"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Aug 2024 17:32:18 -0700
-X-CSE-ConnectionGUID: pYY0dv08Q/qxsxTl3MnYFA==
-X-CSE-MsgGUID: t0459Ns3Q0GaSDHPi6vKiQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,287,1716274800"; d="scan'208";a="58472763"
-Received: from junjie-optiplex-7080.sh.intel.com (HELO localhost.localdomain)
- ([10.239.48.46])
- by fmviesa006.fm.intel.com with ESMTP; 13 Aug 2024 17:32:15 -0700
-From: Junjie Mao <junjie.mao@intel.com>
-To: manos.pitsidianakis@linaro.org,
-	pbonzini@redhat.com
-Cc: alex.bennee@linaro.org, armbru@redhat.com, berrange@redhat.com,
- gustavo.romero@linaro.org, mads@ynddal.dk, marcandre.lureau@redhat.com,
- peter.maydell@linaro.org, philmd@linaro.org, pierrick.bouvier@linaro.org,
- qemu-devel@nongnu.org, richard.henderson@linaro.org, rowan.hart@intel.com,
- stefanha@redhat.com, thuth@redhat.com, zhao1.liu@intel.com
-Subject: [RFC PATCH 2/2] rust: Specify Rust edition by rust_std=20XX
-Date: Wed, 14 Aug 2024 17:08:20 +0800
-Message-Id: <20240814090820.1251026-3-junjie.mao@intel.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20240814090820.1251026-1-junjie.mao@intel.com>
-References: <20240814090820.1251026-1-junjie.mao@intel.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1se2GH-00039b-1G
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 20:53:13 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1se2GF-0003qO-E1
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 20:53:12 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-201d6ac1426so3052745ad.1
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 17:53:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723596790; x=1724201590; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rkc0DscZwkUZCovRI4nWM5TfUQCvSSTd+6RVErRLvkc=;
+ b=dQt4YTxddsJI2whhwo+X7OK+taa1vwhE6zJOxZIi/q2Ds0g3GpEf4h2Y7ucltyPRS3
+ +AXvuuRqarWulisJdykrwb5BJvexAcI0JnkH5m4pWwlXwE47zZPEBgqfQzyNMNAhu6jq
+ roUClvesbwJiWNtOAebcFXNcxVkYZoARsrc5Pk9wIgs03iYa4yR3tRLkoXGgX8WX9EST
+ gC7Fx3hpoRj45jIXHfu4zW5UTjgJi97H8KrHWIQpm3Nu7geG2GtFLwA0xDCBy+Rvc3RW
+ xCEZpG0WFlu6M1cmkfwvKanN2rzrWXs3bvcxaHFrQfcfJCHX5720bPh/q9nTpMrOAqBr
+ g0tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723596790; x=1724201590;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rkc0DscZwkUZCovRI4nWM5TfUQCvSSTd+6RVErRLvkc=;
+ b=ghj7KPBSZRdLls4V78nVH+TibxSvFda2sTdmVv4Stz2bZRG5lKCqxgPYBKjRaX8SiT
+ Z5WEAnERwicl47NRGbv2S33K7/R04F14oviIu8zv0qvhHcsmuWnGd4rwbuYbfL8U6R2t
+ 1XA0rDZSk7LXNBbn4mmq4A5J/mbb+GIke8RvHvJIz/jMoKaAAVqV5V5wG9ptSG5Doij+
+ v5nS20sJGPsrQgD6/bAAFf2uw4tInVjp26qy7Qxzgo4SScXY6c7Cxttjlx9ydH8XE126
+ nzzxol3u70Jg+v3VzZwm2jYaxKNt2qiNR4W66Wju6+GkqW+FosmGPWJ6uPSbMBUdmQCc
+ yD+w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUQxmbgi1U7+dM9M+vIWme85Sy1QBOdImaSQxbyXjATEm4MCtgg3lD8Rtb4goVmZQ3hkf0AGNIIoBggmmyKMUAk5320Ttk=
+X-Gm-Message-State: AOJu0YxUb2RWZ3noqz1WPXK7ZPssFLI2oXTdvd4AMRWctnQkFmTb5bzA
+ 4aI0olDG5IUJBz783e6Xkv4HSNlUHIIcEUHxSv5LyXSDbmZn3gv2JM+XaNk/IFI=
+X-Google-Smtp-Source: AGHT+IFANifIEo+FKDb2uY/E870fAVIw7oWkKy1Z7GNg+oiyFHZC4v84j3/rZqTvTI9gB2gNuBqCvA==
+X-Received: by 2002:a17:902:e850:b0:1fa:1dd8:947a with SMTP id
+ d9443c01a7336-201d648ce5bmr13475725ad.46.1723596789440; 
+ Tue, 13 Aug 2024 17:53:09 -0700 (PDT)
+Received: from [192.168.1.113] ([203.30.4.111])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-201cd1b82bfsm19257545ad.210.2024.08.13.17.53.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 13 Aug 2024 17:53:09 -0700 (PDT)
+Message-ID: <d86ab67c-90cf-422f-aefc-1025a7e5a77b@linaro.org>
+Date: Wed, 14 Aug 2024 10:53:01 +1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=junjie.mao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.2 10/10] hw: Remove device_phases_reset()
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+References: <20240813165250.2717650-1-peter.maydell@linaro.org>
+ <20240813165250.2717650-11-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240813165250.2717650-11-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_FUTURE_06_12=1.947,
- DKIMWL_WL_HIGH=-0.125, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,60 +103,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Junjie Mao <junjie.mao@intel.com>
----
- rust/hw/char/pl011/meson.build | 4 +---
- rust/meson.build               | 4 +---
- rust/qemu-api/meson.build      | 2 +-
- 3 files changed, 3 insertions(+), 7 deletions(-)
+On 8/14/24 02:52, Peter Maydell wrote:
+> Currently we have transitional machinery between legacy reset
+> and three phase reset that works in two directions:
+>   * if you invoke three phase reset on a device which has set
+>     theDeviceClass::legacy_reset method, we detect this in
+>     device_get_transitional_reset() and arrange that we call
+>     the legacy_reset method during the hold phase of reset
+>   * if you invoke legacy reset on a device which implements
+>     three phase reset, the default legacy_reset method is
+>     device_phases_reset(), which does a three-phase reset
+>     of the device
+> 
+> However, we have now eliminated all the places which could invoke
+> legacy reset on a device, which means that the function
+> device_phases_reset() is never called -- it serves only as the value
+> ofDeviceClass::legacy_reset that indicates that the subclass never
+> overrode the legacy reset method.  So we can delete it, and instead
+> check for legacy_reset != NULL.
+> 
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   hw/core/qdev.c | 51 ++++++++++++--------------------------------------
+>   1 file changed, 12 insertions(+), 39 deletions(-)
 
-diff --git a/rust/hw/char/pl011/meson.build b/rust/hw/char/pl011/meson.build
-index 1c139d3af9..518d4924a9 100644
---- a/rust/hw/char/pl011/meson.build
-+++ b/rust/hw/char/pl011/meson.build
-@@ -7,10 +7,8 @@ bilge_impl_dep = dependency('bilge-impl-0.2-rs')
- _libpl011_rs = static_library(
-   'pl011',
-   files('src/lib.rs'),
-+  override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'c',
--  rust_args: rust_args + [
--    '--edition', '2021',
--  ],
-   dependencies: [
-     bilge_dep,
-     bilge_impl_dep,
-diff --git a/rust/meson.build b/rust/meson.build
-index c321fa455e..590e9397c3 100644
---- a/rust/meson.build
-+++ b/rust/meson.build
-@@ -2,10 +2,8 @@ _lib_bindings_rs = static_library(
-   '_bindings_rs',
-   bindings_rs,
-   gnu_symbol_visibility: 'hidden',
-+  override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
--  rust_args: rust_args + [
--    '--edition', '2021',
--  ],
- )
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
- subdir('qemu-api')
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index a169872026..997d478309 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -2,9 +2,9 @@ _qemu_api_rs = static_library(
-   'qemu_api',
-   [files('src/lib.rs')],
-   gnu_symbol_visibility: 'hidden',
-+  override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
-   rust_args: rust_args + [
--    '--edition', '2021',
-     '--cfg', 'MESON_BINDINGS_RS',
-   ],
-   link_with: [
---
-2.30.2
+
+Is the reason we prioritize resettable_get_tr_func over rc->phases to allow for a legacy 
+device to be attached to a resettable bus?
+
+I wonder if device_class_set_legacy_reset can simplify that, with
+
+static void do_legacy_reset(...)
+{
+     dc->legacy_reset(...);
+}
+
+void device_class_set_legacy_reset(DeviceClass *dc, DeviceReset dev_reset)
+{
+     dc->legacy_reset = dev_reset;
+
+     /* Parent enter/exit are not invoked with a legacy child. */
+     dc->resettable.enter = NULL;
+     dc->resettable.exit = NULL;
+     dc->resettable.hold = do_legacy_reset;
+}
+
+Which would eliminate resettable_get_tr_func and the supporting layers completely.
+
+
+r~
 
