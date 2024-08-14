@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9351BC52D7B
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 01:45:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB9B2C52D7C
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 01:56:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1se33M-0008NF-2W; Tue, 13 Aug 2024 21:43:56 -0400
+	id 1se3Eo-0006gs-NE; Tue, 13 Aug 2024 21:55:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1se33K-0008Mm-Qx
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 21:43:54 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1se3Em-0006dt-3Q
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 21:55:44 -0400
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1se33I-0002sv-R1
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 21:43:54 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-1fc4fccdd78so44475655ad.2
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 18:43:51 -0700 (PDT)
+ id 1se3Ek-0004qm-B1
+ for qemu-devel@nongnu.org; Tue, 13 Aug 2024 21:55:43 -0400
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-3db50abf929so4487278b6e.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 18:55:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723599831; x=1724204631; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723600540; x=1724205340; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SUP9wNJJyxSkEXFB2A61bgTzDre8nD7g52axkanqcP0=;
- b=Ezmbho/85JpCN7m+y1Qt9/oVqd0Yb8QAC3em3tTxtP4x/9h1EHweLQ9Qqw0hZiVk9x
- 1V2Ois7UTZdPEgIWxjZxsrweE7AbuTwG10DdSwkQhFQT/4pxYJXv+ttpmES/I1NEXrZb
- /56II1U2WCyH9Ek+5zXgRHo83Nmq94/LajvKtEePMrxnsnKf1dPNpKxr5S1E5ENMG2b5
- y54mBfvEPeD7LgBKHbrYL67TOg8sAhEGsxjrj7g24S/etyWazWoJ5bluCu92MerhWZgj
- dfdbTiFs3i3ulf6pcsS5buuyTcpN218cxl9Yf89z8xeO30YYRxQTpZFnYc4G73uLhXgL
- I3BQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=rEzRA37auQQgy7VMIIOgkwnZ5mNeTU3fq31TXk/HhIA=;
+ b=ku6TpqyvB8e0PEKNwTqBIloKZ4QvZZfC2TtZ14CuZTT3gAj4EkAQrd1HJezAX9Ld5Y
+ EFiMGBHfs2+7GRV/gFwT5C6YpQ6ArjZn+FV7eV4M40krIqpF/3A0CZs0Q4Hdcfone5FG
+ 276mG/jOafvsGRBBRnPBz+KBE4v6HGCD+ROaElKnpP859XbDh/gucJOl1lxRIr8KDH/p
+ 5KviTynCWXxs1jkiLhWB1nz7urUfG7tSqK7E62q6hPrav5NdQ4KI1TYGkWcs4hDKDxJE
+ i/zgssa9oLusOfBxZPMTwBsbrzk+EhXseF5P/5ejLTuJxkLgqLL9Q7M82L0E3BzdH279
+ 92AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723599831; x=1724204631;
+ d=1e100.net; s=20230601; t=1723600540; x=1724205340;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SUP9wNJJyxSkEXFB2A61bgTzDre8nD7g52axkanqcP0=;
- b=cz1a24JTjYCvUk3BRWOQykRNEe2AycmW5y7RUobzy/ut9dkp3Nbj83wLUAhRvlbYOk
- 96Xc5HnIDmDxm++r6BCid0Xa4w+OWC8OxeriBT49pq75ACw+ssbVM/2rSj5BhPvmf7Pl
- FfIv9fFh4rw0H+7j3+WwmKJIwHMljwL46ZwMmZ7j1zWwo42f3gNVJ28RH26b1NTeNA0h
- C06n4h262P5TiJodcxhTSWnYgygz5WTb337PYAsGJEd/SykNnEb8zdU9KXY2KX9Ydka3
- geZV8t0Q/Zy+Gfc/JrcmqPTPdD5pppGGxwpbsqea4AsyDsn+7U6OFHSJPco/Gg0nXluH
- nqbw==
-X-Gm-Message-State: AOJu0YznCwPa2fsbWDc9fzbMrzd0xNYC3qKr4W8vWIaRc5V+GXcszXcD
- fJkpiTtxGf2qeUH2qil17gWZlWtddMOX9cKNuezZqd+tRzi4C0HHfBLZUj6xeTw=
-X-Google-Smtp-Source: AGHT+IEguQmmRuqY+XlNpj2EZeIQw7c1z5urMUPMtuFCB0Co3UhZIzhfMdcNaWjrGNe0gnpVxVQ6qQ==
-X-Received: by 2002:a17:902:ced0:b0:1fd:cda0:2f4c with SMTP id
- d9443c01a7336-201d63ad01bmr12363795ad.18.1723599830475; 
- Tue, 13 Aug 2024 18:43:50 -0700 (PDT)
+ bh=rEzRA37auQQgy7VMIIOgkwnZ5mNeTU3fq31TXk/HhIA=;
+ b=gJQtYDiAwkpv5siSsBZzs+PbpaddoJIAaAFOpxRKiMQh3AFPxgHGxBgyVYm/p3pgFy
+ +aVo1KVdJe7xfTr2WoA5sAhfMmDEGk7MzX48BaALO0H9irTHZcjfdTfnVQbGlaaE2fGr
+ 3UAaPWM+v+I4Gge+h94Q251LPCSH9C2jPOnfUvsutbpknI1Fky44gHGpyMjyl7oFguxv
+ SgtdEARozuTfa2Qm8g0Yf9qdZ/q3QXWBYz1cVefWTot83S1Z9G8QP45ssAwF5DHLaoYF
+ DFiCEbcy2BZQfCofTTNBGr6wrLy7gqDnyfKbdn17AeipoqXji1YlJoeSsFopHeqODEbh
+ hVGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVIURLGUux9XMljP3nGObgqw9SQmlSBl7Tl0r1FNhUaoPQz3etQIvdUegsWMnA7Q4AAOwdA2u4Kow2bKKsDmubR/Ux9TTs=
+X-Gm-Message-State: AOJu0YwGEitJzk/w0au6m02ru04uBJC+faE4I8pD4CCv8V9z/0xRX4YG
+ ljyWnX262HgG4Jsx2rV47DMGY/ksZ/Z1dRq51LO5kKr5Qyj0jm0yHZ25eddc/rs=
+X-Google-Smtp-Source: AGHT+IHFiHuLSyFZrjl4djsPKdMtszCDKNNy3EDdAjHA0M/I4oYsN/xrtrt/I7AklcHiwe6b1fTLWQ==
+X-Received: by 2002:a05:6871:814:b0:260:f1a8:a64b with SMTP id
+ 586e51a60fabf-26fe5aaf81dmr1729587fac.24.1723600540118; 
+ Tue, 13 Aug 2024 18:55:40 -0700 (PDT)
 Received: from [192.168.1.113] ([203.30.4.111])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201cd1a9389sm19532435ad.135.2024.08.13.18.43.47
+ d2e1a72fcca58-710f65cddd7sm4798228b3a.72.2024.08.13.18.55.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Aug 2024 18:43:50 -0700 (PDT)
-Message-ID: <db9a23a4-3423-4c55-8c6d-0507f93d3c50@linaro.org>
-Date: Wed, 14 Aug 2024 11:43:42 +1000
+ Tue, 13 Aug 2024 18:55:39 -0700 (PDT)
+Message-ID: <1d3e1536-9d74-4abc-919d-f28195e0439b@linaro.org>
+Date: Wed, 14 Aug 2024 11:55:34 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/sparc: emulate floating point queue when raising
- fp traps
-To: Carl Hauser <chauser@pullman.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Cc: qemu-devel@nongnu.org, Carl Hauser <carl.hauser@gmail.com>
-References: <cde53d38-c378-459f-9e2a-6e9ca287cc3c@pullman.com>
+Subject: Re: [PATCH v2 07/21] target/i386: allow access_ptr to force slow path
+ on failed probe
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20240813202329.1237572-1-alex.bennee@linaro.org>
+ <20240813202329.1237572-8-alex.bennee@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <cde53d38-c378-459f-9e2a-6e9ca287cc3c@pullman.com>
+In-Reply-To: <20240813202329.1237572-8-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,113 +99,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/14/24 09:22, Carl Hauser wrote:
-> I am unable to test the linux and NetBSD behavior because I've been
-> unable to get gcc to actually generate quad precision instructions on those
-> systems.
-
--mhard-quad-float
-
-> +
-> +    /* single-element FPU fault queue */
-> +    uint32_t fsr_qne;                /* qne */
-> +    uint32_t fsr_qi;                 /* faulting fp instruction */
-> +    target_ulong fsr_qa;             /* address of faulting instruction */
-
-I suppose these could be sparc32 only, but not critical,
-and it would require ifdefs elsewhere as well.
-
-> diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-> index fbcb4f7aef..e0ad090340 100644
-> --- a/target/sparc/insns.decode
-> +++ b/target/sparc/insns.decode
-> @@ -644,8 +644,9 @@ STF         11 ..... 100100 ..... . .............       @r_r_ri_na
->   STFSR       11 00000 100101 ..... . .............          @n_r_ri
->   STXFSR      11 00001 100101 ..... . .............          @n_r_ri
->   {
-> -  STQF      11 ..... 100110 ..... . .............          @q_r_ri_na
-> -  STDFQ     11 ----- 100110 ----- - -------------
-> +
-> +  STDFQ     11 ..... 100110 ..... . .............          @r_r_r_asi ## SPARC-V7-8
-> +  STQF      11 ..... 100110 ..... . .............          @q_r_ri_na ## SPARC-V9
->   }
-
-There is an existing bug:
-
-- TRANS(STQF, ALL, do_st_fpr, a, MO_128)
-+ TRANS(STQF, 64, do_st_fpr, a, MO_128)
-
-which prevented the current ordering from working.  With the fix, just add the argument 
-set for STDFQ (and the comments, I suppose).
-
-
-> @@ -147,6 +148,20 @@ void sparc_cpu_do_interrupt(CPUState *cs)
->       env->psret = 0;
->       cwp = cpu_cwp_dec(env, env->cwp - 1);
->       cpu_set_cwp(env, cwp);
-> +#ifndef TARGET_SPARC64
-> +    if (intno == TT_FP_EXCP) {
-> +        env->fsr_qne = FSR_QNE;
-> +        env->fsr_qa = env->pc;
-> +        env->fsr_qi = cpu_ldl_code(env, env->fsr_qa);
-> +         /*
-> +          * Because of the asynchronous FPU on real Sparc 32 bit
-> +          * machines, the pc and npc will have already been advanced
-> +          * by the time that the trap is taken.
-> +          */
-> +        env->pc = env->npc;
-> +        env->npc = env->npc + 4;
-> +    }
-> +#endif
-
-No need for the ifdef -- the whole file is sparc32 only.
-
-> @@ -1458,8 +1459,10 @@ static void gen_op_fpexception_im(DisasContext *dc, int ftt)
->        * or when raising FSR_FTT_IEEE_EXCP, i.e. check_ieee_exception.
->        * Thus we can simply store FTT into this field.
->        */
-> +
->       tcg_gen_st_i32(tcg_constant_i32(ftt), tcg_env,
->                      offsetof(CPUSPARCState, fsr_cexc_ftt));
-> +
->       gen_exception(dc, TT_FP_EXCP);
->   }
+On 8/14/24 06:23, Alex Bennée wrote:
+> When we are using TCG plugin memory callbacks probe_access_internal
+> will return TLB_MMIO to force the slow path for memory access. This
+> results in probe_access returning NULL but the x86 access_ptr function
+> happily accepts an empty haddr resulting in segfault hilarity.
 > 
+> Check for an empty haddr to prevent the segfault and enable plugins to
+> track all the memory operations for the x86 save/restore helpers. As
+> we also want to run the slow path when instrumenting *-user we should
+> also not have the short cutting test_ptr macro.
+> 
+> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2489
+> Fixes: 6d03226b42 (plugins: force slow path when plugins instrument memory ops)
+> Reviewed-by: Alexandre Iooss<erdnaxe@crans.org>
+> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
+> Message-Id:<20240807160236.2478459-1-alex.bennee@linaro.org>
 
-Drop the unrelated whitespace.
-
-> -static bool trans_STDFQ(DisasContext *dc, arg_STDFQ *a)
-> +static bool trans_STDFQ(DisasContext *dc, arg_r_r_ri_asi *a)
->   {
-> +
-> +#ifndef TARGET_SPARC64
->       if (!avail_32(dc)) {
->           return false;
->       }
-> @@ -4538,10 +4543,19 @@ static bool trans_STDFQ(DisasContext *dc, arg_STDFQ *a)
->       if (gen_trap_ifnofpu(dc)) {
->           return true;
->       }
-> -    gen_op_fpexception_im(dc, FSR_FTT_SEQ_ERROR);
-> -    return true;
-> +
-> +    TCGv store_addr = gen_ldst_addr(dc, a->rs1, a->imm, a->rs2_or_imm);
-> +    if (store_addr == NULL) {
-> +        return false;
-> +    }
-> +    gen_helper_store_fp_queue(tcg_env, store_addr);
-> +    return advance_pc(dc);
-> +#else
-> +    g_assert_not_reached();
-> +#endif
->   }
-
-You shouldn't need the ifdef here, because (1) avail_32 should make the whole function 
-vanish for sparc64 and (2) you handled gen_helper_store_fp_queue with the 
-qemu_build_not_reached define at the top of the file.
-
-Otherwise, this looks really good.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
