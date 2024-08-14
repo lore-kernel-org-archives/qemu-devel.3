@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21F09C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 22:42:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 738C2C52D7D
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 22:43:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seMgb-0002Bb-LS; Wed, 14 Aug 2024 18:41:45 -0400
+	id 1seMgc-0002Dw-8G; Wed, 14 Aug 2024 18:41:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1seMga-00025j-7L
+ id 1seMga-000262-9q
  for qemu-devel@nongnu.org; Wed, 14 Aug 2024 18:41:44 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1seMgY-0007MF-3N
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 18:41:43 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-1fc60c3ead4so3563805ad.0
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 15:41:41 -0700 (PDT)
+ id 1seMgY-0007Lm-3w
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 18:41:44 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-1fc66fc35f2so10990515ad.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 15:41:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723675301; x=1724280101; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723675298; x=1724280098; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zJho7r2KSIGZArJtcY0/tQGk0chbARupwvgFA11PnCQ=;
- b=JVxdkMoYel9RVeqopVLQ2iRIOhWom3bCyiVWwV2ja6LbKNnn5AD14/H0iYAC03fURo
- i3Yru+g26uG3gpgWqywVbL5p++TOmftESo1rroAQRoTLqWJP63EjaKDg++CT3B4XXs3b
- 1xCh3+EiRDo5pKqfe/GGzN4tbbwR5DItHc3EXMtFid8QtxNrRdsGj0y50kfkHxTPvxGg
- x1CdKp3CODGy2DjuY0nQj+V29z+oKBaOxUKDr3Kv0Je5UwjCzNx8wmxblg2FwDyrmfQx
- vrKVZlNdDVR7rKxRisSwLR/AzeOBAMXqbFSYoqes13v1dAGNze5HeFHtkGdkszECoOjC
- Sr8g==
+ bh=lkpyTpSOlqu0+QkwYEsdEX4Fr7KToSSmbcU9XazMmXA=;
+ b=yKEHhFeh69YRsOJybIuyUxNOpaf8Ayut5UhrHfLeKsjOs/1dGWpetcAAu9rLXVal87
+ IgdD1gmipl8M8a5RCl4YivDIGGZIO4Dx4R0FR7NTSsvHZ6G0mwwvnVYdfDqqEnymuvSO
+ qhB24x0/ytx0os8EzAtoTM7CT9EtJ+h4S3c9CU95qRux3Tt7nHuS49DCINrzPrfL8MNa
+ DB2IAofyr91KTRfHSMwkblAtV6JVllw5R3VuJ3i8WeNx0DfVnjEJfwE4w2L1DYgRkoUm
+ OSzY+kNvTM0uB5KWQzX8qjvNqpJgrWTHngEWTtfQBTzNcMB0eQMHShTp9HfhIwQLOa6V
+ UIuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723675301; x=1724280101;
+ d=1e100.net; s=20230601; t=1723675298; x=1724280098;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zJho7r2KSIGZArJtcY0/tQGk0chbARupwvgFA11PnCQ=;
- b=rspFR3ol3AeOTVnHkNTGi22zZnxqOEM2uY8D8u42M4Bh77Y3C4jSCarU6pdfjHugJg
- ta5RoplW3n5oW9BBhCSqAB/ZKZuRYJ3fr5Gp6af9KxJ/CdQ9p4y9hoZRChcQ3vC8U06t
- 2/eEUK6cmQLMlXKHy86QlMVbCTRVdCidAyqSJJkEeoSL/CNSdSpMjwR7GVxd9ZeZ7Z5k
- I/zFwnO7BjTnW2YKG1DU9ztNeed74EKvlCCTeAeNVVCEIl4pS2BMHi4+isKLHlbmDIP1
- De5XjeEe8elGJzumR5Ma/2uljdNTwfT2lRHBQiR8Ylhsl6I7BwR3n8weLoeMNNkHKC5z
- L9FQ==
-X-Gm-Message-State: AOJu0Yz/OCRqvKw50OY2R4r2HjVchVY++iNFVmROdgSQ9dHafUQptvy0
- /DAXUxW6+P/QEJzAGY1TV1EmcTE2AVc+jL1b4VFjRTRtqs89aTYazCQoF1MYPtuOEUUtksL/tZl
- F/PM=
-X-Google-Smtp-Source: AGHT+IHfpUHmltRgG/gVjytdo0w2YyJNJqcCukrC0Pgjx2S3EMn+ubfqhC4bAxsC2vTGIUfXWKdtyQ==
-X-Received: by 2002:a17:903:11c8:b0:1ff:49c:1562 with SMTP id
- d9443c01a7336-201d64d8afcmr48133095ad.56.1723675300659; 
- Wed, 14 Aug 2024 15:41:40 -0700 (PDT)
+ bh=lkpyTpSOlqu0+QkwYEsdEX4Fr7KToSSmbcU9XazMmXA=;
+ b=VWK37P7ff1QelitRD2YixDXlncN5siypw0qlHEd3SQ3caOYGThKzi18rgQm24X2cn+
+ MJxoR4KIHrDsNjydCDiMd0UV6KB+GJ4/L/QeMc75wZ8wVqxE3u9yHRK5An/ebWbmDiZD
+ dZ8uyWQT4tHwi/78ak/2J5cIHgh5D1+wOrkdrdr5XnlVKCjswEbdbUhgvSoVjC/M4+zO
+ IANsxC4eIgbTfbSg4HZz0nOZmk2CAUSr0nAqrCp2vBxClMOmXy1nOB4XWhSgdNcQ7Cap
+ 3oLuYm0M+pv1dYrh3KPYTy7oX4hgM+/uBg7jd3Y7QWyuKGkYdMEHP+6PFiO0h1Xws/LH
+ Jgmw==
+X-Gm-Message-State: AOJu0YwQVC1zCLEfHCLUZE7mstvGE8DOSeEDfv1PIvXLUBrGKrg34Bx1
+ dHWwVjpQiT1B2faklNQ/AOaKPBrTaqWRpzeQ0GIPacGaK679jWycbR12SgaQS1oN6r3rCRBympe
+ NrCk=
+X-Google-Smtp-Source: AGHT+IGkesrW/K1rSLk7UrsKDf2/qUa/M6f0mBcupHt3koifZY7D+XvsN9EVSwi1JJN5HwVBtak53g==
+X-Received: by 2002:a17:903:41ca:b0:1fd:a412:5df2 with SMTP id
+ d9443c01a7336-201ee515b17mr15782565ad.29.1723675298210; 
+ Wed, 14 Aug 2024 15:41:38 -0700 (PDT)
 Received: from linaro.vn.shawcable.net
  ([2604:3d08:9384:1d00:5b09:8db7:b002:cf61])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201f03b2874sm1225595ad.308.2024.08.14.15.41.39
+ d9443c01a7336-201f03b2874sm1225595ad.308.2024.08.14.15.41.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Aug 2024 15:41:40 -0700 (PDT)
+ Wed, 14 Aug 2024 15:41:37 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Beraldo Leal <bleal@redhat.com>, David Hildenbrand <david@redhat.com>,
@@ -73,23 +73,25 @@ Cc: Beraldo Leal <bleal@redhat.com>, David Hildenbrand <david@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Ilya Leoshkevich <iii@linux.ibm.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 4/4] docs/devel: update tsan build documentation
-Date: Wed, 14 Aug 2024 15:41:32 -0700
-Message-Id: <20240814224132.897098-5-pierrick.bouvier@linaro.org>
+Subject: [PATCH v2 2/4] target/i386: fix build warning (gcc-12
+ -fsanitize=thread)
+Date: Wed, 14 Aug 2024 15:41:30 -0700
+Message-Id: <20240814224132.897098-3-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240814224132.897098-1-pierrick.bouvier@linaro.org>
 References: <20240814224132.897098-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,61 +107,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mention it's now possible to build with gcc, instead of clang, and
-explain how to build a sanitized glib version.
+Found on debian stable.
+
+../target/i386/kvm/kvm.c: In function ‘kvm_handle_rdmsr’:
+../target/i386/kvm/kvm.c:5345:1: error: control reaches end of non-void function [-Werror=return-type]
+ 5345 | }
+      | ^
+../target/i386/kvm/kvm.c: In function ‘kvm_handle_wrmsr’:
+../target/i386/kvm/kvm.c:5364:1: error: control reaches end of non-void function [-Werror=return-type]
+ 5364 | }
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- docs/devel/testing.rst | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ target/i386/kvm/kvm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/docs/devel/testing.rst b/docs/devel/testing.rst
-index af73d3d64fb..f10cfc3f786 100644
---- a/docs/devel/testing.rst
-+++ b/docs/devel/testing.rst
-@@ -634,20 +634,38 @@ Building and Testing with TSan
- It is possible to build and test with TSan, with a few additional steps.
- These steps are normally done automatically in the docker.
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 31f149c9902..ddec27edd5b 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -5770,7 +5770,7 @@ static int kvm_handle_rdmsr(X86CPU *cpu, struct kvm_run *run)
+         }
+     }
  
--There is a one time patch needed in clang-9 or clang-10 at this time:
-+TSan is supported for clang and gcc.
-+One particularity of sanitizers is that all the code, including shared objects
-+dependencies, should be built with it.
-+In the case of TSan, any synchronization primitive from glib (GMutex for
-+instance) will not be recognized, and will lead to false positives.
-+
-+To build a tsan version of glib:
+-    assert(false);
++    g_assert_not_reached();
+ }
  
- .. code::
+ static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
+@@ -5789,7 +5789,7 @@ static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
+         }
+     }
  
--  sed -i 's/^const/static const/g' \
--      /usr/lib/llvm-10/lib/clang/10.0.0/include/sanitizer/tsan_interface.h
-+   $ git clone --depth=1 --branch=2.81.0 https://github.com/GNOME/glib.git
-+   $ cd glib
-+   $ CFLAGS="-O2 -g -fsanitize=thread" meson build
-+   $ ninja -C build
+-    assert(false);
++    g_assert_not_reached();
+ }
  
- To configure the build for TSan:
- 
- .. code::
- 
--  ../configure --enable-tsan --cc=clang-10 --cxx=clang++-10 \
-+  ../configure --enable-tsan \
-                --disable-werror --extra-cflags="-O0"
- 
-+When executing qemu, don't forget to point to tsan glib:
-+
-+.. code::
-+
-+   $ glib_dir=/path/to/glib
-+   $ export LD_LIBRARY_PATH=$glib_dir/build/gio:$glib_dir/build/glib:$glib_dir/build/gmodule:$glib_dir/build/gobject:$glib_dir/build/gthread
-+   # check correct version is used
-+   $ ldd build/qemu-x86_64 | grep glib
-+   $ qemu-system-x86_64 ...
-+
- The runtime behavior of TSAN is controlled by the TSAN_OPTIONS environment
- variable.
- 
+ static bool has_sgx_provisioning;
 -- 
 2.39.2
 
