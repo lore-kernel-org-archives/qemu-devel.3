@@ -4,143 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3B86C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 10:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E656C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 11:21:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seBgM-0005PG-Fu; Wed, 14 Aug 2024 06:56:46 -0400
+	id 1seC3S-0000i3-0k; Wed, 14 Aug 2024 07:20:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1seBgI-0005Ka-Qq
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 06:56:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1seBgH-00018L-6R
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 06:56:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723633000;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fQG2Ukb2nwx8M/NNfTVZO6ZZDrB+UrfsivuS4Ld7YxU=;
- b=TUvnEJsDxUV6QuXesxS1eb2YSCgfl47VaiV/42LBn2/kKTm8dXGcb8Yqw5aUxvTLRt8neK
- 7PW4RAIzcT3FiiTDhenGsiv4l2829+cLSF1vDDVXHpAXzeRrtL0yQm1n1toKy28AHS90/Y
- 9aSNWdARLJFLs+42cIo+VorJGV8RJ08=
-Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
- [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-315-ebcxb9MqNtOyFTw35I5p9w-1; Wed, 14 Aug 2024 06:56:38 -0400
-X-MC-Unique: ebcxb9MqNtOyFTw35I5p9w-1
-Received: by mail-lf1-f72.google.com with SMTP id
- 2adb3069b0e04-52fcb0f226bso7464819e87.0
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 03:56:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1seC3O-0000gf-Pg
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 07:20:34 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
+ id 1seC3M-0005gL-VN
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 07:20:34 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5b391c8abd7so7800983a12.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 04:20:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723634430; x=1724239230; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=rPHo4qIf+PODNS2953SxUj/B6hWkDwsprlzBWxKDNY0=;
+ b=ZYP9ny0nVM7mOxGbajalnH/Px0+xVLvoTUi6rEuOvWMzMiQLyHxuET7SLXSJ0MmybS
+ 1OokkQVnr+zkGMPAytqKGcxn4T0nZKED5zx68CGE1c06aMv8WAe5RRMosv/Fe07aRNOj
+ xEzLjY1YOiqN9vpOnM8LaG/8vrEkj5hr51QgM3CgpbAt953QC6mjgYo/5oZL2p0wmHCJ
+ CMjrfymraScZQxuxk3E97q6gfjnYSTko6hLAXRCjzFRfgundhkawE0vseA8iiecn1NzG
+ NKG3+78x6x7oIw5AX5UXsAaNU1J1Mnz0GYUt0L/G7LHbKVrywtlCek08bOxz9dlMnuGa
+ YXFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723632996; x=1724237796;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fQG2Ukb2nwx8M/NNfTVZO6ZZDrB+UrfsivuS4Ld7YxU=;
- b=E87+BZjNVByM9pSaE41MfPRaNElYXp9xyCAVIMqlmjvn1YxRfLx2ZIC3PLYajuKYiC
- HvqOSEfpj3IapBI3fNozHTh4wivNetwZF1L1qaA0P2g9+iuNr/mDknc/2Ip4lVs42VxF
- Op+509zLlLfbejoAGu1PFg9xSmqM++lAVn1GvqmVAM2KiuMoKhXRsmA0UwoR4fU4ux5Z
- XXe3tNxjy8bxS7BMJDh2ZZOlMfwUjz01MLBIG+yC2BPmF9gpkkQgQqUuM/oXFvXwD91T
- fJ14sXXkhvNgQhTIBaOf6aacVpNYO8SikkDSLqpCJzh3wqhuP0eYhW5k3o3lU68sO8oX
- Kz0w==
+ d=1e100.net; s=20230601; t=1723634430; x=1724239230;
+ h=content-transfer-encoding:mime-version:message-id:in-reply-to
+ :references:user-agent:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rPHo4qIf+PODNS2953SxUj/B6hWkDwsprlzBWxKDNY0=;
+ b=J915y5fq+Tt9V8pzYdeo8ZgfsENYYtQCL6PQMrmNztOjJELevn4Nv2e2oLoRMwBAxV
+ q9RXYFUJspvTOfZPaCRLf1qQ1i6LGcic9yBO5joesshQuYXbSfEC8A9oo5m3iQMzg+EK
+ 8XB0ALKnpXHxGBL94y3fVPE7nBK0xpjFpmOUReLg3D/8Iv+aqaGFTg5KWaZ3dsUsd3ss
+ K6uja6F4xjkfOtFMJD3cmgSNmvHDFJ4SjPryk5LNCQ8SJh95pUHmI6UdMk8DVwFKyAxc
+ YbNwNE0JDLvszypJXPiCzAJ+spIcg3ikzBeYK0JsTb7UPsioPSoSJp/GFX/S7E5Xodgo
+ EH0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWcShG+AybH6jseGwKL89MhJOcsja1GNAce1/XTqDRbKqsqwjO9ulMqRPYHIdKiXOI7HgUEAQc0/C9OWVfj3Qt6HkX1Fk0=
-X-Gm-Message-State: AOJu0YzvHjaAJyimLzBQFsp2jeHtOuLPIXCSX3u7PidrI1W7IsSJ9CmC
- 4lAiZTuqn+/XOA6O3BmItOcHdY7gIx61yqxQrFQhExNIh43l1iz37YMLnwnKSSKSnZ1ut0tC6eB
- uJKxalkNKOBmGQYF1RzqlbHmSvmxbXUHKypJGYPZap0jaBQoJSKCV
-X-Received: by 2002:a05:6512:318e:b0:530:adfe:8607 with SMTP id
- 2adb3069b0e04-532edc0f8a6mr1673708e87.51.1723632996354; 
- Wed, 14 Aug 2024 03:56:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEq6bLWp1ozOoIFs6OYzeozmK0O09vzOe1b64jICsSEYPwMLTnmZS8IilUiZHdZJFTHer7Vlw==
-X-Received: by 2002:a05:6512:318e:b0:530:adfe:8607 with SMTP id
- 2adb3069b0e04-532edc0f8a6mr1673683e87.51.1723632995913; 
- Wed, 14 Aug 2024 03:56:35 -0700 (PDT)
-Received: from [192.168.0.6] (ip-109-43-179-177.web.vodafone.de.
- [109.43.179.177]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ded31c5esm16211725e9.13.2024.08.14.03.56.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Aug 2024 03:56:35 -0700 (PDT)
-Message-ID: <5cbced6c-b9d8-4c6d-a271-9a07edb18009@redhat.com>
-Date: Wed, 14 Aug 2024 12:56:34 +0200
+ AJvYcCUJHBTHAUCW3Evir/bFGJNi2yne1oFnB1+kxD7xFwzSE8pcEeCSD/9q519qwRS30+UF19FQ7KWdinxIBUn5vUBe398itGM=
+X-Gm-Message-State: AOJu0YyKGGktBVIj6+93Ciu+CP+f5b/sm6sLaSLZFIHtvPnN5s+9e2iZ
+ QA/nTgescdvGiVNAsfeANuf7xIe/6nI+g5kmN+5tK11IiOe2hduZpPmFNmeS1ag=
+X-Google-Smtp-Source: AGHT+IEqb64zeFn8ESlig7HtnrVL5Wi3S5jZqdXNnsSAHIQtaYEWs2rq1eXGjwd0BBJ+0FJOxgAl0A==
+X-Received: by 2002:a17:907:c88a:b0:a7a:a2e3:3737 with SMTP id
+ a640c23a62f3a-a8366d42d8amr160215666b.28.1723634429884; 
+ Wed, 14 Aug 2024 04:20:29 -0700 (PDT)
+Received: from meli-email.org (adsl-26.37.6.162.tellas.gr. [37.6.162.26])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a80f3f48ecasm160914266b.43.2024.08.14.04.20.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Aug 2024 04:20:29 -0700 (PDT)
+Date: Wed, 14 Aug 2024 14:19:19 +0300
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+To: Junjie Mao <junjie.mao@intel.com>, pbonzini@redhat.com
+Cc: alex.bennee@linaro.org, armbru@redhat.com, berrange@redhat.com,
+ gustavo.romero@linaro.org, mads@ynddal.dk, marcandre.lureau@redhat.com,
+ peter.maydell@linaro.org, philmd@linaro.org, pierrick.bouvier@linaro.org,
+ qemu-devel@nongnu.org, richard.henderson@linaro.org, rowan.hart@intel.com,
+ stefanha@redhat.com, thuth@redhat.com, zhao1.liu@intel.com
+Subject: Re: [RFC PATCH 0/2] meson: Specify Rust edition by rust_std=20XX
+User-Agent: meli 0.8.7
+References: <20240814090820.1251026-1-junjie.mao@intel.com>
+In-Reply-To: <20240814090820.1251026-1-junjie.mao@intel.com>
+Message-ID: <i7gu3.q2sbbwkiiqsk@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 02/10] target/s390: Convert CPU to Resettable
- interface
-To: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>,
- Claudio Imbrenda <imbrenda@linux.ibm.com>, Nico Boehr <nrb@linux.ibm.com>
-References: <20240813165250.2717650-1-peter.maydell@linaro.org>
- <20240813165250.2717650-3-peter.maydell@linaro.org>
- <a405e619-bb51-4309-a4e2-d23b4df550f3@linaro.org>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <a405e619-bb51-4309-a4e2-d23b4df550f3@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=utf-8; format=flowed
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.135,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,23 +100,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/08/2024 01.03, Richard Henderson wrote:
-> On 8/14/24 02:52, Peter Maydell wrote:
->>   static void sigp_cpu_reset(CPUState *cs, run_on_cpu_data arg)
->>   {
->> -    S390CPU *cpu = S390_CPU(cs);
->> -    S390CPUClass *scc = S390_CPU_GET_CLASS(cpu);
->>       SigpInfo *si = arg.host_ptr;
->>       cpu_synchronize_state(cs);
->> -    scc->reset(cs, S390_CPU_RESET_NORMAL);
->> +    resettable_reset(OBJECT(cs), RESET_TYPE_COLD);
-> 
-> NORMAL, not COLD here?
-> 
-> Otherwise,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+On Wed, 14 Aug 2024 12:08, Junjie Mao <junjie.mao@intel.com> wrote:
+>The official way to specify Rust edition in meson is the rust_std build option
+>[1]. It is used for generating --edition rustc options and filling
+>rust-project.json which provides project layout information to
+>rust-analyzer. Specifying Rust edition by rust_args instead causes meson to
+>generate "edition": "--edition" in rust-project.json, which is invalid.
+>
+>Replace "--edition" rust_args with overriding of rust_std and build.rust_std to
+>fix the generated rust-project.json.
+>
+>The rust_std option is part of the build environment and has two forms: rust_std
+>for the host machine and build.rust_std for the build machine. Specify both in
+>meson.build for completeness.
+>
+>The default_options argument of project() is not used because it does not work
+>for rust_std in subprojects in meson 1.5.1.
+>
+>This series is based on Paolo's refinement [2] to Manos's rust-pl011-rfc-v6
+>[3]. Feel free to squash these changes into that series.
+>
+>[1] https://github.com/mesonbuild/meson/pull/7934
+>[2] https://gitlab.com/bonzini/qemu/-/tree/rust-for-manos
+>[3] https://lore.kernel.org/qemu-devel/rust-pl011-rfc-v6.git.manos.pitsidianakis@linaro.org
+>
+>Junjie Mao (2):
+>  meson: subprojects: Specify Rust edition by rust_std=20XX
+>  rust: Specify Rust edition by rust_std=20XX
+>
+> rust/hw/char/pl011/meson.build                                | 4 +---
+> rust/meson.build                                              | 4 +---
+> rust/qemu-api/meson.build                                     | 2 +-
+> subprojects/packagefiles/arbitrary-int-1-rs/meson.build       | 4 +---
+> subprojects/packagefiles/bilge-impl-0.2-rs/meson.build        | 2 +-
+> subprojects/packagefiles/either-1-rs/meson.build              | 2 +-
+> subprojects/packagefiles/itertools-0.11-rs/meson.build        | 2 +-
+> subprojects/packagefiles/proc-macro-error-1-rs/meson.build    | 2 +-
+> .../packagefiles/proc-macro-error-attr-1-rs/meson.build       | 2 +-
+> subprojects/packagefiles/proc-macro2-1-rs/meson.build         | 2 +-
+> subprojects/packagefiles/quote-1-rs/meson.build               | 2 +-
+> subprojects/packagefiles/syn-2-rs/meson.build                 | 2 +-
+> subprojects/packagefiles/unicode-ident-1-rs/meson.build       | 4 +---
+> 13 files changed, 13 insertions(+), 21 deletions(-)
+>
+>--
+>2.30.2
 
-With that fixed:
-Acked-by: Thomas Huth <thuth@redhat.com>
+Thank you Junjie, I have applied the changes to the next version I will 
+be posting. Cheers!
 
+Manos
 
