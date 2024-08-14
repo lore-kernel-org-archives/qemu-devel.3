@@ -4,86 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB8C1C52D7B
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 12:33:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4027BC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 12:33:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seDBl-00051N-VO; Wed, 14 Aug 2024 08:33:18 -0400
+	id 1seDC2-0006RZ-6P; Wed, 14 Aug 2024 08:33:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1seDBh-0004qO-Dl
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 08:33:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1seDBy-0006Cq-Jg
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 08:33:31 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1seDBf-0002CV-E5
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 08:33:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723638789;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6Tlp6b5IFC7GwPxJeEHaxbBS24bb+9eJoPudWhL56zQ=;
- b=DIo60mG4Gb+XtZXzucUwqgelfbwccoy3tAaHK8NJaVS77JlZnyD4s5MMZBGT+UrYRFqPsn
- 8sKZAFRi5Klf0SnJNaoVQNp16AHrbFhWTEUcZd4Ees5JU+2lchuAZG38vMEhIV1vgBeGzQ
- wxwg0lqJ1XL3SzM/SSJwEl51XsFkUE0=
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
- [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-640-vqnUmYzmNumyaL_Frn7-eg-1; Wed, 14 Aug 2024 08:33:06 -0400
-X-MC-Unique: vqnUmYzmNumyaL_Frn7-eg-1
-Received: by mail-ot1-f69.google.com with SMTP id
- 46e09a7af769-709399c7828so10352247a34.3
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 05:33:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723638786; x=1724243586;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6Tlp6b5IFC7GwPxJeEHaxbBS24bb+9eJoPudWhL56zQ=;
- b=fTySVsBYTBjaTpzbDBri9NgAre0kcaLhN219nHEOXfHy1XfMwZOd11b1K76Wvo0N1y
- 4cbsM3+vzeI/b7nPSziDgh7jjbWDU2Cr/FMhd9jOLjraWIqdj3ivZOzP/SfK3BnmvvR7
- Xl7DQHQo7zS4Ay32xWjgU4vGJPSsujDFI44x/qqB0D8nI1juXSTacBsjdI8vREFVnJQQ
- sE6Wqt/FeJrjKUeNcZpmEwDbS9VGZETzBkv5xkMuKyMZAAoSTthq6Hl/y9+/JVFE+jg9
- GfP18uKVKd6+Enig6oVnVwumSIKXHZWhYFIcx9KLwuwnyYnBPBdopmEjEwYdKHbf7uxm
- xbYA==
-X-Gm-Message-State: AOJu0Yxclt98uPsulkoFgSgnoQilrAq4bO6S2WC422sKs4HeTLElI1eZ
- V6OWryquAqbN7tjVJMpYN7n3Idi2CJLmlOzI86ecDTF8Ro0IHvPJPYv3y0sfx5+JOSgaSyEVCZ0
- t3qKMc8gjWCfFCIZ2slxKG9Ysg0zvK8FCf5yvg9BYv4805vk2fx21BpTHsbVuvTjGoPWg9Jiknf
- Utbnwy4DZrIK0WCUzkb4YvLAVFjxQ=
-X-Received: by 2002:a05:6830:3156:b0:709:46be:66df with SMTP id
- 46e09a7af769-70c9d932ad9mr2170737a34.11.1723638785743; 
- Wed, 14 Aug 2024 05:33:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEqrTjEbVjMoQ059B7kbIg1Pix18Ebr05WsltagdI4dIIorJ+ziNDLKSCPcUf+cCM+dflUq/3VBWizSSC57VkA=
-X-Received: by 2002:a05:6830:3156:b0:709:46be:66df with SMTP id
- 46e09a7af769-70c9d932ad9mr2170710a34.11.1723638785300; Wed, 14 Aug 2024
- 05:33:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1seDBv-0002Di-5R
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 08:33:29 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WkSJh1Qcmz6K99w;
+ Wed, 14 Aug 2024 20:30:28 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 3A101140A78;
+ Wed, 14 Aug 2024 20:33:23 +0800 (CST)
+Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 14 Aug
+ 2024 13:33:22 +0100
+Date: Wed, 14 Aug 2024 13:33:21 +0100
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+CC: Shiju Jose <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ <linux-kernel@vger.kernel.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v7 01/10] acpi/generic_event_device: add an APEI error
+ device
+Message-ID: <20240814133321.00006401@Huawei.com>
+In-Reply-To: <0be6db8d06b3abab551f24dcc645d46d72d3f668.1723591201.git.mchehab+huawei@kernel.org>
+References: <cover.1723591201.git.mchehab+huawei@kernel.org>
+ <0be6db8d06b3abab551f24dcc645d46d72d3f668.1723591201.git.mchehab+huawei@kernel.org>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20240813153922.311788-1-jmarcin@redhat.com>
- <20240813153922.311788-3-jmarcin@redhat.com>
- <CAFEAcA9BWOkSmNh_b7HcNgfD429L1iLrjYTHWBJKDP2dJYCjCA@mail.gmail.com>
-In-Reply-To: <CAFEAcA9BWOkSmNh_b7HcNgfD429L1iLrjYTHWBJKDP2dJYCjCA@mail.gmail.com>
-From: Juraj Marcin <jmarcin@redhat.com>
-Date: Wed, 14 Aug 2024 14:32:54 +0200
-Message-ID: <CAC2qdxAfvKubvO7fs4KF8dy_+Ad5kbAaxyn2P0FCDL-zkhEiMw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] reset: Add RESET_TYPE_WAKEUP
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, David Hildenbrand <david@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.135,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100001.china.huawei.com (7.191.160.183) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,110 +69,68 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Aug 13, 2024 at 6:37=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
->
-> On Tue, 13 Aug 2024 at 16:39, Juraj Marcin <jmarcin@redhat.com> wrote:
-> >
-> > Some devices need to distinguish cold start reset from waking up from a
-> > suspended state. This patch adds new value to the enum, and updates the
-> > i386 wakeup method to use this new reset type.
-> >
-> > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-> > Reviewed-by: David Hildenbrand <david@redhat.com>
-> > ---
-> >  docs/devel/reset.rst    | 8 ++++++++
-> >  hw/i386/pc.c            | 2 +-
-> >  include/hw/resettable.h | 2 ++
-> >  3 files changed, 11 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/docs/devel/reset.rst b/docs/devel/reset.rst
-> > index 9746a4e8a0..a7c9467313 100644
-> > --- a/docs/devel/reset.rst
-> > +++ b/docs/devel/reset.rst
-> > @@ -44,6 +44,14 @@ The Resettable interface handles reset types with an=
- enum ``ResetType``:
-> >    value on each cold reset, such as RNG seed information, and which th=
-ey
-> >    must not reinitialize on a snapshot-load reset.
-> >
-> > +``RESET_TYPE_WAKEUP``
-> > +  This type is called for a reset when the system is being woken-up fr=
-om a
-> > +  suspended state using the ``qemu_system_wakeup()`` function. If the =
-machine
-> > +  needs to reset its devices in its ``MachineClass::wakeup()`` method,=
- this
-> > +  reset type should be used, so devices can differentiate system wake-=
-up from
-> > +  other reset types. For example, a virtio-mem device must not unplug =
-its
-> > +  memory during wake-up as that would clear the guest RAM.
-> > +
-> >  Devices which implement reset methods must treat any unknown ``ResetTy=
-pe``
-> >  as equivalent to ``RESET_TYPE_COLD``; this will reduce the amount of
-> >  existing code we need to change if we add more types in future.
-> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> > index ccb9731c91..49efd0a997 100644
-> > --- a/hw/i386/pc.c
-> > +++ b/hw/i386/pc.c
-> > @@ -1716,7 +1716,7 @@ static void pc_machine_reset(MachineState *machin=
-e, ResetType type)
-> >  static void pc_machine_wakeup(MachineState *machine)
-> >  {
-> >      cpu_synchronize_all_states();
-> > -    pc_machine_reset(machine, RESET_TYPE_COLD);
-> > +    pc_machine_reset(machine, RESET_TYPE_WAKEUP);
-> >      cpu_synchronize_all_post_reset();
-> >  }
->
-> I'm happy (following discussion in the previous thread)
-> that 'wakeup' is the right reset event to be using here.
-> But looking at the existing code for qemu_system_wakeup()
-> something seems odd here. qemu_system_wakeup() calls
-> the MachineClass::wakeup method if it's set, and does
-> nothing if it's not. The PC implementation of that calls
-> pc_machine_reset(), which does a qemu_devices_reset(),
-> which does a complete three-phase reset of the system.
-> But if the machine doesn't implement wakeup then we
-> never reset the system at all.
->
-> Shouldn't qemu_system_wakeup() do a qemu_devices_reset()
-> if there's no MachineClass::wakeup, in a similar way to
-> how qemu_system_reset() does a qemu_devices_reset()
-> if there's no MachineClass::reset method ? Having the
-> wakeup event be "sometimes this will do a RESET_TYPE_WAKEUP
-> but sometimes it won't" doesn't seem right to me...
+On Wed, 14 Aug 2024 01:23:23 +0200
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-From my understanding that I have gathered from the code (but please,
-someone correct me if I am wrong), this is machine specific. Some
-machine types might not support suspend+wake-up at all. The support
-has to be explicitly advertised through qemu_register_wakeup_support()
-(for example, aarch64 with a generic virt machine type does not
-advertise support). Even if the machine type advertises
-suspend+wake-up support, it might not need to do anything machine
-specific. This is the case of pSeries PowerPC machine (sPAPR) that
-advertises support, but does not implement MachineClass::wakeup()
-method as nothing needs to change in the machine state. [1]
+> Adds a generic error device to handle generic hardware error
+> events as specified at ACPI 6.5 specification at 18.3.2.7.2:
+> https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#event-notification-for-generic-error-sources
+> using HID PNP0C33.
+> 
+> The PNP0C33 device is used to report hardware errors to
+> the guest via ACPI APEI Generic Hardware Error Source (GHES).
+> 
+> Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+> ---
+>  hw/acpi/aml-build.c                    | 10 ++++++++++
+>  hw/acpi/generic_event_device.c         |  8 ++++++++
+>  include/hw/acpi/acpi_dev_interface.h   |  1 +
+>  include/hw/acpi/aml-build.h            |  2 ++
+>  include/hw/acpi/generic_event_device.h |  1 +
+>  5 files changed, 22 insertions(+)
+> 
+> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> index 6d4517cfbe3d..cb167523859f 100644
+> --- a/hw/acpi/aml-build.c
+> +++ b/hw/acpi/aml-build.c
+> @@ -2520,3 +2520,13 @@ Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source)
+>  
+>      return var;
+>  }
+> +
+> +/* ACPI 5.0: 18.3.2.6.2 Event Notification For Generic Error Sources */
 
-So, if a restart during wake-up happens, it can be differentiated with
-the wake-up reset type, and if the machine type does not need to reset
-its devices during wake-up, there is no reset that needs to be
-differentiated.
+Given this section got a rename maybe the comment should mention old
+name and current name for the section?
 
-[1]: https://gitlab.com/qemu-project/qemu/-/blob/a733f37aef3b7d1d33bfe2716a=
-f88cdfd67ba64e/hw/ppc/spapr.c?#L3155
+> +Aml *aml_error_device(void)
+> +{
+> +    Aml *dev = aml_device(ACPI_APEI_ERROR_DEVICE);
+> +    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0C33")));
+> +    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
+> +
+> +    return dev;
+> +}
+> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+> index 15b4c3ebbf24..1673e9695be3 100644
+> --- a/hw/acpi/generic_event_device.c
+> +++ b/hw/acpi/generic_event_device.c
+> @@ -26,6 +26,7 @@ static const uint32_t ged_supported_events[] = {
+>      ACPI_GED_PWR_DOWN_EVT,
+>      ACPI_GED_NVDIMM_HOTPLUG_EVT,
+>      ACPI_GED_CPU_HOTPLUG_EVT,
+> +    ACPI_GED_ERROR_EVT
 
->
-> thanks
-> -- PMM
->
+trailing comma missing.
 
---=20
-Juraj Marcin
 
 
