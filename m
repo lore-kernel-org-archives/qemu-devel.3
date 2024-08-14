@@ -4,91 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B168BC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 07:03:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C422C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 07:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1se81m-0003UG-8k; Wed, 14 Aug 2024 03:02:38 -0400
+	id 1se86E-0007yK-8l; Wed, 14 Aug 2024 03:07:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1se81j-0003TY-GK
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 03:02:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1se86C-0007wp-7O
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 03:07:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1se81h-0007QO-CU
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 03:02:35 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1se86A-0007xt-KY
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 03:07:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723618951;
+ s=mimecast20190719; t=1723619230;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CkneSoPm6+Orf9AXwbLH3XXYg1RSUbNwxOq8JRHqSsw=;
- b=H9/mKXLUZenzVUxTiSYyoU2Ph8n5eGnKoJPWbadlXr5CUffaBBkQc1pq2YBkNMwFWx7ixN
- VEBSjO/yMDNmdM9nh9lXRzrYi9IyW+5ZVlrnirAfcS+Ubm8PH2ouG/j9KrfiyhzAiTMRPE
- /qrxtQ/i9Oueug7eD8vQgFmN3qbi4Ik=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aixfq3msU3vKLm2ITSkUT14V/Ja+F+Io6bU04msq8Z8=;
+ b=LTn71ts0XWAD0tMycNlVipQt3ex0yL06s1SZ8gXE66vX4nFMoe8BY1NE7bp8P+TFvVhAcn
+ VPZ2XR5+zJOKiB0mTkK1+EXO3359wGGSmhgsVYhnN9y5Z9S+RCCUufQqwouPkDdJzJzQTQ
+ 7WmaTjAQxdeetWWIQFjEihqrnXBQmT8=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-hZy28YcGNceq7c3La8jIMg-1; Wed, 14 Aug 2024 03:02:28 -0400
-X-MC-Unique: hZy28YcGNceq7c3La8jIMg-1
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-52efe4c2261so8253391e87.1
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 00:02:28 -0700 (PDT)
+ us-mta-623-ckWe7dDEPIGhBUhd5aI9zw-1; Wed, 14 Aug 2024 03:07:07 -0400
+X-MC-Unique: ckWe7dDEPIGhBUhd5aI9zw-1
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-a7a83f54fdeso509515666b.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 00:07:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723618947; x=1724223747;
+ d=1e100.net; s=20230601; t=1723619227; x=1724224027;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CkneSoPm6+Orf9AXwbLH3XXYg1RSUbNwxOq8JRHqSsw=;
- b=qpwtAreY+wh3UnEQJZedMOoM7gHp/pnh9l6CZetV4YTT85C5SDfUlT5RrkbzxqAHV2
- e2dSuOnDa5dtG2sJyRJ6naBMO3G25TMtOqw0Nqs3IWia/6FFL5ztM1h5nexseDR48mCI
- /6E0ED95Du8W09SV7N7D5DCK9t/ApFP0+BCfyyszXfloSeBnz86vUQnkdSyRXg03t0Ui
- MmXHAwCOjLvcrEtEKT/b05Q2QN14+4e1HgbVJfj3Dk91GSpSvt8yhc/jUeMF77HsyoW9
- WFc4TjazisxB8Awj40f/tPGuon2bJEvJHSN2H4isDV0PjyfzGGleQ9gSVUqHyQ/lfKPs
- P+QQ==
+ bh=aixfq3msU3vKLm2ITSkUT14V/Ja+F+Io6bU04msq8Z8=;
+ b=dzZ5Fhtr9KbVjfq9qM6QJEmolwnsFiUuwalyRg/0M14L2hWiTJuNYHPDEVrVYdXQR5
+ ngFBIGiYABvC+MIaLWPLA+x5JIxBcua6NhoTBoPUmq7Dx7/fBu3pBX9GgJE4WQu9FxBS
+ kzYttckcX/csEb1AhVxwh0cU+i+Xc++va5ikQebfdly6PAcsCXaNct4btnAPiOLKIr0K
+ FMeHhacy+f407Uy6maHBlX/kqpGCkIfcbWDlxSKto3fXEKbdCAzsO/z87FlSAGR5mv61
+ u2qSNzhQRRdsDCc4sd9SLI3l5/4yc1LcXNS9WQ1FEFlipIX5hxA/dzt+2m6WjD0JoJB4
+ /4UQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXPo8+AYne/OP5aDDsc74g5VDPmVPgUshFTZJtVieCRuKt0FymmXdayhxHP76HfiwAP3WOJuBpa5+HF@nongnu.org
-X-Gm-Message-State: AOJu0YzEe6G2krKzhAp6T7/4ZRZLaEzAoKElg+vfs/TWOBE2Us7QB4Xi
- cZaIsWbPWC18NA4igi7VHzF8vaxYHCc30/Q1QGWnAo/4k2DzD8XpR4ummAkWHERdw3Lno1gU2zH
- 2FxwVxnXBCA6V2unR4AT82X8Bpw32G0RiYLlsS1lE9TnCWx65lenX
-X-Received: by 2002:a05:6512:2203:b0:52e:9904:71e with SMTP id
- 2adb3069b0e04-532eda8a842mr1127455e87.28.1723618947100; 
- Wed, 14 Aug 2024 00:02:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGIKtWtFEfBIrSCWXi0sYdMauFUo+2G9i6jwqT/TqgSJvZ4TvYm2njCQfbe/PtMFzK7G3IsKQ==
-X-Received: by 2002:a05:6512:2203:b0:52e:9904:71e with SMTP id
- 2adb3069b0e04-532eda8a842mr1127404e87.28.1723618946082; 
- Wed, 14 Aug 2024 00:02:26 -0700 (PDT)
+ AJvYcCWSNpEfLVso4r7MjL7QUtZJTkUcIifYTsL0arX56dYfzcTxIOEQN+4h5Q/525v/dDqjqWJFggQgBScrYvInTQOWgFtxjZU=
+X-Gm-Message-State: AOJu0YzfrJpjwFxme8MjX/88sufyp0ECUHrwlOC66q/uyW2QLb5lVBZh
+ wPOI+WdpvIQzhj+pb3Q0R7saAeU2kY1om6/eCLMTPiXiOMEIreszC4BBIpdc0GcB7fCKQ/o+vO5
+ vKfAAiiu+6gu69TF6HwBVzev/HKM8Wit97ZV2FZECyCkHbnZ28ppB
+X-Received: by 2002:a17:907:f707:b0:a7a:cc10:667c with SMTP id
+ a640c23a62f3a-a8366c30da9mr117171866b.16.1723619226615; 
+ Wed, 14 Aug 2024 00:07:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHbBds23XHAUUkZQGp3vLwvFgu0MNt0KE3bGcRJ+z/5Zinju3k+5DQCGKMvpV+FzNUmdpzXcQ==
+X-Received: by 2002:a17:907:f707:b0:a7a:cc10:667c with SMTP id
+ a640c23a62f3a-a8366c30da9mr117165466b.16.1723619225708; 
+ Wed, 14 Aug 2024 00:07:05 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc7:346:dcde:9c09:aa95:551d:d374])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a80f3f49748sm134791466b.4.2024.08.14.00.02.21
+ a640c23a62f3a-a80f411bbfcsm136904866b.135.2024.08.14.00.06.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Aug 2024 00:02:24 -0700 (PDT)
-Date: Wed, 14 Aug 2024 03:02:18 -0400
+ Wed, 14 Aug 2024 00:07:04 -0700 (PDT)
+Date: Wed, 14 Aug 2024 03:06:54 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-Cc: "Liu, Yi L" <yi.l.liu@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "Peng, Chao P" <chao.p.peng@intel.com>,
- =?iso-8859-1?Q?Cl=E9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- Jason Wang <jasowang@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Michael Roth <michael.roth@amd.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ Weiwei Li <liwei1518@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Beraldo Leal <bleal@redhat.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Eric Auger <eric.auger@redhat.com>, Song Gao <gaosong@loongson.cn>,
+ qemu-arm@nongnu.org, Peter Xu <peterx@redhat.com>,
+ Jiri Pirko <jiri@resnulli.us>, Eric Blake <eblake@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, qemu-s390x@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ John Snow <jsnow@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, qemu-riscv@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v3 2/2] intel_iommu: Make PASID-cache and PIOTLB type
- invalid in legacy mode
-Message-ID: <20240814030202-mutt-send-email-mst@kernel.org>
-References: <20240814022654.2612780-1-zhenzhong.duan@intel.com>
- <20240814022654.2612780-3-zhenzhong.duan@intel.com>
- <a08417ee-8315-45a4-b065-c6787db92f4a@intel.com>
- <SJ0PR11MB6744F3FD7B8B23AF47E2A09292872@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ Jason Wang <jasowang@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+Subject: Re: [PATCH v2 16/21] virtio-net: Use replay_schedule_bh_event for
+ bhs that affect machine state
+Message-ID: <20240814030308-mutt-send-email-mst@kernel.org>
+References: <20240813202329.1237572-1-alex.bennee@linaro.org>
+ <20240813202329.1237572-17-alex.bennee@linaro.org>
+ <20240813164631-mutt-send-email-mst@kernel.org>
+ <D3FEPPLH78YW.3BYA9B4HYGN1U@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <SJ0PR11MB6744F3FD7B8B23AF47E2A09292872@SJ0PR11MB6744.namprd11.prod.outlook.com>
+In-Reply-To: <D3FEPPLH78YW.3BYA9B4HYGN1U@gmail.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -114,89 +133,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Aug 14, 2024 at 03:05:33AM +0000, Duan, Zhenzhong wrote:
-> 
-> 
-> >-----Original Message-----
-> >From: Liu, Yi L <yi.l.liu@intel.com>
-> >Subject: Re: [PATCH v3 2/2] intel_iommu: Make PASID-cache and PIOTLB
-> >type invalid in legacy mode
+On Wed, Aug 14, 2024 at 04:05:34PM +1000, Nicholas Piggin wrote:
+> On Wed Aug 14, 2024 at 6:48 AM AEST, Michael S. Tsirkin wrote:
+> > On Tue, Aug 13, 2024 at 09:23:24PM +0100, Alex Bennée wrote:
+> > > From: Nicholas Piggin <npiggin@gmail.com>
+> > > 
+> > > The regular qemu_bh_schedule() calls result in non-deterministic
+> > > execution of the bh in record-replay mode, which causes replay failure.
+> > > 
+> > > Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+> > > Reviewed-by: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+> > > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> > > Message-Id: <20240813050638.446172-9-npiggin@gmail.com>
+> > > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> > > ---
+> > >  hw/net/virtio-net.c | 11 ++++++-----
+> > >  1 file changed, 6 insertions(+), 5 deletions(-)
+> > > 
+> > > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> > > index 08aa0b65e3..10ebaae5e2 100644
+> > > --- a/hw/net/virtio-net.c
+> > > +++ b/hw/net/virtio-net.c
+> > > @@ -40,6 +40,7 @@
+> > >  #include "migration/misc.h"
+> > >  #include "standard-headers/linux/ethtool.h"
+> > >  #include "sysemu/sysemu.h"
+> > > +#include "sysemu/replay.h"
+> > >  #include "trace.h"
+> > >  #include "monitor/qdev.h"
+> > >  #include "monitor/monitor.h"
+> > > @@ -417,7 +418,7 @@ static void virtio_net_set_status(struct VirtIODevice *vdev, uint8_t status)
+> > >                  timer_mod(q->tx_timer,
+> > >                                 qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_timeout);
+> > >              } else {
+> > > -                qemu_bh_schedule(q->tx_bh);
+> > > +                replay_bh_schedule_event(q->tx_bh);
+> > >              }
+> > >          } else {
+> > >              if (q->tx_timer) {
+> > > @@ -2672,7 +2673,7 @@ static void virtio_net_tx_complete(NetClientState *nc, ssize_t len)
+> > >           */
+> > >          virtio_queue_set_notification(q->tx_vq, 0);
+> > >          if (q->tx_bh) {
+> > > -            qemu_bh_schedule(q->tx_bh);
+> > > +            replay_bh_schedule_event(q->tx_bh);
+> > >          } else {
+> > >              timer_mod(q->tx_timer,
+> > >                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_timeout);
+> > > @@ -2838,7 +2839,7 @@ static void virtio_net_handle_tx_bh(VirtIODevice *vdev, VirtQueue *vq)
+> > >          return;
+> > >      }
+> > >      virtio_queue_set_notification(vq, 0);
+> > > -    qemu_bh_schedule(q->tx_bh);
+> > > +    replay_bh_schedule_event(q->tx_bh);
+> > >  }
+> > >  
+> > >  static void virtio_net_tx_timer(void *opaque)
+> > > @@ -2921,7 +2922,7 @@ static void virtio_net_tx_bh(void *opaque)
+> > >      /* If we flush a full burst of packets, assume there are
+> > >       * more coming and immediately reschedule */
+> > >      if (ret >= n->tx_burst) {
+> > > -        qemu_bh_schedule(q->tx_bh);
+> > > +        replay_bh_schedule_event(q->tx_bh);
+> > >          q->tx_waiting = 1;
+> > >          return;
+> > >      }
+> > > @@ -2935,7 +2936,7 @@ static void virtio_net_tx_bh(void *opaque)
+> > >          return;
+> > >      } else if (ret > 0) {
+> > >          virtio_queue_set_notification(q->tx_vq, 0);
+> > > -        qemu_bh_schedule(q->tx_bh);
+> > > +        replay_bh_schedule_event(q->tx_bh);
+> > >          q->tx_waiting = 1;
+> > >      }
+> > >  }
+> > > -- 
+> > > 2.39.2
 > >
-> >On 2024/8/14 10:26, Zhenzhong Duan wrote:
-> >> In vtd_process_inv_desc(), VTD_INV_DESC_PC and VTD_INV_DESC_PIOTLB
-> >are
-> >> bypassed without scalable mode check. These two types are not valid
-> >> in legacy mode and we should report error.
-> >>
-> >> Fixes: 4a4f219e8a1 ("intel_iommu: add scalable-mode option to make
-> >scalable mode work")
 > >
-> >4a4f219e8a10 would be better. :)
+> > Is this really the only way to fix this? I do not think
+> > virtio has any business knowing about replay.
+> > What does this API do, even? BH but not broken with replay?
+> > Do we ever want replay broken? Why not fix qemu_bh_schedule?
+> > And when we add another feature which we do not want to break
+> > will we do foo_bar_replay_bh_schedule_event or what?
 > 
-> Ah, OK, Michael, let me know if you want me send a new version.
-> 
-> Thanks
-> Zhenzhong
+> I agree with you. We need to do this (a couple of other hw
+> subsystems already do and likely some are still broken vs
+> replay and would need to be converted), but I think it's
+> mostly a case of bad naming. You're right the caller should
+> not know about replay at all, what it should be is whether
+> the event is for the target machine or the host harness,
+> same as timers are VIRTUAL / HOST.
+> So I think we just need to make a qemu_bh_schedule_<type>,
+> or qemu_bh_scheudle_event(... QEMU_EVENT_VIRTUAL/HOST/etc).
 
+Or just pass QEMUClockType?
 
-Yes pls, also pls Cc me on the cover letter.
-
-> >
-> >> Suggested-by: Yi Liu <yi.l.liu@intel.com>
-> >> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> >> Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
-> >> Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-> >> ---
-> >>   hw/i386/intel_iommu.c | 22 +++++++++++-----------
-> >>   1 file changed, 11 insertions(+), 11 deletions(-)
-> >>
-> >> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> >> index 68cb72a481..90cd4e5044 100644
-> >> --- a/hw/i386/intel_iommu.c
-> >> +++ b/hw/i386/intel_iommu.c
-> >> @@ -2763,17 +2763,6 @@ static bool
-> >vtd_process_inv_desc(IntelIOMMUState *s)
-> >>           }
-> >>           break;
-> >>
-> >> -    /*
-> >> -     * TODO: the entity of below two cases will be implemented in future
-> >series.
-> >> -     * To make guest (which integrates scalable mode support patch set in
-> >> -     * iommu driver) work, just return true is enough so far.
-> >> -     */
-> >> -    case VTD_INV_DESC_PC:
-> >> -        break;
-> >> -
-> >> -    case VTD_INV_DESC_PIOTLB:
-> >> -        break;
-> >> -
-> >>       case VTD_INV_DESC_WAIT:
-> >>           trace_vtd_inv_desc("wait", inv_desc.hi, inv_desc.lo);
-> >>           if (!vtd_process_wait_desc(s, &inv_desc)) {
-> >> @@ -2795,6 +2784,17 @@ static bool
-> >vtd_process_inv_desc(IntelIOMMUState *s)
-> >>           }
-> >>           break;
-> >>
-> >> +    /*
-> >> +     * TODO: the entity of below two cases will be implemented in future
-> >series.
-> >> +     * To make guest (which integrates scalable mode support patch set in
-> >> +     * iommu driver) work, just return true is enough so far.
-> >> +     */
-> >> +    case VTD_INV_DESC_PC:
-> >> +    case VTD_INV_DESC_PIOTLB:
-> >> +        if (s->scalable_mode) {
-> >> +            break;
-> >> +        }
-> >> +    /* fallthrough */
-> >>       default:
-> >>           error_report_once("%s: invalid inv desc: hi=%"PRIx64", lo=%"PRIx64
-> >>                             " (unknown type)", __func__, inv_desc.hi,
-> >
-> >--
-> >Regards,
-> >Yi Liu
+> I had started on a conversion once but not completed it.
+> I could resurrect if there is agreement on the API?
+> 
+> Thanks,
+> Nick
 
 
