@@ -4,53 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 826EEC52D7B
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 12:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E556FC52D7B
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 13:22:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seDS4-0000p0-3g; Wed, 14 Aug 2024 08:50:08 -0400
+	id 1seDw1-0001sc-No; Wed, 14 Aug 2024 09:21:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kamil@szczek.dev>)
- id 1seBtj-0007m7-B8; Wed, 14 Aug 2024 07:10:35 -0400
-Received: from mail-4317.proton.ch ([185.70.43.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kamil@szczek.dev>)
- id 1seBtg-0003pj-C6; Wed, 14 Aug 2024 07:10:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=szczek.dev;
- s=protonmail3; t=1723633822; x=1723893022;
- bh=9fYMUYs5VhM8NvGzYuEL1YV7KREso0N9pmZ2XGncD9A=;
- h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=dwkYq5lF2lrTidoNPqi3QLEhodXaov4UlQkJx8mVxDkU7Mp1FkyNkW6fR0QEwE1uy
- Ya0ik43rlDtkRg+ZPLmaU3rWVDUsro7a98Rf7f8Tkw5B27Z+Z2XUC77i4kMxWFle7e
- WHXDeC5kWFstkZE2UDYVJbRx9Gxn64/UPjJxKUf8Vy/Bi7iofn3yMovWoVf8Zmlvd6
- ab+C01gd7peeipW0V0zl9gBk3rSSaGUbPITQmzEWFrflz3VpSVi33cwRsTS8YuIFXH
- hv1C7T/aN9yywP6YH+2u/DKLUdVLqaooSat7UQiE2qdhvbPP67dra5u9WLHw/cbuob
- ccWjWNaDN2xhQ==
-Date: Wed, 14 Aug 2024 11:10:16 +0000
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-From: =?utf-8?Q?Kamil_Szcz=C4=99k?= <kamil@szczek.dev>
-Cc: "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
-Subject: [PATCH] hw/i386/pc: Warn about unsatisfied vmport deps
-Message-ID: <vsm1ly2eX009LRKgURcMp6qTYHWw1bZd3zg2GUbd4M90T91QvJRdKxiRS3rPl8PR96y2r890Am3Ajf4kQrwihn7-7hKBU9VicRPPtIRv_GI=@szczek.dev>
-Feedback-ID: 37679334:user:proton
-X-Pm-Message-ID: d53fa00ec7c0b54278ffa66bc4aaad817f9ee9c2
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1seDvz-0001qg-Fb
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:21:03 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1seDvj-0001oA-Vd
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:21:03 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-a7a91cdcc78so225817766b.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 06:20:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723641646; x=1724246446; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=+ELusBiHMjBzgMH5qmLDggCJaEIc3n6Pb1CFyeXfGy8=;
+ b=L5gV+wRx8pyyEBzn/QnLb33OrCrW9nmzUHEcFntKiCtAJ/yzW6kbriJgmZff7ZTTPY
+ srSdO0dkfcoUOJLxxEO4KzG0zLrdvGCvPZeREoEb0NnQVOy3WP7ArDb7bcKR8+NA/8Iv
+ HitgbmyKu44Si7if0bSqCA6HJ6Co3h91PLayIDWkfRF++LWlSONemaYXQyZDIBBN6ibx
+ BmYWsIhlCWoXxj+2af29xvcyFjkQm7JWGuNZQTtVC6sIS6IYT6fkxt1Rn4aDU9EJseTd
+ JL4z4y8m7+GQbtWM1gkilYKl425UpoTtBqvOSa0noaZhiLPJ4qSLaiZKMCZuXH6nYqK5
+ c65w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723641646; x=1724246446;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+ELusBiHMjBzgMH5qmLDggCJaEIc3n6Pb1CFyeXfGy8=;
+ b=cpsTJtU7eIgbnUE/N8z+fUL3hOR9XXeGPII2BTF+lVObrps7s8+fYH2BFCHppA2VDE
+ jZF9CvuhRN2xJN6iFtgyIcZewpb+5Gwm6sCuiQeFCVtwusQlLA+yY7TtxVWPtg6NHKfa
+ v4QRtbJsgRjNxrWe0TXNIH0x+r5iVDgxg/jaNpmELiQK5n2G1fjn+OvSDKqSxm+LO3xp
+ ga24ypwluPxJ9N/xvRhbUWY4TtfO7rIgEt7ECetdjGM8T+z02Sjrglb4rQPCOg2o2zJG
+ ExCA4M8QZXjyyb0WU7fYhu2MKRd60aIpVZVY5fO9g0OLpO2uKrr9Bg03I9IzCK36PgZR
+ XleA==
+X-Gm-Message-State: AOJu0YzhaS2qhF1JriPk+1/hrVHoXfil0W5u2XwmeVnhdz0lUWw+nMit
+ 5rSx3HlJaFe8s+C5wS0V1yqz1ZZo9V7XQS+HyZBt61W99DMkVhYyEO0cddgMjyrlYSvhlVRrs+G
+ r4f3PF+RO+uf9TEU5VVj63r3iQx5S6gFKRjaQrg==
+X-Google-Smtp-Source: AGHT+IEEHKv8zYHUukhAm3+M8SVgx2W29V1BSshsBtDQrn9BV5hJHtCuMNSbNU9jaYkyw1M0Ex7r/Khc+pYsS47mxQo=
+X-Received: by 2002:a05:6402:50c6:b0:5a2:65cb:7335 with SMTP id
+ 4fb4d7f45d1cf-5bea1c7ce61mr2557363a12.19.1723641645596; Wed, 14 Aug 2024
+ 06:20:45 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=185.70.43.17; envelope-from=kamil@szczek.dev;
- helo=mail-4317.proton.ch
+References: <20240813165250.2717650-1-peter.maydell@linaro.org>
+ <20240813165250.2717650-11-peter.maydell@linaro.org>
+ <d86ab67c-90cf-422f-aefc-1025a7e5a77b@linaro.org>
+In-Reply-To: <d86ab67c-90cf-422f-aefc-1025a7e5a77b@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 14 Aug 2024 14:20:34 +0100
+Message-ID: <CAFEAcA9XD1c517EUNrKXw2zpsMNg_gruBjqcTzQ9tK52KzmSZA@mail.gmail.com>
+Subject: Re: [PATCH for-9.2 10/10] hw: Remove device_phases_reset()
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ qemu-s390x@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, 
+ Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 14 Aug 2024 08:50:04 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,84 +95,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 4ccd5fe22feb95137d325f422016a6473541fe9f ('pc: add option
-to disable PS/2 mouse/keyboard'), the vmport will not be created unless
-the i8042 PS/2 controller is enabled. To not confuse users, let's add a
-warning if vmport was explicitly requested, but the i8042 controller is
-disabled. This also changes the behavior of vmport=3Dauto to take i8042
-controller availability into account.
+On Wed, 14 Aug 2024 at 01:53, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 8/14/24 02:52, Peter Maydell wrote:
+> > Currently we have transitional machinery between legacy reset
+> > and three phase reset that works in two directions:
+> >   * if you invoke three phase reset on a device which has set
+> >     theDeviceClass::legacy_reset method, we detect this in
+> >     device_get_transitional_reset() and arrange that we call
+> >     the legacy_reset method during the hold phase of reset
+> >   * if you invoke legacy reset on a device which implements
+> >     three phase reset, the default legacy_reset method is
+> >     device_phases_reset(), which does a three-phase reset
+> >     of the device
+> >
+> > However, we have now eliminated all the places which could invoke
+> > legacy reset on a device, which means that the function
+> > device_phases_reset() is never called -- it serves only as the value
+> > ofDeviceClass::legacy_reset that indicates that the subclass never
+> > overrode the legacy reset method.  So we can delete it, and instead
+> > check for legacy_reset != NULL.
+> >
+> > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> > ---
+> >   hw/core/qdev.c | 51 ++++++++++++--------------------------------------
+> >   1 file changed, 12 insertions(+), 39 deletions(-)
+>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>
+>
+> Is the reason we prioritize resettable_get_tr_func over rc->phases to allow for a legacy
+> device to be attached to a resettable bus?
 
-Signed-off-by: Kamil Szcz=C4=99k <kamil@szczek.dev>
----
- hw/i386/pc.c      | 4 ++++
- hw/i386/pc_piix.c | 3 ++-
- hw/i386/pc_q35.c  | 2 +-
- qemu-options.hx   | 4 ++--
- 4 files changed, 9 insertions(+), 4 deletions(-)
+It's to handle devices which implement only Device::legacy_reset.
+Those devices must have their legacy_reset function called
+(and I think it should always be the case that there are
+no rc->phases methods in that case). (All buses now are always
+3-phase aware, incidentally.)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index c74931d577..5bd8dd0350 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1100,6 +1100,10 @@ static void pc_superio_init(ISABus *isa_bus, bool cr=
-eate_fdctrl,
-     }
-=20
-     if (!create_i8042) {
-+        if (!no_vmport) {
-+            warn_report("vmport requires the i8042 controller to be enable=
-d");
-+        }
-+
-         return;
-     }
-=20
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index d9e69243b4..cf2e2e3e30 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -312,7 +312,8 @@ static void pc_init1(MachineState *machine, const char =
-*pci_type)
-=20
-     assert(pcms->vmport !=3D ON_OFF_AUTO__MAX);
-     if (pcms->vmport =3D=3D ON_OFF_AUTO_AUTO) {
--        pcms->vmport =3D xen_enabled() ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
-+        pcms->vmport =3D (xen_enabled() || !pcms->i8042_enabled)
-+            ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
-     }
-=20
-     /* init basic PC hardware */
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 9d108b194e..6c112d804d 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -278,7 +278,7 @@ static void pc_q35_init(MachineState *machine)
-=20
-     assert(pcms->vmport !=3D ON_OFF_AUTO__MAX);
-     if (pcms->vmport =3D=3D ON_OFF_AUTO_AUTO) {
--        pcms->vmport =3D ON_OFF_AUTO_ON;
-+        pcms->vmport =3D pcms->i8042_enabled ? ON_OFF_AUTO_ON : ON_OFF_AUT=
-O_OFF;
-     }
-=20
-     /* init basic PC hardware */
-diff --git a/qemu-options.hx b/qemu-options.hx
-index cee0da2014..0bc780a669 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -68,8 +68,8 @@ SRST
-=20
-     ``vmport=3Don|off|auto``
-         Enables emulation of VMWare IO port, for vmmouse etc. auto says
--        to select the value based on accel. For accel=3Dxen the default is
--        off otherwise the default is on.
-+        to select the value based on accel and i8042. For accel=3Dxen
-+        and/or i8042=3Doff the default is off otherwise the default is on.
-=20
-     ``dump-guest-core=3Don|off``
-         Include guest memory in a core dump. The default is on.
---=20
-2.45.0
+> I wonder if device_class_set_legacy_reset can simplify that, with
+>
+> static void do_legacy_reset(...)
+> {
+>      dc->legacy_reset(...);
+> }
+>
+> void device_class_set_legacy_reset(DeviceClass *dc, DeviceReset dev_reset)
+> {
+>      dc->legacy_reset = dev_reset;
+>
+>      /* Parent enter/exit are not invoked with a legacy child. */
+>      dc->resettable.enter = NULL;
+>      dc->resettable.exit = NULL;
+>      dc->resettable.hold = do_legacy_reset;
+> }
+>
+> Which would eliminate resettable_get_tr_func and the supporting layers completely.
 
+I did think about something like this but wasn't sure that there
+was much benefit from changing from one workaround to the other.
+But this does look like it's less complication than we have now.
+I'll come back to this if my idea about using coccinelle to make
+a mass conversion of legacy_reset to 3-phase doesn't pan out.
 
+thanks
+-- PMM
 
