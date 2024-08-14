@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9884C531DC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 17:13:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33261C52D7B
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 17:13:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seHXm-0000IC-CU; Wed, 14 Aug 2024 13:12:18 -0400
+	id 1seHXm-0000IM-BA; Wed, 14 Aug 2024 13:12:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1seHXe-00008t-5X
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 13:12:10 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1seHXf-0000AU-D8
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 13:12:12 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1seHXc-0006Cs-G3
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 13:12:09 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-201df0b2df4so842465ad.0
+ id 1seHXd-0006D2-69
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 13:12:11 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1fec34f94abso637775ad.2
  for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 10:12:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723655527; x=1724260327; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723655528; x=1724260328; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=C8jtLk0rS0EhtRCVLy6d5dSWwHGsq2dL7mHB8O5U19E=;
- b=zeEAHGBfCSAbIixCoDRrJ7O5y1lLmtbcYGX1IAVBts9a8oRVsT31WsJruJEFCfNxAx
- 6vdSys4VMT+VIDA7pcgGg7QrVW0epM2TiY/7/a+DxxY+tQ71ltfmNtPA+HnxA2Wa1pve
- yYQ6h5/5HOnzCfTflKyZW9dQoT/c9stUNZRRZF1xWx0th3C5BydB76abI/UUXpC2SOt9
- 1j49xFDxp8WqVXIqQtJtvW863n81Ls5LQ92+sEy47t7P6H5Z9xGDPbgPQcd5bBMc94lb
- aE+s9E/IDK8/LiFcEEZmpZgWlVf92IIQKaUGjvs+tq2ECO6lbOm2QNauw604Tch7RaZi
- 2Hpw==
+ bh=d7PkrlYQr/V3YMS3es97SiZgcfp3AW/tKZmcfuYfGEw=;
+ b=kf7g1y9Ey8R97LoppDxkenw136vJQ4PhuZrSQOsEKGkYQj5wBrPMvKNGB536gHMWqY
+ NHJ8qtXb48V+XIXQy2ZdpUpaY++PE7SmA84bfBgMJmw9KzZMIP0MGxz6BRSglKlswvw+
+ 3aD5R0PpfJNAOc0KbIBY679SZDL+N+iwXX6NHFPiDjgx9Wy7AJM2EpjtOolpIRy9gxcO
+ pld36CtomUNrTt/2+tc7YHEnSleQuK7MQB5jaaCPn24JDjwDiOMQfjlHt5A8YiALnmCp
+ jCh4EyAHVKRVPs1tm/AhCZvU5ZR2OiBjPUDYqDW85AA4mRVLCRLBrMZc4sxgmX+Bj5TM
+ L8cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723655527; x=1724260327;
+ d=1e100.net; s=20230601; t=1723655528; x=1724260328;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C8jtLk0rS0EhtRCVLy6d5dSWwHGsq2dL7mHB8O5U19E=;
- b=gnT/eswOSpFiVbvVoZrWOhv+IQPqs7dCfWH3r4hyROOTtj1G0PKGnrh11js4UDufdL
- wDyW2dayulfl2UnLjIhzeGNpp6jlWvN8fPPiw3vBnWyCD+c/EdDyVkkek1KO9TiAInt4
- q5DDc4/JMpXQHniyfBRsylPdP6QgvULRG5hrY0z6kPI4GoLGjIakZW/+ecCSsD2BKB2G
- ye0FlmX9sZ+aNRpHQHcmDPyYFsiGau+jOdbOcN2KvPkfPzdDePo+sMgaARZUk088dZrW
- XA3G+KVICt0/2nDMRbCFeWKJfKLp5a8/2D949Bqh5YNWJ4mJWWehYJPx/xochm69U4Gp
- iT8A==
-X-Gm-Message-State: AOJu0Yygqh/+ApSc3nj67yqGG5byV2Od3vvmwAjNngHcJyTVXMsDsQG+
- jhSOjrbvKhYuq6DPL3zdgqww+821gBj1TtEBS4QY9+Ozv6ceoHNIXQpBpzT3Oe2KiAX/Qwn2uqJ
- HvBs=
-X-Google-Smtp-Source: AGHT+IERRzizD6WdFAWCfPZg6Om1n+JiPPLwp3B/FbS7ZNeztWagWFiwUGTp5QjIt2c2704zR89fkw==
-X-Received: by 2002:a17:902:b68b:b0:201:cdfb:2919 with SMTP id
- d9443c01a7336-201d638d821mr32538115ad.8.1723655526725; 
- Wed, 14 Aug 2024 10:12:06 -0700 (PDT)
+ bh=d7PkrlYQr/V3YMS3es97SiZgcfp3AW/tKZmcfuYfGEw=;
+ b=PH1ltmBGUiyi/YZqTazVTkmXlXiVcCh76kO34Rx5ACAp2GMaBSrDBdoRcyNCWm15B4
+ Lg8l8OpMqkH8c+M0U9JDx1JN8SZCCeySGgj662Jkpnx44E0oGSXLUCuWzQ//mxN/3RqR
+ ug3Lw03GY4xcW0pZviD9ibFP622MCXqkfSqMGELcNATeuApIFX0ojC7ATBwctK98WlFw
+ 2BQKc6Ep9XeamdtPBvcirPwN3Uak+xFaie1CaF8GRHHZynTyJoYbRFxit9fWB8IYsGpk
+ T2CRRdoQ4Y/OtlONiTAyVPmIC40mES4fKc/7uTEFCXZ06MJ3dwl9ebit7Z+br98v7cS2
+ OSDg==
+X-Gm-Message-State: AOJu0Yz3Bj2UevzxCu9tEBWUhYDgFNeP54KRuZh+/qY7Y/Z2hJ4GRowy
+ Ozqe5HbUDpOAVx45sKIrBZExyhHiMHJMgOvqeH4Kd8bRtW5bIl1I21Wie1pkq7n5y6vIbTQgOIv
+ vHsQ=
+X-Google-Smtp-Source: AGHT+IH1edYhLET7/RIFW48bFtTCY7hghNR+eEBNjSEPgKc65lUBwapnO/P1culqyBP8m+YCz6d0NQ==
+X-Received: by 2002:a17:902:d2c4:b0:1fb:7b96:8467 with SMTP id
+ d9443c01a7336-201d651f85emr34242465ad.63.1723655527854; 
+ Wed, 14 Aug 2024 10:12:07 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::b861])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201cd1c8783sm31813895ad.245.2024.08.14.10.12.05
+ d9443c01a7336-201cd1c8783sm31813895ad.245.2024.08.14.10.12.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Aug 2024 10:12:06 -0700 (PDT)
+ Wed, 14 Aug 2024 10:12:07 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
@@ -73,17 +73,17 @@ Cc: Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 2/4] target/i386: fix build warning (gcc-12 -fsanitize=thread)
-Date: Wed, 14 Aug 2024 10:11:50 -0700
-Message-Id: <20240814171152.575634-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH 3/4] target/s390x: fix build warning (gcc-12 -fsanitize=thread)
+Date: Wed, 14 Aug 2024 10:11:51 -0700
+Message-Id: <20240814171152.575634-4-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240814171152.575634-1-pierrick.bouvier@linaro.org>
 References: <20240814171152.575634-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,39 +108,25 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Found on debian stable.
 
-../target/i386/kvm/kvm.c: In function ‘kvm_handle_rdmsr’:
-../target/i386/kvm/kvm.c:5345:1: error: control reaches end of non-void function [-Werror=return-type]
- 5345 | }
-      | ^
-../target/i386/kvm/kvm.c: In function ‘kvm_handle_wrmsr’:
-../target/i386/kvm/kvm.c:5364:1: error: control reaches end of non-void function [-Werror=return-type]
- 5364 | }
+../target/s390x/tcg/translate.c: In function ‘get_mem_index’:
+../target/s390x/tcg/translate.c:398:1: error: control reaches end of non-void function [-Werror=return-type]
+  398 | }
 ---
- target/i386/kvm/kvm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/s390x/tcg/translate.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 31f149c9902..ddec27edd5b 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -5770,7 +5770,7 @@ static int kvm_handle_rdmsr(X86CPU *cpu, struct kvm_run *run)
-         }
+diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+index c81e035dea4..bcfff40b255 100644
+--- a/target/s390x/tcg/translate.c
++++ b/target/s390x/tcg/translate.c
+@@ -392,7 +392,6 @@ static int get_mem_index(DisasContext *s)
+         return MMU_HOME_IDX;
+     default:
+         g_assert_not_reached();
+-        break;
      }
- 
--    assert(false);
-+    g_assert_not_reached();
+ #endif
  }
- 
- static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
-@@ -5789,7 +5789,7 @@ static int kvm_handle_wrmsr(X86CPU *cpu, struct kvm_run *run)
-         }
-     }
- 
--    assert(false);
-+    g_assert_not_reached();
- }
- 
- static bool has_sgx_provisioning;
 -- 
 2.39.2
 
