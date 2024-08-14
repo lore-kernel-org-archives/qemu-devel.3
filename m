@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DE22C52D7D
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 04:57:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58E58C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 05:42:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1se63f-0004ip-Uw; Wed, 14 Aug 2024 00:56:28 -0400
+	id 1se6lh-0000l5-Mf; Wed, 14 Aug 2024 01:41:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1se63e-0004iL-Mt
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 00:56:26 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1se6le-0000k8-CU
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 01:41:54 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1se63b-0005BE-QX
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 00:56:26 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-1fc6ee64512so46750615ad.0
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 21:56:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1se6la-0003Jm-Fy
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 01:41:53 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-70eae5896bcso5584634b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 22:41:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1723611382; x=1724216182;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1723614106; x=1724218906; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qIGwQeBVXd5IPCFQY6xSRn4unbf6XxSFk3FIpROME2U=;
- b=KjnglXa01jBmAlItggS+0YU+4KNEDZ8/amCUQd0eu70Eyz7Ecv7zsAAUvrN3RBqwzh
- upr7vgU1uVS//OuzYpIpa7mvuZ0dO+A+V46T11FT+a8Ro42q5nQptb41TtggGa+dZFF3
- PKiBfbOuLR3+P6S3JmwXoLZqYbK/FrtMUIIH7CHrWdedhkjEN2ZUz+g5Fyba1KsNu5L3
- qgqOfNd3HHoSIR9eqChW6ap73NsRAumoWhjKzRNqtWsnlLGeFty5pa1ixiXl6BZte1ql
- PRpah0dnSuROj/PhuRqPXrB7UvdEKH32q7tslLzNKEF5ovtnwQpJAYCj+yJCVB8FqQIW
- gnHA==
+ bh=w084jqd5klfnVEajK86bPeJBMzJip5Ys6i/E+Ark/IY=;
+ b=rc2GZslrNqP9UVwnxik/T0MvHyRFAYsIlJAgfuw+j7S6p0HyKLlwt3HFj1wU9YpPZL
+ vEyn1by4s7/551BcxLormQQwzSESq7OhPTHSzo63CJAMMxfvT5p6C0GkRyRFBaGNAkse
+ tuxd5jLdmmubiWXw7VMp2vKqU+M5C0FJZWMknsy99/F5X2v3khtJHW2mWXK7bgmZVTAb
+ uAYP04ak+07WvXbXXehr7UDvhMi/dRPNz0K1FMHjNCC4LHJ6VgwzFGO+r5PnVpMFI20T
+ wotHBKRFyU0jDoommc3b0z1bIcFwcWp4jBI8vlTLnPd+BSpH4x3YpQiwzgOY4Sfj4mgd
+ oyAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723611382; x=1724216182;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1723614106; x=1724218906;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qIGwQeBVXd5IPCFQY6xSRn4unbf6XxSFk3FIpROME2U=;
- b=kJZEwksyjrlIMJKLqP/Hc1i32lrcsNjRTKKQfWUi4D1d/H0uz/4mLJwR+eIWqp8MBf
- m47X3mGbFGaA+z/ifCSVrGI4qzUnqff/qh0QTY/uqB9dqiJTf5xKTJ3Pq3rE1qNiYczg
- 8S9ALla8ciFoOr7175hPF8uUZwZKt1DzKapj2uUl4n/DhOh9PwaUbJZ01pajbJ1XCJgF
- 1HLFfDvwFNyIoKiaf+47G18FARTBwfalIhv59lV0XSjfR4fhrNVYWUmqLY0VuYbyzaH3
- S2cJ0vLi1Cev4F7MbzphGIuejf1KG2lZ9ez6c3UMyBwCdGihgUvs/ZA1vM5WOWQ/htXL
- JCgg==
-X-Gm-Message-State: AOJu0YzG1nYAZnL8cdwZ7Ayc3Utn9rb1M++G6OXgetuSg7OkAtWWaWbd
- ktoOtFs/C/PDaVEeNnOtWBhtLqbusjZMGPrQX1zkXDs2sRLgcKI0VgjsBktXbR4=
-X-Google-Smtp-Source: AGHT+IE81oq7X7HT03vME1TyI9nsh0B+Jh5g3oBQONJirBD53DiSU/GHBYhcniNEvohaW/9VmOBvCg==
-X-Received: by 2002:a17:903:11d1:b0:1fc:327a:1f48 with SMTP id
- d9443c01a7336-201d639c94dmr22905025ad.12.1723611381600; 
- Tue, 13 Aug 2024 21:56:21 -0700 (PDT)
-Received: from [157.82.202.230] ([157.82.202.230])
+ bh=w084jqd5klfnVEajK86bPeJBMzJip5Ys6i/E+Ark/IY=;
+ b=t6K1OBsbLLhRTTjWuhBo31UkafD956bZ1JGJ7Dfz971u85GOZ5TF2cOfuMYkoNTuNd
+ Vs9bEIm38ZldYtsBBIJqpbbA50I5uv1D8B/bXBvof5JAVBC8FPWmrUti9gMM0558rKHK
+ svaBNSwGVxWdkJwHVDtLmAOSmEl7AssOXF+tumbnT3XZHaB3Y7L1hN9J7TR5UcepVXUH
+ inPZeGk3ABiwFFtqSO/5jFrpVKHDEURqfUO/yi7AC9dFzHx84YKuycNNuXYckZekPSY6
+ DJyIbssidkB4S0mb8dQGwGq53FsVYVJuzo5winxkwk0mjExEdRKfa3orjsQfBVTJuq1o
+ jI2g==
+X-Gm-Message-State: AOJu0Yw8Z6O0s2BWYqiE+i7Dm30MKLMb+BayD6LLGDqkXUNHg4CHrdWZ
+ j1ug5X+vdxWGXZb6HSBqZNAL/M8OwY6VAa6i72sn91LKjlraEpp9XZ1XJifI7Io=
+X-Google-Smtp-Source: AGHT+IHX1Z9EeoxVPjRReIMs2DxYmIDxZrpq1kdtR8J4u6gUcC93KLCmhccLeagYplRuKsMZ0hmOPQ==
+X-Received: by 2002:a05:6a00:1743:b0:70d:2b95:d9cd with SMTP id
+ d2e1a72fcca58-71267121bdamr2283774b3a.16.1723614105714; 
+ Tue, 13 Aug 2024 22:41:45 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::b861? ([2604:3d08:9384:1d00::b861])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201cd1e2541sm21397755ad.304.2024.08.13.21.56.18
+ d2e1a72fcca58-710e58a921fsm6617456b3a.67.2024.08.13.22.41.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Aug 2024 21:56:21 -0700 (PDT)
-Message-ID: <767b0e96-d7ad-418f-8d84-cb7e49dc2510@daynix.com>
-Date: Wed, 14 Aug 2024 13:56:16 +0900
+ Tue, 13 Aug 2024 22:41:45 -0700 (PDT)
+Message-ID: <5e877d1a-9a6b-4de5-9c3e-d654908a3922@linaro.org>
+Date: Tue, 13 Aug 2024 22:41:43 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] contrib/plugins: Add a plugin to generate basic block
  vectors
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Content-Language: en-US
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
  <ma.mandourr@gmail.com>, Richard Henderson <richard.henderson@linaro.org>,
@@ -77,20 +77,20 @@ To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
 Cc: qemu-devel@nongnu.org, Yotaro Nada <yotaro.nada@gmail.com>
 References: <20240813-bb-v1-1-effbb77daebf@daynix.com>
  <0e0ee7a5-f8e4-44f0-83d9-918b0ef71396@linaro.org>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <0e0ee7a5-f8e4-44f0-83d9-918b0ef71396@linaro.org>
+ <767b0e96-d7ad-418f-8d84-cb7e49dc2510@daynix.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <767b0e96-d7ad-418f-8d84-cb7e49dc2510@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::62e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- URI_DOTEDU=1 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01, URI_DOTEDU=1 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,220 +106,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/08/14 4:20, Pierrick Bouvier wrote:
-> Hi Akihiko, and thanks for contributing this new plugin.
-
-Hi,
-
-Thanks for reviewing
-
-> 
-> Recently, plugins documentation has been modified, and list of plugins 
-> and their doc is now in "docs/about/emulation.rst". You may want to 
-> rebase on top of master.
-
-I see. I'll rebase and update the documentation with v2.
-
-> 
-> Globally, I'm ok with this plugin and the implementation. Just a few 
-> fixes are needed for concurrent accesses.
-> 
-> On 8/12/24 23:46, Akihiko Odaki wrote:
->> SimPoint is a widely used tool to find the ideal microarchitecture
->> simulation points so Valgrind[2] and Pin[3] support generating basic
->> block vectors for use with them. Let's add a corresponding plugin to
->> QEMU too.
->>
->> Note that this plugin has a different goal with tests/plugin/bb.c.
->>
->> This plugin creates a vector for each constant interval instead of
->> counting the execution of basic blocks for the entire run and able to
->> describe the change of execution behavior. Its output is also
->> syntactically simple and better suited for parsing, while the output of
->> tests/plugin/bb.c is more human-readable.
->>
-> 
-> I think it can be confusing to have two plugins named bb. How about 
-> simpoint, or bbv?
-
-How about renaming tests/tcg/plugins/bb.c to simple-bb.c instead and 
-keep the name of contrib/plugins/bb.c concise?
-
-tests/tcg/plugins/bb.c is simple and good as a sample, but less useful 
-in practice than this plugin due to differences described earlier. On 
-the other hand, this plugin is designed to be utilized for practical 
-purpose so I want to keep its name short and save typing.
-
-> 
->> [1] https://cseweb.ucsd.edu/~calder/simpoint/
->> [2] https://valgrind.org/docs/manual/bbv-manual.html
->> [3] 
->> https://www.intel.com/content/www/us/en/developer/articles/tool/pin-a-dynamic-binary-instrumentation-tool.html
->>
->> Signed-off-by: Yotaro Nada <yotaro.nada@gmail.com>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->> ---
->>   docs/devel/tcg-plugins.rst |  20 ++++++
->>   contrib/plugins/bb.c       | 153 
->> +++++++++++++++++++++++++++++++++++++++++++++
->>   contrib/plugins/Makefile   |   1 +
->>   3 files changed, 174 insertions(+)
->>
->> diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
->> index 9cc09d8c3da1..2859eecc13b9 100644
->> --- a/docs/devel/tcg-plugins.rst
->> +++ b/docs/devel/tcg-plugins.rst
->> @@ -332,6 +332,26 @@ run::
->>     160          1      0
->>     135          1      0
->> +- contrib/plugins/bb.c
->> +
->> +The bb plugin allows you to generates basic block vectors for use 
->> with the
->> +`SimPoint <https://cseweb.ucsd.edu/~calder/simpoint/>`__ analysis tool.
->> +
->> +It has two options, ``interval`` and ``outfile``. ``interval`` 
->> specifies the
->> +interval to generate a basic block vector by the number of 
->> instructions. It is
->> +optional, and its default value is 100000000. ``outfile`` is the path to
->> +output files, and it will be suffixed with ``.N.bb`` where ``N`` is a 
->> vCPU
->> +index.
->> +
->> +Example::
->> +
->> +  $ qemu-aarch64 \
->> +    -plugin contrib/plugins/libb.so,interval=100,outfile=sha1 \
->> +    tests/tcg/aarch64-linux-user/sha1
->> +  SHA1=15dd99a1991e0b3826fede3deffc1feba42278e6
->> +  $ du sha1.0.bb
->> +  23128   sha1.0.bb
->> +
->>   - contrib/plugins/hotblocks.c
->>   The hotblocks plugin allows you to examine the where hot paths of
->> diff --git a/contrib/plugins/bb.c b/contrib/plugins/bb.c
->> new file mode 100644
->> index 000000000000..4f1266d07ff5
->> --- /dev/null
->> +++ b/contrib/plugins/bb.c
->> @@ -0,0 +1,153 @@
->> +/* SPDX-License-Identifier: GPL-2.0-or-later */
->> +
-> 
-> A brief summary and the link to simpoint page can be added as a comment 
-> here.
-
-I'll add them with v2.
-
-> 
->> +#include <stdio.h>
->> +#include <glib.h>
->> +
->> +#include <qemu-plugin.h>
->> +
->> +typedef struct Bb {
->> +    struct qemu_plugin_scoreboard *count;
->> +    unsigned int index;
->> +} Bb;
->> +
->> +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
->> +static GHashTable *bbs;
->> +static GPtrArray *files;
->> +static char *filename;
->> +static struct qemu_plugin_scoreboard *count;
->> +static uint64_t interval = 100000000;
->> +
->> +static void plugin_exit(qemu_plugin_id_t id, void *p)
->> +{
->> +    g_hash_table_unref(bbs);
->> +    g_ptr_array_unref(files);
->> +    g_free(filename);
->> +    qemu_plugin_scoreboard_free(count);
->> +}
->> +
->> +static void free_bb(void *data)
->> +{
->> +    qemu_plugin_scoreboard_free(((Bb *)data)->count);
->> +    g_free(data);
->> +}
->> +
->> +static void free_file(void *data)
->> +{
->> +    fclose(data);
->> +}
->> + > +static directly count_u64(void)
->> +{
->> +    return qemu_plugin_scoreboard_u64(count);
->> +}
->> +
->> +static qemu_plugin_u64 bb_count_u64(Bb *bb)
->> +{
->> +    return qemu_plugin_scoreboard_u64(bb->count);
->> +}
->> +
->> +static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
->> +{
->> +    g_autofree gchar *vcpu_filename = NULL;
->> +
->> +    if (vcpu_index >= files->len) {
->> +        g_ptr_array_set_size(files, vcpu_index + 1);
->> +    } else if (g_ptr_array_index(files, vcpu_index)) {
->> +        return;
->> +    }
->> +
-> 
-> You need a lock for files array for expansion/access.
-
-I will replace GPtrArray with scoreboard instead.
-
-> 
->> +    vcpu_filename = g_strdup_printf("%s.%u.bb", filename, vcpu_index);
->> +    g_ptr_array_index(files, vcpu_index) = fopen(vcpu_filename, "w");
->> +}
->> +
->> +static void vcpu_tb_exec(unsigned int vcpu_index, void *udata)
-> 
-> vcpu_tb_exec is a confusing name, as it is called when interval of insn 
-> is executed. vcpu_interval_exec would be more clear.
-
-That makes sense. I will do so with the next version.
-
-> 
->> +{
->> +    FILE *file = g_ptr_array_index(files, vcpu_index);
-> 
-> Need lock when accessing this array.
-> 
->> +    uint64_t count = qemu_plugin_u64_get(count_u64(), vcpu_index) - 
->> interval;
->> +    GHashTableIter iter;
->> +    void *value;
->> +
->> +    if (!file) {
->> +        return;
->> +    }
->> +
->> +    qemu_plugin_u64_set(count_u64(), vcpu_index, count);
->> + > +    fputc('T', file);
-> 
-> Maybe you can add a comment with a link to 
-> https://valgrind.org/docs/manual/bbv-manual.html at this point. It's 
-> already mentioned in the commit message, but IMHO, it's convenient to 
-> have it here, so we know which data is written exactly.
-
-SimPoint should be referred to know the data format. I cited Valgrind 
-only to show the popularity of the format and to motivate its 
-implementation for QEMU.
-
-> 
->> +
->> +    g_hash_table_iter_init(&iter, bbs);
->> +
-> The access to this hashtable should be under a dedicated lock.
-
-I will add a lock with v2.
-
-Regards,
-Akihiko Odaki
+T24gOC8xMy8yNCAyMTo1NiwgQWtpaGlrbyBPZGFraSB3cm90ZToNCj4gT24gMjAyNC8wOC8x
+NCA0OjIwLCBQaWVycmljayBCb3V2aWVyIHdyb3RlOg0KPj4gSGkgQWtpaGlrbywgYW5kIHRo
+YW5rcyBmb3IgY29udHJpYnV0aW5nIHRoaXMgbmV3IHBsdWdpbi4NCj4gDQo+IEhpLA0KPiAN
+Cj4gVGhhbmtzIGZvciByZXZpZXdpbmcNCj4gDQo+Pg0KPj4gUmVjZW50bHksIHBsdWdpbnMg
+ZG9jdW1lbnRhdGlvbiBoYXMgYmVlbiBtb2RpZmllZCwgYW5kIGxpc3Qgb2YgcGx1Z2lucw0K
+Pj4gYW5kIHRoZWlyIGRvYyBpcyBub3cgaW4gImRvY3MvYWJvdXQvZW11bGF0aW9uLnJzdCIu
+IFlvdSBtYXkgd2FudCB0bw0KPj4gcmViYXNlIG9uIHRvcCBvZiBtYXN0ZXIuDQo+IA0KPiBJ
+IHNlZS4gSSdsbCByZWJhc2UgYW5kIHVwZGF0ZSB0aGUgZG9jdW1lbnRhdGlvbiB3aXRoIHYy
+Lg0KPiANCj4+DQo+PiBHbG9iYWxseSwgSSdtIG9rIHdpdGggdGhpcyBwbHVnaW4gYW5kIHRo
+ZSBpbXBsZW1lbnRhdGlvbi4gSnVzdCBhIGZldw0KPj4gZml4ZXMgYXJlIG5lZWRlZCBmb3Ig
+Y29uY3VycmVudCBhY2Nlc3Nlcy4NCj4+DQo+PiBPbiA4LzEyLzI0IDIzOjQ2LCBBa2loaWtv
+IE9kYWtpIHdyb3RlOg0KPj4+IFNpbVBvaW50IGlzIGEgd2lkZWx5IHVzZWQgdG9vbCB0byBm
+aW5kIHRoZSBpZGVhbCBtaWNyb2FyY2hpdGVjdHVyZQ0KPj4+IHNpbXVsYXRpb24gcG9pbnRz
+IHNvIFZhbGdyaW5kWzJdIGFuZCBQaW5bM10gc3VwcG9ydCBnZW5lcmF0aW5nIGJhc2ljDQo+
+Pj4gYmxvY2sgdmVjdG9ycyBmb3IgdXNlIHdpdGggdGhlbS4gTGV0J3MgYWRkIGEgY29ycmVz
+cG9uZGluZyBwbHVnaW4gdG8NCj4+PiBRRU1VIHRvby4NCj4+Pg0KPj4+IE5vdGUgdGhhdCB0
+aGlzIHBsdWdpbiBoYXMgYSBkaWZmZXJlbnQgZ29hbCB3aXRoIHRlc3RzL3BsdWdpbi9iYi5j
+Lg0KPj4+DQo+Pj4gVGhpcyBwbHVnaW4gY3JlYXRlcyBhIHZlY3RvciBmb3IgZWFjaCBjb25z
+dGFudCBpbnRlcnZhbCBpbnN0ZWFkIG9mDQo+Pj4gY291bnRpbmcgdGhlIGV4ZWN1dGlvbiBv
+ZiBiYXNpYyBibG9ja3MgZm9yIHRoZSBlbnRpcmUgcnVuIGFuZCBhYmxlIHRvDQo+Pj4gZGVz
+Y3JpYmUgdGhlIGNoYW5nZSBvZiBleGVjdXRpb24gYmVoYXZpb3IuIEl0cyBvdXRwdXQgaXMg
+YWxzbw0KPj4+IHN5bnRhY3RpY2FsbHkgc2ltcGxlIGFuZCBiZXR0ZXIgc3VpdGVkIGZvciBw
+YXJzaW5nLCB3aGlsZSB0aGUgb3V0cHV0IG9mDQo+Pj4gdGVzdHMvcGx1Z2luL2JiLmMgaXMg
+bW9yZSBodW1hbi1yZWFkYWJsZS4NCj4+Pg0KPj4NCj4+IEkgdGhpbmsgaXQgY2FuIGJlIGNv
+bmZ1c2luZyB0byBoYXZlIHR3byBwbHVnaW5zIG5hbWVkIGJiLiBIb3cgYWJvdXQNCj4+IHNp
+bXBvaW50LCBvciBiYnY/DQo+IA0KPiBIb3cgYWJvdXQgcmVuYW1pbmcgdGVzdHMvdGNnL3Bs
+dWdpbnMvYmIuYyB0byBzaW1wbGUtYmIuYyBpbnN0ZWFkIGFuZA0KPiBrZWVwIHRoZSBuYW1l
+IG9mIGNvbnRyaWIvcGx1Z2lucy9iYi5jIGNvbmNpc2U/DQo+IA0KPiB0ZXN0cy90Y2cvcGx1
+Z2lucy9iYi5jIGlzIHNpbXBsZSBhbmQgZ29vZCBhcyBhIHNhbXBsZSwgYnV0IGxlc3MgdXNl
+ZnVsDQo+IGluIHByYWN0aWNlIHRoYW4gdGhpcyBwbHVnaW4gZHVlIHRvIGRpZmZlcmVuY2Vz
+IGRlc2NyaWJlZCBlYXJsaWVyLiBPbg0KPiB0aGUgb3RoZXIgaGFuZCwgdGhpcyBwbHVnaW4g
+aXMgZGVzaWduZWQgdG8gYmUgdXRpbGl6ZWQgZm9yIHByYWN0aWNhbA0KPiBwdXJwb3NlIHNv
+IEkgd2FudCB0byBrZWVwIGl0cyBuYW1lIHNob3J0IGFuZCBzYXZlIHR5cGluZy4NCj4gDQoN
+Ckkgd291bGQgcmVjb21tZW5kIHVzaW5nIHRoZSA8dGFiPiBrZXkgdG8gc2F2ZSB0eXBpbmcu
+IEknbSBraWRkaW5nIDopDQoNCk1vcmUgc2VyaW91c2x5LCBJIGdldCB5b3VyIHBvaW50LCBi
+dXQgSSBkb24ndCB0aGluayB0aGlzIG5ldyBwbHVnaW4gaXMgDQpnZW5lcmljIGVub3VnaCB0
+byBiZSBxdWFsaWZpZWQgYXMgInRoZSIgYmIgcGx1Z2luIChub3IgdGhlIA0KdGVzdHMvdGNn
+L3BsdWdpbnMvYmIgbmVpdGhlciwgYnV0IGl0IHByZWRhdGVzIHRoaXMgbmV3IHBsdWdpbiku
+IEl0IA0Kb3V0cHV0cyBmb3JtYXQgZm9yIFNpbVBvaW50LCBzbyBob3cgYWJvdXQgc2ltcG9p
+bnQgKGFjY2Vzc2libGUgYWZ0ZXIgDQp0eXBpbmcgc2k8dGFiPik/DQoNCj4+DQo+Pj4gWzFd
+IGh0dHBzOi8vY3Nld2ViLnVjc2QuZWR1L35jYWxkZXIvc2ltcG9pbnQvDQo+Pj4gWzJdIGh0
+dHBzOi8vdmFsZ3JpbmQub3JnL2RvY3MvbWFudWFsL2Jidi1tYW51YWwuaHRtbA0KPj4+IFsz
+XQ0KPj4+IGh0dHBzOi8vd3d3LmludGVsLmNvbS9jb250ZW50L3d3dy91cy9lbi9kZXZlbG9w
+ZXIvYXJ0aWNsZXMvdG9vbC9waW4tYS1keW5hbWljLWJpbmFyeS1pbnN0cnVtZW50YXRpb24t
+dG9vbC5odG1sDQo+Pj4NCj4+PiBTaWduZWQtb2ZmLWJ5OiBZb3Rhcm8gTmFkYSA8eW90YXJv
+Lm5hZGFAZ21haWwuY29tPg0KPj4+IFNpZ25lZC1vZmYtYnk6IEFraWhpa28gT2Rha2kgPGFr
+aWhpa28ub2Rha2lAZGF5bml4LmNvbT4NCj4+PiAtLS0NCj4+PiAgwqAgZG9jcy9kZXZlbC90
+Y2ctcGx1Z2lucy5yc3QgfMKgIDIwICsrKysrKw0KPj4+ICDCoCBjb250cmliL3BsdWdpbnMv
+YmIuY8KgwqDCoMKgwqDCoCB8IDE1Mw0KPj4+ICsrKysrKysrKysrKysrKysrKysrKysrKysr
+KysrKysrKysrKysrKysrKysrKw0KPj4+ICDCoCBjb250cmliL3BsdWdpbnMvTWFrZWZpbGXC
+oMKgIHzCoMKgIDEgKw0KPj4+ICDCoCAzIGZpbGVzIGNoYW5nZWQsIDE3NCBpbnNlcnRpb25z
+KCspDQo+Pj4NCj4+PiBkaWZmIC0tZ2l0IGEvZG9jcy9kZXZlbC90Y2ctcGx1Z2lucy5yc3Qg
+Yi9kb2NzL2RldmVsL3RjZy1wbHVnaW5zLnJzdA0KPj4+IGluZGV4IDljYzA5ZDhjM2RhMS4u
+Mjg1OWVlY2MxM2I5IDEwMDY0NA0KPj4+IC0tLSBhL2RvY3MvZGV2ZWwvdGNnLXBsdWdpbnMu
+cnN0DQo+Pj4gKysrIGIvZG9jcy9kZXZlbC90Y2ctcGx1Z2lucy5yc3QNCj4+PiBAQCAtMzMy
+LDYgKzMzMiwyNiBAQCBydW46Og0KPj4+ICDCoMKgwqAgMTYwwqDCoMKgwqDCoMKgwqDCoMKg
+IDHCoMKgwqDCoMKgIDANCj4+PiAgwqDCoMKgIDEzNcKgwqDCoMKgwqDCoMKgwqDCoCAxwqDC
+oMKgwqDCoCAwDQo+Pj4gKy0gY29udHJpYi9wbHVnaW5zL2JiLmMNCj4+PiArDQo+Pj4gK1Ro
+ZSBiYiBwbHVnaW4gYWxsb3dzIHlvdSB0byBnZW5lcmF0ZXMgYmFzaWMgYmxvY2sgdmVjdG9y
+cyBmb3IgdXNlDQo+Pj4gd2l0aCB0aGUNCj4+PiArYFNpbVBvaW50IDxodHRwczovL2NzZXdl
+Yi51Y3NkLmVkdS9+Y2FsZGVyL3NpbXBvaW50Lz5gX18gYW5hbHlzaXMgdG9vbC4NCj4+PiAr
+DQo+Pj4gK0l0IGhhcyB0d28gb3B0aW9ucywgYGBpbnRlcnZhbGBgIGFuZCBgYG91dGZpbGVg
+YC4gYGBpbnRlcnZhbGBgDQo+Pj4gc3BlY2lmaWVzIHRoZQ0KPj4+ICtpbnRlcnZhbCB0byBn
+ZW5lcmF0ZSBhIGJhc2ljIGJsb2NrIHZlY3RvciBieSB0aGUgbnVtYmVyIG9mDQo+Pj4gaW5z
+dHJ1Y3Rpb25zLiBJdCBpcw0KPj4+ICtvcHRpb25hbCwgYW5kIGl0cyBkZWZhdWx0IHZhbHVl
+IGlzIDEwMDAwMDAwMC4gYGBvdXRmaWxlYGAgaXMgdGhlIHBhdGggdG8NCj4+PiArb3V0cHV0
+IGZpbGVzLCBhbmQgaXQgd2lsbCBiZSBzdWZmaXhlZCB3aXRoIGBgLk4uYmJgYCB3aGVyZSBg
+YE5gYCBpcyBhDQo+Pj4gdkNQVQ0KPj4+ICtpbmRleC4NCj4+PiArDQo+Pj4gK0V4YW1wbGU6
+Og0KPj4+ICsNCj4+PiArwqAgJCBxZW11LWFhcmNoNjQgXA0KPj4+ICvCoMKgwqAgLXBsdWdp
+biBjb250cmliL3BsdWdpbnMvbGliYi5zbyxpbnRlcnZhbD0xMDAsb3V0ZmlsZT1zaGExIFwN
+Cj4+PiArwqDCoMKgIHRlc3RzL3RjZy9hYXJjaDY0LWxpbnV4LXVzZXIvc2hhMQ0KPj4+ICvC
+oCBTSEExPTE1ZGQ5OWExOTkxZTBiMzgyNmZlZGUzZGVmZmMxZmViYTQyMjc4ZTYNCj4+PiAr
+wqAgJCBkdSBzaGExLjAuYmINCj4+PiArwqAgMjMxMjjCoMKgIHNoYTEuMC5iYg0KPj4+ICsN
+Cj4+PiAgwqAgLSBjb250cmliL3BsdWdpbnMvaG90YmxvY2tzLmMNCj4+PiAgwqAgVGhlIGhv
+dGJsb2NrcyBwbHVnaW4gYWxsb3dzIHlvdSB0byBleGFtaW5lIHRoZSB3aGVyZSBob3QgcGF0
+aHMgb2YNCj4+PiBkaWZmIC0tZ2l0IGEvY29udHJpYi9wbHVnaW5zL2JiLmMgYi9jb250cmli
+L3BsdWdpbnMvYmIuYw0KPj4+IG5ldyBmaWxlIG1vZGUgMTAwNjQ0DQo+Pj4gaW5kZXggMDAw
+MDAwMDAwMDAwLi40ZjEyNjZkMDdmZjUNCj4+PiAtLS0gL2Rldi9udWxsDQo+Pj4gKysrIGIv
+Y29udHJpYi9wbHVnaW5zL2JiLmMNCj4+PiBAQCAtMCwwICsxLDE1MyBAQA0KPj4+ICsvKiBT
+UERYLUxpY2Vuc2UtSWRlbnRpZmllcjogR1BMLTIuMC1vci1sYXRlciAqLw0KPj4+ICsNCj4+
+DQo+PiBBIGJyaWVmIHN1bW1hcnkgYW5kIHRoZSBsaW5rIHRvIHNpbXBvaW50IHBhZ2UgY2Fu
+IGJlIGFkZGVkIGFzIGEgY29tbWVudA0KPj4gaGVyZS4NCj4gDQo+IEknbGwgYWRkIHRoZW0g
+d2l0aCB2Mi4NCj4gDQo+Pg0KPj4+ICsjaW5jbHVkZSA8c3RkaW8uaD4NCj4+PiArI2luY2x1
+ZGUgPGdsaWIuaD4NCj4+PiArDQo+Pj4gKyNpbmNsdWRlIDxxZW11LXBsdWdpbi5oPg0KPj4+
+ICsNCj4+PiArdHlwZWRlZiBzdHJ1Y3QgQmIgew0KPj4+ICvCoMKgwqAgc3RydWN0IHFlbXVf
+cGx1Z2luX3Njb3JlYm9hcmQgKmNvdW50Ow0KPj4+ICvCoMKgwqAgdW5zaWduZWQgaW50IGlu
+ZGV4Ow0KPj4+ICt9IEJiOw0KPj4+ICsNCj4+PiArUUVNVV9QTFVHSU5fRVhQT1JUIGludCBx
+ZW11X3BsdWdpbl92ZXJzaW9uID0gUUVNVV9QTFVHSU5fVkVSU0lPTjsNCj4+PiArc3RhdGlj
+IEdIYXNoVGFibGUgKmJiczsNCj4+PiArc3RhdGljIEdQdHJBcnJheSAqZmlsZXM7DQo+Pj4g
+K3N0YXRpYyBjaGFyICpmaWxlbmFtZTsNCj4+PiArc3RhdGljIHN0cnVjdCBxZW11X3BsdWdp
+bl9zY29yZWJvYXJkICpjb3VudDsNCj4+PiArc3RhdGljIHVpbnQ2NF90IGludGVydmFsID0g
+MTAwMDAwMDAwOw0KPj4+ICsNCj4+PiArc3RhdGljIHZvaWQgcGx1Z2luX2V4aXQocWVtdV9w
+bHVnaW5faWRfdCBpZCwgdm9pZCAqcCkNCj4+PiArew0KPj4+ICvCoMKgwqAgZ19oYXNoX3Rh
+YmxlX3VucmVmKGJicyk7DQo+Pj4gK8KgwqDCoCBnX3B0cl9hcnJheV91bnJlZihmaWxlcyk7
+DQo+Pj4gK8KgwqDCoCBnX2ZyZWUoZmlsZW5hbWUpOw0KPj4+ICvCoMKgwqAgcWVtdV9wbHVn
+aW5fc2NvcmVib2FyZF9mcmVlKGNvdW50KTsNCj4+PiArfQ0KPj4+ICsNCj4+PiArc3RhdGlj
+IHZvaWQgZnJlZV9iYih2b2lkICpkYXRhKQ0KPj4+ICt7DQo+Pj4gK8KgwqDCoCBxZW11X3Bs
+dWdpbl9zY29yZWJvYXJkX2ZyZWUoKChCYiAqKWRhdGEpLT5jb3VudCk7DQo+Pj4gK8KgwqDC
+oCBnX2ZyZWUoZGF0YSk7DQo+Pj4gK30NCj4+PiArDQo+Pj4gK3N0YXRpYyB2b2lkIGZyZWVf
+ZmlsZSh2b2lkICpkYXRhKQ0KPj4+ICt7DQo+Pj4gK8KgwqDCoCBmY2xvc2UoZGF0YSk7DQo+
+Pj4gK30NCj4+PiArID4gK3N0YXRpYyBkaXJlY3RseSBjb3VudF91NjQodm9pZCkNCj4+PiAr
+ew0KPj4+ICvCoMKgwqAgcmV0dXJuIHFlbXVfcGx1Z2luX3Njb3JlYm9hcmRfdTY0KGNvdW50
+KTsNCj4+PiArfQ0KPj4+ICsNCj4+PiArc3RhdGljIHFlbXVfcGx1Z2luX3U2NCBiYl9jb3Vu
+dF91NjQoQmIgKmJiKQ0KPj4+ICt7DQo+Pj4gK8KgwqDCoCByZXR1cm4gcWVtdV9wbHVnaW5f
+c2NvcmVib2FyZF91NjQoYmItPmNvdW50KTsNCj4+PiArfQ0KPj4+ICsNCj4+PiArc3RhdGlj
+IHZvaWQgdmNwdV9pbml0KHFlbXVfcGx1Z2luX2lkX3QgaWQsIHVuc2lnbmVkIGludCB2Y3B1
+X2luZGV4KQ0KPj4+ICt7DQo+Pj4gK8KgwqDCoCBnX2F1dG9mcmVlIGdjaGFyICp2Y3B1X2Zp
+bGVuYW1lID0gTlVMTDsNCj4+PiArDQo+Pj4gK8KgwqDCoCBpZiAodmNwdV9pbmRleCA+PSBm
+aWxlcy0+bGVuKSB7DQo+Pj4gK8KgwqDCoMKgwqDCoMKgIGdfcHRyX2FycmF5X3NldF9zaXpl
+KGZpbGVzLCB2Y3B1X2luZGV4ICsgMSk7DQo+Pj4gK8KgwqDCoCB9IGVsc2UgaWYgKGdfcHRy
+X2FycmF5X2luZGV4KGZpbGVzLCB2Y3B1X2luZGV4KSkgew0KPj4+ICvCoMKgwqDCoMKgwqDC
+oCByZXR1cm47DQo+Pj4gK8KgwqDCoCB9DQo+Pj4gKw0KPj4NCj4+IFlvdSBuZWVkIGEgbG9j
+ayBmb3IgZmlsZXMgYXJyYXkgZm9yIGV4cGFuc2lvbi9hY2Nlc3MuDQo+IA0KPiBJIHdpbGwg
+cmVwbGFjZSBHUHRyQXJyYXkgd2l0aCBzY29yZWJvYXJkIGluc3RlYWQuDQo+IA0KDQpHb29k
+IGlkZWEuIFlvdSdsbCBoYXZlIHRvIGNsZWFudXAgZmlsZXMgYXQgdGhlIGVuZCBtYW51YWxs
+eSwgYXMgdGhlcmUgaXMgDQpubyBzdXBwb3J0IGZvciBjdXN0b20gZGVzdHJ1Y3Rvci4NCg0K
+Pj4NCj4+PiArwqDCoMKgIHZjcHVfZmlsZW5hbWUgPSBnX3N0cmR1cF9wcmludGYoIiVzLiV1
+LmJiIiwgZmlsZW5hbWUsIHZjcHVfaW5kZXgpOw0KPj4+ICvCoMKgwqAgZ19wdHJfYXJyYXlf
+aW5kZXgoZmlsZXMsIHZjcHVfaW5kZXgpID0gZm9wZW4odmNwdV9maWxlbmFtZSwgInciKTsN
+Cj4+PiArfQ0KPj4+ICsNCj4+PiArc3RhdGljIHZvaWQgdmNwdV90Yl9leGVjKHVuc2lnbmVk
+IGludCB2Y3B1X2luZGV4LCB2b2lkICp1ZGF0YSkNCj4+DQo+PiB2Y3B1X3RiX2V4ZWMgaXMg
+YSBjb25mdXNpbmcgbmFtZSwgYXMgaXQgaXMgY2FsbGVkIHdoZW4gaW50ZXJ2YWwgb2YgaW5z
+bg0KPj4gaXMgZXhlY3V0ZWQuIHZjcHVfaW50ZXJ2YWxfZXhlYyB3b3VsZCBiZSBtb3JlIGNs
+ZWFyLg0KPiANCj4gVGhhdCBtYWtlcyBzZW5zZS4gSSB3aWxsIGRvIHNvIHdpdGggdGhlIG5l
+eHQgdmVyc2lvbi4NCj4gDQo+Pg0KPj4+ICt7DQo+Pj4gK8KgwqDCoCBGSUxFICpmaWxlID0g
+Z19wdHJfYXJyYXlfaW5kZXgoZmlsZXMsIHZjcHVfaW5kZXgpOw0KPj4NCj4+IE5lZWQgbG9j
+ayB3aGVuIGFjY2Vzc2luZyB0aGlzIGFycmF5Lg0KPj4NCj4+PiArwqDCoMKgIHVpbnQ2NF90
+IGNvdW50ID0gcWVtdV9wbHVnaW5fdTY0X2dldChjb3VudF91NjQoKSwgdmNwdV9pbmRleCkg
+LQ0KPj4+IGludGVydmFsOw0KPj4+ICvCoMKgwqAgR0hhc2hUYWJsZUl0ZXIgaXRlcjsNCj4+
+PiArwqDCoMKgIHZvaWQgKnZhbHVlOw0KPj4+ICsNCj4+PiArwqDCoMKgIGlmICghZmlsZSkg
+ew0KPj4+ICvCoMKgwqDCoMKgwqDCoCByZXR1cm47DQo+Pj4gK8KgwqDCoCB9DQo+Pj4gKw0K
+Pj4+ICvCoMKgwqAgcWVtdV9wbHVnaW5fdTY0X3NldChjb3VudF91NjQoKSwgdmNwdV9pbmRl
+eCwgY291bnQpOw0KPj4+ICsgPiArwqDCoMKgIGZwdXRjKCdUJywgZmlsZSk7DQo+Pg0KPj4g
+TWF5YmUgeW91IGNhbiBhZGQgYSBjb21tZW50IHdpdGggYSBsaW5rIHRvDQo+PiBodHRwczov
+L3ZhbGdyaW5kLm9yZy9kb2NzL21hbnVhbC9iYnYtbWFudWFsLmh0bWwgYXQgdGhpcyBwb2lu
+dC4gSXQncw0KPj4gYWxyZWFkeSBtZW50aW9uZWQgaW4gdGhlIGNvbW1pdCBtZXNzYWdlLCBi
+dXQgSU1ITywgaXQncyBjb252ZW5pZW50IHRvDQo+PiBoYXZlIGl0IGhlcmUsIHNvIHdlIGtu
+b3cgd2hpY2ggZGF0YSBpcyB3cml0dGVuIGV4YWN0bHkuDQo+IA0KPiBTaW1Qb2ludCBzaG91
+bGQgYmUgcmVmZXJyZWQgdG8ga25vdyB0aGUgZGF0YSBmb3JtYXQuIEkgY2l0ZWQgVmFsZ3Jp
+bmQNCj4gb25seSB0byBzaG93IHRoZSBwb3B1bGFyaXR5IG9mIHRoZSBmb3JtYXQgYW5kIHRv
+IG1vdGl2YXRlIGl0cw0KPiBpbXBsZW1lbnRhdGlvbiBmb3IgUUVNVS4NCj4gDQoNCkkgdW5k
+ZXJzdG9vZCB0aGF0LCBidXQgaXQgaGFwcGVucyB0aGF0IEkgZGlkbid0IGZpbmQgYSBzaW1w
+bGUgDQpkZXNjcmlwdGlvbiBvZiB0aGUgZm9ybWF0IG9uIFNpbVBvaW50IHdlYnNpdGUgKG1h
+eWJlIEkgbWlzc2VkIGl0PyksIA0Kd2hpbGUgdmFsZ3JpbmQgZG9jIHBhZ2UgaXMgY2xlYXIg
+YW5kIGNvbmNpc2UuIEZlZWwgZnJlZSB0byBwb2ludCB0aGUgDQpyaWdodCBwYWdlIGlmIGl0
+IGV4aXN0cy4NCg0KPj4NCj4+PiArDQo+Pj4gK8KgwqDCoCBnX2hhc2hfdGFibGVfaXRlcl9p
+bml0KCZpdGVyLCBiYnMpOw0KPj4+ICsNCj4+IFRoZSBhY2Nlc3MgdG8gdGhpcyBoYXNodGFi
+bGUgc2hvdWxkIGJlIHVuZGVyIGEgZGVkaWNhdGVkIGxvY2suDQo+IA0KPiBJIHdpbGwgYWRk
+IGEgbG9jayB3aXRoIHYyLg0KPiANCj4gUmVnYXJkcywNCj4gQWtpaGlrbyBPZGFraQ0K
 
