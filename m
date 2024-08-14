@@ -4,83 +4,204 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CEE3C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 12:04:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82F93C52D7B
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 12:19:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seCiz-0002TU-PO; Wed, 14 Aug 2024 08:03:33 -0400
+	id 1seCxu-0001z7-7v; Wed, 14 Aug 2024 08:18:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1seCit-0002J8-Gk; Wed, 14 Aug 2024 08:03:28 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1seCih-0004cp-2c; Wed, 14 Aug 2024 08:03:27 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2ef248ab2aeso101994811fa.0; 
- Wed, 14 Aug 2024 05:03:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723636993; x=1724241793; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=pLWlOhX7IA1D60QAMmJx/e3m5tenDd37UlQuuePJAH8=;
- b=lOdMBsWwf1qYEiDEK9lr2shN5ZP+mcwSRpUP1PVUKLStKz32iV+afvHySNJVJBhkhF
- /i+M+YAa+TvEE/Dj0T4wAUbuLTMlz2g6oTEdN58qfJjK1VxY+GhF1GnXMbCFWJLU/t3z
- jNCOz6GpGZ3xBbTaFPuK7JEc4VBQNOyC8qniLP/+W/J7An+QWCJoYiVG8SI5logezuOO
- o8I2Bp4AqafIGzgMEhOg03lS4CJzJqd6FdSFCptPwuXNU6TENAOt328rx6lywN8vchab
- sDrWy9CMuMdPlMrli4ZATe8N+WlYL+P7fg2g7EcB21YjkP10d+JcxOK2ZEzVnAeL3pg/
- /9LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723636993; x=1724241793;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pLWlOhX7IA1D60QAMmJx/e3m5tenDd37UlQuuePJAH8=;
- b=CPW5trNKoR3MnmpPY7mGzH11o3f8UA9++j/GWDajME7LmNPhC9xaiorGh2LeNxHK3/
- Ch6d4WacanLs8sr886EsYp/hVcPzZE9NQY8N7mpXxei1Y2GEyZMEStYT2WmFgc6IDJL5
- BgmWsAcHphI6qiFgmtOEPUOQ5kvqaaV5gsg4hnfuZrycto6YaXGAh201OMC1UaZyWJwb
- CB4HeIiyomjZCX9SA8gs3RVJDEMuaz3Bvo7v86m7EKgmNyEY8YzJ7sPJpdQ08Hr3lHqf
- sTnTpLJniSJ8uqankKZ7BbnXFsIrcxzmw6WXtPqGu6tpdCyVdqlCs2xV6xEzzHyR8MM5
- iY1w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUxVs/JJke04lzdtDCt1svzSCPHILAqpV/veLkX0VQQgXvAbR10zRNYq9ym0Zgfzu17HdMRmTcvy5OfGlOASx8vvVgI
-X-Gm-Message-State: AOJu0YxdVK1nDDtjXLYK7WOoT+tVhau43BHqm6lst6qBsrbGpMpYQfgx
- ySajdnvTBq3FD+oRwNVr9EjzUrcwB+dKRj8Du5rLjNz5sAcNRVN3
-X-Google-Smtp-Source: AGHT+IFpGmYJLf5ZDi74BUV7AvcFD/4rB5wLJWAUAT0SVtzs0jlSIzfJAaZ9CKeogM3VI9No7by5Jw==
-X-Received: by 2002:a2e:e09:0:b0:2ef:17ee:62a2 with SMTP id
- 38308e7fff4ca-2f3aa1df04emr17339101fa.14.1723636991778; 
- Wed, 14 Aug 2024 05:03:11 -0700 (PDT)
-Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
- by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-2f2920511d0sm14080291fa.113.2024.08.14.05.03.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Aug 2024 05:03:10 -0700 (PDT)
-Date: Wed, 14 Aug 2024 14:03:10 +0200
-From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: Stefano Stabellini <sstabellini@kernel.org>
-Cc: qemu-devel@nongnu.org, anthony@xenproject.org, paul@xen.org,
- peter.maydell@linaro.org, alex.bennee@linaro.org,
- xenia.ragiadakou@amd.com, jason.andryuk@amd.com,
- edgar.iglesias@amd.com, xen-devel@lists.xenproject.org, qemu-arm@nongnu.org
-Subject: Re: [PATCH v1 05/10] hw/arm: xenpvh: Break out a common PVH module
-Message-ID: <Zryc_gna9c4XNX9c@zapote>
-References: <20240812130606.90410-1-edgar.iglesias@gmail.com>
- <20240812130606.90410-6-edgar.iglesias@gmail.com>
- <alpine.DEB.2.22.394.2408121720290.298534@ubuntu-linux-20-04-desktop>
+ (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
+ id 1seCxr-0001yD-Tm
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 08:18:56 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
+ id 1seCxp-0008S5-L6
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 08:18:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1723637934; x=1755173934;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=fzaSQ2gnTK+WdKPkljeXsYKuW9IhAeHq72xA0mwXrpM=;
+ b=dC1Dv9nrRCfPMZT8wDFEKp8w5C4/LtPQv7RNoiP0kgcFiCQYwG+qB/Ng
+ seuJEgSuI13zJUr9oTRM6JtT+1YORAb1+fDBV6TVbPkp/MdKegul3sllP
+ TEmF8kdxIxOG5z1K0bzndiujZn4B58dti6gctpGyNUXr0zn0H5Asl4n37
+ VsgP4qWmUnCv9s9VacnXRl9b9uO3+9qkUmHrE0qtrAUs0vlElPmQvKiZ0
+ be3+8YGmxYYWDAcGWZjFTOHR3DcW1PL1jNNEpWgGWNIfWS2aXwxRhBSjV
+ SXd2YwGecLj7/RIRVgNgrgdQq3OzJnkBepu1cCml30oE3XFQNCmT78Qso A==;
+X-CSE-ConnectionGUID: Cfc0KVChRealuc8O1EbuMA==
+X-CSE-MsgGUID: 46SzoiuDRqeNA4n5CTjUwg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11163"; a="39354695"
+X-IronPort-AV: E=Sophos;i="6.10,145,1719903600"; d="scan'208";a="39354695"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 14 Aug 2024 05:18:50 -0700
+X-CSE-ConnectionGUID: 8frSWXkKTKSSpLR6bX9A0g==
+X-CSE-MsgGUID: E9M91xKwT6e2uvoBpQelaQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,145,1719903600"; d="scan'208";a="59563816"
+Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
+ by orviesa007.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
+ 14 Aug 2024 05:18:50 -0700
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Wed, 14 Aug 2024 05:18:49 -0700
+Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39; Wed, 14 Aug 2024 05:18:49 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.39 via Frontend Transport; Wed, 14 Aug 2024 05:18:49 -0700
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.168)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 14 Aug 2024 05:18:48 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=M8d1vuJdf2DXDdJFOy1sd4SvLQCkfUhPu/byrn6mZdi/8gLaZ/ekfQEB0D5ER+v29149hFwkj4NqZDSkNrBJ0ZJik8UzJG9VbbucarQbaqYxzUZwmAzCpxss6kAnbirTG3xtPG/ZHbJfF1EmsX58u1Z/vkI1jv3fBljKF0OtsVLi8bp48/4tCGeS/p6BIEzCV0a1hnrNaOuT/DqmzQbTcu9r8gGWl03lvJzjouSo8ExBqURjua69TAyPJClhNAtZ+Cp3ts5wg3Z+FjiREKUvyqsLeBj6S1tHH4yIhoEE+i+njM7UuB5mhH+pq4N4HBYULBQglkFG4xZHB9kz4FcfXA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bNKehBBIGcYDINVmSV/Lg50zZtDZEFaH38mlYzmT0Oc=;
+ b=aUDmTEQDsm2Mt/uCiZPH7pIlv9ANhAVznEJHkDFXQ3j9EMvMmmnyNDFgxUlvyvnx/G58x+vlLe9krktUgaKORVBbHFE4I2gDwnBPUx1a076XVFPDAYBF1wNLXCFhplPfmibMhaRGnFjA0vm87od9vumew0tc31wxmmln1lYvL1nUr/gWe7rXIZ+yrAPWzLYB6aYDvUpgIpJk3twZphvN5kEz/YokfFbPZK9jE/SwDg+hT0SJH2c0Z8Sdfz5NzbI1Fmx3trWuvQa1BapiiOxeF0f3KWU/1xZlEDpDbrol7Zx/ChjNmhD3kY/mTQioBOBtXmNS6Pkdps57WimRxhyhyA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS0PR11MB7529.namprd11.prod.outlook.com (2603:10b6:8:141::20)
+ by PH7PR11MB8502.namprd11.prod.outlook.com (2603:10b6:510:30c::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.26; Wed, 14 Aug
+ 2024 12:18:46 +0000
+Received: from DS0PR11MB7529.namprd11.prod.outlook.com
+ ([fe80::d244:15cd:1060:941a]) by DS0PR11MB7529.namprd11.prod.outlook.com
+ ([fe80::d244:15cd:1060:941a%3]) with mapi id 15.20.7875.016; Wed, 14 Aug 2024
+ 12:18:46 +0000
+Message-ID: <9b2b2f76-a5ef-4378-b233-af1a44f742c7@intel.com>
+Date: Wed, 14 Aug 2024 20:22:59 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 16/17] intel_iommu: Introduce a property to control
+ FS1GP cap bit setting
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, <qemu-devel@nongnu.org>
+CC: <alex.williamson@redhat.com>, <clg@redhat.com>, <eric.auger@redhat.com>,
+ <mst@redhat.com>, <peterx@redhat.com>, <jasowang@redhat.com>,
+ <jgg@nvidia.com>, <nicolinc@nvidia.com>, <joao.m.martins@oracle.com>,
+ <clement.mathieu--drif@eviden.com>, <kevin.tian@intel.com>,
+ <chao.p.peng@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, "Richard
+ Henderson" <richard.henderson@linaro.org>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240805062727.2307552-1-zhenzhong.duan@intel.com>
+ <20240805062727.2307552-17-zhenzhong.duan@intel.com>
+Content-Language: en-US
+From: Yi Liu <yi.l.liu@intel.com>
+In-Reply-To: <20240805062727.2307552-17-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG2PR02CA0010.apcprd02.prod.outlook.com
+ (2603:1096:3:17::22) To DS0PR11MB7529.namprd11.prod.outlook.com
+ (2603:10b6:8:141::20)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.22.394.2408121720290.298534@ubuntu-linux-20-04-desktop>
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x22a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS0PR11MB7529:EE_|PH7PR11MB8502:EE_
+X-MS-Office365-Filtering-Correlation-Id: 05739166-f174-4e17-0c81-08dcbc5b3ee3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|7416014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?ODBMTW5FMjJSVkQ2YWNubHNMK2NvWEg3N0dYVnlBK0J3VmlycFpZdGRQMFV6?=
+ =?utf-8?B?VmovaC9PNzN6WlJ2QnN1cnRlTTU1elRyOHZMTFJrVWN0RXZoNXFPcTJjcVFY?=
+ =?utf-8?B?ZlArWmVFajBwdzFZbW5rdGx0MzduMkdGVXFWbWYwcXRpVlNjaDRtYWlFYVJ6?=
+ =?utf-8?B?V2Y5bHc1di9yN1FCeVpiVHBKaE5Pb2RQcU9lTysrR0txa0cyNTZrakg3ZWt4?=
+ =?utf-8?B?aVBiSTJIZ1l5V3BkRTJWMXNyUFljaG5ELzVsa3FlZml6U1EvbzBCOVAvR3FK?=
+ =?utf-8?B?RDduWTMwVm9hdWVwWW5GMmFYQzhsZnVKUktTcFZvUWhoMU0ydDJjd1JXUXAr?=
+ =?utf-8?B?UGxhUU9icmloQ0k0ekRha0JONWdVTG00b3VBTmNHOXdpUUIrRmI0cU9Ja01t?=
+ =?utf-8?B?RzFuVzhnT01QRmVYOVBNOEEvdGtWRjFTeUxlZEJIWUE2MEdTSXhGY0NzUmRn?=
+ =?utf-8?B?NTY2TFJndElPWmt6Ti9KcnRKRVlLQzVHYkNIS3QrdllwTy9NbHRSc1l5TG56?=
+ =?utf-8?B?YWgzc3pvYnNxbzZhcnRabndQcGZackxRUXNLNThnR1p1TW5ENGY0MnFGNmNT?=
+ =?utf-8?B?QUVJUnFCdjQ5VHdIMmZpa3loK0RIMWYyK3cweFQvdS9IWnRqazZIcEEzSVVI?=
+ =?utf-8?B?UGFLQ3BUSE5LMmNSaHhXTHhiSjV1NVR2ZUpzOTQrSFliRVZOR01zVjVhZERI?=
+ =?utf-8?B?WUxXMU5pTVNRb3Y5d0huTVlSd1VNWjVycWp2WEtiQTdrTm5GVXBCenJtOEpy?=
+ =?utf-8?B?Zyt1VUV2Q3N1N0xSNDlqS2Y0WjMvK0RPK0wvZFJDMVZtZ3hLNFZIcmNPVHh5?=
+ =?utf-8?B?a3FJQk0rR1ZGWnd1NXVqTTFxZ0pOd2VsOTZoVURPNEFGWFJETUlWcld1K3hB?=
+ =?utf-8?B?UmlINndaMGY5YTBLV3hLUnlaZTNkOXVjcmE4V3NJQ0xlZmRZUm5TUGRxOEdj?=
+ =?utf-8?B?NHhTUDZiaDMxMWlOcTJYaVRDNUlSVko4ZXNROUQyaHdUNkVPajVTYTBlYTVr?=
+ =?utf-8?B?bGNQSmFzQkxZNVkxSWEzUW5GWUxaYjZ1UWFEQlRwK2xaMzZTQ1NwTGRFK1NS?=
+ =?utf-8?B?RFlNT1ZqNDc5ZjQyU3ZUOUt1WjFJTjNhS0wvRW9ZWTVVQWtLaHFaZzdEVnVt?=
+ =?utf-8?B?b0pRa2FDT1daSi82ekdOajRJTTJldjVpYWpabDhWeUk5VUFxeFlHYjd6TVl1?=
+ =?utf-8?B?NVE5b2NhOWdIR1ZuMmg0elNweElGamtscDdlTks5QzZHM0J4cU5NRTZjWTU4?=
+ =?utf-8?B?dSs4Q2JlQy9JOXhsaWlEd1EvOFpic253SWUxMGtXOVJvblpveGMxL3FsSGIv?=
+ =?utf-8?B?UXVKTnd1aXl5dFZtQnNidnFpWnNKRnovU0RmQUlYdCtaaGwvMCt4SWVzS2FY?=
+ =?utf-8?B?R2ZGYW5HMnhVcW5qUjJTeCt3UTJpbGJTQWFHbEYrRU4rbmVMU2RRT3lhaXFQ?=
+ =?utf-8?B?OTdjbit4NmEwN3pTMEhmZDErSkp2NnB5M3VZWEEybVkvTk9Md2lOaFBRaWh2?=
+ =?utf-8?B?c1RJQ29walFHbkVzMnU0MGllcG5QMWlqb1J4ZmdYWHFVMzcrcWFUelFoRUha?=
+ =?utf-8?B?bDdaalJoR3ZGakNpZGVudVRjVVlqeTYwRkhOWXVocTJMU09hYW1UQ015eUsx?=
+ =?utf-8?B?Yk9aOHBRMDJoa0lpclhrR3Q0YUh2NXdUaDZFZDZkaEN0ZVJsZkYrQzJpQmZP?=
+ =?utf-8?B?b0N1ZWg2YkpDNEw3OEFRZlRwS3g1bjZ5YVdNKzg0dHhybXMvS045NlVkeDBi?=
+ =?utf-8?B?V1RxT1lpQzkza3NJU1VWYU8ra0VBYnB5S25GSUVIdFhQWWl2ZXVOWkx1NnhP?=
+ =?utf-8?B?bGxaY0tRZ25LMHBNOFRPdz09?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS0PR11MB7529.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(7416014)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cHVyRVhxVmh5SlA5bnFZQVNpNlZSN0JnR3V5K2FRL295aXBrV05FVDBlcHpv?=
+ =?utf-8?B?MndBYlhXWnVzTXBLZXBFNHhiam9pcTRLdGlzLy94ZDhldEZwd0tFd3pLY2NX?=
+ =?utf-8?B?ZGIyTEV3QWQ2citxQlNLQzF0OWMvMTZDOUphcG5VNHE5U1ZZb0o2S0hBUnV2?=
+ =?utf-8?B?b3NlbWlnWTVuZWxpV2UvN1NvWkhyU0s2bGg1aS96OVl0RkZVaHUrMCtlUm0v?=
+ =?utf-8?B?NDNLUWJtTXZINFc1bUZtNEZDa0VsV2ZFVVFqZ2EwU3F5Nm9LeUlBRnpwZ1Nq?=
+ =?utf-8?B?S0w0S3I4Z3djN1I0M2x4YzdySlRYNjVERTdOSlNoWXc2TFVZcEE0djZ3bHZn?=
+ =?utf-8?B?c2o0MFhWOWNsRVcvT3MzTE5jMjkrOFgyQVlZRXI1NWRCZEVMWk50SXhDellN?=
+ =?utf-8?B?WDAxYVNGazFrdi93V2JoTGh4THVqZUk2K0FTYzNqMitjRnpMUUZTZ01jQURm?=
+ =?utf-8?B?aDVDN05KN29JVGtlbWtlUGtQM1lJUVR2eWNkdkRoZ1BSNElabnRrNDF5T2NF?=
+ =?utf-8?B?LzlMMlo1WFhrNzE2WlhZYWVwdHAwYjJKM3RSSWMxdkYwRmNrektzSGE5Z3dD?=
+ =?utf-8?B?ZWFldU9rUkV2T3p0aDN4STNqbjlEUXJ4dHVhUHdpeFR3cU54ZzZDMzFJREt2?=
+ =?utf-8?B?REVIcWZ6WFdLT2EreGRITmZpbmpQRGFoZ2h0U2s0V0ZjcVdEZ1p0eTB5dlpI?=
+ =?utf-8?B?eWVwajJTbVVGSkJuaDhGNGNRQm80SjVqbFBmdVpTTWN1b2E1eUs1ZzUzMzlR?=
+ =?utf-8?B?WlBHcEZ2NW5JRVJyMzZRWDY2YlVqK0tCOVExaG12TnN6WmV6VHlQZ3lrQjNa?=
+ =?utf-8?B?eDh2Qmc4TWQxSE1hRS9mRGVhVU1nL1duNGdxK3gzTnllMTdTNmdjMzBDYXBu?=
+ =?utf-8?B?NlBlZno3Z0llNGlwSnh6ZTNTM1FMY1pvSHl5Uk5lb0NsS1Z6NXZSUStLTUFD?=
+ =?utf-8?B?QlIrQThCQTFidnNENEFxS1VvL204YUdNTlNiSHdvRHhEbExLdnE4Y29KbmtQ?=
+ =?utf-8?B?Kyt4N0RMQW0zNnBsTEM3ZUwyL2M5d01XRHAxR2xOVVBCYXlrMFQ2a0xMYkJG?=
+ =?utf-8?B?a0lWSGs4VmhFSnAzblZ6dkNmREd1ZlN4VlFlNW5ZanlFQ0gySnJWL2s3R2xX?=
+ =?utf-8?B?Mjk4cmVMdVBvYW9IZ1RWdktSV21oeDhWc3RXOERkaHNhTEZHWmFLWmtrdURO?=
+ =?utf-8?B?WlJORHJrbitnY2Z4enNURlBDZmlCanN6Q3NrcDc3RDFFdlBHak16WlJWRXRL?=
+ =?utf-8?B?NG1oenZXNEYwSlE0OGJLNUdTWjcrU3pPRkxxMURqWWFMbHVvTzdBdzVMUjJW?=
+ =?utf-8?B?ZGUvT2twbWFOclJIVWJFU0ZVbWNqdFZ1NVVUSWhKeHR5U0N2djMyWllNM0lz?=
+ =?utf-8?B?TWJUN3dLUnRPNVBsY05xRVd0elMwVnk5eHVPampqYVlVaGJYMWFBT3dsWmxE?=
+ =?utf-8?B?NlkzcjV2Z3UvSlhaMmI3SmpBTGJaaTVBbFhzRHYvSWhQQnljRGVvdWFuY0ZW?=
+ =?utf-8?B?SDJUNTlkakNRKzM1eUtWdlBzUkhWdW51dFh5Uzh2Umwvd1FITW9JMlNnZlMv?=
+ =?utf-8?B?ZlFJM1dIVXlrZ3hSc2dpcUQ3TWNNV2hQOU1ubEJnZThLeWVSR0VqeTllTzV0?=
+ =?utf-8?B?Y2MxRmtwMURGOS9VZk11K3pXUDVtbHJ1aGZuZXRRdVk5aVVTWWxOaU5rWSs5?=
+ =?utf-8?B?ZXdRNlRCaXNxWlE5aXJJTmc0dHBBSll4em5lSStmTkNhR3l1dVFmTE9UbCsy?=
+ =?utf-8?B?VGtBREkrcFdxRUQ4cmNsd1ZLc0RTcTZKaHhtdG5sRDNHdGxKSERaZnZkbWs3?=
+ =?utf-8?B?bFpwVE45bjFtaXdScVM4d2haVm85UDFuR1RBYy8waEd0U2k3cW1TbW96b3Vk?=
+ =?utf-8?B?UnhqT2l0a1BraFNwaXFQSGo0d1hacTh2d0xUNCt3cDBqQ25nYjdtOGNYZE8x?=
+ =?utf-8?B?elExUDEwN212V2VVcnJZU1lVSWIrKzk2V0VxVTg3blVUSTdqQjZOT2VuLzVY?=
+ =?utf-8?B?UTJsbU1NVGh3K0tGTDlpYTBpZzlWMWt2TzdLeEs0SEgxM3RQaEgxREphYkxp?=
+ =?utf-8?B?eGNNQWEyOGpVbERyUWxEdmNYeVlBUTFQTEVsbkFQQlFLM2lhdXlFTWpxejZX?=
+ =?utf-8?Q?iXoRGCX4iUYZ/6WVVVg6xJifF?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 05739166-f174-4e17-0c81-08dcbc5b3ee3
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB7529.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2024 12:18:46.5903 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: gJ6uPYw51JJodnNIenee14c6Fqhmy38cx0GHZJtRkV7gsFx1b1UGm/uJsZ3eJwz2U1zV56sYdY9gr23ATtx1fA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB8502
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=yi.l.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.135,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,563 +218,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 12, 2024 at 06:47:51PM -0700, Stefano Stabellini wrote:
-> On Mon, 12 Aug 2024, Edgar E. Iglesias wrote:
-> > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> > 
-> > Break out a common Xen PVH module in preparation for
-> > adding a x86 Xen PVH Machine.
-> > 
-> > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> > ---
-> >  hw/arm/trace-events             |   5 -
-> >  hw/arm/xen_arm.c                | 154 ++++++--------------------
-> >  hw/xen/meson.build              |   1 +
-> >  hw/xen/trace-events             |   4 +
-> >  hw/xen/xen-pvh-common.c         | 185 ++++++++++++++++++++++++++++++++
-> >  include/hw/xen/xen-pvh-common.h |  45 ++++++++
-> >  6 files changed, 269 insertions(+), 125 deletions(-)
-> >  create mode 100644 hw/xen/xen-pvh-common.c
-> >  create mode 100644 include/hw/xen/xen-pvh-common.h
-> > 
-> > diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-> > index be6c8f720b..c64ad344bd 100644
-> > --- a/hw/arm/trace-events
-> > +++ b/hw/arm/trace-events
-> > @@ -68,10 +68,5 @@ z2_aer915_send_too_long(int8_t msg) "message too long (%i bytes)"
-> >  z2_aer915_send(uint8_t reg, uint8_t value) "reg %d value 0x%02x"
-> >  z2_aer915_event(int8_t event, int8_t len) "i2c event =0x%x len=%d bytes"
-> >  
-> > -# xen_arm.c
-> > -xen_create_virtio_mmio_devices(int i, int irq, uint64_t base) "Created virtio-mmio device %d: irq %d base 0x%"PRIx64
-> > -xen_init_ram(uint64_t machine_ram_size) "Initialized xen ram with size 0x%"PRIx64
-> > -xen_enable_tpm(uint64_t addr) "Connected tpmdev at address 0x%"PRIx64
-> > -
-> >  # bcm2838.c
-> >  bcm2838_gic_set_irq(int irq, int level) "gic irq:%d lvl:%d"
-> > diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
-> > index ef8315969c..b8a5c09bdf 100644
-> > --- a/hw/arm/xen_arm.c
-> > +++ b/hw/arm/xen_arm.c
-> > @@ -12,40 +12,25 @@
-> >  #include "hw/irq.h"
-> >  #include "hw/sysbus.h"
-> >  #include "sysemu/block-backend.h"
-> > -#include "sysemu/tpm_backend.h"
-> >  #include "sysemu/sysemu.h"
-> > -#include "hw/xen/xen-hvm-common.h"
-> > +#include "hw/xen/xen-pvh-common.h"
-> >  #include "sysemu/tpm.h"
-> >  #include "hw/xen/arch_hvm.h"
-> > -#include "trace.h"
-> >  
-> >  #define TYPE_XEN_ARM  MACHINE_TYPE_NAME("xenpvh")
-> >  OBJECT_DECLARE_SIMPLE_TYPE(XenArmState, XEN_ARM)
-> >  
-> > -static const MemoryListener xen_memory_listener = {
-> > -    .region_add = xen_region_add,
-> > -    .region_del = xen_region_del,
-> > -    .log_start = NULL,
-> > -    .log_stop = NULL,
-> > -    .log_sync = NULL,
-> > -    .log_global_start = NULL,
-> > -    .log_global_stop = NULL,
-> > -    .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
-> > -};
-> > -
-> >  struct XenArmState {
-> >      /*< private >*/
-> >      MachineState parent;
-> >  
-> > -    XenIOState *state;
-> > +    XenPVHCommonState pvh;
-> >  
-> >      struct {
-> >          uint64_t tpm_base_addr;
-> >      } cfg;
-> >  };
-> >  
-> > -static MemoryRegion ram_lo, ram_hi;
-> > -
-> >  /*
-> >   * VIRTIO_MMIO_DEV_SIZE is imported from tools/libs/light/libxl_arm.c under Xen
-> >   * repository.
-> > @@ -57,64 +42,6 @@ static MemoryRegion ram_lo, ram_hi;
-> >  #define NR_VIRTIO_MMIO_DEVICES   \
-> >     (GUEST_VIRTIO_MMIO_SPI_LAST - GUEST_VIRTIO_MMIO_SPI_FIRST)
-> >  
-> > -static void xen_set_irq(void *opaque, int irq, int level)
-> > -{
-> > -    if (xendevicemodel_set_irq_level(xen_dmod, xen_domid, irq, level)) {
-> > -        error_report("xendevicemodel_set_irq_level failed");
-> > -    }
-> > -}
-> > -
-> > -static void xen_create_virtio_mmio_devices(XenArmState *xam)
-> > -{
-> > -    int i;
-> > -
-> > -    for (i = 0; i < NR_VIRTIO_MMIO_DEVICES; i++) {
-> > -        hwaddr base = GUEST_VIRTIO_MMIO_BASE + i * VIRTIO_MMIO_DEV_SIZE;
-> > -        qemu_irq irq = qemu_allocate_irq(xen_set_irq, NULL,
-> > -                                         GUEST_VIRTIO_MMIO_SPI_FIRST + i);
-> > -
-> > -        sysbus_create_simple("virtio-mmio", base, irq);
-> > -
-> > -        trace_xen_create_virtio_mmio_devices(i,
-> > -                                             GUEST_VIRTIO_MMIO_SPI_FIRST + i,
-> > -                                             base);
-> > -    }
-> > -}
-> 
-> There are 4 trivial functions in this file:
-> 
-> void arch_handle_ioreq(XenIOState *state, ioreq_t *req)
-> void arch_xen_set_memory(XenIOState *state, MemoryRegionSection *section,
->                          bool add)
-> void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length)
-> void qmp_xen_set_global_dirty_log(bool enable, Error **errp)
-> 
-> Do you think it would make sense to move these too to xen-pvh-common.c ?
+On 2024/8/5 14:27, Zhenzhong Duan wrote:
+> When host IOMMU doesn't support FS1GP but vIOMMU does, host IOMMU
+> can't translate stage-1 page table from guest correctly.
 
+this series is for emulated devices, so the above statement does not
+belong to this series. Is there any other reason to have this option?
 
-Yes, it would be nice to at least provide some sort of default
-implementation for these that archs like x86 can override. I'll look
-into it for v2.
+> Add a property x-cap-fs1gp for user to turn FS1GP off so that
+> nested page table on host side works.
 
+I guess you would need to sync the FS1GP cap with host before reporting it
+in vIOMMU when comes to support passthrough devices.
 
+> This property has no effect when vIOMMU isn't in scalable modern
+> mode.
 > 
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>   include/hw/i386/intel_iommu.h | 1 +
+>   hw/i386/intel_iommu.c         | 5 ++++-
+>   2 files changed, 5 insertions(+), 1 deletion(-)
 > 
-> > -
-> > -static void xen_init_ram(MachineState *machine)
-> > -{
-> > -    MemoryRegion *sysmem = get_system_memory();
-> > -    ram_addr_t block_len, ram_size[GUEST_RAM_BANKS];
-> > -
-> > -    trace_xen_init_ram(machine->ram_size);
-> > -    if (machine->ram_size <= GUEST_RAM0_SIZE) {
-> > -        ram_size[0] = machine->ram_size;
-> > -        ram_size[1] = 0;
-> > -        block_len = GUEST_RAM0_BASE + ram_size[0];
-> > -    } else {
-> > -        ram_size[0] = GUEST_RAM0_SIZE;
-> > -        ram_size[1] = machine->ram_size - GUEST_RAM0_SIZE;
-> > -        block_len = GUEST_RAM1_BASE + ram_size[1];
-> > -    }
-> > -
-> > -    memory_region_init_ram(&xen_memory, NULL, "xen.ram", block_len,
-> > -                           &error_fatal);
-> > -
-> > -    memory_region_init_alias(&ram_lo, NULL, "xen.ram.lo", &xen_memory,
-> > -                             GUEST_RAM0_BASE, ram_size[0]);
-> > -    memory_region_add_subregion(sysmem, GUEST_RAM0_BASE, &ram_lo);
-> > -    if (ram_size[1] > 0) {
-> > -        memory_region_init_alias(&ram_hi, NULL, "xen.ram.hi", &xen_memory,
-> > -                                 GUEST_RAM1_BASE, ram_size[1]);
-> > -        memory_region_add_subregion(sysmem, GUEST_RAM1_BASE, &ram_hi);
-> > -    }
-> > -
-> > -    /* Setup support for grants.  */
-> > -    memory_region_init_ram(&xen_grants, NULL, "xen.grants", block_len,
-> > -                           &error_fatal);
-> > -    memory_region_add_subregion(sysmem, XEN_GRANT_ADDR_OFF, &xen_grants);
-> > -}
-> > -
-> >  void arch_handle_ioreq(XenIOState *state, ioreq_t *req)
-> >  {
-> >      hw_error("Invalid ioreq type 0x%x\n", req->type);
-> > @@ -135,55 +62,42 @@ void qmp_xen_set_global_dirty_log(bool enable, Error **errp)
-> >  {
-> >  }
-> >  
-> > -#ifdef CONFIG_TPM
-> > -static void xen_enable_tpm(XenArmState *xam)
-> > -{
-> > -    Error *errp = NULL;
-> > -    DeviceState *dev;
-> > -    SysBusDevice *busdev;
-> > -
-> > -    TPMBackend *be = qemu_find_tpm_be("tpm0");
-> > -    if (be == NULL) {
-> > -        error_report("Couldn't find tmp0 backend");
-> > -        return;
-> > -    }
-> > -    dev = qdev_new(TYPE_TPM_TIS_SYSBUS);
-> > -    object_property_set_link(OBJECT(dev), "tpmdev", OBJECT(be), &errp);
-> > -    object_property_set_str(OBJECT(dev), "tpmdev", be->id, &errp);
-> > -    busdev = SYS_BUS_DEVICE(dev);
-> > -    sysbus_realize_and_unref(busdev, &error_fatal);
-> > -    sysbus_mmio_map(busdev, 0, xam->cfg.tpm_base_addr);
-> > -
-> > -    trace_xen_enable_tpm(xam->cfg.tpm_base_addr);
-> > -}
-> > -#endif
-> > -
-> > -static void xen_arm_init(MachineState *machine)
-> > +static void xen_arm_init(MachineState *ms)
-> >  {
-> > -    XenArmState *xam = XEN_ARM(machine);
-> > -
-> > -    xam->state =  g_new0(XenIOState, 1);
-> > +    XenArmState *xam = XEN_ARM(ms);
-> > +    const struct {
-> > +        const char *name;
-> > +        MemMapEntry map;
-> > +    } map[] = {
-> > +        { "ram-low", { GUEST_RAM0_BASE, GUEST_RAM0_SIZE } },
-> > +        { "ram-high", { GUEST_RAM1_BASE, GUEST_RAM1_SIZE } },
-> > +        { "virtio-mmio", { GUEST_VIRTIO_MMIO_BASE, VIRTIO_MMIO_DEV_SIZE } },
-> > +        { "tpm", { xam->cfg.tpm_base_addr, 0x1000 } },
-> > +    };
-> > +    int i;
-> >  
-> > -    if (machine->ram_size == 0) {
-> > -        warn_report("%s non-zero ram size not specified. QEMU machine started"
-> > -                    " without IOREQ (no emulated devices including virtio)",
-> > -                    MACHINE_CLASS(object_get_class(OBJECT(machine)))->desc);
-> > -        return;
-> > +    object_initialize_child(OBJECT(ms), "pvh", &xam->pvh, TYPE_XEN_PVH_COMMON);
-> > +
-> > +    object_property_set_int(OBJECT(&xam->pvh), "max-cpus", ms->smp.max_cpus,
-> > +                            &error_abort);
-> 
-> Is ms->smp.max_cpus updated according to the QEMU command line option?
-> If so, that would solve the problem of the static initialization of
-> max_cpus to GUEST_MAX_VCPUS in xen_arm_machine_class_init.
+> diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+> index 650641544c..f6d9b41b80 100644
+> --- a/include/hw/i386/intel_iommu.h
+> +++ b/include/hw/i386/intel_iommu.h
+> @@ -308,6 +308,7 @@ struct IntelIOMMUState {
+>       bool dma_drain;                 /* Whether DMA r/w draining enabled */
+>       bool dma_translation;           /* Whether DMA translation supported */
+>       bool pasid;                     /* Whether to support PASID */
+> +    bool fs1gp;                     /* First Stage 1-GByte Page Support */
+>   
+>       /*
+>        * Protects IOMMU states in general.  Currently it protects the
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index 9e973bd710..d7e7354db4 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -3778,6 +3778,7 @@ static Property vtd_properties[] = {
+>       DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
+>       DEFINE_PROP_BOOL("dma-drain", IntelIOMMUState, dma_drain, true),
+>       DEFINE_PROP_BOOL("dma-translation", IntelIOMMUState, dma_translation, true),
+> +    DEFINE_PROP_BOOL("x-cap-fs1gp", IntelIOMMUState, fs1gp, true),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+>   
+> @@ -4506,7 +4507,9 @@ static void vtd_cap_init(IntelIOMMUState *s)
+>       /* TODO: read cap/ecap from host to decide which cap to be exposed. */
+>       if (s->scalable_modern) {
+>           s->ecap |= VTD_ECAP_SMTS | VTD_ECAP_FLTS;
+> -        s->cap |= VTD_CAP_FS1GP;
+> +        if (s->fs1gp) {
+> +            s->cap |= VTD_CAP_FS1GP;
+> +        }
+>       } else if (s->scalable_mode) {
+>           s->ecap |= VTD_ECAP_SMTS | VTD_ECAP_SRS | VTD_ECAP_SLTS;
+>       }
 
-Yes, it kind of solves it but I'll leave that discussion to the other
-thread.
-
-> 
-> 
-> > +    object_property_set_int(OBJECT(&xam->pvh), "ram-size", ms->ram_size,
-> > +                            &error_abort);
-> > +    object_property_set_int(OBJECT(&xam->pvh), "virtio-mmio-num",
-> > +                            NR_VIRTIO_MMIO_DEVICES, &error_abort);
-> > +    object_property_set_int(OBJECT(&xam->pvh), "virtio-mmio-irq-base",
-> > +                            GUEST_VIRTIO_MMIO_SPI_FIRST, &error_abort);
-> > +
-> > +    for (i = 0; i < ARRAY_SIZE(map); i++) {
-> > +        g_autofree char *base_name = g_strdup_printf("%s-base", map[i].name);
-> > +        g_autofree char *size_name = g_strdup_printf("%s-size", map[i].name);
-> > +
-> > +        object_property_set_int(OBJECT(&xam->pvh), base_name, map[i].map.base,
-> > +                                &error_abort);
-> > +        object_property_set_int(OBJECT(&xam->pvh), size_name, map[i].map.size,
-> > +                                &error_abort);
-> >      }
-> >  
-> > -    xen_init_ram(machine);
-> > -
-> > -    xen_register_ioreq(xam->state, machine->smp.max_cpus, &xen_memory_listener);
-> > -
-> > -    xen_create_virtio_mmio_devices(xam);
-> > -
-> > -#ifdef CONFIG_TPM
-> > -    if (xam->cfg.tpm_base_addr) {
-> > -        xen_enable_tpm(xam);
-> 
-> Do you think it makes sense also to move xen_arm_get_tpm_base_addr and
-> xen_arm_set_tpm_base_addr to xen-pvh-common.c ?
->
-
-Yes, perhaps we should create an abstract PVH machine. We could probably
-reuse more code between x86/ARM and future PVH support. I can have a
-look at it for v2.
-
-> 
-> 
-> > -    } else {
-> > -        warn_report("tpm-base-addr is not provided. TPM will not be enabled");
-> > -    }
-> > -#endif
-> > +    sysbus_realize(SYS_BUS_DEVICE(&xam->pvh), &error_abort);
-> >  }
-> >  
-> >  #ifdef CONFIG_TPM
-> > diff --git a/hw/xen/meson.build b/hw/xen/meson.build
-> > index d887fa9ba4..4a486e3673 100644
-> > --- a/hw/xen/meson.build
-> > +++ b/hw/xen/meson.build
-> > @@ -15,6 +15,7 @@ xen_specific_ss = ss.source_set()
-> >  xen_specific_ss.add(files(
-> >    'xen-mapcache.c',
-> >    'xen-hvm-common.c',
-> > +  'xen-pvh-common.c',
-> >  ))
-> >  if have_xen_pci_passthrough
-> >    xen_specific_ss.add(files(
-> > diff --git a/hw/xen/trace-events b/hw/xen/trace-events
-> > index d1b27f6c11..a07fe41c6d 100644
-> > --- a/hw/xen/trace-events
-> > +++ b/hw/xen/trace-events
-> > @@ -64,6 +64,10 @@ destroy_hvm_domain_cannot_acquire_handle(void) "Cannot acquire xenctrl handle"
-> >  destroy_hvm_domain_failed_action(const char *action, int sts, char *errno_s) "xc_domain_shutdown failed to issue %s, sts %d, %s"
-> >  destroy_hvm_domain_action(int xen_domid, const char *action) "Issued domain %d %s"
-> >  
-> > +# xen-pvh-common.c
-> > +xen_create_virtio_mmio_devices(int i, int irq, uint64_t base) "Created virtio-mmio device %d: irq %d base 0x%"PRIx64
-> > +xen_enable_tpm(uint64_t addr) "Connected tpmdev at address 0x%"PRIx64
-> > +
-> >  # xen-mapcache.c
-> >  xen_map_cache(uint64_t phys_addr) "want 0x%"PRIx64
-> >  xen_remap_bucket(uint64_t index) "index 0x%"PRIx64
-> > diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
-> > new file mode 100644
-> > index 0000000000..0d368398d0
-> > --- /dev/null
-> > +++ b/hw/xen/xen-pvh-common.c
-> > @@ -0,0 +1,185 @@
-> > +/*
-> > + * Common Xen PVH code.
-> > + *
-> > + * Copyright (c) 2024 Advanced Micro Devices, Inc.
-> > + *
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + */
-> > +
-> > +#include "qemu/osdep.h"
-> > +#include "qemu/error-report.h"
-> > +#include "qapi/error.h"
-> > +#include "hw/boards.h"
-> > +#include "hw/irq.h"
-> > +#include "hw/sysbus.h"
-> > +#include "sysemu/sysemu.h"
-> > +#include "sysemu/tpm.h"
-> > +#include "sysemu/tpm_backend.h"
-> > +#include "hw/xen/xen-pvh-common.h"
-> > +#include "trace.h"
-> > +
-> > +static const MemoryListener xen_memory_listener = {
-> > +    .region_add = xen_region_add,
-> > +    .region_del = xen_region_del,
-> > +    .log_start = NULL,
-> > +    .log_stop = NULL,
-> > +    .log_sync = NULL,
-> > +    .log_global_start = NULL,
-> > +    .log_global_stop = NULL,
-> > +    .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
-> > +};
-> > +
-> > +static void xen_pvh_init_ram(XenPVHCommonState *s,
-> > +                             MemoryRegion *sysmem)
-> > +{
-> > +    ram_addr_t block_len, ram_size[2];
-> > +
-> > +    if (s->cfg.ram_size <= s->cfg.ram_low.size) {
-> > +        ram_size[0] = s->cfg.ram_size;
-> > +        ram_size[1] = 0;
-> > +        block_len = s->cfg.ram_low.base + ram_size[0];
-> > +    } else {
-> > +        ram_size[0] = s->cfg.ram_low.size;
-> > +        ram_size[1] = s->cfg.ram_size - s->cfg.ram_low.size;
-> > +        block_len = s->cfg.ram_high.base + ram_size[1];
-> > +    }
-> > +
-> > +    memory_region_init_ram(&xen_memory, NULL, "xen.ram", block_len,
-> > +                           &error_fatal);
-> > +
-> > +    memory_region_init_alias(&s->ram.low, NULL, "xen.ram.lo", &xen_memory,
-> > +                             s->cfg.ram_low.base, ram_size[0]);
-> > +    memory_region_add_subregion(sysmem, s->cfg.ram_low.base, &s->ram.low);
-> > +    if (ram_size[1] > 0) {
-> > +        memory_region_init_alias(&s->ram.high, NULL, "xen.ram.hi", &xen_memory,
-> > +                                 s->cfg.ram_high.base, ram_size[1]);
-> > +        memory_region_add_subregion(sysmem, s->cfg.ram_high.base, &s->ram.high);
-> > +    }
-> > +
-> > +    /* Setup support for grants.  */
-> > +    memory_region_init_ram(&xen_grants, NULL, "xen.grants", block_len,
-> > +                           &error_fatal);
-> > +    memory_region_add_subregion(sysmem, XEN_GRANT_ADDR_OFF, &xen_grants);
-> > +}
-> > +
-> > +static void xen_set_irq(void *opaque, int irq, int level)
-> > +{
-> > +    if (xendevicemodel_set_irq_level(xen_dmod, xen_domid, irq, level)) {
-> > +        error_report("xendevicemodel_set_irq_level failed");
-> > +    }
-> > +}
-> > +
-> > +static void xen_create_virtio_mmio_devices(XenPVHCommonState *s)
-> > +{
-> > +    int i;
-> > +
-> > +    for (i = 0; i < s->cfg.virtio_mmio_num; i++) {
-> > +        hwaddr base = s->cfg.virtio_mmio.base + i * s->cfg.virtio_mmio.size;
-> > +        qemu_irq irq = qemu_allocate_irq(xen_set_irq, NULL,
-> > +                                         s->cfg.virtio_mmio_irq_base + i);
-> > +
-> > +        sysbus_create_simple("virtio-mmio", base, irq);
-> > +
-> > +        trace_xen_create_virtio_mmio_devices(i,
-> > +                                             s->cfg.virtio_mmio_irq_base + i,
-> > +                                             base);
-> > +    }
-> > +}
-> > +
-> > +#ifdef CONFIG_TPM
-> > +static void xen_enable_tpm(XenPVHCommonState *s)
-> > +{
-> > +    Error *errp = NULL;
-> > +    DeviceState *dev;
-> > +    SysBusDevice *busdev;
-> > +
-> > +    TPMBackend *be = qemu_find_tpm_be("tpm0");
-> > +    if (be == NULL) {
-> > +        error_report("Couldn't find tmp0 backend");
-> > +        return;
-> > +    }
-> > +    dev = qdev_new(TYPE_TPM_TIS_SYSBUS);
-> > +    object_property_set_link(OBJECT(dev), "tpmdev", OBJECT(be), &errp);
-> > +    object_property_set_str(OBJECT(dev), "tpmdev", be->id, &errp);
-> > +    busdev = SYS_BUS_DEVICE(dev);
-> > +    sysbus_realize_and_unref(busdev, &error_fatal);
-> > +    sysbus_mmio_map(busdev, 0, s->cfg.tpm.base);
-> > +
-> > +    trace_xen_enable_tpm(s->cfg.tpm.base);
-> > +}
-> > +#endif
-> > +
-> > +static void xen_pvh_realize(DeviceState *dev, Error **errp)
-> > +{
-> > +    XenPVHCommonState *s = XEN_PVH_COMMON(dev);
-> > +    MemoryRegion *sysmem = get_system_memory();
-> > +
-> > +    if (s->cfg.ram_size == 0) {
-> > +        /* FIXME: Prefix with object path and consider bailing out.  */
-> 
-> I am not sure about these two FIXME
-> 
-> 
-> > +        warn_report("non-zero ram size not specified. QEMU machine started"
-> > +                    " without IOREQ (no emulated devices including virtio)");
-> 
-> Also the warn message has a double negative?
-
-
-Yeah, I forgot to fix these up before posting. Will fix for v2.
-
-
-> 
-> 
-> > +        return;
-> > +    }
-> > +
-> > +    if (s->cfg.max_cpus == 0) {
-> > +        /* FIXME: Prefix with object path and bail out.  */
-> > +        warn_report("max-cpus not specified. QEMU machine started");
-> > +        return;
-> > +    }
-> > +
-> > +    xen_pvh_init_ram(s, sysmem);
-> > +    xen_register_ioreq(&s->ioreq, s->cfg.max_cpus, &xen_memory_listener);
-> > +
-> > +    if (s->cfg.virtio_mmio_num) {
-> > +        xen_create_virtio_mmio_devices(s);
-> > +    }
-> > +
-> > +#ifdef CONFIG_TPM
-> > +    if (s->cfg.tpm.base) {
-> > +        xen_enable_tpm(s);
-> > +    } else {
-> > +        warn_report("tpm-base-addr is not provided. TPM will not be enabled");
-> > +    }
-> > +#endif
-> > +}
-> > +
-> > +#define DEFINE_PROP_MEMMAP(n, f) \
-> > +    DEFINE_PROP_UINT64(n "-base", XenPVHCommonState, cfg.f.base, 0), \
-> > +    DEFINE_PROP_UINT64(n "-size", XenPVHCommonState, cfg.f.size, 0)
-> > +
-> > +static Property xen_pvh_properties[] = {
-> > +    DEFINE_PROP_UINT32("max-cpus", XenPVHCommonState, cfg.max_cpus, 0),
-> > +    DEFINE_PROP_UINT64("ram-size", XenPVHCommonState, cfg.ram_size, 0),
-> > +    DEFINE_PROP_MEMMAP("ram-low", ram_low),
-> > +    DEFINE_PROP_MEMMAP("ram-high", ram_high),
-> > +    DEFINE_PROP_MEMMAP("virtio-mmio", virtio_mmio),
-> > +    DEFINE_PROP_MEMMAP("tpm", tpm),
-> > +    DEFINE_PROP_UINT32("virtio-mmio-num", XenPVHCommonState,
-> > +                       cfg.virtio_mmio_num, 0),
-> > +    DEFINE_PROP_UINT32("virtio-mmio-irq-base", XenPVHCommonState,
-> > +                       cfg.virtio_mmio_irq_base, 0),
-> > +    DEFINE_PROP_END_OF_LIST()
-> > +};
-> > +
-> > +static void xen_pvh_class_init(ObjectClass *klass, void *data)
-> > +{
-> > +    DeviceClass *dc = DEVICE_CLASS(klass);
-> > +
-> > +    dc->realize = xen_pvh_realize;
-> > +    device_class_set_props(dc, xen_pvh_properties);
-> > +    /* No VMSD since we haven't got any top-level SoC state to save.  */
-> > +}
-> > +
-> > +static const TypeInfo xen_pvh_info = {
-> > +    .name = TYPE_XEN_PVH_COMMON,
-> > +    .parent = TYPE_SYS_BUS_DEVICE,
-> > +    .instance_size = sizeof(XenPVHCommonState),
-> > +    .class_init = xen_pvh_class_init,
-> > +};
-> > +
-> > +static void xen_pvh_register_types(void)
-> > +{
-> > +    type_register_static(&xen_pvh_info);
-> > +}
-> > +
-> > +type_init(xen_pvh_register_types);
-> > diff --git a/include/hw/xen/xen-pvh-common.h b/include/hw/xen/xen-pvh-common.h
-> > new file mode 100644
-> > index 0000000000..e958b441fd
-> > --- /dev/null
-> > +++ b/include/hw/xen/xen-pvh-common.h
-> > @@ -0,0 +1,45 @@
-> > +/*
-> > + * QEMU Xen PVH machine - common code.
-> > + *
-> > + * Copyright (c) 2024 Advanced Micro Devices, Inc.
-> > + *
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + */
-> > +
-> > +#ifndef XEN_PVH_COMMON_H__
-> > +#define XEN_PVH_COMMON_H__
-> > +
-> > +#include <assert.h>
-> > +#include "hw/sysbus.h"
-> > +#include "hw/hw.h"
-> > +#include "hw/xen/xen-hvm-common.h"
-> > +#include "hw/pci-host/gpex.h"
-> > +
-> > +#define TYPE_XEN_PVH_COMMON "xen-pvh-common"
-> > +OBJECT_DECLARE_SIMPLE_TYPE(XenPVHCommonState, XEN_PVH_COMMON)
-> > +
-> > +typedef struct XenPVHCommonState {
-> > +    /*< private >*/
-> > +    SysBusDevice parent_obj;
-> > +
-> > +    XenIOState ioreq;
-> > +
-> > +    struct {
-> > +        MemoryRegion low;
-> > +        MemoryRegion high;
-> > +    } ram;
-> > +
-> > +    struct {
-> > +        uint64_t ram_size;
-> > +        uint32_t max_cpus;
-> > +        uint32_t virtio_mmio_num;
-> > +        uint32_t virtio_mmio_irq_base;
-> > +        struct {
-> > +            uint64_t base;
-> > +            uint64_t size;
-> > +        } ram_low, ram_high,
-> > +          virtio_mmio,
-> > +          tpm;
-> > +    } cfg;
-> > +} XenPVHCommonState;
-> > +#endif
-> > -- 
-> > 2.43.0
-> > 
+-- 
+Regards,
+Yi Liu
 
