@@ -4,82 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4688C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 08:18:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED1B3C52D7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 08:26:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1se9Ci-0005Tr-6E; Wed, 14 Aug 2024 04:18:00 -0400
+	id 1se9Jh-0003gE-JJ; Wed, 14 Aug 2024 04:25:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=94947ded6=graf@amazon.de>)
- id 1se9Cg-0005T9-Rv
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 04:17:59 -0400
-Received: from smtp-fw-80007.amazon.com ([99.78.197.218])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=94947ded6=graf@amazon.de>)
- id 1se9Ce-0002MU-Q2
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 04:17:58 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1se9Jf-0003fH-W1
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 04:25:12 -0400
+Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1se9Je-0003Kg-3U
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 04:25:11 -0400
+Received: by mail-oi1-x232.google.com with SMTP id
+ 5614622812f47-3db51133978so4351998b6e.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 01:25:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1723623477; x=1755159477;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=ZFcGcP0nYxpsq3z2vCvQrd8L81fGMMeLGHHuWdCz1co=;
- b=UPHlOZcBEGg01qTT2O/8C0XpaaqHpJa0QspRDIYbq0uIK5TLuZWXTNHl
- y5QEEUtFd5ZINMpP1kZ333Jz41ot2JZURmhOHqP8RNJCqGfxuCNcXFXdx
- hZSPBcWQi2t1wcr+Rc03HVNe/O0oU+T79e8Lwlk07Fr9NSaEub0qI4vmc c=;
-X-IronPort-AV: E=Sophos;i="6.09,288,1716249600"; d="scan'208";a="320836915"
-Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.25.36.210])
- by smtp-border-fw-80007.pdx80.corp.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Aug 2024 08:17:49 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [10.0.21.151:24837]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.3.1:2525] with
- esmtp (Farcaster)
- id 8c7742f7-211f-4d15-99db-acbdda8d4c4a; Wed, 14 Aug 2024 08:17:49 +0000 (UTC)
-X-Farcaster-Flow-ID: 8c7742f7-211f-4d15-99db-acbdda8d4c4a
-Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Wed, 14 Aug 2024 08:17:49 +0000
-Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
- (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34; Wed, 14 Aug 2024
- 08:17:46 +0000
-Message-ID: <01d825dd-4c5a-4532-b4b2-6e5d63eee131@amazon.com>
-Date: Wed, 14 Aug 2024 10:17:43 +0200
+ d=linaro.org; s=google; t=1723623908; x=1724228708; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BdBmJ/kk0u7YMhWmnPakUFig2Q0XocWnRUJe6xpARiM=;
+ b=bBxuqBtHNNMfgftrMy2gsTxiJxTvJK/C9pkmqMcRGAmqwWv1sd37+KZ5y+DHhXKCUy
+ ovrm/VTiSwa4x9fnXKS0Dcrc4aBnILmeQIqJsxAunOj4CWieHjGzSgZTMvRReFczwvBH
+ 0H9SeGAcJaTl9+xfeGpIpuJc8jA0OtOkpWR0jn2D0dmUHPUeHwajWyXhYCGP7GlxsQJH
+ wkLn78blLxKcd8mqIgyw0mhU/FirNoV9YwXd9JjUyPlXqHPPkY9r0+zTqYAFeVYXujec
+ RFypSuIDIyA/udEHDpr9dChvSf2nMAuJgcapwXWovu9T0JVvKmxCTZXjOBDfWmvjXOV9
+ iiFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723623908; x=1724228708;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BdBmJ/kk0u7YMhWmnPakUFig2Q0XocWnRUJe6xpARiM=;
+ b=imoUyldzt2CGCAViOz9JJSnQI5bFQf8fLGqJ26cmYH1LBdpe9G3qOp+fChVN/V1X97
+ lnpZfXPD9Pn2yDp9+cUSB93Zp9PFPr8C00AkqLH3I0Jt8k1uusmmPKl1spVySk6hd7uP
+ GSwiefQNFywk64UBljak1XqV0VgcRr2KDhlj8dmI/CyZZiFcsR97VClyNAA3XGUmgXdP
+ cvLX2oCozhxI+KjdK9vxeAZcbBToGLxJyvg5yLgVwDXw2J6e8xon/Lw54QZ8ZuGdHWuF
+ 4+W4aqLOK3lBPHCmhBmeGsG1mIZCfd8ahU8IqvcqjcjLRIKWxO6ujuXgL4X3kzgk9IPB
+ C/xA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVovGs4RhDdrwvWrbZJnKO5bJXkh6SFkdpCR4oZoo9EXrdDwZl7tSTVihhqrsiZoVeZSBsVg10pDHYdcQVfcadFx0OBGZc=
+X-Gm-Message-State: AOJu0YzL9QKBbJD43quXuT13DvCsLccX0IJ+/Clv0O2ZAxJJfleKhcu+
+ ZBBFU3R9XvI5cBJpmFfDUgr76FRuxQ30hVVOC8/UGicsWrR7+sf/IQHxAhFfgfQ=
+X-Google-Smtp-Source: AGHT+IHrgtZmBLxuuNxCOVaxPpLbEb8+97H7mDbYX1GHCi7k5wNrkn/NFM1l+iVoYsyWHVkOkM6pKg==
+X-Received: by 2002:a05:6808:1284:b0:3db:25f6:a62f with SMTP id
+ 5614622812f47-3dd29935d71mr2462235b6e.28.1723623907866; 
+ Wed, 14 Aug 2024 01:25:07 -0700 (PDT)
+Received: from [192.168.1.113] ([203.30.4.111])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7c697a54939sm2683936a12.70.2024.08.14.01.25.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 Aug 2024 01:25:07 -0700 (PDT)
+Message-ID: <37e67a28-dd86-435d-a072-95f6a85cc2a7@linaro.org>
+Date: Wed, 14 Aug 2024 18:24:58 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/5] machine/nitro-enclave: Add vhost-user-vsock device
-To: Dorjoy Chowdhury <dorjoychy111@gmail.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-CC: <qemu-devel@nongnu.org>, <agraf@csgraf.de>, <stefanha@redhat.com>,
- <pbonzini@redhat.com>, <slp@redhat.com>, <richard.henderson@linaro.org>,
- <eduardo@habkost.net>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>,
- <philmd@linaro.org>
-References: <20240810164502.19693-1-dorjoychy111@gmail.com>
- <20240810164502.19693-3-dorjoychy111@gmail.com> <ZrobFFVV4tN6dueh@redhat.com>
- <CAFfO_h7nNatk=WgGiZcrTR_YEhAYniY=aeBrsxsnE_KEv+fL4Q@mail.gmail.com>
+Subject: Re: [PATCH v1 05/15] tcg/riscv: Add riscv vset{i}vli support
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240813113436.831-1-zhiwei_liu@linux.alibaba.com>
+ <20240813113436.831-6-zhiwei_liu@linux.alibaba.com>
 Content-Language: en-US
-From: Alexander Graf <graf@amazon.com>
-In-Reply-To: <CAFfO_h7nNatk=WgGiZcrTR_YEhAYniY=aeBrsxsnE_KEv+fL4Q@mail.gmail.com>
-X-Originating-IP: [10.253.83.51]
-X-ClientProxiedBy: EX19D043UWC003.ant.amazon.com (10.13.139.240) To
- EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=99.78.197.218;
- envelope-from=prvs=94947ded6=graf@amazon.de; helo=smtp-fw-80007.amazon.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240813113436.831-6-zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x232.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,107 +100,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ck9uIDEzLjA4LjI0IDIwOjAyLCBEb3Jqb3kgQ2hvd2RodXJ5IHdyb3RlOgo+IE9uIE1vbiwgQXVn
-IDEyLCAyMDI0IGF0IDg6MjTigK9QTSBEYW5pZWwgUC4gQmVycmFuZ8OpIDxiZXJyYW5nZUByZWRo
-YXQuY29tPiB3cm90ZToKPj4gT24gU2F0LCBBdWcgMTAsIDIwMjQgYXQgMTA6NDQ6NTlQTSArMDYw
-MCwgRG9yam95IENob3dkaHVyeSB3cm90ZToKPj4+IEFXUyBOaXRybyBFbmNsYXZlcyBoYXZlIGJ1
-aWx0LWluIHZob3N0LXZzb2NrIGRldmljZSBzdXBwb3J0IHdoaWNoCj4+PiBlbmFibGVzIGFwcGxp
-Y2F0aW9ucyBpbiBlbmNsYXZlIFZNcyB0byBjb21tdW5pY2F0ZSB3aXRoIHRoZSBwYXJlbnQKPj4+
-IEVDMiBWTSBvdmVyIHZzb2NrLiBUaGUgZW5jbGF2ZSBWTXMgaGF2ZSBkeW5hbWljIENJRCB3aGls
-ZSB0aGUgcGFyZW50Cj4+PiBhbHdheXMgaGFzIENJRCAzLiBJbiBRRU1VLCB0aGUgdnNvY2sgZW11
-bGF0aW9uIGZvciBuaXRybyBlbmNsYXZlIGlzCj4+PiBhZGRlZCB1c2luZyB2aG9zdC11c2VyLXZz
-b2NrIGFzIG9wcG9zZWQgdG8gdmhvc3QtdnNvY2suIHZob3N0LXZzb2NrCj4+PiBkb2Vzbid0IHN1
-cHBvcnQgc2libGluZyBWTSBjb21tdW5pY2F0aW9uIHdoaWNoIGlzIG5lZWRlZCBmb3Igbml0cm8K
-Pj4+IGVuY2xhdmVzLgo+Pj4KPj4+IEluIFFFTVUncyBuaXRyby1lbmNsYXZlIGVtdWxhdGlvbiwg
-Zm9yIHRoZSB2c29jayBjb21tdW5pY2F0aW9uIHRvIENJRAo+Pj4gMyB0byB3b3JrLCBhbm90aGVy
-IHByb2Nlc3MgdGhhdCBkb2VzIHRoZSB2c29jayBlbXVsYXRpb24gaW4gIHVzZXJzcGFjZQo+Pj4g
-bXVzdCBiZSBydW4sIGZvciBleGFtcGxlLCB2aG9zdC1kZXZpY2UtdnNvY2tbMV0gZnJvbSBydXN0
-LXZtbSwgd2l0aAo+Pj4gbmVjZXNzYXJ5IHZzb2NrIGNvbW11bmljYXRpb24gc3VwcG9ydCBpbiBh
-bm90aGVyIGd1ZXN0IFZNIHdpdGggQ0lEIDMuCj4+PiBBIG5ldyBtYW5kYXRvcnkgbml0cm8tZW5j
-bGF2ZSBtYWNoaW5lIG9wdGlvbiAndnNvY2snIGhhcyBiZWVuIGFkZGVkLgo+Pj4gVGhlIHZhbHVl
-IGZvciB0aGlzIG9wdGlvbiBzaG91bGQgYmUgdGhlIGNoYXJkZXYgaWQgZnJvbSB0aGUgJy1jaGFy
-ZGV2Jwo+Pj4gb3B0aW9uIGZvciB0aGUgdmhvc3QtdXNlci12c29jayBkZXZpY2UgdG8gd29yay4K
-Pj4+Cj4+PiBVc2luZyB2aG9zdC11c2VyLXZzb2NrIGFsc28gZW5hYmxlcyB0aGUgcG9zc2liaWxp
-dHkgdG8gaW1wbGVtZW50IHNvbWUKPj4+IHByb3h5aW5nIHN1cHBvcnQgaW4gdGhlIHZob3N0LXVz
-ZXItdnNvY2sgZGFlbW9uIHRoYXQgd2lsbCBmb3J3YXJkIGFsbAo+Pj4gdGhlIHBhY2tldHMgdG8g
-dGhlIGhvc3QgbWFjaGluZSBpbnN0ZWFkIG9mIENJRCAzIHNvIHRoYXQgdXNlcnMgb2YKPj4+IG5p
-dHJvLWVuY2xhdmUgY2FuIHJ1biB0aGUgbmVjZXNzYXJ5IGFwcGxpY2F0aW9ucyBpbiB0aGVpciBo
-b3N0IG1hY2hpbmUKPj4+IGluc3RlYWQgb2YgcnVubmluZyBhbm90aGVyIHdob2xlIFZNIHdpdGgg
-Q0lEIDMuCj4+Pgo+Pj4gWzFdIGh0dHBzOi8vZ2l0aHViLmNvbS9ydXN0LXZtbS92aG9zdC1kZXZp
-Y2UvdHJlZS9tYWluL3Zob3N0LWRldmljZS12c29jawo+Pj4KPj4+IFNpZ25lZC1vZmYtYnk6IERv
-cmpveSBDaG93ZGh1cnkgPGRvcmpveWNoeTExMUBnbWFpbC5jb20+Cj4+PiAtLS0KPj4+ICAgYmFj
-a2VuZHMvaG9zdG1lbS1tZW1mZC5jICAgICAgICB8ICAgMiAtCj4+PiAgIGh3L2NvcmUvbWFjaGlu
-ZS5jICAgICAgICAgICAgICAgfCAgNzEgKysrKysrKysrLS0tLS0tLS0tCj4+PiAgIGh3L2kzODYv
-S2NvbmZpZyAgICAgICAgICAgICAgICAgfCAgIDEgKwo+Pj4gICBody9pMzg2L25pdHJvX2VuY2xh
-dmUuYyAgICAgICAgIHwgMTIzICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrCj4+PiAg
-IGluY2x1ZGUvaHcvYm9hcmRzLmggICAgICAgICAgICAgfCAgIDIgKwo+Pj4gICBpbmNsdWRlL2h3
-L2kzODYvbml0cm9fZW5jbGF2ZS5oIHwgICA4ICsrKwo+Pj4gICBpbmNsdWRlL3N5c2VtdS9ob3N0
-bWVtLmggICAgICAgIHwgICAyICsKPj4+ICAgNyBmaWxlcyBjaGFuZ2VkLCAxNzQgaW5zZXJ0aW9u
-cygrKSwgMzUgZGVsZXRpb25zKC0pCj4+Pgo+Pj4gZGlmZiAtLWdpdCBhL2h3L2kzODYvbml0cm9f
-ZW5jbGF2ZS5jIGIvaHcvaTM4Ni9uaXRyb19lbmNsYXZlLmMKPj4+IGluZGV4IDk4NjkwYzYzNzMu
-LjI4MGFiNGNjOWIgMTAwNjQ0Cj4+PiAtLS0gYS9ody9pMzg2L25pdHJvX2VuY2xhdmUuYwo+Pj4g
-KysrIGIvaHcvaTM4Ni9uaXRyb19lbmNsYXZlLmMKPj4+IEBAIC0xMSwxMSArMTEsODEgQEAKPj4+
-ICAgI2luY2x1ZGUgInFlbXUvb3NkZXAuaCIKPj4+ICAgI2luY2x1ZGUgInFlbXUvZXJyb3ItcmVw
-b3J0LmgiCj4+PiAgICNpbmNsdWRlICJxYXBpL2Vycm9yLmgiCj4+PiArI2luY2x1ZGUgInFvbS9v
-YmplY3RfaW50ZXJmYWNlcy5oIgo+Pj4KPj4+ICsjaW5jbHVkZSAiY2hhcmRldi9jaGFyLmgiCj4+
-PiArI2luY2x1ZGUgImh3L3N5c2J1cy5oIgo+Pj4gICAjaW5jbHVkZSAiaHcvY29yZS9laWYuaCIK
-Pj4+ICAgI2luY2x1ZGUgImh3L2kzODYveDg2LmgiCj4+PiAgICNpbmNsdWRlICJody9pMzg2L21p
-Y3Jvdm0uaCIKPj4+ICAgI2luY2x1ZGUgImh3L2kzODYvbml0cm9fZW5jbGF2ZS5oIgo+Pj4gKyNp
-bmNsdWRlICJody92aXJ0aW8vdmlydGlvLW1taW8uaCIKPj4+ICsjaW5jbHVkZSAiaHcvdmlydGlv
-L3Zob3N0LXVzZXItdnNvY2suaCIKPj4+ICsjaW5jbHVkZSAic3lzZW11L2hvc3RtZW0uaCIKPj4+
-ICsKPj4+ICtzdGF0aWMgQnVzU3RhdGUgKmZpbmRfZnJlZV92aXJ0aW9fbW1pb19idXModm9pZCkK
-Pj4+ICt7Cj4+PiArICAgIEJ1c0NoaWxkICpraWQ7Cj4+PiArICAgIEJ1c1N0YXRlICpidXMgPSBz
-eXNidXNfZ2V0X2RlZmF1bHQoKTsKPj4+ICsKPj4+ICsgICAgUVRBSUxRX0ZPUkVBQ0goa2lkLCAm
-YnVzLT5jaGlsZHJlbiwgc2libGluZykgewo+Pj4gKyAgICAgICAgRGV2aWNlU3RhdGUgKmRldiA9
-IGtpZC0+Y2hpbGQ7Cj4+PiArICAgICAgICBpZiAob2JqZWN0X2R5bmFtaWNfY2FzdChPQkpFQ1Qo
-ZGV2KSwgVFlQRV9WSVJUSU9fTU1JTykpIHsKPj4+ICsgICAgICAgICAgICBWaXJ0SU9NTUlPUHJv
-eHkgKm1taW8gPSBWSVJUSU9fTU1JTyhPQkpFQ1QoZGV2KSk7Cj4+PiArICAgICAgICAgICAgVmly
-dGlvQnVzU3RhdGUgKm1taW9fdmlydGlvX2J1cyA9ICZtbWlvLT5idXM7Cj4+PiArICAgICAgICAg
-ICAgQnVzU3RhdGUgKm1taW9fYnVzID0gJm1taW9fdmlydGlvX2J1cy0+cGFyZW50X29iajsKPj4+
-ICsgICAgICAgICAgICBpZiAoUVRBSUxRX0VNUFRZKCZtbWlvX2J1cy0+Y2hpbGRyZW4pKSB7Cj4+
-PiArICAgICAgICAgICAgICAgIHJldHVybiBtbWlvX2J1czsKPj4+ICsgICAgICAgICAgICB9Cj4+
-PiArICAgICAgICB9Cj4+PiArICAgIH0KPj4+ICsKPj4+ICsgICAgcmV0dXJuIE5VTEw7Cj4+PiAr
-fQo+Pj4gKwo+Pj4gK3N0YXRpYyB2b2lkIHZob3N0X3VzZXJfdnNvY2tfaW5pdChOaXRyb0VuY2xh
-dmVNYWNoaW5lU3RhdGUgKm5lbXMpCj4+PiArewo+Pj4gKyAgICBEZXZpY2VTdGF0ZSAqZGV2ID0g
-cWRldl9uZXcoVFlQRV9WSE9TVF9VU0VSX1ZTT0NLKTsKPj4+ICsgICAgVkhvc3RVc2VyVlNvY2sg
-KnZzb2NrID0gVkhPU1RfVVNFUl9WU09DSyhkZXYpOwo+Pj4gKyAgICBCdXNTdGF0ZSAqYnVzOwo+
-Pj4gKwo+Pj4gKyAgICBpZiAoIW5lbXMtPnZzb2NrKSB7Cj4+PiArICAgICAgICBlcnJvcl9yZXBv
-cnQoIkEgdmFsaWQgY2hhcmRldiBpZCBmb3Igdmhvc3QtdXNlci12c29jayBkZXZpY2UgbXVzdCBi
-ZSAiCj4+PiArICAgICAgICAgICAgICAgICAgICAgInByb3ZpZGVkIHVzaW5nIHRoZSAndnNvY2sn
-IG1hY2hpbmUgb3B0aW9uIik7Cj4+PiArICAgICAgICBleGl0KDEpOwo+Pj4gKyAgICB9Cj4+PiAr
-Cj4+PiArICAgIGJ1cyA9IGZpbmRfZnJlZV92aXJ0aW9fbW1pb19idXMoKTsKPj4+ICsgICAgaWYg
-KCFidXMpIHsKPj4+ICsgICAgICAgIGVycm9yX3JlcG9ydCgiRmFpbGVkIHRvIGZpbmQgYnVzIGZv
-ciB2aG9zdC11c2VyLXZzb2NrIGRldmljZSIpOwo+Pj4gKyAgICAgICAgZXhpdCgxKTsKPj4+ICsg
-ICAgfQo+Pj4gKwo+Pj4gKyAgICBDaGFyZGV2ICpjaGFyZGV2ID0gcWVtdV9jaHJfZmluZChuZW1z
-LT52c29jayk7Cj4+PiArICAgIGlmICghY2hhcmRldikgewo+Pj4gKyAgICAgICAgZXJyb3JfcmVw
-b3J0KCJGYWlsZWQgdG8gZmluZCBjaGFyZGV2IHdpdGggaWQgJXMiLCBuZW1zLT52c29jayk7Cj4+
-PiArICAgICAgICBleGl0KDEpOwo+Pj4gKyAgICB9Cj4+PiArCj4+PiArICAgIHZzb2NrLT5jb25m
-LmNoYXJkZXYuY2hyID0gY2hhcmRldjsKPj4+ICsKPj4+ICsgICAgcWRldl9yZWFsaXplX2FuZF91
-bnJlZihkZXYsIGJ1cywgJmVycm9yX2ZhdGFsKTsKPj4+ICt9Cj4+IFdoeSBkb2VzIHRoaXMgbWFj
-aGluZSBuZWVkIHRvIGNyZWF0ZSB0aGUgdmhvc3QtdXNlci12c29jayBkZXZpY2UgaXRzZWxmID8K
-Pj4gRG9pbmcgaXQgdGhpcyB3YXkgcHJldmVudHMgdGhlIG1nbXQgYXBwIGZyb20gY2hhbmdpbmcg
-YW55IG9mIHRoZSBvdGhlcgo+PiB2c29jayBkZXZpY2Ugc2V0dGluZ3MgYmV5b25kICdjaGFyZGV2
-Jy4gVGhlIGVudGl0eSBjcmVhdGluZyBRRU1VIGNhbiB1c2UKPj4gLWRldmljZSB0byBjcmVhdGUg
-dGhlIHZzb2NrIGRldmljZS4KPj4KPiBIaSBEYW5pZWwuIEdvb2QgcG9pbnQuIFRoZSByZWFzb24g
-dG8gbWFrZSB0aGUgdmhvc3QtdXNlci12c29jayBkZXZpY2UKPiBidWlsdC1pbiBpcyBiZWNhdXNl
-IG5pdHJvIFZNcyB3aWxsIGFsd2F5cyBuZWVkIGl0IGFueXdheSAobGlrZSB0aGUKPiB2aXJ0aW8t
-bnNtIGRldmljZSB3aGljaCBpcyBidWlsdC1pbiB0b28pLiBXaGVuIGFuIEVJRiBpbWFnZSBpcyBi
-dWlsdAo+IHVzaW5nIG5pdHJvLWNsaSB0aGUgImluaXQiIHByb2Nlc3MgaW4gdGhlIEVJRiBpbWFn
-ZSB0cmllcyB0byBjb25uZWN0Cj4gdG8gKEFGX1ZTT0NLLCBDSUQgMywgcG9ydCA5MDAwKSB0byBz
-ZW5kIGEgaGVhcnRiZWF0IGFuZCBleHBlY3RzIGEKPiBoZWFydGJlYXQgcmVwbHkuIFNvIG15IHVu
-ZGVyc3RhbmRpbmcgaXMgdGhhdCBpZiB3ZSBkb24ndCBjcmVhdGUgaXQKPiBpbnNpZGUgdGhlIG1h
-Y2hpbmUgY29kZSBpdHNlbGYsIHVzZXJzIHdvdWxkIGFsd2F5cyBuZWVkIHRvIHByb3ZpZGUgdGhl
-Cj4gZXhwbGljaXQgb3B0aW9ucyBmb3IgdGhlIGRldmljZSBhbnl3YXkuIEJ1dCBhcyB5b3UgcG9p
-bnQgb3V0IHRoaXMgYWxzbwo+IG1ha2VzIHRoZSBkZXZpY2Ugc2V0dGluZ3Mgbm9uLWNvbmZpZ3Vy
-YWJsZS4KPgo+IEhleSBBbGV4LCBkbyB5b3UgaGF2ZSBhbnkgc3VnZ2VzdGlvbnMgb24gdGhpcz8K
-CgpJTUhPIGRldmljZXMgdGhhdCBhcmUgcmVxdWlyZWQgZm9yIHRoZSBtYWNoaW5lIHRvIGZ1bmN0
-aW9uIHNob3VsZCBiZSAKcGFydCBvZiB0aGUgbWFjaGluZS4gU2luY2UgdnNvY2sgaXMgYSBjb3Jl
-IHBhcnQgb2YgdGhlIE5pdHJvIEVuY2xhdmUsIGl0IApzaG91bGQgYmUgcGFydCBvZiB0aGUgbWFj
-aGluZSBkZWZpbml0aW9uLiBJdCdzIGFzIG11Y2ggYSBib2FyZCAKZGVwZW5kZW5jeSBhcyBmd19j
-ZmcuCgpBbGV4CgoKCgpBbWF6b24gV2ViIFNlcnZpY2VzIERldmVsb3BtZW50IENlbnRlciBHZXJt
-YW55IEdtYkgKS3JhdXNlbnN0ci4gMzgKMTAxMTcgQmVybGluCkdlc2NoYWVmdHNmdWVocnVuZzog
-Q2hyaXN0aWFuIFNjaGxhZWdlciwgSm9uYXRoYW4gV2Vpc3MKRWluZ2V0cmFnZW4gYW0gQW10c2dl
-cmljaHQgQ2hhcmxvdHRlbmJ1cmcgdW50ZXIgSFJCIDI1Nzc2NCBCClNpdHo6IEJlcmxpbgpVc3Qt
-SUQ6IERFIDM2NSA1MzggNTk3Cg==
+On 8/13/24 21:34, LIU Zhiwei wrote:
+> From: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+> 
+> In RISC-V, vector operations require initial configuration using
+> the vset{i}vl{i} instruction.
+> 
+> This instruction:
+>    1. Sets the vector length (vl) in bytes
+>    2. Configures the vtype register, which includes:
+>      SEW (Single Element Width)
+>      LMUL (vector register group multiplier)
+>      Other vector operation parameters
+> 
+> This configuration is crucial for defining subsequent vector
+> operation behavior. To optimize performance, the configuration
+> process is managed dynamically:
+>    1. Reconfiguration using vset{i}vl{i} is necessary when SEW
+>       or vector register group width changes.
+>    2. The vset instruction can be omitted when configuration
+>       remains unchanged.
+> 
+> This optimization is only effective within a single TB.
+> Each TB requires reconfiguration at its start, as the current
+> state cannot be obtained from hardware.
+> 
+> Signed-off-by: TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+> Signed-off-by: Weiwei Li <liwei1518@gmail.com>
+> Reviewed-by: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+> ---
+>   tcg/riscv/tcg-target.c.inc | 121 +++++++++++++++++++++++++++++++++++++
+>   1 file changed, 121 insertions(+)
+> 
+> diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
+> index ca9bafcb3c..d17f523187 100644
+> --- a/tcg/riscv/tcg-target.c.inc
+> +++ b/tcg/riscv/tcg-target.c.inc
+> @@ -167,6 +167,18 @@ static bool tcg_target_const_match(int64_t val, int ct,
+>    * RISC-V Base ISA opcodes (IM)
+>    */
+>   
+> +#define V_OPIVV (0x0 << 12)
+> +#define V_OPFVV (0x1 << 12)
+> +#define V_OPMVV (0x2 << 12)
+> +#define V_OPIVI (0x3 << 12)
+> +#define V_OPIVX (0x4 << 12)
+> +#define V_OPFVF (0x5 << 12)
+> +#define V_OPMVX (0x6 << 12)
+> +#define V_OPCFG (0x7 << 12)
+> +
+> +#define V_SUMOP (0x0 << 20)
+> +#define V_LUMOP (0x0 << 20)
+> +
+>   typedef enum {
+>       OPC_ADD = 0x33,
+>       OPC_ADDI = 0x13,
+> @@ -262,6 +274,11 @@ typedef enum {
+>       /* Zicond: integer conditional operations */
+>       OPC_CZERO_EQZ = 0x0e005033,
+>       OPC_CZERO_NEZ = 0x0e007033,
+> +
+> +    /* V: Vector extension 1.0 */
+> +    OPC_VSETVLI  = 0x57 | V_OPCFG,
+> +    OPC_VSETIVLI = 0xc0000057 | V_OPCFG,
+> +    OPC_VSETVL   = 0x80000057 | V_OPCFG,
+>   } RISCVInsn;
+>   
+>   /*
+> @@ -354,6 +371,42 @@ static int32_t encode_uj(RISCVInsn opc, TCGReg rd, uint32_t imm)
+>       return opc | (rd & 0x1f) << 7 | encode_ujimm20(imm);
+>   }
+>   
+> +typedef enum {
+> +    VTA_TU = 0,
+> +    VTA_TA,
+> +} RISCVVta;
+> +
+> +typedef enum {
+> +    VMA_MU = 0,
+> +    VMA_MA,
+> +} RISCVVma;
+> +
+> +typedef enum {
+> +    VSEW_E8 = 0, /* EW=8b */
+> +    VSEW_E16,    /* EW=16b */
+> +    VSEW_E32,    /* EW=32b */
+> +    VSEW_E64,    /* EW=64b */
+> +} RISCVVsew;
 
+This exactly aligns with MemOp and vece.  Do we really need an enum for this?
+
+> +
+> +typedef enum {
+> +    VLMUL_M1 = 0, /* LMUL=1 */
+> +    VLMUL_M2,     /* LMUL=2 */
+> +    VLMUL_M4,     /* LMUL=4 */
+> +    VLMUL_M8,     /* LMUL=8 */
+> +    VLMUL_RESERVED,
+> +    VLMUL_MF8,    /* LMUL=1/8 */
+> +    VLMUL_MF4,    /* LMUL=1/4 */
+> +    VLMUL_MF2,    /* LMUL=1/2 */
+> +} RISCVVlmul;
+> +#define LMUL_MAX 8
+> +
+> +static int32_t encode_vtype(RISCVVta vta, RISCVVma vma,
+> +                            RISCVVsew vsew, RISCVVlmul vlmul)
+> +{
+> +    return (vma & 0x1) << 7 | (vta & 0x1) << 6 | (vsew & 0x7) << 3 |
+> +           (vlmul & 0x7);
+> +}
+
+> +static void tcg_out_vsetvl(TCGContext *s, uint32_t avl, RISCVVta vta,
+> +                           RISCVVma vma, RISCVVsew vsew,
+> +                           RISCVVlmul vlmul)
+> +{
+> +    int32_t vtypei = encode_vtype(vta, vma, vsew, vlmul);
+> +
+> +    if (avl < 32) {
+> +        tcg_out_opc_vconfig(s, OPC_VSETIVLI, TCG_REG_ZERO, avl, vtypei);
+> +    } else {
+> +        tcg_out_opc_imm(s, OPC_ADDI, TCG_REG_TMP0, TCG_REG_ZERO, avl);
+> +        tcg_out_opc_vconfig(s, OPC_VSETVLI, TCG_REG_ZERO, TCG_REG_TMP0, vtypei);
+> +    }
+> +}
+> +
+> +/*
+> + * TODO: If the vtype value is not supported by the implementation,
+> + * then the vill bit is set in vtype, the remaining bits in
+> + * vtype are set to zero, and the vl register is also set to zero
+> + */
+> +
+> +static __thread unsigned prev_size;
+> +static __thread unsigned prev_vece = MO_8;
+> +static __thread bool vec_vtpye_init = true;
+
+Typo in vtpye.
+
+That said, init should be redundant.  I think you only need one variable here:
+
+   static __thread int prev_vtype;
+
+Since any vtype < 0 is vill, the "uninitialized" value is easily -1.
+
+> +static inline void tcg_target_set_vec_config(TCGContext *s, TCGType type,
+> +                                      unsigned vece)
+> +{
+> +    unsigned oprsz = get_vec_type_bytes(type);
+> +
+> +    if (!vec_vtpye_init && (prev_size == oprsz && prev_vece == vece)) {
+> +        return ;
+> +    }
+
+     int vtype = encode_vtype(...);
+     if (vtype != prev_vtype) {
+         prev_vtype = vtype;
+         tcg_out_vsetvl(s, vtype);
+     }
+
+> @@ -1914,6 +2029,11 @@ static void tcg_out_vec_op(TCGContext *s, TCGOpcode opc,
+>                              const TCGArg args[TCG_MAX_OP_ARGS],
+>                              const int const_args[TCG_MAX_OP_ARGS])
+>   {
+> +    TCGType type = vecl + TCG_TYPE_V64;
+> +
+> +    if (vec_vtpye_init) {
+> +        tcg_target_set_vec_config(s, type, vece);
+> +    }
+
+Here is perhaps too early... see patch 8 re logicals.
+
+
+r~
 
