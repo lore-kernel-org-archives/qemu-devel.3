@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E80AC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 13:40:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18920C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 13:50:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seEEp-0007kO-4S; Wed, 14 Aug 2024 09:40:31 -0400
+	id 1seENX-0003AH-W7; Wed, 14 Aug 2024 09:49:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seEEk-0007QX-Ls
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:40:29 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seENW-00039F-Ln
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:49:30 -0400
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seEEi-0004fU-Gx
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:40:26 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-36bcc168cdaso4498152f8f.0
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 06:40:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seENV-0005wp-10
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:49:30 -0400
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-52efbb55d24so11879327e87.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 06:49:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723642823; x=1724247623; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cmqvLXpHsMm1BHP4snAIAmxsuND6y2HmjOEmCpPOzSI=;
- b=tddrXg450q937Wo+qbCfEsSWctKgwVA0LDrjH1FQV0Ph9/VOQwVAc1dhWc5GttZNe1
- XPeugubb7bNfhA3NhmhGXDKlZf8mpYGxWngDWIt9bZ3XNMdmF04AWwgCzIGFvz4ZBewp
- OfN59YfjAONwTdYLrGSwNwhsc8KPS+3mIICXxhUrmw8LkRPw7Axm0ruLYJauKaLDFrPa
- p8nCZ3epwXk7aJoJNjO4NdSEcCodcb+So/WiAU3ohz+ky1RM8svEJelTM3G9wsobFmIc
- 2IwMvh28pXn71+yoq3STGDCchKaSCR00fnhhFCmp/dXp0Qt2zkZu5YuDjodC6ECJtJKo
- 5nQQ==
+ d=linaro.org; s=google; t=1723643367; x=1724248167; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MvmdxaeKXNXybhr4dzq5qE4MfB4QIdk7RoqfISfO1ns=;
+ b=uMbc914yRjG0VHthcArU229cH5ZOm6abcJCWhoC9Bm48dYOwzR8sj9kRc4o7A8N0j6
+ UG/IltzoDF0gZUjvWdWm7is964xe36mexMZfmh9VddUVBUzrom8IvJlwIJs3zuovmGWJ
+ k/Q22OIw1SVSey5ItNo7rDhSwENyzLsm4hHe3U9sIaApBrYJLlzfN9i9PRVmlMaXoiHj
+ SSDEjypt9mRSDccmwtyNDH4m5MChJTK5CFZAlLol539yIyzzYSjcEyH+4yoX42iskoms
+ Oa62oa79hw+OxnGRniXsT4kRKVdqWCrTeLt557cNSrVmTVFDrvnslet1jSoxV+p5owHA
+ atWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723642823; x=1724247623;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cmqvLXpHsMm1BHP4snAIAmxsuND6y2HmjOEmCpPOzSI=;
- b=b/OShccNOjzkaentqMQ+EtzlsQADfs499xz0nbZQVbXtJikV50ImVEY0spzX7HDntZ
- Wtf6G0mzqbGhsb+Hlp+YJGsTC6xzrHxp165LvF4HLswYBr7ZiLNU36T4T1YHnxgwYMLe
- lKUAGddLkxsGt0ZByzVD7PkPxJ8Li0I5wWu0Ciyzv7/hjaMEwjBd2+t2/mipu4CJcBfL
- B9xAZiuyVNZFC9FCJsI3wQB2FtDElPNXsZ4IyLh6nU86yZZgCgKG06UcIztOrfzorCN1
- 1spOhw1/1IQw2poGLXGtgc6p8l96LP9Tc9bLr8BY0z/KajZaqmGWgWnruTtF9q1bwFXH
- HzoQ==
-X-Gm-Message-State: AOJu0YwrhG5Vt+fLP5nLtk6XHoz76LBzcSjM1sj91b+m/1I0Minm0Pha
- iMPFw8RyljZukFZerIfry0tss2cDRzh1O39yMgqTBD2KLdRXXRV+e4Xc6PgTFI/aj/h1YrAFsyZ
- Gf80=
-X-Google-Smtp-Source: AGHT+IFvhODmAfAuwVZxgCpoYf8NdEklFCc4gWVOb35d4limDWjg0Cf675n3PiH0H7fDqyUPChE1Vw==
-X-Received: by 2002:a5d:5e0f:0:b0:371:8283:94c1 with SMTP id
- ffacd0b85a97d-371828395eamr379163f8f.0.1723642822653; 
- Wed, 14 Aug 2024 06:40:22 -0700 (PDT)
-Received: from m1x-phil.lan ([176.187.208.57])
+ d=1e100.net; s=20230601; t=1723643367; x=1724248167;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MvmdxaeKXNXybhr4dzq5qE4MfB4QIdk7RoqfISfO1ns=;
+ b=EhhC7QKtsEudGawItpyVogSWtbND3AY7O08WYQdaw8mh1HhrpWni+zLjgNkmb6wjhp
+ PdBSrnje2bevM//kZKe3/2p+PTTX1pXzNmB6lSkZ3s4ak61DGTMBDUympokONfikDcAy
+ XOMeSc6+uVoyMyutxkt0UX3pCeY0Obpj9ZHk2y+s3hW7z6BdJbNP7c3q+WSdpfy2owdm
+ QkMA3VsHBOSJvx8c+JEwAWwF3ZQ4KmPbInrh+YzWi95JOrNqnOD63j0oV3SmNJp5F+Eo
+ JLueIGiz2vfVUGn9Uxk2c0i38+l+7/EyaHGXMA1uctvW+dJupABphHjmMtc7PtgmpKuZ
+ qfEQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX/UMZwnDhB02pE9Wnwnb5rntcI0TTH+jk7R4uwzbO0caSCVEBtY3INj3i+2u/GE5mEe0W+jeqQ1qOLGrW3lkAEsm4uTYE=
+X-Gm-Message-State: AOJu0Yy3OoEatZTyfiEAk7nEQycRhyUhHie5Ai03ali8+aAFp7f1OqpW
+ CzRD+RespLfGXHndtR9fYmuCyJ6OhHR7jRXiwkzawsHgM3m9B1CWD6mAFAkVwqI=
+X-Google-Smtp-Source: AGHT+IFojsUY/FvvM3/tL2ToNji4/sH6NFuQvXR+pvINpMqEZOgyGG9Q8MIHgffxBO2Bc32lT9WgeA==
+X-Received: by 2002:a05:6512:318a:b0:52e:9cc7:4462 with SMTP id
+ 2adb3069b0e04-532eda67246mr2277692e87.11.1723643366499; 
+ Wed, 14 Aug 2024 06:49:26 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.208.57])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36e4c937b5fsm12803551f8f.31.2024.08.14.06.40.18
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 14 Aug 2024 06:40:22 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Laurent Vivier <laurent@vivier.eu>,
- Richard Henderson <richard.henderson@linaro.org>,
- YunQiang Su <syq@debian.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-9.1? 4/4] linux-user/mips: Select Loongson CPU for
- Loongson binaries
-Date: Wed, 14 Aug 2024 15:39:28 +0200
-Message-ID: <20240814133928.6746-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240814133928.6746-1-philmd@linaro.org>
-References: <20240814133928.6746-1-philmd@linaro.org>
+ 2adb3069b0e04-53200ec3a85sm1270514e87.98.2024.08.14.06.49.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 Aug 2024 06:49:26 -0700 (PDT)
+Message-ID: <bf66bee5-1a52-4add-a6f5-56cb03c3a24f@linaro.org>
+Date: Wed, 14 Aug 2024 15:48:52 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.2 06/10] hw/remote/message.c: Don't directly invoke
+ DeviceClass:reset
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+References: <20240813165250.2717650-1-peter.maydell@linaro.org>
+ <20240813165250.2717650-7-peter.maydell@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240813165250.2717650-7-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=philmd@linaro.org; helo=mail-lf1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,29 +102,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- linux-user/mips64/target_elf.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+On 13/8/24 18:52, Peter Maydell wrote:
+> Directly invoking the DeviceClass::reset method is a bad idea,
+> because if the device is using three-phase reset then it relies on
+> transitional reset machinery which is likely to disappear at some
+> point.
 
-diff --git a/linux-user/mips64/target_elf.h b/linux-user/mips64/target_elf.h
-index a3a8b2e385..502af9d278 100644
---- a/linux-user/mips64/target_elf.h
-+++ b/linux-user/mips64/target_elf.h
-@@ -14,6 +14,12 @@ static inline const char *cpu_get_model(uint32_t eflags)
-     case EF_MIPS_MACH_OCTEON2:
-     case EF_MIPS_MACH_OCTEON3:
-         return "Octeon68XX";
-+    case EF_MIPS_MACH_LS2E:
-+        return "Loongson-2E";
-+    case EF_MIPS_MACH_LS2F:
-+        return "Loongson-2F";
-+    case EF_MIPS_MACH_LS3A:
-+        return "Loongson-3A1000";
-     default:
-         break;
-     }
--- 
-2.45.2
+This seems like fix-for-9.1 material.
+
+> Reset the device in the standard way, by calling device_cold_reset().
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/remote/message.c | 5 +----
+>   1 file changed, 1 insertion(+), 4 deletions(-)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
 
