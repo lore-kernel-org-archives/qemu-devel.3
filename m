@@ -4,79 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D92EFC3DA4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10974C52D7B
 	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 13:40:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seEEP-00074t-Q2; Wed, 14 Aug 2024 09:40:05 -0400
+	id 1seEE4-0006Pl-69; Wed, 14 Aug 2024 09:39:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seEEO-00073j-4j
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:40:04 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seEE0-0006JJ-1k
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:39:40 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seEEM-0004RB-CE
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:40:03 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3684bea9728so3910054f8f.3
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 06:40:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seEDx-0004Ks-2f
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:39:38 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-428e0d18666so49021285e9.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 06:39:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723642800; x=1724247600; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jxLHqx+S5C+GI1KIVnOAvNeyCE7KTQMJVIjAY6qG4kE=;
- b=M1JdrgpRAdN78DDRdwZPpPQ6Rg2uIMpne6tJIlimLIaVcRbH5ucqqfewk9HSm2nupo
- 06umrhXuUT/GtIkaA04cNOAvB7TWKA8ISJphj13WrQgjW4hlcVNuFpwFIusGdTwkjzc9
- U+COr1Uml0kAmD5/wojJqM4pcNmOQEk1wkyNOCfw6tm1PwFHUfJp3dFlYHvRL4mbzKmR
- gTJf+/b0nqkdbX7VonjOVQUqhA2fx3SIU5CN+ZVcE5WTE9Qdo3layuwPJEP2Xok3l8X6
- HAUwq0ZfFCXFD/KGPoDARygWptYeRqkVXhbkMCdln1uFqh928wqrL7by6xo25eoj/hRd
- 4jPw==
+ d=linaro.org; s=google; t=1723642775; x=1724247575; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=gTkWpmoTYWWZMSGTkTM4NmFUtiHO/e0O6nDNIsU/+uk=;
+ b=dndskHQDHeNC9jJIYrNqq34OdzwpS24n6pz87L92F6dZtKVH9IcCG0S8tiRZDxBXK6
+ gjZ5MYndH580b1s07f0/cOsu0LsgBA3/DRCKfXiBexMeYiZ0FdKdqwa4TF7rFfMDsZ92
+ j0gy7PI6adIdOds6PLG6oI7F0zq8E/uPhbbkRS2vJOkyzN1tGOtGyZEo0ZZgMlSYG7y0
+ AQacw7Otpb8nzaME7xJFX9K69bAhQivKjwwvAZCQoBhl1kmpP8wBwyPNLDVsHLGo+FUx
+ aa8FwHZzDUSh4f2B+443+ganYR6tmmYc2Q/zPfCiury1bAe0lhpFTtJJ7f35DAmX3dr4
+ +aOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723642800; x=1724247600;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jxLHqx+S5C+GI1KIVnOAvNeyCE7KTQMJVIjAY6qG4kE=;
- b=LOEDR9aIVdELHweDaOslm1F+L9AoMW+wfw4lK/x7MFtHcDHK/kuaz3PbHcOMmAM/La
- 5Y6KAaFAHF9MCD6DESnaJX86FX3ZT2RZe7oNY/xfwa8vm3u8QkdxjEbNBsmXQ1oMAECt
- 1XTpynICXHcouVCM/9Ruuo3WPxefiASO9hUdPP+AxMdfn0/TaAUFf91NaMpjyqQ9hpwp
- v6DThI6fXzTmE9xMjcOnMlDliAiwktKOe2H0gAdtm/OEX3awfQ9fH0hwmuBKq9WUx6xS
- SNAgyAk0uEEWJIkUPnxwv4Imf0Fc2KdlXHMMQA3v5TAurF1h4MSlgp/iWi4+E0KsTI+M
- e7Vw==
-X-Gm-Message-State: AOJu0YzmIZnj/XEm1Hwz++VWsmRPqyAj7SlW0HxjMSwvYP/AD8z+W6W7
- Le1Er9PcqUEHfMRhhXjmzNdQNP9z3jTiM7Py1IoROkHadofTC0PdbbKDfhJD0vk4YHk7E9CN+k4
- F+hY=
-X-Google-Smtp-Source: AGHT+IGpWkFi07doCplbrzZz3dDjDbBNd+a4oenVB3ShtBAM2SIzkFdS4igdKIPRnNpaw4/eIWu+3g==
-X-Received: by 2002:adf:fa4a:0:b0:367:8ff0:e022 with SMTP id
- ffacd0b85a97d-37177837cb2mr1780181f8f.63.1723642800475; 
- Wed, 14 Aug 2024 06:40:00 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723642775; x=1724247575;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gTkWpmoTYWWZMSGTkTM4NmFUtiHO/e0O6nDNIsU/+uk=;
+ b=k55enkyR+1QWcPtGAe6pOC8UX4Y6tlEA9ut9rN5bJTYud7WP+stFyfz7aSs0uwzaxF
+ gPdSqt4hNW8r/3dlNEDecB6NWIF8RQp/FyUz0NMTPGmXxCOfnOvFgn9QE1gdo2vfUR0l
+ Xxex6pYrIpIh27Wq6eq89SuvTuT0C6YZar7m6/SRhQxjZnUMFbIYtskt140V/Jk+yYsG
+ QY2kN5z6iPoLdT2M00MU6UQHNv3J9YQqHtwiRvDX0TeRKlWqgTh2n2ptZofOGiilRnhg
+ q40h1HjVMpPp2tP8DUlGYUaPwAj5++4yrjoUdALdBemBL4guImI80z9M/1MCRVSaI1wQ
+ zhDA==
+X-Gm-Message-State: AOJu0YyLi+hjxuEVRKCPPz72BN96Ay9kGF9qlrzzyassqj60YsTgAdy0
+ PKJWHg6UGZDJXPejC5Y86RWeOJT+biOTVOYtmqSEbq7rZSLhzyLmghoeCTF7Bh6tSGdlFfGbXzf
+ PMmo=
+X-Google-Smtp-Source: AGHT+IFbGkXb4xGvyA5EPstlaMjaUl1QltvJNADlud8h7l91Xx+j7S/MPXAeQJRKKht+6DGNzZEnqg==
+X-Received: by 2002:a05:600c:1f83:b0:428:f41:d467 with SMTP id
+ 5b1f17b1804b1-429dd2364d4mr20711195e9.10.1723642774754; 
+ Wed, 14 Aug 2024 06:39:34 -0700 (PDT)
 Received: from m1x-phil.lan ([176.187.208.57])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-36e4c938280sm12912096f8f.36.2024.08.14.06.39.55
+ 5b1f17b1804b1-429ded29fcfsm20404245e9.20.2024.08.14.06.39.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 14 Aug 2024 06:40:00 -0700 (PDT)
+ Wed, 14 Aug 2024 06:39:34 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Laurent Vivier <laurent@vivier.eu>,
  Richard Henderson <richard.henderson@linaro.org>,
  YunQiang Su <syq@debian.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>,
- =?UTF-8?q?Johnathan=20H=E1=BB=AFu=20Tr=C3=AD?= <nhtri2003@gmail.com>
-Subject: [PATCH-for-9.1 2/4] linux-user/mips: Select Octeon68XX CPU for Octeon
- binaries
-Date: Wed, 14 Aug 2024 15:39:26 +0200
-Message-ID: <20240814133928.6746-3-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH-for-9.1 0/4] linux-user/mips: Select correct CPUs
+Date: Wed, 14 Aug 2024 15:39:24 +0200
+Message-ID: <20240814133928.6746-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240814133928.6746-1-philmd@linaro.org>
-References: <20240814133928.6746-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,37 +93,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Octeon68XX CPU is available since commit 9a6046a655
-("target/mips: introduce Cavium Octeon CPU model").
+Improve CPU type selection:
+- Remove R5900
+- Cover Octeon / R2 / Loongson*
 
-Cc: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1722
-Reported-by: Johnathan Hữu Trí <nhtri2003@gmail.com>
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- linux-user/mips64/target_elf.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Philippe Mathieu-Daudé (4):
+  linux-user/mips: Do not try to use removed R5900 CPU
+  linux-user/mips: Select Octeon68XX CPU for Octeon binaries
+  linux-user/mips: Select MIPS64R2-generic for Rel2 binaries
+  linux-user/mips: Select Loongson CPU for Loongson binaries
 
-diff --git a/linux-user/mips64/target_elf.h b/linux-user/mips64/target_elf.h
-index ec55d8542a..ce6fb6541e 100644
---- a/linux-user/mips64/target_elf.h
-+++ b/linux-user/mips64/target_elf.h
-@@ -9,6 +9,14 @@
- #define MIPS64_TARGET_ELF_H
- static inline const char *cpu_get_model(uint32_t eflags)
- {
-+    switch (eflags & EF_MIPS_MACH) {
-+    case EF_MIPS_MACH_OCTEON:
-+    case EF_MIPS_MACH_OCTEON2:
-+    case EF_MIPS_MACH_OCTEON3:
-+        return "Octeon68XX";
-+    default:
-+        break;
-+    }
-     if ((eflags & EF_MIPS_ARCH) == EF_MIPS_ARCH_64R6) {
-         return "I6400";
-     }
+ linux-user/mips/target_elf.h   |  3 ---
+ linux-user/mips64/target_elf.h | 24 ++++++++++++++++++++----
+ 2 files changed, 20 insertions(+), 7 deletions(-)
+
 -- 
 2.45.2
 
