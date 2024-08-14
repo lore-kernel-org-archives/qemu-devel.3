@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7C14C52D7B
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 10:56:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3B86C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 10:57:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seBfT-00047A-Br; Wed, 14 Aug 2024 06:55:51 -0400
+	id 1seBgM-0005PG-Fu; Wed, 14 Aug 2024 06:56:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1seBfQ-00044q-CQ
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 06:55:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1seBgI-0005Ka-Qq
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 06:56:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1seBfO-0000yy-Sn
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 06:55:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1seBgH-00018L-6R
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 06:56:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723632945;
+ s=mimecast20190719; t=1723633000;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=CJnRJK2iX9AhwdK2pp52JpepRBP6YNcdwBhgRdbk5qU=;
- b=X3a9e6BA1aPRws+XM6pTsdybtisEHd6DuaIVV4WhuaOPLm5Za1Jqagckuhj92YVQS0JbSb
- ++rmbpzLnsu9iqV+ZguqLeN2vPIH9q01J0Yv/qZkpqcxzqVjoufD4+2gMdL2YG0swhLadR
- sZjypS50JhefB8IOx/8WQ4KsidFXDfs=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fQG2Ukb2nwx8M/NNfTVZO6ZZDrB+UrfsivuS4Ld7YxU=;
+ b=TUvnEJsDxUV6QuXesxS1eb2YSCgfl47VaiV/42LBn2/kKTm8dXGcb8Yqw5aUxvTLRt8neK
+ 7PW4RAIzcT3FiiTDhenGsiv4l2829+cLSF1vDDVXHpAXzeRrtL0yQm1n1toKy28AHS90/Y
+ 9aSNWdARLJFLs+42cIo+VorJGV8RJ08=
+Received: from mail-lf1-f72.google.com (mail-lf1-f72.google.com
+ [209.85.167.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-387-fz_wm5O-PVy9BjeqxCAd7A-1; Wed, 14 Aug 2024 06:55:44 -0400
-X-MC-Unique: fz_wm5O-PVy9BjeqxCAd7A-1
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-427ffa0c9c7so73712595e9.1
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 03:55:44 -0700 (PDT)
+ us-mta-315-ebcxb9MqNtOyFTw35I5p9w-1; Wed, 14 Aug 2024 06:56:38 -0400
+X-MC-Unique: ebcxb9MqNtOyFTw35I5p9w-1
+Received: by mail-lf1-f72.google.com with SMTP id
+ 2adb3069b0e04-52fcb0f226bso7464819e87.0
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 03:56:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723632943; x=1724237743;
+ d=1e100.net; s=20230601; t=1723632996; x=1724237796;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CJnRJK2iX9AhwdK2pp52JpepRBP6YNcdwBhgRdbk5qU=;
- b=NafMkIFOB8RMSoVoyzLSQDtgUicnGkYFd2wDyNmDkSpiaDjE5JjW6nDR3L1aIfDxuc
- +pNmhSSuLFc4WnLH1U+Xeq3W9HqkPAGGTSfQZLdWUuzUBtJPo07PKvtUM/u5LKoMdvs/
- 1O9Nb3IUEObApupdJ0/3Uzjq1UFlUa1BGF89wTR57OQK7dhr5gdsXrBsGZ6FZ8UktYw6
- QFT73/NgK3xxndvg2HVHsCPRp+meMwoXTXXuxkn1zYD/feXuqHCXAAYyfnpjtIkILine
- A1GM9SMID6rbOa5F0Xawim6KuDon41ykixTHjddcjOeAdPUnd0642SJ7rD/P887GaU1r
- ZsfQ==
+ bh=fQG2Ukb2nwx8M/NNfTVZO6ZZDrB+UrfsivuS4Ld7YxU=;
+ b=E87+BZjNVByM9pSaE41MfPRaNElYXp9xyCAVIMqlmjvn1YxRfLx2ZIC3PLYajuKYiC
+ HvqOSEfpj3IapBI3fNozHTh4wivNetwZF1L1qaA0P2g9+iuNr/mDknc/2Ip4lVs42VxF
+ Op+509zLlLfbejoAGu1PFg9xSmqM++lAVn1GvqmVAM2KiuMoKhXRsmA0UwoR4fU4ux5Z
+ XXe3tNxjy8bxS7BMJDh2ZZOlMfwUjz01MLBIG+yC2BPmF9gpkkQgQqUuM/oXFvXwD91T
+ fJ14sXXkhvNgQhTIBaOf6aacVpNYO8SikkDSLqpCJzh3wqhuP0eYhW5k3o3lU68sO8oX
+ Kz0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVctNCY5BkQDXIr7cIOinOuC19lKbhN1lLDYqJ3XmwzH8fx1S9qnOIF7biuqg2eRw97tC1A2xSFJ/yk@nongnu.org
-X-Gm-Message-State: AOJu0YwCHmex9hVlNwJyEtEbfPgDYs9pfGnKTWRfEKHmxy7TskoiQuE/
- DzfI4GTIKwX5hRBCzS0JL+L/Jq48vFqt7LvimeZa6Aij4A1Dn3d4yN+0JDa1uDcfwajX09fVsub
- DGrQqj1dj9JnkOhZqcXZT1eX+pSNbqAVuUga4VJlIJCifYGHB6+V7
-X-Received: by 2002:a05:600c:190e:b0:426:6822:5aa8 with SMTP id
- 5b1f17b1804b1-429dd23cf9emr23467285e9.18.1723632943164; 
- Wed, 14 Aug 2024 03:55:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGeclh82908UAdJwYUeWnxi5OCdrtQ7LFG1iUvuXWBdMIZ7caILiDjhgj6JchTHBhpuh/B3LA==
-X-Received: by 2002:a05:600c:190e:b0:426:6822:5aa8 with SMTP id
- 5b1f17b1804b1-429dd23cf9emr23467095e9.18.1723632942629; 
- Wed, 14 Aug 2024 03:55:42 -0700 (PDT)
+ AJvYcCWcShG+AybH6jseGwKL89MhJOcsja1GNAce1/XTqDRbKqsqwjO9ulMqRPYHIdKiXOI7HgUEAQc0/C9OWVfj3Qt6HkX1Fk0=
+X-Gm-Message-State: AOJu0YzvHjaAJyimLzBQFsp2jeHtOuLPIXCSX3u7PidrI1W7IsSJ9CmC
+ 4lAiZTuqn+/XOA6O3BmItOcHdY7gIx61yqxQrFQhExNIh43l1iz37YMLnwnKSSKSnZ1ut0tC6eB
+ uJKxalkNKOBmGQYF1RzqlbHmSvmxbXUHKypJGYPZap0jaBQoJSKCV
+X-Received: by 2002:a05:6512:318e:b0:530:adfe:8607 with SMTP id
+ 2adb3069b0e04-532edc0f8a6mr1673708e87.51.1723632996354; 
+ Wed, 14 Aug 2024 03:56:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEq6bLWp1ozOoIFs6OYzeozmK0O09vzOe1b64jICsSEYPwMLTnmZS8IilUiZHdZJFTHer7Vlw==
+X-Received: by 2002:a05:6512:318e:b0:530:adfe:8607 with SMTP id
+ 2adb3069b0e04-532edc0f8a6mr1673683e87.51.1723632995913; 
+ Wed, 14 Aug 2024 03:56:35 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-179-177.web.vodafone.de.
  [109.43.179.177]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ded327aesm16291585e9.20.2024.08.14.03.55.41
+ 5b1f17b1804b1-429ded31c5esm16211725e9.13.2024.08.14.03.56.34
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Aug 2024 03:55:42 -0700 (PDT)
-Message-ID: <0ca851ce-3ed9-48a8-a795-9135f2c936ad@redhat.com>
-Date: Wed, 14 Aug 2024 12:55:40 +0200
+ Wed, 14 Aug 2024 03:56:35 -0700 (PDT)
+Message-ID: <5cbced6c-b9d8-4c6d-a271-9a07edb18009@redhat.com>
+Date: Wed, 14 Aug 2024 12:56:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 05/10] hw/dma/xilinx_axidma: Use semicolon at end
- of statement, not comma
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- QEMU Trivial <qemu-trivial@nongnu.org>
-Cc: qemu-s390x@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: Re: [PATCH for-9.2 02/10] target/s390: Convert CPU to Resettable
+ interface
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Janosch Frank <frankja@linux.ibm.com>,
+ Claudio Imbrenda <imbrenda@linux.ibm.com>, Nico Boehr <nrb@linux.ibm.com>
 References: <20240813165250.2717650-1-peter.maydell@linaro.org>
- <20240813165250.2717650-6-peter.maydell@linaro.org>
+ <20240813165250.2717650-3-peter.maydell@linaro.org>
+ <a405e619-bb51-4309-a4e2-d23b4df550f3@linaro.org>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -126,19 +128,19 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240813165250.2717650-6-peter.maydell@linaro.org>
+In-Reply-To: <a405e619-bb51-4309-a4e2-d23b4df550f3@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.135,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,32 +156,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/08/2024 18.52, Peter Maydell wrote:
-> In axidma_class_init() we accidentally used a comma at the end of
-> a statement rather than a semicolon. This has no ill effects, but
-> it's obviously not intended and it means that Coccinelle scripts
-> for instance will fail to match on the two statements. Use a
-> semicolon instead.
+On 14/08/2024 01.03, Richard Henderson wrote:
+> On 8/14/24 02:52, Peter Maydell wrote:
+>>   static void sigp_cpu_reset(CPUState *cs, run_on_cpu_data arg)
+>>   {
+>> -    S390CPU *cpu = S390_CPU(cs);
+>> -    S390CPUClass *scc = S390_CPU_GET_CLASS(cpu);
+>>       SigpInfo *si = arg.host_ptr;
+>>       cpu_synchronize_state(cs);
+>> -    scc->reset(cs, S390_CPU_RESET_NORMAL);
+>> +    resettable_reset(OBJECT(cs), RESET_TYPE_COLD);
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/dma/xilinx_axidma.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> NORMAL, not COLD here?
 > 
-> diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
-> index c9cfc3169b8..7707634253a 100644
-> --- a/hw/dma/xilinx_axidma.c
-> +++ b/hw/dma/xilinx_axidma.c
-> @@ -626,7 +626,7 @@ static void axidma_class_init(ObjectClass *klass, void *data)
->   {
->       DeviceClass *dc = DEVICE_CLASS(klass);
->   
-> -    dc->realize = xilinx_axidma_realize,
-> +    dc->realize = xilinx_axidma_realize;
->       dc->reset = xilinx_axidma_reset;
->       device_class_set_props(dc, axidma_properties);
->   }
+> Otherwise,
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+With that fixed:
+Acked-by: Thomas Huth <thuth@redhat.com>
 
 
