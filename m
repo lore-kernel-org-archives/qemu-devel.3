@@ -4,58 +4,206 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACC2EC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 19:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1D61C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 19:55:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seJk0-0004Lf-4X; Wed, 14 Aug 2024 15:33:04 -0400
+	id 1seK4v-0001nG-71; Wed, 14 Aug 2024 15:54:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chauser@pullman.com>)
- id 1seJjr-0004KN-BZ
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 15:32:56 -0400
-Received: from secure.fsr.com ([64.126.132.23])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1seK4u-0001mi-7n
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 15:54:40 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chauser@pullman.com>)
- id 1seJjo-0003I8-Mc
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 15:32:55 -0400
-Received: from [192.168.254.26] (syn-098-146-201-045.res.spectrum.com
- [98.146.201.45]) (Authenticated sender: chauser)
- by secure.fsr.com (Postfix) with ESMTPSA id AF094BB8C6;
- Wed, 14 Aug 2024 12:32:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pullman.com;
- s=mail1; t=1723663966;
- bh=X5Lg3HEpwGX+11t9r/yK48e7mPC0jLoUArguwjZFR3c=;
- h=Date:Subject:To:From;
- b=HNOGkwOQsMnWRukkyns/kwll8zn3rmAl2rOuicEXC7QA7nyyWY3lHlloUkvBAP89/
- KjwFLJDRQ+6jbXgmySL1omT8a6bc/E5b7+rZuqxNCOprsU76LcqF6eOicOipowSfR/
- zkk39ObvOM5BpnhhWmsHTuaY6sLUg2OXhLhfdKjA=
-Message-ID: <54595d87-fc23-45a0-8dde-a7e43359304a@pullman.com>
-Date: Wed, 14 Aug 2024 12:32:44 -0700
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1seK4s-00064q-8t
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 15:54:39 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47EI5Ww7023338;
+ Wed, 14 Aug 2024 19:54:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+ message-id:date:subject:to:cc:references:from:in-reply-to
+ :content-type:content-transfer-encoding:mime-version; s=
+ corp-2023-11-20; bh=RDeiLkj3LTGhpwyaMVOeBrqyklNSdqsceHcrhTtpGA4=; b=
+ UvOpCsV4UOQpA+vdptSdkReEWe4UBpgTT0Dwv1RFNo9lJ8mo9zWucooOhc2fbqJj
+ vR5QzFDdYCNC0lvvXDeINX1ZyQIg/1s+7BkUG4oFH5wQIIl+Wo8D3IsA3oeRXqz7
+ S05tNuA2sdZRmsQwpG0amkBNy3gXZohVny7JDVVYfnKIKOGHEJsnh8TTB9L+aFaY
+ pPD1WUNPSH5PZdXA9xdPRBWUYU5uqApp8WQ6VELSaGZx05NNDp17g7lkeL/Zw8Br
+ tS4YeFFgW6IKsLjjO0UOa0wwEyAsShUsh23p7qvl7h9ZqrGwJtDDu/a0LwOejlOO
+ YW+eS2Jz9YMoW3jloEBS3Q==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4104gakwct-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 14 Aug 2024 19:54:32 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19)
+ with ESMTP id 47EJ3qkb006085; Wed, 14 Aug 2024 19:54:31 GMT
+Received: from nam10-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam10lp2100.outbound.protection.outlook.com [104.47.58.100])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 40wxnbcggn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 14 Aug 2024 19:54:31 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=blbQIpJxldDXA8VvXQMK+X8PHvs0+qn2Ok0yQbGiV9ssaymxzsObLj6O6zq7hhRh6h29UGHBfSBeFtJt9HcZy4Ls9w4c56mspcUsOQkj65xgBJ7o0YK8xzjeNLrNjWzCg71jPLIN28hrxFjDklX3abSD2ZEexvFNm5Mfi+N7qax4Y45D+4Ovy/rqgy6Tq7Qw+WBJsMYg2pH67SoQmVGatKhejuBAujvzckZCBTRfdqLSs8BFIZ2rHuozQ39RGnEM8Hc5dAtV6Z71nW7xQTU04fhU+NXI38Bw/9jJ3DqnLp1RKNNwOAYaEgdRJO7p4HfQ/ycZhXcCHXh3NnJCugLi8A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=RDeiLkj3LTGhpwyaMVOeBrqyklNSdqsceHcrhTtpGA4=;
+ b=keCuKsEngb/zhBbV6gK4nAKO6YJV9uknCXw2goiVciXRHWiWsWSavL6fjwck1XwXnaaOLpeSTdtR8gGuWfKf8U4qcedYZc8yIGRq6qz3inZJI4w7KGoCfMZOPjjWQZoIOnVRjjgynL7FjFhMA7C51/xB4/5WZght6E8LZF2lGXXrdRh0wJCYKIH2MooSz15Q6dxfKydwCBcg3gh3qa9krXfoy0qwhW2eJelNgJ9fde5eVBmJ3cs+mvTQrd+0Ggwy3HSxY72j/iWUXuWnPuF+jDYi1ys8l+RWspJOQyYmTIt78yJUDg6XMOC38izdRIdJkBeNLKKJvA5djDhbzubGmg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=RDeiLkj3LTGhpwyaMVOeBrqyklNSdqsceHcrhTtpGA4=;
+ b=s2uxAEz6HDRBDQqjKob2OyN8/VGaiF9Hlh5Z/kMnuHNbEEypD1x3cNgIRyIk2MGr33zYa4r2m2Kp8jBYXKjYjNfF+VF/uZbeLSB4B145ocX/8Xil+whnuctbcuP+HDAFsUABFLZp3UYRVPwZM2gfNynqYNg98GoP4JECmAEXBxs=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by CH3PR10MB7530.namprd10.prod.outlook.com (2603:10b6:610:155::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7875.16; Wed, 14 Aug
+ 2024 19:54:29 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%7]) with mapi id 15.20.7875.016; Wed, 14 Aug 2024
+ 19:54:29 +0000
+Message-ID: <48244fb9-eeb6-4446-bf59-8cef9c7d775e@oracle.com>
+Date: Wed, 14 Aug 2024 15:54:26 -0400
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2] target/sparc: emulate floating point queue when raising fp
- traps
-To: Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Cc: qemu-devel@nongnu.org, Carl Hauser <carl.hauser@gmail.com>
-References: <cde53d38-c378-459f-9e2a-6e9ca287cc3c@pullman.com>
- <db9a23a4-3423-4c55-8c6d-0507f93d3c50@linaro.org>
-Content-Language: en-GB
-From: Carl Hauser <chauser@pullman.com>
-In-Reply-To: <db9a23a4-3423-4c55-8c6d-0507f93d3c50@linaro.org>
+Subject: Re: [RFC V1 2/7] migration: skip dirty memory tracking for cpr
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Eugenio Perez Martin <eperezma@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Si-Wei Liu <si-wei.liu@oracle.com>
+References: <1720792931-456433-1-git-send-email-steven.sistare@oracle.com>
+ <1720792931-456433-3-git-send-email-steven.sistare@oracle.com>
+ <87mslhfu2r.fsf@suse.de>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+Organization: Oracle Corporation
+In-Reply-To: <87mslhfu2r.fsf@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=64.126.132.23; envelope-from=chauser@pullman.com;
- helo=secure.fsr.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-ClientProxiedBy: MN0P222CA0009.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:208:531::10) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|CH3PR10MB7530:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4967af0a-05ff-4f68-3728-08dcbc9ae89d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Q0xUTWlFVEtFbmZ5UHlnWkVqTHVCSlBrcGRoYzhwZFBWY000MlFJQk1ldWwv?=
+ =?utf-8?B?eHhaUTRmY2thQUkwaEdDMlN6bzZTZXoxUGdWN01nQjBoSHkzWnBUQW1wVnln?=
+ =?utf-8?B?Mmt2R3Y4R1Y3WFA0bU9ua3ZId1FwNUU2eWZOSGFzaVQ0c3U0L2NRUTBDRnRK?=
+ =?utf-8?B?bTNYZVlpK2VROExIWTd0ZktkTHU2UVB0Q3FrNmZwQTRKQjF5dGxuRHlrT2Zq?=
+ =?utf-8?B?ZHEzWjdkSXpPOXVUVzh6QzVEY3YzNG10bnlZU1JwSEJUQWN4aXBpTUxER2Zq?=
+ =?utf-8?B?SVFYRExlNWErak0rZnpqN1NBcXFLcHAxRUdvUGphd2pOcGhIRGg4NGJFSkVJ?=
+ =?utf-8?B?azNReE1zT0pYY0FpRDFoQzRzcXN1cHpaTDg4YmRhRUVtR2xpVUZoZW1na01V?=
+ =?utf-8?B?U2NQTmtyV3h3SFBMNC9jM0U5UFU2b0dYOU5EYWVWK3dJQTk3eUJmVUljM1Bp?=
+ =?utf-8?B?akpXY0NLVnBUbk16bjdxcGJFS2o3TDAwZkJWRS9mMXYxWHExOGozSTRsQW9P?=
+ =?utf-8?B?R2JXQXFLT2NFUjlFNUVsbjZRMllFZ1FKZ0JrRkl1WHZDRlJTN0U4Qkw3cTdS?=
+ =?utf-8?B?UmpJVmdxS0d0bjNjNEZPVDg0N01wclQ5bG8zNDlIOEsrTjdzVFk1bWlxaUZQ?=
+ =?utf-8?B?eTNYYk1XNkQ0bjJteU9NaW5oQnQwbGFYR0M5Tk1mUTRFa1V3SWF2aHF3VDZx?=
+ =?utf-8?B?aE1YUzVBclM4TnNrY1UwNE5wTVcwNC92RTMzQWZxanJPVzB5TW5vSWFNbkNp?=
+ =?utf-8?B?UEdVbTRrU1hlTFJCUFdPQzFFMTZVbGt1QkFZQkR1SFBHZnhrRmNBbDdEYk04?=
+ =?utf-8?B?bzJKYWN1ZkZDbWp4WEdnRitkbjN6enJvTTgvQ0pJdDBYMjM1bmVEU3hSWUpk?=
+ =?utf-8?B?aGlRM0ZKZFFSUGp5Uk9DeUNsMmVZZWl6MFBYb0FMekZJZFBBbkdGbFpmS08z?=
+ =?utf-8?B?cmFVT3FmOVdQU1hUWVR5TGxkMm1Cb0VZaUdrb1EvK2JGcmcyanhaUmNDb1Uz?=
+ =?utf-8?B?M1ByZTc1QlgwNWM0YlF5SzlQOFRua1F5aHNmSGdZcEdVTEpRU2hrUE5XYW1I?=
+ =?utf-8?B?QzN5eGlyZWNtYzE2akxPZmg2d0RHSVhUNkVNTE9FMGRrdC80MlVUb1BNWEha?=
+ =?utf-8?B?SHhJRmZ5YUZPUE93M1pobUh0cENuOWMyZUlKQ2laTUxjcUIzcyt4Ynh5L2Nq?=
+ =?utf-8?B?Y1hhamUxSUwxdE1teEZnU1l1T0ZndTRNOXJCcVdRbUJENjNHeVpjUjZGNzh0?=
+ =?utf-8?B?KzBvZG9jSkJ6K1VKYnJxVGE4Z1VzN292MDduUHovdDNFbWNYalJYelV2Uktq?=
+ =?utf-8?B?RHd2YTl0R0dubVpOZnFPZjZRMTlSZUdBOEppaG9BVUR5TEEvTnVsTFUyQ2xy?=
+ =?utf-8?B?VFZGZG9KbzAxVkVZRjc4Z0xjcFZ1b1kxaDdSQ0ZOWjRwOGVZY09uOHRGWGJu?=
+ =?utf-8?B?ZzFxQzhDNWZNQW9KMDhMZFpUQ1VVREdHVWkwSXIzUU51RjE2WXdKQzVKN1RL?=
+ =?utf-8?B?cjF5K2pSMThFSUpleFdORU90Rjd1OTdUOEEreGdwMWoxbnZqMVBPUFUvRmJr?=
+ =?utf-8?B?MG5QbmRSVjk3MjVER1NXSENhbXdXZkJSbUhzY29NMzBCdmtFbVdZWjhlTSts?=
+ =?utf-8?B?WUJCaURCZmVnbFVlWWYrSmYxdWVEcWZjRkN1RENXMUFWdlFYRUUrWTU4QnBG?=
+ =?utf-8?B?T1J0bVJpdHpCQ01IazUxMEsvbGtsWFN5L3JlQVB2eDMyVkNuNEErejVWYlRo?=
+ =?utf-8?B?NndLbFRhKzRZMlVNdjBpbElTOFJEVFRMTmJOYnRrTHpJUk9JSWlWTGUxazBN?=
+ =?utf-8?B?ajdsZGZxYjF3OGpHbFYzUT09?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cDdVb2pjMWxBSWZwOU11MElHbDl6ejBYSm90ZWNOTHpINVJraGJnWWhzZDRi?=
+ =?utf-8?B?WXgwSEIzZVMwSWc0azdKUUNPeklSNXZxeG1tQ1dCYVJBWkNXTXVUcDd2WTd2?=
+ =?utf-8?B?d0V0OFpUeUJxSzczNjlyVjhDVFkrYnJ1Qm5vNHhTWnpqMklWOGNqQU9xTjJu?=
+ =?utf-8?B?cVZydGdPOUs1Sm1Wb0JxMm5MTjdmSUxNWU9LM09MTjhKd2ZsM3MwTDU4a3Rt?=
+ =?utf-8?B?YjRzd3Q1VWgzRDRrU0x4VUl1c25adFlmMnZ3SllLaVlvSmZUOTFRRFBQK2FV?=
+ =?utf-8?B?NTJ3TFlPUWdHRC9uYmRoaXZDTmtFaSt1TlNWejBRYVN6bjM0Z3VJQnArRU9p?=
+ =?utf-8?B?dWxXMEtHVFB3UVh3VjRaejVPcGdCTFJLMTBrYUdEY1B5QjZ6L2pKOGxNU1NO?=
+ =?utf-8?B?ZVQxMmt1aDJuc3RzWEJRQXU0ejZNSVJsM2tlUnptaEdiTjBqc01uWnNCT2lE?=
+ =?utf-8?B?ZTB1b2hhNG93QWFIbVBjeVdVK1YyZkszbXlrNyt6SWRBZUhKNndqQXJBdCs0?=
+ =?utf-8?B?aUR5NTkxTXhmY0puRDAyVHBlMlpnd0pHVG5HaUlZaDBCTmdnT0VBZzZCTy95?=
+ =?utf-8?B?Y1Q2T1EzRHIzUU5UdjFJYmI5a1dxUFlGQlI2UmVGRE9ldU14K3MzQnYzTkJa?=
+ =?utf-8?B?QUk0d3RSQ2xablhPNmY3ZUQzQmZGNmpveWNxdWpWSDBIejUxQUxUakIreW9H?=
+ =?utf-8?B?c3NkOEpxLzRKNzZRVFE1cmEzRGswdzB0Y0tkRFpkV3JmazVDbW94NjM0RytR?=
+ =?utf-8?B?cDlFNE9KTHQwTTg2UERpYmxLbkp1WlFLaXFrUUpmbFZYeWxsbzR5bmJMK1VG?=
+ =?utf-8?B?WUplN0N3S2hNaC8yUm01cENKSUZxR2ExNTBxVVBBLzh4Y1ZVZ0dFVUVLbkhJ?=
+ =?utf-8?B?VWVpWEZ3QUJ2V0p6RUtra2Jaelo3UHRFdlFybjVpL0JVYngwbXh5RzUxTkJr?=
+ =?utf-8?B?U2IwMjhZUTExa1BHVnptZE9DMFBTRkQxV3ZNUWVPY1FSMkcrV3NTUjFvNkxM?=
+ =?utf-8?B?MTZadisyK3FkMWM5NmU0OVRzOXF3MU1OZFNiUEhBdWpneDdNcUpqaHBSbzlE?=
+ =?utf-8?B?QUduaU8xTVRESjVMazhYb09RMGJ2Tm9CNXRpaXlUQnNhRnZadThPZFowVTha?=
+ =?utf-8?B?MjhrcEx4TGNlbGZxZjJxbm9jVUZicW9mQndRcDgyZGRiSjlBakdMV2U5YSsx?=
+ =?utf-8?B?Yno1bjFudFdQdmRmbzcxWXJaSVRSNkZYRFA1K0IzcE9ySkM5RkZxd2lkdjFD?=
+ =?utf-8?B?YjdwT051TjU1LzVLREZqWlZON1R2TnpCZCtjNHJJdGJ2T0F5K0k3VjlERGE5?=
+ =?utf-8?B?L1V3cllqd04zZGJkN3EzMCtpb001bThRVDVyZlIyVzVnT2N5Q2h4M3VONXA2?=
+ =?utf-8?B?SytNaGNUenFVUmpibUVCbldaMUk5M3NMYnBYNkM3NGhZY1IyU3N0a05TTFhF?=
+ =?utf-8?B?RWszQWlacURvMUQwdUpYNHdEZkFuSnpwTE8rQVcwc2xFcHZyM0ZWZDBIUVh3?=
+ =?utf-8?B?MmZaeUdFK084aE1IMFlsdUsyUytaT0xpTkhSZVBaN0d3ejEwZVp5TitLQ0Fl?=
+ =?utf-8?B?bHFXNjRQeWFHc1BCLzU5UCt1YjVhcCtJT2xDbzJ5OGd6MGc2ODZvNzdIMW13?=
+ =?utf-8?B?TXpYbng1Q2U1NHRoNHVtY1AxNGszZjlJcENMRVlaVzF5TW1CNElhdU9RbGhl?=
+ =?utf-8?B?OUk4RmVpbUV0dnpxei8yUURVZkNibHA3dWVSVURmdEtkNlB3b0RjaWxuNHFv?=
+ =?utf-8?B?MlpUOTVRMUZFL3NLcjJ3c2NVY2JMUGNoK1g4bkpJY0UyVVpmOFFyeGNoK0px?=
+ =?utf-8?B?NXV5bzIxVlRPaEV0SWtEdXRia3N2SUNpR2JDR2tqQVNuK0VMNkJHa0NKVjkw?=
+ =?utf-8?B?SEwwcjQ3YjZLVjZ4OVBxd2RVamtncHlIRFZjUUViNGoxK2RZR3J3NGcxYVJs?=
+ =?utf-8?B?ZTRQWmlIQjc4TUdiZGZkTUZwS09tRWc0eFc5SHpxa1ZaZjRXNzUxOTk2TTk3?=
+ =?utf-8?B?dzBpVUlNYS9tYXRtN01WTGtsN3ZLa2tWbk1ubjdMY09BQVJhT2F2OTY0WEQw?=
+ =?utf-8?B?UkNCY0VFQkZnNlFHeklxU1ovVGFWVy9RdUY3bG1FZ2JiZURQdFd2ZlJTdTlH?=
+ =?utf-8?B?QXlOSTNwVUVTa252Tm9UMFFISVNHeUVidGR5R3plQkNFT0dHdkF4Q01lYURB?=
+ =?utf-8?B?bWc9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: e9+juRsnfeq9DmaB2gIe/E0TmKmzoyHd/6md0rA28Oi+Al0iE+tz7oi2uwGNvQRaMFhVcn5DgtNzX+eW3cRPI6Hm/EqiOKQZELM+ObpFo/iegAZvV4OdCHO3lBrRzPkLpnvdzrTcZgGTS1qZXlJraxKrEFCvmUxRB8C6jUnpZiv9egEGx9DeH+OWvdc7JAndb50C67cV6FTrIArfymFZl11l8SCHdPeR7hQK4vjPieUdN9/qT/x8DmCVSh+G/MtkAMyU17yCtNHh760OQoQGAyiAWudPB5Jv7o8w2Ctp1l2Hk0cBJtDqLwRqk8VZcHESYor9/BwrjslxT4ngdbgeVunZeLTe4HOuuW1v1Itq29obMS+I3q8/0+buOljS5xmjan9WuvpmRShpL1G/0/KlwG4n2d6cMPhmTBWGpqeVBune16eM2XQ3PyP9KQ4HDTMRbyvycE4TQ5xGL25cA9cAON6i9E56toD9RtGp8NIU5oVX7GrTTsS9AjBIaltYx1xNBjQuOrYycZ53xcdSDH1hsVQejIO5hbRft5ryYZp2oDdtOd6GDTazD/mOnQrFTIQyXL89gyfdik1SaWVQYdPYy0HsP1E+ML7qvr18zM8MMlI=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4967af0a-05ff-4f68-3728-08dcbc9ae89d
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2024 19:54:29.4201 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: g602h610B94w10VNy5fUvms6QCkn8HM/looOV3L0V0WboGgNqkVhix2Fz81PUS57u8rIlnJytvbsZcefWvGMZivYXvBrV8eSsbuhoKgaBPA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR10MB7530
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-14_16,2024-08-13_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ mlxscore=0 adultscore=0
+ suspectscore=0 mlxlogscore=999 phishscore=0 spamscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2407110000
+ definitions=main-2408140136
+X-Proofpoint-GUID: rq4CgaeGprvfsWTv4PYXEIqn63MVsfdH
+X-Proofpoint-ORIG-GUID: rq4CgaeGprvfsWTv4PYXEIqn63MVsfdH
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,243 +219,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 8/12/2024 2:57 PM, Fabiano Rosas wrote:
+> Steve Sistare <steven.sistare@oracle.com> writes:
+> 
+>> CPR preserves memory in place, so there is no need to track dirty memory.
+>> By skipping it, CPR can support devices that do not support tracking.
+>>
+>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>> ---
+>>   system/memory.c | 11 +++++++++++
+>>   1 file changed, 11 insertions(+)
+>>
+>> diff --git a/system/memory.c b/system/memory.c
+>> index b7548bf112..aef584e638 100644
+>> --- a/system/memory.c
+>> +++ b/system/memory.c
+>> @@ -27,6 +27,7 @@
+>>   
+>>   #include "exec/memory-internal.h"
+>>   #include "exec/ram_addr.h"
+>> +#include "migration/misc.h"
+>>   #include "sysemu/kvm.h"
+>>   #include "sysemu/runstate.h"
+>>   #include "sysemu/tcg.h"
+>> @@ -2947,6 +2948,11 @@ bool memory_global_dirty_log_start(unsigned int flags, Error **errp)
+>>   
+>>       assert(flags && !(flags & (~GLOBAL_DIRTY_MASK)));
+>>   
+>> +    /* CPR preserves memory in place, so no need to track dirty memory */
+>> +    if (migrate_mode() != MIG_MODE_NORMAL) {
+>> +        return true;
+>> +    }
+> 
+> How this interacts with DIRTY_RATE and DIRTY_LIMIT? The former at least
+> seems to never overlap with CPR, right? I'm wondering whether this check
+> would be more appropriate up in ram.c along with the similar
+> migrate_background_snapshot() check.
+Agreed.  I previously pushed the CPR check down to memory_global_dirty_log_start
+to catch all callers, but the only callers that matter are ram_init_bitmaps and
+ram_save_cleanup, so I will hoist the check to those callers.
 
- From 9265233081fae546c0459792598a9f1688ddb020 Mon Sep 17 00:00:00 2001
-From: Carl Hauser <chauser@pullman.com>
-Date: Sat, 10 Aug 2024 15:09:39 -0700
-Subject: [PATCH v2] target/sparc: emulate floating point queue when 
-raising fp
-  traps
+> (I wish we had made the global_dirty_log_change() function a bit more
+> flexible. It would have been a nice place to put this and the snapshot
+> check. Not worth the risk of changing it now...)
+> 
+> Also, not tracking dirty memory implies also not doing the bitmap sync?
+> We skip it for bg_snapshot, but not for CPR.
 
-Sparc 32-bit machines perform floating point operations in an
-asynchronous co-processor. When a FP operation traps for any reason
-the entire set of pending operations is dumped to memory as
-the "floating point queue" and then processed by kernel trap
-handling. SunOS and at least early Solaris 2 releases only
-handle traps correctly if they can find the faulting operation
-at the head of the floating point queue. Qemu did not previously
-implement FP queue handling. This commit adds: additional fields
-to the processor state to contain a single-element FP queue;
-logic in trap handling to populate the FP queue when a FP
-trap occurs; and implementation of the STDFQ instruction that
-the kernel uses to extract a FP queue element from the processor
-state to memory.
+Good catch, I must skip it for CPR also:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2340
-Signed-off-by: Carl Hauser <chauser@pullman.com>
----
-Addressed comments about unrelated blank line insertions, and
-unneeded #ifdefs. Put lines in insns.c back to original order,
-but now with comments and arg specifier for STDFQ.
+--------------------------
+@@ -3250,7 +3261,8 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+      rs->last_stage = !migration_in_colo_state();
 
-As for testing unimplemented operations on linux and NetBSD,
-my problem is that I can't get gcc to generate quad-precision
-code on them at all. Both gcc's generate the same code for long double
-that they generate for double. And neither accepts _Float_128 as
-a valid type. While I have reasonable confidence that the
-implementation of unimplemented operations will work in the
-qemu, I don't know if these kernels actually have the necessary
-code to emulate the instructions. Of course, if the compilers
-have never generated the instructions it's unlikely that there
-are any programs out there using them.
+      WITH_RCU_READ_LOCK_GUARD() {
+-        if (!migration_in_postcopy()) {
++        /* We don't use dirty log with CPR. */
++        if (!migration_in_postcopy() && migrate_mode() == MIG_MODE_NORMAL) {
+              migration_bitmap_sync_precopy(rs, true);
+          }
+---------------------------
 
-  target/sparc/cpu.h          |  8 ++++++++
-  target/sparc/fop_helper.c   | 17 ++++++++++++++++-
-  target/sparc/helper.h       |  4 ++++
-  target/sparc/insns.decode   |  4 ++--
-  target/sparc/int32_helper.c | 13 +++++++++++++
-  target/sparc/translate.c    | 14 ++++++++++----
-  6 files changed, 53 insertions(+), 7 deletions(-)
+- Steve
 
-diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-index dfd9512a21..ff48279a55 100644
---- a/target/sparc/cpu.h
-+++ b/target/sparc/cpu.h
-@@ -184,6 +184,8 @@ enum {
-  #define FSR_FTT_SEQ_ERROR (4ULL << 14)
-  #define FSR_FTT_INVAL_FPR (6ULL << 14)
-
-+#define FSR_QNE    (1ULL << 13)
-+
-  #define FSR_FCC0_SHIFT    10
-  #define FSR_FCC1_SHIFT    32
-  #define FSR_FCC2_SHIFT    34
-@@ -436,6 +438,12 @@ struct CPUArchState {
-      /* FPU State Register, in parts */
-      uint32_t fsr;                    /* rm, tem, aexc */
-      uint32_t fsr_cexc_ftt;           /* cexc, ftt */
-+
-+    /* single-element FPU fault queue */
-+    uint32_t fsr_qne;                /* qne */
-+    uint32_t fsr_qi;                 /* faulting fp instruction */
-+    target_ulong fsr_qa;             /* address of faulting instruction */
-+
-      uint32_t fcc[TARGET_FCCREGS];    /* fcc* */
-
-      CPU_DoubleU fpr[TARGET_DPREGS];  /* floating point registers */
-diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
-index 0b30665b51..0f74ca7908 100644
---- a/target/sparc/fop_helper.c
-+++ b/target/sparc/fop_helper.c
-@@ -21,6 +21,7 @@
-  #include "cpu.h"
-  #include "exec/exec-all.h"
-  #include "exec/helper-proto.h"
-+#include "exec/cpu_ldst.h"
-  #include "fpu/softfloat.h"
-
-  static inline float128 f128_in(Int128 i)
-@@ -538,7 +539,7 @@ uint32_t helper_flcmpd(float64 src1, float64 src2)
-
-  target_ulong cpu_get_fsr(CPUSPARCState *env)
-  {
--    target_ulong fsr = env->fsr | env->fsr_cexc_ftt;
-+    target_ulong fsr = env->fsr | env->fsr_cexc_ftt | env->fsr_qne;
-
-      fsr |= env->fcc[0] << FSR_FCC0_SHIFT;
-  #ifdef TARGET_SPARC64
-@@ -563,6 +564,7 @@ static void set_fsr_nonsplit(CPUSPARCState *env, 
-target_ulong fsr)
-      int rnd_mode;
-
-      env->fsr = fsr & (FSR_RD_MASK | FSR_TEM_MASK | FSR_AEXC_MASK);
-+    env->fsr_qne = fsr & FSR_QNE;
-
-      switch (fsr & FSR_RD_MASK) {
-      case FSR_RD_NEAREST:
-@@ -608,3 +610,16 @@ void helper_set_fsr_nofcc(CPUSPARCState *env, 
-uint32_t fsr)
-      env->fsr_cexc_ftt = fsr & (FSR_CEXC_MASK | FSR_FTT_MASK);
-      set_fsr_nonsplit(env, fsr);
-  }
-+
-+#ifndef TARGET_SPARC64
-+void helper_store_fp_queue(CPUSPARCState *env, uint32_t addr)
-+{
-+    if (!env->fsr_qne) {
-+        env->fsr_cexc_ftt = FSR_FTT_SEQ_ERROR;
-+        cpu_raise_exception_ra(env, TT_FP_EXCP, GETPC());
-+    }
-+    cpu_stl_be_data(env, addr, env->fsr_qa);
-+    cpu_stl_be_data(env, addr + 4, env->fsr_qi);
-+    env->fsr_qne = 0;
-+}
-+#endif
-diff --git a/target/sparc/helper.h b/target/sparc/helper.h
-index 134e519a37..15ae94d0f3 100644
---- a/target/sparc/helper.h
-+++ b/target/sparc/helper.h
-@@ -85,6 +85,10 @@ DEF_HELPER_FLAGS_2(fitoq, TCG_CALL_NO_WG, i128, env, s32)
-
-  DEF_HELPER_FLAGS_2(fitos, TCG_CALL_NO_WG, f32, env, s32)
-
-+#ifndef TARGET_SPARC64
-+DEF_HELPER_2(store_fp_queue, void, env, i32)
-+#endif
-+
-  #ifdef TARGET_SPARC64
-  DEF_HELPER_FLAGS_2(fxtos, TCG_CALL_NO_WG, f32, env, s64)
-  DEF_HELPER_FLAGS_2(fxtod, TCG_CALL_NO_WG, f64, env, s64)
-diff --git a/target/sparc/insns.decode b/target/sparc/insns.decode
-index fbcb4f7aef..cc59dcf8d9 100644
---- a/target/sparc/insns.decode
-+++ b/target/sparc/insns.decode
-@@ -644,8 +644,8 @@ STF         11 ..... 100100 ..... . ............. 
-    @r_r_ri_na
-  STFSR       11 00000 100101 ..... . .............          @n_r_ri
-  STXFSR      11 00001 100101 ..... . .............          @n_r_ri
-  {
--  STQF      11 ..... 100110 ..... . .............          @q_r_ri_na
--  STDFQ     11 ----- 100110 ----- - -------------
-+  STQF      11 ..... 100110 ..... . .............          @q_r_ri_na 
-## SPARC-V9
-+  STDFQ     11 ..... 100110 ..... . .............          @r_r_r_asi 
-## SPARC-V7-8
-  }
-  STDF        11 ..... 100111 ..... . .............          @d_r_ri_na
-
-diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
-index 6b7d65b031..f18cd97059 100644
---- a/target/sparc/int32_helper.c
-+++ b/target/sparc/int32_helper.c
-@@ -22,6 +22,7 @@
-  #include "cpu.h"
-  #include "trace.h"
-  #include "exec/log.h"
-+#include "exec/cpu_ldst.h"
-  #include "sysemu/runstate.h"
-
-
-@@ -147,6 +148,18 @@ void sparc_cpu_do_interrupt(CPUState *cs)
-      env->psret = 0;
-      cwp = cpu_cwp_dec(env, env->cwp - 1);
-      cpu_set_cwp(env, cwp);
-+    if (intno == TT_FP_EXCP) {
-+        env->fsr_qne = FSR_QNE;
-+        env->fsr_qa = env->pc;
-+        env->fsr_qi = cpu_ldl_code(env, env->fsr_qa);
-+         /*
-+          * Because of the asynchronous FPU on real Sparc 32 bit
-+          * machines, the pc and npc will have already been advanced
-+          * by the time that the trap is taken.
-+          */
-+        env->pc = env->npc;
-+        env->npc = env->npc + 4;
-+    }
-      env->regwptr[9] = env->pc;
-      env->regwptr[10] = env->npc;
-      env->psrps = env->psrs;
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index 113639083b..2160ccb5b9 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -41,6 +41,7 @@
-  # define gen_helper_rett(E)                     qemu_build_not_reached()
-  # define gen_helper_power_down(E)               qemu_build_not_reached()
-  # define gen_helper_wrpsr(E, S)                 qemu_build_not_reached()
-+# define gen_helper_store_fp_queue(E, A)        qemu_build_not_reached()
-  #else
-  # define gen_helper_clear_softint(E, S)         qemu_build_not_reached()
-  # define gen_helper_done(E)                     qemu_build_not_reached()
-@@ -4521,13 +4522,13 @@ static bool do_st_fpr(DisasContext *dc, 
-arg_r_r_ri_asi *a, MemOp sz)
-
-  TRANS(STF, ALL, do_st_fpr, a, MO_32)
-  TRANS(STDF, ALL, do_st_fpr, a, MO_64)
--TRANS(STQF, ALL, do_st_fpr, a, MO_128)
-+TRANS(STQF, 64, do_st_fpr, a, MO_128)
-
-  TRANS(STFA, 64, do_st_fpr, a, MO_32)
-  TRANS(STDFA, 64, do_st_fpr, a, MO_64)
-  TRANS(STQFA, 64, do_st_fpr, a, MO_128)
-
--static bool trans_STDFQ(DisasContext *dc, arg_STDFQ *a)
-+static bool trans_STDFQ(DisasContext *dc, arg_r_r_ri_asi *a)
-  {
-      if (!avail_32(dc)) {
-          return false;
-@@ -4538,10 +4539,15 @@ static bool trans_STDFQ(DisasContext *dc, 
-arg_STDFQ *a)
-      if (gen_trap_ifnofpu(dc)) {
-          return true;
-      }
--    gen_op_fpexception_im(dc, FSR_FTT_SEQ_ERROR);
--    return true;
-+    TCGv store_addr = gen_ldst_addr(dc, a->rs1, a->imm, a->rs2_or_imm);
-+    if (store_addr == NULL) {
-+        return false;
-+    }
-+    gen_helper_store_fp_queue(tcg_env, store_addr);
-+    return advance_pc(dc);
-  }
-
-+
-  static bool trans_LDFSR(DisasContext *dc, arg_r_r_ri *a)
-  {
-      TCGv addr = gen_ldst_addr(dc, a->rs1, a->imm, a->rs2_or_imm);
--- 
-2.34.1
-
-
-
+>> +
+>>       if (vmstate_change) {
+>>           /* If there is postponed stop(), operate on it first */
+>>           postponed_stop_flags &= ~flags;
+>> @@ -3021,6 +3027,11 @@ static void memory_vm_change_state_handler(void *opaque, bool running,
+>>   
+>>   void memory_global_dirty_log_stop(unsigned int flags)
+>>   {
+>> +    /* CPR preserves memory in place, so no need to track dirty memory */
+>> +    if (migrate_mode() != MIG_MODE_NORMAL) {
+>> +        return;
+>> +    }
+>> +
+>>       if (!runstate_is_running()) {
+>>           /* Postpone the dirty log stop, e.g., to when VM starts again */
+>>           if (vmstate_change) {
 
