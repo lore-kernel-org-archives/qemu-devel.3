@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2581CC531DC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 09:06:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8470EC531DD
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 09:13:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1se9xr-0006mI-Lj; Wed, 14 Aug 2024 05:06:43 -0400
+	id 1seA3H-0003tG-Cj; Wed, 14 Aug 2024 05:12:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1se9xn-0006Ng-Gk
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 05:06:41 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1seA3F-0003ry-Hx
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 05:12:17 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1se9xl-0000rl-Lj
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 05:06:39 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-a7a8e73b29cso598502266b.3
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 02:06:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1seA31-0001lM-BO
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 05:12:17 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-2cd5e3c27c5so4259521a91.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 02:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723626395; x=1724231195; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2c0XRHjU0y3cm6Z6eyIislTDkEC9zABvUTWrSeWCGjw=;
- b=eVh4jqt/xFRlje2e6kzP2sUjTyUyn0IY/5FuUkG50Aa3PJks691O8RUBVgn93ELb1J
- 0PnVCg7nd7Rwtxm0/KV92zbmE7IvSERXxRylojn3dy2OASbyXKqcGAqOkkpo784Nd++l
- 7dcftOGeLGbe3F9+OLh7hhyL4zjZVHUp06MQlb6m7dW8zKWWTawuVB2tmivYPVUeJtGA
- +Lm1zIPEQNOfFl40F8Yez43MmgJuVHufNCu7N0RyAzOE2lkGTRJvFq200tahQ+EZEtWw
- j8d7C9Up6vIwndF/E7HnckMor7Siq//yKZ1D9yqmqEOQ1i7KyWITeVW2LU0wYn0OZ8eY
- Zt2Q==
+ d=linaro.org; s=google; t=1723626720; x=1724231520; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=vo+Q7nKaCEGxhm2sz+3gwndBpFPUEHdxfFB1pkFylYw=;
+ b=ocpWZvfeD5XH4fhgNZeFds7lER5jW8gXzyg9QHQWP29sMYn/3lOXAkGeKt/XbOCS+W
+ DDFmKGUhhort+GT6tdTweCqCWHFuBEQklO5c6us0B0yTB+d2+1vOxZ6Zd65+OIj5VB1k
+ J/jVHlpf3JUV5X4V5y8OvBzzj4ydDw8lRdsM8f9p8vhOfxm1gcwBP5ZzW3UeTAKkbRrl
+ 6BKzPbemin/aXJYY4h3mNH6WyoxKsdhZFSnOYv38f1QL0HEQMBCIvJpUl2pZQySJjLRM
+ Bsi+ncI58vmF3v0fExenDaOnLUp4UXa30YBcBAmQxgDwJk0NhvW5QMPRCPuZXA3C0D6w
+ DCuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723626395; x=1724231195;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2c0XRHjU0y3cm6Z6eyIislTDkEC9zABvUTWrSeWCGjw=;
- b=pPC8HnrCbXh3azS7TfS2jwfcE/vd9t6mGUSpQmbh7SLfxui4bWhB3GSa7anS9JtQE2
- VOyQa0yrAznv2SICP36HIJzYyuBP6ybOfbh1qAQ5Q72B8VQsHWdqYd5sUiJKYS1jEJsX
- i5freVydxTFc6IoWX135F+opf/zecbauqbmRDxhuj7sg7h1GdI1ZbDa42eux+2vX5M1S
- wTpuK2tjC5JjKcm6q1Oqfvp29HSRgy/nBRbvtkDzUQQz0Pz0n3lZc51/tzThzR8QzSDD
- Zmi+jM5EBHbxJBDt7rArWJICicO1OTy1PLVVIr2smU7XUeFnX+luC7uHxl2ZGS4ESeFi
- h0AA==
-X-Gm-Message-State: AOJu0Yzml+Q056CLAGbTeB5ltxxyxPnuVdGnXjZpVCM/ovx0kmk44WcP
- U/xKr3AU1otLkP9Sv4JWqGYHGFMa3Pd6YnN+D036F6r+Ei61O+hoL7Gu6ejx+z7sgrxiAgssHaj
- FAYw=
-X-Google-Smtp-Source: AGHT+IHq4qL/d5eYhN2Fp+NlLv2g2obI6vIsS6Y1taMn2w782x6PyhFJr5tVEgU6bx5LFyKw8x5a5g==
-X-Received: by 2002:a17:907:3ea6:b0:a72:8a62:65e7 with SMTP id
- a640c23a62f3a-a8367047e66mr142634666b.57.1723626395466; 
- Wed, 14 Aug 2024 02:06:35 -0700 (PDT)
-Received: from localhost.localdomain (124.170.88.92.rev.sfr.net.
- [92.88.170.124]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a80f414e561sm145162166b.169.2024.08.14.02.06.28
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 14 Aug 2024 02:06:35 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
- Waldemar Brodkorb <wbx@uclibc-ng.org>,
- Aleksandar Rikalo <arikalo@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH-for-9.1 v4 3/3] target/mips: Load PTE as DATA
-Date: Wed, 14 Aug 2024 11:04:52 +0200
-Message-ID: <20240814090452.2591-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240814090452.2591-1-philmd@linaro.org>
-References: <20240814090452.2591-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1723626720; x=1724231520;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=vo+Q7nKaCEGxhm2sz+3gwndBpFPUEHdxfFB1pkFylYw=;
+ b=VgMrE4TPXoZQZivPpBRzWUHUJTybkkCtPB4u85dkt7XtUZ3jp/fRZhaZ4VkawDsD8H
+ QHLvgr8cfKGdXFdABr2YCD6K7MKj2J97vOgQkcWJpWiFe/6r5p7h4Rl3R+QU4n9axKny
+ V2Z85rVtO8RJGTsbRB9mpFG5P0gZLh9ZHFis4coECrpJLGPMjdsR+cWZqwYjejNP/gMb
+ yjqW0rpZsKe4rC+Lf7r359WfJSI+qahJzP3OV1C9S7p0giRvcZQGiqE+K4zW6L4C3Wx6
+ o/jnwqLP5UL3FVIAG95fH7TcC49AEUKU7iM199keU4QyH8UsejOqAr3Ato2CCOIlTFJq
+ eVHw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVT6V42IMO+5tGTnpRC0DfhcK4tz+BqBdmKD83Zb6fuTmckOXaNz4QIqM5z87KRTG3ICTUU2EHeq9Mh@nongnu.org
+X-Gm-Message-State: AOJu0Ywdv1zXJnlRMSejEUJhFfmmE8Yp3S1u++nvFVE1rp21dbrPpR0u
+ rmu7wUzUXl4oh+lcfOOl018YuV7DWp7xl5C3KAPj29KBUXiQ2j40JQj67QlFppU=
+X-Google-Smtp-Source: AGHT+IHPl600IyqepDyveRozTqQnRwhp7nkCRFSm9E2N1XgXm15zg9a6uJhA+J5IO3q+jFt38xdang==
+X-Received: by 2002:a17:90a:510d:b0:2cc:ff56:5be1 with SMTP id
+ 98e67ed59e1d1-2d3aaa7cea2mr2247483a91.7.1723626720222; 
+ Wed, 14 Aug 2024 02:12:00 -0700 (PDT)
+Received: from [192.168.1.113] ([203.30.4.111])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2d3ac7e8af3sm1142475a91.18.2024.08.14.02.11.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 Aug 2024 02:11:59 -0700 (PDT)
+Message-ID: <21210e0f-457e-4858-befc-f869984d3315@linaro.org>
+Date: Wed, 14 Aug 2024 19:11:51 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x62f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 07/15] tcg/riscv: Implement vector mov/dup{m/i}
+To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240813113436.831-1-zhiwei_liu@linux.alibaba.com>
+ <20240813113436.831-8-zhiwei_liu@linux.alibaba.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240813113436.831-8-zhiwei_liu@linux.alibaba.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,33 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PTE is not CODE so load it as normal DATA access.
+On 8/13/24 21:34, LIU Zhiwei wrote:
+> @@ -641,6 +645,13 @@ static bool tcg_out_mov(TCGContext *s, TCGType type, TCGReg ret, TCGReg arg)
+>       case TCG_TYPE_I64:
+>           tcg_out_opc_imm(s, OPC_ADDI, ret, arg, 0);
+>           break;
+> +    case TCG_TYPE_V64:
+> +    case TCG_TYPE_V128:
+> +    case TCG_TYPE_V256:
+> +        tcg_debug_assert(ret > TCG_REG_V0 && arg > TCG_REG_V0);
+> +        tcg_target_set_vec_config(s, type, prev_vece);
+> +        tcg_out_opc_vv(s, OPC_VMV_V_V, ret, TCG_REG_V0, arg, true);
 
-Fixes: 074cfcb4da ("Implement hardware page table walker for MIPS32")
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/mips/tcg/sysemu/tlb_helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I suggest these asserts be in tcg_out_opc_*
+That way you don't need to replicate to all uses.
 
-diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu/tlb_helper.c
-index 0e94e00a5f..3836137750 100644
---- a/target/mips/tcg/sysemu/tlb_helper.c
-+++ b/target/mips/tcg/sysemu/tlb_helper.c
-@@ -603,9 +603,9 @@ static bool get_pte(CPUMIPSState *env, uint64_t vaddr, MemOp op,
- 
-     oi = make_memop_idx(op | MO_TE, ptw_mmu_idx);
-     if (op == MO_64) {
--        *pte = cpu_ldq_code_mmu(env, vaddr, oi, 0);
-+        *pte = cpu_ldq_mmu(env, vaddr, oi, 0);
-     } else {
--        *pte = cpu_ldl_code_mmu(env, vaddr, oi, 0);
-+        *pte = cpu_ldl_mmu(env, vaddr, oi, 0);
-     }
- 
-     return true;
--- 
-2.45.2
+> +static inline bool tcg_out_dup_vec(TCGContext *s, TCGType type, unsigned vece,
+> +                                   TCGReg dst, TCGReg src)
 
+Oh, please drop all of the inline markup, from all patches.
+Let the compiler decide.
+
+> +static inline bool tcg_out_dupm_vec(TCGContext *s, TCGType type, unsigned vece,
+> +                                    TCGReg dst, TCGReg base, intptr_t offset)
+> +{
+> +    tcg_out_ld(s, TCG_TYPE_REG, TCG_REG_TMP0, base, offset);
+> +    return tcg_out_dup_vec(s, type, vece, dst, TCG_REG_TMP0);
+> +}
+
+Is this really better than using strided load with rs2 = r0?
+
+
+r~
 
