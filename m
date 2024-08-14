@@ -4,56 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67831C531DC
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 08:04:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E26D9C52D7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 08:05:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1se8xx-0002KA-MM; Wed, 14 Aug 2024 04:02:45 -0400
+	id 1se8xx-0002Jo-Ji; Wed, 14 Aug 2024 04:02:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1se8xv-0002I3-GW
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 04:02:43 -0400
+ id 1se8xu-0002Gu-Ge
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 04:02:42 -0400
 Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1se8xp-0007rt-9p
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 04:02:43 -0400
+ id 1se8xp-0007sc-EF
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 04:02:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
  t=1723622558; x=1755158558;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=Pc6v8vQDyhFUnCnaUpnKF0TGvteOoZKGCnvSfBFYwhY=;
- b=gfje2xDSK2r2w4SMfqwkoOVpk8+W/YNRVMIlOzTOOyPhNMstzfOrEULN
- nH+2a2wGd0PNFoy27Ybfm2k0R2d1QJXWhgWE1bsT9mLUHfYjNbW0nhx3P
- HV6PXMMIqu1tekUhTIGeg7vSbOx7ahjHo8Cb7KWLdJIrc6nv3vo+UFiDf
- XfovumuahV2bwfTKeQtZ26wDJwv4tANX93DNe9frVbIrtVd7FLdc4b9V/
- Qj3qXG6i1UKcq7kUZ3q7doEQfGAA8ZC1TqleCQecfQzNP91mhrowtnTuF
- sasE7getyxsm8XMMSEQrnUOYz9+gVZyBPRtFifjtZyM3TQjEN+/z3rzHZ A==;
-X-CSE-ConnectionGUID: EIXD9JUBTZmZm+6zrnC+aA==
-X-CSE-MsgGUID: s7pPiFE2Tu+ctaCvLCdaTQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11163"; a="25584449"
-X-IronPort-AV: E=Sophos;i="6.09,288,1716274800"; d="scan'208";a="25584449"
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=95lVEX5CsBG7kTAIi2nQlw8g78ZvNp99dsAYOY0HpDo=;
+ b=VIxXEF2dmN65l3Ift9jCWBlURN0XOtLWCb1bH0So7P9WxPoCdBWr7KvK
+ rwgHNtvAiTWg7IeAYslnCRZHFVI3DJG9leIleQ3IoNsuvkYjZLAavMncV
+ Z+otNFiu5zYonqyYZSiuBtfczO056hj/ZIGQ3r/KDXUKrpMilnyauXD6j
+ MZwdfeNbkkHBPjtuVe+UfhSd03C6t+JX3TKXyT1E3fi3dMRk7JLssOwzu
+ tBUJoOtKtV/WXKcGQHj55xDsGpAtjNIwKfPDRPmSM6tt+gwbZvVZ+ab9r
+ Rijly0BVEGDSUs4/RRT7xYWivfIXd0azzXsAmta2HRV9F95AYbDGIxlBt Q==;
+X-CSE-ConnectionGUID: Ef9vSaLZTWKQc4921Oav3Q==
+X-CSE-MsgGUID: 95A1uGMvSz6TvzmPqpskag==
+X-IronPort-AV: E=McAfee;i="6700,10204,11163"; a="25584456"
+X-IronPort-AV: E=Sophos;i="6.09,288,1716274800"; d="scan'208";a="25584456"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Aug 2024 01:02:33 -0700
-X-CSE-ConnectionGUID: v9MCkPMnRlyoOxRBYN7Qxw==
-X-CSE-MsgGUID: S4LG+NLlRsGaUmQVXgYh/g==
+ 14 Aug 2024 01:02:35 -0700
+X-CSE-ConnectionGUID: 8wOW06pLTcCnYg13vPkjNw==
+X-CSE-MsgGUID: NbBLo//tQNKuSM0CFGdwiA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,288,1716274800"; d="scan'208";a="59048939"
+X-IronPort-AV: E=Sophos;i="6.09,288,1716274800"; d="scan'208";a="59048943"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa010.fm.intel.com with ESMTP; 14 Aug 2024 01:02:31 -0700
+ by fmviesa010.fm.intel.com with ESMTP; 14 Aug 2024 01:02:32 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
 Cc: qemu-devel@nongnu.org,
 	kvm@vger.kernel.org,
 	xiaoyao.li@intel.com
-Subject: [PATCH 0/9] Misc patches for x86 CPUID
-Date: Wed, 14 Aug 2024 03:54:22 -0400
-Message-Id: <20240814075431.339209-1-xiaoyao.li@intel.com>
+Subject: [PATCH 1/9] i386/cpu: Don't construct a all-zero entry for CPUID[0xD
+ 0x3f]
+Date: Wed, 14 Aug 2024 03:54:23 -0400
+Message-Id: <20240814075431.339209-2-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240814075431.339209-1-xiaoyao.li@intel.com>
+References: <20240814075431.339209-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.15; envelope-from=xiaoyao.li@intel.com;
@@ -81,31 +84,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series is a misc collection of patches for x86 CPUID. It contains
-patches to add support for new CPUID bit, to fix the construction of
-some CPUID leaves, to not expose AMD defined bits on Intel guest, and to
-make invtsc migratable contioned on user_tsc_khz.
+Currently, QEMU always constructs a all-zero CPUID entry for
+CPUID[0xD 0x3f].
 
-All of them are found during TDX development and testing. However, they
-issues they aim to address are not TDX specific and the patches are not
-TDX specific.
+It's meaningless to construct such a leaf as the end of leaf 0xD. Rework
+the logic of how subleaves of 0xD are constructed to get rid of such
+all-zero value of subleaf 0x3f.
 
-Xiaoyao Li (9):
-  i386/cpu: Don't construct a all-zero entry for CPUID[0xD 0x3f]
-  i386/cpu: Enable fdp-excptn-only and zero-fcs-fds
-  i386/cpu: Add support for bits in CPUID.7_2.EDX
-  i386/cpu: Construct valid CPUID leaf 5 iff CPUID_EXT_MONITOR
-  i386/cpu: Construct CPUID 2 as stateful iff times > 1
-  i386/cpu: Set topology info in 0x80000008.ECX only for AMD CPUs
-  i386/cpu: Suppress CPUID values not defined by Intel
-  i386/cpu: Drop AMD alias bits in FEAT_8000_0001_EDX for non-AMD guests
-  i386/cpu: Make invtsc migratable when user sets tsc-khz explicitly
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+---
+ target/i386/kvm/kvm.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
- target/i386/cpu.c     | 50 ++++++++++++++++++++++++++++++-------------
- target/i386/cpu.h     |  4 ++++
- target/i386/kvm/kvm.c | 17 +++++++++------
- 3 files changed, 49 insertions(+), 22 deletions(-)
-
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 31f149c9902c..c168ff5691df 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -1844,10 +1844,6 @@ static uint32_t kvm_x86_build_cpuid(CPUX86State *env,
+         case 0xb:
+         case 0xd:
+             for (j = 0; ; j++) {
+-                if (i == 0xd && j == 64) {
+-                    break;
+-                }
+-
+                 c->function = i;
+                 c->flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX;
+                 c->index = j;
+@@ -1863,7 +1859,12 @@ static uint32_t kvm_x86_build_cpuid(CPUX86State *env,
+                     break;
+                 }
+                 if (i == 0xd && c->eax == 0) {
+-                    continue;
++                    if (j < 63) {
++                        continue;
++                    } else {
++                        cpuid_i--;
++                        break;
++                    }
+                 }
+                 if (cpuid_i == KVM_MAX_CPUID_ENTRIES) {
+                     goto full;
 -- 
 2.34.1
 
