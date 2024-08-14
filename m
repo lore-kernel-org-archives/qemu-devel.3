@@ -4,95 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E3CFC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 06:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B168BC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 07:03:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1se7ZA-0001UF-Gb; Wed, 14 Aug 2024 02:33:04 -0400
+	id 1se81m-0003UG-8k; Wed, 14 Aug 2024 03:02:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1se7Z8-0001Te-Js
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 02:33:02 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1se7Z6-0002iL-3D
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 02:33:02 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-70d2b921cdfso5601331b3a.0
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 23:32:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1723617178; x=1724221978;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Efm/CGOjylRexP++hdaclqo7GwQBkfRY8/dWs49ruC8=;
- b=qULfTyBDPEEzS3QlxOoUdmgk3k96YlWGj9TYLU5WDg0A4atOP8vRaE+G9aWlvw37wK
- BCilJdgfhNEnqfkbmIlHpqsVD6+Xe2Dnt14ObVKGlsu5EqrPpQCuooBEUEM44b2nHfuT
- Wj3pDzkSg0xerzThiWAf7xV/AhJuofZ93br/jFscl+CLYUdLLKVeyupl/5ZpsWt0SEXQ
- wKrYFovUJmX4euwUGEErTVuYTWBA56BXPBKhxjv1vBBiqBlObUEBjBD8vulwe38Bd0yH
- B+aRr5kMKoXQcG+ujWzurGOoxpVv9NTQnMmDPNDAJn3ASgd/IiT7d3Q3aNOibHDcC8Cw
- ZNIw==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1se81j-0003TY-GK
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 03:02:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1se81h-0007QO-CU
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 03:02:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723618951;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CkneSoPm6+Orf9AXwbLH3XXYg1RSUbNwxOq8JRHqSsw=;
+ b=H9/mKXLUZenzVUxTiSYyoU2Ph8n5eGnKoJPWbadlXr5CUffaBBkQc1pq2YBkNMwFWx7ixN
+ VEBSjO/yMDNmdM9nh9lXRzrYi9IyW+5ZVlrnirAfcS+Ubm8PH2ouG/j9KrfiyhzAiTMRPE
+ /qrxtQ/i9Oueug7eD8vQgFmN3qbi4Ik=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-593-hZy28YcGNceq7c3La8jIMg-1; Wed, 14 Aug 2024 03:02:28 -0400
+X-MC-Unique: hZy28YcGNceq7c3La8jIMg-1
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-52efe4c2261so8253391e87.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 00:02:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723617178; x=1724221978;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1723618947; x=1724223747;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Efm/CGOjylRexP++hdaclqo7GwQBkfRY8/dWs49ruC8=;
- b=rUNbt6EubPTblIGwVstWVvSj3QT532B7JqWWAqbM0hTMQCO+x8jio6zKepEXrboGYm
- 2L4Z7oTfueAkwSt/SgYSO2u2h9dGtAMWxRBRcPVk1qB3X7D7vJrgxJit9JBmebOX+WHn
- N/NI7p1qQf7FDDAMReu1ght7590j+FQPUnoiTPmxo5uRYNI1aBMJqQ8qHhdywYO9pZVV
- CK8EfB1iwA+SWZONzL+CCDY/3JpTq+phLTa7vmZ+rk89v1MB/lfn7Bqz+/zu8VF/xoJc
- fNbF63XP/3o9NFxgFLljHTsWzYxS1h2kDSk3Qdt0e+J7tuNODKFw9KaaiWUNZLuvB+Px
- V87g==
-X-Gm-Message-State: AOJu0YyJPzb3r4nPY/k6xymdQtxvIKqQ+zZ80pc0CarTjVZuFkxtB60R
- 1HrDxaWpldYaeKoVsq3LXCaIPcTnLAJrqYd8fbNkp0GzyLgbnvqdX7N3Vvn/hFs=
-X-Google-Smtp-Source: AGHT+IFBsMcmrNyQbeK1ZaJ66JKUZ4nOTxwQJcrjF+5QdAPyAXYxfaZspn/hrgLm6o1QcA2WXfjgFg==
-X-Received: by 2002:a05:6a00:9284:b0:70a:f22d:caf5 with SMTP id
- d2e1a72fcca58-712670f6858mr2627789b3a.5.1723617178059; 
- Tue, 13 Aug 2024 23:32:58 -0700 (PDT)
-Received: from [157.82.202.230] ([157.82.202.230])
+ bh=CkneSoPm6+Orf9AXwbLH3XXYg1RSUbNwxOq8JRHqSsw=;
+ b=qpwtAreY+wh3UnEQJZedMOoM7gHp/pnh9l6CZetV4YTT85C5SDfUlT5RrkbzxqAHV2
+ e2dSuOnDa5dtG2sJyRJ6naBMO3G25TMtOqw0Nqs3IWia/6FFL5ztM1h5nexseDR48mCI
+ /6E0ED95Du8W09SV7N7D5DCK9t/ApFP0+BCfyyszXfloSeBnz86vUQnkdSyRXg03t0Ui
+ MmXHAwCOjLvcrEtEKT/b05Q2QN14+4e1HgbVJfj3Dk91GSpSvt8yhc/jUeMF77HsyoW9
+ WFc4TjazisxB8Awj40f/tPGuon2bJEvJHSN2H4isDV0PjyfzGGleQ9gSVUqHyQ/lfKPs
+ P+QQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXPo8+AYne/OP5aDDsc74g5VDPmVPgUshFTZJtVieCRuKt0FymmXdayhxHP76HfiwAP3WOJuBpa5+HF@nongnu.org
+X-Gm-Message-State: AOJu0YzEe6G2krKzhAp6T7/4ZRZLaEzAoKElg+vfs/TWOBE2Us7QB4Xi
+ cZaIsWbPWC18NA4igi7VHzF8vaxYHCc30/Q1QGWnAo/4k2DzD8XpR4ummAkWHERdw3Lno1gU2zH
+ 2FxwVxnXBCA6V2unR4AT82X8Bpw32G0RiYLlsS1lE9TnCWx65lenX
+X-Received: by 2002:a05:6512:2203:b0:52e:9904:71e with SMTP id
+ 2adb3069b0e04-532eda8a842mr1127455e87.28.1723618947100; 
+ Wed, 14 Aug 2024 00:02:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGIKtWtFEfBIrSCWXi0sYdMauFUo+2G9i6jwqT/TqgSJvZ4TvYm2njCQfbe/PtMFzK7G3IsKQ==
+X-Received: by 2002:a05:6512:2203:b0:52e:9904:71e with SMTP id
+ 2adb3069b0e04-532eda8a842mr1127404e87.28.1723618946082; 
+ Wed, 14 Aug 2024 00:02:26 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc7:346:dcde:9c09:aa95:551d:d374])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7c69e8f8a74sm1665374a12.10.2024.08.13.23.32.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Aug 2024 23:32:57 -0700 (PDT)
-Message-ID: <76cf39cb-ef99-4b5f-8908-1a437b4c3120@daynix.com>
-Date: Wed, 14 Aug 2024 15:32:54 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] contrib/plugins: Add a plugin to generate basic block
- vectors
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, Richard Henderson <richard.henderson@linaro.org>,
+ a640c23a62f3a-a80f3f49748sm134791466b.4.2024.08.14.00.02.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Aug 2024 00:02:24 -0700 (PDT)
+Date: Wed, 14 Aug 2024 03:02:18 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+Cc: "Liu, Yi L" <yi.l.liu@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "Peng, Chao P" <chao.p.peng@intel.com>,
+ =?iso-8859-1?Q?Cl=E9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
-Cc: qemu-devel@nongnu.org, Yotaro Nada <yotaro.nada@gmail.com>
-References: <20240813-bb-v1-1-effbb77daebf@daynix.com>
- <0e0ee7a5-f8e4-44f0-83d9-918b0ef71396@linaro.org>
- <767b0e96-d7ad-418f-8d84-cb7e49dc2510@daynix.com>
- <5e877d1a-9a6b-4de5-9c3e-d654908a3922@linaro.org>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <5e877d1a-9a6b-4de5-9c3e-d654908a3922@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v3 2/2] intel_iommu: Make PASID-cache and PIOTLB type
+ invalid in legacy mode
+Message-ID: <20240814030202-mutt-send-email-mst@kernel.org>
+References: <20240814022654.2612780-1-zhenzhong.duan@intel.com>
+ <20240814022654.2612780-3-zhenzhong.duan@intel.com>
+ <a08417ee-8315-45a4-b065-c6787db92f4a@intel.com>
+ <SJ0PR11MB6744F3FD7B8B23AF47E2A09292872@SJ0PR11MB6744.namprd11.prod.outlook.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::430;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01,
- URI_DOTEDU=1 autolearn=no autolearn_force=no
+In-Reply-To: <SJ0PR11MB6744F3FD7B8B23AF47E2A09292872@SJ0PR11MB6744.namprd11.prod.outlook.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,245 +114,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/08/14 14:41, Pierrick Bouvier wrote:
-> On 8/13/24 21:56, Akihiko Odaki wrote:
->> On 2024/08/14 4:20, Pierrick Bouvier wrote:
->>> Hi Akihiko, and thanks for contributing this new plugin.
->>
->> Hi,
->>
->> Thanks for reviewing
->>
->>>
->>> Recently, plugins documentation has been modified, and list of plugins
->>> and their doc is now in "docs/about/emulation.rst". You may want to
->>> rebase on top of master.
->>
->> I see. I'll rebase and update the documentation with v2.
->>
->>>
->>> Globally, I'm ok with this plugin and the implementation. Just a few
->>> fixes are needed for concurrent accesses.
->>>
->>> On 8/12/24 23:46, Akihiko Odaki wrote:
->>>> SimPoint is a widely used tool to find the ideal microarchitecture
->>>> simulation points so Valgrind[2] and Pin[3] support generating basic
->>>> block vectors for use with them. Let's add a corresponding plugin to
->>>> QEMU too.
->>>>
->>>> Note that this plugin has a different goal with tests/plugin/bb.c.
->>>>
->>>> This plugin creates a vector for each constant interval instead of
->>>> counting the execution of basic blocks for the entire run and able to
->>>> describe the change of execution behavior. Its output is also
->>>> syntactically simple and better suited for parsing, while the output of
->>>> tests/plugin/bb.c is more human-readable.
->>>>
->>>
->>> I think it can be confusing to have two plugins named bb. How about
->>> simpoint, or bbv?
->>
->> How about renaming tests/tcg/plugins/bb.c to simple-bb.c instead and
->> keep the name of contrib/plugins/bb.c concise?
->>
->> tests/tcg/plugins/bb.c is simple and good as a sample, but less useful
->> in practice than this plugin due to differences described earlier. On
->> the other hand, this plugin is designed to be utilized for practical
->> purpose so I want to keep its name short and save typing.
->>
+On Wed, Aug 14, 2024 at 03:05:33AM +0000, Duan, Zhenzhong wrote:
 > 
-> I would recommend using the <tab> key to save typing. I'm kidding :)
 > 
-> More seriously, I get your point, but I don't think this new plugin is 
-> generic enough to be qualified as "the" bb plugin (nor the 
-> tests/tcg/plugins/bb neither, but it predates this new plugin). It 
-> outputs format for SimPoint, so how about simpoint (accessible after 
-> typing si<tab>)?
+> >-----Original Message-----
+> >From: Liu, Yi L <yi.l.liu@intel.com>
+> >Subject: Re: [PATCH v3 2/2] intel_iommu: Make PASID-cache and PIOTLB
+> >type invalid in legacy mode
+> >
+> >On 2024/8/14 10:26, Zhenzhong Duan wrote:
+> >> In vtd_process_inv_desc(), VTD_INV_DESC_PC and VTD_INV_DESC_PIOTLB
+> >are
+> >> bypassed without scalable mode check. These two types are not valid
+> >> in legacy mode and we should report error.
+> >>
+> >> Fixes: 4a4f219e8a1 ("intel_iommu: add scalable-mode option to make
+> >scalable mode work")
+> >
+> >4a4f219e8a10 would be better. :)
+> 
+> Ah, OK, Michael, let me know if you want me send a new version.
+> 
+> Thanks
+> Zhenzhong
 
-Perhaps bbv is a better naming. I expect there are more use cases of 
-basic block vectors than feeding it for SimPoint. Searching for "basic 
-block vectors" with Google Scholar show this terminology has a 
-consistent meaning and used in several researches.
 
-> 
->>>
->>>> [1] https://cseweb.ucsd.edu/~calder/simpoint/
->>>> [2] https://valgrind.org/docs/manual/bbv-manual.html
->>>> [3]
->>>> https://www.intel.com/content/www/us/en/developer/articles/tool/pin-a-dynamic-binary-instrumentation-tool.html
->>>>
->>>> Signed-off-by: Yotaro Nada <yotaro.nada@gmail.com>
->>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>> ---
->>>>    docs/devel/tcg-plugins.rst |  20 ++++++
->>>>    contrib/plugins/bb.c       | 153
->>>> +++++++++++++++++++++++++++++++++++++++++++++
->>>>    contrib/plugins/Makefile   |   1 +
->>>>    3 files changed, 174 insertions(+)
->>>>
->>>> diff --git a/docs/devel/tcg-plugins.rst b/docs/devel/tcg-plugins.rst
->>>> index 9cc09d8c3da1..2859eecc13b9 100644
->>>> --- a/docs/devel/tcg-plugins.rst
->>>> +++ b/docs/devel/tcg-plugins.rst
->>>> @@ -332,6 +332,26 @@ run::
->>>>      160          1      0
->>>>      135          1      0
->>>> +- contrib/plugins/bb.c
->>>> +
->>>> +The bb plugin allows you to generates basic block vectors for use
->>>> with the
->>>> +`SimPoint <https://cseweb.ucsd.edu/~calder/simpoint/>`__ analysis 
->>>> tool.
->>>> +
->>>> +It has two options, ``interval`` and ``outfile``. ``interval``
->>>> specifies the
->>>> +interval to generate a basic block vector by the number of
->>>> instructions. It is
->>>> +optional, and its default value is 100000000. ``outfile`` is the 
->>>> path to
->>>> +output files, and it will be suffixed with ``.N.bb`` where ``N`` is a
->>>> vCPU
->>>> +index.
->>>> +
->>>> +Example::
->>>> +
->>>> +  $ qemu-aarch64 \
->>>> +    -plugin contrib/plugins/libb.so,interval=100,outfile=sha1 \
->>>> +    tests/tcg/aarch64-linux-user/sha1
->>>> +  SHA1=15dd99a1991e0b3826fede3deffc1feba42278e6
->>>> +  $ du sha1.0.bb
->>>> +  23128   sha1.0.bb
->>>> +
->>>>    - contrib/plugins/hotblocks.c
->>>>    The hotblocks plugin allows you to examine the where hot paths of
->>>> diff --git a/contrib/plugins/bb.c b/contrib/plugins/bb.c
->>>> new file mode 100644
->>>> index 000000000000..4f1266d07ff5
->>>> --- /dev/null
->>>> +++ b/contrib/plugins/bb.c
->>>> @@ -0,0 +1,153 @@
->>>> +/* SPDX-License-Identifier: GPL-2.0-or-later */
->>>> +
->>>
->>> A brief summary and the link to simpoint page can be added as a comment
->>> here.
->>
->> I'll add them with v2.
->>
->>>
->>>> +#include <stdio.h>
->>>> +#include <glib.h>
->>>> +
->>>> +#include <qemu-plugin.h>
->>>> +
->>>> +typedef struct Bb {
->>>> +    struct qemu_plugin_scoreboard *count;
->>>> +    unsigned int index;
->>>> +} Bb;
->>>> +
->>>> +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
->>>> +static GHashTable *bbs;
->>>> +static GPtrArray *files;
->>>> +static char *filename;
->>>> +static struct qemu_plugin_scoreboard *count;
->>>> +static uint64_t interval = 100000000;
->>>> +
->>>> +static void plugin_exit(qemu_plugin_id_t id, void *p)
->>>> +{
->>>> +    g_hash_table_unref(bbs);
->>>> +    g_ptr_array_unref(files);
->>>> +    g_free(filename);
->>>> +    qemu_plugin_scoreboard_free(count);
->>>> +}
->>>> +
->>>> +static void free_bb(void *data)
->>>> +{
->>>> +    qemu_plugin_scoreboard_free(((Bb *)data)->count);
->>>> +    g_free(data);
->>>> +}
->>>> +
->>>> +static void free_file(void *data)
->>>> +{
->>>> +    fclose(data);
->>>> +}
->>>> + > +static directly count_u64(void)
->>>> +{
->>>> +    return qemu_plugin_scoreboard_u64(count);
->>>> +}
->>>> +
->>>> +static qemu_plugin_u64 bb_count_u64(Bb *bb)
->>>> +{
->>>> +    return qemu_plugin_scoreboard_u64(bb->count);
->>>> +}
->>>> +
->>>> +static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
->>>> +{
->>>> +    g_autofree gchar *vcpu_filename = NULL;
->>>> +
->>>> +    if (vcpu_index >= files->len) {
->>>> +        g_ptr_array_set_size(files, vcpu_index + 1);
->>>> +    } else if (g_ptr_array_index(files, vcpu_index)) {
->>>> +        return;
->>>> +    }
->>>> +
->>>
->>> You need a lock for files array for expansion/access.
->>
->> I will replace GPtrArray with scoreboard instead.
->>
-> 
-> Good idea. You'll have to cleanup files at the end manually, as there is 
-> no support for custom destructor.
-> 
->>>
->>>> +    vcpu_filename = g_strdup_printf("%s.%u.bb", filename, vcpu_index);
->>>> +    g_ptr_array_index(files, vcpu_index) = fopen(vcpu_filename, "w");
->>>> +}
->>>> +
->>>> +static void vcpu_tb_exec(unsigned int vcpu_index, void *udata)
->>>
->>> vcpu_tb_exec is a confusing name, as it is called when interval of insn
->>> is executed. vcpu_interval_exec would be more clear.
->>
->> That makes sense. I will do so with the next version.
->>
->>>
->>>> +{
->>>> +    FILE *file = g_ptr_array_index(files, vcpu_index);
->>>
->>> Need lock when accessing this array.
->>>
->>>> +    uint64_t count = qemu_plugin_u64_get(count_u64(), vcpu_index) -
->>>> interval;
->>>> +    GHashTableIter iter;
->>>> +    void *value;
->>>> +
->>>> +    if (!file) {
->>>> +        return;
->>>> +    }
->>>> +
->>>> +    qemu_plugin_u64_set(count_u64(), vcpu_index, count);
->>>> + > +    fputc('T', file);
->>>
->>> Maybe you can add a comment with a link to
->>> https://valgrind.org/docs/manual/bbv-manual.html at this point. It's
->>> already mentioned in the commit message, but IMHO, it's convenient to
->>> have it here, so we know which data is written exactly.
->>
->> SimPoint should be referred to know the data format. I cited Valgrind
->> only to show the popularity of the format and to motivate its
->> implementation for QEMU.
->>
-> 
-> I understood that, but it happens that I didn't find a simple 
-> description of the format on SimPoint website (maybe I missed it?), 
-> while valgrind doc page is clear and concise. Feel free to point the 
-> right page if it exists.
+Yes pls, also pls Cc me on the cover letter.
 
-The authoritative reference would be README.txt included in SimPoint 
-3.2. The Valgrind documentation is more accessible, but anyone who tries 
-to generate or parse it should refer to SimPoint.
+> >
+> >> Suggested-by: Yi Liu <yi.l.liu@intel.com>
+> >> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> >> Reviewed-by: Cl�ment Mathieu--Drif<clement.mathieu--drif@eviden.com>
+> >> Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+> >> ---
+> >>   hw/i386/intel_iommu.c | 22 +++++++++++-----------
+> >>   1 file changed, 11 insertions(+), 11 deletions(-)
+> >>
+> >> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> >> index 68cb72a481..90cd4e5044 100644
+> >> --- a/hw/i386/intel_iommu.c
+> >> +++ b/hw/i386/intel_iommu.c
+> >> @@ -2763,17 +2763,6 @@ static bool
+> >vtd_process_inv_desc(IntelIOMMUState *s)
+> >>           }
+> >>           break;
+> >>
+> >> -    /*
+> >> -     * TODO: the entity of below two cases will be implemented in future
+> >series.
+> >> -     * To make guest (which integrates scalable mode support patch set in
+> >> -     * iommu driver) work, just return true is enough so far.
+> >> -     */
+> >> -    case VTD_INV_DESC_PC:
+> >> -        break;
+> >> -
+> >> -    case VTD_INV_DESC_PIOTLB:
+> >> -        break;
+> >> -
+> >>       case VTD_INV_DESC_WAIT:
+> >>           trace_vtd_inv_desc("wait", inv_desc.hi, inv_desc.lo);
+> >>           if (!vtd_process_wait_desc(s, &inv_desc)) {
+> >> @@ -2795,6 +2784,17 @@ static bool
+> >vtd_process_inv_desc(IntelIOMMUState *s)
+> >>           }
+> >>           break;
+> >>
+> >> +    /*
+> >> +     * TODO: the entity of below two cases will be implemented in future
+> >series.
+> >> +     * To make guest (which integrates scalable mode support patch set in
+> >> +     * iommu driver) work, just return true is enough so far.
+> >> +     */
+> >> +    case VTD_INV_DESC_PC:
+> >> +    case VTD_INV_DESC_PIOTLB:
+> >> +        if (s->scalable_mode) {
+> >> +            break;
+> >> +        }
+> >> +    /* fallthrough */
+> >>       default:
+> >>           error_report_once("%s: invalid inv desc: hi=%"PRIx64", lo=%"PRIx64
+> >>                             " (unknown type)", __func__, inv_desc.hi,
+> >
+> >--
+> >Regards,
+> >Yi Liu
 
-Regards,
-Akihiko Odaki
 
