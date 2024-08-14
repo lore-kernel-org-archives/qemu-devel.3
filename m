@@ -4,71 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41BE6C52D7B
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 14:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 980A3C52D7B
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 14:23:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seEg2-0007aD-41; Wed, 14 Aug 2024 10:08:38 -0400
+	id 1seEtv-00079B-8I; Wed, 14 Aug 2024 10:22:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <engguopeng@buaa.edu.cn>)
- id 1seEA8-0005nT-Ub
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:35:41 -0400
-Received: from azure-sdnproxy.icoremail.net ([52.237.72.81])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <engguopeng@buaa.edu.cn>) id 1seEA5-0003s1-As
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 09:35:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=buaa.edu.cn; s=buaa; h=Received:From:To:Cc:Subject:Date:
- Message-ID:MIME-Version:Content-Transfer-Encoding; bh=emLaVKASAR
- pJE/jzq2vtaV8x0Qsgu6jmAqCVcMc0hAM=; b=lpyHEmGxw8lLf0K3RxKWrkUvYI
- 93pXhJ61Ztr6Kv4bV8sV5df+VuLKdjG05Om7KdRabqw9OBjET893Q9BLHYSl4++7
- cYf8ItcNq+SdmJoFebAVpZ9aI+MSqwwTZjqkKLO8OLmBU5QkbzwuMHpordfWO8qK
- 11RFxAHhY9CAJYWu4=
-Received: from gp-VMware-Virtual-Platform.localdomain (unknown
- [139.227.253.190])
- by coremail-app1 (Coremail) with SMTP id OCz+CgBXv7uZsrxmjP5bAA--.5830S2;
- Wed, 14 Aug 2024 21:35:23 +0800 (CST)
-From: peng guo <engguopeng@buaa.edu.cn>
-To: jonathan.cameron@huawei.com,
-	fan.ni@samsung.com
-Cc: qemu-devel@nongnu.org,
-	peng guo <engguopeng@buaa.edu.cn>
-Subject: [PATCH] hw/cxl: fixed the determination of illegal physical addresses
-Date: Wed, 14 Aug 2024 21:35:18 +0800
-Message-ID: <20240814133518.23393-1-engguopeng@buaa.edu.cn>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1seEtt-00077o-NY; Wed, 14 Aug 2024 10:22:57 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1seEtq-0003Kz-W6; Wed, 14 Aug 2024 10:22:57 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47EDEvO3019961;
+ Wed, 14 Aug 2024 14:22:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=F
+ W990GYEJ3HqYuhDLff0vU2pFNIlHHQ+Xwx3BayWMps=; b=IZEPtQVXD+pWNuhEW
+ ekyb1OHRvbx4yiqov8BS8uGXSUWTB4d21ThP9I1mf92H470w+x9cOSQBQfwkFbMw
+ cZmtPijcGDxIgjo7NbvHGfHFIBBTEC/m43zlDV1VvM6AGWNSrq9oPDHX4iDHnoDR
+ EYK3O2/p06kSViBUpXopq+GGMZc64BVYChr+xQctTggsCcAA+kig+KtH3tp+8LRm
+ vU2JrpdYxUvncgKovyXDIif19R9k8tleM2CnR02l06F7QILzlZNvNxmjhLPDBTOF
+ X0FtAliX1xP3zMRSrLo94/44Bdqevn3Omrd37CZFkQFt3gmqZWjGUZsL/RT9QTNF
+ diomg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 410w9u0a4p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 Aug 2024 14:22:50 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 47EEMo94031803;
+ Wed, 14 Aug 2024 14:22:50 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 410w9u0a4h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 Aug 2024 14:22:50 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 47EECpcq015321; Wed, 14 Aug 2024 14:22:49 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40xm1msnh1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 Aug 2024 14:22:49 +0000
+Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
+ [10.20.54.101])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 47EEMh2Y49545698
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 14 Aug 2024 14:22:45 GMT
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5B39020043;
+ Wed, 14 Aug 2024 14:22:43 +0000 (GMT)
+Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A1DA720040;
+ Wed, 14 Aug 2024 14:22:42 +0000 (GMT)
+Received: from [9.179.20.40] (unknown [9.179.20.40])
+ by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 14 Aug 2024 14:22:42 +0000 (GMT)
+Message-ID: <14c38495-131f-4798-bf41-da442ede23eb@linux.ibm.com>
+Date: Wed, 14 Aug 2024 16:22:42 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: OCz+CgBXv7uZsrxmjP5bAA--.5830S2
-X-Coremail-Antispam: 1UD129KBjvJXoW7Zw4fCFyDJr45Ary8Zw1rXrb_yoW8Wry7pr
- s3Kr4Svw1rKay7ZFs7t3ykXw4UCrWxKFZIkrWDuwn5Gryqgr45ZF13KayIv3s8J34xJa4r
- Zr4jqr4DCa1jyF7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDU0xBIdaVrnRJUUUk21xkIjI8I6I8E6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AE
- w4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2
- IY67AKxVW7JVWDJwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxVW8Jr0_Cr1UM28EF7xvwVC2
- z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v26rxl6s0DM2AIxVAIcxkEcV
- Aq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j
- 6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64
- vIr41lF7I21c0EjII2zVCS5cI20VAGYxC7MxAIw28IcxkI7VAKI48JMxAIw28IcVCjz48v
- 1sIEY20_Aw1UJr1UMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr
- 4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxG
- rwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8Jw
- CI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2
- z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjfUoOJ5UUUUU
-X-CM-SenderInfo: d2isijirrujqpexdthxhgxhubq/
-Received-SPF: pass client-ip=52.237.72.81; envelope-from=engguopeng@buaa.edu.cn;
- helo=azure-sdnproxy.icoremail.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.2 00/10] s390: Convert virtio-ccw, cpu to
+ three-phase reset, and followup cleanup
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>
+References: <20240813165250.2717650-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+In-Reply-To: <20240813165250.2717650-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: wDlJRhf0GlXO-kDkcn4Ga9SUoVWnXzCR
+X-Proofpoint-ORIG-GUID: 8J3AF_DrORPuMgrjLN5ptqVr0yo2MlYD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-14_10,2024-08-13_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1011
+ lowpriorityscore=0 phishscore=0 bulkscore=0 spamscore=0 adultscore=0
+ mlxscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408140099
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 14 Aug 2024 10:08:34 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,44 +121,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When physical address range in the input payload of scan media command
-exceeds static_mem_size but does not exceed the sum of static and dynamic
-memory, the scan media mailbox command unexpectedly returns an invalid input.
+Am 13.08.24 um 18:52 schrieb Peter Maydell:
+> The main aim of this patchseries is to remove the two remaining uses
+> of device_class_set_parent_reset() in the tree, which are virtio-ccw
+> and the s390 CPU class. Doing that lets us do some followup cleanup.
+> (The diffstat looks alarming but is almost all coccinelle automated
+> changes.)
+> 
+> virtio-ccw is a simple conversion, because it's a leaf class and no
+> other code interacts with the reset function. So we convert to
+> three-phase and resettable_class_set_parent_phases().
+> 
+> The s390 CPU is trickier, because s390 has its own set of different
+> kinds of reset (the S390_CPU_RESET_* enum values). At the moment we
+> have a single function implementing the reset, which always chains to
+> the parent DeviceClass::reset, and which can be called both from the
+> CPU object's own DeviceClass::reset method and also from other s390
+> code.
+> 
+> I opted to handle this by adding two new S390-CPU-specific reset types
+> to the Resettable ResetType enum.  Now instead of having an underlying
+> implementation of reset that is s390-specific and which might be
+> called either directly or via the DeviceClass::reset method, we can
+> implement only the Resettable hold phase method, and have the places
+> that need to trigger an s390-specific reset type do so by calling
+> resettable_reset().
+>                              
+> The other option would have been to smuggle in the s390 reset type
+> via, for instance, a field in the CPU state that we set in
+> s390_do_cpu_initial_reset() etc and then examined in the reset method,
+> but doing it this way seems cleaner.
+> 
+> The rest of the series is largely cleanup. Some small stuff:
+>   * remove the now-unused device_class_set_parent_reset() function
+>   * remove some CPU state struct fields in alpha and hppa that
+>     were simply unused
+>   * fix an accidental comma in xilinx_axidma that confused a
+>     Coccinelle script
+>   * hw/remote/message.c should not be directly invoking the
+>     DeviceClass::reset method
+> 
+> There are also patches here which convert devices from directly
+> setting:
+>     dc->reset = my_reset_function;
+> to using a function call:
+>     device_class_set_legacy_reset(dc, my_reset_function);
+> 
+> The conversion is entirely scripted using a coccinelle patch, and it
+> is responsible for the large diffstat here.
+> 
+> If people feel this is unnecessary churn I'm open to that argument,
+> but my motivation here is:
+>   * it means that people writing device code see the "legacy" word
+>     and get a hint that a new QEMU device probably should be using
+>     something else (i.e. Resettable)
+>   * it makes it easier to find the places in the code that are
+>     still using legacy-reset with a simple grep
+> 
+> In particular, having done that makes it easier to rename the
+> DeviceState::reset field to DeviceState::legacy_reset, and that in
+> turn is how I found that hw/remote/ was still directly invoking it.
+> 
+> The last patch removes device_phases_reset(), which was the part of
+> the reset transition glue that supported "device is reset via the
+> legacy reset method but it is a three-phase device".  Now we know
+> there is no way to directly invoke legacy-reset any more, we can drop
+> that bit of glue. (The opposite direction, "device is reset via a
+> three-phase-aware method but only implements the legacy reset method",
+> is still supported.)
+> 
+> I am pondering the idea of a further Coccinelle-driven conversion
+> of device_class_set_legacy_reset() calls into three-phase setting
+> of the Resettable hold phase method. This would be a zero behaviour
+> change, but the difficult part will be where we have devices
+> which make direct function calls to their reset function as well
+> as registering it as the reset method; I'm not sure if Coccinelle
+> can do "match functions which are not referenced elsewhere in the
+> file" checks.
+> 
+> Note that my testing here has only been "make check" and
+> "make check-avocado", which I know doesn't really exercise reset
+> very heavily.
 
-It is handled differently depending on whether dynamic memory is present
-or not.If dynamic memory exists, check whether the address range of the 
-request exceeds the range of static memory and dynamic memory.If dynamic 
-memory does not exist, then check whether the address range of the request 
-exceeds the static memory size.
-
-Fixes: d61cc5b6a8d3 ("hw/cxl: Add get scan media capabilities cmd support")
-Signed-off-by: peng guo <engguopeng@buaa.edu.cn>
----
- hw/cxl/cxl-mailbox-utils.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index 3ebbd32e10..b23c6b9b0b 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -1943,11 +1943,12 @@ static CXLRetCode cmd_media_scan_media(const struct cxl_cmd *cmd,
-     }
-     query_length = ldq_le_p(&in->length) * CXL_CACHE_LINE_SIZE;
- 
--    if (query_start + query_length > cxl_dstate->static_mem_size) {
--        return CXL_MBOX_INVALID_PA;
--    }
--    if (ct3d->dc.num_regions && query_start + query_length >=
-+    if (ct3d->dc.num_regions) {
-+        if (query_start + query_length >=
-             cxl_dstate->static_mem_size + ct3d->dc.total_capacity) {
-+                return CXL_MBOX_INVALID_PA;
-+            }
-+    } else if (query_start + query_length > cxl_dstate->static_mem_size) {
-         return CXL_MBOX_INVALID_PA;
-     }
- 
--- 
-2.43.0
+Nina, can you have a look at those patches?
 
 
