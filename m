@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A4E8C52D7F
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 08:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C0E0C52D7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 08:04:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1se8yt-00044v-1d; Wed, 14 Aug 2024 04:03:43 -0400
+	id 1se8yn-0003YB-Rh; Wed, 14 Aug 2024 04:03:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1se8yT-0002tI-0z
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 04:03:24 -0400
+ id 1se8ya-0002zY-RL
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 04:03:25 -0400
 Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1se8yL-0007sl-4D
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 04:03:15 -0400
+ id 1se8yU-0007sc-Cc
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 04:03:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723622589; x=1755158589;
+ t=1723622598; x=1755158598;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=YQXU1V8cjOIRfFnAkE3ZUsJxcIpDFj6x85Y7iJEOblI=;
- b=TYzM23AsAf9p6dfW+88Q1nlM0rzvVhU0YDmNH1Hne1q4QMzEl9q8xkSW
- EP0sZBvx8fzYSS+fNcWcSglxvhrYHeD7yS74zZo8sWNDLAZJN2CJsGJW5
- 6BjiWKGqSFmckC/DpGmIl48ObTJ0uST0npySw9K0BDL5QjolgpJA0dMVX
- P/m9xU0EZOhu6fvCROJjZSZtAFTiWQ6xmoKrZ5CoYTYLhBWR/Qy2U81k3
- OvmQo4WZsn4TlV761vrMDMKYB3NGIencFkj80DRLj4GtqFTH0o45UOGKU
- 5wMhdZqScdy0q6Dz78MUunUvpLOtNunTExY5R7D7RoOK6NPUsXF5gDXJ0 w==;
-X-CSE-ConnectionGUID: PFdy1yh/TbuBFS/wW4Py9w==
-X-CSE-MsgGUID: 7Nar7dGnTsOZQAsaKeafYA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11163"; a="25584506"
-X-IronPort-AV: E=Sophos;i="6.09,288,1716274800"; d="scan'208";a="25584506"
+ bh=CS43UzH48cjlmpX92LFl+4C3u5GSWZlxQ4JoVqNlFE8=;
+ b=QTcBRXfyGu4ISDitLQ+pGe2MhuyWUq2NhdiMkAzEVz3DAlhJ3GnAMw2g
+ Cdl9JCiYVnN2Hcg7i8BpSqUuDtO6cNrAqLvJeVgc2Xvh8pZXDa70HCWRW
+ uiM7q/UR+AqMMU1NEKiF+PBqXiFFVfFlNXisJ9xfbre3PYoc54sk/Tlzf
+ 693zxw10hZd7eeVR558fwoY3bQhmq5MWtBz9OCuLhoO1US+gtUTAuBde/
+ hDg9RuV/1Sl+iwUL52cHflJ0shu7gM0htmWWT5GnIXsI3Bx0DkTUuDS5q
+ Xp1FJmtUX4L/NVi6yP3qmQrAkUWjZpbse0bh0PEpMpNZiCHj5Gu0SthpZ Q==;
+X-CSE-ConnectionGUID: N3wz2giGRvu8A4G27wOWZA==
+X-CSE-MsgGUID: bmBPMeC7Ss6JWOUnJnxTQw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11163"; a="25584510"
+X-IronPort-AV: E=Sophos;i="6.09,288,1716274800"; d="scan'208";a="25584510"
 Received: from fmviesa010.fm.intel.com ([10.60.135.150])
  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Aug 2024 01:02:44 -0700
-X-CSE-ConnectionGUID: aHkv1BIkToCVIdaFFa7Yyg==
-X-CSE-MsgGUID: t1AZl/TdSAq9Ftp1CBFuKg==
+ 14 Aug 2024 01:02:46 -0700
+X-CSE-ConnectionGUID: KgvttIVYRdeLtaOXm/+pdw==
+X-CSE-MsgGUID: prB1e/MfTna/Sx4+fuK1gg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,288,1716274800"; d="scan'208";a="59048966"
+X-IronPort-AV: E=Sophos;i="6.09,288,1716274800"; d="scan'208";a="59048969"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa010.fm.intel.com with ESMTP; 14 Aug 2024 01:02:43 -0700
+ by fmviesa010.fm.intel.com with ESMTP; 14 Aug 2024 01:02:45 -0700
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
 Cc: qemu-devel@nongnu.org,
 	kvm@vger.kernel.org,
 	xiaoyao.li@intel.com
-Subject: [PATCH 8/9] i386/cpu: Drop AMD alias bits in FEAT_8000_0001_EDX for
- non-AMD guests
-Date: Wed, 14 Aug 2024 03:54:30 -0400
-Message-Id: <20240814075431.339209-9-xiaoyao.li@intel.com>
+Subject: [PATCH 9/9] i386/cpu: Make invtsc migratable when user sets tsc-khz
+ explicitly
+Date: Wed, 14 Aug 2024 03:54:31 -0400
+Message-Id: <20240814075431.339209-10-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240814075431.339209-1-xiaoyao.li@intel.com>
 References: <20240814075431.339209-1-xiaoyao.li@intel.com>
@@ -84,29 +84,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The AMD alias bits are reserved for Intel.
+When user sets tsc-frequency explicitly, the invtsc feature is actually
+migratable because the tsc-frequency is supposed to be fixed during the
+migration.
+
+See commit d99569d9d856 ("kvm: Allow invtsc migration if tsc-khz
+is set explicitly") for referrence.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- target/i386/cpu.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/i386/cpu.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index fed805e04aeb..85ce405ece80 100644
+index 85ce405ece80..fb3519fc6836 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -6118,6 +6118,11 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
- #endif
-         break;
+@@ -1865,9 +1865,10 @@ static inline uint64_t x86_cpu_xsave_xss_components(X86CPU *cpu)
+  * Returns the set of feature flags that are supported and migratable by
+  * QEMU, for a given FeatureWord.
+  */
+-static uint64_t x86_cpu_get_migratable_flags(FeatureWord w)
++static uint64_t x86_cpu_get_migratable_flags(X86CPU *cpu, FeatureWord w)
+ {
+     FeatureWordInfo *wi = &feature_word_info[w];
++    CPUX86State *env = &cpu->env;
+     uint64_t r = 0;
+     int i;
  
-+    case FEAT_8000_0001_EDX:
-+        if (cpu && !IS_AMD_CPU(&cpu->env)) {
-+            unavail = CPUID_EXT2_AMD_ALIASES;
-+        }
-+        break;
-     default:
-         break;
+@@ -1881,6 +1882,12 @@ static uint64_t x86_cpu_get_migratable_flags(FeatureWord w)
+             r |= f;
+         }
      }
++
++    /* when tsc-khz is set explicitly, invtsc is migratable */
++    if ((w == FEAT_8000_0007_EDX) && env->user_tsc_khz) {
++        r |= CPUID_APM_INVTSC;
++    }
++
+     return r;
+ }
+ 
+@@ -6129,7 +6136,7 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
+ 
+     r &= ~unavail;
+     if (cpu && cpu->migratable) {
+-        r &= x86_cpu_get_migratable_flags(w);
++        r &= x86_cpu_get_migratable_flags(cpu, w);
+     }
+     return r;
+ }
 -- 
 2.34.1
 
