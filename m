@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7718C531DE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAC95C52D7D
 	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 23:38:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seNY8-0001rh-1J; Wed, 14 Aug 2024 19:37:04 -0400
+	id 1seNYA-00023A-ST; Wed, 14 Aug 2024 19:37:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1seNY5-0001fz-2v
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 19:37:01 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1seNY6-0001ki-8h
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 19:37:02 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1seNY2-0006Vx-L1
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 19:37:00 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-70d316f0060so1060332b3a.1
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 16:36:58 -0700 (PDT)
+ id 1seNY4-0006WR-Lt
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 19:37:02 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-70f5ef740b7so319819b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 16:37:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723678617; x=1724283417; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723678619; x=1724283419; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tYFEGUaBbs4kAr/qhpAyjUWtir2g5OojC1AciDAIaeA=;
- b=a/wh6CFnrZF+SvqoJIGBE0rNFFquOHRbtwPbnEWcv8oMl8VhVYfthVt9q1NUnieat3
- +7rbaWV8I8wR+9dL5Hmj3nsTmr/SAhOZgr6bZT3O+laOETH0ck9mL2Si3+SdbD1qt1DO
- 4ouyKh8wgsQuTzg2cBwSE+panYpQwHeWJSrGSA8HreEH3ChfFMKAXC9HcQOqZN/xIhgL
- vzZjIdWtIM2uzfJQh8A/rGuvU83DFZv+pDfz+KGgjugTlbAPZLwzrn4NRxVT5VqcstO0
- ZyH2zr75LCc6Zg+y4+DX9iZUaI/mP/bc8JdrHvTpbrj1fGkzIVFCecw52Xx7vESl0cAS
- zMbQ==
+ bh=bzoJvs+/ktmRvV/uludFrSeMjpPKw38xy+lGwp2LWAA=;
+ b=CqIMZho1iQIzGr/SHFL9AtS4K0w0BAfgozvIyT26wP3J+eJxtF5m/jjt/1CPhiSrRm
+ 35XlCvnFZbumzBuKYuGA3yhf12ZpuC5lvrxdYI++XzXmPqytzGrt0jJDzRmg5eu+jy6c
+ 0TLXGD5YnTp4JI3qwobtYD4LQ/k13bQ5WU6UOqpC3d3tTSiSGoS0+QzKZEnsp41aei2v
+ HlgHHW/A6cvcJ+59fOrdQLsu2KvXlHXiNjQQnn8McqPKGN2UkjHz8bXWVpWPuk1LwEV8
+ okfrsylTxNa7u9CoH4I3fE0rVK9pNvAnEk79xpO0FXpFG/Cn+shmisCAxzedYBzuv23o
+ d6IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723678617; x=1724283417;
+ d=1e100.net; s=20230601; t=1723678619; x=1724283419;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tYFEGUaBbs4kAr/qhpAyjUWtir2g5OojC1AciDAIaeA=;
- b=kcg/dFiHURQKvb9T3glR38e6Y4OH2Te7S4/heaUex1/jhcvfj+CJYayp/pIAD/hK0s
- nBHNr12gPno4Jn+hUH/Kowtupff1XQKDLBAnAHiH8soezGwT8EFq84NXwstzqb2Gxqbv
- l3rW20gigE2Jy658cuuI/sjqTeQMbtgw7Q5Rr5pzXDl8ar/0hAuKwMONDG0821PsELx9
- kGxJ6a+lw7Yq4GMgyEmBWDCrh0/OwU91XB3vrrUmycJj0MPbbptTsh3xhEVnFbEqHe4K
- lw6V6Jm+d2T9ARvxKE08mRTvMiSghXFZysCMobl/T65iSZXiTA2bo6TSmosZbQR2BHWT
- HCHg==
-X-Gm-Message-State: AOJu0Yxpxrb99TdXswdYzHu7LrAa4LmUozzgMhotK5EKKz9bLCLQr0Sm
- ozaN1C5tsh0c76Yn59NhUGbJGjyon6oY1tcsBdg2uN2wwZWVU3RPhcSLFwF02NcnNzmDspJZLrJ
- 0hUg=
-X-Google-Smtp-Source: AGHT+IEK3TwW4ycE/0mRFuPXDeQ5wyJmp0/McRZ5fntPOU3bdIsVbC9LiikVo5iCDBOKLiIN8n0V0A==
-X-Received: by 2002:a05:6a20:c508:b0:1c0:f630:97a5 with SMTP id
- adf61e73a8af0-1c8f859e750mr1567761637.10.1723678617181; 
- Wed, 14 Aug 2024 16:36:57 -0700 (PDT)
+ bh=bzoJvs+/ktmRvV/uludFrSeMjpPKw38xy+lGwp2LWAA=;
+ b=L8H/DJ00/ipzbaUmNqyiaytLkFhm6zZcOTthgQhb9kHjKc42+EFZiWHzwBP31GLgZj
+ MBqWNTC5D5eoS/RMFXW49g485VtzPXdV3gFT8eL5CtcSxfLGi2CmJCOzt0fh4CI8EmcK
+ iUyhXjyF69+mKAB5wY3n2dxxEg4TxP8qDb9vRpv4JqJcqAaFlYxazhkUXmsnQNgN2kAI
+ VIEc0NQ9btHFGWXt/JpN0efsaWsVGa0M3Z6SETZQVnyJJth8PFPV1OgrW/nJgLxC71k9
+ m39Xb2UGHy+krRXKbj+ujlZMoNfVHG9T6Uz1GRXTedC9vFwUEo1WduoSxpfwcJxBil5A
+ fZag==
+X-Gm-Message-State: AOJu0Ywo4uJcrpnd44ZeNueVgJKMzRNevs3X+q3IpSa3yR9MoNZxBJwC
+ 8o2yLWe07xBGgMGuNxkapvBeBGXoX/+xiN/yY/OeKcyCTbXWNGg5R1EtV8IQ4DUMdtqZqwELE3K
+ h1gs=
+X-Google-Smtp-Source: AGHT+IEerxmprREtG28hemAszEAk+gOmixw605ol/n/naRl7+bng26g1gKIb3JJm1IVAqIZYrhQ9pg==
+X-Received: by 2002:a05:6a00:1ad1:b0:706:29e6:2ed2 with SMTP id
+ d2e1a72fcca58-712670fa392mr6336540b3a.5.1723678619237; 
+ Wed, 14 Aug 2024 16:36:59 -0700 (PDT)
 Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::b861])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7127aef57dfsm112164b3a.115.2024.08.14.16.36.55
+ d2e1a72fcca58-7127aef57dfsm112164b3a.115.2024.08.14.16.36.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Aug 2024 16:36:56 -0700 (PDT)
+ Wed, 14 Aug 2024 16:36:58 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -69,17 +69,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/6] contrib/plugins/cache: fix warning when compiling on
+Subject: [PATCH 4/6] contrib/plugins/hotblocks: fix warning when compiling on
  32bits host
-Date: Wed, 14 Aug 2024 16:36:41 -0700
-Message-Id: <20240814233645.944327-3-pierrick.bouvier@linaro.org>
+Date: Wed, 14 Aug 2024 16:36:43 -0700
+Message-Id: <20240814233645.944327-5-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240814233645.944327-1-pierrick.bouvier@linaro.org>
 References: <20240814233645.944327-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,36 +104,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Found on debian stable (i386).
 
-../contrib/plugins/cache.c: In function 'vcpu_tb_trans':
-../contrib/plugins/cache.c:477:30: error: cast from pointer to integer of different size [-Werror=pointer-to-int-cast]
-  477 |             effective_addr = (uint64_t) qemu_plugin_insn_haddr(insn);
+../contrib/plugins/hotblocks.c: In function 'vcpu_tb_trans':
+../contrib/plugins/hotblocks.c:117:56: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+  117 |     cnt = (ExecCount *) g_hash_table_lookup(hotblocks, (gconstpointer) hash);
+      |                                                        ^
+../contrib/plugins/hotblocks.c:126:40: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+  126 |         g_hash_table_insert(hotblocks, (gpointer) hash, (gpointer) cnt);
       |
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- contrib/plugins/cache.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ contrib/plugins/hotblocks.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/plugins/cache.c b/contrib/plugins/cache.c
-index 512ef6776b7..82ed734d6d4 100644
---- a/contrib/plugins/cache.c
-+++ b/contrib/plugins/cache.c
-@@ -471,12 +471,12 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-     n_insns = qemu_plugin_tb_n_insns(tb);
-     for (i = 0; i < n_insns; i++) {
-         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
--        uint64_t effective_addr;
-+        uintptr_t effective_addr;
+diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
+index 02bc5078bdd..d540f1b7f0b 100644
+--- a/contrib/plugins/hotblocks.c
++++ b/contrib/plugins/hotblocks.c
+@@ -109,9 +109,9 @@ static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
+ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+ {
+     ExecCount *cnt;
+-    uint64_t pc = qemu_plugin_tb_vaddr(tb);
++    uintptr_t pc = qemu_plugin_tb_vaddr(tb);
+     size_t insns = qemu_plugin_tb_n_insns(tb);
+-    uint64_t hash = pc ^ insns;
++    uintptr_t hash = pc ^ insns;
  
-         if (sys) {
--            effective_addr = (uint64_t) qemu_plugin_insn_haddr(insn);
-+            effective_addr = (uintptr_t) qemu_plugin_insn_haddr(insn);
-         } else {
--            effective_addr = (uint64_t) qemu_plugin_insn_vaddr(insn);
-+            effective_addr = (uintptr_t) qemu_plugin_insn_vaddr(insn);
-         }
- 
-         /*
+     g_mutex_lock(&lock);
+     cnt = (ExecCount *) g_hash_table_lookup(hotblocks, (gconstpointer) hash);
 -- 
 2.39.2
 
