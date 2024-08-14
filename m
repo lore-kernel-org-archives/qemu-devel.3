@@ -4,93 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58E58C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 05:42:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 430E5C52D7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 06:06:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1se6lh-0000l5-Mf; Wed, 14 Aug 2024 01:41:57 -0400
+	id 1se799-0008Ry-OL; Wed, 14 Aug 2024 02:06:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1se6le-0000k8-CU
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 01:41:54 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1se78y-0008Qf-Ed; Wed, 14 Aug 2024 02:06:01 -0400
+Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1se6la-0003Jm-Fy
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 01:41:53 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-70eae5896bcso5584634b3a.2
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 22:41:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1se78v-0007EW-O9; Wed, 14 Aug 2024 02:05:59 -0400
+Received: by mail-oo1-xc31.google.com with SMTP id
+ 006d021491bc7-5da686531d3so1183084eaf.3; 
+ Tue, 13 Aug 2024 23:05:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723614106; x=1724218906; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=w084jqd5klfnVEajK86bPeJBMzJip5Ys6i/E+Ark/IY=;
- b=rc2GZslrNqP9UVwnxik/T0MvHyRFAYsIlJAgfuw+j7S6p0HyKLlwt3HFj1wU9YpPZL
- vEyn1by4s7/551BcxLormQQwzSESq7OhPTHSzo63CJAMMxfvT5p6C0GkRyRFBaGNAkse
- tuxd5jLdmmubiWXw7VMp2vKqU+M5C0FJZWMknsy99/F5X2v3khtJHW2mWXK7bgmZVTAb
- uAYP04ak+07WvXbXXehr7UDvhMi/dRPNz0K1FMHjNCC4LHJ6VgwzFGO+r5PnVpMFI20T
- wotHBKRFyU0jDoommc3b0z1bIcFwcWp4jBI8vlTLnPd+BSpH4x3YpQiwzgOY4Sfj4mgd
- oyAQ==
+ d=gmail.com; s=20230601; t=1723615554; x=1724220354; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nQkMJkL9vL2igVIu7c4khKnTRZrEXKbAcPuAdwKii3Y=;
+ b=jPvQfr1hapV9jg1aJSng8+f3EPXfsUOty+7FTcKzp/5o+Gzwurp4k4gh3sfvrqyq2R
+ /vT9KVgTHk3C8Nsd8HjoH9TM9NYri6CkkVVf8biC9fSAhjBDAN7e8WpEdgVEzqLqWtFQ
+ djVyQvlm5ASFd5c4huB+VTBA5S2gXQhfMPx5QzpaeAhcb8ExikOoW+nVoBhVD1fHczWi
+ DBvXc3mRDAxuNnK7uDXN4sWqCBLMspNFfUojP19YBmJa1ZIF/l7t2eyWgwRvETmLR8dI
+ dzrbEgyif+f2hZ/Dmk8AdrrQ1l3wYrf24NWeZJ+PcIonNYUNHDnM8v23zVBhelxm5jTv
+ 4VOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723614106; x=1724218906;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=w084jqd5klfnVEajK86bPeJBMzJip5Ys6i/E+Ark/IY=;
- b=t6K1OBsbLLhRTTjWuhBo31UkafD956bZ1JGJ7Dfz971u85GOZ5TF2cOfuMYkoNTuNd
- Vs9bEIm38ZldYtsBBIJqpbbA50I5uv1D8B/bXBvof5JAVBC8FPWmrUti9gMM0558rKHK
- svaBNSwGVxWdkJwHVDtLmAOSmEl7AssOXF+tumbnT3XZHaB3Y7L1hN9J7TR5UcepVXUH
- inPZeGk3ABiwFFtqSO/5jFrpVKHDEURqfUO/yi7AC9dFzHx84YKuycNNuXYckZekPSY6
- DJyIbssidkB4S0mb8dQGwGq53FsVYVJuzo5winxkwk0mjExEdRKfa3orjsQfBVTJuq1o
- jI2g==
-X-Gm-Message-State: AOJu0Yw8Z6O0s2BWYqiE+i7Dm30MKLMb+BayD6LLGDqkXUNHg4CHrdWZ
- j1ug5X+vdxWGXZb6HSBqZNAL/M8OwY6VAa6i72sn91LKjlraEpp9XZ1XJifI7Io=
-X-Google-Smtp-Source: AGHT+IHX1Z9EeoxVPjRReIMs2DxYmIDxZrpq1kdtR8J4u6gUcC93KLCmhccLeagYplRuKsMZ0hmOPQ==
-X-Received: by 2002:a05:6a00:1743:b0:70d:2b95:d9cd with SMTP id
- d2e1a72fcca58-71267121bdamr2283774b3a.16.1723614105714; 
- Tue, 13 Aug 2024 22:41:45 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::b861? ([2604:3d08:9384:1d00::b861])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-710e58a921fsm6617456b3a.67.2024.08.13.22.41.44
+ d=1e100.net; s=20230601; t=1723615554; x=1724220354;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=nQkMJkL9vL2igVIu7c4khKnTRZrEXKbAcPuAdwKii3Y=;
+ b=FuI9RKfPb9fpwkLyBW8XZPM6M5/Db+vIaKbuqFOXmtqlCC2klq9YrmM53j9VvDF+Kp
+ XCtK9M9Y1GdmtHOvKVC+8LQpYL9e2lDF3j3uQlE8ZbdENKeUWWQW2kG2tmX1qHJcFxsP
+ s6VNZN15a8bXDTvgA4eueSynoxX977siquhx72KUlkE3VQMhxFhfnMwBHShbUmUceO/o
+ XLlRCiiH03Fcxb//0xVR7/E49UkoIIyqX04clIoceAOTRhjc2Ok0+a2fwHje1FzOgZjF
+ uUTKJhdAbleMIfnojavTgrxblKsjOp8d/J7RVAQ3jaQsBO4oRTm1xYGtCQ6hb5zzR5BH
+ VP1Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVGjhSoIryy0KAuvYTRJWgWmVcs34Y+9pBIM+dtkYyLN72aXJ/ig2iwlDJZh/NKq/UylNW/QfEDWKO2Qkvwrw+iUbpuYeiTL/7XyALTDkbOxRyVSh22WmvuMuXOymEed9i5GWrr80ZacCnKEC5/Q0RKAg==
+X-Gm-Message-State: AOJu0YyDzxiIs65cJ1ZA8D0m27u32QEWX6Xymzex0KQcxFKOc+8Tcu/J
+ BnnYi0NyJB5SW7t18J0282OT3YQviKH2oq7eP3AwlgKKcCTL5NQF
+X-Google-Smtp-Source: AGHT+IHZYl6JElZIGXPo8z9Y26JBm80QMKtE42nqYrE66+zStj03nZGHXrXLbO7RM17UAL7xmLDnBw==
+X-Received: by 2002:a05:6358:5292:b0:1b1:a899:95fe with SMTP id
+ e5c5f4694b2df-1b1aab56d19mr182206955d.8.1723615554128; 
+ Tue, 13 Aug 2024 23:05:54 -0700 (PDT)
+Received: from localhost ([1.145.94.19]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-710e58aa1d2sm6630840b3a.73.2024.08.13.23.05.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Aug 2024 22:41:45 -0700 (PDT)
-Message-ID: <5e877d1a-9a6b-4de5-9c3e-d654908a3922@linaro.org>
-Date: Tue, 13 Aug 2024 22:41:43 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] contrib/plugins: Add a plugin to generate basic block
- vectors
-Content-Language: en-US
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>
-Cc: qemu-devel@nongnu.org, Yotaro Nada <yotaro.nada@gmail.com>
-References: <20240813-bb-v1-1-effbb77daebf@daynix.com>
- <0e0ee7a5-f8e4-44f0-83d9-918b0ef71396@linaro.org>
- <767b0e96-d7ad-418f-8d84-cb7e49dc2510@daynix.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <767b0e96-d7ad-418f-8d84-cb7e49dc2510@daynix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ Tue, 13 Aug 2024 23:05:53 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 14 Aug 2024 16:05:34 +1000
+Message-Id: <D3FEPPLH78YW.3BYA9B4HYGN1U@gmail.com>
+Cc: <qemu-devel@nongnu.org>, "Alistair Francis" <alistair.francis@wdc.com>,
+ "Michael Roth" <michael.roth@amd.com>, "Palmer Dabbelt"
+ <palmer@dabbelt.com>, "Mahmoud Mandour" <ma.mandourr@gmail.com>, "Pavel
+ Dovgalyuk" <pavel.dovgaluk@ispras.ru>, "Yoshinori Sato"
+ <ysato@users.sourceforge.jp>, "Weiwei Li" <liwei1518@gmail.com>, "Eduardo
+ Habkost" <eduardo@habkost.net>, =?utf-8?q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, "Markus Armbruster" <armbru@redhat.com>,
+ "David Hildenbrand" <david@redhat.com>, "Beraldo Leal" <bleal@redhat.com>,
+ "Liu Zhiwei" <zhiwei_liu@linux.alibaba.com>, "Eric Auger"
+ <eric.auger@redhat.com>, "Song Gao" <gaosong@loongson.cn>,
+ <qemu-arm@nongnu.org>, "Peter Xu" <peterx@redhat.com>, "Jiri Pirko"
+ <jiri@resnulli.us>, "Eric Blake" <eblake@redhat.com>, "Fabiano Rosas"
+ <farosas@suse.de>, <qemu-s390x@nongnu.org>, "Peter Maydell"
+ <peter.maydell@linaro.org>, "Daniel Henrique Barboza"
+ <dbarboza@ventanamicro.com>, "John Snow" <jsnow@redhat.com>, "Alexandre
+ Iooss" <erdnaxe@crans.org>, "Konstantin Kostiuk" <kkostiuk@redhat.com>,
+ "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, "Cleber Rosa"
+ <crosa@redhat.com>, "Ilya Leoshkevich" <iii@linux.ibm.com>,
+ <qemu-riscv@nongnu.org>, "Thomas Huth" <thuth@redhat.com>, "Paolo Bonzini"
+ <pbonzini@redhat.com>, "Richard Henderson" <richard.henderson@linaro.org>,
+ "Jason Wang" <jasowang@redhat.com>, "Bin Meng" <bmeng.cn@gmail.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Wainer dos
+ Santos Moschetta" <wainersm@redhat.com>, "Pavel Dovgalyuk"
+ <Pavel.Dovgalyuk@ispras.ru>
+Subject: Re: [PATCH v2 16/21] virtio-net: Use replay_schedule_bh_event for
+ bhs that affect machine state
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>, =?utf-8?q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+X-Mailer: aerc 0.18.2
+References: <20240813202329.1237572-1-alex.bennee@linaro.org>
+ <20240813202329.1237572-17-alex.bennee@linaro.org>
+ <20240813164631-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240813164631-mutt-send-email-mst@kernel.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
+ envelope-from=npiggin@gmail.com; helo=mail-oo1-xc31.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01, URI_DOTEDU=1 autolearn=no autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,153 +120,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gOC8xMy8yNCAyMTo1NiwgQWtpaGlrbyBPZGFraSB3cm90ZToNCj4gT24gMjAyNC8wOC8x
-NCA0OjIwLCBQaWVycmljayBCb3V2aWVyIHdyb3RlOg0KPj4gSGkgQWtpaGlrbywgYW5kIHRo
-YW5rcyBmb3IgY29udHJpYnV0aW5nIHRoaXMgbmV3IHBsdWdpbi4NCj4gDQo+IEhpLA0KPiAN
-Cj4gVGhhbmtzIGZvciByZXZpZXdpbmcNCj4gDQo+Pg0KPj4gUmVjZW50bHksIHBsdWdpbnMg
-ZG9jdW1lbnRhdGlvbiBoYXMgYmVlbiBtb2RpZmllZCwgYW5kIGxpc3Qgb2YgcGx1Z2lucw0K
-Pj4gYW5kIHRoZWlyIGRvYyBpcyBub3cgaW4gImRvY3MvYWJvdXQvZW11bGF0aW9uLnJzdCIu
-IFlvdSBtYXkgd2FudCB0bw0KPj4gcmViYXNlIG9uIHRvcCBvZiBtYXN0ZXIuDQo+IA0KPiBJ
-IHNlZS4gSSdsbCByZWJhc2UgYW5kIHVwZGF0ZSB0aGUgZG9jdW1lbnRhdGlvbiB3aXRoIHYy
-Lg0KPiANCj4+DQo+PiBHbG9iYWxseSwgSSdtIG9rIHdpdGggdGhpcyBwbHVnaW4gYW5kIHRo
-ZSBpbXBsZW1lbnRhdGlvbi4gSnVzdCBhIGZldw0KPj4gZml4ZXMgYXJlIG5lZWRlZCBmb3Ig
-Y29uY3VycmVudCBhY2Nlc3Nlcy4NCj4+DQo+PiBPbiA4LzEyLzI0IDIzOjQ2LCBBa2loaWtv
-IE9kYWtpIHdyb3RlOg0KPj4+IFNpbVBvaW50IGlzIGEgd2lkZWx5IHVzZWQgdG9vbCB0byBm
-aW5kIHRoZSBpZGVhbCBtaWNyb2FyY2hpdGVjdHVyZQ0KPj4+IHNpbXVsYXRpb24gcG9pbnRz
-IHNvIFZhbGdyaW5kWzJdIGFuZCBQaW5bM10gc3VwcG9ydCBnZW5lcmF0aW5nIGJhc2ljDQo+
-Pj4gYmxvY2sgdmVjdG9ycyBmb3IgdXNlIHdpdGggdGhlbS4gTGV0J3MgYWRkIGEgY29ycmVz
-cG9uZGluZyBwbHVnaW4gdG8NCj4+PiBRRU1VIHRvby4NCj4+Pg0KPj4+IE5vdGUgdGhhdCB0
-aGlzIHBsdWdpbiBoYXMgYSBkaWZmZXJlbnQgZ29hbCB3aXRoIHRlc3RzL3BsdWdpbi9iYi5j
-Lg0KPj4+DQo+Pj4gVGhpcyBwbHVnaW4gY3JlYXRlcyBhIHZlY3RvciBmb3IgZWFjaCBjb25z
-dGFudCBpbnRlcnZhbCBpbnN0ZWFkIG9mDQo+Pj4gY291bnRpbmcgdGhlIGV4ZWN1dGlvbiBv
-ZiBiYXNpYyBibG9ja3MgZm9yIHRoZSBlbnRpcmUgcnVuIGFuZCBhYmxlIHRvDQo+Pj4gZGVz
-Y3JpYmUgdGhlIGNoYW5nZSBvZiBleGVjdXRpb24gYmVoYXZpb3IuIEl0cyBvdXRwdXQgaXMg
-YWxzbw0KPj4+IHN5bnRhY3RpY2FsbHkgc2ltcGxlIGFuZCBiZXR0ZXIgc3VpdGVkIGZvciBw
-YXJzaW5nLCB3aGlsZSB0aGUgb3V0cHV0IG9mDQo+Pj4gdGVzdHMvcGx1Z2luL2JiLmMgaXMg
-bW9yZSBodW1hbi1yZWFkYWJsZS4NCj4+Pg0KPj4NCj4+IEkgdGhpbmsgaXQgY2FuIGJlIGNv
-bmZ1c2luZyB0byBoYXZlIHR3byBwbHVnaW5zIG5hbWVkIGJiLiBIb3cgYWJvdXQNCj4+IHNp
-bXBvaW50LCBvciBiYnY/DQo+IA0KPiBIb3cgYWJvdXQgcmVuYW1pbmcgdGVzdHMvdGNnL3Bs
-dWdpbnMvYmIuYyB0byBzaW1wbGUtYmIuYyBpbnN0ZWFkIGFuZA0KPiBrZWVwIHRoZSBuYW1l
-IG9mIGNvbnRyaWIvcGx1Z2lucy9iYi5jIGNvbmNpc2U/DQo+IA0KPiB0ZXN0cy90Y2cvcGx1
-Z2lucy9iYi5jIGlzIHNpbXBsZSBhbmQgZ29vZCBhcyBhIHNhbXBsZSwgYnV0IGxlc3MgdXNl
-ZnVsDQo+IGluIHByYWN0aWNlIHRoYW4gdGhpcyBwbHVnaW4gZHVlIHRvIGRpZmZlcmVuY2Vz
-IGRlc2NyaWJlZCBlYXJsaWVyLiBPbg0KPiB0aGUgb3RoZXIgaGFuZCwgdGhpcyBwbHVnaW4g
-aXMgZGVzaWduZWQgdG8gYmUgdXRpbGl6ZWQgZm9yIHByYWN0aWNhbA0KPiBwdXJwb3NlIHNv
-IEkgd2FudCB0byBrZWVwIGl0cyBuYW1lIHNob3J0IGFuZCBzYXZlIHR5cGluZy4NCj4gDQoN
-Ckkgd291bGQgcmVjb21tZW5kIHVzaW5nIHRoZSA8dGFiPiBrZXkgdG8gc2F2ZSB0eXBpbmcu
-IEknbSBraWRkaW5nIDopDQoNCk1vcmUgc2VyaW91c2x5LCBJIGdldCB5b3VyIHBvaW50LCBi
-dXQgSSBkb24ndCB0aGluayB0aGlzIG5ldyBwbHVnaW4gaXMgDQpnZW5lcmljIGVub3VnaCB0
-byBiZSBxdWFsaWZpZWQgYXMgInRoZSIgYmIgcGx1Z2luIChub3IgdGhlIA0KdGVzdHMvdGNn
-L3BsdWdpbnMvYmIgbmVpdGhlciwgYnV0IGl0IHByZWRhdGVzIHRoaXMgbmV3IHBsdWdpbiku
-IEl0IA0Kb3V0cHV0cyBmb3JtYXQgZm9yIFNpbVBvaW50LCBzbyBob3cgYWJvdXQgc2ltcG9p
-bnQgKGFjY2Vzc2libGUgYWZ0ZXIgDQp0eXBpbmcgc2k8dGFiPik/DQoNCj4+DQo+Pj4gWzFd
-IGh0dHBzOi8vY3Nld2ViLnVjc2QuZWR1L35jYWxkZXIvc2ltcG9pbnQvDQo+Pj4gWzJdIGh0
-dHBzOi8vdmFsZ3JpbmQub3JnL2RvY3MvbWFudWFsL2Jidi1tYW51YWwuaHRtbA0KPj4+IFsz
-XQ0KPj4+IGh0dHBzOi8vd3d3LmludGVsLmNvbS9jb250ZW50L3d3dy91cy9lbi9kZXZlbG9w
-ZXIvYXJ0aWNsZXMvdG9vbC9waW4tYS1keW5hbWljLWJpbmFyeS1pbnN0cnVtZW50YXRpb24t
-dG9vbC5odG1sDQo+Pj4NCj4+PiBTaWduZWQtb2ZmLWJ5OiBZb3Rhcm8gTmFkYSA8eW90YXJv
-Lm5hZGFAZ21haWwuY29tPg0KPj4+IFNpZ25lZC1vZmYtYnk6IEFraWhpa28gT2Rha2kgPGFr
-aWhpa28ub2Rha2lAZGF5bml4LmNvbT4NCj4+PiAtLS0NCj4+PiAgwqAgZG9jcy9kZXZlbC90
-Y2ctcGx1Z2lucy5yc3QgfMKgIDIwICsrKysrKw0KPj4+ICDCoCBjb250cmliL3BsdWdpbnMv
-YmIuY8KgwqDCoMKgwqDCoCB8IDE1Mw0KPj4+ICsrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKysrKw0KPj4+ICDCoCBjb250cmliL3BsdWdpbnMvTWFrZWZpbGXC
-oMKgIHzCoMKgIDEgKw0KPj4+ICDCoCAzIGZpbGVzIGNoYW5nZWQsIDE3NCBpbnNlcnRpb25z
-KCspDQo+Pj4NCj4+PiBkaWZmIC0tZ2l0IGEvZG9jcy9kZXZlbC90Y2ctcGx1Z2lucy5yc3Qg
-Yi9kb2NzL2RldmVsL3RjZy1wbHVnaW5zLnJzdA0KPj4+IGluZGV4IDljYzA5ZDhjM2RhMS4u
-Mjg1OWVlY2MxM2I5IDEwMDY0NA0KPj4+IC0tLSBhL2RvY3MvZGV2ZWwvdGNnLXBsdWdpbnMu
-cnN0DQo+Pj4gKysrIGIvZG9jcy9kZXZlbC90Y2ctcGx1Z2lucy5yc3QNCj4+PiBAQCAtMzMy
-LDYgKzMzMiwyNiBAQCBydW46Og0KPj4+ICDCoMKgwqAgMTYwwqDCoMKgwqDCoMKgwqDCoMKg
-IDHCoMKgwqDCoMKgIDANCj4+PiAgwqDCoMKgIDEzNcKgwqDCoMKgwqDCoMKgwqDCoCAxwqDC
-oMKgwqDCoCAwDQo+Pj4gKy0gY29udHJpYi9wbHVnaW5zL2JiLmMNCj4+PiArDQo+Pj4gK1Ro
-ZSBiYiBwbHVnaW4gYWxsb3dzIHlvdSB0byBnZW5lcmF0ZXMgYmFzaWMgYmxvY2sgdmVjdG9y
-cyBmb3IgdXNlDQo+Pj4gd2l0aCB0aGUNCj4+PiArYFNpbVBvaW50IDxodHRwczovL2NzZXdl
-Yi51Y3NkLmVkdS9+Y2FsZGVyL3NpbXBvaW50Lz5gX18gYW5hbHlzaXMgdG9vbC4NCj4+PiAr
-DQo+Pj4gK0l0IGhhcyB0d28gb3B0aW9ucywgYGBpbnRlcnZhbGBgIGFuZCBgYG91dGZpbGVg
-YC4gYGBpbnRlcnZhbGBgDQo+Pj4gc3BlY2lmaWVzIHRoZQ0KPj4+ICtpbnRlcnZhbCB0byBn
-ZW5lcmF0ZSBhIGJhc2ljIGJsb2NrIHZlY3RvciBieSB0aGUgbnVtYmVyIG9mDQo+Pj4gaW5z
-dHJ1Y3Rpb25zLiBJdCBpcw0KPj4+ICtvcHRpb25hbCwgYW5kIGl0cyBkZWZhdWx0IHZhbHVl
-IGlzIDEwMDAwMDAwMC4gYGBvdXRmaWxlYGAgaXMgdGhlIHBhdGggdG8NCj4+PiArb3V0cHV0
-IGZpbGVzLCBhbmQgaXQgd2lsbCBiZSBzdWZmaXhlZCB3aXRoIGBgLk4uYmJgYCB3aGVyZSBg
-YE5gYCBpcyBhDQo+Pj4gdkNQVQ0KPj4+ICtpbmRleC4NCj4+PiArDQo+Pj4gK0V4YW1wbGU6
-Og0KPj4+ICsNCj4+PiArwqAgJCBxZW11LWFhcmNoNjQgXA0KPj4+ICvCoMKgwqAgLXBsdWdp
-biBjb250cmliL3BsdWdpbnMvbGliYi5zbyxpbnRlcnZhbD0xMDAsb3V0ZmlsZT1zaGExIFwN
-Cj4+PiArwqDCoMKgIHRlc3RzL3RjZy9hYXJjaDY0LWxpbnV4LXVzZXIvc2hhMQ0KPj4+ICvC
-oCBTSEExPTE1ZGQ5OWExOTkxZTBiMzgyNmZlZGUzZGVmZmMxZmViYTQyMjc4ZTYNCj4+PiAr
-wqAgJCBkdSBzaGExLjAuYmINCj4+PiArwqAgMjMxMjjCoMKgIHNoYTEuMC5iYg0KPj4+ICsN
-Cj4+PiAgwqAgLSBjb250cmliL3BsdWdpbnMvaG90YmxvY2tzLmMNCj4+PiAgwqAgVGhlIGhv
-dGJsb2NrcyBwbHVnaW4gYWxsb3dzIHlvdSB0byBleGFtaW5lIHRoZSB3aGVyZSBob3QgcGF0
-aHMgb2YNCj4+PiBkaWZmIC0tZ2l0IGEvY29udHJpYi9wbHVnaW5zL2JiLmMgYi9jb250cmli
-L3BsdWdpbnMvYmIuYw0KPj4+IG5ldyBmaWxlIG1vZGUgMTAwNjQ0DQo+Pj4gaW5kZXggMDAw
-MDAwMDAwMDAwLi40ZjEyNjZkMDdmZjUNCj4+PiAtLS0gL2Rldi9udWxsDQo+Pj4gKysrIGIv
-Y29udHJpYi9wbHVnaW5zL2JiLmMNCj4+PiBAQCAtMCwwICsxLDE1MyBAQA0KPj4+ICsvKiBT
-UERYLUxpY2Vuc2UtSWRlbnRpZmllcjogR1BMLTIuMC1vci1sYXRlciAqLw0KPj4+ICsNCj4+
-DQo+PiBBIGJyaWVmIHN1bW1hcnkgYW5kIHRoZSBsaW5rIHRvIHNpbXBvaW50IHBhZ2UgY2Fu
-IGJlIGFkZGVkIGFzIGEgY29tbWVudA0KPj4gaGVyZS4NCj4gDQo+IEknbGwgYWRkIHRoZW0g
-d2l0aCB2Mi4NCj4gDQo+Pg0KPj4+ICsjaW5jbHVkZSA8c3RkaW8uaD4NCj4+PiArI2luY2x1
-ZGUgPGdsaWIuaD4NCj4+PiArDQo+Pj4gKyNpbmNsdWRlIDxxZW11LXBsdWdpbi5oPg0KPj4+
-ICsNCj4+PiArdHlwZWRlZiBzdHJ1Y3QgQmIgew0KPj4+ICvCoMKgwqAgc3RydWN0IHFlbXVf
-cGx1Z2luX3Njb3JlYm9hcmQgKmNvdW50Ow0KPj4+ICvCoMKgwqAgdW5zaWduZWQgaW50IGlu
-ZGV4Ow0KPj4+ICt9IEJiOw0KPj4+ICsNCj4+PiArUUVNVV9QTFVHSU5fRVhQT1JUIGludCBx
-ZW11X3BsdWdpbl92ZXJzaW9uID0gUUVNVV9QTFVHSU5fVkVSU0lPTjsNCj4+PiArc3RhdGlj
-IEdIYXNoVGFibGUgKmJiczsNCj4+PiArc3RhdGljIEdQdHJBcnJheSAqZmlsZXM7DQo+Pj4g
-K3N0YXRpYyBjaGFyICpmaWxlbmFtZTsNCj4+PiArc3RhdGljIHN0cnVjdCBxZW11X3BsdWdp
-bl9zY29yZWJvYXJkICpjb3VudDsNCj4+PiArc3RhdGljIHVpbnQ2NF90IGludGVydmFsID0g
-MTAwMDAwMDAwOw0KPj4+ICsNCj4+PiArc3RhdGljIHZvaWQgcGx1Z2luX2V4aXQocWVtdV9w
-bHVnaW5faWRfdCBpZCwgdm9pZCAqcCkNCj4+PiArew0KPj4+ICvCoMKgwqAgZ19oYXNoX3Rh
-YmxlX3VucmVmKGJicyk7DQo+Pj4gK8KgwqDCoCBnX3B0cl9hcnJheV91bnJlZihmaWxlcyk7
-DQo+Pj4gK8KgwqDCoCBnX2ZyZWUoZmlsZW5hbWUpOw0KPj4+ICvCoMKgwqAgcWVtdV9wbHVn
-aW5fc2NvcmVib2FyZF9mcmVlKGNvdW50KTsNCj4+PiArfQ0KPj4+ICsNCj4+PiArc3RhdGlj
-IHZvaWQgZnJlZV9iYih2b2lkICpkYXRhKQ0KPj4+ICt7DQo+Pj4gK8KgwqDCoCBxZW11X3Bs
-dWdpbl9zY29yZWJvYXJkX2ZyZWUoKChCYiAqKWRhdGEpLT5jb3VudCk7DQo+Pj4gK8KgwqDC
-oCBnX2ZyZWUoZGF0YSk7DQo+Pj4gK30NCj4+PiArDQo+Pj4gK3N0YXRpYyB2b2lkIGZyZWVf
-ZmlsZSh2b2lkICpkYXRhKQ0KPj4+ICt7DQo+Pj4gK8KgwqDCoCBmY2xvc2UoZGF0YSk7DQo+
-Pj4gK30NCj4+PiArID4gK3N0YXRpYyBkaXJlY3RseSBjb3VudF91NjQodm9pZCkNCj4+PiAr
-ew0KPj4+ICvCoMKgwqAgcmV0dXJuIHFlbXVfcGx1Z2luX3Njb3JlYm9hcmRfdTY0KGNvdW50
-KTsNCj4+PiArfQ0KPj4+ICsNCj4+PiArc3RhdGljIHFlbXVfcGx1Z2luX3U2NCBiYl9jb3Vu
-dF91NjQoQmIgKmJiKQ0KPj4+ICt7DQo+Pj4gK8KgwqDCoCByZXR1cm4gcWVtdV9wbHVnaW5f
-c2NvcmVib2FyZF91NjQoYmItPmNvdW50KTsNCj4+PiArfQ0KPj4+ICsNCj4+PiArc3RhdGlj
-IHZvaWQgdmNwdV9pbml0KHFlbXVfcGx1Z2luX2lkX3QgaWQsIHVuc2lnbmVkIGludCB2Y3B1
-X2luZGV4KQ0KPj4+ICt7DQo+Pj4gK8KgwqDCoCBnX2F1dG9mcmVlIGdjaGFyICp2Y3B1X2Zp
-bGVuYW1lID0gTlVMTDsNCj4+PiArDQo+Pj4gK8KgwqDCoCBpZiAodmNwdV9pbmRleCA+PSBm
-aWxlcy0+bGVuKSB7DQo+Pj4gK8KgwqDCoMKgwqDCoMKgIGdfcHRyX2FycmF5X3NldF9zaXpl
-KGZpbGVzLCB2Y3B1X2luZGV4ICsgMSk7DQo+Pj4gK8KgwqDCoCB9IGVsc2UgaWYgKGdfcHRy
-X2FycmF5X2luZGV4KGZpbGVzLCB2Y3B1X2luZGV4KSkgew0KPj4+ICvCoMKgwqDCoMKgwqDC
-oCByZXR1cm47DQo+Pj4gK8KgwqDCoCB9DQo+Pj4gKw0KPj4NCj4+IFlvdSBuZWVkIGEgbG9j
-ayBmb3IgZmlsZXMgYXJyYXkgZm9yIGV4cGFuc2lvbi9hY2Nlc3MuDQo+IA0KPiBJIHdpbGwg
-cmVwbGFjZSBHUHRyQXJyYXkgd2l0aCBzY29yZWJvYXJkIGluc3RlYWQuDQo+IA0KDQpHb29k
-IGlkZWEuIFlvdSdsbCBoYXZlIHRvIGNsZWFudXAgZmlsZXMgYXQgdGhlIGVuZCBtYW51YWxs
-eSwgYXMgdGhlcmUgaXMgDQpubyBzdXBwb3J0IGZvciBjdXN0b20gZGVzdHJ1Y3Rvci4NCg0K
-Pj4NCj4+PiArwqDCoMKgIHZjcHVfZmlsZW5hbWUgPSBnX3N0cmR1cF9wcmludGYoIiVzLiV1
-LmJiIiwgZmlsZW5hbWUsIHZjcHVfaW5kZXgpOw0KPj4+ICvCoMKgwqAgZ19wdHJfYXJyYXlf
-aW5kZXgoZmlsZXMsIHZjcHVfaW5kZXgpID0gZm9wZW4odmNwdV9maWxlbmFtZSwgInciKTsN
-Cj4+PiArfQ0KPj4+ICsNCj4+PiArc3RhdGljIHZvaWQgdmNwdV90Yl9leGVjKHVuc2lnbmVk
-IGludCB2Y3B1X2luZGV4LCB2b2lkICp1ZGF0YSkNCj4+DQo+PiB2Y3B1X3RiX2V4ZWMgaXMg
-YSBjb25mdXNpbmcgbmFtZSwgYXMgaXQgaXMgY2FsbGVkIHdoZW4gaW50ZXJ2YWwgb2YgaW5z
-bg0KPj4gaXMgZXhlY3V0ZWQuIHZjcHVfaW50ZXJ2YWxfZXhlYyB3b3VsZCBiZSBtb3JlIGNs
-ZWFyLg0KPiANCj4gVGhhdCBtYWtlcyBzZW5zZS4gSSB3aWxsIGRvIHNvIHdpdGggdGhlIG5l
-eHQgdmVyc2lvbi4NCj4gDQo+Pg0KPj4+ICt7DQo+Pj4gK8KgwqDCoCBGSUxFICpmaWxlID0g
-Z19wdHJfYXJyYXlfaW5kZXgoZmlsZXMsIHZjcHVfaW5kZXgpOw0KPj4NCj4+IE5lZWQgbG9j
-ayB3aGVuIGFjY2Vzc2luZyB0aGlzIGFycmF5Lg0KPj4NCj4+PiArwqDCoMKgIHVpbnQ2NF90
-IGNvdW50ID0gcWVtdV9wbHVnaW5fdTY0X2dldChjb3VudF91NjQoKSwgdmNwdV9pbmRleCkg
-LQ0KPj4+IGludGVydmFsOw0KPj4+ICvCoMKgwqAgR0hhc2hUYWJsZUl0ZXIgaXRlcjsNCj4+
-PiArwqDCoMKgIHZvaWQgKnZhbHVlOw0KPj4+ICsNCj4+PiArwqDCoMKgIGlmICghZmlsZSkg
-ew0KPj4+ICvCoMKgwqDCoMKgwqDCoCByZXR1cm47DQo+Pj4gK8KgwqDCoCB9DQo+Pj4gKw0K
-Pj4+ICvCoMKgwqAgcWVtdV9wbHVnaW5fdTY0X3NldChjb3VudF91NjQoKSwgdmNwdV9pbmRl
-eCwgY291bnQpOw0KPj4+ICsgPiArwqDCoMKgIGZwdXRjKCdUJywgZmlsZSk7DQo+Pg0KPj4g
-TWF5YmUgeW91IGNhbiBhZGQgYSBjb21tZW50IHdpdGggYSBsaW5rIHRvDQo+PiBodHRwczov
-L3ZhbGdyaW5kLm9yZy9kb2NzL21hbnVhbC9iYnYtbWFudWFsLmh0bWwgYXQgdGhpcyBwb2lu
-dC4gSXQncw0KPj4gYWxyZWFkeSBtZW50aW9uZWQgaW4gdGhlIGNvbW1pdCBtZXNzYWdlLCBi
-dXQgSU1ITywgaXQncyBjb252ZW5pZW50IHRvDQo+PiBoYXZlIGl0IGhlcmUsIHNvIHdlIGtu
-b3cgd2hpY2ggZGF0YSBpcyB3cml0dGVuIGV4YWN0bHkuDQo+IA0KPiBTaW1Qb2ludCBzaG91
-bGQgYmUgcmVmZXJyZWQgdG8ga25vdyB0aGUgZGF0YSBmb3JtYXQuIEkgY2l0ZWQgVmFsZ3Jp
-bmQNCj4gb25seSB0byBzaG93IHRoZSBwb3B1bGFyaXR5IG9mIHRoZSBmb3JtYXQgYW5kIHRv
-IG1vdGl2YXRlIGl0cw0KPiBpbXBsZW1lbnRhdGlvbiBmb3IgUUVNVS4NCj4gDQoNCkkgdW5k
-ZXJzdG9vZCB0aGF0LCBidXQgaXQgaGFwcGVucyB0aGF0IEkgZGlkbid0IGZpbmQgYSBzaW1w
-bGUgDQpkZXNjcmlwdGlvbiBvZiB0aGUgZm9ybWF0IG9uIFNpbVBvaW50IHdlYnNpdGUgKG1h
-eWJlIEkgbWlzc2VkIGl0PyksIA0Kd2hpbGUgdmFsZ3JpbmQgZG9jIHBhZ2UgaXMgY2xlYXIg
-YW5kIGNvbmNpc2UuIEZlZWwgZnJlZSB0byBwb2ludCB0aGUgDQpyaWdodCBwYWdlIGlmIGl0
-IGV4aXN0cy4NCg0KPj4NCj4+PiArDQo+Pj4gK8KgwqDCoCBnX2hhc2hfdGFibGVfaXRlcl9p
-bml0KCZpdGVyLCBiYnMpOw0KPj4+ICsNCj4+IFRoZSBhY2Nlc3MgdG8gdGhpcyBoYXNodGFi
-bGUgc2hvdWxkIGJlIHVuZGVyIGEgZGVkaWNhdGVkIGxvY2suDQo+IA0KPiBJIHdpbGwgYWRk
-IGEgbG9jayB3aXRoIHYyLg0KPiANCj4gUmVnYXJkcywNCj4gQWtpaGlrbyBPZGFraQ0K
+On Wed Aug 14, 2024 at 6:48 AM AEST, Michael S. Tsirkin wrote:
+> On Tue, Aug 13, 2024 at 09:23:24PM +0100, Alex Benn=C3=A9e wrote:
+> > From: Nicholas Piggin <npiggin@gmail.com>
+> >=20
+> > The regular qemu_bh_schedule() calls result in non-deterministic
+> > execution of the bh in record-replay mode, which causes replay failure.
+> >=20
+> > Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> > Reviewed-by: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> > Message-Id: <20240813050638.446172-9-npiggin@gmail.com>
+> > Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> > ---
+> >  hw/net/virtio-net.c | 11 ++++++-----
+> >  1 file changed, 6 insertions(+), 5 deletions(-)
+> >=20
+> > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> > index 08aa0b65e3..10ebaae5e2 100644
+> > --- a/hw/net/virtio-net.c
+> > +++ b/hw/net/virtio-net.c
+> > @@ -40,6 +40,7 @@
+> >  #include "migration/misc.h"
+> >  #include "standard-headers/linux/ethtool.h"
+> >  #include "sysemu/sysemu.h"
+> > +#include "sysemu/replay.h"
+> >  #include "trace.h"
+> >  #include "monitor/qdev.h"
+> >  #include "monitor/monitor.h"
+> > @@ -417,7 +418,7 @@ static void virtio_net_set_status(struct VirtIODevi=
+ce *vdev, uint8_t status)
+> >                  timer_mod(q->tx_timer,
+> >                                 qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +=
+ n->tx_timeout);
+> >              } else {
+> > -                qemu_bh_schedule(q->tx_bh);
+> > +                replay_bh_schedule_event(q->tx_bh);
+> >              }
+> >          } else {
+> >              if (q->tx_timer) {
+> > @@ -2672,7 +2673,7 @@ static void virtio_net_tx_complete(NetClientState=
+ *nc, ssize_t len)
+> >           */
+> >          virtio_queue_set_notification(q->tx_vq, 0);
+> >          if (q->tx_bh) {
+> > -            qemu_bh_schedule(q->tx_bh);
+> > +            replay_bh_schedule_event(q->tx_bh);
+> >          } else {
+> >              timer_mod(q->tx_timer,
+> >                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_ti=
+meout);
+> > @@ -2838,7 +2839,7 @@ static void virtio_net_handle_tx_bh(VirtIODevice =
+*vdev, VirtQueue *vq)
+> >          return;
+> >      }
+> >      virtio_queue_set_notification(vq, 0);
+> > -    qemu_bh_schedule(q->tx_bh);
+> > +    replay_bh_schedule_event(q->tx_bh);
+> >  }
+> > =20
+> >  static void virtio_net_tx_timer(void *opaque)
+> > @@ -2921,7 +2922,7 @@ static void virtio_net_tx_bh(void *opaque)
+> >      /* If we flush a full burst of packets, assume there are
+> >       * more coming and immediately reschedule */
+> >      if (ret >=3D n->tx_burst) {
+> > -        qemu_bh_schedule(q->tx_bh);
+> > +        replay_bh_schedule_event(q->tx_bh);
+> >          q->tx_waiting =3D 1;
+> >          return;
+> >      }
+> > @@ -2935,7 +2936,7 @@ static void virtio_net_tx_bh(void *opaque)
+> >          return;
+> >      } else if (ret > 0) {
+> >          virtio_queue_set_notification(q->tx_vq, 0);
+> > -        qemu_bh_schedule(q->tx_bh);
+> > +        replay_bh_schedule_event(q->tx_bh);
+> >          q->tx_waiting =3D 1;
+> >      }
+> >  }
+> > --=20
+> > 2.39.2
+>
+>
+> Is this really the only way to fix this? I do not think
+> virtio has any business knowing about replay.
+> What does this API do, even? BH but not broken with replay?
+> Do we ever want replay broken? Why not fix qemu_bh_schedule?
+> And when we add another feature which we do not want to break
+> will we do foo_bar_replay_bh_schedule_event or what?
+
+I agree with you. We need to do this (a couple of other hw
+subsystems already do and likely some are still broken vs
+replay and would need to be converted), but I think it's
+mostly a case of bad naming. You're right the caller should
+not know about replay at all, what it should be is whether
+the event is for the target machine or the host harness,
+same as timers are VIRTUAL / HOST.
+
+So I think we just need to make a qemu_bh_schedule_<type>,
+or qemu_bh_scheudle_event(... QEMU_EVENT_VIRTUAL/HOST/etc).
+I had started on a conversion once but not completed it.
+I could resurrect if there is agreement on the API?
+
+Thanks,
+Nick
+
 
