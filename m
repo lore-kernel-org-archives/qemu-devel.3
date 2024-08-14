@@ -4,85 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1884BC52D7D
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 22:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 640A6C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 22:58:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seMmh-0002oD-N7; Wed, 14 Aug 2024 18:48:03 -0400
+	id 1seMwC-0001J3-91; Wed, 14 Aug 2024 18:57:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1seMmf-0002m8-78
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 18:48:01 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1seMmd-00084i-Is
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 18:48:00 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-7a0e8b76813so330094a12.3
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 15:47:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723675678; x=1724280478; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Ahp+ZOzdGGQJhl5LADPxcjExVcW0vy5FLQfjVrpZKX0=;
- b=DIRvXfjEacRV5cZ3ELu10mMABRwRAHDvO1WjNy5CwFoGFscyOgoz4J7WUqZw0eJo5v
- l8zb66hRYTmuOY6ftUbUV+D6Xt1lOQMPqa9/SeVjojRYJjI5T+bq0OUtDzMt8jfIlemK
- r7xG0BRXXrPILV/OiUoBBmx/Jk0huwnuzcWy0SOwmqD+y0iyWQXAes0eiEtgvj24eB2p
- +j6nvGBUTNhIYB42iEthao82dwUSgdNoA37LBoGWT1I2fBGdFEXKStJffrcOiCPsb/M5
- yRC4r943Z4RvNHn2XrJH59YiEi6Vampwv38/jgXJEMBCjzTMcxFQMCYtnC6d6lEYDKyW
- hRCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723675678; x=1724280478;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ahp+ZOzdGGQJhl5LADPxcjExVcW0vy5FLQfjVrpZKX0=;
- b=wfRLHk++wfrPybGGYMwRpNBBrHJoxcClkfbsW86ljH41ShGoeQRfvrjpPFTu2KKVGj
- 52tIOTAZ+/h4wC2CDyXxvoDTlnMzsXdw3D0xM79Z6c7zmkHLj3Bg6j25DaIolbdNxDEA
- vTBvoM8sdVczc5geqLCRmh8UYrUxUdMZmSHYnxyBuZiOpuYjUgpeSkF6q0NKL7ppBlxs
- 5q0T/NOuXXZVVjMZ8puONfqhuv8P6ZZX3cq/Pwngvvw8RukO2ejG7ytT0n4HUd6wmpQS
- Hlt4EdAzbMFh8eV1LAGgdZA+SElolcpnruQpnhEnu22TDYDlWG0A3B5IQS7GH78RAR7Y
- Ewxg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV9DpEKX9eJOmV7WpJdH5COC52gmNUxP+AyyrN5BAs64bbqNVQIrUC2DdNpYjtYVMi502DQDYNDUoledOcBv0gSXuvVtB8=
-X-Gm-Message-State: AOJu0Yzr5VX/S5d2w8XLAG/NO86WkR3jGmtvV1hPXvluuBhReyf/i3FO
- tTkKVjF8iA3ZC5zuBLv+fUaWX6qQV08LorO26czjgBWrblp43JtHLinF9cG2U/7X52ignakY3HF
- mEPk=
-X-Google-Smtp-Source: AGHT+IE/eLRHqNZQYimxoQzM9Xb+dL6t1wNCxUpgHTIaNCag4giXE4di94juUCOY692EF6o/KXfogw==
-X-Received: by 2002:a17:902:e741:b0:201:ef29:3541 with SMTP id
- d9443c01a7336-201ef293769mr9649385ad.18.1723675677445; 
- Wed, 14 Aug 2024 15:47:57 -0700 (PDT)
-Received: from [192.168.1.113] ([203.30.4.111])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201f037592csm1300385ad.142.2024.08.14.15.47.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 14 Aug 2024 15:47:57 -0700 (PDT)
-Message-ID: <efd7aaab-081c-47b1-b0f5-6a959f04c9af@linaro.org>
-Date: Thu, 15 Aug 2024 08:47:51 +1000
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] target/i386: fix build warning (gcc-12
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1seMwA-0001Gz-50; Wed, 14 Aug 2024 18:57:50 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1seMw8-00015B-18; Wed, 14 Aug 2024 18:57:49 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47EHtNxv013013;
+ Wed, 14 Aug 2024 22:57:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:subject:from:to:cc:date:in-reply-to:references
+ :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
+ R4rBzep3wt8cwF8iJPcpyPemhVqeacKhVyDXdn6hDLY=; b=tW5yhGUlNLsMKxnx
+ iAGkV7fI2TRQ2u9plrjMlmK558/vzkX8m9+QtV4H6VsOE6m9yzWOmbD6la434cdP
+ pXd9XhwMVA2619gzVu9j8xjOtOrbgvTovEbdTPFuWVtLlzTtUgRFw/fjhGZeZ/D7
+ alyHhpSQXQ60YTHUA5JuN4Gjgkb8RY7CrEVghgqvsClXEt/xD1q/0rbEeYdcD+C0
+ +rDi7NYdeD3uvr2Sz+prKgBSEBX4T9nG/ErFRlG9MJ26sqqccP6AApApxQr05ZA+
+ rDPxJXRCtTgOVNy2ssinzVGA2sdRQ0ez3KhP1H1eF3UI1qfcjKf+HlCpJ9Ri3sfN
+ 7HMMIA==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4111d693kq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 Aug 2024 22:57:43 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 47EMurnq012331;
+ Wed, 14 Aug 2024 22:57:42 GMT
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4111d693kh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 Aug 2024 22:57:42 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
+ 47EJe93x010088; Wed, 14 Aug 2024 22:57:41 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40xjx0uyr3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 14 Aug 2024 22:57:41 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 47EMvb9M53674384
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 14 Aug 2024 22:57:39 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 447FB20043;
+ Wed, 14 Aug 2024 22:57:37 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 76E2A20040;
+ Wed, 14 Aug 2024 22:57:36 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 14 Aug 2024 22:57:36 +0000 (GMT)
+Message-ID: <e7478b1e0116882c5cbbff61fac5f2221841877c.camel@linux.ibm.com>
+Subject: Re: [PATCH v2 3/4] target/s390x: fix build warning (gcc-12
  -fsanitize=thread)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Beraldo Leal <bleal@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, Paolo
+ Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org, Wainer dos Santos
+ Moschetta <wainersm@redhat.com>, qemu-s390x@nongnu.org, "Daniel P."
+ =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>,
+ =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>, Richard
+ Henderson <richard.henderson@linaro.org>, Alex =?ISO-8859-1?Q?Benn=E9e?=
+ <alex.bennee@linaro.org>
+Date: Thu, 15 Aug 2024 00:57:35 +0200
+In-Reply-To: <20240814224132.897098-4-pierrick.bouvier@linaro.org>
 References: <20240814224132.897098-1-pierrick.bouvier@linaro.org>
- <20240814224132.897098-3-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240814224132.897098-3-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ <20240814224132.897098-4-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: AuD4AOgyxvUz_qqmdMkzwrQKCGm8U92K
+X-Proofpoint-ORIG-GUID: tiqy8AfNNfwo-eIdKn9mriTFTZZj3Fqg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-14_18,2024-08-13_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=841 phishscore=0
+ spamscore=0 malwarescore=0 priorityscore=1501 impostorscore=0 adultscore=0
+ bulkscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1011
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408140157
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,39 +123,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/15/24 08:41, Pierrick Bouvier wrote:
+On Wed, 2024-08-14 at 15:41 -0700, Pierrick Bouvier wrote:
 > Found on debian stable.
-> 
-> ../target/i386/kvm/kvm.c: In function ‘kvm_handle_rdmsr’:
-> ../target/i386/kvm/kvm.c:5345:1: error: control reaches end of non-void function [-Werror=return-type]
->   5345 | }
->        | ^
-> ../target/i386/kvm/kvm.c: In function ‘kvm_handle_wrmsr’:
-> ../target/i386/kvm/kvm.c:5364:1: error: control reaches end of non-void function [-Werror=return-type]
->   5364 | }
-> 
+>=20
+> ../target/s390x/tcg/translate.c: In function =E2=80=98get_mem_index=E2=80=
+=99:
+> ../target/s390x/tcg/translate.c:398:1: error: control reaches end of
+> non-void function [-Werror=3Dreturn-type]
+> =C2=A0 398 | }
+>=20
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   target/i386/kvm/kvm.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 31f149c9902..ddec27edd5b 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -5770,7 +5770,7 @@ static int kvm_handle_rdmsr(X86CPU *cpu, struct kvm_run *run)
->           }
->       }
->   
-> -    assert(false);
-> +    g_assert_not_reached();
 
-While a good change, and while I have always hated the assert(false) idiom, I believe this 
-points to a compiler bug and might be worth reporting -- assuming a later version of gcc 
-still warns.
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-
-r~
+Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
