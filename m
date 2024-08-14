@@ -4,90 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F38DAC52D7B
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 00:54:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC706C52D7B
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 00:59:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1se2GI-0003Aa-FB; Tue, 13 Aug 2024 20:53:14 -0400
+	id 1se2MC-0008Op-EN; Tue, 13 Aug 2024 20:59:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1se2GH-00039b-1G
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 20:53:13 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1se2GF-0003qO-E1
- for qemu-devel@nongnu.org; Tue, 13 Aug 2024 20:53:12 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-201d6ac1426so3052745ad.1
- for <qemu-devel@nongnu.org>; Tue, 13 Aug 2024 17:53:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1se2MA-0008NO-0L; Tue, 13 Aug 2024 20:59:18 -0400
+Received: from out30-118.freemail.mail.aliyun.com ([115.124.30.118])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1se2M7-0004QV-DF; Tue, 13 Aug 2024 20:59:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723596790; x=1724201590; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rkc0DscZwkUZCovRI4nWM5TfUQCvSSTd+6RVErRLvkc=;
- b=dQt4YTxddsJI2whhwo+X7OK+taa1vwhE6zJOxZIi/q2Ds0g3GpEf4h2Y7ucltyPRS3
- +AXvuuRqarWulisJdykrwb5BJvexAcI0JnkH5m4pWwlXwE47zZPEBgqfQzyNMNAhu6jq
- roUClvesbwJiWNtOAebcFXNcxVkYZoARsrc5Pk9wIgs03iYa4yR3tRLkoXGgX8WX9EST
- gC7Fx3hpoRj45jIXHfu4zW5UTjgJi97H8KrHWIQpm3Nu7geG2GtFLwA0xDCBy+Rvc3RW
- xCEZpG0WFlu6M1cmkfwvKanN2rzrWXs3bvcxaHFrQfcfJCHX5720bPh/q9nTpMrOAqBr
- g0tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723596790; x=1724201590;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rkc0DscZwkUZCovRI4nWM5TfUQCvSSTd+6RVErRLvkc=;
- b=ghj7KPBSZRdLls4V78nVH+TibxSvFda2sTdmVv4Stz2bZRG5lKCqxgPYBKjRaX8SiT
- Z5WEAnERwicl47NRGbv2S33K7/R04F14oviIu8zv0qvhHcsmuWnGd4rwbuYbfL8U6R2t
- 1XA0rDZSk7LXNBbn4mmq4A5J/mbb+GIke8RvHvJIz/jMoKaAAVqV5V5wG9ptSG5Doij+
- v5nS20sJGPsrQgD6/bAAFf2uw4tInVjp26qy7Qxzgo4SScXY6c7Cxttjlx9ydH8XE126
- nzzxol3u70Jg+v3VzZwm2jYaxKNt2qiNR4W66Wju6+GkqW+FosmGPWJ6uPSbMBUdmQCc
- yD+w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQxmbgi1U7+dM9M+vIWme85Sy1QBOdImaSQxbyXjATEm4MCtgg3lD8Rtb4goVmZQ3hkf0AGNIIoBggmmyKMUAk5320Ttk=
-X-Gm-Message-State: AOJu0YxUb2RWZ3noqz1WPXK7ZPssFLI2oXTdvd4AMRWctnQkFmTb5bzA
- 4aI0olDG5IUJBz783e6Xkv4HSNlUHIIcEUHxSv5LyXSDbmZn3gv2JM+XaNk/IFI=
-X-Google-Smtp-Source: AGHT+IFANifIEo+FKDb2uY/E870fAVIw7oWkKy1Z7GNg+oiyFHZC4v84j3/rZqTvTI9gB2gNuBqCvA==
-X-Received: by 2002:a17:902:e850:b0:1fa:1dd8:947a with SMTP id
- d9443c01a7336-201d648ce5bmr13475725ad.46.1723596789440; 
- Tue, 13 Aug 2024 17:53:09 -0700 (PDT)
-Received: from [192.168.1.113] ([203.30.4.111])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201cd1b82bfsm19257545ad.210.2024.08.13.17.53.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 13 Aug 2024 17:53:09 -0700 (PDT)
-Message-ID: <d86ab67c-90cf-422f-aefc-1025a7e5a77b@linaro.org>
-Date: Wed, 14 Aug 2024 10:53:01 +1000
+ d=linux.alibaba.com; s=default;
+ t=1723597145; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=qc9zSGnAkRo6xuD6J8t5C+U/jljFRApyqoH6+UZTs9U=;
+ b=tw4vZrybfXWBP9gBfqWRuICfQ6tInqWxlTRRv05WApthzgLBFMXLTrUE9+E+ENkkskLECkyVzF6IDzznb8WCh2yZAweOS7audTHQffdgPMg20yqwrwxyzHVf141fpFlht/gkX6VmAenXjFyobE4p2BNfEcw5nJMEg+flv3QGXXE=
+Received: from 30.166.64.117(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WCqL5u3_1723597142) by smtp.aliyun-inc.com;
+ Wed, 14 Aug 2024 08:59:02 +0800
+Message-ID: <1e61235e-1cb8-4bc1-9983-6e8dc0c3b406@linux.alibaba.com>
+Date: Wed, 14 Aug 2024 08:58:42 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.2 10/10] hw: Remove device_phases_reset()
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>
-References: <20240813165250.2717650-1-peter.maydell@linaro.org>
- <20240813165250.2717650-11-peter.maydell@linaro.org>
+Subject: Re: [PATCH v1 03/15] tcg: Fix register allocation constraints
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
+ TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
+References: <20240813113436.831-1-zhiwei_liu@linux.alibaba.com>
+ <20240813113436.831-4-zhiwei_liu@linux.alibaba.com>
+ <2efe353a-4700-4632-b919-e43cb039c2c0@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20240813165250.2717650-11-peter.maydell@linaro.org>
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <2efe353a-4700-4632-b919-e43cb039c2c0@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.30.118;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-118.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,55 +69,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/14/24 02:52, Peter Maydell wrote:
-> Currently we have transitional machinery between legacy reset
-> and three phase reset that works in two directions:
->   * if you invoke three phase reset on a device which has set
->     theDeviceClass::legacy_reset method, we detect this in
->     device_get_transitional_reset() and arrange that we call
->     the legacy_reset method during the hold phase of reset
->   * if you invoke legacy reset on a device which implements
->     three phase reset, the default legacy_reset method is
->     device_phases_reset(), which does a three-phase reset
->     of the device
-> 
-> However, we have now eliminated all the places which could invoke
-> legacy reset on a device, which means that the function
-> device_phases_reset() is never called -- it serves only as the value
-> ofDeviceClass::legacy_reset that indicates that the subclass never
-> overrode the legacy reset method.  So we can delete it, and instead
-> check for legacy_reset != NULL.
-> 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   hw/core/qdev.c | 51 ++++++++++++--------------------------------------
->   1 file changed, 12 insertions(+), 39 deletions(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+On 2024/8/13 19:52, Richard Henderson wrote:
+> On 8/13/24 21:34, LIU Zhiwei wrote:
+>> From: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
+>>
+>> When allocating registers for input and output, ensure they match
+>> the available registers to avoid allocating illeagal registers.
+>>
+>> We should respect RISC-V vector extension's variable-length registers
+>> and LMUL-based register grouping. Coordinate with 
+>> tcg_target_available_regs
+>> initialization tcg_target_init (behind this commit) to ensure proper
+>> handling of vector register constraints.
+>>
+>> Note: While mov_vec doesn't have constraints, dup_vec and other IRs do.
+>> We need to strengthen constraints for all IRs except mov_vec, and this
+>> is sufficient.
+>>
+>> Signed-off-by: TANG Tiancheng<tangtiancheng.ttc@alibaba-inc.com>
+>> Fixes: 29f5e92502 (tcg: Introduce paired register allocation)
+>> Reviewed-by: Liu Zhiwei<zhiwei_liu@linux.alibaba.com>
+>> ---
+>>   tcg/tcg.c | 20 +++++++++++++-------
+>>   1 file changed, 13 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/tcg/tcg.c b/tcg/tcg.c
+>> index 34e3056380..d26b42534d 100644
+>> --- a/tcg/tcg.c
+>> +++ b/tcg/tcg.c
+>> @@ -4722,8 +4722,10 @@ static void tcg_reg_alloc_dup(TCGContext *s, 
+>> const TCGOp *op)
+>>           return;
+>>       }
+>>   -    dup_out_regs = tcg_op_defs[INDEX_op_dup_vec].args_ct[0].regs;
+>> -    dup_in_regs = tcg_op_defs[INDEX_op_dup_vec].args_ct[1].regs;
+>> +    dup_out_regs = tcg_op_defs[INDEX_op_dup_vec].args_ct[0].regs &
+>> + tcg_target_available_regs[ots->type];
+>> +    dup_in_regs = tcg_op_defs[INDEX_op_dup_vec].args_ct[1].regs &
+>> + tcg_target_available_regs[its->type];
+>
+> Why would you ever have constraints that resolve to unavailable 
+> registers?
+>
+> If you don't want to fix this in the backend, then the next best place 
+> is in process_op_defs(), so that we take care of this once at startup, 
+> and never have to think about it again.
 
+Hi Richard,
 
-Is the reason we prioritize resettable_get_tr_func over rc->phases to allow for a legacy 
-device to be attached to a resettable bus?
+The constraints provided in process_op_defs() are static and tied to the 
+IR operations. For example, if we create constraints for add_vec, the 
+same constraints will apply to all types of add_vec operations 
+(TCG_TYPE_V64, TCG_TYPE_V128, TCG_TYPE_V256). This means the constraints 
+don't change based on the specific type of operation being performed.
+In contrast, RISC-V's LMUL (Length Multiplier) can change at runtime 
+depending on the type of IR operation. Different LMUL values affect 
+which vector registers are available for use in RISC-V. Let's consider 
+an example where the host's vector register width is 128 bits:
 
-I wonder if device_class_set_legacy_reset can simplify that, with
+For an add_vec operation on v256 (256-bit vectors), only even-numbered 
+vector registers like 0, 2, 4 can be used.
+However, for an add_vec operation on v128 (128-bit vectors), all vector 
+registers (0, 1, 2, etc.) are available.
 
-static void do_legacy_reset(...)
-{
-     dc->legacy_reset(...);
-}
+Thus if we want to use all registers of vectors, we have to add a 
+dynamic constraint on register allocation based on IR types.
 
-void device_class_set_legacy_reset(DeviceClass *dc, DeviceReset dev_reset)
-{
-     dc->legacy_reset = dev_reset;
+Thanks,
+Zhiwei
 
-     /* Parent enter/exit are not invoked with a legacy child. */
-     dc->resettable.enter = NULL;
-     dc->resettable.exit = NULL;
-     dc->resettable.hold = do_legacy_reset;
-}
-
-Which would eliminate resettable_get_tr_func and the supporting layers completely.
-
-
-r~
+>
+>
+> r~
 
