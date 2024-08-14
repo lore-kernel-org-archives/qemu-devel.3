@@ -4,72 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A2A0C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 18:18:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F225DC52D7F
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 18:18:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seIXn-0006se-FU; Wed, 14 Aug 2024 14:16:23 -0400
+	id 1seIXQ-0005Om-Re; Wed, 14 Aug 2024 14:16:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1seIXd-0006Gm-MJ
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 14:16:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1seIXY-0000EK-LP
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 14:16:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723659365;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vaFr2EQNxBRskF46e9cx1NE9UbZmtIyeInYR7Wdgxy4=;
- b=RPaSizX5fooHrLAw+X+hwVPi3AywJJijZV/SfUkzCifWyu+oxdTbkJMQmByUAPYPCiliVM
- BQUkvjo+lqPiyuu0LTYwMaNpZ04vFwPNErknOg5MZZaZ0c/iK4fCRCdXoq03cn86n9aiAd
- xRkEwtDE8PxDXSJuuce0I9JwdIOhi7E=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-za0-Qb-0O9u92G25mgOv3A-1; Wed,
- 14 Aug 2024 14:16:01 -0400
-X-MC-Unique: za0-Qb-0O9u92G25mgOv3A-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5B3741925381; Wed, 14 Aug 2024 18:16:00 +0000 (UTC)
-Received: from redhat.com (unknown [10.2.16.27])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D948F1955D87; Wed, 14 Aug 2024 18:15:57 +0000 (UTC)
-Date: Wed, 14 Aug 2024 13:15:55 -0500
-From: Eric Blake <eblake@redhat.com>
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com, 
- edgar.iglesias@amd.com, qemu-block@nongnu.org
-Subject: Re: [PATCH v1 1/1] block/file-posix: Avoid maybe-uninitialized warning
-Message-ID: <xk2z73avp7eobweubmma4oefeo2siwm2zhzbpecl4y3qv2ohq5@j7oodpli5sij>
-References: <20240812144324.116343-1-edgar.iglesias@gmail.com>
- <20240812144324.116343-2-edgar.iglesias@gmail.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1seIXL-0005CF-Iu; Wed, 14 Aug 2024 14:15:55 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1seIXJ-0000Bq-Lj; Wed, 14 Aug 2024 14:15:55 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-367963ea053so123367f8f.2; 
+ Wed, 14 Aug 2024 11:15:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1723659351; x=1724264151; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pgBwQcTsY5kig6ob6QbX8yg1wENWhX6GNFsHsRJ5hkg=;
+ b=geKisHJU+JXMwAG6C4BTlrnuawxFB9ezTbXMCKR1WUz4aKGrOuR4wwPGvTsIYolqAP
+ yK097NWXc6fdGzZN4/N+/v1z5gdGcafhURNVAaFwVz73X6wlv3QEX8IMhuI9Ta/EfAUU
+ Rh07XJOOgGYNyRKvCUHwNgED2wF8yPRf08jCQVKSYF/Yk6FUqLV8CtGRufT3JVZnOz9r
+ JzUCIEIWsECq+jEEoOKW8IvBO3Y/+2/LUqaBFRvtmf8zp4/Aj1PeLBdyyT0G5D7eCdF0
+ Rmst1Qc4/yLGLoxFsmpGnEAAw7zN0RgwNypH5u/09JTipwCpGsnnr6ZlUBS05DINfm2m
+ hpUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723659351; x=1724264151;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=pgBwQcTsY5kig6ob6QbX8yg1wENWhX6GNFsHsRJ5hkg=;
+ b=VoRQgn9nrFWIbiOctRkoP0Lqw5d8C14WC52fmAweW4w/hrfi4SCJj0PEjjP8zkUuxF
+ tLFnWEggtLZKwbNYvKN+qO7xkms3x4ueFWc49bYfxqAzsns6yeg29BhIPwFAbi3igPkr
+ J7mPkvacrhWzxi/ElWB74i3BDRjVRUVNsXH9XyXT11QI6nE65yr2xqxkGNU/5rBQrR5o
+ MYp5qzx/W0+z58qSZkFo0tb5eXIdMKYahqHfN2dU6/naT+L5GtLoAAahC2z1J4H5ri9u
+ gnhLHmWYXNSmulYNwlOV1qjscK95WcPG+qv2Up+45PSM60w3Z3n5oQN4c2pnyLO41g0x
+ MAfQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWHFUsAoeSgS89RMqKyHIk2q6H+WCeoTpUog+hMfJzJHUrDK0kRuQQuCztxzwuDnl77V1dGYKUgxAgJpTA7u2n4+G7Ol1xgK4Fu1DsbI2fyNboHIB9VEyGrF93WIkHXY2n+FA3X7aDOW4yhxMEG3h8=
+X-Gm-Message-State: AOJu0YysjUwqvfj5R2yiEdxTnq/sU0eoTZSmugCYZLZbb/V6HB+xmKDr
+ yQhhZWANcTzQaz8u7BqsXkAS1hElbVgShSJKUBDu7R/r/DzPv6SrBuQrUA==
+X-Google-Smtp-Source: AGHT+IFX9LTvjT3b7ve5IYdfE3ktHjzApsErplWUB3VfLFvs2c4uwvRGIPQi/aciDQ8IYA5f6LLZ3A==
+X-Received: by 2002:adf:f4cf:0:b0:371:869b:4e5e with SMTP id
+ ffacd0b85a97d-371869b4f83mr478621f8f.1.1723659350403; 
+ Wed, 14 Aug 2024 11:15:50 -0700 (PDT)
+Received: from Provence.localdomain
+ (dynamic-078-055-049-243.78.55.pool.telefonica.de. [78.55.49.243])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-36e4c937bb9sm13557625f8f.34.2024.08.14.11.15.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Aug 2024 11:15:50 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Paul Burton <paulburton@kernel.org>, Stafford Horne <shorne@gmail.com>,
+ qemu-ppc@nongnu.org, Tyrone Ting <kfting@nuvoton.com>,
+ Joel Stanley <joel@jms.id.au>, Eduardo Habkost <eduardo@habkost.net>,
+ Sergio Lopez <slp@redhat.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Hao Wu <wuhaotsh@google.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Jan Kiszka <jan.kiszka@web.de>,
+ Beniamino Galvani <b.galvani@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Jia Liu <proljc@gmail.com>,
+ Helge Deller <deller@gmx.de>, Max Filippov <jcmvbkbc@gmail.com>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Huacai Chen <chenhuacai@kernel.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, qemu-arm@nongnu.org,
+ Aleksandar Rikalo <arikalo@gmail.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ qemu-riscv@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Song Gao <gaosong@loongson.cn>, Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH 2/5] hw/char/serial: Remove unused funtion
+Date: Wed, 14 Aug 2024 20:15:31 +0200
+Message-ID: <20240814181534.218964-3-shentey@gmail.com>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240814181534.218964-1-shentey@gmail.com>
+References: <20240814181534.218964-1-shentey@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240812144324.116343-2-edgar.iglesias@gmail.com>
-User-Agent: NeoMutt/20240425
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eblake@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.135,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,52 +130,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 12, 2024 at 04:43:23PM GMT, Edgar E. Iglesias wrote:
-> From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> 
-> Avoid a maybe-uninitialized warning in raw_refresh_zoned_limits()
-> by initializing zoned.
-> 
-> With GCC 14.1.0:
-> In function ‘raw_refresh_zoned_limits’,
->     inlined from ‘raw_refresh_limits’ at ../qemu/block/file-posix.c:1522:5:
-> ../qemu/block/file-posix.c:1405:17: error: ‘zoned’ may be used uninitialized [-Werror=maybe-uninitialized]
->  1405 |     if (ret < 0 || zoned == BLK_Z_NONE) {
->       |         ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
-> ../qemu/block/file-posix.c:1401:20: note: ‘zoned’ was declared here
->  1401 |     BlockZoneModel zoned;
->       |                    ^~~~~
-> cc1: all warnings being treated as errors
-> 
-> Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> ---
->  block/file-posix.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+The serial port's frequency is set via the "baudbase" property nowadays.
 
-Reviewed-by: Eric Blake <eblake@redhat.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ include/hw/char/serial.h | 2 --
+ hw/char/serial.c         | 7 -------
+ 2 files changed, 9 deletions(-)
 
-> 
-> diff --git a/block/file-posix.c b/block/file-posix.c
-> index ff928b5e85..90fa54352c 100644
-> --- a/block/file-posix.c
-> +++ b/block/file-posix.c
-> @@ -1398,7 +1398,7 @@ static void raw_refresh_zoned_limits(BlockDriverState *bs, struct stat *st,
->                                       Error **errp)
->  {
->      BDRVRawState *s = bs->opaque;
-> -    BlockZoneModel zoned;
-> +    BlockZoneModel zoned = BLK_Z_NONE;
->      int ret;
->  
->      ret = get_sysfs_zoned_model(st, &zoned);
-> -- 
-> 2.43.0
-> 
-> 
-
+diff --git a/include/hw/char/serial.h b/include/hw/char/serial.h
+index 6e14099ee7..40aad21df3 100644
+--- a/include/hw/char/serial.h
++++ b/include/hw/char/serial.h
+@@ -93,8 +93,6 @@ struct SerialMM {
+ extern const VMStateDescription vmstate_serial;
+ extern const MemoryRegionOps serial_io_ops;
+ 
+-void serial_set_frequency(SerialState *s, uint32_t frequency);
+-
+ #define TYPE_SERIAL "serial"
+ OBJECT_DECLARE_SIMPLE_TYPE(SerialState, SERIAL)
+ 
+diff --git a/hw/char/serial.c b/hw/char/serial.c
+index d8b2db5082..6c5c4a23c7 100644
+--- a/hw/char/serial.c
++++ b/hw/char/serial.c
+@@ -951,13 +951,6 @@ static void serial_unrealize(DeviceState *dev)
+     qemu_unregister_reset(serial_reset, s);
+ }
+ 
+-/* Change the main reference oscillator frequency. */
+-void serial_set_frequency(SerialState *s, uint32_t frequency)
+-{
+-    s->baudbase = frequency;
+-    serial_update_parameters(s);
+-}
+-
+ const MemoryRegionOps serial_io_ops = {
+     .read = serial_ioport_read,
+     .write = serial_ioport_write,
 -- 
-Eric Blake, Principal Software Engineer
-Red Hat, Inc.
-Virtualization:  qemu.org | libguestfs.org
+2.46.0
 
 
