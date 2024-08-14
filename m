@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11115C52D7D
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 11:59:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CEE3C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 12:04:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seCdR-0004AX-JN; Wed, 14 Aug 2024 07:57:49 -0400
+	id 1seCiz-0002TU-PO; Wed, 14 Aug 2024 08:03:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
- id 1seCdQ-00045A-0q
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 07:57:48 -0400
-Received: from mail-qv1-xf36.google.com ([2607:f8b0:4864:20::f36])
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1seCit-0002J8-Gk; Wed, 14 Aug 2024 08:03:28 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ribalda@chromium.org>)
- id 1seCdN-0003Xu-R4
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 07:57:47 -0400
-Received: by mail-qv1-xf36.google.com with SMTP id
- 6a1803df08f44-6bbc1cee9b7so38544416d6.3
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 04:57:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1seCih-0004cp-2c; Wed, 14 Aug 2024 08:03:27 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-2ef248ab2aeso101994811fa.0; 
+ Wed, 14 Aug 2024 05:03:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=chromium.org; s=google; t=1723636664; x=1724241464; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/9pBVuHeeKUuchvAHlh93dIxxXQ/KQ6UxVkCEoa6S8c=;
- b=Aelea2hmyV0CtWRCrTpVTioYecy91naHeGYWCoFVxcbNIfHuKML1dCYevBxY53QlHI
- HuidGhC5XJZis71H63T3nHYT4wr4p4UVO0xGaGvmjgwDvYbnD42J6cDAkQDAqwEROY4C
- T2qtKNW8iOUfL2BVsY+cPQ+PqdZTQ1Wa8J4TM=
+ d=gmail.com; s=20230601; t=1723636993; x=1724241793; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=pLWlOhX7IA1D60QAMmJx/e3m5tenDd37UlQuuePJAH8=;
+ b=lOdMBsWwf1qYEiDEK9lr2shN5ZP+mcwSRpUP1PVUKLStKz32iV+afvHySNJVJBhkhF
+ /i+M+YAa+TvEE/Dj0T4wAUbuLTMlz2g6oTEdN58qfJjK1VxY+GhF1GnXMbCFWJLU/t3z
+ jNCOz6GpGZ3xBbTaFPuK7JEc4VBQNOyC8qniLP/+W/J7An+QWCJoYiVG8SI5logezuOO
+ o8I2Bp4AqafIGzgMEhOg03lS4CJzJqd6FdSFCptPwuXNU6TENAOt328rx6lywN8vchab
+ sDrWy9CMuMdPlMrli4ZATe8N+WlYL+P7fg2g7EcB21YjkP10d+JcxOK2ZEzVnAeL3pg/
+ /9LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723636664; x=1724241464;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/9pBVuHeeKUuchvAHlh93dIxxXQ/KQ6UxVkCEoa6S8c=;
- b=lcXpb3BWsa6n3h/uVt/wpNsH1gst0I9/2zKFfuQTm7LroqyI6g0ebOHe4H+Ev1OM2D
- D9UN4QrAmKd2fES28LN6P3Wu/AhtIevgpgsJTObBY+rxyL6V6gjP+a3jDQwan49GtTm9
- Ww1/5F2i8VCNziidoq8EEnEbiBXrtVnN2qtrswseUEjdQqRlUcRGVCkAg1Qs26DKiKeC
- O8EsiU3dOTppVxBrPQFODcuOLPJetf2zKmxZJm+sZMUOs1PG0hTBIy+1xXCz9DeIjGQO
- YDNFWrqHdBVFgYC/4MM/vNC0niC86RQWSRk7WlPX+zU57yKRoYLKrm/D/DSDwbJ6jqEC
- JKWw==
+ d=1e100.net; s=20230601; t=1723636993; x=1724241793;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pLWlOhX7IA1D60QAMmJx/e3m5tenDd37UlQuuePJAH8=;
+ b=CPW5trNKoR3MnmpPY7mGzH11o3f8UA9++j/GWDajME7LmNPhC9xaiorGh2LeNxHK3/
+ Ch6d4WacanLs8sr886EsYp/hVcPzZE9NQY8N7mpXxei1Y2GEyZMEStYT2WmFgc6IDJL5
+ BgmWsAcHphI6qiFgmtOEPUOQ5kvqaaV5gsg4hnfuZrycto6YaXGAh201OMC1UaZyWJwb
+ CB4HeIiyomjZCX9SA8gs3RVJDEMuaz3Bvo7v86m7EKgmNyEY8YzJ7sPJpdQ08Hr3lHqf
+ sTnTpLJniSJ8uqankKZ7BbnXFsIrcxzmw6WXtPqGu6tpdCyVdqlCs2xV6xEzzHyR8MM5
+ iY1w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWuDAvjq/TPb9zcpucMqYyfupZAh8KcCZwNdTDsjpv9G8Q2uA72G0kWJSGwZRtrhaAQmTvNRkFLIj/x7+BuOXKAj2rQsc0=
-X-Gm-Message-State: AOJu0YxDkNxovFF599jOyNdgqY7Vh7nT6KtB8Zqp32nVNl56tism2q8S
- meBVn2Ny+wQGCYjS7pHbu9lW6bggpd5j9qayjI7wnsvCaIFunZ4DoUpzJR2bkg==
-X-Google-Smtp-Source: AGHT+IFi8rzfrhMUYTXT/JXRnnIoIjNNaA9iOj/efDcu93Y/fsGW4d2UtttzSUIFd0qVED73/+Sv5A==
-X-Received: by 2002:a05:6214:2f88:b0:6b7:b285:74e7 with SMTP id
- 6a1803df08f44-6bf5d24e7b5mr28690156d6.37.1723636664617; 
- Wed, 14 Aug 2024 04:57:44 -0700 (PDT)
-Received: from denia.c.googlers.com.com
- (123.178.145.34.bc.googleusercontent.com. [34.145.178.123])
+ AJvYcCUxVs/JJke04lzdtDCt1svzSCPHILAqpV/veLkX0VQQgXvAbR10zRNYq9ym0Zgfzu17HdMRmTcvy5OfGlOASx8vvVgI
+X-Gm-Message-State: AOJu0YxdVK1nDDtjXLYK7WOoT+tVhau43BHqm6lst6qBsrbGpMpYQfgx
+ ySajdnvTBq3FD+oRwNVr9EjzUrcwB+dKRj8Du5rLjNz5sAcNRVN3
+X-Google-Smtp-Source: AGHT+IFpGmYJLf5ZDi74BUV7AvcFD/4rB5wLJWAUAT0SVtzs0jlSIzfJAaZ9CKeogM3VI9No7by5Jw==
+X-Received: by 2002:a2e:e09:0:b0:2ef:17ee:62a2 with SMTP id
+ 38308e7fff4ca-2f3aa1df04emr17339101fa.14.1723636991778; 
+ Wed, 14 Aug 2024 05:03:11 -0700 (PDT)
+Received: from gmail.com (213-67-3-247-no600.tbcn.telia.com. [213.67.3.247])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6bd82c5f375sm43001586d6.14.2024.08.14.04.57.43
+ 38308e7fff4ca-2f2920511d0sm14080291fa.113.2024.08.14.05.03.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Aug 2024 04:57:44 -0700 (PDT)
-From: Ricardo Ribalda <ribalda@chromium.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, qemu-devel@nongnu.org,
- righi.andrea@gmail.com
-Cc: Ricardo Ribalda <ribalda@chromium.org>
-Subject: [PATCH v5 2/3] hw/i386/acpi-build: Return a pre-computed _PRT table
-Date: Wed, 14 Aug 2024 11:56:10 +0000
-Message-ID: <20240814115736.1580337-3-ribalda@chromium.org>
-X-Mailer: git-send-email 2.46.0.76.ge559c4bf1a-goog
-In-Reply-To: <20240814115736.1580337-1-ribalda@chromium.org>
-References: <20240814115736.1580337-1-ribalda@chromium.org>
+ Wed, 14 Aug 2024 05:03:10 -0700 (PDT)
+Date: Wed, 14 Aug 2024 14:03:10 +0200
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+To: Stefano Stabellini <sstabellini@kernel.org>
+Cc: qemu-devel@nongnu.org, anthony@xenproject.org, paul@xen.org,
+ peter.maydell@linaro.org, alex.bennee@linaro.org,
+ xenia.ragiadakou@amd.com, jason.andryuk@amd.com,
+ edgar.iglesias@amd.com, xen-devel@lists.xenproject.org, qemu-arm@nongnu.org
+Subject: Re: [PATCH v1 05/10] hw/arm: xenpvh: Break out a common PVH module
+Message-ID: <Zryc_gna9c4XNX9c@zapote>
+References: <20240812130606.90410-1-edgar.iglesias@gmail.com>
+ <20240812130606.90410-6-edgar.iglesias@gmail.com>
+ <alpine.DEB.2.22.394.2408121720290.298534@ubuntu-linux-20-04-desktop>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f36;
- envelope-from=ribalda@chromium.org; helo=mail-qv1-xf36.google.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.22.394.2408121720290.298534@ubuntu-linux-20-04-desktop>
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-lj1-x22a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.135,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -99,240 +97,563 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When qemu runs without kvm acceleration the ACPI executions take a great
-amount of time. If they take more than the default time (30sec), the
-ACPI calls fail and the system might not behave correctly.
+On Mon, Aug 12, 2024 at 06:47:51PM -0700, Stefano Stabellini wrote:
+> On Mon, 12 Aug 2024, Edgar E. Iglesias wrote:
+> > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+> > 
+> > Break out a common Xen PVH module in preparation for
+> > adding a x86 Xen PVH Machine.
+> > 
+> > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> > ---
+> >  hw/arm/trace-events             |   5 -
+> >  hw/arm/xen_arm.c                | 154 ++++++--------------------
+> >  hw/xen/meson.build              |   1 +
+> >  hw/xen/trace-events             |   4 +
+> >  hw/xen/xen-pvh-common.c         | 185 ++++++++++++++++++++++++++++++++
+> >  include/hw/xen/xen-pvh-common.h |  45 ++++++++
+> >  6 files changed, 269 insertions(+), 125 deletions(-)
+> >  create mode 100644 hw/xen/xen-pvh-common.c
+> >  create mode 100644 include/hw/xen/xen-pvh-common.h
+> > 
+> > diff --git a/hw/arm/trace-events b/hw/arm/trace-events
+> > index be6c8f720b..c64ad344bd 100644
+> > --- a/hw/arm/trace-events
+> > +++ b/hw/arm/trace-events
+> > @@ -68,10 +68,5 @@ z2_aer915_send_too_long(int8_t msg) "message too long (%i bytes)"
+> >  z2_aer915_send(uint8_t reg, uint8_t value) "reg %d value 0x%02x"
+> >  z2_aer915_event(int8_t event, int8_t len) "i2c event =0x%x len=%d bytes"
+> >  
+> > -# xen_arm.c
+> > -xen_create_virtio_mmio_devices(int i, int irq, uint64_t base) "Created virtio-mmio device %d: irq %d base 0x%"PRIx64
+> > -xen_init_ram(uint64_t machine_ram_size) "Initialized xen ram with size 0x%"PRIx64
+> > -xen_enable_tpm(uint64_t addr) "Connected tpmdev at address 0x%"PRIx64
+> > -
+> >  # bcm2838.c
+> >  bcm2838_gic_set_irq(int irq, int level) "gic irq:%d lvl:%d"
+> > diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
+> > index ef8315969c..b8a5c09bdf 100644
+> > --- a/hw/arm/xen_arm.c
+> > +++ b/hw/arm/xen_arm.c
+> > @@ -12,40 +12,25 @@
+> >  #include "hw/irq.h"
+> >  #include "hw/sysbus.h"
+> >  #include "sysemu/block-backend.h"
+> > -#include "sysemu/tpm_backend.h"
+> >  #include "sysemu/sysemu.h"
+> > -#include "hw/xen/xen-hvm-common.h"
+> > +#include "hw/xen/xen-pvh-common.h"
+> >  #include "sysemu/tpm.h"
+> >  #include "hw/xen/arch_hvm.h"
+> > -#include "trace.h"
+> >  
+> >  #define TYPE_XEN_ARM  MACHINE_TYPE_NAME("xenpvh")
+> >  OBJECT_DECLARE_SIMPLE_TYPE(XenArmState, XEN_ARM)
+> >  
+> > -static const MemoryListener xen_memory_listener = {
+> > -    .region_add = xen_region_add,
+> > -    .region_del = xen_region_del,
+> > -    .log_start = NULL,
+> > -    .log_stop = NULL,
+> > -    .log_sync = NULL,
+> > -    .log_global_start = NULL,
+> > -    .log_global_stop = NULL,
+> > -    .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
+> > -};
+> > -
+> >  struct XenArmState {
+> >      /*< private >*/
+> >      MachineState parent;
+> >  
+> > -    XenIOState *state;
+> > +    XenPVHCommonState pvh;
+> >  
+> >      struct {
+> >          uint64_t tpm_base_addr;
+> >      } cfg;
+> >  };
+> >  
+> > -static MemoryRegion ram_lo, ram_hi;
+> > -
+> >  /*
+> >   * VIRTIO_MMIO_DEV_SIZE is imported from tools/libs/light/libxl_arm.c under Xen
+> >   * repository.
+> > @@ -57,64 +42,6 @@ static MemoryRegion ram_lo, ram_hi;
+> >  #define NR_VIRTIO_MMIO_DEVICES   \
+> >     (GUEST_VIRTIO_MMIO_SPI_LAST - GUEST_VIRTIO_MMIO_SPI_FIRST)
+> >  
+> > -static void xen_set_irq(void *opaque, int irq, int level)
+> > -{
+> > -    if (xendevicemodel_set_irq_level(xen_dmod, xen_domid, irq, level)) {
+> > -        error_report("xendevicemodel_set_irq_level failed");
+> > -    }
+> > -}
+> > -
+> > -static void xen_create_virtio_mmio_devices(XenArmState *xam)
+> > -{
+> > -    int i;
+> > -
+> > -    for (i = 0; i < NR_VIRTIO_MMIO_DEVICES; i++) {
+> > -        hwaddr base = GUEST_VIRTIO_MMIO_BASE + i * VIRTIO_MMIO_DEV_SIZE;
+> > -        qemu_irq irq = qemu_allocate_irq(xen_set_irq, NULL,
+> > -                                         GUEST_VIRTIO_MMIO_SPI_FIRST + i);
+> > -
+> > -        sysbus_create_simple("virtio-mmio", base, irq);
+> > -
+> > -        trace_xen_create_virtio_mmio_devices(i,
+> > -                                             GUEST_VIRTIO_MMIO_SPI_FIRST + i,
+> > -                                             base);
+> > -    }
+> > -}
+> 
+> There are 4 trivial functions in this file:
+> 
+> void arch_handle_ioreq(XenIOState *state, ioreq_t *req)
+> void arch_xen_set_memory(XenIOState *state, MemoryRegionSection *section,
+>                          bool add)
+> void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length)
+> void qmp_xen_set_global_dirty_log(bool enable, Error **errp)
+> 
+> Do you think it would make sense to move these too to xen-pvh-common.c ?
 
-Now the _PRT table is computed on the fly. We can drastically reduce the
-execution of the _PRT method if we return a pre-computed table.
 
-Without this patch:
-[   51.343484] ACPI Error: Aborting method \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
-[   51.527032] ACPI Error: Method execution failed \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/uteval-68)
-[   51.530049] virtio-pci 0000:00:02.0: can't derive routing for PCI INT A
-[   51.530797] virtio-pci 0000:00:02.0: PCI INT A: no GSI
-[   81.922901] ACPI Error: Aborting method \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
-[   82.103534] ACPI Error: Method execution failed \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/uteval-68)
-[   82.106088] virtio-pci 0000:00:04.0: can't derive routing for PCI INT A
-[   82.106761] virtio-pci 0000:00:04.0: PCI INT A: no GSI
-[  112.192568] ACPI Error: Aborting method \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
-[  112.486687] ACPI Error: Method execution failed \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/uteval-68)
-[  112.489554] virtio-pci 0000:00:05.0: can't derive routing for PCI INT A
-[  112.490027] virtio-pci 0000:00:05.0: PCI INT A: no GSI
-[  142.559448] ACPI Error: Aborting method \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/psparse-529)
-[  142.718596] ACPI Error: Method execution failed \_SB.PCI0._PRT due to previous error (AE_AML_LOOP_TIMEOUT) (20230628/uteval-68)
-[  142.722889] virtio-pci 0000:00:06.0: can't derive routing for PCI INT A
-[  142.724578] virtio-pci 0000:00:06.0: PCI INT A: no GSI
+Yes, it would be nice to at least provide some sort of default
+implementation for these that archs like x86 can override. I'll look
+into it for v2.
 
-With this patch:
-[   22.938076] ACPI: \_SB_.LNKB: Enabled at IRQ 10
-[   24.214002] ACPI: \_SB_.LNKD: Enabled at IRQ 11
-[   25.465170] ACPI: \_SB_.LNKA: Enabled at IRQ 10
-[   27.944920] ACPI: \_SB_.LNKC: Enabled at IRQ 11
 
-ACPI disassembly:
-        Scope (PCI0)
-        {
-            Method (_PRT, 0, NotSerialized)  // _PRT: PCI Routing Table
-            {
-                Return (Package (0x80)
-                {
-                    Package (0x04)
-                    {
-                        0xFFFF,
-                        Zero,
-                        LNKD,
-                        Zero
-                    },
+> 
+> 
+> > -
+> > -static void xen_init_ram(MachineState *machine)
+> > -{
+> > -    MemoryRegion *sysmem = get_system_memory();
+> > -    ram_addr_t block_len, ram_size[GUEST_RAM_BANKS];
+> > -
+> > -    trace_xen_init_ram(machine->ram_size);
+> > -    if (machine->ram_size <= GUEST_RAM0_SIZE) {
+> > -        ram_size[0] = machine->ram_size;
+> > -        ram_size[1] = 0;
+> > -        block_len = GUEST_RAM0_BASE + ram_size[0];
+> > -    } else {
+> > -        ram_size[0] = GUEST_RAM0_SIZE;
+> > -        ram_size[1] = machine->ram_size - GUEST_RAM0_SIZE;
+> > -        block_len = GUEST_RAM1_BASE + ram_size[1];
+> > -    }
+> > -
+> > -    memory_region_init_ram(&xen_memory, NULL, "xen.ram", block_len,
+> > -                           &error_fatal);
+> > -
+> > -    memory_region_init_alias(&ram_lo, NULL, "xen.ram.lo", &xen_memory,
+> > -                             GUEST_RAM0_BASE, ram_size[0]);
+> > -    memory_region_add_subregion(sysmem, GUEST_RAM0_BASE, &ram_lo);
+> > -    if (ram_size[1] > 0) {
+> > -        memory_region_init_alias(&ram_hi, NULL, "xen.ram.hi", &xen_memory,
+> > -                                 GUEST_RAM1_BASE, ram_size[1]);
+> > -        memory_region_add_subregion(sysmem, GUEST_RAM1_BASE, &ram_hi);
+> > -    }
+> > -
+> > -    /* Setup support for grants.  */
+> > -    memory_region_init_ram(&xen_grants, NULL, "xen.grants", block_len,
+> > -                           &error_fatal);
+> > -    memory_region_add_subregion(sysmem, XEN_GRANT_ADDR_OFF, &xen_grants);
+> > -}
+> > -
+> >  void arch_handle_ioreq(XenIOState *state, ioreq_t *req)
+> >  {
+> >      hw_error("Invalid ioreq type 0x%x\n", req->type);
+> > @@ -135,55 +62,42 @@ void qmp_xen_set_global_dirty_log(bool enable, Error **errp)
+> >  {
+> >  }
+> >  
+> > -#ifdef CONFIG_TPM
+> > -static void xen_enable_tpm(XenArmState *xam)
+> > -{
+> > -    Error *errp = NULL;
+> > -    DeviceState *dev;
+> > -    SysBusDevice *busdev;
+> > -
+> > -    TPMBackend *be = qemu_find_tpm_be("tpm0");
+> > -    if (be == NULL) {
+> > -        error_report("Couldn't find tmp0 backend");
+> > -        return;
+> > -    }
+> > -    dev = qdev_new(TYPE_TPM_TIS_SYSBUS);
+> > -    object_property_set_link(OBJECT(dev), "tpmdev", OBJECT(be), &errp);
+> > -    object_property_set_str(OBJECT(dev), "tpmdev", be->id, &errp);
+> > -    busdev = SYS_BUS_DEVICE(dev);
+> > -    sysbus_realize_and_unref(busdev, &error_fatal);
+> > -    sysbus_mmio_map(busdev, 0, xam->cfg.tpm_base_addr);
+> > -
+> > -    trace_xen_enable_tpm(xam->cfg.tpm_base_addr);
+> > -}
+> > -#endif
+> > -
+> > -static void xen_arm_init(MachineState *machine)
+> > +static void xen_arm_init(MachineState *ms)
+> >  {
+> > -    XenArmState *xam = XEN_ARM(machine);
+> > -
+> > -    xam->state =  g_new0(XenIOState, 1);
+> > +    XenArmState *xam = XEN_ARM(ms);
+> > +    const struct {
+> > +        const char *name;
+> > +        MemMapEntry map;
+> > +    } map[] = {
+> > +        { "ram-low", { GUEST_RAM0_BASE, GUEST_RAM0_SIZE } },
+> > +        { "ram-high", { GUEST_RAM1_BASE, GUEST_RAM1_SIZE } },
+> > +        { "virtio-mmio", { GUEST_VIRTIO_MMIO_BASE, VIRTIO_MMIO_DEV_SIZE } },
+> > +        { "tpm", { xam->cfg.tpm_base_addr, 0x1000 } },
+> > +    };
+> > +    int i;
+> >  
+> > -    if (machine->ram_size == 0) {
+> > -        warn_report("%s non-zero ram size not specified. QEMU machine started"
+> > -                    " without IOREQ (no emulated devices including virtio)",
+> > -                    MACHINE_CLASS(object_get_class(OBJECT(machine)))->desc);
+> > -        return;
+> > +    object_initialize_child(OBJECT(ms), "pvh", &xam->pvh, TYPE_XEN_PVH_COMMON);
+> > +
+> > +    object_property_set_int(OBJECT(&xam->pvh), "max-cpus", ms->smp.max_cpus,
+> > +                            &error_abort);
+> 
+> Is ms->smp.max_cpus updated according to the QEMU command line option?
+> If so, that would solve the problem of the static initialization of
+> max_cpus to GUEST_MAX_VCPUS in xen_arm_machine_class_init.
 
-                    Package (0x04)
-                    {
-                        0xFFFF,
-                        One,
-                        LNKA,
-                        Zero
-                    },
+Yes, it kind of solves it but I'll leave that discussion to the other
+thread.
 
-                    Package (0x04)
-                    {
-                        0xFFFF,
-                        0x02,
-                        LNKB,
-                        Zero
-                    },
+> 
+> 
+> > +    object_property_set_int(OBJECT(&xam->pvh), "ram-size", ms->ram_size,
+> > +                            &error_abort);
+> > +    object_property_set_int(OBJECT(&xam->pvh), "virtio-mmio-num",
+> > +                            NR_VIRTIO_MMIO_DEVICES, &error_abort);
+> > +    object_property_set_int(OBJECT(&xam->pvh), "virtio-mmio-irq-base",
+> > +                            GUEST_VIRTIO_MMIO_SPI_FIRST, &error_abort);
+> > +
+> > +    for (i = 0; i < ARRAY_SIZE(map); i++) {
+> > +        g_autofree char *base_name = g_strdup_printf("%s-base", map[i].name);
+> > +        g_autofree char *size_name = g_strdup_printf("%s-size", map[i].name);
+> > +
+> > +        object_property_set_int(OBJECT(&xam->pvh), base_name, map[i].map.base,
+> > +                                &error_abort);
+> > +        object_property_set_int(OBJECT(&xam->pvh), size_name, map[i].map.size,
+> > +                                &error_abort);
+> >      }
+> >  
+> > -    xen_init_ram(machine);
+> > -
+> > -    xen_register_ioreq(xam->state, machine->smp.max_cpus, &xen_memory_listener);
+> > -
+> > -    xen_create_virtio_mmio_devices(xam);
+> > -
+> > -#ifdef CONFIG_TPM
+> > -    if (xam->cfg.tpm_base_addr) {
+> > -        xen_enable_tpm(xam);
+> 
+> Do you think it makes sense also to move xen_arm_get_tpm_base_addr and
+> xen_arm_set_tpm_base_addr to xen-pvh-common.c ?
+>
 
-                    Package (0x04)
-                    {
-                        0xFFFF,
-                        0x03,
-                        LNKC,
-                        Zero
-                    },
+Yes, perhaps we should create an abstract PVH machine. We could probably
+reuse more code between x86/ARM and future PVH support. I can have a
+look at it for v2.
 
-                    Package (0x04)
-                    {
-                        0x0001FFFF,
-                        Zero,
-                        LNKS,
-                        Zero
-                    },
-Context: https://lore.kernel.org/virtualization/20240417145544.38d7b482@imammedo.users.ipa.redhat.com/T/#t
+> 
+> 
+> > -    } else {
+> > -        warn_report("tpm-base-addr is not provided. TPM will not be enabled");
+> > -    }
+> > -#endif
+> > +    sysbus_realize(SYS_BUS_DEVICE(&xam->pvh), &error_abort);
+> >  }
+> >  
+> >  #ifdef CONFIG_TPM
+> > diff --git a/hw/xen/meson.build b/hw/xen/meson.build
+> > index d887fa9ba4..4a486e3673 100644
+> > --- a/hw/xen/meson.build
+> > +++ b/hw/xen/meson.build
+> > @@ -15,6 +15,7 @@ xen_specific_ss = ss.source_set()
+> >  xen_specific_ss.add(files(
+> >    'xen-mapcache.c',
+> >    'xen-hvm-common.c',
+> > +  'xen-pvh-common.c',
+> >  ))
+> >  if have_xen_pci_passthrough
+> >    xen_specific_ss.add(files(
+> > diff --git a/hw/xen/trace-events b/hw/xen/trace-events
+> > index d1b27f6c11..a07fe41c6d 100644
+> > --- a/hw/xen/trace-events
+> > +++ b/hw/xen/trace-events
+> > @@ -64,6 +64,10 @@ destroy_hvm_domain_cannot_acquire_handle(void) "Cannot acquire xenctrl handle"
+> >  destroy_hvm_domain_failed_action(const char *action, int sts, char *errno_s) "xc_domain_shutdown failed to issue %s, sts %d, %s"
+> >  destroy_hvm_domain_action(int xen_domid, const char *action) "Issued domain %d %s"
+> >  
+> > +# xen-pvh-common.c
+> > +xen_create_virtio_mmio_devices(int i, int irq, uint64_t base) "Created virtio-mmio device %d: irq %d base 0x%"PRIx64
+> > +xen_enable_tpm(uint64_t addr) "Connected tpmdev at address 0x%"PRIx64
+> > +
+> >  # xen-mapcache.c
+> >  xen_map_cache(uint64_t phys_addr) "want 0x%"PRIx64
+> >  xen_remap_bucket(uint64_t index) "index 0x%"PRIx64
+> > diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
+> > new file mode 100644
+> > index 0000000000..0d368398d0
+> > --- /dev/null
+> > +++ b/hw/xen/xen-pvh-common.c
+> > @@ -0,0 +1,185 @@
+> > +/*
+> > + * Common Xen PVH code.
+> > + *
+> > + * Copyright (c) 2024 Advanced Micro Devices, Inc.
+> > + *
+> > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > + */
+> > +
+> > +#include "qemu/osdep.h"
+> > +#include "qemu/error-report.h"
+> > +#include "qapi/error.h"
+> > +#include "hw/boards.h"
+> > +#include "hw/irq.h"
+> > +#include "hw/sysbus.h"
+> > +#include "sysemu/sysemu.h"
+> > +#include "sysemu/tpm.h"
+> > +#include "sysemu/tpm_backend.h"
+> > +#include "hw/xen/xen-pvh-common.h"
+> > +#include "trace.h"
+> > +
+> > +static const MemoryListener xen_memory_listener = {
+> > +    .region_add = xen_region_add,
+> > +    .region_del = xen_region_del,
+> > +    .log_start = NULL,
+> > +    .log_stop = NULL,
+> > +    .log_sync = NULL,
+> > +    .log_global_start = NULL,
+> > +    .log_global_stop = NULL,
+> > +    .priority = MEMORY_LISTENER_PRIORITY_ACCEL,
+> > +};
+> > +
+> > +static void xen_pvh_init_ram(XenPVHCommonState *s,
+> > +                             MemoryRegion *sysmem)
+> > +{
+> > +    ram_addr_t block_len, ram_size[2];
+> > +
+> > +    if (s->cfg.ram_size <= s->cfg.ram_low.size) {
+> > +        ram_size[0] = s->cfg.ram_size;
+> > +        ram_size[1] = 0;
+> > +        block_len = s->cfg.ram_low.base + ram_size[0];
+> > +    } else {
+> > +        ram_size[0] = s->cfg.ram_low.size;
+> > +        ram_size[1] = s->cfg.ram_size - s->cfg.ram_low.size;
+> > +        block_len = s->cfg.ram_high.base + ram_size[1];
+> > +    }
+> > +
+> > +    memory_region_init_ram(&xen_memory, NULL, "xen.ram", block_len,
+> > +                           &error_fatal);
+> > +
+> > +    memory_region_init_alias(&s->ram.low, NULL, "xen.ram.lo", &xen_memory,
+> > +                             s->cfg.ram_low.base, ram_size[0]);
+> > +    memory_region_add_subregion(sysmem, s->cfg.ram_low.base, &s->ram.low);
+> > +    if (ram_size[1] > 0) {
+> > +        memory_region_init_alias(&s->ram.high, NULL, "xen.ram.hi", &xen_memory,
+> > +                                 s->cfg.ram_high.base, ram_size[1]);
+> > +        memory_region_add_subregion(sysmem, s->cfg.ram_high.base, &s->ram.high);
+> > +    }
+> > +
+> > +    /* Setup support for grants.  */
+> > +    memory_region_init_ram(&xen_grants, NULL, "xen.grants", block_len,
+> > +                           &error_fatal);
+> > +    memory_region_add_subregion(sysmem, XEN_GRANT_ADDR_OFF, &xen_grants);
+> > +}
+> > +
+> > +static void xen_set_irq(void *opaque, int irq, int level)
+> > +{
+> > +    if (xendevicemodel_set_irq_level(xen_dmod, xen_domid, irq, level)) {
+> > +        error_report("xendevicemodel_set_irq_level failed");
+> > +    }
+> > +}
+> > +
+> > +static void xen_create_virtio_mmio_devices(XenPVHCommonState *s)
+> > +{
+> > +    int i;
+> > +
+> > +    for (i = 0; i < s->cfg.virtio_mmio_num; i++) {
+> > +        hwaddr base = s->cfg.virtio_mmio.base + i * s->cfg.virtio_mmio.size;
+> > +        qemu_irq irq = qemu_allocate_irq(xen_set_irq, NULL,
+> > +                                         s->cfg.virtio_mmio_irq_base + i);
+> > +
+> > +        sysbus_create_simple("virtio-mmio", base, irq);
+> > +
+> > +        trace_xen_create_virtio_mmio_devices(i,
+> > +                                             s->cfg.virtio_mmio_irq_base + i,
+> > +                                             base);
+> > +    }
+> > +}
+> > +
+> > +#ifdef CONFIG_TPM
+> > +static void xen_enable_tpm(XenPVHCommonState *s)
+> > +{
+> > +    Error *errp = NULL;
+> > +    DeviceState *dev;
+> > +    SysBusDevice *busdev;
+> > +
+> > +    TPMBackend *be = qemu_find_tpm_be("tpm0");
+> > +    if (be == NULL) {
+> > +        error_report("Couldn't find tmp0 backend");
+> > +        return;
+> > +    }
+> > +    dev = qdev_new(TYPE_TPM_TIS_SYSBUS);
+> > +    object_property_set_link(OBJECT(dev), "tpmdev", OBJECT(be), &errp);
+> > +    object_property_set_str(OBJECT(dev), "tpmdev", be->id, &errp);
+> > +    busdev = SYS_BUS_DEVICE(dev);
+> > +    sysbus_realize_and_unref(busdev, &error_fatal);
+> > +    sysbus_mmio_map(busdev, 0, s->cfg.tpm.base);
+> > +
+> > +    trace_xen_enable_tpm(s->cfg.tpm.base);
+> > +}
+> > +#endif
+> > +
+> > +static void xen_pvh_realize(DeviceState *dev, Error **errp)
+> > +{
+> > +    XenPVHCommonState *s = XEN_PVH_COMMON(dev);
+> > +    MemoryRegion *sysmem = get_system_memory();
+> > +
+> > +    if (s->cfg.ram_size == 0) {
+> > +        /* FIXME: Prefix with object path and consider bailing out.  */
+> 
+> I am not sure about these two FIXME
+> 
+> 
+> > +        warn_report("non-zero ram size not specified. QEMU machine started"
+> > +                    " without IOREQ (no emulated devices including virtio)");
+> 
+> Also the warn message has a double negative?
 
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
----
- hw/i386/acpi-build.c | 120 ++++++++-----------------------------------
- 1 file changed, 22 insertions(+), 98 deletions(-)
 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 5d4bd2b710..4967aa7459 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -724,120 +724,44 @@ static Aml *aml_pci_pdsm(void)
-     return method;
- }
- 
--/**
-- * build_prt_entry:
-- * @link_name: link name for PCI route entry
-- *
-- * build AML package containing a PCI route entry for @link_name
-- */
--static Aml *build_prt_entry(const char *link_name)
--{
--    Aml *a_zero = aml_int(0);
--    Aml *pkg = aml_package(4);
--    aml_append(pkg, a_zero);
--    aml_append(pkg, a_zero);
--    aml_append(pkg, aml_name("%s", link_name));
--    aml_append(pkg, a_zero);
--    return pkg;
--}
--
- /*
-- * initialize_route - Initialize the interrupt routing rule
-- * through a specific LINK:
-- *  if (lnk_idx == idx)
-- *      route using link 'link_name'
-- */
--static Aml *initialize_route(Aml *route, const char *link_name,
--                             Aml *lnk_idx, int idx)
--{
--    Aml *if_ctx = aml_if(aml_equal(lnk_idx, aml_int(idx)));
--    Aml *pkg = build_prt_entry(link_name);
--
--    aml_append(if_ctx, aml_store(pkg, route));
--
--    return if_ctx;
--}
--
--/*
-- * build_prt - Define interrupt rounting rules
-+ * build_prt - Define interrupt routing rules
-  *
-  * Returns an array of 128 routes, one for each device,
-  * based on device location.
-  * The main goal is to equally distribute the interrupts
-  * over the 4 existing ACPI links (works only for i440fx).
-- * The hash function is  (slot + pin) & 3 -> "LNK[D|A|B|C]".
-+ * The hash function is: (slot + pin) & 3 -> "LNK[D|A|B|C]".
-  *
-  */
- static Aml *build_prt(bool is_pci0_prt)
- {
--    Aml *method, *while_ctx, *pin, *res;
-+    const int nroutes = 128;
-+    Aml *rt_pkg, *method;
-+    int pin;
- 
-     method = aml_method("_PRT", 0, AML_NOTSERIALIZED);
--    res = aml_local(0);
--    pin = aml_local(1);
--    aml_append(method, aml_store(aml_package(128), res));
--    aml_append(method, aml_store(aml_int(0), pin));
-+    rt_pkg = aml_varpackage(nroutes);
- 
--    /* while (pin < 128) */
--    while_ctx = aml_while(aml_lless(pin, aml_int(128)));
--    {
--        Aml *slot = aml_local(2);
--        Aml *lnk_idx = aml_local(3);
--        Aml *route = aml_local(4);
--
--        /* slot = pin >> 2 */
--        aml_append(while_ctx,
--                   aml_store(aml_shiftright(pin, aml_int(2), NULL), slot));
--        /* lnk_idx = (slot + pin) & 3 */
--        aml_append(while_ctx,
--            aml_store(aml_and(aml_add(pin, slot, NULL), aml_int(3), NULL),
--                      lnk_idx));
--
--        /* route[2] = "LNK[D|A|B|C]", selection based on pin % 3  */
--        aml_append(while_ctx, initialize_route(route, "LNKD", lnk_idx, 0));
--        if (is_pci0_prt) {
--            Aml *if_device_1, *if_pin_4, *else_pin_4;
--
--            /* device 1 is the power-management device, needs SCI */
--            if_device_1 = aml_if(aml_equal(lnk_idx, aml_int(1)));
--            {
--                if_pin_4 = aml_if(aml_equal(pin, aml_int(4)));
--                {
--                    aml_append(if_pin_4,
--                        aml_store(build_prt_entry("LNKS"), route));
--                }
--                aml_append(if_device_1, if_pin_4);
--                else_pin_4 = aml_else();
--                {
--                    aml_append(else_pin_4,
--                        aml_store(build_prt_entry("LNKA"), route));
--                }
--                aml_append(if_device_1, else_pin_4);
--            }
--            aml_append(while_ctx, if_device_1);
-+    for (pin = 0; pin < nroutes; pin++) {
-+        Aml *pkg = aml_package(4);
-+        int slot = pin >> 2;
-+
-+        aml_append(pkg, aml_int((slot << 16) | 0xFFFF));
-+        aml_append(pkg, aml_int(pin & 3));
-+        /* device 1 is the power-management device, needs SCI */
-+        if (is_pci0_prt && pin == 4) {
-+            aml_append(pkg, aml_name("%s", "LNKS"));
-         } else {
--            aml_append(while_ctx, initialize_route(route, "LNKA", lnk_idx, 1));
-+            static const char link_name[][5] = {"LNKD", "LNKA", "LNKB", "LNKC"};
-+            int hash = (slot + pin) & 3;
-+            aml_append(pkg, aml_name("%s", link_name[hash]));
-         }
--        aml_append(while_ctx, initialize_route(route, "LNKB", lnk_idx, 2));
--        aml_append(while_ctx, initialize_route(route, "LNKC", lnk_idx, 3));
--
--        /* route[0] = 0x[slot]FFFF */
--        aml_append(while_ctx,
--            aml_store(aml_or(aml_shiftleft(slot, aml_int(16)), aml_int(0xFFFF),
--                             NULL),
--                      aml_index(route, aml_int(0))));
--        /* route[1] = pin & 3 */
--        aml_append(while_ctx,
--            aml_store(aml_and(pin, aml_int(3), NULL),
--                      aml_index(route, aml_int(1))));
--        /* res[pin] = route */
--        aml_append(while_ctx, aml_store(route, aml_index(res, pin)));
--        /* pin++ */
--        aml_append(while_ctx, aml_increment(pin));
-+        aml_append(pkg, aml_int(0));
-+        aml_append(rt_pkg, pkg);
-     }
--    aml_append(method, while_ctx);
--    /* return res*/
--    aml_append(method, aml_return(res));
-+
-+    aml_append(method, aml_return(rt_pkg));
- 
-     return method;
- }
--- 
-2.46.0.76.ge559c4bf1a-goog
+Yeah, I forgot to fix these up before posting. Will fix for v2.
 
+
+> 
+> 
+> > +        return;
+> > +    }
+> > +
+> > +    if (s->cfg.max_cpus == 0) {
+> > +        /* FIXME: Prefix with object path and bail out.  */
+> > +        warn_report("max-cpus not specified. QEMU machine started");
+> > +        return;
+> > +    }
+> > +
+> > +    xen_pvh_init_ram(s, sysmem);
+> > +    xen_register_ioreq(&s->ioreq, s->cfg.max_cpus, &xen_memory_listener);
+> > +
+> > +    if (s->cfg.virtio_mmio_num) {
+> > +        xen_create_virtio_mmio_devices(s);
+> > +    }
+> > +
+> > +#ifdef CONFIG_TPM
+> > +    if (s->cfg.tpm.base) {
+> > +        xen_enable_tpm(s);
+> > +    } else {
+> > +        warn_report("tpm-base-addr is not provided. TPM will not be enabled");
+> > +    }
+> > +#endif
+> > +}
+> > +
+> > +#define DEFINE_PROP_MEMMAP(n, f) \
+> > +    DEFINE_PROP_UINT64(n "-base", XenPVHCommonState, cfg.f.base, 0), \
+> > +    DEFINE_PROP_UINT64(n "-size", XenPVHCommonState, cfg.f.size, 0)
+> > +
+> > +static Property xen_pvh_properties[] = {
+> > +    DEFINE_PROP_UINT32("max-cpus", XenPVHCommonState, cfg.max_cpus, 0),
+> > +    DEFINE_PROP_UINT64("ram-size", XenPVHCommonState, cfg.ram_size, 0),
+> > +    DEFINE_PROP_MEMMAP("ram-low", ram_low),
+> > +    DEFINE_PROP_MEMMAP("ram-high", ram_high),
+> > +    DEFINE_PROP_MEMMAP("virtio-mmio", virtio_mmio),
+> > +    DEFINE_PROP_MEMMAP("tpm", tpm),
+> > +    DEFINE_PROP_UINT32("virtio-mmio-num", XenPVHCommonState,
+> > +                       cfg.virtio_mmio_num, 0),
+> > +    DEFINE_PROP_UINT32("virtio-mmio-irq-base", XenPVHCommonState,
+> > +                       cfg.virtio_mmio_irq_base, 0),
+> > +    DEFINE_PROP_END_OF_LIST()
+> > +};
+> > +
+> > +static void xen_pvh_class_init(ObjectClass *klass, void *data)
+> > +{
+> > +    DeviceClass *dc = DEVICE_CLASS(klass);
+> > +
+> > +    dc->realize = xen_pvh_realize;
+> > +    device_class_set_props(dc, xen_pvh_properties);
+> > +    /* No VMSD since we haven't got any top-level SoC state to save.  */
+> > +}
+> > +
+> > +static const TypeInfo xen_pvh_info = {
+> > +    .name = TYPE_XEN_PVH_COMMON,
+> > +    .parent = TYPE_SYS_BUS_DEVICE,
+> > +    .instance_size = sizeof(XenPVHCommonState),
+> > +    .class_init = xen_pvh_class_init,
+> > +};
+> > +
+> > +static void xen_pvh_register_types(void)
+> > +{
+> > +    type_register_static(&xen_pvh_info);
+> > +}
+> > +
+> > +type_init(xen_pvh_register_types);
+> > diff --git a/include/hw/xen/xen-pvh-common.h b/include/hw/xen/xen-pvh-common.h
+> > new file mode 100644
+> > index 0000000000..e958b441fd
+> > --- /dev/null
+> > +++ b/include/hw/xen/xen-pvh-common.h
+> > @@ -0,0 +1,45 @@
+> > +/*
+> > + * QEMU Xen PVH machine - common code.
+> > + *
+> > + * Copyright (c) 2024 Advanced Micro Devices, Inc.
+> > + *
+> > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > + */
+> > +
+> > +#ifndef XEN_PVH_COMMON_H__
+> > +#define XEN_PVH_COMMON_H__
+> > +
+> > +#include <assert.h>
+> > +#include "hw/sysbus.h"
+> > +#include "hw/hw.h"
+> > +#include "hw/xen/xen-hvm-common.h"
+> > +#include "hw/pci-host/gpex.h"
+> > +
+> > +#define TYPE_XEN_PVH_COMMON "xen-pvh-common"
+> > +OBJECT_DECLARE_SIMPLE_TYPE(XenPVHCommonState, XEN_PVH_COMMON)
+> > +
+> > +typedef struct XenPVHCommonState {
+> > +    /*< private >*/
+> > +    SysBusDevice parent_obj;
+> > +
+> > +    XenIOState ioreq;
+> > +
+> > +    struct {
+> > +        MemoryRegion low;
+> > +        MemoryRegion high;
+> > +    } ram;
+> > +
+> > +    struct {
+> > +        uint64_t ram_size;
+> > +        uint32_t max_cpus;
+> > +        uint32_t virtio_mmio_num;
+> > +        uint32_t virtio_mmio_irq_base;
+> > +        struct {
+> > +            uint64_t base;
+> > +            uint64_t size;
+> > +        } ram_low, ram_high,
+> > +          virtio_mmio,
+> > +          tpm;
+> > +    } cfg;
+> > +} XenPVHCommonState;
+> > +#endif
+> > -- 
+> > 2.43.0
+> > 
 
