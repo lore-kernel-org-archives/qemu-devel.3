@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BBE5C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 20:07:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00B66C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 21:13:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seKGR-0008M2-Od; Wed, 14 Aug 2024 16:06:35 -0400
+	id 1seLIa-0004Gm-CL; Wed, 14 Aug 2024 17:12:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1seKGP-0008Kr-Bx
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 16:06:33 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ (Exim 4.90_1) (envelope-from <venture@google.com>)
+ id 1seLIZ-0004GJ-Li
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 17:12:51 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1seKGM-0007gR-Sk
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 16:06:33 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-2ef2cce8be8so3027821fa.1
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 13:06:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <venture@google.com>)
+ id 1seLIU-0002QD-HU
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 17:12:51 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-371893dd249so16804f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 14:12:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723665989; x=1724270789; darn=nongnu.org;
+ d=google.com; s=20230601; t=1723669964; x=1724274764; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=vM25kOL+kIlD5UWKXPq8/PQEgN2eOGwSdM3vNDHPTOI=;
- b=kPJijeQ4h9stFJS3U2Wew438FFi+Q2nBOQBZRXaStDd4tXntt2ahB8d3ZaflzfK+j8
- xNHKFLImr/vuyNtHxS3cyzqRapT/432M/jRgcHP6asR7LsPPKDuOgPisHbDxoG1Va3rl
- 7DYoJLizfiaeZZ+luYF8akOJ9rDRZcZs9eaYutnOJ5NOU8FS1pekUWSk4jYQNiFJf9Hc
- mN7mAB1uI2RZdoaKEyet/tbxysLTbjCqJN/CSAb+GyH4tIRJO0nSU3TP7roUn8gGsFH4
- +lROkJPPIkNMOoH/aUPjuQLBxCQVIFhidKB1Zm/cmfmGYn4ZFSqI1tVlmalym797C/6o
- rKlA==
+ bh=A1lkVNa+r2qGdoXm7g5nCq8nXlcVB0boBpujh7QU99Y=;
+ b=4S6CCRWB8RC4Yx9esFemHDllGlOUfY7aDJ78EgdZza0hBTLlgt2SsdYnerznRX6a8O
+ 7HUThNr+n1tFIbF0B9GPdzpHBt+5hcIFvTXoof4UjiQf3AUb51jQRMLw7S+V2cD/4bfF
+ vMAClzBBq1uaEjlkJOJrO/EElUZRG4XtT21CC73jA0afXJi+oCPPz+jBCsB/n92m3ity
+ BC35C7EOYikzkJJ12t2OnWWCyQPQUEaEuS4RToHd735L9OL+DS72bG1fNoMYViv7Ke7l
+ HUWa8Pt+ovPj0Bvqi5TmaZfIQixvUxTyCfACkgOuKPd/5mmMiiiZzwmSEWC6uYq9kM++
+ wr+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723665989; x=1724270789;
+ d=1e100.net; s=20230601; t=1723669964; x=1724274764;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=vM25kOL+kIlD5UWKXPq8/PQEgN2eOGwSdM3vNDHPTOI=;
- b=B7ViPb1n4UrNgP9fPPGp1mV1BNDABjJx4hbfpQhx7N7c9XaWg8zxBPHY+5f7zApx/9
- 7hAj1Bln2qJmFZwPTviqEfW48wu2XM/JhgqKNiXXeFDv4GuhAefU4tqUm72MGFyaQHt3
- F+aup/dwksn5b+IYlcWMzWBpA/Lw6+drmyF2/bvsDV/onTjfjJ34KHtl3aNkWBojWXIr
- wtW9ml8CBIk5/3/FicW/MzjtIkDpDCJOixOYaELrLsQ2EQ3uRDWPAvCPhpLb69OrJata
- aaejIluztSK2VlFw5H2/yqtwyqINTAkoWhlB2cfMAOHDAm0TQH1x5EyF6gmLof5cyFNg
- Xp8Q==
-X-Gm-Message-State: AOJu0Yw1vS8TP5M5iAB/DE9fYYrx/JbEVSEOVg8Ccqg3gWKl00JXL/Lo
- 8XlgPTNFkG8GIQvw7FnTmdKsCtxPx08vARJYIVK12lK9HeS6lLr7wgCNSQB4/n/npyvc74Vk5h5
- wL3s0pcXACh9iP6WeVnKhvBT3JriqoyQOrzGFrg==
-X-Google-Smtp-Source: AGHT+IFnf43d56G9pu9qXOdQzY2+gEw1mrsQDK7L6DiegSjkYWJT3pHdYiSZzCYPHDV1zSqyTJoJP2kZ724oVQQluks=
-X-Received: by 2002:a05:651c:2121:b0:2f1:5d72:4239 with SMTP id
- 38308e7fff4ca-2f3aa198545mr33896851fa.10.1723665988356; Wed, 14 Aug 2024
- 13:06:28 -0700 (PDT)
+ bh=A1lkVNa+r2qGdoXm7g5nCq8nXlcVB0boBpujh7QU99Y=;
+ b=snuIKjE2Pc+IX5VMafHJoeL+siqSEE0COsuGYuKzz1Nt0e4WbF8f4ouwMiQcp0TEgC
+ fz5tUiSTrl3Ef2ehVjtesfWKEzyEjDA0eiONSvQs6HGENpIop5eHRwc3OTIm/gcvE2I0
+ BaiwB3MPWY5rj0cCN//97XcJaLSSQly1WXmE/wpeh0Asd8B+OX8CVZqT1hOKhF0y24Hk
+ zOhWvniAF7Yx6/P0BHpPHh2eLrTH9IvmaMAV0UKdHyVWkucliYXiGiK0011W5IfIs1BQ
+ FO6leMgVg3/iOSCATajfPJGiRr2zGULPEOAQQnWPIyQqbF3kDdm98ihXkyNcEGOYyb+b
+ 9Kjg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVqb4eg88q/UDK1QDr/6ahidljmn9F/sUFig/BDUJZ9sLLpks65my9TuqN0fWqMEsYdOif+vicct+LZSYhADS6t2DDZSjE=
+X-Gm-Message-State: AOJu0Yxwt6+Q87II+TSIZzHjCK5q662eZTZNDQmAGxEu/CwbxPR8wXAy
+ z30aug1zZkOnakDwRBQtoy5G4XpQwDV05xdQx5Asz7ETO+GOqpLi7QfROr8dDLxqQ4ugZ5+7WDt
+ 4az8kcOnJXASuQJt6NA9uA9xMIWxYk/Fw+0fH
+X-Google-Smtp-Source: AGHT+IGdlwznpHWE9Ctu13Z6ehFUWbEehuqT0G6nDc85ePg050eiwyK8dX6xStK+hZx9y0//p0crx0SZG6aHZz/Kpnw=
+X-Received: by 2002:a05:6000:10d:b0:368:7943:146f with SMTP id
+ ffacd0b85a97d-37177797511mr2575335f8f.26.1723669963755; Wed, 14 Aug 2024
+ 14:12:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240813165250.2717650-1-peter.maydell@linaro.org>
- <14c38495-131f-4798-bf41-da442ede23eb@linux.ibm.com>
-In-Reply-To: <14c38495-131f-4798-bf41-da442ede23eb@linux.ibm.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 14 Aug 2024 21:06:16 +0100
-Message-ID: <CAFEAcA8FFiiMXTcMR0WRP=Nhw3-+LYoP=X4OYrm5tnrp4L-wGQ@mail.gmail.com>
-Subject: Re: [PATCH for-9.2 00/10] s390: Convert virtio-ccw, cpu to
- three-phase reset, and followup cleanup
-To: Christian Borntraeger <borntraeger@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, Nina Schoetterl-Glausch <nsg@linux.ibm.com>, 
- Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, 
- Halil Pasic <pasic@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x232.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+References: <ad0740c5-9bc2-443c-9caa-a243b3a29108@redhat.com>
+ <20240627003134.3447175-1-rkir@google.com>
+ <CABgObfajkBU9-aGQcDGf6taUGwZOG=O5sewzc1HjCWTb5cVA1A@mail.gmail.com>
+ <CAOGAQepLGTY-92So1arNZWjg9m+HZ8AjZ28Gsscm2ai5sj1AMQ@mail.gmail.com>
+ <CABgObfaBjneGy__o_aABdm+60wsg=rxLmgZLthwCoezwnH34ZQ@mail.gmail.com>
+ <CAOGAQeo+DZpE=6xEeUWUEkqSwYgturQ9QzXyzNNt7QfrFqea-Q@mail.gmail.com>
+In-Reply-To: <CAOGAQeo+DZpE=6xEeUWUEkqSwYgturQ9QzXyzNNt7QfrFqea-Q@mail.gmail.com>
+From: Patrick Leis <venture@google.com>
+Date: Wed, 14 Aug 2024 14:12:32 -0700
+Message-ID: <CAO=notwaOEkXK1PN679=1qTSnAh1R_f9kkRAF+ykLBij2nqy9A@mail.gmail.com>
+Subject: Re: [PATCH v3] timer: Fix a race condition between timer's callback
+ and destroying code
+To: Roman Kiryanov <rkir@google.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, jansene@google.com,
+ jpcottin@google.com, mett@google.com, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000e736e3061fab2f27"
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=venture@google.com; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01, T_SPF_TEMPERROR=0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,27 +97,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 14 Aug 2024 at 15:22, Christian Borntraeger
-<borntraeger@linux.ibm.com> wrote:
+--000000000000e736e3061fab2f27
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Jun 27, 2024 at 10:55=E2=80=AFAM Roman Kiryanov <rkir@google.com> w=
+rote:
+
+> Paolo, thank you for your comments.
 >
-> Am 13.08.24 um 18:52 schrieb Peter Maydell:
-> > The main aim of this patchseries is to remove the two remaining uses
-> > of device_class_set_parent_reset() in the tree, which are virtio-ccw
-> > and the s390 CPU class. Doing that lets us do some followup cleanup.
-> > (The diffstat looks alarming but is almost all coccinelle automated
-> > changes.)
+> On Thu, Jun 27, 2024 at 10:16=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.c=
+om>
+> wrote:
+> > I think the easiest options would be:
 > >
-> > Note that my testing here has only been "make check" and
-> > "make check-avocado", which I know doesn't really exercise reset
-> > very heavily.
+> > 1) if possible, allocate the timer and the callbackState statically in
+> > the device.
+>
+> I think this assumption is not good for both QEMU and us.
+>
+> > 2) use "aio_wait_bh_oneshot(qemu_get_aio_context(), [](void
+> > *opaque){}, NULL);" after timer_del(). You can also put the timer and
+> > the callbackState in a RAII wrapper, so that aio_wait_bh_oneshot() is
+> > executed when the RAII wrapper is destructed
+>
+> My understanding is that this will work as a fence waiting for all
+> timers to finish. If so, maybe there is a value to put it into QEMU
+> (as times_joins() or even as timer_join(QEMUTimer *ts)) if one day
+> you decide to implement it in a more efficient way?
+>
+> > Another thing that you could do is to use a shared_ptr<> for the
+> > timer+callbackState combo, and pass a weak_ptr<> to the timer. Then:
+> >
+> > - at the beginning of the timer, you upgrade the weak_ptr with lock()
+> > and if it fails, return
+> >
+> > I'm not sure how you'd pass the weak_ptr/shared_ptr to a callback
+>
+> I suspect this is not possible in plain C++ without modifying QEMU or
+> code generating at runtime.
+>
+> I would go with your aio_wait_bh_oneshot suggestion. Please consider
+> adding it to QEMU as I pointed above. I can send a patch.
+>
 
-> Nina, can you have a look at those patches?
+Hey - this is an important race condition to resolve, can we get some
+attention back on this patchset please.  It's pressing.
 
-If you plan to do any testing you'll want to locally fix the
-silly mistake I made in patch 2 (a RESET_TYPE_COLD where
-it should say RESET_TYPE_S390_CPU_NORMAL) -- see the review
-comments on that patch. Sorry about that one...
+Patrick
 
-thanks
--- PMM
+--000000000000e736e3061fab2f27
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun 27, 2024 at 10:55=E2=80=
+=AFAM Roman Kiryanov &lt;<a href=3D"mailto:rkir@google.com">rkir@google.com=
+</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
+0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
+Paolo, thank you for your comments.<br>
+<br>
+On Thu, Jun 27, 2024 at 10:16=E2=80=AFAM Paolo Bonzini &lt;<a href=3D"mailt=
+o:pbonzini@redhat.com" target=3D"_blank">pbonzini@redhat.com</a>&gt; wrote:=
+<br>
+&gt; I think the easiest options would be:<br>
+&gt;<br>
+&gt; 1) if possible, allocate the timer and the callbackState statically in=
+<br>
+&gt; the device.<br>
+<br>
+I think this assumption is not good for both QEMU and us.<br>
+<br>
+&gt; 2) use &quot;aio_wait_bh_oneshot(qemu_get_aio_context(), [](void<br>
+&gt; *opaque){}, NULL);&quot; after timer_del(). You can also put the timer=
+ and<br>
+&gt; the callbackState in a RAII wrapper, so that aio_wait_bh_oneshot() is<=
+br>
+&gt; executed when the RAII wrapper is destructed<br>
+<br>
+My understanding is that this will work as a fence waiting for all<br>
+timers to finish. If so, maybe there is a value to put it into QEMU<br>
+(as times_joins() or even as timer_join(QEMUTimer *ts)) if one day<br>
+you decide to implement it in a more efficient way?<br>
+<br>
+&gt; Another thing that you could do is to use a shared_ptr&lt;&gt; for the=
+<br>
+&gt; timer+callbackState combo, and pass a weak_ptr&lt;&gt; to the timer. T=
+hen:<br>
+&gt;<br>
+&gt; - at the beginning of the timer, you upgrade the weak_ptr with lock()<=
+br>
+&gt; and if it fails, return<br>
+&gt;<br>
+&gt; I&#39;m not sure how you&#39;d pass the weak_ptr/shared_ptr to a callb=
+ack<br>
+<br>
+I suspect this is not possible in plain C++ without modifying QEMU or<br>
+code generating at runtime.<br>
+<br>
+I would go with your aio_wait_bh_oneshot suggestion. Please consider<br>
+adding it to QEMU as I pointed above. I can send a patch.<br></blockquote><=
+div><br></div><div>Hey - this is an important race condition to resolve, ca=
+n we get some attention back on this patchset please.=C2=A0 It&#39;s pressi=
+ng.</div><div><br></div><div>Patrick</div><div>=C2=A0</div></div></div>
+
+--000000000000e736e3061fab2f27--
 
