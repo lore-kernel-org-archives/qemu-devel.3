@@ -4,109 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 640A6C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 22:58:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CB54C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 23:38:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seMwC-0001J3-91; Wed, 14 Aug 2024 18:57:52 -0400
+	id 1seNY6-0001kV-8U; Wed, 14 Aug 2024 19:37:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1seMwA-0001Gz-50; Wed, 14 Aug 2024 18:57:50 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1seMw8-00015B-18; Wed, 14 Aug 2024 18:57:49 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47EHtNxv013013;
- Wed, 14 Aug 2024 22:57:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- message-id:subject:from:to:cc:date:in-reply-to:references
- :content-type:content-transfer-encoding:mime-version; s=pp1; bh=
- R4rBzep3wt8cwF8iJPcpyPemhVqeacKhVyDXdn6hDLY=; b=tW5yhGUlNLsMKxnx
- iAGkV7fI2TRQ2u9plrjMlmK558/vzkX8m9+QtV4H6VsOE6m9yzWOmbD6la434cdP
- pXd9XhwMVA2619gzVu9j8xjOtOrbgvTovEbdTPFuWVtLlzTtUgRFw/fjhGZeZ/D7
- alyHhpSQXQ60YTHUA5JuN4Gjgkb8RY7CrEVghgqvsClXEt/xD1q/0rbEeYdcD+C0
- +rDi7NYdeD3uvr2Sz+prKgBSEBX4T9nG/ErFRlG9MJ26sqqccP6AApApxQr05ZA+
- rDPxJXRCtTgOVNy2ssinzVGA2sdRQ0ez3KhP1H1eF3UI1qfcjKf+HlCpJ9Ri3sfN
- 7HMMIA==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4111d693kq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 Aug 2024 22:57:43 +0000 (GMT)
-Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 47EMurnq012331;
- Wed, 14 Aug 2024 22:57:42 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4111d693kh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 Aug 2024 22:57:42 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id
- 47EJe93x010088; Wed, 14 Aug 2024 22:57:41 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 40xjx0uyr3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 14 Aug 2024 22:57:41 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 47EMvb9M53674384
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 14 Aug 2024 22:57:39 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 447FB20043;
- Wed, 14 Aug 2024 22:57:37 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 76E2A20040;
- Wed, 14 Aug 2024 22:57:36 +0000 (GMT)
-Received: from [127.0.0.1] (unknown [9.152.108.100])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 14 Aug 2024 22:57:36 +0000 (GMT)
-Message-ID: <e7478b1e0116882c5cbbff61fac5f2221841877c.camel@linux.ibm.com>
-Subject: Re: [PATCH v2 3/4] target/s390x: fix build warning (gcc-12
- -fsanitize=thread)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Beraldo Leal <bleal@redhat.com>, David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, Paolo
- Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org, Wainer dos Santos
- Moschetta <wainersm@redhat.com>, qemu-s390x@nongnu.org, "Daniel P."
- =?ISO-8859-1?Q?Berrang=E9?= <berrange@redhat.com>,
- =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>, Richard
- Henderson <richard.henderson@linaro.org>, Alex =?ISO-8859-1?Q?Benn=E9e?=
- <alex.bennee@linaro.org>
-Date: Thu, 15 Aug 2024 00:57:35 +0200
-In-Reply-To: <20240814224132.897098-4-pierrick.bouvier@linaro.org>
-References: <20240814224132.897098-1-pierrick.bouvier@linaro.org>
- <20240814224132.897098-4-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.52.4 (3.52.4-1.fc40) 
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1seNY5-0001hB-B2
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 19:37:01 -0400
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1seNY3-0006W9-Oc
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 19:37:01 -0400
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-70d18d4b94cso276342b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 16:36:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723678618; x=1724283418; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OHisr3UikbRag7D0QJ33pcI9STMq6DpazTYXpbTOwMY=;
+ b=HBLcCOEgy0DeFQZLiiV76slyZ9lgCegKElLLLIVNeseNl0Q+gYs9oauvw2tGIJjxmh
+ od5kaI5mcalpQWoz6Z9OZIAhXNN3vQvjxbywkZoOOOPQ7xe9Swhb6bbTfO5aSELPbDpd
+ DnyJG7v9GHwqoyF3mAeTRMaC8QFGnI47HGIeB8lpfj3auROc9yI8BH6TpmhDlvPsupJy
+ 7z/Uy9Ny62CbxAVPDuaw33mdE6gNjXH4oVxyzy2GoV3aFZQ6sP/7vTOBwGuhqlNPUgn8
+ HvZvRwtJaaWVEXpxOwESdNf98Un24oJf6HI4X+I56baF3Gaa1+n07niWKN0fPykh0vec
+ 37Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723678618; x=1724283418;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OHisr3UikbRag7D0QJ33pcI9STMq6DpazTYXpbTOwMY=;
+ b=vvRPne89dE5AQbmPH+bRZRXyKR0lT6IsEb4u0coXNVWO0nxHljWgsit92KhZN0wFvw
+ FNt0PVC6drFhNBRK2f32V8/1a9Xxv+9w93PxYRfC8QGK43feX88KbWY7VCaxVzLu6m4W
+ nErOEL3N1WCbz6qZg8jLBUrSSVoWQLu/kTUw0FzU5MKQVFRKnVxqW56tZARORr5f2ru1
+ YJ8doIN4v8f4wsXBQ3iMIvdiAiGPUIH2EEyvn7WtCfZbtLaz0m8DNy9XTeCxScPOBKW+
+ ZHhmucZP/FwxWdrlUGuzwO5FCHDRHpinBcrT/JYMPS94TaD7dpq9l+VUn6FxxdrRkNve
+ yA4A==
+X-Gm-Message-State: AOJu0Yyg0vmenKneoAU5Axr7VP/ttzve3fi05hfK18qYpqFQVPo8OEWc
+ oQ7SBPwvtxJtU+PCGL/oPy0AXLpiboSMdScKenLercIjiCHaNG7zpHSvHI7tQinKbT6Tku1qbLz
+ aMk0=
+X-Google-Smtp-Source: AGHT+IHXyYUb+nK7n0KwdvSo1ZfOGSVr8GxiCN3LqPpbhOi8eh+FyIDNujNiCWlLU8tqU6H38Vfcuw==
+X-Received: by 2002:a05:6a20:6f0e:b0:1c8:92ed:7c5e with SMTP id
+ adf61e73a8af0-1c8eaeb3b5emr5140262637.23.1723678618196; 
+ Wed, 14 Aug 2024 16:36:58 -0700 (PDT)
+Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::b861])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7127aef57dfsm112164b3a.115.2024.08.14.16.36.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 14 Aug 2024 16:36:57 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Thomas Huth <thuth@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 3/6] contrib/plugins/hwprofile: fix warning when compiling on
+ 32bits host
+Date: Wed, 14 Aug 2024 16:36:42 -0700
+Message-Id: <20240814233645.944327-4-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240814233645.944327-1-pierrick.bouvier@linaro.org>
+References: <20240814233645.944327-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: AuD4AOgyxvUz_qqmdMkzwrQKCGm8U92K
-X-Proofpoint-ORIG-GUID: tiqy8AfNNfwo-eIdKn9mriTFTZZj3Fqg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-14_18,2024-08-13_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=841 phishscore=0
- spamscore=0 malwarescore=0 priorityscore=1501 impostorscore=0 adultscore=0
- bulkscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1011
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2408140157
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,16 +102,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 2024-08-14 at 15:41 -0700, Pierrick Bouvier wrote:
-> Found on debian stable.
->=20
-> ../target/s390x/tcg/translate.c: In function =E2=80=98get_mem_index=E2=80=
-=99:
-> ../target/s390x/tcg/translate.c:398:1: error: control reaches end of
-> non-void function [-Werror=3Dreturn-type]
-> =C2=A0 398 | }
->=20
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Found on debian stable (i386).
 
-Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
+../contrib/plugins/hwprofile.c: In function 'new_location':
+../contrib/plugins/hwprofile.c:172:32: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+  172 |     g_hash_table_insert(table, (gpointer) off_or_pc, loc);
+      |                                ^
+../contrib/plugins/hwprofile.c: In function 'vcpu_haddr':
+../contrib/plugins/hwprofile.c:227:19: error: cast from pointer to integer of different size [-Werror=pointer-to-int-cast]
+  227 |             off = (uint64_t) udata;
+      |                   ^
+../contrib/plugins/hwprofile.c:232:62: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+  232 |                                                              (gpointer) off);
+      |                                                              ^
+../contrib/plugins/hwprofile.c: In function 'vcpu_tb_trans':
+../contrib/plugins/hwprofile.c:250:26: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+  250 |         gpointer udata = (gpointer) (source ? qemu_plugin_insn_vaddr(insn) : 0);
+      |
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ contrib/plugins/hwprofile.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/plugins/hwprofile.c b/contrib/plugins/hwprofile.c
+index 739ac0c66b5..ee94a74ad94 100644
+--- a/contrib/plugins/hwprofile.c
++++ b/contrib/plugins/hwprofile.c
+@@ -165,7 +165,7 @@ static DeviceCounts *new_count(const char *name, uint64_t base)
+     return count;
+ }
+ 
+-static IOLocationCounts *new_location(GHashTable *table, uint64_t off_or_pc)
++static IOLocationCounts *new_location(GHashTable *table, uintptr_t off_or_pc)
+ {
+     IOLocationCounts *loc = g_new0(IOLocationCounts, 1);
+     loc->off_or_pc = off_or_pc;
+@@ -201,7 +201,7 @@ static void vcpu_haddr(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
+         return;
+     } else {
+         const char *name = qemu_plugin_hwaddr_device_name(hwaddr);
+-        uint64_t off = qemu_plugin_hwaddr_phys_addr(hwaddr);
++        uintptr_t off = qemu_plugin_hwaddr_phys_addr(hwaddr);
+         bool is_write = qemu_plugin_mem_is_store(meminfo);
+         DeviceCounts *counts;
+ 
+@@ -224,7 +224,7 @@ static void vcpu_haddr(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
+ 
+         /* either track offsets or source of access */
+         if (source) {
+-            off = (uint64_t) udata;
++            off = (uintptr_t) udata;
+         }
+ 
+         if (pattern || source) {
+@@ -247,7 +247,8 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+ 
+     for (i = 0; i < n; i++) {
+         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+-        gpointer udata = (gpointer) (source ? qemu_plugin_insn_vaddr(insn) : 0);
++        gpointer udata = (gpointer) (
++                source ? (uintptr_t) qemu_plugin_insn_vaddr(insn) : 0);
+         qemu_plugin_register_vcpu_mem_cb(insn, vcpu_haddr,
+                                          QEMU_PLUGIN_CB_NO_REGS,
+                                          rw, udata);
+-- 
+2.39.2
+
 
