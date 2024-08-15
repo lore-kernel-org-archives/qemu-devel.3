@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BE42C52D7D
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 08:14:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CCBCC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 08:14:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seVcC-000789-8U; Thu, 15 Aug 2024 04:13:48 -0400
+	id 1seVd0-0002LH-Fv; Thu, 15 Aug 2024 04:14:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1seVc6-0006tH-LZ
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 04:13:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1seVcr-0001Pn-4t
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 04:14:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1seVc3-0002X3-Og
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 04:13:41 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1seVcp-0002cS-62
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 04:14:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723709618;
+ s=mimecast20190719; t=1723709666;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+gyuA32BDRTqkRYQzKtgifrjWd83CrAf9auKLS5stzY=;
- b=B1zP0yMMNouV3URr7VcsSCGYeYZ87Gc1K732xrr8+iZ2pMdGx7OGj3tspnL8+vgRZmLD6O
- 48amHbguEHqwVz6iMQGbeoaQSDParpVU7ANSX4gjqILLb+uZt/SCDE0SK0X6O9jxaQY7h9
- daYwMeO+tuIiCGYysciMUoqPiugSmD0=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wcud/RY98h9IQ5H9AMpFCRvD9OaCwdnfvMr98nTp/S8=;
+ b=EeDmqdExxUCT6/2g3LI08HXkL0s81bnaOw5MvxWVirfaJgoYV7eJ6gVWVOmH5PsDTgXiQv
+ Y5vKwxQV6onQhcOaCIiRvb9GSGShQUNtbyocxBBBzz82g9d3CjeKW9771MhktZrNmzErKQ
+ z5QVN7eqdRXV6ASaQHtJRkL9z4S1PTM=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-584-O9_e4HlYO4ak-unje6wo-w-1; Thu, 15 Aug 2024 04:13:35 -0400
-X-MC-Unique: O9_e4HlYO4ak-unje6wo-w-1
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-a7aa56d8b14so59856766b.1
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 01:13:35 -0700 (PDT)
+ us-mta-665-WjiaqU9wM2yPczRPT_Ul_Q-1; Thu, 15 Aug 2024 04:14:23 -0400
+X-MC-Unique: WjiaqU9wM2yPczRPT_Ul_Q-1
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-a7aa56d8b14so59890766b.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 01:14:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723709614; x=1724314414;
+ d=1e100.net; s=20230601; t=1723709662; x=1724314462;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+gyuA32BDRTqkRYQzKtgifrjWd83CrAf9auKLS5stzY=;
- b=R+bavb7iWIVB20Tu8cWF2qeUt/KTpuPdjEp9xzvWZtq0t/d+MEbgYdHWkFE7Lw1cHR
- 7D6hUU1WdNsNv9f6QGQhT1yPWXUiIcJZkRHw70YGBAZ6QLtDMZWdw5vTpzZq+4/GB98G
- l3sf7EvUo4xoDV2VXN6XdXyRV7q/16+ZDQURIrWt3TNYV4o1NOHwzi8DjXbgwtJrkGt7
- vRtOj57oLGiJi5dVsq7Ga3kT9b2V50jA0Ad7Jvm9e60DHMoywaGSTsua6J3sYLgAx8SN
- OmLyaSLqriSlkPRz1ZV6CBTSKWkzBRIvaCvB35FkvGeXnAHfYYyNfiPSUAzCO9Z7XYwa
- jrKw==
+ bh=wcud/RY98h9IQ5H9AMpFCRvD9OaCwdnfvMr98nTp/S8=;
+ b=YmiBzcnstn23ZOA2kXkvusHkbDQKI7y/K7RYbqQrzw91TdzlB1sY+81jibh+8NnlCc
+ NP/Hhv16kOTucEI22OOxQ1GehxN7Ng0jOAEiLuZUlR9kTKfoDwTEIY0KEeEVVy+hw2nX
+ aJORRyXUIqmv9AWsQYPm+vsSzoVN69pV6YKxTOfyTfOn3Z4hMukDVL6IoBs+RMcrQ3vQ
+ BuXslMJ3Ej4Ky5b9g3DnFiBBGB7CTlDuVhXyQC7zBwGyb0YylYGs9BkVckICn6oFabsH
+ RfR6Tzji64Dyc2DQrjZNCawhVSh3ddJFoEzZpLICCQY+5P3ZFnu4kayMMH3o8yjEyBSq
+ yDSA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWlKnBRLylFGWAisEGaiJ7OBKB7Mls9d0pJFVqmaZ5KwU/nTdn4BwxUotUuZJCd27Jjvnt5cccaXxjFgUEmHfs9rPfCQWQ=
-X-Gm-Message-State: AOJu0YxvWfwU93O1Chxi4UxEVb0FEw2PUs64g4gPmL66lujYlTKhL8Q8
- vX7aJPRxh5yZ9dtJ/LZvvHTT3t605Ek6fpjRXsMtwo1kJCMUBRMt/uz0wOfNudd897qlCiMFc5k
- yfuEnMhYoqG+DFWhdkHACPh4IMnSG90u+yV0ZKcBScZakX65JO3Jx
-X-Received: by 2002:a17:907:e25a:b0:a77:deb2:8b01 with SMTP id
- a640c23a62f3a-a8366c1fb20mr383009266b.1.1723709614486; 
- Thu, 15 Aug 2024 01:13:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEtpqBP0ylECyrtq3zexmkuHPbc1OqDRcKHd2f0RW3mRIEt5vVZCBeLmwMCgPEtxxtXsDMsvw==
-X-Received: by 2002:a17:907:e25a:b0:a77:deb2:8b01 with SMTP id
- a640c23a62f3a-a8366c1fb20mr383007866b.1.1723709613997; 
- Thu, 15 Aug 2024 01:13:33 -0700 (PDT)
+ AJvYcCVTHmWMzDuUWpDuy+MmmV5njb2n2cn0P3JwKEIK9Aaae+e/ML0Qe5yDAuHqKLQbjPnLF75ZYk/RtCU12RkQrJFxBrNul8U=
+X-Gm-Message-State: AOJu0Yxw+y9wGXobmDmQlGbSR0K5b9tqCYIdQTtR1CFFAYytu6p3ODjc
+ DAq0kT96/JyzrfDpf4DG0pyJj95wPp9KIPTVDlLmeEJNLfMfNp/xo/HA93JHqNMbJCsOO1X5Mk6
+ lYSXqqbfp03Thrc6NJVIpEZG7aC04J8btjNqZetiGkVbH1ls3ZXhX
+X-Received: by 2002:a17:907:e64d:b0:a7a:b0a0:ebd2 with SMTP id
+ a640c23a62f3a-a8366d5b851mr379275666b.32.1723709662359; 
+ Thu, 15 Aug 2024 01:14:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF8Qu8msYjZc32W2XHDNFD1htJuB6lZowPNuYttztsMBenVinFL/ipBEqMmOs6+hif4fdNCBA==
+X-Received: by 2002:a17:907:e64d:b0:a7a:b0a0:ebd2 with SMTP id
+ a640c23a62f3a-a8366d5b851mr379273766b.32.1723709661877; 
+ Thu, 15 Aug 2024 01:14:21 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-177-15.web.vodafone.de.
  [109.43.177.15]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a83839359f7sm63651766b.131.2024.08.15.01.13.32
+ a640c23a62f3a-a83839342f6sm63399166b.137.2024.08.15.01.14.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Aug 2024 01:13:33 -0700 (PDT)
-Message-ID: <353d0b10-8a7a-4660-a22c-f3dcb35df89e@redhat.com>
-Date: Thu, 15 Aug 2024 10:13:32 +0200
+ Thu, 15 Aug 2024 01:14:21 -0700 (PDT)
+Message-ID: <1a568716-c9a8-4599-b759-fc4b76c5d1be@redhat.com>
+Date: Thu, 15 Aug 2024 10:14:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] contrib/plugins/hwprofile: fix warning when compiling
+Subject: Re: [PATCH 4/6] contrib/plugins/hotblocks: fix warning when compiling
  on 32bits host
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -80,7 +80,7 @@ Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20240814233645.944327-1-pierrick.bouvier@linaro.org>
- <20240814233645.944327-4-pierrick.bouvier@linaro.org>
+ <20240814233645.944327-5-pierrick.bouvier@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -125,17 +125,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20240814233645.944327-4-pierrick.bouvier@linaro.org>
+In-Reply-To: <20240814233645.944327-5-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.135,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -156,48 +156,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 15/08/2024 01.36, Pierrick Bouvier wrote:
 > Found on debian stable (i386).
 > 
-> ../contrib/plugins/hwprofile.c: In function 'new_location':
-> ../contrib/plugins/hwprofile.c:172:32: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
->    172 |     g_hash_table_insert(table, (gpointer) off_or_pc, loc);
->        |                                ^
-> ../contrib/plugins/hwprofile.c: In function 'vcpu_haddr':
-> ../contrib/plugins/hwprofile.c:227:19: error: cast from pointer to integer of different size [-Werror=pointer-to-int-cast]
->    227 |             off = (uint64_t) udata;
->        |                   ^
-> ../contrib/plugins/hwprofile.c:232:62: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
->    232 |                                                              (gpointer) off);
->        |                                                              ^
-> ../contrib/plugins/hwprofile.c: In function 'vcpu_tb_trans':
-> ../contrib/plugins/hwprofile.c:250:26: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
->    250 |         gpointer udata = (gpointer) (source ? qemu_plugin_insn_vaddr(insn) : 0);
+> ../contrib/plugins/hotblocks.c: In function 'vcpu_tb_trans':
+> ../contrib/plugins/hotblocks.c:117:56: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+>    117 |     cnt = (ExecCount *) g_hash_table_lookup(hotblocks, (gconstpointer) hash);
+>        |                                                        ^
+> ../contrib/plugins/hotblocks.c:126:40: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+>    126 |         g_hash_table_insert(hotblocks, (gpointer) hash, (gpointer) cnt);
 >        |
 > 
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   contrib/plugins/hwprofile.c | 9 +++++----
->   1 file changed, 5 insertions(+), 4 deletions(-)
+>   contrib/plugins/hotblocks.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/contrib/plugins/hwprofile.c b/contrib/plugins/hwprofile.c
-> index 739ac0c66b5..ee94a74ad94 100644
-> --- a/contrib/plugins/hwprofile.c
-> +++ b/contrib/plugins/hwprofile.c
-> @@ -165,7 +165,7 @@ static DeviceCounts *new_count(const char *name, uint64_t base)
->       return count;
->   }
->   
-> -static IOLocationCounts *new_location(GHashTable *table, uint64_t off_or_pc)
-> +static IOLocationCounts *new_location(GHashTable *table, uintptr_t off_or_pc)
+> diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
+> index 02bc5078bdd..d540f1b7f0b 100644
+> --- a/contrib/plugins/hotblocks.c
+> +++ b/contrib/plugins/hotblocks.c
+> @@ -109,9 +109,9 @@ static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
+>   static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
 >   {
->       IOLocationCounts *loc = g_new0(IOLocationCounts, 1);
->       loc->off_or_pc = off_or_pc;
-> @@ -201,7 +201,7 @@ static void vcpu_haddr(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
->           return;
->       } else {
->           const char *name = qemu_plugin_hwaddr_device_name(hwaddr);
-> -        uint64_t off = qemu_plugin_hwaddr_phys_addr(hwaddr);
-> +        uintptr_t off = qemu_plugin_hwaddr_phys_addr(hwaddr);
+>       ExecCount *cnt;
+> -    uint64_t pc = qemu_plugin_tb_vaddr(tb);
+> +    uintptr_t pc = qemu_plugin_tb_vaddr(tb);
 
-qemu_plugin_hwaddr_phys_addr() returns an uint64_t, so this looks wrong to me.
+qemu_plugin_tb_vaddr() return uint64_t, so this looks wrong to me, too.
 
   Thomas
 
