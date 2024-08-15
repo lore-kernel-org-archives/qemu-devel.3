@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B24FC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 17:55:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C2B9C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 17:55:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seegV-0003jB-Vj; Thu, 15 Aug 2024 13:54:52 -0400
+	id 1seegy-0004Gg-I5; Thu, 15 Aug 2024 13:55:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1seegT-0003hu-Tv
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 13:54:49 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1seegt-0003y0-JI
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 13:55:16 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1seegS-0004M0-AJ
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 13:54:49 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-1fd70ba6a15so10883625ad.0
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 10:54:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1seegm-0004Xq-Ja
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 13:55:11 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5bebd3b7c22so1127476a12.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 10:55:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723744486; x=1724349286; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2YKSJ2n8OS/IVEPWotzaXg/8leJ6lDGmmxdPVmQ8FW4=;
- b=KQ9eKbLNtupRgEm1wEE4yWZwWi+t/vRaCazrDKPe5e7xz/5XL2inXxvuJ8MlFwfI67
- W4Vun+/IbX0FObHqK9Xut1H5GP87cklBiKYoXNzm9uWYG3EqjwdvCiOtKh9o8UofqNQ0
- 5zc7bdyyS11OA0AiJPQFfMEShPjzwNRKPU1V46WAO4oqseRkuhBhpDADaHzVnWDCr5oB
- vJ0K5OGWrEkVvHruw3TUihX+EWFt8u40iEvMfGiuAUkJ5l+Xje3rnci4hVZ+ZxwCGDeH
- NXIO93dF2NPW4tp3HbH/h9lBGlhs49CBVerOv2eDxFIg6ExkqA1kgNzwQDsGFNTZ2e89
- Tw8g==
+ d=linaro.org; s=google; t=1723744505; x=1724349305; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jw42O4Ff2HO8SgGAiIajt3yXkZ/7KaY5K9z1+AIipQg=;
+ b=AzWPjIZGhIolnYVQ7taHVQOoqiUEPUQOH0v4f8+zzd7vsVa4yVIJycs/GYuJFu/SE0
+ B74NhNQi4MClBHqP9CerDa7fUcfPdBSj/e00RIhDkVOjBE0kCpoRTikfyZBnhfLh2BZO
+ xpvJRFW232nn6JQDFiziesKWiU6K83NMoh750P/X/uKJi67fV/T1UdXZYK4Nj4EK+sOx
+ AZiRKuUZSeaI1jaVMyJAGNwo6G4SRPBA5si1C7M41i1/igfWjK7B5VsXSM0Oj2Lr2E2j
+ z1pNII0aritL8ZbEtp/A72XrGNDzBgq2v0sfcu3CC9n4Z/6xNHdiJ7l7WGJjdjys/Mxp
+ uIdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723744486; x=1724349286;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2YKSJ2n8OS/IVEPWotzaXg/8leJ6lDGmmxdPVmQ8FW4=;
- b=EBYIRHqDFA3aFwhV3ZZ5HnjkLk9ElEDJHSMxky52/dex5rYix/YJEhQAfTO6CkQHEk
- spUOf7McCAh1VUyE9G1fKi0V06VpOQCX7nmC9Jf13rqtPHLzIzwyzLMRA0PF/3vMdYFM
- eqYJjf48/iAdhHRpIopZ16yIxVQMbpE92fu5KPK+HLk+aQ4lHSGzfEES5wsmeZ1Rw+Sj
- WncYNYcmBGTRitwfIPA9X1pP8fUDZppzFOokUb4+tS82qKh6GrZIA+Zk+3AsauibAL2O
- lWoFGw7Qg2AUYMDq710pwoXEK9uEDhT6UAfxXJNMtoACd8GrRWyLM8lny1JxNjRNFM/V
- 5bKg==
+ d=1e100.net; s=20230601; t=1723744505; x=1724349305;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jw42O4Ff2HO8SgGAiIajt3yXkZ/7KaY5K9z1+AIipQg=;
+ b=xMghOt/2JhR6l4MkyX7Pi0IN0N80a4Ns+yZyBfpztBnYyaKNTtlou93B5ApFemwH1R
+ xYqWp/ab6CsqxnXi07YQ20aCY4xld3bjTgUiGGvJJBOSqTseq/io8N7Akk10ewdVVNBj
+ FwqcdtpbJxrsBjxaDZXAMhf7Wrg8aj+gSSos8Ej17DN7iMfdnP9EAx3pnACJT8Dtp8Lj
+ 8o5r99mNlWCmGifJuNhnOPeCE5DFWc/eDRRMvYdcpsvRPt1QO57NYuoUoXp6ohmfYe6S
+ kxs7cY23Ol6Qu8x7HT3AoYNWucbnDDrmsxzTC/2/wyX4CQpTJhmtOZJ4BnhpJvv2Lfp/
+ iHcg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVl4SbVrAkPhAHrbwsEVi45dfsE8lFj9wr2hQ3Ai8jGcSH0GU+zHJK0dmDp92XK7m2PIFlyNb7ZMP+kCRokQ9hEK0v4j+4=
-X-Gm-Message-State: AOJu0Yx4okpEhlRZAU6xi9j4E7G9PDt1oA/8Lx3l5a9ul7WDtdv8ZtDE
- 2Mu0H3sKY98S02lIMd7iwV6Bal7wL2ikmnSHutQTkYqydfArzQARV2kr8jD6NX4=
-X-Google-Smtp-Source: AGHT+IGMQqCJqnKW2gjSndaYQi9xoii055n1pRyA9QIu2ijf7Iitiam2BinlQZ2bNY5BIjXEaZaMrA==
-X-Received: by 2002:a17:903:2307:b0:1fd:9590:6550 with SMTP id
- d9443c01a7336-2020405f461mr6108655ad.64.1723744486179; 
- Thu, 15 Aug 2024 10:54:46 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::b861? ([2604:3d08:9384:1d00::b861])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201f038df95sm12675915ad.227.2024.08.15.10.54.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Aug 2024 10:54:45 -0700 (PDT)
-Message-ID: <2f025274-5b25-46a5-a745-6b0647dd677a@linaro.org>
-Date: Thu, 15 Aug 2024 10:54:44 -0700
+ AJvYcCUINFrZOUvhOLJwoJLBrpx9Fy+KfXPUYYNzrv7o9kteyQq6UYm0yZx4Gq0GeIze94qeVzmsN4smY58Ovw24+l2Wip+2SsA=
+X-Gm-Message-State: AOJu0Yx52E3wMHXmTSg2SW0xurypIsyP6CepBjP9SsEkMLcMQFMU30FC
+ eYgCabv3CQhZV0b8X6d35Oid4Tt42ue1cXC8N5TOC7RUu2j785p6Q8QbVkj3d7cn/KnnfExlB+d
+ 00h+grPtLj9uyPiPDS/uVBOz/CwP5wed97REJ6A==
+X-Google-Smtp-Source: AGHT+IHguy3eQzFTIlLDOvSVCF35knPAw3D/fYtKe/Zh9diigsn4hGipWPiAUcKwXmU7/rQ8B7bVjOBUDIwqp2e1n58=
+X-Received: by 2002:a05:6402:5cb:b0:5b4:cbba:902a with SMTP id
+ 4fb4d7f45d1cf-5beb3a3bd84mr3636991a12.4.1723744505269; Thu, 15 Aug 2024
+ 10:55:05 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] target/i386: fix build warning (gcc-12
- -fsanitize=thread)
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20240814224132.897098-1-pierrick.bouvier@linaro.org>
- <20240814224132.897098-3-pierrick.bouvier@linaro.org>
- <efd7aaab-081c-47b1-b0f5-6a959f04c9af@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <efd7aaab-081c-47b1-b0f5-6a959f04c9af@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
+ <20240814224132.897098-2-pierrick.bouvier@linaro.org>
+ <CAFEAcA-EAm9mEdGz6m2Y-yxK16TgX6CpxnXc6hW59iAxhXhHtw@mail.gmail.com>
+ <Zr3g7lEfteRpNYVC@redhat.com>
+In-Reply-To: <Zr3g7lEfteRpNYVC@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 15 Aug 2024 18:54:53 +0100
+Message-ID: <CAFEAcA8xMjd2w5tT-sMcHKuKGXbqZg4HtTerNFG=_YpNRVVhxQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] meson: hide tsan related warnings
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org, 
+ Beraldo Leal <bleal@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org, 
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-s390x@nongnu.org, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,30 +103,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gOC8xNC8yNCAxNTo0NywgUmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+IE9uIDgvMTUv
-MjQgMDg6NDEsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBGb3VuZCBvbiBkZWJpYW4g
-c3RhYmxlLg0KPj4NCj4+IC4uL3RhcmdldC9pMzg2L2t2bS9rdm0uYzogSW4gZnVuY3Rpb24g
-4oCYa3ZtX2hhbmRsZV9yZG1zcuKAmToNCj4+IC4uL3RhcmdldC9pMzg2L2t2bS9rdm0uYzo1
-MzQ1OjE6IGVycm9yOiBjb250cm9sIHJlYWNoZXMgZW5kIG9mIG5vbi12b2lkIGZ1bmN0aW9u
-IFstV2Vycm9yPXJldHVybi10eXBlXQ0KPj4gICAgNTM0NSB8IH0NCj4+ICAgICAgICAgfCBe
-DQo+PiAuLi90YXJnZXQvaTM4Ni9rdm0va3ZtLmM6IEluIGZ1bmN0aW9uIOKAmGt2bV9oYW5k
-bGVfd3Jtc3LigJk6DQo+PiAuLi90YXJnZXQvaTM4Ni9rdm0va3ZtLmM6NTM2NDoxOiBlcnJv
-cjogY29udHJvbCByZWFjaGVzIGVuZCBvZiBub24tdm9pZCBmdW5jdGlvbiBbLVdlcnJvcj1y
-ZXR1cm4tdHlwZV0NCj4+ICAgIDUzNjQgfCB9DQo+Pg0KPj4gU2lnbmVkLW9mZi1ieTogUGll
-cnJpY2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPj4gLS0tDQo+
-PiAgICB0YXJnZXQvaTM4Ni9rdm0va3ZtLmMgfCA0ICsrLS0NCj4+ICAgIDEgZmlsZSBjaGFu
-Z2VkLCAyIGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pDQo+Pg0KPj4gZGlmZiAtLWdp
-dCBhL3RhcmdldC9pMzg2L2t2bS9rdm0uYyBiL3RhcmdldC9pMzg2L2t2bS9rdm0uYw0KPj4g
-aW5kZXggMzFmMTQ5Yzk5MDIuLmRkZWMyN2VkZDViIDEwMDY0NA0KPj4gLS0tIGEvdGFyZ2V0
-L2kzODYva3ZtL2t2bS5jDQo+PiArKysgYi90YXJnZXQvaTM4Ni9rdm0va3ZtLmMNCj4+IEBA
-IC01NzcwLDcgKzU3NzAsNyBAQCBzdGF0aWMgaW50IGt2bV9oYW5kbGVfcmRtc3IoWDg2Q1BV
-ICpjcHUsIHN0cnVjdCBrdm1fcnVuICpydW4pDQo+PiAgICAgICAgICAgIH0NCj4+ICAgICAg
-ICB9DQo+PiAgICANCj4+IC0gICAgYXNzZXJ0KGZhbHNlKTsNCj4+ICsgICAgZ19hc3NlcnRf
-bm90X3JlYWNoZWQoKTsNCj4gDQo+IFdoaWxlIGEgZ29vZCBjaGFuZ2UsIGFuZCB3aGlsZSBJ
-IGhhdmUgYWx3YXlzIGhhdGVkIHRoZSBhc3NlcnQoZmFsc2UpIGlkaW9tLCBJIGJlbGlldmUg
-dGhpcw0KPiBwb2ludHMgdG8gYSBjb21waWxlciBidWcgYW5kIG1pZ2h0IGJlIHdvcnRoIHJl
-cG9ydGluZyAtLSBhc3N1bWluZyBhIGxhdGVyIHZlcnNpb24gb2YgZ2NjDQo+IHN0aWxsIHdh
-cm5zLg0KPiANCg0KUmVwb3J0ZWQgaXQ6IGh0dHBzOi8vZ2NjLmdudS5vcmcvYnVnemlsbGEv
-c2hvd19idWcuY2dpP2lkPTExNjM4Ng0KDQo+IFJldmlld2VkLWJ5OiBSaWNoYXJkIEhlbmRl
-cnNvbiA8cmljaGFyZC5oZW5kZXJzb25AbGluYXJvLm9yZz4NCj4gDQo+IA0KPiByfg0K
+On Thu, 15 Aug 2024 at 12:05, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+>
+> On Thu, Aug 15, 2024 at 11:12:39AM +0100, Peter Maydell wrote:
+> > On Wed, 14 Aug 2024 at 23:42, Pierrick Bouvier
+> > <pierrick.bouvier@linaro.org> wrote:
+> > >
+> > > When building with gcc-12 -fsanitize=3Dthread, gcc reports some
+> > > constructions not supported with tsan.
+> > > Found on debian stable.
+> > >
+> > > qemu/include/qemu/atomic.h:36:52: error: =E2=80=98atomic_thread_fence=
+=E2=80=99 is not supported with =E2=80=98-fsanitize=3Dthread=E2=80=99 [-Wer=
+ror=3Dtsan]
+> > >    36 | #define smp_mb()                     ({ barrier(); __atomic_t=
+hread_fence(__ATOMIC_SEQ_CST); })
+> > >       |                                                    ^~~~~~~~~~=
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > >
+> > > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > > ---
+> > >  meson.build | 10 +++++++++-
+> > >  1 file changed, 9 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/meson.build b/meson.build
+> > > index 81ecd4bae7c..52e5aa95cc0 100644
+> > > --- a/meson.build
+> > > +++ b/meson.build
+> > > @@ -499,7 +499,15 @@ if get_option('tsan')
+> > >                           prefix: '#include <sanitizer/tsan_interface=
+.h>')
+> > >      error('Cannot enable TSAN due to missing fiber annotation interf=
+ace')
+> > >    endif
+> > > -  qemu_cflags =3D ['-fsanitize=3Dthread'] + qemu_cflags
+> > > +  tsan_warn_suppress =3D []
+> > > +  # gcc (>=3D11) will report constructions not supported by tsan:
+> > > +  # "error: =E2=80=98atomic_thread_fence=E2=80=99 is not supported w=
+ith =E2=80=98-fsanitize=3Dthread=E2=80=99"
+> > > +  # https://gcc.gnu.org/gcc-11/changes.html
+> > > +  # However, clang does not support this warning and this triggers a=
+n error.
+> > > +  if cc.has_argument('-Wno-tsan')
+> > > +    tsan_warn_suppress =3D ['-Wno-tsan']
+> > > +  endif
+> >
+> > That last part sounds like a clang bug -- -Wno-foo is supposed
+> > to not be an error on compilers that don't implement -Wfoo for
+> > any value of foo (unless some other warning/error would also
+> > be emitted).
+>
+> -Wno-foo isn't an error, but it is a warning... which we then
+> turn into an error due to -Werror, unless we pass -Wno-unknown-warning-op=
+tion
+> to clang.
+
+Which is irritating if you want to be able to blanket say
+'-Wno-silly-compiler-warning' and not see any of that
+warning regardless of compiler version. That's why the
+gcc behaviour is the way it is (i.e. -Wno-such-thingy
+is neither a warning nor an error if it would be the only
+warning/error), and if clang doesn't match it that's a shame.
+
+thanks
+-- PMM
 
