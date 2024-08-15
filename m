@@ -4,121 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A42EFC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 14:30:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D7CEC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 14:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sebTR-00028H-LX; Thu, 15 Aug 2024 10:29:09 -0400
+	id 1sebaj-0008OY-BS; Thu, 15 Aug 2024 10:36:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sebTP-00022g-0U
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:29:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sebTM-0005PL-Pa
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:29:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723732142;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=pLW8VxYvBfkl9d6XaUqzmKjRXnbivJG5S8ggECncIC4=;
- b=BGr3OMWSTcEA7XAA2puEaxStp1VFD2D3eWq4AVF+TTHAmarO0bzhKabNMAR1G+9+EjqJgd
- yTRxjnGJwOFtAM+JS5FV7yjzEJ/neRDkoZOaXO0p3upzWTxq2Loo26XGMO6v+ULIhdfom+
- 3He76o26PDgY4LkUMHN99IeCS+PKetI=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-10-V5t_3iL1MLuQsMuT0XUv9A-1; Thu, 15 Aug 2024 10:29:00 -0400
-X-MC-Unique: V5t_3iL1MLuQsMuT0XUv9A-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5bec23ba156so310325a12.1
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 07:29:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sebai-0008N5-66
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:36:40 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sebag-0006Sf-Ei
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:36:39 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-367963ea053so669424f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 07:36:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723732596; x=1724337396; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=kw/kMF2UrPFy/1Y87Dczx++p4s+nUe86BSQw9sw3PK8=;
+ b=egi9Y8hYPRy+/HeByUkCiG04B34XyN84g/eFf8D7p8nXHw9NrVpf7EY1HFvO5JIe2y
+ +rue4tJc7u6AyK8w45m0uoeG2xSwXC/TKE1TQEXp0YRdxw2EgIGKJecI5RdL7c/vr6MS
+ ZSOGnr0Q2YrsHpFB8iInqRE8CgTH5A9vY4fNwVQL8P4TuFb7Va6oLtspcu0Lyw31sF53
+ QMV2A5mBFsveHVSm2pdEZ3PVDVmZ/xbXJgPHiWo/OsOnaSmEsv9t6kt0oa3lffJ5SgcW
+ kQGR4bt73m0UO8TjkXmUGzpP/qHe6i+h5RXASVWD1gB6gkudgwoOYFmYCminCchbs5mW
+ 5Snw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723732139; x=1724336939;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=pLW8VxYvBfkl9d6XaUqzmKjRXnbivJG5S8ggECncIC4=;
- b=VZIeYIsJ6AaXlNEosBCcE2VAaOuvsSdHEbqDTseTcouzmkwCimRU1BWnjCvAOuOr1o
- rCFPqakYGh8Oa0rmvoudOKuFrj8yQndlPuNDh/bk7GC0v/O9Fss6VPXw9EdiiSrSLNWX
- r9nhk1Xy24Bc63kTY48AFJJrBPUGHkpD1WiSNeNdOiD6DKVVDdG3Rklts9qgqnGTTQUG
- AnkZ3EGVyjHpVkJi/0OOcsnRsgpr39ufzoqleuGvg3HVRMb4BrnkaGdb2ZqJgJstYaKV
- 6G/sxoxu25FT3AN4A2VZ++BgvvYgpXdemAieSA8FFYvQNYom5PjI0+OiZNus6gU3ozj6
- 6T1g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVgG6VfYvzkh9QaBTwlsmrAsnb+KenPVBkYZ/C737YNyw+whULOqyYwVPzX6et3V9K99EKGaWydxdA272qGZM9Eb36fUZw=
-X-Gm-Message-State: AOJu0Yxze2mSVvQgKuFWK6JzLGcaQZvw7hoKdFBGHbjzxGotOxJed0c3
- NZUWTUt2TgrkLg55nIJWgjopBtwlKhoCU6Q04SBnIp2Tce+b6aIj5Eg8+EMP7nHGsjpRMnnuXj0
- +O/ZzFwbCUwGXRaJKCXNSL4AkL6VTqCCz3SQILdrV1GCcIxiKjMso
-X-Received: by 2002:a05:6402:e83:b0:5be:b6ae:dc68 with SMTP id
- 4fb4d7f45d1cf-5beb6aee07amr1903250a12.10.1723732139486; 
- Thu, 15 Aug 2024 07:28:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGxUvAIrtGJlhS2+cKFnc3kpN1cB4UpecvdGY8jlQAP3RH/LlQE/BcOYPhfJrk3tkUlBALFgg==
-X-Received: by 2002:a05:6402:e83:b0:5be:b6ae:dc68 with SMTP id
- 4fb4d7f45d1cf-5beb6aee07amr1903190a12.10.1723732138674; 
- Thu, 15 Aug 2024 07:28:58 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:178:8f0f:2cfe:cb96:98c4:3fd0])
+ d=1e100.net; s=20230601; t=1723732596; x=1724337396;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kw/kMF2UrPFy/1Y87Dczx++p4s+nUe86BSQw9sw3PK8=;
+ b=WenM5LfBEkh02l+2DH2ahBED3LDy51F8rdwVXatO3x+xszQCm/wBdaULnttn1pom1s
+ W/VcpAxhPE+PNkRWPfC25/Fygb8zqVbIfpNzU240ux8N3yVDzaQFljBV6NKUszjiMTvb
+ d7+5GO19Wb2ZoFl+6FNfzgujYiFidyn57fzD2QcYC3ERiSHMxMubV/PB2ENXQxZbJKrq
+ 8U5JCY78yI4zueNZSsMUFpBA4Y25Jn4XbF0pbcPEHCpgjSLehV02wGgddjVBMjGIjJ8r
+ aYxRRmunsBrMGSHKTPQ+uqTqxa0xYeERt1jk9Jlv3j3106fORkfmUr/5k8etSvf5POuj
+ e3Uw==
+X-Gm-Message-State: AOJu0YxCVDOss2uDZDjD4I8nKvaJCSll5GPNomUhwh4PtLCIIrTvjkz6
+ HR16VMX0ID5uBi9oI1DF3wPLLAQN6zGSB+0hcD98okMKAqeqyddAxHDuMwyFrvJuPqIVgEtIWLt
+ s
+X-Google-Smtp-Source: AGHT+IH+IJcPuQwYLYBiTxJK49qlzqTiCEGLtVwQJ/COobM/l80Xee7cQVq5/WJcUM4Fq8zAYCCt/g==
+X-Received: by 2002:a05:6000:4388:b0:371:83ae:809b with SMTP id
+ ffacd0b85a97d-37183ae8285mr3118007f8f.4.1723732596272; 
+ Thu, 15 Aug 2024 07:36:36 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bebc081a24sm938598a12.95.2024.08.15.07.28.53
+ ffacd0b85a97d-37189839f16sm1667146f8f.18.2024.08.15.07.36.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Aug 2024 07:28:58 -0700 (PDT)
-Date: Thu, 15 Aug 2024 10:28:51 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Nicholas Piggin <npiggin@gmail.com>
-Cc: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Michael Roth <michael.roth@amd.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Weiwei Li <liwei1518@gmail.com>, Eduardo Habkost <eduardo@habkost.net>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- David Hildenbrand <david@redhat.com>, Beraldo Leal <bleal@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Eric Auger <eric.auger@redhat.com>, Song Gao <gaosong@loongson.cn>,
- qemu-arm@nongnu.org, Peter Xu <peterx@redhat.com>,
- Jiri Pirko <jiri@resnulli.us>, Eric Blake <eblake@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, qemu-s390x@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- John Snow <jsnow@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Konstantin Kostiuk <kkostiuk@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Cleber Rosa <crosa@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, qemu-riscv@nongnu.org,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Jason Wang <jasowang@redhat.com>, Bin Meng <bmeng.cn@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
-Subject: Re: [PATCH v2 16/21] virtio-net: Use replay_schedule_bh_event for
- bhs that affect machine state
-Message-ID: <20240815102754-mutt-send-email-mst@kernel.org>
-References: <20240813202329.1237572-1-alex.bennee@linaro.org>
- <20240813202329.1237572-17-alex.bennee@linaro.org>
- <20240813164631-mutt-send-email-mst@kernel.org>
- <D3FEPPLH78YW.3BYA9B4HYGN1U@gmail.com>
- <20240814030308-mutt-send-email-mst@kernel.org>
- <87y14z81ak.fsf@draig.linaro.org>
- <D3GARIYVC16C.20SXVKSIMLED4@gmail.com>
+ Thu, 15 Aug 2024 07:36:35 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH for-9.2] accel/tcg: Remove dead code from rr_cpu_thread_fn()
+Date: Thu, 15 Aug 2024 15:36:34 +0100
+Message-Id: <20240815143634.3413679-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <D3GARIYVC16C.20SXVKSIMLED4@gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,32 +92,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 15, 2024 at 05:12:32PM +1000, Nicholas Piggin wrote:
-> Could be a good idea. Although I'm not sure what to do with
-> all types, maybe we can restrict what is supported.
-> 
-> > Is this wider re-factoring something that can wait for the next
-> > developer cycle?
-> 
-> I would say so. It's not quite trivial to do nicely since
-> things are a bit tangled between util/async and replay.
-> 
-> > >> I had started on a conversion once but not completed it.
-> > >> I could resurrect if there is agreement on the API?
-> >
-> > I would certainly welcome it being cleaned up. The supported replay
-> > devices are very piecemeal at the moment.
-> 
-> I'll tidy up and post an RFC for how the new API might look.
-> 
-> Thanks,
-> Nick
+The main loop in rr_cpu_thread_fn() can never terminate, so the
+code at the end of the function to clean up the RCU subsystem is
+dead code. Replace it with g_assert_not_reached().
 
-Fundamentally it's virtio net, up to Jason. I don't like messy
-APIs and people tend to get distracted and not fix them up
-if one does not make this a blocker.
+(This is different from the other cpu_thread_fn for e.g. MTTCG or
+for the KVM accelerator -- those can exit, if the vCPU they
+are responsible for is unplugged. But the RR cpu thread fn
+handles all CPUs in the system in a round-robin way, so even
+if one is unplugged it keeps looping.)
 
+Resolves: Coverity CID 1547782
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ accel/tcg/tcg-accel-ops-rr.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index 48c38714bd6..38ab16244e3 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -302,9 +302,7 @@ static void *rr_cpu_thread_fn(void *arg)
+         rr_deal_with_unplugged_cpus();
+     }
+ 
+-    rcu_remove_force_rcu_notifier(&force_rcu);
+-    rcu_unregister_thread();
+-    return NULL;
++    g_assert_not_reached();
+ }
+ 
+ void rr_start_vcpu_thread(CPUState *cpu)
 -- 
-MST
+2.34.1
 
 
