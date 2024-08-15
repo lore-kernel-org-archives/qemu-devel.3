@@ -4,94 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09279C531DC
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 00:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12BECC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 00:29:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seOFK-00056I-5i; Wed, 14 Aug 2024 20:21:42 -0400
+	id 1seOMh-0006Ug-8b; Wed, 14 Aug 2024 20:29:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1seOFI-00050J-He
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 20:21:40 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
- id 1seOFG-0004HF-Sq
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 20:21:40 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-710ece280b6so312610b3a.2
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 17:21:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance.com; s=google; t=1723681297; x=1724286097; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=70tmt7SXXA8xNV/GOXmAHGlkd6Y3uEXM0oMIn+MfWWk=;
- b=iHIxtynnJrMF5Y2BEuW4k8tsxIqy03xUQeWOubIq7mOVabANL4rtB4kSaLF3NEvzOh
- Z6elE+jr+4CyfBVC3gvBTNdYDchrOHYRK6nuZsj3MQcyCnMsSHLuLAFHMCokEI7lIUQ7
- nF4IIEvhE4SBNnMV7x/jPWXfeC2ErzaKFWdy5cLvyc17vN5+7jdsEW3Sw0UMPRuG74Hr
- sBtOFe+gCFSwR2CR9afx54qYpPCtjJ8X1uxeh4zly1ls0NjqH8/b2io49upwr/pWSEWN
- kzkWRwURnSVk/PFokckS+zQR2CgDx4GdcC7S9AWv9LiPr+11VvT8bGs1lHEftTGVy9py
- 0aUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723681297; x=1724286097;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=70tmt7SXXA8xNV/GOXmAHGlkd6Y3uEXM0oMIn+MfWWk=;
- b=Spf3O4VSJBvbz7JHjWck/5kecoz5hlJrHg9CMIr5N/pYxAZvTsQO4iLDxOb8v8+y29
- wHzHp5axTKOfZk1/fNupAs11zyI8zO5TVuMH6Br2LOXj2EE2Az2AOLy4GT5uwlrt6emb
- IjJ7mV7cuHS8NwuBxKbAZqIt4kCDC1eL4xlGyN+BkRyNMjC2A2qm0g3YeJlsfvn+gVlu
- 75mTAGzDVpX/4Rm11U8WBfwKzCBDvCHgzuOsRiZZK6trylr3qwBF2McpOLChACO8HgAF
- qeFu5dnKfPaRGpR4z7anktjVtyKlW1VNMzm9jkDgaw2a+7N2aPEEk0CjlSca7Jlkjcht
- 3Vag==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWpae2U7Erqk0A5d+K5KVAyLyKpyeri0u9vcufm3swM5gxz1FJJrMx9gfsoXDDdzVPPkHDm/ACtGozQBTgWnGY6CCxVeus=
-X-Gm-Message-State: AOJu0YyWkavz0ZehTNK3AJr6VnFVKDdt5LViRTR3jQ70sUlCSQQOx6pi
- hdsyxIzMSc4DO9XLFxTGaseGWbLrtC23FDZ3+BqqXUBv/yBB92n+iCQm0y/nwRA=
-X-Google-Smtp-Source: AGHT+IHcFOepqsH/6Q/9F/rNl7zNg+U6jP63+E2fx8QnWHphBOzjOXT1z63hJy2uE17YXxm6B1svVw==
-X-Received: by 2002:a05:6a20:c6c2:b0:1c6:a83c:d5db with SMTP id
- adf61e73a8af0-1c8eae97feamr3442947637.31.1723681297382; 
- Wed, 14 Aug 2024 17:21:37 -0700 (PDT)
-Received: from DY4X0N7X05.bytedance.net ([72.29.204.230])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201f02faa03sm1961185ad.19.2024.08.14.17.21.35
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 14 Aug 2024 17:21:37 -0700 (PDT)
-From: Yichen Wang <yichen.wang@bytedance.com>
-To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- qemu-devel@nongnu.org
-Cc: "Hao Xiang" <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- "Zou, Nanhai" <nanhai.zou@intel.com>,
- "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
- "Yichen Wang" <yichen.wang@bytedance.com>,
- Bryan Zhang <bryan.zhang@bytedance.com>
-Subject: [PATCH v7 5/5] tests/migration: Add integration test for 'qatzip'
- compression method
-Date: Wed, 14 Aug 2024 17:21:24 -0700
-Message-Id: <20240815002124.65384-6-yichen.wang@bytedance.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-146)
-In-Reply-To: <20240815002124.65384-1-yichen.wang@bytedance.com>
-References: <20240815002124.65384-1-yichen.wang@bytedance.com>
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1seOMe-0006Tb-5x
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 20:29:16 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1seOMc-00054C-51
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 20:29:15 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id AEDD261291;
+ Thu, 15 Aug 2024 00:29:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AB3C116B1;
+ Thu, 15 Aug 2024 00:29:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1723681752;
+ bh=h9FXGgG9EJcZD/S0va3nNedGjOMTJFMu5BAD+EEQ1jI=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+ b=EIdtPxXvMVu3OPwhWOlXrPnJP6qsS7qYf/M87i08dFyo4izAf8uiLShZsoL/oXLpw
+ Es0Z9SSdXpC0/X6q3kx92tdl+ZkZguEcGZlE/UYmjwKuw16EzRWsdIj1KaXfwSFsFK
+ al9+lzRx8dgRhlQONee93rsV7uQeC6Z6YToQL4CnLK6RujgjzEBk7XnV/H7Dc9xK34
+ X9LEgvLDtYKP1fhJ3+14jl1HNDWCWS4VO8ZJv/c9kCUsqKfolzpOhEzO4gAuf8MosJ
+ /R9/YKfnfyC5u7mFEOfF1OpkGFrFdMu4YQ/dFsGW3tI5NpS0HJT2f2QKbl4QLus+8E
+ puiEK8DgFs4Xw==
+Date: Wed, 14 Aug 2024 17:29:10 -0700 (PDT)
+From: Stefano Stabellini <sstabellini@kernel.org>
+X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+cc: Stefano Stabellini <sstabellini@kernel.org>, qemu-devel@nongnu.org, 
+ anthony@xenproject.org, paul@xen.org, peter.maydell@linaro.org, 
+ alex.bennee@linaro.org, xenia.ragiadakou@amd.com, jason.andryuk@amd.com, 
+ edgar.iglesias@amd.com, xen-devel@lists.xenproject.org
+Subject: Re: [PATCH v1 08/10] hw/xen: pvh-common: Add support for creating
+ PCIe/GPEX
+In-Reply-To: <ZrzMkI5jGUtXU2qA@zapote>
+Message-ID: <alpine.DEB.2.22.394.2408141717300.298534@ubuntu-linux-20-04-desktop>
+References: <20240812130606.90410-1-edgar.iglesias@gmail.com>
+ <20240812130606.90410-9-edgar.iglesias@gmail.com>
+ <alpine.DEB.2.22.394.2408121822370.298534@ubuntu-linux-20-04-desktop>
+ <ZrzMkI5jGUtXU2qA@zapote>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=yichen.wang@bytedance.com; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=sstabellini@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.135,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,71 +78,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bryan Zhang <bryan.zhang@bytedance.com>
+On Wed, 14 Aug 2024, Edgar E. Iglesias wrote:
+> On Mon, Aug 12, 2024 at 06:48:37PM -0700, Stefano Stabellini wrote:
+> > On Mon, 12 Aug 2024, Edgar E. Iglesias wrote:
+> > > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+> > > 
+> > > Add support for optionally creating a PCIe/GPEX controller.
+> > > 
+> > > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> > > ---
+> > >  hw/xen/xen-pvh-common.c         | 66 +++++++++++++++++++++++++++++++++
+> > >  include/hw/xen/xen-pvh-common.h | 10 ++++-
+> > >  2 files changed, 75 insertions(+), 1 deletion(-)
+> > > 
+> > > diff --git a/hw/xen/xen-pvh-common.c b/hw/xen/xen-pvh-common.c
+> > > index 69a2dbdb6d..b1432e4bd9 100644
+> > > --- a/hw/xen/xen-pvh-common.c
+> > > +++ b/hw/xen/xen-pvh-common.c
+> > > @@ -120,6 +120,59 @@ static void xen_enable_tpm(XenPVHCommonState *s)
+> > >  }
+> > >  #endif
+> > >  
+> > > +static void xen_set_pci_intx_irq(void *opaque, int irq, int level)
+> > > +{
+> > > +    if (xen_set_pci_intx_level(xen_domid, 0, 0, 0, irq, level)) {
+> > 
+> > Looking at the implementation of XEN_DMOP_set_pci_intx_level in
+> > xen/arch/x86/hvm/dm.c, it looks like the device parameter of
+> > xen_set_pci_intx_level is required?
+> 
+> Yes, by setting device = 0, we're bypassing the irq swizzling in Xen.
+> I'll try to clarify below.
+> 
+> 
+> > 
+> > 
+> > > +        error_report("xendevicemodel_set_pci_intx_level failed");
+> > > +    }
+> > > +}
+> > > +
+> > > +static inline void xenpvh_gpex_init(XenPVHCommonState *s,
+> > > +                                    MemoryRegion *sysmem,
+> > > +                                    hwaddr ecam_base, hwaddr ecam_size,
+> > > +                                    hwaddr mmio_base, hwaddr mmio_size,
+> > > +                                    hwaddr mmio_high_base,
+> > > +                                    hwaddr mmio_high_size,
+> > > +                                    int intx_irq_base)
+> > > +{
+> > > +    MemoryRegion *ecam_reg;
+> > > +    MemoryRegion *mmio_reg;
+> > > +    DeviceState *dev;
+> > > +    int i;
+> > > +
+> > > +    object_initialize_child(OBJECT(s), "gpex", &s->pci.gpex,
+> > > +                            TYPE_GPEX_HOST);
+> > > +    dev = DEVICE(&s->pci.gpex);
+> > > +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+> > > +
+> > > +    ecam_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 0);
+> > > +    memory_region_add_subregion(sysmem, ecam_base, ecam_reg);
+> > 
+> > I notice we don't use ecam_size anywhere? Is that because the size is
+> > standard?
+> 
+> Yes. we could remove the size property, having it slightly simplifies the
+> prop setting code (keeping these memmap prop-pairs alike) but it's not a big deal.
 
-Adds an integration test for 'qatzip'.
+Not a big deal either way, up to you
 
-Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
-Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
-Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/migration-test.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
 
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 70b606b888..3aed5441f7 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -2992,6 +2992,18 @@ test_migrate_precopy_tcp_multifd_zstd_start(QTestState *from,
- }
- #endif /* CONFIG_ZSTD */
- 
-+#ifdef CONFIG_QATZIP
-+static void *
-+test_migrate_precopy_tcp_multifd_qatzip_start(QTestState *from,
-+                                              QTestState *to)
-+{
-+    migrate_set_parameter_int(from, "multifd-qatzip-level", 2);
-+    migrate_set_parameter_int(to, "multifd-qatzip-level", 2);
-+
-+    return test_migrate_precopy_tcp_multifd_start_common(from, to, "qatzip");
-+}
-+#endif
-+
- #ifdef CONFIG_QPL
- static void *
- test_migrate_precopy_tcp_multifd_qpl_start(QTestState *from,
-@@ -3089,6 +3101,17 @@ static void test_multifd_tcp_zstd(void)
- }
- #endif
- 
-+#ifdef CONFIG_QATZIP
-+static void test_multifd_tcp_qatzip(void)
-+{
-+    MigrateCommon args = {
-+        .listen_uri = "defer",
-+        .start_hook = test_migrate_precopy_tcp_multifd_qatzip_start,
-+    };
-+    test_precopy_common(&args);
-+}
-+#endif
-+
- #ifdef CONFIG_QPL
- static void test_multifd_tcp_qpl(void)
- {
-@@ -3992,6 +4015,10 @@ int main(int argc, char **argv)
-     migration_test_add("/migration/multifd/tcp/plain/zstd",
-                        test_multifd_tcp_zstd);
- #endif
-+#ifdef CONFIG_QATZIP
-+    migration_test_add("/migration/multifd/tcp/plain/qatzip",
-+                test_multifd_tcp_qatzip);
-+#endif
- #ifdef CONFIG_QPL
-     migration_test_add("/migration/multifd/tcp/plain/qpl",
-                        test_multifd_tcp_qpl);
--- 
-Yichen Wang
+> > > +    mmio_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
+> > > +
+> > > +    if (mmio_size) {
+> > > +        memory_region_init_alias(&s->pci.mmio_alias, OBJECT(dev), "pcie-mmio",
+> > > +                                 mmio_reg, mmio_base, mmio_size);
+> > > +        memory_region_add_subregion(sysmem, mmio_base, &s->pci.mmio_alias);
+> > > +    }
+> > > +
+> > > +    if (mmio_high_size) {
+> > > +        memory_region_init_alias(&s->pci.mmio_high_alias, OBJECT(dev),
+> > > +                "pcie-mmio-high",
+> > > +                mmio_reg, mmio_high_base, mmio_high_size);
+> > > +        memory_region_add_subregion(sysmem, mmio_high_base,
+> > > +                &s->pci.mmio_high_alias);
+> > > +    }
+> > > +
+> > > +    for (i = 0; i < GPEX_NUM_IRQS; i++) {
+> > > +        qemu_irq irq = qemu_allocate_irq(xen_set_pci_intx_irq, s, i);
+> > > +
+> > > +        sysbus_connect_irq(SYS_BUS_DEVICE(dev), i, irq);
+> > > +        gpex_set_irq_num(GPEX_HOST(dev), i, intx_irq_base + i);
+> > > +        xen_set_pci_link_route(i, intx_irq_base + i);
+> > 
+> > xen_set_pci_link_route is not currently implemented on ARM?
+> > 
+> > Looking at hw/i386/pc_piix.c:piix_intx_routing_notifier_xen it seems
+> > that the routing is much more complex over there. But looking at other
+> > machines that use GPEX such as hw/arm/virt.c it looks like the routing
+> > is straightforward the same way as in this patch.
+> > 
+> > I thought that PCI interrupt pin swizzling was required, but maybe not ?
+> > 
+> > It is totally fine if we do something different, simpler, than
+> > hw/i386/pc_piix.c:piix_intx_routing_notifier_xen. I just want to make
+> > sure that things remain consistent between ARM and x86, and also between
+> > Xen and QEMU view of virtual PCI interrupt routing.
+> >
+> 
+> Good questions. The following is the way I understand things but I may
+> ofcourse be wrong.
+> 
+> Yes, we're doing things differently than hw/i386/pc_piix.c mainly
+> because we're using the GPEX PCIe host bridge with it's internal
+> standard swizzling down to 4 INTX interrupts. Similar to microvm and
+> the ARM virt machine.
+> 
+> The swizzling for the GPEX is done inside the GPEX model and it's
+> described by xl in the ACPI tables for PVH guests. We don't want
+> Xen to do any additional swizzling in xen_set_pci_intx_level(), hence
+> device=0.
 
+OK
+
+
+> I haven't plumbed the GPEX connectinos for ARM yet but I think we could
+> simply call xendevicemodel_set_irq_level() and not use the pci_intx
+> calls that aren't implement (we wouldn't need them).
+> 
+> For x86/pvh, I wonder if we should be using xen_set_pci_intx_level() /
+> xen_set_pci_link_route() or some other API? since we're basically
+> bypassing things?
+> In one of the first implementations we used set_isa_irq_level() but
+> that call only reaches into irqs < 16 so it messed things up.
+> 
+> Does any one have any better ideas or suggestions?
+
+I think QEMU is free to call or not call any API at setup time. Given
+that the PVH interrupt controller is emulated by Xen, the important
+thing is that when QEMU raises an interrupt or an MSI with
+xen_set_isa_irq_level, xen_inject_msi and xen_set_pci_intx_level, Xen
+injects it into the guest as expected and the guest receives it
+appropriately.
+
+To oversimplify things, I was worried that QEMU tries to inject INTA but
+the guest receives INTD instead. Or QEMU tries to raise a level
+interrupt and Xen injects an edge interrupt instead.
+
+Also I think we should try to do things the same way between the PVH
+machine on ARM and X86. But we can (should?) do things differently from
+hw/i386/pc_piix.c.
 
