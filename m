@@ -4,153 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C53F7C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 16:03:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57C2BC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 16:23:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1secw9-0007YH-7k; Thu, 15 Aug 2024 12:02:53 -0400
+	id 1sedFM-0006B6-9y; Thu, 15 Aug 2024 12:22:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1secw8-0007Ti-2z
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 12:02:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sedFJ-0006Ad-Sl
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 12:22:41 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1secw4-0003Gh-9n
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 12:02:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723737766;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=d25gAAZTwx5HFLBSQIC4ypWKDudPB+ue+R/jvwM+ipU=;
- b=OpigzLF8KLaI3PY2KP+q2B4rwqO7x+C+1OR1OSSCMfTQzYGN0noGAYv2EcFDssw7mZE43x
- mbuk3XfRpAVDjpLLpK6d1y6ESFRESTtcE62EnPftAcRBOeLFOvNlmnlyz3Y7SG2zuKhHIa
- GLhSZf+vIPJhbaKss0dFpXdE3XlyjkI=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-Qdl-jvuBNrSkTVJz_U-6qQ-1; Thu, 15 Aug 2024 12:02:43 -0400
-X-MC-Unique: Qdl-jvuBNrSkTVJz_U-6qQ-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7a1f230ad32so107423985a.0
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 09:02:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723737763; x=1724342563;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=d25gAAZTwx5HFLBSQIC4ypWKDudPB+ue+R/jvwM+ipU=;
- b=Opp+wQv5m6fnAbB8suJe60x40jFJY/8u3zyvMmRCj6+88aCzjXp3c1AN9xLOXFOpgC
- NddiyR2S6jjdjwMsTJdYFhSh86okomPCu122X+RFQLiciJx/Sx2MOxhLyf9FWnEPyJm5
- fff+hTsKSMB1E2XRkmsqSGFS2sZuXrwNZGQBZI8ZAhYRN6pOup3ivrpPY0Na3LdfwkMS
- tHLLjxz1PPEfBCc3to7xDNf7NIeUwwHInyQK7L4ORRIV65I3hoLGAl6jkElNJviQ+hL7
- ybWxFvi8TtJX+TCir0kUAVxIdxHXic8imDvnNjwljNuNkCs6PecdmwyYaPe94PLNz4qk
- 6ZUA==
-X-Gm-Message-State: AOJu0YyD7gjGPHRpcEobpjnNl8M5sMVgVmaOA/0QNYIzX2FoAITUoWLQ
- i+kNCIcS6SthdRX/xsP9rNW1W2+eWFmbSY9kc5I5iziYGGf3EdBhela7S0rzWJe9tkOkFu8q8rl
- P+2rr6tgZyplaPoHaiE9fPLG/9pdRoETTtECOSPCsC5REnxyt1zL5
-X-Received: by 2002:a05:6214:2f0b:b0:6bf:6da7:6113 with SMTP id
- 6a1803df08f44-6bf6da76357mr54616496d6.12.1723737762705; 
- Thu, 15 Aug 2024 09:02:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHRaChnq18AXxGPvYlMQ3a/QihvEFGSAAw5kOi02UnpTd7m+tjpnOmRpYOJiyLCTpOITxNrwA==
-X-Received: by 2002:a05:6214:2f0b:b0:6bf:6da7:6113 with SMTP id
- 6a1803df08f44-6bf6da76357mr54615636d6.12.1723737762070; 
- Thu, 15 Aug 2024 09:02:42 -0700 (PDT)
-Received: from [192.168.0.6] (ip-109-43-177-15.web.vodafone.de.
- [109.43.177.15]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6bf6fe10ddbsm7483086d6.49.2024.08.15.09.02.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Aug 2024 09:02:41 -0700 (PDT)
-Message-ID: <6ecd8981-f5d5-42d0-9769-82fbde55df23@redhat.com>
-Date: Thu, 15 Aug 2024 18:02:34 +0200
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1sedFG-0006B7-9u
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 12:22:41 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Wl9Lm6jLqz6K9B7;
+ Fri, 16 Aug 2024 00:19:44 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+ by mail.maildlp.com (Postfix) with ESMTPS id 5D968140A87;
+ Fri, 16 Aug 2024 00:22:26 +0800 (CST)
+Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 15 Aug
+ 2024 17:22:25 +0100
+Date: Thu, 15 Aug 2024 17:22:23 +0100
+To: David Hildenbrand <david@redhat.com>, <linux-mm@kvack.org>,
+ <linux-cxl@vger.kernel.org>, Davidlohr Bueso <dave@stgolabs.net>, Ira Weiny
+ <ira.weiny@intel.com>, John Groves <John@Groves.net>,
+ <virtualization@lists.linux.dev>
+CC: Oscar Salvador <osalvador@suse.de>, <qemu-devel@nongnu.org>, Dave Jiang
+ <dave.jiang@intel.com>, Dan Williams <dan.j.williams@intel.com>,
+ <linuxarm@huawei.com>, <wangkefeng.wang@huawei.com>, John Groves
+ <jgroves@micron.com>, "Fan   Ni" <fan.ni@samsung.com>, "Navneet   Singh"
+ <navneet.singh@intel.com>, "=?UTF-8?Q?=E2=80=9CMichael?= S. =?UTF-8?Q?Tsi?=
+ =?UTF-8?Q?rkin=E2=80=9D?=" <mst@redhat.com>, Igor Mammedov
+ <imammedo@redhat.com>, Philippe =?UTF-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+Subject: [RFC] Virtualizing tagged disaggregated memory capacity (app
+ specific, multi host shared)
+Message-ID: <20240815172223.00001ca7@Huawei.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 9/9] Avocado tests: allow for parallel execution of
- tests
-To: Cleber Rosa <crosa@redhat.com>
-Cc: qemu-devel@nongnu.org, Marcin Juszkiewicz
- <marcin.juszkiewicz@linaro.org>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
- Radoslaw Biernacki <rad@semihalf.com>, Troy Lee <leetroy@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, Beraldo Leal <bleal@redhat.com>,
- kvm@vger.kernel.org, Joel Stanley <joel@jms.id.au>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Aurelien Jarno <aurelien@aurel32.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, Paul Durrant
- <paul@xen.org>, Eric Auger <eric.auger@redhat.com>,
- David Woodhouse <dwmw2@infradead.org>, qemu-arm@nongnu.org,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Steven Lee
- <steven_lee@aspeedtech.com>, Peter Maydell <peter.maydell@linaro.org>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Leif Lindholm <quic_llindhol@quicinc.com>
-References: <20240806173119.582857-1-crosa@redhat.com>
- <20240806173119.582857-10-crosa@redhat.com>
- <1f645137-c621-4fa3-ace0-415087267a7b@redhat.com>
- <CA+bd_6LTqGbx2+GOyYHyJ4d5gpg4v8Ddx5apjghiB0vjt8Abhg@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CA+bd_6LTqGbx2+GOyYHyJ4d5gpg4v8Ddx5apjghiB0vjt8Abhg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,71 +74,414 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/08/2024 16.08, Cleber Rosa wrote:
-> On Mon, Aug 12, 2024 at 6:17 AM Thomas Huth <thuth@redhat.com> wrote:
->> ...
->>> diff --git a/tests/Makefile.include b/tests/Makefile.include
->>> index 537804d101..545b5155f9 100644
->>> --- a/tests/Makefile.include
->>> +++ b/tests/Makefile.include
->>> @@ -94,6 +94,9 @@ TESTS_RESULTS_DIR=$(BUILD_DIR)/tests/results
->>>    ifndef AVOCADO_TESTS
->>>        AVOCADO_TESTS=tests/avocado
->>>    endif
->>> +ifndef AVOCADO_PARALLEL
->>> +     AVOCADO_PARALLEL=1
->>> +endif
->>>    # Controls the output generated by Avocado when running tests.
->>>    # Any number of command separated loggers are accepted.  For more
->>>    # information please refer to "avocado --help".
->>> @@ -141,7 +144,8 @@ check-avocado: check-venv $(TESTS_RESULTS_DIR) get-vm-images
->>>                --show=$(AVOCADO_SHOW) run --job-results-dir=$(TESTS_RESULTS_DIR) \
->>>                $(if $(AVOCADO_TAGS),, --filter-by-tags-include-empty \
->>>                        --filter-by-tags-include-empty-key) \
->>> -            $(AVOCADO_CMDLINE_TAGS) --max-parallel-tasks=1 \
->>> +            $(AVOCADO_CMDLINE_TAGS) --max-parallel-tasks=$(AVOCADO_PARALLEL) \
->>> +                     -p timeout_factor=$(AVOCADO_PARALLEL) \
->>>                $(if $(GITLAB_CI),,--failfast) $(AVOCADO_TESTS), \
->>>                "AVOCADO", "tests/avocado")
->>
->> I think it was nicer in the previous attempt to bump the avocado version:
->>
->> https://gitlab.com/qemu-project/qemu/-/commit/ec5ffa0056389c3c10ea2de1e783
->>
->> This re-used the "-j" option from "make", so you could do "make -j$(nproc)
->> check-avocado" just like with the other "check" targets.
->>
-> 
-> Hi Thomas,
-> 
-> I can see why it looks better, but in practice, I'm not getting the
-> best behavior with such a change.
-> 
-> First, the fact that it enables the parallelization by default, while
-> there still seems to be issues with test timeout issues, and even
-> existing races between tests (which this series tried to address as
-> much as possible) will not result in the best experience IMO.  On my
-> 12 core machine, and also on GitLab CI, having 4 tests running in
-> parallel gets a nice speed up (as others have reported) while still
-> being very stable.
-> 
-> I'd say making the number of parallel tests equal to `nproc` is best
-> kept for a future round.
-> 
-> Let me know if this sounds reasonable to you.
+Introduction
+============
 
-  Hi Cleber,
+If we think application specific memory (including inter-host shared memory) is
+a thing, it will also be a thing people want to use with virtual machines,
+potentially nested. So how do we present it at the Host to VM boundary?
 
-that patch that I linked did not set the default number of parallel tests to 
-$(nproc), it just used the value of the "-j" option of make. So if you just 
-run "make check-avocado" there, you only get single threaded execution as 
-before. You explicitely have to run "make -jX check-avocado" to get X 
-parallel threads. IMHO using "-j" is more intuitive than using yet another 
-environment variable.
+This RFC is perhaps premature given we haven't yet merged upstream support for
+the bare metal case. However I'd like to get the discussion going given we've
+touched briefly on this in a number of CXL sync calls and it is clear no one is
+entirely sure what direction make sense.  We may briefly touch on this in the
+LPC CXL uconf, but time will be very limited.
 
-  Thomas
+Aim here isn't to promote a particular path, but just to describe the problem
+and some potential solutions. It may be obvious which one I think is easiest,
+but it may be a case of I have that hammer so will hit things with it.
+It's also the case that we may not converge on a single solution and end up
+with several supported.  That's not a problem as long as there isn't
+significant extra maintenance burden etc.  There are subtle differences
+between likely deployments that may make certain solutions more attractive
+than others.
 
+Whilst I'm very familiar with the bare metal CXL part of this, I'm less
+familiar with the Virtual Machine and MM elements.  Hence I'm hoping to
+get inputs from David Hildenbrand, particularly around virtio-mem as an
+option and many others to help fill in some of the gaps in information.
+I'd also like inputs from those like John Groves who are looking at inter-host
+sharing.  I've also cc'd the QEMU list given all these solutions are likely
+to involve some additional emulation work and QEMU is my preferred choice for
+a reference implementation.
+
+I've almost certainly forgotten someone, so please do +CC others.
+
+Background
+==========
+
+Skip if you already know all about CXL or similar memory pooling technologies.
+I've skipped over many of the details, because they hopefully don't matter for
+the core of the questions posed. I'm happy to provide more details though if
+this isn't detailed enough.
+
+Memory pool devices
+-------------------
+
+CXL and similar technologies bring the option of having an 'appliance' that
+provides disaggregated memory to a number of servers with moderately low latency
+overhead compared to local memory.  Typically these are multi-head devices
+directly connected to Root Ports of a number of different hosts. This design
+avoids the latency cost of a switched fabric.
+
+Experimental deployments suggest ratios of around 1 memory pool to 16 CPU
+sockets.
+[Pond: CXL-Based Memory Pooling Systems for Cloud Platforms, Li et Al.
+ ASPLOS '23]
+
+In some deployments, each socket has on it's own connection allowing lowish
+latency (perhaps 1.5x typical inter socket), highish bandwidth memory
+expansion.  Interleave can further boost the host to appliance bandwidth
+at the cost of reducing number of hosts sharing a single appliance.
+ __________________   __________________   __________________
+| Host A           | | Host B           | | Host C           |
+|                  | |                  | |                  |
+|   ____    ____   | |   ____    ____   | |   ____    ____   |
+|__|_RP_|__|_RP_|__| |__|_RP_|__|_RP_|__| |__|_RP_|__|_RP_|__|
+     ||      ||           ||      ||           ||      ||
+     ||      ||           ||      ||           ||      ||
+ ____||______||___________||______||___________||______||_____
+|                                                             |
+|                                                             |
+|             Memory Appliance.                               |
+|                                                             |
+|_____________________________________________________________|
+
+CXL memory pooling options
+--------------------------
+
+CXL 2.0 provided basic memory pool facilities via hot-plug of entire devices.
+This is both expensive to do and inflexible, so not well suited to memory
+appliance applications.
+
+CXL 3.0 and onwards introduced Dynamic Capacity in what is known as a Dynamic
+Capacity Device (DCD).
+
+We'll need a few key terms:
+
+Host Physical Address (HPA). Region of the host system address map where reads 
+and writes will be routed to a particular CXL host bridge. This is considered
+a fixed mapping (may be changeable in BIOS) and presented to the host OS via
+an ACPI table. These windows are called CXL Fixed Memory Windows (CFMWs)
+Yes I'm being lazy here and HPA may not quite be the same as the view a CPU sees
+but that's a detail we don't care about here.
+
+Device Physical Address (DPA).  Confusingly this isn't necessarily the
+addressing used on a device to access a particular physical address in the DRAM
+chips, but rather a presentation of the device memory to a particular host.
+There may be another level of translation underneath (this detail will matter
+later)
+
+Host Managed Device Memory Decoders (HDM Decoders). Programmable Address
+Routers that control the routing of a CXL transaction.
+
+Extents - Contiguous regions of DPA space (offset + size)
+
+Key elements of DCD usage
+-------------------------
+
+Device to host address routing is not often changed. Typically it is set up at
+boot, either in host firmware, or once the operating system has started. That
+is, we'll probably program all the HDM Decoders once per boot. They may be left
+in a state where the host can reprogram them, or locked down.
+
+Regions of the DPA space that these decoders are routing the accesses to may
+not be backed by anything. A slight simplification is that these unbacked
+addresses read zero, and writes are dropped.
+
+Later on, some magic entity - let's call it an orchestrator, will tell the
+memory pool to provide memory to a given host. The host gets notified by
+the device of an 'offer' of specific memory extents and can accept it, after
+which it may start to make use of the provided memory extent.
+
+Those address ranges may be shared across multiple hosts (in which case they
+are not for general use), or may be dedicated memory intended for use as
+normal RAM.
+
+Whilst the granularity of DCD extents is allowed by the specification to be very
+fine (64 Bytes), in reality my expectation is no one will build general purpose
+memory pool devices with fine granularity.
+
+Memory hot-plug options (bare metal)
+------------------------------------
+
+By default, these extents will surface as either:
+1) Normal memory hot-plugged into a NUMA node.
+2) DAX - requiring applications to map that memory directly or use
+   a filesystem etc.
+
+There are various ways to apply policy to this. One is to base the policy
+decision on a 'tag' that is associated with a set of DPA extents. That 'tag'
+is metadata that originates at the orchestrator. It's big enough to hold a
+UUID, so can convey whatever meaning is agreed by the orchestrator and the
+software running on each host.
+
+Memory pools tend to want to guarantee, when the circumstances change
+(workload finishes etc), they can have the resources they allocated back.
+CXL brings polite ways of asking for the memory back and big hammers for
+when the host ignores things (which may well crash a naughty host).
+Reliable hot unplug of normal memory continues to be a challenge for memory
+that is 'normal' because not all its use / lifetime is tied to a particular
+application.
+
+Application specific memory
+---------------------------
+
+The DAX path enables association of the memory with a single application
+by allowing that application to simply mmap appropriate /dev/daxX.Y
+That device optionally has an associated tag.
+
+When the application closes or otherwise releases that memory we can
+guarantee to be able to recover the capacity.  Memory provided to an
+application this way will be referred to here as Application Specific Memory.
+This model also works for HBM or other 'better' memory that is reserved for
+specific use cases.
+
+So the flow is something like:
+1. Cloud orchestrator decides it's going to run in memory database A 
+   on host W.
+2. Memory appliance Z is told to 'offer' 1TB or memory to host W with
+   UUID / tag wwwwxxxxzzzz
+3. Host W accepts that memory (why would it say no?) and creates a
+   DAX device for which the tag is discoverable.
+4. Orchestrator tells host W to launch the workload and that it
+   should use the memory provided with tag wwwwxxxxzzzz.
+5. Host launches DB and tells it to use DAX device with tag wwwwxxxxzzzz 
+   which the DB then mmap()s and loads it's database data into.
+... sometime later....
+6. Orchestrator tells host W to close that DB ad release the memory
+   allocated from the pool.
+7. Host gives the memory back to the memory appliance which can then use
+   it to provide another host with the necessary memory.
+
+This approach requires applications or at least memory allocation libraries to
+be modified.  The guarantees of getting the memory they asked for + that they
+will definitely be able to safely give the memory back when done, may make such
+software modifications worthwhile.
+
+There are disadvantages and bloat issues if the 'wrong' amount of memory is
+allocated to the application. So these techniques only work when the
+orchestrator has the necessary information about the workload.
+
+Note that one specific example of application specific memory is virtual
+machines.  Just in this case the virtual machine is the application.
+Later on it may be useful to consider the example of the specific
+application in a VM being a nested virtual machine.
+
+Shared Memory - closely related!
+--------------------------------
+
+CXL enables a number of different types of memory sharing across multiple
+hosts:
+- Read only shared memory (suitable for apache arrow for example)
+- Hardware Coherent shared memory.
+- Software managed coherency.
+
+These surface using the same machinery as non shared DCD extents. Note however
+that the presentation, in terms of extents, to different host is not the same
+(can be different extents, in an unrelated order) but along with tags, shared
+extents have sufficient data to 'construct' a virtual address to HPA mapping
+that makes them look the same to aware  application or file systems.  Current
+proposed approach to this is to surface the extents via DAX and apply a
+filesystem approach to managing the data.
+https://lpc.events/event/18/contributions/1827/
+
+These two types of memory pooling activity (shared memory, application specific
+memory) both require capacity associated with a tag to be presented to specific
+users in a fashion that is 'separate' from normal memory hot-plug.
+
+The virtualization question
+===========================
+
+Having made the assumption that the models above are going to be used in
+practice, and that Linux will support them, the natural next step is to
+assume that applications designed against them are going to be used in virtual
+machines as well as on bare metal hosts.
+
+The open question this RFC is aiming to start discussion around is how best to
+present them to the VM.  I want to get that discussion going early because
+some of the options I can see will require specification additions and / or
+significant PoC / development work to prove them out.  Before we go there,
+let us briefly consider other uses of pooled memory in VMs and how theuy
+aren't really relevant here.
+
+Other virtualization uses of memory pool capacity
+-------------------------------------------------
+
+1. Part of static capacity of VM provided from a memory pool.
+   Can be presented as a NUMA setup, with HMAT etc providing performance data
+   relative to other memory the VM is using. Recovery of pooled capacity 
+   requires shutting down or migrating the VM.
+2. Coarse grained memory increases for 'normal' memory.
+   Can use memory hot-plug. Recovery of capacity likely to only be possible on
+   VM shutdown.
+
+Both these use cases are well covered by existing solutions so we can ignore
+them for the rest of this document.
+
+Application specific or shared dynamic capacity - VM options.
+-------------------------------------------------------------
+
+1. Memory hot-plug - but with specific purpose memory flag set in EFI
+   memory map.  Current default policy is to bring those up as normal memory.
+   That policy can be adjusted via kernel option or Kconfig so they turn up
+   as DAX.  We 'could' augment the metadata with such hot-plugged memory
+   with the UID / tag from an underlying bare metal DAX device.
+
+2. Virtio-mem - It may be possible to fit this use case within an extended
+   virtio-mem.
+
+3. Emulate a CXL type 3 device.
+
+4. Other options?
+
+Memory hotplug
+--------------
+
+This is the heavy weight solution but should 'work' if we close a specification
+gap.  Granularity limitations are unlikely to be a big problem given anticipated
+CXL devices.
+
+Today, the EFI memory map has an attribute EFI_MEMORY_SP, for "Specific Purpose
+Memory" intended to notify the operating system that it can use the memory as
+normal, but it is there for a specific use case and so might be wanted back at
+any point. This memory attribute can be provided in the memory map at boot
+time and if associated with EfiReservedMemoryType can be used to indicate a
+range of HPA Space where memory that is hot-plugged later should be treated as
+'special'.
+
+There isn't an obvious path to associate a particular range of hot plugged
+memory with a UID / tag.  I'd expect we'd need to add something to the ACPI
+specification to enable this.
+
+Virtio-mem
+----------
+
+The design goals of virtio-mem [1] mean that it is not 'directly' applicable
+to this case, but could perhaps be adapted with the addition of meta data
+and DAX + guaranteed removal of explicit extents.
+
+[1] [virtio-mem: Paravirtualized Memory Hot(Un)Plug, David Hildenbrand and
+Martin Schulz, Vee'21]
+
+Emulating a CXL Type 3 Device
+-----------------------------
+
+Concerns raised about just emulating a CXL topology:
+* A CXL Type 3 device is pretty complex.
+* All we need is a tag + make it DAX, so surely this is too much?
+
+Possible advantages
+* Kernel is exactly the same as that running on the host. No new drivers or
+  changes to existing drivers needed as what we are presenting is a possible
+  device topology - which may be much simpler that the host.
+
+Complexity:
+***********
+
+We don't emulate everything that can exist in physical topologies.
+- One emulated device per host CXL Fixed Memory Window
+  (I think we can't quite get away with just one in total due to BW/Latency
+   discovery)
+- Direct connect each emulated device to an emulate RP + Host Bridge. 
+- Single CXL Fixed memory Window.  Never present interleave (that's a host
+  only problem).
+- Can probably always present a single extent per DAX region (if we don't
+  mind burning some GPA space to avoid fragmentation).
+
+In most real deployments, that's 1 CFMW, 1 pass through expander bridge, 1 RP
+and 1 EP. We would probably lock down the decoders before presentation to the
+kernel. Locking down routing is already supported by Linux as a BIOS may do
+this. That lock down simplifies the emulation.
+
+We already have most of what is needed emulated and upstream in QEMU with
+the exception of a necessary optimization to avoid interleave decoding
+(not relevant here, that is all for testing topology handling). PoC level
+code exists for that bit.  The other aspect not yet enabled, is hotplugging
+additional memory backends into a single CXL Type 3 emulated device. I don't
+anticipate that being a problem, but PoC needed to be sure.
+
+One possible corner is that the Dynamic Capacity Flows in a physical machine
+require flushing caches due to changes of the physical address map.  Care may
+be needed to silently drop such flushes if they are issued from the guest as it
+will not actually be changing the physical address map when capacity is added
+or released.
+
+Today, Linux associates a single NUMA node with a CXL Fixed Memory
+window. Whilst this is a limitation of the Linux handling, to avoid
+major changes to that infrastructure it may make sense to present multiple
+CXL Fixed Memory windows, so that the Guest can have separate NUMA nodes
+for memory pools with different characteristics.
+
+So I agreed complexity of this solution is a valid point, but mostly for
+emulation complexity. As emulated devices go it's not that complex (and
+we have most of it in place already and upstream in QEMU with Fan's
+DCD emulation support going in recently).
+
+Error handling:
+***************
+What we mostly care about here is memory corruption.  Protocol errors
+may be relevant if we an contain the resulting resets, but that is mostly
+a host problem.
+
+Synchronous memory errors should surface the same as normal.
+Asynchronous errors can either use FW first error injection into the VMM
+or inject emulated device errors (some support already in QEMU, additional
+support under review).
+
+Conclusion for Type 3 emulation
+*******************************
+Seems doable.
+Complexity is control paths in the VMM.
+No kernel changes needed (I think!)
+
+What I'm looking for from this discussion
+=========================================
+
+- Blockers!  What problems do people anticipate with each approach?
+- General agreement on what we 'might' support in the kernel / QEMU / other VMMs.
+- Are there other use cases with similar requirements that we should incorporate?
+
+
+
+
+
+
+Appendix : Known corner cases
+=============================
+
+These are here mostly for completeness and to track things we need
+to solve, rather that because they should greatly influence the
+path taken.
+
+CXL Type 3 Performance discovery
+--------------------------------
+
+The discussion above suggests that we would represent interleaved CXL devices
+as a single device.  Given NUMA characteristics of CXL attached memory are
+calculated based partly on the PCIe Link register values that currently 
+indicate we have up to a 16x 64GT/s link, to present several higher performance
+devices that are interleaved as a single device may require representation of 
+a device faster than hardware specifications allow.  If this turns out to be 
+a practical problem, solutions such as a PCIe DVSEC capability could be used
+to provided accurate information.  If we can ensure the emulated link is not
+acting as a bottleneck, the rest of the performance information from the
+topology can be mapped to a combination of emulated host HMAT entries and
+emulated CDAT data provided by the emulated type 3 device.
+
+Migration
+---------
+
+VM migration will either have to remove all extents, or appropriately
+prepopulate them prior to migration.  There are possible ways this
+may be done with the same memory pool contents via 'temporal' sharing,
+but in general this may bring additional complexity.
+
+Kexec etc etc will be similar to how we handle it on the host - probably
+just give all the capacity back.
 
