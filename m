@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 998CAC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 14:52:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEACAC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 14:53:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sebnI-0004E2-3e; Thu, 15 Aug 2024 10:49:40 -0400
+	id 1sebnH-0004Bn-JG; Thu, 15 Aug 2024 10:49:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sebn5-0003aR-8F
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:49:27 -0400
-Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ id 1sebn6-0003eA-5n
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:49:29 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sebn2-0000Dr-Cm
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:49:26 -0400
-Received: by mail-ej1-x62c.google.com with SMTP id
- a640c23a62f3a-a7aac70e30dso120862566b.1
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 07:49:24 -0700 (PDT)
+ id 1sebn4-0000EG-61
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:49:27 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-5bec78c3f85so252779a12.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 07:49:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723733363; x=1724338163; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723733365; x=1724338165; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fGNwWa3S5TX7tw+jVxHwopux+SCGaD9vnHCk/doezEQ=;
- b=TEradAnQNc2vat9wviJ0YlSOR+iYRNK5Md2UgbZ2CGu4ikk0fsM5iS1IwZuOUMpVDs
- s1wCAuL+1IWS0JbCnS99fJ4BzqSBEAdCtX9blWUpm5fxL5w6IGxv1dNijYTxGkZYEeYi
- bReg9k+Yvlcfpe5RLmrJdJ+C4xxFmb7+BTD+8YAlGbKzUSRzhKKY4xSq2bM3GO1YRGu8
- sftTUXw39akPMU8ZP17NF/Ie+18Cofx6jri4jbwFT50hir7i7pgER5L7dnThl6Psif7j
- JYaPEdlKjC0GWITM1b6RZU1qLj2M7aweKsA/k874a5DXnzd+hlv8A6NezVR7c1Q2+CSC
- Idsw==
+ bh=ANsPiSjLHElnluRHF+jBoUXCzn/4iakx0mEan1/xlMw=;
+ b=LaS1yfGj90UbOSMgL8UrbN8fGP2CD9tSFDloBHATuizj9n3ifGOiFFcgVVPxpAWq5A
+ 0Sn/kbaYOjrmlpOPR8JAK0WdcXtwZCH7Qieq4RYaQVALqG12lmQjc0ktA8LOK7wVTG3Q
+ IMVjdeCWbJcAj4484Jc49hz9y6F3iQ6sOZhd4Y/XXP5ZtEKDoGTTixDRp7idc1J4IQkx
+ N+wkEXVU/Iw3LWRZsMK1aXJ35NQJ2nx8uMk7Uy2MCKKGPBCqN1RSi8pGk1F2rkhSAIPj
+ S5EO/gmGIWr6C1r/6T2yQUzYLfOqUjYs/UWEwwbJzPhhs2BF9NvuswIg0pf6bwdR1TK3
+ i8Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723733363; x=1724338163;
+ d=1e100.net; s=20230601; t=1723733365; x=1724338165;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fGNwWa3S5TX7tw+jVxHwopux+SCGaD9vnHCk/doezEQ=;
- b=tuswgPRJrqRA6zICxyTD8YE5rU3fVh7MX2VwVDutwJBopvm54pbNHI7MkvYTb4d9v/
- +BqQNZHHYeNs6ig1skV75hC1EkicS1bGKWkeNDhfhD7BwAzpZC1TFJm8cqvcrjGsBILz
- AfuHGDkkei1/zLCA1mqHNxUtmNJcEbeB3OpuGxrPhRI2qCpL6mmdTYK0QfNkRpyUmqO8
- G1uzIW9lpfOvnGYxESwBI6XURhLxqy4h66kMKwzQZDhl2U1YlphJGRagKwQQqMP5Lmcg
- a9wbWZ+w+RVL4DQPxMxrdrsd3jF9AnxbrQ8C0Ho6FQ8VANiO7CEH3x3F/vaBR7737DYz
- FU9g==
-X-Gm-Message-State: AOJu0YzuixN3NxeQppnajZ5zvy5vYdmhsryW6T4L4CvqltqpvUxIZPP6
- J8tt+SMM8guz+keOSZDpOJGcAxJUmvUypaT8Xue+AkuozQidBZJvk4mBPVTtCOzlUrWu1ubSU8g
- 6
-X-Google-Smtp-Source: AGHT+IFG+JYdR8k28AF8t9wmxtN9aFr6ywujt3U9J0/xHVK7QUhooazY37v4RAVC7Hfg0OThu1yHbQ==
-X-Received: by 2002:a17:907:d58f:b0:a77:d7f1:42eb with SMTP id
- a640c23a62f3a-a8366d396ebmr495271366b.23.1723733362446; 
- Thu, 15 Aug 2024 07:49:22 -0700 (PDT)
+ bh=ANsPiSjLHElnluRHF+jBoUXCzn/4iakx0mEan1/xlMw=;
+ b=aZG/6n6XMh+SgncLQFSsOkbggj/756FIT+H1nQ6mIbG+leWTdBPn9EyL4XOJbC0ADX
+ w+WsBTI5Lqz+cgrJ+V0wVULvkUhaBLBD3mM2b0CQiqx0Kyzv2NwjyrQ01Kz57yJR47uj
+ Gnzr7T5La+lotQe68CaDtliSd+8SbMPjBwKlyviCIKZpAo0U7NFK6qs7D5Kh+cnSfMni
+ qKikBe882aMf9TpK5B413sqI8oo/YlZmtCLPPpjw+R74aIio1VWaie6T0c7k572k+xPj
+ mHlCXLAM6lrVhEY4gB/unURFN14iFz9rVtPKMWlvFsBtHWGw2AgOG3rYK9GUufu2mySn
+ OpkA==
+X-Gm-Message-State: AOJu0YznlwXVOj7TvTAOaXDTdxZBJha8W39ZwUtfS8rdUMIrW4XhUwIZ
+ 6R/o+44C8S95iYziRapHupkQxdQ5Q3R+ZQbzqnJFSElL2FSWUoXbClqP4GYo6AI=
+X-Google-Smtp-Source: AGHT+IFvhkcP2ugHHp8zYDYF7AUd1wBO/1X90Asc+Rxn6YFbhmDAzQc3nh6ezyeAIDijP0iq+agIfw==
+X-Received: by 2002:a05:6402:360b:b0:5a8:2f2b:d2d3 with SMTP id
+ 4fb4d7f45d1cf-5bea1cb4ef1mr3638752a12.37.1723733364142; 
+ Thu, 15 Aug 2024 07:49:24 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a83838cefe0sm112307466b.47.2024.08.15.07.49.18
+ 4fb4d7f45d1cf-5bebbdfb923sm964129a12.54.2024.08.15.07.49.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 15 Aug 2024 07:49:20 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B35ED5F8ED;
+ by draig.lan (Postfix) with ESMTP id 242AB5FF6C;
  Thu, 15 Aug 2024 15:49:13 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PULL 21/21] plugins: fix race condition with scoreboards
-Date: Thu, 15 Aug 2024 15:49:11 +0100
-Message-Id: <20240815144911.1931487-22-alex.bennee@linaro.org>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 15/21] chardev: set record/replay on the base device of a muxed
+ device
+Date: Thu, 15 Aug 2024 15:49:05 +0100
+Message-Id: <20240815144911.1931487-16-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20240815144911.1931487-1-alex.bennee@linaro.org>
 References: <20240815144911.1931487-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,96 +100,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-A deadlock can be created if a new vcpu (a) triggers a scoreboard
-reallocation, and another vcpu (b) wants to create a new scoreboard at
-the same time.
+chardev events to a muxed device don't get recorded because e.g.,
+qemu_chr_be_write() checks whether the base device has the record flag
+set.
 
-In this case, (a) holds the plugin lock, and starts an exclusive
-section, waiting for (b). But at the same time, (b) is waiting for
-plugin lock.
+This can be seen when replaying a trace that has characters typed into
+the console, an examination of the log shows they are not recorded.
 
-The solution is to drop the lock before entering the exclusive section.
+Setting QEMU_CHAR_FEATURE_REPLAY on the base chardev fixes the problem.
 
-This bug can be easily reproduced by creating a callback for any tb
-exec, that allocates a new scoreboard. In this case, as soon as we reach
-more than 16 vcpus, the deadlock occurs.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2344
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20240812220748.95167-2-pierrick.bouvier@linaro.org>
-[AJB: tweak var position to meet coding style]
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Message-Id: <20240813050638.446172-8-npiggin@gmail.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240813202329.1237572-22-alex.bennee@linaro.org>
+Message-Id: <20240813202329.1237572-16-alex.bennee@linaro.org>
 
-diff --git a/plugins/core.c b/plugins/core.c
-index 12c67b4b4e..2897453cac 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -214,30 +214,49 @@ CPUPluginState *qemu_plugin_create_vcpu_state(void)
- 
- static void plugin_grow_scoreboards__locked(CPUState *cpu)
- {
--    if (cpu->cpu_index < plugin.scoreboard_alloc_size) {
-+    size_t scoreboard_size = plugin.scoreboard_alloc_size;
-+    bool need_realloc = false;
-+
-+    if (cpu->cpu_index < scoreboard_size) {
-         return;
-     }
- 
--    bool need_realloc = FALSE;
--    while (cpu->cpu_index >= plugin.scoreboard_alloc_size) {
--        plugin.scoreboard_alloc_size *= 2;
--        need_realloc = TRUE;
-+    while (cpu->cpu_index >= scoreboard_size) {
-+        scoreboard_size *= 2;
-+        need_realloc = true;
-     }
- 
-+    if (!need_realloc) {
-+        return;
-+    }
- 
--    if (!need_realloc || QLIST_EMPTY(&plugin.scoreboards)) {
--        /* nothing to do, we just updated sizes for future scoreboards */
-+    if (QLIST_EMPTY(&plugin.scoreboards)) {
-+        /* just update size for future scoreboards */
-+        plugin.scoreboard_alloc_size = scoreboard_size;
-         return;
-     }
- 
-+    /*
-+     * A scoreboard creation/deletion might be in progress. If a new vcpu is
-+     * initialized at the same time, we are safe, as the new
-+     * plugin.scoreboard_alloc_size was not yet written.
-+     */
-+    qemu_rec_mutex_unlock(&plugin.lock);
-+
-     /* cpus must be stopped, as tb might still use an existing scoreboard. */
-     start_exclusive();
--    struct qemu_plugin_scoreboard *score;
--    QLIST_FOREACH(score, &plugin.scoreboards, entry) {
--        g_array_set_size(score->data, plugin.scoreboard_alloc_size);
-+    /* re-acquire lock */
-+    qemu_rec_mutex_lock(&plugin.lock);
-+    /* in case another vcpu is created between unlock and exclusive section. */
-+    if (scoreboard_size > plugin.scoreboard_alloc_size) {
-+        struct qemu_plugin_scoreboard *score;
-+        QLIST_FOREACH(score, &plugin.scoreboards, entry) {
-+            g_array_set_size(score->data, scoreboard_size);
-+        }
-+        plugin.scoreboard_alloc_size = scoreboard_size;
-+        /* force all tb to be flushed, as scoreboard pointers were changed. */
-+        tb_flush(cpu);
-     }
--    /* force all tb to be flushed, as scoreboard pointers were changed. */
--    tb_flush(cpu);
-     end_exclusive();
+diff --git a/chardev/char.c b/chardev/char.c
+index 3c43fb1278..ba847b6e9e 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -615,11 +615,24 @@ ChardevBackend *qemu_chr_parse_opts(QemuOpts *opts, Error **errp)
+     return backend;
  }
  
+-Chardev *qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
+-                                Error **errp)
++static void qemu_chardev_set_replay(Chardev *chr, Error **errp)
++{
++    if (replay_mode != REPLAY_MODE_NONE) {
++        if (CHARDEV_GET_CLASS(chr)->chr_ioctl) {
++            error_setg(errp, "Replay: ioctl is not supported "
++                             "for serial devices yet");
++            return;
++        }
++        qemu_chr_set_feature(chr, QEMU_CHAR_FEATURE_REPLAY);
++        replay_register_char_driver(chr);
++    }
++}
++
++static Chardev *__qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
++                                         bool replay, Error **errp)
+ {
+     const ChardevClass *cc;
+-    Chardev *chr = NULL;
++    Chardev *base = NULL, *chr = NULL;
+     ChardevBackend *backend = NULL;
+     const char *name = qemu_opt_get(opts, "backend");
+     const char *id = qemu_opts_id(opts);
+@@ -657,11 +670,11 @@ Chardev *qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
+     chr = qemu_chardev_new(bid ? bid : id,
+                            object_class_get_name(OBJECT_CLASS(cc)),
+                            backend, context, errp);
+-
+     if (chr == NULL) {
+         goto out;
+     }
+ 
++    base = chr;
+     if (bid) {
+         Chardev *mux;
+         qapi_free_ChardevBackend(backend);
+@@ -681,11 +694,25 @@ Chardev *qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
+ out:
+     qapi_free_ChardevBackend(backend);
+     g_free(bid);
++
++    if (replay && base) {
++        /* RR should be set on the base device, not the mux */
++        qemu_chardev_set_replay(base, errp);
++    }
++
+     return chr;
+ }
+ 
+-Chardev *qemu_chr_new_noreplay(const char *label, const char *filename,
+-                               bool permit_mux_mon, GMainContext *context)
++Chardev *qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
++                                Error **errp)
++{
++    /* XXX: should this really not record/replay? */
++    return __qemu_chr_new_from_opts(opts, context, false, errp);
++}
++
++static Chardev *__qemu_chr_new(const char *label, const char *filename,
++                               bool permit_mux_mon, GMainContext *context,
++                               bool replay)
+ {
+     const char *p;
+     Chardev *chr;
+@@ -693,14 +720,22 @@ Chardev *qemu_chr_new_noreplay(const char *label, const char *filename,
+     Error *err = NULL;
+ 
+     if (strstart(filename, "chardev:", &p)) {
+-        return qemu_chr_find(p);
++        chr = qemu_chr_find(p);
++        if (replay) {
++            qemu_chardev_set_replay(chr, &err);
++            if (err) {
++                error_report_err(err);
++                return NULL;
++            }
++        }
++        return chr;
+     }
+ 
+     opts = qemu_chr_parse_compat(label, filename, permit_mux_mon);
+     if (!opts)
+         return NULL;
+ 
+-    chr = qemu_chr_new_from_opts(opts, context, &err);
++    chr = __qemu_chr_new_from_opts(opts, context, replay, &err);
+     if (!chr) {
+         error_report_err(err);
+         goto out;
+@@ -722,24 +757,18 @@ out:
+     return chr;
+ }
+ 
++Chardev *qemu_chr_new_noreplay(const char *label, const char *filename,
++                               bool permit_mux_mon, GMainContext *context)
++{
++    return __qemu_chr_new(label, filename, permit_mux_mon, context, false);
++}
++
+ static Chardev *qemu_chr_new_permit_mux_mon(const char *label,
+                                           const char *filename,
+                                           bool permit_mux_mon,
+                                           GMainContext *context)
+ {
+-    Chardev *chr;
+-    chr = qemu_chr_new_noreplay(label, filename, permit_mux_mon, context);
+-    if (chr) {
+-        if (replay_mode != REPLAY_MODE_NONE) {
+-            qemu_chr_set_feature(chr, QEMU_CHAR_FEATURE_REPLAY);
+-        }
+-        if (qemu_chr_replay(chr) && CHARDEV_GET_CLASS(chr)->chr_ioctl) {
+-            error_report("Replay: ioctl is not supported "
+-                         "for serial devices yet");
+-        }
+-        replay_register_char_driver(chr);
+-    }
+-    return chr;
++    return __qemu_chr_new(label, filename, permit_mux_mon, context, true);
+ }
+ 
+ Chardev *qemu_chr_new(const char *label, const char *filename,
 -- 
 2.39.2
 
