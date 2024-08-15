@@ -4,215 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FEEDC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 03:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11C41C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 05:49:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seRRp-0001Kw-IO; Wed, 14 Aug 2024 23:46:49 -0400
+	id 1seTLt-00062W-Fq; Thu, 15 Aug 2024 01:48:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1seRRn-0001Ji-RI
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 23:46:47 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1seRRl-0005VG-N4
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 23:46:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1723693605; x=1755229605;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=9aLsWPRmKrjsVu5UzvGG7Vv/3ufloJbHP6kKAJnjalc=;
- b=TUq/NU5ArkNPbVkXXofsEgQqoKXG4pihbyJELOM8pLY9JpS1w+waCk3k
- KocwdA0H6h2N7B5YG4+YGJ3+ZPSSCcVsUwJC6tLbID25vKtqrFf+37Tlh
- 1T5OAibXX8ki7edTxAQYKLDZ5n6M6eyIG2f693xquHwVpSpHijuvT7s9+
- JAKRt6yiZPbEiV49xVCWNNf1ltG0jcM1hbnmeHWWH1r9RTGi+ks8sJmYE
- Qi6TQuuwOLrtNlfuJPipNAaDpmSRVmj0l6ZBkW/rZtevRxEKgoiXgOCXz
- Nl1sMEf+In8twQJ5YQfr+9jCMsK+c515QItpy1RXaobmFBMCAE+3Y3j57 w==;
-X-CSE-ConnectionGUID: KLiA0tTjTy6tnIxJonvqoQ==
-X-CSE-MsgGUID: llNBGPtNR82PheVJN0f+UA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11164"; a="39398122"
-X-IronPort-AV: E=Sophos;i="6.10,147,1719903600"; d="scan'208";a="39398122"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 14 Aug 2024 20:46:43 -0700
-X-CSE-ConnectionGUID: S7ocNFEOTOqyqJjOIKsxzw==
-X-CSE-MsgGUID: FIqjigIpRSqAA52n9vKp5A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,147,1719903600"; d="scan'208";a="58898828"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
- by fmviesa007.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 14 Aug 2024 20:46:42 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Wed, 14 Aug 2024 20:46:41 -0700
-Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
- ORSMSX610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Wed, 14 Aug 2024 20:46:41 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Wed, 14 Aug 2024 20:46:41 -0700
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com (104.47.74.40) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 14 Aug 2024 20:46:40 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Q1ehvq73Q9HK3laVsxOpi9bGAs0uGYuoGrWpe3xbYW9+9r272dIM+TSXtKbs9rjj2Pc8zdhdQOUuD8xWVkMa6tVA/EOrd6MsTYEAXxp6G9kFOW8340P4vB1hUGgjQncW2jVthmRfK0EGxBYPSDztKqqIq995WQnuN6H6VuEM10X9EFL1/ZvR0QAE5w76zTiWdJmxfaAd9o8JraVb1RtJkOcgU27uCSvfzHzAeHR0nccX0rEHz2l22K/HHbS+i0W4ux129MB6AfAud5c3icop5C3ZIQ/Kr2pWkXgI8DqMOfeAQ7NcTnrG5v77rixUwdkF6elkU56yNS9qb5kHiBC6YA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9aLsWPRmKrjsVu5UzvGG7Vv/3ufloJbHP6kKAJnjalc=;
- b=bDh/ZfqgWGjW5pH1ieBn9oeYzwHf6H5hUt1vPh+zkPy4kyFouJQaT6ixBTtAv5MNdMkZm8epwC5zRiaWASOU2QZMjyBzdD4n4D9hSPIBk+ULnkJ/+9yXXU/fjihLrJX0aDqw5k45hxRT5057XAbSPCgVVKazxcdZuJ24T2ZwXSHdnQeQAHWLpzKDa5ipByCvwj30K5LI0xE+50QkC6wmWVnh07taziOvY/0u05Y9jN0+erY6Co5dWYVMwR7wekN7RymwYpPV3IXODjwcNvMrNW4XM0BNRsUPilsol9yWzVLevnbnFyNrI9Gc0F76ImbQWtfpRlERS7D9TXtmQW4yLA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com (2603:10b6:a03:47d::10)
- by DM4PR11MB6142.namprd11.prod.outlook.com (2603:10b6:8:b2::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.33; Thu, 15 Aug
- 2024 03:46:38 +0000
-Received: from SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091]) by SJ0PR11MB6744.namprd11.prod.outlook.com
- ([fe80::fe49:d628:48b1:6091%6]) with mapi id 15.20.7828.031; Thu, 15 Aug 2024
- 03:46:37 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: "Liu, Yi L" <yi.l.liu@intel.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "eric.auger@redhat.com"
- <eric.auger@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "peterx@redhat.com" <peterx@redhat.com>, "jasowang@redhat.com"
- <jasowang@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>,
- "nicolinc@nvidia.com" <nicolinc@nvidia.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
- <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: RE: [PATCH v2 16/17] intel_iommu: Introduce a property to control
- FS1GP cap bit setting
-Thread-Topic: [PATCH v2 16/17] intel_iommu: Introduce a property to control
- FS1GP cap bit setting
-Thread-Index: AQHa5wEcbJ7zQ5MdU06ZtXNCg9xsy7Imu2OAgAEA3vA=
-Date: Thu, 15 Aug 2024 03:46:37 +0000
-Message-ID: <SJ0PR11MB6744410546621C57CCF7D2E892802@SJ0PR11MB6744.namprd11.prod.outlook.com>
-References: <20240805062727.2307552-1-zhenzhong.duan@intel.com>
- <20240805062727.2307552-17-zhenzhong.duan@intel.com>
- <9b2b2f76-a5ef-4378-b233-af1a44f742c7@intel.com>
-In-Reply-To: <9b2b2f76-a5ef-4378-b233-af1a44f742c7@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ0PR11MB6744:EE_|DM4PR11MB6142:EE_
-x-ms-office365-filtering-correlation-id: 0942386b-43e7-45d5-99d4-08dcbcdcddc0
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|7416014|376014|38070700018; 
-x-microsoft-antispam-message-info: =?utf-8?B?S0NVaXh3K2JxRm1xSXI2NjI3UWtxV2JUZThvdmF4VDNyTkVwQkV3Q242V2x0?=
- =?utf-8?B?ZzBNelhYRlMvdk9mdkRPeHFnSEZjU1J1VzI4UGVqNFY4TVVOM1pJaUMwNDd2?=
- =?utf-8?B?YUZXV05LeUN5VFdiZHh6U0hPNk9MdEJHQVpVSjlzTzJaQktiSjFiYXRnRnZq?=
- =?utf-8?B?d0NYcmtWMUhFTFQ2RmNRdDdEMWZEb1BYVG0vdkhiU2tvOG1Wcnl0SzJPbW9r?=
- =?utf-8?B?T3NPTVhDcVVtai9ObWN2dTd5cUhUdDlzNzRDVjBSakNuVStUaEc5ZkpzSmdO?=
- =?utf-8?B?ZitkZlRJNzEzVHljWWljL1IyVjJVdWFkS2JDWkZJZm50K3crZmRLcjlFK0p5?=
- =?utf-8?B?Vmg2dHBkb3o0WHFVNU1EMWJEcXFLMURMSnJSVWJrY2hwTEpRYjV6em1XTHZV?=
- =?utf-8?B?VWlsNE9nNHJFWTQzaEw1NG0xVUxLb3pVamJncnJWOWVNWTh2alN5YUlCWFdr?=
- =?utf-8?B?Unpodzg2amlaWXBGRzlkbzRkU0NFOHJqWWxzdTBYOEs2anh1QzV0NTcxQ1Ru?=
- =?utf-8?B?eVlDMTF4Z09QMk5hRW5uV0xIR0RQdHE3SmIzay9RSG1hUFBtNTJCN1dZSlFu?=
- =?utf-8?B?d1FMek4vSzZpL25sSVBVa1E5MWorcXV5VU9UZjFKcjVjbXJCSm9XMWN5Y0tH?=
- =?utf-8?B?RDRITWY5SGwxdnB4Zk14SXRnK2l6WGNGaGZ3K214R2t0ZkpWMThnVHk1QlF3?=
- =?utf-8?B?NVBESzJQM3hhZVpPR0R3M2lLYVZlZ2FXU2wvNk52LzZ5VFpKMTFJVE0rRzA1?=
- =?utf-8?B?cDJyTjduV0FtOUt3Yi94a0tzTFFoanRnSW4rOVJJVnFoQ3JERW1GKzJXSmxz?=
- =?utf-8?B?UTBzQ2lXczB0SUU5RG9XUXdYbWZjSURIKzVKZTdqVE5uZFNPUFh2VUF4QTBk?=
- =?utf-8?B?VHFtMEhPMU5NOUw4cHh1aFZKZEpmVER6UXI0ckl4Uy9Ua1ovU3JIbG9pa2FP?=
- =?utf-8?B?UkZGWFBZOHEvVVM3dWhGL292VFdleHRLUWF6aC9tRUhhblBhVGwzU3FVZzBk?=
- =?utf-8?B?T0pNM3ErOFYyRTYzN0ZaSUlUSmordVZQRmJCT2dBb01tK2d2RHpHVmg4c1Fo?=
- =?utf-8?B?TGRVMGRNdXFrMjJmSVBoT0hXY2RGUGRhUEpDdHY1SHNyeHFDcHFEdjZla1E2?=
- =?utf-8?B?cXFMNUpuUnVYenlvSUIvT0tHNHJpRU0vb29NdkFWK3hXNGpBWWFkQUpBeTNR?=
- =?utf-8?B?WlRvRmczS0llb0pXVXBYMllVdFplZ2J5bjNZY21xZXhDczUyZzVYc0lTTFQr?=
- =?utf-8?B?Rmt2Yy9UQytGTFpPWFVTellQbzV3SFd1di80WlZYM2VTMzNYV1VzR2xvNkUx?=
- =?utf-8?B?NGczZlZnZWhhTWpaSFNVaS80RUhSM0x1NmxoVTFVbytpN2JxZmQ1ZVlKcWgv?=
- =?utf-8?B?M052bTZzdW14MUIxU3JvUWh2OWZDc2RXUWpleitpbzdhY3BubDJ4ZnhybVpw?=
- =?utf-8?B?L3VyWmREcG03c092UnRyTkNubG9zNFZmYzBSZ1I4QmpXOEdLeFdzRlJLcS81?=
- =?utf-8?B?Ri85eVZUWWJZZ0Mzd0tDd1N5b1BzZ2xVRzJkbTNjTmlaeXpXOE1xN0ZZQnBv?=
- =?utf-8?B?aWYrOFNmbEdvNWxjK2FGN28vNkYxbElCWHRvMUx2NWx1YTJsblBqQXVIYk81?=
- =?utf-8?B?alBJMmFmdklMVkIzYTZUUWJ1MDExTHpQb2wxZWZncWFwS01KSWxrUlVzUU1C?=
- =?utf-8?B?M2FpYVBRWFRVVHJBWEJqdlJpQW9xbkZpVEtkNTE3YTlpWW5KZkgxcEl1NmxR?=
- =?utf-8?B?WUxLbXVReFE5RWExbUJDMk04VXBVdG1ISWNOZzNmV0UrSS9Ic2RaQS80WVgz?=
- =?utf-8?Q?X0NDnTAZ915nIfNjbxEvsyMaqEcZgR2zsmGSM=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR11MB6744.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?eGMxKzdiK21lSTZadDZOeVFuYnFrb2xTZ0UxdXBDQysvRXd5S1JmZUZIRnJu?=
- =?utf-8?B?VXBoczNrL0xzSzdpb0s1dzZFaVhJaHRTQk5RWEhyQXZJT1FiSjhRemlaZnhi?=
- =?utf-8?B?MWUxZUxWdXVoVDVXSTlOandhSm53Mm41SFBtWUk0czhZZHNoa0ZQSWpGVUM3?=
- =?utf-8?B?RkFaUEUycWdwOUkvYlVvMWJCWkNxMEFRWURuRVFndlI0ZmxFdkc1R2U4STdq?=
- =?utf-8?B?eUN6OHBnbElRcDBxNHBTa0dZQUdMcVZoM1pBMDhJOVJ6cEU3aXpBNzlaMjZy?=
- =?utf-8?B?UzN5a3MrUVdVZ005dmhJUzl6MFVhZU5pOGY1L2lEODUzQXZhbzlUVEVJV3FI?=
- =?utf-8?B?bWU4YjZTRUVFRStRbTlIR3d4WngxS1l0K2Y2Vzl4SXo4VEVRSFp1YmtTRUZ4?=
- =?utf-8?B?WTVOMzZrZnZnVTkrSmc1K1luczFZbVRKcW5hdDhUUVdNeTE5WWkwVURrdVpv?=
- =?utf-8?B?V05CclRyanNwSnFKU01qd1lTRGhxaGFnVFk0dHNZUTBxTDJrY1pyTnZPdjVj?=
- =?utf-8?B?ZUpYT0VFeHRoY0JvNStOY2taM010SVVhVFZBbmU5VXVkbG1LdHgxR3RUejNv?=
- =?utf-8?B?NXBkL0VFM0poMnVxSy85c2JDVmRkSTdld29oV2xPSHpFQmdxM3RETWtsclNQ?=
- =?utf-8?B?eWVnK0xNa1dFMlpwaFhBWUY1a2FpZ3RsdUl2bGlOTU9FbTIxWlovVEd1V09D?=
- =?utf-8?B?Zi80ckVBdnJldGtxUkc3QWFjWmo5eTgzYklnKzgwM0ZacUlKWjZVZnJnYlNx?=
- =?utf-8?B?K3M5L1lMWU0wLzJ1UVlzRjlYNFNoa2ZheUJQWUdMTDBnOTNOaStiVDdnNC9j?=
- =?utf-8?B?MnA2OVZEOVJXYTRMYnFXSGdVQm5FVGZ6V2tOMDNjUjAvYysxYjNjVGdkbm9t?=
- =?utf-8?B?eHpXcDFIQWd0ak02K3RaYTZERkRMOTQ5Rnh5RGh3QkhhLzFwK05KTjZ2cG1o?=
- =?utf-8?B?ZkgrNGJiZ3VtNlhzTy9WUXovUzROU0hwQnRodnAvR2dvdXhkQmNoRjVYYTZp?=
- =?utf-8?B?RlBtajlBQmhNUmVvQmxYOVBIa2ZtS2xoZE9TWGRrcnc3Tm5XYW9XWDVJbmZz?=
- =?utf-8?B?UmhZaFR6YU53NFZwT0ZaQ1JtemlsSExEQWJrQjJvWHhrMDdidXN2TVZBc0ZD?=
- =?utf-8?B?eVZJQnAwcStXRFZTTUZGUjhSUEgxTUNwK2pPR1Iyd294VWVEbzFoRzBkWXdx?=
- =?utf-8?B?eDRBRCt5VVEwUVN5Y2o3ZG5zMk1UZ1N4Yi91WVhZTzdvM1hqQkFzOXpxcWIw?=
- =?utf-8?B?UEJmNFNNZVJ6dzdmcXd3MFBmWktmREFNNmk2N2MvWVlFLzNoeWRVenFtK0R3?=
- =?utf-8?B?SDRXTUpjZXg0YUVRZmxTZWRhMStvanhFaVJnR3pZOXpONTBraWh2NDFmYjBC?=
- =?utf-8?B?UTVXZm1teUZOVGVUVStYYmhhd000MW44RVptQ2xPcEQ3bUJiNmFFN3h4cXJt?=
- =?utf-8?B?a1FKeWlhOGY2SVNNK3kvSmxuZkxBMi91S2hSZ1NpeTZLOVJicXdaT2N1b1My?=
- =?utf-8?B?S1VJbVdmR3lZMnVWanFqMklhY2lTVnp4ZU9CbGhuUUhmK2RIV3BUcVdMcW9Y?=
- =?utf-8?B?dG90RGxBMit1TzVEMTBOSUR3VURhOGo1cWl3VDVvdHU1Rmx5d1ZDL2dQK0dU?=
- =?utf-8?B?MGtjVU9TbzB5OXRtTm5xUnJvRWxLdHZMOEVQUzkrK240REFwNkNKaWxjNjFt?=
- =?utf-8?B?Ris2SzZiYkJXNFBoV3k1SXB1eW1uSHNNeDRaV0NEK3dQMnM1MEl2TXJpUjNP?=
- =?utf-8?B?MTRmWUxocmcrUndsUDA5dDgwNHlNREFGQi9kWHprMFZxcUJyWVNFWnp4UEo3?=
- =?utf-8?B?TW16dzdCTjE5RUozM1BwR0t3eXJwekc5UFdVZWphM1FYVklESlFHRFlHZitL?=
- =?utf-8?B?QzhZMnFublYrN2VBTkpQdzJmRmdnd1ZKSm9BZjZLVXdNTmlYd2U5T1EyNkpU?=
- =?utf-8?B?eTVCc3ZVck9CaWF4NGQzb2I2SDdDY0kzSU5GYnI4WnV5cjRlM2NvcFJFd2Jz?=
- =?utf-8?B?eFd3MVRqVHoxN2RWN3hjQ0NSaThzYVF3WlNvQ05jK28wclppWVJUWlpKRTJR?=
- =?utf-8?B?ZFpUdldsTVVwYzJMTzBESmd4WVFyaEhVT0ZvVHpmM2p2WHArZ3lJeDZEbWwy?=
- =?utf-8?Q?3fQ8/KiNT4gSjRpRa5C4UhYeY?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1seTLr-000620-Qw
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 01:48:47 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1seTLp-0005Xj-OH
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 01:48:47 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-1fd90c2fc68so5166025ad.1
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 22:48:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723700923; x=1724305723; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=OuLdahOjWQIKsaFAaipb1noSJ/Jc/C34rzmpT8uX43I=;
+ b=w3TO4hLvdnEUPrtlsaY9WvdCCIUpxf5gZUykGVF0h7n0penaF+UWyWUGx2ezYYstDT
+ xjg2vEU7kAD/m5bcsTuKV0KuJOW5Oo9jVVvCg5VxdfWloTzB+Pdb+2B1jIU8QiGzlNsh
+ P7O0iaxMGyc+v6YemeMDgON2Y6lJ8wpS/DUYzqngAk1SjxXcNA+qCqpzHceT4wxAnaEJ
+ Wxnkm6BC51u7rnw50hrFYGcahYoTYpVaqyIpq8ttcnyE7ZCeMIYStQuDYTvJ7tBNLMtY
+ imiTI7h4e2JfO+WhyQrNFoMH+2zpRSBVCVamP1ltxvh6Wfai74jVe2yM4o7muMoP4qhA
+ DIcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723700923; x=1724305723;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OuLdahOjWQIKsaFAaipb1noSJ/Jc/C34rzmpT8uX43I=;
+ b=QvClYO/PUmobYJeg8zwHRcumVDRrLQ95FJufxWEhfLpoUumlTlvQl3o7eED87+NHDh
+ hgJzuzcjeEK4qMl1XnprZ3nDgfqjpwdusUa5KjpaEZsd+s60gjbx4+JQyvLoO2Md7rIC
+ 5FP3rU2z1E3IHCwC/HVQ2YO3bnu3HDrJQkHKkairSRT2aJHuhgGKpqDH9s5lIbdvw6Un
+ IxN56Bx31s0AVu8iqLdZopeokT6h5/twmNPe3bMsVqj0Rkcf3BU8oo5bHtM29Y4Gi0eF
+ jfvbtzxFpsGp2p8UO5GhYs26QnQYfbBWPQ/YKAXg8Io2o0Me4AWIBqYwhTtzbAfvFowo
+ q5kQ==
+X-Gm-Message-State: AOJu0YyCXJNh81Q5IO8E2avbyWITpOfm4V1ivJgASI005HIMMvYJheCT
+ QXB4WMaBPg5sNZXUWY7hpiI99F8Vdl84UP09dn0AVHa0NtPCMkZSkjqEo0t4qAU=
+X-Google-Smtp-Source: AGHT+IEhWcjifEksXcctgGwcosuCx52q40jJpVAhcXxSBUV0D0EP7RCA8OzkrqLcgy5RzhQgOMkoKA==
+X-Received: by 2002:a17:903:1c1:b0:1fd:9a23:90cc with SMTP id
+ d9443c01a7336-201d63bfe84mr56872255ad.26.1723700923089; 
+ Wed, 14 Aug 2024 22:48:43 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::b861? ([2604:3d08:9384:1d00::b861])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-201f031c63asm4784385ad.111.2024.08.14.22.48.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 14 Aug 2024 22:48:42 -0700 (PDT)
+Message-ID: <8e027dfd-4fa7-4eab-852a-6f9d649c4b53@linaro.org>
+Date: Wed, 14 Aug 2024 22:48:41 -0700
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR11MB6744.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0942386b-43e7-45d5-99d4-08dcbcdcddc0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Aug 2024 03:46:37.8867 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 6cpAqzhvBvBYleRXvcfmaxUGmc+rA/CD7SABavM/Ft9WFobq+9idlZzmQfK0V1bzEa3HtAFa0PLlJDjUlrgzRdNcgNudm9zGoy6ekhrkFWA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR11MB6142
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.10;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.135,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] contrib/plugins: Add a plugin to generate basic block
+ vectors
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Cc: qemu-devel@nongnu.org, Yotaro Nada <yotaro.nada@gmail.com>
+References: <20240815-bb-v2-1-6222ee98297b@daynix.com>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20240815-bb-v2-1-6222ee98297b@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01, URI_DOTEDU=1 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -228,22 +104,266 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IExpdSwgWWkgTCA8eWkubC5s
-aXVAaW50ZWwuY29tPg0KPlN1YmplY3Q6IFJlOiBbUEFUQ0ggdjIgMTYvMTddIGludGVsX2lvbW11
-OiBJbnRyb2R1Y2UgYSBwcm9wZXJ0eSB0byBjb250cm9sDQo+RlMxR1AgY2FwIGJpdCBzZXR0aW5n
-DQo+DQo+T24gMjAyNC84LzUgMTQ6MjcsIFpoZW56aG9uZyBEdWFuIHdyb3RlOg0KPj4gV2hlbiBo
-b3N0IElPTU1VIGRvZXNuJ3Qgc3VwcG9ydCBGUzFHUCBidXQgdklPTU1VIGRvZXMsIGhvc3QNCj5J
-T01NVQ0KPj4gY2FuJ3QgdHJhbnNsYXRlIHN0YWdlLTEgcGFnZSB0YWJsZSBmcm9tIGd1ZXN0IGNv
-cnJlY3RseS4NCj4NCj50aGlzIHNlcmllcyBpcyBmb3IgZW11bGF0ZWQgZGV2aWNlcywgc28gdGhl
-IGFib3ZlIHN0YXRlbWVudCBkb2VzIG5vdA0KPmJlbG9uZyB0byB0aGlzIHNlcmllcy4gSXMgdGhl
-cmUgYW55IG90aGVyIHJlYXNvbiB0byBoYXZlIHRoaXMgb3B0aW9uPw0KDQpHb29kIGNhdGNoLCB3
-aWxsIHJlbW92ZSB0aGlzIGNvbW1lbnQuDQpJbiBmYWN0LCB0aGlzIHBhdGNoIGlzIG1haW5seSBm
-b3IgcGFzc3Rocm91Z2ggZGV2aWNlIHdoZXJlIGhvc3QgSU9NTVUgZG9lc24ndCBzdXBwb3J0IGZz
-MWdwLg0KDQo+DQo+PiBBZGQgYSBwcm9wZXJ0eSB4LWNhcC1mczFncCBmb3IgdXNlciB0byB0dXJu
-IEZTMUdQIG9mZiBzbyB0aGF0DQo+PiBuZXN0ZWQgcGFnZSB0YWJsZSBvbiBob3N0IHNpZGUgd29y
-a3MuDQo+DQo+SSBndWVzcyB5b3Ugd291bGQgbmVlZCB0byBzeW5jIHRoZSBGUzFHUCBjYXAgd2l0
-aCBob3N0IGJlZm9yZSByZXBvcnRpbmcgaXQNCj5pbiB2SU9NTVUgd2hlbiBjb21lcyB0byBzdXBw
-b3J0IHBhc3N0aHJvdWdoIGRldmljZXMuDQoNClllcywgd2UgYWxyZWFkeSBoYXZlIHRoaXMgY2hl
-Y2ssIHNlZSBodHRwczovL2dpdGh1Yi5jb20veWlsaXUxNzY1L3FlbXUvY29tbWl0L2I3YWM3Y2Uz
-YTJlMjFlYjFiMzE3Mjc0M2VlNmY3M2U4MGZlNjdiM2ENCg0KVGhhbmtzDQpaaGVuemhvbmcNCg==
+On 8/14/24 20:04, Akihiko Odaki wrote:
+> SimPoint is a widely used tool to find the ideal microarchitecture
+> simulation points so Valgrind[2] and Pin[3] support generating basic
+> block vectors for use with them. Let's add a corresponding plugin to
+> QEMU too.
+> 
+> Note that this plugin has a different goal with tests/plugin/bb.c.
+> 
+> This plugin creates a vector for each constant interval instead of
+> counting the execution of basic blocks for the entire run and able to
+> describe the change of execution behavior. Its output is also
+> syntactically simple and better suited for parsing, while the output of
+> tests/plugin/bb.c is more human-readable.
+> 
+> [1] https://cseweb.ucsd.edu/~calder/simpoint/
+> [2] https://valgrind.org/docs/manual/bbv-manual.html
+> [3] https://www.intel.com/content/www/us/en/developer/articles/tool/pin-a-dynamic-binary-instrumentation-tool.html
+> 
+> Signed-off-by: Yotaro Nada <yotaro.nada@gmail.com>
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+> Changes in v2:
+> - Merged files variable into the global scoreboard.
+> - Added a lock for bbs.
+> - Added a summary to contrib/plugins/bbv.c.
+> - Rebased.
+> - Link to v1: https://lore.kernel.org/r/20240813-bb-v1-1-effbb77daebf@daynix.com
+> ---
+>   docs/about/emulation.rst |  30 +++++++++
+>   contrib/plugins/bbv.c    | 158 +++++++++++++++++++++++++++++++++++++++++++++++
+>   contrib/plugins/Makefile |   1 +
+>   3 files changed, 189 insertions(+)
+> 
+> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+> index c03033e4e956..72d7846ab6f8 100644
+> --- a/docs/about/emulation.rst
+> +++ b/docs/about/emulation.rst
+> @@ -381,6 +381,36 @@ run::
+>     160          1      0
+>     135          1      0
+>   
+> +Basic Block Vectors
+> +...................
+> +
+> +``contrib/plugins/bbv.c``
+> +
+> +The bbv plugin allows you to generate basic block vectors for use with the
+> +`SimPoint <https://cseweb.ucsd.edu/~calder/simpoint/>`__ analysis tool.
+> +
+> +.. list-table:: Basic block vectors arguments
+> +  :widths: 20 80
+> +  :header-rows: 1
+> +
+> +  * - Option
+> +    - Description
+> +  * - interval=N
+> +    - The interval to generate a basic block vector specified by the number of
+> +      instructions (Default: N = 100000000)
+> +  * - outfile=PATH
+> +    - The path to output files.
+> +      It will be suffixed with ``.N.bb`` where ``N`` is a vCPU index.
+> +
+> +Example::
+> +
+> +  $ qemu-aarch64 \
+> +    -plugin contrib/plugins/libbbv.so,interval=100,outfile=sha1 \
+> +    tests/tcg/aarch64-linux-user/sha1
+> +  SHA1=15dd99a1991e0b3826fede3deffc1feba42278e6
+> +  $ du sha1.0.bb
+> +  23128   sha1.0.bb
+> +
+>   Hot Blocks
+>   ..........
+>   
+> diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
+> new file mode 100644
+> index 000000000000..41139f423fe2
+> --- /dev/null
+> +++ b/contrib/plugins/bbv.c
+> @@ -0,0 +1,158 @@
+> +/*
+> + * Generate basic block vectors for use with the SimPoint analysis tool.
+> + * SimPoint: https://cseweb.ucsd.edu/~calder/simpoint/
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include <stdio.h>
+> +#include <glib.h>
+> +
+> +#include <qemu-plugin.h>
+> +
+> +typedef struct Bb {
+> +    struct qemu_plugin_scoreboard *count;
+> +    unsigned int index;
+> +} Bb;
+> +
+> +typedef struct Vcpu {
+> +    uint64_t count;
+> +    FILE *file;
+> +} Vcpu;
+> +
+> +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+> +static GHashTable *bbs;
+> +static GRWLock bbs_lock;
+> +static char *filename;
+> +static struct qemu_plugin_scoreboard *vcpus;
+> +static uint64_t interval = 100000000;
+> +
+> +static void plugin_exit(qemu_plugin_id_t id, void *p)
+> +{
+> +    for (int i = 0; i < qemu_plugin_num_vcpus(); i++) {
+> +        fclose(((Vcpu *)qemu_plugin_scoreboard_find(vcpus, i))->file);
+> +    }
+> +
+> +    g_hash_table_unref(bbs);
+> +    g_free(filename);
+> +    qemu_plugin_scoreboard_free(vcpus);
+> +}
+> +
+> +static void free_bb(void *data)
+> +{
+> +    qemu_plugin_scoreboard_free(((Bb *)data)->count);
+> +    g_free(data);
+> +}
+> +
+> +static qemu_plugin_u64 count_u64(void)
+> +{
+> +    return qemu_plugin_scoreboard_u64_in_struct(vcpus, Vcpu, count);
+> +}
+> +
+> +static qemu_plugin_u64 bb_count_u64(Bb *bb)
+> +{
+> +    return qemu_plugin_scoreboard_u64(bb->count);
+> +}
+> +
+> +static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+> +{
+> +    g_autofree gchar *vcpu_filename = NULL;
+> +    Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
+> +
+> +    vcpu_filename = g_strdup_printf("%s.%u.bb", filename, vcpu_index);
+> +    vcpu->file = fopen(vcpu_filename, "w");
+> +}
+> +
+> +static void vcpu_interval_exec(unsigned int vcpu_index, void *udata)
+> +{
+> +    Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
+> +    GHashTableIter iter;
+> +    void *value;
+> +
+> +    if (!vcpu->file) {
+> +        return;
+> +    }
+> +
+> +    vcpu->count -= interval;
+> +
+> +    fputc('T', vcpu->file);
+> +
+> +    g_rw_lock_reader_lock(&bbs_lock);
+> +    g_hash_table_iter_init(&iter, bbs);
+> +
+> +    while (g_hash_table_iter_next(&iter, NULL, &value)) {
+> +        Bb *bb = value;
+> +        uint64_t bb_count = qemu_plugin_u64_get(bb_count_u64(bb), vcpu_index);
+> +
+> +        if (!bb_count) {
+> +            continue;
+> +        }
+> +
+> +        fprintf(vcpu->file, ":%u:%" PRIu64 " ", bb->index, bb_count);
+> +        qemu_plugin_u64_set(bb_count_u64(bb), vcpu_index, 0);
+> +    }
+> +
+> +    g_rw_lock_reader_unlock(&bbs_lock);
+> +    fputc('\n', vcpu->file);
+> +}
+> +
+> +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+> +{
+> +    uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
+> +    uint64_t vaddr = qemu_plugin_tb_vaddr(tb);
+> +    Bb *bb = g_hash_table_lookup(bbs, &vaddr);
+
+Missing a read_lock for this access.
+
+> +
+> +    if (!bb) {
+> +        uint64_t *key = g_new(uint64_t, 1);
+> +
+> +        *key = vaddr;
+> +        bb = g_new(Bb, 1);
+> +        bb->count = qemu_plugin_scoreboard_new(sizeof(uint64_t));
+> +        bb->index = g_hash_table_size(bbs);
+> +        g_rw_lock_writer_lock(&bbs_lock);
+> +        g_hash_table_insert(bbs, key, bb);
+> +        g_rw_lock_writer_unlock(&bbs_lock);
+> +    }
+> +
+> +    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+> +        tb, QEMU_PLUGIN_INLINE_ADD_U64, count_u64(), n_insns);
+> +
+> +    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+> +        tb, QEMU_PLUGIN_INLINE_ADD_U64, bb_count_u64(bb), n_insns);
+> +
+> +    qemu_plugin_register_vcpu_tb_exec_cond_cb(
+> +        tb, vcpu_interval_exec, QEMU_PLUGIN_CB_NO_REGS,
+> +        QEMU_PLUGIN_COND_GE, count_u64(), interval, NULL);
+> +}
+> +
+> +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+> +                                           const qemu_info_t *info,
+> +                                           int argc, char **argv)
+> +{
+> +    for (int i = 0; i < argc; i++) {
+> +        char *opt = argv[i];
+> +        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+> +        if (g_strcmp0(tokens[0], "interval") == 0) {
+> +            interval = g_ascii_strtoull(tokens[1], NULL, 10);
+> +        } else if (g_strcmp0(tokens[0], "outfile") == 0) {
+> +            filename = tokens[1];
+> +            tokens[1] = NULL;
+> +        } else {
+> +            fprintf(stderr, "option parsing failed: %s\n", opt);
+> +            return -1;
+> +        }
+> +    }
+> +
+> +    if (!filename) {
+> +        fputs("outfile unspecified\n", stderr);
+> +        return -1;
+> +    }
+> +
+> +    bbs = g_hash_table_new_full(g_int64_hash, g_int64_equal, g_free, free_bb);
+> +    vcpus = qemu_plugin_scoreboard_new(sizeof(Vcpu));
+> +    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+> +    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+> +
+> +    return 0;
+> +}
+> diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
+> index edf256cd9d11..6936591b1022 100644
+> --- a/contrib/plugins/Makefile
+> +++ b/contrib/plugins/Makefile
+> @@ -13,6 +13,7 @@ TOP_SRC_PATH = $(SRC_PATH)/../..
+>   VPATH += $(SRC_PATH)
+>   
+>   NAMES :=
+> +NAMES += bbv
+>   NAMES += execlog
+>   NAMES += hotblocks
+>   NAMES += hotpages
+> 
+> ---
+> base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
+> change-id: 20240618-bb-93387ddf765b
+> 
+> Best regards,
+
+Otherwise,
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
