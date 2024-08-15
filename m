@@ -4,75 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B39BCC52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 14:50:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA289C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 14:50:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sebmz-0003Bn-6s; Thu, 15 Aug 2024 10:49:21 -0400
+	id 1sebmx-00036W-SB; Thu, 15 Aug 2024 10:49:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sebmx-00036w-MQ
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:49:19 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1sebmv-00034k-Rg
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:49:17 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sebmv-0000Bl-1I
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:49:19 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5b5b67d0024so1288614a12.0
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 07:49:16 -0700 (PDT)
+ id 1sebmt-0000Bh-Us
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:49:17 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5b9d48d1456so1639897a12.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 07:49:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1723733354; x=1724338154; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=g1i8FNivYpeAFOmR72AaEwCVagScAYeMii2EtYMaJis=;
- b=iLmgrHX+bWuABFrlGnArDYmHgzLwqanxR8J1kxvPqHw2uaW21WUnGgHs1ohWI7NhnQ
- Ea2kxTbwKIo94Azbq+md4m5a9IdmGQefGy53FQ7/h3krnnZalDDISGsMyw0kZFirl5S6
- +PbZMVH3KORqhFpSkauPyF0yL9HojwYNXPF6jkZo4rNLrMi9S+K7JWa5OhpkddRUTuNL
- WiJK+0nTs+PD+lQTkl42ynlMxG3jKCMx1e95+GcQKvXjBEKXUh4VgfIm4sQUQH2USirm
- S7edz0625KSKSMBP0Bh1sq0txVB2atrESvMnDhUcYbGh/CPkLGUV36ZLRICwOrAzHduv
- Rpow==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yWTKlDd6LK1VooQusJJbhCpW5WJ0iCeY5ofYJWN9ldI=;
+ b=wwRl0KHBVClQxe4erm2www7r3dC1S034jYSo8lvdK8ti0kUhnPKUUjUkmw0MmHhB91
+ 7Aee7YrX7pMOjyDT1pz+5MHQQ1rmUay0qsuQlnE5TwtfwVzNTt7g36wa7Inc5oM5b7X5
+ ZfZlvJwgemy2S37zT6bnko/fqJljDgLlj2ZGcp4kWk1PMmUUNz2SoRix8+Fiy7u4o/6b
+ tG6HjGvDrNHOz9+8hSat3IQCNrMYMp+XxgzP8PT8bo0/Nh6MJH8x7o9+x5L2DW8pQXcP
+ jZmj9BEaNkmv0+9SPMw8G5o/h4VvH4aDsR+ayvihN4/qixVapASMcuzL/vFNiHdLmq7x
+ vsWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1723733354; x=1724338154;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=g1i8FNivYpeAFOmR72AaEwCVagScAYeMii2EtYMaJis=;
- b=NsMC2axEAFqVn024uzQ1p+XYvh01ZBSTgkH5jMZ7HJUs2/C2Igwvsrl7jBgp07ueUu
- beBHsvof70HbPdh1pUB0ZWY1ORto0ovRwWnoj8chkY+vRTfaYJDCtroski/0sdA+0Ice
- MlsXgRDc/sZ9SlZipsnwQwILW3iUO8RL7Z+ZtZZDgL8XrrgjpcG1w4Pkom804cYZDCmp
- kDfmDaJJclPGH9vpnr4P4nI+LCV1JoV5YcpymuU1nwMCdriQKq9EmwicKh2gQmN4nGQ/
- RuwWf4rL493SRBWig2MCwFgR/b3m/TDW4TlJCzPo/SI5uPeJommTauajZNv76TD2BAD9
- MkBQ==
-X-Gm-Message-State: AOJu0Yxy531Jn5Qq6pDLvIuFmUBNqN1PzPN43Uc4FJiOZnO+mSMjlqwT
- jRkkypYMTP0F7w76TqztbYfO3cuLGaEt1PsQA+WC/ioLn7su/mFXEeXvdcDtML7p+UYd3dy9D3Y
- t
-X-Google-Smtp-Source: AGHT+IHDvXkObiTdTJwVJ3dFxyHIU/YdViq7mE9ieuIaFIynktTZw1Vt/GAGdyS7ZSOXvCn4S5fzoQ==
-X-Received: by 2002:a17:907:f74b:b0:a77:bfca:da57 with SMTP id
- a640c23a62f3a-a8367058e51mr456332866b.44.1723733354181; 
- Thu, 15 Aug 2024 07:49:14 -0700 (PDT)
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yWTKlDd6LK1VooQusJJbhCpW5WJ0iCeY5ofYJWN9ldI=;
+ b=aqRogeEvPVz5Mf3moR/v+40reFPwsjWq404CPlsSXHBeiMgevq6if5NhNhs7tSxx/F
+ uLbBKSdDmFkD6pKmZaOH2QVasPKZXXPoHcqjsUDvYkAumgba231knvzCa4CSHvuLIr/A
+ MJQye9z0wI/JmdHXCG1XGLT8KcJOdC+PmssqwHo7EdtX+yF34WgCPsRfojBY2CJiBo/e
+ dTQ3xQ8uzGtQvut9xPROgYMAZbXt8sWAPZf+agLXz4gAXs1L38sU3ZK+AigKlcvxAOF6
+ nw4gmR0xu9FCCcfUSpg1V6znAJ5pOKqqEgtZHOJjUeYUDtGfquJ7vwX8AWKBkDgF0flw
+ mlVA==
+X-Gm-Message-State: AOJu0YwiHqq8JzLq49PRR9je0jkh85Z4Y4QVgySGz+UeORfhZ3xl3AwL
+ +vwMkRrQ3+XnhZUe1bNiil1Gs9XNk5Su/eP8emPfilwH2OjCMaFhdj0gjLZQ1zI=
+X-Google-Smtp-Source: AGHT+IENyghTMykpQlzwhyebQBu97V2cNcAdQG8P+4fqGQiMKtZCLui91LF8lWF9Iasbg2HL7FHObg==
+X-Received: by 2002:a05:6402:280a:b0:5a1:4f76:1a25 with SMTP id
+ 4fb4d7f45d1cf-5beb3c255fcmr2917353a12.17.1723733353544; 
+ Thu, 15 Aug 2024 07:49:13 -0700 (PDT)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a83838c6998sm113683866b.19.2024.08.15.07.49.12
+ 4fb4d7f45d1cf-5bebc081a19sm967489a12.86.2024.08.15.07.49.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 15 Aug 2024 07:49:12 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B37975F8E4;
+ by draig.lan (Postfix) with ESMTP id C85AB5F8ED;
  Thu, 15 Aug 2024 15:49:11 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL for 9.1 00/21] Some fixes for 9.1-rc3 (build, replay, docs,
- plugins)
-Date: Thu, 15 Aug 2024 15:48:50 +0100
-Message-Id: <20240815144911.1931487-1-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yoshinori Sato <ysato@users.sourceforge.jp>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Cleber Rosa <crosa@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>
+Subject: [PULL 01/21] tests/avocado: Re-enable gdbsim-r5f562n8 testing U-Boot
+Date: Thu, 15 Aug 2024 15:48:51 +0100
+Message-Id: <20240815144911.1931487-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240815144911.1931487-1-alex.bennee@linaro.org>
+References: <20240815144911.1931487-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,97 +101,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit b0d6c037ea0a825192285f149af72a73a1baaa04:
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-  Update version for v9.1.0-rc2 release (2024-08-15 20:32:37 +1000)
+We disabled all RX tests on commit 9b45cc9931 ("docs/devel:
+rationalise unstable gitlab tests under FLAKY_TESTS") for
+being flaky. However I don't recall the U-Boot test to fail
+(the problematic line checking the 'version' string is already
+commented out), and I'm running this test reliably, so re-enable
+it.
 
-are available in the Git repository at:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Yoshinori Sato <ysato@users.sourceforge.jp>
+Message-Id: <20240801172332.65701-1-philmd@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20240813202329.1237572-2-alex.bennee@linaro.org>
 
-  https://gitlab.com/stsquad/qemu.git tags/pull-maintainer-9.1-rc3-150824-1
-
-for you to fetch changes up to f39cbfc9f8dcb17e8168735acb6fb75638d9904f:
-
-  plugins: fix race condition with scoreboards (2024-08-15 12:10:23 +0100)
-
-----------------------------------------------------------------
-Some fixes for 9.1-rc3 (build, replay, docs, plugins)
-
-  - re-enable gdbsim-r5f562n8 test
-  - ensure updates to python deps re-trigger configure
-  - tweak configure detection of GDB MTE support
-  - make checkpatch emit more warnings on updating headers
-  - allow i386 access_ptr to force slow path for plugins
-  - fixe some replay regressions
-  - update the replay-dump tool
-  - better handle muxed chardev during replay
-  - clean up TCG plugins docs to mention scoreboards
-  - fix plugin scoreboard race condition
-
-----------------------------------------------------------------
-Alex Bennée (2):
-      Makefile: trigger re-configure on updated pythondeps
-      target/i386: allow access_ptr to force slow path on failed probe
-
-Gustavo Romero (3):
-      configure: Fix arch detection for GDB_HAS_MTE
-      configure: Avoid use of param. expansion when using gdb_version
-      configure: Fix GDB version detection for GDB_HAS_MTE
-
-Nicholas Piggin (10):
-      scripts/replay-dump.py: Update to current rr record format
-      scripts/replay-dump.py: rejig decoders in event number order
-      tests/avocado: excercise scripts/replay-dump.py in replay tests
-      replay: allow runstate shutdown->running when replaying trace
-      Revert "replay: stop us hanging in rr_wait_io_event"
-      tests/avocado: replay_kernel.py add x86-64 q35 machine test
-      chardev: set record/replay on the base device of a muxed device
-      virtio-net: Use replay_schedule_bh_event for bhs that affect machine state
-      virtio-net: Use virtual time for RSC timers
-      savevm: Fix load_snapshot error path crash
-
-Philippe Mathieu-Daudé (2):
-      tests/avocado: Re-enable gdbsim-r5f562n8 testing U-Boot
-      buildsys: Fix building without plugins on Darwin
-
-Pierrick Bouvier (2):
-      docs/devel: update tcg-plugins page
-      plugins: fix race condition with scoreboards
-
-Stefan Weil (1):
-      docs: Fix some typos (found by typos) and grammar issues
-
-Stefano Garzarella (1):
-      scripts/checkpatch: more checks on files imported from Linux
-
- docs/about/emulation.rst                  |  49 +++++++--
- docs/devel/migration/uadk-compression.rst |   4 +-
- docs/devel/tcg-plugins.rst                |  13 ++-
- docs/interop/qemu-ga.rst                  |   2 +-
- docs/tools/qemu-vmsr-helper.rst           |   4 +-
- configure                                 |   8 +-
- Makefile                                  |   3 +-
- qapi/rocker.json                          |   4 +-
- include/exec/memory.h                     |   2 +-
- include/sysemu/replay.h                   |   5 -
- include/sysemu/runstate.h                 |   1 +
- accel/tcg/tcg-accel-ops-rr.c              |   2 +-
- chardev/char.c                            |  71 +++++++++----
- hw/arm/smmu-common.c                      |   2 +-
- hw/net/virtio-net.c                       |  17 +--
- migration/savevm.c                        |   1 +
- plugins/core.c                            |  43 +++++---
- qga/main.c                                |   2 +-
- replay/replay.c                           |  23 +---
- system/runstate.c                         |  31 +++++-
- target/i386/tcg/access.c                  |  27 +++--
- plugins/meson.build                       |  50 ++++-----
- scripts/checkpatch.pl                     |  24 +++++
- scripts/replay-dump.py                    | 167 ++++++++++++++++++++----------
- tests/avocado/machine_rx_gdbsim.py        |   2 -
- tests/avocado/replay_kernel.py            |  31 +++++-
- tests/avocado/replay_linux.py             |  10 ++
- 27 files changed, 406 insertions(+), 192 deletions(-)
-
+diff --git a/tests/avocado/machine_rx_gdbsim.py b/tests/avocado/machine_rx_gdbsim.py
+index 412a7a5089..a83873b738 100644
+--- a/tests/avocado/machine_rx_gdbsim.py
++++ b/tests/avocado/machine_rx_gdbsim.py
+@@ -22,8 +22,6 @@ class RxGdbSimMachine(QemuSystemTest):
+     timeout = 30
+     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
+ 
+-    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
+-
+     def test_uboot(self):
+         """
+         U-Boot and checks that the console is operational.
 -- 
 2.39.2
 
