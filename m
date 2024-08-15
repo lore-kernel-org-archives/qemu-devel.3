@@ -4,103 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF3A5C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 07:13:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 116B3C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 07:32:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seUfO-0008EO-LH; Thu, 15 Aug 2024 03:13:03 -0400
+	id 1seUx5-0000Bv-Ip; Thu, 15 Aug 2024 03:31:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1seUfG-0008D9-9m; Thu, 15 Aug 2024 03:12:54 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1seUx3-0000An-49; Thu, 15 Aug 2024 03:31:17 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1seUfE-0001vp-99; Thu, 15 Aug 2024 03:12:53 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-710dc3015bfso441476b3a.0; 
- Thu, 15 Aug 2024 00:12:50 -0700 (PDT)
+ id 1seUx1-0004oH-Ab; Thu, 15 Aug 2024 03:31:16 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-70d162eef54so474141b3a.3; 
+ Thu, 15 Aug 2024 00:31:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723705969; x=1724310769; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1723707073; x=1724311873; darn=nongnu.org;
  h=in-reply-to:references:subject:cc:to:from:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=p44C8fERsSRYQkkQyzymFn1pVVaUH+QWqY2k98VCWpA=;
- b=ZaC+8okAiyrmrGxWInCQHIyMFpLGrJJX80fin7uIg65x/5wpfV0kkE60jCkJWr9he0
- 2U4/C5CIRFxrA6HvZwCV8TlZ4KoeU+3l1pUMYToAS26O99F7Vbd5INY3iGnVXKkV0Qjx
- FhIZZxico/T4tMMw7anWRVsVZDmUyU/ZcwJgSarm7g8khIKNVY9rXuO9OFUjAxINMAZ6
- pO1uFTcbaEAv3FVd2PGkD5FK8V51w86flKCsuSZvTJrDMH1NWk3Ks675O4l3vkEoJyWt
- xv3Vptky2Jdf+SY2FOLPyvstSAI4hBJybMJ4z2riRe4YMpOFCuz3WZjal9HJ3b7rxDi1
- JD8A==
+ bh=T7Fr67iEKUcmeOsvw+AlXn2rFrseuZqnnLU1IFaFLLw=;
+ b=V8EWb4Pv6F52fGkFDtttu5Ub0UvFSLmat1wv/6Scam23XuHKflAHLyw0kPyF42lBxC
+ iZZRsP6QUf4mwGKDB2LPFF02ZjrzUGIpx4Y4Thk8LiFaNrZ51QBsxZcwhwUe5OHQTGG5
+ 8bJEIJWvy5FHHsTML7gndYUeqPaf8S9AEjtm+AnreejM4/sLlaXg3yQkzHVO1RHVFftD
+ fqs9chryewNKHNpuQGYJZTOvUgTJWLJ8YzsfevoEsKEskgWyLrvDgaMxMFe+Q9iup6/V
+ ISA082d1S7+6tLtPuIRG7c3a1m53txPjnu6129uN590SAeKD4IaWL6cUOJh6/MNBW55q
+ rVJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723705969; x=1724310769;
+ d=1e100.net; s=20230601; t=1723707073; x=1724311873;
  h=in-reply-to:references:subject:cc:to:from:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=p44C8fERsSRYQkkQyzymFn1pVVaUH+QWqY2k98VCWpA=;
- b=R+unl9+L1o5JfDT3EyQhA+NYbuamGjT7VykY8Wg6nT/5aRCaaAjYzQqPYyEd96J76D
- Cs5FzIOVo/l7THlK/kJBFqzd2QqboPOL6UZzF04PFAnrqbksi+2b+scRY/jnxAvEJ4gf
- u9xX3Ex2KHpFhkuKwp2makbqzuju9XOqKnqkJAdxuma6gPZwal9sVkHzBnV0SeGOopMA
- Eud/E1B019ovl4+4IySegKLbiyH3Q7TVhElGGHgVKTnE3I3es2lk1uFO0mX0blyh4ntW
- Y0QwXdpeu0D9noe+WmuIpaP6dB+HFJc/62q69pAacwVRSdjKvgMAzfx0NLr5PNR6KR5z
- CZlg==
+ bh=T7Fr67iEKUcmeOsvw+AlXn2rFrseuZqnnLU1IFaFLLw=;
+ b=DFVY3AkCVGycIetGkjWM4JwLY0qpDeV/SU34oozjylnyjCqEN5YRnGbxZbZ8dOtfbB
+ x9AqHjKtw/TiBh4i0BCKEc4VK2R58SPZOhu9P+DsulTOcj/tizBW65S0E6DyZIo/BPy+
+ r7btd1oedZ03HGLUMVZSGbd60+hx34NfKaudfYQYjy2PD4IhUUMaQWryQdJx7UFqszqy
+ GQ3dSffxpXeceWPeaIImruHKRU6pQ8ROHtlNN2H79CaBPzS3zeyYobM/F1HblERXfaeX
+ IKX3Bglstg0KLl2Ow7cx9e59ZpzSneAVSX36sqXta7pv25BYVoXdI/ISDCYgDs9zqlav
+ LgMw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWj3Xr/ArOLhKaTtNTanBBKkSKykL3ipoXrqCo4gxsiGv8tUZIRjUcCQ3zvwmKb6ptDKaEcDEKpUAYDqEhjLHbgooJ/qw/PbdjYpuUUKQCm+e2pmqPxFGUkbTMZjcGpDx2I6TTVdOFgn0zc+y4ksdT/jA==
-X-Gm-Message-State: AOJu0Yy5/fJOaR9j7zGrZC89zb4Y2RnAXqwe89UCjF6eO+ePJd49+x7v
- ZV37o0D/fvK+jyN0OHWBwgsMf6W6noKeZ5NUHwmdKwipM2csrIFE
-X-Google-Smtp-Source: AGHT+IE7rhqF7AoUY4l8ZHu5L54QNuP56/MeZb/fUoS7zwo8PbyG03bMmxV/Akc8UpDL2PaAff/3lg==
-X-Received: by 2002:a05:6a00:816:b0:70d:26cd:9741 with SMTP id
- d2e1a72fcca58-71276fbd507mr3022597b3a.12.1723705969120; 
- Thu, 15 Aug 2024 00:12:49 -0700 (PDT)
+ AJvYcCXpYM89cSOuQAign+I2NYIHbCLVmV0UD65I8ARbadXplgvf1JLf+PVJBf0D0iAovxlDaJx+aVr8pULz8bD3FC+yAx32
+X-Gm-Message-State: AOJu0YxDIWu0latm70vY6bRCkLrXmj5kKaRZC3b/t1YxtZ/VuPWjlEnd
+ QNG7yeghp5eAE7fI9Fqw7idDSvJawq2EDUyiTjKq34QtWI/X/Gt0W31DPfzF
+X-Google-Smtp-Source: AGHT+IG+8dMvrrVRCjAnBOGuXqgNj/WkGVSP4RVx293eWUhewEtR5JjhPzfcbRYGrpuzo9+tGnWUmg==
+X-Received: by 2002:a05:6a00:10c2:b0:70d:3938:f1a5 with SMTP id
+ d2e1a72fcca58-712673a8571mr6413276b3a.22.1723707073104; 
+ Thu, 15 Aug 2024 00:31:13 -0700 (PDT)
 Received: from localhost ([1.145.66.109]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7127af3aeaasm535479b3a.191.2024.08.15.00.12.35
+ d2e1a72fcca58-7127ae06b4fsm565556b3a.46.2024.08.15.00.31.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Aug 2024 00:12:48 -0700 (PDT)
+ Thu, 15 Aug 2024 00:31:12 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 15 Aug 2024 17:12:32 +1000
-Message-Id: <D3GARIYVC16C.20SXVKSIMLED4@gmail.com>
+Date: Thu, 15 Aug 2024 17:31:07 +1000
+Message-Id: <D3GB5QVADVQ1.XZM3FFV52LIW@gmail.com>
 From: "Nicholas Piggin" <npiggin@gmail.com>
-To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, "Michael S.
- Tsirkin" <mst@redhat.com>
-Cc: <qemu-devel@nongnu.org>, "Alistair Francis" <alistair.francis@wdc.com>,
- "Michael Roth" <michael.roth@amd.com>, "Palmer Dabbelt"
- <palmer@dabbelt.com>, "Mahmoud Mandour" <ma.mandourr@gmail.com>, "Pavel
- Dovgalyuk" <pavel.dovgaluk@ispras.ru>, "Yoshinori Sato"
- <ysato@users.sourceforge.jp>, "Weiwei Li" <liwei1518@gmail.com>, "Eduardo
- Habkost" <eduardo@habkost.net>, =?utf-8?q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, "Markus Armbruster" <armbru@redhat.com>,
- "David Hildenbrand" <david@redhat.com>, "Beraldo Leal" <bleal@redhat.com>,
- "Liu Zhiwei" <zhiwei_liu@linux.alibaba.com>, "Eric Auger"
- <eric.auger@redhat.com>, "Song Gao" <gaosong@loongson.cn>,
- <qemu-arm@nongnu.org>, "Peter Xu" <peterx@redhat.com>, "Jiri Pirko"
- <jiri@resnulli.us>, "Eric Blake" <eblake@redhat.com>, "Fabiano Rosas"
- <farosas@suse.de>, <qemu-s390x@nongnu.org>, "Peter Maydell"
- <peter.maydell@linaro.org>, "Daniel Henrique Barboza"
- <dbarboza@ventanamicro.com>, "John Snow" <jsnow@redhat.com>, "Alexandre
- Iooss" <erdnaxe@crans.org>, "Konstantin Kostiuk" <kkostiuk@redhat.com>,
- "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, "Cleber Rosa"
- <crosa@redhat.com>, "Ilya Leoshkevich" <iii@linux.ibm.com>,
- <qemu-riscv@nongnu.org>, "Thomas Huth" <thuth@redhat.com>, "Paolo Bonzini"
- <pbonzini@redhat.com>, "Richard Henderson" <richard.henderson@linaro.org>,
- "Jason Wang" <jasowang@redhat.com>, "Bin Meng" <bmeng.cn@gmail.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Wainer dos
- Santos Moschetta" <wainersm@redhat.com>, "Pavel Dovgalyuk"
- <Pavel.Dovgalyuk@ispras.ru>
-Subject: Re: [PATCH v2 16/21] virtio-net: Use replay_schedule_bh_event for
- bhs that affect machine state
+To: "Aditya Gupta" <adityag@linux.ibm.com>, "Mahesh J Salgaonkar"
+ <mahesh@linux.ibm.com>, "Madhavan Srinivasan" <maddy@linux.ibm.com>,
+ =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, "Harsh Prateek Bora"
+ <harshpb@linux.ibm.com>, =?utf-8?q?Fr=C3=A9d=C3=A9ric_Barrat?=
+ <fbarrat@linux.ibm.com>, =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?=
+ <berrange@redhat.com>
+Cc: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>
+Subject: Re: [PATCH v3] hw/ppc: Implement -dtb support for PowerNV
 X-Mailer: aerc 0.18.2
-References: <20240813202329.1237572-1-alex.bennee@linaro.org>
- <20240813202329.1237572-17-alex.bennee@linaro.org>
- <20240813164631-mutt-send-email-mst@kernel.org>
- <D3FEPPLH78YW.3BYA9B4HYGN1U@gmail.com>
- <20240814030308-mutt-send-email-mst@kernel.org>
- <87y14z81ak.fsf@draig.linaro.org>
-In-Reply-To: <87y14z81ak.fsf@draig.linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x434.google.com
+References: <20240813134536.1204513-1-adityag@linux.ibm.com>
+In-Reply-To: <20240813134536.1204513-1-adityag@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,129 +98,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu Aug 15, 2024 at 3:25 AM AEST, Alex Benn=C3=A9e wrote:
-> "Michael S. Tsirkin" <mst@redhat.com> writes:
+On Tue Aug 13, 2024 at 11:45 PM AEST, Aditya Gupta wrote:
+> Currently any device tree passed with -dtb option in QEMU, was ignored
+> by the PowerNV code.
 >
-> > On Wed, Aug 14, 2024 at 04:05:34PM +1000, Nicholas Piggin wrote:
-> >> On Wed Aug 14, 2024 at 6:48 AM AEST, Michael S. Tsirkin wrote:
-> >> > On Tue, Aug 13, 2024 at 09:23:24PM +0100, Alex Benn=C3=A9e wrote:
-> >> > > From: Nicholas Piggin <npiggin@gmail.com>
-> >> > >=20
-> >> > > The regular qemu_bh_schedule() calls result in non-deterministic
-> >> > > execution of the bh in record-replay mode, which causes replay fai=
-lure.
-> >> > >=20
-> >> > > Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> >> > > Reviewed-by: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
-> >> > > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> >> > > Message-Id: <20240813050638.446172-9-npiggin@gmail.com>
-> >> > > Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> >> > > ---
-> >> > >  hw/net/virtio-net.c | 11 ++++++-----
-> >> > >  1 file changed, 6 insertions(+), 5 deletions(-)
-> >> > >=20
-> >> > > diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> >> > > index 08aa0b65e3..10ebaae5e2 100644
-> >> > > --- a/hw/net/virtio-net.c
-> >> > > +++ b/hw/net/virtio-net.c
-> >> > > @@ -40,6 +40,7 @@
-> >> > >  #include "migration/misc.h"
-> >> > >  #include "standard-headers/linux/ethtool.h"
-> >> > >  #include "sysemu/sysemu.h"
-> >> > > +#include "sysemu/replay.h"
-> >> > >  #include "trace.h"
-> >> > >  #include "monitor/qdev.h"
-> >> > >  #include "monitor/monitor.h"
-> >> > > @@ -417,7 +418,7 @@ static void virtio_net_set_status(struct VirtI=
-ODevice *vdev, uint8_t status)
-> >> > >                  timer_mod(q->tx_timer,
-> >> > >                                 qemu_clock_get_ns(QEMU_CLOCK_VIRTU=
-AL) + n->tx_timeout);
-> >> > >              } else {
-> >> > > -                qemu_bh_schedule(q->tx_bh);
-> >> > > +                replay_bh_schedule_event(q->tx_bh);
-> >> > >              }
-> >> > >          } else {
-> >> > >              if (q->tx_timer) {
-> >> > > @@ -2672,7 +2673,7 @@ static void virtio_net_tx_complete(NetClient=
-State *nc, ssize_t len)
-> >> > >           */
-> >> > >          virtio_queue_set_notification(q->tx_vq, 0);
-> >> > >          if (q->tx_bh) {
-> >> > > -            qemu_bh_schedule(q->tx_bh);
-> >> > > +            replay_bh_schedule_event(q->tx_bh);
-> >> > >          } else {
-> >> > >              timer_mod(q->tx_timer,
-> >> > >                        qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->=
-tx_timeout);
-> >> > > @@ -2838,7 +2839,7 @@ static void virtio_net_handle_tx_bh(VirtIODe=
-vice *vdev, VirtQueue *vq)
-> >> > >          return;
-> >> > >      }
-> >> > >      virtio_queue_set_notification(vq, 0);
-> >> > > -    qemu_bh_schedule(q->tx_bh);
-> >> > > +    replay_bh_schedule_event(q->tx_bh);
-> >> > >  }
-> >> > > =20
-> >> > >  static void virtio_net_tx_timer(void *opaque)
-> >> > > @@ -2921,7 +2922,7 @@ static void virtio_net_tx_bh(void *opaque)
-> >> > >      /* If we flush a full burst of packets, assume there are
-> >> > >       * more coming and immediately reschedule */
-> >> > >      if (ret >=3D n->tx_burst) {
-> >> > > -        qemu_bh_schedule(q->tx_bh);
-> >> > > +        replay_bh_schedule_event(q->tx_bh);
-> >> > >          q->tx_waiting =3D 1;
-> >> > >          return;
-> >> > >      }
-> >> > > @@ -2935,7 +2936,7 @@ static void virtio_net_tx_bh(void *opaque)
-> >> > >          return;
-> >> > >      } else if (ret > 0) {
-> >> > >          virtio_queue_set_notification(q->tx_vq, 0);
-> >> > > -        qemu_bh_schedule(q->tx_bh);
-> >> > > +        replay_bh_schedule_event(q->tx_bh);
-> >> > >          q->tx_waiting =3D 1;
-> >> > >      }
-> >> > >  }
-> >> > > --=20
-> >> > > 2.39.2
-> >> >
-> >> >
-> >> > Is this really the only way to fix this? I do not think
-> >> > virtio has any business knowing about replay.
-> >> > What does this API do, even? BH but not broken with replay?
-> >> > Do we ever want replay broken? Why not fix qemu_bh_schedule?
-> >> > And when we add another feature which we do not want to break
-> >> > will we do foo_bar_replay_bh_schedule_event or what?
-> >>=20
-> >> I agree with you. We need to do this (a couple of other hw
-> >> subsystems already do and likely some are still broken vs
-> >> replay and would need to be converted), but I think it's
-> >> mostly a case of bad naming. You're right the caller should
-> >> not know about replay at all, what it should be is whether
-> >> the event is for the target machine or the host harness,
-> >> same as timers are VIRTUAL / HOST.
-> >> So I think we just need to make a qemu_bh_schedule_<type>,
-> >> or qemu_bh_scheudle_event(... QEMU_EVENT_VIRTUAL/HOST/etc).
-> >
-> > Or just pass QEMUClockType?
-
-Could be a good idea. Although I'm not sure what to do with
-all types, maybe we can restrict what is supported.
-
-> Is this wider re-factoring something that can wait for the next
-> developer cycle?
-
-I would say so. It's not quite trivial to do nicely since
-things are a bit tangled between util/async and replay.
-
-> >> I had started on a conversion once but not completed it.
-> >> I could resurrect if there is agreement on the API?
+> Read and pass the passed -dtb to the kernel, thus enabling easier
+> debugging with custom DTBs.
 >
-> I would certainly welcome it being cleaned up. The supported replay
-> devices are very piecemeal at the moment.
+> The existing behaviour when -dtb is 'not' passed, is preserved as-is.
+>
+> But when a '-dtb' is passed, it completely overrides any dtb nodes or
+> changes QEMU might have done, such as '-append' arguments to the kernel
+> (which are mentioned in /chosen/bootargs in the dtb), hence add warning
+> when -dtb is being used
+>
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 
-I'll tidy up and post an RFC for how the new API might look.
+This looks pretty good, I'm inclined to take it as a bug fix fo this
+release.  One little nit is MachineState.fdt vs PnvMachineState.fdt
+which is now confusing. I would call the new PnvMachineState member
+something like fdt_from_dtb, or fdt_override?
+
+The other question... Some machines rebuild fdt at init, others at
+reset time. As far as I understood, spapr has to rebuild on reset
+because C-A-S call can update the fdt so you have to undo that on
+reset. Did powernv just copy that without really needing it, I wonder?
+Maybe that rearranged to just do it at init time (e.g., see
+hw/riscv/virt.c which is simpler).
 
 Thanks,
 Nick
+
+>
+> ---
+> Changelog
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> v3:
+>  + use 'load_device_tree' to read the device tree, instead of g_file_get_=
+contents
+>  + tested that passed dtb does NOT get ignored on system_reset
+>
+> v2:
+>  + move reading dtb and warning to pnv_init
+>
+> v1:
+>  + use 'g_file_get_contents' and add check for -append & -dtb as suggeste=
+d by Daniel
+> ---
+> ---
+>  hw/ppc/pnv.c         | 34 ++++++++++++++++++++++++++++++----
+>  include/hw/ppc/pnv.h |  2 ++
+>  2 files changed, 32 insertions(+), 4 deletions(-)
+>
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 3526852685b4..14225f7e48af 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -736,10 +736,13 @@ static void pnv_reset(MachineState *machine, Shutdo=
+wnCause reason)
+>          }
+>      }
+> =20
+> -    fdt =3D pnv_dt_create(machine);
+> -
+> -    /* Pack resulting tree */
+> -    _FDT((fdt_pack(fdt)));
+> +    if (pnv->fdt) {
+> +        fdt =3D pnv->fdt;
+> +    } else {
+> +        fdt =3D pnv_dt_create(machine);
+> +        /* Pack resulting tree */
+> +        _FDT((fdt_pack(fdt)));
+> +    }
+> =20
+>      qemu_fdt_dumpdtb(fdt, fdt_totalsize(fdt));
+>      cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
+> @@ -952,6 +955,14 @@ static void pnv_init(MachineState *machine)
+>          g_free(sz);
+>          exit(EXIT_FAILURE);
+>      }
+> +
+> +    /* checks for invalid option combinations */
+> +    if (machine->dtb && (strlen(machine->kernel_cmdline) !=3D 0)) {
+> +        error_report("-append and -dtb cannot be used together, as passe=
+d"
+> +                " command line is ignored in case of custom dtb");
+> +        exit(EXIT_FAILURE);
+> +    }
+> +
+>      memory_region_add_subregion(get_system_memory(), 0, machine->ram);
+> =20
+>      /*
+> @@ -1003,6 +1014,21 @@ static void pnv_init(MachineState *machine)
+>          }
+>      }
+> =20
+> +    /* load dtb if passed */
+> +    if (machine->dtb) {
+> +        int fdt_size;
+> +
+> +        warn_report("with manually passed dtb, some options like '-appen=
+d'"
+> +                " will get ignored and the dtb passed will be used as-is=
+");
+> +
+> +        /* read the file 'machine->dtb', and load it into 'fdt' buffer *=
+/
+> +        pnv->fdt =3D load_device_tree(machine->dtb, &fdt_size);
+> +        if (!pnv->fdt) {
+> +            error_report("Could not load dtb '%s'", machine->dtb);
+> +            exit(1);
+> +        }
+> +    }
+> +
+>      /* MSIs are supported on this platform */
+>      msi_nonbroken =3D true;
+> =20
+> diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+> index fcb6699150c8..20b68fd9264e 100644
+> --- a/include/hw/ppc/pnv.h
+> +++ b/include/hw/ppc/pnv.h
+> @@ -91,6 +91,8 @@ struct PnvMachineState {
+>      uint32_t     initrd_base;
+>      long         initrd_size;
+> =20
+> +    void         *fdt;
+> +
+>      uint32_t     num_chips;
+>      PnvChip      **chips;
+> =20
+
 
