@@ -4,71 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF579C3DA7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 14:18:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EBF5C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 14:19:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sebIo-0001Fw-0t; Thu, 15 Aug 2024 10:18:10 -0400
+	id 1sebJQ-0001wm-Nf; Thu, 15 Aug 2024 10:18:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sebIm-0001FS-7B
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:18:08 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sebJP-0001rI-Al
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:18:47 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sebIk-0003MI-2n
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:18:07 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5a156557026so1223911a12.2
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 07:18:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sebJN-0003VP-IX
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:18:47 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5b8c2a6117aso504114a12.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 07:18:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723731484; x=1724336284; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=p0baqdfrh5sYCuHyOSIqoPgx1xZ61orTgdUJ39jYQt4=;
- b=D0hGDBM162JfVBb0SlEVluFu66RfawGXijQZ1XWmy2v4zpFjQRiG+rcjbV0tjjoMMh
- mlLbtmwYeckcDoIOKCmzU2L2WIHwiMMlv+yH2ulNcYM1hIQWb3XCIpC0XEhhy1IJEVjJ
- H3aJ4PvxQxnmhcRRPNxB3QrZtyHL5FZGpq04Us/64lFhWStKZDaxwE/MJujvOm7pRh0/
- ahR7kmROMrTafs9uzulJzlIvr5KgTyIMMhfj6lUq74y8hl2B0W55rt8TCgkURshd99tk
- DCgt9uUlOOK8Vm5qpIbm1eYSE5qAX1V+CPYSv3ldN7QeJ/12vlgmvOR7tLOkelY2HxSb
- wRMg==
+ d=linaro.org; s=google; t=1723731524; x=1724336324; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5ktXRN3L6nhgf7kfoPz50UQErPBwCIwP3ToUUpy4xxA=;
+ b=yuBEKnf+eC9XAzxgdGvo0EGaxsRd1N8w6ffMTo1ao/Q+MtiffagY5pje41xPD/1qY3
+ BHUPYTERhWP0aRvuuuBzh9FhkcnFyDdEJFWKqQQnriOhZ3fiHfnmMEDqRt/0HtR4gFy+
+ V+WPG2bilPl8euyCN9OdY4m/3+C/bGmV0bpHu70HZzvYfYPIJ04j4J3LMA+Z/5tbXyfa
+ u94YCLc+rrM8lmWbgpjgBtB0qhm34GPlmd0Wwa4+zkeG8VybmSkY77b8S/He/iOSq+s8
+ jsmYTfSoEUqGOKJ6VpRhGCiFtc33xB32YyCMsdeQTvRv7ACeg/yPPfr7+b7g212YpJnN
+ 5Pnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723731484; x=1724336284;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=p0baqdfrh5sYCuHyOSIqoPgx1xZ61orTgdUJ39jYQt4=;
- b=TAS7thoY4bLf09xZCdkJpNyE76OneMPysyzPkrrCQCAUNuFVSL1m+bAhIOAHbCL4U+
- xk+TkNUAbhza9qSdgkYpi+HJm5i06VECqdww/HLwOlalwP+DcouHHihi4rD3sN0ntOw0
- ynqr/380eGS35pFejJBF1DNDzSIXyCrOIvUOhTrtnpVCGSmt83mcVyt6GbHKLKQbSPzW
- QzbqXS1TQOvjb2aWxl6yI7Yn20aahZN5oNJRIcZV5yZX4YeO0i4B2aN8jell5T06yWKN
- HIeTwDQAbPKPAiJlzWTY1aC5LTOS5K3LL1o/0mcRAwSk8njDGKgZwsbO3FLF51TrVFVQ
- dgXQ==
-X-Gm-Message-State: AOJu0YwLV8YRtaYGeVaZUQqz9JJANv9QMOvOfX8VCG8IDPyn0f4xQUYZ
- XguhGBrRyzHGWLlA+g6PVZJc749uyYJEgJJZ/NZqkv9LhAyM2F9kFkCAP1uNHgWi9kcWCufNVUL
- GuQ83Gb/xqN3ts8d304b5wO8E6eSYr0rlPPGUhQ==
-X-Google-Smtp-Source: AGHT+IEJdR+P2C7CjfZehXNXXULg1scJabnzY0ppbSC8xZ56/2q+RbqovHB04IitkOZSx9zI9BBje+hcuT+k8hSXWG8=
-X-Received: by 2002:a05:6402:1e88:b0:5be:9c56:3ab with SMTP id
- 4fb4d7f45d1cf-5bea1cae111mr4487388a12.27.1723731484226; Thu, 15 Aug 2024
- 07:18:04 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723731524; x=1724336324;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5ktXRN3L6nhgf7kfoPz50UQErPBwCIwP3ToUUpy4xxA=;
+ b=AW5EuSEIFDJcQdo3f9yxm/wW3mZXHnBeyh/aXBaP+0iPtWBqXnBrd/Z4dey8qSN/Ng
+ X0JNgjIxlqtZD3sTFE+ZbYpuo1UETcFRaw3cgfH23EwPL5Hh/j9HUb1MnuP4oKbRtWTu
+ yL3BsVTNqrfpqe0aAxJpnWsssOhiHqjZJwF+9t8Engmq/FBuWsXFLAakNteobBsiUzyE
+ CUlZXjeeTiha7E8zy50tUAuI/RNwso1yWTmLT76iljTe9A3vgZjrb+IyuCehRWSSaxM2
+ bqM09abZLbY+i5SL8mOF2Xj9aMGiMYv67sL8f2QoybUI0HuPUHWlBal5KEA+bEtJWIiu
+ zP9g==
+X-Gm-Message-State: AOJu0Yyl+gf6QKdl3tDzLLbfa4QTKud0jr5dZsi119CJlhY5KFBGgkvv
+ 0iNK75pnUjiKGY4S/t0Q0U+SS+vutOHGum4TqKPTH2Ex2GunK25lsZ1+5puizv0=
+X-Google-Smtp-Source: AGHT+IE3hhTpmXk/+f2CzROVsAphMTFlFZo1QnHeai9/9RDcGOPxQVhnmNd7RSlIvqhLiUimmEdzVg==
+X-Received: by 2002:a05:6402:50c6:b0:5a2:65cb:7335 with SMTP id
+ 4fb4d7f45d1cf-5bea1c7ce61mr5657509a12.19.1723731523493; 
+ Thu, 15 Aug 2024 07:18:43 -0700 (PDT)
+Received: from [192.168.69.100] ([176.187.202.43])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5bebbbe2a02sm943169a12.18.2024.08.15.07.18.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Aug 2024 07:18:43 -0700 (PDT)
+Message-ID: <b5587a20-d2ad-4dfa-aba5-0154ebe8c61d@linaro.org>
+Date: Thu, 15 Aug 2024 16:18:36 +0200
 MIME-Version: 1.0
-References: <20240723070251.25575-1-kkostiuk@redhat.com>
- <20240723070251.25575-26-kkostiuk@redhat.com>
- <CAFEAcA831S0wGbyLwDK7yVeEoi1SFPD7gpYribNqP6AmyQHN5A@mail.gmail.com>
- <CAPMcbCpfP-XX0RsTerdrSunb9Z772efCGKf5h2ju7JQdygvDtA@mail.gmail.com>
- <CAFEAcA9CyhYRZz0kK_oB6WKQF-3EZsEg88mdFWoDzQoF6ZfYAw@mail.gmail.com>
-In-Reply-To: <CAFEAcA9CyhYRZz0kK_oB6WKQF-3EZsEg88mdFWoDzQoF6ZfYAw@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 15 Aug 2024 15:17:51 +0100
-Message-ID: <CAFEAcA9v2An2=P3aTNbv+z_a2nk6xQ+f-b4B6Ci0rWO2Q=C18A@mail.gmail.com>
-Subject: Re: [PULL v2 25/25] qga/linux: Add new api 'guest-network-get-route'
-To: Konstantin Kostiuk <kkostiuk@redhat.com>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: Removing python/qemu/qmp
+To: John Snow <jsnow@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <CAFn=p-ZJZ1BScebJtgGmFBwV4n2Yhyha6WFAmVe9_T2c4ML7Dw@mail.gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CAFn=p-ZJZ1BScebJtgGmFBwV4n2Yhyha6WFAmVe9_T2c4ML7Dw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,31 +94,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 29 Jul 2024 at 10:35, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Mon, 29 Jul 2024 at 08:40, Konstantin Kostiuk <kkostiuk@redhat.com> wrote:
-> >
-> > Hi Peter,
-> >
-> > How to see the full coverity report? In https://gitlab.com/qemu-project/qemu/-/artifacts, I see only job.log
-> > Do you expect to fix these errors for the 9.1 release?
->
-> Coverity errors are in https://scan.coverity.com/projects/qemu
->  -- you can ask for an account with the project if you want
-> to see them directly. But I think you have the information
-> you need in this email: the actual coverity issue isn't
-> much more informative.
->
-> > Do you expect to fix these errors for the 9.1 release?
->
-> No, I post these emails to inform the people responsible
-> for the original commits about the problem so that they
-> can provide fixes -- after all, it's the original author
-> that knows most about the code and how to test it.
+On 15/8/24 15:58, John Snow wrote:
+> Hi Paolo,
+> 
+> Let's discuss finally dropping the qemu.qmp lib out of qemu.git in favor 
+> of using the standalone package at 
+> https://gitlab.com/qemu-project/python-qemu-qmp/ 
+> <https://gitlab.com/qemu-project/python-qemu-qmp/>
 
-Konstantin, are you or Dehan planning to write fixes
-for these bugs?
 
-thanks
--- PMM
+> Thoughts? Lets schedule a call to discuss if we can. (Anyone else 
+> interested can join if they want.)
+
+Next community call is next week on Tuesday 20, 2pm UTC.
+(https://meet.jit.si/kvmcallmeeting)
 
