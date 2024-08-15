@@ -4,87 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4764EC52D7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57A1EC52D7D
 	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 14:49:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sebn3-0003Tw-MO; Thu, 15 Aug 2024 10:49:25 -0400
+	id 1sebmq-0002t2-Gq; Thu, 15 Aug 2024 10:49:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sebmz-0003EB-Md
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:49:21 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1sebmp-0002rj-67
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:49:11 -0400
+Received: from mail.weilnetz.de ([37.120.169.71]
+ helo=mail.v2201612906741603.powersrv.de)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sebmx-0000Cm-JR
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:49:21 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-a8385f38fcdso62758566b.3
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 07:49:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723733358; x=1724338158; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=O/2O2QWI/Uf5GFig2yGm0H8WH7A5Eq7y7uzfXzjAjGQ=;
- b=VHI+ezQy9nJYvXNJ9KJNSjLGmRnEBI80BE+9s1djV91H1MWGtTQYuhjSHD9pQNeiUs
- TNsXQd9pQwKEfD4Dz+jOmVb2FlFEIfyLZKR7pdecxCKOGdY/YaHlgnRSQnOclntV1pGT
- JbO/UFTNLoeyhYfdTn105lt8Ls2oZhkfMC8vOiOs9GMtBfnNeeWe9G4r+vFh/oUZ3k2o
- w47ymYNjhCgPskd4eLk3IFhYg2FfvCCOOJEqijopCIjaynetAkhCbIbfLgGm6wG1yByD
- XkdouJW/is6JF6W5VZsCeDPbMS10zUXxUvVNRE9pKAqi1+kg5w8p0bbQA/z+yWfyJ1E+
- PybQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723733358; x=1724338158;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=O/2O2QWI/Uf5GFig2yGm0H8WH7A5Eq7y7uzfXzjAjGQ=;
- b=M25g6LnvPDicAbCn4NV3/T1wPl8BKKP0jHksnhToab1q6lv+sVl98vx2jYF1u4MUC0
- ZYulSYvaC3+E6Ee/j0GMo2+uzFGsT5RWi7rfvhR9f74fejUbfremG6m6Hrknzawpy5y6
- QPp6boqalZA3ZNbm3Y/zTaQdYSYJyxenMp6wVp0t04guhOeE0xmqzqrWk6LD+7ORaak0
- waHog0hK/VvqEEYfBiiZ7SpcpCQKKFD+s5ToJNi5xsUUIdz9ewJ6NDARPwcTQzfhpff1
- UZJQCLmEelXl0RCkv1BrNrUKNDNZ5vKYvNj711khWuH79dHCFxDX7OIibbSvGC61jWCZ
- D48w==
-X-Gm-Message-State: AOJu0YxRYzwMgf1ItVHZ1yU8DlLr+5yi3+ryG8INsGCRl82lfM1pxe/I
- XdMKuXkywXFGgpnPdtACEfMy6U2kQ1tlORKcOvhfaQICbhyxtUMhv9pX3b0okvc=
-X-Google-Smtp-Source: AGHT+IHXTM05zKcMC3ai7A5C/iBWIIgK3CctC56tk/IKn4JZbRNe8vqdBLyxeG6i9ObU80ciNjkSQg==
-X-Received: by 2002:a17:906:cad9:b0:a7d:a29e:5c33 with SMTP id
- a640c23a62f3a-a8366c36624mr400869666b.28.1723733357602; 
- Thu, 15 Aug 2024 07:49:17 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a83838c6c07sm112618866b.43.2024.08.15.07.49.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Aug 2024 07:49:14 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 59A465F95A;
- Thu, 15 Aug 2024 15:49:12 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-Subject: [PULL 07/21] target/i386: allow access_ptr to force slow path on
- failed probe
-Date: Thu, 15 Aug 2024 15:48:57 +0100
-Message-Id: <20240815144911.1931487-8-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240815144911.1931487-1-alex.bennee@linaro.org>
-References: <20240815144911.1931487-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <sw@weilnetz.de>) id 1sebmm-0000BI-OY
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:49:10 -0400
+Received: from [192.168.179.52] (pd9f540ac.dip0.t-ipconnect.de
+ [217.245.64.172])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id C016CDA0808;
+ Thu, 15 Aug 2024 16:49:04 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim;
+ t=1723733345;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=79F/GXR0SWFXShIp/h23vqAUUvf/eRJ9SdA/33X1RFQ=;
+ b=BMZX9PWy6sbqWrFlwKkS1L7l3d3HXY/dLoaYr8lNMWQJqYGj9dcj1M52w4L/uGQUXAxKJm
+ wyTqVk/zPzhhpVSWDvOvgH4dLc967rVSIk/tdjG3zTh64o+t3xhjVZBDxsqvv2i85CebcM
+ CGnkCtdO32JtjUGcezhcLamFqMIuFD5afjLXR46n42P37LXGD2TfF43OYlYUliY9L+d07N
+ MWHUSycgiWQkihuA943w3C87FyXq86kSSqJTs9jIJAYjLnbrKQrjgDVBuNECLAP0CzGtas
+ Tz/lroSfhqbrE0iz1cgWWTiR5lOM4bYbmquCBH3XmXxu4kPh74c4KyNJBK/f5Q==
+Message-ID: <ea3f2325-d6fd-489d-88ad-8d7efc3bcace@weilnetz.de>
+Date: Thu, 15 Aug 2024 16:49:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] meson.build: Check for the availability of
+ __attribute__((gcc_struct)) on MSYS2
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Daniel P . Berrange" <berrange@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Yonggang Luo <luoyonggang@gmail.com>
+References: <20240815122719.727639-1-thuth@redhat.com>
+Autocrypt: addr=sw@weilnetz.de; keydata=
+ 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
+In-Reply-To: <20240815122719.727639-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=37.120.169.71; envelope-from=sw@weilnetz.de;
+ helo=mail.v2201612906741603.powersrv.de
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,125 +117,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Stefan Weil <sw@weilnetz.de>
+From:  Stefan Weil via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When we are using TCG plugin memory callbacks probe_access_internal
-will return TLB_MMIO to force the slow path for memory access. This
-results in probe_access returning NULL but the x86 access_ptr function
-happily accepts an empty haddr resulting in segfault hilarity.
+Am 15.08.24 um 14:27 schrieb Thomas Huth:
 
-Check for an empty haddr to prevent the segfault and enable plugins to
-track all the memory operations for the x86 save/restore helpers. As
-we also want to run the slow path when instrumenting *-user we should
-also not have the short cutting test_ptr macro.
+> Since quite a while MSYS2 now supports Clang as a compiler, too.
+> Unfortunately, this compiler is lacking the __attribute__((gcc_struct))
+> that we need for compiling on Windows. But since the compiler is
+> available now, some people started to use it to compile QEMU on MSYS2,
+> apparently ignoring the compiler warnings (see for example the ticket at
+> https://gitlab.com/qemu-project/qemu/-/issues/2476 ). These builds are
+> likely broken in a couple of spots, so let's make sure that we rather
+> bail out early in the configuration phase instead of allowing the build
+> to succeed with warnings.
+>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   meson.build | 5 +++++
+>   1 file changed, 5 insertions(+)
+>
+> diff --git a/meson.build b/meson.build
+> index 81ecd4bae7..fbda17c987 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -315,6 +315,11 @@ elif host_os == 'sunos'
+>     qemu_common_flags += '-D__EXTENSIONS__'
+>   elif host_os == 'haiku'
+>     qemu_common_flags += ['-DB_USE_POSITIVE_POSIX_ERRORS', '-D_BSD_SOURCE', '-fPIC']
+> +elif host_os == 'windows'
+> +  if not compiler.compiles('struct x { int y; } __attribute__((gcc_struct));',
+> +                           args: '-Werror')
+> +    error('Your compiler does not support __attribute__((gcc_struct)) - please use GCC instead of Clang')
+> +  endif
+>   endif
+>   
+>   # __sync_fetch_and_and requires at least -march=i486. Many toolchains
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2489
-Fixes: 6d03226b42 (plugins: force slow path when plugins instrument memory ops)
-Reviewed-by: Alexandre Iooss <erdnaxe@crans.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20240813202329.1237572-8-alex.bennee@linaro.org>
 
-diff --git a/target/i386/tcg/access.c b/target/i386/tcg/access.c
-index 56a1181ea5..e68b73a24b 100644
---- a/target/i386/tcg/access.c
-+++ b/target/i386/tcg/access.c
-@@ -58,6 +58,11 @@ static void *access_ptr(X86Access *ac, vaddr addr, unsigned len)
- 
-     assert(addr >= ac->vaddr);
- 
-+    /* No haddr means probe_access wants to force slow path */
-+    if (!ac->haddr1) {
-+        return NULL;
-+    }
-+
- #ifdef CONFIG_USER_ONLY
-     assert(offset <= ac->size1 - len);
-     return ac->haddr1 + offset;
-@@ -78,17 +83,11 @@ static void *access_ptr(X86Access *ac, vaddr addr, unsigned len)
- #endif
- }
- 
--#ifdef CONFIG_USER_ONLY
--# define test_ptr(p)  true
--#else
--# define test_ptr(p)  likely(p)
--#endif
--
- uint8_t access_ldb(X86Access *ac, vaddr addr)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint8_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         return ldub_p(p);
-     }
-     return cpu_ldub_mmuidx_ra(ac->env, addr, ac->mmu_idx, ac->ra);
-@@ -98,7 +97,7 @@ uint16_t access_ldw(X86Access *ac, vaddr addr)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint16_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         return lduw_le_p(p);
-     }
-     return cpu_lduw_le_mmuidx_ra(ac->env, addr, ac->mmu_idx, ac->ra);
-@@ -108,7 +107,7 @@ uint32_t access_ldl(X86Access *ac, vaddr addr)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint32_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         return ldl_le_p(p);
-     }
-     return cpu_ldl_le_mmuidx_ra(ac->env, addr, ac->mmu_idx, ac->ra);
-@@ -118,7 +117,7 @@ uint64_t access_ldq(X86Access *ac, vaddr addr)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint64_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         return ldq_le_p(p);
-     }
-     return cpu_ldq_le_mmuidx_ra(ac->env, addr, ac->mmu_idx, ac->ra);
-@@ -128,7 +127,7 @@ void access_stb(X86Access *ac, vaddr addr, uint8_t val)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint8_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         stb_p(p, val);
-     } else {
-         cpu_stb_mmuidx_ra(ac->env, addr, val, ac->mmu_idx, ac->ra);
-@@ -139,7 +138,7 @@ void access_stw(X86Access *ac, vaddr addr, uint16_t val)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint16_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         stw_le_p(p, val);
-     } else {
-         cpu_stw_le_mmuidx_ra(ac->env, addr, val, ac->mmu_idx, ac->ra);
-@@ -150,7 +149,7 @@ void access_stl(X86Access *ac, vaddr addr, uint32_t val)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint32_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         stl_le_p(p, val);
-     } else {
-         cpu_stl_le_mmuidx_ra(ac->env, addr, val, ac->mmu_idx, ac->ra);
-@@ -161,7 +160,7 @@ void access_stq(X86Access *ac, vaddr addr, uint64_t val)
- {
-     void *p = access_ptr(ac, addr, sizeof(uint64_t));
- 
--    if (test_ptr(p)) {
-+    if (likely(p)) {
-         stq_le_p(p, val);
-     } else {
-         cpu_stq_le_mmuidx_ra(ac->env, addr, val, ac->mmu_idx, ac->ra);
--- 
-2.39.2
+Tested-by: Stefan Weil <sw@weilnetz.de>
+
 
 
