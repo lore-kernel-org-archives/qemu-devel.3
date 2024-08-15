@@ -4,88 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAC95C52D7D
-	for <qemu-devel@archiver.kernel.org>; Wed, 14 Aug 2024 23:38:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9058DC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 00:20:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seNYA-00023A-ST; Wed, 14 Aug 2024 19:37:06 -0400
+	id 1seODT-0000Ym-R9; Wed, 14 Aug 2024 20:19:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1seNY6-0001ki-8h
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 19:37:02 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1seNY4-0006WR-Lt
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 19:37:02 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-70f5ef740b7so319819b3a.2
- for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 16:37:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723678619; x=1724283419; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bzoJvs+/ktmRvV/uludFrSeMjpPKw38xy+lGwp2LWAA=;
- b=CqIMZho1iQIzGr/SHFL9AtS4K0w0BAfgozvIyT26wP3J+eJxtF5m/jjt/1CPhiSrRm
- 35XlCvnFZbumzBuKYuGA3yhf12ZpuC5lvrxdYI++XzXmPqytzGrt0jJDzRmg5eu+jy6c
- 0TLXGD5YnTp4JI3qwobtYD4LQ/k13bQ5WU6UOqpC3d3tTSiSGoS0+QzKZEnsp41aei2v
- HlgHHW/A6cvcJ+59fOrdQLsu2KvXlHXiNjQQnn8McqPKGN2UkjHz8bXWVpWPuk1LwEV8
- okfrsylTxNa7u9CoH4I3fE0rVK9pNvAnEk79xpO0FXpFG/Cn+shmisCAxzedYBzuv23o
- d6IQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723678619; x=1724283419;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bzoJvs+/ktmRvV/uludFrSeMjpPKw38xy+lGwp2LWAA=;
- b=L8H/DJ00/ipzbaUmNqyiaytLkFhm6zZcOTthgQhb9kHjKc42+EFZiWHzwBP31GLgZj
- MBqWNTC5D5eoS/RMFXW49g485VtzPXdV3gFT8eL5CtcSxfLGi2CmJCOzt0fh4CI8EmcK
- iUyhXjyF69+mKAB5wY3n2dxxEg4TxP8qDb9vRpv4JqJcqAaFlYxazhkUXmsnQNgN2kAI
- VIEc0NQ9btHFGWXt/JpN0efsaWsVGa0M3Z6SETZQVnyJJth8PFPV1OgrW/nJgLxC71k9
- m39Xb2UGHy+krRXKbj+ujlZMoNfVHG9T6Uz1GRXTedC9vFwUEo1WduoSxpfwcJxBil5A
- fZag==
-X-Gm-Message-State: AOJu0Ywo4uJcrpnd44ZeNueVgJKMzRNevs3X+q3IpSa3yR9MoNZxBJwC
- 8o2yLWe07xBGgMGuNxkapvBeBGXoX/+xiN/yY/OeKcyCTbXWNGg5R1EtV8IQ4DUMdtqZqwELE3K
- h1gs=
-X-Google-Smtp-Source: AGHT+IEerxmprREtG28hemAszEAk+gOmixw605ol/n/naRl7+bng26g1gKIb3JJm1IVAqIZYrhQ9pg==
-X-Received: by 2002:a05:6a00:1ad1:b0:706:29e6:2ed2 with SMTP id
- d2e1a72fcca58-712670fa392mr6336540b3a.5.1723678619237; 
- Wed, 14 Aug 2024 16:36:59 -0700 (PDT)
-Received: from linaro.vn.shawcable.net ([2604:3d08:9384:1d00::b861])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7127aef57dfsm112164b3a.115.2024.08.14.16.36.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 14 Aug 2024 16:36:58 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Thomas Huth <thuth@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 4/6] contrib/plugins/hotblocks: fix warning when compiling on
- 32bits host
-Date: Wed, 14 Aug 2024 16:36:43 -0700
-Message-Id: <20240814233645.944327-5-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240814233645.944327-1-pierrick.bouvier@linaro.org>
-References: <20240814233645.944327-1-pierrick.bouvier@linaro.org>
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1seODR-0000YI-ID
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 20:19:45 -0400
+Received: from sin.source.kernel.org ([145.40.73.55])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1seODP-0003vI-5g
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 20:19:45 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sin.source.kernel.org (Postfix) with ESMTP id B45DDCE1B04;
+ Thu, 15 Aug 2024 00:19:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E260C116B1;
+ Thu, 15 Aug 2024 00:19:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1723681170;
+ bh=9IHO+IHlt+Bd47+QggcZMinljdOBWoC9h40/wIqMC3Q=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+ b=XPFlIutVOqaRrr2IAnjhalrqcHb28oShUtLiBvz3nfby2tNneHmk9qHlJ5Mf3X4Eb
+ AaR8unaUKM855Yuy6diNyiFCh/VX76I8MytwSWhGUYSHN6kBvKU0BOwC+E/Z+wRAZW
+ /E+qDqkGayTP/xIRtNgQj5Uu0B5Xv5s5zHcLl3nF1vud4Ta/4DnhelOkrgXsJdt7Rk
+ iMXX2etVZna7PdcEcceBxk7nLJYHQugvzhB9cC7Khy+wJX7DRdKblR1iU5xmgPaDnk
+ 7hAib7vMmXl6cBwk8lpP8zqsK0xlfgixqqtwn8QirijW1Orl6D8uuVXgK3c7bGEOcw
+ xHqJIIjzdzVhQ==
+Date: Wed, 14 Aug 2024 17:19:28 -0700 (PDT)
+From: Stefano Stabellini <sstabellini@kernel.org>
+X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+cc: Stefano Stabellini <sstabellini@kernel.org>, qemu-devel@nongnu.org, 
+ anthony@xenproject.org, paul@xen.org, peter.maydell@linaro.org, 
+ alex.bennee@linaro.org, xenia.ragiadakou@amd.com, jason.andryuk@amd.com, 
+ edgar.iglesias@amd.com, xen-devel@lists.xenproject.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v1 09/10] hw/i386/xen: Add a Xen PVH x86 machine
+In-Reply-To: <ZrzSRPPNYxeh98J4@zapote>
+Message-ID: <alpine.DEB.2.22.394.2408141718510.298534@ubuntu-linux-20-04-desktop>
+References: <20240812130606.90410-1-edgar.iglesias@gmail.com>
+ <20240812130606.90410-10-edgar.iglesias@gmail.com>
+ <alpine.DEB.2.22.394.2408121840230.298534@ubuntu-linux-20-04-desktop>
+ <ZrzSRPPNYxeh98J4@zapote>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=US-ASCII
+Received-SPF: pass client-ip=145.40.73.55; envelope-from=sstabellini@kernel.org;
+ helo=sin.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.135,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,38 +82,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Found on debian stable (i386).
+On Wed, 14 Aug 2024, Edgar E. Iglesias wrote:
+> On Mon, Aug 12, 2024 at 06:48:52PM -0700, Stefano Stabellini wrote:
+> > On Mon, 12 Aug 2024, Edgar E. Iglesias wrote:
+> > > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+> > > 
+> > > This adds a Xen PVH x86 machine based on the PVH Common
+> > > module used by the ARM PVH machine.
+> > > 
+> > > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> > > ---
+> > >  hw/i386/xen/meson.build |   1 +
+> > >  hw/i386/xen/xen-pvh.c   | 196 ++++++++++++++++++++++++++++++++++++++++
+> > >  2 files changed, 197 insertions(+)
+> > >  create mode 100644 hw/i386/xen/xen-pvh.c
+> > > 
+> > > diff --git a/hw/i386/xen/meson.build b/hw/i386/xen/meson.build
+> > > index 3f0df8bc07..c73c62b8e3 100644
+> > > --- a/hw/i386/xen/meson.build
+> > > +++ b/hw/i386/xen/meson.build
+> > > @@ -4,6 +4,7 @@ i386_ss.add(when: 'CONFIG_XEN', if_true: files(
+> > >  ))
+> > >  i386_ss.add(when: ['CONFIG_XEN', xen], if_true: files(
+> > >    'xen-hvm.c',
+> > > +  'xen-pvh.c',
+> > >  ))
+> > >  
+> > >  i386_ss.add(when: 'CONFIG_XEN_BUS', if_true: files(
+> > > diff --git a/hw/i386/xen/xen-pvh.c b/hw/i386/xen/xen-pvh.c
+> > > new file mode 100644
+> > > index 0000000000..9c3d3fc58d
+> > > --- /dev/null
+> > > +++ b/hw/i386/xen/xen-pvh.c
+> > > @@ -0,0 +1,196 @@
+> > > +/*
+> > > + * QEMU Xen PVH x86 Machine
+> > > + *
+> > > + * Copyright (c) 2024 Advanced Micro Devices, Inc.
+> > > + * Written by Edgar E. Iglesias <edgar.iglesias@amd.com>
+> > > + *
+> > > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > > + */
+> > > +
+> > > +#include "qemu/osdep.h"
+> > > +#include "qapi/error.h"
+> > > +#include "qapi/visitor.h"
+> > > +#include "qemu/error-report.h"
+> > > +#include "hw/boards.h"
+> > > +#include "sysemu/sysemu.h"
+> > > +#include "hw/xen/arch_hvm.h"
+> > > +#include "hw/xen/xen.h"
+> > > +#include "hw/xen/xen-pvh-common.h"
+> > > +
+> > > +#define TYPE_XEN_PVH_X86  MACHINE_TYPE_NAME("xenpvh")
+> > > +OBJECT_DECLARE_SIMPLE_TYPE(XenPVHx86State, XEN_PVH_X86)
+> > > +
+> > > +#define PVH_MAX_CPUS 128
+> > > +
+> > > +struct XenPVHx86State {
+> > > +    /*< private >*/
+> > > +    MachineState parent;
+> > > +
+> > > +    DeviceState *cpu[PVH_MAX_CPUS];
+> > > +    XenPVHCommonState pvh;
+> > > +
+> > > +    /*
+> > > +     * We provide these properties to allow Xen to move things to other
+> > > +     * addresses for example when users need to accomodate the memory-map
+> > > +     * for 1:1 mapped devices/memory.
+> > > +     */
+> > > +    struct {
+> > > +        MemMapEntry ram_low, ram_high;
+> > > +        MemMapEntry pci_ecam, pci_mmio, pci_mmio_high;
+> > 
+> > Can we use the same properties already present under XenPVHCommonState?
+> > 
+> > 
+> > 
+> > > +    } cfg;
+> > > +};
+> > > +
+> > > +static void xenpvh_cpu_new(MachineState *ms,
+> > > +                           XenPVHx86State *xp,
+> > > +                           int cpu_idx,
+> > > +                           int64_t apic_id)
+> > > +{
+> > > +    Object *cpu = object_new(ms->cpu_type);
+> > > +
+> > > +    object_property_add_child(OBJECT(ms), "cpu[*]", cpu);
+> > > +    object_property_set_uint(cpu, "apic-id", apic_id, &error_fatal);
+> > > +    qdev_realize(DEVICE(cpu), NULL, &error_fatal);
+> > > +    object_unref(cpu);
+> > > +
+> > > +    xp->cpu[cpu_idx] = DEVICE(cpu);
+> > 
+> > 
+> > Why do we need to create CPU devices in QEMU given that we are only
+> > doing device emulation? I guess it is because ....
+> > 
+> > 
+> > 
+> > > +}
+> > > +
+> > > +static void xenpvh_init(MachineState *ms)
+> > > +{
+> > > +    XenPVHx86State *xp = XEN_PVH_X86(ms);
+> > > +    const struct {
+> > > +        const char *name;
+> > > +        MemMapEntry *map;
+> > > +    } map[] = {
+> > > +        { "ram-low", &xp->cfg.ram_low },
+> > > +        { "ram-high", &xp->cfg.ram_high },
+> > > +        { "pci-ecam", &xp->cfg.pci_ecam },
+> > > +        { "pci-mmio", &xp->cfg.pci_mmio },
+> > > +        { "pci-mmio-high", &xp->cfg.pci_mmio_high },
+> > > +    };
+> > > +    int i;
+> > > +
+> > > +    object_initialize_child(OBJECT(ms), "pvh", &xp->pvh, TYPE_XEN_PVH_COMMON);
+> > > +    object_property_set_int(OBJECT(&xp->pvh), "max-cpus", ms->smp.max_cpus,
+> > > +                            &error_abort);
+> > > +    object_property_set_int(OBJECT(&xp->pvh), "ram-size", ms->ram_size,
+> > > +                            &error_abort);
+> > > +
+> > > +    for (i = 0; i < ARRAY_SIZE(map); i++) {
+> > > +        g_autofree char *base_name = g_strdup_printf("%s-base", map[i].name);
+> > > +        g_autofree char *size_name = g_strdup_printf("%s-size", map[i].name);
+> > > +
+> > > +        object_property_set_int(OBJECT(&xp->pvh), base_name, map[i].map->base,
+> > > +                                 &error_abort);
+> > > +        object_property_set_int(OBJECT(&xp->pvh), size_name, map[i].map->size,
+> > > +                                 &error_abort);
+> > > +    }
+> > > +
+> > > +    /* GSI's 16 - 20 are used for legacy PCIe INTX IRQs.  */
+> > > +    object_property_set_int(OBJECT(&xp->pvh), "pci-intx-irq-base", 16,
+> > > +                            &error_abort);
+> > > +
+> > > +    sysbus_realize(SYS_BUS_DEVICE(&xp->pvh), &error_abort);
+> > > +
+> > > +    /* Create dummy cores. This will indirectly create the APIC MSI window.  */
+> > 
+> > ... of the APIC MSI window ?
+> 
+> 
+> Yes, exactly. I did have a first version without the CPUs that only had
+> the MSI window but there was a bit of disentanglement needed and some
+> other issue that I forgot. Note that with TCG disabled, this doesn't
+> have the any CPU emulation so it doesn't affect our small PVH config
+> very much. I could look into the MSI windows again though.
 
-../contrib/plugins/hotblocks.c: In function 'vcpu_tb_trans':
-../contrib/plugins/hotblocks.c:117:56: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
-  117 |     cnt = (ExecCount *) g_hash_table_lookup(hotblocks, (gconstpointer) hash);
-      |                                                        ^
-../contrib/plugins/hotblocks.c:126:40: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
-  126 |         g_hash_table_insert(hotblocks, (gpointer) hash, (gpointer) cnt);
-      |
-
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- contrib/plugins/hotblocks.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-index 02bc5078bdd..d540f1b7f0b 100644
---- a/contrib/plugins/hotblocks.c
-+++ b/contrib/plugins/hotblocks.c
-@@ -109,9 +109,9 @@ static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
- static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
- {
-     ExecCount *cnt;
--    uint64_t pc = qemu_plugin_tb_vaddr(tb);
-+    uintptr_t pc = qemu_plugin_tb_vaddr(tb);
-     size_t insns = qemu_plugin_tb_n_insns(tb);
--    uint64_t hash = pc ^ insns;
-+    uintptr_t hash = pc ^ insns;
- 
-     g_mutex_lock(&lock);
-     cnt = (ExecCount *) g_hash_table_lookup(hotblocks, (gconstpointer) hash);
--- 
-2.39.2
-
+no, I think this is OK, especially if the number of CPUs is accurate
 
