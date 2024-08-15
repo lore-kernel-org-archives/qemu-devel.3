@@ -4,56 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84854C52D7D
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 10:50:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E45D6C52D7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 11:06:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seY3W-0000hp-MM; Thu, 15 Aug 2024 06:50:10 -0400
+	id 1seYIW-0006pb-3d; Thu, 15 Aug 2024 07:05:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1seY3P-0000gf-2v; Thu, 15 Aug 2024 06:50:05 -0400
-Received: from out30-118.freemail.mail.aliyun.com ([115.124.30.118])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1seYIU-0006nB-3Y
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 07:05:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1seY3M-00014M-Bx; Thu, 15 Aug 2024 06:50:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1723718988; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=AV3AYu+DH86HNGKe/JSeSW5at/TVVSSufIlvyzQQA24=;
- b=mNJHiYJpPuxZiTXxPQSY8C7YniCLef+i8x5v5qsXsIxGRAKZRsNZecAE3JR1UnG1rDRrpbCb/ioa5Yqt0i3vknlYhaf+Tfxh0BxAgo4dicSo3hZrM2CyjPM1MzNRHsBDy3Pt/eN3q/lkt0l+ex46pfmc3S6BZL+QDAVdJDPw2jQ=
-Received: from 30.166.64.117(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WCwdTc0_1723718984) by smtp.aliyun-inc.com;
- Thu, 15 Aug 2024 18:49:45 +0800
-Message-ID: <70a2e212-e2c5-4221-87cc-6ff371b5f509@linux.alibaba.com>
-Date: Thu, 15 Aug 2024 18:49:22 +0800
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1seYIS-00036D-8G
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 07:05:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723719934;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HHa9aFfTkq9W9zMlo50Xq2DohN++dzLZD2cadlzl9xQ=;
+ b=Fs/CBCjtxeG3Jx+ZLSk4jaZVWCwAXXs31uty/hvm7pIpWsNDCYxT0aGstKsJT8TUwqCqg0
+ Nb8fJMMFaVprqFxx5y8QXz60dNxEnf7glMYaK/wgUZNKM9m5nP/jS2H3aR//g9aVXUuKSm
+ EV5jWwwbn0tSi2EW7jTNiGxLEqQGALM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-343-e2hN7Z13Pu-XyTKFdIjgMA-1; Thu,
+ 15 Aug 2024 07:05:31 -0400
+X-MC-Unique: e2hN7Z13Pu-XyTKFdIjgMA-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BA7311956048; Thu, 15 Aug 2024 11:05:29 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.137])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 723D71955DC6; Thu, 15 Aug 2024 11:05:22 +0000 (UTC)
+Date: Thu, 15 Aug 2024 12:05:18 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ Beraldo Leal <bleal@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-s390x@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: Re: [PATCH v2 1/4] meson: hide tsan related warnings
+Message-ID: <Zr3g7lEfteRpNYVC@redhat.com>
+References: <20240814224132.897098-1-pierrick.bouvier@linaro.org>
+ <20240814224132.897098-2-pierrick.bouvier@linaro.org>
+ <CAFEAcA-EAm9mEdGz6m2Y-yxK16TgX6CpxnXc6hW59iAxhXhHtw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 07/15] tcg/riscv: Implement vector mov/dup{m/i}
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-References: <20240813113436.831-1-zhiwei_liu@linux.alibaba.com>
- <20240813113436.831-8-zhiwei_liu@linux.alibaba.com>
- <21210e0f-457e-4858-befc-f869984d3315@linaro.org>
-Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <21210e0f-457e-4858-befc-f869984d3315@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.118;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-118.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+In-Reply-To: <CAFEAcA-EAm9mEdGz6m2Y-yxK16TgX6CpxnXc6hW59iAxhXhHtw@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,53 +94,68 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Aug 15, 2024 at 11:12:39AM +0100, Peter Maydell wrote:
+> On Wed, 14 Aug 2024 at 23:42, Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+> >
+> > When building with gcc-12 -fsanitize=thread, gcc reports some
+> > constructions not supported with tsan.
+> > Found on debian stable.
+> >
+> > qemu/include/qemu/atomic.h:36:52: error: ‘atomic_thread_fence’ is not supported with ‘-fsanitize=thread’ [-Werror=tsan]
+> >    36 | #define smp_mb()                     ({ barrier(); __atomic_thread_fence(__ATOMIC_SEQ_CST); })
+> >       |                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> >
+> > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > ---
+> >  meson.build | 10 +++++++++-
+> >  1 file changed, 9 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/meson.build b/meson.build
+> > index 81ecd4bae7c..52e5aa95cc0 100644
+> > --- a/meson.build
+> > +++ b/meson.build
+> > @@ -499,7 +499,15 @@ if get_option('tsan')
+> >                           prefix: '#include <sanitizer/tsan_interface.h>')
+> >      error('Cannot enable TSAN due to missing fiber annotation interface')
+> >    endif
+> > -  qemu_cflags = ['-fsanitize=thread'] + qemu_cflags
+> > +  tsan_warn_suppress = []
+> > +  # gcc (>=11) will report constructions not supported by tsan:
+> > +  # "error: ‘atomic_thread_fence’ is not supported with ‘-fsanitize=thread’"
+> > +  # https://gcc.gnu.org/gcc-11/changes.html
+> > +  # However, clang does not support this warning and this triggers an error.
+> > +  if cc.has_argument('-Wno-tsan')
+> > +    tsan_warn_suppress = ['-Wno-tsan']
+> > +  endif
+> 
+> That last part sounds like a clang bug -- -Wno-foo is supposed
+> to not be an error on compilers that don't implement -Wfoo for
+> any value of foo (unless some other warning/error would also
+> be emitted).
 
-On 2024/8/14 17:11, Richard Henderson wrote:
-> On 8/13/24 21:34, LIU Zhiwei wrote:
->> @@ -641,6 +645,13 @@ static bool tcg_out_mov(TCGContext *s, TCGType 
->> type, TCGReg ret, TCGReg arg)
->>       case TCG_TYPE_I64:
->>           tcg_out_opc_imm(s, OPC_ADDI, ret, arg, 0);
->>           break;
->> +    case TCG_TYPE_V64:
->> +    case TCG_TYPE_V128:
->> +    case TCG_TYPE_V256:
->> +        tcg_debug_assert(ret > TCG_REG_V0 && arg > TCG_REG_V0);
->> +        tcg_target_set_vec_config(s, type, prev_vece);
->> +        tcg_out_opc_vv(s, OPC_VMV_V_V, ret, TCG_REG_V0, arg, true);
->
-> I suggest these asserts be in tcg_out_opc_*
-> That way you don't need to replicate to all uses.
-OK.
->
->> +static inline bool tcg_out_dup_vec(TCGContext *s, TCGType type, 
->> unsigned vece,
->> +                                   TCGReg dst, TCGReg src)
->
-> Oh, please drop all of the inline markup, from all patches.
-> Let the compiler decide.
->
-OK.
->> +static inline bool tcg_out_dupm_vec(TCGContext *s, TCGType type, 
->> unsigned vece,
->> +                                    TCGReg dst, TCGReg base, 
->> intptr_t offset)
->> +{
->> +    tcg_out_ld(s, TCG_TYPE_REG, TCG_REG_TMP0, base, offset);
->> +    return tcg_out_dup_vec(s, type, vece, dst, TCG_REG_TMP0);
->> +}
->
-> Is this really better than using strided load with rs2 = r0?
+-Wno-foo isn't an error, but it is a warning... which we then
+turn into an error due to -Werror, unless we pass -Wno-unknown-warning-option
+to clang.
 
-It depends.  For our test board, it is.
+>               At any rate, that's how gcc does it
+> (see the paragraph "When an unrecognized warning option ..."
+> in https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html )
+> and I thought clang did too...
+> 
+> thanks
+> -- PMM
+> 
 
-Thanks,
-Zhiwei
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
->
->
-> r~
 
