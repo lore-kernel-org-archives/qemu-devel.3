@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18EABC52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 17:20:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE682C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 17:39:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1see8W-0006AL-F3; Thu, 15 Aug 2024 13:19:44 -0400
+	id 1seeQx-0005HJ-2w; Thu, 15 Aug 2024 13:38:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jgg@ziepe.ca>) id 1see8U-00068m-9E
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 13:19:42 -0400
-Received: from mail-qk1-x72a.google.com ([2607:f8b0:4864:20::72a])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1seeQv-0005GC-A9
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 13:38:45 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jgg@ziepe.ca>) id 1see8R-0006oj-AV
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 13:19:42 -0400
-Received: by mail-qk1-x72a.google.com with SMTP id
- af79cd13be357-7a1d6f4714bso112301385a.1
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 10:19:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1seeQt-0001p2-HM
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 13:38:45 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-201d9fa899dso8891925ad.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 10:38:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ziepe.ca; s=google; t=1723742377; x=1724347177; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=BqaSFAda1BULnUkvbkqjvUbbEFCCq1QGyMDyl6SYwo8=;
- b=H4delLrSPKQFCtSP5jYPFxTjg7yhSJk97/UaEotEd34tZgkk4gw8W6MyO18fzM+pVm
- ZOg4vGiHs/C0W3QvdlhiyFglhLdp0ZDX3rWTwmMlAddfPetCXNhNuq2E4X8cAm18ptm5
- eFsgX1A1z4gX8pin0HpppNTseU6pREUIcDar4DZloTKA8XxxWvxGhRFw7YMVOcF2y5o+
- RqPcy997Nl/5It0JavW/sZ62UpFAxR1yU9pug9/FkZ/sYsHx/erl0+uZLe7JHTyccEq/
- cLMieDGJsYYiPoMFk9HtPaSxq0eRAR5EkkoGVefiMmObum7dpPc37dl4CnZxY/jhrNhy
- sRyw==
+ d=linaro.org; s=google; t=1723743521; x=1724348321; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=y3HjH4dZJYgclGIiedJQJmO8vgqmhtvAFQlrzEyrz2s=;
+ b=Nmb2Pg6B7H3Maa0Zmsje2TFD9ADN+ne/a+pocQp8web6tXGkD5lt2T8sJDRvaspijB
+ fKnGygU8hRfLMtuI4361pum1Wp2pB+mT5eoGEj1nZcCwIa/IjVv9rYS+Quj7KWbHvXuO
+ EAblGM6VY6lt8zNK1+1u8Bm2BibZQPscS1xd86Bqb2XK1oAbtxKbO+2zqskrlZG38oc+
+ zAXYYDbj2rimhXz3e2uO+mOZCt4zI9lUpwXzRgUCBoLOR5NryXXdYlIXuCLcU2lcStPJ
+ pnfbKYs0Pb5Id5eYKmESEgBOkeMOsjqC6opEW6VwVWodJW34SXp7eCP3iBMxEbeIWay8
+ qQ3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723742377; x=1724347177;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BqaSFAda1BULnUkvbkqjvUbbEFCCq1QGyMDyl6SYwo8=;
- b=mcGNQNLSbxoHlTbzxTVNQFp38U8rzRqM5WmF9x7fboNjxZOVhfSnjzHiiCuxFs78WG
- 5GYB8T8lLZ/qtMHUykxOlORNTkWUWXdwKK+GWtiKgSgbIKNLZ3DHPfBYhYxdTA+MdMnj
- JsoWzC/prOLo2JP/4px8qetgKU1HIF5V2YXBHuZ7zzDUZkmxAyrtAxsRFasIDSFZOxJs
- 2DWoDGcMqtTk9/cTKo6HzUt+YIgnjZA5uGwNKEn2b3TxbIJMdUG+GyK9fB64XY1RHxl/
- lsQyo5oNKfAy+PjjLSLVv3BtlfidG+n65VkrvUYie+TRiziu7jpZrChaUDPQ/cAq5SeV
- dPgw==
-X-Gm-Message-State: AOJu0YwVBP8ulaq0VbuS6vLU+54ViDcAJ/BNf8uBxqamZhuiuaAlR0xO
- 6VPYvqjPWEC01TCoAxgFWNE46ptm80ut3zmzmdC/P5x7CPzk2nCpFqtm61NiQoQ=
-X-Google-Smtp-Source: AGHT+IGEGC1/A/48dBre5gaeZ0zHau3OBx975u/klzSPGEReClcShxi3bAXTedaOfHOOcJfdHkXOVA==
-X-Received: by 2002:a05:620a:294c:b0:79e:f745:5445 with SMTP id
- af79cd13be357-7a506ff0efbmr18473085a.31.1723742377586; 
- Thu, 15 Aug 2024 10:19:37 -0700 (PDT)
-Received: from ziepe.ca ([128.77.69.90]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a4ff0dcac4sm80966585a.84.2024.08.15.10.19.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Aug 2024 10:19:37 -0700 (PDT)
-Received: from jgg by wakko with local (Exim 4.95)
- (envelope-from <jgg@ziepe.ca>) id 1see8N-004EaT-MX;
- Thu, 15 Aug 2024 14:19:35 -0300
-Date: Thu, 15 Aug 2024 14:19:35 -0300
-From: Jason Gunthorpe <jgg@ziepe.ca>
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, quic_bqiang@quicinc.com,
- kvalo@kernel.org, prestwoj@gmail.com,
- linux-wireless@vger.kernel.org, ath11k@lists.infradead.org,
- dwmw2@infradead.org, iommu@lists.linux.dev, kernel@quicinc.com,
- johannes@sipsolutions.net, jtornosm@redhat.com
-Subject: Re: [PATCH RFC/RFT] vfio/pci-quirks: Quirk for ath wireless
-Message-ID: <20240815171935.GO3468552@ziepe.ca>
-References: <adcb785e-4dc7-4c4a-b341-d53b72e13467@gmail.com>
- <20240812170045.1584000-1-alex.williamson@redhat.com>
- <20240813164341.GL1985367@ziepe.ca>
- <20240813150320.73df43d7.alex.williamson@redhat.com>
- <20240813233724.GS1985367@ziepe.ca>
- <20240815105905.19d69576.alex.williamson@redhat.com>
+ d=1e100.net; s=20230601; t=1723743521; x=1724348321;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=y3HjH4dZJYgclGIiedJQJmO8vgqmhtvAFQlrzEyrz2s=;
+ b=S1s9tFQr1pT38GpSqENCh8hbbG72do+5oyJR6lczj3IdfLfFA2jVu+50hdIwAWOKSP
+ jpkb8M9KiqJ+ApwlZ93fWHOqWAtddX3xKW+KkIg/G/iosK/UhiaMFCaAp+bk03JY8BYj
+ Y7FjFb8jiWDnnYz8uNkVzU203SUCF1+aW3kENySEPNda511XcjzWEBUbK91/VoagOT6Q
+ LmnBd/5Z5qSeo1ijlNbyZ4l4mcz0ZlA4PTkwKyi/bfJQvXNEmhbADO+xtKIetXthCEf1
+ XaL5/wptNia+DldvbIdamXJQ+KiVVBKxJaIVNkREN6jydboB3dPV1eRjZ8sZbWO2S75o
+ rFCw==
+X-Gm-Message-State: AOJu0YysiRvdF1ZVM748xC1iS3jZPyzlsq6BauN7Nx57gOIYVL75m3bX
+ Q0u1wh1xKLtn79MY8tszdiscrS6SUsN47t0umAV+TgIQo5wq/hEk3QGyoLUsOvk=
+X-Google-Smtp-Source: AGHT+IEAiA/olozTgqYjN5GOr6o0CN/HQ+mtqwhNVBXA8+F43Tk6IYekefV+wedi2Y0O3lrDuyaOkw==
+X-Received: by 2002:a17:902:f90f:b0:1fc:6b8b:4918 with SMTP id
+ d9443c01a7336-20203f3238fmr3871565ad.41.1723743521255; 
+ Thu, 15 Aug 2024 10:38:41 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::b861? ([2604:3d08:9384:1d00::b861])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-201f0379ab3sm12474465ad.137.2024.08.15.10.38.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Aug 2024 10:38:40 -0700 (PDT)
+Message-ID: <10d3fd64-bb03-487b-afd2-28e0f5e014c6@linaro.org>
+Date: Thu, 15 Aug 2024 10:38:38 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240815105905.19d69576.alex.williamson@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72a; envelope-from=jgg@ziepe.ca;
- helo=mail-qk1-x72a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/6] contrib/plugins/cache: fix warning when compiling on
+ 32bits host
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240814233645.944327-1-pierrick.bouvier@linaro.org>
+ <20240814233645.944327-3-pierrick.bouvier@linaro.org>
+ <491b34f6-a81a-4793-984c-6a588910d0e1@redhat.com>
+ <87ttfm2em2.fsf@draig.linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+In-Reply-To: <87ttfm2em2.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,70 +105,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 15, 2024 at 10:59:05AM -0600, Alex Williamson wrote:
-
-> > This is probably the only way to approach this, trap and emulate the
-> > places in the device that program additional interrupt sources and do
-> > a full MSI-like flow to set them up in the kernel.
-> 
-> Your last sentence here seems to agree with this approach, but
-> everything else suggests disapproval, so I don't know where you're
-> going here.
-
-Trapping and emulating is fine.
-
-My concern is really only about skipping SET_IRQ.
-
-That works because of the assumption that the IMS sources are going to
-re-use addr/data pairs setup in the MSI CAP.
-
-That assumption is frail, and won't work at all under the proper IMS
-support Linux now has.
-
-I really don't want to go down the road and have someone tell Thomas
-he can't convert the Linux driver to use irq_domain IMS because it
-will break this stuff here.
-
-> I have no specs for this device, nor any involvement from the device
-> vendor, so the idea of creating a vfio-pci variant driver to setup an
-> irq_domain and augment a device specific SET_IRQs ioctls not only sounds
-> tremendously more complicated (host and VMM), it's simply not possible
-> with the knowledge we have at hand.  
-
-It seems like you have reverse engineered alot of the necessary
-information though??
-
-Maybe there is a more generic approach than a variant driver. If you
-wanted to use IMS from userspace generically you could imagine some
-kind of IMS focused "SET_IRQ" in generic VFIO. Where we'd create the
-needed irq_domains and pass the addr/data pair back to userspace?
-
-> I observe that the device configures MSI vectors and then writes that
-> same vector address/data elsewhere into the device.  Whether the device
-> can trigger those vectors based only on the MSI capability programming
-> and a secondary source piggybacks on those vectors or if this is just a
-> hack by Qualcomm to use an MSI capability to acquire some vectors which
-> are exclusively used by the secondary hardware, I have no idea.
-
-Well at least that should be testable - but it seems crazy if the
-device has registers for an addr/data pair and then somehow doesn't
-use the values that get put in them??
-
-Copying from the MSI is almost certainly a SW hack because IMS support
-has never really existed in an OS until now. I think your guess for
-why it is like this is pretty good.
-
-> I do not believe that introducing a vfio device feature that disables
-> virtualization of the MSI address/data _only_ at the vfio interface
-> (not to a QEMU VM) provides some implicit support of this device
-> behavior.  These values are already available to a privileged user in
-> the host and the same is available for an MSI-X use case by directly
-> reading the MSI-X vector table.  
-
-To be clear, I'm not really worried about showing the data to
-userspace.
-
-Userspace just shouldn't be using it to implement an IMS technique!
-
-Jason
+T24gOC8xNS8yNCAwNDo0NiwgQWxleCBCZW5uw6llIHdyb3RlOg0KPiBUaG9tYXMgSHV0aCA8
+dGh1dGhAcmVkaGF0LmNvbT4gd3JpdGVzOg0KPiANCj4+IE9uIDE1LzA4LzIwMjQgMDEuMzYs
+IFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+Pj4gRm91bmQgb24gZGViaWFuIHN0YWJsZSAo
+aTM4NikuDQo+Pj4gLi4vY29udHJpYi9wbHVnaW5zL2NhY2hlLmM6IEluIGZ1bmN0aW9uICd2
+Y3B1X3RiX3RyYW5zJzoNCj4+PiAuLi9jb250cmliL3BsdWdpbnMvY2FjaGUuYzo0Nzc6MzA6
+IGVycm9yOiBjYXN0IGZyb20gcG9pbnRlciB0byBpbnRlZ2VyIG9mIGRpZmZlcmVudCBzaXpl
+IFstV2Vycm9yPXBvaW50ZXItdG8taW50LWNhc3RdDQo+Pj4gICAgIDQ3NyB8ICAgICAgICAg
+ICAgIGVmZmVjdGl2ZV9hZGRyID0gKHVpbnQ2NF90KSBxZW11X3BsdWdpbl9pbnNuX2hhZGRy
+KGluc24pOw0KPj4+ICAgICAgICAgfA0KPj4+IFNpZ25lZC1vZmYtYnk6IFBpZXJyaWNrIEJv
+dXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4+PiAtLS0NCj4+PiAgICBj
+b250cmliL3BsdWdpbnMvY2FjaGUuYyB8IDYgKysrLS0tDQo+Pj4gICAgMSBmaWxlIGNoYW5n
+ZWQsIDMgaW5zZXJ0aW9ucygrKSwgMyBkZWxldGlvbnMoLSkNCj4+PiBkaWZmIC0tZ2l0IGEv
+Y29udHJpYi9wbHVnaW5zL2NhY2hlLmMgYi9jb250cmliL3BsdWdpbnMvY2FjaGUuYw0KPj4+
+IGluZGV4IDUxMmVmNjc3NmI3Li44MmVkNzM0ZDZkNCAxMDA2NDQNCj4+PiAtLS0gYS9jb250
+cmliL3BsdWdpbnMvY2FjaGUuYw0KPj4+ICsrKyBiL2NvbnRyaWIvcGx1Z2lucy9jYWNoZS5j
+DQo+Pj4gQEAgLTQ3MSwxMiArNDcxLDEyIEBAIHN0YXRpYyB2b2lkIHZjcHVfdGJfdHJhbnMo
+cWVtdV9wbHVnaW5faWRfdCBpZCwgc3RydWN0IHFlbXVfcGx1Z2luX3RiICp0YikNCj4+PiAg
+ICAgICAgbl9pbnNucyA9IHFlbXVfcGx1Z2luX3RiX25faW5zbnModGIpOw0KPj4+ICAgICAg
+ICBmb3IgKGkgPSAwOyBpIDwgbl9pbnNuczsgaSsrKSB7DQo+Pj4gICAgICAgICAgICBzdHJ1
+Y3QgcWVtdV9wbHVnaW5faW5zbiAqaW5zbiA9IHFlbXVfcGx1Z2luX3RiX2dldF9pbnNuKHRi
+LCBpKTsNCj4+PiAtICAgICAgICB1aW50NjRfdCBlZmZlY3RpdmVfYWRkcjsNCj4+PiArICAg
+ICAgICB1aW50cHRyX3QgZWZmZWN0aXZlX2FkZHI7DQo+Pj4gICAgICAgICAgICAgIGlmIChz
+eXMpIHsNCj4+PiAtICAgICAgICAgICAgZWZmZWN0aXZlX2FkZHIgPSAodWludDY0X3QpIHFl
+bXVfcGx1Z2luX2luc25faGFkZHIoaW5zbik7DQo+Pj4gKyAgICAgICAgICAgIGVmZmVjdGl2
+ZV9hZGRyID0gKHVpbnRwdHJfdCkgcWVtdV9wbHVnaW5faW5zbl9oYWRkcihpbnNuKTsNCj4+
+PiAgICAgICAgICAgIH0gZWxzZSB7DQo+Pj4gLSAgICAgICAgICAgIGVmZmVjdGl2ZV9hZGRy
+ID0gKHVpbnQ2NF90KSBxZW11X3BsdWdpbl9pbnNuX3ZhZGRyKGluc24pOw0KPj4+ICsgICAg
+ICAgICAgICBlZmZlY3RpdmVfYWRkciA9ICh1aW50cHRyX3QpDQo+Pj4gcWVtdV9wbHVnaW5f
+aW5zbl92YWRkcihpbnNuKTsNCj4+PiAgICAgICAgICAgIH0NCj4+DQo+PiBJcyB0aGlzIHRo
+ZSByaWdodCBmaXg/IEkgYXNzdW1lIGVmZmVjdGl2ZV9hZGRyIHN0b3JlcyBhbiBhZGRyZXNz
+IG9mDQo+PiB0aGUgZ3Vlc3QsIHNvIGlmIHRoZSBndWVzdCBpcyA2NC1iaXQgYW5kIHRoZSBo
+b3N0IGlzIDMyLWJpdCwgeW91IG5vdw0KPj4gbG9zZSB0aGUgdXBwZXIgYml0cyBvZiB0aGUg
+YWRkcmVzcy4uLj8NCj4gDQo+IEkgdGhpbmsgdGhlIHByb2JsZW0gaXMgaGlnaGVyIHVwLCBp
+dCB3YXMgYSBtaXN0YWtlIHRvIGhhdmU6DQo+IA0KPiAgICB2b2lkICpxZW11X3BsdWdpbl9p
+bnNuX2hhZGRyKGNvbnN0IHN0cnVjdCBxZW11X3BsdWdpbl9pbnNuICppbnNuKTsNCj4gDQo+
+IHJldHVybiAqdm9pZCwgYXQgbGVhc3QgdmFkZHIgcmV0dXJucyBhbiBleHBsaWNpdCA2NCBi
+aXQgdmFsdWUgd2hpY2ggY2FuDQo+IGhvbGQgZXZlcnl0aGluZyAoYXQgYSBzbGlnaHQgZXhw
+ZW5zZSB0byAzMmJpdCBlbXVsYXRpb24gaG9zdHMsIGJ1dA0KPiBzZXJpb3VzbHkgc3RvcCBk
+b2luZyB0aGF0IHdlJ3ZlIGJlZW4gaW4gdGhlIDY0Yml0IHdvcmxkIGZvciBzb21lIHRpbWUN
+Cj4gbm93KS4NCj4gDQoNCkl0J3MgYW4gb3BlbiBxdWVzdGlvbiBJIGhhZC4gV2hlbiBleGVj
+dXRpbmcgNjQgYml0cyBiaW5hcmllcyBvbiBhIDMyIA0KYml0cyBob3N0LCBhcmUgd2UgZW11
+bGF0aW5nIHRoZSBmdWxsIDY0IGJpdHMgYWRkcmVzcyBzcGFjZSwgb3IgZG8gd2UgDQpyZXN0
+cmljdCB0byAzMiBiaXRzPyBGb3IgdXNlciBtb2RlLCBJIGRvbid0IHNlZSBob3cgaXQgY291
+bGQgYmUgcG9zc2libGUgDQp0byBoYXZlIGFkZHJlc3Mgc3BhY2UgYmV5b25kIHRoZSAzMiBi
+aXRzIHJhbmdlLCBidXQgc3lzdGVtIG1vZGUgaXMgDQpwcm9iYWJseSBkaWZmZXJlbnQuDQoN
+ClRoZSByZWFsIHByb3BlciBmaXggaXMgdG8gbm90IGVuY29kZSBkaXJlY3RseSB2YWx1ZSB1
+bmRlciB1ZGF0YSBmb3IgDQpjYWxsYmFja3MsIGJ1dCBhbGxvY2F0ZSB0aGlzIGFuZCBwYXNz
+IGEgcG9pbnRlciBpbnN0ZWFkLg0KDQo+Pg0KPj4gVGhlIGNhc3RpbmcgZm9yIHFlbXVfcGx1
+Z2luX2luc25fdmFkZHIgaXMgbm90IHJlcXVpcmVkIGF0IGFsbCBzaW5jZSBpdA0KPj4gYWxy
+ZWFkeSByZXR1cm5zIGFuIHVpbnQ2NF90LCBzbyB5b3UgY2FuIHJlbW9lIHRoYXQgb25lLiBG
+b3IgdGhlIGhhZGRyDQo+PiBwYXJ0LCBtYXliZSBkbyBhIGRvdWJsZS1jYXN0Og0KPj4NCj4+
+ICAgIGVmZmVjdGl2ZV9hZGRyID0gKHVpbnQ2NF90KSh1aW50cHRyX3QpcWVtdV9wbHVnaW5f
+aW5zbl9oYWRkcihpbnNuKQ0KPj4NCj4+ID8NCj4+DQo+PiAgIFRob21hcw0KPiANCg==
 
