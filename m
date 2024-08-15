@@ -4,79 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5067DC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 08:26:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48A50C52D7D
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 08:27:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seVnJ-0002Bs-8y; Thu, 15 Aug 2024 04:25:17 -0400
+	id 1seVp1-0007fh-1Y; Thu, 15 Aug 2024 04:27:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1seVnG-00027s-N5; Thu, 15 Aug 2024 04:25:14 -0400
+ id 1seVoy-0007Wf-Sf; Thu, 15 Aug 2024 04:27:00 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1seVnF-0004V5-3p; Thu, 15 Aug 2024 04:25:14 -0400
+ id 1seVow-0004ks-Vf; Thu, 15 Aug 2024 04:27:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=e8x9yi8SHcvnBt3pDIbSrzZYuvEmVG8mRmmGsFuDMwM=; b=yp5Y2/fLLyY6icOqzlOgZ2lxu7
- loCBuM5UOQh2yRxnzAs0iBR80Vw3w0NVHKPVjXA0OS2p2T4cHQl4JhTzuNEwykNPxGXmCNeUSSJyc
- 3PrKsBtrr7/x4Pad0X1vu2/gdScFpavrkGr+C1TTpg+EmVB2M/1kl3rwQJsdzDm+oJDPduDLzecN7
- TqAB5x4ncHkIcK9bbojVzkHXxtuAYYijYOEg4e5Mp345dE67Ia1Gu1macRkmaVmrEv9LNR9gBNAUu
- 4+cCF8IWrpf+eoBhJU8KtzfEYUs9NR5SK5wEwW+NxjGZdbJpsf/1g3FjokJD5I/Odm0mixfpLaQHT
- zDZSHec6s9vEe6FjfVb6FkPsa1D/PQ5TG8lETLVUD1Kk05G58wvKiwpiL5zJv8wYTMu6zBKAQDf6n
- Vm8TumtHgDH1IB+A5/Y6wRlQsGaO8YdSHozQlYGnR9MDhqYOEqWBmnl9Huux1jFYjJUpCHakO+2+3
- I8QEk+gw4WeeefrF27Xmg9Ipn2FYbTEXqHl2jyE9gY7sZNLcRE2pbah+b1DwOlc8pvJmC/pDtc5TZ
- Nolc2AUgYHM/mOu/+8njPXjhqUSBzJ7mOU/kdbthAL9ARX5Hhj7DWVXLVR7xuwjhSnOvzy3qIun/3
- XqxH7G8z+huDpFZnjCz66eFJidw+huAhykGdkswxI=;
+ bh=9++bb6v9NOQCbpse9X23jTgVgHAdPwkZGLo3PG+vCqw=; b=SX3x0smxnUz+5M1mywMZpW4ea9
+ //qqRXnWv12gSty/AqCOh63CmM+wrhgz6D7hchBQrRHf0VUo+Y4DBuRsIp3uRC+l6JpVvv+oQatE1
+ R0exjGG5n/vPGTt/BM4oVaHhubqO3bX2LpEQgzTjDTqdGNYi0/vp+o1RhBDe1vKKAG2GiHWvaikIs
+ jIufWfzckiJpOiC0uZnhpaq/7q+W4Z2WY0up2Ync6pIu6qQl+5YFdDacm+ErRIQ2QOXvT9bW5fDRL
+ AxhCVnnELT0tu2Qm8WdcZNRfX+CatByCDx8Jeap78xNGZFUgTcSbESNU1DihwDpwv1lRtioeKrogr
+ K1gD86rCGj419oAubEuw9fGcWTLj2nxeksbMZgI7FIrtwPgEiPSsBmZlVY+HIWXla6qHWz7eAtB0T
+ N1aTzAqhU8gpRAscfTB/c3K1DvMuxMgS4hTU//a0G2Jlfz9rOyVkh/xae7+ragmTvKofbPaA/MnYp
+ MyGxL0jy8RzXUfJtT4r3MZObV33TAq16YDPUi0zvSuS76maqyyggUCBm1UEYLX1zZHrs4u+zbkCTU
+ lCzPLTj5DRGmXAx+d7p9KQTea/6jfQYAJC1oKkK58XJDmsutYKSxxXMtDoefsOrQCcAPQYVt6tlZg
+ odkytPuLu03hUfIIdWlsApwi+TD4+RVtS5uQf0nls=;
 Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1seVm5-0000qs-Jj; Thu, 15 Aug 2024 09:24:01 +0100
-Message-ID: <11aeac5f-1985-494e-941a-5115d5e679bc@ilande.co.uk>
-Date: Thu, 15 Aug 2024 09:24:02 +0100
+ id 1seVoi-0000st-Nc; Thu, 15 Aug 2024 09:26:48 +0100
+Message-ID: <c9b7b9aa-9c2e-4275-a7fb-ff994d74d3f4@ilande.co.uk>
+Date: Thu, 15 Aug 2024 09:26:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: BALATON Zoltan <balaton@eik.bme.hu>, Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
- Paul Burton <paulburton@kernel.org>, Stafford Horne <shorne@gmail.com>,
- qemu-ppc@nongnu.org, Tyrone Ting <kfting@nuvoton.com>,
- Joel Stanley <joel@jms.id.au>, Eduardo Habkost <eduardo@habkost.net>,
- Sergio Lopez <slp@redhat.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Hao Wu <wuhaotsh@google.com>,
- Alistair Francis <Alistair.Francis@wdc.com>, Jan Kiszka <jan.kiszka@web.de>,
- Beniamino Galvani <b.galvani@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, "Michael S. Tsirkin"
- <mst@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
- Palmer Dabbelt <palmer@dabbelt.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
- Jia Liu <proljc@gmail.com>, Helge Deller <deller@gmx.de>,
- Max Filippov <jcmvbkbc@gmail.com>, Subbaraya Sundeep
- <sundeep.lkml@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
+To: Alistair Francis <alistair23@gmail.com>, alex.bennee@linaro.org,
+ qemu-devel@nongnu.org, peter.maydell@linaro.org
+Cc: dbarboza@ventanamicro.com, palmer@dabbelt.com, qemu-riscv@nongnu.org,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Steven Lee <steven_lee@aspeedtech.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Huacai Chen <chenhuacai@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, qemu-arm@nongnu.org,
- Aleksandar Rikalo <arikalo@gmail.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- qemu-riscv@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Song Gao <gaosong@loongson.cn>
-References: <20240814181534.218964-1-shentey@gmail.com>
- <20240814181534.218964-3-shentey@gmail.com>
- <22fa9014-2923-b501-e38d-f5dd1e53d15a@eik.bme.hu>
+ zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com,
+ Bin Meng <bmeng.cn@gmail.com>, liwei1518@gmail.com,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240815015410.369925-1-alistair.francis@wdc.com>
+ <20240815015410.369925-3-alistair.francis@wdc.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -103,12 +77,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <22fa9014-2923-b501-e38d-f5dd1e53d15a@eik.bme.hu>
+In-Reply-To: <20240815015410.369925-3-alistair.francis@wdc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH 2/5] hw/char/serial: Remove unused funtion
+Subject: Re: [PATCH 2/2] hw/char: sifive_uart: Print uart charecters async
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -134,19 +108,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/08/2024 22:38, BALATON Zoltan wrote:
+On 15/08/2024 02:54, Alistair Francis wrote:
 
-> On Wed, 14 Aug 2024, Bernhard Beschow wrote:
->> The serial port's frequency is set via the "baudbase" property nowadays.
+> The current approach of using qemu_chr_fe_write() and ignoring the
+> return values results in dropped charecters [1].
 > 
-> Please keep it as some devices might have registers that set this freq and this 
-> function will be needed for emulating that even if it's not emulated currently.
+> Let's update the SiFive UART to use a async sifive_uart_xmit() function
+> to transmit the charecters and apply back preassure to the guest with
+> the SIFIVE_UART_TXFIFO_FULL status.
+> 
+> This should avoid dropped charecters and more realisiticly model the
+> hardware.
+> 
+> 1: https://gitlab.com/qemu-project/qemu/-/issues/2114
+> 
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
+>   include/hw/char/sifive_uart.h | 17 +++++++-
+>   hw/char/sifive_uart.c         | 81 +++++++++++++++++++++++++++++++++--
+>   2 files changed, 92 insertions(+), 6 deletions(-)
+> 
+> diff --git a/include/hw/char/sifive_uart.h b/include/hw/char/sifive_uart.h
+> index 7f6c79f8bd..73379457a0 100644
+> --- a/include/hw/char/sifive_uart.h
+> +++ b/include/hw/char/sifive_uart.h
+> @@ -48,9 +48,13 @@ enum {
+>       SIFIVE_UART_IP_RXWM       = 2  /* Receive watermark interrupt pending */
+>   };
+>   
+> +#define SIFIVE_UART_TXFIFO_FULL    0x80000000
+> +
+>   #define SIFIVE_UART_GET_TXCNT(txctrl)   ((txctrl >> 16) & 0x7)
+>   #define SIFIVE_UART_GET_RXCNT(rxctrl)   ((rxctrl >> 16) & 0x7)
+> +
+>   #define SIFIVE_UART_RX_FIFO_SIZE 8
+> +#define SIFIVE_UART_TX_FIFO_SIZE 8
+>   
+>   #define TYPE_SIFIVE_UART "riscv.sifive.uart"
+>   OBJECT_DECLARE_SIMPLE_TYPE(SiFiveUARTState, SIFIVE_UART)
+> @@ -63,13 +67,22 @@ struct SiFiveUARTState {
+>       qemu_irq irq;
+>       MemoryRegion mmio;
+>       CharBackend chr;
+> -    uint8_t rx_fifo[SIFIVE_UART_RX_FIFO_SIZE];
+> -    uint8_t rx_fifo_len;
+> +
+> +    uint32_t txfifo;
+>       uint32_t ie;
+>       uint32_t ip;
+>       uint32_t txctrl;
+>       uint32_t rxctrl;
+>       uint32_t div;
+> +
+> +    uint8_t rx_fifo[SIFIVE_UART_RX_FIFO_SIZE];
+> +    uint8_t rx_fifo_len;
+> +
+> +    uint8_t tx_fifo[SIFIVE_UART_TX_FIFO_SIZE];
+> +    uint32_t tx_level;
+> +
+> +    QEMUTimer *fifo_trigger_handle;
+> +    uint64_t char_tx_time;
+>   };
+>   
+>   SiFiveUARTState *sifive_uart_create(MemoryRegion *address_space, hwaddr base,
+> diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
+> index 7fc6787f69..f517500df4 100644
+> --- a/hw/char/sifive_uart.c
+> +++ b/hw/char/sifive_uart.c
+> @@ -64,6 +64,64 @@ static void sifive_uart_update_irq(SiFiveUARTState *s)
+>       }
+>   }
+>   
+> +static gboolean sifive_uart_xmit(void *do_not_use, GIOCondition cond,
+> +                                 void *opaque)
+> +{
+> +    SiFiveUARTState *s = opaque;
+> +    int ret;
+> +
+> +    /* instant drain the fifo when there's no back-end */
+> +    if (!qemu_chr_fe_backend_connected(&s->chr)) {
+> +        s->tx_level = 0;
+> +        return G_SOURCE_REMOVE;
+> +    }
+> +
+> +    ret = qemu_chr_fe_write(&s->chr, s->tx_fifo, s->tx_level);
+> +
+> +    if (ret >= 0) {
+> +        s->tx_level -= ret;
+> +        memmove(s->tx_fifo, s->tx_fifo + ret, s->tx_level);
+> +    }
+> +
+> +    if (s->tx_level) {
+> +        guint r = qemu_chr_fe_add_watch(&s->chr, G_IO_OUT | G_IO_HUP,
+> +                                        sifive_uart_xmit, s);
+> +        if (!r) {
+> +            s->tx_level = 0;
+> +            return G_SOURCE_REMOVE;
+> +        }
+> +    }
+> +
+> +    /* Clear the TX Full bit */
+> +    if (s->tx_level != SIFIVE_UART_TX_FIFO_SIZE) {
+> +        s->txfifo &= ~SIFIVE_UART_TXFIFO_FULL;
+> +    }
+> +
+> +    sifive_uart_update_irq(s);
+> +    return G_SOURCE_REMOVE;
+> +}
+> +
+> +static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
+> +                                      int size)
+> +{
+> +    uint64_t current_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+> +
+> +    if (size > SIFIVE_UART_TX_FIFO_SIZE - s->tx_level) {
+> +        size = SIFIVE_UART_TX_FIFO_SIZE - s->tx_level;
+> +        qemu_log_mask(LOG_GUEST_ERROR, "sifive_uart: TX FIFO overflow");
+> +    }
+> +
+> +    memcpy(s->tx_fifo + s->tx_level, buf, 1);
+> +    s->tx_level += 1;
+> +
+> +    if (s->tx_level == SIFIVE_UART_TX_FIFO_SIZE) {
+> +        s->txfifo |= SIFIVE_UART_TXFIFO_FULL;
+> +    }
+> +
+> +    timer_mod(s->fifo_trigger_handle, current_time +
+> +              (s->char_tx_time * 4));
+> +}
+> +
+>   static uint64_t
+>   sifive_uart_read(void *opaque, hwaddr addr, unsigned int size)
+>   {
+> @@ -82,7 +140,7 @@ sifive_uart_read(void *opaque, hwaddr addr, unsigned int size)
+>           return 0x80000000;
+>   
+>       case SIFIVE_UART_TXFIFO:
+> -        return 0; /* Should check tx fifo */
+> +        return s->txfifo;
+>       case SIFIVE_UART_IE:
+>           return s->ie;
+>       case SIFIVE_UART_IP:
+> @@ -106,12 +164,10 @@ sifive_uart_write(void *opaque, hwaddr addr,
+>   {
+>       SiFiveUARTState *s = opaque;
+>       uint32_t value = val64;
+> -    unsigned char ch = value;
+>   
+>       switch (addr) {
+>       case SIFIVE_UART_TXFIFO:
+> -        qemu_chr_fe_write(&s->chr, &ch, 1);
+> -        sifive_uart_update_irq(s);
+> +        sifive_uart_write_tx_fifo(s, (uint8_t *) &value, 1);
+>           return;
+>       case SIFIVE_UART_IE:
+>           s->ie = val64;
+> @@ -131,6 +187,13 @@ sifive_uart_write(void *opaque, hwaddr addr,
+>                     __func__, (int)addr, (int)value);
+>   }
+>   
+> +static void fifo_trigger_update(void *opaque)
+> +{
+> +    SiFiveUARTState *s = opaque;
+> +
+> +    sifive_uart_xmit(NULL, G_IO_OUT, s);
+> +}
+> +
+>   static const MemoryRegionOps sifive_uart_ops = {
+>       .read = sifive_uart_read,
+>       .write = sifive_uart_write,
+> @@ -197,6 +260,9 @@ static void sifive_uart_realize(DeviceState *dev, Error **errp)
+>   {
+>       SiFiveUARTState *s = SIFIVE_UART(dev);
+>   
+> +    s->fifo_trigger_handle = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+> +                                          fifo_trigger_update, s);
+> +
+>       qemu_chr_fe_set_handlers(&s->chr, sifive_uart_can_rx, sifive_uart_rx,
+>                                sifive_uart_event, sifive_uart_be_change, s,
+>                                NULL, true);
+> @@ -206,12 +272,19 @@ static void sifive_uart_realize(DeviceState *dev, Error **errp)
+>   static void sifive_uart_reset_enter(Object *obj, ResetType type)
+>   {
+>       SiFiveUARTState *s = SIFIVE_UART(obj);
+> +
+> +    s->txfifo = 0;
+>       s->ie = 0;
+>       s->ip = 0;
+>       s->txctrl = 0;
+>       s->rxctrl = 0;
+>       s->div = 0;
+> +
+> +    s->tx_level = 0;
+>       s->rx_fifo_len = 0;
+> +
+> +    memset(s->rx_fifo, 0, SIFIVE_UART_RX_FIFO_SIZE);
+> +    memset(s->tx_fifo, 0, SIFIVE_UART_TX_FIFO_SIZE);
+>   }
+>   
+>   static void sifive_uart_reset_hold(Object *obj, ResetType type)
 
-Why not remove the function if it isn't being used? In general having unused code 
-lying around is bad as it tends to bitrot.
-
-If someone did want to re-add this functionality then you would likely want to do it 
-with clock API rather than using a separate function.
+Have you considered using a Fifo8 here? This avoids having to manually roll your own 
+FIFO implementation.
 
 
 ATB,
