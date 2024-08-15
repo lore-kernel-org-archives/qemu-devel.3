@@ -4,83 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E45D6C52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 11:06:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 191E3C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 11:43:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seYIW-0006pb-3d; Thu, 15 Aug 2024 07:05:40 -0400
+	id 1seYsT-0007li-T8; Thu, 15 Aug 2024 07:42:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1seYIU-0006nB-3Y
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 07:05:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1seYIS-00036D-8G
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 07:05:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723719934;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HHa9aFfTkq9W9zMlo50Xq2DohN++dzLZD2cadlzl9xQ=;
- b=Fs/CBCjtxeG3Jx+ZLSk4jaZVWCwAXXs31uty/hvm7pIpWsNDCYxT0aGstKsJT8TUwqCqg0
- Nb8fJMMFaVprqFxx5y8QXz60dNxEnf7glMYaK/wgUZNKM9m5nP/jS2H3aR//g9aVXUuKSm
- EV5jWwwbn0tSi2EW7jTNiGxLEqQGALM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-343-e2hN7Z13Pu-XyTKFdIjgMA-1; Thu,
- 15 Aug 2024 07:05:31 -0400
-X-MC-Unique: e2hN7Z13Pu-XyTKFdIjgMA-1
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BA7311956048; Thu, 15 Aug 2024 11:05:29 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.137])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 723D71955DC6; Thu, 15 Aug 2024 11:05:22 +0000 (UTC)
-Date: Thu, 15 Aug 2024 12:05:18 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
- Beraldo Leal <bleal@redhat.com>, David Hildenbrand <david@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-s390x@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: Re: [PATCH v2 1/4] meson: hide tsan related warnings
-Message-ID: <Zr3g7lEfteRpNYVC@redhat.com>
-References: <20240814224132.897098-1-pierrick.bouvier@linaro.org>
- <20240814224132.897098-2-pierrick.bouvier@linaro.org>
- <CAFEAcA-EAm9mEdGz6m2Y-yxK16TgX6CpxnXc6hW59iAxhXhHtw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1seYsR-0007kv-MU
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 07:42:47 -0400
+Received: from mail-lf1-x129.google.com ([2a00:1450:4864:20::129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1seYsP-0002CZ-UX
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 07:42:47 -0400
+Received: by mail-lf1-x129.google.com with SMTP id
+ 2adb3069b0e04-52f025ab3a7so1122398e87.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 04:42:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723722164; x=1724326964; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=YraZGJ9bJr3ONnmuBTPkzJUV2p5ou6G6xUlSy78rDf8=;
+ b=Ha268RC/nbCamBmzUQemSFSSvdVmijfUYjoM3KrbL4rILZwizgAn5p36oEYt/e/Cbs
+ E9PPgqOP8dbqCAlddqvvzZyqqeZXzCyuVCgaJ6YQ+dkE37+HS7VsHc0luuSY7g3+ZvHR
+ RpiHvoprFekeywPhkakpxTD9OlP6LOlAwUZT3pJCn9NbRMVAIDCic0T7bmFM/aeJD24a
+ LV2u8OY/b7MxKFYXV8xv4DrqgqcsoASYg1tMsQ1rrIYwxhfYxPLGyLkesax0UH0Oc+6e
+ NMaEN8lGQXHOss74Lr2cjbqmkBWxZmp6+dsP3sq2CouxvY13IyS091WUnWna9PG3p/ty
+ R/mQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723722164; x=1724326964;
+ h=content-transfer-encoding:mime-version:message-id:date:references
+ :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=YraZGJ9bJr3ONnmuBTPkzJUV2p5ou6G6xUlSy78rDf8=;
+ b=Gmq/nYsnXLt5MiN0G1inPW/dHix8eszwjbQ1QeKOr8lg0gQcZ9fGdIRLJCYwTelvTZ
+ Ht98I9alxg1FfNL7zOLqEB9Lcw1xsYVMmoAnzPx7McoHZFaJg8cTTcl1ml1zJSQxFiqk
+ OxboFu6R9kqU0QDY5C8ln0lZdtKYdsRJUZEsTz11XrSXA1nFKXwjII/nQn2xiV9ttlzg
+ LlfNiibbZAh0Foxi+Fkz7IXf074a6cwCk12W6CISABMhikDpb9kJDrkVwszeh8tENhr/
+ N4shhICftMo4nXCU8rcZYDi9M/QfxnMUzo8Jy4Z8YmcxudzI9xTGoHW4R6EI6dfoy8bD
+ Eiag==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXa+VJghdLbGI0sC+i8miLJnGMIUHv35ocdPld/ydRooDBdlc+qgHg75TQbLHO6mkTTY80i2dYIOP4m@nongnu.org
+X-Gm-Message-State: AOJu0YxTb5W9B2Rpz1IVyVWJe6AXi2VEIjtM2wEimVCxZVOjL1FXuTvU
+ B4YfdSUX/x1XtkhQrqaU59+pLneS/M/acW3CO+e5vRKgTpig0JSQou0WN1tfw6Y=
+X-Google-Smtp-Source: AGHT+IFT13DNS+3kg9UcIuGDMqYgKU7AOrfp3pff4jCyTU6dRD71sfdy/v41514fk8sgKbi0whPhaQ==
+X-Received: by 2002:a05:6512:2216:b0:52c:cc2e:1c45 with SMTP id
+ 2adb3069b0e04-532eda6bda2mr3636529e87.15.1723722163660; 
+ Thu, 15 Aug 2024 04:42:43 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a83839464ebsm87914866b.155.2024.08.15.04.42.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 15 Aug 2024 04:42:43 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id CEA1E5F8E4;
+ Thu, 15 Aug 2024 12:42:41 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,  Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9?=
+ <berrange@redhat.com>,  Alexandre Iooss <erdnaxe@crans.org>,  Thomas Huth
+ <thuth@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH 0/6] build contrib/plugins using meson
+In-Reply-To: <CABgObfa8GTo06hm0oDT+GUy-_6z=FVH2xnLWFcpm39_=_p4LNQ@mail.gmail.com>
+ (Paolo Bonzini's message of "Thu, 15 Aug 2024 08:00:00 +0200")
+References: <20240814233645.944327-1-pierrick.bouvier@linaro.org>
+ <CABgObfa8GTo06hm0oDT+GUy-_6z=FVH2xnLWFcpm39_=_p4LNQ@mail.gmail.com>
+Date: Thu, 15 Aug 2024 12:42:41 +0100
+Message-ID: <87y14y2ery.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA-EAm9mEdGz6m2Y-yxK16TgX6CpxnXc6hW59iAxhXhHtw@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::129;
+ envelope-from=alex.bennee@linaro.org; helo=mail-lf1-x129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,68 +101,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 15, 2024 at 11:12:39AM +0100, Peter Maydell wrote:
-> On Wed, 14 Aug 2024 at 23:42, Pierrick Bouvier
+Paolo Bonzini <pbonzini@redhat.com> writes:
+
+> On Thu, Aug 15, 2024 at 1:37=E2=80=AFAM Pierrick Bouvier
 > <pierrick.bouvier@linaro.org> wrote:
-> >
-> > When building with gcc-12 -fsanitize=thread, gcc reports some
-> > constructions not supported with tsan.
-> > Found on debian stable.
-> >
-> > qemu/include/qemu/atomic.h:36:52: error: ‘atomic_thread_fence’ is not supported with ‘-fsanitize=thread’ [-Werror=tsan]
-> >    36 | #define smp_mb()                     ({ barrier(); __atomic_thread_fence(__ATOMIC_SEQ_CST); })
-> >       |                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> >
-> > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> > ---
-> >  meson.build | 10 +++++++++-
-> >  1 file changed, 9 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/meson.build b/meson.build
-> > index 81ecd4bae7c..52e5aa95cc0 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -499,7 +499,15 @@ if get_option('tsan')
-> >                           prefix: '#include <sanitizer/tsan_interface.h>')
-> >      error('Cannot enable TSAN due to missing fiber annotation interface')
-> >    endif
-> > -  qemu_cflags = ['-fsanitize=thread'] + qemu_cflags
-> > +  tsan_warn_suppress = []
-> > +  # gcc (>=11) will report constructions not supported by tsan:
-> > +  # "error: ‘atomic_thread_fence’ is not supported with ‘-fsanitize=thread’"
-> > +  # https://gcc.gnu.org/gcc-11/changes.html
-> > +  # However, clang does not support this warning and this triggers an error.
-> > +  if cc.has_argument('-Wno-tsan')
-> > +    tsan_warn_suppress = ['-Wno-tsan']
-> > +  endif
-> 
-> That last part sounds like a clang bug -- -Wno-foo is supposed
-> to not be an error on compilers that don't implement -Wfoo for
-> any value of foo (unless some other warning/error would also
-> be emitted).
+>> Contrib plugins have been built out of tree so far, thanks to a Makefile.
+>> However, it is quite inconvenient for maintenance, as we may break them,
+>> especially for specific architectures.
+>>
+>> First patches are fixing warnings for existing plugins, then we add meson
+>> support, and finally, we remove Makefile for contrib/plugins.
+>>
+>> Based on the proposal of Anton Kochkov on associated gitlab issue.
+>> Solves: https://gitlab.com/qemu-project/qemu/-/issues/1710
+>
+> Is the bug actually still there?
+>
+> The Makefile explains why it was done this way:
+>
+> # This Makefile example is fairly independent from the main makefile
+> # so users can take and adapt it for their build. We only really
+> # include config-host.mak so we don't have to repeat probing for
+> # programs that the main configure has already done for us.
+>
+> In other words we should also take into account that there is a
+> documentation benefit to having a Makefile that works across Windows,
+> Darwin and generic ELF Unices. Anyway Philippe, Akihiko and Alex are
+> the best people to decide.
 
--Wno-foo isn't an error, but it is a warning... which we then
-turn into an error due to -Werror, unless we pass -Wno-unknown-warning-option
-to clang.
+We could keep the Makefile as an example but the meson file looks fairly
+easy to read. However it keeps growing warts to adapt to the fact its
+not integrated with the wider project.
 
->               At any rate, that's how gcc does it
-> (see the paragraph "When an unrecognized warning option ..."
-> in https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html )
-> and I thought clang did too...
-> 
-> thanks
-> -- PMM
-> 
+> One argument from moving contrib/plugins to meson is that the Windows
+> case depends on libqemu_plugin_api.a which is built with meson(*);
+> that said, libqemu_plugin_api.a should be installed - which would
+> justify it being used from an "external" makefile.
+>
+> Paolo
+>
+> (*) by the way,
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
