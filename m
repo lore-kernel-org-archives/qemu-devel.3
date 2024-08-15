@@ -4,96 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CA22C52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 14:02:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B578BC52D7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 14:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seb2w-0003A8-2B; Thu, 15 Aug 2024 10:01:46 -0400
+	id 1seb9h-0000UC-Kr; Thu, 15 Aug 2024 10:08:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seb2l-00036W-Eu
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:01:38 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seb2h-0000JW-3k
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:01:34 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-a7a8a4f21aeso125503166b.2
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 07:01:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723730487; x=1724335287; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8DxCdAIn5y4gTzTjhyb9YR7k4aqTjKY2yApmrude/dg=;
- b=oRseeJsxx5hAnIX7a7RajU+29hcS4rrbEbh1BBDzxxRQlQ1QdhBxSbSaNUslVVhqoG
- Nyln4HFHPN27//GLnsKKGUkz/ydHI41jco9aoyo86dq3pFwYrFw5mTnJkIHZbqxnvSiZ
- gp98yCDYNG9umv8AO2O/CmZfuGG1cUmUI4tk4zIbc8MVMcM1K+kLu9bxGoO02Lfl9sGU
- 1N3U19AJsEZOWfYqSVZ92MWGWSQ1sY+QZ9w0ThH1JjSTU/wbQmTjHgAQMiLWA7sxT/j0
- 2FGZPQ7TkJTa4matNlx/jKPPKvZBAJzfkMT81LSMw3UwcbsSd5RUZNztP+94HwMBwZnn
- 3Jhg==
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1seb9Z-0000P6-Gn
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:08:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1seb9W-0001ZQ-AO
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:08:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723730905;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vzr3KYLk8750O7gOgaxuZ0lSzVhIlcuDGPfj02xRDb8=;
+ b=i46vzONJdrFMVJI0IKH2Ufv5UU37TcSJ/3bt9nYJdavbPhMgU8oXPJueUJFQnNOOOLPi+b
+ E85Tmkzcs8p7jqL2t9IRu/CgsuREtSOn6KTUwcMG5ppLEg0SxQN+zfUgHC3sUmQZyXycCG
+ sqe8WGcxXUl4IOakrYL0Ze0YQpatSOY=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-177-rbr-FshRNFq_FMpdt9haqw-1; Thu, 15 Aug 2024 10:08:24 -0400
+X-MC-Unique: rbr-FshRNFq_FMpdt9haqw-1
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-6b0fa22d9faso2969607b3.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 07:08:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723730487; x=1724335287;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8DxCdAIn5y4gTzTjhyb9YR7k4aqTjKY2yApmrude/dg=;
- b=d1QYag2NmvQvabUSss9SIBz8pU5BKLHsVcstjjUiWHklPtsbC+d4WJjJ8UQ29urZxr
- uLjq4BiIB+8cNrF8YveTiVGO8acgzwHq6NghAp+lhbeoBi0IuOWL+BmoWdmPK1m7NO4S
- Ii4qR7sSTwc22JfTKuRciTybfpV8MU0186FdkFa1wBkU3ArpZH0ICwoOXPtNHIcGqFeM
- ca0+lSTFR0mlgmPcZ3qPfUiQ3H/vVaZ4hQBKrcsIhgWQYZpHUyW80HMro9wUAsk0K7XW
- UppQDqB2yOgT8LdlVvWU2GyJuqkrh9Wq3++jh/bfYAWYVN3va2cUEYK+vFbLqHRZiCZB
- NrZw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVq3TPmrGwLFPVLRnULnhUmHAAeyi/wXHXBNiw43xtCLfTuKrIXQF+MVzBOyf9CM0sh9Soisox/rvefZVeW1jDcjIl/+Po=
-X-Gm-Message-State: AOJu0YzZ6p/q1yEyzrrlKxaW5M3W+QM6hDrZzIGeOVT3aqOvD8bg/wor
- wL2DFX+LyHulVEoq1A9uGW5QIKx0gh7hSUy8s+bn57LdJPKbwoo/A/KiPpBBxNg=
-X-Google-Smtp-Source: AGHT+IG+VRgNNZ0HwlyxiqMHy9WFgWzm7ORf95ag1U2KeV1i6XvltyF075I/Y4XWGWZ5tkxdq4pdzA==
-X-Received: by 2002:a17:907:f769:b0:a7d:340e:43a4 with SMTP id
- a640c23a62f3a-a8366d474c1mr444370466b.31.1723730486912; 
- Thu, 15 Aug 2024 07:01:26 -0700 (PDT)
-Received: from [192.168.69.100] ([176.187.202.43])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a83838cf2b7sm107233066b.55.2024.08.15.07.01.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Aug 2024 07:01:26 -0700 (PDT)
-Message-ID: <9f6c96fd-bb0c-4014-bba1-70986f4bb384@linaro.org>
-Date: Thu, 15 Aug 2024 16:01:17 +0200
+ d=1e100.net; s=20230601; t=1723730903; x=1724335703;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vzr3KYLk8750O7gOgaxuZ0lSzVhIlcuDGPfj02xRDb8=;
+ b=EkNBjM23S+AIi5mz1mTlpyOyKSEsCU2jkOMIs0GdUFYsehCHiwy5s74zAmSIaX0OpC
+ dRg1pUDQuvWW26EYE45fX0nXHJaa6HOORDkXjmhGrwQOEoQ1tUTO6uwbilPZbMoIjHUZ
+ PiciY61bF17k8/XNHXJTIcETuWdqUk1caDUPq3mb4dXTWvrbuxp9E8RJFsrM7qhBsrtm
+ tuLfxhVhXg8SwW+YCq28HD6vR0y9seCO3qkbDvRXTk5f9sZI4Az5JZ/pfFFd5LFryc3k
+ 173gDNV0gJI2iFCb/yr0nMQJbiKnZ2gZ4TVLn7inlrVUqi+HY/t550gKKofnLKQkH9SH
+ u0Fg==
+X-Gm-Message-State: AOJu0Yz/zfNvLzfx4mQfP8lHT+1GnjQqenIst4yb/LArCSgJs3OXK5bg
+ Vx4RJQTGsHLAoPvUgPXe3sZQHuUlnK7YsqxbNL+B1jEHmHiUWXOyz/NPBX6RNSN05xuGqgSmbGw
+ vU2HH5I9HeZjLG6J+LoXMuEZrA9+jN+mvvfSrF2JKn/DLMVjKPx6b+hMhyTuzymMLVwgDwbak2H
+ MHspn+FI/KzXKWpQaoGbj1vpEjWkQ=
+X-Received: by 2002:a05:690c:4710:b0:651:6e6f:32d2 with SMTP id
+ 00721157ae682-6ac9a4787c2mr61877217b3.43.1723730902725; 
+ Thu, 15 Aug 2024 07:08:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFT7vDXefVC4Et5zdVF0bwaa4s7FPKN+0th/aIjv2bWaCiNvtKshmdfN94YlL0srm5N1LZPSBnK/+GCQt+WDjs=
+X-Received: by 2002:a05:690c:4710:b0:651:6e6f:32d2 with SMTP id
+ 00721157ae682-6ac9a4787c2mr61876777b3.43.1723730902291; Thu, 15 Aug 2024
+ 07:08:22 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 6/7] rust: add crate to expose bindings and interfaces
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, John Snow <jsnow@redhat.com>,
- Cleber Rosa <crosa@redhat.com>, Beraldo Leal <bleal@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+References: <20240806173119.582857-1-crosa@redhat.com>
+ <20240806173119.582857-10-crosa@redhat.com>
+ <1f645137-c621-4fa3-ace0-415087267a7b@redhat.com>
+In-Reply-To: <1f645137-c621-4fa3-ace0-415087267a7b@redhat.com>
+From: Cleber Rosa <crosa@redhat.com>
+Date: Thu, 15 Aug 2024 10:08:11 -0400
+Message-ID: <CA+bd_6LTqGbx2+GOyYHyJ4d5gpg4v8Ddx5apjghiB0vjt8Abhg@mail.gmail.com>
+Subject: Re: [PATCH v2 9/9] Avocado tests: allow for parallel execution of
+ tests
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, 
+ Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Radoslaw Biernacki <rad@semihalf.com>, 
+ Troy Lee <leetroy@gmail.com>, Akihiko Odaki <akihiko.odaki@daynix.com>, 
+ Beraldo Leal <bleal@redhat.com>, kvm@vger.kernel.org,
+ Joel Stanley <joel@jms.id.au>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, Paul Durrant <paul@xen.org>, 
+ Eric Auger <eric.auger@redhat.com>, David Woodhouse <dwmw2@infradead.org>,
+ qemu-arm@nongnu.org, Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, 
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Yoshinori Sato <ysato@users.sourceforge.jp>, 
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
- ARM TCG CPUs <qemu-arm@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>,
- Junjie Mao <junjie.mao@intel.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, rowan.hart@intel.com,
- Mads Ynddal <mads@ynddal.dk>, Markus Armbruster <armbru@redhat.com>
-References: <20240815-rust-pl011-v7-0-975135e98831@linaro.org>
- <20240815-rust-pl011-v7-6-975135e98831@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240815-rust-pl011-v7-6-975135e98831@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x631.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Leif Lindholm <quic_llindhol@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=crosa@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,70 +116,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Manos,
+On Mon, Aug 12, 2024 at 6:17=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
+e:
+> ...
+> > diff --git a/tests/Makefile.include b/tests/Makefile.include
+> > index 537804d101..545b5155f9 100644
+> > --- a/tests/Makefile.include
+> > +++ b/tests/Makefile.include
+> > @@ -94,6 +94,9 @@ TESTS_RESULTS_DIR=3D$(BUILD_DIR)/tests/results
+> >   ifndef AVOCADO_TESTS
+> >       AVOCADO_TESTS=3Dtests/avocado
+> >   endif
+> > +ifndef AVOCADO_PARALLEL
+> > +     AVOCADO_PARALLEL=3D1
+> > +endif
+> >   # Controls the output generated by Avocado when running tests.
+> >   # Any number of command separated loggers are accepted.  For more
+> >   # information please refer to "avocado --help".
+> > @@ -141,7 +144,8 @@ check-avocado: check-venv $(TESTS_RESULTS_DIR) get-=
+vm-images
+> >               --show=3D$(AVOCADO_SHOW) run --job-results-dir=3D$(TESTS_=
+RESULTS_DIR) \
+> >               $(if $(AVOCADO_TAGS),, --filter-by-tags-include-empty \
+> >                       --filter-by-tags-include-empty-key) \
+> > -            $(AVOCADO_CMDLINE_TAGS) --max-parallel-tasks=3D1 \
+> > +            $(AVOCADO_CMDLINE_TAGS) --max-parallel-tasks=3D$(AVOCADO_P=
+ARALLEL) \
+> > +                     -p timeout_factor=3D$(AVOCADO_PARALLEL) \
+> >               $(if $(GITLAB_CI),,--failfast) $(AVOCADO_TESTS), \
+> >               "AVOCADO", "tests/avocado")
+>
+> I think it was nicer in the previous attempt to bump the avocado version:
+>
+> https://gitlab.com/qemu-project/qemu/-/commit/ec5ffa0056389c3c10ea2de1e78=
+3
+>
+> This re-used the "-j" option from "make", so you could do "make -j$(nproc=
+)
+> check-avocado" just like with the other "check" targets.
+>
 
-On 15/8/24 13:42, Manos Pitsidianakis wrote:
-> Add rust/qemu-api, which exposes rust-bindgen generated FFI bindings and
-> provides some declaration macros for symbols visible to the rest of
-> QEMU.
-> 
-> Co-authored-by: Junjie Mao <junjie.mao@intel.com>
-> Co-authored-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Junjie Mao <junjie.mao@intel.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> ---
->   MAINTAINERS                       |   6 ++
->   rust/meson.build                  |   9 +++
->   rust/qemu-api/.gitignore          |   2 +
->   rust/qemu-api/Cargo.lock          |   7 +++
->   rust/qemu-api/Cargo.toml          |  23 +++++++
->   rust/qemu-api/README.md           |  17 +++++
->   rust/qemu-api/build.rs            |  13 ++++
->   rust/qemu-api/meson.build         |  17 +++++
->   rust/qemu-api/rustfmt.toml        |   1 +
->   rust/qemu-api/src/bindings.rs     |   7 +++
->   rust/qemu-api/src/definitions.rs  | 108 ++++++++++++++++++++++++++++++++
->   rust/qemu-api/src/device_class.rs | 128 ++++++++++++++++++++++++++++++++++++++
->   rust/qemu-api/src/lib.rs          | 100 +++++++++++++++++++++++++++++
->   rust/qemu-api/src/tests.rs        |  48 ++++++++++++++
->   rust/rustfmt.toml                 |   7 +++
->   15 files changed, 493 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 5464cb2b03..56a88048d2 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3348,6 +3348,12 @@ F: hw/core/register.c
->   F: include/hw/register.h
->   F: include/hw/registerfields.h
->   
-> +Rust
-> +M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-> +S: Maintained
-> +F: rust/qemu-api
-> +F: rust/rustfmt.toml
+Hi Thomas,
 
-Few lines in docs/devel/rust.rst would be welcomed,
+I can see why it looks better, but in practice, I'm not getting the
+best behavior with such a change.
 
-> diff --git a/rust/qemu-api/Cargo.toml b/rust/qemu-api/Cargo.toml
-> new file mode 100644
-> index 0000000000..51260cbe42
-> --- /dev/null
-> +++ b/rust/qemu-api/Cargo.toml
-> @@ -0,0 +1,23 @@
-> +[package]
-> +name = "qemu_api"
-> +version = "0.1.0"
-> +edition = "2021"
+First, the fact that it enables the parallelization by default, while
+there still seems to be issues with test timeout issues, and even
+existing races between tests (which this series tried to address as
+much as possible) will not result in the best experience IMO.  On my
+12 core machine, and also on GitLab CI, having 4 tests running in
+parallel gets a nice speed up (as others have reported) while still
+being very stable.
 
-> +license = "GPL-2.0 OR GPL-3.0-or-later"
+I'd say making the number of parallel tests equal to `nproc` is best
+kept for a future round.
 
-in particular explaining the license choice.
+Let me know if this sounds reasonable to you.
 
-Should all rust code use it?
+Regards,
+- Cleber.
 
-Thanks,
+>   Thomas
+>
 
-Phil.
 
