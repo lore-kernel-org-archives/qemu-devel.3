@@ -4,87 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A401C52D7D
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 10:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33B50C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 10:23:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seXTW-0000O9-1g; Thu, 15 Aug 2024 06:12:58 -0400
+	id 1seXcv-0005Pb-Cu; Thu, 15 Aug 2024 06:22:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1seXTT-0000LD-K7
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 06:12:55 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1seXTR-0003ig-Lp
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 06:12:55 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-5a156557026so992365a12.2
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 03:12:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723716772; x=1724321572; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IBNryXwUQ1FmSedDlo0SbME5pHcOtJSt28zB17THPuk=;
- b=Xa8o/uEIqYjyylI4WBvhyOpgkEIG5KwKsAmm73OpJdnl1Yflj0plAThk/NejnWIPvT
- R3NSqILnz092OXo3HfTNzOXaiKRK+ioRP1zCYcDlW5IH9eaXHFrY3sEfqCex213vlIDF
- etnIDmyf8FXvMs8wpRmiTl8lUihKfBFDChfd5wdrBO6ds+j6ojYR3A4NnSuupyEwmaJk
- TnVq4X7wH9v0Lz/7UcWZWyAKG+7DI+DIBnfyInUbUdpOZPLPynQ4kDV4WRHcqWwxhHUb
- lxEc86ipnYVAraA96b9I+q0dk+X/qEH0R8z7WuwKudRM02CNZkJBM6wQVerZnub2cUGx
- i0OA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723716772; x=1724321572;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IBNryXwUQ1FmSedDlo0SbME5pHcOtJSt28zB17THPuk=;
- b=BWORrCE8g6YLl7WPod9oOwTcBCy6WRiGTzOd3807ZzoQ1Kx768tKQ0a2HmMoLELYoo
- ntgkigxXZnJqRUaUOX19D1FpiLcce+aHcgm1FiwBUV8sdQSn2yTU49QASjZYCAZAqqIh
- uepK5D7dJNy7NG+D7B8yHQ1+bm/PlBXy4K66tN0mkX3v4AJQgBeGLVpZnrFbPaBktCMW
- rJ7Ai3MdVAPeV7CXzfzDUePAvLmBAMfab/k37TgJe0BmEJ8RFF0fbrsUxCi72G9fpKIb
- LMlVWtsgEqGEVlM/gHsXv5RHATNqxmWy5h87HWXjGc/RKuemn1/qbxwgQJY4nKSroWAj
- A3hg==
-X-Gm-Message-State: AOJu0Yy1kq4g01E7q8M02IPbPV1ZPfYHSOgtRXFRR4HnIpgwHkD9ApEt
- WFTDmr7oFbYCqhOfggpmV6+OaWxpUL9H1JH3dXHwWQqb1vpwT2t11sNg/7ImtHGdJoxHfnCrLvR
- x756Fqgvo5Y6icnXP7EJCDqe1+NOesSvrBN7NBw==
-X-Google-Smtp-Source: AGHT+IGNaYJf90yHZ/TRxldPcq5OdO7je4IKLHSYUqjFp+8oZOTGa63oYD4Ubggc5/tHzKEgewZOFYIFZFUJtMC9c+Y=
-X-Received: by 2002:a05:6402:3788:b0:58b:7b90:94e2 with SMTP id
- 4fb4d7f45d1cf-5bea1cb4e62mr2896445a12.38.1723716771475; Thu, 15 Aug 2024
- 03:12:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1seXcr-0005Ot-Md
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 06:22:37 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1seXcm-0004ra-RL
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 06:22:35 -0400
+Received: from mail-nwsmtp-mxback-corp-main-58.myt.yp-c.yandex.net
+ (mail-nwsmtp-mxback-corp-main-58.myt.yp-c.yandex.net
+ [IPv6:2a02:6b8:c12:25a8:0:640:7439:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 9FBC660E8A;
+ Thu, 15 Aug 2024 13:22:23 +0300 (MSK)
+Received: from mail.yandex-team.ru (2a02:6b8:c12:47a2:0:640:a60c:0
+ [2a02:6b8:c12:47a2:0:640:a60c:0])
+ by mail-nwsmtp-mxback-corp-main-58.myt.yp-c.yandex.net (mxbackcorp/Yandex)
+ with HTTPS id nLF9QL0IoSw0-RUwusryp; Thu, 15 Aug 2024 13:22:23 +0300
+X-Yandex-Fwd: 2
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1723717343;
+ bh=A3HyMZWpOQB1g9Rl02AFKnx+26hoP4zM9eAj5jizWh0=;
+ h=References:Date:Message-Id:Cc:Subject:To:From:In-Reply-To;
+ b=sQ2aGDXqc4CzJB9H9o+aTx+1i/Sfq96g4XwzC0WvOCyOrGtYUkk/4qJZwfeHeYbTy
+ h8Z0VCr3ImwWeC+LA1MDXecuSusnZ/Jtzme03/iZzJEUGCO+m1oeuQveMlIbFLct9n
+ WECipVSTsAYGVGzkCy7D6ISsCEWELkFg/xDt9SX4=
+Authentication-Results: mail-nwsmtp-mxback-corp-main-58.myt.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Received: from 3ahzf6w6bumkt4xv.vla.yp-c.yandex.net
+ (3ahzf6w6bumkt4xv.vla.yp-c.yandex.net [2a02:6b8:c0d:916:0:640:c216:0])
+ by mail-nwsmtp-mxback-corp-main-51.vla.yp-c.yandex.net (mxbackcorp/Yandex)
+ with HTTP id cLFZv01I1Gk0-QVM6qpYM
+ for <d-tatianin@yandex-team.ru>; Thu, 15 Aug 2024 13:22:13 +0300
+Received: by 3ahzf6w6bumkt4xv.vla.yp-c.yandex.net with HTTP;
+ Thu, 15 Aug 2024 13:22:12 +0300
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>
+Cc: Michael S. Tsirkin <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eric Blake <eblake@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+In-Reply-To: <a60edbc0-38ab-4f8b-85ca-6e476716fbca@yandex-team.ru>
+References: <20240528072242.493056-1-d-tatianin@yandex-team.ru>
+ <87mso8n7tw.fsf@pond.sub.org>
+ <9a4ae973-5ad0-4dd1-9818-489833352936@linaro.org>
+ <c8ef6f8f-411d-4f25-bfec-d9f2dfa4b55d@yandex-team.ru>
+ <079a43b9-52db-4428-9ae4-52a31fbf5e74@linaro.org>
+ <bbe49906-26b5-4443-9be1-c621a76c53d8@yandex-team.ru>
+ <874jaglm9x.fsf@pond.sub.org>
+ <a585832f-87ff-4416-be3c-9f5513e99876@linaro.org>
+ <a60edbc0-38ab-4f8b-85ca-6e476716fbca@yandex-team.ru>
+Subject: Re: [PATCH v4] mc146818rtc: add a way to generate RTC interrupts via
+ QMP
 MIME-Version: 1.0
-References: <20240814224132.897098-1-pierrick.bouvier@linaro.org>
- <20240814224132.897098-2-pierrick.bouvier@linaro.org>
-In-Reply-To: <20240814224132.897098-2-pierrick.bouvier@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 15 Aug 2024 11:12:39 +0100
-Message-ID: <CAFEAcA-EAm9mEdGz6m2Y-yxK16TgX6CpxnXc6hW59iAxhXhHtw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] meson: hide tsan related warnings
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, Beraldo Leal <bleal@redhat.com>, 
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-s390x@nongnu.org, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Ilya Leoshkevich <iii@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date: Thu, 15 Aug 2024 13:22:22 +0300
+Message-Id: <8161723717327@mail.yandex-team.ru>
+Content-Transfer-Encoding: base64
+Content-Type: text/html; charset=utf-8
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ HTML_MIME_NO_HTML_TAG=0.377, MIME_HTML_ONLY=0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,56 +96,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 14 Aug 2024 at 23:42, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> When building with gcc-12 -fsanitize=3Dthread, gcc reports some
-> constructions not supported with tsan.
-> Found on debian stable.
->
-> qemu/include/qemu/atomic.h:36:52: error: =E2=80=98atomic_thread_fence=E2=
-=80=99 is not supported with =E2=80=98-fsanitize=3Dthread=E2=80=99 [-Werror=
-=3Dtsan]
->    36 | #define smp_mb()                     ({ barrier(); __atomic_threa=
-d_fence(__ATOMIC_SEQ_CST); })
->       |                                                    ^~~~~~~~~~~~~~=
-~~~~~~~~~~~~~~~~~~~~~~~~~
->
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->  meson.build | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
->
-> diff --git a/meson.build b/meson.build
-> index 81ecd4bae7c..52e5aa95cc0 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -499,7 +499,15 @@ if get_option('tsan')
->                           prefix: '#include <sanitizer/tsan_interface.h>'=
-)
->      error('Cannot enable TSAN due to missing fiber annotation interface'=
-)
->    endif
-> -  qemu_cflags =3D ['-fsanitize=3Dthread'] + qemu_cflags
-> +  tsan_warn_suppress =3D []
-> +  # gcc (>=3D11) will report constructions not supported by tsan:
-> +  # "error: =E2=80=98atomic_thread_fence=E2=80=99 is not supported with =
-=E2=80=98-fsanitize=3Dthread=E2=80=99"
-> +  # https://gcc.gnu.org/gcc-11/changes.html
-> +  # However, clang does not support this warning and this triggers an er=
-ror.
-> +  if cc.has_argument('-Wno-tsan')
-> +    tsan_warn_suppress =3D ['-Wno-tsan']
-> +  endif
-
-That last part sounds like a clang bug -- -Wno-foo is supposed
-to not be an error on compilers that don't implement -Wfoo for
-any value of foo (unless some other warning/error would also
-be emitted). At any rate, that's how gcc does it
-(see the paragraph "When an unrecognized warning option ..."
-in https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html )
-and I thought clang did too...
-
-thanks
--- PMM
+PGRpdj5QaW5nOik8L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj4xNy4wNy4yMDI0LCAxMDo1OCwgIkRh
+bmlpbCBUYXRpYW5pbiIgJmx0O2QtdGF0aWFuaW5AeWFuZGV4LXRlYW0ucnUmZ3Q7OjwvZGl2Pjxi
+bG9ja3F1b3RlPjxwPk9uIDUvMjkvMjQgNjoyNyBQTSwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kg
+d3JvdGU6PGJyIC8+wqA8L3A+PGJsb2NrcXVvdGU+wqBPbiAyOS81LzI0IDE2OjM0LCBNYXJrdXMg
+QXJtYnJ1c3RlciB3cm90ZTo8YmxvY2txdW90ZT7CoERhbmlpbCBUYXRpYW5pbiAmbHQ7PGEgaHJl
+Zj0ibWFpbHRvOmQtdGF0aWFuaW5AeWFuZGV4LXRlYW0ucnUiIHJlbD0ibm9vcGVuZXIgbm9yZWZl
+cnJlciI+ZC10YXRpYW5pbkB5YW5kZXgtdGVhbS5ydTwvYT4mZ3Q7IHdyaXRlczo8YnIgLz7CoDxi
+bG9ja3F1b3RlPsKgT24gNS8yOS8yNCA0OjM5IFBNLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3
+cm90ZTo8YnIgLz7CoDxibG9ja3F1b3RlPsKgT24gMjkvNS8yNCAxNDo0MywgRGFuaWlsIFRhdGlh
+bmluIHdyb3RlOjxibG9ja3F1b3RlPsKgT24gNS8yOS8yNCAzOjM2IFBNLCBQaGlsaXBwZSBNYXRo
+aWV1LURhdWTDqSB3cm90ZTo8YnIgLz7CoDxibG9ja3F1b3RlPsKgT24gMjkvNS8yNCAxNDowMywg
+TWFya3VzIEFybWJydXN0ZXIgd3JvdGU6PGJsb2NrcXVvdGU+wqBEYW5paWwgVGF0aWFuaW4gJmx0
+OzxhIGhyZWY9Im1haWx0bzpkLXRhdGlhbmluQHlhbmRleC10ZWFtLnJ1IiByZWw9Im5vb3BlbmVy
+IG5vcmVmZXJyZXIiPmQtdGF0aWFuaW5AeWFuZGV4LXRlYW0ucnU8L2E+Jmd0OyB3cml0ZXM6PGJy
+IC8+wqA8YmxvY2txdW90ZT7CoFRoaXMgY2FuIGJlIHVzZWQgdG8gZm9yY2Utc3luY2hyb25pemUg
+dGhlIHRpbWUgaW4gZ3Vlc3QgYWZ0ZXIgYTxiciAvPsKgbG9uZzxiciAvPsKgc3RvcC1jb250IHBh
+dXNlLCB3aGljaCBjYW4gYmUgdXNlZnVsIGZvciBzZXJ2ZXJsZXNzLXR5cGUgd29ya2xvYWQuPGJy
+IC8+PGJyIC8+wqBBbHNvIGFkZCBhIGNvbW1lbnQgdG8gaGlnaGxpZ2h0IHRoZSBmYWN0IHRoYXQg
+dGhpcyAoYW5kIG9uZTxiciAvPsKgb3RoZXIgUU1QPGJyIC8+wqBjb21tYW5kKSBvbmx5IHdvcmtz
+IGZvciB0aGUgTUMxNDY4MTggUlRDIGNvbnRyb2xsZXIuPGJyIC8+PGJyIC8+wqBBY2tlZC1ieTog
+UGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgJmx0OzxhIGhyZWY9Im1haWx0bzpwaGlsbWRAbGluYXJv
+Lm9yZyIgcmVsPSJub29wZW5lciBub3JlZmVycmVyIj5waGlsbWRAbGluYXJvLm9yZzwvYT4mZ3Q7
+PGJyIC8+wqBTaWduZWQtb2ZmLWJ5OiBEYW5paWwgVGF0aWFuaW4gJmx0OzxhIGhyZWY9Im1haWx0
+bzpkLXRhdGlhbmluQHlhbmRleC10ZWFtLnJ1IiByZWw9Im5vb3BlbmVyIG5vcmVmZXJyZXIiPmQt
+dGF0aWFuaW5AeWFuZGV4LXRlYW0ucnU8L2E+Jmd0OzxiciAvPsKgLS0tPGJyIC8+PGJyIC8+wqBD
+aGFuZ2VzIHNpbmNlIHYwOjxiciAvPsKgLSBSZW5hbWUgdG8gcnRjLWluamVjdC1pcnEgdG8gbWF0
+Y2ggb3RoZXIgc2ltaWxhciBBUEk8YnIgLz7CoC0gQWRkIGEgY29tbWVudCB0byBoaWdobGlnaHQg
+dGhhdCB0aGlzIG9ubHkgd29ya3MgZm9yIHRoZSBJMzg2IFJUQzxiciAvPjxiciAvPsKgQ2hhbmdl
+cyBzaW5jZSB2MTo8YnIgLz7CoC0gQWRkZWQgYSBkZXNjcmlwdGlvbiBiZWxvdyB0aGUgUU1QIGNv
+bW1hbmQgdG8gZXhwbGFpbiBob3cgaXQ8YnIgLz7CoGNhbiBiZTxiciAvPsKgwqDCoMKgIHVzZWQg
+YW5kIHdoYXQgaXQgZG9lcy48YnIgLz48YnIgLz7CoENoYW5nZXMgc2luY2UgdjI6PGJyIC8+wqAt
+IEFkZCBhICdicm9hZGNhc3QnIHN1ZmZpeC48YnIgLz7CoC0gQ2hhbmdlIHRoZSBjb21tZW50cyB0
+byBleHBsYWluIHRoZSBmbGFncyB3ZSdyZSBzZXR0aW5nLjxiciAvPsKgLSBDaGFuZ2UgdGhlIGNv
+bW1hbmQgZGVzY3JpcHRpb24gdG8gZml4IHN0eWxpbmcgJmFtcDsgZXhwbGFpbiB0aGF0PGJyIC8+
+wqBpdCdzIGEgYnJvYWRjYXN0IGNvbW1hbmQuPGJyIC8+PGJyIC8+wqBDaGFuZ2VzIHNpbmNlIHYz
+OjxiciAvPsKgLSBGaXggY2hlY2twYXRjaCBjb21wbGFpbnRzIGFib3V0IHVzYWdlIG9mIEM5OSBj
+b21tZW50czxiciAvPjxiciAvPsKgLS0tPGJyIC8+wqDCoMKgIGh3L3J0Yy9tYzE0NjgxOHJ0Yy5j
+wqDCoMKgwqDCoMKgwqDCoCB8IDIwICsrKysrKysrKysrKysrKysrKysrPGJyIC8+wqDCoMKgIGlu
+Y2x1ZGUvaHcvcnRjL21jMTQ2ODE4cnRjLmggfMKgIDEgKzxiciAvPsKgwqDCoCBxYXBpL21pc2Mt
+dGFyZ2V0Lmpzb27CoMKgwqDCoMKgwqDCoCB8IDE5ICsrKysrKysrKysrKysrKysrKys8YnIgLz7C
+oMKgwqAgMyBmaWxlcyBjaGFuZ2VkLCA0MCBpbnNlcnRpb25zKCspPC9ibG9ja3F1b3RlPjwvYmxv
+Y2txdW90ZT48L2Jsb2NrcXVvdGU+PC9ibG9ja3F1b3RlPsKgPGJsb2NrcXVvdGU+PGJsb2NrcXVv
+dGU+PGJsb2NrcXVvdGU+PGJsb2NrcXVvdGU+wqBkaWZmIC0tZ2l0IGEvcWFwaS9taXNjLXRhcmdl
+dC5qc29uIGIvcWFwaS9taXNjLXRhcmdldC5qc29uPGJyIC8+wqBpbmRleCA0ZTBhNjQ5MmE5Li43
+ZDM4OGEzNzUzIDEwMDY0NDxiciAvPsKgLS0tIGEvcWFwaS9taXNjLXRhcmdldC5qc29uPGJyIC8+
+wqArKysgYi9xYXBpL21pc2MtdGFyZ2V0Lmpzb248YnIgLz7CoEBAIC0xOSw2ICsxOSwyNSBAQDxi
+ciAvPsKgwqDCoCB7ICdjb21tYW5kJzogJ3J0Yy1yZXNldC1yZWluamVjdGlvbicsPGJyIC8+wqDC
+oMKgwqDCoCAnaWYnOiAnVEFSR0VUX0kzODYnIH08YnIgLz7CoMKgwqAgKyMjPGJyIC8+wqArIyBA
+cnRjLWluamVjdC1pcnEtYnJvYWRjYXN0OjxiciAvPsKgKyM8YnIgLz7CoCsjIEluamVjdCBhbiBS
+VEMgaW50ZXJydXB0IGZvciBhbGwgZXhpc3RpbmcgUlRDcyBvbiB0aGUgc3lzdGVtLjxiciAvPsKg
+KyMgVGhlIGludGVycnVwdCBmb3JjZXMgdGhlIGd1ZXN0IHRvIHN5bmNocm9uaXplIHRoZSB0aW1l
+IHdpdGg8YnIgLz7CoFJUQy48YnIgLz7CoCsjIFRoaXMgaXMgdXNlZnVsIGFmdGVyIGEgbG9uZyBz
+dG9wLWNvbnQgcGF1c2UsIHdoaWNoIGlzIGNvbW1vbjxiciAvPsKgZm9yPGJyIC8+wqArIyBzZXJ2
+ZXJsZXNzLXR5cGUgd29ya2xvYWQuPC9ibG9ja3F1b3RlPjwvYmxvY2txdW90ZT48YnIgLz7CoElu
+IHByZXZpb3VzIHZlcnNpb24geW91IHNhaWQ6PGJyIC8+PGJyIC8+wqDCoMKgICZndDsgVGhpcyBp
+c24ndCByZWFsbHkgcmVsYXRlZCB0byBtaWdyYXRpb24gdGhvdWdoLiBTZXJ2ZXJsZXNzIGlzPGJy
+IC8+wqBiYXNlZDxiciAvPsKgwqDCoCAmZ3Q7IG9uIGNvbnN0YW50bHkgc3RvcHBpbmcgYW5kIHJl
+c3VtaW5nIHRoZSBWTSBvbiBlLmcuIGV2ZXJ5IEhUVFA8YnIgLz7CoMKgwqAgJmd0OyByZXF1ZXN0
+IHRvIGFuIGVuZHBvaW50LjxiciAvPjxiciAvPsKgV2hpY2ggbWFkZSBzb21lIHNlbnNlLiBNYXli
+ZSBtZW50aW9uIEhUVFA/IEFuZCBwb2ludCB0byB0aGF0IHVzZTxiciAvPsKgY2FzZTxiciAvPsKg
+KHBvc3NpYmx5IHdpdGggUU1QIGNvbW1hbmRzKSBpbiB0aGUgY29tbWl0IGRlc2NyaXB0aW9uPzwv
+YmxvY2txdW90ZT48YnIgLz7CoEhtbSwgbWF5YmUgaXQgd291bGQgYmUgaGVscGZ1bCBmb3IgcGVv
+cGxlIHdobyBkb24ndCBrbm93IHdoYXQ8YnIgLz7CoHNlcnZlcmxlc3MgbWVhbnMuPGJyIC8+PGJy
+IC8+wqBIb3cgYWJvdXQ6PGJyIC8+wqDCoMKgwqDCoMKgIFRoaXMgaXMgdXNlZnVsIGFmdGVyIGEg
+bG9uZyBzdG9wLWNvbnN0IHBhdXNlLCB3aGljaCBpczxiciAvPsKgY29tbW9uIGZvciBzZXJ2ZXJs
+ZXNzLXR5cGUgd29ya2xvYWRzLDxiciAvPsKgwqDCoMKgwqDCoCBlLmcuIHN0b3BwaW5nL3Jlc3Vt
+aW5nIHRoZSBWTSBvbiBldmVyeSBIVFRQIHJlcXVlc3QgdG8gYW48YnIgLz7CoGVuZHBvaW50LCB3
+aGljaCBtaWdodCBpbnZvbHZlPGJyIC8+wqDCoMKgwqDCoMKgIGEgbG9uZyBwYXVzZSBpbiBiZXR3
+ZWVuIHRoZSByZXF1ZXN0cywgY2F1c2luZyB0aW1lIGRyaWZ0IGluPGJyIC8+wqB0aGUgZ3Vlc3Qu
+PC9ibG9ja3F1b3RlPjxiciAvPsKgUGxlYXNlIGhlbHAgbWUgdW5kZXJzdGFuZCB5b3VyIHdvcmtm
+bG93LiBZb3VyIG1hbmFnZW1lbnQgbGF5ZXIgY2FsbDxiciAvPsKgQHN0b3AgYW5kIEBjb250IFFN
+UCBjb21tYW5kcywgaXMgdGhhdCByaWdodD88L2Jsb2NrcXVvdGU+PGJyIC8+wqBZZXMsIHRoYXQg
+aXMgY29ycmVjdC48YnIgLz7CoDxibG9ja3F1b3RlPsKgQGNvbnQgd2lsbCBlbWl0IGEgQFJFU1VN
+RSBldmVudC48YnIgLz48YnIgLz7CoElmIHdlIGNvdWxkIGxpc3RlbiB0byBRQVBJIGV2ZW50cyBm
+cm9tIEMgY29kZSwgd2UgY291bGQgaGF2ZSB0aGU8YnIgLz7CoG1jMTQ2ODE4cnRjIGRldmljZSBh
+dXRvbWF0aWNhbGx5IHN5bmMgb24gVk0gcmVzdW1lLCBhbmQgbm8gbmVlZCBmb3I8YnIgLz7CoHRo
+aXMgYXN5bmMgY29tbWFuZC48L2Jsb2NrcXVvdGU+PGJyIC8+wqBQZXJoYXBzPyBJJ20gbm90IHN1
+cmUgaG93IHRoYXQgd291bGQgYmUgaW1wbGVtZW50ZWQsIGJ1dCBsZXQncyBzZWU8YnIgLz7CoHdo
+YXQgTWFya3VzIGhhcyB0byBzYXkuPC9ibG9ja3F1b3RlPjxiciAvPsKgWW91IGNhbid0IGxpc3Rl
+biBvbiBhbiBldmVudCBpbiBRRU1VIGl0c2VsZi7CoCBZb3UgY2FuIG9ubHkgaG9vayBpbnRvIHRo
+ZTxiciAvPsKgcGxhY2UgdGhhdCBnZW5lcmF0ZXMgdGhlIGV2ZW50LjwvYmxvY2txdW90ZT48YnIg
+Lz7CoEFwcGFyZW50bHkgInFlbXUvbm90aWZ5LmgiIGNvdWxkIGJlIHVzZSBmb3IgUUFQSSBldmVu
+dHMgKGN1cnJlbnRseTxiciAvPsKgb25seSB1c2VkIGJ5IG1pZ3JhdGlvbikuIEJpZyBjaGFuZ2Us
+IHRvIGJlIGRpc2N1c3NlZCBsYXRlci48YnIgLz7CoDxibG9ja3F1b3RlPsKgVGhlIFJFU1VNRSBl
+dmVudCBpcyBzZW50IGZyb20gdm1fcHJlcGFyZV9zdGFydCgpIGluIHN5c3RlbS9jcHVzLmMuPC9i
+bG9ja3F1b3RlPjxiciAvPsKgR29vZCBzcG90LCBpdCBpcyB3aGVyZSB3ZSBjYWxsIHN5bmNocm9u
+aXplX3ByZV9yZXN1bWUoKSBmb3IgdkNQVXMsPGJyIC8+wqB3aGljaCBpcyBleGFjdGx5IHdoYXQg
+RGFuaWlsIHdhbnRzIGZvciBSVEMgZGV2aWNlcy48YnIgLz48YnIgLz7CoEknZCByYXRoZXIgd2Ug
+Y2FsbCBoZXJlIHJ0Y19zeW5jaHJvbml6ZV9wcmVfcmVzdW1lKCksIHdoaWNoIHdvdWxkPGJyIC8+
+wqBtb3N0bHkgYmUgcW1wX3J0Y19pbmplY3RfaXJxX2Jyb2FkY2FzdCgpIGNvbnRlbnQsIHdpdGhv
+dXQgdXNpbmcgUU1QPGJyIC8+wqBhdCBhbGwuPGJyIC8+PGJyIC8+wqBCdXQgZm9yIGJhY2stY29t
+cGF0IHdlIG5lZWQgc29tZSBDTEkgb3B0aW9uICJzeW5jLXJ0Yy1vbi1yZXN1bWUiPGJyIC8+wqBk
+ZWZhdWx0IHRvIGZhbHNlLiBQcmVmZXJhYmx5IGEgbWMxNDY4MThydGMgcHJvcGVydHkgdG8gS0lT
+Uy48YnIgLz48YnIgLz7CoFRoYXQgd291bGQgc29sdmUgRGFuaWlsIHByb2JsZW0gYW5kIG1ha2Ug
+TWFya3VzL215c2VsZiBoYXBwaWVyLjwvYmxvY2txdW90ZT48cD48YnIgLz5TbyBJIHN0YXJ0ZWQg
+bG9va2luZyBpbnRvIHRoaXMsIGFuZCBJJ20gYSBiaXQgdW5zdXJlIGFib3V0IHdoYXQgd2Ugd2Fu
+dDxiciAvPnRoaXMgQVBJIHRvIGxvb2sgbGlrZS4gV2hhdCBJIG1lYW4gaXMgdGhlcmUgaXNuJ3Qg
+YSBnZW5lcmljIFJUQzxiciAvPmFic3RyYWN0aW9uIGluIFFFTVUsIGxpa2V3aXNlIHRoZXJlIGlz
+bid0IGFuICJSVEMiIGdsb2JhbCB2YXJpYWJsZSB5b3U8YnIgLz5jYW4gZWFzaWx5IHVzZSB0byBo
+b29rIHVwIHNvbWUgc29ydCBvZiBBUEkgb3Igb3BzLWxpa2UgZnVuY3Rpb25zIGxpa2U8YnIgLz5j
+cHVfYWNjZWwgZG9lcy48YnIgLz48YnIgLz5PbmUgc2ltcGxlIHNvbHV0aW9uIEknbSBzZWVpbmcg
+aXMgbWFraW5nIGFuIG1jMTQ2ODE4LXNwZWNpZmljIEFQSSBsaWtlPGJyIC8+bWMxNDY4MThydGNf
+c3luY2hyb25pemVfcHJlX3Jlc3VtZSgpLCBhbmQgY2FsbCB0aGF0IGRpcmVjdGx5IHdyYXBwZWQ8
+YnIgLz5pbnNpZGUgYW4gaWZkZWYgQ09ORklHX01DMTQ2ODE4UlRDIGluc2lkZSBzeXN0ZW0vY3B1
+cy5jLiBXZSBjYW4gdGhlbjxiciAvPmNoZWNrIHRoZSBzeW5jLW9uLXJlc3VtZSBwcm9wZXJ0eSBp
+bnNpZGUgb2YgdGhhdCBoZWxwZXIgYW5kIG9wdGlvbmFsbHk8YnIgLz5qdXN0IHJldHVybiBmcm9t
+IGl0IGlmIGl0J3Mgbm90IHNldC48YnIgLz48YnIgLz5Bbnkgb2JqZWN0aW9ucyBvbiB0aGlzIGFw
+cHJvYWNoPyBJcyB0aGVyZSBhIGJldHRlciB3YXkgdG8gZG8gdGhpcz88YnIgLz48YnIgLz5UaGFu
+a3MhPC9wPjxibG9ja3F1b3RlPsKgUGFvbG8sIGFueSBvYmplY3Rpb24/PGJyIC8+PGJyIC8+wqBS
+ZWdhcmRzLDxiciAvPjxiciAvPsKgUGhpbC48L2Jsb2NrcXVvdGU+PHA+wqA8L3A+PC9ibG9ja3F1
+b3RlPg==
 
