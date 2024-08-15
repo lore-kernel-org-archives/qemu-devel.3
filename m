@@ -4,56 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF2FEC52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 17:53:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B24FC3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 17:55:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seeeK-0007LA-UN; Thu, 15 Aug 2024 13:52:36 -0400
+	id 1seegV-0003jB-Vj; Thu, 15 Aug 2024 13:54:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=dF58=PO=kaod.org=clg@ozlabs.org>)
- id 1seeeI-0007Cw-Vq; Thu, 15 Aug 2024 13:52:34 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=dF58=PO=kaod.org=clg@ozlabs.org>)
- id 1seeeF-0004AH-L2; Thu, 15 Aug 2024 13:52:33 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4WlCPg1T5qz4x1V;
- Fri, 16 Aug 2024 03:52:23 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4WlCPb4Y1Mz4x1H;
- Fri, 16 Aug 2024 03:52:19 +1000 (AEST)
-Message-ID: <6c0cdf26-9795-4998-9d80-1d0095700a59@kaod.org>
-Date: Thu, 15 Aug 2024 19:52:14 +0200
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1seegT-0003hu-Tv
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 13:54:49 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1seegS-0004M0-AJ
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 13:54:49 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1fd70ba6a15so10883625ad.0
+ for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 10:54:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723744486; x=1724349286; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2YKSJ2n8OS/IVEPWotzaXg/8leJ6lDGmmxdPVmQ8FW4=;
+ b=KQ9eKbLNtupRgEm1wEE4yWZwWi+t/vRaCazrDKPe5e7xz/5XL2inXxvuJ8MlFwfI67
+ W4Vun+/IbX0FObHqK9Xut1H5GP87cklBiKYoXNzm9uWYG3EqjwdvCiOtKh9o8UofqNQ0
+ 5zc7bdyyS11OA0AiJPQFfMEShPjzwNRKPU1V46WAO4oqseRkuhBhpDADaHzVnWDCr5oB
+ vJ0K5OGWrEkVvHruw3TUihX+EWFt8u40iEvMfGiuAUkJ5l+Xje3rnci4hVZ+ZxwCGDeH
+ NXIO93dF2NPW4tp3HbH/h9lBGlhs49CBVerOv2eDxFIg6ExkqA1kgNzwQDsGFNTZ2e89
+ Tw8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723744486; x=1724349286;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2YKSJ2n8OS/IVEPWotzaXg/8leJ6lDGmmxdPVmQ8FW4=;
+ b=EBYIRHqDFA3aFwhV3ZZ5HnjkLk9ElEDJHSMxky52/dex5rYix/YJEhQAfTO6CkQHEk
+ spUOf7McCAh1VUyE9G1fKi0V06VpOQCX7nmC9Jf13rqtPHLzIzwyzLMRA0PF/3vMdYFM
+ eqYJjf48/iAdhHRpIopZ16yIxVQMbpE92fu5KPK+HLk+aQ4lHSGzfEES5wsmeZ1Rw+Sj
+ WncYNYcmBGTRitwfIPA9X1pP8fUDZppzFOokUb4+tS82qKh6GrZIA+Zk+3AsauibAL2O
+ lWoFGw7Qg2AUYMDq710pwoXEK9uEDhT6UAfxXJNMtoACd8GrRWyLM8lny1JxNjRNFM/V
+ 5bKg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVl4SbVrAkPhAHrbwsEVi45dfsE8lFj9wr2hQ3Ai8jGcSH0GU+zHJK0dmDp92XK7m2PIFlyNb7ZMP+kCRokQ9hEK0v4j+4=
+X-Gm-Message-State: AOJu0Yx4okpEhlRZAU6xi9j4E7G9PDt1oA/8Lx3l5a9ul7WDtdv8ZtDE
+ 2Mu0H3sKY98S02lIMd7iwV6Bal7wL2ikmnSHutQTkYqydfArzQARV2kr8jD6NX4=
+X-Google-Smtp-Source: AGHT+IGMQqCJqnKW2gjSndaYQi9xoii055n1pRyA9QIu2ijf7Iitiam2BinlQZ2bNY5BIjXEaZaMrA==
+X-Received: by 2002:a17:903:2307:b0:1fd:9590:6550 with SMTP id
+ d9443c01a7336-2020405f461mr6108655ad.64.1723744486179; 
+ Thu, 15 Aug 2024 10:54:46 -0700 (PDT)
+Received: from ?IPV6:2604:3d08:9384:1d00::b861? ([2604:3d08:9384:1d00::b861])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-201f038df95sm12675915ad.227.2024.08.15.10.54.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 15 Aug 2024 10:54:45 -0700 (PDT)
+Message-ID: <2f025274-5b25-46a5-a745-6b0647dd677a@linaro.org>
+Date: Thu, 15 Aug 2024 10:54:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] hw/ppc: Implement -dtb support for PowerNV
-To: Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta
- <adityag@linux.ibm.com>, Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-References: <20240813134536.1204513-1-adityag@linux.ibm.com>
- <D3GB5QVADVQ1.XZM3FFV52LIW@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <D3GB5QVADVQ1.XZM3FFV52LIW@gmail.com>
+Subject: Re: [PATCH v2 2/4] target/i386: fix build warning (gcc-12
+ -fsanitize=thread)
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240814224132.897098-1-pierrick.bouvier@linaro.org>
+ <20240814224132.897098-3-pierrick.bouvier@linaro.org>
+ <efd7aaab-081c-47b1-b0f5-6a959f04c9af@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <efd7aaab-081c-47b1-b0f5-6a959f04c9af@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=dF58=PO=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -70,152 +99,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/15/24 09:31, Nicholas Piggin wrote:
-> On Tue Aug 13, 2024 at 11:45 PM AEST, Aditya Gupta wrote:
->> Currently any device tree passed with -dtb option in QEMU, was ignored
->> by the PowerNV code.
->>
->> Read and pass the passed -dtb to the kernel, thus enabling easier
->> debugging with custom DTBs.
->>
->> The existing behaviour when -dtb is 'not' passed, is preserved as-is.
->>
->> But when a '-dtb' is passed, it completely overrides any dtb nodes or
->> changes QEMU might have done, such as '-append' arguments to the kernel
->> (which are mentioned in /chosen/bootargs in the dtb), hence add warning
->> when -dtb is being used
->>
->> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> 
-> This looks pretty good, I'm inclined to take it as a bug fix fo this
-> release.  
-
-I don't think this is a bug fix. is it ? AFAIUI, it is a debug
-feature for skiboot. It's QEMU 9.2 material.
-
-> One little nit is MachineState.fdt vs PnvMachineState.fdt
-> which is now confusing. I would call the new PnvMachineState member
-> something like fdt_from_dtb, or fdt_override?
-
-I agree. this is confusing. machine->fdt could be used instead ?
-  
-> The other question... Some machines rebuild fdt at init, others at
-> reset time. As far as I understood, spapr has to rebuild on reset
-> because C-A-S call can update the fdt so you have to undo that on
-> reset. 
-
-C-A-S is a guest OS hcall. reset is called before the guest OS
-is started.
-
-> Did powernv just copy that without really needing it, I wonder?
-> Maybe that rearranged to just do it at init time (e.g., see
-> hw/riscv/virt.c which is simpler).
-
-The machine is aware of user created devices (on the command line)
-only at reset time.
-
-Thanks,
-
-C.
-
-
-
-  
-
-> Thanks,
-> Nick
-> 
->>
->> ---
->> Changelog
->> ===========
->> v3:
->>   + use 'load_device_tree' to read the device tree, instead of g_file_get_contents
->>   + tested that passed dtb does NOT get ignored on system_reset
->>
->> v2:
->>   + move reading dtb and warning to pnv_init
->>
->> v1:
->>   + use 'g_file_get_contents' and add check for -append & -dtb as suggested by Daniel
->> ---
->> ---
->>   hw/ppc/pnv.c         | 34 ++++++++++++++++++++++++++++++----
->>   include/hw/ppc/pnv.h |  2 ++
->>   2 files changed, 32 insertions(+), 4 deletions(-)
->>
->> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
->> index 3526852685b4..14225f7e48af 100644
->> --- a/hw/ppc/pnv.c
->> +++ b/hw/ppc/pnv.c
->> @@ -736,10 +736,13 @@ static void pnv_reset(MachineState *machine, ShutdownCause reason)
->>           }
->>       }
->>   
->> -    fdt = pnv_dt_create(machine);
->> -
->> -    /* Pack resulting tree */
->> -    _FDT((fdt_pack(fdt)));
->> +    if (pnv->fdt) {
->> +        fdt = pnv->fdt;
->> +    } else {
->> +        fdt = pnv_dt_create(machine);
->> +        /* Pack resulting tree */
->> +        _FDT((fdt_pack(fdt)));
->> +    }
->>   
->>       qemu_fdt_dumpdtb(fdt, fdt_totalsize(fdt));
->>       cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
->> @@ -952,6 +955,14 @@ static void pnv_init(MachineState *machine)
->>           g_free(sz);
->>           exit(EXIT_FAILURE);
->>       }
->> +
->> +    /* checks for invalid option combinations */
->> +    if (machine->dtb && (strlen(machine->kernel_cmdline) != 0)) {
->> +        error_report("-append and -dtb cannot be used together, as passed"
->> +                " command line is ignored in case of custom dtb");
->> +        exit(EXIT_FAILURE);
->> +    }
->> +
->>       memory_region_add_subregion(get_system_memory(), 0, machine->ram);
->>   
->>       /*
->> @@ -1003,6 +1014,21 @@ static void pnv_init(MachineState *machine)
->>           }
->>       }
->>   
->> +    /* load dtb if passed */
->> +    if (machine->dtb) {
->> +        int fdt_size;
->> +
->> +        warn_report("with manually passed dtb, some options like '-append'"
->> +                " will get ignored and the dtb passed will be used as-is");
->> +
->> +        /* read the file 'machine->dtb', and load it into 'fdt' buffer */
->> +        pnv->fdt = load_device_tree(machine->dtb, &fdt_size);
->> +        if (!pnv->fdt) {
->> +            error_report("Could not load dtb '%s'", machine->dtb);
->> +            exit(1);
->> +        }
->> +    }
->> +
->>       /* MSIs are supported on this platform */
->>       msi_nonbroken = true;
->>   
->> diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
->> index fcb6699150c8..20b68fd9264e 100644
->> --- a/include/hw/ppc/pnv.h
->> +++ b/include/hw/ppc/pnv.h
->> @@ -91,6 +91,8 @@ struct PnvMachineState {
->>       uint32_t     initrd_base;
->>       long         initrd_size;
->>   
->> +    void         *fdt;
->> +
->>       uint32_t     num_chips;
->>       PnvChip      **chips;
->>   
-> 
-
+T24gOC8xNC8yNCAxNTo0NywgUmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+IE9uIDgvMTUv
+MjQgMDg6NDEsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBGb3VuZCBvbiBkZWJpYW4g
+c3RhYmxlLg0KPj4NCj4+IC4uL3RhcmdldC9pMzg2L2t2bS9rdm0uYzogSW4gZnVuY3Rpb24g
+4oCYa3ZtX2hhbmRsZV9yZG1zcuKAmToNCj4+IC4uL3RhcmdldC9pMzg2L2t2bS9rdm0uYzo1
+MzQ1OjE6IGVycm9yOiBjb250cm9sIHJlYWNoZXMgZW5kIG9mIG5vbi12b2lkIGZ1bmN0aW9u
+IFstV2Vycm9yPXJldHVybi10eXBlXQ0KPj4gICAgNTM0NSB8IH0NCj4+ICAgICAgICAgfCBe
+DQo+PiAuLi90YXJnZXQvaTM4Ni9rdm0va3ZtLmM6IEluIGZ1bmN0aW9uIOKAmGt2bV9oYW5k
+bGVfd3Jtc3LigJk6DQo+PiAuLi90YXJnZXQvaTM4Ni9rdm0va3ZtLmM6NTM2NDoxOiBlcnJv
+cjogY29udHJvbCByZWFjaGVzIGVuZCBvZiBub24tdm9pZCBmdW5jdGlvbiBbLVdlcnJvcj1y
+ZXR1cm4tdHlwZV0NCj4+ICAgIDUzNjQgfCB9DQo+Pg0KPj4gU2lnbmVkLW9mZi1ieTogUGll
+cnJpY2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPj4gLS0tDQo+
+PiAgICB0YXJnZXQvaTM4Ni9rdm0va3ZtLmMgfCA0ICsrLS0NCj4+ICAgIDEgZmlsZSBjaGFu
+Z2VkLCAyIGluc2VydGlvbnMoKyksIDIgZGVsZXRpb25zKC0pDQo+Pg0KPj4gZGlmZiAtLWdp
+dCBhL3RhcmdldC9pMzg2L2t2bS9rdm0uYyBiL3RhcmdldC9pMzg2L2t2bS9rdm0uYw0KPj4g
+aW5kZXggMzFmMTQ5Yzk5MDIuLmRkZWMyN2VkZDViIDEwMDY0NA0KPj4gLS0tIGEvdGFyZ2V0
+L2kzODYva3ZtL2t2bS5jDQo+PiArKysgYi90YXJnZXQvaTM4Ni9rdm0va3ZtLmMNCj4+IEBA
+IC01NzcwLDcgKzU3NzAsNyBAQCBzdGF0aWMgaW50IGt2bV9oYW5kbGVfcmRtc3IoWDg2Q1BV
+ICpjcHUsIHN0cnVjdCBrdm1fcnVuICpydW4pDQo+PiAgICAgICAgICAgIH0NCj4+ICAgICAg
+ICB9DQo+PiAgICANCj4+IC0gICAgYXNzZXJ0KGZhbHNlKTsNCj4+ICsgICAgZ19hc3NlcnRf
+bm90X3JlYWNoZWQoKTsNCj4gDQo+IFdoaWxlIGEgZ29vZCBjaGFuZ2UsIGFuZCB3aGlsZSBJ
+IGhhdmUgYWx3YXlzIGhhdGVkIHRoZSBhc3NlcnQoZmFsc2UpIGlkaW9tLCBJIGJlbGlldmUg
+dGhpcw0KPiBwb2ludHMgdG8gYSBjb21waWxlciBidWcgYW5kIG1pZ2h0IGJlIHdvcnRoIHJl
+cG9ydGluZyAtLSBhc3N1bWluZyBhIGxhdGVyIHZlcnNpb24gb2YgZ2NjDQo+IHN0aWxsIHdh
+cm5zLg0KPiANCg0KUmVwb3J0ZWQgaXQ6IGh0dHBzOi8vZ2NjLmdudS5vcmcvYnVnemlsbGEv
+c2hvd19idWcuY2dpP2lkPTExNjM4Ng0KDQo+IFJldmlld2VkLWJ5OiBSaWNoYXJkIEhlbmRl
+cnNvbiA8cmljaGFyZC5oZW5kZXJzb25AbGluYXJvLm9yZz4NCj4gDQo+IA0KPiByfg0K
 
