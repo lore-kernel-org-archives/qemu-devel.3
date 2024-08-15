@@ -4,103 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B578BC52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 14:09:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF579C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 14:18:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seb9h-0000UC-Kr; Thu, 15 Aug 2024 10:08:45 -0400
+	id 1sebIo-0001Fw-0t; Thu, 15 Aug 2024 10:18:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1seb9Z-0000P6-Gn
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:08:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <crosa@redhat.com>) id 1seb9W-0001ZQ-AO
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:08:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723730905;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vzr3KYLk8750O7gOgaxuZ0lSzVhIlcuDGPfj02xRDb8=;
- b=i46vzONJdrFMVJI0IKH2Ufv5UU37TcSJ/3bt9nYJdavbPhMgU8oXPJueUJFQnNOOOLPi+b
- E85Tmkzcs8p7jqL2t9IRu/CgsuREtSOn6KTUwcMG5ppLEg0SxQN+zfUgHC3sUmQZyXycCG
- sqe8WGcxXUl4IOakrYL0Ze0YQpatSOY=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-177-rbr-FshRNFq_FMpdt9haqw-1; Thu, 15 Aug 2024 10:08:24 -0400
-X-MC-Unique: rbr-FshRNFq_FMpdt9haqw-1
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-6b0fa22d9faso2969607b3.1
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 07:08:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sebIm-0001FS-7B
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:18:08 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sebIk-0003MI-2n
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 10:18:07 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5a156557026so1223911a12.2
+ for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 07:18:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1723731484; x=1724336284; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=p0baqdfrh5sYCuHyOSIqoPgx1xZ61orTgdUJ39jYQt4=;
+ b=D0hGDBM162JfVBb0SlEVluFu66RfawGXijQZ1XWmy2v4zpFjQRiG+rcjbV0tjjoMMh
+ mlLbtmwYeckcDoIOKCmzU2L2WIHwiMMlv+yH2ulNcYM1hIQWb3XCIpC0XEhhy1IJEVjJ
+ H3aJ4PvxQxnmhcRRPNxB3QrZtyHL5FZGpq04Us/64lFhWStKZDaxwE/MJujvOm7pRh0/
+ ahR7kmROMrTafs9uzulJzlIvr5KgTyIMMhfj6lUq74y8hl2B0W55rt8TCgkURshd99tk
+ DCgt9uUlOOK8Vm5qpIbm1eYSE5qAX1V+CPYSv3ldN7QeJ/12vlgmvOR7tLOkelY2HxSb
+ wRMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723730903; x=1724335703;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vzr3KYLk8750O7gOgaxuZ0lSzVhIlcuDGPfj02xRDb8=;
- b=EkNBjM23S+AIi5mz1mTlpyOyKSEsCU2jkOMIs0GdUFYsehCHiwy5s74zAmSIaX0OpC
- dRg1pUDQuvWW26EYE45fX0nXHJaa6HOORDkXjmhGrwQOEoQ1tUTO6uwbilPZbMoIjHUZ
- PiciY61bF17k8/XNHXJTIcETuWdqUk1caDUPq3mb4dXTWvrbuxp9E8RJFsrM7qhBsrtm
- tuLfxhVhXg8SwW+YCq28HD6vR0y9seCO3qkbDvRXTk5f9sZI4Az5JZ/pfFFd5LFryc3k
- 173gDNV0gJI2iFCb/yr0nMQJbiKnZ2gZ4TVLn7inlrVUqi+HY/t550gKKofnLKQkH9SH
- u0Fg==
-X-Gm-Message-State: AOJu0Yz/zfNvLzfx4mQfP8lHT+1GnjQqenIst4yb/LArCSgJs3OXK5bg
- Vx4RJQTGsHLAoPvUgPXe3sZQHuUlnK7YsqxbNL+B1jEHmHiUWXOyz/NPBX6RNSN05xuGqgSmbGw
- vU2HH5I9HeZjLG6J+LoXMuEZrA9+jN+mvvfSrF2JKn/DLMVjKPx6b+hMhyTuzymMLVwgDwbak2H
- MHspn+FI/KzXKWpQaoGbj1vpEjWkQ=
-X-Received: by 2002:a05:690c:4710:b0:651:6e6f:32d2 with SMTP id
- 00721157ae682-6ac9a4787c2mr61877217b3.43.1723730902725; 
- Thu, 15 Aug 2024 07:08:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFT7vDXefVC4Et5zdVF0bwaa4s7FPKN+0th/aIjv2bWaCiNvtKshmdfN94YlL0srm5N1LZPSBnK/+GCQt+WDjs=
-X-Received: by 2002:a05:690c:4710:b0:651:6e6f:32d2 with SMTP id
- 00721157ae682-6ac9a4787c2mr61876777b3.43.1723730902291; Thu, 15 Aug 2024
- 07:08:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723731484; x=1724336284;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=p0baqdfrh5sYCuHyOSIqoPgx1xZ61orTgdUJ39jYQt4=;
+ b=TAS7thoY4bLf09xZCdkJpNyE76OneMPysyzPkrrCQCAUNuFVSL1m+bAhIOAHbCL4U+
+ xk+TkNUAbhza9qSdgkYpi+HJm5i06VECqdww/HLwOlalwP+DcouHHihi4rD3sN0ntOw0
+ ynqr/380eGS35pFejJBF1DNDzSIXyCrOIvUOhTrtnpVCGSmt83mcVyt6GbHKLKQbSPzW
+ QzbqXS1TQOvjb2aWxl6yI7Yn20aahZN5oNJRIcZV5yZX4YeO0i4B2aN8jell5T06yWKN
+ HIeTwDQAbPKPAiJlzWTY1aC5LTOS5K3LL1o/0mcRAwSk8njDGKgZwsbO3FLF51TrVFVQ
+ dgXQ==
+X-Gm-Message-State: AOJu0YwLV8YRtaYGeVaZUQqz9JJANv9QMOvOfX8VCG8IDPyn0f4xQUYZ
+ XguhGBrRyzHGWLlA+g6PVZJc749uyYJEgJJZ/NZqkv9LhAyM2F9kFkCAP1uNHgWi9kcWCufNVUL
+ GuQ83Gb/xqN3ts8d304b5wO8E6eSYr0rlPPGUhQ==
+X-Google-Smtp-Source: AGHT+IEJdR+P2C7CjfZehXNXXULg1scJabnzY0ppbSC8xZ56/2q+RbqovHB04IitkOZSx9zI9BBje+hcuT+k8hSXWG8=
+X-Received: by 2002:a05:6402:1e88:b0:5be:9c56:3ab with SMTP id
+ 4fb4d7f45d1cf-5bea1cae111mr4487388a12.27.1723731484226; Thu, 15 Aug 2024
+ 07:18:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240806173119.582857-1-crosa@redhat.com>
- <20240806173119.582857-10-crosa@redhat.com>
- <1f645137-c621-4fa3-ace0-415087267a7b@redhat.com>
-In-Reply-To: <1f645137-c621-4fa3-ace0-415087267a7b@redhat.com>
-From: Cleber Rosa <crosa@redhat.com>
-Date: Thu, 15 Aug 2024 10:08:11 -0400
-Message-ID: <CA+bd_6LTqGbx2+GOyYHyJ4d5gpg4v8Ddx5apjghiB0vjt8Abhg@mail.gmail.com>
-Subject: Re: [PATCH v2 9/9] Avocado tests: allow for parallel execution of
- tests
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>, 
- Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
- Radoslaw Biernacki <rad@semihalf.com>, 
- Troy Lee <leetroy@gmail.com>, Akihiko Odaki <akihiko.odaki@daynix.com>, 
- Beraldo Leal <bleal@redhat.com>, kvm@vger.kernel.org,
- Joel Stanley <joel@jms.id.au>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Aurelien Jarno <aurelien@aurel32.net>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, Paul Durrant <paul@xen.org>, 
- Eric Auger <eric.auger@redhat.com>, David Woodhouse <dwmw2@infradead.org>,
- qemu-arm@nongnu.org, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Jamin Lin <jamin_lin@aspeedtech.com>, 
- Steven Lee <steven_lee@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Yoshinori Sato <ysato@users.sourceforge.jp>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Leif Lindholm <quic_llindhol@quicinc.com>
+References: <20240723070251.25575-1-kkostiuk@redhat.com>
+ <20240723070251.25575-26-kkostiuk@redhat.com>
+ <CAFEAcA831S0wGbyLwDK7yVeEoi1SFPD7gpYribNqP6AmyQHN5A@mail.gmail.com>
+ <CAPMcbCpfP-XX0RsTerdrSunb9Z772efCGKf5h2ju7JQdygvDtA@mail.gmail.com>
+ <CAFEAcA9CyhYRZz0kK_oB6WKQF-3EZsEg88mdFWoDzQoF6ZfYAw@mail.gmail.com>
+In-Reply-To: <CAFEAcA9CyhYRZz0kK_oB6WKQF-3EZsEg88mdFWoDzQoF6ZfYAw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 15 Aug 2024 15:17:51 +0100
+Message-ID: <CAFEAcA9v2An2=P3aTNbv+z_a2nk6xQ+f-b4B6Ci0rWO2Q=C18A@mail.gmail.com>
+Subject: Re: [PULL v2 25/25] qga/linux: Add new api 'guest-network-get-route'
+To: Konstantin Kostiuk <kkostiuk@redhat.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=crosa@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,68 +91,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 12, 2024 at 6:17=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
-e:
-> ...
-> > diff --git a/tests/Makefile.include b/tests/Makefile.include
-> > index 537804d101..545b5155f9 100644
-> > --- a/tests/Makefile.include
-> > +++ b/tests/Makefile.include
-> > @@ -94,6 +94,9 @@ TESTS_RESULTS_DIR=3D$(BUILD_DIR)/tests/results
-> >   ifndef AVOCADO_TESTS
-> >       AVOCADO_TESTS=3Dtests/avocado
-> >   endif
-> > +ifndef AVOCADO_PARALLEL
-> > +     AVOCADO_PARALLEL=3D1
-> > +endif
-> >   # Controls the output generated by Avocado when running tests.
-> >   # Any number of command separated loggers are accepted.  For more
-> >   # information please refer to "avocado --help".
-> > @@ -141,7 +144,8 @@ check-avocado: check-venv $(TESTS_RESULTS_DIR) get-=
-vm-images
-> >               --show=3D$(AVOCADO_SHOW) run --job-results-dir=3D$(TESTS_=
-RESULTS_DIR) \
-> >               $(if $(AVOCADO_TAGS),, --filter-by-tags-include-empty \
-> >                       --filter-by-tags-include-empty-key) \
-> > -            $(AVOCADO_CMDLINE_TAGS) --max-parallel-tasks=3D1 \
-> > +            $(AVOCADO_CMDLINE_TAGS) --max-parallel-tasks=3D$(AVOCADO_P=
-ARALLEL) \
-> > +                     -p timeout_factor=3D$(AVOCADO_PARALLEL) \
-> >               $(if $(GITLAB_CI),,--failfast) $(AVOCADO_TESTS), \
-> >               "AVOCADO", "tests/avocado")
+On Mon, 29 Jul 2024 at 10:35, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> I think it was nicer in the previous attempt to bump the avocado version:
+> On Mon, 29 Jul 2024 at 08:40, Konstantin Kostiuk <kkostiuk@redhat.com> wrote:
+> >
+> > Hi Peter,
+> >
+> > How to see the full coverity report? In https://gitlab.com/qemu-project/qemu/-/artifacts, I see only job.log
+> > Do you expect to fix these errors for the 9.1 release?
 >
-> https://gitlab.com/qemu-project/qemu/-/commit/ec5ffa0056389c3c10ea2de1e78=
-3
+> Coverity errors are in https://scan.coverity.com/projects/qemu
+>  -- you can ask for an account with the project if you want
+> to see them directly. But I think you have the information
+> you need in this email: the actual coverity issue isn't
+> much more informative.
 >
-> This re-used the "-j" option from "make", so you could do "make -j$(nproc=
-)
-> check-avocado" just like with the other "check" targets.
+> > Do you expect to fix these errors for the 9.1 release?
 >
+> No, I post these emails to inform the people responsible
+> for the original commits about the problem so that they
+> can provide fixes -- after all, it's the original author
+> that knows most about the code and how to test it.
 
-Hi Thomas,
+Konstantin, are you or Dehan planning to write fixes
+for these bugs?
 
-I can see why it looks better, but in practice, I'm not getting the
-best behavior with such a change.
-
-First, the fact that it enables the parallelization by default, while
-there still seems to be issues with test timeout issues, and even
-existing races between tests (which this series tried to address as
-much as possible) will not result in the best experience IMO.  On my
-12 core machine, and also on GitLab CI, having 4 tests running in
-parallel gets a nice speed up (as others have reported) while still
-being very stable.
-
-I'd say making the number of parallel tests equal to `nproc` is best
-kept for a future round.
-
-Let me know if this sounds reasonable to you.
-
-Regards,
-- Cleber.
-
->   Thomas
->
-
+thanks
+-- PMM
 
