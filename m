@@ -4,58 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E364AC3DA7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 18:23:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A681C3DA7F
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 18:38:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sef7F-0000CT-Gl; Thu, 15 Aug 2024 14:22:29 -0400
+	id 1sefMB-0001Sb-EG; Thu, 15 Aug 2024 14:37:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kamil@szczek.dev>) id 1sef7D-0000BB-Oz
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 14:22:27 -0400
-Received: from mail-40136.proton.ch ([185.70.40.136])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sefM8-0001Ru-S7
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 14:37:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kamil@szczek.dev>) id 1sef7B-0008Cx-8L
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 14:22:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=szczek.dev;
- s=protonmail3; t=1723746140; x=1724005340;
- bh=bYolgXZLJ87b8G/nLyJICaHwNIwA72sBjzumNO3Ihb8=;
- h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
- Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
- Message-ID:BIMI-Selector;
- b=O8e6A5A9R8Ir11zCGlGzcknoK7K0Mta8HqpD56j6y4ro1bwVIew0ADiqMCvjYIrCn
- CzdG0yS8vyQdFsH0RzjzCqAZmwKcqHOzvM/DxtkwTSxfWcYkXGpch6lSOo3aF0lYvq
- iqSecRH9iVdaGXPsGs4nXgzz/X5bVZy1NxtF7DD6DtBZv1wLxGIHPTx2/fn/Gg82Hd
- d4WXwSPBXNH6F04puJv41Q218LZnuB4fnWfwO0V0gOf5dc/QH399KIWql0AlsM5uBo
- bAcJgQ5UoCAhRMFh77AXQkZayxNw7M4s7q5dsfO3rGkSKhnmLtlyWz86koVOGX1H4h
- kjkMhs8Ew0yew==
-Date: Thu, 15 Aug 2024 18:22:16 +0000
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-From: =?utf-8?Q?Kamil_Szcz=C4=99k?= <kamil@szczek.dev>
-Cc: "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>,
- Joelle van Dyne <j@getutm.app>, Bernhard Beschow <shentey@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH-for-9.1] hw/i386/pc: Warn about unsatisfied vmport deps
-Message-ID: <ghPjnPAU8FvuVvcKbO9wNpQPgm4ZwkjL1j5Vh-voSnVI8EE4tCUKDqmBj7LGXv2cc7Yt7IWlMvnbvA-I6QxR7iS6xDyfIwvpuKtEMVbxHIo=@szczek.dev>
-In-Reply-To: <e7c17260-41d7-4749-aca9-da344517c772@linaro.org>
-References: <vsm1ly2eX009LRKgURcMp6qTYHWw1bZd3zg2GUbd4M90T91QvJRdKxiRS3rPl8PR96y2r890Am3Ajf4kQrwihn7-7hKBU9VicRPPtIRv_GI=@szczek.dev>
- <e7c17260-41d7-4749-aca9-da344517c772@linaro.org>
-Feedback-ID: 37679334:user:proton
-X-Pm-Message-ID: d4c4ec556afb60c2e53ceb6273c95af8710d922a
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1sefM7-00043l-BS
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 14:37:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723747069;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aNrBoy2xYlL30RPuBCpkA0cPY/KlSdDcI9uwsOeh+5c=;
+ b=c7cQGt9zbi+bEyMh0cViwUsX0wOw/1dIm5wiJ3TX++HqjFM3B8bwD9SVhJcSqpZGfgVsAX
+ 87TX83oqWhAZAY4DxZi96U7G8zdlTL28proqx/6rITMBuAXdzvsS2AjUImBG1+zJchbtt6
+ vzRdn0NwfUj3y6tdrXe/a25nUn3FSzs=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-609-ZK9748cnMMSnhVT5FFkXQg-1; Thu, 15 Aug 2024 14:37:48 -0400
+X-MC-Unique: ZK9748cnMMSnhVT5FFkXQg-1
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3688010b3bfso794772f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 11:37:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723747066; x=1724351866;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=aNrBoy2xYlL30RPuBCpkA0cPY/KlSdDcI9uwsOeh+5c=;
+ b=ZMEdtO4Ki5H7SubxAFBqOMuWldm6VFwguuWuWiTGAz0J3zxhI7MF97wDr4WPR4ooYJ
+ v59qzG6O1ZXBEkCMa9CH9jRWW4GBH+57vbGH5VFT7lMwqxE87HAwMnwFfl83xxCm+0U6
+ VdF7Oe6YSPR70tpnyKs7F6BfVey6BcLmSVgLgg/5J25S4arBP5Bk0/HdyPX81V54EPQr
+ 8gO2003oWwZ95hzKEZvYixzI4jga90BFDUIBJWYhXJmS/4c1VO2FyZiWldOyPsk8iDrF
+ IvZs+wE/31jRFxN0/CwvkL7omCwrbdXNFtIIdFckPmm4AOgpidr6yN+0xE0BacXbgj6p
+ a5ww==
+X-Gm-Message-State: AOJu0YwWZLKPyMprp9kYpMtVCphPxE7CUcYdk1hvVjtGS+/rsjQfWVYw
+ V9YqFFWeclE4VrMVrHk0YUstptFaT6RrSapeZWq0ePCkT01r0Fq4zzR4eKEI3yOdp1QLnXx0P6x
+ p1gC0JUDq1U3CHpmPgaPLhjalSt8uLyISGTCs6axEEMTSFxW84hrJJVioMFC3m2X7IHJbqK/l4O
+ i74jdMVMwIhj7AAHjR0l3coY+GFtc=
+X-Received: by 2002:a5d:5a15:0:b0:371:8e9c:e608 with SMTP id
+ ffacd0b85a97d-371946a1a0dmr295781f8f.52.1723747066589; 
+ Thu, 15 Aug 2024 11:37:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG620hCfl+odW0HGRQMAmYAQS4jVOoxnZeIzuk7jhIVX5kixquoiZgqpO6SPTH+TbfJD4S2sGVBB9kMURbj880=
+X-Received: by 2002:a5d:5a15:0:b0:371:8e9c:e608 with SMTP id
+ ffacd0b85a97d-371946a1a0dmr295754f8f.52.1723747066178; Thu, 15 Aug 2024
+ 11:37:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20240814233645.944327-1-pierrick.bouvier@linaro.org>
+ <CABgObfa8GTo06hm0oDT+GUy-_6z=FVH2xnLWFcpm39_=_p4LNQ@mail.gmail.com>
+ <f31bac22-5fcc-4f01-9eb3-c9512daa41d7@linaro.org>
+In-Reply-To: <f31bac22-5fcc-4f01-9eb3-c9512daa41d7@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 15 Aug 2024 20:37:34 +0200
+Message-ID: <CABgObfZ2qiOg3WYerO7nUP4U+726f2=ToBiTdi=Jx18DRNkxhQ@mail.gmail.com>
+Subject: Re: [PATCH 0/6] build contrib/plugins using meson
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Alexandre Iooss <erdnaxe@crans.org>, Thomas Huth <thuth@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=185.70.40.136; envelope-from=kamil@szczek.dev;
- helo=mail-40136.proton.ch
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,105 +105,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Philippe and sorry for the delay!
+On Thu, Aug 15, 2024 at 8:04=E2=80=AFPM Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+> > One argument from moving contrib/plugins to meson is that the Windows
+> > case depends on libqemu_plugin_api.a which is built with meson(*);
+> > that said, libqemu_plugin_api.a should be installed - which would
+> > justify it being used from an "external" makefile.
+>
+> You need meson to build this lib in the first place, so I guess that
+> 99.9% of the people writing a plugin will have a qemu source tree (with
+> access to plugin headers), and first compile the lib.
 
-On Wednesday, August 14th, 2024 at 16:02, Philippe Mathieu-Daud=C3=A9 <phil=
-md@linaro.org> wrote:
+Note that the lib is built at configure time, not Make time.  It's not
+a normal library.
 
->=20
->=20
-> Hi Kamil,
->=20
-> On 14/8/24 13:10, Kamil Szcz=C4=99k wrote:
->=20
-> > Since commit 4ccd5fe22feb95137d325f422016a6473541fe9f ('pc: add option
-> > to disable PS/2 mouse/keyboard'), the vmport will not be created unless
-> > the i8042 PS/2 controller is enabled. To not confuse users, let's add a
-> > warning if vmport was explicitly requested, but the i8042 controller is
-> > disabled. This also changes the behavior of vmport=3Dauto to take i8042
-> > controller availability into account.
-> >=20
-> > Signed-off-by: Kamil Szcz=C4=99k kamil@szczek.dev
-> > ---
-> > hw/i386/pc.c | 4 ++++
-> > hw/i386/pc_piix.c | 3 ++-
-> > hw/i386/pc_q35.c | 2 +-
-> > qemu-options.hx | 4 ++--
-> > 4 files changed, 9 insertions(+), 4 deletions(-)
-> >=20
-> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> > index c74931d577..5bd8dd0350 100644
-> > --- a/hw/i386/pc.c
-> > +++ b/hw/i386/pc.c
-> > @@ -1100,6 +1100,10 @@ static void pc_superio_init(ISABus *isa_bus, boo=
-l create_fdctrl,
-> > }
-> >=20
-> > if (!create_i8042) {
-> > + if (!no_vmport) {
-> > + warn_report("vmport requires the i8042 controller to be enabled");
->=20
->=20
-> Should we fail instead?
+> I am not convinced by the scenario where people build this out of tree
+> to be honest, but I may be wrong.
 
-I think failing would be preferrable over a warning, but I opted for the la=
-tter to maintain backward compatibility in this specific configuration.
+The idea is that people copy the Makefile, and yeah I'm not sure
+either if they do it but it can be useful.
 
-But now that I think about it, this explicit configuration (vmport=3Don,i80=
-42=3Doff) is probably very rare in the real world, if it is exercised at al=
-l. So failing may not be as big of a breaking change as I first thought.
+Paolo
 
-If you're fine with introducing this "breaking" change, then I'm down for i=
-t too. Let me know if I should post v2.
-
->=20
-> > + }
-> > +
-> > return;
-> > }
-> >=20
-> > diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> > index d9e69243b4..cf2e2e3e30 100644
-> > --- a/hw/i386/pc_piix.c
-> > +++ b/hw/i386/pc_piix.c
-> > @@ -312,7 +312,8 @@ static void pc_init1(MachineState *machine, const c=
-har *pci_type)
-> >=20
-> > assert(pcms->vmport !=3D ON_OFF_AUTO__MAX);
-> > if (pcms->vmport =3D=3D ON_OFF_AUTO_AUTO) {
-> > - pcms->vmport =3D xen_enabled() ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
-> > + pcms->vmport =3D (xen_enabled() || !pcms->i8042_enabled)
-> > + ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
-> > }
-> >=20
-> > /* init basic PC hardware */
-> > diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-> > index 9d108b194e..6c112d804d 100644
-> > --- a/hw/i386/pc_q35.c
-> > +++ b/hw/i386/pc_q35.c
-> > @@ -278,7 +278,7 @@ static void pc_q35_init(MachineState *machine)
-> >=20
-> > assert(pcms->vmport !=3D ON_OFF_AUTO__MAX);
-> > if (pcms->vmport =3D=3D ON_OFF_AUTO_AUTO) {
-> > - pcms->vmport =3D ON_OFF_AUTO_ON;
-> > + pcms->vmport =3D pcms->i8042_enabled ? ON_OFF_AUTO_ON : ON_OFF_AUTO_O=
-FF;
-> > }
-> >=20
-> > /* init basic PC hardware */
-> > diff --git a/qemu-options.hx b/qemu-options.hx
-> > index cee0da2014..0bc780a669 100644
-> > --- a/qemu-options.hx
-> > +++ b/qemu-options.hx
-> > @@ -68,8 +68,8 @@ SRST
-> >=20
-> > `vmport=3Don|off|auto`
-> > Enables emulation of VMWare IO port, for vmmouse etc. auto says
-> > - to select the value based on accel. For accel=3Dxen the default is
-> > - off otherwise the default is on.
-> > + to select the value based on accel and i8042. For accel=3Dxen
-> > + and/or i8042=3Doff the default is off otherwise the default is on.
-> >=20
-> > `dump-guest-core=3Don|off`
-> > Include guest memory in a core dump. The default is on.
 
