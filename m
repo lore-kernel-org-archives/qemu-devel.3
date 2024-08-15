@@ -4,94 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CD60C52D7C
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 17:43:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF2FEC52D7C
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 17:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seeVc-0001PU-Pi; Thu, 15 Aug 2024 13:43:36 -0400
+	id 1seeeK-0007LA-UN; Thu, 15 Aug 2024 13:52:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1seeVb-0001Nw-4L
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 13:43:35 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1seeVZ-0002HG-AF
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 13:43:34 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-1fc5296e214so12553425ad.0
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 10:43:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723743811; x=1724348611; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Qzx+J2Rjorlia6Ijm2PzI08MkOLH9bUdtHYX95Om4z0=;
- b=uHnD7dK62xE0zJvhU6ro/a5oD1pV+JmslchuUQFYEBaxxNxo8FAtou6OJCPGzV38j7
- G9i/p5DhL7auNqbXlcIleS38k9FHKYr4Kerk8fU/ZjMef7+U8IMDm3yIcGmhz+Bw+ZBV
- uV9SUpzjS5yHl+wwNPrZLwL5EPRTyhQqEtE1GmnpIGoUd7LDbzzeiRIc+8nxI++lQCZ7
- C5v0nVE7j2XbidGSHLaKl9GpH3U/Hsdm2o2XbnSng1AOPWQuKptG4Z9nw8E5Seu1W2y1
- qeZINOFHye8ou6oUO0E1z3GoX/YH4jWoDlxy7/xsfVSV2cRY5X8rIfkaKUVpBaoWmRos
- djdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723743811; x=1724348611;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Qzx+J2Rjorlia6Ijm2PzI08MkOLH9bUdtHYX95Om4z0=;
- b=qHOZqFKect0h8i7f+w2bH5x7lXl2ZDcFPsnrn1TkpupUP23Ub+JQ1th1VZgrB/Mh/+
- I37kOoWfq+W6q92LypCFyI++wqRhVoX+1kuA3CSDMVTMbeOEAW0zyg4xz1zuNx9iKQrm
- RW35fgHU8E0fsf0e/T6fs31/zEDiN8XJpPHY4ar1Z4PovdLsnkungwKILyMyCWDwPgPX
- WvBkvyOkREohREJ6ig0wLCzZgwhenp5IH4KjqqW2JQGcAYjsA02pW7VR68k/lVDuQNz7
- DqSKhkQ6GOsmnw8AF/hi+xV7YNAYqEmFNVgWCcT+0hZ5LZSvAMwsgrr/bIFbpTps1CXP
- JkXA==
-X-Gm-Message-State: AOJu0YyVwywqcDzI5C9ZUHC3aDx27dVx/RRclwbrnPfTxyMPEiV28GSE
- CfUqGvLNqkdPAZNkOZfanYVo+pakIPpgo0QZdDuI4Yut6KsNLaQKd7lpjFme6po=
-X-Google-Smtp-Source: AGHT+IGy0FWb0inV+zTv8LG3647k9pDnEZPw+izVbNQR75Eo9w1/uQrFaOyKI3sg/7Ymn8GD4oqkMg==
-X-Received: by 2002:a17:902:e84a:b0:202:117:929f with SMTP id
- d9443c01a7336-20203f52adamr5520275ad.57.1723743811592; 
- Thu, 15 Aug 2024 10:43:31 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::b861? ([2604:3d08:9384:1d00::b861])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201f02faa77sm12632285ad.58.2024.08.15.10.43.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Aug 2024 10:43:31 -0700 (PDT)
-Message-ID: <90c9de4b-5f4f-4614-8ceb-26a156c0cba5@linaro.org>
-Date: Thu, 15 Aug 2024 10:43:29 -0700
+ (Exim 4.90_1) (envelope-from <SRS0=dF58=PO=kaod.org=clg@ozlabs.org>)
+ id 1seeeI-0007Cw-Vq; Thu, 15 Aug 2024 13:52:34 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=dF58=PO=kaod.org=clg@ozlabs.org>)
+ id 1seeeF-0004AH-L2; Thu, 15 Aug 2024 13:52:33 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4WlCPg1T5qz4x1V;
+ Fri, 16 Aug 2024 03:52:23 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4WlCPb4Y1Mz4x1H;
+ Fri, 16 Aug 2024 03:52:19 +1000 (AEST)
+Message-ID: <6c0cdf26-9795-4998-9d80-1d0095700a59@kaod.org>
+Date: Thu, 15 Aug 2024 19:52:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] meson: hide tsan related warnings
-Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Beraldo Leal <bleal@redhat.com>,
- David Hildenbrand <david@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-s390x@nongnu.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20240814224132.897098-1-pierrick.bouvier@linaro.org>
- <20240814224132.897098-2-pierrick.bouvier@linaro.org>
- <CAFEAcA-EAm9mEdGz6m2Y-yxK16TgX6CpxnXc6hW59iAxhXhHtw@mail.gmail.com>
- <Zr3g7lEfteRpNYVC@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <Zr3g7lEfteRpNYVC@redhat.com>
+Subject: Re: [PATCH v3] hw/ppc: Implement -dtb support for PowerNV
+To: Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta
+ <adityag@linux.ibm.com>, Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+References: <20240813134536.1204513-1-adityag@linux.ibm.com>
+ <D3GB5QVADVQ1.XZM3FFV52LIW@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <D3GB5QVADVQ1.XZM3FFV52LIW@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=dF58=PO=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,49 +70,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gOC8xNS8yNCAwNDowNSwgRGFuaWVsIFAuIEJlcnJhbmfDqSB3cm90ZToNCj4gT24gVGh1
-LCBBdWcgMTUsIDIwMjQgYXQgMTE6MTI6MzlBTSArMDEwMCwgUGV0ZXIgTWF5ZGVsbCB3cm90
-ZToNCj4+IE9uIFdlZCwgMTQgQXVnIDIwMjQgYXQgMjM6NDIsIFBpZXJyaWNrIEJvdXZpZXIN
-Cj4+IDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+IHdyb3RlOg0KPj4+DQo+Pj4gV2hl
-biBidWlsZGluZyB3aXRoIGdjYy0xMiAtZnNhbml0aXplPXRocmVhZCwgZ2NjIHJlcG9ydHMg
-c29tZQ0KPj4+IGNvbnN0cnVjdGlvbnMgbm90IHN1cHBvcnRlZCB3aXRoIHRzYW4uDQo+Pj4g
-Rm91bmQgb24gZGViaWFuIHN0YWJsZS4NCj4+Pg0KPj4+IHFlbXUvaW5jbHVkZS9xZW11L2F0
-b21pYy5oOjM2OjUyOiBlcnJvcjog4oCYYXRvbWljX3RocmVhZF9mZW5jZeKAmSBpcyBub3Qg
-c3VwcG9ydGVkIHdpdGgg4oCYLWZzYW5pdGl6ZT10aHJlYWTigJkgWy1XZXJyb3I9dHNhbl0N
-Cj4+PiAgICAgMzYgfCAjZGVmaW5lIHNtcF9tYigpICAgICAgICAgICAgICAgICAgICAgKHsg
-YmFycmllcigpOyBfX2F0b21pY190aHJlYWRfZmVuY2UoX19BVE9NSUNfU0VRX0NTVCk7IH0p
-DQo+Pj4gICAgICAgIHwgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgXn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+fn5+DQo+
-Pj4NCj4+PiBTaWduZWQtb2ZmLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2
-aWVyQGxpbmFyby5vcmc+DQo+Pj4gLS0tDQo+Pj4gICBtZXNvbi5idWlsZCB8IDEwICsrKysr
-KysrKy0NCj4+PiAgIDEgZmlsZSBjaGFuZ2VkLCA5IGluc2VydGlvbnMoKyksIDEgZGVsZXRp
-b24oLSkNCj4+Pg0KPj4+IGRpZmYgLS1naXQgYS9tZXNvbi5idWlsZCBiL21lc29uLmJ1aWxk
-DQo+Pj4gaW5kZXggODFlY2Q0YmFlN2MuLjUyZTVhYTk1Y2MwIDEwMDY0NA0KPj4+IC0tLSBh
-L21lc29uLmJ1aWxkDQo+Pj4gKysrIGIvbWVzb24uYnVpbGQNCj4+PiBAQCAtNDk5LDcgKzQ5
-OSwxNSBAQCBpZiBnZXRfb3B0aW9uKCd0c2FuJykNCj4+PiAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICBwcmVmaXg6ICcjaW5jbHVkZSA8c2FuaXRpemVyL3RzYW5faW50ZXJmYWNlLmg+
-JykNCj4+PiAgICAgICBlcnJvcignQ2Fubm90IGVuYWJsZSBUU0FOIGR1ZSB0byBtaXNzaW5n
-IGZpYmVyIGFubm90YXRpb24gaW50ZXJmYWNlJykNCj4+PiAgICAgZW5kaWYNCj4+PiAtICBx
-ZW11X2NmbGFncyA9IFsnLWZzYW5pdGl6ZT10aHJlYWQnXSArIHFlbXVfY2ZsYWdzDQo+Pj4g
-KyAgdHNhbl93YXJuX3N1cHByZXNzID0gW10NCj4+PiArICAjIGdjYyAoPj0xMSkgd2lsbCBy
-ZXBvcnQgY29uc3RydWN0aW9ucyBub3Qgc3VwcG9ydGVkIGJ5IHRzYW46DQo+Pj4gKyAgIyAi
-ZXJyb3I6IOKAmGF0b21pY190aHJlYWRfZmVuY2XigJkgaXMgbm90IHN1cHBvcnRlZCB3aXRo
-IOKAmC1mc2FuaXRpemU9dGhyZWFk4oCZIg0KPj4+ICsgICMgaHR0cHM6Ly9nY2MuZ251Lm9y
-Zy9nY2MtMTEvY2hhbmdlcy5odG1sDQo+Pj4gKyAgIyBIb3dldmVyLCBjbGFuZyBkb2VzIG5v
-dCBzdXBwb3J0IHRoaXMgd2FybmluZyBhbmQgdGhpcyB0cmlnZ2VycyBhbiBlcnJvci4NCj4+
-PiArICBpZiBjYy5oYXNfYXJndW1lbnQoJy1Xbm8tdHNhbicpDQo+Pj4gKyAgICB0c2FuX3dh
-cm5fc3VwcHJlc3MgPSBbJy1Xbm8tdHNhbiddDQo+Pj4gKyAgZW5kaWYNCj4+DQo+PiBUaGF0
-IGxhc3QgcGFydCBzb3VuZHMgbGlrZSBhIGNsYW5nIGJ1ZyAtLSAtV25vLWZvbyBpcyBzdXBw
-b3NlZA0KPj4gdG8gbm90IGJlIGFuIGVycm9yIG9uIGNvbXBpbGVycyB0aGF0IGRvbid0IGlt
-cGxlbWVudCAtV2ZvbyBmb3INCj4+IGFueSB2YWx1ZSBvZiBmb28gKHVubGVzcyBzb21lIG90
-aGVyIHdhcm5pbmcvZXJyb3Igd291bGQgYWxzbw0KPj4gYmUgZW1pdHRlZCkuDQo+IA0KPiAt
-V25vLWZvbyBpc24ndCBhbiBlcnJvciwgYnV0IGl0IGlzIGEgd2FybmluZy4uLiB3aGljaCB3
-ZSB0aGVuDQo+IHR1cm4gaW50byBhbiBlcnJvciBkdWUgdG8gLVdlcnJvciwgdW5sZXNzIHdl
-IHBhc3MgLVduby11bmtub3duLXdhcm5pbmctb3B0aW9uDQo+IHRvIGNsYW5nLg0KPiANCg0K
-UmlnaHQsIGl0J3MgYSBjb25zZXF1ZW5jZS4NCg0KPj4gICAgICAgICAgICAgICAgQXQgYW55
-IHJhdGUsIHRoYXQncyBob3cgZ2NjIGRvZXMgaXQNCj4+IChzZWUgdGhlIHBhcmFncmFwaCAi
-V2hlbiBhbiB1bnJlY29nbml6ZWQgd2FybmluZyBvcHRpb24gLi4uIg0KPj4gaW4gaHR0cHM6
-Ly9nY2MuZ251Lm9yZy9vbmxpbmVkb2NzL2djYy9XYXJuaW5nLU9wdGlvbnMuaHRtbCApDQo+
-PiBhbmQgSSB0aG91Z2h0IGNsYW5nIGRpZCB0b28uLi4NCj4+DQo+PiB0aGFua3MNCj4+IC0t
-IFBNTQ0KPj4NCj4gDQo+IFdpdGggcmVnYXJkcywNCj4gRGFuaWVsDQo=
+On 8/15/24 09:31, Nicholas Piggin wrote:
+> On Tue Aug 13, 2024 at 11:45 PM AEST, Aditya Gupta wrote:
+>> Currently any device tree passed with -dtb option in QEMU, was ignored
+>> by the PowerNV code.
+>>
+>> Read and pass the passed -dtb to the kernel, thus enabling easier
+>> debugging with custom DTBs.
+>>
+>> The existing behaviour when -dtb is 'not' passed, is preserved as-is.
+>>
+>> But when a '-dtb' is passed, it completely overrides any dtb nodes or
+>> changes QEMU might have done, such as '-append' arguments to the kernel
+>> (which are mentioned in /chosen/bootargs in the dtb), hence add warning
+>> when -dtb is being used
+>>
+>> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> 
+> This looks pretty good, I'm inclined to take it as a bug fix fo this
+> release.  
+
+I don't think this is a bug fix. is it ? AFAIUI, it is a debug
+feature for skiboot. It's QEMU 9.2 material.
+
+> One little nit is MachineState.fdt vs PnvMachineState.fdt
+> which is now confusing. I would call the new PnvMachineState member
+> something like fdt_from_dtb, or fdt_override?
+
+I agree. this is confusing. machine->fdt could be used instead ?
+  
+> The other question... Some machines rebuild fdt at init, others at
+> reset time. As far as I understood, spapr has to rebuild on reset
+> because C-A-S call can update the fdt so you have to undo that on
+> reset. 
+
+C-A-S is a guest OS hcall. reset is called before the guest OS
+is started.
+
+> Did powernv just copy that without really needing it, I wonder?
+> Maybe that rearranged to just do it at init time (e.g., see
+> hw/riscv/virt.c which is simpler).
+
+The machine is aware of user created devices (on the command line)
+only at reset time.
+
+Thanks,
+
+C.
+
+
+
+  
+
+> Thanks,
+> Nick
+> 
+>>
+>> ---
+>> Changelog
+>> ===========
+>> v3:
+>>   + use 'load_device_tree' to read the device tree, instead of g_file_get_contents
+>>   + tested that passed dtb does NOT get ignored on system_reset
+>>
+>> v2:
+>>   + move reading dtb and warning to pnv_init
+>>
+>> v1:
+>>   + use 'g_file_get_contents' and add check for -append & -dtb as suggested by Daniel
+>> ---
+>> ---
+>>   hw/ppc/pnv.c         | 34 ++++++++++++++++++++++++++++++----
+>>   include/hw/ppc/pnv.h |  2 ++
+>>   2 files changed, 32 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+>> index 3526852685b4..14225f7e48af 100644
+>> --- a/hw/ppc/pnv.c
+>> +++ b/hw/ppc/pnv.c
+>> @@ -736,10 +736,13 @@ static void pnv_reset(MachineState *machine, ShutdownCause reason)
+>>           }
+>>       }
+>>   
+>> -    fdt = pnv_dt_create(machine);
+>> -
+>> -    /* Pack resulting tree */
+>> -    _FDT((fdt_pack(fdt)));
+>> +    if (pnv->fdt) {
+>> +        fdt = pnv->fdt;
+>> +    } else {
+>> +        fdt = pnv_dt_create(machine);
+>> +        /* Pack resulting tree */
+>> +        _FDT((fdt_pack(fdt)));
+>> +    }
+>>   
+>>       qemu_fdt_dumpdtb(fdt, fdt_totalsize(fdt));
+>>       cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
+>> @@ -952,6 +955,14 @@ static void pnv_init(MachineState *machine)
+>>           g_free(sz);
+>>           exit(EXIT_FAILURE);
+>>       }
+>> +
+>> +    /* checks for invalid option combinations */
+>> +    if (machine->dtb && (strlen(machine->kernel_cmdline) != 0)) {
+>> +        error_report("-append and -dtb cannot be used together, as passed"
+>> +                " command line is ignored in case of custom dtb");
+>> +        exit(EXIT_FAILURE);
+>> +    }
+>> +
+>>       memory_region_add_subregion(get_system_memory(), 0, machine->ram);
+>>   
+>>       /*
+>> @@ -1003,6 +1014,21 @@ static void pnv_init(MachineState *machine)
+>>           }
+>>       }
+>>   
+>> +    /* load dtb if passed */
+>> +    if (machine->dtb) {
+>> +        int fdt_size;
+>> +
+>> +        warn_report("with manually passed dtb, some options like '-append'"
+>> +                " will get ignored and the dtb passed will be used as-is");
+>> +
+>> +        /* read the file 'machine->dtb', and load it into 'fdt' buffer */
+>> +        pnv->fdt = load_device_tree(machine->dtb, &fdt_size);
+>> +        if (!pnv->fdt) {
+>> +            error_report("Could not load dtb '%s'", machine->dtb);
+>> +            exit(1);
+>> +        }
+>> +    }
+>> +
+>>       /* MSIs are supported on this platform */
+>>       msi_nonbroken = true;
+>>   
+>> diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+>> index fcb6699150c8..20b68fd9264e 100644
+>> --- a/include/hw/ppc/pnv.h
+>> +++ b/include/hw/ppc/pnv.h
+>> @@ -91,6 +91,8 @@ struct PnvMachineState {
+>>       uint32_t     initrd_base;
+>>       long         initrd_size;
+>>   
+>> +    void         *fdt;
+>> +
+>>       uint32_t     num_chips;
+>>       PnvChip      **chips;
+>>   
+> 
+
 
