@@ -4,68 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9058DC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 00:20:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45B3EC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Thu, 15 Aug 2024 00:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seODT-0000Ym-R9; Wed, 14 Aug 2024 20:19:47 -0400
+	id 1seOFF-0004lF-Uv; Wed, 14 Aug 2024 20:21:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1seODR-0000YI-ID
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 20:19:45 -0400
-Received: from sin.source.kernel.org ([145.40.73.55])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
- id 1seODP-0003vI-5g
- for qemu-devel@nongnu.org; Wed, 14 Aug 2024 20:19:45 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sin.source.kernel.org (Postfix) with ESMTP id B45DDCE1B04;
- Thu, 15 Aug 2024 00:19:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E260C116B1;
- Thu, 15 Aug 2024 00:19:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1723681170;
- bh=9IHO+IHlt+Bd47+QggcZMinljdOBWoC9h40/wIqMC3Q=;
- h=Date:From:To:cc:Subject:In-Reply-To:References:From;
- b=XPFlIutVOqaRrr2IAnjhalrqcHb28oShUtLiBvz3nfby2tNneHmk9qHlJ5Mf3X4Eb
- AaR8unaUKM855Yuy6diNyiFCh/VX76I8MytwSWhGUYSHN6kBvKU0BOwC+E/Z+wRAZW
- /E+qDqkGayTP/xIRtNgQj5Uu0B5Xv5s5zHcLl3nF1vud4Ta/4DnhelOkrgXsJdt7Rk
- iMXX2etVZna7PdcEcceBxk7nLJYHQugvzhB9cC7Khy+wJX7DRdKblR1iU5xmgPaDnk
- 7hAib7vMmXl6cBwk8lpP8zqsK0xlfgixqqtwn8QirijW1Orl6D8uuVXgK3c7bGEOcw
- xHqJIIjzdzVhQ==
-Date: Wed, 14 Aug 2024 17:19:28 -0700 (PDT)
-From: Stefano Stabellini <sstabellini@kernel.org>
-X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
-To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-cc: Stefano Stabellini <sstabellini@kernel.org>, qemu-devel@nongnu.org, 
- anthony@xenproject.org, paul@xen.org, peter.maydell@linaro.org, 
- alex.bennee@linaro.org, xenia.ragiadakou@amd.com, jason.andryuk@amd.com, 
- edgar.iglesias@amd.com, xen-devel@lists.xenproject.org, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v1 09/10] hw/i386/xen: Add a Xen PVH x86 machine
-In-Reply-To: <ZrzSRPPNYxeh98J4@zapote>
-Message-ID: <alpine.DEB.2.22.394.2408141718510.298534@ubuntu-linux-20-04-desktop>
-References: <20240812130606.90410-1-edgar.iglesias@gmail.com>
- <20240812130606.90410-10-edgar.iglesias@gmail.com>
- <alpine.DEB.2.22.394.2408121840230.298534@ubuntu-linux-20-04-desktop>
- <ZrzSRPPNYxeh98J4@zapote>
-User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
+ (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
+ id 1seOFD-0004iJ-Rj
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 20:21:35 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yichen.wang@bytedance.com>)
+ id 1seOFA-0004GZ-T0
+ for qemu-devel@nongnu.org; Wed, 14 Aug 2024 20:21:35 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-1fd640a6454so4834635ad.3
+ for <qemu-devel@nongnu.org>; Wed, 14 Aug 2024 17:21:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance.com; s=google; t=1723681291; x=1724286091; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AbsMGU759tw6NTBLURH2+15n6uWZy/9JB+FIZCPq28k=;
+ b=GlnqZM1PRUd7dNfPv+7HetvcogKyPxA9rrfAio6BXbQafpP+ymk5qD5wGR3H5JgZdk
+ 2whu6jIAURhlnju6CJk3Ot4HHv2408kVdVXbinrj7xA67FDfYLEfN8hfXNsXVOy9NUQl
+ B4Dmv4ACaubjAEAyXqUrTb8e6Rj1Ot0efIShwhPoTxGYNmRPK2rzJbBfkIWs94bomOQ4
+ TOoKQd0Lju1FFbKDsHy8iCBsRNpPaI/NPkawVLhucfUDcK7K3CDNl+xqEgQLIUm4gFyL
+ BRcQVXQzW/J6y8a08Dx6mNKxaa/nGYZu1peGhXzOxZ5lkeiBXC5YfoN9ACvj/MlLoUuu
+ x6gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723681291; x=1724286091;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=AbsMGU759tw6NTBLURH2+15n6uWZy/9JB+FIZCPq28k=;
+ b=a+b3+qI21BUoIrkwKCabXFVR6iIMGgWRAVDBUmw68bBinOuJytU+sEQuo+toO6/nTW
+ DsIycGUIBkE2+F5yLwfVy1C5yJTTEpA1W4BJQGDBWJmlAoUbITkquPcG/+lds5XKeGV7
+ V39PsHpV5dycBeL6c56rK5ILA2XL10hfsCUsNrnXEWXBb0JEqGorxstoQDlU56N0ZGZq
+ Q2d1oKMm1qATP2QwWj3EF500tUFMreTdNY8NVnHQMhgFvJE/dxh1T7cyJY2qR0ePhQK8
+ 7Ev/l+UB4Q/peu+22q8X7TwFlmzpJn9kdBtQhuZNEOGXd5+dWOcWFyo3GKaBxPtRw81v
+ aVjw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWIixEr7+qJ3ZTKhpLV98KDUiLX9SJ3u9OeArgIw1SVcbqW456fK4oWhM0SHqku/Y/NseU54AqBrGjoj52hy0rREarG6i4=
+X-Gm-Message-State: AOJu0Yxz5a8YmAa2mkixkGlNmBVyoi1AssJolZi/ZfvHZal6Xu0SHiAz
+ Dt6lnlIViqAfHNFu765c6oYPGUcuzO8TbokuO7WcIZb90s3FUU6++bNz68cbiNo=
+X-Google-Smtp-Source: AGHT+IHh9tej7HYgHwOTYzXgvNuOU+Tl4Urdf7y/QSlXDGNk9JQyL23PO5xSro8jePyawXNiDYwXmA==
+X-Received: by 2002:a17:903:1104:b0:1fd:7fac:a539 with SMTP id
+ d9443c01a7336-201d63abfa0mr48415205ad.16.1723681291280; 
+ Wed, 14 Aug 2024 17:21:31 -0700 (PDT)
+Received: from DY4X0N7X05.bytedance.net ([72.29.204.230])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-201f02faa03sm1961185ad.19.2024.08.14.17.21.29
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 14 Aug 2024 17:21:31 -0700 (PDT)
+From: Yichen Wang <yichen.wang@bytedance.com>
+To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: "Hao Xiang" <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
+ "Zou, Nanhai" <nanhai.zou@intel.com>,
+ "Ho-Ren (Jack) Chuang" <horenchuang@bytedance.com>,
+ "Yichen Wang" <yichen.wang@bytedance.com>,
+ Bryan Zhang <bryan.zhang@bytedance.com>
+Subject: [PATCH v7 2/5] meson: Introduce 'qatzip' feature to the build system
+Date: Wed, 14 Aug 2024 17:21:21 -0700
+Message-Id: <20240815002124.65384-3-yichen.wang@bytedance.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20240815002124.65384-1-yichen.wang@bytedance.com>
+References: <20240815002124.65384-1-yichen.wang@bytedance.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Received-SPF: pass client-ip=145.40.73.55; envelope-from=sstabellini@kernel.org;
- helo=sin.source.kernel.org
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.135,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=yichen.wang@bytedance.com; helo=mail-pl1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,155 +107,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 14 Aug 2024, Edgar E. Iglesias wrote:
-> On Mon, Aug 12, 2024 at 06:48:52PM -0700, Stefano Stabellini wrote:
-> > On Mon, 12 Aug 2024, Edgar E. Iglesias wrote:
-> > > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
-> > > 
-> > > This adds a Xen PVH x86 machine based on the PVH Common
-> > > module used by the ARM PVH machine.
-> > > 
-> > > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-> > > ---
-> > >  hw/i386/xen/meson.build |   1 +
-> > >  hw/i386/xen/xen-pvh.c   | 196 ++++++++++++++++++++++++++++++++++++++++
-> > >  2 files changed, 197 insertions(+)
-> > >  create mode 100644 hw/i386/xen/xen-pvh.c
-> > > 
-> > > diff --git a/hw/i386/xen/meson.build b/hw/i386/xen/meson.build
-> > > index 3f0df8bc07..c73c62b8e3 100644
-> > > --- a/hw/i386/xen/meson.build
-> > > +++ b/hw/i386/xen/meson.build
-> > > @@ -4,6 +4,7 @@ i386_ss.add(when: 'CONFIG_XEN', if_true: files(
-> > >  ))
-> > >  i386_ss.add(when: ['CONFIG_XEN', xen], if_true: files(
-> > >    'xen-hvm.c',
-> > > +  'xen-pvh.c',
-> > >  ))
-> > >  
-> > >  i386_ss.add(when: 'CONFIG_XEN_BUS', if_true: files(
-> > > diff --git a/hw/i386/xen/xen-pvh.c b/hw/i386/xen/xen-pvh.c
-> > > new file mode 100644
-> > > index 0000000000..9c3d3fc58d
-> > > --- /dev/null
-> > > +++ b/hw/i386/xen/xen-pvh.c
-> > > @@ -0,0 +1,196 @@
-> > > +/*
-> > > + * QEMU Xen PVH x86 Machine
-> > > + *
-> > > + * Copyright (c) 2024 Advanced Micro Devices, Inc.
-> > > + * Written by Edgar E. Iglesias <edgar.iglesias@amd.com>
-> > > + *
-> > > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > > + */
-> > > +
-> > > +#include "qemu/osdep.h"
-> > > +#include "qapi/error.h"
-> > > +#include "qapi/visitor.h"
-> > > +#include "qemu/error-report.h"
-> > > +#include "hw/boards.h"
-> > > +#include "sysemu/sysemu.h"
-> > > +#include "hw/xen/arch_hvm.h"
-> > > +#include "hw/xen/xen.h"
-> > > +#include "hw/xen/xen-pvh-common.h"
-> > > +
-> > > +#define TYPE_XEN_PVH_X86  MACHINE_TYPE_NAME("xenpvh")
-> > > +OBJECT_DECLARE_SIMPLE_TYPE(XenPVHx86State, XEN_PVH_X86)
-> > > +
-> > > +#define PVH_MAX_CPUS 128
-> > > +
-> > > +struct XenPVHx86State {
-> > > +    /*< private >*/
-> > > +    MachineState parent;
-> > > +
-> > > +    DeviceState *cpu[PVH_MAX_CPUS];
-> > > +    XenPVHCommonState pvh;
-> > > +
-> > > +    /*
-> > > +     * We provide these properties to allow Xen to move things to other
-> > > +     * addresses for example when users need to accomodate the memory-map
-> > > +     * for 1:1 mapped devices/memory.
-> > > +     */
-> > > +    struct {
-> > > +        MemMapEntry ram_low, ram_high;
-> > > +        MemMapEntry pci_ecam, pci_mmio, pci_mmio_high;
-> > 
-> > Can we use the same properties already present under XenPVHCommonState?
-> > 
-> > 
-> > 
-> > > +    } cfg;
-> > > +};
-> > > +
-> > > +static void xenpvh_cpu_new(MachineState *ms,
-> > > +                           XenPVHx86State *xp,
-> > > +                           int cpu_idx,
-> > > +                           int64_t apic_id)
-> > > +{
-> > > +    Object *cpu = object_new(ms->cpu_type);
-> > > +
-> > > +    object_property_add_child(OBJECT(ms), "cpu[*]", cpu);
-> > > +    object_property_set_uint(cpu, "apic-id", apic_id, &error_fatal);
-> > > +    qdev_realize(DEVICE(cpu), NULL, &error_fatal);
-> > > +    object_unref(cpu);
-> > > +
-> > > +    xp->cpu[cpu_idx] = DEVICE(cpu);
-> > 
-> > 
-> > Why do we need to create CPU devices in QEMU given that we are only
-> > doing device emulation? I guess it is because ....
-> > 
-> > 
-> > 
-> > > +}
-> > > +
-> > > +static void xenpvh_init(MachineState *ms)
-> > > +{
-> > > +    XenPVHx86State *xp = XEN_PVH_X86(ms);
-> > > +    const struct {
-> > > +        const char *name;
-> > > +        MemMapEntry *map;
-> > > +    } map[] = {
-> > > +        { "ram-low", &xp->cfg.ram_low },
-> > > +        { "ram-high", &xp->cfg.ram_high },
-> > > +        { "pci-ecam", &xp->cfg.pci_ecam },
-> > > +        { "pci-mmio", &xp->cfg.pci_mmio },
-> > > +        { "pci-mmio-high", &xp->cfg.pci_mmio_high },
-> > > +    };
-> > > +    int i;
-> > > +
-> > > +    object_initialize_child(OBJECT(ms), "pvh", &xp->pvh, TYPE_XEN_PVH_COMMON);
-> > > +    object_property_set_int(OBJECT(&xp->pvh), "max-cpus", ms->smp.max_cpus,
-> > > +                            &error_abort);
-> > > +    object_property_set_int(OBJECT(&xp->pvh), "ram-size", ms->ram_size,
-> > > +                            &error_abort);
-> > > +
-> > > +    for (i = 0; i < ARRAY_SIZE(map); i++) {
-> > > +        g_autofree char *base_name = g_strdup_printf("%s-base", map[i].name);
-> > > +        g_autofree char *size_name = g_strdup_printf("%s-size", map[i].name);
-> > > +
-> > > +        object_property_set_int(OBJECT(&xp->pvh), base_name, map[i].map->base,
-> > > +                                 &error_abort);
-> > > +        object_property_set_int(OBJECT(&xp->pvh), size_name, map[i].map->size,
-> > > +                                 &error_abort);
-> > > +    }
-> > > +
-> > > +    /* GSI's 16 - 20 are used for legacy PCIe INTX IRQs.  */
-> > > +    object_property_set_int(OBJECT(&xp->pvh), "pci-intx-irq-base", 16,
-> > > +                            &error_abort);
-> > > +
-> > > +    sysbus_realize(SYS_BUS_DEVICE(&xp->pvh), &error_abort);
-> > > +
-> > > +    /* Create dummy cores. This will indirectly create the APIC MSI window.  */
-> > 
-> > ... of the APIC MSI window ?
-> 
-> 
-> Yes, exactly. I did have a first version without the CPUs that only had
-> the MSI window but there was a bit of disentanglement needed and some
-> other issue that I forgot. Note that with TCG disabled, this doesn't
-> have the any CPU emulation so it doesn't affect our small PVH config
-> very much. I could look into the MSI windows again though.
+From: Bryan Zhang <bryan.zhang@bytedance.com>
 
-no, I think this is OK, especially if the number of CPUs is accurate
+Add a 'qatzip' feature, which is automatically disabled, and which
+depends on the QATzip library if enabled.
+
+Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
+Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
+---
+ meson.build                   | 10 ++++++++++
+ meson_options.txt             |  2 ++
+ scripts/meson-buildoptions.sh |  3 +++
+ 3 files changed, 15 insertions(+)
+
+diff --git a/meson.build b/meson.build
+index c2a050b844..5daaea15df 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1257,6 +1257,14 @@ if not get_option('uadk').auto() or have_system
+      uadk = declare_dependency(dependencies: [libwd, libwd_comp])
+   endif
+ endif
++
++qatzip = not_found
++if not get_option('qatzip').auto() or have_system
++  qatzip = dependency('qatzip', version: '>=1.1.2',
++                      required: get_option('qatzip'),
++                      method: 'pkg-config')
++endif
++
+ virgl = not_found
+ 
+ have_vhost_user_gpu = have_tools and host_os == 'linux' and pixman.found()
+@@ -2405,6 +2413,7 @@ config_host_data.set('CONFIG_STATX_MNT_ID', has_statx_mnt_id)
+ config_host_data.set('CONFIG_ZSTD', zstd.found())
+ config_host_data.set('CONFIG_QPL', qpl.found())
+ config_host_data.set('CONFIG_UADK', uadk.found())
++config_host_data.set('CONFIG_QATZIP', qatzip.found())
+ config_host_data.set('CONFIG_FUSE', fuse.found())
+ config_host_data.set('CONFIG_FUSE_LSEEK', fuse_lseek.found())
+ config_host_data.set('CONFIG_SPICE_PROTOCOL', spice_protocol.found())
+@@ -4528,6 +4537,7 @@ summary_info += {'lzfse support':     liblzfse}
+ summary_info += {'zstd support':      zstd}
+ summary_info += {'Query Processing Library support': qpl}
+ summary_info += {'UADK Library support': uadk}
++summary_info += {'qatzip support':    qatzip}
+ summary_info += {'NUMA host support': numa}
+ summary_info += {'capstone':          capstone}
+ summary_info += {'libpmem support':   libpmem}
+diff --git a/meson_options.txt b/meson_options.txt
+index 0269fa0f16..f7b652b30d 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -261,6 +261,8 @@ option('qpl', type : 'feature', value : 'auto',
+        description: 'Query Processing Library support')
+ option('uadk', type : 'feature', value : 'auto',
+        description: 'UADK Library support')
++option('qatzip', type: 'feature', value: 'auto',
++       description: 'QATzip compression support')
+ option('fuse', type: 'feature', value: 'auto',
+        description: 'FUSE block device export')
+ option('fuse_lseek', type : 'feature', value : 'auto',
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index c97079a38c..5f377a6d81 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -163,6 +163,7 @@ meson_options_help() {
+   printf "%s\n" '  pixman          pixman support'
+   printf "%s\n" '  plugins         TCG plugins via shared library loading'
+   printf "%s\n" '  png             PNG support with libpng'
++  printf "%s\n" '  qatzip          QATzip compression support'
+   printf "%s\n" '  qcow1           qcow1 image format support'
+   printf "%s\n" '  qed             qed image format support'
+   printf "%s\n" '  qga-vss         build QGA VSS support (broken with MinGW)'
+@@ -427,6 +428,8 @@ _meson_option_parse() {
+     --enable-png) printf "%s" -Dpng=enabled ;;
+     --disable-png) printf "%s" -Dpng=disabled ;;
+     --prefix=*) quote_sh "-Dprefix=$2" ;;
++    --enable-qatzip) printf "%s" -Dqatzip=enabled ;;
++    --disable-qatzip) printf "%s" -Dqatzip=disabled ;;
+     --enable-qcow1) printf "%s" -Dqcow1=enabled ;;
+     --disable-qcow1) printf "%s" -Dqcow1=disabled ;;
+     --enable-qed) printf "%s" -Dqed=enabled ;;
+-- 
+Yichen Wang
+
 
