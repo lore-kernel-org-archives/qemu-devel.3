@@ -4,86 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD836C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 16:01:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB0AC531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 16:01:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sezMj-0006x6-Bk; Fri, 16 Aug 2024 11:59:49 -0400
+	id 1sezO2-00023c-5u; Fri, 16 Aug 2024 12:01:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sezMi-0006wS-Es
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:59:48 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sezNi-0000ok-3l
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 12:01:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sezMg-0005Kh-Ji
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:59:48 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sezNe-0005qb-13
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 12:00:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723823984;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1723824044;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cY7E8nDPEJJ/mztgi68VVEACWdl3qH90cN/qlqMvRek=;
- b=PxbRBhg7/KWCojPeS2Swk+JcNYO6JeV9kXZA0MYnyv2YT3s3SGTcS4BAHoX1KE12dsthMd
- JCXT4NlkWeBESR7XWNxhzBWA4tDmWHE3VnXz5hgswLEvVjU9z/WVBuvOb2g8htCf5ynccc
- gw9zrXK76hKA+PO6I9PxAFz2vESYBe8=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-464-lFySx7NJPmynbaMt8kLzYg-1; Fri, 16 Aug 2024 11:59:42 -0400
-X-MC-Unique: lFySx7NJPmynbaMt8kLzYg-1
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6bba0f9d3efso4265706d6.3
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 08:59:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723823982; x=1724428782;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cY7E8nDPEJJ/mztgi68VVEACWdl3qH90cN/qlqMvRek=;
- b=nynpyvJeGPu6Q/oqPI/qeSoXZiZq3JoQDYXJyDAjNoQ6UT5uxCkIVBeoG8QV++C9yv
- 0GKE9zIvnezz7WZPLX3uyYRwkoUJtBeJdZ1s57vm8P8hKxUUvxFXTt/ggPSqQogx7QSH
- eDTdf+zKunOG2SHi3sBgLOiUVWXi27dk9NDaUsIyEF5D9y+F/QG9Ahte/OaQy1c+r+dj
- e2ArOfk9e1mj+2E4si/VMcM2JeL0jrTxi4DZFVYrAB6GQFkdIIId4/XnNXSru8xCmLiw
- 9ODUz/Nuk8G9Cr5+M/8nSCMWfdUCzHpTfhs6Ye/8WBxDI0KHUff7yzj2Eb/omRRREesN
- UT7w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWxhc0bu+qKk/uIX+amf343RKxAqnA+ewgtHsWbHdBZt72+Vom79nH8uh9MzCYm8fg2XoBDhgC4Ycpt@nongnu.org
-X-Gm-Message-State: AOJu0YzT3CwdujqVEnTFhK/0mC3ve6jE97Z2eEkDzdlEDiqA/AGVoADV
- ziPVe6YsrEYnEvoc/lMk6c748BSd2gvFm7ezNeODxZqsWkjffA9Sd4dj2wF5Y9gau7Z/emneosB
- Xrptltd+Pi8s34u4o/TtxChkEPGdCFiI0W5c4IRvMI/Sx0wDBMlAl
-X-Received: by 2002:a05:6214:2a83:b0:6bf:6ef5:4160 with SMTP id
- 6a1803df08f44-6bf7cc8e5e0mr20814966d6.0.1723823982287; 
- Fri, 16 Aug 2024 08:59:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG4djCgR3SmyNt4MGftRC+Zs5l7E4bxHqdVMNSJnDqNv3eyALCp/fCmHHC1VbGdlUhfbAX7jw==
-X-Received: by 2002:a05:6214:2a83:b0:6bf:6ef5:4160 with SMTP id
- 6a1803df08f44-6bf7cc8e5e0mr20814846d6.0.1723823981858; 
- Fri, 16 Aug 2024 08:59:41 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6bf6fe11bd9sm18919786d6.52.2024.08.16.08.59.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 08:59:41 -0700 (PDT)
-Date: Fri, 16 Aug 2024 11:59:40 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+ bh=OtcEckEWkXRpUlT92tRdtVJBlm22Cr3rtbZUHCc8bBc=;
+ b=VXLdoHigvBbSOeWuyA29U1nG1PWP0VRFY+plkEcb90cByKxTbBIlir5wJWYgQ9E0WfsOhi
+ pcSYyJ3grYkwmeE7xzj3Wdqjlqwdi7+i0tweBe4Xw/yMLqxkb9sAQ1gSVVoHBYohObzx6n
+ EBqY0cNIfN0TVt8mQpHCR5Xd89xVA04=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-568-IrTPgRwTMh-klPgzeHnYmw-1; Fri,
+ 16 Aug 2024 12:00:41 -0400
+X-MC-Unique: IrTPgRwTMh-klPgzeHnYmw-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8D49B1955F3D; Fri, 16 Aug 2024 16:00:39 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.143])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D39D219560A3; Fri, 16 Aug 2024 16:00:35 +0000 (UTC)
+Date: Fri, 16 Aug 2024 17:00:32 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Xu <peterx@redhat.com>
 Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [RFC V1 0/6] Live update: cpr-transfer
-Message-ID: <Zr93bOr1zrSZadf5@x1n>
-References: <1719776648-435073-1-git-send-email-steven.sistare@oracle.com>
- <Zpk2bfjS1Wu2QbcO@x1n>
- <90a01b2b-6a72-475f-9232-3af73d1618cf@oracle.com>
- <Zr5lC9ryCsn9FjE2@x1n>
- <94478262-034d-48db-bd4d-c74ca3c315a6@oracle.com>
- <Zr9u1YV4m9Uzvj7Z@x1n> <Zr9yGoXBpHIzrDak@redhat.com>
+ Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH V2 00/11] Live update: cpr-exec
+Message-ID: <Zr93oOn9J5JLs2Rn@redhat.com>
+References: <1719776434-435013-1-git-send-email-steven.sistare@oracle.com>
+ <Zpk7Mf2c7LiNV2xC@x1n> <ZrCi8DWCKFiBHQAQ@redhat.com>
+ <5776f6b4-c55f-4e56-aac5-bee7e441ad15@oracle.com>
+ <Zru4AaTmBIAGnyDr@x1n>
+ <46b63356-9602-4fa2-9d31-186f5f85151f@oracle.com>
+ <Zr9q4muKZmYCf9mv@x1n> <Zr9tYsmy8j2t8fq0@redhat.com>
+ <Zr9xcmUfkYAWnXH-@x1n>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zr9yGoXBpHIzrDak@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <Zr9xcmUfkYAWnXH-@x1n>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -105,84 +94,106 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 16, 2024 at 04:36:58PM +0100, Daniel P. Berrangé wrote:
-> On Fri, Aug 16, 2024 at 11:23:01AM -0400, Peter Xu wrote:
-> > On Fri, Aug 16, 2024 at 11:13:36AM -0400, Steven Sistare wrote:
-> > > On 8/15/2024 4:28 PM, Peter Xu wrote:
-> > > > On Sat, Jul 20, 2024 at 04:07:50PM -0400, Steven Sistare wrote:
-> > > > > > > The new user-visible interfaces are:
-> > > > > > >     * cpr-transfer (MigMode migration parameter)
-> > > > > > >     * cpr-uri (migration parameter)
-> > > > > > 
-> > > > > > I wonder whether this parameter can be avoided already, maybe we can let
-> > > > > > cpr-transfer depend on unix socket in -incoming, then integrate fd sharing
-> > > > > > in the same channel?
+On Fri, Aug 16, 2024 at 11:34:10AM -0400, Peter Xu wrote:
+> On Fri, Aug 16, 2024 at 04:16:50PM +0100, Daniel P. Berrangé wrote:
+> > On Fri, Aug 16, 2024 at 11:06:10AM -0400, Peter Xu wrote:
+> > > On Thu, Aug 15, 2024 at 04:55:20PM -0400, Steven Sistare wrote:
+> > > > On 8/13/2024 3:46 PM, Peter Xu wrote:
+> > > > > On Tue, Aug 06, 2024 at 04:56:18PM -0400, Steven Sistare wrote:
+> > > > > > > The flipside, however, is that localhost migration via 2 separate QEMU
+> > > > > > > processes has issues where both QEMUs want to be opening the very same
+> > > > > > > file, and only 1 of them can ever have them open.
 > > > > > 
-> > > > > You saw the answer in another thread, but I repeat it here for others benefit:
+> > > > > I thought we used to have similar issue with block devices, but I assume
+> > > > > it's solved for years (and whoever owns it will take proper file lock,
+> > > > > IIRC, and QEMU migration should properly serialize the time window on who's
+> > > > > going to take the file lock).
 > > > > > 
-> > > > >    "CPR state cannot be sent over the normal migration channel, because devices
-> > > > >     and backends are created prior to reading the channel, so this mode sends
-> > > > >     CPR state over a second migration channel that is not visible to the user.
-> > > > >     New QEMU reads the second channel prior to creating devices or backends."
+> > > > > Maybe this is about something else?
 > > > > 
-> > > > Today when looking again, I wonder about the other way round: can we make
-> > > > the new parameter called "-incoming-cpr", working exactly the same as
-> > > > "cpr-uri" qemu cmdline, but then after cpr is loaded it'll be automatically
-> > > > be reused for migration incoming ports?
+> > > > I don't have an example where this fails.
 > > > > 
-> > > > After all, cpr needs to happen already with unix sockets.  Having separate
-> > > > cmdline options grants user to make the other one to be non-unix, but that
-> > > > doesn't seem to buy us anything.. then it seems easier to always reuse it,
-> > > > and restrict cpr-transfer to only work with unix sockets for incoming too?
+> > > > I can cause "Failed to get "write" lock" errors if two qemu instances open
+> > > > the same block device, but the error is suppressed if you add the -incoming
+> > > > argument, due to this code:
+> > > > 
+> > > >   blk_attach_dev()
+> > > >     if (runstate_check(RUN_STATE_INMIGRATE))
+> > > >       blk->disable_perm = true;
 > > > 
-> > > This idea also occurred to me, but I dislike the loss of flexibility for
-> > > the incoming socket type.  The exec URI in particular can do anything, and
-> > > we would be eliminating it.
+> > > Yep, this one is pretty much expected.
+> > > 
+> > > > 
+> > > > > > Indeed, and "files" includes unix domain sockets.
+> > > > 
+> > > > More on this -- the second qemu to bind a unix domain socket for listening
+> > > > wins, and the first qemu loses it (because second qemu unlinks and recreates
+> > > > the socket path before binding on the assumption that it is stale).
+> > > > 
+> > > > One must use a different name for the socket for second qemu, and clients
+> > > > that wish to connect must be aware of the new port.
+> > > > 
+> > > > > > Network ports also conflict.
+> > > > > > cpr-exec avoids such problems, and is one of the advantages of the method that
+> > > > > > I forgot to promote.
+> > > > > 
+> > > > > I was thinking that's fine, as the host ports should be the backend of the
+> > > > > VM ports only anyway so they don't need to be identical on both sides?
+> > > > > 
+> > > > > IOW, my understanding is it's the guest IP/ports/... which should still be
+> > > > > stable across migrations, where the host ports can be different as long as
+> > > > > the host ports can forward guest port messages correctly?
+> > > > 
+> > > > Yes, one must use a different host port number for the second qemu, and clients
+> > > > that wish to connect must be aware of the new port.
+> > > > 
+> > > > That is my point -- cpr-transfer requires fiddling with such things.
+> > > > cpr-exec does not.
+> > > 
+> > > Right, and my understanding is all these facilities are already there, so
+> > > no new code should be needed on reconnect issues if to support cpr-transfer
+> > > in Libvirt or similar management layers that supports migrations.
 > > 
-> > Ah, I would be guessing that if Juan is still around then exec URI should
-> > already been marked deprecated and prone to removal soon.. while I tend to
-> > agree that exec does introduce some complexity meanwhile iiuc nobody uses
-> > that in production systems.
-> > 
-> > What's the exec use case you're picturing?  Would that mostly for debugging
-> > purpose, and would that be easily replaceable with another tunnelling like
-> > "ncat" or so?
+> > Note Libvirt explicitly blocks localhost migration today because
+> > solving all these clashing resource problems is a huge can of worms
+> > and it can't be made invisible to the user of libvirt in any practical
+> > way.
 > 
-> Conceptually "exec:" is a nice thing, but from a practical POV it
-> introduces difficulties for QEMU. QEMU doesn't know if the exec'd
-> command will provide a unidirectional channel or bidirectional
-> channel, so has to assume the worst - unidirectional. It also can't
-> know if it is safe to run the exec multiple times, or is only valid
-> to run it once - so afgai nhas to assume once only.
-> 
-> We could fix those by adding further flags in the migration address
-> to indicate if its bi-directional & multi-channel safe.
-> 
-> Technically "exec" is obsolete given "fd", but then that applies to
-> literally all protocols. Implementing them in QEMU is a more user
-> friendly thing.
-> 
-> Exec was more compelling when QEMU's other protocols were less
-> mature, lacking TLS for example, but I still find it interesting
-> as a facility.
+> Ahhh, OK.  I'm pretty surprised by this, as I thought at least kubevirt
+> supported local migration somehow on top of libvirt.
 
-Right, it's an interesting idea on its own.  It's just that when QEMU grows
-into not only a tool anymore it adds burden on top as you discussed, in
-which case we consider dropping things as wins (and we already started
-doing so at least in migration, but iiuc it's not limited to migration).
+Since kubevirt runs inside a container, "localhost" migration
+is effectively migrating between 2 completely separate OS installs
+(containers), that happen to be on the same physical host. IOW, it
+is a cross-host migration from Libvirt & QEMU's POV, and there are
+no clashing resources to worry about.
 
-Again, it looks reasonable to drop because I think it's too easy to tool-up
-the same "exec:" function with ncat or similar things.  E.g. kubevirt does
-TLS even today without qemu's TLS, and AFAIU that's based on unix sockets
-not exec, and it tunnels to the daemon for TLS encryption (which is prone
-of removal, though).  So even that is not leveraged as we thought.
+> Does it mean that cpr-transfer is a no-go in this case at least for Libvirt
+> to consume it (as cpr-* is only for local host migrations so far)?  Even if
+> all the rest issues we're discussing with cpr-exec, is that the only way to
+> go for Libvirt, then?
 
-Thanks,
+cpr-exec is certainly appealing from the POV of avoiding the clashing
+resources problem in libvirt.
 
+It has own issues though, because libvirt runs all QEMU processes with
+seccomp filters that block 'execve', as we consider QEMU to be untrustworthy
+and thus don't want to allow it to exec anything !
+
+I don't know which is the lesser evil from libvirt's POV.
+
+Personally I see security controls as an overriding requirement for
+everything.
+
+With regards,
+Daniel
 -- 
-Peter Xu
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
