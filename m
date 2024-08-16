@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 094D4C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 08:19:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F284DC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 08:19:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ses9u-0003ze-JA; Fri, 16 Aug 2024 04:18:06 -0400
+	id 1sesBC-0007YX-Vq; Fri, 16 Aug 2024 04:19:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ses9s-0003ua-3I
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:18:04 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1ses9o-0003Uc-Uw
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:18:03 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5bed83487aeso51415a12.2
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 01:18:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723796279; x=1724401079; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nPpU0PH6JcycdB2I98txnw/CAZnoVrAUDVWZJg3o/Sk=;
- b=gWSHPBlMKkRqWaqU9+gHT+mcu5kHA9kde6sdvB4w1RYuHT5g6yGS+iBJL45fgCakJO
- 5M9jq6Kc1KObKqCCAUOhdNtpDYGtwI5ISOynwyxoS+crdMezyI4D+ZJREoIHZAqdITAr
- uXaFrkANFagGo5alv/6atvdkr1G6yRij1Db1lxOfNBv47lSVmtX7eSwgRfJErsaAhNwq
- xcibQiFAtIc15VDIO80/wd0ZNdmqdfGUtWE9MnC63MK+D41k8UhhBWmMI9mt2Dl9hfSA
- yPIfNztCVA8Dkk6E8quMkj9y4ngFTbtsTnM9Q/nuorIoeK85DUJz5DVI8yJM19FdhElJ
- /lTw==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sesBB-0007Rz-9Q
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:19:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sesB9-0003bs-MS
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:19:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723796363;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MjGlFvMeZNehK1w5wtaKUP74GiBi92a6em/Iv+rrTAo=;
+ b=ambEKBrodhL2Lghw2u3J80uFCQfag5yPFIKpquoFdgfkSw90Ay8tFk71TZ2uuUzg9tf0Jy
+ ZF0rE59fB5hFc0SdO6veDh3CgadIUCOzx/rv8PDH6zUQeoZqGN1zKDQrIkhhuKgrem9fgK
+ t8cFrOTVXS5KdxuVE1DASie+CtNElMQ=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-630-74PMUcoeMm2sms9D4Ad6WA-1; Fri, 16 Aug 2024 04:19:17 -0400
+X-MC-Unique: 74PMUcoeMm2sms9D4Ad6WA-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2ef23b417bcso13663901fa.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 01:19:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723796279; x=1724401079;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nPpU0PH6JcycdB2I98txnw/CAZnoVrAUDVWZJg3o/Sk=;
- b=n4Mwv4y6Ak9yTz/7d78WZD5bykwBVV6OE9JjAm9ZCDUeUtM1YZEJHFD1Ib1jCpBkIJ
- ZGnwcX0/Wi8ARbKsjqTLGT/tua5U24UeJXR9xGghQ6vxpNZDGTM9QjMHNr+SFl9prxn5
- au0/vUS2VWc+TIm/NrjaCn3MVBG7oLH5SDm+C0rmEUwvMfhpUN1W9Xuu3Nobh52xq9Qa
- RQmPt2R0a2/WJ0KqWxDFuEMztd3JQ/Z2rPm+EtdJDsjF+E3Fy5Kch3/UQi88WUACYEZx
- Q3tIZ3ouKVxh/vop2JbhtOR3xZWfhiAyPywnnawDlfUtWrnqhxQw1CRqRAdUG5qpTsaP
- rE2Q==
-X-Gm-Message-State: AOJu0YzyRv5Wm6L+QpToMj3+8rxKIhVBbVkJ7xLyITE0fcdxzJFRRsHc
- ux06H3j+t/DsZPsCL8kzBYk9UwuB4d7XiZ1CKorro4LG/qu+tT8PghSRt3UDsajoDVBIwjV/8Bo
- jxPea+rGIWXX8BpNWQO+Zq+gUn2XrekZl1rkj2Q==
-X-Google-Smtp-Source: AGHT+IHwBzP7404BHcFLdlD7qbYBGf8bhQDZW5S7N8RM6o9qavhPbf51m0tm6yH9raLsgP8+KMvrnH8N/L9NMM3uGoo=
-X-Received: by 2002:a05:6402:2353:b0:5a1:1:27a9 with SMTP id
- 4fb4d7f45d1cf-5beca595cbcmr1609888a12.18.1723796279045; Fri, 16 Aug 2024
- 01:17:59 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723796356; x=1724401156;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MjGlFvMeZNehK1w5wtaKUP74GiBi92a6em/Iv+rrTAo=;
+ b=fr9JN1k5PVebIl7+ZWtJNVJaP+bloAudpEktweZ5bc2fAONKCFTjh5g1fsteT48Lsr
+ cr6yotObXDFf8zTmfkbg22TXeqF8nNgsU+tmBlBu0LlXznNOTX12CRpNlY019illqkqN
+ zdeAaJko/HBQOFUzlyD3miqnaNOBol4sl3MLkI3UG1nVdNAiejzp7UFigp3ns55XFHnN
+ iudT6VJmzvHWCTORvyvqLdey8YhOyjDnY4impQU8RoanOM2qXp5cjowGvrpff+nLe1hx
+ G03K5fK1hbaDmDcR0tW6YHRSPF4ndi0294dKn9lqJHztLR5eD6EFFuRifLqEBkiucMH2
+ YTQw==
+X-Gm-Message-State: AOJu0YzY4jKCQRzYFYoeOgKmnk3DJgdK8/RbjghJbhItiYzpYBtXRFbr
+ c7sbL9EXcBnO7IVseVLY7zwBzDE79nPxuBiDcV04BUu7gwv7lD6nXq3cIuVo+N7G+QEldGI561s
+ ATXLUijVNVOlfoAVCwkdIGHM6ISTMet4ZglhntFRyl77VtnPZHfO9
+X-Received: by 2002:a05:6512:1085:b0:52c:a016:5405 with SMTP id
+ 2adb3069b0e04-5331c6914a6mr1571274e87.8.1723796355768; 
+ Fri, 16 Aug 2024 01:19:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IETUpoGQAUzUH4RwR7T53nNjTGrischl3/TwsHI0X5+ohyTf+2GXpQiTYjm3/yLiMF/VyElPg==
+X-Received: by 2002:a05:6512:1085:b0:52c:a016:5405 with SMTP id
+ 2adb3069b0e04-5331c6914a6mr1571230e87.8.1723796354919; 
+ Fri, 16 Aug 2024 01:19:14 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:17d:3378:6322:e9ee:713:b9ed])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a83838cfaffsm218902366b.76.2024.08.16.01.19.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Aug 2024 01:19:14 -0700 (PDT)
+Date: Fri, 16 Aug 2024 04:19:10 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Kamil =?utf-8?Q?Szcz=C4=99k?= <kamil@szczek.dev>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Joelle van Dyne <j@getutm.app>, Bernhard Beschow <shentey@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH-for-9.1 v2] hw/i386/pc: Ensure vmport prerequisites are
+ fulfilled
+Message-ID: <20240816041900-mutt-send-email-mst@kernel.org>
+References: <CJaQOvoJMl8P04F7-0Pk23paXt29GnSt2ICM-xlruQ9rGsMHocU_xH3RRaRRJEQpqUxGo63sATZb5St7968jHLV0r7NORODN3zHgi_qxpPE=@szczek.dev>
 MIME-Version: 1.0
-References: <20240815-rust-pl011-v7-0-975135e98831@linaro.org>
- <8f5f670b-313e-4172-a04b-ff8439bc4777@intel.com>
-In-Reply-To: <8f5f670b-313e-4172-a04b-ff8439bc4777@intel.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Fri, 16 Aug 2024 11:17:47 +0300
-Message-ID: <CAAjaMXYyggQuenzEt-cTpENAM5S46_Wi4iqeXjzLYoDrHXzj2g@mail.gmail.com>
-Subject: Re: [PATCH v7 0/7] Add Rust build support, ARM PL011 device impl
-To: Junjie Mao <junjie.mao@intel.com>
-Cc: "open list:ARM SMMU <qemu-arm@nongnu.org>, " <qemu-devel@nongnu.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>, "Liu,
- Zhao1" <zhao1.liu@intel.com>, 
- Peter Maydell <peter.maydell@linaro.org>, ARM TCG CPUs <qemu-arm@nongnu.org>, 
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, 
- "Hart, Rowan" <rowan.hart@intel.com>, Mads Ynddal <mads@ynddal.dk>, 
- Markus Armbruster <armbru@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000e0ce20061fc89844"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CJaQOvoJMl8P04F7-0Pk23paXt29GnSt2ICM-xlruQ9rGsMHocU_xH3RRaRRJEQpqUxGo63sATZb5St7968jHLV0r7NORODN3zHgi_qxpPE=@szczek.dev>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,164 +105,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e0ce20061fc89844
-Content-Type: text/plain; charset="UTF-8"
-
-On Fri, 16 Aug 2024, 11:06 Junjie Mao, <junjie.mao@intel.com> wrote:
-
-> On 8/15/2024 7:42 PM, Manos Pitsidianakis wrote:
-> > Outstanding issues
-> > ==================
-> >
-> > Outstanding issues that are not blocking for merge are:
-> >
-> > - Cross-compilation for aarch64 is not possible out-of-the-box because
-> of this bug:
-> >    <https://github.com/rust-lang/rust/issues/125619> in llvm which when
-> >    fixed, must be ported to upstream rust's llvm fork. Since the problem
-> >    is an extraneous symbol we could strip it with objcopy
-> -N|--strip-symbol
-> > - Adding more than one Rust device ends up with duplicate symbols from
-> >    rust std library because we are linking as whole archives because...
-> >    constructors are stripped by the linker otherwise :( It can be worked
-> >    around if a single Rust library is built with all the devices as
-> >    dependencies which is then linked to qemu. The fix is a small change
-> >    which I will add either in a next version or when a new Rust device is
-> >    added.
-> >
->
-> Hi Manos,
->
-> I also noticed that when I tried adding a second device. Some other
-> projects met
-> similar issues [1], but no clean solution seems to be available yet. The
-> options
-> are:
->
-> 1) Combining all crates into one staticlib which is linked to the final
-> executable. That requires generating one .rs with extern crate decls of
-> all
-> enabled crates. In the context of QEMU, different targets may enable
-> different
-> set of crates (e.g., some crates have arch constraints), thus one .rs for
-> each
-> target will be needed in general.
->
-> 2) Linking rlibs (or emitted objects) directly with other C objects using
-> the C
-> linker. That somehow works (with some tricks) but is not officially
-> supported
-> and may break in the future.
->
-> I'm working on (1), but would like to have your thoughts and preference on
-> those
-> options.
->
-
-Hello Junjie, I have also implemented (1) already (the fix I mentioned in
-the cover letter). In general I'd like to do it on a standalone patch so
-that it can be separated from the other changes instead of squashing it.
-
-If you have something already too, please share here! I will send mine as a
-reply to this thread when I am able. I am not familiar with meson so my
-version could be lacking!
-
-Manos
+On Fri, Aug 16, 2024 at 08:01:26AM +0000, Kamil Szczęk wrote:
+> Since commit 4ccd5fe22feb95137d325f422016a6473541fe9f ('pc: add option
+> to disable PS/2 mouse/keyboard'), the vmport will not be created unless
+> the i8042 PS/2 controller is enabled. To avoid confusion, let's fail if
+> vmport was explicitly requested, but the i8042 controller is disabled.
+> This also changes the behavior of vmport=auto to take i8042 controller
+> availability into account.
+> 
+> Signed-off-by: Kamil Szczęk <kamil@szczek.dev>
 
 
+tagged, thanks!
 
-[1] https://github.com/rust-lang/rust/issues/73632
->
 > ---
-> Best Regards
-> Junjie Mao
->
+>  hw/i386/pc.c      | 8 ++++++--
+>  hw/i386/pc_piix.c | 3 ++-
+>  hw/i386/pc_q35.c  | 2 +-
+>  qemu-options.hx   | 4 ++--
+>  4 files changed, 11 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index c74931d577..c99f2ce540 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -1075,7 +1075,7 @@ static const MemoryRegionOps ioportF0_io_ops = {
+>  };
+>  
+>  static void pc_superio_init(ISABus *isa_bus, bool create_fdctrl,
+> -                            bool create_i8042, bool no_vmport)
+> +                            bool create_i8042, bool no_vmport, Error **errp)
+>  {
+>      int i;
+>      DriveInfo *fd[MAX_FD];
+> @@ -1100,6 +1100,10 @@ static void pc_superio_init(ISABus *isa_bus, bool create_fdctrl,
+>      }
+>  
+>      if (!create_i8042) {
+> +        if (!no_vmport) {
+> +            error_setg(errp,
+> +                       "vmport requires the i8042 controller to be enabled");
+> +        }
+>          return;
+>      }
+>  
+> @@ -1219,7 +1223,7 @@ void pc_basic_device_init(struct PCMachineState *pcms,
+>  
+>      /* Super I/O */
+>      pc_superio_init(isa_bus, create_fdctrl, pcms->i8042_enabled,
+> -                    pcms->vmport != ON_OFF_AUTO_ON);
+> +                    pcms->vmport != ON_OFF_AUTO_ON, &error_fatal);
+>  }
+>  
+>  void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus)
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index d9e69243b4..cf2e2e3e30 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -312,7 +312,8 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+>  
+>      assert(pcms->vmport != ON_OFF_AUTO__MAX);
+>      if (pcms->vmport == ON_OFF_AUTO_AUTO) {
+> -        pcms->vmport = xen_enabled() ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
+> +        pcms->vmport = (xen_enabled() || !pcms->i8042_enabled)
+> +            ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
+>      }
+>  
+>      /* init basic PC hardware */
+> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> index 9d108b194e..6c112d804d 100644
+> --- a/hw/i386/pc_q35.c
+> +++ b/hw/i386/pc_q35.c
+> @@ -278,7 +278,7 @@ static void pc_q35_init(MachineState *machine)
+>  
+>      assert(pcms->vmport != ON_OFF_AUTO__MAX);
+>      if (pcms->vmport == ON_OFF_AUTO_AUTO) {
+> -        pcms->vmport = ON_OFF_AUTO_ON;
+> +        pcms->vmport = pcms->i8042_enabled ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
+>      }
+>  
+>      /* init basic PC hardware */
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index cee0da2014..0bc780a669 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -68,8 +68,8 @@ SRST
+>  
+>      ``vmport=on|off|auto``
+>          Enables emulation of VMWare IO port, for vmmouse etc. auto says
+> -        to select the value based on accel. For accel=xen the default is
+> -        off otherwise the default is on.
+> +        to select the value based on accel and i8042. For accel=xen
+> +        and/or i8042=off the default is off otherwise the default is on.
+>  
+>      ``dump-guest-core=on|off``
+>          Include guest memory in a core dump. The default is on.
+> -- 
+> 2.45.0
+> 
 
---000000000000e0ce20061fc89844
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">On Fri, 16 Aug 2024, 11:06 Junjie Mao, &lt;<a href=3D"=
-mailto:junjie.mao@intel.com" target=3D"_blank" rel=3D"noreferrer">junjie.ma=
-o@intel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">On 8/15/2024 7:42 PM, Manos Pitsidianakis wrote:<br>
-&gt; Outstanding issues<br>
-&gt; =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
-&gt; <br>
-&gt; Outstanding issues that are not blocking for merge are:<br>
-&gt; <br>
-&gt; - Cross-compilation for aarch64 is not possible out-of-the-box because=
- of this bug:<br>
-&gt;=C2=A0 =C2=A0 &lt;<a href=3D"https://github.com/rust-lang/rust/issues/1=
-25619" rel=3D"noreferrer noreferrer noreferrer" target=3D"_blank">https://g=
-ithub.com/rust-lang/rust/issues/125619</a>&gt; in llvm which when<br>
-&gt;=C2=A0 =C2=A0 fixed, must be ported to upstream rust&#39;s llvm fork. S=
-ince the problem<br>
-&gt;=C2=A0 =C2=A0 is an extraneous symbol we could strip it with objcopy -N=
-|--strip-symbol<br>
-&gt; - Adding more than one Rust device ends up with duplicate symbols from=
-<br>
-&gt;=C2=A0 =C2=A0 rust std library because we are linking as whole archives=
- because...<br>
-&gt;=C2=A0 =C2=A0 constructors are stripped by the linker otherwise :( It c=
-an be worked<br>
-&gt;=C2=A0 =C2=A0 around if a single Rust library is built with all the dev=
-ices as<br>
-&gt;=C2=A0 =C2=A0 dependencies which is then linked to qemu. The fix is a s=
-mall change<br>
-&gt;=C2=A0 =C2=A0 which I will add either in a next version or when a new R=
-ust device is<br>
-&gt;=C2=A0 =C2=A0 added.<br>
-&gt; <br>
-<br>
-Hi Manos,<br>
-<br>
-I also noticed that when I tried adding a second device. Some other project=
-s met <br>
-similar issues [1], but no clean solution seems to be available yet. The op=
-tions <br>
-are:<br>
-<br>
-1) Combining all crates into one staticlib which is linked to the final <br=
->
-executable. That requires generating one .rs with extern crate decls of all=
- <br>
-enabled crates. In the context of QEMU, different targets may enable differ=
-ent <br>
-set of crates (e.g., some crates have arch constraints), thus one .rs for e=
-ach <br>
-target will be needed in general.<br>
-<br>
-2) Linking rlibs (or emitted objects) directly with other C objects using t=
-he C <br>
-linker. That somehow works (with some tricks) but is not officially support=
-ed <br>
-and may break in the future.<br>
-<br>
-I&#39;m working on (1), but would like to have your thoughts and preference=
- on those <br>
-options.<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=
-=3D"auto">Hello Junjie, I have also implemented (1) already (the fix I ment=
-ioned in the cover letter). In general I&#39;d like to do it on a standalon=
-e patch so that it can be separated from the other changes instead of squas=
-hing it.</div><div dir=3D"auto"><br></div><div dir=3D"auto">If you have som=
-ething already too, please share here! I will send mine as a reply to this =
-thread when I am able. I am not familiar with meson so my version could be =
-lacking!</div><div dir=3D"auto"><br></div><div dir=3D"auto">Manos</div><div=
- dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto"><br><=
-/div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmai=
-l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
-4,204);padding-left:1ex">
-[1] <a href=3D"https://github.com/rust-lang/rust/issues/73632" rel=3D"noref=
-errer noreferrer noreferrer" target=3D"_blank">https://github.com/rust-lang=
-/rust/issues/73632</a><br>
-<br>
----<br>
-Best Regards<br>
-Junjie Mao<br>
-</blockquote></div></div></div>
-
---000000000000e0ce20061fc89844--
 
