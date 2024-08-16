@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78C5AC52D7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:24:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E220C531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:34:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sewuQ-0005Qt-Bl; Fri, 16 Aug 2024 09:22:26 -0400
+	id 1sex56-0007iF-EQ; Fri, 16 Aug 2024 09:33:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sewuK-000597-MC
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:20 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1sex52-0007gm-As
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:33:25 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sewuH-0007k0-7k
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:20 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4281faefea9so13831155e9.2
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:22:16 -0700 (PDT)
+ id 1sex50-0000xO-6r
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:33:24 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-428163f7635so15661985e9.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:33:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723814535; x=1724419335; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+qDfeY+CsvBUJu7CFKOtFh4EY2RJKFqnGcNsx1NoFx4=;
- b=lLNr/K3QeQ7ARwo1nnHRnMBfEQlxaklE85pxr8pvnjvvy0uZlsI2XHCHNi5rqmc86v
- p4ptX5iUDU8y/GQCngm2GnnwyZmOiPWadrhUVJGaUHHno/luJ/sJ3fUsRjGChozwydLD
- MyN128P2EfL0W0LC8vNr/kJenDTHv9nkjHzKGr5BnyG0B2iXz2oJQVQA8psXcSYwTXj/
- 6Z4c0RENxm3JZDf4cRZq/a7SpDECAVjU2O86xi4xguqwTQd0KWt9trH9/5QCOptAGbtl
- dvNx0Y+xp+JlAvC9EJccwazEAdxZ1VVEt5Z9huS7qVMCGP0aFU+I+z6oMehyRbzpDQZr
- cNRw==
+ d=linaro.org; s=google; t=1723815200; x=1724420000; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QrtOZIjmVH3biFn3NBGJOVqrNEwQZIehQby9RM852o4=;
+ b=LG+qyo/ux8JMpXEFYLYnmZsfHOJs5x72jFtZNTaUHVLzsSYmayVoUaMqpE4fW4TC9b
+ ZE+FjIiWVphboCB/W1Pzj5Pr4pYt9sWc21yb60LDt1ecK2tSDfQAfdBKjHyrKwYTqTcX
+ iZXJkHfwUnwfeBT9T0WvYfLloqsLPcqkpKXTRJ6XuH23UrD09LI1xo4OXBJvEK7fyo83
+ EyKtomg5yQF5Qf1cqyMZ/1whOSA15N2EPOlellooEQyEDdaW20+ThL576MDe79RTM8YA
+ e2SjtDaq3ZCl8T8dMbQ8uQICaAigFGv35REtpkZXMfUo+BK90V0ijc0DV+WiSVdtoUGg
+ CIMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723814535; x=1724419335;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+qDfeY+CsvBUJu7CFKOtFh4EY2RJKFqnGcNsx1NoFx4=;
- b=Fs9w4JpsAhfSIa7Za3XiRkl3gjuOyRScIrtFqbREsRONZrP6TcYBlOoxXI2uET2/ig
- acM17I7StlfIg97E339aWQR2wjepxPf9l78fPXu3rtVS6yd63wYKDb8EqUkLqlarDqrV
- N7DLyH9puCmimVEQWgm3p2Zms3cslBvPzclI3Uc+6e2e8pVctLdC5DDFhlcz97Z/qOZV
- 38HDrvSwCHhJosrDTcmfqvjpK6zKtaGvbN/ruxBjTHPgEAhtbDeeNxQ2QjKz8oBmchiP
- J+LblCfevi3b39KVfTJA7kshQp3wAsK0j+LILJ/qpcTZlJYAL5cRkMJAbj9ZKseuGLct
- z50A==
-X-Gm-Message-State: AOJu0YzwZvsPEY3lWPuYlBJG/XDefxLerisb9lKMwBfqv88OB1yxQGLI
- ggOXBRPCAxSF1p8BJ6TMcSQfwJwAOCX/QSvNi+QSDlhK6o5EKlXnqgrQwMNWPu7rtY3UlP3lz1k
- Y
-X-Google-Smtp-Source: AGHT+IHD9HdZOmNwrGd38VGkIRMdVdizqRIEkJxVJwu/k/RfR7I6U6FI3bkIzZzQdErliciSB8959g==
-X-Received: by 2002:adf:ef4b:0:b0:368:3ee5:e3e1 with SMTP id
- ffacd0b85a97d-37194314e6emr2086023f8f.7.1723814534888; 
- Fri, 16 Aug 2024 06:22:14 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723815200; x=1724420000;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QrtOZIjmVH3biFn3NBGJOVqrNEwQZIehQby9RM852o4=;
+ b=Syf8PNUrUlf7u6AjR20LyPBCSGK5+0aQPW5yEbECrxAciGg/DKv8HmqN/uD5k8AzV1
+ zxeqdykvcGFgImYfv5q5vK0onIngiNgEEzucjtDXma0vhsC08x7/nzoNfscqObhSCT8b
+ nKw7TnX8t7kP/MMuH06uqwFkS8px1l56hzdcQy8LrZnJIFEt14JF2qiPJsB/HsrXPvsd
+ vjJf5w06kid6MZ14s3po23K41Lktq97+Q5P1+p/AqSG+Qg6q+/HGAzxvPnFvBK5DmhW7
+ L63DueRZ78f/p0meBBkhL6x2II9iqFNtGrswUX9c6PwxAuAlqp9ws9P2wKKUA1fzNa1+
+ mr/A==
+X-Gm-Message-State: AOJu0Yzq0GCxLqsrYGUwU3phMZwnk5pbE1CzA1UYG8he5fZ3DGrMoIKC
+ FdSvb3DpM9BGemwu7/52G11pkTOB0759+x0HyhO7QW769KxXetGvhTGWbpNJFCSdwrVTC6s1gas
+ f
+X-Google-Smtp-Source: AGHT+IEHR2GdlLPZLIUIRe2kSgCdaBbHxER5w/yXx9Aqa6p/MIxnXTqtW9csGSWWsxKD9oKnQuXGyg==
+X-Received: by 2002:adf:ef8a:0:b0:368:4c54:ae27 with SMTP id
+ ffacd0b85a97d-371946573a6mr1915523f8f.36.1723815199976; 
+ Fri, 16 Aug 2024 06:33:19 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-371898ab855sm3631948f8f.105.2024.08.16.06.22.14
+ ffacd0b85a97d-3718989708esm3718279f8f.70.2024.08.16.06.33.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 06:22:14 -0700 (PDT)
+ Fri, 16 Aug 2024 06:33:19 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 1/7] docs/devel/blkdebug: Convert to rST format
-Date: Fri, 16 Aug 2024 14:22:06 +0100
-Message-Id: <20240816132212.3602106-2-peter.maydell@linaro.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
+Subject: [PATCH for-9.2] docs/devel: Remove nested-papr.txt
+Date: Fri, 16 Aug 2024 14:33:18 +0100
+Message-Id: <20240816133318.3603114-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240816132212.3602106-1-peter.maydell@linaro.org>
-References: <20240816132212.3602106-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,394 +94,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert blkdebug.txt to rST format.  We put it into index-build.rst
-because it falls under the "test" part of "QEMU Build and Test
-System".
+docs/devel/nested-papr.txt is entirely (apart from the initial
+paragraph) a partial copy of the kernel documentation
+https://docs.kernel.org/arch/powerpc/kvm-nested.html
+
+There's no benefit to the QEMU docs to converting this to rST,
+so instead delete it. Anybody needing to know the API and
+protocol for the guest to communicate with the hypervisor
+to created nested VMs should refer to the authoratitative
+documentation in the kernel docs.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
-At least, index-build seemed the most plausible home to me...
----
- MAINTAINERS                |   1 +
- docs/devel/blkdebug.rst    | 177 +++++++++++++++++++++++++++++++++++++
- docs/devel/blkdebug.txt    | 162 ---------------------------------
- docs/devel/index-build.rst |   1 +
- 4 files changed, 179 insertions(+), 162 deletions(-)
- create mode 100644 docs/devel/blkdebug.rst
- delete mode 100644 docs/devel/blkdebug.txt
+I'm going through converting .txt documents (which end users
+will basically never see) to rST format (which appears in our
+HTML manuals). For this file, though, since almost all the
+contents are just a copy of an authoritative source that
+lives elsewhere, it didn't seem to me worth keeping it.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 3584d6a6c6d..ca0a5c731f5 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4015,6 +4015,7 @@ M: Hanna Reitz <hreitz@redhat.com>
- L: qemu-block@nongnu.org
- S: Supported
- F: block/blkdebug.c
-+F: docs/devel/blkdebug.rst
- 
- vpc
- M: Kevin Wolf <kwolf@redhat.com>
-diff --git a/docs/devel/blkdebug.rst b/docs/devel/blkdebug.rst
-new file mode 100644
-index 00000000000..63887c9aa9c
---- /dev/null
-+++ b/docs/devel/blkdebug.rst
-@@ -0,0 +1,177 @@
-+Block I/O error injection using ``blkdebug``
-+============================================
-+
-+..
-+   Copyright (C) 2014-2015 Red Hat Inc
-+
-+   This work is licensed under the terms of the GNU GPL, version 2 or later.  See
-+   the COPYING file in the top-level directory.
-+
-+The ``blkdebug`` block driver is a rule-based error injection engine.  It can be
-+used to exercise error code paths in block drivers including ``ENOSPC`` (out of
-+space) and ``EIO``.
-+
-+This document gives an overview of the features available in ``blkdebug``.
-+
-+Background
-+----------
-+Block drivers have many error code paths that handle I/O errors.  Image formats
-+are especially complex since metadata I/O errors during cluster allocation or
-+while updating tables happen halfway through request processing and require
-+discipline to keep image files consistent.
-+
-+Error injection allows test cases to trigger I/O errors at specific points.
-+This way, all error paths can be tested to make sure they are correct.
-+
-+Rules
-+-----
-+The ``blkdebug`` block driver takes a list of "rules" that tell the error injection
-+engine when to fail an I/O request.
-+
-+Each I/O request is evaluated against the rules.  If a rule matches the request
-+then its "action" is executed.
-+
-+Rules can be placed in a configuration file; the configuration file
-+follows the same .ini-like format used by QEMU's ``-readconfig`` option, and
-+each section of the file represents a rule.
-+
-+The following configuration file defines a single rule::
-+
-+  $ cat blkdebug.conf
-+  [inject-error]
-+  event = "read_aio"
-+  errno = "28"
-+
-+This rule fails all aio read requests with ``ENOSPC`` (28).  Note that the errno
-+value depends on the host.  On Linux, see
-+``/usr/include/asm-generic/errno-base.h`` for errno values.
-+
-+Invoke QEMU as follows::
-+
-+  $ qemu-system-x86_64
-+        -drive if=none,cache=none,file=blkdebug:blkdebug.conf:test.img,id=drive0 \
-+        -device virtio-blk-pci,drive=drive0,id=virtio-blk-pci0
-+
-+Rules support the following attributes:
-+
-+``event``
-+  which type of operation to match (e.g. ``read_aio``, ``write_aio``,
-+  ``flush_to_os``, ``flush_to_disk``).  See `Events`_ for
-+  information on events.
-+
-+``state``
-+  (optional) the engine must be in this state number in order for this
-+  rule to match.  See `State transitions`_ for information
-+  on states.
-+
-+``errno``
-+  the numeric errno value to return when a request matches this rule.
-+  The errno values depend on the host since the numeric values are not
-+  standardized in the POSIX specification.
-+
-+``sector``
-+  (optional) a sector number that the request must overlap in order to
-+  match this rule
-+
-+``once``
-+  (optional, default ``off``) only execute this action on the first
-+  matching request
-+
-+``immediately``
-+  (optional, default ``off``) return a NULL ``BlockAIOCB``
-+  pointer and fail without an errno instead.  This
-+  exercises the code path where ``BlockAIOCB`` fails and the
-+  caller's ``BlockCompletionFunc`` is not invoked.
-+
-+Events
-+------
-+Block drivers provide information about the type of I/O request they are about
-+to make so rules can match specific types of requests.  For example, the ``qcow2``
-+block driver tells ``blkdebug`` when it accesses the L1 table so rules can match
-+only L1 table accesses and not other metadata or guest data requests.
-+
-+The core events are:
-+
-+``read_aio``
-+  guest data read
-+
-+``write_aio``
-+  guest data write
-+
-+``flush_to_os``
-+  write out unwritten block driver state (e.g. cached metadata)
-+
-+``flush_to_disk``
-+  flush the host block device's disk cache
-+
-+See ``qapi/block-core.json:BlkdebugEvent`` for the full list of events.
-+You may need to grep block driver source code to understand the
-+meaning of specific events.
-+
-+State transitions
-+-----------------
-+There are cases where more power is needed to match a particular I/O request in
-+a longer sequence of requests.  For example::
-+
-+  write_aio
-+  flush_to_disk
-+  write_aio
-+
-+How do we match the 2nd ``write_aio`` but not the first?  This is where state
-+transitions come in.
-+
-+The error injection engine has an integer called the "state" that always starts
-+initialized to 1.  The state integer is internal to ``blkdebug`` and cannot be
-+observed from outside but rules can interact with it for powerful matching
-+behavior.
-+
-+Rules can be conditional on the current state and they can transition to a new
-+state.
-+
-+When a rule's "state" attribute is non-zero then the current state must equal
-+the attribute in order for the rule to match.
-+
-+For example, to match the 2nd write_aio::
-+
-+  [set-state]
-+  event = "write_aio"
-+  state = "1"
-+  new_state = "2"
-+
-+  [inject-error]
-+  event = "write_aio"
-+  state = "2"
-+  errno = "5"
-+
-+The first ``write_aio`` request matches the ``set-state`` rule and transitions from
-+state 1 to state 2.  Once state 2 has been entered, the ``set-state`` rule no
-+longer matches since it requires state 1.  But the ``inject-error`` rule now
-+matches the next ``write_aio`` request and injects ``EIO`` (5).
-+
-+State transition rules support the following attributes:
-+
-+``event``
-+  which type of operation to match (e.g. ``read_aio``, ``write_aio``,
-+  ``flush_to_os`, ``flush_to_disk``).  See `Events`_ for
-+  information on events.
-+
-+``state``
-+  (optional) the engine must be in this state number in order for this
-+  rule to match
-+
-+``new_state``
-+  transition to this state number
-+
-+Suspend and resume
-+------------------
-+Exercising code paths in block drivers may require specific ordering amongst
-+concurrent requests.  The "breakpoint" feature allows requests to be halted on
-+a ``blkdebug`` event and resumed later.  This makes it possible to achieve
-+deterministic ordering when multiple requests are in flight.
-+
-+Breakpoints on ``blkdebug`` events are associated with a user-defined ``tag`` string.
-+This tag serves as an identifier by which the request can be resumed at a later
-+point.
-+
-+See the ``qemu-io(1)`` ``break``, ``resume``, ``remove_break``, and ``wait_break``
-+commands for details.
-diff --git a/docs/devel/blkdebug.txt b/docs/devel/blkdebug.txt
+Perhaps the cap-nested-papr machine property should be
+documented in docs/system/ppc/pseries.rst, but that is
+a pre-existing omission: would somebody who knows more
+about the pseries machine than I do like to propose a
+docs tweak there?
+---
+ docs/devel/nested-papr.txt | 119 -------------------------------------
+ 1 file changed, 119 deletions(-)
+ delete mode 100644 docs/devel/nested-papr.txt
+
+diff --git a/docs/devel/nested-papr.txt b/docs/devel/nested-papr.txt
 deleted file mode 100644
-index 0b0c128d356..00000000000
---- a/docs/devel/blkdebug.txt
+index 90943650db9..00000000000
+--- a/docs/devel/nested-papr.txt
 +++ /dev/null
-@@ -1,162 +0,0 @@
--Block I/O error injection using blkdebug
------------------------------------------
--Copyright (C) 2014-2015 Red Hat Inc
+@@ -1,119 +0,0 @@
+-Nested PAPR API (aka KVM on PowerVM)
+-====================================
 -
--This work is licensed under the terms of the GNU GPL, version 2 or later.  See
--the COPYING file in the top-level directory.
+-This API aims at providing support to enable nested virtualization with
+-KVM on PowerVM. While the existing support for nested KVM on PowerNV was
+-introduced with cap-nested-hv option, however, with a slight design change,
+-to enable this on papr/pseries, a new cap-nested-papr option is added. eg:
 -
--The blkdebug block driver is a rule-based error injection engine.  It can be
--used to exercise error code paths in block drivers including ENOSPC (out of
--space) and EIO.
+-  qemu-system-ppc64 -cpu POWER10 -machine pseries,cap-nested-papr=true ...
 -
--This document gives an overview of the features available in blkdebug.
+-Work by:
+-    Michael Neuling <mikey@neuling.org>
+-    Vaibhav Jain <vaibhav@linux.ibm.com>
+-    Jordan Niethe <jniethe5@gmail.com>
+-    Harsh Prateek Bora <harshpb@linux.ibm.com>
+-    Shivaprasad G Bhat <sbhat@linux.ibm.com>
+-    Kautuk Consul <kconsul@linux.vnet.ibm.com>
 -
--Background
------------
--Block drivers have many error code paths that handle I/O errors.  Image formats
--are especially complex since metadata I/O errors during cluster allocation or
--while updating tables happen halfway through request processing and require
--discipline to keep image files consistent.
+-Below taken from the kernel documentation:
 -
--Error injection allows test cases to trigger I/O errors at specific points.
--This way, all error paths can be tested to make sure they are correct.
+-Introduction
+-============
 -
--Rules
-------
--The blkdebug block driver takes a list of "rules" that tell the error injection
--engine when to fail an I/O request.
+-This document explains how a guest operating system can act as a
+-hypervisor and run nested guests through the use of hypercalls, if the
+-hypervisor has implemented them. The terms L0, L1, and L2 are used to
+-refer to different software entities. L0 is the hypervisor mode entity
+-that would normally be called the "host" or "hypervisor". L1 is a
+-guest virtual machine that is directly run under L0 and is initiated
+-and controlled by L0. L2 is a guest virtual machine that is initiated
+-and controlled by L1 acting as a hypervisor. A significant design change
+-wrt existing API is that now the entire L2 state is maintained within L0.
 -
--Each I/O request is evaluated against the rules.  If a rule matches the request
--then its "action" is executed.
+-Existing Nested-HV API
+-======================
 -
--Rules can be placed in a configuration file; the configuration file
--follows the same .ini-like format used by QEMU's -readconfig option, and
--each section of the file represents a rule.
+-Linux/KVM has had support for Nesting as an L0 or L1 since 2018
 -
--The following configuration file defines a single rule:
+-The L0 code was added::
 -
--  $ cat blkdebug.conf
--  [inject-error]
--  event = "read_aio"
--  errno = "28"
+-   commit 8e3f5fc1045dc49fd175b978c5457f5f51e7a2ce
+-   Author: Paul Mackerras <paulus@ozlabs.org>
+-   Date:   Mon Oct 8 16:31:03 2018 +1100
+-   KVM: PPC: Book3S HV: Framework and hcall stubs for nested virtualization
 -
--This rule fails all aio read requests with ENOSPC (28).  Note that the errno
--value depends on the host.  On Linux, see
--/usr/include/asm-generic/errno-base.h for errno values.
+-The L1 code was added::
 -
--Invoke QEMU as follows:
+-   commit 360cae313702cdd0b90f82c261a8302fecef030a
+-   Author: Paul Mackerras <paulus@ozlabs.org>
+-   Date:   Mon Oct 8 16:31:04 2018 +1100
+-   KVM: PPC: Book3S HV: Nested guest entry via hypercall
 -
--  $ qemu-system-x86_64
--        -drive if=none,cache=none,file=blkdebug:blkdebug.conf:test.img,id=drive0 \
--        -device virtio-blk-pci,drive=drive0,id=virtio-blk-pci0
+-This API works primarily using a signal hcall h_enter_nested(). This
+-call made by the L1 to tell the L0 to start an L2 vCPU with the given
+-state. The L0 then starts this L2 and runs until an L2 exit condition
+-is reached. Once the L2 exits, the state of the L2 is given back to
+-the L1 by the L0. The full L2 vCPU state is always transferred from
+-and to L1 when the L2 is run. The L0 doesn't keep any state on the L2
+-vCPU (except in the short sequence in the L0 on L1 -> L2 entry and L2
+--> L1 exit).
 -
--Rules support the following attributes:
+-The only state kept by the L0 is the partition table. The L1 registers
+-it's partition table using the h_set_partition_table() hcall. All
+-other state held by the L0 about the L2s is cached state (such as
+-shadow page tables).
 -
--  event - which type of operation to match (e.g. read_aio, write_aio,
--          flush_to_os, flush_to_disk).  See the "Events" section for
--          information on events.
+-The L1 may run any L2 or vCPU without first informing the L0. It
+-simply starts the vCPU using h_enter_nested(). The creation of L2s and
+-vCPUs is done implicitly whenever h_enter_nested() is called.
 -
--  state - (optional) the engine must be in this state number in order for this
--          rule to match.  See the "State transitions" section for information
--          on states.
+-In this document, we call this existing API the v1 API.
 -
--  errno - the numeric errno value to return when a request matches this rule.
--          The errno values depend on the host since the numeric values are not
--          standardized in the POSIX specification.
+-New PAPR API
+-===============
 -
--  sector - (optional) a sector number that the request must overlap in order to
--           match this rule
+-The new PAPR API changes from the v1 API such that the creating L2 and
+-associated vCPUs is explicit. In this document, we call this the v2
+-API.
 -
--  once - (optional, default "off") only execute this action on the first
--         matching request
+-h_enter_nested() is replaced with H_GUEST_VCPU_RUN().  Before this can
+-be called the L1 must explicitly create the L2 using h_guest_create()
+-and any associated vCPUs() created with h_guest_create_vCPU(). Getting
+-and setting vCPU state can also be performed using h_guest_{g|s}et
+-hcall.
 -
--  immediately - (optional, default "off") return a NULL BlockAIOCB
--                pointer and fail without an errno instead.  This
--                exercises the code path where BlockAIOCB fails and the
--                caller's BlockCompletionFunc is not invoked.
+-The basic execution flow is for an L1 to create an L2, run it, and
+-delete it is:
 -
--Events
--------
--Block drivers provide information about the type of I/O request they are about
--to make so rules can match specific types of requests.  For example, the qcow2
--block driver tells blkdebug when it accesses the L1 table so rules can match
--only L1 table accesses and not other metadata or guest data requests.
+-- L1 and L0 negotiate capabilities with H_GUEST_{G,S}ET_CAPABILITIES()
+-  (normally at L1 boot time).
 -
--The core events are:
+-- L1 requests the L0 to create an L2 with H_GUEST_CREATE() and receives a token
 -
--  read_aio - guest data read
+-- L1 requests the L0 to create an L2 vCPU with H_GUEST_CREATE_VCPU()
 -
--  write_aio - guest data write
+-- L1 and L0 communicate the vCPU state using the H_GUEST_{G,S}ET() hcall
 -
--  flush_to_os - write out unwritten block driver state (e.g. cached metadata)
+-- L1 requests the L0 to run the vCPU using H_GUEST_RUN_VCPU() hcall
 -
--  flush_to_disk - flush the host block device's disk cache
+-- L1 deletes L2 with H_GUEST_DELETE()
 -
--See qapi/block-core.json:BlkdebugEvent for the full list of events.
--You may need to grep block driver source code to understand the
--meaning of specific events.
+-For more details, please refer:
 -
--State transitions
-------------------
--There are cases where more power is needed to match a particular I/O request in
--a longer sequence of requests.  For example:
+-[1] Linux Kernel documentation (upstream documentation commit):
 -
--  write_aio
--  flush_to_disk
--  write_aio
+-commit 476652297f94a2e5e5ef29e734b0da37ade94110
+-Author: Michael Neuling <mikey@neuling.org>
+-Date:   Thu Sep 14 13:06:00 2023 +1000
 -
--How do we match the 2nd write_aio but not the first?  This is where state
--transitions come in.
+-    docs: powerpc: Document nested KVM on POWER
 -
--The error injection engine has an integer called the "state" that always starts
--initialized to 1.  The state integer is internal to blkdebug and cannot be
--observed from outside but rules can interact with it for powerful matching
--behavior.
+-    Document support for nested KVM on POWER using the existing API as well
+-    as the new PAPR API. This includes the new HCALL interface and how it
+-    used by KVM.
 -
--Rules can be conditional on the current state and they can transition to a new
--state.
--
--When a rule's "state" attribute is non-zero then the current state must equal
--the attribute in order for the rule to match.
--
--For example, to match the 2nd write_aio:
--
--  [set-state]
--  event = "write_aio"
--  state = "1"
--  new_state = "2"
--
--  [inject-error]
--  event = "write_aio"
--  state = "2"
--  errno = "5"
--
--The first write_aio request matches the set-state rule and transitions from
--state 1 to state 2.  Once state 2 has been entered, the set-state rule no
--longer matches since it requires state 1.  But the inject-error rule now
--matches the next write_aio request and injects EIO (5).
--
--State transition rules support the following attributes:
--
--  event - which type of operation to match (e.g. read_aio, write_aio,
--          flush_to_os, flush_to_disk).  See the "Events" section for
--          information on events.
--
--  state - (optional) the engine must be in this state number in order for this
--          rule to match
--
--  new_state - transition to this state number
--
--Suspend and resume
--------------------
--Exercising code paths in block drivers may require specific ordering amongst
--concurrent requests.  The "breakpoint" feature allows requests to be halted on
--a blkdebug event and resumed later.  This makes it possible to achieve
--deterministic ordering when multiple requests are in flight.
--
--Breakpoints on blkdebug events are associated with a user-defined "tag" string.
--This tag serves as an identifier by which the request can be resumed at a later
--point.
--
--See the qemu-io(1) break, resume, remove_break, and wait_break commands for
--details.
-diff --git a/docs/devel/index-build.rst b/docs/devel/index-build.rst
-index 90b406ca0ed..3a912aefcfa 100644
---- a/docs/devel/index-build.rst
-+++ b/docs/devel/index-build.rst
-@@ -18,3 +18,4 @@ the basics if you are adding new files and targets to the build.
-    qapi-code-gen
-    fuzzing
-    control-flow-integrity
-+   blkdebug
+-    Signed-off-by: Michael Neuling <mikey@neuling.org>
+-    Signed-off-by: Jordan Niethe <jniethe5@gmail.com>
+-    Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+-    Link: https://msgid.link/20230914030600.16993-12-jniethe5@gmail.com
 -- 
 2.34.1
 
