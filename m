@@ -4,79 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DA7BC531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 07:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 883DFC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 07:24:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1serIx-0006gX-3U; Fri, 16 Aug 2024 03:23:23 -0400
+	id 1serIR-0005gV-2M; Fri, 16 Aug 2024 03:22:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1serIv-0006Wl-CL
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:23:21 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1serIt-00041O-8h
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:23:21 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-1fd9e70b592so17717265ad.3
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 00:23:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723792997; x=1724397797; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=7o74z2jYqMnAGW52/hRgkdhTpNI67oRRMh60yVxM2GM=;
- b=Yd8zNlF9ZWNfxFZltf2O+BoBuNNi7HmVLZWYBPEJ1TTDtjLB5+w5B54BimiHg44kMf
- iDZVn6t2gm6izKFPoKdgqRdQfDLBfoXSGROorvd2H+cm8terrFVWHoHDK+mQbIYn1lRF
- c6r9cw/p5Wmf3qrgUCbtF6ScHehrRVyvJeM5RBiM1WXG6lWw2ez/bHc0l7dK/jaZk+P+
- Rjh7rl86+/1IoBBfCVkR82EvMeAhryZqg9Pwzlcped0mf/qogPap1zGvhuZXU3zZI2tb
- XTR2SaImKWdpFGEihHCsyi2lZkUkLr7yBsuab9mfeFKP2lVJcPXa5Ow07QYghahenMOT
- jOPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723792997; x=1724397797;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7o74z2jYqMnAGW52/hRgkdhTpNI67oRRMh60yVxM2GM=;
- b=OkqkdvczKqZTtsvodcZ7dA3SBx2kVVqJMXp+nRIOFLeT/43OHWTFNrt/o4UTJuLcIw
- NGz3GnKId7QufwSOjRVy5WPezh9HMsCWI1NdV8HlJ+jEDfvwl6kSts5mg6Q6OGWWFz+i
- aMz0ubGikNZaCJfbe0cZjqDRwQVaGzXq1IR+E/80nHd3FgAPW/z085LLRT8IER+GtDwo
- 8M/fy4Hk2IHtoQWds5ESbBSgBAFHYNI0q3mD1mUB0rsAETFD5rizgmd1CIKuxfAPXCSu
- 5iLoUts95GU8/MgJEv3sjZGEKs9YTyof6yuecI9CN6pPFV/5Ewv7AVsXJZRCGc77Gyvu
- 6bQg==
-X-Gm-Message-State: AOJu0YynuKgxvKWG5mm85HjoqhFF+09gZnzmEsqee/uH75RgL6j/sxdj
- zCwlUvqgg/GhBBGIrMs3MEcc3CCB00XcBppNptTZ08KMpfnpJ+oRwPGZ3v9dT/0nnmVA8FTdgiI
- 4K8I=
-X-Google-Smtp-Source: AGHT+IFwcA+itW/JICDn47N7jviXopaKgM5Hlt1cwHGodVwHfBiXPuPBsh7L+pSPS+Uf1bRlQYARsg==
-X-Received: by 2002:a17:902:ea0e:b0:1fc:86cc:4254 with SMTP id
- d9443c01a7336-20203ec5f75mr28991285ad.33.1723792997278; 
- Fri, 16 Aug 2024 00:23:17 -0700 (PDT)
-Received: from stoup.. (2403-580a-f89b-0-1b6b-8c7b-90f9-144f.ip6.aussiebb.net.
- [2403:580a:f89b:0:1b6b:8c7b:90f9:144f])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201f037588esm20195525ad.171.2024.08.16.00.23.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 00:23:16 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: chauser@pullman.com
-Subject: [PATCH for-9.2 v3 0/6] target/sparc: emulate floating point queue
- when raising fp traps
-Date: Fri, 16 Aug 2024 17:23:05 +1000
-Message-ID: <20240816072311.353234-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1serIF-0005Ln-07
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:22:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1serIA-0003xt-8w
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:22:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723792953;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4ziMcKMgTIE3T4+13ZdPgIhZiIyVR9U9bdaD+wjkZoc=;
+ b=Sx/GA54WNflgrzJhwL1pbZ8LrncY+j7G3cnpVLArWwbfEVuItpnIz3AjAXudDnRg7Kdmah
+ z9Dd8ZNbXqp5LBxij0rTA3OkMBeeNKkftXjCX+D9Tlo1jp2X2KvD79MyqXJWYgOjA0Yd2p
+ goTsEIJmq0ZmXWYMuJ1orc7dZn1+PVI=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-425-z5dri-0aO6aPB32rXyabzg-1; Fri,
+ 16 Aug 2024 03:22:29 -0400
+X-MC-Unique: z5dri-0aO6aPB32rXyabzg-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AB61A1955D4E; Fri, 16 Aug 2024 07:22:27 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.75])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3EDE51956054; Fri, 16 Aug 2024 07:22:25 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+	Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 2/5] meson.build: Check for the availability of
+ __attribute__((gcc_struct)) on MSYS2
+Date: Fri, 16 Aug 2024 09:22:15 +0200
+Message-ID: <20240816072218.27125-3-thuth@redhat.com>
+In-Reply-To: <20240816072218.27125-1-thuth@redhat.com>
+References: <20240816072218.27125-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,42 +81,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Carl,
+Since quite a while MSYS2 now supports Clang as a compiler, too.
+Unfortunately, this compiler is lacking the __attribute__((gcc_struct))
+that we need for compiling on Windows. But since the compiler is
+available now, some people started to use it to compile QEMU on MSYS2,
+apparently ignoring the compiler warnings (see for example the ticket at
+https://gitlab.com/qemu-project/qemu/-/issues/2476 ). These builds are
+likely broken in a couple of spots, so let's make sure that we rather
+bail out early in the configuration phase instead of allowing the build
+to succeed with warnings.
 
-While digging through the manual to figure out if we were really
-doing the right thing raising the fp exception, I found the fpu
-exception state machine.  I'm not sure it's worth emulating the
-fp_exception_pending state, but it's certainly easy enough to
-emulate the fp_executing/fp_exception states.
+Message-ID: <20240815122719.727639-1-thuth@redhat.com>
+Tested-by: Stefan Weil <sw@weilnetz.de>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ meson.build | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-In addition, this simplifies the implementation of STDFQ,
-restricts FQ to sparc32 system mode, and handles migration.
-
-Would you please double-check this against your Solaris images?
-
-
-r~
-
-
-Carl Hauser (2):
-  target/sparc: Add FQ and FSR.QNE
-  target/sparc: Populate sparc32 FQ when raising fp exception
-
-Richard Henderson (4):
-  target/sparc: Restrict STQF to sparcv9
-  target/sparc: Add FSR_QNE to tb_flags
-  target/sparc: Implement STDFQ
-  target/sparc: Add gen_trap_if_nofpu_fpexception
-
- target/sparc/cpu.h          |  30 ++++++++-
- target/sparc/fop_helper.c   |   4 ++
- target/sparc/int32_helper.c |  32 ++++-----
- target/sparc/machine.c      |  25 +++++++
- target/sparc/translate.c    | 126 ++++++++++++++++++++++++++----------
- target/sparc/insns.decode   |   4 +-
- 6 files changed, 169 insertions(+), 52 deletions(-)
-
+diff --git a/meson.build b/meson.build
+index 81ecd4bae7..fbda17c987 100644
+--- a/meson.build
++++ b/meson.build
+@@ -315,6 +315,11 @@ elif host_os == 'sunos'
+   qemu_common_flags += '-D__EXTENSIONS__'
+ elif host_os == 'haiku'
+   qemu_common_flags += ['-DB_USE_POSITIVE_POSIX_ERRORS', '-D_BSD_SOURCE', '-fPIC']
++elif host_os == 'windows'
++  if not compiler.compiles('struct x { int y; } __attribute__((gcc_struct));',
++                           args: '-Werror')
++    error('Your compiler does not support __attribute__((gcc_struct)) - please use GCC instead of Clang')
++  endif
+ endif
+ 
+ # __sync_fetch_and_and requires at least -march=i486. Many toolchains
 -- 
-2.43.0
+2.46.0
 
 
