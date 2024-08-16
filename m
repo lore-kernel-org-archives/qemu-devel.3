@@ -4,129 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C29C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 07:06:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB299C531DE
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 07:07:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1ser2D-0008II-6t; Fri, 16 Aug 2024 03:06:05 -0400
+	id 1ser2t-0000eF-Ko; Fri, 16 Aug 2024 03:06:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hare@suse.de>) id 1ser28-0008HC-MY
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:06:01 -0400
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1ser2m-0000Su-3S
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:06:40 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hare@suse.de>) id 1ser21-0001xx-FI
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:05:57 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8D2101FDCE;
- Fri, 16 Aug 2024 07:05:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1723791948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=at5DFSP6c81qT5KRnYgWvCQnog+7QeKU+7pgyjRGQaE=;
- b=tTg+ANczlHUA1K9DXrR1Uiv+05Wg2zV8g4vfN1qhzXWQduxbRQW8+LGdSCEMNPUrkXTxQ2
- BENxRbfSkTpzAclkVaWwIzwxW0PsoeNCw949GlMpBQbTIAXZgG4TzMy74vW0s0EYw+mp+l
- 7nMbp0LjzSsolyp9iwfvlNUo9h4BCTo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1723791948;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=at5DFSP6c81qT5KRnYgWvCQnog+7QeKU+7pgyjRGQaE=;
- b=p0EEYejfF76V6qlUViyyjqKb83a3BgPPY2QqTsoGjctQdwBMbTv/5P2AYSLilaH121a9In
- b1JwlsJKwoAovTBg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=tTg+ANcz;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=p0EEYejf
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1723791948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=at5DFSP6c81qT5KRnYgWvCQnog+7QeKU+7pgyjRGQaE=;
- b=tTg+ANczlHUA1K9DXrR1Uiv+05Wg2zV8g4vfN1qhzXWQduxbRQW8+LGdSCEMNPUrkXTxQ2
- BENxRbfSkTpzAclkVaWwIzwxW0PsoeNCw949GlMpBQbTIAXZgG4TzMy74vW0s0EYw+mp+l
- 7nMbp0LjzSsolyp9iwfvlNUo9h4BCTo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1723791948;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=at5DFSP6c81qT5KRnYgWvCQnog+7QeKU+7pgyjRGQaE=;
- b=p0EEYejfF76V6qlUViyyjqKb83a3BgPPY2QqTsoGjctQdwBMbTv/5P2AYSLilaH121a9In
- b1JwlsJKwoAovTBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C27C613A2F;
- Fri, 16 Aug 2024 07:05:47 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id EDDLLUv6vmbJAwAAD6G6ig
- (envelope-from <hare@suse.de>); Fri, 16 Aug 2024 07:05:47 +0000
-Message-ID: <904a433c-0471-4f11-a34b-cef8adf1663c@suse.de>
-Date: Fri, 16 Aug 2024 09:05:46 +0200
+ (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
+ id 1ser2j-00022d-CD
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:06:39 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-201fae21398so8110215ad.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 00:06:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1723791995; x=1724396795;
+ darn=nongnu.org; 
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=xRU+5Nf9Pu4LJArUVSD6RBlibUDf6dTZ4t+zd9+TE6I=;
+ b=InhzHso49vwutlknz9h7/ghxQ5eegsPs02PfVmC3k+2BCoM7JZUtklUGXZKzhPA8Fb
+ dkBGLsFgHF49HZ1yxnbL7R0su3gzHh3CLoDlWvhCgAVc86dgehay7R2FEwNGSRVxmYW7
+ R2DOYuFxv004hBDdjhrqENyuyeAJP9zB5WLJvJXnm0t5wO/Lasp0yI5w679icdkLCKd9
+ UT5M1SCe+6P81RBQbS5bmTS6ftodin7rS92r01O8cogkviQ4DgxMM9LetLFaIoRXithd
+ d9HQKRspsIxXkAQogOhqDu6Glyf3nzGo7Fsj+G5UtCGJcXhf2+bsd865ZO8wLaJ7GKxD
+ Ai0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723791995; x=1724396795;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xRU+5Nf9Pu4LJArUVSD6RBlibUDf6dTZ4t+zd9+TE6I=;
+ b=sUxWRj6Cz7HohtB97ru4aG4O8/Y/ORhA4xPo42AO83NX/w/C3KAuIY/I11c+mtN+cM
+ RHKWdNZZbjHvJljXa74akkgdGZFGpvmCNqWI6d91mz97k2iisMRcOnZN5J9ssH7wuTT+
+ wTBNJ+KGreFk2aNRoclPRUoujlf2r1CM4SGlUNghSi+PkeNvyOM8dYKpgTmb5Mc47kQv
+ asWrIsZP+aLxriyUI6wz/N5jBHfhrWfbF/RRKdkFZlYj77g3rg0SGsxvzLh6P/8xr1JM
+ FJKwMgvIMZPCBuvEvuRfG5QcbKqUxdUmM6TqJcevW/wbHFEFIw6ZlJ+fQKxMcKICfxiq
+ kKUw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUp1x0pU/X3aH2G1CvyhQRNXxMwYMGpbdHHbe/C0C5AI47C4Lf2nv+is+yakiUpCV8vaTtDCdreWDNy/Hu8qlD1KaX3nDo=
+X-Gm-Message-State: AOJu0Yxiwn0isILx0gzXE2qbxnGN6MxPaZC3j+obi+AJ4t8ruogRtAQm
+ xr8jaJn5XgMLWtWruPd5nY9QkTr7zEvVKykWqTW+fnONY585rIKbK6KpXYgfFVc=
+X-Google-Smtp-Source: AGHT+IG2/j9sEh16l66MuZVe+bS6ByutthICRsPOZ+dO6D1onL+d/LyTr5APKFYa4ggr9u8qP852RA==
+X-Received: by 2002:a17:903:247:b0:1fd:92a7:6ccc with SMTP id
+ d9443c01a7336-20203ec1b8cmr26825795ad.30.1723791995186; 
+ Fri, 16 Aug 2024 00:06:35 -0700 (PDT)
+Received: from debug.ba.rivosinc.com ([64.71.180.162])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-201f0319755sm19860105ad.65.2024.08.16.00.06.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Aug 2024 00:06:34 -0700 (PDT)
+Date: Fri, 16 Aug 2024 00:06:32 -0700
+From: Deepak Gupta <debug@rivosinc.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com,
+ Alistair.Francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ pbonzini@redhat.com, jim.shu@sifive.com, andy.chiu@sifive.com,
+ kito.cheng@sifive.com
+Subject: Re: [PATCH v4 16/16] target/riscv: add trace-hooks for each case of
+ sw-check exception
+Message-ID: <Zr76eGu0ELFGx8Pi@debug.ba.rivosinc.com>
+References: <20240816010711.3055425-1-debug@rivosinc.com>
+ <20240816010711.3055425-17-debug@rivosinc.com>
+ <70e86ba9-1764-4a2d-bee5-89a0b16ba385@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC] Virtualizing tagged disaggregated memory capacity (app
- specific, multi host shared)
-Content-Language: en-US
-To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>,
- David Hildenbrand <david@redhat.com>, linux-mm@kvack.org,
- linux-cxl@vger.kernel.org, Davidlohr Bueso <dave@stgolabs.net>,
- Ira Weiny <ira.weiny@intel.com>, John Groves <John@Groves.net>,
- virtualization@lists.linux.dev
-Cc: Oscar Salvador <osalvador@suse.de>, qemu-devel@nongnu.org,
- Dave Jiang <dave.jiang@intel.com>, Dan Williams <dan.j.williams@intel.com>,
- linuxarm@huawei.com, wangkefeng.wang@huawei.com,
- John Groves <jgroves@micron.com>, Fan Ni <fan.ni@samsung.com>,
- Navneet Singh <navneet.singh@intel.com>,
- =?UTF-8?B?4oCcTWljaGFlbCBTLiBUc2lya2lu4oCd?= <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20240815172223.00001ca7@Huawei.com>
-From: Hannes Reinecke <hare@suse.de>
-In-Reply-To: <20240815172223.00001ca7@Huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RCPT_COUNT_TWELVE(0.00)[20]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email]
-X-Rspamd-Queue-Id: 8D2101FDCE
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=hare@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <70e86ba9-1764-4a2d-bee5-89a0b16ba385@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=debug@rivosinc.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,42 +101,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/15/24 18:22, Jonathan Cameron wrote:
-> Introduction
-> ============
-> 
-> If we think application specific memory (including inter-host shared memory) is
-> a thing, it will also be a thing people want to use with virtual machines,
-> potentially nested. So how do we present it at the Host to VM boundary?
-> 
-> This RFC is perhaps premature given we haven't yet merged upstream support for
-> the bare metal case. However I'd like to get the discussion going given we've
-> touched briefly on this in a number of CXL sync calls and it is clear no one is
-> entirely sure what direction make sense.  We may briefly touch on this in the
-> LPC CXL uconf, but time will be very limited.
-> 
-Thanks for the detailed write-up.
+On Fri, Aug 16, 2024 at 03:52:34PM +1000, Richard Henderson wrote:
+>On 8/16/24 11:07, Deepak Gupta wrote:
+>>Violations to control flow rules setup by zicfilp and zicfiss lead to
+>>software check exceptions. To debug and fix such sw check issues in guest
+>>, add trace-hooks for each case.
+>>
+>>Signed-off-by: Jim Shu <jim.shu@sifive.com>
+>>Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+>>---
+>>  target/riscv/helper.h                         |  3 +++
+>>  target/riscv/insn_trans/trans_rvi.c.inc       |  3 +++
+>>  target/riscv/insn_trans/trans_rvzicfiss.c.inc |  1 +
+>>  target/riscv/op_helper.c                      | 13 +++++++++++++
+>>  target/riscv/trace-events                     |  6 ++++++
+>>  target/riscv/translate.c                      |  2 ++
+>>  6 files changed, 28 insertions(+)
+>>
+>>diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+>>index e946ba61fd..6e90fbd225 100644
+>>--- a/target/riscv/helper.h
+>>+++ b/target/riscv/helper.h
+>>@@ -123,6 +123,9 @@ DEF_HELPER_2(cbo_zero, void, env, tl)
+>>  /* helper to raise sw check exception */
+>>  DEF_HELPER_2(raise_sw_check_excep, void, env, tl)
+>>+/* helper functions to trace riscv cfi violations */
+>>+DEF_HELPER_3(zicfilp_label_mismatch, void, env, tl, tl)
+>>+DEF_HELPER_3(zicfiss_ra_mismatch, void, env, tl, tl)
+>>  /* Special functions */
+>>  DEF_HELPER_2(csrr, tl, env, int)
+>>diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
+>>index 936b430282..7021f8d3da 100644
+>>--- a/target/riscv/insn_trans/trans_rvi.c.inc
+>>+++ b/target/riscv/insn_trans/trans_rvi.c.inc
+>>@@ -54,6 +54,7 @@ static bool trans_lpad(DisasContext *ctx, arg_lpad *a)
+>>              /*
+>>               * misaligned, according to spec we should raise sw check exception
+>>               */
+>>+            trace_zicfilp_unaligned_lpad_instr(ctx->base.pc_first);
+>>              gen_helper_raise_sw_check_excep(tcg_env,
+>>                  tcg_constant_tl(RISCV_EXCP_SW_CHECK_FCFI_TVAL));
+>
+>Ah, no.
+>
+>This performs the trace at translation time.
+>You want the trace at execution time.
+>
+>    gen_update_pc(ctx, 0);
+>    gen_helper_zicfilp_unaligned_lpad(tcg_env);
+>    ctx->base.is_jmp = DISAS_NORETURN;
+>
+>
+>void HELPER(zicfilp_unaligned_lpad)(CPURISCVState *env)
+>{
+>    trace_zicfilp_unaligned_lpad(env->pc);
+>    env->sw_check_code = RISCV_EXCP_SW_CHECK_FCFI_TVAL;
+>    riscv_raise_exception(RISCV_EXCP_SW_CHECK, 0);
+>}
+>
 
-Can't we have an ad-hoc meeting at OSS/LPC to gather interested/relevant 
-people to explore ideas around this?
+facepalm on me. sorry.
 
-In particular I'd be interested on how to _get_ the application specific 
-memory to the application in question. It's easy if you have your own 
-application and design it to work on DAX devices. Obviously this 
-approach won't work for unmodified applications; however, they really
-might want to use this, too.
+>etc.
+>
+>Nevermind the previous advice vs patch 5 saying you could inline 
+>everything; I had forgotten the desire for tracepoints.
 
-And, of course, the other mentioned problems are worth discussing, and I 
-do agree that the uconf will probably not providing sufficient time for 
-this.
+It helps locate finding control flow violations faster and fix such
+issues in libc, libraries, and other pieces of software faster.
 
-Cheers,
+So desire is basically fixing guest software faster.
 
-Hannes
--- 
-Dr. Hannes Reinecke                  Kernel Storage Architect
-hare@suse.de                                +49 911 74053 688
-SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
-HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
+>
+>You should probably add these helpers and tracepoints as you add the 
+>code.  Anything else is going to be a bit confusing.
 
+Or I can just drop this for now for upstreaming purpose. I'll think about it.
+>
+>
+>r~
 
