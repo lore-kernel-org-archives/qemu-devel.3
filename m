@@ -4,78 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8882C3DA4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB6C1C531DC
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 21:32:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sf4Ye-0005K1-90; Fri, 16 Aug 2024 17:32:28 -0400
+	id 1sf4YD-0004yW-Hz; Fri, 16 Aug 2024 17:32:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sf4YZ-0005IN-UJ
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 17:32:24 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1sf4YC-0004xL-0T
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 17:32:00 -0400
+Received: from mail-io1-xd2b.google.com ([2607:f8b0:4864:20::d2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sf4YX-0000Xe-UQ
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 17:32:23 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3717ff2358eso1271873f8f.1
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 14:32:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1sf4YA-0000X4-Gk
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 17:31:59 -0400
+Received: by mail-io1-xd2b.google.com with SMTP id
+ ca18e2360f4ac-824d911b6c4so95620639f.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 14:31:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723843937; x=1724448737; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=FQh0QJhCbLd86zDXPRNkn3AQi7dFzwG3ifnJG1Chf3E=;
- b=hWw6SWaw1ae+6gCKd9c4HCuLO8Duj5yBXBQuKL6aJYM/OucJeMJYFTUYLeoHFKqo3H
- syFRvgmhC22IROzYQkjkMyBl4weN9KIV9/NLvpfR6Jwv4oL5fMvk27//2JznhmIYZEE6
- D+/tNIr7aRhTuzTOxmjcqOURUESVUUC3NBHDVR1FwgeSl0GcqyiN07wq5k5//vwiltO8
- Znhg38a2q02s0DyF1+kSQPjlpJqfr5wGq2hv+5gj7Y4gyKyjja6XO55wizU4iTVhKz3X
- Fr5L7fqIUc4VqLwOHJnVPJZtyPHcfMi9JkwEAC7fPM6ZxBI8nmL4jXS2TntM+9yqFA+K
- EjbA==
+ d=gmail.com; s=20230601; t=1723843915; x=1724448715; darn=nongnu.org;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=mXNPKvtAYsewmUk+k0BVBIEDhBQa4YPGiEIKEpv8sw8=;
+ b=MNtioknYKctQpsWnoC+1C+OK84YVNCBe5HTe+j8B47n9KqL2lrrSD12KobezEqg3fz
+ ZW3ee3KaRZixhWg1v3Sn6VMWgZcn+JQPRfx4Iyy8HayT15YRLJkrf7qhLgd+jxS3yqAd
+ T8eLfX0INu/lNA+BTdQ8hsrj5hZEMejGiF0P8gY+aVbb9a6xUIaHNR7FlYXLzVTyJxkX
+ rWvp1DRtxD3cZeFVnbDJzn8NsRNOZk8tqMI7bMbQSQEm/wBn47p4YcoG0YBnb/goSlXq
+ NOfP7HZW1Hlg2SXMt1qkQ78d2qycmr47syk7hFt1iD7viR+s6GJxO/04x48bibTKcPhe
+ 2/RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723843937; x=1724448737;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FQh0QJhCbLd86zDXPRNkn3AQi7dFzwG3ifnJG1Chf3E=;
- b=lv2g4n1/ncbehaZnuY9eJI3jHpPpnWvpZ/k7TFUo+a8roUMqTY/U8NjJ2Gv9XO53EB
- wB2bP7BnQC5miiQztERR9tQaATnQLcbgudv54jajp5mUe67fFCKEuOm2YhR5SwuKAHTC
- P7gMLI/WHJhKIAEX076AoFWJqtKDZdyQm0M3HxkI7uSFc/4xLK/GPlvBDxjf3GoIyNTX
- 6YAdOe7WIPhQMbGrIlflTN/nMexWDQx/4ReMtopSgLIleW1JYwXT7ZU1tYJ2zy9EkU9c
- IffvbyVmrk0d6TYdoP/phKM+JnNWqFImOLzpJlyLNmMKmvSum96gW6zcQcqxrb+r1K4L
- 4w8w==
-X-Gm-Message-State: AOJu0YyQoEZFEm5OXLEKTTRvLvMGOzUwHi9KHM8AdsQB9baiXcDi1G2b
- ikQlTGVljILIN7Hud7D48JyRq+uqKakw/jowG0uKdXOYAZqb/zbTzjMybtiCigZNKunNvfk7gRc
- Kgdk=
-X-Google-Smtp-Source: AGHT+IE8g/Ps27UkjbOHNXP+NCjw5BRnFpEFXd6F83bwC6hCm7s64qsjh/3ulNGMhqyj8yK/xnlN+g==
-X-Received: by 2002:a5d:498b:0:b0:368:48e6:5056 with SMTP id
- ffacd0b85a97d-37194641ed7mr2724486f8f.22.1723843936007; 
- Fri, 16 Aug 2024 14:32:16 -0700 (PDT)
-Received: from m1x-phil.lan ([176.176.151.17])
+ d=1e100.net; s=20230601; t=1723843915; x=1724448715;
+ h=content-language:thread-index:content-transfer-encoding
+ :mime-version:message-id:date:subject:in-reply-to:references:cc:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=mXNPKvtAYsewmUk+k0BVBIEDhBQa4YPGiEIKEpv8sw8=;
+ b=oyzaCSoE8jGuXsSEIheQnW7yXHiscNe/YM0G7dVQYq4BSBxLjRamb8HUm8CjdkxKRm
+ P+/6n0sdWGfPu2b1vbfN6xpg+ga51nG8zTHl0qodPm9gSzIdRMxWegjuuPdQbL3AuR2m
+ h/hoJsmfPv8jIQPHPsuvI5eQaKDOZ4/GsS9aZ+zruuCVyomL/WLT6mGPc9SxRHmXCDDR
+ y+rjY8XdkxvjtW5yLNhryR7T7+gYMKd4SmG0zgT0aW7dX7INCvgfF+FzxoYGtM7anVkt
+ LahwWOHcIiKCjc9pBqhClvOVUiNor/7EUpykU9jbguhZC5BngK6JJDisiF40dxuRwXVW
+ 4TRg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWiVYfXxBSEuE30VSOzSbRkCic9zXWRCdQDVqgxJPjj2T6fwBhLNVJcaA0J0Iz0/LLzGHtsgw3iq9ao901k2g+lJ0YgLIg=
+X-Gm-Message-State: AOJu0YxlXzHUYnjFWWu23NNhpAYwwhSUY8pc9UPaf9Da5yFc6Q3G0Hnz
+ qB2cr51FVlCbtTwaJatFcBWV0yEYwGk0Ctp8b0y7gG1MGq7QoD2E
+X-Google-Smtp-Source: AGHT+IEF3Snz4gOHcvZH3e1flCFnqcuWoiOMcsHRPXD+YVNP1aE9Kfvi6Jy1PymBa7GhJ8FTu6S1hg==
+X-Received: by 2002:a05:6602:6c18:b0:822:2584:2f73 with SMTP id
+ ca18e2360f4ac-824f26fbffcmr448556739f.11.1723843915461; 
+ Fri, 16 Aug 2024 14:31:55 -0700 (PDT)
+Received: from DESKTOPUU50BPD ([2601:284:8201:81c0:8166:7e5b:29b6:51cb])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-371898aabf5sm4394219f8f.97.2024.08.16.14.32.11
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 16 Aug 2024 14:32:15 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Beraldo Leal <bleal@redhat.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] gitlab-ci: Replace build_script -> step_script in Cirrus jobs
-Date: Fri, 16 Aug 2024 23:32:03 +0200
-Message-ID: <20240816213203.18350-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
+ 8926c6da1cb9f-4ccd6e9d253sm1474145173.72.2024.08.16.14.31.54
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 16 Aug 2024 14:31:54 -0700 (PDT)
+From: <ltaylorsimpson@gmail.com>
+To: "'Brian Cain'" <bcain@quicinc.com>,
+	<qemu-devel@nongnu.org>
+Cc: <quic_mathbern@quicinc.com>, <sidneym@quicinc.com>,
+ <quic_mliebel@quicinc.com>, "'Laurent Vivier'" <laurent@vivier.eu>
+References: <20240816190620.1418311-1-bcain@quicinc.com>
+In-Reply-To: <20240816190620.1418311-1-bcain@quicinc.com>
+Subject: RE: [PATCH 1/3] target/hexagon: Rename HEX_EXCP_ => HEX_EVENT_
+Date: Fri, 16 Aug 2024 15:31:54 -0600
+Message-ID: <019a01daf023$b72a1140$257e33c0$@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQHkSSDsbHa0lsPsUwH6PIsqcGtF+rIXtAyw
+Content-Language: en-us
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2b;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd2b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -93,42 +101,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Long due upgrade, see [1]:
 
-  In GitLab Runner 13.2 a translation for step_script to
-  build_script was added to the custom executor. In 14.0
-  the build_script stage will be replaced with step_script.
 
-We are using GitLab 17 [2]!
+> -----Original Message-----
+> From: Brian Cain <bcain@quicinc.com>
+> Sent: Friday, August 16, 2024 1:06 PM
+> To: qemu-devel@nongnu.org
+> Cc: bcain@quicinc.com; quic_mathbern@quicinc.com;
+> sidneym@quicinc.com; quic_mliebel@quicinc.com;
+> ltaylorsimpson@gmail.com; Laurent Vivier <laurent@vivier.eu>
+> Subject: [PATCH 1/3] target/hexagon: Rename HEX_EXCP_ => HEX_EVENT_
+> 
+> Change the name of these definitions to reflect that they correspond to the
+> event code for the exception.
+> 
+> Signed-off-by: Brian Cain <bcain@quicinc.com>
+> ---
+>  linux-user/hexagon/cpu_loop.c |  4 ++--
+>  target/hexagon/cpu.h          |  2 +-
+>  target/hexagon/cpu_bits.h     | 14 +++++++-------
+>  target/hexagon/gen_tcg.h      |  2 +-
+>  target/hexagon/translate.c    |  6 +++---
+>  5 files changed, 14 insertions(+), 14 deletions(-)
 
-This removes the following warning:
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 
-  WARNING: Starting with version 17.0 the 'build_script'
-  stage will be replaced with 'step_script':
-  https://gitlab.com/groups/gitlab-org/-/epics/6112
-
-[1] https://about.gitlab.com/releases/2021/05/22/gitlab-13-12-released/#remove-translation-from-stepscript-to-buildscript-in-custom-executor
-[2] https://about.gitlab.com/releases/2024/05/16/gitlab-17-0-released/
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- .gitlab-ci.d/cirrus/build.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/.gitlab-ci.d/cirrus/build.yml b/.gitlab-ci.d/cirrus/build.yml
-index 43dd52dd19..102cdbd8b1 100644
---- a/.gitlab-ci.d/cirrus/build.yml
-+++ b/.gitlab-ci.d/cirrus/build.yml
-@@ -26,7 +26,7 @@ build_task:
-     - git clone --depth 100 "$CI_REPOSITORY_URL" .
-     - git fetch origin "$CI_COMMIT_REF_NAME"
-     - git reset --hard "$CI_COMMIT_SHA"
--  build_script:
-+  step_script:
-     - mkdir build
-     - cd build
-     - ../configure --enable-werror $CONFIGURE_ARGS
--- 
-2.45.2
 
 
