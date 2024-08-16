@@ -4,76 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A730C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 06:08:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46FAEC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 06:17:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seq7n-0002s9-J0; Fri, 16 Aug 2024 02:07:47 -0400
+	id 1seqGI-0003OJ-S5; Fri, 16 Aug 2024 02:16:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seq7h-0002nX-95
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 02:07:41 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seqGF-0003Me-NP
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 02:16:32 -0400
 Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seq7e-0002P3-Ln
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 02:07:40 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1seqGC-0003qZ-QP
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 02:16:30 -0400
 Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5bec87ececeso794806a12.0
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 23:07:37 -0700 (PDT)
+ 4fb4d7f45d1cf-5bb85e90ad5so1432840a12.3
+ for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 23:16:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723788457; x=1724393257; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723788986; x=1724393786; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Ia6EoS/pQWC1dw280eGmttTlgXgRCOdoLo4NpzA3JYc=;
- b=k/5ZGQkZcImrpk1+4Y52A/38qNCiijRPYW5+ejfNb8zmoRQDTpFZmCDige2RrZ6qRE
- LonYsQOVCB8e3igOt+d/PReEEQy7htWjpjgHuTWsFs+E99Qm7Ttw7RswR1B6hOTiAYfX
- 7NsPbc6uzPY+VnNcRmoqTLOHpTGP3RSHA2Mr4l1+0KxBzY/pJKgWyEUzu8NSPsSLdzex
- wznHn4HsRUtR33RKIRLalRb7gOn93cBF+veUgSj8YUzQwGorsFLVf2CuQP0Wkpca3Cn9
- 21fg6EP+f4KAbXZFMIm07+LQ8Wg1FmJVdeeYXrBbqmBpsA5zlRjLxJ60dDwQJ8l6klw1
- Yl6w==
+ bh=ns6Qg3OYWk3Ry63Tz1spLZGvUKGI1mzJjq2PdU/zuZk=;
+ b=G6I8An9uJxw4W7Oo7praY5HASHuXitmoi56H2vMjYgkrCFjeKMBUQrBwJPAuQkMkXF
+ MiecevRFr5XEnfKjTIiSNgZYjzhRfzPQ30QtY5siQfjebYrEepN7pX4178LqbYn6M7Fb
+ b5elB6hG8ahMHo4ZwVEnNaznDwsLelSP+B0IHGrLY1HMLRmaqEnsPx1BGBOXTQmnA2BM
+ Q875kQUfrkCMKCTiRiS7jk6ML/faghHLjNegVACEfmOQa0QOkf049bqgagqgObHBmC7G
+ ysg9d9adb+ndJXkmwoT7pyXlA4jE76/6WJL0mP7Umx+H6Q/ITvgFjlk38/dtUepWz2+7
+ AT2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723788457; x=1724393257;
+ d=1e100.net; s=20230601; t=1723788986; x=1724393786;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ia6EoS/pQWC1dw280eGmttTlgXgRCOdoLo4NpzA3JYc=;
- b=JnTph1KSiQhFh0OSjOEQ4t8s3ZmNEAXRJgUWUnmSf8V1eQWIDdYL9f7epR3YzUL/sU
- G9HxoXh1cHkzaeLF3b6woz5rOorzjvsfjSoYVDyH5jb6i/poVBTmDRAFW3F/XscVmGw/
- 7Dg2Df8KUH9dURNpkgOB6lMy678Fx4SJVefuttODTuqw1fNiFcf4YuVhEQCOOi59uoPB
- zoR13pBjqGai93yB2NbZKH8VPzaLSIwziy2YqVX2V73iTzcPiMlFWw/pOj6h5BAyY7Ku
- D/fdqtLkliKc2s8UVAiSWE15yfggdEiJS9vnqJ1MdEP6vuLicO7JiiRXqevP0zghBHZU
- Gu2Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXrJtaUrIvAN/01+v5jHWT9gj8Q4rhkVKOiMfpnqoSSAqSQmsAuRqZRqBQvbKn5JXhhlld/XKYafNRX6B/gzuhbQmJPf1A=
-X-Gm-Message-State: AOJu0Yw5qD1634i57HKpFkklvCBbb/b/IyBGcMlehmHzyHcgIXijH2iT
- s6dqPWKIyyjYjFUPrRRpip3lZ1i5f4Hg+llX5SISqnWL6ME3EfRqVAzUKjU4baE=
-X-Google-Smtp-Source: AGHT+IEqe2GCJDxHfY7CimAibElgcKjANogxf7tJsHiZQgN4+Ki9XqEDMIQQuK+H4X75bxaABcQytQ==
-X-Received: by 2002:a17:907:944d:b0:a80:7c30:a836 with SMTP id
- a640c23a62f3a-a8392a4103amr121655966b.56.1723788456504; 
- Thu, 15 Aug 2024 23:07:36 -0700 (PDT)
+ bh=ns6Qg3OYWk3Ry63Tz1spLZGvUKGI1mzJjq2PdU/zuZk=;
+ b=uhangVHPSkJMw/BVL1IdnCcqBpxKifztzYRk+9j744CZfQGibghSaerLmPN6Hiign1
+ frnI2FHCl1M8WTDOxnEosGspLo7pJ2fsyoTYjTMG9Nl1woms9ZCE5FItqLWam8DKQHSB
+ yFkz2SIP7RweDVXGNMuTqrhgGoaXCwg0xj1be3vF2HoUGSevSgZq/hVSUiZC7DnoO6Gb
+ a/dLeWbuOflB6WoTXc6y/iXfRTWWObEQ+8nK6nfN58RU7nvebe//eC2W1dUYP+1ppkXP
+ kPqvFMpDYSaZ7wKaX/yn/tgkk/2o2QKRQEiIuznqr+LLQILRBYDkN5Br8dEz737oIbM4
+ Tc8Q==
+X-Gm-Message-State: AOJu0Yw5U9hB3einrvexYAOAphliKIM/Gpg+jxqZDM38Ni0ilEyE5kqb
+ CoiXhIzuj4h0V3Hiy/YF91piJtOddikyqNXt88V7t9Ps6AI81aGZhUFZCHOLSAOu91D9H/vK6zw
+ c3/M=
+X-Google-Smtp-Source: AGHT+IHD3sPtCXYPHNcRxHO2B7A/PXZHd+mNUc9+6oQ5HZSckKZ77gDOWZHty647GSfEVcSMFUgpLw==
+X-Received: by 2002:a17:907:94ce:b0:a7a:b9dd:775f with SMTP id
+ a640c23a62f3a-a8392a2241cmr112907766b.55.1723788986018; 
+ Thu, 15 Aug 2024 23:16:26 -0700 (PDT)
 Received: from [192.168.69.100] (cor91-h02-176-184-30-185.dsl.sta.abo.bbox.fr.
  [176.184.30.185]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a838396d5b3sm203495966b.215.2024.08.15.23.07.32
+ a640c23a62f3a-a83839471c0sm205263966b.182.2024.08.15.23.16.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Aug 2024 23:07:36 -0700 (PDT)
-Message-ID: <db09223b-fba4-485e-953c-73f050273c5b@linaro.org>
-Date: Fri, 16 Aug 2024 08:07:17 +0200
+ Thu, 15 Aug 2024 23:16:25 -0700 (PDT)
+Message-ID: <8e386637-3481-4eaa-b19f-70187924d817@linaro.org>
+Date: Fri, 16 Aug 2024 08:16:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1] hw/i386/pc: Warn about unsatisfied vmport deps
-To: =?UTF-8?Q?Kamil_Szcz=C4=99k?= <kamil@szczek.dev>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>,
- Joelle van Dyne <j@getutm.app>, Bernhard Beschow <shentey@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <vsm1ly2eX009LRKgURcMp6qTYHWw1bZd3zg2GUbd4M90T91QvJRdKxiRS3rPl8PR96y2r890Am3Ajf4kQrwihn7-7hKBU9VicRPPtIRv_GI=@szczek.dev>
- <e7c17260-41d7-4749-aca9-da344517c772@linaro.org>
- <ghPjnPAU8FvuVvcKbO9wNpQPgm4ZwkjL1j5Vh-voSnVI8EE4tCUKDqmBj7LGXv2cc7Yt7IWlMvnbvA-I6QxR7iS6xDyfIwvpuKtEMVbxHIo=@szczek.dev>
+Subject: Re: [PATCH-for-9.1? v2] hw/pci/pci-hmp-cmds: Avoid displaying bogus
+ size in 'info pci'
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20240801131449.51328-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <ghPjnPAU8FvuVvcKbO9wNpQPgm4ZwkjL1j5Vh-voSnVI8EE4tCUKDqmBj7LGXv2cc7Yt7IWlMvnbvA-I6QxR7iS6xDyfIwvpuKtEMVbxHIo=@szczek.dev>
+In-Reply-To: <20240801131449.51328-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
@@ -100,53 +96,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/8/24 20:22, Kamil Szczęk wrote:
-> Hi Philippe and sorry for the delay!
-> 
-> On Wednesday, August 14th, 2024 at 16:02, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
-> 
->>
->>
->> Hi Kamil,
->>
->> On 14/8/24 13:10, Kamil Szczęk wrote:
->>
->>> Since commit 4ccd5fe22feb95137d325f422016a6473541fe9f ('pc: add option
->>> to disable PS/2 mouse/keyboard'), the vmport will not be created unless
->>> the i8042 PS/2 controller is enabled. To not confuse users, let's add a
->>> warning if vmport was explicitly requested, but the i8042 controller is
->>> disabled. This also changes the behavior of vmport=auto to take i8042
->>> controller availability into account.
->>>
->>> Signed-off-by: Kamil Szczęk kamil@szczek.dev
->>> ---
->>> hw/i386/pc.c | 4 ++++
->>> hw/i386/pc_piix.c | 3 ++-
->>> hw/i386/pc_q35.c | 2 +-
->>> qemu-options.hx | 4 ++--
->>> 4 files changed, 9 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
->>> index c74931d577..5bd8dd0350 100644
->>> --- a/hw/i386/pc.c
->>> +++ b/hw/i386/pc.c
->>> @@ -1100,6 +1100,10 @@ static void pc_superio_init(ISABus *isa_bus, bool create_fdctrl,
->>> }
->>>
->>> if (!create_i8042) {
->>> + if (!no_vmport) {
->>> + warn_report("vmport requires the i8042 controller to be enabled");
->>
->>
->> Should we fail instead?
-> 
-> I think failing would be preferrable over a warning, but I opted for the latter to maintain backward compatibility in this specific configuration.
-> 
-> But now that I think about it, this explicit configuration (vmport=on,i8042=off) is probably very rare in the real world, if it is exercised at all. So failing may not be as big of a breaking change as I first thought.
-> 
-> If you're fine with introducing this "breaking" change, then I'm down for it too. Let me know if I should post v2.
+ping
 
-Better fail early on incoherent config options rather than keep
-going with a broken machine IMHO, so I'd rather a v2.
+On 1/8/24 15:14, Philippe Mathieu-Daudé wrote:
+> When BAR aren't mapped, we get:
+> 
+>    (qemu) info pci
+>      Bus  0, device   0, function 0:
+>        Host bridge: PCI device dead:beef
+>          ...
+>          BAR4: 32 bit memory at 0xffffffffffffffff [0x00000ffe].
+>          BAR5: I/O at 0xffffffffffffffff [0x0ffe].
+> 
+> Check the BAR is mapped comparing its address to PCI_BAR_UNMAPPED
+> which is what the PCI layer uses for unmapped BARs.
+> See pci_bar_address and pci_update_mappings implementations and
+> in "hw/pci/pci.h":
+> 
+>    typedef struct PCIIORegion {
+>        pcibus_t addr; /* current PCI mapping address. -1 means not mapped */
+>    #define PCI_BAR_UNMAPPED (~(pcibus_t)0)
+>        ...
+> 
+> This improves the logging, not displaying bogus sizes:
+> 
+>    (qemu) info pci
+>      Bus  0, device   0, function 0:
+>        Host bridge: PCI device dead:beef
+>          ...
+>        BAR4: 32 bit memory (not mapped)
+>        BAR5: I/O (not mapped)
+> 
+> Remove trailing dot which is not used in other commands format.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/pci/pci-hmp-cmds.c | 26 ++++++++++++++++++--------
+>   1 file changed, 18 insertions(+), 8 deletions(-)
+> 
+> diff --git a/hw/pci/pci-hmp-cmds.c b/hw/pci/pci-hmp-cmds.c
+> index b09fce9377..fdfe44435c 100644
+> --- a/hw/pci/pci-hmp-cmds.c
+> +++ b/hw/pci/pci-hmp-cmds.c
+> @@ -83,15 +83,25 @@ static void hmp_info_pci_device(Monitor *mon, const PciDeviceInfo *dev)
+>           monitor_printf(mon, "      BAR%" PRId64 ": ", region->value->bar);
+>   
+>           if (!strcmp(region->value->type, "io")) {
+> -            monitor_printf(mon, "I/O at 0x%04" PRIx64
+> -                                " [0x%04" PRIx64 "].\n",
+> -                           addr, addr + size - 1);
+> +            if (addr != PCI_BAR_UNMAPPED) {
+> +                monitor_printf(mon, "I/O at 0x%04" PRIx64
+> +                                    " [0x%04" PRIx64 "]\n",
+> +                               addr, addr + size - 1);
+> +            } else {
+> +                monitor_printf(mon, "I/O (not mapped)\n");
+> +            }
+>           } else {
+> -            monitor_printf(mon, "%d bit%s memory at 0x%08" PRIx64
+> -                               " [0x%08" PRIx64 "].\n",
+> -                           region->value->mem_type_64 ? 64 : 32,
+> -                           region->value->prefetch ? " prefetchable" : "",
+> -                           addr, addr + size - 1);
+> +            if (addr != PCI_BAR_UNMAPPED) {
+> +                monitor_printf(mon, "%d bit%s memory at 0x%08" PRIx64
+> +                                   " [0x%08" PRIx64 "]\n",
+> +                               region->value->mem_type_64 ? 64 : 32,
+> +                               region->value->prefetch ? " prefetchable" : "",
+> +                               addr, addr + size - 1);
+> +            } else {
+> +                monitor_printf(mon, "%d bit%s memory (not mapped)\n",
+> +                               region->value->mem_type_64 ? 64 : 32,
+> +                               region->value->prefetch ? " prefetchable" : "");
+> +            }
+>           }
+>       }
+>   
 
 
