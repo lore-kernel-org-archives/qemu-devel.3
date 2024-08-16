@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA64EC531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 09:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A629CC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 09:31:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1setAA-00024V-Fo; Fri, 16 Aug 2024 05:22:26 -0400
+	id 1setI7-00080N-3S; Fri, 16 Aug 2024 05:30:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1setA8-000236-GE
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 05:22:24 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1setI3-0007zR-Fs
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 05:30:35 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1setA6-0003zx-0K
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 05:22:24 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-429d2d7be1eso9025285e9.1
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 02:22:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1setHl-0004qJ-4O
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 05:30:33 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-371941bbfb0so354666f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 02:30:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723800140; x=1724404940; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723800605; x=1724405405; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=iZ3Mtgyw151CnnO4/vDgQzyZ9/eU3xvWXQcwwBJWqsI=;
- b=nE6oKSoBiktxiEpVnabD8LkAeF+XNiwEBHme7CYVgTF/Rn0xu0j3P/u3/ZA4eLQXAP
- 9E6ywm+NdWMMdIf7mbnNhfGgr2Wty+eY1dZu3aQXbqagyrtfJHnsf99Ih7ctdGzSOVCf
- MiFO1V3xhUYdSFCq+KxOAygU1GNzpA3eBypGLaBKWz+lMxIoveMAMHpEddzbNMi9A/j/
- IqUZTgyrvszIADF1AbSsc2zUocTbCpKjwUAuGpMrUu7APvWh3BW60fTWYJV+xKqXH+eJ
- WgpdXiR2N7zO6PZTiWoMohCM8U1Io51z3/UhvSyvdTUD9UO+Nr5WASL3rKZfuosUc9PW
- et0g==
+ bh=muKjfOsb+GD8Nk49J+v8C+E1AqHZzThyokLLBX+rjaQ=;
+ b=PLxDeKmXSkQUQMNVZwHWfNYSH2Mqlnhse3ZKfx3xJDz+aa07ETp0LhZ1EOme4I15dp
+ 0Qpk8fULUKbvPhYkMIvQbwpETXR3+G0QWS/cu6Y3bjJD3dVVw2gv4m+eKdc46bX0MlG+
+ 8EnfThi9EYbwZRkJXrFr8YmQQ07xaJ5NWh51CvTxzNQGpZXcj+LaMsDVHf2xP64pHUmJ
+ 6FsIx/AtPWOkG03yV7/v46WbTAY9vYb03g+LOHhzj9h4qm/zMB87sOjePg/CIU3aH2kd
+ OYhWgjXjQt5MA2xuEnQ2VKo+QUhsahk3PFfKwoouLiuq/yJRfA25Shx/qHs7iXdk8mwc
+ me4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723800140; x=1724404940;
+ d=1e100.net; s=20230601; t=1723800605; x=1724405405;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iZ3Mtgyw151CnnO4/vDgQzyZ9/eU3xvWXQcwwBJWqsI=;
- b=XYvT/UxBAMXXF6Hrcc59IASYOrNxw1Cu6AfBXhPXQ9NHpeKb0N7ZAwz5T5ThFL0WjF
- V5/y/+9x5/kmts7lidbO55lhoWOU7OLAGyFmlfhuu1a6sOfEZm8XfGwBt+nUJxIsUmgV
- okEfq2O38imLq1Gp/sq3F8W7b4e+tb+Uq1vrkrWpiVeFzVZktmcstr8aPrTSN55qqvot
- B3zUwDtCULwdOgVAKDFGo+DM85CXNtnPsOAMZcW0JtWUSDUrhDtCiAgdzkwUmcfLFlpg
- CDpMtWz1uJ0+HXUh6poLZZfEcIeMIVGIiUxQjxok9a1jI3aD+yiS1GHGYh/4jBxDX0yU
- eGsQ==
+ bh=muKjfOsb+GD8Nk49J+v8C+E1AqHZzThyokLLBX+rjaQ=;
+ b=aVQnPP/MI8v6Gj8s9cJ8fDpg/ENb+oP4zc7ULNR7lBIz87RHc+5RVrjfNEGqM2i8KI
+ s88L3gY8eOweB6RrGtxtL5PNRaxU/3NccLyk/r6OxWPS7fQ3dh52+iDzRlc91kDGO5T1
+ jhVTScyNiGxcncMI6fIljuNX3RRHfjVgY6fHDFxx2a2X1Hk/yniSx5gc8gf4U96GyHH6
+ jciLMXnSxYCE46ESK2qo6SyZu//+olWxthUuckWnEYBY9OijFk6Yptd2VHbAavAGOz8d
+ FGTyAt87J6TUTsVhMWZy24vT3CA8bsEhzQjelrun7TNYhiSbc8zFvgWvRuUbAbU76tCU
+ mSnQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVVTx7k8yZ0edeQAArGRcabWbHWTlMqf6+eXp3XgQBNbifcKEUnCUoM9I1YgYflfj9iLT8u1sdKbS0nbw9k9PMpsfSG/pM=
-X-Gm-Message-State: AOJu0Yyk8urtx9svmaQ+FCnYRRcMT5Fzek/aT2uDzvI+5uWN4HklXLzF
- FdRoAFE5+AGR4CYkqwvjEE0zrd0O2JYT5t9n0sVp1Bchjp7A1cpgQIxpQncTUto=
-X-Google-Smtp-Source: AGHT+IFmRTJNNt5V2DDevvR/HeG9UOwMgaXRGOMz5qysmAutZAAG8pALAGitqiFo4Vwu5kSXIqjq2g==
-X-Received: by 2002:a05:600c:3b95:b0:424:895c:b84b with SMTP id
- 5b1f17b1804b1-429ed9e8bf7mr16121735e9.4.1723800140095; 
- Fri, 16 Aug 2024 02:22:20 -0700 (PDT)
+ AJvYcCWt9q4hK774zl0NsEn0Bhreo6JpjJig1DKA3ajzQjrWxQspt64Vy4CQ/mcRrHfEhHkoycVjxEmQGd8JITiw+WdCWlEAgTI=
+X-Gm-Message-State: AOJu0YxyVsSpKG91hEjSiCtSfphwfb2W+vQU1CZ1IYBbC0QNW36gk0Qr
+ IXCPjmQBnQm+HUC/Yl0re+YhgYLoggklMBhBln2SevcXWjALYlWFxOe0hMWx2Wo=
+X-Google-Smtp-Source: AGHT+IGdG6tpDdi5kK07LfPcNk4v3jiW8AfARJQtVuNegzSLgDPc4ynUYQSjXW52KSJF7BSBs2QVoA==
+X-Received: by 2002:a5d:490d:0:b0:368:2f01:3053 with SMTP id
+ ffacd0b85a97d-3719468e61bmr1403022f8f.55.1723800604764; 
+ Fri, 16 Aug 2024 02:30:04 -0700 (PDT)
 Received: from [192.168.220.175] (143.red-88-28-5.dynamicip.rima-tde.net.
  [88.28.5.143]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ded36f55sm71122995e9.26.2024.08.16.02.22.18
+ ffacd0b85a97d-371898bb588sm3204144f8f.115.2024.08.16.02.30.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Aug 2024 02:22:19 -0700 (PDT)
-Message-ID: <a53e7ca7-620f-47f1-a9b0-66fe184dc8f8@linaro.org>
-Date: Fri, 16 Aug 2024 11:22:17 +0200
+ Fri, 16 Aug 2024 02:30:04 -0700 (PDT)
+Message-ID: <f6091ce8-0107-49cd-bf0f-05377711e493@linaro.org>
+Date: Fri, 16 Aug 2024 11:30:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/i386: Split out gen_prepare_val_nz
+Subject: Re: [PATCH 2/2] target/i386: Fix carry flag for BLSI
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com
 References: <20240801075845.573075-1-richard.henderson@linaro.org>
- <20240801075845.573075-2-richard.henderson@linaro.org>
+ <20240801075845.573075-3-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240801075845.573075-2-richard.henderson@linaro.org>
+In-Reply-To: <20240801075845.573075-3-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,15 +97,44 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 1/8/24 09:58, Richard Henderson wrote:
-> Split out the TCG_COND_TSTEQ logic from gen_prepare_eflags_z,
-> and use it for CC_OP_BMILG* as well.  Prepare for requiring
-> both zero and non-zero senses.
-> 
+> BLSI has inverted semantics for C as compared to the other two
+> BMI1 instructions, BLSMSK and BLSR.  Introduce CC_OP_BLSI* for
+> this purpose.
+
+Fixes: 1d0b926150 ("target/i386: move scalar 0F 38 and 0F 3A instruction 
+to new decoder")
+
+or even older?
+
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2175
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/i386/tcg/translate.c | 22 ++++++++++++++--------
->   1 file changed, 14 insertions(+), 8 deletions(-)
+>   target/i386/cpu.h                        |  5 +++++
+>   target/i386/tcg/cc_helper.c              | 18 ++++++++++++++++++
+>   target/i386/tcg/translate.c              |  5 +++++
+>   tests/tcg/x86_64/test-2175.c             | 24 ++++++++++++++++++++++++
+>   target/i386/tcg/cc_helper_template.h.inc | 18 ++++++++++++++++++
+>   target/i386/tcg/emit.c.inc               |  2 +-
+>   tests/tcg/x86_64/Makefile.target         |  1 +
+>   7 files changed, 72 insertions(+), 1 deletion(-)
+>   create mode 100644 tests/tcg/x86_64/test-2175.c
 
+
+> +static int glue(compute_all_blsi, SUFFIX)(DATA_TYPE dst, DATA_TYPE src1)
+> +{
+> +    int cf, pf, af, zf, sf, of;
+> +
+> +    cf = (src1 != 0);
+> +    pf = 0; /* undefined */
+> +    af = 0; /* undefined */
+> +    zf = (dst == 0) * CC_Z;
+> +    sf = lshift(dst, 8 - DATA_BITS) & CC_S;
+> +    of = 0;
+> +    return cf | pf | af | zf | sf | of;
+> +}
+
+Except this function which I'm not reviewing, for the rest
+to the best of my x86 knowledge:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
