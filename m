@@ -4,66 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 140EBC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 09:42:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C22D5C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 10:08:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1setSe-0005Ht-Th; Fri, 16 Aug 2024 05:41:33 -0400
+	id 1setrx-0004Vx-AP; Fri, 16 Aug 2024 06:07:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1setSc-0005HQ-VN
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 05:41:31 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1setru-0004VK-Lo
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:07:38 -0400
+Received: from forwardcorp1d.mail.yandex.net
+ ([2a02:6b8:c41:1300:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1setSQ-00063M-Lp
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 05:41:20 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WlcPJ4psFz6K5l3;
- Fri, 16 Aug 2024 17:38:28 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 2AACD1400DB;
- Fri, 16 Aug 2024 17:41:12 +0800 (CST)
-Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 16 Aug
- 2024 10:41:11 +0100
-Date: Fri, 16 Aug 2024 10:41:10 +0100
-To: Hannes Reinecke <hare@suse.de>
-CC: David Hildenbrand <david@redhat.com>, <linux-mm@kvack.org>,
- <linux-cxl@vger.kernel.org>, Davidlohr Bueso <dave@stgolabs.net>, Ira Weiny
- <ira.weiny@intel.com>, John Groves <John@Groves.net>,
- <virtualization@lists.linux.dev>, Oscar Salvador <osalvador@suse.de>,
- <qemu-devel@nongnu.org>, Dave Jiang <dave.jiang@intel.com>, Dan Williams
- <dan.j.williams@intel.com>, <linuxarm@huawei.com>,
- <wangkefeng.wang@huawei.com>, John Groves <jgroves@micron.com>, Fan Ni
- <fan.ni@samsung.com>, Navneet Singh <navneet.singh@intel.com>, "
- =?UTF-8?Q?=E2=80=9CMichael?= S. =?UTF-8?Q?Tsirkin=E2=80=9D?="
- <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Philippe
- =?UTF-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [RFC] Virtualizing tagged disaggregated memory capacity (app
- specific, multi host shared)
-Message-ID: <20240816104110.000012e6@Huawei.com>
-In-Reply-To: <904a433c-0471-4f11-a34b-cef8adf1663c@suse.de>
-References: <20240815172223.00001ca7@Huawei.com>
- <904a433c-0471-4f11-a34b-cef8adf1663c@suse.de>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1setrr-0001iD-HK
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:07:38 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:1c0f:0:640:cad:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 68BEC60BB0;
+ Fri, 16 Aug 2024 13:07:29 +0300 (MSK)
+Received: from d-tatianin-lin.yandex-team.ru (unknown
+ [2a02:6b8:b081:b593::1:1f])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id O7GhxJ0gACg0-2j9T7cmM; Fri, 16 Aug 2024 13:07:28 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1723802848;
+ bh=MOrL4YLgzsNM6+Jo2KZEeZLSI3TzEzfFCKW7qPYGL+k=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=I9lVKGFe7lf2UpygTcUOuCES4USRh5+PSGwdMTrAkEs/BIv8dlNOQeEIwswVPNAON
+ a5MP+JGBZrUHA2UDyc9yhkwJOyjyJXLUtnRMMMti3bCLBn2mmVvpQqR1WoFqTjcWL9
+ Jc2SYKXCjmA2Mt84IPifDLC30VZpwcSOinvumgBw=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Subject: [PATCH] chardev: allow specifying finer-grained reconnect timeouts
+Date: Fri, 16 Aug 2024 13:07:23 +0300
+Message-Id: <20240816100723.2815-1-d-tatianin@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+ envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,57 +71,104 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Aug 2024 09:05:46 +0200
-Hannes Reinecke <hare@suse.de> wrote:
+The "reconnect" option only allows to specify the time in seconds,
+which is way too long for certain workflows.
 
-> On 8/15/24 18:22, Jonathan Cameron wrote:
-> > Introduction
-> > ============
-> > 
-> > If we think application specific memory (including inter-host shared memory) is
-> > a thing, it will also be a thing people want to use with virtual machines,
-> > potentially nested. So how do we present it at the Host to VM boundary?
-> > 
-> > This RFC is perhaps premature given we haven't yet merged upstream support for
-> > the bare metal case. However I'd like to get the discussion going given we've
-> > touched briefly on this in a number of CXL sync calls and it is clear no one is
-> > entirely sure what direction make sense.  We may briefly touch on this in the
-> > LPC CXL uconf, but time will be very limited.
-> >   
-> Thanks for the detailed write-up.
-> 
-> Can't we have an ad-hoc meeting at OSS/LPC to gather interested/relevant 
-> people to explore ideas around this?
+We have a lightweight disk backend server, which takes about 20ms to
+live update, but due to this limitation in QEMU, previously the guest
+disk controller would hang for one second because it would take this
+long for QEMU to reinitialize the socket connection.
 
-Absolutely.  If people want to email me directly (or mention in the thread)
-I'll gather up a list of people to try and find a suitable time / place
-(and then post that here).
+Make it possible to specify a smaller timeout by treating the value in
+"reconnect" as milliseconds via the new "reconnect-is-ms" option.
 
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+---
+ chardev/char-socket.c |  7 +++++--
+ chardev/char.c        |  3 +++
+ qapi/char.json        | 12 +++++++++---
+ 3 files changed, 17 insertions(+), 5 deletions(-)
 
-> 
-> In particular I'd be interested on how to _get_ the application specific 
-> memory to the application in question. It's easy if you have your own 
-> application and design it to work on DAX devices. Obviously this 
-> approach won't work for unmodified applications; however, they really
-> might want to use this, too.
-
-That's a good parallel question (as not virtualization specific).
-I'd be tempted to enable this path first for aware applications, but longer
-term the ability to use this via common allocator libraries (LD_PRELOAD etc)
-might make sense (or some other path?) 
-
-> 
-> And, of course, the other mentioned problems are worth discussing, and I 
-> do agree that the uconf will probably not providing sufficient time for 
-> this.
-> 
-> Cheers,
-> 
-> Hannes
+diff --git a/chardev/char-socket.c b/chardev/char-socket.c
+index 1ca9441b1b..d87859e641 100644
+--- a/chardev/char-socket.c
++++ b/chardev/char-socket.c
+@@ -74,7 +74,7 @@ static void qemu_chr_socket_restart_timer(Chardev *chr)
+     assert(!s->reconnect_timer);
+     name = g_strdup_printf("chardev-socket-reconnect-%s", chr->label);
+     s->reconnect_timer = qemu_chr_timeout_add_ms(chr,
+-                                                 s->reconnect_time * 1000,
++                                                 s->reconnect_time,
+                                                  socket_reconnect_timeout,
+                                                  chr);
+     g_source_set_name(s->reconnect_timer, name);
+@@ -1082,7 +1082,7 @@ static int tcp_chr_wait_connected(Chardev *chr, Error **errp)
+             if (tcp_chr_connect_client_sync(chr, &err) < 0) {
+                 if (s->reconnect_time) {
+                     error_free(err);
+-                    g_usleep(s->reconnect_time * 1000ULL * 1000ULL);
++                    g_usleep(s->reconnect_time * 1000ULL);
+                 } else {
+                     error_propagate(errp, err);
+                     return -1;
+@@ -1509,6 +1509,9 @@ static void qemu_chr_parse_socket(QemuOpts *opts, ChardevBackend *backend,
+     sock->wait = qemu_opt_get_bool(opts, "wait", true);
+     sock->has_reconnect = qemu_opt_find(opts, "reconnect");
+     sock->reconnect = qemu_opt_get_number(opts, "reconnect", 0);
++    if (!qemu_opt_get_bool(opts, "reconnect-is-ms", false)) {
++        sock->reconnect *= 1000ULL;
++    }
+     sock->tls_creds = g_strdup(qemu_opt_get(opts, "tls-creds"));
+     sock->tls_authz = g_strdup(qemu_opt_get(opts, "tls-authz"));
+ 
+diff --git a/chardev/char.c b/chardev/char.c
+index 3c43fb1278..f6e5f1d5c9 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -859,6 +859,9 @@ QemuOptsList qemu_chardev_opts = {
+         },{
+             .name = "reconnect",
+             .type = QEMU_OPT_NUMBER,
++        },{
++            .name = "reconnect-is-ms",
++            .type = QEMU_OPT_BOOL,
+         },{
+             .name = "telnet",
+             .type = QEMU_OPT_BOOL,
+diff --git a/qapi/char.json b/qapi/char.json
+index ef58445cee..61aeccf09d 100644
+--- a/qapi/char.json
++++ b/qapi/char.json
+@@ -272,8 +272,13 @@
+ #     (default: false) (Since: 3.1)
+ #
+ # @reconnect: For a client socket, if a socket is disconnected, then
+-#     attempt a reconnect after the given number of seconds.  Setting
+-#     this to zero disables this function.  (default: 0) (Since: 2.2)
++#     attempt a reconnect after the given number of seconds (unless
++#     @reconnect-is-ms is set to true, in that case the number is
++#     treated as milliseconds).  Setting this to zero disables
++#     this function.  (default: 0) (Since: 2.2)
++#
++# @reconnect-is-ms: The value specified in @reconnect should be treated
++#     as milliseconds.  (default: false) (Since: 9.2)
+ #
+ # Since: 1.4
+ ##
+@@ -287,7 +292,8 @@
+             '*telnet': 'bool',
+             '*tn3270': 'bool',
+             '*websocket': 'bool',
+-            '*reconnect': 'int' },
++            '*reconnect': 'int',
++            '*reconnect-is-ms': 'bool' },
+   'base': 'ChardevCommon' }
+ 
+ ##
+-- 
+2.34.1
 
 
