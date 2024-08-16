@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AF1CC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D1F5C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:17:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sewn5-0003cL-KS; Fri, 16 Aug 2024 09:14:51 -0400
+	id 1sewpZ-00006i-OJ; Fri, 16 Aug 2024 09:17:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1sewn2-0003bC-8K; Fri, 16 Aug 2024 09:14:48 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sewpW-00005o-K9
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:17:24 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1sewn0-0006Ev-CE; Fri, 16 Aug 2024 09:14:47 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-5b9d48d1456so3253708a12.1; 
- Fri, 16 Aug 2024 06:14:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1sewpT-0006ju-4u
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:17:21 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-428178fc07eso13606395e9.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:17:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723814083; x=1724418883; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NO0yNECN+xfmp1Ew6nPth1TBvVMJWXurUgl6b+qxEiY=;
- b=ZUCT/PYFlI36DbSvWUdmdxkso/FDH7TeZIkxO3qoYgkLruXg6eDcchwuYLSXz/jyEk
- Ftz3YxX0+WITfydAwvnHW+1iIkl2MFvEq16X2YTmN9lvD9cebiT5Vd7tl/9dDnqDf0Bj
- e2oKfP5i3OHOlKj0F4PCC8eUXRAQSOPjEw6nJ/sQVhTS2aOOipF0QgT989con4dE4Ava
- O3iaODaQsROUkvOWOKt8vb8XqlY5j1lYspePW6J4VeixSGtpKsABsf7KSEOlmnqm7Y0T
- q9oGZ0ygOhcILIgB7ouVQ5uIZm6PA22ZgsltReCcCpfgg2p3TGxrD6xONOsW10s4Iv3K
- Pn6Q==
+ d=linaro.org; s=google; t=1723814236; x=1724419036; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=3s5jOdTrAiEUgXbaiSvG7TfWdlhfq0DM9hXaeA8tn/4=;
+ b=XKT07/kE/9Ca6CxTlPoFaf78HpTgI6Ii/L/km1bIgsqgCB6ZObY8q/KYHikwbh+16I
+ HD5vJRHCkjxkx5s3FmJrsFOboUg9m8ZDeZ0EXJPWocwEi9gsS2lKVx51Wo1sA00NvebL
+ z6PZ6W1VTCCTDO3P96mbY7V7lYw/z3pUL2HVAM6ZMir91bNJfiQEFwIrXaP0cfWA7TCW
+ nT1Zga4aR2Igct0LkJyP4CVqxyNc4ezOJp3zkw+uvzXXX/qCUOAc68joER3moqnSfl2C
+ 1pFF/dAaUbIVeQSbERH43QHMKIkz8/cKM2il7FUXFcHSrp9naE5rc5e+xBtteuilh/iY
+ JXkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723814083; x=1724418883;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NO0yNECN+xfmp1Ew6nPth1TBvVMJWXurUgl6b+qxEiY=;
- b=BrpihK9fGhLmRBzuL9qC1ObOU+nGMZOodmJfZIKmeWQR46rtv7hHRDgrJn1PYlBWwq
- ydJNb7vMUcMdLF3ZBxWDnLS1XYhSVB26U0Nqwxd3I4noeCXKkMucFkRtQvTIq8y80gBr
- DdSI5cv9fkRdMyJtmHP8F9E6bBF6yoDt6is4iHmUNUMqzr3WLTCJJpg/RGfdI353RpjM
- AWxt2vLVoHiyfa1Gh47qquGl/D302/Ml4cgDyWBjZ+1Ez9LDTRhlc9bcgpaQxqa9qN0z
- adhF+aL4h39V8HOeOaKn/HmAUnw5cl8kV1yN3VdLGfE3kgie1DsZUXa2BHA/e6dfwrNL
- OkjQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWajg9qvfdyrVONxpCwGykUSv1TQYQ6Hng8IilxdxmDepFrlhF/ygzK4/TMZDKgXNyruBnyrZuBLJTSPIUD7+jjLw0gRW0=
-X-Gm-Message-State: AOJu0Yx7ze/lkdLlUX6l786gGJHuTpKs/as9zlCQpQFuQiHERlyeLbB7
- sKHsmbs0IQpdZeyWFsCNLv3s6Bn1QUWhRBN+mZZsxmZmKdmIEcT7B+ivzA==
-X-Google-Smtp-Source: AGHT+IF0qtJ+9CX6ULHCp08LHeW1yCgYYgvjrvRADJ1pT8O7bGynF5Ry1KFEHB2b+Cgw6SFYe/jUPQ==
-X-Received: by 2002:a05:6402:5108:b0:5bb:8ffd:24b9 with SMTP id
- 4fb4d7f45d1cf-5beb38ba20fmr5249697a12.0.1723814082980; 
- Fri, 16 Aug 2024 06:14:42 -0700 (PDT)
-Received: from [127.0.0.1] (dynamic-077-013-145-177.77.13.pool.telefonica.de.
- [77.13.145.177]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bebbdfa240sm2252070a12.42.2024.08.16.06.14.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Aug 2024 06:14:42 -0700 (PDT)
-Date: Fri, 16 Aug 2024 13:14:41 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, =?UTF-8?Q?Kamil_Szcz=C4=99k?= <kamil@szczek.dev>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>
-Subject: Re: [PATCH] hw/i386/pc: Warn about unsatisfied vmport deps
-In-Reply-To: <vsm1ly2eX009LRKgURcMp6qTYHWw1bZd3zg2GUbd4M90T91QvJRdKxiRS3rPl8PR96y2r890Am3Ajf4kQrwihn7-7hKBU9VicRPPtIRv_GI=@szczek.dev>
-References: <vsm1ly2eX009LRKgURcMp6qTYHWw1bZd3zg2GUbd4M90T91QvJRdKxiRS3rPl8PR96y2r890Am3Ajf4kQrwihn7-7hKBU9VicRPPtIRv_GI=@szczek.dev>
-Message-ID: <0D723368-3251-4D5E-A625-73169CBE3395@gmail.com>
+ d=1e100.net; s=20230601; t=1723814236; x=1724419036;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3s5jOdTrAiEUgXbaiSvG7TfWdlhfq0DM9hXaeA8tn/4=;
+ b=mu+TEXR6pe/Ej6gYbe1h7nkghqZxQ4+8ieAJ7seIn0kXZvvg3WwgRD3PfTiFPvjIVP
+ 5qpUWgeP8n3VHDLUAnFrrYKgKgTnUPriUQckp+iQWEwCR+hllEkFGhu6RkAZGJYl8bbj
+ GcUtumxppS1qZR1arDSptM0hZ5Li25lc57vgNZ1jciVL0CX27KYsvIAbIjE+xBZBNkzz
+ 0wODhuecFifTbDoi9iYq98lIgbhrEvT4CsrRKk/tgKrtnBQJPegJzMIm9sZr25Lvcy1c
+ 86Ctw06IvH7bgT/yeKoHh+9YF2pfu+IgJH/paeMCX8UZcpwG6Pm89C0WIZKzfBoSksXN
+ Upgg==
+X-Gm-Message-State: AOJu0YxskBizvBF0Aqkv5+hYYx6d48k3ebEHPgr1F5TBoqTnWbcbzpuY
+ Qm+PkWyccVwkLleQfdQF/AcHBTrAeV5yj76KFGPGrMZT9uPTMaQhldDBpSGMlOE/uQHmMvpp0bk
+ c
+X-Google-Smtp-Source: AGHT+IGbGMXjFdQGhn8XAMcbQCY74O/GEuQtrtky9F/tATwKQir39//ozYT3Ehi83xFKu4vHHMnesw==
+X-Received: by 2002:a05:600c:3552:b0:426:593c:9351 with SMTP id
+ 5b1f17b1804b1-429ed7a5f31mr19968005e9.6.1723814235573; 
+ Fri, 16 Aug 2024 06:17:15 -0700 (PDT)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-429eeadfafbsm18223025e9.47.2024.08.16.06.17.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Aug 2024 06:17:15 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id BF6B35F867;
+ Fri, 16 Aug 2024 14:17:13 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL v2 for 9.1 00/21] Some fixes for 9.1-rc3 (build, replay, docs,
+ plugins)
+Date: Fri, 16 Aug 2024 14:17:13 +0100
+Message-Id: <20240816131713.2321664-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52a.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,101 +95,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The following changes since commit ecdfa31beb1f7616091bedba79dfdf9ee525ed9d:
 
+  Merge tag 'pull-request-2024-08-16' of https://gitlab.com/thuth/qemu into staging (2024-08-16 18:18:27 +1000)
 
-Am 14=2E August 2024 11:10:16 UTC schrieb "Kamil Szcz=C4=99k" <kamil@szcze=
-k=2Edev>:
->Since commit 4ccd5fe22feb95137d325f422016a6473541fe9f ('pc: add option
->to disable PS/2 mouse/keyboard'), the vmport will not be created unless
->the i8042 PS/2 controller is enabled=2E To not confuse users, let's add a
->warning if vmport was explicitly requested, but the i8042 controller is
->disabled=2E This also changes the behavior of vmport=3Dauto to take i8042
->controller availability into account=2E
->
->Signed-off-by: Kamil Szcz=C4=99k <kamil@szczek=2Edev>
->---
-> hw/i386/pc=2Ec      | 4 ++++
-> hw/i386/pc_piix=2Ec | 3 ++-
-> hw/i386/pc_q35=2Ec  | 2 +-
-> qemu-options=2Ehx   | 4 ++--
-> 4 files changed, 9 insertions(+), 4 deletions(-)
->
->diff --git a/hw/i386/pc=2Ec b/hw/i386/pc=2Ec
->index c74931d577=2E=2E5bd8dd0350 100644
->--- a/hw/i386/pc=2Ec
->+++ b/hw/i386/pc=2Ec
->@@ -1100,6 +1100,10 @@ static void pc_superio_init(ISABus *isa_bus, bool =
-create_fdctrl,
->     }
->=20
->     if (!create_i8042) {
->+        if (!no_vmport) {
->+            warn_report("vmport requires the i8042 controller to be enab=
-led");
->+        }
->+
->         return;
->     }
->=20
->diff --git a/hw/i386/pc_piix=2Ec b/hw/i386/pc_piix=2Ec
->index d9e69243b4=2E=2Ecf2e2e3e30 100644
->--- a/hw/i386/pc_piix=2Ec
->+++ b/hw/i386/pc_piix=2Ec
->@@ -312,7 +312,8 @@ static void pc_init1(MachineState *machine, const cha=
-r *pci_type)
->=20
->     assert(pcms->vmport !=3D ON_OFF_AUTO__MAX);
->     if (pcms->vmport =3D=3D ON_OFF_AUTO_AUTO) {
->-        pcms->vmport =3D xen_enabled() ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_O=
-N;
->+        pcms->vmport =3D (xen_enabled() || !pcms->i8042_enabled)
->+            ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
->     }
+are available in the Git repository at:
 
-I think it makes sense to consolidate this handling into pc_basic_devices_=
-init() before doing this change=2E Maybe just in front of the call to pc_su=
-perio_init()? The additional handling of xen_enabled() shouldn't hurt there=
- for q35: Even though q35 doesn't (yet) support Xen there are already code =
-paths where this check is done=2E
+  https://gitlab.com/stsquad/qemu.git tags/pull-maintainer-9.1-rc3-160824-1
 
->=20
->     /* init basic PC hardware */
->diff --git a/hw/i386/pc_q35=2Ec b/hw/i386/pc_q35=2Ec
->index 9d108b194e=2E=2E6c112d804d 100644
->--- a/hw/i386/pc_q35=2Ec
->+++ b/hw/i386/pc_q35=2Ec
->@@ -278,7 +278,7 @@ static void pc_q35_init(MachineState *machine)
->=20
->     assert(pcms->vmport !=3D ON_OFF_AUTO__MAX);
->     if (pcms->vmport =3D=3D ON_OFF_AUTO_AUTO) {
->-        pcms->vmport =3D ON_OFF_AUTO_ON;
->+        pcms->vmport =3D pcms->i8042_enabled ? ON_OFF_AUTO_ON : ON_OFF_A=
-UTO_OFF;
->     }
->=20
->     /* init basic PC hardware */
->diff --git a/qemu-options=2Ehx b/qemu-options=2Ehx
->index cee0da2014=2E=2E0bc780a669 100644
->--- a/qemu-options=2Ehx
->+++ b/qemu-options=2Ehx
->@@ -68,8 +68,8 @@ SRST
->=20
->     ``vmport=3Don|off|auto``
->         Enables emulation of VMWare IO port, for vmmouse etc=2E auto say=
-s
->-        to select the value based on accel=2E For accel=3Dxen the defaul=
-t is
->-        off otherwise the default is on=2E
->+        to select the value based on accel and i8042=2E For accel=3Dxen
->+        and/or i8042=3Doff the default is off otherwise the default is o=
-n=2E
+for you to fetch changes up to 278035fc81510bd88501afb78bd5ab652beffa76:
 
-I'd do s#and/or#or# for readability=2E
+  plugins: fix race condition with scoreboards (2024-08-16 14:13:07 +0100)
 
-Best regards,
-Bernhard
+----------------------------------------------------------------
+Some fixes for 9.1-rc3 (build, replay, docs, plugins)
 
->=20
->     ``dump-guest-core=3Don|off``
->         Include guest memory in a core dump=2E The default is on=2E
+  - re-enable gdbsim-r5f562n8 test
+  - ensure updates to python deps re-trigger configure
+  - tweak configure detection of GDB MTE support
+  - make checkpatch emit more warnings on updating headers
+  - allow i386 access_ptr to force slow path for plugins
+  - fixe some replay regressions
+  - update the replay-dump tool
+  - better handle muxed chardev during replay
+  - clean up TCG plugins docs to mention scoreboards
+  - fix plugin scoreboard race condition
+
+----------------------------------------------------------------
+Alex Bennée (2):
+      Makefile: trigger re-configure on updated pythondeps
+      target/i386: allow access_ptr to force slow path on failed probe
+
+Gustavo Romero (3):
+      configure: Fix arch detection for GDB_HAS_MTE
+      configure: Avoid use of param. expansion when using gdb_version
+      configure: Fix GDB version detection for GDB_HAS_MTE
+
+Nicholas Piggin (10):
+      scripts/replay-dump.py: Update to current rr record format
+      scripts/replay-dump.py: rejig decoders in event number order
+      tests/avocado: excercise scripts/replay-dump.py in replay tests
+      replay: allow runstate shutdown->running when replaying trace
+      Revert "replay: stop us hanging in rr_wait_io_event"
+      tests/avocado: replay_kernel.py add x86-64 q35 machine test
+      chardev: set record/replay on the base device of a muxed device
+      virtio-net: Use replay_schedule_bh_event for bhs that affect machine state
+      virtio-net: Use virtual time for RSC timers
+      savevm: Fix load_snapshot error path crash
+
+Philippe Mathieu-Daudé (2):
+      tests/avocado: Re-enable gdbsim-r5f562n8 testing U-Boot
+      buildsys: Fix building without plugins on Darwin
+
+Pierrick Bouvier (2):
+      docs/devel: update tcg-plugins page
+      plugins: fix race condition with scoreboards
+
+Stefan Weil (1):
+      docs: Fix some typos (found by typos) and grammar issues
+
+Stefano Garzarella (1):
+      scripts/checkpatch: more checks on files imported from Linux
+
+ docs/about/emulation.rst                  |  49 +++++++--
+ docs/devel/migration/uadk-compression.rst |   4 +-
+ docs/devel/tcg-plugins.rst                |  13 ++-
+ docs/interop/qemu-ga.rst                  |   2 +-
+ docs/tools/qemu-vmsr-helper.rst           |   4 +-
+ configure                                 |   8 +-
+ Makefile                                  |   3 +-
+ qapi/rocker.json                          |   4 +-
+ include/exec/memory.h                     |   2 +-
+ include/sysemu/replay.h                   |   5 -
+ include/sysemu/runstate.h                 |   1 +
+ accel/tcg/tcg-accel-ops-rr.c              |   2 +-
+ chardev/char.c                            |  71 +++++++++----
+ hw/arm/smmu-common.c                      |   2 +-
+ hw/net/virtio-net.c                       |  17 +--
+ migration/savevm.c                        |   1 +
+ plugins/core.c                            |  43 +++++---
+ qga/main.c                                |   2 +-
+ replay/replay.c                           |  23 +---
+ system/runstate.c                         |  31 +++++-
+ target/i386/tcg/access.c                  |  27 +++--
+ plugins/meson.build                       |  50 ++++-----
+ scripts/checkpatch.pl                     |  24 +++++
+ scripts/replay-dump.py                    | 167 ++++++++++++++++++++----------
+ tests/avocado/machine_rx_gdbsim.py        |   2 -
+ tests/avocado/replay_kernel.py            |  31 +++++-
+ tests/avocado/replay_linux.py             |  10 ++
+ 27 files changed, 406 insertions(+), 192 deletions(-)
+
+-- 
+2.39.2
+
 
