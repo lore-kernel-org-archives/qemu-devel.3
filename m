@@ -4,48 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43CE5C52D7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:00:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A18DAC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:06:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sewZJ-0006a6-Kx; Fri, 16 Aug 2024 09:00:37 -0400
+	id 1sewe0-00077B-Al; Fri, 16 Aug 2024 09:05:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zuoboqun@baidu.com>)
- id 1ser5r-0000I0-0d
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:09:51 -0400
-Received: from mx22.baidu.com ([220.181.50.185] helo=baidu.com)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sewdy-00076X-FH
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:05:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zuoboqun@baidu.com>)
- id 1ser5o-0002E5-64
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:09:50 -0400
-To: qemu-devel <qemu-devel@nongnu.org>
-CC: "Michael S . Tsirkin" <mst@redhat.com>, Stefano Garzarella
- <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>, zuoboqun
- <zuoboqun@baidu.com>
-Subject: [PATCH] vhost_net: configure all host notifiers in a single MR
- transaction
-Date: Fri, 16 Aug 2024 15:08:35 +0800
-Message-ID: <20240816070835.8309-1-zuoboqun@baidu.com>
-X-Mailer: git-send-email 2.42.0.windows.2
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sewdw-0005Ct-OA
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:05:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723813522;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=fm/MW6IVb6SWCnHEMBJaX5UWV2lDvT61ZY3tnZSrf8E=;
+ b=CAXLjesHHfAv8PQ8JHbdL8wLU19sc+y0Jz3Fd6qtc9V84fDTKojBp0fcjlFyxgXPtjpes/
+ 0Bhlgp+ylWkO0R459/VHwT5UjkHlAcGCN1tkfYDCMqk4UTOjq1WijNC4rpjAeluK/e2Wyl
+ 5fevQMD4Vt8KmlnRgRjTqR559/RgRgo=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-223-OTlBr-vLPYmmhGVMzJmB1Q-1; Fri, 16 Aug 2024 09:05:21 -0400
+X-MC-Unique: OTlBr-vLPYmmhGVMzJmB1Q-1
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4280cf2be19so13772615e9.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:05:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723813520; x=1724418320;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fm/MW6IVb6SWCnHEMBJaX5UWV2lDvT61ZY3tnZSrf8E=;
+ b=q2BvzgGapaDt3X2BCFSNfcv6agblgJHpd7v5eKXyQpgDA+N6L5BL1anezYvOXZdxOk
+ Ns2pmEDjmsmny6juv9VnZzyfoHZZQVsQT2pWA2Kv9ZEYw6wlLLGjEKKmIGDqWl4I1+06
+ O7+ooCnwGnsbdGNHyvOVdw9hEtxiqbJjQcAEbv6jorG/a31ltHc3xOgWYhah6glS6wQW
+ LbyKs1w/2ikyTnOsJcK+8Y6eNJbdMjS1TlmVnW1N2ZW75SdY45jgXyMjWclfg06cMZHe
+ tUNilSNNrNutIikWL4OFu5jRm8MInkIn8dlcOxmkFXnpjxeDPIBHuzQ4rBuRl1AVhZ1S
+ e03A==
+X-Gm-Message-State: AOJu0YwGfH2oPQuBu3RLMmDMxPKIOXm4b33iyYLOQKGO3bOj344/jnjg
+ 3p1Cn9XdcYx39vIfsWHwO3knjgA9Xrw51QeLzYOhWHWFvn409lmKwSbP3WdQI+Di+4XOQydug4U
+ puhPamvcPg9fzy2OI23eQ4cZY93SLJZCJMCXRZ7nca2QBF0gSifW7
+X-Received: by 2002:a05:600c:46cc:b0:426:5f8f:51a4 with SMTP id
+ 5b1f17b1804b1-429ed793d36mr17394815e9.12.1723813520435; 
+ Fri, 16 Aug 2024 06:05:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEU7kfyfp1etvh/Dp4yEjf8Rz8U2Wts2Fm+hWJNn0kaABLbE/5SnlZzXQtA7dEK6j/jqhB6kQ==
+X-Received: by 2002:a05:600c:46cc:b0:426:5f8f:51a4 with SMTP id
+ 5b1f17b1804b1-429ed793d36mr17394605e9.12.1723813519924; 
+ Fri, 16 Aug 2024 06:05:19 -0700 (PDT)
+Received: from [192.168.0.6] (ip-109-43-177-15.web.vodafone.de.
+ [109.43.177.15]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-429ed650e41sm22148535e9.19.2024.08.16.06.05.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 Aug 2024 06:05:19 -0700 (PDT)
+Message-ID: <c2c05892-cd7a-4f54-af3d-e8e82aa06dfd@redhat.com>
+Date: Fri, 16 Aug 2024 15:05:17 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL for 9.1 00/21] Some fixes for 9.1-rc3 (build, replay, docs, 
+ plugins)
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Weil <sw@weilnetz.de>
+References: <20240815144911.1931487-1-alex.bennee@linaro.org>
+ <f0f5f04b-9ffa-46ad-bb2a-a497de3c1c41@linaro.org>
+ <878qww39xu.fsf@draig.linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <878qww39xu.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.127.72.15]
-X-ClientProxiedBy: BC-Mail-Ex13.internal.baidu.com (172.31.51.53) To
- BJHW-MAIL-EX26.internal.baidu.com (10.127.64.41)
-X-FEAS-Client-IP: 10.127.64.14
-X-FE-Policy-ID: 52:10:53:SYSTEM
-Received-SPF: pass client-ip=220.181.50.185; envelope-from=zuoboqun@baidu.com;
- helo=baidu.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 16 Aug 2024 09:00:13 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,286 +145,81 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  zuoboqun <zuoboqun@baidu.com>
-From:  zuoboqun via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This allows the vhost_net device which has multiple virtqueues to batch
-the setup of all its host notifiers. This significantly reduces the
-vhost_net device starting and stoping time, e.g. the time spend
-on enabling notifiers reduce from 630ms to 75ms and the time spend on
-disabling notifiers reduce from 441ms to 45ms for a VM with 192 vCPUs
-and 15 vhost-user-net devices (64vq per device) in our case.
+On 16/08/2024 14.54, Alex Bennée wrote:
+> Richard Henderson <richard.henderson@linaro.org> writes:
+> 
+>> On 8/16/24 00:48, Alex Bennée wrote:
+>>> The following changes since commit b0d6c037ea0a825192285f149af72a73a1baaa04:
+>>>     Update version for v9.1.0-rc2 release (2024-08-15 20:32:37 +1000)
+>>> are available in the Git repository at:
+>>>     https://gitlab.com/stsquad/qemu.git
+>>> tags/pull-maintainer-9.1-rc3-150824-1
+>>> for you to fetch changes up to
+>>> f39cbfc9f8dcb17e8168735acb6fb75638d9904f:
+>>>     plugins: fix race condition with scoreboards (2024-08-15 12:10:23
+>>> +0100)
+>>> ----------------------------------------------------------------
+>>> Some fixes for 9.1-rc3 (build, replay, docs, plugins)
+>>>     - re-enable gdbsim-r5f562n8 test
+>>>     - ensure updates to python deps re-trigger configure
+>>>     - tweak configure detection of GDB MTE support
+>>>     - make checkpatch emit more warnings on updating headers
+>>>     - allow i386 access_ptr to force slow path for plugins
+>>>     - fixe some replay regressions
+>>>     - update the replay-dump tool
+>>>     - better handle muxed chardev during replay
+>>>     - clean up TCG plugins docs to mention scoreboards
+>>>     - fix plugin scoreboard race condition
+>>> ----------------------------------------------------------------
+>>> Alex Bennée (2):
+>>>         Makefile: trigger re-configure on updated pythondeps
+>>>         target/i386: allow access_ptr to force slow path on failed probe
+>>> Gustavo Romero (3):
+>>>         configure: Fix arch detection for GDB_HAS_MTE
+>>>         configure: Avoid use of param. expansion when using gdb_version
+>>>         configure: Fix GDB version detection for GDB_HAS_MTE
+>>> Nicholas Piggin (10):
+>>>         scripts/replay-dump.py: Update to current rr record format
+>>>         scripts/replay-dump.py: rejig decoders in event number order
+>>>         tests/avocado: excercise scripts/replay-dump.py in replay tests
+>>>         replay: allow runstate shutdown->running when replaying trace
+>>>         Revert "replay: stop us hanging in rr_wait_io_event"
+>>>         tests/avocado: replay_kernel.py add x86-64 q35 machine test
+>>>         chardev: set record/replay on the base device of a muxed device
+>>>         virtio-net: Use replay_schedule_bh_event for bhs that affect machine state
+>>>         virtio-net: Use virtual time for RSC timers
+>>>         savevm: Fix load_snapshot error path crash
+>>> Philippe Mathieu-Daudé (2):
+>>>         tests/avocado: Re-enable gdbsim-r5f562n8 testing U-Boot
+>>>         buildsys: Fix building without plugins on Darwin
+>>> Pierrick Bouvier (2):
+>>>         docs/devel: update tcg-plugins page
+>>>         plugins: fix race condition with scoreboards
+>>> Stefan Weil (1):
+>>>         docs: Fix some typos (found by typos) and grammar issues
+>>
+>> Patch 19:
+>>
+>> ERROR: pull request includes commits attributed to list
+> 
+> What does that actually mean?
 
-Signed-off-by: zuoboqun <zuoboqun@baidu.com>
----
- hw/net/vhost_net.c        | 155 +++++++++++++++++++++++++++++++++++---
- hw/virtio/vhost.c         |   6 +-
- include/hw/virtio/vhost.h |   4 +
- 3 files changed, 150 insertions(+), 15 deletions(-)
+Stefan's patch has:
 
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index a788e6937e..28a9aca1a7 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -160,6 +160,135 @@ void vhost_net_save_acked_features(NetClientState *nc)
- #endif
- }
- 
-+static void vhost_net_disable_notifiers_nvhosts(VirtIODevice *dev,
-+                NetClientState *ncs, int data_queue_pairs, int nvhosts)
-+{
-+    VirtIONet *n = VIRTIO_NET(dev);
-+    BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(dev)));
-+    struct vhost_net *net;
-+    struct vhost_dev *hdev;
-+    int r, i, j;
-+    NetClientState *peer;
-+
-+    /*
-+     * Batch all the host notifiers in a single transaction to avoid
-+     * quadratic time complexity in address_space_update_ioeventfds().
-+     */
-+    memory_region_transaction_begin();
-+
-+    for (i = 0; i < nvhosts; i++) {
-+        if (i < data_queue_pairs) {
-+            peer = qemu_get_peer(ncs, i);
-+        } else {
-+            peer = qemu_get_peer(ncs, n->max_queue_pairs);
-+        }
-+
-+        net = get_vhost_net(peer);
-+        hdev = &net->dev;
-+        for (j = 0; j < hdev->nvqs; j++) {
-+            r = virtio_bus_set_host_notifier(VIRTIO_BUS(qbus),
-+                                             hdev->vq_index + j,
-+                                             false);
-+            if (r < 0) {
-+                error_report("vhost %d VQ %d notifier cleanup failed: %d",
-+                              i, j, -r);
-+            }
-+            assert(r >= 0);
-+        }
-+    }
-+    /*
-+     * The transaction expects the ioeventfds to be open when it
-+     * commits. Do it now, before the cleanup loop.
-+     */
-+    memory_region_transaction_commit();
-+
-+    for (i = 0; i < nvhosts; i++) {
-+        if (i < data_queue_pairs) {
-+            peer = qemu_get_peer(ncs, i);
-+        } else {
-+            peer = qemu_get_peer(ncs, n->max_queue_pairs);
-+        }
-+
-+        net = get_vhost_net(peer);
-+        hdev = &net->dev;
-+        for (j = 0; j < hdev->nvqs; j++) {
-+            virtio_bus_cleanup_host_notifier(VIRTIO_BUS(qbus),
-+                                             hdev->vq_index + j);
-+        }
-+        virtio_device_release_ioeventfd(dev);
-+    }
-+}
-+
-+static int vhost_net_enable_notifiers(VirtIODevice *dev,
-+                NetClientState *ncs, int data_queue_pairs, int cvq)
-+{
-+    VirtIONet *n = VIRTIO_NET(dev);
-+    BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(dev)));
-+    int nvhosts = data_queue_pairs + cvq;
-+    struct vhost_net *net;
-+    struct vhost_dev *hdev;
-+    int r, i, j;
-+    NetClientState *peer;
-+
-+    /*
-+     * Batch all the host notifiers in a single transaction to avoid
-+     * quadratic time complexity in address_space_update_ioeventfds().
-+     */
-+    memory_region_transaction_begin();
-+
-+    for (i = 0; i < nvhosts; i++) {
-+        if (i < data_queue_pairs) {
-+            peer = qemu_get_peer(ncs, i);
-+        } else {
-+            peer = qemu_get_peer(ncs, n->max_queue_pairs);
-+        }
-+
-+        net = get_vhost_net(peer);
-+        hdev = &net->dev;
-+        /*
-+         * We will pass the notifiers to the kernel, make sure that QEMU
-+         * doesn't interfere.
-+         */
-+        r = virtio_device_grab_ioeventfd(dev);
-+        if (r < 0) {
-+            error_report("binding does not support host notifiers");
-+            memory_region_transaction_commit();
-+            goto fail_nvhosts;
-+        }
-+
-+        for (j = 0; j < hdev->nvqs; j++) {
-+            r = virtio_bus_set_host_notifier(VIRTIO_BUS(qbus),
-+                                             hdev->vq_index + j,
-+                                             true);
-+            if (r < 0) {
-+                error_report("vhost %d VQ %d notifier binding failed: %d",
-+                              i, j, -r);
-+                memory_region_transaction_commit();
-+                vhost_dev_disable_notifiers_nvqs(hdev, dev, j);
-+                goto fail_nvhosts;
-+            }
-+        }
-+    }
-+
-+    memory_region_transaction_commit();
-+
-+    return 0;
-+fail_nvhosts:
-+    vhost_net_disable_notifiers_nvhosts(dev, ncs, data_queue_pairs, i);
-+    return r;
-+}
-+
-+/*
-+ * Stop processing guest IO notifications in qemu.
-+ * Start processing them in vhost in kernel.
-+ */
-+static void vhost_net_disable_notifiers(VirtIODevice *dev,
-+                NetClientState *ncs, int data_queue_pairs, int cvq)
-+{
-+    vhost_net_disable_notifiers_nvhosts(dev, ncs, data_queue_pairs,
-+                                        data_queue_pairs + cvq);
-+}
-+
- static int vhost_net_get_fd(NetClientState *backend)
- {
-     switch (backend->info->type) {
-@@ -270,11 +399,6 @@ static int vhost_net_start_one(struct vhost_net *net,
-         }
-     }
- 
--    r = vhost_dev_enable_notifiers(&net->dev, dev);
--    if (r < 0) {
--        goto fail_notifiers;
--    }
--
-     r = vhost_dev_start(&net->dev, dev, false);
-     if (r < 0) {
-         goto fail_start;
-@@ -326,8 +450,6 @@ fail:
-     }
-     vhost_dev_stop(&net->dev, dev, false);
- fail_start:
--    vhost_dev_disable_notifiers(&net->dev, dev);
--fail_notifiers:
-     return r;
- }
- 
-@@ -349,7 +471,6 @@ static void vhost_net_stop_one(struct vhost_net *net,
-     if (net->nc->info->stop) {
-         net->nc->info->stop(net->nc);
-     }
--    vhost_dev_disable_notifiers(&net->dev, dev);
- }
- 
- int vhost_net_start(VirtIODevice *dev, NetClientState *ncs,
-@@ -394,10 +515,16 @@ int vhost_net_start(VirtIODevice *dev, NetClientState *ncs,
-         }
-      }
- 
-+    r = vhost_net_enable_notifiers(dev, ncs, data_queue_pairs, cvq);
-+    if (r < 0) {
-+        error_report("Error enabling host notifiers: %d", -r);
-+        goto err;
-+    }
-+
-     r = k->set_guest_notifiers(qbus->parent, total_notifiers, true);
-     if (r < 0) {
-         error_report("Error binding guest notifier: %d", -r);
--        goto err;
-+        goto err_host_notifiers;
-     }
- 
-     for (i = 0; i < nvhosts; i++) {
-@@ -412,19 +539,19 @@ int vhost_net_start(VirtIODevice *dev, NetClientState *ncs,
-             r = vhost_set_vring_enable(peer, peer->vring_enable);
- 
-             if (r < 0) {
--                goto err_start;
-+                goto err_guest_notifiers;
-             }
-         }
- 
-         r = vhost_net_start_one(get_vhost_net(peer), dev);
-         if (r < 0) {
--            goto err_start;
-+            goto err_guest_notifiers;
-         }
-     }
- 
-     return 0;
- 
--err_start:
-+err_guest_notifiers:
-     while (--i >= 0) {
-         peer = qemu_get_peer(ncs, i < data_queue_pairs ?
-                                   i : n->max_queue_pairs);
-@@ -435,6 +562,8 @@ err_start:
-         fprintf(stderr, "vhost guest notifier cleanup failed: %d\n", e);
-         fflush(stderr);
-     }
-+err_host_notifiers:
-+    vhost_net_disable_notifiers(dev, ncs, data_queue_pairs, cvq);
- err:
-     return r;
- }
-@@ -466,6 +595,8 @@ void vhost_net_stop(VirtIODevice *dev, NetClientState *ncs,
-         fflush(stderr);
-     }
-     assert(r >= 0);
-+
-+    vhost_net_disable_notifiers(dev, ncs, data_queue_pairs, cvq);
- }
- 
- void vhost_net_cleanup(struct vhost_net *net)
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 06fc71746e..7c5ef81b55 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1682,9 +1682,9 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
-     memset(hdev, 0, sizeof(struct vhost_dev));
- }
- 
--static void vhost_dev_disable_notifiers_nvqs(struct vhost_dev *hdev,
--                                             VirtIODevice *vdev,
--                                             unsigned int nvqs)
-+void vhost_dev_disable_notifiers_nvqs(struct vhost_dev *hdev,
-+                                      VirtIODevice *vdev,
-+                                      unsigned int nvqs)
- {
-     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
-     int i, r;
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index d75faf46e9..c75be46c06 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -171,6 +171,10 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
-  */
- void vhost_dev_cleanup(struct vhost_dev *hdev);
- 
-+void vhost_dev_disable_notifiers_nvqs(struct vhost_dev *hdev,
-+                                      VirtIODevice *vdev,
-+                                      unsigned int nvqs);
-+
- /**
-  * vhost_dev_enable_notifiers() - enable event notifiers
-  * @hdev: common vhost_dev structure
--- 
-2.42.0.windows.2
+From: Stefan Weil via <qemu-devel@nongnu.org>
+
+>> Please re-spin.
+> 
+> Should I just drop Stefan's doc tweaks?
+
+No, IIRC, you can fix the commit by doing
+
+  git commit --amend --reset-author="..."
+
+  HTH,
+   Thomas
 
 
