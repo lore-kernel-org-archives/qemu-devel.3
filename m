@@ -4,89 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6914C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 06:56:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A70AC531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 07:04:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seqsj-0007Oh-95; Fri, 16 Aug 2024 02:56:17 -0400
+	id 1seqzV-0003xq-1W; Fri, 16 Aug 2024 03:03:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1seqsg-0007KW-Ku
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 02:56:14 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1seqsb-0000Ti-8p
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 02:56:14 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-7a10b293432so1187555a12.0
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 23:56:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1723791367; x=1724396167;
- darn=nongnu.org; 
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=6f/+3JFYzcy3cXgc3BcD+q5ndWVqr+qoQDmW1MWj1OA=;
- b=gz6Q5y/Uq+QFZCW337hbEc7+z/YobNhxJOn4UKGjvuw071G55T38cr048dp8a/13e5
- tydWUMLhMCSPKdxcY9PK4ACvwZAARFqnIbUX/aArCg1eJJbNlnge7jCQ+N2FaCRZ0vII
- QLwcM/i9Cu4aKcdHpeeYHee54GiEBWAlFQNt0yF2WBZdu0fwnjYMrEMOiEnQ5WvGlf67
- t5selWbmEIOT4yqidpvs5gAT+X4xkuI719873bqcelOFrYhE+Ls0GsVqCPNge9tVETc+
- CkAG7sqY06L0141516mu8oMCZ2i99Ll5Tl86bTCFUvqDeW/VY/Q2sOtKeZLXk5az1pP3
- 8wYw==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1seqzS-0003wo-MY
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:03:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1seqzQ-0001KX-Kz
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:03:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723791790;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=tvsaJpO4Ds11qn4sBBK1KUcYlKHB9+Y+4/YU/ibGpdQ=;
+ b=ey8WZ8bP7fVahVj43wNav/FTi1o0/tWHxQa36iWXABCL2f1SAqPCXu5Kn8Zcdjxd48wvx0
+ vsQWE4MkF0WT+FCBYiou/cn/lD6tR5N4KQapZSd6xxtRtj3G5Ihn2VYu1pzvr06okda8Wc
+ bhaw5Io+8nWbAtrEwlMW0KkMvxxBpJA=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-502-wlKYzvHnO-OWsDuvpqCY_Q-1; Fri, 16 Aug 2024 03:03:07 -0400
+X-MC-Unique: wlKYzvHnO-OWsDuvpqCY_Q-1
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-428e48612acso17365645e9.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 00:03:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723791367; x=1724396167;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1723791786; x=1724396586;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6f/+3JFYzcy3cXgc3BcD+q5ndWVqr+qoQDmW1MWj1OA=;
- b=AudTaaNZbG7OUlr51OZWBNF+Q2Jftm99syXHGanpfSn+pZRDUNAdzaMXbfe/MRu5SG
- jvrp2qwDOXEXf3YH03nj/p8WymQ3xR29rPn3fxWrCIPgnOzBKRwsLxdApMDNpC2/Vxj3
- UIDpbGJ2zncU0kodqVfhGgWMNWiqmVUhZEMJ2BT3x4l+y4ohoHffwQr25b2khs3fZu5u
- mtLs12SWKYTMwmZnt7DEOOuyyH+Rz20sHEEWwIwVUtd76z84A6YmE0HcHiL4fjQ1Q9z9
- 1B4DdRQUOENVnS+950ebQDG0YXkILSUNDDAGet3I+ABjcZPaBfTn3KvTbqVi1q99uW+j
- r5Cw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVUxeS/ZpF1eQbWS0EhKit9xQi/dqkbpq90g+EmZv2FSbevbmE5oNLiQ1FMcPx2f2ykzMJ9TafpfM406P6XPUhB2fWuYbI=
-X-Gm-Message-State: AOJu0YwoR8Tm6ogRxD1pdRpVOQWVaee6JTUUxGSutcJanYQHeMtDutZ/
- fSWPNDcOOqEvrRa9LMIvyUfj3RVTabKPsz6vUIkJBF0CVnF3//E+rrkfyj3ICNo=
-X-Google-Smtp-Source: AGHT+IHAv9AXl+UhDln7WsF2EVIw2VopKa7wU4OoqWuL3DaPus5nNZqAO35RtfW+w4kJg31T0KIyPw==
-X-Received: by 2002:a05:6a21:2d86:b0:1c4:9100:6a1b with SMTP id
- adf61e73a8af0-1c904fca42bmr2205135637.30.1723791367159; 
- Thu, 15 Aug 2024 23:56:07 -0700 (PDT)
-Received: from debug.ba.rivosinc.com ([64.71.180.162])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201f03032b1sm19747595ad.61.2024.08.15.23.56.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Aug 2024 23:56:06 -0700 (PDT)
-Date: Thu, 15 Aug 2024 23:56:03 -0700
-From: Deepak Gupta <debug@rivosinc.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, palmer@dabbelt.com,
- Alistair.Francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- pbonzini@redhat.com, jim.shu@sifive.com, andy.chiu@sifive.com,
- kito.cheng@sifive.com
-Subject: Re: [PATCH v4 13/16] target/riscv: compressed encodings for sspush
- and sspopchk
-Message-ID: <Zr74Axtj/871L5Nj@debug.ba.rivosinc.com>
-References: <20240816010711.3055425-1-debug@rivosinc.com>
- <20240816010711.3055425-14-debug@rivosinc.com>
- <794021c3-02f2-4b64-8d1c-a56125e09462@linaro.org>
+ bh=tvsaJpO4Ds11qn4sBBK1KUcYlKHB9+Y+4/YU/ibGpdQ=;
+ b=uHiIDDOOO3Hhs414pq1HG+F2M1us2afjZz6+Qx8QiBY4dBT/xLfn/VUpjL8vqmNjE4
+ YZkRfbuLU1oe8U9PFMoexdCFehPER0EtSGbOH687dg+2IeR/lFffFi2u3bzGGzCvq/+w
+ jVV5xABIEFNL32xZQ1XUfASY0S9kxU86Xv9P78pxD8pLEjcfLdhg1nLNn6DmFTBKetDl
+ vaz52/muC1SS8xBAHtSL59+abR2bSarVSTF8fZZhUTR1iKT2vq5vcfVmYU+TNRNj7QeM
+ 0jhWE8J2adMOm4m0OsJ2Llnt65FbwkGzgAahglDf6eciCIlf6CCs7a6T6JAuZES6SATp
+ H+cQ==
+X-Gm-Message-State: AOJu0YzuPbul3Pp13STCFdG8pT5mAUQmkfUEflk2ZRx/7yAHiKZ5Kh5q
+ r0qsJKhvBGcX2ILb3hJYLM13/zPGSVNXCD+Z8JbEEx8J/iWBPqsP7CfSmmS/nRoRBfawAHZMdNZ
+ qCXbkaVVS3VPFc0bt05GbAGRFYjHZr/7mUa6fAYE8d/jhCroQOQ9D
+X-Received: by 2002:a5d:6448:0:b0:371:914a:4850 with SMTP id
+ ffacd0b85a97d-3719443eaa5mr1268587f8f.20.1723791786090; 
+ Fri, 16 Aug 2024 00:03:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGVrNeNQYx6eX0Iht8zQLqy/JeM0bkF+OMJLXvHJ5vUY+ubwVqrCddqkIPDIADDOKxA6QJkSQ==
+X-Received: by 2002:a5d:6448:0:b0:371:914a:4850 with SMTP id
+ ffacd0b85a97d-3719443eaa5mr1268553f8f.20.1723791785586; 
+ Fri, 16 Aug 2024 00:03:05 -0700 (PDT)
+Received: from [192.168.0.6] (ip-109-43-177-15.web.vodafone.de.
+ [109.43.177.15]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-37189897175sm2957166f8f.83.2024.08.16.00.03.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 Aug 2024 00:03:05 -0700 (PDT)
+Message-ID: <3d417232-ba66-4781-8278-a6a31987b54c@redhat.com>
+Date: Fri, 16 Aug 2024 09:03:03 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <794021c3-02f2-4b64-8d1c-a56125e09462@linaro.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=debug@rivosinc.com; helo=mail-pg1-x533.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SCC_BODY_TEXT_LINE=-0.01,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] meson: Use -fno-sanitize=function when available
+To: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20240816-function-v3-1-32ff225e550e@daynix.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
+ yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
+ 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
+ tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
+ 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
+ O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
+ 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
+ gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
+ 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
+ zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
+ aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
+ AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
+ QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
+ EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
+ 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
+ eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
+ ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
+ zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
+ tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
+ WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
+ UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
+ BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
+ 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
+ +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
+ 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
+ gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
+ WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
+ VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
+ knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
+ cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
+ X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
+ AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
+ ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
+ fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
+ 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
+ cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
+ ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
+ Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
+ oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
+ IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
+ yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
+In-Reply-To: <20240816-function-v3-1-32ff225e550e@daynix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,69 +150,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 16, 2024 at 03:09:10PM +1000, Richard Henderson wrote:
->On 8/16/24 11:07, Deepak Gupta wrote:
->>sspush/sspopchk have compressed encodings carved out of zcmops.
->>compressed sspush is designated as c.mop.1 while compressed sspopchk
->>is designated as c.mop.5.
->>
->>Note that c.sspush x1 exists while c.sspush x5 doesn't. Similarly
->>c.sspopchk x5 exists while c.sspopchk x1 doesn't.
->>
->>Signed-off-by: Deepak Gupta <debug@rivosinc.com>
->>Co-developed-by: Jim Shu <jim.shu@sifive.com>
->>Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
->>---
->>  target/riscv/insn16.decode                    |  2 ++
->>  target/riscv/insn_trans/trans_rvzicfiss.c.inc | 12 ++++++++++++
->>  2 files changed, 14 insertions(+)
->>
->>diff --git a/target/riscv/insn16.decode b/target/riscv/insn16.decode
->>index 3953bcf82d..3b84a36233 100644
->>--- a/target/riscv/insn16.decode
->>+++ b/target/riscv/insn16.decode
->>@@ -140,6 +140,8 @@ sw                110  ... ... .. ... 00 @cs_w
->>  addi              000 .  .....  ..... 01 @ci
->>  addi              010 .  .....  ..... 01 @c_li
->>  {
->>+  c_sspush        011 0  00001  00000 01 rs2=1 rs1=0 # c.sspush x1 carving out of zcmops
->>+  c_sspopchk      011 0  00101  00000 01 rs1=5 rd=0 # c.sspopchk x5 carving out of zcmops
->>    c_mop_n         011 0 0 n:3 1 00000 01
->>    illegal         011 0  -----  00000 01 # c.addi16sp and c.lui, RES nzimm=0
->>    addi            011 .  00010  ..... 01 @c_addi16sp
->>diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
->>index 05d439c1f6..67f5c7804a 100644
->>--- a/target/riscv/insn_trans/trans_rvzicfiss.c.inc
->>+++ b/target/riscv/insn_trans/trans_rvzicfiss.c.inc
->>@@ -109,3 +109,15 @@ static bool trans_sspush(DisasContext *ctx, arg_sspush *a)
->>  {
->>      return gen_sspush(ctx, a->rs2);
->>  }
->>+
->>+static bool trans_c_sspopchk(DisasContext *ctx, arg_c_sspopchk *a)
->>+{
->>+    assert(a->rs1 == 5);
->>+    return gen_sspopchk(ctx, a->rs1);
->>+}
->>+
->>+static bool trans_c_sspush(DisasContext *ctx, arg_c_sspush *a)
->>+{
->>+    assert(a->rs2 == 1);
->>+    return gen_sspush(ctx, a->rs2);
->>+}
->
->This indirection is pointless.  Have the decoder invoke the proper 
->insn in the first place.  Identically with how we're treating 'addi', 
->for instance.
->
+On 16/08/2024 08.22, Akihiko Odaki wrote:
+> Commit 23ef50ae2d0c (".gitlab-ci.d/buildtest.yml: Use
+> -fno-sanitize=function in the clang-system job") adds
+> -fno-sanitize=function for the CI but doesn't add the flag in the
+> other context. Add it to meson.build for such. It is not removed from
+> .gitlab-ci.d/buildtest.yml because -fno-sanitize=function in meson.build
+> does not affect --extra-cflags due to argument ordering.
+> 
+> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> ---
+> Changes in v3:
+> - I was not properly dropping the change of .gitlab-ci.d/buildtest.yml
+>    but only updated the message. v3 fixes this. (Thomas Huth)
+> - Link to v2: https://lore.kernel.org/r/20240729-function-v2-1-2401ab18b30b@daynix.com
+> 
+> Changes in v2:
+> - Dropped the change of: .gitlab-ci.d/buildtest.yml
+> - Link to v1: https://lore.kernel.org/r/20240714-function-v1-1-cc2acb4171ba@daynix.com
+> ---
+>   meson.build | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/meson.build b/meson.build
+> index 5613b62a4f42..a4169c572ba9 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -609,6 +609,7 @@ if host_os != 'openbsd' and \
+>   endif
+>   
+>   qemu_common_flags += cc.get_supported_arguments(hardening_flags)
+> +qemu_common_flags += cc.get_supported_arguments('-fno-sanitize=function')
 
-I was getting compilation error. How to reconcile with arugment sets between
-insn32.decode and insn16.decode. Earlier I was doing that and didn't need it.
-But after removing indirection in arguments and using single use format, type for
-structs instruction arguments ends up conflicting and compiler complains.
+As I mentioned in my last mail: I think it would make sense to move this at 
+the end of the "if get_option('tsan')" block in meson.build, since this 
+apparently only fixes the use of "--enable-sanitizers", and cannot fix the 
+"--extra-cflags" that a user might have specified?
+
+  Thomas
 
 
->
->r~
->
 
