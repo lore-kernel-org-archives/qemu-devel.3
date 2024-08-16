@@ -4,81 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA8D2C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 10:30:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 375B9C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 10:39:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seuDK-0002aD-JU; Fri, 16 Aug 2024 06:29:46 -0400
+	id 1seuLP-0000pb-H7; Fri, 16 Aug 2024 06:38:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1seuDI-0002Y3-AE
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:29:44 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1seuLN-0000mz-6a
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:38:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1seuDG-00051S-Nw
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:29:44 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1seuL9-0006AY-6z
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:38:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723804181;
+ s=mimecast20190719; t=1723804668;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9MnMphnsUo5fZBNhUymgzNdYcmv2xCiRrOwDkMc5yho=;
- b=ARP9KvmWFxdHCAY6eZT56MDAX3EElz2yOGUSCcgxsMab8H2TGg1qlH9y6pJbVQPEkok9bo
- 2+quUXJYDnWrw3qrWsHabIUK6A2ogqKlvVllOCAWAmfECB9UDj7I4p10Ees+2TWL5oxsYc
- 2yo3xTykhARhlf8+NkMv3lxzDYO2XcQ=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-410-Y3V6nA02NMafgeictI9bpw-1; Fri, 16 Aug 2024 06:29:39 -0400
-X-MC-Unique: Y3V6nA02NMafgeictI9bpw-1
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-5a2d4fb1e73so1511382a12.2
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 03:29:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723804178; x=1724408978;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9MnMphnsUo5fZBNhUymgzNdYcmv2xCiRrOwDkMc5yho=;
- b=C85r/QUFxiIB0TsSE61nIZpH1+UWTIqg2+GBT68bo+pWDSlH3WQtEYvc5xlHfJRTne
- ejYOOOPkc3XqlIxrJtCsF8h475N4JlU81edORau7kPl28yFZoGYUquEoN8cyLvGp0hJC
- 9uPbJyw7LYF+G9aMZzehD+qKJAD0m0a/U73R2498qrBvZyzC7J9HT7MODY1fJCN35vZz
- y16AT5Phcf1Dd1nto5og4nxaAJaHzR62v12JhEsZAD+CQOL7xLUTNhJfgHUXW3AmrpLX
- qQxxrqIWudNIKZWD8qBMtNgDJiKw/ZvJ3QI09qBANzHDabtVwoxAO7dn04t2V7AI6TEB
- vm8Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXC6kRwQRh1ls0PxsSsNFfg0QmtZUiRwgkZ8tb5emvgQB1ExHGavSWJSjL4Jt/IEzkDbeX1grRTEkrEhnIXmjOtFr4ZJ+8=
-X-Gm-Message-State: AOJu0YyQTXKdh/pdExzSrW2A4DLA2vpAgZlhE33N7u7LE/94E8vnSAPz
- Sbpa7eK9JqzdA2x9wO2UHFEw8Fc2j1Ewd9X5x8hX4UTruqhOv6XfQHVByhNZOd5An3LTRdJh23f
- RN4tmZg3vdzWRftw1rDqp8JwdaMpaYppeo06mAM1qqFkozF6ozIQl
-X-Received: by 2002:a05:6402:234d:b0:5be:9c84:a01 with SMTP id
- 4fb4d7f45d1cf-5beca76d270mr1894794a12.29.1723804178654; 
- Fri, 16 Aug 2024 03:29:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEhp1L7S4lXnr1obbcfXsEPZl5+N1CoUUtsYnQkyg8mrAXFKI+fc/e1wTiHWpcPoZOXU7TPCw==
-X-Received: by 2002:a05:6402:234d:b0:5be:9c84:a01 with SMTP id
- 4fb4d7f45d1cf-5beca76d270mr1894747a12.29.1723804177805; 
- Fri, 16 Aug 2024 03:29:37 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:17d:3378:6322:e9ee:713:b9ed])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bebbde4b37sm2074074a12.34.2024.08.16.03.29.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 03:29:37 -0700 (PDT)
-Date: Fri, 16 Aug 2024 06:29:33 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Gao Shiyuan <gaoshiyuan@baidu.com>
-Cc: Tiwei Bie <tiwei.bie@intel.com>, zuoboqun@baidu.com,
- qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 1/1] virtio-pci: return RAM device MR when set host
- notifier success
-Message-ID: <20240816061647-mutt-send-email-mst@kernel.org>
-References: <20240812122027.65600-1-gaoshiyuan@baidu.com>
+ content-transfer-encoding:content-transfer-encoding;
+ bh=bRFn2gcsCH1DPqIkJG2TXb2/rUer206MG55MbUglkdY=;
+ b=V2xcassrH1gnKIwXgyGVR5Z/XIfbnoDbVYHf5nLIEnf8OLGYoMsigD9SE0VQ5OKtnZGJmB
+ K2bzT4l5qPHg7wThxxrosDP17ws4qX1yh5Fw7pc+rQWdjp5puGhwtCDkx5c/gUMUsVsnl8
+ vvRjOM/j+2vBEYfqPYc5i0wNHsj1sMg=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-534-Hvm3FYjNNQ6ReahwXL9kvQ-1; Fri,
+ 16 Aug 2024 06:37:46 -0400
+X-MC-Unique: Hvm3FYjNNQ6ReahwXL9kvQ-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A7DA71955D4B; Fri, 16 Aug 2024 10:37:41 +0000 (UTC)
+Received: from gondolin.str.redhat.com (dhcp-192-244.str.redhat.com
+ [10.33.192.244])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 176661955F2E; Fri, 16 Aug 2024 10:37:31 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ qemu-s390x@nongnu.org, Cornelia Huck <cohuck@redhat.com>
+Subject: [PATCH for-9.2] hw: add compat machines for 9.2
+Date: Fri, 16 Aug 2024 12:37:23 +0200
+Message-ID: <20240816103723.2325982-1-cohuck@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240812122027.65600-1-gaoshiyuan@baidu.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -103,65 +95,264 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 12, 2024 at 08:20:27PM +0800, Gao Shiyuan wrote:
-> When vhost-user backend register memory region based host notifiers,
-> we should return RAM device MR of notify region MR's subregion in
-> virtio_address_space_lookup.
-> 
-> In seabios, it will use virtio PCI Configration Access Capability
-> access notify region when assign notify region above 4GB. This will
-> exit to QEMU and invoke virtio_address_space_write. When vhost-user
-> backend register memory region based host notifiers, return RAM device
-> MR instead of notify region MR is suitable.
+Add 9.2 machine types for arm/i440fx/m68k/q35/s390x/spapr.
 
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+---
+ hw/arm/virt.c              |  9 ++++++++-
+ hw/core/machine.c          |  3 +++
+ hw/i386/pc.c               |  3 +++
+ hw/i386/pc_piix.c          | 15 ++++++++++++---
+ hw/i386/pc_q35.c           | 13 +++++++++++--
+ hw/m68k/virt.c             |  9 ++++++++-
+ hw/ppc/spapr.c             | 15 +++++++++++++--
+ hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
+ include/hw/boards.h        |  3 +++
+ include/hw/i386/pc.h       |  3 +++
+ 10 files changed, 77 insertions(+), 10 deletions(-)
 
-I can't really parse this.
-
-> Co-developed-by: Zuo Boqun <zuoboqun@baidu.com>
-> Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
-> Signed-off-by: Zuo Boqun <zuoboqun@baidu.com>
-
-CC Jason
-
-> ---
->  hw/virtio/virtio-pci.c | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
-> index 9534730bba..167ac9718a 100644
-> --- a/hw/virtio/virtio-pci.c
-> +++ b/hw/virtio/virtio-pci.c
-> @@ -610,13 +610,22 @@ static MemoryRegion *virtio_address_space_lookup(VirtIOPCIProxy *proxy,
->  {
->      int i;
->      VirtIOPCIRegion *reg;
-> +    MemoryRegion *mr, *submr;
->  
->      for (i = 0; i < ARRAY_SIZE(proxy->regs); ++i) {
->          reg = &proxy->regs[i];
->          if (*off >= reg->offset &&
->              *off + len <= reg->offset + reg->size) {
->              *off -= reg->offset;
-> -            return &reg->mr;
-> +            mr = &reg->mr;
-> +            QTAILQ_FOREACH(submr, &mr->subregions, subregions_link) {
-> +                if (*off >= submr->addr &&
-> +                    *off + len < submr->addr + submr->size) {
-> +                    *off -= submr->addr;
-> +                    return submr;
-> +                }
-> +            }
-> +            return mr;
->          }
->      }
-
-Poking at internals of MR like this is not nice.
-Doesn't memory_region_find work for this?
-
-
-
->  
-> -- 
-> 2.39.3 (Apple Git-146)
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 687fe0bb8bc9..a5d3ad9bf9e7 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -3301,10 +3301,17 @@ static void machvirt_machine_init(void)
+ }
+ type_init(machvirt_machine_init);
+ 
++static void virt_machine_9_2_options(MachineClass *mc)
++{
++}
++DEFINE_VIRT_MACHINE_AS_LATEST(9, 2)
++
+ static void virt_machine_9_1_options(MachineClass *mc)
+ {
++    virt_machine_9_2_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_9_1, hw_compat_9_1_len);
+ }
+-DEFINE_VIRT_MACHINE_AS_LATEST(9, 1)
++DEFINE_VIRT_MACHINE(9, 1)
+ 
+ static void virt_machine_9_0_options(MachineClass *mc)
+ {
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 27dcda024834..adaba17ebac1 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -34,6 +34,9 @@
+ #include "hw/virtio/virtio-iommu.h"
+ #include "audio/audio.h"
+ 
++GlobalProperty hw_compat_9_1[] = {};
++const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
++
+ GlobalProperty hw_compat_9_0[] = {
+     {"arm-cpu", "backcompat-cntfrq", "true" },
+     { "scsi-hd", "migrate-emulated-scsi-request", "false" },
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index c74931d577a8..0cf4cb0d9f29 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -79,6 +79,9 @@
+     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
+     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
+ 
++GlobalProperty pc_compat_9_1[] = {};
++const size_t pc_compat_9_1_len = G_N_ELEMENTS(pc_compat_9_1);
++
+ GlobalProperty pc_compat_9_0[] = {
+     { TYPE_X86_CPU, "x-amd-topoext-features-only", "false" },
+     { TYPE_X86_CPU, "x-l1-cache-per-thread", "false" },
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index d9e69243b4a7..746bfe05d386 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -479,13 +479,24 @@ static void pc_i440fx_machine_options(MachineClass *m)
+                                      "Use a different south bridge than PIIX3");
+ }
+ 
+-static void pc_i440fx_machine_9_1_options(MachineClass *m)
++static void pc_i440fx_machine_9_2_options(MachineClass *m)
+ {
+     pc_i440fx_machine_options(m);
+     m->alias = "pc";
+     m->is_default = true;
+ }
+ 
++DEFINE_I440FX_MACHINE(9, 2);
++
++static void pc_i440fx_machine_9_1_options(MachineClass *m)
++{
++    pc_i440fx_machine_9_2_options(m);
++    m->alias = NULL;
++    m->is_default = false;
++    compat_props_add(m->compat_props, hw_compat_9_1, hw_compat_9_1_len);
++    compat_props_add(m->compat_props, pc_compat_9_1, pc_compat_9_1_len);
++}
++
+ DEFINE_I440FX_MACHINE(9, 1);
+ 
+ static void pc_i440fx_machine_9_0_options(MachineClass *m)
+@@ -493,8 +504,6 @@ static void pc_i440fx_machine_9_0_options(MachineClass *m)
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+ 
+     pc_i440fx_machine_9_1_options(m);
+-    m->alias = NULL;
+-    m->is_default = false;
+     m->smbios_memory_device_size = 16 * GiB;
+ 
+     compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 9d108b194e47..67162ac88634 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -361,19 +361,28 @@ static void pc_q35_machine_options(MachineClass *m)
+                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);
+ }
+ 
+-static void pc_q35_machine_9_1_options(MachineClass *m)
++static void pc_q35_machine_9_2_options(MachineClass *m)
+ {
+     pc_q35_machine_options(m);
+     m->alias = "q35";
+ }
+ 
++DEFINE_Q35_MACHINE(9, 2);
++
++static void pc_q35_machine_9_1_options(MachineClass *m)
++{
++    pc_q35_machine_9_2_options(m);
++    m->alias = NULL;
++    compat_props_add(m->compat_props, hw_compat_9_1, hw_compat_9_1_len);
++    compat_props_add(m->compat_props, pc_compat_9_1, pc_compat_9_1_len);
++}
++
+ DEFINE_Q35_MACHINE(9, 1);
+ 
+ static void pc_q35_machine_9_0_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+     pc_q35_machine_9_1_options(m);
+-    m->alias = NULL;
+     m->smbios_memory_device_size = 16 * GiB;
+     compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
+     compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+index cda199af8faa..ea5c4a5a570b 100644
+--- a/hw/m68k/virt.c
++++ b/hw/m68k/virt.c
+@@ -366,10 +366,17 @@ type_init(virt_machine_register_types)
+ #define DEFINE_VIRT_MACHINE(major, minor) \
+     DEFINE_VIRT_MACHINE_IMPL(false, major, minor)
+ 
++static void virt_machine_9_2_options(MachineClass *mc)
++{
++}
++DEFINE_VIRT_MACHINE_AS_LATEST(9, 2)
++
+ static void virt_machine_9_1_options(MachineClass *mc)
+ {
++    virt_machine_9_2_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_9_1, hw_compat_9_1_len);
+ }
+-DEFINE_VIRT_MACHINE_AS_LATEST(9, 1)
++DEFINE_VIRT_MACHINE(9, 1)
+ 
+ static void virt_machine_9_0_options(MachineClass *mc)
+ {
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 370d7c35d3a7..8aa3ce7449be 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4837,15 +4837,26 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
+ #define DEFINE_SPAPR_MACHINE_TAGGED(major, minor, tag) \
+     DEFINE_SPAPR_MACHINE_IMPL(false, major, minor, _, tag)
+ 
++/*
++ * pseries-9.2
++ */
++static void spapr_machine_9_2_class_options(MachineClass *mc)
++{
++    /* Defaults for the latest behaviour inherited from the base class */
++}
++
++DEFINE_SPAPR_MACHINE_AS_LATEST(9, 2);
++
+ /*
+  * pseries-9.1
+  */
+ static void spapr_machine_9_1_class_options(MachineClass *mc)
+ {
+-    /* Defaults for the latest behaviour inherited from the base class */
++    spapr_machine_9_2_class_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_9_1, hw_compat_9_1_len);
+ }
+ 
+-DEFINE_SPAPR_MACHINE_AS_LATEST(9, 1);
++DEFINE_SPAPR_MACHINE(9, 1);
+ 
+ /*
+  * pseries-9.0
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index c483ff8064d4..18240a0fd8b4 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -871,14 +871,26 @@ static const TypeInfo ccw_machine_info = {
+     DEFINE_CCW_MACHINE_IMPL(false, major, minor)
+ 
+ 
++static void ccw_machine_9_2_instance_options(MachineState *machine)
++{
++}
++
++static void ccw_machine_9_2_class_options(MachineClass *mc)
++{
++}
++DEFINE_CCW_MACHINE_AS_LATEST(9, 2);
++
+ static void ccw_machine_9_1_instance_options(MachineState *machine)
+ {
++    ccw_machine_9_2_instance_options(machine);
+ }
+ 
+ static void ccw_machine_9_1_class_options(MachineClass *mc)
+ {
++    ccw_machine_9_2_class_options(mc);
++    compat_props_add(mc->compat_props, hw_compat_9_1, hw_compat_9_1_len);
+ }
+-DEFINE_CCW_MACHINE_AS_LATEST(9, 1);
++DEFINE_CCW_MACHINE(9, 1);
+ 
+ static void ccw_machine_9_0_instance_options(MachineState *machine)
+ {
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index 48ff6d8b93f7..9a492770cbb9 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -732,6 +732,9 @@ struct MachineState {
+     } \
+     type_init(machine_initfn##_register_types)
+ 
++extern GlobalProperty hw_compat_9_1[];
++extern const size_t hw_compat_9_1_len;
++
+ extern GlobalProperty hw_compat_9_0[];
+ extern const size_t hw_compat_9_0_len;
+ 
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 4e55d7ef6ea9..14ee06287da3 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -215,6 +215,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
+ /* sgx.c */
+ void pc_machine_init_sgx_epc(PCMachineState *pcms);
+ 
++extern GlobalProperty pc_compat_9_1[];
++extern const size_t pc_compat_9_1_len;
++
+ extern GlobalProperty pc_compat_9_0[];
+ extern const size_t pc_compat_9_0_len;
+ 
+-- 
+2.46.0
 
 
