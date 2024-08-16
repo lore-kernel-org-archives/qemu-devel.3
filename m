@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87A60C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 07:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D07AC531DE
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 07:25:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1serJ5-0007GQ-Sl; Fri, 16 Aug 2024 03:23:31 -0400
+	id 1serJ5-0007G8-Qk; Fri, 16 Aug 2024 03:23:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1serJ3-000799-Vx
+ id 1serJ4-00079J-1h
  for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:23:30 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1serIy-00041g-L1
+ id 1serJ0-00041o-9y
  for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:23:29 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-201e64607a5so12642265ad.2
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 00:23:23 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-7c3ebba7fbbso1386581a12.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 00:23:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723793003; x=1724397803; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723793005; x=1724397805; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gpBjGkW6BU4v1nqztsjjBjF53uYRgoULCdoJY53mCgc=;
- b=hv7mQFCgQIgC3vJK0aRnIiTcu8vpUYlF0sLpRib+1oau+KeNcOzHzDdZu1SURGdRmn
- l/0nNS4xEk6zdrS9IpSrhHePeE25QwgqfkMMu9HsjtUMTsXm3QSqOqvgS7tJHaiMCOxr
- 5IliFdyG+0TUrUV25KHvGVsg0OJ1StwxtPvJxysvCP0D7zFPJVv4ORPDpOY4+72W6DDN
- nWkrJH5f1AXk8V7Z4I8cinWVtiendAcFh4DMzmg7RBQdX6UXKTmMheH3ODvSf/egsDtP
- UUdDMhLoFFhJhjRLk2nsYGPAuX4OSjxb5M4ycNT+TE+rW7j4UJP1qm8l6g5sv6+kXhAe
- jxLg==
+ bh=Ek2SH+eIGTE6kXSOvmjvmBjlH+328ULsNPwNMVHdkKo=;
+ b=d3d/SGShkXUefdLSt0+gzNOudjjOguduOiflw0+b4mU8BXXVZ5UY4HPBXN20KtD7FE
+ BVlXyk1SlwlY6vFKtpAGx/lGK3+lWIOmcz2OEQvQowUPeOkklSSODd4vnjL10o7zJ0lr
+ yNsycirNjbLXVVSl2nk8/JeQBlCNE1q+3aBkJvptAUtb1WETQDor8cLzCi8FIt2ubWtq
+ p1K+BJiySDwqp9oAbNQLhqlaTFZJq1xaJWK3FHrn4/uREjBLdavlzyk1vacoyrffkt6P
+ r1XfI2kJKPdSEOxR469kSTQtjudOp0bgXhnR/mbTGJH6E905Yic2seFoNPgb4b6zETCz
+ PHaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723793003; x=1724397803;
+ d=1e100.net; s=20230601; t=1723793005; x=1724397805;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gpBjGkW6BU4v1nqztsjjBjF53uYRgoULCdoJY53mCgc=;
- b=jmwkbw9IwcEvC58mBIYDpJWhwqr47TnQG9fO00G9f7c778+3OdgsK4WfE7Fy4jm9Sv
- ORG1e9nzX1K58zwcmeZMEiyLk4WgaN42g2oEdMkSwGGtWFtpRYWexTnfFbwNBHV9zViO
- meP7uCx9NGuwpvUQtILQtnxmHeHIXWSGfQPSJ9l+QjIi2wmAZOY7Cx5zP2MOBq4ms6pD
- v7Ity+2osVziDeyjjz2DAma2OCQlux+mJ9FzReRWB6PCuwImzBUgNCUn0N8wXQMjkQvy
- TlRv4ruE6BmqlfI8pfHpy19m2M7Ierdoikmx447xa25pz98Wx3zPWBk63r7DVr1Zel0g
- JOSg==
-X-Gm-Message-State: AOJu0YzfHoeYtpchD9501wfdDBQBQdG4bMnkAt4kCVAbKDv7BjLQzU7Y
- 0KDKK4rpztFkpAHemyyECGLEBtSnEQiRao4+ZZUG6hPzISBoXGDZyWRW0Srk4Jc6DIgqEap8jMs
- CGGk=
-X-Google-Smtp-Source: AGHT+IFr2O8vZNyaBw50MbNjqTKEwM9Nmiwdb1WZHp1h8JQLVLFoa230ea5Vc9f6MBX0SOkQogcYxg==
-X-Received: by 2002:a17:902:ced2:b0:1ff:3c45:48dd with SMTP id
- d9443c01a7336-20203eb85famr33930975ad.30.1723793002486; 
- Fri, 16 Aug 2024 00:23:22 -0700 (PDT)
+ bh=Ek2SH+eIGTE6kXSOvmjvmBjlH+328ULsNPwNMVHdkKo=;
+ b=CLzgc3yIiBAwOUjFV0YI1HKdBdcRGIVZnUnn58nwoUfz8WIp59/4FaMsLgG8ebXQQJ
+ 45Fbq9FKrpE8ZSoIBE54F2vdq+e2dM69zN5SJ2ug9NhoqWe0FLB5rfprkHTI1xs4kCM0
+ Er4NWEIHer3XDPon0nfJK6WlyfhEfaddDa35BdsEH6ExlbFR9QZXTpQrtBFl25nHo4t6
+ LijODobx26rp24PzB+Yw3HDju+oJBQ+O5xioANQCaIDM41hQhOWnhGsaYMWGImYzfdyE
+ Z4Jep8lXbE3E0SqYBOLQdH9bnuOViyZ3kqF4swRk/MAC57Ix8g8TG7r1Gc4aTGVAtxv2
+ pgsA==
+X-Gm-Message-State: AOJu0Yz/k5wPPVVRAIilaPwIwgnIokBUEdyACGjQo9ZzMujR313be/Cv
+ o0J9V5xAY+1wui2TSeLSInMGEb4zE4MD1OQNYwMYKeWx2x1e4JmajtPzJGIhyWPbr8jae1QEQ+U
+ ZLyI=
+X-Google-Smtp-Source: AGHT+IFPr4Z67P959ODzh1IOqFW0139YPDL0ZJHpy9CtKHLLJJ/bvoox5y4QSKrufw1xwodPhrsOmA==
+X-Received: by 2002:a05:6a21:392:b0:1be:c6f8:c530 with SMTP id
+ adf61e73a8af0-1c904fc9f79mr2892997637.26.1723793004727; 
+ Fri, 16 Aug 2024 00:23:24 -0700 (PDT)
 Received: from stoup.. (2403-580a-f89b-0-1b6b-8c7b-90f9-144f.ip6.aussiebb.net.
  [2403:580a:f89b:0:1b6b:8c7b:90f9:144f])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201f037588esm20195525ad.171.2024.08.16.00.23.20
+ d9443c01a7336-201f037588esm20195525ad.171.2024.08.16.00.23.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 00:23:22 -0700 (PDT)
+ Fri, 16 Aug 2024 00:23:24 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: chauser@pullman.com
-Subject: [PATCH v3 2/6] target/sparc: Add FQ and FSR.QNE
-Date: Fri, 16 Aug 2024 17:23:07 +1000
-Message-ID: <20240816072311.353234-3-richard.henderson@linaro.org>
+Subject: [PATCH v3 3/6] target/sparc: Populate sparc32 FQ when raising fp
+ exception
+Date: Fri, 16 Aug 2024 17:23:08 +1000
+Message-ID: <20240816072311.353234-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240816072311.353234-1-richard.henderson@linaro.org>
 References: <20240816072311.353234-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,123 +98,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Carl Hauser <chauser@pullman.com>
 
-Add support for, and migrate, a single-entry fp
-instruction queue for sparc32.
+Implement a single instruction floating point queue,
+populated while delivering an fp exception.
 
 Signed-off-by: Carl Hauser <chauser@pullman.com>
-[rth: Split from a larger patch;
-      adjust representation with union;
-      add migration state]
+[rth: Split from a larger patch]
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/sparc/cpu.h        | 22 ++++++++++++++++++++++
- target/sparc/fop_helper.c |  4 ++++
- target/sparc/machine.c    | 25 +++++++++++++++++++++++++
- 3 files changed, 51 insertions(+)
+ target/sparc/int32_helper.c | 32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
-index dfd9512a21..9f2bc44722 100644
---- a/target/sparc/cpu.h
-+++ b/target/sparc/cpu.h
-@@ -184,6 +184,8 @@ enum {
- #define FSR_FTT_SEQ_ERROR (4ULL << 14)
- #define FSR_FTT_INVAL_FPR (6ULL << 14)
+diff --git a/target/sparc/int32_helper.c b/target/sparc/int32_helper.c
+index 6b7d65b031..fb6f3799c8 100644
+--- a/target/sparc/int32_helper.c
++++ b/target/sparc/int32_helper.c
+@@ -21,10 +21,10 @@
+ #include "qemu/main-loop.h"
+ #include "cpu.h"
+ #include "trace.h"
++#include "exec/cpu_ldst.h"
+ #include "exec/log.h"
+ #include "sysemu/runstate.h"
  
-+#define FSR_QNE    (1ULL << 13)
-+
- #define FSR_FCC0_SHIFT    10
- #define FSR_FCC1_SHIFT    32
- #define FSR_FCC2_SHIFT    34
-@@ -438,6 +440,26 @@ struct CPUArchState {
-     uint32_t fsr_cexc_ftt;           /* cexc, ftt */
-     uint32_t fcc[TARGET_FCCREGS];    /* fcc* */
+-
+ static const char * const excp_names[0x80] = {
+     [TT_TFAULT] = "Instruction Access Fault",
+     [TT_ILL_INSN] = "Illegal Instruction",
+@@ -116,22 +116,9 @@ void sparc_cpu_do_interrupt(CPUState *cs)
  
-+#if !defined(TARGET_SPARC64) && !defined(CONFIG_USER_ONLY)
-+    /*
-+     * Single-element FPU fault queue, with address and insn,
-+     * packaged into the double-word with which it is stored.
-+     */
-+    uint32_t fsr_qne;                /* qne */
-+    union {
-+        uint64_t d;
-+        struct {
-+#if HOST_BIG_ENDIAN
-+            uint32_t addr;
-+            uint32_t insn;
-+#else
-+            uint32_t insn;
-+            uint32_t addr;
-+#endif
-+        } s;
-+    } fq;
-+#endif
-+
-     CPU_DoubleU fpr[TARGET_DPREGS];  /* floating point registers */
-     uint32_t cwp;      /* index of current register window (extracted
-                           from PSR) */
-diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
-index 0b30665b51..b6692382b3 100644
---- a/target/sparc/fop_helper.c
-+++ b/target/sparc/fop_helper.c
-@@ -545,6 +545,8 @@ target_ulong cpu_get_fsr(CPUSPARCState *env)
-     fsr |= (uint64_t)env->fcc[1] << FSR_FCC1_SHIFT;
-     fsr |= (uint64_t)env->fcc[2] << FSR_FCC2_SHIFT;
-     fsr |= (uint64_t)env->fcc[3] << FSR_FCC3_SHIFT;
-+#elif !defined(CONFIG_USER_ONLY)
-+    fsr |= env->fsr_qne;
+         qemu_log("%6d: %s (v=%02x)\n", count, name, intno);
+         log_cpu_state(cs, 0);
+-#if 0
+-        {
+-            int i;
+-            uint8_t *ptr;
+-
+-            qemu_log("       code=");
+-            ptr = (uint8_t *)env->pc;
+-            for (i = 0; i < 16; i++) {
+-                qemu_log(" %02x", ldub(ptr + i));
+-            }
+-            qemu_log("\n");
+-        }
+-#endif
+         count++;
+     }
+-#if !defined(CONFIG_USER_ONLY)
++#ifndef CONFIG_USER_ONLY
+     if (env->psret == 0) {
+         if (cs->exception_index == 0x80 &&
+             env->def.features & CPU_FEATURE_TA0_SHUTDOWN) {
+@@ -143,6 +130,21 @@ void sparc_cpu_do_interrupt(CPUState *cs)
+         }
+         return;
+     }
++    if (intno == TT_FP_EXCP) {
++        env->fsr_qne = FSR_QNE;
++        env->fq.s.addr = env->pc;
++        env->fq.s.insn = cpu_ldl_code(env, env->pc);
++        /*
++         * The sparc32 fpu has three states related to exception handling.
++         * The FPop that signals an exception transitions from fp_execute
++         * to fp_exception_pending.  A subsequent FPop transitions from
++         * fp_exception_pending to fp_exception, which forces the trap.
++         * We do not model the fp_exception_pending state, but we do need
++         * to advance pc/npc to mimic the delayed trap delivery.
++         */
++        env->pc = env->npc;
++        env->npc = env->npc + 4;
++    }
  #endif
- 
-     /* VER is kept completely separate until re-assembly. */
-@@ -591,6 +593,8 @@ void cpu_put_fsr(CPUSPARCState *env, target_ulong fsr)
-     env->fcc[1] = extract64(fsr, FSR_FCC1_SHIFT, 2);
-     env->fcc[2] = extract64(fsr, FSR_FCC2_SHIFT, 2);
-     env->fcc[3] = extract64(fsr, FSR_FCC3_SHIFT, 2);
-+#elif !defined(CONFIG_USER_ONLY)
-+    env->fsr_qne = fsr & FSR_QNE;
- #endif
- 
-     set_fsr_nonsplit(env, fsr);
-diff --git a/target/sparc/machine.c b/target/sparc/machine.c
-index 48e0cf22f3..222e5709c5 100644
---- a/target/sparc/machine.c
-+++ b/target/sparc/machine.c
-@@ -143,6 +143,24 @@ static const VMStateInfo vmstate_xcc = {
-     .get = get_xcc,
-     .put = put_xcc,
- };
-+#else
-+static bool fq_needed(void *opaque)
-+{
-+    SPARCCPU *cpu = opaque;
-+    return cpu->env.fsr_qne;
-+}
-+
-+static const VMStateDescription vmstate_fq = {
-+    .name = "cpu/fq",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = fq_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(env.fq.s.addr, SPARCCPU),
-+        VMSTATE_UINT32(env.fq.s.insn, SPARCCPU),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
- #endif
- 
- static int cpu_pre_save(void *opaque)
-@@ -265,4 +283,11 @@ const VMStateDescription vmstate_sparc_cpu = {
- #endif
-         VMSTATE_END_OF_LIST()
-     },
-+#ifndef TARGET_SPARC64
-+    .subsections = (const VMStateDescription * const []) {
-+        &vmstate_fq,
-+        NULL
-+    },
-+#endif
-+
- };
+     env->psret = 0;
+     cwp = cpu_cwp_dec(env, env->cwp - 1);
 -- 
 2.43.0
 
