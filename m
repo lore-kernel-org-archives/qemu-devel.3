@@ -4,95 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED120C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 15:51:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67BCFC531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 15:52:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sezE9-0004Pu-DW; Fri, 16 Aug 2024 11:50:57 -0400
+	id 1sezFE-0007UT-5d; Fri, 16 Aug 2024 11:52:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sezE4-0004M5-Sa
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:50:53 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sezE2-0004X3-U1
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:50:52 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5b7b6a30454so2687676a12.2
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 08:50:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723823449; x=1724428249; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rO2VVv+jqWNvTEkWJWzvHa+RzRFCb0oR03+xq6f+JrI=;
- b=q+012dSgS89fRkpQ9UWILcxZcR0rsVjJnhL/7sUv/xOaclgbeRcRuPr4m8RbkNYsFi
- JVpmBEgIh+QN+V0EpbCzGXlp1J2713iQ0yJ2HakBiU/9fkr27A6qq33ErDZnWNJ2XEl1
- +8p9r78Cyu7BN9OmERVhzZ4E7++jZdaQ0MGMkDV9txyKT7HaiTddq+Kz9DCmfMx73aP6
- 2ahNSyAajHs0r7nnjOXiUrNeRGSjexckULMsJGjPvn+DL2OM7umxlvMaIBaVkkKlaqTs
- SYYq10wbyb4oGwPOzFVgPjnIzAvdc4QwHbkXvjzVg4dlm7FM85MV3AHHvqlH3+7nBo3L
- T5+A==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sezFB-0007L2-OE
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:52:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sezF8-0004c1-02
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:52:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723823516;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TOZ37lRFqHfpgVhi4prp5yjI5hOKLc8mxtz1oSWIDQk=;
+ b=QklFmW/6wcKEVe18XrV6eojVCx752DSn/vsBy3fboaM9q4P3USyvge5I9gNF+2Q5o5Fb41
+ rnq7Xvdvp9W7ztzI76pVw/L99fi6zcHbAxtCrlBdGW3zJTia87LZnKgzBMPa5WRQgB0skS
+ MP81ybz8wf3fgYByszjH0Dfn6BRGNVY=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-683-PR1fUQSdO1C7lwY3FS32jA-1; Fri, 16 Aug 2024 11:51:55 -0400
+X-MC-Unique: PR1fUQSdO1C7lwY3FS32jA-1
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6bf6f1ad75cso4513646d6.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 08:51:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723823449; x=1724428249;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rO2VVv+jqWNvTEkWJWzvHa+RzRFCb0oR03+xq6f+JrI=;
- b=mUkdDMlPxctCjRNuaqySa84H4UOp3Q2qJG9+I4GOToG2e2VSJ0Qpsj/ZQTWUktWe23
- VYosbY38xcEEYYRWuFgby2i8eGMby74g/p/bQ1X89fHQz1TLIgHg2GehDW4hSH8TZjej
- /MQeiS//dAS0dcRGMu3MXhjQvG4I4H+c2HvKAozowW5MJ7CWaXaQrlwCZfvnqXGErbc3
- puwj3ej7W+kMVro9VeM1pUCusuOmSIQLMAsZMfU6z3f1aCgCHXpxAkdMNZyuAteNy2Bp
- JwxY55lXGiib5rdj1WibuCjk0KUzbTYiJSCvT1usr3BoT7+sMLgG1p/Vj/J5h93xHXea
- uQtA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXtajaBsvU0fH6BSGD82nnoeBs04wz5N4R45sdaK7JHX1eCvsaKVlnqG0uCO98QOB0Ia/y7voQ4iTsKrB/vk1GbVFVLXCA=
-X-Gm-Message-State: AOJu0YyTnHAaCZZBSU7a7CDGhljhLBegqtk4CZzUhq/OKN2N8orJNL0+
- TJPiDdUqguIuxRibwB6LP2HvgYU8BZ7MniRWR5T9VIKB22e9P+yo1zjVspUQ7S5dkDSj7OWu65U
- XlD+L8K16qtRKELC2wNoLu84T7xTjYCCeJi435w==
-X-Google-Smtp-Source: AGHT+IHIPeGhhc/g4WyYTayKU5+A3kVN8m/nYqxm2rrx+9FNvYIgajZruMHjcMqg+zqzrSYGZ76blvB442XFuKJRX5A=
-X-Received: by 2002:a05:6402:524d:b0:58c:eee0:48f4 with SMTP id
- 4fb4d7f45d1cf-5beca78d2d0mr2138274a12.31.1723823448850; Fri, 16 Aug 2024
- 08:50:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723823514; x=1724428314;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TOZ37lRFqHfpgVhi4prp5yjI5hOKLc8mxtz1oSWIDQk=;
+ b=G7IC+Szfhf+iM2JkBKJp3uHBbYSGlrG1M8/EogqBCaug5AH02xDTxzpGy64H78+3Jt
+ EJk6SodT5ZyP2g+ch1pE8dQ9N2Q/tARB9aGAHUoSbnNthhOpPTK27aLp3GjUUp/GhTvq
+ 2U+PWtP4wFmLZIFsUG6UuTNe8nC20KdnuO+/a/jpgMuFnM+Uybwq9fQjvz91icqd2Son
+ Qu4vaQtEL/OiIT1xUDYzPsLKsB4jqcedw/eh7qPV0ufmsRAX+YPXPLdDkbykxBzhxPYK
+ pmvwfnmzU5lAWbo/oXHfFfLzzZ4Y2scrqw/0OxcnKWyVoI9PD5qV+F4IYMJV3MNQdyXe
+ +H2A==
+X-Gm-Message-State: AOJu0Yztzuh3wxSLAY9kOyPveJzl5Cc/fUjs7e7FPvwu/37/StaTfkrl
+ MP+tsLb/+3RaGGb4ZsQmu5PAICrQ7R3fRdvCNA5OEqUm3NsNAW+3tgRQGdvjsK377G/OenVlyG2
+ M8g2HSLx2xVSVLL/JxdqXaq6MIBhAMk8ubzHfOlhQkp5O8YHTdXTl
+X-Received: by 2002:ae9:e645:0:b0:7a5:8f7:1b7f with SMTP id
+ af79cd13be357-7a508f71dcbmr130485485a.0.1723823514323; 
+ Fri, 16 Aug 2024 08:51:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGfAQu2DZsoNu48GE5RM6h0eCJSFjiaxg0ls2BNlgV8WY8YVzm7qL+n7oCIm44Mfb/iVSEP+g==
+X-Received: by 2002:ae9:e645:0:b0:7a5:8f7:1b7f with SMTP id
+ af79cd13be357-7a508f71dcbmr130484685a.0.1723823513848; 
+ Fri, 16 Aug 2024 08:51:53 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7a4ff06a25bsm185402185a.54.2024.08.16.08.51.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Aug 2024 08:51:53 -0700 (PDT)
+Date: Fri, 16 Aug 2024 11:51:52 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Markus Armbruster <armbru@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Subject: Re: [RFC V1 1/6] migration: SCM_RIGHTS for QEMUFile
+Message-ID: <Zr91mApJzvnDny8D@x1n>
+References: <1719776648-435073-1-git-send-email-steven.sistare@oracle.com>
+ <1719776648-435073-2-git-send-email-steven.sistare@oracle.com>
+ <Zr5r4_lyKAPVZY3Y@x1n>
+ <92e5309e-9b16-4cf4-8ffb-e1383201cbd0@oracle.com>
 MIME-Version: 1.0
-References: <20240613233639.202896-1-salil.mehta@huawei.com>
- <20240613233639.202896-25-salil.mehta@huawei.com>
- <87v800wkb1.fsf@draig.linaro.org>
-In-Reply-To: <87v800wkb1.fsf@draig.linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 16 Aug 2024 16:50:37 +0100
-Message-ID: <CAFEAcA9A9Oq0nURkiLNWZNC=P7KQGyr8TjjfOmEq+squwF+xog@mail.gmail.com>
-Subject: Re: [PATCH RFC V3 24/29] target/arm: Add support of *unrealize*
- ARMCPU during vCPU Hot-unplug
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, 
- mst@redhat.com, maz@kernel.org, jean-philippe@linaro.org, 
- jonathan.cameron@huawei.com, lpieralisi@kernel.org, 
- richard.henderson@linaro.org, imammedo@redhat.com, andrew.jones@linux.dev, 
- david@redhat.com, philmd@linaro.org, eric.auger@redhat.com, will@kernel.org, 
- ardb@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com, 
- gshan@redhat.com, rafael@kernel.org, borntraeger@linux.ibm.com, 
- npiggin@gmail.com, harshpb@linux.ibm.com, linux@armlinux.org.uk, 
- darren@os.amperecomputing.com, ilkka@os.amperecomputing.com, 
- vishnu@os.amperecomputing.com, karl.heubaum@oracle.com, 
- miguel.luis@oracle.com, salil.mehta@opnsrc.net, zhukeqian1@huawei.com, 
- wangxiongfeng2@huawei.com, wangyanan55@huawei.com, jiakernel2@gmail.com, 
- maobibo@loongson.cn, lixianglai@loongson.cn, shahuang@redhat.com, 
- zhao1.liu@intel.com, linuxarm@huawei.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <92e5309e-9b16-4cf4-8ffb-e1383201cbd0@oracle.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,121 +103,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Aug 2024 at 16:37, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
->
-> Salil Mehta <salil.mehta@huawei.com> writes:
->
-> > vCPU Hot-unplug will result in QOM CPU object unrealization which will =
-do away
-> > with all the vCPU thread creations, allocations, registrations that hap=
-pened
-> > as part of the realization process. This change introduces the ARM CPU =
-unrealize
-> > function taking care of exactly that.
-> >
-> > Note, initialized KVM vCPUs are not destroyed in host KVM but their Qem=
-u context
-> > is parked at the QEMU KVM layer.
-> >
-> > Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
-> > Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
-> > Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-> > Reported-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-> > [VP: Identified CPU stall issue & suggested probable fix]
-> > Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-> > ---
-> >  target/arm/cpu.c       | 101 +++++++++++++++++++++++++++++++++++++++++
-> >  target/arm/cpu.h       |  14 ++++++
-> >  target/arm/gdbstub.c   |   6 +++
-> >  target/arm/helper.c    |  25 ++++++++++
-> >  target/arm/internals.h |   3 ++
-> >  target/arm/kvm.c       |   5 ++
-> >  6 files changed, 154 insertions(+)
-> >
-> > diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> > index c92162fa97..a3dc669309 100644
-> > --- a/target/arm/cpu.c
-> > +++ b/target/arm/cpu.c
-> > @@ -157,6 +157,16 @@ void arm_register_pre_el_change_hook(ARMCPU *cpu, =
-ARMELChangeHookFn *hook,
-> >      QLIST_INSERT_HEAD(&cpu->pre_el_change_hooks, entry, node);
-> >  }
-> >
-> > +void arm_unregister_pre_el_change_hooks(ARMCPU *cpu)
-> > +{
-> > +    ARMELChangeHook *entry, *next;
-> > +
-> > +    QLIST_FOREACH_SAFE(entry, &cpu->pre_el_change_hooks, node, next) {
-> > +        QLIST_REMOVE(entry, node);
-> > +        g_free(entry);
-> > +    }
-> > +}
-> > +
-> >  void arm_register_el_change_hook(ARMCPU *cpu, ARMELChangeHookFn *hook,
-> >                                   void *opaque)
-> >  {
-> > @@ -168,6 +178,16 @@ void arm_register_el_change_hook(ARMCPU *cpu, ARME=
-LChangeHookFn *hook,
-> >      QLIST_INSERT_HEAD(&cpu->el_change_hooks, entry, node);
-> >  }
-> >
-> > +void arm_unregister_el_change_hooks(ARMCPU *cpu)
-> > +{
-> > +    ARMELChangeHook *entry, *next;
-> > +
-> > +    QLIST_FOREACH_SAFE(entry, &cpu->el_change_hooks, node, next) {
-> > +        QLIST_REMOVE(entry, node);
-> > +        g_free(entry);
-> > +    }
-> > +}
-> > +
-> >  static void cp_reg_reset(gpointer key, gpointer value, gpointer opaque=
-)
-> >  {
-> >      /* Reset a single ARMCPRegInfo register */
-> > @@ -2552,6 +2572,85 @@ static void arm_cpu_realizefn(DeviceState *dev, =
-Error **errp)
-> >      acc->parent_realize(dev, errp);
-> >  }
-> >
-> > +static void arm_cpu_unrealizefn(DeviceState *dev)
-> > +{
-> > +    ARMCPUClass *acc =3D ARM_CPU_GET_CLASS(dev);
-> > +    ARMCPU *cpu =3D ARM_CPU(dev);
-> > +    CPUARMState *env =3D &cpu->env;
-> > +    CPUState *cs =3D CPU(dev);
-> > +    bool has_secure;
-> > +
-> > +    has_secure =3D cpu->has_el3 || arm_feature(env, ARM_FEATURE_M_SECU=
-RITY);
-> > +
-> > +    /* rock 'n' un-roll, whatever happened in the arm_cpu_realizefn cl=
-eanly */
-> > +    cpu_address_space_destroy(cs, ARMASIdx_NS);
->
-> On current master this will fail:
->
-> ../../target/arm/cpu.c: In function =E2=80=98arm_cpu_unrealizefn=E2=80=99=
-:
-> ../../target/arm/cpu.c:2626:5: error: implicit declaration of function =
-=E2=80=98cpu_address_space_destroy=E2=80=99 [-Werror=3Dimplicit-function-de=
-claration]
->  2626 |     cpu_address_space_destroy(cs, ARMASIdx_NS);
->       |     ^~~~~~~~~~~~~~~~~~~~~~~~~
-> ../../target/arm/cpu.c:2626:5: error: nested extern declaration of =E2=80=
-=98cpu_address_space_destroy=E2=80=99 [-Werror=3Dnested-externs]
-> cc1: all warnings being treated as errors
+On Fri, Aug 16, 2024 at 11:13:20AM -0400, Steven Sistare wrote:
+> On 8/15/2024 4:58 PM, Peter Xu wrote:
+> > On Sun, Jun 30, 2024 at 12:44:03PM -0700, Steve Sistare wrote:
+> > > Define functions to put/get file descriptors to/from a QEMUFile, for qio
+> > > channels that support SCM_RIGHTS.  Maintain ordering such that
+> > >    put(A), put(fd), put(B)
+> > > followed by
+> > >    get(A), get(fd), get(B)
+> > > always succeeds.  Other get orderings may succeed but are not guaranteed.
+> > > 
+> > > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> > 
+> > It's a slight pity that we'll extend fd to qemufiles, rather than changing
+> > qemufiles back to iochannels.. for the long term we want to remove qemufile.
+> 
+> Thanks, I did not know that removing QEMUFile is a goal.
+> 
+> Currently QEMUFile buffers I/O in userland to reduce system calls.  Do you
+> plan to eliminate that buffering, or move it to QIOChannel, perhaps in a
+> new QIOChannelBuffered class?
+> 
+> If you eliminate the buffering, then migration might take longer.
+> If you keep the buffering, then this patch's logic will still be needed
+> in the QIOChannelBuffered code.
 
-We shouldn't need to explicitly call cpu_address_space_destroy()
-from a target-specific unrealize anyway: we can do it all
-from the base class (and I think this would fix some
-leaks in current code for targets that hot-unplug, though
-I should check that). Otherwise you need to duplicate all
-the logic for figuring out which address spaces we created
-in realize, which is fragile and not necessary when all we
-want to do is "delete every address space the CPU object has"
-and we want to do that for every target architecture always.
++Dan.
 
--- PMM
+Yes probably the buffering is still needed ultimately.  It's just that it
+currently involves qemufile which is (hopefully..) destined to be either
+removed or updated.
+
+For this cpr states, I'm not sure the buffered iochannel is a must, e.g. I
+wonder what happens if we start with using iochannels directly without
+buffering, then after replacing that with buffered iochannels, it'll simply
+improve on top without changing much of the code - I mean, buffered
+iochannel should still be able to be casted into an iochannel anyway.
+
+> 
+> > Would you think we can start to introduce iochannel-compatible vmstate
+> > loader from cpr-[exec/transfer] here?  The idea is that we'd want
+> > vmstate_load_iochannel() then take that from an iochannel and start getting
+> > rid of qemufile API.  It'll already bring two benefits:
+> > 
+> >    - We don't need this patch then I assume, but stick with iochannel API
+> > 
+> >    - We can have Error** as last parameter of vmstate_load_iochannel(), then
+> >      as we discussed in the other thread cpr_state_load() can fail with
+> >      explicit errors without error_report()s (and as you pointed out, the
+> >      load side of Error** support is yet missing)
+> > 
+> > There's a 3rd potential benefit, and will come to play when we want to
+> > allow multifd threads to load device states / VMSDs at some point, as
+> > multifd doesn't maintain qemufiles, but only iochannels.
+> > 
+> > I'm not sure whether it adds too much to you yet, but I'm curious how you
+> > think about it.
+> 
+> A decent idea, but the task quickly mushrooms.  All of the VMSTATE macros used
+> in cpr.c would need to be converted, and that stack is deep. eg:
+> 
+>   VMSTATE_INT32
+>     vmstate_info_int32
+>       put_int32
+>         qemu_put_sbe32s
+>           qemu_put_byte
+>             add_buf_to_iovec
+>               qemu_fflush
+>                qio_channel_writev_all
+
+Right, right after I sent the email I noticed this too..
+
+The chance is the new iochannel API only resolves whatever needed for cpr
+early states, currently:
+
+static const VMStateDescription vmstate_cpr_state = {
+    .name = CPR_STATE,
+    .version_id = 1,
+    .minimum_version_id = 1,
+    .pre_save = cpr_state_presave,
+    .fields = (VMStateField[]) {
+        VMSTATE_UINT32(mode, CprState),
+        VMSTATE_QLIST_V(fds, CprState, 1, vmstate_cpr_fd, CprFd, next),
+        VMSTATE_END_OF_LIST()
+    }
+};
+
+static const VMStateDescription vmstate_cpr_fd = {
+    .name = "cpr fd",
+    .version_id = 1,
+    .minimum_version_id = 1,
+    .fields = (VMStateField[]) {
+        VMSTATE_UINT32(namelen, CprFd),
+        VMSTATE_VBUFFER_ALLOC_UINT32(name, CprFd, 0, NULL, namelen),
+        VMSTATE_INT32(id, CprFd),
+        VMSTATE_FD(fd, CprFd),
+        VMSTATE_END_OF_LIST()
+    }
+};
+
+IIUC, a summary of a few things only so far: UINT32/INT32, VBUFFER, FD.
+Here FD is the new one, which we'll need to support that anyway, either
+with the qemufile API or iochannel API.  Then the rest looks pretty
+limited.  IOW, the new iochannel-based vmstate_load() doesn't yet need to
+know anything else but these types of fields.  While I don't think I have a
+full grasp yet on everything; that just sounds like the right direction to
+go for the longer term.
+
+Said that, as you said there can still be plenty of work there.  Steve,
+feel free to think about it and take whatever approach you like.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
