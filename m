@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D1F5C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:17:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE236C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:22:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sewpZ-00006i-OJ; Fri, 16 Aug 2024 09:17:25 -0400
+	id 1sewuL-0005AY-T5; Fri, 16 Aug 2024 09:22:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sewpW-00005o-K9
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:17:24 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sewuK-00058M-9g
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:20 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sewpT-0006ju-4u
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:17:21 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-428178fc07eso13606395e9.3
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:17:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sewuH-0007k3-FK
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:19 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3719753d365so329409f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:22:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723814236; x=1724419036; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3s5jOdTrAiEUgXbaiSvG7TfWdlhfq0DM9hXaeA8tn/4=;
- b=XKT07/kE/9Ca6CxTlPoFaf78HpTgI6Ii/L/km1bIgsqgCB6ZObY8q/KYHikwbh+16I
- HD5vJRHCkjxkx5s3FmJrsFOboUg9m8ZDeZ0EXJPWocwEi9gsS2lKVx51Wo1sA00NvebL
- z6PZ6W1VTCCTDO3P96mbY7V7lYw/z3pUL2HVAM6ZMir91bNJfiQEFwIrXaP0cfWA7TCW
- nT1Zga4aR2Igct0LkJyP4CVqxyNc4ezOJp3zkw+uvzXXX/qCUOAc68joER3moqnSfl2C
- 1pFF/dAaUbIVeQSbERH43QHMKIkz8/cKM2il7FUXFcHSrp9naE5rc5e+xBtteuilh/iY
- JXkQ==
+ d=linaro.org; s=google; t=1723814535; x=1724419335; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=L3BYyoFuiUhi097Go1IdQzbbTPVpAV8zdtNg6dApNEU=;
+ b=J0EN+EmQx8V2LrNaxrckjspv+g/23rnQZw0XXM15V7rrJM1uKtjTKi/X0JW9vLmGel
+ pfcxbAh2e1Ye0xxX4wqr2GyfhR8HOCR8xlQWgmBEV06B6UzkuhAQTGv1Y0MRWymgs/V0
+ BILz2Cq9Qor3obJomOx7U1vVE9oXoYScFlFVCji6Enpb6esIvHcWvf5x2HbdN8phLndy
+ 8Awz6qsOMR959WUHAblHDIPE8W/iqwh+fZM9nKuYDFGlOxypx9Auvcb/uLqscNw3BELN
+ qlgN93+Sxpi27tOcKaCldafuXaII1GVBEXRSMDKNGJUvwKfR+i97n4uxIoXQE4SD+Aka
+ kQfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723814236; x=1724419036;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3s5jOdTrAiEUgXbaiSvG7TfWdlhfq0DM9hXaeA8tn/4=;
- b=mu+TEXR6pe/Ej6gYbe1h7nkghqZxQ4+8ieAJ7seIn0kXZvvg3WwgRD3PfTiFPvjIVP
- 5qpUWgeP8n3VHDLUAnFrrYKgKgTnUPriUQckp+iQWEwCR+hllEkFGhu6RkAZGJYl8bbj
- GcUtumxppS1qZR1arDSptM0hZ5Li25lc57vgNZ1jciVL0CX27KYsvIAbIjE+xBZBNkzz
- 0wODhuecFifTbDoi9iYq98lIgbhrEvT4CsrRKk/tgKrtnBQJPegJzMIm9sZr25Lvcy1c
- 86Ctw06IvH7bgT/yeKoHh+9YF2pfu+IgJH/paeMCX8UZcpwG6Pm89C0WIZKzfBoSksXN
- Upgg==
-X-Gm-Message-State: AOJu0YxskBizvBF0Aqkv5+hYYx6d48k3ebEHPgr1F5TBoqTnWbcbzpuY
- Qm+PkWyccVwkLleQfdQF/AcHBTrAeV5yj76KFGPGrMZT9uPTMaQhldDBpSGMlOE/uQHmMvpp0bk
- c
-X-Google-Smtp-Source: AGHT+IGbGMXjFdQGhn8XAMcbQCY74O/GEuQtrtky9F/tATwKQir39//ozYT3Ehi83xFKu4vHHMnesw==
-X-Received: by 2002:a05:600c:3552:b0:426:593c:9351 with SMTP id
- 5b1f17b1804b1-429ed7a5f31mr19968005e9.6.1723814235573; 
- Fri, 16 Aug 2024 06:17:15 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429eeadfafbsm18223025e9.47.2024.08.16.06.17.14
+ d=1e100.net; s=20230601; t=1723814535; x=1724419335;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=L3BYyoFuiUhi097Go1IdQzbbTPVpAV8zdtNg6dApNEU=;
+ b=TAX0y+tE7HDNwvEkpOcL7ylYGZ7pEOdElBzqnc0LcjsYrtX+AtJihpkg/gaKtDt8mx
+ aAYnvI2f0URi2jqT1heQOrxDi/nw9oHPeJnseAAoRV3Qql+2kc4NrdnxkKC4huFXhQ3H
+ Xp8pvxwDqrzfIpD1lLi3LROrJqNRcObjcKuX1Fe5HCiUEhS46oDJoNW+OwG9tAW2iH5f
+ TBvIkci5C32c4o8uX0Fo0EHoWL5sBV5lHSYZomFP3WimZgj4M/mY1q2FSQBVSYmqAMcK
+ g1N7wlkslDQbEEenJSW/zoDjtiAEkEEZVE6S9fxUmK6FMK3hpwhPClR8g67z/rahxonN
+ JMBg==
+X-Gm-Message-State: AOJu0Yw70+GqqqqeFVgz16nGA8fKxnvbEkQfTZ3YRAD6CKNHNyaLkCqy
+ DExItae1iWEHCvsPm67Yg50eqTwOGiCZP4MOVnYst5PnhcV78LhmWL0SWNaToGsv7fdh0fKgFbQ
+ Z
+X-Google-Smtp-Source: AGHT+IG4oyYbdCOLq7ErxdT7m0wtT+/At885LDS58iJUq46gVTm5u2Piyn9vS0USHKuQLXAnVcEx3Q==
+X-Received: by 2002:adf:f1c2:0:b0:368:3789:1a2 with SMTP id
+ ffacd0b85a97d-37194641ac2mr1951421f8f.21.1723814535469; 
+ Fri, 16 Aug 2024 06:22:15 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-371898ab855sm3631948f8f.105.2024.08.16.06.22.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 06:17:15 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BF6B35F867;
- Fri, 16 Aug 2024 14:17:13 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ Fri, 16 Aug 2024 06:22:15 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL v2 for 9.1 00/21] Some fixes for 9.1-rc3 (build, replay, docs,
- plugins)
-Date: Fri, 16 Aug 2024 14:17:13 +0100
-Message-Id: <20240816131713.2321664-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.2
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH 2/7] docs/devel/blkverify: Convert to rST format
+Date: Fri, 16 Aug 2024 14:22:07 +0100
+Message-Id: <20240816132212.3602106-3-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240816132212.3602106-1-peter.maydell@linaro.org>
+References: <20240816132212.3602106-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,98 +95,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit ecdfa31beb1f7616091bedba79dfdf9ee525ed9d:
+Convert blkverify.txt to rST format.
 
-  Merge tag 'pull-request-2024-08-16' of https://gitlab.com/thuth/qemu into staging (2024-08-16 18:18:27 +1000)
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ MAINTAINERS                                 |  1 +
+ docs/devel/{blkverify.txt => blkverify.rst} | 30 ++++++++++++---------
+ docs/devel/index-build.rst                  |  1 +
+ 3 files changed, 19 insertions(+), 13 deletions(-)
+ rename docs/devel/{blkverify.txt => blkverify.rst} (77%)
 
-are available in the Git repository at:
-
-  https://gitlab.com/stsquad/qemu.git tags/pull-maintainer-9.1-rc3-160824-1
-
-for you to fetch changes up to 278035fc81510bd88501afb78bd5ab652beffa76:
-
-  plugins: fix race condition with scoreboards (2024-08-16 14:13:07 +0100)
-
-----------------------------------------------------------------
-Some fixes for 9.1-rc3 (build, replay, docs, plugins)
-
-  - re-enable gdbsim-r5f562n8 test
-  - ensure updates to python deps re-trigger configure
-  - tweak configure detection of GDB MTE support
-  - make checkpatch emit more warnings on updating headers
-  - allow i386 access_ptr to force slow path for plugins
-  - fixe some replay regressions
-  - update the replay-dump tool
-  - better handle muxed chardev during replay
-  - clean up TCG plugins docs to mention scoreboards
-  - fix plugin scoreboard race condition
-
-----------------------------------------------------------------
-Alex Bennée (2):
-      Makefile: trigger re-configure on updated pythondeps
-      target/i386: allow access_ptr to force slow path on failed probe
-
-Gustavo Romero (3):
-      configure: Fix arch detection for GDB_HAS_MTE
-      configure: Avoid use of param. expansion when using gdb_version
-      configure: Fix GDB version detection for GDB_HAS_MTE
-
-Nicholas Piggin (10):
-      scripts/replay-dump.py: Update to current rr record format
-      scripts/replay-dump.py: rejig decoders in event number order
-      tests/avocado: excercise scripts/replay-dump.py in replay tests
-      replay: allow runstate shutdown->running when replaying trace
-      Revert "replay: stop us hanging in rr_wait_io_event"
-      tests/avocado: replay_kernel.py add x86-64 q35 machine test
-      chardev: set record/replay on the base device of a muxed device
-      virtio-net: Use replay_schedule_bh_event for bhs that affect machine state
-      virtio-net: Use virtual time for RSC timers
-      savevm: Fix load_snapshot error path crash
-
-Philippe Mathieu-Daudé (2):
-      tests/avocado: Re-enable gdbsim-r5f562n8 testing U-Boot
-      buildsys: Fix building without plugins on Darwin
-
-Pierrick Bouvier (2):
-      docs/devel: update tcg-plugins page
-      plugins: fix race condition with scoreboards
-
-Stefan Weil (1):
-      docs: Fix some typos (found by typos) and grammar issues
-
-Stefano Garzarella (1):
-      scripts/checkpatch: more checks on files imported from Linux
-
- docs/about/emulation.rst                  |  49 +++++++--
- docs/devel/migration/uadk-compression.rst |   4 +-
- docs/devel/tcg-plugins.rst                |  13 ++-
- docs/interop/qemu-ga.rst                  |   2 +-
- docs/tools/qemu-vmsr-helper.rst           |   4 +-
- configure                                 |   8 +-
- Makefile                                  |   3 +-
- qapi/rocker.json                          |   4 +-
- include/exec/memory.h                     |   2 +-
- include/sysemu/replay.h                   |   5 -
- include/sysemu/runstate.h                 |   1 +
- accel/tcg/tcg-accel-ops-rr.c              |   2 +-
- chardev/char.c                            |  71 +++++++++----
- hw/arm/smmu-common.c                      |   2 +-
- hw/net/virtio-net.c                       |  17 +--
- migration/savevm.c                        |   1 +
- plugins/core.c                            |  43 +++++---
- qga/main.c                                |   2 +-
- replay/replay.c                           |  23 +---
- system/runstate.c                         |  31 +++++-
- target/i386/tcg/access.c                  |  27 +++--
- plugins/meson.build                       |  50 ++++-----
- scripts/checkpatch.pl                     |  24 +++++
- scripts/replay-dump.py                    | 167 ++++++++++++++++++++----------
- tests/avocado/machine_rx_gdbsim.py        |   2 -
- tests/avocado/replay_kernel.py            |  31 +++++-
- tests/avocado/replay_linux.py             |  10 ++
- 27 files changed, 406 insertions(+), 192 deletions(-)
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ca0a5c731f5..e9dd1180077 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3938,6 +3938,7 @@ M: Stefan Hajnoczi <stefanha@redhat.com>
+ L: qemu-block@nongnu.org
+ S: Supported
+ F: block/blkverify.c
++F: docs/devel/blkverify.rst
+ 
+ bochs
+ M: Stefan Hajnoczi <stefanha@redhat.com>
+diff --git a/docs/devel/blkverify.txt b/docs/devel/blkverify.rst
+similarity index 77%
+rename from docs/devel/blkverify.txt
+rename to docs/devel/blkverify.rst
+index aca826c51cc..2a71778b5e3 100644
+--- a/docs/devel/blkverify.txt
++++ b/docs/devel/blkverify.rst
+@@ -1,8 +1,10 @@
+-= Block driver correctness testing with blkverify =
++Block driver correctness testing with ``blkverify``
++===================================================
+ 
+-== Introduction ==
++Introduction
++------------
+ 
+-This document describes how to use the blkverify protocol to test that a block
++This document describes how to use the ``blkverify`` protocol to test that a block
+ driver is operating correctly.
+ 
+ It is difficult to test and debug block drivers against real guests.  Often
+@@ -11,12 +13,13 @@ of the executable.  Other times obscure errors are raised by a program inside
+ the guest.  These issues are extremely hard to trace back to bugs in the block
+ driver.
+ 
+-Blkverify solves this problem by catching data corruption inside QEMU the first
++``blkverify`` solves this problem by catching data corruption inside QEMU the first
+ time bad data is read and reporting the disk sector that is corrupted.
+ 
+-== How it works ==
++How it works
++------------
+ 
+-The blkverify protocol has two child block devices, the "test" device and the
++The ``blkverify`` protocol has two child block devices, the "test" device and the
+ "raw" device.  Read/write operations are mirrored to both devices so their
+ state should always be in sync.
+ 
+@@ -25,13 +28,14 @@ contents to the "test" image.  The idea is that the "raw" device will handle
+ read/write operations correctly and not corrupt data.  It can be used as a
+ reference for comparison against the "test" device.
+ 
+-After a mirrored read operation completes, blkverify will compare the data and
++After a mirrored read operation completes, ``blkverify`` will compare the data and
+ raise an error if it is not identical.  This makes it possible to catch the
+ first instance where corrupt data is read.
+ 
+-== Example ==
++Example
++-------
+ 
+-Imagine raw.img has 0xcd repeated throughout its first sector:
++Imagine raw.img has 0xcd repeated throughout its first sector::
+ 
+     $ ./qemu-io -c 'read -v 0 512' raw.img
+     00000000:  cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd  ................
+@@ -42,7 +46,7 @@ Imagine raw.img has 0xcd repeated throughout its first sector:
+     read 512/512 bytes at offset 0
+     512.000000 bytes, 1 ops; 0.0000 sec (97.656 MiB/sec and 200000.0000 ops/sec)
+ 
+-And test.img is corrupt, its first sector is zeroed when it shouldn't be:
++And test.img is corrupt, its first sector is zeroed when it shouldn't be::
+ 
+     $ ./qemu-io -c 'read -v 0 512' test.img
+     00000000:  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+@@ -53,17 +57,17 @@ And test.img is corrupt, its first sector is zeroed when it shouldn't be:
+     read 512/512 bytes at offset 0
+     512.000000 bytes, 1 ops; 0.0000 sec (81.380 MiB/sec and 166666.6667 ops/sec)
+ 
+-This error is caught by blkverify:
++This error is caught by ``blkverify``::
+ 
+     $ ./qemu-io -c 'read 0 512' blkverify:a.img:b.img
+     blkverify: read sector_num=0 nb_sectors=4 contents mismatch in sector 0
+ 
+-A more realistic scenario is verifying the installation of a guest OS:
++A more realistic scenario is verifying the installation of a guest OS::
+ 
+     $ ./qemu-img create raw.img 16G
+     $ ./qemu-img create -f qcow2 test.qcow2 16G
+     $ ./qemu-system-x86_64 -cdrom debian.iso \
+           -drive file=blkverify:raw.img:test.qcow2
+ 
+-If the installation is aborted when blkverify detects corruption, use qemu-io
++If the installation is aborted when ``blkverify`` detects corruption, use ``qemu-io``
+ to explore the contents of the disk image at the sector in question.
+diff --git a/docs/devel/index-build.rst b/docs/devel/index-build.rst
+index 3a912aefcfa..a8f7c5cdebc 100644
+--- a/docs/devel/index-build.rst
++++ b/docs/devel/index-build.rst
+@@ -19,3 +19,4 @@ the basics if you are adding new files and targets to the build.
+    fuzzing
+    control-flow-integrity
+    blkdebug
++   blkverify
 -- 
-2.39.2
+2.34.1
 
 
