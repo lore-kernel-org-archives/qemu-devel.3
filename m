@@ -4,81 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19B3DC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 08:32:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43966C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 08:35:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sesNC-0006dP-3M; Fri, 16 Aug 2024 04:31:50 -0400
+	id 1sesPv-0007BJ-7J; Fri, 16 Aug 2024 04:34:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sesNB-0006a9-7T
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:31:49 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sesPt-00077J-Rp
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:34:37 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sesN7-0005S4-UJ
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:31:48 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-530c2e5f4feso1757657e87.0
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 01:31:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sesPp-0005by-OO
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:34:37 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-37186c2278bso973569f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 01:34:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723797103; x=1724401903; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723797272; x=1724402072; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=mWpE7NvxfAae1g3LoLAhBZ7iStPc3mji+hgy7WriXvA=;
- b=Vl4Y/qJz1sqHVAT49Oei96qDrOdpyVWrZl3xBSEacWwsFTg+67f9FSJJNOjHhTwfAH
- BDFUuMxz6F18h/8FQ2zrWFtV8JVQqMnplng5L2aaxDgyRPEoXkyBT69ZTDsifN6JGkBZ
- oyncwN/y7cWKwv5iVng12tV8NdNopk11WGqr9DAu22WJ0Dgyd03Khlm17jxkAW0UUvX2
- TxYuEo4CtJr95R5inMT3W7XoRywQxXR+HRQqe7SNBxvTYbEkqI6rLOPxJw5Xyv2DkBoE
- 2uSWtw8oACFjh0SYWluxfY2sUHKgjN2mj31mga0rOESp+DgEFX3le/N4XYtWCjY/K69Q
- +HHw==
+ bh=rcdVqiOHn2SOCfjcoFBldMGuyRVl6Cw86IDGdXt6peM=;
+ b=coDoEJG4Phd4KULnNpnv2jAMLtCuAHZGHomx5Ssx5L7ITVQNxldDFTlwLK0RNb808D
+ FIbAeZMpE1PNZKi7WlI33JztlbhFxXsZf/GzSnWY4jXUocOxGMsaLgYKwdanEXnmveiI
+ zYTMwrCevqvYgGi3uDFRBdaQjSLEKOJWU1YMRegx8hYk9HANLL/DFEns/ETT7I5ImE1D
+ A2fHW6jp+wuniVQwHlVC9Opc420VS6IzkxOJyTKzqGiGxxFwmbGLlzXWV9bCUUYoyEko
+ GZnM6uzuQ2eUiJVAsnv/gsPvH2+mcSDWdznTUOQIUwU9SjTNdUS191wzRiyKHziXrIDx
+ lDHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723797103; x=1724401903;
+ d=1e100.net; s=20230601; t=1723797272; x=1724402072;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mWpE7NvxfAae1g3LoLAhBZ7iStPc3mji+hgy7WriXvA=;
- b=R0qhDKCguq2tIpqSfEgTF+TxqwmZ/8eRGbFbrDYJcLmGnD8coxeFe7yO9Ifl+VtX3y
- uAhg4cY88n5RRQZVcVIdTSJM1d/Gx1rQWesAzrSSRKoMparK5jOhRJpTtNuPuvx1mDFI
- ujIVeIWoA4IgPX6ix+8kBpU3H+ZvJ7e1o1IBVpLDWaWgYRa0iGXp2TmP+bqXQLLxpyNl
- /5fDmHtFPQV2fAkpMW8AnSEPkAMJhxfRzen2mWJO9ZgXdllNE99Nhi4bzdlMGDuvSbFb
- UqIbYz9sN5nS43YQbHIpxTbpCErmT5ra5H/uAKJab1oDhYnKfLD3XVRnN2Fiq6g6wlBp
- Jhow==
+ bh=rcdVqiOHn2SOCfjcoFBldMGuyRVl6Cw86IDGdXt6peM=;
+ b=XqJZZbzKRu6+6emaRgDqFoENp1LtezIkx/T493HHtxGrxz88h7HwPEBWOxD8hMdtkd
+ LrBMflWzWogDVYL2BUCjRpgJVUWDWiE6wGxhJ7tE3xAEkbtvze5pg+Csph2h9cA8mFbm
+ ajNumt4Q83Sb6mWPqbJyTShaKDfpdup0U+wDsSWWJlQIoQPdu7DZaBpZStZtim06tj/z
+ HR8WGYf5/1JrDSRVngM+nMNg0fazK1MZpoNhi9skhB7TU05wCeuwwCuPFIIgvsW9gen5
+ A85UmRICuRi+efMvPeQvuI8R6IM2H3aKBbYxiN/SGjt0q70ftOzrJP2/qzLGxX/f/aZs
+ TJeA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUlzddfa5l0I3WNRd4mgLnH2W46ISlv2K9tItul7YJ2FcTcbjqEVf/Zu35QYKAJrMC0ul+iSHPHl1a6@nongnu.org
-X-Gm-Message-State: AOJu0YwHg7ozyVt+w2fLsxrF5OvjRjzWp+czFpOb01XFsn56YmTjFcxb
- WnZvFq72qjqZzzl9D083fdUzpCP/mq0aCDkx4WVDaGRqdG0Z2pH0VI4lXuNGymM=
-X-Google-Smtp-Source: AGHT+IHSI4Zli0y/kRm9ffl4mnXa+7sNdsF9YQxiK7LwOrEjbTO5z75vPwk8p49VarrU7mivoQGkzg==
-X-Received: by 2002:a05:6512:6cd:b0:532:c197:393e with SMTP id
- 2adb3069b0e04-5331c690098mr1387316e87.11.1723797102371; 
- Fri, 16 Aug 2024 01:31:42 -0700 (PDT)
+ AJvYcCVymw2u6eydZAHqABfj3DuovojweROUkHF59clg73jZ91Qon/xP86nJCCvnX7xtdNMsNMEScDrFH8Oq96vXD/lteqwt/2w=
+X-Gm-Message-State: AOJu0YzU3Imjnbjrck6geOk8QpcVUl3/a/6RcUA9qtJfbeDmqwAo5cUQ
+ 098xOeMflk11aK312+Y5zlO+M++hWduklUZJFT/PYC7yBMNTPsLTDJA3eQNmMyg=
+X-Google-Smtp-Source: AGHT+IFShy4jd5WRvAhSKtqzWxwMatyTL980wx7NZ1fvES5RCsQmd++fHQBzYM9IFJt35z65kOfN3w==
+X-Received: by 2002:adf:e6c3:0:b0:365:aec0:e191 with SMTP id
+ ffacd0b85a97d-37186d740a7mr4078144f8f.21.1723797271841; 
+ Fri, 16 Aug 2024 01:34:31 -0700 (PDT)
 Received: from [192.168.220.175] (143.red-88-28-5.dynamicip.rima-tde.net.
  [88.28.5.143]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3718983a57asm3150007f8f.2.2024.08.16.01.31.40
+ 5b1f17b1804b1-429ded71ed8sm70447235e9.31.2024.08.16.01.34.28
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Aug 2024 01:31:41 -0700 (PDT)
-Message-ID: <e00fbc1e-866e-43ba-b757-7044247d0d30@linaro.org>
-Date: Fri, 16 Aug 2024 10:31:39 +0200
+ Fri, 16 Aug 2024 01:34:31 -0700 (PDT)
+Message-ID: <6f009629-fbad-4868-bc12-21a18de379b5@linaro.org>
+Date: Fri, 16 Aug 2024 10:34:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1 v2] hw/i386/pc: Ensure vmport prerequisites are
- fulfilled
-To: =?UTF-8?Q?Kamil_Szcz=C4=99k?= <kamil@szczek.dev>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>,
- Joelle van Dyne <j@getutm.app>, Bernhard Beschow <shentey@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <CJaQOvoJMl8P04F7-0Pk23paXt29GnSt2ICM-xlruQ9rGsMHocU_xH3RRaRRJEQpqUxGo63sATZb5St7968jHLV0r7NORODN3zHgi_qxpPE=@szczek.dev>
- <fca41463-b835-4958-9c08-dfe7d09654ff@linaro.org>
- <8k4duf_dozKAnKnCqWFNJpiQCk0RMmMvDXMzPMOuZB0weL6yxhJuDTRLWLdZAcIxFkEAdGjSUfjHZCnuRQ4DKxjQi660jJF8PgMrSxcBlaA=@szczek.dev>
+Subject: Re: [PATCH v7 6/7] rust: add crate to expose bindings and interfaces
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, Beraldo Leal <bleal@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>,
+ ARM TCG CPUs <qemu-arm@nongnu.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Junjie Mao <junjie.mao@intel.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, rowan.hart@intel.com,
+ Mads Ynddal <mads@ynddal.dk>, Markus Armbruster <armbru@redhat.com>
+References: <20240815-rust-pl011-v7-0-975135e98831@linaro.org>
+ <20240815-rust-pl011-v7-6-975135e98831@linaro.org>
+ <9f6c96fd-bb0c-4014-bba1-70986f4bb384@linaro.org>
+ <Zr4ZbOHR9Sc10YSX@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <8k4duf_dozKAnKnCqWFNJpiQCk0RMmMvDXMzPMOuZB0weL6yxhJuDTRLWLdZAcIxFkEAdGjSUfjHZCnuRQ4DKxjQi660jJF8PgMrSxcBlaA=@szczek.dev>
+In-Reply-To: <Zr4ZbOHR9Sc10YSX@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,62 +111,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/8/24 10:27, Kamil Szczęk wrote:
-> On Friday, August 16th, 2024 at 10:22, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
-> 
+On 15/8/24 17:06, Daniel P. Berrangé wrote:
+> On Thu, Aug 15, 2024 at 04:01:17PM +0200, Philippe Mathieu-Daudé wrote:
+>> Hi Manos,
 >>
->>
->> On 16/8/24 10:01, Kamil Szczęk wrote:
->>
->>> Since commit 4ccd5fe22feb95137d325f422016a6473541fe9f ('pc: add option
->>> to disable PS/2 mouse/keyboard'), the vmport will not be created unless
->>> the i8042 PS/2 controller is enabled. To avoid confusion, let's fail if
->>> vmport was explicitly requested, but the i8042 controller is disabled.
->>> This also changes the behavior of vmport=auto to take i8042 controller
->>> availability into account.
+>> On 15/8/24 13:42, Manos Pitsidianakis wrote:
+>>> Add rust/qemu-api, which exposes rust-bindgen generated FFI bindings and
+>>> provides some declaration macros for symbols visible to the rest of
+>>> QEMU.
 >>>
->>> Signed-off-by: Kamil Szczęk kamil@szczek.dev
+>>> Co-authored-by: Junjie Mao <junjie.mao@intel.com>
+>>> Co-authored-by: Paolo Bonzini <pbonzini@redhat.com>
+>>> Signed-off-by: Junjie Mao <junjie.mao@intel.com>
+>>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 >>> ---
->>> hw/i386/pc.c | 8 ++++++--
->>> hw/i386/pc_piix.c | 3 ++-
->>> hw/i386/pc_q35.c | 2 +-
->>> qemu-options.hx | 4 ++--
->>> 4 files changed, 11 insertions(+), 6 deletions(-)
->>>
->>> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
->>> index c74931d577..c99f2ce540 100644
->>> --- a/hw/i386/pc.c
->>> +++ b/hw/i386/pc.c
->>> @@ -1075,7 +1075,7 @@ static const MemoryRegionOps ioportF0_io_ops = {
->>> };
->>>
->>> static void pc_superio_init(ISABus *isa_bus, bool create_fdctrl,
->>> - bool create_i8042, bool no_vmport)
->>> + bool create_i8042, bool no_vmport, Error **errp)
->>> {
->>> int i;
->>> DriveInfo *fd[MAX_FD];
->>> @@ -1100,6 +1100,10 @@ static void pc_superio_init(ISABus *isa_bus, bool create_fdctrl,
->>> }
->>>
->>> if (!create_i8042) {
->>> + if (!no_vmport) {
->>> + error_setg(errp,
->>
->>
->> Is 'errp' available? Does this patch compile?
+>>>    MAINTAINERS                       |   6 ++
+>>>    rust/meson.build                  |   9 +++
+>>>    rust/qemu-api/.gitignore          |   2 +
+>>>    rust/qemu-api/Cargo.lock          |   7 +++
+>>>    rust/qemu-api/Cargo.toml          |  23 +++++++
+>>>    rust/qemu-api/README.md           |  17 +++++
+>>>    rust/qemu-api/build.rs            |  13 ++++
+>>>    rust/qemu-api/meson.build         |  17 +++++
+>>>    rust/qemu-api/rustfmt.toml        |   1 +
+>>>    rust/qemu-api/src/bindings.rs     |   7 +++
+>>>    rust/qemu-api/src/definitions.rs  | 108 ++++++++++++++++++++++++++++++++
+>>>    rust/qemu-api/src/device_class.rs | 128 ++++++++++++++++++++++++++++++++++++++
+>>>    rust/qemu-api/src/lib.rs          | 100 +++++++++++++++++++++++++++++
+>>>    rust/qemu-api/src/tests.rs        |  48 ++++++++++++++
+>>>    rust/rustfmt.toml                 |   7 +++
+>>>    15 files changed, 493 insertions(+)
 > 
-> It does and works as expected.
-
-My bad I missed the whole context.
-
->> Anyway, I think you want to call error_report() & exit().
+>>> diff --git a/rust/qemu-api/Cargo.toml b/rust/qemu-api/Cargo.toml
+>>> new file mode 100644
+>>> index 0000000000..51260cbe42
+>>> --- /dev/null
+>>> +++ b/rust/qemu-api/Cargo.toml
+>>> @@ -0,0 +1,23 @@
+>>> +[package]
+>>> +name = "qemu_api"
+>>> +version = "0.1.0"
+>>> +edition = "2021"
+>>
+>>> +license = "GPL-2.0 OR GPL-3.0-or-later"
+>>
+>> in particular explaining the license choice.
 > 
-> Hmm, the error.h suggests that error_report() & exit() is a legacy approach, hence why I've used error_setg & error_fatal ptr. As far as I know both approaches are equivalent, no?
+> Semantically this is an overly verbose way of saying
+> "GPL-2.0-or-later", so just simplify this.
 
-Yep.
+Indeed. Manos, please use GPL-2.0-or-later to keep it simple.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+>> Should all rust code use it?
+> 
+> GPL-2.0-or-later is what we expect all new QEMU contributions to be
+> licensed as, regardless of language[1], so this looks desirable.
 
+Agreed.
+
+> 
+> With regards,
+> Daniel
+> 
+> [1] unless they're derived from one of the few pieces of code under
+>      different terms
 
 
