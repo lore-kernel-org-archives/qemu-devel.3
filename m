@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 375B9C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 10:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECAE4C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 10:40:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seuLP-0000pb-H7; Fri, 16 Aug 2024 06:38:07 -0400
+	id 1seuN4-0005JU-In; Fri, 16 Aug 2024 06:39:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1seuLN-0000mz-6a
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:38:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1seuL9-0006AY-6z
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:38:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723804668;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=bRFn2gcsCH1DPqIkJG2TXb2/rUer206MG55MbUglkdY=;
- b=V2xcassrH1gnKIwXgyGVR5Z/XIfbnoDbVYHf5nLIEnf8OLGYoMsigD9SE0VQ5OKtnZGJmB
- K2bzT4l5qPHg7wThxxrosDP17ws4qX1yh5Fw7pc+rQWdjp5puGhwtCDkx5c/gUMUsVsnl8
- vvRjOM/j+2vBEYfqPYc5i0wNHsj1sMg=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-534-Hvm3FYjNNQ6ReahwXL9kvQ-1; Fri,
- 16 Aug 2024 06:37:46 -0400
-X-MC-Unique: Hvm3FYjNNQ6ReahwXL9kvQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A7DA71955D4B; Fri, 16 Aug 2024 10:37:41 +0000 (UTC)
-Received: from gondolin.str.redhat.com (dhcp-192-244.str.redhat.com
- [10.33.192.244])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 176661955F2E; Fri, 16 Aug 2024 10:37:31 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- qemu-s390x@nongnu.org, Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH for-9.2] hw: add compat machines for 9.2
-Date: Fri, 16 Aug 2024 12:37:23 +0200
-Message-ID: <20240816103723.2325982-1-cohuck@redhat.com>
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1seuN3-0005FD-DD; Fri, 16 Aug 2024 06:39:49 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
+ id 1seuN1-0006c5-4N; Fri, 16 Aug 2024 06:39:49 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5bed83489c3so187567a12.3; 
+ Fri, 16 Aug 2024 03:39:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1723804781; x=1724409581; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=HxaT/G/a9C9d36zMJfUOotU5H2JIbQHX2nL8czHz2/8=;
+ b=k0DwO0clXj1klg/WKN9XawgW8d2/8iPTGTutkAWAvAI3oDqUfM0dl2vf+6LrvhK9mH
+ IbFKysDaYG4qxpPaR6C6l1PZc9px+CIo/GIecNrwikLIe3Xxpr/op51vjENgikyp/yKu
+ qgOYBJgcs86xMaOLG06jw9jYX8o/FxjQfjocXGRMMDE1w9DUa2PtgnUHrxDkgMtCSXlG
+ dA1C/jB2acnQ9fCkr/co1wbUvKxtXJVvcBBGmrt5dMO9qwTTbIa/piX38sRAa+T4QqBx
+ WPX7wnJWdN6g/+pijsG4nu/NZ1C/iMoRoKtZbkgfqg+ivih4se+qfaacEiRvJjs+r000
+ fOyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723804781; x=1724409581;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HxaT/G/a9C9d36zMJfUOotU5H2JIbQHX2nL8czHz2/8=;
+ b=iNPULKdZFOX17Fed0xdWjXnnuaxCqJU1Nilp9B9X10Kvdb7PTNmBQ+18pmKyomwKwv
+ hmeGEUDUsFqwvorE+yz9fDC8o0eKjb5EfbB+swHthsz/ZXRKw2m/Okm8kFbWGUwjqboX
+ u2JIMugSFz6Rd1nWM+KywIu6Z99B0X4OPflrdrcQ8q3JHG4pCHZ5R09frEqukKxBEEV7
+ g7oOLzQ11SfchUlaUFRq8W5wCN7vwQDNHaGV2WdJ44CBVbBQ/UlVlZayv+nSE0BwlYao
+ 5ETnOkvKd1kQxrfXXlTLU3u4UIghrNf0aZqtrhxWhOrLk606058QzffwTgQkpmrmLuHc
+ cXOQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUT13H/BIX+1ASU5LMlTS3vMVa8s8SmVSVkfFAbsVKmIE+aJjDR8gOAnuWOntBwQhG2yjrawUJvHw==@nongnu.org
+X-Gm-Message-State: AOJu0YypD6EkxtwL9wh6zexqI9IVEtb+C2tFqNvxNZyGcKtVNfq8Rddp
+ PXmb4PyhTcAc1RHLJZE0W8aqRV0bozgODZw6icHb8VM4YJY/rFCOpZIGhh/PEt+D83Kn/Iu2ltW
+ aGi5Maaz+aYqmrPdMIKzR+JVDfto=
+X-Google-Smtp-Source: AGHT+IFe/aw2okEbnHGGh2K6rt+9/+4BQBHsFxWSaNJv2/16ZXE9cadhwAxXurr0h1HWpgjn9PaKtCpCdDlbRj0J9JQ=
+X-Received: by 2002:a05:6402:5206:b0:5a2:1f7b:e017 with SMTP id
+ 4fb4d7f45d1cf-5beca4da60dmr1723171a12.4.1723804780681; Fri, 16 Aug 2024
+ 03:39:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20240812130606.90410-1-edgar.iglesias@gmail.com>
+ <20240812130606.90410-5-edgar.iglesias@gmail.com>
+ <alpine.DEB.2.22.394.2408121650590.298534@ubuntu-linux-20-04-desktop>
+ <ZruRm34zIMtUm7oH@zapote>
+ <alpine.DEB.2.22.394.2408131550080.298534@ubuntu-linux-20-04-desktop>
+ <ZryZwOoadeb1UWK8@zapote>
+ <alpine.DEB.2.22.394.2408141719400.298534@ubuntu-linux-20-04-desktop>
+In-Reply-To: <alpine.DEB.2.22.394.2408141719400.298534@ubuntu-linux-20-04-desktop>
+From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Date: Fri, 16 Aug 2024 12:39:28 +0200
+Message-ID: <CAJy5ezrUbGZCaF=HiYhyLCoXRL3d=t-QbmLeKvu7ByWksV888g@mail.gmail.com>
+Subject: Re: [PATCH v1 04/10] hw/arm: xenpvh: Add support for SMP guests
+To: Stefano Stabellini <sstabellini@kernel.org>
+Cc: qemu-devel@nongnu.org, anthony@xenproject.org, paul@xen.org, 
+ peter.maydell@linaro.org, alex.bennee@linaro.org, xenia.ragiadakou@amd.com, 
+ jason.andryuk@amd.com, edgar.iglesias@amd.com, xen-devel@lists.xenproject.org, 
+ qemu-arm@nongnu.org, andrew.cooper3@citrix.com
+Content-Type: multipart/alternative; boundary="0000000000009d62ae061fca9383"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,264 +96,302 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add 9.2 machine types for arm/i440fx/m68k/q35/s390x/spapr.
+--0000000000009d62ae061fca9383
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
----
- hw/arm/virt.c              |  9 ++++++++-
- hw/core/machine.c          |  3 +++
- hw/i386/pc.c               |  3 +++
- hw/i386/pc_piix.c          | 15 ++++++++++++---
- hw/i386/pc_q35.c           | 13 +++++++++++--
- hw/m68k/virt.c             |  9 ++++++++-
- hw/ppc/spapr.c             | 15 +++++++++++++--
- hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
- include/hw/boards.h        |  3 +++
- include/hw/i386/pc.h       |  3 +++
- 10 files changed, 77 insertions(+), 10 deletions(-)
+On Thu, Aug 15, 2024 at 2:30=E2=80=AFAM Stefano Stabellini <sstabellini@ker=
+nel.org>
+wrote:
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 687fe0bb8bc9..a5d3ad9bf9e7 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3301,10 +3301,17 @@ static void machvirt_machine_init(void)
- }
- type_init(machvirt_machine_init);
- 
-+static void virt_machine_9_2_options(MachineClass *mc)
-+{
-+}
-+DEFINE_VIRT_MACHINE_AS_LATEST(9, 2)
-+
- static void virt_machine_9_1_options(MachineClass *mc)
- {
-+    virt_machine_9_2_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_9_1, hw_compat_9_1_len);
- }
--DEFINE_VIRT_MACHINE_AS_LATEST(9, 1)
-+DEFINE_VIRT_MACHINE(9, 1)
- 
- static void virt_machine_9_0_options(MachineClass *mc)
- {
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 27dcda024834..adaba17ebac1 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -34,6 +34,9 @@
- #include "hw/virtio/virtio-iommu.h"
- #include "audio/audio.h"
- 
-+GlobalProperty hw_compat_9_1[] = {};
-+const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
-+
- GlobalProperty hw_compat_9_0[] = {
-     {"arm-cpu", "backcompat-cntfrq", "true" },
-     { "scsi-hd", "migrate-emulated-scsi-request", "false" },
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index c74931d577a8..0cf4cb0d9f29 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -79,6 +79,9 @@
-     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
-     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
- 
-+GlobalProperty pc_compat_9_1[] = {};
-+const size_t pc_compat_9_1_len = G_N_ELEMENTS(pc_compat_9_1);
-+
- GlobalProperty pc_compat_9_0[] = {
-     { TYPE_X86_CPU, "x-amd-topoext-features-only", "false" },
-     { TYPE_X86_CPU, "x-l1-cache-per-thread", "false" },
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index d9e69243b4a7..746bfe05d386 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -479,13 +479,24 @@ static void pc_i440fx_machine_options(MachineClass *m)
-                                      "Use a different south bridge than PIIX3");
- }
- 
--static void pc_i440fx_machine_9_1_options(MachineClass *m)
-+static void pc_i440fx_machine_9_2_options(MachineClass *m)
- {
-     pc_i440fx_machine_options(m);
-     m->alias = "pc";
-     m->is_default = true;
- }
- 
-+DEFINE_I440FX_MACHINE(9, 2);
-+
-+static void pc_i440fx_machine_9_1_options(MachineClass *m)
-+{
-+    pc_i440fx_machine_9_2_options(m);
-+    m->alias = NULL;
-+    m->is_default = false;
-+    compat_props_add(m->compat_props, hw_compat_9_1, hw_compat_9_1_len);
-+    compat_props_add(m->compat_props, pc_compat_9_1, pc_compat_9_1_len);
-+}
-+
- DEFINE_I440FX_MACHINE(9, 1);
- 
- static void pc_i440fx_machine_9_0_options(MachineClass *m)
-@@ -493,8 +504,6 @@ static void pc_i440fx_machine_9_0_options(MachineClass *m)
-     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
- 
-     pc_i440fx_machine_9_1_options(m);
--    m->alias = NULL;
--    m->is_default = false;
-     m->smbios_memory_device_size = 16 * GiB;
- 
-     compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 9d108b194e47..67162ac88634 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -361,19 +361,28 @@ static void pc_q35_machine_options(MachineClass *m)
-                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);
- }
- 
--static void pc_q35_machine_9_1_options(MachineClass *m)
-+static void pc_q35_machine_9_2_options(MachineClass *m)
- {
-     pc_q35_machine_options(m);
-     m->alias = "q35";
- }
- 
-+DEFINE_Q35_MACHINE(9, 2);
-+
-+static void pc_q35_machine_9_1_options(MachineClass *m)
-+{
-+    pc_q35_machine_9_2_options(m);
-+    m->alias = NULL;
-+    compat_props_add(m->compat_props, hw_compat_9_1, hw_compat_9_1_len);
-+    compat_props_add(m->compat_props, pc_compat_9_1, pc_compat_9_1_len);
-+}
-+
- DEFINE_Q35_MACHINE(9, 1);
- 
- static void pc_q35_machine_9_0_options(MachineClass *m)
- {
-     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
-     pc_q35_machine_9_1_options(m);
--    m->alias = NULL;
-     m->smbios_memory_device_size = 16 * GiB;
-     compat_props_add(m->compat_props, hw_compat_9_0, hw_compat_9_0_len);
-     compat_props_add(m->compat_props, pc_compat_9_0, pc_compat_9_0_len);
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index cda199af8faa..ea5c4a5a570b 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -366,10 +366,17 @@ type_init(virt_machine_register_types)
- #define DEFINE_VIRT_MACHINE(major, minor) \
-     DEFINE_VIRT_MACHINE_IMPL(false, major, minor)
- 
-+static void virt_machine_9_2_options(MachineClass *mc)
-+{
-+}
-+DEFINE_VIRT_MACHINE_AS_LATEST(9, 2)
-+
- static void virt_machine_9_1_options(MachineClass *mc)
- {
-+    virt_machine_9_2_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_9_1, hw_compat_9_1_len);
- }
--DEFINE_VIRT_MACHINE_AS_LATEST(9, 1)
-+DEFINE_VIRT_MACHINE(9, 1)
- 
- static void virt_machine_9_0_options(MachineClass *mc)
- {
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 370d7c35d3a7..8aa3ce7449be 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4837,15 +4837,26 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
- #define DEFINE_SPAPR_MACHINE_TAGGED(major, minor, tag) \
-     DEFINE_SPAPR_MACHINE_IMPL(false, major, minor, _, tag)
- 
-+/*
-+ * pseries-9.2
-+ */
-+static void spapr_machine_9_2_class_options(MachineClass *mc)
-+{
-+    /* Defaults for the latest behaviour inherited from the base class */
-+}
-+
-+DEFINE_SPAPR_MACHINE_AS_LATEST(9, 2);
-+
- /*
-  * pseries-9.1
-  */
- static void spapr_machine_9_1_class_options(MachineClass *mc)
- {
--    /* Defaults for the latest behaviour inherited from the base class */
-+    spapr_machine_9_2_class_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_9_1, hw_compat_9_1_len);
- }
- 
--DEFINE_SPAPR_MACHINE_AS_LATEST(9, 1);
-+DEFINE_SPAPR_MACHINE(9, 1);
- 
- /*
-  * pseries-9.0
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index c483ff8064d4..18240a0fd8b4 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -871,14 +871,26 @@ static const TypeInfo ccw_machine_info = {
-     DEFINE_CCW_MACHINE_IMPL(false, major, minor)
- 
- 
-+static void ccw_machine_9_2_instance_options(MachineState *machine)
-+{
-+}
-+
-+static void ccw_machine_9_2_class_options(MachineClass *mc)
-+{
-+}
-+DEFINE_CCW_MACHINE_AS_LATEST(9, 2);
-+
- static void ccw_machine_9_1_instance_options(MachineState *machine)
- {
-+    ccw_machine_9_2_instance_options(machine);
- }
- 
- static void ccw_machine_9_1_class_options(MachineClass *mc)
- {
-+    ccw_machine_9_2_class_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_9_1, hw_compat_9_1_len);
- }
--DEFINE_CCW_MACHINE_AS_LATEST(9, 1);
-+DEFINE_CCW_MACHINE(9, 1);
- 
- static void ccw_machine_9_0_instance_options(MachineState *machine)
- {
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 48ff6d8b93f7..9a492770cbb9 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -732,6 +732,9 @@ struct MachineState {
-     } \
-     type_init(machine_initfn##_register_types)
- 
-+extern GlobalProperty hw_compat_9_1[];
-+extern const size_t hw_compat_9_1_len;
-+
- extern GlobalProperty hw_compat_9_0[];
- extern const size_t hw_compat_9_0_len;
- 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 4e55d7ef6ea9..14ee06287da3 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -215,6 +215,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
- /* sgx.c */
- void pc_machine_init_sgx_epc(PCMachineState *pcms);
- 
-+extern GlobalProperty pc_compat_9_1[];
-+extern const size_t pc_compat_9_1_len;
-+
- extern GlobalProperty pc_compat_9_0[];
- extern const size_t pc_compat_9_0_len;
- 
--- 
-2.46.0
+> On Wed, 14 Aug 2024, Edgar E. Iglesias wrote:
+> > On Tue, Aug 13, 2024 at 03:52:32PM -0700, Stefano Stabellini wrote:
+> > > On Tue, 13 Aug 2024, Edgar E. Iglesias wrote:
+> > > > On Mon, Aug 12, 2024 at 06:47:17PM -0700, Stefano Stabellini wrote:
+> > > > > On Mon, 12 Aug 2024, Edgar E. Iglesias wrote:
+> > > > > > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+> > > > > >
+> > > > > > Add SMP support for Xen PVH ARM guests. Create max_cpus ioreq
+> > > > > > servers to handle hotplug.
+> > > > > >
+> > > > > > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+> > > > > > ---
+> > > > > >  hw/arm/xen_arm.c | 5 +++--
+> > > > > >  1 file changed, 3 insertions(+), 2 deletions(-)
+> > > > > >
+> > > > > > diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
+> > > > > > index 5f75cc3779..ef8315969c 100644
+> > > > > > --- a/hw/arm/xen_arm.c
+> > > > > > +++ b/hw/arm/xen_arm.c
+> > > > > > @@ -173,7 +173,7 @@ static void xen_arm_init(MachineState
+> *machine)
+> > > > > >
+> > > > > >      xen_init_ram(machine);
+> > > > > >
+> > > > > > -    xen_register_ioreq(xam->state, machine->smp.cpus,
+> &xen_memory_listener);
+> > > > > > +    xen_register_ioreq(xam->state, machine->smp.max_cpus,
+> &xen_memory_listener);
+> > > > > >
+> > > > > >      xen_create_virtio_mmio_devices(xam);
+> > > > > >
+> > > > > > @@ -218,7 +218,8 @@ static void
+> xen_arm_machine_class_init(ObjectClass *oc, void *data)
+> > > > > >      MachineClass *mc =3D MACHINE_CLASS(oc);
+> > > > > >      mc->desc =3D "Xen PVH ARM machine";
+> > > > > >      mc->init =3D xen_arm_init;
+> > > > > > -    mc->max_cpus =3D 1;
+> > > > > > +    /* MAX number of vcpus supported by Xen.  */
+> > > > > > +    mc->max_cpus =3D GUEST_MAX_VCPUS;
+> > > > >
+> > > > > Will this cause allocations of data structures with 128 elements?
+> > > > > Looking at hw/xen/xen-hvm-common.c:xen_do_ioreq_register it seems
+> > > > > possible? Or hw/xen/xen-hvm-common.c:xen_do_ioreq_register is
+> called
+> > > >
+> > > > Yes, in theory there's probably overhead with this but as you
+> correctly
+> > > > noted below, a PVH aware xl will set the max_cpus option to a lower
+> value.
+> > > >
+> > > > With a non-pvh aware xl, I was a little worried about the overhead
+> > > > but I couldn't see any visible slow-down on ARM neither in boot or
+> in network
+> > > > performance (I didn't run very sophisticated benchmarks).
+> > >
+> > > What do you mean by "non-pvh aware xl"? All useful versions of xl
+> > > support pvh?
+> >
+> >
+> > I mean an xl without our PVH patches merged.
+> > xl in upstream doesn't know much about PVH yet.
+> > Even for ARM, we're still carrying significant patches in our tree.
+>
+> Oh I see. In that case, I don't think we need to support "non-pvh aware
+> xl".
+>
+>
+> > > > > later on with the precise vCPU value which should be provided to
+> QEMU
+> > > > > via the -smp command line option
+> > > > > (tools/libs/light/libxl_dm.c:libxl__build_device_model_args_new)?
+> > > >
+> > > > Yes, a pvh aware xl will for example pass -smp 2,maxcpus=3D4 based =
+on
+> > > > values from the xl.cfg. If the user doesn't set maxvcpus in xl.cfg,
+> xl
+> > > > will set maxvcpus to the same value as vcpus.
+> > >
+> > > OK good. In that case if this is just an initial value meant to be
+> > > overwritten, I think it is best to keep it as 1.
+> >
+> > Sorry but that won't work. I think the confusion here may be that
+> > it's easy to mix up mc->max_cpus and machine->smp.max_cpus, these are
+> > not the same. They have different purposes.
+> >
+> > I'll try to clarify the 3 values in play.
+> >
+> > machine-smp.cpus:
+> > Number of guest vcpus active at boot.
+> > Passed to QEMU via the -smp command-line option.
+> > We don't use this value in QEMU's ARM PVH machines.
+> >
+> > machine->smp.max_cpus:
+> > Max number of vcpus that the guest can use (equal or larger than
+> machine-smp.cpus).
+> > Will be set by xl via the "-smp X,maxcpus=3DY" command-line option to Q=
+EMU.
+> > Taken from maxvcpus from xl.cfg, same as XEN_DMOP_nr_vcpus.
+> > This is what we use for xen_register_ioreq().
+> >
+> > mc->max_cpus:
+> > Absolute MAX in QEMU used to cap the -smp command-line options.
+> > If xl tries to set -smp (machine->smp.max_cpus) larger than this, QEMU
+> will bail out.
+> > Used to setup xen_register_ioreq() ONLY if -smp maxcpus was NOT set (i.=
+e
+> by a non PVH aware xl).
+> > Cannot be 1 because that would limit QEMU to MAX 1 vcpu.
+> >
+> > I guess we could set mc->max_cpus to what XEN_DMOP_nr_vcpus returns but
+> I'll
+> > have to check if we can even issue that hypercall this early in QEMU
+> since
+> > mc->max_cpus is setup before we even parse the machine options. We may
+> > not yet know what domid we're attaching to yet.
+>
+> If mc->max_cpus is the absolute max and it will not be used if -smp is
+> passed to QEMU, then I think it is OK to use GUEST_MAX_VCPUS
+>
 
+
+Looking at this a little more. If users (xl) don't pass an -smp option we
+actually default to smp.max_cpus=3D1.
+So, another option is to simply remove the upper limit in QEMU (e.g we can
+set mc->max_cpus to something very large like UINT32_MAX).
+That would avoid early hypercalls, avoid using GUEST_MAX_VCPUS and always
+let xl dictate the max_cpus value using the -smp cmdline option.
+
+--0000000000009d62ae061fca9383
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">On Thu, Aug 15, 2024 at 2:30=E2=80=AFAM S=
+tefano Stabellini &lt;<a href=3D"mailto:sstabellini@kernel.org">sstabellini=
+@kernel.org</a>&gt; wrote:<br></div><div class=3D"gmail_quote"><blockquote =
+class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
+id rgb(204,204,204);padding-left:1ex">On Wed, 14 Aug 2024, Edgar E. Iglesia=
+s wrote:<br>
+&gt; On Tue, Aug 13, 2024 at 03:52:32PM -0700, Stefano Stabellini wrote:<br=
+>
+&gt; &gt; On Tue, 13 Aug 2024, Edgar E. Iglesias wrote:<br>
+&gt; &gt; &gt; On Mon, Aug 12, 2024 at 06:47:17PM -0700, Stefano Stabellini=
+ wrote:<br>
+&gt; &gt; &gt; &gt; On Mon, 12 Aug 2024, Edgar E. Iglesias wrote:<br>
+&gt; &gt; &gt; &gt; &gt; From: &quot;Edgar E. Iglesias&quot; &lt;<a href=3D=
+"mailto:edgar.iglesias@amd.com" target=3D"_blank">edgar.iglesias@amd.com</a=
+>&gt;<br>
+&gt; &gt; &gt; &gt; &gt; <br>
+&gt; &gt; &gt; &gt; &gt; Add SMP support for Xen PVH ARM guests. Create max=
+_cpus ioreq<br>
+&gt; &gt; &gt; &gt; &gt; servers to handle hotplug.<br>
+&gt; &gt; &gt; &gt; &gt; <br>
+&gt; &gt; &gt; &gt; &gt; Signed-off-by: Edgar E. Iglesias &lt;<a href=3D"ma=
+ilto:edgar.iglesias@amd.com" target=3D"_blank">edgar.iglesias@amd.com</a>&g=
+t;<br>
+&gt; &gt; &gt; &gt; &gt; ---<br>
+&gt; &gt; &gt; &gt; &gt;=C2=A0 hw/arm/xen_arm.c | 5 +++--<br>
+&gt; &gt; &gt; &gt; &gt;=C2=A0 1 file changed, 3 insertions(+), 2 deletions=
+(-)<br>
+&gt; &gt; &gt; &gt; &gt; <br>
+&gt; &gt; &gt; &gt; &gt; diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c<b=
+r>
+&gt; &gt; &gt; &gt; &gt; index 5f75cc3779..ef8315969c 100644<br>
+&gt; &gt; &gt; &gt; &gt; --- a/hw/arm/xen_arm.c<br>
+&gt; &gt; &gt; &gt; &gt; +++ b/hw/arm/xen_arm.c<br>
+&gt; &gt; &gt; &gt; &gt; @@ -173,7 +173,7 @@ static void xen_arm_init(Machi=
+neState *machine)<br>
+&gt; &gt; &gt; &gt; &gt;=C2=A0 <br>
+&gt; &gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 xen_init_ram(machine);<br>
+&gt; &gt; &gt; &gt; &gt;=C2=A0 <br>
+&gt; &gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 xen_register_ioreq(xam-&gt;state, m=
+achine-&gt;smp.cpus, &amp;xen_memory_listener);<br>
+&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 xen_register_ioreq(xam-&gt;state, m=
+achine-&gt;smp.max_cpus, &amp;xen_memory_listener);<br>
+&gt; &gt; &gt; &gt; &gt;=C2=A0 <br>
+&gt; &gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 xen_create_virtio_mmio_devices=
+(xam);<br>
+&gt; &gt; &gt; &gt; &gt;=C2=A0 <br>
+&gt; &gt; &gt; &gt; &gt; @@ -218,7 +218,8 @@ static void xen_arm_machine_cl=
+ass_init(ObjectClass *oc, void *data)<br>
+&gt; &gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 MachineClass *mc =3D MACHINE_C=
+LASS(oc);<br>
+&gt; &gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 mc-&gt;desc =3D &quot;Xen PVH =
+ARM machine&quot;;<br>
+&gt; &gt; &gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 mc-&gt;init =3D xen_arm_init;<=
+br>
+&gt; &gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 mc-&gt;max_cpus =3D 1;<br>
+&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 /* MAX number of vcpus supported by=
+ Xen.=C2=A0 */<br>
+&gt; &gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 mc-&gt;max_cpus =3D GUEST_MAX_VCPUS=
+;<br>
+&gt; &gt; &gt; &gt; <br>
+&gt; &gt; &gt; &gt; Will this cause allocations of data structures with 128=
+ elements?<br>
+&gt; &gt; &gt; &gt; Looking at hw/xen/xen-hvm-common.c:xen_do_ioreq_registe=
+r it seems<br>
+&gt; &gt; &gt; &gt; possible? Or hw/xen/xen-hvm-common.c:xen_do_ioreq_regis=
+ter is called<br>
+&gt; &gt; &gt; <br>
+&gt; &gt; &gt; Yes, in theory there&#39;s probably overhead with this but a=
+s you correctly<br>
+&gt; &gt; &gt; noted below, a PVH aware xl will set the max_cpus option to =
+a lower value.<br>
+&gt; &gt; &gt; <br>
+&gt; &gt; &gt; With a non-pvh aware xl, I was a little worried about the ov=
+erhead<br>
+&gt; &gt; &gt; but I couldn&#39;t see any visible slow-down on ARM neither =
+in boot or in network<br>
+&gt; &gt; &gt; performance (I didn&#39;t run very sophisticated benchmarks)=
+.<br>
+&gt; &gt;=C2=A0 <br>
+&gt; &gt; What do you mean by &quot;non-pvh aware xl&quot;? All useful vers=
+ions of xl<br>
+&gt; &gt; support pvh?<br>
+&gt; <br>
+&gt; <br>
+&gt; I mean an xl without our PVH patches merged.<br>
+&gt; xl in upstream doesn&#39;t know much about PVH yet.<br>
+&gt; Even for ARM, we&#39;re still carrying significant patches in our tree=
+.<br>
+<br>
+Oh I see. In that case, I don&#39;t think we need to support &quot;non-pvh =
+aware xl&quot;.<br>
+<br>
+<br>
+&gt; &gt; &gt; &gt; later on with the precise vCPU value which should be pr=
+ovided to QEMU<br>
+&gt; &gt; &gt; &gt; via the -smp command line option<br>
+&gt; &gt; &gt; &gt; (tools/libs/light/libxl_dm.c:libxl__build_device_model_=
+args_new)?<br>
+&gt; &gt; &gt; <br>
+&gt; &gt; &gt; Yes, a pvh aware xl will for example pass -smp 2,maxcpus=3D4=
+ based on<br>
+&gt; &gt; &gt; values from the xl.cfg. If the user doesn&#39;t set maxvcpus=
+ in xl.cfg, xl<br>
+&gt; &gt; &gt; will set maxvcpus to the same value as vcpus.<br>
+&gt; &gt; <br>
+&gt; &gt; OK good. In that case if this is just an initial value meant to b=
+e<br>
+&gt; &gt; overwritten, I think it is best to keep it as 1.<br>
+&gt; <br>
+&gt; Sorry but that won&#39;t work. I think the confusion here may be that<=
+br>
+&gt; it&#39;s easy to mix up mc-&gt;max_cpus and machine-&gt;smp.max_cpus, =
+these are<br>
+&gt; not the same. They have different purposes.<br>
+&gt; <br>
+&gt; I&#39;ll try to clarify the 3 values in play.<br>
+&gt; <br>
+&gt; machine-smp.cpus:<br>
+&gt; Number of guest vcpus active at boot.<br>
+&gt; Passed to QEMU via the -smp command-line option.<br>
+&gt; We don&#39;t use this value in QEMU&#39;s ARM PVH machines.<br>
+&gt; <br>
+&gt; machine-&gt;smp.max_cpus:<br>
+&gt; Max number of vcpus that the guest can use (equal or larger than machi=
+ne-smp.cpus).<br>
+&gt; Will be set by xl via the &quot;-smp X,maxcpus=3DY&quot; command-line =
+option to QEMU.<br>
+&gt; Taken from maxvcpus from xl.cfg, same as XEN_DMOP_nr_vcpus.<br>
+&gt; This is what we use for xen_register_ioreq().<br>
+&gt; <br>
+&gt; mc-&gt;max_cpus:<br>
+&gt; Absolute MAX in QEMU used to cap the -smp command-line options.<br>
+&gt; If xl tries to set -smp (machine-&gt;smp.max_cpus) larger than this, Q=
+EMU will bail out.<br>
+&gt; Used to setup xen_register_ioreq() ONLY if -smp maxcpus was NOT set (i=
+.e by a non PVH aware xl).<br>
+&gt; Cannot be 1 because that would limit QEMU to MAX 1 vcpu.<br>
+&gt; <br>
+&gt; I guess we could set mc-&gt;max_cpus to what XEN_DMOP_nr_vcpus returns=
+ but I&#39;ll<br>
+&gt; have to check if we can even issue that hypercall this early in QEMU s=
+ince<br>
+&gt; mc-&gt;max_cpus is setup before we even parse the machine options. We =
+may<br>
+&gt; not yet know what domid we&#39;re attaching to yet.<br>
+<br>
+If mc-&gt;max_cpus is the absolute max and it will not be used if -smp is<b=
+r>
+passed to QEMU, then I think it is OK to use GUEST_MAX_VCPUS<br></blockquot=
+e><div><br></div><div><br></div><div>Looking at this a little more. If user=
+s (xl) don&#39;t pass an -smp option we actually default to smp.max_cpus=3D=
+1.</div><div>So, another option is to simply remove the upper limit in QEMU=
+ (e.g we can set mc-&gt;max_cpus to something very large like UINT32_MAX).<=
+/div><div>That would avoid early hypercalls, avoid using GUEST_MAX_VCPUS an=
+d always let xl dictate the max_cpus value using the -smp cmdline option.=
+=C2=A0</div></div></div>
+
+--0000000000009d62ae061fca9383--
 
