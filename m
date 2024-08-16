@@ -4,82 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E764C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:35:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB61C531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 14:18:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sex6p-0003OY-0D; Fri, 16 Aug 2024 09:35:15 -0400
+	id 1sexld-0004oD-Eb; Fri, 16 Aug 2024 10:17:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sex6m-0003H0-S7
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:35:12 -0400
-Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sexlY-0004n7-Cg
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 10:17:20 -0400
+Received: from mail-lj1-x235.google.com ([2a00:1450:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sex6j-00016t-PE
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:35:12 -0400
-Received: by mail-vk1-xa33.google.com with SMTP id
- 71dfb90a1353d-4f8dbdbba98so1082258e0c.0
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:35:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sexlV-0007yJ-A9
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 10:17:20 -0400
+Received: by mail-lj1-x235.google.com with SMTP id
+ 38308e7fff4ca-2ef2cb7d562so25143741fa.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 07:17:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723815308; x=1724420108; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723817834; x=1724422634; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mF9cJRUo+GfHxvzd0gOKBxB/iMn4ag039sowfbSB+8E=;
- b=ePrrDXryFoN2FwRLd0sTWKYjPwGqp0a0U3AcOsJ6S7G5g8Axo3RcnBzRambPIQJlQh
- 1APpP/4zdhzNiNoe9lJLXsZhs13nWaHulrFSK1lQlyT/n5AIOS4ZIoVtX3r7dmA2GDaK
- LX9t7CFDSHw63iMjsb7Pjip3wUlQcDp9iQMP8V0DwJz1CzEAChRz+koCmHCSDNm6XS5N
- hr2ZPAv8XZSZktTS4ZYMDC96GmjngI5EdunegTtD0j2IFnBwJgznII3hzkZa6A5MBd9J
- MjFkxmiNhXX2YBw3b6mO7C1xtSL98vduxkv6P6b+aC1kI5FNis/G7QCM4T9cZLUOtq9/
- l6wA==
+ bh=tMYHt9G0BRgCr0uEeqglLAfx/JM3opmVw3/UKxEzYvw=;
+ b=vXwC0OlOSVtIcqE9jBPi8G20PXV389bgJveQ0nAMGwkMwOceK7zgUP3i8BYLhfZSDf
+ qgtgfZSJEl8H6RD3D54ddYl0iC6KMODy2GJlWHbfZS6K8urpDVOLQQLd7YDMwBzsQKBz
+ K9PTdPI6pFLqpVVZcPVvx9DemzMWcnA+HoPeSU41lSUW5SRDNkRaCGv2chLD/0NLN+IH
+ 1ohLpzWNl9GepaM66TGFFNtkXXzBTJ3G5qCNNJZ6WsE2iyHQ8V5MlvuUtzdS/LLB3GHy
+ WaG9/NbTeelFpD/R5IkMFkIpFuBDtSujRC4SDlIux62HJedBv7zvLp1V6QQPb9dROxtR
+ lZ7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723815308; x=1724420108;
+ d=1e100.net; s=20230601; t=1723817834; x=1724422634;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mF9cJRUo+GfHxvzd0gOKBxB/iMn4ag039sowfbSB+8E=;
- b=CxtnmOyK0JuPzQ/nGiPdGLwAKotnpdXx3YDZLjxmhT15/SlegSSbqNP9YCxib/geZY
- kbfLzitl6WOugw8OQYVTkiHcQc6Zkll9gBIHMoXWJsH35v0L3gQopzgPRjwjm6Jr+wq8
- +u8UVHFf1K8nOrI2nhjPPDt0Lcauzf/FXYMkhpP2dh8C+tdXuSyNOd5W3//Ph0tTUnj5
- 2xlCD1RQ7MrmfWeRH/S/ZZi/zaf44DwU19xRFvDZdOpEWzpyKEY3hNeg/lb44OFk4+6/
- S+DIOB5o9JQso1IXVXin3gdvDKs0Bqzdlf2CBK5/PkigUjTALIIyoCUGdYm8Gx18vOxI
- aPrw==
-X-Gm-Message-State: AOJu0Yx2/5ihI8cqs+eoW2YNfpF8aK+qFyHNCN4be49TPfxXfKCB99WY
- wMDebznwAcd8z8N271TkERaZ93FoppaEYKVGCBXMBtNm++Rkr7vtH/V5+xbEskGX+sfvnscIe6g
- xwMiZV+Fpxb4JIQBFnqP80WUKNPo=
-X-Google-Smtp-Source: AGHT+IHEaxIbrwhVz/FMiHdcU9miC1pt9fmZmZO3Y7YmSxwARr15Q2+N3kamjwbssU1eC2CSl/YE7vvjagH/e5mx0oI=
-X-Received: by 2002:a05:6122:3b06:b0:4f5:1f34:15d5 with SMTP id
- 71dfb90a1353d-4fc59134ccemr4133539e0c.5.1723815307735; Fri, 16 Aug 2024
- 06:35:07 -0700 (PDT)
+ bh=tMYHt9G0BRgCr0uEeqglLAfx/JM3opmVw3/UKxEzYvw=;
+ b=GVAzQa9BCU5fJGRANvKuWl0acdrWYtUlfqrQTik4YlIHRtOeB6rRW7h6sqqLWTBUAU
+ U3E0ctYfGhU4RUNS5LsN9Q9N2n7Nsn6al6to6W4TMI0ha8xIxJlOaHsgXMg12psTT3Wo
+ Bg7cC6XgIY0/kasP7x22xjbN0be3tmPFNEPhsFX2a95wc8TrxOTsG1UMdxmaxTSL1m7A
+ JdhG5z/1Zkdmy3BzMr7VSsrUz6B6IgetFjRlWXqJyMsX5CqZtfqfSkuVRYjrzjpm1jDX
+ r07xXLP3dXEUY/8m+nAtsYLwgBhhh8kwjrlJ7NZdCzVri/77M0SYdwt7+6KaenjZua7E
+ tC0g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbckgc4LDiLrNm358bh4qKsU+l2B15o/kqAOW8xRX1WH/nM3T+MN0RY+bXjIdtaFhRZEVyDDEK1u7FxgZI0im3qic/A34=
+X-Gm-Message-State: AOJu0Yyoo9nuHsA+ZxAhJiATHUxpK3nABpH/mXH2kEEL2gLXpl7V29Yq
+ xiT1lYkaiqbOFXZGfeHzvW7Q3CCF3EOV/OkZkxE0JjslQsEwEfi7P9dSNZEAct/srLSgUZjXLKW
+ /pOxJnBb9IptF60fXYP90raUQzrAk98i8veulUw==
+X-Google-Smtp-Source: AGHT+IFucfmgbSScfjVPj/rRmOxPaOazQrk3+hSn3k99gmg211DY/z3HIxQ8h9KerCUvu0tZ4iMf/pWeIqHJMY4suyU=
+X-Received: by 2002:a2e:e02:0:b0:2ef:1ecc:cf5a with SMTP id
+ 38308e7fff4ca-2f3be5b1636mr20090131fa.26.1723817833984; Fri, 16 Aug 2024
+ 07:17:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240810164502.19693-1-dorjoychy111@gmail.com>
- <20240810164502.19693-5-dorjoychy111@gmail.com> <ZroXDY3YulpB4SCt@redhat.com>
- <CAFfO_h48q9Lkt1BmtoPxtZ1a8HJsoQCTTdBMTFkB568+v6B0Sw@mail.gmail.com>
- <Zr9M0BqDEdF5D5xJ@redhat.com>
-In-Reply-To: <Zr9M0BqDEdF5D5xJ@redhat.com>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Fri, 16 Aug 2024 19:34:59 +0600
-Message-ID: <CAFfO_h40N3n-uErpb9AXAi_hEqW7-UaD2ZSHFYO0BKfpw7dBOg@mail.gmail.com>
-Subject: Re: [PATCH v3 4/5] machine/nitro-enclave: Add built-in Nitro Secure
- Module device
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, graf@amazon.com, agraf@csgraf.de, 
- stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com, 
- richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com, 
- marcel.apfelbaum@gmail.com, philmd@linaro.org
+References: <20240814233645.944327-1-pierrick.bouvier@linaro.org>
+ <20240814233645.944327-3-pierrick.bouvier@linaro.org>
+ <491b34f6-a81a-4793-984c-6a588910d0e1@redhat.com>
+ <87ttfm2em2.fsf@draig.linaro.org>
+ <557ad237-9a46-4dff-9177-bd4b2108d26c@linaro.org>
+ <87h6bk3a9k.fsf@draig.linaro.org>
+In-Reply-To: <87h6bk3a9k.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 16 Aug 2024 15:17:02 +0100
+Message-ID: <CAFEAcA9ROs_a=Qb6-bbwDTR646CaXLN1XG6uZEnPk6oU-k0xjA@mail.gmail.com>
+Subject: Re: [PATCH 2/6] contrib/plugins/cache: fix warning when compiling on
+ 32bits host
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, Mahmoud Mandour <ma.mandourr@gmail.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
- envelope-from=dorjoychy111@gmail.com; helo=mail-vk1-xa33.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::235;
+ envelope-from=peter.maydell@linaro.org; helo=mail-lj1-x235.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,253 +104,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 16, 2024 at 6:58=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
+On Fri, 16 Aug 2024 at 13:48, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
+te:
 >
-> On Fri, Aug 16, 2024 at 06:50:34PM +0600, Dorjoy Chowdhury wrote:
-> > Hi Daniel,
+> Richard Henderson <richard.henderson@linaro.org> writes:
+>
+> > On 8/15/24 21:46, Alex Benn=C3=A9e wrote:
+> >> Thomas Huth <thuth@redhat.com> writes:
+> >>
+> >>> On 15/08/2024 01.36, Pierrick Bouvier wrote:
+> >>>> Found on debian stable (i386).
+> >>>> ../contrib/plugins/cache.c: In function 'vcpu_tb_trans':
+> >>>> ../contrib/plugins/cache.c:477:30: error: cast from pointer to integ=
+er of different size [-Werror=3Dpointer-to-int-cast]
+> >>>>     477 |             effective_addr =3D (uint64_t) qemu_plugin_insn=
+_haddr(insn);
+> >>>>         |
+> >>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> >>>> ---
+> >>>>    contrib/plugins/cache.c | 6 +++---
+> >>>>    1 file changed, 3 insertions(+), 3 deletions(-)
+> >>>> diff --git a/contrib/plugins/cache.c b/contrib/plugins/cache.c
+> >>>> index 512ef6776b7..82ed734d6d4 100644
+> >>>> --- a/contrib/plugins/cache.c
+> >>>> +++ b/contrib/plugins/cache.c
+> >>>> @@ -471,12 +471,12 @@ static void vcpu_tb_trans(qemu_plugin_id_t id,=
+ struct qemu_plugin_tb *tb)
+> >>>>        n_insns =3D qemu_plugin_tb_n_insns(tb);
+> >>>>        for (i =3D 0; i < n_insns; i++) {
+> >>>>            struct qemu_plugin_insn *insn =3D qemu_plugin_tb_get_insn=
+(tb, i);
+> >>>> -        uint64_t effective_addr;
+> >>>> +        uintptr_t effective_addr;
+> >>>>              if (sys) {
+> >>>> -            effective_addr =3D (uint64_t) qemu_plugin_insn_haddr(in=
+sn);
+> >>>> +            effective_addr =3D (uintptr_t) qemu_plugin_insn_haddr(i=
+nsn);
+> >>>>            } else {
+> >>>> -            effective_addr =3D (uint64_t) qemu_plugin_insn_vaddr(in=
+sn);
+> >>>> +            effective_addr =3D (uintptr_t)
+> >>>> qemu_plugin_insn_vaddr(insn);
+> >>>>            }
+> >>>
+> >>> Is this the right fix? I assume effective_addr stores an address of
+> >>> the guest, so if the guest is 64-bit and the host is 32-bit, you now
+> >>> lose the upper bits of the address...?
+> >> I think the problem is higher up, it was a mistake to have:
+> >>    void *qemu_plugin_insn_haddr(const struct qemu_plugin_insn
+> >> *insn);
+> >> return *void.
 > >
-> > On Mon, Aug 12, 2024 at 8:07=E2=80=AFPM Daniel P. Berrang=C3=A9 <berran=
-ge@redhat.com> wrote:
-> > >
-> > > On Sat, Aug 10, 2024 at 10:45:01PM +0600, Dorjoy Chowdhury wrote:
-> > > > AWS Nitro Enclaves have built-in Nitro Secure Module (NSM) device w=
-hich
-> > > > is used for stripped down TPM functionality like attestation. This =
-commit
-> > > > adds the built-in NSM device in the nitro-enclave machine type.
-> > > >
-> > > > In Nitro Enclaves, all the PCRs start in a known zero state and the=
- first
-> > > > 16 PCRs are locked from boot and reserved. The PCR0, PCR1, PCR2 and=
- PCR8
-> > > > contain the SHA384 hashes related to the EIF file used to boot the
-> > > > VM for validation.
-> > > >
-> > > > A new optional nitro-enclave machine option 'id' has been added whi=
-ch will
-> > > > be the enclave identifier reflected in the module-id of the NSM dev=
-ice.
-> > > > Otherwise, the device will have a default id set.
-> > > >
-> > > > Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> > > > ---
-> > > >  hw/core/eif.c                   | 205 ++++++++++++++++++++++++++++=
-+++-
-> > > >  hw/core/eif.h                   |   5 +-
-> > > >  hw/core/meson.build             |   4 +-
-> > > >  hw/i386/Kconfig                 |   1 +
-> > > >  hw/i386/nitro_enclave.c         |  85 ++++++++++++-
-> > > >  include/hw/i386/nitro_enclave.h |  19 +++
-> > > >  6 files changed, 310 insertions(+), 9 deletions(-)
-> > > >
-> > > > diff --git a/hw/core/eif.c b/hw/core/eif.c
-> > > > index 5558879a96..d2c65668ef 100644
-> > > > --- a/hw/core/eif.c
-> > > > +++ b/hw/core/eif.c
-> > > > @@ -12,6 +12,9 @@
-> > > >  #include "qemu/bswap.h"
-> > > >  #include "qapi/error.h"
-> > > >  #include <zlib.h> /* for crc32 */
-> > > > +#include <cbor.h>
-> > > > +#include <gnutls/gnutls.h>
-> > > > +#include <gnutls/x509.h>
-> > > >
-> > > >  #include "hw/core/eif.h"
-> > > >
-> > >
-> > > > @@ -269,6 +284,125 @@ static bool read_eif_ramdisk(FILE *eif, FILE =
-*initrd, uint64_t size,
-> > > >      return false;
-> > > >  }
-> > > >
-> > > > +static bool get_fingerprint_sha384_from_cert(uint8_t *cert, size_t=
- size,
-> > > > +                                             uint8_t *sha384, Erro=
-r **errp)
-> > > > +{
-> > > > +    gnutls_x509_crt_t crt;
-> > > > +    size_t hash_size =3D 48;
-> > > > +    gnutls_datum_t datum =3D {.data =3D cert, .size =3D size};
-> > > > +
-> > > > +    gnutls_global_init();
-> > > > +    gnutls_x509_crt_init(&crt);
-> > > > +
-> > > > +    if (gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM) !=
-=3D 0) {
-> > > > +        error_setg(errp, "Failed to import certificate");
-> > > > +        goto cleanup;
-> > > > +    }
-> > > > +
-> > > > +    if (gnutls_x509_crt_get_fingerprint(crt, GNUTLS_DIG_SHA384, sh=
-a384,
-> > > > +                                        &hash_size) !=3D 0) {
-> > > > +        error_setg(errp, "Failed to compute SHA384 fingerprint");
-> > > > +        goto cleanup;
-> > > > +    }
-> > > > +
-> > > > +    return true;
-> > > > +
-> > > > + cleanup:
-> > > > +    gnutls_x509_crt_deinit(crt);
-> > > > +    gnutls_global_deinit();
-> > > > +    return false;
-> > > > +}
-> > >
-> > > I'd suggest this go into  qcrypto/x509-utils.c & include/qcrypto/x509=
--utils.h,
-> > > as:
-> > >
-> > >     int qcrypto_get_x509_cert_fingerprint(uint8_t *cert,
-> > >                                           size_t size,
-> > >                                           QCryptoHashAlgorith hash,
-> > >                                           Error **errp);
-> > >
-> > > there's no need to be calling gnutls_global_init() / deinit() either.
-> > >
-> > >
-> > > > @@ -299,7 +433,9 @@ static long get_file_size(FILE *f, Error **errp=
-)
-> > > >   */
-> > > >  bool read_eif_file(const char *eif_path, const char *machine_initr=
-d,
-> > > >                     char **kernel_path, char **initrd_path, char **=
-cmdline,
-> > > > -                   Error **errp)
-> > > > +                   uint8_t *image_sha384, uint8_t *bootstrap_sha38=
-4,
-> > > > +                   uint8_t *app_sha384, uint8_t *fingerprint_sha38=
-4,
-> > > > +                   bool *signature_found, Error **errp)
-> > > >  {
-> > > >      FILE *f =3D NULL;
-> > > >      FILE *machine_initrd_f =3D NULL;
-> > > > @@ -308,9 +444,33 @@ bool read_eif_file(const char *eif_path, const=
- char *machine_initrd,
-> > > >      uint32_t crc =3D 0;
-> > > >      EifHeader eif_header;
-> > > >      bool seen_sections[EIF_SECTION_MAX] =3D {false};
-> > > > -
-> > > > +    /* kernel + ramdisks + cmdline sha384 hash */
-> > > > +    GChecksum *image_hasher =3D NULL;
-> > > > +    /* kernel + boot ramdisk + cmdline sha384 hash */
-> > > > +    GChecksum *bootstrap_hasher =3D NULL;
-> > > > +    /* application ramdisk(s) hash */
-> > > > +    GChecksum *app_hasher =3D NULL;
-> > > > +    size_t digest_len;
-> > > > +
-> > > > +    *signature_found =3D false;
-> > > >      *kernel_path =3D *initrd_path =3D *cmdline =3D NULL;
-> > > >
-> > > > +    image_hasher =3D g_checksum_new(G_CHECKSUM_SHA384);
-> > > > +    if (image_hasher =3D=3D NULL) {
-> > > > +        error_setg(errp, "Failed to initialize sha384 hash for ima=
-ge");
-> > > > +        goto cleanup;
-> > > > +    }
-> > > > +    bootstrap_hasher =3D g_checksum_new(G_CHECKSUM_SHA384);
-> > > > +    if (bootstrap_hasher =3D=3D NULL) {
-> > > > +        error_setg(errp, "Failed to initialize sha384 hash for boo=
-tstrap");
-> > > > +        goto cleanup;
-> > > > +    }
-> > > > +    app_hasher =3D g_checksum_new(G_CHECKSUM_SHA384);
-> > > > +    if (app_hasher =3D=3D NULL) {
-> > > > +        error_setg(errp, "Failed to initialize sha384 hash for app=
-");
-> > > > +        goto cleanup;
-> > > > +    }
-> > >
-> > > Don't use GChecksum APIs please, use the qcrypto hash APIs instead,
-> > > as we need all code to be using the designated QEMU crypto backend.
-> > >
-> >
-> > Thanks for the reviews. I was looking into replacing the GChecksum
-> > uses with qcrypto apis and was able to do it in the extendPCR function
-> > but I need some help with how I can do this in the eif.c file. For
-> > example, the "image_hash" needs to be a SHA384 hash of the kernel,
-> > cmdline, ramdisks sections' data as they appear in the order that is
-> > in the EIF file. Using GChecksum it was easy as I was able to just
-> > pass the hashers to the "read_eif_kernel", "read_eif_ramdisk" etc
-> > functions and call "update" on them. But the qcrypto apis are
-> > stateless i.e., I would need to pass all the buffers in a single api
-> > call so it wouldn't work right now out of the box. Do you have any
-> > suggestions how I should modify/create qcrypto apis so that I can
-> > easily do this (considering that I would need to implement for
-> > different qcrypto backends)? Thanks!
+> > No, not a bug.  This is a host addr, right there in the name.
+> > Returning uint64_t would be a bug.
 >
-> Looking at the read_eif_* methods:
+> No it's:
 >
-> @ -213,6 +218,8 @@ static bool read_eif_kernel(FILE *f, uint64_t size, ch=
-ar **kernel_path,
->      }
+>  * Returns: hardware (physical) target address of instruction
 >
->      *crc =3D crc32(*crc, kernel, size);
-> +    g_checksum_update(image_hasher, kernel, size);
-> +    g_checksum_update(bootstrap_hasher, kernel, size);
->      g_free(kernel);
->      fclose(tmp_file);
->
-> @@ -230,6 +237,8 @@ static bool read_eif_kernel(FILE *f, uint64_t size, c=
-har **kernel_path,
->  }
->
->  static bool read_eif_cmdline(FILE *f, uint64_t size, char *cmdline,
-> +                             GChecksum *image_hasher,
-> +                             GChecksum *bootstrap_hasher,
->                               uint32_t *crc, Error **errp)
->  {
->      size_t got =3D fread(cmdline, 1, size, f);
-> @@ -239,10 +248,14 @@ static bool read_eif_cmdline(FILE *f, uint64_t size=
-, char *cmdline,
->      }
->
->      *crc =3D crc32(*crc, (uint8_t *)cmdline, size);
-> +    g_checksum_update(image_hasher, (uint8_t *)cmdline, size);
-> +    g_checksum_update(bootstrap_hasher, (uint8_t *)cmdline, size);
->      return true;
->  }
->
->  static bool read_eif_ramdisk(FILE *eif, FILE *initrd, uint64_t size,
-> +                             GChecksum *image_hasher,
-> +                             GChecksum *bootstrap_or_app_hasher,
->                               uint32_t *crc, Error **errp)
->  {
->      size_t got;
-> @@ -261,6 +274,8 @@ static bool read_eif_ramdisk(FILE *eif, FILE *initrd,=
- uint64_t size,
->      }
->
->      *crc =3D crc32(*crc, ramdisk, size);
-> +    g_checksum_update(image_hasher, ramdisk, size);
-> +    g_checksum_update(bootstrap_or_app_hasher, ramdisk, size);
->      g_free(ramdisk);
->      return true;
->
->
-> For the kernel + ramdisk, these methods are freeing the buffer.
-> For the cmdline, the pointer is held by the caller.
->
-> I'd suggest that read_eif_kernel+ramddisk are changed to return
-> the data pointer instead of free'ing it.
->
-> The caller can then stash the kernl+cmdline+ramdisk into an iovec
-> and calc the hash in a single stateless operation.
->
->
->
-> If you really don't want to do that, then you'll have to wait for
-> this series to be finalized & merged next dev cycle:
->
->   https://lists.nongnu.org/archive/html/qemu-devel/2024-08/msg01173.html
->
-> It is getting close to ready, so might not be too long, but I can't
-> guarantee a timeframe.
->
+> I was kinda assuming that was what the underlying host_addr[] fields in
+> DisasContextDB are. Are we just saying its QEMU's vaddr of where the
+> guest physical address is mapped into QEMU?
 
-Thanks Daniel! It looks like returning the buffers is the way to move
-forward for now.
+DisasContextBase::host_addr[] are host (virtual) addresses,
+i.e. pointers you can dereference in C code in QEMU.
+The comment in qemu_plugin_insn_haddr() says:
 
-Regards,
-Dorjoy
+     * ??? The return value is not intended for use of host memory,
+     * but as a proxy for address space and physical address.
+
+This seems pretty QEMU-implementation-internal to me and
+not something we should be allowing to escape into the
+plugin API. What, per the comment, we ought to be exposing is
+the (address space, guest physaddr) tuple, which we
+presumably don't conveniently have to hand here.
+
+thanks
+-- PMM
 
