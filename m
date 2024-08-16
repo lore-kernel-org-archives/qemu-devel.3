@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47D09C531DF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DA92C5320D
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 15:43:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sez6q-0003x1-Nd; Fri, 16 Aug 2024 11:43:24 -0400
+	id 1sez6W-0003k2-GC; Fri, 16 Aug 2024 11:43:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sez6n-0003uN-2B
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:43:22 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1sez6V-0003j8-3g
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:43:03 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sez6j-0002hi-UC
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:43:20 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-201f2b7fe0dso15113645ad.1
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 08:43:17 -0700 (PDT)
+ id 1sez6S-0002fg-SJ
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:43:02 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-201fbd0d7c2so13403435ad.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 08:42:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723822996; x=1724427796; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1723822978; x=1724427778; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=wyG8z0eoFNGOVxPxaZRTcOhILkswlyzHSY4DySLuGXg=;
- b=kMCr+Ni0HBKcbpcoVoZ9xN3WVn4YpOgOsONzjr3T++SLW21I4Y98tzm/C19FtBpMC+
- QHGDN9Px1IPCQ49XpooKIJz0CtZFv0h2JCxiI0oX9mdmNrZVDnXYUOteg2HMA6yJ3ZNl
- NlLq7aWJFi08pyvlTcsncR4pjdVa8tiI/CeBzX/9n+0gnoEraKIBFZCAfneBYS7gCTvO
- GVyRAM58ZYXFZ3sfGrxZ++L+YNLzdotsOqi8Iqgh7ooM5ZPhf90WLt7N2TMmcfnHXtQj
- c0D8SlTSsjBTH9vBUDzYFsu9G5rLkEFDIKHuskhBmsmRPibPP8uuEV9lUNiEo1lDThiG
- 7FSA==
+ bh=QIZ/A5rDlf46NJXJ4OOPIYj2YAtdaJskFshUubpzcA4=;
+ b=YS7V86BD3iKY7IJuUdVGXAITvU+QxvHE3D59Ge1QTUb5REs/yDoUXDGXE0lYckgaXJ
+ 0rYADoHac8rtKdge44zcx1S/MoUcs6uv4kaJD8yuo79Y1fVESQwtQEow4AVYmucx0v3T
+ jfbnXUL02UmJ94Xhx9j21tqz6f2CUot1Jt656y/bNlNJ9UXET/WyfBDcePYLjyab2mmY
+ 7Ivw7MtK7Jz+XMRRN6TKqieV5Hsh/P06jIeqdrVL1vLwXzK5PAdEeYCAQhg4DRZ64piz
+ m7wiaXD/oXyxTTlOy30rGkzXnGf/FMDTW4qjfK1xiarAK//S1D7YbQTlabrILoFTbI0a
+ Q/5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723822996; x=1724427796;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1723822978; x=1724427778;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wyG8z0eoFNGOVxPxaZRTcOhILkswlyzHSY4DySLuGXg=;
- b=TY+F3VRbgdDMZQ4g0x2CkSwN89fN+ZWa8fvcHKN+MAlB0B6vlonXhmOPIoxZb21UtA
- V176D8yPOAwSrkZKKKRVctMUuLZ7IHMZhthusMDQHXtfKW85qOOrRidaVCJ06wp9AkDC
- J10+OVINw+x6kDw9wOeTXsQQ4DlvNM5s/K+WiaGsQsJAmk0njk8ecnEc+OlWCTuIDz0K
- m8E1FP7I5Rw0R5sAVJiH76DUKpENHmtv6T4jVjSqZNCvETUepUET/5Aw9htLe0g0d1+9
- 93TSQBzuHNEuBbQT8q2/LtiKczErsTSdXGD5g4Yy5lbcddNbeC1iizStDWHmOgiG9ohN
- avnA==
-X-Gm-Message-State: AOJu0YzT5/VUMOYzwZLR1lcFXigAUaNEhKPh8D14NdB2KlZDUyjl8P5c
- +tM8b7rp85rJ8X1OCVJxo1hSjMrB5mS7enFHcgYnFof+IPFtVtP9bIXLWk0B5L8=
-X-Google-Smtp-Source: AGHT+IF1ebEGZalPm/9T8fpiZFdX6G7AouBsw8U/hb8p/Bpeb8NjH4zzViECOPTwZXPSAc59UloLQQ==
-X-Received: by 2002:a17:903:1ce:b0:1ff:1bd:7e61 with SMTP id
- d9443c01a7336-20203e86a86mr36591235ad.14.1723822996425; 
- Fri, 16 Aug 2024 08:43:16 -0700 (PDT)
+ bh=QIZ/A5rDlf46NJXJ4OOPIYj2YAtdaJskFshUubpzcA4=;
+ b=Mddm4u7GxBGJbiidM7H4v+WpXUsb2QhEmLzNI4KLGqP4qlNUV0rQe7iwm6w8HllBoa
+ 2TQEDj5Lsdt+IAGALAIs79JtbGffO0rL+f9uu6SSXKj2g0FeB9fsl3EqtTCNq9IHQOoW
+ Prp18xP1iPqkZwQX9oGh727mTg+PVbpDW41pG7JweTe6m5AFsdbjYX6LNu+6mhkVCRJN
+ mJyTrAv16g6v4u0zXqIrOBpPM8bkT1NHgEU/NGcTVPfsENcrc/BE6Hp+lUrK+kkrUDv2
+ 1NUwzf/XsnlnFA9YhlXkm7YLgLW+EGCICptsiY+Vhxw2IUCwgosPeh9GmKT5f6Vnrg2a
+ 2HAw==
+X-Gm-Message-State: AOJu0YxJut+zKVLX8uer2NGvSUcAz2ncZ6LnQCcS6Z/wOHGiKQSVT48K
+ b/AH6PcTgF2qAmNw1LNcUz721i8aUvB/E068VLL+Ax5Hlcsqs5gBJ1btx5OD8rY=
+X-Google-Smtp-Source: AGHT+IGQTpefNapHRpAgx2lXKZeL2OVnz+Wr7QolwHolkF698Tkd+OUX3fmbn7XHZQAbrNkmuNh3kQ==
+X-Received: by 2002:a17:902:d48b:b0:200:8c4d:9120 with SMTP id
+ d9443c01a7336-20203ee7920mr46255885ad.39.1723822978129; 
+ Fri, 16 Aug 2024 08:42:58 -0700 (PDT)
 Received: from ?IPV6:2604:3d08:9384:1d00::b861? ([2604:3d08:9384:1d00::b861])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201f031970asm27053635ad.63.2024.08.16.08.43.14
+ d9443c01a7336-201f038a3d7sm26943685ad.186.2024.08.16.08.42.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Aug 2024 08:43:15 -0700 (PDT)
-Message-ID: <179989e8-0136-49bd-883c-d188a38fd9ad@linaro.org>
-Date: Fri, 16 Aug 2024 08:43:14 -0700
+ Fri, 16 Aug 2024 08:42:57 -0700 (PDT)
+Message-ID: <6c0077f8-ce8b-438e-9c3e-9a97fb074f7d@linaro.org>
+Date: Fri, 16 Aug 2024 08:42:56 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] contrib/plugins: Add a plugin to generate basic block
+Subject: Re: [PATCH v2] contrib/plugins: Add a plugin to generate basic block
  vectors
-Content-Language: en-US
 To: Akihiko Odaki <akihiko.odaki@daynix.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
@@ -75,13 +74,17 @@ To: Akihiko Odaki <akihiko.odaki@daynix.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>,
  Beraldo Leal <bleal@redhat.com>
 Cc: qemu-devel@nongnu.org, Yotaro Nada <yotaro.nada@gmail.com>
-References: <20240816-bb-v3-1-b9aa4a5c75c5@daynix.com>
+References: <20240815-bb-v2-1-6222ee98297b@daynix.com>
+ <8e027dfd-4fa7-4eab-852a-6f9d649c4b53@linaro.org>
+ <f6f9f742-3213-436c-8f73-d4f32da5d7d2@daynix.com>
+ <748eeda6-0400-4cbb-9322-57e092afaa0a@daynix.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20240816-bb-v3-1-b9aa4a5c75c5@daynix.com>
+Content-Language: en-US
+In-Reply-To: <748eeda6-0400-4cbb-9322-57e092afaa0a@daynix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -104,267 +107,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/15/24 23:05, Akihiko Odaki wrote:
-> SimPoint is a widely used tool to find the ideal microarchitecture
-> simulation points so Valgrind[2] and Pin[3] support generating basic
-> block vectors for use with them. Let's add a corresponding plugin to
-> QEMU too.
-> 
-> Note that this plugin has a different goal with tests/plugin/bb.c.
-> 
-> This plugin creates a vector for each constant interval instead of
-> counting the execution of basic blocks for the entire run and able to
-> describe the change of execution behavior. Its output is also
-> syntactically simple and better suited for parsing, while the output of
-> tests/plugin/bb.c is more human-readable.
-> 
-> [1] https://cseweb.ucsd.edu/~calder/simpoint/
-> [2] https://valgrind.org/docs/manual/bbv-manual.html
-> [3] https://www.intel.com/content/www/us/en/developer/articles/tool/pin-a-dynamic-binary-instrumentation-tool.html
-> 
-> Signed-off-by: Yotaro Nada <yotaro.nada@gmail.com>
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
-> Changes in v3:
-> - Protect the entire operation with bbs in vcpu_tb_trans().
-> - Reduce memory allocations.
-> - Link to v2: https://lore.kernel.org/r/20240815-bb-v2-1-6222ee98297b@daynix.com
-> 
-> Changes in v2:
-> - Merged files variable into the global scoreboard.
-> - Added a lock for bbs.
-> - Added a summary to contrib/plugins/bbv.c.
-> - Rebased.
-> - Link to v1: https://lore.kernel.org/r/20240813-bb-v1-1-effbb77daebf@daynix.com
-> ---
->   docs/about/emulation.rst |  30 +++++++++
->   contrib/plugins/bbv.c    | 158 +++++++++++++++++++++++++++++++++++++++++++++++
->   contrib/plugins/Makefile |   1 +
->   3 files changed, 189 insertions(+)
-> 
-> diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-> index c03033e4e956..72d7846ab6f8 100644
-> --- a/docs/about/emulation.rst
-> +++ b/docs/about/emulation.rst
-> @@ -381,6 +381,36 @@ run::
->     160          1      0
->     135          1      0
->   
-> +Basic Block Vectors
-> +...................
-> +
-> +``contrib/plugins/bbv.c``
-> +
-> +The bbv plugin allows you to generate basic block vectors for use with the
-> +`SimPoint <https://cseweb.ucsd.edu/~calder/simpoint/>`__ analysis tool.
-> +
-> +.. list-table:: Basic block vectors arguments
-> +  :widths: 20 80
-> +  :header-rows: 1
-> +
-> +  * - Option
-> +    - Description
-> +  * - interval=N
-> +    - The interval to generate a basic block vector specified by the number of
-> +      instructions (Default: N = 100000000)
-> +  * - outfile=PATH
-> +    - The path to output files.
-> +      It will be suffixed with ``.N.bb`` where ``N`` is a vCPU index.
-> +
-> +Example::
-> +
-> +  $ qemu-aarch64 \
-> +    -plugin contrib/plugins/libbbv.so,interval=100,outfile=sha1 \
-> +    tests/tcg/aarch64-linux-user/sha1
-> +  SHA1=15dd99a1991e0b3826fede3deffc1feba42278e6
-> +  $ du sha1.0.bb
-> +  23128   sha1.0.bb
-> +
->   Hot Blocks
->   ..........
->   
-> diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
-> new file mode 100644
-> index 000000000000..a5256517dd44
-> --- /dev/null
-> +++ b/contrib/plugins/bbv.c
-> @@ -0,0 +1,158 @@
-> +/*
-> + * Generate basic block vectors for use with the SimPoint analysis tool.
-> + * SimPoint: https://cseweb.ucsd.edu/~calder/simpoint/
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include <stdio.h>
-> +#include <glib.h>
-> +
-> +#include <qemu-plugin.h>
-> +
-> +typedef struct Bb {
-> +    uint64_t vaddr;
-> +    struct qemu_plugin_scoreboard *count;
-> +    unsigned int index;
-> +} Bb;
-> +
-> +typedef struct Vcpu {
-> +    uint64_t count;
-> +    FILE *file;
-> +} Vcpu;
-> +
-> +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-> +static GHashTable *bbs;
-> +static GRWLock bbs_lock;
-> +static char *filename;
-> +static struct qemu_plugin_scoreboard *vcpus;
-> +static uint64_t interval = 100000000;
-> +
-> +static void plugin_exit(qemu_plugin_id_t id, void *p)
-> +{
-> +    for (int i = 0; i < qemu_plugin_num_vcpus(); i++) {
-> +        fclose(((Vcpu *)qemu_plugin_scoreboard_find(vcpus, i))->file);
-> +    }
-> +
-> +    g_hash_table_unref(bbs);
-> +    g_free(filename);
-> +    qemu_plugin_scoreboard_free(vcpus);
-> +}
-> +
-> +static void free_bb(void *data)
-> +{
-> +    qemu_plugin_scoreboard_free(((Bb *)data)->count);
-> +    g_free(data);
-> +}
-> +
-> +static qemu_plugin_u64 count_u64(void)
-> +{
-> +    return qemu_plugin_scoreboard_u64_in_struct(vcpus, Vcpu, count);
-> +}
-> +
-> +static qemu_plugin_u64 bb_count_u64(Bb *bb)
-> +{
-> +    return qemu_plugin_scoreboard_u64(bb->count);
-> +}
-> +
-> +static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
-> +{
-> +    g_autofree gchar *vcpu_filename = NULL;
-> +    Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
-> +
-> +    vcpu_filename = g_strdup_printf("%s.%u.bb", filename, vcpu_index);
-> +    vcpu->file = fopen(vcpu_filename, "w");
-> +}
-> +
-> +static void vcpu_interval_exec(unsigned int vcpu_index, void *udata)
-> +{
-> +    Vcpu *vcpu = qemu_plugin_scoreboard_find(vcpus, vcpu_index);
-> +    GHashTableIter iter;
-> +    void *value;
-> +
-> +    if (!vcpu->file) {
-> +        return;
-> +    }
-> +
-> +    vcpu->count -= interval;
-> +
-> +    fputc('T', vcpu->file);
-> +
-> +    g_rw_lock_reader_lock(&bbs_lock);
-> +    g_hash_table_iter_init(&iter, bbs);
-> +
-> +    while (g_hash_table_iter_next(&iter, NULL, &value)) {
-> +        Bb *bb = value;
-> +        uint64_t bb_count = qemu_plugin_u64_get(bb_count_u64(bb), vcpu_index);
-> +
-> +        if (!bb_count) {
-> +            continue;
-> +        }
-> +
-> +        fprintf(vcpu->file, ":%u:%" PRIu64 " ", bb->index, bb_count);
-> +        qemu_plugin_u64_set(bb_count_u64(bb), vcpu_index, 0);
-> +    }
-> +
-> +    g_rw_lock_reader_unlock(&bbs_lock);
-> +    fputc('\n', vcpu->file);
-> +}
-> +
-> +static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-> +{
-> +    uint64_t n_insns = qemu_plugin_tb_n_insns(tb);
-> +    uint64_t vaddr = qemu_plugin_tb_vaddr(tb);
-> +    Bb *bb;
-> +
-> +    g_rw_lock_writer_lock(&bbs_lock);
-> +    bb = g_hash_table_lookup(bbs, &vaddr);
-> +    if (!bb) {
-> +        bb = g_new(Bb, 1);
-> +        bb->vaddr = vaddr;
-> +        bb->count = qemu_plugin_scoreboard_new(sizeof(uint64_t));
-> +        bb->index = g_hash_table_size(bbs);
-> +        g_hash_table_replace(bbs, &bb->vaddr, bb);
-> +    }
-> +    g_rw_lock_writer_unlock(&bbs_lock);
-> +
-> +    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
-> +        tb, QEMU_PLUGIN_INLINE_ADD_U64, count_u64(), n_insns);
-> +
-> +    qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
-> +        tb, QEMU_PLUGIN_INLINE_ADD_U64, bb_count_u64(bb), n_insns);
-> +
-> +    qemu_plugin_register_vcpu_tb_exec_cond_cb(
-> +        tb, vcpu_interval_exec, QEMU_PLUGIN_CB_NO_REGS,
-> +        QEMU_PLUGIN_COND_GE, count_u64(), interval, NULL);
-> +}
-> +
-> +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-> +                                           const qemu_info_t *info,
-> +                                           int argc, char **argv)
-> +{
-> +    for (int i = 0; i < argc; i++) {
-> +        char *opt = argv[i];
-> +        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-> +        if (g_strcmp0(tokens[0], "interval") == 0) {
-> +            interval = g_ascii_strtoull(tokens[1], NULL, 10);
-> +        } else if (g_strcmp0(tokens[0], "outfile") == 0) {
-> +            filename = tokens[1];
-> +            tokens[1] = NULL;
-> +        } else {
-> +            fprintf(stderr, "option parsing failed: %s\n", opt);
-> +            return -1;
-> +        }
-> +    }
-> +
-> +    if (!filename) {
-> +        fputs("outfile unspecified\n", stderr);
-> +        return -1;
-> +    }
-> +
-> +    bbs = g_hash_table_new_full(g_int64_hash, g_int64_equal, NULL, free_bb);
-> +    vcpus = qemu_plugin_scoreboard_new(sizeof(Vcpu));
-> +    qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
-> +    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
-> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-> +
-> +    return 0;
-> +}
-> diff --git a/contrib/plugins/Makefile b/contrib/plugins/Makefile
-> index edf256cd9d11..6936591b1022 100644
-> --- a/contrib/plugins/Makefile
-> +++ b/contrib/plugins/Makefile
-> @@ -13,6 +13,7 @@ TOP_SRC_PATH = $(SRC_PATH)/../..
->   VPATH += $(SRC_PATH)
->   
->   NAMES :=
-> +NAMES += bbv
->   NAMES += execlog
->   NAMES += hotblocks
->   NAMES += hotpages
-> 
-> ---
-> base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
-> change-id: 20240618-bb-93387ddf765b
-> 
-> Best regards,
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+T24gOC8xNS8yNCAyMjoyOCwgQWtpaGlrbyBPZGFraSB3cm90ZToNCj4gT24gMjAyNC8wOC8x
+NiAxNDoxMywgQWtpaGlrbyBPZGFraSB3cm90ZToNCj4+IE9uIDIwMjQvMDgvMTUgMTQ6NDgs
+IFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+Pj4gT24gOC8xNC8yNCAyMDowNCwgQWtpaGlr
+byBPZGFraSB3cm90ZToNCj4+Pj4gU2ltUG9pbnQgaXMgYSB3aWRlbHkgdXNlZCB0b29sIHRv
+IGZpbmQgdGhlIGlkZWFsIG1pY3JvYXJjaGl0ZWN0dXJlDQo+Pj4+IHNpbXVsYXRpb24gcG9p
+bnRzIHNvIFZhbGdyaW5kWzJdIGFuZCBQaW5bM10gc3VwcG9ydCBnZW5lcmF0aW5nIGJhc2lj
+DQo+Pj4+IGJsb2NrIHZlY3RvcnMgZm9yIHVzZSB3aXRoIHRoZW0uIExldCdzIGFkZCBhIGNv
+cnJlc3BvbmRpbmcgcGx1Z2luIHRvDQo+Pj4+IFFFTVUgdG9vLg0KPj4+Pg0KPj4+PiBOb3Rl
+IHRoYXQgdGhpcyBwbHVnaW4gaGFzIGEgZGlmZmVyZW50IGdvYWwgd2l0aCB0ZXN0cy9wbHVn
+aW4vYmIuYy4NCj4+Pj4NCj4+Pj4gVGhpcyBwbHVnaW4gY3JlYXRlcyBhIHZlY3RvciBmb3Ig
+ZWFjaCBjb25zdGFudCBpbnRlcnZhbCBpbnN0ZWFkIG9mDQo+Pj4+IGNvdW50aW5nIHRoZSBl
+eGVjdXRpb24gb2YgYmFzaWMgYmxvY2tzIGZvciB0aGUgZW50aXJlIHJ1biBhbmQgYWJsZSB0
+bw0KPj4+PiBkZXNjcmliZSB0aGUgY2hhbmdlIG9mIGV4ZWN1dGlvbiBiZWhhdmlvci4gSXRz
+IG91dHB1dCBpcyBhbHNvDQo+Pj4+IHN5bnRhY3RpY2FsbHkgc2ltcGxlIGFuZCBiZXR0ZXIg
+c3VpdGVkIGZvciBwYXJzaW5nLCB3aGlsZSB0aGUgb3V0cHV0IG9mDQo+Pj4+IHRlc3RzL3Bs
+dWdpbi9iYi5jIGlzIG1vcmUgaHVtYW4tcmVhZGFibGUuDQo+Pj4+DQo+Pj4+IFsxXSBodHRw
+czovL2NzZXdlYi51Y3NkLmVkdS9+Y2FsZGVyL3NpbXBvaW50Lw0KPj4+PiBbMl0gaHR0cHM6
+Ly92YWxncmluZC5vcmcvZG9jcy9tYW51YWwvYmJ2LW1hbnVhbC5odG1sDQo+Pj4+IFszXQ0K
+Pj4+PiBodHRwczovL3d3dy5pbnRlbC5jb20vY29udGVudC93d3cvdXMvZW4vZGV2ZWxvcGVy
+L2FydGljbGVzL3Rvb2wvcGluLWEtZHluYW1pYy1iaW5hcnktaW5zdHJ1bWVudGF0aW9uLXRv
+b2wuaHRtbA0KPj4+Pg0KPj4+PiBTaWduZWQtb2ZmLWJ5OiBZb3Rhcm8gTmFkYSA8eW90YXJv
+Lm5hZGFAZ21haWwuY29tPg0KPj4+PiBTaWduZWQtb2ZmLWJ5OiBBa2loaWtvIE9kYWtpIDxh
+a2loaWtvLm9kYWtpQGRheW5peC5jb20+DQo+Pj4+IC0tLQ0KPj4+PiBDaGFuZ2VzIGluIHYy
+Og0KPj4+PiAtIE1lcmdlZCBmaWxlcyB2YXJpYWJsZSBpbnRvIHRoZSBnbG9iYWwgc2NvcmVi
+b2FyZC4NCj4+Pj4gLSBBZGRlZCBhIGxvY2sgZm9yIGJicy4NCj4+Pj4gLSBBZGRlZCBhIHN1
+bW1hcnkgdG8gY29udHJpYi9wbHVnaW5zL2Jidi5jLg0KPj4+PiAtIFJlYmFzZWQuDQo+Pj4+
+IC0gTGluayB0byB2MToNCj4+Pj4gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvci8yMDI0MDgx
+My1iYi12MS0xLWVmZmJiNzdkYWViZkBkYXluaXguY29tDQo+Pj4+IC0tLQ0KPj4+PiAgwqAg
+ZG9jcy9hYm91dC9lbXVsYXRpb24ucnN0IHzCoCAzMCArKysrKysrKysNCj4+Pj4gIMKgIGNv
+bnRyaWIvcGx1Z2lucy9iYnYuY8KgwqDCoCB8IDE1OA0KPj4+PiArKysrKysrKysrKysrKysr
+KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKw0KPj4+PiAgwqAgY29udHJpYi9wbHVn
+aW5zL01ha2VmaWxlIHzCoMKgIDEgKw0KPj4+PiAgwqAgMyBmaWxlcyBjaGFuZ2VkLCAxODkg
+aW5zZXJ0aW9ucygrKQ0KPj4+Pg0KPj4+PiBkaWZmIC0tZ2l0IGEvZG9jcy9hYm91dC9lbXVs
+YXRpb24ucnN0IGIvZG9jcy9hYm91dC9lbXVsYXRpb24ucnN0DQo+Pj4+IGluZGV4IGMwMzAz
+M2U0ZTk1Ni4uNzJkNzg0NmFiNmY4IDEwMDY0NA0KPj4+PiAtLS0gYS9kb2NzL2Fib3V0L2Vt
+dWxhdGlvbi5yc3QNCj4+Pj4gKysrIGIvZG9jcy9hYm91dC9lbXVsYXRpb24ucnN0DQo+Pj4+
+IEBAIC0zODEsNiArMzgxLDM2IEBAIHJ1bjo6DQo+Pj4+ICDCoMKgwqAgMTYwwqDCoMKgwqDC
+oMKgwqDCoMKgIDHCoMKgwqDCoMKgIDANCj4+Pj4gIMKgwqDCoCAxMzXCoMKgwqDCoMKgwqDC
+oMKgwqAgMcKgwqDCoMKgwqAgMA0KPj4+PiArQmFzaWMgQmxvY2sgVmVjdG9ycw0KPj4+PiAr
+Li4uLi4uLi4uLi4uLi4uLi4uLg0KPj4+PiArDQo+Pj4+ICtgYGNvbnRyaWIvcGx1Z2lucy9i
+YnYuY2BgDQo+Pj4+ICsNCj4+Pj4gK1RoZSBiYnYgcGx1Z2luIGFsbG93cyB5b3UgdG8gZ2Vu
+ZXJhdGUgYmFzaWMgYmxvY2sgdmVjdG9ycyBmb3IgdXNlDQo+Pj4+IHdpdGggdGhlDQo+Pj4+
+ICtgU2ltUG9pbnQgPGh0dHBzOi8vY3Nld2ViLnVjc2QuZWR1L35jYWxkZXIvc2ltcG9pbnQv
+PmBfXyBhbmFseXNpcyB0b29sLg0KPj4+PiArDQo+Pj4+ICsuLiBsaXN0LXRhYmxlOjogQmFz
+aWMgYmxvY2sgdmVjdG9ycyBhcmd1bWVudHMNCj4+Pj4gK8KgIDp3aWR0aHM6IDIwIDgwDQo+
+Pj4+ICvCoCA6aGVhZGVyLXJvd3M6IDENCj4+Pj4gKw0KPj4+PiArwqAgKiAtIE9wdGlvbg0K
+Pj4+PiArwqDCoMKgIC0gRGVzY3JpcHRpb24NCj4+Pj4gK8KgICogLSBpbnRlcnZhbD1ODQo+
+Pj4+ICvCoMKgwqAgLSBUaGUgaW50ZXJ2YWwgdG8gZ2VuZXJhdGUgYSBiYXNpYyBibG9jayB2
+ZWN0b3Igc3BlY2lmaWVkIGJ5IHRoZQ0KPj4+PiBudW1iZXIgb2YNCj4+Pj4gK8KgwqDCoMKg
+wqAgaW5zdHJ1Y3Rpb25zIChEZWZhdWx0OiBOID0gMTAwMDAwMDAwKQ0KPj4+PiArwqAgKiAt
+IG91dGZpbGU9UEFUSA0KPj4+PiArwqDCoMKgIC0gVGhlIHBhdGggdG8gb3V0cHV0IGZpbGVz
+Lg0KPj4+PiArwqDCoMKgwqDCoCBJdCB3aWxsIGJlIHN1ZmZpeGVkIHdpdGggYGAuTi5iYmBg
+IHdoZXJlIGBgTmBgIGlzIGEgdkNQVSBpbmRleC4NCj4+Pj4gKw0KPj4+PiArRXhhbXBsZTo6
+DQo+Pj4+ICsNCj4+Pj4gK8KgICQgcWVtdS1hYXJjaDY0IFwNCj4+Pj4gK8KgwqDCoCAtcGx1
+Z2luIGNvbnRyaWIvcGx1Z2lucy9saWJiYnYuc28saW50ZXJ2YWw9MTAwLG91dGZpbGU9c2hh
+MSBcDQo+Pj4+ICvCoMKgwqAgdGVzdHMvdGNnL2FhcmNoNjQtbGludXgtdXNlci9zaGExDQo+
+Pj4+ICvCoCBTSEExPTE1ZGQ5OWExOTkxZTBiMzgyNmZlZGUzZGVmZmMxZmViYTQyMjc4ZTYN
+Cj4+Pj4gK8KgICQgZHUgc2hhMS4wLmJiDQo+Pj4+ICvCoCAyMzEyOMKgwqAgc2hhMS4wLmJi
+DQo+Pj4+ICsNCj4+Pj4gIMKgIEhvdCBCbG9ja3MNCj4+Pj4gIMKgIC4uLi4uLi4uLi4NCj4+
+Pj4gZGlmZiAtLWdpdCBhL2NvbnRyaWIvcGx1Z2lucy9iYnYuYyBiL2NvbnRyaWIvcGx1Z2lu
+cy9iYnYuYw0KPj4+PiBuZXcgZmlsZSBtb2RlIDEwMDY0NA0KPj4+PiBpbmRleCAwMDAwMDAw
+MDAwMDAuLjQxMTM5ZjQyM2ZlMg0KPj4+PiAtLS0gL2Rldi9udWxsDQo+Pj4+ICsrKyBiL2Nv
+bnRyaWIvcGx1Z2lucy9iYnYuYw0KPj4+PiBAQCAtMCwwICsxLDE1OCBAQA0KPj4+PiArLyoN
+Cj4+Pj4gKyAqIEdlbmVyYXRlIGJhc2ljIGJsb2NrIHZlY3RvcnMgZm9yIHVzZSB3aXRoIHRo
+ZSBTaW1Qb2ludCBhbmFseXNpcw0KPj4+PiB0b29sLg0KPj4+PiArICogU2ltUG9pbnQ6IGh0
+dHBzOi8vY3Nld2ViLnVjc2QuZWR1L35jYWxkZXIvc2ltcG9pbnQvDQo+Pj4+ICsgKg0KPj4+
+PiArICogU1BEWC1MaWNlbnNlLUlkZW50aWZpZXI6IEdQTC0yLjAtb3ItbGF0ZXINCj4+Pj4g
+KyAqLw0KPj4+PiArDQo+Pj4+ICsjaW5jbHVkZSA8c3RkaW8uaD4NCj4+Pj4gKyNpbmNsdWRl
+IDxnbGliLmg+DQo+Pj4+ICsNCj4+Pj4gKyNpbmNsdWRlIDxxZW11LXBsdWdpbi5oPg0KPj4+
+PiArDQo+Pj4+ICt0eXBlZGVmIHN0cnVjdCBCYiB7DQo+Pj4+ICvCoMKgwqAgc3RydWN0IHFl
+bXVfcGx1Z2luX3Njb3JlYm9hcmQgKmNvdW50Ow0KPj4+PiArwqDCoMKgIHVuc2lnbmVkIGlu
+dCBpbmRleDsNCj4+Pj4gK30gQmI7DQo+Pj4+ICsNCj4+Pj4gK3R5cGVkZWYgc3RydWN0IFZj
+cHUgew0KPj4+PiArwqDCoMKgIHVpbnQ2NF90IGNvdW50Ow0KPj4+PiArwqDCoMKgIEZJTEUg
+KmZpbGU7DQo+Pj4+ICt9IFZjcHU7DQo+Pj4+ICsNCj4+Pj4gK1FFTVVfUExVR0lOX0VYUE9S
+VCBpbnQgcWVtdV9wbHVnaW5fdmVyc2lvbiA9IFFFTVVfUExVR0lOX1ZFUlNJT047DQo+Pj4+
+ICtzdGF0aWMgR0hhc2hUYWJsZSAqYmJzOw0KPj4+PiArc3RhdGljIEdSV0xvY2sgYmJzX2xv
+Y2s7DQo+Pj4+ICtzdGF0aWMgY2hhciAqZmlsZW5hbWU7DQo+Pj4+ICtzdGF0aWMgc3RydWN0
+IHFlbXVfcGx1Z2luX3Njb3JlYm9hcmQgKnZjcHVzOw0KPj4+PiArc3RhdGljIHVpbnQ2NF90
+IGludGVydmFsID0gMTAwMDAwMDAwOw0KPj4+PiArDQo+Pj4+ICtzdGF0aWMgdm9pZCBwbHVn
+aW5fZXhpdChxZW11X3BsdWdpbl9pZF90IGlkLCB2b2lkICpwKQ0KPj4+PiArew0KPj4+PiAr
+wqDCoMKgIGZvciAoaW50IGkgPSAwOyBpIDwgcWVtdV9wbHVnaW5fbnVtX3ZjcHVzKCk7IGkr
+Kykgew0KPj4+PiArwqDCoMKgwqDCoMKgwqAgZmNsb3NlKCgoVmNwdSAqKXFlbXVfcGx1Z2lu
+X3Njb3JlYm9hcmRfZmluZCh2Y3B1cywgaSkpLT5maWxlKTsNCj4+Pj4gK8KgwqDCoCB9DQo+
+Pj4+ICsNCj4+Pj4gK8KgwqDCoCBnX2hhc2hfdGFibGVfdW5yZWYoYmJzKTsNCj4+Pj4gK8Kg
+wqDCoCBnX2ZyZWUoZmlsZW5hbWUpOw0KPj4+PiArwqDCoMKgIHFlbXVfcGx1Z2luX3Njb3Jl
+Ym9hcmRfZnJlZSh2Y3B1cyk7DQo+Pj4+ICt9DQo+Pj4+ICsNCj4+Pj4gK3N0YXRpYyB2b2lk
+IGZyZWVfYmIodm9pZCAqZGF0YSkNCj4+Pj4gK3sNCj4+Pj4gK8KgwqDCoCBxZW11X3BsdWdp
+bl9zY29yZWJvYXJkX2ZyZWUoKChCYiAqKWRhdGEpLT5jb3VudCk7DQo+Pj4+ICvCoMKgwqAg
+Z19mcmVlKGRhdGEpOw0KPj4+PiArfQ0KPj4+PiArDQo+Pj4+ICtzdGF0aWMgcWVtdV9wbHVn
+aW5fdTY0IGNvdW50X3U2NCh2b2lkKQ0KPj4+PiArew0KPj4+PiArwqDCoMKgIHJldHVybiBx
+ZW11X3BsdWdpbl9zY29yZWJvYXJkX3U2NF9pbl9zdHJ1Y3QodmNwdXMsIFZjcHUsIGNvdW50
+KTsNCj4+Pj4gK30NCj4+Pj4gKw0KPj4+PiArc3RhdGljIHFlbXVfcGx1Z2luX3U2NCBiYl9j
+b3VudF91NjQoQmIgKmJiKQ0KPj4+PiArew0KPj4+PiArwqDCoMKgIHJldHVybiBxZW11X3Bs
+dWdpbl9zY29yZWJvYXJkX3U2NChiYi0+Y291bnQpOw0KPj4+PiArfQ0KPj4+PiArDQo+Pj4+
+ICtzdGF0aWMgdm9pZCB2Y3B1X2luaXQocWVtdV9wbHVnaW5faWRfdCBpZCwgdW5zaWduZWQg
+aW50IHZjcHVfaW5kZXgpDQo+Pj4+ICt7DQo+Pj4+ICvCoMKgwqAgZ19hdXRvZnJlZSBnY2hh
+ciAqdmNwdV9maWxlbmFtZSA9IE5VTEw7DQo+Pj4+ICvCoMKgwqAgVmNwdSAqdmNwdSA9IHFl
+bXVfcGx1Z2luX3Njb3JlYm9hcmRfZmluZCh2Y3B1cywgdmNwdV9pbmRleCk7DQo+Pj4+ICsN
+Cj4+Pj4gK8KgwqDCoCB2Y3B1X2ZpbGVuYW1lID0gZ19zdHJkdXBfcHJpbnRmKCIlcy4ldS5i
+YiIsIGZpbGVuYW1lLCB2Y3B1X2luZGV4KTsNCj4+Pj4gK8KgwqDCoCB2Y3B1LT5maWxlID0g
+Zm9wZW4odmNwdV9maWxlbmFtZSwgInciKTsNCj4+Pj4gK30NCj4+Pj4gKw0KPj4+PiArc3Rh
+dGljIHZvaWQgdmNwdV9pbnRlcnZhbF9leGVjKHVuc2lnbmVkIGludCB2Y3B1X2luZGV4LCB2
+b2lkICp1ZGF0YSkNCj4+Pj4gK3sNCj4+Pj4gK8KgwqDCoCBWY3B1ICp2Y3B1ID0gcWVtdV9w
+bHVnaW5fc2NvcmVib2FyZF9maW5kKHZjcHVzLCB2Y3B1X2luZGV4KTsNCj4+Pj4gK8KgwqDC
+oCBHSGFzaFRhYmxlSXRlciBpdGVyOw0KPj4+PiArwqDCoMKgIHZvaWQgKnZhbHVlOw0KPj4+
+PiArDQo+Pj4+ICvCoMKgwqAgaWYgKCF2Y3B1LT5maWxlKSB7DQo+Pj4+ICvCoMKgwqDCoMKg
+wqDCoCByZXR1cm47DQo+Pj4+ICvCoMKgwqAgfQ0KPj4+PiArDQo+Pj4+ICvCoMKgwqAgdmNw
+dS0+Y291bnQgLT0gaW50ZXJ2YWw7DQo+Pj4+ICsNCj4+Pj4gK8KgwqDCoCBmcHV0YygnVCcs
+IHZjcHUtPmZpbGUpOw0KPj4+PiArDQo+Pj4+ICvCoMKgwqAgZ19yd19sb2NrX3JlYWRlcl9s
+b2NrKCZiYnNfbG9jayk7DQo+Pj4+ICvCoMKgwqAgZ19oYXNoX3RhYmxlX2l0ZXJfaW5pdCgm
+aXRlciwgYmJzKTsNCj4+Pj4gKw0KPj4+PiArwqDCoMKgIHdoaWxlIChnX2hhc2hfdGFibGVf
+aXRlcl9uZXh0KCZpdGVyLCBOVUxMLCAmdmFsdWUpKSB7DQo+Pj4+ICvCoMKgwqDCoMKgwqDC
+oCBCYiAqYmIgPSB2YWx1ZTsNCj4+Pj4gK8KgwqDCoMKgwqDCoMKgIHVpbnQ2NF90IGJiX2Nv
+dW50ID0gcWVtdV9wbHVnaW5fdTY0X2dldChiYl9jb3VudF91NjQoYmIpLA0KPj4+PiB2Y3B1
+X2luZGV4KTsNCj4+Pj4gKw0KPj4+PiArwqDCoMKgwqDCoMKgwqAgaWYgKCFiYl9jb3VudCkg
+ew0KPj4+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBjb250aW51ZTsNCj4+Pj4gK8KgwqDC
+oMKgwqDCoMKgIH0NCj4+Pj4gKw0KPj4+PiArwqDCoMKgwqDCoMKgwqAgZnByaW50Zih2Y3B1
+LT5maWxlLCAiOiV1OiUiIFBSSXU2NCAiICIsIGJiLT5pbmRleCwgYmJfY291bnQpOw0KPj4+
+PiArwqDCoMKgwqDCoMKgwqAgcWVtdV9wbHVnaW5fdTY0X3NldChiYl9jb3VudF91NjQoYmIp
+LCB2Y3B1X2luZGV4LCAwKTsNCj4+Pj4gK8KgwqDCoCB9DQo+Pj4+ICsNCj4+Pj4gK8KgwqDC
+oCBnX3J3X2xvY2tfcmVhZGVyX3VubG9jaygmYmJzX2xvY2spOw0KPj4+PiArwqDCoMKgIGZw
+dXRjKCdcbicsIHZjcHUtPmZpbGUpOw0KPj4+PiArfQ0KPj4+PiArDQo+Pj4+ICtzdGF0aWMg
+dm9pZCB2Y3B1X3RiX3RyYW5zKHFlbXVfcGx1Z2luX2lkX3QgaWQsIHN0cnVjdCBxZW11X3Bs
+dWdpbl90Yg0KPj4+PiAqdGIpDQo+Pj4+ICt7DQo+Pj4+ICvCoMKgwqAgdWludDY0X3Qgbl9p
+bnNucyA9IHFlbXVfcGx1Z2luX3RiX25faW5zbnModGIpOw0KPj4+PiArwqDCoMKgIHVpbnQ2
+NF90IHZhZGRyID0gcWVtdV9wbHVnaW5fdGJfdmFkZHIodGIpOw0KPj4+PiArwqDCoMKgIEJi
+ICpiYiA9IGdfaGFzaF90YWJsZV9sb29rdXAoYmJzLCAmdmFkZHIpOw0KPj4+DQo+Pj4gTWlz
+c2luZyBhIHJlYWRfbG9jayBmb3IgdGhpcyBhY2Nlc3MuDQo+Pg0KPj4gSSBleHBlY3QgdmNw
+dV90Yl90cmFucygpIHdpbGwgbm90IGJlIGV4ZWN1dGVkIGNvbmN1cnJlbnRseS4NCj4gDQo+
+IE5vLCBRRU1VIGRvZXNuJ3QgbG9jayB1bmxlc3MgaXQgaXMgdXNlcnNwYWNlIGVtdWxhdGlv
+bi4gSSdsbCBhZGQgdGhlDQo+IHJlYWQgbG9jay4NCj4NCg0KVXNlciBtb2RlIHVzZXMgYSBz
+aGFyZWQgY29kZSBjYWNoZSB3aGlsZSBzeXN0ZW0gbW9kZSB1c2VzIGEgY29kZSBjYWNoZSAN
+CnBlciB2Y3B1ICh0aHVzLCB0cmFuc2xhdGlvbiBjYW4gaGFwcGVuIGNvbmN1cnJlbnRseSku
+DQpodHRwczovL3d3dy5xZW11Lm9yZy9kb2NzL21hc3Rlci9kZXZlbC9tdWx0aS10aHJlYWQt
+dGNnLmh0bWwjZ2xvYmFsLXRjZy1zdGF0ZQ0KDQo+IFJlZ2FyZHMsDQo+IEFraWhpa28gT2Rh
+a2kNCg==
 
