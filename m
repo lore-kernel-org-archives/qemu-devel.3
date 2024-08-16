@@ -4,88 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0E4BC531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 10:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A17A4C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 10:13:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1setua-0000JQ-WB; Fri, 16 Aug 2024 06:10:25 -0400
+	id 1setxA-0004Uj-J3; Fri, 16 Aug 2024 06:13:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1setuZ-0000IY-82
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:10:23 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1setuW-000267-OR
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:10:22 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2021537a8e6so559885ad.2
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 03:10:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1723803019; x=1724407819;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=RQfwFUn43XTGvvnAF92vxroN+7TSaI1PGyFGfLRSZUU=;
- b=NYSA32F9yzBXXkIezrdEEuhtKeKB4N3PmXhydl6s93K6Vh81ZlqMfylnoVjC/oGEm+
- P437am5cdLdWZL3n5zmVq5wgXiBpewolW9CfUWVFzmDts9hK+Jb488t/LwaYYz6Lo4kL
- 4p8UfkX2M+RqUPI1zCQd0yaAG6gQHNl6hOuVRNS0lFX4Iyd4Ajkly1pVID5DFQJq0625
- 3h751p263K4xUcJtNEr6ZytXqJDjRugZ65L8LjTdOyO6tWOxPk7WYCT3zuO8dSSHTnkz
- FYukPFAEnHE1pBAj0On6muUSPd5Zv14JloMQAHXFM5e5nEFPxMcPAIOL0MyVA9reLnYa
- umlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723803019; x=1724407819;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RQfwFUn43XTGvvnAF92vxroN+7TSaI1PGyFGfLRSZUU=;
- b=pP27/X3IN37apgVa6XGf+dh6b2DtqAloBjSRRA/onwn8EpL00InjfEOlX4JGAQYjmB
- IT+WnqrdX75ij47oObWp8CqWtCnhcK2w9VZC04UgXKOOncXU68q7/XFQ4t11Zmv5vpSE
- crGLIu6WVvvqEn0F5pOIN8Du8RQvKGqHO0g1kSoIVvSHMLhSGggFL6Jm+JkZd1KdfnBq
- cObMYSpyEllmVW+DpJsoEK6J3qb7PZitJQi4QK1p2h1ifgFUr1Fd5fL8HxNTeK+pcspF
- bLDZN/gPtaWnLDnn6Eu05hFlj5fAaMR/aHTBGo2mnUU92X+egB2GrzwOxPjTT4iul8TZ
- 3elA==
-X-Gm-Message-State: AOJu0YxEZgA8CkUA/WK9Ispl9k/52vJ14WUL1dA/qKDxcRcGNA4SfuTF
- wKvr9Mjc7dpYxl9HMHx3svXs58wOSv6du73DzR/gE5Pmy9MFUI7Y+SrkWfMfsy4=
-X-Google-Smtp-Source: AGHT+IEzoZQz/znQcowjrHs4aUCOomaHLnlOlOkkGdlPNs8zaLg/rNPeIWxbzTEFb5/1BZGbw/qLww==
-X-Received: by 2002:a17:902:cec9:b0:202:75a:4184 with SMTP id
- d9443c01a7336-202075a4492mr21845695ad.22.1723803018947; 
- Fri, 16 Aug 2024 03:10:18 -0700 (PDT)
-Received: from localhost ([157.82.202.230])
- by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-201f0375626sm22711715ad.156.2024.08.16.03.10.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Aug 2024 03:10:18 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 16 Aug 2024 19:10:13 +0900
-Subject: [PATCH v4] meson: Use -fno-sanitize=function when available
+ (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
+ id 1setx7-0004TU-TF
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:13:01 -0400
+Received: from mx22.baidu.com ([220.181.50.185] helo=baidu.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
+ id 1setx4-0002HF-7N
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:13:01 -0400
+To: "Michael S. Tsirkin" <mst@redhat.com>, Tiwei Bie <tiwei.bie@intel.com>,
+ "sgarzare@redhat.com" <sgarzare@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "Gao,Shiyuan"
+ <gaoshiyuan@baidu.com>
+Subject: Re: [PATCH 1/1] virtio-pci: return RAM device MR when set host
+ notifier success
+Thread-Topic: [PATCH 1/1] virtio-pci: return RAM device MR when set host
+ notifier success
+Thread-Index: AQHa7LI5llKSHEXN00eCXTiFzBl+lrIprzpd
+Date: Fri, 16 Aug 2024 10:12:44 +0000
+Message-ID: <a73618bee263452485e31c1261cf9a05@baidu.com>
+References: <20240812122027.65600-1-gaoshiyuan@baidu.com>
+In-Reply-To: <20240812122027.65600-1-gaoshiyuan@baidu.com>
+Accept-Language: zh-CN, en-US
+Content-Language: zh-CN
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.22.192.129]
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240816-function-v4-1-9ba0f836318f@daynix.com>
-X-B4-Tracking: v=1; b=H4sIAIQlv2YC/23MQQ7CIBQE0KsY1mL4HyrVlfcwLoCCZSE1UEmbp
- neXdmONLmcybyaSbPQ2kfNuItFmn3wXShD7HTGtCndLfVMyQYaCSRDUvYLpy4jKhqORyJXWhpT
- 5M1rnh/Xqeiu59anv4rg+Z1jaPycZKFBjUBktQIJWl0aNwQ8H0z3I8pJxI/G0kVhkKUFpqDVn+
- kfyj6zhuJG8SI7OIVa2qpj9kvM8vwHYCm6HFQEAAA==
-To: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Thomas Huth <thuth@redhat.com>, 
- Wainer dos Santos Moschetta <wainersm@redhat.com>, 
- Beraldo Leal <bleal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::633;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x633.google.com
+X-FEAS-Client-IP: 10.127.64.14
+X-FE-Last-Public-Client-IP: 100.100.100.60
+X-FE-Policy-ID: 52:10:53:SYSTEM
+Received-SPF: pass client-ip=220.181.50.185; envelope-from=gaoshiyuan@baidu.com;
+ helo=baidu.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,60 +64,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  "Gao,Shiyuan" <gaoshiyuan@baidu.com>
+From:  "Gao,Shiyuan" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 23ef50ae2d0c (".gitlab-ci.d/buildtest.yml: Use
--fno-sanitize=function in the clang-system job") adds
--fno-sanitize=function for the CI but doesn't add the flag in the
-other context. Add it to meson.build for such. It is not removed from
-.gitlab-ci.d/buildtest.yml because -fno-sanitize=function in meson.build
-does not affect --extra-cflags due to argument ordering.
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
-Changes in v4:
-- Moved -fno-sanitize=function immediately after -fsanitize=undefined
-- Link to v3: https://lore.kernel.org/r/20240816-function-v3-1-32ff225e550e@daynix.com
-
-Changes in v3:
-- I was not properly dropping the change of .gitlab-ci.d/buildtest.yml
-  but only updated the message. v3 fixes this. (Thomas Huth)
-- Link to v2: https://lore.kernel.org/r/20240729-function-v2-1-2401ab18b30b@daynix.com
-
-Changes in v2:
-- Dropped the change of: .gitlab-ci.d/buildtest.yml
-- Link to v1: https://lore.kernel.org/r/20240714-function-v1-1-cc2acb4171ba@daynix.com
----
- meson.build | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/meson.build b/meson.build
-index 5613b62a4f42..b7e50358a88a 100644
---- a/meson.build
-+++ b/meson.build
-@@ -483,8 +483,12 @@ if get_option('sanitizers')
-   # Detect static linking issue with ubsan - https://gcc.gnu.org/bugzilla/show_bug.cgi?id=84285
-   if cc.links('int main(int argc, char **argv) { return argc + 1; }',
-               args: [qemu_ldflags, '-fsanitize=undefined'])
--    qemu_cflags = ['-fsanitize=undefined'] + qemu_cflags
--    qemu_ldflags = ['-fsanitize=undefined'] + qemu_ldflags
-+    qemu_cflags = ['-fsanitize=undefined'] + \
-+                  cc.get_supported_arguments('-fno-sanitize=function') + \
-+                  qemu_cflags
-+    qemu_ldflags = ['-fsanitize=undefined'] + \
-+                   cc.get_supported_arguments('-fno-sanitize=function') + \
-+                   qemu_ldflags
-   endif
- endif
- 
-
----
-base-commit: 93b799fafd9170da3a79a533ea6f73a18de82e22
-change-id: 20240714-function-7d32c723abbc
-
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
-
+cGluZy4NCg0KV2hlbiBWSE9TVF9VU0VSX1BST1RPQ09MX0ZfSE9TVF9OT1RJRklFUiB0aGlzIGZl
+YXR1cmUgbmVnb3RpYXRlZA0KYW5kIHZpcnRpb19xdWV1ZV9zZXRfaG9zdF9ub3RpZmllcl9tciBz
+dWNjZXNzIG9uIHN5c3RlbSBibGsNCmRldmljZSdzIHF1ZXVlLCB0aGUgVk0gY2FuJ3QgbG9hZCBN
+QlIgaWYgdGhlIG5vdGlmeSByZWdpb24ncyBhZGRyZXNzDQphYm92ZSA0R0IuDQpCZWNhdXNlIHRo
+ZSB2cF9ub3RpZnkgaW4gc2VhYmlvcyBtYXliZSBjYW5uJ3Qgbm90aWZ5IHRoZSBoYXJkd2FyZQ0K
+YWNjZWxlcmF0b3IgYnkga2lja2ZkIGZyb20gcWVtdSBub3RpZnlfb3BzLg0KDQpUaGFua3MuDQoN
+Cj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogR2FvIFNoaXl1YW4gPGdhb3No
+aXl1YW5AYmFpZHUuY29tPg0KPiBEYXRlOiBNb24sIDEyIEF1ZyAyMDI0IDIwOjA5OjAxICswODAw
+DQo+IFN1YmplY3Q6IFtQQVRDSCAxLzFdIHZpcnRpby1wY2k6IHJldHVybiBSQU0gZGV2aWNlIE1S
+IHdoZW4gc2V0IGhvc3Qgbm90aWZpZXINCj4gIHN1Y2Nlc3MNCj4NCj4gV2hlbiB2aG9zdC11c2Vy
+IGJhY2tlbmQgcmVnaXN0ZXIgbWVtb3J5IHJlZ2lvbiBiYXNlZCBob3N0IG5vdGlmaWVycywNCj4g
+d2Ugc2hvdWxkIHJldHVybiBSQU0gZGV2aWNlIE1SIG9mIG5vdGlmeSByZWdpb24gTVIncyBzdWJy
+ZWdpb24gaW4NCj4gdmlydGlvX2FkZHJlc3Nfc3BhY2VfbG9va3VwLg0KPg0KPiBJbiBzZWFiaW9z
+LCBpdCB3aWxsIHVzZSB2aXJ0aW8gUENJIENvbmZpZ3JhdGlvbiBBY2Nlc3MgQ2FwYWJpbGl0eQ0K
+PiBhY2Nlc3Mgbm90aWZ5IHJlZ2lvbiB3aGVuIGFzc2lnbiBub3RpZnkgcmVnaW9uIGFib3ZlIDRH
+Qi4gVGhpcyB3aWxsDQo+IGV4aXQgdG8gUUVNVSBhbmQgaW52b2tlIHZpcnRpb19hZGRyZXNzX3Nw
+YWNlX3dyaXRlLiBXaGVuIHZob3N0LXVzZXINCj4gYmFja2VuZCByZWdpc3RlciBtZW1vcnkgcmVn
+aW9uIGJhc2VkIGhvc3Qgbm90aWZpZXJzLCByZXR1cm4gUkFNIGRldmljZQ0KPiBNUiBpbnN0ZWFk
+IG9mIG5vdGlmeSByZWdpb24gTVIgaXMgc3VpdGFibGUuDQo+DQo+IENvLWRldmVsb3BlZC1ieTog
+WnVvIEJvcXVuIDx6dW9ib3F1bkBiYWlkdS5jb20+DQo+IFNpZ25lZC1vZmYtYnk6IEdhbyBTaGl5
+dWFuIDxnYW9zaGl5dWFuQGJhaWR1LmNvbT4NCj4gU2lnbmVkLW9mZi1ieTogWnVvIEJvcXVuIDx6
+dW9ib3F1bkBiYWlkdS5jb20+
 
