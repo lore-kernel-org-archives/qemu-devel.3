@@ -4,54 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A17A4C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 10:13:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA8D2C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 10:30:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1setxA-0004Uj-J3; Fri, 16 Aug 2024 06:13:05 -0400
+	id 1seuDK-0002aD-JU; Fri, 16 Aug 2024 06:29:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
- id 1setx7-0004TU-TF
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:13:01 -0400
-Received: from mx22.baidu.com ([220.181.50.185] helo=baidu.com)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1seuDI-0002Y3-AE
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:29:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaoshiyuan@baidu.com>)
- id 1setx4-0002HF-7N
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:13:01 -0400
-To: "Michael S. Tsirkin" <mst@redhat.com>, Tiwei Bie <tiwei.bie@intel.com>,
- "sgarzare@redhat.com" <sgarzare@redhat.com>, "jasowang@redhat.com"
- <jasowang@redhat.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "Gao,Shiyuan"
- <gaoshiyuan@baidu.com>
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1seuDG-00051S-Nw
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:29:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723804181;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9MnMphnsUo5fZBNhUymgzNdYcmv2xCiRrOwDkMc5yho=;
+ b=ARP9KvmWFxdHCAY6eZT56MDAX3EElz2yOGUSCcgxsMab8H2TGg1qlH9y6pJbVQPEkok9bo
+ 2+quUXJYDnWrw3qrWsHabIUK6A2ogqKlvVllOCAWAmfECB9UDj7I4p10Ees+2TWL5oxsYc
+ 2yo3xTykhARhlf8+NkMv3lxzDYO2XcQ=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-410-Y3V6nA02NMafgeictI9bpw-1; Fri, 16 Aug 2024 06:29:39 -0400
+X-MC-Unique: Y3V6nA02NMafgeictI9bpw-1
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5a2d4fb1e73so1511382a12.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 03:29:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723804178; x=1724408978;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9MnMphnsUo5fZBNhUymgzNdYcmv2xCiRrOwDkMc5yho=;
+ b=C85r/QUFxiIB0TsSE61nIZpH1+UWTIqg2+GBT68bo+pWDSlH3WQtEYvc5xlHfJRTne
+ ejYOOOPkc3XqlIxrJtCsF8h475N4JlU81edORau7kPl28yFZoGYUquEoN8cyLvGp0hJC
+ 9uPbJyw7LYF+G9aMZzehD+qKJAD0m0a/U73R2498qrBvZyzC7J9HT7MODY1fJCN35vZz
+ y16AT5Phcf1Dd1nto5og4nxaAJaHzR62v12JhEsZAD+CQOL7xLUTNhJfgHUXW3AmrpLX
+ qQxxrqIWudNIKZWD8qBMtNgDJiKw/ZvJ3QI09qBANzHDabtVwoxAO7dn04t2V7AI6TEB
+ vm8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXC6kRwQRh1ls0PxsSsNFfg0QmtZUiRwgkZ8tb5emvgQB1ExHGavSWJSjL4Jt/IEzkDbeX1grRTEkrEhnIXmjOtFr4ZJ+8=
+X-Gm-Message-State: AOJu0YyQTXKdh/pdExzSrW2A4DLA2vpAgZlhE33N7u7LE/94E8vnSAPz
+ Sbpa7eK9JqzdA2x9wO2UHFEw8Fc2j1Ewd9X5x8hX4UTruqhOv6XfQHVByhNZOd5An3LTRdJh23f
+ RN4tmZg3vdzWRftw1rDqp8JwdaMpaYppeo06mAM1qqFkozF6ozIQl
+X-Received: by 2002:a05:6402:234d:b0:5be:9c84:a01 with SMTP id
+ 4fb4d7f45d1cf-5beca76d270mr1894794a12.29.1723804178654; 
+ Fri, 16 Aug 2024 03:29:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEhp1L7S4lXnr1obbcfXsEPZl5+N1CoUUtsYnQkyg8mrAXFKI+fc/e1wTiHWpcPoZOXU7TPCw==
+X-Received: by 2002:a05:6402:234d:b0:5be:9c84:a01 with SMTP id
+ 4fb4d7f45d1cf-5beca76d270mr1894747a12.29.1723804177805; 
+ Fri, 16 Aug 2024 03:29:37 -0700 (PDT)
+Received: from redhat.com ([2a02:14f:17d:3378:6322:e9ee:713:b9ed])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5bebbde4b37sm2074074a12.34.2024.08.16.03.29.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Aug 2024 03:29:37 -0700 (PDT)
+Date: Fri, 16 Aug 2024 06:29:33 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Gao Shiyuan <gaoshiyuan@baidu.com>
+Cc: Tiwei Bie <tiwei.bie@intel.com>, zuoboqun@baidu.com,
+ qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
 Subject: Re: [PATCH 1/1] virtio-pci: return RAM device MR when set host
  notifier success
-Thread-Topic: [PATCH 1/1] virtio-pci: return RAM device MR when set host
- notifier success
-Thread-Index: AQHa7LI5llKSHEXN00eCXTiFzBl+lrIprzpd
-Date: Fri, 16 Aug 2024 10:12:44 +0000
-Message-ID: <a73618bee263452485e31c1261cf9a05@baidu.com>
+Message-ID: <20240816061647-mutt-send-email-mst@kernel.org>
 References: <20240812122027.65600-1-gaoshiyuan@baidu.com>
-In-Reply-To: <20240812122027.65600-1-gaoshiyuan@baidu.com>
-Accept-Language: zh-CN, en-US
-Content-Language: zh-CN
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [172.22.192.129]
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-X-FEAS-Client-IP: 10.127.64.14
-X-FE-Last-Public-Client-IP: 100.100.100.60
-X-FE-Policy-ID: 52:10:53:SYSTEM
-Received-SPF: pass client-ip=220.181.50.185; envelope-from=gaoshiyuan@baidu.com;
- helo=baidu.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240812122027.65600-1-gaoshiyuan@baidu.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,31 +100,68 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Gao,Shiyuan" <gaoshiyuan@baidu.com>
-From:  "Gao,Shiyuan" via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cGluZy4NCg0KV2hlbiBWSE9TVF9VU0VSX1BST1RPQ09MX0ZfSE9TVF9OT1RJRklFUiB0aGlzIGZl
-YXR1cmUgbmVnb3RpYXRlZA0KYW5kIHZpcnRpb19xdWV1ZV9zZXRfaG9zdF9ub3RpZmllcl9tciBz
-dWNjZXNzIG9uIHN5c3RlbSBibGsNCmRldmljZSdzIHF1ZXVlLCB0aGUgVk0gY2FuJ3QgbG9hZCBN
-QlIgaWYgdGhlIG5vdGlmeSByZWdpb24ncyBhZGRyZXNzDQphYm92ZSA0R0IuDQpCZWNhdXNlIHRo
-ZSB2cF9ub3RpZnkgaW4gc2VhYmlvcyBtYXliZSBjYW5uJ3Qgbm90aWZ5IHRoZSBoYXJkd2FyZQ0K
-YWNjZWxlcmF0b3IgYnkga2lja2ZkIGZyb20gcWVtdSBub3RpZnlfb3BzLg0KDQpUaGFua3MuDQoN
-Cj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogR2FvIFNoaXl1YW4gPGdhb3No
-aXl1YW5AYmFpZHUuY29tPg0KPiBEYXRlOiBNb24sIDEyIEF1ZyAyMDI0IDIwOjA5OjAxICswODAw
-DQo+IFN1YmplY3Q6IFtQQVRDSCAxLzFdIHZpcnRpby1wY2k6IHJldHVybiBSQU0gZGV2aWNlIE1S
-IHdoZW4gc2V0IGhvc3Qgbm90aWZpZXINCj4gIHN1Y2Nlc3MNCj4NCj4gV2hlbiB2aG9zdC11c2Vy
-IGJhY2tlbmQgcmVnaXN0ZXIgbWVtb3J5IHJlZ2lvbiBiYXNlZCBob3N0IG5vdGlmaWVycywNCj4g
-d2Ugc2hvdWxkIHJldHVybiBSQU0gZGV2aWNlIE1SIG9mIG5vdGlmeSByZWdpb24gTVIncyBzdWJy
-ZWdpb24gaW4NCj4gdmlydGlvX2FkZHJlc3Nfc3BhY2VfbG9va3VwLg0KPg0KPiBJbiBzZWFiaW9z
-LCBpdCB3aWxsIHVzZSB2aXJ0aW8gUENJIENvbmZpZ3JhdGlvbiBBY2Nlc3MgQ2FwYWJpbGl0eQ0K
-PiBhY2Nlc3Mgbm90aWZ5IHJlZ2lvbiB3aGVuIGFzc2lnbiBub3RpZnkgcmVnaW9uIGFib3ZlIDRH
-Qi4gVGhpcyB3aWxsDQo+IGV4aXQgdG8gUUVNVSBhbmQgaW52b2tlIHZpcnRpb19hZGRyZXNzX3Nw
-YWNlX3dyaXRlLiBXaGVuIHZob3N0LXVzZXINCj4gYmFja2VuZCByZWdpc3RlciBtZW1vcnkgcmVn
-aW9uIGJhc2VkIGhvc3Qgbm90aWZpZXJzLCByZXR1cm4gUkFNIGRldmljZQ0KPiBNUiBpbnN0ZWFk
-IG9mIG5vdGlmeSByZWdpb24gTVIgaXMgc3VpdGFibGUuDQo+DQo+IENvLWRldmVsb3BlZC1ieTog
-WnVvIEJvcXVuIDx6dW9ib3F1bkBiYWlkdS5jb20+DQo+IFNpZ25lZC1vZmYtYnk6IEdhbyBTaGl5
-dWFuIDxnYW9zaGl5dWFuQGJhaWR1LmNvbT4NCj4gU2lnbmVkLW9mZi1ieTogWnVvIEJvcXVuIDx6
-dW9ib3F1bkBiYWlkdS5jb20+
+On Mon, Aug 12, 2024 at 08:20:27PM +0800, Gao Shiyuan wrote:
+> When vhost-user backend register memory region based host notifiers,
+> we should return RAM device MR of notify region MR's subregion in
+> virtio_address_space_lookup.
+> 
+> In seabios, it will use virtio PCI Configration Access Capability
+> access notify region when assign notify region above 4GB. This will
+> exit to QEMU and invoke virtio_address_space_write. When vhost-user
+> backend register memory region based host notifiers, return RAM device
+> MR instead of notify region MR is suitable.
+
+
+I can't really parse this.
+
+> Co-developed-by: Zuo Boqun <zuoboqun@baidu.com>
+> Signed-off-by: Gao Shiyuan <gaoshiyuan@baidu.com>
+> Signed-off-by: Zuo Boqun <zuoboqun@baidu.com>
+
+CC Jason
+
+> ---
+>  hw/virtio/virtio-pci.c | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+> index 9534730bba..167ac9718a 100644
+> --- a/hw/virtio/virtio-pci.c
+> +++ b/hw/virtio/virtio-pci.c
+> @@ -610,13 +610,22 @@ static MemoryRegion *virtio_address_space_lookup(VirtIOPCIProxy *proxy,
+>  {
+>      int i;
+>      VirtIOPCIRegion *reg;
+> +    MemoryRegion *mr, *submr;
+>  
+>      for (i = 0; i < ARRAY_SIZE(proxy->regs); ++i) {
+>          reg = &proxy->regs[i];
+>          if (*off >= reg->offset &&
+>              *off + len <= reg->offset + reg->size) {
+>              *off -= reg->offset;
+> -            return &reg->mr;
+> +            mr = &reg->mr;
+> +            QTAILQ_FOREACH(submr, &mr->subregions, subregions_link) {
+> +                if (*off >= submr->addr &&
+> +                    *off + len < submr->addr + submr->size) {
+> +                    *off -= submr->addr;
+> +                    return submr;
+> +                }
+> +            }
+> +            return mr;
+>          }
+>      }
+
+Poking at internals of MR like this is not nice.
+Doesn't memory_region_find work for this?
+
+
+
+>  
+> -- 
+> 2.39.3 (Apple Git-146)
+
 
