@@ -4,98 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE7A9C531DF
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 15:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D46DC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 15:38:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sez19-0007Zw-2m; Fri, 16 Aug 2024 11:37:31 -0400
+	id 1sez1j-0002F5-Mb; Fri, 16 Aug 2024 11:38:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sez16-0007Xd-RO
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:37:28 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sez15-000254-4U
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:37:28 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5b8c2a6135eso154506a12.0
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 08:37:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723822645; x=1724427445; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=yJxYM7gZybbqeya6mc35PVsWezbMh8hgRpJUUaoEGbY=;
- b=QbYhHWwd3D3qvUmKrA02iKxXbfJPAht2p+SfrgElcJwYQzSYbwk9wAnUWNOjwOpwHm
- xmoAHZXqj8F6A2oq5b5lAnavTun8BHOZywgHAiG+fjaoXpK1ledbkZPnrx4bYPcPZMlh
- OyEXTWYS2yhSydl8nbsiuKsZBgVWWP3xld29FZ0VkJtBLA8d8KId+zqCvWL/lXrE0/VC
- 8+yDkEWTZHHelBo62bGvSdN1w5lr/wNDBBkyulihRkK/8nkxzg62dNu8/d5VXCe7QOcA
- ojmTPKu1F8MnOXnDN6aKaLOnW8BpNM3TVEFjnLfp2LtiAkLZKKw0tjgH323tf1fsnKPk
- Tg2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723822645; x=1724427445;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yJxYM7gZybbqeya6mc35PVsWezbMh8hgRpJUUaoEGbY=;
- b=s/3r2YP1C6OZKy2QIzS9ItDSouOOayOj+072LagamGY/mmZdlg7MfSBG6TBuuHk5q/
- sRoRY/nS5VjhOB8Lq2mNsUNI4qmVskwyKmywMd/7SpGorUAZoXfAREaoaOgqq03kKdiw
- NpdXxC4+1iH+q8MKetGFYEezOrlUts4QMVjhERCY2c3jixiqaZj+YBpwZB6f5EbOvQ9l
- owKKU975nxpgB7CQlLWj6jGHxSQqgtcUttRk8+5lmokgAyBh16TL4byGj5qDhQmk4pXM
- +YvbfIYhZRK/Rm3HGiEqWgxzyR3yL+66wNrzJQ7gp5ooIS/z5d1ksu509Zgw+T2spACJ
- GPKA==
-X-Gm-Message-State: AOJu0YzdlUiwEofnm6AzxpKnFgXUV6Nak1brzWM4XhSxkcPP0SMUMnQ1
- 9AvD7dd8lbNMQrr1xnvHf/+Q3/bZK1Edc/Jv9g7eaDVkJik/nozrj3NH7yrYs28=
-X-Google-Smtp-Source: AGHT+IFtjq9RSkr+32FMzqM57nSykzhAhSTf0L0+dWPTvtNHrT17gYOg1RBdzeJXxNOvBeZa9c8FTg==
-X-Received: by 2002:a05:6402:1e89:b0:5a1:4ca9:c667 with SMTP id
- 4fb4d7f45d1cf-5becb5edc13mr3127372a12.11.1723822644367; 
- Fri, 16 Aug 2024 08:37:24 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bebc0817a8sm2381867a12.84.2024.08.16.08.37.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 08:37:23 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B0C555F92F;
- Fri, 16 Aug 2024 16:37:22 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Salil Mehta <salil.mehta@huawei.com>
-Cc: <qemu-devel@nongnu.org>,  <qemu-arm@nongnu.org>,  <mst@redhat.com>,
- <maz@kernel.org>,  <jean-philippe@linaro.org>,
- <jonathan.cameron@huawei.com>,  <lpieralisi@kernel.org>,
- <peter.maydell@linaro.org>,  <richard.henderson@linaro.org>,
- <imammedo@redhat.com>,  <andrew.jones@linux.dev>,  <david@redhat.com>,
- <philmd@linaro.org>,  <eric.auger@redhat.com>,  <will@kernel.org>,
- <ardb@kernel.org>,  <oliver.upton@linux.dev>,  <pbonzini@redhat.com>,
- <gshan@redhat.com>,  <rafael@kernel.org>,  <borntraeger@linux.ibm.com>,
- <npiggin@gmail.com>,  <harshpb@linux.ibm.com>,  <linux@armlinux.org.uk>,
- <darren@os.amperecomputing.com>,  <ilkka@os.amperecomputing.com>,
- <vishnu@os.amperecomputing.com>,  <karl.heubaum@oracle.com>,
- <miguel.luis@oracle.com>,  <salil.mehta@opnsrc.net>,
- <zhukeqian1@huawei.com>,  <wangxiongfeng2@huawei.com>,
- <wangyanan55@huawei.com>,  <jiakernel2@gmail.com>,
- <maobibo@loongson.cn>,  <lixianglai@loongson.cn>,  <shahuang@redhat.com>,
- <zhao1.liu@intel.com>,  <linuxarm@huawei.com>
-Subject: Re: [PATCH RFC V3 24/29] target/arm: Add support of *unrealize*
- ARMCPU during vCPU Hot-unplug
-In-Reply-To: <20240613233639.202896-25-salil.mehta@huawei.com> (Salil Mehta's
- message of "Fri, 14 Jun 2024 00:36:34 +0100")
-References: <20240613233639.202896-1-salil.mehta@huawei.com>
- <20240613233639.202896-25-salil.mehta@huawei.com>
-Date: Fri, 16 Aug 2024 16:37:22 +0100
-Message-ID: <87v800wkb1.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sez1d-0001ju-8r
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:38:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sez1b-00028R-Sl
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:38:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723822678;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=gMGrm7nlH0rCGmigogvtJNwkGhOH8i4UjZdh8E/gKWc=;
+ b=KbJ7N4lhrCqP6DLLimswi3WCRUXjzc6HVlfASb8OJEBF7NRoP+qHe/raXlx1s2ttahIZ7m
+ wXqveuhVRzCrmrK0unoGYicdoWfqv3Yx2JnSXNKIB4Qwm8hF0EmSG/YZjB3hPuz0GNcL89
+ LyErT0+mN33q0Rm9ATR0BYtyyX3a9Hk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-523-y286bktTNmSwlDKOkEhLpg-1; Fri,
+ 16 Aug 2024 11:37:54 -0400
+X-MC-Unique: y286bktTNmSwlDKOkEhLpg-1
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16C4919560A6; Fri, 16 Aug 2024 15:37:53 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.75])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0802719560A3; Fri, 16 Aug 2024 15:37:48 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Yonggang Luo <luoyonggang@gmail.com>,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Stefan Weil <sw@weilnetz.de>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH] .gitlab-ci.d/windows.yml: Disable the qtests in the MSYS2 job
+Date: Fri, 16 Aug 2024 17:37:47 +0200
+Message-ID: <20240816153747.319161-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,108 +81,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Salil Mehta <salil.mehta@huawei.com> writes:
+The qtests are broken since a while in the MSYS2 job in the gitlab-CI,
+likely due to some changes in the MSYS2 environment. So far nobody has
+neither a clue what's going wrong here, nor an idea how to fix this
+(in fact most QEMU developers even don't have a Windows environment
+available for properly analyzing this problem), so let's disable the
+qtests here again to get at least the test coverage for the compilation
+and unit tests back to the CI.
 
-> vCPU Hot-unplug will result in QOM CPU object unrealization which will do=
- away
-> with all the vCPU thread creations, allocations, registrations that happe=
-ned
-> as part of the realization process. This change introduces the ARM CPU un=
-realize
-> function taking care of exactly that.
->
-> Note, initialized KVM vCPUs are not destroyed in host KVM but their Qemu =
-context
-> is parked at the QEMU KVM layer.
->
-> Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
-> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
-> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-> Reported-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-> [VP: Identified CPU stall issue & suggested probable fix]
-> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-> ---
->  target/arm/cpu.c       | 101 +++++++++++++++++++++++++++++++++++++++++
->  target/arm/cpu.h       |  14 ++++++
->  target/arm/gdbstub.c   |   6 +++
->  target/arm/helper.c    |  25 ++++++++++
->  target/arm/internals.h |   3 ++
->  target/arm/kvm.c       |   5 ++
->  6 files changed, 154 insertions(+)
->
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index c92162fa97..a3dc669309 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -157,6 +157,16 @@ void arm_register_pre_el_change_hook(ARMCPU *cpu, AR=
-MELChangeHookFn *hook,
->      QLIST_INSERT_HEAD(&cpu->pre_el_change_hooks, entry, node);
->  }
->=20=20
-> +void arm_unregister_pre_el_change_hooks(ARMCPU *cpu)
-> +{
-> +    ARMELChangeHook *entry, *next;
-> +
-> +    QLIST_FOREACH_SAFE(entry, &cpu->pre_el_change_hooks, node, next) {
-> +        QLIST_REMOVE(entry, node);
-> +        g_free(entry);
-> +    }
-> +}
-> +
->  void arm_register_el_change_hook(ARMCPU *cpu, ARMELChangeHookFn *hook,
->                                   void *opaque)
->  {
-> @@ -168,6 +178,16 @@ void arm_register_el_change_hook(ARMCPU *cpu, ARMELC=
-hangeHookFn *hook,
->      QLIST_INSERT_HEAD(&cpu->el_change_hooks, entry, node);
->  }
->=20=20
-> +void arm_unregister_el_change_hooks(ARMCPU *cpu)
-> +{
-> +    ARMELChangeHook *entry, *next;
-> +
-> +    QLIST_FOREACH_SAFE(entry, &cpu->el_change_hooks, node, next) {
-> +        QLIST_REMOVE(entry, node);
-> +        g_free(entry);
-> +    }
-> +}
-> +
->  static void cp_reg_reset(gpointer key, gpointer value, gpointer opaque)
->  {
->      /* Reset a single ARMCPRegInfo register */
-> @@ -2552,6 +2572,85 @@ static void arm_cpu_realizefn(DeviceState *dev, Er=
-ror **errp)
->      acc->parent_realize(dev, errp);
->  }
->=20=20
-> +static void arm_cpu_unrealizefn(DeviceState *dev)
-> +{
-> +    ARMCPUClass *acc =3D ARM_CPU_GET_CLASS(dev);
-> +    ARMCPU *cpu =3D ARM_CPU(dev);
-> +    CPUARMState *env =3D &cpu->env;
-> +    CPUState *cs =3D CPU(dev);
-> +    bool has_secure;
-> +
-> +    has_secure =3D cpu->has_el3 || arm_feature(env, ARM_FEATURE_M_SECURI=
-TY);
-> +
-> +    /* rock 'n' un-roll, whatever happened in the arm_cpu_realizefn clea=
-nly */
-> +    cpu_address_space_destroy(cs, ARMASIdx_NS);
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ .gitlab-ci.d/windows.yml | 2 ++
+ 1 file changed, 2 insertions(+)
 
-On current master this will fail:
+diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
+index a83f23a786..9f3112f010 100644
+--- a/.gitlab-ci.d/windows.yml
++++ b/.gitlab-ci.d/windows.yml
+@@ -23,6 +23,8 @@ msys2-64bit:
+     # for this job, because otherwise the build could not complete within
+     # the project timeout.
+     CONFIGURE_ARGS:  --target-list=sparc-softmmu --without-default-devices -Ddebug=false -Doptimization=0
++    # The qtests are broken in the msys2 job on gitlab, so disable them:
++    TEST_ARGS: --no-suite qtest
+     # The Windows git is a bit older so override the default
+     GIT_FETCH_EXTRA_FLAGS: --no-tags --prune --quiet
+   artifacts:
+-- 
+2.46.0
 
-../../target/arm/cpu.c: In function =E2=80=98arm_cpu_unrealizefn=E2=80=99:
-../../target/arm/cpu.c:2626:5: error: implicit declaration of function =E2=
-=80=98cpu_address_space_destroy=E2=80=99 [-Werror=3Dimplicit-function-decla=
-ration]
- 2626 |     cpu_address_space_destroy(cs, ARMASIdx_NS);
-      |     ^~~~~~~~~~~~~~~~~~~~~~~~~
-../../target/arm/cpu.c:2626:5: error: nested extern declaration of =E2=80=
-=98cpu_address_space_destroy=E2=80=99 [-Werror=3Dnested-externs]
-cc1: all warnings being treated as errors
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
