@@ -4,87 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46FC4C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 16:46:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A31D6C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 16:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sf04w-0008LO-TO; Fri, 16 Aug 2024 12:45:31 -0400
+	id 1sf0Cv-0005MM-8E; Fri, 16 Aug 2024 12:53:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sf04p-0008K4-J4
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 12:45:23 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sf04m-0003eF-Lu
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 12:45:22 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-428e0d18666so15294245e9.3
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 09:45:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723826717; x=1724431517; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=WvgsniRMNm+WbdoAwcgJKgrxH4vK43SOaJ12NKEvpmM=;
- b=wncFk/hc0jYa8orQWjjDbmKuWtYeq2OlbYXT8Ayhtx+3zRGvKtH6nu0SyUhxGcJ+dK
- dO70yx6IYp1Q/L/Ws6kueigvXlI8gciCtzxZ+cME7KK814TjWkMcix5s07dDEi/tUBPv
- CkOuhgfKs/NbGOyBQ9SSPcaychXpshzGDG8ZqYTSgKy0Gs5k5IM0+0KT0MlOzEzU3Olh
- dnvhrEz4xAehijfreSNTHGH/oK2ohWOGYz3gV5mNH9yjSuOJd1i+z8PSxSusgiN0kgmG
- 1KhosXcIvhMtWtvQQwJBeRthu72QR8VmBNNFv2U393AxUgbfLbR8+/QJvMu4yg0urz1o
- GhCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723826717; x=1724431517;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WvgsniRMNm+WbdoAwcgJKgrxH4vK43SOaJ12NKEvpmM=;
- b=E8PP+KeCc5qXpka1hRnI8cu8mXeSxEwSsRrEdRNqaFAdtSma7yJxCqwchfrTc6qCi1
- 7eyggpHKR2/uEWAkS6jPqMw1FpvADiQmCkHYXAz2/k9BGaW1YpZAwMw3s9E6zwqd8wT6
- nDEBWZZOrQVrohdBXMZ1GD+ClPmnGdvzy6A8dd0LGriAvxbxbOlsWdL6hsnt+uJ0k6Zj
- Zxi69/iPh1wCwjYXkQzUVBbTHFUaQFRJu5YtM6TgFDGd/NgbvAfCk8cbXXbPLXwWtyWY
- pi7mjPwgyveMidoU2fQ6l8+kPXl0213l9w/5PYN77skxLV6nvkkqfc24LGMkxrLBw/R4
- cr6w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU8j1Xk/SdFiSqZ5Q43LnmyXOlhRdK5xz/fun2l+zLujEPo/BoKkAjXTwa/kpsowFMEtQFVcP69WIo5pcFt7joS6vPt8uE=
-X-Gm-Message-State: AOJu0Yx4OTzCXVV84sEGUM6FtLJQ9taJSPB6TTz/Gt48ZVdzt5mzPTlM
- Sl42Wx6i8ysUfMaxBxpRis+wM0SDJYK+JKa/vLyz8q0Q206tO1Bay9UxvMdLEO8=
-X-Google-Smtp-Source: AGHT+IE6nGa+j04ds2YAQevEBcKfnweGwi88TZJopmcXGgva4gT0szSFLj/IC1vMaojHI2LtJdHr/g==
-X-Received: by 2002:a05:600c:56ce:b0:426:6455:f124 with SMTP id
- 5b1f17b1804b1-42aa7afda74mr4391605e9.0.1723826716435; 
- Fri, 16 Aug 2024 09:45:16 -0700 (PDT)
-Received: from [192.168.220.175] (143.red-88-28-5.dynamicip.rima-tde.net.
- [88.28.5.143]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ed6507c4sm27240355e9.15.2024.08.16.09.45.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Aug 2024 09:45:15 -0700 (PDT)
-Message-ID: <e190d050-7f63-4f7f-bce5-09b1cecac9aa@linaro.org>
-Date: Fri, 16 Aug 2024 18:45:12 +0200
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1sf0Cs-0005I6-O1; Fri, 16 Aug 2024 12:53:42 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sstabellini@kernel.org>)
+ id 1sf0Cq-0004ux-Kz; Fri, 16 Aug 2024 12:53:42 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id 6258462117;
+ Fri, 16 Aug 2024 16:53:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DDCFC32782;
+ Fri, 16 Aug 2024 16:53:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1723827217;
+ bh=05FqKFiDp1obCU8IVAX68BZqgenFk4qV0Beo1Yu69iI=;
+ h=Date:From:To:cc:Subject:In-Reply-To:References:From;
+ b=k/LHvJhpaspNwG/e3/BBfVQljbSO8JQivzWeF4Uxz45RMPAEC9E3KvFr+YNcCfmZ5
+ WryYmXyz3cN3Lp4NW/tJjAK2W45HAYHTN5ayPNkXp56F9Lgs/1CJFoxOlgupGgU8q2
+ 7tL+jGtoY8p/CHy36L5B7d3FgExilUr587zCy8j2sXeAtD+3rvRXve4M+M81TiZCbp
+ lr7ZNXO6JzvYELT2B4q5HHnKocwAxiER/oo8IT/VwD+Phl5/XdnUAXI0AeuDgMxO/2
+ 1gzKn2T8HN/HMU4MB/rRNbcba14q1TCcxZJ801HM6NLlYy+3N7KRMCOnS/2pMdXJrs
+ 9citVOSJqzZuA==
+Date: Fri, 16 Aug 2024 09:53:34 -0700 (PDT)
+From: Stefano Stabellini <sstabellini@kernel.org>
+X-X-Sender: sstabellini@ubuntu-linux-20-04-desktop
+To: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+cc: Stefano Stabellini <sstabellini@kernel.org>, qemu-devel@nongnu.org, 
+ anthony@xenproject.org, paul@xen.org, peter.maydell@linaro.org, 
+ alex.bennee@linaro.org, xenia.ragiadakou@amd.com, jason.andryuk@amd.com, 
+ edgar.iglesias@amd.com, xen-devel@lists.xenproject.org, 
+ qemu-arm@nongnu.org, andrew.cooper3@citrix.com
+Subject: Re: [PATCH v1 04/10] hw/arm: xenpvh: Add support for SMP guests
+In-Reply-To: <CAJy5ezrUbGZCaF=HiYhyLCoXRL3d=t-QbmLeKvu7ByWksV888g@mail.gmail.com>
+Message-ID: <alpine.DEB.2.22.394.2408160949320.298534@ubuntu-linux-20-04-desktop>
+References: <20240812130606.90410-1-edgar.iglesias@gmail.com>
+ <20240812130606.90410-5-edgar.iglesias@gmail.com>
+ <alpine.DEB.2.22.394.2408121650590.298534@ubuntu-linux-20-04-desktop>
+ <ZruRm34zIMtUm7oH@zapote>
+ <alpine.DEB.2.22.394.2408131550080.298534@ubuntu-linux-20-04-desktop>
+ <ZryZwOoadeb1UWK8@zapote>
+ <alpine.DEB.2.22.394.2408141719400.298534@ubuntu-linux-20-04-desktop>
+ <CAJy5ezrUbGZCaF=HiYhyLCoXRL3d=t-QbmLeKvu7ByWksV888g@mail.gmail.com>
+User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH for-9.1 1/2] Revert "hw/riscv/virt.c: imsics DT: add
- '#msi-cells'"
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Andrew Jones <ajones@ventanamicro.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, Conor Dooley <conor@kernel.org>
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com,
- dbarboza@ventanamicro.com, Anup Patel <apatel@ventanamicro.com>
-References: <20240816160743.220374-4-ajones@ventanamicro.com>
- <20240816160743.220374-5-ajones@ventanamicro.com>
- <40c7abce-8d1d-4591-ab09-bbfebf1e1657@linaro.org>
-Content-Language: en-US
-In-Reply-To: <40c7abce-8d1d-4591-ab09-bbfebf1e1657@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Content-Type: multipart/mixed; boundary="8323329-1147340740-1723827217=:298534"
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=sstabellini@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,45 +80,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/8/24 18:27, Philippe Mathieu-Daudé wrote:
-> On 16/8/24 18:07, Andrew Jones wrote:
->> This reverts commit f42cdf2ea5b3a1dc369792d7acbf9cd3e5c90815.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Ahah sorry I'm not seeing well after a long day in front of the
-monitor =)
+--8323329-1147340740-1723827217=:298534
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
->> Linux does not properly handle '#msi-cells=<0>' when searching for
->> MSI controllers for PCI devices which results in the devices being
->> unable to use MSIs. A patch for Linux has been sent[1] but until it,
->> or something like it, is merged and in distro kernels we should stop
->> adding the property. It's harmless to stop adding it since the
->> absence of the property and a value of zero for the property mean
->> the same thing according to the DT binding definition.
->>
+On Fri, 16 Aug 2024, Edgar E. Iglesias wrote:
+> On Thu, Aug 15, 2024 at 2:30 AM Stefano Stabellini <sstabellini@kernel.org> wrote:
+>       On Wed, 14 Aug 2024, Edgar E. Iglesias wrote:
+>       > On Tue, Aug 13, 2024 at 03:52:32PM -0700, Stefano Stabellini wrote:
+>       > > On Tue, 13 Aug 2024, Edgar E. Iglesias wrote:
+>       > > > On Mon, Aug 12, 2024 at 06:47:17PM -0700, Stefano Stabellini wrote:
+>       > > > > On Mon, 12 Aug 2024, Edgar E. Iglesias wrote:
+>       > > > > > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+>       > > > > >
+>       > > > > > Add SMP support for Xen PVH ARM guests. Create max_cpus ioreq
+>       > > > > > servers to handle hotplug.
+>       > > > > >
+>       > > > > > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+>       > > > > > ---
+>       > > > > >  hw/arm/xen_arm.c | 5 +++--
+>       > > > > >  1 file changed, 3 insertions(+), 2 deletions(-)
+>       > > > > >
+>       > > > > > diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
+>       > > > > > index 5f75cc3779..ef8315969c 100644
+>       > > > > > --- a/hw/arm/xen_arm.c
+>       > > > > > +++ b/hw/arm/xen_arm.c
+>       > > > > > @@ -173,7 +173,7 @@ static void xen_arm_init(MachineState *machine)
+>       > > > > > 
+>       > > > > >      xen_init_ram(machine);
+>       > > > > > 
+>       > > > > > -    xen_register_ioreq(xam->state, machine->smp.cpus, &xen_memory_listener);
+>       > > > > > +    xen_register_ioreq(xam->state, machine->smp.max_cpus, &xen_memory_listener);
+>       > > > > > 
+>       > > > > >      xen_create_virtio_mmio_devices(xam);
+>       > > > > > 
+>       > > > > > @@ -218,7 +218,8 @@ static void xen_arm_machine_class_init(ObjectClass *oc, void *data)
+>       > > > > >      MachineClass *mc = MACHINE_CLASS(oc);
+>       > > > > >      mc->desc = "Xen PVH ARM machine";
+>       > > > > >      mc->init = xen_arm_init;
+>       > > > > > -    mc->max_cpus = 1;
+>       > > > > > +    /* MAX number of vcpus supported by Xen.  */
+>       > > > > > +    mc->max_cpus = GUEST_MAX_VCPUS;
+>       > > > >
+>       > > > > Will this cause allocations of data structures with 128 elements?
+>       > > > > Looking at hw/xen/xen-hvm-common.c:xen_do_ioreq_register it seems
+>       > > > > possible? Or hw/xen/xen-hvm-common.c:xen_do_ioreq_register is called
+>       > > >
+>       > > > Yes, in theory there's probably overhead with this but as you correctly
+>       > > > noted below, a PVH aware xl will set the max_cpus option to a lower value.
+>       > > >
+>       > > > With a non-pvh aware xl, I was a little worried about the overhead
+>       > > > but I couldn't see any visible slow-down on ARM neither in boot or in network
+>       > > > performance (I didn't run very sophisticated benchmarks).
+>       > > 
+>       > > What do you mean by "non-pvh aware xl"? All useful versions of xl
+>       > > support pvh?
+>       >
+>       >
+>       > I mean an xl without our PVH patches merged.
+>       > xl in upstream doesn't know much about PVH yet.
+>       > Even for ARM, we're still carrying significant patches in our tree.
 > 
-> This reverts commit f42cdf2ea5b3a1dc369792d7acbf9cd3e5c90815.
+>       Oh I see. In that case, I don't think we need to support "non-pvh aware xl".
 > 
->> Link: 
->> https://lore.kernel.org/all/20240816124957.130017-2-ajones@ventanamicro.com/ # 1
->> Signed-off-by: Andrew Jones <ajones@ventanamicro.com>
->> ---
->>   hw/riscv/virt.c | 1 -
->>   1 file changed, 1 deletion(-)
->>
->> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
->> index 9981e0f6c9b9..cef41c150aaf 100644
->> --- a/hw/riscv/virt.c
->> +++ b/hw/riscv/virt.c
->> @@ -552,7 +552,6 @@ static void create_fdt_one_imsic(RISCVVirtState 
->> *s, hwaddr base_addr,
->>                             FDT_IMSIC_INT_CELLS);
->>       qemu_fdt_setprop(ms->fdt, imsic_name, "interrupt-controller", 
->> NULL, 0);
->>       qemu_fdt_setprop(ms->fdt, imsic_name, "msi-controller", NULL, 0);
->> -    qemu_fdt_setprop_cell(ms->fdt, imsic_name, "#msi-cells", 0);
->>       qemu_fdt_setprop(ms->fdt, imsic_name, "interrupts-extended",
->>                        imsic_cells, ms->smp.cpus * sizeof(uint32_t) * 2);
->>       qemu_fdt_setprop(ms->fdt, imsic_name, "reg", imsic_regs,
 > 
+>       > > > > later on with the precise vCPU value which should be provided to QEMU
+>       > > > > via the -smp command line option
+>       > > > > (tools/libs/light/libxl_dm.c:libxl__build_device_model_args_new)?
+>       > > >
+>       > > > Yes, a pvh aware xl will for example pass -smp 2,maxcpus=4 based on
+>       > > > values from the xl.cfg. If the user doesn't set maxvcpus in xl.cfg, xl
+>       > > > will set maxvcpus to the same value as vcpus.
+>       > >
+>       > > OK good. In that case if this is just an initial value meant to be
+>       > > overwritten, I think it is best to keep it as 1.
+>       >
+>       > Sorry but that won't work. I think the confusion here may be that
+>       > it's easy to mix up mc->max_cpus and machine->smp.max_cpus, these are
+>       > not the same. They have different purposes.
+>       >
+>       > I'll try to clarify the 3 values in play.
+>       >
+>       > machine-smp.cpus:
+>       > Number of guest vcpus active at boot.
+>       > Passed to QEMU via the -smp command-line option.
+>       > We don't use this value in QEMU's ARM PVH machines.
+>       >
+>       > machine->smp.max_cpus:
+>       > Max number of vcpus that the guest can use (equal or larger than machine-smp.cpus).
+>       > Will be set by xl via the "-smp X,maxcpus=Y" command-line option to QEMU.
+>       > Taken from maxvcpus from xl.cfg, same as XEN_DMOP_nr_vcpus.
+>       > This is what we use for xen_register_ioreq().
+>       >
+>       > mc->max_cpus:
+>       > Absolute MAX in QEMU used to cap the -smp command-line options.
+>       > If xl tries to set -smp (machine->smp.max_cpus) larger than this, QEMU will bail out.
+>       > Used to setup xen_register_ioreq() ONLY if -smp maxcpus was NOT set (i.e by a non PVH aware xl).
+>       > Cannot be 1 because that would limit QEMU to MAX 1 vcpu.
+>       >
+>       > I guess we could set mc->max_cpus to what XEN_DMOP_nr_vcpus returns but I'll
+>       > have to check if we can even issue that hypercall this early in QEMU since
+>       > mc->max_cpus is setup before we even parse the machine options. We may
+>       > not yet know what domid we're attaching to yet.
+> 
+>       If mc->max_cpus is the absolute max and it will not be used if -smp is
+>       passed to QEMU, then I think it is OK to use GUEST_MAX_VCPUS
+> 
+> Looking at this a little more. If users (xl) don't pass an -smp option we actually default to smp.max_cpus=1.
+> So, another option is to simply remove the upper limit in QEMU (e.g we can set mc->max_cpus to something very large like UINT32_MAX).
+> That would avoid early hypercalls, avoid using GUEST_MAX_VCPUS and always let xl dictate the max_cpus value using the -smp cmdline option. 
 
+As the expectation is that there will be always a smp.max_cpus option
+passed to QEMU, I would avoid an extra early hypercall.
+
+For the initial value, I would use something static and large, but not
+unreasonably large as UINT32_MAX to be more resilient in (erroneous)
+cases where smp.max_cpus is not passed.
+
+So I would initialize it to GUEST_MAX_VCPUS, or if we don't want to use
+GUEST_MAX_VCPUS, something equivalent in the 64-256 range.
+
+Alternative we can have a runtime check and exit with a warning if
+smp.max_cpus is not set.
+--8323329-1147340740-1723827217=:298534--
 
