@@ -4,84 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D2FBC5472D
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 12:54:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 196BCC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 12:58:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sewT6-0003XU-NC; Fri, 16 Aug 2024 08:54:12 -0400
+	id 1sewWy-0008UT-BH; Fri, 16 Aug 2024 08:58:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sewT5-0003Wu-6N
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 08:54:11 -0400
-Received: from mail-lj1-x233.google.com ([2a00:1450:4864:20::233])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sewT3-0003CZ-7J
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 08:54:10 -0400
-Received: by mail-lj1-x233.google.com with SMTP id
- 38308e7fff4ca-2ef2c56d9dcso24356021fa.2
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 05:54:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723812847; x=1724417647; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qPw2LFYVBp8naoRU6cpLZ9ldMf9dHXLYYquXiShw6RQ=;
- b=J0P57QyhYgwwNmq50yJpyGFIJFO7Zgo/LmUzhDLl1GIx0AU2dVp0pm+G2CJMXDAG38
- tU9Q+kNuQmPUrm3sbkn0LZHS0J7ckVH037J3vhipEzc5PhGVkeev/Bn/7RvGO+Q9CekN
- ZYdaffj+OvMGpbcNdYlA1Iu7050L6TszXtxH+lRu4ksQqrnB/UAvRHHCzt2eKqhUp53o
- YlUgxFFjbL/yU/7QBGcSlLJVvRJGPo2mNgC3l93Jmt7b2m64Tw8uRG5udmqVGbi+LbfH
- DKPZF0NH3D9qH7LNgh6ho/+xDHbLFNeqlXZbfUadjGNm4jojiJj2zKleiG275j95Oe7q
- hP+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723812847; x=1724417647;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qPw2LFYVBp8naoRU6cpLZ9ldMf9dHXLYYquXiShw6RQ=;
- b=ltkoGldfeIDJ/q2YuFbclSMfAOCzXguI50FHeklRNIghjoNrzzS1HKb+tYEJ9PeWLu
- mmxEpQZFlTE8SN+TnjT9C5E2jCyzwyVSRr66h2uW9+/xFJYV9AnZhYI8JgDdvihwKDHI
- 6w8PkFYkm++QPcKUy6k0bF40C7FaUQSZPou9/zx6epjN5Dw9JDK+7fskpDoeRwEiULyB
- eGywlIsASMfmyQkRV31yIfiE3VOwoStZdzUz9tpvzWJPhmvcfReaU6atSyw1KV2xxwQl
- 6Eykd4KJu+DmdwMsGVEwYgno0d2dn/HveA1ERucMAp60k+CsWGNua601XWxGifc6q3cC
- 2Q7Q==
-X-Gm-Message-State: AOJu0Yw0/6eNVXFcAAQGbj/Fw5KkG0qszrxu6RjMVpD33CRF9tOepjGK
- wjHlnTmv3l4kZXrblopBelaLlft8lliTJZPeEbl2LVCBe32ULsXtzy6KwAx33EAWomTT3utPVMz
- z
-X-Google-Smtp-Source: AGHT+IF5fTpltqD0Q/UcxJO1v9Evf6df0UEGk0kIil/5aw4YebxQusbSElbTHq53elprVe1S/QTUnw==
-X-Received: by 2002:a05:6512:ea7:b0:52c:8e00:486a with SMTP id
- 2adb3069b0e04-5331c6e94afmr1895418e87.55.1723812846544; 
- Fri, 16 Aug 2024 05:54:06 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a83838cf03csm250528866b.50.2024.08.16.05.54.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 05:54:06 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 1A34D5F867;
- Fri, 16 Aug 2024 13:54:05 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL for 9.1 00/21] Some fixes for 9.1-rc3 (build, replay,
- docs, plugins)
-In-Reply-To: <f0f5f04b-9ffa-46ad-bb2a-a497de3c1c41@linaro.org> (Richard
- Henderson's message of "Fri, 16 Aug 2024 08:28:33 +1000")
-References: <20240815144911.1931487-1-alex.bennee@linaro.org>
- <f0f5f04b-9ffa-46ad-bb2a-a497de3c1c41@linaro.org>
-Date: Fri, 16 Aug 2024 13:54:05 +0100
-Message-ID: <878qww39xu.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sewWw-0008Ta-R3
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 08:58:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1sewWu-0004DX-LD
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 08:58:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723813085;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=e/tDeubGZmIKECYGc56eU8Qwc8FDl7jIS7S9ewaVBAY=;
+ b=JS0rD0CVoNhGFZ6DTtjAS0bgLkAcVjdk0BybpyXpYfWQwcANpCQmbIF0qVCn84Oa2j5Lv0
+ auJS95qMEwXm+qmu58x/M02H0HAkUNGLYN58amaoVF32aGBL+UvgycY3pRh8WlS0f9U847
+ lLKrKT/G4IlHbj5N0/6ob5xYEaFVIQU=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-249-jbhkqbdrOaSizY0YF1puCw-1; Fri,
+ 16 Aug 2024 08:58:02 -0400
+X-MC-Unique: jbhkqbdrOaSizY0YF1puCw-1
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9D91E1955D45; Fri, 16 Aug 2024 12:58:00 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.143])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 166201956054; Fri, 16 Aug 2024 12:57:55 +0000 (UTC)
+Date: Fri, 16 Aug 2024 13:57:52 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Cc: qemu-devel@nongnu.org, graf@amazon.com, agraf@csgraf.de,
+ stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, philmd@linaro.org
+Subject: Re: [PATCH v3 4/5] machine/nitro-enclave: Add built-in Nitro Secure
+ Module device
+Message-ID: <Zr9M0BqDEdF5D5xJ@redhat.com>
+References: <20240810164502.19693-1-dorjoychy111@gmail.com>
+ <20240810164502.19693-5-dorjoychy111@gmail.com>
+ <ZroXDY3YulpB4SCt@redhat.com>
+ <CAFfO_h48q9Lkt1BmtoPxtZ1a8HJsoQCTTdBMTFkB568+v6B0Sw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::233;
- envelope-from=alex.bennee@linaro.org; helo=mail-lj1-x233.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAFfO_h48q9Lkt1BmtoPxtZ1a8HJsoQCTTdBMTFkB568+v6B0Sw@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,78 +90,228 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Richard Henderson <richard.henderson@linaro.org> writes:
+On Fri, Aug 16, 2024 at 06:50:34PM +0600, Dorjoy Chowdhury wrote:
+> Hi Daniel,
+> 
+> On Mon, Aug 12, 2024 at 8:07 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> > On Sat, Aug 10, 2024 at 10:45:01PM +0600, Dorjoy Chowdhury wrote:
+> > > AWS Nitro Enclaves have built-in Nitro Secure Module (NSM) device which
+> > > is used for stripped down TPM functionality like attestation. This commit
+> > > adds the built-in NSM device in the nitro-enclave machine type.
+> > >
+> > > In Nitro Enclaves, all the PCRs start in a known zero state and the first
+> > > 16 PCRs are locked from boot and reserved. The PCR0, PCR1, PCR2 and PCR8
+> > > contain the SHA384 hashes related to the EIF file used to boot the
+> > > VM for validation.
+> > >
+> > > A new optional nitro-enclave machine option 'id' has been added which will
+> > > be the enclave identifier reflected in the module-id of the NSM device.
+> > > Otherwise, the device will have a default id set.
+> > >
+> > > Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+> > > ---
+> > >  hw/core/eif.c                   | 205 +++++++++++++++++++++++++++++++-
+> > >  hw/core/eif.h                   |   5 +-
+> > >  hw/core/meson.build             |   4 +-
+> > >  hw/i386/Kconfig                 |   1 +
+> > >  hw/i386/nitro_enclave.c         |  85 ++++++++++++-
+> > >  include/hw/i386/nitro_enclave.h |  19 +++
+> > >  6 files changed, 310 insertions(+), 9 deletions(-)
+> > >
+> > > diff --git a/hw/core/eif.c b/hw/core/eif.c
+> > > index 5558879a96..d2c65668ef 100644
+> > > --- a/hw/core/eif.c
+> > > +++ b/hw/core/eif.c
+> > > @@ -12,6 +12,9 @@
+> > >  #include "qemu/bswap.h"
+> > >  #include "qapi/error.h"
+> > >  #include <zlib.h> /* for crc32 */
+> > > +#include <cbor.h>
+> > > +#include <gnutls/gnutls.h>
+> > > +#include <gnutls/x509.h>
+> > >
+> > >  #include "hw/core/eif.h"
+> > >
+> >
+> > > @@ -269,6 +284,125 @@ static bool read_eif_ramdisk(FILE *eif, FILE *initrd, uint64_t size,
+> > >      return false;
+> > >  }
+> > >
+> > > +static bool get_fingerprint_sha384_from_cert(uint8_t *cert, size_t size,
+> > > +                                             uint8_t *sha384, Error **errp)
+> > > +{
+> > > +    gnutls_x509_crt_t crt;
+> > > +    size_t hash_size = 48;
+> > > +    gnutls_datum_t datum = {.data = cert, .size = size};
+> > > +
+> > > +    gnutls_global_init();
+> > > +    gnutls_x509_crt_init(&crt);
+> > > +
+> > > +    if (gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM) != 0) {
+> > > +        error_setg(errp, "Failed to import certificate");
+> > > +        goto cleanup;
+> > > +    }
+> > > +
+> > > +    if (gnutls_x509_crt_get_fingerprint(crt, GNUTLS_DIG_SHA384, sha384,
+> > > +                                        &hash_size) != 0) {
+> > > +        error_setg(errp, "Failed to compute SHA384 fingerprint");
+> > > +        goto cleanup;
+> > > +    }
+> > > +
+> > > +    return true;
+> > > +
+> > > + cleanup:
+> > > +    gnutls_x509_crt_deinit(crt);
+> > > +    gnutls_global_deinit();
+> > > +    return false;
+> > > +}
+> >
+> > I'd suggest this go into  qcrypto/x509-utils.c & include/qcrypto/x509-utils.h,
+> > as:
+> >
+> >     int qcrypto_get_x509_cert_fingerprint(uint8_t *cert,
+> >                                           size_t size,
+> >                                           QCryptoHashAlgorith hash,
+> >                                           Error **errp);
+> >
+> > there's no need to be calling gnutls_global_init() / deinit() either.
+> >
+> >
+> > > @@ -299,7 +433,9 @@ static long get_file_size(FILE *f, Error **errp)
+> > >   */
+> > >  bool read_eif_file(const char *eif_path, const char *machine_initrd,
+> > >                     char **kernel_path, char **initrd_path, char **cmdline,
+> > > -                   Error **errp)
+> > > +                   uint8_t *image_sha384, uint8_t *bootstrap_sha384,
+> > > +                   uint8_t *app_sha384, uint8_t *fingerprint_sha384,
+> > > +                   bool *signature_found, Error **errp)
+> > >  {
+> > >      FILE *f = NULL;
+> > >      FILE *machine_initrd_f = NULL;
+> > > @@ -308,9 +444,33 @@ bool read_eif_file(const char *eif_path, const char *machine_initrd,
+> > >      uint32_t crc = 0;
+> > >      EifHeader eif_header;
+> > >      bool seen_sections[EIF_SECTION_MAX] = {false};
+> > > -
+> > > +    /* kernel + ramdisks + cmdline sha384 hash */
+> > > +    GChecksum *image_hasher = NULL;
+> > > +    /* kernel + boot ramdisk + cmdline sha384 hash */
+> > > +    GChecksum *bootstrap_hasher = NULL;
+> > > +    /* application ramdisk(s) hash */
+> > > +    GChecksum *app_hasher = NULL;
+> > > +    size_t digest_len;
+> > > +
+> > > +    *signature_found = false;
+> > >      *kernel_path = *initrd_path = *cmdline = NULL;
+> > >
+> > > +    image_hasher = g_checksum_new(G_CHECKSUM_SHA384);
+> > > +    if (image_hasher == NULL) {
+> > > +        error_setg(errp, "Failed to initialize sha384 hash for image");
+> > > +        goto cleanup;
+> > > +    }
+> > > +    bootstrap_hasher = g_checksum_new(G_CHECKSUM_SHA384);
+> > > +    if (bootstrap_hasher == NULL) {
+> > > +        error_setg(errp, "Failed to initialize sha384 hash for bootstrap");
+> > > +        goto cleanup;
+> > > +    }
+> > > +    app_hasher = g_checksum_new(G_CHECKSUM_SHA384);
+> > > +    if (app_hasher == NULL) {
+> > > +        error_setg(errp, "Failed to initialize sha384 hash for app");
+> > > +        goto cleanup;
+> > > +    }
+> >
+> > Don't use GChecksum APIs please, use the qcrypto hash APIs instead,
+> > as we need all code to be using the designated QEMU crypto backend.
+> >
+> 
+> Thanks for the reviews. I was looking into replacing the GChecksum
+> uses with qcrypto apis and was able to do it in the extendPCR function
+> but I need some help with how I can do this in the eif.c file. For
+> example, the "image_hash" needs to be a SHA384 hash of the kernel,
+> cmdline, ramdisks sections' data as they appear in the order that is
+> in the EIF file. Using GChecksum it was easy as I was able to just
+> pass the hashers to the "read_eif_kernel", "read_eif_ramdisk" etc
+> functions and call "update" on them. But the qcrypto apis are
+> stateless i.e., I would need to pass all the buffers in a single api
+> call so it wouldn't work right now out of the box. Do you have any
+> suggestions how I should modify/create qcrypto apis so that I can
+> easily do this (considering that I would need to implement for
+> different qcrypto backends)? Thanks!
 
-> On 8/16/24 00:48, Alex Benn=C3=A9e wrote:
->> The following changes since commit b0d6c037ea0a825192285f149af72a73a1baa=
-a04:
->>    Update version for v9.1.0-rc2 release (2024-08-15 20:32:37 +1000)
->> are available in the Git repository at:
->>    https://gitlab.com/stsquad/qemu.git
->> tags/pull-maintainer-9.1-rc3-150824-1
->> for you to fetch changes up to
->> f39cbfc9f8dcb17e8168735acb6fb75638d9904f:
->>    plugins: fix race condition with scoreboards (2024-08-15 12:10:23
->> +0100)
->> ----------------------------------------------------------------
->> Some fixes for 9.1-rc3 (build, replay, docs, plugins)
->>    - re-enable gdbsim-r5f562n8 test
->>    - ensure updates to python deps re-trigger configure
->>    - tweak configure detection of GDB MTE support
->>    - make checkpatch emit more warnings on updating headers
->>    - allow i386 access_ptr to force slow path for plugins
->>    - fixe some replay regressions
->>    - update the replay-dump tool
->>    - better handle muxed chardev during replay
->>    - clean up TCG plugins docs to mention scoreboards
->>    - fix plugin scoreboard race condition
->> ----------------------------------------------------------------
->> Alex Benn=C3=A9e (2):
->>        Makefile: trigger re-configure on updated pythondeps
->>        target/i386: allow access_ptr to force slow path on failed probe
->> Gustavo Romero (3):
->>        configure: Fix arch detection for GDB_HAS_MTE
->>        configure: Avoid use of param. expansion when using gdb_version
->>        configure: Fix GDB version detection for GDB_HAS_MTE
->> Nicholas Piggin (10):
->>        scripts/replay-dump.py: Update to current rr record format
->>        scripts/replay-dump.py: rejig decoders in event number order
->>        tests/avocado: excercise scripts/replay-dump.py in replay tests
->>        replay: allow runstate shutdown->running when replaying trace
->>        Revert "replay: stop us hanging in rr_wait_io_event"
->>        tests/avocado: replay_kernel.py add x86-64 q35 machine test
->>        chardev: set record/replay on the base device of a muxed device
->>        virtio-net: Use replay_schedule_bh_event for bhs that affect mach=
-ine state
->>        virtio-net: Use virtual time for RSC timers
->>        savevm: Fix load_snapshot error path crash
->> Philippe Mathieu-Daud=C3=A9 (2):
->>        tests/avocado: Re-enable gdbsim-r5f562n8 testing U-Boot
->>        buildsys: Fix building without plugins on Darwin
->> Pierrick Bouvier (2):
->>        docs/devel: update tcg-plugins page
->>        plugins: fix race condition with scoreboards
->> Stefan Weil (1):
->>        docs: Fix some typos (found by typos) and grammar issues
->
-> Patch 19:
->
-> ERROR: pull request includes commits attributed to list
+Looking at the read_eif_* methods:
 
-What does that actually mean?
+@ -213,6 +218,8 @@ static bool read_eif_kernel(FILE *f, uint64_t size, char **kernel_path,
+     }
 
-> Please re-spin.
+     *crc = crc32(*crc, kernel, size);
++    g_checksum_update(image_hasher, kernel, size);
++    g_checksum_update(bootstrap_hasher, kernel, size);
+     g_free(kernel);
+     fclose(tmp_file);
 
-Should I just drop Stefan's doc tweaks?
+@@ -230,6 +237,8 @@ static bool read_eif_kernel(FILE *f, uint64_t size, char **kernel_path,
+ }
 
->
->
-> r~
+ static bool read_eif_cmdline(FILE *f, uint64_t size, char *cmdline,
++                             GChecksum *image_hasher,
++                             GChecksum *bootstrap_hasher,
+                              uint32_t *crc, Error **errp)
+ {
+     size_t got = fread(cmdline, 1, size, f);
+@@ -239,10 +248,14 @@ static bool read_eif_cmdline(FILE *f, uint64_t size, char *cmdline,
+     }
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+     *crc = crc32(*crc, (uint8_t *)cmdline, size);
++    g_checksum_update(image_hasher, (uint8_t *)cmdline, size);
++    g_checksum_update(bootstrap_hasher, (uint8_t *)cmdline, size);
+     return true;
+ }
+
+ static bool read_eif_ramdisk(FILE *eif, FILE *initrd, uint64_t size,
++                             GChecksum *image_hasher,
++                             GChecksum *bootstrap_or_app_hasher,
+                              uint32_t *crc, Error **errp)
+ {
+     size_t got;
+@@ -261,6 +274,8 @@ static bool read_eif_ramdisk(FILE *eif, FILE *initrd, uint64_t size,
+     }
+
+     *crc = crc32(*crc, ramdisk, size);
++    g_checksum_update(image_hasher, ramdisk, size);
++    g_checksum_update(bootstrap_or_app_hasher, ramdisk, size);
+     g_free(ramdisk);
+     return true;
+
+
+For the kernel + ramdisk, these methods are freeing the buffer.
+For the cmdline, the pointer is held by the caller.
+
+I'd suggest that read_eif_kernel+ramddisk are changed to return
+the data pointer instead of free'ing it.
+
+The caller can then stash the kernl+cmdline+ramdisk into an iovec
+and calc the hash in a single stateless operation.
+
+
+
+If you really don't want to do that, then you'll have to wait for
+this series to be finalized & merged next dev cycle:
+
+  https://lists.nongnu.org/archive/html/qemu-devel/2024-08/msg01173.html
+
+It is getting close to ready, so might not be too long, but I can't
+guarantee a timeframe.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
