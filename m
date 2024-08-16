@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1550C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 18:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 683B8C531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 18:18:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sf1Wq-0003vL-ET; Fri, 16 Aug 2024 14:18:24 -0400
+	id 1sf1X2-0004LI-TI; Fri, 16 Aug 2024 14:18:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <just4now666666@gmail.com>)
- id 1sezhc-0003FB-Tc
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 12:21:24 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <doug@schmorgal.com>)
+ id 1sezwe-0003GX-FR
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 12:36:56 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <just4now666666@gmail.com>)
- id 1sezha-0000Cc-DY
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 12:21:24 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4281c164408so15196565e9.1
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 09:21:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <doug@schmorgal.com>)
+ id 1sezwZ-0002KG-7h
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 12:36:56 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2d3ed48c748so159303a91.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 09:36:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723825279; x=1724430079; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=k2a8wZIm05R7plSdjrg5kNp3Tv6BG06tA1WKCBKzCKg=;
- b=V2qrImzkVdY0dvQh8ePIFGyqSU8KPWxMnZJ0ZQX3vzjFHHdh+lRKuyEBGZvX76JhcZ
- j0baQ6B9I5NtEPAcGwdFDv2QRYFytql5X58WTgVhEBZ/TtTkjqF3qmUqbt4vX7GrObs1
- LU6suQftjlwi+7odcjHikEaW/t+pgtm3ZfPsU/aEIdQDfFYa5Lx4KmOBUr6zr2lZQtn1
- 9UY5a1RIBlsUM8gWuIouzjXeNYH/3Hc4QCTtdwt5dDyzIJ3dgqV08/qXVUxDR4J1yONF
- I/tZ2GtR/y/0nyxMbWQKYDsa252IXH2vFbXnOeIcwgMhhWbiWnyKV/g2kbjeQdp5AbmP
- ONvw==
+ d=schmorgal.com; s=google; t=1723826210; x=1724431010; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hpykp3v3nUS3no6XDt2FDZxaHDZOI6A5wRB8LlJUTdQ=;
+ b=VqjC/92pQ54Pj0Mzn0kzAxfEQ8vMZgqMoxKEGM8NHas1Te9LJ782Jc26Iit+mpCJlw
+ NZXlzFdsEu9FZBxeLWOC67oHdI/Hc9N/it/e45W/oEC5OyfN9qzbHio+55WheMWVo5og
+ IU6eJu6OTJbcn+S0/0+brYUdc8Pl9vMNnwbYA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723825279; x=1724430079;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=k2a8wZIm05R7plSdjrg5kNp3Tv6BG06tA1WKCBKzCKg=;
- b=VrwJdFBILA0OMAAAa2YQ16UnkCYA638mdJf73tGWO9wisfPCFylocwA6LMqewYHtNl
- zQWhn8GuRi+y/G3KIad83/jso98Y1+hDDEFt6AQ3wJurijeOxpFiKU+lD69G1mj7LvnY
- HMBdWP6weyc1xMQ5amj5R/OqE3FFHJ/pey/QS6Ijvc+JyPIYT1rhkRAFe7sLcoYhrw46
- 3vikVA5o6tugswbSxgSR0ERkqrf2NK0G2u6Tz+7CkV2rYu9G2xAi33rnjX1z5dLaXGRI
- /Xu6w0F5XBmVukzq99AiApCAJ7f5ox4mJ5qcVdvo3uQoDGDTIh4zWQDlMRIOJZW5+bdW
- ciSw==
-X-Gm-Message-State: AOJu0YwIJ2bdg1OTuJp7D17GgAQVDPiMKKdSLU5q7v067VwwylGVRxVB
- lhIZsieUzdCTArOmNTUKtHR+FkRtbH1ulpH55cHd+T9PcWlv4nVKCMMvNRrluFU=
-X-Google-Smtp-Source: AGHT+IEHkQJBNmQ+uAqGfdE9gIofSXMVrQkjaOMym65F9iVtPRWWxd4UJkaMEm55hr1S8c4/qFfrKg==
-X-Received: by 2002:a05:600c:458b:b0:428:1663:2c2e with SMTP id
- 5b1f17b1804b1-429ed7a6b76mr21603425e9.17.1723825278913; 
- Fri, 16 Aug 2024 09:21:18 -0700 (PDT)
-Received: from localhost.localdomain
- ([2a06:c701:4869:8e00:fd40:3d83:5141:6edb])
+ d=1e100.net; s=20230601; t=1723826210; x=1724431010;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Hpykp3v3nUS3no6XDt2FDZxaHDZOI6A5wRB8LlJUTdQ=;
+ b=NgiopPYQOz4Y1EutX65XKzKXwP7hSD/gqVecXZrC6ehQMo9ck334vleFacT2VCc4np
+ I663NNIefw8hrr8SUNWLVgSrxfVFip/U09jd5Ee3ZaQ8wBlkyW8iTmmozpWRgSIOqJgb
+ rVv5a9HPoJ8fbvxkgX4ty6U8CeL4qxNLp5AvOSJexuTHSTWIGnPFgDuYOLKoM2O80Cm/
+ BSueFj2DwUwqYtCT/3Bjw9uy4Z+9YtrhvF/Ccjy2RJSf3xniDGC3WVclvaueFmzs3Qzj
+ Ct//S6DGdIZN94CB4Zs5woz5m0BHkd7nVGWHz6yLLzXvdMEYfg05SDDHhAUsIUGp5QxE
+ UMHA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWRAc+mgtRjqTKiMzyvnx1SKwdv15StKeT13t4L9Ny5ZdDUsffsjLpbJC6ZSpiZiKWs6jpT8uWWkVxL@nongnu.org
+X-Gm-Message-State: AOJu0YzrcMhB7JZCTsJiIPhhkSZChZFaULzVC9csD7XCFd5QmWvAevVI
+ TfUWiy/GAhjm4D+NZGrPeZDfe/VOUE7XNWsjnCXDMxugtWfzPXdfm8f0CmGg1UE=
+X-Google-Smtp-Source: AGHT+IHtue1ofcS5v4Hx4+pAt9Dw9ZXebnre/TFnx2PeOqt8lj0qBsytmNORWwtiXFPBgWyZLAcGKg==
+X-Received: by 2002:a17:90a:ad83:b0:2cd:1e0d:a4c8 with SMTP id
+ 98e67ed59e1d1-2d3e02ebd87mr2208763a91.3.1723826209538; 
+ Fri, 16 Aug 2024 09:36:49 -0700 (PDT)
+Received: from doug-ryzen-5700G.. ([50.37.200.153])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ded35991sm79966185e9.21.2024.08.16.09.21.17
+ 98e67ed59e1d1-2d3e2e6b201sm2134285a91.15.2024.08.16.09.36.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 09:21:18 -0700 (PDT)
-From: Elisha Hollander <just4now666666@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Elisha Hollander <just4now666666@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 1/1] allow using a higher icount
-Date: Fri, 16 Aug 2024 16:20:43 +0000
-Message-Id: <20240816162044.5764-1-just4now666666@gmail.com>
-X-Mailer: git-send-email 2.30.2
+ Fri, 16 Aug 2024 09:36:49 -0700 (PDT)
+From: Doug Brown <doug@schmorgal.com>
+To: Vikram Garhwal <vikram.garhwal@amd.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Pavel Pisa <pisa@cmp.felk.cvut.cz>
+Cc: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org,
+ Doug Brown <doug@schmorgal.com>
+Subject: [PATCH 1/5] hw/net/can/xlnx-versal-canfd: Fix interrupt level
+Date: Fri, 16 Aug 2024 09:35:01 -0700
+Message-Id: <20240816163504.789393-2-doug@schmorgal.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240816163504.789393-1-doug@schmorgal.com>
+References: <20240816163504.789393-1-doug@schmorgal.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=just4now666666@gmail.com; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=doug@schmorgal.com; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 16 Aug 2024 14:18:21 -0400
+X-Mailman-Approved-At: Fri, 16 Aug 2024 14:18:34 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,53 +96,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Elisha Hollander <just4now666666@gmail.com>
----
- accel/tcg/cpu-exec.c      | 4 +---
- accel/tcg/icount-common.c | 4 ++--
- 2 files changed, 3 insertions(+), 5 deletions(-)
+The interrupt level should be 0 or 1. The existing code was using the
+interrupt flags to determine the level. In the only machine currently
+supported (xlnx-versal-virt), the GICv3 was masking off all bits except
+bit 0 when applying it, resulting in the IRQ never being delivered.
 
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index 8163295f34..4c2baf8ed4 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -95,11 +95,10 @@ static void align_clocks(SyncClocks *sc, CPUState *cpu)
- static void print_delay(const SyncClocks *sc)
+Signed-off-by: Doug Brown <doug@schmorgal.com>
+---
+ hw/net/can/xlnx-versal-canfd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
+index 5f083c21e9..ad0c4da3c8 100644
+--- a/hw/net/can/xlnx-versal-canfd.c
++++ b/hw/net/can/xlnx-versal-canfd.c
+@@ -682,8 +682,8 @@ static uint8_t canfd_dlc_array[8] = {8, 12, 16, 20, 24, 32, 48, 64};
+ 
+ static void canfd_update_irq(XlnxVersalCANFDState *s)
  {
-     static float threshold_delay;
--    static int64_t last_realtime_clock;
-     static int nb_prints;
+-    unsigned int irq = s->regs[R_INTERRUPT_STATUS_REGISTER] &
+-                        s->regs[R_INTERRUPT_ENABLE_REGISTER];
++    const bool irq = (s->regs[R_INTERRUPT_STATUS_REGISTER] &
++                      s->regs[R_INTERRUPT_ENABLE_REGISTER]) != 0;
+     g_autofree char *path = object_get_canonical_path(OBJECT(s));
  
-     if (icount_align_option &&
--        sc->realtime_clock - last_realtime_clock >= MAX_DELAY_PRINT_RATE &&
-+        sc->diff_clk >= MAX_DELAY_PRINT_RATE &&
-         nb_prints < MAX_NB_PRINTS) {
-         if ((-sc->diff_clk / (float)1000000000LL > threshold_delay) ||
-             (-sc->diff_clk / (float)1000000000LL <
-@@ -109,7 +108,6 @@ static void print_delay(const SyncClocks *sc)
-                         threshold_delay - 1,
-                         threshold_delay);
-             nb_prints++;
--            last_realtime_clock = sc->realtime_clock;
-         }
-     }
- }
-diff --git a/accel/tcg/icount-common.c b/accel/tcg/icount-common.c
-index 8d3d3a7e9d..f07f8baf4d 100644
---- a/accel/tcg/icount-common.c
-+++ b/accel/tcg/icount-common.c
-@@ -46,8 +46,8 @@
-  * is TCG-specific, and does not need to be built for other accels.
-  */
- static bool icount_sleep = true;
--/* Arbitrarily pick 1MIPS as the minimum allowable speed.  */
--#define MAX_ICOUNT_SHIFT 10
-+/* Arbitrarily pick the minimum allowable speed.  */
-+#define MAX_ICOUNT_SHIFT 30
- 
- /* Do not count executed instructions */
- ICountMode use_icount = ICOUNT_DISABLED;
+     /* RX watermark interrupts. */
 -- 
-2.30.2
+2.34.1
 
 
