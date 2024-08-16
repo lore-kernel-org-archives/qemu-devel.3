@@ -4,84 +4,158 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2802FC531DF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 098A1C531DC
 	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 00:55:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sf7iV-0005SQ-Ut; Fri, 16 Aug 2024 20:54:51 -0400
+	id 1sf7iU-0005Kt-92; Fri, 16 Aug 2024 20:54:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <samuel.holland@sifive.com>)
- id 1sf7HY-00056W-EI
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 20:27:00 -0400
-Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <samuel.holland@sifive.com>)
- id 1sf7HW-0005OL-IF
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 20:27:00 -0400
-Received: by mail-oa1-x32.google.com with SMTP id
- 586e51a60fabf-267b7ef154aso1714818fac.0
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 17:26:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1723854413; x=1724459213; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=6mBzLqL6MdSQlxiCxzjBTnD6Jwm1kjbNkQm4sK+PO4k=;
- b=VMgLuG5CyyrPo6XoJe4rK66cPYDSBT1jDotjKI4y65SXpE2rCorpvC3+Nxf5fkBVm3
- 2CTo40uD+KCK3DCwg6ND69LCHcG2vBNDZc7uMCXFqQcjgqm0+8g7xdlU/W1/KEHOWjqO
- Br2cAWkHCzrl2IKwNVqzi6a38tnCJ8Hy1aQNl5Ap/bkDMQ1gd7TcX9JUVsS2QgemITHe
- PKLERp5Fg2bl9SsJujD0tgwWEi+RaGeNYqVtNv5iGzCPRwRjZQPAgbnKhPMfl73LQpVS
- Yv/Dol2ksunyThqF28IAHmmjrBKMBQkQ1AeWrvyjf7ll78dqtzeTlUI0+v2qS4ThPOeZ
- SRew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723854413; x=1724459213;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6mBzLqL6MdSQlxiCxzjBTnD6Jwm1kjbNkQm4sK+PO4k=;
- b=wt6pUgf4Eegok0Vg0ldCQV+KwwABm2hzIY6+o+uF3ESxEHwHLiWQ3w/6ZdwPDF5035
- sC48V+XIgOMRYGFXE2rQOlv0cqTcjuB85gO+wF2xrrKHUyjFMRpQS1CUfvtokbt7lx0D
- fYZ0X857KIFR1OuxJGtzW8kHbLNJblUuVrb3WoIVwGKFb3htA5hMny8Rc8Mtn+0Arz+3
- NqebPLvmkwa89yCpm6w4NOpoadYKvbzkMqKckN2m0KNaItYew9gE0YFiTob1LI7lsBaP
- NOAzLbPWaQpWQjfOGbBDr1XL0PJHQEjF9hBYYBKM1w0KXqSbyUZZj+Fkg9tdmJHStDqf
- i4ew==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU8owVh+gXgchkkCYPIAtJg4AXQ8P/inzUkNDoPtaKSPRFgIuCwD0/Jpi2bi3TWhlQ82T9j1GS3Art/+RH1agiGkIhCREA=
-X-Gm-Message-State: AOJu0Yxbgj3A5OqeR2aLngPs9VJINJAJp64qQT+pvISxVrVdHzvkNTp7
- 61Wn/h/sUiW7rFx6dnI3tpzwEHrRKJO0NtnS7tuPEAPGuRHHwurS2zuEHKEL6UQ=
-X-Google-Smtp-Source: AGHT+IHmDwGcwfB5GaS4fg2IwtZxaPZPIEhKGxGi0+Xi8AJ3N7CsYZ8GItDdWoR5ZRK2Et1sXhgbkg==
-X-Received: by 2002:a05:6870:6387:b0:268:952b:d2a4 with SMTP id
- 586e51a60fabf-270341e0c73mr1301704fac.32.1723854413580; 
- Fri, 16 Aug 2024 17:26:53 -0700 (PDT)
-Received: from sw06.internal.sifive.com ([4.53.31.132])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7127aef5457sm3152654b3a.127.2024.08.16.17.26.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 17:26:53 -0700 (PDT)
-From: Samuel Holland <samuel.holland@sifive.com>
-To: qemu-riscv@nongnu.org
-Cc: Samuel Holland <samuel.holland@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Vijai Kumar K <vijai@behindbytes.com>,
- Weiwei Li <liwei1518@gmail.com>, qemu-devel@nongnu.org
-Subject: [PATCH] hw/riscv: Respect firmware ELF entry point
-Date: Fri, 16 Aug 2024 17:25:02 -0700
-Message-ID: <20240817002651.3209701-1-samuel.holland@sifive.com>
-X-Mailer: git-send-email 2.45.1
+ (Exim 4.90_1) (envelope-from <Jason.Andryuk@amd.com>)
+ id 1sf7a4-0004AV-Qg; Fri, 16 Aug 2024 20:46:08 -0400
+Received: from mail-bn7nam10on20613.outbound.protection.outlook.com
+ ([2a01:111:f403:2009::613]
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Jason.Andryuk@amd.com>)
+ id 1sf7Zz-0000GB-UX; Fri, 16 Aug 2024 20:46:08 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=F8vrRC7roj99wmz41J6BY5Y2/SHa85GIugxghpM64KHak6LADmf7INUNpMCe0ntQU//bLG19qT8j/deMG0cHAphj6uDeUxpTY9LkJCWugau/WYukJ6JlEWQcGNDhHyw6Eb3XZ6eV8fgv7OcF7OCZZYy42Y4+p27qwGHO7FlY7EzqHtTtajvuxZwl8nunpPGmekS006W+RsgybZnkHsL7R6ABraH4Quw5T5jMufNDz4GJHXrHjHey71PdakVd1yIB6R3lTbdH7lDWt+tRVqirmCwu2scYzmaghJpZOfwFTiUVtrrtf+AV6uYwYRkeF93sGOXDCagXwD/2WP0OOHRoXA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=m4SVgnne9erkuAhrAeM3VCVOKRFMY2Is89F35hd+2Sk=;
+ b=cPfOm+jmZ25g1hPXYcCsoWQGD7wSYrL6ypUPgO0k/Pb+1acw4OVQaMn4ViQxVVkpoMXZ54T5JeQlHP1Lmcrjasvuo+7jsaWKQCGQjQrlsBdKnlWUo8JPUNiw1+cm1JHFL4dVndkqTue87rJsKEwwQPoXgJ+hwXNSV/JMl10K1ERpjx0oWQvfSOShYm49cBSrqWKM8qR/HbvlBSzwuRJmkhG7GseIXWxOF/3AyVQcUyRJm3Fq57c0BasdNPa6w+SlqU9yzPiOUbOZEEzplbRk1/kBryBRdCLijKqROJ3nbTELfGxly9kWm9VN/TKaDnliDtq1vAsprzYW44TomNNjhQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=m4SVgnne9erkuAhrAeM3VCVOKRFMY2Is89F35hd+2Sk=;
+ b=yyKe+f4OwTp3AbVgJbDKlFsVXBIeDFU4JTkfv34I+I96d0YRfxFOc6iQzyqW5B02vYhnbBJ6dBXjoSWqWgwADYjYkg0BokTQmOYEwgpspcB0YXITk4Guv8N9T4keFnmdBDRZiBKLZO1r5U4YfdiiI9vg0F1FVvbetqx0wo6IgXE=
+Received: from BN9PR03CA0709.namprd03.prod.outlook.com (2603:10b6:408:ef::24)
+ by LV3PR12MB9412.namprd12.prod.outlook.com (2603:10b6:408:211::18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7875.20; Sat, 17 Aug
+ 2024 00:45:53 +0000
+Received: from BL6PEPF00020E63.namprd04.prod.outlook.com
+ (2603:10b6:408:ef:cafe::3c) by BN9PR03CA0709.outlook.office365.com
+ (2603:10b6:408:ef::24) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7875.19 via Frontend
+ Transport; Sat, 17 Aug 2024 00:45:53 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
+Received: from SATLEXMB03.amd.com (165.204.84.17) by
+ BL6PEPF00020E63.mail.protection.outlook.com (10.167.249.24) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.7849.8 via Frontend Transport; Sat, 17 Aug 2024 00:45:53 +0000
+Received: from SATLEXMB06.amd.com (10.181.40.147) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 16 Aug
+ 2024 19:45:48 -0500
+Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB06.amd.com
+ (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 16 Aug
+ 2024 19:45:45 -0500
+Received: from [172.24.94.179] (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.39 via Frontend
+ Transport; Fri, 16 Aug 2024 19:45:45 -0500
+Message-ID: <93de8d6d-6123-4038-a566-d134206ba608@amd.com>
+Date: Fri, 16 Aug 2024 18:58:26 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 04/10] hw/arm: xenpvh: Add support for SMP guests
+To: Stefano Stabellini <sstabellini@kernel.org>, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>
+CC: <qemu-devel@nongnu.org>, <anthony@xenproject.org>, <paul@xen.org>,
+ <peter.maydell@linaro.org>, <alex.bennee@linaro.org>,
+ <xenia.ragiadakou@amd.com>, <edgar.iglesias@amd.com>,
+ <xen-devel@lists.xenproject.org>, <qemu-arm@nongnu.org>,
+ <andrew.cooper3@citrix.com>
+References: <20240812130606.90410-1-edgar.iglesias@gmail.com>
+ <20240812130606.90410-5-edgar.iglesias@gmail.com>
+ <alpine.DEB.2.22.394.2408121650590.298534@ubuntu-linux-20-04-desktop>
+ <ZruRm34zIMtUm7oH@zapote>
+ <alpine.DEB.2.22.394.2408131550080.298534@ubuntu-linux-20-04-desktop>
+ <ZryZwOoadeb1UWK8@zapote>
+ <alpine.DEB.2.22.394.2408141719400.298534@ubuntu-linux-20-04-desktop>
+ <CAJy5ezrUbGZCaF=HiYhyLCoXRL3d=t-QbmLeKvu7ByWksV888g@mail.gmail.com>
+ <alpine.DEB.2.22.394.2408160949320.298534@ubuntu-linux-20-04-desktop>
+Content-Language: en-US
+From: Jason Andryuk <jason.andryuk@amd.com>
+In-Reply-To: <alpine.DEB.2.22.394.2408160949320.298534@ubuntu-linux-20-04-desktop>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::32;
- envelope-from=samuel.holland@sifive.com; helo=mail-oa1-x32.google.com
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL6PEPF00020E63:EE_|LV3PR12MB9412:EE_
+X-MS-Office365-Filtering-Correlation-Id: ba8e23ee-e94c-44f2-3cd6-08dcbe55f2a5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|1800799024|7416014|36860700013|376014; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?OXBSTWZPd2lwZ3FaZWh2Tk9UZXo3VnVSeXkvMWl5cngwNWZOZXErQSt4Nmo5?=
+ =?utf-8?B?Q0ozNXhaM1VoTkFsS0tYcTYyVTh4dnh0Slpoa3p5K29BMVJ5OVVrVHl6RGtl?=
+ =?utf-8?B?VXU1MkRvdGM5ZW5lalFwR3d5MzYzZDByRXFtQTE2UjI2V0tleVQ5eFA5RytI?=
+ =?utf-8?B?d1VyT2VYemxxSGtta0NTaXREZzVkdS90eTZvaGprUFZHdUgrd04yT0ZuQ0N3?=
+ =?utf-8?B?U1prSCtRVyttanBaMlkycFo1dVp2UW0xY0c4RGZhOHM5YUVJTjJQY2FJLzVW?=
+ =?utf-8?B?NnY5S3NUdEVyMGVVMkxlN0MzN29HMm9INnpuZ3F6c1NmV1F0aUxvQUJlb3dx?=
+ =?utf-8?B?UndiMU9sOG82d0RrdDZlb0hKZmpKRWxoM1hpZmpOSGZHa0hleithd1JremZN?=
+ =?utf-8?B?NG5WcnRkcE1RYlVYSmZsL1dJREtBaGwyWkhJd1FJb1pmbnJDSnVzRXZvMUZ5?=
+ =?utf-8?B?b3ZFNll0cEoxUHFDQlk1YXJrNnJxSzFhNmlib2lLK1AycTVTVHBNandDcW15?=
+ =?utf-8?B?cHhpc3NTMUpia29XQ1JPSzQrSmhqaFcwVTZzRHFXQzlpeUFBbndUNUJlY2Y0?=
+ =?utf-8?B?UmM5cnAzeFBzYThoTnAzNm1pUW1aZGdVWVVqRE15OVdYRXVVbitPakxORlpQ?=
+ =?utf-8?B?c1dMaVRmbkw4NUhFQ1ZQSnVwUFlBcDJYcE1zREloSjY5dkdjS3E0dkt1Y0hW?=
+ =?utf-8?B?YWVvYXhNYVRmc0JoRXBrcW9HUGY5WWNMUjR2RmozdGdmNTlZU3dYd3hoODFK?=
+ =?utf-8?B?UXAvWjdHSUJoRzdURGgyajY3bGVMaGptUVIxUGZ5d3FUa05ydllIWGN2NFNE?=
+ =?utf-8?B?YWd6dzRaODN3UllRTG9CNjgxUUVEcEdkMHJYeVpaUUpUYnZlZVRHY04xS3c3?=
+ =?utf-8?B?VXBEcFAxN3FZVWU1SFZ3U1o2bWV5SzJxRzBnM1g4b05zamk3M29WcnRmNmwv?=
+ =?utf-8?B?UjRXcEJxcWVVczFOTXZJelhzRWV3QjZ2Mm9UKzg3eHV2WmsvaTFNaEMwc2x0?=
+ =?utf-8?B?SjAwUG84UmVObmsvUXhyeFUydDAyaVdNcVpldE5qNDlQU3hpTHZ3OXYxMUxp?=
+ =?utf-8?B?enNSWTNtMWZ1Q2pCcmMzdVpXMUppOXRQOE9HRmdDVyt4VTUvdURielFTR2Zx?=
+ =?utf-8?B?c1I5aEpCbEFnODNRdU1KUU5IWnY2L01zSjVUQ0tkOXo4YnF3cHNKVzBnamFo?=
+ =?utf-8?B?MVpFdEdML0UycUR6NEYvYS95azVKR04zZ0x5YU0xUDJXV2JObGh2NG0yeDd1?=
+ =?utf-8?B?MStRS0xpcUJGc25nRFUydTZtZkJnSzZJSFZidysxaExOSTVzenlCU3FoUC9B?=
+ =?utf-8?B?K0VTTXpxdlFaZmk3WlZnYTdoSWdwZGtiSHBXNXVzL3JNZzB3OUh6VGw1TFNr?=
+ =?utf-8?B?VUhyOENnVmw2UXhod0NxRTRySzhkK3JyZTlncUJYeXlYcWFBOGx5K05IczhQ?=
+ =?utf-8?B?dEhpVzBQdUdiWVdwSUF4ME5YaElmMnoxVzZGcVl0aGhLdElvdVZkTVZzN2tW?=
+ =?utf-8?B?aFVNb0x4K0dIeFZabklKcmROYVlvZzhiVTg4bms4QnpIaVFmYkVCU0NueTNK?=
+ =?utf-8?B?M2xLbmtkMVBMcWVpODlYYlB2SFhSZnlCUm5JOVRhNFlDK1FmQWEzelFOdDYy?=
+ =?utf-8?B?dmRjUHBLeHNMSHVHYnNsOUZpQTZ0cmlIa29rWDNvTFdSaHJDZDJRcXJmaG1y?=
+ =?utf-8?B?ZWZKMFBYc1J1VW03MW13eFpKTVVOODV4NmtVd1BTaEZ1dGV3L2gvOEQ4cExG?=
+ =?utf-8?B?MWxKTkxCZmdIbko0QVBQdklkMTA4a21WWnI4UWdkaHlzU0FJdE9OSmFWN21J?=
+ =?utf-8?B?eGZxYjdkNld6cEVWQlc5K3NLeU1DV3RZdDdYUEt5dllpTDYxcXJETDIyTkpS?=
+ =?utf-8?B?N1F4WWc3ZXZsams2MVM1RlBEUWxmMWwyV21YbzVOOER0RHFGRXZaN0gvZVRq?=
+ =?utf-8?Q?20ss47yP/frVMvZbzfb+u/lvoXVO/JWk?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(1800799024)(7416014)(36860700013)(376014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Aug 2024 00:45:53.1399 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ba8e23ee-e94c-44f2-3cd6-08dcbe55f2a5
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB03.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00020E63.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9412
+Received-SPF: permerror client-ip=2a01:111:f403:2009::613;
+ envelope-from=Jason.Andryuk@amd.com;
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Fri, 16 Aug 2024 20:54:48 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,232 +172,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When riscv_load_firmware() loads an ELF, the ELF segment addresses are
-used, not the passed-in firmware_load_addr. The machine models assume
-the firmware entry point is what they provided for firmware_load_addr,
-and use that address to generate the boot ROM, so if the ELF is linked
-at any other address, the boot ROM will jump to empty memory.
+On 2024-08-16 12:53, Stefano Stabellini wrote:
+> On Fri, 16 Aug 2024, Edgar E. Iglesias wrote:
+>> On Thu, Aug 15, 2024 at 2:30 AM Stefano Stabellini <sstabellini@kernel.org> wrote:
+>>        On Wed, 14 Aug 2024, Edgar E. Iglesias wrote:
+>>        > On Tue, Aug 13, 2024 at 03:52:32PM -0700, Stefano Stabellini wrote:
+>>        > > On Tue, 13 Aug 2024, Edgar E. Iglesias wrote:
+>>        > > > On Mon, Aug 12, 2024 at 06:47:17PM -0700, Stefano Stabellini wrote:
+>>        > > > > On Mon, 12 Aug 2024, Edgar E. Iglesias wrote:
+>>        > > > > > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
+>>        > > > > >
+>>        > > > > > Add SMP support for Xen PVH ARM guests. Create max_cpus ioreq
+>>        > > > > > servers to handle hotplug.
+>>        > > > > >
+>>        > > > > > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+>>        > > > > > ---
+>>        > > > > >  hw/arm/xen_arm.c | 5 +++--
+>>        > > > > >  1 file changed, 3 insertions(+), 2 deletions(-)
+>>        > > > > >
+>>        > > > > > diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
+>>        > > > > > index 5f75cc3779..ef8315969c 100644
+>>        > > > > > --- a/hw/arm/xen_arm.c
+>>        > > > > > +++ b/hw/arm/xen_arm.c
+>>        > > > > > @@ -173,7 +173,7 @@ static void xen_arm_init(MachineState *machine)
+>>        > > > > >
+>>        > > > > >      xen_init_ram(machine);
+>>        > > > > >
+>>        > > > > > -    xen_register_ioreq(xam->state, machine->smp.cpus, &xen_memory_listener);
+>>        > > > > > +    xen_register_ioreq(xam->state, machine->smp.max_cpus, &xen_memory_listener);
+>>        > > > > >
+>>        > > > > >      xen_create_virtio_mmio_devices(xam);
+>>        > > > > >
+>>        > > > > > @@ -218,7 +218,8 @@ static void xen_arm_machine_class_init(ObjectClass *oc, void *data)
+>>        > > > > >      MachineClass *mc = MACHINE_CLASS(oc);
+>>        > > > > >      mc->desc = "Xen PVH ARM machine";
+>>        > > > > >      mc->init = xen_arm_init;
+>>        > > > > > -    mc->max_cpus = 1;
+>>        > > > > > +    /* MAX number of vcpus supported by Xen.  */
+>>        > > > > > +    mc->max_cpus = GUEST_MAX_VCPUS;
+>>        > > > >
+>>        > > > > Will this cause allocations of data structures with 128 elements?
+>>        > > > > Looking at hw/xen/xen-hvm-common.c:xen_do_ioreq_register it seems
+>>        > > > > possible? Or hw/xen/xen-hvm-common.c:xen_do_ioreq_register is called
+>>        > > >
+>>        > > > Yes, in theory there's probably overhead with this but as you correctly
+>>        > > > noted below, a PVH aware xl will set the max_cpus option to a lower value.
+>>        > > >
+>>        > > > With a non-pvh aware xl, I was a little worried about the overhead
+>>        > > > but I couldn't see any visible slow-down on ARM neither in boot or in network
+>>        > > > performance (I didn't run very sophisticated benchmarks).
+>>        > >
+>>        > > What do you mean by "non-pvh aware xl"? All useful versions of xl
+>>        > > support pvh?
+>>        >
+>>        >
+>>        > I mean an xl without our PVH patches merged.
+>>        > xl in upstream doesn't know much about PVH yet.
+>>        > Even for ARM, we're still carrying significant patches in our tree.
+>>
+>>        Oh I see. In that case, I don't think we need to support "non-pvh aware xl".
+>>
+>>
+>>        > > > > later on with the precise vCPU value which should be provided to QEMU
+>>        > > > > via the -smp command line option
+>>        > > > > (tools/libs/light/libxl_dm.c:libxl__build_device_model_args_new)?
+>>        > > >
+>>        > > > Yes, a pvh aware xl will for example pass -smp 2,maxcpus=4 based on
+>>        > > > values from the xl.cfg. If the user doesn't set maxvcpus in xl.cfg, xl
+>>        > > > will set maxvcpus to the same value as vcpus.
+>>        > >
+>>        > > OK good. In that case if this is just an initial value meant to be
+>>        > > overwritten, I think it is best to keep it as 1.
+>>        >
+>>        > Sorry but that won't work. I think the confusion here may be that
+>>        > it's easy to mix up mc->max_cpus and machine->smp.max_cpus, these are
+>>        > not the same. They have different purposes.
+>>        >
+>>        > I'll try to clarify the 3 values in play.
+>>        >
+>>        > machine-smp.cpus:
+>>        > Number of guest vcpus active at boot.
+>>        > Passed to QEMU via the -smp command-line option.
+>>        > We don't use this value in QEMU's ARM PVH machines.
+>>        >
+>>        > machine->smp.max_cpus:
+>>        > Max number of vcpus that the guest can use (equal or larger than machine-smp.cpus).
+>>        > Will be set by xl via the "-smp X,maxcpus=Y" command-line option to QEMU.
+>>        > Taken from maxvcpus from xl.cfg, same as XEN_DMOP_nr_vcpus.
+>>        > This is what we use for xen_register_ioreq().
+>>        >
+>>        > mc->max_cpus:
+>>        > Absolute MAX in QEMU used to cap the -smp command-line options.
+>>        > If xl tries to set -smp (machine->smp.max_cpus) larger than this, QEMU will bail out.
+>>        > Used to setup xen_register_ioreq() ONLY if -smp maxcpus was NOT set (i.e by a non PVH aware xl).
+>>        > Cannot be 1 because that would limit QEMU to MAX 1 vcpu.
+>>        >
+>>        > I guess we could set mc->max_cpus to what XEN_DMOP_nr_vcpus returns but I'll
+>>        > have to check if we can even issue that hypercall this early in QEMU since
+>>        > mc->max_cpus is setup before we even parse the machine options. We may
+>>        > not yet know what domid we're attaching to yet.
+>>
+>>        If mc->max_cpus is the absolute max and it will not be used if -smp is
+>>        passed to QEMU, then I think it is OK to use GUEST_MAX_VCPUS
+>>
+>> Looking at this a little more. If users (xl) don't pass an -smp option we actually default to smp.max_cpus=1.
+>> So, another option is to simply remove the upper limit in QEMU (e.g we can set mc->max_cpus to something very large like UINT32_MAX).
+>> That would avoid early hypercalls, avoid using GUEST_MAX_VCPUS and always let xl dictate the max_cpus value using the -smp cmdline option.
+> 
+> As the expectation is that there will be always a smp.max_cpus option
+> passed to QEMU, I would avoid an extra early hypercall.
+> 
+> For the initial value, I would use something static and large, but not
+> unreasonably large as UINT32_MAX to be more resilient in (erroneous)
+> cases where smp.max_cpus is not passed.
+> 
+> So I would initialize it to GUEST_MAX_VCPUS, or if we don't want to use
+> GUEST_MAX_VCPUS, something equivalent in the 64-256 range.
+> 
+> Alternative we can have a runtime check and exit with a warning if
+> smp.max_cpus is not set.
 
-Pass back the ELF entry point to use when generating the boot ROM, so
-the boot ROM can jump to firmware loaded anywhere in RAM. For example,
-on the virt machine, this allows using an OpenSBI fw_dynamic.elf built
-with FW_TEXT_START values other than 0x80000000.
+FYI, xl only passes a -smp option when the domU has more than 1 vcpu. 
+Though that implies only a single vcpu.
 
-Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
----
-
- hw/riscv/boot.c            | 11 ++++++-----
- hw/riscv/microchip_pfsoc.c |  2 +-
- hw/riscv/opentitan.c       |  3 ++-
- hw/riscv/shakti_c.c        | 13 ++++++-------
- hw/riscv/sifive_u.c        |  4 ++--
- hw/riscv/spike.c           |  5 +++--
- hw/riscv/virt.c            |  4 ++--
- include/hw/riscv/boot.h    |  4 ++--
- 8 files changed, 24 insertions(+), 22 deletions(-)
-
-diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index 47281ca853..9115ecd91f 100644
---- a/hw/riscv/boot.c
-+++ b/hw/riscv/boot.c
-@@ -128,11 +128,11 @@ char *riscv_find_firmware(const char *firmware_filename,
- 
- target_ulong riscv_find_and_load_firmware(MachineState *machine,
-                                           const char *default_machine_firmware,
--                                          hwaddr firmware_load_addr,
-+                                          hwaddr *firmware_load_addr,
-                                           symbol_fn_t sym_cb)
- {
-     char *firmware_filename;
--    target_ulong firmware_end_addr = firmware_load_addr;
-+    target_ulong firmware_end_addr = *firmware_load_addr;
- 
-     firmware_filename = riscv_find_firmware(machine->firmware,
-                                             default_machine_firmware);
-@@ -148,7 +148,7 @@ target_ulong riscv_find_and_load_firmware(MachineState *machine,
- }
- 
- target_ulong riscv_load_firmware(const char *firmware_filename,
--                                 hwaddr firmware_load_addr,
-+                                 hwaddr *firmware_load_addr,
-                                  symbol_fn_t sym_cb)
- {
-     uint64_t firmware_entry, firmware_end;
-@@ -159,15 +159,16 @@ target_ulong riscv_load_firmware(const char *firmware_filename,
-     if (load_elf_ram_sym(firmware_filename, NULL, NULL, NULL,
-                          &firmware_entry, NULL, &firmware_end, NULL,
-                          0, EM_RISCV, 1, 0, NULL, true, sym_cb) > 0) {
-+        *firmware_load_addr = firmware_entry;
-         return firmware_end;
-     }
- 
-     firmware_size = load_image_targphys_as(firmware_filename,
--                                           firmware_load_addr,
-+                                           *firmware_load_addr,
-                                            current_machine->ram_size, NULL);
- 
-     if (firmware_size > 0) {
--        return firmware_load_addr + firmware_size;
-+        return *firmware_load_addr + firmware_size;
-     }
- 
-     error_report("could not load firmware '%s'", firmware_filename);
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 7725dfbde5..f9a3b43d2e 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -613,7 +613,7 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
- 
-     /* Load the firmware */
-     firmware_end_addr = riscv_find_and_load_firmware(machine, firmware_name,
--                                                     firmware_load_addr, NULL);
-+                                                     &firmware_load_addr, NULL);
- 
-     if (kernel_as_payload) {
-         kernel_start_addr = riscv_calc_kernel_start_addr(&s->soc.u_cpus,
-diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
-index 436503f1ba..e2830e9dc2 100644
---- a/hw/riscv/opentitan.c
-+++ b/hw/riscv/opentitan.c
-@@ -98,7 +98,8 @@ static void opentitan_machine_init(MachineState *machine)
-         memmap[IBEX_DEV_RAM].base, machine->ram);
- 
-     if (machine->firmware) {
--        riscv_load_firmware(machine->firmware, memmap[IBEX_DEV_RAM].base, NULL);
-+        hwaddr firmware_load_addr = memmap[IBEX_DEV_RAM].base;
-+        riscv_load_firmware(machine->firmware, &firmware_load_addr, NULL);
-     }
- 
-     if (machine->kernel_filename) {
-diff --git a/hw/riscv/shakti_c.c b/hw/riscv/shakti_c.c
-index 3888034c2b..2dccc1eff2 100644
---- a/hw/riscv/shakti_c.c
-+++ b/hw/riscv/shakti_c.c
-@@ -45,6 +45,7 @@ static void shakti_c_machine_state_init(MachineState *mstate)
- {
-     ShaktiCMachineState *sms = RISCV_SHAKTI_MACHINE(mstate);
-     MemoryRegion *system_memory = get_system_memory();
-+    hwaddr firmware_load_addr = shakti_c_memmap[SHAKTI_C_RAM].base;
- 
-     /* Initialize SoC */
-     object_initialize_child(OBJECT(mstate), "soc", &sms->soc,
-@@ -56,16 +57,14 @@ static void shakti_c_machine_state_init(MachineState *mstate)
-                                 shakti_c_memmap[SHAKTI_C_RAM].base,
-                                 mstate->ram);
- 
-+    if (mstate->firmware) {
-+        riscv_load_firmware(mstate->firmware, &firmware_load_addr, NULL);
-+    }
-+
-     /* ROM reset vector */
--    riscv_setup_rom_reset_vec(mstate, &sms->soc.cpus,
--                              shakti_c_memmap[SHAKTI_C_RAM].base,
-+    riscv_setup_rom_reset_vec(mstate, &sms->soc.cpus, firmware_load_addr,
-                               shakti_c_memmap[SHAKTI_C_ROM].base,
-                               shakti_c_memmap[SHAKTI_C_ROM].size, 0, 0);
--    if (mstate->firmware) {
--        riscv_load_firmware(mstate->firmware,
--                            shakti_c_memmap[SHAKTI_C_RAM].base,
--                            NULL);
--    }
- }
- 
- static void shakti_c_machine_instance_init(Object *obj)
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index af5f923f54..35a689309d 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -515,7 +515,7 @@ static void sifive_u_machine_init(MachineState *machine)
-     SiFiveUState *s = RISCV_U_MACHINE(machine);
-     MemoryRegion *system_memory = get_system_memory();
-     MemoryRegion *flash0 = g_new(MemoryRegion, 1);
--    target_ulong start_addr = memmap[SIFIVE_U_DEV_DRAM].base;
-+    hwaddr start_addr = memmap[SIFIVE_U_DEV_DRAM].base;
-     target_ulong firmware_end_addr, kernel_start_addr;
-     const char *firmware_name;
-     uint32_t start_addr_hi32 = 0x00000000;
-@@ -589,7 +589,7 @@ static void sifive_u_machine_init(MachineState *machine)
- 
-     firmware_name = riscv_default_firmware_name(&s->soc.u_cpus);
-     firmware_end_addr = riscv_find_and_load_firmware(machine, firmware_name,
--                                                     start_addr, NULL);
-+                                                     &start_addr, NULL);
- 
-     if (machine->kernel_filename) {
-         kernel_start_addr = riscv_calc_kernel_start_addr(&s->soc.u_cpus,
-diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
-index 64074395bc..fceb91d946 100644
---- a/hw/riscv/spike.c
-+++ b/hw/riscv/spike.c
-@@ -198,6 +198,7 @@ static void spike_board_init(MachineState *machine)
-     MemoryRegion *system_memory = get_system_memory();
-     MemoryRegion *mask_rom = g_new(MemoryRegion, 1);
-     target_ulong firmware_end_addr = memmap[SPIKE_DRAM].base;
-+    hwaddr firmware_load_addr = memmap[SPIKE_DRAM].base;
-     target_ulong kernel_start_addr;
-     char *firmware_name;
-     uint32_t fdt_load_addr;
-@@ -290,7 +291,7 @@ static void spike_board_init(MachineState *machine)
-     /* Load firmware */
-     if (firmware_name) {
-         firmware_end_addr = riscv_load_firmware(firmware_name,
--                                                memmap[SPIKE_DRAM].base,
-+                                                &firmware_load_addr,
-                                                 htif_symbol_callback);
-         g_free(firmware_name);
-     }
-@@ -320,7 +321,7 @@ static void spike_board_init(MachineState *machine)
-     riscv_load_fdt(fdt_load_addr, machine->fdt);
- 
-     /* load the reset vector */
--    riscv_setup_rom_reset_vec(machine, &s->soc[0], memmap[SPIKE_DRAM].base,
-+    riscv_setup_rom_reset_vec(machine, &s->soc[0], firmware_load_addr,
-                               memmap[SPIKE_MROM].base,
-                               memmap[SPIKE_MROM].size, kernel_entry,
-                               fdt_load_addr);
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 9981e0f6c9..aef5e284a7 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1336,7 +1336,7 @@ static void virt_machine_done(Notifier *notifier, void *data)
-                                      machine_done);
-     const MemMapEntry *memmap = virt_memmap;
-     MachineState *machine = MACHINE(s);
--    target_ulong start_addr = memmap[VIRT_DRAM].base;
-+    hwaddr start_addr = memmap[VIRT_DRAM].base;
-     target_ulong firmware_end_addr, kernel_start_addr;
-     const char *firmware_name = riscv_default_firmware_name(&s->soc[0]);
-     uint64_t fdt_load_addr;
-@@ -1368,7 +1368,7 @@ static void virt_machine_done(Notifier *notifier, void *data)
-     }
- 
-     firmware_end_addr = riscv_find_and_load_firmware(machine, firmware_name,
--                                                     start_addr, NULL);
-+                                                     &start_addr, NULL);
- 
-     pflash_blk0 = pflash_cfi01_get_blk(s->flash[0]);
-     if (pflash_blk0) {
-diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-index a2e4ae9cb0..18bfe9f7bf 100644
---- a/include/hw/riscv/boot.h
-+++ b/include/hw/riscv/boot.h
-@@ -35,13 +35,13 @@ target_ulong riscv_calc_kernel_start_addr(RISCVHartArrayState *harts,
-                                           target_ulong firmware_end_addr);
- target_ulong riscv_find_and_load_firmware(MachineState *machine,
-                                           const char *default_machine_firmware,
--                                          hwaddr firmware_load_addr,
-+                                          hwaddr *firmware_load_addr,
-                                           symbol_fn_t sym_cb);
- const char *riscv_default_firmware_name(RISCVHartArrayState *harts);
- char *riscv_find_firmware(const char *firmware_filename,
-                           const char *default_machine_firmware);
- target_ulong riscv_load_firmware(const char *firmware_filename,
--                                 hwaddr firmware_load_addr,
-+                                 hwaddr *firmware_load_addr,
-                                  symbol_fn_t sym_cb);
- target_ulong riscv_load_kernel(MachineState *machine,
-                                RISCVHartArrayState *harts,
--- 
-2.45.1
-
+Regards,
+Jason
 
