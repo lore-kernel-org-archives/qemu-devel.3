@@ -4,61 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 262A1C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 10:43:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E2C9C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 10:48:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seuPs-0002jr-1I; Fri, 16 Aug 2024 06:42:44 -0400
+	id 1seuUm-0002Gk-91; Fri, 16 Aug 2024 06:47:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1seuPp-0002iL-V0
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:42:41 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1seuUh-00026u-A4
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:47:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1seuPn-00070E-4n
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:42:41 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Wldm80kfqz67pJF;
- Fri, 16 Aug 2024 18:39:52 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id B247F140119;
- Fri, 16 Aug 2024 18:42:35 +0800 (CST)
-Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 16 Aug
- 2024 11:42:35 +0100
-Date: Fri, 16 Aug 2024 11:42:33 +0100
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-CC: Shiju Jose <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- <linux-kernel@vger.kernel.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v7 01/10] acpi/generic_event_device: add an APEI error
- device
-Message-ID: <20240816114233.00003805@Huawei.com>
-In-Reply-To: <20240816075324.19d13670@foz.lan>
-References: <cover.1723591201.git.mchehab+huawei@kernel.org>
- <0be6db8d06b3abab551f24dcc645d46d72d3f668.1723591201.git.mchehab+huawei@kernel.org>
- <20240814133321.00006401@Huawei.com>
- <20240816075324.19d13670@foz.lan>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1seuUd-0007kE-CK
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 06:47:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723805257;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ruh/6FdaqlEUw7kKiWhA+IdMOIXJ4j/BnscKRu3IQVE=;
+ b=fKgKn5LfI5V64njry09zoAIkoc9GUQu60BExIBFLEtA4OdH8LOj8ggfMhq8wpGjEDNb1OY
+ JrEVSOynG4WrvSFBrTw3whKawntqiDiPiqT25UwUzZIx3eERYTJ7CnKKMe1na9mH+2qEMk
+ R5I/YIwWN8I28EfitYG96HrHuYwJHBc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-452-q84_8tCqMuqc8KTJyOtXAQ-1; Fri,
+ 16 Aug 2024 06:47:34 -0400
+X-MC-Unique: q84_8tCqMuqc8KTJyOtXAQ-1
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7AB71195421B; Fri, 16 Aug 2024 10:47:28 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.143])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CAB0D3001FE8; Fri, 16 Aug 2024 10:47:19 +0000 (UTC)
+Date: Fri, 16 Aug 2024 11:47:16 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Cornelia Huck <cohuck@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ David Gibson <david@gibson.dropbear.id.au>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, qemu-s390x@nongnu.org
+Subject: Re: [PATCH for-9.2] hw: add compat machines for 9.2
+Message-ID: <Zr8uNB8gaJTroMBU@redhat.com>
+References: <20240816103723.2325982-1-cohuck@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240816103723.2325982-1-cohuck@redhat.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,100 +99,79 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Aug 2024 07:53:24 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+On Fri, Aug 16, 2024 at 12:37:23PM +0200, Cornelia Huck wrote:
+> Add 9.2 machine types for arm/i440fx/m68k/q35/s390x/spapr.
+> 
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> ---
+>  hw/arm/virt.c              |  9 ++++++++-
+>  hw/core/machine.c          |  3 +++
+>  hw/i386/pc.c               |  3 +++
+>  hw/i386/pc_piix.c          | 15 ++++++++++++---
+>  hw/i386/pc_q35.c           | 13 +++++++++++--
+>  hw/m68k/virt.c             |  9 ++++++++-
+>  hw/ppc/spapr.c             | 15 +++++++++++++--
+>  hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
+>  include/hw/boards.h        |  3 +++
+>  include/hw/i386/pc.h       |  3 +++
+>  10 files changed, 77 insertions(+), 10 deletions(-)
 
-> Em Wed, 14 Aug 2024 13:33:21 +0100
-> Jonathan Cameron <Jonathan.Cameron@Huawei.com> escreveu:
-> 
-> > On Wed, 14 Aug 2024 01:23:23 +0200
-> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> >   
-> > > Adds a generic error device to handle generic hardware error
-> > > events as specified at ACPI 6.5 specification at 18.3.2.7.2:
-> > > https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#event-notification-for-generic-error-sources
-> > > using HID PNP0C33.
-> > > 
-> > > The PNP0C33 device is used to report hardware errors to
-> > > the guest via ACPI APEI Generic Hardware Error Source (GHES).
-> > > 
-> > > Co-authored-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > Co-authored-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-> > > ---
-> > >  hw/acpi/aml-build.c                    | 10 ++++++++++
-> > >  hw/acpi/generic_event_device.c         |  8 ++++++++
-> > >  include/hw/acpi/acpi_dev_interface.h   |  1 +
-> > >  include/hw/acpi/aml-build.h            |  2 ++
-> > >  include/hw/acpi/generic_event_device.h |  1 +
-> > >  5 files changed, 22 insertions(+)
-> > > 
-> > > diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-> > > index 6d4517cfbe3d..cb167523859f 100644
-> > > --- a/hw/acpi/aml-build.c
-> > > +++ b/hw/acpi/aml-build.c
-> > > @@ -2520,3 +2520,13 @@ Aml *aml_i2c_serial_bus_device(uint16_t address, const char *resource_source)
-> > >  
-> > >      return var;
-> > >  }
-> > > +
-> > > +/* ACPI 5.0: 18.3.2.6.2 Event Notification For Generic Error Sources */    
-> > 
-> > Given this section got a rename maybe the comment should mention old
-> > name and current name for the section?  
-> 
-> ACPI 6.5 has the same name for the section:
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-We did a bit of digging after an offline discussion.
-It's only there in Errata B of ACPI 5.0.  So need to update this reference
-to be more specific if we want to avoid confusion.
 
-> 
-> 	18.3.2.7.2. Event Notification For Generic Error Sources
-> 
-> 	An event notification is recommended for corrected errors where latency 
-> 	in processing error reports is not critical to proper system operation. 
-> 	The implementation of Event notification requires the platform to define
-> 	a device with PNP ID PNP0C33 in the ACPI namespace, referred to as the
-> 	error device. 
-> 
-> Just section number changed. IMO, it is still good enough to seek for
-> it at the docs.
-> 
-> Btw, in this specific case, the best is to use the search box of
-> Sphinx html output and seek for PNP0C33 ;-)
-> 
-> >   
-> > > +Aml *aml_error_device(void)
-> > > +{
-> > > +    Aml *dev = aml_device(ACPI_APEI_ERROR_DEVICE);
-> > > +    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0C33")));
-> > > +    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
-> > > +
-> > > +    return dev;
-> > > +}
-> > > diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-> > > index 15b4c3ebbf24..1673e9695be3 100644
-> > > --- a/hw/acpi/generic_event_device.c
-> > > +++ b/hw/acpi/generic_event_device.c
-> > > @@ -26,6 +26,7 @@ static const uint32_t ged_supported_events[] = {
-> > >      ACPI_GED_PWR_DOWN_EVT,
-> > >      ACPI_GED_NVDIMM_HOTPLUG_EVT,
-> > >      ACPI_GED_CPU_HOTPLUG_EVT,
-> > > +    ACPI_GED_ERROR_EVT    
-> > 
-> > trailing comma missing.  
-> 
-> I'll add.
-> 
-> Thanks,
-> Mauro
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index d9e69243b4a7..746bfe05d386 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -479,13 +479,24 @@ static void pc_i440fx_machine_options(MachineClass *m)
+>                                       "Use a different south bridge than PIIX3");
+>  }
+>  
+> -static void pc_i440fx_machine_9_1_options(MachineClass *m)
+> +static void pc_i440fx_machine_9_2_options(MachineClass *m)
+>  {
+>      pc_i440fx_machine_options(m);
+>      m->alias = "pc";
+>      m->is_default = true;
+>  }
+>  
+> +DEFINE_I440FX_MACHINE(9, 2);
+> +
+> +static void pc_i440fx_machine_9_1_options(MachineClass *m)
+> +{
+> +    pc_i440fx_machine_9_2_options(m);
+> +    m->alias = NULL;
+> +    m->is_default = false;
+> +    compat_props_add(m->compat_props, hw_compat_9_1, hw_compat_9_1_len);
+> +    compat_props_add(m->compat_props, pc_compat_9_1, pc_compat_9_1_len);
+> +}
+> +
+>  DEFINE_I440FX_MACHINE(9, 1);
+>  
+>  static void pc_i440fx_machine_9_0_options(MachineClass *m)
+> @@ -493,8 +504,6 @@ static void pc_i440fx_machine_9_0_options(MachineClass *m)
+>      PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+>  
+>      pc_i440fx_machine_9_1_options(m);
+> -    m->alias = NULL;
+> -    m->is_default = false;
+>      m->smbios_memory_device_size = 16 * GiB;
+
+Feels like we should be adding an "_AS_LATEST" macro
+variant for piix/q35 too, so it matches the pattern
+in other targets for handling alias & is_default.
+
+Not a thing your patch needs todo though.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
