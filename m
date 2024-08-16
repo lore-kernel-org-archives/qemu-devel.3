@@ -4,89 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD6C1C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 17:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86550C531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 17:44:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sf0ho-0008WL-88; Fri, 16 Aug 2024 13:25:41 -0400
+	id 1sf0z9-0001kb-Oa; Fri, 16 Aug 2024 13:43:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sf0hm-0008Pb-Aq
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 13:25:38 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sf0z8-0001k1-AQ
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 13:43:34 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sf0hk-00013b-01
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 13:25:38 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-427fc97a88cso16884215e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 10:25:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723829134; x=1724433934; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=sYJMlYO9VGLWEvxyHaUDf7+X+EVYopfonw7dRlnUZHk=;
- b=wk05ywl5MYfgOS4nzDwmZio5mqGKGicj31+zLBZJ1WZNk2XW2w4PF7KCTlsdRNS4qX
- PVpxrz2n7C5bMHF4xTFyENTF4ZR4BkzIMvudC/kRACppVvsoksSfvRFIDb0E47Mo6Z7A
- FqqDXIvGqvIle5sp66+kqt4tx04LpdhKL7ndQwppyzwtC5zYDBEeGRMClQJFNcnwW1pU
- 2Ox83sNKOrAS0Taa4N01aZZdXpGS8C8Y02qej8l1uTQaBog4LcZY0v6hpNziX8Rg23xy
- 5tfviY92QlW2aXnY1kVqqoXSsvrudsE2Akqpcozb1jjdC3h1yR4RwsSfZPSiFDhH1krW
- Rq5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723829134; x=1724433934;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sYJMlYO9VGLWEvxyHaUDf7+X+EVYopfonw7dRlnUZHk=;
- b=sRE+iFGrV0l5JB/bWTOmdWsUn/t33Jj7s7YhygHY49qnJeNZ409BZEtDQjN4kCAZMD
- h+/0HOaiwpbxPtfdFS1yZxdVKd/W4HBUgXtXp5hHs0zu3KcS1PcQl7IejsWVbOoVDQMd
- 8SqlSP6qW5pGHbfS+b6qLH2DpqFKTb+WxHXUq/8rfwv2nwCleZN+QtrUlyhBxr+P2moh
- gT8pGSydbcDp9KARygtwAPWQW0rw+1HHrujDfn1300mms57hvtCfKrf5I/yD2Ym9ADOL
- vStJPRhKoa/m0GUyxZmi4EmLSDm74n2KoR5bh2F8ECB8cYqeYd6fUjoLaJa0R3CoZD5d
- ar6g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVny39jLY5MNh82eM3v73mLyDRXBPx9uTlWlTLDhey1P2avm7EwIK8dGSYaqHq5XUGkARrFZZhSrRs3Os6V4bMiTPjbWqA=
-X-Gm-Message-State: AOJu0YyHmTsY6CO4LCN3iI8oWtUutTJUHoqgaG8+tJmrbJro6SsPhLno
- 4CpFhzWsjuGYJOnqezc89F12cFaIozGNkpSYJ9qhzXxGcLLPNc3Rho7pKnb/zKE=
-X-Google-Smtp-Source: AGHT+IF7ExHCJGFpWU/3TOJuLzwDrhfrrEocyhkCO/6b3kyGKwlxcbUeKp+d9TR/9VTt8KdaRD7KRg==
-X-Received: by 2002:a5d:6304:0:b0:368:785f:b78e with SMTP id
- ffacd0b85a97d-371a73dbd82mr175539f8f.13.1723829133630; 
- Fri, 16 Aug 2024 10:25:33 -0700 (PDT)
-Received: from [192.168.220.175] (143.red-88-28-5.dynamicip.rima-tde.net.
- [88.28.5.143]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ed65079fsm27774765e9.16.2024.08.16.10.25.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Aug 2024 10:25:33 -0700 (PDT)
-Message-ID: <b12e2ac1-807a-4df3-b101-584a5520f09f@linaro.org>
-Date: Fri, 16 Aug 2024 19:25:30 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] .gitlab-ci.d/windows.yml: Disable the qtests in the MSYS2
- job
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Thomas Huth <thuth@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>,
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sf0z2-0003Xh-Nb
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 13:43:34 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id F22C52288F;
+ Fri, 16 Aug 2024 17:43:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1723830207; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ItPPf1KMfyygjv93ZUhQxnwfsTvl7j/bJ06xj1SyEnw=;
+ b=Lo0wUkS6gvYKA63okQh22nGjQZ9Zy4DAhlLnv2lpvDML8RFwKHjId3rxItkeUqjqHMGCsA
+ evTF2LbrZ6SpXsj6rrCfR/ejdxgTwD0s/PYSeVO7dj6d8Qf26wTjwvB4bMxFvJ2Q03vqTc
+ IPvkB4UISY4K1UYklptjumsNS5vsMrM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1723830207;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ItPPf1KMfyygjv93ZUhQxnwfsTvl7j/bJ06xj1SyEnw=;
+ b=+PacjucnnV2cLk3CIxFvPurMSzIN/Gi43rSDJOIvdojx2YEUOoHU38AO2YBHuHUnlcRgvz
+ 1M2j0o1VhXa5xQAg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1723830207; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ItPPf1KMfyygjv93ZUhQxnwfsTvl7j/bJ06xj1SyEnw=;
+ b=Lo0wUkS6gvYKA63okQh22nGjQZ9Zy4DAhlLnv2lpvDML8RFwKHjId3rxItkeUqjqHMGCsA
+ evTF2LbrZ6SpXsj6rrCfR/ejdxgTwD0s/PYSeVO7dj6d8Qf26wTjwvB4bMxFvJ2Q03vqTc
+ IPvkB4UISY4K1UYklptjumsNS5vsMrM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1723830207;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ItPPf1KMfyygjv93ZUhQxnwfsTvl7j/bJ06xj1SyEnw=;
+ b=+PacjucnnV2cLk3CIxFvPurMSzIN/Gi43rSDJOIvdojx2YEUOoHU38AO2YBHuHUnlcRgvz
+ 1M2j0o1VhXa5xQAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6EF071379A;
+ Fri, 16 Aug 2024 17:43:26 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id /mxuDb6Pv2YIPwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 16 Aug 2024 17:43:26 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Yichen Wang <yichen.wang@bytedance.com>, Peter Xu <peterx@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, =?utf-8?Q?M?=
+ =?utf-8?Q?arc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Eric Blake
+ <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Stefan Weil <sw@weilnetz.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, John Snow <jsnow@redhat.com>
-References: <20240816153747.319161-1-thuth@redhat.com>
- <8d07931c-444e-4030-ac7c-b81ad2d3bac4@linaro.org>
- <ac16ccfe-65fa-4de4-95a1-7b2d2379c893@redhat.com>
- <3abd50a8-6add-4406-ba21-ddd0c73965ed@linaro.org>
-Content-Language: en-US
-In-Reply-To: <3abd50a8-6add-4406-ba21-ddd0c73965ed@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Cc: Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
+ "Zou, Nanhai" <nanhai.zou@intel.com>, "Ho-Ren (Jack) Chuang"
+ <horenchuang@bytedance.com>, Yichen Wang <yichen.wang@bytedance.com>,
+ Bryan Zhang <bryan.zhang@bytedance.com>
+Subject: Re: [PATCH v7 4/5] migration: Introduce 'qatzip' compression method
+In-Reply-To: <20240815002124.65384-5-yichen.wang@bytedance.com>
+References: <20240815002124.65384-1-yichen.wang@bytedance.com>
+ <20240815002124.65384-5-yichen.wang@bytedance.com>
+Date: Fri, 16 Aug 2024 14:43:23 -0300
+Message-ID: <87le0w5pok.fsf@suse.de>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[17]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
+ bytedance.com:email, suse.de:mid, suse.de:email, linux.dev:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,250 +125,497 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/8/24 19:18, Philippe Mathieu-Daudé wrote:
-> On 16/8/24 18:40, Thomas Huth wrote:
->> On 16/08/2024 18.34, Philippe Mathieu-Daudé wrote:
->>> On 16/8/24 17:37, Thomas Huth wrote:
->>>> The qtests are broken since a while in the MSYS2 job in the gitlab-CI,
->>>> likely due to some changes in the MSYS2 environment. So far nobody has
->>>> neither a clue what's going wrong here, nor an idea how to fix this
->>>> (in fact most QEMU developers even don't have a Windows environment
->>>> available for properly analyzing this problem), so let's disable the
->>>> qtests here again to get at least the test coverage for the compilation
->>>> and unit tests back to the CI.
->>>>
->>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>>> ---
->>>>   .gitlab-ci.d/windows.yml | 2 ++
->>>>   1 file changed, 2 insertions(+)
->>>>
->>>> diff --git a/.gitlab-ci.d/windows.yml b/.gitlab-ci.d/windows.yml
->>>> index a83f23a786..9f3112f010 100644
->>>> --- a/.gitlab-ci.d/windows.yml
->>>> +++ b/.gitlab-ci.d/windows.yml
->>>> @@ -23,6 +23,8 @@ msys2-64bit:
->>>>       # for this job, because otherwise the build could not complete 
->>>> within
->>>>       # the project timeout.
->>>>       CONFIGURE_ARGS:  --target-list=sparc-softmmu 
->>>> --without-default-devices -Ddebug=false -Doptimization=0
->>>> +    # The qtests are broken in the msys2 job on gitlab, so disable 
->>>> them:
->>>> +    TEST_ARGS: --no-suite qtest
->>>
->>> Then building system emulation is pointless, isn't it?
->>
->> We're still running the unit tests and some others.
-> 
-> I tried to configure with '--disable-system' and the same tests
-> are run:
-> 
-> [1107/1109] Linking target tests/unit/test-vmstate.exe
-> [1108/1109] Linking target tests/unit/test-yank.exe
-> [1109/1109] Linking target tests/unit/test-qdev-global-props.exe
+Yichen Wang <yichen.wang@bytedance.com> writes:
 
-Wrong console, only 743 objects compiled in this config.
+> From: Bryan Zhang <bryan.zhang@bytedance.com>
+>
+> Adds support for 'qatzip' as an option for the multifd compression
+> method parameter, and implements using QAT for 'qatzip' compression and
+> decompression.
+>
+> Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
+> Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
+> Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
+> Acked-by: Markus Armbruster <armbru@redhat.com>
+> ---
+>  hw/core/qdev-properties-system.c |   2 +-
+>  migration/meson.build            |   1 +
+>  migration/multifd-qatzip.c       | 394 +++++++++++++++++++++++++++++++
+>  migration/multifd.h              |   5 +-
+>  qapi/migration.json              |   3 +
+>  5 files changed, 402 insertions(+), 3 deletions(-)
+>  create mode 100644 migration/multifd-qatzip.c
+>
+> diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+> index f13350b4fb..a56fbf728d 100644
+> --- a/hw/core/qdev-properties-system.c
+> +++ b/hw/core/qdev-properties-system.c
+> @@ -659,7 +659,7 @@ const PropertyInfo qdev_prop_fdc_drive_type = {
+>  const PropertyInfo qdev_prop_multifd_compression = {
+>      .name = "MultiFDCompression",
+>      .description = "multifd_compression values, "
+> -                   "none/zlib/zstd/qpl/uadk",
+> +                   "none/zlib/zstd/qpl/uadk/qatzip",
+>      .enum_table = &MultiFDCompression_lookup,
+>      .get = qdev_propinfo_get_enum,
+>      .set = qdev_propinfo_set_enum,
+> diff --git a/migration/meson.build b/migration/meson.build
+> index 5ce2acb41e..c9454c26ae 100644
+> --- a/migration/meson.build
+> +++ b/migration/meson.build
+> @@ -41,6 +41,7 @@ system_ss.add(when: rdma, if_true: files('rdma.c'))
+>  system_ss.add(when: zstd, if_true: files('multifd-zstd.c'))
+>  system_ss.add(when: qpl, if_true: files('multifd-qpl.c'))
+>  system_ss.add(when: uadk, if_true: files('multifd-uadk.c'))
+> +system_ss.add(when: qatzip, if_true: files('multifd-qatzip.c'))
+>  
+>  specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
+>                  if_true: files('ram.c',
+> diff --git a/migration/multifd-qatzip.c b/migration/multifd-qatzip.c
+> new file mode 100644
+> index 0000000000..3c787ed879
+> --- /dev/null
+> +++ b/migration/multifd-qatzip.c
+> @@ -0,0 +1,394 @@
+> +/*
+> + * Multifd QATzip compression implementation
+> + *
+> + * Copyright (c) Bytedance
+> + *
+> + * Authors:
+> + *  Bryan Zhang <bryan.zhang@bytedance.com>
+> + *  Hao Xiang <hao.xiang@bytedance.com>
+> + *  Yichen Wang <yichen.wang@bytedance.com>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "exec/ramblock.h"
+> +#include "qapi/error.h"
+> +#include "qemu/error-report.h"
+> +#include "qapi/qapi-types-migration.h"
+> +#include "options.h"
+> +#include "multifd.h"
+> +#include <qatzip.h>
+> +
+> +typedef struct {
+> +    /*
+> +     * Unique session for use with QATzip API
+> +     */
+> +    QzSession_T sess;
+> +
+> +    /*
+> +     * For compression: Buffer for pages to compress
+> +     * For decompression: Buffer for data to decompress
+> +     */
+> +    uint8_t *in_buf;
+> +    uint32_t in_len;
+> +
+> +    /*
+> +     * For compression: Output buffer of compressed data
+> +     * For decompression: Output buffer of decompressed data
+> +     */
+> +    uint8_t *out_buf;
+> +    uint32_t out_len;
+> +} QatzipData;
+> +
+> +/**
+> + * qatzip_send_setup: Set up QATzip session and private buffers.
+> + *
+> + * @param p    Multifd channel params
+> + * @param errp Pointer to error, which will be set in case of error
+> + * @return     0 on success, -1 on error (and *errp will be set)
+> + */
+> +static int qatzip_send_setup(MultiFDSendParams *p, Error **errp)
+> +{
+> +    QatzipData *q;
+> +    QzSessionParamsDeflate_T params;
+> +    const char *err_msg;
+> +    int ret;
+> +
+> +    q = g_new0(QatzipData, 1);
+> +    p->compress_data = q;
+> +    /* We need one extra place for the packet header */
+> +    p->iov = g_new0(struct iovec, 2);
+> +
+> +    /*
+> +     * Initialize QAT device with software fallback by default. This allows
+> +     * QATzip to use CPU path when QAT hardware reaches maximum throughput.
+> +     */
+> +    ret = qzInit(&q->sess, true);
+> +    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
+> +        err_msg = "qzInit failed";
+> +        goto err;
+> +    }
+> +
+> +    ret = qzGetDefaultsDeflate(&params);
+> +    if (ret != QZ_OK) {
+> +        err_msg = "qzGetDefaultsDeflate failed";
+> +        goto err;
+> +    }
+> +
+> +    /* Make sure to use configured QATzip compression level. */
+> +    params.common_params.comp_lvl = migrate_multifd_qatzip_level();
+> +    ret = qzSetupSessionDeflate(&q->sess, &params);
+> +    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
+> +        err_msg = "qzSetupSessionDeflate failed";
+> +        goto err;
+> +    }
+> +
+> +    if (MULTIFD_PACKET_SIZE > UINT32_MAX) {
+> +        err_msg = "packet size too large for QAT";
+> +        goto err;
+> +    }
+> +
+> +    q->in_len = MULTIFD_PACKET_SIZE;
+> +    /*
+> +     * PINNED_MEM is an enum from qatzip headers, which means to use
+> +     * kzalloc_node() to allocate memory for QAT DMA purposes. When QAT device
+> +     * is not available or software fallback is used, the malloc flag needs to
+> +     * be set as COMMON_MEM.
+> +     */
+> +    q->in_buf = qzMalloc(q->in_len, 0, PINNED_MEM);
+> +    if (!q->in_buf) {
+> +        q->in_buf = qzMalloc(q->in_len, 0, COMMON_MEM);
+> +        if (!q->in_buf) {
+> +            err_msg = "qzMalloc failed";
+> +            goto err;
+> +        }
+> +    }
+> +
+> +    q->out_len = qzMaxCompressedLength(MULTIFD_PACKET_SIZE, &q->sess);
+> +    q->out_buf = qzMalloc(q->out_len, 0, PINNED_MEM);
+> +    if (!q->out_buf) {
+> +        q->out_buf = qzMalloc(q->out_len, 0, COMMON_MEM);
+> +        if (!q->out_buf) {
+> +            err_msg = "qzMalloc failed";
+> +            goto err;
+> +        }
+> +    }
+> +
+> +    return 0;
+> +
+> +err:
+> +    error_setg(errp, "multifd %u: [sender] %s", p->id, err_msg);
+> +    return -1;
+> +}
+> +
+> +/**
+> + * qatzip_send_cleanup: Tear down QATzip session and release private buffers.
+> + *
+> + * @param p    Multifd channel params
+> + * @param errp Pointer to error, which will be set in case of error
+> + * @return     None
+> + */
+> +static void qatzip_send_cleanup(MultiFDSendParams *p, Error **errp)
+> +{
+> +    QatzipData *q = p->compress_data;
+> +
+> +    if (q) {
+> +        if (q->in_buf) {
+> +            qzFree(q->in_buf);
+> +        }
+> +        if (q->out_buf) {
+> +            qzFree(q->out_buf);
+> +        }
+> +        (void)qzTeardownSession(&q->sess);
+> +        (void)qzClose(&q->sess);
+> +        g_free(q);
+> +    }
+> +
+> +    g_free(p->iov);
+> +    p->iov = NULL;
+> +    p->compress_data = NULL;
+> +}
+> +
+> +/**
+> + * qatzip_send_prepare: Compress pages and update IO channel info.
+> + *
+> + * @param p    Multifd channel params
+> + * @param errp Pointer to error, which will be set in case of error
+> + * @return     0 on success, -1 on error (and *errp will be set)
+> + */
+> +static int qatzip_send_prepare(MultiFDSendParams *p, Error **errp)
+> +{
+> +    MultiFDPages_t *pages = p->pages;
+> +    QatzipData *q = p->compress_data;
+> +    int ret;
+> +    unsigned int in_len, out_len;
+> +
+> +    if (!multifd_send_prepare_common(p)) {
+> +        goto out;
+> +    }
+> +
+> +    /*
+> +     * Unlike other multifd compression implementations, we use a non-streaming
+> +     * API and place all the data into one buffer, rather than sending each
+> +     * page to the compression API at a time. Based on initial benchmarks, the
+> +     * non-streaming API outperforms the streaming API. Plus, the logic in QEMU
+> +     * is friendly to using the non-streaming API anyway. If either of these
+> +     * statements becomes no longer true, we can revisit adding a streaming
+> +     * implementation.
+> +     */
+> +    for (int i = 0; i < pages->normal_num; i++) {
+> +        memcpy(q->in_buf + (i * p->page_size),
+> +               pages->block->host + pages->offset[i],
+> +               p->page_size);
+> +    }
+> +
+> +    in_len = pages->normal_num * p->page_size;
+> +    if (in_len > q->in_len) {
+> +        error_setg(errp, "multifd %u: unexpectedly large input", p->id);
+> +        return -1;
+> +    }
+> +    out_len = q->out_len;
+> +
+> +    ret = qzCompress(&q->sess, q->in_buf, &in_len, q->out_buf, &out_len, 1);
+> +    if (ret != QZ_OK) {
+> +        error_setg(errp, "multifd %u: QATzip returned %d instead of QZ_OK",
+> +                   p->id, ret);
+> +        return -1;
+> +    }
+> +    if (in_len != pages->normal_num * p->page_size) {
+> +        error_setg(errp, "multifd %u: QATzip failed to compress all input",
+> +                   p->id);
+> +        return -1;
+> +    }
+> +
+> +    p->iov[p->iovs_num].iov_base = q->out_buf;
+> +    p->iov[p->iovs_num].iov_len = out_len;
+> +    p->iovs_num++;
+> +    p->next_packet_size = out_len;
+> +
+> +out:
+> +    p->flags |= MULTIFD_FLAG_QATZIP;
+> +    multifd_send_fill_packet(p);
+> +    return 0;
+> +}
+> +
+> +/**
+> + * qatzip_recv_setup: Set up QATzip session and allocate private buffers.
+> + *
+> + * @param p    Multifd channel params
+> + * @param errp Pointer to error, which will be set in case of error
+> + * @return     0 on success, -1 on error (and *errp will be set)
+> + */
+> +static int qatzip_recv_setup(MultiFDRecvParams *p, Error **errp)
+> +{
+> +    QatzipData *q;
+> +    QzSessionParamsDeflate_T params;
+> +    const char *err_msg;
+> +    int ret;
+> +
+> +    q = g_new0(QatzipData, 1);
+> +    p->compress_data = q;
+> +
+> +    /*
+> +     * Initialize QAT device with software fallback by default. This allows
+> +     * QATzip to use CPU path when QAT hardware reaches maximum throughput.
+> +     */
+> +    ret = qzInit(&q->sess, true);
+> +    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
+> +        err_msg = "qzInit failed";
+> +        goto err;
+> +    }
+> +
+> +    ret = qzGetDefaultsDeflate(&params);
+> +    if (ret != QZ_OK) {
+> +        err_msg = "qzGetDefaultsDeflate failed";
+> +        goto err;
+> +    }
+> +
+> +    ret = qzSetupSessionDeflate(&q->sess, &params);
+> +    if (ret != QZ_OK && ret != QZ_DUPLICATE) {
+> +        err_msg = "qzSetupSessionDeflate failed";
+> +        goto err;
+> +    }
+> +
+> +    /*
+> +     * Reserve extra spaces for the incoming packets. Current implementation
+> +     * doesn't send uncompressed pages in case the compression gets too big.
+> +     */
+> +    q->in_len = MULTIFD_PACKET_SIZE * 2;
+> +    /*
+> +     * PINNED_MEM is an enum from qatzip headers, which means to use
+> +     * kzalloc_node() to allocate memory for QAT DMA purposes. When QAT device
+> +     * is not available or software fallback is used, the malloc flag needs to
+> +     * be set as COMMON_MEM.
+> +     */
+> +    q->in_buf = qzMalloc(q->in_len, 0, PINNED_MEM);
+> +    if (!q->in_buf) {
+> +        q->in_buf = qzMalloc(q->in_len, 0, COMMON_MEM);
+> +        if (!q->in_buf) {
+> +            err_msg = "qzMalloc failed";
+> +            goto err;
+> +        }
+> +    }
+> +
+> +    q->out_len = MULTIFD_PACKET_SIZE;
+> +    q->out_buf = qzMalloc(q->out_len, 0, PINNED_MEM);
+> +    if (!q->out_buf) {
+> +        q->out_buf = qzMalloc(q->out_len, 0, COMMON_MEM);
+> +        if (!q->out_buf) {
+> +            err_msg = "qzMalloc failed";
+> +            goto err;
+> +        }
+> +    }
+> +
+> +    return 0;
+> +
+> +err:
+> +    error_setg(errp, "multifd %u: [receiver] %s", p->id, err_msg);
+> +    return -1;
+> +}
+> +
+> +/**
+> + * qatzip_recv_cleanup: Tear down QATzip session and release private buffers.
+> + *
+> + * @param p    Multifd channel params
+> + * @return     None
+> + */
+> +static void qatzip_recv_cleanup(MultiFDRecvParams *p)
+> +{
+> +    QatzipData *q = p->compress_data;
+> +
+> +    if (q) {
+> +        if (q->in_buf) {
+> +            qzFree(q->in_buf);
+> +        }
+> +        if (q->out_buf) {
+> +            qzFree(q->out_buf);
+> +        }
+> +        (void)qzTeardownSession(&q->sess);
+> +        (void)qzClose(&q->sess);
+> +        g_free(q);
+> +    }
+> +    p->compress_data = NULL;
+> +}
+> +
+> +
+> +/**
+> + * qatzip_recv: Decompress pages and copy them to the appropriate
+> + * locations.
+> + *
+> + * @param p    Multifd channel params
+> + * @param errp Pointer to error, which will be set in case of error
+> + * @return     0 on success, -1 on error (and *errp will be set)
+> + */
+> +static int qatzip_recv(MultiFDRecvParams *p, Error **errp)
+> +{
+> +    QatzipData *q = p->compress_data;
+> +    int ret;
+> +    unsigned int in_len, out_len;
+> +    uint32_t in_size = p->next_packet_size;
+> +    uint32_t expected_size = p->normal_num * p->page_size;
+> +    uint32_t flags = p->flags & MULTIFD_FLAG_COMPRESSION_MASK;
+> +
+> +    if (in_size > q->in_len) {
+> +        error_setg(errp, "multifd %u: received unexpectedly large packet",
+> +                   p->id);
+> +        return -1;
+> +    }
+> +
+> +    if (flags != MULTIFD_FLAG_QATZIP) {
+> +        error_setg(errp, "multifd %u: flags received %x flags expected %x",
+> +                   p->id, flags, MULTIFD_FLAG_QATZIP);
+> +        return -1;
+> +    }
+> +
+> +    multifd_recv_zero_page_process(p);
+> +    if (!p->normal_num) {
+> +        assert(in_size == 0);
+> +        return 0;
+> +    }
+> +
+> +    ret = qio_channel_read_all(p->c, (void *)q->in_buf, in_size, errp);
+> +    if (ret != 0) {
+> +        return ret;
+> +    }
+> +
+> +    in_len = in_size;
+> +    out_len = q->out_len;
+> +    ret = qzDecompress(&q->sess, q->in_buf, &in_len, q->out_buf, &out_len);
+> +    if (ret != QZ_OK) {
+> +        error_setg(errp, "multifd %u: qzDecompress failed", p->id);
+> +        return -1;
+> +    }
+> +    if (out_len != expected_size) {
+> +        error_setg(errp, "multifd %u: packet size received %u size expected %u",
+> +                   p->id, out_len, expected_size);
+> +        return -1;
+> +    }
+> +
+> +    /* Copy each page to its appropriate location. */
+> +    for (int i = 0; i < p->normal_num; i++) {
+> +        memcpy(p->host + p->normal[i],
+> +               q->out_buf + p->page_size * i,
+> +               p->page_size);
+> +    }
+> +    return 0;
+> +}
+> +
+> +static MultiFDMethods multifd_qatzip_ops = {
+> +    .send_setup = qatzip_send_setup,
+> +    .send_cleanup = qatzip_send_cleanup,
+> +    .send_prepare = qatzip_send_prepare,
+> +    .recv_setup = qatzip_recv_setup,
+> +    .recv_cleanup = qatzip_recv_cleanup,
+> +    .recv = qatzip_recv
+> +};
+> +
+> +static void multifd_qatzip_register(void)
+> +{
+> +    multifd_register_ops(MULTIFD_COMPRESSION_QATZIP, &multifd_qatzip_ops);
+> +}
+> +
+> +migration_init(multifd_qatzip_register);
+> diff --git a/migration/multifd.h b/migration/multifd.h
+> index 0ecd6f47d7..adceb65050 100644
+> --- a/migration/multifd.h
+> +++ b/migration/multifd.h
+> @@ -34,14 +34,15 @@ MultiFDRecvData *multifd_get_recv_data(void);
+>  /* Multifd Compression flags */
+>  #define MULTIFD_FLAG_SYNC (1 << 0)
+>  
+> -/* We reserve 4 bits for compression methods */
+> -#define MULTIFD_FLAG_COMPRESSION_MASK (0xf << 1)
+> +/* We reserve 5 bits for compression methods */
+> +#define MULTIFD_FLAG_COMPRESSION_MASK (0x1f << 1)
+>  /* we need to be compatible. Before compression value was 0 */
+>  #define MULTIFD_FLAG_NOCOMP (0 << 1)
+>  #define MULTIFD_FLAG_ZLIB (1 << 1)
+>  #define MULTIFD_FLAG_ZSTD (2 << 1)
+>  #define MULTIFD_FLAG_QPL (4 << 1)
+>  #define MULTIFD_FLAG_UADK (8 << 1)
+> +#define MULTIFD_FLAG_QATZIP (16 << 1)
+>  
+>  /* This value needs to be a multiple of qemu_target_page_size() */
+>  #define MULTIFD_PACKET_SIZE (512 * 1024)
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 279a705cae..dc65f90b44 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -561,6 +561,8 @@
+>  #
+>  # @zstd: use zstd compression method.
+>  #
+> +# @qatzip: use qatzip compression method. (Since 9.1)
+> +#
 
-> /c/Users/Administrator/qemu/build/pyvenv/bin/meson test  --no-rebuild -t 
-> 1  --num-processes 1 --print-errorlogs  --suite unit
->   1/93 qemu:unit / test-crypto-block                   OK 0.22s   1 
-> subtests passed
->   2/93 qemu:unit / test-aio-multithread                OK 6.94s   5 
-> subtests passed
->   3/93 qemu:unit / test-replication                    OK 1.55s   8 
-> subtests passed
->   4/93 qemu:unit / test-bufferiszero                   OK 9.70s   1 
-> subtests passed
->   5/93 qemu:unit / check-block-qdict                   OK 0.09s   10 
-> subtests passed
->   6/93 qemu:unit / check-qdict                         OK 0.06s   15 
-> subtests passed
->   7/93 qemu:unit / check-qnum                          OK 0.08s   8 
-> subtests passed
->   8/93 qemu:unit / check-qstring                       OK 0.08s   4 
-> subtests passed
->   9/93 qemu:unit / check-qlist                         OK 0.06s   4 
-> subtests passed
-> 10/93 qemu:unit / check-qnull                         OK 0.06s   2 
-> subtests passed
-> 11/93 qemu:unit / check-qobject                       OK 0.08s   7 
-> subtests passed
-> 12/93 qemu:unit / check-qjson                         OK 0.31s   31 
-> subtests passed
-> 13/93 qemu:unit / check-qlit                          OK 0.09s   2 
-> subtests passed
-> 14/93 qemu:unit / test-error-report                   OK 0.42s   6 
-> subtests passed
-> 15/93 qemu:unit / test-qobject-output-visitor         OK 0.09s   16 
-> subtests passed
-> 16/93 qemu:unit / test-clone-visitor                  OK 0.06s   7 
-> subtests passed
-> 17/93 qemu:unit / test-qobject-input-visitor          OK 0.08s   42 
-> subtests passed
-> 18/93 qemu:unit / test-forward-visitor                OK 0.08s   7 
-> subtests passed
-> 19/93 qemu:unit / test-string-input-visitor           OK 0.11s   8 
-> subtests passed
-> 20/93 qemu:unit / test-string-output-visitor          OK 0.08s   14 
-> subtests passed
-> 21/93 qemu:unit / test-visitor-serialization          OK 0.08s   156 
-> subtests passed
-> 22/93 qemu:unit / test-bitmap                         OK 0.08s   2 
-> subtests passed
-> 23/93 qemu:unit / test-resv-mem                       OK 0.09s   3 
-> subtests passed
-> 24/93 qemu:unit / test-x86-topo                       OK 0.06s   1 
-> subtests passed
-> 25/93 qemu:unit / test-cutils                         OK 0.08s   179 
-> subtests passed
-> 26/93 qemu:unit / test-div128                         OK 0.08s   2 
-> subtests passed
-> 27/93 qemu:unit / test-shift128                       OK 0.06s   2 
-> subtests passed
-> 28/93 qemu:unit / test-mul64                          OK 0.08s   2 
-> subtests passed
-> 29/93 qemu:unit / test-int128                         OK 0.08s   11 
-> subtests passed
-> 30/93 qemu:unit / rcutorture                          OK 2.34s   2 
-> subtests passed
-> 31/93 qemu:unit / test-rcu-list                       OK 4.20s   3 
-> subtests passed
-> 32/93 qemu:unit / test-rcu-simpleq                    OK 4.20s   3 
-> subtests passed
-> 33/93 qemu:unit / test-rcu-tailq                      OK 4.20s   3 
-> subtests passed
-> 34/93 qemu:unit / test-rcu-slist                      OK 4.20s   3 
-> subtests passed
-> 35/93 qemu:unit / test-qdist                          OK 0.09s   8 
-> subtests passed
-> 36/93 qemu:unit / test-qht                            OK 1.94s   2 
-> subtests passed
-> 37/93 qemu:unit / test-qtree                          OK 0.09s   4 
-> subtests passed
-> 38/93 qemu:unit / test-bitops                         OK 0.08s   6 
-> subtests passed
-> 39/93 qemu:unit / test-bitcnt                         OK 0.06s   4 
-> subtests passed
-> 40/93 qemu:unit / test-qgraph                         OK 0.06s   23 
-> subtests passed
-> 41/93 qemu:unit / check-qom-interface                 OK 0.09s   2 
-> subtests passed
-> 42/93 qemu:unit / check-qom-proplist                  OK 0.08s   9 
-> subtests passed
-> 43/93 qemu:unit / test-qemu-opts                      OK 0.06s   19 
-> subtests passed
-> 44/93 qemu:unit / test-keyval                         OK 0.08s   13 
-> subtests passed
-> 45/93 qemu:unit / test-logging                        OK 0.17s   4 
-> subtests passed
-> 46/93 qemu:unit / test-qapi-util                      OK 0.06s   2 
-> subtests passed
-> 47/93 qemu:unit / test-interval-tree                  OK 0.08s   6 
-> subtests passed
-> 48/93 qemu:unit / test-qmp-event                      OK 0.16s   6 
-> subtests passed
-> 49/93 qemu:unit / test-coroutine                      OK 0.28s   12 
-> subtests passed
-> 50/93 qemu:unit / test-aio                            OK 3.88s   27 
-> subtests passed
-> 51/93 qemu:unit / test-throttle                       OK 0.33s   17 
-> subtests passed
-> 52/93 qemu:unit / test-thread-pool                    OK 4.34s   6 
-> subtests passed
-> 53/93 qemu:unit / test-hbitmap                        OK 0.55s   40 
-> subtests passed
-> 54/93 qemu:unit / test-bdrv-drain                     OK 1.67s   30 
-> subtests passed
-> 55/93 qemu:unit / test-bdrv-graph-mod                 OK 0.31s   5 
-> subtests passed
-> 56/93 qemu:unit / test-blockjob                       OK 0.33s   8 
-> subtests passed
-> 57/93 qemu:unit / test-blockjob-txn                   OK 0.42s   7 
-> subtests passed
-> 58/93 qemu:unit / test-block-backend                  OK 0.31s   2 
-> subtests passed
-> 59/93 qemu:unit / test-block-iothread                 OK 0.41s   22 
-> subtests passed
-> 60/93 qemu:unit / test-write-threshold                OK 0.33s   2 
-> subtests passed
-> 61/93 qemu:unit / test-crypto-hash                    OK 0.08s   5 
-> subtests passed
-> 62/93 qemu:unit / test-crypto-hmac                    OK 0.08s   4 
-> subtests passed
-> 63/93 qemu:unit / test-crypto-cipher                  OK 0.09s   17 
-> subtests passed
-> 64/93 qemu:unit / test-crypto-akcipher                OK 0.09s   16 
-> subtests passed
-> 65/93 qemu:unit / test-crypto-secret                  OK 0.11s   16 
-> subtests passed
-> 66/93 qemu:unit / test-crypto-der                     OK 0.08s   4 
-> subtests passed
-> 67/93 qemu:unit / test-authz-simple                   OK 0.08s   1 
-> subtests passed
-> 68/93 qemu:unit / test-authz-list                     OK 0.08s   6 
-> subtests passed
-> 69/93 qemu:unit / test-authz-listfile                 OK 0.16s   5 
-> subtests passed
-> 70/93 qemu:unit / test-io-task                        OK 0.33s   5 
-> subtests passed
-> 71/93 qemu:unit / test-io-channel-socket              OK 0.33s   8 
-> subtests passed
-> 72/93 qemu:unit / test-io-channel-file                OK 0.20s   3 
-> subtests passed
-> 73/93 qemu:unit / test-io-channel-command             SKIP 0.19s   0 
-> subtests passed
-> 74/93 qemu:unit / test-io-channel-buffer              OK 0.17s   1 
-> subtests passed
-> 75/93 qemu:unit / test-io-channel-null                OK 0.19s   1 
-> subtests passed
-> 76/93 qemu:unit / test-crypto-ivgen                   OK 0.19s   9 
-> subtests passed
-> 77/93 qemu:unit / test-crypto-afsplit                 OK 0.20s   4 
-> subtests passed
-> 78/93 qemu:unit / test-timed-average                  OK 0.14s   1 
-> subtests passed
-> 79/93 qemu:unit / test-uuid                           OK 0.08s   6 
-> subtests passed
-> 80/93 qemu:unit / ptimer-test                         OK 0.09s   576 
-> subtests passed
-> 81/93 qemu:unit / test-iov                            OK 0.08s   6 
-> subtests passed
-> 82/93 qemu:unit / test-opts-visitor                   OK 0.14s   33 
-> subtests passed
-> 83/93 qemu:unit / test-xs-node                        OK 0.08s   7 
-> subtests passed
-> 84/93 qemu:unit / test-virtio-dmabuf                  OK 0.08s   5 
-> subtests passed
-> 85/93 qemu:unit / test-qmp-cmds                       OK 0.16s   10 
-> subtests passed
-> 86/93 qemu:unit / test-xbzrle                         OK 0.31s   6 
-> subtests passed
-> 87/93 qemu:unit / test-util-sockets                   OK 0.16s   2 
-> subtests passed
-> 88/93 qemu:unit / test-base64                         OK 0.08s   4 
-> subtests passed
-> 89/93 qemu:unit / test-smp-parse                      OK 0.09s   10 
-> subtests passed
-> 90/93 qemu:unit / test-vmstate                        OK 0.22s   23 
-> subtests passed
-> 91/93 qemu:unit / test-yank                           OK 0.20s   6 
-> subtests passed
-> 92/93 qemu:unit / test-qdev-global-props              OK 0.33s   4 
-> subtests passed
-> 93/93 qemu:unit / xml-preprocess                      OK               
-> 0.53s
-> 
-> Ok:                 92
-> Expected Fail:      0
-> Fail:               0
-> Unexpected Pass:    0
-> Skipped:            1
-> Timeout:            0
-> 
-> Full log written to 
-> C:/Users/Administrator/qemu/build/meson-logs/testlog.txt
-> 
-> Administrator@FOOBAR UCRT64 /c/Users/Administrator/qemu/build
-> #
+Since 9.2
 
+>  # @qpl: use qpl compression method.  Query Processing Library(qpl) is
+>  #     based on the deflate compression algorithm and use the Intel
+>  #     In-Memory Analytics Accelerator(IAA) accelerated compression and
+> @@ -573,6 +575,7 @@
+>  { 'enum': 'MultiFDCompression',
+>    'data': [ 'none', 'zlib',
+>              { 'name': 'zstd', 'if': 'CONFIG_ZSTD' },
+> +            { 'name': 'qatzip', 'if': 'CONFIG_QATZIP'},
+>              { 'name': 'qpl', 'if': 'CONFIG_QPL' },
+>              { 'name': 'uadk', 'if': 'CONFIG_UADK' } ] }
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
