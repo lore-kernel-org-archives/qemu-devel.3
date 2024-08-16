@@ -4,68 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99A09C52D7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:22:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91B45C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:23:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sewuL-00059y-E1; Fri, 16 Aug 2024 09:22:21 -0400
+	id 1sewuT-0005dR-Ir; Fri, 16 Aug 2024 09:22:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sewuI-000581-PV
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:20 -0400
+ id 1sewuN-0005Gv-8u
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:25 -0400
 Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sewuG-0007jw-9B
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:18 -0400
+ id 1sewuK-0007ki-TR
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:23 -0400
 Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-428f5c0833bso16161095e9.0
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:22:15 -0700 (PDT)
+ 5b1f17b1804b1-428ec6c190eso14950045e9.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:22:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723814534; x=1724419334; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=pgqsoRr6u7uYuDiHRia4sFMDUVvp3Aw+9Kef5/KmriY=;
- b=k5pn8HlCex2RU8AYOlDKrgrEdbfasAKz9OKBHP9ABjcTz7gOzqqqj3NCQqTAIMzH6V
- liS+e4zNMLEqpqO1EM7xvxnFdjJma/m83Zadfcfv9P/RUZaX4AGEvINHCJJz9QNBZ1D0
- CfQOHGFctldfWGs2d8trQRr0tF03emlVcJTU18W8WLLWvKsKtD0pMr90JkWqG/J1S6f4
- j6c7r+7ePqt4kbE9Yz+G3+FLrrX34ci8faedKhUGga+QKffal9tIY6K+F0RiXmv+4tpu
- Rrwh/zEwzDAJi8u3XCzh/2W4vhikfjrbPuCWSkLXMurM6RUZdi0nQyOHGtq0L+tQ+mJy
- p8uw==
+ d=linaro.org; s=google; t=1723814539; x=1724419339; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2vFh0taXho/PjkpHjQyE36dh+SvBwU6eZKgiDGqrkEc=;
+ b=UEv4R0fK1fD2+IcqqzEhOY+HRTxO/MHpZp7CFHeXHtkVG2Inwc2FNTzDDUrSDV2rCp
+ yBLqLYIqr0P1p76qzhEHme0U4bk+7jpcJqtMkzlnLPqfAJ7SEMPg4Fzs1FjHofVZmAB6
+ LWsQphDDhHiX0VLHBBfPTxhW2KKqUEyTaGGaHe0r9445Fmmha2nPpooVyoJr42dMAHSq
+ I7/UUVZVPdG++fvlRzYB8BrFsDOSbgM77eQVqgcHbUwKdXTQd9zdHRt7TBHTKIkP0HTr
+ CPWEVX66dvboqAK/aV9mOzQgRJQfI1d6pr5xal1Uk4ByWNYOvN9/Es3hcWUf+70dmOWX
+ 7lVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723814534; x=1724419334;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pgqsoRr6u7uYuDiHRia4sFMDUVvp3Aw+9Kef5/KmriY=;
- b=p0YVmeqOQtjx2C31mb0AYYYCNZL5+VAEgIRTbO9dd43c+gOl0qF8wu91EtyjnXl2PV
- dZADlOUit3QyRFmfzVB3EKgawuc2D1aqUK2BofMVTj3osxfwgweebQUyZu/IZRE/Iblt
- cBB03r59L7MQifnLviW1J8CpCYYPqmrIFguySE9hctE/i2GckZZ1MNvMuorV6YrtTVUp
- P6SVptisNajdgeLIUS5nTjrqOlD0UpTHsyyS3IOFZA8KOD4UylscbxYxdXoyQr4CneCt
- GPYBB+pVzEzFPZhWJDgSy6MhvaVh2knBxmeuzFp8gMwHQ6KMNFS2fJuxDNgn8Zv9zx2U
- Dxyw==
-X-Gm-Message-State: AOJu0Yyc26BjmzAl4zvEcVzQJiJ0omSBjMcmye+PCPkuy24oYTI4TsBO
- kPFBR/8PBpzqmMFvp0Vja0qG3RspNTJ1v4fsr6B/IgnzW6HMyb9hH/7UcOp8HDiNgLMS6SFOUd6
- 8
-X-Google-Smtp-Source: AGHT+IGO0rB7ggvvS3A1nUT2spW5kigyBKKzvn5QT6GzLKP+tRvCnHO/3C+FSHQufhYHTGSPgt+suQ==
-X-Received: by 2002:a5d:6481:0:b0:367:8418:fde4 with SMTP id
- ffacd0b85a97d-37194b956bcmr2137199f8f.7.1723814534273; 
- Fri, 16 Aug 2024 06:22:14 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723814539; x=1724419339;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2vFh0taXho/PjkpHjQyE36dh+SvBwU6eZKgiDGqrkEc=;
+ b=NMPsmi0Rg1EsUwfelgOEvxUZimaGrK0q4l7G1x+tHmPhNsjlIAP3/u1nBOciZ1N2bl
+ rGGyda6xvZzBxPXTHJ926VKQCzn7/VDBYAyeauKGiNEUCh1MYGyAgwj+bkVPO2taXcje
+ boTQ0Kua6ZKEsgwaBCd4cRUtVt1Oi81xK62tcO4SVMQIv+ArRlo8YWZXZ46bQIs3fKth
+ QwMOGcudVRj0i12wpYFeLePo7IuzWud/P47+nO1CFW7Y/1Ox2wvD1yiyLMVRwYUeTFo2
+ /7/d0Jy9wZcws8e58Ji39L3UTxDeU6CZ5T+Ho7t9AW9FPEBB2ipQBnhFK0moT0Y2/ahX
+ QYkQ==
+X-Gm-Message-State: AOJu0YygDE58M4ahfg6RxumB3SmLqW+QBf+SXsgVaJhepw82JLoBFj6e
+ ZGhzIRfWFWa+ZsuW2CP9S6/fnOEb3Uol9UTX2er3pDLQpxAwuroMblpAL1Q0io/Q2qWNj906GNw
+ t
+X-Google-Smtp-Source: AGHT+IHaaNIIpIuBbwgzlYn/WAMs06Fi2U1MnoQxNqE7h9aMHTYqMtvzIeghzT/x/aWWqudAlx59tg==
+X-Received: by 2002:adf:fa50:0:b0:371:72a8:15e with SMTP id
+ ffacd0b85a97d-371943292ecmr1600973f8f.16.1723814539070; 
+ Fri, 16 Aug 2024 06:22:19 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-371898ab855sm3631948f8f.105.2024.08.16.06.22.13
+ ffacd0b85a97d-371898ab855sm3631948f8f.105.2024.08.16.06.22.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 06:22:13 -0700 (PDT)
+ Fri, 16 Aug 2024 06:22:18 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH for-9.2 0/7] docs/devel: Convert txt files to rST
-Date: Fri, 16 Aug 2024 14:22:05 +0100
-Message-Id: <20240816132212.3602106-1-peter.maydell@linaro.org>
+Subject: [PATCH 7/7] docs/devel/lockcnt: Include kernel-doc API documentation
+Date: Fri, 16 Aug 2024 14:22:12 +0100
+Message-Id: <20240816132212.3602106-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240816132212.3602106-1-peter.maydell@linaro.org>
+References: <20240816132212.3602106-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
@@ -92,67 +95,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset converts a collection of the remaining txt files in
-docs/devel to rST format. At this point in the release cycle
-I'm targeting 9.2 for these.
+Pull in the kernel-doc API documentation into the lockcnt docs.
+This requires us to fix one rST markup syntax error in the
+header file comments.
 
-Patches 1-5 are simple conversions.  In patch 6 I move the
-QemuLockCnt APIs to their own header file; this is so that we can
-include the kernel-doc generated APIs in lockcnt.rst (since
-kernel-doc works on a per-file basis).
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ docs/devel/lockcnt.rst | 2 +-
+ include/qemu/lockcnt.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Paolo: can you confirm that you mean GPLv2-or-later for the lockcnt
-code?  There's no explicit license comment in either util/lockcnt.c
-or include/qemu/thread.h.
-
-(There's one .txt file left in docs/devel after this, but I don't
-think it's very useful so I propose to delete it and will send a
-separate patch for that.)
-
-thanks
--- PMM
-
-Peter Maydell (7):
-  docs/devel/blkdebug: Convert to rST format
-  docs/devel/blkverify: Convert to rST format
-  docs/devel/lockcnt: Convert to rST format
-  docs/devel/multiple-iothreads: Convert to rST format
-  docs/devel/rcu: Convert to rST format
-  include: Move QemuLockCnt APIs to their own header
-  docs/devel/lockcnt: Include kernel-doc API documentation
-
- MAINTAINERS                                 |   8 +-
- docs/devel/blkdebug.rst                     | 177 ++++++++++++++++++++
- docs/devel/blkdebug.txt                     | 162 ------------------
- docs/devel/{blkverify.txt => blkverify.rst} |  30 ++--
- docs/devel/index-api.rst                    |   1 +
- docs/devel/index-build.rst                  |   2 +
- docs/devel/index-internals.rst              |   2 +
- docs/devel/{lockcnt.txt => lockcnt.rst}     |  89 +++++-----
- docs/devel/multiple-iothreads.rst           | 139 +++++++++++++++
- docs/devel/multiple-iothreads.txt           | 130 --------------
- docs/devel/{rcu.txt => rcu.rst}             | 172 +++++++++----------
- include/block/aio.h                         |   1 +
- include/hw/core/cpu.h                       |   1 +
- include/qemu/lockcnt.h                      | 130 ++++++++++++++
- include/qemu/thread.h                       | 111 ------------
- accel/accel-blocker.c                       |   1 +
- hw/core/cpu-common.c                        |   1 +
- util/aio-posix.c                            |   1 +
- util/aio-win32.c                            |   1 +
- util/async.c                                |   1 +
- util/fdmon-epoll.c                          |   1 +
- util/lockcnt.c                              |   1 +
- 22 files changed, 608 insertions(+), 554 deletions(-)
- create mode 100644 docs/devel/blkdebug.rst
- delete mode 100644 docs/devel/blkdebug.txt
- rename docs/devel/{blkverify.txt => blkverify.rst} (77%)
- rename docs/devel/{lockcnt.txt => lockcnt.rst} (75%)
- create mode 100644 docs/devel/multiple-iothreads.rst
- delete mode 100644 docs/devel/multiple-iothreads.txt
- rename docs/devel/{rcu.txt => rcu.rst} (73%)
- create mode 100644 include/qemu/lockcnt.h
-
+diff --git a/docs/devel/lockcnt.rst b/docs/devel/lockcnt.rst
+index 728594bcea3..8b43578f6c7 100644
+--- a/docs/devel/lockcnt.rst
++++ b/docs/devel/lockcnt.rst
+@@ -175,7 +175,7 @@ three instructions in the critical path, two assignments and a ``smp_wmb()``.
+ ``QemuLockCnt`` API
+ -------------------
+ 
+-The ``QemuLockCnt`` API is described in ``include/qemu/lockcnt.h``.
++.. kernel-doc:: include/qemu/lockcnt.h
+ 
+ 
+ ``QemuLockCnt`` usage
+diff --git a/include/qemu/lockcnt.h b/include/qemu/lockcnt.h
+index 2c92ae17c9e..f4b62a3f701 100644
+--- a/include/qemu/lockcnt.h
++++ b/include/qemu/lockcnt.h
+@@ -51,7 +51,7 @@ void qemu_lockcnt_destroy(QemuLockCnt *lockcnt);
+  * Because this function can wait on the mutex, it must not be
+  * called while the lockcnt's mutex is held by the current thread.
+  * For the same reason, qemu_lockcnt_inc can also contribute to
+- * AB-BA deadlocks.  This is a sample deadlock scenario:
++ * AB-BA deadlocks.  This is a sample deadlock scenario::
+  *
+  *            thread 1                      thread 2
+  *            -------------------------------------------------------
 -- 
 2.34.1
 
