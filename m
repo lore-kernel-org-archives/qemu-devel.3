@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0483CC52D7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A92BC52D7F
 	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 01:08:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1selRC-0000nd-LT; Thu, 15 Aug 2024 21:07:32 -0400
+	id 1selRJ-00018Z-MV; Thu, 15 Aug 2024 21:07:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1selR4-0000lx-SV
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 21:07:24 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1selRG-0000uz-GM
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 21:07:34 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <debug@rivosinc.com>)
- id 1selR2-0002IW-6T
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 21:07:22 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-710e39961f4so1140656b3a.3
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 18:07:19 -0700 (PDT)
+ id 1selRD-0002Li-LJ
+ for qemu-devel@nongnu.org; Thu, 15 Aug 2024 21:07:33 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-7c691c8f8dcso1153198a12.1
+ for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 18:07:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1723770438; x=1724375238;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1723770450; x=1724375250;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=UVgqSXGbDG3KIOH2TWfF1Osar7ymB7+INCHwitRDPF4=;
- b=f5KZRmqlBBKAAR90ZaGtFlYbNbetdgRZaxnOMPoRZLzI50qDfVL5D8gXB5iBl4xQUj
- sovRNPoMvQmtGmBNF5mcg1vFYFoHw2PJlD+0VPW4jFRhgjAlpRj9xhFZnPI/v2+RFMQ/
- /VgZjUNYdzT5FkOXuVnzuN5wydiNPA9imToE4sIQKe8h79VvgP1uMjahGGQhfC8TNXd8
- lP1ND0vLRfe/oSe1utaIpUla8p6me7gTOT7YhvE4FrMksOAnLIFgyRkwSWZgYYRDAc16
- l3Idca3Pd0mor7DZ0YkdTksMJkbH9PJujHRZISGKcQjZ655Xa25mhLDfoFYlohcKsmfk
- dILg==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Zwwcop53hXtYL8GHkUUj7OHfyXWtcMSv/IjCclE+Sy4=;
+ b=vbTBGelaWoezmh+5F+IKz8wouPolj+xG1U2JVRELuNPI0qd3x9TCq6l8KugNdjtj2X
+ 7WbhmCiP0fx6OyX8u+i7gcDig1rn6U+untw+BEAziZtTPoop40TSdZmsp8iq0PAd1RRW
+ NsXcs2okqpwEbYkYUc93IvOkhtVpwUDW6+a8SU7qGJqFZdJ5HkGnM01gICYlbdw3wisX
+ aV3pkmEXmBiwYQLjCYvKCmJHA7zvPKg6XvefICzm7ah4WPxfFeCDD2S2fnKBhLoTpQiH
+ nqowOXsciiaQU1+zCANX966ARQzflIGZKA1u3KHsSlVGEgapcQiqopQ/ll+tb7IgtVKd
+ L41w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723770438; x=1724375238;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UVgqSXGbDG3KIOH2TWfF1Osar7ymB7+INCHwitRDPF4=;
- b=UqtvsECw7IrPO5RbdBvzC/uibYRYPyLd69/okABypPWpHGqsGc0VMVrzl6h9oZ+moL
- yhkmeYgk99eqrs2aL63lbrd5uqRTGrnorvs3BNsWjVVooT4LzJcXgKrTAZXj3RzpYASa
- secskPgOJAWjYqVCB7W1hYZSJns98xM6/uiiZcDfS8E9qdbMU629GZzltg6/AVyO4EUP
- oIiyi4oLCUUhP2vikpJytKDh6c+4sA+1L4XnGAt0aYkOnaStb80pGO942ZOhYyEVY/VE
- vFJ753fW4fnVhCJzAHWaj2zCM0fg8DTfuhfO0kvol5Q1w1IJdhB3td8IE+pg+vZoXIoV
- llhA==
+ d=1e100.net; s=20230601; t=1723770450; x=1724375250;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Zwwcop53hXtYL8GHkUUj7OHfyXWtcMSv/IjCclE+Sy4=;
+ b=reNhHC2YxWh7ms1/5kT6ioqPdatv6PSKFnwn8v4IAZqVS6/fjLXcmdogACDPNHedg8
+ jNSNP9AvacPCLjz+Maof7hHcGPJ6S9qGoL/8tkFDvdnSMCXi33u9+BOzfv9PEB89Mjot
+ JJKaZB5HpkcoTBHZ5tOroK2uof+u5PwADSr+hpwwVHco9mw1m/l+vZug8455k+owzOjh
+ wPRTo3o9s7cvBvXSCsme2dB+D4GyB2ieHllArAkAA0j9dqnG+OW/+qcPKDzIC485ALOP
+ Au4Ot60bhYvtjMkKBnmtq2MxGxaHGhxvCU4dbhhC/F61VRrYg2L0qopD7Xs5baHAamkO
+ rAdA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV3SJwZdbNVJpoXWiwX6UQItyQD2fhpGvYmHr+9e8Wl1nsJJJ6AI7QoJ0bLuv5QeBGm/t/7gfF6O0JcGH1elHMK6yIgsaw=
-X-Gm-Message-State: AOJu0YzL3f3mhr+Jm8cqk6fSHCXDn2QwrVXxFjYrBhf0qhJp8FrBR7LJ
- 5aVRrWpkz8BzLyOgkwm+KcuDtt52tap9ax7qYtltQ0oiflgKipcVDwra2D9Pa2k=
-X-Google-Smtp-Source: AGHT+IG0lcqPr/UKaw52BZDEwk7b5X7qlJqNBHsQMhXXecfdbD6oFhhVD+1Xx7hxIUuAGcCV3h+9yg==
-X-Received: by 2002:a05:6a00:3cd5:b0:70d:3a27:54ca with SMTP id
- d2e1a72fcca58-713c5126a1bmr2034190b3a.22.1723770437870; 
- Thu, 15 Aug 2024 18:07:17 -0700 (PDT)
+ AJvYcCVl64syNUVJ7MsNnEqzQhqdhY99yBcVON4TTug7JMLCcXhXkmZuoA8V9+4XJk2dsa0jMDIq9Gl2U/awp8fo14Kgz+QfcD0=
+X-Gm-Message-State: AOJu0YxYZxKgRkxkP6xHekD7fJTPqFeYnigJLddfZjVigfA9Eslqrq5L
+ XVlID+riHUvIS7gNtG4HzqO8Sao+oh3xqHM8kidSn1MlW7Y/UOhPk+k3W83+d9Y=
+X-Google-Smtp-Source: AGHT+IF/m70F5QcrPLcgGbRHhfT3hs05ke40ld+CViHdqKngen+RsBMYnqTnGUh+CC9BjAFfK3uuaA==
+X-Received: by 2002:a05:6a21:9207:b0:1c2:5fa8:2dee with SMTP id
+ adf61e73a8af0-1c904f88d85mr1964955637.12.1723770450185; 
+ Thu, 15 Aug 2024 18:07:30 -0700 (PDT)
 Received: from debug.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7127ae120cdsm1604806b3a.77.2024.08.15.18.07.16
+ d2e1a72fcca58-7127ae120cdsm1604806b3a.77.2024.08.15.18.07.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 15 Aug 2024 18:07:17 -0700 (PDT)
+ Thu, 15 Aug 2024 18:07:29 -0700 (PDT)
 From: Deepak Gupta <debug@rivosinc.com>
 To: qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
@@ -68,14 +69,16 @@ Cc: palmer@dabbelt.com, Alistair.Francis@wdc.com, richard.henderson@linaro.org,
  zhiwei_liu@linux.alibaba.com, pbonzini@redhat.com, jim.shu@sifive.com,
  andy.chiu@sifive.com, kito.cheng@sifive.com,
  Deepak Gupta <debug@rivosinc.com>
-Subject: [PATCH v4 00/16] riscv support for control flow integrity extensions
-Date: Thu, 15 Aug 2024 18:06:54 -0700
-Message-ID: <20240816010711.3055425-1-debug@rivosinc.com>
+Subject: [PATCH v4 10/16] target/riscv: tb flag for shadow stack instructions
+Date: Thu, 15 Aug 2024 18:07:04 -0700
+Message-ID: <20240816010711.3055425-11-debug@rivosinc.com>
 X-Mailer: git-send-email 2.45.0
+In-Reply-To: <20240816010711.3055425-1-debug@rivosinc.com>
+References: <20240816010711.3055425-1-debug@rivosinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=debug@rivosinc.com; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=debug@rivosinc.com; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -97,85 +100,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v4 for riscv zicfilp and zicfiss extensions support in qemu.
+Shadow stack instructions can be decoded as zimop / zcmop or shadow stack
+instructions depending on whether shadow stack are enabled at current
+privilege. This requires a TB flag so that correct TB generation and correct
+TB lookup happens. `DisasContext` gets a field indicating whether bcfi is
+enabled or not.
 
-
-Links for previous versions
-[1] - v1 https://lists.nongnu.org/archive/html/qemu-devel/2024-07/msg06017.html
-[2] - v2 https://lore.kernel.org/all/ed23bcbc-fdc4-4492-803c-daa95880375a@linaro.org/T/
-[3] - v3 https://lists.nongnu.org/archive/html/qemu-devel/2024-08/msg01005.html
-
+Signed-off-by: Deepak Gupta <debug@rivosinc.com>
+Co-developed-by: Jim Shu <jim.shu@sifive.com>
+Co-developed-by: Andy Chiu <andy.chiu@sifive.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-v4:
-   - elp state in cpu is true/false instead of enum and elp cleared
-     unconditionally on trap entry. elp in *status cleared unconditionally on
-     trap return. 
-   - Moved logic for branch tracking in instruction translation from tb_start.
-   - fixed zicfiss dependency on 'A'
-   - `cpu_get_fcfien/bcfien` helpers checks fixed to check for extension first.
-   - removed trace hook enums. Instead added dedicated trace helpers wherever needed.
-   - fixed/simplified instruction format in decoder for lpad, sspush, sspopchk
-   - simplified tlb index logic for shadow stack instructions. Removed SUM TB_FLAG
-   - access to ssp CSR is gated on `cpu_get_bcfien` instead of duplicated logic
-   - removed vDSO related changes for now. 
-v3:
-   - Removed prctl specific patches because they need to be upstream
-     in kernel first.
-   - As suggested by Richard, added TB flag if fcfi enabled
-   - Re-worked translation for landing pad and shadow stack instructions
-     to not require helper.
-   - tcg helpers only for cfi violation cases so that trace hooks can be
-     placed.
-   - Style changes.
-   - fixes assert condition in accel/tcg
+ target/riscv/cpu.h        | 2 ++
+ target/riscv/cpu_helper.c | 4 ++++
+ target/riscv/translate.c  | 4 ++++
+ 3 files changed, 10 insertions(+)
 
-v2:
-   - added missed file (in v1) for shadow stack instructions implementation.
-
-Deepak Gupta (16):
-  target/riscv: Add zicfilp extension
-  target/riscv: Introduce elp state and enabling controls for zicfilp
-  target/riscv: save and restore elp state on priv transitions
-  target/riscv: additional code information for sw check
-  target/riscv: tracking indirect branches (fcfi) for zicfilp
-  target/riscv: zicfilp `lpad` impl and branch tracking
-  disas/riscv: enabled `lpad` disassembly
-  target/riscv: Add zicfiss extension
-  target/riscv: introduce ssp and enabling controls for zicfiss
-  target/riscv: tb flag for shadow stack  instructions
-  target/riscv: mmu changes for zicfiss shadow stack protection
-  target/riscv: implement zicfiss instructions
-  target/riscv: compressed encodings for sspush and sspopchk
-  disas/riscv: enable disassembly for zicfiss instructions
-  disas/riscv: enable disassembly for compressed sspush/sspopchk
-  target/riscv: add trace-hooks for each case of sw-check exception
-
- disas/riscv.c                                 |  77 ++++++++-
- disas/riscv.h                                 |   4 +
- include/tcg/tcg.h                             |   1 +
- target/riscv/cpu.c                            |  17 ++
- target/riscv/cpu.h                            |  15 ++
- target/riscv/cpu_bits.h                       |  17 ++
- target/riscv/cpu_cfg.h                        |   2 +
- target/riscv/cpu_helper.c                     | 150 +++++++++++++++++-
- target/riscv/cpu_user.h                       |   1 +
- target/riscv/csr.c                            |  84 ++++++++++
- target/riscv/helper.h                         |   6 +
- target/riscv/insn16.decode                    |   2 +
- target/riscv/insn32.decode                    |  26 ++-
- target/riscv/insn_trans/trans_rva.c.inc       |  43 +++++
- target/riscv/insn_trans/trans_rvi.c.inc       |  56 +++++++
- target/riscv/insn_trans/trans_rvzicfiss.c.inc | 124 +++++++++++++++
- target/riscv/internals.h                      |   3 +
- target/riscv/op_helper.c                      |  37 +++++
- target/riscv/pmp.c                            |   5 +
- target/riscv/pmp.h                            |   3 +-
- target/riscv/tcg/tcg-cpu.c                    |  24 +++
- target/riscv/trace-events                     |   6 +
- target/riscv/translate.c                      |  48 ++++++
- 23 files changed, 742 insertions(+), 9 deletions(-)
- create mode 100644 target/riscv/insn_trans/trans_rvzicfiss.c.inc
-
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 5a57099d59..dcc3bc9d93 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -613,6 +613,8 @@ FIELD(TB_FLAGS, AXL, 26, 2)
+ /* zicfilp needs a TB flag to track indirect branches */
+ FIELD(TB_FLAGS, FCFI_ENABLED, 28, 1)
+ FIELD(TB_FLAGS, FCFI_LP_EXPECTED, 29, 1)
++/* zicfiss needs a TB flag so that correct TB is located based on tb flags */
++FIELD(TB_FLAGS, BCFI_ENABLED, 30, 1)
+ 
+ #ifdef TARGET_RISCV32
+ #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 96571177ef..d3115da28d 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -170,6 +170,10 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+         flags = FIELD_DP32(flags, TB_FLAGS, FCFI_ENABLED, 1);
+     }
+ 
++    if (cpu_get_bcfien(env)) {
++        flags = FIELD_DP32(flags, TB_FLAGS, BCFI_ENABLED, 1);
++    }
++
+ #ifdef CONFIG_USER_ONLY
+     fs = EXT_STATUS_DIRTY;
+     vs = EXT_STATUS_DIRTY;
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index f1522e8b96..4ba42597c4 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -119,6 +119,8 @@ typedef struct DisasContext {
+     /* zicfilp extension. fcfi_enabled, lp expected or not */
+     bool fcfi_enabled;
+     bool fcfi_lp_expected;
++    /* zicfiss extension, if shadow stack was enabled during TB gen */
++    bool bcfi_enabled;
+ } DisasContext;
+ 
+ static inline bool has_ext(DisasContext *ctx, uint32_t ext)
+@@ -1241,6 +1243,8 @@ static void riscv_tr_init_disas_context(DisasContextBase *dcbase, CPUState *cs)
+     ctx->pm_base_enabled = FIELD_EX32(tb_flags, TB_FLAGS, PM_BASE_ENABLED);
+     ctx->ztso = cpu->cfg.ext_ztso;
+     ctx->itrigger = FIELD_EX32(tb_flags, TB_FLAGS, ITRIGGER);
++    ctx->bcfi_enabled = cpu_get_bcfien(env) &&
++                        FIELD_EX32(tb_flags, TB_FLAGS, BCFI_ENABLED);
+     ctx->fcfi_lp_expected = FIELD_EX32(tb_flags, TB_FLAGS, FCFI_LP_EXPECTED);
+     ctx->fcfi_enabled = FIELD_EX32(tb_flags, TB_FLAGS, FCFI_ENABLED);
+     ctx->zero = tcg_constant_tl(0);
 -- 
 2.44.0
 
