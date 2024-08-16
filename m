@@ -4,86 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 027B1C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 17:55:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 641EBC531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 17:57:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sf1Ar-0001Gw-GC; Fri, 16 Aug 2024 13:55:41 -0400
+	id 1sf1CT-0007wj-6T; Fri, 16 Aug 2024 13:57:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sf1Ap-000167-Rt
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 13:55:39 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sf1CR-0007wE-Ok
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 13:57:19 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1sf1An-00056Q-Oi
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 13:55:39 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-70d162eef54so1670774b3a.3
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 10:55:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723830936; x=1724435736; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=WEoEClJCWjSoHlO/IWlAnDaNlAe95rm1D4So+ODZ0uk=;
- b=GxxJc7jgaA/iy1vWFfKv/uIUuRjJ+bjJ2Gu6jPRYoJSoEM5J22JU2Lx565P09PllHw
- epI7vF2FdjnegrHhGFeiAFAbfu49+mz6mWaAozWjJ76J8WiWNhDlxaHucSYI18OVW2uX
- hwsGT8B52mYtDaCQCNa2HprZhp5Dhn0VNrYjcUYvq5vdhT1sevVP3OnxFjAfVTjKg20M
- q9Vht0WQnkaL9EmGQps9R5aPhu7DL071cQDuJ57N4HlzJpYf//nEXlaH1lBDoktq5fNz
- duNpvVZslkBt2/2FiLKckhPFVQw7ErMKvZnRhJdTXZ/hsXV69PKc+eBq1zBLCFQHdyZq
- FqnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723830936; x=1724435736;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=WEoEClJCWjSoHlO/IWlAnDaNlAe95rm1D4So+ODZ0uk=;
- b=IIT673i+xGipwBHWKmsGwJxBU6xM5MzSyrzXv2HWlyYGIPSnWSe76jUyQeoA5LwDFT
- IEpS/3wz0nquhWR2yEWVGksMI3ESn4fUOBuRA8YkfoqziTiFiH9aBbvtuaLPJnut4IZ1
- QJj6iSKCLRmaRQWMCiGStiHZstbqKslK9AlkJLV+LWA8oXxIBaP5TqjjxTRnmnXbqSBQ
- GPH9JJPw7BCvxXdf6uY7OfGyPAW3hOYvipcyoNF06WPlIbWZXCrFApS/8mfcObZLaWxu
- gT2dDzh1A3zVlrcQjB31AGQmywcymNCFdZROTvAb9PkA3teZWlm50cFmrsFJMPBvDC0W
- HPhw==
-X-Gm-Message-State: AOJu0YwhNRgcfgXIU2jEMvx9BnB+UCIVE3c6eUJglMxl0Mb84NNqeqGD
- fjNut+DGrtEhwDvzZiy6+4XeUGaaZQhsaP5B1MwgG8X4DKgBxjvb/q3xRbNM03o=
-X-Google-Smtp-Source: AGHT+IFOLdEszxSC8+3SkeB6DXjmNsuyIqVS0HIMHv5OlFQGsdmfYbrW2tQqve20fsKhJNg+1SvQvw==
-X-Received: by 2002:a05:6a20:d493:b0:1c4:81ab:1f5e with SMTP id
- adf61e73a8af0-1c90503036amr4562718637.38.1723830936042; 
- Fri, 16 Aug 2024 10:55:36 -0700 (PDT)
-Received: from ?IPV6:2604:3d08:9384:1d00::b861? ([2604:3d08:9384:1d00::b861])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7127add68a3sm2883507b3a.7.2024.08.16.10.55.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Aug 2024 10:55:35 -0700 (PDT)
-Message-ID: <55eaeca5-dc4d-4b7a-986a-d49403460dda@linaro.org>
-Date: Fri, 16 Aug 2024 10:55:34 -0700
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1sf1CD-0005Eu-Ce
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 13:57:19 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 7BA6C22878;
+ Fri, 16 Aug 2024 17:57:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1723831023; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pR/UoN9/E44L4n2whK4d6Mp0ooouYsXb8OSb0/YOZM4=;
+ b=X+DfrzqZVl4d72Mx7e00jt8n0xRIgP1YuT3CrsaNIMuAyhir96inEMaQitabmGpa8OiJGN
+ cK7VBWZu0lcYDbxEj9yPRVsCtbQCkvu8arCPzSLHuvYGzRPoDFdVfC4tDhW9EyohEwromF
+ mOQbcfMlbcTQEKrySl0Pavq8Yes3jLw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1723831023;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pR/UoN9/E44L4n2whK4d6Mp0ooouYsXb8OSb0/YOZM4=;
+ b=4+51J7WPjjqy1QEFC2VrVp88tVv8BoYojjwvGB8SsjN8TxS5N6ToZ45fNBcLrQ//ftKK94
+ n30VOjgNTAWTllDA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=X+DfrzqZ;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=4+51J7WP
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1723831023; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pR/UoN9/E44L4n2whK4d6Mp0ooouYsXb8OSb0/YOZM4=;
+ b=X+DfrzqZVl4d72Mx7e00jt8n0xRIgP1YuT3CrsaNIMuAyhir96inEMaQitabmGpa8OiJGN
+ cK7VBWZu0lcYDbxEj9yPRVsCtbQCkvu8arCPzSLHuvYGzRPoDFdVfC4tDhW9EyohEwromF
+ mOQbcfMlbcTQEKrySl0Pavq8Yes3jLw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1723831023;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pR/UoN9/E44L4n2whK4d6Mp0ooouYsXb8OSb0/YOZM4=;
+ b=4+51J7WPjjqy1QEFC2VrVp88tVv8BoYojjwvGB8SsjN8TxS5N6ToZ45fNBcLrQ//ftKK94
+ n30VOjgNTAWTllDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EC58F1397F;
+ Fri, 16 Aug 2024 17:57:02 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id la0/LO6Sv2ZIQgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 16 Aug 2024 17:57:02 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, Alex Williamson
+ <alex.williamson@redhat.com>, Cedric Le Goater <clg@redhat.com>, "Michael
+ S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>, Philippe
+ Mathieu-Daude <philmd@linaro.org>, David Hildenbrand <david@redhat.com>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: Re: [RFC V1 10/12] migration/ram: old host address
+In-Reply-To: <1721502937-87102-11-git-send-email-steven.sistare@oracle.com>
+References: <1721502937-87102-1-git-send-email-steven.sistare@oracle.com>
+ <1721502937-87102-11-git-send-email-steven.sistare@oracle.com>
+Date: Fri, 16 Aug 2024 14:57:00 -0300
+Message-ID: <87ikw05p1v.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 1/5] target/s390x: fix build warning (gcc-12
- -fsanitize=thread)
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240816072218.27125-1-thuth@redhat.com>
- <20240816072218.27125-2-thuth@redhat.com>
- <ddad1d38-2f4d-41b8-a7b5-69bec00ebe02@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <ddad1d38-2f4d-41b8-a7b5-69bec00ebe02@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Rspamd-Queue-Id: 7BA6C22878
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-6.47 / 50.00]; BAYES_HAM(-2.96)[99.82%];
+ DWL_DNSWL_MED(-2.00)[suse.de:dkim];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; MIME_TRACE(0.00)[0:+];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FUZZY_BLOCKED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCPT_COUNT_TWELVE(0.00)[12]; ARC_NA(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
+ imap1.dmz-prg2.suse.org:helo, suse.de:mid, suse.de:dkim]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,73 +130,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gOC8xNi8yNCAwMDo0NSwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3JvdGU6DQo+IE9u
-IDE2LzgvMjQgMDk6MjIsIFRob21hcyBIdXRoIHdyb3RlOg0KPj4gRnJvbTogUGllcnJpY2sg
-Qm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPj4NCj4+IEZvdW5kIG9u
-IGRlYmlhbiBzdGFibGUuDQo+Pg0KPj4gLi4vdGFyZ2V0L3MzOTB4L3RjZy90cmFuc2xhdGUu
-YzogSW4gZnVuY3Rpb24g4oCYZ2V0X21lbV9pbmRleOKAmToNCj4+IC4uL3RhcmdldC9zMzkw
-eC90Y2cvdHJhbnNsYXRlLmM6Mzk4OjE6IGVycm9yOiBjb250cm9sIHJlYWNoZXMgZW5kIG9m
-IG5vbi12b2lkIGZ1bmN0aW9uIFstV2Vycm9yPXJldHVybi10eXBlXQ0KPj4gICAgIDM5OCB8
-IH0NCj4+DQo+PiBTaWduZWQtb2ZmLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5i
-b3V2aWVyQGxpbmFyby5vcmc+DQo+PiBBY2tlZC1ieTogSWx5YSBMZW9zaGtldmljaCA8aWlp
-QGxpbnV4LmlibS5jb20+DQo+PiBNZXNzYWdlLUlEOiA8MjAyNDA4MTQyMjQxMzIuODk3MDk4
-LTQtcGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPj4gU2lnbmVkLW9mZi1ieTogVGhv
-bWFzIEh1dGggPHRodXRoQHJlZGhhdC5jb20+DQo+PiAtLS0NCj4+ICAgIHRhcmdldC9zMzkw
-eC90Y2cvdHJhbnNsYXRlLmMgfCAxIC0NCj4+ICAgIDEgZmlsZSBjaGFuZ2VkLCAxIGRlbGV0
-aW9uKC0pDQo+Pg0KPj4gZGlmZiAtLWdpdCBhL3RhcmdldC9zMzkweC90Y2cvdHJhbnNsYXRl
-LmMgYi90YXJnZXQvczM5MHgvdGNnL3RyYW5zbGF0ZS5jDQo+PiBpbmRleCBjODFlMDM1ZGVh
-Li5iY2ZmZjQwYjI1IDEwMDY0NA0KPj4gLS0tIGEvdGFyZ2V0L3MzOTB4L3RjZy90cmFuc2xh
-dGUuYw0KPj4gKysrIGIvdGFyZ2V0L3MzOTB4L3RjZy90cmFuc2xhdGUuYw0KPj4gQEAgLTM5
-Miw3ICszOTIsNiBAQCBzdGF0aWMgaW50IGdldF9tZW1faW5kZXgoRGlzYXNDb250ZXh0ICpz
-KQ0KPj4gICAgICAgICAgICByZXR1cm4gTU1VX0hPTUVfSURYOw0KPj4gICAgICAgIGRlZmF1
-bHQ6DQo+PiAgICAgICAgICAgIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCk7DQo+PiAtICAgICAg
-ICBicmVhazsNCj4gDQo+IFdoeSBhcmVuJ3QgdGhlIG90aGVyIGNhc2VzIHByb2JsZW1hdGlj
-Pw0KPiANCj4gJCBnaXQgZ3JlcCAtQTEgZ19hc3NlcnRfbm90X3JlYWNoZWQgfCBmZ3JlcCAt
-QjEgYnJlYWsNCj4gYWNjZWwvdGNnL3BsdWdpbi1nZW4uYzoyNTM6ICAgICAgICBnX2Fzc2Vy
-dF9ub3RfcmVhY2hlZCgpOw0KPiBhY2NlbC90Y2cvcGx1Z2luLWdlbi5jLTI1NC0gICAgICAg
-IGJyZWFrOw0KPiAtLQ0KPiBibG9jay9zc2guYzo0NzY6ICAgICAgICBnX2Fzc2VydF9ub3Rf
-cmVhY2hlZCgpOw0KPiBibG9jay9zc2guYy00NzctICAgICAgICBicmVhazsNCj4gLS0NCj4g
-ZnB1L3NvZnRmbG9hdC1wYXJ0cy5jLmluYzoxMzc1OiAgICAgICAgICAgIGdfYXNzZXJ0X25v
-dF9yZWFjaGVkKCk7DQo+IGZwdS9zb2Z0ZmxvYXQtcGFydHMuYy5pbmMtMTM3Ni0gICAgICAg
-ICAgICBicmVhazsNCj4gLS0NCj4gZnB1L3NvZnRmbG9hdC1wYXJ0cy5jLmluYzoxMzg4OiAg
-ICAgICAgICAgIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCk7DQo+IGZwdS9zb2Z0ZmxvYXQtcGFy
-dHMuYy5pbmMtMTM4OS0gICAgICAgICAgICBicmVhazsNCj4gLS0NCj4gaHcvZ3Bpby9ucmY1
-MV9ncGlvLmM6NDI6ICAgICAgICBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpOw0KPiBody9ncGlv
-L25yZjUxX2dwaW8uYy00My0gICAgICAgIGJyZWFrOw0KPiAtLQ0KPiBody9taXNjL2lteDZf
-Y2NtLmM6MzAzOiAgICAgICAgZ19hc3NlcnRfbm90X3JlYWNoZWQoKTsNCj4gaHcvbWlzYy9p
-bXg2X2NjbS5jLTMwNC0gICAgICAgIGJyZWFrOw0KPiAtLQ0KPiBody9taXNjL21hY192aWEu
-Yzo0OTc6ICAgICAgICAgICAgICAgIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCk7DQo+IGh3L21p
-c2MvbWFjX3ZpYS5jLTQ5OC0gICAgICAgICAgICAgICAgYnJlYWs7DQo+IC0tDQo+IGh3L21p
-c2MvbWFjX3ZpYS5jOjU1ODogICAgICAgICAgICBnX2Fzc2VydF9ub3RfcmVhY2hlZCgpOw0K
-PiBody9taXNjL21hY192aWEuYy01NTktICAgICAgICAgICAgYnJlYWs7DQo+IC0tDQo+IGh3
-L3BjaS1ob3N0L2d0NjQxMjAuYzo2OTE6ICAgICAgICBnX2Fzc2VydF9ub3RfcmVhY2hlZCgp
-Ow0KPiBody9wY2ktaG9zdC9ndDY0MTIwLmMtNjkyLSAgICAgICAgYnJlYWs7DQo+IC0tDQo+
-IGh3L3BjaS1ob3N0L2d0NjQxMjAuYzo5MzU6ICAgICAgICBnX2Fzc2VydF9ub3RfcmVhY2hl
-ZCgpOw0KPiBody9wY2ktaG9zdC9ndDY0MTIwLmMtOTM2LSAgICAgICAgYnJlYWs7DQo+IC0t
-DQo+IGh3L3Njc2kvdmlydGlvLXNjc2kuYzozNTk6ICAgICAgICBnX2Fzc2VydF9ub3RfcmVh
-Y2hlZCgpOw0KPiBody9zY3NpL3ZpcnRpby1zY3NpLmMtMzYwLSAgICAgICAgYnJlYWs7DQo+
-IC0tDQo+IGh3L3RwbS90cG1fc3BhcHIuYzoyMDg6ICAgICAgICAgICAgICAgIGdfYXNzZXJ0
-X25vdF9yZWFjaGVkKCk7DQo+IGh3L3RwbS90cG1fc3BhcHIuYy0yMDktICAgICAgICAgICAg
-ICAgIGJyZWFrOw0KPiAtLQ0KPiB0YXJnZXQvYXJtL2h5cF9nZGJzdHViLmM6MTYwOiAgICAg
-ICAgZ19hc3NlcnRfbm90X3JlYWNoZWQoKTsNCj4gdGFyZ2V0L2FybS9oeXBfZ2Ric3R1Yi5j
-LTE2MS0gICAgICAgIGJyZWFrOw0KPiAtLQ0KPiB0YXJnZXQvcmlzY3YvaW5zbl90cmFucy90
-cmFuc19ydnYuYy5pbmM6MzE3NDogICAgICAgIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCk7DQo+
-IHRhcmdldC9yaXNjdi9pbnNuX3RyYW5zL3RyYW5zX3J2di5jLmluYy0zMTc1LSAgICAgICAg
-YnJlYWs7DQo+IC0tDQo+IHRhcmdldC9yaXNjdi9pbnNuX3RyYW5zL3RyYW5zX3J2di5jLmlu
-YzozMjU5OiAgICAgICAgZ19hc3NlcnRfbm90X3JlYWNoZWQoKTsNCj4gdGFyZ2V0L3Jpc2N2
-L2luc25fdHJhbnMvdHJhbnNfcnZ2LmMuaW5jLTMyNjAtICAgICAgICBicmVhazsNCj4gLS0N
-Cj4gdGFyZ2V0L3Jpc2N2L21vbml0b3IuYzoxODY6ICAgICAgICBnX2Fzc2VydF9ub3RfcmVh
-Y2hlZCgpOw0KPiB0YXJnZXQvcmlzY3YvbW9uaXRvci5jLTE4Ny0gICAgICAgIGJyZWFrOw0K
-PiAtLQ0KPiB0YXJnZXQvczM5MHgvdGNnL3RyYW5zbGF0ZS5jOjM5NDogICAgICAgIGdfYXNz
-ZXJ0X25vdF9yZWFjaGVkKCk7DQo+IHRhcmdldC9zMzkweC90Y2cvdHJhbnNsYXRlLmMtMzk1
-LSAgICAgICAgYnJlYWs7DQo+IC0tDQo+IHRjZy9sb29uZ2FyY2g2NC90Y2ctdGFyZ2V0LmMu
-aW5jOjY1MjogICAgICAgIGdfYXNzZXJ0X25vdF9yZWFjaGVkKCk7DQo+IHRjZy9sb29uZ2Fy
-Y2g2NC90Y2ctdGFyZ2V0LmMuaW5jLTY1My0gICAgICAgIGJyZWFrOw0KPiAtLQ0KPiB0ZXN0
-cy9xdGVzdC9taWdyYXRpb24taGVscGVycy5jOjc4OiAgICAgICAgZ19hc3NlcnRfbm90X3Jl
-YWNoZWQoKTsNCj4gdGVzdHMvcXRlc3QvbWlncmF0aW9uLWhlbHBlcnMuYy03OS0gICAgICAg
-IGJyZWFrOw0KPiAtLQ0KPiB1aS9xZW11LXBpeG1hbi5jOjUxOiAgICAgICAgZ19hc3NlcnRf
-bm90X3JlYWNoZWQoKTsNCj4gdWkvcWVtdS1waXhtYW4uYy01Mi0gICAgICAgIGJyZWFrOw0K
-PiANCg0KSSdsbCB0YWtlIGEgbG9vayBhdCBjb25zdHJ1Y3Rpb25zIHdoZXJlIGNvZGUgaXMg
-cHJlc2VudCBhZnRlciANCmdfYXNzZXJ0X25vdF9yZWFjaGVkKCkgYW5kIG1ha2UgYSBzZXJp
-ZXMgb3V0IG9mIGl0IHRvIGNsZWFuIHRoaXMuDQo=
+Steve Sistare <steven.sistare@oracle.com> writes:
+
+> Remember the RAMBlock host address as host_old during migration, for use
+> by CPR.  The iommufd interface to update the virtual address of DMA
+> mappings requires it.
+>
+> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> ---
+>  hw/core/machine.c       | 6 ++++++
+>  include/exec/ramblock.h | 1 +
+>  migration/migration.h   | 2 ++
+>  migration/options.c     | 2 ++
+>  migration/ram.c         | 7 +++++++
+>  5 files changed, 18 insertions(+)
+>
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 9676953..0ac16b8 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -35,6 +35,12 @@
+>  #include "hw/virtio/virtio-iommu.h"
+>  #include "audio/audio.h"
+>  
+> +/* TBD: register hw_compat_9_1 with machines */
+> +GlobalProperty hw_compat_9_1[] = {
+> +    { "migration", "send-host-old", "off"},
+> +};
+> +const size_t hw_compat_9_1_len = G_N_ELEMENTS(hw_compat_9_1);
+> +
+>  GlobalProperty hw_compat_9_0[] = {
+>      {"arm-cpu", "backcompat-cntfrq", "true" },
+>      {"scsi-disk-base", "migrate-emulated-scsi-request", "false" },
+> diff --git a/include/exec/ramblock.h b/include/exec/ramblock.h
+> index 64484cd..8f1c535 100644
+> --- a/include/exec/ramblock.h
+> +++ b/include/exec/ramblock.h
+> @@ -28,6 +28,7 @@ struct RAMBlock {
+>      struct rcu_head rcu;
+>      struct MemoryRegion *mr;
+>      uint8_t *host;
+> +    uint64_t host_old;
+>      uint8_t *colo_cache; /* For colo, VM's ram cache */
+>      ram_addr_t offset;
+>      ram_addr_t used_length;
+> diff --git a/migration/migration.h b/migration/migration.h
+> index 38aa140..b5e3151 100644
+> --- a/migration/migration.h
+> +++ b/migration/migration.h
+> @@ -442,6 +442,8 @@ struct MigrationState {
+>       */
+>      uint8_t clear_bitmap_shift;
+>  
+> +    bool send_host_old;
+> +
+>      /*
+>       * This save hostname when out-going migration starts
+>       */
+> diff --git a/migration/options.c b/migration/options.c
+> index 7526f9f..197cb86 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -92,6 +92,8 @@ Property migration_properties[] = {
+>                        clear_bitmap_shift, CLEAR_BITMAP_SHIFT_DEFAULT),
+>      DEFINE_PROP_BOOL("x-preempt-pre-7-2", MigrationState,
+>                       preempt_pre_7_2, false),
+> +    DEFINE_PROP_BOOL("send-host-old", MigrationState,
+> +                     send_host_old, true),
+>  
+>      /* Migration parameters */
+>      DEFINE_PROP_UINT8("x-throttle-trigger-threshold", MigrationState,
+> diff --git a/migration/ram.c b/migration/ram.c
+> index 1e1e05e..8644917 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -3030,6 +3030,9 @@ static int ram_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>              qemu_put_byte(f, strlen(block->idstr));
+>              qemu_put_buffer(f, (uint8_t *)block->idstr, strlen(block->idstr));
+>              qemu_put_be64(f, block->used_length);
+> +            if (migrate_get_current()->send_host_old) {
+> +                qemu_put_be64(f, (uint64_t)block->host);
+> +            }
+
+This requires an update of scripts/analyze-migration.py. Could be done
+on the side.
+
+>              if (migrate_postcopy_ram() &&
+>                  block->page_size != max_hg_page_size) {
+>                  qemu_put_be64(f, block->page_size);
+> @@ -4021,6 +4024,10 @@ static int parse_ramblock(QEMUFile *f, RAMBlock *block, ram_addr_t length)
+>  
+>      assert(block);
+>  
+> +    if (migrate_get_current()->send_host_old) {
+> +        block->host_old = qemu_get_be64(f);
+> +    }
+> +
+>      if (migrate_mapped_ram()) {
+>          parse_ramblock_mapped_ram(f, block, length, &local_err);
+>          if (local_err) {
 
