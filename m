@@ -4,136 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A70AC531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 07:04:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C29C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 07:06:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1seqzV-0003xq-1W; Fri, 16 Aug 2024 03:03:17 -0400
+	id 1ser2D-0008II-6t; Fri, 16 Aug 2024 03:06:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1seqzS-0003wo-MY
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:03:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1seqzQ-0001KX-Kz
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:03:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723791790;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <hare@suse.de>) id 1ser28-0008HC-MY
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:06:01 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hare@suse.de>) id 1ser21-0001xx-FI
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:05:57 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 8D2101FDCE;
+ Fri, 16 Aug 2024 07:05:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1723791948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=tvsaJpO4Ds11qn4sBBK1KUcYlKHB9+Y+4/YU/ibGpdQ=;
- b=ey8WZ8bP7fVahVj43wNav/FTi1o0/tWHxQa36iWXABCL2f1SAqPCXu5Kn8Zcdjxd48wvx0
- vsQWE4MkF0WT+FCBYiou/cn/lD6tR5N4KQapZSd6xxtRtj3G5Ihn2VYu1pzvr06okda8Wc
- bhaw5Io+8nWbAtrEwlMW0KkMvxxBpJA=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-502-wlKYzvHnO-OWsDuvpqCY_Q-1; Fri, 16 Aug 2024 03:03:07 -0400
-X-MC-Unique: wlKYzvHnO-OWsDuvpqCY_Q-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-428e48612acso17365645e9.3
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 00:03:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723791786; x=1724396586;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tvsaJpO4Ds11qn4sBBK1KUcYlKHB9+Y+4/YU/ibGpdQ=;
- b=uHiIDDOOO3Hhs414pq1HG+F2M1us2afjZz6+Qx8QiBY4dBT/xLfn/VUpjL8vqmNjE4
- YZkRfbuLU1oe8U9PFMoexdCFehPER0EtSGbOH687dg+2IeR/lFffFi2u3bzGGzCvq/+w
- jVV5xABIEFNL32xZQ1XUfASY0S9kxU86Xv9P78pxD8pLEjcfLdhg1nLNn6DmFTBKetDl
- vaz52/muC1SS8xBAHtSL59+abR2bSarVSTF8fZZhUTR1iKT2vq5vcfVmYU+TNRNj7QeM
- 0jhWE8J2adMOm4m0OsJ2Llnt65FbwkGzgAahglDf6eciCIlf6CCs7a6T6JAuZES6SATp
- H+cQ==
-X-Gm-Message-State: AOJu0YzuPbul3Pp13STCFdG8pT5mAUQmkfUEflk2ZRx/7yAHiKZ5Kh5q
- r0qsJKhvBGcX2ILb3hJYLM13/zPGSVNXCD+Z8JbEEx8J/iWBPqsP7CfSmmS/nRoRBfawAHZMdNZ
- qCXbkaVVS3VPFc0bt05GbAGRFYjHZr/7mUa6fAYE8d/jhCroQOQ9D
-X-Received: by 2002:a5d:6448:0:b0:371:914a:4850 with SMTP id
- ffacd0b85a97d-3719443eaa5mr1268587f8f.20.1723791786090; 
- Fri, 16 Aug 2024 00:03:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGVrNeNQYx6eX0Iht8zQLqy/JeM0bkF+OMJLXvHJ5vUY+ubwVqrCddqkIPDIADDOKxA6QJkSQ==
-X-Received: by 2002:a5d:6448:0:b0:371:914a:4850 with SMTP id
- ffacd0b85a97d-3719443eaa5mr1268553f8f.20.1723791785586; 
- Fri, 16 Aug 2024 00:03:05 -0700 (PDT)
-Received: from [192.168.0.6] (ip-109-43-177-15.web.vodafone.de.
- [109.43.177.15]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37189897175sm2957166f8f.83.2024.08.16.00.03.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Aug 2024 00:03:05 -0700 (PDT)
-Message-ID: <3d417232-ba66-4781-8278-a6a31987b54c@redhat.com>
-Date: Fri, 16 Aug 2024 09:03:03 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=at5DFSP6c81qT5KRnYgWvCQnog+7QeKU+7pgyjRGQaE=;
+ b=tTg+ANczlHUA1K9DXrR1Uiv+05Wg2zV8g4vfN1qhzXWQduxbRQW8+LGdSCEMNPUrkXTxQ2
+ BENxRbfSkTpzAclkVaWwIzwxW0PsoeNCw949GlMpBQbTIAXZgG4TzMy74vW0s0EYw+mp+l
+ 7nMbp0LjzSsolyp9iwfvlNUo9h4BCTo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1723791948;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=at5DFSP6c81qT5KRnYgWvCQnog+7QeKU+7pgyjRGQaE=;
+ b=p0EEYejfF76V6qlUViyyjqKb83a3BgPPY2QqTsoGjctQdwBMbTv/5P2AYSLilaH121a9In
+ b1JwlsJKwoAovTBg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=tTg+ANcz;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=p0EEYejf
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1723791948; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=at5DFSP6c81qT5KRnYgWvCQnog+7QeKU+7pgyjRGQaE=;
+ b=tTg+ANczlHUA1K9DXrR1Uiv+05Wg2zV8g4vfN1qhzXWQduxbRQW8+LGdSCEMNPUrkXTxQ2
+ BENxRbfSkTpzAclkVaWwIzwxW0PsoeNCw949GlMpBQbTIAXZgG4TzMy74vW0s0EYw+mp+l
+ 7nMbp0LjzSsolyp9iwfvlNUo9h4BCTo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1723791948;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=at5DFSP6c81qT5KRnYgWvCQnog+7QeKU+7pgyjRGQaE=;
+ b=p0EEYejfF76V6qlUViyyjqKb83a3BgPPY2QqTsoGjctQdwBMbTv/5P2AYSLilaH121a9In
+ b1JwlsJKwoAovTBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C27C613A2F;
+ Fri, 16 Aug 2024 07:05:47 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id EDDLLUv6vmbJAwAAD6G6ig
+ (envelope-from <hare@suse.de>); Fri, 16 Aug 2024 07:05:47 +0000
+Message-ID: <904a433c-0471-4f11-a34b-cef8adf1663c@suse.de>
+Date: Fri, 16 Aug 2024 09:05:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] meson: Use -fno-sanitize=function when available
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20240816-function-v3-1-32ff225e550e@daynix.com>
+Subject: Re: [RFC] Virtualizing tagged disaggregated memory capacity (app
+ specific, multi host shared)
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20240816-function-v3-1-32ff225e550e@daynix.com>
+To: Jonathan Cameron <Jonathan.Cameron@Huawei.com>,
+ David Hildenbrand <david@redhat.com>, linux-mm@kvack.org,
+ linux-cxl@vger.kernel.org, Davidlohr Bueso <dave@stgolabs.net>,
+ Ira Weiny <ira.weiny@intel.com>, John Groves <John@Groves.net>,
+ virtualization@lists.linux.dev
+Cc: Oscar Salvador <osalvador@suse.de>, qemu-devel@nongnu.org,
+ Dave Jiang <dave.jiang@intel.com>, Dan Williams <dan.j.williams@intel.com>,
+ linuxarm@huawei.com, wangkefeng.wang@huawei.com,
+ John Groves <jgroves@micron.com>, Fan Ni <fan.ni@samsung.com>,
+ Navneet Singh <navneet.singh@intel.com>,
+ =?UTF-8?B?4oCcTWljaGFlbCBTLiBUc2lya2lu4oCd?= <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240815172223.00001ca7@Huawei.com>
+From: Hannes Reinecke <hare@suse.de>
+In-Reply-To: <20240815172223.00001ca7@Huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ RCPT_COUNT_TWELVE(0.00)[20]; MIME_TRACE(0.00)[0:+];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email]
+X-Rspamd-Queue-Id: 8D2101FDCE
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=hare@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,44 +142,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/08/2024 08.22, Akihiko Odaki wrote:
-> Commit 23ef50ae2d0c (".gitlab-ci.d/buildtest.yml: Use
-> -fno-sanitize=function in the clang-system job") adds
-> -fno-sanitize=function for the CI but doesn't add the flag in the
-> other context. Add it to meson.build for such. It is not removed from
-> .gitlab-ci.d/buildtest.yml because -fno-sanitize=function in meson.build
-> does not affect --extra-cflags due to argument ordering.
+On 8/15/24 18:22, Jonathan Cameron wrote:
+> Introduction
+> ============
 > 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
-> Changes in v3:
-> - I was not properly dropping the change of .gitlab-ci.d/buildtest.yml
->    but only updated the message. v3 fixes this. (Thomas Huth)
-> - Link to v2: https://lore.kernel.org/r/20240729-function-v2-1-2401ab18b30b@daynix.com
+> If we think application specific memory (including inter-host shared memory) is
+> a thing, it will also be a thing people want to use with virtual machines,
+> potentially nested. So how do we present it at the Host to VM boundary?
 > 
-> Changes in v2:
-> - Dropped the change of: .gitlab-ci.d/buildtest.yml
-> - Link to v1: https://lore.kernel.org/r/20240714-function-v1-1-cc2acb4171ba@daynix.com
-> ---
->   meson.build | 1 +
->   1 file changed, 1 insertion(+)
+> This RFC is perhaps premature given we haven't yet merged upstream support for
+> the bare metal case. However I'd like to get the discussion going given we've
+> touched briefly on this in a number of CXL sync calls and it is clear no one is
+> entirely sure what direction make sense.  We may briefly touch on this in the
+> LPC CXL uconf, but time will be very limited.
 > 
-> diff --git a/meson.build b/meson.build
-> index 5613b62a4f42..a4169c572ba9 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -609,6 +609,7 @@ if host_os != 'openbsd' and \
->   endif
->   
->   qemu_common_flags += cc.get_supported_arguments(hardening_flags)
-> +qemu_common_flags += cc.get_supported_arguments('-fno-sanitize=function')
+Thanks for the detailed write-up.
 
-As I mentioned in my last mail: I think it would make sense to move this at 
-the end of the "if get_option('tsan')" block in meson.build, since this 
-apparently only fixes the use of "--enable-sanitizers", and cannot fix the 
-"--extra-cflags" that a user might have specified?
+Can't we have an ad-hoc meeting at OSS/LPC to gather interested/relevant 
+people to explore ideas around this?
 
-  Thomas
+In particular I'd be interested on how to _get_ the application specific 
+memory to the application in question. It's easy if you have your own 
+application and design it to work on DAX devices. Obviously this 
+approach won't work for unmodified applications; however, they really
+might want to use this, too.
 
+And, of course, the other mentioned problems are worth discussing, and I 
+do agree that the uconf will probably not providing sufficient time for 
+this.
+
+Cheers,
+
+Hannes
+-- 
+Dr. Hannes Reinecke                  Kernel Storage Architect
+hare@suse.de                                +49 911 74053 688
+SUSE Software Solutions GmbH, Frankenstr. 146, 90461 Nürnberg
+HRB 36809 (AG Nürnberg), GF: I. Totev, A. McDonald, W. Knoblich
 
 
