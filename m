@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 234A9C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:23:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AC20C52D7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:23:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sewuM-0005Cm-9k; Fri, 16 Aug 2024 09:22:25 -0400
+	id 1sewuR-0005Wv-T0; Fri, 16 Aug 2024 09:22:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sewuK-00058S-Ff
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:20 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1sewuM-0005EY-La
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:25 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sewuH-0007k7-LS
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:20 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-42817bee9e8so13642215e9.3
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:22:17 -0700 (PDT)
+ id 1sewuK-0007kd-50
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:22 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-42816ca782dso14897415e9.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:22:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723814536; x=1724419336; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723814539; x=1724419339; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=w0Uc190Y4kUeif42FgIZy4DdRtiwAx6zfSHmj9YJomk=;
- b=uihpPkB0Xwo8tQ5R0pueH7EIBwakkhBYbhZfn0XHAyksQv1u/GC5qdrP37xOZNAQ1X
- RgypTqLKIF9oBFcE+Z9yLIkb8TVFHWwRvriyHn6sgv6UUUbs8YwFjkcPTlL1fycou58d
- rRArOKv3Rx/HsZJETyb9io/WAEor6haTx7ciJJtLvTyprFChm92Xo/KdwurvudHEVuv0
- qKvAOK9pLSzlsCOZEVKiS2qEnxjtAsM1DEsE1DDLRWUxroniQsu07vte780DvS8b56WP
- pvSjL0pf5/TLtrNZA7sEor0QitSn39hPP9DnWFnz7OaBiR4GqaTBp/CI/Mvz66ORaOcr
- NCrA==
+ bh=tbFKdbxYbnOhLfqgIpN9vAb16GVhlAA5iH79ZtRgaj8=;
+ b=Dj9mRKkwOdmGubtl7nJltjaSORRqagS7qtH1KIoSJNcQ0qQpFe8lURqD+l483ewK+G
+ WaGBw+wn9APLCnOlGi5xPDQEJbjV8YYx23tJE4GHPD7HRoCAVNwplHWgCbfY2U/JS9FK
+ 1B8zjXKXGhmY0z/J98XN/b9AwXITeWNIu9xlm+JuNGyB+liwe1h8z1o4FmPx8FVOmm6e
+ aHK7JMl+k+eINFPKiLU+uvREbDjfdXZZzjG2Gy0ysB3hEVOxWeGJrNUHDeRblx0ByH86
+ cpnYWPbV256gd+wulRRqtMAfsPPq4GPJfqjDi67BgnoF97Dnrun/MUxTcfURftBtzxRQ
+ eHsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723814536; x=1724419336;
+ d=1e100.net; s=20230601; t=1723814539; x=1724419339;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=w0Uc190Y4kUeif42FgIZy4DdRtiwAx6zfSHmj9YJomk=;
- b=rjANr4cTQUtJeKPbeyhZeOq24hI7U4C/lPFK6BspmRzkiOwxOwpb+GOA0UIWm2NfVU
- T+QFLyBSIu9DHdoRTZ2YKw0K5MW+88uBAwTP9kX5R6yrGDcWzj+GKbUI5H0rnfrMpfva
- yd0mOGxNcYTnn2h/F1qUJ7d8VFyvwSBgu5LhnlvdoJ3De4WKwCcoLB+lyyc/WIDp3uPf
- 2pzFrKSLU9SVlbfLULIVkWRI23w1keBoC4ciNYXfHzfjjUxok49Z7mCuyo0aWU8jkqFS
- OxJMEAxrCazA1ClBN2eurfEIjwaoSqdNLw39YNQBH99nLNybBpPUpJ+b/HsRCnDfhuGt
- E39g==
-X-Gm-Message-State: AOJu0YxsbCpGb+b35RQEpHiolWWEocd4tm2ZgvsQ+yFrKiDjKCC0Hw/e
- 8FaMsYTRFFIUg5EY9Srn8cHN/5RWuBNWiTsJ2+nOf+aoXhhGzGEfwBwogvBKlsLl+a1vjtjSCPZ
- W
-X-Google-Smtp-Source: AGHT+IGvlbEIo3yJhwMKXrwrp2HWqNuFjep+ZGuuOWclqVlkx/ZA5nuiuF2palz7rwikNmxZ+Fiw4g==
-X-Received: by 2002:a5d:694a:0:b0:368:31c7:19d3 with SMTP id
- ffacd0b85a97d-3719431e723mr1869776f8f.9.1723814536038; 
- Fri, 16 Aug 2024 06:22:16 -0700 (PDT)
+ bh=tbFKdbxYbnOhLfqgIpN9vAb16GVhlAA5iH79ZtRgaj8=;
+ b=brMYq/kVX3iieGRnmg9UQw3/IjZBphvSednGZj2d16N3GJPwroT8khPzWjOXvuQiBt
+ lL7XZzBbEI1jubTJ+/rvennvUFUb0VzT2pxEUoPZtS9zchMljdIeOgwvjn96naGh1z0t
+ 7d0v/rgfV5herf0MxpYy678SDxJg/05/RIqYbCUf1J69XAi/neuzsMbMYY//HIGgBPI7
+ H2K/XNylXDzJ5nFgZ2Xlr8Vs//A1A0jSNiHBRFce9Ei+/iykFSQiXWNlV2DHk2cv+5h6
+ gmLs4r+q8DAkophbkW4tPOkjgdOwGSoFIp85IdoHZebj1P+lOBjulQ+/+Hri6veC48/m
+ MzWQ==
+X-Gm-Message-State: AOJu0YzrDbLLZ2cADwOMo5NuQp9N9WICY60q04J4aA+AmSXTGK12KEy5
+ K1WRCcf4S0vX1SD09nsypniCj32c2B43V+j8oWCCYzj5E22cCoxS7vC2rqGDlKaR2gaJNuTqvGX
+ 3
+X-Google-Smtp-Source: AGHT+IGHybU9Txyn8OmYaoT6edezR8sDktJlr/6kIrcsbP5ZDHobMtGaaDAebnnJZnqUtXFoZzvRCw==
+X-Received: by 2002:a05:6000:1365:b0:367:980a:6aa with SMTP id
+ ffacd0b85a97d-371946bf62dmr2252621f8f.54.1723814538477; 
+ Fri, 16 Aug 2024 06:22:18 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-371898ab855sm3631948f8f.105.2024.08.16.06.22.15
+ ffacd0b85a97d-371898ab855sm3631948f8f.105.2024.08.16.06.22.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 06:22:15 -0700 (PDT)
+ Fri, 16 Aug 2024 06:22:18 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 3/7] docs/devel/lockcnt: Convert to rST format
-Date: Fri, 16 Aug 2024 14:22:08 +0100
-Message-Id: <20240816132212.3602106-4-peter.maydell@linaro.org>
+Subject: [PATCH 6/7] include: Move QemuLockCnt APIs to their own header
+Date: Fri, 16 Aug 2024 14:22:11 +0100
+Message-Id: <20240816132212.3602106-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240816132212.3602106-1-peter.maydell@linaro.org>
 References: <20240816132212.3602106-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,277 +95,433 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert docs/devel/lockcnt.txt to rST format.
+Currently the QemuLockCnt data structure and associated functions are
+in the include/qemu/thread.h header.  Move them to their own
+qemu/lockcnt.h.  The main reason for doing this is that it means we
+can autogenerate the documentation comments into the docs/devel
+documentation.
+
+The copyright/author in the new header is drawn from lockcnt.c,
+since the header changes were added in the same commit as
+lockcnt.c; since neither thread.h nor lockcnt.c state an explicit
+license, the standard default of GPL-2-or-later applies.
+
+We include the new header (and the .c file, which was accidentally
+omitted previously) in the "RCU" part of MAINTAINERS, since that
+is where the lockcnt.rst documentation is categorized.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- MAINTAINERS                             |  2 +-
- docs/devel/index-api.rst                |  1 +
- docs/devel/{lockcnt.txt => lockcnt.rst} | 89 +++++++++++++------------
- 3 files changed, 47 insertions(+), 45 deletions(-)
- rename docs/devel/{lockcnt.txt => lockcnt.rst} (74%)
+Paolo: could you confirm that you meant GPL2+ for this code?
+---
+ MAINTAINERS            |   2 +
+ docs/devel/lockcnt.rst |   2 +-
+ include/block/aio.h    |   1 +
+ include/hw/core/cpu.h  |   1 +
+ include/qemu/lockcnt.h | 130 +++++++++++++++++++++++++++++++++++++++++
+ include/qemu/thread.h  | 111 -----------------------------------
+ accel/accel-blocker.c  |   1 +
+ hw/core/cpu-common.c   |   1 +
+ util/aio-posix.c       |   1 +
+ util/aio-win32.c       |   1 +
+ util/async.c           |   1 +
+ util/fdmon-epoll.c     |   1 +
+ util/lockcnt.c         |   1 +
+ 13 files changed, 142 insertions(+), 112 deletions(-)
+ create mode 100644 include/qemu/lockcnt.h
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index e9dd1180077..9e091a4e214 100644
+index f8f4df44460..2da11411ff3 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -3112,7 +3112,7 @@ F: qapi/run-state.json
- Read, Copy, Update (RCU)
- M: Paolo Bonzini <pbonzini@redhat.com>
- S: Maintained
--F: docs/devel/lockcnt.txt
-+F: docs/devel/lockcnt.rst
- F: docs/devel/rcu.txt
+@@ -3115,8 +3115,10 @@ S: Maintained
+ F: docs/devel/lockcnt.rst
+ F: docs/devel/rcu.rst
  F: include/qemu/rcu*.h
++F: include/qemu/lockcnt.h
  F: tests/unit/rcutorture.c
-diff --git a/docs/devel/index-api.rst b/docs/devel/index-api.rst
-index fe01b2b488d..1c487c152ab 100644
---- a/docs/devel/index-api.rst
-+++ b/docs/devel/index-api.rst
-@@ -9,6 +9,7 @@ generated from in-code annotations to function prototypes.
+ F: tests/unit/test-rcu-*.c
++F: util/lockcnt.c
+ F: util/rcu.c
  
-    bitops
-    loads-stores
-+   lockcnt
-    memory
-    modules
-    pci
-diff --git a/docs/devel/lockcnt.txt b/docs/devel/lockcnt.rst
-similarity index 74%
-rename from docs/devel/lockcnt.txt
-rename to docs/devel/lockcnt.rst
-index a3fb3bc5d8d..994aeb57151 100644
---- a/docs/devel/lockcnt.txt
+ Human Monitor (HMP)
+diff --git a/docs/devel/lockcnt.rst b/docs/devel/lockcnt.rst
+index 994aeb57151..728594bcea3 100644
+--- a/docs/devel/lockcnt.rst
 +++ b/docs/devel/lockcnt.rst
-@@ -1,9 +1,9 @@
--DOCUMENTATION FOR LOCKED COUNTERS (aka QemuLockCnt)
--===================================================
-+Locked Counters (aka ``QemuLockCnt``)
-+=====================================
+@@ -175,7 +175,7 @@ three instructions in the critical path, two assignments and a ``smp_wmb()``.
+ ``QemuLockCnt`` API
+ -------------------
  
- QEMU often uses reference counts to track data structures that are being
- accessed and should not be freed.  For example, a loop that invoke
--callbacks like this is not safe:
-+callbacks like this is not safe::
- 
-     QLIST_FOREACH_SAFE(ioh, &io_handlers, next, pioh) {
-         if (ioh->revents & G_IO_OUT) {
-@@ -11,11 +11,11 @@ callbacks like this is not safe:
-         }
-     }
- 
--QLIST_FOREACH_SAFE protects against deletion of the current node (ioh)
--by stashing away its "next" pointer.  However, ioh->fd_write could
-+``QLIST_FOREACH_SAFE`` protects against deletion of the current node (``ioh``)
-+by stashing away its ``next`` pointer.  However, ``ioh->fd_write`` could
- actually delete the next node from the list.  The simplest way to
- avoid this is to mark the node as deleted, and remove it from the
--list in the above loop:
-+list in the above loop::
- 
-     QLIST_FOREACH_SAFE(ioh, &io_handlers, next, pioh) {
-         if (ioh->deleted) {
-@@ -29,7 +29,7 @@ list in the above loop:
-     }
- 
- If however this loop must also be reentrant, i.e. it is possible that
--ioh->fd_write invokes the loop again, some kind of counting is needed:
-+``ioh->fd_write`` invokes the loop again, some kind of counting is needed::
- 
-     walking_handlers++;
-     QLIST_FOREACH_SAFE(ioh, &io_handlers, next, pioh) {
-@@ -46,8 +46,8 @@ ioh->fd_write invokes the loop again, some kind of counting is needed:
-     }
-     walking_handlers--;
- 
--One may think of using the RCU primitives, rcu_read_lock() and
--rcu_read_unlock(); effectively, the RCU nesting count would take
-+One may think of using the RCU primitives, ``rcu_read_lock()`` and
-+``rcu_read_unlock()``; effectively, the RCU nesting count would take
- the place of the walking_handlers global variable.  Indeed,
- reference counting and RCU have similar purposes, but their usage in
- general is complementary:
-@@ -70,14 +70,14 @@ general is complementary:
-   this can improve performance, but also delay reclamation undesirably.
-   With reference counting, reclamation is deterministic.
- 
--This file documents QemuLockCnt, an abstraction for using reference
-+This file documents ``QemuLockCnt``, an abstraction for using reference
- counting in code that has to be both thread-safe and reentrant.
+-The ``QemuLockCnt`` API is described in ``include/qemu/thread.h``.
++The ``QemuLockCnt`` API is described in ``include/qemu/lockcnt.h``.
  
  
--QemuLockCnt concepts
----------------------
-+``QemuLockCnt`` concepts
-+------------------------
+ ``QemuLockCnt`` usage
+diff --git a/include/block/aio.h b/include/block/aio.h
+index 4ee81936ed5..43883a8a33a 100644
+--- a/include/block/aio.h
++++ b/include/block/aio.h
+@@ -20,6 +20,7 @@
+ #include "qemu/coroutine-core.h"
+ #include "qemu/queue.h"
+ #include "qemu/event_notifier.h"
++#include "qemu/lockcnt.h"
+ #include "qemu/thread.h"
+ #include "qemu/timer.h"
+ #include "block/graph-lock.h"
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 1c9c775df65..ecbeeb1c0dd 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -33,6 +33,7 @@
+ #include "qemu/bitmap.h"
+ #include "qemu/rcu_queue.h"
+ #include "qemu/queue.h"
++#include "qemu/lockcnt.h"
+ #include "qemu/thread.h"
+ #include "qom/object.h"
  
--A QemuLockCnt comprises both a counter and a mutex; it has primitives
-+A ``QemuLockCnt`` comprises both a counter and a mutex; it has primitives
- to increment and decrement the counter, and to take and release the
- mutex.  The counter notes how many visits to the data structures are
- taking place (the visits could be from different threads, or there could
-@@ -95,13 +95,14 @@ not just frees, though there could be cases where this is not necessary.
+diff --git a/include/qemu/lockcnt.h b/include/qemu/lockcnt.h
+new file mode 100644
+index 00000000000..2c92ae17c9e
+--- /dev/null
++++ b/include/qemu/lockcnt.h
+@@ -0,0 +1,130 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * QemuLockCnt implementation
++ *
++ * Copyright Red Hat, Inc. 2017
++ *
++ * Author:
++ *   Paolo Bonzini <pbonzini@redhat.com>
++ *
++ */
++
++#ifndef QEMU_LOCKCNT_H
++#define QEMU_LOCKCNT_H
++
++#include "qemu/thread.h"
++
++typedef struct QemuLockCnt QemuLockCnt;
++
++struct QemuLockCnt {
++#ifndef CONFIG_LINUX
++    QemuMutex mutex;
++#endif
++    unsigned count;
++};
++
++/**
++ * qemu_lockcnt_init: initialize a QemuLockcnt
++ * @lockcnt: the lockcnt to initialize
++ *
++ * Initialize lockcnt's counter to zero and prepare its mutex
++ * for usage.
++ */
++void qemu_lockcnt_init(QemuLockCnt *lockcnt);
++
++/**
++ * qemu_lockcnt_destroy: destroy a QemuLockcnt
++ * @lockcnt: the lockcnt to destruct
++ *
++ * Destroy lockcnt's mutex.
++ */
++void qemu_lockcnt_destroy(QemuLockCnt *lockcnt);
++
++/**
++ * qemu_lockcnt_inc: increment a QemuLockCnt's counter
++ * @lockcnt: the lockcnt to operate on
++ *
++ * If the lockcnt's count is zero, wait for critical sections
++ * to finish and increment lockcnt's count to 1.  If the count
++ * is not zero, just increment it.
++ *
++ * Because this function can wait on the mutex, it must not be
++ * called while the lockcnt's mutex is held by the current thread.
++ * For the same reason, qemu_lockcnt_inc can also contribute to
++ * AB-BA deadlocks.  This is a sample deadlock scenario:
++ *
++ *            thread 1                      thread 2
++ *            -------------------------------------------------------
++ *            qemu_lockcnt_lock(&lc1);
++ *                                          qemu_lockcnt_lock(&lc2);
++ *            qemu_lockcnt_inc(&lc2);
++ *                                          qemu_lockcnt_inc(&lc1);
++ */
++void qemu_lockcnt_inc(QemuLockCnt *lockcnt);
++
++/**
++ * qemu_lockcnt_dec: decrement a QemuLockCnt's counter
++ * @lockcnt: the lockcnt to operate on
++ */
++void qemu_lockcnt_dec(QemuLockCnt *lockcnt);
++
++/**
++ * qemu_lockcnt_dec_and_lock: decrement a QemuLockCnt's counter and
++ * possibly lock it.
++ * @lockcnt: the lockcnt to operate on
++ *
++ * Decrement lockcnt's count.  If the new count is zero, lock
++ * the mutex and return true.  Otherwise, return false.
++ */
++bool qemu_lockcnt_dec_and_lock(QemuLockCnt *lockcnt);
++
++/**
++ * qemu_lockcnt_dec_if_lock: possibly decrement a QemuLockCnt's counter and
++ * lock it.
++ * @lockcnt: the lockcnt to operate on
++ *
++ * If the count is 1, decrement the count to zero, lock
++ * the mutex and return true.  Otherwise, return false.
++ */
++bool qemu_lockcnt_dec_if_lock(QemuLockCnt *lockcnt);
++
++/**
++ * qemu_lockcnt_lock: lock a QemuLockCnt's mutex.
++ * @lockcnt: the lockcnt to operate on
++ *
++ * Remember that concurrent visits are not blocked unless the count is
++ * also zero.  You can use qemu_lockcnt_count to check for this inside a
++ * critical section.
++ */
++void qemu_lockcnt_lock(QemuLockCnt *lockcnt);
++
++/**
++ * qemu_lockcnt_unlock: release a QemuLockCnt's mutex.
++ * @lockcnt: the lockcnt to operate on.
++ */
++void qemu_lockcnt_unlock(QemuLockCnt *lockcnt);
++
++/**
++ * qemu_lockcnt_inc_and_unlock: combined unlock/increment on a QemuLockCnt.
++ * @lockcnt: the lockcnt to operate on.
++ *
++ * This is the same as
++ *
++ *     qemu_lockcnt_unlock(lockcnt);
++ *     qemu_lockcnt_inc(lockcnt);
++ *
++ * but more efficient.
++ */
++void qemu_lockcnt_inc_and_unlock(QemuLockCnt *lockcnt);
++
++/**
++ * qemu_lockcnt_count: query a LockCnt's count.
++ * @lockcnt: the lockcnt to query.
++ *
++ * Note that the count can change at any time.  Still, while the
++ * lockcnt is locked, one can usefully check whether the count
++ * is non-zero.
++ */
++unsigned qemu_lockcnt_count(QemuLockCnt *lockcnt);
++
++#endif
+diff --git a/include/qemu/thread.h b/include/qemu/thread.h
+index fb74e21c08a..7eba27a7049 100644
+--- a/include/qemu/thread.h
++++ b/include/qemu/thread.h
+@@ -293,115 +293,4 @@ static inline void qemu_spin_unlock(QemuSpin *spin)
+ #endif
+ }
  
- Reads, instead, can be done without taking the mutex, as long as the
- readers and writers use the same macros that are used for RCU, for
--example qatomic_rcu_read, qatomic_rcu_set, QLIST_FOREACH_RCU, etc.  This is
--because the reads are done outside a lock and a set or QLIST_INSERT_HEAD
-+example ``qatomic_rcu_read``, ``qatomic_rcu_set``, ``QLIST_FOREACH_RCU``,
-+etc.  This is because the reads are done outside a lock and a set
-+or ``QLIST_INSERT_HEAD``
- can happen concurrently with the read.  The RCU API ensures that the
- processor and the compiler see all required memory barriers.
+-struct QemuLockCnt {
+-#ifndef CONFIG_LINUX
+-    QemuMutex mutex;
+-#endif
+-    unsigned count;
+-};
+-
+-/**
+- * qemu_lockcnt_init: initialize a QemuLockcnt
+- * @lockcnt: the lockcnt to initialize
+- *
+- * Initialize lockcnt's counter to zero and prepare its mutex
+- * for usage.
+- */
+-void qemu_lockcnt_init(QemuLockCnt *lockcnt);
+-
+-/**
+- * qemu_lockcnt_destroy: destroy a QemuLockcnt
+- * @lockcnt: the lockcnt to destruct
+- *
+- * Destroy lockcnt's mutex.
+- */
+-void qemu_lockcnt_destroy(QemuLockCnt *lockcnt);
+-
+-/**
+- * qemu_lockcnt_inc: increment a QemuLockCnt's counter
+- * @lockcnt: the lockcnt to operate on
+- *
+- * If the lockcnt's count is zero, wait for critical sections
+- * to finish and increment lockcnt's count to 1.  If the count
+- * is not zero, just increment it.
+- *
+- * Because this function can wait on the mutex, it must not be
+- * called while the lockcnt's mutex is held by the current thread.
+- * For the same reason, qemu_lockcnt_inc can also contribute to
+- * AB-BA deadlocks.  This is a sample deadlock scenario:
+- *
+- *            thread 1                      thread 2
+- *            -------------------------------------------------------
+- *            qemu_lockcnt_lock(&lc1);
+- *                                          qemu_lockcnt_lock(&lc2);
+- *            qemu_lockcnt_inc(&lc2);
+- *                                          qemu_lockcnt_inc(&lc1);
+- */
+-void qemu_lockcnt_inc(QemuLockCnt *lockcnt);
+-
+-/**
+- * qemu_lockcnt_dec: decrement a QemuLockCnt's counter
+- * @lockcnt: the lockcnt to operate on
+- */
+-void qemu_lockcnt_dec(QemuLockCnt *lockcnt);
+-
+-/**
+- * qemu_lockcnt_dec_and_lock: decrement a QemuLockCnt's counter and
+- * possibly lock it.
+- * @lockcnt: the lockcnt to operate on
+- *
+- * Decrement lockcnt's count.  If the new count is zero, lock
+- * the mutex and return true.  Otherwise, return false.
+- */
+-bool qemu_lockcnt_dec_and_lock(QemuLockCnt *lockcnt);
+-
+-/**
+- * qemu_lockcnt_dec_if_lock: possibly decrement a QemuLockCnt's counter and
+- * lock it.
+- * @lockcnt: the lockcnt to operate on
+- *
+- * If the count is 1, decrement the count to zero, lock
+- * the mutex and return true.  Otherwise, return false.
+- */
+-bool qemu_lockcnt_dec_if_lock(QemuLockCnt *lockcnt);
+-
+-/**
+- * qemu_lockcnt_lock: lock a QemuLockCnt's mutex.
+- * @lockcnt: the lockcnt to operate on
+- *
+- * Remember that concurrent visits are not blocked unless the count is
+- * also zero.  You can use qemu_lockcnt_count to check for this inside a
+- * critical section.
+- */
+-void qemu_lockcnt_lock(QemuLockCnt *lockcnt);
+-
+-/**
+- * qemu_lockcnt_unlock: release a QemuLockCnt's mutex.
+- * @lockcnt: the lockcnt to operate on.
+- */
+-void qemu_lockcnt_unlock(QemuLockCnt *lockcnt);
+-
+-/**
+- * qemu_lockcnt_inc_and_unlock: combined unlock/increment on a QemuLockCnt.
+- * @lockcnt: the lockcnt to operate on.
+- *
+- * This is the same as
+- *
+- *     qemu_lockcnt_unlock(lockcnt);
+- *     qemu_lockcnt_inc(lockcnt);
+- *
+- * but more efficient.
+- */
+-void qemu_lockcnt_inc_and_unlock(QemuLockCnt *lockcnt);
+-
+-/**
+- * qemu_lockcnt_count: query a LockCnt's count.
+- * @lockcnt: the lockcnt to query.
+- *
+- * Note that the count can change at any time.  Still, while the
+- * lockcnt is locked, one can usefully check whether the count
+- * is non-zero.
+- */
+-unsigned qemu_lockcnt_count(QemuLockCnt *lockcnt);
+-
+ #endif
+diff --git a/accel/accel-blocker.c b/accel/accel-blocker.c
+index e083f24aa80..75daaa29113 100644
+--- a/accel/accel-blocker.c
++++ b/accel/accel-blocker.c
+@@ -25,6 +25,7 @@
+  */
  
- This could be implemented simply by protecting the counter with the
--mutex, for example:
-+mutex, for example::
+ #include "qemu/osdep.h"
++#include "qemu/lockcnt.h"
+ #include "qemu/thread.h"
+ #include "qemu/main-loop.h"
+ #include "hw/core/cpu.h"
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 7982ecd39a5..09c79035949 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -24,6 +24,7 @@
+ #include "sysemu/hw_accel.h"
+ #include "qemu/log.h"
+ #include "qemu/main-loop.h"
++#include "qemu/lockcnt.h"
+ #include "exec/log.h"
+ #include "exec/gdbstub.h"
+ #include "sysemu/tcg.h"
+diff --git a/util/aio-posix.c b/util/aio-posix.c
+index 266c9dd35fa..06bf9f456cf 100644
+--- a/util/aio-posix.c
++++ b/util/aio-posix.c
+@@ -17,6 +17,7 @@
+ #include "block/block.h"
+ #include "block/thread-pool.h"
+ #include "qemu/main-loop.h"
++#include "qemu/lockcnt.h"
+ #include "qemu/rcu.h"
+ #include "qemu/rcu_queue.h"
+ #include "qemu/sockets.h"
+diff --git a/util/aio-win32.c b/util/aio-win32.c
+index d144f9391fb..6583d5c5f31 100644
+--- a/util/aio-win32.c
++++ b/util/aio-win32.c
+@@ -18,6 +18,7 @@
+ #include "qemu/osdep.h"
+ #include "block/block.h"
+ #include "qemu/main-loop.h"
++#include "qemu/lockcnt.h"
+ #include "qemu/queue.h"
+ #include "qemu/sockets.h"
+ #include "qapi/error.h"
+diff --git a/util/async.c b/util/async.c
+index 3e3e4fc7126..99db28389f6 100644
+--- a/util/async.c
++++ b/util/async.c
+@@ -30,6 +30,7 @@
+ #include "block/graph-lock.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/atomic.h"
++#include "qemu/lockcnt.h"
+ #include "qemu/rcu_queue.h"
+ #include "block/raw-aio.h"
+ #include "qemu/coroutine_int.h"
+diff --git a/util/fdmon-epoll.c b/util/fdmon-epoll.c
+index c6413cb18fe..9fb8800dde8 100644
+--- a/util/fdmon-epoll.c
++++ b/util/fdmon-epoll.c
+@@ -5,6 +5,7 @@
  
-     // (1)
-     qemu_mutex_lock(&walking_handlers_mutex);
-@@ -125,33 +126,33 @@ mutex, for example:
- Here, no frees can happen in the code represented by the ellipsis.
- If another thread is executing critical section (2), that part of
- the code cannot be entered, because the thread will not be able
--to increment the walking_handlers variable.  And of course
-+to increment the ``walking_handlers`` variable.  And of course
- during the visit any other thread will see a nonzero value for
--walking_handlers, as in the single-threaded code.
-+``walking_handlers``, as in the single-threaded code.
+ #include "qemu/osdep.h"
+ #include <sys/epoll.h>
++#include "qemu/lockcnt.h"
+ #include "qemu/rcu_queue.h"
+ #include "aio-posix.h"
  
- Note that it is possible for multiple concurrent accesses to delay
--the cleanup arbitrarily; in other words, for the walking_handlers
-+the cleanup arbitrarily; in other words, for the ``walking_handlers``
- counter to never become zero.  For this reason, this technique is
- more easily applicable if concurrent access to the structure is rare.
- 
- However, critical sections are easy to forget since you have to do
--them for each modification of the counter.  QemuLockCnt ensures that
-+them for each modification of the counter.  ``QemuLockCnt`` ensures that
- all modifications of the counter take the lock appropriately, and it
- can also be more efficient in two ways:
- 
- - it avoids taking the lock for many operations (for example
-   incrementing the counter while it is non-zero);
- 
--- on some platforms, one can implement QemuLockCnt to hold the lock
-+- on some platforms, one can implement ``QemuLockCnt`` to hold the lock
-   and the mutex in a single word, making the fast path no more expensive
-   than simply managing a counter using atomic operations (see
--  docs/devel/atomics.rst).  This can be very helpful if concurrent access to
-+  :doc:`atomics`).  This can be very helpful if concurrent access to
-   the data structure is expected to be rare.
- 
- 
- Using the same mutex for frees and writes can still incur some small
- inefficiencies; for example, a visit can never start if the counter is
--zero and the mutex is taken---even if the mutex is taken by a write,
-+zero and the mutex is taken -- even if the mutex is taken by a write,
- which in principle need not block a visit of the data structure.
- However, these are usually not a problem if any of the following
- assumptions are valid:
-@@ -163,27 +164,27 @@ assumptions are valid:
- - writes are frequent, but this kind of write (e.g. appending to a
-   list) has a very small critical section.
- 
--For example, QEMU uses QemuLockCnt to manage an AioContext's list of
-+For example, QEMU uses ``QemuLockCnt`` to manage an ``AioContext``'s list of
- bottom halves and file descriptor handlers.  Modifications to the list
- of file descriptor handlers are rare.  Creation of a new bottom half is
- frequent and can happen on a fast path; however: 1) it is almost never
- concurrent with a visit to the list of bottom halves; 2) it only has
--three instructions in the critical path, two assignments and a smp_wmb().
-+three instructions in the critical path, two assignments and a ``smp_wmb()``.
- 
- 
--QemuLockCnt API
-----------------
-+``QemuLockCnt`` API
-+-------------------
- 
--The QemuLockCnt API is described in include/qemu/thread.h.
-+The ``QemuLockCnt`` API is described in ``include/qemu/thread.h``.
- 
- 
--QemuLockCnt usage
-------------------
-+``QemuLockCnt`` usage
-+---------------------
- 
--This section explains the typical usage patterns for QemuLockCnt functions.
-+This section explains the typical usage patterns for ``QemuLockCnt`` functions.
- 
- Setting a variable to a non-NULL value can be done between
--qemu_lockcnt_lock and qemu_lockcnt_unlock:
-+``qemu_lockcnt_lock`` and ``qemu_lockcnt_unlock``::
- 
-     qemu_lockcnt_lock(&xyz_lockcnt);
-     if (!xyz) {
-@@ -193,8 +194,8 @@ qemu_lockcnt_lock and qemu_lockcnt_unlock:
-     }
-     qemu_lockcnt_unlock(&xyz_lockcnt);
- 
--Accessing the value can be done between qemu_lockcnt_inc and
--qemu_lockcnt_dec:
-+Accessing the value can be done between ``qemu_lockcnt_inc`` and
-+``qemu_lockcnt_dec``::
- 
-     qemu_lockcnt_inc(&xyz_lockcnt);
-     if (xyz) {
-@@ -204,11 +205,11 @@ qemu_lockcnt_dec:
-     }
-     qemu_lockcnt_dec(&xyz_lockcnt);
- 
--Freeing the object can similarly use qemu_lockcnt_lock and
--qemu_lockcnt_unlock, but you also need to ensure that the count
--is zero (i.e. there is no concurrent visit).  Because qemu_lockcnt_inc
--takes the QemuLockCnt's lock, the count cannot become non-zero while
--the object is being freed.  Freeing an object looks like this:
-+Freeing the object can similarly use ``qemu_lockcnt_lock`` and
-+``qemu_lockcnt_unlock``, but you also need to ensure that the count
-+is zero (i.e. there is no concurrent visit).  Because ``qemu_lockcnt_inc``
-+takes the ``QemuLockCnt``'s lock, the count cannot become non-zero while
-+the object is being freed.  Freeing an object looks like this::
- 
-     qemu_lockcnt_lock(&xyz_lockcnt);
-     if (!qemu_lockcnt_count(&xyz_lockcnt)) {
-@@ -218,7 +219,7 @@ the object is being freed.  Freeing an object looks like this:
-     qemu_lockcnt_unlock(&xyz_lockcnt);
- 
- If an object has to be freed right after a visit, you can combine
--the decrement, the locking and the check on count as follows:
-+the decrement, the locking and the check on count as follows::
- 
-     qemu_lockcnt_inc(&xyz_lockcnt);
-     if (xyz) {
-@@ -232,7 +233,7 @@ the decrement, the locking and the check on count as follows:
-         qemu_lockcnt_unlock(&xyz_lockcnt);
-     }
- 
--QemuLockCnt can also be used to access a list as follows:
-+``QemuLockCnt`` can also be used to access a list as follows::
- 
-     qemu_lockcnt_inc(&io_handlers_lockcnt);
-     QLIST_FOREACH_RCU(ioh, &io_handlers, pioh) {
-@@ -252,10 +253,10 @@ QemuLockCnt can also be used to access a list as follows:
-     }
- 
- Again, the RCU primitives are used because new items can be added to the
--list during the walk.  QLIST_FOREACH_RCU ensures that the processor and
-+list during the walk.  ``QLIST_FOREACH_RCU`` ensures that the processor and
- the compiler see the appropriate memory barriers.
- 
--An alternative pattern uses qemu_lockcnt_dec_if_lock:
-+An alternative pattern uses ``qemu_lockcnt_dec_if_lock``::
- 
-     qemu_lockcnt_inc(&io_handlers_lockcnt);
-     QLIST_FOREACH_SAFE_RCU(ioh, &io_handlers, next, pioh) {
-@@ -273,5 +274,5 @@ An alternative pattern uses qemu_lockcnt_dec_if_lock:
-     }
-     qemu_lockcnt_dec(&io_handlers_lockcnt);
- 
--Here you can use qemu_lockcnt_dec instead of qemu_lockcnt_dec_and_lock,
-+Here you can use ``qemu_lockcnt_dec`` instead of ``qemu_lockcnt_dec_and_lock``,
- because there is no special task to do if the count goes from 1 to 0.
+diff --git a/util/lockcnt.c b/util/lockcnt.c
+index 5da36946b1b..d07c6cc5cee 100644
+--- a/util/lockcnt.c
++++ b/util/lockcnt.c
+@@ -7,6 +7,7 @@
+  *   Paolo Bonzini <pbonzini@redhat.com>
+  */
+ #include "qemu/osdep.h"
++#include "qemu/lockcnt.h"
+ #include "qemu/thread.h"
+ #include "qemu/atomic.h"
+ #include "trace.h"
 -- 
 2.34.1
 
