@@ -4,95 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9459C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 16:08:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D1A8C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 16:08:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sezTw-0006Qc-Qu; Fri, 16 Aug 2024 12:07:16 -0400
+	id 1sezUU-0006gW-20; Fri, 16 Aug 2024 12:07:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sezTu-0006PY-PB
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 12:07:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sezTs-0006aN-Pi
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 12:07:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723824431;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jOoHG3i4BpiPV7VZMDR4olz6SKvarhtsXPpSakoNZ3U=;
- b=YwtZY/wX873TwBcUHH90BnZ/NXLgsksw9oOmmsw3wjBCu2GWRnf8hM7Ig2qtP711kA3sLK
- twg8XDeVaQLnzQWVkFprVszfprOBRp5nwEfhFLbvGxda3OoEh7+8I5TyQvT1UMk8KpZbqx
- 5as2/zdKuLVWoc33BtH7zY7kWmcQqQ8=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-xqWvy2jnMzykxSpZVA1Ziw-1; Fri, 16 Aug 2024 12:07:10 -0400
-X-MC-Unique: xqWvy2jnMzykxSpZVA1Ziw-1
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7a1d6c57f9fso1724185a.3
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 09:07:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sezUT-0006fR-2R
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 12:07:49 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ajones@ventanamicro.com>)
+ id 1sezUR-0006bq-DL
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 12:07:48 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5bed0a2ae0fso772505a12.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 09:07:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1723824465; x=1724429265; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=iM+5udRhqlu06GCwx5XhEDrXDkT/XqzKJwlAvAiH6NI=;
+ b=KofQj4CRRGEhC65L7JH0grsNB6BJYynAG/gCoYODbzTd2E+z8ka307BxZ3iy/24RCj
+ nlaGfhC4xoC6MMxPGGDvYW03vR6h8D2iaZ7MYG3zipf8JMNxmN2QIVktEfElsNh8jY02
+ RstGHdoVPv7cyEoCSrmETYgoLNu5PxxS4cPNP5mIdJmXEjrt/W17veWhpw4RAlZ22fk0
+ 6nc3FUKnrPnuIMmR/XTZsshoVefcQhTBDd9Fp0XhR6v/q1b7ntmeiUYsJeCZptve/Aur
+ Y3HXXV/E1YQwrJDSnClc3A6r4dt8rnfy15bA6VPQ7nDDPVHDYIbiWZFwC+56cQXdajmG
+ AQvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723824430; x=1724429230;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jOoHG3i4BpiPV7VZMDR4olz6SKvarhtsXPpSakoNZ3U=;
- b=qpyNaYdw8Gv4vQczcUdBRXNfzGmN9wX5DWt0t2J4As4kD5p9hIL03dEBf8j1mH3tu5
- IPPVTL/NmIkkUo57o5Xk0BreSns0SIBjzIejCdFr6+3lMIeAdjNNusytKsKTDemKb9mX
- g8qi6ikzzaFmdlj07rm/4KVtNQTT3jZZGQ+c0ADTJ7Z9M4VGg5rOQonI93689uVmWC2u
- eVy5gNXtkXv28IIdvM3wpAPL0T6jPdPIuRWmV0Nn8QBqyJvomObb9ht14U5L56EWPlft
- 9034kNacU/rjTY1835SmgAbu0S4T9Bglzwurg/gpeVErbsKm2phXKdZgx+/e4n7VQxq4
- DIlg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVhDpueDqPmawFudoN6ucK8nxLkA1OAXEVcU17i9tYqg9QgS2ogUg39B47QIb2tGVvwM1ZagBWRn3Nk@nongnu.org
-X-Gm-Message-State: AOJu0YzGQCw+aHCYwoGC5qQ10QCKH/s4uplO2rxI7PsnAY3ZbJ+83qJH
- //8iu+1RtfEmLg24ePsxg/1QbOF5JOZQKJYI46tKAqJlNudmSkmhi/ePDeE4xiqtHWvNGFICp5Z
- jtIItFOz4YmUygTM7vs3KAV6NyjUc3Dhb2W5x6WCeQoBYTxp2GGUu
-X-Received: by 2002:a05:620a:4507:b0:79f:70f:ee0b with SMTP id
- af79cd13be357-7a5069c3311mr226867785a.6.1723824429818; 
- Fri, 16 Aug 2024 09:07:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFDfRkNU/CiTJlxrCo7SNUsgf+T+CSpMRf7uJpFW2XAZ8ohPM9w08dcfxjNnNucnyMlfVi50g==
-X-Received: by 2002:a05:620a:4507:b0:79f:70f:ee0b with SMTP id
- af79cd13be357-7a5069c3311mr226863585a.6.1723824429126; 
- Fri, 16 Aug 2024 09:07:09 -0700 (PDT)
-Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
- [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7a4ff0fb469sm188151885a.107.2024.08.16.09.07.08
+ d=1e100.net; s=20230601; t=1723824465; x=1724429265;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iM+5udRhqlu06GCwx5XhEDrXDkT/XqzKJwlAvAiH6NI=;
+ b=FuGCR0hSN+q0ZbByS75yPibUjbVcA8TRnKACI6inxuIoWUkvEKj98kFY7T2CZwCINT
+ AeY7GjEVrBh4HEPmckYZE803iEr1w+n1fxd1j6ZxI6WBDkOm6RKkD9AwsP242+p7cFep
+ CjjHHiI9oGCpfND0viyiaeUDKnOWbxqE9p1EpULansYGkjXqx1Aum38EAKPDC4AJ9Uwf
+ 82UWtjybolLcV62C6bvT9CXn77yU7Vc3+ElV9Mc5fm1htYSLTiO4hg8DvvwMR6XzFyqQ
+ M2qHHP3/OV4sy77jLCclJAD3JdTRYOufFoTTW5C6N+mU1BA42sDmwHWPhTLPvYZy1fMK
+ LfuQ==
+X-Gm-Message-State: AOJu0Yxch4bEuM5aSlc8sDUa2RxWtvy0fadH5ZlESNpYRqwJikxipgAM
+ Uisgt7SbQTuk5jnzfqbI1Q08HUypkrRKvAXHTbexr3v0oZmFfMdULDGQfH77x58/y4bGcihZ48Q
+ p38M=
+X-Google-Smtp-Source: AGHT+IHGb/DnkpbwydMJMfciuD6xr/pCFhv6B+yKBJ5lJsrxoJJnDJHc2uRWPQ/z3QnugN1l+eDKCA==
+X-Received: by 2002:a17:907:746:b0:a80:f79a:10c9 with SMTP id
+ a640c23a62f3a-a83a9fbd239mr4093466b.12.1723824464596; 
+ Fri, 16 Aug 2024 09:07:44 -0700 (PDT)
+Received: from localhost (2001-1ae9-1c2-4c00-20f-c6b4-1e57-7965.ip6.tmcz.cz.
+ [2001:1ae9:1c2:4c00:20f:c6b4:1e57:7965])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-a83838c70afsm277611166b.15.2024.08.16.09.07.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 09:07:08 -0700 (PDT)
-Date: Fri, 16 Aug 2024 12:07:07 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [RFC V1 0/6] Live update: cpr-transfer
-Message-ID: <Zr95K3-Df8fHZ66w@x1n>
-References: <1719776648-435073-1-git-send-email-steven.sistare@oracle.com>
- <Zpk2bfjS1Wu2QbcO@x1n>
- <90a01b2b-6a72-475f-9232-3af73d1618cf@oracle.com>
- <Zr5lC9ryCsn9FjE2@x1n> <Zr8Q3rgoKkh1ohTG@redhat.com>
- <79cf9d92-9abe-4045-8789-4e3b13102751@oracle.com>
+ Fri, 16 Aug 2024 09:07:44 -0700 (PDT)
+From: Andrew Jones <ajones@ventanamicro.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, bmeng.cn@gmail.com,
+ dbarboza@ventanamicro.com, Anup Patel <apatel@ventanamicro.com>
+Subject: [PATCH 0/2] hw/riscv/virt: Fix PCI devices with AIA
+Date: Fri, 16 Aug 2024 18:07:44 +0200
+Message-ID: <20240816160743.220374-4-ajones@ventanamicro.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <79cf9d92-9abe-4045-8789-4e3b13102751@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=ajones@ventanamicro.com; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,70 +94,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 16, 2024 at 11:14:38AM -0400, Steven Sistare wrote:
-> On 8/16/2024 4:42 AM, Daniel P. Berrangé wrote:
-> > On Thu, Aug 15, 2024 at 04:28:59PM -0400, Peter Xu wrote:
-> > > On Sat, Jul 20, 2024 at 04:07:50PM -0400, Steven Sistare wrote:
-> > > > > > The new user-visible interfaces are:
-> > > > > >     * cpr-transfer (MigMode migration parameter)
-> > > > > >     * cpr-uri (migration parameter)
-> > > > > 
-> > > > > I wonder whether this parameter can be avoided already, maybe we can let
-> > > > > cpr-transfer depend on unix socket in -incoming, then integrate fd sharing
-> > > > > in the same channel?
-> > > > 
-> > > > You saw the answer in another thread, but I repeat it here for others benefit:
-> > > > 
-> > > >    "CPR state cannot be sent over the normal migration channel, because devices
-> > > >     and backends are created prior to reading the channel, so this mode sends
-> > > >     CPR state over a second migration channel that is not visible to the user.
-> > > >     New QEMU reads the second channel prior to creating devices or backends."
-> > > 
-> > > Today when looking again, I wonder about the other way round: can we make
-> > > the new parameter called "-incoming-cpr", working exactly the same as
-> > > "cpr-uri" qemu cmdline, but then after cpr is loaded it'll be automatically
-> > > be reused for migration incoming ports?
-> > > 
-> > > After all, cpr needs to happen already with unix sockets.  Having separate
-> > > cmdline options grants user to make the other one to be non-unix, but that
-> > > doesn't seem to buy us anything.. then it seems easier to always reuse it,
-> > > and restrict cpr-transfer to only work with unix sockets for incoming too?
-> > 
-> > IMHO we should not be adding any new command line parameter at all,
-> > and in fact we should actually deprecate the existing "-incoming",
-> > except when used with "defer".
-> > 
-> > An application managing migration should be doing all the configuration
-> > via QMP
-> 
-> This is devilish hard to implement for cpr-uri, because it must be known
-> before any backends or devices are created.  The existing preconfig phase
-> occurs too late.
-> 
-> One must define a new precreate phase which occurs before any backends or
-> devices are created.  Requires a new -precreate option and a precreate-exit
-> qmp command.
-> 
-> Untangle catch-22 dependencies amongst properties, machine, and accelerator,
-> so that migration_object_init() can be called early, so that migration
-> commands are supported in the monitor.
-> 
-> Extract monitor specific options and start a monitor (and first create
-> monitor chardevs, an exception to the "no creation" rule).
-> 
-> If/when someone tackles the "all configuration via QMP" project, I would
-> be happy to advise, but right now a cpr-uri command-line parameter is
-> a sane and simple option.
+Linux does not properly handle '#msi-cells=<0>' when searching for
+MSI controllers for PCI devices which results in the devices being
+unable to use MSIs. A patch for Linux has been sent[1] but until it,
+or something like it, is merged and in distro kernels we should stop
+adding the property. It's harmless to stop adding it since the
+absence of the property and a value of zero for the property mean
+the same thing according to the DT binding definition.
 
-So far it looks ok to me from migration POV, but that definitely sounds
-like relevant to whoever cares about this go-via-QMP-only project.   Let me
-at least copy Paolo as I know he's in that, maybe anyone else too just to
-collect feedbacks, or just to let people know one more exception might be
-needed (if no NACK will come later).
+The first patch stops adding the property by simply reverting the
+patch that started adding it and should be applied for 9.1 since
+it's a fix. The second patch allows users to bring it back by enabling
+a new machine property 'strict-dt' which is meant to be used for cases
+like these going forward. There's no rush for the second patch.
+
+[1] https://lore.kernel.org/all/20240816124957.130017-2-ajones@ventanamicro.com/
 
 Thanks,
+drew
+
+Andrew Jones (2):
+  Revert "hw/riscv/virt.c: imsics DT: add '#msi-cells'"
+  hw/riscv/virt: Introduce strict-dt
+
+ docs/system/riscv/virt.rst | 11 ++++++++++
+ hw/riscv/virt.c            | 44 +++++++++++++++++++++++++++++---------
+ include/hw/riscv/virt.h    |  1 +
+ 3 files changed, 46 insertions(+), 10 deletions(-)
 
 -- 
-Peter Xu
+2.45.2
 
 
