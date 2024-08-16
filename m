@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A750C52D7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:24:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78C5AC52D7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:24:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sewuQ-0005Sz-WB; Fri, 16 Aug 2024 09:22:27 -0400
+	id 1sewuQ-0005Qt-Bl; Fri, 16 Aug 2024 09:22:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sewuM-0005Bi-1Z
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:22 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1sewuK-000597-MC
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:20 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sewuJ-0007kL-Fo
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:21 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3687ea0521cso1269392f8f.1
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:22:18 -0700 (PDT)
+ id 1sewuH-0007k0-7k
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:20 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4281faefea9so13831155e9.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:22:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723814537; x=1724419337; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723814535; x=1724419335; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ePF/o/hQSoaSIDuJhqV/fjOlqlj+BNS3IyHKpKM6oQg=;
- b=mrqVp0OBcAe4Hn1oFWMxipmza+iw5QK4XAYyViPj8Zsck1o8LEqSTZij4kGPkX90yj
- MoEM/y+JrLduP8JKfWyAx6sksz6xYc3+lkxB7/qFfAEMcYOeNmlkBRueoQuW5fwCpmYc
- BkTR020xNhH2kHO1dO5DEeAht1mAHnDhaRNRAyDmSLV2cXLoMaXjo2VenG844KpEzLZD
- vgOdn/s3DXNtLnNSnwHHL9E3vkmnmWLHyWCcEIiM4jAbxuapDlRJBp1LkbTstZNpGSzB
- njm3SHDEEsphQfYGWetUQoTlcRoLVxVNyn2Op946Psj9QKOyHwoiR5PV8XEjXJDa0JKj
- D1Lw==
+ bh=+qDfeY+CsvBUJu7CFKOtFh4EY2RJKFqnGcNsx1NoFx4=;
+ b=lLNr/K3QeQ7ARwo1nnHRnMBfEQlxaklE85pxr8pvnjvvy0uZlsI2XHCHNi5rqmc86v
+ p4ptX5iUDU8y/GQCngm2GnnwyZmOiPWadrhUVJGaUHHno/luJ/sJ3fUsRjGChozwydLD
+ MyN128P2EfL0W0LC8vNr/kJenDTHv9nkjHzKGr5BnyG0B2iXz2oJQVQA8psXcSYwTXj/
+ 6Z4c0RENxm3JZDf4cRZq/a7SpDECAVjU2O86xi4xguqwTQd0KWt9trH9/5QCOptAGbtl
+ dvNx0Y+xp+JlAvC9EJccwazEAdxZ1VVEt5Z9huS7qVMCGP0aFU+I+z6oMehyRbzpDQZr
+ cNRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723814537; x=1724419337;
+ d=1e100.net; s=20230601; t=1723814535; x=1724419335;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ePF/o/hQSoaSIDuJhqV/fjOlqlj+BNS3IyHKpKM6oQg=;
- b=XpYpxeMauC0YCoH1v0SoxxAYEKYb1wRe2e+6bUUkvj3ayvMsDGC8Bh6fb/POeykUZI
- sIf9ySNJQgHE+yZHaLuxbe/klfhhIRcCAd3f8HzOZiSdpLkRsbK7cuOAaQK46aENkvDV
- cmr0Gpj4Qf/kUZsHXmH6UxaotpobVX+jGlTGGP2LEpLrpPK2qZ4DF/V5rIT/pF43y9q6
- QATxmVaoCDV6uj4C2fx6d3uKSh/sFdIz+xxT5Sn2ViIY8uca410G+Gs0AbxKPtU838Ha
- 0lzbdtiX4AMSvRkk2+1M5pzZDYXD+SDtdexkt6yfJGrg8CCLPBufIoZmTeZS2xnyuGKL
- ioRA==
-X-Gm-Message-State: AOJu0Yyur1tk8Fd/ra8HYQG8eYcTkFx0coAtdCK9/cdcwxy91gksQE60
- F5ikkl5z3kkNOLYQLW8kPeVHob0Q50IV+JIxYsbayr5cOmxmgkYsCE/sLHuJofORs/lLKH2T1xx
- N
-X-Google-Smtp-Source: AGHT+IFoOGB36cUl+ANrXfK2uA5RyEUDPxaEqgm5wAdCd3EuuT4+mcUtxP9lKqQVSt7kurYPIY8uMA==
-X-Received: by 2002:a5d:4e42:0:b0:371:8eea:24b7 with SMTP id
- ffacd0b85a97d-371946a04e6mr2246256f8f.50.1723814537151; 
- Fri, 16 Aug 2024 06:22:17 -0700 (PDT)
+ bh=+qDfeY+CsvBUJu7CFKOtFh4EY2RJKFqnGcNsx1NoFx4=;
+ b=Fs9w4JpsAhfSIa7Za3XiRkl3gjuOyRScIrtFqbREsRONZrP6TcYBlOoxXI2uET2/ig
+ acM17I7StlfIg97E339aWQR2wjepxPf9l78fPXu3rtVS6yd63wYKDb8EqUkLqlarDqrV
+ N7DLyH9puCmimVEQWgm3p2Zms3cslBvPzclI3Uc+6e2e8pVctLdC5DDFhlcz97Z/qOZV
+ 38HDrvSwCHhJosrDTcmfqvjpK6zKtaGvbN/ruxBjTHPgEAhtbDeeNxQ2QjKz8oBmchiP
+ J+LblCfevi3b39KVfTJA7kshQp3wAsK0j+LILJ/qpcTZlJYAL5cRkMJAbj9ZKseuGLct
+ z50A==
+X-Gm-Message-State: AOJu0YzwZvsPEY3lWPuYlBJG/XDefxLerisb9lKMwBfqv88OB1yxQGLI
+ ggOXBRPCAxSF1p8BJ6TMcSQfwJwAOCX/QSvNi+QSDlhK6o5EKlXnqgrQwMNWPu7rtY3UlP3lz1k
+ Y
+X-Google-Smtp-Source: AGHT+IHD9HdZOmNwrGd38VGkIRMdVdizqRIEkJxVJwu/k/RfR7I6U6FI3bkIzZzQdErliciSB8959g==
+X-Received: by 2002:adf:ef4b:0:b0:368:3ee5:e3e1 with SMTP id
+ ffacd0b85a97d-37194314e6emr2086023f8f.7.1723814534888; 
+ Fri, 16 Aug 2024 06:22:14 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-371898ab855sm3631948f8f.105.2024.08.16.06.22.16
+ ffacd0b85a97d-371898ab855sm3631948f8f.105.2024.08.16.06.22.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 06:22:16 -0700 (PDT)
+ Fri, 16 Aug 2024 06:22:14 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 4/7] docs/devel/multiple-iothreads: Convert to rST format
-Date: Fri, 16 Aug 2024 14:22:09 +0100
-Message-Id: <20240816132212.3602106-5-peter.maydell@linaro.org>
+Subject: [PATCH 1/7] docs/devel/blkdebug: Convert to rST format
+Date: Fri, 16 Aug 2024 14:22:06 +0100
+Message-Id: <20240816132212.3602106-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20240816132212.3602106-1-peter.maydell@linaro.org>
 References: <20240816132212.3602106-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,307 +95,394 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert docs/devel/multiple-iothreads.txt to rST format.
+Convert blkdebug.txt to rST format.  We put it into index-build.rst
+because it falls under the "test" part of "QEMU Build and Test
+System".
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/devel/index-internals.rst    |   1 +
- docs/devel/multiple-iothreads.rst | 139 ++++++++++++++++++++++++++++++
- docs/devel/multiple-iothreads.txt | 130 ----------------------------
- 3 files changed, 140 insertions(+), 130 deletions(-)
- create mode 100644 docs/devel/multiple-iothreads.rst
- delete mode 100644 docs/devel/multiple-iothreads.txt
+At least, index-build seemed the most plausible home to me...
+---
+ MAINTAINERS                |   1 +
+ docs/devel/blkdebug.rst    | 177 +++++++++++++++++++++++++++++++++++++
+ docs/devel/blkdebug.txt    | 162 ---------------------------------
+ docs/devel/index-build.rst |   1 +
+ 4 files changed, 179 insertions(+), 162 deletions(-)
+ create mode 100644 docs/devel/blkdebug.rst
+ delete mode 100644 docs/devel/blkdebug.txt
 
-diff --git a/docs/devel/index-internals.rst b/docs/devel/index-internals.rst
-index 4ac7725d728..88fa0e9450d 100644
---- a/docs/devel/index-internals.rst
-+++ b/docs/devel/index-internals.rst
-@@ -21,3 +21,4 @@ Details about QEMU's various subsystems including how to add features to them.
-    writing-monitor-commands
-    virtio-backends
-    crypto
-+   multiple-iothreads
-diff --git a/docs/devel/multiple-iothreads.rst b/docs/devel/multiple-iothreads.rst
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 3584d6a6c6d..ca0a5c731f5 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4015,6 +4015,7 @@ M: Hanna Reitz <hreitz@redhat.com>
+ L: qemu-block@nongnu.org
+ S: Supported
+ F: block/blkdebug.c
++F: docs/devel/blkdebug.rst
+ 
+ vpc
+ M: Kevin Wolf <kwolf@redhat.com>
+diff --git a/docs/devel/blkdebug.rst b/docs/devel/blkdebug.rst
 new file mode 100644
-index 00000000000..d1f3fc4510a
+index 00000000000..63887c9aa9c
 --- /dev/null
-+++ b/docs/devel/multiple-iothreads.rst
-@@ -0,0 +1,139 @@
-+Using Multiple ``IOThread``\ s
-+==============================
++++ b/docs/devel/blkdebug.rst
+@@ -0,0 +1,177 @@
++Block I/O error injection using ``blkdebug``
++============================================
 +
 +..
-+   Copyright (c) 2014-2017 Red Hat Inc.
++   Copyright (C) 2014-2015 Red Hat Inc
 +
 +   This work is licensed under the terms of the GNU GPL, version 2 or later.  See
 +   the COPYING file in the top-level directory.
 +
++The ``blkdebug`` block driver is a rule-based error injection engine.  It can be
++used to exercise error code paths in block drivers including ``ENOSPC`` (out of
++space) and ``EIO``.
 +
-+This document explains the ``IOThread`` feature and how to write code that runs
-+outside the BQL.
++This document gives an overview of the features available in ``blkdebug``.
 +
-+The main loop and ``IOThread``\ s
-+---------------------------------
-+QEMU is an event-driven program that can do several things at once using an
-+event loop.  The VNC server and the QMP monitor are both processed from the
-+same event loop, which monitors their file descriptors until they become
-+readable and then invokes a callback.
++Background
++----------
++Block drivers have many error code paths that handle I/O errors.  Image formats
++are especially complex since metadata I/O errors during cluster allocation or
++while updating tables happen halfway through request processing and require
++discipline to keep image files consistent.
 +
-+The default event loop is called the main loop (see ``main-loop.c``).  It is
-+possible to create additional event loop threads using
-+``-object iothread,id=my-iothread``.
++Error injection allows test cases to trigger I/O errors at specific points.
++This way, all error paths can be tested to make sure they are correct.
 +
-+Side note: The main loop and ``IOThread`` are both event loops but their code is
-+not shared completely.  Sometimes it is useful to remember that although they
-+are conceptually similar they are currently not interchangeable.
++Rules
++-----
++The ``blkdebug`` block driver takes a list of "rules" that tell the error injection
++engine when to fail an I/O request.
 +
-+Why ``IOThread``\ s are useful
-+------------------------------
-+``IOThread``\ s allow the user to control the placement of work.  The main loop is a
-+scalability bottleneck on hosts with many CPUs.  Work can be spread across
-+several ``IOThread``\ s instead of just one main loop.  When set up correctly this
-+can improve I/O latency and reduce jitter seen by the guest.
++Each I/O request is evaluated against the rules.  If a rule matches the request
++then its "action" is executed.
 +
-+The main loop is also deeply associated with the BQL, which is a
-+scalability bottleneck in itself.  vCPU threads and the main loop use the BQL
-+to serialize execution of QEMU code.  This mutex is necessary because a lot of
-+QEMU's code historically was not thread-safe.
++Rules can be placed in a configuration file; the configuration file
++follows the same .ini-like format used by QEMU's ``-readconfig`` option, and
++each section of the file represents a rule.
 +
-+The fact that all I/O processing is done in a single main loop and that the
-+BQL is contended by all vCPU threads and the main loop explain
-+why it is desirable to place work into ``IOThread``\ s.
++The following configuration file defines a single rule::
 +
-+The experimental ``virtio-blk`` data-plane implementation has been benchmarked and
-+shows these effects:
-+ftp://public.dhe.ibm.com/linux/pdfs/KVM_Virtualized_IO_Performance_Paper.pdf
++  $ cat blkdebug.conf
++  [inject-error]
++  event = "read_aio"
++  errno = "28"
 +
-+.. _how-to-program:
++This rule fails all aio read requests with ``ENOSPC`` (28).  Note that the errno
++value depends on the host.  On Linux, see
++``/usr/include/asm-generic/errno-base.h`` for errno values.
 +
-+How to program for ``IOThread``\ s
-+----------------------------------
-+The main difference between legacy code and new code that can run in an
-+``IOThread`` is dealing explicitly with the event loop object, ``AioContext``
-+(see ``include/block/aio.h``).  Code that only works in the main loop
-+implicitly uses the main loop's ``AioContext``.  Code that supports running
-+in ``IOThread``\ s must be aware of its ``AioContext``.
++Invoke QEMU as follows::
 +
-+AioContext supports the following services:
-+ * File descriptor monitoring (read/write/error on POSIX hosts)
-+ * Event notifiers (inter-thread signalling)
-+ * Timers
-+ * Bottom Halves (BH) deferred callbacks
++  $ qemu-system-x86_64
++        -drive if=none,cache=none,file=blkdebug:blkdebug.conf:test.img,id=drive0 \
++        -device virtio-blk-pci,drive=drive0,id=virtio-blk-pci0
 +
-+There are several old APIs that use the main loop AioContext:
-+ * LEGACY ``qemu_aio_set_fd_handler()`` - monitor a file descriptor
-+ * LEGACY ``qemu_aio_set_event_notifier()`` - monitor an event notifier
-+ * LEGACY ``timer_new_ms()`` - create a timer
-+ * LEGACY ``qemu_bh_new()`` - create a BH
-+ * LEGACY ``qemu_bh_new_guarded()`` - create a BH with a device re-entrancy guard
-+ * LEGACY ``qemu_aio_wait()`` - run an event loop iteration
++Rules support the following attributes:
 +
-+Since they implicitly work on the main loop they cannot be used in code that
-+runs in an ``IOThread``.  They might cause a crash or deadlock if called from an
-+``IOThread`` since the BQL is not held.
++``event``
++  which type of operation to match (e.g. ``read_aio``, ``write_aio``,
++  ``flush_to_os``, ``flush_to_disk``).  See `Events`_ for
++  information on events.
 +
-+Instead, use the ``AioContext`` functions directly (see ``include/block/aio.h``):
-+ * ``aio_set_fd_handler()`` - monitor a file descriptor
-+ * ``aio_set_event_notifier()`` - monitor an event notifier
-+ * ``aio_timer_new()`` - create a timer
-+ * ``aio_bh_new()`` - create a BH
-+ * ``aio_bh_new_guarded()`` - create a BH with a device re-entrancy guard
-+ * ``aio_poll()`` - run an event loop iteration
++``state``
++  (optional) the engine must be in this state number in order for this
++  rule to match.  See `State transitions`_ for information
++  on states.
 +
-+The ``qemu_bh_new_guarded``/``aio_bh_new_guarded`` APIs accept a
-+``MemReentrancyGuard``
-+argument, which is used to check for and prevent re-entrancy problems. For
-+BHs associated with devices, the reentrancy-guard is contained in the
-+corresponding ``DeviceState`` and named ``mem_reentrancy_guard``.
++``errno``
++  the numeric errno value to return when a request matches this rule.
++  The errno values depend on the host since the numeric values are not
++  standardized in the POSIX specification.
 +
-+The ``AioContext`` can be obtained from the ``IOThread`` using
-+``iothread_get_aio_context()`` or for the main loop using
-+``qemu_get_aio_context()``. Code that takes an ``AioContext`` argument
-+works both in ``IOThread``\ s or the main loop, depending on which ``AioContext``
-+instance the caller passes in.
++``sector``
++  (optional) a sector number that the request must overlap in order to
++  match this rule
 +
-+How to synchronize with an ``IOThread``
-+---------------------------------------
-+Variables that can be accessed by multiple threads require some form of
-+synchronization such as ``qemu_mutex_lock()``, ``rcu_read_lock()``, etc.
++``once``
++  (optional, default ``off``) only execute this action on the first
++  matching request
 +
-+``AioContext`` functions like ``aio_set_fd_handler()``,
-+``aio_set_event_notifier()``, ``aio_bh_new()``, and ``aio_timer_new()``
-+are thread-safe. They can be used to trigger activity in an ``IOThread``.
++``immediately``
++  (optional, default ``off``) return a NULL ``BlockAIOCB``
++  pointer and fail without an errno instead.  This
++  exercises the code path where ``BlockAIOCB`` fails and the
++  caller's ``BlockCompletionFunc`` is not invoked.
 +
-+Side note: the best way to schedule a function call across threads is to call
-+``aio_bh_schedule_oneshot()``.
++Events
++------
++Block drivers provide information about the type of I/O request they are about
++to make so rules can match specific types of requests.  For example, the ``qcow2``
++block driver tells ``blkdebug`` when it accesses the L1 table so rules can match
++only L1 table accesses and not other metadata or guest data requests.
 +
-+The main loop thread can wait synchronously for a condition using
-+``AIO_WAIT_WHILE()``.
++The core events are:
 +
-+``AioContext`` and the block layer
-+----------------------------------
-+The ``AioContext`` originates from the QEMU block layer, even though nowadays
-+``AioContext`` is a generic event loop that can be used by any QEMU subsystem.
++``read_aio``
++  guest data read
 +
-+The block layer has support for ``AioContext`` integrated.  Each
-+``BlockDriverState`` is associated with an ``AioContext`` using
-+``bdrv_try_change_aio_context()`` and ``bdrv_get_aio_context()``.
-+This allows block layer code to process I/O inside the
-+right ``AioContext``.  Other subsystems may wish to follow a similar approach.
++``write_aio``
++  guest data write
 +
-+Block layer code must therefore expect to run in an ``IOThread`` and avoid using
-+old APIs that implicitly use the main loop.  See
-+`How to program for IOThreads`_ for information on how to do that.
++``flush_to_os``
++  write out unwritten block driver state (e.g. cached metadata)
 +
-+Code running in the monitor typically needs to ensure that past
-+requests from the guest are completed.  When a block device is running
-+in an ``IOThread``, the ``IOThread`` can also process requests from the guest
-+(via ioeventfd).  To achieve both objects, wrap the code between
-+``bdrv_drained_begin()`` and ``bdrv_drained_end()``, thus creating a "drained
-+section".
++``flush_to_disk``
++  flush the host block device's disk cache
 +
-+Long-running jobs (usually in the form of coroutines) are often scheduled in
-+the ``BlockDriverState``'s ``AioContext``.  The functions
-+``bdrv_add``/``remove_aio_context_notifier``, or alternatively
-+``blk_add``/``remove_aio_context_notifier`` if you use ``BlockBackends``,
-+can be used to get a notification whenever ``bdrv_try_change_aio_context()``
-+moves a ``BlockDriverState`` to a different ``AioContext``.
-diff --git a/docs/devel/multiple-iothreads.txt b/docs/devel/multiple-iothreads.txt
++See ``qapi/block-core.json:BlkdebugEvent`` for the full list of events.
++You may need to grep block driver source code to understand the
++meaning of specific events.
++
++State transitions
++-----------------
++There are cases where more power is needed to match a particular I/O request in
++a longer sequence of requests.  For example::
++
++  write_aio
++  flush_to_disk
++  write_aio
++
++How do we match the 2nd ``write_aio`` but not the first?  This is where state
++transitions come in.
++
++The error injection engine has an integer called the "state" that always starts
++initialized to 1.  The state integer is internal to ``blkdebug`` and cannot be
++observed from outside but rules can interact with it for powerful matching
++behavior.
++
++Rules can be conditional on the current state and they can transition to a new
++state.
++
++When a rule's "state" attribute is non-zero then the current state must equal
++the attribute in order for the rule to match.
++
++For example, to match the 2nd write_aio::
++
++  [set-state]
++  event = "write_aio"
++  state = "1"
++  new_state = "2"
++
++  [inject-error]
++  event = "write_aio"
++  state = "2"
++  errno = "5"
++
++The first ``write_aio`` request matches the ``set-state`` rule and transitions from
++state 1 to state 2.  Once state 2 has been entered, the ``set-state`` rule no
++longer matches since it requires state 1.  But the ``inject-error`` rule now
++matches the next ``write_aio`` request and injects ``EIO`` (5).
++
++State transition rules support the following attributes:
++
++``event``
++  which type of operation to match (e.g. ``read_aio``, ``write_aio``,
++  ``flush_to_os`, ``flush_to_disk``).  See `Events`_ for
++  information on events.
++
++``state``
++  (optional) the engine must be in this state number in order for this
++  rule to match
++
++``new_state``
++  transition to this state number
++
++Suspend and resume
++------------------
++Exercising code paths in block drivers may require specific ordering amongst
++concurrent requests.  The "breakpoint" feature allows requests to be halted on
++a ``blkdebug`` event and resumed later.  This makes it possible to achieve
++deterministic ordering when multiple requests are in flight.
++
++Breakpoints on ``blkdebug`` events are associated with a user-defined ``tag`` string.
++This tag serves as an identifier by which the request can be resumed at a later
++point.
++
++See the ``qemu-io(1)`` ``break``, ``resume``, ``remove_break``, and ``wait_break``
++commands for details.
+diff --git a/docs/devel/blkdebug.txt b/docs/devel/blkdebug.txt
 deleted file mode 100644
-index de85767b124..00000000000
---- a/docs/devel/multiple-iothreads.txt
+index 0b0c128d356..00000000000
+--- a/docs/devel/blkdebug.txt
 +++ /dev/null
-@@ -1,130 +0,0 @@
--Copyright (c) 2014-2017 Red Hat Inc.
+@@ -1,162 +0,0 @@
+-Block I/O error injection using blkdebug
+-----------------------------------------
+-Copyright (C) 2014-2015 Red Hat Inc
 -
 -This work is licensed under the terms of the GNU GPL, version 2 or later.  See
 -the COPYING file in the top-level directory.
 -
+-The blkdebug block driver is a rule-based error injection engine.  It can be
+-used to exercise error code paths in block drivers including ENOSPC (out of
+-space) and EIO.
 -
--This document explains the IOThread feature and how to write code that runs
--outside the BQL.
+-This document gives an overview of the features available in blkdebug.
 -
--The main loop and IOThreads
-----------------------------
--QEMU is an event-driven program that can do several things at once using an
--event loop.  The VNC server and the QMP monitor are both processed from the
--same event loop, which monitors their file descriptors until they become
--readable and then invokes a callback.
+-Background
+-----------
+-Block drivers have many error code paths that handle I/O errors.  Image formats
+-are especially complex since metadata I/O errors during cluster allocation or
+-while updating tables happen halfway through request processing and require
+-discipline to keep image files consistent.
 -
--The default event loop is called the main loop (see main-loop.c).  It is
--possible to create additional event loop threads using -object
--iothread,id=my-iothread.
+-Error injection allows test cases to trigger I/O errors at specific points.
+-This way, all error paths can be tested to make sure they are correct.
 -
--Side note: The main loop and IOThread are both event loops but their code is
--not shared completely.  Sometimes it is useful to remember that although they
--are conceptually similar they are currently not interchangeable.
+-Rules
+------
+-The blkdebug block driver takes a list of "rules" that tell the error injection
+-engine when to fail an I/O request.
 -
--Why IOThreads are useful
--------------------------
--IOThreads allow the user to control the placement of work.  The main loop is a
--scalability bottleneck on hosts with many CPUs.  Work can be spread across
--several IOThreads instead of just one main loop.  When set up correctly this
--can improve I/O latency and reduce jitter seen by the guest.
+-Each I/O request is evaluated against the rules.  If a rule matches the request
+-then its "action" is executed.
 -
--The main loop is also deeply associated with the BQL, which is a
--scalability bottleneck in itself.  vCPU threads and the main loop use the BQL
--to serialize execution of QEMU code.  This mutex is necessary because a lot of
--QEMU's code historically was not thread-safe.
+-Rules can be placed in a configuration file; the configuration file
+-follows the same .ini-like format used by QEMU's -readconfig option, and
+-each section of the file represents a rule.
 -
--The fact that all I/O processing is done in a single main loop and that the
--BQL is contended by all vCPU threads and the main loop explain
--why it is desirable to place work into IOThreads.
+-The following configuration file defines a single rule:
 -
--The experimental virtio-blk data-plane implementation has been benchmarked and
--shows these effects:
--ftp://public.dhe.ibm.com/linux/pdfs/KVM_Virtualized_IO_Performance_Paper.pdf
+-  $ cat blkdebug.conf
+-  [inject-error]
+-  event = "read_aio"
+-  errno = "28"
 -
--How to program for IOThreads
------------------------------
--The main difference between legacy code and new code that can run in an
--IOThread is dealing explicitly with the event loop object, AioContext
--(see include/block/aio.h).  Code that only works in the main loop
--implicitly uses the main loop's AioContext.  Code that supports running
--in IOThreads must be aware of its AioContext.
+-This rule fails all aio read requests with ENOSPC (28).  Note that the errno
+-value depends on the host.  On Linux, see
+-/usr/include/asm-generic/errno-base.h for errno values.
 -
--AioContext supports the following services:
-- * File descriptor monitoring (read/write/error on POSIX hosts)
-- * Event notifiers (inter-thread signalling)
-- * Timers
-- * Bottom Halves (BH) deferred callbacks
+-Invoke QEMU as follows:
 -
--There are several old APIs that use the main loop AioContext:
-- * LEGACY qemu_aio_set_fd_handler() - monitor a file descriptor
-- * LEGACY qemu_aio_set_event_notifier() - monitor an event notifier
-- * LEGACY timer_new_ms() - create a timer
-- * LEGACY qemu_bh_new() - create a BH
-- * LEGACY qemu_bh_new_guarded() - create a BH with a device re-entrancy guard
-- * LEGACY qemu_aio_wait() - run an event loop iteration
+-  $ qemu-system-x86_64
+-        -drive if=none,cache=none,file=blkdebug:blkdebug.conf:test.img,id=drive0 \
+-        -device virtio-blk-pci,drive=drive0,id=virtio-blk-pci0
 -
--Since they implicitly work on the main loop they cannot be used in code that
--runs in an IOThread.  They might cause a crash or deadlock if called from an
--IOThread since the BQL is not held.
+-Rules support the following attributes:
 -
--Instead, use the AioContext functions directly (see include/block/aio.h):
-- * aio_set_fd_handler() - monitor a file descriptor
-- * aio_set_event_notifier() - monitor an event notifier
-- * aio_timer_new() - create a timer
-- * aio_bh_new() - create a BH
-- * aio_bh_new_guarded() - create a BH with a device re-entrancy guard
-- * aio_poll() - run an event loop iteration
+-  event - which type of operation to match (e.g. read_aio, write_aio,
+-          flush_to_os, flush_to_disk).  See the "Events" section for
+-          information on events.
 -
--The qemu_bh_new_guarded/aio_bh_new_guarded APIs accept a "MemReentrancyGuard"
--argument, which is used to check for and prevent re-entrancy problems. For
--BHs associated with devices, the reentrancy-guard is contained in the
--corresponding DeviceState and named "mem_reentrancy_guard".
+-  state - (optional) the engine must be in this state number in order for this
+-          rule to match.  See the "State transitions" section for information
+-          on states.
 -
--The AioContext can be obtained from the IOThread using
--iothread_get_aio_context() or for the main loop using qemu_get_aio_context().
--Code that takes an AioContext argument works both in IOThreads or the main
--loop, depending on which AioContext instance the caller passes in.
+-  errno - the numeric errno value to return when a request matches this rule.
+-          The errno values depend on the host since the numeric values are not
+-          standardized in the POSIX specification.
 -
--How to synchronize with an IOThread
-------------------------------------
--Variables that can be accessed by multiple threads require some form of
--synchronization such as qemu_mutex_lock(), rcu_read_lock(), etc.
+-  sector - (optional) a sector number that the request must overlap in order to
+-           match this rule
 -
--AioContext functions like aio_set_fd_handler(), aio_set_event_notifier(),
--aio_bh_new(), and aio_timer_new() are thread-safe. They can be used to trigger
--activity in an IOThread.
+-  once - (optional, default "off") only execute this action on the first
+-         matching request
 -
--Side note: the best way to schedule a function call across threads is to call
--aio_bh_schedule_oneshot().
+-  immediately - (optional, default "off") return a NULL BlockAIOCB
+-                pointer and fail without an errno instead.  This
+-                exercises the code path where BlockAIOCB fails and the
+-                caller's BlockCompletionFunc is not invoked.
 -
--The main loop thread can wait synchronously for a condition using
--AIO_WAIT_WHILE().
+-Events
+-------
+-Block drivers provide information about the type of I/O request they are about
+-to make so rules can match specific types of requests.  For example, the qcow2
+-block driver tells blkdebug when it accesses the L1 table so rules can match
+-only L1 table accesses and not other metadata or guest data requests.
 -
--AioContext and the block layer
--------------------------------
--The AioContext originates from the QEMU block layer, even though nowadays
--AioContext is a generic event loop that can be used by any QEMU subsystem.
+-The core events are:
 -
--The block layer has support for AioContext integrated.  Each BlockDriverState
--is associated with an AioContext using bdrv_try_change_aio_context() and
--bdrv_get_aio_context().  This allows block layer code to process I/O inside the
--right AioContext.  Other subsystems may wish to follow a similar approach.
+-  read_aio - guest data read
 -
--Block layer code must therefore expect to run in an IOThread and avoid using
--old APIs that implicitly use the main loop.  See the "How to program for
--IOThreads" above for information on how to do that.
+-  write_aio - guest data write
 -
--Code running in the monitor typically needs to ensure that past
--requests from the guest are completed.  When a block device is running
--in an IOThread, the IOThread can also process requests from the guest
--(via ioeventfd).  To achieve both objects, wrap the code between
--bdrv_drained_begin() and bdrv_drained_end(), thus creating a "drained
--section".
+-  flush_to_os - write out unwritten block driver state (e.g. cached metadata)
 -
--Long-running jobs (usually in the form of coroutines) are often scheduled in
--the BlockDriverState's AioContext.  The functions
--bdrv_add/remove_aio_context_notifier, or alternatively
--blk_add/remove_aio_context_notifier if you use BlockBackends, can be used to
--get a notification whenever bdrv_try_change_aio_context() moves a
--BlockDriverState to a different AioContext.
+-  flush_to_disk - flush the host block device's disk cache
+-
+-See qapi/block-core.json:BlkdebugEvent for the full list of events.
+-You may need to grep block driver source code to understand the
+-meaning of specific events.
+-
+-State transitions
+------------------
+-There are cases where more power is needed to match a particular I/O request in
+-a longer sequence of requests.  For example:
+-
+-  write_aio
+-  flush_to_disk
+-  write_aio
+-
+-How do we match the 2nd write_aio but not the first?  This is where state
+-transitions come in.
+-
+-The error injection engine has an integer called the "state" that always starts
+-initialized to 1.  The state integer is internal to blkdebug and cannot be
+-observed from outside but rules can interact with it for powerful matching
+-behavior.
+-
+-Rules can be conditional on the current state and they can transition to a new
+-state.
+-
+-When a rule's "state" attribute is non-zero then the current state must equal
+-the attribute in order for the rule to match.
+-
+-For example, to match the 2nd write_aio:
+-
+-  [set-state]
+-  event = "write_aio"
+-  state = "1"
+-  new_state = "2"
+-
+-  [inject-error]
+-  event = "write_aio"
+-  state = "2"
+-  errno = "5"
+-
+-The first write_aio request matches the set-state rule and transitions from
+-state 1 to state 2.  Once state 2 has been entered, the set-state rule no
+-longer matches since it requires state 1.  But the inject-error rule now
+-matches the next write_aio request and injects EIO (5).
+-
+-State transition rules support the following attributes:
+-
+-  event - which type of operation to match (e.g. read_aio, write_aio,
+-          flush_to_os, flush_to_disk).  See the "Events" section for
+-          information on events.
+-
+-  state - (optional) the engine must be in this state number in order for this
+-          rule to match
+-
+-  new_state - transition to this state number
+-
+-Suspend and resume
+-------------------
+-Exercising code paths in block drivers may require specific ordering amongst
+-concurrent requests.  The "breakpoint" feature allows requests to be halted on
+-a blkdebug event and resumed later.  This makes it possible to achieve
+-deterministic ordering when multiple requests are in flight.
+-
+-Breakpoints on blkdebug events are associated with a user-defined "tag" string.
+-This tag serves as an identifier by which the request can be resumed at a later
+-point.
+-
+-See the qemu-io(1) break, resume, remove_break, and wait_break commands for
+-details.
+diff --git a/docs/devel/index-build.rst b/docs/devel/index-build.rst
+index 90b406ca0ed..3a912aefcfa 100644
+--- a/docs/devel/index-build.rst
++++ b/docs/devel/index-build.rst
+@@ -18,3 +18,4 @@ the basics if you are adding new files and targets to the build.
+    qapi-code-gen
+    fuzzing
+    control-flow-integrity
++   blkdebug
 -- 
 2.34.1
 
