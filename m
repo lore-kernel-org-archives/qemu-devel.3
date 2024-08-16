@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F284DC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 08:19:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B0E8C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 08:21:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sesBC-0007YX-Vq; Fri, 16 Aug 2024 04:19:27 -0400
+	id 1sesDA-0005Zn-GG; Fri, 16 Aug 2024 04:21:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sesBB-0007Rz-9Q
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:19:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sesB9-0003bs-MS
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:19:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723796363;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MjGlFvMeZNehK1w5wtaKUP74GiBi92a6em/Iv+rrTAo=;
- b=ambEKBrodhL2Lghw2u3J80uFCQfag5yPFIKpquoFdgfkSw90Ay8tFk71TZ2uuUzg9tf0Jy
- ZF0rE59fB5hFc0SdO6veDh3CgadIUCOzx/rv8PDH6zUQeoZqGN1zKDQrIkhhuKgrem9fgK
- t8cFrOTVXS5KdxuVE1DASie+CtNElMQ=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-74PMUcoeMm2sms9D4Ad6WA-1; Fri, 16 Aug 2024 04:19:17 -0400
-X-MC-Unique: 74PMUcoeMm2sms9D4Ad6WA-1
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-2ef23b417bcso13663901fa.0
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 01:19:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sesD6-0005Z7-GO
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:21:25 -0400
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1sesD3-0003x5-UQ
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:21:24 -0400
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-7093d565310so1354854a34.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 01:21:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1723796479; x=1724401279;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jF5eh1eT8NvxZZQ/+oJZgWfMSXYg9b/XxIhqvm/GgKc=;
+ b=ISF9EpJWGhJ0MeF8oXixt/iQAOmGKzvpYULf9IdCtAyWrcMraaVquGhOsML4PY/3aU
+ f0Tc/rQWkJ3UDKhTLM83sWhLgKwLNCPB3juquoZSP3abvkKoMR2lBbd7XqOPbI4j3wE8
+ 5xeJrhwIcJjCGdOLIIwl8cGyMhnZniPUrcPjCfJvFyhAPTjXl0G/WENyxSzooMRmS0GV
+ 8VMXcv7onxo4urpoEux5+qu97nqHrNt8Pe0iY5OIMxTOeR2xB39WUyyOZ4nHP6pGx3Ne
+ BQYk6yBa5w0tx5V9D+0howYDxK7AvY0PdKf0pOfuUJRI/0fnXDM8lzWDRq+IY4JeVMYd
+ N+UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723796356; x=1724401156;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1723796479; x=1724401279;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MjGlFvMeZNehK1w5wtaKUP74GiBi92a6em/Iv+rrTAo=;
- b=fr9JN1k5PVebIl7+ZWtJNVJaP+bloAudpEktweZ5bc2fAONKCFTjh5g1fsteT48Lsr
- cr6yotObXDFf8zTmfkbg22TXeqF8nNgsU+tmBlBu0LlXznNOTX12CRpNlY019illqkqN
- zdeAaJko/HBQOFUzlyD3miqnaNOBol4sl3MLkI3UG1nVdNAiejzp7UFigp3ns55XFHnN
- iudT6VJmzvHWCTORvyvqLdey8YhOyjDnY4impQU8RoanOM2qXp5cjowGvrpff+nLe1hx
- G03K5fK1hbaDmDcR0tW6YHRSPF4ndi0294dKn9lqJHztLR5eD6EFFuRifLqEBkiucMH2
- YTQw==
-X-Gm-Message-State: AOJu0YzY4jKCQRzYFYoeOgKmnk3DJgdK8/RbjghJbhItiYzpYBtXRFbr
- c7sbL9EXcBnO7IVseVLY7zwBzDE79nPxuBiDcV04BUu7gwv7lD6nXq3cIuVo+N7G+QEldGI561s
- ATXLUijVNVOlfoAVCwkdIGHM6ISTMet4ZglhntFRyl77VtnPZHfO9
-X-Received: by 2002:a05:6512:1085:b0:52c:a016:5405 with SMTP id
- 2adb3069b0e04-5331c6914a6mr1571274e87.8.1723796355768; 
- Fri, 16 Aug 2024 01:19:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IETUpoGQAUzUH4RwR7T53nNjTGrischl3/TwsHI0X5+ohyTf+2GXpQiTYjm3/yLiMF/VyElPg==
-X-Received: by 2002:a05:6512:1085:b0:52c:a016:5405 with SMTP id
- 2adb3069b0e04-5331c6914a6mr1571230e87.8.1723796354919; 
- Fri, 16 Aug 2024 01:19:14 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:17d:3378:6322:e9ee:713:b9ed])
+ bh=jF5eh1eT8NvxZZQ/+oJZgWfMSXYg9b/XxIhqvm/GgKc=;
+ b=wK/aiWQumJj62q1fL0lwKJygGNgwzMKcugTkiyFfszDG8JkPPkJCUJcsDCqkqj6lPM
+ rD2bh0GhuIhgryxlm1vk6ox/13yqZLQQSAPfAGOlXNlJfUfzFZGlYB5Q8qiNZUGl1wR4
+ ZhsEPlQmb3yXP5DAFdpdY8V/yLnA2bGatWZKwKeI8MragglXtcRFWjg7LEWTpg9vUAeu
+ OuqVLVNT29bgPobU/11f6TyMmgPleMqPgpsNXMd/yn6trnpuOUABYz2rdB3bGetkVLeP
+ ye65FmAdL8XVTx3p/Uq9795zsf2Lnw7bo5xhxsdEbIK/ZDwy6bKSe/ORR22wedeJj/3t
+ 15WA==
+X-Gm-Message-State: AOJu0YzhYBxJpskJttwxIVET3wGZh/iB8zgt+B5cuCteKLWE97KZsA11
+ TUXav2ZnJT2BzgwsHViRPBoXq/P5uSAHd61jP+etTUyKdsfL7aRgYYkq1bJQ0bw=
+X-Google-Smtp-Source: AGHT+IHvqcnAgNXsIWeWulfKAc7B752eAbhZpgCnHL+xCZnTiqCWmKuWN5gQ1o4O7Oh+29axZHV6GQ==
+X-Received: by 2002:a05:6358:7208:b0:1b1:ac1d:274a with SMTP id
+ e5c5f4694b2df-1b392eb5129mr277703955d.0.1723796479429; 
+ Fri, 16 Aug 2024 01:21:19 -0700 (PDT)
+Received: from [157.82.207.214] ([157.82.207.214])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a83838cfaffsm218902366b.76.2024.08.16.01.19.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 01:19:14 -0700 (PDT)
-Date: Fri, 16 Aug 2024 04:19:10 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Kamil =?utf-8?Q?Szcz=C4=99k?= <kamil@szczek.dev>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Joelle van Dyne <j@getutm.app>, Bernhard Beschow <shentey@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH-for-9.1 v2] hw/i386/pc: Ensure vmport prerequisites are
- fulfilled
-Message-ID: <20240816041900-mutt-send-email-mst@kernel.org>
-References: <CJaQOvoJMl8P04F7-0Pk23paXt29GnSt2ICM-xlruQ9rGsMHocU_xH3RRaRRJEQpqUxGo63sATZb5St7968jHLV0r7NORODN3zHgi_qxpPE=@szczek.dev>
+ 41be03b00d2f7-7c6b63585d6sm2459023a12.70.2024.08.16.01.21.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 Aug 2024 01:21:19 -0700 (PDT)
+Message-ID: <4b4dd3bc-8338-4452-a8b2-013405094e1b@daynix.com>
+Date: Fri, 16 Aug 2024 17:21:16 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] meson: Use -fno-sanitize=function when available
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Beraldo Leal <bleal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20240816-function-v3-1-32ff225e550e@daynix.com>
+ <3d417232-ba66-4781-8278-a6a31987b54c@redhat.com>
+ <337e647e-3edf-475c-8e37-de3d28b30340@daynix.com>
+ <bfd436ad-f76d-4bc3-b92f-cf9aaca9c7f5@redhat.com>
+ <6d1949bc-a0c2-487c-8b6c-21db12f6a0af@daynix.com>
+ <a8ec0efa-0369-4f21-9234-e447b40c0973@redhat.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <a8ec0efa-0369-4f21-9234-e447b40c0973@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CJaQOvoJMl8P04F7-0Pk23paXt29GnSt2ICM-xlruQ9rGsMHocU_xH3RRaRRJEQpqUxGo63sATZb5St7968jHLV0r7NORODN3zHgi_qxpPE=@szczek.dev>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+Received-SPF: none client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-ot1-x32f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,103 +105,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 16, 2024 at 08:01:26AM +0000, Kamil Szczęk wrote:
-> Since commit 4ccd5fe22feb95137d325f422016a6473541fe9f ('pc: add option
-> to disable PS/2 mouse/keyboard'), the vmport will not be created unless
-> the i8042 PS/2 controller is enabled. To avoid confusion, let's fail if
-> vmport was explicitly requested, but the i8042 controller is disabled.
-> This also changes the behavior of vmport=auto to take i8042 controller
-> availability into account.
+On 2024/08/16 17:03, Thomas Huth wrote:
+> On 16/08/2024 09.30, Akihiko Odaki wrote:
+>> On 2024/08/16 16:27, Thomas Huth wrote:
+>>> On 16/08/2024 09.12, Akihiko Odaki wrote:
+>>>> On 2024/08/16 16:03, Thomas Huth wrote:
+>>>>> On 16/08/2024 08.22, Akihiko Odaki wrote:
+>>>>>> Commit 23ef50ae2d0c (".gitlab-ci.d/buildtest.yml: Use
+>>>>>> -fno-sanitize=function in the clang-system job") adds
+>>>>>> -fno-sanitize=function for the CI but doesn't add the flag in the
+>>>>>> other context. Add it to meson.build for such. It is not removed from
+>>>>>> .gitlab-ci.d/buildtest.yml because -fno-sanitize=function in 
+>>>>>> meson.build
+>>>>>> does not affect --extra-cflags due to argument ordering.
+>>>>>>
+>>>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>>>>>> ---
+>>>>>> Changes in v3:
+>>>>>> - I was not properly dropping the change of 
+>>>>>> .gitlab-ci.d/buildtest.yml
+>>>>>>    but only updated the message. v3 fixes this. (Thomas Huth)
+>>>>>> - Link to v2: 
+>>>>>> https://lore.kernel.org/r/20240729-function-v2-1-2401ab18b30b@daynix.com
+>>>>>>
+>>>>>> Changes in v2:
+>>>>>> - Dropped the change of: .gitlab-ci.d/buildtest.yml
+>>>>>> - Link to v1: 
+>>>>>> https://lore.kernel.org/r/20240714-function-v1-1-cc2acb4171ba@daynix.com
+>>>>>> ---
+>>>>>>   meson.build | 1 +
+>>>>>>   1 file changed, 1 insertion(+)
+>>>>>>
+>>>>>> diff --git a/meson.build b/meson.build
+>>>>>> index 5613b62a4f42..a4169c572ba9 100644
+>>>>>> --- a/meson.build
+>>>>>> +++ b/meson.build
+>>>>>> @@ -609,6 +609,7 @@ if host_os != 'openbsd' and \
+>>>>>>   endif
+>>>>>>   qemu_common_flags += cc.get_supported_arguments(hardening_flags)
+>>>>>> +qemu_common_flags += 
+>>>>>> cc.get_supported_arguments('-fno-sanitize=function')
+>>>>>
+>>>>> As I mentioned in my last mail: I think it would make sense to move 
+>>>>> this at the end of the "if get_option('tsan')" block in 
+>>>>> meson.build, since this apparently only fixes the use of 
+>>>>> "--enable-sanitizers", and cannot fix the "--extra-cflags" that a 
+>>>>> user might have specified?
+>>>>
+>>>> Sorry, I missed it. It cannot fix --extra-cflags, but it should be 
+>>>> able to fix compiler flags specified by compiler distributor.
+>>>
+>>> Oh, you mean that there are distros that enable -fsanitize=function 
+>>> by default? Can you name one? If so, I think that information should 
+>>> go into the patch description...?
+>>
+>> No, it is just a precaution.
 > 
-> Signed-off-by: Kamil Szczęk <kamil@szczek.dev>
+> Ok. I don't think any normal distro will enable this by default since 
+> this impacts performance of the programs, so it's either the user 
+> specifying --enable-sanitizers or the user specifying 
+> --extra-cflags="-fsanitize=...". In the latter case, your patch does not 
+> help. In the former case, I think this setting should go into the same 
+> code block as where we set -fsanitize=undefined in our meson.build file, 
+> so that it is clear where it belongs to.
 
-
-tagged, thanks!
-
-> ---
->  hw/i386/pc.c      | 8 ++++++--
->  hw/i386/pc_piix.c | 3 ++-
->  hw/i386/pc_q35.c  | 2 +-
->  qemu-options.hx   | 4 ++--
->  4 files changed, 11 insertions(+), 6 deletions(-)
-> 
-> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> index c74931d577..c99f2ce540 100644
-> --- a/hw/i386/pc.c
-> +++ b/hw/i386/pc.c
-> @@ -1075,7 +1075,7 @@ static const MemoryRegionOps ioportF0_io_ops = {
->  };
->  
->  static void pc_superio_init(ISABus *isa_bus, bool create_fdctrl,
-> -                            bool create_i8042, bool no_vmport)
-> +                            bool create_i8042, bool no_vmport, Error **errp)
->  {
->      int i;
->      DriveInfo *fd[MAX_FD];
-> @@ -1100,6 +1100,10 @@ static void pc_superio_init(ISABus *isa_bus, bool create_fdctrl,
->      }
->  
->      if (!create_i8042) {
-> +        if (!no_vmport) {
-> +            error_setg(errp,
-> +                       "vmport requires the i8042 controller to be enabled");
-> +        }
->          return;
->      }
->  
-> @@ -1219,7 +1223,7 @@ void pc_basic_device_init(struct PCMachineState *pcms,
->  
->      /* Super I/O */
->      pc_superio_init(isa_bus, create_fdctrl, pcms->i8042_enabled,
-> -                    pcms->vmport != ON_OFF_AUTO_ON);
-> +                    pcms->vmport != ON_OFF_AUTO_ON, &error_fatal);
->  }
->  
->  void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus)
-> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> index d9e69243b4..cf2e2e3e30 100644
-> --- a/hw/i386/pc_piix.c
-> +++ b/hw/i386/pc_piix.c
-> @@ -312,7 +312,8 @@ static void pc_init1(MachineState *machine, const char *pci_type)
->  
->      assert(pcms->vmport != ON_OFF_AUTO__MAX);
->      if (pcms->vmport == ON_OFF_AUTO_AUTO) {
-> -        pcms->vmport = xen_enabled() ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
-> +        pcms->vmport = (xen_enabled() || !pcms->i8042_enabled)
-> +            ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
->      }
->  
->      /* init basic PC hardware */
-> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-> index 9d108b194e..6c112d804d 100644
-> --- a/hw/i386/pc_q35.c
-> +++ b/hw/i386/pc_q35.c
-> @@ -278,7 +278,7 @@ static void pc_q35_init(MachineState *machine)
->  
->      assert(pcms->vmport != ON_OFF_AUTO__MAX);
->      if (pcms->vmport == ON_OFF_AUTO_AUTO) {
-> -        pcms->vmport = ON_OFF_AUTO_ON;
-> +        pcms->vmport = pcms->i8042_enabled ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
->      }
->  
->      /* init basic PC hardware */
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index cee0da2014..0bc780a669 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -68,8 +68,8 @@ SRST
->  
->      ``vmport=on|off|auto``
->          Enables emulation of VMWare IO port, for vmmouse etc. auto says
-> -        to select the value based on accel. For accel=xen the default is
-> -        off otherwise the default is on.
-> +        to select the value based on accel and i8042. For accel=xen
-> +        and/or i8042=off the default is off otherwise the default is on.
->  
->      ``dump-guest-core=on|off``
->          Include guest memory in a core dump. The default is on.
-> -- 
-> 2.45.0
-> 
-
+It does not look like -fno-sanitize=function belongs to the code block 
+to me. Putting -fno-sanitize=function in the code block will make it 
+seem to say that we should disable function sanitizer because the user 
+requests to enable sanitizers, which makes little sense.
 
