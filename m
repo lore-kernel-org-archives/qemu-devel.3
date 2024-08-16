@@ -4,86 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2076C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 08:24:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BD58C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 08:27:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sesG4-0005ie-Bx; Fri, 16 Aug 2024 04:24:28 -0400
+	id 1sesIV-0002DC-HN; Fri, 16 Aug 2024 04:26:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sesG3-0005hm-FF
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:24:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sesIU-0002AY-1t
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:26:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sesG1-0004K1-OJ
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:24:27 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sesIS-0004no-IF
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:26:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723796665;
+ s=mimecast20190719; t=1723796815;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=tzuw0jhGtEEpOqvm2iVSzUFi/qmzZkyeDjV1tfEWnLU=;
- b=Wutdwj+LRL2nXjjpbKYgSvGn9JtU69AV/aIFEe/UaX7A0NptdT2LHeQFvXGPtEUR5o3k83
- hvRGW1aibGAx9ro2ct89mM2cVwozGioOwidT1j8XNnXgBpKcGOgEiQwM3JtoA3xpWrsrcJ
- lPhlEtjuspQVYsm49+JGC2wJeiMcZ88=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=usJ5KAmBvcrSjbqeBdMs+li8I0Pymi39evve0RsVTJk=;
+ b=KgPDnkEVFPdfcFw5kZoa1ryy2e8wx1HMr1r1VBVxyTm/AYTPlhRWGiuz5Q0zBJwpXOncrG
+ TaCm/RHXwW5QtU8k2+a0AVqHX3VC6iH7k9g0pFHOh4JIe8fBHa7hDIzIJ2LrIaUXJh1ACh
+ +p/irEsg4JdJSOhm8hPVUbdYXXelwWI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-152-Ny2fo7HFO0Gz8EM-GTZ45g-1; Fri, 16 Aug 2024 04:24:21 -0400
-X-MC-Unique: Ny2fo7HFO0Gz8EM-GTZ45g-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-36848f30d39so933958f8f.3
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 01:24:21 -0700 (PDT)
+ us-mta-259-_DNdE77jOLCNdDX6LC8NWA-1; Fri, 16 Aug 2024 04:26:50 -0400
+X-MC-Unique: _DNdE77jOLCNdDX6LC8NWA-1
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3717c75b265so1004498f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 01:26:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723796660; x=1724401460;
+ d=1e100.net; s=20230601; t=1723796809; x=1724401609;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tzuw0jhGtEEpOqvm2iVSzUFi/qmzZkyeDjV1tfEWnLU=;
- b=gLlAp/XpTKRJRn6veyeRThgTvLUhpF5XBEs4IWXaCynJ5LAOo2Vw8TPQyJjywz/KTq
- +UDfXh3rs40ZFH6U0FZ4OMZ7xE5RrzDJQ0EzNC2MvrhjZ6zrrn2J7GoFVpTheuGO9YJ3
- oFahVRcE6cVYfiFNSrJ3XZXIx0Z3rM0o0AoVrmXPh5NuIbzh1K+C0io9YRiGMdkTB6rH
- FxsUHhCAM1y/LhTB+AxythhlWWZbN+SLgcFrI0k41zMvH4VldrZYAPJQR+TVhiWOhP/k
- be9oKYLHUrBUPPJgLTzBuMJ856HCTc0vHgH5CqWvh4PrxMq2O1E0pXe71KbidiAtknXj
- mvjw==
-X-Gm-Message-State: AOJu0YxISGwLimI+kn1B2I/Llips7Gu2DWLCt/iqHQDEzTvprfXj7mqw
- B4LUh1uv3x/F8hzHnwTLbZ/m+74eDs0ry9E3eLjtUWW4QRE/vEHWC+tCwzeA5ewXsOl+e9UTp4u
- 3gaJyTDLBZz+WKFwSSi46PcgbN9YRiZ/qnJ2/rLsWjwDxIs1WveDw
-X-Received: by 2002:a5d:452b:0:b0:371:9360:c4a8 with SMTP id
- ffacd0b85a97d-37194315205mr1127397f8f.6.1723796660206; 
- Fri, 16 Aug 2024 01:24:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEmXToVaAzDatC/i7WtiSsT2LBgEEmZ1qaAf7bzfjzLPmCewriYB0xU5/15CKk9bT5R1pgNJA==
-X-Received: by 2002:a5d:452b:0:b0:371:9360:c4a8 with SMTP id
- ffacd0b85a97d-37194315205mr1127383f8f.6.1723796659655; 
- Fri, 16 Aug 2024 01:24:19 -0700 (PDT)
+ bh=usJ5KAmBvcrSjbqeBdMs+li8I0Pymi39evve0RsVTJk=;
+ b=Kz1TpeGa62VyjTc+Vsv4XYaQTGuC3Hm5m20IFE16azUw2+9eTRZV10ZlA6L2mb5VKX
+ +ikIyqVg281eubNdyt3roIWQ3nJI3o0UeHtMw/DKHM0TIvK/GIzfzqC0CXRX18qV42j4
+ 8LxFM7TpnxiYOiuDELDdnygFnC1XM1lKiQ4WjKx91Aql4j35vJVEYjrbA1s1QfwmXFvi
+ pyuCpPv0oZrfnRPlG5dpA79HqpBPqaozd+lPckFa4aHhfMgRS7GEjrW3cnqtqXTWHRo9
+ 8wTIreh4z9jqlNPEQyw1F0U6geKDBcgg3tv0kSzdbBRdmqRcqHAq6vV7lohOu2RVsRdr
+ v5Aw==
+X-Gm-Message-State: AOJu0YwJos/vRKRB8FF//jsz4z1FxhM0hslQusFHhaMGpGdEvfPm8VwC
+ 5Ft0D3VM5rVZe4jIq5xlkFuoi/5aPMFsGa03/kZVbFGbITTrUdlErBED3Y6kF9l/DslhOoVy3K7
+ AiNaQjH+Edw+uJsS8i1pttyICtDr4U/RqO+J02kWWL3HdyN/8X1VK
+X-Received: by 2002:adf:f54e:0:b0:371:8a90:112f with SMTP id
+ ffacd0b85a97d-371946a4f49mr1401915f8f.44.1723796808697; 
+ Fri, 16 Aug 2024 01:26:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGMVJ4F1SwDqmIP+yacicCb0h7tOmflHSCvw9XcTWO7Ydh+tmCRLCguNEwgn9/1qAxu32JFpQ==
+X-Received: by 2002:adf:f54e:0:b0:371:8a90:112f with SMTP id
+ ffacd0b85a97d-371946a4f49mr1401899f8f.44.1723796808231; 
+ Fri, 16 Aug 2024 01:26:48 -0700 (PDT)
 Received: from [192.168.0.6] (ip-109-43-177-15.web.vodafone.de.
  [109.43.177.15]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3718983a306sm3108301f8f.15.2024.08.16.01.24.18
+ ffacd0b85a97d-37189897008sm3106214f8f.84.2024.08.16.01.26.47
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Aug 2024 01:24:19 -0700 (PDT)
-Message-ID: <12206320-2647-448e-a206-685ff95be8c3@redhat.com>
-Date: Fri, 16 Aug 2024 10:24:17 +0200
+ Fri, 16 Aug 2024 01:26:47 -0700 (PDT)
+Message-ID: <dc969600-ad94-42a9-8c17-5dd849843b4a@redhat.com>
+Date: Fri, 16 Aug 2024 10:26:46 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] meson: Use -fno-sanitize=function when available
-To: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Beraldo Leal <bleal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-References: <20240816-function-v3-1-32ff225e550e@daynix.com>
- <3d417232-ba66-4781-8278-a6a31987b54c@redhat.com>
- <337e647e-3edf-475c-8e37-de3d28b30340@daynix.com>
- <bfd436ad-f76d-4bc3-b92f-cf9aaca9c7f5@redhat.com>
- <6d1949bc-a0c2-487c-8b6c-21db12f6a0af@daynix.com>
- <a8ec0efa-0369-4f21-9234-e447b40c0973@redhat.com>
- <4b4dd3bc-8338-4452-a8b2-013405094e1b@daynix.com>
+Subject: Re: [PULL 1/5] target/s390x: fix build warning (gcc-12
+ -fsanitize=thread)
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+References: <20240816072218.27125-1-thuth@redhat.com>
+ <20240816072218.27125-2-thuth@redhat.com>
+ <ddad1d38-2f4d-41b8-a7b5-69bec00ebe02@linaro.org>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -128,17 +120,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <4b4dd3bc-8338-4452-a8b2-013405094e1b@daynix.com>
+In-Reply-To: <ddad1d38-2f4d-41b8-a7b5-69bec00ebe02@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -156,78 +148,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/08/2024 10.21, Akihiko Odaki wrote:
-> On 2024/08/16 17:03, Thomas Huth wrote:
->> On 16/08/2024 09.30, Akihiko Odaki wrote:
->>> On 2024/08/16 16:27, Thomas Huth wrote:
->>>> On 16/08/2024 09.12, Akihiko Odaki wrote:
->>>>> On 2024/08/16 16:03, Thomas Huth wrote:
->>>>>> On 16/08/2024 08.22, Akihiko Odaki wrote:
->>>>>>> Commit 23ef50ae2d0c (".gitlab-ci.d/buildtest.yml: Use
->>>>>>> -fno-sanitize=function in the clang-system job") adds
->>>>>>> -fno-sanitize=function for the CI but doesn't add the flag in the
->>>>>>> other context. Add it to meson.build for such. It is not removed from
->>>>>>> .gitlab-ci.d/buildtest.yml because -fno-sanitize=function in meson.build
->>>>>>> does not affect --extra-cflags due to argument ordering.
->>>>>>>
->>>>>>> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
->>>>>>> ---
->>>>>>> Changes in v3:
->>>>>>> - I was not properly dropping the change of .gitlab-ci.d/buildtest.yml
->>>>>>>    but only updated the message. v3 fixes this. (Thomas Huth)
->>>>>>> - Link to v2: 
->>>>>>> https://lore.kernel.org/r/20240729-function-v2-1-2401ab18b30b@daynix.com
->>>>>>>
->>>>>>> Changes in v2:
->>>>>>> - Dropped the change of: .gitlab-ci.d/buildtest.yml
->>>>>>> - Link to v1: 
->>>>>>> https://lore.kernel.org/r/20240714-function-v1-1-cc2acb4171ba@daynix.com
->>>>>>> ---
->>>>>>>   meson.build | 1 +
->>>>>>>   1 file changed, 1 insertion(+)
->>>>>>>
->>>>>>> diff --git a/meson.build b/meson.build
->>>>>>> index 5613b62a4f42..a4169c572ba9 100644
->>>>>>> --- a/meson.build
->>>>>>> +++ b/meson.build
->>>>>>> @@ -609,6 +609,7 @@ if host_os != 'openbsd' and \
->>>>>>>   endif
->>>>>>>   qemu_common_flags += cc.get_supported_arguments(hardening_flags)
->>>>>>> +qemu_common_flags += 
->>>>>>> cc.get_supported_arguments('-fno-sanitize=function')
->>>>>>
->>>>>> As I mentioned in my last mail: I think it would make sense to move 
->>>>>> this at the end of the "if get_option('tsan')" block in meson.build, 
->>>>>> since this apparently only fixes the use of "--enable-sanitizers", and 
->>>>>> cannot fix the "--extra-cflags" that a user might have specified?
->>>>>
->>>>> Sorry, I missed it. It cannot fix --extra-cflags, but it should be able 
->>>>> to fix compiler flags specified by compiler distributor.
->>>>
->>>> Oh, you mean that there are distros that enable -fsanitize=function by 
->>>> default? Can you name one? If so, I think that information should go 
->>>> into the patch description...?
->>>
->>> No, it is just a precaution.
+On 16/08/2024 09.45, Philippe Mathieu-Daudé wrote:
+> On 16/8/24 09:22, Thomas Huth wrote:
+>> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >>
->> Ok. I don't think any normal distro will enable this by default since this 
->> impacts performance of the programs, so it's either the user specifying 
->> --enable-sanitizers or the user specifying 
->> --extra-cflags="-fsanitize=...". In the latter case, your patch does not 
->> help. In the former case, I think this setting should go into the same 
->> code block as where we set -fsanitize=undefined in our meson.build file, 
->> so that it is clear where it belongs to.
+>> Found on debian stable.
+>>
+>> ../target/s390x/tcg/translate.c: In function ‘get_mem_index’:
+>> ../target/s390x/tcg/translate.c:398:1: error: control reaches end of 
+>> non-void function [-Werror=return-type]
+>>    398 | }
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
+>> Message-ID: <20240814224132.897098-4-pierrick.bouvier@linaro.org>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>> ---
+>>   target/s390x/tcg/translate.c | 1 -
+>>   1 file changed, 1 deletion(-)
+>>
+>> diff --git a/target/s390x/tcg/translate.c b/target/s390x/tcg/translate.c
+>> index c81e035dea..bcfff40b25 100644
+>> --- a/target/s390x/tcg/translate.c
+>> +++ b/target/s390x/tcg/translate.c
+>> @@ -392,7 +392,6 @@ static int get_mem_index(DisasContext *s)
+>>           return MMU_HOME_IDX;
+>>       default:
+>>           g_assert_not_reached();
+>> -        break;
 > 
-> It does not look like -fno-sanitize=function belongs to the code block to 
-> me. Putting -fno-sanitize=function in the code block will make it seem to 
-> say that we should disable function sanitizer because the user requests to 
-> enable sanitizers, which makes little sense.
+> Why aren't the other cases problematic?
 
-As far as I understood, -fsanitize=undefine turns on -fsanitize=function, 
-too, or did I get that wrong?
-If not, how did you run into this problem? How did you enable the function 
-sanitizer if not using --enable-sanitizers ?
+No clue, but I guess we can tackle them once anybody runs into a problem in 
+one of these spots.
 
   Thomas
+
 
 
