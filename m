@@ -4,75 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE236C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:22:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99A09C52D7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:22:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sewuL-0005AY-T5; Fri, 16 Aug 2024 09:22:21 -0400
+	id 1sewuL-00059y-E1; Fri, 16 Aug 2024 09:22:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sewuK-00058M-9g
+ id 1sewuI-000581-PV
  for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:20 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sewuH-0007k3-FK
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:19 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3719753d365so329409f8f.2
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:22:17 -0700 (PDT)
+ id 1sewuG-0007jw-9B
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:22:18 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-428f5c0833bso16161095e9.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:22:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723814535; x=1724419335; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=L3BYyoFuiUhi097Go1IdQzbbTPVpAV8zdtNg6dApNEU=;
- b=J0EN+EmQx8V2LrNaxrckjspv+g/23rnQZw0XXM15V7rrJM1uKtjTKi/X0JW9vLmGel
- pfcxbAh2e1Ye0xxX4wqr2GyfhR8HOCR8xlQWgmBEV06B6UzkuhAQTGv1Y0MRWymgs/V0
- BILz2Cq9Qor3obJomOx7U1vVE9oXoYScFlFVCji6Enpb6esIvHcWvf5x2HbdN8phLndy
- 8Awz6qsOMR959WUHAblHDIPE8W/iqwh+fZM9nKuYDFGlOxypx9Auvcb/uLqscNw3BELN
- qlgN93+Sxpi27tOcKaCldafuXaII1GVBEXRSMDKNGJUvwKfR+i97n4uxIoXQE4SD+Aka
- kQfw==
+ d=linaro.org; s=google; t=1723814534; x=1724419334; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=pgqsoRr6u7uYuDiHRia4sFMDUVvp3Aw+9Kef5/KmriY=;
+ b=k5pn8HlCex2RU8AYOlDKrgrEdbfasAKz9OKBHP9ABjcTz7gOzqqqj3NCQqTAIMzH6V
+ liS+e4zNMLEqpqO1EM7xvxnFdjJma/m83Zadfcfv9P/RUZaX4AGEvINHCJJz9QNBZ1D0
+ CfQOHGFctldfWGs2d8trQRr0tF03emlVcJTU18W8WLLWvKsKtD0pMr90JkWqG/J1S6f4
+ j6c7r+7ePqt4kbE9Yz+G3+FLrrX34ci8faedKhUGga+QKffal9tIY6K+F0RiXmv+4tpu
+ Rrwh/zEwzDAJi8u3XCzh/2W4vhikfjrbPuCWSkLXMurM6RUZdi0nQyOHGtq0L+tQ+mJy
+ p8uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723814535; x=1724419335;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=L3BYyoFuiUhi097Go1IdQzbbTPVpAV8zdtNg6dApNEU=;
- b=TAX0y+tE7HDNwvEkpOcL7ylYGZ7pEOdElBzqnc0LcjsYrtX+AtJihpkg/gaKtDt8mx
- aAYnvI2f0URi2jqT1heQOrxDi/nw9oHPeJnseAAoRV3Qql+2kc4NrdnxkKC4huFXhQ3H
- Xp8pvxwDqrzfIpD1lLi3LROrJqNRcObjcKuX1Fe5HCiUEhS46oDJoNW+OwG9tAW2iH5f
- TBvIkci5C32c4o8uX0Fo0EHoWL5sBV5lHSYZomFP3WimZgj4M/mY1q2FSQBVSYmqAMcK
- g1N7wlkslDQbEEenJSW/zoDjtiAEkEEZVE6S9fxUmK6FMK3hpwhPClR8g67z/rahxonN
- JMBg==
-X-Gm-Message-State: AOJu0Yw70+GqqqqeFVgz16nGA8fKxnvbEkQfTZ3YRAD6CKNHNyaLkCqy
- DExItae1iWEHCvsPm67Yg50eqTwOGiCZP4MOVnYst5PnhcV78LhmWL0SWNaToGsv7fdh0fKgFbQ
- Z
-X-Google-Smtp-Source: AGHT+IG4oyYbdCOLq7ErxdT7m0wtT+/At885LDS58iJUq46gVTm5u2Piyn9vS0USHKuQLXAnVcEx3Q==
-X-Received: by 2002:adf:f1c2:0:b0:368:3789:1a2 with SMTP id
- ffacd0b85a97d-37194641ac2mr1951421f8f.21.1723814535469; 
- Fri, 16 Aug 2024 06:22:15 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1723814534; x=1724419334;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=pgqsoRr6u7uYuDiHRia4sFMDUVvp3Aw+9Kef5/KmriY=;
+ b=p0YVmeqOQtjx2C31mb0AYYYCNZL5+VAEgIRTbO9dd43c+gOl0qF8wu91EtyjnXl2PV
+ dZADlOUit3QyRFmfzVB3EKgawuc2D1aqUK2BofMVTj3osxfwgweebQUyZu/IZRE/Iblt
+ cBB03r59L7MQifnLviW1J8CpCYYPqmrIFguySE9hctE/i2GckZZ1MNvMuorV6YrtTVUp
+ P6SVptisNajdgeLIUS5nTjrqOlD0UpTHsyyS3IOFZA8KOD4UylscbxYxdXoyQr4CneCt
+ GPYBB+pVzEzFPZhWJDgSy6MhvaVh2knBxmeuzFp8gMwHQ6KMNFS2fJuxDNgn8Zv9zx2U
+ Dxyw==
+X-Gm-Message-State: AOJu0Yyc26BjmzAl4zvEcVzQJiJ0omSBjMcmye+PCPkuy24oYTI4TsBO
+ kPFBR/8PBpzqmMFvp0Vja0qG3RspNTJ1v4fsr6B/IgnzW6HMyb9hH/7UcOp8HDiNgLMS6SFOUd6
+ 8
+X-Google-Smtp-Source: AGHT+IGO0rB7ggvvS3A1nUT2spW5kigyBKKzvn5QT6GzLKP+tRvCnHO/3C+FSHQufhYHTGSPgt+suQ==
+X-Received: by 2002:a5d:6481:0:b0:367:8418:fde4 with SMTP id
+ ffacd0b85a97d-37194b956bcmr2137199f8f.7.1723814534273; 
+ Fri, 16 Aug 2024 06:22:14 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-371898ab855sm3631948f8f.105.2024.08.16.06.22.15
+ ffacd0b85a97d-371898ab855sm3631948f8f.105.2024.08.16.06.22.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 06:22:15 -0700 (PDT)
+ Fri, 16 Aug 2024 06:22:13 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PATCH 2/7] docs/devel/blkverify: Convert to rST format
-Date: Fri, 16 Aug 2024 14:22:07 +0100
-Message-Id: <20240816132212.3602106-3-peter.maydell@linaro.org>
+Subject: [PATCH for-9.2 0/7] docs/devel: Convert txt files to rST
+Date: Fri, 16 Aug 2024 14:22:05 +0100
+Message-Id: <20240816132212.3602106-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240816132212.3602106-1-peter.maydell@linaro.org>
-References: <20240816132212.3602106-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,123 +92,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert blkverify.txt to rST format.
+This patchset converts a collection of the remaining txt files in
+docs/devel to rST format. At this point in the release cycle
+I'm targeting 9.2 for these.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- MAINTAINERS                                 |  1 +
- docs/devel/{blkverify.txt => blkverify.rst} | 30 ++++++++++++---------
- docs/devel/index-build.rst                  |  1 +
- 3 files changed, 19 insertions(+), 13 deletions(-)
+Patches 1-5 are simple conversions.  In patch 6 I move the
+QemuLockCnt APIs to their own header file; this is so that we can
+include the kernel-doc generated APIs in lockcnt.rst (since
+kernel-doc works on a per-file basis).
+
+Paolo: can you confirm that you mean GPLv2-or-later for the lockcnt
+code?  There's no explicit license comment in either util/lockcnt.c
+or include/qemu/thread.h.
+
+(There's one .txt file left in docs/devel after this, but I don't
+think it's very useful so I propose to delete it and will send a
+separate patch for that.)
+
+thanks
+-- PMM
+
+Peter Maydell (7):
+  docs/devel/blkdebug: Convert to rST format
+  docs/devel/blkverify: Convert to rST format
+  docs/devel/lockcnt: Convert to rST format
+  docs/devel/multiple-iothreads: Convert to rST format
+  docs/devel/rcu: Convert to rST format
+  include: Move QemuLockCnt APIs to their own header
+  docs/devel/lockcnt: Include kernel-doc API documentation
+
+ MAINTAINERS                                 |   8 +-
+ docs/devel/blkdebug.rst                     | 177 ++++++++++++++++++++
+ docs/devel/blkdebug.txt                     | 162 ------------------
+ docs/devel/{blkverify.txt => blkverify.rst} |  30 ++--
+ docs/devel/index-api.rst                    |   1 +
+ docs/devel/index-build.rst                  |   2 +
+ docs/devel/index-internals.rst              |   2 +
+ docs/devel/{lockcnt.txt => lockcnt.rst}     |  89 +++++-----
+ docs/devel/multiple-iothreads.rst           | 139 +++++++++++++++
+ docs/devel/multiple-iothreads.txt           | 130 --------------
+ docs/devel/{rcu.txt => rcu.rst}             | 172 +++++++++----------
+ include/block/aio.h                         |   1 +
+ include/hw/core/cpu.h                       |   1 +
+ include/qemu/lockcnt.h                      | 130 ++++++++++++++
+ include/qemu/thread.h                       | 111 ------------
+ accel/accel-blocker.c                       |   1 +
+ hw/core/cpu-common.c                        |   1 +
+ util/aio-posix.c                            |   1 +
+ util/aio-win32.c                            |   1 +
+ util/async.c                                |   1 +
+ util/fdmon-epoll.c                          |   1 +
+ util/lockcnt.c                              |   1 +
+ 22 files changed, 608 insertions(+), 554 deletions(-)
+ create mode 100644 docs/devel/blkdebug.rst
+ delete mode 100644 docs/devel/blkdebug.txt
  rename docs/devel/{blkverify.txt => blkverify.rst} (77%)
+ rename docs/devel/{lockcnt.txt => lockcnt.rst} (75%)
+ create mode 100644 docs/devel/multiple-iothreads.rst
+ delete mode 100644 docs/devel/multiple-iothreads.txt
+ rename docs/devel/{rcu.txt => rcu.rst} (73%)
+ create mode 100644 include/qemu/lockcnt.h
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ca0a5c731f5..e9dd1180077 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3938,6 +3938,7 @@ M: Stefan Hajnoczi <stefanha@redhat.com>
- L: qemu-block@nongnu.org
- S: Supported
- F: block/blkverify.c
-+F: docs/devel/blkverify.rst
- 
- bochs
- M: Stefan Hajnoczi <stefanha@redhat.com>
-diff --git a/docs/devel/blkverify.txt b/docs/devel/blkverify.rst
-similarity index 77%
-rename from docs/devel/blkverify.txt
-rename to docs/devel/blkverify.rst
-index aca826c51cc..2a71778b5e3 100644
---- a/docs/devel/blkverify.txt
-+++ b/docs/devel/blkverify.rst
-@@ -1,8 +1,10 @@
--= Block driver correctness testing with blkverify =
-+Block driver correctness testing with ``blkverify``
-+===================================================
- 
--== Introduction ==
-+Introduction
-+------------
- 
--This document describes how to use the blkverify protocol to test that a block
-+This document describes how to use the ``blkverify`` protocol to test that a block
- driver is operating correctly.
- 
- It is difficult to test and debug block drivers against real guests.  Often
-@@ -11,12 +13,13 @@ of the executable.  Other times obscure errors are raised by a program inside
- the guest.  These issues are extremely hard to trace back to bugs in the block
- driver.
- 
--Blkverify solves this problem by catching data corruption inside QEMU the first
-+``blkverify`` solves this problem by catching data corruption inside QEMU the first
- time bad data is read and reporting the disk sector that is corrupted.
- 
--== How it works ==
-+How it works
-+------------
- 
--The blkverify protocol has two child block devices, the "test" device and the
-+The ``blkverify`` protocol has two child block devices, the "test" device and the
- "raw" device.  Read/write operations are mirrored to both devices so their
- state should always be in sync.
- 
-@@ -25,13 +28,14 @@ contents to the "test" image.  The idea is that the "raw" device will handle
- read/write operations correctly and not corrupt data.  It can be used as a
- reference for comparison against the "test" device.
- 
--After a mirrored read operation completes, blkverify will compare the data and
-+After a mirrored read operation completes, ``blkverify`` will compare the data and
- raise an error if it is not identical.  This makes it possible to catch the
- first instance where corrupt data is read.
- 
--== Example ==
-+Example
-+-------
- 
--Imagine raw.img has 0xcd repeated throughout its first sector:
-+Imagine raw.img has 0xcd repeated throughout its first sector::
- 
-     $ ./qemu-io -c 'read -v 0 512' raw.img
-     00000000:  cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd cd  ................
-@@ -42,7 +46,7 @@ Imagine raw.img has 0xcd repeated throughout its first sector:
-     read 512/512 bytes at offset 0
-     512.000000 bytes, 1 ops; 0.0000 sec (97.656 MiB/sec and 200000.0000 ops/sec)
- 
--And test.img is corrupt, its first sector is zeroed when it shouldn't be:
-+And test.img is corrupt, its first sector is zeroed when it shouldn't be::
- 
-     $ ./qemu-io -c 'read -v 0 512' test.img
-     00000000:  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-@@ -53,17 +57,17 @@ And test.img is corrupt, its first sector is zeroed when it shouldn't be:
-     read 512/512 bytes at offset 0
-     512.000000 bytes, 1 ops; 0.0000 sec (81.380 MiB/sec and 166666.6667 ops/sec)
- 
--This error is caught by blkverify:
-+This error is caught by ``blkverify``::
- 
-     $ ./qemu-io -c 'read 0 512' blkverify:a.img:b.img
-     blkverify: read sector_num=0 nb_sectors=4 contents mismatch in sector 0
- 
--A more realistic scenario is verifying the installation of a guest OS:
-+A more realistic scenario is verifying the installation of a guest OS::
- 
-     $ ./qemu-img create raw.img 16G
-     $ ./qemu-img create -f qcow2 test.qcow2 16G
-     $ ./qemu-system-x86_64 -cdrom debian.iso \
-           -drive file=blkverify:raw.img:test.qcow2
- 
--If the installation is aborted when blkverify detects corruption, use qemu-io
-+If the installation is aborted when ``blkverify`` detects corruption, use ``qemu-io``
- to explore the contents of the disk image at the sector in question.
-diff --git a/docs/devel/index-build.rst b/docs/devel/index-build.rst
-index 3a912aefcfa..a8f7c5cdebc 100644
---- a/docs/devel/index-build.rst
-+++ b/docs/devel/index-build.rst
-@@ -19,3 +19,4 @@ the basics if you are adding new files and targets to the build.
-    fuzzing
-    control-flow-integrity
-    blkdebug
-+   blkverify
 -- 
 2.34.1
 
