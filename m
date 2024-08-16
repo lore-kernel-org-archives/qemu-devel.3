@@ -4,108 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 309F3C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 09:20:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA64EC531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 09:22:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1set76-0004gg-Sx; Fri, 16 Aug 2024 05:19:16 -0400
+	id 1setAA-00024V-Fo; Fri, 16 Aug 2024 05:22:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1set73-0004eJ-1A
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 05:19:13 -0400
-Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1setA8-000236-GE
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 05:22:24 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1set6w-0003RC-GW
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 05:19:09 -0400
-Received: by mail-lj1-x22a.google.com with SMTP id
- 38308e7fff4ca-2eeb1ba040aso25085091fa.1
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 02:18:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1setA6-0003zx-0K
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 05:22:24 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-429d2d7be1eso9025285e9.1
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 02:22:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723799938; x=1724404738; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723800140; x=1724404940; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=R+6q90f+Bxv9eyWqMeEAynySV6PRqJeAyEpIbAk5224=;
- b=j67Ipw/+CPxJ8FvdhPr8dNm0f9kt72TYfEEtVp3RQYIWUWNjL8YjoKSyWPB4vp/P21
- qf8xvtr8GkAPr7VuAgWCjNk9HVIdkhAFeJ2r3B/Kd6608blZUKl/Qn5IxmeaVaZafTAI
- KsdMXSTPOf8EU/vRvzvX9zcoZs3FbL0m7kG37EvEgibCkluwQ9z20M2PbQQ/phov5Xoi
- MzzGOzdwIZu4YkYuyGlpMfpB6Ln0d443IykR02cjQzcqggNT8EuDjX5N+wSIoPL7u9jD
- hRAixYzWMpbtnvWdUiT7LRNeg4bXCUB/Ne3RUM7eoDx5zrfp414Tjm2JWW++WjJbMB9X
- zDxw==
+ bh=iZ3Mtgyw151CnnO4/vDgQzyZ9/eU3xvWXQcwwBJWqsI=;
+ b=nE6oKSoBiktxiEpVnabD8LkAeF+XNiwEBHme7CYVgTF/Rn0xu0j3P/u3/ZA4eLQXAP
+ 9E6ywm+NdWMMdIf7mbnNhfGgr2Wty+eY1dZu3aQXbqagyrtfJHnsf99Ih7ctdGzSOVCf
+ MiFO1V3xhUYdSFCq+KxOAygU1GNzpA3eBypGLaBKWz+lMxIoveMAMHpEddzbNMi9A/j/
+ IqUZTgyrvszIADF1AbSsc2zUocTbCpKjwUAuGpMrUu7APvWh3BW60fTWYJV+xKqXH+eJ
+ WgpdXiR2N7zO6PZTiWoMohCM8U1Io51z3/UhvSyvdTUD9UO+Nr5WASL3rKZfuosUc9PW
+ et0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723799938; x=1724404738;
+ d=1e100.net; s=20230601; t=1723800140; x=1724404940;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R+6q90f+Bxv9eyWqMeEAynySV6PRqJeAyEpIbAk5224=;
- b=retIYOSvCFOPeuUXDN+Slg/MP/efwUElVDJ5nynJ/l5JTMXHnjldZ7QFHn28RXb5dI
- +gLop31+tZ8HAdXvJgO8nh7xsjSM5RELlHQ5LZch4Yq4bzzqwRAMmT4dVjq5ol3jBn5v
- U87M9znxbUZrn7kje7KARwjS1jkTwW3DNt+bJPaoNBGaocpEIT26C/Rm6NSdv1Enb8v0
- f67fYV+PO7/deD0Gc2eNzAoKh3j1OTry4WR1YYYaBtNSbqn/faxSCn7pkQtmZt1JPnXc
- tqfMyJzNj7XkkwuhYrVRIuYTrMjQzOo7YHLFxpjzb1TfcnViYTfngzf5R8OysE5FVRbl
- 2ZNg==
+ bh=iZ3Mtgyw151CnnO4/vDgQzyZ9/eU3xvWXQcwwBJWqsI=;
+ b=XYvT/UxBAMXXF6Hrcc59IASYOrNxw1Cu6AfBXhPXQ9NHpeKb0N7ZAwz5T5ThFL0WjF
+ V5/y/+9x5/kmts7lidbO55lhoWOU7OLAGyFmlfhuu1a6sOfEZm8XfGwBt+nUJxIsUmgV
+ okEfq2O38imLq1Gp/sq3F8W7b4e+tb+Uq1vrkrWpiVeFzVZktmcstr8aPrTSN55qqvot
+ B3zUwDtCULwdOgVAKDFGo+DM85CXNtnPsOAMZcW0JtWUSDUrhDtCiAgdzkwUmcfLFlpg
+ CDpMtWz1uJ0+HXUh6poLZZfEcIeMIVGIiUxQjxok9a1jI3aD+yiS1GHGYh/4jBxDX0yU
+ eGsQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV6AM/hSlzFe3YL0zucqhz/zqxSYTuKvylOSLIi78xaQEvaiB06mty8Nyr5A1EPOJ8vgDKxoKYyQjtRQqHJSTfWSfDaivc=
-X-Gm-Message-State: AOJu0Yw4wT8JUjuVDmUQU68z7DS8i0hOibdzQSFrXvkpNITk/OjB7qrk
- 8BhSj9hEGzdUuCtHyO4piYGYc9g94vvzQSOY8gqTlwgUN2KpU23PZsO+mnF3Qk0=
-X-Google-Smtp-Source: AGHT+IH9gpSQ2G8/ktzuWrcYaojw7YuloBrQrznBu/0wsO00hhXzlh+4QjJ20OBp9+LvUl+U1Lz0aA==
-X-Received: by 2002:a05:651c:198e:b0:2ef:2525:be90 with SMTP id
- 38308e7fff4ca-2f3be5f7818mr18181421fa.31.1723799937707; 
- Fri, 16 Aug 2024 02:18:57 -0700 (PDT)
+ AJvYcCVVTx7k8yZ0edeQAArGRcabWbHWTlMqf6+eXp3XgQBNbifcKEUnCUoM9I1YgYflfj9iLT8u1sdKbS0nbw9k9PMpsfSG/pM=
+X-Gm-Message-State: AOJu0Yyk8urtx9svmaQ+FCnYRRcMT5Fzek/aT2uDzvI+5uWN4HklXLzF
+ FdRoAFE5+AGR4CYkqwvjEE0zrd0O2JYT5t9n0sVp1Bchjp7A1cpgQIxpQncTUto=
+X-Google-Smtp-Source: AGHT+IFmRTJNNt5V2DDevvR/HeG9UOwMgaXRGOMz5qysmAutZAAG8pALAGitqiFo4Vwu5kSXIqjq2g==
+X-Received: by 2002:a05:600c:3b95:b0:424:895c:b84b with SMTP id
+ 5b1f17b1804b1-429ed9e8bf7mr16121735e9.4.1723800140095; 
+ Fri, 16 Aug 2024 02:22:20 -0700 (PDT)
 Received: from [192.168.220.175] (143.red-88-28-5.dynamicip.rima-tde.net.
  [88.28.5.143]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-371898aabdesm3190305f8f.99.2024.08.16.02.18.50
+ 5b1f17b1804b1-429ded36f55sm71122995e9.26.2024.08.16.02.22.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Aug 2024 02:18:56 -0700 (PDT)
-Message-ID: <2455bf3b-aa93-4505-aa5d-eab42d4620e4@linaro.org>
-Date: Fri, 16 Aug 2024 11:18:48 +0200
+ Fri, 16 Aug 2024 02:22:19 -0700 (PDT)
+Message-ID: <a53e7ca7-620f-47f1-a9b0-66fe184dc8f8@linaro.org>
+Date: Fri, 16 Aug 2024 11:22:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] hw/ppc/Kconfig: Add missing SERIAL_ISA dependency to
- POWERNV machine
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
- Paul Burton <paulburton@kernel.org>, Stafford Horne <shorne@gmail.com>,
- qemu-ppc@nongnu.org, Tyrone Ting <kfting@nuvoton.com>,
- Joel Stanley <joel@jms.id.au>, Eduardo Habkost <eduardo@habkost.net>,
- Sergio Lopez <slp@redhat.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Hao Wu <wuhaotsh@google.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Jan Kiszka <jan.kiszka@web.de>,
- Beniamino Galvani <b.galvani@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, "Michael S. Tsirkin"
- <mst@redhat.com>, Aurelien Jarno <aurelien@aurel32.net>,
- Palmer Dabbelt <palmer@dabbelt.com>, Artyom Tarasenko <atar4qemu@gmail.com>,
- Jia Liu <proljc@gmail.com>, Helge Deller <deller@gmx.de>,
- Max Filippov <jcmvbkbc@gmail.com>, Subbaraya Sundeep
- <sundeep.lkml@gmail.com>, Weiwei Li <liwei1518@gmail.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Steven Lee <steven_lee@aspeedtech.com>, Huacai Chen <chenhuacai@kernel.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, qemu-arm@nongnu.org,
- Aleksandar Rikalo <arikalo@gmail.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- qemu-riscv@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Song Gao <gaosong@loongson.cn>
-References: <20240814181534.218964-1-shentey@gmail.com>
- <20240814181534.218964-4-shentey@gmail.com>
+Subject: Re: [PATCH 1/2] target/i386: Split out gen_prepare_val_nz
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com
+References: <20240801075845.573075-1-richard.henderson@linaro.org>
+ <20240801075845.573075-2-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240814181534.218964-4-shentey@gmail.com>
+In-Reply-To: <20240801075845.573075-2-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x22a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -128,14 +96,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/8/24 20:15, Bernhard Beschow wrote:
-> The machine calls serial_hds_isa_init() which is provided by serial-isa.c,
-> guarded by SERIAL_ISA.
+On 1/8/24 09:58, Richard Henderson wrote:
+> Split out the TCG_COND_TSTEQ logic from gen_prepare_eflags_z,
+> and use it for CC_OP_BMILG* as well.  Prepare for requiring
+> both zero and non-zero senses.
 > 
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   hw/ppc/Kconfig | 1 +
->   1 file changed, 1 insertion(+)
+>   target/i386/tcg/translate.c | 22 ++++++++++++++--------
+>   1 file changed, 14 insertions(+), 8 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
