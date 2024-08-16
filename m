@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E220C531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:34:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E764C531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 13:35:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sex56-0007iF-EQ; Fri, 16 Aug 2024 09:33:28 -0400
+	id 1sex6p-0003OY-0D; Fri, 16 Aug 2024 09:35:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sex52-0007gm-As
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:33:25 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1sex6m-0003H0-S7
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:35:12 -0400
+Received: from mail-vk1-xa33.google.com ([2607:f8b0:4864:20::a33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sex50-0000xO-6r
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:33:24 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-428163f7635so15661985e9.2
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:33:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1sex6j-00016t-PE
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 09:35:12 -0400
+Received: by mail-vk1-xa33.google.com with SMTP id
+ 71dfb90a1353d-4f8dbdbba98so1082258e0c.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 06:35:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723815200; x=1724420000; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=QrtOZIjmVH3biFn3NBGJOVqrNEwQZIehQby9RM852o4=;
- b=LG+qyo/ux8JMpXEFYLYnmZsfHOJs5x72jFtZNTaUHVLzsSYmayVoUaMqpE4fW4TC9b
- ZE+FjIiWVphboCB/W1Pzj5Pr4pYt9sWc21yb60LDt1ecK2tSDfQAfdBKjHyrKwYTqTcX
- iZXJkHfwUnwfeBT9T0WvYfLloqsLPcqkpKXTRJ6XuH23UrD09LI1xo4OXBJvEK7fyo83
- EyKtomg5yQF5Qf1cqyMZ/1whOSA15N2EPOlellooEQyEDdaW20+ThL576MDe79RTM8YA
- e2SjtDaq3ZCl8T8dMbQ8uQICaAigFGv35REtpkZXMfUo+BK90V0ijc0DV+WiSVdtoUGg
- CIMA==
+ d=gmail.com; s=20230601; t=1723815308; x=1724420108; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mF9cJRUo+GfHxvzd0gOKBxB/iMn4ag039sowfbSB+8E=;
+ b=ePrrDXryFoN2FwRLd0sTWKYjPwGqp0a0U3AcOsJ6S7G5g8Axo3RcnBzRambPIQJlQh
+ 1APpP/4zdhzNiNoe9lJLXsZhs13nWaHulrFSK1lQlyT/n5AIOS4ZIoVtX3r7dmA2GDaK
+ LX9t7CFDSHw63iMjsb7Pjip3wUlQcDp9iQMP8V0DwJz1CzEAChRz+koCmHCSDNm6XS5N
+ hr2ZPAv8XZSZktTS4ZYMDC96GmjngI5EdunegTtD0j2IFnBwJgznII3hzkZa6A5MBd9J
+ MjFkxmiNhXX2YBw3b6mO7C1xtSL98vduxkv6P6b+aC1kI5FNis/G7QCM4T9cZLUOtq9/
+ l6wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723815200; x=1724420000;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QrtOZIjmVH3biFn3NBGJOVqrNEwQZIehQby9RM852o4=;
- b=Syf8PNUrUlf7u6AjR20LyPBCSGK5+0aQPW5yEbECrxAciGg/DKv8HmqN/uD5k8AzV1
- zxeqdykvcGFgImYfv5q5vK0onIngiNgEEzucjtDXma0vhsC08x7/nzoNfscqObhSCT8b
- nKw7TnX8t7kP/MMuH06uqwFkS8px1l56hzdcQy8LrZnJIFEt14JF2qiPJsB/HsrXPvsd
- vjJf5w06kid6MZ14s3po23K41Lktq97+Q5P1+p/AqSG+Qg6q+/HGAzxvPnFvBK5DmhW7
- L63DueRZ78f/p0meBBkhL6x2II9iqFNtGrswUX9c6PwxAuAlqp9ws9P2wKKUA1fzNa1+
- mr/A==
-X-Gm-Message-State: AOJu0Yzq0GCxLqsrYGUwU3phMZwnk5pbE1CzA1UYG8he5fZ3DGrMoIKC
- FdSvb3DpM9BGemwu7/52G11pkTOB0759+x0HyhO7QW769KxXetGvhTGWbpNJFCSdwrVTC6s1gas
- f
-X-Google-Smtp-Source: AGHT+IEHR2GdlLPZLIUIRe2kSgCdaBbHxER5w/yXx9Aqa6p/MIxnXTqtW9csGSWWsxKD9oKnQuXGyg==
-X-Received: by 2002:adf:ef8a:0:b0:368:4c54:ae27 with SMTP id
- ffacd0b85a97d-371946573a6mr1915523f8f.36.1723815199976; 
- Fri, 16 Aug 2024 06:33:19 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3718989708esm3718279f8f.70.2024.08.16.06.33.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 06:33:19 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- David Gibson <david@gibson.dropbear.id.au>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
-Subject: [PATCH for-9.2] docs/devel: Remove nested-papr.txt
-Date: Fri, 16 Aug 2024 14:33:18 +0100
-Message-Id: <20240816133318.3603114-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1723815308; x=1724420108;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mF9cJRUo+GfHxvzd0gOKBxB/iMn4ag039sowfbSB+8E=;
+ b=CxtnmOyK0JuPzQ/nGiPdGLwAKotnpdXx3YDZLjxmhT15/SlegSSbqNP9YCxib/geZY
+ kbfLzitl6WOugw8OQYVTkiHcQc6Zkll9gBIHMoXWJsH35v0L3gQopzgPRjwjm6Jr+wq8
+ +u8UVHFf1K8nOrI2nhjPPDt0Lcauzf/FXYMkhpP2dh8C+tdXuSyNOd5W3//Ph0tTUnj5
+ 2xlCD1RQ7MrmfWeRH/S/ZZi/zaf44DwU19xRFvDZdOpEWzpyKEY3hNeg/lb44OFk4+6/
+ S+DIOB5o9JQso1IXVXin3gdvDKs0Bqzdlf2CBK5/PkigUjTALIIyoCUGdYm8Gx18vOxI
+ aPrw==
+X-Gm-Message-State: AOJu0Yx2/5ihI8cqs+eoW2YNfpF8aK+qFyHNCN4be49TPfxXfKCB99WY
+ wMDebznwAcd8z8N271TkERaZ93FoppaEYKVGCBXMBtNm++Rkr7vtH/V5+xbEskGX+sfvnscIe6g
+ xwMiZV+Fpxb4JIQBFnqP80WUKNPo=
+X-Google-Smtp-Source: AGHT+IHEaxIbrwhVz/FMiHdcU9miC1pt9fmZmZO3Y7YmSxwARr15Q2+N3kamjwbssU1eC2CSl/YE7vvjagH/e5mx0oI=
+X-Received: by 2002:a05:6122:3b06:b0:4f5:1f34:15d5 with SMTP id
+ 71dfb90a1353d-4fc59134ccemr4133539e0c.5.1723815307735; Fri, 16 Aug 2024
+ 06:35:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20240810164502.19693-1-dorjoychy111@gmail.com>
+ <20240810164502.19693-5-dorjoychy111@gmail.com> <ZroXDY3YulpB4SCt@redhat.com>
+ <CAFfO_h48q9Lkt1BmtoPxtZ1a8HJsoQCTTdBMTFkB568+v6B0Sw@mail.gmail.com>
+ <Zr9M0BqDEdF5D5xJ@redhat.com>
+In-Reply-To: <Zr9M0BqDEdF5D5xJ@redhat.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Fri, 16 Aug 2024 19:34:59 +0600
+Message-ID: <CAFfO_h40N3n-uErpb9AXAi_hEqW7-UaD2ZSHFYO0BKfpw7dBOg@mail.gmail.com>
+Subject: Re: [PATCH v3 4/5] machine/nitro-enclave: Add built-in Nitro Secure
+ Module device
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, graf@amazon.com, agraf@csgraf.de, 
+ stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com, 
+ richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com, 
+ marcel.apfelbaum@gmail.com, philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a33;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-vk1-xa33.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -94,160 +97,253 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-docs/devel/nested-papr.txt is entirely (apart from the initial
-paragraph) a partial copy of the kernel documentation
-https://docs.kernel.org/arch/powerpc/kvm-nested.html
+On Fri, Aug 16, 2024 at 6:58=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> On Fri, Aug 16, 2024 at 06:50:34PM +0600, Dorjoy Chowdhury wrote:
+> > Hi Daniel,
+> >
+> > On Mon, Aug 12, 2024 at 8:07=E2=80=AFPM Daniel P. Berrang=C3=A9 <berran=
+ge@redhat.com> wrote:
+> > >
+> > > On Sat, Aug 10, 2024 at 10:45:01PM +0600, Dorjoy Chowdhury wrote:
+> > > > AWS Nitro Enclaves have built-in Nitro Secure Module (NSM) device w=
+hich
+> > > > is used for stripped down TPM functionality like attestation. This =
+commit
+> > > > adds the built-in NSM device in the nitro-enclave machine type.
+> > > >
+> > > > In Nitro Enclaves, all the PCRs start in a known zero state and the=
+ first
+> > > > 16 PCRs are locked from boot and reserved. The PCR0, PCR1, PCR2 and=
+ PCR8
+> > > > contain the SHA384 hashes related to the EIF file used to boot the
+> > > > VM for validation.
+> > > >
+> > > > A new optional nitro-enclave machine option 'id' has been added whi=
+ch will
+> > > > be the enclave identifier reflected in the module-id of the NSM dev=
+ice.
+> > > > Otherwise, the device will have a default id set.
+> > > >
+> > > > Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+> > > > ---
+> > > >  hw/core/eif.c                   | 205 ++++++++++++++++++++++++++++=
++++-
+> > > >  hw/core/eif.h                   |   5 +-
+> > > >  hw/core/meson.build             |   4 +-
+> > > >  hw/i386/Kconfig                 |   1 +
+> > > >  hw/i386/nitro_enclave.c         |  85 ++++++++++++-
+> > > >  include/hw/i386/nitro_enclave.h |  19 +++
+> > > >  6 files changed, 310 insertions(+), 9 deletions(-)
+> > > >
+> > > > diff --git a/hw/core/eif.c b/hw/core/eif.c
+> > > > index 5558879a96..d2c65668ef 100644
+> > > > --- a/hw/core/eif.c
+> > > > +++ b/hw/core/eif.c
+> > > > @@ -12,6 +12,9 @@
+> > > >  #include "qemu/bswap.h"
+> > > >  #include "qapi/error.h"
+> > > >  #include <zlib.h> /* for crc32 */
+> > > > +#include <cbor.h>
+> > > > +#include <gnutls/gnutls.h>
+> > > > +#include <gnutls/x509.h>
+> > > >
+> > > >  #include "hw/core/eif.h"
+> > > >
+> > >
+> > > > @@ -269,6 +284,125 @@ static bool read_eif_ramdisk(FILE *eif, FILE =
+*initrd, uint64_t size,
+> > > >      return false;
+> > > >  }
+> > > >
+> > > > +static bool get_fingerprint_sha384_from_cert(uint8_t *cert, size_t=
+ size,
+> > > > +                                             uint8_t *sha384, Erro=
+r **errp)
+> > > > +{
+> > > > +    gnutls_x509_crt_t crt;
+> > > > +    size_t hash_size =3D 48;
+> > > > +    gnutls_datum_t datum =3D {.data =3D cert, .size =3D size};
+> > > > +
+> > > > +    gnutls_global_init();
+> > > > +    gnutls_x509_crt_init(&crt);
+> > > > +
+> > > > +    if (gnutls_x509_crt_import(crt, &datum, GNUTLS_X509_FMT_PEM) !=
+=3D 0) {
+> > > > +        error_setg(errp, "Failed to import certificate");
+> > > > +        goto cleanup;
+> > > > +    }
+> > > > +
+> > > > +    if (gnutls_x509_crt_get_fingerprint(crt, GNUTLS_DIG_SHA384, sh=
+a384,
+> > > > +                                        &hash_size) !=3D 0) {
+> > > > +        error_setg(errp, "Failed to compute SHA384 fingerprint");
+> > > > +        goto cleanup;
+> > > > +    }
+> > > > +
+> > > > +    return true;
+> > > > +
+> > > > + cleanup:
+> > > > +    gnutls_x509_crt_deinit(crt);
+> > > > +    gnutls_global_deinit();
+> > > > +    return false;
+> > > > +}
+> > >
+> > > I'd suggest this go into  qcrypto/x509-utils.c & include/qcrypto/x509=
+-utils.h,
+> > > as:
+> > >
+> > >     int qcrypto_get_x509_cert_fingerprint(uint8_t *cert,
+> > >                                           size_t size,
+> > >                                           QCryptoHashAlgorith hash,
+> > >                                           Error **errp);
+> > >
+> > > there's no need to be calling gnutls_global_init() / deinit() either.
+> > >
+> > >
+> > > > @@ -299,7 +433,9 @@ static long get_file_size(FILE *f, Error **errp=
+)
+> > > >   */
+> > > >  bool read_eif_file(const char *eif_path, const char *machine_initr=
+d,
+> > > >                     char **kernel_path, char **initrd_path, char **=
+cmdline,
+> > > > -                   Error **errp)
+> > > > +                   uint8_t *image_sha384, uint8_t *bootstrap_sha38=
+4,
+> > > > +                   uint8_t *app_sha384, uint8_t *fingerprint_sha38=
+4,
+> > > > +                   bool *signature_found, Error **errp)
+> > > >  {
+> > > >      FILE *f =3D NULL;
+> > > >      FILE *machine_initrd_f =3D NULL;
+> > > > @@ -308,9 +444,33 @@ bool read_eif_file(const char *eif_path, const=
+ char *machine_initrd,
+> > > >      uint32_t crc =3D 0;
+> > > >      EifHeader eif_header;
+> > > >      bool seen_sections[EIF_SECTION_MAX] =3D {false};
+> > > > -
+> > > > +    /* kernel + ramdisks + cmdline sha384 hash */
+> > > > +    GChecksum *image_hasher =3D NULL;
+> > > > +    /* kernel + boot ramdisk + cmdline sha384 hash */
+> > > > +    GChecksum *bootstrap_hasher =3D NULL;
+> > > > +    /* application ramdisk(s) hash */
+> > > > +    GChecksum *app_hasher =3D NULL;
+> > > > +    size_t digest_len;
+> > > > +
+> > > > +    *signature_found =3D false;
+> > > >      *kernel_path =3D *initrd_path =3D *cmdline =3D NULL;
+> > > >
+> > > > +    image_hasher =3D g_checksum_new(G_CHECKSUM_SHA384);
+> > > > +    if (image_hasher =3D=3D NULL) {
+> > > > +        error_setg(errp, "Failed to initialize sha384 hash for ima=
+ge");
+> > > > +        goto cleanup;
+> > > > +    }
+> > > > +    bootstrap_hasher =3D g_checksum_new(G_CHECKSUM_SHA384);
+> > > > +    if (bootstrap_hasher =3D=3D NULL) {
+> > > > +        error_setg(errp, "Failed to initialize sha384 hash for boo=
+tstrap");
+> > > > +        goto cleanup;
+> > > > +    }
+> > > > +    app_hasher =3D g_checksum_new(G_CHECKSUM_SHA384);
+> > > > +    if (app_hasher =3D=3D NULL) {
+> > > > +        error_setg(errp, "Failed to initialize sha384 hash for app=
+");
+> > > > +        goto cleanup;
+> > > > +    }
+> > >
+> > > Don't use GChecksum APIs please, use the qcrypto hash APIs instead,
+> > > as we need all code to be using the designated QEMU crypto backend.
+> > >
+> >
+> > Thanks for the reviews. I was looking into replacing the GChecksum
+> > uses with qcrypto apis and was able to do it in the extendPCR function
+> > but I need some help with how I can do this in the eif.c file. For
+> > example, the "image_hash" needs to be a SHA384 hash of the kernel,
+> > cmdline, ramdisks sections' data as they appear in the order that is
+> > in the EIF file. Using GChecksum it was easy as I was able to just
+> > pass the hashers to the "read_eif_kernel", "read_eif_ramdisk" etc
+> > functions and call "update" on them. But the qcrypto apis are
+> > stateless i.e., I would need to pass all the buffers in a single api
+> > call so it wouldn't work right now out of the box. Do you have any
+> > suggestions how I should modify/create qcrypto apis so that I can
+> > easily do this (considering that I would need to implement for
+> > different qcrypto backends)? Thanks!
+>
+> Looking at the read_eif_* methods:
+>
+> @ -213,6 +218,8 @@ static bool read_eif_kernel(FILE *f, uint64_t size, ch=
+ar **kernel_path,
+>      }
+>
+>      *crc =3D crc32(*crc, kernel, size);
+> +    g_checksum_update(image_hasher, kernel, size);
+> +    g_checksum_update(bootstrap_hasher, kernel, size);
+>      g_free(kernel);
+>      fclose(tmp_file);
+>
+> @@ -230,6 +237,8 @@ static bool read_eif_kernel(FILE *f, uint64_t size, c=
+har **kernel_path,
+>  }
+>
+>  static bool read_eif_cmdline(FILE *f, uint64_t size, char *cmdline,
+> +                             GChecksum *image_hasher,
+> +                             GChecksum *bootstrap_hasher,
+>                               uint32_t *crc, Error **errp)
+>  {
+>      size_t got =3D fread(cmdline, 1, size, f);
+> @@ -239,10 +248,14 @@ static bool read_eif_cmdline(FILE *f, uint64_t size=
+, char *cmdline,
+>      }
+>
+>      *crc =3D crc32(*crc, (uint8_t *)cmdline, size);
+> +    g_checksum_update(image_hasher, (uint8_t *)cmdline, size);
+> +    g_checksum_update(bootstrap_hasher, (uint8_t *)cmdline, size);
+>      return true;
+>  }
+>
+>  static bool read_eif_ramdisk(FILE *eif, FILE *initrd, uint64_t size,
+> +                             GChecksum *image_hasher,
+> +                             GChecksum *bootstrap_or_app_hasher,
+>                               uint32_t *crc, Error **errp)
+>  {
+>      size_t got;
+> @@ -261,6 +274,8 @@ static bool read_eif_ramdisk(FILE *eif, FILE *initrd,=
+ uint64_t size,
+>      }
+>
+>      *crc =3D crc32(*crc, ramdisk, size);
+> +    g_checksum_update(image_hasher, ramdisk, size);
+> +    g_checksum_update(bootstrap_or_app_hasher, ramdisk, size);
+>      g_free(ramdisk);
+>      return true;
+>
+>
+> For the kernel + ramdisk, these methods are freeing the buffer.
+> For the cmdline, the pointer is held by the caller.
+>
+> I'd suggest that read_eif_kernel+ramddisk are changed to return
+> the data pointer instead of free'ing it.
+>
+> The caller can then stash the kernl+cmdline+ramdisk into an iovec
+> and calc the hash in a single stateless operation.
+>
+>
+>
+> If you really don't want to do that, then you'll have to wait for
+> this series to be finalized & merged next dev cycle:
+>
+>   https://lists.nongnu.org/archive/html/qemu-devel/2024-08/msg01173.html
+>
+> It is getting close to ready, so might not be too long, but I can't
+> guarantee a timeframe.
+>
 
-There's no benefit to the QEMU docs to converting this to rST,
-so instead delete it. Anybody needing to know the API and
-protocol for the guest to communicate with the hypervisor
-to created nested VMs should refer to the authoratitative
-documentation in the kernel docs.
+Thanks Daniel! It looks like returning the buffers is the way to move
+forward for now.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-I'm going through converting .txt documents (which end users
-will basically never see) to rST format (which appears in our
-HTML manuals). For this file, though, since almost all the
-contents are just a copy of an authoritative source that
-lives elsewhere, it didn't seem to me worth keeping it.
-
-Perhaps the cap-nested-papr machine property should be
-documented in docs/system/ppc/pseries.rst, but that is
-a pre-existing omission: would somebody who knows more
-about the pseries machine than I do like to propose a
-docs tweak there?
----
- docs/devel/nested-papr.txt | 119 -------------------------------------
- 1 file changed, 119 deletions(-)
- delete mode 100644 docs/devel/nested-papr.txt
-
-diff --git a/docs/devel/nested-papr.txt b/docs/devel/nested-papr.txt
-deleted file mode 100644
-index 90943650db9..00000000000
---- a/docs/devel/nested-papr.txt
-+++ /dev/null
-@@ -1,119 +0,0 @@
--Nested PAPR API (aka KVM on PowerVM)
--====================================
--
--This API aims at providing support to enable nested virtualization with
--KVM on PowerVM. While the existing support for nested KVM on PowerNV was
--introduced with cap-nested-hv option, however, with a slight design change,
--to enable this on papr/pseries, a new cap-nested-papr option is added. eg:
--
--  qemu-system-ppc64 -cpu POWER10 -machine pseries,cap-nested-papr=true ...
--
--Work by:
--    Michael Neuling <mikey@neuling.org>
--    Vaibhav Jain <vaibhav@linux.ibm.com>
--    Jordan Niethe <jniethe5@gmail.com>
--    Harsh Prateek Bora <harshpb@linux.ibm.com>
--    Shivaprasad G Bhat <sbhat@linux.ibm.com>
--    Kautuk Consul <kconsul@linux.vnet.ibm.com>
--
--Below taken from the kernel documentation:
--
--Introduction
--============
--
--This document explains how a guest operating system can act as a
--hypervisor and run nested guests through the use of hypercalls, if the
--hypervisor has implemented them. The terms L0, L1, and L2 are used to
--refer to different software entities. L0 is the hypervisor mode entity
--that would normally be called the "host" or "hypervisor". L1 is a
--guest virtual machine that is directly run under L0 and is initiated
--and controlled by L0. L2 is a guest virtual machine that is initiated
--and controlled by L1 acting as a hypervisor. A significant design change
--wrt existing API is that now the entire L2 state is maintained within L0.
--
--Existing Nested-HV API
--======================
--
--Linux/KVM has had support for Nesting as an L0 or L1 since 2018
--
--The L0 code was added::
--
--   commit 8e3f5fc1045dc49fd175b978c5457f5f51e7a2ce
--   Author: Paul Mackerras <paulus@ozlabs.org>
--   Date:   Mon Oct 8 16:31:03 2018 +1100
--   KVM: PPC: Book3S HV: Framework and hcall stubs for nested virtualization
--
--The L1 code was added::
--
--   commit 360cae313702cdd0b90f82c261a8302fecef030a
--   Author: Paul Mackerras <paulus@ozlabs.org>
--   Date:   Mon Oct 8 16:31:04 2018 +1100
--   KVM: PPC: Book3S HV: Nested guest entry via hypercall
--
--This API works primarily using a signal hcall h_enter_nested(). This
--call made by the L1 to tell the L0 to start an L2 vCPU with the given
--state. The L0 then starts this L2 and runs until an L2 exit condition
--is reached. Once the L2 exits, the state of the L2 is given back to
--the L1 by the L0. The full L2 vCPU state is always transferred from
--and to L1 when the L2 is run. The L0 doesn't keep any state on the L2
--vCPU (except in the short sequence in the L0 on L1 -> L2 entry and L2
---> L1 exit).
--
--The only state kept by the L0 is the partition table. The L1 registers
--it's partition table using the h_set_partition_table() hcall. All
--other state held by the L0 about the L2s is cached state (such as
--shadow page tables).
--
--The L1 may run any L2 or vCPU without first informing the L0. It
--simply starts the vCPU using h_enter_nested(). The creation of L2s and
--vCPUs is done implicitly whenever h_enter_nested() is called.
--
--In this document, we call this existing API the v1 API.
--
--New PAPR API
--===============
--
--The new PAPR API changes from the v1 API such that the creating L2 and
--associated vCPUs is explicit. In this document, we call this the v2
--API.
--
--h_enter_nested() is replaced with H_GUEST_VCPU_RUN().  Before this can
--be called the L1 must explicitly create the L2 using h_guest_create()
--and any associated vCPUs() created with h_guest_create_vCPU(). Getting
--and setting vCPU state can also be performed using h_guest_{g|s}et
--hcall.
--
--The basic execution flow is for an L1 to create an L2, run it, and
--delete it is:
--
--- L1 and L0 negotiate capabilities with H_GUEST_{G,S}ET_CAPABILITIES()
--  (normally at L1 boot time).
--
--- L1 requests the L0 to create an L2 with H_GUEST_CREATE() and receives a token
--
--- L1 requests the L0 to create an L2 vCPU with H_GUEST_CREATE_VCPU()
--
--- L1 and L0 communicate the vCPU state using the H_GUEST_{G,S}ET() hcall
--
--- L1 requests the L0 to run the vCPU using H_GUEST_RUN_VCPU() hcall
--
--- L1 deletes L2 with H_GUEST_DELETE()
--
--For more details, please refer:
--
--[1] Linux Kernel documentation (upstream documentation commit):
--
--commit 476652297f94a2e5e5ef29e734b0da37ade94110
--Author: Michael Neuling <mikey@neuling.org>
--Date:   Thu Sep 14 13:06:00 2023 +1000
--
--    docs: powerpc: Document nested KVM on POWER
--
--    Document support for nested KVM on POWER using the existing API as well
--    as the new PAPR API. This includes the new HCALL interface and how it
--    used by KVM.
--
--    Signed-off-by: Michael Neuling <mikey@neuling.org>
--    Signed-off-by: Jordan Niethe <jniethe5@gmail.com>
--    Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
--    Link: https://msgid.link/20230914030600.16993-12-jniethe5@gmail.com
--- 
-2.34.1
-
+Regards,
+Dorjoy
 
