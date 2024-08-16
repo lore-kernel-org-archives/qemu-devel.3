@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BAB0C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 11:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5FF6C52D7D
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 11:39:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sevGC-0005J3-0c; Fri, 16 Aug 2024 07:36:48 -0400
+	id 1sevIW-0002Gb-8W; Fri, 16 Aug 2024 07:39:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1sevGA-0005FX-6Q
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 07:36:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1sevG8-0007D1-NK
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 07:36:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723808204;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0P3g9Ey6qjkiCE263qL85AQR6FbWw54n1jXcxLmplEk=;
- b=eYt58ld7JDi972cnQGZMD1DNsmJQPzrHO7xR86IEW3w1mMReKzA3x8I9HR3vg57HCZv4Yg
- OJT733M9adb6T1Vf+kwE7lCou0/qEHtzimvILNnfIXBXXZO2TY61QF9OLR2VRzdNgkqi1c
- kWWvZrso32MmFmPhIjH61wXGuFPoHY0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-c0pyEvhqNYCWc_FfWSPVBQ-1; Fri,
- 16 Aug 2024 07:36:35 -0400
-X-MC-Unique: c0pyEvhqNYCWc_FfWSPVBQ-1
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A22591955D55; Fri, 16 Aug 2024 11:36:31 +0000 (UTC)
-Received: from localhost (dhcp-192-244.str.redhat.com [10.33.192.244])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 900FF19560A3; Fri, 16 Aug 2024 11:36:28 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, Eduardo Habkost
- <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Yanan Wang
- <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- Nicholas Piggin <npiggin@gmail.com>, Daniel Henrique Barboza
- <danielhb413@gmail.com>, David Gibson <david@gibson.dropbear.id.au>, Harsh
- Prateek Bora <harshpb@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>, Christian Borntraeger
- <borntraeger@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>, David
- Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- qemu-s390x@nongnu.org
-Subject: Re: [PATCH for-9.2] hw: add compat machines for 9.2
-In-Reply-To: <Zr8uNB8gaJTroMBU@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <20240816103723.2325982-1-cohuck@redhat.com>
- <Zr8uNB8gaJTroMBU@redhat.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Fri, 16 Aug 2024 13:36:26 +0200
-Message-ID: <87frr466o5.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sevIR-0002FC-FC
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 07:39:08 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1sevIP-0007O6-Jo
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 07:39:07 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2d3c08541cdso1378736a91.2
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 04:39:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1723808343; x=1724413143; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=YrXmJP0T5PuESmfzLa5Jje7GuulXuQ6qTfUpaeTPhEw=;
+ b=OyYZ8hdO8kQJN3ioN6kst0x3P5xKi7KV1b4y+KLvOzO+LhVaRtH0rq0ok792Iwfkmx
+ 6qJczN0aUtwEmwlHkwGu5hVpm85oXFI0HWtt6aZ07R6hYvprFSeb8pQiYDtsGkZBc1BB
+ NHvuzYBkMyPxJ1xd+wk8PP82Wq0E2YZ72Q0dPpr9HTD/INqr+tjNi1nQHc9wEtA9Y+ra
+ 9xDcRWOivSKpyDw5pf/bGz+jrB2G3j7frUPvXr0UEATW8IlJP2jIxiF8IuEE3QEtwRKN
+ pmA8wXqpgK/XLFtNZdLrTX1SL+HkHv8LYoj7Z9BThRFViEHUOe7oIdeWjakFbFfD+ZXB
+ 0VcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723808343; x=1724413143;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YrXmJP0T5PuESmfzLa5Jje7GuulXuQ6qTfUpaeTPhEw=;
+ b=wVekdsjxdT6l11i72nHx7/+Rhvn0GV1Mqs8mntaoqqT8LrOOcGZdpm8TKH5G5cZzmY
+ 9vZSdrc6z48m7KHDtIYAg+tG9Xe3w50ZnZZ807PHlAy2mSUkbCMaG9VkXDph9ItyK0Hl
+ sSOrkxjTbZPxtl45WDMvxnSs3dX/B8Gct2B9Sg0irtaLwdPu8No33ukg9kHF6GrPuYoE
+ 0euLEKMNq0djCT1JNIucMx2Knoue6Gs45vIyl775yAVlHHyGvweq7j83mw+HTFw1GgoL
+ eb7++QWXtakZ37hGa2NIZjLTgfLBSC+LctFx69yydkP1VNXyyrKhyT6L1xI2SwDPRR1f
+ zfow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX8NcwtXa3a0YgXpTz8EuDsgCV+u/GtGieiW7U/2YPCaNzKR/cQ4DGRV9hC9MoMEwpDylnRFlvDBsOgmWWp6fkM6OvHfmo=
+X-Gm-Message-State: AOJu0YzSJLRAnsZr4rQsXNUWObik9bfrJjDwp4K3QYCkb8kVwu7p3s3N
+ 9h0ENUiH5atHT11ZM6FMSeLLm7h8KaBu4vuNpD4yLKhhwK80fnxHcPDTD2Wrr/A=
+X-Google-Smtp-Source: AGHT+IGoEWFbK4DaiR5SLzSvh6BYAuT554CckHIIY7IeAqQZp7JNcMDbLahsTYmbzRXCtW4exqiNvQ==
+X-Received: by 2002:a17:90b:802:b0:2c7:ab00:f605 with SMTP id
+ 98e67ed59e1d1-2d3dfc7d183mr2799374a91.20.1723808343513; 
+ Fri, 16 Aug 2024 04:39:03 -0700 (PDT)
+Received: from [192.168.68.110] ([179.133.97.250])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2d3ac7f2276sm5416711a91.29.2024.08.16.04.38.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 16 Aug 2024 04:39:03 -0700 (PDT)
+Message-ID: <986253df-1102-4625-9fa5-264f3a4e0c6b@ventanamicro.com>
+Date: Fri, 16 Aug 2024 08:38:56 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] hw/char: riscv_htif: Use blocking
+ qemu_chr_fe_write_all
+To: Alistair Francis <alistair23@gmail.com>, alex.bennee@linaro.org,
+ qemu-devel@nongnu.org, peter.maydell@linaro.org
+Cc: palmer@dabbelt.com, qemu-riscv@nongnu.org,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com,
+ Bin Meng <bmeng.cn@gmail.com>, liwei1518@gmail.com,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20240815015410.369925-1-alistair.francis@wdc.com>
+ <20240815015410.369925-2-alistair.francis@wdc.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240815015410.369925-2-alistair.francis@wdc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,77 +105,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 16 2024, Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
 
-> On Fri, Aug 16, 2024 at 12:37:23PM +0200, Cornelia Huck wrote:
->> Add 9.2 machine types for arm/i440fx/m68k/q35/s390x/spapr.
->>=20
->> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
->> ---
->>  hw/arm/virt.c              |  9 ++++++++-
->>  hw/core/machine.c          |  3 +++
->>  hw/i386/pc.c               |  3 +++
->>  hw/i386/pc_piix.c          | 15 ++++++++++++---
->>  hw/i386/pc_q35.c           | 13 +++++++++++--
->>  hw/m68k/virt.c             |  9 ++++++++-
->>  hw/ppc/spapr.c             | 15 +++++++++++++--
->>  hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
->>  include/hw/boards.h        |  3 +++
->>  include/hw/i386/pc.h       |  3 +++
->>  10 files changed, 77 insertions(+), 10 deletions(-)
->
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->
->
->> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
->> index d9e69243b4a7..746bfe05d386 100644
->> --- a/hw/i386/pc_piix.c
->> +++ b/hw/i386/pc_piix.c
->> @@ -479,13 +479,24 @@ static void pc_i440fx_machine_options(MachineClass=
- *m)
->>                                       "Use a different south bridge than=
- PIIX3");
->>  }
->>=20=20
->> -static void pc_i440fx_machine_9_1_options(MachineClass *m)
->> +static void pc_i440fx_machine_9_2_options(MachineClass *m)
->>  {
->>      pc_i440fx_machine_options(m);
->>      m->alias =3D "pc";
->>      m->is_default =3D true;
->>  }
->>=20=20
->> +DEFINE_I440FX_MACHINE(9, 2);
->> +
->> +static void pc_i440fx_machine_9_1_options(MachineClass *m)
->> +{
->> +    pc_i440fx_machine_9_2_options(m);
->> +    m->alias =3D NULL;
->> +    m->is_default =3D false;
->> +    compat_props_add(m->compat_props, hw_compat_9_1, hw_compat_9_1_len);
->> +    compat_props_add(m->compat_props, pc_compat_9_1, pc_compat_9_1_len);
->> +}
->> +
->>  DEFINE_I440FX_MACHINE(9, 1);
->>=20=20
->>  static void pc_i440fx_machine_9_0_options(MachineClass *m)
->> @@ -493,8 +504,6 @@ static void pc_i440fx_machine_9_0_options(MachineCla=
-ss *m)
->>      PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
->>=20=20
->>      pc_i440fx_machine_9_1_options(m);
->> -    m->alias =3D NULL;
->> -    m->is_default =3D false;
->>      m->smbios_memory_device_size =3D 16 * GiB;
->
-> Feels like we should be adding an "_AS_LATEST" macro
-> variant for piix/q35 too, so it matches the pattern
-> in other targets for handling alias & is_default.
->
-> Not a thing your patch needs todo though.
 
-Yes, having to fiddle the is_default setting is a bit annoying. We still
-have the q35 vs pc alias issue, though. (I'm wondering if it is finally
-time to make q35 the default, and alias pc to it?)
+On 8/14/24 10:54 PM, Alistair Francis wrote:
+> The current approach of using qemu_chr_fe_write() and ignoring the
+> return values results in dropped charecters [1]. Ideally we want to
+> report FIFO status to the guest, but the HTIF isn't a real UART, so we
+> don't really have a way to do that.
+> 
+> Instead let's just use qemu_chr_fe_write_all() so at least we don't drop
+> charecters.
+> 
+> 1: https://gitlab.com/qemu-project/qemu/-/issues/2114
+> 
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
 
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+
+>   hw/char/riscv_htif.c | 12 ++++++++++--
+>   1 file changed, 10 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
+> index 9bef60def1..d40b542948 100644
+> --- a/hw/char/riscv_htif.c
+> +++ b/hw/char/riscv_htif.c
+> @@ -218,7 +218,11 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
+>                       tswap64(syscall[3]) == HTIF_CONSOLE_CMD_PUTC) {
+>                       uint8_t ch;
+>                       cpu_physical_memory_read(tswap64(syscall[2]), &ch, 1);
+> -                    qemu_chr_fe_write(&s->chr, &ch, 1);
+> +                    /*
+> +                     * XXX this blocks entire thread. Rewrite to use
+> +                     * qemu_chr_fe_write and background I/O callbacks
+> +                     */
+> +                    qemu_chr_fe_write_all(&s->chr, &ch, 1);
+>                       resp = 0x100 | (uint8_t)payload;
+>                   } else {
+>                       qemu_log_mask(LOG_UNIMP,
+> @@ -237,7 +241,11 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
+>               return;
+>           } else if (cmd == HTIF_CONSOLE_CMD_PUTC) {
+>               uint8_t ch = (uint8_t)payload;
+> -            qemu_chr_fe_write(&s->chr, &ch, 1);
+> +            /*
+> +             * XXX this blocks entire thread. Rewrite to use
+> +             * qemu_chr_fe_write and background I/O callbacks
+> +             */
+> +            qemu_chr_fe_write_all(&s->chr, &ch, 1);
+>               resp = 0x100 | (uint8_t)payload;
+>           } else {
+>               qemu_log("HTIF device %d: unknown command\n", device);
 
