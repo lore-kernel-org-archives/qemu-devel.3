@@ -4,89 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80403C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 21:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA193C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 21:55:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sf4YH-00058N-7L; Fri, 16 Aug 2024 17:32:05 -0400
+	id 1sf4uV-0008GB-9e; Fri, 16 Aug 2024 17:55:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1sf4YE-00053m-U5
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 17:32:02 -0400
-Received: from mail-io1-xd2d.google.com ([2607:f8b0:4864:20::d2d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1sf4YD-0000XH-Db
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 17:32:02 -0400
-Received: by mail-io1-xd2d.google.com with SMTP id
- ca18e2360f4ac-81fd925287eso102008239f.3
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 14:32:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723843920; x=1724448720; darn=nongnu.org;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=vy/n8mlzqwKn7GxhQdAMxiuJghrT1X2vOr0nkwydxW8=;
- b=csVSd0UlWkmdjp3UAihuvlm1iRyxk4w/0JycLxtAwp4wzW+NeKtmNKE9yI42C6rupG
- TzBuBSMcOw+P3+EXN8VZk62NqTZC++Sx4BEiS88Id5iXs/8uhbZe8WhOvi2n411VKyK9
- Ge+EefWJmov3zK+lhNZgw2BrWByvZpZCsMSdrlcjH5OfoxjO7MFGKWBUDWKwa3SZaaL+
- yBSecFbtSzSX4I+RbpZUuZ4RhAXE90FzvgAbJdRnwUmMxgtJ7p3WG5FZpEM8D2ip4fc0
- tSZSXxSJYppuBiqlrZhrC8ZsfRVwx3W9JViKwQq4doTQZPP2KULDWMCRmcQEMRP8G84c
- Ylyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723843920; x=1724448720;
- h=content-language:thread-index:content-transfer-encoding
- :mime-version:message-id:date:subject:in-reply-to:references:cc:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vy/n8mlzqwKn7GxhQdAMxiuJghrT1X2vOr0nkwydxW8=;
- b=KaNZB7oCFF0jAU3VCd+xzBX1MbpstER9kw4QJH/cCr/OEnUYFj0GGMpIs7oT58VtcY
- ibK4LwXwwmbD+tlHVdCa55l1Q9cKxFTqo+MV2EYU9nO2jgb88ioJTYwl4kwiMuACyl1K
- h9e4vOoKloov/5chB+i+bKAniZgb6KqSU9OXoVNkQCowCojv21rGNBu7O/hAO7O55tqB
- u6A/sptkgiltio+RDdnP+wUOMX0xhw6G/YbM7eya1zOet0IvJExwvAWRUtqARXOADY5j
- IBDsPn3lohJSJ+aC3MQmW66n/gjMrsi5XjZzig4jXeOKefHNUQMONfx8gizRnyKoXyYZ
- 49Wg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW4e9EGlPxxqqrxFciN1+zQQul2yC094Aarxl+hJCWi+uf2IKa5qxuC8BFVY7P8SWcVerlm1GF3sLk8poU4YptyiKQ+t4M=
-X-Gm-Message-State: AOJu0YzFpkg9dEa7K/6mSI9cSuxHKqdZaNQ9/AyB8a8ZK0NSSdYLgUgJ
- BtkXmXdV5RChX2RwI41PnBBsvWluTLrkZAMiyvsHu5XV92w5jGPtvy4M6g==
-X-Google-Smtp-Source: AGHT+IFQL0neHSgmiSLOfSYHdcCofx+p7MwN8SVrLF9Db4Spb11I0JG3Q5e1EUyrZK1WMVHhG5YoKA==
-X-Received: by 2002:a05:6602:6084:b0:822:3df4:64c5 with SMTP id
- ca18e2360f4ac-824f2642fd7mr493939439f.9.1723843919801; 
- Fri, 16 Aug 2024 14:31:59 -0700 (PDT)
-Received: from DESKTOPUU50BPD ([2601:284:8201:81c0:8166:7e5b:29b6:51cb])
- by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4ccd6e9d253sm1474145173.72.2024.08.16.14.31.56
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 16 Aug 2024 14:31:59 -0700 (PDT)
-From: <ltaylorsimpson@gmail.com>
-To: "'Brian Cain'" <bcain@quicinc.com>,
-	<qemu-devel@nongnu.org>
-Cc: <quic_mathbern@quicinc.com>, <sidneym@quicinc.com>,
- <quic_mliebel@quicinc.com>
-References: <20240816190620.1418311-1-bcain@quicinc.com>
- <20240816190620.1418311-2-bcain@quicinc.com>
-In-Reply-To: <20240816190620.1418311-2-bcain@quicinc.com>
-Subject: RE: [PATCH 2/3] target/hexagon: rename
- HEX_EVENT_TRAP0=>HEX_CAUSE_TRAP0
-Date: Fri, 16 Aug 2024 15:31:56 -0600
-Message-ID: <019b01daf023$b9dfe270$2d9fa750$@gmail.com>
+ (Exim 4.90_1) (envelope-from <chauser@pullman.com>)
+ id 1sf4uI-0008F1-7w
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 17:54:52 -0400
+Received: from secure.fsr.com ([64.126.132.23])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chauser@pullman.com>)
+ id 1sf4uF-0002l0-C6
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 17:54:49 -0400
+Received: from [192.168.254.26] (syn-098-146-201-045.res.spectrum.com
+ [98.146.201.45]) (Authenticated sender: chauser)
+ by secure.fsr.com (Postfix) with ESMTPSA id 8AA3D34684;
+ Fri, 16 Aug 2024 14:46:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pullman.com;
+ s=mail1; t=1723844816;
+ bh=liImmO7tee0sCzlpxFB/Zsct9M9VNqEhsFm23KWs7qo=;
+ h=Date:Subject:From:To;
+ b=D56aALYv7fUQmuAHdX87Bg1oa2bftFOzDGVEm9tf3xqfMfHR4YiJuDwx3ImCi/HG3
+ s2G/cV/ScxYsl+oDjW/AVezVz5GiXjhv9G7myYe0eItgg6bTFnbF05cl1qLl8GT9QS
+ v0yn3U75JlIltecc6eCmF0K2swtesyhWmA4/EQ6g=
+Message-ID: <2c1d0942-1428-47a7-bd37-29c16d596761@pullman.com>
+Date: Fri, 16 Aug 2024 14:46:55 -0700
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHkSSDsbHa0lsPsUwH6PIsqcGtF+gHS+MQusgkc9SA=
-Content-Language: en-us
-Received-SPF: pass client-ip=2607:f8b0:4864:20::d2d;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-io1-xd2d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-9.2 v3 0/6] target/sparc: emulate floating point queue
+ when raising fp traps
+From: Carl Hauser <chauser@pullman.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20240816072311.353234-1-richard.henderson@linaro.org>
+ <501c22c3-d8e3-4439-a958-549e9a772ffd@pullman.com>
+Content-Language: en-GB
+In-Reply-To: <501c22c3-d8e3-4439-a958-549e9a772ffd@pullman.com>
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=64.126.132.23; envelope-from=chauser@pullman.com;
+ helo=secure.fsr.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ MIME_HTML_ONLY=0.1, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,29 +69,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>OK, I think the problem is the handling of dc-&gt;fsr_qne in
+      trans_STDFQ, lines 4583 and 4593 -- the code is evaluating
+      dc-&gt;fsr_qne at translation time and not at runtime. <br>
+    </p>
+    <div class="moz-cite-prefix">On 8/16/24 14:19, Carl Hauser wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:501c22c3-d8e3-4439-a958-549e9a772ffd@pullman.com">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <p>Hi Richard,</p>
+      <p>I applied the 6 patches and then ran a divide-by-zero test on
+        the Solaris image. The result was a crash<br>
+      </p>
+      <p><span style="font-family:monospace"><span
+            style="color:#000000;background-color:#ffffff;">(qemu) qemu:
+            fatal: Trap 0x08 (FPU Exception) while interrupts disabled,
+            Error state </span><br>
+          pc: f0066d80  npc: f0066d84 <br>
+          %g0-7: 00000000 01086002 00000000 00002000 00000000 fc067b80
+          00000001 f638b180 <br>
+          %o0-7: f025ef5c 00000000 00000000 f6376648 00000000 00000000
+          fc067b80 f004149c  <br>
+          %l0-7: 04401087 00010a10 00010a14 fc067b80 fc067f70 00000080
+          00000001 fc067b80  <br>
+          %i0-7: 00000000 01080000 00080000 00000002 0f800000 ef718cb0
+          effff510 000109ec  <br>
+          %f00:  ffffffffffffffff ffffffffffffffff ffffffffffffffff
+          ffffffffffffffff <br>
+          %f08:  0000000040400000 ffffffffffffffff ffffffffffffffff
+          ffffffffffffffff <br>
+          %f16:  ffffffffffffffff ffffffffffffffff ffffffffffffffff
+          ffffffffffffffff <br>
+          %f24:  ffffffffffffffff ffffffffffffffff ffffffffffffffff
+          ffffffffffffffff <br>
+          psr: 04001087 (icc: ---- SPE: S--) wim: 00000002 <br>
+          fsr: 01090000 y: 00000000<br>
+          <br>
+          <br>
+        </span></p>
+      <div class="moz-cite-prefix"><span style="font-family:monospace">I've
+          seen that PC address before -- I'm pretty sure it is the STDFQ
+          instruction in the kernel trap handler, and if I'm reading the
+          fsr correctly that is confirmed by the fact that it is
+          sequence-error type FPE which only occurs for STDFQ. Without a
+          bit of further poking around with the debugger I don't know
+          what's happening beyond that. I will keep looking but thought
+          I'd provide immediate results in case this rings a bell for
+          you.</span></div>
+      <div class="moz-cite-prefix"><span style="font-family:monospace"><br>
+        </span></div>
+      <div class="moz-cite-prefix"><span style="font-family:monospace">If
+          it would be helpful, I could share a disk image with Solaris,
+          gnu tools, the test examples, etc. It's under 500MB compressed
+          and I think I have enough google drive space to accommodate
+          that at the moment. <br>
+        </span></div>
+      <div class="moz-cite-prefix"><span style="font-family:monospace"><br>
+        </span></div>
+      <div class="moz-cite-prefix"><span style="font-family:monospace">--
+          Carl<br>
+        </span></div>
+      <div class="moz-cite-prefix">On 8/16/24 00:23, Richard Henderson
+        wrote:<br>
+      </div>
+      <blockquote type="cite"
+        cite="mid:20240816072311.353234-1-richard.henderson@linaro.org">
+        <pre class="moz-quote-pre" wrap="">Hi Carl,
+
+While digging through the manual to figure out if we were really
+doing the right thing raising the fp exception, I found the fpu
+exception state machine.  I'm not sure it's worth emulating the
+fp_exception_pending state, but it's certainly easy enough to
+emulate the fp_executing/fp_exception states.
+
+In addition, this simplifies the implementation of STDFQ,
+restricts FQ to sparc32 system mode, and handles migration.
+
+Would you please double-check this against your Solaris images?
 
 
-> -----Original Message-----
-> From: Brian Cain <bcain@quicinc.com>
-> Sent: Friday, August 16, 2024 1:06 PM
-> To: qemu-devel@nongnu.org
-> Cc: bcain@quicinc.com; quic_mathbern@quicinc.com;
-> sidneym@quicinc.com; quic_mliebel@quicinc.com;
-> ltaylorsimpson@gmail.com
-> Subject: [PATCH 2/3] target/hexagon: rename
-> HEX_EVENT_TRAP0=>HEX_CAUSE_TRAP0
-> 
-> The value previously used for "HEX_EVENT_TRAP0" was the cause code
-> definition and not the event number.  So in this commit, we update the
-> name to reflect the cause code and add a new "HEX_EVENT_TRAP0"
-> with the correct event number.
-> 
-> Signed-off-by: Brian Cain <bcain@quicinc.com>
-> ---
->  target/hexagon/cpu_bits.h | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+r~
 
 
+Carl Hauser (2):
+  target/sparc: Add FQ and FSR.QNE
+  target/sparc: Populate sparc32 FQ when raising fp exception
+
+Richard Henderson (4):
+  target/sparc: Restrict STQF to sparcv9
+  target/sparc: Add FSR_QNE to tb_flags
+  target/sparc: Implement STDFQ
+  target/sparc: Add gen_trap_if_nofpu_fpexception
+
+ target/sparc/cpu.h          |  30 ++++++++-
+ target/sparc/fop_helper.c   |   4 ++
+ target/sparc/int32_helper.c |  32 ++++-----
+ target/sparc/machine.c      |  25 +++++++
+ target/sparc/translate.c    | 126 ++++++++++++++++++++++++++----------
+ target/sparc/insns.decode   |   4 +-
+ 6 files changed, 169 insertions(+), 52 deletions(-)
+
+</pre>
+      </blockquote>
+    </blockquote>
+  </body>
+</html>
 
