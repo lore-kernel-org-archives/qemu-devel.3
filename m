@@ -4,72 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECB8EC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 08:43:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A3D1C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 08:45:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sesXN-0004Eg-Q2; Fri, 16 Aug 2024 04:42:21 -0400
+	id 1sesZo-0008SX-5A; Fri, 16 Aug 2024 04:44:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sesXL-0004Dk-9E
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:42:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1sesZk-0008Rv-1I
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:44:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1sesXJ-0006Wk-Fl
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:42:19 -0400
+ id 1sesZi-0006dw-9p
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 04:44:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723797735;
+ s=mimecast20190719; t=1723797884;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Y4XA43Xcoz+g2ic3dGNxf6liAtMP0wx7qDgoX1tTGLA=;
- b=PDm6IwcAKIDxXEQog5skrCjjzr3K5ZQ7vm/fesjjlvMSGHbVHIDXuT7FsykZ0qh22NfG3o
- 7wP9AJNVAQ3FLrGC+boIqhzm+nzENBcO5fUUJQ1dCCU1pVvw3LMHNtThds/J2Kmz+laH/U
- W90It+Q1wV3jNcT0m9n5JQf492QGsRE=
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gA5jdq5dLKzufFOVi0jOEI5ost4zThD+hb6Vt+IMbFc=;
+ b=WjgLjJ0Od9LwPXS9FzeHiRztA7Jy4aS0huOY34nfKvGlCm2vuharORjfvU/wiOZ+V2hO0e
+ 5DYTPJU26y0O0a5RWhCe7gARyQ6nddjRGUcBk5F34aKpjPC36R7BYCvAG2Ws3qCFZFaLFN
+ N6qoT1/fEoJWJuINM5lT+oLUXFVRPes=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-102-GWUZsbS0P_e8Ls4xKhym5Q-1; Fri,
- 16 Aug 2024 04:42:13 -0400
-X-MC-Unique: GWUZsbS0P_e8Ls4xKhym5Q-1
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-599-Sjs8SNsAMqait3Xiq3HaTA-1; Fri,
+ 16 Aug 2024 04:44:41 -0400
+X-MC-Unique: Sjs8SNsAMqait3Xiq3HaTA-1
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E49131955F42; Fri, 16 Aug 2024 08:42:11 +0000 (UTC)
+ id 7F0D81955BFC; Fri, 16 Aug 2024 08:44:39 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.143])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D11241955DD8; Fri, 16 Aug 2024 08:42:09 +0000 (UTC)
-Date: Fri, 16 Aug 2024 09:42:06 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 659E81955F23; Fri, 16 Aug 2024 08:44:33 +0000 (UTC)
+Date: Fri, 16 Aug 2024 09:44:29 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [RFC V1 0/6] Live update: cpr-transfer
-Message-ID: <Zr8Q3rgoKkh1ohTG@redhat.com>
-References: <1719776648-435073-1-git-send-email-steven.sistare@oracle.com>
- <Zpk2bfjS1Wu2QbcO@x1n>
- <90a01b2b-6a72-475f-9232-3af73d1618cf@oracle.com>
- <Zr5lC9ryCsn9FjE2@x1n>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ qemu-devel@nongnu.org, Beraldo Leal <bleal@redhat.com>,
+ David Hildenbrand <david@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>, qemu-s390x@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: Re: [PATCH v2 1/4] meson: hide tsan related warnings
+Message-ID: <Zr8RbcFVN0cgwp-H@redhat.com>
+References: <20240814224132.897098-1-pierrick.bouvier@linaro.org>
+ <20240814224132.897098-2-pierrick.bouvier@linaro.org>
+ <CAFEAcA-EAm9mEdGz6m2Y-yxK16TgX6CpxnXc6hW59iAxhXhHtw@mail.gmail.com>
+ <Zr3g7lEfteRpNYVC@redhat.com>
+ <CAFEAcA8xMjd2w5tT-sMcHKuKGXbqZg4HtTerNFG=_YpNRVVhxQ@mail.gmail.com>
+ <66f144dd-f098-443b-8a34-d68bbdecc48f@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Zr5lC9ryCsn9FjE2@x1n>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <66f144dd-f098-443b-8a34-d68bbdecc48f@redhat.com>
 User-Agent: Mutt/2.2.12 (2023-09-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,39 +103,67 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 15, 2024 at 04:28:59PM -0400, Peter Xu wrote:
-> On Sat, Jul 20, 2024 at 04:07:50PM -0400, Steven Sistare wrote:
-> > > > The new user-visible interfaces are:
-> > > >    * cpr-transfer (MigMode migration parameter)
-> > > >    * cpr-uri (migration parameter)
+On Fri, Aug 16, 2024 at 07:44:28AM +0200, Thomas Huth wrote:
+> On 15/08/2024 19.54, Peter Maydell wrote:
+> > On Thu, 15 Aug 2024 at 12:05, Daniel P. Berrangé <berrange@redhat.com> wrote:
 > > > 
-> > > I wonder whether this parameter can be avoided already, maybe we can let
-> > > cpr-transfer depend on unix socket in -incoming, then integrate fd sharing
-> > > in the same channel?
+> > > On Thu, Aug 15, 2024 at 11:12:39AM +0100, Peter Maydell wrote:
+> > > > On Wed, 14 Aug 2024 at 23:42, Pierrick Bouvier
+> > > > <pierrick.bouvier@linaro.org> wrote:
+> > > > > 
+> > > > > When building with gcc-12 -fsanitize=thread, gcc reports some
+> > > > > constructions not supported with tsan.
+> > > > > Found on debian stable.
+> > > > > 
+> > > > > qemu/include/qemu/atomic.h:36:52: error: ‘atomic_thread_fence’ is not supported with ‘-fsanitize=thread’ [-Werror=tsan]
+> > > > >     36 | #define smp_mb()                     ({ barrier(); __atomic_thread_fence(__ATOMIC_SEQ_CST); })
+> > > > >        |                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> > > > > 
+> > > > > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > > > > ---
+> > > > >   meson.build | 10 +++++++++-
+> > > > >   1 file changed, 9 insertions(+), 1 deletion(-)
+> > > > > 
+> > > > > diff --git a/meson.build b/meson.build
+> > > > > index 81ecd4bae7c..52e5aa95cc0 100644
+> > > > > --- a/meson.build
+> > > > > +++ b/meson.build
+> > > > > @@ -499,7 +499,15 @@ if get_option('tsan')
+> > > > >                            prefix: '#include <sanitizer/tsan_interface.h>')
+> > > > >       error('Cannot enable TSAN due to missing fiber annotation interface')
+> > > > >     endif
+> > > > > -  qemu_cflags = ['-fsanitize=thread'] + qemu_cflags
+> > > > > +  tsan_warn_suppress = []
+> > > > > +  # gcc (>=11) will report constructions not supported by tsan:
+> > > > > +  # "error: ‘atomic_thread_fence’ is not supported with ‘-fsanitize=thread’"
+> > > > > +  # https://gcc.gnu.org/gcc-11/changes.html
+> > > > > +  # However, clang does not support this warning and this triggers an error.
+> > > > > +  if cc.has_argument('-Wno-tsan')
+> > > > > +    tsan_warn_suppress = ['-Wno-tsan']
+> > > > > +  endif
+> > > > 
+> > > > That last part sounds like a clang bug -- -Wno-foo is supposed
+> > > > to not be an error on compilers that don't implement -Wfoo for
+> > > > any value of foo (unless some other warning/error would also
+> > > > be emitted).
+> > > 
+> > > -Wno-foo isn't an error, but it is a warning... which we then
+> > > turn into an error due to -Werror, unless we pass -Wno-unknown-warning-option
+> > > to clang.
 > > 
-> > You saw the answer in another thread, but I repeat it here for others benefit:
-> > 
-> >   "CPR state cannot be sent over the normal migration channel, because devices
-> >    and backends are created prior to reading the channel, so this mode sends
-> >    CPR state over a second migration channel that is not visible to the user.
-> >    New QEMU reads the second channel prior to creating devices or backends."
+> > Which is irritating if you want to be able to blanket say
+> > '-Wno-silly-compiler-warning' and not see any of that
+> > warning regardless of compiler version. That's why the
+> > gcc behaviour is the way it is (i.e. -Wno-such-thingy
+> > is neither a warning nor an error if it would be the only
+> > warning/error), and if clang doesn't match it that's a shame.
 > 
-> Today when looking again, I wonder about the other way round: can we make
-> the new parameter called "-incoming-cpr", working exactly the same as
-> "cpr-uri" qemu cmdline, but then after cpr is loaded it'll be automatically
-> be reused for migration incoming ports?
-> 
-> After all, cpr needs to happen already with unix sockets.  Having separate
-> cmdline options grants user to make the other one to be non-unix, but that
-> doesn't seem to buy us anything.. then it seems easier to always reuse it,
-> and restrict cpr-transfer to only work with unix sockets for incoming too?
+> I thought that Clang would behave the same way as GCC, but apparently it
+> does not (anymore?):
 
-IMHO we should not be adding any new command line parameter at all,
-and in fact we should actually deprecate the existing "-incoming",
-except when used with "defer".
+It is nothing new - clang has behaved this way wrt unknown warning flags
+for as long as I remember.
 
-An application managing migration should be doing all the configuration
-via QMP
 
 With regards,
 Daniel
