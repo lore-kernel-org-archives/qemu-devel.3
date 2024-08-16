@@ -4,78 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB81DC52D7C
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 02:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5F29C52D7C
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 02:27:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1semdL-00038Q-2R; Thu, 15 Aug 2024 22:24:08 -0400
+	id 1semfq-0007LY-EA; Thu, 15 Aug 2024 22:26:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1semdG-00037U-2W
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 22:24:02 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1semfo-0007I6-Bd; Thu, 15 Aug 2024 22:26:40 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1semdE-0004vh-JF
- for qemu-devel@nongnu.org; Thu, 15 Aug 2024 22:24:01 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-20202df1c2fso4258105ad.1
- for <qemu-devel@nongnu.org>; Thu, 15 Aug 2024 19:24:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1semfm-0005O0-ND; Thu, 15 Aug 2024 22:26:40 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-1fc60c3ead4so14632005ad.0; 
+ Thu, 15 Aug 2024 19:26:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723775039; x=1724379839; darn=nongnu.org;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
+ d=gmail.com; s=20230601; t=1723775196; x=1724379996; darn=nongnu.org;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Z2Kq7vgxrD0V1bNg0gZMrLJZijYM6ZFsEKzjQvvZ3Ww=;
- b=CZjrefjEdnn682KGixO8YIU0CA3A6mzWgEMRY2mMRpqpXdPy59oTWRpSWQMkp0vZZ7
- /QSSdfwc4G1OrHoxOyGNnzkZhfowREgy+TG9pql6jHkj5gkPBb2HmyhlJkGpei56g3p0
- dHfQh71vYayh527i+osxclDWLDX81onm2mkL3P+o4jFHxloL/w6rnhX1HLbXYNPwbPSf
- S+nnoUdENxCYVhFqLtWiAWaoFrKzgSTvXX0yev1ur7VIPlEF3Ub1CN5TvDHykiyqfu0l
- q4cnpS1TYxx1SeMuOEm3QPJABGMG8JVV/1STxWPYmtgz3lR2svBa7Ii3KagU06NX6H2g
- xM4g==
+ bh=XiJ95sFlW8mgrdmS+FGQG1YkX3zQYhm3/ChV9srynF0=;
+ b=ac1Umut91DNJge8EsBSHt2m1HDPEsdEpm8bf6inM6wvhWaJp4uwB/TrRYmnCnRCXQu
+ zVpGelbiYca7iEfbMU7ne49GXRk3hlJA0hy2UzDP7GKdlkjxL3hADbFFCWz8CWPR8c+p
+ ehRMcik9wbe0YDeHMzKxulNnmII9uQGOeZcqpL9yiDBPSEfJRgaTMorLDXQBrALhhFxW
+ vHbdBpElt+ph6ce/sv8ZA/rG79ldKjSv1s0BxI9EAPx+zmatRrc+okpTYj5wxhyvfRLW
+ YbHifGICZUG8PBsxnn7GMA46Wo3gJfcX2Q2gUPXigfOh9mksSQHadEjbvS6AAfX27L1/
+ Zjig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723775039; x=1724379839;
- h=in-reply-to:references:subject:cc:to:from:message-id:date
+ d=1e100.net; s=20230601; t=1723775196; x=1724379996;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Z2Kq7vgxrD0V1bNg0gZMrLJZijYM6ZFsEKzjQvvZ3Ww=;
- b=obJOY/aCTeyk+z/MBlrN6FJ2nD5U96cOiaEGwGu5cwjPi1cl4Xa8gMX6j+4swfe8zJ
- pHR8H2RIqM6AacUWxrxEocenArhYR4vz6CZDF6zDSi/Goq+rc0WdNZDspsvh4KiZoYio
- GXOJ212OrklCc8kFW1250rHYDxT7i5zDlA4xto5WxqjxFvlsdRnD67DBz/mLlGb9ykWm
- XG3A0Ccsheiwbp/1Lo8CEWuHEmnCZBq4TYdxb2RvnL/o3rHV60/kEUjahlsCZWDtFv4V
- p+7Zb4yl7hK4bMk3wOnOJAShajTb9SMF2waNiq0GZS1AHssRXgFoPj/jmKISZOIvl7n6
- JL3A==
-X-Gm-Message-State: AOJu0Yw/EWnu0AKopjfA4xZ2SYjyzV4Q/xZjAUcQKsmKPrXCsgrMG8Bo
- /ygRu606UdLihzJnEuilWvp/a1M60/ivp+V9QqFd3TYtfS3ftX3/
-X-Google-Smtp-Source: AGHT+IEsAubLiJ6rGKZ2ZyOETuW6hbEhG1X8nqHWeTJqoHXe/vryF6hYYMYTmwi3WGilEkmO2HBy0Q==
-X-Received: by 2002:a17:902:e549:b0:1fd:8b77:998e with SMTP id
- d9443c01a7336-202062baefamr16151095ad.29.1723775038507; 
- Thu, 15 Aug 2024 19:23:58 -0700 (PDT)
+ bh=XiJ95sFlW8mgrdmS+FGQG1YkX3zQYhm3/ChV9srynF0=;
+ b=oiIzORVx/sl7E904RnnfZf9ff1BP8l/X8TeV9Run820+/t+dUjtAjvQ6HN+2RkiQJi
+ xBCmrX/ix4Tzw5Tfl7IXL7zpNhb+REOnUQ6f0gy6mpRS1pSXtYKrn6O/5EvUSV2T1k5m
+ XSKLxeeA2zg0gwYZZlh0MAu7i0Fvnj4lD7DrGAC8UvI2HguwftWyy1JeZsA6lXFUiYuX
+ NSm3ZJQelqGhEE1Sm3LxuByHk9R2M2WgHjvT0dVFJBHNXhO3M8841opwO5SPnR9wfF3/
+ 9VA3xPfyvfLKs6gFRrO0Plvzcal+y2KnxhjBshgZ2KU3gx/IbAnOtze70sxK5mGgUFrh
+ 0RFA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXAPlrd8qH5oHMSzGcaIYHNu6QEBSUW/VGEUsmDXF3ebeiWPGTkPD6f0iIFAaCNQzmbYVYYvRqBBLjZ6aobjH0EKvClNfi/D/+RRQzMcSutFe8TMh4qXT4dTAlJhpbEc4M0X1UnIQGPhOr4oGUOFqaZYTpi0Fxfz1k/KATtS4Id0xF9yCCEbKFV
+X-Gm-Message-State: AOJu0Yw7zSzf+PEurfzb2/geg9ciwLhMKxhO43ZiX8EoxBzP3w719w7t
+ PXldUK5xKBwuxP8T+6UI8Qnm5Eh+EbDlR44yaIQXvkgErLwMBMKK
+X-Google-Smtp-Source: AGHT+IE5W/byoNs9Ba1LE24xkIbzXaBp1C2IGuE0Ma0+CTpXzATv1ZUn5JGzVmJ5HIIEGa+An/R42g==
+X-Received: by 2002:a17:903:247:b0:201:ed48:f11c with SMTP id
+ d9443c01a7336-20203c08902mr20493245ad.0.1723775195953; 
+ Thu, 15 Aug 2024 19:26:35 -0700 (PDT)
 Received: from localhost ([1.145.119.203]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201f031cbfdsm16398435ad.114.2024.08.15.19.23.52
+ d9443c01a7336-201f039e09csm16366065ad.244.2024.08.15.19.26.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 15 Aug 2024 19:23:58 -0700 (PDT)
+ Thu, 15 Aug 2024 19:26:35 -0700 (PDT)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Fri, 16 Aug 2024 12:23:50 +1000
-Message-Id: <D3GZ90ORAGBC.EPV2C5TYYGKG@gmail.com>
-From: "Nicholas Piggin" <npiggin@gmail.com>
+Date: Fri, 16 Aug 2024 12:26:18 +1000
+Message-Id: <D3GZAWNK3B01.36WGYVZO23DPO@gmail.com>
 To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: <qemu-devel@nongnu.org>, "Pavel Dovgalyuk" <Pavel.Dovgalyuk@ispras.ru>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Richard
- Henderson" <richard.henderson@linaro.org>, =?utf-8?q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Paolo Bonzini" <pbonzini@redhat.com>, "John
- Snow" <jsnow@redhat.com>, "Cleber Rosa" <crosa@redhat.com>, "Wainer dos
- Santos Moschetta" <wainersm@redhat.com>, "Beraldo Leal" <bleal@redhat.com>,
- "Michael Tokarev" <mjt@tls.msk.ru>
-Subject: Re: [RFC PATCH 0/2] async: rework async event API for replay
+Cc: =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ <qemu-devel@nongnu.org>, "Alistair Francis" <alistair.francis@wdc.com>,
+ "Michael Roth" <michael.roth@amd.com>, "Palmer Dabbelt"
+ <palmer@dabbelt.com>, "Mahmoud Mandour" <ma.mandourr@gmail.com>, "Pavel
+ Dovgalyuk" <pavel.dovgaluk@ispras.ru>, "Yoshinori Sato"
+ <ysato@users.sourceforge.jp>, "Weiwei Li" <liwei1518@gmail.com>, "Eduardo
+ Habkost" <eduardo@habkost.net>, =?utf-8?q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, "Markus Armbruster" <armbru@redhat.com>,
+ "David Hildenbrand" <david@redhat.com>, "Beraldo Leal" <bleal@redhat.com>,
+ "Liu Zhiwei" <zhiwei_liu@linux.alibaba.com>, "Eric Auger"
+ <eric.auger@redhat.com>, "Song Gao" <gaosong@loongson.cn>,
+ <qemu-arm@nongnu.org>, "Peter Xu" <peterx@redhat.com>, "Jiri Pirko"
+ <jiri@resnulli.us>, "Eric Blake" <eblake@redhat.com>, "Fabiano Rosas"
+ <farosas@suse.de>, <qemu-s390x@nongnu.org>, "Peter Maydell"
+ <peter.maydell@linaro.org>, "Daniel Henrique Barboza"
+ <dbarboza@ventanamicro.com>, "John Snow" <jsnow@redhat.com>, "Alexandre
+ Iooss" <erdnaxe@crans.org>, "Konstantin Kostiuk" <kkostiuk@redhat.com>,
+ "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, "Cleber Rosa"
+ <crosa@redhat.com>, "Ilya Leoshkevich" <iii@linux.ibm.com>,
+ <qemu-riscv@nongnu.org>, "Thomas Huth" <thuth@redhat.com>, "Paolo Bonzini"
+ <pbonzini@redhat.com>, "Richard Henderson" <richard.henderson@linaro.org>,
+ "Jason Wang" <jasowang@redhat.com>, "Bin Meng" <bmeng.cn@gmail.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Wainer dos
+ Santos Moschetta" <wainersm@redhat.com>, "Pavel Dovgalyuk"
+ <Pavel.Dovgalyuk@ispras.ru>
+Subject: Re: [PATCH v2 16/21] virtio-net: Use replay_schedule_bh_event for
+ bhs that affect machine state
+From: "Nicholas Piggin" <npiggin@gmail.com>
 X-Mailer: aerc 0.18.2
-References: <20240815132838.615330-1-npiggin@gmail.com>
- <20240815113029-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20240815113029-mutt-send-email-mst@kernel.org>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x629.google.com
+References: <20240813202329.1237572-1-alex.bennee@linaro.org>
+ <20240813202329.1237572-17-alex.bennee@linaro.org>
+ <20240813164631-mutt-send-email-mst@kernel.org>
+ <D3FEPPLH78YW.3BYA9B4HYGN1U@gmail.com>
+ <20240814030308-mutt-send-email-mst@kernel.org>
+ <87y14z81ak.fsf@draig.linaro.org> <D3GARIYVC16C.20SXVKSIMLED4@gmail.com>
+ <20240815102754-mutt-send-email-mst@kernel.org>
+In-Reply-To: <20240815102754-mutt-send-email-mst@kernel.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,20 +124,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri Aug 16, 2024 at 1:30 AM AEST, Michael S. Tsirkin wrote:
-> On Thu, Aug 15, 2024 at 11:28:35PM +1000, Nicholas Piggin wrote:
-> > Continuing the conversation from the thread about record/replay
-> > virtio fix. Here is a sketch of how we could improve the naming
-> > convention so users of bh don't have to know about record/replay.
+On Fri Aug 16, 2024 at 12:28 AM AEST, Michael S. Tsirkin wrote:
+> On Thu, Aug 15, 2024 at 05:12:32PM +1000, Nicholas Piggin wrote:
+> > Could be a good idea. Although I'm not sure what to do with
+> > all types, maybe we can restrict what is supported.
+> >=20
+> > > Is this wider re-factoring something that can wait for the next
+> > > developer cycle?
+> >=20
+> > I would say so. It's not quite trivial to do nicely since
+> > things are a bit tangled between util/async and replay.
+> >=20
+> > > >> I had started on a conversion once but not completed it.
+> > > >> I could resurrect if there is agreement on the API?
+> > >
+> > > I would certainly welcome it being cleaned up. The supported replay
+> > > devices are very piecemeal at the moment.
+> >=20
+> > I'll tidy up and post an RFC for how the new API might look.
 > >=20
 > > Thanks,
 > > Nick
 >
-> The API looks ok to me.
+> Fundamentally it's virtio net, up to Jason. I don't like messy
+> APIs and people tend to get distracted and not fix them up
+> if one does not make this a blocker.
 
-Thanks for taking a look. In that case let's go with the fixes for
-now so we have rr regression tests in a bit better state, and I will
-resend for 9.2.
+Happy for objections, but FYI Michael did find the proposed API
+tweak nicer, so shall we get these minimal fixes in for 9.1 then
+switch them for next release?
 
 Thanks,
 Nick
