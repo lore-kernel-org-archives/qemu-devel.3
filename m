@@ -4,85 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5FF6C52D7D
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 11:39:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A737EC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 11:51:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sevIW-0002Gb-8W; Fri, 16 Aug 2024 07:39:12 -0400
+	id 1sevTs-00084k-LL; Fri, 16 Aug 2024 07:50:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sevIR-0002FC-FC
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 07:39:08 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sevTq-00084B-Tp
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 07:50:54 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1sevIP-0007O6-Jo
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 07:39:07 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-2d3c08541cdso1378736a91.2
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 04:39:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sevTo-00018p-Vf
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 07:50:54 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-70d2b921cdfso1544905b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 04:50:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1723808343; x=1724413143; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723809050; x=1724413850; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=YrXmJP0T5PuESmfzLa5Jje7GuulXuQ6qTfUpaeTPhEw=;
- b=OyYZ8hdO8kQJN3ioN6kst0x3P5xKi7KV1b4y+KLvOzO+LhVaRtH0rq0ok792Iwfkmx
- 6qJczN0aUtwEmwlHkwGu5hVpm85oXFI0HWtt6aZ07R6hYvprFSeb8pQiYDtsGkZBc1BB
- NHvuzYBkMyPxJ1xd+wk8PP82Wq0E2YZ72Q0dPpr9HTD/INqr+tjNi1nQHc9wEtA9Y+ra
- 9xDcRWOivSKpyDw5pf/bGz+jrB2G3j7frUPvXr0UEATW8IlJP2jIxiF8IuEE3QEtwRKN
- pmA8wXqpgK/XLFtNZdLrTX1SL+HkHv8LYoj7Z9BThRFViEHUOe7oIdeWjakFbFfD+ZXB
- 0VcQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OkBr1xUbWvZyC5vs+/WZ0yK7wzImK+NBfcMdOKzbEIo=;
+ b=lOmKeWCAIbDGE1VH53JrqLnEobhezAUNAwjaHDzoGZRpxmmAwKn9bUd062Z488K7WN
+ kefRZCYYyhzDtXTvaYCVpHvDwSyszTmwW/9DEjRqfJa72mTDYzzorxgFdKY7SYCLlXDX
+ SvkGn7butAQlaPv+RFzQd80KzEDMJYFAoW+NH79iMECiF8VwlzU2GuOVTARQd3mBpLDe
+ ApxGNwFAkjP+XdAdQuxulT04vCUeNT8oZoLzL8r8mcsHCscinfhD8GpSe4vCNdf7QFux
+ GH1hxNfAGEm5nDLW/XMboQINq9uEU0zCf5MuO1bCQWs7zcZW07eo0Po/xDKnMZQwPZpD
+ fviA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723808343; x=1724413143;
+ d=1e100.net; s=20230601; t=1723809050; x=1724413850;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YrXmJP0T5PuESmfzLa5Jje7GuulXuQ6qTfUpaeTPhEw=;
- b=wVekdsjxdT6l11i72nHx7/+Rhvn0GV1Mqs8mntaoqqT8LrOOcGZdpm8TKH5G5cZzmY
- 9vZSdrc6z48m7KHDtIYAg+tG9Xe3w50ZnZZ807PHlAy2mSUkbCMaG9VkXDph9ItyK0Hl
- sSOrkxjTbZPxtl45WDMvxnSs3dX/B8Gct2B9Sg0irtaLwdPu8No33ukg9kHF6GrPuYoE
- 0euLEKMNq0djCT1JNIucMx2Knoue6Gs45vIyl775yAVlHHyGvweq7j83mw+HTFw1GgoL
- eb7++QWXtakZ37hGa2NIZjLTgfLBSC+LctFx69yydkP1VNXyyrKhyT6L1xI2SwDPRR1f
- zfow==
+ bh=OkBr1xUbWvZyC5vs+/WZ0yK7wzImK+NBfcMdOKzbEIo=;
+ b=srKXVXnjdrOw/oWKzkQT0+v70f8vHPMxn3AkYEgxXoGugPMpY/9WdOzWzdmR45aQ/h
+ q2ZTOH+Cri7qSAXRP9Dp/zVVdoW0q5fKH9FufHeF3KLUDdm8+tIM1qCT/af8ydMbLxVU
+ 45gLav7Mn39JKZibOUX6ZNAghKhN2o2seRjRyBLtkqnWSAAKsUTDn0Rp3F8CgD5XOUgA
+ mr4vlablq9rBhgQosE/SofgmKGHxdoiTzt8W6enzjEKqSb3bm0iIt9JnJuuRadR0Mwjd
+ sUG258WFbLxP7+Byo8yOTy9WUQZ3C/SykE67bIIzwTU44E/7kJJvUa5ggj6JzMeqwK+d
+ A13g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX8NcwtXa3a0YgXpTz8EuDsgCV+u/GtGieiW7U/2YPCaNzKR/cQ4DGRV9hC9MoMEwpDylnRFlvDBsOgmWWp6fkM6OvHfmo=
-X-Gm-Message-State: AOJu0YzSJLRAnsZr4rQsXNUWObik9bfrJjDwp4K3QYCkb8kVwu7p3s3N
- 9h0ENUiH5atHT11ZM6FMSeLLm7h8KaBu4vuNpD4yLKhhwK80fnxHcPDTD2Wrr/A=
-X-Google-Smtp-Source: AGHT+IGoEWFbK4DaiR5SLzSvh6BYAuT554CckHIIY7IeAqQZp7JNcMDbLahsTYmbzRXCtW4exqiNvQ==
-X-Received: by 2002:a17:90b:802:b0:2c7:ab00:f605 with SMTP id
- 98e67ed59e1d1-2d3dfc7d183mr2799374a91.20.1723808343513; 
- Fri, 16 Aug 2024 04:39:03 -0700 (PDT)
-Received: from [192.168.68.110] ([179.133.97.250])
+ AJvYcCXIrtVOd1QKZ+7V4QMz28fmTAkinbC3Y30ZsAzxc9q8tnrCWLsH6gNaxF9vRJ5HdiRXXripVUSr8XruW+zv0ALXZ2toZw0=
+X-Gm-Message-State: AOJu0Yy8sIftyIBZmNKdMoHwv+Z0orCw5p8Z5fJV0dhTPlDn1lKtw/1g
+ t3SseqLJ1OQRJfmPyZRx96ZXCnfoCTq5XbLBs8o/DSgp3UPyrRj6hWIjkfMRhqA=
+X-Google-Smtp-Source: AGHT+IEeG96W5l8jdte9YJV3ckCsGjgl12N7IDb5H1hASpO/fj2NLeimrhOac7l46Ze/dkf6lZfgUg==
+X-Received: by 2002:a05:6a20:43a9:b0:1c3:ce0f:bfb7 with SMTP id
+ adf61e73a8af0-1c904f88ce3mr3237972637.21.1723809050222; 
+ Fri, 16 Aug 2024 04:50:50 -0700 (PDT)
+Received: from [192.168.1.113] ([203.30.4.109])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d3ac7f2276sm5416711a91.29.2024.08.16.04.38.58
+ d2e1a72fcca58-7127aef5f30sm2472810b3a.105.2024.08.16.04.50.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Aug 2024 04:39:03 -0700 (PDT)
-Message-ID: <986253df-1102-4625-9fa5-264f3a4e0c6b@ventanamicro.com>
-Date: Fri, 16 Aug 2024 08:38:56 -0300
+ Fri, 16 Aug 2024 04:50:49 -0700 (PDT)
+Message-ID: <dbbdfd50-5caf-42f2-91ef-a1d88e8391b9@linaro.org>
+Date: Fri, 16 Aug 2024 21:50:43 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] hw/char: riscv_htif: Use blocking
- qemu_chr_fe_write_all
-To: Alistair Francis <alistair23@gmail.com>, alex.bennee@linaro.org,
- qemu-devel@nongnu.org, peter.maydell@linaro.org
-Cc: palmer@dabbelt.com, qemu-riscv@nongnu.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com,
- Bin Meng <bmeng.cn@gmail.com>, liwei1518@gmail.com,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240815015410.369925-1-alistair.francis@wdc.com>
- <20240815015410.369925-2-alistair.francis@wdc.com>
+Subject: Re: [PULL 0/5] Some small tests and s390x fixes
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+References: <20240816072218.27125-1-thuth@redhat.com>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20240815015410.369925-2-alistair.francis@wdc.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240816072218.27125-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pj1-x1035.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,55 +96,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 8/16/24 17:22, Thomas Huth wrote:
+>   Hi Richard!
+> 
+> The following changes since commit b0d6c037ea0a825192285f149af72a73a1baaa04:
+> 
+>    Update version for v9.1.0-rc2 release (2024-08-15 20:32:37 +1000)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/thuth/qemu.git tags/pull-request-2024-08-16
+> 
+> for you to fetch changes up to b4be15a9f9e73fa2e7c46da559f10afc94018984:
+> 
+>    ci: refresh package lists with lcitool (2024-08-16 09:16:03 +0200)
+> 
+> ----------------------------------------------------------------
+> * Fix a potential build warning in the s390x target code
+> * Check for the availability of __attribute__((gcc_struct)) on MSYS2
+> * Fix skipUnless decorators in Avocado tests
+> * Add missing gtk-vnc package to the CI jobs
 
 
-On 8/14/24 10:54 PM, Alistair Francis wrote:
-> The current approach of using qemu_chr_fe_write() and ignoring the
-> return values results in dropped charecters [1]. Ideally we want to
-> report FIFO status to the guest, but the HTIF isn't a real UART, so we
-> don't really have a way to do that.
-> 
-> Instead let's just use qemu_chr_fe_write_all() so at least we don't drop
-> charecters.
-> 
-> 1: https://gitlab.com/qemu-project/qemu/-/issues/2114
-> 
-> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
+Applied, thanks.  Please update https://wiki.qemu.org/ChangeLog/9.1 as appropriate.
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-
->   hw/char/riscv_htif.c | 12 ++++++++++--
->   1 file changed, 10 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/char/riscv_htif.c b/hw/char/riscv_htif.c
-> index 9bef60def1..d40b542948 100644
-> --- a/hw/char/riscv_htif.c
-> +++ b/hw/char/riscv_htif.c
-> @@ -218,7 +218,11 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
->                       tswap64(syscall[3]) == HTIF_CONSOLE_CMD_PUTC) {
->                       uint8_t ch;
->                       cpu_physical_memory_read(tswap64(syscall[2]), &ch, 1);
-> -                    qemu_chr_fe_write(&s->chr, &ch, 1);
-> +                    /*
-> +                     * XXX this blocks entire thread. Rewrite to use
-> +                     * qemu_chr_fe_write and background I/O callbacks
-> +                     */
-> +                    qemu_chr_fe_write_all(&s->chr, &ch, 1);
->                       resp = 0x100 | (uint8_t)payload;
->                   } else {
->                       qemu_log_mask(LOG_UNIMP,
-> @@ -237,7 +241,11 @@ static void htif_handle_tohost_write(HTIFState *s, uint64_t val_written)
->               return;
->           } else if (cmd == HTIF_CONSOLE_CMD_PUTC) {
->               uint8_t ch = (uint8_t)payload;
-> -            qemu_chr_fe_write(&s->chr, &ch, 1);
-> +            /*
-> +             * XXX this blocks entire thread. Rewrite to use
-> +             * qemu_chr_fe_write and background I/O callbacks
-> +             */
-> +            qemu_chr_fe_write_all(&s->chr, &ch, 1);
->               resp = 0x100 | (uint8_t)payload;
->           } else {
->               qemu_log("HTIF device %d: unknown command\n", device);
+r~
 
