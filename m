@@ -4,60 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A14F4C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 16:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD836C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 16:01:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sezMZ-0006il-5c; Fri, 16 Aug 2024 11:59:39 -0400
+	id 1sezMj-0006x6-Bk; Fri, 16 Aug 2024 11:59:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sezMX-0006iH-4o
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:59:37 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sezMi-0006wS-Es
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:59:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1sezMU-0005IB-C9
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:59:36 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Wlmnk2GYwz6K993;
- Fri, 16 Aug 2024 23:56:42 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
- by mail.maildlp.com (Postfix) with ESMTPS id 8CF10140A70;
- Fri, 16 Aug 2024 23:59:26 +0800 (CST)
-Received: from localhost (10.122.19.247) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 16 Aug
- 2024 16:59:26 +0100
-Date: Fri, 16 Aug 2024 16:59:25 +0100
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-CC: Jason Wang <jasowang@redhat.com>, Dmitry Fleytman
- <dmitry.fleytman@gmail.com>, Sriram Yagnaraman
- <sriram.yagnaraman@ericsson.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Luigi Rizzo <rizzo@iet.unipi.it>, Giuseppe Lettieri
- <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>, "Andrew
- Melnychenko" <andrew@daynix.com>, Yuri Benditovich
- <yuri.benditovich@daynix.com>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v10 02/18] tap: Remove qemu_using_vnet_hdr()
-Message-ID: <20240816165925.00003da3@huawei.com>
-In-Reply-To: <20240428-rss-v10-2-73cbaa91aeb6@daynix.com>
-References: <20240428-rss-v10-0-73cbaa91aeb6@daynix.com>
- <20240428-rss-v10-2-73cbaa91aeb6@daynix.com>
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.29; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1sezMg-0005Kh-Ji
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 11:59:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1723823984;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cY7E8nDPEJJ/mztgi68VVEACWdl3qH90cN/qlqMvRek=;
+ b=PxbRBhg7/KWCojPeS2Swk+JcNYO6JeV9kXZA0MYnyv2YT3s3SGTcS4BAHoX1KE12dsthMd
+ JCXT4NlkWeBESR7XWNxhzBWA4tDmWHE3VnXz5hgswLEvVjU9z/WVBuvOb2g8htCf5ynccc
+ gw9zrXK76hKA+PO6I9PxAFz2vESYBe8=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-464-lFySx7NJPmynbaMt8kLzYg-1; Fri, 16 Aug 2024 11:59:42 -0400
+X-MC-Unique: lFySx7NJPmynbaMt8kLzYg-1
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6bba0f9d3efso4265706d6.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 08:59:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723823982; x=1724428782;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cY7E8nDPEJJ/mztgi68VVEACWdl3qH90cN/qlqMvRek=;
+ b=nynpyvJeGPu6Q/oqPI/qeSoXZiZq3JoQDYXJyDAjNoQ6UT5uxCkIVBeoG8QV++C9yv
+ 0GKE9zIvnezz7WZPLX3uyYRwkoUJtBeJdZ1s57vm8P8hKxUUvxFXTt/ggPSqQogx7QSH
+ eDTdf+zKunOG2SHi3sBgLOiUVWXi27dk9NDaUsIyEF5D9y+F/QG9Ahte/OaQy1c+r+dj
+ e2ArOfk9e1mj+2E4si/VMcM2JeL0jrTxi4DZFVYrAB6GQFkdIIId4/XnNXSru8xCmLiw
+ 9ODUz/Nuk8G9Cr5+M/8nSCMWfdUCzHpTfhs6Ye/8WBxDI0KHUff7yzj2Eb/omRRREesN
+ UT7w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWxhc0bu+qKk/uIX+amf343RKxAqnA+ewgtHsWbHdBZt72+Vom79nH8uh9MzCYm8fg2XoBDhgC4Ycpt@nongnu.org
+X-Gm-Message-State: AOJu0YzT3CwdujqVEnTFhK/0mC3ve6jE97Z2eEkDzdlEDiqA/AGVoADV
+ ziPVe6YsrEYnEvoc/lMk6c748BSd2gvFm7ezNeODxZqsWkjffA9Sd4dj2wF5Y9gau7Z/emneosB
+ Xrptltd+Pi8s34u4o/TtxChkEPGdCFiI0W5c4IRvMI/Sx0wDBMlAl
+X-Received: by 2002:a05:6214:2a83:b0:6bf:6ef5:4160 with SMTP id
+ 6a1803df08f44-6bf7cc8e5e0mr20814966d6.0.1723823982287; 
+ Fri, 16 Aug 2024 08:59:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG4djCgR3SmyNt4MGftRC+Zs5l7E4bxHqdVMNSJnDqNv3eyALCp/fCmHHC1VbGdlUhfbAX7jw==
+X-Received: by 2002:a05:6214:2a83:b0:6bf:6ef5:4160 with SMTP id
+ 6a1803df08f44-6bf7cc8e5e0mr20814846d6.0.1723823981858; 
+ Fri, 16 Aug 2024 08:59:41 -0700 (PDT)
+Received: from x1n (pool-99-254-121-117.cpe.net.cable.rogers.com.
+ [99.254.121.117]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6bf6fe11bd9sm18919786d6.52.2024.08.16.08.59.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Aug 2024 08:59:41 -0700 (PDT)
+Date: Fri, 16 Aug 2024 11:59:40 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [RFC V1 0/6] Live update: cpr-transfer
+Message-ID: <Zr93bOr1zrSZadf5@x1n>
+References: <1719776648-435073-1-git-send-email-steven.sistare@oracle.com>
+ <Zpk2bfjS1Wu2QbcO@x1n>
+ <90a01b2b-6a72-475f-9232-3af73d1618cf@oracle.com>
+ <Zr5lC9ryCsn9FjE2@x1n>
+ <94478262-034d-48db-bd4d-c74ca3c315a6@oracle.com>
+ <Zr9u1YV4m9Uzvj7Z@x1n> <Zr9yGoXBpHIzrDak@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Zr9yGoXBpHIzrDak@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,298 +105,84 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 28 Apr 2024 16:00:45 +0900
-Akihiko Odaki <akihiko.odaki@daynix.com> wrote:
-
-> Since qemu_set_vnet_hdr_len() is always called when
-> qemu_using_vnet_hdr() is called, we can merge them and save some code.
+On Fri, Aug 16, 2024 at 04:36:58PM +0100, Daniel P. Berrangé wrote:
+> On Fri, Aug 16, 2024 at 11:23:01AM -0400, Peter Xu wrote:
+> > On Fri, Aug 16, 2024 at 11:13:36AM -0400, Steven Sistare wrote:
+> > > On 8/15/2024 4:28 PM, Peter Xu wrote:
+> > > > On Sat, Jul 20, 2024 at 04:07:50PM -0400, Steven Sistare wrote:
+> > > > > > > The new user-visible interfaces are:
+> > > > > > >     * cpr-transfer (MigMode migration parameter)
+> > > > > > >     * cpr-uri (migration parameter)
+> > > > > > 
+> > > > > > I wonder whether this parameter can be avoided already, maybe we can let
+> > > > > > cpr-transfer depend on unix socket in -incoming, then integrate fd sharing
+> > > > > > in the same channel?
+> > > > > 
+> > > > > You saw the answer in another thread, but I repeat it here for others benefit:
+> > > > > 
+> > > > >    "CPR state cannot be sent over the normal migration channel, because devices
+> > > > >     and backends are created prior to reading the channel, so this mode sends
+> > > > >     CPR state over a second migration channel that is not visible to the user.
+> > > > >     New QEMU reads the second channel prior to creating devices or backends."
+> > > > 
+> > > > Today when looking again, I wonder about the other way round: can we make
+> > > > the new parameter called "-incoming-cpr", working exactly the same as
+> > > > "cpr-uri" qemu cmdline, but then after cpr is loaded it'll be automatically
+> > > > be reused for migration incoming ports?
+> > > > 
+> > > > After all, cpr needs to happen already with unix sockets.  Having separate
+> > > > cmdline options grants user to make the other one to be non-unix, but that
+> > > > doesn't seem to buy us anything.. then it seems easier to always reuse it,
+> > > > and restrict cpr-transfer to only work with unix sockets for incoming too?
+> > > 
+> > > This idea also occurred to me, but I dislike the loss of flexibility for
+> > > the incoming socket type.  The exec URI in particular can do anything, and
+> > > we would be eliminating it.
+> > 
+> > Ah, I would be guessing that if Juan is still around then exec URI should
+> > already been marked deprecated and prone to removal soon.. while I tend to
+> > agree that exec does introduce some complexity meanwhile iiuc nobody uses
+> > that in production systems.
+> > 
+> > What's the exec use case you're picturing?  Would that mostly for debugging
+> > purpose, and would that be easily replaceable with another tunnelling like
+> > "ncat" or so?
 > 
-> For consistency, express that the virtio-net header is not in use by
-> returning 0 with qemu_get_vnet_hdr_len() instead of having a dedicated
-> function, qemu_get_using_vnet_hdr().
+> Conceptually "exec:" is a nice thing, but from a practical POV it
+> introduces difficulties for QEMU. QEMU doesn't know if the exec'd
+> command will provide a unidirectional channel or bidirectional
+> channel, so has to assume the worst - unidirectional. It also can't
+> know if it is safe to run the exec multiple times, or is only valid
+> to run it once - so afgai nhas to assume once only.
 > 
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-
-With a simple e1000e test (silly configuration as I was just using
-it as a placeholder for some pci tests) bisection led me to this
-for a qemu segfault. Reverting this patch resolves it.
-
-Much of this is probably irrelevant.. 
-
-qemu-system-aarch64 \
-    -M virt,ras=on,nvdimm=on,gic-version=3,hmat=on -m 4g,maxmem=8g,slots=4 -cpu max -smp 4 \
- -kernel Image \
- -drive if=none,file=/mnt/d/images/full.qcow2,format=qcow2,id=hd \
- -device pcie-root-port,id=root_port1 \
- -device e1000e,bus=root_port1,id=rngtest0 \
- -device virtio-blk-pci,drive=hd \
- -nographic -no-reboot -append 'earlycon memblock=debug root=/dev/vda2 fsck.mode=skip maxcpus=4 tp_printk' \
- -bios QEMU_EFI.fd
-
-I've not dug into why yet as in middle of some other debugging.
-
-Jonathan
-
-
-> ---
->  include/net/net.h   |  7 -------
->  hw/net/e1000e.c     |  1 -
->  hw/net/igb.c        |  1 -
->  hw/net/net_tx_pkt.c |  4 ++--
->  hw/net/virtio-net.c |  3 ---
->  hw/net/vmxnet3.c    |  2 --
->  net/dump.c          |  4 +---
->  net/net.c           | 24 +-----------------------
->  net/netmap.c        |  5 -----
->  net/tap.c           | 28 +---------------------------
->  10 files changed, 5 insertions(+), 74 deletions(-)
+> We could fix those by adding further flags in the migration address
+> to indicate if its bi-directional & multi-channel safe.
 > 
-> diff --git a/include/net/net.h b/include/net/net.h
-> index b1f9b35fcca1..6fe5a0aee833 100644
-> --- a/include/net/net.h
-> +++ b/include/net/net.h
-> @@ -57,8 +57,6 @@ typedef bool (HasUfo)(NetClientState *);
->  typedef bool (HasUso)(NetClientState *);
->  typedef bool (HasVnetHdr)(NetClientState *);
->  typedef bool (HasVnetHdrLen)(NetClientState *, int);
-> -typedef bool (GetUsingVnetHdr)(NetClientState *);
-> -typedef void (UsingVnetHdr)(NetClientState *, bool);
->  typedef void (SetOffload)(NetClientState *, int, int, int, int, int, int, int);
->  typedef int (GetVnetHdrLen)(NetClientState *);
->  typedef void (SetVnetHdrLen)(NetClientState *, int);
-> @@ -88,10 +86,7 @@ typedef struct NetClientInfo {
->      HasUso *has_uso;
->      HasVnetHdr *has_vnet_hdr;
->      HasVnetHdrLen *has_vnet_hdr_len;
-> -    GetUsingVnetHdr *get_using_vnet_hdr;
-> -    UsingVnetHdr *using_vnet_hdr;
->      SetOffload *set_offload;
-> -    GetVnetHdrLen *get_vnet_hdr_len;
->      SetVnetHdrLen *set_vnet_hdr_len;
->      SetVnetLE *set_vnet_le;
->      SetVnetBE *set_vnet_be;
-> @@ -194,8 +189,6 @@ bool qemu_has_ufo(NetClientState *nc);
->  bool qemu_has_uso(NetClientState *nc);
->  bool qemu_has_vnet_hdr(NetClientState *nc);
->  bool qemu_has_vnet_hdr_len(NetClientState *nc, int len);
-> -bool qemu_get_using_vnet_hdr(NetClientState *nc);
-> -void qemu_using_vnet_hdr(NetClientState *nc, bool enable);
->  void qemu_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
->                        int ecn, int ufo, int uso4, int uso6);
->  int qemu_get_vnet_hdr_len(NetClientState *nc);
-> diff --git a/hw/net/e1000e.c b/hw/net/e1000e.c
-> index 7c6f6029518c..d0dde767f6aa 100644
-> --- a/hw/net/e1000e.c
-> +++ b/hw/net/e1000e.c
-> @@ -352,7 +352,6 @@ e1000e_init_net_peer(E1000EState *s, PCIDevice *pci_dev, uint8_t *macaddr)
->      for (i = 0; i < s->conf.peers.queues; i++) {
->          nc = qemu_get_subqueue(s->nic, i);
->          qemu_set_vnet_hdr_len(nc->peer, sizeof(struct virtio_net_hdr));
-> -        qemu_using_vnet_hdr(nc->peer, true);
->      }
->  }
->  
-> diff --git a/hw/net/igb.c b/hw/net/igb.c
-> index 9b37523d6df8..1224c7ba8e38 100644
-> --- a/hw/net/igb.c
-> +++ b/hw/net/igb.c
-> @@ -349,7 +349,6 @@ igb_init_net_peer(IGBState *s, PCIDevice *pci_dev, uint8_t *macaddr)
->      for (i = 0; i < s->conf.peers.queues; i++) {
->          nc = qemu_get_subqueue(s->nic, i);
->          qemu_set_vnet_hdr_len(nc->peer, sizeof(struct virtio_net_hdr));
-> -        qemu_using_vnet_hdr(nc->peer, true);
->      }
->  }
->  
-> diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
-> index 2134a18c4c90..903238dca24d 100644
-> --- a/hw/net/net_tx_pkt.c
-> +++ b/hw/net/net_tx_pkt.c
-> @@ -578,7 +578,7 @@ static void net_tx_pkt_sendv(
->  {
->      NetClientState *nc = opaque;
->  
-> -    if (qemu_get_using_vnet_hdr(nc->peer)) {
-> +    if (qemu_get_vnet_hdr_len(nc->peer)) {
->          qemu_sendv_packet(nc, virt_iov, virt_iov_cnt);
->      } else {
->          qemu_sendv_packet(nc, iov, iov_cnt);
-> @@ -808,7 +808,7 @@ static bool net_tx_pkt_do_sw_fragmentation(struct NetTxPkt *pkt,
->  
->  bool net_tx_pkt_send(struct NetTxPkt *pkt, NetClientState *nc)
->  {
-> -    bool offload = qemu_get_using_vnet_hdr(nc->peer);
-> +    bool offload = qemu_get_vnet_hdr_len(nc->peer);
->      return net_tx_pkt_send_custom(pkt, offload, net_tx_pkt_sendv, nc);
->  }
->  
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 58014a92ad19..f6112c0ac97d 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -3794,9 +3794,6 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
->  
->      peer_test_vnet_hdr(n);
->      if (peer_has_vnet_hdr(n)) {
-> -        for (i = 0; i < n->max_queue_pairs; i++) {
-> -            qemu_using_vnet_hdr(qemu_get_subqueue(n->nic, i)->peer, true);
-> -        }
->          n->host_hdr_len = sizeof(struct virtio_net_hdr);
->      } else {
->          n->host_hdr_len = 0;
-> diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
-> index 707487c63666..63a91877730d 100644
-> --- a/hw/net/vmxnet3.c
-> +++ b/hw/net/vmxnet3.c
-> @@ -2091,8 +2091,6 @@ static void vmxnet3_net_init(VMXNET3State *s)
->      if (s->peer_has_vhdr) {
->          qemu_set_vnet_hdr_len(qemu_get_queue(s->nic)->peer,
->              sizeof(struct virtio_net_hdr));
-> -
-> -        qemu_using_vnet_hdr(qemu_get_queue(s->nic)->peer, 1);
->      }
->  
->      qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
-> diff --git a/net/dump.c b/net/dump.c
-> index 16073f245828..956e34a123c0 100644
-> --- a/net/dump.c
-> +++ b/net/dump.c
-> @@ -154,10 +154,8 @@ static ssize_t filter_dump_receive_iov(NetFilterState *nf, NetClientState *sndr,
->                                         int iovcnt, NetPacketSent *sent_cb)
->  {
->      NetFilterDumpState *nfds = FILTER_DUMP(nf);
-> -    int offset = qemu_get_using_vnet_hdr(nf->netdev) ?
-> -                 qemu_get_vnet_hdr_len(nf->netdev) : 0;
->  
-> -    dump_receive_iov(&nfds->ds, iov, iovcnt, offset);
-> +    dump_receive_iov(&nfds->ds, iov, iovcnt, qemu_get_vnet_hdr_len(nf->netdev));
->      return 0;
->  }
->  
-> diff --git a/net/net.c b/net/net.c
-> index a2f0c828bbf2..bd51037ebfb0 100644
-> --- a/net/net.c
-> +++ b/net/net.c
-> @@ -529,24 +529,6 @@ bool qemu_has_vnet_hdr_len(NetClientState *nc, int len)
->      return nc->info->has_vnet_hdr_len(nc, len);
->  }
->  
-> -bool qemu_get_using_vnet_hdr(NetClientState *nc)
-> -{
-> -    if (!nc || !nc->info->get_using_vnet_hdr) {
-> -        return false;
-> -    }
-> -
-> -    return nc->info->get_using_vnet_hdr(nc);
-> -}
-> -
-> -void qemu_using_vnet_hdr(NetClientState *nc, bool enable)
-> -{
-> -    if (!nc || !nc->info->using_vnet_hdr) {
-> -        return;
-> -    }
-> -
-> -    nc->info->using_vnet_hdr(nc, enable);
-> -}
-> -
->  void qemu_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
->                            int ecn, int ufo, int uso4, int uso6)
->  {
-> @@ -559,11 +541,7 @@ void qemu_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
->  
->  int qemu_get_vnet_hdr_len(NetClientState *nc)
->  {
-> -    if (!nc || !nc->info->get_vnet_hdr_len) {
-> -        return 0;
-> -    }
-> -
-> -    return nc->info->get_vnet_hdr_len(nc);
-> +    return nc->vnet_hdr_len;
->  }
->  
->  void qemu_set_vnet_hdr_len(NetClientState *nc, int len)
-> diff --git a/net/netmap.c b/net/netmap.c
-> index 241b27c8e973..297510e19088 100644
-> --- a/net/netmap.c
-> +++ b/net/netmap.c
-> @@ -351,10 +351,6 @@ static bool netmap_has_vnet_hdr(NetClientState *nc)
->      return netmap_has_vnet_hdr_len(nc, sizeof(struct virtio_net_hdr));
->  }
->  
-> -static void netmap_using_vnet_hdr(NetClientState *nc, bool enable)
-> -{
-> -}
-> -
->  static void netmap_set_vnet_hdr_len(NetClientState *nc, int len)
->  {
->      NetmapState *s = DO_UPCAST(NetmapState, nc, nc);
-> @@ -393,7 +389,6 @@ static NetClientInfo net_netmap_info = {
->      .has_ufo = netmap_has_vnet_hdr,
->      .has_vnet_hdr = netmap_has_vnet_hdr,
->      .has_vnet_hdr_len = netmap_has_vnet_hdr_len,
-> -    .using_vnet_hdr = netmap_using_vnet_hdr,
->      .set_offload = netmap_set_offload,
->      .set_vnet_hdr_len = netmap_set_vnet_hdr_len,
->  };
-> diff --git a/net/tap.c b/net/tap.c
-> index 72ae95894ff1..c848844955df 100644
-> --- a/net/tap.c
-e1> +++ b/net/tap.c
-> @@ -262,13 +262,6 @@ static bool tap_has_vnet_hdr_len(NetClientState *nc, int len)
->      return tap_has_vnet_hdr(nc);
->  }
->  
-> -static int tap_get_vnet_hdr_len(NetClientState *nc)
-> -{
-> -    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-> -
-> -    return s->host_vnet_hdr_len;
-> -}
-> -
->  static void tap_set_vnet_hdr_len(NetClientState *nc, int len)
->  {
->      TAPState *s = DO_UPCAST(TAPState, nc, nc);
-> @@ -280,23 +273,7 @@ static void tap_set_vnet_hdr_len(NetClientState *nc, int len)
->  
->      tap_fd_set_vnet_hdr_len(s->fd, len);
->      s->host_vnet_hdr_len = len;
-> -}
-> -
-> -static bool tap_get_using_vnet_hdr(NetClientState *nc)
-> -{
-> -    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-> -
-> -    return s->using_vnet_hdr;
-> -}
-> -
-> -static void tap_using_vnet_hdr(NetClientState *nc, bool using_vnet_hdr)
-> -{
-> -    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-> -
-> -    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
-> -    assert(!!s->host_vnet_hdr_len == using_vnet_hdr);
-> -
-> -    s->using_vnet_hdr = using_vnet_hdr;
-> +    s->using_vnet_hdr = true;
->  }
->  
->  static int tap_set_vnet_le(NetClientState *nc, bool is_le)
-> @@ -394,10 +371,7 @@ static NetClientInfo net_tap_info = {
->      .has_uso = tap_has_uso,
->      .has_vnet_hdr = tap_has_vnet_hdr,
->      .has_vnet_hdr_len = tap_has_vnet_hdr_len,
-> -    .get_using_vnet_hdr = tap_get_using_vnet_hdr,
-> -    .using_vnet_hdr = tap_using_vnet_hdr,
->      .set_offload = tap_set_offload,
-> -    .get_vnet_hdr_len = tap_get_vnet_hdr_len,
->      .set_vnet_hdr_len = tap_set_vnet_hdr_len,
->      .set_vnet_le = tap_set_vnet_le,
->      .set_vnet_be = tap_set_vnet_be,
+> Technically "exec" is obsolete given "fd", but then that applies to
+> literally all protocols. Implementing them in QEMU is a more user
+> friendly thing.
 > 
+> Exec was more compelling when QEMU's other protocols were less
+> mature, lacking TLS for example, but I still find it interesting
+> as a facility.
+
+Right, it's an interesting idea on its own.  It's just that when QEMU grows
+into not only a tool anymore it adds burden on top as you discussed, in
+which case we consider dropping things as wins (and we already started
+doing so at least in migration, but iiuc it's not limited to migration).
+
+Again, it looks reasonable to drop because I think it's too easy to tool-up
+the same "exec:" function with ncat or similar things.  E.g. kubevirt does
+TLS even today without qemu's TLS, and AFAIU that's based on unix sockets
+not exec, and it tunnels to the daemon for TLS encryption (which is prone
+of removal, though).  So even that is not leveraged as we thought.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
