@@ -4,88 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F5EC531DC
-	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 07:37:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D404C531DC
+	for <qemu-devel@archiver.kernel.org>; Fri, 16 Aug 2024 07:38:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1serWP-0003Uc-S0; Fri, 16 Aug 2024 03:37:17 -0400
+	id 1serX8-0006sa-N1; Fri, 16 Aug 2024 03:38:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1serWM-0003K2-WC
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:37:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1serX4-0006c4-UP; Fri, 16 Aug 2024 03:37:58 -0400
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1serWL-0005pw-ND
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 03:37:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723793832;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=LGsbGDdMqoz88zvHmCdfGsEgwZe1xcq/oIzfLEV7cnk=;
- b=dy6ZFMzjADEs/DUrnH0VXk4cAaT+UZ1aLnHlOtdUOK0ptNocFw2zRFFOQ1Fy5Nn/WXIGyY
- TxRzMoJg9OcNXiYmDNH00ORE0sLMx/oyMWBmr/L/MVijOcH+yw4FuXcqpsVlZN7LGPtlHj
- tTViroVLXJ+vQ+luXxt66Qb2t8ipDiw=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-295--SH15_osPumouEPYIyjsxw-1; Fri, 16 Aug 2024 03:37:11 -0400
-X-MC-Unique: -SH15_osPumouEPYIyjsxw-1
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-a7aa054fb2eso74501566b.3
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 00:37:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723793830; x=1724398630;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LGsbGDdMqoz88zvHmCdfGsEgwZe1xcq/oIzfLEV7cnk=;
- b=d7pDrL5XzPWhM0AawDrbtTL3V82EL04kXCEehISryeVfKljEWr1oTTFD9ONnWlgJI8
- stTN5Dkuv254v1tC3IX98hpX9Xn9Hm+ttAND5b6EugMgsRh7FJzPyXiuMqyQWTUID7Wg
- mv2EjUIxRKDKW/d8KQy1J4CBd8go0dm9A1f+a5a5TfLd8rI6FMapcUZmW/T9RAAs6NUV
- AsQLTvnzn7CGFl6/84ct886BURMjwarUEGlFUDMIV2EXQ6qWX8hv64GgoPzD0pGOdisH
- ljlCbsFu8btJvBbdOivUT0tRxwtFANhhvgiQnKFOXqrRZX+oZ1uIDXAKkn0Ao1nHgQ/z
- t7nw==
-X-Gm-Message-State: AOJu0Yz1ByvzQC/mo9o7k1jgxKFtOR6yppj7/MVVoFE4GQjp2oZJzgS5
- vWJYHG6+C0CGoA8fcIyXokPJB5aJGcDBw+S+kbzPbmnOSipoBMpeSrhQnJKenJW9oxkVspZZi8T
- w93xF0Dt7bi4ctDwIjzT63qYK1YFekYgcK5W0hTlhCJctdprozl9L
-X-Received: by 2002:a05:6402:348f:b0:5af:758a:693b with SMTP id
- 4fb4d7f45d1cf-5beca4d7c45mr1506508a12.4.1723793829823; 
- Fri, 16 Aug 2024 00:37:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IELOscBkSdLWAw1HIKMjdtVXW+qt04BPOg7q/2ndhhAnXKJ3w3cvLGo/G4CpIgGHuPa5Aa7/w==
-X-Received: by 2002:a05:6402:348f:b0:5af:758a:693b with SMTP id
- 4fb4d7f45d1cf-5beca4d7c45mr1506476a12.4.1723793829240; 
- Fri, 16 Aug 2024 00:37:09 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:17d:3378:6322:e9ee:713:b9ed])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5bebbbe29a6sm1875305a12.13.2024.08.16.00.37.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 16 Aug 2024 00:37:08 -0700 (PDT)
-Date: Fri, 16 Aug 2024 03:37:03 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH-for-9.1? v2] hw/pci/pci-hmp-cmds: Avoid displaying bogus
- size in 'info pci'
-Message-ID: <20240816033654-mutt-send-email-mst@kernel.org>
-References: <20240801131449.51328-1-philmd@linaro.org>
- <8e386637-3481-4eaa-b19f-70187924d817@linaro.org>
+ (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
+ id 1serX2-0005uJ-4T; Fri, 16 Aug 2024 03:37:58 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by dfw.source.kernel.org (Postfix) with ESMTP id D509B62110;
+ Fri, 16 Aug 2024 07:37:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C56C4AF1B;
+ Fri, 16 Aug 2024 07:37:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1723793873;
+ bh=/UrLD39uTtqzLQxF34eTLlBfA+BnxRQyD1jfJGYlCXg=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=bmr4TPJOs8R126ZTZujoL+kcn4vqs4uJF2xQupXLwWPFzrqf73Bc6iWDbnBEsEzPA
+ 5Vn7z74PF+PHT8U9y9vhXVH+olR89WFT2N4yV0UptS7U4hBHn+Sif18rUMP8YHxuwP
+ tMlvrX5tRlJ6NTjCPzfA80YIhvJZXihhEKsdHWZin/8oo/OUQ/U4PCkNF023/498Gp
+ PTnhYX372f1bmpVv0z9OqhxR0NwEoFhCT36YVBSErUM3yvjRtoFut6N9kvHDsyJYkd
+ hRxn9x+chujIKeIkBGiA60VOvsIyhRUevXnHAZnvOQNwPjXbhPxKifQWiDHMMyn1jv
+ 21I5Y/d2caiGg==
+Received: from mchehab by mail.kernel.org with local (Exim 4.98)
+ (envelope-from <mchehab+huawei@kernel.org>)
+ id 1serWx-000000055f3-31wS; Fri, 16 Aug 2024 09:37:51 +0200
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+To: 
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Shiju Jose <shiju.jose@huawei.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Dongjiu Geng <gengdongjiu1@gmail.com>, Igor Mammedov <imammedo@redhat.com>,
+ linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v8 12/13] acpi/ghes: cleanup generic error data logic
+Date: Fri, 16 Aug 2024 09:37:44 +0200
+Message-ID: <d91565e9ac1c59bd2bb22b06256f5fefcb43a973.1723793768.git.mchehab+huawei@kernel.org>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <cover.1723793768.git.mchehab+huawei@kernel.org>
+References: <cover.1723793768.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <8e386637-3481-4eaa-b19f-70187924d817@linaro.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,9 +76,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Aug 16, 2024 at 08:16:15AM +0200, Philippe Mathieu-Daudé wrote:
-> ping
+Remove comments that are obvious.
 
-tagged this now, thanks!
+No functional changes.
+
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+---
+ hw/acpi/ghes.c | 38 +++++++++++++++-----------------------
+ 1 file changed, 15 insertions(+), 23 deletions(-)
+
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index 4f7b6c5ad2b6..a822a5eafaa0 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -130,34 +130,28 @@ static void build_ghes_hw_error_notification(GArray *table, const uint8_t type)
+  * ACPI 6.1: 18.3.2.7.1 Generic Error Data
+  */
+ static void acpi_ghes_generic_error_data(GArray *table,
+-                const uint8_t *section_type, uint32_t error_severity,
+-                uint8_t validation_bits, uint8_t flags,
+-                uint32_t error_data_length, QemuUUID fru_id,
+-                uint64_t time_stamp)
++                                         const uint8_t *section_type,
++                                         uint32_t error_severity,
++                                         uint8_t validation_bits,
++                                         uint8_t flags,
++                                         uint32_t error_data_length,
++                                         QemuUUID fru_id,
++                                         uint64_t time_stamp)
+ {
+     const uint8_t fru_text[20] = {0};
+ 
+-    /* Section Type */
+     g_array_append_vals(table, section_type, 16);
+-
+-    /* Error Severity */
+     build_append_int_noprefix(table, error_severity, 4);
++
+     /* Revision */
+     build_append_int_noprefix(table, 0x300, 2);
+-    /* Validation Bits */
++
+     build_append_int_noprefix(table, validation_bits, 1);
+-    /* Flags */
+     build_append_int_noprefix(table, flags, 1);
+-    /* Error Data Length */
+     build_append_int_noprefix(table, error_data_length, 4);
+ 
+-    /* FRU Id */
+     g_array_append_vals(table, fru_id.data, ARRAY_SIZE(fru_id.data));
+-
+-    /* FRU Text */
+     g_array_append_vals(table, fru_text, sizeof(fru_text));
+-
+-    /* Timestamp */
+     build_append_int_noprefix(table, time_stamp, 8);
+ }
+ 
+@@ -165,19 +159,17 @@ static void acpi_ghes_generic_error_data(GArray *table,
+  * Generic Error Status Block
+  * ACPI 6.1: 18.3.2.7.1 Generic Error Data
+  */
+-static void acpi_ghes_generic_error_status(GArray *table, uint32_t block_status,
+-                uint32_t raw_data_offset, uint32_t raw_data_length,
+-                uint32_t data_length, uint32_t error_severity)
++static void acpi_ghes_generic_error_status(GArray *table,
++                                           uint32_t block_status,
++                                           uint32_t raw_data_offset,
++                                           uint32_t raw_data_length,
++                                           uint32_t data_length,
++                                           uint32_t error_severity)
+ {
+-    /* Block Status */
+     build_append_int_noprefix(table, block_status, 4);
+-    /* Raw Data Offset */
+     build_append_int_noprefix(table, raw_data_offset, 4);
+-    /* Raw Data Length */
+     build_append_int_noprefix(table, raw_data_length, 4);
+-    /* Data Length */
+     build_append_int_noprefix(table, data_length, 4);
+-    /* Error Severity */
+     build_append_int_noprefix(table, error_severity, 4);
+ }
+ 
+-- 
+2.46.0
 
 
