@@ -4,99 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8D04C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 00:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2802FC531DF
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 00:55:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sf7WQ-0006Og-Ju; Fri, 16 Aug 2024 20:42:22 -0400
+	id 1sf7iV-0005SQ-Ut; Fri, 16 Aug 2024 20:54:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <danny_canter@apple.com>)
- id 1sf7WO-0006OA-Py
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 20:42:20 -0400
-Received: from ma-mailsvcp-mx-lapp02.apple.com ([17.32.222.23])
+ (Exim 4.90_1) (envelope-from <samuel.holland@sifive.com>)
+ id 1sf7HY-00056W-EI
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 20:27:00 -0400
+Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <danny_canter@apple.com>)
- id 1sf7WM-0007X0-BY
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 20:42:20 -0400
-Received: from rn-mailsvcp-mta-lapp04.rno.apple.com
- (rn-mailsvcp-mta-lapp04.rno.apple.com [10.225.203.152])
- by ma-mailsvcp-mx-lapp02.apple.com
- (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
- 2023)) with ESMTPS id <0SIC000MG722PA10@ma-mailsvcp-mx-lapp02.apple.com> for
- qemu-devel@nongnu.org; Fri, 16 Aug 2024 17:37:15 -0700 (PDT)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-16_17,2024-08-16_01,2024-05-17_01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=apple.com; h=cc :
- content-type : date : from : in-reply-to : message-id : mime-version :
- references : subject : to; s=20180706;
- bh=Z1KtMJ9inNrCSBgeoGYAd5GLzpy22ae6mW9LL6GR8OY=;
- b=igpAYPMSBEiDRqWVK6CQ/1rainOGPYdJ6FnPzSHAP5oJhxArV3RbI01dU/wDGeXvJJli
- 2SefRr/AKTOrj8+7YbyQDb9tKEIsqExjahH2J2koMmoKTCv84HBHg5mHS+qg2oQG+O8w
- tVEfuZC5hStXe7G6vhV0x0cIwRJp7SoNFdSc2rIEmphqv1ayUPM8/uAbpPPrmtMiycUh
- /Vo4DBaF6IV/4gRHRvHMBx5n55/HYaZBB76N1aVe6yzyh2ybXfxPOHvk6sObqtF2UVku
- FECKjYkY8WG8mtmmD79low5MwQVOEC+5MhmmQCHr1jjk+o63AA/WpWfhMKL5EKbyPSM0 UA==
-Received: from mr55p01nt-mmpp04.apple.com
- (mr55p01nt-mmpp04.apple.com [10.170.185.204])
- by rn-mailsvcp-mta-lapp04.rno.apple.com
- (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
- 2023)) with ESMTPS id <0SIC00YKH721J590@rn-mailsvcp-mta-lapp04.rno.apple.com>; 
- Fri, 16 Aug 2024 17:37:13 -0700 (PDT)
-Received: from process_milters-daemon.mr55p01nt-mmpp04.apple.com by
- mr55p01nt-mmpp04.apple.com
- (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
- 2023)) id <0SIC08X006TJVD00@mr55p01nt-mmpp04.apple.com>; Sat,
- 17 Aug 2024 00:37:13 +0000 (GMT)
-X-Va-A: 
-X-Va-T-CD: 9be860c946f6cbc0801dd392535b1c06
-X-Va-E-CD: 6e8d677d3901fd5b58b190047ca79016
-X-Va-R-CD: 4206bda14c83e153d471243933acbb53
-X-Va-ID: df1ee542-a3ac-4040-bb1c-4785413cf21f
-X-Va-CD: 0
-X-V-A: 
-X-V-T-CD: 9be860c946f6cbc0801dd392535b1c06
-X-V-E-CD: 6e8d677d3901fd5b58b190047ca79016
-X-V-R-CD: 4206bda14c83e153d471243933acbb53
-X-V-ID: 7c7b94ba-3674-487b-b424-138886f76123
-X-V-CD: 0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-16_17,2024-08-16_01,2024-05-17_01
-Received: from smtpclient.apple (unknown [17.11.165.88])
- by mr55p01nt-mmpp04.apple.com
- (Oracle Communications Messaging Server 8.1.0.23.20230328 64bit (built Mar 28
- 2023)) with ESMTPSA id <0SIC08DD271OBV00@mr55p01nt-mmpp04.apple.com>; Sat,
- 17 Aug 2024 00:37:12 +0000 (GMT)
-From: Danny Canter <danny_canter@apple.com>
-Message-id: <CA7E2403-A9F6-4B29-B640-13E41D530744@apple.com>
-Content-type: multipart/alternative;
- boundary="Apple-Mail=_182B2C20-4477-4C15-BACF-6201DBE72E07"
-MIME-version: 1.0 (Mac OS X Mail 16.0 \(3815.100.3\))
-Subject: Re: [PATCH] hvf: arm: Allow creating VMs with > 63GB of RAM on macOS
- 15+
-Date: Fri, 16 Aug 2024 17:36:42 -0700
-In-reply-to: <CAFEAcA9XXhsUeHNjsVkjhjO2_Njkk=L00BG+24xtXWWKgJayRw@mail.gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Cameron Esfahani <dirty@apple.com>, rbolshakov@ddn.com, agraf@csgraf.de
-To: Peter Maydell <peter.maydell@linaro.org>
-References: <20240718230031.69641-1-danny_canter@apple.com>
- <CAFEAcA__WZ=uw0VLcP0fLbUTwmctsZ1y=FRf9bXMT9WJC2sRFA@mail.gmail.com>
- <E03A8C36-4079-468F-9596-328D713C3611@apple.com>
- <CAFEAcA9XXhsUeHNjsVkjhjO2_Njkk=L00BG+24xtXWWKgJayRw@mail.gmail.com>
-X-Mailer: Apple Mail (2.3815.100.3)
-Received-SPF: pass client-ip=17.32.222.23; envelope-from=danny_canter@apple.com;
- helo=ma-mailsvcp-mx-lapp02.apple.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+ (Exim 4.90_1) (envelope-from <samuel.holland@sifive.com>)
+ id 1sf7HW-0005OL-IF
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 20:27:00 -0400
+Received: by mail-oa1-x32.google.com with SMTP id
+ 586e51a60fabf-267b7ef154aso1714818fac.0
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 17:26:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1723854413; x=1724459213; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6mBzLqL6MdSQlxiCxzjBTnD6Jwm1kjbNkQm4sK+PO4k=;
+ b=VMgLuG5CyyrPo6XoJe4rK66cPYDSBT1jDotjKI4y65SXpE2rCorpvC3+Nxf5fkBVm3
+ 2CTo40uD+KCK3DCwg6ND69LCHcG2vBNDZc7uMCXFqQcjgqm0+8g7xdlU/W1/KEHOWjqO
+ Br2cAWkHCzrl2IKwNVqzi6a38tnCJ8Hy1aQNl5Ap/bkDMQ1gd7TcX9JUVsS2QgemITHe
+ PKLERp5Fg2bl9SsJujD0tgwWEi+RaGeNYqVtNv5iGzCPRwRjZQPAgbnKhPMfl73LQpVS
+ Yv/Dol2ksunyThqF28IAHmmjrBKMBQkQ1AeWrvyjf7ll78dqtzeTlUI0+v2qS4ThPOeZ
+ SRew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723854413; x=1724459213;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=6mBzLqL6MdSQlxiCxzjBTnD6Jwm1kjbNkQm4sK+PO4k=;
+ b=wt6pUgf4Eegok0Vg0ldCQV+KwwABm2hzIY6+o+uF3ESxEHwHLiWQ3w/6ZdwPDF5035
+ sC48V+XIgOMRYGFXE2rQOlv0cqTcjuB85gO+wF2xrrKHUyjFMRpQS1CUfvtokbt7lx0D
+ fYZ0X857KIFR1OuxJGtzW8kHbLNJblUuVrb3WoIVwGKFb3htA5hMny8Rc8Mtn+0Arz+3
+ NqebPLvmkwa89yCpm6w4NOpoadYKvbzkMqKckN2m0KNaItYew9gE0YFiTob1LI7lsBaP
+ NOAzLbPWaQpWQjfOGbBDr1XL0PJHQEjF9hBYYBKM1w0KXqSbyUZZj+Fkg9tdmJHStDqf
+ i4ew==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU8owVh+gXgchkkCYPIAtJg4AXQ8P/inzUkNDoPtaKSPRFgIuCwD0/Jpi2bi3TWhlQ82T9j1GS3Art/+RH1agiGkIhCREA=
+X-Gm-Message-State: AOJu0Yxbgj3A5OqeR2aLngPs9VJINJAJp64qQT+pvISxVrVdHzvkNTp7
+ 61Wn/h/sUiW7rFx6dnI3tpzwEHrRKJO0NtnS7tuPEAPGuRHHwurS2zuEHKEL6UQ=
+X-Google-Smtp-Source: AGHT+IHmDwGcwfB5GaS4fg2IwtZxaPZPIEhKGxGi0+Xi8AJ3N7CsYZ8GItDdWoR5ZRK2Et1sXhgbkg==
+X-Received: by 2002:a05:6870:6387:b0:268:952b:d2a4 with SMTP id
+ 586e51a60fabf-270341e0c73mr1301704fac.32.1723854413580; 
+ Fri, 16 Aug 2024 17:26:53 -0700 (PDT)
+Received: from sw06.internal.sifive.com ([4.53.31.132])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7127aef5457sm3152654b3a.127.2024.08.16.17.26.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 16 Aug 2024 17:26:53 -0700 (PDT)
+From: Samuel Holland <samuel.holland@sifive.com>
+To: qemu-riscv@nongnu.org
+Cc: Samuel Holland <samuel.holland@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Vijai Kumar K <vijai@behindbytes.com>,
+ Weiwei Li <liwei1518@gmail.com>, qemu-devel@nongnu.org
+Subject: [PATCH] hw/riscv: Respect firmware ELF entry point
+Date: Fri, 16 Aug 2024 17:25:02 -0700
+Message-ID: <20240817002651.3209701-1-samuel.holland@sifive.com>
+X-Mailer: git-send-email 2.45.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::32;
+ envelope-from=samuel.holland@sifive.com; helo=mail-oa1-x32.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.131,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 16 Aug 2024 20:54:48 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -111,176 +98,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+When riscv_load_firmware() loads an ELF, the ELF segment addresses are
+used, not the passed-in firmware_load_addr. The machine models assume
+the firmware entry point is what they provided for firmware_load_addr,
+and use that address to generate the boot ROM, so if the ELF is linked
+at any other address, the boot ROM will jump to empty memory.
 
---Apple-Mail=_182B2C20-4477-4C15-BACF-6201DBE72E07
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+Pass back the ELF entry point to use when generating the boot ROM, so
+the boot ROM can jump to firmware loaded anywhere in RAM. For example,
+on the virt machine, this allows using an OpenSBI fw_dynamic.elf built
+with FW_TEXT_START values other than 0x80000000.
 
-Peter, thought I=E2=80=99d send this little snippet before getting the =
-rest of V2 done in case anyone hates this :). I tried to take a similar =
-approach to kvm_type,
-but I=E2=80=99m not sure if this will be looked upon favorably so want =
-an early opinion. The nice thing about kvm_type is at least it has =
-differing meaning per
-platform so all the impls can do whatever they need, with the below =
-it=E2=80=99s really only needed on ARM (and obviously macOS specific) so =
-it's a bit odd,
-but couldn=E2=80=99t think of how else to be able to be able to get what =
-we need out of the memmap during vm creation.=20
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+---
 
-How this would be used is almost exactly like how ARMs kvm_type is used. =
-We set up hvf_get_physical_address_range to freeze the memory
-map and compute the highest gpa, then check if that exceeds our =
-platforms largest IPA size and if so return a sane error message. If =
-everything
-checks out we=E2=80=99d just set the IPA size on the VM config object =
-and then create the VM. The current patch should mostly stay the same =
-after that bit
-of plumbing I think besides removing the macOS 13 ifdef=E2=80=99s (and =
-simplifying the copy and pasted loop you pointed out). x86=E2=80=99s
-hvf_get_physical_address_range can be NULL.
+ hw/riscv/boot.c            | 11 ++++++-----
+ hw/riscv/microchip_pfsoc.c |  2 +-
+ hw/riscv/opentitan.c       |  3 ++-
+ hw/riscv/shakti_c.c        | 13 ++++++-------
+ hw/riscv/sifive_u.c        |  4 ++--
+ hw/riscv/spike.c           |  5 +++--
+ hw/riscv/virt.c            |  4 ++--
+ include/hw/riscv/boot.h    |  4 ++--
+ 8 files changed, 24 insertions(+), 22 deletions(-)
 
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -215,6 +215,10 @@ typedef struct {
-  *    Return the type of KVM corresponding to the kvm-type string =
-option or
-  *    computed based on other criteria such as the host kernel =
-capabilities.
-  *    kvm-type may be NULL if it is not needed.
-+ * @hvf_get_physical_address_range:
-+ *    Returns the physical address range in bits to use for the HVF =
-virtual
-+ *    machine based on the current boards memory map. This may be NULL =
-if it
-+ *    is not needed.
-  * @numa_mem_supported:
-  *    true if '--numa node.mem' option is supported and false otherwise
-  * @hotplug_allowed:
-@@ -253,6 +257,7 @@ struct MachineClass {
-     void (*reset)(MachineState *state, ShutdownCause reason);
-     void (*wakeup)(MachineState *state);
-     int (*kvm_type)(MachineState *machine, const char *arg);
-+    unsigned int (*hvf_get_physical_address_range)(MachineState =
-*machine);
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index 47281ca853..9115ecd91f 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -128,11 +128,11 @@ char *riscv_find_firmware(const char *firmware_filename,
+ 
+ target_ulong riscv_find_and_load_firmware(MachineState *machine,
+                                           const char *default_machine_firmware,
+-                                          hwaddr firmware_load_addr,
++                                          hwaddr *firmware_load_addr,
+                                           symbol_fn_t sym_cb)
+ {
+     char *firmware_filename;
+-    target_ulong firmware_end_addr = firmware_load_addr;
++    target_ulong firmware_end_addr = *firmware_load_addr;
+ 
+     firmware_filename = riscv_find_firmware(machine->firmware,
+                                             default_machine_firmware);
+@@ -148,7 +148,7 @@ target_ulong riscv_find_and_load_firmware(MachineState *machine,
+ }
+ 
+ target_ulong riscv_load_firmware(const char *firmware_filename,
+-                                 hwaddr firmware_load_addr,
++                                 hwaddr *firmware_load_addr,
+                                  symbol_fn_t sym_cb)
+ {
+     uint64_t firmware_entry, firmware_end;
+@@ -159,15 +159,16 @@ target_ulong riscv_load_firmware(const char *firmware_filename,
+     if (load_elf_ram_sym(firmware_filename, NULL, NULL, NULL,
+                          &firmware_entry, NULL, &firmware_end, NULL,
+                          0, EM_RISCV, 1, 0, NULL, true, sym_cb) > 0) {
++        *firmware_load_addr = firmware_entry;
+         return firmware_end;
+     }
+ 
+     firmware_size = load_image_targphys_as(firmware_filename,
+-                                           firmware_load_addr,
++                                           *firmware_load_addr,
+                                            current_machine->ram_size, NULL);
+ 
+     if (firmware_size > 0) {
+-        return firmware_load_addr + firmware_size;
++        return *firmware_load_addr + firmware_size;
+     }
+ 
+     error_report("could not load firmware '%s'", firmware_filename);
+diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+index 7725dfbde5..f9a3b43d2e 100644
+--- a/hw/riscv/microchip_pfsoc.c
++++ b/hw/riscv/microchip_pfsoc.c
+@@ -613,7 +613,7 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
+ 
+     /* Load the firmware */
+     firmware_end_addr = riscv_find_and_load_firmware(machine, firmware_name,
+-                                                     firmware_load_addr, NULL);
++                                                     &firmware_load_addr, NULL);
+ 
+     if (kernel_as_payload) {
+         kernel_start_addr = riscv_calc_kernel_start_addr(&s->soc.u_cpus,
+diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
+index 436503f1ba..e2830e9dc2 100644
+--- a/hw/riscv/opentitan.c
++++ b/hw/riscv/opentitan.c
+@@ -98,7 +98,8 @@ static void opentitan_machine_init(MachineState *machine)
+         memmap[IBEX_DEV_RAM].base, machine->ram);
+ 
+     if (machine->firmware) {
+-        riscv_load_firmware(machine->firmware, memmap[IBEX_DEV_RAM].base, NULL);
++        hwaddr firmware_load_addr = memmap[IBEX_DEV_RAM].base;
++        riscv_load_firmware(machine->firmware, &firmware_load_addr, NULL);
+     }
+ 
+     if (machine->kernel_filename) {
+diff --git a/hw/riscv/shakti_c.c b/hw/riscv/shakti_c.c
+index 3888034c2b..2dccc1eff2 100644
+--- a/hw/riscv/shakti_c.c
++++ b/hw/riscv/shakti_c.c
+@@ -45,6 +45,7 @@ static void shakti_c_machine_state_init(MachineState *mstate)
+ {
+     ShaktiCMachineState *sms = RISCV_SHAKTI_MACHINE(mstate);
+     MemoryRegion *system_memory = get_system_memory();
++    hwaddr firmware_load_addr = shakti_c_memmap[SHAKTI_C_RAM].base;
+ 
+     /* Initialize SoC */
+     object_initialize_child(OBJECT(mstate), "soc", &sms->soc,
+@@ -56,16 +57,14 @@ static void shakti_c_machine_state_init(MachineState *mstate)
+                                 shakti_c_memmap[SHAKTI_C_RAM].base,
+                                 mstate->ram);
+ 
++    if (mstate->firmware) {
++        riscv_load_firmware(mstate->firmware, &firmware_load_addr, NULL);
++    }
++
+     /* ROM reset vector */
+-    riscv_setup_rom_reset_vec(mstate, &sms->soc.cpus,
+-                              shakti_c_memmap[SHAKTI_C_RAM].base,
++    riscv_setup_rom_reset_vec(mstate, &sms->soc.cpus, firmware_load_addr,
+                               shakti_c_memmap[SHAKTI_C_ROM].base,
+                               shakti_c_memmap[SHAKTI_C_ROM].size, 0, 0);
+-    if (mstate->firmware) {
+-        riscv_load_firmware(mstate->firmware,
+-                            shakti_c_memmap[SHAKTI_C_RAM].base,
+-                            NULL);
+-    }
+ }
+ 
+ static void shakti_c_machine_instance_init(Object *obj)
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index af5f923f54..35a689309d 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -515,7 +515,7 @@ static void sifive_u_machine_init(MachineState *machine)
+     SiFiveUState *s = RISCV_U_MACHINE(machine);
+     MemoryRegion *system_memory = get_system_memory();
+     MemoryRegion *flash0 = g_new(MemoryRegion, 1);
+-    target_ulong start_addr = memmap[SIFIVE_U_DEV_DRAM].base;
++    hwaddr start_addr = memmap[SIFIVE_U_DEV_DRAM].base;
+     target_ulong firmware_end_addr, kernel_start_addr;
+     const char *firmware_name;
+     uint32_t start_addr_hi32 = 0x00000000;
+@@ -589,7 +589,7 @@ static void sifive_u_machine_init(MachineState *machine)
+ 
+     firmware_name = riscv_default_firmware_name(&s->soc.u_cpus);
+     firmware_end_addr = riscv_find_and_load_firmware(machine, firmware_name,
+-                                                     start_addr, NULL);
++                                                     &start_addr, NULL);
+ 
+     if (machine->kernel_filename) {
+         kernel_start_addr = riscv_calc_kernel_start_addr(&s->soc.u_cpus,
+diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
+index 64074395bc..fceb91d946 100644
+--- a/hw/riscv/spike.c
++++ b/hw/riscv/spike.c
+@@ -198,6 +198,7 @@ static void spike_board_init(MachineState *machine)
+     MemoryRegion *system_memory = get_system_memory();
+     MemoryRegion *mask_rom = g_new(MemoryRegion, 1);
+     target_ulong firmware_end_addr = memmap[SPIKE_DRAM].base;
++    hwaddr firmware_load_addr = memmap[SPIKE_DRAM].base;
+     target_ulong kernel_start_addr;
+     char *firmware_name;
+     uint32_t fdt_load_addr;
+@@ -290,7 +291,7 @@ static void spike_board_init(MachineState *machine)
+     /* Load firmware */
+     if (firmware_name) {
+         firmware_end_addr = riscv_load_firmware(firmware_name,
+-                                                memmap[SPIKE_DRAM].base,
++                                                &firmware_load_addr,
+                                                 htif_symbol_callback);
+         g_free(firmware_name);
+     }
+@@ -320,7 +321,7 @@ static void spike_board_init(MachineState *machine)
+     riscv_load_fdt(fdt_load_addr, machine->fdt);
+ 
+     /* load the reset vector */
+-    riscv_setup_rom_reset_vec(machine, &s->soc[0], memmap[SPIKE_DRAM].base,
++    riscv_setup_rom_reset_vec(machine, &s->soc[0], firmware_load_addr,
+                               memmap[SPIKE_MROM].base,
+                               memmap[SPIKE_MROM].size, kernel_entry,
+                               fdt_load_addr);
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 9981e0f6c9..aef5e284a7 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1336,7 +1336,7 @@ static void virt_machine_done(Notifier *notifier, void *data)
+                                      machine_done);
+     const MemMapEntry *memmap = virt_memmap;
+     MachineState *machine = MACHINE(s);
+-    target_ulong start_addr = memmap[VIRT_DRAM].base;
++    hwaddr start_addr = memmap[VIRT_DRAM].base;
+     target_ulong firmware_end_addr, kernel_start_addr;
+     const char *firmware_name = riscv_default_firmware_name(&s->soc[0]);
+     uint64_t fdt_load_addr;
+@@ -1368,7 +1368,7 @@ static void virt_machine_done(Notifier *notifier, void *data)
+     }
+ 
+     firmware_end_addr = riscv_find_and_load_firmware(machine, firmware_name,
+-                                                     start_addr, NULL);
++                                                     &start_addr, NULL);
+ 
+     pflash_blk0 = pflash_cfi01_get_blk(s->flash[0]);
+     if (pflash_blk0) {
+diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+index a2e4ae9cb0..18bfe9f7bf 100644
+--- a/include/hw/riscv/boot.h
++++ b/include/hw/riscv/boot.h
+@@ -35,13 +35,13 @@ target_ulong riscv_calc_kernel_start_addr(RISCVHartArrayState *harts,
+                                           target_ulong firmware_end_addr);
+ target_ulong riscv_find_and_load_firmware(MachineState *machine,
+                                           const char *default_machine_firmware,
+-                                          hwaddr firmware_load_addr,
++                                          hwaddr *firmware_load_addr,
+                                           symbol_fn_t sym_cb);
+ const char *riscv_default_firmware_name(RISCVHartArrayState *harts);
+ char *riscv_find_firmware(const char *firmware_filename,
+                           const char *default_machine_firmware);
+ target_ulong riscv_load_firmware(const char *firmware_filename,
+-                                 hwaddr firmware_load_addr,
++                                 hwaddr *firmware_load_addr,
+                                  symbol_fn_t sym_cb);
+ target_ulong riscv_load_kernel(MachineState *machine,
+                                RISCVHartArrayState *harts,
+-- 
+2.45.1
 
-> On Aug 13, 2024, at 2:31=E2=80=AFAM, Peter Maydell =
-<peter.maydell@linaro.org> wrote:
->=20
-> On Mon, 12 Aug 2024 at 23:18, Danny Canter <danny_canter@apple.com> =
-wrote:
->> On Aug 12, 2024, at 10:52=E2=80=AFAM, Peter Maydell =
-<peter.maydell@linaro.org> wrote:
->>> This is unfortunately probably going to imply a bit of extra
->>> plumbing to be implemented for hvf -- that MachineClass::kvm_type
->>> method is (as the name suggests) KVM specific. (Multi-patch
->>> patchset for that, where we add the plumbing in as its own
->>> separate patch (and/or whatever other split of functionality
->>> into coherent chunks makes sense), rather than one-big-patch, =
-please.)
->>=20
->> That=E2=80=99s perfectly fine, I=E2=80=99ll try and see how the =
-plumbing was done
->> for KVM and try and emulate where it makes sense
->> for HVF. Agree though, that=E2=80=99d definitely push this into =
-multi-patch
->> territory. Curious if you think what=E2=80=99s here today should
->> be multiple patches or the current work seems fine in one?
->=20
-> I think it was fine as one patch. My personal preference
-> when I write code tends to go for more-smaller-patches
-> over fewer-larger-patches, so I might have for example
-> split out "Add hvf_arch_vm_create()" into its own
-> patch, but that's very borderline, and I wouldn't ask for
-> that change at code review time unless the patch as a whole
-> was too big and unwieldy and I was looking for places to
-> suggest a split into multiple patches.
->=20
-> -- PMM
-
-
---Apple-Mail=_182B2C20-4477-4C15-BACF-6201DBE72E07
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html><head><meta http-equiv=3D"content-type" content=3D"text/html; =
-charset=3Dutf-8"></head><body style=3D"overflow-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: after-white-space;">Peter, thought =
-I=E2=80=99d send this little snippet before getting the rest of V2 done =
-in case anyone hates this :). I tried to take a similar approach to =
-kvm_type,<div>but I=E2=80=99m not sure if this will be looked upon =
-favorably so want an early opinion. The nice thing about kvm_type is at =
-least it has differing meaning per</div><div>platform so all the impls =
-can do whatever they need, with the below it=E2=80=99s really only =
-needed on ARM (and obviously macOS specific) so it's a bit =
-odd,</div><div>but couldn=E2=80=99t think of how else to be able to be =
-able to get what we need out of the memmap during vm =
-creation.&nbsp;<div><div><br></div><div>How this would be used is almost =
-exactly like how ARMs kvm_type is used. We set up&nbsp;<span =
-style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
-0);">hvf_get_physical_address_range to freeze the =
-memory</span></div><div>map and compute the highest gpa, then&nbsp;<span =
-style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, 0);">check if that =
-exceeds our platforms largest IPA size and if so return a sane error =
-message. If&nbsp;</span><span style=3D"caret-color: rgb(0, 0, 0); color: =
-rgb(0, 0, 0);">everything</span></div><div><span style=3D"caret-color: =
-rgb(0, 0, 0); color: rgb(0, 0, 0);">checks out we=E2=80=99d just set the =
-IPA size on the VM config object and then create the VM. The current =
-patch should mostly stay the&nbsp;</span><span style=3D"color: rgb(0, 0, =
-0);">same after that bit</span></div><div><span style=3D"color: rgb(0, =
-0, 0);">of plumbing I think besides removing the macOS 13 ifdef=E2=80=99s =
-(and simplifying the copy and pasted loop you pointed =
-out).&nbsp;</span><font color=3D"#000000">x86=E2=80=99s</font></div><div><=
-span style=3D"caret-color: rgb(0, 0, 0); color: rgb(0, 0, =
-0);">hvf_get_physical_address_range can be =
-NULL.</span></div><div><br></div><div><div>--- =
-a/include/hw/boards.h</div><div>+++ b/include/hw/boards.h</div><div>@@ =
--215,6 +215,10 @@ typedef struct {</div><div>&nbsp; * &nbsp; =
-&nbsp;Return the type of KVM corresponding to the kvm-type string option =
-or</div><div>&nbsp; * &nbsp; &nbsp;computed based on other criteria such =
-as the host kernel capabilities.</div><div>&nbsp; * &nbsp; =
-&nbsp;kvm-type may be NULL if it is not needed.</div><div>+ * =
-@hvf_get_physical_address_range:</div><div>+ * &nbsp; &nbsp;Returns the =
-physical address range in bits to use for the HVF virtual</div><div>+ * =
-&nbsp; &nbsp;machine based on the current boards memory map. This may be =
-NULL if it</div><div>+ * &nbsp; &nbsp;is not needed.</div><div>&nbsp; * =
-@numa_mem_supported:</div><div>&nbsp; * &nbsp; &nbsp;true if '--numa =
-node.mem' option is supported and false otherwise</div><div>&nbsp; * =
-@hotplug_allowed:</div><div>@@ -253,6 +257,7 @@ struct MachineClass =
-{</div><div>&nbsp; &nbsp; &nbsp;void (*reset)(MachineState *state, =
-ShutdownCause reason);</div><div>&nbsp; &nbsp; &nbsp;void =
-(*wakeup)(MachineState *state);</div><div>&nbsp; &nbsp; &nbsp;int =
-(*kvm_type)(MachineState *machine, const char *arg);</div><div>+ &nbsp; =
-&nbsp;unsigned int (*hvf_get_physical_address_range)(MachineState =
-*machine);</div></div><div><div><br><blockquote type=3D"cite"><div>On =
-Aug 13, 2024, at 2:31=E2=80=AFAM, Peter Maydell =
-&lt;peter.maydell@linaro.org&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><div>On Mon, 12 Aug 2024 at =
-23:18, Danny Canter &lt;danny_canter@apple.com&gt; wrote:<br><blockquote =
-type=3D"cite">On Aug 12, 2024, at 10:52=E2=80=AFAM, Peter Maydell =
-&lt;peter.maydell@linaro.org&gt; wrote:<br><blockquote type=3D"cite">This =
-is unfortunately probably going to imply a bit of extra<br>plumbing to =
-be implemented for hvf -- that MachineClass::kvm_type<br>method is (as =
-the name suggests) KVM specific. (Multi-patch<br>patchset for that, =
-where we add the plumbing in as its own<br>separate patch (and/or =
-whatever other split of functionality<br>into coherent chunks makes =
-sense), rather than one-big-patch, please.)<br></blockquote><br>That=E2=80=
-=99s perfectly fine, I=E2=80=99ll try and see how the plumbing was =
-done<br>for KVM and try and emulate where it makes sense<br>for HVF. =
-Agree though, that=E2=80=99d definitely push this into =
-multi-patch<br>territory. Curious if you think what=E2=80=99s here today =
-should<br>be multiple patches or the current work seems fine in =
-one?<br></blockquote><br>I think it was fine as one patch. My personal =
-preference<br>when I write code tends to go for =
-more-smaller-patches<br>over fewer-larger-patches, so I might have for =
-example<br>split out "Add hvf_arch_vm_create()" into its own<br>patch, =
-but that's very borderline, and I wouldn't ask for<br>that change at =
-code review time unless the patch as a whole<br>was too big and unwieldy =
-and I was looking for places to<br>suggest a split into multiple =
-patches.<br><br>-- =
-PMM<br></div></div></blockquote></div><br></div></div></div></body></html>=
-
---Apple-Mail=_182B2C20-4477-4C15-BACF-6201DBE72E07--
 
