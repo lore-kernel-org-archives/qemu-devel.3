@@ -4,90 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54666C52D7D
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 07:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97129C52D7D
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 08:50:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sfDRE-0007vb-EK; Sat, 17 Aug 2024 03:01:24 -0400
+	id 1sfF7v-0004G3-CQ; Sat, 17 Aug 2024 04:49:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sfDQx-0007qD-AQ
- for qemu-devel@nongnu.org; Sat, 17 Aug 2024 03:01:20 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1sfDQr-0000y8-LR
- for qemu-devel@nongnu.org; Sat, 17 Aug 2024 03:01:06 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2d3d662631aso1607812a91.1
- for <qemu-devel@nongnu.org>; Sat, 17 Aug 2024 00:01:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1723878060; x=1724482860;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=uoLVcxBvzTNKoye12hLBhREbMjSKAq5KzLpEfss6xGc=;
- b=csrjC7qOTl4lGMqH/3AuVEmK8uFBy8xa2lh9R+EPkmBvHi/jbY+uI3rS9qh7u1cXP3
- 63TwjH4s/1MYrf2mT/1faTXoIyAd7MWv+LJaSOK5kC6hJN1nNJjIU9sasidKeYSx12UL
- qh3h3MQu+Yl9m0N0id+w1NYIpq2Ti/Iw+XFddF1aTgt5N7kXNGHU/QDBcpGZqtD+7nHa
- 4ccIxo7/2/4J1bQtg4wZ2PiiYp5t3yabxt0uoDseBBvz2Gd1j9kO18zBJOvsAHrCuPRS
- SLgAt0Ptesd3U04WHb45Sjo1fvo2mPyYSihnzg3+BGJTRWCFWYEJQq02ytixRulfruRK
- rF5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723878060; x=1724482860;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uoLVcxBvzTNKoye12hLBhREbMjSKAq5KzLpEfss6xGc=;
- b=doKw+1zF3Vfms6NrSj76k2XvEE8NrXD+E4rGsl73xF98kZND6w7lqOahYvQYRAPhB0
- /UiRVc30IDLOy+2fL39l3myARnpayi3giJhHWPR2ZlrdWmXNCoP0R+1TmB4dk3QfWl1h
- uy7OYszIUJIsnbN6nWYeLi3/KZ1/QaIsxSqRLKj0c39SLyJucoKBItdJ7u747RZyq7+e
- Fwi2w+JePW3IKvpQH9PxOTNYOXMMZFst48YnNRWWBileSDzFb+YP4C5AF8hfmCwb/8dI
- az88IFFOq36BxxTFR2dttX4Nd0dGMIf2lGvTgznQsOp6pDi2qXfPWXdW01E5jvbnGr8+
- Doqg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUJvuQj0zYUZK+jSJqTMRnXwseNpVVCpKtv8Hcnn/q7JilCYRrUSEcO50to5Y7TQVnh3w1M2sniK8zkkCSYYNGLhHNgsEE=
-X-Gm-Message-State: AOJu0YyELqBmwtLBj79DMmDgL1mkQxkhBSPtxMpt9crdKmddWG2TIca5
- CQK6Yl+AAomOmv/RToD3gphjL2OWgPkH48q9t/AhUhETBR2hrYZa18YoPeS4fq0=
-X-Google-Smtp-Source: AGHT+IFWNnVrH2kAKqHPajUMreUxC6PlucG3a01HO1LyGQb8RDDGP7gxPlaDkIhWYqHv48zO4+Pjvw==
-X-Received: by 2002:a17:90b:ed0:b0:2d3:9137:2375 with SMTP id
- 98e67ed59e1d1-2d3dfdaadc6mr5755199a91.4.1723878059770; 
- Sat, 17 Aug 2024 00:00:59 -0700 (PDT)
-Received: from localhost ([157.82.207.23]) by smtp.gmail.com with UTF8SMTPSA id
- 98e67ed59e1d1-2d3e3c7d7bdsm3051174a91.44.2024.08.17.00.00.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 17 Aug 2024 00:00:59 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Sat, 17 Aug 2024 16:00:43 +0900
-Subject: [PATCH] net: Check if nc is NULL in qemu_get_vnet_hdr_len()
+ (Exim 4.90_1) (envelope-from <kamil@szczek.dev>) id 1sfF7o-0004DN-U4
+ for qemu-devel@nongnu.org; Sat, 17 Aug 2024 04:49:28 -0400
+Received: from mail-4022.proton.ch ([185.70.40.22])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kamil@szczek.dev>) id 1sfF7g-0007VC-IM
+ for qemu-devel@nongnu.org; Sat, 17 Aug 2024 04:49:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=szczek.dev;
+ s=protonmail3; t=1723884550; x=1724143750;
+ bh=tkL+j2AuaQd3rWS/sFgiD96I3hY5MbiXOZryxix19wY=;
+ h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector;
+ b=nnTyNXh7Y4CuahGZTzXrbQU59NbZ4TOHvEu+WNsDmyvc4vEk//OGkPCGM5gnWb+w5
+ 7fxy1Fwaef1Wf5hZq3hlad3Az6RhFzWLaiGDkZFCK+kmjMu8YGqOCU34LNXDBYn1vH
+ tjRktTHRQRBmVIGgA9DjselW2D+28BDAf793j4vpg5IcTxHzHWp+zWCzjLO7hegwAP
+ Z3c9ywt99Bh7uj7IG2iM0smWxBvFF7IAHJRXUFbjk12YKxP7IFqRF5qgHTr+ZtvTbZ
+ +aPj2BMpnSHvX9Iahs+ci4PGS7XQtcjznpm/2bTwW4bqjIbpHgp6AdLCniEvHohpvV
+ E1RhWpcRMKk7A==
+Date: Sat, 17 Aug 2024 08:49:05 +0000
+To: Bernhard Beschow <shentey@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+From: =?utf-8?Q?Kamil_Szcz=C4=99k?= <kamil@szczek.dev>
+Cc: "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] hw/i386/pc: Warn about unsatisfied vmport deps
+Message-ID: <qT_ps6medVHIOIF5hUE_tIMUtEdbHQw5wnhE2ZVauM1cpnfHXqnl9-hroGS-3due9uRtKlMR5RsREbzeIV_0Xp1-FM0w4UDFsvdo3PsIG6U=@szczek.dev>
+In-Reply-To: <0D723368-3251-4D5E-A625-73169CBE3395@gmail.com>
+References: <vsm1ly2eX009LRKgURcMp6qTYHWw1bZd3zg2GUbd4M90T91QvJRdKxiRS3rPl8PR96y2r890Am3Ajf4kQrwihn7-7hKBU9VicRPPtIRv_GI=@szczek.dev>
+ <0D723368-3251-4D5E-A625-73169CBE3395@gmail.com>
+Feedback-ID: 37679334:user:proton
+X-Pm-Message-ID: c1a6bcafa1b93b2b6ed742e983777258883b9490
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240817-net-v1-1-699b5591ad3b@daynix.com>
-X-B4-Tracking: v=1; b=H4sIAJpKwGYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDC0Nz3bzUEt2UZBMzQwtL00QjS1MloMqCotS0zAqwKdGxtbUAbmDhN1U
- AAAA=
-To: Jason Wang <jasowang@redhat.com>
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>, Luigi Rizzo <rizzo@iet.unipi.it>, 
- Giuseppe Lettieri <g.lettieri@iet.unipi.it>, 
- Vincenzo Maffione <v.maffione@gmail.com>, 
- Andrew Melnychenko <andrew@daynix.com>, 
- Yuri Benditovich <yuri.benditovich@daynix.com>, qemu-devel@nongnu.org, 
- Jonathan Cameron <Jonathan.Cameron@huawei.com>, 
- Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.14-dev-fd6e3
-Received-SPF: none client-ip=2607:f8b0:4864:20::102f;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pj1-x102f.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=185.70.40.22; envelope-from=kamil@szczek.dev;
+ helo=mail-4022.proton.ch
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,39 +72,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A netdev may not have a peer specified, resulting in NULL. We should
-make it behave like /dev/null in such a case instead of letting it
-cause segmentatin fault.
+On Friday, August 16th, 2024 at 15:14, Bernhard Beschow <shentey@gmail.com>=
+ wrote:
 
-Fixes: 4b52d63249a5 ("tap: Remove qemu_using_vnet_hdr()")
-Reported-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
- net/net.c | 4 ++++
- 1 file changed, 4 insertions(+)
+>
+> Am 14. August 2024 11:10:16 UTC schrieb "Kamil Szcz=C4=99k" kamil@szczek.=
+dev:
+>
+> > Since commit 4ccd5fe22feb95137d325f422016a6473541fe9f ('pc: add option
+> > to disable PS/2 mouse/keyboard'), the vmport will not be created unless
+> > the i8042 PS/2 controller is enabled. To not confuse users, let's add a
+> > warning if vmport was explicitly requested, but the i8042 controller is
+> > disabled. This also changes the behavior of vmport=3Dauto to take i8042
+> > controller availability into account.
+> >
+> > Signed-off-by: Kamil Szcz=C4=99k kamil@szczek.dev
+> > ---
+> > hw/i386/pc.c | 4 ++++
+> > hw/i386/pc_piix.c | 3 ++-
+> > hw/i386/pc_q35.c | 2 +-
+> > qemu-options.hx | 4 ++--
+> > 4 files changed, 9 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> > index c74931d577..5bd8dd0350 100644
+> > --- a/hw/i386/pc.c
+> > +++ b/hw/i386/pc.c
+> > @@ -1100,6 +1100,10 @@ static void pc_superio_init(ISABus *isa_bus, boo=
+l create_fdctrl,
+> > }
+> >
+> > if (!create_i8042) {
+> > + if (!no_vmport) {
+> > + warn_report("vmport requires the i8042 controller to be enabled");
+> > + }
+> > +
+> > return;
+> > }
+> >
+> > diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> > index d9e69243b4..cf2e2e3e30 100644
+> > --- a/hw/i386/pc_piix.c
+> > +++ b/hw/i386/pc_piix.c
+> > @@ -312,7 +312,8 @@ static void pc_init1(MachineState *machine, const c=
+har *pci_type)
+> >
+> > assert(pcms->vmport !=3D ON_OFF_AUTO__MAX);
+> > if (pcms->vmport =3D=3D ON_OFF_AUTO_AUTO) {
+> > - pcms->vmport =3D xen_enabled() ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
+> > + pcms->vmport =3D (xen_enabled() || !pcms->i8042_enabled)
+> > + ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
+> > }
+>
+>
+> I think it makes sense to consolidate this handling into pc_basic_devices=
+_init() before doing this change. Maybe just in front of the call to pc_sup=
+erio_init()? The additional handling of xen_enabled() shouldn't hurt there =
+for q35: Even though q35 doesn't (yet) support Xen there are already code p=
+aths where this check is done.
 
-diff --git a/net/net.c b/net/net.c
-index 6938da05e077..4c21d91f9450 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -542,6 +542,10 @@ void qemu_set_offload(NetClientState *nc, int csum, int tso4, int tso6,
- 
- int qemu_get_vnet_hdr_len(NetClientState *nc)
- {
-+    if (!nc) {
-+        return 0;
-+    }
-+
-     return nc->vnet_hdr_len;
- }
- 
+Makes sense technically, but since I'm new to the mailing list workflow I c=
+ould use some help with logistics. I've already posted a v2 of this patch w=
+hich was reviewed and accepted, should I wait for it to be pulled in and po=
+st a follow-up patch or post another revision of this patch?
 
----
-base-commit: 31669121a01a14732f57c49400bc239cf9fd505f
-change-id: 20240817-net-dc461895a295
-
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
-
+>
+> > /* init basic PC hardware */
+> > diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> > index 9d108b194e..6c112d804d 100644
+> > --- a/hw/i386/pc_q35.c
+> > +++ b/hw/i386/pc_q35.c
+> > @@ -278,7 +278,7 @@ static void pc_q35_init(MachineState *machine)
+> >
+> > assert(pcms->vmport !=3D ON_OFF_AUTO__MAX);
+> > if (pcms->vmport =3D=3D ON_OFF_AUTO_AUTO) {
+> > - pcms->vmport =3D ON_OFF_AUTO_ON;
+> > + pcms->vmport =3D pcms->i8042_enabled ? ON_OFF_AUTO_ON : ON_OFF_AUTO_O=
+FF;
+> > }
+> >
+> > /* init basic PC hardware */
+> > diff --git a/qemu-options.hx b/qemu-options.hx
+> > index cee0da2014..0bc780a669 100644
+> > --- a/qemu-options.hx
+> > +++ b/qemu-options.hx
+> > @@ -68,8 +68,8 @@ SRST
+> >
+> > `vmport=3Don|off|auto`
+> > Enables emulation of VMWare IO port, for vmmouse etc. auto says
+> > - to select the value based on accel. For accel=3Dxen the default is
+> > - off otherwise the default is on.
+> > + to select the value based on accel and i8042. For accel=3Dxen
+> > + and/or i8042=3Doff the default is off otherwise the default is on.
+>
+>
+> I'd do s#and/or#or# for readability.
+>
+> Best regards,
+> Bernhard
+>
+> > `dump-guest-core=3Don|off`
+> > Include guest memory in a core dump. The default is on.
 
