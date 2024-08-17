@@ -4,59 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97129C52D7D
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 08:50:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E761C52D7D
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 10:26:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sfF7v-0004G3-CQ; Sat, 17 Aug 2024 04:49:37 -0400
+	id 1sfGdS-0005sd-L1; Sat, 17 Aug 2024 06:26:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kamil@szczek.dev>) id 1sfF7o-0004DN-U4
- for qemu-devel@nongnu.org; Sat, 17 Aug 2024 04:49:28 -0400
-Received: from mail-4022.proton.ch ([185.70.40.22])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kamil@szczek.dev>) id 1sfF7g-0007VC-IM
- for qemu-devel@nongnu.org; Sat, 17 Aug 2024 04:49:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=szczek.dev;
- s=protonmail3; t=1723884550; x=1724143750;
- bh=tkL+j2AuaQd3rWS/sFgiD96I3hY5MbiXOZryxix19wY=;
- h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
- Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
- Message-ID:BIMI-Selector;
- b=nnTyNXh7Y4CuahGZTzXrbQU59NbZ4TOHvEu+WNsDmyvc4vEk//OGkPCGM5gnWb+w5
- 7fxy1Fwaef1Wf5hZq3hlad3Az6RhFzWLaiGDkZFCK+kmjMu8YGqOCU34LNXDBYn1vH
- tjRktTHRQRBmVIGgA9DjselW2D+28BDAf793j4vpg5IcTxHzHWp+zWCzjLO7hegwAP
- Z3c9ywt99Bh7uj7IG2iM0smWxBvFF7IAHJRXUFbjk12YKxP7IFqRF5qgHTr+ZtvTbZ
- +aPj2BMpnSHvX9Iahs+ci4PGS7XQtcjznpm/2bTwW4bqjIbpHgp6AdLCniEvHohpvV
- E1RhWpcRMKk7A==
-Date: Sat, 17 Aug 2024 08:49:05 +0000
-To: Bernhard Beschow <shentey@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-From: =?utf-8?Q?Kamil_Szcz=C4=99k?= <kamil@szczek.dev>
-Cc: "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] hw/i386/pc: Warn about unsatisfied vmport deps
-Message-ID: <qT_ps6medVHIOIF5hUE_tIMUtEdbHQw5wnhE2ZVauM1cpnfHXqnl9-hroGS-3due9uRtKlMR5RsREbzeIV_0Xp1-FM0w4UDFsvdo3PsIG6U=@szczek.dev>
-In-Reply-To: <0D723368-3251-4D5E-A625-73169CBE3395@gmail.com>
-References: <vsm1ly2eX009LRKgURcMp6qTYHWw1bZd3zg2GUbd4M90T91QvJRdKxiRS3rPl8PR96y2r890Am3Ajf4kQrwihn7-7hKBU9VicRPPtIRv_GI=@szczek.dev>
- <0D723368-3251-4D5E-A625-73169CBE3395@gmail.com>
-Feedback-ID: 37679334:user:proton
-X-Pm-Message-ID: c1a6bcafa1b93b2b6ed742e983777258883b9490
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=185.70.40.22; envelope-from=kamil@szczek.dev;
- helo=mail-4022.proton.ch
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <3wHrAZgUKCvMoVqdkbjjbgZ.XjhlZhp-YZqZgijibip.jmb@flex--tavip.bounces.google.com>)
+ id 1sfGdQ-0005qU-LW
+ for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:12 -0400
+Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3wHrAZgUKCvMoVqdkbjjbgZ.XjhlZhp-YZqZgijibip.jmb@flex--tavip.bounces.google.com>)
+ id 1sfGdO-00036Y-Ck
+ for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:12 -0400
+Received: by mail-pl1-x649.google.com with SMTP id
+ d9443c01a7336-1fc5e1ab396so27443065ad.2
+ for <qemu-devel@nongnu.org>; Sat, 17 Aug 2024 03:26:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1723890368; x=1724495168; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=gJ7FkzR4rnRxOTRm9HDwdpqUjndpT48FwsqUgOZ8ewk=;
+ b=cbSb0DBg8j1A8h7kXeeK4MPSG3tgdeVUuHFkFxlBsmpNkm0U+UjVl4U7FTicW/xqFc
+ 3aeF81ttiq/TCvUi6B9lBsEEVsLAVGFMqG4vPonsT6PUNfTdziLAuUnbQaMVNQUolpz3
+ 1mu6JT6QO9v+au8tBwrx+hbTzrhb0dXmX0tP9bSdo3t6WnF4quXskwsH+93amT1W5BqX
+ kfS309fBS8K4jt18ha8oorA0wFk/bv0Fj4p9iyrkga+Pu3pwJC91bnNmqe3NY9MEsue+
+ PVPMOcTExBOdN0YoiwvxM3t2M0W2FCUnUNrGTxg6+USVJpyS9mFDlzmWWGw52XJdfO7L
+ i0qA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1723890368; x=1724495168;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gJ7FkzR4rnRxOTRm9HDwdpqUjndpT48FwsqUgOZ8ewk=;
+ b=tXkCkAOSPdCR+bnaM1Q/GMRcEN040WFmpLKO46IgNqgCt3iCSMU/RFvy7zLRIDHCZ/
+ OEEEoo2P4mld5N3cOQpAApcdE5YQamrxX+YDTUVt7Fi9WaIY7BNdsedkHyjR+wlHNYpy
+ M7wFJvTVtm8fGBw6oru+5X5OPiDy1tclPZZbe0ftcy+yjhPFXhMxU1S/SMlWWfLSQhiN
+ oYDOr4cTm211MwmyNsYyN1p5PPE+TlrabcOvPR7H99nKZq20AjRxpfQivh57C5rnLPDv
+ SFrIT3G0Scs9P+pU9gDJ4vMYz/7WyMELNiw6nmGmO8QjgsR3IRfTYpBXDqODZWk3V2DF
+ Rzow==
+X-Gm-Message-State: AOJu0YyNHQKPhh3WX+vonl4VgQwjCiN6VD030vJQTxk4FknNviJa74RR
+ O0kx5g2NIC4mojFdUqsewgNTh39FHe3r+6OdlB38/9dz+RQ3tq9PFCYvlyDTqZfuXc+FjkgxJVg
+ mRWaOKr6m6e87A7XSqSDO0g+WqMVVjhf9ddAWUtBlWEjd83KQG83hbjF+a+axKpVEJwL3txD7+N
+ VSm3szE4qLi7BXV1o+FyjuZyYy5Q==
+X-Google-Smtp-Source: AGHT+IFNvVi8mzoJTYk9zBbP74jhKAwTOoL4/lzvYKPqFPAAsDaS//wBccQ1rdFL3HvBPY5+z6li9apKaw==
+X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
+ (user=tavip job=sendgmr) by 2002:a17:902:c40d:b0:1fb:8620:e113
+ with SMTP id
+ d9443c01a7336-20203e35d20mr5870355ad.3.1723890368005; Sat, 17 Aug 2024
+ 03:26:08 -0700 (PDT)
+Date: Sat, 17 Aug 2024 03:25:43 -0700
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.46.0.184.g6999bdac58-goog
+Message-ID: <20240817102606.3996242-1-tavip@google.com>
+Subject: [RFC PATCH v2 00/23] NXP i.MX RT595,
+ ARM SVD and device model unit tests
+From: Octavian Purdila <tavip@google.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
+ thuth@redhat.com, peter.maydell@linaro.org, marcandre.lureau@redhat.com, 
+ alistair@alistair23.me, berrange@redhat.com, philmd@linaro.org, 
+ jsnow@redhat.com, crosa@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
+ envelope-from=3wHrAZgUKCvMoVqdkbjjbgZ.XjhlZhp-YZqZgijibip.jmb@flex--tavip.bounces.google.com;
+ helo=mail-pl1-x649.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,105 +96,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Friday, August 16th, 2024 at 15:14, Bernhard Beschow <shentey@gmail.com>=
- wrote:
+This patch set adds support for NXP's RT500 MCU [1] and the RT595
+EVK[2]. More RT500 device models will be submitted in future patch sets.
 
->
-> Am 14. August 2024 11:10:16 UTC schrieb "Kamil Szcz=C4=99k" kamil@szczek.=
-dev:
->
-> > Since commit 4ccd5fe22feb95137d325f422016a6473541fe9f ('pc: add option
-> > to disable PS/2 mouse/keyboard'), the vmport will not be created unless
-> > the i8042 PS/2 controller is enabled. To not confuse users, let's add a
-> > warning if vmport was explicitly requested, but the i8042 controller is
-> > disabled. This also changes the behavior of vmport=3Dauto to take i8042
-> > controller availability into account.
-> >
-> > Signed-off-by: Kamil Szcz=C4=99k kamil@szczek.dev
-> > ---
-> > hw/i386/pc.c | 4 ++++
-> > hw/i386/pc_piix.c | 3 ++-
-> > hw/i386/pc_q35.c | 2 +-
-> > qemu-options.hx | 4 ++--
-> > 4 files changed, 9 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-> > index c74931d577..5bd8dd0350 100644
-> > --- a/hw/i386/pc.c
-> > +++ b/hw/i386/pc.c
-> > @@ -1100,6 +1100,10 @@ static void pc_superio_init(ISABus *isa_bus, boo=
-l create_fdctrl,
-> > }
-> >
-> > if (!create_i8042) {
-> > + if (!no_vmport) {
-> > + warn_report("vmport requires the i8042 controller to be enabled");
-> > + }
-> > +
-> > return;
-> > }
-> >
-> > diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-> > index d9e69243b4..cf2e2e3e30 100644
-> > --- a/hw/i386/pc_piix.c
-> > +++ b/hw/i386/pc_piix.c
-> > @@ -312,7 +312,8 @@ static void pc_init1(MachineState *machine, const c=
-har *pci_type)
-> >
-> > assert(pcms->vmport !=3D ON_OFF_AUTO__MAX);
-> > if (pcms->vmport =3D=3D ON_OFF_AUTO_AUTO) {
-> > - pcms->vmport =3D xen_enabled() ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
-> > + pcms->vmport =3D (xen_enabled() || !pcms->i8042_enabled)
-> > + ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
-> > }
->
->
-> I think it makes sense to consolidate this handling into pc_basic_devices=
-_init() before doing this change. Maybe just in front of the call to pc_sup=
-erio_init()? The additional handling of xen_enabled() shouldn't hurt there =
-for q35: Even though q35 doesn't (yet) support Xen there are already code p=
-aths where this check is done.
+The goal of this first patch set is to provide a minimal set that
+allows running the NXP MCU SDK hello world example[4].
 
-Makes sense technically, but since I'm new to the mailing list workflow I c=
-ould use some help with logistics. I've already posted a v2 of this patch w=
-hich was reviewed and accepted, should I wait for it to be pulled in and po=
-st a follow-up patch or post another revision of this patch?
+The patch set introduces a (python) tool that generates C header files
+from ARM SVD files[3]. This significantly reduces the effort to write
+a new device model by automatically generating: register definitions
+and layout (including bit fields), register names for easier debugging
+and tracing, reset register values, register write masks, etc.
 
->
-> > /* init basic PC hardware */
-> > diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-> > index 9d108b194e..6c112d804d 100644
-> > --- a/hw/i386/pc_q35.c
-> > +++ b/hw/i386/pc_q35.c
-> > @@ -278,7 +278,7 @@ static void pc_q35_init(MachineState *machine)
-> >
-> > assert(pcms->vmport !=3D ON_OFF_AUTO__MAX);
-> > if (pcms->vmport =3D=3D ON_OFF_AUTO_AUTO) {
-> > - pcms->vmport =3D ON_OFF_AUTO_ON;
-> > + pcms->vmport =3D pcms->i8042_enabled ? ON_OFF_AUTO_ON : ON_OFF_AUTO_O=
-FF;
-> > }
-> >
-> > /* init basic PC hardware */
-> > diff --git a/qemu-options.hx b/qemu-options.hx
-> > index cee0da2014..0bc780a669 100644
-> > --- a/qemu-options.hx
-> > +++ b/qemu-options.hx
-> > @@ -68,8 +68,8 @@ SRST
-> >
-> > `vmport=3Don|off|auto`
-> > Enables emulation of VMWare IO port, for vmmouse etc. auto says
-> > - to select the value based on accel. For accel=3Dxen the default is
-> > - off otherwise the default is on.
-> > + to select the value based on accel and i8042. For accel=3Dxen
-> > + and/or i8042=3Doff the default is off otherwise the default is on.
->
->
-> I'd do s#and/or#or# for readability.
->
-> Best regards,
-> Bernhard
->
-> > `dump-guest-core=3Don|off`
-> > Include guest memory in a core dump. The default is on.
+The generated files are commited and not generated at compile
+time. Build targets are created so that they can be easily regenerated
+if needed.
+
+It also introduces unit tests for device models. To allow accessing
+registers from unit tests a system bus mock is created.
+
+This can potentially introduce maintainance issues, due to mocks or
+unit tests getting outdated when code is refactored. However, I think
+this is not an issue in this case because the APIs we mocked (system
+bus MMIO access) or directly used (irq APIs, chardev APIs, clock tree
+APIs) to interact with device models are stable at this
+point. Anecdotally, our experience seems to confirm this: we only run
+into one (trivially fixed) breaking upstream change (gpio getting
+removed from hwcore) in the last three years.
+
+Changes since v1:
+ * setup scripts/git.orderfile
+ * svd_gen_header: add support for multi line comments
+ * svd_gen_header: use qemu register fields instead of bitfields
+ * svd_gen_header: generate register write mask array
+ * add mcux-soc-svd as a subproject instead of commiting the rt595 SVD
+   file directly
+ * svd generated headers: don't generate them at compile time, instead
+   commit the generated headers and create compile targets so that it is
+   easy to regenerate them
+ * remove pysvd dependency; developers who need to (re)generate svd
+   headers need to have it installed on the host machine
+ * use DEFINE_TYPES where possible
+ * use g_strdup_printf where possible
+ * reduce iterator variables scopes
+ * hard code rt500 to use the cortex-m33
+ * use static for local arrays initializers
+ * remove rt500 properties as they are not yet used
+ * drop private/public comments
+ * remove unused headers
+ * free rt500 mem regions in rt500_unrealize() instead of
+   rt500_finalize
+ * use memops access constraints where possible instead of
+   reg32_aligned_access
+ * flexspi: use 64bit properties for mmap_size property
+ * rstctl: use a generic abstract type and remove the  "num" property
+ * flexspi: don't call get_system_memory() directly and remove
+   mmap_base property
+
+[1] https://www.nxp.com/docs/en/data-sheet/IMXRT500EC.pdf
+[2] https://www.nxp.com/webapp/Download?colCode=MIMXRT595EVKHUG
+[3] https://arm-software.github.io/CMSIS_5/SVD/html/index.html
+[4] Building and running the NXP MCU SDK hello world example
+
+    Clone the following git repos:
+
+    https://github.com/nxp-mcuxpresso/cmsis.git,
+    https://github.com/nxp-mcuxpresso/mcux-sdk.git
+    https://github.com/nxp-mcuxpresso/mcux-sdk-examples.git
+
+    in the following directories: CMSIS, core, examples.
+
+    cd examples/evkmimxrt595/demo_apps/hello_world/armgcc
+
+    ARMGCC_DIR=/usr CFLAGS=-I../../../../../CMSIS/CMSIS/Core/Include \
+      sh build_flash_debug.sh
+
+    qemu-system-arm --machine rt595-evk -kernel flash_debug/hello_world.elf \
+      -global armv7m.init-nsvtor=0x08001000 -global armv7m.init-svtor=0x08001000 \
+      -chardev stdio,id=flexcomm0
+
+Octavian Purdila (19):
+  fifo32: add peek function
+  tests/unit: add fifo test
+  Add mcux-soc-svd subproject
+  hw: add register access utility functions
+  hw/misc: add basic flexcomm device model
+  test/unit: add register access macros and functions
+  test/unit: add flexcomm unit test
+  hw/char: add support for flexcomm usart
+  test/unit: add flexcomm usart unit test
+  hw/i2c: add support for flexcomm i2c
+  test/unit: add i2c-tester
+  test/unit: add unit tests for flexcomm i2c
+  test/unit: add spi-tester
+  hw/misc: add support for RT500's clock controller
+  test/unit: add unit tests for RT500's clock controller
+  hw/ssi: add support for flexspi
+  hw/misc: add support for RT500's reset controller
+  hw/arm: add basic support for the RT500 SoC
+  hw/arm: add RT595-EVK board
+
+Sebastian Ene (2):
+  hw/ssi: add support for flexcomm spi
+  test/unit: add unit tests for flexcomm spi
+
+Stefan Stanacar (1):
+  scripts: add script to generate C header files from SVD XML files
+
+Valentin Ghita (1):
+  tests/unit: add system bus mock
+
+ meson.build                                   |    4 +
+ include/hw/arm/rt500.h                        |   44 +
+ include/hw/arm/svd/flexcomm.h                 |  109 +
+ include/hw/arm/svd/flexcomm_i2c.h             | 1134 ++++++
+ include/hw/arm/svd/flexcomm_spi.h             |  980 ++++++
+ include/hw/arm/svd/flexcomm_usart.h           |  959 +++++
+ include/hw/arm/svd/flexspi.h                  | 2100 +++++++++++
+ include/hw/arm/svd/rt500.h                    |   65 +
+ include/hw/arm/svd/rt500_clkctl0.h            | 2287 ++++++++++++
+ include/hw/arm/svd/rt500_clkctl1.h            | 3109 +++++++++++++++++
+ include/hw/arm/svd/rt500_rstctl0.h            |  832 +++++
+ include/hw/arm/svd/rt500_rstctl1.h            | 1344 +++++++
+ include/hw/char/flexcomm_usart.h              |   20 +
+ include/hw/i2c/flexcomm_i2c.h                 |   27 +
+ include/hw/misc/flexcomm.h                    |   85 +
+ include/hw/misc/rt500_clk_freqs.h             |   18 +
+ include/hw/misc/rt500_clkctl0.h               |   37 +
+ include/hw/misc/rt500_clkctl1.h               |   36 +
+ include/hw/misc/rt500_rstctl.h                |   32 +
+ include/hw/regs.h                             |   34 +
+ include/hw/ssi/flexcomm_spi.h                 |   20 +
+ include/hw/ssi/flexspi.h                      |   32 +
+ include/qemu/fifo32.h                         |   28 +
+ tests/unit/i2c_tester.h                       |   30 +
+ tests/unit/reg-utils.h                        |   97 +
+ tests/unit/spi_tester.h                       |   32 +
+ tests/unit/sysbus-mock.h                      |   82 +
+ hw/arm/rt500.c                                |  335 ++
+ hw/arm/rt595-evk.c                            |   64 +
+ hw/char/flexcomm_usart.c                      |  292 ++
+ hw/i2c/flexcomm_i2c.c                         |  207 ++
+ hw/misc/flexcomm.c                            |  304 ++
+ hw/misc/rt500_clkctl0.c                       |  226 ++
+ hw/misc/rt500_clkctl1.c                       |  207 ++
+ hw/misc/rt500_rstctl.c                        |  225 ++
+ hw/ssi/flexcomm_spi.c                         |  439 +++
+ hw/ssi/flexspi.c                              |  157 +
+ tests/unit/i2c_tester.c                       |  108 +
+ tests/unit/spi_tester.c                       |   57 +
+ tests/unit/sysbus-mock.c                      |  312 ++
+ tests/unit/test-fifo.c                        |   97 +
+ tests/unit/test-flexcomm-i2c.c                |  210 ++
+ tests/unit/test-flexcomm-spi.c                |  201 ++
+ tests/unit/test-flexcomm-usart.c              |  320 ++
+ tests/unit/test-flexcomm.c                    |  212 ++
+ tests/unit/test-rt500-clkctl.c                |  263 ++
+ hw/arm/Kconfig                                |   13 +
+ hw/arm/meson.build                            |    4 +
+ hw/arm/svd/meson.build                        |   35 +
+ hw/char/meson.build                           |    1 +
+ hw/char/trace-events                          |    9 +
+ hw/i2c/meson.build                            |    1 +
+ hw/i2c/trace-events                           |   10 +
+ hw/misc/Kconfig                               |   12 +
+ hw/misc/meson.build                           |    5 +
+ hw/misc/trace-events                          |   18 +
+ hw/ssi/Kconfig                                |    4 +
+ hw/ssi/meson.build                            |    2 +
+ hw/ssi/trace-events                           |   12 +
+ meson_options.txt                             |    3 +
+ scripts/meson-buildoptions.sh                 |    4 +
+ scripts/svd-gen-header.py                     |  343 ++
+ subprojects/.gitignore                        |    1 +
+ subprojects/mcux-soc-svd.wrap                 |    5 +
+ .../packagefiles/mcux-soc-svd/meson.build     |    5 +
+ tests/unit/meson.build                        |   56 +-
+ 66 files changed, 18355 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/arm/rt500.h
+ create mode 100644 include/hw/arm/svd/flexcomm.h
+ create mode 100644 include/hw/arm/svd/flexcomm_i2c.h
+ create mode 100644 include/hw/arm/svd/flexcomm_spi.h
+ create mode 100644 include/hw/arm/svd/flexcomm_usart.h
+ create mode 100644 include/hw/arm/svd/flexspi.h
+ create mode 100644 include/hw/arm/svd/rt500.h
+ create mode 100644 include/hw/arm/svd/rt500_clkctl0.h
+ create mode 100644 include/hw/arm/svd/rt500_clkctl1.h
+ create mode 100644 include/hw/arm/svd/rt500_rstctl0.h
+ create mode 100644 include/hw/arm/svd/rt500_rstctl1.h
+ create mode 100644 include/hw/char/flexcomm_usart.h
+ create mode 100644 include/hw/i2c/flexcomm_i2c.h
+ create mode 100644 include/hw/misc/flexcomm.h
+ create mode 100644 include/hw/misc/rt500_clk_freqs.h
+ create mode 100644 include/hw/misc/rt500_clkctl0.h
+ create mode 100644 include/hw/misc/rt500_clkctl1.h
+ create mode 100644 include/hw/misc/rt500_rstctl.h
+ create mode 100644 include/hw/regs.h
+ create mode 100644 include/hw/ssi/flexcomm_spi.h
+ create mode 100644 include/hw/ssi/flexspi.h
+ create mode 100644 tests/unit/i2c_tester.h
+ create mode 100644 tests/unit/reg-utils.h
+ create mode 100644 tests/unit/spi_tester.h
+ create mode 100644 tests/unit/sysbus-mock.h
+ create mode 100644 hw/arm/rt500.c
+ create mode 100644 hw/arm/rt595-evk.c
+ create mode 100644 hw/char/flexcomm_usart.c
+ create mode 100644 hw/i2c/flexcomm_i2c.c
+ create mode 100644 hw/misc/flexcomm.c
+ create mode 100644 hw/misc/rt500_clkctl0.c
+ create mode 100644 hw/misc/rt500_clkctl1.c
+ create mode 100644 hw/misc/rt500_rstctl.c
+ create mode 100644 hw/ssi/flexcomm_spi.c
+ create mode 100644 hw/ssi/flexspi.c
+ create mode 100644 tests/unit/i2c_tester.c
+ create mode 100644 tests/unit/spi_tester.c
+ create mode 100644 tests/unit/sysbus-mock.c
+ create mode 100644 tests/unit/test-fifo.c
+ create mode 100644 tests/unit/test-flexcomm-i2c.c
+ create mode 100644 tests/unit/test-flexcomm-spi.c
+ create mode 100644 tests/unit/test-flexcomm-usart.c
+ create mode 100644 tests/unit/test-flexcomm.c
+ create mode 100644 tests/unit/test-rt500-clkctl.c
+ create mode 100644 hw/arm/svd/meson.build
+ create mode 100755 scripts/svd-gen-header.py
+ create mode 100644 subprojects/mcux-soc-svd.wrap
+ create mode 100644 subprojects/packagefiles/mcux-soc-svd/meson.build
+
+-- 
+2.46.0.184.g6999bdac58-goog
+
 
