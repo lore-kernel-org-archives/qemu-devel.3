@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D22DEC52D7F
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 10:28:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA6B3C52D7F
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 10:28:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sfGeI-0007wn-1H; Sat, 17 Aug 2024 06:27:06 -0400
+	id 1sfGeJ-000812-25; Sat, 17 Aug 2024 06:27:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3ynrAZgUKCv0yf0nulttlqj.htrvjrz-ij0jqstslsz.twl@flex--tavip.bounces.google.com>)
- id 1sfGdj-0006IS-JW
+ <3zHrAZgUKCgEubwjqhpphmf.dpnrfnv-efwfmopohov.psh@flex--tavip.bounces.google.com>)
+ id 1sfGdj-0006IR-Hz
  for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:37 -0400
-Received: from mail-yw1-x114a.google.com ([2607:f8b0:4864:20::114a])
+Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3ynrAZgUKCv0yf0nulttlqj.htrvjrz-ij0jqstslsz.twl@flex--tavip.bounces.google.com>)
- id 1sfGdf-0003Fo-20
- for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:30 -0400
-Received: by mail-yw1-x114a.google.com with SMTP id
- 00721157ae682-68fd6ccd4c8so48696617b3.0
- for <qemu-devel@nongnu.org>; Sat, 17 Aug 2024 03:26:20 -0700 (PDT)
+ <3zHrAZgUKCgEubwjqhpphmf.dpnrfnv-efwfmopohov.psh@flex--tavip.bounces.google.com>)
+ id 1sfGdf-0003G1-1x
+ for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:29 -0400
+Received: by mail-pl1-x649.google.com with SMTP id
+ d9443c01a7336-201f89c6a42so15823325ad.1
+ for <qemu-devel@nongnu.org>; Sat, 17 Aug 2024 03:26:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1723890379; x=1724495179; darn=nongnu.org;
+ d=google.com; s=20230601; t=1723890382; x=1724495182; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=KWDxw7cDXNkeFjseQreZ2D3udH1zfx7V8SO4i4f1gZg=;
- b=nyyaABMWvNuZ/Ny6XjCts1yy7K40NoPYfSQRqAF+M+Pq+7Ioj0TkJ0UrFs2pH/+9h4
- 0CGHt0+XyrpppQ4xSpKQykdggEEIyQXd+Dz3NzjBfWBDLQij12GicZykpjn+xQtfkrNb
- CyxA+bA8+9y54A3dyMqOv/oCjL82WCoBSgcX7JuZXkH39vgqomwdqFUz0c8bdYGS+Bus
- fywcWjCFxYEGI5Rtlv4c4/ORl5twhjsag4HkyXBRoWG3Hn2XwDcZn+juFbFmCPlQqGBV
- iGv2G9RaeT6HdKLec1WNmvoE95yEcXy9VZ0If4lAunANvQv9JLdjoKKM0PTqCDttzTBV
- LYvQ==
+ bh=K5pNiPdMnkVpvdoU6E3TfKg+uzZuRPD51D6vIB4kgAI=;
+ b=tdnKEyY3SEhaSbYRTdrHquCbpwWd8plLKZpiyslr4KJlM56Ove/9bolV/ff5LDSwkc
+ BhzUJFnvwyLaaVcn0XllLaI+w7W63BWqeYFrFwFbWAXrTCw/1pWqBPIlluzs7q32iSzT
+ lnW2IOfeZsFkksOzFGDyxMAzUyxJeHC2NqpDyFva8V3j++igg/Jc2Fe7Ayylaw6lC4ty
+ ETAVCe/2hvX3f9DZuSJibBIYc1RTTl6kbhpJBE+Q1aCOZ90GpUZ3e0UT1N+g5rOkyjTA
+ p8JmWDCopV54U/TH/UFB7+sIXsQd5s/6uM93CotbolLydMYjgXfQwL6iHO5LU7zC1/H+
+ EUlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723890379; x=1724495179;
+ d=1e100.net; s=20230601; t=1723890382; x=1724495182;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KWDxw7cDXNkeFjseQreZ2D3udH1zfx7V8SO4i4f1gZg=;
- b=HkrMfJQ5Uo2gwjxz0hblGMJKBsMsvYc0VF9df5K41MXLW6WCuH7LHYvQEofwBAJxlm
- +syO9NxBK4RIZ5qQULQOvBPfsk61gXlyFZsBfoNF40K2slxMJATFb0BsSuh2hhmTWUOV
- 3dzJnI7tFyR+Goi/ujKhyOvjbFEWtqh6SMIBC/Sv3JFbXux7+rUtKIFXY2iainPPUBZT
- daQtyhr3A1Ye+k7UvNaWswcV71mSBvFhMl4JPZKkx7Nm8vRiTEnFypdjaQ5/saaqkgLV
- knysiNdJF9misNr2eXOiAricMX+srKmpGX3E7kwwLNddgaxvYJj5FLPRTO74dszw1Sdo
- N6sw==
-X-Gm-Message-State: AOJu0Yx8FnioOz1qKNjsxVCTfi+t3egMvDoNYZiw7E0S6R3dt0F8glUX
- 5j2FngiHK9/gQX5b9Ee41gkbRo7K2OZlyrWna3Owy7sEziQe7IDekoDI4/x94V9RSTCQRpg8TpS
- bcda0c1Aw1V1cLJklrspNgMNGyzqYVKUKc56zpQ89zWusQ0WZhOYnvL8yHtQYx5kz1ThI6znMzP
- f3CfA0kKbUQ31BtLvPM/uonQANzg==
-X-Google-Smtp-Source: AGHT+IHqKADhIRvs+Jq/9OEVRtghcj6uITft94zh1lmDavc0xZPDmSE+z2bkwKv5GOcUpPIScr5ZOcfn/Q==
+ bh=K5pNiPdMnkVpvdoU6E3TfKg+uzZuRPD51D6vIB4kgAI=;
+ b=iBSpb74mhLtRCtHpGiBICpE8vnrMtvB1ximPIivDFiPNO+nU3mlW57wSX/Q7391HOq
+ COtZ7WEvXNhqtAYJK2iEJABhNTxFf3pujdOI+eHrcSY34og92JC+DrsXEJ5XNwgipNLI
+ ZGhVp5b0rNnEam60Xk1Ssss9OCFkRWu2jVNNa7T63lwWcSrgFEcLRNV2SmrhoPc2vKVO
+ v548PDmenO7LZ9SYu8JQTr+2l8TyZ99d/uQ4fdCS34gAe2O4ToabZjms2y7GIghWiM77
+ qaCfmiudwR9Fbpxiz4UTYcHCvZao+Jaf4LFoFWZwLHEi/3ugO0Ia0br/F1TRdZvlABZD
+ rnPA==
+X-Gm-Message-State: AOJu0Yw5LnoLpSbhwuiK+SIY3ZjDZPdVbrcJYk69MYOEo7MXR5wrQOLP
+ vsJIFL3dNt0Pb20zHb5B+HcU4IquT3RpiN8+oHKEyKqa12L3fxcJ+wGvgP39ppVmuL+KIACQsYY
+ ynhnsS3Vv6areK9O/hazQg5BJV6Ka1DYm2x6iQYChxT8mBeDU6WYYzfwphec4pn/W5T/bCbvu0g
+ Qd0d7eboW1yf+yv8oOG3IJDzS3Fg==
+X-Google-Smtp-Source: AGHT+IE5vYMY2usLWOnpHOsUI7zP7Li9KRkHs2jPehnVYuLRedfYvr7ZSJlDGkrEW8M3fn+FEMQdveJdKg==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a05:690c:6208:b0:61c:89a4:dd5f
- with SMTP id
- 00721157ae682-6b1b2139fa6mr4529147b3.0.1723890378773; Sat, 17 Aug 2024
- 03:26:18 -0700 (PDT)
-Date: Sat, 17 Aug 2024 03:25:49 -0700
+ (user=tavip job=sendgmr) by 2002:a17:902:fb83:b0:201:e646:4cb with
+ SMTP id
+ d9443c01a7336-20203e844f8mr93415ad.5.1723890380645; Sat, 17 Aug 2024 03:26:20
+ -0700 (PDT)
+Date: Sat, 17 Aug 2024 03:25:50 -0700
 In-Reply-To: <20240817102606.3996242-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20240817102606.3996242-1-tavip@google.com>
 X-Mailer: git-send-email 2.46.0.184.g6999bdac58-goog
-Message-ID: <20240817102606.3996242-7-tavip@google.com>
-Subject: [RFC PATCH v2 06/23] hw/misc: add basic flexcomm device model
+Message-ID: <20240817102606.3996242-8-tavip@google.com>
+Subject: [RFC PATCH v2 07/23] tests/unit: add system bus mock
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -71,9 +71,9 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  alistair@alistair23.me, berrange@redhat.com, philmd@linaro.org, 
  jsnow@redhat.com, crosa@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::114a;
- envelope-from=3ynrAZgUKCv0yf0nulttlqj.htrvjrz-ij0jqstslsz.twl@flex--tavip.bounces.google.com;
- helo=mail-yw1-x114a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
+ envelope-from=3zHrAZgUKCgEubwjqhpphmf.dpnrfnv-efwfmopohov.psh@flex--tavip.bounces.google.com;
+ helo=mail-pl1-x649.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -97,162 +97,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for NXP's FLEXCOMM device model. It uses the NXP RT595 SVD
-file to generate the register structure.
+From: Valentin Ghita <valentinghita@google.com>
 
-FLEXCOMM is a generic serial communication module which support
-multiple functions: UART, SPI and I2C. These are configurable at runtime.
+Add a system bus mock and the necessary memory access functions to be
+able to create unit tests for device models.
 
-This patch adds the infrastructure to support adding the above
-mentioned hardware functions in a modular fashion in subsequent
-patches as well as switching between functions.
-
-The patch includes an automatically generated header which contains
-the register layout and helpers.
-
-The header can be regenerated with the svd-flexcomm target when the
-build is configured with --enable-mcux-soc-svd.
-
+Signed-off-by: Valentin Ghita <valentinghita@google.com>
+[tavip: coding style fixes, add mocks for address_space_rw,
+address_space_write, address_space_read_full]
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- include/hw/arm/svd/flexcomm.h | 109 +++++++++++++
- include/hw/misc/flexcomm.h    |  70 +++++++++
- hw/misc/flexcomm.c            | 283 ++++++++++++++++++++++++++++++++++
- hw/arm/meson.build            |   2 +
- hw/arm/svd/meson.build        |   3 +
- hw/misc/Kconfig               |   3 +
- hw/misc/meson.build           |   2 +
- hw/misc/trace-events          |   6 +
- 8 files changed, 478 insertions(+)
- create mode 100644 include/hw/arm/svd/flexcomm.h
- create mode 100644 include/hw/misc/flexcomm.h
- create mode 100644 hw/misc/flexcomm.c
+ tests/unit/sysbus-mock.h |  82 ++++++++++
+ tests/unit/sysbus-mock.c | 312 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 394 insertions(+)
+ create mode 100644 tests/unit/sysbus-mock.h
+ create mode 100644 tests/unit/sysbus-mock.c
 
-diff --git a/include/hw/arm/svd/flexcomm.h b/include/hw/arm/svd/flexcomm.h
+diff --git a/tests/unit/sysbus-mock.h b/tests/unit/sysbus-mock.h
 new file mode 100644
-index 0000000000..677e434dd4
+index 0000000000..7a4c2e7b9a
 --- /dev/null
-+++ b/include/hw/arm/svd/flexcomm.h
-@@ -0,0 +1,109 @@
++++ b/tests/unit/sysbus-mock.h
+@@ -0,0 +1,82 @@
 +/*
-+ * Copyright 2016-2023 NXP SPDX-License-Identifier: BSD-3-Clause
++ * System Bus Mock
 + *
-+ * Automatically generated by svd-gen-header.py from MIMXRT595S_cm33.xml
-+ */
-+#pragma once
-+
-+#include "hw/registerfields.h"
-+
-+/* Flexcomm */
-+#define FLEXCOMM_REGS_NO (1024)
-+
-+/* Peripheral Select and Flexcomm module ID */
-+REG32(FLEXCOMM_PSELID, 4088);
-+/* Peripheral Select */
-+FIELD(FLEXCOMM_PSELID, PERSEL, 0, 3);
-+/* Lock the peripheral select */
-+FIELD(FLEXCOMM_PSELID, LOCK, 3, 1);
-+/* USART present indicator */
-+FIELD(FLEXCOMM_PSELID, USARTPRESENT, 4, 1);
-+/* SPI present indicator */
-+FIELD(FLEXCOMM_PSELID, SPIPRESENT, 5, 1);
-+/* I2C present indicator */
-+FIELD(FLEXCOMM_PSELID, I2CPRESENT, 6, 1);
-+/* I2S Present */
-+FIELD(FLEXCOMM_PSELID, I2SPRESENT, 7, 1);
-+/* Flexcomm ID */
-+FIELD(FLEXCOMM_PSELID, ID, 12, 20);
-+
-+/* Peripheral Identification */
-+REG32(FLEXCOMM_PID, 4092);
-+/* Minor revision of module implementation */
-+FIELD(FLEXCOMM_PID, Minor_Rev, 8, 4);
-+/* Major revision of module implementation */
-+FIELD(FLEXCOMM_PID, Major_Rev, 12, 4);
-+/* Module identifier for the selected function */
-+FIELD(FLEXCOMM_PID, ID, 16, 16);
-+
-+
-+typedef enum {
-+    /* No peripheral selected. */
-+    FLEXCOMM_PSELID_PERSEL_NO_PERIPH_SELECTED = 0,
-+    /* USART function selected */
-+    FLEXCOMM_PSELID_PERSEL_USART = 1,
-+    /* SPI function selected */
-+    FLEXCOMM_PSELID_PERSEL_SPI = 2,
-+    /* I2C */
-+    FLEXCOMM_PSELID_PERSEL_I2C = 3,
-+    /* I2S Transmit */
-+    FLEXCOMM_PSELID_PERSEL_I2S_TRANSMIT = 4,
-+    /* I2S Receive */
-+    FLEXCOMM_PSELID_PERSEL_I2S_RECEIVE = 5,
-+} FLEXCOMM_PSELID_PERSEL_Enum;
-+
-+typedef enum {
-+    /* Peripheral select can be changed by software. */
-+    FLEXCOMM_PSELID_LOCK_UNLOCKED = 0,
-+    /*
-+     * Peripheral select is locked and cannot be changed until this Flexcomm
-+     * module or the entire device is reset.
-+     */
-+    FLEXCOMM_PSELID_LOCK_LOCKED = 1,
-+} FLEXCOMM_PSELID_LOCK_Enum;
-+
-+typedef enum {
-+    /* This Flexcomm module does not include the USART function. */
-+    FLEXCOMM_PSELID_USARTPRESENT_NOT_PRESENT = 0,
-+    /* This Flexcomm module includes the USART function. */
-+    FLEXCOMM_PSELID_USARTPRESENT_PRESENT = 1,
-+} FLEXCOMM_PSELID_USARTPRESENT_Enum;
-+
-+typedef enum {
-+    /* This Flexcomm module does not include the SPI function. */
-+    FLEXCOMM_PSELID_SPIPRESENT_NOT_PRESENT = 0,
-+    /* This Flexcomm module includes the SPI function. */
-+    FLEXCOMM_PSELID_SPIPRESENT_PRESENT = 1,
-+} FLEXCOMM_PSELID_SPIPRESENT_Enum;
-+
-+typedef enum {
-+    /* I2C Not Present */
-+    FLEXCOMM_PSELID_I2CPRESENT_NOT_PRESENT = 0,
-+    /* I2C Present */
-+    FLEXCOMM_PSELID_I2CPRESENT_PRESENT = 1,
-+} FLEXCOMM_PSELID_I2CPRESENT_Enum;
-+
-+typedef enum {
-+    /* I2S Not Present */
-+    FLEXCOMM_PSELID_I2SPRESENT_NOT_PRESENT = 0,
-+    /* I2S Present */
-+    FLEXCOMM_PSELID_I2SPRESENT_PRESENT = 1,
-+} FLEXCOMM_PSELID_I2SPRESENT_Enum;
-+
-+
-+#define FLEXCOMM_REGISTER_NAMES_ARRAY(_name) \
-+    const char *_name[FLEXCOMM_REGS_NO] = { \
-+        [R_FLEXCOMM_PSELID] = "PSELID", \
-+        [R_FLEXCOMM_PID] = "PID", \
-+    }
-+
-+#define FLEXCOMM_REGISTER_WMASK_ARRAY(_name) \
-+    const uint32_t _name[FLEXCOMM_REGS_NO] = { \
-+        [R_FLEXCOMM_PSELID] = 0xF, \
-+    }
-+
-+static inline void flexcomm_reset_registers(uint32_t *regs)
-+{
-+    regs[R_FLEXCOMM_PSELID] = 0x101000;
-+    regs[R_FLEXCOMM_PID] = 0x0;
-+}
-diff --git a/include/hw/misc/flexcomm.h b/include/hw/misc/flexcomm.h
-new file mode 100644
-index 0000000000..137e483412
---- /dev/null
-+++ b/include/hw/misc/flexcomm.h
-@@ -0,0 +1,70 @@
-+/*
-+ * QEMU model for NXP's FLEXCOMM
-+ *
-+ * Copyright (c) 2024 Google LLC
++ * Copyright (C) 2024 Google LLC
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
@@ -260,75 +130,87 @@ index 0000000000..137e483412
 + * See the COPYING file in the top-level directory.
 + */
 +
-+#ifndef HW_FLEXCOMM_H
-+#define HW_FLEXCOMM_H
++#ifndef SYSBUS_MOCK_H
++#define SYSBUS_MOCK_H
 +
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
 +#include "hw/sysbus.h"
-+#include "hw/arm/svd/flexcomm.h"
-+#include "qemu/fifo32.h"
 +
-+#define TYPE_FLEXCOMM "flexcomm"
-+#define FLEXCOMM(obj) OBJECT_CHECK(FlexcommState, (obj), TYPE_FLEXCOMM)
-+
-+#define FLEXCOMM_FUNC_USART     0
-+#define FLEXCOMM_FUNC_SPI       1
-+#define FLEXCOMM_FUNC_I2C       2
-+#define FLEXCOMM_FUNC_I2S       3
-+#define FLEXCOMM_FUNCTIONS 4
-+
-+#define FLEXCOMM_FULL    0xF
-+#define FLEXCOMM_HSSPI   (1 << FLEXCOMM_FUNC_SPI)
-+#define FLEXCOMM_PMICI2C (1 << FLEXCOMM_FUNC_I2C)
-+
-+#define FLEXCOMM_PERSEL_USART  1
-+#define FLEXCOMM_PERSEL_SPI    2
-+#define FLEXCOMM_PERSEL_I2C    3
-+#define FLEXCOMM_PERSEL_I2S_TX 4
-+#define FLEXCOMM_PERSEL_I2S_RX 5
-+
-+typedef struct {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion mmio;
-+    uint32_t regs[FLEXCOMM_REGS_NO];
-+    uint32_t functions;
-+    qemu_irq irq;
-+    bool irq_state;
-+} FlexcommState;
-+
-+typedef struct {
-+    /* argument to pass to functions */
-+    void *arg;
-+
-+    /* function / submodule has been  selected / deselected. */
-+    void (*select)(void *o, FlexcommState *s, int f, bool selected);
-+
-+    /* read register */
-+    MemTxResult (*reg_read)(void *o, FlexcommState *s, int f, hwaddr addr,
-+                            uint64_t *data, unsigned size);
-+
-+    /* write register */
-+    MemTxResult (*reg_write)(void *o, FlexcommState *s, int f, hwaddr addr,
-+                             uint64_t data, unsigned size);
-+} FlexcommFunctionOps;
-+
-+
-+void flexcomm_irq(FlexcommState *s, bool irq);
-+bool flexcomm_register_ops(int f, void *arg, const FlexcommFunctionOps *ops,
-+                          Error **errp);
-+void flexcomm_unregister_ops(int f);
-+
-+#endif /* HW_FLEXCOMM_H */
-diff --git a/hw/misc/flexcomm.c b/hw/misc/flexcomm.c
-new file mode 100644
-index 0000000000..e8d8816cfe
---- /dev/null
-+++ b/hw/misc/flexcomm.c
-@@ -0,0 +1,283 @@
 +/*
-+ * QEMU model for NXP's FLEXCOMM
++ * sysbus_mock_init
 + *
-+ * Copyright (c) 2024 Google LLC
++ * Initialize the sysbus mock implementation.
++ */
++void sysbus_mock_init(void);
++
++/*
++ * sysbus_mmio_read_addr
++ * @dev: device structure
++ * @addr: address to read from
++ *
++ * Read from an address in a mmio region and assert on errors.
++ */
++uint32_t sysbus_mmio_read_addr(DeviceState *dev, hwaddr addr, unsigned size);
++
++/*
++ * sysbus_mmio_write_addr
++ * @dev: device structure
++ * @addr: address to write to
++ * @value: value to write
++ *
++ * Write to an address in a mmio region and assert on errors.
++ */
++void sysbus_mmio_write_addr(DeviceState *dev, hwaddr addr, uint64_t value,
++                            unsigned size);
++
++/*
++ * sysbus_dev_set_guest_mem
++ *
++ * Set guest generic memory space.
++ */
++void sysbus_dev_set_guest_mem(void *mem, size_t size);
++
++
++/*
++ * sysbus_mmio_read_addr_raw
++ * @dev: device structure
++ * @addr: address to write to
++ * @size: access size
++ *
++ * Read from an address in a mmio region and return errors.
++ *
++ * Returns: MEMTX_OK if the access was successful, MEMTX_ERROR otherwise
++ */
++MemTxResult sysbus_mmio_read_addr_raw(DeviceState *dev, hwaddr addr,
++                                      uint64_t *value, unsigned size);
++
++/*
++ * sysbus_mmio_write_addr_raw
++ * @dev: device structure
++ * @addr: address to write to
++ * @value: value to write
++ * @size: access size
++ *
++ * Write to an address in a mmio region and return errors.
++ *
++ * Returns: MEMTX_OK if the access was successful, MEMTX_ERROR otherwise
++ */
++MemTxResult sysbus_mmio_write_addr_raw(DeviceState *dev, hwaddr addr,
++                                       uint64_t value, unsigned size);
++
++#endif /* SYSBUS_MOCK_H */
+diff --git a/tests/unit/sysbus-mock.c b/tests/unit/sysbus-mock.c
+new file mode 100644
+index 0000000000..173bb0bc8c
+--- /dev/null
++++ b/tests/unit/sysbus-mock.c
+@@ -0,0 +1,312 @@
++/*
++ * System Bus Mock
++ *
++ * Copyright (C) 2024 Google LLC
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
@@ -337,335 +219,306 @@ index 0000000000..e8d8816cfe
 + */
 +
 +#include "qemu/osdep.h"
-+#include "qemu/mmap-alloc.h"
 +#include "qemu/log.h"
 +#include "qemu/module.h"
++#include "qemu/main-loop.h"
++#include "exec/memory.h"
 +#include "hw/irq.h"
 +#include "hw/qdev-properties.h"
-+#include "hw/qdev-properties-system.h"
-+#include "migration/vmstate.h"
-+#include "exec/address-spaces.h"
-+#include "qapi/error.h"
-+#include "trace.h"
-+#include "hw/regs.h"
-+#include "hw/misc/flexcomm.h"
++#include "hw/sysbus.h"
++#include "hw/qdev-core.h"
 +
-+#define REG(s, reg) (s->regs[R_FLEXCOMM_##reg])
-+#define RF_WR(s, reg, field, val) \
-+    ARRAY_FIELD_DP32(s->regs, FLEXCOMM_##reg, field, val)
-+#define RF_RD(s, reg, field) \
-+    ARRAY_FIELD_EX32(s->regs, FLEXCOMM_##reg, field)
++#include "sysbus-mock.h"
 +
-+static FLEXCOMM_REGISTER_NAMES_ARRAY(reg_names);
++AddressSpace address_space_memory;
 +
-+#define modname "flexcomm: "
++/* Simulates guest memory space. */
++static uint8_t *guest_mem;
++static size_t guest_mem_size;
 +
-+static const FlexcommFunctionOps *flexcomm_fops[FLEXCOMM_FUNCTIONS];
-+static void *flexcomm_farg[FLEXCOMM_FUNCTIONS];
-+
-+static inline bool has_function(FlexcommState *s, int function)
++static uint64_t memory_region_ram_device_read(void *opaque,
++                                              hwaddr addr, unsigned size)
 +{
-+    return s->functions & (1 << function);
-+}
++    uint64_t data = (uint64_t)~0;
++    uint8_t *buf = opaque;
 +
-+static inline int persel_to_function(FlexcommState *s)
-+{
-+    switch (RF_RD(s, PSELID, PERSEL)) {
-+    case FLEXCOMM_PERSEL_USART:
-+        return FLEXCOMM_FUNC_USART;
-+    case FLEXCOMM_PERSEL_SPI:
-+        return FLEXCOMM_FUNC_SPI;
-+    case FLEXCOMM_PERSEL_I2C:
-+        return FLEXCOMM_FUNC_I2C;
-+    case FLEXCOMM_PERSEL_I2S_TX:
-+    case FLEXCOMM_PERSEL_I2S_RX:
-+        return FLEXCOMM_FUNC_I2S;
-+    default:
-+        return -1;
-+    }
-+}
-+
-+static void flexcomm_func_select(FlexcommState *s, bool selected)
-+{
-+    int f = persel_to_function(s);
-+
-+    if (f < 0 || !flexcomm_fops[f] || !flexcomm_fops[f]->select) {
-+        return;
-+    }
-+
-+    flexcomm_fops[f]->select(flexcomm_farg[f], s, f, selected);
-+}
-+
-+static MemTxResult flexcomm_func_reg_read(FlexcommState *s, hwaddr addr,
-+                                         uint64_t *data, unsigned size)
-+{
-+    int f = persel_to_function(s);
-+
-+    if (f < 0 || !flexcomm_fops[f] || !flexcomm_fops[f]->reg_read) {
-+        return MEMTX_ERROR;
-+    }
-+
-+    return flexcomm_fops[f]->reg_read(flexcomm_farg[f], s, f, addr, data, size);
-+}
-+
-+static MemTxResult flexcomm_func_reg_write(FlexcommState *s, hwaddr addr,
-+                                          uint64_t data, unsigned size)
-+{
-+    int f = persel_to_function(s);
-+
-+    if (f < 0 || !flexcomm_fops[f] || !flexcomm_fops[f]->reg_write) {
-+        return MEMTX_ERROR;
-+    }
-+
-+    return flexcomm_fops[f]->reg_write(flexcomm_farg[f], s, f, addr, data,
-+                                       size);
-+}
-+
-+static void flexcomm_reset(DeviceState *dev)
-+{
-+    FlexcommState *s = FLEXCOMM(dev);
-+
-+    trace_flexcomm_reset();
-+
-+    flexcomm_func_select(s, false);
-+
-+    flexcomm_reset_registers(s->regs);
-+
-+    RF_WR(s, PSELID, USARTPRESENT, has_function(s, FLEXCOMM_FUNC_USART));
-+    RF_WR(s, PSELID, SPIPRESENT, has_function(s, FLEXCOMM_FUNC_SPI));
-+    RF_WR(s, PSELID, I2CPRESENT, has_function(s, FLEXCOMM_FUNC_I2C));
-+    RF_WR(s, PSELID, I2SPRESENT, has_function(s, FLEXCOMM_FUNC_I2S));
-+
-+    s->irq_state = false;
-+    qemu_set_irq(s->irq, s->irq_state);
-+}
-+
-+static MemTxResult flexcomm_reg_read(void *opaque, hwaddr addr,
-+                                    uint64_t *data, unsigned size,
-+                                    MemTxAttrs attrs)
-+{
-+    FlexcommState *s = opaque;
-+    MemTxResult ret = MEMTX_OK;
-+
-+    switch (addr) {
-+    case A_FLEXCOMM_PSELID:
-+    case A_FLEXCOMM_PID:
-+    {
-+        if (!reg32_aligned_access(addr, size)) {
-+            ret = MEMTX_ERROR;
-+        } else {
-+            *data = s->regs[addr / 4];
-+        }
++    switch (size) {
++    case 1:
++        data = *(uint8_t *)(buf + addr);
++        break;
++    case 2:
++        data = *(uint16_t *)(buf + addr);
++        break;
++    case 4:
++        data = *(uint32_t *)(buf + addr);
++        break;
++    case 8:
++        data = *(uint64_t *)(buf + addr);
 +        break;
 +    }
-+    default:
-+        return flexcomm_func_reg_read(s, addr, data, size);
-+    }
 +
-+    trace_flexcomm_reg_read(DEVICE(s)->id, reg_names[addr / 4], addr, *data);
-+    return ret;
++    return data;
 +}
 +
-+static int flexcomm_check_function(FlexcommState *s)
++static void memory_region_ram_device_write(void *opaque, hwaddr addr,
++                                           uint64_t data, unsigned size)
 +{
-+    int f = persel_to_function(s);
++    uint8_t *buf = opaque;
 +
-+    if (f < 0 || !has_function(s, f)) {
-+        return -1;
-+    }
-+
-+    return f;
-+}
-+
-+static MemTxResult flexcomm_reg_write(void *opaque, hwaddr addr,
-+                                     uint64_t value, unsigned size,
-+                                     MemTxAttrs attrs)
-+{
-+    FlexcommState *s = opaque;
-+    MemTxResult ret = MEMTX_OK;
-+    static FLEXCOMM_REGISTER_WMASK_ARRAY(wmask);
-+
-+    trace_flexcomm_reg_write(DEVICE(s)->id, reg_names[addr / 4], addr, value);
-+
-+    switch (addr) {
-+    case A_FLEXCOMM_PID:
-+        /* RO register, nothing do to */
++    switch (size) {
++    case 1:
++        *(uint8_t *)(buf + addr) = (uint8_t)data;
 +        break;
-+    case A_FLEXCOMM_PSELID:
-+    {
-+        if (!reg32_aligned_access(addr, size)) {
-+            ret = MEMTX_ERROR;
-+            break;
-+        }
-+
-+        if (RF_RD(s, PSELID, LOCK)) {
-+            break;
-+        }
-+
-+        flexcomm_func_select(s, false);
-+
-+        value &= wmask[addr / 4];
-+
-+        s->regs[addr / 4] = value;
-+
-+        if (flexcomm_check_function(s) < 0) {
-+            RF_WR(s, PSELID, PERSEL, 0);
-+        }
-+        RF_WR(s, PID, ID, RF_RD(s, PSELID, PERSEL));
-+
-+        flexcomm_func_select(s, true);
++    case 2:
++        *(uint16_t *)(buf + addr) = (uint16_t)data;
++        break;
++    case 4:
++        *(uint32_t *)(buf + addr) = (uint32_t)data;
++        break;
++    case 8:
++        *(uint64_t *)(buf + addr) = data;
 +        break;
 +    }
-+    default:
-+        return flexcomm_func_reg_write(s, addr, value, size);
-+    }
-+
-+    return ret;
 +}
 +
-+
-+static const MemoryRegionOps flexcomm_ops = {
-+    .read_with_attrs = flexcomm_reg_read,
-+    .write_with_attrs = flexcomm_reg_write,
-+    .endianness = DEVICE_NATIVE_ENDIAN,
-+};
-+
-+static Property flexcomm_properties[] = {
-+    DEFINE_PROP_UINT32("functions", FlexcommState, functions,
-+                       FLEXCOMM_FULL),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void flexcomm_init(Object *obj)
-+{
-+    FlexcommState *s = FLEXCOMM(obj);
-+    DeviceState *dev = DEVICE(obj);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+
-+    memory_region_init_io(&s->mmio, obj, &flexcomm_ops, s,
-+                          TYPE_FLEXCOMM, sizeof(s->regs));
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
-+
-+    sysbus_init_irq(sbd, &s->irq);
-+}
-+
-+static void flexcomm_realize(DeviceState *dev, Error **errp)
-+{
-+}
-+
-+static void flexcomm_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->reset = flexcomm_reset;
-+    device_class_set_props(dc, flexcomm_properties);
-+    dc->realize = flexcomm_realize;
-+}
-+
-+static const TypeInfo flexcomm_types[] = {
-+    {
-+        .name          = TYPE_FLEXCOMM,
-+        .parent        = TYPE_SYS_BUS_DEVICE,
-+        .instance_size = sizeof(FlexcommState),
-+        .instance_init = flexcomm_init,
-+        .class_init    = flexcomm_class_init,
++static const MemoryRegionOps ram_device_mem_ops = {
++    .read = memory_region_ram_device_read,
++    .write = memory_region_ram_device_write,
++    .endianness = DEVICE_HOST_ENDIAN,
++    .valid = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++        .unaligned = true,
++    },
++    .impl = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++        .unaligned = true,
 +    },
 +};
 +
-+DEFINE_TYPES(flexcomm_types);
-+
-+void flexcomm_irq(FlexcommState *s, bool irq)
++void *cpu_physical_memory_map(hwaddr addr, hwaddr *plen, bool is_write)
 +{
-+    if (s->irq_state != irq) {
-+        trace_flexcomm_irq(DEVICE(s)->id, irq);
-+        qemu_set_irq(s->irq, irq);
-+        s->irq_state = irq;
++    /* Mock implementation. Return a pointer inside the guest_mem buffer. */
++    g_assert(guest_mem != NULL);
++    g_assert(guest_mem_size <= addr + (size_t)plen);
++
++    return guest_mem + addr;
++}
++
++void cpu_physical_memory_unmap(void *buffer, hwaddr len,
++                               bool is_write, hwaddr access_len)
++{
++    /* Mock implementation. */
++}
++
++MemTxResult address_space_read_full(AddressSpace *as, hwaddr addr,
++                                    MemTxAttrs attrs, void *buf, hwaddr len)
++{
++    /* Mock implementation */
++    g_assert(guest_mem != NULL);
++
++    if (guest_mem_size < addr + (size_t)len) {
++        return MEMTX_ERROR;
++    }
++
++    memcpy(buf, guest_mem + addr, len);
++
++    return MEMTX_OK;
++}
++
++MemTxResult address_space_write(AddressSpace *as, hwaddr addr,
++                                MemTxAttrs attrs,
++                                const void *buf, hwaddr len)
++{
++    /* Mock implementation */
++    g_assert(guest_mem != NULL);
++
++    if (guest_mem_size < addr + (size_t)len) {
++        return MEMTX_ERROR;
++    }
++
++    memcpy(guest_mem + addr, buf, len);
++
++    return MEMTX_OK;
++}
++
++MemTxResult address_space_rw(AddressSpace *as, hwaddr addr, MemTxAttrs attrs,
++                             void *buf, hwaddr len, bool is_write)
++{
++    if (is_write) {
++        return address_space_write(as, addr, attrs, buf, len);
++    } else {
++        return address_space_read_full(as, addr, attrs, buf, len);
 +    }
 +}
 +
-+bool flexcomm_register_ops(int f, void *arg, const FlexcommFunctionOps *ops,
-+                          Error **errp)
++void cpu_physical_memory_rw(hwaddr addr, void *buf,
++                            hwaddr len, bool is_write)
 +{
-+    if (f < 0 || f >= FLEXCOMM_FUNCTIONS) {
-+        error_setg(errp, modname "invalid function %d", f);
-+        return false;
-+    }
-+
-+    if (flexcomm_fops[f]) {
-+        error_setg(errp, modname "function %d already registered", f);
-+        return false;
-+    }
-+
-+    flexcomm_fops[f] = ops;
-+    flexcomm_farg[f] = arg;
-+
-+    return true;
++    address_space_rw(&address_space_memory, addr, MEMTXATTRS_UNSPECIFIED,
++                     buf, len, is_write);
 +}
 +
-+/* for unit tests */
-+void flexcomm_unregister_ops(int f)
++void memory_region_init_io(MemoryRegion *mr, Object *owner,
++                           const MemoryRegionOps *ops, void *opaque,
++                           const char *name, uint64_t size)
 +{
-+    flexcomm_fops[f] = NULL;
-+    flexcomm_farg[f] = NULL;
++    /* Mock implementation. */
++    mr->size = size;
++    mr->ops = ops;
++    mr->opaque = opaque;
 +}
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index aefde0c69a..eb604d00cf 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -78,3 +78,5 @@ system_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
- system_ss.add(when: 'CONFIG_Z2', if_true: files('z2.c'))
- 
- hw_arch += {'arm': arm_ss}
 +
-+subdir('svd')
-diff --git a/hw/arm/svd/meson.build b/hw/arm/svd/meson.build
-index 7d83d2ccbc..4b0bbbbbdc 100644
---- a/hw/arm/svd/meson.build
-+++ b/hw/arm/svd/meson.build
-@@ -1,4 +1,7 @@
- if get_option('mcux-soc-svd')
-   mcux_soc_svd = subproject('mcux-soc-svd')
-   rt595 = mcux_soc_svd.get_variable('rt595')
-+  run_target('svd-flexcomm', command: svd_gen_header +
-+    [ '-i', rt595, '-o', '@SOURCE_ROOT@/include/hw/arm/svd/flexcomm.h',
-+    '-p', 'FLEXCOMM0', '-t', 'FLEXCOMM'])
- endif
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 1e08785b83..14167ae9e8 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -213,4 +213,7 @@ config IOSB
- config XLNX_VERSAL_TRNG
-     bool
- 
-+config FLEXCOMM
-+    bool
++void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
++                                       const char *name, uint64_t size,
++                                       void *ptr)
++{
++    mr->size = size;
++    mr->ops = &ram_device_mem_ops;
++    mr->opaque = ptr;
++}
 +
- source macio/Kconfig
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 86596a3888..8414767ae3 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -156,3 +156,5 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
- 
- # HPPA devices
- system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
++void memory_region_set_readonly(MemoryRegion *mr, bool readonly)
++{
++    if (mr->readonly != readonly) {
++        mr->readonly = readonly;
++    }
++}
 +
-+system_ss.add(when: 'CONFIG_FLEXCOMM', if_true: files('flexcomm.c'))
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index 5d241cb40a..71ec77de29 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -351,3 +351,9 @@ djmemc_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRI
- # iosb.c
- iosb_read(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
- iosb_write(int reg, uint64_t value, unsigned int size) "reg=0x%x value=0x%"PRIx64" size=%u"
++void sysbus_mmio_map(SysBusDevice *dev, int n, hwaddr addr)
++{
++    assert(n >= 0 && n < dev->num_mmio);
++    dev->mmio[n].addr = addr;
++    dev->mmio[n].memory->addr = addr;
++}
 +
-+# flexcomm
-+flexcomm_reset(void) ""
-+flexcomm_irq(const char *id, uint8_t irq) "%s %d"
-+flexcomm_reg_read(const char *devname, const char *regname, uint32_t addr, uint32_t val) "%s: %s[0x%04x] -> 0x%08x"
-+flexcomm_reg_write(const char *dename, const char *regname, uint32_t addr, uint32_t val) "%s: %s[0x%04x] <- 0x%08x"
++void sysbus_init_mmio(SysBusDevice *dev, MemoryRegion *memory)
++{
++    /* Mock implementation. */
++    assert(dev->num_mmio < QDEV_MAX_MMIO);
++    int n = dev->num_mmio++;
++    dev->mmio[n].addr = -1;
++    dev->mmio[n].memory = memory;
++}
++
++static void sysbus_device_class_init(ObjectClass *klass, void *data)
++{
++    /* Mock implementation. */
++}
++
++void sysbus_init_irq(SysBusDevice *dev, qemu_irq *p)
++{
++    qdev_init_gpio_out_named(DEVICE(dev), p, SYSBUS_DEVICE_GPIO_IRQ, 1);
++}
++
++/*
++ * Mock implementation of the sysbus device class.
++ * Including the sysbus source code is difficult because of the dependencies,
++ * so it is easier to define the type here.
++ */
++static const TypeInfo sysbus_device_type_info = {
++    .name = TYPE_SYS_BUS_DEVICE,
++    .parent = TYPE_DEVICE,
++    .instance_size = sizeof(SysBusDevice),
++    .abstract = true,
++    .class_size = sizeof(SysBusDeviceClass),
++    .class_init = sysbus_device_class_init,
++};
++
++void sysbus_mock_init(void)
++{
++    type_register_static(&sysbus_device_type_info);
++}
++
++/* Find the mmio region containing an address. */
++static MemoryRegion *find_region(SysBusDevice *dev, hwaddr addr)
++{
++    for (int i = 0; i < dev->num_mmio; i++) {
++        if (dev->mmio[i].addr <= addr &&
++            (addr - dev->mmio[i].addr) < dev->mmio[i].memory->size) {
++
++            return dev->mmio[i].memory;
++        }
++    }
++
++    return NULL;
++}
++
++uint32_t sysbus_mmio_read_addr(DeviceState *dev, hwaddr addr, unsigned size)
++{
++    uint64_t value;
++    MemTxResult result;
++    MemoryRegion *mem = find_region(SYS_BUS_DEVICE(dev), addr);
++
++    assert(mem != NULL);
++    assert(mem->ops->read_with_attrs != NULL || mem->ops->read != NULL);
++
++    if (mem->ops->read_with_attrs != NULL) {
++        result = mem->ops->read_with_attrs(mem->opaque, addr - mem->addr,
++                                           &value, size,
++                                           MEMTXATTRS_UNSPECIFIED);
++        assert(result == MEMTX_OK);
++    } else {
++        value = mem->ops->read(mem->opaque, addr - mem->addr, size);
++    }
++
++    return (uint32_t)value;
++}
++
++void sysbus_mmio_write_addr(DeviceState *dev, hwaddr addr, uint64_t value,
++                            unsigned size)
++{
++    MemTxResult result;
++    MemoryRegion *mem = find_region(SYS_BUS_DEVICE(dev), addr);
++
++    assert(mem != NULL);
++    assert(mem->ops->write_with_attrs != NULL || mem->ops->write != NULL);
++    assert(!mem->readonly);
++
++    if (mem->ops->write_with_attrs != NULL) {
++        result = mem->ops->write_with_attrs(mem->opaque, addr - mem->addr,
++                                            value, size,
++                                            MEMTXATTRS_UNSPECIFIED);
++        g_assert(result == MEMTX_OK);
++    } else {
++        mem->ops->write(mem->opaque, addr - mem->addr, value, size);
++    }
++}
++
++void sysbus_dev_set_guest_mem(void *mem, size_t size)
++{
++    guest_mem = mem;
++    guest_mem_size = size;
++}
++
++MemTxResult sysbus_mmio_read_addr_raw(DeviceState *dev, hwaddr addr,
++                                      uint64_t *value, unsigned size)
++{
++    uint64_t tmp;
++    MemTxResult result;
++    MemoryRegion *mem = find_region(SYS_BUS_DEVICE(dev), addr);
++
++    assert(mem != NULL);
++
++    result = mem->ops->read_with_attrs(dev, addr - mem->addr, &tmp,
++                                       size,
++                                       MEMTXATTRS_UNSPECIFIED);
++    *value = tmp;
++    return result;
++}
++
++MemTxResult sysbus_mmio_write_addr_raw(DeviceState *dev, hwaddr addr,
++                                       uint64_t value, unsigned size)
++{
++    MemoryRegion *mem = find_region(SYS_BUS_DEVICE(dev), addr);
++    assert(mem != NULL);
++    assert(!mem->readonly);
++
++    return mem->ops->write_with_attrs(dev, addr - mem->addr, value,
++                                      size,
++                                      MEMTXATTRS_UNSPECIFIED);
++}
 -- 
 2.46.0.184.g6999bdac58-goog
 
