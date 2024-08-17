@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8351C52D7D
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 10:27:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD659C52D7D
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 10:27:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sfGe4-0006kO-BJ; Sat, 17 Aug 2024 06:26:52 -0400
+	id 1sfGeK-00085d-5V; Sat, 17 Aug 2024 06:27:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3yXrAZgUKCvwxezmtksskpi.gsquiqy-hiziprsrkry.svk@flex--tavip.bounces.google.com>)
- id 1sfGdh-0006Ft-PT
- for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:30 -0400
-Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
+ <33nrAZgUKChMCtE18z77z4x.v759x5D-wxEx4676z6D.7Az@flex--tavip.bounces.google.com>)
+ id 1sfGdz-0006Y8-Je
+ for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:48 -0400
+Received: from mail-pg1-x549.google.com ([2607:f8b0:4864:20::549])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3yXrAZgUKCvwxezmtksskpi.gsquiqy-hiziprsrkry.svk@flex--tavip.bounces.google.com>)
- id 1sfGdf-0003Fe-1v
- for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:29 -0400
-Received: by mail-pg1-x54a.google.com with SMTP id
- 41be03b00d2f7-6507e2f0615so2314246a12.1
- for <qemu-devel@nongnu.org>; Sat, 17 Aug 2024 03:26:19 -0700 (PDT)
+ <33nrAZgUKChMCtE18z77z4x.v759x5D-wxEx4676z6D.7Az@flex--tavip.bounces.google.com>)
+ id 1sfGdw-0003J5-6l
+ for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:46 -0400
+Received: by mail-pg1-x549.google.com with SMTP id
+ 41be03b00d2f7-6c8f99fef10so2830223a12.3
+ for <qemu-devel@nongnu.org>; Sat, 17 Aug 2024 03:26:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1723890378; x=1724495178; darn=nongnu.org;
+ d=google.com; s=20230601; t=1723890399; x=1724495199; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=pXYuaLkVN9XEUa9twQAaD4EBLjrrL0bAtjxvWVUlbaE=;
- b=NCcfBAIwrq0tDVJbXrDEHlgH/qHVW4GWsNWj+F2oVsPK/mkAL0P3+Cx4u0hHnjct+C
- GgmCgviWg8StIzGwPpc8MVB0cYdA2ok/At6aPOUEcShFzT6m4+MvYbjYTNR/VkYybd5t
- ouScjseWkKYYRzA7Z9y+Eu+/jT3muk9VEonVnll4bdZvGSzaFXPoXoSJVp49y1OBWiKE
- 2EVhWGuQ0wY1ePVIH6PERf9AaCBfNd/EQVnadKUluWFfAEfvJY3e5CchAUW0JB7B9iW0
- QSAQgvteqdnISD2IodphFbJVjUUlZkYSqx2BwK4Xsel+rSnpzFGen3w7FjcxIo7N0pMc
- 4MaA==
+ bh=Upd9FeYdowY3IZShEUb1HXBlUbq++p8JkY3ix5d4D/M=;
+ b=Y5b9lJ/xid4nppwhvvusxDfP8VvZIqI3oFZq/ONkXKw7OxbhLxG3JA9dCZuAwcmJlj
+ W+GNznWX1pUZDxlCN9/v8+7WHYZrYUafU1szE0pD/Uh6M7rZXTxcyb4c9yukqRp+O72i
+ WEdr3yj8V8LqGIMuAhkvNSWTAPfN3zpCboHxuSHUeJvwbpPzA8ogR0nYI6H/72YcDf+d
+ MavnxUxIqdvl2zcCj9Vq2Te1r46Sw4RUtNxD6sosjN0/KeztwcF7Sg/FY1tsfNDiKH4k
+ 4wPyAfGrN8gW2sBM0OfX2vSiE6V+DB0gaif7+UAqMrSxEpjhJZ8rY/1A5V+1TDO0NmRR
+ CX2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723890378; x=1724495178;
+ d=1e100.net; s=20230601; t=1723890399; x=1724495199;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pXYuaLkVN9XEUa9twQAaD4EBLjrrL0bAtjxvWVUlbaE=;
- b=YSxf5NVjX/tadRN2rnnxKPmMOFDqz43Pg3KSkl6EWgaQhopVPoZhHqOPa89v7VFHPU
- T6VPtRVhJZtJxblRwmPAEKkNhf5Azb7YZxHhy5MlJQEX/SQbk3usGG1r05kotMsxo8uT
- WBr3Te07lwZvTvjvN5pbjj7IecZn6WMtVpkEq3ddVmH+r1wFbQT2G6ezDWRFkT/46Zzm
- S2WFIEK8S6dgcvaAcEnG+SOoLS99jzKK4mOY2piEUru6IaYdMntYn+iK3Zc7aK3BX1tH
- xMfkgflnlixQ7ZnTt/I3c7BBRV2C36Nv4Qsn6ZFdfy4KbyVXqiDwzgdsLwkMlf26Qqra
- AeMA==
-X-Gm-Message-State: AOJu0YyWMG7Jekuh0GracUoD8KfHY0W2JLIz1QCtOat/LvLEYXKEG+2g
- tLWWAlGp7HHhA6qTCB6+G6/nB2kHJfoUbnQN+lrNTNLFh4AEwsWUMUKZt0qsSQ3wPBZCHmYo4ri
- yeNnck4YuwJ4FxXsdv0OeNmhwOjwtfhSOGHYLhAvc0Wq7Gz9Rq8WJbmW9Kv6ws1dgFJOM9zTqIM
- 65IwnZVp5jp2WKjjUWhWIxcSAvzw==
-X-Google-Smtp-Source: AGHT+IH0T4nvwG2zPXbnPodUW9H0YDQr7bAHSGr09nZruSNQs/uB9gdIMpwCmTyVi+pJuDu4LWwy2UHIBA==
+ bh=Upd9FeYdowY3IZShEUb1HXBlUbq++p8JkY3ix5d4D/M=;
+ b=l6QuisLL2aSKXi0kOWCLStp5zpkCBuLXl2Se0je6AIA7JoutJ/BM40KJRwW5VUK1cp
+ ui6JzJu5/7NmXCzNJ4ZjKC4+VkAeAy3O/B4LoDdR1YTr/VQLyAIGO3GrxWu/y1P1+5TG
+ XuNhu/yKjNuhBQ6XKT0NnsUIAQhFtWrvlIAqBjejMyFElaY90cGfwiJq5HTqXG5qbToM
+ /orges7aoqONnGRYUhEHHuUlhLqMKUOZrfTdrQzqL/9/DyTTZ/JSCW7XOq0WRbnk7zix
+ ekCVxop9LhyjGcu6lxOpBinjx3hek/hwvhSqpkWFJSnLA4xrB4c/gdOVHdoFgTZqei/5
+ Pz3Q==
+X-Gm-Message-State: AOJu0YzjXbjsSFdiDWp7AlfGlbfPUfcS/bUYq74Fdw055ZZqFUSAG/9G
+ JP7O6shSlxAwqfo6Ygx27SV8n4XqMSwqk29Lle5gGNrGK1QA+gRgZ5Kd9PNVRQEg+TPMtD4q8br
+ Ony3boNRf58ZbpvzuCiLqBKQgixxQOJ5XPpGaYyW5Ky5qdL5jrHa/F1rUWoPwyzMLvnb/Iu9tfU
+ r7uASPK3mE5b2jQvVqCmQ6CJSzwg==
+X-Google-Smtp-Source: AGHT+IGFCQhCHSaXkndnnYNVcH3SLN/Fw3Mm2mFM5Gs9rAwFxGZ3cB9xCDyPpDVegQclw5fCSqQwaCRlWQ==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a05:6a02:5a4:b0:718:da6:277e with
+ (user=tavip job=sendgmr) by 2002:a17:902:ecd1:b0:202:156:c4c6 with
  SMTP id
- 41be03b00d2f7-7c9790eb4demr9639a12.2.1723890377114; Sat, 17 Aug 2024 03:26:17
- -0700 (PDT)
-Date: Sat, 17 Aug 2024 03:25:48 -0700
+ d9443c01a7336-20203f1cdbamr5626085ad.9.1723890398382; Sat, 17 Aug 2024
+ 03:26:38 -0700 (PDT)
+Date: Sat, 17 Aug 2024 03:25:59 -0700
 In-Reply-To: <20240817102606.3996242-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20240817102606.3996242-1-tavip@google.com>
 X-Mailer: git-send-email 2.46.0.184.g6999bdac58-goog
-Message-ID: <20240817102606.3996242-6-tavip@google.com>
-Subject: [RFC PATCH v2 05/23] hw: add register access utility functions
+Message-ID: <20240817102606.3996242-17-tavip@google.com>
+Subject: [RFC PATCH v2 16/23] test/unit: add spi-tester
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -71,9 +71,9 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  alistair@alistair23.me, berrange@redhat.com, philmd@linaro.org, 
  jsnow@redhat.com, crosa@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
- envelope-from=3yXrAZgUKCvwxezmtksskpi.gsquiqy-hiziprsrkry.svk@flex--tavip.bounces.google.com;
- helo=mail-pg1-x54a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::549;
+ envelope-from=33nrAZgUKChMCtE18z77z4x.v759x5D-wxEx4676z6D.7Az@flex--tavip.bounces.google.com;
+ helo=mail-pg1-x549.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -81,7 +81,7 @@ X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,25 +97,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add register access utility functions for device models, like checking
-aligned access.
+Add a simple SPI peripheral that echoes back received data. Useful for
+testing SPI controllers.
 
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- include/hw/regs.h | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
- create mode 100644 include/hw/regs.h
+ tests/unit/spi_tester.h | 32 +++++++++++++++++++++++
+ tests/unit/spi_tester.c | 57 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 89 insertions(+)
+ create mode 100644 tests/unit/spi_tester.h
+ create mode 100644 tests/unit/spi_tester.c
 
-diff --git a/include/hw/regs.h b/include/hw/regs.h
+diff --git a/tests/unit/spi_tester.h b/tests/unit/spi_tester.h
 new file mode 100644
-index 0000000000..692428af12
+index 0000000000..16e08d2b5c
 --- /dev/null
-+++ b/include/hw/regs.h
-@@ -0,0 +1,34 @@
++++ b/tests/unit/spi_tester.h
+@@ -0,0 +1,32 @@
 +/*
-+ * Useful macros/functions for register handling.
++ * Simple SPI peripheral device used for SPI controller testing.
 + *
-+ * Copyright (c) 2021 Google LLC
++ * Copyright (c) 2024 Google LLC.
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
@@ -123,29 +125,90 @@ index 0000000000..692428af12
 + * See the COPYING file in the top-level directory.
 + */
 +
-+#ifndef HW_REGS_H
-+#define HW_REGS_H
++#ifndef TESTS_UNIT_SPI_TESTER_H
++#define TESTS_UNIT_SPI_TESTER_H
 +
-+#include "exec/hwaddr.h"
++#include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "qemu/bswap.h"
++#include "hw/irq.h"
++#include "hw/ssi/ssi.h"
++#include "qemu/timer.h"
++#include "hw/qdev-properties.h"
 +
++#define TYPE_SPI_TESTER "spi-tester"
++#define SPI_TESTER(obj) OBJECT_CHECK(SpiTesterState, (obj), TYPE_SPI_TESTER)
++
++typedef struct {
++    SSIPeripheral ssidev;
++    bool cs;
++} SpiTesterState;
++
++#endif /* TESTS_UNIT_SPI_TESTER_H */
+diff --git a/tests/unit/spi_tester.c b/tests/unit/spi_tester.c
+new file mode 100644
+index 0000000000..e055d25990
+--- /dev/null
++++ b/tests/unit/spi_tester.c
+@@ -0,0 +1,57 @@
 +/*
-+ * reg32_aligned_access
-+ * @addr: address to check
-+ * @size: size of access
++ * Simple SPI peripheral echo device used for SPI controller testing.
 + *
-+ * Check if access to a hardware address is 32bit aligned.
++ * Copyright (c) 2024 Google LLC.
 + *
-+ * Returns: true if access is 32bit aligned, false otherwise
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
 + */
-+static inline bool reg32_aligned_access(hwaddr addr, unsigned size)
++
++#include "spi_tester.h"
++
++static uint32_t spi_tester_transfer(SSIPeripheral *dev, uint32_t value)
 +{
-+    if (size != 4 || addr % 4 != 0) {
-+        return false;
++    SpiTesterState *s = SPI_TESTER(dev);
++
++    if (s->cs) {
++        return 0;
 +    }
-+    return true;
++
++    return value;
 +}
 +
-+#endif /* HW_REGS_H */
++static void spi_tester_realize(SSIPeripheral *d, Error **errp)
++{
++}
++
++static int spi_tester_set_cs(SSIPeripheral *dev, bool select)
++{
++    SpiTesterState *s = SPI_TESTER(dev);
++
++    s->cs = select;
++
++    return 0;
++}
++
++static void spi_tester_class_init(ObjectClass *klass, void *data)
++{
++    SSIPeripheralClass *k = SSI_PERIPHERAL_CLASS(klass);
++
++    k->realize     = spi_tester_realize;
++    k->transfer    = spi_tester_transfer;
++    k->set_cs      = spi_tester_set_cs;
++    k->cs_polarity = SSI_CS_LOW;
++}
++
++static const TypeInfo spi_tester_types[] = {
++    {
++        .name          = TYPE_SPI_TESTER,
++        .parent        = TYPE_SSI_PERIPHERAL,
++        .instance_size = sizeof(SpiTesterState),
++        .class_init    = spi_tester_class_init,
++    },
++};
++
++DEFINE_TYPES(spi_tester_types);
 -- 
 2.46.0.184.g6999bdac58-goog
 
