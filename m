@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC36C52D7D
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 00:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61A4FC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 00:18:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sf6rd-00036r-Qr; Fri, 16 Aug 2024 20:00:13 -0400
+	id 1sf77y-00008m-K8; Fri, 16 Aug 2024 20:17:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sf6rY-00035x-Vr
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 20:00:09 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1sf77v-00007o-Fr
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 20:17:04 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1sf6rW-0001sU-Rd
- for qemu-devel@nongnu.org; Fri, 16 Aug 2024 20:00:08 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2020ac89cabso10279225ad.1
- for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 17:00:05 -0700 (PDT)
+ id 1sf77u-00042C-19
+ for qemu-devel@nongnu.org; Fri, 16 Aug 2024 20:17:03 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-202146e9538so7413755ad.3
+ for <qemu-devel@nongnu.org>; Fri, 16 Aug 2024 17:17:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1723852804; x=1724457604; darn=nongnu.org;
+ d=linaro.org; s=google; t=1723853820; x=1724458620; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hThVIS0NMDVyIHD+K67zvnuEC7Gg05r1u9JYA+DTPYw=;
- b=HlaGyiQDhHfpzgG2UIEAn1vDorDBIq6RTA3t4x6PTiAHTJeWRpGcaW9PdVFW6UH8fW
- xFphueTCzUERv/cjolPv4SGwUhqeBWjlN4vWF5CKyJ/D7Bm2zekU3di4hvdeS9zY9/03
- 20NMW4Raemv7j+rB/rq/DeOLE/j8dHZtZFcv0CbqpXiFm3DFFtEAm7du7tx+vKo23xBq
- Ln+uuFQh2y4wiZOpjB9CvboSfCHfJRG5eJ0SEIpQwEsxP8kuAJFzZji0X/1eIOFWT08S
- Skpzx7wK3lk22q+BkbpKlQwwIl1LSC/XmSMsLOgIKV2aNsyCOJRY/vrg4tVL92EN/XbP
- UPog==
+ bh=+smS3V05s5eWuvLPAQ5vrnyr59tDdVA+fGI337pmeCE=;
+ b=XYtwWew4lBKtHEimZ2+gm3NRZncKFHDBSm84Fast+TfoJWsvGDx6GfnsNVicAxPN4d
+ kwzUmdK2NvwcwMcswbPbNLoagqztGef/jUSf+0pkVPoN2n92grtZeIpEA9+2AQdfew+m
+ U+pTllODiK+biEod5SiCgD476Khm18pQjA60qynFSb6xmt0Lg1fDdBYMj784TveJSYiW
+ D4Uc4yPyAU+5yJO+AOUasJxpflfC5Z6Ka556s2+jEOR5EVhfod8CX422CVig9gwQugnF
+ CtANYCb+Q8Wa2FSZRqyVxgk5CvkHE2QU6gDMkhjCcz9rufHXZPhfIIjWv73OqrU/9ORl
+ DdmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723852804; x=1724457604;
+ d=1e100.net; s=20230601; t=1723853820; x=1724458620;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hThVIS0NMDVyIHD+K67zvnuEC7Gg05r1u9JYA+DTPYw=;
- b=NvHhhmWu6WNiw0yZCKGNHxhxEEzyyp9wxdqtu1n2MpZdkAIZIRbgAfQ2sPB0YPEt23
- 1zYH/XOpYmq65uPGod/FMuq/FHnmh1qO21YqBbFOY6Pa2hfI84HC5Fjx8SGiPG+lFuht
- 4rNjl5cw9E1K000yHw5r2EgkdniZc5wmytqpNm8rWOlXR+oJ8qSmkFafvsjLp7srVQ+b
- mjpWS89IEwtFPy9n9QaiaDKhjmpNJare/X8e0CM/XamGOBgbM1Y1GAIGDuZqm0mGdtYb
- 4B8NTgP12xN8kVQrFDl0LZ7TcbiF8ZFcEtciDpkGfsfvn1N4TYjAdsGlxvGlIESZGab6
- Vvng==
+ bh=+smS3V05s5eWuvLPAQ5vrnyr59tDdVA+fGI337pmeCE=;
+ b=a12J5OfhWNhVpMsmgOqG7V/+YUDbPlYaW0P0djc6YOHdy6L1qSztfycrnnef+mmwMm
+ kcvGropjxFCU9nF5frgIlaEnV0WxAI2xkX5fVEGxwEiEXm7zG76Xd0wD1r3oy2OY+yxu
+ H2WiO6huTpqe86Xey+KbChGjMY1/TIZOukwlMEranG13M1WfJquIXXBuA94ZQPV9HqKJ
+ PADLi71IqykvBnxoKNHSzFdHib3nXL/GMAi6U/ZtJzlkV9tQlPdKRYqHAuxhSU1/OyTU
+ 1UQe+xtC8b03DNhquZbIE8B564dyt359pTq2BrJdPAroKgHJwZAnL6seX0WIhHeSsBiV
+ wAxQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXbFLoJtoWoy0elsa6Q+oshp5gzYmXETEUfHV1Zn0mjY+yFWB+vFTTHV9/hrwUUfL61Rakz+TCuRPUJhzb9/X7jM7CmGJo=
-X-Gm-Message-State: AOJu0Yw8PcKreEslw04v1rhGqevlxHJHLmhfk/qnMbx1Gvu3xWO2UGya
- V7gg+NyBfFRr5CmsTeyAfcVewMNA4W39C4RmUkjjnJRB/K4T4zZgohFOJF8Aj55/pt4lKQpWFfY
- l7fM=
-X-Google-Smtp-Source: AGHT+IE5z+4od9pW4s6FiAs2YjwtRbHZpqujN8HtScJOySlEeDGch/WK5ITxCfl2d8VCZyZEzIt8Ow==
-X-Received: by 2002:a17:903:2343:b0:1ff:622c:277d with SMTP id
- d9443c01a7336-20203f314a0mr48278585ad.46.1723852803369; 
- Fri, 16 Aug 2024 17:00:03 -0700 (PDT)
+ AJvYcCWtXMz6mjgRH8cIDrHD/Md6D9RApbPi34YYIpJXw737fulxSNrU3qe8VOTqWFr0l+5oTJrcWs32GZOpMRgJ9yEHndzzm68=
+X-Gm-Message-State: AOJu0YzLAIW9etJCm7i+5xFqPdI4DpHpxF3YnfywxozoQGhEhqdqzYdI
+ HZ0GVGvwpJjQ5HxI925HQMCMr+LY+2oWLZHUTxVhN77BqC+0fvxEt1YHtTPIghg=
+X-Google-Smtp-Source: AGHT+IGvMUccN0ysHQ9Nz1KeHOz1ajXQhvQyrGxIUmBD50E9MMiE/gLzBjG3djLgFPtx/RfjqKmI9Q==
+X-Received: by 2002:a17:902:e84a:b0:201:f2a4:cf94 with SMTP id
+ d9443c01a7336-20203eb5532mr51712465ad.29.1723853820017; 
+ Fri, 16 Aug 2024 17:17:00 -0700 (PDT)
 Received: from [192.168.1.113] ([203.30.4.109])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201f02fb465sm30434975ad.51.2024.08.16.17.00.01
+ d9443c01a7336-201f022c72bsm30659735ad.0.2024.08.16.17.16.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 16 Aug 2024 17:00:02 -0700 (PDT)
-Message-ID: <a1bb747e-f2b1-4eec-97cd-0c7614623aed@linaro.org>
-Date: Sat, 17 Aug 2024 09:59:58 +1000
+ Fri, 16 Aug 2024 17:16:59 -0700 (PDT)
+Message-ID: <e2aa8b92-4cb1-4fcf-92b7-eadb86893ccf@linaro.org>
+Date: Sat, 17 Aug 2024 10:16:55 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH for-9.2 v3 0/6] target/sparc: emulate floating point queue
@@ -72,14 +71,14 @@ References: <20240816072311.353234-1-richard.henderson@linaro.org>
  <501c22c3-d8e3-4439-a958-549e9a772ffd@pullman.com>
  <2c1d0942-1428-47a7-bd37-29c16d596761@pullman.com>
  <092fdfde-7305-467c-9131-6f5d2128c58f@linaro.org>
- <a06ebc2a-e67b-49d9-91a8-ae2a7a1d8b9d@pullman.com>
+ <aa172755-faf8-4587-a4e8-d1cbfdc139b1@pullman.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <a06ebc2a-e67b-49d9-91a8-ae2a7a1d8b9d@pullman.com>
+In-Reply-To: <aa172755-faf8-4587-a4e8-d1cbfdc139b1@pullman.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,19 +101,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/17/24 08:58, Carl Hauser wrote:
-> Yes, but ...
-> 
-> isn't the state of dc->fsr_qne at translation time irrelevant?
+On 8/17/24 09:48, Carl Hauser wrote:
+> netbsd panics in the kernel trap handler; unfortunately it does not include the fsr in the 
+> panic message, but I expect it will be the same as on Solaris.
 
-No, because patch 4 made it part of the hashed TB state.
-It's checked and verified, generating a new TB if state does not match.
-
-> And changing it at 
-> translation time (line 4593) is dangerous (because it pertains to runtime, not translation 
-> time); i.e. why is 0 stored at both translation time (4593) and at runtime (4591)?
-
-That keeps the translation time state in sync with the runtime state until the end of the TB.
+Ok, I have reproduced this with netbsd 9.3.
+I'll have a look.
 
 
 r~
