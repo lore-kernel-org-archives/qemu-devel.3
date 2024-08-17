@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD659C52D7D
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 10:27:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68B3FC52D7D
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 10:27:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sfGeK-00085d-5V; Sat, 17 Aug 2024 06:27:08 -0400
+	id 1sfGeI-0007xO-8c; Sat, 17 Aug 2024 06:27:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <33nrAZgUKChMCtE18z77z4x.v759x5D-wxEx4676z6D.7Az@flex--tavip.bounces.google.com>)
- id 1sfGdz-0006Y8-Je
+ <32HrAZgUKCg06n8v2t11tyr.p1z3rz7-qr8ry010t07.14t@flex--tavip.bounces.google.com>)
+ id 1sfGdy-0006U2-4n
  for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:48 -0400
-Received: from mail-pg1-x549.google.com ([2607:f8b0:4864:20::549])
+Received: from mail-yw1-x1149.google.com ([2607:f8b0:4864:20::1149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <33nrAZgUKChMCtE18z77z4x.v759x5D-wxEx4676z6D.7Az@flex--tavip.bounces.google.com>)
- id 1sfGdw-0003J5-6l
- for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:46 -0400
-Received: by mail-pg1-x549.google.com with SMTP id
- 41be03b00d2f7-6c8f99fef10so2830223a12.3
- for <qemu-devel@nongnu.org>; Sat, 17 Aug 2024 03:26:39 -0700 (PDT)
+ <32HrAZgUKCg06n8v2t11tyr.p1z3rz7-qr8ry010t07.14t@flex--tavip.bounces.google.com>)
+ id 1sfGdt-0003IH-Cc
+ for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:42 -0400
+Received: by mail-yw1-x1149.google.com with SMTP id
+ 00721157ae682-6ad97b9a0fbso54639587b3.0
+ for <qemu-devel@nongnu.org>; Sat, 17 Aug 2024 03:26:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1723890399; x=1724495199; darn=nongnu.org;
+ d=google.com; s=20230601; t=1723890393; x=1724495193; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=Upd9FeYdowY3IZShEUb1HXBlUbq++p8JkY3ix5d4D/M=;
- b=Y5b9lJ/xid4nppwhvvusxDfP8VvZIqI3oFZq/ONkXKw7OxbhLxG3JA9dCZuAwcmJlj
- W+GNznWX1pUZDxlCN9/v8+7WHYZrYUafU1szE0pD/Uh6M7rZXTxcyb4c9yukqRp+O72i
- WEdr3yj8V8LqGIMuAhkvNSWTAPfN3zpCboHxuSHUeJvwbpPzA8ogR0nYI6H/72YcDf+d
- MavnxUxIqdvl2zcCj9Vq2Te1r46Sw4RUtNxD6sosjN0/KeztwcF7Sg/FY1tsfNDiKH4k
- 4wPyAfGrN8gW2sBM0OfX2vSiE6V+DB0gaif7+UAqMrSxEpjhJZ8rY/1A5V+1TDO0NmRR
- CX2g==
+ bh=gYjLNYCYgmz+RuXhYlYlEGx1aZzBL8oMAQt3ozgBUbM=;
+ b=MOtUUm6NUoHEj82igudWWXZ2Yqe9b1KHRBGUzet6PvF11kBlVNiBNNdN45c9fRld4S
+ 73zQ25j22bfi0SIiahF0H5xEUL3EvC8KLcMtvDsVnyBcoJBGelkuhs7ZbHnzwehjz3SH
+ GN+S+FGAVFKlqZabSZn6NUFfadzJYpotpCVnDCeebaDamhqk/BqelW0aRKtmoSrxhCFm
+ AqK9FPRtnZdiXhXAfx3E89ZsjgYa6tWNaO2EnNSBhIdKXgP8VWdenat1yfxmMxcgaePJ
+ aUaIFBCoK20SpHdTzeKtTz3YsI42Tygc8Q9bvw2VFLN1BTgRTHYzqgbAIZu6tK2dsD8g
+ 5EeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723890399; x=1724495199;
+ d=1e100.net; s=20230601; t=1723890393; x=1724495193;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Upd9FeYdowY3IZShEUb1HXBlUbq++p8JkY3ix5d4D/M=;
- b=l6QuisLL2aSKXi0kOWCLStp5zpkCBuLXl2Se0je6AIA7JoutJ/BM40KJRwW5VUK1cp
- ui6JzJu5/7NmXCzNJ4ZjKC4+VkAeAy3O/B4LoDdR1YTr/VQLyAIGO3GrxWu/y1P1+5TG
- XuNhu/yKjNuhBQ6XKT0NnsUIAQhFtWrvlIAqBjejMyFElaY90cGfwiJq5HTqXG5qbToM
- /orges7aoqONnGRYUhEHHuUlhLqMKUOZrfTdrQzqL/9/DyTTZ/JSCW7XOq0WRbnk7zix
- ekCVxop9LhyjGcu6lxOpBinjx3hek/hwvhSqpkWFJSnLA4xrB4c/gdOVHdoFgTZqei/5
- Pz3Q==
-X-Gm-Message-State: AOJu0YzjXbjsSFdiDWp7AlfGlbfPUfcS/bUYq74Fdw055ZZqFUSAG/9G
- JP7O6shSlxAwqfo6Ygx27SV8n4XqMSwqk29Lle5gGNrGK1QA+gRgZ5Kd9PNVRQEg+TPMtD4q8br
- Ony3boNRf58ZbpvzuCiLqBKQgixxQOJ5XPpGaYyW5Ky5qdL5jrHa/F1rUWoPwyzMLvnb/Iu9tfU
- r7uASPK3mE5b2jQvVqCmQ6CJSzwg==
-X-Google-Smtp-Source: AGHT+IGFCQhCHSaXkndnnYNVcH3SLN/Fw3Mm2mFM5Gs9rAwFxGZ3cB9xCDyPpDVegQclw5fCSqQwaCRlWQ==
+ bh=gYjLNYCYgmz+RuXhYlYlEGx1aZzBL8oMAQt3ozgBUbM=;
+ b=PYqRW/r4IMONHwKxizcWiiDBJE66sNy9UdIuqBUPra8J25hC5qylvMnBd/YPQCi7Ie
+ lnpEwIwElsG1QGw04E1ACKF84FRLbhimSQB9koBTfJ19HE4Xkh9XR4aeIEBdGNy79XBG
+ jPx3jWsu0lteidpGRcqggTagIzy4KUSbRa/5MvocKpAmSfO5YcVXXE4uxicpa2Wu61BC
+ Tu10PJdRmr/z0lTgFTcucAIggv2Chu/SmUm4vKjRpgt+MXLK7UMA8eVofR+zTog0ttno
+ X9RGRhNKDSNElhuL9iLyLdZdDl5alL7uH1la85Z2D8ghALdXvUF6Hus9SMtOuzjgtoxo
+ AQwA==
+X-Gm-Message-State: AOJu0YzOOpjaHuWXqukNnkvzOp05FQEnUf0cFmAnT7VAQXkxKIpnrDNO
+ o9EdYk3OzaHXgY28R4MnkFX8Ydg6aJeWjL6u/ERtGcRWTQAwJrfrBu/R/fwh41PATT8ggZMmeEP
+ iZPKgImJJEZBTdM+t3BRZpmm8bwDzCKE5ubsq4J/XLHTMrPILlzGUvp53em2IHzSZwQbpQoJ5gF
+ UuQBi1T7sRCDGE9/wMIWe7cUIZNg==
+X-Google-Smtp-Source: AGHT+IFaSSK3fanWGDJUNkBK2HfyOfl2bt5nAD1Ig09UZk8Dtz9NOsOMcyLz694GaIx1PKSs08n99tEEGw==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a17:902:ecd1:b0:202:156:c4c6 with
- SMTP id
- d9443c01a7336-20203f1cdbamr5626085ad.9.1723890398382; Sat, 17 Aug 2024
- 03:26:38 -0700 (PDT)
-Date: Sat, 17 Aug 2024 03:25:59 -0700
+ (user=tavip job=sendgmr) by 2002:a05:690c:2b13:b0:673:b39a:92f2
+ with SMTP id
+ 00721157ae682-6b1baeae4ccmr303877b3.7.1723890392821; Sat, 17 Aug 2024
+ 03:26:32 -0700 (PDT)
+Date: Sat, 17 Aug 2024 03:25:56 -0700
 In-Reply-To: <20240817102606.3996242-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20240817102606.3996242-1-tavip@google.com>
 X-Mailer: git-send-email 2.46.0.184.g6999bdac58-goog
-Message-ID: <20240817102606.3996242-17-tavip@google.com>
-Subject: [RFC PATCH v2 16/23] test/unit: add spi-tester
+Message-ID: <20240817102606.3996242-14-tavip@google.com>
+Subject: [RFC PATCH v2 13/23] test/unit: add i2c-tester
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -71,9 +71,9 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  alistair@alistair23.me, berrange@redhat.com, philmd@linaro.org, 
  jsnow@redhat.com, crosa@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::549;
- envelope-from=33nrAZgUKChMCtE18z77z4x.v759x5D-wxEx4676z6D.7Az@flex--tavip.bounces.google.com;
- helo=mail-pg1-x549.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1149;
+ envelope-from=32HrAZgUKCg06n8v2t11tyr.p1z3rz7-qr8ry010t07.14t@flex--tavip.bounces.google.com;
+ helo=mail-yw1-x1149.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -97,27 +97,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a simple SPI peripheral that echoes back received data. Useful for
-testing SPI controllers.
+Add a simple i2c peripheral to be used for testing I2C device
+models. The peripheral has a fixed number of registers that can be
+read and written.
 
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- tests/unit/spi_tester.h | 32 +++++++++++++++++++++++
- tests/unit/spi_tester.c | 57 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 89 insertions(+)
- create mode 100644 tests/unit/spi_tester.h
- create mode 100644 tests/unit/spi_tester.c
+ tests/unit/i2c_tester.h |  30 +++++++++++
+ tests/unit/i2c_tester.c | 108 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 138 insertions(+)
+ create mode 100644 tests/unit/i2c_tester.h
+ create mode 100644 tests/unit/i2c_tester.c
 
-diff --git a/tests/unit/spi_tester.h b/tests/unit/spi_tester.h
+diff --git a/tests/unit/i2c_tester.h b/tests/unit/i2c_tester.h
 new file mode 100644
-index 0000000000..16e08d2b5c
+index 0000000000..14cf2ead36
 --- /dev/null
-+++ b/tests/unit/spi_tester.h
-@@ -0,0 +1,32 @@
++++ b/tests/unit/i2c_tester.h
+@@ -0,0 +1,30 @@
 +/*
-+ * Simple SPI peripheral device used for SPI controller testing.
 + *
-+ * Copyright (c) 2024 Google LLC.
++ * Copyright (c) 2024 Google LLC
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
@@ -125,37 +125,36 @@ index 0000000000..16e08d2b5c
 + * See the COPYING file in the top-level directory.
 + */
 +
-+#ifndef TESTS_UNIT_SPI_TESTER_H
-+#define TESTS_UNIT_SPI_TESTER_H
++#ifndef TESTS_UNIT_I2C_TESTER_H
++#define TESTS_UNIT_I2C_TESTER_H
 +
 +#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "qemu/bswap.h"
++#include "hw/i2c/i2c.h"
 +#include "hw/irq.h"
-+#include "hw/ssi/ssi.h"
-+#include "qemu/timer.h"
-+#include "hw/qdev-properties.h"
 +
-+#define TYPE_SPI_TESTER "spi-tester"
-+#define SPI_TESTER(obj) OBJECT_CHECK(SpiTesterState, (obj), TYPE_SPI_TESTER)
++#define I2C_TESTER_NUM_REGS    0x31
++
++#define TYPE_I2C_TESTER "i2c_tester"
++#define I2C_TESTER(obj) OBJECT_CHECK(I2cTesterState, (obj), TYPE_I2C_TESTER)
 +
 +typedef struct {
-+    SSIPeripheral ssidev;
-+    bool cs;
-+} SpiTesterState;
++    I2CSlave i2c;
++    bool set_reg_idx;
++    uint8_t reg_idx;
++    uint8_t regs[I2C_TESTER_NUM_REGS];
++} I2cTesterState;
 +
-+#endif /* TESTS_UNIT_SPI_TESTER_H */
-diff --git a/tests/unit/spi_tester.c b/tests/unit/spi_tester.c
++#endif /* TESTS_UNIT_I2C_TESTER_H */
+diff --git a/tests/unit/i2c_tester.c b/tests/unit/i2c_tester.c
 new file mode 100644
-index 0000000000..e055d25990
+index 0000000000..2e4314fe6e
 --- /dev/null
-+++ b/tests/unit/spi_tester.c
-@@ -0,0 +1,57 @@
++++ b/tests/unit/i2c_tester.c
+@@ -0,0 +1,108 @@
 +/*
-+ * Simple SPI peripheral echo device used for SPI controller testing.
++ * Simple I2C peripheral for testing I2C device models.
 + *
-+ * Copyright (c) 2024 Google LLC.
++ * Copyright (c) 2024 Google LLC
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + *
@@ -163,52 +162,103 @@ index 0000000000..e055d25990
 + * See the COPYING file in the top-level directory.
 + */
 +
-+#include "spi_tester.h"
++#include "i2c_tester.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
 +
-+static uint32_t spi_tester_transfer(SSIPeripheral *dev, uint32_t value)
++static void i2c_tester_reset(DeviceState *ds)
 +{
-+    SpiTesterState *s = SPI_TESTER(dev);
++    I2cTesterState *s = I2C_TESTER(ds);
 +
-+    if (s->cs) {
-+        return 0;
++    s->set_reg_idx = false;
++    s->reg_idx     = 0;
++    memset(s->regs, 0, I2C_TESTER_NUM_REGS);
++}
++
++static int i2c_tester_event(I2CSlave *i2c, enum i2c_event event)
++{
++    I2cTesterState *s = I2C_TESTER(i2c);
++
++    if (event == I2C_START_SEND) {
++        s->set_reg_idx = true;
 +    }
-+
-+    return value;
-+}
-+
-+static void spi_tester_realize(SSIPeripheral *d, Error **errp)
-+{
-+}
-+
-+static int spi_tester_set_cs(SSIPeripheral *dev, bool select)
-+{
-+    SpiTesterState *s = SPI_TESTER(dev);
-+
-+    s->cs = select;
 +
 +    return 0;
 +}
 +
-+static void spi_tester_class_init(ObjectClass *klass, void *data)
++static uint8_t i2c_tester_rx(I2CSlave *i2c)
 +{
-+    SSIPeripheralClass *k = SSI_PERIPHERAL_CLASS(klass);
++    I2cTesterState *s = I2C_TESTER(i2c);
 +
-+    k->realize     = spi_tester_realize;
-+    k->transfer    = spi_tester_transfer;
-+    k->set_cs      = spi_tester_set_cs;
-+    k->cs_polarity = SSI_CS_LOW;
++    if (s->reg_idx >= I2C_TESTER_NUM_REGS) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid reg 0x%02x\n", __func__,
++                      s->reg_idx);
++        return I2C_NACK;
++    }
++
++    return s->regs[s->reg_idx];
 +}
 +
-+static const TypeInfo spi_tester_types[] = {
++static int i2c_tester_tx(I2CSlave *i2c, uint8_t data)
++{
++    I2cTesterState *s = I2C_TESTER(i2c);
++
++    if (s->set_reg_idx) {
++        /* Setting the register in which the operation will be done. */
++        s->reg_idx = data;
++        s->set_reg_idx = false;
++        return 0;
++    }
++
++    if (s->reg_idx >= I2C_TESTER_NUM_REGS) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: invalid reg 0x%02x\n", __func__,
++                      s->reg_idx);
++        return I2C_NACK;
++    }
++
++    /* Write reg data. */
++    s->regs[s->reg_idx] = data;
++
++    return 0;
++}
++
++static void i2c_tester_init(Object *obj)
++{
++}
++
++static void i2c_tester_realize(DeviceState *ds, Error **errp)
++{
++}
++
++static void i2c_tester_unrealize(DeviceState *dev)
++{
++}
++
++static void i2c_tester_class_init(ObjectClass *oc, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    I2CSlaveClass *isc = I2C_SLAVE_CLASS(oc);
++
++    dc->reset = i2c_tester_reset;
++    dc->realize   = i2c_tester_realize;
++    dc->unrealize = i2c_tester_unrealize;
++
++    isc->event = i2c_tester_event;
++    isc->recv = i2c_tester_rx;
++    isc->send = i2c_tester_tx;
++}
++
++static const TypeInfo i2c_tester_types[] = {
 +    {
-+        .name          = TYPE_SPI_TESTER,
-+        .parent        = TYPE_SSI_PERIPHERAL,
-+        .instance_size = sizeof(SpiTesterState),
-+        .class_init    = spi_tester_class_init,
++        .name = TYPE_I2C_TESTER,
++        .parent = TYPE_I2C_SLAVE,
++        .instance_size = sizeof(I2cTesterState),
++        .instance_init = i2c_tester_init,
++        .class_init = i2c_tester_class_init
 +    },
 +};
 +
-+DEFINE_TYPES(spi_tester_types);
++DEFINE_TYPES(i2c_tester_types);
 -- 
 2.46.0.184.g6999bdac58-goog
 
