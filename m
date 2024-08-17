@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99A32C52D7D
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 10:29:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADA44C52D7F
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 10:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sfGeB-0007Ni-VD; Sat, 17 Aug 2024 06:27:01 -0400
+	id 1sfGeK-00088V-Um; Sat, 17 Aug 2024 06:27:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3x3rAZgUKCvovcxkriqqing.eqosgow-fgxgnpqpipw.qti@flex--tavip.bounces.google.com>)
- id 1sfGdk-0006IV-2r
- for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:37 -0400
-Received: from mail-pg1-x549.google.com ([2607:f8b0:4864:20::549])
+ <34HrAZgUKChUEvG3A19916z.x97Bz7F-yzGz689818F.9C1@flex--tavip.bounces.google.com>)
+ id 1sfGe3-0006lK-1J
+ for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:52 -0400
+Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3x3rAZgUKCvovcxkriqqing.eqosgow-fgxgnpqpipw.qti@flex--tavip.bounces.google.com>)
- id 1sfGdf-0003FI-Bz
- for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:31 -0400
-Received: by mail-pg1-x549.google.com with SMTP id
- 41be03b00d2f7-5e4df21f22dso2254001a12.0
- for <qemu-devel@nongnu.org>; Sat, 17 Aug 2024 03:26:18 -0700 (PDT)
+ <34HrAZgUKChUEvG3A19916z.x97Bz7F-yzGz689818F.9C1@flex--tavip.bounces.google.com>)
+ id 1sfGdz-0003Jo-BO
+ for qemu-devel@nongnu.org; Sat, 17 Aug 2024 06:26:50 -0400
+Received: by mail-pg1-x54a.google.com with SMTP id
+ 41be03b00d2f7-7a267d9e7b0so2230370a12.2
+ for <qemu-devel@nongnu.org>; Sat, 17 Aug 2024 03:26:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1723890377; x=1724495177; darn=nongnu.org;
+ d=google.com; s=20230601; t=1723890402; x=1724495202; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=FVNYijpYFtbfaDyQGxsk5OhIQ8sQjh7sQW2Q7Qw6WEo=;
- b=gZHD/EwxQNautVvBImGMTPeDLU1v2UfY2rX0PhBDx1DYg0IUtQzUB19R9RmtbkhfQZ
- WFHDP2IJgqXk4pTQrG4pS+77yprLg0Up3nfAeSIbtZUALcFWJKx0/QtTvW/hPMlsKCQu
- 48f/HIiYlqDwDdLozrBOKtZMu3qrZiCZqW0pDMXcjkWFVaQFwYKPk1W0XyxiyUU1mIW3
- M5yugEWOV1qTfoEGwEMCuVM0AzvvSGqCFLB3UE5gW5CfSvQqJK9Ncdg5/kBZgp2i8JDI
- b4rBLQacje5miy72cc2vQvlwc8uqSpYIzD1XA44Gf4MoK7/RZbWESc/s0lWBFhPbDqu2
- CM5Q==
+ bh=jrfugPeSIojLMkZyOUDpR5lNbRABMXvASxgVCAUl6jI=;
+ b=C4SvhjMPebb0BUE8eLnJlXTjYP1hRkvaM0H/uzT1Fhj3jNcNugeLkLbJHKyPYA15XH
+ CMgVDxaH3Jzv01XAzdt5DZn2Tqo26NI3jnKR4bSECUVgl0vFrGC0uNp/EOvC3OsEKmlB
+ W7MBzEZlSZPGL9fnoE6wjLv2nCC+8Yu4JGzUH/aa4W83A6xAhZgcD6YPKG/SooOW7QZg
+ Njn7xqXFFrC5WkOVvmrGZFp34JU8PWeciMcC8HS6d6I4kOi8ya/lf26CsjCs1pmvfvVD
+ dBtI0JF352VFuxpJBRuMzQfKQffX4Z5xbzUJSFRlzZ9PqQ3sfXNVvFOAyY56vnpDh4TI
+ nZzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723890377; x=1724495177;
+ d=1e100.net; s=20230601; t=1723890402; x=1724495202;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=FVNYijpYFtbfaDyQGxsk5OhIQ8sQjh7sQW2Q7Qw6WEo=;
- b=NXjcO9sjgrEl556H0iLkpxjsEdObueHDEsu89ua/7cGjFIM0UCTJE6jT4uo/L2CwZF
- so5GY0kFoshQ9AIL4o1dt5cSB+Iqcv1mncoDYn1yTp6tdtXZ5sMHyLAOqGSn43YFYKYh
- hH7d+XsSKVotE8hZWlJFamsyCRcR24a4pdOU7zTIUe0x0WDyUeTQCR6eKyUJ+X8T7oLQ
- 2mVGaFlnnce87n2gXD+aFYhdqfNrYSKvy1xTUR8QMGOcmeKP4f6GOfOGTd09Rjw9M2Ds
- 6O5JB5SxSA0MIWIMhzzUUUaNKBGCA5y7ZvEe0NkEr7gBvJ7EprwwxjgasE96YOn4KERL
- b9ww==
-X-Gm-Message-State: AOJu0YxcKetieGtpaVhurjQtWUTp6hbnu1qkAKpys429F5ht6y0L8nET
- WNPHa2fE5OLxQ7czOnGgTXUNI7WZm8443PfYG5aUtu4v4O3iOn8zPAgxIOZWZSbTWJiVbOKCjb8
- LBwxleP3kvGkqs47yaTht3p7bRxkmltPy+ZM6Byki/YNGgTG+8GfdU+6n52fJD1HhWPH+kFjrYU
- 1SUVpHr1il6U8hWgt9hbvz7BY2dA==
-X-Google-Smtp-Source: AGHT+IFuMo4GRP8A1pErMqDsDMGK0GSXNVR4IZPiVh6XRSK1ciwW7Ikz1en5Ytn2Jail2Gz0UZghsKhphA==
+ bh=jrfugPeSIojLMkZyOUDpR5lNbRABMXvASxgVCAUl6jI=;
+ b=P83W+4Kj0sL44XZyVpwQWaquNp8K/n3L81kAFGFob7vKnz3n2jRtcbIXZ7HALNzrbC
+ AnYCFnc5W8vzt4XyK/d+7PWJLioDsSfGLujiKy/8orQMAr99j0ljo/u0UJC0fjVkN6Td
+ wIoFTngwK9SrjZPgcUPS7dbKOHytwitxtVzRBuevlpTr0v43gpaKTpvFfF4gaZN9Ofk1
+ wH8teTwVl5EZC0TPhTKYJXAL7svnu3w8C/uFRzvSaOvETMC9bs4KOX1tHLQJk2w0ffgp
+ +178kRcAcYlfZ+IhbbaizNezoCNGFIAw8LwekFj6ZlRXB4JQJ/yrXJ1g6MyYuZtvTWUK
+ PmsQ==
+X-Gm-Message-State: AOJu0YyKJB4vfthSI426bIZUN4RsndNc4tb+7bLV1c5lSdqzFeiyNCPU
+ 0ZiY4pt23KHErUYnWUWxLlxzZY+itx/+28AhcabEbf43SLZMANiE++jqTaFbAmU4col1W5dO/A9
+ pBdURtj6rLUOKPZPB/KA/MBdkca5AOu9fyooCXaFawU1fPnEJ0LEOOznu+W0u7f10rVtl7Vg5Vt
+ BoyCAIPTZABX9e0Gn+IDZshARNTA==
+X-Google-Smtp-Source: AGHT+IHaZll7FNxDwUjRwcF04hm24gyLNoSa3B7s6lzVwGAosu6Lf2SHaDxeIhEnAq1L3JTWKq4SCNv/eg==
 X-Received: from warp10.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:750])
- (user=tavip job=sendgmr) by 2002:a05:6a02:590:b0:718:84ed:abe7
+ (user=tavip job=sendgmr) by 2002:a05:6a02:581:b0:7a1:95c1:de3f
  with SMTP id
- 41be03b00d2f7-7ca488fb5e5mr7695a12.4.1723890375445; Sat, 17 Aug 2024 03:26:15
- -0700 (PDT)
-Date: Sat, 17 Aug 2024 03:25:47 -0700
+ 41be03b00d2f7-7c975f682c9mr10767a12.0.1723890400429; Sat, 17 Aug 2024
+ 03:26:40 -0700 (PDT)
+Date: Sat, 17 Aug 2024 03:26:00 -0700
 In-Reply-To: <20240817102606.3996242-1-tavip@google.com>
 Mime-Version: 1.0
 References: <20240817102606.3996242-1-tavip@google.com>
 X-Mailer: git-send-email 2.46.0.184.g6999bdac58-goog
-Message-ID: <20240817102606.3996242-5-tavip@google.com>
-Subject: [RFC PATCH v2 04/23] Add mcux-soc-svd subproject
+Message-ID: <20240817102606.3996242-18-tavip@google.com>
+Subject: [RFC PATCH v2 17/23] test/unit: add unit tests for flexcomm spi
 From: Octavian Purdila <tavip@google.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com, 
@@ -71,9 +71,9 @@ Cc: qemu-arm@nongnu.org, stefanst@google.com, pbonzini@redhat.com,
  alistair@alistair23.me, berrange@redhat.com, philmd@linaro.org, 
  jsnow@redhat.com, crosa@redhat.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::549;
- envelope-from=3x3rAZgUKCvovcxkriqqing.eqosgow-fgxgnpqpipw.qti@flex--tavip.bounces.google.com;
- helo=mail-pg1-x549.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
+ envelope-from=34HrAZgUKChUEvG3A19916z.x97Bz7F-yzGz689818F.9C1@flex--tavip.bounces.google.com;
+ helo=mail-pg1-x54a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -97,107 +97,249 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add mcux-soc-svd subproject that contains SVD files that are going to
-be used to generate C header with register layout definitions and
-other helpers to create device models.
+From: Sebastian Ene <sebastianene@google.com>
 
-Guard the subproject by a configuration option since it is rarely
-going to be used - whenever new headers will be generated. It is
-unlikely that already generated headers will be updated, with the
-exception of minor hardware revisions.
+Add master and loopback tests for flexcomm spi.
 
-Also export the rt595 SVD file which is going to be used by subsequent
-patches.
-
-TBD: switch to a qemu gitlab fork before merge
-
+Signed-off-by: Sebastian Ene <sebastianene@google.com>
+[tavip: add master mode test]
 Signed-off-by: Octavian Purdila <tavip@google.com>
 ---
- hw/arm/svd/meson.build                            | 4 ++++
- meson_options.txt                                 | 3 +++
- scripts/meson-buildoptions.sh                     | 4 ++++
- subprojects/.gitignore                            | 1 +
- subprojects/mcux-soc-svd.wrap                     | 5 +++++
- subprojects/packagefiles/mcux-soc-svd/meson.build | 5 +++++
- 6 files changed, 22 insertions(+)
- create mode 100644 hw/arm/svd/meson.build
- create mode 100644 subprojects/mcux-soc-svd.wrap
- create mode 100644 subprojects/packagefiles/mcux-soc-svd/meson.build
+ tests/unit/test-flexcomm-spi.c | 201 +++++++++++++++++++++++++++++++++
+ tests/unit/meson.build         |  12 ++
+ 2 files changed, 213 insertions(+)
+ create mode 100644 tests/unit/test-flexcomm-spi.c
 
-diff --git a/hw/arm/svd/meson.build b/hw/arm/svd/meson.build
+diff --git a/tests/unit/test-flexcomm-spi.c b/tests/unit/test-flexcomm-spi.c
 new file mode 100644
-index 0000000000..7d83d2ccbc
+index 0000000000..c15c8e608b
 --- /dev/null
-+++ b/hw/arm/svd/meson.build
-@@ -0,0 +1,4 @@
-+if get_option('mcux-soc-svd')
-+  mcux_soc_svd = subproject('mcux-soc-svd')
-+  rt595 = mcux_soc_svd.get_variable('rt595')
-+endif
-diff --git a/meson_options.txt b/meson_options.txt
-index 4c1583eb40..25f827078a 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -366,3 +366,6 @@ option('qemu_ga_version', type: 'string', value: '',
- 
- option('hexagon_idef_parser', type : 'boolean', value : true,
-        description: 'use idef-parser to automatically generate TCG code for the Hexagon frontend')
++++ b/tests/unit/test-flexcomm-spi.c
+@@ -0,0 +1,201 @@
++/*
++ * Copyright (c) 2024 Google LLC.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ */
 +
-+option('mcux-soc-svd', type : 'boolean', value : false,
-+       description: 'enable targets to generate C headers from mcux-soc-svd')
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index 6ce5a8b72a..2c1e501806 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -40,6 +40,8 @@ meson_options_help() {
-   printf "%s\n" '  --enable-lto             Use link time optimization'
-   printf "%s\n" '  --enable-malloc=CHOICE   choose memory allocator to use [system] (choices:'
-   printf "%s\n" '                           jemalloc/system/tcmalloc)'
-+  printf "%s\n" '  --enable-mcux-soc-svd    enable targets to generate C headers from mcux-'
-+  printf "%s\n" '                           soc-svd'
-   printf "%s\n" '  --enable-module-upgrades try to load modules from alternate paths for'
-   printf "%s\n" '                           upgrades'
-   printf "%s\n" '  --enable-rng-none        dummy RNG, avoid using /dev/(u)random and'
-@@ -390,6 +392,8 @@ _meson_option_parse() {
-     --enable-malloc-trim) printf "%s" -Dmalloc_trim=enabled ;;
-     --disable-malloc-trim) printf "%s" -Dmalloc_trim=disabled ;;
-     --mandir=*) quote_sh "-Dmandir=$2" ;;
-+    --enable-mcux-soc-svd) printf "%s" -Dmcux-soc-svd=true ;;
-+    --disable-mcux-soc-svd) printf "%s" -Dmcux-soc-svd=false ;;
-     --enable-membarrier) printf "%s" -Dmembarrier=enabled ;;
-     --disable-membarrier) printf "%s" -Dmembarrier=disabled ;;
-     --enable-module-upgrades) printf "%s" -Dmodule_upgrades=true ;;
-diff --git a/subprojects/.gitignore b/subprojects/.gitignore
-index adca0266be..bca8693ef4 100644
---- a/subprojects/.gitignore
-+++ b/subprojects/.gitignore
-@@ -6,3 +6,4 @@
- /keycodemapdb
- /libvfio-user
- /slirp
-+/mcux-soc-svd
-diff --git a/subprojects/mcux-soc-svd.wrap b/subprojects/mcux-soc-svd.wrap
-new file mode 100644
-index 0000000000..80d18e8561
---- /dev/null
-+++ b/subprojects/mcux-soc-svd.wrap
-@@ -0,0 +1,5 @@
-+[wrap-git]
-+url = https://github.com/nxp-mcuxpresso/mcux-soc-svd/
-+revision = 7f6f9ef7420144fe14cd9bc4d8e0e3523232da04
-+patch_directory = mcux-soc-svd
-+depth = 1
-diff --git a/subprojects/packagefiles/mcux-soc-svd/meson.build b/subprojects/packagefiles/mcux-soc-svd/meson.build
-new file mode 100644
-index 0000000000..37c537d040
---- /dev/null
-+++ b/subprojects/packagefiles/mcux-soc-svd/meson.build
-@@ -0,0 +1,5 @@
-+project('mcux-soc-svd')
++#include "qemu/osdep.h"
 +
-+fs = import('fs')
++#include "qemu/config-file.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "qapi/error.h"
++#include "qemu/sockets.h"
++#include "sysemu/sysemu.h"
++#include "qemu/main-loop.h"
++#include "qemu/option.h"
++#include "exec/memory.h"
++#include "hw/irq.h"
++#include "hw/qdev-properties.h"
++#include "hw/qdev-core.h"
 +
-+rt595 = fs.copyfile('MIMXRT595S/MIMXRT595S_cm33.xml')
++#include "hw/misc/flexcomm.h"
++#include "spi_tester.h"
++#include "sysbus-mock.h"
++#include "reg-utils.h"
++
++/* The number of words sent on the SPI in loopback mode. */
++#define SEQ_LOOPBACK_MODE   (8)
++
++/* This value is used to set the cycle counter for the spi tester */
++#define SPI_TESTER_CONFIG (0x10)
++
++#define FLEXCOMM_BASE 0x40106000UL
++#define FLEXCOMM_SPI_BASE FLEXCOMM_BASE
++
++typedef struct {
++    DeviceState *dev;
++    DeviceState *periph;
++    bool irq;
++} TestFixture;
++
++/* Callback for the interrupt line. */
++static void spi_irq_set(void *opaque, int line, int level)
++{
++    TestFixture *f = (TestFixture *)opaque;
++
++    f->irq = level;
++}
++
++/*
++ * Test fixture initialization.
++ */
++static void set_up(TestFixture *f, gconstpointer data)
++{
++    FlexcommState *s;
++
++    f->dev = qdev_new(TYPE_FLEXCOMM);
++    g_assert(f->dev);
++
++    s = FLEXCOMM(f->dev);
++    s->irq = qemu_allocate_irq(spi_irq_set, f, 0);
++
++    if (data != NULL) {
++        qdev_prop_set_int32(DEVICE(f->dev), "functions", (uintptr_t)data);
++    }
++
++    qdev_realize_and_unref(f->dev, NULL, &error_abort);
++    sysbus_mmio_map(SYS_BUS_DEVICE(f->dev), 0, FLEXCOMM_BASE);
++
++    device_cold_reset(f->dev);
++
++    f->periph = ssi_create_peripheral(s->spi, TYPE_SPI_TESTER);
++    s->cs[0] = qdev_get_gpio_in_named(f->periph, SSI_GPIO_CS, 0);
++}
++
++static void tear_down(TestFixture *f, gconstpointer user_data)
++{
++    qdev_unrealize(f->dev);
++    qdev_unrealize(DEVICE(f->periph));
++    g_free(f->dev);
++}
++
++static void configure_spi(TestFixture *f, bool master, bool is_loopback_mode)
++{
++    uint32_t tmp;
++
++    /* Select and lock SPI */
++    tmp = FLEXCOMM_PERSEL_SPI;
++    FIELD_DP32(tmp, FLEXCOMM_PSELID, LOCK, 1);
++    REG32_WRITE(f->dev, FLEXCOMM, PSELID, tmp);
++
++    /* Disable the FIFO */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, ENABLE, 0);
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, FIFOCFG, ENABLETX, 0);
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, FIFOCFG, ENABLERX, 0);
++
++    if (is_loopback_mode) {
++        /* Set up SPI interface - loop mode, master mode */
++        REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, LOOP, 1);
++        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, CFG, LOOP) == 1);
++    }
++
++    if (master) {
++        REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, MASTER, 1);
++        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, CFG, MASTER) == 1);
++    } else {
++        REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, MASTER, 0);
++        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, CFG, MASTER) == 0);
++    }
++
++    /* Enable the FIFO */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, FIFOCFG, ENABLETX, 1);
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, FIFOCFG, ENABLERX, 1);
++
++    /* Enable the SPI */
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, ENABLE, 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, CFG, ENABLE) == 1);
++}
++
++/* The SPI controller running in master mode can run in loopback mode for */
++/* internal testing. Transmit and receive lines are connected together. */
++static void loopback_test(TestFixture *f, gconstpointer user_data)
++{
++    configure_spi(f, true, true);
++
++    /* Write a sequence */
++    for (int i = 0; i < SEQ_LOOPBACK_MODE; i++) {
++        REG32_WRITE(f->dev, FLEXCOMM_SPI, FIFOWR, i);
++    }
++
++    /* Read the sequence back */
++    for (int i = 0; i < SEQ_LOOPBACK_MODE; i++) {
++        g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFORD, RXDATA) == i);
++    }
++}
++
++static void spi_master_test(TestFixture *f, gconstpointer user_data)
++{
++    uint32_t tmp;
++
++    configure_spi(f, true, false);
++
++    REG32_WRITE_FIELD(f->dev, FLEXCOMM_SPI, CFG, LSBF, 1);
++
++    /* single 16bit word transfer */
++
++    tmp = FIELD_DP32(0x1122, FLEXCOMM_SPI_FIFOWR, EOT, 1);
++    tmp = FIELD_DP32(tmp, FLEXCOMM_SPI_FIFOWR, TXSSEL0_N, 1);
++    tmp = FIELD_DP32(tmp, FLEXCOMM_SPI_FIFOWR, LEN, 0xF);
++    REG32_WRITE(f->dev, FLEXCOMM_SPI, FIFOWR, tmp);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFOSTAT, RXNOTEMPTY) == 1);
++    g_assert_cmpuint(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFORD, RXDATA),
++                     ==, 0x1122);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFOSTAT, RXNOTEMPTY) == 0);
++
++    /* multi word 8 bits transfer */
++
++    tmp = FIELD_DP32(0x11, FLEXCOMM_SPI_FIFOWR, TXSSEL0_N, 1);
++    tmp = FIELD_DP32(tmp, FLEXCOMM_SPI_FIFOWR, LEN, 0x7);
++    REG32_WRITE(f->dev, FLEXCOMM_SPI, FIFOWR, tmp);
++    tmp = 0x22;
++    FIELD_DP32(tmp, FLEXCOMM_SPI_FIFOWR, EOT, 1);
++    FIELD_DP32(tmp, FLEXCOMM_SPI_FIFOWR, TXSSEL0_N, 1);
++    FIELD_DP32(tmp, FLEXCOMM_SPI_FIFOWR, LEN, 0x7);
++    REG32_WRITE(f->dev, FLEXCOMM_SPI, FIFOWR, tmp);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFOSTAT, RXNOTEMPTY) == 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFORD, RXDATA) == 0x11);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFOSTAT, RXNOTEMPTY) == 1);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFORD, RXDATA) == 0x22);
++    g_assert(REG32_READ_FIELD(f->dev, FLEXCOMM_SPI, FIFOSTAT, RXNOTEMPTY) == 0);
++}
++
++
++/* mock-up */
++const PropertyInfo qdev_prop_chr;
++
++int main(int argc, char **argv)
++{
++    qemu_init_main_loop(&error_abort);
++    socket_init();
++
++    g_test_init(&argc, &argv, NULL);
++
++    /* Initialize object types. */
++    sysbus_mock_init();
++    module_call_init(MODULE_INIT_QOM);
++    qemu_add_opts(&qemu_chardev_opts);
++
++    g_test_add("/flexcomm-spi/loopback", TestFixture,
++               (gconstpointer)(1 << FLEXCOMM_FUNC_SPI),
++               set_up, loopback_test, tear_down);
++
++    g_test_add("/flexcomm-spi/master", TestFixture,
++               (gconstpointer)(1 << FLEXCOMM_FUNC_SPI),
++               set_up, spi_master_test, tear_down);
++
++    return g_test_run();
++}
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index 033e98483f..7a28e7b521 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -176,6 +176,18 @@ if have_system
+       meson.project_source_root() / 'hw/ssi/flexcomm_spi.c',
+       meson.project_source_root() / 'hw/ssi/ssi.c',
+     ],
++    'test-flexcomm-spi': [
++      qom, hwcore, migration, chardev,
++      meson.project_source_root() / 'hw/core/gpio.c',
++      meson.project_source_root() / 'tests/unit/sysbus-mock.c',
++      meson.project_source_root() / 'hw/misc/flexcomm.c',
++      meson.project_source_root() / 'hw/char/flexcomm_usart.c',
++      meson.project_source_root() / 'hw/i2c/flexcomm_i2c.c',
++      meson.project_source_root() / 'hw/i2c/core.c',
++      meson.project_source_root() / 'hw/ssi/flexcomm_spi.c',
++      meson.project_source_root() / 'hw/ssi/ssi.c',
++      'spi_tester.c',
++    ],
+   }
+   if config_host_data.get('CONFIG_INOTIFY1')
+     tests += {'test-util-filemonitor': []}
 -- 
 2.46.0.184.g6999bdac58-goog
 
