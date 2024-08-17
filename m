@@ -4,160 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 098A1C531DC
-	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 00:55:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8967DC52D7F
+	for <qemu-devel@archiver.kernel.org>; Sat, 17 Aug 2024 06:48:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sf7iU-0005Kt-92; Fri, 16 Aug 2024 20:54:50 -0400
+	id 1sfDDs-0001dh-Th; Sat, 17 Aug 2024 02:47:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Jason.Andryuk@amd.com>)
- id 1sf7a4-0004AV-Qg; Fri, 16 Aug 2024 20:46:08 -0400
-Received: from mail-bn7nam10on20613.outbound.protection.outlook.com
- ([2a01:111:f403:2009::613]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <erdnaxe@crans.org>) id 1sfDDp-0001ch-VF
+ for qemu-devel@nongnu.org; Sat, 17 Aug 2024 02:47:34 -0400
+Received: from redisdead.crans.org ([185.230.79.39])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Jason.Andryuk@amd.com>)
- id 1sf7Zz-0000GB-UX; Fri, 16 Aug 2024 20:46:08 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=F8vrRC7roj99wmz41J6BY5Y2/SHa85GIugxghpM64KHak6LADmf7INUNpMCe0ntQU//bLG19qT8j/deMG0cHAphj6uDeUxpTY9LkJCWugau/WYukJ6JlEWQcGNDhHyw6Eb3XZ6eV8fgv7OcF7OCZZYy42Y4+p27qwGHO7FlY7EzqHtTtajvuxZwl8nunpPGmekS006W+RsgybZnkHsL7R6ABraH4Quw5T5jMufNDz4GJHXrHjHey71PdakVd1yIB6R3lTbdH7lDWt+tRVqirmCwu2scYzmaghJpZOfwFTiUVtrrtf+AV6uYwYRkeF93sGOXDCagXwD/2WP0OOHRoXA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=m4SVgnne9erkuAhrAeM3VCVOKRFMY2Is89F35hd+2Sk=;
- b=cPfOm+jmZ25g1hPXYcCsoWQGD7wSYrL6ypUPgO0k/Pb+1acw4OVQaMn4ViQxVVkpoMXZ54T5JeQlHP1Lmcrjasvuo+7jsaWKQCGQjQrlsBdKnlWUo8JPUNiw1+cm1JHFL4dVndkqTue87rJsKEwwQPoXgJ+hwXNSV/JMl10K1ERpjx0oWQvfSOShYm49cBSrqWKM8qR/HbvlBSzwuRJmkhG7GseIXWxOF/3AyVQcUyRJm3Fq57c0BasdNPa6w+SlqU9yzPiOUbOZEEzplbRk1/kBryBRdCLijKqROJ3nbTELfGxly9kWm9VN/TKaDnliDtq1vAsprzYW44TomNNjhQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=m4SVgnne9erkuAhrAeM3VCVOKRFMY2Is89F35hd+2Sk=;
- b=yyKe+f4OwTp3AbVgJbDKlFsVXBIeDFU4JTkfv34I+I96d0YRfxFOc6iQzyqW5B02vYhnbBJ6dBXjoSWqWgwADYjYkg0BokTQmOYEwgpspcB0YXITk4Guv8N9T4keFnmdBDRZiBKLZO1r5U4YfdiiI9vg0F1FVvbetqx0wo6IgXE=
-Received: from BN9PR03CA0709.namprd03.prod.outlook.com (2603:10b6:408:ef::24)
- by LV3PR12MB9412.namprd12.prod.outlook.com (2603:10b6:408:211::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7875.20; Sat, 17 Aug
- 2024 00:45:53 +0000
-Received: from BL6PEPF00020E63.namprd04.prod.outlook.com
- (2603:10b6:408:ef:cafe::3c) by BN9PR03CA0709.outlook.office365.com
- (2603:10b6:408:ef::24) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7875.19 via Frontend
- Transport; Sat, 17 Aug 2024 00:45:53 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
-Received: from SATLEXMB03.amd.com (165.204.84.17) by
- BL6PEPF00020E63.mail.protection.outlook.com (10.167.249.24) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.7849.8 via Frontend Transport; Sat, 17 Aug 2024 00:45:53 +0000
-Received: from SATLEXMB06.amd.com (10.181.40.147) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 16 Aug
- 2024 19:45:48 -0500
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB06.amd.com
- (10.181.40.147) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 16 Aug
- 2024 19:45:45 -0500
-Received: from [172.24.94.179] (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.39 via Frontend
- Transport; Fri, 16 Aug 2024 19:45:45 -0500
-Message-ID: <93de8d6d-6123-4038-a566-d134206ba608@amd.com>
-Date: Fri, 16 Aug 2024 18:58:26 -0400
+ (Exim 4.90_1) (envelope-from <erdnaxe@crans.org>) id 1sfDDn-0007Ys-Qg
+ for qemu-devel@nongnu.org; Sat, 17 Aug 2024 02:47:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crans.org; s=mail;
+ t=1723877236; bh=CoHVbTQQYN8kWTgp6ZNPr3NHDSxkSZ8qBip+I5C00xA=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=Teu10xUc8vJgoGsCHnqZTxKZqHZ8VlgNDB3Vaqbhh8rbQCfWYuUC4hWd+FeDoebd0
+ BD0WvEOqSZfuxLY89TF40A53PwM/nkKclTL1KpQVuUTKD4oEyL7Nql3E++oyxM5Ejf
+ ikidF69rl+rJHFU/MoWuvSOjgyjuTTamTXhhfQFOI9ZXbmisVkac48gV2IiP3CD+Wg
+ ImzPvJ2TR0mM/TSL3v/f7KR7BGJRmyHtyf+rUA2GCREvYZdyfdlyCgbQ+dJnp+buTM
+ LH85WnY9sbG0goroMO38si3cuavk/c3APAJ6huEVRajiYvDaJb1KJgsSNiQs5FQHSz
+ BjhTYzKqibXbsKdGfHAQYfIbehKROfhDk0c6blaaE/moAseW0tEjDQEdnHoBExZSdg
+ J0ImfMsL7v2IPKxLpb9Y98HbPEzKUld9gjLg0U4VWogVX+vg5tVECYKJWGahhHuh1m
+ cChyMbIL6ILhdYHUXbTmDcbKLGCqrf9B/MB45dOgbCqTWVidcu3ZD+xPLvpX3Om5YK
+ oIu42uJkboUqV7r2M5NPWhl0cDHR9xt+8ULC/YzDpZTfdxBKUy+KF2/tpYYG4dORAu
+ 9HfMixlzt87sBQFNNif8puv8WcjOBoja6ka/3BVSvM4cQfKEMPOTdL/2E1/Iqen8O7
+ GYrffesU5sgd++0tqWt9RUXE=
+Received: from [10.100.0.104] (carton.adh.crans.org [185.230.78.194])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by redisdead.crans.org (Postfix) with ESMTPSA id 8DDF916FE;
+ Sat, 17 Aug 2024 08:47:15 +0200 (CEST)
+Message-ID: <50c7f6a8-066a-46dc-93f7-e72d65b66b49@crans.org>
+Date: Sat, 17 Aug 2024 08:47:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 04/10] hw/arm: xenpvh: Add support for SMP guests
-To: Stefano Stabellini <sstabellini@kernel.org>, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>
-CC: <qemu-devel@nongnu.org>, <anthony@xenproject.org>, <paul@xen.org>,
- <peter.maydell@linaro.org>, <alex.bennee@linaro.org>,
- <xenia.ragiadakou@amd.com>, <edgar.iglesias@amd.com>,
- <xen-devel@lists.xenproject.org>, <qemu-arm@nongnu.org>,
- <andrew.cooper3@citrix.com>
-References: <20240812130606.90410-1-edgar.iglesias@gmail.com>
- <20240812130606.90410-5-edgar.iglesias@gmail.com>
- <alpine.DEB.2.22.394.2408121650590.298534@ubuntu-linux-20-04-desktop>
- <ZruRm34zIMtUm7oH@zapote>
- <alpine.DEB.2.22.394.2408131550080.298534@ubuntu-linux-20-04-desktop>
- <ZryZwOoadeb1UWK8@zapote>
- <alpine.DEB.2.22.394.2408141719400.298534@ubuntu-linux-20-04-desktop>
- <CAJy5ezrUbGZCaF=HiYhyLCoXRL3d=t-QbmLeKvu7ByWksV888g@mail.gmail.com>
- <alpine.DEB.2.22.394.2408160949320.298534@ubuntu-linux-20-04-desktop>
+Subject: Re: [PATCH 1/6] contrib/plugins/execlog: fix warning
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20240814233645.944327-1-pierrick.bouvier@linaro.org>
+ <20240814233645.944327-2-pierrick.bouvier@linaro.org>
 Content-Language: en-US
-From: Jason Andryuk <jason.andryuk@amd.com>
-In-Reply-To: <alpine.DEB.2.22.394.2408160949320.298534@ubuntu-linux-20-04-desktop>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Alexandre IOOSS <erdnaxe@crans.org>
+Organization: Crans
+In-Reply-To: <20240814233645.944327-2-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF00020E63:EE_|LV3PR12MB9412:EE_
-X-MS-Office365-Filtering-Correlation-Id: ba8e23ee-e94c-44f2-3cd6-08dcbe55f2a5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|1800799024|7416014|36860700013|376014; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?OXBSTWZPd2lwZ3FaZWh2Tk9UZXo3VnVSeXkvMWl5cngwNWZOZXErQSt4Nmo5?=
- =?utf-8?B?Q0ozNXhaM1VoTkFsS0tYcTYyVTh4dnh0Slpoa3p5K29BMVJ5OVVrVHl6RGtl?=
- =?utf-8?B?VXU1MkRvdGM5ZW5lalFwR3d5MzYzZDByRXFtQTE2UjI2V0tleVQ5eFA5RytI?=
- =?utf-8?B?d1VyT2VYemxxSGtta0NTaXREZzVkdS90eTZvaGprUFZHdUgrd04yT0ZuQ0N3?=
- =?utf-8?B?U1prSCtRVyttanBaMlkycFo1dVp2UW0xY0c4RGZhOHM5YUVJTjJQY2FJLzVW?=
- =?utf-8?B?NnY5S3NUdEVyMGVVMkxlN0MzN29HMm9INnpuZ3F6c1NmV1F0aUxvQUJlb3dx?=
- =?utf-8?B?UndiMU9sOG82d0RrdDZlb0hKZmpKRWxoM1hpZmpOSGZHa0hleithd1JremZN?=
- =?utf-8?B?NG5WcnRkcE1RYlVYSmZsL1dJREtBaGwyWkhJd1FJb1pmbnJDSnVzRXZvMUZ5?=
- =?utf-8?B?b3ZFNll0cEoxUHFDQlk1YXJrNnJxSzFhNmlib2lLK1AycTVTVHBNandDcW15?=
- =?utf-8?B?cHhpc3NTMUpia29XQ1JPSzQrSmhqaFcwVTZzRHFXQzlpeUFBbndUNUJlY2Y0?=
- =?utf-8?B?UmM5cnAzeFBzYThoTnAzNm1pUW1aZGdVWVVqRE15OVdYRXVVbitPakxORlpQ?=
- =?utf-8?B?c1dMaVRmbkw4NUhFQ1ZQSnVwUFlBcDJYcE1zREloSjY5dkdjS3E0dkt1Y0hW?=
- =?utf-8?B?YWVvYXhNYVRmc0JoRXBrcW9HUGY5WWNMUjR2RmozdGdmNTlZU3dYd3hoODFK?=
- =?utf-8?B?UXAvWjdHSUJoRzdURGgyajY3bGVMaGptUVIxUGZ5d3FUa05ydllIWGN2NFNE?=
- =?utf-8?B?YWd6dzRaODN3UllRTG9CNjgxUUVEcEdkMHJYeVpaUUpUYnZlZVRHY04xS3c3?=
- =?utf-8?B?VXBEcFAxN3FZVWU1SFZ3U1o2bWV5SzJxRzBnM1g4b05zamk3M29WcnRmNmwv?=
- =?utf-8?B?UjRXcEJxcWVVczFOTXZJelhzRWV3QjZ2Mm9UKzg3eHV2WmsvaTFNaEMwc2x0?=
- =?utf-8?B?SjAwUG84UmVObmsvUXhyeFUydDAyaVdNcVpldE5qNDlQU3hpTHZ3OXYxMUxp?=
- =?utf-8?B?enNSWTNtMWZ1Q2pCcmMzdVpXMUppOXRQOE9HRmdDVyt4VTUvdURielFTR2Zx?=
- =?utf-8?B?c1I5aEpCbEFnODNRdU1KUU5IWnY2L01zSjVUQ0tkOXo4YnF3cHNKVzBnamFo?=
- =?utf-8?B?MVpFdEdML0UycUR6NEYvYS95azVKR04zZ0x5YU0xUDJXV2JObGh2NG0yeDd1?=
- =?utf-8?B?MStRS0xpcUJGc25nRFUydTZtZkJnSzZJSFZidysxaExOSTVzenlCU3FoUC9B?=
- =?utf-8?B?K0VTTXpxdlFaZmk3WlZnYTdoSWdwZGtiSHBXNXVzL3JNZzB3OUh6VGw1TFNr?=
- =?utf-8?B?VUhyOENnVmw2UXhod0NxRTRySzhkK3JyZTlncUJYeXlYcWFBOGx5K05IczhQ?=
- =?utf-8?B?dEhpVzBQdUdiWVdwSUF4ME5YaElmMnoxVzZGcVl0aGhLdElvdVZkTVZzN2tW?=
- =?utf-8?B?aFVNb0x4K0dIeFZabklKcmROYVlvZzhiVTg4bms4QnpIaVFmYkVCU0NueTNK?=
- =?utf-8?B?M2xLbmtkMVBMcWVpODlYYlB2SFhSZnlCUm5JOVRhNFlDK1FmQWEzelFOdDYy?=
- =?utf-8?B?dmRjUHBLeHNMSHVHYnNsOUZpQTZ0cmlIa29rWDNvTFdSaHJDZDJRcXJmaG1y?=
- =?utf-8?B?ZWZKMFBYc1J1VW03MW13eFpKTVVOODV4NmtVd1BTaEZ1dGV3L2gvOEQ4cExG?=
- =?utf-8?B?MWxKTkxCZmdIbko0QVBQdklkMTA4a21WWnI4UWdkaHlzU0FJdE9OSmFWN21J?=
- =?utf-8?B?eGZxYjdkNld6cEVWQlc5K3NLeU1DV3RZdDdYUEt5dllpTDYxcXJETDIyTkpS?=
- =?utf-8?B?N1F4WWc3ZXZsams2MVM1RlBEUWxmMWwyV21YbzVOOER0RHFGRXZaN0gvZVRq?=
- =?utf-8?Q?20ss47yP/frVMvZbzfb+u/lvoXVO/JWk?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(1800799024)(7416014)(36860700013)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Aug 2024 00:45:53.1399 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ba8e23ee-e94c-44f2-3cd6-08dcbe55f2a5
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF00020E63.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9412
-Received-SPF: permerror client-ip=2a01:111:f403:2009::613;
- envelope-from=Jason.Andryuk@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
+Received-SPF: pass client-ip=185.230.79.39; envelope-from=erdnaxe@crans.org;
+ helo=redisdead.crans.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 16 Aug 2024 20:54:48 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -172,129 +81,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024-08-16 12:53, Stefano Stabellini wrote:
-> On Fri, 16 Aug 2024, Edgar E. Iglesias wrote:
->> On Thu, Aug 15, 2024 at 2:30 AM Stefano Stabellini <sstabellini@kernel.org> wrote:
->>        On Wed, 14 Aug 2024, Edgar E. Iglesias wrote:
->>        > On Tue, Aug 13, 2024 at 03:52:32PM -0700, Stefano Stabellini wrote:
->>        > > On Tue, 13 Aug 2024, Edgar E. Iglesias wrote:
->>        > > > On Mon, Aug 12, 2024 at 06:47:17PM -0700, Stefano Stabellini wrote:
->>        > > > > On Mon, 12 Aug 2024, Edgar E. Iglesias wrote:
->>        > > > > > From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
->>        > > > > >
->>        > > > > > Add SMP support for Xen PVH ARM guests. Create max_cpus ioreq
->>        > > > > > servers to handle hotplug.
->>        > > > > >
->>        > > > > > Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
->>        > > > > > ---
->>        > > > > >  hw/arm/xen_arm.c | 5 +++--
->>        > > > > >  1 file changed, 3 insertions(+), 2 deletions(-)
->>        > > > > >
->>        > > > > > diff --git a/hw/arm/xen_arm.c b/hw/arm/xen_arm.c
->>        > > > > > index 5f75cc3779..ef8315969c 100644
->>        > > > > > --- a/hw/arm/xen_arm.c
->>        > > > > > +++ b/hw/arm/xen_arm.c
->>        > > > > > @@ -173,7 +173,7 @@ static void xen_arm_init(MachineState *machine)
->>        > > > > >
->>        > > > > >      xen_init_ram(machine);
->>        > > > > >
->>        > > > > > -    xen_register_ioreq(xam->state, machine->smp.cpus, &xen_memory_listener);
->>        > > > > > +    xen_register_ioreq(xam->state, machine->smp.max_cpus, &xen_memory_listener);
->>        > > > > >
->>        > > > > >      xen_create_virtio_mmio_devices(xam);
->>        > > > > >
->>        > > > > > @@ -218,7 +218,8 @@ static void xen_arm_machine_class_init(ObjectClass *oc, void *data)
->>        > > > > >      MachineClass *mc = MACHINE_CLASS(oc);
->>        > > > > >      mc->desc = "Xen PVH ARM machine";
->>        > > > > >      mc->init = xen_arm_init;
->>        > > > > > -    mc->max_cpus = 1;
->>        > > > > > +    /* MAX number of vcpus supported by Xen.  */
->>        > > > > > +    mc->max_cpus = GUEST_MAX_VCPUS;
->>        > > > >
->>        > > > > Will this cause allocations of data structures with 128 elements?
->>        > > > > Looking at hw/xen/xen-hvm-common.c:xen_do_ioreq_register it seems
->>        > > > > possible? Or hw/xen/xen-hvm-common.c:xen_do_ioreq_register is called
->>        > > >
->>        > > > Yes, in theory there's probably overhead with this but as you correctly
->>        > > > noted below, a PVH aware xl will set the max_cpus option to a lower value.
->>        > > >
->>        > > > With a non-pvh aware xl, I was a little worried about the overhead
->>        > > > but I couldn't see any visible slow-down on ARM neither in boot or in network
->>        > > > performance (I didn't run very sophisticated benchmarks).
->>        > >
->>        > > What do you mean by "non-pvh aware xl"? All useful versions of xl
->>        > > support pvh?
->>        >
->>        >
->>        > I mean an xl without our PVH patches merged.
->>        > xl in upstream doesn't know much about PVH yet.
->>        > Even for ARM, we're still carrying significant patches in our tree.
->>
->>        Oh I see. In that case, I don't think we need to support "non-pvh aware xl".
->>
->>
->>        > > > > later on with the precise vCPU value which should be provided to QEMU
->>        > > > > via the -smp command line option
->>        > > > > (tools/libs/light/libxl_dm.c:libxl__build_device_model_args_new)?
->>        > > >
->>        > > > Yes, a pvh aware xl will for example pass -smp 2,maxcpus=4 based on
->>        > > > values from the xl.cfg. If the user doesn't set maxvcpus in xl.cfg, xl
->>        > > > will set maxvcpus to the same value as vcpus.
->>        > >
->>        > > OK good. In that case if this is just an initial value meant to be
->>        > > overwritten, I think it is best to keep it as 1.
->>        >
->>        > Sorry but that won't work. I think the confusion here may be that
->>        > it's easy to mix up mc->max_cpus and machine->smp.max_cpus, these are
->>        > not the same. They have different purposes.
->>        >
->>        > I'll try to clarify the 3 values in play.
->>        >
->>        > machine-smp.cpus:
->>        > Number of guest vcpus active at boot.
->>        > Passed to QEMU via the -smp command-line option.
->>        > We don't use this value in QEMU's ARM PVH machines.
->>        >
->>        > machine->smp.max_cpus:
->>        > Max number of vcpus that the guest can use (equal or larger than machine-smp.cpus).
->>        > Will be set by xl via the "-smp X,maxcpus=Y" command-line option to QEMU.
->>        > Taken from maxvcpus from xl.cfg, same as XEN_DMOP_nr_vcpus.
->>        > This is what we use for xen_register_ioreq().
->>        >
->>        > mc->max_cpus:
->>        > Absolute MAX in QEMU used to cap the -smp command-line options.
->>        > If xl tries to set -smp (machine->smp.max_cpus) larger than this, QEMU will bail out.
->>        > Used to setup xen_register_ioreq() ONLY if -smp maxcpus was NOT set (i.e by a non PVH aware xl).
->>        > Cannot be 1 because that would limit QEMU to MAX 1 vcpu.
->>        >
->>        > I guess we could set mc->max_cpus to what XEN_DMOP_nr_vcpus returns but I'll
->>        > have to check if we can even issue that hypercall this early in QEMU since
->>        > mc->max_cpus is setup before we even parse the machine options. We may
->>        > not yet know what domid we're attaching to yet.
->>
->>        If mc->max_cpus is the absolute max and it will not be used if -smp is
->>        passed to QEMU, then I think it is OK to use GUEST_MAX_VCPUS
->>
->> Looking at this a little more. If users (xl) don't pass an -smp option we actually default to smp.max_cpus=1.
->> So, another option is to simply remove the upper limit in QEMU (e.g we can set mc->max_cpus to something very large like UINT32_MAX).
->> That would avoid early hypercalls, avoid using GUEST_MAX_VCPUS and always let xl dictate the max_cpus value using the -smp cmdline option.
+On 8/15/24 01:36, Pierrick Bouvier wrote:
+> Found on debian stable.
 > 
-> As the expectation is that there will be always a smp.max_cpus option
-> passed to QEMU, I would avoid an extra early hypercall.
+> ../contrib/plugins/execlog.c: In function ‘vcpu_tb_trans’:
+> ../contrib/plugins/execlog.c:236:22: error: declaration of ‘n’ shadows a previous local [-Werror=shadow=local]
+>    236 |             for (int n = 0; n < all_reg_names->len; n++) {
+>        |                      ^
+> ../contrib/plugins/execlog.c:184:12: note: shadowed declaration is here
+>    184 |     size_t n = qemu_plugin_tb_n_insns(tb);
+>        |
 > 
-> For the initial value, I would use something static and large, but not
-> unreasonably large as UINT32_MAX to be more resilient in (erroneous)
-> cases where smp.max_cpus is not passed.
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   contrib/plugins/execlog.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> So I would initialize it to GUEST_MAX_VCPUS, or if we don't want to use
-> GUEST_MAX_VCPUS, something equivalent in the 64-256 range.
-> 
-> Alternative we can have a runtime check and exit with a warning if
-> smp.max_cpus is not set.
+> diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
+> index 1c1601cc0b4..d67d0107613 100644
+> --- a/contrib/plugins/execlog.c
+> +++ b/contrib/plugins/execlog.c
+> @@ -181,8 +181,8 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+>       bool check_regs_this = rmatches;
+>       bool check_regs_next = false;
+>   
+> -    size_t n = qemu_plugin_tb_n_insns(tb);
+> -    for (size_t i = 0; i < n; i++) {
+> +    size_t n_insns = qemu_plugin_tb_n_insns(tb);
+> +    for (size_t i = 0; i < n_insns; i++) {
+>           char *insn_disas;
+>           uint64_t insn_vaddr;
+>   
 
-FYI, xl only passes a -smp option when the domU has more than 1 vcpu. 
-Though that implies only a single vcpu.
+Reviewed-by: Alexandre Iooss <erdnaxe@crans.org>
 
-Regards,
-Jason
 
