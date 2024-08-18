@@ -4,102 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76119C52D7C
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Aug 2024 07:05:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6737C52D7C
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Aug 2024 11:44:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sfZxP-00034y-N0; Sun, 18 Aug 2024 03:04:07 -0400
+	id 1sfeJd-0002ft-Vt; Sun, 18 Aug 2024 07:43:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sfZxM-00034L-QV
- for qemu-devel@nongnu.org; Sun, 18 Aug 2024 03:04:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1sfZxL-0007us-03
- for qemu-devel@nongnu.org; Sun, 18 Aug 2024 03:04:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1723964639;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=R0THHF7DGPPS1TPpiHeeSkTwc81ncCdgdRXxo6WvHw0=;
- b=ii0rvr4pkUzxjH7LDXzkB3LJPhmgIuofIrJqATto1K4jWdnAWXltg7+TkjRPkpEF5QXcwy
- gTnFVj4e1tO2rNHxl/mEkL3juGaZRusp9fk6aCuo1L15CrQxiz2+92e+nZU13o+SH2bNIF
- aK1MD2lPw70+Wa8OtkLxQjN6WlkMbyI=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-462-qyzj8PasM6uZMLfNbtmu1Q-1; Sun, 18 Aug 2024 03:03:57 -0400
-X-MC-Unique: qyzj8PasM6uZMLfNbtmu1Q-1
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-367962f0cb0so1794834f8f.1
- for <qemu-devel@nongnu.org>; Sun, 18 Aug 2024 00:03:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1sfeJa-0002fO-1a
+ for qemu-devel@nongnu.org; Sun, 18 Aug 2024 07:43:18 -0400
+Received: from mail-io1-xd2e.google.com ([2607:f8b0:4864:20::d2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1sfeJV-0001aH-Tj
+ for qemu-devel@nongnu.org; Sun, 18 Aug 2024 07:43:17 -0400
+Received: by mail-io1-xd2e.google.com with SMTP id
+ ca18e2360f4ac-81f921c40a0so130551639f.0
+ for <qemu-devel@nongnu.org>; Sun, 18 Aug 2024 04:43:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1723981391; x=1724586191; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=BV8QSSP2M5BOgIXQ+9RLO6WwKCAhojP48v4uki4JwNo=;
+ b=bV8jDHQ7EeHoApO7/tu4dYzoUMhSx3pTSp87XwO5fJANKcF9yLOoxrA6tw58aHdtv4
+ k/wnzVXnXT9LuFZ81zU3U2qQKA52ggBbMCbXoflsl0+gq66l2foILTnnCNRQP/yHHG6p
+ g4xehrgRo/dLTFm4/eyGNPdf3C8VE1RQZiWZZQmmpUgcPZFLUmm0mnVR9EsP/En78o/G
+ BCUBB3ltK6PcxoZ97Q2imRVePipxRJ1D/W60i9JuTQHF74ApewE4njZfq8KcJftxKxFo
+ vORNssxtXekkhugjVILqlp4WxtT0DYPpQNlb5SKUkSwc3EysgdjD1tU9sHgukLQKA6IY
+ aJBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723964636; x=1724569436;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=R0THHF7DGPPS1TPpiHeeSkTwc81ncCdgdRXxo6WvHw0=;
- b=ZY7wfQpGacf1I4+vUDWGCL5dL+9HfC6Dq9fM05Uc/Cj0lOTYYoGcxOK0sad+u7G+Ne
- IMdKpYJk2CWM8eOYf0ZK81I/onE7TtLj9PvPXj5zOx72N0d4kUnikDa9TRhtK634/80N
- WrN1yQRxvksriiXOI6qskCzzxDKH+q4BMka3UDj/4LFhwZH7r5OT0JlbNm6vCfDvkJMP
- CYNaX36GQb8ejYfQcuuZw1IR5geDIFGx2bYMiQ7TSCz8uQGTVs46zOL7VAfmELC7xUKB
- vpJRFOBE1lLjjc/fnAHJlKt0AsckCRzvyTYCg3GGbNNqE9pnHvjmHHZIi4bbve7AzOh/
- dC9Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXfYMYZCPRoEPpcg+JaU/Ang3eZsT+YsaBe70HIjHsrHHGhK+9ESXvaQoiIHImGiLkvQJvqQFRzOlPeIRRWoaMoXMcMTDI=
-X-Gm-Message-State: AOJu0YxE6vUUt4Upql9FuY8RnamsZzolNrjjs6PgGSpfzIBk8PWV+0Tg
- oPr+Kh5eu+yIyLRbYfEDYIB6512yMHFxUN/YNxn+QUp2xbxfvK4mIW5oQpfipxjqEObacY2kGd/
- L68vWR/6FUBuKTx0UQuqKjYvq4DsPi5lhzh9wI/RpS4mduuGldyes
-X-Received: by 2002:a5d:6886:0:b0:371:83ae:808f with SMTP id
- ffacd0b85a97d-3719429e8bdmr5668161f8f.0.1723964635796; 
- Sun, 18 Aug 2024 00:03:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEdUe5sI986RQNsHMJC6FFZ7H6yb1zO3cAeaHfrn9IVz++fRyBL5e4cYogDvarzfl6dXZ392w==
-X-Received: by 2002:a5d:6886:0:b0:371:83ae:808f with SMTP id
- ffacd0b85a97d-3719429e8bdmr5668124f8f.0.1723964634982; 
- Sun, 18 Aug 2024 00:03:54 -0700 (PDT)
-Received: from redhat.com ([2a02:14f:179:a585:e32b:7b99:cc8e:265b])
+ d=1e100.net; s=20230601; t=1723981391; x=1724586191;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BV8QSSP2M5BOgIXQ+9RLO6WwKCAhojP48v4uki4JwNo=;
+ b=e9fJoTErxq3XToxsLrjS5X/6OLO6ErKLO3kbIla+NXH+MgnvxtoFExkytDHD5ViFtW
+ YOuuVerXZ672DnPKjzErTOaXfoQzxhJ4t58VEvst9BfhW5l0FXjZQu49DgfJQ9Pu75QS
+ C9vHqFLNvRHtUOludins1Nb9DXDfqVqQL3z89ub3aQgbGjKfL3qBKyHBVASIRgG1342C
+ yUilAPKnEsdUeNQtNSGODA5o7IfouoY/keQem5Z/7PW20stBujPfkHNfz9je7SfRA1fr
+ tkisbmSRewPfPmFqS779Yo6Pc7+2h4cJ1YSrR9tgB39JQyMTUfQmaxlFSfvV0TU+6QYW
+ 1Wjw==
+X-Gm-Message-State: AOJu0YwaTncNeCN5yHlhs4BaaXUOlVyE+VpCfSvIaoFs+R7xi6vcsJyr
+ 1kN9CNLxfkN7DAtJ9iCwrBDPifUmw4w5RKwcWNLSoPdruat3fkEeQ9xPoA==
+X-Google-Smtp-Source: AGHT+IE3P+E+LOPIAAWJ44d9EY9QeyOOFFnQVYVeOSFyZ/5a4IjylubAkBjvl7vFhsDsB/qVyfJgBg==
+X-Received: by 2002:a05:6602:6402:b0:7eb:7f2e:5b3a with SMTP id
+ ca18e2360f4ac-824f25e4a59mr839323639f.2.1723981390677; 
+ Sun, 18 Aug 2024 04:43:10 -0700 (PDT)
+Received: from localhost.localdomain ([103.103.35.174])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ded71ee3sm119210365e9.29.2024.08.18.00.03.52
+ 98e67ed59e1d1-2d3e2c61fe4sm5303617a91.4.2024.08.18.04.43.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 18 Aug 2024 00:03:54 -0700 (PDT)
-Date: Sun, 18 Aug 2024 03:03:49 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com, philmd@linaro.org,
- wangyanan55@huawei.com, dmitry.fleytman@gmail.com, jasowang@redhat.com,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, sw@weilnetz.de,
- qemu-devel@nongnu.org, yan@daynix.com, devel@lists.libvirt.org
-Subject: Re: [PATCH v2 4/4] virtio-net: Add support for USO features
-Message-ID: <20240818030325-mutt-send-email-mst@kernel.org>
-References: <20240806092822-mutt-send-email-mst@kernel.org>
- <890f9d0a-3ded-488d-b274-8be9c38b5df3@daynix.com>
- <20240808065339-mutt-send-email-mst@kernel.org>
- <274ccd97-a473-4937-a57b-0029a18069c9@daynix.com>
- <20240808070912-mutt-send-email-mst@kernel.org>
- <ZrTTCIpXLmW8c5Kv@x1n>
- <20240808104559-mutt-send-email-mst@kernel.org>
- <ZrTjaZPyjDuJZK36@x1n> <8734ndhncb.fsf@suse.de>
- <7a330bb1-ca53-41b5-ae97-aec8694fc325@daynix.com>
+ Sun, 18 Aug 2024 04:43:10 -0700 (PDT)
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: graf@amazon.com, agraf@csgraf.de, stefanha@redhat.com, pbonzini@redhat.com,
+ slp@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
+ mst@redhat.com, marcel.apfelbaum@gmail.com, berrange@redhat.com,
+ philmd@linaro.org
+Subject: [PATCH v4 0/6] AWS Nitro Enclave emulation support
+Date: Sun, 18 Aug 2024 17:42:51 +0600
+Message-Id: <20240818114257.21456-1-dorjoychy111@gmail.com>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7a330bb1-ca53-41b5-ae97-aec8694fc325@daynix.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.125,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::d2e;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-io1-xd2e.google.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,81 +94,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Aug 18, 2024 at 02:04:29PM +0900, Akihiko Odaki wrote:
-> On 2024/08/09 21:50, Fabiano Rosas wrote:
-> > Peter Xu <peterx@redhat.com> writes:
-> > 
-> > > On Thu, Aug 08, 2024 at 10:47:28AM -0400, Michael S. Tsirkin wrote:
-> > > > On Thu, Aug 08, 2024 at 10:15:36AM -0400, Peter Xu wrote:
-> > > > > On Thu, Aug 08, 2024 at 07:12:14AM -0400, Michael S. Tsirkin wrote:
-> > > > > > This is too big of a hammer. People already use what you call "cross
-> > > > > > migrate" and have for years. We are not going to stop developing
-> > > > > > features just because someone suddenly became aware of some such bit.
-> > > > > > If you care, you will have to work to solve the problem properly -
-> > > > > > nacking half baked hacks is the only tool maintainers have to make
-> > > > > > people work on hard problems.
-> > > > > 
-> > > > > IMHO this is totally different thing.  It's not about proposing a new
-> > > > > feature yet so far, it's about how we should fix a breakage first.
-> > > > > 
-> > > > > And that's why I think we should fix it even in the simple way first, then
-> > > > > we consider anything more benefitial from perf side without breaking
-> > > > > anything, which should be on top of that.
-> > > > > 
-> > > > > Thanks,
-> > > > 
-> > > > As I said, once the quick hack is merged people stop caring.
-> > > 
-> > > IMHO it's not a hack. It's a proper fix to me to disable it by default for
-> > > now.
-> > > 
-> > > OTOH, having it ON always even knowing it can break migration is a hack to
-> > > me, when we don't have anything else to guard the migration.
-> > > 
-> > > > Mixing different kernel versions in migration is esoteric enough for
-> > > > this not to matter to most people. There's no rush I think, address
-> > > > it properly.
-> > > 
-> > > Exactly mixing kernel versions will be tricky to users to identify, but
-> > > that's, AFAICT, exactly happening everywhere.  We can't urge user to always
-> > > use the exact same kernels when we're talking about a VM cluster.  That's
-> > > why I think allowing migration to work across those kernels matter.
-> > 
-> > I also worry a bit about the scenario where the cluster changes slightly
-> > and now all VMs are already restricted by some option that requires the
-> > exact same kernel. Specifically, kernel changes in a cloud environment
-> > also happen due to factors completely unrelated to migration. I'm not
-> > sure the people managing the infra (who care about migration) will be
-> > gating kernel changes just because QEMU has been configured in a
-> > specific manner.
-> 
-> I have wrote a bit about the expectation on the platform earlier[1], but let
-> me summarize it here.
-> 
-> 1. I expect the user will not downgrade the platform of hosts after setting
-> up a VM. This is essential to enable any platform feature.
-> 
-> 2. The user is allowed to upgrade the platform of hosts gradually. This
-> results in a situation with mixed platforms. The oldest platform is still
-> not older than the platform the VM is set up for. This enables the gradual
-> deployment strategy.
-> 
-> 3. the user is allowed to downgrade the platform of hosts to the version
-> used when setting up the VM. This enables rollbacks in case of regression.
-> 
-> With these expectations, we can ensure migratability by a) enabling platform
-> features available on all hosts when setting up the VM and b) saving the
-> enabled features. This is covered with my
-> -dump-platform/-merge-platform/-use-platform proposal[2].
+This is v4 submission for AWS Nitro Enclave emulation in QEMU. From the QEMU side
+the implementation for nitro enclaves is complete. v3 is at:
+https://mail.gnu.org/archive/html/qemu-devel/2024-08/msg01594.html
 
-I really like [2]. Do you plan to work on it? Does anyone else?
+Changes in v4:
+    - fixed error_setv assertion failed. I could not reproduce this but I think
+this was happening because I did not set Error *err = NULL in x86_load_eif
+    - qemu_cbor.. helpers moved to a separate file now
+    - libcbor version requirement reduced from 0.8.0 to 0.7.0
+    - replaced GChecksum uses with qcrypto apis
+    - timestamp multiplied by 1000 in virtio-nsm
+    - user_data and nonce are now included in attestation even when they are empty
+    - added x509-utils in crypto
+    - added G_CHECKSUM_SHA384 support in hash-glib.c
+    - PCR3 and PCR4 can be set from nitro-enclave machine options. I did not add
+the options for virtio-nsm device though. I think the PCR states are set by
+machines so it made sense to add the options for machine only.
 
-> Regards,
-> Akihiko Odaki
-> 
-> [1]
-> https://lore.kernel.org/r/2b62780c-a6cb-4262-beb5-81d54c14f545@daynix.com
-> [2]
-> https://lore.kernel.org/all/2da4ebcd-2058-49c3-a4ec-8e60536e5cbb@daynix.com/
+Changes in v3:
+    - Support for virtio-nsm device
+    - The EIF related logic has been removed from microvm.c i.e., the logic is
+contained in enclave related code
+    - For vsock emulation in nitro-enclave, now vhost-user-vsock is being used
+instead of vhost-vsock (more details in the cover-letter below)
+    - updated documentation accordingly
+
+Changes in v2:
+    - moved eif.c and eif.h files from hw/i386 to hw/core
+
+Hi,
+
+Hope everyone is doing well. This is a patch series adding AWS Nitro Enclave[1]
+emulation support in QEMU. Alexander Graf is mentoring me on this work. I have
+a gitlab branch where you can view the patches in the gitlab web UI for each commit:
+https://gitlab.com/dorjoy03/qemu/-/tree/nitro-enclave-emulation
+
+AWS nitro enclaves is an Amazon EC2[2] feature that allows creating isolated
+execution environments, called enclaves, from Amazon EC2 instances, which are
+used for processing highly sensitive data. Enclaves have no persistent storage
+and no external networking. The enclave VMs are based on Firecracker microvm
+and have a vhost-vsock device for communication with the parent EC2 instance
+that spawned it and a Nitro Secure Module (NSM) device for cryptographic
+attestation. The parent instance VM always has CID 3 while the enclave VM gets
+a dynamic CID. The enclave VMs can communicate with the parent instance over
+various ports to CID 3, for example, the init process inside an enclave sends a
+heartbeat to port 9000 upon boot, expecting a heartbeat reply, letting the
+parent instance know that the enclave VM has successfully booted.
+
+From inside an EC2 instance, nitro-cli[3] is used to spawn an enclave VM using
+an EIF (Enclave Image Format)[4] file. EIF files can be built using nitro-cli
+as well. The EIF specification can be found in the README of the github
+aws-nitro-enclaves-image-format repository[4]. An EIF file contains the kernel,
+cmdline and ramdisk(s) in different sections which are used to boot the enclave
+VM.
+
+Adding nitro enclave emulation support in QEMU will make the life of AWS Nitro
+Enclave users easier as they will be able to test their EIF images locally
+without having to run real nitro enclaves which can be difficult for debugging
+due to its roots in security. This will also make quick prototyping easier.
+
+In QEMU, the new nitro-enclave machine type is implemented based on the microvm
+machine type similar to how AWS Nitro Enclaves are based on Firecracker microvm.
+
+The vsock emulation support is added using vhost-user-vsock device. This is
+needed as nitro VMs always talk to parent VM (CID 3) but there is no support for
+sibling VM communication in vhost-vsock. So to run nitro-enclave, a process that
+does vsock emulation in user-space like vhost-device-vsock[5] from rust-vmm must
+be run. I am working on adding proxying using vsock (right now it uses unix
+domain socket) to the host machine in vhost-device-vsock which I have already
+posted a PR[6] in rust-vmm repo. This will allow users to run the necessary parent
+VM applications in the host machine instead of a separate VM with CID 3.
+
+A new device virtio-nsm support has been added to QEMU. This device is built-into
+the nitro-enclave VM. The virtio-nsm spec can be found here[7].
+
+For local testing you need to generate a hello.eif image by first building
+nitro-cli locally[8]. Then you can use nitro-cli to build a hello.eif image[9].
+More details about testing can be found in the docs/system/i386/nitro-enclave.rst
+file.
+
+Thanks.
+
+Regards,
+Dorjoy
+
+[1] https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave.html
+[2] https://aws.amazon.com/ec2/
+[3] https://docs.aws.amazon.com/enclaves/latest/user/getting-started.html
+[4] https://github.com/aws/aws-nitro-enclaves-image-format?tab=readme-ov-file#enclave-image-file-eif-specification
+[5] https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock
+[6] https://github.com/rust-vmm/vhost-device/pull/706
+[7] https://lists.oasis-open.org/archives/virtio-comment/202310/msg00387.html
+[8] https://github.com/aws/aws-nitro-enclaves-cli/blob/main/docs/ubuntu_20.04_how_to_install_nitro_cli_from_github_sources.md
+[9] https://github.com/aws/aws-nitro-enclaves-cli/blob/main/examples/x86_64/hello/README.md
+
+Dorjoy Chowdhury (6):
+  machine/nitro-enclave: New machine type for AWS Nitro Enclaves
+  machine/nitro-enclave: Add vhost-user-vsock device
+  device/virtio-nsm: Support for Nitro Secure Module device
+  machine/nitro-enclave: Add built-in Nitro Secure Module device
+  crypto: Support SHA384 hash when using glib
+  docs/nitro-enclave: Documentation for nitro-enclave machine type
+
+ MAINTAINERS                              |   19 +
+ backends/hostmem-memfd.c                 |    2 -
+ configs/devices/i386-softmmu/default.mak |    1 +
+ crypto/hash-glib.c                       |    2 +-
+ crypto/meson.build                       |    2 +-
+ crypto/x509-utils.c                      |   73 +
+ docs/system/i386/nitro-enclave.rst       |   82 ++
+ hw/core/eif.c                            |  707 ++++++++++
+ hw/core/eif.h                            |   22 +
+ hw/core/machine.c                        |   71 +-
+ hw/core/meson.build                      |    3 +
+ hw/i386/Kconfig                          |    6 +
+ hw/i386/meson.build                      |    1 +
+ hw/i386/microvm.c                        |    6 +-
+ hw/i386/nitro_enclave.c                  |  355 +++++
+ hw/virtio/Kconfig                        |    5 +
+ hw/virtio/cbor-helpers.c                 |  292 ++++
+ hw/virtio/meson.build                    |    4 +
+ hw/virtio/virtio-nsm-pci.c               |   73 +
+ hw/virtio/virtio-nsm.c                   | 1648 ++++++++++++++++++++++
+ include/crypto/x509-utils.h              |   22 +
+ include/hw/boards.h                      |    2 +
+ include/hw/i386/microvm.h                |    2 +
+ include/hw/i386/nitro_enclave.h          |   63 +
+ include/hw/virtio/cbor-helpers.h         |   43 +
+ include/hw/virtio/virtio-nsm.h           |   59 +
+ include/sysemu/hostmem.h                 |    2 +
+ 27 files changed, 3529 insertions(+), 38 deletions(-)
+ create mode 100644 crypto/x509-utils.c
+ create mode 100644 docs/system/i386/nitro-enclave.rst
+ create mode 100644 hw/core/eif.c
+ create mode 100644 hw/core/eif.h
+ create mode 100644 hw/i386/nitro_enclave.c
+ create mode 100644 hw/virtio/cbor-helpers.c
+ create mode 100644 hw/virtio/virtio-nsm-pci.c
+ create mode 100644 hw/virtio/virtio-nsm.c
+ create mode 100644 include/crypto/x509-utils.h
+ create mode 100644 include/hw/i386/nitro_enclave.h
+ create mode 100644 include/hw/virtio/cbor-helpers.h
+ create mode 100644 include/hw/virtio/virtio-nsm.h
+
+-- 
+2.39.2
 
 
