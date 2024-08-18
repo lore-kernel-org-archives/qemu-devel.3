@@ -4,78 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C86CC52D7C
-	for <qemu-devel@archiver.kernel.org>; Sun, 18 Aug 2024 11:52:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52EECC52D7C
+	for <qemu-devel@archiver.kernel.org>; Sun, 18 Aug 2024 16:59:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sfeRb-0001fy-8E; Sun, 18 Aug 2024 07:51:35 -0400
+	id 1sfjE8-0002Mk-9J; Sun, 18 Aug 2024 12:58:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sfeRW-0001f6-6t
- for qemu-devel@nongnu.org; Sun, 18 Aug 2024 07:51:30 -0400
-Received: from mail-vk1-xa2c.google.com ([2607:f8b0:4864:20::a2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sfeRT-0002UZ-Bl
- for qemu-devel@nongnu.org; Sun, 18 Aug 2024 07:51:29 -0400
-Received: by mail-vk1-xa2c.google.com with SMTP id
- 71dfb90a1353d-4f6b67d9608so1278515e0c.2
- for <qemu-devel@nongnu.org>; Sun, 18 Aug 2024 04:51:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1723981886; x=1724586686; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=AR9tSyrBESGhFcbSvwbRNxfkXu0DF+aO60UM50Pu3n4=;
- b=WMoehorPfqV4+oxuBZtL3msiL9y4EQqIlPKC0O43qf2rnaf8umjcepq+WRsf+AWf0i
- bppCrsbIxuWpO4VIVapz3ugnxXMdyoohRy4u7bweixKUnvncDiPQYUXeg55vkDmeCZru
- XbA4fS3C1rlSr7KT4GdrxLcaE+E+3YS7arxVawXmAJW2BLKTSiTNGASIy+uY0dtzfWmQ
- kdnVl1Dmf/b7AIoojseRxNZn2EvgC8bMP3pyPuPYMszYumvhaQE/AslYoD/3KRStA4U4
- gGI6GPN1kR/70Iqias+5oOvxpIN1AFBo3sI5qA0Xy2/Uj0jdO+nsNRsKyiYe8KXJSZla
- UHUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1723981886; x=1724586686;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AR9tSyrBESGhFcbSvwbRNxfkXu0DF+aO60UM50Pu3n4=;
- b=MfgWE7L9MTrWMX5+BQYN2qwA5DI5jsY1Yx/GaPAUBCT3vvlAE9F5zZMnsnl2Xam+Ir
- kySz9SArD1NXefGBCmLcecV0kY+FnpZg3VAhyM0f5L3iTjfpW43JMraZnmZD012sdk+s
- ZnKJv6DLZhdbGnakHHkJ3BrYSOmmRN95fZfj9qQokWFINN3CixcooYJOF4n7sW8yvZcz
- yJRgo8DKdCBfPwbfmzkMwVKs1xPxjA1wv9V5jPQaiqAPdvDj14QKtPU86f1Ca1Bur1LC
- gbbgLOWC/Db9xuB2v7W/+/0i4+m85NWEvpSMOeA1t5H2sSr34lSinHfFjc10VOQSJ8Vi
- SYcQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXPAjVbSq/dQpVL6vxthyv1g9PUNx/Z/8bgo9PMlD43lNiPKTD5JkKAL4bGYj1m9bGmdsaod6oOibv0lxvJvKTuEXf+pWw=
-X-Gm-Message-State: AOJu0Yx+/3bg0mh7I481RrYZiENy2irHr7RXtyr2UFsHb+1eH1Q7aKyP
- n5v8lcHqpMBdIvbCippxR1PBv6yGl3y3ihG39w1r/k8i3lsi5rsSIgTl/R4QCCvPmr2/Dw1l1/e
- 8jK9xDH8y+3QBQD01uGWAbCX3CdQ=
-X-Google-Smtp-Source: AGHT+IG6+RTPhb4h7Av46E0+CP/ev7FBWxmx6zFUk4/GzKgxXOoCOwyDB6CzFxUqr69DpKmwqaJIcqTVrRNq+dOr7lk=
-X-Received: by 2002:a05:6122:3189:b0:4f5:cd00:e492 with SMTP id
- 71dfb90a1353d-4fc6c981e94mr9237445e0c.7.1723981886016; Sun, 18 Aug 2024
- 04:51:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1sfjE5-0002Io-O5; Sun, 18 Aug 2024 12:57:57 -0400
+Received: from fout1-smtp.messagingengine.com ([103.168.172.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1sfjE1-0008Cq-Vm; Sun, 18 Aug 2024 12:57:57 -0400
+Received: from phl-compute-07.internal (phl-compute-07.nyi.internal
+ [10.202.2.47])
+ by mailfout.nyi.internal (Postfix) with ESMTP id 2F1EA1387C78;
+ Sun, 18 Aug 2024 12:57:49 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-07.internal (MEProxy); Sun, 18 Aug 2024 12:57:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm2; t=1724000269; x=
+ 1724086669; bh=nVI5Q4w3LV17iiMT45eu4VsYFX2LwvI8HpclUJBOQa4=; b=k
+ td/V2mYGwfwo6AIxReyA5BZ7WCxCdEdN9nkOZtX5JPnHSnMpw0v4OxvqxWLGQmrC
+ YHuxRqvHRcAqR1sc1z1aH01Tg32sOeKaFCEHsZQ0aBhQeAlwrRd6a6w+QvH+lG5W
+ X19bbnCdUDj32IoXi97YqtjGRHCsvxXyFpr3DObJ1lf52kJpo2gmDAxyNpomAEnA
+ m5faKR79ylecWja1MN/h0yfOiX2CAjjg6/Qrk55fdeplkD4OJ+qyu+TrI89jvpdm
+ LFzJv1je3xR1PlUh4JGdQdO4I4GR2kGR2F0pT6UQKx0TZfiCZROe9BhH7bK/WA3g
+ hRgMjPX3fPCiftFInMZLg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+ fm3; t=1724000269; x=1724086669; bh=nVI5Q4w3LV17iiMT45eu4VsYFX2L
+ wvI8HpclUJBOQa4=; b=GjgWLf3WdFsGrzQ8vUhbblXOvwt/I6JDvGP3HbN3B4Jc
+ xn4M0Nm++7cMLOjbqHMVayo9FAFlznstRIDpkvV3B+e1Fuweg3QWDlJu7g5IveLJ
+ ZNP7UyNXGOCH7vN/naIqkXXCJUxXiZCPVPB8ghXs8hiitpdRg83AGdtlljNPh9Tp
+ 0iHJbtA4gZ2mykw4I84eRVkkJPxHQNoQn552tivQ373mGZwny69Q983W6R7P/luJ
+ U//ZSHUUluLwdam4lAh5bG9MwI3yTkLyw+syUcN7R/xIhOIF4sxM/8EeyPNdbRym
+ 1XwQLmHm7dKGSW+L0KCJ7m1S0GWM9T2uBgNg3EbO4g==
+X-ME-Sender: <xms:CyjCZgDhT1E8OaaeBV-54bzAwCnpPcRKTKeWwFy8Bw61izVqxfnjmg>
+ <xme:CyjCZijpHheEkuUErBc2PkD2mC0ZRvWsdBgsjyRuIy7-YVbnM4czfJAKIC1iqPO06
+ WK4wJE8AjwvVZiM6B4>
+X-ME-Received: <xmr:CyjCZjmO4zVBj50wqVdG0rikSWRckKlxVsvkU-VBeO9jVcv3d__BB55Dyg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeftddrudduvddguddtjecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+ uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+ evuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghushculfgvnhhsvghn
+ uceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvghrnhepjefgje
+ efffdvuefhieefhffggfeuleehudekveejvedtuddugeeigeetffffjeevnecuvehluhhs
+ thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepihhtshesihhrrhgvlh
+ gvvhgrnhhtrdgukhdpnhgspghrtghpthhtohepudeipdhmohguvgepshhmthhpohhuthdp
+ rhgtphhtthhopehluhgthhgrnhhgqhhirdduvdefsegshihtvggurghntggvrdgtohhmpd
+ hrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtohhmpdhrtghpthhtohep
+ qhgvmhhuqdgslhhotghksehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdqug
+ gvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepkhifohhlfhesrhgvughhrght
+ rdgtohhmpdhrtghpthhtohephhhrvghithiisehrvgguhhgrthdrtghomhdprhgtphhtth
+ hopehsthgvfhgrnhhhrgesrhgvughhrghtrdgtohhmpdhrtghpthhtohepfhgrmhesvghu
+ phhhohhnrdhnvghtpdhrtghpthhtoheprhhonhhnihgvshgrhhhlsggvrhhgsehgmhgrih
+ hlrdgtohhm
+X-ME-Proxy: <xmx:CyjCZmwwGjOtKKQ2sIhTPJASfQS8SOZRITzYa4b37VrIQD09zUn5LA>
+ <xmx:CyjCZlRqe9ELxwSdxGK8F4A0hjK6sDS0Ufhf8JB7mZvwPKEv1fFfOQ>
+ <xmx:CyjCZhZaanEOo8OCexgk4_0q_LVhn-preSjRQl1kKnHs5bf5bmqqew>
+ <xmx:CyjCZuSwHWoegXEChNazWiYA1zNTA6_9pvF2kRj3IbW2E5KXuqWeUg>
+ <xmx:DSjCZmBg6kNlbSlN7No2U8wfwLty2uSKZ250f-ZrTTjE2OjbknTRpCY9>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 18 Aug 2024 12:57:46 -0400 (EDT)
+Date: Sun, 18 Aug 2024 18:57:40 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: =?utf-8?B?5Y2i6ZW/5aWH?= <luchangqi.123@bytedance.com>
+Cc: Klaus Jensen <k.jensen@samsung.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
+ stefanha@redhat.com, fam@euphon.net, ronniesahlberg@gmail.com,
+ pbonzini@redhat.com, pl@dlhnet.de, kbusch@kernel.org,
+ foss@defmacro.it, philmd@linaro.org, pizhenwei@bytedance.com
+Subject: Re: Ping: Re: [PATCH v9 09/10] hw/nvme: add reservation protocal
+ command
+Message-ID: <ZsIoBLfd40_QL9zk@cormorant.local>
+References: <20240712023650.45626-1-luchangqi.123@bytedance.com>
+ <20240712023650.45626-10-luchangqi.123@bytedance.com>
+ <ZpT1ZnOjx48_6q0j@cormorant.local>
+ <58383d65-83df-4527-81e4-b4d12c409b22@bytedance.com>
+ <CAO5cSZDc9_o4=VZRDFA-CXAkF12r=v95zhNQ0gBM0NHExgkbMw@mail.gmail.com>
+ <ZqNBSGmVTg-xkTs3@cormorant.local>
+ <3a799eb6-3350-4b35-8e75-68d9020443cb@bytedance.com>
+ <CAO5cSZDgv0V=bJx2Bj6p-Bx+1_2E4QcMrq2fSSdgoU_BtPLkrg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20240810164502.19693-1-dorjoychy111@gmail.com>
-In-Reply-To: <20240810164502.19693-1-dorjoychy111@gmail.com>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Sun, 18 Aug 2024 17:51:19 +0600
-Message-ID: <CAFfO_h7+z9ByNykXNSs=dj+EcP1a+DtU8DG5VopcWq0DChTBMg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] AWS Nitro Enclave emulation support
-To: graf@amazon.com, berrange@redhat.com
-Cc: agraf@csgraf.de, stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com, 
- richard.henderson@linaro.org, eduardo@habkost.net, qemu-devel@nongnu.org, 
- mst@redhat.com, marcel.apfelbaum@gmail.com, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2c;
- envelope-from=dorjoychy111@gmail.com; helo=mail-vk1-xa2c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="6lcfkY/0Ax9DF0cx"
+Content-Disposition: inline
+In-Reply-To: <CAO5cSZDgv0V=bJx2Bj6p-Bx+1_2E4QcMrq2fSSdgoU_BtPLkrg@mail.gmail.com>
+Received-SPF: pass client-ip=103.168.172.144; envelope-from=its@irrelevant.dk;
+ helo=fout1-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,9 +123,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for the reviews. I have now posted a v4 at:
-https://mail.gnu.org/archive/html/qemu-devel/2024-08/msg02675.html
 
-Regards,
-Dorjoy
+--6lcfkY/0Ax9DF0cx
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Aug  6 04:56, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
+> Hi;
+>=20
+> Klaus, Does the test method in the above email work properly?
+>=20
+
+I assume it will; I was on conference and was catching up all of last
+week.
+
+I'll take action on this this week.
+
+> On 2024/7/26 17:53, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
+> > Hi;
+> >
+> > You can test it in spdk.
+> > First start spdk and execute the following command.
+> >
+> > ```
+> > dd if=3D/dev/zero of=3Dtest.img bs=3D1G count=3D10
+> > RPC=3D/root/source/spdk/spdk/scripts/rpc.py
+> > FILE=3D/root/test.img
+> >
+> > $RPC bdev_aio_create $FILE aio0 512
+> > $RPC iscsi_create_portal_group 1 127.0.0.1:3260
+> > $RPC iscsi_create_initiator_group 2 ANY ANY
+> > $RPC iscsi_create_target_node target0 target0_alias aio0:0 1:2 64 -d
+> > ```
+> >
+> > Then start qemu and mount an nvme disk.
+> > Execute the following test command.
+> > ```
+> > #reporter
+> > nvme resv-report /dev/nvme0n1
+> > #register
+> > nvme resv-register /dev/nvme0n1 --nrkey 3 --rrega 0
+> > #unregister
+> > nvme resv-register /dev/nvme0n1 --crkey 3 --rrega 1
+> > # register replace
+> > nvme resv-register /dev/nvme0n1 --crkey 3 --nrkey 5 --rrega 2
+> > #release
+> > nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 0
+> > #clear
+> > nvme resv-release /dev/nvme0n1 --crkey 5 --rtype 1 --rrela 1
+> > #reserve
+> > nvme resv-acquire /dev/nvme0n1 --crkey 3 --rtype 1 --racqa 0
+> > #premmpt
+> > nvme resv-acquire /dev/nvme0n1 --crkey 6 --prkey 3 --rtype 1 --racqa 1
+> > ```
+> >
+> >
+> >
+> > On 2024/7/26 14:25, Klaus Jensen wrote:
+> >> On Jul 25 19:42, =E5=8D=A2=E9=95=BF=E5=A5=87 wrote:
+> >>> Hi,
+> >>>
+> >>> ```
+> >>> 2685 nvme_status->regctl_ds[i].cntlid =3D nvme_ctrl(req)->cntlid;
+> >>> 2686 nvme_status->regctl_ds[i].rkey =3D keys_info->keys[i];
+> >>> 2687 nvme_status->regctl_ds[i].rcsts =3D keys_info->keys[i] =3D=3D
+> >>> 2688 reservation->key ? 1 : 0;
+> >>> 2689 /* hostid is not supported currently */
+> >>> 2670 memset(&nvme_status->regctl_ds[i].hostid, 0, 8);
+> >>> ```
+> >>>
+> >>> Klaus, I think hostid(2685) is stored locally like cntlid, i
+> >>> can get cntlid by nvme_ctrl(req)->cntlid, but I can't
+> >>> find a good way to get the host ID(2670). So I add a comment
+> >>> "/* hostid is not supported currently */". Could you give me
+> >>> some advices?
+> >>>
+> >>
+> >> The Host Identifier is just a 64 or 128 bit value that the host can set
+> >> with Set Feature. So, it is fine (and normal) that the value is
+> >> initially zero, but the host should be able to set it on controllers
+> >> with Set Feature to indicate if a controller belongs to the same host =
+or
+> >> not.
+> >>
+> >>> And using spdk as target will not fail, but it will show 0 at hostid
+> >>> at present.
+> >>
+> >> Host Identifier 0 is a valid value when used with reservations; 0
+> >> indicates that the host associated with the controller is not associat=
+ed
+> >> with any other controllers in the subsystem. So if two controllers have
+> >> Host Identifier set to 0, that implicitly mean they are associated with
+> >> two different hosts.
+> >>
+> >>> The relevant tests in qemu are as follows=EF=BC=8C
+> >>>
+> >>> ```
+> >>> root@node1:~# nvme resv-report /dev/nvme0n1
+> >>> NVME Reservation Report success
+> >>>
+> >>> NVME Reservation status:
+> >>>
+> >>> gen : 1
+> >>> regctl : 1
+> >>> rtype : 0
+> >>> ptpls : 0
+> >>> regctl[0] :
+> >>> cntlid : 0
+> >>> rcsts : 0
+> >>> hostid : 0
+> >>> rkey : 6
+> >>> ```
+> >>
+> >> I was hoping for an example on how to setup some simple iscsi stuff so=
+ I
+> >> could test the feature.
+
+--=20
+One of us - No more doubt, silence or taboo about mental illness.
+
+--6lcfkY/0Ax9DF0cx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmbCKAMACgkQTeGvMW1P
+DeluuQf/cdrJqTZXqaYLooRoBJsjLY586LxcQ3ISzI6NNJgZ4jhZ5sm0HrierKff
+d5XUGiIJWnvG+ywOEuIxIvciZcsp3gzT+hrhT3rDnTu7+Sb2DKweAfSyUwE9MPsA
+XPlUBo39W1K9MIg2RpfxIfWUM/OUcxjs6fhYcKs7mYj5FOqyoBmnP5IJVTxnddSA
+RAeWJUCIphjjX5/X9Nm0FFZP7HCha5Uwj18cOJCUo6wq/vyHpau4y9Q/bAFW0l1T
+FEmrZftwLKlxfsYKpKGucXAIJjh1AAGuIX517r9M/83sMkRZiOwneHvLxv85S3o0
+jxzAMhrgi/japIH5jPweWfxmJUEuFg==
+=rpFI
+-----END PGP SIGNATURE-----
+
+--6lcfkY/0Ax9DF0cx--
 
