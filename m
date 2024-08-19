@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58169C52D7C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0290C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:54:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgBG3-0006OM-2R; Mon, 19 Aug 2024 18:53:51 -0400
+	id 1sgBEz-00022x-EN; Mon, 19 Aug 2024 18:52:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEP-0000pO-Oh
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:14 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEF-0000em-FD
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:01 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEN-0000jf-0s
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:09 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4281faefea9so37930355e9.2
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:52:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBED-0000im-RW
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:51:59 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-429e29933aaso36681315e9.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:51:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724107925; x=1724712725; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724107916; x=1724712716; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EWWwpfQxRAAbj0joei2mdKLyEuAn6gjZiKaYfsPccaM=;
- b=At6IbjmEJ25Pv1TJEUlw3Sy/P4BWMFCMeXU3ttOV0T52VUm7GP6Fy/wo2qaK4JXebw
- yyZ6/7cQw7onkWvNdadNnJ8aW/ARtre07vIFR5t7JSnPMRfsG04DY5nN6Hrb2VxgqpIF
- 0PWfYYka5HvZAqn7eBEoz07/aGKCbnFAGFNs46IBN6Dx8A/aC3k8gTEhLTZu2G2GCzhs
- rcZrKmxu4Y78I4zxt2iv12t4+epXL6sygnXdQbPq7c95h8WJlP/yTued/atGtKYKhLT+
- wM5pVaCAzZQ+XAMD3qCksgXyXjp4ajs1wBmU2DST+9oRpPQoH1d47sb6k9ngmdHzmDGW
- oIqQ==
+ bh=r9dq7opeWVZG3BtwY0r0XLR76Nuys55wAqLRnBp/jbM=;
+ b=gfI7ZNmZYRuHprksljSI+Wz5RAIY1tuAU4cLs0RdH79qsOHfdW0ha3ar7div2HX8G1
+ ZQcjFxdg/l5eSh2IMz7pjlm7lzI/28BnXUA8E051Bge6cx1wA/t3fy1AIWakvoZt30D0
+ ni+SzjBsLdZ5VDpneOj57wcz0+4bVQYF8VYcgvcrfzZVKsNBhvMzCwELv3SPTCxIcT3q
+ 43PAVsyJXjfHvYOZ405ZzhLwPoInAPAiVTeaMmvHongxhba9RYxvJ8yuTrTNEwOH8K3b
+ nx1YgNzc7YOrg22Og8/G9MA66nXkmKOBxAcL3uYvYGNw9CKDh5nbcQgB8MEIe3lV/BWg
+ 1I0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724107925; x=1724712725;
+ d=1e100.net; s=20230601; t=1724107916; x=1724712716;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EWWwpfQxRAAbj0joei2mdKLyEuAn6gjZiKaYfsPccaM=;
- b=BlpwPHSjRGxsl09enGX3fYHehma1JGBMYrLRBD6802P/7wi63KcPKI0+T0eZPGEFiW
- o+mmBncQcVYtr6QG3Ne0FOjq1eM9v42mekwjV41LWqb34DfDJJyL270CVYs0Y2YAhPPS
- HRDCLyORFzZFurBpdMWi5xfzDUet/yo9M8h5AYAVGQtaBkIFr2vMTdWS3GHFkLq7hQZY
- JZepPettnvqVJmkk+DX30T1rZBLZg0j9Q1GeYykTuEkEm/BcEpNvsFTTx1m3uC/eyOcE
- 7sPROPt1OT0xv4KEx4nvJxgylyTasSm7VTKks2Cgh92v+Doad/zu91RQqNYOd4/F7Lge
- 6ncw==
-X-Gm-Message-State: AOJu0Yz0BtvCU0ifdzo2kLBMeyTajw/FK3aiTvAm0379CaUWhPcwcJIo
- 7blvELdtX6iO/1NAQRTUak2Ffem5U3DsfRpSpZn4wmytoyKFYaMN+25Nq0seNaKUDy03QsX+mBq
- uiOo=
-X-Google-Smtp-Source: AGHT+IFzDFbCIAxlgQLRx00KeagIgsITOuejAYij0/ID88tPUOz8tw6CuQSnEpwqqL3Y6fyrBoKCuw==
-X-Received: by 2002:a05:600c:30d2:b0:42a:b0a4:8828 with SMTP id
- 5b1f17b1804b1-42ab0a48880mr26857165e9.37.1724107924923; 
- Mon, 19 Aug 2024 15:52:04 -0700 (PDT)
+ bh=r9dq7opeWVZG3BtwY0r0XLR76Nuys55wAqLRnBp/jbM=;
+ b=GCj6ogLiAvWncai7HCJRDQ+fkBV1Cbs7e34XXUzDRrpXVaeMWPgF23+ShlPg6B8s9W
+ acYnbgZOrUoXoufXTvziL9snNTzv7cb7C4RS1nwX6mZRHj6Z1PjJH4wlWWcUA4J3txhh
+ EJBnDj5q1Nxyqqo/bpcobOhGvNZ4a4CqLBMLUxj6+VIeNvCD9Xq6pfTrcR7ud2e9f87Z
+ d5tH6w5VA6Y4QCADqwnq25B3YpwPsJuKN9bOUH+OziESalnVVCXlnalxR3t7z5uFQ502
+ K/pmoMk5VYL7be2TXxpBB1xdnveUcjfRVPsyWNkBc1q1gNe32xMbQItfjLg22jVPIaL/
+ +tvg==
+X-Gm-Message-State: AOJu0YyV27fAhQYHfT88KKfrku8Y/3Bxmu2WR7VhtbVUiALSzbRJC/+T
+ Pszklr1a3Dqzw6S2zQKfpWZbChSHfs5wTkS/XUqPrKRPqU0pQ/jZEnlfcgb3tX9a6sIu9J7Gqzh
+ Q4AY=
+X-Google-Smtp-Source: AGHT+IH3avEpLYouBO8BKbwI8iTPf+GWGZA41+Mzx3b0n30Arpea26YUrQ7BRhLJ0NgNpMs0cGe5kA==
+X-Received: by 2002:a05:600c:310f:b0:426:5b21:97fa with SMTP id
+ 5b1f17b1804b1-429ed7e432cmr101753805e9.29.1724107915886; 
+ Mon, 19 Aug 2024 15:51:55 -0700 (PDT)
 Received: from localhost.localdomain (88-178-97-237.subs.proxad.net.
  [88.178.97.237]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ded180dcsm176905445e9.4.2024.08.19.15.52.04
+ 5b1f17b1804b1-429ded1813dsm181831585e9.7.2024.08.19.15.51.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Aug 2024 15:52:04 -0700 (PDT)
+ Mon, 19 Aug 2024 15:51:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Johnathan=20H=E1=BB=AFu=20Tr=C3=AD?= <nhtri2003@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 10/20] linux-user/mips: Select Octeon68XX CPU for Octeon
- binaries
-Date: Tue, 20 Aug 2024 00:51:06 +0200
-Message-ID: <20240819225116.17928-11-philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 08/20] hw/remote/message.c: Don't directly invoke
+ DeviceClass:reset
+Date: Tue, 20 Aug 2024 00:51:04 +0200
+Message-ID: <20240819225116.17928-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240819225116.17928-1-philmd@linaro.org>
 References: <20240819225116.17928-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,38 +96,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Octeon68XX CPU is available since commit 9a6046a655
-("target/mips: introduce Cavium Octeon CPU model").
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1722
-Reported-by: Johnathan Hữu Trí <nhtri2003@gmail.com>
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Directly invoking the DeviceClass::reset method is a bad idea,
+because if the device is using three-phase reset then it relies on
+transitional reset machinery which is likely to disappear at some
+point.
+
+Reset the device in the standard way, by calling device_cold_reset().
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20240814133928.6746-3-philmd@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240813165250.2717650-7-peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- linux-user/mips64/target_elf.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/remote/message.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/linux-user/mips64/target_elf.h b/linux-user/mips64/target_elf.h
-index ec55d8542a..ce6fb6541e 100644
---- a/linux-user/mips64/target_elf.h
-+++ b/linux-user/mips64/target_elf.h
-@@ -9,6 +9,14 @@
- #define MIPS64_TARGET_ELF_H
- static inline const char *cpu_get_model(uint32_t eflags)
+diff --git a/hw/remote/message.c b/hw/remote/message.c
+index 50f6bf2d49..38ae6c75b4 100644
+--- a/hw/remote/message.c
++++ b/hw/remote/message.c
+@@ -215,13 +215,10 @@ fail:
+ static void process_device_reset_msg(QIOChannel *ioc, PCIDevice *dev,
+                                      Error **errp)
  {
-+    switch (eflags & EF_MIPS_MACH) {
-+    case EF_MIPS_MACH_OCTEON:
-+    case EF_MIPS_MACH_OCTEON2:
-+    case EF_MIPS_MACH_OCTEON3:
-+        return "Octeon68XX";
-+    default:
-+        break;
-+    }
-     if ((eflags & EF_MIPS_ARCH) == EF_MIPS_ARCH_64R6) {
-         return "I6400";
-     }
+-    DeviceClass *dc = DEVICE_GET_CLASS(dev);
+     DeviceState *s = DEVICE(dev);
+     MPQemuMsg ret = { 0 };
+ 
+-    if (dc->reset) {
+-        dc->reset(s);
+-    }
++    device_cold_reset(s);
+ 
+     ret.cmd = MPQEMU_CMD_RET;
+ 
 -- 
 2.45.2
 
