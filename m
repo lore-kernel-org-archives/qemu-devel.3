@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D604C52D7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 04:27:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14EB8C52D7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 04:27:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sftzP-0002pU-VG; Mon, 19 Aug 2024 00:27:33 -0400
+	id 1sftzZ-0003xY-BZ; Mon, 19 Aug 2024 00:27:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sftvw-0002k2-60
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 00:23:56 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1sftvU-0000ce-1r
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 00:23:28 -0400
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1sftvu-0004ja-1O
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 00:23:55 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-20202df1c2fso17497115ad.1
- for <qemu-devel@nongnu.org>; Sun, 18 Aug 2024 21:23:53 -0700 (PDT)
+ id 1sftvS-0004To-3P
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 00:23:27 -0400
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-70968db52d0so4301028a34.3
+ for <qemu-devel@nongnu.org>; Sun, 18 Aug 2024 21:23:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724041433; x=1724646233; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724041405; x=1724646205; darn=nongnu.org;
  h=content-transfer-encoding:content-language:in-reply-to:mime-version
  :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cOy4FBOY+w4yjrjdybUBQRfN32zP+ViihPCMJnkV6PY=;
- b=u/g2YP6JhuxoL2X6Cd4gj8qXcpbt0lr95Ej55MIJe8q4XKhwSVAgRilifmYw3WBRuo
- xu49NF4OiJ7IHGeBG2QfaRgzQZjVrl8T0NSzw8PyR0obWk45yl71vFCjC+O2ngj4xbFi
- /G48N/NWKLsDHEtj/cNO6VdMExQGoINLgatkgAnU8Rmm0GPVmQKGLDZOznjE1/pJ9qyA
- mkypqy9fRPjlTXwUYf0zDIPWuZpgIy7nKS3br0RMsyZdLhZ97xEqB1XNX4QMNAlHQfeq
- IS5UuqH47jPx2QgfjXszow4+L6ciHu3f7SI/U2hW05TLq7mRGHcyhMhO4dlYhj0C2Lbu
- WyOA==
+ bh=Nuq/AMvAxy3nR8GHaaLSwgI+50j2bTLxILd8fiUV20s=;
+ b=gi17Ec62I0egx1Ke7Fk9d459shHF742geOG1w72Uw3i95Z6wK5FGWRVIUX8CPctyth
+ zhSTvut/0wA1znDr7jLCQ0ejORAQbAiGFZTRgKOarw5IUMQao2PTGv9UagMNcw4GCwZk
+ HbsyjMGQnOzH0GYLI0N2I7S05SBmgXqSqvHlVcgGZd1/PzM48Vu4/Eq+cBz66L5YQyOa
+ /9fSIrfyymH5iEeLCR9Cw3zbjkN+7bbbb7xXp0sLMR3s7MOwZz3MA3qnMhHqeHIiiwmE
+ 59gHA2yNGqgeB+r7+h3qed+crHUm0Q3Lv0K7YpA6uzSj/6pIYmemLjmj8sBqqh7ZhG7a
+ aPMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724041433; x=1724646233;
+ d=1e100.net; s=20230601; t=1724041405; x=1724646205;
  h=content-transfer-encoding:content-language:in-reply-to:mime-version
  :user-agent:date:message-id:from:references:cc:to:subject
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=cOy4FBOY+w4yjrjdybUBQRfN32zP+ViihPCMJnkV6PY=;
- b=bLoU3w8Lla0Ry7YajmaM9h/zFbA7vr6gmwyuPwhz/luoAQJZNhuh6xp4gc/iWRCU88
- /5DT+djLw8cLiY3rkYOsN5amOex5pBdC5hGSzAKkBDFf0gna8KTGDa7aHiOtnzGCkFHo
- RSq9ZZNILLjO4rSI0YUGRdgOY2hFIGSmHJWsLySohf8kEfWDLrwE37M05QtvZezTp45U
- dNeU3hQThaFNwwxIui8kbyrl7NJGZhlsrHX7y2+obDz25WtbjnVlRFS28SRXm7lCW/iJ
- ZVSDRnDZeNF/ZHebO0+CSHZ6AN+ppWKm/R5Y+ofltJ91d2tYehzktmDMaAR6cpAPYT3D
- blHw==
+ bh=Nuq/AMvAxy3nR8GHaaLSwgI+50j2bTLxILd8fiUV20s=;
+ b=tNYqe0VSBN2ZIk+1iWy9EOkAP4f65MYK6GQcGx9tMsBL3zyfQe8qD6DiyU4fN1W0JC
+ Nt/Mscn6lv6gpUJfx+0FFCaEfQSfViSa1aYFekuwgGP2tUy4Hf1LdaedWIz+jzJR8B+1
+ AGeKvA99qRdzjF7Hqrrm6RpbpNcuY572OIjfEKbWfavc50hvoEKQYpUiTR7ItJkraYgJ
+ GbLRk7vJuvZ2Yb9X1kdyW/scBjE4l9amf3pZ5kPJgLF+6uTPJnWC8dbp4rvO73CUbmsX
+ BkL1ll/ks1Ir9YQoMCEu1g3PnDFxKQa8XhYJMZZapwUGhqt6rnKwzLKrGuerpdyy6r9B
+ H02Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXPPBTqImDYjcQ5byKw8GU6Dtf+SmRHszmAFqvd+zIz5d/CMBv2LnvLi56I42iBDG1WZROlkqsahAzd@nongnu.org
-X-Gm-Message-State: AOJu0Yyu7EO1KltN6GP96Tjn/O7xZuLkTX2RtLbm47lnBsknXKNZqj4B
- PEIirey5cLpUjB/fSkPnuBYUPg2MpYCIO2OmgD0ryN6Ep86Gh769wAnGkJUH4uQ=
-X-Google-Smtp-Source: AGHT+IGdybo0m9uhUSM4jzlw9tJnEGCX3c4CZ3yJwXqIyQW+ASxZqta1M7bC6VE9mSY/TIfyXtljPA==
-X-Received: by 2002:a17:903:2309:b0:1fb:2ebc:d16b with SMTP id
- d9443c01a7336-201ee49e74emr208796915ad.7.1724041432643; 
- Sun, 18 Aug 2024 21:23:52 -0700 (PDT)
+ AJvYcCVN0HSq+l0Cb2AhA2EzqcUUU2PsL0/U+hSd6xWD4oFVPZh4q0dzBJoRdn2cFAa1bi0Liy4o7UCFfzvoJO9qN+FHWOYjG2w=
+X-Gm-Message-State: AOJu0Yy28+s7peBb7+VK/PmbF/OpJIDsY5eVjQG07YgVKBAtc13/pTed
+ wVLk/jGCR4ohDSSsjB/bX/Qk3QibuSJzx8De7si8gjuDGlKKVkImqIXKfEG3eJbc7WU1d4cPO/v
+ x
+X-Google-Smtp-Source: AGHT+IGKqEgysF5u4hYd/7tihG+Lxf5WNyMpBS+BiaFMvdCJcUD98ktTYeT/KqMAQi99VL21SOjHUA==
+X-Received: by 2002:a05:6358:938f:b0:1ac:f346:735a with SMTP id
+ e5c5f4694b2df-1b393315b20mr1431440155d.28.1724041404682; 
+ Sun, 18 Aug 2024 21:23:24 -0700 (PDT)
 Received: from [192.168.0.103] ([191.205.40.123])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-201f03b0e0bsm56169755ad.300.2024.08.18.21.23.50
+ 41be03b00d2f7-7c6b61a6cffsm6840103a12.2.2024.08.18.21.23.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 18 Aug 2024 21:23:52 -0700 (PDT)
-Subject: Re: [PATCH 8/8] hw/pci-host/designware: Create ViewPorts during host
- bridge realization
+ Sun, 18 Aug 2024 21:23:24 -0700 (PDT)
+Subject: Re: [PATCH 6/8] hw/pci-host/designware: Move viewports from root func
+ to host bridge
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=c3=a9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Andrey Smirnov <andrew.smirnov@gmail.com>, qemu-arm@nongnu.org,
  Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?Q?Alex_Benn=c3=a9e?= <alex.bennee@linaro.org>
 References: <20231012121857.31873-1-philmd@linaro.org>
- <20231012121857.31873-9-philmd@linaro.org>
+ <20231012121857.31873-7-philmd@linaro.org>
 From: Gustavo Romero <gustavo.romero@linaro.org>
-Message-ID: <9ce96a75-ad19-2d3e-50a3-640aae63dc4e@linaro.org>
-Date: Mon, 19 Aug 2024 01:23:49 -0300
+Message-ID: <bd4f9669-cf91-3fe1-cc3c-bbc529aa4ce3@linaro.org>
+Date: Mon, 19 Aug 2024 01:23:21 -0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.6.0
 MIME-Version: 1.0
-In-Reply-To: <20231012121857.31873-9-philmd@linaro.org>
+In-Reply-To: <20231012121857.31873-7-philmd@linaro.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-ot1-x334.google.com
 X-Spam_score_int: -36
 X-Spam_score: -3.7
 X-Spam_bar: ---
@@ -106,18 +107,20 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Hi Phil,
 
 On 10/12/23 9:18 AM, Philippe Mathieu-Daudé wrote:
-> ViewPorts are managed by the host bridge part, so create them
-> when the host bridge is realized. The host bridge become the
-
-nit: becomes
-
-
-> owner of the memory regions.
+> As mentioned in previous commit, the PCI root function is
+> irrelevant for the ViewPorts. Move the fields to the host
+> bridge state.
 > 
-> The PCI root function realize() method now only contains PCI
-> specific code.
+> This is a migration compatibility break for the machines
+> using the i.MX7 SoC (currently the mcimx7d-sabre machine).
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+I also see the ATU Viewport registers closer to the host
+bridge, so from a modeling perspective I think that makes
+sense, even if it's hard to tell that for sure when looking
+at the DW IP core docs (but of course QEMU model doesn't
+have to mimic any verilog code etc).
 
 Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
 
@@ -125,260 +128,173 @@ Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
 Cheers,
 Gustavo
 
+
 > ---
->   hw/pci-host/designware.c | 207 +++++++++++++++++++--------------------
->   1 file changed, 102 insertions(+), 105 deletions(-)
+>   include/hw/pci-host/designware.h | 13 ++++-----
+>   hw/pci-host/designware.c         | 47 ++++++++++++++++----------------
+>   2 files changed, 30 insertions(+), 30 deletions(-)
 > 
+> diff --git a/include/hw/pci-host/designware.h b/include/hw/pci-host/designware.h
+> index e1952ad324..702777ab17 100644
+> --- a/include/hw/pci-host/designware.h
+> +++ b/include/hw/pci-host/designware.h
+> @@ -63,13 +63,6 @@ typedef struct DesignwarePCIEMSI {
+>   struct DesignwarePCIERoot {
+>       PCIBridge parent_obj;
+>   
+> -    uint32_t atu_viewport;
+> -
+> -#define DESIGNWARE_PCIE_VIEWPORT_OUTBOUND    0
+> -#define DESIGNWARE_PCIE_VIEWPORT_INBOUND     1
+> -#define DESIGNWARE_PCIE_NUM_VIEWPORTS        4
+> -
+> -    DesignwarePCIEViewport viewports[2][DESIGNWARE_PCIE_NUM_VIEWPORTS];
+>       DesignwarePCIEMSI msi;
+>       DesignwarePCIEHost *host;
+>   };
+> @@ -79,6 +72,12 @@ struct DesignwarePCIEHost {
+>   
+>       DesignwarePCIERoot root;
+>   
+> +    uint32_t atu_viewport;
+> +#define DESIGNWARE_PCIE_VIEWPORT_OUTBOUND    0
+> +#define DESIGNWARE_PCIE_VIEWPORT_INBOUND     1
+> +#define DESIGNWARE_PCIE_NUM_VIEWPORTS        4
+> +    DesignwarePCIEViewport viewports[2][DESIGNWARE_PCIE_NUM_VIEWPORTS];
+> +
+>       struct {
+>           AddressSpace address_space;
+>           MemoryRegion address_space_root;
 > diff --git a/hw/pci-host/designware.c b/hw/pci-host/designware.c
-> index 6cb8655a75..e5dc9b4b8d 100644
+> index d12a36b628..2ef17137e2 100644
 > --- a/hw/pci-host/designware.c
 > +++ b/hw/pci-host/designware.c
-> @@ -384,22 +384,10 @@ static char *designware_pcie_viewport_name(const char *direction,
->   static void designware_pcie_root_realize(PCIDevice *dev, Error **errp)
+> @@ -109,20 +109,21 @@ static void designware_pcie_root_update_msi_mapping(DesignwarePCIERoot *root)
+>   }
+>   
+>   static DesignwarePCIEViewport *
+> -designware_pcie_root_get_current_viewport(DesignwarePCIERoot *root)
+> +designware_pcie_host_get_current_viewport(DesignwarePCIEHost *host)
 >   {
->       DesignwarePCIERoot *root = DESIGNWARE_PCIE_ROOT(dev);
-> -    DesignwarePCIEHost *host = DESIGNWARE_PCIE_HOST(
-> -                                    qdev_get_parent_bus(DEVICE(dev))->parent);
-> -    MemoryRegion *host_mem = get_system_memory();
-> -    MemoryRegion *address_space = &host->pci.memory;
->       PCIBridge *br = PCI_BRIDGE(dev);
-> -    DesignwarePCIEViewport *viewport;
-> -    /*
-> -     * Dummy values used for initial configuration of MemoryRegions
-> -     * that belong to a given viewport
-> -     */
-> -    const hwaddr dummy_offset = 0;
-> -    const uint64_t dummy_size = 4;
-> -    size_t i;
->   
->       br->bus_name  = "dw-pcie";
-> -    root->host = host;
-> +    root->host = DESIGNWARE_PCIE_HOST(qdev_get_parent_bus(DEVICE(dev))->parent);
->   
->       pci_set_word(dev->config + PCI_COMMAND,
->                    PCI_COMMAND_MEMORY | PCI_COMMAND_MASTER);
-> @@ -414,97 +402,6 @@ static void designware_pcie_root_realize(PCIDevice *dev, Error **errp)
->   
->       msi_nonbroken = true;
->       msi_init(dev, 0x50, 32, true, true, &error_fatal);
-> -
-> -    for (i = 0; i < DESIGNWARE_PCIE_NUM_VIEWPORTS; i++) {
-> -        MemoryRegion *source, *destination, *mem;
-> -        const char *direction;
-> -        char *name;
-> -
-> -        viewport = &host->viewports[DESIGNWARE_PCIE_VIEWPORT_INBOUND][i];
-> -        viewport->inbound = true;
-> -        viewport->base    = 0x0000000000000000ULL;
-> -        viewport->target  = 0x0000000000000000ULL;
-> -        viewport->limit   = UINT32_MAX;
-> -        viewport->cr[0]   = DESIGNWARE_PCIE_ATU_TYPE_MEM;
-> -
-> -        source      = &host->pci.address_space_root;
-> -        destination = host_mem;
-> -        direction   = "Inbound";
-> -
-> -        /*
-> -         * Configure MemoryRegion implementing PCI -> CPU memory
-> -         * access
-> -         */
-> -        mem  = &viewport->mem;
-> -        name = designware_pcie_viewport_name(direction, i, "MEM");
-> -        memory_region_init_alias(mem, OBJECT(root), name, destination,
-> -                                 dummy_offset, dummy_size);
-> -        memory_region_add_subregion_overlap(source, dummy_offset, mem, -1);
-> -        memory_region_set_enabled(mem, false);
-> -        g_free(name);
-> -
-> -        viewport = &host->viewports[DESIGNWARE_PCIE_VIEWPORT_OUTBOUND][i];
-> -        viewport->host    = host;
-> -        viewport->inbound = false;
-> -        viewport->base    = 0x0000000000000000ULL;
-> -        viewport->target  = 0x0000000000000000ULL;
-> -        viewport->limit   = UINT32_MAX;
-> -        viewport->cr[0]   = DESIGNWARE_PCIE_ATU_TYPE_MEM;
-> -
-> -        destination = &host->pci.memory;
-> -        direction   = "Outbound";
-> -        source      = host_mem;
-> -
-> -        /*
-> -         * Configure MemoryRegion implementing CPU -> PCI memory
-> -         * access
-> -         */
-> -        mem  = &viewport->mem;
-> -        name = designware_pcie_viewport_name(direction, i, "MEM");
-> -        memory_region_init_alias(mem, OBJECT(root), name, destination,
-> -                                 dummy_offset, dummy_size);
-> -        memory_region_add_subregion(source, dummy_offset, mem);
-> -        memory_region_set_enabled(mem, false);
-> -        g_free(name);
-> -
-> -        /*
-> -         * Configure MemoryRegion implementing access to configuration
-> -         * space
-> -         */
-> -        mem  = &viewport->cfg;
-> -        name = designware_pcie_viewport_name(direction, i, "CFG");
-> -        memory_region_init_io(&viewport->cfg, OBJECT(root),
-> -                              &designware_pci_host_conf_ops,
-> -                              viewport, name, dummy_size);
-> -        memory_region_add_subregion(source, dummy_offset, mem);
-> -        memory_region_set_enabled(mem, false);
-> -        g_free(name);
-> -    }
-> -
-> -    /*
-> -     * If no inbound iATU windows are configured, HW defaults to
-> -     * letting inbound TLPs to pass in. We emulate that by explicitly
-> -     * configuring first inbound window to cover all of target's
-> -     * address space.
-> -     *
-> -     * NOTE: This will not work correctly for the case when first
-> -     * configured inbound window is window 0
-> -     */
-> -    viewport = &host->viewports[DESIGNWARE_PCIE_VIEWPORT_INBOUND][0];
-> -    viewport->cr[1] = DESIGNWARE_PCIE_ATU_ENABLE;
-> -    designware_pcie_update_viewport(root, viewport);
-> -
-> -    memory_region_init_io(&host->msi.iomem, OBJECT(root),
-> -                          &designware_pci_host_msi_ops,
-> -                          root, "pcie-msi", 0x4);
-> -    /*
-> -     * We initially place MSI interrupt I/O region at address 0 and
-> -     * disable it. It'll be later moved to correct offset and enabled
-> -     * in designware_pcie_root_update_msi_mapping() as a part of
-> -     * initialization done by guest OS
-> -     */
-> -    memory_region_add_subregion(address_space, dummy_offset, &host->msi.iomem);
-> -    memory_region_set_enabled(&host->msi.iomem, false);
+> -    const unsigned int idx = root->atu_viewport & 0xF;
+> +    const unsigned int idx = host->atu_viewport & 0xF;
+>       const unsigned int dir =
+> -        !!(root->atu_viewport & DESIGNWARE_PCIE_ATU_REGION_INBOUND);
+> -    return &root->viewports[dir][idx];
+> +        !!(host->atu_viewport & DESIGNWARE_PCIE_ATU_REGION_INBOUND);
+> +    return &host->viewports[dir][idx];
 >   }
 >   
->   static void designware_pcie_set_irq(void *opaque, int irq_num, int level)
-> @@ -590,7 +487,7 @@ static void designware_pcie_root_class_init(ObjectClass *klass, void *data)
->       dc->reset = pci_bridge_reset;
->       /*
->        * PCI-facing part of the host bridge, not usable without the
-> -     * host-facing part, which can't be device_add'ed, yet.
-> +     * host-facing part.
+>   static uint32_t
+>   designware_pcie_root_config_read(PCIDevice *d, uint32_t address, int len)
+>   {
+>       DesignwarePCIERoot *root = DESIGNWARE_PCIE_ROOT(d);
+> +    DesignwarePCIEHost *host = root->host;
+>       DesignwarePCIEViewport *viewport =
+> -        designware_pcie_root_get_current_viewport(root);
+> +        designware_pcie_host_get_current_viewport(host);
+>   
+>       uint32_t val;
+>   
+> @@ -170,7 +171,7 @@ designware_pcie_root_config_read(PCIDevice *d, uint32_t address, int len)
+>           break;
+>   
+>       case DESIGNWARE_PCIE_ATU_VIEWPORT:
+> -        val = root->atu_viewport;
+> +        val = host->atu_viewport;
+>           break;
+>   
+>       case DESIGNWARE_PCIE_ATU_LOWER_BASE:
+> @@ -294,7 +295,7 @@ static void designware_pcie_root_config_write(PCIDevice *d, uint32_t address,
+>       DesignwarePCIERoot *root = DESIGNWARE_PCIE_ROOT(d);
+>       DesignwarePCIEHost *host = root->host;
+>       DesignwarePCIEViewport *viewport =
+> -        designware_pcie_root_get_current_viewport(root);
+> +        designware_pcie_host_get_current_viewport(host);
+>   
+>       switch (address) {
+>       case DESIGNWARE_PCIE_PORT_LINK_CONTROL:
+> @@ -332,7 +333,7 @@ static void designware_pcie_root_config_write(PCIDevice *d, uint32_t address,
+>           break;
+>   
+>       case DESIGNWARE_PCIE_ATU_VIEWPORT:
+> -        root->atu_viewport = val;
+> +        host->atu_viewport = val;
+>           break;
+>   
+>       case DESIGNWARE_PCIE_ATU_LOWER_BASE:
+> @@ -420,7 +421,7 @@ static void designware_pcie_root_realize(PCIDevice *dev, Error **errp)
+>           const char *direction;
+>           char *name;
+>   
+> -        viewport = &root->viewports[DESIGNWARE_PCIE_VIEWPORT_INBOUND][i];
+> +        viewport = &host->viewports[DESIGNWARE_PCIE_VIEWPORT_INBOUND][i];
+>           viewport->inbound = true;
+>           viewport->base    = 0x0000000000000000ULL;
+>           viewport->target  = 0x0000000000000000ULL;
+> @@ -443,7 +444,7 @@ static void designware_pcie_root_realize(PCIDevice *dev, Error **errp)
+>           memory_region_set_enabled(mem, false);
+>           g_free(name);
+>   
+> -        viewport = &root->viewports[DESIGNWARE_PCIE_VIEWPORT_OUTBOUND][i];
+> +        viewport = &host->viewports[DESIGNWARE_PCIE_VIEWPORT_OUTBOUND][i];
+>           viewport->host    = host;
+>           viewport->inbound = false;
+>           viewport->base    = 0x0000000000000000ULL;
+> @@ -490,7 +491,7 @@ static void designware_pcie_root_realize(PCIDevice *dev, Error **errp)
+>        * NOTE: This will not work correctly for the case when first
+>        * configured inbound window is window 0
 >        */
->       dc->user_creatable = false;
->       dc->vmsd = &vmstate_designware_pcie_root;
-> @@ -650,8 +547,17 @@ static void designware_pcie_host_realize(DeviceState *dev, Error **errp)
->       PCIHostState *pci = PCI_HOST_BRIDGE(dev);
->       DesignwarePCIEHost *s = DESIGNWARE_PCIE_HOST(dev);
->       SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +    MemoryRegion *host_mem = get_system_memory();
-> +    DesignwarePCIEViewport *viewport;
->       size_t i;
+> -    viewport = &root->viewports[DESIGNWARE_PCIE_VIEWPORT_INBOUND][0];
+> +    viewport = &host->viewports[DESIGNWARE_PCIE_VIEWPORT_INBOUND][0];
+>       viewport->cr[1] = DESIGNWARE_PCIE_ATU_ENABLE;
+>       designware_pcie_update_viewport(root, viewport);
 >   
-> +    /*
-> +     * Dummy values used for initial configuration of MemoryRegions
-> +     * that belong to a given viewport
-> +     */
-> +    const hwaddr dummy_offset = 0;
-> +    const uint64_t dummy_size = 4;
-> +
->       for (i = 0; i < ARRAY_SIZE(s->pci.irqs); i++) {
->           sysbus_init_irq(sbd, &s->pci.irqs[i]);
->       }
-> @@ -694,6 +600,97 @@ static void designware_pcie_host_realize(DeviceState *dev, Error **errp)
->       qdev_prop_set_int32(DEVICE(&s->root), "addr", PCI_DEVFN(0, 0));
->       qdev_prop_set_bit(DEVICE(&s->root), "multifunction", false);
->       qdev_realize(DEVICE(&s->root), BUS(pci->bus), &error_fatal);
-> +
-> +    memory_region_init_io(&s->msi.iomem, OBJECT(s),
-> +                          &designware_pci_host_msi_ops,
-> +                          s, "pcie-msi", 0x4);
-> +    /*
-> +     * We initially place MSI interrupt I/O region at address 0 and
-> +     * disable it. It'll be later moved to correct offset and enabled
-> +     * in designware_pcie_host_update_msi_mapping() as a part of
-> +     * initialization done by guest OS
-> +     */
-> +    memory_region_add_subregion(&s->pci.memory, dummy_offset, &s->msi.iomem);
-> +    memory_region_set_enabled(&s->msi.iomem, false);
-> +
-> +    for (i = 0; i < DESIGNWARE_PCIE_NUM_VIEWPORTS; i++) {
-> +        MemoryRegion *source, *destination, *mem;
-> +        const char *direction;
-> +        char *name;
-> +
-> +        viewport = &s->viewports[DESIGNWARE_PCIE_VIEWPORT_INBOUND][i];
-> +        viewport->inbound = true;
-> +        viewport->base    = 0x0000000000000000ULL;
-> +        viewport->target  = 0x0000000000000000ULL;
-> +        viewport->limit   = UINT32_MAX;
-> +        viewport->cr[0]   = DESIGNWARE_PCIE_ATU_TYPE_MEM;
-> +
-> +        source      = &s->pci.address_space_root;
-> +        destination = host_mem;
-> +        direction   = "Inbound";
-> +
-> +        /*
-> +         * Configure MemoryRegion implementing PCI -> CPU memory
-> +         * access
-> +         */
-> +        mem  = &viewport->mem;
-> +        name = designware_pcie_viewport_name(direction, i, "MEM");
-> +        memory_region_init_alias(mem, OBJECT(s), name, destination,
-> +                                 dummy_offset, dummy_size);
-> +        memory_region_add_subregion_overlap(source, dummy_offset, mem, -1);
-> +        memory_region_set_enabled(mem, false);
-> +        g_free(name);
-> +
-> +        viewport = &s->viewports[DESIGNWARE_PCIE_VIEWPORT_OUTBOUND][i];
-> +        viewport->host    = s;
-> +        viewport->inbound = false;
-> +        viewport->base    = 0x0000000000000000ULL;
-> +        viewport->target  = 0x0000000000000000ULL;
-> +        viewport->limit   = UINT32_MAX;
-> +        viewport->cr[0]   = DESIGNWARE_PCIE_ATU_TYPE_MEM;
-> +
-> +        destination = &s->pci.memory;
-> +        direction   = "Outbound";
-> +        source      = host_mem;
-> +
-> +        /*
-> +         * Configure MemoryRegion implementing CPU -> PCI memory
-> +         * access
-> +         */
-> +        mem  = &viewport->mem;
-> +        name = designware_pcie_viewport_name(direction, i, "MEM");
-> +        memory_region_init_alias(mem, OBJECT(s), name, destination,
-> +                                 dummy_offset, dummy_size);
-> +        memory_region_add_subregion(source, dummy_offset, mem);
-> +        memory_region_set_enabled(mem, false);
-> +        g_free(name);
-> +
-> +        /*
-> +         * Configure MemoryRegion implementing access to configuration
-> +         * space
-> +         */
-> +        mem  = &viewport->cfg;
-> +        name = designware_pcie_viewport_name(direction, i, "CFG");
-> +        memory_region_init_io(&viewport->cfg, OBJECT(s),
-> +                              &designware_pci_host_conf_ops,
-> +                              viewport, name, dummy_size);
-> +        memory_region_add_subregion(source, dummy_offset, mem);
-> +        memory_region_set_enabled(mem, false);
-> +        g_free(name);
-> +    }
-> +
-> +    /*
-> +     * If no inbound iATU windows are configured, HW defaults to
-> +     * letting inbound TLPs to pass in. We emulate that by explicitly
-> +     * configuring first inbound window to cover all of target's
-> +     * address space.
-> +     *
-> +     * NOTE: This will not work correctly for the case when first
-> +     * configured inbound window is window 0
-> +     */
-> +    viewport = &s->viewports[DESIGNWARE_PCIE_VIEWPORT_INBOUND][0];
-> +    viewport->cr[1] = DESIGNWARE_PCIE_ATU_ENABLE;
-> +    designware_pcie_update_viewport(&s->root, viewport);
->   }
+> @@ -563,18 +564,10 @@ static const VMStateDescription vmstate_designware_pcie_viewport = {
+>   
+>   static const VMStateDescription vmstate_designware_pcie_root = {
+>       .name = "designware-pcie-root",
+> -    .version_id = 1,
+> -    .minimum_version_id = 1,
+> +    .version_id = 2,
+> +    .minimum_version_id = 2,
+>       .fields = (VMStateField[]) {
+>           VMSTATE_PCI_DEVICE(parent_obj, PCIBridge),
+> -        VMSTATE_UINT32(atu_viewport, DesignwarePCIERoot),
+> -        VMSTATE_STRUCT_2DARRAY(viewports,
+> -                               DesignwarePCIERoot,
+> -                               2,
+> -                               DESIGNWARE_PCIE_NUM_VIEWPORTS,
+> -                               1,
+> -                               vmstate_designware_pcie_viewport,
+> -                               DesignwarePCIEViewport),
+>           VMSTATE_STRUCT(msi,
+>                          DesignwarePCIERoot,
+>                          1,
+> @@ -711,14 +704,22 @@ static void designware_pcie_host_realize(DeviceState *dev, Error **errp)
 >   
 >   static const VMStateDescription vmstate_designware_pcie_host = {
+>       .name = "designware-pcie-host",
+> -    .version_id = 1,
+> -    .minimum_version_id = 1,
+> +    .version_id = 2,
+> +    .minimum_version_id = 2,
+>       .fields = (VMStateField[]) {
+>           VMSTATE_STRUCT(root,
+>                          DesignwarePCIEHost,
+>                          1,
+>                          vmstate_designware_pcie_root,
+>                          DesignwarePCIERoot),
+> +        VMSTATE_UINT32(atu_viewport, DesignwarePCIEHost),
+> +        VMSTATE_STRUCT_2DARRAY(viewports,
+> +                               DesignwarePCIEHost,
+> +                               2,
+> +                               DESIGNWARE_PCIE_NUM_VIEWPORTS,
+> +                               1,
+> +                               vmstate_designware_pcie_viewport,
+> +                               DesignwarePCIEViewport),
+>           VMSTATE_END_OF_LIST()
+>       }
+>   };
 > 
 
