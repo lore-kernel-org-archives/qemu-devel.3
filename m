@@ -4,83 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76290C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 13:56:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA304C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 14:04:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sg2r2-000694-4G; Mon, 19 Aug 2024 09:55:28 -0400
+	id 1sg2yp-0003JJ-TI; Mon, 19 Aug 2024 10:03:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1sg2qy-000681-4b
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 09:55:24 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1sg2qt-0005M5-GS
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 09:55:23 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-70ea2f25bfaso3154752b3a.1
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 06:55:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1724075716; x=1724680516;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=kfJ8uCNFVXWkQOVqIZwwsin9disYVPF8YyT0LHxhfgs=;
- b=p+Bh7En6lc1Lc67cnt01hRgEztqLpv1Yn9c4ZzQ86a0p4mZTcTLc12PpJvT1PXgYHX
- MdrJ9sr3J5kdAvR7BiivI+sHlqcGrM26Oue8QQ+X7mESpwFanBhgAE8RK7Jpym+rkxot
- w34J1DvDCYde+3WvzGaELRvENL5SSi3XjTIXevUBJjZSCixVBgNJOeLUUvk+pWD2k6Ox
- GjeZ4uTsyhsfcWILgxiMNmuaDWQljmdDZBG0E8M13A/lw/BrBMB5PZ0mysoQHNhAejTD
- wLXEP3Dkfdo4IJtjPHx9xHZxIRYX4fqTCfDY9w46fuKy3USi6atZI1bMB3f0Cwhz8iEZ
- mecw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724075716; x=1724680516;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kfJ8uCNFVXWkQOVqIZwwsin9disYVPF8YyT0LHxhfgs=;
- b=fxjvI7kV+lFe108c+xTaE1n5zqfYTov5Fs/cpPVNaXh4wIzzUz3UO/bvZJDxQEfWKB
- rg7BP6appg8Pv/Fo+vxB4PpjzkjrVsUIBGu6BH5G0RygP6F5oY/OtITgtG2vmlMNmCjB
- cHNmcZBl2KYPbs8mTBNrgSKYmb9nFOj1ll4OLaY87mV74CgnePN9hWWfr5kGM36dXk6v
- iQrWPNw1qzv9jiQ7P8NJin5DyTTuB01G/YXSz4FD06ms1kcvClZdRdmBmLqOmNb2ZqKF
- XWxufmDmfloO/jn5YXvpog5MHxlddO031ZhUhkl7xTRscZtjsvnDGgHS95IlIovoWuZK
- gRmg==
-X-Gm-Message-State: AOJu0YxEOdCHTwX/g8QQL4ecbZigz1/+mxW+lRVjrw0ZCEVU8dMkbh4/
- AiilBO8RY5S3jtEBjUjLn8nQWzGX9ZfGkyYX1YQjY5Qr6p/Jwe6NtXp0dKG5j/g6i8r2/AapYss
- 7
-X-Google-Smtp-Source: AGHT+IFGBsB7cy0dtx6U10bazKGJg37h0QTFJ1ZYW3YdQznf1oRnJT25mGW3rMZbQpHJMlZHdjfaRA==
-X-Received: by 2002:a05:6a20:9d91:b0:1c0:f2d9:a44a with SMTP id
- adf61e73a8af0-1c904f91ce9mr12090347637.22.1724075715857; 
- Mon, 19 Aug 2024 06:55:15 -0700 (PDT)
-Received: from mnissler.ba.rivosinc.com ([64.71.180.162])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7127af3a910sm6602602b3a.184.2024.08.19.06.55.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Aug 2024 06:55:15 -0700 (PDT)
-From: Mattias Nissler <mnissler@rivosinc.com>
-To: qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, stefanha@redhat.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- Mattias Nissler <mnissler@rivosinc.com>
-Subject: [PATCH] softmmu: Support concurrent bounce buffers
-Date: Mon, 19 Aug 2024 06:54:54 -0700
-Message-Id: <20240819135455.2957406-1-mnissler@rivosinc.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sg2yl-0003HT-0s; Mon, 19 Aug 2024 10:03:27 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1sg2yi-0006vm-R6; Mon, 19 Aug 2024 10:03:26 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47J5m2mO014050;
+ Mon, 19 Aug 2024 14:03:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ message-id:date:mime-version:subject:to:cc:references:from
+ :in-reply-to:content-type:content-transfer-encoding; s=pp1; bh=V
+ h8NrWKrEa9zOz2uYPqCc2z2LjnupXgkd7cHNXi5W0Y=; b=bW3Pta2dMJ7OpK/s3
+ vSJmfDlPfAArA18gepT6+hidXs+/1G6tKUawj3De7eZjTPP4amyLd840Vttt65IX
+ BnHLaYcD73rqHPEpmerBlmZZmGwBVAE1HPfscR6FaX4TOKA+oOq7HruEylr82aJn
+ ewvmQw9ycb+g5bkeaF3tW+f7UXqnOiIOeO/Npo2qC0+FEZ52MNV1DKwfbkMtfCW4
+ 6W50tZh7CfZ3Rp8SycjlPOeBuuRA16cNsgSaD+sR5qNf3BVMws7Q5UycqclZcP+L
+ RFkZSP6SeF7QdV7jo4wbxKu7hf2pjrHhe1qJ1DlszqjvepYgm2WR/22kGFXituqD
+ h09Qw==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 412ma013rc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Aug 2024 14:03:17 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 47JE0NBp018053;
+ Mon, 19 Aug 2024 14:03:16 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 412ma013pp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Aug 2024 14:03:16 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 47JD49uG019044;
+ Mon, 19 Aug 2024 14:02:39 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 41376ppd5d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Aug 2024 14:02:39 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 47JE2XQt32375328
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 19 Aug 2024 14:02:35 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6A7C620043;
+ Mon, 19 Aug 2024 14:02:33 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F40D820040;
+ Mon, 19 Aug 2024 14:02:30 +0000 (GMT)
+Received: from [9.195.36.7] (unknown [9.195.36.7])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 19 Aug 2024 14:02:30 +0000 (GMT)
+Message-ID: <253d0911-a3e5-478c-8431-4944be83bdfb@linux.ibm.com>
+Date: Mon, 19 Aug 2024 19:32:29 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] hw/ppc: Implement -dtb support for PowerNV
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Nicholas Piggin <npiggin@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Madhavan Srinivasan <maddy@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20240813134536.1204513-1-adityag@linux.ibm.com>
+ <D3GB5QVADVQ1.XZM3FFV52LIW@gmail.com>
+ <6c0cdf26-9795-4998-9d80-1d0095700a59@kaod.org>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <6c0cdf26-9795-4998-9d80-1d0095700a59@kaod.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=mnissler@rivosinc.com; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: PGczQSZkKin10fGPssp3U3ED5n4-IpC-
+X-Proofpoint-ORIG-GUID: CLYVOq-ZAL-lKx23p1X45gzSMrgg9I-6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-19_12,2024-08-19_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 priorityscore=1501
+ mlxlogscore=999 lowpriorityscore=0 phishscore=0 spamscore=0 malwarescore=0
+ bulkscore=0 adultscore=0 impostorscore=0 suspectscore=0 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408190094
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,289 +122,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When DMA memory can't be directly accessed, as is the case when
-running the device model in a separate process without shareable DMA
-file descriptors, bounce buffering is used.
+Hi Cedric,
 
-It is not uncommon for device models to request mapping of several DMA
-regions at the same time. Examples include:
- * net devices, e.g. when transmitting a packet that is split across
-   several TX descriptors (observed with igb)
- * USB host controllers, when handling a packet with multiple data TRBs
-   (observed with xhci)
 
-Previously, qemu only provided a single bounce buffer per AddressSpace
-and would fail DMA map requests while the buffer was already in use. In
-turn, this would cause DMA failures that ultimately manifest as hardware
-errors from the guest perspective.
+On 15/08/24 23:22, Cédric Le Goater wrote:
+>
+> I don't think this is a bug fix. is it ? AFAIUI, it is a debug
+> feature for skiboot. It's QEMU 9.2 material.
+>
+Thanks for answering Nick's question, I did not check my mails.
 
-This change allocates DMA bounce buffers dynamically instead of
-supporting only a single buffer. Thus, multiple DMA mappings work
-correctly also when RAM can't be mmap()-ed.
+Yes, it can be considered a debug feature.
 
-The total bounce buffer allocation size is limited individually for each
-AddressSpace. The default limit is 4096 bytes, matching the previous
-maximum buffer size. A new x-max-bounce-buffer-size parameter is
-provided to configure the limit for PCI devices.
+>> One little nit is MachineState.fdt vs PnvMachineState.fdt
+>> which is now confusing. I would call the new PnvMachineState member
+>> something like fdt_from_dtb, or fdt_override?
+>
+> I agree. this is confusing. machine->fdt could be used instead ?
 
-Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Peter Xu <peterx@redhat.com>
----
-This patch is split out from my "Support message-based DMA in vfio-user server"
-series. With the series having been partially applied, I'm splitting this one
-out as the only remaining patch to system emulation code in the hope to
-simplify getting it landed. The code has previously been reviewed by Stefan
-Hajnoczi and Peter Xu. This latest version includes changes to switch the
-bounce buffer size bookkeeping to `size_t` as requested and LGTM'd by Phil in
-v9.
----
- hw/pci/pci.c                |  8 ++++
- include/exec/memory.h       | 14 +++----
- include/hw/pci/pci_device.h |  3 ++
- system/memory.c             |  5 ++-
- system/physmem.c            | 82 ++++++++++++++++++++++++++-----------
- 5 files changed, 76 insertions(+), 36 deletions(-)
+Sure, will use it.
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index fab86d0567..d2caf3ee8b 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -85,6 +85,8 @@ static Property pci_props[] = {
-                     QEMU_PCIE_ERR_UNC_MASK_BITNR, true),
-     DEFINE_PROP_BIT("x-pcie-ari-nextfn-1", PCIDevice, cap_present,
-                     QEMU_PCIE_ARI_NEXTFN_1_BITNR, false),
-+    DEFINE_PROP_SIZE32("x-max-bounce-buffer-size", PCIDevice,
-+                     max_bounce_buffer_size, DEFAULT_MAX_BOUNCE_BUFFER_SIZE),
-     DEFINE_PROP_END_OF_LIST()
- };
- 
-@@ -1204,6 +1206,8 @@ static PCIDevice *do_pci_register_device(PCIDevice *pci_dev,
-                        "bus master container", UINT64_MAX);
-     address_space_init(&pci_dev->bus_master_as,
-                        &pci_dev->bus_master_container_region, pci_dev->name);
-+    pci_dev->bus_master_as.max_bounce_buffer_size =
-+        pci_dev->max_bounce_buffer_size;
- 
-     if (phase_check(PHASE_MACHINE_READY)) {
-         pci_init_bus_master(pci_dev);
-@@ -2633,6 +2637,10 @@ static void pci_device_class_init(ObjectClass *klass, void *data)
-     k->unrealize = pci_qdev_unrealize;
-     k->bus_type = TYPE_PCI_BUS;
-     device_class_set_props(k, pci_props);
-+    object_class_property_set_description(
-+        klass, "x-max-bounce-buffer-size",
-+        "Maximum buffer size allocated for bounce buffers used for mapped "
-+        "access to indirect DMA memory");
- }
- 
- static void pci_device_class_base_init(ObjectClass *klass, void *data)
-diff --git a/include/exec/memory.h b/include/exec/memory.h
-index 296fd068c0..e5e865d1a9 100644
---- a/include/exec/memory.h
-+++ b/include/exec/memory.h
-@@ -1084,13 +1084,7 @@ typedef struct AddressSpaceMapClient {
-     QLIST_ENTRY(AddressSpaceMapClient) link;
- } AddressSpaceMapClient;
- 
--typedef struct {
--    MemoryRegion *mr;
--    void *buffer;
--    hwaddr addr;
--    hwaddr len;
--    bool in_use;
--} BounceBuffer;
-+#define DEFAULT_MAX_BOUNCE_BUFFER_SIZE (4096)
- 
- /**
-  * struct AddressSpace: describes a mapping of addresses to #MemoryRegion objects
-@@ -1110,8 +1104,10 @@ struct AddressSpace {
-     QTAILQ_HEAD(, MemoryListener) listeners;
-     QTAILQ_ENTRY(AddressSpace) address_spaces_link;
- 
--    /* Bounce buffer to use for this address space. */
--    BounceBuffer bounce;
-+    /* Maximum DMA bounce buffer size used for indirect memory map requests */
-+    size_t max_bounce_buffer_size;
-+    /* Total size of bounce buffers currently allocated, atomically accessed */
-+    size_t bounce_buffer_size;
-     /* List of callbacks to invoke when buffers free up */
-     QemuMutex map_client_list_lock;
-     QLIST_HEAD(, AddressSpaceMapClient) map_client_list;
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index 15694f2489..91df40f989 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -167,6 +167,9 @@ struct PCIDevice {
-     /* ID of standby device in net_failover pair */
-     char *failover_pair_id;
-     uint32_t acpi_index;
-+
-+    /* Maximum DMA bounce buffer size used for indirect memory map requests */
-+    uint32_t max_bounce_buffer_size;
- };
- 
- static inline int pci_intx(PCIDevice *pci_dev)
-diff --git a/system/memory.c b/system/memory.c
-index 5e6eb459d5..f6f6fee6d8 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -3148,7 +3148,8 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name)
-     as->ioeventfds = NULL;
-     QTAILQ_INIT(&as->listeners);
-     QTAILQ_INSERT_TAIL(&address_spaces, as, address_spaces_link);
--    as->bounce.in_use = false;
-+    as->max_bounce_buffer_size = DEFAULT_MAX_BOUNCE_BUFFER_SIZE;
-+    as->bounce_buffer_size = 0;
-     qemu_mutex_init(&as->map_client_list_lock);
-     QLIST_INIT(&as->map_client_list);
-     as->name = g_strdup(name ? name : "anonymous");
-@@ -3158,7 +3159,7 @@ void address_space_init(AddressSpace *as, MemoryRegion *root, const char *name)
- 
- static void do_address_space_destroy(AddressSpace *as)
- {
--    assert(!qatomic_read(&as->bounce.in_use));
-+    assert(qatomic_read(&as->bounce_buffer_size) == 0);
-     assert(QLIST_EMPTY(&as->map_client_list));
-     qemu_mutex_destroy(&as->map_client_list_lock);
- 
-diff --git a/system/physmem.c b/system/physmem.c
-index 94600a33ec..971bfa0855 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3095,6 +3095,20 @@ void cpu_flush_icache_range(hwaddr start, hwaddr len)
-                                      NULL, len, FLUSH_CACHE);
- }
- 
-+/*
-+ * A magic value stored in the first 8 bytes of the bounce buffer struct. Used
-+ * to detect illegal pointers passed to address_space_unmap.
-+ */
-+#define BOUNCE_BUFFER_MAGIC 0xb4017ceb4ffe12ed
-+
-+typedef struct {
-+    uint64_t magic;
-+    MemoryRegion *mr;
-+    hwaddr addr;
-+    size_t len;
-+    uint8_t buffer[];
-+} BounceBuffer;
-+
- static void
- address_space_unregister_map_client_do(AddressSpaceMapClient *client)
- {
-@@ -3120,9 +3134,9 @@ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh)
-     QEMU_LOCK_GUARD(&as->map_client_list_lock);
-     client->bh = bh;
-     QLIST_INSERT_HEAD(&as->map_client_list, client, link);
--    /* Write map_client_list before reading in_use.  */
-+    /* Write map_client_list before reading bounce_buffer_size. */
-     smp_mb();
--    if (!qatomic_read(&as->bounce.in_use)) {
-+    if (qatomic_read(&as->bounce_buffer_size) < as->max_bounce_buffer_size) {
-         address_space_notify_map_clients_locked(as);
-     }
- }
-@@ -3251,28 +3265,40 @@ void *address_space_map(AddressSpace *as,
-     mr = flatview_translate(fv, addr, &xlat, &l, is_write, attrs);
- 
-     if (!memory_access_is_direct(mr, is_write)) {
--        if (qatomic_xchg(&as->bounce.in_use, true)) {
-+        size_t used = qatomic_read(&as->bounce_buffer_size);
-+        for (;;) {
-+            hwaddr alloc = MIN(as->max_bounce_buffer_size - used, l);
-+            size_t new_size = used + alloc;
-+            size_t actual =
-+                qatomic_cmpxchg(&as->bounce_buffer_size, used, new_size);
-+            if (actual == used) {
-+                l = alloc;
-+                break;
-+            }
-+            used = actual;
-+        }
-+
-+        if (l == 0) {
-             *plen = 0;
-             return NULL;
-         }
--        /* Avoid unbounded allocations */
--        l = MIN(l, TARGET_PAGE_SIZE);
--        as->bounce.buffer = qemu_memalign(TARGET_PAGE_SIZE, l);
--        as->bounce.addr = addr;
--        as->bounce.len = l;
- 
-+        BounceBuffer *bounce = g_malloc0(l + sizeof(BounceBuffer));
-+        bounce->magic = BOUNCE_BUFFER_MAGIC;
-         memory_region_ref(mr);
--        as->bounce.mr = mr;
-+        bounce->mr = mr;
-+        bounce->addr = addr;
-+        bounce->len = l;
-+
-         if (!is_write) {
-             flatview_read(fv, addr, MEMTXATTRS_UNSPECIFIED,
--                          as->bounce.buffer, l);
-+                          bounce->buffer, l);
-         }
- 
-         *plen = l;
--        return as->bounce.buffer;
-+        return bounce->buffer;
-     }
- 
--
-     memory_region_ref(mr);
-     *plen = flatview_extend_translation(fv, addr, len, mr, xlat,
-                                         l, is_write, attrs);
-@@ -3287,12 +3313,11 @@ void *address_space_map(AddressSpace *as,
- void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
-                          bool is_write, hwaddr access_len)
- {
--    if (buffer != as->bounce.buffer) {
--        MemoryRegion *mr;
--        ram_addr_t addr1;
-+    MemoryRegion *mr;
-+    ram_addr_t addr1;
- 
--        mr = memory_region_from_host(buffer, &addr1);
--        assert(mr != NULL);
-+    mr = memory_region_from_host(buffer, &addr1);
-+    if (mr != NULL) {
-         if (is_write) {
-             invalidate_and_set_dirty(mr, addr1, access_len);
-         }
-@@ -3302,15 +3327,22 @@ void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
-         memory_region_unref(mr);
-         return;
-     }
-+
-+
-+    BounceBuffer *bounce = container_of(buffer, BounceBuffer, buffer);
-+    assert(bounce->magic == BOUNCE_BUFFER_MAGIC);
-+
-     if (is_write) {
--        address_space_write(as, as->bounce.addr, MEMTXATTRS_UNSPECIFIED,
--                            as->bounce.buffer, access_len);
--    }
--    qemu_vfree(as->bounce.buffer);
--    as->bounce.buffer = NULL;
--    memory_region_unref(as->bounce.mr);
--    /* Clear in_use before reading map_client_list.  */
--    qatomic_set_mb(&as->bounce.in_use, false);
-+        address_space_write(as, bounce->addr, MEMTXATTRS_UNSPECIFIED,
-+                            bounce->buffer, access_len);
-+    }
-+
-+    qatomic_sub(&as->bounce_buffer_size, bounce->len);
-+    bounce->magic = ~BOUNCE_BUFFER_MAGIC;
-+    memory_region_unref(bounce->mr);
-+    g_free(bounce);
-+    /* Write bounce_buffer_size before reading map_client_list. */
-+    smp_mb();
-     address_space_notify_map_clients(as);
- }
- 
--- 
-2.34.1
 
+Thanks,
+
+Aditya Gupta
+
+>
+>> The other question... Some machines rebuild fdt at init, others at
+>> reset time. As far as I understood, spapr has to rebuild on reset
+>> because C-A-S call can update the fdt so you have to undo that on
+>> reset. 
+>
+> C-A-S is a guest OS hcall. reset is called before the guest OS
+> is started.
+>
+>> Did powernv just copy that without really needing it, I wonder?
+>> Maybe that rearranged to just do it at init time (e.g., see
+>> hw/riscv/virt.c which is simpler).
+>
+> The machine is aware of user created devices (on the command line)
+> only at reset time.
+>
+> Thanks,
+>
+> C.
+>
+>
+>
+>
+>
+>> Thanks,
+>> Nick
+>>
+>>>
+>>> ---
+>>> Changelog
+>>> ===========
+>>> v3:
+>>>   + use 'load_device_tree' to read the device tree, instead of 
+>>> g_file_get_contents
+>>>   + tested that passed dtb does NOT get ignored on system_reset
+>>>
+>>> v2:
+>>>   + move reading dtb and warning to pnv_init
+>>>
+>>> v1:
+>>>   + use 'g_file_get_contents' and add check for -append & -dtb as 
+>>> suggested by Daniel
+>>> ---
+>>> ---
+>>>   hw/ppc/pnv.c         | 34 ++++++++++++++++++++++++++++++----
+>>>   include/hw/ppc/pnv.h |  2 ++
+>>>   2 files changed, 32 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+>>> index 3526852685b4..14225f7e48af 100644
+>>> --- a/hw/ppc/pnv.c
+>>> +++ b/hw/ppc/pnv.c
+>>> @@ -736,10 +736,13 @@ static void pnv_reset(MachineState *machine, 
+>>> ShutdownCause reason)
+>>>           }
+>>>       }
+>>>   -    fdt = pnv_dt_create(machine);
+>>> -
+>>> -    /* Pack resulting tree */
+>>> -    _FDT((fdt_pack(fdt)));
+>>> +    if (pnv->fdt) {
+>>> +        fdt = pnv->fdt;
+>>> +    } else {
+>>> +        fdt = pnv_dt_create(machine);
+>>> +        /* Pack resulting tree */
+>>> +        _FDT((fdt_pack(fdt)));
+>>> +    }
+>>>         qemu_fdt_dumpdtb(fdt, fdt_totalsize(fdt));
+>>>       cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
+>>> @@ -952,6 +955,14 @@ static void pnv_init(MachineState *machine)
+>>>           g_free(sz);
+>>>           exit(EXIT_FAILURE);
+>>>       }
+>>> +
+>>> +    /* checks for invalid option combinations */
+>>> +    if (machine->dtb && (strlen(machine->kernel_cmdline) != 0)) {
+>>> +        error_report("-append and -dtb cannot be used together, as 
+>>> passed"
+>>> +                " command line is ignored in case of custom dtb");
+>>> +        exit(EXIT_FAILURE);
+>>> +    }
+>>> +
+>>>       memory_region_add_subregion(get_system_memory(), 0, 
+>>> machine->ram);
+>>>         /*
+>>> @@ -1003,6 +1014,21 @@ static void pnv_init(MachineState *machine)
+>>>           }
+>>>       }
+>>>   +    /* load dtb if passed */
+>>> +    if (machine->dtb) {
+>>> +        int fdt_size;
+>>> +
+>>> +        warn_report("with manually passed dtb, some options like 
+>>> '-append'"
+>>> +                " will get ignored and the dtb passed will be used 
+>>> as-is");
+>>> +
+>>> +        /* read the file 'machine->dtb', and load it into 'fdt' 
+>>> buffer */
+>>> +        pnv->fdt = load_device_tree(machine->dtb, &fdt_size);
+>>> +        if (!pnv->fdt) {
+>>> +            error_report("Could not load dtb '%s'", machine->dtb);
+>>> +            exit(1);
+>>> +        }
+>>> +    }
+>>> +
+>>>       /* MSIs are supported on this platform */
+>>>       msi_nonbroken = true;
+>>>   diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+>>> index fcb6699150c8..20b68fd9264e 100644
+>>> --- a/include/hw/ppc/pnv.h
+>>> +++ b/include/hw/ppc/pnv.h
+>>> @@ -91,6 +91,8 @@ struct PnvMachineState {
+>>>       uint32_t     initrd_base;
+>>>       long         initrd_size;
+>>>   +    void         *fdt;
+>>> +
+>>>       uint32_t     num_chips;
+>>>       PnvChip      **chips;
+>>
+>
 
