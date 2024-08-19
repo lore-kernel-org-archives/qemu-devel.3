@@ -4,78 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC1C2C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 14:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F742C52D6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 15:04:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sg3iG-0005fy-0n; Mon, 19 Aug 2024 10:50:28 -0400
+	id 1sg3ux-0004Sw-KX; Mon, 19 Aug 2024 11:03:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sg3iE-0005ea-GZ
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:50:26 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sg3iC-0005Sm-9V
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:50:26 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-428085a3ad1so38747555e9.1
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 07:50:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724079022; x=1724683822; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=WW7irc5dOsdR2uIMYAGlC01tbGaKYU0hXrA9re5XZlY=;
- b=IJY9XItS5XKLUOyCKtxEn3A1pFklXiuhAle7ClLAs2PO712T/ZyqYR24DC9z1xor2u
- FmiV7qFjOAnKSb4Wky5EjDFU7hC6cu177qrzS99O40vNjh5j6Bo0KUyMznHdQ/OEaadD
- PqB7C4kdKNhvksoQGY34Sl6q7ffOn8gB/oVUYIZcyfErvQFxSj5+aStBPLs9u9LX8mC9
- KG8SHv2mIH7D3DMoHg5uhoGVRBQwSsr26HTPtsEyW2Kqdyudze1F1sqOIQaeTddGL0y5
- sArlXjsO+XNukQkCQLfbkolH2MPPqeqDpqOSbdtpWiLpsRku0ShXkvC8ukflYJ33UTRZ
- XM9Q==
+ (Exim 4.90_1) (envelope-from <bleal@redhat.com>) id 1sg3uZ-0004Ri-9N
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 11:03:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <bleal@redhat.com>) id 1sg3uR-0007C9-Di
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 11:03:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724079781;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=gHmGo5d4f2Ue8FO+IDuPyI8nkp1T1WSe/NNoH/BHkw8=;
+ b=F0A2Ij6kZDXE84yiuP/djwqCKqb0n1nRk1QTvxhdo+ZiOKRTOOIltIp+tl3nK64+VJhSFi
+ 9xX0EifE4tZ+kRHiQVp91o2qjD5Q0D1TAwx2LT3PTsMr43LlMB+dMp+gpCDPjzhVO9mT4l
+ K8kKSGmR+Xme+W9pzpZwWuBPIDTQhCs=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-605-CzGTcdgIMzW-ms2T9gkWlA-1; Mon, 19 Aug 2024 11:01:39 -0400
+X-MC-Unique: CzGTcdgIMzW-ms2T9gkWlA-1
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7a1dab8a2eeso520120785a.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 08:01:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724079022; x=1724683822;
+ d=1e100.net; s=20230601; t=1724079698; x=1724684498;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=WW7irc5dOsdR2uIMYAGlC01tbGaKYU0hXrA9re5XZlY=;
- b=Ob5Nzz+EtLv16giE/psSrIMJ2YTdcaNc28hbfXURbcugp6coajRqMrSmh+6Gup+gEP
- 8njMEOaAvCfBoIjCD70/JxfVG17H3W+BatfUuPXBtlgecxnfD+WEdBkMtSrZpI05XgCX
- fgwi/M06/fgPdWzffVwPQZ6Mrdwwx58Uki19zy53o/j3k9h/KIRWKE7ZSw8HAyECWTyZ
- qutMamyH/CrqejzyP9BHxDNg8aoYI7t/ksAOhnDAdnddDsi7wkkqegfJOh9WXpCsvL1L
- GHi0CTpiB+zug9zUolrpsxExPWS+IGRLkEOD+UXBQrKlKA3G/NVwxIsp9SmT/s0TuWG0
- n9dQ==
-X-Gm-Message-State: AOJu0YyPyEeJUkEYU+cinCuQVKkE7zrgmwuuQOwnAIUVESapLiEpCNEe
- ToRWzR3+es943F+ou68/ObQaIUJZq8YuEV5Smbc4+Wj/TtGzSM3hcyZf6JfqkXKATH3fR0eH1OD
- s
-X-Google-Smtp-Source: AGHT+IFnx7ZUHZ7XUUNioVenLG/yssOqTtCnFUkHuhioPjpwda1jyfp4KvNmfydBbWhH+47WW4nFFQ==
-X-Received: by 2002:a05:600c:4ed1:b0:426:5c34:b19b with SMTP id
- 5b1f17b1804b1-429ed7b8a1fmr88681545e9.20.1724079022295; 
- Mon, 19 Aug 2024 07:50:22 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ bh=gHmGo5d4f2Ue8FO+IDuPyI8nkp1T1WSe/NNoH/BHkw8=;
+ b=Ldz4gayb7OdkeNGWtXkkE7zWcsr/uL+FbGzls45X36WvVI2YGmJWyDjPm6tipVwPBf
+ nyBIhheGGUHw2xFg3pyorWdWK1r/lyMqaFkgTlY9mkrj67n1cmjwJCyJpW4HEDBDMWS3
+ mkux/d0TG+iZT2ml4ELXGqFBst0zSmZC7abc6Dwzp/4CVBJc3HXLkLi1tHVlNCjByvmh
+ nPmbOXk9+OrLuVK7hn5Vz8LbBwKeOkhpI8FZYVfRKpjqMIvnFKWdO1shgx4aQ+ag53mB
+ gaLsoiuYtdmQFZyJZMqBt1S22T7bTaORaTx6voop614NileNraZ2ca2uN5/8PDKTsFt5
+ 4DYw==
+X-Gm-Message-State: AOJu0Yyg/bkwK8DoP6dqCm+rYK9ljaCGiCLCtgJeoEWDTqw+T1VqaxFL
+ J5pCDbLUum/NPjLeICQnU9JzTuiduu2DOdOaWFoN0EgV45cCoO7jUsdFUyGCXFkp5N9vr/4lmR9
+ h8MpbdPn6DLn7aVDWKUyoEhOgcHhzTok0gUdeF54hNw8JWgZITdxYAxG9nndJmLkzxJF/otDU+Y
+ aL924DwGA3QieifkVdv9/ZqBa7Rl71Yzbf
+X-Received: by 2002:a05:6214:5f04:b0:6bd:6f66:8b5b with SMTP id
+ 6a1803df08f44-6bf7ce5a750mr164283896d6.36.1724079697500; 
+ Mon, 19 Aug 2024 08:01:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFPIm0aGTTeCesTyCKr8x9bHWXhg9nNlly88oJFRPrUv+x2t+1QfhWMP5nxVK6k8Kbh65Ft+w==
+X-Received: by 2002:a05:6214:5f04:b0:6bd:6f66:8b5b with SMTP id
+ 6a1803df08f44-6bf7ce5a750mr164282606d6.36.1724079696452; 
+ Mon, 19 Aug 2024 08:01:36 -0700 (PDT)
+Received: from fedora.redhat.com ([142.181.120.78])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ded18468sm163546855e9.2.2024.08.19.07.50.21
+ 6a1803df08f44-6bf6feed2a9sm43105556d6.111.2024.08.19.08.01.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Aug 2024 07:50:21 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
+ Mon, 19 Aug 2024 08:01:35 -0700 (PDT)
+From: Beraldo Leal <bleal@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] crypto/tlscredspsk: Free username on finalize
-Date: Mon, 19 Aug 2024 15:50:21 +0100
-Message-Id: <20240819145021.38524-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
+Cc: Beraldo Leal <bleal@redhat.com>
+Subject: [PATCH] MAINTAINERS: Remove myself as reviewer
+Date: Mon, 19 Aug 2024 11:00:35 -0400
+Message-Id: <20240819150035.2180786-1-bleal@redhat.com>
+X-Mailer: git-send-email 2.40.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=bleal@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.134,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_PASS=-0.001, T_SCC_BODY_TEXT_LINE=-0.01,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,73 +98,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the creds->username property is set we allocate memory
-for it in qcrypto_tls_creds_psk_prop_set_username(), but
-we never free this when the QCryptoTLSCredsPSK is destroyed.
-Free the memory in finalize.
+Finally taking this off my to-do list. It’s been a privilege to be part
+of this project, but I am no longer actively involved in reviewing
+Python code here, so I believe it's best to update the list to reflect
+the current maintainers.
 
-This fixes a LeakSanitizer complaint in migration-test:
+Please, feel free to reach out if any questions arise.
 
-$ (cd build/asan; ASAN_OPTIONS="fast_unwind_on_malloc=0" QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test --tap -k -p /x86_64/migration/precopy/unix/tls/psk)
-
-=================================================================
-==3867512==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 5 byte(s) in 1 object(s) allocated from:
-    #0 0x5624e5c99dee in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x218edee) (BuildId: a9e623fa1009a9435c0142c037cd7b8c1ad04ce3)
-    #1 0x7fb199ae9738 in g_malloc debian/build/deb/../../../glib/gmem.c:128:13
-    #2 0x7fb199afe583 in g_strdup debian/build/deb/../../../glib/gstrfuncs.c:361:17
-    #3 0x5624e82ea919 in qcrypto_tls_creds_psk_prop_set_username /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../crypto/tlscredspsk.c:255:23
-    #4 0x5624e812c6b5 in property_set_str /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object.c:2277:5
-    #5 0x5624e8125ce5 in object_property_set /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object.c:1463:5
-    #6 0x5624e8136e7c in object_set_properties_from_qdict /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object_interfaces.c:55:14
-    #7 0x5624e81372d2 in user_creatable_add_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object_interfaces.c:112:5
-    #8 0x5624e8137964 in user_creatable_add_qapi /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object_interfaces.c:157:11
-    #9 0x5624e891ba3c in qmp_object_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/qom-qmp-cmds.c:227:5
-    #10 0x5624e8af9118 in qmp_marshal_object_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qapi/qapi-commands-qom.c:337:5
-    #11 0x5624e8bd1d49 in do_qmp_dispatch_bh /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qapi/qmp-dispatch.c:128:5
-    #12 0x5624e8cb2531 in aio_bh_call /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/async.c:171:5
-    #13 0x5624e8cb340c in aio_bh_poll /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/async.c:218:13
-    #14 0x5624e8c0be98 in aio_dispatch /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/aio-posix.c:423:5
-    #15 0x5624e8cba3ce in aio_ctx_dispatch /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/async.c:360:5
-    #16 0x7fb199ae0d3a in g_main_dispatch debian/build/deb/../../../glib/gmain.c:3419:28
-    #17 0x7fb199ae0d3a in g_main_context_dispatch debian/build/deb/../../../glib/gmain.c:4137:7
-    #18 0x5624e8cbe1d9 in glib_pollfds_poll /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/main-loop.c:287:9
-    #19 0x5624e8cbcb13 in os_host_main_loop_wait /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/main-loop.c:310:5
-    #20 0x5624e8cbc6dc in main_loop_wait /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/main-loop.c:589:11
-    #21 0x5624e6f3f917 in qemu_main_loop /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../system/runstate.c:801:9
-    #22 0x5624e893379c in qemu_default_main /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../system/main.c:37:14
-    #23 0x5624e89337e7 in main /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../system/main.c:48:12
-    #24 0x7fb197972d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-    #25 0x7fb197972e3f in __libc_start_main csu/../csu/libc-start.c:392:3
-    #26 0x5624e5c16fa4 in _start (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x210bfa4) (BuildId: a9e623fa1009a9435c0142c037cd7b8c1ad04ce3)
-
-SUMMARY: AddressSanitizer: 5 byte(s) leaked in 1 allocation(s).
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Beraldo Leal <bleal@redhat.com>
 ---
-Found this playing around with the address-sanitizer and running
-"make check".  I guess this is stable material but maybe not
-important enough to go into 9.1 at this point in the cycle, since the
-bug has been present since the code was first written in 2018.
+ MAINTAINERS | 3 ---
+ 1 file changed, 3 deletions(-)
 
- crypto/tlscredspsk.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/crypto/tlscredspsk.c b/crypto/tlscredspsk.c
-index 546cad1c5a4..0d6b71a37cf 100644
---- a/crypto/tlscredspsk.c
-+++ b/crypto/tlscredspsk.c
-@@ -243,6 +243,7 @@ qcrypto_tls_creds_psk_finalize(Object *obj)
-     QCryptoTLSCredsPSK *creds = QCRYPTO_TLS_CREDS_PSK(obj);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 3584d6a6c6..806cf0884d 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3174,7 +3174,6 @@ F: qapi/cryptodev.json
+ Python library
+ M: John Snow <jsnow@redhat.com>
+ M: Cleber Rosa <crosa@redhat.com>
+-R: Beraldo Leal <bleal@redhat.com>
+ S: Maintained
+ F: python/
+ T: git https://gitlab.com/jsnow/qemu.git python
+@@ -4121,7 +4120,6 @@ M: Alex Bennée <alex.bennee@linaro.org>
+ M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ M: Thomas Huth <thuth@redhat.com>
+ R: Wainer dos Santos Moschetta <wainersm@redhat.com>
+-R: Beraldo Leal <bleal@redhat.com>
+ S: Maintained
+ F: .github/workflows/lockdown.yml
+ F: .gitlab-ci.yml
+@@ -4162,7 +4160,6 @@ W: https://trello.com/b/6Qi1pxVn/avocado-qemu
+ R: Cleber Rosa <crosa@redhat.com>
+ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+ R: Wainer dos Santos Moschetta <wainersm@redhat.com>
+-R: Beraldo Leal <bleal@redhat.com>
+ S: Odd Fixes
+ F: tests/avocado/
  
-     qcrypto_tls_creds_psk_unload(creds);
-+    g_free(creds->username);
- }
- 
- static void
 -- 
-2.34.1
+2.40.0
 
 
