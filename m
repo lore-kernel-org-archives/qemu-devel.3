@@ -4,76 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFABFC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 16:15:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF7E6C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 16:25:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sg51N-0005F7-QS; Mon, 19 Aug 2024 12:14:18 -0400
+	id 1sg5Bg-0008TP-9F; Mon, 19 Aug 2024 12:24:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=5961d01319=ian.brockbank@cirrus.com>)
- id 1sg51L-0004yy-B3; Mon, 19 Aug 2024 12:14:15 -0400
-Received: from mx0a-001ae601.pphosted.com ([67.231.149.25]
- helo=mx0b-001ae601.pphosted.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=5961d01319=ian.brockbank@cirrus.com>)
- id 1sg51G-0007hC-Ln; Mon, 19 Aug 2024 12:14:15 -0400
-Received: from pps.filterd (m0077473.ppops.net [127.0.0.1])
- by mx0a-001ae601.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47JF6kgG004018;
- Mon, 19 Aug 2024 11:11:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- PODMain02222019; bh=B8DLQvKLhrx+ODVEVv6MS/qGMzbh77KzgX40R1FVarM=; b=
- XG8Sgq8rkZvxqxTPS5X8OxhJVhO/fevPSewpocEifG4V8Uy/yPohJ0RQiuflZ9By
- U3isF3ubE2LmZYPlfMFU764YWic/Cso5Gr7ok9v1AmhESqOJ/mngG0PDawh+s6jf
- AOuN2JIakYmy8x8CGFIGXy297zs0uHOBCu1yNJFeZCtoW/gzkC/uyWMUmKeVWktw
- Mg0BmC88vZLDpuZMuS9lMIPoSamrQjIRC3sLFdahhZXV2TGKcfor6xlVoETj/wfK
- rRKQ6iwy2D1Pn7s5bH/yQFIEkjkn649origGfwgL93JF4W8+KoXABUFtOR08PGqR
- FBKUQ67d0zL0f1G63jwcwg==
-Received: from ausex01.ad.cirrus.com ([141.131.3.19])
- by mx0a-001ae601.pphosted.com (PPS) with ESMTPS id 412s8x1xbd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Aug 2024 11:11:35 -0500 (CDT)
-Received: from ausex01.ad.cirrus.com (141.131.37.95) by ausex01.ad.cirrus.com
- (141.131.37.95) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 19 Aug
- 2024 11:11:34 -0500
-Received: from EDIN7BQBTG3.ad.cirrus.com (141.131.38.212) by
- anon-ausex01.ad.cirrus.com (141.131.37.95) with Microsoft SMTP Server id
- 15.2.1544.9 via Frontend Transport; Mon, 19 Aug 2024 11:11:32 -0500
-From: Ian Brockbank <Ian.Brockbank@cirrus.com>
-To: <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>
-CC: Palmer Dabbelt <palmer@dabbelt.com>, Alistair Francis
- <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, Weiwei Li
- <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ian Brockbank
- <ian.brockbank@cirrus.com>, LIU Zhiwei <zhiwei_liu@c-sky.com>
-Subject: [PATCH 08/11 v2] target/riscv: Update interrupt handling in CLIC mode
-Date: Mon, 19 Aug 2024 17:02:19 +0100
-Message-ID: <20240819160742.27586-12-Ian.Brockbank@cirrus.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240819160742.27586-1-Ian.Brockbank@cirrus.com>
-References: <https://lists.gnu.org/archive/html/qemu-riscv/2024-08/msg00234.html>
- <20240819160742.27586-1-Ian.Brockbank@cirrus.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sg5Be-0008N8-Ut
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 12:24:54 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sg5Bd-0000UH-3H
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 12:24:54 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5bed83489c3so2975260a12.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 09:24:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724084691; x=1724689491; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=g3yzJ/Uh+Ss9qeZ/rfifb0nfuY+22VYUgWrT+qgRPNk=;
+ b=ErVnGi7UN3fGZ/Cn4zzh5clzOVHlsgbDhfAyquooVYDF/+dvjxVLhd127Gr2EFH6mQ
+ ziJb4m5mtDoA0AX3W7+jPh1FEeaU82FFmUJDQF6XTBaPrjbd+cL0QqOt7PXUFPyvSmgW
+ Ur+ZLurSEODpdRC5bejPA/0Ebd8ulVFvmTC7NPfaGzqNUfiqNkSPaBNtInKdISPtPomK
+ 2oRlBnto2zDU/X5f2c5o+2H0mzVqWMlW8mZHJ0u2IfJFC1dHtfeic2tM1aqLBXRtJExC
+ /+EKQkquyjwRYOo94QtXL157LYxulk/yOg1xKcH9Le8QS+AEnNOOht5gTFbhiwHhsAq2
+ niCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724084691; x=1724689491;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=g3yzJ/Uh+Ss9qeZ/rfifb0nfuY+22VYUgWrT+qgRPNk=;
+ b=rLy8WtFwt2z+Jw5BMZLJWgNaXLpKhO4rQEIqAZuHffE+u2xs2IbmDWvtfz/GrHnVIG
+ CbSrRwmyIxG/6uz2vPm0vzRDfed9w8zPLPka9wBfjrOLxZpGQyw5BXPLljBDAogt929O
+ 8mSm6tWYLuPFEORytg7asNc+IE/vTg8yPSjm7zbyS8hpvZNUy4SH1OcFNK7mWg8PRHfm
+ Zc334dSUIw1DuJYAs/MYAY3iEyca0IqJtgMa0ug5oFJ5Skdgo//STGXgJVBYyj0KbMJX
+ q2aXokbmOc0oi4+Q6MzLgk0Tzo9QMzTHtKKGfdwBtVBxb/vTgJx2gAXC6uNET5JQk6tP
+ M2xw==
+X-Gm-Message-State: AOJu0YxhSijMJ3s2dhXeA7+ViOV049lItoXcfrTT7QvmP8Nn1L/P/5Dm
+ wEiOBX+557ll3L9eMGVv0T0lKY64Uchp+PeRE0SUvOSBeyjYTfHjSY0Ra+TBc7/n8m4FRgtY2iM
+ dcGV1qcB5kGOuD05QArRYMdXecAFhd0kR0uCpXpMRmWeSRGr+
+X-Google-Smtp-Source: AGHT+IFnmThmQOsqobcheQ8DSdZ2IyQuJ13OWNYnLy/7D7bFA2AktGS750LkgnggXrRRsIv0s5JXQQnS92UDlkdXxaw=
+X-Received: by 2002:a05:6402:354e:b0:5be:e01c:6b5e with SMTP id
+ 4fb4d7f45d1cf-5bee01c6dd9mr4695200a12.35.1724084691073; Mon, 19 Aug 2024
+ 09:24:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: prNILGHpb-fk1DJ5VRtaFFAaByPb5zvy
-X-Proofpoint-GUID: prNILGHpb-fk1DJ5VRtaFFAaByPb5zvy
-X-Proofpoint-Spam-Reason: orgsafe
-Received-SPF: pass client-ip=67.231.149.25;
- envelope-from=prvs=5961d01319=ian.brockbank@cirrus.com;
- helo=mx0b-001ae601.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 19 Aug 2024 17:24:39 +0100
+Message-ID: <CAFEAcA-k7a+VObGAfCFNygQNfCKL=AfX6A4kScq=VSSK0peqPg@mail.gmail.com>
+Subject: apparent memory leak from object-add+object-del of memory-backend-ram
+To: QEMU Developers <qemu-devel@nongnu.org>
+Cc: David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,275 +84,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ian Brockbank <ian.brockbank@cirrus.com>
+Hi; I'm looking at a memory leak apparently in the host memory backend
+code that you can see from the qmp-cmd-test. Repro instructions:
 
-Decode CLIC interrupt information from exccode, includes interrupt
-privilege mode, interrupt level, and irq number.
+(1) build QEMU with '--cc=clang' '--cxx=clang++' '--enable-debug'
+'--target-list=x86_64-softmmu' '--enable-sanitizers'
+(2) run 'make check'. More specifically, to get just this
+failure ('make check' on current head-of-tree produces some
+other unrelated leak errors) you can run the relevant single test:
 
-Then update CSRs xcause, xstatus, xepc, xintstatus and jump to
-correct PC according to the CLIC specification.
+(cd build/asan && ASAN_OPTIONS="fast_unwind_on_malloc=0"
+QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/qmp-cmd-test
+--tap -k -p /x86_64/qmp/object-add-failure-modes)
 
-Signed-off-by: LIU Zhiwei <zhiwei_liu@c-sky.com>
-Signed-off-by: Ian Brockbank <ian.brockbank@cirrus.com>
----
- target/riscv/cpu_helper.c | 129 +++++++++++++++++++++++++++++++++++---
- 1 file changed, 119 insertions(+), 10 deletions(-)
+The test case is doing a variety of object-add then object-del
+of the "memory-backend-ram" object, and this add-del cycle seems
+to result in a fairly large leak:
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 395a1d9140..944afb68d2 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -24,6 +24,7 @@
- #include "internals.h"
- #include "pmu.h"
- #include "exec/exec-all.h"
-+#include "exec/cpu_ldst.h"
- #include "exec/page-protection.h"
- #include "instmap.h"
- #include "tcg/tcg-op.h"
-@@ -33,6 +34,7 @@
- #include "cpu_bits.h"
- #include "debug.h"
- #include "tcg/oversized-guest.h"
-+#include "hw/intc/riscv_clic.h"
+Direct leak of 1572864 byte(s) in 6 object(s) allocated from:
+    #0 0x555c1336efd8 in __interceptor_calloc
+(/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x218efd8)
+(BuildId: fc7566a39db1253aed91d500b5b1784e0c438397)
+    #1 0x7f5bf3472c50 in g_malloc0 debian/build/deb/../../../glib/gmem.c:161:13
+    #2 0x555c155bb134 in bitmap_new
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/include/qemu/bitmap.h:102:12
+    #3 0x555c155ba4ee in dirty_memory_extend system/physmem.c:1831:37
+    #4 0x555c15585a2b in ram_block_add system/physmem.c:1907:9
+    #5 0x555c15589e50 in qemu_ram_alloc_internal system/physmem.c:2109:5
+    #6 0x555c1558a096 in qemu_ram_alloc system/physmem.c:2129:12
+    #7 0x555c15518b69 in memory_region_init_ram_flags_nomigrate
+system/memory.c:1571:21
+    #8 0x555c1464fd27 in ram_backend_memory_alloc backends/hostmem-ram.c:34:12
+    #9 0x555c146510ac in host_memory_backend_memory_complete
+backends/hostmem.c:345:10
+    #10 0x555c1580bc90 in user_creatable_complete qom/object_interfaces.c:28:9
+    #11 0x555c1580c6f8 in user_creatable_add_type qom/object_interfaces.c:125:10
+    #12 0x555c1580ccc4 in user_creatable_add_qapi qom/object_interfaces.c:157:11
+    #13 0x555c15ff0e2c in qmp_object_add qom/qom-qmp-cmds.c:227:5
+    #14 0x555c161ce508 in qmp_marshal_object_add
+/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qapi/qapi-commands-qom.c:337:5
+    #15 0x555c162a7139 in do_qmp_dispatch_bh qapi/qmp-dispatch.c:128:5
+    #16 0x555c16387921 in aio_bh_call util/async.c:171:5
+    #17 0x555c163887fc in aio_bh_poll util/async.c:218:13
+    #18 0x555c162e1288 in aio_dispatch util/aio-posix.c:423:5
+    #19 0x555c1638f7be in aio_ctx_dispatch util/async.c:360:5
+    #20 0x7f5bf3469d3a in g_main_dispatch
+debian/build/deb/../../../glib/gmain.c:3419:28
+    #21 0x7f5bf3469d3a in g_main_context_dispatch
+debian/build/deb/../../../glib/gmain.c:4137:7
+    #22 0x555c163935c9 in glib_pollfds_poll util/main-loop.c:287:9
+    #23 0x555c16391f03 in os_host_main_loop_wait util/main-loop.c:310:5
+    #24 0x555c16391acc in main_loop_wait util/main-loop.c:589:11
+    #25 0x555c14614917 in qemu_main_loop system/runstate.c:801:9
+    #26 0x555c16008b8c in qemu_default_main system/main.c:37:14
+    #27 0x555c16008bd7 in main system/main.c:48:12
+    #28 0x7f5bf12fbd8f in __libc_start_call_main
+csu/../sysdeps/nptl/libc_start_call_main.h:58:16
 
- int riscv_env_mmu_index(CPURISCVState *env, bool ifetch)
- {
-@@ -428,6 +430,20 @@ int riscv_cpu_vsirq_pending(CPURISCVState *env)
-                                     (irqs | irqs_f_vs), env->hviprio);
- }
+My initial suspicion here is that the problem is that
+TYPE_MEMORY_BACKEND has a UserCreatableClass::complete method which
+calls HostMemoryBackend::alloc, but there is no corresponding
+"now free this" in instance_finalize. So ram_backend_memory_alloc()
+calls memory_region_init_ram_flags_nomigrate(), which allocates
+RAM, dirty blocks, etc, but nothing ever destroys the MR and the
+memory is leaked when the TYPE_MEMORY_BACKEND object is finalized.
 
-+static int riscv_cpu_local_irq_mode_enabled(CPURISCVState *env, int mode)
-+{
-+    switch (mode) {
-+    case PRV_M:
-+        return env->priv < PRV_M ||
-+            (env->priv =3D=3D PRV_M && get_field(env->mstatus, MSTATUS_MIE=
-));
-+    case PRV_S:
-+        return env->priv < PRV_S ||
-+            (env->priv =3D=3D PRV_S && get_field(env->mstatus, MSTATUS_SIE=
-));
-+    default:
-+        return false;
-+    }
-+}
-+
- static int riscv_cpu_local_irq_pending(CPURISCVState *env)
- {
-     uint64_t irqs, pending, mie, hsie, vsie, irqs_f, irqs_f_vs;
-@@ -506,6 +522,18 @@ bool riscv_cpu_exec_interrupt(CPUState *cs, int interr=
-upt_request)
-             return true;
-         }
-     }
-+    if (interrupt_request & CPU_INTERRUPT_CLIC) {
-+        RISCVCPU *cpu =3D RISCV_CPU(cs);
-+        CPURISCVState *env =3D &cpu->env;
-+        int mode =3D get_field(env->exccode, RISCV_EXCP_CLIC_MODE);
-+        int enabled =3D riscv_cpu_local_irq_mode_enabled(env, mode);
-+        if (enabled) {
-+            cs->exception_index =3D RISCV_EXCP_CLIC | env->exccode;
-+            cs->interrupt_request =3D cs->interrupt_request & ~CPU_INTERRU=
-PT_CLIC;
-+            riscv_cpu_do_interrupt(cs);
-+            return true;
-+        }
-+    }
-     return false;
- }
+But there isn't a "free" method in HostMemoryBackendClass,
+only an "alloc", so this looks like an API with "leaks memory"
+baked into it. How is the freeing of the memory on object
+deletion intended to work?
 
-@@ -1641,6 +1669,60 @@ static target_ulong riscv_transformed_insn(CPURISCVS=
-tate *env,
-     return xinsn;
- }
-
-+static target_ulong riscv_intr_pc(CPURISCVState *env, target_ulong tvec,
-+                                  target_ulong tvt, bool async,
-+                                  int cause, int mode)
-+{
-+    int mode1 =3D tvec & XTVEC_MODE;
-+    int mode2 =3D tvec & XTVEC_FULL_MODE;
-+
-+    if (!async) {
-+        return tvec & XTVEC_OBASE;
-+    }
-+    /* bits [1:0] encode mode; 0 =3D direct, 1 =3D vectored, 2 >=3D reserv=
-ed */
-+    switch (mode1) {
-+    case XTVEC_CLINT_DIRECT:
-+        return tvec & XTVEC_OBASE;
-+    case XTVEC_CLINT_VECTORED:
-+        return (tvec & XTVEC_OBASE) + cause * 4;
-+    default:
-+        if (env->clic && (mode2 =3D=3D XTVEC_CLIC)) {
-+            /* Non-vectored, clicintattr[i].shv =3D 0 || cliccfg.nvbits =
-=3D 0 */
-+            if (!riscv_clic_shv_interrupt(env->clic, cause)) {
-+                /* NBASE =3D mtvec[XLEN-1:6]<<6 */
-+                return tvec & XTVEC_NBASE;
-+            } else {
-+                /*
-+                 * pc :=3D M[TBASE + XLEN/8 * exccode)] & ~1,
-+                 * TBASE =3D mtvt[XLEN-1:6]<<6
-+                 */
-+                int size =3D TARGET_LONG_BITS / 8;
-+                target_ulong tbase =3D (tvt & XTVEC_NBASE) + size * cause;
-+                void *host =3D tlb_vaddr_to_host(env, tbase, MMU_DATA_LOAD=
-, mode);
-+                if (host !=3D NULL) {
-+                    target_ulong new_pc =3D tbase;
-+                    if (!riscv_clic_use_jump_table(env->clic)) {
-+                        /*
-+                         * Standard CLIC: the vector entry is a function p=
-ointer
-+                         * so look up the destination.
-+                         */
-+                        new_pc =3D ldn_p(host, size);
-+                        host =3D tlb_vaddr_to_host(env, new_pc,
-+                                                 MMU_INST_FETCH, mode);
-+                    }
-+                    if (host) {
-+                        return new_pc;
-+                    }
-+                }
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                              "CLIC: load trap handler error!\n");
-+                exit(1);
-+            }
-+        }
-+        g_assert_not_reached();
-+    }
-+}
-+
- /*
-  * Handle Traps
-  *
-@@ -1654,12 +1736,14 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-     bool virt =3D env->virt_enabled;
-     bool write_gva =3D false;
-     uint64_t s;
-+    int mode, level, irq;
-
-     /*
-      * cs->exception is 32-bits wide unlike mcause which is XLEN-bits wide
-      * so we mask off the MSB and separate into trap type and cause.
-      */
--    bool async =3D !!(cs->exception_index & RISCV_EXCP_INT_FLAG);
-+    bool clic =3D !!(cs->exception_index & RISCV_EXCP_CLIC);
-+    bool async =3D !!(cs->exception_index & RISCV_EXCP_INT_FLAG) || clic;
-     target_ulong cause =3D cs->exception_index & RISCV_EXCP_INT_MASK;
-     uint64_t deleg =3D async ? env->mideleg : env->medeleg;
-     bool s_injected =3D env->mvip & (1 << cause) & env->mvien &&
-@@ -1746,6 +1830,28 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-         }
-     }
-
-+    if (clic) {
-+        riscv_clic_decode_exccode(cause, &mode, &level, &irq);
-+        cause =3D irq | get_field(env->mstatus, MSTATUS_MPP) << XCAUSE_XPP=
-_SHIFT;
-+        switch (mode) {
-+        case PRV_M:
-+            cause |=3D get_field(env->mintstatus, MINTSTATUS_MIL)
-+                     << XCAUSE_XPIL_SHIFT;
-+            cause |=3D get_field(env->mstatus, MSTATUS_MIE) << XCAUSE_XPIE=
-_SHIFT;
-+            env->mintstatus =3D set_field(env->mintstatus, MINTSTATUS_MIL,=
- level);
-+            break;
-+        case PRV_S:
-+            cause |=3D get_field(env->mintstatus, MINTSTATUS_SIL)
-+                     << XCAUSE_XPIL_SHIFT;
-+            cause |=3D get_field(env->mstatus, MSTATUS_SPIE) << XCAUSE_XPI=
-E_SHIFT;
-+            env->mintstatus =3D set_field(env->mintstatus, MINTSTATUS_SIL,=
- level);
-+            break;
-+        }
-+    } else {
-+        mode =3D env->priv <=3D PRV_S && cause < 64 &&
-+            ((deleg >> cause) & 1 || s_injected || vs_injected) ? PRV_S : =
-PRV_M;
-+    }
-+
-     trace_riscv_trap(env->mhartid, async, cause, env->pc, tval,
-                      riscv_cpu_get_trap_name(cause, async));
-
-@@ -1755,8 +1861,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-                   __func__, env->mhartid, async, cause, env->pc, tval,
-                   riscv_cpu_get_trap_name(cause, async));
-
--    if (env->priv <=3D PRV_S && cause < 64 &&
--        (((deleg >> cause) & 1) || s_injected || vs_injected)) {
-+    if (PRV_S =3D=3D mode) {
-         /* handle the trap in S-mode */
-         if (riscv_has_ext(env, RVH)) {
-             uint64_t hdeleg =3D async ? env->hideleg : env->hedeleg;
-@@ -1765,7 +1870,7 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-                 (((hdeleg >> cause) & 1) || vs_injected)) {
-                 /* Trap to VS mode */
-                 /*
--                 * See if we need to adjust cause. Yes if its VS mode inte=
-rrupt
-+                 * See if we need to adjust cause. Yes if it's VS mode int=
-errupt
-                  * no if hypervisor has delegated one of hs mode's interru=
-pt
-                  */
-                 if (async && (cause =3D=3D IRQ_VS_TIMER || cause =3D=3D IR=
-Q_VS_SOFT ||
-@@ -1796,13 +1901,15 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-         s =3D set_field(s, MSTATUS_SPP, env->priv);
-         s =3D set_field(s, MSTATUS_SIE, 0);
-         env->mstatus =3D s;
--        env->scause =3D cause | ((target_ulong)async << (TARGET_LONG_BITS =
-- 1));
-+        if (async) {
-+            env->scause =3D cause | SCAUSE_INT;
-+        }
-         env->sepc =3D env->pc;
-         env->stval =3D tval;
-         env->htval =3D htval;
-         env->htinst =3D tinst;
--        env->pc =3D (env->stvec >> 2 << 2) +
--                  ((async && (env->stvec & 3) =3D=3D 1) ? cause * 4 : 0);
-+        env->pc =3D riscv_intr_pc(env, env->stvec, env->stvt, async,
-+                                cause & SCAUSE_EXCCODE, PRV_S);
-         riscv_cpu_set_mode(env, PRV_S, virt);
-     } else {
-         /* handle the trap in M-mode */
-@@ -1827,13 +1934,15 @@ void riscv_cpu_do_interrupt(CPUState *cs)
-         s =3D set_field(s, MSTATUS_MPP, env->priv);
-         s =3D set_field(s, MSTATUS_MIE, 0);
-         env->mstatus =3D s;
--        env->mcause =3D cause | ~(((target_ulong)-1) >> async);
-+        if (async) {
-+            env->mcause =3D cause | MCAUSE_INT;
-+        }
-         env->mepc =3D env->pc;
-         env->mtval =3D tval;
-         env->mtval2 =3D mtval2;
-         env->mtinst =3D tinst;
--        env->pc =3D (env->mtvec >> 2 << 2) +
--                  ((async && (env->mtvec & 3) =3D=3D 1) ? cause * 4 : 0);
-+        env->pc =3D riscv_intr_pc(env, env->mtvec, env->mtvt, async,
-+                                cause & MCAUSE_EXCCODE, PRV_M);
-         riscv_cpu_set_mode(env, PRV_M, virt);
-     }
-
---
-2.46.0.windows.1
-This message and any attachments may contain privileged and confidential in=
-formation that is intended solely for the person(s) to whom it is addressed=
-. If you are not an intended recipient you must not: read; copy; distribute=
-; discuss; take any action in or make any reliance upon the contents of thi=
-s message; nor open or read any attachment. If you have received this messa=
-ge in error, please notify us as soon as possible on the following telephon=
-e number and destroy this message including any attachments. Thank you. Cir=
-rus Logic International (UK) Ltd and Cirrus Logic International Semiconduct=
-or Ltd are companies registered in Scotland, with registered numbers SC0898=
-39 and SC495735 respectively. Our registered office is at 7B Nightingale Wa=
-y, Quartermile, Edinburgh, EH3 9EG, UK. Tel: +44 (0)131 272 7000. www.cirru=
-s.com
+thanks
+-- PMM
 
