@@ -4,94 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDE88C5320E
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 12:58:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF555C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 12:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sg1xC-0002pZ-PI; Mon, 19 Aug 2024 08:57:48 -0400
+	id 1sg1yO-00056H-Ig; Mon, 19 Aug 2024 08:59:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sg1x8-0002oU-HM
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 08:57:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sg1yF-0004Rh-LM; Mon, 19 Aug 2024 08:58:51 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sg1x6-0005Gg-Jp
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 08:57:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724072259;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bQq04umgaGGIU/uyNF6ouiRkFMTZ4eoaEDjVqBV4xoQ=;
- b=L+HdzufIZx3ptFtlVd/+jsYjfLa9AFMLC4kRpF/Cw+6XOIJA4yRhpBXG4Yf2s5tAX+tnkj
- B0tc2bM9SudAsJzl6ULSxl0wglPsccVke0Et7bM3S/+ce0tGj5+WIUlimB/wx0cdp5g3Gl
- /s9hw9Jpr1ZCRGoG8Qv6Jx5bPpoL+2I=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-689-yRSjae6dPsKAYhFKBVwRxg-1; Mon, 19 Aug 2024 08:57:37 -0400
-X-MC-Unique: yRSjae6dPsKAYhFKBVwRxg-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3717cc80ce1so2647017f8f.0
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 05:57:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724072256; x=1724677056;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bQq04umgaGGIU/uyNF6ouiRkFMTZ4eoaEDjVqBV4xoQ=;
- b=jr0YRbhqvkDEm1WcU/J+9lMEquBNkfTy8JIdYK5w75KE8zpUI3h7NkNpXvQmmqVjZ1
- z0GnVpPMZnZnsBVefc1ZfQcFbM3lCpsd41I5Q8/hD58lyEd8vObRFMlY4HvA0UWuAazc
- Hc2u5nQVXGNDJILnnZyaDKQHBh7M+yEEyIrbNNbvqrU0Tq/280pm7u/u6YRiDHbsXBxL
- +tVHgeuvYye+GH6VnhW44p8ge4pEwmmjWAoFFAhT5r/SMqJLIaA/vsR1lTTpLmTSVmBc
- oBMGcxmSmhqeCszxXywmIF2DoCoxSCchO6YrU1fgL8d3dctMFVI162zYdtsuh62G8NuG
- PPwQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXPdnr7bLwE1BMF6iCF3/DRIqB4/WGYPthrxI0OdMn+YIsqAtE1MSoWj00wgBegjYrBmRERxvCh0ohYrZvc1cJ7bnaW3U=
-X-Gm-Message-State: AOJu0YzKkMoF14rwXQ/+wfvMR/1aQd9aTi8ApIzwhrK+D1omcZ7KwuJm
- ASEFGfjcY7hrO1Fowp1Q+WQEpcCCDalks2vwMa27510hGRga1SBqtnbZChBWK1RU9fVHviXlcgC
- dWW7XV6m0rMhW28wES5UZohD+NRNXVAm/htKklijmVczFpnYLTLQK
-X-Received: by 2002:a05:6000:e4e:b0:367:8f29:f7b6 with SMTP id
- ffacd0b85a97d-371946ae685mr7234182f8f.51.1724072256297; 
- Mon, 19 Aug 2024 05:57:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEdM5bWz0CAQc4dGvn0HR9XlG67JZvOfW1ujlsk+hoA8XtZ2Fphyll8c8dG8XzG5MUJlwt/cg==
-X-Received: by 2002:a05:6000:e4e:b0:367:8f29:f7b6 with SMTP id
- ffacd0b85a97d-371946ae685mr7234159f8f.51.1724072255728; 
- Mon, 19 Aug 2024 05:57:35 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3718984c0d0sm10471874f8f.38.2024.08.19.05.57.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Aug 2024 05:57:35 -0700 (PDT)
-Date: Mon, 19 Aug 2024 14:57:34 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v8 12/13] acpi/ghes: cleanup generic error data logic
-Message-ID: <20240819145734.03977654@imammedo.users.ipa.redhat.com>
-In-Reply-To: <d91565e9ac1c59bd2bb22b06256f5fefcb43a973.1723793768.git.mchehab+huawei@kernel.org>
-References: <cover.1723793768.git.mchehab+huawei@kernel.org>
- <d91565e9ac1c59bd2bb22b06256f5fefcb43a973.1723793768.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sg1yC-0005LF-V8; Mon, 19 Aug 2024 08:58:51 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WnXdP1TMHz6LDKx;
+ Mon, 19 Aug 2024 20:55:37 +0800 (CST)
+Received: from lhrpeml500006.china.huawei.com (unknown [7.191.161.198])
+ by mail.maildlp.com (Postfix) with ESMTPS id 2FD42140A78;
+ Mon, 19 Aug 2024 20:58:40 +0800 (CST)
+Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
+ lhrpeml500006.china.huawei.com (7.191.161.198) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 19 Aug 2024 13:58:39 +0100
+Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
+ lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
+ Mon, 19 Aug 2024 13:58:39 +0100
+To: Peter Maydell <peter.maydell@linaro.org>, =?utf-8?B?QWxleCBCZW5uw6ll?=
+ <alex.bennee@linaro.org>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "mst@redhat.com" <mst@redhat.com>, "maz@kernel.org"
+ <maz@kernel.org>, "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>, "lpieralisi@kernel.org"
+ <lpieralisi@kernel.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "imammedo@redhat.com" <imammedo@redhat.com>,
+ "andrew.jones@linux.dev" <andrew.jones@linux.dev>, "david@redhat.com"
+ <david@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "will@kernel.org"
+ <will@kernel.org>, "ardb@kernel.org" <ardb@kernel.org>,
+ "oliver.upton@linux.dev" <oliver.upton@linux.dev>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>, "gshan@redhat.com" <gshan@redhat.com>,
+ "rafael@kernel.org" <rafael@kernel.org>, "borntraeger@linux.ibm.com"
+ <borntraeger@linux.ibm.com>, "npiggin@gmail.com" <npiggin@gmail.com>,
+ "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>, "linux@armlinux.org.uk"
+ <linux@armlinux.org.uk>, "darren@os.amperecomputing.com"
+ <darren@os.amperecomputing.com>, "ilkka@os.amperecomputing.com"
+ <ilkka@os.amperecomputing.com>, "vishnu@os.amperecomputing.com"
+ <vishnu@os.amperecomputing.com>, "karl.heubaum@oracle.com"
+ <karl.heubaum@oracle.com>, "miguel.luis@oracle.com" <miguel.luis@oracle.com>, 
+ "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>, zhukeqian
+ <zhukeqian1@huawei.com>, "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
+ "wangyanan (Y)" <wangyanan55@huawei.com>, "jiakernel2@gmail.com"
+ <jiakernel2@gmail.com>, "maobibo@loongson.cn" <maobibo@loongson.cn>,
+ "lixianglai@loongson.cn" <lixianglai@loongson.cn>, "shahuang@redhat.com"
+ <shahuang@redhat.com>, "zhao1.liu@intel.com" <zhao1.liu@intel.com>, Linuxarm
+ <linuxarm@huawei.com>
+Subject: RE: [PATCH RFC V3 24/29] target/arm: Add support of *unrealize*
+ ARMCPU during vCPU Hot-unplug
+Thread-Topic: [PATCH RFC V3 24/29] target/arm: Add support of *unrealize*
+ ARMCPU during vCPU Hot-unplug
+Thread-Index: AQHavev6H7OxF7zZK02qabf2MUOdZrIqaJGS///y5oCABJZOYA==
+Date: Mon, 19 Aug 2024 12:58:39 +0000
+Message-ID: <0059c598676a4b9d8e34b9c0dc62b09e@huawei.com>
+References: <20240613233639.202896-1-salil.mehta@huawei.com>
+ <20240613233639.202896-25-salil.mehta@huawei.com>
+ <87v800wkb1.fsf@draig.linaro.org>
+ <CAFEAcA9A9Oq0nURkiLNWZNC=P7KQGyr8TjjfOmEq+squwF+xog@mail.gmail.com>
+In-Reply-To: <CAFEAcA9A9Oq0nURkiLNWZNC=P7KQGyr8TjjfOmEq+squwF+xog@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.48.151.47]
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.134,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,100 +100,98 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Aug 2024 09:37:44 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-
-> Remove comments that are obvious.
-> 
-> No functional changes.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-these comments help if you don't have spec side by side with code
-to compare. I'd even say such comments are preferable than no comments
-when composing an ACPI table.
-
-pls, drop the patch
-
-> ---
->  hw/acpi/ghes.c | 38 +++++++++++++++-----------------------
->  1 file changed, 15 insertions(+), 23 deletions(-)
-> 
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index 4f7b6c5ad2b6..a822a5eafaa0 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -130,34 +130,28 @@ static void build_ghes_hw_error_notification(GArray *table, const uint8_t type)
->   * ACPI 6.1: 18.3.2.7.1 Generic Error Data
->   */
->  static void acpi_ghes_generic_error_data(GArray *table,
-> -                const uint8_t *section_type, uint32_t error_severity,
-> -                uint8_t validation_bits, uint8_t flags,
-> -                uint32_t error_data_length, QemuUUID fru_id,
-> -                uint64_t time_stamp)
-> +                                         const uint8_t *section_type,
-> +                                         uint32_t error_severity,
-> +                                         uint8_t validation_bits,
-> +                                         uint8_t flags,
-> +                                         uint32_t error_data_length,
-> +                                         QemuUUID fru_id,
-> +                                         uint64_t time_stamp)
->  {
->      const uint8_t fru_text[20] = {0};
->  
-> -    /* Section Type */
->      g_array_append_vals(table, section_type, 16);
-> -
-> -    /* Error Severity */
->      build_append_int_noprefix(table, error_severity, 4);
-> +
->      /* Revision */
->      build_append_int_noprefix(table, 0x300, 2);
-> -    /* Validation Bits */
-> +
->      build_append_int_noprefix(table, validation_bits, 1);
-> -    /* Flags */
->      build_append_int_noprefix(table, flags, 1);
-> -    /* Error Data Length */
->      build_append_int_noprefix(table, error_data_length, 4);
->  
-> -    /* FRU Id */
->      g_array_append_vals(table, fru_id.data, ARRAY_SIZE(fru_id.data));
-> -
-> -    /* FRU Text */
->      g_array_append_vals(table, fru_text, sizeof(fru_text));
-> -
-> -    /* Timestamp */
->      build_append_int_noprefix(table, time_stamp, 8);
->  }
->  
-> @@ -165,19 +159,17 @@ static void acpi_ghes_generic_error_data(GArray *table,
->   * Generic Error Status Block
->   * ACPI 6.1: 18.3.2.7.1 Generic Error Data
->   */
-> -static void acpi_ghes_generic_error_status(GArray *table, uint32_t block_status,
-> -                uint32_t raw_data_offset, uint32_t raw_data_length,
-> -                uint32_t data_length, uint32_t error_severity)
-> +static void acpi_ghes_generic_error_status(GArray *table,
-> +                                           uint32_t block_status,
-> +                                           uint32_t raw_data_offset,
-> +                                           uint32_t raw_data_length,
-> +                                           uint32_t data_length,
-> +                                           uint32_t error_severity)
->  {
-> -    /* Block Status */
->      build_append_int_noprefix(table, block_status, 4);
-> -    /* Raw Data Offset */
->      build_append_int_noprefix(table, raw_data_offset, 4);
-> -    /* Raw Data Length */
->      build_append_int_noprefix(table, raw_data_length, 4);
-> -    /* Data Length */
->      build_append_int_noprefix(table, data_length, 4);
-> -    /* Error Severity */
->      build_append_int_noprefix(table, error_severity, 4);
->  }
->  
-
+SGkgUGV0ZXIsDQoNCj4gIEZyb206IFBldGVyIE1heWRlbGwgPHBldGVyLm1heWRlbGxAbGluYXJv
+Lm9yZz4NCj4gIFNlbnQ6IEZyaWRheSwgQXVndXN0IDE2LCAyMDI0IDQ6NTEgUE0NCj4gIFRvOiBB
+bGV4IEJlbm7DqWUgPGFsZXguYmVubmVlQGxpbmFyby5vcmc+DQo+ICANCj4gIE9uIEZyaSwgMTYg
+QXVnIDIwMjQgYXQgMTY6MzcsIEFsZXggQmVubsOpZSA8YWxleC5iZW5uZWVAbGluYXJvLm9yZz4g
+d3JvdGU6DQo+ICA+DQo+ICA+IFNhbGlsIE1laHRhIDxzYWxpbC5tZWh0YUBodWF3ZWkuY29tPiB3
+cml0ZXM6DQo+ICA+DQo+ICA+ID4gdkNQVSBIb3QtdW5wbHVnIHdpbGwgcmVzdWx0IGluIFFPTSBD
+UFUgb2JqZWN0IHVucmVhbGl6YXRpb24gd2hpY2gNCj4gID4gPiB3aWxsIGRvIGF3YXkgd2l0aCBh
+bGwgdGhlIHZDUFUgdGhyZWFkIGNyZWF0aW9ucywgYWxsb2NhdGlvbnMsDQo+ICA+ID4gcmVnaXN0
+cmF0aW9ucyB0aGF0IGhhcHBlbmVkIGFzIHBhcnQgb2YgdGhlIHJlYWxpemF0aW9uIHByb2Nlc3Mu
+IFRoaXMNCj4gID4gPiBjaGFuZ2UgaW50cm9kdWNlcyB0aGUgQVJNIENQVSB1bnJlYWxpemUgZnVu
+Y3Rpb24gdGFraW5nIGNhcmUgb2YgZXhhY3RseQ0KPiAgdGhhdC4NCj4gID4gPg0KPiAgPiA+IE5v
+dGUsIGluaXRpYWxpemVkIEtWTSB2Q1BVcyBhcmUgbm90IGRlc3Ryb3llZCBpbiBob3N0IEtWTSBi
+dXQgdGhlaXINCj4gID4gPiBRZW11IGNvbnRleHQgaXMgcGFya2VkIGF0IHRoZSBRRU1VIEtWTSBs
+YXllci4NCj4gID4gPg0KPiAgPiA+IENvLWRldmVsb3BlZC1ieTogS2VxaWFuIFpodSA8emh1a2Vx
+aWFuMUBodWF3ZWkuY29tPg0KPiAgPiA+IFNpZ25lZC1vZmYtYnk6IEtlcWlhbiBaaHUgPHpodWtl
+cWlhbjFAaHVhd2VpLmNvbT4NCj4gID4gPiBTaWduZWQtb2ZmLWJ5OiBTYWxpbCBNZWh0YSA8c2Fs
+aWwubWVodGFAaHVhd2VpLmNvbT4NCj4gID4gPiBSZXBvcnRlZC1ieTogVmlzaG51IFBhamp1cmkg
+PHZpc2hudUBvcy5hbXBlcmVjb21wdXRpbmcuY29tPg0KPiAgPiA+IFtWUDogSWRlbnRpZmllZCBD
+UFUgc3RhbGwgaXNzdWUgJiBzdWdnZXN0ZWQgcHJvYmFibGUgZml4XQ0KPiAgPiA+IFNpZ25lZC1v
+ZmYtYnk6IFNhbGlsIE1laHRhIDxzYWxpbC5tZWh0YUBodWF3ZWkuY29tPg0KPiAgPiA+IC0tLQ0K
+PiAgPiA+ICB0YXJnZXQvYXJtL2NwdS5jICAgICAgIHwgMTAxDQo+ICArKysrKysrKysrKysrKysr
+KysrKysrKysrKysrKysrKysrKysrKysrKw0KPiAgPiA+ICB0YXJnZXQvYXJtL2NwdS5oICAgICAg
+IHwgIDE0ICsrKysrKw0KPiAgPiA+ICB0YXJnZXQvYXJtL2dkYnN0dWIuYyAgIHwgICA2ICsrKw0K
+PiAgPiA+ICB0YXJnZXQvYXJtL2hlbHBlci5jICAgIHwgIDI1ICsrKysrKysrKysNCj4gID4gPiAg
+dGFyZ2V0L2FybS9pbnRlcm5hbHMuaCB8ICAgMyArKw0KPiAgPiA+ICB0YXJnZXQvYXJtL2t2bS5j
+ICAgICAgIHwgICA1ICsrDQo+ICA+ID4gIDYgZmlsZXMgY2hhbmdlZCwgMTU0IGluc2VydGlvbnMo
+KykNCj4gID4gPg0KPiAgPiA+IGRpZmYgLS1naXQgYS90YXJnZXQvYXJtL2NwdS5jIGIvdGFyZ2V0
+L2FybS9jcHUuYyBpbmRleA0KPiAgPiA+IGM5MjE2MmZhOTcuLmEzZGM2NjkzMDkgMTAwNjQ0DQo+
+ICA+ID4gLS0tIGEvdGFyZ2V0L2FybS9jcHUuYw0KPiAgPiA+ICsrKyBiL3RhcmdldC9hcm0vY3B1
+LmMNCj4gID4gPiBAQCAtMTU3LDYgKzE1NywxNiBAQCB2b2lkDQo+ICBhcm1fcmVnaXN0ZXJfcHJl
+X2VsX2NoYW5nZV9ob29rKEFSTUNQVSAqY3B1LCBBUk1FTENoYW5nZUhvb2tGbg0KPiAgKmhvb2ss
+DQo+ICA+ID4gICAgICBRTElTVF9JTlNFUlRfSEVBRCgmY3B1LT5wcmVfZWxfY2hhbmdlX2hvb2tz
+LCBlbnRyeSwgbm9kZSk7ICB9DQo+ICA+ID4NCj4gID4gPiArdm9pZCBhcm1fdW5yZWdpc3Rlcl9w
+cmVfZWxfY2hhbmdlX2hvb2tzKEFSTUNQVSAqY3B1KSB7DQo+ICA+ID4gKyAgICBBUk1FTENoYW5n
+ZUhvb2sgKmVudHJ5LCAqbmV4dDsNCj4gID4gPiArDQo+ICA+ID4gKyAgICBRTElTVF9GT1JFQUNI
+X1NBRkUoZW50cnksICZjcHUtPnByZV9lbF9jaGFuZ2VfaG9va3MsIG5vZGUsDQo+ICBuZXh0KSB7
+DQo+ICA+ID4gKyAgICAgICAgUUxJU1RfUkVNT1ZFKGVudHJ5LCBub2RlKTsNCj4gID4gPiArICAg
+ICAgICBnX2ZyZWUoZW50cnkpOw0KPiAgPiA+ICsgICAgfQ0KPiAgPiA+ICt9DQo+ICA+ID4gKw0K
+PiAgPiA+ICB2b2lkIGFybV9yZWdpc3Rlcl9lbF9jaGFuZ2VfaG9vayhBUk1DUFUgKmNwdSwNCj4g
+IEFSTUVMQ2hhbmdlSG9va0ZuICpob29rLA0KPiAgPiA+ICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICB2b2lkICpvcGFxdWUpICB7IEBAIC0xNjgsNiArMTc4LDE2DQo+ICA+ID4gQEAg
+dm9pZCBhcm1fcmVnaXN0ZXJfZWxfY2hhbmdlX2hvb2soQVJNQ1BVICpjcHUsDQo+ICBBUk1FTENo
+YW5nZUhvb2tGbiAqaG9vaywNCj4gID4gPiAgICAgIFFMSVNUX0lOU0VSVF9IRUFEKCZjcHUtPmVs
+X2NoYW5nZV9ob29rcywgZW50cnksIG5vZGUpOyAgfQ0KPiAgPiA+DQo+ICA+ID4gK3ZvaWQgYXJt
+X3VucmVnaXN0ZXJfZWxfY2hhbmdlX2hvb2tzKEFSTUNQVSAqY3B1KSB7DQo+ICA+ID4gKyAgICBB
+Uk1FTENoYW5nZUhvb2sgKmVudHJ5LCAqbmV4dDsNCj4gID4gPiArDQo+ICA+ID4gKyAgICBRTElT
+VF9GT1JFQUNIX1NBRkUoZW50cnksICZjcHUtPmVsX2NoYW5nZV9ob29rcywgbm9kZSwgbmV4dCkN
+Cj4gIHsNCj4gID4gPiArICAgICAgICBRTElTVF9SRU1PVkUoZW50cnksIG5vZGUpOw0KPiAgPiA+
+ICsgICAgICAgIGdfZnJlZShlbnRyeSk7DQo+ICA+ID4gKyAgICB9DQo+ICA+ID4gK30NCj4gID4g
+PiArDQo+ICA+ID4gIHN0YXRpYyB2b2lkIGNwX3JlZ19yZXNldChncG9pbnRlciBrZXksIGdwb2lu
+dGVyIHZhbHVlLCBncG9pbnRlcg0KPiAgPiA+IG9wYXF1ZSkgIHsNCj4gID4gPiAgICAgIC8qIFJl
+c2V0IGEgc2luZ2xlIEFSTUNQUmVnSW5mbyByZWdpc3RlciAqLyBAQCAtMjU1Miw2ICsyNTcyLDg1
+DQo+ICA+ID4gQEAgc3RhdGljIHZvaWQgYXJtX2NwdV9yZWFsaXplZm4oRGV2aWNlU3RhdGUgKmRl
+diwgRXJyb3IgKiplcnJwKQ0KPiAgPiA+ICAgICAgYWNjLT5wYXJlbnRfcmVhbGl6ZShkZXYsIGVy
+cnApOyAgfQ0KPiAgPiA+DQo+ICA+ID4gK3N0YXRpYyB2b2lkIGFybV9jcHVfdW5yZWFsaXplZm4o
+RGV2aWNlU3RhdGUgKmRldikgew0KPiAgPiA+ICsgICAgQVJNQ1BVQ2xhc3MgKmFjYyA9IEFSTV9D
+UFVfR0VUX0NMQVNTKGRldik7DQo+ICA+ID4gKyAgICBBUk1DUFUgKmNwdSA9IEFSTV9DUFUoZGV2
+KTsNCj4gID4gPiArICAgIENQVUFSTVN0YXRlICplbnYgPSAmY3B1LT5lbnY7DQo+ICA+ID4gKyAg
+ICBDUFVTdGF0ZSAqY3MgPSBDUFUoZGV2KTsNCj4gID4gPiArICAgIGJvb2wgaGFzX3NlY3VyZTsN
+Cj4gID4gPiArDQo+ICA+ID4gKyAgICBoYXNfc2VjdXJlID0gY3B1LT5oYXNfZWwzIHx8IGFybV9m
+ZWF0dXJlKGVudiwNCj4gID4gPiArIEFSTV9GRUFUVVJFX01fU0VDVVJJVFkpOw0KPiAgPiA+ICsN
+Cj4gID4gPiArICAgIC8qIHJvY2sgJ24nIHVuLXJvbGwsIHdoYXRldmVyIGhhcHBlbmVkIGluIHRo
+ZSBhcm1fY3B1X3JlYWxpemVmbg0KPiAgY2xlYW5seSAqLw0KPiAgPiA+ICsgICAgY3B1X2FkZHJl
+c3Nfc3BhY2VfZGVzdHJveShjcywgQVJNQVNJZHhfTlMpOw0KPiAgPg0KPiAgPiBPbiBjdXJyZW50
+IG1hc3RlciB0aGlzIHdpbGwgZmFpbDoNCj4gID4NCj4gID4gLi4vLi4vdGFyZ2V0L2FybS9jcHUu
+YzogSW4gZnVuY3Rpb24g4oCYYXJtX2NwdV91bnJlYWxpemVmbuKAmToNCj4gID4gLi4vLi4vdGFy
+Z2V0L2FybS9jcHUuYzoyNjI2OjU6IGVycm9yOiBpbXBsaWNpdCBkZWNsYXJhdGlvbiBvZiBmdW5j
+dGlvbg0KPiAg4oCYY3B1X2FkZHJlc3Nfc3BhY2VfZGVzdHJveeKAmSBbLVdlcnJvcj1pbXBsaWNp
+dC1mdW5jdGlvbi1kZWNsYXJhdGlvbl0NCj4gID4gIDI2MjYgfCAgICAgY3B1X2FkZHJlc3Nfc3Bh
+Y2VfZGVzdHJveShjcywgQVJNQVNJZHhfTlMpOw0KPiAgPiAgICAgICB8ICAgICBefn5+fn5+fn5+
+fn5+fn5+fn5+fn5+fn5+DQo+ICA+IC4uLy4uL3RhcmdldC9hcm0vY3B1LmM6MjYyNjo1OiBlcnJv
+cjogbmVzdGVkIGV4dGVybiBkZWNsYXJhdGlvbiBvZg0KPiAgPiDigJhjcHVfYWRkcmVzc19zcGFj
+ZV9kZXN0cm954oCZIFstV2Vycm9yPW5lc3RlZC1leHRlcm5zXQ0KPiAgPiBjYzE6IGFsbCB3YXJu
+aW5ncyBiZWluZyB0cmVhdGVkIGFzIGVycm9ycw0KPiAgDQo+ICBXZSBzaG91bGRuJ3QgbmVlZCB0
+byBleHBsaWNpdGx5IGNhbGwgY3B1X2FkZHJlc3Nfc3BhY2VfZGVzdHJveSgpIGZyb20gYQ0KPiAg
+dGFyZ2V0LXNwZWNpZmljIHVucmVhbGl6ZSBhbnl3YXk6IHdlIGNhbiBkbyBpdCBhbGwgZnJvbSB0
+aGUgYmFzZSBjbGFzcyAoYW5kIEkNCj4gIHRoaW5rIHRoaXMgd291bGQgZml4IHNvbWUgbGVha3Mg
+aW4gY3VycmVudCBjb2RlIGZvciB0YXJnZXRzIHRoYXQgaG90LXVucGx1ZywNCj4gIHRob3VnaCBJ
+IHNob3VsZCBjaGVjayB0aGF0KS4gT3RoZXJ3aXNlIHlvdSBuZWVkIHRvIGR1cGxpY2F0ZSBhbGwg
+dGhlIGxvZ2ljIGZvcg0KPiAgZmlndXJpbmcgb3V0IHdoaWNoIGFkZHJlc3Mgc3BhY2VzIHdlIGNy
+ZWF0ZWQgaW4gcmVhbGl6ZSwgd2hpY2ggaXMgZnJhZ2lsZSBhbmQNCj4gIG5vdCBuZWNlc3Nhcnkg
+d2hlbiBhbGwgd2Ugd2FudCB0byBkbyBpcyAiZGVsZXRlIGV2ZXJ5IGFkZHJlc3Mgc3BhY2UgdGhl
+DQo+ICBDUFUgb2JqZWN0IGhhcyINCj4gIGFuZCB3ZSB3YW50IHRvIGRvIHRoYXQgZm9yIGV2ZXJ5
+IHRhcmdldCBhcmNoaXRlY3R1cmUgYWx3YXlzLg0KDQoNCkFncmVlZCBidXQgSSB3b3VsZCBzdWdn
+ZXN0IHRvIG1ha2UgaXQgb3B0aW9uYWwgaS5lLiBpbiBjYXNlIGFyY2hpdGVjdHVyZSB3YW50DQp0
+byByZWxlYXNlIHRvIGZyb20gaXRzIGNvZGUuIEl0IHNob3VsZCBiZSBhbGxvd2VkLiAgVGhpcyBh
+bHNvIGVuc3VyZXMgY2xhcml0eSBvZiB0aGUNCmZsb3dzLA0KDQpodHRwczovL2xvcmUua2VybmVs
+Lm9yZy9xZW11LWRldmVsL2EzMDhlMWY0ZjA2ZjRlM2FiNmFiNTFmMzUzNjAxZjQzQGh1YXdlaS5j
+b20vDQoNCg0KVGhhbmtzDQpTYWxpbC4NCg0KDQoNCj4gIA0KPiAgLS0gUE1NDQo=
 
