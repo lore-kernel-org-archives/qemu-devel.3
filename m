@@ -4,86 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D12FC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 16:08:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84710C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 16:08:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sg4ub-0004Dr-QX; Mon, 19 Aug 2024 12:07:18 -0400
+	id 1sg4vb-0005ym-EQ; Mon, 19 Aug 2024 12:08:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sg4uZ-0004Ch-Is
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 12:07:15 -0400
-Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
- id 1sg4uX-0006tv-G9
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 12:07:15 -0400
-Received: by mail-oi1-x236.google.com with SMTP id
- 5614622812f47-3db1e4219f8so2490935b6e.3
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 09:07:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724083631; x=1724688431; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7cPhvpuIKVsVF4/fRvKXeyayuZaEA8iRK9Tg9wP7gYQ=;
- b=eDsXOKXS2eEO4LjUCDdU8xUjHY6I8annWGHxZyvZEFQGrVW88olPya7zboTLpYZUgx
- vveyQDeENqeFDCnEaH+DjhMInkyksSSDpPUYq0ZImwY82eRwmoa6/Ztqoho2SnE5NVCO
- sIxKygiRw+HChUHyuCeXAjWstJguUxhB9Bex0q8yFDPydgvwgg+e0fxjufxUG9dfkovj
- dyses9QoAXLNGA/UPf1wpK1/D39Yuy4dPtnLeBYKHV8ZAuasVEe46/lerPJ2Z9FAZAHt
- JWOENDGesQwO8Bmvx6f8U0IkqCO2e8B2fLeHn0V9fa+NkQj4IFpEoZtxYpJhg9DEy4Di
- KzNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724083631; x=1724688431;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7cPhvpuIKVsVF4/fRvKXeyayuZaEA8iRK9Tg9wP7gYQ=;
- b=Q1C1xkYCn7s0JsvkgNKSBiK6TkPVA3+MKu8TC3mM4yCM8Le+SeSfhSOr1/6tpD7xLs
- ZevGxtDyAiaIshYHueJ84QHKZilvUEB4XelGk7egmQ9/Z1b+1KF2IEVggOksTCglFyLr
- k6t8bKRQFXR0Gu6HQvItD96pp4GoS9hEOCaXrGGWuztnbCzTvGsYZBK6GHV8wKG5V2Cq
- KdL6RTD1v0SuaqMBOCfT5lNYq5fG4GcxSRKz0w/6lDaAOnuSNZWGGIffZ+JOJod7irdM
- 3mEMZvMwkS8T7pZqxypepmW2opEtnTHFtOG5y7iEq7manIaOpI0T2NAXbjbu9UbxpM9f
- X8vA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVfpf2Um8KJrZB1RSYhitD77bO+RS+yze2Fa49ul0mJcWByaXe5K/p+NMYVNn5CAtOyJ0t/O2aekfBORo6G4Uwr6jDPK30=
-X-Gm-Message-State: AOJu0Yxtg6lSAHXbJYS/5gusRVny2CywtdR94ZE8LuqcSWZmmA9eW5ur
- wfhg2Wr6H0bvwjT3hSRA5I9wllsbPiCCdo8wLAHjIDbIrGRPA5quwve0l52mB12R0oVTg1pVLVf
- PTWr2g7sgxaPKk683qjFuf4t3WhE=
-X-Google-Smtp-Source: AGHT+IGLg8Bmt2GgNBgald9bns5TpA2v7WxlBVs12v9rH/hquJN8aOz+B4Qgl31CQTft1BRH54weTMoeP58XbXCLvA4=
-X-Received: by 2002:a05:6358:99a0:b0:1ac:f35c:1587 with SMTP id
- e5c5f4694b2df-1b3932c9929mr897006455d.25.1724083630451; Mon, 19 Aug 2024
- 09:07:10 -0700 (PDT)
+ (Exim 4.90_1)
+ (envelope-from <prvs=5961d01319=ian.brockbank@cirrus.com>)
+ id 1sg4vX-0005sx-Sg; Mon, 19 Aug 2024 12:08:15 -0400
+Received: from mx0a-001ae601.pphosted.com ([67.231.149.25]
+ helo=mx0b-001ae601.pphosted.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <prvs=5961d01319=ian.brockbank@cirrus.com>)
+ id 1sg4vV-0006x1-QQ; Mon, 19 Aug 2024 12:08:15 -0400
+Received: from pps.filterd (m0077473.ppops.net [127.0.0.1])
+ by mx0a-001ae601.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47JF6kfa004018;
+ Mon, 19 Aug 2024 11:07:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ PODMain02222019; bh=CTBn2WQgxjV9HstSP0zkV4cvwhWuzTA6WEBVfacCLU8=; b=
+ AXB7KgE2t3pNjS8SWBsUN0r2VMkSmRu0sTU2NDtOLeW4SYcDrl58efiakn0Lkp8Q
+ V3ukLux7+4F7G/Rl/PyhWf6jgZX1Nr/E4ohPROV8FK3XD69x379YiutpyMc/cvXp
+ jf6LR8YR/o2+RqCTAwI+M01va8/NPAxcFEWlQTETmmrxyAK6eYZ4wABVyrj+Gx60
+ aaiFY7vvg11l53dU5ar1r/2eyddK4r+XxQo5GdYWsUI2xpukdaXrmKj2vqyFuB6B
+ y4jDxc2Hrq+esNNTPqWgC2ap43dTOxLgi3AU46KKBOLhX0WiTdN0Z8dmfIA2Yj2s
+ I8f2yKQgsZ3tjyLZKa95/A==
+Received: from ausex02.ad.cirrus.com ([141.131.3.21])
+ by mx0a-001ae601.pphosted.com (PPS) with ESMTPS id 412s8x1x57-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 19 Aug 2024 11:07:56 -0500 (CDT)
+Received: from ausex01.ad.cirrus.com (141.131.37.95) by ausex02.ad.cirrus.com
+ (141.131.37.96) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 19 Aug
+ 2024 11:07:55 -0500
+Received: from EDIN7BQBTG3.ad.cirrus.com (141.131.38.212) by
+ anon-ausex01.ad.cirrus.com (141.131.37.95) with Microsoft SMTP Server id
+ 15.2.1544.9 via Frontend Transport; Mon, 19 Aug 2024 11:07:53 -0500
+From: Ian Brockbank <Ian.Brockbank@cirrus.com>
+To: <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>
+CC: Palmer Dabbelt <palmer@dabbelt.com>, Alistair Francis
+ <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ian Brockbank
+ <ian.brockbank@cirrus.com>
+Subject: [PATCH 00/11 v2] RISC-V: support CLIC v0.9 specification
+Date: Mon, 19 Aug 2024 17:02:08 +0100
+Message-ID: <20240819160742.27586-1-Ian.Brockbank@cirrus.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <https://lists.gnu.org/archive/html/qemu-riscv/2024-08/msg00234.html>
+References: <https://lists.gnu.org/archive/html/qemu-riscv/2024-08/msg00234.html>
 MIME-Version: 1.0
-References: <20240818114257.21456-1-dorjoychy111@gmail.com>
- <20240818114257.21456-5-dorjoychy111@gmail.com>
- <bffedf65-6046-4264-a2fe-011ff8c58860@amazon.com>
- <CAFfO_h7+FEzp-FrYM68A104CyNKgUfEReB+o9gYg5i-f=5DsVg@mail.gmail.com>
- <ZsNqerjjLCJ2OICd@redhat.com>
-In-Reply-To: <ZsNqerjjLCJ2OICd@redhat.com>
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Date: Mon, 19 Aug 2024 22:07:02 +0600
-Message-ID: <CAFfO_h5uQWrEKVK+E_QW7x64kdPms4uFeP8TjDVq7JEWANKXPw@mail.gmail.com>
-Subject: Re: [PATCH v4 4/6] machine/nitro-enclave: Add built-in Nitro Secure
- Module device
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Alexander Graf <graf@amazon.com>, qemu-devel@nongnu.org, agraf@csgraf.de, 
- stefanha@redhat.com, pbonzini@redhat.com, slp@redhat.com, 
- richard.henderson@linaro.org, eduardo@habkost.net, mst@redhat.com, 
- marcel.apfelbaum@gmail.com, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
- envelope-from=dorjoychy111@gmail.com; helo=mail-oi1-x236.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Proofpoint-ORIG-GUID: 1hR6MrH6FeYr0AP99NSuhHpCrCRY_fji
+X-Proofpoint-GUID: 1hR6MrH6FeYr0AP99NSuhHpCrCRY_fji
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=67.231.149.25;
+ envelope-from=prvs=5961d01319=ian.brockbank@cirrus.com;
+ helo=mx0b-001ae601.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,144 +89,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Aug 19, 2024 at 9:53=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
->
-> On Mon, Aug 19, 2024 at 09:32:55PM +0600, Dorjoy Chowdhury wrote:
-> > On Mon, Aug 19, 2024 at 4:13=E2=80=AFPM Alexander Graf <graf@amazon.com=
-> wrote:
-> > >
-> > > Hey Dorjoy,
-> > >
-> > > On 18.08.24 13:42, Dorjoy Chowdhury wrote:
-> > > > AWS Nitro Enclaves have built-in Nitro Secure Module (NSM) device w=
-hich
-> > > > is used for stripped down TPM functionality like attestation. This =
-commit
-> > > > adds the built-in NSM device in the nitro-enclave machine type.
-> > > >
-> > > > In Nitro Enclaves, all the PCRs start in a known zero state and the=
- first
-> > > > 16 PCRs are locked from boot and reserved. The PCR0, PCR1, PCR2 and=
- PCR8
-> > > > contain the SHA384 hashes related to the EIF file used to boot the
-> > > > VM for validation.
-> > > >
-> > > > Some optional nitro-enclave machine options have been added:
-> > > >      - 'id': Enclave identifier, reflected in the module-id of the =
-NSM
-> > > > device. If not provided, a default id will be set.
-> > > >      - 'parent-role': Parent instance IAM role ARN, reflected in PC=
-R3
-> > > > of the NSM device.
-> > > >      - 'parent-id': Parent instance identifier, reflected in PCR4 o=
-f the
-> > > > NSM device.
-> > > >
-> > > > Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> > > > ---
-> > > >   crypto/meson.build              |   2 +-
-> > > >   crypto/x509-utils.c             |  73 +++++++++++
-> > >
-> > >
-> > > Can you please put this new API into its own patch file?
-> > >
-> > >
-> > > >   hw/core/eif.c                   | 225 +++++++++++++++++++++++++++=
-++---
-> > > >   hw/core/eif.h                   |   5 +-
-> > >
-> > >
-> > > These changes to eif.c should ideally already be part of the patch th=
-at
-> > > introduces eif.c (patch 1), no? In fact, do you think you can make th=
-e
-> > > whole eif logic its own patch file?
-> > >
-> > >
-> > > >   hw/core/meson.build             |   4 +-
-> > > >   hw/i386/Kconfig                 |   1 +
-> > > >   hw/i386/nitro_enclave.c         | 141 +++++++++++++++++++-
-> > > >   include/crypto/x509-utils.h     |  22 ++++
-> > > >   include/hw/i386/nitro_enclave.h |  26 ++++
-> > > >   9 files changed, 479 insertions(+), 20 deletions(-)
-> > > >   create mode 100644 crypto/x509-utils.c
-> > > >   create mode 100644 include/crypto/x509-utils.h
-> > > >
-> > > > diff --git a/crypto/meson.build b/crypto/meson.build
-> > > > index c46f9c22a7..09633194ed 100644
-> > > > --- a/crypto/meson.build
-> > > > +++ b/crypto/meson.build
-> > > > @@ -62,7 +62,7 @@ endif
-> > > >   if gcrypt.found()
-> > > >     util_ss.add(gcrypt, files('random-gcrypt.c'))
-> > > >   elif gnutls.found()
-> > > > -  util_ss.add(gnutls, files('random-gnutls.c'))
-> > > > +  util_ss.add(gnutls, files('random-gnutls.c', 'x509-utils.c'))
-> > >
-> > >
-> > > What if we don't have gnutls. Will everything still compile or do we
-> > > need to add any dependencies?
-> > >
-> > >
-> >
-> > [...]
-> >
-> > > >
-> > > > diff --git a/hw/core/meson.build b/hw/core/meson.build
-> > > > index f32d1ad943..8dc4552e35 100644
-> > > > --- a/hw/core/meson.build
-> > > > +++ b/hw/core/meson.build
-> > > > @@ -12,6 +12,8 @@ hwcore_ss.add(files(
-> > > >     'qdev-clock.c',
-> > > >   ))
-> > > >
-> > > > +libcbor =3D dependency('libcbor', version: '>=3D0.7.0')
-> > > > +
-> > > >   common_ss.add(files('cpu-common.c'))
-> > > >   common_ss.add(files('machine-smp.c'))
-> > > >   system_ss.add(when: 'CONFIG_FITLOADER', if_true: files('loader-fi=
-t.c'))
-> > > > @@ -24,7 +26,7 @@ system_ss.add(when: 'CONFIG_REGISTER', if_true: f=
-iles('register.c'))
-> > > >   system_ss.add(when: 'CONFIG_SPLIT_IRQ', if_true: files('split-irq=
-.c'))
-> > > >   system_ss.add(when: 'CONFIG_XILINX_AXI', if_true: files('stream.c=
-'))
-> > > >   system_ss.add(when: 'CONFIG_PLATFORM_BUS', if_true: files('sysbus=
--fdt.c'))
-> > > > -system_ss.add(when: 'CONFIG_NITRO_ENCLAVE', if_true: [files('eif.c=
-'), zlib])
-> > > > +system_ss.add(when: 'CONFIG_NITRO_ENCLAVE', if_true: [files('eif.c=
-'), zlib, libcbor, gnutls])
-> > >
-> > >
-> > > Ah, you add the gnutls dependency here. Great! However, this means we
-> > > now make gnutls (and libcbor) a mandatory dependency for the default
-> > > configuration. Does configure know about that? I believe before gnutl=
-s
-> > > was optional, right?
-> > >
-> >
-> > I see gnutls is not a required dependency in the root meson.build. I
-> > am not sure what we should do here.
-> >
-> > Hey Daniel, do you have any suggestions about how this dependency
-> > should be included?
->
-> Unconditionally build the crypto/x509-utils.c file, but in that put
-> file #ifdef CONFIG_GNUTLS, and in the #else put a stub impl of the
-> method that just calls error_setg().
->
-> That way you can compile everything without any hard dep on gnutls,
-> but if someone tries to use it they'll get a runtime error when
-> gnutls is not built
->
+[Resubmission now the merge is correct]
 
-Understood. Thanks! What should I do about libcbor? That one is
-required for building nitro-enclave and virtio-nsm. Should I make that
-required in the root meson.build file?
+This patch set gives an implementation of "RISC-V Core-Local Interrupt
+Controller(CLIC) Version 0.9-draft-20210217". It comes from [1], where
+you can find the pdf format or the source code.
 
-Regards,
-Dorjoy
+This is based on the implementation from 2021 by Liu Zhiwei [3], who took
+over the job from Michael Clark, who gave the first implementation of
+clic-v0.7 specification [2]. I believe this implementation addresses all
+the comments in Liu Zhiwei's RFC patch thread.
+
+This implementation follows the CLIC 0.9-stable draft at 14 March 2024,
+with the following exceptions and implementation details:
+ - the CLIC control registers are memory-mapped as per earlier drafts (in
+   particular version 0.9-draft, 20 June 2023)
+ - the indirect CSR control in 0.9-stable is not implemented
+ - the vector table can be either handler addresses (as per the spec)
+   or a jump table where each entry is processed as an instruction,
+   selectable with version number v0.9-jmp
+ - each hart is assigned its own CLIC block
+ - if PRV_S and/or PRV_M are supported, they are currently assumed to follo=
+w
+   the PRV_M registers; a subsequent update will address this
+ - support for PRV_S and PRV_M is selectable at CLIC instantiation
+ - PRV_S and PRV_U registers are currently separate from PRV_M; a subsequen=
+t
+   update will turn them into filtered views onto the PRV_M registers
+ - each hart is assigned its own CLIC block
+ - support for PRV_S and PRV_M is selectable at CLIC instantiation by
+   passing in a base address for the given modes; a base address of 0 is
+   treated as not supported
+ - PRV_S and PRV_U registers are mapped  onto the PRV_M controls with
+   appropriate filtering for the access mode
+ - the RISCV virt machine has been updated to allow CLIC emulation by
+   passing "machine=3Dvirt,clic=3Don" on the command line; various other
+   parameters have been added to allow finer control of the CLIC behavior
+
+The implementation (in jump-table mode) has been verified to match the
+Cirrus Logic silicon (PRV_M only), which is based upon the Pulp
+implementation [4] as of June 2023.
+
+The implementation also includes a selection of qtests designed to verify
+operation in all possible combinations of PRV_M, PRV_S and PRV_U.
+
+[1] specification website: https://github.com/riscv/riscv-fast-interrupt.
+[2] Michael Clark origin work:
+https://github.com/sifive/riscv-qemu/tree/sifive-clic.
+[3] RFC Patch submission by Liu Zhiwei:
+https://lists.gnu.org/archive/html/qemu-devel/2021-04/msg01417.html
+[4] Pulp implementation of CLIC: https://github.com/pulp-platform/clic
+
+Ian Brockbank (11):
+    target/riscv: Add CLIC CSR mintstatus
+    target/riscv: Update CSR xintthresh in CLIC mode
+    hw/intc: Add CLIC device
+    target/riscv: Update CSR xie in CLIC mode
+    target/riscv: Update CSR xip in CLIC mode
+    target/riscv: Update CSR xtvec in CLIC mode
+    target/riscv: Update CSR xnxti in CLIC mode
+    target/riscv: Update interrupt handling in CLIC mode
+    target/riscv: Update interrupt return in CLIC mode
+    hw/riscv: add CLIC into virt machine
+    tests: add riscv clic qtest case and a function in qtest
+
+This message and any attachments may contain privileged and confidential in=
+formation that is intended solely for the person(s) to whom it is addressed=
+. If you are not an intended recipient you must not: read; copy; distribute=
+; discuss; take any action in or make any reliance upon the contents of thi=
+s message; nor open or read any attachment. If you have received this messa=
+ge in error, please notify us as soon as possible on the following telephon=
+e number and destroy this message including any attachments. Thank you. Cir=
+rus Logic International (UK) Ltd and Cirrus Logic International Semiconduct=
+or Ltd are companies registered in Scotland, with registered numbers SC0898=
+39 and SC495735 respectively. Our registered office is at 7B Nightingale Wa=
+y, Quartermile, Edinburgh, EH3 9EG, UK. Tel: +44 (0)131 272 7000. www.cirru=
+s.com
 
