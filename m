@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0290C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:54:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB3D8C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:54:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgBEz-00022x-EN; Mon, 19 Aug 2024 18:52:47 -0400
+	id 1sgBG7-00078d-Ko; Mon, 19 Aug 2024 18:53:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEF-0000em-FD
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:01 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEd-00013p-0Q
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:25 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBED-0000im-RW
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:51:59 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-429e29933aaso36681315e9.0
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:51:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEb-0000kR-Ct
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:22 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3718706cf8aso3057250f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:52:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724107916; x=1724712716; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724107940; x=1724712740; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=r9dq7opeWVZG3BtwY0r0XLR76Nuys55wAqLRnBp/jbM=;
- b=gfI7ZNmZYRuHprksljSI+Wz5RAIY1tuAU4cLs0RdH79qsOHfdW0ha3ar7div2HX8G1
- ZQcjFxdg/l5eSh2IMz7pjlm7lzI/28BnXUA8E051Bge6cx1wA/t3fy1AIWakvoZt30D0
- ni+SzjBsLdZ5VDpneOj57wcz0+4bVQYF8VYcgvcrfzZVKsNBhvMzCwELv3SPTCxIcT3q
- 43PAVsyJXjfHvYOZ405ZzhLwPoInAPAiVTeaMmvHongxhba9RYxvJ8yuTrTNEwOH8K3b
- nx1YgNzc7YOrg22Og8/G9MA66nXkmKOBxAcL3uYvYGNw9CKDh5nbcQgB8MEIe3lV/BWg
- 1I0g==
+ bh=i525VHbDEEdaYNDK1SbTy9eAffjoVCoTHAg3yOkOeL4=;
+ b=YCbxlXOcQw/1wfI80a4tUMlaW6O/Ls60Tspa/tcTA3iyMCyKIzdFGO27njlsjeM3Bs
+ ouwNO03szdjhn1KD4eRxpWSxgmuYn5txOeziivBVJCzWRMaJDIvkO9cbIHy3fgTjtkgY
+ xBUR+EuGzX8kJF/LOAaMUKFoRT35k/3H/iQHT+3qMfGveiw7pKmyMgNy7Rtq8kUDHkPy
+ hcsBcH9cm/BT4XHFHsQHDhXy8w+DJVy55KsHxNl+UfwE8szbBjyfZ1XQfYDkiKnIxzE+
+ JsFjOeOBXHAaMaAXVtG0md3glm+R1lt3sj8Gu0txXrFcBAyrJJS+PnoPhCzFYlhzsFYu
+ 2BIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724107916; x=1724712716;
+ d=1e100.net; s=20230601; t=1724107940; x=1724712740;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=r9dq7opeWVZG3BtwY0r0XLR76Nuys55wAqLRnBp/jbM=;
- b=GCj6ogLiAvWncai7HCJRDQ+fkBV1Cbs7e34XXUzDRrpXVaeMWPgF23+ShlPg6B8s9W
- acYnbgZOrUoXoufXTvziL9snNTzv7cb7C4RS1nwX6mZRHj6Z1PjJH4wlWWcUA4J3txhh
- EJBnDj5q1Nxyqqo/bpcobOhGvNZ4a4CqLBMLUxj6+VIeNvCD9Xq6pfTrcR7ud2e9f87Z
- d5tH6w5VA6Y4QCADqwnq25B3YpwPsJuKN9bOUH+OziESalnVVCXlnalxR3t7z5uFQ502
- K/pmoMk5VYL7be2TXxpBB1xdnveUcjfRVPsyWNkBc1q1gNe32xMbQItfjLg22jVPIaL/
- +tvg==
-X-Gm-Message-State: AOJu0YyV27fAhQYHfT88KKfrku8Y/3Bxmu2WR7VhtbVUiALSzbRJC/+T
- Pszklr1a3Dqzw6S2zQKfpWZbChSHfs5wTkS/XUqPrKRPqU0pQ/jZEnlfcgb3tX9a6sIu9J7Gqzh
- Q4AY=
-X-Google-Smtp-Source: AGHT+IH3avEpLYouBO8BKbwI8iTPf+GWGZA41+Mzx3b0n30Arpea26YUrQ7BRhLJ0NgNpMs0cGe5kA==
-X-Received: by 2002:a05:600c:310f:b0:426:5b21:97fa with SMTP id
- 5b1f17b1804b1-429ed7e432cmr101753805e9.29.1724107915886; 
- Mon, 19 Aug 2024 15:51:55 -0700 (PDT)
+ bh=i525VHbDEEdaYNDK1SbTy9eAffjoVCoTHAg3yOkOeL4=;
+ b=oiSxYU42J+WwZHkkZ1NMKDqQeHvdn0p2U6qjr5f0muT/xQvaxh0GKsHlj3/owBKXM1
+ +CjQyBk+ZBDRxlr+ewKJxUtK7NMsBFAQO0YMywnV0nppzOhQp36gUb8BZG9raoNkVQmu
+ BVbjzb74lWOn+VKc+n26JPEV+lNkV1UB6Wd5DNrIa2IsWsU2RdZDMVokxBBMo+Ugvz7w
+ G3KJMevpqGWDrcJJbhMCLj0KqOrmf49Xc9uLtlm+68FZ8DWYAVftQJNEHSO+HhtepmQp
+ W8sRLjlod5EhtOQ0U8z4AdXLrHlY+T0HgyfVcnvWHxo7pdZWY2VddnYZ2Ql3kn53EoJ5
+ elRw==
+X-Gm-Message-State: AOJu0YwEkmNQifVOtuswNAVhC15gyEFZOTfXCzETQ3YjLKH0r8xIJLzd
+ UQFbIHYBfMliK4lAyzV0FpUFZcHnDAIVVKNz78xYayoPeBDyUFmLtRV65TUhG4XiKqhSJ7WH0tm
+ nozg=
+X-Google-Smtp-Source: AGHT+IHNfQLkqA2Cyy3T06sUUzcs+V5NfBtNgOyyq/MrTopBY32pDIND7ZknCm2RrCUmQPGCxLsy6Q==
+X-Received: by 2002:adf:b307:0:b0:368:4edc:611e with SMTP id
+ ffacd0b85a97d-37194344041mr7950257f8f.14.1724107939545; 
+ Mon, 19 Aug 2024 15:52:19 -0700 (PDT)
 Received: from localhost.localdomain (88-178-97-237.subs.proxad.net.
  [88.178.97.237]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ded1813dsm181831585e9.7.2024.08.19.15.51.55
+ 5b1f17b1804b1-429ded367ebsm179600455e9.25.2024.08.19.15.52.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Aug 2024 15:51:55 -0700 (PDT)
+ Mon, 19 Aug 2024 15:52:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: Nicholas Piggin <npiggin@gmail.com>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 08/20] hw/remote/message.c: Don't directly invoke
- DeviceClass:reset
-Date: Tue, 20 Aug 2024 00:51:04 +0200
-Message-ID: <20240819225116.17928-9-philmd@linaro.org>
+Subject: [PULL 13/20] tests/avocado: exec_command should not consume console
+ output
+Date: Tue, 20 Aug 2024 00:51:09 +0200
+Message-ID: <20240819225116.17928-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240819225116.17928-1-philmd@linaro.org>
 References: <20240819225116.17928-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,43 +95,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-Directly invoking the DeviceClass::reset method is a bad idea,
-because if the device is using three-phase reset then it relies on
-transitional reset machinery which is likely to disappear at some
-point.
+_console_interaction reads data from the console even when there is only
+an input string to send, and no output data to wait on. This can cause
+lines to be missed by wait_for_console_pattern calls that follows an
+exec_command. Fix this by not reading the console if there is no pattern
+to wait for.
 
-Reset the device in the standard way, by calling device_cold_reset().
+This solves occasional hangs in ppc_hv_tests.py, usually when run on KVM
+hosts that are fast enough to output important lines quickly enough to be
+consumed by exec_command, so they get missed by subsequent wait for
+pattern calls.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240813165250.2717650-7-peter.maydell@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240805232814.267843-2-npiggin@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/remote/message.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ tests/avocado/avocado_qemu/__init__.py | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/hw/remote/message.c b/hw/remote/message.c
-index 50f6bf2d49..38ae6c75b4 100644
---- a/hw/remote/message.c
-+++ b/hw/remote/message.c
-@@ -215,13 +215,10 @@ fail:
- static void process_device_reset_msg(QIOChannel *ioc, PCIDevice *dev,
-                                      Error **errp)
- {
--    DeviceClass *dc = DEVICE_GET_CLASS(dev);
-     DeviceState *s = DEVICE(dev);
-     MPQemuMsg ret = { 0 };
- 
--    if (dc->reset) {
--        dc->reset(s);
--    }
-+    device_cold_reset(s);
- 
-     ret.cmd = MPQEMU_CMD_RET;
- 
+diff --git a/tests/avocado/avocado_qemu/__init__.py b/tests/avocado/avocado_qemu/__init__.py
+index a3da2a96bb..ef935614cf 100644
+--- a/tests/avocado/avocado_qemu/__init__.py
++++ b/tests/avocado/avocado_qemu/__init__.py
+@@ -135,6 +135,13 @@ def _console_interaction(test, success_message, failure_message,
+             vm.console_socket.sendall(send_string.encode())
+             if not keep_sending:
+                 send_string = None # send only once
++
++        # Only consume console output if waiting for something
++        if success_message is None and failure_message is None:
++            if send_string is None:
++                break
++            continue
++
+         try:
+             msg = console.readline().decode().strip()
+         except UnicodeDecodeError:
 -- 
 2.45.2
 
