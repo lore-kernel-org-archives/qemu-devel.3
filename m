@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF78BC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 597FCC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:25:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgAmL-00025l-3R; Mon, 19 Aug 2024 18:23:09 -0400
+	id 1sgAo5-0006IG-1P; Mon, 19 Aug 2024 18:24:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sgAmJ-00024W-Bd
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:23:07 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgAo2-0006G9-DD
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:24:54 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1sgAmH-0005bS-9C
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:23:07 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-a7a975fb47eso561214166b.3
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:23:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgAo0-00061B-LQ
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:24:54 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4281c164408so37843345e9.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:24:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724106183; x=1724710983; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VI+nxXyCKVLEluhDmwkL3g/pWrHRcLRYBPqi6sU+5Gk=;
- b=fTH6zBhHf79Vq/hYSdYUJnkMJ8AOepxNBc6ivyExiniJdlm4h5xAFLjNXK28VGx3eY
- 3iZUjWT1LQV/BQhXKaoRxkZNBLJ/kwKRLd9VG2f5HElWz5hJ0oi1Esuh1C0mOBDnpqr4
- DQPmEG4y2irA1ep8pYxMGEyeZZkJIHaRYs2AeyU+XwiSqwdFynTr9UtEnbvOsPZjJqF6
- oxe3P7Nc7FIMjWIND37B7GVYJC/RPfTHkR/6CN3gRw1WLotGGv4bPuGZRcZW+QCiFJqW
- dzSgywYmXk8lzAxD7KAgKm3c8zgEQ0eTvPd3vdmixiaZ7i4ZG9LKTdaKsP93CYiDgKKY
- QRVQ==
+ d=linaro.org; s=google; t=1724106290; x=1724711090; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Fl6bTB6IYyS1mnNCX73JrfBlcoBo3l1C/eL97Rtp4G8=;
+ b=dSHjJ19kaSM0Wjyj8OncqJWgGRPy+F7e1qa6bQZMTT/I1y8ae108zjHsan7uP+rQwj
+ hL6D2NUrcRSXJvzfGSBr129YpdOrAxgJn+JCK43aZf67rE+nubDFueHbp30BGtC8Jrnv
+ 6/qiYJREpQcNt6ZveDTLDgjOGXHt2sfAOv9L4jSRi1SwIOQFljU0I6S7jBLBDP3oSUFz
+ A5VU/CzZs96U4UhoQNKluJKmFl8nRn8FU1Z3bZILyHPg36K+maq9+Qa2Vr+udXrRdbZu
+ 8PGygcR35S9IJQQaP1hLDbdPCeAxLFuOdEj4chUjm58hpc1EOA/6NFVRZcYbZXfCIuYH
+ lLLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724106183; x=1724710983;
- h=content-transfer-encoding:mime-version:message-id:date:references
- :in-reply-to:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VI+nxXyCKVLEluhDmwkL3g/pWrHRcLRYBPqi6sU+5Gk=;
- b=rD2xMe0Dt153Gp35mEYCVP1v/0QifBAP8Rr747Sj6qTL5S3p3zv3nati2eXppzbkpK
- QEJOTXMlwBqGVZQviJGOvWKWpDlstHpccnnBYlzCq6JuE9sBvUo7w4KGa2Uuqc7JPAN+
- g7NxjCwHF8nGtkTwqUJQnio3xojWUIvL+z4f26AnSRd3C/Sibbw6PPJTi3+Mtf5HfTFv
- o0Mia+eKtIQoe4C4qSUecaVD42j2j/EEciKEnC7CRS9jNCCDWZ460Io72JRAcDpS0gCC
- Tk7zz5zMmsrm5dFDSZtynOWvMBHuo8Qk4C/shgOZY8Ma+g7ChPe3KvIFBB0+CYy4cIqF
- SURA==
-X-Gm-Message-State: AOJu0YwhIT0ziWlFg2JM71uMqM52liy9aoA82vkKxfGi2Ztvs5/F2PW9
- usOo9VMzmJoOW2ffg/9pEm4KrOOsZkQmOgCLlRaY6vKig36o0Y/gUly4mbyn5PU=
-X-Google-Smtp-Source: AGHT+IEbN5g+ry2GOWYchYa2yW34Yf1ll48aU565fJReGbq+oUKREXuaWwcr8arp8qcwO6VsgFp6cg==
-X-Received: by 2002:a17:907:f79f:b0:a7a:b18a:66 with SMTP id
- a640c23a62f3a-a839292f125mr859178266b.16.1724106182499; 
- Mon, 19 Aug 2024 15:23:02 -0700 (PDT)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-a8383947123sm690192866b.178.2024.08.19.15.23.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Aug 2024 15:23:02 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 331FF5F88E;
- Mon, 19 Aug 2024 23:23:01 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH] scripts/lsan-suppressions: Add a LeakSanitizer
- suppressions file
-In-Reply-To: <20240819170700.61844-1-peter.maydell@linaro.org> (Peter
- Maydell's message of "Mon, 19 Aug 2024 18:07:00 +0100")
-References: <20240819170700.61844-1-peter.maydell@linaro.org>
-Date: Mon, 19 Aug 2024 23:23:01 +0100
-Message-ID: <87sev0m9tm.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1724106290; x=1724711090;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Fl6bTB6IYyS1mnNCX73JrfBlcoBo3l1C/eL97Rtp4G8=;
+ b=IZ2WUthTjxQWKsaseyfeT7/+XDWH4I7phGLh5BAjRiEMYCmjXM6XH061yUnqygr7Hj
+ I9K8yFHjtmIwIrTATPJ1bdEi8UqYSXukB90oSya3qB5EszBpVMBzBUI2wKb83v727Kpv
+ z4kuVkrm+d36Y/zmyI1k9W9gNGFpsAuyEckGDhYZqosjq2immIt5C70OVCtaPNrR/QYO
+ 79rFDfQ5LWmDVK62iLXZOopHgdSo3JNPqOO2JaWlSLul8slEAmj1+5wBYyEFZe/OZqyB
+ TmrhbedNtVwlremHU3wtDtqAxzWAArr0MYde7qtKGnth/BRChTZnnzxWzdZwiceDPXQr
+ r+hA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXf+NPbr102calZfzHtcbGV8Tz/gc/w9EKc9GjKLgkFNdfRLNoPf2PvtWzPBKwA1Qxz2drl0V++gSR3@nongnu.org
+X-Gm-Message-State: AOJu0YwaBDvf7yapmXg8CGlVvlXOEGMAKcYXkzVe0i6W6heSJFWQyvjL
+ x8kb3emEvcNnwVcTcbYCoFqzmZS9mi5PSw8hO30IvHq2kxMVhTch93m9qExd5xmjIKs9Y1GiREu
+ QvTU=
+X-Google-Smtp-Source: AGHT+IF6NI6Y1UbA0Gl6YpNdPyn4nzanVXQk5NWqKzTBc1Vyez7idr4N2294LrjvS4tYAA6CKOn8GQ==
+X-Received: by 2002:a05:600c:45ca:b0:426:6e8b:3dc5 with SMTP id
+ 5b1f17b1804b1-429ed7d3160mr77984245e9.32.1724106290422; 
+ Mon, 19 Aug 2024 15:24:50 -0700 (PDT)
+Received: from [192.168.1.67] (88-178-97-237.subs.proxad.net. [88.178.97.237])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-429ed6507c4sm124383885e9.15.2024.08.19.15.24.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 19 Aug 2024 15:24:49 -0700 (PDT)
+Message-ID: <b36ce3bd-1921-4ab6-ac8f-49d2887ff35e@linaro.org>
+Date: Tue, 20 Aug 2024 00:24:48 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] MAINTAINERS: Remove myself as reviewer
+To: Beraldo Leal <bleal@redhat.com>, qemu-devel@nongnu.org
+References: <20240819150035.2180786-1-bleal@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20240819150035.2180786-1-bleal@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,108 +95,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
-
-> Add a LeakSanitizer suppressions file that documents and suppresses
-> known false-positive leaks in either QEMU or its dependencies.
-> To use it you'll need to set
->   LSAN_OPTIONS=3D"suppressions=3D/path/to/scripts/lsan-suppressions.txt"
-> when running a QEMU built with the leak-sanitizer.
->
-> The first and currently only entry is for a deliberate leak in glib's
-> g_set_user_dirs() that otherwise causes false positive leak reports
-> in the qga-ssh-test because of its use of G_TEST_OPTION_ISOLATE_DIRS:
-
-Shame we can't share with scripts/oss-fuzz/lsan_supressions.tct:
-
-# The tcmalloc on Fedora37 confuses things
-leak:/lib64/libtcmalloc_minimal.so.4
-
-# libxkbcommon also leaks in qemu-keymap
-leak:/lib64/libxkbcommon.so.0
-
-Or does fuzzing make some things easier to hit?
-
->
-> Direct leak of 321 byte(s) in 5 object(s) allocated from:
->     #0 0x5555dd8abd1e in __interceptor_malloc (/mnt/nvmedisk/linaro/qemu-=
-from-laptop/qemu/build/asan/qga/qga-ssh-test+0x19cd1e) (BuildId: 7991a16600=
-7e8206c51bee401722a8335e7990bb)
->     #1 0x7fb5bc724738 in g_malloc debian/build/deb/../../../glib/gmem.c:1=
-28:13
->     #2 0x7fb5bc739583 in g_strdup debian/build/deb/../../../glib/gstrfunc=
-s.c:361:17
->     #3 0x7fb5bc757a29 in set_str_if_different debian/build/deb/../../../g=
-lib/gutils.c:1659:21
->     #4 0x7fb5bc757a29 in set_str_if_different debian/build/deb/../../../g=
-lib/gutils.c:1647:1
->     #5 0x7fb5bc757a29 in g_set_user_dirs debian/build/deb/../../../glib/g=
-utils.c:1743:9
->     #6 0x7fb5bc743d78 in test_do_isolate_dirs debian/build/deb/../../../g=
-lib/gtestutils.c:1486:3
->     #7 0x7fb5bc743d78 in test_case_run debian/build/deb/../../../glib/gte=
-stutils.c:2917:16
->     #8 0x7fb5bc743d78 in g_test_run_suite_internal debian/build/deb/../..=
-/../glib/gtestutils.c:3018:16
->     #9 0x7fb5bc74380a in g_test_run_suite_internal debian/build/deb/../..=
-/../glib/gtestutils.c:3035:18
->     #10 0x7fb5bc74380a in g_test_run_suite_internal debian/build/deb/../.=
-./../glib/gtestutils.c:3035:18
->     #11 0x7fb5bc743fe9 in g_test_run_suite debian/build/deb/../../../glib=
-/gtestutils.c:3112:13
->     #12 0x7fb5bc744055 in g_test_run debian/build/deb/../../../glib/gtest=
-utils.c:2231:7
->     #13 0x7fb5bc744055 in g_test_run debian/build/deb/../../../glib/gtest=
-utils.c:2218:1
->     #14 0x5555dd9293b1 in main qga/commands-posix-ssh.c:439:12
->     #15 0x7fb5bc3dfd8f in __libc_start_call_main csu/../sysdeps/nptl/libc=
-_start_call_main.h:58:16
->     #16 0x7fb5bc3dfe3f in __libc_start_main csu/../csu/libc-start.c:392:3
->     #17 0x5555dd828ed4 in _start (/mnt/nvmedisk/linaro/qemu-from-laptop/q=
-emu/build/asan/qga/qga-ssh-test+0x119ed4) (BuildId: 7991a166007e8206c51bee4=
-01722a8335e7990bb)
->
-> (Strictly speaking, this is a genuine leak, it's just a deliberate
-> one by glib; they document it in their valgrind-format suppression
-> file upstream.)
->
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+On 19/8/24 17:00, Beraldo Leal wrote:
+> Finally taking this off my to-do list. It’s been a privilege to be part
+> of this project, but I am no longer actively involved in reviewing
+> Python code here, so I believe it's best to update the list to reflect
+> the current maintainers.
+> 
+> Please, feel free to reach out if any questions arise.
+> 
+> Signed-off-by: Beraldo Leal <bleal@redhat.com>
 > ---
-> Does this seem like a good idea?  It gives us a place to document
-> things like this and to suppress them so we could in theory get a
-> complete clean 'make check' run with the leak sanitizer on.  It might
-> be nice if there was an easy way to enable all our "recommended
-> sanitizer settings" (ASAN_OPTIONS=3D"fast_unwind_on_malloc=3D0 is
-> pretty much required to get useful backtraces, for instance), but
-> I'm not sure there's a neat way to do that.
->
->  scripts/lsan-suppressions.txt | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
->  create mode 100644 scripts/lsan-suppressions.txt
->
-> diff --git a/scripts/lsan-suppressions.txt b/scripts/lsan-suppressions.txt
-> new file mode 100644
-> index 00000000000..5c3cffaa5a0
-> --- /dev/null
-> +++ b/scripts/lsan-suppressions.txt
-> @@ -0,0 +1,14 @@
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +# Copyright (c) 2024 Linaro Limited
-> +
-> +# This is a set of suppressions for LeakSanitizer; you can use it
-> +# by setting
-> +#   LSAN_OPTIONS=3D"suppressions=3D/path/to/scripts/lsan-suppressions.tx=
-t"
-> +# when running a QEMU built with the leak-sanitizer.
-> +
-> +# g_set_user_dirs() deliberately leaks the previous cached g_get_user_*
-> +# values. This is documented in upstream glib's valgrind-format
-> +# suppression file:
-> +# https://github.com/GNOME/glib/blob/main/tools/glib.supp
-> +# This avoids false positive leak reports for the qga-ssh-test.
-> +leak:g_set_user_dirs
+>   MAINTAINERS | 3 ---
+>   1 file changed, 3 deletions(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Thanks Beraldo for your previous reviews!
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
