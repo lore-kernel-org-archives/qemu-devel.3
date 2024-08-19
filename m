@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC866C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 11:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22AFCC5320E
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 11:47:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sg0qp-0008Aq-H4; Mon, 19 Aug 2024 07:47:07 -0400
+	id 1sg0r9-0008Nj-V6; Mon, 19 Aug 2024 07:47:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sg0ql-0008A3-Hx
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 07:47:05 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1sg0qj-0001mF-IX
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 07:47:03 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-5bec4e00978so3355076a12.0
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 04:47:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724068018; x=1724672818; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=z7xUVaeYpNcp3nqqDu7OSRJ9tyoFmOSjIZydDdBqto0=;
- b=cJXaOnQYDpA8bjHfgVNx8fJauQkc9EHs/kmllpomaaA45UMTGrgfTrXn18Y8KWR/YT
- vzD3pKydXT52y2dOSl/y4HcG3BkAMuUVfu60YTPtXweTH3SSY6jmJ2sQgiKrf0TSwQg/
- gbebXHgZwjriu0iH6d5duoKzJQw8+QtBNLIcI/8ihS690JXNSVmGAgNdPBDnN3c1Zwxt
- 7xlTqGbEHoRnrjidmiwwsZDscbcHh70lIP3oUI8sbAm+k7oOWuMTIBjW49cyMQX9uHLY
- brspDMk7i9wY1t7gri/xAQr1wIbVu0+sGP7yoa3NavtlwOmMPmMN4SyioXQd2K++QOud
- BoKA==
+ (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1sg0r7-0008N1-FH
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 07:47:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <demeng@redhat.com>) id 1sg0r4-0001nH-M7
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 07:47:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724068040;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=H+WJVLoXjk8eTEWpbY79SJ7MnaZFVEUaFEFGdKsTupA=;
+ b=B9aHXiTXGG901q35e0jU9rfnDVWZJxVcnJoKyGeO5/8TBP3PAgJdkwqmMSFHs9W8scwteH
+ kwA3MuxpzefDKuZkGRUpRvhsZZkJ8SYLp4/1zNF5vCDb07rAYWoadEqBBYYvYlYE/aqAw9
+ WVgmcj+13CcRHbuNMpZxJ6YB1WEWEDY=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-240-Crq6x2erNtmi2y4HLbUfBA-1; Mon, 19 Aug 2024 07:47:17 -0400
+X-MC-Unique: Crq6x2erNtmi2y4HLbUfBA-1
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-a7ab81eea72so335969766b.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 04:47:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724068018; x=1724672818;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=z7xUVaeYpNcp3nqqDu7OSRJ9tyoFmOSjIZydDdBqto0=;
- b=RY33tjyYPajM+eXPrYULx8a8f92i/RN+rqMQnp90s4xO18ssvHdgakbpJCEN4kpGTt
- j/hscaRWh2gmJx3YgORzncFHLZ46qSCh+zqNx2mFLKPTIV714vv7ngKos2R6xqmp5oOa
- aU01LTyS/+xs40Hnahuqhnn3Z17Kw/mRKWBGutt0rnHWJ0piYa+q8u91WdLf/cVLXUva
- ywoag2gdKnrnEUN3KF97yVTmVuBLp2AGGVUnsInf76h0LdGIjVR1MFdhJ//5kKo4hIIF
- UIwl+qMlRS50/fhiY8cO2MM2pim0DkGWUMMkXURuDqwAGVvAi404x5Lxa6LXzcfYqb3l
- Q+eA==
-X-Gm-Message-State: AOJu0Yxr2Z9owGxVooP/ZNG7inLcncP+T51M6BI6JuiIYQ/IENtm+y4p
- Unkt7fVACg6gkr6UO7UMNlznCI9wflvDZI55r4vTKfzM8o3QqArULTRi5zgCZfLV1WFl+zHHzEt
- a3KJUM69L6BiAfphlwxgKWAiWEe6xSqpV3CcRoph0QtqG3aGq
-X-Google-Smtp-Source: AGHT+IHV6xLEhV2D+NuRGuCsv7v2hYP/rYueWxq5iq4N0xDo0hLagPJH7ZL56qQkxzfzPpxysNJpfgcw8YjMOz9jBhY=
-X-Received: by 2002:a05:6402:3512:b0:5be:fa58:8080 with SMTP id
- 4fb4d7f45d1cf-5befa588190mr2719095a12.3.1724068018180; Mon, 19 Aug 2024
- 04:46:58 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724068036; x=1724672836;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=H+WJVLoXjk8eTEWpbY79SJ7MnaZFVEUaFEFGdKsTupA=;
+ b=BPLimlWyoEGZCMBNA8f4cYHSEvagfM7ETL36ZFAkXe6XwSdvmrYg+q0g1fDuw5R95U
+ EvlOTCvJxmAqOeyelxVS2ru2pVS64JLeZEMbVthBzdU9QTU6Z/OUD1UWY7Y1bQx5TCQd
+ QyM1RFEM5Q7deF3yO5N/3JLL+nCgXZ9xHQa6+yJwmiadlForoDZF9KN2PcDe5TpqUvMg
+ TQHjrd+eVnoVOACFa+uhAqHKeA8Hrh7LDpnPTHQYSATeJlwATy+voKcjKsP5znzI05ag
+ SHen4KJZWjcX/lwvzLjaAQ6FUiQKTz0ULd6PRd306mlKiRA9i5zrU9UxT1uM3FRoih1C
+ yHmg==
+X-Gm-Message-State: AOJu0YyLpBP/2srYIw/LcTZZO8MVzkzX5teiTl2qzIdV46gycvgEnJvv
+ iztMUWs+4vqEogATMMtzvPtF5E0xn3q2W50v1YtSiZuwVKXag+JkPbJ6h1+ml31mzPAPPT2O4J0
+ lfqfwo8F0hkYyKJy734AEhijwKb336Ga/gssQq9S9CWBZl37fS9aipNuRzwWIINC0VRJrl0jWU5
+ H8EldZVANmhW8o6pVcaRQVJcBjFZI=
+X-Received: by 2002:a17:907:d862:b0:a7a:b781:60ed with SMTP id
+ a640c23a62f3a-a839292f71fmr720890666b.17.1724068036161; 
+ Mon, 19 Aug 2024 04:47:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8b4mZo2o0S8W6C2ziuhj6XWhvnvCBhcBQJw5XkR6aO0l14ADhzh6mslM4mXrWKPebAL2WS//xbp3ZbfNMXd8=
+X-Received: by 2002:a17:907:d862:b0:a7a:b781:60ed with SMTP id
+ a640c23a62f3a-a839292f71fmr720888766b.17.1724068035609; Mon, 19 Aug 2024
+ 04:47:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20240815144911.1931487-1-alex.bennee@linaro.org>
- <20240815144911.1931487-16-alex.bennee@linaro.org>
-In-Reply-To: <20240815144911.1931487-16-alex.bennee@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 19 Aug 2024 12:46:46 +0100
-Message-ID: <CAFEAcA8+RprE5MQPA1P5WrRcCajeco9ApRyT3p+Va4mbCir6Jw@mail.gmail.com>
-Subject: Re: [PULL 15/21] chardev: set record/replay on the base device of a
- muxed device
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20240813031115.129000-1-demeng@redhat.com>
+ <CAPMcbCpcQ76EeLxDkAwn6jRQjPEbHzz9QMNDNiX54r+kqxo5Vg@mail.gmail.com>
+In-Reply-To: <CAPMcbCpcQ76EeLxDkAwn6jRQjPEbHzz9QMNDNiX54r+kqxo5Vg@mail.gmail.com>
+From: Dehan Meng <demeng@redhat.com>
+Date: Mon, 19 Aug 2024 19:47:03 +0800
+Message-ID: <CA+kPPJzRTZSsgyCxF-j-OsHd=p0bbFj6pPsNTZGENgnz23du1A@mail.gmail.com>
+Subject: Re: [PATCH] qemu-guest-agent: Update the logfile path of
+ qga-fsfreeze-hook.log
+To: Konstantin Kostiuk <kkostiuk@redhat.com>
+Cc: qemu-devel@nongnu.org, mrezanin@redhat.com
+Content-Type: multipart/alternative; boundary="000000000000d4db21062007debb"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=demeng@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.134,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -93,86 +95,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 15 Aug 2024 at 15:53, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
+--000000000000d4db21062007debb
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+'/var/log/qemu-ga' is more reasonable and forward-looking to facilitate
+future log management. All qga-related logs would be better placed in a
+dedicated and unified log directory.
+
+On Wed, Aug 14, 2024 at 7:54=E2=80=AFPM Konstantin Kostiuk <kkostiuk@redhat=
+.com>
+wrote:
+
+> This bug looks specific to the RedHat SELinux configuration.
+> Is this any reason to move LOGFILE except this?
 >
-> From: Nicholas Piggin <npiggin@gmail.com>
+> Best Regards,
+> Konstantin Kostiuk.
 >
-> chardev events to a muxed device don't get recorded because e.g.,
-> qemu_chr_be_write() checks whether the base device has the record flag
-> set.
 >
-> This can be seen when replaying a trace that has characters typed into
-> the console, an examination of the log shows they are not recorded.
+> On Tue, Aug 13, 2024 at 6:11=E2=80=AFAM Dehan Meng <demeng@redhat.com> wr=
+ote:
 >
-> Setting QEMU_CHAR_FEATURE_REPLAY on the base chardev fixes the problem.
+>> Since '/var/log/qga-fsfreeze-hook.log' is not included to proper
+>> selinux context 'system_u:object_r:virt_qemu_ga_log_t:s0', it
+>> should be changed to '/var/log/qemu-ga/qga-fsfreeze-hook.log'
+>>
+>> Jira: https://issues.redhat.com/browse/RHEL-52250
+>> Signed-off-by: Dehan Meng <demeng@redhat.com>
+>> ---
+>>  scripts/qemu-guest-agent/fsfreeze-hook | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/scripts/qemu-guest-agent/fsfreeze-hook
+>> b/scripts/qemu-guest-agent/fsfreeze-hook
+>> index 13aafd4845..98aad5e18b 100755
+>> --- a/scripts/qemu-guest-agent/fsfreeze-hook
+>> +++ b/scripts/qemu-guest-agent/fsfreeze-hook
+>> @@ -7,7 +7,7 @@
+>>  # "freeze" argument before the filesystem is frozen. And for
+>> fsfreeze-thaw
+>>  # request, it is issued with "thaw" argument after filesystem is thawed=
+.
+>>
+>> -LOGFILE=3D/var/log/qga-fsfreeze-hook.log
+>> +LOGFILE=3D/var/log/qemu-ga/qga-fsfreeze-hook.log
+>>  FSFREEZE_D=3D$(dirname -- "$0")/fsfreeze-hook.d
+>>
+>>  # Check whether file $1 is a backup or rpm-generated file and should be
+>> ignored
+>> --
+>> 2.40.1
+>>
+>>
 
-Hi; Coverity points out a bug in this code (CID 1559470):
+--000000000000d4db21062007debb
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> -Chardev *qemu_chr_new_from_opts(QemuOpts *opts, GMainContext *context,
-> -                                Error **errp)
-> +static void qemu_chardev_set_replay(Chardev *chr, Error **errp)
-> +{
-> +    if (replay_mode !=3D REPLAY_MODE_NONE) {
-> +        if (CHARDEV_GET_CLASS(chr)->chr_ioctl) {
-> +            error_setg(errp, "Replay: ioctl is not supported "
-> +                             "for serial devices yet");
-> +            return;
-> +        }
-> +        qemu_chr_set_feature(chr, QEMU_CHAR_FEATURE_REPLAY);
-> +        replay_register_char_driver(chr);
-> +    }
-> +}
+<div dir=3D"ltr">&#39;/var/log/qemu-ga&#39; is more reasonable and forward-=
+looking to facilitate future log management. All qga-related logs would be =
+better placed in a dedicated and unified log directory.</div><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Aug 14, 2024=
+ at 7:54=E2=80=AFPM Konstantin Kostiuk &lt;<a href=3D"mailto:kkostiuk@redha=
+t.com">kkostiuk@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
+04,204);padding-left:1ex"><div dir=3D"ltr"><div>This bug looks specific to =
+the RedHat SELinux configuration.</div><div>Is this any reason to move LOGF=
+ILE except this?<br></div><div><br></div><div><div><div dir=3D"ltr" class=
+=3D"gmail_signature"><div dir=3D"ltr"><div>Best Regards,</div><div>Konstant=
+in Kostiuk.</div></div></div></div><br></div></div><br><div class=3D"gmail_=
+quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Aug 13, 2024 at 6:11=
+=E2=80=AFAM Dehan Meng &lt;<a href=3D"mailto:demeng@redhat.com" target=3D"_=
+blank">demeng@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail=
+_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
+,204);padding-left:1ex">Since &#39;/var/log/qga-fsfreeze-hook.log&#39; is n=
+ot included to proper<br>
+selinux context &#39;system_u:object_r:virt_qemu_ga_log_t:s0&#39;, it<br>
+should be changed to &#39;/var/log/qemu-ga/qga-fsfreeze-hook.log&#39;<br>
+<br>
+Jira: <a href=3D"https://issues.redhat.com/browse/RHEL-52250" rel=3D"norefe=
+rrer" target=3D"_blank">https://issues.redhat.com/browse/RHEL-52250</a><br>
+Signed-off-by: Dehan Meng &lt;<a href=3D"mailto:demeng@redhat.com" target=
+=3D"_blank">demeng@redhat.com</a>&gt;<br>
+---<br>
+=C2=A0scripts/qemu-guest-agent/fsfreeze-hook | 2 +-<br>
+=C2=A01 file changed, 1 insertion(+), 1 deletion(-)<br>
+<br>
+diff --git a/scripts/qemu-guest-agent/fsfreeze-hook b/scripts/qemu-guest-ag=
+ent/fsfreeze-hook<br>
+index 13aafd4845..98aad5e18b 100755<br>
+--- a/scripts/qemu-guest-agent/fsfreeze-hook<br>
++++ b/scripts/qemu-guest-agent/fsfreeze-hook<br>
+@@ -7,7 +7,7 @@<br>
+=C2=A0# &quot;freeze&quot; argument before the filesystem is frozen. And fo=
+r fsfreeze-thaw<br>
+=C2=A0# request, it is issued with &quot;thaw&quot; argument after filesyst=
+em is thawed.<br>
+<br>
+-LOGFILE=3D/var/log/qga-fsfreeze-hook.log<br>
++LOGFILE=3D/var/log/qemu-ga/qga-fsfreeze-hook.log<br>
+=C2=A0FSFREEZE_D=3D$(dirname -- &quot;$0&quot;)/fsfreeze-hook.d<br>
+<br>
+=C2=A0# Check whether file $1 is a backup or rpm-generated file and should =
+be ignored<br>
+-- <br>
+2.40.1<br>
+<br>
+</blockquote></div>
+</blockquote></div>
 
-qemu_chardev_set_replay() assumes it is passed a non NULL
-'chr' pointer...
+--000000000000d4db21062007debb--
 
-> @@ -693,14 +720,22 @@ Chardev *qemu_chr_new_noreplay(const char *label, c=
-onst char *filename,
->      Error *err =3D NULL;
->
->      if (strstart(filename, "chardev:", &p)) {
-> -        return qemu_chr_find(p);
-> +        chr =3D qemu_chr_find(p);
-
-...but qemu_chr_find() returns NULL if it can't find the
-chardev, and we don't catch that here...
-
-> +        if (replay) {
-> +            qemu_chardev_set_replay(chr, &err);
-
-...so we will pass it to qemu_chardev_set_replay(), which
-dumps core:
-
-$ ./build/x86/qemu-system-arm -icount
-shift=3Dauto,rr=3Drecord,rrfile=3Dreplay.bin  -serial chardev:bang -M virt
-Segmentation fault (core dumped)
-
-(Compare the non-rr behaviour:
-$ ./build/x86/qemu-system-arm  -serial chardev:bang -M virt
-qemu-system-arm: -serial chardev:bang: could not connect serial device
-to character backend 'chardev:bang'
-)
-
-Would you mind sending in a patch to fix this?
-
->      opts =3D qemu_chr_parse_compat(label, filename, permit_mux_mon);
->      if (!opts)
->          return NULL;
->
-> -    chr =3D qemu_chr_new_from_opts(opts, context, &err);
-> +    chr =3D __qemu_chr_new_from_opts(opts, context, replay, &err);
->      if (!chr) {
->          error_report_err(err);
->          goto out;
-
-Side note: the "__" prefix is reserved for the system, so
-we don't generally use it in QEMU function names. Could
-you also submit a patch to rename the __qemu_chr_new()
-and __qemu_chr_new_from_opts() functions, please?
-(One common pattern for this kind of "function that does
-the actual work behind foo()" is to call it "do_foo()".)
-
-thanks
--- PMM
 
