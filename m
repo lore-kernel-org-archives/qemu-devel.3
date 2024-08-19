@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 501D7C52D6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 14:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76847C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 14:04:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sg2zO-0003yD-Lo; Mon, 19 Aug 2024 10:04:06 -0400
+	id 1sg2zO-0003xq-GY; Mon, 19 Aug 2024 10:04:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1sg2zN-0003xN-EJ
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:04:05 -0400
+ id 1sg2zM-0003wt-S8
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:04:04 -0400
 Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <mnissler@rivosinc.com>)
- id 1sg2zK-00072u-Fr
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:04:05 -0400
+ id 1sg2zK-00072f-Ao
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:04:04 -0400
 Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2d3c0d587e4so2937103a91.2
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 07:04:02 -0700 (PDT)
+ 98e67ed59e1d1-2d3ec4bacc5so1865776a91.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 07:04:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1724076241; x=1724681041;
+ d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1724076240; x=1724681040;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=t+hjeHCHtdkd2RYRfSgVvQKkJ7Af9cnuMXy3JgW7EfI=;
- b=MH2WaFpnVvHbab6ZzSX204oQLvhZXLrfAxRLt6SZfJSg3ZekqcjpDfuoYBoDVotLiw
- sG5bXbDMpH2iYfz0QimhhapWM1JUwtA52sZBEGcP+XarF4mPQEJ42ALkWbdC9iFrL3MF
- eA8ZfbBZ83xYGEMZ7MYaiJQle3HdNnBhlkHr8kEAVR6PDX03d99qoP0Vt/JMGnmSHM5x
- lG1eSb7g1qjFeOlviimlzAUH0xPBL8Rm6lgv0zIT+ibm/VJ0G8fGOkA0sZGGGT9jIunx
- mFPedRRQvoH8Q/F7NWUL3LzkoxeOjEsGoOZWcD6cEs2//iGLr4MYdkb2qBRt6TTVfPQc
- SL/A==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=5fNvbCwzZDF9oSzpaUCOvQ0VkkWUMlPUIBucQg5dEJA=;
+ b=PkbJkgZyB+JGIArVOt0GwmWDe4SWXTEpSYjB5IweeqvWPM70AEt1ytBI9NoEw5wOQi
+ tnMspSiP8eRRIdyh1sHlM33mpNi6gSlOZTdbKQiXIe2cCQRwuydXySihOs9VWdNIB/0f
+ KSYGJD+6EpVR8jfZeRli8HmlbMlBsfLnvhz+Vz6owC1KF9F0CsJ0z3ZCslqlzlD4vfWm
+ mg+AKb1tviJbgbF9ybtE0MaRONFSUSJxuSDqA7Hk3l1re89Jg01/R1gWfgFqBUKjzHDd
+ 3GMCBjUAl0167DW2GmWY8cpOFvrhcxoM2GT0qDtcSGFvqAYJRTS6rKFzCWE8U5hst4E6
+ +yiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724076241; x=1724681041;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=t+hjeHCHtdkd2RYRfSgVvQKkJ7Af9cnuMXy3JgW7EfI=;
- b=qBtAuEf4/eawK9vyZ2qZL7PJd7esfaSlyRqDuFR2amT24K7cKo6HRoGW67mVtYFAUV
- y2gKrbQxK1GSjS5KavX6NR9HSFw3Idnz/SJG0hQEj2WAyN8SdpYb797WHVQ2R0ZjRsPT
- XYzJcRLpjReEXLyKLEpvT0C4yFu9BDk2akQlURXTFzaKkIoy75GxLf7zyS684GhqXGWD
- IW7d5JgAkxE6AtX8MPVLgRIXDws+XpBudLuw1PHCoOYaTpnehNlVopwD9sLxTa9d4AQd
- jXgPtV8sfroHR/GBoElWcHtJezFa531SYGHQrYYSr/YWNcsms/mGFYW7oDtQ1LqtY3x4
- ChVw==
+ d=1e100.net; s=20230601; t=1724076240; x=1724681040;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5fNvbCwzZDF9oSzpaUCOvQ0VkkWUMlPUIBucQg5dEJA=;
+ b=YbBYvF+qBjZhGPNwlJLFkaxkuUFlv1mxElnuSEyOlrOnmqbGBEyb/qfhw6b4lcbaSl
+ W7vWtHE0OmOGlhk0kQ39+W281MsGXQCsoA8OFjwtWBCO4+xcZ/DNDRO0gqA9UDs4Wm1l
+ VpPvJXpQVCsCQSj3aAQICnnjvmB7+4J45o47b7KbRiMAIAwY3Nh+Sgxr32dDQm0aE9el
+ WZ78q2kPLgTO+22qYfqRUjPRDO+bmiFCM0zwD/nuIvBmHVPFqmKL+ZyuHTllZyzB6oMi
+ 1x2K9b3P++PwQP1WpMQnobMNUIw3eOjt9pcpoIcdRjojdLoauqmX32V1IGbxAo87K8fU
+ dK6Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXldM/1p9c9nYW1crcf35+fAvgRuF0Nrdp4OpBWj3kUXEtcA/GiOfiNZLgx5wvH1Rzjgy0kqsM5b5RcwzSSMeEIDHtequY=
-X-Gm-Message-State: AOJu0YzfmWH4lW6TOFeXnEbs8LjIRMXTAoJXH5jjk7pqkvrMXJSkS+9t
- P7zNSgB3kxrrK4hdHS9uPyyAYTXlDzau9EeXJRZP1KP3Cw8oeQtpTvYMM8rJTqc=
-X-Google-Smtp-Source: AGHT+IHIK46eRb2N1D/vSf1jCS5eHuWV8eZSxFwv2JYV7ANzzFlfKWrR7nzTyGLgfqa5VhSJ/f6kgg==
-X-Received: by 2002:a17:90a:3986:b0:2d3:ba42:775c with SMTP id
- 98e67ed59e1d1-2d3dfc368e8mr10120665a91.1.1724076240900; 
- Mon, 19 Aug 2024 07:04:00 -0700 (PDT)
+ AJvYcCWokVqHPxx6uSxutXebEE3yigt3L3Qlq4m4et472DRmqqIUd4rg/p/J3AzpBE4XMIPyYw55WbjINtF6Zd6uDV3mvFMGl/o=
+X-Gm-Message-State: AOJu0YwVTjMh+tHeELuy1xL+HA4oXBlCv3qsZUoS10Hyrva259calk8h
+ USbRNsE381ya/ccEwjyTSrEcychJvMMFugLdl2t1HrhIRkCC1aUFm/bD14Ms1xo=
+X-Google-Smtp-Source: AGHT+IHykJUvONMaygJNZHaDCDHqBbNZzjCOUTAvn47CmfPmYPZBKh93eNhpL+y1C1MGdnwmen+ewg==
+X-Received: by 2002:a17:90b:2bc6:b0:2d3:ad41:4d7a with SMTP id
+ 98e67ed59e1d1-2d3e4539f85mr17222534a91.4.1724076239807; 
+ Mon, 19 Aug 2024 07:03:59 -0700 (PDT)
 Received: from mnissler.ba.rivosinc.com ([64.71.180.162])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d3d0b3b6fcsm8341174a91.43.2024.08.19.07.04.00
+ 98e67ed59e1d1-2d3d0b3b6fcsm8341174a91.43.2024.08.19.07.03.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Aug 2024 07:04:00 -0700 (PDT)
+ Mon, 19 Aug 2024 07:03:59 -0700 (PDT)
 From: Mattias Nissler <mnissler@rivosinc.com>
 To: jag.raman@oracle.com,
 	qemu-devel@nongnu.org
@@ -72,12 +71,10 @@ Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  David Hildenbrand <david@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Mattias Nissler <mnissler@rivosinc.com>
-Subject: [PATCH v11 1/2] Update subprojects/libvfio-user
-Date: Mon, 19 Aug 2024 07:03:54 -0700
-Message-Id: <20240819140355.2958821-2-mnissler@rivosinc.com>
+Subject: [PATCH v11 0/2] Support message-based DMA in vfio-user server
+Date: Mon, 19 Aug 2024 07:03:53 -0700
+Message-Id: <20240819140355.2958821-1-mnissler@rivosinc.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240819140355.2958821-1-mnissler@rivosinc.com>
-References: <20240819140355.2958821-1-mnissler@rivosinc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
@@ -103,33 +100,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Brings in assorted bug fixes. The following are of particular interest
-with respect to message-based DMA support:
+This series adds basic support for message-based DMA in qemu's vfio-user
+server. This is useful for cases where the client does not provide file
+descriptors for accessing system memory via memory mappings. My motivating use
+case is to hook up device models as PCIe endpoints to a hardware design. This
+works by bridging the PCIe transaction layer to vfio-user, and the endpoint
+does not access memory directly, but sends memory requests TLPs to the hardware
+design in order to perform DMA.
 
-* bb308a2 "Fix address calculation for message-based DMA"
-  Corrects a bug in DMA address calculation.
+Note that more work is needed to make message-based DMA work well: qemu
+currently breaks down DMA accesses into chunks of size 8 bytes at maximum, each
+of which will be handled in a separate vfio-user DMA request message. This is
+quite terrible for large DMA accesses, such as when nvme reads and writes
+page-sized blocks for example. Thus, I would like to improve qemu to be able to
+perform larger accesses, at least for indirect memory regions. I have something
+working locally, but since this will likely result in more involved surgery and
+discussion, I am leaving this to be addressed in a separate patch.
 
-* 1569a37 "Pass server->client command over a separate socket pair"
-  Adds support for separate sockets for either command direction,
-  addressing a bug where libvfio-user gets confused if both client and
-  server send commands concurrently.
+Changes from v1:
 
-Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
-Signed-off-by: Mattias Nissler <mnissler@rivosinc.com>
----
- subprojects/libvfio-user.wrap | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+* Address Stefan's review comments. In particular, enforce an allocation limit
+  and don't drop the map client callbacks given that map requests can fail when
+  hitting size limits.
 
-diff --git a/subprojects/libvfio-user.wrap b/subprojects/libvfio-user.wrap
-index 416955ca45..3dd08768ed 100644
---- a/subprojects/libvfio-user.wrap
-+++ b/subprojects/libvfio-user.wrap
-@@ -1,4 +1,4 @@
- [wrap-git]
- url = https://gitlab.com/qemu-project/libvfio-user.git
--revision = 0b28d205572c80b568a1003db2c8f37ca333e4d7
-+revision = b1a156d86f55a8fa3f78ece5bee7748ec75e7b82
- depth = 1
+* libvfio-user version bump now included in the series.
+
+* Tested as well on big-endian s390x. This uncovered another byte order issue
+  in vfio-user server code that I've included a fix for.
+
+Changes from v2:
+
+* Add a preparatory patch to make bounce buffering an AddressSpace-specific
+  concept.
+
+* The total buffer size limit parameter is now per AdressSpace and can be
+  configured for PCIDevice via a property.
+
+* Store a magic value in first bytes of bounce buffer struct as a best effort
+  measure to detect invalid pointers in address_space_unmap.
+
+Changes from v3:
+
+* libvfio-user now supports twin-socket mode which uses separate sockets for
+  client->server and server->client commands, respectively. This addresses the
+  concurrent command bug triggered by server->client DMA access commands. See
+  https://github.com/nutanix/libvfio-user/issues/279 for details.
+
+* Add missing teardown code in do_address_space_destroy.
+
+* Fix bounce buffer size bookkeeping race condition.
+
+* Generate unmap notification callbacks unconditionally.
+
+* Some cosmetic fixes.
+
+Changes from v4:
+
+* Fix accidentally dropped memory_region_unref, control flow restored to match
+  previous code to simplify review.
+
+* Some cosmetic fixes.
+
+Changes from v5:
+
+* Unregister indirect memory region in libvfio-user dma_unregister callback.
+
+Changes from v6:
+
+* Rebase, resolve straightforward merge conflict in system/dma-helpers.c
+
+Changes from v7:
+
+* Rebase (applied cleanly)
+
+* Restore various Reviewed-by and Tested-by tags that I failed to carry
+  forward (I double-checked that the patches haven't changed since the reviewed
+  version)
+
+Changes from v8:
+
+* Rebase (clean)
+
+* Change bounce buffer size accounting to use uint32_t so it works also on
+  hosts that don't support uint64_t atomics, such as mipsel. As a consequence
+  overflows are a real concern now, so switch to a cmpxchg loop for allocating
+  bounce buffer space.
+
+Changes from v9:
+
+* Incorporate patch split and QEMU_MUTEX_GUARD change by philmd@linaro.org
+
+* Use size_t instead of uint32_t for bounce buffer size accounting. The qdev
+  property remains uint32_t though, so it has a consistent size regardless of
+  host.
+
+Changes from v10:
+
+* Update the commit to uprev the libvfio-user subproject to the latest
+  libvfio-user revision.
+
+* Break out the "softmmu: Support concurrent bounce buffers" patch so this
+  series only touches vfio-user code and can be picked up as is by Jag.
+
+Mattias Nissler (2):
+  Update subprojects/libvfio-user
+  vfio-user: Message-based DMA support
+
+ hw/remote/trace-events        |   2 +
+ hw/remote/vfio-user-obj.c     | 100 +++++++++++++++++++++++++++++-----
+ subprojects/libvfio-user.wrap |   2 +-
+ 3 files changed, 88 insertions(+), 16 deletions(-)
+
 -- 
 2.34.1
 
