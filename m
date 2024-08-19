@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A96A3C52D7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:55:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C547EC5321D
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:55:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgBGH-00009C-Ii; Mon, 19 Aug 2024 18:54:06 -0400
+	id 1sgBGH-0008LZ-Ap; Mon, 19 Aug 2024 18:54:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBF4-0002mk-PK
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:53 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEm-0001er-SW
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:37 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBF2-0000qE-ML
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:50 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-37196229343so2253352f8f.0
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:52:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEl-0000lV-0M
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:32 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-3718e416297so2192366f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:52:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724107967; x=1724712767; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724107949; x=1724712749; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8Rpj0D5ZMl/IBwW6NXczoFAZCXLiZ4uNQ1t/B/Sarn0=;
- b=uhN6TedFXli2mt+RFohEyh5171RnC2ndEU8AUp9Sh8L7WG4ROgCceYy/A5IS9Oaw9s
- 2xAT5QBU6tbILcgcfsLeWeknNwTCC0Aimsiyon+GtE4nQp9IWPpNZ6lSpjZdLXgSZ2Z+
- 6mNtZM9fbQZ0fLX4ORdC2o1wV6058lbLITOXIBQaLZWahb9COHwjdoU//2KQN6jCbJ2Z
- dWBzroGChHkSgbTLanzLUuhYQAgO1mQqfSOXnzJ2//CmpSwRz0WidwpobnLd1HglkixL
- WKDEUrbICbpHLL6t5FbWomYvx5e7nwYbSGf2Mv+4P/5GXEy+/mpAgcv0GA1BjT9RKzzS
- Y2AA==
+ bh=YLodpe9emd/ELJf5C6nKnsNO7KrpM2yyxOGgNuXlJKo=;
+ b=HuP6PAhQ1CEo2lALJ/3qCnOhQoiX47grui/E/8RmnJf6VZtYK5UwyMVyRp7TdFy5M2
+ MWRtC60+dy0hfpqHVDd71M1y/SvjDK8TiZDg7lkRfERcqJeVxoCd/lNyWhSJWJ8uEVFe
+ kzveIRb1h2JR0QB236FDJenNdi4HgeqAlWVV6cbWnYlm0FIiaeOugGftyoe7dXIO07BC
+ bYI8/l/nwfMlV+i8Um8QcrFjkIZ4LLiXk7a/Syhc+Dh6XR31BY1YUzttOuppYXegStm1
+ HHvskCIpysMjKyBBApdHHhgzYNWlEzDlKsmMFRjljOvzvNs11Cu9bDlDNeTT9jqwb9dr
+ Rw/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724107967; x=1724712767;
+ d=1e100.net; s=20230601; t=1724107949; x=1724712749;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8Rpj0D5ZMl/IBwW6NXczoFAZCXLiZ4uNQ1t/B/Sarn0=;
- b=vwmI/Z9m8x1cFppGwgvi0izTNJbgTEmTD5y9Zi9pGwfFEd8YatALGsRm3I3FdXyrk9
- nCVfUdShT5Sjs7ob7D1wbr3fHm6m99vUIeHmaFzE8D2+kaxGkY6ANXxPuE2ij+2l2wjT
- MBl9rlBkm69uGygunkAbOXbx4F0FL5Dljqb/jEYUy+ATHYGcBiAyB0CHrTJFJpN0FwJ/
- AjysBgocZVP1OCFXzeRovKSUVKAl7zBny6onrLpLrjukPItEwQvzWyIaEBZ84Mx3f7Jn
- bNqEtfWSyh+rXvc5nUb/kbo9N1NZoIh+ydQ78KnMes27EYq8/rGNv9u2VtPLLXMqhaIB
- 8CkQ==
-X-Gm-Message-State: AOJu0YwIVkSkHQzOBCZGGLxh1PTIEXVO8WbdYWzhoawqPNweGRoouHP6
- CN/rMUp5d23KxC5dNPdajWwqQkrjrDCV8Hs/bs7YgggYEzCDuVWFFGoIsuAPou48LnpY94zmDOE
- nQxU=
-X-Google-Smtp-Source: AGHT+IELigD0cS7VR5ltft6sqKDFpDlXbKn8GNqQVP3OgcfVSDZPkpns+vxxwwSrXm6C12yjX28iTw==
-X-Received: by 2002:adf:ec04:0:b0:371:7e73:eb43 with SMTP id
- ffacd0b85a97d-37194694f88mr8068307f8f.42.1724107966740; 
- Mon, 19 Aug 2024 15:52:46 -0700 (PDT)
+ bh=YLodpe9emd/ELJf5C6nKnsNO7KrpM2yyxOGgNuXlJKo=;
+ b=jX/Ux8ilF6+gl8dHgzJYPFfNT0EHa8lpbjHr3dmVWKuFfG/s3dSIKQMm66QoI81mpN
+ ftDnkmmAXEK0vOzMouKbSZ4KtZZnpnCBok0morbNTcpPmTRSMEjLlmNAOBZ+aEuwUOaR
+ Xq1avN8RHAJGt71DZqnQfbx6RH46H1HvC3fLfO9PgAcvTqAKC8J6NTHDKHtgP+LLrDix
+ slMg8KmnQ9KbdOU+BH/JDPtrq51zUoeqKskgUPQjP2yuTofDBwUICSmY9ikOM6pyk+/F
+ J2w1YgzUH8eQg7Nji4iGNKgo+sSwIux2GyAEl6BPw6zz2QtYVTyM4c3SVSKCN372444d
+ ULPA==
+X-Gm-Message-State: AOJu0YyWRGyMkAePi6P3s6NYNakjjid80TPHVra7VJO+24I1g0uA/igq
+ 6AMc8v2n7VT+8lknJRwrsSGj7IYz4OS8mBfKBJTDAAjv//RVLWiD0Papa3leyBG3x5jzRchSXqB
+ SHkQ=
+X-Google-Smtp-Source: AGHT+IH4QyNjHxSTCswrtiCsxg78C4gM8AFwE1pH3jIjZI4n+euGbm6aoq/O6alaOdiudfXfh1rp/Q==
+X-Received: by 2002:a05:6000:1112:b0:371:728e:d000 with SMTP id
+ ffacd0b85a97d-3719431768fmr7207896f8f.1.1724107948725; 
+ Mon, 19 Aug 2024 15:52:28 -0700 (PDT)
 Received: from localhost.localdomain (88-178-97-237.subs.proxad.net.
  [88.178.97.237]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ded2931asm173290985e9.17.2024.08.19.15.52.45
+ ffacd0b85a97d-371aa455abesm7173818f8f.111.2024.08.19.15.52.27
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Aug 2024 15:52:46 -0700 (PDT)
+ Mon, 19 Aug 2024 15:52:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Kamil=20Szcz=C4=99k?= <kamil@szczek.dev>,
- Bernhard Beschow <shentey@gmail.com>,
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 19/20] hw/i386/pc: Ensure vmport prerequisites are fulfilled
-Date: Tue, 20 Aug 2024 00:51:15 +0200
-Message-ID: <20240819225116.17928-20-philmd@linaro.org>
+Subject: [PULL 15/20] contrib/plugins/execlog: Fix shadowed declaration warning
+Date: Tue, 20 Aug 2024 00:51:11 +0200
+Message-ID: <20240819225116.17928-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240819225116.17928-1-philmd@linaro.org>
 References: <20240819225116.17928-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,79 +95,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kamil Szczęk <kamil@szczek.dev>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-Since commit 4ccd5fe22feb95137d325f422016a6473541fe9f ('pc: add option
-to disable PS/2 mouse/keyboard'), the vmport will not be created unless
-the i8042 PS/2 controller is enabled. To avoid confusion, let's fail if
-vmport was explicitly requested, but the i8042 controller is disabled.
-This also changes the behavior of vmport=auto to take i8042 controller
-availability into account.
+Found on debian stable.
 
-Signed-off-by: Kamil Szczęk <kamil@szczek.dev>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <0MS3y5E-hHqODIhiuFxmCnIrXd612JIGq31UuMsz4KGCKZ_wWuF-PHGKTRSGS0nWaPEddOdF4YOczHdgorulECPo792OhWov7O9BBF6UMX4=@szczek.dev>
+../contrib/plugins/execlog.c: In function ‘vcpu_tb_trans’:
+../contrib/plugins/execlog.c:236:22: error: declaration of ‘n’ shadows a previous local [-Werror=shadow=local]
+  236 |             for (int n = 0; n < all_reg_names->len; n++) {
+      |                      ^
+../contrib/plugins/execlog.c:184:12: note: shadowed declaration is here
+  184 |     size_t n = qemu_plugin_tb_n_insns(tb);
+      |
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20240814233645.944327-2-pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i386/pc.c    | 11 ++++++++---
- qemu-options.hx |  4 ++--
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ contrib/plugins/execlog.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 72229a24ff..7779c88a91 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1075,7 +1075,7 @@ static const MemoryRegionOps ioportF0_io_ops = {
- };
+diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
+index 1c1601cc0b..d67d010761 100644
+--- a/contrib/plugins/execlog.c
++++ b/contrib/plugins/execlog.c
+@@ -181,8 +181,8 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+     bool check_regs_this = rmatches;
+     bool check_regs_next = false;
  
- static void pc_superio_init(ISABus *isa_bus, bool create_fdctrl,
--                            bool create_i8042, bool no_vmport)
-+                            bool create_i8042, bool no_vmport, Error **errp)
- {
-     int i;
-     DriveInfo *fd[MAX_FD];
-@@ -1100,6 +1100,10 @@ static void pc_superio_init(ISABus *isa_bus, bool create_fdctrl,
-     }
+-    size_t n = qemu_plugin_tb_n_insns(tb);
+-    for (size_t i = 0; i < n; i++) {
++    size_t n_insns = qemu_plugin_tb_n_insns(tb);
++    for (size_t i = 0; i < n_insns; i++) {
+         char *insn_disas;
+         uint64_t insn_vaddr;
  
-     if (!create_i8042) {
-+        if (!no_vmport) {
-+            error_setg(errp,
-+                       "vmport requires the i8042 controller to be enabled");
-+        }
-         return;
-     }
- 
-@@ -1219,12 +1223,13 @@ void pc_basic_device_init(struct PCMachineState *pcms,
- 
-     assert(pcms->vmport >= 0 && pcms->vmport < ON_OFF_AUTO__MAX);
-     if (pcms->vmport == ON_OFF_AUTO_AUTO) {
--        pcms->vmport = xen_enabled() ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
-+        pcms->vmport = (xen_enabled() || !pcms->i8042_enabled)
-+            ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
-     }
- 
-     /* Super I/O */
-     pc_superio_init(isa_bus, create_fdctrl, pcms->i8042_enabled,
--                    pcms->vmport != ON_OFF_AUTO_ON);
-+                    pcms->vmport != ON_OFF_AUTO_ON, &error_fatal);
- }
- 
- void pc_nic_init(PCMachineClass *pcmc, ISABus *isa_bus, PCIBus *pci_bus)
-diff --git a/qemu-options.hx b/qemu-options.hx
-index d99084a5ee..d94e2cbbae 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -68,8 +68,8 @@ SRST
- 
-     ``vmport=on|off|auto``
-         Enables emulation of VMWare IO port, for vmmouse etc. auto says
--        to select the value based on accel. For accel=xen the default is
--        off otherwise the default is on.
-+        to select the value based on accel and i8042. For accel=xen or
-+        i8042=off the default is off otherwise the default is on.
- 
-     ``dump-guest-core=on|off``
-         Include guest memory in a core dump. The default is on.
 -- 
 2.45.2
 
