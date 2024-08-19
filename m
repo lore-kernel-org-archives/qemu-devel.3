@@ -4,97 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 923D0C52D6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 14:22:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D794C52D6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 14:44:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sg3GV-0007Jo-TW; Mon, 19 Aug 2024 10:21:47 -0400
+	id 1sg3bD-0000Bu-O0; Mon, 19 Aug 2024 10:43:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sg3GU-0007Hp-6r
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:21:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sg3GS-0001GB-9X
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:21:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724077303;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sbJ58YvVZ4dzlnRt+qzf9Ta7hAcbIsn3dkKna10OJxE=;
- b=F5CdKdjjT4K5RHvtZZkdBq8kYsnIKsl3GP8V1/QdY1nievYwlRHdypBLAp3+9I5kaE2zvr
- +bB1Jj0xmZ/5NYqECk7l5dPs8GuobfgAXhmIx2AsmnzSnRoYN14Iv29AQKPavnR9VMJrML
- pxr+h1+c6bzetbjPptXtRjb2twaa150=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-34-LOSyvQenON6791oWRJlA6g-1; Mon, 19 Aug 2024 10:21:41 -0400
-X-MC-Unique: LOSyvQenON6791oWRJlA6g-1
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-37187b43662so2786565f8f.0
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 07:21:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sg3bC-0000Av-Bb
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:43:10 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1sg3bA-0004GE-EY
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:43:10 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-428178fc07eso33222305e9.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 07:43:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1724078586; x=1724683386; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=LK0G25CZG013C1Vbj0ZuFTV6wmWQVTRhUl87xQWJTe4=;
+ b=aLRMrQLKuSRH/C/+H5HlH6iqo106xe4Z9BhjvLlrrkSXp5ADec0rMMRcS4UP6i4Jv4
+ NKWoCYMgEYOaaI6358KDOHcbsZ41jXoY/xZqij/nlyFQAM/1lE567UdZ2gpZ852blPZr
+ +tT0WoVEUbEsX5zA16/OmzZ1bmPaQXcW6gPNPv0u8aDiaf1tJEl35AfVNnCT+MpL3YMd
+ wSDH+LtqJyCg+ZSU1FryZcQi/+u7mh1Bq5vuzKg9dlLQjNJu3RGDRX38K8DbBcpQs56s
+ Gu3hAggVE+gTLpR9DMtvYwEGBbYXjJEH/qjjvK6yHATbQFIvBzyP5PTpMmdDfA0xtLt7
+ lzrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724077300; x=1724682100;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sbJ58YvVZ4dzlnRt+qzf9Ta7hAcbIsn3dkKna10OJxE=;
- b=ERdbz9pEbnFn//EHLnQZkaClZ/gJ3Zl8MDtRMWO2gSUASbSZPpRKXLcm6B9NwtxqRK
- oI/QNMCeJljM5XSE4kHqqTb6WP5cGO505F4Dq8uXsZOocXFkvqDuIul8icZ+J9iU9jTd
- j3tvXQbEIJYraaQKehiHND6Xyo3kKQ93u536pb27eH3HwWGhJ6lrXbzdzluYDSsXKtPu
- urStnzVyeJ+X98xkHiWbJlDpxp3284lX+9OvIfbFd3jGCgpcdgfajSslreImS8ospAH/
- W772E0nLsbHgGyeT7CPE48TbvGArWejpcNODVAgfYzXp9FUsu0Npdcs2OvYH04y1HzwW
- BFUw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWfc4frb9Gh+xG/p4544Zt4B4z6Jb7rKpANwZMfFh3WkXD0Orwzw68ie4ymFMpmjQ7nWimRkBaIuij3@nongnu.org
-X-Gm-Message-State: AOJu0YztHfJ+9S4tT6cLrLFuIgdZo/+eJjQmrEprxkhMJ1yhrEJ1UduI
- 0nowvAfJJdXcRxziN/fzn1hEahdR4bETyk/Ulul0Efxh6fMzfB+19TZqUZryw1uzZqScUjS2Gzp
- ooxXRfcDoosOVfc6w7BLhf7faNdMbSbrJBBz3XjUfcB2rcD6689ld
-X-Received: by 2002:adf:cc8c:0:b0:368:3f60:8725 with SMTP id
- ffacd0b85a97d-3719468fac0mr5409889f8f.39.1724077299921; 
- Mon, 19 Aug 2024 07:21:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFRkNenkG/Yd1MX23P9IfW6QETLMQ6jCAglC3GAfYRJh+TfR+pbxrhdqEe60rPRg0gC1zv+UA==
-X-Received: by 2002:adf:cc8c:0:b0:368:3f60:8725 with SMTP id
- ffacd0b85a97d-3719468fac0mr5409876f8f.39.1724077299359; 
- Mon, 19 Aug 2024 07:21:39 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ed6507c4sm113966685e9.15.2024.08.19.07.21.38
+ d=1e100.net; s=20230601; t=1724078586; x=1724683386;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LK0G25CZG013C1Vbj0ZuFTV6wmWQVTRhUl87xQWJTe4=;
+ b=m3OjZtNVBMhMkPkVk779yeIk68Wsu/JxY3l3d5oIyopwSO9GeDJFqP5XTPAgLHUKHj
+ y4qWpJTq/sVhl69xlIDh0mAIbxuK7Zi3H812SBBEcOpawXWY0KDkWL+eqYjHTPcb0bqb
+ JRWY1/KzylrmRHmO0XCRNq8VcFHR/AgSa5qpHzymHXWiKTLOWoz3ipCdy3w78UXVr4yR
+ KfHikFux5PHQSGspADstwoq9blT4N3QbBopH7kAOcj+WT0/qmYB+RyAgs82TXxX5EdRS
+ nByU5j92bCx6ijC50ENsVuaZzqXTMiPX5SExqXN9zEjtqRjPmkXxp4tJwHgLk7z4Idv9
+ nsRw==
+X-Gm-Message-State: AOJu0YwCTlOQvp2tSL+nGUOx1cXRF/1NS83a547NHHCVIgLBn+PV9/+W
+ 2K2uGYOqgwGeFIziRG23eFue61ahqVuPgKpT4W3ttmWciE0nRPr2bYlrrcq+f0EvCfWWCLCyxIN
+ h
+X-Google-Smtp-Source: AGHT+IHN5LAqNtIMn4Y8RYTYmUEUIdmhoAQsBzSaygKWG7StUQ80ky5DjBR2okypdfLJVjTFQ8uK5Q==
+X-Received: by 2002:a05:600c:35c1:b0:426:6320:226a with SMTP id
+ 5b1f17b1804b1-429ed7baab6mr65607975e9.15.1724078586033; 
+ Mon, 19 Aug 2024 07:43:06 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-429ded7cfc6sm168262695e9.42.2024.08.19.07.43.05
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Aug 2024 07:21:38 -0700 (PDT)
-Date: Mon, 19 Aug 2024 16:21:38 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, Ani Sinha <anisinha@redhat.com>, Dongjiu Geng
- <gengdongjiu1@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
- Maydell <peter.maydell@linaro.org>, Shannon Zhao
- <shannon.zhaosl@gmail.com>, kvm@vger.kernel.org, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v8 00/13] Add ACPI CPER firmware first error injection
- on ARM emulation
-Message-ID: <20240819162138.4dd45330@imammedo.users.ipa.redhat.com>
-In-Reply-To: <cover.1723793768.git.mchehab+huawei@kernel.org>
-References: <cover.1723793768.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ Mon, 19 Aug 2024 07:43:05 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PATCH] docs/system/cpu-hotplug: Update example's socket-id/core-id
+Date: Mon, 19 Aug 2024 15:43:03 +0100
+Message-Id: <20240819144303.37852-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.134,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,205 +90,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Aug 2024 09:37:32 +0200
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+At some point the way we allocate socket-id and core-id to CPUs
+by default changed; update the example of how to do CPU hotplug
+and unplug so the example commands work again. The differences
+in the sample input and output are:
+ * the second CPU is now socket-id=0 core-id=1,
+   not socket-id=1 core-id=0
+ * the order of fields from the qmp_shell is different (it seems
+   to now always be in alphabetical order)
 
-> This series add support for injecting generic CPER records.  Such records
-> are generated outside QEMU via a provided script.
-> 
-> On this version, I added two optional patches at the end:
-> - acpi/ghes: cleanup generic error data logic
-> 
->   It drops some obvious comments from some already-existing code.
->   As we're already doing lots of changes at the code, it sounded
->   reasonable to me to have such cleanup here;
-> 
-> - acpi/ghes: check if the BIOS pointers for HEST are correct
-> 
->   QEMU has two ways to navigate to a CPER start data: via its
->   memory address or indirectly following 2 BIOS pointers.
->   OS only have the latter one. This patch validates if the BIOS
->   links used by the OS were properly produced, comparing to the
->   actual location of the CPER record.
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+I noticed this while I was playing around with vcpu hotplug trying to
+demonstrate a memory leak I want to fix...
 
-I went over the series,
-once suggestion in 13/13 implemented
-we can get rid of pointer math that is reshuffled several times
-in patches here.
+ docs/system/cpu-hotplug.rst | 54 ++++++++++++++++++-------------------
+ 1 file changed, 26 insertions(+), 28 deletions(-)
 
-I'd suggest to structure series as following:
+diff --git a/docs/system/cpu-hotplug.rst b/docs/system/cpu-hotplug.rst
+index 015ce2b6ec3..443ff226b90 100644
+--- a/docs/system/cpu-hotplug.rst
++++ b/docs/system/cpu-hotplug.rst
+@@ -33,23 +33,23 @@ vCPU hotplug
+       {
+           "return": [
+               {
+-                  "type": "IvyBridge-IBRS-x86_64-cpu",
+-                  "vcpus-count": 1,
+                   "props": {
+-                      "socket-id": 1,
+-                      "core-id": 0,
++                      "core-id": 1,
++                      "socket-id": 0,
+                       "thread-id": 0
+-                  }
++                  },
++                  "type": "IvyBridge-IBRS-x86_64-cpu",
++                  "vcpus-count": 1
+               },
+               {
++                  "props": {
++                      "core-id": 0,
++                      "socket-id": 0,
++                      "thread-id": 0
++                  },
+                   "qom-path": "/machine/unattached/device[0]",
+                   "type": "IvyBridge-IBRS-x86_64-cpu",
+-                  "vcpus-count": 1,
+-                  "props": {
+-                      "socket-id": 0,
+-                      "core-id": 0,
+-                      "thread-id": 0
+-                  }
++                  "vcpus-count": 1
+               }
+           ]
+       }
+@@ -58,18 +58,18 @@ vCPU hotplug
+ (4) The ``query-hotpluggable-cpus`` command returns an object for CPUs
+     that are present (containing a "qom-path" member) or which may be
+     hot-plugged (no "qom-path" member).  From its output in step (3), we
+-    can see that ``IvyBridge-IBRS-x86_64-cpu`` is present in socket 0,
+-    while hot-plugging a CPU into socket 1 requires passing the listed
++    can see that ``IvyBridge-IBRS-x86_64-cpu`` is present in socket 0 core 0,
++    while hot-plugging a CPU into socket 0 core 1 requires passing the listed
+     properties to QMP ``device_add``::
  
-  1: patch that adds hest_addr_le
-  2: refactoring current code to use address lookup vs pointer math
-  3. renaming patches 
-  4. patch adding new error source
-  5. QAPI patch
-  6. python script for error injection
-
-with that in place we probably would need to
-  * iron out minor migration compat issues
-    (I didn't look for them during this review round as much
-     would change yet)
-  * make sure that bios tables test is updated
-
-> 
-> ---
-> 
-> v8:
-> - Fix one of the BIOS links that were incorrect;
-> - Changed mem error internal injection to use a common code;
-> - No more hardcoded values for CPER: instead of using just the
->   payload at the QAPI, it now has the full raw CPER there;
-> - Error injection script now supports changing fields at the
->   Generic Error Data section of the CPER;
-> - Several minor cleanups.
-> 
-> v7:
-> - Change the way offsets are calculated and used on HEST table.
->   Now, it is compatible with migrations as all offsets are relative
->   to the HEST table;
-> - GHES interface is now more generic: the entire CPER is sent via
->   QMP, instead of just the payload;
-> - Some code cleanups to make the code more robust;
-> - The python script now uses QEMUMonitorProtocol class.
-> 
-> v6:
-> - PNP0C33 device creation moved to aml-build.c;
-> - acpi_ghes record functions now use ACPI notify parameter,
->   instead of source ID;
-> - the number of source IDs is now automatically calculated;
-> - some code cleanups and function/var renames;
-> - some fixes and cleanups at the error injection script;
-> - ghes cper stub now produces an error if cper JSON is not compiled;
-> - Offset calculation logic for GHES was refactored;
-> - Updated documentation to reflect the GHES allocated size;
-> - Added a x-mpidr object for QOM usage;
-> - Added a patch making usage of x-mpidr field at ARM injection
->   script;
-> 
-> v5:
-> - CPER guid is now passing as string;
-> - raw-data is now passed with base64 encode;
-> - Removed several GPIO left-overs from arm/virt.c changes;
-> - Lots of cleanups and improvements at the error injection script.
->   It now better handles QMP dialog and doesn't print debug messages.
->   Also, code was split on two modules, to make easier to add more
->   error injection commands.
-> 
-> v4:
-> - CPER generation moved to happen outside QEMU;
-> - One patch adding support for mpidr query was removed.
-> 
-> v3:
-> - patch 1 cleanups with some comment changes and adding another place where
->   the poweroff GPIO define should be used. No changes on other patches (except
->   due to conflict resolution).
-> 
-> v2:
-> - added a new patch using a define for GPIO power pin;
-> - patch 2 changed to also use a define for generic error GPIO pin;
-> - a couple cleanups at patch 2 removing uneeded else clauses.
-> 
-> Example of generating a CPER record:
-> 
-> $ scripts/ghes_inject.py -d arm -p 0xdeadbeef
-> GUID: e19e3d16-bc11-11e4-9caa-c2051d5d46b0
-> Generic Error Status Block (20 bytes):
->       00000000  01 00 00 00 00 00 00 00 00 00 00 00 90 00 00 00   ................
->       00000010  00 00 00 00                                       ....
-> 
-> Generic Error Data Entry (72 bytes):
->       00000000  16 3d 9e e1 11 bc e4 11 9c aa c2 05 1d 5d 46 b0   .=...........]F.
->       00000010  00 00 00 00 00 03 00 00 48 00 00 00 00 00 00 00   ........H.......
->       00000020  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
->       00000030  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
->       00000040  00 00 00 00 00 00 00 00                           ........
-> 
-> Payload (72 bytes):
->       00000000  05 00 00 00 01 00 00 00 48 00 00 00 00 00 00 00   ........H.......
->       00000010  00 00 00 80 00 00 00 00 10 05 0f 00 00 00 00 00   ................
->       00000020  00 00 00 00 00 00 00 00 00 20 14 00 02 01 00 03   ......... ......
->       00000030  0f 00 91 00 00 00 00 00 ef be ad de 00 00 00 00   ................
->       00000040  ef be ad de 00 00 00 00                           ........
-> 
-> Error injected.
-> 
-> [    9.358364] {1}[Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 1
-> [    9.359027] {1}[Hardware Error]: event severity: recoverable
-> [    9.359586] {1}[Hardware Error]:  Error 0, type: recoverable
-> [    9.360124] {1}[Hardware Error]:   section_type: ARM processor error
-> [    9.360561] {1}[Hardware Error]:   MIDR: 0x00000000000f0510
-> [    9.361160] {1}[Hardware Error]:   Multiprocessor Affinity Register (MPIDR): 0x0000000080000000
-> [    9.361643] {1}[Hardware Error]:   running state: 0x0
-> [    9.362142] {1}[Hardware Error]:   Power State Coordination Interface state: 0
-> [    9.362682] {1}[Hardware Error]:   Error info structure 0:
-> [    9.363030] {1}[Hardware Error]:   num errors: 2
-> [    9.363656] {1}[Hardware Error]:    error_type: 0x02: cache error
-> [    9.364163] {1}[Hardware Error]:    error_info: 0x000000000091000f
-> [    9.364834] {1}[Hardware Error]:     transaction type: Data Access
-> [    9.365599] {1}[Hardware Error]:     cache error, operation type: Data write
-> [    9.366441] {1}[Hardware Error]:     cache level: 2
-> [    9.367005] {1}[Hardware Error]:     processor context not corrupted
-> [    9.367753] {1}[Hardware Error]:    physical fault address: 0x00000000deadbeef
-> [    9.374267] Memory failure: 0xdeadb: recovery action for free buddy page: Recovered
-> 
-> Such script currently supports arm processor error CPER, but can easily be
-> extended to other GHES notification types.
-> 
-> 
-> 
-> Jonathan Cameron (1):
->   acpi/ghes: Add support for GED error device
-> 
-> Mauro Carvalho Chehab (12):
->   acpi/generic_event_device: add an APEI error device
->   arm/virt: Wire up a GED error device for ACPI / GHES
->   qapi/acpi-hest: add an interface to do generic CPER error injection
->   acpi/ghes: rework the logic to handle HEST source ID
->   acpi/ghes: add support for generic error injection via QAPI
->   acpi/ghes: cleanup the memory error code logic
->   docs: acpi_hest_ghes: fix documentation for CPER size
->   scripts/ghes_inject: add a script to generate GHES error inject
->   target/arm: add an experimental mpidr arm cpu property object
->   scripts/arm_processor_error.py: retrieve mpidr if not filled
->   acpi/ghes: cleanup generic error data logic
->   acpi/ghes: check if the BIOS pointers for HEST are correct
-> 
->  MAINTAINERS                            |  10 +
->  docs/specs/acpi_hest_ghes.rst          |   6 +-
->  hw/acpi/Kconfig                        |   5 +
->  hw/acpi/aml-build.c                    |  10 +
->  hw/acpi/generic_event_device.c         |   8 +
->  hw/acpi/ghes-stub.c                    |   3 +-
->  hw/acpi/ghes.c                         | 362 ++++++++-----
->  hw/acpi/ghes_cper.c                    |  33 ++
->  hw/acpi/ghes_cper_stub.c               |  19 +
->  hw/acpi/meson.build                    |   2 +
->  hw/arm/Kconfig                         |   5 +
->  hw/arm/virt-acpi-build.c               |   6 +-
->  hw/arm/virt.c                          |  12 +-
->  include/hw/acpi/acpi_dev_interface.h   |   1 +
->  include/hw/acpi/aml-build.h            |   2 +
->  include/hw/acpi/generic_event_device.h |   1 +
->  include/hw/acpi/ghes.h                 |  24 +-
->  include/hw/arm/virt.h                  |   1 +
->  qapi/acpi-hest.json                    |  36 ++
->  qapi/meson.build                       |   1 +
->  qapi/qapi-schema.json                  |   1 +
->  scripts/arm_processor_error.py         | 388 ++++++++++++++
->  scripts/ghes_inject.py                 |  51 ++
->  scripts/qmp_helper.py                  | 702 +++++++++++++++++++++++++
->  target/arm/cpu.c                       |   1 +
->  target/arm/cpu.h                       |   1 +
->  target/arm/helper.c                    |  10 +-
->  target/arm/kvm.c                       |   2 +-
->  28 files changed, 1551 insertions(+), 152 deletions(-)
->  create mode 100644 hw/acpi/ghes_cper.c
->  create mode 100644 hw/acpi/ghes_cper_stub.c
->  create mode 100644 qapi/acpi-hest.json
->  create mode 100644 scripts/arm_processor_error.py
->  create mode 100755 scripts/ghes_inject.py
->  create mode 100644 scripts/qmp_helper.py
-> 
+       (QEMU) device_add id=cpu-2 driver=IvyBridge-IBRS-x86_64-cpu socket-id=1 core-id=0 thread-id=0
+       {
+           "execute": "device_add",
+           "arguments": {
+-              "socket-id": 1,
++              "core-id": 1,
+               "driver": "IvyBridge-IBRS-x86_64-cpu",
+               "id": "cpu-2",
+-              "core-id": 0,
++              "socket-id": 0,
+               "thread-id": 0
+           }
+       }
+@@ -83,34 +83,32 @@ vCPU hotplug
+ 
+       (QEMU) query-cpus-fast
+       {
+-          "execute": "query-cpus-fast",
+           "arguments": {}
++          "execute": "query-cpus-fast",
+       }
+       {
+           "return": [
+               {
+-                  "qom-path": "/machine/unattached/device[0]",
+-                  "target": "x86_64",
+-                  "thread-id": 11534,
+                   "cpu-index": 0,
+                   "props": {
+-                      "socket-id": 0,
+                       "core-id": 0,
++                      "socket-id": 0,
+                       "thread-id": 0
+                   },
+-                  "arch": "x86"
++                  "qom-path": "/machine/unattached/device[0]",
++                  "target": "x86_64",
++                  "thread-id": 28957
+               },
+               {
+-                  "qom-path": "/machine/peripheral/cpu-2",
+-                  "target": "x86_64",
+-                  "thread-id": 12106,
+                   "cpu-index": 1,
+                   "props": {
+-                      "socket-id": 1,
+-                      "core-id": 0,
++                      "core-id": 1,
++                      "socket-id": 0,
+                       "thread-id": 0
+                   },
+-                  "arch": "x86"
++                  "qom-path": "/machine/peripheral/cpu-2",
++                  "target": "x86_64",
++                  "thread-id": 29095
+               }
+           ]
+       }
+@@ -123,10 +121,10 @@ From the 'qmp-shell', invoke the QMP ``device_del`` command::
+ 
+       (QEMU) device_del id=cpu-2
+       {
+-          "execute": "device_del",
+           "arguments": {
+               "id": "cpu-2"
+           }
++          "execute": "device_del",
+       }
+       {
+           "return": {}
+-- 
+2.34.1
 
 
