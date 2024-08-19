@@ -4,58 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 255FDC531DF
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 02:55:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F2F9C52D7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 02:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sfsWx-00029I-SQ; Sun, 18 Aug 2024 22:54:03 -0400
+	id 1sfsaq-0007Pf-UM; Sun, 18 Aug 2024 22:58:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sfsWw-00028H-3v; Sun, 18 Aug 2024 22:54:02 -0400
-Received: from out30-101.freemail.mail.aliyun.com ([115.124.30.101])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
- id 1sfsWt-0002ir-O5; Sun, 18 Aug 2024 22:54:01 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sfsaq-0007PA-6b
+ for qemu-devel@nongnu.org; Sun, 18 Aug 2024 22:58:04 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1sfsao-00036q-Av
+ for qemu-devel@nongnu.org; Sun, 18 Aug 2024 22:58:03 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-7a0e8b76813so2938649a12.3
+ for <qemu-devel@nongnu.org>; Sun, 18 Aug 2024 19:58:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1724036030; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
- bh=dDnfXKTJKTzokknwvZN7ZuvtRsHDAIu8i6x238KHu48=;
- b=mr3RrawkWKcI/pI7Kgmf8Eo3CHm/lDSKAelxMG+tq1WxXlmxyg/k+t9DyixubJtP9l/EGGjs4wGYPd1mDN8ccb8R2/sdXUx0QugleTvHGTTUVSjceL3W/NVsKlzekbTjHFIYJfcyL2n7MN8V/LSkrbEK6vV4M8AF/K/4qWgN/II=
-Received: from 30.166.64.89(mailfrom:zhiwei_liu@linux.alibaba.com
- fp:SMTPD_---0WD4y1tS_1724036028) by smtp.aliyun-inc.com;
- Mon, 19 Aug 2024 10:53:48 +0800
-Message-ID: <fd602a3b-c00e-48d0-b51f-169c8cd9a6f4@linux.alibaba.com>
-Date: Mon, 19 Aug 2024 10:53:20 +0800
+ d=linaro.org; s=google; t=1724036280; x=1724641080; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/sCxbbaX1hObMFIBzmxb2PIxsdzDBuo+mAOJoXAGis8=;
+ b=MZwch7/5xB5B/EqO7ULWUmrd7DMKo39kjq6w5hzIyqZIp8yvdzgzvqckMmmw9q61bF
+ NmPgv8Pmz5dvRCvDP98B9M8rl3rHrCFGLiYD8j8SDmD1Gm+hL+FdqBHBQGkVko9htsNk
+ lT1hAqOi10hSXi7V/JzTBwcglfiqW23G3rHTpZSfa9ezyyyxRtKCQJF7elsAnquIMpkR
+ IXnYVanxTy0u6iD+m0IzSTjcCJe8frRX1r9u2s1+Zt/EtByfK97NZz3Zlb1o7Z85okOu
+ bMq00ezam4Qa0s/kevA3QacsF/AYeyNebR6v7FAnuARQGHKV3ugYrca4843trh/jVhDa
+ ISxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1724036280; x=1724641080;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/sCxbbaX1hObMFIBzmxb2PIxsdzDBuo+mAOJoXAGis8=;
+ b=m8BVgWcmZfT9KNPd+5Mf6gbQKT66RwQAogH5d3I2y6sF02WiLvdgoPWdxkn/c1CNSP
+ 7XI7/2en3E1DBtuAuX8hEJKt1XfzPP4YiJUtOF/Tj/0XeH9/yLU7gyJN8WsQJsbWS5i1
+ FaOw5RD/Lge+KmZchZNgD01zv8jocQNCsiSuBd6X0oxZAPFzBt9cfmmTnftbAQKBwIs9
+ OzBVcoNj+kyw47v8FsrDpgbn7+dkOXt0eNHBWa1MLuCyPcRVFZJ8GHbfFIvYm9WKNqYH
+ ZU26qz5m6pV95CkMhh2912fve71qO4FdbNXG4LrioiMjL4cKxgmTdL7Hr5jN70awXErx
+ Ff7w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXebUdmsMiUk7txcrkAruBJuuAujgIbWhD5LRcCFZINEVEoNsEYb+RaJyvubn6Bfkyw2dP35h71nKXADW6vuFvJC32ExSA=
+X-Gm-Message-State: AOJu0YyARWv3xNGAM9TaDvaWnR8grDuprOrdEb1aALqH7drZBiVHPh60
+ ooockpL3ew0+eHn77JtH+1+HwuCpcRVG9MtZwwdnSnofMuDJxFZpSZLKeRQT3r8/mOvFzoR2A0t
+ cpzlM9g==
+X-Google-Smtp-Source: AGHT+IGnq1NPW/V9oG5DYL9xYb1PdlUKPmRWdqpvBnWntvmxSKH0mAjk4KUBkXCoRONtqQMW1szoaA==
+X-Received: by 2002:a05:6a21:398a:b0:1c3:acd1:5cdd with SMTP id
+ adf61e73a8af0-1c905053531mr12564013637.47.1724036279423; 
+ Sun, 18 Aug 2024 19:57:59 -0700 (PDT)
+Received: from [192.168.1.113] ([203.30.4.109])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-201f031bc0fsm55693335ad.101.2024.08.18.19.57.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 18 Aug 2024 19:57:59 -0700 (PDT)
+Message-ID: <5944345c-6e71-46b4-b323-d3804ed8f04f@linaro.org>
+Date: Mon, 19 Aug 2024 12:57:51 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 05/15] tcg/riscv: Add riscv vset{i}vli support
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com,
- TANG Tiancheng <tangtiancheng.ttc@alibaba-inc.com>
-References: <20240813113436.831-1-zhiwei_liu@linux.alibaba.com>
- <20240813113436.831-6-zhiwei_liu@linux.alibaba.com>
- <37e67a28-dd86-435d-a072-95f6a85cc2a7@linaro.org>
- <ac327ea2-2b22-40e2-8246-57e4be77d8d1@linux.alibaba.com>
- <6a0f46a5-02f7-47e8-a5f5-5666c2fc9fe2@linaro.org>
+Subject: Re: [PATCH v2 01/17] bsd-user: Implement RISC-V CPU initialization
+ and main loop
+To: Ajeet Singh <itachis6234@gmail.com>, qemu-devel@nongnu.org
+Cc: Mark Corbin <mark@dibsco.co.uk>, Warner Losh <imp@bsdimp.com>,
+ Ajeet Singh <itachis@FreeBSD.org>, Jessica Clarke <jrtc27@jrtc27.com>
+References: <20240816170949.238511-1-itachis@FreeBSD.org>
+ <20240816170949.238511-2-itachis@FreeBSD.org>
 Content-Language: en-US
-From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-In-Reply-To: <6a0f46a5-02f7-47e8-a5f5-5666c2fc9fe2@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20240816170949.238511-2-itachis@FreeBSD.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.101;
- envelope-from=zhiwei_liu@linux.alibaba.com;
- helo=out30-101.freemail.mail.aliyun.com
-X-Spam_score_int: -174
-X-Spam_score: -17.5
-X-Spam_bar: -----------------
-X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,52 +101,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 8/17/24 03:09, Ajeet Singh wrote:
+> From: Mark Corbin <mark@dibsco.co.uk>
+> 
+> Added the initial implementation for RISC-V CPU initialization and main
+> loop. This includes setting up the general-purpose registers and
+> program counter based on the provided target architecture definitions.
+> 
+> Signed-off-by: Mark Corbin <mark@dibsco.co.uk>
+> Signed-off-by: Ajeet Singh <itachis@FreeBSD.org>
+> Co-authored-by: Jessica Clarke <jrtc27@jrtc27.com>
+> ---
+>   bsd-user/riscv/target_arch_cpu.h | 39 ++++++++++++++++++++++++++++++++
+>   1 file changed, 39 insertions(+)
+>   create mode 100644 bsd-user/riscv/target_arch_cpu.h
+> 
+> diff --git a/bsd-user/riscv/target_arch_cpu.h b/bsd-user/riscv/target_arch_cpu.h
+> new file mode 100644
+> index 0000000000..28f56560e0
+> --- /dev/null
+> +++ b/bsd-user/riscv/target_arch_cpu.h
+> @@ -0,0 +1,39 @@
+> +/*
+> + *  RISC-V CPU init and loop
+> + *
+> + *  Copyright (c) 2019 Mark Corbin
+> + *
+> + *  This program is free software; you can redistribute it and/or modify
+> + *  it under the terms of the GNU General Public License as published by
+> + *  the Free Software Foundation; either version 2 of the License, or
+> + *  (at your option) any later version.
+> + *
+> + *  This program is distributed in the hope that it will be useful,
+> + *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+> + *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+> + *  GNU General Public License for more details.
+> + *
+> + *  You should have received a copy of the GNU General Public License
+> + *  along with this program; if not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#ifndef TARGET_ARCH_CPU_H
+> +#define TARGET_ARCH_CPU_H
+> +
+> +#include "target_arch.h"
+> +
+> +#define TARGET_DEFAULT_CPU_MODEL "max"
+> +
+> +static inline void target_cpu_init(CPURISCVState *env,
+> +        struct target_pt_regs *regs)
+> +{
+> +    int i;
+> +
+> +    for (i = 0; i < 32; i++) {
+> +        env->gpr[i] = regs->regs[i];
 
-On 2024/8/19 10:35, Richard Henderson wrote:
-> On 8/19/24 11:34, LIU Zhiwei wrote:
->>>> @@ -1914,6 +2029,11 @@ static void tcg_out_vec_op(TCGContext *s, 
->>>> TCGOpcode opc,
->>>>                              const TCGArg args[TCG_MAX_OP_ARGS],
->>>>                              const int const_args[TCG_MAX_OP_ARGS])
->>>>   {
->>>> +    TCGType type = vecl + TCG_TYPE_V64;
->>>> +
->>>> +    if (vec_vtpye_init) {
->>>> +        tcg_target_set_vec_config(s, type, vece);
->>>> +    }
->>>
->>> Here is perhaps too early... see patch 8 re logicals.
->>
->> I guess you mean we don't have implemented any vector op, so there is 
->> no need to set vsetvl in this patch. We will postpone it do really 
->> ops need it.
->
-> What I meant is "too early in the function", i.e. before the switch.
->
-> Per my comment in patch 8, there are some vector ops that are agnostic 
-> to type and only care about length.  Thus perhaps
->
->   switch (op) {
->   case xxx:
->     set_vec_config_len(s, type);
->     something;
->
->   case yyy:
->     set_vec_config_len_elt(s, type, vece);
->     something_else;
->
->   ...
->   }
->
-> Or some other structure that makes sense.
+Again, r0 is zero.  Clearer if we never set that outside of reset.
 
-Thanks for clarify once again. It's much better to explicitly have two 
-API types.
+r~
 
-Thanks,
-Zhiwei
+> +    }
+> +
+> +    env->pc = regs->sepc;
+> +}
+> +
+> +#endif /* TARGET_ARCH_CPU_H */
 
->
->
-> r~
 
