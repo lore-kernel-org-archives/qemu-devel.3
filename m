@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB3D8C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:54:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 226C7C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:54:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgBG7-00078d-Ko; Mon, 19 Aug 2024 18:53:55 -0400
+	id 1sgBGC-0007qv-Nv; Mon, 19 Aug 2024 18:54:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEd-00013p-0Q
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:25 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBF0-0002Pa-BQ
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:47 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEb-0000kR-Ct
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:22 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3718706cf8aso3057250f8f.3
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:52:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEy-0000pr-NS
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:46 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-428141be2ddso37493345e9.2
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:52:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724107940; x=1724712740; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724107962; x=1724712762; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i525VHbDEEdaYNDK1SbTy9eAffjoVCoTHAg3yOkOeL4=;
- b=YCbxlXOcQw/1wfI80a4tUMlaW6O/Ls60Tspa/tcTA3iyMCyKIzdFGO27njlsjeM3Bs
- ouwNO03szdjhn1KD4eRxpWSxgmuYn5txOeziivBVJCzWRMaJDIvkO9cbIHy3fgTjtkgY
- xBUR+EuGzX8kJF/LOAaMUKFoRT35k/3H/iQHT+3qMfGveiw7pKmyMgNy7Rtq8kUDHkPy
- hcsBcH9cm/BT4XHFHsQHDhXy8w+DJVy55KsHxNl+UfwE8szbBjyfZ1XQfYDkiKnIxzE+
- JsFjOeOBXHAaMaAXVtG0md3glm+R1lt3sj8Gu0txXrFcBAyrJJS+PnoPhCzFYlhzsFYu
- 2BIw==
+ bh=3pBm6V4tkAnYFc+ZirSS/Y/4pdgPe/X+of3pcxo2Q7E=;
+ b=INfzaB0Ks+ahSo489RyNOjB7L15rmMqUWzCuft3oyjRsJJsvpEAwQCri1RdKMjhvht
+ jw+KeHFuKQYb9zy1Ux4b7YJH7SfpMsWs/2mtJV7MSE7bVTeBNVhMxqDm1bl/nWnz7vQX
+ 4avz+ME0I6I41NJYM4fueDTYdWuG9WQASlUuis0Qmv6au3YIG1tVjUUghGcvJxDxynmb
+ SLyQyFKQYQSI5j3ych84IckmVwvPLRFT870LcQwpbL2YS5hVyPAA0h0PETlRjWBOBNZE
+ 0UqCLjpXXbfB7wKiBFVCFNHhSM0hfUGbQ7YVo2s1nQx1xUV9a+J8DeZB84vHikf4PYjx
+ VU+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724107940; x=1724712740;
+ d=1e100.net; s=20230601; t=1724107962; x=1724712762;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i525VHbDEEdaYNDK1SbTy9eAffjoVCoTHAg3yOkOeL4=;
- b=oiSxYU42J+WwZHkkZ1NMKDqQeHvdn0p2U6qjr5f0muT/xQvaxh0GKsHlj3/owBKXM1
- +CjQyBk+ZBDRxlr+ewKJxUtK7NMsBFAQO0YMywnV0nppzOhQp36gUb8BZG9raoNkVQmu
- BVbjzb74lWOn+VKc+n26JPEV+lNkV1UB6Wd5DNrIa2IsWsU2RdZDMVokxBBMo+Ugvz7w
- G3KJMevpqGWDrcJJbhMCLj0KqOrmf49Xc9uLtlm+68FZ8DWYAVftQJNEHSO+HhtepmQp
- W8sRLjlod5EhtOQ0U8z4AdXLrHlY+T0HgyfVcnvWHxo7pdZWY2VddnYZ2Ql3kn53EoJ5
- elRw==
-X-Gm-Message-State: AOJu0YwEkmNQifVOtuswNAVhC15gyEFZOTfXCzETQ3YjLKH0r8xIJLzd
- UQFbIHYBfMliK4lAyzV0FpUFZcHnDAIVVKNz78xYayoPeBDyUFmLtRV65TUhG4XiKqhSJ7WH0tm
- nozg=
-X-Google-Smtp-Source: AGHT+IHNfQLkqA2Cyy3T06sUUzcs+V5NfBtNgOyyq/MrTopBY32pDIND7ZknCm2RrCUmQPGCxLsy6Q==
-X-Received: by 2002:adf:b307:0:b0:368:4edc:611e with SMTP id
- ffacd0b85a97d-37194344041mr7950257f8f.14.1724107939545; 
- Mon, 19 Aug 2024 15:52:19 -0700 (PDT)
+ bh=3pBm6V4tkAnYFc+ZirSS/Y/4pdgPe/X+of3pcxo2Q7E=;
+ b=aBJUjQEX/Uk38t3zrzIxgfb0f16/JJAvHeYm7fjhWletgkrNZk3XWynhVoTErCVym6
+ asKiz61S1k1dXJ82pTadQsWy7bhqYNZ07WMHn0n+ZVlypafzvQm1m6GnfYGtNWhyp3NB
+ gLLOaMWe5sdK0IrYETRUmLWEUnXBukOaUNbNS3eQ46j7FtQT0mCjCT4e0WoTu/5ufr3Y
+ Hn/KcDqcdcLA57iBgtzsPqg1SqD4QKLfh5hGJr04Ribkyn8DrfQG+JevU5xI0DAQicjR
+ 36Gz2qufPWlajf9+ImKXTY0LYEBwkXJ56eX4CLaJcjsKIgLRQ+ocP1EL+ztpj2G3JfM4
+ U5pA==
+X-Gm-Message-State: AOJu0YyANwwngx6xsiqr27b7mJT0z3EBTjG7ePKOzSuqP+6VhVxxBOq9
+ KGO8MNSgPKeZ4a/i/CftN+4brRmJe0ShpE6PkOUO9aZIg1BCWSMf4oFt5P4Cbe20HSWjxExQOg9
+ QGYg=
+X-Google-Smtp-Source: AGHT+IGCsDoBkmmL9a6NkyCXQz+PNOWnKA5h4I+zJkmOwB+9ePw3LsP+7F1zreFZlQw+OcjjwrSc3Q==
+X-Received: by 2002:a05:600c:1f83:b0:426:5e91:3ff1 with SMTP id
+ 5b1f17b1804b1-429ed7d1a13mr84497905e9.24.1724107962118; 
+ Mon, 19 Aug 2024 15:52:42 -0700 (PDT)
 Received: from localhost.localdomain (88-178-97-237.subs.proxad.net.
  [88.178.97.237]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ded367ebsm179600455e9.25.2024.08.19.15.52.18
+ ffacd0b85a97d-371898497f0sm11573714f8f.39.2024.08.19.15.52.41
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Aug 2024 15:52:19 -0700 (PDT)
+ Mon, 19 Aug 2024 15:52:41 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, Thomas Huth <thuth@redhat.com>,
+Cc: =?UTF-8?q?Kamil=20Szcz=C4=99k?= <kamil@szczek.dev>,
+ Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 13/20] tests/avocado: exec_command should not consume console
- output
-Date: Tue, 20 Aug 2024 00:51:09 +0200
-Message-ID: <20240819225116.17928-14-philmd@linaro.org>
+Subject: [PULL 18/20] hw/i386/pc: Unify vmport=auto handling
+Date: Tue, 20 Aug 2024 00:51:14 +0200
+Message-ID: <20240819225116.17928-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240819225116.17928-1-philmd@linaro.org>
 References: <20240819225116.17928-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,45 +95,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Kamil Szczęk <kamil@szczek.dev>
 
-_console_interaction reads data from the console even when there is only
-an input string to send, and no output data to wait on. This can cause
-lines to be missed by wait_for_console_pattern calls that follows an
-exec_command. Fix this by not reading the console if there is no pattern
-to wait for.
+The code which translates vmport=auto to on/off is currently separate
+for each PC machine variant, while being functionally equivalent.
+This moves the translation into a shared initialization function, while
+also tightening the enum assertion.
 
-This solves occasional hangs in ppc_hv_tests.py, usually when run on KVM
-hosts that are fast enough to output important lines quickly enough to be
-consumed by exec_command, so they get missed by subsequent wait for
-pattern calls.
-
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20240805232814.267843-2-npiggin@gmail.com>
+Signed-off-by: Kamil Szczęk <kamil@szczek.dev>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <v8pz1uwgIYWkidgZK-o8H-qJvnSyl0641XVmNO43Qls307AA3QRPuad_py6xGe0JAxB6yDEe76oZ8tau_n-2Y6sJBCKzCujNbEUUFhd-ahI=@szczek.dev>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/avocado/avocado_qemu/__init__.py | 7 +++++++
- 1 file changed, 7 insertions(+)
+ hw/i386/pc.c      | 5 +++++
+ hw/i386/pc_piix.c | 5 -----
+ hw/i386/pc_q35.c  | 5 -----
+ 3 files changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/tests/avocado/avocado_qemu/__init__.py b/tests/avocado/avocado_qemu/__init__.py
-index a3da2a96bb..ef935614cf 100644
---- a/tests/avocado/avocado_qemu/__init__.py
-+++ b/tests/avocado/avocado_qemu/__init__.py
-@@ -135,6 +135,13 @@ def _console_interaction(test, success_message, failure_message,
-             vm.console_socket.sendall(send_string.encode())
-             if not keep_sending:
-                 send_string = None # send only once
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index c74931d577..72229a24ff 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1217,6 +1217,11 @@ void pc_basic_device_init(struct PCMachineState *pcms,
+         isa_realize_and_unref(pcms->pcspk, isa_bus, &error_fatal);
+     }
+ 
++    assert(pcms->vmport >= 0 && pcms->vmport < ON_OFF_AUTO__MAX);
++    if (pcms->vmport == ON_OFF_AUTO_AUTO) {
++        pcms->vmport = xen_enabled() ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
++    }
 +
-+        # Only consume console output if waiting for something
-+        if success_message is None and failure_message is None:
-+            if send_string is None:
-+                break
-+            continue
-+
-         try:
-             msg = console.readline().decode().strip()
-         except UnicodeDecodeError:
+     /* Super I/O */
+     pc_superio_init(isa_bus, create_fdctrl, pcms->i8042_enabled,
+                     pcms->vmport != ON_OFF_AUTO_ON);
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index d9e69243b4..347afa4c37 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -310,11 +310,6 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+ 
+     pc_vga_init(isa_bus, pcmc->pci_enabled ? pcms->pcibus : NULL);
+ 
+-    assert(pcms->vmport != ON_OFF_AUTO__MAX);
+-    if (pcms->vmport == ON_OFF_AUTO_AUTO) {
+-        pcms->vmport = xen_enabled() ? ON_OFF_AUTO_OFF : ON_OFF_AUTO_ON;
+-    }
+-
+     /* init basic PC hardware */
+     pc_basic_device_init(pcms, isa_bus, x86ms->gsi, x86ms->rtc,
+                          !MACHINE_CLASS(pcmc)->no_floppy, 0x4);
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 9d108b194e..f2d8edfa84 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -276,11 +276,6 @@ static void pc_q35_init(MachineState *machine)
+         x86_register_ferr_irq(x86ms->gsi[13]);
+     }
+ 
+-    assert(pcms->vmport != ON_OFF_AUTO__MAX);
+-    if (pcms->vmport == ON_OFF_AUTO_AUTO) {
+-        pcms->vmport = ON_OFF_AUTO_ON;
+-    }
+-
+     /* init basic PC hardware */
+     pc_basic_device_init(pcms, isa_bus, x86ms->gsi, x86ms->rtc, !mc->no_floppy,
+                          0xff0104);
 -- 
 2.45.2
 
