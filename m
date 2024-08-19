@@ -4,84 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B863AC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 05:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48240C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 05:39:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sfv0M-00056X-VV; Mon, 19 Aug 2024 01:32:34 -0400
+	id 1sfv6r-0007xM-Fq; Mon, 19 Aug 2024 01:39:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sfv0L-0004zj-DK; Mon, 19 Aug 2024 01:32:33 -0400
-Received: from mail-vs1-xe31.google.com ([2607:f8b0:4864:20::e31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1sfv0J-00058J-CT; Mon, 19 Aug 2024 01:32:33 -0400
-Received: by mail-vs1-xe31.google.com with SMTP id
- ada2fe7eead31-493e8ef36b4so1495996137.2; 
- Sun, 18 Aug 2024 22:32:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1724045550; x=1724650350; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6J/8YeXFN7bzIgFX2O2QItwvTyckBanYu33C2tky+1U=;
- b=Kqq2e9vcnzpEYqy8plm79qUiS6Plpnngt4juQJP8pellvMls9vL8retim7N9VeDNRi
- d7i7mxowzIjqWZw2JIrzNoWutkj/lgv1ZYMirE1iHLVWVE37PXirPzpixWOjgmMJ5SB9
- DTJNEL63XBV1c9S8dUOGwWY7cyh5IywEl1X0JkhkSac6BTboYuEYNu3JlPPXEFAAvkym
- 81LgZZqk10PKEIVS5IkOsdUq2H8rwQ0osA8ZZrpCItXWmBAmkwGaMiYTRtSDuJYexv1D
- mg1OvBZ/z8Pru9cT0HHrwKrcNg3S9XqHc8hKz9AJVPA1ECPFz9v9AA77P/t5EIJI2Zqc
- qsMg==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sfv6Z-0007wQ-N2
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 01:38:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1sfv6N-0005ji-36
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 01:38:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1724045925;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=b+0u7FexZ2TYaAmo+TPZpdSZvcYI99Qwu5TyV+vvv4w=;
+ b=QpZzU7AEvF0ixVrzVD7LhjeZEpfICxaeQQ9n+GboP0j9fM9WvpGHYY8j5gL0yPViWhRpt8
+ FOrYBTZHfZMM5KuELV8+DzvDi3qK2HjQyPHEfaTHWXBUcngkj+KmAa9VNMIwvWHcz/dVVz
+ A1gQ7v6OqfCI9lY0BeOUwemVPomO/+c=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-619-tpD22srfNH2MW7yKpFvCpA-1; Mon, 19 Aug 2024 01:38:41 -0400
+X-MC-Unique: tpD22srfNH2MW7yKpFvCpA-1
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-2ef2907e21bso34209271fa.3
+ for <qemu-devel@nongnu.org>; Sun, 18 Aug 2024 22:38:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724045550; x=1724650350;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6J/8YeXFN7bzIgFX2O2QItwvTyckBanYu33C2tky+1U=;
- b=Np/YAEOF4kyzOUYfxY94KYOCbdPtRjPe1Ve9vFOt+oZXo3fGjjp4yD8ghXlmyJFh9C
- mKIHLNP4UjcNjU3ddOlhjIN8t4YqaFzYLlT1O+qmErOImi0zs6wQ49Dz7MwdEmSRVVb7
- rIJKvAuC+elCeryxfn8cO1mX5eugwPu2p0szZFDsQDtzYzOxS6+BToV9/UEJeX4JbOSa
- gJImqZfdKsv+k7pAAkTPiVFCaTczK9XfojrRy2mc7uwb6VMDg3fGdx3PnQNbjbbG3VuH
- moEBAtpARjImfV9aXEAA8Xzdc2B9ha971DaVA1YzUMH4HBaMKHMhnVz1yf2HaFBCTewn
- yeMg==
+ d=1e100.net; s=20230601; t=1724045920; x=1724650720;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=b+0u7FexZ2TYaAmo+TPZpdSZvcYI99Qwu5TyV+vvv4w=;
+ b=QsvM/F2lJ7O/DPzwlixKWsdIWv30N562/Jhe9fxxRU6U+dvNrK0SDZlvfVndN/lV3i
+ xtYqS2LTpNzi3keZJxmlx8kZx6LAygTdAhPq3aFJT+aASt9USpHL7LcvKWhmsfSMxjVj
+ P57s8MDCZUQru1A/thz8bHW+v6AwkT8xe3MQXVfKbcoIjMdSFyChVTUe1W2QYlJR2Ljo
+ 516luMbnC7AP25HL4vARhB1O+IB8Fz6qOZHmxc+KI/jog7oOmX0brz546mbHp3mGJ4kf
+ Cfu2E74n9PwZQs7WMrxIIQBQxqQnQboqD3CkrcVVx7g+E3yT/Zf7s+23KbJVaKmlPIQG
+ Y8VQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUOZHQ/D+3KECBdiQP5l9NbHjDsqFgF6aLlUhh+SkCAmJQkoN2xYvNsRFQ9b0s6I2Ydb7eJSO7ECfrej4hxAkc2yPyd+7q+suFOxGGdemXRsR7Fy2QZ4ZoCNbaZIA==
-X-Gm-Message-State: AOJu0YwOMYkWNd95lfwwoQAkzU6GkPDSd8xq/ro4wo2achAYLd0RElGv
- I1673cSXCt6kZxRe4FhBmCLglBhkNLf7DEyOMc+jnZlSkvVQDzkEtI6RVzZBMUwnJwEf9KJbxgg
- dmtzDxupNv8gNZYQK5vPD1cWJ/Pg=
-X-Google-Smtp-Source: AGHT+IFE22RyGTWkMr2qzAybHouLq77ocfSEp5rCkN0NkOZLHfzC9zBnvM7MQPooPdmPqkFxm5DMcbWZ2PXmX6za9JE=
-X-Received: by 2002:a05:6102:304a:b0:492:9e3a:9f48 with SMTP id
- ada2fe7eead31-49779892fb2mr12213168137.2.1724045549553; Sun, 18 Aug 2024
- 22:32:29 -0700 (PDT)
+ AJvYcCUaswdnat6r90IQ3YG5tpKejDA/FxgB6qMthX9jkYQnD7Im7QppuxdRnGKL1c+h9OOm4iD76bh6ql5F8GSqQKcGoaFaum8=
+X-Gm-Message-State: AOJu0YzHFfvZ9RE/S9l7v7XyZn4nryvhKrecBZ4FTsdiNYQ960pdJVm2
+ kxlo81O1ImdAN762Lv6S2NcZukUEPQNUMVqhg1tD0VXrPI72KJ1Dob0P/N+jNUGS1Gf3Z6AIt07
+ WsJLVD3UVgVGQsN56UxCwE8AIhVAzFtau4e2jAwgdj9Y3HGS6Di8p
+X-Received: by 2002:a05:651c:3cc:b0:2f1:585b:f326 with SMTP id
+ 38308e7fff4ca-2f3c9139d32mr34407391fa.45.1724045920334; 
+ Sun, 18 Aug 2024 22:38:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFwfRHBcr3az7Xly3reG7qPhcB/AF5BN+hwDo4X8VcDoQ/A2GCZRvy9p4XYv8tIilvU9lDtFQ==
+X-Received: by 2002:a05:651c:3cc:b0:2f1:585b:f326 with SMTP id
+ 38308e7fff4ca-2f3c9139d32mr34407161fa.45.1724045919426; 
+ Sun, 18 Aug 2024 22:38:39 -0700 (PDT)
+Received: from [192.168.0.6] (ip-109-43-177-15.web.vodafone.de.
+ [109.43.177.15]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5bebb708a89sm5161679a12.0.2024.08.18.22.38.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 18 Aug 2024 22:38:39 -0700 (PDT)
+Message-ID: <1bc0a966-e000-46a2-bea6-99f579600d74@redhat.com>
+Date: Mon, 19 Aug 2024 07:38:37 +0200
 MIME-Version: 1.0
-References: <20240815015410.369925-1-alistair.francis@wdc.com>
- <20240815015410.369925-3-alistair.francis@wdc.com>
- <c9b7b9aa-9c2e-4275-a7fb-ff994d74d3f4@ilande.co.uk>
-In-Reply-To: <c9b7b9aa-9c2e-4275-a7fb-ff994d74d3f4@ilande.co.uk>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 19 Aug 2024 15:32:03 +1000
-Message-ID: <CAKmqyKMr_riTX+2TdiWqkeYC_YMMZaaj55XiDgBfTx5yJ7eQsw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hw/char: sifive_uart: Print uart charecters async
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: alex.bennee@linaro.org, qemu-devel@nongnu.org, peter.maydell@linaro.org, 
- dbarboza@ventanamicro.com, palmer@dabbelt.com, qemu-riscv@nongnu.org, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com, 
- Bin Meng <bmeng.cn@gmail.com>, liwei1518@gmail.com, 
- Alistair Francis <Alistair.Francis@wdc.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e31;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe31.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] gitlab-ci: Replace build_script -> step_script in Cirrus
+ jobs
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Beraldo Leal <bleal@redhat.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20240816213203.18350-1-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20240816213203.18350-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,234 +149,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Aug 15, 2024 at 6:27=E2=80=AFPM Mark Cave-Ayland
-<mark.cave-ayland@ilande.co.uk> wrote:
->
-> On 15/08/2024 02:54, Alistair Francis wrote:
->
-> > The current approach of using qemu_chr_fe_write() and ignoring the
-> > return values results in dropped charecters [1].
-> >
-> > Let's update the SiFive UART to use a async sifive_uart_xmit() function
-> > to transmit the charecters and apply back preassure to the guest with
-> > the SIFIVE_UART_TXFIFO_FULL status.
-> >
-> > This should avoid dropped charecters and more realisiticly model the
-> > hardware.
-> >
-> > 1: https://gitlab.com/qemu-project/qemu/-/issues/2114
-> >
-> > Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-> > ---
-> >   include/hw/char/sifive_uart.h | 17 +++++++-
-> >   hw/char/sifive_uart.c         | 81 +++++++++++++++++++++++++++++++++-=
--
-> >   2 files changed, 92 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/include/hw/char/sifive_uart.h b/include/hw/char/sifive_uar=
-t.h
-> > index 7f6c79f8bd..73379457a0 100644
-> > --- a/include/hw/char/sifive_uart.h
-> > +++ b/include/hw/char/sifive_uart.h
-> > @@ -48,9 +48,13 @@ enum {
-> >       SIFIVE_UART_IP_RXWM       =3D 2  /* Receive watermark interrupt p=
-ending */
-> >   };
-> >
-> > +#define SIFIVE_UART_TXFIFO_FULL    0x80000000
-> > +
-> >   #define SIFIVE_UART_GET_TXCNT(txctrl)   ((txctrl >> 16) & 0x7)
-> >   #define SIFIVE_UART_GET_RXCNT(rxctrl)   ((rxctrl >> 16) & 0x7)
-> > +
-> >   #define SIFIVE_UART_RX_FIFO_SIZE 8
-> > +#define SIFIVE_UART_TX_FIFO_SIZE 8
-> >
-> >   #define TYPE_SIFIVE_UART "riscv.sifive.uart"
-> >   OBJECT_DECLARE_SIMPLE_TYPE(SiFiveUARTState, SIFIVE_UART)
-> > @@ -63,13 +67,22 @@ struct SiFiveUARTState {
-> >       qemu_irq irq;
-> >       MemoryRegion mmio;
-> >       CharBackend chr;
-> > -    uint8_t rx_fifo[SIFIVE_UART_RX_FIFO_SIZE];
-> > -    uint8_t rx_fifo_len;
-> > +
-> > +    uint32_t txfifo;
-> >       uint32_t ie;
-> >       uint32_t ip;
-> >       uint32_t txctrl;
-> >       uint32_t rxctrl;
-> >       uint32_t div;
-> > +
-> > +    uint8_t rx_fifo[SIFIVE_UART_RX_FIFO_SIZE];
-> > +    uint8_t rx_fifo_len;
-> > +
-> > +    uint8_t tx_fifo[SIFIVE_UART_TX_FIFO_SIZE];
-> > +    uint32_t tx_level;
-> > +
-> > +    QEMUTimer *fifo_trigger_handle;
-> > +    uint64_t char_tx_time;
-> >   };
-> >
-> >   SiFiveUARTState *sifive_uart_create(MemoryRegion *address_space, hwad=
-dr base,
-> > diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-> > index 7fc6787f69..f517500df4 100644
-> > --- a/hw/char/sifive_uart.c
-> > +++ b/hw/char/sifive_uart.c
-> > @@ -64,6 +64,64 @@ static void sifive_uart_update_irq(SiFiveUARTState *=
-s)
-> >       }
-> >   }
-> >
-> > +static gboolean sifive_uart_xmit(void *do_not_use, GIOCondition cond,
-> > +                                 void *opaque)
-> > +{
-> > +    SiFiveUARTState *s =3D opaque;
-> > +    int ret;
-> > +
-> > +    /* instant drain the fifo when there's no back-end */
-> > +    if (!qemu_chr_fe_backend_connected(&s->chr)) {
-> > +        s->tx_level =3D 0;
-> > +        return G_SOURCE_REMOVE;
-> > +    }
-> > +
-> > +    ret =3D qemu_chr_fe_write(&s->chr, s->tx_fifo, s->tx_level);
-> > +
-> > +    if (ret >=3D 0) {
-> > +        s->tx_level -=3D ret;
-> > +        memmove(s->tx_fifo, s->tx_fifo + ret, s->tx_level);
-> > +    }
-> > +
-> > +    if (s->tx_level) {
-> > +        guint r =3D qemu_chr_fe_add_watch(&s->chr, G_IO_OUT | G_IO_HUP=
-,
-> > +                                        sifive_uart_xmit, s);
-> > +        if (!r) {
-> > +            s->tx_level =3D 0;
-> > +            return G_SOURCE_REMOVE;
-> > +        }
-> > +    }
-> > +
-> > +    /* Clear the TX Full bit */
-> > +    if (s->tx_level !=3D SIFIVE_UART_TX_FIFO_SIZE) {
-> > +        s->txfifo &=3D ~SIFIVE_UART_TXFIFO_FULL;
-> > +    }
-> > +
-> > +    sifive_uart_update_irq(s);
-> > +    return G_SOURCE_REMOVE;
-> > +}
-> > +
-> > +static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_=
-t *buf,
-> > +                                      int size)
-> > +{
-> > +    uint64_t current_time =3D qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-> > +
-> > +    if (size > SIFIVE_UART_TX_FIFO_SIZE - s->tx_level) {
-> > +        size =3D SIFIVE_UART_TX_FIFO_SIZE - s->tx_level;
-> > +        qemu_log_mask(LOG_GUEST_ERROR, "sifive_uart: TX FIFO overflow"=
-);
-> > +    }
-> > +
-> > +    memcpy(s->tx_fifo + s->tx_level, buf, 1);
-> > +    s->tx_level +=3D 1;
-> > +
-> > +    if (s->tx_level =3D=3D SIFIVE_UART_TX_FIFO_SIZE) {
-> > +        s->txfifo |=3D SIFIVE_UART_TXFIFO_FULL;
-> > +    }
-> > +
-> > +    timer_mod(s->fifo_trigger_handle, current_time +
-> > +              (s->char_tx_time * 4));
-> > +}
-> > +
-> >   static uint64_t
-> >   sifive_uart_read(void *opaque, hwaddr addr, unsigned int size)
-> >   {
-> > @@ -82,7 +140,7 @@ sifive_uart_read(void *opaque, hwaddr addr, unsigned=
- int size)
-> >           return 0x80000000;
-> >
-> >       case SIFIVE_UART_TXFIFO:
-> > -        return 0; /* Should check tx fifo */
-> > +        return s->txfifo;
-> >       case SIFIVE_UART_IE:
-> >           return s->ie;
-> >       case SIFIVE_UART_IP:
-> > @@ -106,12 +164,10 @@ sifive_uart_write(void *opaque, hwaddr addr,
-> >   {
-> >       SiFiveUARTState *s =3D opaque;
-> >       uint32_t value =3D val64;
-> > -    unsigned char ch =3D value;
-> >
-> >       switch (addr) {
-> >       case SIFIVE_UART_TXFIFO:
-> > -        qemu_chr_fe_write(&s->chr, &ch, 1);
-> > -        sifive_uart_update_irq(s);
-> > +        sifive_uart_write_tx_fifo(s, (uint8_t *) &value, 1);
-> >           return;
-> >       case SIFIVE_UART_IE:
-> >           s->ie =3D val64;
-> > @@ -131,6 +187,13 @@ sifive_uart_write(void *opaque, hwaddr addr,
-> >                     __func__, (int)addr, (int)value);
-> >   }
-> >
-> > +static void fifo_trigger_update(void *opaque)
-> > +{
-> > +    SiFiveUARTState *s =3D opaque;
-> > +
-> > +    sifive_uart_xmit(NULL, G_IO_OUT, s);
-> > +}
-> > +
-> >   static const MemoryRegionOps sifive_uart_ops =3D {
-> >       .read =3D sifive_uart_read,
-> >       .write =3D sifive_uart_write,
-> > @@ -197,6 +260,9 @@ static void sifive_uart_realize(DeviceState *dev, E=
-rror **errp)
-> >   {
-> >       SiFiveUARTState *s =3D SIFIVE_UART(dev);
-> >
-> > +    s->fifo_trigger_handle =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
-> > +                                          fifo_trigger_update, s);
-> > +
-> >       qemu_chr_fe_set_handlers(&s->chr, sifive_uart_can_rx, sifive_uart=
-_rx,
-> >                                sifive_uart_event, sifive_uart_be_change=
-, s,
-> >                                NULL, true);
-> > @@ -206,12 +272,19 @@ static void sifive_uart_realize(DeviceState *dev,=
- Error **errp)
-> >   static void sifive_uart_reset_enter(Object *obj, ResetType type)
-> >   {
-> >       SiFiveUARTState *s =3D SIFIVE_UART(obj);
-> > +
-> > +    s->txfifo =3D 0;
-> >       s->ie =3D 0;
-> >       s->ip =3D 0;
-> >       s->txctrl =3D 0;
-> >       s->rxctrl =3D 0;
-> >       s->div =3D 0;
-> > +
-> > +    s->tx_level =3D 0;
-> >       s->rx_fifo_len =3D 0;
-> > +
-> > +    memset(s->rx_fifo, 0, SIFIVE_UART_RX_FIFO_SIZE);
-> > +    memset(s->tx_fifo, 0, SIFIVE_UART_TX_FIFO_SIZE);
-> >   }
-> >
-> >   static void sifive_uart_reset_hold(Object *obj, ResetType type)
->
-> Have you considered using a Fifo8 here? This avoids having to manually ro=
-ll your own
-> FIFO implementation.
+On 16/08/2024 23.32, Philippe Mathieu-Daudé wrote:
+> Long due upgrade, see [1]:
+> 
+>    In GitLab Runner 13.2 a translation for step_script to
+>    build_script was added to the custom executor. In 14.0
+>    the build_script stage will be replaced with step_script.
+> 
+> We are using GitLab 17 [2]!
+> 
+> This removes the following warning:
+> 
+>    WARNING: Starting with version 17.0 the 'build_script'
+>    stage will be replaced with 'step_script':
+>    https://gitlab.com/groups/gitlab-org/-/epics/6112
+> 
+> [1] https://about.gitlab.com/releases/2021/05/22/gitlab-13-12-released/#remove-translation-from-stepscript-to-buildscript-in-custom-executor
+> [2] https://about.gitlab.com/releases/2024/05/16/gitlab-17-0-released/
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   .gitlab-ci.d/cirrus/build.yml | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/.gitlab-ci.d/cirrus/build.yml b/.gitlab-ci.d/cirrus/build.yml
+> index 43dd52dd19..102cdbd8b1 100644
+> --- a/.gitlab-ci.d/cirrus/build.yml
+> +++ b/.gitlab-ci.d/cirrus/build.yml
+> @@ -26,7 +26,7 @@ build_task:
+>       - git clone --depth 100 "$CI_REPOSITORY_URL" .
+>       - git fetch origin "$CI_COMMIT_REF_NAME"
+>       - git reset --hard "$CI_COMMIT_SHA"
+> -  build_script:
+> +  step_script:
+>       - mkdir build
+>       - cd build
+>       - ../configure --enable-werror $CONFIGURE_ARGS
 
-Yeah, I will convert it to a Fifo8.
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-Alistair
-
->
->
-> ATB,
->
-> Mark.
->
 
