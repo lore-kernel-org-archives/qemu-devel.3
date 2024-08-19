@@ -4,104 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5289CC52D7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 05:32:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B863AC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 05:32:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sfv07-0003yl-TE; Mon, 19 Aug 2024 01:32:19 -0400
+	id 1sfv0M-00056X-VV; Mon, 19 Aug 2024 01:32:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sfuzo-0002XE-Al
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 01:32:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1sfuzm-00056Y-MS
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 01:32:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724045517;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RH0ysvCwiDD6BUVvceG6WstRkYD2wwJ9b+IfnvkifDM=;
- b=FH1/iWQMHFZ8wqWA/dz7JJCYELe4JzY+AVR6kEqwy8VX+4yTfi5hf5UjjMvV9w0vxjOcXy
- yZCLzlyg1MsamOf7I8tABnr2PzNaJHNjbv/a5os/5kljmB2qH0jOeFue5Lgtnv6dR10s/s
- LWVW8mOjnG/CrkyERSxhZGws3nfrivc=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-61-IQsXP67UNYqSOBvonq375w-1; Mon, 19 Aug 2024 01:31:55 -0400
-X-MC-Unique: IQsXP67UNYqSOBvonq375w-1
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-2d3c0ca91f8so3318175a91.3
- for <qemu-devel@nongnu.org>; Sun, 18 Aug 2024 22:31:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sfv0L-0004zj-DK; Mon, 19 Aug 2024 01:32:33 -0400
+Received: from mail-vs1-xe31.google.com ([2607:f8b0:4864:20::e31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1sfv0J-00058J-CT; Mon, 19 Aug 2024 01:32:33 -0400
+Received: by mail-vs1-xe31.google.com with SMTP id
+ ada2fe7eead31-493e8ef36b4so1495996137.2; 
+ Sun, 18 Aug 2024 22:32:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1724045550; x=1724650350; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6J/8YeXFN7bzIgFX2O2QItwvTyckBanYu33C2tky+1U=;
+ b=Kqq2e9vcnzpEYqy8plm79qUiS6Plpnngt4juQJP8pellvMls9vL8retim7N9VeDNRi
+ d7i7mxowzIjqWZw2JIrzNoWutkj/lgv1ZYMirE1iHLVWVE37PXirPzpixWOjgmMJ5SB9
+ DTJNEL63XBV1c9S8dUOGwWY7cyh5IywEl1X0JkhkSac6BTboYuEYNu3JlPPXEFAAvkym
+ 81LgZZqk10PKEIVS5IkOsdUq2H8rwQ0osA8ZZrpCItXWmBAmkwGaMiYTRtSDuJYexv1D
+ mg1OvBZ/z8Pru9cT0HHrwKrcNg3S9XqHc8hKz9AJVPA1ECPFz9v9AA77P/t5EIJI2Zqc
+ qsMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724045514; x=1724650314;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RH0ysvCwiDD6BUVvceG6WstRkYD2wwJ9b+IfnvkifDM=;
- b=ICwXB5NCk5PxhDV2oCxn6SwvK4lNvN3kq7c/B+aRn/OLSlwqfk5z/K/E7AVUpIvQBh
- luHtRfCJTKssINOaXtS6py1AIoweGqZ7ilvmDncu7Q3hbKTu/yOEw94yV1BuVaIWdLaq
- Fy9dAHKzqD5WptcdI39sLXAOY8m9aG2SjY/Wsr5lhFSNCrjlbPeLPf+GuhlR1NqBziNY
- yfA7+jj1pKcpzj84LY7hEeg77isL4DS6Wv887zMtFvlxvtOnCl1qNhvjQXRNxsXv63Rn
- D53c5FRMKgGYrTnrSJLGnRHPFdX7gqA07bW/+z6EIVp75CY2S8sfGBQjPVmFmtYmRSH/
- OVbQ==
+ d=1e100.net; s=20230601; t=1724045550; x=1724650350;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6J/8YeXFN7bzIgFX2O2QItwvTyckBanYu33C2tky+1U=;
+ b=Np/YAEOF4kyzOUYfxY94KYOCbdPtRjPe1Ve9vFOt+oZXo3fGjjp4yD8ghXlmyJFh9C
+ mKIHLNP4UjcNjU3ddOlhjIN8t4YqaFzYLlT1O+qmErOImi0zs6wQ49Dz7MwdEmSRVVb7
+ rIJKvAuC+elCeryxfn8cO1mX5eugwPu2p0szZFDsQDtzYzOxS6+BToV9/UEJeX4JbOSa
+ gJImqZfdKsv+k7pAAkTPiVFCaTczK9XfojrRy2mc7uwb6VMDg3fGdx3PnQNbjbbG3VuH
+ moEBAtpARjImfV9aXEAA8Xzdc2B9ha971DaVA1YzUMH4HBaMKHMhnVz1yf2HaFBCTewn
+ yeMg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVXMUJuaExAyJ9jRd44cWBFMOKfWwY+7i0uX0zn3NWbcukEBUcA3uQGM3GcUdkLbladJ/kjB0Tohis3eur0yqU/fVaqi9g=
-X-Gm-Message-State: AOJu0YwhKUACMlkQwD/BTHUe/TRbUhVbE3i6JThgajVyoIcSmFdEaFqk
- VdVC57NNyCBn6MRKOnb4ZMLG0Hfa8JqMXlaFuYvwO7/H3eFOOU97WeYEte12nJxUV+x1loknVXk
- HVY8+9iIFRnBFgZTGCb+FCt55IZk5jzdEWtRufWNEolBS5V5ymOxH
-X-Received: by 2002:a17:90a:8c11:b0:2d3:c05c:c51 with SMTP id
- 98e67ed59e1d1-2d3dfacb1eemr8581382a91.0.1724045514183; 
- Sun, 18 Aug 2024 22:31:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGwFRyVVzsVTza0X12yGP+l3lP4fNF7SDArfLHBmeVCTzvyIPzLh0yEiYpm4qnk+wtdsntazQ==
-X-Received: by 2002:a17:90a:8c11:b0:2d3:c05c:c51 with SMTP id
- 98e67ed59e1d1-2d3dfacb1eemr8581366a91.0.1724045513697; 
- Sun, 18 Aug 2024 22:31:53 -0700 (PDT)
-Received: from [192.168.68.54] ([103.210.27.48])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2d3ac7dcfc7sm10154019a91.14.2024.08.18.22.31.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 18 Aug 2024 22:31:53 -0700 (PDT)
-Message-ID: <28f3107f-0267-4112-b0ca-da59df2968ae@redhat.com>
-Date: Mon, 19 Aug 2024 15:31:37 +1000
+ AJvYcCUOZHQ/D+3KECBdiQP5l9NbHjDsqFgF6aLlUhh+SkCAmJQkoN2xYvNsRFQ9b0s6I2Ydb7eJSO7ECfrej4hxAkc2yPyd+7q+suFOxGGdemXRsR7Fy2QZ4ZoCNbaZIA==
+X-Gm-Message-State: AOJu0YwOMYkWNd95lfwwoQAkzU6GkPDSd8xq/ro4wo2achAYLd0RElGv
+ I1673cSXCt6kZxRe4FhBmCLglBhkNLf7DEyOMc+jnZlSkvVQDzkEtI6RVzZBMUwnJwEf9KJbxgg
+ dmtzDxupNv8gNZYQK5vPD1cWJ/Pg=
+X-Google-Smtp-Source: AGHT+IFE22RyGTWkMr2qzAybHouLq77ocfSEp5rCkN0NkOZLHfzC9zBnvM7MQPooPdmPqkFxm5DMcbWZ2PXmX6za9JE=
+X-Received: by 2002:a05:6102:304a:b0:492:9e3a:9f48 with SMTP id
+ ada2fe7eead31-49779892fb2mr12213168137.2.1724045549553; Sun, 18 Aug 2024
+ 22:32:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC V3 06/29] arm/virt,kvm: Pre-create disabled possible
- vCPUs @machine init
-To: Salil Mehta <salil.mehta@huawei.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, mst@redhat.com
-Cc: maz@kernel.org, jean-philippe@linaro.org, jonathan.cameron@huawei.com,
- lpieralisi@kernel.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, imammedo@redhat.com, andrew.jones@linux.dev,
- david@redhat.com, philmd@linaro.org, eric.auger@redhat.com, will@kernel.org,
- ardb@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
- rafael@kernel.org, borntraeger@linux.ibm.com, alex.bennee@linaro.org,
- npiggin@gmail.com, harshpb@linux.ibm.com, linux@armlinux.org.uk,
- darren@os.amperecomputing.com, ilkka@os.amperecomputing.com,
- vishnu@os.amperecomputing.com, karl.heubaum@oracle.com,
- miguel.luis@oracle.com, salil.mehta@opnsrc.net, zhukeqian1@huawei.com,
- wangxiongfeng2@huawei.com, wangyanan55@huawei.com, jiakernel2@gmail.com,
- maobibo@loongson.cn, lixianglai@loongson.cn, shahuang@redhat.com,
- zhao1.liu@intel.com, linuxarm@huawei.com
-References: <20240613233639.202896-1-salil.mehta@huawei.com>
- <20240613233639.202896-7-salil.mehta@huawei.com>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20240613233639.202896-7-salil.mehta@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -22
-X-Spam_score: -2.3
-X-Spam_bar: --
-X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.142,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+References: <20240815015410.369925-1-alistair.francis@wdc.com>
+ <20240815015410.369925-3-alistair.francis@wdc.com>
+ <c9b7b9aa-9c2e-4275-a7fb-ff994d74d3f4@ilande.co.uk>
+In-Reply-To: <c9b7b9aa-9c2e-4275-a7fb-ff994d74d3f4@ilande.co.uk>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 19 Aug 2024 15:32:03 +1000
+Message-ID: <CAKmqyKMr_riTX+2TdiWqkeYC_YMMZaaj55XiDgBfTx5yJ7eQsw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] hw/char: sifive_uart: Print uart charecters async
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: alex.bennee@linaro.org, qemu-devel@nongnu.org, peter.maydell@linaro.org, 
+ dbarboza@ventanamicro.com, palmer@dabbelt.com, qemu-riscv@nongnu.org, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ zhiwei_liu@linux.alibaba.com, atishp@rivosinc.com, 
+ Bin Meng <bmeng.cn@gmail.com>, liwei1518@gmail.com, 
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e31;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe31.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,71 +98,234 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/14/24 9:36 AM, Salil Mehta wrote:
-> In the ARMv8 architecture, the GIC must know all the CPUs it is connected to
-> during its initialization, and this cannot change afterward. This must be
-> ensured during the initialization of the VGIC as well in KVM, which requires all
-> vCPUs to be created and present during its initialization. This is necessary
-> because:
-> 
-> 1. The association between GICC and MPIDR must be fixed at VM initialization
->     time. This is represented by the register `GIC_TYPER(mp_affinity, proc_num)`.
-> 2. GICC (CPU interfaces), GICR (redistributors), etc., must all be initialized
->     at boot time.
-> 3. Memory regions associated with GICR, etc., cannot be changed (added, deleted,
->     or modified) after the VM has been initialized.
-> 
-> This patch adds support to pre-create all possible vCPUs within the host using
-> the KVM interface as part of the virtual machine initialization. These vCPUs can
-> later be attached to QOM/ACPI when they are actually hot-plugged and made
-> present.
-> 
-> Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
-> Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
-> Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
-> Reported-by: Vishnu Pajjuri <vishnu@os.amperecomputing.com>
-> [VP: Identified CPU stall issue & suggested probable fix]
-> ---
->   hw/arm/virt.c         | 56 +++++++++++++++++++++++++++++++++++--------
->   include/hw/core/cpu.h |  1 +
->   target/arm/cpu64.c    |  1 +
->   target/arm/kvm.c      | 41 ++++++++++++++++++++++++++++++-
->   target/arm/kvm_arm.h  | 11 +++++++++
->   5 files changed, 99 insertions(+), 11 deletions(-)
-> 
+On Thu, Aug 15, 2024 at 6:27=E2=80=AFPM Mark Cave-Ayland
+<mark.cave-ayland@ilande.co.uk> wrote:
+>
+> On 15/08/2024 02:54, Alistair Francis wrote:
+>
+> > The current approach of using qemu_chr_fe_write() and ignoring the
+> > return values results in dropped charecters [1].
+> >
+> > Let's update the SiFive UART to use a async sifive_uart_xmit() function
+> > to transmit the charecters and apply back preassure to the guest with
+> > the SIFIVE_UART_TXFIFO_FULL status.
+> >
+> > This should avoid dropped charecters and more realisiticly model the
+> > hardware.
+> >
+> > 1: https://gitlab.com/qemu-project/qemu/-/issues/2114
+> >
+> > Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+> > ---
+> >   include/hw/char/sifive_uart.h | 17 +++++++-
+> >   hw/char/sifive_uart.c         | 81 +++++++++++++++++++++++++++++++++-=
+-
+> >   2 files changed, 92 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/include/hw/char/sifive_uart.h b/include/hw/char/sifive_uar=
+t.h
+> > index 7f6c79f8bd..73379457a0 100644
+> > --- a/include/hw/char/sifive_uart.h
+> > +++ b/include/hw/char/sifive_uart.h
+> > @@ -48,9 +48,13 @@ enum {
+> >       SIFIVE_UART_IP_RXWM       =3D 2  /* Receive watermark interrupt p=
+ending */
+> >   };
+> >
+> > +#define SIFIVE_UART_TXFIFO_FULL    0x80000000
+> > +
+> >   #define SIFIVE_UART_GET_TXCNT(txctrl)   ((txctrl >> 16) & 0x7)
+> >   #define SIFIVE_UART_GET_RXCNT(rxctrl)   ((rxctrl >> 16) & 0x7)
+> > +
+> >   #define SIFIVE_UART_RX_FIFO_SIZE 8
+> > +#define SIFIVE_UART_TX_FIFO_SIZE 8
+> >
+> >   #define TYPE_SIFIVE_UART "riscv.sifive.uart"
+> >   OBJECT_DECLARE_SIMPLE_TYPE(SiFiveUARTState, SIFIVE_UART)
+> > @@ -63,13 +67,22 @@ struct SiFiveUARTState {
+> >       qemu_irq irq;
+> >       MemoryRegion mmio;
+> >       CharBackend chr;
+> > -    uint8_t rx_fifo[SIFIVE_UART_RX_FIFO_SIZE];
+> > -    uint8_t rx_fifo_len;
+> > +
+> > +    uint32_t txfifo;
+> >       uint32_t ie;
+> >       uint32_t ip;
+> >       uint32_t txctrl;
+> >       uint32_t rxctrl;
+> >       uint32_t div;
+> > +
+> > +    uint8_t rx_fifo[SIFIVE_UART_RX_FIFO_SIZE];
+> > +    uint8_t rx_fifo_len;
+> > +
+> > +    uint8_t tx_fifo[SIFIVE_UART_TX_FIFO_SIZE];
+> > +    uint32_t tx_level;
+> > +
+> > +    QEMUTimer *fifo_trigger_handle;
+> > +    uint64_t char_tx_time;
+> >   };
+> >
+> >   SiFiveUARTState *sifive_uart_create(MemoryRegion *address_space, hwad=
+dr base,
+> > diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
+> > index 7fc6787f69..f517500df4 100644
+> > --- a/hw/char/sifive_uart.c
+> > +++ b/hw/char/sifive_uart.c
+> > @@ -64,6 +64,64 @@ static void sifive_uart_update_irq(SiFiveUARTState *=
+s)
+> >       }
+> >   }
+> >
+> > +static gboolean sifive_uart_xmit(void *do_not_use, GIOCondition cond,
+> > +                                 void *opaque)
+> > +{
+> > +    SiFiveUARTState *s =3D opaque;
+> > +    int ret;
+> > +
+> > +    /* instant drain the fifo when there's no back-end */
+> > +    if (!qemu_chr_fe_backend_connected(&s->chr)) {
+> > +        s->tx_level =3D 0;
+> > +        return G_SOURCE_REMOVE;
+> > +    }
+> > +
+> > +    ret =3D qemu_chr_fe_write(&s->chr, s->tx_fifo, s->tx_level);
+> > +
+> > +    if (ret >=3D 0) {
+> > +        s->tx_level -=3D ret;
+> > +        memmove(s->tx_fifo, s->tx_fifo + ret, s->tx_level);
+> > +    }
+> > +
+> > +    if (s->tx_level) {
+> > +        guint r =3D qemu_chr_fe_add_watch(&s->chr, G_IO_OUT | G_IO_HUP=
+,
+> > +                                        sifive_uart_xmit, s);
+> > +        if (!r) {
+> > +            s->tx_level =3D 0;
+> > +            return G_SOURCE_REMOVE;
+> > +        }
+> > +    }
+> > +
+> > +    /* Clear the TX Full bit */
+> > +    if (s->tx_level !=3D SIFIVE_UART_TX_FIFO_SIZE) {
+> > +        s->txfifo &=3D ~SIFIVE_UART_TXFIFO_FULL;
+> > +    }
+> > +
+> > +    sifive_uart_update_irq(s);
+> > +    return G_SOURCE_REMOVE;
+> > +}
+> > +
+> > +static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_=
+t *buf,
+> > +                                      int size)
+> > +{
+> > +    uint64_t current_time =3D qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+> > +
+> > +    if (size > SIFIVE_UART_TX_FIFO_SIZE - s->tx_level) {
+> > +        size =3D SIFIVE_UART_TX_FIFO_SIZE - s->tx_level;
+> > +        qemu_log_mask(LOG_GUEST_ERROR, "sifive_uart: TX FIFO overflow"=
+);
+> > +    }
+> > +
+> > +    memcpy(s->tx_fifo + s->tx_level, buf, 1);
+> > +    s->tx_level +=3D 1;
+> > +
+> > +    if (s->tx_level =3D=3D SIFIVE_UART_TX_FIFO_SIZE) {
+> > +        s->txfifo |=3D SIFIVE_UART_TXFIFO_FULL;
+> > +    }
+> > +
+> > +    timer_mod(s->fifo_trigger_handle, current_time +
+> > +              (s->char_tx_time * 4));
+> > +}
+> > +
+> >   static uint64_t
+> >   sifive_uart_read(void *opaque, hwaddr addr, unsigned int size)
+> >   {
+> > @@ -82,7 +140,7 @@ sifive_uart_read(void *opaque, hwaddr addr, unsigned=
+ int size)
+> >           return 0x80000000;
+> >
+> >       case SIFIVE_UART_TXFIFO:
+> > -        return 0; /* Should check tx fifo */
+> > +        return s->txfifo;
+> >       case SIFIVE_UART_IE:
+> >           return s->ie;
+> >       case SIFIVE_UART_IP:
+> > @@ -106,12 +164,10 @@ sifive_uart_write(void *opaque, hwaddr addr,
+> >   {
+> >       SiFiveUARTState *s =3D opaque;
+> >       uint32_t value =3D val64;
+> > -    unsigned char ch =3D value;
+> >
+> >       switch (addr) {
+> >       case SIFIVE_UART_TXFIFO:
+> > -        qemu_chr_fe_write(&s->chr, &ch, 1);
+> > -        sifive_uart_update_irq(s);
+> > +        sifive_uart_write_tx_fifo(s, (uint8_t *) &value, 1);
+> >           return;
+> >       case SIFIVE_UART_IE:
+> >           s->ie =3D val64;
+> > @@ -131,6 +187,13 @@ sifive_uart_write(void *opaque, hwaddr addr,
+> >                     __func__, (int)addr, (int)value);
+> >   }
+> >
+> > +static void fifo_trigger_update(void *opaque)
+> > +{
+> > +    SiFiveUARTState *s =3D opaque;
+> > +
+> > +    sifive_uart_xmit(NULL, G_IO_OUT, s);
+> > +}
+> > +
+> >   static const MemoryRegionOps sifive_uart_ops =3D {
+> >       .read =3D sifive_uart_read,
+> >       .write =3D sifive_uart_write,
+> > @@ -197,6 +260,9 @@ static void sifive_uart_realize(DeviceState *dev, E=
+rror **errp)
+> >   {
+> >       SiFiveUARTState *s =3D SIFIVE_UART(dev);
+> >
+> > +    s->fifo_trigger_handle =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
+> > +                                          fifo_trigger_update, s);
+> > +
+> >       qemu_chr_fe_set_handlers(&s->chr, sifive_uart_can_rx, sifive_uart=
+_rx,
+> >                                sifive_uart_event, sifive_uart_be_change=
+, s,
+> >                                NULL, true);
+> > @@ -206,12 +272,19 @@ static void sifive_uart_realize(DeviceState *dev,=
+ Error **errp)
+> >   static void sifive_uart_reset_enter(Object *obj, ResetType type)
+> >   {
+> >       SiFiveUARTState *s =3D SIFIVE_UART(obj);
+> > +
+> > +    s->txfifo =3D 0;
+> >       s->ie =3D 0;
+> >       s->ip =3D 0;
+> >       s->txctrl =3D 0;
+> >       s->rxctrl =3D 0;
+> >       s->div =3D 0;
+> > +
+> > +    s->tx_level =3D 0;
+> >       s->rx_fifo_len =3D 0;
+> > +
+> > +    memset(s->rx_fifo, 0, SIFIVE_UART_RX_FIFO_SIZE);
+> > +    memset(s->tx_fifo, 0, SIFIVE_UART_TX_FIFO_SIZE);
+> >   }
+> >
+> >   static void sifive_uart_reset_hold(Object *obj, ResetType type)
+>
+> Have you considered using a Fifo8 here? This avoids having to manually ro=
+ll your own
+> FIFO implementation.
 
-The vCPU file descriptor is associated with a feature bitmap when the file descriptor
-is initialized by ioctl(vm_fd, KVM_ARM_VCPU_INIT, &init). The feature bitmap is sorted
-out based on the vCPU properties. The vCPU properties can be different when the vCPU
-file descriptor is initialized for the first time when the vCPU is instantiated, and
-re-initialized when the vCPU is hot added.
+Yeah, I will convert it to a Fifo8.
 
-It can lead to system crash as below. We probably need a mechanism to disallow passing
-extra properties when vCPU is hot added to avoid the conflicts to the global properties
-from the command line "-cpu host,pmu=on". Some of the properties like "id", "socket-id"
-are still needed.
+Alistair
 
-/home/gavin/sandbox/qemu.main/build/qemu-system-aarch64                  \
--accel kvm -machine virt,gic-version=host,nvdimm=on                      \
--cpu host -smp maxcpus=2,cpus=1,sockets=2,clusters=1,cores=1,threads=1   \
--m 4096M,slots=16,maxmem=128G                                            \
--object memory-backend-ram,id=mem0,size=2048M                            \
--object memory-backend-ram,id=mem1,size=2048M                            \
--numa node,nodeid=0,memdev=mem0,cpus=0-0                                 \
--numa node,nodeid=1,memdev=mem1,cpus=1-1                                 \
--L /home/gavin/sandbox/qemu.main/build/pc-bios                           \
--monitor none -serial mon:stdio -nographic                               \
--gdb tcp::6666 -qmp tcp:localhost:5555,server,wait=off                   \
--bios /home/gavin/sandbox/qemu.main/build/pc-bios/edk2-aarch64-code.fd   \
--kernel /home/gavin/sandbox/linux.guest/arch/arm64/boot/Image            \
--initrd /home/gavin/sandbox/images/rootfs.cpio.xz                        \
--append memhp_default_state=online_movable                               \
-     :
-(qemu) device_add host-arm-cpu,id=cpu1,socket-id=1,pmu=off
-kvm_arch_init_vcpu: Error -22 from kvm_arm_vcpu_init()
-qemu-system-aarch64: kvm_init_vcpu: kvm_arch_init_vcpu failed (1): Invalid argument
-
-Thanks,
-Gavin
-
+>
+>
+> ATB,
+>
+> Mark.
+>
 
