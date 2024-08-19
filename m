@@ -4,70 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64F30C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:52:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17C31C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:52:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgBDj-0008Rx-Sj; Mon, 19 Aug 2024 18:51:27 -0400
+	id 1sgBDq-0000IU-CC; Mon, 19 Aug 2024 18:51:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBDh-0008Pj-Vh
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:51:25 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBDn-0000Ap-KP
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:51:31 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBDf-0000fN-4g
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:51:25 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-371a6fcd863so1711983f8f.1
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:51:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBDl-0000fx-RB
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:51:31 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-42819654737so37531655e9.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:51:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724107878; x=1724712678; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=LTxzfu4OzZbTIB6pGjbGlQ0NpMxgXsa11tKEn0g5Iic=;
- b=AUOTZ5M+grP4FNfGDG0ajCdQWE5PNKSpwmWZLUZz3Aw9C8eonWM8XIDEiuTbbivkbo
- oZBda2772QYw2b0b4qnoqhzKR5OMlXBw9OyjteN9f1C8JqOsp1WAg1EQ7WN3i0E9v+BI
- cGwvTYsireci2qsZAmidM0T9Eb+qzF2yD7Q5iKJLJ+sy+hYLKVrvjEnOd+H0THqk2FzO
- qLN5s2m0Fwfedtb7FaATVsMD9ig0VjXcG3sCx2c4lwY73a1ipF9XadUn0PfAaLcoCOS7
- nj/73D1vh7JpFR8vRmekGiGsRoybpKkJ52sCJIw4cKk2kA/4SrCqOeoZKz8DEpJin/19
- wgAA==
+ d=linaro.org; s=google; t=1724107888; x=1724712688; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wXvH5zTUg5dAcDnGKaZdfrZjdGQ55VlC72RabvGbTBU=;
+ b=hYkphleQqaKitRHcdH+7hxl3x/XQytVH/Rb2tNWoGAOi/8KG00EsW/V0EUtiWdHZX0
+ j2pQjCuriAxQgLm8sKcBqT8cBq7zLdRpfPjM1mV577UPd62P6Ur7hY4jmfKqV8lxwQz0
+ etktUwGf/nD3RFDsB3+xBLhK6a3XHssXMNWKfdQtyc+S/SuqggvkUWYQ5JZV5j8yh9Tm
+ gGh599hO21enp22FvcYvcE/mVLD0D49JuInP2OZnLXehoI5I+SCcELhGVd6qq/RNgPvJ
+ eWGJbNee2L5HL4LOWtXJJUkQAHJ9MSAOJSroPChx6Vqyd45/DkcPyMaxFJ+PliRuWq7W
+ Ni8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724107878; x=1724712678;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LTxzfu4OzZbTIB6pGjbGlQ0NpMxgXsa11tKEn0g5Iic=;
- b=t/YfOaBpfLwMxZ56PjnqYLVpCWMh3nS+hc71CXr465x4BoUwg2Wbw84BmSULHYH+fP
- DjFB0NOgF9PicW9o4Wm5n4ZCjlxluqF1auwI8pjwVArQX6Wn03Bofv/xiheyY7a87erb
- FbghjXDUX2k69MYOwmDN2ykHlRXINrhTEhU3BsuH0BEN1HvlCxrN9rUdmtVUUcbjyVVN
- AwpwrcuuxgPHB9yNHn5Nms7LBmscgSAR1DrqxMjZ+nvpkGsFLkRlPBzNomqxdUCJ18rO
- PHgB35GdDBeDvkcRHyWLsRFFvPY4doQCgqu1OZbh8QpQEvv5YOhbeHACrv0h9NiWazP8
- ZHvg==
-X-Gm-Message-State: AOJu0YzDdoWnoSTpcVF667BkNCO/VNXjaD3itA+WbcQ2d4Er4+TkeO4l
- A/OFCCbU2pdJ01QpAcNExUhWkse2lyOlYWRbdyVuTzkn11OABnrp2cdIlMNhDhQJfB2o6pctroh
- xncI=
-X-Google-Smtp-Source: AGHT+IHUYDRbPupBiCPyijNQShdDrpcYYKpLgvOUpme46z+7ICLncmlrwFlhOQ9aUu+qRnJ3/sKc7A==
-X-Received: by 2002:adf:fc8a:0:b0:367:f104:d9e8 with SMTP id
- ffacd0b85a97d-371946a9afbmr7143089f8f.47.1724107878448; 
- Mon, 19 Aug 2024 15:51:18 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1724107888; x=1724712688;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wXvH5zTUg5dAcDnGKaZdfrZjdGQ55VlC72RabvGbTBU=;
+ b=aaEGWqq5X9pszdtnGW4fRFQ85+uQ8zno4zJfNH2oIIbKGslJVpH9WRDiG7xkbfvOc4
+ PpHkApaVWfaNqNc+kwfMMuNcUbISy9wqYXxl3Fzv66iTm6nq7S8LqV4JkHkF/6RC7Dka
+ VkhIHV0PN/FfjLPKasb0awjiQHw5Mlajr+VGIvJGh3yZXFCWM4qbm9Z18UG5XtLqDMUX
+ qT2w4qTFzzDsEVIEN19qkI4pZKiM6yII4vWV/GPxzUN1pO+0WiQz1l5fwyzjh/pKruaR
+ OjqyvGOxPt0OOZPwIoULH49rD8aLTYOyJypcy2Uw1C/xzBMqd733nLy6yCqktmwT72tS
+ WfQw==
+X-Gm-Message-State: AOJu0YwrOPYaE7Nkb7OsD9VAOd2ci9YR+46I+C++75ONtUEP1tlyI7Og
+ pw308env7iGZ2+PWmHqWB3wm4MQ2OsFIFErQFMUpfF6bbDxMhGjOXJhxdEMMfGxinGygZ/gzmvC
+ fLU4=
+X-Google-Smtp-Source: AGHT+IGGNiGIQkR1rIQ7wD85FGuvaB3dypQJelSJ6WeeYiMj902uQCAF5TN1Q1bDLoMJpIbTLndSWg==
+X-Received: by 2002:a05:600c:5494:b0:426:6edf:6597 with SMTP id
+ 5b1f17b1804b1-429ed7b8c11mr75319395e9.19.1724107887915; 
+ Mon, 19 Aug 2024 15:51:27 -0700 (PDT)
 Received: from localhost.localdomain (88-178-97-237.subs.proxad.net.
  [88.178.97.237]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-371898aada4sm11491670f8f.94.2024.08.19.15.51.17
+ 5b1f17b1804b1-429ded17cb3sm175578825e9.10.2024.08.19.15.51.26
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Aug 2024 15:51:17 -0700 (PDT)
+ Mon, 19 Aug 2024 15:51:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 00/20] Misc fixes for 2024-08-20
-Date: Tue, 20 Aug 2024 00:50:56 +0200
-Message-ID: <20240819225116.17928-1-philmd@linaro.org>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 02/20] hw/mips/loongson3_virt: Fix condition of IPI IOCSR
+ connection
+Date: Tue, 20 Aug 2024 00:50:58 +0200
+Message-ID: <20240819225116.17928-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240819225116.17928-1-philmd@linaro.org>
+References: <20240819225116.17928-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -90,99 +95,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit ecdfa31beb1f7616091bedba79dfdf9ee525ed9d:
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-  Merge tag 'pull-request-2024-08-16' of https://gitlab.com/thuth/qemu into staging (2024-08-16 18:18:27 +1000)
+>>>     CID 1547264:  Null pointer dereferences  (REVERSE_INULL)
+>>>     Null-checking "ipi" suggests that it may be null, but it has already been dereferenced on all paths leading to the check.
 
-are available in the Git repository at:
+Resolves: Coverity CID 1547264
+Link: https://lore.kernel.org/qemu-devel/752417ad-ab72-4fed-8d1f-af41f15bc225@app.fastmail.com/
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20240621-loongson3-ipi-follow-v2-2-848eafcbb67e@flygoat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/mips/loongson3_virt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20240820
-
-for you to fetch changes up to 87e012f29f2e47dcd8c385ff8bb8188f9e06d4ea:
-
-  crypto/tlscredspsk: Free username on finalize (2024-08-20 00:49:14 +0200)
-
-Ignored checkpatch warning:
-
-  WARNING: line over 80 characters
-  #115: FILE: target/mips/tcg/sysemu/tlb_helper.c:713:
-  +    MemOp native_op = (((env->CP0_PWSize >> CP0PS_PS) & 1) == 0) ? MO_32 : MO_64;
-
-----------------------------------------------------------------
-Various fixes
-
-- Null pointer dereference in IPI IOCSR (Jiaxun)
-- Correct '-smbios type=4' in man page (Heinrich)
-- Use correct MMU index in MIPS get_pte (Phil)
-- Reset MPQEMU remote message using device_cold_reset (Peter)
-- Update linux-user MIPS CPU list (Phil)
-- Do not let exec_command read console if no pattern to wait for (Nick)
-- Remove shadowed declaration warning (Pierrick)
-- Restrict STQF opcode to SPARC V9 (Richard)
-- Add missing Kconfig dependency for POWERNV ISA serial port (Bernhard)
-- Do not allow vmport device without i8042 PS/2 controller (Kamil)
-- Fix QCryptoTLSCredsPSK leak (Peter)
-
-----------------------------------------------------------------
-
-Bernhard Beschow (1):
-  hw/ppc/Kconfig: Add missing SERIAL_ISA dependency to POWERNV machine
-
-Heinrich Schuchardt (1):
-  qemu-options.hx: correct formatting -smbios type=4
-
-Jiaxun Yang (2):
-  hw/mips/loongson3_virt: Store core_iocsr into LoongsonMachineState
-  hw/mips/loongson3_virt: Fix condition of IPI IOCSR connection
-
-Kamil Szczęk (2):
-  hw/i386/pc: Unify vmport=auto handling
-  hw/i386/pc: Ensure vmport prerequisites are fulfilled
-
-Nicholas Piggin (2):
-  tests/avocado: exec_command should not consume console output
-  tests/avocado: Mark ppc_hv_tests.py as non-flaky after fixed console
-    interaction
-
-Peter Maydell (3):
-  hw/dma/xilinx_axidma: Use semicolon at end of statement, not comma
-  hw/remote/message.c: Don't directly invoke DeviceClass:reset
-  crypto/tlscredspsk: Free username on finalize
-
-Philippe Mathieu-Daudé (7):
-  target/mips: Pass page table entry size as MemOp to get_pte()
-  target/mips: Use correct MMU index in get_pte()
-  target/mips: Load PTE as DATA
-  linux-user/mips: Do not try to use removed R5900 CPU
-  linux-user/mips: Select Octeon68XX CPU for Octeon binaries
-  linux-user/mips: Select MIPS64R2-generic for Rel2 binaries
-  linux-user/mips: Select Loongson CPU for Loongson binaries
-
-Pierrick Bouvier (1):
-  contrib/plugins/execlog: Fix shadowed declaration warning
-
-Richard Henderson (1):
-  target/sparc: Restrict STQF to sparcv9
-
- linux-user/mips/target_elf.h           |  3 --
- linux-user/mips64/target_elf.h         | 24 +++++++--
- target/sparc/insns.decode              |  2 +-
- contrib/plugins/execlog.c              |  4 +-
- crypto/tlscredspsk.c                   |  1 +
- hw/dma/xilinx_axidma.c                 |  2 +-
- hw/i386/pc.c                           | 14 +++++-
- hw/i386/pc_piix.c                      |  5 --
- hw/i386/pc_q35.c                       |  5 --
- hw/mips/loongson3_virt.c               |  5 +-
- hw/remote/message.c                    |  5 +-
- target/mips/tcg/sysemu/tlb_helper.c    | 69 +++++++++++++-------------
- target/sparc/translate.c               |  2 +-
- hw/ppc/Kconfig                         |  1 +
- qemu-options.hx                        |  6 +--
- tests/avocado/avocado_qemu/__init__.py |  7 +++
- tests/avocado/ppc_hv_tests.py          |  1 -
- 17 files changed, 89 insertions(+), 67 deletions(-)
-
+diff --git a/hw/mips/loongson3_virt.c b/hw/mips/loongson3_virt.c
+index 27a85e3614..2067b4fecb 100644
+--- a/hw/mips/loongson3_virt.c
++++ b/hw/mips/loongson3_virt.c
+@@ -574,7 +574,7 @@ static void mips_loongson3_virt_init(MachineState *machine)
+         cpu_mips_clock_init(cpu);
+         qemu_register_reset(main_cpu_reset, cpu);
+ 
+-        if (ipi) {
++        if (!kvm_enabled()) {
+             hwaddr base = ((hwaddr)node << 44) + virt_memmap[VIRT_IPI].base;
+             base += core * 0x100;
+             qdev_connect_gpio_out(ipi, i, cpu->env.irq[6]);
 -- 
 2.45.2
 
