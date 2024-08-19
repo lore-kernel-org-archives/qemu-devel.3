@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 597FCC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:25:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A02DC3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:32:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgAo5-0006IG-1P; Mon, 19 Aug 2024 18:24:57 -0400
+	id 1sgAub-0002tz-7s; Mon, 19 Aug 2024 18:31:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgAo2-0006G9-DD
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:24:54 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgAuZ-0002tS-GN
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:31:39 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgAo0-00061B-LQ
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:24:54 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4281c164408so37843345e9.1
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:24:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgAuX-0006oG-U9
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:31:39 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-36d2a601c31so2790944f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:31:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724106290; x=1724711090; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724106695; x=1724711495; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Fl6bTB6IYyS1mnNCX73JrfBlcoBo3l1C/eL97Rtp4G8=;
- b=dSHjJ19kaSM0Wjyj8OncqJWgGRPy+F7e1qa6bQZMTT/I1y8ae108zjHsan7uP+rQwj
- hL6D2NUrcRSXJvzfGSBr129YpdOrAxgJn+JCK43aZf67rE+nubDFueHbp30BGtC8Jrnv
- 6/qiYJREpQcNt6ZveDTLDgjOGXHt2sfAOv9L4jSRi1SwIOQFljU0I6S7jBLBDP3oSUFz
- A5VU/CzZs96U4UhoQNKluJKmFl8nRn8FU1Z3bZILyHPg36K+maq9+Qa2Vr+udXrRdbZu
- 8PGygcR35S9IJQQaP1hLDbdPCeAxLFuOdEj4chUjm58hpc1EOA/6NFVRZcYbZXfCIuYH
- lLLg==
+ bh=jRkYKZKyY8LoZ2T6m4TBbq48qrkJCL9KAisPDYpd4eM=;
+ b=AL1sHM1ax/iBZm0AeHeOxaLNApaE7SAivUIsivUCfsYJHUOElEf3L6ijW9dFkJi7pi
+ LI9m/w5/UzV6o5FNWGn/UwvPSciFWfhpBZOjBjkT7ARSAyHTDkSPZEOl7VFnFD2vjJFu
+ vT1AInKa0n3eIR3ZXk+lBkc2pI+Nj4/tqC0oYaVvrSekNR0zEC8FOYCN0ejMlM21pfYB
+ ceYwbuaw9nYisJ43av9TkE2PUtz3Q1POWOiDbA8+URQPOAr9Y570Gkk3Cx2r5+p3oEtd
+ exd60tYMmNygFGE2AlN7qihjkOuAFoNsqJYzEkTY9ygbIXpT6nUT3don/O5x8xxHomJl
+ VZWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724106290; x=1724711090;
+ d=1e100.net; s=20230601; t=1724106695; x=1724711495;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Fl6bTB6IYyS1mnNCX73JrfBlcoBo3l1C/eL97Rtp4G8=;
- b=IZ2WUthTjxQWKsaseyfeT7/+XDWH4I7phGLh5BAjRiEMYCmjXM6XH061yUnqygr7Hj
- I9K8yFHjtmIwIrTATPJ1bdEi8UqYSXukB90oSya3qB5EszBpVMBzBUI2wKb83v727Kpv
- z4kuVkrm+d36Y/zmyI1k9W9gNGFpsAuyEckGDhYZqosjq2immIt5C70OVCtaPNrR/QYO
- 79rFDfQ5LWmDVK62iLXZOopHgdSo3JNPqOO2JaWlSLul8slEAmj1+5wBYyEFZe/OZqyB
- TmrhbedNtVwlremHU3wtDtqAxzWAArr0MYde7qtKGnth/BRChTZnnzxWzdZwiceDPXQr
- r+hA==
+ bh=jRkYKZKyY8LoZ2T6m4TBbq48qrkJCL9KAisPDYpd4eM=;
+ b=mhywZOebEpBzEuiUyPCT6zq+f6kxjqGt3OdEkZqgl1TSQUmKUIKuLSspDGWgvYX3Nm
+ RpwW2rzi9AETSxrPZ8mBZdFiBXzblEoj+ssIBmRmoMYt5FV0frhm9A/ger4z9VRZHImW
+ jIyz27e/i9ZcB0jz/Jm38AeMXVIL5khTBKOdyHNS2wjZXdrYu0IJa17rG73Zh2bgpJc7
+ 7uv9maBbKrD3jnbdjpZuic8I2j0ss1gEk8FSgXK61gg6oWQOAqOFbcNKSmZN08oAv67A
+ wLGfZt8fHxskvYINFKrFg9pfDELCvvMCtQnaJDeqrY2upTTHeDF6qjOCDC1Wb+/7uFys
+ tKgw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXf+NPbr102calZfzHtcbGV8Tz/gc/w9EKc9GjKLgkFNdfRLNoPf2PvtWzPBKwA1Qxz2drl0V++gSR3@nongnu.org
-X-Gm-Message-State: AOJu0YwaBDvf7yapmXg8CGlVvlXOEGMAKcYXkzVe0i6W6heSJFWQyvjL
- x8kb3emEvcNnwVcTcbYCoFqzmZS9mi5PSw8hO30IvHq2kxMVhTch93m9qExd5xmjIKs9Y1GiREu
- QvTU=
-X-Google-Smtp-Source: AGHT+IF6NI6Y1UbA0Gl6YpNdPyn4nzanVXQk5NWqKzTBc1Vyez7idr4N2294LrjvS4tYAA6CKOn8GQ==
-X-Received: by 2002:a05:600c:45ca:b0:426:6e8b:3dc5 with SMTP id
- 5b1f17b1804b1-429ed7d3160mr77984245e9.32.1724106290422; 
- Mon, 19 Aug 2024 15:24:50 -0700 (PDT)
+ AJvYcCV8BJvkoJaE5z8RI/P8EuaDJyZgoqTq2ERmeomoVN7YRwNZe6EfsTUxJR3818XzYGCuPLm435Z1JpHKwhDcUcjsPDEFt64=
+X-Gm-Message-State: AOJu0Yy8NrF2sdm+rnwAtMuWJsJxvv13wEhhboix1cybyaueq9cctgoX
+ t5ZjRcrd14LgGg9Pp9YYUyi+3+FUF5/nnOESAJP7AB8UMdVX+4Fpx+vc9wDu2nQ7g0dXPCvLz5n
+ ihVg=
+X-Google-Smtp-Source: AGHT+IFRY8qBS1w3OL52RKhhGoYXG+4WZDe4+3wS7/QqUJYduslxhU/pNbznQecttoSTSVmIPPnSCw==
+X-Received: by 2002:a5d:654d:0:b0:367:8ff5:5858 with SMTP id
+ ffacd0b85a97d-371946cc6dbmr6970494f8f.56.1724106694783; 
+ Mon, 19 Aug 2024 15:31:34 -0700 (PDT)
 Received: from [192.168.1.67] (88-178-97-237.subs.proxad.net. [88.178.97.237])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ed6507c4sm124383885e9.15.2024.08.19.15.24.49
+ ffacd0b85a97d-37189897034sm11586249f8f.67.2024.08.19.15.31.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Aug 2024 15:24:49 -0700 (PDT)
-Message-ID: <b36ce3bd-1921-4ab6-ac8f-49d2887ff35e@linaro.org>
-Date: Tue, 20 Aug 2024 00:24:48 +0200
+ Mon, 19 Aug 2024 15:31:34 -0700 (PDT)
+Message-ID: <300b1324-a527-49af-bf62-ebd5c72368a2@linaro.org>
+Date: Tue, 20 Aug 2024 00:31:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Remove myself as reviewer
-To: Beraldo Leal <bleal@redhat.com>, qemu-devel@nongnu.org
-References: <20240819150035.2180786-1-bleal@redhat.com>
+Subject: Re: [PULL 3/5] tests/avocado: apply proper skipUnless decorator
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20240816072218.27125-1-thuth@redhat.com>
+ <20240816072218.27125-4-thuth@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240819150035.2180786-1-bleal@redhat.com>
+In-Reply-To: <20240816072218.27125-4-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,21 +97,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/8/24 17:00, Beraldo Leal wrote:
-> Finally taking this off my to-do list. It’s been a privilege to be part
-> of this project, but I am no longer actively involved in reviewing
-> Python code here, so I believe it's best to update the list to reflect
-> the current maintainers.
+On 16/8/24 09:22, Thomas Huth wrote:
+> From: Cleber Rosa <crosa@redhat.com>
 > 
-> Please, feel free to reach out if any questions arise.
+> Commit 9b45cc993 added many cases of skipUnless for the sake of
+> organizing flaky tests.  But, Python decorators *must* follow what
+> they decorate, so the newlines added should *not* exist there.
 > 
-> Signed-off-by: Beraldo Leal <bleal@redhat.com>
+> Signed-off-by: Cleber Rosa <crosa@redhat.com>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Tested-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+> Message-ID: <20240806173119.582857-3-crosa@redhat.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 > ---
->   MAINTAINERS | 3 ---
->   1 file changed, 3 deletions(-)
+>   tests/avocado/boot_linux_console.py | 1 -
+>   tests/avocado/intel_iommu.py        | 1 -
+>   tests/avocado/linux_initrd.py       | 1 -
+>   tests/avocado/machine_aspeed.py     | 2 --
+>   tests/avocado/machine_mips_malta.py | 2 --
+>   tests/avocado/machine_rx_gdbsim.py  | 1 -
+>   tests/avocado/reverse_debugging.py  | 4 ----
+>   tests/avocado/smmu.py               | 1 -
+>   8 files changed, 13 deletions(-)
 
-Thanks Beraldo for your previous reviews!
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> diff --git a/tests/avocado/machine_rx_gdbsim.py b/tests/avocado/machine_rx_gdbsim.py
+> index 412a7a5089..9a0bec8a6e 100644
+> --- a/tests/avocado/machine_rx_gdbsim.py
+> +++ b/tests/avocado/machine_rx_gdbsim.py
+> @@ -49,7 +49,6 @@ def test_uboot(self):
+>           #exec_command_and_wait_for_pattern(self, 'version', gcc_version)
+>   
+>       @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
+> -
+>       def test_linux_sash(self):
+>           """
+>           Boots a Linux kernel and checks that the console is operational.
 
+For some weird reason a part of this patch is missing...
 
