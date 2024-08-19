@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 439F5C52D6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 14:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 923D0C52D6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 14:22:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sg32y-0003XM-Eu; Mon, 19 Aug 2024 10:07:48 -0400
+	id 1sg3GV-0007Jo-TW; Mon, 19 Aug 2024 10:21:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sg32u-0003PW-U4
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:07:44 -0400
+ id 1sg3GU-0007Hp-6r
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:21:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1sg32s-0007aG-7W
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:07:44 -0400
+ id 1sg3GS-0001GB-9X
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 10:21:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724076460;
+ s=mimecast20190719; t=1724077303;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XaG8gnC9HkBkVZUgCu9DLDVNY0F8IxCdBiRj1sSxhj0=;
- b=g9t/RzUtyzWvsa67Sx02VaKYHpdQca/jW63/1cEumioIy5j96AM9fo9wfI9s33aAsfPTHr
- HuP/8kV5uTUbSoli3087jPuBQwQd2Z8eNo2qlScgWh3zIjDG90YURbI7hk5rKum3tIMK6V
- kyJnMgGdN//9cphjf8mnyj+XA4XToZM=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sbJ58YvVZ4dzlnRt+qzf9Ta7hAcbIsn3dkKna10OJxE=;
+ b=F5CdKdjjT4K5RHvtZZkdBq8kYsnIKsl3GP8V1/QdY1nievYwlRHdypBLAp3+9I5kaE2zvr
+ +bB1Jj0xmZ/5NYqECk7l5dPs8GuobfgAXhmIx2AsmnzSnRoYN14Iv29AQKPavnR9VMJrML
+ pxr+h1+c6bzetbjPptXtRjb2twaa150=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-260-mRRx5PZRN1ynXVvtLfL7RA-1; Mon, 19 Aug 2024 10:07:38 -0400
-X-MC-Unique: mRRx5PZRN1ynXVvtLfL7RA-1
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-42816aacabcso37167165e9.1
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 07:07:37 -0700 (PDT)
+ us-mta-34-LOSyvQenON6791oWRJlA6g-1; Mon, 19 Aug 2024 10:21:41 -0400
+X-MC-Unique: LOSyvQenON6791oWRJlA6g-1
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-37187b43662so2786565f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 07:21:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724076455; x=1724681255;
+ d=1e100.net; s=20230601; t=1724077300; x=1724682100;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XaG8gnC9HkBkVZUgCu9DLDVNY0F8IxCdBiRj1sSxhj0=;
- b=qhjTX2uY0JQuWeIcu8xsaZoCfMkABYxHd114fWgNcnwr6lyohrr1LMGuIU9IZRO07y
- 1ckDVAEG3qqaIGhNr1YS4otuWgvqi4TcSOyIrrfskWKpi4VQ03kMYvGKhuStxByA8QoG
- PpFi4kC4Us3ycLTEukVzAjQ/RcX9jgAwFe1Ihoh17RozxubgpPtM/b5B++kGsA1L9nSH
- y9QwzWHeyDyhRLjqKIk4qEnWMC9k6BXs0qW6JVH2d0ujvKU9bYk0NuZIqyne3g/TvwP0
- hct+gGcO0lYZ2TpdRtlMkkahUxw7d0C+lh08Ccc54pOVhwIdesYcnSuCC7LypGkHLkEV
- WmSQ==
+ bh=sbJ58YvVZ4dzlnRt+qzf9Ta7hAcbIsn3dkKna10OJxE=;
+ b=ERdbz9pEbnFn//EHLnQZkaClZ/gJ3Zl8MDtRMWO2gSUASbSZPpRKXLcm6B9NwtxqRK
+ oI/QNMCeJljM5XSE4kHqqTb6WP5cGO505F4Dq8uXsZOocXFkvqDuIul8icZ+J9iU9jTd
+ j3tvXQbEIJYraaQKehiHND6Xyo3kKQ93u536pb27eH3HwWGhJ6lrXbzdzluYDSsXKtPu
+ urStnzVyeJ+X98xkHiWbJlDpxp3284lX+9OvIfbFd3jGCgpcdgfajSslreImS8ospAH/
+ W772E0nLsbHgGyeT7CPE48TbvGArWejpcNODVAgfYzXp9FUsu0Npdcs2OvYH04y1HzwW
+ BFUw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWsOrLg7i3ktiGYL9xm4WMHP5kxP7lAAgVo4SFDFbwqsNS/0F87K6MW37FN3iz9ya0bDUYin5A7lT47@nongnu.org
-X-Gm-Message-State: AOJu0YxyKk/L2hgOiYCttorQhD/K3aHnlErmeVQZ8aoNg7Ivszc/tAS0
- qOMiqk07E4jNpW9RyvMnW15frZKenbJeqmL+h/GQIhHcI/inFaq3+wIYEUoBNNLCXF5SUZ/vKWV
- swyIC3xxh+J6T9I3ycDnDBWDizYtivlrShI+RrEwE6e6CVbMc8zdu
-X-Received: by 2002:a05:600c:3c92:b0:428:14b6:ce32 with SMTP id
- 5b1f17b1804b1-429ed794e9bmr83814535e9.9.1724076455466; 
- Mon, 19 Aug 2024 07:07:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGfRKyefx3jM8peabry8rlLAWDzXV188Bk6OgXILyrHTgcw2C0oEyb8nbpJUVCVYivXUG6/SQ==
-X-Received: by 2002:a05:600c:3c92:b0:428:14b6:ce32 with SMTP id
- 5b1f17b1804b1-429ed794e9bmr83814305e9.9.1724076454913; 
- Mon, 19 Aug 2024 07:07:34 -0700 (PDT)
+ AJvYcCWfc4frb9Gh+xG/p4544Zt4B4z6Jb7rKpANwZMfFh3WkXD0Orwzw68ie4ymFMpmjQ7nWimRkBaIuij3@nongnu.org
+X-Gm-Message-State: AOJu0YztHfJ+9S4tT6cLrLFuIgdZo/+eJjQmrEprxkhMJ1yhrEJ1UduI
+ 0nowvAfJJdXcRxziN/fzn1hEahdR4bETyk/Ulul0Efxh6fMzfB+19TZqUZryw1uzZqScUjS2Gzp
+ ooxXRfcDoosOVfc6w7BLhf7faNdMbSbrJBBz3XjUfcB2rcD6689ld
+X-Received: by 2002:adf:cc8c:0:b0:368:3f60:8725 with SMTP id
+ ffacd0b85a97d-3719468fac0mr5409889f8f.39.1724077299921; 
+ Mon, 19 Aug 2024 07:21:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFRkNenkG/Yd1MX23P9IfW6QETLMQ6jCAglC3GAfYRJh+TfR+pbxrhdqEe60rPRg0gC1zv+UA==
+X-Received: by 2002:adf:cc8c:0:b0:368:3f60:8725 with SMTP id
+ ffacd0b85a97d-3719468fac0mr5409876f8f.39.1724077299359; 
+ Mon, 19 Aug 2024 07:21:39 -0700 (PDT)
 Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
  [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ded7d5a9sm164102525e9.43.2024.08.19.07.07.34
+ 5b1f17b1804b1-429ed6507c4sm113966685e9.15.2024.08.19.07.21.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 19 Aug 2024 07:07:34 -0700 (PDT)
-Date: Mon, 19 Aug 2024 16:07:33 +0200
+ Mon, 19 Aug 2024 07:21:38 -0700 (PDT)
+Date: Mon, 19 Aug 2024 16:21:38 +0200
 From: Igor Mammedov <imammedo@redhat.com>
 To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Shiju Jose
- <shiju.jose@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v8 13/13] acpi/ghes: check if the BIOS pointers for HEST
- are correct
-Message-ID: <20240819160733.464ccebf@imammedo.users.ipa.redhat.com>
-In-Reply-To: <52e6058feba318d01f54da6dca427b40ea5c9435.1723793768.git.mchehab+huawei@kernel.org>
+ <shiju.jose@huawei.com>, Ani Sinha <anisinha@redhat.com>, Dongjiu Geng
+ <gengdongjiu1@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>, Peter
+ Maydell <peter.maydell@linaro.org>, Shannon Zhao
+ <shannon.zhaosl@gmail.com>, kvm@vger.kernel.org, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v8 00/13] Add ACPI CPER firmware first error injection
+ on ARM emulation
+Message-ID: <20240819162138.4dd45330@imammedo.users.ipa.redhat.com>
+In-Reply-To: <cover.1723793768.git.mchehab+huawei@kernel.org>
 References: <cover.1723793768.git.mchehab+huawei@kernel.org>
- <52e6058feba318d01f54da6dca427b40ea5c9435.1723793768.git.mchehab+huawei@kernel.org>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -109,135 +110,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 16 Aug 2024 09:37:45 +0200
+On Fri, 16 Aug 2024 09:37:32 +0200
 Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> The OS kernels navigate between HEST, error source struct
-> and CPER by the usage of some pointers. Double-check if such
-> pointers were properly initializing, ensuring that they match
-> the right address for CPER.
+> This series add support for injecting generic CPER records.  Such records
+> are generated outside QEMU via a provided script.
+> 
+> On this version, I added two optional patches at the end:
+> - acpi/ghes: cleanup generic error data logic
+> 
+>   It drops some obvious comments from some already-existing code.
+>   As we're already doing lots of changes at the code, it sounded
+>   reasonable to me to have such cleanup here;
+> 
+> - acpi/ghes: check if the BIOS pointers for HEST are correct
+> 
+>   QEMU has two ways to navigate to a CPER start data: via its
+>   memory address or indirectly following 2 BIOS pointers.
+>   OS only have the latter one. This patch validates if the BIOS
+>   links used by the OS were properly produced, comparing to the
+>   actual location of the CPER record.
 
-as QEMU, we don't care about what guest wrote into those addresses
-(aka it's not hw businesses), even if later qemu will trample
-on wrong guest memory (it's guest responsibility to do init right).
+I went over the series,
+once suggestion in 13/13 implemented
+we can get rid of pointer math that is reshuffled several times
+in patches here.
 
-However this patch introduces usage for hest_addr_le, that I was looking for.
-See notes below.
+I'd suggest to structure series as following:
+ 
+  1: patch that adds hest_addr_le
+  2: refactoring current code to use address lookup vs pointer math
+  3. renaming patches 
+  4. patch adding new error source
+  5. QAPI patch
+  6. python script for error injection
+
+with that in place we probably would need to
+  * iron out minor migration compat issues
+    (I didn't look for them during this review round as much
+     would change yet)
+  * make sure that bios tables test is updated
 
 > 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 > ---
->  hw/acpi/ghes.c | 30 +++++++++++++++++++++++++++++-
->  1 file changed, 29 insertions(+), 1 deletion(-)
 > 
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index a822a5eafaa0..51e2e40e5a9c 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -85,6 +85,9 @@ enum AcpiHestSourceId {
->  #define HEST_GHES_V2_TABLE_SIZE  92
->  #define GHES_ACK_OFFSET          (64 + GAS_ADDR_OFFSET + ACPI_HEST_HEADER_SIZE)
->  
-> +/* ACPI 6.2: 18.3.2.7: Generic Hardware Error Source */
-> +#define GHES_ERR_ST_ADDR_OFFSET  (20 + GAS_ADDR_OFFSET + ACPI_HEST_HEADER_SIZE)
-> +
->  /*
->   * Values for error_severity field
->   */
-> @@ -425,7 +428,10 @@ NotifierList acpi_generic_error_notifiers =
->  void ghes_record_cper_errors(const void *cper, size_t len,
->                               enum AcpiGhesNotifyType notify, Error **errp)
->  {
-> -    uint64_t cper_addr, read_ack_start_addr;
-> +    uint64_t hest_read_ack_start_addr, read_ack_start_addr;
-> +    uint64_t read_ack_start_addr_2, err_source_struct;
-> +    uint64_t hest_err_block_addr, error_block_addr;
-> +    uint64_t cper_addr, cper_addr_2;
->      enum AcpiHestSourceId source;
->      AcpiGedState *acpi_ged_state;
->      AcpiGhesState *ags;
-> @@ -450,6 +456,28 @@ void ghes_record_cper_errors(const void *cper, size_t len,
->      cper_addr += ACPI_HEST_SRC_ID_COUNT * sizeof(uint64_t);
->      cper_addr += source * ACPI_GHES_MAX_RAW_DATA_LENGTH;
->  
-> +    err_source_struct = le64_to_cpu(ags->hest_addr_le) +
-> +                        source * HEST_GHES_V2_TABLE_SIZE;
-
-there is no guaranties that HEST table will contain only GHESv2 sources,
-and once such is added this place becomes broken.
-
-we need to iterate over HEST taking that into account
-and find only ghesv2 structure with source id of interest.
-
-This function (and acpi_ghes_record_errors() as well) taking source_id
-as input should be able to lookup pointers from HEST in guest RAM,
-very crude idea could look something like this:
-
-typedef struct hest_source_type2len{
-   uint16_t type
-   int len
-} hest_structure_type2len
-
-hest_structure_type2len supported_hest_sources[] = {
-    /* Table 18-344 Generic Hardware Error Source version 2 (GHESv2) Structure */
-    {.type = 10, .len = 92},
-}
-
-uint64_t find_error_source(src_id) {
-    uint32_t struct_offset = hest_header_size;
-    uint16_t type, id
-    do {
-       addr = ags->hest_addr_le + struct_offset
- 
-       cpu_physical_memory_read(addr, &id)
-       if (src_id == id)
-         return addr
-
-       cpu_physical_memory_read(addr, &type)
-       struct_offset ++= get_len_from_supported_hest_sources(type)
-    while(struct_offset < hest_len)
-    assert if not found
-}
-
-unit64_t get_error_status_block_addr(src_id) {
-   struct_addr = find_error_source(src_id) 
-   hest_err_block_addr =   struct_addr + GHES_ERR_ST_ADDR_OFFSET
-   // read intermediate pointer to status block addr pointer in hw table
-   cpu_physical_memory_read(hest_err_block_addr, &error_block_addr)
-   // read actual pointer to status block
-   cpu_physical_memory_read(error_block_addr, &error_status_block_addr)
-   return error_status_block_addr
-}
- 
-ditto for read_ack modulo indirection that we have for error_status_block_addr
-
-This way we can easily map source id to error status block
-and find needed addresses using pointer info from guest RAM
-without fragile pointer math and assumptions which might go wrong
-when new error sources are added and regardless of the order they
-are being added.
-
-> +    /* Check if BIOS addr pointers were properly generated */
-> +
-> +    hest_err_block_addr = err_source_struct + GHES_ERR_ST_ADDR_OFFSET;
-> +    hest_read_ack_start_addr = err_source_struct + GHES_ACK_OFFSET;
-> +
-> +    cpu_physical_memory_read(hest_err_block_addr, &error_block_addr,
-> +                             sizeof(error_block_addr));
-> +
-> +    cpu_physical_memory_read(error_block_addr, &cper_addr_2,
-> +                             sizeof(error_block_addr));
-> +
-> +    cpu_physical_memory_read(hest_read_ack_start_addr, &read_ack_start_addr_2,
-> +			     sizeof(read_ack_start_addr_2));
-> +
-> +    assert(cper_addr == cper_addr_2);
-> +    assert(read_ack_start_addr == read_ack_start_addr_2);
-> +
-> +    /* Update ACK offset to notify about a new error */
-> +
->      cpu_physical_memory_read(read_ack_start_addr,
->                               &read_ack, sizeof(uint64_t));
->  
+> v8:
+> - Fix one of the BIOS links that were incorrect;
+> - Changed mem error internal injection to use a common code;
+> - No more hardcoded values for CPER: instead of using just the
+>   payload at the QAPI, it now has the full raw CPER there;
+> - Error injection script now supports changing fields at the
+>   Generic Error Data section of the CPER;
+> - Several minor cleanups.
+> 
+> v7:
+> - Change the way offsets are calculated and used on HEST table.
+>   Now, it is compatible with migrations as all offsets are relative
+>   to the HEST table;
+> - GHES interface is now more generic: the entire CPER is sent via
+>   QMP, instead of just the payload;
+> - Some code cleanups to make the code more robust;
+> - The python script now uses QEMUMonitorProtocol class.
+> 
+> v6:
+> - PNP0C33 device creation moved to aml-build.c;
+> - acpi_ghes record functions now use ACPI notify parameter,
+>   instead of source ID;
+> - the number of source IDs is now automatically calculated;
+> - some code cleanups and function/var renames;
+> - some fixes and cleanups at the error injection script;
+> - ghes cper stub now produces an error if cper JSON is not compiled;
+> - Offset calculation logic for GHES was refactored;
+> - Updated documentation to reflect the GHES allocated size;
+> - Added a x-mpidr object for QOM usage;
+> - Added a patch making usage of x-mpidr field at ARM injection
+>   script;
+> 
+> v5:
+> - CPER guid is now passing as string;
+> - raw-data is now passed with base64 encode;
+> - Removed several GPIO left-overs from arm/virt.c changes;
+> - Lots of cleanups and improvements at the error injection script.
+>   It now better handles QMP dialog and doesn't print debug messages.
+>   Also, code was split on two modules, to make easier to add more
+>   error injection commands.
+> 
+> v4:
+> - CPER generation moved to happen outside QEMU;
+> - One patch adding support for mpidr query was removed.
+> 
+> v3:
+> - patch 1 cleanups with some comment changes and adding another place where
+>   the poweroff GPIO define should be used. No changes on other patches (except
+>   due to conflict resolution).
+> 
+> v2:
+> - added a new patch using a define for GPIO power pin;
+> - patch 2 changed to also use a define for generic error GPIO pin;
+> - a couple cleanups at patch 2 removing uneeded else clauses.
+> 
+> Example of generating a CPER record:
+> 
+> $ scripts/ghes_inject.py -d arm -p 0xdeadbeef
+> GUID: e19e3d16-bc11-11e4-9caa-c2051d5d46b0
+> Generic Error Status Block (20 bytes):
+>       00000000  01 00 00 00 00 00 00 00 00 00 00 00 90 00 00 00   ................
+>       00000010  00 00 00 00                                       ....
+> 
+> Generic Error Data Entry (72 bytes):
+>       00000000  16 3d 9e e1 11 bc e4 11 9c aa c2 05 1d 5d 46 b0   .=...........]F.
+>       00000010  00 00 00 00 00 03 00 00 48 00 00 00 00 00 00 00   ........H.......
+>       00000020  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
+>       00000030  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00   ................
+>       00000040  00 00 00 00 00 00 00 00                           ........
+> 
+> Payload (72 bytes):
+>       00000000  05 00 00 00 01 00 00 00 48 00 00 00 00 00 00 00   ........H.......
+>       00000010  00 00 00 80 00 00 00 00 10 05 0f 00 00 00 00 00   ................
+>       00000020  00 00 00 00 00 00 00 00 00 20 14 00 02 01 00 03   ......... ......
+>       00000030  0f 00 91 00 00 00 00 00 ef be ad de 00 00 00 00   ................
+>       00000040  ef be ad de 00 00 00 00                           ........
+> 
+> Error injected.
+> 
+> [    9.358364] {1}[Hardware Error]: Hardware error from APEI Generic Hardware Error Source: 1
+> [    9.359027] {1}[Hardware Error]: event severity: recoverable
+> [    9.359586] {1}[Hardware Error]:  Error 0, type: recoverable
+> [    9.360124] {1}[Hardware Error]:   section_type: ARM processor error
+> [    9.360561] {1}[Hardware Error]:   MIDR: 0x00000000000f0510
+> [    9.361160] {1}[Hardware Error]:   Multiprocessor Affinity Register (MPIDR): 0x0000000080000000
+> [    9.361643] {1}[Hardware Error]:   running state: 0x0
+> [    9.362142] {1}[Hardware Error]:   Power State Coordination Interface state: 0
+> [    9.362682] {1}[Hardware Error]:   Error info structure 0:
+> [    9.363030] {1}[Hardware Error]:   num errors: 2
+> [    9.363656] {1}[Hardware Error]:    error_type: 0x02: cache error
+> [    9.364163] {1}[Hardware Error]:    error_info: 0x000000000091000f
+> [    9.364834] {1}[Hardware Error]:     transaction type: Data Access
+> [    9.365599] {1}[Hardware Error]:     cache error, operation type: Data write
+> [    9.366441] {1}[Hardware Error]:     cache level: 2
+> [    9.367005] {1}[Hardware Error]:     processor context not corrupted
+> [    9.367753] {1}[Hardware Error]:    physical fault address: 0x00000000deadbeef
+> [    9.374267] Memory failure: 0xdeadb: recovery action for free buddy page: Recovered
+> 
+> Such script currently supports arm processor error CPER, but can easily be
+> extended to other GHES notification types.
+> 
+> 
+> 
+> Jonathan Cameron (1):
+>   acpi/ghes: Add support for GED error device
+> 
+> Mauro Carvalho Chehab (12):
+>   acpi/generic_event_device: add an APEI error device
+>   arm/virt: Wire up a GED error device for ACPI / GHES
+>   qapi/acpi-hest: add an interface to do generic CPER error injection
+>   acpi/ghes: rework the logic to handle HEST source ID
+>   acpi/ghes: add support for generic error injection via QAPI
+>   acpi/ghes: cleanup the memory error code logic
+>   docs: acpi_hest_ghes: fix documentation for CPER size
+>   scripts/ghes_inject: add a script to generate GHES error inject
+>   target/arm: add an experimental mpidr arm cpu property object
+>   scripts/arm_processor_error.py: retrieve mpidr if not filled
+>   acpi/ghes: cleanup generic error data logic
+>   acpi/ghes: check if the BIOS pointers for HEST are correct
+> 
+>  MAINTAINERS                            |  10 +
+>  docs/specs/acpi_hest_ghes.rst          |   6 +-
+>  hw/acpi/Kconfig                        |   5 +
+>  hw/acpi/aml-build.c                    |  10 +
+>  hw/acpi/generic_event_device.c         |   8 +
+>  hw/acpi/ghes-stub.c                    |   3 +-
+>  hw/acpi/ghes.c                         | 362 ++++++++-----
+>  hw/acpi/ghes_cper.c                    |  33 ++
+>  hw/acpi/ghes_cper_stub.c               |  19 +
+>  hw/acpi/meson.build                    |   2 +
+>  hw/arm/Kconfig                         |   5 +
+>  hw/arm/virt-acpi-build.c               |   6 +-
+>  hw/arm/virt.c                          |  12 +-
+>  include/hw/acpi/acpi_dev_interface.h   |   1 +
+>  include/hw/acpi/aml-build.h            |   2 +
+>  include/hw/acpi/generic_event_device.h |   1 +
+>  include/hw/acpi/ghes.h                 |  24 +-
+>  include/hw/arm/virt.h                  |   1 +
+>  qapi/acpi-hest.json                    |  36 ++
+>  qapi/meson.build                       |   1 +
+>  qapi/qapi-schema.json                  |   1 +
+>  scripts/arm_processor_error.py         | 388 ++++++++++++++
+>  scripts/ghes_inject.py                 |  51 ++
+>  scripts/qmp_helper.py                  | 702 +++++++++++++++++++++++++
+>  target/arm/cpu.c                       |   1 +
+>  target/arm/cpu.h                       |   1 +
+>  target/arm/helper.c                    |  10 +-
+>  target/arm/kvm.c                       |   2 +-
+>  28 files changed, 1551 insertions(+), 152 deletions(-)
+>  create mode 100644 hw/acpi/ghes_cper.c
+>  create mode 100644 hw/acpi/ghes_cper_stub.c
+>  create mode 100644 qapi/acpi-hest.json
+>  create mode 100644 scripts/arm_processor_error.py
+>  create mode 100755 scripts/ghes_inject.py
+>  create mode 100644 scripts/qmp_helper.py
+> 
 
 
