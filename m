@@ -4,77 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A02DC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64F30C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:52:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgAub-0002tz-7s; Mon, 19 Aug 2024 18:31:41 -0400
+	id 1sgBDj-0008Rx-Sj; Mon, 19 Aug 2024 18:51:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgAuZ-0002tS-GN
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:31:39 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBDh-0008Pj-Vh
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:51:25 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgAuX-0006oG-U9
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:31:39 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-36d2a601c31so2790944f8f.0
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:31:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBDf-0000fN-4g
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:51:25 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-371a6fcd863so1711983f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:51:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724106695; x=1724711495; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jRkYKZKyY8LoZ2T6m4TBbq48qrkJCL9KAisPDYpd4eM=;
- b=AL1sHM1ax/iBZm0AeHeOxaLNApaE7SAivUIsivUCfsYJHUOElEf3L6ijW9dFkJi7pi
- LI9m/w5/UzV6o5FNWGn/UwvPSciFWfhpBZOjBjkT7ARSAyHTDkSPZEOl7VFnFD2vjJFu
- vT1AInKa0n3eIR3ZXk+lBkc2pI+Nj4/tqC0oYaVvrSekNR0zEC8FOYCN0ejMlM21pfYB
- ceYwbuaw9nYisJ43av9TkE2PUtz3Q1POWOiDbA8+URQPOAr9Y570Gkk3Cx2r5+p3oEtd
- exd60tYMmNygFGE2AlN7qihjkOuAFoNsqJYzEkTY9ygbIXpT6nUT3don/O5x8xxHomJl
- VZWQ==
+ d=linaro.org; s=google; t=1724107878; x=1724712678; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=LTxzfu4OzZbTIB6pGjbGlQ0NpMxgXsa11tKEn0g5Iic=;
+ b=AUOTZ5M+grP4FNfGDG0ajCdQWE5PNKSpwmWZLUZz3Aw9C8eonWM8XIDEiuTbbivkbo
+ oZBda2772QYw2b0b4qnoqhzKR5OMlXBw9OyjteN9f1C8JqOsp1WAg1EQ7WN3i0E9v+BI
+ cGwvTYsireci2qsZAmidM0T9Eb+qzF2yD7Q5iKJLJ+sy+hYLKVrvjEnOd+H0THqk2FzO
+ qLN5s2m0Fwfedtb7FaATVsMD9ig0VjXcG3sCx2c4lwY73a1ipF9XadUn0PfAaLcoCOS7
+ nj/73D1vh7JpFR8vRmekGiGsRoybpKkJ52sCJIw4cKk2kA/4SrCqOeoZKz8DEpJin/19
+ wgAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724106695; x=1724711495;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jRkYKZKyY8LoZ2T6m4TBbq48qrkJCL9KAisPDYpd4eM=;
- b=mhywZOebEpBzEuiUyPCT6zq+f6kxjqGt3OdEkZqgl1TSQUmKUIKuLSspDGWgvYX3Nm
- RpwW2rzi9AETSxrPZ8mBZdFiBXzblEoj+ssIBmRmoMYt5FV0frhm9A/ger4z9VRZHImW
- jIyz27e/i9ZcB0jz/Jm38AeMXVIL5khTBKOdyHNS2wjZXdrYu0IJa17rG73Zh2bgpJc7
- 7uv9maBbKrD3jnbdjpZuic8I2j0ss1gEk8FSgXK61gg6oWQOAqOFbcNKSmZN08oAv67A
- wLGfZt8fHxskvYINFKrFg9pfDELCvvMCtQnaJDeqrY2upTTHeDF6qjOCDC1Wb+/7uFys
- tKgw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV8BJvkoJaE5z8RI/P8EuaDJyZgoqTq2ERmeomoVN7YRwNZe6EfsTUxJR3818XzYGCuPLm435Z1JpHKwhDcUcjsPDEFt64=
-X-Gm-Message-State: AOJu0Yy8NrF2sdm+rnwAtMuWJsJxvv13wEhhboix1cybyaueq9cctgoX
- t5ZjRcrd14LgGg9Pp9YYUyi+3+FUF5/nnOESAJP7AB8UMdVX+4Fpx+vc9wDu2nQ7g0dXPCvLz5n
- ihVg=
-X-Google-Smtp-Source: AGHT+IFRY8qBS1w3OL52RKhhGoYXG+4WZDe4+3wS7/QqUJYduslxhU/pNbznQecttoSTSVmIPPnSCw==
-X-Received: by 2002:a5d:654d:0:b0:367:8ff5:5858 with SMTP id
- ffacd0b85a97d-371946cc6dbmr6970494f8f.56.1724106694783; 
- Mon, 19 Aug 2024 15:31:34 -0700 (PDT)
-Received: from [192.168.1.67] (88-178-97-237.subs.proxad.net. [88.178.97.237])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37189897034sm11586249f8f.67.2024.08.19.15.31.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 19 Aug 2024 15:31:34 -0700 (PDT)
-Message-ID: <300b1324-a527-49af-bf62-ebd5c72368a2@linaro.org>
-Date: Tue, 20 Aug 2024 00:31:33 +0200
+ d=1e100.net; s=20230601; t=1724107878; x=1724712678;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LTxzfu4OzZbTIB6pGjbGlQ0NpMxgXsa11tKEn0g5Iic=;
+ b=t/YfOaBpfLwMxZ56PjnqYLVpCWMh3nS+hc71CXr465x4BoUwg2Wbw84BmSULHYH+fP
+ DjFB0NOgF9PicW9o4Wm5n4ZCjlxluqF1auwI8pjwVArQX6Wn03Bofv/xiheyY7a87erb
+ FbghjXDUX2k69MYOwmDN2ykHlRXINrhTEhU3BsuH0BEN1HvlCxrN9rUdmtVUUcbjyVVN
+ AwpwrcuuxgPHB9yNHn5Nms7LBmscgSAR1DrqxMjZ+nvpkGsFLkRlPBzNomqxdUCJ18rO
+ PHgB35GdDBeDvkcRHyWLsRFFvPY4doQCgqu1OZbh8QpQEvv5YOhbeHACrv0h9NiWazP8
+ ZHvg==
+X-Gm-Message-State: AOJu0YzDdoWnoSTpcVF667BkNCO/VNXjaD3itA+WbcQ2d4Er4+TkeO4l
+ A/OFCCbU2pdJ01QpAcNExUhWkse2lyOlYWRbdyVuTzkn11OABnrp2cdIlMNhDhQJfB2o6pctroh
+ xncI=
+X-Google-Smtp-Source: AGHT+IHUYDRbPupBiCPyijNQShdDrpcYYKpLgvOUpme46z+7ICLncmlrwFlhOQ9aUu+qRnJ3/sKc7A==
+X-Received: by 2002:adf:fc8a:0:b0:367:f104:d9e8 with SMTP id
+ ffacd0b85a97d-371946a9afbmr7143089f8f.47.1724107878448; 
+ Mon, 19 Aug 2024 15:51:18 -0700 (PDT)
+Received: from localhost.localdomain (88-178-97-237.subs.proxad.net.
+ [88.178.97.237]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-371898aada4sm11491670f8f.94.2024.08.19.15.51.17
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 19 Aug 2024 15:51:17 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 00/20] Misc fixes for 2024-08-20
+Date: Tue, 20 Aug 2024 00:50:56 +0200
+Message-ID: <20240819225116.17928-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 3/5] tests/avocado: apply proper skipUnless decorator
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20240816072218.27125-1-thuth@redhat.com>
- <20240816072218.27125-4-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240816072218.27125-4-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,43 +90,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/8/24 09:22, Thomas Huth wrote:
-> From: Cleber Rosa <crosa@redhat.com>
-> 
-> Commit 9b45cc993 added many cases of skipUnless for the sake of
-> organizing flaky tests.  But, Python decorators *must* follow what
-> they decorate, so the newlines added should *not* exist there.
-> 
-> Signed-off-by: Cleber Rosa <crosa@redhat.com>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Tested-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-> Message-ID: <20240806173119.582857-3-crosa@redhat.com>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/avocado/boot_linux_console.py | 1 -
->   tests/avocado/intel_iommu.py        | 1 -
->   tests/avocado/linux_initrd.py       | 1 -
->   tests/avocado/machine_aspeed.py     | 2 --
->   tests/avocado/machine_mips_malta.py | 2 --
->   tests/avocado/machine_rx_gdbsim.py  | 1 -
->   tests/avocado/reverse_debugging.py  | 4 ----
->   tests/avocado/smmu.py               | 1 -
->   8 files changed, 13 deletions(-)
+The following changes since commit ecdfa31beb1f7616091bedba79dfdf9ee525ed9d:
 
+  Merge tag 'pull-request-2024-08-16' of https://gitlab.com/thuth/qemu into staging (2024-08-16 18:18:27 +1000)
 
-> diff --git a/tests/avocado/machine_rx_gdbsim.py b/tests/avocado/machine_rx_gdbsim.py
-> index 412a7a5089..9a0bec8a6e 100644
-> --- a/tests/avocado/machine_rx_gdbsim.py
-> +++ b/tests/avocado/machine_rx_gdbsim.py
-> @@ -49,7 +49,6 @@ def test_uboot(self):
->           #exec_command_and_wait_for_pattern(self, 'version', gcc_version)
->   
->       @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
-> -
->       def test_linux_sash(self):
->           """
->           Boots a Linux kernel and checks that the console is operational.
+are available in the Git repository at:
 
-For some weird reason a part of this patch is missing...
+  https://github.com/philmd/qemu.git tags/hw-misc-20240820
+
+for you to fetch changes up to 87e012f29f2e47dcd8c385ff8bb8188f9e06d4ea:
+
+  crypto/tlscredspsk: Free username on finalize (2024-08-20 00:49:14 +0200)
+
+Ignored checkpatch warning:
+
+  WARNING: line over 80 characters
+  #115: FILE: target/mips/tcg/sysemu/tlb_helper.c:713:
+  +    MemOp native_op = (((env->CP0_PWSize >> CP0PS_PS) & 1) == 0) ? MO_32 : MO_64;
+
+----------------------------------------------------------------
+Various fixes
+
+- Null pointer dereference in IPI IOCSR (Jiaxun)
+- Correct '-smbios type=4' in man page (Heinrich)
+- Use correct MMU index in MIPS get_pte (Phil)
+- Reset MPQEMU remote message using device_cold_reset (Peter)
+- Update linux-user MIPS CPU list (Phil)
+- Do not let exec_command read console if no pattern to wait for (Nick)
+- Remove shadowed declaration warning (Pierrick)
+- Restrict STQF opcode to SPARC V9 (Richard)
+- Add missing Kconfig dependency for POWERNV ISA serial port (Bernhard)
+- Do not allow vmport device without i8042 PS/2 controller (Kamil)
+- Fix QCryptoTLSCredsPSK leak (Peter)
+
+----------------------------------------------------------------
+
+Bernhard Beschow (1):
+  hw/ppc/Kconfig: Add missing SERIAL_ISA dependency to POWERNV machine
+
+Heinrich Schuchardt (1):
+  qemu-options.hx: correct formatting -smbios type=4
+
+Jiaxun Yang (2):
+  hw/mips/loongson3_virt: Store core_iocsr into LoongsonMachineState
+  hw/mips/loongson3_virt: Fix condition of IPI IOCSR connection
+
+Kamil Szczęk (2):
+  hw/i386/pc: Unify vmport=auto handling
+  hw/i386/pc: Ensure vmport prerequisites are fulfilled
+
+Nicholas Piggin (2):
+  tests/avocado: exec_command should not consume console output
+  tests/avocado: Mark ppc_hv_tests.py as non-flaky after fixed console
+    interaction
+
+Peter Maydell (3):
+  hw/dma/xilinx_axidma: Use semicolon at end of statement, not comma
+  hw/remote/message.c: Don't directly invoke DeviceClass:reset
+  crypto/tlscredspsk: Free username on finalize
+
+Philippe Mathieu-Daudé (7):
+  target/mips: Pass page table entry size as MemOp to get_pte()
+  target/mips: Use correct MMU index in get_pte()
+  target/mips: Load PTE as DATA
+  linux-user/mips: Do not try to use removed R5900 CPU
+  linux-user/mips: Select Octeon68XX CPU for Octeon binaries
+  linux-user/mips: Select MIPS64R2-generic for Rel2 binaries
+  linux-user/mips: Select Loongson CPU for Loongson binaries
+
+Pierrick Bouvier (1):
+  contrib/plugins/execlog: Fix shadowed declaration warning
+
+Richard Henderson (1):
+  target/sparc: Restrict STQF to sparcv9
+
+ linux-user/mips/target_elf.h           |  3 --
+ linux-user/mips64/target_elf.h         | 24 +++++++--
+ target/sparc/insns.decode              |  2 +-
+ contrib/plugins/execlog.c              |  4 +-
+ crypto/tlscredspsk.c                   |  1 +
+ hw/dma/xilinx_axidma.c                 |  2 +-
+ hw/i386/pc.c                           | 14 +++++-
+ hw/i386/pc_piix.c                      |  5 --
+ hw/i386/pc_q35.c                       |  5 --
+ hw/mips/loongson3_virt.c               |  5 +-
+ hw/remote/message.c                    |  5 +-
+ target/mips/tcg/sysemu/tlb_helper.c    | 69 +++++++++++++-------------
+ target/sparc/translate.c               |  2 +-
+ hw/ppc/Kconfig                         |  1 +
+ qemu-options.hx                        |  6 +--
+ tests/avocado/avocado_qemu/__init__.py |  7 +++
+ tests/avocado/ppc_hv_tests.py          |  1 -
+ 17 files changed, 89 insertions(+), 67 deletions(-)
+
+-- 
+2.45.2
+
 
