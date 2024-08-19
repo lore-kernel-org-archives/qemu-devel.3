@@ -4,68 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D19AC3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 12:04:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4373FC5320E
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 12:08:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sg16P-0004ha-Nv; Mon, 19 Aug 2024 08:03:13 -0400
+	id 1sg1Ag-0002UY-L4; Mon, 19 Aug 2024 08:07:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sg16N-0004gN-9x
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 08:03:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sg1Aa-0002S1-64; Mon, 19 Aug 2024 08:07:32 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1sg16K-00059U-R4
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 08:03:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1724068985;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+Z4P7MEOyE57BzTzXjsp1+ExYU3jRxXMUpoguGosYG8=;
- b=b/uM0gvSXHtprVZLcuRneLUe+kUqqmsnudSo8TR2/84FmjgHLRswGxwWyH4rq/XDoQr5Zr
- v8nVoXXYyE1J/mm+VOwDO6lK+RUbEOsP/f66GJO4+VQzgsU32P6r0AqpjIIZoeWa5QY0lM
- Kw878WMSJDBKgXQSglb6NULalYi5Asw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-156-oxXvGRnVMm-A5KYphbeoyQ-1; Mon,
- 19 Aug 2024 08:03:02 -0400
-X-MC-Unique: oxXvGRnVMm-A5KYphbeoyQ-1
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1FE7C1955F08; Mon, 19 Aug 2024 12:03:00 +0000 (UTC)
-Received: from kaapi.redhat.com (unknown [10.74.17.132])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A3C161955BEE; Mon, 19 Aug 2024 12:02:54 +0000 (UTC)
-From: Prasad Pandit <ppandit@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: farosas@suse.de, jasowang@redhat.com, mcoqueli@redhat.com, mst@redhat.com,
- peterx@redhat.com, pjp@fedoraproject.org
-Subject: [RFC-PATCH v2] vhost-user: add a request-reply lock
-Date: Mon, 19 Aug 2024 17:32:48 +0530
-Message-ID: <20240819120248.170180-1-ppandit@redhat.com>
-In-Reply-To: <20240808095147.291626-3-ppandit@redhat.com>
-References: <20240808095147.291626-3-ppandit@redhat.com>
+ (Exim 4.90_1) (envelope-from <salil.mehta@huawei.com>)
+ id 1sg1AV-0005b5-0O; Mon, 19 Aug 2024 08:07:31 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WnWVC1xgdz6LDDn;
+ Mon, 19 Aug 2024 20:04:19 +0800 (CST)
+Received: from lhrpeml100003.china.huawei.com (unknown [7.191.160.210])
+ by mail.maildlp.com (Postfix) with ESMTPS id 315A0140680;
+ Mon, 19 Aug 2024 20:07:22 +0800 (CST)
+Received: from lhrpeml500001.china.huawei.com (7.191.163.213) by
+ lhrpeml100003.china.huawei.com (7.191.160.210) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 19 Aug 2024 13:07:21 +0100
+Received: from lhrpeml500001.china.huawei.com ([7.191.163.213]) by
+ lhrpeml500001.china.huawei.com ([7.191.163.213]) with mapi id 15.01.2507.039; 
+ Mon, 19 Aug 2024 13:07:21 +0100
+To: Igor Mammedov <imammedo@redhat.com>, Gavin Shan <gshan@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "mst@redhat.com" <mst@redhat.com>, "maz@kernel.org"
+ <maz@kernel.org>, "jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>, "lpieralisi@kernel.org"
+ <lpieralisi@kernel.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "andrew.jones@linux.dev"
+ <andrew.jones@linux.dev>, "david@redhat.com" <david@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "will@kernel.org" <will@kernel.org>,
+ "ardb@kernel.org" <ardb@kernel.org>, "oliver.upton@linux.dev"
+ <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "rafael@kernel.org" <rafael@kernel.org>, "borntraeger@linux.ibm.com"
+ <borntraeger@linux.ibm.com>, "alex.bennee@linaro.org"
+ <alex.bennee@linaro.org>, "npiggin@gmail.com" <npiggin@gmail.com>,
+ "harshpb@linux.ibm.com" <harshpb@linux.ibm.com>, "linux@armlinux.org.uk"
+ <linux@armlinux.org.uk>, "darren@os.amperecomputing.com"
+ <darren@os.amperecomputing.com>, "ilkka@os.amperecomputing.com"
+ <ilkka@os.amperecomputing.com>, "vishnu@os.amperecomputing.com"
+ <vishnu@os.amperecomputing.com>, "karl.heubaum@oracle.com"
+ <karl.heubaum@oracle.com>, "miguel.luis@oracle.com" <miguel.luis@oracle.com>, 
+ "salil.mehta@opnsrc.net" <salil.mehta@opnsrc.net>, zhukeqian
+ <zhukeqian1@huawei.com>, "wangxiongfeng (C)" <wangxiongfeng2@huawei.com>,
+ "wangyanan (Y)" <wangyanan55@huawei.com>, "jiakernel2@gmail.com"
+ <jiakernel2@gmail.com>, "maobibo@loongson.cn" <maobibo@loongson.cn>,
+ "lixianglai@loongson.cn" <lixianglai@loongson.cn>, "shahuang@redhat.com"
+ <shahuang@redhat.com>, "zhao1.liu@intel.com" <zhao1.liu@intel.com>, Linuxarm
+ <linuxarm@huawei.com>
+Subject: RE: [PATCH RFC V3 01/29] arm/virt,target/arm: Add new ARMCPU
+ {socket,cluster,core,thread}-id property
+Thread-Topic: [PATCH RFC V3 01/29] arm/virt,target/arm: Add new ARMCPU
+ {socket,cluster,core,thread}-id property
+Thread-Index: AQHaverDPpQr1lKFK0SrrcqBF6W41rIjVaUAgAA9dwCAC04sIA==
+Date: Mon, 19 Aug 2024 12:07:21 +0000
+Message-ID: <14027b794794485e9ac5e5561bc4f41a@huawei.com>
+References: <20240613233639.202896-1-salil.mehta@huawei.com>
+ <20240613233639.202896-2-salil.mehta@huawei.com>
+ <11e627ef-d75e-4114-9b93-14d80ec0526b@redhat.com>
+ <20240812101556.1a395712@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20240812101556.1a395712@imammedo.users.ipa.redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.48.151.47]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.134,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=salil.mehta@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H2=-0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
  T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -80,360 +100,83 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Salil Mehta <salil.mehta@huawei.com>
+From:  Salil Mehta via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Prasad Pandit <pjp@fedoraproject.org>
+>  From: Igor Mammedov <imammedo@redhat.com>
+>  Sent: Monday, August 12, 2024 9:16 AM
+>  To: Gavin Shan <gshan@redhat.com>
+> =20
+>  On Mon, 12 Aug 2024 14:35:56 +1000
+>  Gavin Shan <gshan@redhat.com> wrote:
+> =20
+>  > On 6/14/24 9:36 AM, Salil Mehta wrote:
+>  > > This shall be used to store user specified
+>  > > topology{socket,cluster,core,thread}
+>  > > and shall be converted to a unique 'vcpu-id' which is used as
+>  > > slot-index during hot(un)plug of vCPU.
+>  > >
+>  > > Co-developed-by: Keqian Zhu <zhukeqian1@huawei.com>
+>  > > Signed-off-by: Keqian Zhu <zhukeqian1@huawei.com>
+>  > > Signed-off-by: Salil Mehta <salil.mehta@huawei.com>
+>  > > ---
+>  > >   hw/arm/virt.c         | 10 ++++++++++
+>  > >   include/hw/arm/virt.h | 28 ++++++++++++++++++++++++++++
+>  > >   target/arm/cpu.c      |  4 ++++
+>  > >   target/arm/cpu.h      |  4 ++++
+>  > >   4 files changed, 46 insertions(+)
+>  > >
+>  >
+>  > Those 4 properties are introduced to determine the vCPU's slot, which
+>  > is the index to MachineState::possible_cpus::cpus[]. From there, the
+>  > CPU object or instance is referenced and then the CPU's state can be
+>  > further determined. It sounds reasonable to use the CPU's topology to
+>  > determine the index. However, I'm wandering if this can be simplified =
+to
+>  use 'cpu-index' or 'index' for a couple of facts: (1) 'cpu-index'
+> =20
+>  Please, don't. We've spent a bunch of time to get rid of cpu-index in us=
+er
+>  visible interface (well, old NUMA CLI is still there along with 'new' to=
+pology
+>  based one, but that's the last one).
 
-QEMU threads use vhost_user_write/read calls to send
-and receive request/reply messages from a vhost-user
-device. When multiple threads communicate with the
-same vhost-user device, they can receive each other's
-messages, resulting in an erroneous state.
 
-When fault_thread exits upon completion of Postcopy
-migration, it sends a 'postcopy_end' message to the
-vhost-user device. But sometimes 'postcopy_end' message
-is sent while vhost device is being setup via
-vhost_dev_start().
+Agreed. We shouldn't expose CPU index to user.
 
-     Thread-1                           Thread-2
+> =20
+>  > or 'index' is simplified. Users have to provide 4 parameters in order
+>  > to determine its index in the extreme case, for example "device_add
+>  > host-arm-cpu, id=3Dcpu7,socket-id=3D1,
+>  > cluster-id=3D1,core-id=3D1,thread-id=3D1". With 'cpu-index' or 'index'=
+, it
+>  > can be simplified to 'index=3D7'. (2) The cold-booted and hotpluggable
+>  > CPUs are determined by their index instead of their topology. For
+>  > example, CPU0/1/2/3 are cold-booted CPUs while CPU4/5/6/7 are
+>  hotpluggable CPUs with command lines '-smp maxcpus=3D8,cpus=3D4'. So 'in=
+dex'
+>  makes more sense to identify a vCPU's slot.
+>  cpu-index have been used for hotplug with x86 machines as a starting poi=
+nt
+>  to implement hotplug as it was easy to hack and it has already existed i=
+n
+>  QEMU.
+> =20
+>  But that didn't scale as was desired and had its own issues.
+>  Hence the current interface that majority agreed upon.
+>  I don't remember exact arguments anymore (they could be found qemu-
+>  devel if needed) Here is a link to the talk that tried to explain why to=
+po
+>  based was introduced.
+> =20
+>  http://events17.linuxfoundation.org/sites/events/files/slides/CPU%20Hot-
+>  plug%20support%20in%20QEMU.pdf
 
- vhost_dev_start                    postcopy_ram_incoming_cleanup
- vhost_device_iotlb_miss            postcopy_notify
- vhost_backend_update_device_iotlb  vhost_user_postcopy_notifier
- vhost_user_send_device_iotlb_msg   vhost_user_postcopy_end
- process_message_reply              process_message_reply
- vhost_user_read                    vhost_user_read
- vhost_user_read_header             vhost_user_read_header
- "Fail to update device iotlb"      "Failed to receive reply to postcopy_end"
 
-This creates confusion when vhost-user device receives
-'postcopy_end' message while it is trying to update
-IOTLB entries.
+I think you are referring to slide-19 of above presentation?
 
- vhost_user_read_header:
-  700871,700871: Failed to read msg header. Flags 0x0 instead of 0x5.
- vhost_device_iotlb_miss:
-  700871,700871: Fail to update device iotlb
- vhost_user_postcopy_end:
-  700871,700900: Failed to receive reply to postcopy_end
- vhost_user_read_header:
-  700871,700871: Failed to read msg header. Flags 0x0 instead of 0x5.
-
-Here fault thread seems to end the postcopy migration
-while another thread is starting the vhost-user device.
-
-Add a mutex lock to hold for one request-reply cycle
-and avoid such race condition.
-
-Fixes: 46343570c06e ("vhost+postcopy: Wire up POSTCOPY_END notify")
-Suggested-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Prasad Pandit <pjp@fedoraproject.org>
----
- hw/virtio/vhost-user.c         | 74 ++++++++++++++++++++++++++++++++++
- include/hw/virtio/vhost-user.h |  3 ++
- 2 files changed, 77 insertions(+)
-
-v2:
- - Place QEMU_LOCK_GUARD near the vhost_user_write() calls, holding
-   the lock for longer fails some tests during rpmbuild(8).
- - rpmbuild(8) fails for some SRPMs, not all. RHEL-9 SRPM builds with
-   this patch, whereas Fedora SRPM does not build.
- - The host OS also seems to affect rpmbuild(8). Some SRPMs build well
-   on RHEL-9, but not on Fedora-40 machine.
-
-v1: https://lore.kernel.org/qemu-devel/20240808095147.291626-3-ppandit@redhat.com/#R
-
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 00561daa06..7b030ae2cd 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -24,6 +24,7 @@
- #include "qemu/main-loop.h"
- #include "qemu/uuid.h"
- #include "qemu/sockets.h"
-+#include "qemu/lockable.h"
- #include "sysemu/runstate.h"
- #include "sysemu/cryptodev.h"
- #include "migration/postcopy-ram.h"
-@@ -446,6 +447,10 @@ static int vhost_user_set_log_base(struct vhost_dev *dev, uint64_t base,
-         .hdr.size = sizeof(msg.payload.log),
-     };
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     /* Send only once with first queue pair */
-     if (dev->vq_index != 0) {
-         return 0;
-@@ -664,6 +669,7 @@ static int send_remove_regions(struct vhost_dev *dev,
-                                bool reply_supported)
- {
-     struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-     struct vhost_memory_region *shadow_reg;
-     int i, fd, shadow_reg_idx, ret;
-     ram_addr_t offset;
-@@ -685,6 +691,8 @@ static int send_remove_regions(struct vhost_dev *dev,
-             vhost_user_fill_msg_region(&region_buffer, shadow_reg, 0);
-             msg->payload.mem_reg.region = region_buffer;
- 
-+            QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-             ret = vhost_user_write(dev, msg, NULL, 0);
-             if (ret < 0) {
-                 return ret;
-@@ -718,6 +726,7 @@ static int send_add_regions(struct vhost_dev *dev,
-                             bool reply_supported, bool track_ramblocks)
- {
-     struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-     int i, fd, ret, reg_idx, reg_fd_idx;
-     struct vhost_memory_region *reg;
-     MemoryRegion *mr;
-@@ -746,6 +755,8 @@ static int send_add_regions(struct vhost_dev *dev,
-             vhost_user_fill_msg_region(&region_buffer, reg, offset);
-             msg->payload.mem_reg.region = region_buffer;
- 
-+            QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-             ret = vhost_user_write(dev, msg, &fd, 1);
-             if (ret < 0) {
-                 return ret;
-@@ -893,6 +904,7 @@ static int vhost_user_set_mem_table_postcopy(struct vhost_dev *dev,
-                                              bool config_mem_slots)
- {
-     struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-     int fds[VHOST_MEMORY_BASELINE_NREGIONS];
-     size_t fd_num = 0;
-     VhostUserMsg msg_reply;
-@@ -926,6 +938,8 @@ static int vhost_user_set_mem_table_postcopy(struct vhost_dev *dev,
-             return ret;
-         }
- 
-+        QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-         ret = vhost_user_write(dev, &msg, fds, fd_num);
-         if (ret < 0) {
-             return ret;
-@@ -1005,6 +1019,7 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
-                                     struct vhost_memory *mem)
- {
-     struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-     int fds[VHOST_MEMORY_BASELINE_NREGIONS];
-     size_t fd_num = 0;
-     bool do_postcopy = u->postcopy_listen && u->postcopy_fd.handler;
-@@ -1044,6 +1059,8 @@ static int vhost_user_set_mem_table(struct vhost_dev *dev,
-             return ret;
-         }
- 
-+        QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-         ret = vhost_user_write(dev, &msg, fds, fd_num);
-         if (ret < 0) {
-             return ret;
-@@ -1089,6 +1106,10 @@ static int vhost_user_get_u64(struct vhost_dev *dev, int request, uint64_t *u64)
-         return 0;
-     }
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         return ret;
-@@ -1138,6 +1159,10 @@ static int vhost_user_write_sync(struct vhost_dev *dev, VhostUserMsg *msg,
-         }
-     }
- 
-+/*  struct vhost_user *u = dev->opaque;
-+ *  struct VhostUserState *us = u->user;
-+ *  QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+ */
-     ret = vhost_user_write(dev, msg, NULL, 0);
-     if (ret < 0) {
-         return ret;
-@@ -1277,6 +1302,8 @@ static int vhost_user_get_vring_base(struct vhost_dev *dev,
-         .hdr.size = sizeof(msg.payload.state),
-     };
-     struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
- 
-     VhostUserHostNotifier *n = fetch_notifier(u->user, ring->index);
-     if (n) {
-@@ -1669,6 +1696,9 @@ int vhost_user_get_shared_object(struct vhost_dev *dev, unsigned char *uuid,
-     };
-     memcpy(msg.payload.object.uuid, uuid, sizeof(msg.payload.object.uuid));
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         return ret;
-@@ -1889,6 +1919,9 @@ static int vhost_setup_backend_channel(struct vhost_dev *dev)
-         msg.hdr.flags |= VHOST_USER_NEED_REPLY_MASK;
-     }
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, &sv[1], 1);
-     if (ret) {
-         goto out;
-@@ -1993,6 +2026,9 @@ static int vhost_user_postcopy_advise(struct vhost_dev *dev, Error **errp)
-         .hdr.flags = VHOST_USER_VERSION,
-     };
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         error_setg(errp, "Failed to send postcopy_advise to vhost");
-@@ -2051,6 +2087,9 @@ static int vhost_user_postcopy_listen(struct vhost_dev *dev, Error **errp)
- 
-     trace_vhost_user_postcopy_listen();
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         error_setg(errp, "Failed to send postcopy_listen to vhost");
-@@ -2080,6 +2119,9 @@ static int vhost_user_postcopy_end(struct vhost_dev *dev, Error **errp)
- 
-     trace_vhost_user_postcopy_end_entry();
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         error_setg(errp, "Failed to send postcopy_end to vhost");
-@@ -2372,6 +2414,10 @@ static int vhost_user_net_set_mtu(struct vhost_dev *dev, uint16_t mtu)
-         msg.hdr.flags |= VHOST_USER_NEED_REPLY_MASK;
-     }
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         return ret;
-@@ -2396,6 +2442,10 @@ static int vhost_user_send_device_iotlb_msg(struct vhost_dev *dev,
-         .payload.iotlb = *imsg,
-     };
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         return ret;
-@@ -2428,6 +2478,10 @@ static int vhost_user_get_config(struct vhost_dev *dev, uint8_t *config,
- 
-     assert(config_len <= VHOST_USER_MAX_CONFIG_SIZE);
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     msg.payload.config.offset = 0;
-     msg.payload.config.size = config_len;
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-@@ -2492,6 +2546,10 @@ static int vhost_user_set_config(struct vhost_dev *dev, const uint8_t *data,
-     p = msg.payload.config.region;
-     memcpy(p, data, size);
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         return ret;
-@@ -2570,6 +2628,10 @@ static int vhost_user_crypto_create_session(struct vhost_dev *dev,
-         }
-     }
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     msg.payload.session.op_code = backend_info->op_code;
-     msg.payload.session.session_id = backend_info->session_id;
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-@@ -2662,6 +2724,9 @@ static int vhost_user_get_inflight_fd(struct vhost_dev *dev,
-         return 0;
-     }
- 
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         return ret;
-@@ -2757,6 +2822,7 @@ bool vhost_user_init(VhostUserState *user, CharBackend *chr, Error **errp)
-     user->memory_slots = 0;
-     user->notifiers = g_ptr_array_new_full(VIRTIO_QUEUE_MAX / 4,
-                                            &vhost_user_state_destroy);
-+    qemu_mutex_init(&user->vhost_user_request_reply_lock);
-     return true;
- }
- 
-@@ -2769,6 +2835,7 @@ void vhost_user_cleanup(VhostUserState *user)
-     user->notifiers = (GPtrArray *) g_ptr_array_free(user->notifiers, true);
-     memory_region_transaction_commit();
-     user->chr = NULL;
-+    qemu_mutex_destroy(&user->vhost_user_request_reply_lock);
- }
- 
- 
-@@ -2902,6 +2969,9 @@ static int vhost_user_set_device_state_fd(struct vhost_dev *dev,
-         return -ENOTSUP;
-     }
- 
-+    struct VhostUserState *us = vu->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, &fd, 1);
-     close(fd);
-     if (ret < 0) {
-@@ -2965,6 +3035,10 @@ static int vhost_user_check_device_state(struct vhost_dev *dev, Error **errp)
-         return -ENOTSUP;
-     }
- 
-+    struct vhost_user *u = dev->opaque;
-+    struct VhostUserState *us = u->user;
-+    QEMU_LOCK_GUARD(&us->vhost_user_request_reply_lock);
-+
-     ret = vhost_user_write(dev, &msg, NULL, 0);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret,
-diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-index 324cd8663a..e96f12d449 100644
---- a/include/hw/virtio/vhost-user.h
-+++ b/include/hw/virtio/vhost-user.h
-@@ -67,6 +67,9 @@ typedef struct VhostUserState {
-     GPtrArray *notifiers;
-     int memory_slots;
-     bool supports_config;
-+
-+    /* Hold lock for a request-reply cycle */
-+    QemuMutex vhost_user_request_reply_lock;
- } VhostUserState;
- 
- /**
--- 
-2.46.0
-
+Thanks
+Salil.
 
