@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84710C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 16:08:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BED64C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 16:11:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sg4vb-0005ym-EQ; Mon, 19 Aug 2024 12:08:19 -0400
+	id 1sg4y4-0004tn-Mp; Mon, 19 Aug 2024 12:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <prvs=5961d01319=ian.brockbank@cirrus.com>)
- id 1sg4vX-0005sx-Sg; Mon, 19 Aug 2024 12:08:15 -0400
-Received: from mx0a-001ae601.pphosted.com ([67.231.149.25]
- helo=mx0b-001ae601.pphosted.com)
+ id 1sg4y3-0004ru-4t; Mon, 19 Aug 2024 12:10:51 -0400
+Received: from mx0b-001ae601.pphosted.com ([67.231.152.168])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <prvs=5961d01319=ian.brockbank@cirrus.com>)
- id 1sg4vV-0006x1-QQ; Mon, 19 Aug 2024 12:08:15 -0400
-Received: from pps.filterd (m0077473.ppops.net [127.0.0.1])
- by mx0a-001ae601.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47JF6kfa004018;
- Mon, 19 Aug 2024 11:07:57 -0500
+ id 1sg4y1-0007IQ-35; Mon, 19 Aug 2024 12:10:50 -0400
+Received: from pps.filterd (m0077474.ppops.net [127.0.0.1])
+ by mx0b-001ae601.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47JF6kmC012798;
+ Mon, 19 Aug 2024 11:08:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- PODMain02222019; bh=CTBn2WQgxjV9HstSP0zkV4cvwhWuzTA6WEBVfacCLU8=; b=
- AXB7KgE2t3pNjS8SWBsUN0r2VMkSmRu0sTU2NDtOLeW4SYcDrl58efiakn0Lkp8Q
- V3ukLux7+4F7G/Rl/PyhWf6jgZX1Nr/E4ohPROV8FK3XD69x379YiutpyMc/cvXp
- jf6LR8YR/o2+RqCTAwI+M01va8/NPAxcFEWlQTETmmrxyAK6eYZ4wABVyrj+Gx60
- aaiFY7vvg11l53dU5ar1r/2eyddK4r+XxQo5GdYWsUI2xpukdaXrmKj2vqyFuB6B
- y4jDxc2Hrq+esNNTPqWgC2ap43dTOxLgi3AU46KKBOLhX0WiTdN0Z8dmfIA2Yj2s
- I8f2yKQgsZ3tjyLZKa95/A==
+ PODMain02222019; bh=ncndYl91D3S6kjKskFlCOb7/iz5xBVK1N21SwFSv9gs=; b=
+ dAVQV9Q8anwFa4tVU+T4+hKWP7kMii7udB2L5Xn/tSFVtgMCNfIPN4OSsZxvCElI
+ QmxAiMdH2TqtkE3YY2OBSqzkQxypSZcMJd1fSLEIz5uEV/5e2vDc8bh2lfpMoT1s
+ EOpp0HaeXW9fPy60yDSmbSfhPmSPTX8HVkUVMLPp6uF679f5an1QmeDUn2R+tBAs
+ sBxJ74T9+i3IPySN2z0XoAED/6b5zycDpJeHO3IyzJwE4jFqn/10fSRAl+YcBqde
+ sBuvC00zn/BLsZV+uHPJoqRZXGlpy2+ggDbuBOofVgWr1NMyRQ3Aw/lLKMqGYk0E
+ zGAsHBWfUbCzuyild1vnCA==
 Received: from ausex02.ad.cirrus.com ([141.131.3.21])
- by mx0a-001ae601.pphosted.com (PPS) with ESMTPS id 412s8x1x57-1
+ by mx0b-001ae601.pphosted.com (PPS) with ESMTPS id 412r9hsx5m-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 19 Aug 2024 11:07:56 -0500 (CDT)
+ Mon, 19 Aug 2024 11:08:34 -0500 (CDT)
 Received: from ausex01.ad.cirrus.com (141.131.37.95) by ausex02.ad.cirrus.com
  (141.131.37.96) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 19 Aug
- 2024 11:07:55 -0500
+ 2024 11:08:34 -0500
 Received: from EDIN7BQBTG3.ad.cirrus.com (141.131.38.212) by
  anon-ausex01.ad.cirrus.com (141.131.37.95) with Microsoft SMTP Server id
- 15.2.1544.9 via Frontend Transport; Mon, 19 Aug 2024 11:07:53 -0500
+ 15.2.1544.9 via Frontend Transport; Mon, 19 Aug 2024 11:08:32 -0500
 From: Ian Brockbank <Ian.Brockbank@cirrus.com>
 To: <qemu-devel@nongnu.org>, <qemu-riscv@nongnu.org>
 CC: Palmer Dabbelt <palmer@dabbelt.com>, Alistair Francis
  <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>, Weiwei Li
  <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ian Brockbank
- <ian.brockbank@cirrus.com>
-Subject: [PATCH 00/11 v2] RISC-V: support CLIC v0.9 specification
-Date: Mon, 19 Aug 2024 17:02:08 +0100
-Message-ID: <20240819160742.27586-1-Ian.Brockbank@cirrus.com>
+ <ian.brockbank@cirrus.com>, LIU Zhiwei <zhiwei_liu@c-sky.com>
+Subject: [PATCH 01/11 v2] target/riscv: Add CLIC CSR mintstatus
+Date: Mon, 19 Aug 2024 17:02:10 +0100
+Message-ID: <20240819160742.27586-3-Ian.Brockbank@cirrus.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <https://lists.gnu.org/archive/html/qemu-riscv/2024-08/msg00234.html>
+In-Reply-To: <20240819160742.27586-1-Ian.Brockbank@cirrus.com>
 References: <https://lists.gnu.org/archive/html/qemu-riscv/2024-08/msg00234.html>
+ <20240819160742.27586-1-Ian.Brockbank@cirrus.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: 1hR6MrH6FeYr0AP99NSuhHpCrCRY_fji
-X-Proofpoint-GUID: 1hR6MrH6FeYr0AP99NSuhHpCrCRY_fji
+X-Proofpoint-GUID: Ki6zyf9chE_qqssXnoVO38_4-nXfMB96
+X-Proofpoint-ORIG-GUID: Ki6zyf9chE_qqssXnoVO38_4-nXfMB96
 X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=67.231.149.25;
+Received-SPF: pass client-ip=67.231.152.168;
  envelope-from=prvs=5961d01319=ian.brockbank@cirrus.com;
  helo=mx0b-001ae601.pphosted.com
 X-Spam_score_int: -27
@@ -89,70 +89,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-[Resubmission now the merge is correct]
+From: Ian Brockbank <ian.brockbank@cirrus.com>
 
-This patch set gives an implementation of "RISC-V Core-Local Interrupt
-Controller(CLIC) Version 0.9-draft-20210217". It comes from [1], where
-you can find the pdf format or the source code.
+CSR mintstatus holds the active interrupt level for each supported
+privilege mode. sintstatus, and user, uintstatus, provide restricted
+views of mintstatus.
 
-This is based on the implementation from 2021 by Liu Zhiwei [3], who took
-over the job from Michael Clark, who gave the first implementation of
-clic-v0.7 specification [2]. I believe this implementation addresses all
-the comments in Liu Zhiwei's RFC patch thread.
+Signed-off-by: Ian Brockbank <ian.brockbank@cirrus.com>
+Signed-off-by: LIU Zhiwei <zhiwei_liu@c-sky.com>
+---
+ target/riscv/cpu.h      |  3 +++
+ target/riscv/cpu_bits.h | 11 +++++++++++
+ target/riscv/csr.c      | 31 +++++++++++++++++++++++++++++++
+ 3 files changed, 45 insertions(+)
 
-This implementation follows the CLIC 0.9-stable draft at 14 March 2024,
-with the following exceptions and implementation details:
- - the CLIC control registers are memory-mapped as per earlier drafts (in
-   particular version 0.9-draft, 20 June 2023)
- - the indirect CSR control in 0.9-stable is not implemented
- - the vector table can be either handler addresses (as per the spec)
-   or a jump table where each entry is processed as an instruction,
-   selectable with version number v0.9-jmp
- - each hart is assigned its own CLIC block
- - if PRV_S and/or PRV_M are supported, they are currently assumed to follo=
-w
-   the PRV_M registers; a subsequent update will address this
- - support for PRV_S and PRV_M is selectable at CLIC instantiation
- - PRV_S and PRV_U registers are currently separate from PRV_M; a subsequen=
-t
-   update will turn them into filtered views onto the PRV_M registers
- - each hart is assigned its own CLIC block
- - support for PRV_S and PRV_M is selectable at CLIC instantiation by
-   passing in a base address for the given modes; a base address of 0 is
-   treated as not supported
- - PRV_S and PRV_U registers are mapped  onto the PRV_M controls with
-   appropriate filtering for the access mode
- - the RISCV virt machine has been updated to allow CLIC emulation by
-   passing "machine=3Dvirt,clic=3Don" on the command line; various other
-   parameters have been added to allow finer control of the CLIC behavior
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 1619c3acb6..95303f50d3 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -259,6 +259,7 @@ struct CPUArchState {
+     bool software_seip;
 
-The implementation (in jump-table mode) has been verified to match the
-Cirrus Logic silicon (PRV_M only), which is based upon the Pulp
-implementation [4] as of June 2023.
+     uint64_t miclaim;
++    uint64_t mintstatus; /* clic-spec */
 
-The implementation also includes a selection of qtests designed to verify
-operation in all possible combinations of PRV_M, PRV_S and PRV_U.
+     uint64_t mie;
+     uint64_t mideleg;
+@@ -461,6 +462,8 @@ struct CPUArchState {
+     QEMUTimer *vstimer; /* Internal timer for VS-mode interrupt */
+     bool vstime_irq;
 
-[1] specification website: https://github.com/riscv/riscv-fast-interrupt.
-[2] Michael Clark origin work:
-https://github.com/sifive/riscv-qemu/tree/sifive-clic.
-[3] RFC Patch submission by Liu Zhiwei:
-https://lists.gnu.org/archive/html/qemu-devel/2021-04/msg01417.html
-[4] Pulp implementation of CLIC: https://github.com/pulp-platform/clic
++    void *clic;       /* clic interrupt controller */
++
+     hwaddr kernel_addr;
+     hwaddr fdt_addr;
 
-Ian Brockbank (11):
-    target/riscv: Add CLIC CSR mintstatus
-    target/riscv: Update CSR xintthresh in CLIC mode
-    hw/intc: Add CLIC device
-    target/riscv: Update CSR xie in CLIC mode
-    target/riscv: Update CSR xip in CLIC mode
-    target/riscv: Update CSR xtvec in CLIC mode
-    target/riscv: Update CSR xnxti in CLIC mode
-    target/riscv: Update interrupt handling in CLIC mode
-    target/riscv: Update interrupt return in CLIC mode
-    hw/riscv: add CLIC into virt machine
-    tests: add riscv clic qtest case and a function in qtest
+diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
+index 32b068f18a..2e65495b54 100644
+--- a/target/riscv/cpu_bits.h
++++ b/target/riscv/cpu_bits.h
+@@ -165,6 +165,7 @@
+ #define CSR_MCAUSE          0x342
+ #define CSR_MTVAL           0x343
+ #define CSR_MIP             0x344
++#define CSR_MINTSTATUS      0xfb1 /* clic-spec-draft */
 
+ /* Machine-Level Window to Indirectly Accessed Registers (AIA) */
+ #define CSR_MISELECT        0x350
+@@ -206,6 +207,7 @@
+ #define CSR_SCAUSE          0x142
+ #define CSR_STVAL           0x143
+ #define CSR_SIP             0x144
++#define CSR_SINTSTATUS      0xdb1 /* clic-spec-draft */
+
+ /* Sstc supervisor CSRs */
+ #define CSR_STIMECMP        0x14D
+@@ -733,6 +735,15 @@ typedef enum RISCVException {
+ #define SIP_SEIP                           MIP_SEIP
+ #define SIP_LCOFIP                         MIP_LCOFIP
+
++/* mintstatus */
++#define MINTSTATUS_MIL                     0xff000000 /* mil[31:24] */
++#define MINTSTATUS_SIL                     0x0000ff00 /* sil[15:8] */
++#define MINTSTATUS_UIL                     0x000000ff /* uil[7:0] */
++
++/* sintstatus */
++#define SINTSTATUS_SIL                     0x0000ff00 /* sil[15:8] */
++#define SINTSTATUS_UIL                     0x000000ff /* uil[7:0] */
++
+ /* MIE masks */
+ #define MIE_SEIE                           (1 << IRQ_S_EXT)
+ #define MIE_UEIE                           (1 << IRQ_U_EXT)
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index ea3560342c..f9ed7b9079 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -578,6 +578,16 @@ static RISCVException debug(CPURISCVState *env, int cs=
+rno)
+
+     return RISCV_EXCP_ILLEGAL_INST;
+ }
++
++static int clic(CPURISCVState *env, int csrno)
++{
++    if (env->clic) {
++        return RISCV_EXCP_NONE;
++    }
++
++    return RISCV_EXCP_ILLEGAL_INST;
++}
++
+ #endif
+
+ static RISCVException seed(CPURISCVState *env, int csrno)
+@@ -2887,6 +2897,12 @@ static RISCVException rmw_mviph(CPURISCVState *env, =
+int csrno,
+     return ret;
+ }
+
++static int read_mintstatus(CPURISCVState *env, int csrno, target_ulong *va=
+l)
++{
++    *val =3D env->mintstatus;
++    return RISCV_EXCP_NONE;
++}
++
+ /* Supervisor Trap Setup */
+ static RISCVException read_sstatus_i128(CPURISCVState *env, int csrno,
+                                         Int128 *val)
+@@ -3298,6 +3314,14 @@ static RISCVException rmw_siph(CPURISCVState *env, i=
+nt csrno,
+     return ret;
+ }
+
++static int read_sintstatus(CPURISCVState *env, int csrno, target_ulong *va=
+l)
++{
++    /* sintstatus is a filtered view of mintstatus with the PRV_M removed =
+*/
++    target_ulong mask =3D SINTSTATUS_SIL | SINTSTATUS_UIL;
++    *val =3D env->mintstatus & mask;
++    return RISCV_EXCP_NONE;
++}
++
+ /* Supervisor Protection and Translation */
+ static RISCVException read_satp(CPURISCVState *env, int csrno,
+                                 target_ulong *val)
+@@ -5594,6 +5618,13 @@ riscv_csr_operations csr_ops[CSR_TABLE_SIZE] =3D {
+                              write_mhpmcounterh                         },
+     [CSR_MHPMCOUNTER31H] =3D { "mhpmcounter31h", mctr32,  read_hpmcounterh=
+,
+                              write_mhpmcounterh                         },
++
++    /* Machine Mode Core Level Interrupt Controller */
++    [CSR_MINTSTATUS]     =3D { "mintstatus", clic,  read_mintstatus       =
+},
++
++    /* Supervisor Mode Core Level Interrupt Controller */
++    [CSR_SINTSTATUS]     =3D { "sintstatus", clic,  read_sintstatus       =
+},
++
+     [CSR_SCOUNTOVF]      =3D { "scountovf", sscofpmf,  read_scountovf,
+                              .min_priv_ver =3D PRIV_VERSION_1_12_0 },
+
+--
+2.46.0.windows.1
 This message and any attachments may contain privileged and confidential in=
 formation that is intended solely for the person(s) to whom it is addressed=
 . If you are not an intended recipient you must not: read; copy; distribute=
