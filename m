@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2814C3DA4A
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:55:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3EB1C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:55:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgBG7-00078Q-CO; Mon, 19 Aug 2024 18:53:55 -0400
+	id 1sgBGK-0000YN-BT; Mon, 19 Aug 2024 18:54:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEx-000265-7a
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:45 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEk-0001XQ-7d
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:32 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEu-0000nl-82
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:41 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-37196229343so2253264f8f.0
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:52:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBEi-0000lF-8H
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:29 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-428178fc07eso36558065e9.3
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:52:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724107957; x=1724712757; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724107944; x=1724712744; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=z09RW6IFcneNIVHjMWauhlzcbq2Ve54pkQqfOcA3PEg=;
- b=ElViYo1jGB/IydxtVP/35FT7U3FFTpX/428tiEaJLxqRZB4tTZ9WeRMPX7Swu2jFfr
- XqtvjTHtMIm5IWyj7R8+2K0Kj7ith2tYYEdP7z9WMlSgnHfS1si+XRj7yaEoZ8hFxfUE
- w8dPyabSsTVef0ENlT5J8FSC1QRPbI9B7MMZMfnVqx13nmdzaCuJEgM7pAqfCxO2HDKT
- P6hDyGUq9TKz69gpr6afpbybBZwqZ9ifp99CcUlTrXsrHLGHdknIX6IYtQdadR7xhOgy
- KNnObPjIybEAPDLqnfxRtsV92RRIW3r720Sg6ppBvu+UdULVKBzx8n5Gye+NDBFR8yax
- thoQ==
+ bh=zTcmfZovDL+2at9UVP/rP8+xQ32AOJCb5fxO6lUcn8c=;
+ b=iVejb+2gPz99XEHK8h1RETbg9cK8rfLjdGDAfDjlbKl/32I00aV8+KcUvl4ZomZXyF
+ L9bon/fVj17yjVEalWdDnm1MLktf+qLQXKjzFC5ZdXhuZ5FISlU5KgOd7LyKNMhy7nal
+ 2aq8DB6igQ3RejcFyCuWDosllzm5m22CRM1bQhCefWTWLEFKlUCC1a9VPMkcADbTgWVV
+ 7sKSOLwFC4j6GPc9wlbIDGSFr4OItbLVE/bjv+YN6thaQqKfg9Q2qh1Pd6VSGlpKPUt9
+ ZRMg3Xb1KeFJ633QqwneG80tCayuFjOAiN9aHdQ46cunUUudd6sVcEa5CCC3rV4KD+sx
+ irVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724107957; x=1724712757;
+ d=1e100.net; s=20230601; t=1724107944; x=1724712744;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=z09RW6IFcneNIVHjMWauhlzcbq2Ve54pkQqfOcA3PEg=;
- b=Edwg6IiexN59XPFobe0lvy3Krq2BrMt1/e4mzCoS4JzOULCdcVfl9h9xk0k8Py0Wtb
- HSFhN4UtCLTZaeUHRxlNAfHB5KUv0xvd4ZdLnU5FL6vGl6xHJflPDsf2Yvrhpoa3F20M
- km8YOn/pFM/eb5QKoyN+iesBWvCcq5iKdeOCLocEJ2Ojb26I7QfceE0Hvxx3w5XfOVQG
- ZcSjDgkFo9KaDIFB8tO6OyJyvNWr56CZuVHujI1TWO1hxOxZzYyGDNt9aHxBmL3/P/jY
- tTLt+t+JNS12cDBdNSR3kZRF50tAmOjxoJCxo0U6Ymp53DEaBE3xLnnbE5aJihv0dTzp
- 5fwA==
-X-Gm-Message-State: AOJu0YxhExjoiMrzyL0NEecQiU/nQUPGIA3BqM4j3vvVLq2Vq+vo5jAf
- Vn1+SnglESO1Ic9MoOX5Yj9szvx4NOA/I9U/9DTpXSmvkCP0L7LSub1QmJnGUCEsjOJEdoiLhHq
- gA3s=
-X-Google-Smtp-Source: AGHT+IFppZc2C2k0jzdRIXeMYR2BrPwxSECWzKO6v6Mvlb+8GJrm4Spb218TdNBcu+z6fuTLjTe1qw==
-X-Received: by 2002:adf:9785:0:b0:371:8e67:7a90 with SMTP id
- ffacd0b85a97d-371946a4f3emr7195327f8f.49.1724107957546; 
- Mon, 19 Aug 2024 15:52:37 -0700 (PDT)
+ bh=zTcmfZovDL+2at9UVP/rP8+xQ32AOJCb5fxO6lUcn8c=;
+ b=c0XvAoSYWvaMtnHqowkT9EH28YgLgezXG0dnXszz+leE/tpD9GNoXQOgCkSB2tD+3K
+ K6ob8YIcqb0CHqwmIx9uj3hPq7/LCaoF6SAWr3A4EYBDZDkCHX1lhWC8iXCtvOOqr8Qg
+ Q5hD2kNZDn72C7uWkT8+dkAJwoeKYv0zee+ZLSEaOUZ6R54MrCQYNYbf/9nKVNNGvFo6
+ MeQhJAlqbZefa3V08aXq1cQ2JoysecuWr7I8gHVFxl9Goeiq6XN7n7oOJ0TQwo7Cd6OV
+ UMHSwHZT3eeaNzz6s4/6PmKHDjxlZfJQP1mNZ+3nBFyJvJ/03wyGUIPvdrglI8vAHpbQ
+ zmzA==
+X-Gm-Message-State: AOJu0YypHU9NZeKhTbaQ+8JqrqX6UTLsVTtE8cRS3R/Nq2Z5NC7B1nSR
+ 6TdT9yAuuh88aXrrwrTWiTRhq+f+6k19rk0Lox6RzPeTlGuYUXONVLZRbgjDKogLgB30tDvEeDx
+ nxaQ=
+X-Google-Smtp-Source: AGHT+IHudnoR6LWmE2RVxE9W9gG2+NwY6H/GTDeY9O1ynzVttZGeR3lWRbgHRUCneLg9BfNStPVTfg==
+X-Received: by 2002:a05:600c:4455:b0:427:d8f7:b718 with SMTP id
+ 5b1f17b1804b1-429ed7e43d7mr87042175e9.24.1724107944227; 
+ Mon, 19 Aug 2024 15:52:24 -0700 (PDT)
 Received: from localhost.localdomain (88-178-97-237.subs.proxad.net.
  [88.178.97.237]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-37189849831sm11585295f8f.30.2024.08.19.15.52.36
+ ffacd0b85a97d-3718985a6ddsm11569150f8f.58.2024.08.19.15.52.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Aug 2024 15:52:37 -0700 (PDT)
+ Mon, 19 Aug 2024 15:52:23 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>,
+Cc: Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 17/20] hw/ppc/Kconfig: Add missing SERIAL_ISA dependency to
- POWERNV machine
-Date: Tue, 20 Aug 2024 00:51:13 +0200
-Message-ID: <20240819225116.17928-18-philmd@linaro.org>
+Subject: [PULL 14/20] tests/avocado: Mark ppc_hv_tests.py as non-flaky after
+ fixed console interaction
+Date: Tue, 20 Aug 2024 00:51:10 +0200
+Message-ID: <20240819225116.17928-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240819225116.17928-1-philmd@linaro.org>
 References: <20240819225116.17928-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,31 +95,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-The machine calls serial_hds_isa_init() which is provided by serial-isa.c,
-guarded by SERIAL_ISA.
+Now that exec_command doesn't incorrectly consume console output,
+and guest time is set correctly, ppc_hv_tests.py is working more
+reliably. Try marking it non-flaky.
 
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20240814181534.218964-4-shentey@gmail.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Message-ID: <20240805232814.267843-3-npiggin@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ppc/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ tests/avocado/ppc_hv_tests.py | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/ppc/Kconfig b/hw/ppc/Kconfig
-index c235519881..5addad1124 100644
---- a/hw/ppc/Kconfig
-+++ b/hw/ppc/Kconfig
-@@ -39,6 +39,7 @@ config POWERNV
-     select PCI_POWERNV
-     select PCA9552
-     select PCA9554
-+    select SERIAL_ISA
-     select SSI
-     select SSI_M25P80
-     select PNV_SPI
+diff --git a/tests/avocado/ppc_hv_tests.py b/tests/avocado/ppc_hv_tests.py
+index bf8822bb97..0e83bbac71 100644
+--- a/tests/avocado/ppc_hv_tests.py
++++ b/tests/avocado/ppc_hv_tests.py
+@@ -45,7 +45,6 @@ def missing_deps():
+ # QEMU already installed and use that.
+ # XXX: The order of these tests seems to matter, see git blame.
+ @skipIf(missing_deps(), 'dependencies (%s) not installed' % ','.join(deps))
+-@skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test sometimes gets stuck due to console handling problem')
+ @skipUnless(os.getenv('AVOCADO_ALLOW_LARGE_STORAGE'), 'storage limited')
+ @skipUnless(os.getenv('SPEED') == 'slow', 'runtime limited')
+ class HypervisorTest(QemuSystemTest):
 -- 
 2.45.2
 
