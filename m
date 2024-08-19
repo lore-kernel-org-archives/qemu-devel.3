@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB948C52D7C
-	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:55:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C616C52D7C
+	for <qemu-devel@archiver.kernel.org>; Mon, 19 Aug 2024 22:55:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1sgBGJ-0000TE-Lh; Mon, 19 Aug 2024 18:54:07 -0400
+	id 1sgBF7-0002Ox-Dt; Mon, 19 Aug 2024 18:52:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBF9-0002zh-8l
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:59 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBE2-0000T2-FS
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:51:49 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBF7-0000qa-DC
- for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:52:54 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-42819654737so37538355e9.1
- for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:52:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1sgBE0-0000gV-LF
+ for qemu-devel@nongnu.org; Mon, 19 Aug 2024 18:51:46 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-37182eee02dso2551230f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 19 Aug 2024 15:51:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1724107971; x=1724712771; darn=nongnu.org;
+ d=linaro.org; s=google; t=1724107902; x=1724712702; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZEmJWyUe5Z7mps33C1UMKOWEUqjAklVcCYaJjEGW1x0=;
- b=TriDJmWKIhuEaOCa2LRFASnKLIjdbBSHhcmakHsJnEkugPiMvpub2OZsCeIpCV9DRE
- 5ydszRT+DDeA2UVOB6gaDstDwQ90MXxp2Cti8uszVNgioW/HrwBbTOksWfUY1hflbRt4
- 3Vb1XuAqfPrO21mikfp3S9FhKIfQxVJIPtO404hzgEilPH6hpNi3BvOWYq1flZVk72KK
- 2khCRjZ9dcfxWZuhFNX/rwLMDpOv+8z3rkEbCgTUWN0t6Zq59Rgo5ygzgjzwYIJlOrhE
- GiM+qrdua8UYSC+LBoneIV4txLNV9Y1l7UvGaWanEH0BVxPoT7jI7DD5tGbkSfiDe4Jj
- 1+rw==
+ bh=nd77jbfvrLILzXcHedj2gSAGQaYl7M6K1uhrf65ne10=;
+ b=URbGPzgX/DJiRLTIYSW46iqzl+KtpGiXlJXGkLKmmErHWJBWm8jqUrDT1p0uSVa2VD
+ NnhC+BPFuV14sAJF/BYbvhewCYwc8EY3oh7oluVPIvQ+M9Ka00ssmiN++Z2V4mhLk/R+
+ 7iei8FR6jDSTHkSCvHuXDQy28yPIkIaXd8iuGQXXx2JdrOJkJbb9rlaf8b8h9DKRHqbn
+ q04+Dig69KtNJNoct8ye3XVKnHCjFdWWF/NH6V640A/wOtIP093xeK0qX+rWeWaOKffa
+ bTqiaB7bQtSLsI5IQvttnYFrEAn8RFPiDFZbSe3Vt9nCuWz1lvYBdwcraPDgnyEOQJFo
+ ZXjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1724107971; x=1724712771;
+ d=1e100.net; s=20230601; t=1724107902; x=1724712702;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZEmJWyUe5Z7mps33C1UMKOWEUqjAklVcCYaJjEGW1x0=;
- b=o6shGNJYc1tcdkQjCGiggZI4MKYMyswxmf4HaIsRazVH1plTFo+3s7BZvJU0Q7dhG2
- Zo3xXeyHGcXbWvpmB1iYfxSZiQvqmIqKEyKaOOXWJtzYiG0fcZxeC2FEt1rlNcHt2heV
- InJ+8AX0YxCuDTzG+AxOX5IMVhscBpRXm0PUzOH7Lx4Auyb+C1yfplooCQLITmobc8Ib
- xqaQXARuz1jIrr26PVUOUYz2uestyBID6fMqQ0OUuaMZnQD5ORR9sTMC1ZoqLstQnzHR
- kzj2ZkGedmcJkpEHPy+tv8yh/0UQqgA46UsSbsD7gUQQ6Ha6UTSNi7uMyJcL6/0KyL9I
- 0/zQ==
-X-Gm-Message-State: AOJu0YzdF1Stbb/hf/Lv8V1r7x9mfyTMfN5GXaf2hpGNXJ21f89v4fwf
- rY2EJMjr2vLA07rI42uTjktmb3yJeTwYEy+6p3yMH+q4eArEYUFW32RMr3epr93dRZqTtBBy1rt
- O2K0=
-X-Google-Smtp-Source: AGHT+IFIlse8M2XwYV+nLLXCUt3xIk/rkiVIEMkbetMSezMb9lFm4NYfrXmzGtX8YIgqmYCY+kH9eA==
-X-Received: by 2002:adf:b652:0:b0:367:9088:fecd with SMTP id
- ffacd0b85a97d-3719431e602mr7867047f8f.7.1724107971108; 
- Mon, 19 Aug 2024 15:52:51 -0700 (PDT)
+ bh=nd77jbfvrLILzXcHedj2gSAGQaYl7M6K1uhrf65ne10=;
+ b=kW3iCoSkbo2/2eB7hcnMk8fOrDVhQAjgSR7lRyym9XjkpHlzTnbg8dsCZ5Ne0g71jc
+ nrcwJq+sLgutvGQJhvYS7maFU+QFqMZmhApf8IEeIVRT9lH7kktEtPyUdlS/Fy3FPdJ4
+ sDtE9g5pMyZN+79WMBlrK2z1zhmVc153Ywjv1HB2KmMUgJCoFMCDCikkeVH7MxKoC7PL
+ rW95g8Nbxmy8w6z3gRQGnTkyn3tJ0eMNjYRcPtyp01yO/pvPVsImtR8QmgYaB7l30YBk
+ sGtxiwAlvfoo7NhMafmi23YoUxBO/p6ugEIC/4OdsLlVM//4dARlFl0LHGpynxzN7AiL
+ BWJg==
+X-Gm-Message-State: AOJu0YySaKmawEzka+ls467WLzOA6qsox+1oJOqwdcZZTBjt86n1kd4n
+ DUjNYyc/sUdaVKq+Rf52PsakJUu6GPUHOcvN9X8vi4kX3xeoN/TQb0xLEZjWP7pwyXhWjMz+nup
+ AQYg=
+X-Google-Smtp-Source: AGHT+IGor8W9PkmhMbF5zZLQUdhb/zhmNCVLIQn5x0Sk5Z7uxD1NHUgZ3RU5K+SjSU5Or0U+qLRImQ==
+X-Received: by 2002:a5d:5e04:0:b0:366:dfc4:3790 with SMTP id
+ ffacd0b85a97d-371c4a63393mr463587f8f.0.1724107902137; 
+ Mon, 19 Aug 2024 15:51:42 -0700 (PDT)
 Received: from localhost.localdomain (88-178-97-237.subs.proxad.net.
  [88.178.97.237]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-429ded18630sm175647555e9.1.2024.08.19.15.52.50
+ ffacd0b85a97d-3718983a38csm11705599f8f.6.2024.08.19.15.51.41
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 19 Aug 2024 15:52:50 -0700 (PDT)
+ Mon, 19 Aug 2024 15:51:41 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 20/20] crypto/tlscredspsk: Free username on finalize
-Date: Tue, 20 Aug 2024 00:51:16 +0200
-Message-ID: <20240819225116.17928-21-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+ Waldemar Brodkorb <wbx@uclibc-ng.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 05/20] target/mips: Use correct MMU index in get_pte()
+Date: Tue, 20 Aug 2024 00:51:01 +0200
+Message-ID: <20240819225116.17928-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240819225116.17928-1-philmd@linaro.org>
 References: <20240819225116.17928-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_SCC_BODY_TEXT_LINE=-0.01 autolearn=unavailable autolearn_force=no
+ T_SCC_BODY_TEXT_LINE=-0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,72 +96,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+When refactoring page_table_walk_refill() in commit 4e999bf419
+we missed the indirect call to cpu_mmu_index() in get_pte():
 
-When the creds->username property is set we allocate memory
-for it in qcrypto_tls_creds_psk_prop_set_username(), but
-we never free this when the QCryptoTLSCredsPSK is destroyed.
-Free the memory in finalize.
+  page_table_walk_refill()
+  -> get_pte()
+     -> cpu_ld[lq]_code()
+        -> cpu_mmu_index()
 
-This fixes a LeakSanitizer complaint in migration-test:
+Since we don't mask anymore the modes in hflags, cpu_mmu_index()
+can return UM or SM, while we only expect KM or ERL.
 
-$ (cd build/asan; ASAN_OPTIONS="fast_unwind_on_malloc=0" QTEST_QEMU_BINARY=./qemu-system-x86_64 ./tests/qtest/migration-test --tap -k -p /x86_64/migration/precopy/unix/tls/psk)
+Fix by propagating ptw_mmu_idx to get_pte(), and use the
+cpu_ld/st_code_mmu() API with the correct MemOpIdx.
 
-=================================================================
-==3867512==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 5 byte(s) in 1 object(s) allocated from:
-    #0 0x5624e5c99dee in malloc (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x218edee) (BuildId: a9e623fa1009a9435c0142c037cd7b8c1ad04ce3)
-    #1 0x7fb199ae9738 in g_malloc debian/build/deb/../../../glib/gmem.c:128:13
-    #2 0x7fb199afe583 in g_strdup debian/build/deb/../../../glib/gstrfuncs.c:361:17
-    #3 0x5624e82ea919 in qcrypto_tls_creds_psk_prop_set_username /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../crypto/tlscredspsk.c:255:23
-    #4 0x5624e812c6b5 in property_set_str /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object.c:2277:5
-    #5 0x5624e8125ce5 in object_property_set /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object.c:1463:5
-    #6 0x5624e8136e7c in object_set_properties_from_qdict /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object_interfaces.c:55:14
-    #7 0x5624e81372d2 in user_creatable_add_type /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object_interfaces.c:112:5
-    #8 0x5624e8137964 in user_creatable_add_qapi /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/object_interfaces.c:157:11
-    #9 0x5624e891ba3c in qmp_object_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qom/qom-qmp-cmds.c:227:5
-    #10 0x5624e8af9118 in qmp_marshal_object_add /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qapi/qapi-commands-qom.c:337:5
-    #11 0x5624e8bd1d49 in do_qmp_dispatch_bh /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../qapi/qmp-dispatch.c:128:5
-    #12 0x5624e8cb2531 in aio_bh_call /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/async.c:171:5
-    #13 0x5624e8cb340c in aio_bh_poll /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/async.c:218:13
-    #14 0x5624e8c0be98 in aio_dispatch /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/aio-posix.c:423:5
-    #15 0x5624e8cba3ce in aio_ctx_dispatch /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/async.c:360:5
-    #16 0x7fb199ae0d3a in g_main_dispatch debian/build/deb/../../../glib/gmain.c:3419:28
-    #17 0x7fb199ae0d3a in g_main_context_dispatch debian/build/deb/../../../glib/gmain.c:4137:7
-    #18 0x5624e8cbe1d9 in glib_pollfds_poll /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/main-loop.c:287:9
-    #19 0x5624e8cbcb13 in os_host_main_loop_wait /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/main-loop.c:310:5
-    #20 0x5624e8cbc6dc in main_loop_wait /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../util/main-loop.c:589:11
-    #21 0x5624e6f3f917 in qemu_main_loop /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../system/runstate.c:801:9
-    #22 0x5624e893379c in qemu_default_main /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../system/main.c:37:14
-    #23 0x5624e89337e7 in main /mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/../../system/main.c:48:12
-    #24 0x7fb197972d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-    #25 0x7fb197972e3f in __libc_start_main csu/../csu/libc-start.c:392:3
-    #26 0x5624e5c16fa4 in _start (/mnt/nvmedisk/linaro/qemu-from-laptop/qemu/build/asan/qemu-system-x86_64+0x210bfa4) (BuildId: a9e623fa1009a9435c0142c037cd7b8c1ad04ce3)
-
-SUMMARY: AddressSanitizer: 5 byte(s) leaked in 1 allocation(s).
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20240819145021.38524-1-peter.maydell@linaro.org>
+Reported-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+Reported-by: Waldemar Brodkorb <wbx@uclibc-ng.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2470
+Fixes: 4e999bf419 ("target/mips: Pass ptw_mmu_idx down from mips_cpu_tlb_fill")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20240814090452.2591-3-philmd@linaro.org>
 ---
- crypto/tlscredspsk.c | 1 +
- 1 file changed, 1 insertion(+)
+ target/mips/tcg/sysemu/tlb_helper.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/crypto/tlscredspsk.c b/crypto/tlscredspsk.c
-index 546cad1c5a..0d6b71a37c 100644
---- a/crypto/tlscredspsk.c
-+++ b/crypto/tlscredspsk.c
-@@ -243,6 +243,7 @@ qcrypto_tls_creds_psk_finalize(Object *obj)
-     QCryptoTLSCredsPSK *creds = QCRYPTO_TLS_CREDS_PSK(obj);
+diff --git a/target/mips/tcg/sysemu/tlb_helper.c b/target/mips/tcg/sysemu/tlb_helper.c
+index 60147ba0af..0e94e00a5f 100644
+--- a/target/mips/tcg/sysemu/tlb_helper.c
++++ b/target/mips/tcg/sysemu/tlb_helper.c
+@@ -593,16 +593,21 @@ static void raise_mmu_exception(CPUMIPSState *env, target_ulong address,
+  */
  
-     qcrypto_tls_creds_psk_unload(creds);
-+    g_free(creds->username);
+ static bool get_pte(CPUMIPSState *env, uint64_t vaddr, MemOp op,
+-        uint64_t *pte)
++                    uint64_t *pte, unsigned ptw_mmu_idx)
+ {
++    MemOpIdx oi;
++
+     if ((vaddr & (memop_size(op) - 1)) != 0) {
+         return false;
+     }
++
++    oi = make_memop_idx(op | MO_TE, ptw_mmu_idx);
+     if (op == MO_64) {
+-        *pte = cpu_ldq_code(env, vaddr);
++        *pte = cpu_ldq_code_mmu(env, vaddr, oi, 0);
+     } else {
+-        *pte = cpu_ldl_code(env, vaddr);
++        *pte = cpu_ldl_code_mmu(env, vaddr, oi, 0);
+     }
++
+     return true;
  }
  
- static void
+@@ -642,7 +647,7 @@ static int walk_directory(CPUMIPSState *env, uint64_t *vaddr,
+         /* wrong base address */
+         return 0;
+     }
+-    if (!get_pte(env, *vaddr, directory_mop, &entry)) {
++    if (!get_pte(env, *vaddr, directory_mop, &entry, ptw_mmu_idx)) {
+         return 0;
+     }
+ 
+@@ -668,7 +673,7 @@ static int walk_directory(CPUMIPSState *env, uint64_t *vaddr,
+                                      ptw_mmu_idx) != TLBRET_MATCH) {
+                 return 0;
+             }
+-            if (!get_pte(env, vaddr2, leaf_mop, &entry)) {
++            if (!get_pte(env, vaddr2, leaf_mop, &entry, ptw_mmu_idx)) {
+                 return 0;
+             }
+             entry = get_tlb_entry_layout(env, entry, leaf_mop, pf_ptew);
+@@ -823,7 +828,7 @@ static bool page_table_walk_refill(CPUMIPSState *env, vaddr address,
+                              ptw_mmu_idx) != TLBRET_MATCH) {
+         return false;
+     }
+-    if (!get_pte(env, vaddr, leaf_mop, &dir_entry)) {
++    if (!get_pte(env, vaddr, leaf_mop, &dir_entry, ptw_mmu_idx)) {
+         return false;
+     }
+     dir_entry = get_tlb_entry_layout(env, dir_entry, leaf_mop, pf_ptew);
+@@ -835,7 +840,7 @@ static bool page_table_walk_refill(CPUMIPSState *env, vaddr address,
+                              ptw_mmu_idx) != TLBRET_MATCH) {
+         return false;
+     }
+-    if (!get_pte(env, vaddr, leaf_mop, &dir_entry)) {
++    if (!get_pte(env, vaddr, leaf_mop, &dir_entry, ptw_mmu_idx)) {
+         return false;
+     }
+     dir_entry = get_tlb_entry_layout(env, dir_entry, leaf_mop, pf_ptew);
 -- 
 2.45.2
 
